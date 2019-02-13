@@ -70,6 +70,34 @@ MatrixStack.prototype.loadTransposeMatrix = function(mat) {
   this.stack[this.stack.length - 1] = m;
   return this;
 };
+
+/**
+ * Modifies the matrix at the top of this stack by multiplying it by the transpose of another matrix.
+ * The matrices are multiplied such that the transformations
+ * they describe happen in the order given. For example, if the matrix
+ * at the top of the stack describes a translation and the matrix
+ * passed to this method describes a scaling, the multiplied matrix will describe
+ * the effect of translation than scaling.
+ * @param {Array<number>} mat A matrix whose transpose the current matrix is to be multiplied.
+ * @returns {MatrixStack} This object.
+ */
+MatrixStack.prototype.multTransposeMatrix = function(mat) {
+  const curmat = this.stack[this.stack.length - 1];
+  const dst = [];
+  let i;
+  for (i = 0; i < 16; i += 4) {
+    let j;
+    for (j = 0; j < 4; j++) {
+      dst[i + j] =
+        curmat[i] * mat[j] +
+        curmat[i + 1] * mat[j + 4] +
+        curmat[i + 2] * mat[j + 8] +
+        curmat[i + 3] * mat[j + 12];
+    }
+  }
+  this.stack[this.stack.length - 1] = dst;
+  return this;
+};
 /**
  * Modifies the matrix at the top of this stack by multiplying it by another matrix.
  * The matrices are multiplied such that the transformations
@@ -98,11 +126,9 @@ MatrixStack.prototype.multMatrix = function(mat) {
   return this;
 };
 /**
- * Modifies the matrix at the top of this stack by multiplying it by a rotation transformation.
+ * Modifies the matrix at the top of this stack by multiplying it by a rotation transformation matrix. For more information on that matrix and the parameters, see {@link MathUtil.mat4rotate}.
  * @param {number} angle The desired angle
- * to rotate in degrees. If the axis of rotation
- * points toward the viewer, the angle's value is increasing in
- * a counterclockwise direction.
+ * to rotate, in degrees.
  * @param {number} x X-component of the axis
  * of rotation.
  * @param {number} y Y-component of the axis
@@ -216,20 +242,16 @@ MatrixStack.prototype.popMatrix = function() {
 };
 /**
  * Modifies the matrix at the top of this stack by multiplying it by
- * an orthographic projection.
- * In this projection, the left clipping plane is parallel to the right clipping
- * plane and the top to the bottom.<p>
- * This method is designed for enabling a [right-handed coordinate system]{@tutorial glmath}.
- * @param {number} l Leftmost coordinate of the 3D view.
- * @param {number} r Rightmost coordinate of the 3D view.
- * (Note that r can be greater than l or vice versa.)
- * @param {number} b Bottommost coordinate of the 3D view.
+ * an orthographic projection matrix.<p>
+ * For more information on the projection matrix and the parameters, see {@link MathUtil.mat4ortho}.
+ * @param {number} l Leftmost coordinate of the orthographic view.
+ * @param {number} r Rightmost coordinate of the orthographic view.
+ * @param {number} b Bottommost coordinate of the orthographic view.
  * @param {number} t Topmost coordinate of the 3D view.
- * (Note that t can be greater than b or vice versa.)
  * @param {number} n Distance from the camera to the near clipping
- * plane. A positive value means the plane is in front of the viewer.
+ * plane.
  * @param {number} f Distance from the camera to the far clipping
- * plane. A positive value means the plane is in front of the viewer.
+ * plane.
  * @returns {MatrixStack} This object.
  */
 MatrixStack.prototype.ortho = function(l, r, b, t, n, f) {
@@ -256,8 +278,8 @@ MatrixStack.prototype.ortho = function(l, r, b, t, n, f) {
 };
 /**
  * Modifies the matrix at the top of this stack by multiplying it by
- * a frustum matrix.
- * This method is designed for enabling a [right-handed coordinate system]{@tutorial glmath}.
+ * a frustum matrix.<p>
+ * For more information on the frustum matrix and the parameters, see {@link MathUtil.mat4frustum}.
  * @param {number} l X coordinate of the point where the left
  * clipping plane meets the near clipping plane.
  * @param {number} r X coordinate of the point where the right
@@ -267,11 +289,9 @@ MatrixStack.prototype.ortho = function(l, r, b, t, n, f) {
  * @param {number} t Y coordinate of the point where the top
  * clipping plane meets the near clipping plane.
  * @param {number} n The distance from the camera to
- * the near clipping plane. Objects closer than this distance won't be
- * seen. This should be slightly greater than 0.
+ * the near clipping plane.
  * @param {number} f The distance from the camera to
- * the far clipping plane. Objects beyond this distance will be too far
- * to be seen.
+ * the far clipping plane.
  * @returns {MatrixStack} This object.
  */
 MatrixStack.prototype.frustum = function(l, r, b, t, n, f) {
@@ -299,18 +319,16 @@ MatrixStack.prototype.frustum = function(l, r, b, t, n, f) {
 };
 /**
  * Modifies the matrix at the top of this stack by multiplying it by
- * a matrix representing a camera view.
- * This method is designed for enabling a [right-handed coordinate system]{@tutorial glmath}.
- * @param {number} ex X coordinate of the camera position in world space.
- * @param {number} ey Y coordinate of the camera position.
- * @param {number} ez Z coordinate of the camera position.
+ * a matrix representing a "camera" view.<p>
+ * For more information on that matrix and the parameters, see {@link MathUtil.mat4lookat}.
+ * @param {number} ex X coordinate of the "camera" position in world space.
+ * @param {number} ey Y coordinate of the "camera" position.
+ * @param {number} ez Z coordinate of the "camera" position.
  * @param {number} cx X coordinate of the position in world space that
- * the camera is looking at.
- * @param {number} cy Y coordinate of the position looked at.
- * @param {number} cz Z coordinate of the position looked at.
+ * the "camera" is "looking at".
+ * @param {number} cy Y coordinate of the position "looked at".
+ * @param {number} cz Z coordinate of the position "looked at".
  * @param {number} ux X coordinate of the up direction vector.
- * This vector must not point in the same or opposite direction as
- * the camera's view direction.
  * @param {number} uy Y coordinate of the up vector.
  * @param {number} uz Z coordinate of the up vector.
  * @returns {MatrixStack} This object.
@@ -381,14 +399,12 @@ MatrixStack.prototype.lookAt = function(ex, ey, ez, cx, cy, cz, ux, uy, uz) {
 };
 /**
  * Modifies the matrix at the top of this stack by multiplying it by
- * a 2D orthographic projection.
- * This method is designed for enabling a [right-handed coordinate system]{@tutorial glmath}.
- * @param {number} l Leftmost coordinate of the 2D view.
- * @param {number} r Rightmost coordinate of the 2D view.
- * (Note that r can be greater than l or vice versa.)
- * @param {number} b Bottommost coordinate of the 2D view.
- * @param {number} t Topmost coordinate of the 2D view.
- * (Note that t can be greater than b or vice versa.)
+ * a 2D orthographic projection matrix.<p>
+ * For more information on that matrix and the parameters, see {@link MathUtil.mat4ortho2d}.
+ * @param {number} l Leftmost coordinate of the orthographic view.
+ * @param {number} r Rightmost coordinate of the orthographic view.
+ * @param {number} b Bottommost coordinate of the orthographic view.
+ * @param {number} t Topmost coordinate of the orthographic view.
  * @returns {MatrixStack} This object.
  */
 MatrixStack.prototype.ortho2d = function(l, r, b, t) {
@@ -412,20 +428,14 @@ MatrixStack.prototype.ortho2d = function(l, r, b, t) {
 /**
  * Modifies the matrix at the top of this stack by multiplying it by
  * a matrix that defines a perspective projection.<p>
- * This method is designed for enabling a [right-handed coordinate system]{@tutorial glmath}.
- * @param {number} fov Vertical field of view, in degrees. Should be less
- * than 180 degrees. (The smaller
- * this number, the bigger close objects appear to be. As a result,
- * zoom can be implemented by multiplying field of view by an
- * additional factor.)
+ * For more information on that matrix and the parameters, see {@link MathUtil.mat4perspective}.
+ * @param {number} fov Vertical field of view, in degrees.
  * @param {number} aspect The ratio of width to height of the viewport, usually
  * the scene's aspect ratio.
  * @param {number} n The distance from the camera to
- * the near clipping plane. Objects closer than this distance won't be
- * seen. This should be slightly greater than 0.
+ * the near clipping plane.
  * @param {number} f The distance from the camera to
- * the far clipping plane. Objects beyond this distance will be too far
- * to be seen.
+ * the far clipping plane.
  * @returns {MatrixStack} This object.
  */
 MatrixStack.prototype.perspective = function(fov, aspect, n, f) {

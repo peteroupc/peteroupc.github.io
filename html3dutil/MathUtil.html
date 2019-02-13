@@ -887,30 +887,30 @@ Returns the identity matrix if this matrix&#39;s determinant, or overall scaling
 
 <p><a name='MathUtil.mat4lookat'></a></p>
 
-<h3>(static) MathUtil.mat4lookat(viewerPos, [lookingAt], [up])</h3>
+<h3>(static) MathUtil.mat4lookat(cameraPos, [lookingAt], [up])</h3>
 
 <p>Returns a 4x4 matrix that represents a &quot;camera&quot; view,
 transforming world space coordinates, shared by every object in a scene, to coordinates in <i>eye space</i>
 (also called <i>camera space</i> or <i>view space</i>). This essentially rotates a &quot;camera&quot;
 and moves it to somewhere in the scene. In eye space, when just this matrix is used to transform vertices:<ul>
 <li>The &quot;camera&quot; is located at the origin (0,0,0), or
-at <code>viewerPos</code> in world space,
+at <code>cameraPos</code> in world space,
 and points away from the viewer toward the <code>lookingAt</code>
 position in world space. This generally
 puts <code>lookingAt</code> at the center of the view.
 <li>The X axis points rightward from the &quot;camera&quot;&#39;s viewpoint.
 <li>The Y axis points upward from the center of the &quot;camera&quot; to its top. The
 <code>up</code> vector guides this direction.
-<li>The Z axis points away from the <code>lookingAt</code> point toward the camera, so that the eye space is a <a href="tutorial-glmath.html">right-handed coordinate system</a>.</ul></p>
+<li>The Z axis points away from the <code>lookingAt</code> point toward the &quot;camera&quot;, so that the eye space is a <a href="tutorial-glmath.html">right-handed coordinate system</a>.</ul></p>
 
 <p>To adjust the result of this method for a left-handed coordinate system (so that the Z axis points in the opposite direction), reverse the sign of the 1st, 3rd, 5th, 7th, 9th, 11th, 13th, and 15th elements of the result (zero-based indices 0, 2, 4, 6, 8, 10, 12, and 14).</p>
 
 <h4>Parameters</h4>
 
 <ul>
-<li><code>viewerPos</code> (Type: Array.&lt;number&gt;)<br>A 3-element vector specifying the &quot;camera&quot; position in world space.<br> When used in conjunction with an <a href="MathUtil.html#MathUtil.mat4ortho">orthographic projection</a>, set this parameter to the value of <code>lookingAt</code> plus a <a href="tutorial-glmath.html">unit vector</a> (for example, using <a href="MathUtil.html#MathUtil.vec3add">MathUtil.vec3add</a>) to form an <i>axonometric projection</i> (if the unit vector is <code>[sqrt(1/3),sqrt(1/3),sqrt(1/3)]</code>, the result is an <i>isometric projection</i>). See the examples below.</li>
+<li><code>cameraPos</code> (Type: Array.&lt;number&gt;)<br>A 3-element vector specifying the &quot;camera&quot; position in world space.<br> When used in conjunction with an <a href="MathUtil.html#MathUtil.mat4ortho">orthographic projection</a>, set this parameter to the value of <code>lookingAt</code> plus a <a href="tutorial-glmath.html">unit vector</a> (for example, using <a href="MathUtil.html#MathUtil.vec3add">MathUtil.vec3add</a>) to form an <i>axonometric projection</i> (if the unit vector is <code>[sqrt(1/3),sqrt(1/3),sqrt(1/3)]</code>, the result is an <i>isometric projection</i>). See the examples below.</li>
 <li><code>lookingAt</code> (Type: Array.&lt;number&gt;) (optional)<br>A 3-element vector specifying the point in world space that the &quot;camera&quot; is looking at. May be null or omitted, in which case the default is the coordinates (0,0,0).</li>
-<li><code>up</code> (Type: Array.&lt;number&gt;) (optional)<br>A 3-element vector specifying the direction from the center of the &quot;camera&quot; to its top. This parameter may be null or omitted, in which case the default is the vector (0, 1, 0), the vector that results when the &quot;camera&quot; is held upright.<br> This vector must not be parallel to the view direction (the direction from &quot;viewerPos&quot; to &quot;lookingAt&quot;). (See the example for one way to ensure this.)<br></li>
+<li><code>up</code> (Type: Array.&lt;number&gt;) (optional)<br>A 3-element vector specifying the direction from the center of the &quot;camera&quot; to its top. This parameter may be null or omitted, in which case the default is the vector (0, 1, 0), the vector that results when the &quot;camera&quot; is held upright.<br> This vector must not be parallel to the view direction (the direction from &quot;cameraPos&quot; to &quot;lookingAt&quot;). (See the example for one way to ensure this.)<br></li>
 </ul>
 
 <h4>Return Value</h4>
@@ -924,10 +924,10 @@ up vector of (0, 1, 0) except if the view direction is parallel to that
 vector or nearly so.</p>
 
 <pre>var upVector=[0,1,0]; // Y axis
-var viewdir=MathUtil.vec3sub(lookingAt, viewerPos);
+var viewdir=MathUtil.vec3sub(lookingAt, cameraPos);
 var par=MathUtil.vec3length(MathUtil.vec3cross(viewdir,upVector));
 if(par&lt;0.00001)upVector=[0,0,1]; // view is almost parallel, so use Z axis
-var matrix=MathUtil.mat4lookat(viewerPos,lookingAt,upVector);
+var matrix=MathUtil.mat4lookat(cameraPos,lookingAt,upVector);
 </pre>
 
 <p>The following example creates an
@@ -959,10 +959,10 @@ var matrix=MathUtil.mat4lookat(cameraPoint,lookPoint,[0,0,1]);
 viewer position, the viewing direction, and the up vector (a &quot;look-to&quot; matrix):</p>
 
 <pre>var viewDirection=[0,0,1]
-var viewerPos=[0,0,0]
+var cameraPos=[0,0,0]
 var upVector=[0,1,0]
-var lookingAt=MathUtil.vec3add(viewerPos,viewDirection);
-var matrix=MathUtil.mat4lookat(viewerPos,lookingAt,upVector);
+var lookingAt=MathUtil.vec3add(cameraPos,viewDirection);
+var matrix=MathUtil.mat4lookat(cameraPos,lookingAt,upVector);
 </pre>
 
 <p><a name='MathUtil.mat4multiply'></a></p>
@@ -2967,7 +2967,7 @@ increase from front to back.</p>
 <li><code>vector</code> (Type: Array.&lt;number&gt;)<br>A 3-element vector giving the X, Y, and Z coordinates of the 3D point to transform, in window coordinates.</li>
 <li><code>matrix</code> (Type: Array.&lt;number&gt;)<br>A 4x4 matrix. After undoing the transformation to window coordinates, the vector will be transformed by the inverse of this matrix according to the <a href="MathUtil.html#MathUtil.mat4projectVec3">MathUtil.mat4projectVec3</a> method.<br> To convert to world space, this parameter will generally be a projection-view matrix (projection matrix multiplied by the view matrix, in that order). To convert to object (model) space, this parameter will generally be a model-view-projection matrix (projection-view matrix multiplied by the world [model] matrix, in that order). See <a href="MathUtil.html#MathUtil.vec3toWindowPoint">MathUtil.vec3toWindowPoint</a> for the meaning of window coordinates with respect to the &quot;matrix&quot; and &quot;yUp&quot; parameters.</li>
 <li><code>viewport</code> (Type: Array.&lt;number&gt;)<br>A 4-element array specifying the starting position and size of the viewport in window units (such as pixels). In order, the four elements are the starting position&#39;s X coordinate, its Y coordinate, the viewport&#39;s width, and the viewport&#39;s height. Throws an error if the width or height is less than 0.</li>
-<li><code>yUp</code> (Type: boolean) (optional)<br>If omitted or a &quot;falsy&quot; value, reverses the sign of the Y coordinate returned by the <a href="MathUtil.html#MathUtil.mat4projectVec3">MathUtil.mat4projectVec3</a> method before converting it to window coordinates. If true, the Y coordinate will remain unchanged. If window Y coordinates increase upward, the viewport&#39;s starting position is at the lower left corner. If those coordinates increase downward, the viewport&#39;s starting position is at the upper left corner.</li>
+<li><code>yUp</code> (Type: boolean) (optional)<br>If false, null, undefined, or omitted, reverses the sign of the Y coordinate returned by the <a href="MathUtil.html#MathUtil.mat4projectVec3">MathUtil.mat4projectVec3</a> method before converting it to window coordinates. If true, the Y coordinate will remain unchanged. If window Y coordinates increase upward, the viewport&#39;s starting position is at the lower left corner. If those coordinates increase downward, the viewport&#39;s starting position is at the upper left corner.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -3338,9 +3338,9 @@ using the given transformation matrix and viewport rectangle.</p>
 
 <ul>
 <li><code>vector</code> (Type: Array.&lt;number&gt;)<br>A 3-element vector giving the X, Y, and Z coordinates of the 3D point to transform.</li>
-<li><code>matrix</code> (Type: Array.&lt;number&gt;)<br>A 4x4 matrix to use to transform the vector according to the <a href="MathUtil.html#MathUtil.mat4projectVec3">MathUtil.mat4projectVec3</a> method, before the transformed vector is converted to window coordinates. <br>This parameter will generally be a projection-view matrix (projection matrix multiplied by the view matrix, in that order), if the vector to transform is in <i>world space</i>, or a model-view-projection matrix, that is, (projection-view matrix multiplied by the model [world] matrix, in that order), if the vector is in <i>model (object) space</i>.<br> If the matrix includes a projection transform returned by <a href="MathUtil.html#MathUtil.mat4ortho">MathUtil.mat4ortho</a>, <a href="MathUtil.html#MathUtil.mat4perspective">MathUtil.mat4perspective</a>, or similar <a href="MathUtil.html">MathUtil</a> methods, the X, Y, and Z coordinates within the view volume will increase in the direction given in that documentation (except that if &quot;yUp&quot; is omitted or a &quot;falsy&quot; value, Y coordinates increase in the opposite direction), and Z coordinates in the view volume will range from 0 to 1 in <card>window coordinates</card>, assuming <a href="MathUtil.html#MathUtil.mat4projectVec3">MathUtil.mat4projectVec3</a> made such Z coordinates range from -1 to 1.</li>
+<li><code>matrix</code> (Type: Array.&lt;number&gt;)<br>A 4x4 matrix to use to transform the vector according to the <a href="MathUtil.html#MathUtil.mat4projectVec3">MathUtil.mat4projectVec3</a> method, before the transformed vector is converted to window coordinates. <br>This parameter will generally be a projection-view matrix (projection matrix multiplied by the view matrix, in that order), if the vector to transform is in <i>world space</i>, or a model-view-projection matrix, that is, (projection-view matrix multiplied by the model [world] matrix, in that order), if the vector is in <i>model (object) space</i>.<br> If the matrix includes a projection transform returned by <a href="MathUtil.html#MathUtil.mat4ortho">MathUtil.mat4ortho</a>, <a href="MathUtil.html#MathUtil.mat4perspective">MathUtil.mat4perspective</a>, or similar <a href="MathUtil.html">MathUtil</a> methods, the X, Y, and Z coordinates within the view volume will increase in the direction given in those methods&#39; documentation (except that if &quot;yUp&quot; is false, null, undefined, or omitted, Y coordinates increase in the opposite direction), and Z coordinates in the view volume will range from 0 to 1 in <card>window coordinates</card>, assuming <a href="MathUtil.html#MathUtil.mat4projectVec3">MathUtil.mat4projectVec3</a> made such Z coordinates range from -1 to 1.</li>
 <li><code>viewport</code> (Type: Array.&lt;number&gt;)<br>A 4-element array specifying the starting position and size of the viewport in window units (such as pixels). In order, the four elements are the starting position&#39;s X coordinate, its Y coordinate, the viewport&#39;s width, and the viewport&#39;s height. Throws an error if the width or height is less than 0.</li>
-<li><code>yUp</code> (Type: boolean) (optional)<br>If omitted or a &quot;falsy&quot; value, reverses the sign of the Y coordinate returned by the <a href="MathUtil.html#MathUtil.mat4projectVec3">MathUtil.mat4projectVec3</a> method before converting it to window coordinates. If true, the Y coordinate will remain unchanged. If window Y coordinates increase upward, the viewport&#39;s starting position is at the lower left corner. If those coordinates increase downward, the viewport&#39;s starting position is at the upper left corner.</li>
+<li><code>yUp</code> (Type: boolean) (optional)<br>If false, null, undefined, or omitted, reverses the sign of the Y coordinate returned by the <a href="MathUtil.html#MathUtil.mat4projectVec3">MathUtil.mat4projectVec3</a> method before converting it to window coordinates. If true, the Y coordinate will remain unchanged. If window Y coordinates increase upward, the viewport&#39;s starting position is at the lower left corner. If those coordinates increase downward, the viewport&#39;s starting position is at the upper left corner.</li>
 </ul>
 
 <h4>Return Value</h4>
