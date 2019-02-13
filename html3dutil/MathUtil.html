@@ -892,7 +892,7 @@ Returns the identity matrix if this matrix&#39;s determinant, or overall scaling
 <p>Returns a 4x4 matrix that represents a &quot;camera&quot; view,
 transforming world space coordinates, shared by every object in a scene, to coordinates in <i>eye space</i>
 (also called <i>camera space</i> or <i>view space</i>). This essentially rotates a &quot;camera&quot;
-and moves it to somewhere in the scene. In eye space:<ul>
+and moves it to somewhere in the scene. In eye space, when just this matrix is used to transform vertices:<ul>
 <li>The &quot;camera&quot; is located at the origin (0,0,0), or
 at <code>viewerPos</code> in world space,
 and points away from the viewer toward the <code>lookingAt</code>
@@ -901,15 +901,9 @@ puts <code>lookingAt</code> at the center of the view.
 <li>The X axis points rightward from the &quot;camera&quot;&#39;s viewpoint.
 <li>The Y axis points upward from the center of the &quot;camera&quot; to its top. The
 <code>up</code> vector guides this direction.
-<li>The Z axis is parallel to the direction from the &quot;camera&quot;
-to the <code>lookingAt</code> point.</ul></p>
+<li>The Z axis points away from the <code>lookingAt</code> point toward the camera, so that the eye space is a <a href="tutorial-glmath.html">right-handed coordinate system</a>.</ul></p>
 
-<p>This method is designed for use in a <a href="tutorial-glmath.html">right-handed coordinate system</a>
-(the Z axis&#39;s direction will be from the &quot;camera&quot; to the point looked at).
-To adjust the result of this method for a left-handed system,
-reverse the sign of the 1st, 3rd, 5th, 7th, 9th, 11th,
-13th, and 15th elements of the result (zero-based indices 0, 2, 4, 6, 8,
-10, 12, and 14); the Z axis&#39;s direction will thus be from the point looked at to the &quot;camera&quot;.</p>
+<p>To adjust the result of this method for a left-handed coordinate system (so that the Z axis points in the opposite direction), reverse the sign of the 1st, 3rd, 5th, 7th, 9th, 11th, 13th, and 15th elements of the result (zero-based indices 0, 2, 4, 6, 8, 10, 12, and 14).</p>
 
 <h4>Parameters</h4>
 
@@ -1210,8 +1204,9 @@ window.innerWidth/Math.max(1,window.innerHeight),
 <h3>(static) MathUtil.mat4perspectiveHorizontal(fovX, aspectRatio, near, far)</h3>
 
 <p>Returns a 4x4 matrix representing a <a href="tutorial-camera.html">perspective projection</a>,
-given an X axis field of view.
-See <a href="MathUtil.html#MathUtil.mat4perspective">mat4ortho()</a> for information on the meaning of coordinates
+given an X axis field of view.</p>
+
+<p>See <a href="MathUtil.html#MathUtil.mat4perspective">mat4perspective()</a> for information on the meaning of coordinates
 when using this matrix and on adjusting the matrix for different coordinate systems.</p>
 
 <h4>Parameters</h4>
@@ -1219,8 +1214,8 @@ when using this matrix and on adjusting the matrix for different coordinate syst
 <ul>
 <li><code>fovX</code> (Type: number)<br>X axis field of view, in degrees, that is, the shortest angle between the left and right clipping planes. Should be less than 180 degrees. (The smaller this number, the bigger close objects appear to be. As a result, zooming out can be implemented by raising this value, and zooming in by lowering it.)</li>
 <li><code>aspectRatio</code> (Type: number)<br>The ratio of width to height of the viewport, usually the scene&#39;s aspect ratio.</li>
-<li><code>near</code> (Type: number)<br>The distance, in eye space, from the &quot;eye&quot; to the near clipping plane. Objects closer than this distance won&#39;t be seen.<br>This value should be greater than 0, and should be set to the highest distance from the &quot;eye&quot; that the application can afford to clip out for being too close, for example, 0.5, 1, or higher.</li>
-<li><code>far</code> (Type: number)<br>The distance, in eye space, from the &quot;eye&quot; to the far clipping plane. Objects farther than this distance won&#39;t be seen.<br>This value should be greater than 0 and should be set so that the absolute ratio of &quot;far&quot; to &quot;near&quot; is as small as the application can accept. (&quot;near&quot; is usually less than &quot;far&quot;, so that, in WebGL and most other graphics pipelines by default, Z coordinates increase from the &quot;eye&quot; backward when just this matrix is used to transform vertices. If &quot;near&quot; is greater than &quot;far&quot;, Z coordinates increase in the opposite direction.)<br> In the usual case that &quot;far&quot; is greater than &quot;near&quot;, depth buffer values will be more concentrated around the near plane than around the far plane due to the perspective projection. The greater the ratio of &quot;far&quot; to &quot;near&quot;, the more concentrated the values will be around the near plane, and the more likely two objects close to the far plane will have identical depth values. (Most WebGL implementations support 24-bit depth buffers, meaning they support 16,777,216 possible values per pixel.)</li>
+<li><code>near</code> (Type: number)<br>The distance, in eye space, from the &quot;eye&quot; to the near clipping plane. Objects closer than this distance won&#39;t be seen.<br>See <a href="MathUtil.html#MathUtil.mat4perspective">mat4perspective()</a> for further information on this parameter.</li>
+<li><code>far</code> (Type: number)<br>The distance, in eye space, from the &quot;eye&quot; to the far clipping plane. Objects farther than this distance won&#39;t be seen.<br>See <a href="MathUtil.html#MathUtil.mat4perspective">mat4perspective()</a> for further information on this parameter.</li>
 </ul>
 
 <h4>Return Value</h4>
