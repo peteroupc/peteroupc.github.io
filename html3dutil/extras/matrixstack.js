@@ -72,9 +72,9 @@ MatrixStack.prototype.loadTransposeMatrix = function(mat) {
 };
 
 /**
- * Modifies the matrix at the top of this stack by multiplying it by the transpose of another matrix.
- * The matrices are multiplied such that the transformations
- * they describe happen in the order given. For example, if the matrix
+ * Modifies the matrix at the top of this stack by multiplying it by the transpose of another matrix. Both matrices are multiplied such that the transformation described
+ * by the top matrix "happens before" the transformation described by the matrix passed
+ * to this method. For example, if the matrix
  * at the top of the stack describes a translation and the matrix
  * passed to this method describes a scaling, the multiplied matrix will describe
  * the effect of translation than scaling.
@@ -457,13 +457,14 @@ MatrixStack.prototype.perspective = function(fov, aspect, n, f) {
 };
 /**
  * Modifies the matrix at the top of this stack by multiplying it by
- * a matrix that transforms the view to a portion of the viewport.
+ * a matrix that transforms the view to a portion of the viewport.<p>
+ * For more information on that matrix and the parameters, see {@link MathUtil.mat4pickMatrix}.
  * @param {number} wx X coordinate of the center of the desired viewport portion.
  * @param {number} wy Y coordinate of the center of the desired viewport portion.
  * @param {number} ww Width of the desired viewport portion.
  * @param {number} wh Height of the desired viewport portion.
  * @param {Array<number>} vp A 4-element array giving the X and Y coordinates
- * of the lower left corner followed by the width and height
+ * of the current viewport's origin followed by the width and height
  * of a rectangle indicating the current viewport.
  * @returns {MatrixStack} This object.
  */

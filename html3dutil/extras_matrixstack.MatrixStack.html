@@ -178,9 +178,9 @@ the effect of scaling then translation.</p>
 
 <h3>module:extras/matrixstack~MatrixStack#multTransposeMatrix(mat)</h3>
 
-<p>Modifies the matrix at the top of this stack by multiplying it by the transpose of another matrix.
-The matrices are multiplied such that the transformations
-they describe happen in the order given. For example, if the matrix
+<p>Modifies the matrix at the top of this stack by multiplying it by the transpose of another matrix. Both matrices are multiplied such that the transformation described
+by the top matrix &quot;happens before&quot; the transformation described by the matrix passed
+to this method. For example, if the matrix
 at the top of the stack describes a translation and the matrix
 passed to this method describes a scaling, the multiplied matrix will describe
 the effect of translation than scaling.</p>
@@ -270,6 +270,8 @@ a matrix that defines a perspective projection.</p>
 <p>Modifies the matrix at the top of this stack by multiplying it by
 a matrix that transforms the view to a portion of the viewport.</p>
 
+<p>For more information on that matrix and the parameters, see <a href="MathUtil.html#MathUtil.mat4pickMatrix">MathUtil.mat4pickMatrix</a>.</p>
+
 <h4>Parameters</h4>
 
 <ul>
@@ -277,7 +279,7 @@ a matrix that transforms the view to a portion of the viewport.</p>
 <li><code>wy</code> (Type: number)<br>Y coordinate of the center of the desired viewport portion.</li>
 <li><code>ww</code> (Type: number)<br>Width of the desired viewport portion.</li>
 <li><code>wh</code> (Type: number)<br>Height of the desired viewport portion.</li>
-<li><code>vp</code> (Type: Array.&lt;number&gt;)<br>A 4-element array giving the X and Y coordinates of the lower left corner followed by the width and height of a rectangle indicating the current viewport.</li>
+<li><code>vp</code> (Type: Array.&lt;number&gt;)<br>A 4-element array giving the X and Y coordinates of the current viewport&#39;s origin followed by the width and height of a rectangle indicating the current viewport.</li>
 </ul>
 
 <h4>Return Value</h4>
