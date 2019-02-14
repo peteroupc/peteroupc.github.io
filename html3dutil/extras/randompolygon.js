@@ -50,7 +50,7 @@ function segsIntersect(a1, a2, b1, b2) {
 }
 /**
  * Generates a simple polygon at random.
- * Inspired by http://stackoverflow.com/questions/8997099 .
+ * Inspired by [a _Stack Overflow_ question](http://stackoverflow.com/questions/8997099).
  * @param {number} cx X coordinate of the polygon's approximate center.
  * @param {number} cy Y coordinate of the polygon's approximate center.
  * @param {number} avgRadius Average distance of the polygon's vertices from the center.

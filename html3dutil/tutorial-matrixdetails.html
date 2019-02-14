@@ -88,7 +88,7 @@ element of the matrix is placed in columns as opposed to rows, as in the followi
 </math>
 
 <p>The numbers in brackets in the matrix above are the zero-based indices
-into the matrix arrays passed to <code>H3DU.MathUtil</code>&#39;s matrix methods.</p>
+into the matrix arrays passed to <code>MathUtil</code>&#39;s matrix methods.</p>
 
 <p>For 3x3 matrices, the elements are arranged in the following order:</p>
 
@@ -245,9 +245,9 @@ position:</p>
 <p>Related functions:</p>
 
 <ul>
-<li><a href="MathUtil.html#MathUtil.mat4transform">H3DU.MathUtil.mat4transform()</a> -
+<li><a href="MathUtil.html#MathUtil.mat4transform">MathUtil.mat4transform()</a> -
 Transforms a 4-element vector with a 4x4 matrix</li>
-<li><a href="MathUtil.html#MathUtil.mat3transform">H3DU.MathUtil.mat3transform()</a> -
+<li><a href="MathUtil.html#MathUtil.mat3transform">MathUtil.mat3transform()</a> -
 Transforms a 3-element vector with a 3x3 matrix</li>
 <li><a href="MathUtil.html#MathUtil.mat4projectVec3">MathUtil.mat4projectVec3</a> -
 Does a perspective-correct transformation of a 3D point with a 4x4 matrix</li>
@@ -319,15 +319,15 @@ if <code>sx</code> is 2, the X axis will be (2, 0, 0) and thus have a length of 
 <p>Related functions:</p>
 
 <ul>
-<li><a href="MathUtil.html#MathUtil.mat4scaled">H3DU.MathUtil.mat4scaled()</a> -
+<li><a href="MathUtil.html#MathUtil.mat4scaled">MathUtil.mat4scaled()</a> -
 Returns a scaling matrix</li>
-<li><a href="MathUtil.html#MathUtil.mat4scale">H3DU.MathUtil.mat4scale()</a> -
+<li><a href="MathUtil.html#MathUtil.mat4scale">MathUtil.mat4scale()</a> -
 Multiplies a matrix by a scaling.</li>
-<li><a href="MathUtil.html#MathUtil.mat4scaleInPlace">H3DU.MathUtil.mat4scaleInPlace()</a> -
+<li><a href="MathUtil.html#MathUtil.mat4scaleInPlace">MathUtil.mat4scaleInPlace()</a> -
 Multiplies a matrix in place by a scaling.</li>
-<li><a href="MathUtil.html#MathUtil.mat4identity">H3DU.MathUtil.mat4identity()</a> -
+<li><a href="MathUtil.html#MathUtil.mat4identity">MathUtil.mat4identity()</a> -
 Returns a 4x4 identity matrix</li>
-<li><a href="MathUtil.html#MathUtil.mat3identity">H3DU.MathUtil.mat3identity()</a> -
+<li><a href="MathUtil.html#MathUtil.mat3identity">MathUtil.mat3identity()</a> -
 Returns a 3x3 identity matrix</li>
 </ul>
 
@@ -386,9 +386,9 @@ remains unchanged. Likewise for y (<code>ty</code>) and z (<code>tz</code>).</p>
 <p>Related functions:</p>
 
 <ul>
-<li><a href="MathUtil.html#MathUtil.mat4translated">H3DU.MathUtil.mat4translated()</a> -
+<li><a href="MathUtil.html#MathUtil.mat4translated">MathUtil.mat4translated()</a> -
 Returns a translation matrix</li>
-<li><a href="MathUtil.html#MathUtil.mat4translate">H3DU.MathUtil.mat4translate()</a> -
+<li><a href="MathUtil.html#MathUtil.mat4translate">MathUtil.mat4translate()</a> -
 Multiplies a matrix by a translation.</li>
 </ul>
 
@@ -505,7 +505,7 @@ sines and cosines, see the end of this section.)</p>
 <li>When we rotate a point about the X axis, the X coordinate is unchanged
 and the Y and Z coordinates are adjusted in the rotation. For rotations about the
 Y axis or the Z axis, the Y or Z coordinate, respectively, is likewise unchanged.</li>
-<li>If the axis of rotation points toward the viewer, positive rotations mean
+<li>If the axis of rotation points backward from the &quot;eye&quot;, positive rotations mean
 counterclockwise rotation in <a href="tutorial-glmath.html">right-handed coordinate systems</a>. For example,
 60 degrees about the axis means
 60 degrees counterclockwise, and negative 60 degrees means 60 degrees
@@ -521,9 +521,9 @@ transformation.</p>
 <p>Related functions:</p>
 
 <ul>
-<li><a href="MathUtil.html#MathUtil.mat4rotated">H3DU.MathUtil.mat4rotated()</a> -
+<li><a href="MathUtil.html#MathUtil.mat4rotated">MathUtil.mat4rotated()</a> -
 Returns a rotation matrix</li>
-<li><a href="MathUtil.html#MathUtil.mat4rotate">H3DU.MathUtil.mat4rotate()</a> -
+<li><a href="MathUtil.html#MathUtil.mat4rotate">MathUtil.mat4rotate()</a> -
 Multiplies a matrix by a translation.</li>
 </ul>
 
@@ -665,7 +665,7 @@ mat4rotate involve multiplying 4x4 matrices.</p>
 <p>Related functions:</p>
 
 <ul>
-<li><a href="MathUtil.html#MathUtil.mat4multiply">H3DU.MathUtil.mat4multiply()</a> -
+<li><a href="MathUtil.html#MathUtil.mat4multiply">MathUtil.mat4multiply()</a> -
 Multiplies two matrices</li>
 </ul>
 
@@ -679,7 +679,7 @@ led me to this highly useful insight.</p>
 <p>In all the transformations described above, the last row in the transformation matrix is
 (0, 0, 0, 1). (Such transformations are called <em>affine transformations</em>, those that
 keep straight lines straight and parallel lines parallel.) However, this is not the case for
-some transformations in the <code>H3DU.MathUtil</code> class.</p>
+some transformations in the <code>MathUtil</code> class.</p>
 
 <p>Transformations that don&#39;t necessarily preserve parallelism of lines are called <em>projective transformations</em>.
 An NxN matrix can describe certain projective transformations if it has one more row and one more column
@@ -700,9 +700,9 @@ as returned by <a href="MathUtil.html#MathUtil.mat4perspective">MathUtil.mat4per
 <p>Related functions:</p>
 
 <ul>
-<li><a href="MathUtil.html#MathUtil.mat4frustum">H3DU.MathUtil.mat4frustum()</a> -
+<li><a href="MathUtil.html#MathUtil.mat4frustum">MathUtil.mat4frustum()</a> -
 Returns a frustum matrix</li>
-<li><a href="MathUtil.html#MathUtil.mat4perspective">H3DU.MathUtil.mat4perspective()</a> -
+<li><a href="MathUtil.html#MathUtil.mat4perspective">MathUtil.mat4perspective()</a> -
 Returns a field-of-view perspective matrix</li>
 </ul>
 
@@ -732,7 +732,7 @@ rotation matrix, <em>transpose</em> that matrix (so that its rows become its col
 
 <h4>Inverting a General NxN Matrix</h4>
 
-<p>Matrices that use some combination of translation, scaling, and rotation as well as other kinds of matrices are more complicated to invert. In fact, some matrices can&#39;t be inverted at all. Many 4x4 or 3x3 matrices can be inverted using the <a href="MathUtil.html#MathUtil.mat4invert">H3DU.MathUtil.mat4invert()</a> or <a href="MathUtil.html#MathUtil.mat3invert">H3DU.MathUtil.mat3invert()</a> methods, respectively.</p>
+<p>Matrices that use some combination of translation, scaling, and rotation as well as other kinds of matrices are more complicated to invert. In fact, some matrices can&#39;t be inverted at all. Many 4x4 or 3x3 matrices can be inverted using the <a href="MathUtil.html#MathUtil.mat4invert">MathUtil.mat4invert()</a> or <a href="MathUtil.html#MathUtil.mat3invert">MathUtil.mat3invert()</a> methods, respectively.</p>
 
 <p>To describe how inverting a matrix works, we will need to define some terms:</p>
 
