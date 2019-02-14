@@ -51,7 +51,7 @@ it draw triangles, lines, and other graphics primitives.</p>
 the coordinate system shared by every object in the scene. The world matrix
 is not discussed in this page.</li>
 <li>A <em>view matrix</em> transforms coordinates in world space to <em>eye space</em>.</li>
-<li>A <em>projection matrix</em> transforms coordinates in eye space to <em>clip space</em>.  If we use the concept of a &quot;camera&quot;, the projection matrix is like setting the camera&#39;s focus and lens, and the view matrix is like setting its position and orientation.</li>
+<li>A <em>projection matrix</em> transforms coordinates in eye space to <em>clip space</em>.  If we use the concept of a &quot;camera&quot;, the projection matrix is like setting the &quot;camera&quot;&#39;s focus and lens, and the view matrix is like setting its position and orientation.</li>
 </ul>
 
 <p>As <a href="#Vertex%20Coordinates%20in%20the%20Graphics%20System"><strong>explained later</strong></a> on this page,
@@ -73,8 +73,7 @@ orthographic projection, described below. (Other kinds of projections, such as o
 
 <h3>Perspective Projection</h3>
 
-<p>A perspective projection gives the 3D scene a sense of depth. In this projection, closer objects look bigger than more distant objects with the same size, making the
-projection similar to how our eyes see the world.</p>
+<p>A perspective projection gives the 3D scene a sense of depth. In this projection, closer objects look bigger than more distant objects with the same size, making the projection similar to how our eyes see the world.</p>
 
 <p><img src="persp1.png" alt="**Two rows of spheres, and a drawing of a perspective view volume.**"></p>
 
@@ -88,7 +87,7 @@ and others would be.</p>
 <p>The view volume is bounded on all six sides by six <em>clipping planes</em>:</p>
 
 <ul>
-<li>The near and far clipping planes are placed a certain distance from the camera. For example, if the near clipping plane is 3 units away and the far clipping plane is 5 units away, the view volume will hold only objects between 3 and 5 units from the camera. (Strictly speaking, a near clipping plane is not necessary, but practically speaking it is, in order to make the math work out correctly.)</li>
+<li>The near and far clipping planes are placed a certain distance from the &quot;camera&quot;. For example, if the near clipping plane is 3 units away and the far clipping plane is 5 units away, the view volume will hold only objects between 3 and 5 units from the &quot;camera&quot;. (Strictly speaking, a near clipping plane is not necessary, but practically speaking it is, in order to make the math work out correctly.)</li>
 <li>The left, right, top, and bottom clipping planes form the other four sides of the volume.</li>
 </ul>
 
@@ -112,7 +111,7 @@ and sets the scene&#39;s projection matrix accordingly.</p>
 <ul>
 <li><code>fov</code> - Vertical field of view, in degrees.</li>
 <li><code>aspect</code> - Aspect ratio of the scene.</li>
-<li><code>near</code>, <code>far</code> - Distance from the camera to the near and far clipping planes.</li>
+<li><code>near</code>, <code>far</code> - Distance from the &quot;camera&quot; to the near and far clipping planes.</li>
 </ul>
 
 <p><strong>[</strong><code>MathUtil.mat4frustum(left, right, bottom, top, near, far)</code><strong>](<a href="http://peteroupc.github.io/html3dutil/MathUtil.html#.mat4frustum">http://peteroupc.github.io/html3dutil/MathUtil.html#.mat4frustum</a>)</strong></p>
@@ -124,7 +123,7 @@ bound the view volume. Their positions are chosen so that the result is a perspe
 <ul>
 <li><code>left</code>, <code>right</code>, <code>bottom</code>, <code>top</code> - Location of the left, right, bottom, and top clipping planes in terms
 of where they meet the near clipping plane.</li>
-<li><code>near</code>, <code>far</code> - Distance from the camera to the near and far clipping planes.</li>
+<li><code>near</code>, <code>far</code> - Distance from the &quot;camera&quot; to the near and far clipping planes.</li>
 </ul>
 
 <p><a id=Orthographic_Projection></a></p>
@@ -147,13 +146,13 @@ objects with the same size not varying in size with their distance from the &quo
 <li><code>right</code> - Rightmost coordinate of the 3D view.</li>
 <li><code>bottom</code> - Topmost coordinate of the 3D view.</li>
 <li><code>top</code> - Bottommost coordinate of the 3D view.</li>
-<li><code>near</code>, <code>far</code> - Distance from the camera to the near and far clipping planes. Either value
+<li><code>near</code>, <code>far</code> - Distance from the &quot;camera&quot; to the near and far clipping planes. Either value
 can be negative.</li>
 </ul>
 
 <p><strong><code>MathUtil.mat4ortho2d(left, right, bottom, top)</code></strong></p>
 
-<p>This method returns a 4x4 matrix that adjusts the coordinate system for a two-dimensional orthographic projection. This is a convenience method that is useful for showing a two-dimensional view.  The <code>mat4ortho2d</code> method calls <code>mat4ortho</code> and sets <code>near</code> and <code>far</code> to -1 and 1, respectively. This choice of values makes a Z coordinate of 0 especially appropriate for this projection.</p>
+<p>This method returns a 4x4 matrix that adjusts the coordinate system for a two-dimensional orthographic projection. This is a convenience method that is useful for showing a two-dimensional view.  The <code>mat4ortho2d</code> method calls <code>mat4ortho</code> and sets <code>near</code> and <code>far</code> to -1 and 1, respectively. This choice of values makes Z coordinates at or near 0 especially appropriate for this projection.</p>
 
 <ul>
 <li><code>left</code>, <code>right</code>, <code>bottom</code>, <code>top</code> - Same as in <code>mat4ortho</code>.</li>
@@ -176,28 +175,28 @@ or squished in case the view volume&#39;s aspect ratio and the scene&#39;s aspec
 
 <p>The view matrix transforms <em>world space</em> coordinates, shared by every object in a scene, to coordinates in <em>eye space</em>
 (also called <em>camera space</em> or <em>view space</em>), in which the &quot;camera&quot; is located at the center of the coordinate system: (0, 0, 0).
-A view matrix essentially rotates the camera and moves it to a given position in world space. Specifically:</p>
+A view matrix essentially rotates the &quot;camera&quot; and moves it to a given position in world space. Specifically:</p>
 
 <ul>
-<li>The camera is rotated to point at a certain object or location on the scene. This is represented by
+<li>The &quot;camera&quot; is rotated to point at a certain object or location on the scene. This is represented by
 the <code>lookingAt</code> parameter in the <code>mat4lookat()</code> method, below.</li>
-<li>The camera is placed somewhere on the scene. This is represented by
+<li>The &quot;camera&quot; is placed somewhere on the scene. This is represented by
 the <code>eye</code> parameter in the <code>mat4lookat()</code> method.  It also represents the &quot;eye position&quot; in the perspective
 projection, above.</li>
-<li>The camera rolls itself, possibly turning it sideways or upside down. This is guided by
-the <code>up</code> parameter in the <code>mat4lookat()</code> method. Turning the camera upside down, for example, will swap
+<li>The &quot;camera&quot; rolls itself, possibly turning it sideways or upside down. This is guided by
+the <code>up</code> parameter in the <code>mat4lookat()</code> method. Turning the &quot;camera&quot; upside down, for example, will swap
 the placement of the top and bottom clipping planes, thus inverting the view of the scene.</li>
 </ul>
 
 <p><strong><code>MathUtil.mat4lookat(eye, lookingAt, up)</code></strong></p>
 
-<p>This method allows you to generate a view matrix based on the camera&#39;s position and view.</p>
+<p>This method allows you to generate a view matrix based on the &quot;camera&quot;&#39;s position and view.</p>
 
 <ul>
-<li><code>eye</code> - Array of three elements (X, Y, Z) giving the position of the camera in world space.</li>
-<li><code>lookingAt</code> - Array of three elements (X, Y, Z) giving the position the camera is looking at in world space.
+<li><code>eye</code> - Array of three elements (X, Y, Z) giving the position of the &quot;camera&quot; in world space.</li>
+<li><code>lookingAt</code> - Array of three elements (X, Y, Z) giving the position the &quot;camera&quot; is looking at in world space.
 This is optional. The default is [0, 0, 0].</li>
-<li><code>up</code> - Array of three elements (X, Y, Z) giving the vector from the center of the camera to the top.
+<li><code>up</code> - Array of three elements (X, Y, Z) giving the vector from the center of the &quot;camera&quot; to the top.
 This is optional. The default is [0, 1, 0].</li>
 </ul>
 

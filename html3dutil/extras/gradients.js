@@ -40,8 +40,8 @@ export function horizontalGradient(color1, color2) {
     );
   }
   const gradient = [];
-  // i = 0;
   let y;
+  i = 0;
   for (y = 0; y < size; y++) {
     let x;
     for (x = 0; x < size; x++, i += 4) {
@@ -76,10 +76,10 @@ export function radialGradient(colorCenter, colorEdges) {
       MathUtil.vec4scaleInPlace(MathUtil.vec4lerp(colorCenter, colorEdges, i / 31), 255)
     );
   }
-  // i = 0;
   const radius = (size - 1) * 0.5;
   const recipradius = 1.0 / radius;
   let y;
+  i = 0;
   for (y = 0; y < size; y++) {
     let x;
     for (x = 0; x < size; x++, i += 4) {

@@ -16,8 +16,24 @@
 */
 
 /**
- * TODO: Not documented yet.
- * @returns {*} Return value.
+ * Returns GLSL shader code for several useful functions
+ * for shaders, especially fragment shaders.
+ * TODO: Not documented fully yet.
+ * Contains the following functions:<ul>
+ * <li><code>float rand(float seed)</code>: Generates a randomized
+ * hash of a number, in the interval [0, 1).
+ * <li><code>float rand(vec2 seed)</code>: Generates a randomized
+ * hash of a two-number vector, in the interval [0, 1).
+ * <li><code>float rand(vec3 seed)</code>: Generates a randomized
+ * hash of a three-number vector, in the interval [0, 1).
+ * <li><code>float signedrand(float seed)</code>: Generates a randomized
+ * hash of a number, in the interval [-1, 1).
+ * <li><code>float signedrand(vec2 seed)</code>: Generates a randomized
+ * hash of a two-number vector, in the interval [-1, 1).
+ * <li><code>float signedrand(vec3 seed)</code>: Generates a randomized
+ * hash of a three-number vector, in the interval [-1, 1).
+ * </ul>
+ * @returns {string} The GLSL shader code.
  * @function
  */
 export const fragmentShaderLib = function() {

@@ -21,18 +21,35 @@ import * as CustomModuleName from &quot;extras/fragmentshaderlib.js&quot;;
 <h3>Methods</h3>
 
 <ul>
-<li><a href="#extras_fragmentshaderlib.fragmentShaderLib">fragmentShaderLib</a><br>TODO: Not documented yet.</li>
+<li><a href="#extras_fragmentshaderlib.fragmentShaderLib">fragmentShaderLib</a><br>Returns GLSL shader code for several useful functions
+for shaders, especially fragment shaders.</li>
 </ul>
 
 <p><a name='extras_fragmentshaderlib.fragmentShaderLib'></a></p>
 
 <h3>(static) module:extras/fragmentshaderlib.fragmentShaderLib()</h3>
 
-<p>TODO: Not documented yet.</p>
+<p>Returns GLSL shader code for several useful functions
+for shaders, especially fragment shaders.
+TODO: Not documented fully yet.
+Contains the following functions:<ul>
+<li><code>float rand(float seed)</code>: Generates a randomized
+hash of a number, in the interval [0, 1).
+<li><code>float rand(vec2 seed)</code>: Generates a randomized
+hash of a two-number vector, in the interval [0, 1).
+<li><code>float rand(vec3 seed)</code>: Generates a randomized
+hash of a three-number vector, in the interval [0, 1).
+<li><code>float signedrand(float seed)</code>: Generates a randomized
+hash of a number, in the interval [-1, 1).
+<li><code>float signedrand(vec2 seed)</code>: Generates a randomized
+hash of a two-number vector, in the interval [-1, 1).
+<li><code>float signedrand(vec3 seed)</code>: Generates a randomized
+hash of a three-number vector, in the interval [-1, 1).
+</ul></p>
 
 <h4>Return Value</h4>
 
-<p>Return value. (Type: *)</p>
+<p>The GLSL shader code. (Type: string)</p>
 
 <p><a href="index.html">Back to documentation index.</a></p>
 </div><nav id="navigation"><ul>

@@ -1,14 +1,15 @@
-<head><meta charset=utf-8><meta name="viewport" content="user-scalable=no,initial-scale=1,maximum-scale=1">
+<head><meta charset=utf-8>
 <style>
 body { margin: 0px; }
 canvas { width:100%; height:100%; overflow: hidden; }
 </style>
-<script type="text/javascript" src="../h3du_min.js"></script>
-<script type="text/javascript" src="demoutil.js"></script>
+<head><meta name="viewport" content="user-scalable=no,initial-scale=1,maximum-scale=1">
 </head>
 <body>
 <canvas id=canvas></canvas>
-<script id="demo">
+<script type="module">
+
+import {MathUtil,MeshBuffer,Meshes,newFrames} from "../h3du_module.js";
 /* global H3DU */
 // <!--
 /*
@@ -20,16 +21,13 @@ canvas { width:100%; height:100%; overflow: hidden; }
  http://peteroupc.github.io/
 */
 
-function TriangleParticles(scene, count, w, h) {
+function TriangleParticles(count, w, h) {
   "use strict";
   this.tris = [];
-  this.width = w;
-  this.scene = scene;
   this.timer = {};
-  this.height = h;
   var triVertices=[]
   for(var i = 0; i < count; i++) {
-    var tri = TriangleParticles.generateTri(this.width, this.height);
+    var tri = TriangleParticles.generateTri(w,h);
     this.tris[i] = tri;
     triVertices.push(
 tri.position[0],tri.position[1],tri.position[2],0,0,1,
@@ -39,18 +37,18 @@ tri.color[0],tri.color[1],tri.color[2],
 tri.position[6],tri.position[7],tri.position[8],0,0,1,
 tri.color[0],tri.color[1],tri.color[2])
   }
-  this.group=H3DU.MeshBuffer.fromPositionsColors(triVertices)
+  this.group=MeshBuffer.fromPositionsColors(triVertices)
 }
-TriangleParticles.prototype.update = function(time) {
+TriangleParticles.prototype.update = function(time, width, height) {
   "use strict";
-  var frames = H3DU.newFrames(this.timer, time);
+  var frames = newFrames(this.timer, time);
   var attr=this.group.getAttribute("POSITION")
   var attrcolor=this.group.getAttribute("COLOR")
   var vec=[]
   for(var i = 0; i < this.tris.length; i++) {
     this.tris[i].life -= frames;
     if(this.tris[i].life <= 0) {
-      var tri = TriangleParticles.generateTri(this.width, this.height);
+      var tri = TriangleParticles.generateTri(width,height);
       this.tris[i] = tri;
       // NOTE: No rotation here
       attr.setXyz(i*3,tri.position[0],tri.position[1],tri.position[2])
@@ -60,16 +58,16 @@ TriangleParticles.prototype.update = function(time) {
           .setVec(i*3+1,tri.color)
           .setVec(i*3+2,tri.color)
     } else {
-      var trans = H3DU.MathUtil.mat4translated(
-         H3DU.MathUtil.vec3scale(this.tris[i].movement, frames));
-      trans=H3DU.MathUtil.mat4rotate(trans,
+      var trans = MathUtil.mat4translated(
+         MathUtil.vec3scale(this.tris[i].movement, frames));
+      trans=MathUtil.mat4rotate(trans,
          this.tris[i].rotation * frames, 0, 0, 1);
       attr.getVec(i*3,vec)
-      attr.setVec(i*3,H3DU.MathUtil.mat4transformVec3(vec))
+      attr.setVec(i*3,MathUtil.mat4transformVec3(vec))
       attr.getVec(i*3+1,vec)
-      attr.setVec(i*3+1,H3DU.MathUtil.mat4transformVec3(vec))
+      attr.setVec(i*3+1,MathUtil.mat4transformVec3(vec))
       attr.getVec(i*3+2,vec)
-      attr.setVec(i*3+2,H3DU.MathUtil.mat4transformVec3(vec))
+      attr.setVec(i*3+2,MathUtil.mat4transformVec3(vec))
     }
   }
 };
@@ -78,8 +76,8 @@ TriangleParticles._getArea = function(tri) {
   "use strict";
   var tx = [tri[0] - tri[3], tri[1] - tri[4], tri[2] - tri[5]];
   var ty = [tri[6] - tri[3], tri[7] - tri[4], tri[8] - tri[5]];
-  var tz = H3DU.MathUtil.vec3cross(tx, ty);
-  return H3DU.MathUtil.vec3length(tz) * 0.5;
+  var tz = MathUtil.vec3cross(tx, ty);
+  return MathUtil.vec3length(tz) * 0.5;
 };
 
 TriangleParticles.generateTri = function(width, height) {
@@ -117,6 +115,137 @@ TriangleParticles.generateTri = function(width, height) {
     "life":life
   };
 };
-// -->
+///////////////////////
+// Helper methods
+
+function prepareMeshBuffer(context,shaderProgram,mesh,attributes,buffers){
+ Object.keys(attributes).forEach(x=>{
+  var attrLoc=context.getAttribLocation(shaderProgram,attributes[x])
+  var accessor=mesh.getAttribute(x)
+  if(attrLoc>=0){
+   var b=context.createBuffer()
+   buffers.push(b)
+   context.bindBuffer(context.ARRAY_BUFFER,b)
+   context.bufferData(context.ARRAY_BUFFER,accessor.buffer,context.STATIC_DRAW)
+   context.enableVertexAttribArray(attrLoc)
+   context.vertexAttribPointer(attrLoc,
+     accessor.countPerValue,context.FLOAT,false,
+     accessor.stride*4,accessor.offset*4)
+  }
+ })
+ var indices=mesh.getIndices()
+ if(indices==null){
+  context.bindBuffer(context.ELEMENT_ARRAY_BUFFER,null)
+ } else {
+  var mbi=context.createBuffer()
+  buffers.push(mbi)
+  context.bindBuffer(context.ELEMENT_ARRAY_BUFFER,mbi)
+  context.bufferData(context.ELEMENT_ARRAY_BUFFER,indices,context.STATIC_DRAW)
+ }
+}
+
+function refreshInstanceBuffer(context,ext,shaderProgram,mesh,bufferObj){
+ bufferObj.forEach(x=>{
+  var attrLoc=context.getAttribLocation(shaderProgram,x[1])
+  var accessor=mesh.getAttribute(x[0])
+  if(attrLoc>=0){
+   context.bindBuffer(context.ARRAY_BUFFER,x[2])
+   context.bufferData(context.ARRAY_BUFFER,accessor.buffer,context.STATIC_DRAW)
+   if(ext)ext.vertexAttribDivisorANGLE(attrLoc,1)
+  }
+ })
+}
+
+///////////////////////
+
+var vertexShader=[
+"precision mediump float;",
+"attribute vec3 position;",
+"attribute vec3 instancePosition;",
+"attribute vec3 color;",
+"uniform mat4 proj;",
+"varying vec3 colorVar;",
+"void main(){",
+"colorVar=color;gl_Position=proj*vec4(position+instancePosition,1.0); }"
+].join("\n")
+
+var fragmentShader=[
+"precision mediump float;",
+"varying vec3 colorVar;",
+"void main(){ gl_FragColor=vec4(colorVar,1.0); }"
+].join("\n")
+
+var context=canvas.getContext("webgl")
+var cdims=[window.innerWidth*(window.devicePixelRatio||1),
+   window.innerHeight*(window.devicePixelRatio||1)]
+var currentdims;
+currentdims=cdims
+context.canvas.width=cdims[0]
+context.canvas.height=cdims[1]
+context.viewport(0, 0,cdims[0],cdims[1])
+context.enable(context.BLEND);
+context.blendFunc(context.SRC_ALPHA, context.ONE_MINUS_SRC_ALPHA);
+context.enable(context.DEPTH_TEST);
+context.depthFunc(context.LEQUAL);
+context.disable(context.CULL_FACE);
+context.clearDepth(1.0);
+context.clearColor(1,1,1,1); // use white as the clear color
+context.enable(context.CULL_FACE);
+context.cullFace(context.BACK);
+context.frontFace(context.CCW);
+var vs=context.createShader(context.VERTEX_SHADER)
+var fs=context.createShader(context.FRAGMENT_SHADER)
+var sp=context.createProgram()
+context.shaderSource(vs,vertexShader)
+context.shaderSource(fs,fragmentShader)
+context.compileShader(vs)
+var ilog=context.getShaderInfoLog(vs)
+if(ilog && ilog.length!=0)console.log(ilog)
+context.compileShader(fs)
+ilog=context.getShaderInfoLog(fs)
+if(ilog && ilog.length!=0)console.log(ilog)
+context.attachShader(sp,vs)
+context.attachShader(sp,fs)
+context.linkProgram(sp)
+context.detachShader(sp,vs)
+context.detachShader(sp,fs)
+////////////////////////
+var sf=new TriangleParticles(100,100,100);
+var buffers=[]
+context.useProgram(sp)
+var projUniform=context.getUniformLocation(sp,"proj")
+// Prepare mesh and instance buffer
+prepareMeshBuffer(context,sp,sf.group,
+  {"POSITION":"position","COLOR":"color"},buffers)
+// animation loop
+var raf=(time)=>{
+// resize canvas if needed
+cdims=[window.innerWidth*(window.devicePixelRatio||1),
+   window.innerHeight*(window.devicePixelRatio||1)]
+if(cdims[0]!=currentdims[0] || cdims[1]!=currentdims[1]){
+ currentdims=cdims
+ context.canvas.width=cdims[0]
+ context.canvas.height=cdims[1]
+ context.viewport(0, 0,cdims[0],cdims[1])
+}
+// clear canvas
+context.clear(context.COLOR_BUFFER_BIT|
+  context.DEPTH_BUFFER_BIT|
+  context.STENCIL_BUFFER_BIT)
+sf.update(time,100,100)
+// prepare transformation matrix
+var matrix=MathUtil.mat4frustum(
+ -50,50,-50,50,
+ 0.01,100)
+matrix=MathUtil.mat4multiply(
+  matrix,MathUtil.mat4lookat([0,0,-50],[0,0,0]))
+matrix=new Float32Array(matrix)
+context.uniformMatrix4fv(projUniform,false,matrix)
+ext.drawArrays(
+  context.TRIANGLES,0,
+  sf.group.vertexCount())
+requestAnimationFrame(raf)
+}
+requestAnimationFrame(raf)
 </script>
 </body>

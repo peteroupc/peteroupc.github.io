@@ -1,4 +1,4 @@
-<meta charset=utf-8>
+<head><meta charset=utf-8>
 <style>
 body { margin: 0px; }
 canvas { width:100%; height:100%; overflow: hidden; }
@@ -15,9 +15,9 @@ import {StarField} from "../extras/starfield.js";
 ///////////////////////
 // Helper methods
 
-function prepareMeshBuffer(context,sp,mesh,attributes,buffers){
+function prepareMeshBuffer(context,shaderProgram,mesh,attributes,buffers){
  Object.keys(attributes).forEach(x=>{
-  var attrLoc=context.getAttribLocation(sp,attributes[x])
+  var attrLoc=context.getAttribLocation(shaderProgram,attributes[x])
   var accessor=mesh.getAttribute(x)
   if(attrLoc>=0){
    var b=context.createBuffer()
@@ -41,10 +41,10 @@ function prepareMeshBuffer(context,sp,mesh,attributes,buffers){
  }
 }
 
-function prepareInstanceBuffer(context,ext,sp,mesh,attributes,buffers){
+function prepareInstanceBuffer(context,ext,shaderProgram,mesh,attributes,buffers){
  var bufferObj=[]
  Object.keys(attributes).forEach(x=>{
-  var attrLoc=context.getAttribLocation(sp,attributes[x])
+  var attrLoc=context.getAttribLocation(shaderProgram,attributes[x])
   var accessor=mesh.getAttribute(x)
   if(attrLoc>=0){
    var b=context.createBuffer()
@@ -62,9 +62,9 @@ function prepareInstanceBuffer(context,ext,sp,mesh,attributes,buffers){
  return bufferObj
 }
 
-function refreshInstanceBuffer(context,ext,sp,mesh,bufferObj){
+function refreshInstanceBuffer(context,ext,shaderProgram,mesh,bufferObj){
  bufferObj.forEach(x=>{
-  var attrLoc=context.getAttribLocation(sp,x[1])
+  var attrLoc=context.getAttribLocation(shaderProgram,x[1])
   var accessor=mesh.getAttribute(x[0])
   if(attrLoc>=0){
    context.bindBuffer(context.ARRAY_BUFFER,x[2])
@@ -111,7 +111,6 @@ context.clearColor(0,0,0,1)
 context.enable(context.CULL_FACE);
 context.cullFace(context.BACK);
 context.frontFace(context.CCW);
-var ext=context.getExtension("ANGLE_instanced_arrays");
 var vs=context.createShader(context.VERTEX_SHADER)
 var fs=context.createShader(context.FRAGMENT_SHADER)
 var sp=context.createProgram()
@@ -129,6 +128,7 @@ context.linkProgram(sp)
 context.detachShader(sp,vs)
 context.detachShader(sp,fs)
 ////////////////////////
+var ext=context.getExtension("ANGLE_instanced_arrays");
 var sf=new StarField(100);
 var buffers=[]
 context.useProgram(sp)
