@@ -2,14 +2,14 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on June 4, 2017; last updated on Feb. 11, 2019.
+Begun on June 4, 2017; last updated on Feb. 14, 2019.
 
 Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.
 
 <a id=Introduction></a>
 ## Introduction
 
-This page discusses many ways applications can do random number generation and sampling from an underlying random number generator (RNG), often with pseudocode. Those methods include&mdash;
+This page discusses many ways applications can generate and sample random content using an underlying random number generator (RNG), often with pseudocode. Those methods include&mdash;
 - ways to generate uniform random numbers from an underlying RNG (such as the [**core method, `RNDINT(N)`**](#Core_Random_Generation_Method)),
 - ways to generate randomized content and conditions, such as [**true/false conditions**](#Boolean_True_False_Conditions), [**shuffling**](#Shuffling), and [**sampling unique items from a list**](#Sampling_Without_Replacement_Choosing_Several_Unique_Items), and
 - generating non-uniform random numbers, including [**weighted choice**](#Weighted_Choice), the [**normal distribution**](#Normal_Gaussian_Distribution), and [**other probability distributions**](#Index_of_Non_Uniform_Distributions).
@@ -330,11 +330,6 @@ where `MAXINT` is an integer greater than 0, the following pseudocode for `RNDIN
 
     METHOD RNDINTEXCRANGE(minInclusive, maxExclusive)
        if minInclusive >= maxExclusive: return error
-       // NOTE: For integer formats that can express negative
-       // or nonnegative integers, replace the following line
-       // with "if minInclusive >=0 or minInclusive + MAXINT >=
-       // maxExclusive", where `MAXINT` has the same meaning
-       // as in the pseudocode for `RNDINTRANGE`.
        if minInclusive >=0
          return RNDINTRANGE(minInclusive, maxExclusive - 1)
        end

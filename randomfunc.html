@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
-<p>Begun on June 4, 2017; last updated on Feb. 11, 2019.</p>
+<p>Begun on June 4, 2017; last updated on Feb. 14, 2019.</p>
 
 <p>Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.</p>
 
@@ -14,7 +14,7 @@
 
 <h2>Introduction</h2>
 
-<p>This page discusses many ways applications can do random number generation and sampling from an underlying random number generator (RNG), often with pseudocode. Those methods include&mdash;</p>
+<p>This page discusses many ways applications can generate and sample random content using an underlying random number generator (RNG), often with pseudocode. Those methods include&mdash;</p>
 
 <ul>
 <li>ways to generate uniform random numbers from an underlying RNG (such as the <a href="#Core_Random_Generation_Method"><strong>core method, <code>RNDINT(N)</code></strong></a>),</li>
@@ -429,11 +429,6 @@ result = NUMBER_TO_DATETIME(num)
 
 <pre>METHOD RNDINTEXCRANGE(minInclusive, maxExclusive)
    if minInclusive &gt;= maxExclusive: return error
-   // NOTE: For integer formats that can express negative
-   // or nonnegative integers, replace the following line
-   // with &quot;if minInclusive &gt;=0 or minInclusive + MAXINT &gt;=
-   // maxExclusive&quot;, where `MAXINT` has the same meaning
-   // as in the pseudocode for `RNDINTRANGE`.
    if minInclusive &gt;=0
      return RNDINTRANGE(minInclusive, maxExclusive - 1)
    end

@@ -30,11 +30,11 @@ function TriangleParticles(count, w, h) {
     var tri = TriangleParticles.generateTri(w,h);
     this.tris[i] = tri;
     triVertices.push(
-tri.position[0],tri.position[1],tri.position[2],0,0,1,
+tri.position[0],tri.position[1],tri.position[2],
 tri.color[0],tri.color[1],tri.color[2],
-tri.position[3],tri.position[4],tri.position[5],0,0,1,
+tri.position[3],tri.position[4],tri.position[5],
 tri.color[0],tri.color[1],tri.color[2],
-tri.position[6],tri.position[7],tri.position[8],0,0,1,
+tri.position[6],tri.position[7],tri.position[8],
 tri.color[0],tri.color[1],tri.color[2])
   }
   this.group=MeshBuffer.fromPositionsColors(triVertices)
@@ -63,11 +63,11 @@ TriangleParticles.prototype.update = function(time, width, height) {
       trans=MathUtil.mat4rotate(trans,
          this.tris[i].rotation * frames, 0, 0, 1);
       attr.getVec(i*3,vec)
-      attr.setVec(i*3,MathUtil.mat4transformVec3(vec))
+      attr.setVec(i*3,MathUtil.mat4transformVec3(trans,vec))
       attr.getVec(i*3+1,vec)
-      attr.setVec(i*3+1,MathUtil.mat4transformVec3(vec))
+      attr.setVec(i*3+1,MathUtil.mat4transformVec3(trans,vec))
       attr.getVec(i*3+2,vec)
-      attr.setVec(i*3+2,MathUtil.mat4transformVec3(vec))
+      attr.setVec(i*3+2,MathUtil.mat4transformVec3(trans,vec))
     }
   }
 };
@@ -119,12 +119,14 @@ TriangleParticles.generateTri = function(width, height) {
 // Helper methods
 
 function prepareMeshBuffer(context,shaderProgram,mesh,attributes,buffers){
+ var bufferObj=[]
  Object.keys(attributes).forEach(x=>{
   var attrLoc=context.getAttribLocation(shaderProgram,attributes[x])
   var accessor=mesh.getAttribute(x)
   if(attrLoc>=0){
    var b=context.createBuffer()
    buffers.push(b)
+   bufferObj.push([x,attributes[x],b])
    context.bindBuffer(context.ARRAY_BUFFER,b)
    context.bufferData(context.ARRAY_BUFFER,accessor.buffer,context.STATIC_DRAW)
    context.enableVertexAttribArray(attrLoc)
@@ -142,16 +144,17 @@ function prepareMeshBuffer(context,shaderProgram,mesh,attributes,buffers){
   context.bindBuffer(context.ELEMENT_ARRAY_BUFFER,mbi)
   context.bufferData(context.ELEMENT_ARRAY_BUFFER,indices,context.STATIC_DRAW)
  }
+ return bufferObj
 }
 
-function refreshInstanceBuffer(context,ext,shaderProgram,mesh,bufferObj){
+function refreshBuffer(context,shaderProgram,mesh,bufferObj){
  bufferObj.forEach(x=>{
   var attrLoc=context.getAttribLocation(shaderProgram,x[1])
   var accessor=mesh.getAttribute(x[0])
   if(attrLoc>=0){
    context.bindBuffer(context.ARRAY_BUFFER,x[2])
    context.bufferData(context.ARRAY_BUFFER,accessor.buffer,context.STATIC_DRAW)
-   if(ext)ext.vertexAttribDivisorANGLE(attrLoc,1)
+   context.enableVertexAttribArray(attrLoc)
   }
  })
 }
@@ -215,7 +218,9 @@ var buffers=[]
 context.useProgram(sp)
 var projUniform=context.getUniformLocation(sp,"proj")
 // Prepare mesh and instance buffer
-prepareMeshBuffer(context,sp,sf.group,
+console.log(sf.group)
+console.log(sf.group.vertexCount())
+var bdata=prepareMeshBuffer(context,sp,sf.group,
   {"POSITION":"position","COLOR":"color"},buffers)
 // animation loop
 var raf=(time)=>{
@@ -234,14 +239,12 @@ context.clear(context.COLOR_BUFFER_BIT|
   context.STENCIL_BUFFER_BIT)
 sf.update(time,100,100)
 // prepare transformation matrix
-var matrix=MathUtil.mat4frustum(
- -50,50,-50,50,
- 0.01,100)
-matrix=MathUtil.mat4multiply(
-  matrix,MathUtil.mat4lookat([0,0,-50],[0,0,0]))
+var matrix=MathUtil.mat4ortho2dAspect(
+ -50,50,-50,50,window.innerWidth/Math.max(1,window.innerHeight))
 matrix=new Float32Array(matrix)
+refreshBuffer(context,sp,sf.group,bdata)
 context.uniformMatrix4fv(projUniform,false,matrix)
-ext.drawArrays(
+context.drawArrays(
   context.TRIANGLES,0,
   sf.group.vertexCount())
 requestAnimationFrame(raf)

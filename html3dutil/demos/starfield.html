@@ -16,12 +16,14 @@ import {StarField} from "../extras/starfield.js";
 // Helper methods
 
 function prepareMeshBuffer(context,shaderProgram,mesh,attributes,buffers){
+ var bufferObj=[]
  Object.keys(attributes).forEach(x=>{
   var attrLoc=context.getAttribLocation(shaderProgram,attributes[x])
   var accessor=mesh.getAttribute(x)
   if(attrLoc>=0){
    var b=context.createBuffer()
    buffers.push(b)
+   bufferObj.push([x,attributes[x],b])
    context.bindBuffer(context.ARRAY_BUFFER,b)
    context.bufferData(context.ARRAY_BUFFER,accessor.buffer,context.STATIC_DRAW)
    context.enableVertexAttribArray(attrLoc)
@@ -39,6 +41,7 @@ function prepareMeshBuffer(context,shaderProgram,mesh,attributes,buffers){
   context.bindBuffer(context.ELEMENT_ARRAY_BUFFER,mbi)
   context.bufferData(context.ELEMENT_ARRAY_BUFFER,indices,context.STATIC_DRAW)
  }
+ return bufferObj
 }
 
 function prepareInstanceBuffer(context,ext,shaderProgram,mesh,attributes,buffers){
