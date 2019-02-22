@@ -13,6 +13,19 @@ import random
 _SIGBITS = 53
 _FLOAT_MAX = 1.7976931348623157e+308
 
+def _variance(list):
+    if len(list)<=1: return 0
+    xm=list[0]
+    xs=0
+    i=1
+    while i<len(list):
+      c=list[i]
+      i+=1
+      cxm=(c-xm)
+      xm+=cxm*1.0/i
+      xs+=cxm*(c-xm)
+    return xs*1.0/(len(list)-1)
+
 def _tableInterpSearch(table,x,censor=False):
    # Effective length is the length of table minus 1
    tablelen=len(table)-1
@@ -469,8 +482,7 @@ class RandomGen:
          Statistical Distributions for Experimentalists",
          pp. 93-94."""
     while True:
-      y=self.rndrangemaxexc(-math.pi/2,math.pi/2)
-      while y==math.pi/2: y=self.rndrangemaxexc(-math.pi/2,math.pi/2)
+      y=self.rndrangeminmaxexc(-math.pi/2,math.pi/2)
       tany=math.tan(y)
       hy=math.exp(-(tany+math.exp(-tany))*0.5)
       hy=hy/((math.cos(y)**2)*sqrt(2.0*math.pi))
@@ -638,6 +650,39 @@ of failures of each kind of failure.
      accessed Jun. 9, 2018, sec. 1.3.6.6.13. """
     return self._icdfnormal(1-(1-self.rndu01())**(1.0/p))
 
+  def _mhc(self, pdf,n,sigma=1.0):
+   burnin=1000
+   ru=[self.rndu01() for _ in range(n+burnin)]
+   rn=[self.normal(0,sigma) for _ in range(n+burnin)]
+   ret=[0 for _ in range(n)]
+   p=0
+   while p==0:
+    x=self.normal(0,sigma)
+    p=math.exp(-0.125*(x*x))*pdf(x)
+   for i in range(n+burnin):
+    newx=x+rn[i]
+    p2=math.exp(-0.125*(newx*newx))*pdf(newx)
+    accept=(p2>0 and p2/p>=ru[i])
+    x=newx if accept else x
+    p=p2 if accept else p
+    if i>=burnin: ret[i-burnin]=x
+   return ret
+
+  def mcmc(self,pdf,n):
+    """ Generates 'n' random numbers that follow
+    the probability density given in 'pdf' using
+    a Markov-chain Monte Carlo algorithm, currently
+    Metropolis--Hastings.  The resulting random numbers
+    are not independent, but are often close to
+    being independent.  'pdf' takes one number as
+    a parameter and returns a number 0 or greater.
+    The area under the curve (integral) of 'pdf'
+    need not be equal to 1. """
+    # Compute optimal sigma.  See
+    # Gelman et al., 1997.
+    s=_variance(self._mhc(pdf,1000,1.0))*5.6644
+    return self._mhc(pdf,n,s)
+
   def _decompose(self, matrix):
       numrows = len(matrix)
       if len(matrix[0])!=numrows: raise ValueError
@@ -777,10 +822,9 @@ of failures of each kind of failure.
         for i in range(len(mt))]
 
   def simplex_point(self, points):
-       """ Generates a point on the surface of an N-dimensional
+       """ Generates an independent and uniform random point on the surface of an N-dimensional
            simplex (line segment, triangle, tetrahedron, etc.)
-           with the given coordinates,
-           uniformly at random. """
+           with the given coordinates. """
        ret=[]
        if len(points) > len(points[0])+1: raise ValueError
        if len(points)==1: # Return a copy of the point
@@ -804,10 +848,9 @@ of failures of each kind of failure.
        return ret
 
   def hypercube_point(self, dims, sizeFromCenter = 1):
-      """ Generates a point on the surface of a 'dims'-dimensional
+      """ Generates an independent and uniform random point on the surface of a 'dims'-dimensional
            hypercube (square, cube, etc.)
-           centered at the origin,
-          uniformly at random. """
+           centered at the origin. """
       return [self.rndrange(-sizeFromCenter,sizeFromCenter) \
          for _ in range(dims)]
 
@@ -818,10 +861,9 @@ of failures of each kind of failure.
       return sum([x*x for x in vec])
 
   def hypersphere_point(self, dims, radius = 1):
-      """ Generates a point on the surface of a 'dims'-dimensional
+      """ Generates an independent and uniform random point on the surface of a 'dims'-dimensional
            hypersphere (circle, sphere, etc.)
-           centered at the origin,
-          uniformly at random. """
+           centered at the origin. """
       x=0
       while x==0:
         ret=[self.normal() for _ in range(dims)]
@@ -829,8 +871,7 @@ of failures of each kind of failure.
       return [i*radius/x for i in ret]
 
   def ball_point(self, dims, radius = 1):
-      """ Generates, uniformly at random,
-           a point inside a 'dims'-dimensional
+      """ Generates an independent and uniform random point inside a 'dims'-dimensional
            ball (disc, solid sphere, etc.) centered at the origin. """
       x=0
       while x==0:
@@ -839,17 +880,15 @@ of failures of each kind of failure.
       return [i*radius/x for i in ret]
 
   def shell_point(self, dims, outerRadius = 1, innerRadius = 0.5):
-      """ Generates a point inside a 'dims'-dimensional
+      """ Generates an independent and uniform random point inside a 'dims'-dimensional
            spherical shell (donut, hollow sphere, etc.)
-           centered at the origin,
-           uniformly at random. """
+           centered at the origin. """
       r=self.rndrange(innerRadius**dims,\
            outerRadius**dims)**(1.0/dims)
       return self.hypersphere_point(dims, r)
 
   def latlon(self):
-      """ Generates a latitude and longitude, in radians,
-          uniformly at random.  West and south coordinates
+      """ Generates an independent and uniform random latitude and longitude, in radians.  West and south coordinates
           are negative. """
       lon=self.rndrangemaxexc(-math.pi,math.pi)
       latx=self.rndrange(-1,1)

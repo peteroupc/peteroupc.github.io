@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
-<p>Begun on June 4, 2017; last updated on Feb. 14, 2019.</p>
+<p>Begun on June 4, 2017; last updated on Feb. 22, 2019.</p>
 
 <p>Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.</p>
 
@@ -1370,7 +1370,7 @@ and/or discarding some of them.</p>
 <li>The <a href="https://en.wikipedia.org/wiki/Probability_density_function"><strong><em>probability density function</em></strong></a>, or <em>PDF</em>, is, roughly and intuitively, a curve of weights 0 or greater, where for each number, the greater its weight, the more likely a number close to that number is randomly chosen.<sup><a href="#Note21"><strong>(21)</strong></a></sup></li>
 </ul>
 
-<p>If a probability distribution&#39;s <strong>PDF is known</strong>, one of the following techniques, among others, can be used to generate random numbers that follow that distribution.</p>
+<p>If a probability distribution&#39;s <strong>PDF is known</strong>, one of the following techniques, among others, can be used to generate random numbers that follow that distribution approximately.</p>
 
 <ol>
 <li>Use the PDF to calculate the weights for a number of sample points (usually regularly spaced). Create one list with the sampled points in ascending order (the <code>list</code>) and another list of the same size with the PDF&#39;s values at those points (the <code>weights</code>).  Finally generate <a href="#Continuous_Weighted_Choice"><strong><code>ContinuousWeightedChoice(list, weights)</code></strong></a> to generate a random number bounded by the lowest and highest sampled point. This technique can be used even if the area under the PDF isn&#39;t 1. <strong>OR</strong></li>
@@ -1381,10 +1381,11 @@ and/or discarding some of them.</p>
      while True
          x=RNDRANGEMaxExc(minValue, maxValue)
          y=RNDRANGEMaxExc(0, maxDensity)
-         if y &lt; PDF(x): return x
+         if y &lt; PDF(x): return xs
      end
 END METHOD
 </pre></li>
+<li><p>If many random numbers from the given PDF need to be generated, use a so-called <em>Markov chain Monte Carlo</em> (MCMC) algorithm, with the disadvantage that the resulting random numbers will not be independent (they will be correlated to some degree).  The <a href="https://peteroupc.github.io/randomgen.zip"><strong>Python sample code</strong></a> includes a method called <code>mcmc</code> that implements one kind of MCMC algorithm, called Metropolis&ndash;Hastings.</p></li>
 </ol>
 
 <p>If both <strong>a PDF and a uniform random variable in the interval [0, 1) (<code>randomVariable</code>)</strong> are given, then the following technique, among other possible techniques, can be used: Create <code>list</code> and <code>weights</code> as given in method 1, then divide each item in <code>weights</code> by the sum of <code>weights</code>&#39;s items, then generate <a href="#Continuous_Weighted_Choice"><strong><code>ContinuousWeightedChoice(list, weights)</code></strong></a> (except that method is modified to use <code>value = randomVariable</code> rather than <code>value = RNDRANGEMaxExc(0, sum)</code>).</p>

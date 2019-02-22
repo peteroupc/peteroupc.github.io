@@ -218,8 +218,6 @@ var buffers=[]
 context.useProgram(sp)
 var projUniform=context.getUniformLocation(sp,"proj")
 // Prepare mesh and instance buffer
-console.log(sf.group)
-console.log(sf.group.vertexCount())
 var bdata=prepareMeshBuffer(context,sp,sf.group,
   {"POSITION":"position","COLOR":"color"},buffers)
 // animation loop

@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on June 4, 2017; last updated on Feb. 14, 2019.
+Begun on June 4, 2017; last updated on Feb. 22, 2019.
 
 Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.
 
@@ -1105,7 +1105,7 @@ Many probability distributions can be defined in terms of any of the following:
 * The [**_cumulative distribution function_**](https://en.wikipedia.org/wiki/Cumulative_distribution_function), or _CDF_, returns, for each number, the probability for a randomly generated variable to be equal to or less than that number; the probability is in the interval [0, 1].
 * The [**_probability density function_**](https://en.wikipedia.org/wiki/Probability_density_function), or _PDF_, is, roughly and intuitively, a curve of weights 0 or greater, where for each number, the greater its weight, the more likely a number close to that number is randomly chosen.<sup>[**(21)**](#Note21)</sup>
 
-If a probability distribution's **PDF is known**, one of the following techniques, among others, can be used to generate random numbers that follow that distribution.
+If a probability distribution's **PDF is known**, one of the following techniques, among others, can be used to generate random numbers that follow that distribution approximately.
 
 1. Use the PDF to calculate the weights for a number of sample points (usually regularly spaced). Create one list with the sampled points in ascending order (the `list`) and another list of the same size with the PDF's values at those points (the `weights`).  Finally generate [**`ContinuousWeightedChoice(list, weights)`**](#Continuous_Weighted_Choice) to generate a random number bounded by the lowest and highest sampled point. This technique can be used even if the area under the PDF isn't 1. **OR**
 2. Use [**_rejection sampling_**](#Rejection_Sampling).  Choose the lowest and highest random number to generate (`minValue` and `maxValue`, respectively) and find the maximum value of the PDF at or between those points (`maxDensity`).  The rejection sampling approach is then illustrated with the following pseudocode, where `PDF(X)` is the distribution's PDF (see also Saucier 2000, p. 39).   This technique can be used even if the area under the PDF isn't 1.
@@ -1115,9 +1115,11 @@ If a probability distribution's **PDF is known**, one of the following technique
              while True
                  x=RNDRANGEMaxExc(minValue, maxValue)
                  y=RNDRANGEMaxExc(0, maxDensity)
-                 if y < PDF(x): return x
+                 if y < PDF(x): return xs
              end
         END METHOD
+
+3. If many random numbers from the given PDF need to be generated, use a so-called _Markov chain Monte Carlo_ (MCMC) algorithm, with the disadvantage that the resulting random numbers will not be independent (they will be correlated to some degree).  The [**Python sample code**](https://peteroupc.github.io/randomgen.zip) includes a method called `mcmc` that implements one kind of MCMC algorithm, called Metropolis&ndash;Hastings.
 
 If both **a PDF and a uniform random variable in the interval \[0, 1\) (`randomVariable`)** are given, then the following technique, among other possible techniques, can be used: Create `list` and `weights` as given in method 1, then divide each item in `weights` by the sum of `weights`'s items, then generate [**`ContinuousWeightedChoice(list, weights)`**](#Continuous_Weighted_Choice) (except that method is modified to use `value = randomVariable` rather than `value = RNDRANGEMaxExc(0, sum)`).
 
