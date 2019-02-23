@@ -650,7 +650,29 @@ of failures of each kind of failure.
      accessed Jun. 9, 2018, sec. 1.3.6.6.13. """
     return self._icdfnormal(1-(1-self.rndu01())**(1.0/p))
 
+  def _mhc2(self, pdf,n,sigma=1.0):
+   # Bivariate Metropolis-Hastings
+   burnin=1000
+   ru=[self.rndu01() for _ in range(n+burnin)]
+   sqsigma=sigma*sigma
+   cov=[[sqsigma,0],[0,sqsigma]]
+   rn=[self.multinormal(None,cov) for _ in range(n+burnin)]
+   ret=[0 for _ in range(n)]
+   p=0
+   while p==0:
+    x=self.multinormal(None,cov)
+    p=pdf(x)
+   for i in range(n+burnin):
+    newx=[x[j]+rn[i][j] for j in range(2)]
+    p2=pdf(newx)
+    accept=(p2>0 and p2/p>=ru[i])
+    x=newx if accept else x
+    p=p2 if accept else p
+    if i>=burnin: ret[i-burnin]=x
+   return ret
+
   def _mhc(self, pdf,n,sigma=1.0):
+   # Univariate Metropolis-Hastings
    burnin=1000
    ru=[self.rndu01() for _ in range(n+burnin)]
    rn=[self.normal(0,sigma) for _ in range(n+burnin)]
@@ -658,10 +680,10 @@ of failures of each kind of failure.
    p=0
    while p==0:
     x=self.normal(0,sigma)
-    p=math.exp(-0.125*(x*x))*pdf(x)
+    p=math.exp(-0.5*(x*x))*pdf(x)
    for i in range(n+burnin):
     newx=x+rn[i]
-    p2=math.exp(-0.125*(newx*newx))*pdf(newx)
+    p2=math.exp(-0.5*(newx*newx))*pdf(newx)
     accept=(p2>0 and p2/p>=ru[i])
     x=newx if accept else x
     p=p2 if accept else p
@@ -682,6 +704,26 @@ of failures of each kind of failure.
     # Gelman et al., 1997.
     s=_variance(self._mhc(pdf,1000,1.0))*5.6644
     return self._mhc(pdf,n,s)
+
+  def mcmc2(self,pdf,n):
+    """ Generates 'n' pairs of random numbers that follow
+    the probability density given in 'pdf' using
+    a Markov-chain Monte Carlo algorithm, currently
+    Metropolis--Hastings.  The resulting random pairs
+    are not independent, but are often close to
+    being independent.  'pdf' takes one parameter,
+    namely, a list of two numbers giving a sampled
+    point and returns a number 0 or greater.
+    The volume under the surface (integral) of 'pdf'
+    need not be equal to 1. """
+    mhc=self._mhc2(pdf,1000,1.0)
+    # Compute distances of random points
+    # from the origin
+    dists=[math.sqrt(x*x+y*y) for x, y in mhc]
+    # Compute optimal sigma.  See
+    # Gelman et al., 1997.
+    s=_variance(dists)*5.6644
+    return self._mhc2(pdf,n,s)
 
   def _decompose(self, matrix):
       numrows = len(matrix)
