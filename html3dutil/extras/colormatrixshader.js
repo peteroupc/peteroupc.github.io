@@ -17,7 +17,7 @@
 
 /**
  * GLSL shader data for a family of image processing filters, which modify colors based on a transformation matrix, a 4x4 matrix that is multiplied by the red/green/blue color to get a new color. The shader program takes three uniforms: "sampler", which
- * is the input texture, "t", a value from 0 to 1 indicating how strongly to
+ * is the texture to which the filter is to be applied, "t", a value from 0 to 1 indicating how strongly to
  * apply the color matrix, and "matrix", which is the 4x4 matrix just described.
  */
 export const colorMatrixShader = {
@@ -58,12 +58,12 @@ export const colorMatrixShader = {
  * and blue components to result in black, white, or a
  * shade of gray.
  * <li>"boosted-red" - Filter that boosts the red component
- * of the input.
+ * of the image's colors.
  * <li>"boosted-blue" - Filter that boosts the blue component
- * of the input.
+ * of the image's colors.
  * <li>"sepia" or "sepia2" - One of two filters that adjust the colors of the
  * image to achieve a sepia coloring.
- * <li>"invert" - Filter that inverts the colors of the input so the effect looks like a film negative.
+ * <li>"invert" - Filter that inverts the colors of the image so the effect looks like a film negative.
  * </ul>
  * @returns {Array<number>} 4x4 color matrix.
  * @function

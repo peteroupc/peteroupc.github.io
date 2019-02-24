@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on June 4, 2017; last updated on Feb. 23, 2019.
+Begun on June 4, 2017; last updated on Feb. 24, 2019.
 
 Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.
 
@@ -962,43 +962,54 @@ The continuous weighted choice method generates a random number that follows a c
 
 The pseudocode below takes two lists as follows:
 
-- `list` is a list of numbers (which need not be integers). If the numbers are arranged in ascending order, which they should, the first number in this list can be returned exactly, but not the last number.
+- `values` is a list of numbers (which need not be integers). If the numbers are arranged in ascending order, which they should, the first number in this list can be returned exactly, but not the last number.
 - `weights` is a list of weights for the given numbers (where each number and its weight have the same index in both lists).   The greater a number's weight, the more likely it is that a number close to that number will be chosen.  Each weight should be 0 or greater.
 
 &nbsp;
 
-    METHOD ContinuousWeightedChoice(list, weights)
-        if size(list) <= 0 or size(weights) < size(list): return error
-        if size(list) == 1: return list[0]
+    METHOD ContinuousWeightedChoice(values, weights)
+        if size(values) <= 0 or size(weights) < size(values): return error
+        if size(values) == 1: return values[0]
         // Get the sum of all areas between weights
         sum = 0
         areas = NewList()
         i = 0
-        while i < size(list) - 1
+        while i < size(values) - 1
           weightArea = abs((weights[i] + weights[i + 1]) * 0.5 *
-                (list[i + 1] - list[i]))
+                (values[i + 1] - values[i]))
           AddItem(areas, weightArea)
           sum = sum + weightArea
            i = i + 1
         end
-        // Choose a random number
+        // Generate random numbers
         value = RNDRANGEMaxExc(0, sum)
+        wt=RNDU01OneExc()
         // Interpolate a number according to the given value
         i=0
         // Get the number corresponding to the random number
         runningValue = 0
-        while i < size(list) - 1
+        while i < size(values) - 1
          area = areas[i]
          if area > 0
           newValue = runningValue + area
           // NOTE: Includes start, excludes end
           if value < newValue
-           // NOTE: The following line can also read
-           // "interp = RNDU01OneExc()", that is, a new number is generated
-           // within the chosen area rather than using the point
-           // already generated.
-           interp = (value - runningValue) / (newValue - runningValue)
-           retValue = list[i] + (list[i + 1] - list[i]) * interp
+           w1=weights[i]
+           w2=weights[i+1]
+           interp=wt
+           if diff>0
+            s=sqrt(w2*w2*wt+w1*w1-w1*w1*wt)
+            interp=(s-w1)/diff
+            if interp<0 or interp>1: interp=-(s+w1)/diff
+           end
+           if diff<0
+            s=sqrt(w1*w1*wt+w2*w2-w2*w2*wt)
+            interp=-(s-w2)/diff
+            if interp<0 or interp>1: interp=(s+w2)/diff
+            interp=1-interp
+           end
+           retValue = values[i] + (values[i + 1] - values[i]) *
+             interp
            return retValue
           end
           runningValue = newValue
@@ -1007,10 +1018,10 @@ The pseudocode below takes two lists as follows:
         end
         // Last resort (might happen because rounding
         // error happened somehow)
-        return list[size(list) - 1]
+        return values[size(values) - 1]
     END METHOD
 
-> **Example**: Assume `list` is the following: `[0, 1, 2, 2.5, 3]`, and `weights` is the following: `[0.2, 0.8, 0.5, 0.3, 0.1]`.  The weight for 2 is 0.5, and that for 2.5 is 0.3.  Since 2 has a higher weight than 2.5, numbers near 2 are more likely to be chosen than numbers near 2.5 with the `ContinuousWeightedChoice` method.
+> **Example**: Assume `values` is the following: `[0, 1, 2, 2.5, 3]`, and `weights` is the following: `[0.2, 0.8, 0.5, 0.3, 0.1]`.  The weight for 2 is 0.5, and that for 2.5 is 0.3.  Since 2 has a higher weight than 2.5, numbers near 2 are more likely to be chosen than numbers near 2.5 with the `ContinuousWeightedChoice` method.
 
 <a id=Mixtures_of_Distributions></a>
 ### Mixtures of Distributions
@@ -1104,9 +1115,9 @@ Many probability distributions can be defined in terms of any of the following:
 * The [**_cumulative distribution function_**](https://en.wikipedia.org/wiki/Cumulative_distribution_function), or _CDF_, returns, for each number, the probability for a randomly generated variable to be equal to or less than that number; the probability is in the interval [0, 1].
 * The [**_probability density function_**](https://en.wikipedia.org/wiki/Probability_density_function), or _PDF_, is, roughly and intuitively, a curve of weights 0 or greater, where for each number, the greater its weight, the more likely a number close to that number is randomly chosen.<sup>[**(21)**](#Note21)</sup>
 
-If a probability distribution's **PDF is known**, one of the following techniques, among others, can be used to generate random numbers that follow that distribution approximately.  Any of these three techniques can be used even if the area under the PDF isn't 1.
+If a probability distribution's **PDF is known**, random numbers that approximately follow that distribution can be generated using one of the following techniques, even if the area under the PDF isn't 1.
 
-1. Use the PDF to calculate the weights for a number of sample points (usually regularly spaced). Create one list with the sampled points in ascending order (the `list`) and another list of the same size with the PDF's values at those points (the `weights`).  Finally generate [**`ContinuousWeightedChoice(list, weights)`**](#Continuous_Weighted_Choice) to generate a random number bounded by the lowest and highest sampled point.
+1. Use the PDF to calculate the weights for a number of sample points (usually regularly spaced). Create one list with the sampled points in ascending order (the `list`) and another list of the same size with the PDF's values at those points (the `weights`).  Finally generate [**`ContinuousWeightedChoice(list, weights)`**](#Continuous_Weighted_Choice) to generate a random number bounded by the lowest and highest sampled point.  The [**Python sample code**](https://peteroupc.github.io/randomgen.zip) includes a `numbers_from_pdf` method that implements this approach.
 2. Use [**_rejection sampling_**](#Rejection_Sampling).  The pseudocode below generates random points in a rectangular region until a point falls within the PDF (shown as `PDF(x)` below). `minValue` and `maxValue` are the lowest and highest possible random numbers, and `maxDensity` is the maximum value of the PDF at or between those numbers.  This can be inefficient, though, if the PDF gives some numbers in the range much higher weights than it gives to others.  See also Saucier 2000, p. 39.
 
         METHOD ArbitraryDist(minValue, maxValue, maxDensity)
@@ -1118,9 +1129,9 @@ If a probability distribution's **PDF is known**, one of the following technique
              end
         END METHOD
 
-    If the PDF can be more easily sampled by another distribution with its own PDF (`PDF2`) that satisfies `PDF2(X) >= PDF(X)` at every `X`, then generate random numbers `samp` with that distribution until a `samp` that satisfies `PDF(samp) >= RNDRANGEMaxExc(0, PDF2(samp))` is generated this way (that is, sample points in `PDF2` until a point falls within `PDF`) (see also Saucier 2000, pp. 6-7; Devroye 1986, pp. 41-43).
+    If the PDF can be more easily sampled by another distribution with its own PDF (`PDF2`) that satisfies `PDF2(X) >= PDF(X)` at every `X`, then generate random numbers with that distribution until a number (`n`) that satisfies `PDF(n) >= RNDRANGEMaxExc(0, PDF2(n))` is generated this way (that is, sample points in `PDF2` until a point falls within `PDF`) (see also Saucier 2000, pp. 6-7; Devroye 1986, pp. 41-43).
 
-3. If many random numbers from the given PDF need to be generated, then a so-called _Markov chain Monte Carlo_ (MCMC) algorithm can be used, with the disadvantage that the resulting random numbers will not be independent (they will be correlated to some degree).  The [**Python sample code**](https://peteroupc.github.io/randomgen.zip) includes a method called `mcmc` that implements one kind of MCMC algorithm called Metropolis&ndash;Hastings, and a similar method, `mcmc2`, that uses the same algorithm for PDFs that take two-dimensional points.
+3. If many random numbers from the given PDF need to be generated, then a so-called _Markov-chain Monte Carlo_ (MCMC) algorithm can be used, with the disadvantage that the resulting random numbers will not be independent (they will be correlated to some degree).  The [**Python sample code**](https://peteroupc.github.io/randomgen.zip) includes a method called `mcmc` that implements one kind of MCMC algorithm called Metropolis&ndash;Hastings, and a similar method, `mcmc2`, that uses the same algorithm for PDFs that take two-dimensional points.
 
 If both **a PDF and a uniform random variable in the interval \[0, 1\) (`randomVariable`)** are given, then the following technique, among other possible techniques, can be used: Create `list` and `weights` as given in method 1, then divide each item in `weights` by the sum of `weights`'s items, then generate [**`ContinuousWeightedChoice(list, weights)`**](#Continuous_Weighted_Choice) (except that method is modified to use `value = randomVariable` rather than `value = RNDRANGEMaxExc(0, sum)`).
 
@@ -1189,7 +1200,7 @@ The [**_normal distribution_**](https://en.wikipedia.org/wiki/Normal_distributio
 - `sigma` (&sigma;), the standard deviation, affects how wide the "bell curve" appears. The
 probability that a normally-distributed random number will be within one standard deviation from the mean is about 68.3%; within two standard deviations (2 times `sigma`), about 95.4%; and within three standard deviations, about 99.7%.  (Some publications give &sigma;<sup>2</sup>, or variance, rather than standard deviation, as the second parameter.  In this case, the standard deviation is the variance's square root.)
 
-There are a number of methods for normal random number generation.<sup>[**(23)**](#Note23)</sup> The pseudocode below uses the polar method to generate two normal random numbers. (Ways to adapt the pseudocode to output only one random number at a time, rather than two, are outside the scope of this document.  The name `Normal` is used in this document to represent a method that returns only one normally-distributed random number rather than two.)
+There are a number of methods for normal random number generation.<sup>[**(23)**](#Note23)</sup> The pseudocode below uses the polar method to generate two normal random numbers. (Ways to adapt the pseudocode to output only one random number at a time, rather than two, are outside the scope of this document.  In this document, the name `Normal` means a method that returns only one normally-distributed random number rather than two.)
 
     METHOD Normal2(mu, sigma)
       while true
@@ -1233,7 +1244,8 @@ A random integer that follows a _binomial distribution_ expresses the number of 
         i = 0
         count = 0
         // Suggested by Saucier, R. in "Computer
-        // generation of probability distributions", 2000, p. 49
+        // generation of probability distributions",
+        // 2000, p. 49
         tp = trials * p
         if tp > 25 or (tp > 5 and p > 0.1 and p < 0.9)
              countval = -1
@@ -1415,7 +1427,7 @@ The _von Mises distribution_ describes a distribution of circular angles. In the
 - `kappa` is a shape parameter, and
 - the method can return a number within &pi; of that mean.
 
-The algorithm below is the Best&ndash;Fisher algorithm from 1979 (as described in Devroye 1986 with errata incorporated).
+The algorithm below is based on the Best&ndash;Fisher algorithm from 1979 (as described in Devroye 1986 with errata incorporated).
 
     METHOD VonMises(mean, kappa)
         if kappa < 0: return error
@@ -1426,9 +1438,9 @@ The algorithm below is the Best&ndash;Fisher algorithm from 1979 (as described i
         rho = (r - sqrt(2 * r)) / (kappa * 2)
         s = (1 + rho * rho) / (2 * rho)
         while true
-            u = RNDRANGEMaxExc(-1, 1)
+            u = RNDRANGEMaxExc(-pi, pi)
             v = RNDU01ZeroOneExc()
-            z = cos(pi * u)
+            z = cos(u)
             w = (1 + s*z) / (s + z)
             y = kappa * (s - w)
             if y*(2 - y) - v >=0 or ln(y / v) + 1 - y >= 0
@@ -1919,10 +1931,10 @@ If an item uses a nonuniform distribution, but otherwise meets this definition, 
 
 <small><sup id=Note2>(2)</sup> For an exercise solved by the `RNDINT` pseudocode, see A. Koenig and B. E. Moo, _Accelerated C++_, 2000; see also a [**blog post by Johnny Chan**](http://mathalope.co.uk/2014/10/26/accelerated-c-solution-to-exercise-7-9/).  In addition, M. O'Neill discusses various methods, both biased and unbiased, for generating random integers in a range with an RNG in a [**blog post from July 2018**](http://www.pcg-random.org/posts/bounded-rands.html).</small>
 
-<small><sup id=Note3>(3)</sup> A na&iuml;ve `RNDINTEXC` implementation often seen in certain languages like JavaScript is the idiom `floor(RNDU01OneExc()*maxExclusive)`.  However, there are certain issues with this idiom:
+<small><sup id=Note3>(3)</sup> A na&iuml;ve `RNDINTEXC` implementation often seen in certain languages like JavaScript is the idiom `floor(RNDU01OneExc()*maxExclusive)`.  However:
 
-1. Depending on how `RNDU01OneExc()` is implemented, some integers can never occur with this idiom for large `maxExclusive` values, or this idiom can otherwise have a slight bias toward certain integers.  This bias may or may not be negligible in a given application.  For example, if `RNDU01OneExc()` is implemented as `RNDINT(255)/256`, not all numbers can "randomly" occur with `maxExclusive` greater than 256.
-2. Depending on the number format, rounding error can result in `maxExclusive` being returned in rare cases.  A more robust implementation could use a loop to check whether `maxExclusive` was generated and try again if so.  Where a loop is not possible, such as within an SQL query, the idiom above can be replaced with `min(floor(RNDU01OneExc() * maxExclusive, maxExclusive - 1))`.  Neither modification addresses the issue given in item 1.
+1. Depending on how `RNDU01OneExc()` is implemented, this idiom can't choose from among all integers in its range or may bias some integers over others; this bias may or may not be negligible in a given application.  For example, if `RNDU01OneExc()` is implemented as `RNDINT(255)/256`, not all numbers can "randomly" occur by this idiom with `maxExclusive` greater than 256.
+2. Depending on the number format, rounding error can result in `maxExclusive` being returned in rare cases.  A more robust implementation could use a loop to check whether `maxExclusive` was generated and try again if so.  Where a loop is not possible, such as within an SQL query, the idiom above can be replaced with `min(floor(RNDU01OneExc() * maxExclusive, maxExclusive - 1))`.  Neither modification addresses item 1, however.
 
 If an application is concerned about these issues, it should treat the `RNDU01OneExc()` implementation (e.g., `Math.random()`) as the underlying RNG for `RNDINT` and implement `RNDINTEXC` through `RNDINT` instead.</small>
 
@@ -1974,7 +1986,7 @@ provided the PDF's values are all 0 or greater and the area under the PDF's curv
 
 <small><sup id=Note23>(23)</sup> For example:
 
-1. In the _Box&ndash;Muller transformation_, `mu + radius * cos(angle)` and `mu + radius * sin(angle)`, where `angle = 2 * pi * RNDU01OneExc()` and `radius = sqrt(-2 * ln(RNDU01ZeroExc())) * sigma`, are two independent normally-distributed random numbers.
+1. In the _Box&ndash;Muller transformation_, `mu + radius * cos(angle)` and `mu + radius * sin(angle)`, where `angle = RNDRANGEMaxExc(0, 2 * pi)` and `radius = sqrt(-2 * ln(RNDU01ZeroExc())) * sigma`, are two independent normally-distributed random numbers.
 2. Computing the sum of twelve `RNDU01OneExc()` numbers and subtracting the sum by 6 (see also [**"Irwin&ndash;Hall distribution" on Wikipedia**](https://en.wikipedia.org/wiki/Irwin%E2%80%93Hall_distribution)) results in approximate standard normal (`mu`=0, `sigma`=1) random numbers, whose values are not less than -6 or greater than 6; on the other hand, in a standard normal distribution, results less than -6 or greater than 6 will occur only with a generally negligible probability.
 3. Generating `RNDU01ZeroOneExc()`, then running the standard normal distribution's inverse cumulative distribution function on that number, results in a random number from that distribution.  An approximation is found in M. Wichura, _Applied Statistics_ 37(3), 1988.
 

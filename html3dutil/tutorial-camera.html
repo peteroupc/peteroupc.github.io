@@ -212,7 +212,7 @@ which exist for convenience in many 3D graphics libraries.</p>
 <p>When a commonly used graphics pipeline (outside of the 3D graphics library concerned) draws a triangle, line, or point,
 all it really expects is the location of that primitive&#39;s vertices in <em>clip space</em>. A
 so-called <em>vertex shader</em> communicates those locations to the graphics pipeline using
-the input it&#39;s given. Although the vertex shader can use projection, view, and world
+the data accessible to it. Although the vertex shader can use projection, view, and world
 matrices to help the pipeline find a vertex&#39;s clip space coordinates, it doesn&#39;t have to,
 and can use a different paradigm for this purpose. For example, the vertex shader can
 be passed vertex coordinates that are already in clip space and just output those coordinates

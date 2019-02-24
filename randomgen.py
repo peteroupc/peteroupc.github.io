@@ -286,35 +286,62 @@ class RandomGen:
       i+=1
     return lastItem
 
-  def continuous_choice(self, list, weights):
-    if len(list)<=0 or len(weights)<len(list):
+  def continuous_choice(self, values, weights):
+    return self.continuous_choice_n(values,weights)[0]
+
+  def continuous_choice_n(self, values, weights, n=1):
+    if len(values)<=0 or len(weights)<len(values):
       raise ValueError
-    if len(list)==1:
-      return list[0]
-    sum=0
-    areas=[]
+    if len(values)==1:
+      return [values[0] for i in range(n)]
+    total=0
+    areas=[0 for i in range(len(values)-1)]
     i=0
-    while i<len(list)-1:
+    while i<len(values)-1:
       weightArea=(weights[i]+weights[i+1])*0.5* \
-        (list[i+1]-list[i])
+        (values[i+1]-values[i])
       if weightArea < 0:
         weightArea = -weightArea
-      sum+=weightArea
+      areas[i]=weightArea
+      total+=weightArea
       i+=1
-    value=self.rndrangemaxexc(0, sum)
-    i=0
-    runningValue=0
-    while i < len(list)-1:
-      area=areas[i]
-      if area>0:
-        newValue=runningValue+area
-        if value<newValue:
-          interp=self.rndu01oneexc()
-          retValue=list[i]+(list[i+1]-list[i])*interp
-          return retValue
-        runningValue=newValue
-      i+=1
-    return list[len(list)-1]
+    valuelist=[self.rndrangemaxexc(0, total) \
+      for _ in range(n)]
+    wtlist=[self.rndu01oneexc() \
+      for _ in range(n)]
+    lastValue=values[len(values)-1]
+    retValues=[lastValue for _ in range(n)]
+    for k in range(n):
+      i=0
+      runningValue=0
+      while i < len(values)-1:
+        area=areas[i]
+        if area>0:
+          newValue=runningValue+area
+          if valuelist[k]<newValue:
+            w1=weights[i]
+            w2=weights[i+1]
+            wt=wtlist[k]
+            interp=wt
+            diff=w2-w1
+            if diff>0:
+              cs=w2*w2*wt+w1*w1-w1*w1*wt
+              s=math.sqrt(cs)
+              interp=(s-w1)/diff
+              if interp<0 or interp>1:
+                interp=-(s+w1)/diff
+            if diff<0:
+              cs=w1*w1*wt+w2*w2-w2*w2*wt
+              s=math.sqrt(cs)
+              interp=-(s-w2)/diff
+              if interp<0 or interp>1:
+                interp=(s+w2)/diff
+              interp=1-interp
+            retValues[k]=values[i]+(values[i+1]-values[i])*interp
+            break
+          runningValue=newValue
+        i+=1
+    return retValues
 
   def normal(self, mu=0.0, sigma=1.0):
     """ Generates a normally-distributed random number. """
@@ -940,15 +967,31 @@ of failures of each kind of failure.
         math.pi * 0.5
       return [lat,lon]
 
-  def numbers_from_cdf(self, cdf, mn, mx, n = 1):
+  def numbers_from_pdf(self, pdf, mn, mx, n = 1, steps = 100):
+      """ Generates one or more random numbers from a probability
+         distribution expressed as a probability density
+         function (PDF).  The random number
+         will be in the interval [mn, mx].  `n` random numbers will be
+         generated. `pdf` is the PDF; it takes one parameter and returns,
+         for that parameter, a weight indicating the relative likelihood
+          that a random number will be close to that parameter. `steps`
+         is the number of subintervals between sample points of the PDF.
+         By default, `n` is 1 and `steps` is 100.  """
+      values=[mn+(mx-mn)*i*1.0/steps for i in range(steps+1)]
+      weights=[pdf(v) for v in values]
+      return self.continuous_choice_n(values,weights,n)
+
+  def numbers_from_cdf(self, cdf, mn, mx, n = 1, steps = 100):
       """ Generates one or more random numbers from a probability
          distribution by numerically inverting its cumulative
          distribution function (CDF).  The random number
          will be in the interval [mn, mx].  `n` random numbers will be
          generated. `cdf` is the CDF; it takes one parameter and returns,
          for that parameter, the probability that a random number will
-         be less than or equal to that parameter. By default, `n` is 1.  """
-      ntable=numericalTable(cdf, mn, mx)
+         be less than or equal to that parameter. `steps` is the number
+         of subintervals between sample points of the CDF.
+         By default, `n` is 1 and `steps` is 100.  """
+      ntable=numericalTable(cdf, mn, mx, steps)
       return [self.from_interp(ntable) for i in range(n)]
 
   def from_interp(self, table):

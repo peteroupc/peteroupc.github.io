@@ -36,7 +36,7 @@ matrix shader.</li>
 <h3>module:extras/colormatrixshader.colorMatrixShader (constant)</h3>
 
 <p>GLSL shader data for a family of image processing filters, which modify colors based on a transformation matrix, a 4x4 matrix that is multiplied by the red/green/blue color to get a new color. The shader program takes three uniforms: &quot;sampler&quot;, which
-is the input texture, &quot;t&quot;, a value from 0 to 1 indicating how strongly to
+is the texture to which the filter is to be applied, &quot;t&quot;, a value from 0 to 1 indicating how strongly to
 apply the color matrix, and &quot;matrix&quot;, which is the 4x4 matrix just described.</p>
 
 <p><a name='extras_colormatrixshader.getColorMatrix'></a></p>
@@ -49,7 +49,7 @@ matrix shader.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>kind</code> (Type: string)<br>One of the following:<ul> <li>&quot;grayscale&quot; - Filter that averages the red, green, and blue components to result in black, white, or a shade of gray. <li>&quot;boosted-red&quot; - Filter that boosts the red component of the input. <li>&quot;boosted-blue&quot; - Filter that boosts the blue component of the input. <li>&quot;sepia&quot; or &quot;sepia2&quot; - One of two filters that adjust the colors of the image to achieve a sepia coloring. <li>&quot;invert&quot; - Filter that inverts the colors of the input so the effect looks like a film negative. </ul></li>
+<li><code>kind</code> (Type: string)<br>One of the following:<ul> <li>&quot;grayscale&quot; - Filter that averages the red, green, and blue components to result in black, white, or a shade of gray. <li>&quot;boosted-red&quot; - Filter that boosts the red component of the image&#39;s colors. <li>&quot;boosted-blue&quot; - Filter that boosts the blue component of the image&#39;s colors. <li>&quot;sepia&quot; or &quot;sepia2&quot; - One of two filters that adjust the colors of the image to achieve a sepia coloring. <li>&quot;invert&quot; - Filter that inverts the colors of the image so the effect looks like a film negative. </ul></li>
 </ul>
 
 <h4>Return Value</h4>
