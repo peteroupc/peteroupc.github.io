@@ -225,30 +225,6 @@ class RandomGen:
   def choice(self, list):
     return list[self.rndintexc(len(list))]
 
-  def ball_point(self, dimension, radius = 1.0):
-    if dimension<=0:
-      raise ValueError
-    while True:
-      norm=0
-      point=[self.rndrange(-1,1) for i in range(dimension)]
-      for coord in point:
-        norm+=coord*coord
-      norm=math.sqrt(norm)
-      if norm<=1.0:
-        return point
-
-  def hypersphere_point(self, dimension, radius = 1.0):
-    if dimension<=0:
-      raise ValueError
-    while True:
-      norm=0
-      point=[self.normal() for i in range(dimension)]
-      for coord in point:
-        norm+=coord*coord
-      norm=math.sqrt(norm)
-      if norm>0:
-        return [p*radius/norm for p in point]
-
   def numbersWithSum(self, count, sum = 1.0):
     if count<=0 or sum<=0:
       raise ValueError
@@ -683,7 +659,7 @@ of failures of each kind of failure.
    ru=[self.rndu01() for _ in range(n+burnin)]
    sqsigma=sigma*sigma
    cov=[[sqsigma,0],[0,sqsigma]]
-   rn=[self.multinormal(None,cov) for _ in range(n+burnin)]
+   rn=self.multinormal_n(None,cov,n+burnin)
    ret=[0 for _ in range(n)]
    p=0
    while p==0:
@@ -788,23 +764,28 @@ of failures of each kind of failure.
            return nums[k-1]
       return self.beta(k, n+1-k)
 
-  def multinormal(self, mu, cov):
+  def multinormal_n(self, mu, cov, n=1):
       mulen=len(cov)
       if mu != None:
         mulen = len(mu)
         if mulen!=len(cov): raise ValueError
         if mulen!=len(cov[0]): raise ValueError
       cho=self._decompose(cov)
-      i=0
-      ret=[0 for i in range(mulen)]
-      variables=[self.normal(0,1) for i in range(mulen)]
-      while i<mulen:
-        sum = 0
-        if mu != None: sum=mu[i]
-        for j in range(mulen): sum=sum+variables[j]*cho[j][i]
-        ret[i]=sum
+      variables=[self.normal(0,1) for i in range(mulen*n)]
+      ret=[[0 for i in range(mulen)] for i in range(n)]
+      for k in range(n):
+       js=mulen*k
+       i=0
+       while i<mulen:
+        msum = 0
+        if mu != None: msum=mu[i]
+        for j in range(mulen): msum=msum+variables[js+j]*cho[j][i]
+        ret[k][i]=msum
         i=i+1
       return ret
+
+  def multinormal(self, mu, cov):
+      return self.multinormal_n(mu, cov, 1)[0]
 
   def upper_bound_copula(self, n = 2):
       x=self.rndu01() # Generate number once
@@ -933,6 +914,15 @@ of failures of each kind of failure.
       """ Generates an independent and uniform random point on the surface of a 'dims'-dimensional
            hypersphere (circle, sphere, etc.)
            centered at the origin. """
+      if dims==2:
+        # Use polar method mentioned in Devroye 1986, p. 235
+        while True:
+          a=self.rndrange(-1,1)
+          b=self.rndrange(-1,1)
+          c=a*a; d=b*b; e=c+d
+          if e!=0 and e<=1:
+            ie=radius/e
+            return [(c-d)*ie,a*b*ie*2]
       x=0
       while x==0:
         ret=[self.normal() for _ in range(dims)]
@@ -957,7 +947,8 @@ of failures of each kind of failure.
       return self.hypersphere_point(dims, r)
 
   def latlon(self):
-      """ Generates an independent and uniform random latitude and longitude, in radians.  West and south coordinates
+      """ Generates an independent and uniform random latitude and
+          longitude, in radians.  West and south coordinates
           are negative. """
       lon=self.rndrangemaxexc(-math.pi,math.pi)
       latx=self.rndrange(-1,1)
@@ -976,6 +967,7 @@ of failures of each kind of failure.
          for that parameter, a weight indicating the relative likelihood
           that a random number will be close to that parameter. `steps`
          is the number of subintervals between sample points of the PDF.
+         The area under the curve of the PDF need not be 1.
          By default, `n` is 1 and `steps` is 100.  """
       values=[mn+(mx-mn)*i*1.0/steps for i in range(steps+1)]
       weights=[pdf(v) for v in values]
