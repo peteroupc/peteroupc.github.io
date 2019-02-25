@@ -287,7 +287,8 @@ class RandomGen:
       for _ in range(n)]
     lastValue=values[len(values)-1]
     retValues=[lastValue for _ in range(n)]
-    for k in range(n):
+    k=0
+    while k<n:
       i=0
       runningValue=0
       while i < len(values)-1:
@@ -317,6 +318,7 @@ class RandomGen:
             break
           runningValue=newValue
         i+=1
+      k+=1
     return retValues
 
   def normal(self, mu=0.0, sigma=1.0):
@@ -681,12 +683,13 @@ of failures of each kind of failure.
    rn=[self.normal(0,sigma) for _ in range(n+burnin)]
    ret=[0 for _ in range(n)]
    p=0
+   nsig=1.0/(2*sigma*sigma)
    while p==0:
     x=self.normal(0,sigma)
-    p=math.exp(-0.5*(x*x))*pdf(x)
+    p=math.exp(-0.5*(x*x)*nsig)*pdf(x)
    for i in range(n+burnin):
     newx=x+rn[i]
-    p2=math.exp(-0.5*(newx*newx))*pdf(newx)
+    p2=math.exp(-0.5*(newx*newx)*nsig)*pdf(newx)
     accept=(p2>0 and p2/p>=ru[i])
     x=newx if accept else x
     p=p2 if accept else p
@@ -705,7 +708,7 @@ of failures of each kind of failure.
     need not be equal to 1. """
     # Compute optimal sigma.  See
     # Gelman et al., 1997.
-    s=_variance(self._mhc(pdf,1000,1.0))*5.6644
+    s=_variance(self._mhc(pdf,1000,3.0))*5.6644
     return self._mhc(pdf,n,s)
 
   def mcmc2(self,pdf,n):
@@ -719,7 +722,7 @@ of failures of each kind of failure.
     point and returns a number 0 or greater.
     The volume under the surface (integral) of 'pdf'
     need not be equal to 1. """
-    mhc=self._mhc2(pdf,1000,1.0)
+    mhc=self._mhc2(pdf,1000,3.0)
     # Compute distances of random points
     # from the origin
     dists=[math.sqrt(x*x+y*y) for x, y in mhc]

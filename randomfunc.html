@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
-<p>Begun on June 4, 2017; last updated on Feb. 24, 2019.</p>
+<p>Begun on June 4, 2017; last updated on Feb. 25, 2019.</p>
 
 <p>Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.</p>
 
@@ -142,7 +142,7 @@
 <li><a href="#Random_Points_Inside_a_Ball_or_Shell"><strong>Random Points Inside a Ball or Shell</strong></a></li>
 <li><a href="#Random_Latitude_and_Longitude"><strong>Random Latitude and Longitude</strong></a></li>
 </ul></li>
-<li><a href="#Conclusion"><strong>Conclusion</strong></a></li>
+<li><a href="#Acknowledgments"><strong>Acknowledgments</strong></a></li>
 <li><a href="#Notes"><strong>Notes</strong></a></li>
 <li><a href="#Appendix"><strong>Appendix</strong></a>
 
@@ -1434,7 +1434,7 @@ END METHOD
 
 <h3>Gibbs Sampling</h3>
 
-<p>Gibbs sampling involves repeatedly generating random numbers from two distributions, each of which uses a random number from the other distribution, with the disadvantage that the resulting random numbers will not be independent (they will be correlated to some degree).  An example is generating multiple <code>x</code>, <code>y</code> pairs of random numbers where <code>x = BetaDist(y, 5)</code> then <code>y = Binomial(10, x)</code>.  (Before the random pairs are generated, an initial value for <code>y</code> has to be chosen.)  Usually the first few pairs (e.g., 1000 pairs) are ignored this way (&quot;burn in&quot;).  See also (Casella and George 1992)<sup><a href="#Note22"><strong>(22)</strong></a></sup>.</p>
+<p>Gibbs sampling involves repeatedly generating random numbers from two or more distributions, each of which uses a random number from the previous distribution, with the disadvantage that the resulting random numbers will not be independent (they will be correlated to some degree).  An example is generating multiple <code>x</code>, <code>y</code> pairs of random numbers where <code>x = BetaDist(y, 5)</code> then <code>y = Binomial(10, x)</code>.  (Before the random pairs are generated, an initial value for <code>y</code> has to be chosen.)  Usually the first few (e.g., first 1000) pairs or groups of random numbers are ignored this way (&quot;burn in&quot;).  See also (Casella and George 1992)<sup><a href="#Note22"><strong>(22)</strong></a></sup>.</p>
 
 <p><a id=Specific_Non_Uniform_Distributions></a></p>
 
@@ -2274,9 +2274,9 @@ END METHOD
 </pre>
 
 <blockquote>
-<p><strong>Note:</strong> The Python sample code contains an optimized method for points on the surface of a circle.</p>
+<p><strong>Note:</strong> The Python sample code contains an optimized method for points on the edge of a circle.</p>
 
-<p><strong>Example:</strong> To generate a random point on the surface of a cylinder running along the Z axis, generate random X and Y coordinates on the surface of a circle (2-dimensional hypersphere) and generate a random Z coordinate by <code>RNDRANGE(mn, mx)</code>, where <code>mn</code> and <code>mx</code> are the highest and lowest Z coordinates possible.</p>
+<p><strong>Example:</strong> To generate a random point on the surface of a cylinder running along the Z axis, generate random X and Y coordinates on the edge of a circle (2-dimensional hypersphere) and generate a random Z coordinate by <code>RNDRANGE(mn, mx)</code>, where <code>mn</code> and <code>mx</code> are the highest and lowest Z coordinates possible.</p>
 </blockquote>
 
 <p><a id=Random_Points_Inside_a_Ball_or_Shell></a></p>
@@ -2309,12 +2309,9 @@ END METHOD
 
 <p>Reference: <a href="http://mathworld.wolfram.com/SpherePointPicking.html"><strong>&quot;Sphere Point Picking&quot;</strong></a> in MathWorld (replacing inverse cosine with <code>atan2</code> equivalent).</p>
 
-<p><a id=Conclusion></a></p>
+<p><a id=Acknowledgments></a></p>
 
-<h2>Conclusion</h2>
-
-<p>This page discussed many ways applications can extract random numbers
-from random number generators.</p>
+<h2>Acknowledgments</h2>
 
 <p>I acknowledge the commenters to the CodeProject version of this page, including George Swan, who referred me to the reservoir sampling method.</p>
 

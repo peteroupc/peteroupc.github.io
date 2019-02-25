@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on June 4, 2017; last updated on Feb. 24, 2019.
+Begun on June 4, 2017; last updated on Feb. 25, 2019.
 
 Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.
 
@@ -100,7 +100,7 @@ All the random number methods presented on this page are ultimately based on an 
     - [**Random Points on the Surface of a Hypersphere**](#Random_Points_on_the_Surface_of_a_Hypersphere)
     - [**Random Points Inside a Ball or Shell**](#Random_Points_Inside_a_Ball_or_Shell)
     - [**Random Latitude and Longitude**](#Random_Latitude_and_Longitude)
-- [**Conclusion**](#Conclusion)
+- [**Acknowledgments**](#Acknowledgments)
 - [**Notes**](#Notes)
 - [**Appendix**](#Appendix)
     - [**Implementation of `erf`**](#Implementation_of_erf)
@@ -1157,7 +1157,7 @@ To sample from a _truncated_ probability distribution, generate a random number 
 <a id=Gibbs_Sampling></a>
 ### Gibbs Sampling
 
-Gibbs sampling involves repeatedly generating random numbers from two distributions, each of which uses a random number from the other distribution, with the disadvantage that the resulting random numbers will not be independent (they will be correlated to some degree).  An example is generating multiple `x`, `y` pairs of random numbers where `x = BetaDist(y, 5)` then `y = Binomial(10, x)`.  (Before the random pairs are generated, an initial value for `y` has to be chosen.)  Usually the first few pairs (e.g., 1000 pairs) are ignored this way ("burn in").  See also (Casella and George 1992)<sup>[**(22)**](#Note22)</sup>.
+Gibbs sampling involves repeatedly generating random numbers from two or more distributions, each of which uses a random number from the previous distribution, with the disadvantage that the resulting random numbers will not be independent (they will be correlated to some degree).  An example is generating multiple `x`, `y` pairs of random numbers where `x = BetaDist(y, 5)` then `y = Binomial(10, x)`.  (Before the random pairs are generated, an initial value for `y` has to be chosen.)  Usually the first few (e.g., first 1000) pairs or groups of random numbers are ignored this way ("burn in").  See also (Casella and George 1992)<sup>[**(22)**](#Note22)</sup>.
 
 <a id=Specific_Non_Uniform_Distributions></a>
 ## Specific Non-Uniform Distributions
@@ -1900,9 +1900,9 @@ The following pseudocode shows how to generate a random N-dimensional point on t
       return ret
     END METHOD
 
-> **Note:** The Python sample code contains an optimized method for points on the surface of a circle.
+> **Note:** The Python sample code contains an optimized method for points on the edge of a circle.
 >
-> **Example:** To generate a random point on the surface of a cylinder running along the Z axis, generate random X and Y coordinates on the surface of a circle (2-dimensional hypersphere) and generate a random Z coordinate by `RNDRANGE(mn, mx)`, where `mn` and `mx` are the highest and lowest Z coordinates possible.
+> **Example:** To generate a random point on the surface of a cylinder running along the Z axis, generate random X and Y coordinates on the edge of a circle (2-dimensional hypersphere) and generate a random Z coordinate by `RNDRANGE(mn, mx)`, where `mn` and `mx` are the highest and lowest Z coordinates possible.
 
 <a id=Random_Points_Inside_a_Ball_or_Shell></a>
 ### Random Points Inside a Ball or Shell
@@ -1925,11 +1925,8 @@ To generate a random point on the surface of a sphere in the form of a latitude 
 
 Reference: [**"Sphere Point Picking"**](http://mathworld.wolfram.com/SpherePointPicking.html) in MathWorld (replacing inverse cosine with `atan2` equivalent).
 
-<a id=Conclusion></a>
-## Conclusion
-
-This page discussed many ways applications can extract random numbers
-from random number generators.
+<a id=Acknowledgments></a>
+## Acknowledgments
 
 I acknowledge the commenters to the CodeProject version of this page, including George Swan, who referred me to the reservoir sampling method.
 
