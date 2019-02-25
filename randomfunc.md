@@ -78,6 +78,7 @@ All the random number methods presented on this page are ultimately based on an 
     - [**Random Numbers from a Distribution of Data Points**](#Random_Numbers_from_a_Distribution_of_Data_Points)
     - [**Random Numbers from an Arbitrary Distribution**](#Random_Numbers_from_an_Arbitrary_Distribution)
     - [**Censored and Truncated Distributions**](#Censored_and_Truncated_Distributions)
+    - [**Gibbs Sampling**](#Gibbs_Sampling)
 - [**Specific Non-Uniform Distributions**](#Specific_Non_Uniform_Distributions)
     - [**Dice**](#Dice)
     - [**Normal (Gaussian) Distribution**](#Normal_Gaussian_Distribution)
@@ -466,7 +467,9 @@ Three related methods can be derived from `RNDRANGE` as follows:
 - **`RNDRANGEMinMaxExc`, interval \(`mn`, `mx`\)**:
     - Generate `RNDRANGE(mn, mx)` in a loop until a number other than `mn` or `mx` is generated this way.  Return an error if `mn >= mx`.
 
-> **Example:** To generate a random point inside an N-dimensional box, generate `RNDRANGEMaxExc(mn, mx)` for each coordinate, where `mn` and `mx` are the lower and upper bounds for that coordinate.  For example, to generate a random point inside a rectangle bounded in \[0, 2\) along the X axis and \[3, 6\) along the Y axis, generate `[RNDRANGEMaxExc(0,2), RNDRANGEMaxExc(3,6)]`.
+> **Example:** To generate a random point inside an N-dimensional box, generate `RNDRANGEMaxExc(mn, mx)` for each coordinate, where `mn` and `mx` are the lower and upper bounds for that coordinate.  For example&mdash;
+> - to generate a random point inside a rectangle bounded in \[0, 2\) along the X axis and \[3, 6\) along the Y axis, generate `[RNDRANGEMaxExc(0,2), RNDRANGEMaxExc(3,6)]`, and
+> - to generate a complex number with real and imaginary parts bounded in \[0, 1\], generate `[RNDU01(), RNDU01()]`.
 
 <a id=Certain_Programming_Environments></a>
 ### Certain Programming Environments
@@ -1147,6 +1150,11 @@ To sample from a _censored_ probability distribution, generate a random number f
 - if that number is greater than a maximum threshold, use the maximum threshold instead.
 
 To sample from a _truncated_ probability distribution, generate a random number from that distribution and, if that number is less than a minimum threshold and/or higher than a maximum threshold, repeat this process.
+
+<a id=Gibbs_Sampling></a>
+### Gibbs Sampling
+
+Gibbs sampling involves repeatedly generating random numbers from two distributions, each of which uses a random number from the other distribution, with the disadvantage that the resulting random numbers will not be independent (they will be correlated to some degree).  An example is generating multiple `x`, `y` pairs of random numbers where `x = BetaDist(y, 5)` then `y = Binomial(10, x)`.  (Before the random pairs are generated, an initial value for `y` has to be chosen.)  Usually the first few pairs (e.g., 1000 pairs) are ignored this way ("burn in").  See also (Casella and George 1992)<sup>[**(30)**](#Note30)</sup>
 
 <a id=Specific_Non_Uniform_Distributions></a>
 ## Specific Non-Uniform Distributions
@@ -2004,6 +2012,8 @@ In 2007, Thomas, D., et al. gave a survey of normal random number methods in "Ga
 
 <small><sup id=Note29>(29)</sup> See the _Mathematics Stack Exchange_ question titled "Random multivariate in hyperannulus", `questions/1885630`.</small>
 
+<small><sup id=Note30>(30)</sup> Casella, G., and George, E.I., "Explaining the Gibbs Sampler", The American Statistician 46:3 (1992).</small>
+
 <a id=Appendix></a>
 ## Appendix
 
@@ -2060,6 +2070,12 @@ The following method calculates the mean and the [**bias-corrected sample varian
         end
         return [xm, xs*1.0/(size(list)-1)]
     END METHOD
+
+> **Example:** A probability distribution's estimated _expectation value_  can be found by generating many random numbers from that distribution, applying a function to those numbers, then calculating the mean of the results.  (If that function is `pow(x, n)`, the expectation value estimated is the `n`th raw moment.)  An example is as follows:
+
+   ret=[]
+   for i in 0...n: AddItem(ret,pow(Normal(0,1),3))
+   thirdRawMoment=MeanAndVariance(ret)[0]
 
 <a id=Norm_Calculation></a>
 ### Norm Calculation

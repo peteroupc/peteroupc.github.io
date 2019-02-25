@@ -113,6 +113,7 @@
 <li><a href="#Random_Numbers_from_a_Distribution_of_Data_Points"><strong>Random Numbers from a Distribution of Data Points</strong></a></li>
 <li><a href="#Random_Numbers_from_an_Arbitrary_Distribution"><strong>Random Numbers from an Arbitrary Distribution</strong></a></li>
 <li><a href="#Censored_and_Truncated_Distributions"><strong>Censored and Truncated Distributions</strong></a></li>
+<li><a href="#Gibbs_Sampling"><strong>Gibbs Sampling</strong></a></li>
 </ul></li>
 <li><a href="#Specific_Non_Uniform_Distributions"><strong>Specific Non-Uniform Distributions</strong></a>
 
@@ -605,7 +606,12 @@ END METHOD
 </ul>
 
 <blockquote>
-<p><strong>Example:</strong> To generate a random point inside an N-dimensional box, generate <code>RNDRANGEMaxExc(mn, mx)</code> for each coordinate, where <code>mn</code> and <code>mx</code> are the lower and upper bounds for that coordinate.  For example, to generate a random point inside a rectangle bounded in [0, 2) along the X axis and [3, 6) along the Y axis, generate <code>[RNDRANGEMaxExc(0,2), RNDRANGEMaxExc(3,6)]</code>.</p>
+<p><strong>Example:</strong> To generate a random point inside an N-dimensional box, generate <code>RNDRANGEMaxExc(mn, mx)</code> for each coordinate, where <code>mn</code> and <code>mx</code> are the lower and upper bounds for that coordinate.  For example&mdash;</p>
+
+<ul>
+<li>to generate a random point inside a rectangle bounded in [0, 2) along the X axis and [3, 6) along the Y axis, generate <code>[RNDRANGEMaxExc(0,2), RNDRANGEMaxExc(3,6)]</code>, and</li>
+<li>to generate a complex number with real and imaginary parts bounded in [0, 1], generate <code>[RNDU01(), RNDU01()]</code>.</li>
+</ul>
 </blockquote>
 
 <p><a id=Certain_Programming_Environments></a></p>
@@ -1420,6 +1426,12 @@ END METHOD
 </ul>
 
 <p>To sample from a <em>truncated</em> probability distribution, generate a random number from that distribution and, if that number is less than a minimum threshold and/or higher than a maximum threshold, repeat this process.</p>
+
+<p><a id=Gibbs_Sampling></a></p>
+
+<h3>Gibbs Sampling</h3>
+
+<p>Gibbs sampling involves repeatedly generating random numbers from two distributions, each of which uses a random number from the other distribution, with the disadvantage that the resulting random numbers will not be independent (they will be correlated to some degree).  An example is generating multiple <code>x</code>, <code>y</code> pairs of random numbers where <code>x = BetaDist(y, 5)</code> then <code>y = Binomial(10, x)</code>.  (Before the random pairs are generated, an initial value for <code>y</code> has to be chosen.)  Usually the first few pairs (e.g., 1000 pairs) are ignored this way (&quot;burn in&quot;).  See also (Casella and George 1992)<sup><a href="#Note30"><strong>(30)</strong></a></sup></p>
 
 <p><a id=Specific_Non_Uniform_Distributions></a></p>
 
@@ -2398,6 +2410,8 @@ from random number generators.</p>
 
 <p><small><sup id=Note29>(29)</sup> See the <em>Mathematics Stack Exchange</em> question titled &quot;Random multivariate in hyperannulus&quot;, <code>questions/1885630</code>.</small></p>
 
+<p><small><sup id=Note30>(30)</sup> Casella, G., and George, E.I., &quot;Explaining the Gibbs Sampler&quot;, The American Statistician 46:3 (1992).</small></p>
+
 <p><a id=Appendix></a></p>
 
 <h2>Appendix</h2>
@@ -2459,6 +2473,14 @@ END METHOD
     return [xm, xs*1.0/(size(list)-1)]
 END METHOD
 </pre>
+
+<blockquote>
+<p><strong>Example:</strong> A probability distribution&#39;s estimated <em>expectation value</em>  can be found by generating many random numbers from that distribution, applying a function to those numbers, then calculating the mean of the results.  (If that function is <code>pow(x, n)</code>, the expectation value estimated is the <code>n</code>th raw moment.)  An example is as follows:</p>
+</blockquote>
+
+<p>ret=[]
+   for i in 0...n: AddItem(ret,pow(Normal(0,1),3))
+   thirdRawMoment=MeanAndVariance(ret)[0]</p>
 
 <p><a id=Norm_Calculation></a></p>
 
