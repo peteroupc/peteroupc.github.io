@@ -13,6 +13,17 @@ import random
 _SIGBITS = 53
 _FLOAT_MAX = 1.7976931348623157e+308
 
+def _mean(list):
+    if len(list)<=1: return 0
+    xm=list[0]
+    i=1
+    while i<len(list):
+      c=list[i]
+      i+=1
+      cxm=(c-xm)
+      xm+=cxm*1.0/i
+    return xm
+
 def _variance(list):
     if len(list)<=1: return 0
     xm=list[0]
@@ -241,26 +252,37 @@ class RandomGen:
         return [(p/numsum)*sum for p in nums]
 
   def weighted_choice(self, weights):
+    return self._weighted_choice_n(weights,1,0)[0]
+
+  def weighted_choice_n(self, weights,n=1):
+    return self._weighted_choice_n(weights,n,m)
+
+  def _weighted_choice_n(self, weights, n, addvalue):
     if len(weights)==0:
       raise ValueError
-    sum=0
+    msum=0
     i=0
     while i < len(weights):
-      sum+=weights[i]
+      msum+=weights[i]
       i+=1
-    value=self.rndrangemaxexc(0, sum)
-    i=0
-    lastItem=len(weights)-1
-    runningValue=0
-    while i<len(weights):
-      if weights[i]>0:
-        newValue=runningValue+weights[i]
-        if value < newValue:
-          return i
-        runningValue=newValue
-        lastItem=i
-      i+=1
-    return lastItem
+    ret=[0 for k in range(n)]
+    k=0
+    while k<len(weights):
+      value=self.rndrangemaxexc(0, msum)
+      i=0
+      lastItem=len(weights)-1
+      runningValue=0
+      while i<len(weights):
+        if weights[i]>0:
+          newValue=runningValue+weights[i]
+          lastItem=i
+          if value < newValue:
+            break
+          runningValue=newValue
+        i+=1
+      ret[k]=lastItem+addvalue
+      k+=1
+    return ret
 
   def continuous_choice(self, values, weights):
     return self.continuous_choice_n(values,weights)[0]
@@ -374,7 +396,7 @@ class RandomGen:
     if tp>25 or (tp > 5 and p>0.1 and p<0.9):
       countval=-1
       while countval<0 or countval > trials:
-        countval=self.normal(tp,tp)
+        countval=self.normal(tp,math.sqrt(tp))
       return round(countval)
     while i < trials:
       if self.rndu01oneexc() < p:
@@ -405,12 +427,12 @@ class RandomGen:
       raise ValueError
     if mean==0:
       return 0
-    p=1.0
     if mean>9:
-      p=-1.0
-      while p<0:
-        p=self.normal(mean,mean)
-      return round(p)
+       p=-1.0
+       while p<0:
+         p=self.normal(mean,math.sqrt(mean))
+       return round(p)
+    p=1.0
     pn=math.exp(-mean)
     count=0
     while True:
@@ -505,9 +527,18 @@ class RandomGen:
     if p<=0.0:
       return 1.0/0.0
     if successes==1.0:
-      return int(math.log(self.rndu01zerooneexc())/ln(1.0-p))
-    else:
+      return int(math.log(self.rndu01zerooneexc())/ \
+         math.log(1.0-p))
+    if int(successes)!=successes or successes>1000:
       return self.poisson(self.gamma(successes)*(1-p)/p)
+    else:
+      count=0
+      total=0
+      while True:
+        if r.rndu01oneexc()<p:
+          total+=1
+          if total>=successes: return count
+        count+=1
 
   def dirichlet(alphas):
      gammas=[self.gamma(x,1) for x in alphas]
@@ -961,8 +992,22 @@ of failures of each kind of failure.
         math.pi * 0.5
       return [lat,lon]
 
+  def integers_from_pdf(self,pdf,mn,mx,n = 1):
+      """ Generates one or more random integers from a discrete probability
+         distribution expressed as a probability density
+         function (PDF), which is also called the probability mass
+         function for discrete distributions.  The random integers
+         will be in the interval [mn, mx].  `n` random integers will be
+         generated. `pdf` is the PDF; it takes one parameter and returns,
+         for that parameter, a weight indicating the relative likelihood
+         that a random integer will equal that parameter.
+         The area under the "curve" of the PDF need not be 1.
+         By default, `n` is 1.  """
+     wt=[pdf(x) for x in range(mn,mx)]
+     return r._weighted_choice_n(wt,n,mn)
+
   def numbers_from_pdf(self, pdf, mn, mx, n = 1, steps = 100):
-      """ Generates one or more random numbers from a probability
+      """ Generates one or more random numbers from a continuous probability
          distribution expressed as a probability density
          function (PDF).  The random number
          will be in the interval [mn, mx].  `n` random numbers will be
@@ -977,7 +1022,7 @@ of failures of each kind of failure.
       return self.continuous_choice_n(values,weights,n)
 
   def numbers_from_cdf(self, cdf, mn, mx, n = 1, steps = 100):
-      """ Generates one or more random numbers from a probability
+      """ Generates one or more random numbers from a continuous probability
          distribution by numerically inverting its cumulative
          distribution function (CDF).  The random number
          will be in the interval [mn, mx].  `n` random numbers will be
@@ -1151,3 +1196,13 @@ if __name__ == "__main__":
     print("Sampling a rectangle")
     for i in range(10):
        print(cps.sample())
+    # Estimating raw moments of a normal distribution
+    n=[randgen.normal() for i in range(10000)]
+    print("Estimating expectation values of a normal distribution")
+    print("Mean ~= %f" % (_mean([x for x in n])))
+    print("2nd raw moment ~= %f" % (_mean([x**2 for x in n])))
+    print("3rd raw moment ~= %f" % (_mean([x**3 for x in n])))
+    print("4th raw moment ~= %f" % (_mean([x**4 for x in n])))
+    print("5th raw moment ~= %f" % (_mean([x**5 for x in n])))
+    print("Mean of sines (E<sin(x)>) ~= %f" % \
+      (_mean([math.sin(x) for x in n])))
