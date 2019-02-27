@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on June 4, 2017; last updated on Feb. 25, 2019.
+Begun on June 4, 2017; last updated on Feb. 27, 2019.
 
 Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.
 
@@ -1850,6 +1850,7 @@ Miscellaneous:
 - **"Type 0" stable distribution**: See [**Stable Distribution**](#Stable_Distribution).
 - **von Mises distribution**: See [**von Mises Distribution**](#von_Mises_Distribution).
 - **Waring&ndash;Yule distribution**: See beta negative binomial distribution.
+- **Wigner (semicircle) distribution**: `a + radius * (BetaDist(1.5, 1.5)*2-1)`, where `radius` is the semicircular radius and `a` is the location.
 - **Zeta distribution**: Generate `n = floor(pow(RNDU01ZeroOneExc(), -1.0 / r))`, and if `d / pow(2, r) < (d - 1) * RNDU01OneExc() * n / (pow(2, r) - 1.0)`, where `d = pow((1.0 / n) + 1, r)`, repeat this process. The parameter `r` is greater than 0. Based on method described in Devroye 1986. A zeta distribution [**truncated**](#Censoring_and_Truncation) by rejecting random values greater than some positive integer is called a _Zipf distribution_ or _Estoup distribution_. (Note that Devroye uses "Zipf distribution" to refer to the untruncated zeta distribution.)
 - **Zipf distribution**: See zeta distribution.
 

@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on Mar. 5, 2016; last updated on Feb. 26, 2019.
+Begun on Mar. 5, 2016; last updated on Feb. 27, 2019.
 
 Most apps that use random numbers care about either unpredictability, speed/high quality, or repeatability.  This article explains the three kinds of RNGs and gives recommendations on each kind.
 
@@ -103,7 +103,7 @@ The following definitions are helpful in better understanding this document.
 <a id=Motivation></a>
 ## Motivation
 
-Random numbers that merely "look random" are not enough for most applications.  But unfortunately, most popular programming languages today&mdash;
+For most appliations, it's not enough for random numbers to merely "look random".  But unfortunately, most popular programming languages today&mdash;
 
 - specify few and weak requirements on their built-in RNGs (such as [**C's `rand`**](http://en.cppreference.com/w/cpp/numeric/random/rand)),
 - specify a relatively weak general-purpose RNG (such as Java's `java.math.Random`),
