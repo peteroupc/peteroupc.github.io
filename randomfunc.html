@@ -45,6 +45,7 @@
 <li><strong>Corrections to any method given on this page.</strong></li>
 <li><strong>Requests to provide an implementation of any method given here in other programming languages, in addition to Python.</strong></li>
 <li><strong>If there is enough interest by readers, I may discuss approaches to generate random mazes, graphs, matrices, or paths.</strong></li>
+<li><strong>Suggestions to add probability distributions to this document.</strong></li>
 <li><strong>Suggestions to trim the size of this document, such as by limiting it to the most common and most useful methods for generating random numbers.</strong></li>
 </ul>
 
@@ -1964,6 +1965,8 @@ method for generating multiple random points in one call.</p>
 <li>A <strong>binormal distribution</strong> (two-variable multinormal distribution) can be sampled using the following idiom: <code>MultivariateNormal([mu1, mu2], [[s1*s1, s1*s2*rho], [rho*s1*s2, s2*s2]])</code>, where <code>mu1</code> and <code>mu2</code> are the means of the two random variables, <code>s1</code> and <code>s2</code> are their standard deviations, and <code>rho</code> is a <em>correlation coefficient</em> greater than -1 and less than 1 (0 means no correlation).</li>
 <li>A <strong>log-multinormal distribution</strong> can be sampled by generating numbers from a multinormal distribution, then applying <code>exp(n)</code> to the resulting numbers, where <code>n</code> is each number generated this way.</li>
 <li>A <strong>Beckmann distribution</strong> can be sampled by calculating <code>sqrt(x*x+y*y)</code>, where <code>x</code> and <code>y</code> are the two numbers in a binormal random pair (see example 1).</li>
+<li>A <strong>Rice (Rician) distribution</strong> is a Beckmann distribution in which the binormal random pair is generated with <code>m1 = m2 = a / sqrt(2)</code>, <code>rho = 0</code>, and <code>s1 = s2 = b</code>, where <code>a</code> and <code>b</code> are the parameters to the Rice distribution.</li>
+<li>A <strong>Rice&ndash;Norton distributed</strong> random variable is the norm (see the appendix) of the following point: <code>MultivariateNormal([v,v,v],[[w,0,0],[0,w,0],[0,0,w]])</code>, where <code>v = a/sqrt(m*2)</code>, <code>w = b*b/m</code>, and <code>a</code>, <code>b</code>, and <code>m</code> are the parameters to the Rice&ndash;Norton distribution.</li>
 </ol>
 </blockquote>
 
@@ -2078,7 +2081,7 @@ END METHOD
 <p><strong>Examples:</strong></p>
 
 <ol>
-<li>To generate two correlated uniform variables with a Gaussian copula, generate <code>GaussianCopula([[1, rho], [rho, 1]])</code>, where <code>rho</code> is the Pearson correlation coefficient, in the interval [-1, 1]. (Note that <a href="https://en.wikipedia.org/wiki/Rank_correlation"><strong><em>rank correlation</em></strong></a> parameters, which can be converted to <code>rho</code>, can better describe the correlation than <code>rho</code> itself. For example, for a two-variable Gaussian copula, the Spearman coefficient <code>srho</code> can be converted to <code>rho</code> by <code>rho = sin(srho * pi / 6) * 2</code>.  Rank correlation parameters are not further discussed in this document.)</li>
+<li>To generate two correlated uniform variables with a Gaussian copula, generate <code>GaussianCopula([[1, rho], [rho, 1]])</code>, where <code>rho</code> is the Pearson correlation coefficient, in the interval [-1, 1]. (Other correlation coefficients besides <code>rho</code> exist. For example, for a two-variable Gaussian copula, the <a href="https://en.wikipedia.org/wiki/Rank_correlation"><strong>Spearman correlation coefficient</strong></a> <code>srho</code> can be converted to <code>rho</code> by <code>rho = sin(srho * pi / 6) * 2</code>.  Other correlation coefficients are not further discussed in this document.)</li>
 <li><p>The following example generates two random numbers that follow a Gaussian copula with exponential marginals (<code>rho</code> is the Pearson correlation coefficient, and <code>rate1</code> and <code>rate2</code> are the rates of the two exponential marginals).</p>
 
 <pre>METHOD CorrelatedExpo(rho, rate1, rate2)
@@ -2096,7 +2099,7 @@ END METHOD
 <ul>
 <li>the <strong>Fr&eacute;chet&ndash;Hoeffding upper bound copula</strong> <em>[x, x, ..., x]</em> (e.g., <code>[x, x]</code>), where <code>x = RNDU01()</code>,</li>
 <li>the <strong>Fr&eacute;chet&ndash;Hoeffding lower bound copula</strong> <code>[x, 1.0 - x]</code> where <code>x = RNDU01()</code>,</li>
-<li>the <strong>product copula</strong>, where each number is a separately generated <code>RNDU01()</code> (indicating no correlation between the numbers), and</li>
+<li>the <strong>product copula</strong>, where each number is a separately generated <code>RNDU01()</code> (indicating no correlation between the numbers),</li>
 <li>the <strong>Archimedean copulas</strong>, described by M. Hofert and M. M&auml;chler (2011)<sup><a href="#Note26"><strong>(26)</strong></a></sup>.</li>
 </ul>
 
@@ -2207,6 +2210,8 @@ the two parameters of the beta distribution, and <code>trials</code> is a parame
 <li><strong>Power lognormal distribution</strong>: See the <a href="https://peteroupc.github.io/randomgen.zip"><strong>Python sample code</strong></a>.</li>
 <li><strong>Power normal distribution</strong>: See the <a href="https://peteroupc.github.io/randomgen.zip"><strong>Python sample code</strong></a>.</li>
 <li><strong>Product copula</strong>: See <a href="#Gaussian_and_Other_Copulas"><strong>Gaussian and Other Copulas</strong></a>.</li>
+<li><strong>Rice distribution</strong>: See <a href="#Multivariate_Normal_Multinormal_Distribution"><strong>Multivariate Normal (Multinormal) Distribution</strong></a>.</li>
+<li><strong>Rice&ndash;Norton distribution</strong>: See <a href="#Multivariate_Normal_Multinormal_Distribution"><strong>Multivariate Normal (Multinormal) Distribution</strong></a>.</li>
 <li><strong>Singh&ndash;Maddala distribution</strong>: See beta prime distribution.</li>
 <li><strong>Skellam distribution</strong>: <code>Poisson(mean1) - Poisson(mean2)</code>, where <code>mean1</code> and <code>mean2</code> are the means of the two Poisson variables.</li>
 <li><strong>Skewed normal distribution</strong>: <code>Normal(0, x) + mu + alpha * abs(Normal(0, x))</code>, where <code>x</code> is <code>sigma / sqrt(alpha * alpha + 1.0)</code>, <code>mu</code> and <code>sigma</code> have the same meaning as in the normal distribution, and <code>alpha</code> is a shape parameter.</li>
@@ -2404,7 +2409,7 @@ END METHOD
 <li>S. Eger, &quot;Stirling&#39;s approximation for central extended binomial coefficients&quot;, 2014, helped suggest the variance of the dice roll distribution.</small></li>
 </ul>
 
-<p><small><sup id=Note24>(24)</sup> For example:</p>
+<p><small><sup id=Note24>(24)</sup> For example, besides the methods given in this section&#39;s main text:</p>
 
 <ol>
 <li>In the <em>Box&ndash;Muller transformation</em>, <code>mu + radius * cos(angle)</code> and <code>mu + radius * sin(angle)</code>, where <code>angle = RNDRANGEMaxExc(0, 2 * pi)</code> and <code>radius = sqrt(-2 * ln(RNDU01ZeroExc())) * sigma</code>, are two independent normally-distributed random numbers.</li>

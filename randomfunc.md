@@ -33,6 +33,7 @@ All the random number methods presented on this page are ultimately based on an 
 - **Corrections to any method given on this page.**
 - **Requests to provide an implementation of any method given here in other programming languages, in addition to Python.**
 - **If there is enough interest by readers, I may discuss approaches to generate random mazes, graphs, matrices, or paths.**
+- **Suggestions to add probability distributions to this document.**
 - **Suggestions to trim the size of this document, such as by limiting it to the most common and most useful methods for generating random numbers.**
 
 <a id=Contents></a>
@@ -1628,6 +1629,8 @@ The following pseudocode calculates a random point in space that follows a [**_m
 > 1. A **binormal distribution** (two-variable multinormal distribution) can be sampled using the following idiom: `MultivariateNormal([mu1, mu2], [[s1*s1, s1*s2*rho], [rho*s1*s2, s2*s2]])`, where `mu1` and `mu2` are the means of the two random variables, `s1` and `s2` are their standard deviations, and `rho` is a _correlation coefficient_ greater than -1 and less than 1 (0 means no correlation).
 > 2. A **log-multinormal distribution** can be sampled by generating numbers from a multinormal distribution, then applying `exp(n)` to the resulting numbers, where `n` is each number generated this way.
 > 3. A **Beckmann distribution** can be sampled by calculating `sqrt(x*x+y*y)`, where `x` and `y` are the two numbers in a binormal random pair (see example 1).
+> 4. A **Rice (Rician) distribution** is a Beckmann distribution in which the binormal random pair is generated with `m1 = m2 = a / sqrt(2)`, `rho = 0`, and `s1 = s2 = b`, where `a` and `b` are the parameters to the Rice distribution.
+> 5. A **Rice&ndash;Norton distributed** random variable is the norm (see the appendix) of the following point: `MultivariateNormal([v,v,v],[[w,0,0],[0,w,0],[0,0,w]])`, where `v = a/sqrt(m*2)`, `w = b*b/m`, and `a`, `b`, and `m` are the parameters to the Rice&ndash;Norton distribution.
 
 <a id=Random_Numbers_with_a_Given_Positive_Sum></a>
 ### Random Numbers with a Given Positive Sum
@@ -1724,7 +1727,7 @@ Each of the resulting uniform numbers will be in the interval [0, 1], and each o
 
 > **Examples:**
 >
-> 1. To generate two correlated uniform variables with a Gaussian copula, generate `GaussianCopula([[1, rho], [rho, 1]])`, where `rho` is the Pearson correlation coefficient, in the interval [-1, 1]. (Note that [**_rank correlation_**](https://en.wikipedia.org/wiki/Rank_correlation) parameters, which can be converted to `rho`, can better describe the correlation than `rho` itself. For example, for a two-variable Gaussian copula, the Spearman coefficient `srho` can be converted to `rho` by `rho = sin(srho * pi / 6) * 2`.  Rank correlation parameters are not further discussed in this document.)
+> 1. To generate two correlated uniform variables with a Gaussian copula, generate `GaussianCopula([[1, rho], [rho, 1]])`, where `rho` is the Pearson correlation coefficient, in the interval [-1, 1]. (Other correlation coefficients besides `rho` exist. For example, for a two-variable Gaussian copula, the [**Spearman correlation coefficient**](https://en.wikipedia.org/wiki/Rank_correlation) `srho` can be converted to `rho` by `rho = sin(srho * pi / 6) * 2`.  Other correlation coefficients are not further discussed in this document.)
 > 2. The following example generates two random numbers that follow a Gaussian copula with exponential marginals (`rho` is the Pearson correlation coefficient, and `rate1` and `rate2` are the rates of the two exponential marginals).
 >
 >         METHOD CorrelatedExpo(rho, rate1, rate2)
@@ -1738,7 +1741,7 @@ Other kinds of copulas describe different kinds of correlation between random nu
 
 - the **Fr&eacute;chet&ndash;Hoeffding upper bound copula** _\[x, x, ..., x\]_ (e.g., `[x, x]`), where `x = RNDU01()`,
 - the **Fr&eacute;chet&ndash;Hoeffding lower bound copula** `[x, 1.0 - x]` where `x = RNDU01()`,
-- the **product copula**, where each number is a separately generated `RNDU01()` (indicating no correlation between the numbers), and
+- the **product copula**, where each number is a separately generated `RNDU01()` (indicating no correlation between the numbers),
 - the **Archimedean copulas**, described by M. Hofert and M. M&auml;chler (2011)<sup>[**(26)**](#Note26)</sup>.
 
 <a id=Index_of_Non_Uniform_Distributions></a>
@@ -1840,6 +1843,8 @@ Miscellaneous:
 - **Power lognormal distribution**: See the [**Python sample code**](https://peteroupc.github.io/randomgen.zip).
 - **Power normal distribution**: See the [**Python sample code**](https://peteroupc.github.io/randomgen.zip).
 - **Product copula**: See [**Gaussian and Other Copulas**](#Gaussian_and_Other_Copulas).
+- **Rice distribution**: See [**Multivariate Normal (Multinormal) Distribution**](#Multivariate_Normal_Multinormal_Distribution).
+- **Rice&ndash;Norton distribution**: See [**Multivariate Normal (Multinormal) Distribution**](#Multivariate_Normal_Multinormal_Distribution).
 - **Singh&ndash;Maddala distribution**: See beta prime distribution.
 - **Skellam distribution**: `Poisson(mean1) - Poisson(mean2)`, where `mean1` and `mean2` are the means of the two Poisson variables.
 - **Skewed normal distribution**: `Normal(0, x) + mu + alpha * abs(Normal(0, x))`, where `x` is `sigma / sqrt(alpha * alpha + 1.0)`, `mu` and `sigma` have the same meaning as in the normal distribution, and `alpha` is a shape parameter.
@@ -2008,7 +2013,7 @@ provided the PDF's values are all 0 or greater and the area under the PDF's curv
 - The [**MathWorld article "Dice"**](http://mathworld.wolfram.com/Dice.html) provided the mean of the dice roll distribution.
 - S. Eger, "Stirling's approximation for central extended binomial coefficients", 2014, helped suggest the variance of the dice roll distribution.</small>
 
-<small><sup id=Note24>(24)</sup> For example:
+<small><sup id=Note24>(24)</sup> For example, besides the methods given in this section's main text:
 
 1. In the _Box&ndash;Muller transformation_, `mu + radius * cos(angle)` and `mu + radius * sin(angle)`, where `angle = RNDRANGEMaxExc(0, 2 * pi)` and `radius = sqrt(-2 * ln(RNDU01ZeroExc())) * sigma`, are two independent normally-distributed random numbers.
 2. Computing the sum of twelve `RNDU01OneExc()` numbers and subtracting the sum by 6 (see also [**"Irwin&ndash;Hall distribution" on Wikipedia**](https://en.wikipedia.org/wiki/Irwin%E2%80%93Hall_distribution)) results in approximate standard normal (`mu`=0, `sigma`=1) random numbers, whose values are not less than -6 or greater than 6; on the other hand, in a standard normal distribution, results less than -6 or greater than 6 will occur only with a generally negligible probability.

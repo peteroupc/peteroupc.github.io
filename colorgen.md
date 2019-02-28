@@ -1224,9 +1224,9 @@ In this document, `COLORDIFF(color1, color2)` is a function that calculates a [*
         hdiff=h2-h1
         hh=h1+h2
         if abs(hdiff)>pi
-                hh=hh+pi*2
-                if h2<=h1: hdiff=hdiff+pi*2
-                else: hdiff=hdiff-pi*2
+          hh=hh+pi*2
+          if h2<=h1: hdiff=hdiff+pi*2
+          else: hdiff=hdiff-pi*2
         end
         hh=hh*0.5
         t2=1-0.17*cos(hh-pi/6)+0.24*cos(hh*2)
@@ -1290,7 +1290,7 @@ There are several methods of finding the kind or kinds of colors that appear mos
     - add all the image color list's colors, or a sample or subset of them (for RGB or other multicomponent colors, adding two or more colors means adding each of their components individually), then
     - divide the result by the number of colors added this way.
 
-2. [**Color quantization**](https://en.wikipedia.org/wiki/Color_quantization). In this technique, the image color list's colors are reduced to a small set of colors (for example, ten to twenty).  Quantization algorithms include _k_-means clustering (see the previous section), recursive subdivision, and octrees.
+2. [**Color quantization**](https://en.wikipedia.org/wiki/Color_quantization)**.** In this technique, the image color list's colors are reduced to a small set of colors (for example, ten to twenty).  Quantization algorithms include _k_-means clustering (see the previous section), recursive subdivision, and octrees.
 
 3. **Histogram binning.** To find the dominant colors using this technique (which is independent of color model):
 
@@ -1355,12 +1355,7 @@ Color maps can list colors used to identify different items. Because of this use
 
 In general, the greater the number of colors used, the harder it is to distinguish them from each other.  Any application that needs to distinguish many items (especially more than 22 items, the number of colors in Kelly's list) should use other visual means in addition to color (or rather than color) to help users identify them. (Note that under the [**Web Content Accessibility Guidelines 2.0**](https://www.w3.org/TR/2008/REC-WCAG20-20081211/) level A, color may not be [**"the only visual means of conveying information"**](http://www.w3.org/TR/2008/REC-WCAG20-20081211/#visual-audio-contrast-without-color).)
 
-In general, any method that seeks to choose colors that are maximally distant in a particular
-color space (that is, where the smallest [**color difference**](#Color_Differences) [`COLORDIFF`]
-between them is maximized as much as feasible) can be used to select visually
-distinct colors. Such colors can be pregenerated or generated at runtime, and such colors
-can be limited to those in a particular _color gamut_. Here, the color difference method
-should be _&Delta;E\*_<sub>ab</sub> or another color difference method that takes human color perception into account. (See also (Tatarize)<sup>[**(44)**](#Note44)</sup>.)
+In general, any method that seeks to choose colors that are maximally distant in a particular color space (that is, where the smallest [**color difference**](#Color_Differences) [`COLORDIFF`] between them is maximized as much as feasible) can be used to select visually distinct colors. Such colors can be pregenerated or generated at runtime, and such colors can be limited to those in a particular _color gamut_. Here, the color difference method should be _&Delta;E\*_<sub>ab</sub> or another color difference method that takes human color perception into account. (See also (Tatarize)<sup>[**(44)**](#Note44)</sup>.)
 
 <a id=Pseudocode></a>
 ### Pseudocode
@@ -1414,8 +1409,9 @@ The following techniques can be used to generate random RGB colors. Note that fo
     - To select one random color from a color map (`colormap`): `colormap[RNDINTEXC(size(colormap))]`.  See also [**"Choosing a Random Item from a List"**](https://peteroupc.github.io/randomfunc.html#Sampling_With_Replacement_Choosing_a_Random_Item_from_a_List).
     - To select several random colors from a color map: See [**"Choosing Several Unique Items"**](https://peteroupc.github.io/randomfunc.html#Sampling_Without_Replacement_Choosing_Several_Unique_Items).
 - **Similar random colors:** Generating a random color that's similar to another is equivalent to generating a random color (`color1`) until `COLORDIFF(color1, color2)` (defined [**earlier**](#Color_Differences)) is less than a predetermined threshold, where `color2` is the color to compare.
-- **Data hashing:** A technique similar to generating random colors is to generate a color from arbitrary data using a [**_hash function_**](https://peteroupc.github.io/random.html#Hash_Functions).
 - **Image noise:** This alters a color using random numbers, such as by adding or multiplying random numbers to that color.  For example, in _uniform noise_, each component of a multicomponent color is changed to  `min(1,max(0,c+RNDRANGE(-level, level)))`, where `c` is the value of the previous component and `level` is the noise level.  Other kinds of image noise include noise following a Gaussian, Poisson, or other [**probability distribution**](https://peteroupc.github.io/randomfunc.html#Specific_Non_Uniform_Distributions), and _salt-and-pepper noise_ that involves replacing each pixel by black or white at a predetermined probability each.
+
+> **Note:** The methods in this section can also be implemented by using a [**_hash function_**](https://peteroupc.github.io/random.html#Hash_Functions) to convert arbitrary data to "random" bits which can be used either directly or to initialize a pseudorandom number generator which can generate further "random" bits.  For example, `From888(MD5_24("Hello World"))`, where `MD5_24` is the first 24 bits of the MD5 hash, can be interpreted as an 8-bpc encoded RGB color.
 
 <a id=Spectral_Color_Functions></a>
 ## Spectral Color Functions
@@ -1670,7 +1666,7 @@ where `FUNC` is an arbitrary function of one or more variables) can be done to a
 
 <small><sup id=Note36>(36)</sup> T. Riemersma, [**"Colour metric"**](https://www.compuphase.com/cmetric.htm), "A low-cost approximation".</small>
 
-<small><sup id=Note37>(37)</sup> Huang, M., Cui, G., et al. (2015). "Power functions improving the performance of color-difference formulas." Optical Society of America, 23(1), 597–610.</small>
+<small><sup id=Note37>(37)</sup> Huang, M., Cui, G., et al. (2015). "Power functions improving the performance of color-difference formulas." Optical Society of America, 23(1), 597&ndash;610.</small>
 
 <small><sup id=Note38>(38)</sup> One way to implement dithering is mentioned in C. Peters, "[**Free blue noise textures**](http://momentsingraphics.de/?p=127)", _Moments in Graphics_, Dec. 22, 2016.</small>
 

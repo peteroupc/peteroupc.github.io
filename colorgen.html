@@ -1463,9 +1463,9 @@ END METHOD
     hdiff=h2-h1
     hh=h1+h2
     if abs(hdiff)&gt;pi
-            hh=hh+pi*2
-            if h2&lt;=h1: hdiff=hdiff+pi*2
-            else: hdiff=hdiff-pi*2
+      hh=hh+pi*2
+      if h2&lt;=h1: hdiff=hdiff+pi*2
+      else: hdiff=hdiff-pi*2
     end
     hh=hh*0.5
     t2=1-0.17*cos(hh-pi/6)+0.24*cos(hh*2)
@@ -1545,7 +1545,7 @@ END METHOD
 <li>add all the image color list&#39;s colors, or a sample or subset of them (for RGB or other multicomponent colors, adding two or more colors means adding each of their components individually), then</li>
 <li>divide the result by the number of colors added this way.</li>
 </ul></li>
-<li><p><a href="https://en.wikipedia.org/wiki/Color_quantization"><strong>Color quantization</strong></a>. In this technique, the image color list&#39;s colors are reduced to a small set of colors (for example, ten to twenty).  Quantization algorithms include <em>k</em>-means clustering (see the previous section), recursive subdivision, and octrees.</p></li>
+<li><p><a href="https://en.wikipedia.org/wiki/Color_quantization"><strong>Color quantization</strong></a><strong>.</strong> In this technique, the image color list&#39;s colors are reduced to a small set of colors (for example, ten to twenty).  Quantization algorithms include <em>k</em>-means clustering (see the previous section), recursive subdivision, and octrees.</p></li>
 <li><p><strong>Histogram binning.</strong> To find the dominant colors using this technique (which is independent of color model):</p>
 
 <ul>
@@ -1637,12 +1637,7 @@ were intended for readers with normal and <a href="#Defective_and_Animal_Color_V
 
 <p>In general, the greater the number of colors used, the harder it is to distinguish them from each other.  Any application that needs to distinguish many items (especially more than 22 items, the number of colors in Kelly&#39;s list) should use other visual means in addition to color (or rather than color) to help users identify them. (Note that under the <a href="https://www.w3.org/TR/2008/REC-WCAG20-20081211/"><strong>Web Content Accessibility Guidelines 2.0</strong></a> level A, color may not be <a href="http://www.w3.org/TR/2008/REC-WCAG20-20081211/#visual-audio-contrast-without-color"><strong>&quot;the only visual means of conveying information&quot;</strong></a>.)</p>
 
-<p>In general, any method that seeks to choose colors that are maximally distant in a particular
-color space (that is, where the smallest <a href="#Color_Differences"><strong>color difference</strong></a> [<code>COLORDIFF</code>]
-between them is maximized as much as feasible) can be used to select visually
-distinct colors. Such colors can be pregenerated or generated at runtime, and such colors
-can be limited to those in a particular <em>color gamut</em>. Here, the color difference method
-should be <em>&Delta;E*</em><sub>ab</sub> or another color difference method that takes human color perception into account. (See also (Tatarize)<sup><a href="#Note44"><strong>(44)</strong></a></sup>.)</p>
+<p>In general, any method that seeks to choose colors that are maximally distant in a particular color space (that is, where the smallest <a href="#Color_Differences"><strong>color difference</strong></a> [<code>COLORDIFF</code>] between them is maximized as much as feasible) can be used to select visually distinct colors. Such colors can be pregenerated or generated at runtime, and such colors can be limited to those in a particular <em>color gamut</em>. Here, the color difference method should be <em>&Delta;E*</em><sub>ab</sub> or another color difference method that takes human color perception into account. (See also (Tatarize)<sup><a href="#Note44"><strong>(44)</strong></a></sup>.)</p>
 
 <p><a id=Pseudocode></a></p>
 
@@ -1714,9 +1709,12 @@ maximum value of each color component, e.g., 0.5.</li>
 <li>To select several random colors from a color map: See <a href="https://peteroupc.github.io/randomfunc.html#Sampling_Without_Replacement_Choosing_Several_Unique_Items"><strong>&quot;Choosing Several Unique Items&quot;</strong></a>.</li>
 </ul></li>
 <li><strong>Similar random colors:</strong> Generating a random color that&#39;s similar to another is equivalent to generating a random color (<code>color1</code>) until <code>COLORDIFF(color1, color2)</code> (defined <a href="#Color_Differences"><strong>earlier</strong></a>) is less than a predetermined threshold, where <code>color2</code> is the color to compare.</li>
-<li><strong>Data hashing:</strong> A technique similar to generating random colors is to generate a color from arbitrary data using a <a href="https://peteroupc.github.io/random.html#Hash_Functions"><strong><em>hash function</em></strong></a>.</li>
 <li><strong>Image noise:</strong> This alters a color using random numbers, such as by adding or multiplying random numbers to that color.  For example, in <em>uniform noise</em>, each component of a multicomponent color is changed to  <code>min(1,max(0,c+RNDRANGE(-level, level)))</code>, where <code>c</code> is the value of the previous component and <code>level</code> is the noise level.  Other kinds of image noise include noise following a Gaussian, Poisson, or other <a href="https://peteroupc.github.io/randomfunc.html#Specific_Non_Uniform_Distributions"><strong>probability distribution</strong></a>, and <em>salt-and-pepper noise</em> that involves replacing each pixel by black or white at a predetermined probability each.</li>
 </ul>
+
+<blockquote>
+<p><strong>Note:</strong> The methods in this section can also be implemented by using a <a href="https://peteroupc.github.io/random.html#Hash_Functions"><strong><em>hash function</em></strong></a> to convert arbitrary data to &quot;random&quot; bits which can be used either directly or to initialize a pseudorandom number generator which can generate further &quot;random&quot; bits.  For example, <code>From888(MD5_24(&quot;Hello World&quot;))</code>, where <code>MD5_24</code> is the first 24 bits of the MD5 hash, can be interpreted as an 8-bpc encoded RGB color.</p>
+</blockquote>
 
 <p><a id=Spectral_Color_Functions></a></p>
 
@@ -2019,7 +2017,7 @@ where <code>FUNC</code> is an arbitrary function of one or more variables) can b
 
 <p><small><sup id=Note36>(36)</sup> T. Riemersma, <a href="https://www.compuphase.com/cmetric.htm"><strong>&quot;Colour metric&quot;</strong></a>, &quot;A low-cost approximation&quot;.</small></p>
 
-<p><small><sup id=Note37>(37)</sup> Huang, M., Cui, G., et al. (2015). &quot;Power functions improving the performance of color-difference formulas.&quot; Optical Society of America, 23(1), 597–610.</small></p>
+<p><small><sup id=Note37>(37)</sup> Huang, M., Cui, G., et al. (2015). &quot;Power functions improving the performance of color-difference formulas.&quot; Optical Society of America, 23(1), 597&ndash;610.</small></p>
 
 <p><small><sup id=Note38>(38)</sup> One way to implement dithering is mentioned in C. Peters, &quot;<a href="http://momentsingraphics.de/?p=127"><strong>Free blue noise textures</strong></a>&quot;, <em>Moments in Graphics</em>, Dec. 22, 2016.</small></p>
 
