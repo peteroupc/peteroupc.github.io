@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on June 4, 2017; last updated on Feb. 27, 2019.
+Begun on June 4, 2017; last updated on Feb. 28, 2019.
 
 Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.
 
@@ -767,10 +767,10 @@ Statistical testing uses shuffling and _bootstrapping_ to help draw conclusions 
 
 After creating the simulated data sets, one or more statistics, such as the mean, are calculated for each simulated data set as well as the original data set, then the statistics for the simulated data sets are compared with those of the original (such comparisons are outside the scope of this document).
 
-Randomization also occurs in numerical estimation.
+Randomization also occurs in some estimation tasks.
 
 - [**Monte Carlo integration**](https://en.wikipedia.org/wiki/Monte_Carlo_integration) uses randomization to estimate a multidimensional integral. It involves evaluating a function at N random points in the domain.  The estimated integral is the volume of the domain times the mean of those N points, and the error in the estimate is that volume times the square root of the (bias-corrected sample) variance of the N points (see the appendix). Often [**low-discrepancy sequences**](#Low_Discrepancy_Sequences) provide the "random" numbers to sample the function more efficiently.
-- The **expectation value** of a random process or sampling distribution can be estimated by generating many random numbers according to that process or distribution, applying a function to those numbers, then calculating the mean of the results. (For example, if that function is `pow(x, n)`, the expectation value estimated is the `n`th raw moment, or mean of `n`th powers.  A mean calculation function is found in the appendix.)
+- The **expectation value** of a random process or sampling distribution can be estimated by generating many random numbers according to that process or distribution, applying a function to those numbers, then calculating the mean of the results. (For example, if that function is `pow(x, n)`, the expectation value estimated is the `n`th raw moment, or mean of `n`th powers.  A mean calculation method is found in the appendix.)
 
 <a id=A_Note_on_Sorting_Random_Numbers></a>
 ### A Note on Sorting Random Numbers
@@ -1144,7 +1144,7 @@ If a probability distribution's **PDF is known**, random numbers that approximat
 
     If the PDF can be more easily sampled by another distribution with its own PDF (`PDF2`) that satisfies `PDF2(X) >= PDF(X)` at every `X`, then generate random numbers with that distribution until a number (`n`) that satisfies `PDF(n) >= RNDRANGEMaxExc(0, PDF2(n))` is generated this way (that is, sample points in `PDF2` until a point falls within `PDF`) (see also Saucier 2000, pp. 6-7; Devroye 1986, pp. 41-43).
 
-3. If many random numbers from the given PDF need to be generated, then a so-called _Markov-chain Monte Carlo_ (MCMC) algorithm can be used, with the disadvantage that the resulting random numbers will not be independent (they will be correlated to some degree).  The [**Python sample code**](https://peteroupc.github.io/randomgen.zip) includes a method called `mcmc` that implements one kind of MCMC algorithm called Metropolis&ndash;Hastings, and a similar method, `mcmc2`, that uses the same algorithm for PDFs that take two-dimensional points.
+3. If many random numbers from the given PDF need to be generated, then a so-called _Markov-chain Monte Carlo_ (MCMC) algorithm can be used, with the disadvantage that the resulting random numbers will not be chosen independently of each other.  The [**Python sample code**](https://peteroupc.github.io/randomgen.zip) includes a method called `mcmc` that implements one kind of MCMC algorithm called Metropolis&ndash;Hastings, and a similar method, `mcmc2`, that uses the same algorithm for PDFs that take two-dimensional points.
 
 If both **a PDF and a uniform random variable in the interval \[0, 1\) (`randomVariable`)** are given, then the following technique, among other possible techniques, can be used: Create `list` and `weights` as given in method 1, then divide each item in `weights` by the sum of `weights`'s items, then generate [**`ContinuousWeightedChoice(list, weights)`**](#Continuous_Weighted_Choice) (except that method is modified to use `value = randomVariable` rather than `value = RNDRANGEMaxExc(0, sum)`).
 
@@ -1164,7 +1164,7 @@ To sample from a _truncated_ probability distribution, generate a random number 
 <a id=Gibbs_Sampling></a>
 ### Gibbs Sampling
 
-Gibbs sampling involves repeatedly generating random numbers from two or more distributions, each of which uses a random number from the previous distribution, with the disadvantage that the resulting random numbers will not be independent (they will be correlated to some degree).  An example is generating multiple `x`, `y` pairs of random numbers where `x = BetaDist(y, 5)` then `y = Binomial(10, x)`.  (Before the random pairs are generated, an initial value for `y` has to be chosen.)  Usually the first few (e.g., first 1000) pairs or groups of random numbers are ignored this way ("burn in").  See also (Casella and George 1992)<sup>[**(22)**](#Note22)</sup>.
+Gibbs sampling involves repeatedly generating random numbers from two or more distributions, each of which uses a random number from the previous distribution, with the disadvantage that the resulting random numbers will not be chosen independently of each other.  An example is generating multiple `x`, `y` pairs of random numbers where `x = BetaDist(y, 5)` then `y = Binomial(10, x)`.  (Before the random pairs are generated, an initial value for `y` has to be chosen.)  Usually the first few (e.g., first 1000) pairs or groups of random numbers are ignored this way ("burn in").  See also (Casella and George 1992)<sup>[**(22)**](#Note22)</sup>.
 
 <a id=Specific_Non_Uniform_Distributions></a>
 ## Specific Non-Uniform Distributions
@@ -1685,7 +1685,7 @@ The following pseudocode shows how to generate random integers with a given posi
 <a id=Multinomial_Distribution></a>
 ### Multinomial Distribution
 
-The _multinomial distribution_ models the number of times each of several mutually exclusive events happens among a given number of trials, where each event can have a separate probability of happening.  The pseudocode below is of a method that takes two parameters: `trials`, which is the number of trials, and `weights`, which are the relative probabilities of each event.  The method tallies the events as they happen and returns a list (with the same size as `weights`) containing the number of successes for each event.
+The _multinomial distribution_ models the number of times each of several mutually exclusive events happens among a given number of trials, where each event can have a separate probability of happening.  In the pseudocode below, `trials` is the number of trials, and `weights` is a list of the relative probabilities of each event.  The method tallies the events as they happen and returns a list (with the same size as `weights`) containing the number of successes for each event.
 
     METHOD Multinomial(trials, weights)
         if trials < 0: return error
@@ -1704,9 +1704,9 @@ The _multinomial distribution_ models the number of times each of several mutual
 <a id=Gaussian_and_Other_Copulas></a>
 ### Gaussian and Other Copulas
 
-A _copula_ is a distribution describing the correlation (dependence) between random numbers.
+A _copula_ is a distribution describing the dependence between random numbers.
 
-One example is a _Gaussian copula_; this copula is sampled by sampling from a [**multinormal distribution**](#Multivariate_Normal_Multinormal_Distribution), then converting the resulting numbers to uniformly-distributed, but correlated, numbers. In the following pseudocode, which implements a Gaussian copula:
+One example is a _Gaussian copula_; this copula is sampled by sampling from a [**multinormal distribution**](#Multivariate_Normal_Multinormal_Distribution), then converting the resulting numbers to uniformly-distributed, but dependent, numbers. In the following pseudocode, which implements a Gaussian copula:
 
 - The parameter `covar` is the covariance matrix for the multinormal distribution.
 - `erf(v)` is the [**error function**](https://en.wikipedia.org/wiki/Error_function) of the variable `v` (see the appendix).
@@ -1727,7 +1727,7 @@ Each of the resulting uniform numbers will be in the interval [0, 1], and each o
 
 > **Examples:**
 >
-> 1. To generate two correlated uniform variables with a Gaussian copula, generate `GaussianCopula([[1, rho], [rho, 1]])`, where `rho` is the Pearson correlation coefficient, in the interval [-1, 1]. (Other correlation coefficients besides `rho` exist. For example, for a two-variable Gaussian copula, the [**Spearman correlation coefficient**](https://en.wikipedia.org/wiki/Rank_correlation) `srho` can be converted to `rho` by `rho = sin(srho * pi / 6) * 2`.  Other correlation coefficients are not further discussed in this document.)
+> 1. To generate two dependent uniform variables with a Gaussian copula, generate `GaussianCopula([[1, rho], [rho, 1]])`, where `rho` is the Pearson correlation coefficient, in the interval [-1, 1]. (Other correlation coefficients besides `rho` exist. For example, for a two-variable Gaussian copula, the [**Spearman correlation coefficient**](https://en.wikipedia.org/wiki/Rank_correlation) `srho` can be converted to `rho` by `rho = sin(srho * pi / 6) * 2`.  Other correlation coefficients are not further discussed in this document.)
 > 2. The following example generates two random numbers that follow a Gaussian copula with exponential marginals (`rho` is the Pearson correlation coefficient, and `rate1` and `rate2` are the rates of the two exponential marginals).
 >
 >         METHOD CorrelatedExpo(rho, rate1, rate2)
@@ -1737,11 +1737,11 @@ Each of the resulting uniform numbers will be in the interval [0, 1], and each o
 >            return [-ln(copula[0]) / rate1, -ln(copula[1]) / rate2]
 >         END METHOD
 
-Other kinds of copulas describe different kinds of correlation between random numbers.  Examples of other copulas are&mdash;
+Other kinds of copulas describe different kinds of dependence between random numbers.  Examples of other copulas are&mdash;
 
 - the **Fr&eacute;chet&ndash;Hoeffding upper bound copula** _\[x, x, ..., x\]_ (e.g., `[x, x]`), where `x = RNDU01()`,
 - the **Fr&eacute;chet&ndash;Hoeffding lower bound copula** `[x, 1.0 - x]` where `x = RNDU01()`,
-- the **product copula**, where each number is a separately generated `RNDU01()` (indicating no correlation between the numbers),
+- the **product copula**, where each number is a separately generated `RNDU01()` (indicating no dependence between the numbers), and
 - the **Archimedean copulas**, described by M. Hofert and M. M&auml;chler (2011)<sup>[**(26)**](#Note26)</sup>.
 
 <a id=Index_of_Non_Uniform_Distributions></a>

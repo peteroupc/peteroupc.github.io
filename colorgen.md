@@ -597,7 +597,7 @@ The Y&prime;C<sub>_B_</sub>C<sub>_R_</sub> transformation is independent of RGB 
 
 > **Notes:**
 >
-> 1. This document does not seek to survey the various ways in which Y&prime;C<sub>_B_</sub>C<sub>_R_</sub> and similar colors are built up into pixels in images and video.  In general, such ways take into account the human eye's normally greater spatial sensitivity to luminance (e.g., Y, as approximated by Y&prime;, luma) than chromatic sensitivity (e.g., C<sub>_B_</sub>, C<sub>_R_</sub>).
+> 1. This document does not seek to survey the various ways in which Y&prime;C<sub>_B_</sub>C<sub>_R_</sub> and similar colors are built up into pixels in images and video.  In general, such ways take into account the human eye's normally greater spatial sensitivity to luminance (Y, as approximated, e.g., by Y&prime;, luma) than chromatic sensitivity (e.g., C<sub>_B_</sub>, C<sub>_R_</sub>).
 > 2. Other video color formats include "BT.2020 constant luminance", in [**Rec. 2020**](https://en.wikipedia.org/wiki/Rec._2020), and IC<sub>_T_</sub>C<sub>_P_</sub>, mentioned in Rep. 2390-4.  Both formats are not detailed here.
 
 <a id=Other_Color_Models></a>
@@ -731,8 +731,8 @@ A color in CIELAB consists of three components, in the following order:
 _L\*C\*h_ form expresses CIELAB colors as polar coordinates; the three components have the following order:
 
 - Lightness (_L\*_) remains unchanged.
-- _Chroma_ (_C\*_) is the distance of the color from the "gray" line.<sup>[**(23)**](#Note23)</sup>.
-- _Hue_ (_h_, an angle)<sup>[**(13)**](#Note13)</sup> ranges from magenta at roughly 0 to red to yellow to green to cyan to blue to magenta
+- _Chroma_ (_C\*_) is the distance of the color from the "gray" line.<sup>[**(23)**](#Note23)</sup>
+- _Hue_ (_h_, an angle)<sup>[**(13)**](#Note13)</sup> ranges from magenta at roughly 0 to red to yellow to green to cyan to blue to magenta.
 
 In the following pseudocode:
 - The following methods convert an **encoded sRGB** color to and from CIELAB:
@@ -903,7 +903,7 @@ In the following pseudocode&mdash;
 <a id=CMYK_and_Other_Ink_Mixture_Color_Models></a>
 ### CMYK and Other Ink-Mixture Color Models
 
-The _CMYK color model_, ideally, describes the proportion of cyan, magenta, yellow, and black (K) inks to use to reproduce certain colors on a surface.<sup>[**(24)**](#Note24)</sup> However, since [**color mixture**](#Color_Mixture) of inks is very complex, the exact color appearance of any recipe of inks (not just CMYK) depends on the _printing condition_ (as defined in ISO 12647-1), including what inks are used, how the inks are printed, and what surface (e.g., paper) the printed output appears on.
+The _CMYK color model_, ideally, describes the proportion of cyan, magenta, yellow, and black (K) inks to use to reproduce certain colors on a surface.<sup>[**(24)**](#Note24)</sup> However, since [**color mixture**](#Color_Mixture) of inks or other colorants is very complex, the exact color appearance of any recipe of colorants (not just CMYK) depends on the _printing condition_ (as defined in ISO 12647-1), including what colorants are used, how the inks are printed, and what surface (e.g., paper) the printed output appears on.
 
 **Characterization tables.** In printing industry practice, a given printing condition is characterized by finding out how it forms colors using different mixtures of inks.  This is usually done by printing CMYK color "patches" and using a [**color measurement device**](https://peteroupc.github.io/suppcolor.html#Color_Measurement_Devices) to measure their [**CIELAB**](#CIELAB) colors under standardized lighting and measurement conditions.
 
@@ -933,7 +933,7 @@ This section goes over many of the operations that can be done on colors.  Note 
 ### Luminance Factor (Grayscale)
 
 The [**_luminance factor_**](http://eilv.cie.co.at/term/717)&mdash;
-- is a single number indicating a color's luminance relative to white, that is, how much light reaches the eyes when that color is viewed, in comparison to white,
+- is a single number indicating a color's luminance relative to "white", that is, how much light reaches the eyes when that color is viewed, in comparison to "white",
 - is called **`Luminance(color)`** in this document,
 - is equivalent to the Y component of a relative [**XYZ color**](#CIE_XYZ), and
 - ranges from 0 for "black" to 1 for "white".
@@ -1091,7 +1091,7 @@ A _color matrix_ is a 9-item (3x3) list for transforming colors. The following a
 - **Sepia.** Sepia matrices can have the form `[r*sw[0], g*sw[0], b*sw[0], r*sw[1], g*sw[1], b*sw[1], r*sw[2], g*sw[2], b*sw[2]]`, where `r`, `g`, and `b` are as defined in the section "[**Luminance Factor (Grayscale)**](#Luminance_Factor_Grayscale)", and `sw` is the RGB color for "sepia white" (an arbitrary choice).  An example for linear sRGB is: `[0.207,0.696,0.07,0.212,0.712,0.072,0.16,0.538,0.054]`.
 - **Saturate.** `[s+(1-s)*r, (1-s)*g, (1-s)*b, (1-s)*r, s+(1-s)*g,(1-s)*b,(1-s)*r,(1-s)*g,s+(1-s)*b]`, where `s` ranges
 from 0 through 1 (the greater `s` is, the less saturated), and `r`, `g`, and `b` are as defined in the section "[**Luminance Factor (Grayscale)**](#Luminance_Factor_Grayscale)"<sup>[**(32)**](#Note32)</sup>.
-- **Hue rotate.** `[-0.37124*sr + 0.7874*cr + 0.2126,  -0.49629*sr - 0.7152*cr + 0.7152, 0.86753*sr - 0.0722*cr + 0.0722, 0.20611*sr - 0.2126*cr + 0.2126, 0.08106*sr + 0.2848*cr + 0.7152, -0.28717*sr - 0.072199*cr + 0.0722, -0.94859*sr - 0.2126*cr + 0.2126, 0.65841*sr - 0.7152*cr + 0.7152, 0.29018*sr + 0.9278*cr + 0.0722]`, where `sr = sin(rotation)`, `cr = cos(rotation)`, and `rotation` is the hue rotation angle.<sup>[**(33)**](#Note33)</sup><sup>[**(32)**](#Note32)</sup>
+- **Hue rotate.** `[-0.37124*sr + 0.7874*cr + 0.2126,  -0.49629*sr - 0.7152*cr + 0.7152, 0.86753*sr - 0.0722*cr + 0.0722, 0.20611*sr - 0.2126*cr + 0.2126, 0.08106*sr + 0.2848*cr + 0.7152, -0.28717*sr - 0.072199*cr + 0.0722, -0.94859*sr - 0.2126*cr + 0.2126, 0.65841*sr - 0.7152*cr + 0.7152, 0.29018*sr + 0.9278*cr + 0.0722]`, where `sr = sin(rotation)`, `cr = cos(rotation)`, and `rotation` is the hue rotation angle.<sup>[**(32)**](#Note32)</sup><sup>[**(33)**](#Note33)</sup>
 
 In the following pseudocode, `TransformColor` transforms an RGB color (`color`) with a color matrix (`matrix`).
 
@@ -1334,8 +1334,8 @@ The [**_ColorBrewer 2.0_**](http://colorbrewer2.org/) Web site's suggestions for
 If each color in a color map has a name, number, or code associated with it, the color map is also called a _color collection_.  Examples of names are "red", "vivid green", "orange", "lemonchiffon", and "5RP 5/6"<sup>[**(42)**](#Note42)</sup>.  A survey of color collections or color atlases is not covered in this document, but some of them are discussed in some detail in my [**colors tutorial for the HTML 3D Library**](https://peteroupc.github.io/html3dutil/tutorial-colors.html#What_Do_Some_Colors_Look_Like).
 
 Converting a color (such as an RGB color) to a color name is equivalent to&mdash;
-- retrieving the name keyed to that color in a hash table (or returning an error if that color doesn't exist in the hash table), or
-- finding the [**nearest color**](#Nearest_Colors) to that color among the named colors, and returning the color found this way (and/or that color's name).<sup>[**(39)**](#Note39)</sup>
+- retrieving the name keyed to that color in a hash table (or returning an error if that color doesn't exist in the hash table)<sup>[**(39)**](#Note39)</sup>, or
+- finding the [**nearest color**](#Nearest_Colors) to that color among the named colors, and returning the name of the color found this way.
 
 Converting a color name to a color is equivalent to retrieving the color keyed to that name (or optionally, its lower-cased form) in a hash table, or returning an error if no such color exists.<sup>[**(39)**](#Note39)</sup>
 

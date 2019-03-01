@@ -14,6 +14,7 @@ This document presents supplemental topics about color.  They add to my article 
 - [**Contents**](#Contents)
 - [**Notation and Definitions**](#Notation_and_Definitions)
 - [**Kinds of Color Spaces**](#Kinds_of_Color_Spaces)
+- [**"Primary Colors"**](#Primary_Colors)
 - [**Calculating the Mean Hue Angle**](#Calculating_the_Mean_Hue_Angle)
 - [**Additional Text-based RGB colors**](#Additional_Text_based_RGB_colors)
 - [**Additional Color Models**](#Additional_Color_Models)
@@ -23,7 +24,6 @@ This document presents supplemental topics about color.  They add to my article 
 - [**Terminal Graphics**](#Terminal_Graphics)
 - [**Color Measurement Devices**](#Color_Measurement_Devices)
 - [**Irrelevant Topics**](#Irrelevant_Topics)
-- [**Notes**](#Notes)
 - [**License**](#License)
 
 <a id=Notation_and_Definitions></a>
@@ -38,15 +38,23 @@ This document presents supplemental topics about color.  They add to my article 
 
 _Color spaces_ are designed to organize colors.  They can be categorized as any of the following:
 
-- **Device-dependent** color spaces are based on how devices display or record color.  Such color spaces include&mdash;
-    - **light-mixture color spaces**, based on mixtures of colored light sources (such as RGB, red-green-blue), and
-    - **colorant-mixture color spaces**, based on mixtures of inks, dyes, or other colorants (such as CMYK, cyan-magenta-yellow-black).<sup>[**(1)**](#Note1)</sup>
-
-    A color space defined in terms of a device-dependent color space is itself device-dependent.  Examples of this include HSL, HSV, and HWB, which transform an RGB color space to ease intuition.
-- **Device-independent** color spaces are other than device dependent (including color spaces based on how humans perceive color).  These include XYZ color spaces as well as color spaces defined in terms of the XYZ color model, such as CIELAB and CIELUV.
-- **Lightness-based** color spaces have three dimensions, one of which is a light-dark dimension and the other two of which are _chromatic_ dimensions.  Examples include HSL, CIE _L\*C\*h_, CIE XYZ, and Y&prime;C<sub>_B_</sub>C<sub>_R_</sub>.  Of these color spaces:
-    - **Opponent** color spaces are arranged in three axes: black/white, red/green, and blue/yellow.  Examples include CIELAB and Hunter L,a,b.<sup>[**(2)**](#Note2)</sup>
+- **Light-mixture** color spaces are based on mixtures of colored light sources (such as RGB, red-green-blue).  (The term "additive mixture" is better used to mean [**_additive mixture of color stimuli_**](http://eilv.cie.co.at/term/24), rather than light mixture.)
+- **Colorant-mixture** color spaces are based on mixtures of inks, dyes, or other colorants (such as CMYK, cyan-magenta-yellow-black). ("Subtractive mixture" is an inferior term.)
 - **Hue-based** color spaces have three dimensions, one of which is hue.  Examples include HSL, HSV, and CIE _L\*C\*h_.
+- **Lightness-based** color spaces have three dimensions, one of which is a light-dark dimension.  Examples include HSL, CIE _L\*C\*h_, CIE XYZ, and Y&prime;C<sub>_B_</sub>C<sub>_R_</sub>.  Of these color spaces:
+- **Opponent** color spaces are lightness-based color spaces arranged in three axes: black/white, red/green, and blue/yellow.  Examples include CIELAB and Hunter L,a,b.
+- It's discouraged to speak of **"device-dependent"** and **"device-independent"** color spaces, because the difference between the two is not always clear.  While color spaces based on how humans perceive color, such as XYZ, may be considered "device independent", some RGB color spaces may also be, depending on whether they are convertible, without loss, to XYZ and back (_colorimetric color spaces_).
+
+<a id=Primary_Colors></a>
+## "Primary Colors"
+
+In general, so-called "primary colors" are not relevant to programming except in the context of light-mixture, colorant-mixture, or opponent color spaces.
+
+For light-mixture and colorant-mixture color spaces, the colors of the light sources or colorants those spaces are based on can be called "primary colors".
+
+For opponent color spaces, the four so-called _unique hues_ red, green, blue, and yellow, and maybe white and black, can be called "primary colors"; such "primary colors", however, are generally imaginary and serve as axes only.
+
+"Primary colors" can be, and often are, imaginary.  For example, the [**ACES2065-1 RGB color space**](http://www.oscars.org/science-technology/sci-tech-projects/aces), include imaginary points for one or more "primary colors" in exchange for covering a range of colors not normally possible otherwise.
 
 <a id=Calculating_the_Mean_Hue_Angle></a>
 ## Calculating the Mean Hue Angle
@@ -152,7 +160,7 @@ The difference in lightness, _a_, _b_, or chroma (_&Delta;L_, _&Delta;a_, _&Delt
 <a id=Additional_Color_Formulas></a>
 ## Additional Color Formulas
 
-**CIE94.** The following pseudocode implements the color difference formula published in 1994 by the CIE, called CIE94 or _&Delta;E\*_<sub>94</sub>, between two [**CIELAB**](#CIELAB) colors.  Note that in this formula, the order of the two colors is important (the first color is the reference, and the second color is the test).  In the pseudocode below, `TEXTILES` is `true` for a color difference suitable for textile applications, and `false` otherwise.
+**CIE94.** The following pseudocode implements the color difference formula published in 1994 by the CIE, called CIE94 or _&Delta;E\*_<sub>94</sub>, between two [**CIELAB**](https://peteroupc.github.io/colorgen.html#CIELAB) colors.  Note that in this formula, the order of the two colors is important (the first color is the reference, and the second color is the test).  In the pseudocode below, `TEXTILES` is `true` for a color difference suitable for textile applications, and `false` otherwise.
 
     METHOD COLORDIFF(lab1, lab2)
         c1=LabToChroma(lab1)
@@ -188,10 +196,10 @@ Some command-line terminals (or terminal emulators) support coloring the backgro
 - "7": Reverse the meaning of "foreground" and "background" in the following text.
 - "8": Hide text while still taking up space.
 - "21", "22", "23", "24", "27", "28": Turns off the feature mentioned earlier in "1", "2", "3", "4", "7", or "8", respectively.
-- "3" followed by one of the _color numbers_ below: Dimmer foreground color.
-- "4" followed by color number: Dimmer background color.
-- "9" followed by color number: Brighter foreground color.
-- "10" followed by color number: Brighter background color.
+- "3" followed by one of the _color numbers_ below: Dimmer version of foreground color.
+- "4" followed by color number: Dimmer version of background color.
+- "9" followed by color number: Brighter version of foreground color.
+- "10" followed by color number: Brighter version of background color.
 
 The _color number_ is one of the following: "0" (black), "1" (red), "2" (green), "3" (yellow), "4" (blue), "5" (magenta), "6" (cyan), or "7" (white).  Note that not all terminals or terminal emulators support all the SGR codes given here, and that the exact colors named by each color number can vary with the implementation.
 
@@ -226,15 +234,6 @@ The following topics on color are rarely relevant to programmers:
 - The psychology, symbolism, or "meaning" of colors, since they vary from culture to culture and can change over time, even within the same culture.
 - Language differences in color lexicons, for the same reason.
 - "Color forecasting", or predicting which colors will be in high demand, especially in the fashion and design realms.
-
-<a id=Notes></a>
-## Notes
-
-<small><sup id=Note1>(1)</sup> The colors that such lights or colorants are based on can be called "primary colors"; it's only in the context of light-mixture, colorant-mixture, or opponent color spaces that "primary colors" are normally relevant to programming.  Note that some light-mixture color spaces, such as the [**ACES2065-1 RGB color space**](http://www.oscars.org/science-technology/sci-tech-projects/aces), include imaginary points for one or more "primary colors" in exchange for covering a range of colors not normally possible otherwise.  Moreover, in my opinion&mdash;
-- "additive mixture" should not be used to mean light mixture, but rather to mean [**_additive mixture of color stimuli_**](http://eilv.cie.co.at/term/24), and
-- "subtractive mixture" is an inferior term to colorant mixture.</small>
-
-<small><sup id=Note2>(2)</sup> In the context of such color spaces, the colors red, green, blue, and yellow are often called the _unique hues_, and those colors, with or without white and black, can be called "primary colors".  Here, such "primary colors" serve more to anchor the location of a particular color in the color space than to "mix all colors" or represent specific light sources or colorants.</small>
 
 <a id=License></a>
 ## License

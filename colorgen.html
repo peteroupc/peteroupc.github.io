@@ -719,7 +719,7 @@ END METHOD
 <p><strong>Notes:</strong></p>
 
 <ol>
-<li>This document does not seek to survey the various ways in which Y&prime;C<sub><em>B</em></sub>C<sub><em>R</em></sub> and similar colors are built up into pixels in images and video.  In general, such ways take into account the human eye&#39;s normally greater spatial sensitivity to luminance (e.g., Y, as approximated by Y&prime;, luma) than chromatic sensitivity (e.g., C<sub><em>B</em></sub>, C<sub><em>R</em></sub>).</li>
+<li>This document does not seek to survey the various ways in which Y&prime;C<sub><em>B</em></sub>C<sub><em>R</em></sub> and similar colors are built up into pixels in images and video.  In general, such ways take into account the human eye&#39;s normally greater spatial sensitivity to luminance (Y, as approximated, e.g., by Y&prime;, luma) than chromatic sensitivity (e.g., C<sub><em>B</em></sub>, C<sub><em>R</em></sub>).</li>
 <li>Other video color formats include &quot;BT.2020 constant luminance&quot;, in <a href="https://en.wikipedia.org/wiki/Rec._2020"><strong>Rec. 2020</strong></a>, and IC<sub><em>T</em></sub>C<sub><em>P</em></sub>, mentioned in Rep. 2390-4.  Both formats are not detailed here.</li>
 </ol>
 </blockquote>
@@ -881,8 +881,8 @@ END METHOD
 
 <ul>
 <li>Lightness (<em>L*</em>) remains unchanged.</li>
-<li><em>Chroma</em> (<em>C*</em>) is the distance of the color from the &quot;gray&quot; line.<sup><a href="#Note23"><strong>(23)</strong></a></sup>.</li>
-<li><em>Hue</em> (<em>h</em>, an angle)<sup><a href="#Note13"><strong>(13)</strong></a></sup> ranges from magenta at roughly 0 to red to yellow to green to cyan to blue to magenta</li>
+<li><em>Chroma</em> (<em>C*</em>) is the distance of the color from the &quot;gray&quot; line.<sup><a href="#Note23"><strong>(23)</strong></a></sup></li>
+<li><em>Hue</em> (<em>h</em>, an angle)<sup><a href="#Note13"><strong>(13)</strong></a></sup> ranges from magenta at roughly 0 to red to yellow to green to cyan to blue to magenta.</li>
 </ul>
 
 <p>In the following pseudocode:</p>
@@ -1073,7 +1073,7 @@ END METHOD
 
 <h3>CMYK and Other Ink-Mixture Color Models</h3>
 
-<p>The <em>CMYK color model</em>, ideally, describes the proportion of cyan, magenta, yellow, and black (K) inks to use to reproduce certain colors on a surface.<sup><a href="#Note24"><strong>(24)</strong></a></sup> However, since <a href="#Color_Mixture"><strong>color mixture</strong></a> of inks is very complex, the exact color appearance of any recipe of inks (not just CMYK) depends on the <em>printing condition</em> (as defined in ISO 12647-1), including what inks are used, how the inks are printed, and what surface (e.g., paper) the printed output appears on.</p>
+<p>The <em>CMYK color model</em>, ideally, describes the proportion of cyan, magenta, yellow, and black (K) inks to use to reproduce certain colors on a surface.<sup><a href="#Note24"><strong>(24)</strong></a></sup> However, since <a href="#Color_Mixture"><strong>color mixture</strong></a> of inks or other colorants is very complex, the exact color appearance of any recipe of colorants (not just CMYK) depends on the <em>printing condition</em> (as defined in ISO 12647-1), including what colorants are used, how the inks are printed, and what surface (e.g., paper) the printed output appears on.</p>
 
 <p><strong>Characterization tables.</strong> In printing industry practice, a given printing condition is characterized by finding out how it forms colors using different mixtures of inks.  This is usually done by printing CMYK color &quot;patches&quot; and using a <a href="https://peteroupc.github.io/suppcolor.html#Color_Measurement_Devices"><strong>color measurement device</strong></a> to measure their <a href="#CIELAB"><strong>CIELAB</strong></a> colors under standardized lighting and measurement conditions.</p>
 
@@ -1108,7 +1108,7 @@ END METHOD
 <p>The <a href="http://eilv.cie.co.at/term/717"><strong><em>luminance factor</em></strong></a>&mdash;</p>
 
 <ul>
-<li>is a single number indicating a color&#39;s luminance relative to white, that is, how much light reaches the eyes when that color is viewed, in comparison to white,</li>
+<li>is a single number indicating a color&#39;s luminance relative to &quot;white&quot;, that is, how much light reaches the eyes when that color is viewed, in comparison to &quot;white&quot;,</li>
 <li>is called <strong><code>Luminance(color)</code></strong> in this document,</li>
 <li>is equivalent to the Y component of a relative <a href="#CIE_XYZ"><strong>XYZ color</strong></a>, and</li>
 <li>ranges from 0 for &quot;black&quot; to 1 for &quot;white&quot;.</li>
@@ -1305,7 +1305,7 @@ END METHOD
 <li><strong>Sepia.</strong> Sepia matrices can have the form <code>[r*sw[0], g*sw[0], b*sw[0], r*sw[1], g*sw[1], b*sw[1], r*sw[2], g*sw[2], b*sw[2]]</code>, where <code>r</code>, <code>g</code>, and <code>b</code> are as defined in the section &quot;<a href="#Luminance_Factor_Grayscale"><strong>Luminance Factor (Grayscale)</strong></a>&quot;, and <code>sw</code> is the RGB color for &quot;sepia white&quot; (an arbitrary choice).  An example for linear sRGB is: <code>[0.207,0.696,0.07,0.212,0.712,0.072,0.16,0.538,0.054]</code>.</li>
 <li><strong>Saturate.</strong> <code>[s+(1-s)*r, (1-s)*g, (1-s)*b, (1-s)*r, s+(1-s)*g,(1-s)*b,(1-s)*r,(1-s)*g,s+(1-s)*b]</code>, where <code>s</code> ranges
 from 0 through 1 (the greater <code>s</code> is, the less saturated), and <code>r</code>, <code>g</code>, and <code>b</code> are as defined in the section &quot;<a href="#Luminance_Factor_Grayscale"><strong>Luminance Factor (Grayscale)</strong></a>&quot;<sup><a href="#Note32"><strong>(32)</strong></a></sup>.</li>
-<li><strong>Hue rotate.</strong> <code>[-0.37124*sr + 0.7874*cr + 0.2126,  -0.49629*sr - 0.7152*cr + 0.7152, 0.86753*sr - 0.0722*cr + 0.0722, 0.20611*sr - 0.2126*cr + 0.2126, 0.08106*sr + 0.2848*cr + 0.7152, -0.28717*sr - 0.072199*cr + 0.0722, -0.94859*sr - 0.2126*cr + 0.2126, 0.65841*sr - 0.7152*cr + 0.7152, 0.29018*sr + 0.9278*cr + 0.0722]</code>, where <code>sr = sin(rotation)</code>, <code>cr = cos(rotation)</code>, and <code>rotation</code> is the hue rotation angle.<sup><a href="#Note33"><strong>(33)</strong></a></sup><sup><a href="#Note32"><strong>(32)</strong></a></sup></li>
+<li><strong>Hue rotate.</strong> <code>[-0.37124*sr + 0.7874*cr + 0.2126,  -0.49629*sr - 0.7152*cr + 0.7152, 0.86753*sr - 0.0722*cr + 0.0722, 0.20611*sr - 0.2126*cr + 0.2126, 0.08106*sr + 0.2848*cr + 0.7152, -0.28717*sr - 0.072199*cr + 0.0722, -0.94859*sr - 0.2126*cr + 0.2126, 0.65841*sr - 0.7152*cr + 0.7152, 0.29018*sr + 0.9278*cr + 0.0722]</code>, where <code>sr = sin(rotation)</code>, <code>cr = cos(rotation)</code>, and <code>rotation</code> is the hue rotation angle.<sup><a href="#Note32"><strong>(32)</strong></a></sup><sup><a href="#Note33"><strong>(33)</strong></a></sup></li>
 </ul>
 
 <p>In the following pseudocode, <code>TransformColor</code> transforms an RGB color (<code>color</code>) with a color matrix (<code>matrix</code>).</p>
@@ -1608,8 +1608,8 @@ END METHOD
 <p>Converting a color (such as an RGB color) to a color name is equivalent to&mdash;</p>
 
 <ul>
-<li>retrieving the name keyed to that color in a hash table (or returning an error if that color doesn&#39;t exist in the hash table), or</li>
-<li>finding the <a href="#Nearest_Colors"><strong>nearest color</strong></a> to that color among the named colors, and returning the color found this way (and/or that color&#39;s name).<sup><a href="#Note39"><strong>(39)</strong></a></sup></li>
+<li>retrieving the name keyed to that color in a hash table (or returning an error if that color doesn&#39;t exist in the hash table)<sup><a href="#Note39"><strong>(39)</strong></a></sup>, or</li>
+<li>finding the <a href="#Nearest_Colors"><strong>nearest color</strong></a> to that color among the named colors, and returning the name of the color found this way.</li>
 </ul>
 
 <p>Converting a color name to a color is equivalent to retrieving the color keyed to that name (or optionally, its lower-cased form) in a hash table, or returning an error if no such color exists.<sup><a href="#Note39"><strong>(39)</strong></a></sup></p>

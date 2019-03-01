@@ -21,6 +21,7 @@
 <li><a href="#Contents"><strong>Contents</strong></a></li>
 <li><a href="#Notation_and_Definitions"><strong>Notation and Definitions</strong></a></li>
 <li><a href="#Kinds_of_Color_Spaces"><strong>Kinds of Color Spaces</strong></a></li>
+<li><a href="#Primary_Colors"><strong>&quot;Primary Colors&quot;</strong></a></li>
 <li><a href="#Calculating_the_Mean_Hue_Angle"><strong>Calculating the Mean Hue Angle</strong></a></li>
 <li><a href="#Additional_Text_based_RGB_colors"><strong>Additional Text-based RGB colors</strong></a></li>
 <li><a href="#Additional_Color_Models"><strong>Additional Color Models</strong></a>
@@ -33,7 +34,6 @@
 <li><a href="#Terminal_Graphics"><strong>Terminal Graphics</strong></a></li>
 <li><a href="#Color_Measurement_Devices"><strong>Color Measurement Devices</strong></a></li>
 <li><a href="#Irrelevant_Topics"><strong>Irrelevant Topics</strong></a></li>
-<li><a href="#Notes"><strong>Notes</strong></a></li>
 <li><a href="#License"><strong>License</strong></a></li>
 </ul>
 
@@ -54,22 +54,25 @@
 <p><em>Color spaces</em> are designed to organize colors.  They can be categorized as any of the following:</p>
 
 <ul>
-<li><p><strong>Device-dependent</strong> color spaces are based on how devices display or record color.  Such color spaces include&mdash;</p>
-
-<ul>
-<li><strong>light-mixture color spaces</strong>, based on mixtures of colored light sources (such as RGB, red-green-blue), and</li>
-<li><strong>colorant-mixture color spaces</strong>, based on mixtures of inks, dyes, or other colorants (such as CMYK, cyan-magenta-yellow-black).<sup><a href="#Note1"><strong>(1)</strong></a></sup></li>
-</ul>
-
-<p>A color space defined in terms of a device-dependent color space is itself device-dependent.  Examples of this include HSL, HSV, and HWB, which transform an RGB color space to ease intuition.</p></li>
-<li><strong>Device-independent</strong> color spaces are other than device dependent (including color spaces based on how humans perceive color).  These include XYZ color spaces as well as color spaces defined in terms of the XYZ color model, such as CIELAB and CIELUV.</li>
-<li><strong>Lightness-based</strong> color spaces have three dimensions, one of which is a light-dark dimension and the other two of which are <em>chromatic</em> dimensions.  Examples include HSL, CIE <em>L*C*h</em>, CIE XYZ, and Y&prime;C<sub><em>B</em></sub>C<sub><em>R</em></sub>.  Of these color spaces:
-
-<ul>
-<li><strong>Opponent</strong> color spaces are arranged in three axes: black/white, red/green, and blue/yellow.  Examples include CIELAB and Hunter L,a,b.<sup><a href="#Note2"><strong>(2)</strong></a></sup></li>
-</ul></li>
+<li><strong>Light-mixture</strong> color spaces are based on mixtures of colored light sources (such as RGB, red-green-blue).  (The term &quot;additive mixture&quot; is better used to mean <a href="http://eilv.cie.co.at/term/24"><strong><em>additive mixture of color stimuli</em></strong></a>, rather than light mixture.)</li>
+<li><strong>Colorant-mixture</strong> color spaces are based on mixtures of inks, dyes, or other colorants (such as CMYK, cyan-magenta-yellow-black). (&quot;Subtractive mixture&quot; is an inferior term.)</li>
 <li><strong>Hue-based</strong> color spaces have three dimensions, one of which is hue.  Examples include HSL, HSV, and CIE <em>L*C*h</em>.</li>
+<li><strong>Lightness-based</strong> color spaces have three dimensions, one of which is a light-dark dimension.  Examples include HSL, CIE <em>L*C*h</em>, CIE XYZ, and Y&prime;C<sub><em>B</em></sub>C<sub><em>R</em></sub>.  Of these color spaces:</li>
+<li><strong>Opponent</strong> color spaces are lightness-based color spaces arranged in three axes: black/white, red/green, and blue/yellow.  Examples include CIELAB and Hunter L,a,b.</li>
+<li>It&#39;s discouraged to speak of <strong>&quot;device-dependent&quot;</strong> and <strong>&quot;device-independent&quot;</strong> color spaces, because the difference between the two is not always clear.  While color spaces based on how humans perceive color, such as XYZ, may be considered &quot;device independent&quot;, some RGB color spaces may also be, depending on whether they are convertible, without loss, to XYZ and back (<em>colorimetric color spaces</em>).</li>
 </ul>
+
+<p><a id=Primary_Colors></a></p>
+
+<h2>&quot;Primary Colors&quot;</h2>
+
+<p>In general, so-called &quot;primary colors&quot; are not relevant to programming except in the context of light-mixture, colorant-mixture, or opponent color spaces.</p>
+
+<p>For light-mixture and colorant-mixture color spaces, the colors of the light sources or colorants those spaces are based on can be called &quot;primary colors&quot;.</p>
+
+<p>For opponent color spaces, the four so-called <em>unique hues</em> red, green, blue, and yellow, and maybe white and black, can be called &quot;primary colors&quot;; such &quot;primary colors&quot;, however, are generally imaginary and serve as axes only.</p>
+
+<p>&quot;Primary colors&quot; can be, and often are, imaginary.  For example, the <a href="http://www.oscars.org/science-technology/sci-tech-projects/aces"><strong>ACES2065-1 RGB color space</strong></a>, include imaginary points for one or more &quot;primary colors&quot; in exchange for covering a range of colors not normally possible otherwise.</p>
 
 <p><a id=Calculating_the_Mean_Hue_Angle></a></p>
 
@@ -188,7 +191,7 @@ Hunter L, a, b colors analogously to CIELAB colors.</p>
 
 <h2>Additional Color Formulas</h2>
 
-<p><strong>CIE94.</strong> The following pseudocode implements the color difference formula published in 1994 by the CIE, called CIE94 or <em>&Delta;E*</em><sub>94</sub>, between two <a href="#CIELAB"><strong>CIELAB</strong></a> colors.  Note that in this formula, the order of the two colors is important (the first color is the reference, and the second color is the test).  In the pseudocode below, <code>TEXTILES</code> is <code>true</code> for a color difference suitable for textile applications, and <code>false</code> otherwise.</p>
+<p><strong>CIE94.</strong> The following pseudocode implements the color difference formula published in 1994 by the CIE, called CIE94 or <em>&Delta;E*</em><sub>94</sub>, between two <a href="https://peteroupc.github.io/colorgen.html#CIELAB"><strong>CIELAB</strong></a> colors.  Note that in this formula, the order of the two colors is important (the first color is the reference, and the second color is the test).  In the pseudocode below, <code>TEXTILES</code> is <code>true</code> for a color difference suitable for textile applications, and <code>false</code> otherwise.</p>
 
 <pre>METHOD COLORDIFF(lab1, lab2)
     c1=LabToChroma(lab1)
@@ -227,10 +230,10 @@ END METHOD
 <li>&quot;7&quot;: Reverse the meaning of &quot;foreground&quot; and &quot;background&quot; in the following text.</li>
 <li>&quot;8&quot;: Hide text while still taking up space.</li>
 <li>&quot;21&quot;, &quot;22&quot;, &quot;23&quot;, &quot;24&quot;, &quot;27&quot;, &quot;28&quot;: Turns off the feature mentioned earlier in &quot;1&quot;, &quot;2&quot;, &quot;3&quot;, &quot;4&quot;, &quot;7&quot;, or &quot;8&quot;, respectively.</li>
-<li>&quot;3&quot; followed by one of the <em>color numbers</em> below: Dimmer foreground color.</li>
-<li>&quot;4&quot; followed by color number: Dimmer background color.</li>
-<li>&quot;9&quot; followed by color number: Brighter foreground color.</li>
-<li>&quot;10&quot; followed by color number: Brighter background color.</li>
+<li>&quot;3&quot; followed by one of the <em>color numbers</em> below: Dimmer version of foreground color.</li>
+<li>&quot;4&quot; followed by color number: Dimmer version of background color.</li>
+<li>&quot;9&quot; followed by color number: Brighter version of foreground color.</li>
+<li>&quot;10&quot; followed by color number: Brighter version of background color.</li>
 </ul>
 
 <p>The <em>color number</em> is one of the following: &quot;0&quot; (black), &quot;1&quot; (red), &quot;2&quot; (green), &quot;3&quot; (yellow), &quot;4&quot; (blue), &quot;5&quot; (magenta), &quot;6&quot; (cyan), or &quot;7&quot; (white).  Note that not all terminals or terminal emulators support all the SGR codes given here, and that the exact colors named by each color number can vary with the implementation.</p>
@@ -276,19 +279,6 @@ END METHOD
 <li>Language differences in color lexicons, for the same reason.</li>
 <li>&quot;Color forecasting&quot;, or predicting which colors will be in high demand, especially in the fashion and design realms.</li>
 </ul>
-
-<p><a id=Notes></a></p>
-
-<h2>Notes</h2>
-
-<p><small><sup id=Note1>(1)</sup> The colors that such lights or colorants are based on can be called &quot;primary colors&quot;; it&#39;s only in the context of light-mixture, colorant-mixture, or opponent color spaces that &quot;primary colors&quot; are normally relevant to programming.  Note that some light-mixture color spaces, such as the <a href="http://www.oscars.org/science-technology/sci-tech-projects/aces"><strong>ACES2065-1 RGB color space</strong></a>, include imaginary points for one or more &quot;primary colors&quot; in exchange for covering a range of colors not normally possible otherwise.  Moreover, in my opinion&mdash;</p>
-
-<ul>
-<li>&quot;additive mixture&quot; should not be used to mean light mixture, but rather to mean <a href="http://eilv.cie.co.at/term/24"><strong><em>additive mixture of color stimuli</em></strong></a>, and</li>
-<li>&quot;subtractive mixture&quot; is an inferior term to colorant mixture.</small></li>
-</ul>
-
-<p><small><sup id=Note2>(2)</sup> In the context of such color spaces, the colors red, green, blue, and yellow are often called the <em>unique hues</em>, and those colors, with or without white and black, can be called &quot;primary colors&quot;.  Here, such &quot;primary colors&quot; serve more to anchor the location of a particular color in the color space than to &quot;mix all colors&quot; or represent specific light sources or colorants.</small></p>
 
 <p><a id=License></a></p>
 
