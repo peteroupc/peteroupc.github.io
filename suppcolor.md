@@ -52,7 +52,7 @@ In general, so-called "primary colors" are not relevant to programming except in
 
 For light-mixture and colorant-mixture color spaces, the colors of the light sources or colorants those spaces are based on can be called "primary colors".
 
-For opponent color spaces, the four so-called _unique hues_ red, green, blue, and yellow, and maybe white and black, can be called "primary colors"; such "primary colors", however, are generally imaginary and serve as axes only.
+For opponent color spaces, the four so-called _unique hues_ red, green, blue, and yellow, and maybe white and black, can be called "primary colors"; such "primary colors", however, generally serve as axes only.
 
 "Primary colors" can be, and often are, imaginary.  For example, the [**ACES2065-1 RGB color space**](http://www.oscars.org/science-technology/sci-tech-projects/aces), include imaginary points for one or more "primary colors" in exchange for covering a range of colors not normally possible otherwise.
 

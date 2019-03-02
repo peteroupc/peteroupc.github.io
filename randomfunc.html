@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
-<p>Begun on June 4, 2017; last updated on Feb. 28, 2019.</p>
+<p>Begun on June 4, 2017; last updated on Mar. 1, 2019.</p>
 
 <p>Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.</p>
 
@@ -200,17 +200,17 @@
 </tr>
 </thead><tbody>
 <tr>
-<td>Integers in the interval [0, <em>n</em>)</td>
+<td>Integers in the interval [0, <em>n</em>).</td>
 <td>The underlying RNG.</td>
 <td><em>n</em>.</td>
 </tr>
 <tr>
-<td>Numbers in the interval [0, 1) known to be evenly spaced by a number <em>p</em> (e.g., dSFMT)</td>
+<td>Numbers in the interval [0, 1) known to be evenly spaced by a number <em>p</em> (e.g., dSFMT).</td>
 <td>The underlying RNG, except with its outputs multiplied by <em>p</em>.</td>
 <td>1/<em>p</em>.</td>
 </tr>
 <tr>
-<td>Numbers not specified above</td>
+<td>Numbers not specified above.</td>
 <td>A new RNG formed by writing the underlying RNG&#39;s outputs to a stream of memory units (such as 8-bit bytes) and using a <em>randomness extraction</em> technique to transform that stream to <em>n</em>-bit integers.</td>
 <td>2<sup><em>n</em></sup>.</td>
 </tr>
@@ -2414,7 +2414,7 @@ END METHOD
 <ol>
 <li>In the <em>Box&ndash;Muller transformation</em>, <code>mu + radius * cos(angle)</code> and <code>mu + radius * sin(angle)</code>, where <code>angle = RNDRANGEMaxExc(0, 2 * pi)</code> and <code>radius = sqrt(-2 * ln(RNDU01ZeroExc())) * sigma</code>, are two independent normally-distributed random numbers.</li>
 <li>Computing the sum of twelve <code>RNDU01OneExc()</code> numbers and subtracting the sum by 6 (see also <a href="https://en.wikipedia.org/wiki/Irwin%E2%80%93Hall_distribution"><strong>&quot;Irwin&ndash;Hall distribution&quot; on Wikipedia</strong></a>) results in approximate standard normal (<code>mu</code>=0, <code>sigma</code>=1) random numbers, whose values are not less than -6 or greater than 6; on the other hand, in a standard normal distribution, results less than -6 or greater than 6 will occur only with a generally negligible probability.</li>
-<li>Generating <code>RNDU01ZeroOneExc()</code>, then running the standard normal distribution&#39;s inverse cumulative distribution function on that number, results in a random number from that distribution.  An approximation is found in M. Wichura, <em>Applied Statistics</em> 37(3), 1988.</li>
+<li>Generating <code>RNDU01ZeroOneExc()</code>, then running the standard normal distribution&#39;s inverse cumulative distribution function on that number, results in a random number from that distribution.  An approximation is found in M. Wichura, <em>Applied Statistics</em> 37(3), 1988.  See also <a href="https://www.johndcook.com/blog/normal_cdf_inverse/"><strong>&quot;A literate program to compute the inverse of the normal CDF&quot;</strong></a>.</li>
 </ol>
 
 <p>In 2007, Thomas, D., et al. gave a survey of normal random number methods in &quot;Gaussian Random Number Generators&quot;, <em>ACM Computing Surveys</em> 39(4), 2007, article 11.</small></p>

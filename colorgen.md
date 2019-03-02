@@ -1411,7 +1411,7 @@ The following techniques can be used to generate random RGB colors. Note that fo
 - **Similar random colors:** Generating a random color that's similar to another is equivalent to generating a random color (`color1`) until `COLORDIFF(color1, color2)` (defined [**earlier**](#Color_Differences)) is less than a predetermined threshold, where `color2` is the color to compare.
 - **Image noise:** This alters a color using random numbers, such as by adding or multiplying random numbers to that color.  For example, in _uniform noise_, each component of a multicomponent color is changed to  `min(1,max(0,c+RNDRANGE(-level, level)))`, where `c` is the value of the previous component and `level` is the noise level.  Other kinds of image noise include noise following a Gaussian, Poisson, or other [**probability distribution**](https://peteroupc.github.io/randomfunc.html#Specific_Non_Uniform_Distributions), and _salt-and-pepper noise_ that involves replacing each pixel by black or white at a predetermined probability each.
 
-> **Note:** The methods in this section can also be implemented by using a [**_hash function_**](https://peteroupc.github.io/random.html#Hash_Functions) to convert arbitrary data to "random" bits which can be used either directly or to initialize a pseudorandom number generator which can generate further "random" bits.  For example, `From888(MD5_24("Hello World"))`, where `MD5_24` is the first 24 bits of the MD5 hash, can be interpreted as an 8-bpc encoded RGB color.
+> **Note:** The methods in this section can also be implemented by using a [**_hash function_**](https://peteroupc.github.io/random.html#Hash_Functions) to convert arbitrary data to "random" bits which can be used either directly or to initialize a pseudorandom number generator which can generate further "random" bits.  For example, `From888(MD5_24("Hello World"))`, where `MD5_24()` is the first 24 bits of the MD5 hash, can be interpreted as an 8-bpc encoded RGB color.
 
 <a id=Spectral_Color_Functions></a>
 ## Spectral Color Functions
@@ -1508,7 +1508,7 @@ The `Planckian` method shown below models the spectral power distribution (SPD) 
 
 > **Note:** If `TEMP` is 2856, the `BlackbodySPD` function above is substantially equivalent to the CIE illuminant A.
 
-The concept "color temperature" properly applies only to blackbody chromaticities.  For chromaticities close to a blackbody's, the CIE defines [**_correlated color temperature_**](http://eilv.cie.co.at/term/258) (CCT) as the temperature of the blackbody with the closest (_u_, _v_) coordinates<sup>[**(20)**](#Note20)</sup> to those of the given color.  (According to the CIE, however, CCT is not meaningful if the straight-line distance between the two (_u_, _v_) points is more than 0.05.)
+The concept "color temperature" properly applies only to blackbody chromaticities.  For chromaticities close to a blackbody's, the CIE defines [**_correlated color temperature_**](http://eilv.cie.co.at/term/258) (CCT) as the temperature of the blackbody with the closest (_u_, _v_) coordinates<sup>[**(20)**](#Note20)</sup> to those of the given color.  The CCT calculation uses the CIE 1931 standard observer. (According to the CIE, however, CCT is not meaningful if the straight-line distance between the two (_u_, _v_) points is more than 0.05.)
 
 The following method (`XYZToCCT`), which computes an approximate CCT from an [**XYZ color**](#CIE_XYZ), is based on McCamy's formula from 1992.
 

@@ -1713,7 +1713,7 @@ maximum value of each color component, e.g., 0.5.</li>
 </ul>
 
 <blockquote>
-<p><strong>Note:</strong> The methods in this section can also be implemented by using a <a href="https://peteroupc.github.io/random.html#Hash_Functions"><strong><em>hash function</em></strong></a> to convert arbitrary data to &quot;random&quot; bits which can be used either directly or to initialize a pseudorandom number generator which can generate further &quot;random&quot; bits.  For example, <code>From888(MD5_24(&quot;Hello World&quot;))</code>, where <code>MD5_24</code> is the first 24 bits of the MD5 hash, can be interpreted as an 8-bpc encoded RGB color.</p>
+<p><strong>Note:</strong> The methods in this section can also be implemented by using a <a href="https://peteroupc.github.io/random.html#Hash_Functions"><strong><em>hash function</em></strong></a> to convert arbitrary data to &quot;random&quot; bits which can be used either directly or to initialize a pseudorandom number generator which can generate further &quot;random&quot; bits.  For example, <code>From888(MD5_24(&quot;Hello World&quot;))</code>, where <code>MD5_24()</code> is the first 24 bits of the MD5 hash, can be interpreted as an 8-bpc encoded RGB color.</p>
 </blockquote>
 
 <p><a id=Spectral_Color_Functions></a></p>
@@ -1830,7 +1830,7 @@ END METHOD
 <p><strong>Note:</strong> If <code>TEMP</code> is 2856, the <code>BlackbodySPD</code> function above is substantially equivalent to the CIE illuminant A.</p>
 </blockquote>
 
-<p>The concept &quot;color temperature&quot; properly applies only to blackbody chromaticities.  For chromaticities close to a blackbody&#39;s, the CIE defines <a href="http://eilv.cie.co.at/term/258"><strong><em>correlated color temperature</em></strong></a> (CCT) as the temperature of the blackbody with the closest (<em>u</em>, <em>v</em>) coordinates<sup><a href="#Note20"><strong>(20)</strong></a></sup> to those of the given color.  (According to the CIE, however, CCT is not meaningful if the straight-line distance between the two (<em>u</em>, <em>v</em>) points is more than 0.05.)</p>
+<p>The concept &quot;color temperature&quot; properly applies only to blackbody chromaticities.  For chromaticities close to a blackbody&#39;s, the CIE defines <a href="http://eilv.cie.co.at/term/258"><strong><em>correlated color temperature</em></strong></a> (CCT) as the temperature of the blackbody with the closest (<em>u</em>, <em>v</em>) coordinates<sup><a href="#Note20"><strong>(20)</strong></a></sup> to those of the given color.  The CCT calculation uses the CIE 1931 standard observer. (According to the CIE, however, CCT is not meaningful if the straight-line distance between the two (<em>u</em>, <em>v</em>) points is more than 0.05.)</p>
 
 <p>The following method (<code>XYZToCCT</code>), which computes an approximate CCT from an <a href="#CIE_XYZ"><strong>XYZ color</strong></a>, is based on McCamy&#39;s formula from 1992.</p>
 

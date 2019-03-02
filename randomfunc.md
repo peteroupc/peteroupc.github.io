@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on June 4, 2017; last updated on Feb. 28, 2019.
+Begun on June 4, 2017; last updated on Mar. 1, 2019.
 
 Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.
 
@@ -138,9 +138,9 @@ In this document, **`RNDINT(maxInclusive)`** is the core method for using an und
 
 | If the underlying RNG produces: | Then `RNG()` is: | And `MODULUS` is: |
  --------- | ------ | ------ |
-| Integers in the interval \[0, _n_\) | The underlying RNG. | _n_. |
-| Numbers in the interval \[0, 1\) known to be evenly spaced by a number _p_ (e.g., dSFMT) | The underlying RNG, except with its outputs multiplied by _p_. | 1/_p_. |
-| Numbers not specified above | A new RNG formed by writing the underlying RNG's outputs to a stream of memory units (such as 8-bit bytes) and using a _randomness extraction_ technique to transform that stream to _n_-bit integers. | 2<sup>_n_</sup>. |
+| Integers in the interval \[0, _n_\). | The underlying RNG. | _n_. |
+| Numbers in the interval \[0, 1\) known to be evenly spaced by a number _p_ (e.g., dSFMT). | The underlying RNG, except with its outputs multiplied by _p_. | 1/_p_. |
+| Numbers not specified above. | A new RNG formed by writing the underlying RNG's outputs to a stream of memory units (such as 8-bit bytes) and using a _randomness extraction_ technique to transform that stream to _n_-bit integers. | 2<sup>_n_</sup>. |
 
     METHOD RndIntHelperNonPowerOfTwo(maxInclusive)
         cx = floor(maxInclusive / MODULUS) + 1
@@ -2017,7 +2017,7 @@ provided the PDF's values are all 0 or greater and the area under the PDF's curv
 
 1. In the _Box&ndash;Muller transformation_, `mu + radius * cos(angle)` and `mu + radius * sin(angle)`, where `angle = RNDRANGEMaxExc(0, 2 * pi)` and `radius = sqrt(-2 * ln(RNDU01ZeroExc())) * sigma`, are two independent normally-distributed random numbers.
 2. Computing the sum of twelve `RNDU01OneExc()` numbers and subtracting the sum by 6 (see also [**"Irwin&ndash;Hall distribution" on Wikipedia**](https://en.wikipedia.org/wiki/Irwin%E2%80%93Hall_distribution)) results in approximate standard normal (`mu`=0, `sigma`=1) random numbers, whose values are not less than -6 or greater than 6; on the other hand, in a standard normal distribution, results less than -6 or greater than 6 will occur only with a generally negligible probability.
-3. Generating `RNDU01ZeroOneExc()`, then running the standard normal distribution's inverse cumulative distribution function on that number, results in a random number from that distribution.  An approximation is found in M. Wichura, _Applied Statistics_ 37(3), 1988.
+3. Generating `RNDU01ZeroOneExc()`, then running the standard normal distribution's inverse cumulative distribution function on that number, results in a random number from that distribution.  An approximation is found in M. Wichura, _Applied Statistics_ 37(3), 1988.  See also [**"A literate program to compute the inverse of the normal CDF"**](https://www.johndcook.com/blog/normal_cdf_inverse/).
 
 In 2007, Thomas, D., et al. gave a survey of normal random number methods in "Gaussian Random Number Generators", _ACM Computing Surveys_ 39(4), 2007, article 11.</small>
 
