@@ -100,6 +100,7 @@ This document presents an overview of many common color topics that are of gener
     - the colors (which can have duplicates) used in a raster image's pixels, a vector image, a three-dimensional image, a digital video, or a digital document.
 - **ISO.** International Organization for Standardization.
 - **Light source.** Means a [**_primary light source_**](http://eilv.cie.co.at/term/982) or an [**_illuminant_**](http://eilv.cie.co.at/term/554), as defined by the CIE.  Roughly means an emitter of light, or radiation describing an emitter of light.
+- **Multicomponent color.** Color given in terms of one or more color components.  Color components include red components, green components, luminance factors, and points on a spectral reflectance curve.
 - **RGB.** Red-green-blue.
 
 <a id=Overview_of_Color_Vision></a>
@@ -173,7 +174,7 @@ There are many **RGB color spaces**, not just one, and they generally differ in 
 
 - **"Transfer function".** This is a function used to convert, component by component, a so-called **_linear RGB_** color to an **_encoded RGB_ (_R&prime;G&prime;B&prime;_)** color in the same color space.  Examples include the sRGB transfer function given [**later**](#sRGB); _gamma_ functions such as _c_<sup>1/_&gamma;_</sup>, where _c_ is the red, green, or blue component and _&gamma;_ is a positive number; and the PQ and HLG functions.
 
-In this document, the only RGB color space described in detail is [**sRGB**](#sRGB).  (Lindbloom)<sup>[**(9)**](#Note9)</sup> contains further information on many RGB color spaces.
+In general, the same three numbers, such as (1, 0.5, 0.3), identify a different-appearing RGB color in different RGB color spaces.  In this document, the only RGB color space described in detail is [**sRGB**](#sRGB).  (Lindbloom)<sup>[**(9)**](#Note9)</sup> contains further information on many RGB color spaces.
 
 > **Notes:**
 >
@@ -903,7 +904,7 @@ In the following pseudocode&mdash;
 <a id=CMYK_and_Other_Ink_Mixture_Color_Models></a>
 ### CMYK and Other Ink-Mixture Color Models
 
-The _CMYK color model_, ideally, describes the proportion of cyan, magenta, yellow, and black (K) inks to use to reproduce certain colors on a surface.<sup>[**(24)**](#Note24)</sup> However, since [**color mixture**](#Color_Mixture) of inks or other colorants is very complex, the exact color appearance of any recipe of colorants (not just CMYK) depends on the _printing condition_ (as defined in ISO 12647-1), including what colorants are used, how the inks are printed, and what surface (e.g., paper) the printed output appears on.
+The _CMYK color model_, ideally, describes the proportion of cyan, magenta, yellow, and black (K) inks to use to reproduce certain colors on a surface.<sup>[**(24)**](#Note24)</sup> However, since [**color mixture**](#Color_Mixture) of inks or other colorants is very complex, the exact color appearance of any recipe of colorants (not just in the CMYK context) depends on the _printing condition_ (as defined in ISO 12647-1), including what colorants are used, how the inks are printed, and what surface (e.g., paper) the printed output appears on.
 
 **Characterization tables.** In printing industry practice, a given printing condition is characterized by finding out how it forms colors using different mixtures of inks.  This is usually done by printing CMYK color "patches" and using a [**color measurement device**](https://peteroupc.github.io/suppcolor.html#Color_Measurement_Devices) to measure their [**CIELAB**](#CIELAB) colors under standardized lighting and measurement conditions.
 
@@ -1070,7 +1071,7 @@ Porter and Duff (1984) define twelve formulas for combining (compositing) two RG
 <a id=Blend_Modes></a>
 ### Blend Modes
 
-[**Blend modes**](https://en.wikipedia.org/wiki/Blend_modes) take a source color and destination color and blend them to create a new color.  The same blend mode, or different blend modes, can be applied to each component of a given color.  In the idioms below, `src` is one component of the source color, `dst` is the same component of the destination color (for example, `src` and `dst` can both be two RGB colors' red components), and both components are assumed to be 0 or greater and 1 or less.  The following are examples of blend modes.
+[**Blend modes**](https://en.wikipedia.org/wiki/Blend_modes) take two multicomponent colors, namely a source color and a destination color, and blend them to create a new color.  The same blend mode, or different blend modes, can be applied to each component of a given color.  In the idioms below, `src` is one component of the source color, `dst` is the same component of the destination color (for example, `src` and `dst` can both be two RGB colors' red components), and both components are assumed to be 0 or greater and 1 or less.  The following are examples of blend modes.
 
 - **Normal**: `src`.
 - **Lighten**: `max(src, dst)`.
@@ -1086,7 +1087,7 @@ Porter and Duff (1984) define twelve formulas for combining (compositing) two RG
 <a id=Color_Matrices></a>
 ### Color Matrices
 
-A _color matrix_ is a 9-item (3x3) list for transforming colors. The following are examples of color matrices:
+A _color matrix_ is a 9-item (3x3) list for transforming a three-component color. The following are examples of color matrices:
 
 - **Sepia.** Sepia matrices can have the form `[r*sw[0], g*sw[0], b*sw[0], r*sw[1], g*sw[1], b*sw[1], r*sw[2], g*sw[2], b*sw[2]]`, where `r`, `g`, and `b` are as defined in the section "[**Luminance Factor (Grayscale)**](#Luminance_Factor_Grayscale)", and `sw` is the RGB color for "sepia white" (an arbitrary choice).  An example for linear sRGB is: `[0.207,0.696,0.07,0.212,0.712,0.072,0.16,0.538,0.054]`.
 - **Saturate.** `[s+(1-s)*r, (1-s)*g, (1-s)*b, (1-s)*r, s+(1-s)*g,(1-s)*b,(1-s)*r,(1-s)*g,s+(1-s)*b]`, where `s` ranges
@@ -1101,6 +1102,11 @@ In the following pseudocode, `TransformColor` transforms an RGB color (`color`) 
           min(max(color[0]*matrix[3]+color[1]*matrix[4]+color[2]*matrix[5],0),1),
           min(max(color[0]*matrix[6]+color[1]*matrix[7]+color[2]*matrix[8],0),1) ]
     END METHOD
+
+More generally&mdash;
+
+- an N&times;N matrix can be used to transform an N-component color, or
+- an (N+1)&times;(N+1) matrix can be used to transform a color consisting of N components followed by the number 1; if this is done, the first N components of the transformed color are divided by the last component.
 
 <a id=Lighten_Darken></a>
 ### Lighten/Darken
@@ -1620,7 +1626,7 @@ The following topics would greatly enrich this document:
 <small><sup id=Note16>(16)</sup> In interior and architectural design, the luminance factor multiplied by 100 is also known as _light reflectance value_ (LRV).</small>
 
 <small><sup id=Note17>(17)</sup> Although the D65/2 white point is the usual one for sRGB, another white point may be more convenient in the following cases, among others:
-- Using the white point `[0.9642, 1, 0.8249]` can improve interoperability with applications color-managed with International Color Consortium (ICC) version 2 or 4 profiles (this is the D50/2 white point given in CIE Publication 15 [**before it was corrected**](https://lists.w3.org/Archives/Public/public-colorweb/2018Apr/0003.html)).
+- Using the white point `[0.9642, 1, 0.8249]` can improve interoperability with applications color-managed with International Color Consortium (ICC) version 2 or 4 profiles (this corresponds to the D50/2 white point given in CIE Publication 15 [**before it was corrected**](https://lists.w3.org/Archives/Public/public-colorweb/2018Apr/0003.html)).
 - The printing industry uses the D50 illuminant for historical reasons (see A. Kraushaar, [**"Why the printing industry is not using D65?"**](https://fogra.org/plugin.php?menuid=125&template=mv/templates/mv_show_front.html&mv_id=10&extern_meta=x&mv_content_id=140332&getlang=en), 2009).</small>
 
 <small><sup id=Note18>(18)</sup> Chromatic adaptation transforms include linear Bradford transformations, but are not further detailed in this document. (See also E. Stone, "[**The Luminance of an sRGB Color**](https://ninedegreesbelow.com/photography/srgb-luminance.html)", 2013.)</small>
