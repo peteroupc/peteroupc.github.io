@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
-<p>Begun on Mar. 5, 2016; last updated on Feb. 27, 2019.</p>
+<p>Begun on Mar. 5, 2016; last updated on Mar. 5, 2019.</p>
 
 <p>Most apps that use random numbers care about either unpredictability, speed/high quality, or repeatability.  This article explains the three kinds of RNGs and gives recommendations on each kind.</p>
 
@@ -285,11 +285,11 @@
 <li>by distributing the &quot;random&quot; numbers or results to networked users as they are generated, and</li>
 </ul></li>
 </ul></li>
-<li>any feature that uses such a PRNG to generate that &quot;random&quot; result will remain backward compatible with respect to the &quot;random&quot; results it generates, for as long as that feature is still in use by the application.</li>
+<li>any feature that uses such a PRNG to generate that &quot;random&quot; result will be consistent and deterministic, both across time and across supported hardware and operating systems, with respect to the &quot;random&quot; results it generates, for as long as that feature is still in use by the application.</li>
 </ol>
 
 <blockquote>
-<p><strong>Note:</strong> Meeting statement 3 is not exactly trivial, as it implies that the feature that generates &quot;random&quot; content from a seed has to be deterministic, among other things.<sup><a href="#Note10"><strong>(10)</strong></a></sup>  Using only documented PRNGs, with implementation-independent behavior that will not change in the future, can help meet the determinism requirement.  <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Random.html"><strong><code>java.util.Random</code></strong></a> is one such PRNG.  On the other hand, the following are non-examples:</p>
+<p><strong>Note:</strong> Meeting statement 3 is not exactly trivial.<sup><a href="#Note10"><strong>(10)</strong></a></sup>  Using only documented PRNGs, with implementation-independent behavior that will not change in the future, can help.  <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Random.html"><strong><code>java.util.Random</code></strong></a> is one such PRNG, but none of the following is:</p>
 
 <ul>
 <li>The C <a href="http://en.cppreference.com/w/cpp/numeric/random/rand"><strong><code>rand</code> method</strong></a>, as well as C++&#39;s random number distribution classes, such as <a href="http://en.cppreference.com/w/cpp/numeric/random/uniform_int_distribution"><strong><code>std::uniform_int_distribution</code></strong></a>, use implementation-defined algorithms for random number generation.</li>
