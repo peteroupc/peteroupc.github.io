@@ -1109,17 +1109,16 @@ If the probability distributions are the same, then strategies 1 to 3 make highe
 <a id=Random_Numbers_from_a_Distribution_of_Data_Points></a>
 ### Random Numbers from a Distribution of Data Points
 
-Generating random numbers (or data points) based on how a list of numbers (or data points) is distributed involves a family of techniques called [**_density estimation_**](http://scikit-learn.org/stable/modules/density.html), including the three given below.  These techniques seek to model the distribution of data points in a given data set, where areas with more points are more likely to be sampled.
+Generating random numbers (or data points) based on how a list of numbers (or data points) is distributed involves a family of techniques called [**_density estimation_**](http://scikit-learn.org/stable/modules/density.html), including the four given below.  These techniques seek to model the distribution of data points in a given data set, where areas with more points are more likely to be sampled.
 
 1. **Histograms** are sets of one or more _bins_, which are generally of equal size.  Histograms are [**_mixtures_**](#Mixtures_of_Distributions), where each bin's weight is the number of data points in that bin.  After a bin is randomly chosen, a random data point that could fit in that bin is generated (that point need not be an existing data point).
 2. **Gaussian** [**mixture models**](https://en.wikipedia.org/wiki/Mixture_model) are also mixtures, in this case, mixtures of one or more [**Gaussian (normal) distributions**](#Normal_Gaussian_Distribution).
 3. **Kernel distributions** are mixtures of sampling distributions, one for each data point. Estimating a kernel distribution is called [**_kernel density estimation_**](https://en.wikipedia.org/wiki/Kernel_density_estimation).  To sample from a kernel distribution:
     1. Choose one of the numbers or points in the list at random [**with replacement**](#Sampling_With_Replacement_Choosing_a_Random_Item_from_a_List).
     2. Add a randomized "jitter" to the chosen number or point; for example, add a separately generated `Normal(0, sigma)` to the chosen number or each component of the chosen point, where `sigma` is the _bandwidth_<sup>[**(19)**](#Note19)</sup>.
+4. **Stochastic interpolation** is described in (Saucier 2000)<sup>[**(18)**](#Note18)</sup>, sec. 5.3.4.  It involves choosing a data point at random, taking the mean of that point and its _k_ nearest neighbors, and shifting that mean by a random weighted sum of the differences between that mean and each of those points (here, the weight is `RNDRANGE((1-sqrt(k*3))/(k+1.0), (1+sqrt(k*3))/(k+1.0))` for each point). This approach assumes that the lowest and highest values of each dimension are 0 and 1, respectively, so that arbitrary data points have to be shifted and scaled accordingly.
 
 This document doesn't detail how to build a density estimation model.<sup>[**(20)**](#Note20)</sup>
-
-Another way to generate random numbers based on a distribution of data points is known as _stochastic interpolation_, described in (Saucier 2000)<sup>[**(18)**](#Note18)</sup>, sec. 5.3.4.
 
 <a id=Random_Numbers_from_an_Arbitrary_Distribution></a>
 ### Random Numbers from an Arbitrary Distribution

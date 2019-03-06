@@ -263,7 +263,7 @@
 
 <h2>Seeded PRNGs</h2>
 
-<p>Some applications (such as simulations, machine learning, and some games) use pseudorandom number generators (PRNGs) to generate apparently &quot;random&quot; numbers starting from a known initial state, or &quot;seed&quot;. Such applications usually care about repeatable &quot;randomness&quot;. (Note that in the definitions for <a href="#Cryptographic_RNGs_Requirements"><strong>cryptographic</strong></a> and <a href="#Statistical_RNGs_Requirementss"><strong>statistical</strong></a> RNGs given later, the PRNGs involved are automatically seeded before use.)</p>
+<p>Some applications (such as simulations, machine learning, and some games) use pseudorandom number generators (PRNGs) to generate apparently &quot;random&quot; numbers starting from a known initial state, or &quot;seed&quot;. Such applications usually care about repeatable &quot;randomness&quot;. (Note that in the definitions for <a href="#Cryptographic_RNGs_Requirements"><strong>cryptographic</strong></a> and <a href="#Statistical_RNGs_Requirements"><strong>statistical</strong></a> RNGs given later, the PRNGs involved are automatically seeded before use.)</p>
 
 <p><a id=When_to_Use_a_Seeded_PRNG></a></p>
 
@@ -307,7 +307,7 @@
 
 <h3>Seed Generation for Seeded PRNGs</h3>
 
-<p>As much as possible, an application SHOULD generate seeds for a seeded PRNG using hard-to-predict data (e.g., the output of a cryptographic RNG) or as described in [<strong>Nondeterministic Sources and Seed Generation</strong>].</p>
+<p>As much as possible, an application SHOULD generate seeds for a seeded PRNG using hard-to-predict data (e.g., the output of a cryptographic RNG) or as described in <a href="#Nondeterministic_Sources_and_Seed_Generation"><strong>Nondeterministic Sources and Seed Generation</strong></a>.</p>
 
 <p><a id=Examples_2></a></p>
 

@@ -1369,7 +1369,7 @@ and/or discarding some of them.</p>
 
 <h3>Random Numbers from a Distribution of Data Points</h3>
 
-<p>Generating random numbers (or data points) based on how a list of numbers (or data points) is distributed involves a family of techniques called <a href="http://scikit-learn.org/stable/modules/density.html"><strong><em>density estimation</em></strong></a>, including the three given below.  These techniques seek to model the distribution of data points in a given data set, where areas with more points are more likely to be sampled.</p>
+<p>Generating random numbers (or data points) based on how a list of numbers (or data points) is distributed involves a family of techniques called <a href="http://scikit-learn.org/stable/modules/density.html"><strong><em>density estimation</em></strong></a>, including the four given below.  These techniques seek to model the distribution of data points in a given data set, where areas with more points are more likely to be sampled.</p>
 
 <ol>
 <li><strong>Histograms</strong> are sets of one or more <em>bins</em>, which are generally of equal size.  Histograms are <a href="#Mixtures_of_Distributions"><strong><em>mixtures</em></strong></a>, where each bin&#39;s weight is the number of data points in that bin.  After a bin is randomly chosen, a random data point that could fit in that bin is generated (that point need not be an existing data point).</li>
@@ -1380,11 +1380,10 @@ and/or discarding some of them.</p>
 <li>Choose one of the numbers or points in the list at random <a href="#Sampling_With_Replacement_Choosing_a_Random_Item_from_a_List"><strong>with replacement</strong></a>.</li>
 <li>Add a randomized &quot;jitter&quot; to the chosen number or point; for example, add a separately generated <code>Normal(0, sigma)</code> to the chosen number or each component of the chosen point, where <code>sigma</code> is the <em>bandwidth</em><sup><a href="#Note19"><strong>(19)</strong></a></sup>.</li>
 </ol></li>
+<li><strong>Stochastic interpolation</strong> is described in (Saucier 2000)<sup><a href="#Note18"><strong>(18)</strong></a></sup>, sec. 5.3.4.  It involves choosing a data point at random, taking the mean of that point and its <em>k</em> nearest neighbors, and shifting that mean by a random weighted sum of the differences between that mean and each of those points (here, the weight is <code>RNDRANGE((1-sqrt(k*3))/(k+1.0), (1+sqrt(k*3))/(k+1.0))</code> for each point). This approach assumes that the lowest and highest values of each dimension are 0 and 1, respectively, so that arbitrary data points have to be shifted and scaled accordingly.</li>
 </ol>
 
 <p>This document doesn&#39;t detail how to build a density estimation model.<sup><a href="#Note20"><strong>(20)</strong></a></sup></p>
-
-<p>Another way to generate random numbers based on a distribution of data points is known as <em>stochastic interpolation</em>, described in (Saucier 2000)<sup><a href="#Note18"><strong>(18)</strong></a></sup>, sec. 5.3.4.</p>
 
 <p><a id=Random_Numbers_from_an_Arbitrary_Distribution></a></p>
 
