@@ -206,11 +206,7 @@ If an application decides to use a seeded PRNG for repeatable "randomness", that
 <a id=Seed_Generation_for_Seeded_PRNGs></a>
 ### Seed Generation for Seeded PRNGs
 
-As much as possible, an application SHOULD generate seeds for a seeded PRNG&mdash;
-
-- using a cryptographic or statistical RNG (as defined earlier),
-- as described in [**Nondeterministic Sources and Seed Generation**](#Nondeterministic_Sources_and_Seed_Generation), or
-- otherwise using hard-to-predict data.
+As much as possible, an application SHOULD generate seeds for a seeded PRNG using hard-to-predict data (e.g., the output of a cryptographic RNG) or as described in [**Nondeterministic Sources and Seed Generation**].
 
 <a id=Examples_2></a>
 ### Examples
