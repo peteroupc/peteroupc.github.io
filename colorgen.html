@@ -10,7 +10,7 @@
 
 <h2>Introduction</h2>
 
-<p>This document presents an overview of many common color topics that are of general interest         to programmers and that can be implemented in many different programming languages.  <a href="https://peteroupc.github.io/colorutil.zip"><strong>Sample Python code</strong></a>  <strong>that implements many of the methods in this document is available.</strong>  <a href="https://peteroupc.github.io/suppcolor.html"><strong>Supplemental topics</strong></a> are listed in another open-source page.</p>
+<p>This document presents an overview of many common color topics that are of general interest to programmers and that can be implemented in many different programming languages.  <a href="https://peteroupc.github.io/colorutil.zip"><strong>Sample Python code</strong></a>  <strong>that implements many of the methods in this document is available.</strong>  <a href="https://peteroupc.github.io/suppcolor.html"><strong>Supplemental topics</strong></a> are listed in another open-source page.</p>
 
 <p><strong>Topics this document covers include:</strong></p>
 
@@ -1151,9 +1151,9 @@ END METHOD
 
 <ol>
 <li><strong>Single channel</strong> of a multicomponent color; for example, <code>color[0]</code>, <code>color[1]</code>, or <code>color[2]</code> for an RGB color&#39;s red, green, or blue component, respectively.</li>
-<li><strong>Average</strong>: <code>(color[0] + color[1] + color[2]) / 3.0</code>.</li>
-<li><strong>Maximum</strong>: <code>max(max(color[0], color[1]), color[2])</code>.</li>
-<li><strong>Minimum</strong>: <code>min(min(color[0], color[1]), color[2])</code>. (For techniques 1-4, see also (Helland)<sup><a href="#Note26"><strong>(26)</strong></a></sup>.)</li>
+<li><strong>Average</strong>; e.g., <code>(color[0] + color[1] + color[2]) / 3.0</code> for three-component colors.</li>
+<li><strong>Maximum</strong>; e.g., <code>max(max(color[0], color[1]), color[2])</code> for three-component colors.</li>
+<li><strong>Minimum</strong>; e.g., <code>min(min(color[0], color[1]), color[2])</code> for three-component colors. (For techniques 1-4, see also (Helland)<sup><a href="#Note26"><strong>(26)</strong></a></sup>.)</li>
 <li><strong>Light/dark factor</strong>: A <a href="#CIELAB"><strong>CIELAB</strong></a> or <a href="#CIELUV"><strong>CIELUV</strong></a> color&#39;s lightness (<em>L*</em>) divided by 100 (or a similar ratio in other color spaces with a light/dark dimension, such as <a href="#HSL"><strong>HSL</strong></a> &quot;lightness&quot; (Cook 2009)<sup><a href="#Note27"><strong>(27)</strong></a></sup>.</li>
 </ol>
 </blockquote>
@@ -1291,7 +1291,7 @@ END METHOD
 <li><strong>Subtract</strong>: <code>max(0.0, src - dst)</code>.</li>
 <li><strong>Multiply</strong>: <code>(src + dst)</code>.</li>
 <li><strong>Screen</strong>: <code>1 - (1 - dst) * (1 - src)</code>.</li>
-<li><strong>Average</strong>: <code>(src + dst) * 0.5</code>.</li>
+<li><strong>Average</strong>: <code>src + (dst - src) * 0.5</code>.</li>
 <li><strong>Difference</strong>: <code>abs(src - dst)</code>.</li>
 <li><strong>Exclusion</strong>: <code>src - 2 * src * dst + dst</code>.</li>
 </ul>
@@ -1359,14 +1359,11 @@ END METHOD
 <li><p>An RGB color&mdash;</p>
 
 <ul>
-<li><p>is white, black, or a shade of gray (<strong><em>achromatic</em></strong>) if it has equal red, green, and blue components, and</p>
-
-<ul>
+<li>is white, black, or a shade of gray (<strong><em>achromatic</em></strong>) if it has equal red, green, and blue components, and</li>
 <li>is a <a href="http://en.wikipedia.org/wiki/Web_colors"><strong>&quot;Web safe&quot; color</strong></a> if its red, green, and blue components are each a multiple of 0.2.</li>
 </ul>
 
 <p>An <a href="#Notation_and_Definitions"><strong><em>image color list</em></strong></a> is achromatic or &quot;Web safe&quot; if all its colors are achromatic or &quot;Web safe&quot;, respectively.</p></li>
-</ul></li>
 <li><p>Background removal algorithms, including <a href="https://en.wikipedia.org/wiki/Chroma_key"><strong><em>chroma key</em></strong></a>, can replace &quot;background&quot; pixels of a raster image with other colors.  Such algorithms are outside the scope of this document unless they use only a pixel&#39;s color to determine whether that pixel is a &quot;background&quot; pixel (for example, by checking whether the <a href="#Color_Difference"><strong>color difference</strong></a> between that color and a predetermined background color is small enough) and, if so, what color that pixel uses instead.</p></li>
 <li> An application can <strong>apply a function</strong> to each component of an RGB or other multicomponent color, including a power function (of the form <em>base</em><sup><em>exponent</em></sup>), an inversion (an example is <code>[1.0 - color[0], 1.0 - color[1], 1.0 - color[2]]</code> for RGB colors in 0-1 format<sup><a href="#Note34"><strong>(34)</strong></a></sup>), or a tone mapping curve.  The function can be one-to-one, but need not be, as long as it maps numbers from 0 through 1 to numbers from 0 through 1.</li>
 <li> An application can <strong>swap</strong> the values of any two components of an RGB or other multicomponent color to form new colors.  The following example swaps the blue and red channels of an RGB color: <code>[color[2], color[1], color[0]]</code>.</li>

@@ -5,7 +5,7 @@
 <a id=Introduction></a>
 ## Introduction
 
-This document presents an overview of many common color topics that are of general interest         to programmers and that can be implemented in many different programming languages.  [**Sample Python code**](https://peteroupc.github.io/colorutil.zip)  **that implements many of the methods in this document is available.**  [**Supplemental topics**](https://peteroupc.github.io/suppcolor.html) are listed in another open-source page.
+This document presents an overview of many common color topics that are of general interest to programmers and that can be implemented in many different programming languages.  [**Sample Python code**](https://peteroupc.github.io/colorutil.zip)  **that implements many of the methods in this document is available.**  [**Supplemental topics**](https://peteroupc.github.io/suppcolor.html) are listed in another open-source page.
 
 **Topics this document covers include:**
 
@@ -970,9 +970,9 @@ An **_encoded RGB_ color** needs to be converted to linear RGB (in the same RGB 
 > **Note:** Although an application should favor implementing `Luminance(color)` to output luminance factor, that method could also be implemented to output any of the following values, which are similar to luminance factor:
 >
 > 1. **Single channel** of a multicomponent color; for example, `color[0]`, `color[1]`, or `color[2]` for an RGB color's red, green, or blue component, respectively.
-> 2. **Average**: `(color[0] + color[1] + color[2]) / 3.0`.
-> 3. **Maximum**: `max(max(color[0], color[1]), color[2])`.
-> 4. **Minimum**: `min(min(color[0], color[1]), color[2])`. (For techniques 1-4, see also (Helland)<sup>[**(26)**](#Note26)</sup>.)
+> 2. **Average**; e.g., `(color[0] + color[1] + color[2]) / 3.0` for three-component colors.
+> 3. **Maximum**; e.g., `max(max(color[0], color[1]), color[2])` for three-component colors.
+> 4. **Minimum**; e.g., `min(min(color[0], color[1]), color[2])` for three-component colors. (For techniques 1-4, see also (Helland)<sup>[**(26)**](#Note26)</sup>.)
 > 5. **Light/dark factor**: A [**CIELAB**](#CIELAB) or [**CIELUV**](#CIELUV) color's lightness (_L\*_) divided by 100 (or a similar ratio in other color spaces with a light/dark dimension, such as [**HSL**](#HSL) "lightness" (Cook 2009)<sup>[**(27)**](#Note27)</sup>.
 
 <a id=Alpha_Blending></a>
@@ -1080,7 +1080,7 @@ Porter and Duff (1984) define twelve formulas for combining (compositing) two RG
 - **Subtract**: `max(0.0, src - dst)`.
 - **Multiply**: `(src + dst)`.
 - **Screen**: `1 - (1 - dst) * (1 - src)`.
-- **Average**: `(src + dst) * 0.5`.
+- **Average**: `src + (dst - src) * 0.5`.
 - **Difference**: `abs(src - dst)`.
 - **Exclusion**: `src - 2 * src * dst + dst`.
 
@@ -1132,9 +1132,9 @@ The following approaches can generate a saturated or desaturated version of a co
 
 1. An RGB color&mdash;
     - is white, black, or a shade of gray (**_achromatic_**) if it has equal red, green, and blue components, and
-     - is a [**"Web safe" color**](http://en.wikipedia.org/wiki/Web_colors) if its red, green, and blue components are each a multiple of 0.2.
+    - is a [**"Web safe" color**](http://en.wikipedia.org/wiki/Web_colors) if its red, green, and blue components are each a multiple of 0.2.
 
-     An [**_image color list_**](#Notation_and_Definitions) is achromatic or "Web safe" if all its colors are achromatic or "Web safe", respectively.
+    An [**_image color list_**](#Notation_and_Definitions) is achromatic or "Web safe" if all its colors are achromatic or "Web safe", respectively.
 
 2. Background removal algorithms, including [**_chroma key_**](https://en.wikipedia.org/wiki/Chroma_key), can replace "background" pixels of a raster image with other colors.  Such algorithms are outside the scope of this document unless they use only a pixel's color to determine whether that pixel is a "background" pixel (for example, by checking whether the [**color difference**](#Color_Difference) between that color and a predetermined background color is small enough) and, if so, what color that pixel uses instead.
 3.  An application can **apply a function** to each component of an RGB or other multicomponent color, including a power function (of the form _base_<sup>_exponent_</sup>), an inversion (an example is `[1.0 - color[0], 1.0 - color[1], 1.0 - color[2]]` for RGB colors in 0-1 format<sup>[**(34)**](#Note34)</sup>), or a tone mapping curve.  The function can be one-to-one, but need not be, as long as it maps numbers from 0 through 1 to numbers from 0 through 1.
