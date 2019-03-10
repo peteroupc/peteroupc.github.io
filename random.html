@@ -14,20 +14,23 @@
 
 <h2>Introduction and Summary</h2>
 
-<p>Many applications rely on random number generators (RNGs); these RNGs include&mdash;</p>
+<p>Many applications rely on random number generators (RNGs);
+however, it&#39;s not enough for random numbers to merely &quot;look random&quot;.  But unfortunately, most popular programming languages today&mdash;</p>
 
 <ul>
-<li><em>cryptographic RNGs</em>, which seek to generate numbers that are cost-prohibitive to predict,</li>
-<li><em>statistical RNGs</em>, which seek to generate numbers that follow a uniform random distribution, and</li>
-<li><em>seeded PRNGs</em> (pseudorandom number generators), which generate numbers that &quot;seem&quot; random given an initial &quot;seed&quot;.</li>
+<li>specify few and weak requirements on their built-in RNGs (such as <a href="http://en.cppreference.com/w/cpp/numeric/random/rand"><strong>C&#39;s <code>rand</code></strong></a>),</li>
+<li>specify a relatively weak general-purpose RNG (such as Java&#39;s <code>java.math.Random</code>),</li>
+<li>implement RNGs by default that leave something to be desired (such as Mersenne Twister),</li>
+<li>seed RNGs with a timestamp by default (such as the <a href="https://docs.microsoft.com/dotnet/api/system.random"><strong>.NET Framework implementation of <code>System.Random</code></strong></a>), and/or</li>
+<li>use fixed seeds by default in their RNGs (as is the case in <a href="https://www.mathworks.com/help/matlab/examples/controlling-random-number-generation.html"><strong>MATLAB</strong></a> and C; see also the question titled &quot;Matlab rand and c++ rand()&quot; on <em>Stack Overflow</em>),</li>
 </ul>
 
-<p>A distinction between <em>statistical</em> and <em>cryptographic</em> RNGs seems natural, because many programming languages offer a general-purpose RNG (such as C&#39;s <code>rand</code> or Java&#39;s <code>java.util.Random</code>) and sometimes an RNG intended for information security purposes (such as Ruby&#39;s <code>SecureRandom</code>).  However, for many programming languages, the built-in RNG offers little assurance of quality.</p>
+<p>so that as a result, many applications use RNGs, especially built-in RNGs, that have little assurance of high quality or security.   That is why this document discusses high-quality RNGs and suggests <a href="#Existing_RNG_APIs_in_Programming_Languages"><strong>existing implementations</strong></a> of them.</p>
 
 <p><strong>This document covers:</strong></p>
 
 <ul>
-<li>Statistical and cryptographic RNGs, as well as recommendations on their use and properties.</li>
+<li>Statistical and cryptographic RNGs<sup><a href="#Note30"><strong>(30)</strong></a></sup> and seeded PRNGs (pseudorandom number generators), as well as recommendations on their use and properties.</li>
 <li>A discussion on when an application that needs numbers that &quot;seem&quot; random ought to specify their own &quot;seed&quot; (the initial state that the numbers are based on).</li>
 <li>Nondeterministic sources, entropy, and seed generation.</li>
 <li>An explanation of how to implement RNGs in programming code, including APIs that help in doing so.</li>
@@ -54,17 +57,17 @@
 </tr>
 </thead><tbody>
 <tr>
-<td><a href="#Cryptographic_RNGs"><strong>Cryptographic RNG</strong></a></td>
+<td>A <a href="#Cryptographic_RNGs"><strong>cryptographic RNG</strong></a> seeks to generate numbers that are cost-prohibitive to predict.</td>
 <td>In information security cases, or when speed is not a concern.</td>
 <td><code>/dev/urandom</code>, <code>BCryptGenRandom</code></td>
 </tr>
 <tr>
-<td><a href="#Statistical_RNGs"><strong>Statistical RNG</strong></a></td>
+<td>A <a href="#Statistical_RNGs"><strong>statistical RNG</strong></a> seeks to generate numbers that are uniformly random for most practical purposes.</td>
 <td>When information security is not a concern, but speed is.</td>
-<td><code>xoroshiro128+</code>, <code>xorshift128+</code></td>
+<td><code>pcg64</code>, <code>xoshiro256**</code></td>
 </tr>
 <tr>
-<td><a href="#Seeded_PRNGs"><strong>Seeded PRNG</strong></a></td>
+<td>A <a href="#Seeded_PRNGs"><strong>seeded PRNG</strong></a> generates numbers that &quot;seem&quot; random given an initial &quot;seed&quot;.</td>
 <td>When generating reproducible &quot;randomness&quot; in a way not practical otherwise.</td>
 <td>High-quality PRNG with custom seed</td>
 </tr>
@@ -88,7 +91,6 @@
 </ul></li>
 <li><a href="#Contents"><strong>Contents</strong></a></li>
 <li><a href="#Definitions"><strong>Definitions</strong></a></li>
-<li><a href="#Motivation"><strong>Motivation</strong></a></li>
 <li><a href="#Cryptographic_RNGs"><strong>Cryptographic RNGs</strong></a>
 
 <ul>
@@ -162,22 +164,6 @@
 <li><strong>Information security.</strong> Defined in ISO/IEC 27000.</li>
 <li><strong>MUST, SHOULD, SHOULD NOT, MAY, RECOMMENDED, NOT RECOMMENDED.</strong>  As defined in RFC 2119 and RFC 8174.</li>
 </ul>
-
-<p><a id=Motivation></a></p>
-
-<h2>Motivation</h2>
-
-<p>For most appliations, it&#39;s not enough for random numbers to merely &quot;look random&quot;.  But unfortunately, most popular programming languages today&mdash;</p>
-
-<ul>
-<li>specify few and weak requirements on their built-in RNGs (such as <a href="http://en.cppreference.com/w/cpp/numeric/random/rand"><strong>C&#39;s <code>rand</code></strong></a>),</li>
-<li>specify a relatively weak general-purpose RNG (such as Java&#39;s <code>java.math.Random</code>),</li>
-<li>implement RNGs by default that leave something to be desired (such as Mersenne Twister),</li>
-<li>seed RNGs with a timestamp by default (such as the <a href="https://docs.microsoft.com/dotnet/api/system.random"><strong>.NET Framework implementation of <code>System.Random</code></strong></a>), and/or</li>
-<li>use fixed seeds by default in their RNGs (as is the case in <a href="https://www.mathworks.com/help/matlab/examples/controlling-random-number-generation.html"><strong>MATLAB</strong></a> and C; see also the question titled &quot;Matlab rand and c++ rand()&quot; on <em>Stack Overflow</em>),</li>
-</ul>
-
-<p>so that as a result, many applications use RNGs, especially built-in RNGs, that have little assurance of high quality or security.  That is why this document includes a more rigorous definition of RNGs, and also suggests <a href="#Existing_RNG_APIs_in_Programming_Languages"><strong>existing RNGs</strong></a> an application could consider using.</p>
 
 <p><a id=Cryptographic_RNGs></a></p>
 
@@ -745,6 +731,8 @@
 <p><small><sup id=Note28>(28)</sup> Such arbitrary data can include process identifiers, time stamps, environment variables, random numbers, virtual machine guest identifiers, and/or other data specific to the session or to the instance of the RNG.  See also NIST SP800-90A and the references below.<br/>Everspaugh, A., Zhai, Y., et al.  &quot;Not-So-Random Numbers in Virtualized Linux and the Whirlwind RNG&quot;, 2014.<br>Ristenpart, T., Yilek, S. &quot;When Good Randomness Goes Bad: Virtual Machine Reset Vulnerabilities and Hedging Deployed Cryptography&quot;, 2010.</small></p>
 
 <p><small><sup id=Note29>(29)</sup> Allowing applications to do so would hamper forward compatibility &mdash; the API would then be less free to change how the RNG is implemented in the future (e.g., to use a cryptographic or otherwise &quot;better&quot; RNG), or to make improvements or bug fixes in methods that use that RNG (such as shuffling and Gaussian number generation).  (As a notable example, the V8 JavaScript engine recently changed its <code>Math.random()</code> implementation to use a variant of <code>xorshift128+</code>, which is backward compatible because nothing in JavaScript allows  <code>Math.random()</code> to be seeded.)  Nevertheless, APIs can still allow applications to provide additional input (&quot;entropy&quot;) to the RNG in order to increase its randomness rather than to ensure repeatability.</small></p>
+
+<p><small><sup id=Note30>(30)</sup> A distinction between <em>statistical</em> and <em>cryptographic</em> RNGs seems natural, because many programming languages offer a general-purpose RNG (such as C&#39;s <code>rand</code> or Java&#39;s <code>java.util.Random</code>) and sometimes an RNG intended for information security purposes (such as Ruby&#39;s <code>SecureRandom</code>).</small></p>
 
 <p><a id=Appendix></a></p>
 
