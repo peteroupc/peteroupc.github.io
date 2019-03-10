@@ -241,7 +241,7 @@
 <p>There are many <strong>RGB color spaces</strong>, not just one, and they generally differ in their red, green, blue, and white points and in their color component transfer functions (<em>&quot;transfer functions&quot;</em>):</p>
 
 <ul>
-<li><p><strong>Red, green, blue, and white points.</strong> These are what a given RGB color space considers &quot;red&quot;, &quot;green&quot;, &quot;blue&quot;, and &quot;white&quot;. (The first three are commonly called &quot;primaries&quot;.)  Each of these points need not be an actual color (this is illustrated by the <a href="http://www.oscars.org/science-technology/sci-tech-projects/aces"><strong>ACES2065-1 color space</strong></a>, for example).  Examples of &quot;primaries&quot; are Rec. 601 (NTSC), Rec. 709, and DCI-P3.  Examples of white points are the D50/2 and D65/2 white points.</p></li>
+<li><p><strong>Red, green, blue, and white points.</strong> These are what a given RGB color space considers &quot;red&quot;, &quot;green&quot;, &quot;blue&quot;, and &quot;white&quot;, that is, what that space associates with the RGB colors (1, 0, 0), (0, 1, 0), (0, 0, 1), and (1, 1, 1), respectively. (The first three points are commonly called &quot;primaries&quot;.)  Each of these points need not be an actual color (this is illustrated by the <a href="http://www.oscars.org/science-technology/sci-tech-projects/aces"><strong>ACES2065-1 color space</strong></a>, for example).  Examples of &quot;primaries&quot; are Rec. 601 (NTSC), Rec. 709, and DCI-P3.  Examples of white points are the D50/2 and D65/2 white points.</p></li>
 <li><p><strong>&quot;Transfer function&quot;.</strong> This is a function used to convert, component by component, a so-called <strong><em>linear RGB</em></strong> color to an <strong><em>encoded RGB</em> (<em>R&prime;G&prime;B&prime;</em>)</strong> color in the same color space.  Examples include the sRGB transfer function given <a href="#sRGB"><strong>later</strong></a>; <em>gamma</em> functions such as <em>c</em><sup>1/<em>&gamma;</em></sup>, where <em>c</em> is the red, green, or blue component and <em>&gamma;</em> is a positive number; and the PQ and HLG functions.</p></li>
 </ul>
 
@@ -721,7 +721,7 @@ END METHOD
 
 <ol>
 <li>This document does not seek to survey the various ways in which Y&prime;C<sub><em>B</em></sub>C<sub><em>R</em></sub> and similar colors are built up into pixels in images and video.  In general, such ways take into account the human eye&#39;s normally greater spatial sensitivity to luminance (Y, as approximated, e.g., by Y&prime;, luma) than chromatic sensitivity (e.g., C<sub><em>B</em></sub>, C<sub><em>R</em></sub>).</li>
-<li>Other video color formats include &quot;BT.2020 constant luminance&quot;, in <a href="https://en.wikipedia.org/wiki/Rec._2020"><strong>Rec. 2020</strong></a>, and IC<sub><em>T</em></sub>C<sub><em>P</em></sub>, mentioned in Rep. 2390-4.  Both formats are not detailed here.</li>
+<li>Other video color formats include &quot;BT.2020 constant luminance&quot;, in <a href="https://en.wikipedia.org/wiki/Rec._2020"><strong>Rec. 2020</strong></a>, and IC<sub><em>T</em></sub>C<sub><em>P</em></sub>, mentioned in Rep. 2390-4 and detailed in a <a href="https://www.dolby.com/us/en/technologies/dolby-vision/ICtCp-white-paper.pdf"><strong>Dolby white paper</strong></a>.</li>
 </ol>
 </blockquote>
 
@@ -1151,10 +1151,10 @@ END METHOD
 
 <ol>
 <li><strong>Single channel</strong> of a multicomponent color; for example, <code>color[0]</code>, <code>color[1]</code>, or <code>color[2]</code> for an RGB color&#39;s red, green, or blue component, respectively.</li>
-<li><strong>Average</strong>; e.g., <code>(color[0] + color[1] + color[2]) / 3.0</code> for three-component colors.</li>
+<li><strong>Average</strong> of the multicomponent color&#39;s components (see <a href="#Alpha_Blending"><strong>Alpha Blending</strong></a>).</li>
 <li><strong>Maximum</strong>; e.g., <code>max(max(color[0], color[1]), color[2])</code> for three-component colors.</li>
 <li><strong>Minimum</strong>; e.g., <code>min(min(color[0], color[1]), color[2])</code> for three-component colors. (For techniques 1-4, see also (Helland)<sup><a href="#Note26"><strong>(26)</strong></a></sup>.)</li>
-<li><strong>Light/dark factor</strong>: A <a href="#CIELAB"><strong>CIELAB</strong></a> or <a href="#CIELUV"><strong>CIELUV</strong></a> color&#39;s lightness (<em>L*</em>) divided by 100 (or a similar ratio in other color spaces with a light/dark dimension, such as <a href="#HSL"><strong>HSL</strong></a> &quot;lightness&quot; (Cook 2009)<sup><a href="#Note27"><strong>(27)</strong></a></sup>.</li>
+<li><strong>Light/dark factor</strong>: A <a href="#CIELAB"><strong>CIELAB</strong></a> or <a href="#CIELUV"><strong>CIELUV</strong></a> color&#39;s lightness (<em>L*</em>) divided by 100 (or a similar ratio in other color spaces with a light/dark dimension, such as <a href="#HSL"><strong>HSL</strong></a> &quot;lightness&quot; (Cook 2009)<sup><a href="#Note27"><strong>(27)</strong></a></sup>).</li>
 </ol>
 </blockquote>
 
@@ -1197,7 +1197,7 @@ END METHOD
 
 <ul>
 <li><strong>Black and white.</strong> Generate <code>[0, 0, 0]</code> (black) if <code>Luminance(color) &lt; 0.5</code>, or <code>[1, 1, 1]</code> (white) otherwise.</li>
-<li><strong>Contrasting color.</strong> Generate <code>[1, 1, 1]</code> (black) if <code>Luminance(color) &lt; 0.5</code>, or <code>[0, 0, 0]</code> (white) otherwise.</li>
+<li><strong>Contrasting color.</strong> Generate <code>[1, 1, 1]</code> (white) if <code>Luminance(color) &lt; 0.5</code>, or <code>[0, 0, 0]</code> (black) otherwise.</li>
 </ul>
 
 <p>Other forms of binarization may classify pixels based at least in part on their positions in the image.</p>
@@ -1322,7 +1322,7 @@ END METHOD
 <p>More generally&mdash;</p>
 
 <ul>
-<li>an N&times;N matrix can be used to transform an N-component color, or</li>
+<li>an N&times;N matrix can be used to transform an N-component color, and</li>
 <li>an (N+1)&times;(N+1) matrix can be used to transform a color consisting of N components followed by the number 1; if this is done, the first N components of the transformed color are divided by the last component.</li>
 </ul>
 

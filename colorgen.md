@@ -170,7 +170,7 @@ The **red-green-blue (RGB) color model** is the most commonly seen color model i
 
 There are many **RGB color spaces**, not just one, and they generally differ in their red, green, blue, and white points and in their color component transfer functions (_"transfer functions"_):
 
-- **Red, green, blue, and white points.** These are what a given RGB color space considers "red", "green", "blue", and "white". (The first three are commonly called "primaries".)  Each of these points need not be an actual color (this is illustrated by the [**ACES2065-1 color space**](http://www.oscars.org/science-technology/sci-tech-projects/aces), for example).  Examples of "primaries" are Rec. 601 (NTSC), Rec. 709, and DCI-P3.  Examples of white points are the D50/2 and D65/2 white points.
+- **Red, green, blue, and white points.** These are what a given RGB color space considers "red", "green", "blue", and "white", that is, what that space associates with the RGB colors (1, 0, 0), (0, 1, 0), (0, 0, 1), and (1, 1, 1), respectively. (The first three points are commonly called "primaries".)  Each of these points need not be an actual color (this is illustrated by the [**ACES2065-1 color space**](http://www.oscars.org/science-technology/sci-tech-projects/aces), for example).  Examples of "primaries" are Rec. 601 (NTSC), Rec. 709, and DCI-P3.  Examples of white points are the D50/2 and D65/2 white points.
 
 - **"Transfer function".** This is a function used to convert, component by component, a so-called **_linear RGB_** color to an **_encoded RGB_ (_R&prime;G&prime;B&prime;_)** color in the same color space.  Examples include the sRGB transfer function given [**later**](#sRGB); _gamma_ functions such as _c_<sup>1/_&gamma;_</sup>, where _c_ is the red, green, or blue component and _&gamma;_ is a positive number; and the PQ and HLG functions.
 
@@ -599,7 +599,7 @@ The Y&prime;C<sub>_B_</sub>C<sub>_R_</sub> transformation is independent of RGB 
 > **Notes:**
 >
 > 1. This document does not seek to survey the various ways in which Y&prime;C<sub>_B_</sub>C<sub>_R_</sub> and similar colors are built up into pixels in images and video.  In general, such ways take into account the human eye's normally greater spatial sensitivity to luminance (Y, as approximated, e.g., by Y&prime;, luma) than chromatic sensitivity (e.g., C<sub>_B_</sub>, C<sub>_R_</sub>).
-> 2. Other video color formats include "BT.2020 constant luminance", in [**Rec. 2020**](https://en.wikipedia.org/wiki/Rec._2020), and IC<sub>_T_</sub>C<sub>_P_</sub>, mentioned in Rep. 2390-4.  Both formats are not detailed here.
+> 2. Other video color formats include "BT.2020 constant luminance", in [**Rec. 2020**](https://en.wikipedia.org/wiki/Rec._2020), and IC<sub>_T_</sub>C<sub>_P_</sub>, mentioned in Rep. 2390-4 and detailed in a [**Dolby white paper**](https://www.dolby.com/us/en/technologies/dolby-vision/ICtCp-white-paper.pdf).
 
 <a id=Other_Color_Models></a>
 ## Other Color Models
@@ -970,10 +970,10 @@ An **_encoded RGB_ color** needs to be converted to linear RGB (in the same RGB 
 > **Note:** Although an application should favor implementing `Luminance(color)` to output luminance factor, that method could also be implemented to output any of the following values, which are similar to luminance factor:
 >
 > 1. **Single channel** of a multicomponent color; for example, `color[0]`, `color[1]`, or `color[2]` for an RGB color's red, green, or blue component, respectively.
-> 2. **Average**; e.g., `(color[0] + color[1] + color[2]) / 3.0` for three-component colors.
+> 2. **Average** of the multicomponent color's components (see [**Alpha Blending**](#Alpha_Blending)).
 > 3. **Maximum**; e.g., `max(max(color[0], color[1]), color[2])` for three-component colors.
 > 4. **Minimum**; e.g., `min(min(color[0], color[1]), color[2])` for three-component colors. (For techniques 1-4, see also (Helland)<sup>[**(26)**](#Note26)</sup>.)
-> 5. **Light/dark factor**: A [**CIELAB**](#CIELAB) or [**CIELUV**](#CIELUV) color's lightness (_L\*_) divided by 100 (or a similar ratio in other color spaces with a light/dark dimension, such as [**HSL**](#HSL) "lightness" (Cook 2009)<sup>[**(27)**](#Note27)</sup>.
+> 5. **Light/dark factor**: A [**CIELAB**](#CIELAB) or [**CIELUV**](#CIELUV) color's lightness (_L\*_) divided by 100 (or a similar ratio in other color spaces with a light/dark dimension, such as [**HSL**](#HSL) "lightness" (Cook 2009)<sup>[**(27)**](#Note27)</sup>).
 
 <a id=Alpha_Blending></a>
 ### Alpha Blending
@@ -1006,7 +1006,7 @@ Alpha blends can support the following color operations.
 _Binarization_, also known as _thresholding_, involves classifying pixels or colors into one of two categories (usually black or white).  It involves applying a function to a pixel or color and returning 1 if the result is greater than a threshold, or 0 otherwise.  The following are examples of binarization with RGB colors in 0-1 format.
 
 - **Black and white.** Generate `[0, 0, 0]` (black) if `Luminance(color) < 0.5`, or `[1, 1, 1]` (white) otherwise.
-- **Contrasting color.** Generate `[1, 1, 1]` (black) if `Luminance(color) < 0.5`, or `[0, 0, 0]` (white) otherwise.
+- **Contrasting color.** Generate `[1, 1, 1]` (white) if `Luminance(color) < 0.5`, or `[0, 0, 0]` (black) otherwise.
 
 Other forms of binarization may classify pixels based at least in part on their positions in the image.
 
@@ -1105,7 +1105,7 @@ In the following pseudocode, `TransformColor` transforms an RGB color (`color`) 
 
 More generally&mdash;
 
-- an N&times;N matrix can be used to transform an N-component color, or
+- an N&times;N matrix can be used to transform an N-component color, and
 - an (N+1)&times;(N+1) matrix can be used to transform a color consisting of N components followed by the number 1; if this is done, the first N components of the transformed color are divided by the last component.
 
 <a id=Lighten_Darken></a>
