@@ -25,7 +25,8 @@ so that as a result, many applications use RNGs, especially built-in RNGs, that 
 - Statistical and cryptographic RNGs<sup>[**(1)**](#Note1)</sup> and seeded PRNGs (pseudorandom number generators), as well as recommendations on their use and properties.
 - A discussion on when an application that needs numbers that "seem" random ought to specify their own "seed" (the initial state that the numbers are based on).
 - Nondeterministic sources, entropy, and seed generation.
-- An explanation of how to implement RNGs in programming code, including APIs that help in doing so.
+- Existing implementations of RNGs.
+- Guidance for implementations of RNGs designed for reuse by applications.
 - Issues on shuffling with an RNG.
 
 **This document does not cover:**
