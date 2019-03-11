@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on Mar. 5, 2016; last updated on Mar. 10, 2019.
+Begun on Mar. 5, 2016; last updated on Mar. 11, 2019.
 
 Most apps that use random numbers care about either unpredictability, speed/high quality, or repeatability.  This article explains the three kinds of RNGs and gives recommendations on each kind.
 
@@ -183,7 +183,7 @@ By using a seeded PRNG for repeatable "randomness", an application will be tied 
         - by distributing the "random" numbers or results to networked users as they are generated, and
 3. any feature that uses such a PRNG to generate that "random" result will be consistent and deterministic, both across time and across supported hardware and operating systems, with respect to the "random" results it generates, for as long as that feature is still in use by the application.
 
-> **Note:** Meeting statement 3 is not exactly trivial.<sup>[**(11)**](#Note11)</sup>  Using only documented PRNGs, with implementation-independent behavior that will not change in the future, can help.  [**`java.util.Random`**](https://docs.oracle.com/javase/8/docs/api/java/util/Random.html) is one such PRNG, but none of the following is:
+> **Note:** Meeting statement 3 is not exactly trivial.<sup>[**(11)**](#Note11)</sup>  Using only documented PRNGs, with implementation-independent behavior that will not change in the future, can help.  [**`java.util.Random`**](https://docs.oracle.com/javase/8/docs/api/java/util/Random.html) is one such PRNG, but none of the following is such a PRNG:
 >
 > - The C [**`rand` method**](http://en.cppreference.com/w/cpp/numeric/random/rand), as well as C++'s random number distribution classes, such as [**`std::uniform_int_distribution`**](http://en.cppreference.com/w/cpp/numeric/random/uniform_int_distribution), use implementation-defined algorithms for random number generation.
 > - .NET's [**`System.Random`**](https://docs.microsoft.com/dotnet/api/system.random) has random number generation behavior that could change in the future.
@@ -237,7 +237,7 @@ A custom seed is appropriate when unit testing a method that uses a seeded PRNG 
 
 _Noise_ is a randomized variation in images, sound, and other data.  (See also Red Blob Games, [**"Noise Functions and Map Generation"**](http://www.redblobgames.com/articles/noise/introduction.html)).  For the purposes of RNG recommendations, there are two kinds of noise:
 
-1.  **_Procedural noise_** is generated using a _noise function_, which is a function that outputs seemingly random numbers given an _n_-dimensional point and, optionally, additional data (such as gradients or hash values).<sup>[**(12)**](#Note12)</sup>  Procedural noise includes [**cellular noise**](https://en.wikipedia.org/wiki/Cellular_noise), [**value noise**](https://en.wikipedia.org/wiki/Value_noise), and [**gradient noise**](https://en.wikipedia.org/wiki/Gradient_noise) (such as [**Perlin noise**](https://en.wikipedia.org/wiki/Perlin_noise)).  A procedural noise implementation SHOULD either be completely deterministic or be initialized using an RNG.  The same instance of such an implementation SHOULD NOT output different "random" numbers at different times for the same _n_-dimensional point.
+1.  **_Procedural noise_** is generated using a _noise function_, which is a function that takes an _n_-dimensional point and, optionally, additional data such as gradients or hash values, and outputs a seemingly random number.<sup>[**(12)**](#Note12)</sup>  Procedural noise includes [**cellular noise**](https://en.wikipedia.org/wiki/Cellular_noise), [**value noise**](https://en.wikipedia.org/wiki/Value_noise), and [**gradient noise**](https://en.wikipedia.org/wiki/Gradient_noise) (such as [**Perlin noise**](https://en.wikipedia.org/wiki/Perlin_noise)).  The same instance of a procedural implementation SHOULD NOT output different "random" numbers at different times for the same _n_-dimensional point.  Such an instance SHOULD be initialized either with "hard-coded" data only or RNG-generated data.
 
 2.  **_Nonprocedural noise_** is generated using the help of an RNG.  Nonprocedural noise includes [**colored noise**](https://en.wikipedia.org/wiki/Colors_of_noise) (including white noise and pink noise), periodic noise, and noise following a Gaussian or other [**probability distribution**](https://peteroupc.github.io/randomfunc.html#Specific_Non_Uniform_Distributions).  For nonprocedural noise, the same considerations apply to any RNGs the noise implementation uses as in cases not involving noise.
 
@@ -310,6 +310,7 @@ As much as possible, **applications SHOULD use existing libraries and techniques
 
 <small>(C) A cryptographic RNG implementation can&mdash;
    - read from the `/dev/urandom` device in most Unix-based systems (using the `open` and `read` system calls where available)<sup>[**(18)**](#Note18)</sup>,
+   - call the `arc4random` or `arc4random_buf` method on FreeBSD or macOS, or
    - call the `getentropy` method on OpenBSD, or
    - call the `BCryptGenRandom` API in Windows 7 and later,</small>
 

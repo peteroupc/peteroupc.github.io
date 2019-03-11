@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
-<p>Begun on Mar. 5, 2016; last updated on Mar. 10, 2019.</p>
+<p>Begun on Mar. 5, 2016; last updated on Mar. 11, 2019.</p>
 
 <p>Most apps that use random numbers care about either unpredictability, speed/high quality, or repeatability.  This article explains the three kinds of RNGs and gives recommendations on each kind.</p>
 
@@ -276,7 +276,7 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 </ol>
 
 <blockquote>
-<p><strong>Note:</strong> Meeting statement 3 is not exactly trivial.<sup><a href="#Note11"><strong>(11)</strong></a></sup>  Using only documented PRNGs, with implementation-independent behavior that will not change in the future, can help.  <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Random.html"><strong><code>java.util.Random</code></strong></a> is one such PRNG, but none of the following is:</p>
+<p><strong>Note:</strong> Meeting statement 3 is not exactly trivial.<sup><a href="#Note11"><strong>(11)</strong></a></sup>  Using only documented PRNGs, with implementation-independent behavior that will not change in the future, can help.  <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Random.html"><strong><code>java.util.Random</code></strong></a> is one such PRNG, but none of the following is such a PRNG:</p>
 
 <ul>
 <li>The C <a href="http://en.cppreference.com/w/cpp/numeric/random/rand"><strong><code>rand</code> method</strong></a>, as well as C++&#39;s random number distribution classes, such as <a href="http://en.cppreference.com/w/cpp/numeric/random/uniform_int_distribution"><strong><code>std::uniform_int_distribution</code></strong></a>, use implementation-defined algorithms for random number generation.</li>
@@ -348,7 +348,7 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 <p><em>Noise</em> is a randomized variation in images, sound, and other data.  (See also Red Blob Games, <a href="http://www.redblobgames.com/articles/noise/introduction.html"><strong>&quot;Noise Functions and Map Generation&quot;</strong></a>).  For the purposes of RNG recommendations, there are two kinds of noise:</p>
 
 <ol>
-<li><p><strong><em>Procedural noise</em></strong> is generated using a <em>noise function</em>, which is a function that outputs seemingly random numbers given an <em>n</em>-dimensional point and, optionally, additional data (such as gradients or hash values).<sup><a href="#Note12"><strong>(12)</strong></a></sup>  Procedural noise includes <a href="https://en.wikipedia.org/wiki/Cellular_noise"><strong>cellular noise</strong></a>, <a href="https://en.wikipedia.org/wiki/Value_noise"><strong>value noise</strong></a>, and <a href="https://en.wikipedia.org/wiki/Gradient_noise"><strong>gradient noise</strong></a> (such as <a href="https://en.wikipedia.org/wiki/Perlin_noise"><strong>Perlin noise</strong></a>).  A procedural noise implementation SHOULD either be completely deterministic or be initialized using an RNG.  The same instance of such an implementation SHOULD NOT output different &quot;random&quot; numbers at different times for the same <em>n</em>-dimensional point.</p></li>
+<li><p><strong><em>Procedural noise</em></strong> is generated using a <em>noise function</em>, which is a function that takes an <em>n</em>-dimensional point and, optionally, additional data such as gradients or hash values, and outputs a seemingly random number.<sup><a href="#Note12"><strong>(12)</strong></a></sup>  Procedural noise includes <a href="https://en.wikipedia.org/wiki/Cellular_noise"><strong>cellular noise</strong></a>, <a href="https://en.wikipedia.org/wiki/Value_noise"><strong>value noise</strong></a>, and <a href="https://en.wikipedia.org/wiki/Gradient_noise"><strong>gradient noise</strong></a> (such as <a href="https://en.wikipedia.org/wiki/Perlin_noise"><strong>Perlin noise</strong></a>).  The same instance of a procedural implementation SHOULD NOT output different &quot;random&quot; numbers at different times for the same <em>n</em>-dimensional point.  Such an instance SHOULD be initialized either with &quot;hard-coded&quot; data only or RNG-generated data.</p></li>
 <li><p><strong><em>Nonprocedural noise</em></strong> is generated using the help of an RNG.  Nonprocedural noise includes <a href="https://en.wikipedia.org/wiki/Colors_of_noise"><strong>colored noise</strong></a> (including white noise and pink noise), periodic noise, and noise following a Gaussian or other <a href="https://peteroupc.github.io/randomfunc.html#Specific_Non_Uniform_Distributions"><strong>probability distribution</strong></a>.  For nonprocedural noise, the same considerations apply to any RNGs the noise implementation uses as in cases not involving noise.</p></li>
 </ol>
 
@@ -479,6 +479,7 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 
 <ul>
 <li>read from the <code>/dev/urandom</code> device in most Unix-based systems (using the <code>open</code> and <code>read</code> system calls where available)<sup><a href="#Note18"><strong>(18)</strong></a></sup>,</li>
+<li>call the <code>arc4random</code> or <code>arc4random_buf</code> method on FreeBSD or macOS, or</li>
 <li>call the <code>getentropy</code> method on OpenBSD, or</li>
 <li>call the <code>BCryptGenRandom</code> API in Windows 7 and later,</small></li>
 </ul>
