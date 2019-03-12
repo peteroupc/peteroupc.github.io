@@ -15,8 +15,8 @@ however, it's not enough for random numbers to merely "look random".  But unfort
 - specify few and weak requirements on their built-in RNGs (such as [**C's `rand`**](http://en.cppreference.com/w/cpp/numeric/random/rand)),
 - specify a relatively weak general-purpose RNG (such as Java's `java.math.Random`),
 - implement RNGs by default that leave something to be desired (such as Mersenne Twister),
-- seed RNGs with a timestamp by default (such as the [**.NET Framework implementation of `System.Random`**](https://docs.microsoft.com/dotnet/api/system.random)), and/or
-- use fixed seeds by default in their RNGs (as is the case in [**MATLAB**](https://www.mathworks.com/help/matlab/examples/controlling-random-number-generation.html) and C; see also the question titled "Matlab rand and c++ rand()" on _Stack Overflow_),
+- initialize RNGs with a timestamp by default (such as the [**.NET Framework implementation of `System.Random`**](https://docs.microsoft.com/dotnet/api/system.random)), and/or
+- use RNGs that are initialized with a fixed value by default (as is the case in [**MATLAB**](https://www.mathworks.com/help/matlab/examples/controlling-random-number-generation.html) and C; see also the question titled "Matlab rand and c++ rand()" on _Stack Overflow_),
 
 so that as a result, many applications use RNGs, especially built-in RNGs, that have little assurance of high quality or security.   That is why this document discusses high-quality RNGs and suggests [**existing implementations**](#Existing_RNG_APIs_in_Programming_Languages) of them.
 
