@@ -265,10 +265,12 @@ class RandomGen:
     while i < len(weights):
       msum+=weights[i]
       i+=1
+    rv=[self.rndrangemaxexc(0, msum) \
+       for k in range(n)]
     ret=[0 for k in range(n)]
     k=0
-    while k<len(weights):
-      value=self.rndrangemaxexc(0, msum)
+    while k<n:
+      value=rv[k]
       i=0
       lastItem=len(weights)-1
       runningValue=0
@@ -912,12 +914,12 @@ of failures of each kind of failure.
        ret=[]
        if len(points) > len(points[0])+1: raise ValueError
        if len(points)==1: # Return a copy of the point
-         for i in range(0,len(points[0])): ret+=[points[0][i]]
+         for i in range(0,len(points[0])): ret.append(points[0][i])
          return ret
        gammas=[]
        # Sample from a Dirichlet distribution
        simplexDims=len(points)-1
-       for i in range(0,len(points)): gammas+=[self.exponential()]
+       for i in range(0,len(points)): gammas.append(self.exponential())
        tsum=0
        for i in range(0,len(gammas)): tsum = tsum + gammas[i]
        tot = 0
@@ -925,7 +927,7 @@ of failures of each kind of failure.
            gammas[i] = gammas[i] / tsum
            tot = tot + gammas[i]
        tot = 1.0 - tot
-       for i in range(0,len(points[0])): ret+=[points[0][i]*tot]
+       for i in range(0,len(points[0])): ret.append(points[0][i]*tot)
        for i in range(1,len(points)):
           for j in range(0,len(points[0])):
              ret[j]=ret[j]+points[i][j]*gammas[i-1]
@@ -1003,8 +1005,8 @@ of failures of each kind of failure.
          that a random integer will equal that parameter.
          The area under the "curve" of the PDF need not be 1.
          By default, `n` is 1.  """
-     wt=[pdf(x) for x in range(mn,mx)]
-     return r._weighted_choice_n(wt,n,mn)
+      wt=[pdf(x) for x in range(mn,mx)]
+      return r._weighted_choice_n(wt,n,mn)
 
   def numbers_from_pdf(self, pdf, mn, mx, n = 1, steps = 100):
       """ Generates one or more random numbers from a continuous probability
@@ -1087,10 +1089,10 @@ of failures of each kind of failure.
          if i==st: lastv=self.normal(mu*st,sigma*math.sqrt(st))
          else: lastv=lastv+self.normal(mu*step,sigma*math.sqrt(step))
          lasttime=i
-         ret+=[[i, lastv]]
+         ret.append([i, lastv])
          i+=step
       lastv=lastv+self.normal(mu*(en-lasttime),sigma*math.sqrt(en-lasttime))
-      ret+=[[i, lastv]]
+      ret.append([i, lastv])
       return ret
 
 class ConvexPolygonSampler:
@@ -1206,3 +1208,36 @@ if __name__ == "__main__":
     print("5th raw moment ~= %f" % (_mean([x**5 for x in n])))
     print("Mean of sines (E<sin(x)>) ~= %f" % \
       (_mean([math.sin(x) for x in n])))
+
+    # Estimates expectation given
+    # an array of samples
+    def expect(a,f):
+      return _mean([f(x) for x in a])
+
+    def trim(x,f):
+      ret=[]
+      for i in x:
+        if f(i): ret.append(i)
+      return ret
+
+    # Two ways to get the estimated
+    # conditional expectation given
+    # an array of samples and a predicate
+    def condexpect1(a,f,pred):
+      e1=expect(nums,lambda x: (f(x) if pred(x) else 0))
+      # e2 is probability given predicate
+      e2=expect(nums,lambda x: (1 if pred(x) else 0))
+      return e1/e2
+
+    def condexpect2(a,f,pred):
+      # Expectation of only the samples
+      # that meet the predicate
+      return expect(trim(a,pred),f)
+
+    # Conditional expectation estimation
+    nums=[abs(randgen.normal(0,1)) for _ in range(10000)]
+    epred=lambda x: x<2
+    efunc=lambda x: x*x
+    print(expect(nums,efunc))
+    print(condexpect1(nums,efunc,epred))
+    print(condexpect2(nums,efunc,epred))
