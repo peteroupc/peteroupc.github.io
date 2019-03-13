@@ -93,10 +93,7 @@
 </ul></li>
 <li><a href="#Rejection_Sampling"><strong>Rejection Sampling</strong></a></li>
 <li><a href="#Random_Walks"><strong>Random Walks</strong></a></li>
-</ul></li>
-<li><a href="#Estimating_Expectation_Values_and_Monte_Carlo_Integration"><strong>Estimating Expectation Values and Monte Carlo Integration</strong></a>
-
-<ul>
+<li><a href="#Expected_Values_and_Monte_Carlo_Integration"><strong>Expected Values and Monte Carlo Integration</strong></a></li>
 <li><a href="#Randomization_in_Statistical_Testing"><strong>Randomization in Statistical Testing</strong></a></li>
 <li><a href="#Low_Discrepancy_Sequences"><strong>Low-Discrepancy Sequences</strong></a></li>
 <li><a href="#A_Note_on_Sorting_Random_Numbers"><strong>A Note on Sorting Random Numbers</strong></a></li>
@@ -951,11 +948,11 @@ END METHOD
 </ol>
 </blockquote>
 
-<p><a id=Estimating_Expectation_Values_and_Monte_Carlo_Integration></a></p>
+<p><a id=Expected_Values_and_Monte_Carlo_Integration></a></p>
 
-<h2>Estimating Expectation Values and Monte Carlo Integration</h2>
+<h3>Expected Values and Monte Carlo Integration</h3>
 
-<p>Randomization can be used to estimate the <strong>expectation value</strong> of a function given a random process or sampling distribution.  The following pseudocode estimates the expectation value of a list of random numbers generated the same way.  Here, <code>EFUNC</code> is the function, and <code>MeanAndVariance</code> is given in the <a href="#Mean_and_Variance_Calculation"><strong>appendix</strong></a>.  <code>Expectation</code> return two numbers &mdash; the estimated expectation value and its variance.</p>
+<p>Randomization can be used to estimate the <strong>expected value</strong> of a function given a random process or sampling distribution.  The following pseudocode estimates the expected value of a list of random numbers generated the same way.  Here, <code>EFUNC</code> is the function, and <code>MeanAndVariance</code> is given in the <a href="#Mean_and_Variance_Calculation"><strong>appendix</strong></a>.  <code>Expectation</code> returns a list of two numbers &mdash; the estimated expected value and its variance.</p>
 
 <pre>METHOD Expectation(numbers)
   ret=[]
@@ -966,7 +963,7 @@ END METHOD
 END METHOD
 </pre>
 
-<p>Examples of expectation values include the following:</p>
+<p>Examples of expected values include the following:</p>
 
 <ul>
 <li>The <strong><code>n</code>th raw moment</strong> (mean of <code>n</code>th powers) if <code>EFUNC(x)</code> is <code>pow(x, n)</code>.</li>
@@ -974,9 +971,9 @@ END METHOD
 <li>The <strong>probability</strong>, if <code>EFUNC(x)</code> is <code>1</code> if some condition is met or <code>0</code> otherwise.</li>
 </ul>
 
-<p><a href="https://en.wikipedia.org/wiki/Monte_Carlo_integration"><strong>Monte Carlo integration</strong></a> is a way to estimate the volume of a multidimensional integral; randomly sampled numbers are put into a list (<code>nums</code>) and the estimated integral and its squared error are then calculated with <code>MeanAndVariance(nums)</code>, or alternatively <code>Expectation(nums)</code> with <code>EFUNC(x) = x</code> (that is, the estimated expectation value of the mean and that value&#39;s variance), and multiplied by the volume of the sampling domain.</p>
+<p>If the sampling domain is also limited to random numbers meeting a given condition (such as <code>x &lt; 2</code> or <code>x != 10</code>), then the estimated expected value is also called the estimated <em>conditional expectation</em>.</p>
 
-<p>If the sampling domain is also limited to random numbers meeting a given condition (such as <code>x &lt; 2</code> or <code>x != 10</code>), then the estimated expectation value is also called the estimated <em>conditional expectation</em>.</p>
+<p><a href="https://en.wikipedia.org/wiki/Monte_Carlo_integration"><strong>Monte Carlo integration</strong></a> is a way to estimate the volume of a multidimensional integral; randomly sampled numbers are put into a list (<code>nums</code>) and the estimated integral and its squared error are then calculated with <code>MeanAndVariance(nums)</code>, or alternatively <code>Expectation(nums)</code> with <code>EFUNC(x) = x</code> (that is, the estimated expected value of the mean and that value&#39;s variance), and multiplied by the volume of the sampling domain.</p>
 
 <p><a id=Randomization_in_Statistical_Testing></a></p>
 
@@ -1012,7 +1009,7 @@ END METHOD
 
 <p>In most cases, RNGs can be used to generate a &quot;seed&quot; to start the low-discrepancy sequence at.</p>
 
-<p>In Monte Carlo integration and other estimations (described in the previous section), low-discrepancy sequences are often used to achieve more efficient &quot;random&quot; sampling.</p>
+<p>In Monte Carlo integration and other estimations (described earlier), low-discrepancy sequences are often used to achieve more efficient &quot;random&quot; sampling.</p>
 
 <p><a id=A_Note_on_Sorting_Random_Numbers></a></p>
 

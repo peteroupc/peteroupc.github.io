@@ -64,7 +64,7 @@ All the random number methods presented on this page are ultimately based on an 
         - [**Pseudocode for Random Sampling**](#Pseudocode_for_Random_Sampling)
     - [**Rejection Sampling**](#Rejection_Sampling)
     - [**Random Walks**](#Random_Walks)
-- [**Estimating Expectation Values and Monte Carlo Integration**](#Estimating_Expectation_Values_and_Monte_Carlo_Integration)
+    - [**Expected Values and Monte Carlo Integration**](#Expected_Values_and_Monte_Carlo_Integration)
     - [**Randomization in Statistical Testing**](#Randomization_in_Statistical_Testing)
     - [**Low-Discrepancy Sequences**](#Low_Discrepancy_Sequences)
     - [**A Note on Sorting Random Numbers**](#A_Note_on_Sorting_Random_Numbers)
@@ -743,10 +743,10 @@ A _random walk_ is a process with random behavior over time.  A simple form of r
 > 2.  Some random walks model random behavior at every moment, not just at discrete times.  One example is a _Wiener process_, with random states and jumps that are normally distributed (a process of this kind is also known as _Brownian motion_).  (For a random walk that follows a Wiener process, `STATEJUMP()` is `Normal(mu * timediff, sigma * sqrt(timediff))`, where  `mu` is the average value per time unit, `sigma` is the volatility, and `timediff` is the time difference between samples.)
 > 3.  Some random walks model state changes happening at random times. One example is a _Poisson process_, in which the time between each event is a random exponential variable (that random variable is `-ln(RNDU01ZeroOneExc()) / rate`, where `rate` is the average number of events per time unit; an _inhomogeneous Poisson process_ results if `rate` can vary with the "timestamp" before each event jump).
 
-<a id=Estimating_Expectation_Values_and_Monte_Carlo_Integration></a>
-## Estimating Expectation Values and Monte Carlo Integration
+<a id=Expected_Values_and_Monte_Carlo_Integration></a>
+### Expected Values and Monte Carlo Integration
 
-Randomization can be used to estimate the **expectation value** of a function given a random process or sampling distribution.  The following pseudocode estimates the expectation value of a list of random numbers generated the same way.  Here, `EFUNC` is the function, and `MeanAndVariance` is given in the [**appendix**](#Mean_and_Variance_Calculation).  `Expectation` return two numbers &mdash; the estimated expectation value and its variance.
+Randomization can be used to estimate the **expected value** of a function given a random process or sampling distribution.  The following pseudocode estimates the expected value of a list of random numbers generated the same way.  Here, `EFUNC` is the function, and `MeanAndVariance` is given in the [**appendix**](#Mean_and_Variance_Calculation).  `Expectation` returns a list of two numbers &mdash; the estimated expected value and its variance.
 
     METHOD Expectation(numbers)
       ret=[]
@@ -756,15 +756,15 @@ Randomization can be used to estimate the **expectation value** of a function gi
       return MeanAndVariance(ret)
     END METHOD
 
-Examples of expectation values include the following:
+Examples of expected values include the following:
 
 - The **`n`th raw moment** (mean of `n`th powers) if `EFUNC(x)` is `pow(x, n)`.
 - The **mean**, if `EFUNC(x)` is `x`.
 - The **probability**, if `EFUNC(x)` is `1` if some condition is met or `0` otherwise.
 
-[**Monte Carlo integration**](https://en.wikipedia.org/wiki/Monte_Carlo_integration) is a way to estimate the volume of a multidimensional integral; randomly sampled numbers are put into a list (`nums`) and the estimated integral and its squared error are then calculated with `MeanAndVariance(nums)`, or alternatively `Expectation(nums)` with `EFUNC(x) = x` (that is, the estimated expectation value of the mean and that value's variance), and multiplied by the volume of the sampling domain.
+If the sampling domain is also limited to random numbers meeting a given condition (such as `x < 2` or `x != 10`), then the estimated expected value is also called the estimated _conditional expectation_.
 
-If the sampling domain is also limited to random numbers meeting a given condition (such as `x < 2` or `x != 10`), then the estimated expectation value is also called the estimated _conditional expectation_.
+[**Monte Carlo integration**](https://en.wikipedia.org/wiki/Monte_Carlo_integration) is a way to estimate the volume of a multidimensional integral; randomly sampled numbers are put into a list (`nums`) and the estimated integral and its squared error are then calculated with `MeanAndVariance(nums)`, or alternatively `Expectation(nums)` with `EFUNC(x) = x` (that is, the estimated expected value of the mean and that value's variance), and multiplied by the volume of the sampling domain.
 
 <a id=Randomization_in_Statistical_Testing></a>
 ### Randomization in Statistical Testing
@@ -792,7 +792,7 @@ A [**_low-discrepancy sequence_**](https://en.wikipedia.org/wiki/Low-discrepancy
 
 In most cases, RNGs can be used to generate a "seed" to start the low-discrepancy sequence at.
 
-In Monte Carlo integration and other estimations (described in the previous section), low-discrepancy sequences are often used to achieve more efficient "random" sampling.
+In Monte Carlo integration and other estimations (described earlier), low-discrepancy sequences are often used to achieve more efficient "random" sampling.
 
 <a id=A_Note_on_Sorting_Random_Numbers></a>
 ### A Note on Sorting Random Numbers
