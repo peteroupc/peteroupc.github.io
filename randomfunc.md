@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on June 4, 2017; last updated on Mar. 12, 2019.
+Begun on June 4, 2017; last updated on Mar. 13, 2019.
 
 Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.
 
@@ -764,7 +764,7 @@ Examples of expected values include the following:
 
 If the sampling domain is also limited to random numbers meeting a given condition (such as `x < 2` or `x != 10`), then the estimated expected value is also called the estimated _conditional expectation_.
 
-[**Monte Carlo integration**](https://en.wikipedia.org/wiki/Monte_Carlo_integration) is a way to estimate the volume of a multidimensional integral; randomly sampled numbers are put into a list (`nums`) and the estimated integral and its squared error are then calculated with `MeanAndVariance(nums)`, or alternatively `Expectation(nums)` with `EFUNC(x) = x` (that is, the estimated expected value of the mean and that value's variance), and multiplied by the volume of the sampling domain.
+[**Monte Carlo integration**](https://en.wikipedia.org/wiki/Monte_Carlo_integration) is a way to estimate a multidimensional integral; randomly sampled numbers are put into a list (`nums`) and the estimated integral and its squared error are then calculated with `MeanAndVariance(nums)`, or alternatively `Expectation(nums)` with `EFUNC(x) = x` (that is, the estimated expected value of the mean and that value's variance), and multiplied by the volume of the sampling domain.
 
 <a id=Randomization_in_Statistical_Testing></a>
 ### Randomization in Statistical Testing
