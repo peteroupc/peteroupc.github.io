@@ -1279,7 +1279,7 @@ In the pseudocode below, the method `NearestColorIndex` finds, for a given color
 > **Examples:**
 >
 > - To find the nearest color to `color` in a list of colors (`list`), generate `nearestColor = list[NearestColorIndex(color, list)]`.
-> - Sorting colors into **color categories** can be done by [**_k_-means clustering**](http://aishack.in/tutorials/kmeans-clustering) (see also the [**Wikipedia article**](https://en.wikipedia.org/wiki/K-means_clustering)), which involves&mdash;
+> - Sorting colors into **color categories** can be done by a so-called "hard clustering" algorithm such as [**_k_-means clustering**](http://aishack.in/tutorials/kmeans-clustering) (see also the [**Wikipedia article**](https://en.wikipedia.org/wiki/K-means_clustering)), which involves&mdash;
 >     1. defining a list (`repColors`) of _k_ color points (which, for example, can be representative colors for red, blue, black, white, and so on, or can be colors chosen at random), then
 >     2. for each color (`color`) to be categorized, finding the nearest color to that color among the _k_ color points (for example, by calling `NearestColorIndex(color, repColors)`), then
 >     3. replacing each color point in `repColors` with its new average color (based on the colors that point categorizes), then

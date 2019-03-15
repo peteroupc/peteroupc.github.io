@@ -1141,7 +1141,7 @@ If the probability distributions are the same, then strategies 1 to 3 make highe
 
 **Regression models.** A _regression model_ is a model that summarizes data as a formula and an error term.  If an application has data in the form of inputs and outputs (e.g., monthly sales figures) and wants to sample a random but plausible output given a known input point (e.g., sales for a future month), then the application can fit and sample a regression model for that data.  For example, a _linear regression model_, which simulates the value of `y` given known inputs `a` and `b`, can be sampled as follows: `y = c1 * a + c2 * b + c3 + Normal(mse)`, where `mse` is the mean squared error and `c1`, `c2`, and `c3` are the coefficients of the model.  (Here, `Normal(mse)` is the error term.)
 
-> **Note:** A comprehensive survey of density estimation or regression models, or how to fit data to such models, are outside the scope of this document.<sup>[**(20)**](#Note20)</sup>
+> **Note:** A comprehensive survey of density estimation or regression models, or how to fit such models to data, are outside the scope of this document.<sup>[**(20)**](#Note20)</sup>
 
 <a id=Random_Numbers_from_an_Arbitrary_Distribution></a>
 ### Random Numbers from an Arbitrary Distribution
@@ -1169,7 +1169,7 @@ If a probability distribution's **PDF is known**, random numbers that approximat
 
     For example, a custom distribution's PDF, `PDF`, is `exp(-abs(x*x*x))`, and the exponential distribution's PDF, `PDF2`, is `exp(-x)`.  The exponential PDF "dominates" the other PDF (at every `x` 0 or greater) if we multiply it by 1.5, so that `PDF2` is now `1.5 * exp(-x)`.  Now we can generate numbers from our custom distribution by sampling exponential points until a point falls within `PDF`.  This is done by generating `n = -ln(RNDU01ZeroOneExc())` until `PDF(n) >= RNDRANGEMaxExc(0, PDF2(n))`.
 
-3. If many random numbers from the given PDF need to be generated, then a so-called _Markov-chain Monte Carlo_ (MCMC) algorithm can be used, with the disadvantage that the resulting random numbers will not be chosen independently of each other.  The [**Python sample code**](https://peteroupc.github.io/randomgen.zip) includes a method called `mcmc` that implements one kind of MCMC algorithm called Metropolis&ndash;Hastings, and a similar method, `mcmc2`, that uses the same algorithm for PDFs that take two-dimensional points.
+3. If many random numbers from the given PDF need to be generated, then a so-called _Markov-chain Monte Carlo_ (MCMC) algorithm can be used, with the disadvantage that the resulting random numbers will not be chosen independently of each other.  MCMC algorithms include Metropolis&ndash;Hastings and slice sampling(Neal 2003)<sup>[**(31)**](#Note31)</sup>. The [**Python sample code**](https://peteroupc.github.io/randomgen.zip) includes methods called `mcmc` and `mcmc2` that implement Metropolis&ndash;Hastings for PDFs that take single numbers or two-dimensional points, respectively, and a method called `slicesample` that implements slice sampling.
 
 If both **a PDF and a uniform random variable in the interval \[0, 1\) (`randomVariable`)** are given, then the following technique, among other possible techniques, can be used: Create `list` and `weights` as given in method 1, then divide each item in `weights` by the sum of `weights`'s items, then generate [**`ContinuousWeightedChoice(list, weights)`**](#Continuous_Weighted_Choice) (except that method is modified to use `value = randomVariable` rather than `value = RNDRANGEMaxExc(0, sum)`).
 
@@ -2057,6 +2057,8 @@ In 2007, Thomas, D., et al. gave a survey of normal random number methods in "Ga
 <small><sup id=Note29>(29)</sup> See also a [**MathWorld article**](http://mathworld.wolfram.com/BallPointPicking.html), which was the inspiration for these two methods, and the _Stack Overflow_ question "How to generate uniform random points in (arbitrary) N-dimension ball?", `questions/54544971`.</small>
 
 <small><sup id=Note30>(30)</sup> See the _Mathematics Stack Exchange_ question titled "Random multivariate in hyperannulus", `questions/1885630`.</small>
+
+<small><sup id=Note31>(31)</sup> Neal, R. M., [**"Slice sampling"**](https://projecteuclid.org/euclid.aos/1056562461), Annals of Statistics 31:3 (2003), 705-767.</small>
 
 <a id=Appendix></a>
 ## Appendix

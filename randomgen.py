@@ -729,6 +729,48 @@ of failures of each kind of failure.
     if i>=burnin: ret[i-burnin]=x
    return ret
 
+  def slicesample(self,pdf,n,xstart=0.1):
+     """
+  Slice sampling of R. M. Neal.
+  Generates 'n' random numbers that follow
+  the probability density given in 'pdf' using
+  slice sampling.  The resulting random numbers
+  are not independent, but are often close to
+    being independent.  'pdf' takes one number as
+    a parameter and returns a number 0 or greater.
+    The area under the curve (integral) of 'pdf'
+    need not be equal to 1. 'xstart' should be
+  chosen such that `pdf(xstart)>0`.
+     """
+     x=xstart
+     w=0.2
+     while pdf(x)<=0:
+       xstart+=w
+     ret=[]
+     burnin=2000
+     while len(ret)<n:
+       y=self.rndrange(0,pdf(x))
+       xleft=x
+       xright=x
+       while xleft==x or y<pdf(xleft):
+          xleft-=w
+       while xright==x or y<pdf(xright):
+          xright+=w
+       while True:
+          x2=self.rndrange(xleft,xright)
+          if y<pdf(x2):
+            x=x2
+            break
+          if x2>x:
+            xright=x2
+          else:
+            xleft=x2
+       if burnin==0:
+         ret.append(x)
+       else:
+         burnin-=1
+     return ret
+
   def mcmc(self,pdf,n):
     """ Generates 'n' random numbers that follow
     the probability density given in 'pdf' using
