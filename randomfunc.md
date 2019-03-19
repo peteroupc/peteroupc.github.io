@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on June 4, 2017; last updated on Mar. 14, 2019.
+Begun on June 4, 2017; last updated on Mar. 17, 2019.
 
 Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.
 
@@ -760,6 +760,8 @@ Examples of expected values include the following:
 
 - The **`n`th raw moment** (mean of `n`th powers) if `EFUNC(x)` is `pow(x, n)`.
 - The **mean**, if `EFUNC(x)` is `x`.
+- The **`n`th sample central moment**, if `EFUNC(x)` is `pow(x-m, n)`, where `m` is the mean of the sampled numbers.
+- The (biased) **sample variance**, the second sample central moment.
 - The **probability**, if `EFUNC(x)` is `1` if some condition is met or `0` otherwise.
 
 If the sampling domain is also limited to random numbers meeting a given condition (such as `x < 2` or `x != 10`), then the estimated expected value is also called the estimated _conditional expectation_.
@@ -1130,7 +1132,7 @@ If the probability distributions are the same, then strategies 1 to 3 make highe
 <a id=Random_Numbers_from_a_Distribution_of_Data_Points></a>
 ### Random Numbers from a Distribution of Data Points
 
-**Density estimation models.** Generating random numbers (or data points) based on how a list of numbers (or data points) is distributed involves a family of data models called [**density estimation**](http://scikit-learn.org/stable/modules/density.html) models (also known as _empirical distributions_), including the four given below.  These models seek to describe the distribution of data points in a given data set, where areas with more points are more likely to be sampled.
+**Density estimation models.** Generating random numbers (or data points) based on how a list of numbers (or data points) is distributed involves a family of data models called [**density estimation**](http://scikit-learn.org/stable/modules/density.html) models, including the four given below.  These models seek to describe the distribution of data points in a given data set, where areas with more points are more likely to be sampled.
 
 1. **Histograms** are sets of one or more _bins_, which are generally of equal size.  Histograms are [**_mixtures_**](#Mixtures_of_Distributions), where each bin's weight is the number of data points in that bin.  After a bin is randomly chosen, a random data point that could fit in that bin is generated (that point need not be an existing data point).
 2. **Gaussian** [**mixture models**](https://en.wikipedia.org/wiki/Mixture_model) are also mixtures, in this case, mixtures of one or more [**Gaussian (normal) distributions**](#Normal_Gaussian_Distribution).
@@ -1169,7 +1171,7 @@ If a probability distribution's **PDF is known**, random numbers that approximat
 
     For example, a custom distribution's PDF, `PDF`, is `exp(-abs(x*x*x))`, and the exponential distribution's PDF, `PDF2`, is `exp(-x)`.  The exponential PDF "dominates" the other PDF (at every `x` 0 or greater) if we multiply it by 1.5, so that `PDF2` is now `1.5 * exp(-x)`.  Now we can generate numbers from our custom distribution by sampling exponential points until a point falls within `PDF`.  This is done by generating `n = -ln(RNDU01ZeroOneExc())` until `PDF(n) >= RNDRANGEMaxExc(0, PDF2(n))`.
 
-3. If many random numbers from the given PDF need to be generated, then a so-called _Markov-chain Monte Carlo_ (MCMC) algorithm can be used, with the disadvantage that the resulting random numbers will not be chosen independently of each other.  MCMC algorithms include Metropolis&ndash;Hastings and slice sampling(Neal 2003)<sup>[**(31)**](#Note31)</sup>. The [**Python sample code**](https://peteroupc.github.io/randomgen.zip) includes methods called `mcmc` and `mcmc2` that implement Metropolis&ndash;Hastings for PDFs that take single numbers or two-dimensional points, respectively, and a method called `slicesample` that implements slice sampling.
+3. If many random numbers from the given PDF need to be generated, then a so-called _Markov-chain Monte Carlo_ (MCMC) algorithm can be used, with the disadvantage that the resulting random numbers will not be chosen independently of each other.  MCMC algorithms include Metropolis&ndash;Hastings and slice sampling (Neal 2003)<sup>[**(22)**](#Note22)</sup>. The [**Python sample code**](https://peteroupc.github.io/randomgen.zip) includes methods called `mcmc` and `mcmc2` that implement Metropolis&ndash;Hastings for PDFs that take single numbers or two-dimensional points, respectively, and a method called `slicesample` that implements slice sampling.
 
 If both **a PDF and a uniform random variable in the interval \[0, 1\) (`randomVariable`)** are given, then the following technique, among other possible techniques, can be used: Create `list` and `weights` as given in method 1, then divide each item in `weights` by the sum of `weights`'s items, then generate [**`ContinuousWeightedChoice(list, weights)`**](#Continuous_Weighted_Choice) (except that method is modified to use `value = randomVariable` rather than `value = RNDRANGEMaxExc(0, sum)`).
 
@@ -1189,7 +1191,7 @@ To sample from a _truncated_ probability distribution, generate a random number 
 <a id=Gibbs_Sampling></a>
 ### Gibbs Sampling
 
-Gibbs sampling involves repeatedly generating random numbers from two or more distributions, each of which uses a random number from the previous distribution, with the disadvantage that the resulting random numbers will not be chosen independently of each other.  An example is generating multiple `x`, `y` pairs of random numbers where `x = BetaDist(y, 5)` then `y = Binomial(10, x)`.  (Before the random pairs are generated, an initial value for `y` has to be chosen.)  Usually the first few (e.g., first 1000) pairs or groups of random numbers are ignored this way ("burn in").  See also (Casella and George 1992)<sup>[**(22)**](#Note22)</sup>.
+Gibbs sampling involves repeatedly generating random numbers from two or more distributions, each of which uses a random number from the previous distribution, with the disadvantage that the resulting random numbers will not be chosen independently of each other.  An example is generating multiple `x`, `y` pairs of random numbers where `x = BetaDist(y, 5)` then `y = Binomial(10, x)`.  (Before the random pairs are generated, an initial value for `y` has to be chosen.)  Usually the first few (e.g., first 1000) pairs or groups of random numbers are ignored this way ("burn in").  See also (Casella and George 1992)<sup>[**(23)**](#Note23)</sup>.
 
 <a id=Specific_Non_Uniform_Distributions></a>
 ## Specific Non-Uniform Distributions
@@ -1199,7 +1201,7 @@ This section contains information on some of the most common non-uniform probabi
 <a id=Dice></a>
 ### Dice
 
-The following method generates a random result of rolling virtual dice.<sup>[**(23)**](#Note23)</sup>  It takes three parameters: the number of dice (`dice`), the number of sides in each die (`sides`), and a number to add to the result (`bonus`) (which can be negative, but the result of the subtraction is 0 if that result is greater).
+The following method generates a random result of rolling virtual dice.<sup>[**(24)**](#Note24)</sup>  It takes three parameters: the number of dice (`dice`), the number of sides in each die (`sides`), and a number to add to the result (`bonus`) (which can be negative, but the result of the subtraction is 0 if that result is greater).
 
     METHOD DiceRoll(dice, sides, bonus)
         if dice < 0 or sides < 1: return error
@@ -1243,7 +1245,7 @@ The [**_normal distribution_**](https://en.wikipedia.org/wiki/Normal_distributio
 - `sigma` (&sigma;), the standard deviation, affects how wide the "bell curve" appears. The
 probability that a normally-distributed random number will be within one standard deviation from the mean is about 68.3%; within two standard deviations (2 times `sigma`), about 95.4%; and within three standard deviations, about 99.7%.  (Some publications give &sigma;<sup>2</sup>, or variance, rather than standard deviation, as the second parameter.  In this case, the standard deviation is the variance's square root.)
 
-There are a number of methods for normal random number generation.<sup>[**(24)**](#Note24)</sup> The pseudocode below uses the polar method to generate two normal random numbers. (Ways to adapt the pseudocode to output only one random number at a time, rather than two, are outside the scope of this document.  In this document, the name `Normal` means a method that returns only one normally-distributed random number rather than two.)
+There are a number of methods for normal random number generation.<sup>[**(25)**](#Note25)</sup> The pseudocode below uses the polar method to generate two normal random numbers. (Ways to adapt the pseudocode to output only one random number at a time, rather than two, are outside the scope of this document.  In this document, the name `Normal` means a method that returns only one normally-distributed random number rather than two.)
 
     METHOD Normal2(mu, sigma)
       while true
@@ -1660,17 +1662,17 @@ The following pseudocode calculates a random point in space that follows a [**_m
 <a id=Random_Numbers_with_a_Given_Positive_Sum></a>
 ### Random Numbers with a Given Positive Sum
 
-Generating N `GammaDist(total, 1)` numbers and dividing them by their sum will result in N random numbers that (approximately) sum to `total` (see a [**Wikipedia article**](https://en.wikipedia.org/wiki/Dirichlet_distribution#Gamma_distribution)).  For example, if `total` is 1, the numbers will (approximately) sum to 1.  Note that in the exceptional case that all numbers are 0, the process should repeat.
+Generating N `GammaDist(total, 1)` numbers and dividing them by their sum will result in N numbers that (approximately) sum to `total`, where the combination of numbers is chosen uniformly at random (see a [**Wikipedia article**](https://en.wikipedia.org/wiki/Dirichlet_distribution#Gamma_distribution)).  For example, if `total` is 1, the numbers will (approximately) sum to 1.  Note that in the exceptional case that all numbers are 0, the process should repeat.
 
-The following pseudocode shows how to generate random integers with a given positive sum. (The algorithm for this was presented in (Smith and Tromble 2004)<sup>[**(25)**](#Note25)</sup>.)  In the pseudocode below&mdash;
+The following pseudocode shows how to generate integers with a given positive sum, where the combination is chosen uniformly at random from among all possible combinations. (The algorithm for this was presented in (Smith and Tromble 2004)<sup>[**(26)**](#Note26)</sup>.)  In the pseudocode below&mdash;
 
-- the method `NonzeroIntegersWithSum` returns `n` positive integers that sum to `total`,
-- the method `IntegersWithSum` returns `n` nonnegative integers that sum to `total`, and
+- the method `PositiveIntegersWithSum` returns `n` integers greater than 0 that sum to `total`,
+- the method `IntegersWithSum` returns `n` integers 0 or greater that sum to `total`, and
 - `Sort(list)` sorts the items in `list` in ascending order (note that sort algorithms are outside the scope of this document).
 
 &nbsp;
 
-    METHOD NonzeroIntegersWithSum(n, total)
+    METHOD PositiveIntegersWithSum(n, total)
         if n <= 0 or total <=0: return error
         ls = NewList()
         ret = NewList()
@@ -1696,16 +1698,16 @@ The following pseudocode shows how to generate random integers with a given posi
 
     METHOD IntegersWithSum(n, total)
         if n <= 0 or total <=0: return error
-        ret = NonzeroIntegersWithSum(n, total + n)
+        ret = PositiveIntegersWithSum(n, total + n)
         for i in 0...size(ret): ret[i] = ret[i] - 1
         return ret
     END METHOD
 
 > **Notes:**
 >
-> - Generating `N` random numbers with a given positive average `avg` is equivalent to generating `N` random numbers with the sum `N * avg`.
-> - Generating `N` random numbers `min` or greater and with a given positive sum `sum` is equivalent to generating `N` random numbers with the sum `sum - n * min`, then adding `min` to each number generated this way.
-> - The **Dirichlet distribution**, as defined in some places (e.g., _Mathematica_; Devroye 1986, p. 594), models _n_ random numbers, and can be sampled by generating _n_+1 random [**gamma-distributed**](#Gamma_Distribution) numbers, each with separate parameters, taking their sum, and dividing the first _n_ numbers by that sum.
+> - Generating a uniformly randomly chosen combination of `N` numbers with a given positive average `avg`, is equivalent to generating a uniformly randomly chosen combination of `N` numbers with the sum `N * avg`.
+> - Generating a uniformly randomly chosen combination of `N` numbers `min` or greater and with a given positive sum `sum` is equivalent to generating  a uniformly randomly chosen combination of `N` numbers with the sum `sum - n * min`, then adding `min` to each number generated this way.
+> - The **Dirichlet distribution**, as defined in some places (e.g., _Mathematica_; Devroye 1986, p. 594), models a uniformly randomly chosen combination of _n_ random numbers that sum to 1, and can be sampled by generating _n_+1 random [**gamma-distributed**](#Gamma_Distribution) numbers, each with separate parameters, taking their sum, and dividing the first _n_ numbers by that sum.
 
 <a id=Multinomial_Distribution></a>
 ### Multinomial Distribution
@@ -1767,7 +1769,7 @@ Other kinds of copulas describe different kinds of dependence between random num
 - the **Fr&eacute;chet&ndash;Hoeffding upper bound copula** _\[x, x, ..., x\]_ (e.g., `[x, x]`), where `x = RNDU01()`,
 - the **Fr&eacute;chet&ndash;Hoeffding lower bound copula** `[x, 1.0 - x]` where `x = RNDU01()`,
 - the **product copula**, where each number is a separately generated `RNDU01()` (indicating no dependence between the numbers), and
-- the **Archimedean copulas**, described by M. Hofert and M. M&auml;chler (2011)<sup>[**(26)**](#Note26)</sup>.
+- the **Archimedean copulas**, described by M. Hofert and M. M&auml;chler (2011)<sup>[**(27)**](#Note27)</sup>.
 
 <a id=Index_of_Non_Uniform_Distributions></a>
 ### Index of Non-Uniform Distributions
@@ -1925,7 +1927,7 @@ The following pseudocode generates a random point inside an _n_-dimensional simp
 <a id=Random_Points_on_the_Surface_of_a_Hypersphere></a>
 ### Random Points on the Surface of a Hypersphere
 
-The following pseudocode shows how to generate a random N-dimensional point on the surface of an N-dimensional hypersphere, centered at the origin, of radius `radius` (if `radius` is 1, the result can also serve as a unit vector in N-dimensional space).  Here, `Norm` is given in the appendix.  See also (Weisstein)<sup>[**(27)**](#Note27)</sup>.
+The following pseudocode shows how to generate a random N-dimensional point on the surface of an N-dimensional hypersphere, centered at the origin, of radius `radius` (if `radius` is 1, the result can also serve as a unit vector in N-dimensional space).  Here, `Norm` is given in the appendix.  See also (Weisstein)<sup>[**(28)**](#Note28)</sup>.
 
     METHOD RandomPointInHypersphere(dims, radius)
       x=0
@@ -1946,11 +1948,11 @@ The following pseudocode shows how to generate a random N-dimensional point on t
 <a id=Random_Points_Inside_a_Ball_or_Shell></a>
 ### Random Points Inside a Ball or Shell
 
-To generate a random N-dimensional point on or inside an N-dimensional ball, centered at the origin, of radius R, follow the pseudocode in `RandomPointInHypersphere`, except replace `Norm(ret)` with `sqrt( S - ln(RNDU01ZeroExc()))`, where `S` is the sum of squares of the numbers in `ret`.  For discs and spheres (2- or 3-dimensional balls), an alternative is to generate a vector (list) of N `RNDRANGE(-R, R)` random numbers<sup>[**(28)**](#Note28)</sup> until its _norm_ is R or less (see the [**appendix**](#Appendix)).<sup>[**(29)**](#Note29)</sup>
+To generate a random N-dimensional point on or inside an N-dimensional ball, centered at the origin, of radius R, follow the pseudocode in `RandomPointInHypersphere`, except replace `Norm(ret)` with `sqrt( S - ln(RNDU01ZeroExc()))`, where `S` is the sum of squares of the numbers in `ret`.  For discs and spheres (2- or 3-dimensional balls), an alternative is to generate a vector (list) of N `RNDRANGE(-R, R)` random numbers<sup>[**(29)**](#Note29)</sup> until its _norm_ is R or less (see the [**appendix**](#Appendix)).<sup>[**(30)**](#Note30)</sup>
 
 To generate a random point on or inside an N-dimensional spherical shell (a hollow ball), centered at the origin, with inner radius A and outer radius B (where A is less than B), either&mdash;
 - generate a random point for a ball of radius B until the norm of that point is A or greater (see the [**appendix**](#Appendix)), or
-- generate a random point on the surface of an N-dimensional hypersphere with radius equal to `pow(RNDRANGE(pow(A, N), pow(B, N)), 1.0 / N)`<sup>[**(30)**](#Note30)</sup>.
+- generate a random point on the surface of an N-dimensional hypersphere with radius equal to `pow(RNDRANGE(pow(A, N), pow(B, N)), 1.0 / N)`<sup>[**(31)**](#Note31)</sup>.
 
 > **Example:** To generate a random point inside a cylinder running along the Z axis, generate random X and Y coordinates inside a disk (2-dimensional ball) and generate a random Z coordinate by `RNDRANGE(mn, mx)`, where `mn` and `mx` are the highest and lowest Z coordinates possible.
 
@@ -2030,15 +2032,17 @@ If an application is concerned about these issues, it should treat the `RNDU01On
 
 provided the PDF's values are all 0 or greater and the area under the PDF's curve is 1.</small>
 
-<small><sup id=Note22>(22)</sup> Casella, G., and George, E.I., "Explaining the Gibbs Sampler", The American Statistician 46:3 (1992).</small>
+<small><sup id=Note22>(22)</sup> Neal, R. M., [**"Slice sampling"**](https://projecteuclid.org/euclid.aos/1056562461), _Annals of Statistics_ 31(3), pp. 705-767 (2003).</small>
 
-<small><sup id=Note23>(23)</sup> The "Dice" section used the following sources:
+<small><sup id=Note23>(23)</sup> Casella, G., and George, E.I., "Explaining the Gibbs Sampler", The American Statistician 46:3 (1992).</small>
+
+<small><sup id=Note24>(24)</sup> The "Dice" section used the following sources:
 
 - Red Blob Games, [**"Probability and Games: Damage Rolls"**](http://www.redblobgames.com/articles/probability/damage-rolls.html) was the main source for the dice-roll distribution.  The method `random(N)` in that document corresponds to `RNDINTEXC(N)` in this document.
 - The [**MathWorld article "Dice"**](http://mathworld.wolfram.com/Dice.html) provided the mean of the dice roll distribution.
 - S. Eger, "Stirling's approximation for central extended binomial coefficients", 2014, helped suggest the variance of the dice roll distribution.</small>
 
-<small><sup id=Note24>(24)</sup> For example, besides the methods given in this section's main text:
+<small><sup id=Note25>(25)</sup> For example, besides the methods given in this section's main text:
 
 1. In the _Box&ndash;Muller transformation_, `mu + radius * cos(angle)` and `mu + radius * sin(angle)`, where `angle = RNDRANGEMaxExc(0, 2 * pi)` and `radius = sqrt(-2 * ln(RNDU01ZeroExc())) * sigma`, are two independent normally-distributed random numbers.
 2. Computing the sum of twelve `RNDU01OneExc()` numbers and subtracting the sum by 6 (see also [**"Irwin&ndash;Hall distribution" on Wikipedia**](https://en.wikipedia.org/wiki/Irwin%E2%80%93Hall_distribution)) results in approximate standard normal (`mu`=0, `sigma`=1) random numbers, whose values are not less than -6 or greater than 6; on the other hand, in a standard normal distribution, results less than -6 or greater than 6 will occur only with a generally negligible probability.
@@ -2046,19 +2050,17 @@ provided the PDF's values are all 0 or greater and the area under the PDF's curv
 
 In 2007, Thomas, D., et al. gave a survey of normal random number methods in "Gaussian Random Number Generators", _ACM Computing Surveys_ 39(4), 2007, article 11.</small>
 
-<small><sup id=Note25>(25)</sup> Smith and Tromble, "[**Sampling Uniformly from the Unit Simplex**](http://www.cs.cmu.edu/~nasmith/papers/smith+tromble.tr04.pdf)", 2004.</small>
+<small><sup id=Note26>(26)</sup> Smith and Tromble, "[**Sampling Uniformly from the Unit Simplex**](http://www.cs.cmu.edu/~nasmith/papers/smith+tromble.tr04.pdf)", 2004.</small>
 
-<small><sup id=Note26>(26)</sup> Hofert, M., and Maechler, M.  "Nested Archimedean Copulas Meet R: The nacopula Package".  Journal of Statistical Software 39(9), 2011, pp. 1-20.</small>
+<small><sup id=Note27>(27)</sup> Hofert, M., and Maechler, M.  "Nested Archimedean Copulas Meet R: The nacopula Package".  Journal of Statistical Software 39(9), 2011, pp. 1-20.</small>
 
-<small><sup id=Note27>(27)</sup> Weisstein, Eric W.  "[**Hypersphere Point Picking**](http://mathworld.wolfram.com/HyperspherePointPicking.html)".  From MathWorld&mdash;A Wolfram Web Resource.</small>
+<small><sup id=Note28>(28)</sup> Weisstein, Eric W.  "[**Hypersphere Point Picking**](http://mathworld.wolfram.com/HyperspherePointPicking.html)".  From MathWorld&mdash;A Wolfram Web Resource.</small>
 
-<small><sup id=Note28>(28)</sup> The N numbers generated this way will form a point inside an N-dimensional _hypercube_ with length `2 * R` in each dimension and centered at the origin of space.</small>
+<small><sup id=Note29>(29)</sup> The N numbers generated this way will form a point inside an N-dimensional _hypercube_ with length `2 * R` in each dimension and centered at the origin of space.</small>
 
-<small><sup id=Note29>(29)</sup> See also a [**MathWorld article**](http://mathworld.wolfram.com/BallPointPicking.html), which was the inspiration for these two methods, and the _Stack Overflow_ question "How to generate uniform random points in (arbitrary) N-dimension ball?", `questions/54544971`.</small>
+<small><sup id=Note30>(30)</sup> See also a [**MathWorld article**](http://mathworld.wolfram.com/BallPointPicking.html), which was the inspiration for these two methods, and the _Stack Overflow_ question "How to generate uniform random points in (arbitrary) N-dimension ball?", `questions/54544971`.</small>
 
-<small><sup id=Note30>(30)</sup> See the _Mathematics Stack Exchange_ question titled "Random multivariate in hyperannulus", `questions/1885630`.</small>
-
-<small><sup id=Note31>(31)</sup> Neal, R. M., [**"Slice sampling"**](https://projecteuclid.org/euclid.aos/1056562461), Annals of Statistics 31:3 (2003), 705-767.</small>
+<small><sup id=Note31>(31)</sup> See the _Mathematics Stack Exchange_ question titled "Random multivariate in hyperannulus", `questions/1885630`.</small>
 
 <a id=Appendix></a>
 ## Appendix

@@ -202,6 +202,11 @@ class RandomGen:
     return list
 
   def partialshuffle(self, list, k):
+  """ Does a partial shuffle of
+a list's items (stops when 'k' items
+are shuffled); the shuffled items
+will appear at the end of the list.
+Returns 'list'."""
     ki = 0
     if len(list) >= 2:
       i = len(list) - 1
