@@ -32,7 +32,7 @@ All the random number methods presented on this page are ultimately based on an 
 
 - **Corrections to any method given on this page.**
 - **Requests to provide an implementation of any method given here in other programming languages, in addition to Python.**
-- **If there is enough interest by readers, I may discuss approaches to generate random mazes, graphs, matrices, or paths.**
+- **If there is enough interest by readers, I may discuss approaches to generate random graphs or matrices.** <!-- Generating a random maze is equivalent to generating a random spanning tree of a mesh graph.  Generating a random path is equivalent to a simple random walk of a (weighted or unweighted) graph. -->
 - **Suggestions to add probability distributions to this document.**
 - **Suggestions to trim the size of this document, such as by limiting it to the most common and most useful methods for generating random numbers.**
 
