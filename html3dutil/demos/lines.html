@@ -21,99 +21,130 @@ import {MathUtil,MeshBuffer,Meshes,newFrames} from "../h3du_module.js";
  http://peteroupc.github.io/
 */
 
-function TriangleParticles(count, w, h) {
+function mollweide(lat,lon,scale,lon0){
+var th=2*Math.asin(2*lat/Math.PI)
+lon0=lon0||0
+var psphi=Math.PI*Math.sin(lat)
+var sth,cth
+for(var i=0;i<10;i++){
+ sth=Math.sin(th)
+ cth=Math.cos(th)
+ if(cth==-1)break
+ var dth=(th-psphi+sth)/(cth+1)
+ th-=dth
+ if(Math.abs(dth)<1e-15)break
+}
+th*=0.5
+sth=Math.sin(th)
+cth=Math.cos(th)
+var s2=Math.sqrt(2)
+var x=2*lon*cth/Math.PI
+return [scale*s2*x,scale*s2*sth]
+}
+function cylinderequidistant(lat,lon,scale,lats,lon0){
+lon0=lon0||0
+lats=lats||0
+return [(lon-lon0)*Math.cos(lats)*scale,lat*scale]
+}
+function sinusoid(lat,lon,scale,lon0){
+lon0=lon0||0
+return [scale*Math.cos(lat)*(lon-lon0),
+   scale*lat]
+}
+function dms2rad(d,m,s){
+ return (d+m/60.0+s/3600.0)*MathUtil.ToRadians
+}
+
+function winkel1(lat,lon,scale,lats,lon0){
+ if(lats==null)lats=dms2rad(50,28,0)
+ var a=sinusoid(lat,lon,scale,lon0)
+ var b=cylinderequidistant(lat,lon,scale,lats,lon0)
+ return MathUtil.vec2lerp(a,b,0.5)
+}
+
+function eckert5(lat,lon,scale,lon0){
+ return winkel1(lat,lon,scale,0,lon0)
+}
+
+function cylinderequalarea(lat,lon,scale,lats,lon0){
+lon0=lon0||0
+if(lats==null)lats=44.138*MathUtil.ToRadians
+var clats=Math.cos(lats)
+return [scale*clats*(lon-lon0),
+   scale*Math.sin(lat)/clats]
+}
+
+function cassini(lat,lon,scale,lon0){
+//NOTE: might not have finite boundary
+lon0=lon0||0
+var lo=lon-lon0
+var s=Math.sin(lo)
+var c=Math.cos(lo)
+var slat=Math.sin(lat)
+var tlat=Math.tan(lat)
+var x=Math.asin(clat*s)
+var y=Math.atan2(tlat,c)
+return [scale*x,scale*y]
+}
+
+function polyconic(lat,lon,scale,lat0,lon0){
+lon0=lon0||0
+lat0=lat0||0
+if(lat==0){
+ return [(lon-lon0)*scale,(lat-lat0)*scale]
+}
+var lo=lon-lon0
+var slat=Math.sin(lat)
+var clat=Math.cos(lat)
+var s=Math.sin(lo)
+var c=Math.cos(lo)
+var e=slat*lo
+var se=Math.sin(e)
+var ce=Math.cos(e)
+var cotlat=clat/slat
+var y=scale*((lat-lat0)+cotlat*(1-ce))
+return [scale*cotlat*se,y]
+}
+function ProjectionLines(count, w, h) {
   "use strict";
   this.tris = [];
   this.timer = {};
   var triVertices=[]
-  for(var i = 0; i < count; i++) {
-    var tri = TriangleParticles.generateTri(w,h);
-    this.tris[i] = tri;
+  var lon0=0
+  var incr=7.5
+  var deg15=incr*MathUtil.ToRadians
+  // Latitude lines
+  for(var i=-90;i<=90;i+=incr){
+   for(var j=-180;j<180;j+=incr){
+    var lon=j*MathUtil.ToRadians;
+    var lat=i*MathUtil.ToRadians;
+    var p1=eckert5(lat,lon,20)
+    var p2=eckert5(lat,lon+deg15,20)
     triVertices.push(
-tri.position[0],tri.position[1],tri.position[2],
-tri.color[0],tri.color[1],tri.color[2],
-tri.position[3],tri.position[4],tri.position[5],
-tri.color[0],tri.color[1],tri.color[2],
-tri.position[6],tri.position[7],tri.position[8],
-tri.color[0],tri.color[1],tri.color[2])
+          p1[0],p1[1],0,0,0,0,
+          p2[0],p2[1],0,0,0,0)
+   }
+  }
+  // Meridians
+  for(var j=-180;j<=180;j+=incr){
+   for(var i=-90;i<90;i+=incr){
+    var lon=j*MathUtil.ToRadians;
+    var lat=i*MathUtil.ToRadians;
+    var p1=eckert5(lat,lon,20)
+    var p2=eckert5(lat+deg15,lon,20)
+    triVertices.push(
+          p1[0],p1[1],0,0,0,0,
+          p2[0],p2[1],0,0,0,0)
+   }
   }
   this.group=MeshBuffer.fromPositionsColors(triVertices)
+     .setType(MeshBuffer.LINES)
 }
-TriangleParticles.prototype.update = function(time, width, height) {
+ProjectionLines.prototype.update = function(time, width, height) {
   "use strict";
   var frames = newFrames(this.timer, time);
   var attr=this.group.getAttribute("POSITION")
   var attrcolor=this.group.getAttribute("COLOR")
-  var vec=[]
-  for(var i = 0; i < this.tris.length; i++) {
-    this.tris[i].life -= frames;
-    if(this.tris[i].life <= 0) {
-      var tri = TriangleParticles.generateTri(width,height);
-      this.tris[i] = tri;
-      // NOTE: No rotation here
-      attr.setXyz(i*3,tri.position[0],tri.position[1],tri.position[2])
-          .setXyz(i*3+1,tri.position[3],tri.position[4],tri.position[5])
-          .setXyz(i*3+2,tri.position[6],tri.position[7],tri.position[8])
-      attrcolor.setVec(i*3,tri.color)
-          .setVec(i*3+1,tri.color)
-          .setVec(i*3+2,tri.color)
-    } else {
-      var trans = MathUtil.mat4translated(
-         MathUtil.vec3scale(this.tris[i].movement, frames));
-      trans=MathUtil.mat4rotate(trans,
-         this.tris[i].rotation * frames, 0, 0, 1);
-      attr.getVec(i*3,vec)
-      attr.setVec(i*3,MathUtil.mat4transformVec3(trans,vec))
-      attr.getVec(i*3+1,vec)
-      attr.setVec(i*3+1,MathUtil.mat4transformVec3(trans,vec))
-      attr.getVec(i*3+2,vec)
-      attr.setVec(i*3+2,MathUtil.mat4transformVec3(trans,vec))
-    }
-  }
-};
-// Calculates the area of a triangle
-TriangleParticles._getArea = function(tri) {
-  "use strict";
-  var tx = [tri[0] - tri[3], tri[1] - tri[4], tri[2] - tri[5]];
-  var ty = [tri[6] - tri[3], tri[7] - tri[4], tri[8] - tri[5]];
-  var tz = MathUtil.vec3cross(tx, ty);
-  return MathUtil.vec3length(tz) * 0.5;
-};
-
-TriangleParticles.generateTri = function(width, height) {
-  "use strict";
-  var xpos = Math.random() * (width + 10) - 5;
-  var ypos = Math.random() * (height + 10) - 5;
-  var maxw = 100;
-  var maxh = 100;
-  var pos;
-  do {
-    pos = [
-      Math.random() * maxw - maxw / 2,
-      Math.random() * maxh - maxh / 2,
-      0,
-      Math.random() * maxw - maxw / 2,
-      Math.random() * maxh - maxh / 2,
-      0,
-      Math.random() * maxw - maxw / 2,
-      Math.random() * maxh - maxh / 2,
-      0];
-  } while(TriangleParticles._getArea(pos) < 200);
-  var dx = Math.random() * 10 - 5;
-  var dy = Math.random() * 10 - 5;
-  var rotation = Math.floor(Math.random() * 10) - 5;
-  var life = Math.floor(Math.random() * 200);
-  var r = Math.random();
-  var g = Math.random();
-  var b = Math.random();
-  return {
-    "center":[xpos, ypos, 0],
-    "position":pos,
-    "rotation":rotation,
-    "movement":[dx, dy, 0],
-    "color":[r, g, b],
-    "life":life
-  };
 };
 ///////////////////////
 // Helper methods
@@ -212,7 +243,7 @@ context.linkProgram(sp)
 context.detachShader(sp,vs)
 context.detachShader(sp,fs)
 ////////////////////////
-var sf=new TriangleParticles(100,100,100);
+var sf=new ProjectionLines(100,100,100);
 var buffers=[]
 context.useProgram(sp)
 var projUniform=context.getUniformLocation(sp,"proj")
@@ -242,7 +273,7 @@ matrix=new Float32Array(matrix)
 refreshBuffer(context,sp,sf.group,bdata)
 context.uniformMatrix4fv(projUniform,false,matrix)
 context.drawArrays(
-  context.TRIANGLES,0,
+  context.LINES,0,
   sf.group.vertexCount())
 requestAnimationFrame(raf)
 }

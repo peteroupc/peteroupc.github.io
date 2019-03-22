@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
-<p>Begun on June 4, 2017; last updated on Mar. 17, 2019.</p>
+<p>Begun on June 4, 2017; last updated on Mar. 20, 2019.</p>
 
 <p>Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.</p>
 
@@ -1397,7 +1397,7 @@ and/or discarding some of them.</p>
 <p><strong>Density estimation models.</strong> Generating random numbers (or data points) based on how a list of numbers (or data points) is distributed involves a family of data models called <a href="http://scikit-learn.org/stable/modules/density.html"><strong>density estimation</strong></a> models, including the ones given below.  These models seek to describe the distribution of data points in a given data set, where areas with more points are more likely to be sampled.</p>
 
 <ol>
-<li><strong>Histograms</strong> are sets of one or more <em>bins</em>, which are generally of equal size.  Histograms are <a href="#Mixtures_of_Distributions"><strong><em>mixtures</em></strong></a>, where each bin&#39;s weight is the number of data points in that bin.  After a bin is randomly chosen, a random data point that could fit in that bin is generated (that point need not be an existing data point).</li>
+<li><strong>Histograms</strong> are sets of one or more non-overlapping <em>bins</em>, which are generally of equal size.  Histograms are <a href="#Mixtures_of_Distributions"><strong><em>mixtures</em></strong></a>, where each bin&#39;s weight is the number of data points in that bin.  After a bin is randomly chosen, a random data point that could fit in that bin is generated (that point need not be an existing data point).</li>
 <li><strong>Gaussian</strong> <a href="https://en.wikipedia.org/wiki/Mixture_model"><strong>mixture models</strong></a> are also mixtures, in this case, mixtures of one or more <a href="#Normal_Gaussian_Distribution"><strong>Gaussian (normal) distributions</strong></a>.</li>
 <li><strong>Kernel distributions</strong> are mixtures of sampling distributions, one for each data point. Estimating a kernel distribution is called <a href="https://en.wikipedia.org/wiki/Kernel_density_estimation"><strong><em>kernel density estimation</em></strong></a>.  To sample from a kernel distribution:
 
