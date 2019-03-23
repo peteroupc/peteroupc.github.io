@@ -83,9 +83,9 @@
 <li><code>atan2(y, x)</code> is&mdash;
 
 <ul>
-<li>the inverse tangent of <code>y/x</code> if <code>x &gt; 0</code>,</li>
-<li>&pi; plus the inverse tangent of <code>y/x</code> if <code>y &gt;= 0 and x &lt; 0</code>,</li>
-<li>-&pi; plus the inverse tangent of <code>y/x</code> if <code>y &lt; 0 and x &lt; 0</code>,</li>
+<li>the inverse tangent of <code>y/x</code>, in radians, if <code>x &gt; 0</code>,</li>
+<li>&pi; plus the inverse tangent of <code>y/x</code>, in radians, if <code>y &gt;= 0 and x &lt; 0</code>,</li>
+<li>-&pi; plus the inverse tangent of <code>y/x</code>, in radians, if <code>y &lt; 0 and x &lt; 0</code>,</li>
 <li><code>-pi / 2</code> if <code>y &lt; 0 and x == 0</code>,</li>
 <li><code>pi / 2</code> if <code>y &gt; 0 and x == 0</code>, and</li>
 <li>0 if <code>y == 0 and x == 0</code>.</li>
@@ -105,8 +105,8 @@
 <p><strong>Notes:</strong></p>
 
 <ul>
-<li>The inverse sine of <code>a</code> is equivalent to <code>atan2(a, sqrt(1.0 - a * a))</code>.</li>
-<li>The inverse cosine of <code>a</code> is equivalent to <code>atan2(sqrt(1.0 - a * a), a)</code>.</li>
+<li>The inverse sine, in radians, of <code>a</code> is equivalent to <code>atan2(a, sqrt(1.0 - a * a))</code>.</li>
+<li>The inverse cosine, in radians, of <code>a</code> is equivalent to <code>atan2(sqrt(1.0 - a * a), a)</code>.</li>
 </ul>
 
 <p><a id=Pseudocode_Notes></a></p>

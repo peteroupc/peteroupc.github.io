@@ -62,9 +62,9 @@ A _list_ can be expressed by wrapping items in brackets; for example, `[0, 1, 2]
 
 * `sin(a)`, `cos(a)`, and `tan(a)` are the sine, cosine, and tangent of the angle `a`, respectively, where `a` is in radians.
 * `atan2(y, x)` is&mdash;
-    - the inverse tangent of `y/x` if `x > 0`,
-    - &pi; plus the inverse tangent of `y/x` if `y >= 0 and x < 0`,
-    - -&pi; plus the inverse tangent of `y/x` if `y < 0 and x < 0`,
+    - the inverse tangent of `y/x`, in radians, if `x > 0`,
+    - &pi; plus the inverse tangent of `y/x`, in radians, if `y >= 0 and x < 0`,
+    - -&pi; plus the inverse tangent of `y/x`, in radians, if `y < 0 and x < 0`,
     - `-pi / 2` if `y < 0 and x == 0`,
     - `pi / 2` if `y > 0 and x == 0`, and
     - 0 if `y == 0 and x == 0`.
@@ -81,8 +81,8 @@ A _list_ can be expressed by wrapping items in brackets; for example, `[0, 1, 2]
 
 **Notes:**
 
-- The inverse sine of `a` is equivalent to `atan2(a, sqrt(1.0 - a * a))`.
-- The inverse cosine of `a` is equivalent to `atan2(sqrt(1.0 - a * a), a)`.
+- The inverse sine, in radians, of `a` is equivalent to `atan2(a, sqrt(1.0 - a * a))`.
+- The inverse cosine, in radians, of `a` is equivalent to `atan2(sqrt(1.0 - a * a), a)`.
 
 <a id=Pseudocode_Notes></a>
 ## Pseudocode Notes
