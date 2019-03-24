@@ -21,6 +21,12 @@ import {MathUtil,MeshBuffer,Meshes,newFrames} from "../h3du_module.js";
  http://peteroupc.github.io/
 */
 
+function dms2rad(d,m,s){
+ var ret=(d<0 ? -1 : 1)*(
+   Math.abs(d)+((m||0)*60+(s||0))/3600.0)*MathUtil.ToRadians
+ return ret
+}
+
 function Ellipsoid(a,f){
     this.a=a // Semimajor axis
     this.f=f // Flattening
@@ -115,6 +121,7 @@ function Datum(ellipsoid){
    this.towgs84=[[0,0,0],[0,0,0],1]
    this.xyzTransform=function(xyz,txyz,rxyz,
       scale,pxyz,pvTransform){
+     // TODO: Inverse
     if(scale==null)scale=1
     if(pxyz==null)pxyz=null
     if(pvTransform==null)pvTransform=false
@@ -164,12 +171,18 @@ function LambertConformalConic(ellipsoid,lat1,lat2,latf,lonf,ef,nf,k,belgium){
   lat1, lat2: Latitudes of standard parallels.
     May be the same.
   latf, lonf: Coordinates of false origin.
-  ef, nf: False easting and false northing,
-    in meters
+  ef, nf: False easting and false northing, in the
+    same units used to define the ellipsoid
   k: Scale factor, optional.
   belgium: True to apply modification for
-    Belgium.
+    old practice in Belgium.
 */
+
+  this._tcalc=function(phi,ecc){
+    var sp=Math.sin(phi)*ecc
+    return Math.tan(Math.PI*0.25-phi*0.5)/
+     ((1-sp)/(1+sp))**(ecc*0.5)
+  }
     this.lat1=lat1
     this.lat2=lat2
     this.latf=latf
@@ -181,24 +194,24 @@ function LambertConformalConic(ellipsoid,lat1,lat2,latf,lonf,ef,nf,k,belgium){
     this.k=(k==null) ? 1 : k
     var belg=belgium==null ? false : belgium
     // Set up
-    sp=Math.sin(this.lat1)
+    var sp=Math.sin(this.lat1)
     this.m1=Math.cos(this.lat1)
     this.m1/=Math.sqrt(1-this.ecc*this.ecc*sp*sp)
     this.t1=this._tcalc(this.lat1,this.ecc)
-    tf=0
+    var tf=0
     // 29.2985 arcseconds
     this.thOffset = belg ?
      -0.00014204313635987740308 : 0
     if(this.lat1==this.lat2){
       // One standard parallel
       if(this.latf!=this.lat1)throw new Error()
-      tf=t1
+      tf=this.t1
       this.n=Math.sin(this.lat1)
     } else{
       sp=Math.sin(this.lat2)
-      m2=Math.cos(this.lat2)
+      var m2=Math.cos(this.lat2)
       m2/=Math.sqrt(1-this.ecc*this.ecc*sp*sp)
-      t2=this._tcalc(this.lat2,this.ecc)
+      var t2=this._tcalc(this.lat2,this.ecc)
       this.n=Math.log(this.m1)-Math.log(m2)
       this.n/=Math.log(this.t1)-Math.log(t2)
       tf=this._tcalc(this.latf,this.ecc)
@@ -206,42 +219,122 @@ function LambertConformalConic(ellipsoid,lat1,lat2,latf,lonf,ef,nf,k,belgium){
     this.f=this.m1/(this.n*this.t1**this.n)
     this.rf=this.a*this.f*this.k*tf**this.n
   this.forward=function(lat,lon){
-   // Returns: Easting and northing in meters.
-   t=this._tcalc(lat,this.ecc)
-   th=this.n*(lon-this.lonf)+this.thoffset
-   r=this.a*this.f*this.k*t**this.n
+   // Returns: Easting and northing, in the
+   // same units used to define the ellipsoid
+   var t=this._tcalc(lat,this.ecc)
+   var th=this.n*(lon-this.lonf)+this.thOffset
+   var r=this.a*this.f*this.k*t**this.n
    return [
      this.ef+r*Math.sin(th),
      this.nf+this.rf-r*Math.cos(th)
    ]
   }
   this.inverse=function(x,y){
-    e=x-this.ef
-    nn=y-this.nf
-    rp=(this.n<0 ? -1 : 1)*Math.pow(
-     Math.sqrt(e*e+(this.rf-nn)),2)
-    tp=Math.pow(rp/(this.a*this.k*this.f),1.0/this.n)
-    thp=Math.atan2(e,this.rf-nn)-this.thOffset
-    lon=thp/this.n+this.lonf
-    lat=Math.PI*0.5-2*Math.atan(tp)
+    var e=x-this.ef
+    var nn=y-this.nf
+    var rp=(this.n<0 ? -1 : 1)*Math.sqrt(
+     e*e+Math.pow(this.rf-nn,2))
+    var tp=Math.pow(rp/(this.a*this.k*this.f),1.0/this.n)
+    var thp=Math.atan2(e,this.rf-nn)-this.thOffset
+    var lon=thp/this.n+this.lonf
+    var lat=Math.PI*0.5-2*Math.atan(tp)
     for(var i=0;i<10;i++){
-     eslat=this.ecc*Math.sin(lat)
-     newtp=tp*Math.pow((1-eslat)/(1+eslat),this.ecc*0.5)
-     newlat=Math.PI*0.5-2*Math.atan(newtp)
+     var eslat=this.ecc*Math.sin(lat)
+     var newtp=tp*Math.pow((1-eslat)/(1+eslat),this.ecc*0.5)
+     var newlat=Math.PI*0.5-2*Math.atan(newtp)
      if(Math.abs(newlat-lat)<1e-12)break
+     lat=newlat
     }
     return [lat,lon]
-  }
-  this._tcalc=function(phi,ecc){
-    sp=Math.sin(phi)*ecc
-    return Math.tan(Math.PI*0.25-phi*0.5)/
-     ((1-sp)/(1+sp))**(ecc*0.5)
   }
 }
 LambertConformalConic.oneParallel=function(
    ellipsoid,latf,lonf,ef,nf,k,belgium){
  return new LambertConformalConic(ellipsoid,latf,latf,latf,
    lonf,ef,nf,k,belgium)
+}
+
+function Mercator(ellipsoid,k,lonf,ef,nf){
+  this.a=ellipsoid.a
+  this.ecc=ellipsoid.ecc()
+  this.eccsq=ellipsoid.eccsq()
+  this.k=k // scale factor on equator
+  this.ef=ef
+  this.nf=nf
+  this.lonf=lonf
+  this.forward=function(lat,lon){
+    var t=Math.log(this._tcalcpl(lat,this.ecc))
+    return [
+     this.ef+this.a*this.k*(lon-lonf),
+     this.nf+this.a*this.k*t
+    ]
+  }
+  this.inverse=function(x,y){
+   var lon=((x-this.ef)/(this.a*this.k))+this.lonf
+   var t=Math.exp((this.nf-y)/(this.a*this.k))
+   var chi=Math.PI/2-2*Math.atan(t)
+   var e2=this.eccsq
+   var c1=((((13/360.0)*e2+1/12.0)*e2+5/24.0)*e2+0.5)*e2
+   var c2=((((811/11520.0)*e2+29/240.0)*e2+7/48.0)*e2)*e2
+   var c3=((((81/1120.0)*e2+7/120.0)*e2)*e2)*e2
+   var c4=((((4279/161280)*e2)*e2)*e2)*e2
+   c1*=Math.sin(chi*2)
+   c2*=Math.sin(chi*4)
+   c3*=Math.sin(chi*6)
+   c4*=Math.sin(chi*8)
+   return [chi+c1+c2+c3+c4,lon]
+  }
+  this._tcalcpl=function(phi,ecc){
+    var sp=Math.sin(phi)*ecc
+    return Math.tan(Math.PI*0.25+phi*0.5)*
+       ((1-sp)/(1+sp))**(ecc*0.5)
+  }
+}
+Mercator.falseOrigin=function(ellipsoid,lats,latf,lonf,ef,nf){
+  var a=ellipsoid.a
+  var ecc=ellipsoid.ecc()
+  var lat1abs=Math.abs(lats)
+  var sp=Math.sin(lat1abs)
+  var k=Math.cos(lat1abs)
+  k/=Math.sqrt(1-ecc*ecc*sp*sp)
+  sp=Math.sin(latf)*ecc
+  var tc=Math.tan(Math.PI*0.25+latf*0.5)*
+       ((1-sp)/(1+sp))**(ecc*0.5)
+  var m=a*k*Math.log(tc)
+  var newnf=(nf||0)-m
+  return new Mercator(ellipsoid,k,lonf,ef,newnf)
+}
+Mercator.twoParallels=function(ellipsoid,lats,lonf,ef,nf){
+// 'lats' is the longitude north and south of the
+// equator of the two standard parallels
+ var ecc=ellipsoid.ecc()
+  var lat1abs=Math.abs(lats)
+ var sp=Math.sin(lat1abs)
+ var k=Math.cos(lat1abs)
+ k/=Math.sqrt(1-ecc*ecc*sp*sp)
+ return new Mercator(ellipsoid,k,lonf,ef,nf)
+}
+function MercatorSpherical(r,lonf,ef,nf){
+/* r is:
+   - the radius of the sphere (or conformal radius
+     for the origin latitude), or
+   - the ellipsoid's semimajor axis for Web Mercator
+     (usually 6378137 m) */
+ this.r=r
+ this.lonf=lonf
+ this.ef=ef
+ this.nf=nf
+ this.forward=function(lat,lon){
+return [this.ef+this.r*(lon-this.lonf),
+   this.nf+this.r*Math.log(
+      Math.tan(Math.PI*0.25+lat*0.5))]
+ }
+ this.inverse=function(x,y){
+  var lat=Math.PI*0.5-2*Math.atan(
+   Math.exp((this.nf-y)/this.r))
+  var lon=(x-this.ef)/this.r+this.lonf
+  return [lat,lon]
+ }
 }
 
 ///////////////////////////
@@ -275,9 +368,6 @@ function sinusoid(lat,lon,scale,lon0){
 lon0=lon0||0
 return [scale*Math.cos(lat)*(lon-lon0),
    scale*lat]
-}
-function dms2rad(d,m,s){
- return (d+m/60.0+s/3600.0)*MathUtil.ToRadians
 }
 
 function winkel1(lat,lon,scale,lats,lon0){
