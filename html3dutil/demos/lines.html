@@ -21,6 +21,224 @@ import {MathUtil,MeshBuffer,Meshes,newFrames} from "../h3du_module.js";
  http://peteroupc.github.io/
 */
 
+function Ellipsoid(a,f){
+    this.a=a // Semimajor axis
+    this.f=f // Flattening
+  /** Radius of sphere with same surface area
+    as the ellipsoid. */
+  this.authalicRadius=function(){
+    var ecc=this.ecc()
+    var lo=Math.log((1-ecc)/(1+ecc))
+    lo*=(1-ecc*ecc)/(2*ecc)
+    return this.a*Math.sqrt((1-lo)*0.5)
+  }
+  this.conformalRadius=function(lat){
+    var eccsq=this.eccsq()
+    var sl=Math.sin(lat)
+    // TODO: Verify this is correct
+    return Math.sqrt(1-eccsq)*this.a/(1-eccsq*sl*sl)
+  }
+
+  this.ecc=()=> Math.sqrt(2*this.f-this.f*this.f);
+  this.eccsq=()=> 2*this.f-this.f*this.f;
+  this.ecc=function(u,v,w,x0,y0,z0){
+     latlon=latLonFromXYZ(x0,y0,z0)
+     lat=latlon[0]
+     lon=latlon[1]
+     slat=Math.sin(lat)
+     clat=Math.cos(lat)
+     slon=Math.sin(lon)
+     clon=Math.cos(lon)
+     x=x0-u*slon-v*slat*clon+w*clat*clon
+     y=y0+u*clon-v*slat*slon+w*clat*slon
+     z=z0+v*clat+w*slat
+     return [x,y,z]
+  }
+  this.enuFromXYZ=function(x,y,z,x0,y0,z0){
+     latlon=latLonFromXYZ(x0,y0,z0)
+     xx=x-x0
+     yy=y-y0
+     zz=z-z0
+     lat=latlon[0]
+     lon=latlon[1]
+     slat=Math.sin(lat)
+     clat=Math.cos(lat)
+     slon=Math.sin(lon)
+     clon=Math.cos(lon)
+     u=-xx*slon+yy*clon
+     v=-xx*slat*clon-yy*slat*slon+zz*clat
+     w=xx*clat*clon+yy*clat*slon+zz*slat
+     return [u,v,w]
+  }
+  this.latLonToXYZ(geo)
+  // Note: altitude is height above this ellipsoid,
+   //      not necessarily height above mean sea level.
+    lat=geo[0];lon=geo[1];altitude=geo[2]||0
+    eccsq=this.eccsq()
+    sl=Math.sin(lat)
+    cl=Math.cos(lat)
+    nu=this.a/Math.sqrt(1-eccsq*sl*sl)
+    xs=cl*(nu+altitude)
+    zs=(altitude+nu*(1-eccsq))
+    return [Math.cos(lon)*xs,Math.sin(lon)*xs,
+        Math.sin(lat)*zs]
+  }
+  this.latLonFromXYZ=function(xyz){
+     eccsq=this.eccsq()
+     e=eccsq/(1-eccsq)
+     b=this.a*(1-this.f)
+     x=xyz[0];y=xyz[1];z=xyz[2]
+     lon=Math.atan2(y,x)
+     p=Math.sqrt(x*x+y*y)
+     q=Math.atan2(this.a*z,b*p)
+     sq=Math.sin(q)
+     cq=Math.cos(q)
+     lat=Math.atan2(z+b*e*sq*sq*sq,
+            p-this.a*eccsq*cq*cq*cq)
+     sl=Math.sin(lat)
+     cl=Math.cos(lat)
+     nu=this.a/Math.sqrt(1-eccsq*sl*sl)
+     return [lat,lon,(p/cl)-nu]
+  }
+}
+  Ellipsoid.fromAInvFlat=function(a,invf)
+    return new Ellipsoid(a,1.0/invf)
+  }
+  Ellipsoid.fromAEcc(a,ecc)
+    return new Ellipsoid(a,1.0+Math.sqrt(1-ecc*ecc))
+  }
+
+function Datum(ellipsoid){
+   this.ellipsoid=ellipsoid
+   this.towgs84=[[0,0,0],[0,0,0],1]
+   this.xyzTransform=function(xyz,txyz,rxyz,
+      scale,pxyz,pvTransform){
+    if(scale==null)scale=1
+    if(pxyz==null)pxyz=null
+    if(pvTransform==null)pvTransform=false
+    sx=xyz[0];sy=xyz[1];sz=xyz[2]
+    tx=txyz[0];ty=txyz[1];tz=txyz[2]
+    rx=rxyz[0];ry=rxyz[1];rz=rxyz[2]
+    if(pxyz!=null){ // has pivot
+       sx-=pxyz[0];tx+=pxyz[0]
+       sy-=pxyz[1];ty+=pxyz[1]
+       sz-=pxyz[2];tz+=pxyz[2]
+    }
+    // coordinate frame transformation
+    mat1=[1,rz,-ry,-rz,1,rx,ry,-rx,1]
+    if(pvTransform){
+      // position vector transformation
+      mat1=[1,-rz,ry,rz,1,-rx,-ry,rx,1]
+    }
+    ret=this._transform(mat1,[sx,sy,sz])
+    return [ret[0]*scale+tx,ret[1]*scale+ty,
+          ret[2]*scale+tz]
+   }
+   this.setToWgs84=function(tx,ty,tz,rx,ry,rz,s){
+     this.towgs84=[[tx,ty,tz],[rx,ry,rz],s]
+   }
+   this.toWgs84=function(geo){
+      xyz=this.ellipsoid.latLonToXYZ(geo)
+      xyz=Datum.xyzTransform(
+         xyz,this.towgs84[0],this.towgs84[1],this.towgs84[2])
+      return WGS84.ellipsoid.latLonFromXYZ(xyz)
+   }
+   /** @private */
+   this._transform=function(mat,vec)
+     return [
+       vec[0]*mat[0]+vec[1]*mat[1]+vec[2]*mat[2],
+       vec[0]*mat[3]+vec[1]*mat[4]+vec[2]*mat[5],
+       vec[0]*mat[6]+vec[1]*mat[7]+vec[2]*mat[8]
+     ]
+   }
+}
+Datum.WGS84 = new Datum(
+     Ellipsoid.fromAInvFlat(
+        6378137,298.257223563))
+
+function LambertConformalConic(ellipsoid,lat1,lat2,latf,lonf,ef,nf,k,belgium){
+/*
+  Lambert conformal conic projection with
+  one or two standard parallels.
+  ellipsoid: Ellipsoid parameters
+  lat1, lat2: Latitudes of standard parallels.
+    May be the same.
+  latf, lonf: Coordinates of false origin.
+  ef, nf: False easting and false northing,
+    in meters
+  k: Scale factor, optional.
+  belgium: True to apply modification for
+    Belgium.
+*/
+    this.lat1=lat1
+    this.lat2=lat2
+    this.latf=latf
+    this.lonf=lonf
+    this.ef=ef
+    this.nf=nf
+    this.a=ellipsoid.a
+    this.ecc=ellipsoid.ecc()
+    this.k=(k==null) ? 1 : k
+    var belg=belgium==null ? false : belgium
+    # Set up
+    sp=Math.sin(this.lat1)
+    this.m1=Math.cos(this.lat1)
+    this.m1/=Math.sqrt(1-this.ecc*this.ecc*sp*sp)
+    this.t1=this._tcalc(this.lat1,this.ecc)
+    tf=0
+    # 29.2985 arcseconds
+    this.thOffset = belg ?
+     -0.00014204313635987740308 : 0
+    if(this.lat1==this.lat2){
+      # One standard parallel
+      raise if this.latf!=this.lat1
+      tf=t1
+      this.n=Math.sin(this.lat1)
+    } else{
+      sp=Math.sin(this.lat2)
+      m2=Math.cos(this.lat2)
+      m2/=Math.sqrt(1-this.ecc*this.ecc*sp*sp)
+      t2=this._tcalc(this.lat2,this.ecc)
+      this.n=Math.log(this.m1)-Math.log(m2)
+      this.n/=Math.log(this.t1)-Math.log(t2)
+      tf=this._tcalc(this.latf,this.ecc)
+    }
+    this.f=this.m1/(this.n*this.t1**this.n)
+    this.rf=this.a*this.f*this.k*tf**this.n
+  this.forward=function(lat,lon){
+   // Returns: Easting and northing in meters.
+   t=this._tcalc(lat,this.ecc)
+   th=this.n*(lon-this.lonf)+this.thoffset
+   r=this.a*this.f*this.k*t**this.n
+   return [
+     this.ef+r*Math.sin(th),
+     this.nf+this.rf-r*Math.cos(th)
+   ]
+  }
+  this.inverse=function(x,y){
+    e=x-this.ef
+    nn=y-this.nf
+    rp=(this.n<0 ? -1 : 1)*Math.sqrt(e*e+(this.rf-nn))**2)
+    tp=Math.pow(rp/(this.a*this.k*this.f),1.0/this.n)
+    thp=Math.atan2(e,this.rf-nn)-this.thOffset
+    lon=thp/this.n+this.lonf
+    lat=Math.PI*0.5-2*Math.atan(tp)
+    for(var i=0;i<10;i++){
+     eslat=this.ecc*Math.sin(lat)
+     newtp=tp*Math.pow((1-eslat)/(1+eslat),this.ecc*0.5)
+     newlat=Math.PI*0.5-2*Math.atan(newtp)
+     p newtp
+     break if (newlat-lat).abs<1e-12
+    }
+    return [lat,lon]
+  }
+  this._tcalc=function(phi,ecc)
+    sp=Math.sin(phi)*ecc
+    return Math.tan(Math.PI*0.25-phi*0.5)/
+     ((1-sp)/(1+sp))**(ecc*0.5)
+  }
+}
+
 function mollweide(lat,lon,scale,lon0){
 var th=2*Math.asin(2*lat/Math.PI)
 lon0=lon0||0
