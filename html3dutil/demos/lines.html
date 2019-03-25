@@ -44,7 +44,7 @@ function Ellipsoid(a,f){
     var sl=Math.sin(lat)
     return Math.sqrt(1-eccsq)*this.a/(1-eccsq*sl*sl)
   }
-
+  this.invf=()=> 1.0/this.f;
   this.ecc=()=> Math.sqrt(2*this.f-this.f*this.f);
   this.eccsq=()=> 2*this.f-this.f*this.f;
   this.enuToXYZ=function(u,v,w,x0,y0,z0){
@@ -106,6 +106,9 @@ function Ellipsoid(a,f){
      nu=this.a/Math.sqrt(1-eccsq*sl*sl)
      return [lat,lon,(p/cl)-nu]
   }
+}
+Ellipsoid.fromSphere=function(r){
+ return new Ellipsoid(r,0)
 }
 
   Ellipsoid.fromAInvFlat=function(a,invf){
@@ -254,6 +257,74 @@ LambertConformalConic.oneParallel=function(
    lonf,ef,nf,k,belgium)
 }
 
+var EqualEarth=function(ellipsoid,lonf,ef,nf){
+ // Equal Earth projection, published in 2018,
+ // and designed for world mapping.
+ this._authalic=function(lat,ecc){
+  var sl=Math.sin(lat)
+  var esl=ecc*sl
+  var esq=ecc*ecc
+  return (1-esq)*((sl/(1-esq*sl*sl)) -
+       1/(2*ecc)*Math.log((1-esl)/(1+esl)))
+ }
+ this.lonf=lonf==null ? 0 : lonf
+ this.ef=ef==null ? 0 : ef
+ this.nf=nf==null ? 0 : nf
+ // Set up
+ this.a=ellipsoid.a
+ this.ecc=ellipsoid.ecc()
+ this.qp=this._authalic(Math.PI/2,this.ecc);
+ this.rq=Math.sqrt(this.qp*0.5)*this.a
+ this.eccsq=ellipsoid.eccsq()
+ this.forward=function(lat,lon){
+  var beta=Math.asin(this._authalic(lat,this.ecc)/this.qp)
+  var sqrt3=Math.sqrt(3)
+  var th=Math.asin(sqrt3*Math.sin(beta)*0.5)
+  var cth=Math.cos(th)
+  var thsq=th*th
+  var th6=Math.pow(th,6)
+  return [
+   this.ef+this.rq*2*(lon-this.lonf)*cth/(
+      sqrt3*(1.340264-0.243318*thsq+th6*(thsq*0.034164+
+          0.006251))),
+   this.nf+this.rq*th*(1.340264-0.081106*thsq+th6*(thsq*0.003796+
+          0.000893))
+  ]
+ }
+ this.inverse=function(x,y){
+  var ee=x-this.ef
+  var nn=y-this.nf
+  var eescaled=nn/this.rq
+  var th=eescaled
+   var thsq,th6
+  for(var i=0;i<10;i++){
+    thsq=th*th
+    th6=Math.pow(th,6)
+   var nth=th*(1.340264-0.081106*thsq+th6*(thsq*0.003796+
+          0.000893))-eescaled
+   nth/=(1.340264-0.243318*thsq+th6*(thsq*0.034164+
+          0.006251))
+   th-=nth
+   if(Math.abs(nth)<1e-12)break
+  }
+  var sqrt3=Math.sqrt(3)
+  var beta=Math.asin(Math.sin(th)*2/Math.sqrt(3))
+  var e2=this.eccsq
+   var c1=(((517/5040.0)*e2+31/180.0)*e2+1.0/3)*e2
+   var c2=(((251/3780.0)*e2+23/360.0)*e2)*e2
+   var c3=(((761/45360.0)*e2)*e2)*e2
+   c1*=Math.sin(2*beta)
+   c2*=Math.sin(4*beta)
+   c3*=Math.sin(6*beta)
+   var lat=beta+c1+c2+c3
+   thsq=th*th
+   th6=Math.pow(th,6)
+   var lon=this.lonf+ee*Math.sqrt(3)*
+     (1.340264-0.243318*thsq+th6*(thsq*0.034164+
+          0.006251))/(this.rq*2*Math.cos(th))
+   return [lat,lon]
+ }
+}
 function Mercator(ellipsoid,k,lonf,ef,nf){
   this.a=ellipsoid.a
   this.ecc=ellipsoid.ecc()
@@ -427,14 +498,17 @@ function ProjectionLines(count, w, h) {
   var triVertices=[]
   var lon0=0
   var incr=7.5
+  var ell=Ellipsoid.fromAInvFlat(
+     20,Ellipsoid.WGS84.invf())
+  var proj=new EqualEarth(ell)
   var deg15=incr*MathUtil.ToRadians
   // Latitude lines
   for(var i=-90;i<=90;i+=incr){
    for(var j=-180;j<180;j+=incr){
     var lon=j*MathUtil.ToRadians;
     var lat=i*MathUtil.ToRadians;
-    var p1=eckert5(lat,lon,20)
-    var p2=eckert5(lat,lon+deg15,20)
+    var p1=proj.forward(lat,lon)
+    var p2=proj.forward(lat,lon+deg15)
     triVertices.push(
           p1[0],p1[1],0,0,0,0,
           p2[0],p2[1],0,0,0,0)
@@ -445,8 +519,8 @@ function ProjectionLines(count, w, h) {
    for(var i=-90;i<90;i+=incr){
     var lon=j*MathUtil.ToRadians;
     var lat=i*MathUtil.ToRadians;
-    var p1=eckert5(lat,lon,20)
-    var p2=eckert5(lat+deg15,lon,20)
+    var p1=proj.forward(lat,lon)
+    var p2=proj.forward(lat+deg15,lon)
     triVertices.push(
           p1[0],p1[1],0,0,0,0,
           p2[0],p2[1],0,0,0,0)

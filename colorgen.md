@@ -729,7 +729,7 @@ A color in CIELAB consists of three components, in the following order:
 - _a\*_ is a coordinate of the red/green axis (positive points to red, negative to green).
 - _b\*_ is a coordinate of the yellow/blue axis (positive points to yellow, negative to blue).<sup>[**(22)**](#Note22)</sup>
 
-_L\*C\*h_ form expresses CIELAB colors as polar coordinates; the three components have the following order:
+_L\*C\*h_ form expresses CIELAB colors as cylindrical coordinates; the three components have the following order:
 
 - Lightness (_L\*_) remains unchanged.
 - _Chroma_ (_C\*_) is the distance of the color from the "gray" line.<sup>[**(23)**](#Note23)</sup>
