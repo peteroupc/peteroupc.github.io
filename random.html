@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
-<p>Begun on Mar. 5, 2016; last updated on Mar. 11, 2019.</p>
+<p>Begun on Mar. 5, 2016; last updated on Mar. 25, 2019.</p>
 
 <p>Most apps that use random numbers care about either unpredictability, speed/high quality, or repeatability.  This article explains the three kinds of RNGs and gives recommendations on each kind.</p>
 
@@ -606,7 +606,7 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 <p>If a cryptographic RNG implementation uses a PRNG, the following requirements apply.</p>
 
 <ol>
-<li><p>The PRNG&#39;s <em>state length</em> MUST be at least 128 bits and SHOULD be at least 256 bits.  The <em>security strength</em> used by the RNG MUST be at least 112 bits, SHOULD be at least 128 bits, and is less than or equal to the PRNG&#39;s <em>state length</em>.</p></li>
+<li><p>The PRNG&#39;s <em>state length</em> MUST be at least 128 bits and SHOULD be at least 256 bits.  The <em>security strength</em> used by the RNG MUST be at least 128 bits and SHOULD be less than or equal to the PRNG&#39;s <em>state length</em>.</p></li>
 <li><p>Before an instance of the RNG generates a random number, it MUST have been initialized (&quot;seeded&quot;) with a seed described as follows. The seed&mdash;</p>
 
 <ul>

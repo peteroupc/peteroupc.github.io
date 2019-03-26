@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on Mar. 5, 2016; last updated on Mar. 11, 2019.
+Begun on Mar. 5, 2016; last updated on Mar. 25, 2019.
 
 Most apps that use random numbers care about either unpredictability, speed/high quality, or repeatability.  This article explains the three kinds of RNGs and gives recommendations on each kind.
 
@@ -411,7 +411,7 @@ A cryptographic RNG generates uniformly distributed random bits such that it wou
 
 If a cryptographic RNG implementation uses a PRNG, the following requirements apply.
 
-1. The PRNG's _state length_ MUST be at least 128 bits and SHOULD be at least 256 bits.  The _security strength_ used by the RNG MUST be at least 112 bits, SHOULD be at least 128 bits, and is less than or equal to the PRNG's _state length_.
+1. The PRNG's _state length_ MUST be at least 128 bits and SHOULD be at least 256 bits.  The _security strength_ used by the RNG MUST be at least 128 bits and SHOULD be less than or equal to the PRNG's _state length_.
 
 2. Before an instance of the RNG generates a random number, it MUST have been initialized ("seeded") with a seed described as follows. The seed&mdash;
     - MUST have as many bits as the PRNG's _state length_,

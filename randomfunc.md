@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on June 4, 2017; last updated on Mar. 20, 2019.
+Begun on June 4, 2017; last updated on Mar. 26, 2019.
 
 Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.
 
@@ -64,7 +64,7 @@ All the random number methods presented on this page are ultimately based on an 
         - [**Pseudocode for Random Sampling**](#Pseudocode_for_Random_Sampling)
     - [**Rejection Sampling**](#Rejection_Sampling)
     - [**Random Walks**](#Random_Walks)
-    - [**Expected Values and Monte Carlo Integration**](#Expected_Values_and_Monte_Carlo_Integration)
+    - [**Monte Carlo Sampling: Expected Values and Integration**](#Monte_Carlo_Sampling_Expected_Values_and_Integration)
     - [**Randomization in Statistical Testing**](#Randomization_in_Statistical_Testing)
     - [**Low-Discrepancy Sequences**](#Low_Discrepancy_Sequences)
     - [**A Note on Sorting Random Numbers**](#A_Note_on_Sorting_Random_Numbers)
@@ -743,10 +743,10 @@ A _random walk_ is a process with random behavior over time.  A simple form of r
 > 2.  Some random walks model random behavior at every moment, not just at discrete times.  One example is a _Wiener process_, with random states and jumps that are normally distributed (a process of this kind is also known as _Brownian motion_).  (For a random walk that follows a Wiener process, `STATEJUMP()` is `Normal(mu * timediff, sigma * sqrt(timediff))`, where  `mu` is the average value per time unit, `sigma` is the volatility, and `timediff` is the time difference between samples.)
 > 3.  Some random walks model state changes happening at random times. One example is a _Poisson process_, in which the time between each event is a random exponential variable (that random variable is `-ln(RNDU01ZeroOneExc()) / rate`, where `rate` is the average number of events per time unit; an _inhomogeneous Poisson process_ results if `rate` can vary with the "timestamp" before each event jump).
 
-<a id=Expected_Values_and_Monte_Carlo_Integration></a>
-### Expected Values and Monte Carlo Integration
+<a id=Monte_Carlo_Sampling_Expected_Values_and_Integration></a>
+### Monte Carlo Sampling: Expected Values and Integration
 
-Randomization can be used to estimate the **expected value** of a function given a random process or sampling distribution.  The following pseudocode estimates the expected value of a list of random numbers generated the same way.  Here, `EFUNC` is the function, and `MeanAndVariance` is given in the [**appendix**](#Mean_and_Variance_Calculation).  `Expectation` returns a list of two numbers &mdash; the estimated expected value and its variance.
+Randomization is the core of **Monte Carlo sampling**; it can be used to estimate the **expected value** of a function given a random process or sampling distribution.  The following pseudocode estimates the expected value of a list of random numbers generated the same way.  Here, `EFUNC` is the function, and `MeanAndVariance` is given in the [**appendix**](#Mean_and_Variance_Calculation).  `Expectation` returns a list of two numbers &mdash; the estimated expected value and its variance.
 
     METHOD Expectation(numbers)
       ret=[]

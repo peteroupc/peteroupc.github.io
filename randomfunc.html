@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
-<p>Begun on June 4, 2017; last updated on Mar. 20, 2019.</p>
+<p>Begun on June 4, 2017; last updated on Mar. 26, 2019.</p>
 
 <p>Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.</p>
 
@@ -93,7 +93,7 @@
 </ul></li>
 <li><a href="#Rejection_Sampling"><strong>Rejection Sampling</strong></a></li>
 <li><a href="#Random_Walks"><strong>Random Walks</strong></a></li>
-<li><a href="#Expected_Values_and_Monte_Carlo_Integration"><strong>Expected Values and Monte Carlo Integration</strong></a></li>
+<li><a href="#Monte_Carlo_Sampling_Expected_Values_and_Integration"><strong>Monte Carlo Sampling: Expected Values and Integration</strong></a></li>
 <li><a href="#Randomization_in_Statistical_Testing"><strong>Randomization in Statistical Testing</strong></a></li>
 <li><a href="#Low_Discrepancy_Sequences"><strong>Low-Discrepancy Sequences</strong></a></li>
 <li><a href="#A_Note_on_Sorting_Random_Numbers"><strong>A Note on Sorting Random Numbers</strong></a></li>
@@ -948,11 +948,11 @@ END METHOD
 </ol>
 </blockquote>
 
-<p><a id=Expected_Values_and_Monte_Carlo_Integration></a></p>
+<p><a id=Monte_Carlo_Sampling_Expected_Values_and_Integration></a></p>
 
-<h3>Expected Values and Monte Carlo Integration</h3>
+<h3>Monte Carlo Sampling: Expected Values and Integration</h3>
 
-<p>Randomization can be used to estimate the <strong>expected value</strong> of a function given a random process or sampling distribution.  The following pseudocode estimates the expected value of a list of random numbers generated the same way.  Here, <code>EFUNC</code> is the function, and <code>MeanAndVariance</code> is given in the <a href="#Mean_and_Variance_Calculation"><strong>appendix</strong></a>.  <code>Expectation</code> returns a list of two numbers &mdash; the estimated expected value and its variance.</p>
+<p>Randomization is the core of <strong>Monte Carlo sampling</strong>; it can be used to estimate the <strong>expected value</strong> of a function given a random process or sampling distribution.  The following pseudocode estimates the expected value of a list of random numbers generated the same way.  Here, <code>EFUNC</code> is the function, and <code>MeanAndVariance</code> is given in the <a href="#Mean_and_Variance_Calculation"><strong>appendix</strong></a>.  <code>Expectation</code> returns a list of two numbers &mdash; the estimated expected value and its variance.</p>
 
 <pre>METHOD Expectation(numbers)
   ret=[]
