@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on June 4, 2017; last updated on Mar. 26, 2019.
+Begun on June 4, 2017; last updated on Mar. 27, 2019.
 
 Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.
 
@@ -1140,11 +1140,13 @@ If the probability distributions are the same, then strategies 1 to 3 make highe
     1. Choose one of the numbers or points in the list at random [**with replacement**](#Sampling_With_Replacement_Choosing_a_Random_Item_from_a_List).
     2. Add a randomized "jitter" to the chosen number or point; for example, add a separately generated `Normal(0, sigma)` to the chosen number or each component of the chosen point, where `sigma` is the _bandwidth_<sup>[**(19)**](#Note19)</sup>.
 4. **Stochastic interpolation** is described in (Saucier 2000)<sup>[**(18)**](#Note18)</sup>, sec. 5.3.4.  It involves choosing a data point at random, taking the mean of that point and its _k_ nearest neighbors, and shifting that mean by a random weighted sum of the differences between each of those points and that mean (here, the weight is `RNDRANGE((1-sqrt(k*3))/(k+1.0), (1+sqrt(k*3))/(k+1.0))` for each point). This approach assumes that the lowest and highest values of each dimension are 0 and 1, respectively, so that arbitrary data points have to be shifted and scaled accordingly.
-5. **Fitting a known distribution** (such as the normal distribution), with unknown parameters, to data can be done by [**maximum likelihood estimation**](https://en.wikipedia.org/wiki/Maximum_likelihood_estimation) or the [**method of moments**](https://en.wikipedia.org/wiki/Method_of_moments), among other ways.  If several kinds of distributions are possible fitting choices, then the kind showing the best _goodness of fit_ for the data (e.g., chi-squared goodness of fit) is chosen.  Details of the fitting are too involved to discuss further.
+5. **Fitting a known distribution** (such as the normal distribution), with unknown parameters, to data can be done by [**maximum likelihood estimation**](https://en.wikipedia.org/wiki/Maximum_likelihood_estimation) or the [**method of moments**](https://en.wikipedia.org/wiki/Method_of_moments), among other ways.  If several kinds of distributions are possible fitting choices, then the kind showing the best _goodness of fit_ for the data (e.g., chi-squared goodness of fit) is chosen.
 
 **Regression models.** A _regression model_ is a model that summarizes data as a formula and an error term.  If an application has data in the form of inputs and outputs (e.g., monthly sales figures) and wants to sample a random but plausible output given a known input point (e.g., sales for a future month), then the application can fit and sample a regression model for that data.  For example, a _linear regression model_, which simulates the value of `y` given known inputs `a` and `b`, can be sampled as follows: `y = c1 * a + c2 * b + c3 + Normal(mse)`, where `mse` is the mean squared error and `c1`, `c2`, and `c3` are the coefficients of the model.  (Here, `Normal(mse)` is the error term.)
 
-> **Note:** A comprehensive survey of density estimation or regression models, or how to fit such models to data, are outside the scope of this document.<sup>[**(20)**](#Note20)</sup>
+**Generative models.** These are machine-learning models that take random numbers as input and generate outputs (such as images or sounds) that are similar to examples they have already seen.  [**_Generative adversarial networks_**](https://en.wikipedia.org/wiki/Generative_adversarial_network) are one kind of generative model.
+
+> **Note:** A comprehensive survey of density estimation, regression, or generative models, or how to fit such models to data, are outside the scope of this document.<sup>[**(20)**](#Note20)</sup>
 
 <a id=Random_Numbers_from_an_Arbitrary_Distribution></a>
 ### Random Numbers from an Arbitrary Distribution
@@ -1153,32 +1155,27 @@ Many probability distributions can be defined in terms of any of the following:
 
 * The [**_cumulative distribution function_**](https://en.wikipedia.org/wiki/Cumulative_distribution_function), or _CDF_, returns, for each number, the probability for a randomly generated variable to be equal to or less than that number; the probability is in the interval [0, 1].
 * The [**_probability density function_**](https://en.wikipedia.org/wiki/Probability_density_function), or _PDF_, is, roughly and intuitively, a curve of weights 0 or greater, where for each number, the greater its weight, the more likely a number close to that number is randomly chosen.<sup>[**(21)**](#Note21)</sup>
+* The _inverse cumulative distribution function_ (_inverse CDF_) is the inverse of the CDF and maps numbers in the interval [0, 1] to numbers in the distribution, from low to high.
 
-If a probability distribution's **PDF is known**, random numbers that approximately follow that distribution can be generated using one of the following techniques, even if the area under the PDF isn't 1.
+Depending on what information is known about the distribution, random numbers that approximately follow that distribution can be generated as follows:
 
-1. Use the PDF to calculate the weights for a number of sample points (usually regularly spaced). Create one list with the sampled points in ascending order (the `list`) and another list of the same size with the PDF's values at those points (the `weights`).  Finally, generate a random number bounded by the lowest and highest sampled point using a weighted choice method (e.g., [**`ContinuousWeightedChoice(list, weights)`**](#Continuous_Weighted_Choice)).  The [**Python sample code**](https://peteroupc.github.io/randomgen.zip) includes a `numbers_from_pdf` method (for continuous PDFs) and an `integers_from_pdf` method (for discrete PDFs) that implement this approach.
-2. Use [**_rejection sampling_**](#Rejection_Sampling).  The pseudocode below generates random points in a rectangular region until a point falls within the PDF (shown as `PDF(x)` below). `minValue` and `maxValue` are the lowest and highest possible random numbers, and `maxDensity` is the maximum value of the PDF at or between those numbers.  This can be inefficient, though, if the PDF gives some numbers in the range much higher weights than it gives to others.  See also Saucier 2000, p. 39.
+-  **PDF is known**, even if the area under the PDF isn't 1:
 
-        METHOD ArbitraryDist(minValue, maxValue, maxDensity)
-             if minValue >= maxValue: return error
-             while True
-                 x=RNDRANGEMaxExc(minValue, maxValue)
-                 y=RNDRANGEMaxExc(0, maxDensity)
-                 if y < PDF(x): return xs
-             end
-        END METHOD
+    - **Empirical sampling.** Use the PDF to calculate the weights for a number of sample points (usually regularly spaced). Create one list with the sampled points in ascending order (the `list`) and another list of the same size with the PDF's values at those points (the `weights`).  Finally, generate a random number bounded by the lowest and highest sampled point using a weighted choice method (e.g., [**`ContinuousWeightedChoice(list, weights)`**](#Continuous_Weighted_Choice)).  The [**Python sample code**](https://peteroupc.github.io/randomgen.zip) includes a `numbers_from_pdf` method (for continuous PDFs) and an `integers_from_pdf` method (for discrete PDFs) that implement this approach.
+    - [**Rejection sampling.**](#Rejection_Sampling)  If the PDF can be more easily sampled by another distribution with its own PDF (`PDF2`) that "dominates" `PDF` in the sense that `PDF2(x) >= PDF(x)` at every valid `x`, then generate random numbers with that distribution until a number (`n`) that satisfies `PDF(n) >= RNDRANGEMaxExc(0, PDF2(n))` is generated this way (that is, sample points in `PDF2` until a point falls within `PDF`). (See also Saucier 2000, pp. 6-7, 39; Devroye 1986, pp. 41-43; and "[**Generating Pseudorandom Numbers**](https://mathworks.com/help/stats/generating-random-data.html)".)
 
-    If the PDF can be more easily sampled by another distribution with its own PDF (`PDF2`) that "dominates" `PDF` in the sense that `PDF2(x) >= PDF(x)` at every valid `x`, then generate random numbers with that distribution until a number (`n`) that satisfies `PDF(n) >= RNDRANGEMaxExc(0, PDF2(n))` is generated this way (that is, sample points in `PDF2` until a point falls within `PDF`). (See also Saucier 2000, pp. 6-7; Devroye 1986, pp. 41-43; and "[**Generating Pseudorandom Numbers**](https://mathworks.com/help/stats/generating-random-data.html)".)
+        For example, a custom distribution's PDF, `PDF`, is `exp(-abs(x*x*x))`, and the exponential distribution's PDF, `PDF2`, is `exp(-x)`.  The exponential PDF "dominates" the other PDF (at every `x` 0 or greater) if we multiply it by 1.5, so that `PDF2` is now `1.5 * exp(-x)`.  Now we can generate numbers from our custom distribution by sampling exponential points until a point falls within `PDF`.  This is done by generating `n = -ln(RNDU01ZeroOneExc())` until `PDF(n) >= RNDRANGEMaxExc(0, PDF2(n))`.
+    - **_Markov-chain Monte Carlo_ (MCMC).** If many random numbers from the given PDF need to be generated, then an MCMC algorithm can be used, with the disadvantage that the resulting random numbers will not be chosen independently of each other.  MCMC algorithms include Metropolis&ndash;Hastings and slice sampling (Neal 2003)<sup>[**(22)**](#Note22)</sup>. Generally, as more numbers are generated, the MCMC algorithm converges to the given distribution; this is why usually, random numbers from the first few (e.g., first 1000) iterations are ignored ("burn in").  MCMC can also be used to find a suitable sampling range for the empirical sampling method, above.  The [**Python sample code**](https://peteroupc.github.io/randomgen.zip) includes methods called `mcmc` and `mcmc2` that implement Metropolis&ndash;Hastings for PDFs that take single numbers or two-dimensional points, respectively, and a method called `slicesample` that implements slice sampling.
 
-    For example, a custom distribution's PDF, `PDF`, is `exp(-abs(x*x*x))`, and the exponential distribution's PDF, `PDF2`, is `exp(-x)`.  The exponential PDF "dominates" the other PDF (at every `x` 0 or greater) if we multiply it by 1.5, so that `PDF2` is now `1.5 * exp(-x)`.  Now we can generate numbers from our custom distribution by sampling exponential points until a point falls within `PDF`.  This is done by generating `n = -ln(RNDU01ZeroOneExc())` until `PDF(n) >= RNDRANGEMaxExc(0, PDF2(n))`.
+- **PDF and a uniform random variable in the interval \[0, 1\) (`randomVariable`)** are known: Create `list` and `weights` as given in the empirical sampling method, above, then divide each item in `weights` by the sum of `weights`'s items, then generate [**`ContinuousWeightedChoice(list, weights)`**](#Continuous_Weighted_Choice) (except that method is modified to use `value = randomVariable` rather than `value = RNDRANGEMaxExc(0, sum)`).
 
-3. If many random numbers from the given PDF need to be generated, then a so-called _Markov-chain Monte Carlo_ (MCMC) algorithm can be used, with the disadvantage that the resulting random numbers will not be chosen independently of each other.  MCMC algorithms include Metropolis&ndash;Hastings and slice sampling (Neal 2003)<sup>[**(22)**](#Note22)</sup>. The [**Python sample code**](https://peteroupc.github.io/randomgen.zip) includes methods called `mcmc` and `mcmc2` that implement Metropolis&ndash;Hastings for PDFs that take single numbers or two-dimensional points, respectively, and a method called `slicesample` that implements slice sampling.
+- **Inverse CDF is known:** Generate `ICDF(RNDU01ZeroOneExc())`, where `ICDF(X)` is the inverse CDF ([**_inverse transform sampling_**](https://en.wikipedia.org/wiki/Inverse_transform_sampling)).
 
-If both **a PDF and a uniform random variable in the interval \[0, 1\) (`randomVariable`)** are given, then the following technique, among other possible techniques, can be used: Create `list` and `weights` as given in method 1, then divide each item in `weights` by the sum of `weights`'s items, then generate [**`ContinuousWeightedChoice(list, weights)`**](#Continuous_Weighted_Choice) (except that method is modified to use `value = randomVariable` rather than `value = RNDRANGEMaxExc(0, sum)`).
+- **Inverse CDF and a uniform random variable in the interval \[0, 1\) (`randomVariable`)** are known: Generate `ICDF(randomVariable)`, where `ICDF(X)` is the inverse CDF.
 
-If the distribution's **CDF is known**, an approach called [**_inverse transform sampling_**](https://en.wikipedia.org/wiki/Inverse_transform_sampling) can be used: Generate `ICDF(RNDU01ZeroOneExc())`, where `ICDF(X)` is the distribution's _inverse CDF_.  The [**Python sample code**](https://peteroupc.github.io/randomgen.zip) includes `from_interp` and `numbers_from_cdf` methods that implement this approach numerically.
+- **CDF is known**: In this case, the CDF is usually numerically inverted to generate a random number from that distribution.  For example, see the `from_interp` and `numbers_from_cdf` methods in the [**Python sample code**](https://peteroupc.github.io/randomgen.zip).
 
-> **Note:** Further details on inverse transform sampling or on how to find inverses, as well as lists of PDFs and CDFs, are outside the scope of this page.
+> **Note:** Lists of PDFs, CDFs, or inverse CDFs are outside the scope of this page.
 
 <a id=Censored_and_Truncated_Distributions></a>
 ### Censored and Truncated Distributions
@@ -1192,7 +1189,9 @@ To sample from a _truncated_ probability distribution, generate a random number 
 <a id=Gibbs_Sampling></a>
 ### Gibbs Sampling
 
-Gibbs sampling involves repeatedly generating random numbers from two or more distributions, each of which uses a random number from the previous distribution, with the disadvantage that the resulting random numbers will not be chosen independently of each other.  An example is generating multiple `x`, `y` pairs of random numbers where `x = BetaDist(y, 5)` then `y = Binomial(10, x)`.  (Before the random pairs are generated, an initial value for `y` has to be chosen.)  Usually the first few (e.g., first 1000) pairs or groups of random numbers are ignored this way ("burn in").  See also (Casella and George 1992)<sup>[**(23)**](#Note23)</sup>.
+Gibbs sampling<sup>[**(23)**](#Note23)</sup> is a Markov-chain Monte Carlo algorithm.  It involves repeatedly generating random numbers from two or more distributions, each of which uses a random number from the previous distribution (_conditional distributions_); however, the resulting random numbers will not be chosen independently of each other.
+
+> **Example:** In one Gibbs sampler, an initial value for `y` is chosen, then multiple `x`, `y` pairs of random numbers are generated, where `x = BetaDist(y, 5)` then `y = Binomial(10, x)`.
 
 <a id=Specific_Non_Uniform_Distributions></a>
 ## Specific Non-Uniform Distributions
@@ -1683,25 +1682,26 @@ The following pseudocode shows how to generate integers with a given positive su
                 found = false
                 j = 1
                 while j < size(ls)
-                        if ls[j] == c
-                                found = true
-                                break
-                        end
-                        j = j + 1
+                  if ls[j] == c
+                    found = true
+                    break
+                  end
+                  j = j + 1
                 end
                 if found == false: AddItem(ls, c)
         end
         Sort(ls)
         AddItem(ls, total)
-        for i in 1...size(ls): AddItem(ret, list[i] - list[i - 1])
+        for i in 1...size(ls): AddItem(ret,
+            list[i] - list[i - 1])
         return ret
     END METHOD
 
     METHOD IntegersWithSum(n, total)
-        if n <= 0 or total <=0: return error
-        ret = PositiveIntegersWithSum(n, total + n)
-        for i in 0...size(ret): ret[i] = ret[i] - 1
-        return ret
+      if n <= 0 or total <=0: return error
+      ret = PositiveIntegersWithSum(n, total + n)
+      for i in 0...size(ret): ret[i] = ret[i] - 1
+      return ret
     END METHOD
 
 > **Notes:**
@@ -2001,7 +2001,7 @@ If an application is concerned about these issues, it should treat the `RNDU01On
 
 <small><sup id=Note7>(7)</sup> Jeff Atwood, "[**The danger of na&iuml;vet&eacute;**](https://blog.codinghorror.com/the-danger-of-naivete/)", Dec. 7, 2007.</small>
 
-<small><sup id=Note8>(8)</sup> If the strings identify database records, file system paths, or other shared resources, special considerations apply, including the need to synchronize access to those resources.  If the string will uniquely identify database records (e.g., Web site users) and is not secret, an application should consider using an auto-incrementing row number instead, if supported by the database.</small>
+<small><sup id=Note8>(8)</sup> If the strings identify database records, file system paths, or other shared resources, special considerations apply, including the need to synchronize access to those resources.  If an application seeks unique, non-secret identifiers of a central database's records (e.g., Web site users), then auto-incrementing row numbers are better choices than random strings for that purpose.</small>
 
 <small><sup id=Note9>(9)</sup> See also the _Stack Overflow_ question "Random index of a non zero value in a numpy array".</small>
 
@@ -2035,7 +2035,7 @@ provided the PDF's values are all 0 or greater and the area under the PDF's curv
 
 <small><sup id=Note22>(22)</sup> Neal, R. M., [**"Slice sampling"**](https://projecteuclid.org/euclid.aos/1056562461), _Annals of Statistics_ 31(3), pp. 705-767 (2003).</small>
 
-<small><sup id=Note23>(23)</sup> Casella, G., and George, E.I., "Explaining the Gibbs Sampler", The American Statistician 46:3 (1992).</small>
+<small><sup id=Note23>(23)</sup> _See also_ Casella, G., and George, E.I., "Explaining the Gibbs Sampler", The American Statistician 46:3 (1992).</small>
 
 <small><sup id=Note24>(24)</sup> The "Dice" section used the following sources:
 
