@@ -1707,7 +1707,7 @@ The following pseudocode shows how to generate integers with a given positive su
 > **Notes:**
 >
 > - Generating a uniformly randomly chosen combination of `N` numbers with a given positive average `avg`, is equivalent to generating a uniformly randomly chosen combination of `N` numbers with the sum `N * avg`.
-> - Generating a uniformly randomly chosen combination of `N` numbers `min` or greater and with a given positive sum `sum` is equivalent to generating  a uniformly randomly chosen combination of `N` numbers with the sum `sum - n * min`, then adding `min` to each number generated this way.
+> - Generating a uniformly randomly chosen combination of `N` numbers `min` or greater and with a given positive sum `sum` is equivalent to generating a uniformly randomly chosen combination of `N` numbers with the sum `sum - n * min`, then adding `min` to each number generated this way.
 > - The **Dirichlet distribution**, as defined in some places (e.g., _Mathematica_; Devroye 1986, p. 594), models a uniformly randomly chosen combination of _n_ random numbers that sum to 1, and can be sampled by generating _n_+1 random [**gamma-distributed**](#Gamma_Distribution) numbers, each with separate parameters, taking their sum, and dividing the first _n_ numbers by that sum.
 
 <a id=Multinomial_Distribution></a>

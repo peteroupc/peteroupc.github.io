@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
-<p>Begun on Mar. 5, 2016; last updated on Mar. 28, 2019.</p>
+<p>Begun on Mar. 5, 2016; last updated on Apr. 2, 2019.</p>
 
 <p>Most apps that use random numbers care about either unpredictability, speed/high quality, or repeatability.  This article explains the three kinds of RNGs and gives recommendations on each kind.</p>
 
@@ -31,7 +31,7 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 
 <ul>
 <li>Statistical and cryptographic RNGs<sup><a href="#Note1"><strong>(1)</strong></a></sup> and seeded PRNGs (pseudorandom number generators), as well as recommendations on their use and properties.</li>
-<li>A discussion on when an application that needs numbers that &quot;seem&quot; random ought to specify their own &quot;seed&quot; (the initial state that the numbers are based on).</li>
+<li>A discussion on when an application that needs numbers that &quot;seem&quot; random ought to specify its own &quot;seed&quot; (the initial state that the numbers are based on).</li>
 <li>Nondeterministic sources, entropy, and seed generation.</li>
 <li>Existing implementations of RNGs.</li>
 <li>Guidance for implementations of RNGs designed for reuse by applications.</li>
@@ -96,7 +96,7 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 
 <ul>
 <li><a href="#Examples"><strong>Examples</strong></a></li>
-<li><a href="#Resource_Constrained_Devices"><strong>Resource-Constrained Devices</strong></a></li>
+<li><a href="#A_Note_on_Resource_Constrained_Devices"><strong>A Note on Resource-Constrained Devices</strong></a></li>
 </ul></li>
 <li><a href="#Statistical_RNGs"><strong>Statistical RNGs</strong></a>
 
@@ -162,8 +162,8 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 <li><strong>Pseudorandom number generator (PRNG).</strong> A random number generator that outputs seemingly random numbers using a deterministic algorithm (that is, an algorithm that returns the same output for the same input and state every time), and in which its state can be initialized and possibly reinitialized with arbitrary data.</li>
 <li><strong>Seed.</strong>  Arbitrary data for initializing the state of a PRNG.</li>
 <li><strong>State length.</strong>  The maximum size of the seed a PRNG can take to initialize its state without shortening or compressing that seed.</li>
-<li><strong>Information security.</strong> Defined in ISO/IEC 27000.</li>
-<li><strong>MUST, SHOULD, SHOULD NOT, MAY, RECOMMENDED, NOT RECOMMENDED.</strong>  As defined in RFC 2119 and RFC 8174.</li>
+<li><strong>Information security.</strong> &quot;The protection of information and information systems from unauthorized access, use, disclosure, disruption, modification, or destruction in order to provide confidentiality, integrity, and availability&quot; (FIPS 200).  See also ISO/IEC 27000.</li>
+<li><strong>MUST, SHOULD, SHOULD NOT, MAY, RECOMMENDED, NOT RECOMMENDED.</strong>  These terms have the meanings given in RFC 2119 and RFC 8174.</li>
 </ul>
 
 <p><a id=Cryptographic_RNGs></a></p>
@@ -176,7 +176,7 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 <li> generating keying material, such as encryption keys,</li>
 <li> generating random passwords, nonces, or session identifiers,</li>
 <li> generating &quot;salts&quot; to vary hash codes of the same password,</li>
-<li> use in communications between two networked computers (including in data transfer, data transport, and messaging), and</li>
+<li> sending or receiving messages or other data securely between computers, and</li>
 <li> cases (such as in multiplayer networked games) when predicting future random numbers would give a player or user a significant and unfair advantage,</li>
 </ul>
 
@@ -196,9 +196,9 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 <li>An RNG implementation complying with NIST SP 800-90A.  The SP 800-90 series goes into further detail on how RNGs appropriate for information security can be constructed, and inspired much of the &quot;Cryptographic RNGs&quot; section.</li>
 </ul>
 
-<p><a id=Resource_Constrained_Devices></a></p>
+<p><a id=A_Note_on_Resource_Constrained_Devices></a></p>
 
-<h3>Resource-Constrained Devices</h3>
+<h3>A Note on Resource-Constrained Devices</h3>
 
 <p>Compared to general-purpose computing devices such as desktop computers and smartphones, resource-constrained devices (&quot;embedded&quot; devices) are much less likely to have a cryptographic RNG available (Wetzels 2017)<sup><a href="#Note5"><strong>(5)</strong></a></sup>, although methods exist for implementing a cryptographic RNG on the Arduino (Peng 2017)<sup><a href="#Note6"><strong>(6)</strong></a></sup>.</p>
 
@@ -451,7 +451,7 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 </tr>
 <tr>
 <td>Ruby (A) (E)</td>
-<td>(C); <code>SecureRandom.rand()</code> (ranges from 0 to 1 exclusive) (E); <code>SecureRandom.rand(N)</code> (integer) (E) (for both, <code>require &#39;securerandom&#39;</code>); <code>sysrandom</code> gem</td>
+<td>(C); <code>SecureRandom.rand()</code> (0 or greater and less than 1) (E); <code>SecureRandom.rand(N)</code> (integer) (E) (for both, <code>require &#39;securerandom&#39;</code>); <code>sysrandom</code> gem</td>
 <td></td>
 </tr>
 <tr>
@@ -473,7 +473,7 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 
 <p><small>(A) The general RNGs of recent versions of Python and Ruby implement <a href="https://en.wikipedia.org/wiki/Mersenne_Twister"><strong>Mersenne Twister</strong></a>, which is not preferred for a statistical RNG.  PHP&#39;s <code>mt_rand()</code> implements or implemented a flawed version of Mersenne Twister. <code>prngine</code>, a Java library, also has <code>MT19937_32Random</code> and <code>MT19937_64Random</code> classes that implement Mersenne Twister.</small></p>
 
-<p><small>(B) JavaScript&#39;s <code>Math.random()</code> (which ranges from 0 to 1 exclusive) is implemented using <code>xorshift128+</code> (or a variant) in the V8 engine, Firefox, and certain other modern browsers as of late 2017; <code>Math.random()</code> uses an &quot;implementation-dependent algorithm or strategy&quot;, though (see ECMAScript sec. 20.2.2.27).</small></p>
+<p><small>(B) JavaScript&#39;s <code>Math.random()</code> (which ranges 0 or greater and less than 1) is implemented using <code>xorshift128+</code> (or a variant) in the V8 engine, Firefox, and certain other modern browsers as of late 2017; <code>Math.random()</code> uses an &quot;implementation-dependent algorithm or strategy&quot;, though (see ECMAScript sec. 20.2.2.27).</small></p>
 
 <p><small>(C) A cryptographic RNG implementation can&mdash;</p>
 
@@ -488,7 +488,7 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 
 <p><small>(D) Java&#39;s <code>java.util.Random</code> class uses a 48-bit seed, so doesn&#39;t meet the statistical RNG requirements.  However, a subclass of <code>java.util.Random</code> might be implemented to meet those requirements.</small></p>
 
-<p><small>(E) Ruby&#39;s <code>Random#rand</code> and <code>SecureRandom.rand</code> methods present a beautiful and simple API for random number generation, in my opinion.  Namely, <code>rand()</code> returns a number from 0 to 1 exclusive, and <code>rand(N)</code> returns an integer from 0 to N exclusive.</small></p>
+<p><small>(E) Ruby&#39;s <code>Random#rand</code> and <code>SecureRandom.rand</code> methods present a beautiful and simple API for random number generation, in my opinion.  Namely, <code>rand()</code> returns a number 0 or greater and less than 1, and <code>rand(N)</code> returns an integer 0 or greater and less than N.</small></p>
 
 <p><small>(F) Calling the <code>setSeed</code> method of <code>SecureRandom</code> before use is RECOMMENDED. The data passed to the method SHOULD be data described in note (C). (Despite the name, <code>setSeed</code> <em>supplements</em> the existing seed, according to the documentation.)  See also (Klyubin 2013)<sup><a href="#Note19"><strong>(19)</strong></a></sup>.  Using the <code>SecureRandom</code> implementation <code>&quot;SHA1PRNG&quot;</code> is NOT RECOMMENDED, because of weaknesses in seeding and RNG quality in implementations as of 2013 (Michaelis et al., 2013)<sup><a href="#Note20"><strong>(20)</strong></a></sup>.</small></p>
 
