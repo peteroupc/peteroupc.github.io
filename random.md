@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on Mar. 5, 2016; last updated on Apr. 3, 2019.
+Begun on Mar. 5, 2016; last updated on Apr. 4, 2019.
 
 Most apps that use random numbers care about either unpredictability, speed/high quality, or repeatability.  This article explains the three kinds of RNGs and gives recommendations on each kind.
 
@@ -100,7 +100,7 @@ The following definitions are helpful in better understanding this document.
 - **Pseudorandom number generator (PRNG).** A random number generator that outputs seemingly random numbers using a deterministic algorithm (that is, an algorithm that returns the same output for the same input and state every time), and in which its state can be initialized and possibly reinitialized with arbitrary data.
 - **Seed.**  Arbitrary data for initializing the state of a PRNG.
 - **State length.**  The maximum size of the seed a PRNG can take to initialize its state without shortening or compressing that seed.
-- **Information security.** Keeping information safe from attacks that could access, use, delay, or manipulate that information.<sup>[**(31)**](#Note31)</sup>
+- **Information security.** Keeping information safe from attacks that could access, use, delay, or manipulate that information.<sup>[**(4)**](#Note4)</sup>
 - **MUST, SHOULD, SHOULD NOT, MAY, RECOMMENDED, NOT RECOMMENDED.**  These terms have the meanings given in RFC 2119 and RFC 8174.
 
 <a id=Cryptographic_RNGs></a>
@@ -123,13 +123,13 @@ See "[**Cryptographic RNGs: Requirements**](#Cryptographic_RNGs_Requirements)" f
 
 Examples of cryptographic RNG implementations are:
 - Randomness extractors or cryptographic [**hash functions**](#Hash_Functions) that take very hard-to-predict signals from two or more [**nondeterministic sources**](#Nondeterministic_Sources) as input.
-- A "fast-key-erasure" random number generator described by D.J. Bernstein in his blog (Bernstein 2017)<sup>[**(4)**](#Note4)</sup>.
+- A "fast-key-erasure" random number generator described by D.J. Bernstein in his blog (Bernstein 2017)<sup>[**(5)**](#Note5)</sup>.
 - An RNG implementation complying with NIST SP 800-90A.  The SP 800-90 series goes into further detail on how RNGs appropriate for information security can be constructed, and inspired much of the "Cryptographic RNGs" section.
 
 <a id=A_Note_on_Resource_Constrained_Devices></a>
 ### A Note on Resource-Constrained Devices
 
-Compared to general-purpose computing devices such as desktop computers and smartphones, resource-constrained devices ("embedded" devices) are much less likely to have a cryptographic RNG available (Wetzels 2017)<sup>[**(5)**](#Note5)</sup>, although methods exist for implementing a cryptographic RNG on the Arduino (Peng 2017)<sup>[**(6)**](#Note6)</sup>.
+Compared to general-purpose computing devices such as desktop computers and smartphones, resource-constrained devices ("embedded" devices) are much less likely to have a cryptographic RNG available (Wetzels 2017)<sup>[**(6)**](#Note6)</sup>, although methods exist for implementing a cryptographic RNG on the Arduino (Peng 2017)<sup>[**(7)**](#Note7)</sup>.
 
 <a id=Statistical_RNGs></a>
 ## Statistical RNGs
@@ -151,14 +151,14 @@ Examples of statistical RNGs include the following:
 - `Lehmer64` and `Lehmer128` (for each: state length 128 bits; odd seed, so effectively 127 bits state length).
 - XorShift\* 128/64 (state length 128 bits; nonzero seed).
 - XorShift\* 64/32 (state length 64 bits; nonzero seed).
-- `JKISS`, `JKISS32`, `JLKISS`, `JLKISS64`, described in (Jones 2007/2010)<sup>[**(7)**](#Note7)</sup>.
+- `JKISS`, `JKISS32`, `JLKISS`, `JLKISS64`, described in (Jones 2007/2010)<sup>[**(8)**](#Note8)</sup>.
 - C++'s [**`std::ranlux48` engine**](http://www.cplusplus.com/reference/random/ranlux48/) (state length 577 bits; nonzero seed).
 - PCG (`pcg32`, `pcg64`, and `pcg64_fast` classes), by Melissa O'Neill. See also a [**critique by S. Vigna**](http://pcg.di.unimi.it/pcg.php).
-- Other examples include B. Jenkins's "A small noncryptographic PRNG" (sometimes called `jsf`), C. Doty-Humphrey's `sfc`, `msws` (Widynski 2017)<sup>[**(8)**](#Note8)</sup>, and D. Blackman's `gjrand`.
+- Other examples include B. Jenkins's "A small noncryptographic PRNG" (sometimes called `jsf`), C. Doty-Humphrey's `sfc`, `msws` (Widynski 2017)<sup>[**(9)**](#Note9)</sup>, and D. Blackman's `gjrand`.
 
 The following also count as statistical RNGs, but are not preferred:
-- Mersenne Twister shows a [**systematic failure**](http://xoroshiro.di.unimi.it/#quality) in `BigCrush`'s LinearComp test. (See also (Vigna 2016)<sup>[**(9)**](#Note9)</sup>.)
-- [**`xoroshiro128+`**](http://xoshiro.di.unimi.it/xoroshiro128plus.c), `xoshiro256+`, and `xorshift128+`.  As described by (Blackman and Vigna 2018)<sup>[**(10)**](#Note10)</sup>, these linear PRNGs use weak scramblers, so that each output's lowest bits have low linear complexity even though the output as a whole has excellent statistical randomness.  See also [**"Testing lowest bits in isolation"**](http://xoshiro.di.unimi.it/lowcomp.php).
+- Mersenne Twister shows a [**systematic failure**](http://xoroshiro.di.unimi.it/#quality) in `BigCrush`'s LinearComp test. (See also (Vigna 2016)<sup>[**(10)**](#Note10)</sup>.)
+- [**`xoroshiro128+`**](http://xoshiro.di.unimi.it/xoroshiro128plus.c), `xoshiro256+`, and `xorshift128+`.  As described by (Blackman and Vigna 2018)<sup>[**(11)**](#Note11)</sup>, these linear PRNGs use weak scramblers, so that each output's lowest bits have low linear complexity even though the output as a whole has excellent statistical randomness.  See also [**"Testing lowest bits in isolation"**](http://xoshiro.di.unimi.it/lowcomp.php).
 
 Non-examples include the following:
 - Any [**linear congruential generator**](https://en.wikipedia.org/wiki/Linear_congruential_generator) with modulus 2<sup>63</sup> or less (such as `java.util.Random` and C++'s `std::minstd_rand` and `std::minstd_rand0` engines) has a _state length_ of less than 64 bits.
@@ -183,7 +183,7 @@ By using a seeded PRNG for repeatable "randomness", an application will be tied 
         - by distributing the "random" numbers or results to networked users as they are generated, and
 3. any feature that uses such a PRNG to generate that "random" result will be consistent and deterministic, both across time and across supported hardware and operating systems, with respect to the "random" results it generates, for as long as that feature is still in use by the application.
 
-> **Note:** Meeting statement 3 is not exactly trivial.<sup>[**(11)**](#Note11)</sup>  Using only documented PRNGs, with implementation-independent behavior that will not change in the future, can help.  [**`java.util.Random`**](https://docs.oracle.com/javase/8/docs/api/java/util/Random.html) is one such PRNG, but none of the following is such a PRNG:
+> **Note:** Meeting statement 3 is not exactly trivial.<sup>[**(12)**](#Note12)</sup>  Using only documented PRNGs, with implementation-independent behavior that will not change in the future, can help.  [**`java.util.Random`**](https://docs.oracle.com/javase/8/docs/api/java/util/Random.html) is one such PRNG, but none of the following is such a PRNG:
 >
 > - The C [**`rand` method**](http://en.cppreference.com/w/cpp/numeric/random/rand), as well as C++'s random number distribution classes, such as [**`std::uniform_int_distribution`**](http://en.cppreference.com/w/cpp/numeric/random/uniform_int_distribution), use implementation-defined algorithms for random number generation.
 > - .NET's [**`System.Random`**](https://docs.microsoft.com/dotnet/api/system.random) has random number generation behavior that could change in the future.
@@ -216,10 +216,8 @@ where the game might need to generate the same content of that kind multiple tim
 
 In general, such a game SHOULD NOT use a PRNG with a custom seed for such purposes unless&mdash;
 
-1. generating the random content uses relatively many random numbers (say, more than a few thousand), and the application finds it impractical to store or distribute the content or the numbers for later use, or
+1. generating the random content uses relatively many random numbers (say, more than a few thousand), and the application finds it impractical to store or distribute the content or the numbers for later use (this is often the case for maps with random procedural terrain, but not for puzzle game boards or card shuffling), or
 2. the game makes the seed (or a "code" or "password" based on the seed, such as a barcode or a string of letters and digits) accessible to the player, to allow the player to regenerate the content.
-
-Option 1 often applies to games that generate procedural terrain for game levels, since the terrain often exhibits random variations over an extended space.  Option 1 is less suitable for puzzle game boards or card shuffling, since much less data needs to be stored.
 
 > **Example:** Suppose a game generates a map with random terrain and shows the player a "code" to generate that map. In this case, the game&mdash;
 >
@@ -237,14 +235,14 @@ A custom seed is appropriate when unit testing a method that uses a seeded PRNG 
 
 _Noise_ is a randomized variation in images, sound, and other data.  (See also Red Blob Games, [**"Noise Functions and Map Generation"**](http://www.redblobgames.com/articles/noise/introduction.html)).  For the purposes of RNG recommendations, there are two kinds of noise:
 
-1.  **_Procedural noise_** is generated using a _noise function_, which is a function that takes an _n_-dimensional point and, optionally, additional data such as gradients or hash values, and outputs a seemingly random number.<sup>[**(12)**](#Note12)</sup>  Procedural noise includes [**cellular noise**](https://en.wikipedia.org/wiki/Cellular_noise), [**value noise**](https://en.wikipedia.org/wiki/Value_noise), and [**gradient noise**](https://en.wikipedia.org/wiki/Gradient_noise) (such as [**Perlin noise**](https://en.wikipedia.org/wiki/Perlin_noise)).  The same instance of a procedural noise implementation SHOULD NOT output different "random" numbers at different times for the same _n_-dimensional point.  Such an instance SHOULD be initialized either with "hard-coded" data only or RNG-generated data.
+1.  **_Procedural noise_** is generated using a _noise function_, which is a function that takes an _n_-dimensional point and, optionally, additional data such as gradients or hash values, and outputs a seemingly random number.<sup>[**(13)**](#Note13)</sup>  Procedural noise includes [**cellular noise**](https://en.wikipedia.org/wiki/Cellular_noise), [**value noise**](https://en.wikipedia.org/wiki/Value_noise), and [**gradient noise**](https://en.wikipedia.org/wiki/Gradient_noise) (such as [**Perlin noise**](https://en.wikipedia.org/wiki/Perlin_noise)).  The same instance of a procedural noise implementation SHOULD NOT output different "random" numbers at different times for the same _n_-dimensional point.  Such an instance SHOULD be initialized either with "hard-coded" data only or RNG-generated data.
 
 2.  **_Nonprocedural noise_** is generated using the help of an RNG.  Nonprocedural noise includes [**colored noise**](https://en.wikipedia.org/wiki/Colors_of_noise) (including white noise and pink noise), periodic noise, and noise following a Gaussian or other [**probability distribution**](https://peteroupc.github.io/randomfunc.html#Specific_Non_Uniform_Distributions).  For nonprocedural noise, the same considerations apply to any RNGs the noise implementation uses as in cases not involving noise.
 
 <a id=Verifiable_Random_Numbers></a>
 #### Verifiable Random Numbers
 
-_Verifiable random numbers_ are random numbers (such as seeds for PRNGs) that are disclosed along with all the information necessary to verify their generation.  Usually, such information includes random numbers and/or uncertain data to be determined and publicly disclosed in the future.  Generating verifiable randomness has been described in [**RFC 3797**](https://www.rfc-editor.org/rfc/rfc3797.txt), in (Lenstra et al., 2015)<sup>[**(13)**](#Note13)</sup>, in (Boneh et al., 2018)<sup>[**(14)**](#Note14)</sup> (which introduces the concept of _verifiable delay functions_, functions whose output deliberately takes time to compute but is easy to verify), and elsewhere.
+_Verifiable random numbers_ are random numbers (such as seeds for PRNGs) that are disclosed along with all the information necessary to verify their generation.  Usually, such information includes random numbers and/or uncertain data to be determined and publicly disclosed in the future.  Generating verifiable randomness has been described in [**RFC 3797**](https://www.rfc-editor.org/rfc/rfc3797.txt), in (Lenstra et al., 2015)<sup>[**(14)**](#Note14)</sup>, in (Boneh et al., 2018)<sup>[**(15)**](#Note15)</sup> (which introduces the concept of _verifiable delay functions_, functions whose output deliberately takes time to compute but is easy to verify), and elsewhere.
 
 <a id=Nondeterministic_Sources_and_Seed_Generation></a>
 ## Nondeterministic Sources and Seed Generation
@@ -261,15 +259,14 @@ Examples of nondeterministic sources are&mdash;
 - thermal noise,
 - the output of assembly instructions specially dedicated to random number generation, such as RdSeed,
 - the output generated with A. Seznec's technique called hardware volatile entropy gathering and expansion (HAVEGE), provided a high-resolution counter is available, and
-- differences between two high-resolution counter values taken in quick succession (such as in "Jitter RNG"; see (M&uuml;ller)<sup>[**(15)**](#Note15)</sup>).
+- differences between two high-resolution counter values taken in quick succession (such as in "Jitter RNG"; see (M&uuml;ller)<sup>[**(16)**](#Note16)</sup>).
 
 RFC 4086, "Randomness Requirements for Security", section 3, contains a survey of nondeterministic sources.
 
 > **Notes:**
 >
 > 1. Online services that make random numbers available to applications, as well as outputs of audio and video devices (see RFC 4086 sec. 3.2.1), are additional nondeterministic sources.  However, online services require Internet or other network access, and some of them require access credentials.  Also, many mobile operating systems require applications to declare network, camera, and microphone access to users upon installation.  For these reasons, these kinds of sources are NOT RECOMMENDED if other approaches are adequate.
-> 2. For noncryptographic RNGs, timestamps from the system clock are commonly used.  Timestamps with millisecond or coarser granularity are not encouraged, however, because multiple instances of a PRNG automatically seeded with a timestamp, when they are created at about the same time, run the risk of starting with the same seed and therefore generating the same sequence of random numbers.<sup>[**(16)**](#Note16)</sup>
-> 3. For general-purpose use, nondeterministic sources that enable many high-quality seeds per second to be generated are highly advantageous, especially for a cryptographic RNG.
+> 2. For noncryptographic RNGs, timestamps from the system clock are commonly used.  Timestamps with millisecond or coarser granularity are not encouraged, however, because multiple instances of a PRNG automatically seeded with a timestamp, when they are created at about the same time, run the risk of starting with the same seed and therefore generating the same sequence of random numbers.<sup>[**(17)**](#Note17)</sup>
 
 <a id=Entropy></a>
 ### Entropy
@@ -281,7 +278,7 @@ _Entropy_ is a value that describes how hard it is to predict a nondeterministic
 
 In general, especially for cryptographic RNGs, **to generate an N-bit seed, enough data needs to be gathered from nondeterministic sources to reach N bits of entropy or more**.
 
-Once data with enough entropy is gathered, it might need to be condensed into a seed to initialize a PRNG with. Following (Cliff et al., 2009)<sup>[**(17)**](#Note17)</sup>, it is suggested to generate an N-bit seed by using an HMAC (hash-based message authentication code) algorithm, with outputs at least N times 3 bits long, on data with at least N times 3 bits of entropy, then truncating the output to N bits.  See also NIST SP 800-90B sec. 3.1.5.1 and RFC 4086 sec. 4.2 and 5.2.
+Once data with enough entropy is gathered, it might need to be condensed into a seed to initialize a PRNG with. Following (Cliff et al., 2009)<sup>[**(18)**](#Note18)</sup>, it is suggested to generate an N-bit seed by using an HMAC (hash-based message authentication code) algorithm, with outputs at least N times 3 bits long, on data with at least N times 3 bits of entropy, then truncating the output to N bits.  See also NIST SP 800-90B sec. 3.1.5.1 and RFC 4086 sec. 4.2 and 5.2.
 
 <a id=Existing_RNG_APIs_in_Programming_Languages></a>
 ## Existing RNG APIs in Programming Languages
@@ -309,7 +306,7 @@ As much as possible, **applications SHOULD use existing libraries and techniques
 <small>(B) JavaScript's `Math.random()` (which ranges 0 or greater and less than 1) is implemented using `xorshift128+` (or a variant) in the V8 engine, Firefox, and certain other modern browsers as of late 2017; `Math.random()` uses an "implementation-dependent algorithm or strategy", though (see ECMAScript sec. 20.2.2.27).</small>
 
 <small>(C) A cryptographic RNG implementation can&mdash;
-   - read from the `/dev/urandom` device in most Unix-based systems (using the `open` and `read` system calls where available)<sup>[**(18)**](#Note18)</sup>,
+   - read from the `/dev/urandom` device in most Unix-based systems (using the `open` and `read` system calls where available)<sup>[**(19)**](#Note19)</sup>,
    - call the `arc4random` or `arc4random_buf` method on FreeBSD or macOS, or
    - call the `getentropy` method on OpenBSD, or
    - call the `BCryptGenRandom` API in Windows 7 and later,</small>
@@ -320,7 +317,7 @@ As much as possible, **applications SHOULD use existing libraries and techniques
 
 <small>(E) Ruby's `Random#rand` and `SecureRandom.rand` methods present a beautiful and simple API for random number generation, in my opinion.  Namely, `rand()` returns a number 0 or greater and less than 1, and `rand(N)` returns an integer 0 or greater and less than N.</small>
 
-<small>(F) Calling the `setSeed` method of `SecureRandom` before use is RECOMMENDED. The data passed to the method SHOULD be data described in note (C). (Despite the name, `setSeed` _supplements_ the existing seed, according to the documentation.)  See also (Klyubin 2013)<sup>[**(19)**](#Note19)</sup>.  Using the `SecureRandom` implementation `"SHA1PRNG"` is NOT RECOMMENDED, because of weaknesses in seeding and RNG quality in implementations as of 2013 (Michaelis et al., 2013)<sup>[**(20)**](#Note20)</sup>.</small>
+<small>(F) Calling the `setSeed` method of `SecureRandom` before use is RECOMMENDED. The data passed to the method SHOULD be data described in note (C). (Despite the name, `setSeed` _supplements_ the existing seed, according to the documentation.)  See also (Klyubin 2013)<sup>[**(20)**](#Note20)</sup>.  Using the `SecureRandom` implementation `"SHA1PRNG"` is NOT RECOMMENDED, because of weaknesses in seeding and RNG quality in implementations as of 2013 (Michaelis et al., 2013)<sup>[**(21)**](#Note21)</sup>.</small>
 
 <small>(G) [**`std::random_device`**](http://en.cppreference.com/w/cpp/numeric/random/random_device), introduced in C++11, is NOT RECOMMENDED because its specification leaves considerably much to be desired.  For example,  `std::random_device` can fall back to a pseudorandom number generator of unspecified quality without much warning.  At best, `std::random_device` SHOULD only be used to supplement other techniques for random number generation.</small>
 
@@ -343,17 +340,17 @@ For **seeded PRNGs**, to **reduce the chance of correlated random numbers or ide
 - is initialized with a seed that is unrelated to the other seeds (using sequential or linearly related seeds can cause [**undesirable correlations**](https://blogs.unity3d.com/2015/01/07/a-primer-on-repeatable-random-numbers/) in some PRNGs), and
 - MAY use a different conforming RNG scheme from the others.
 
-(L'Ecuyer et al. 2015)<sup>[**(21)**](#Note21)</sup>, section 4, goes in greater detail on ways to initialize PRNGs for generating random numbers in parallel, including how to ensure repeatable "randomness" this way if that is desired.
+(L'Ecuyer et al. 2015)<sup>[**(22)**](#Note22)</sup>, section 4, goes in greater detail on ways to initialize PRNGs for generating random numbers in parallel, including how to ensure repeatable "randomness" this way if that is desired.
 
 <a id=Shuffling></a>
 ### Shuffling
 
-In a list with `N` different items, there are `N` factorial (that is, `1 * 2 * ... * N`, or `N!`) ways to arrange the items in that list.  These ways are called _permutations_<sup>[**(22)**](#Note22)</sup>.
+In a list with `N` different items, there are `N` factorial (that is, `1 * 2 * ... * N`, or `N!`) ways to arrange the items in that list.  These ways are called _permutations_<sup>[**(23)**](#Note23)</sup>.
 
 An application can **shuffle a list**&mdash;
 
 - by generating a random integer at least 0 and less than the number of permutations, and converting that integer to a permutation, or
-- by doing a [**Fisher&ndash;Yates shuffle**](https://en.wikipedia.org/wiki/Fisher-Yates_shuffle) (which is unfortunately easy to mess up &mdash; see (Atwood 2007)<sup>[**(23)**](#Note23)</sup> &mdash; and is implemented correctly in [**another document of mine**](https://peteroupc.github.io/randomfunc.html)).
+- by doing a [**Fisher&ndash;Yates shuffle**](https://en.wikipedia.org/wiki/Fisher-Yates_shuffle) (which is unfortunately easy to mess up &mdash; see (Atwood 2007)<sup>[**(24)**](#Note24)</sup> &mdash; and is implemented correctly in [**another document of mine**](https://peteroupc.github.io/randomfunc.html)).
 
 Either way, however, if a PRNG's period is less than the number of permutations, then there are **some permutations that that PRNG can't choose** when it shuffles that list. (This is not the same as _generating_ all permutations of a list, which, for a list big enough, can't be done by any computer in a reasonable time.  A PRNG's _period_ is the maximum size of a "random" number sequence it can generate before that sequence repeats; this size is no greater than 2<sup>L</sup> where L is the PRNG's state length.)
 
@@ -366,24 +363,24 @@ An application that shuffles a list can do the shuffling&mdash;
     - has a state length of `B` bits or greater, and
     - qualifies as a statistical RNG except it's initialized with a seed derived from data with at least **`B` bits of** [**_entropy_**](#Nondeterministic_Sources_and_Seed_Generation), or "randomness".
 
-Here, `B` can usually be calculated for different lists using the Python code in the [**appendix**](#Suggested_Entropy_Size); see also (van Staveren 2000, "Lack of randomness")<sup>[**(24)**](#Note24)</sup>.  For example, `B` is 226 (bits) for a 52-item list.  An application MAY limit `B` to 256 or greater, in cases when variety of permutations is not important.
+Here, `B` can usually be calculated for different lists using the Python code in the [**appendix**](#Suggested_Entropy_Size); see also (van Staveren 2000, "Lack of randomness")<sup>[**(25)**](#Note25)</sup>.  For example, `B` is 226 (bits) for a 52-item list.  An application MAY limit `B` to 256 or greater, in cases when variety of permutations is not important.
 
 <a id=GPU_Programming_Environments></a>
 ### GPU Programming Environments
 
 In general, GL Shading Language (GLSL) and other programming environments designed for execution on a graphics processing unit (GPU) are stateless (they read from and write to data without storing any state themselves).  Approaches that have been used for random number generation in GPU environments include&mdash;
 
-- using [**hash functions**](#Hash_Functions), whose output is determined solely by the input rather than both the input and state (as with PRNGs)<sup>[**(25)**](#Note25)</sup>, and
-- sampling "noise textures" with random data in each pixel (Peters 2016)<sup>[**(26)**](#Note26)</sup>.
+- using [**hash functions**](#Hash_Functions), whose output is determined solely by the input rather than both the input and state (as with PRNGs)<sup>[**(26)**](#Note26)</sup>, and
+- sampling "noise textures" with random data in each pixel (Peters 2016)<sup>[**(27)**](#Note27)</sup>.
 
-(L'Ecuyer et al. 2015)<sup>[**(27)**](#Note27)</sup> discusses parallel generation of random numbers using PRNGs, especially on GPUs.
+(L'Ecuyer et al. 2015)<sup>[**(28)**](#Note28)</sup> discusses parallel generation of random numbers using PRNGs, especially on GPUs.
 
 <a id=Hash_Functions></a>
 ## Hash Functions
 
 A seemingly random number can be generated from arbitrary data using a _hash function_.
 
-A _hash function_ is a function that takes an arbitrary input of any size (such as an array of 8-bit bytes or a sequence of characters) and returns an output with a fixed number of bits. That output is also known as a _hash code_. (By definition, hash functions are deterministic<sup>[**(28)**](#Note28)</sup>.)
+A _hash function_ is a function that takes an arbitrary input of any size (such as an array of 8-bit bytes or a sequence of characters) and returns an output with a fixed number of bits. That output is also known as a _hash code_. (By definition, hash functions are deterministic<sup>[**(29)**](#Note29)</sup>.)
 
 A hash code can be used as follows:
 - The hash code can serve as a seed for a PRNG, and the desired random numbers can be generated from that PRNG.  (See my document on [**random number generation methods**](https://peteroupc.github.io/randomfunc.html) for techniques.)
@@ -416,7 +413,7 @@ If a cryptographic RNG implementation uses a PRNG, the following requirements ap
 2. Before an instance of the RNG generates a random number, it MUST have been initialized ("seeded") with a seed described as follows. The seed&mdash;
     - MUST have as many bits as the PRNG's _state length_,
     - MUST consist of data that ultimately derives from the output of one or more [**nondeterministic sources**](#Nondeterministic_Sources_and_Seed_Generation), where the output is at least as hard to predict as ideal random data with as many bits as the _security strength_, and
-    - MAY be mixed with arbitrary data other than the seed as long as the result is no easier to predict<sup>[**(29)**](#Note29)</sup>.
+    - MAY be mixed with arbitrary data other than the seed as long as the result is no easier to predict<sup>[**(30)**](#Note30)</sup>.
 
 3. The RNG SHOULD reseed itself from time to time, using a newly generated seed as described earlier.  If the RNG reseeds if it would generate more than a threshold number of bits without reseeding, that threshold SHOULD be 2<sup>67</sup> or less.
 
@@ -442,7 +439,7 @@ If a statistical RNG implementation uses a PRNG, the following requirements appl
 A **programming language API** designed for reuse by applications could implement RNGs using the following guidelines:
 
 1.  The RNG API can include a method that fills one or more memory units (such as 8-bit bytes) completely with random bits (see example 1).
-2.  If the API implements an automatically-initialized RNG, it SHOULD NOT allow applications to initialize that same RNG with a seed for repeatable "randomness"<sup>[**(30)**](#Note30)</sup> (it MAY provide a separate PRNG to accept such a seed). See example 2.
+2.  If the API implements an automatically-initialized RNG, it SHOULD NOT allow applications to initialize that same RNG with a seed for repeatable "randomness"<sup>[**(31)**](#Note31)</sup> (it MAY provide a separate PRNG to accept such a seed). See example 2.
 3.  If the API provides a PRNG that an application can seed for repeatable "randomness", it SHOULD document that PRNG and any methods the API provides that use that PRNG (such as shuffling and Gaussian number generation), and SHOULD NOT change that PRNG or those methods in a way that would change the "random" numbers they deliver for a given seed. See example 2.
 4.  My document on [**random number generation methods**](https://peteroupc.github.io/randomfunc.html) includes details on twelve uniform random number methods. In my opinion, a new programming language's **standard library** ought to include those twelve methods separately for cryptographic and for statistical RNGs.
 
@@ -467,63 +464,63 @@ I acknowledge&mdash;
 
 <small><sup id=Note3>(3)</sup> If the software and/or hardware uses a nonuniform distribution, but otherwise meets this definition, it can be converted to use a uniform distribution, at least in theory, using _unbiasing_, _deskewing_, or _randomness extraction_ (see RFC 4086 sec. 4 or Cliff et al. 2009 for further discussion).</small>
 
-<small><sup id=Note4>(4)</sup> Bernstein, D.J.  "Fast-key-erasure random number generators", Jun. 23, 2017.</small>
+<small><sup id=Note4>(4)</sup> See also the FIPS 200 definition ("The protection of information and information systems from unauthorized access, use, disclosure, disruption, modification, or destruction in order to provide confidentiality, integrity, and availability") and ISO/IEC 27000.</small>
 
-<small><sup id=Note5>(5)</sup> Wetzels, J., "33C3: Analyzing Embedded Operating System Random Number Generators", samvartaka.github.io, Jan. 3, 2017.</small>
+<small><sup id=Note5>(5)</sup> Bernstein, D.J.  "Fast-key-erasure random number generators", Jun. 23, 2017.</small>
 
-<small><sup id=Note6>(6)</sup> B. Peng, "Two Fast Methods of Generating True Random Numbers on the Arduino", GitHub Gist, December 2017.</small>
+<small><sup id=Note6>(6)</sup> Wetzels, J., "33C3: Analyzing Embedded Operating System Random Number Generators", samvartaka.github.io, Jan. 3, 2017.</small>
 
-<small><sup id=Note7>(7)</sup> Jones, D., "Good Practice in (Pseudo) Random Number Generation for Bioinformatics Applications", 2007/2010.</small>
+<small><sup id=Note7>(7)</sup> B. Peng, "Two Fast Methods of Generating True Random Numbers on the Arduino", GitHub Gist, December 2017.</small>
 
-<small><sup id=Note8>(8)</sup> Widynski, B., "Middle Square Weyl Sequence RNG", arXiv:1704.00358v1 [cs.CR], 2017.</small>
+<small><sup id=Note8>(8)</sup> Jones, D., "Good Practice in (Pseudo) Random Number Generation for Bioinformatics Applications", 2007/2010.</small>
 
-<small><sup id=Note9>(9)</sup> S. Vigna, "[**An experimental exploration of Marsaglia's `xorshift` generators, scrambled**](http://vigna.di.unimi.it/ftp/papers/xorshift.pdf)", 2016.</small>
+<small><sup id=Note9>(9)</sup> Widynski, B., "Middle Square Weyl Sequence RNG", arXiv:1704.00358v1 [cs.CR], 2017.</small>
 
-<small><sup id=Note10>(10)</sup> Blackman, D., Vigna, S. "Scrambled Linear Pseudorandom Number Generators", 2018.</small>
+<small><sup id=Note10>(10)</sup> S. Vigna, "[**An experimental exploration of Marsaglia's `xorshift` generators, scrambled**](http://vigna.di.unimi.it/ftp/papers/xorshift.pdf)", 2016.</small>
 
-<small><sup id=Note11>(11)</sup> An algorithm can become nondeterministic in many ways.  [**For example**](https://keras.io/getting-started/faq/#how-can-i-obtain-reproducible-results-using-keras-during-development), different results can happen because parallel operations can finish in a different order, items can be assigned differently to hash table buckets, or floating-point addition can be carried out in a different order.
+<small><sup id=Note11>(11)</sup> Blackman, D., Vigna, S. "Scrambled Linear Pseudorandom Number Generators", 2018.</small>
+
+<small><sup id=Note12>(12)</sup> An algorithm can become nondeterministic in many ways.  [**For example**](https://keras.io/getting-started/faq/#how-can-i-obtain-reproducible-results-using-keras-during-development), different results can happen because parallel operations can finish in a different order, items can be assigned differently to hash table buckets, or floating-point addition can be carried out in a different order.
 
 Implementations of floating-point numbers and floating-point math can also differ, especially for math functions for which specifications don't always require delivering as-accurate-as-possible results (examples are the x87 `FSIN` instruction and the difference between `Math` and `StrictMath` in Java).  Applications SHOULD avoid generating "random" floating-point numbers when they desire repeatable "randomness".</small>
 
-<small><sup id=Note12>(12)</sup> Noise functions include functions that combine several outputs of a noise function, including by [**fractional Brownian motion**](https://en.wikipedia.org/wiki/Fractional_Brownian_motion).  By definition, noise functions are deterministic.</small>
+<small><sup id=Note13>(13)</sup> Noise functions include functions that combine several outputs of a noise function, including by [**fractional Brownian motion**](https://en.wikipedia.org/wiki/Fractional_Brownian_motion).  By definition, noise functions are deterministic.</small>
 
-<small><sup id=Note13>(13)</sup> Lenstra, A.K., Wesolowski, B. "A random zoo: sloth, unicorn, and trx", 2015.</small>
+<small><sup id=Note14>(14)</sup> Lenstra, A.K., Wesolowski, B. "A random zoo: sloth, unicorn, and trx", 2015.</small>
 
-<small><sup id=Note14>(14)</sup> Boneh, D., Bonneau, J., et al. "Verifiable Delay Functions", 2018.</small>
+<small><sup id=Note15>(15)</sup> Boneh, D., Bonneau, J., et al. "Verifiable Delay Functions", 2018.</small>
 
-<small><sup id=Note15>(15)</sup> M&uuml;ller, S. "CPU Time Jitter Based Non-Physical True Random Number Generator".</small>
+<small><sup id=Note16>(16)</sup> M&uuml;ller, S. "CPU Time Jitter Based Non-Physical True Random Number Generator".</small>
 
-<small><sup id=Note16>(16)</sup> For example, many questions on _Stack Overflow_ highlight the pitfalls of creating a new instance of .NET's `System.Random` each time a random number is needed, rather than only once in the application.  See also the section "How to Initialize RNGs".</small>
+<small><sup id=Note17>(17)</sup> For example, many questions on _Stack Overflow_ highlight the pitfalls of creating a new instance of .NET's `System.Random` each time a random number is needed, rather than only once in the application.  See also the section "How to Initialize RNGs".</small>
 
-<small><sup id=Note17>(17)</sup> Cliff, Y., Boyd, C., Gonzalez Nieto, J.  "How to Extract and Expand Randomness: A Summary and Explanation of Existing Results", 2009.</small>
+<small><sup id=Note18>(18)</sup> Cliff, Y., Boyd, C., Gonzalez Nieto, J.  "How to Extract and Expand Randomness: A Summary and Explanation of Existing Results", 2009.</small>
 
-<small><sup id=Note18>(18)</sup> Using the similar `/dev/random` is NOT RECOMMENDED, since in some implementations it can block for seconds at a time, especially if not enough randomness is available.  See also [**"Myths about /dev/urandom"**](https://www.2uo.de/myths-about-urandom).</small>
+<small><sup id=Note19>(19)</sup> Using the similar `/dev/random` is NOT RECOMMENDED, since in some implementations it can block for seconds at a time, especially if not enough randomness is available.  See also [**"Myths about /dev/urandom"**](https://www.2uo.de/myths-about-urandom).</small>
 
-<small><sup id=Note19>(19)</sup> A. Klyubin, "Some SecureRandom Thoughts", Android Developers Blog, Aug. 14, 2013.</small>
+<small><sup id=Note20>(20)</sup> A. Klyubin, "Some SecureRandom Thoughts", Android Developers Blog, Aug. 14, 2013.</small>
 
-<small><sup id=Note20>(20)</sup> Michaelis, K., Meyer, C., and Schwenk, J. "Randomly Failed! The State of Randomness in Current Java Implementations", 2013.</small>
+<small><sup id=Note21>(21)</sup> Michaelis, K., Meyer, C., and Schwenk, J. "Randomly Failed! The State of Randomness in Current Java Implementations", 2013.</small>
 
-<small><sup id=Note21>(21)</sup> P. L'Ecuyer, D. Munger, et al.  "Random Numbers for Parallel Computers: Requirements and Methods, With Emphasis on GPUs". April 17, 2015.</small>
+<small><sup id=Note22>(22)</sup> P. L'Ecuyer, D. Munger, et al.  "Random Numbers for Parallel Computers: Requirements and Methods, With Emphasis on GPUs". April 17, 2015.</small>
 
-<small><sup id=Note22>(22)</sup> More generally, a list has `N! / (W_1! * W_2! * ... * W_K!)` permutations (a [**multinomial coefficient**](http://mathworld.wolfram.com/MultinomialCoefficient.html)), where `N` is the list's size, `K` is the number of different items in the list, and `W_i` is the number of times the item identified by `i` appears in the list.  However, this number is never more than `N!` and suggests using less randomness, so an application need not use this more complicated formula and MAY assume that a list has `N!` permutations even if some of its items occur more than once.</small>
+<small><sup id=Note23>(23)</sup> More generally, a list has `N! / (W_1! * W_2! * ... * W_K!)` permutations (a [**multinomial coefficient**](http://mathworld.wolfram.com/MultinomialCoefficient.html)), where `N` is the list's size, `K` is the number of different items in the list, and `W_i` is the number of times the item identified by `i` appears in the list.  However, this number is never more than `N!` and suggests using less randomness, so an application need not use this more complicated formula and MAY assume that a list has `N!` permutations even if some of its items occur more than once.</small>
 
-<small><sup id=Note23>(23)</sup> Atwood, Jeff. "[**The danger of na&iuml;vet&eacute;**](https://blog.codinghorror.com/the-danger-of-naivete/)", Dec. 7, 2007.</small>
+<small><sup id=Note24>(24)</sup> Atwood, Jeff. "[**The danger of na&iuml;vet&eacute;**](https://blog.codinghorror.com/the-danger-of-naivete/)", Dec. 7, 2007.</small>
 
-<small><sup id=Note24>(24)</sup> van Staveren, Hans. [**"Big Deal: A new program for dealing bridge hands"**](https://sater.home.xs4all.nl/doc.html), Sep. 8, 2000</small>
+<small><sup id=Note25>(25)</sup> van Staveren, Hans. [**"Big Deal: A new program for dealing bridge hands"**](https://sater.home.xs4all.nl/doc.html), Sep. 8, 2000</small>
 
-<small><sup id=Note25>(25)</sup> The only binary floating-point numbers supported by some GPUs are 16-bit (with 10 significant bits of precision), notably not 32- or 64-bit as is otherwise common. An application ought to choose hash functions that deliver acceptable "noise" regardless of the size of floating-point numbers supported by the GPU.</small>
+<small><sup id=Note26>(26)</sup> The only binary floating-point numbers supported by some GPUs are 16-bit (with 10 significant bits of precision), notably not 32- or 64-bit as is otherwise common. An application ought to choose hash functions that deliver acceptable "noise" regardless of the size of floating-point numbers supported by the GPU.</small>
 
-<small><sup id=Note26>(26)</sup> C. Peters, "[**Free blue noise textures**](http://momentsingraphics.de/?p=127)", _Moments in Graphics_, Dec. 22, 2016.  That article discusses the sampling of _blue noise_, not independent uniformly-distributed random numbers, but a similar approach applies to textures of noise however generated.</small>
+<small><sup id=Note27>(27)</sup> C. Peters, "[**Free blue noise textures**](http://momentsingraphics.de/?p=127)", _Moments in Graphics_, Dec. 22, 2016.  That article discusses the sampling of _blue noise_, not independent uniformly-distributed random numbers, but a similar approach applies to textures of noise however generated.</small>
 
-<small><sup id=Note27>(27)</sup> P. L'Ecuyer, D. Munger, et al.  "Random Numbers for Parallel Computers: Requirements and Methods, With Emphasis on GPUs". April 17, 2015.</small>
+<small><sup id=Note28>(28)</sup> P. L'Ecuyer, D. Munger, et al.  "Random Numbers for Parallel Computers: Requirements and Methods, With Emphasis on GPUs". April 17, 2015.</small>
 
-<small><sup id=Note28>(28)</sup> Note that although PRNGs can also act like hash functions (if they're seeded with the input and the PRNG is "large enough" for the input), some PRNGs (such as `xorshift128+`) are not well suited to serve as hash functions, because they don't mix their state before generating a random number from that state.</small>
+<small><sup id=Note29>(29)</sup> Note that although PRNGs can also act like hash functions (if they're seeded with the input and the PRNG is "large enough" for the input), some PRNGs (such as `xorshift128+`) are not well suited to serve as hash functions, because they don't mix their state before generating a random number from that state.</small>
 
-<small><sup id=Note29>(29)</sup> Such arbitrary data can include process identifiers, time stamps, environment variables, random numbers, virtual machine guest identifiers, and/or other data specific to the session or to the instance of the RNG.  See also NIST SP800-90A and the references below.<br/>Everspaugh, A., Zhai, Y., et al.  "Not-So-Random Numbers in Virtualized Linux and the Whirlwind RNG", 2014.<br>Ristenpart, T., Yilek, S. "When Good Randomness Goes Bad: Virtual Machine Reset Vulnerabilities and Hedging Deployed Cryptography", 2010.</small>
+<small><sup id=Note30>(30)</sup> Such arbitrary data can include process identifiers, time stamps, environment variables, random numbers, virtual machine guest identifiers, and/or other data specific to the session or to the instance of the RNG.  See also NIST SP800-90A and the references below.<br/>Everspaugh, A., Zhai, Y., et al.  "Not-So-Random Numbers in Virtualized Linux and the Whirlwind RNG", 2014.<br>Ristenpart, T., Yilek, S. "When Good Randomness Goes Bad: Virtual Machine Reset Vulnerabilities and Hedging Deployed Cryptography", 2010.</small>
 
-<small><sup id=Note30>(30)</sup> Allowing applications to do so would hamper forward compatibility &mdash; the API would then be less free to change how the RNG is implemented in the future (e.g., to use a cryptographic or otherwise "better" RNG), or to make improvements or bug fixes in methods that use that RNG (such as shuffling and Gaussian number generation).  (As a notable example, the V8 JavaScript engine recently changed its `Math.random()` implementation to use a variant of `xorshift128+`, which is backward compatible because nothing in JavaScript allows  `Math.random()` to be seeded.)  Nevertheless, APIs can still allow applications to provide additional input ("entropy") to the RNG in order to increase its randomness rather than to ensure repeatability.</small>
-
-<small><sup id=Note31>(31)</sup> See also the FIPS 200 definition ("The protection of information and information systems from unauthorized access, use, disclosure, disruption, modification, or destruction in order to provide confidentiality, integrity, and availability") and ISO/IEC 27000.</small>
+<small><sup id=Note31>(31)</sup> Allowing applications to do so would hamper forward compatibility &mdash; the API would then be less free to change how the RNG is implemented in the future (e.g., to use a cryptographic or otherwise "better" RNG), or to make improvements or bug fixes in methods that use that RNG (such as shuffling and Gaussian number generation).  (As a notable example, the V8 JavaScript engine recently changed its `Math.random()` implementation to use a variant of `xorshift128+`, which is backward compatible because nothing in JavaScript allows  `Math.random()` to be seeded.)  Nevertheless, APIs can still allow applications to provide additional input ("entropy") to the RNG in order to increase its randomness rather than to ensure repeatability.</small>
 
 <a id=Appendix></a>
 ## Appendix

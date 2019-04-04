@@ -1345,6 +1345,8 @@ Converting a color (such as an RGB color) to a color name is equivalent to&mdash
 
 Converting a color name to a color is equivalent to retrieving the color keyed to that name (or optionally, its lower-cased form) in a hash table, or returning an error if no such color exists.<sup>[**(39)**](#Note39)</sup>
 
+If each name, number, or code in a color map is associated with one or several colors, optionally with a weighting factor for each color, then the color map is also known as a _color dictionary_(Venn et al.)<sup>[**(48)**](#Note48)</sup>.
+
 > **Notes:**
 >
 > - As used in the [**CSS Color Module Level 3**](http://www.w3.org/TR/css3-color/), named colors defined in that module are expressed as encoded RGB colors in the [**_sRGB color space_**](#sRGB).
@@ -1693,6 +1695,8 @@ where `FUNC` is an arbitrary function of one or more variables) can be done to a
 <small><sup id=Note46>(46)</sup> As [**B. MacEvoy explains**](http://www.handprint.com/HP/WCL/color18a.html#compmatch) (at "Other Factors in Material Mixtures"), things that affect the mixture of two colorants include their "refractive index, particle size, crystal form, hiding power and tinting strength" (see also his [**principles 39 to 41**](http://www.handprint.com/HP/WCL/color18a.html#ctprin39)), and "the material attributes of the support [e.g., the paper or canvas] and the paint application methods" are also relevant here.  These factors, to the extent the reflectance curves don't take them into account, are not dealt with in this method.</small>
 
 <small><sup id=Note47>(47)</sup> Walowit, E.  "Spectrophotometric color formulation based on two-constant Kubelka-Munk theory". Thesis, Rochester Institute of Technology, 1985.</small>
+
+<small><sup id=Note48>(48)</sup> Venn, A., et al. "Das Farbw&ouml;rterbuch / The Colour Dictionary".</small>
 
 <a id=License></a>
 ## License
