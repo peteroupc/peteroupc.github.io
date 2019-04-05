@@ -1619,7 +1619,7 @@ END METHOD
 
 <p>Converting a color name to a color is equivalent to retrieving the color keyed to that name (or optionally, its lower-cased form) in a hash table, or returning an error if no such color exists.<sup><a href="#Note39"><strong>(39)</strong></a></sup></p>
 
-<p>If each name, number, or code in a color map is associated with one or several colors, optionally with a weighting factor for each color, then the color map is also known as a <em>color dictionary</em>(Venn et al.)<sup><a href="#Note48"><strong>(48)</strong></a></sup>.</p>
+<p>If each name, number, or code in a color map is associated with one or several colors, optionally with a weighting factor for each color, then the color map is also known as a <em>color dictionary</em>(Venn et al.)<sup><a href="#Note43"><strong>(43)</strong></a></sup>.</p>
 
 <blockquote>
 <p><strong>Notes:</strong></p>
@@ -1637,14 +1637,14 @@ END METHOD
 <p>Color maps can list colors used to identify different items. Because of this use, many applications need to use colors that are easily distinguishable by humans.  In this respect&mdash;</p>
 
 <ul>
-<li>K. Kelly (1965) proposed a list of &quot;twenty two colors of maximum contrast&quot;<sup><a href="#Note43"><strong>(43)</strong></a></sup>, the first nine of which
+<li>K. Kelly (1965) proposed a list of &quot;twenty two colors of maximum contrast&quot;<sup><a href="#Note44"><strong>(44)</strong></a></sup>, the first nine of which
 were intended for readers with normal and <a href="#Defective_and_Animal_Color_Vision"><strong>defective</strong></a> color vision, and</li>
 <li>B. Berlin and P. Kay, in a work published in 1969, identified eleven basic color terms: black, white, gray, purple, pink, red, green, blue, yellow, orange, and brown.</li>
 </ul>
 
 <p>In general, the greater the number of colors used, the harder it is to distinguish them from each other.  Any application that needs to distinguish many items (especially more than 22 items, the number of colors in Kelly&#39;s list) should use other visual means in addition to color (or rather than color) to help users identify them. (Note that under the <a href="https://www.w3.org/TR/2008/REC-WCAG20-20081211/"><strong>Web Content Accessibility Guidelines 2.0</strong></a> level A, color may not be <a href="http://www.w3.org/TR/2008/REC-WCAG20-20081211/#visual-audio-contrast-without-color"><strong>&quot;the only visual means of conveying information&quot;</strong></a>.)</p>
 
-<p>In general, any method that seeks to choose colors that are maximally distant in a particular color space (that is, where the smallest <a href="#Color_Differences"><strong>color difference</strong></a> [<code>COLORDIFF</code>] between them is maximized as much as feasible) can be used to select visually distinct colors. Such colors can be pregenerated or generated at runtime, and such colors can be limited to those in a particular <em>color gamut</em>. Here, the color difference method should be <em>&Delta;E*</em><sub>ab</sub> or another color difference method that takes human color perception into account. (See also (Tatarize)<sup><a href="#Note44"><strong>(44)</strong></a></sup>.)</p>
+<p>In general, any method that seeks to choose colors that are maximally distant in a particular color space (that is, where the smallest <a href="#Color_Differences"><strong>color difference</strong></a> [<code>COLORDIFF</code>] between them is maximized as much as feasible) can be used to select visually distinct colors. Such colors can be pregenerated or generated at runtime, and such colors can be limited to those in a particular <em>color gamut</em>. Here, the color difference method should be <em>&Delta;E*</em><sub>ab</sub> or another color difference method that takes human color perception into account. (See also (Tatarize)<sup><a href="#Note45"><strong>(45)</strong></a></sup>.)</p>
 
 <p><a id=Pseudocode></a></p>
 
@@ -1816,7 +1816,7 @@ END METHOD
 
 <p>A <em>blackbody</em> is an idealized material that emits light based only on its temperature.  As a blackbody&#39;s temperature goes up, its chromaticity changes from red to orange to pale yellow up to sky blue.</p>
 
-<p>The <code>Planckian</code> method shown below models the spectral power distribution (SPD) of a blackbody with the given temperature in kelvins (its <strong>color temperature</strong>). The <code>BlackbodySPD</code> method below uses that method (where <code>TEMP</code> is the desired color temperature).<sup><a href="#Note45"><strong>(45)</strong></a></sup>.  Note that such familiar light sources as sunlight, daylight, candlelight, and incandescent lamps can be closely described by the appropriate blackbody SPD.</p>
+<p>The <code>Planckian</code> method shown below models the spectral power distribution (SPD) of a blackbody with the given temperature in kelvins (its <strong>color temperature</strong>). The <code>BlackbodySPD</code> method below uses that method (where <code>TEMP</code> is the desired color temperature).<sup><a href="#Note46"><strong>(46)</strong></a></sup>.  Note that such familiar light sources as sunlight, daylight, candlelight, and incandescent lamps can be closely described by the appropriate blackbody SPD.</p>
 
 <pre>METHOD Planckian(wl, temp)
     num = pow(wl, -5)
@@ -1860,9 +1860,9 @@ END METHOD
 
 <ul>
 <li>As <a href="http://www.scottburns.us/subtractive-color-mixture/"><strong>S. A. Burns indicates</strong></a>, two or more <a href="#Spectral_Color_Functions"><strong><em>reflectance curves</em></strong></a>, each representing a <strong>pigment or colorant</strong>, can be mixed by calculating their <em>weighted geometric mean</em>, which
-takes into account the relative proportions of those colorants in the mixture; the result is a new reflectance curve that can be converted into an RGB color.<sup><a href="#Note46"><strong>(46)</strong></a></sup></li>
+takes into account the relative proportions of those colorants in the mixture; the result is a new reflectance curve that can be converted into an RGB color.<sup><a href="#Note47"><strong>(47)</strong></a></sup></li>
 <li>As <a href="http://www.handprint.com/HP/WCL/color3.html#mixprofile"><strong>B. MacEvoy indicates</strong></a>, two or more spectral curves for <strong>transmissive materials</strong> can be mixed simply by multiplying them; the result is a new spectral curve for the mixed material.</li>
-<li>An alternative method of color formulation, based on the <strong>Kubelka&ndash;Munk theory</strong>, uses two curves for each colorant: an <em>absorption coefficient</em> curve (K curve) and a <em>scattering coefficient</em> curve (S curve).  The ratio of absorption to scattering (<em>K/S</em>) has a simple relationship to reflectance factors in the Kubelka&ndash;Munk theory.  The Python sample code implements the Kubelka&ndash;Munk equations.  One way to predict a color formula using this theory is described by E. Walowit in 1985<sup><a href="#Note47"><strong>(47)</strong></a></sup>.  ISO 18314-2 is also a relevant document.</li>
+<li>An alternative method of color formulation, based on the <strong>Kubelka&ndash;Munk theory</strong>, uses two curves for each colorant: an <em>absorption coefficient</em> curve (K curve) and a <em>scattering coefficient</em> curve (S curve).  The ratio of absorption to scattering (<em>K/S</em>) has a simple relationship to reflectance factors in the Kubelka&ndash;Munk theory.  The Python sample code implements the Kubelka&ndash;Munk equations.  One way to predict a color formula using this theory is described by E. Walowit in 1985<sup><a href="#Note48"><strong>(48)</strong></a></sup>.  ISO 18314-2 is also a relevant document.</li>
 </ul>
 
 <p>For convenience, the <code>WGM</code> method below computes the weighted geometric mean of one or more numbers, where&mdash;</p>
@@ -2036,17 +2036,17 @@ where <code>FUNC</code> is an arbitrary function of one or more variables) can b
 
 <p><small><sup id=Note42>(42)</sup> Many color collections are represented by printed or dyed color swatches and/or found in printed &quot;fan decks&quot;.  Most color collections of this kind, however, are proprietary. &quot;5RP 5/6&quot; is an example from a famous color system and color space from the early 20th century.</small></p>
 
-<p><small><sup id=Note43>(43)</sup> An approximation of the colors, in order, to encoded sRGB in <a href="#HTML_Format_and_Other_Text_Formats"><strong>HTML color format</strong></a>, is as follows: &quot;#F0F0F1&quot;, &quot;#181818&quot;, &quot;#F7C100&quot;, &quot;#875392&quot;, &quot;#F78000&quot;, &quot;#9EC9EF&quot;, &quot;#C0002D&quot;, &quot;#C2B280&quot;, &quot;#838382&quot;, &quot;#008D4B&quot;, &quot;#E68DAB&quot;, &quot;#0067A8&quot;, &quot;#F99178&quot;, &quot;#5E4B97&quot;, &quot;#FBA200&quot;, &quot;#B43E6B&quot;, &quot;#DDD200&quot;, &quot;#892610&quot;, &quot;#8DB600&quot;, &quot;#65421B&quot;, &quot;#E4531B&quot;, &quot;#263A21&quot;. The list was generated by converting the Munsell renotations (and a similar renotation for black) to sRGB using the Python <code>colour</code> package.</small></p>
+<p><small><sup id=Note43>(43)</sup> Venn, A., et al. &quot;Das Farbw&ouml;rterbuch / The Colour Dictionary&quot;.</small></p>
 
-<p><small><sup id=Note44>(44)</sup> Tatarize, &quot;<a href="http://godsnotwheregodsnot.blogspot.com/2012/09/color-distribution-methodology.html"><strong>Color Distribution Methodology</strong></a>&quot;.</small></p>
+<p><small><sup id=Note44>(44)</sup> An approximation of the colors, in order, to encoded sRGB in <a href="#HTML_Format_and_Other_Text_Formats"><strong>HTML color format</strong></a>, is as follows: &quot;#F0F0F1&quot;, &quot;#181818&quot;, &quot;#F7C100&quot;, &quot;#875392&quot;, &quot;#F78000&quot;, &quot;#9EC9EF&quot;, &quot;#C0002D&quot;, &quot;#C2B280&quot;, &quot;#838382&quot;, &quot;#008D4B&quot;, &quot;#E68DAB&quot;, &quot;#0067A8&quot;, &quot;#F99178&quot;, &quot;#5E4B97&quot;, &quot;#FBA200&quot;, &quot;#B43E6B&quot;, &quot;#DDD200&quot;, &quot;#892610&quot;, &quot;#8DB600&quot;, &quot;#65421B&quot;, &quot;#E4531B&quot;, &quot;#263A21&quot;. The list was generated by converting the Munsell renotations (and a similar renotation for black) to sRGB using the Python <code>colour</code> package.</small></p>
 
-<p><small><sup id=Note45>(45)</sup> See also J. Walker, &quot;<a href="http://www.fourmilab.ch/documents/specrend/"><strong>Colour Rendering of Spectra</strong></a>&quot;.</small></p>
+<p><small><sup id=Note45>(45)</sup> Tatarize, &quot;<a href="http://godsnotwheregodsnot.blogspot.com/2012/09/color-distribution-methodology.html"><strong>Color Distribution Methodology</strong></a>&quot;.</small></p>
 
-<p><small><sup id=Note46>(46)</sup> As <a href="http://www.handprint.com/HP/WCL/color18a.html#compmatch"><strong>B. MacEvoy explains</strong></a> (at &quot;Other Factors in Material Mixtures&quot;), things that affect the mixture of two colorants include their &quot;refractive index, particle size, crystal form, hiding power and tinting strength&quot; (see also his <a href="http://www.handprint.com/HP/WCL/color18a.html#ctprin39"><strong>principles 39 to 41</strong></a>), and &quot;the material attributes of the support [e.g., the paper or canvas] and the paint application methods&quot; are also relevant here.  These factors, to the extent the reflectance curves don&#39;t take them into account, are not dealt with in this method.</small></p>
+<p><small><sup id=Note46>(46)</sup> See also J. Walker, &quot;<a href="http://www.fourmilab.ch/documents/specrend/"><strong>Colour Rendering of Spectra</strong></a>&quot;.</small></p>
 
-<p><small><sup id=Note47>(47)</sup> Walowit, E.  &quot;Spectrophotometric color formulation based on two-constant Kubelka-Munk theory&quot;. Thesis, Rochester Institute of Technology, 1985.</small></p>
+<p><small><sup id=Note47>(47)</sup> As <a href="http://www.handprint.com/HP/WCL/color18a.html#compmatch"><strong>B. MacEvoy explains</strong></a> (at &quot;Other Factors in Material Mixtures&quot;), things that affect the mixture of two colorants include their &quot;refractive index, particle size, crystal form, hiding power and tinting strength&quot; (see also his <a href="http://www.handprint.com/HP/WCL/color18a.html#ctprin39"><strong>principles 39 to 41</strong></a>), and &quot;the material attributes of the support [e.g., the paper or canvas] and the paint application methods&quot; are also relevant here.  These factors, to the extent the reflectance curves don&#39;t take them into account, are not dealt with in this method.</small></p>
 
-<p><small><sup id=Note48>(48)</sup> Venn, A., et al. &quot;Das Farbw&ouml;rterbuch / The Colour Dictionary&quot;.</small></p>
+<p><small><sup id=Note48>(48)</sup> Walowit, E.  &quot;Spectrophotometric color formulation based on two-constant Kubelka-Munk theory&quot;. Thesis, Rochester Institute of Technology, 1985.</small></p>
 
 <p><a id=License></a></p>
 

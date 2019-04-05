@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
-<p>Begun on June 4, 2017; last updated on Mar. 27, 2019.</p>
+<p>Begun on June 4, 2017; last updated on Apr. 4, 2019.</p>
 
 <p>Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.</p>
 
@@ -2508,7 +2508,7 @@ END METHOD
 
 <h3>Mean and Variance Calculation</h3>
 
-<p>The following method calculates the mean and the <a href="http://mathworld.wolfram.com/Variance.html"><strong>bias-corrected sample variance</strong></a> of a list of real numbers.   It returns a two-item list containing the mean and that kind of variance in that order. It uses the <a href="https://www.johndcook.com/blog/standard_deviation/"><strong>Welford method</strong></a> presented by J. D. Cook.  (Sample variance is the estimated variance of a population or distribution based on a random sample of that population or distribution.)</p>
+<p>The following method calculates the mean and the <a href="http://mathworld.wolfram.com/Variance.html"><strong>bias-corrected sample variance</strong></a> of a list of real numbers, using the <a href="https://www.johndcook.com/blog/standard_deviation/"><strong>Welford method</strong></a> presented by J. D. Cook.  The method returns a two-item list containing the mean and that kind of variance in that order.  (Sample variance is the estimated variance of a population or distribution assuming <code>list</code> is a random sample of that population or distribution.)  The sample standard deviation is the square root of the variance calculated here.</p>
 
 <pre>METHOD MeanAndVariance(list)
     if size(list)==0: return [0, 0]
@@ -2526,6 +2526,10 @@ END METHOD
     return [xm, xs*1.0/(size(list)-1)]
 END METHOD
 </pre>
+
+<blockquote>
+<p><strong>Note:</strong> The population variance (or biased sample variance) is found by dividing by <code>size(list)</code> rather than <code>(size(list)-1)</code>, and the population standard deviation (or biased sample standard deviation) is the square root of that variance.</p>
+</blockquote>
 
 <p><a id=Norm_Calculation></a></p>
 

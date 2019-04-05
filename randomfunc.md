@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on June 4, 2017; last updated on Mar. 27, 2019.
+Begun on June 4, 2017; last updated on Apr. 4, 2019.
 
 Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.
 
@@ -2102,7 +2102,7 @@ The pseudocode below shows how the [**error function**](https://en.wikipedia.org
 <a id=Mean_and_Variance_Calculation></a>
 ### Mean and Variance Calculation
 
-The following method calculates the mean and the [**bias-corrected sample variance**](http://mathworld.wolfram.com/Variance.html) of a list of real numbers.   It returns a two-item list containing the mean and that kind of variance in that order. It uses the [**Welford method**](https://www.johndcook.com/blog/standard_deviation/) presented by J. D. Cook.  (Sample variance is the estimated variance of a population or distribution based on a random sample of that population or distribution.)
+The following method calculates the mean and the [**bias-corrected sample variance**](http://mathworld.wolfram.com/Variance.html) of a list of real numbers, using the [**Welford method**](https://www.johndcook.com/blog/standard_deviation/) presented by J. D. Cook.  The method returns a two-item list containing the mean and that kind of variance in that order.  (Sample variance is the estimated variance of a population or distribution assuming `list` is a random sample of that population or distribution.)  The sample standard deviation is the square root of the variance calculated here.
 
     METHOD MeanAndVariance(list)
         if size(list)==0: return [0, 0]
@@ -2119,6 +2119,8 @@ The following method calculates the mean and the [**bias-corrected sample varian
         end
         return [xm, xs*1.0/(size(list)-1)]
     END METHOD
+
+> **Note:** The population variance (or biased sample variance) is found by dividing by `size(list)` rather than `(size(list)-1)`, and the population standard deviation (or biased sample standard deviation) is the square root of that variance.
 
 <a id=Norm_Calculation></a>
 ### Norm Calculation
