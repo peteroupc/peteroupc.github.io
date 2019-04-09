@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
-<p>Begun on June 4, 2017; last updated on Apr. 7, 2019.</p>
+<p>Begun on June 4, 2017; last updated on Apr. 8, 2019.</p>
 
 <p>Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.</p>
 
@@ -952,14 +952,17 @@ END METHOD
 
 <h3>Monte Carlo Sampling: Expected Values and Integration</h3>
 
-<p>Randomization is the core of <strong>Monte Carlo sampling</strong>; it can be used to estimate the <strong>expected value</strong> of a function given a random process or sampling distribution.  The following pseudocode estimates the expected value of a list of random numbers generated the same way.  Here, <code>EFUNC</code> is the function, and <code>MeanAndVariance</code> is given in the <a href="#Mean_and_Variance_Calculation"><strong>appendix</strong></a>.  <code>Expectation</code> returns a list of two numbers &mdash; the estimated expected value and its variance.</p>
+<p>Randomization is the core of <strong>Monte Carlo sampling</strong>; it can be used to estimate the <strong>expected value</strong> of a function given a random process or sampling distribution.  The following pseudocode estimates the expected value of a list of random numbers generated the same way.  Here, <code>EFUNC</code> is the function, and <code>MeanAndVariance</code> is given in the <a href="#Mean_and_Variance_Calculation"><strong>appendix</strong></a>.  <code>Expectation</code> returns a list of two numbers &mdash; the estimated expected value and its standard error.</p>
 
 <pre>METHOD Expectation(numbers)
   ret=[]
   for i in 0...size(numbers)
      AddItem(ret,EFUNC(numbers[i]))
   end
-  return MeanAndVariance(ret)
+  merr=MeanAndVariance(ret)
+  merr[1]=merr[1]*(size(ret)-1.0)/size(ret)
+  merr[1]=sqrt(merr[1])/sqrt(size(ret))
+  return merr
 END METHOD
 </pre>
 
@@ -975,7 +978,7 @@ END METHOD
 
 <p>If the sampling domain is also limited to random numbers meeting a given condition (such as <code>x &lt; 2</code> or <code>x != 10</code>), then the estimated expected value is also called the estimated <em>conditional expectation</em>.</p>
 
-<p><a href="https://en.wikipedia.org/wiki/Monte_Carlo_integration"><strong>Monte Carlo integration</strong></a> is a way to estimate a multidimensional integral; randomly sampled numbers are put into a list (<code>nums</code>) and the estimated integral and its squared error are then calculated with <code>MeanAndVariance(nums)</code>, or alternatively <code>Expectation(nums)</code> with <code>EFUNC(x) = x</code> (that is, the estimated expected value of the mean and that value&#39;s variance), and multiplied by the volume of the sampling domain.</p>
+<p><a href="https://en.wikipedia.org/wiki/Monte_Carlo_integration"><strong>Monte Carlo integration</strong></a> is a way to estimate a multidimensional integral; randomly sampled numbers are put into a list (<code>nums</code>) and the estimated integral and its standard error are then calculated with <code>Expectation(nums)</code> with <code>EFUNC(x) = x</code>, and multiplied by the volume of the sampling domain.</p>
 
 <p><a id=Randomization_in_Statistical_Testing></a></p>
 
@@ -1431,7 +1434,7 @@ of the differences between each of those points and that mean (here, the weight 
 <ul>
 <li>The <a href="https://en.wikipedia.org/wiki/Cumulative_distribution_function"><strong><em>cumulative distribution function</em></strong></a>, or <em>CDF</em>, returns, for each number, the probability for a randomly generated variable to be equal to or less than that number; the probability is in the interval [0, 1].</li>
 <li>The <a href="https://en.wikipedia.org/wiki/Probability_density_function"><strong><em>probability density function</em></strong></a>, or <em>PDF</em>, is, roughly and intuitively, a curve of weights 0 or greater, where for each number, the greater its weight, the more likely a number close to that number is randomly chosen.<sup><a href="#Note22"><strong>(22)</strong></a></sup></li>
-<li>The <em>inverse cumulative distribution function</em> (<em>inverse CDF</em>) is the inverse of the CDF and maps numbers in the interval [0, 1] to numbers in the distribution, from low to high.</li>
+<li>The <em>inverse cumulative distribution function</em> (<em>inverse CDF</em>) is the inverse of the CDF and maps numbers in the interval [0, 1) to numbers in the distribution, from low to high.</li>
 </ul>
 
 <p>Depending on what information is known about the distribution, random numbers that approximately follow that distribution can be generated as follows:</p>
@@ -1440,13 +1443,13 @@ of the differences between each of those points and that mean (here, the weight 
 <li><p><strong>PDF is known</strong>, even if the area under the PDF isn&#39;t 1:</p>
 
 <ul>
-<li><strong>Empirical sampling.</strong> Use the PDF to calculate the weights for a number of sample points (usually regularly spaced). Create one list with the sampled points in ascending order (the <code>list</code>) and another list of the same size with the PDF&#39;s values at those points (the <code>weights</code>).  Finally, generate a random number bounded by the lowest and highest sampled point using a weighted choice method (e.g., <a href="#Continuous_Weighted_Choice"><strong><code>ContinuousWeightedChoice(list, weights)</code></strong></a>).  The <a href="https://peteroupc.github.io/randomgen.zip"><strong>Python sample code</strong></a> includes a <code>numbers_from_pdf</code> method (for continuous PDFs) and an <code>integers_from_pdf</code> method (for discrete PDFs) that implement this approach.</li>
+<li><strong>Piecewise interpolation.</strong> Use the PDF to calculate the weights for a number of sample points (usually regularly spaced). Create one list with the sampled points in ascending order (the <code>list</code>) and another list of the same size with the PDF&#39;s values at those points (the <code>weights</code>).  Finally, generate a random number bounded by the lowest and highest sampled point using a weighted choice method (e.g., <a href="#Continuous_Weighted_Choice"><strong><code>ContinuousWeightedChoice(list, weights)</code></strong></a>).  The <a href="https://peteroupc.github.io/randomgen.zip"><strong>Python sample code</strong></a> includes a <code>numbers_from_pdf</code> method (for continuous PDFs) and an <code>integers_from_pdf</code> method (for discrete PDFs) that implement this approach.</li>
 <li><p><a href="#Rejection_Sampling"><strong>Rejection sampling.</strong></a>  If the PDF can be more easily sampled by another distribution with its own PDF (<code>PDF2</code>) that &quot;dominates&quot; <code>PDF</code> in the sense that <code>PDF2(x) &gt;= PDF(x)</code> at every valid <code>x</code>, then generate random numbers with that distribution until a number (<code>n</code>) that satisfies <code>PDF(n) &gt;= RNDRANGEMaxExc(0, PDF2(n))</code> is generated this way (that is, sample points in <code>PDF2</code> until a point falls within <code>PDF</code>). (See also Saucier 2000, pp. 6-7, 39; Devroye 1986, pp. 41-43; and &quot;<a href="https://mathworks.com/help/stats/generating-random-data.html"><strong>Generating Pseudorandom Numbers</strong></a>&quot;.)</p>
 
 <p>For example, a custom distribution&#39;s PDF, <code>PDF</code>, is <code>exp(-abs(x*x*x))</code>, and the exponential distribution&#39;s PDF, <code>PDF2</code>, is <code>exp(-x)</code>.  The exponential PDF &quot;dominates&quot; the other PDF (at every <code>x</code> 0 or greater) if we multiply it by 1.5, so that <code>PDF2</code> is now <code>1.5 * exp(-x)</code>.  Now we can generate numbers from our custom distribution by sampling exponential points until a point falls within <code>PDF</code>.  This is done by generating <code>n = -ln(RNDU01ZeroOneExc())</code> until <code>PDF(n) &gt;= RNDRANGEMaxExc(0, PDF2(n))</code>.</p></li>
-<li><a href="https://en.wikipedia.org/wiki/Markov_chain_Monte_Carlo"><strong>Markov-chain Monte Carlo</strong></a> <strong>(MCMC).</strong> If many random numbers from the given PDF need to be generated, then an MCMC algorithm can be used, with the disadvantage that the resulting random numbers will not be chosen independently of each other.  MCMC algorithms include Metropolis&ndash;Hastings and slice sampling (Neal 2003)<sup><a href="#Note23"><strong>(23)</strong></a></sup>. Generally, as more numbers are generated, the MCMC algorithm converges to the given distribution; this is why usually, random numbers from the first few (e.g., first 1000) iterations are ignored (&quot;burn in&quot;).  MCMC can also be used to find a suitable sampling range for the empirical sampling method, above.  The <a href="https://peteroupc.github.io/randomgen.zip"><strong>Python sample code</strong></a> includes methods called <code>mcmc</code> and <code>mcmc2</code> that implement Metropolis&ndash;Hastings for PDFs that take single numbers or two-dimensional points, respectively, and a method called <code>slicesample</code> that implements slice sampling.</li>
+<li><a href="https://en.wikipedia.org/wiki/Markov_chain_Monte_Carlo"><strong>Markov-chain Monte Carlo</strong></a> <strong>(MCMC).</strong> If many random numbers from the given PDF need to be generated, then an MCMC algorithm can be used, with the disadvantage that the resulting random numbers will not be chosen independently of each other.  MCMC algorithms include Metropolis&ndash;Hastings and slice sampling (Neal 2003)<sup><a href="#Note23"><strong>(23)</strong></a></sup>. Generally, as more numbers are generated, the MCMC algorithm converges to the given distribution; this is why usually, random numbers from the first few (e.g., first 1000) iterations are ignored (&quot;burn in&quot;).  MCMC can also be used to find a suitable sampling range for the Piecewise interpolation method, above.  The <a href="https://peteroupc.github.io/randomgen.zip"><strong>Python sample code</strong></a> includes methods called <code>mcmc</code> and <code>mcmc2</code> that implement Metropolis&ndash;Hastings for PDFs that take single numbers or two-dimensional points, respectively, and a method called <code>slicesample</code> that implements slice sampling.</li>
 </ul></li>
-<li><p><strong>PDF and a uniform random variable in the interval [0, 1) (<code>randomVariable</code>)</strong> are known: Create <code>list</code> and <code>weights</code> as given in the empirical sampling method, above, then divide each item in <code>weights</code> by the sum<sup><a href="#Note17"><strong>(17)</strong></a></sup>
+<li><p><strong>PDF and a uniform random variable in the interval [0, 1) (<code>randomVariable</code>)</strong> are known: Create <code>list</code> and <code>weights</code> as given in the Piecewise interpolation method, above, then divide each item in <code>weights</code> by the sum<sup><a href="#Note17"><strong>(17)</strong></a></sup>
 of <code>weights</code>&#39;s items, then generate <a href="#Continuous_Weighted_Choice"><strong><code>ContinuousWeightedChoice(list, weights)</code></strong></a> (except that method is modified to use <code>value = randomVariable</code> rather than <code>value = RNDRANGEMaxExc(0, sum)</code>).</p></li>
 <li><p><strong>Inverse CDF is known:</strong> Generate <code>ICDF(RNDU01ZeroOneExc())</code>, where <code>ICDF(X)</code> is the inverse CDF (<a href="https://en.wikipedia.org/wiki/Inverse_transform_sampling"><strong><em>inverse transform sampling</em></strong></a>).</p></li>
 <li><p><strong>Inverse CDF and a uniform random variable in the interval [0, 1) (<code>randomVariable</code>)</strong> are known: Generate <code>ICDF(randomVariable)</code>, where <code>ICDF(X)</code> is the inverse CDF.</p></li>
@@ -2437,7 +2440,7 @@ END METHOD
 
 <ul>
 <li>the PDF is the <em>derivative</em> (instantaneous rate of change) of the distribution&#39;s CDF (that is, PDF(x) = CDF&prime;(x)), and</li>
-<li>the CDF is also defined as the <em>integral</em> of the PDF,</li>
+<li>the CDF is also defined as the <em>integral</em> (&quot;area under the curve&quot;) of the PDF,</li>
 </ul>
 
 <p>provided the PDF&#39;s values are all 0 or greater and the area under the PDF&#39;s curve is 1.</small></p>
@@ -2519,7 +2522,7 @@ END METHOD
 
 <h3>Mean and Variance Calculation</h3>
 
-<p>The following method calculates the mean and the <a href="http://mathworld.wolfram.com/Variance.html"><strong>bias-corrected sample variance</strong></a> of a list of real numbers, using the <a href="https://www.johndcook.com/blog/standard_deviation/"><strong>Welford method</strong></a> presented by J. D. Cook.  The method returns a two-item list containing the mean and that kind of variance in that order.  (Sample variance is the estimated variance of a population or distribution assuming <code>list</code> is a random sample of that population or distribution.)  The sample standard deviation is the square root of the variance calculated here.</p>
+<p>The following method calculates the mean and the <a href="http://mathworld.wolfram.com/Variance.html"><strong>bias-corrected sample variance</strong></a> of a list of real numbers, using the <a href="https://www.johndcook.com/blog/standard_deviation/"><strong>Welford method</strong></a> presented by J. D. Cook.  The method returns a two-item list containing the mean and that kind of variance in that order.  (Sample variance is the estimated variance of a population or distribution assuming <code>list</code> is a random sample of that population or distribution.)  The square root of the variance calculated here is what many APIs call a standard deviation (e.g. Python&#39;s <code>statistics.stdev</code>).</p>
 
 <pre>METHOD MeanAndVariance(list)
     if size(list)==0: return [0, 0]
@@ -2539,7 +2542,7 @@ END METHOD
 </pre>
 
 <blockquote>
-<p><strong>Note:</strong> The population variance (or biased sample variance) is found by dividing by <code>size(list)</code> rather than <code>(size(list)-1)</code>, and the population standard deviation (or biased sample standard deviation) is the square root of that variance.</p>
+<p><strong>Note:</strong> The population variance (or biased sample variance) is found by dividing by <code>size(list)</code> rather than <code>(size(list)-1)</code>, and the standard deviation of the population or a sample of it is the square root of that variance.</p>
 </blockquote>
 
 <p><a id=Norm_Calculation></a></p>
