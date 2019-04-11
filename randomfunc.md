@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on June 4, 2017; last updated on Apr. 8, 2019.
+Begun on June 4, 2017; last updated on Apr. 11, 2019.
 
 Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.
 
@@ -63,8 +63,8 @@ All the random number methods presented on this page are ultimately based on an 
         - [**Random Character Strings**](#Random_Character_Strings)
         - [**Pseudocode for Random Sampling**](#Pseudocode_for_Random_Sampling)
     - [**Rejection Sampling**](#Rejection_Sampling)
-    - [**Random Walks**](#Random_Walks)
     - [**Monte Carlo Sampling: Expected Values and Integration**](#Monte_Carlo_Sampling_Expected_Values_and_Integration)
+    - [**Random Walks**](#Random_Walks)
     - [**Randomization in Statistical Testing**](#Randomization_in_Statistical_Testing)
     - [**Low-Discrepancy Sequences**](#Low_Discrepancy_Sequences)
     - [**A Note on Sorting Random Numbers**](#A_Note_on_Sorting_Random_Numbers)
@@ -717,6 +717,34 @@ Example criteria include checking&mdash;
 
 (KD-trees, hash tables, red-black trees, prime-number testing algorithms, and regular expressions are outside the scope of this document.)
 
+<a id=Monte_Carlo_Sampling_Expected_Values_and_Integration></a>
+### Monte Carlo Sampling: Expected Values and Integration
+
+Randomization is the core of **Monte Carlo sampling**; it can be used to estimate the **expected value** of a function given a random process or sampling distribution.  The following pseudocode estimates the expected value of a list of random numbers generated the same way.  Here, `EFUNC` is the function, and `MeanAndVariance` is given in the [**appendix**](#Mean_and_Variance_Calculation).  `Expectation` returns a list of two numbers &mdash; the estimated expected value and its standard error.
+
+    METHOD Expectation(numbers)
+      ret=[]
+      for i in 0...size(numbers)
+         AddItem(ret,EFUNC(numbers[i]))
+      end
+      merr=MeanAndVariance(ret)
+      merr[1]=merr[1]*(size(ret)-1.0)/size(ret)
+      merr[1]=sqrt(merr[1]/size(ret))
+      return merr
+    END METHOD
+
+Examples of expected values include the following:
+
+- The **`n`th raw moment** (mean of `n`th powers) if `EFUNC(x)` is `pow(x, n)`.
+- The **mean**, if `EFUNC(x)` is `x`.
+- The **`n`th sample central moment**, if `EFUNC(x)` is `pow(x-m, n)`, where `m` is the mean of the sampled numbers.
+- The (biased) **sample variance**, the second sample central moment.
+- The **probability**, if `EFUNC(x)` is `1` if some condition is met or `0` otherwise.
+
+If the sampling domain is also limited to random numbers meeting a given condition (such as `x < 2` or `x != 10`), then the estimated expected value is also called the estimated _conditional expectation_.
+
+[**Monte Carlo integration**](https://en.wikipedia.org/wiki/Monte_Carlo_integration) is a way to estimate a multidimensional integral; randomly sampled numbers are put into a list (`nums`) and the estimated integral and its standard error are then calculated with `Expectation(nums)` with `EFUNC(x) = x`, and multiplied by the volume of the sampling domain.
+
 <a id=Random_Walks></a>
 ### Random Walks
 
@@ -732,7 +760,7 @@ A _random walk_ is a process with random behavior over time.  A simple form of r
 
 > **Examples:**
 >
-> 1. If `STATEJUMP()` is `RNDINT(1) * 2 - 1`, the random walk generates numbers that differ by -1 or 1, chosen at random.
+> 1. If `STATEJUMP()` is `RNDINT(1) * 2 - 1`, the random walk generates numbers that each differ from the last by -1 or 1, chosen at random.
 > 2. If `STATEJUMP()` is `RNDRANGE(-1, 1)`, the random state is advanced by a random real number in the interval [-1, 1].
 > 3. If `STATEJUMP()` is `Binomial(1, p)`, the random walk models a _binomial process_, where the state is advanced with probability `p`.
 > 4. If `STATEJUMP()` is `Binomial(1, p) * 2 - 1`, the random walk generates numbers that each differ from the last by -1 or 1 depending on the probability `p`.
@@ -742,34 +770,6 @@ A _random walk_ is a process with random behavior over time.  A simple form of r
 > 1.  A random process can also be simulated by creating a list of random numbers generated the same way.  Such a process generally models behavior over time that does not depend on the time or the current state.  Examples of this include `Normal(0, 1)` (for modeling _Gaussian white noise_) and `Binomial(1, p)` (for modeling a _Bernoulli process_, where each number is 0 or 1 depending on the probability `p`).
 > 2.  Some random walks model random behavior at every moment, not just at discrete times.  One example is a _Wiener process_, with random states and jumps that are normally distributed (a process of this kind is also known as _Brownian motion_).  (For a random walk that follows a Wiener process, `STATEJUMP()` is `Normal(mu * timediff, sigma * sqrt(timediff))`, where  `mu` is the average value per time unit, `sigma` is the volatility, and `timediff` is the time difference between samples.)
 > 3.  Some random walks model state changes happening at random times. One example is a _Poisson process_, in which the time between each event is a random exponential variable (that random variable is `-ln(RNDU01ZeroOneExc()) / rate`, where `rate` is the average number of events per time unit; an _inhomogeneous Poisson process_ results if `rate` can vary with the "timestamp" before each event jump).
-
-<a id=Monte_Carlo_Sampling_Expected_Values_and_Integration></a>
-### Monte Carlo Sampling: Expected Values and Integration
-
-Randomization is the core of **Monte Carlo sampling**; it can be used to estimate the **expected value** of a function given a random process or sampling distribution.  The following pseudocode estimates the expected value of a list of random numbers generated the same way.  Here, `EFUNC` is the function, and `MeanAndVariance` is given in the [**appendix**](#Mean_and_Variance_Calculation).  `Expectation` returns a list of two numbers &mdash; the estimated expected value and its standard error.
-
-    METHOD Expectation(numbers)
-      ret=[]
-      for i in 0...size(numbers)
-         AddItem(ret,EFUNC(numbers[i]))
-      end
-      merr=MeanAndVariance(ret)
-      merr[1]=merr[1]*(size(ret)-1.0)/size(ret)
-      merr[1]=sqrt(merr[1])/sqrt(size(ret))
-      return merr
-    END METHOD
-
-Examples of expected values include the following:
-
-- The **`n`th raw moment** (mean of `n`th powers) if `EFUNC(x)` is `pow(x, n)`.
-- The **mean**, if `EFUNC(x)` is `x`.
-- The **`n`th sample central moment**, if `EFUNC(x)` is `pow(x-m, n)`, where `m` is the mean of the sampled numbers.
-- The (biased) **sample variance**, the second sample central moment.
-- The **probability**, if `EFUNC(x)` is `1` if some condition is met or `0` otherwise.
-
-If the sampling domain is also limited to random numbers meeting a given condition (such as `x < 2` or `x != 10`), then the estimated expected value is also called the estimated _conditional expectation_.
-
-[**Monte Carlo integration**](https://en.wikipedia.org/wiki/Monte_Carlo_integration) is a way to estimate a multidimensional integral; randomly sampled numbers are put into a list (`nums`) and the estimated integral and its standard error are then calculated with `Expectation(nums)` with `EFUNC(x) = x`, and multiplied by the volume of the sampling domain.
 
 <a id=Randomization_in_Statistical_Testing></a>
 ### Randomization in Statistical Testing
