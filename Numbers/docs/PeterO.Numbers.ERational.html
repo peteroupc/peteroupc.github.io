@@ -7,8 +7,8 @@
 <h2>PeterO.Numbers.ERational</h2>
 
 <pre>public sealed class ERational :
-    System.IComparable,
-    System.IEquatable
+    System.IEquatable,
+    System.IComparable
 </pre>
 
 <p>Represents an arbitrary-precision rational number. This class can&#39;t be inherited. (The &quot;E&quot; stands for &quot;extended&quot;, meaning that instances of this class can be values other than numbers proper, such as infinity and not-a-number.)<b>Thread safety:</b>Instances of this class are immutable, so they are inherently safe for se by multiple threads. Multiple instances of this object with the same roperties are interchangeable, so they should not be compared using the ==&quot; operator (which might only check if each side of the operator is he same instance).</p>

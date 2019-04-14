@@ -837,6 +837,39 @@ of failures of each kind of failure.
             ret[j][i]=(matrix[j][i]-sum)*1.0/ret[j][j]
       return ret
 
+  def monte_carlo_integrate(self, func, bounds, samples=1000):
+    """
+    Monte Carlo integral of a function.
+    func - Function to integrate.  Takes the same number
+       of parameters as the length of bounds.
+    bounds - Bounds of integration at each dimension.
+       An N-length array of arrays.  Each array in turn
+       contains two items: the lower bound and upper bound
+       for that dimension.
+    samples - Number of times to sample the bounds of
+       integration randomly.  The default is 1000 samples.
+    Returns an array containing two items: the estimated
+    integral and the standard error.
+    """
+    xm=func(*[self.rndrange(a[0],a[1]) \
+      for a in bounds])
+    xs=0
+    i=1
+    for j in range(samples):
+       c=func(*[self.rndrange(a[0],a[1]) \
+          for a in bounds])
+       i+=1
+       cxm=(c-xm)
+       xm+=cxm*1.0/i
+       xs+=cxm*(c-cxm)
+    # Calculate the bounding volume
+    volume=1
+    for a in bounds:
+       volume*=a[1]-a[0]
+    # Return integral and standard error
+    return [volume*xm,\
+       volume*math.sqrt(xs*1.0/(i*i))]
+
   def kth_smallest_of_n_u01(self, k, n):
       """ Generates the kth smallest number among n random numbers
          from 0 to 1. """
