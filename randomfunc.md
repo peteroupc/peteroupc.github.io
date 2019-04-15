@@ -1970,6 +1970,8 @@ To generate a random point on or inside an N-dimensional spherical shell (a holl
 - generate a random point on the surface of an N-dimensional hypersphere with radius equal to `pow(RNDRANGE(pow(A, N), pow(B, N)), 1.0 / N)`<sup>[**(32)**](#Note32)</sup>.
 
 > **Example:** To generate a random point inside a cylinder running along the Z axis, generate random X and Y coordinates inside a disk (2-dimensional ball) and generate a random Z coordinate by `RNDRANGE(mn, mx)`, where `mn` and `mx` are the highest and lowest Z coordinates possible.
+>
+> **Note:** The Python sample code contains a method for generating a random point on the surface of an ellipsoid modeling the Earth.
 
 <a id=Random_Latitude_and_Longitude></a>
 ### Random Latitude and Longitude
