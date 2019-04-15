@@ -202,11 +202,11 @@ class RandomGen:
     return list
 
   def partialshuffle(self, list, k):
-  """ Does a partial shuffle of
+    """ Does a partial shuffle of
 a list's items (stops when 'k' items
 are shuffled); the shuffled items
 will appear at the end of the list.
-Returns 'list'."""
+Returns 'list'. """
     ki = 0
     if len(list) >= 2:
       i = len(list) - 1
@@ -1026,6 +1026,37 @@ of failures of each kind of failure.
   def _sumsq(self, vec):
       return sum([x*x for x in vec])
 
+  def geoellipsoid_point(self, a=6378.137, \
+        invf=298.2572236):
+     """ Generates an independent and uniform random
+      point on the surface of a geoellipsoid.  The
+      geoellipsoid uses the following parameters:
+      a - semimajor axis (distance from the center of
+         the geoellipsoid to the equator).  The default
+         is the WGS 84 ellipsoid's semimajor axis
+         in kilometers.
+      invf - inverse flattening.  The default is the
+         WGS 84 ellipsoid's inverse flattening. """
+     # b is the semiminor axis, the distance from the
+     # center of the geoellipsoid to the north pole
+     b=a-(a*1.0/invf)
+     semim=b/a
+     semimp4=semim*semim*semim*semim
+     semiminv=1.0/semim
+     while True:
+       # Generate a spherical point, then selectively
+       # reject it based on the difference in stretching
+       # between the spherical point and the same point on
+       # the ellipsoid.  This rejection approach for sampling
+       # curved surfaces was developed by Williams, J.F.,
+       # Phys. in Med. and Biol. 32(10), 1987.
+       pt=self.hypersphere_point(3)
+       pz=pt[2]*semim
+       g=semiminv*math.sqrt(pz*pz+semimp4*(pt[0]*pt[0]+ \
+           pt[1]*pt[1]))
+       if self.rndu01()<=g:
+           return [pt[0]*a,pt[1]*a,pt[2]*b]
+
   def hypersphere_point(self, dims, radius = 1):
       """ Generates an independent and uniform random point on the surface of a 'dims'-dimensional
            hypersphere (circle, sphere, etc.)
@@ -1272,6 +1303,9 @@ if __name__ == "__main__":
     print("Gaussian values by CDF inversion")
     normal_cdf = lambda x: 0.5*(1+math.erf(x/math.sqrt(2)))
     print(randgen.numbers_from_cdf(normal_cdf, -6, 6, n=30))
+    # Geoellipsoid points
+    print("Geoellipsoid points")
+    print([randgen.geoellipsoid_point() for i in range(20)])
     # Convex polygon sampler
     poly=[[0,0],[0,20],[20,20],[20,0]]
     cps=ConvexPolygonSampler(randgen, poly)
