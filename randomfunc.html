@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
-<p>Begun on June 4, 2017; last updated on Apr. 11, 2019.</p>
+<p>Begun on June 4, 2017; last updated on Apr. 16, 2019.</p>
 
 <p>Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.</p>
 
@@ -131,6 +131,7 @@
 <li><a href="#Stable_Distribution"><strong>Stable Distribution</strong></a></li>
 <li><a href="#Hypergeometric_Distribution"><strong>Hypergeometric Distribution</strong></a></li>
 <li><a href="#Multivariate_Normal_Multinormal_Distribution"><strong>Multivariate Normal (Multinormal) Distribution</strong></a></li>
+<li><a href="#Random_Integers_with_a_Given_Positive_Sum"><strong>Random Integers with a Given Positive Sum</strong></a></li>
 <li><a href="#Random_Numbers_with_a_Given_Positive_Sum"><strong>Random Numbers with a Given Positive Sum</strong></a></li>
 <li><a href="#Multinomial_Distribution"><strong>Multinomial Distribution</strong></a></li>
 <li><a href="#Gaussian_and_Other_Copulas"><strong>Gaussian and Other Copulas</strong></a></li>
@@ -1105,16 +1106,16 @@ method for generating multiple random points in one call.</p>
 
 <p>To implement weighted choice <em>without replacement</em> (which can be thought of as drawing a ball <em>without</em> putting it back), generate an index by <code>WeightedChoice</code>, and then decrease the weight for the chosen index by 1.  In this way, <strong>each weight behaves like the number of &quot;copies&quot; of each item</strong>. This technique, though, will only work properly if all the weights are integers 0 or greater.  The pseudocode below is an example of this.</p>
 
-<pre>// Get the sum of weights
-// NOTE: Kahan summation is more robust
-// than the naive summing given here
-// (NOTE: This code assumes that `weights` is
-// a list that can be modified.  If the original weights
-// are needed for something else, a copy of that
-// list should be made first, but the copying process
-// is not shown here.  This code also assumes that `list`,
-// a list of items, was already declared earlier and
-// has at least as many items as `weights`.)
+<pre>// Get the sum of weights.
+// NOTE: This code assumes--
+// - that `weights` is a list that can be modified,
+// - that all the weights are integers 0 or greater, and
+// - that `list`, a list of items, was already
+//   declared earlier and has at least as many
+//   items as `weights`.
+// If the original weights are needed for something
+// else, a copy of that list should be made first,
+// but the copying process is not shown here.
 totalWeight = 0
 i = 0
 while i &lt; size(weights)
@@ -1146,13 +1147,14 @@ end
 
 <p>Weighted choice can also choose items from a list, where each item has a separate probability of being chosen and <strong>can be chosen no more than once</strong>.  In this case, after choosing a random index, set the weight for that index to 0 to keep it from being chosen again.  The pseudocode below is an example of this.</p>
 
-<pre>// (NOTE: This code assumes that `weights` is
-// a list that can be modified.  If the original weights
-// are needed for something else, a copy of that
-// list should be made first, but the copying process
-// is not shown here.  This code also assumes that `list`,
-// a list of items, was already declared earlier and
-// has at least as many items as `weights`.)
+<pre>// NOTE: This code assumes--
+// - that `weights` is a list that can be modified, and
+// - that `list`, a list of items, was already
+//   declared earlier and has at least as many
+//   items as `weights`.
+// If the original weights are needed for something
+// else, a copy of that list should be made first,
+// but the copying process is not shown here.
 chosenItems = NewList()
 i = 0
 // Choose k items from the list
@@ -1342,7 +1344,7 @@ rates = [0.3, 0.1, 0.05]
 // Generate an exponential random number with chosen rate
 number = -ln(RNDU01ZeroOneExc()) / rates[index]
 </pre></li>
-<li><p>Choosing, independently and uniformly, a random point from a complex shape (in any number of dimensions) is equivalent to doing such sampling from a mixture of simpler shapes that make up the complex shape (here, the <code>weights</code> list holds the content of each simpler shape).  (Content is called area in 2D and volume in 3D.) For example, a simple closed 2D polygon can be <a href="https://en.wikipedia.org/wiki/Polygon_triangulation"><strong><em>triangulated</em></strong></a>, or decomposed into <a href="#Random_Points_Inside_a_Simplex"><strong>triangles</strong></a>, and a mixture of those triangles can be sampled.<sup><a href="#Note15"><strong>(15)</strong></a></sup></p></li>
+<li><p>Choosing, independently and uniformly, a random point from a complex shape (in any number of dimensions) is equivalent to doing such sampling from a mixture of simpler shapes that make up the complex shape (here, the <code>weights</code> list holds the n-dimensional &quot;volume&quot; of each simpler shape).  For example, a simple closed 2D polygon can be <a href="https://en.wikipedia.org/wiki/Polygon_triangulation"><strong><em>triangulated</em></strong></a>, or decomposed into <a href="#Random_Points_Inside_a_Simplex"><strong>triangles</strong></a>, and a mixture of those triangles can be sampled.<sup><a href="#Note15"><strong>(15)</strong></a></sup></p></li>
 <li><p>For generating a random integer from multiple nonoverlapping ranges of integers&mdash;</p>
 
 <ul>
@@ -1387,7 +1389,7 @@ and/or discarding some of them.</p>
 <ol>
 <li>The idiom <code>min(RNDINTRANGE(1, 6), RNDINTRANGE(1, 6))</code> takes the lowest of two six-sided die results.  Due to this approach, 1 is more likely to occur than 6.</li>
 <li>The idiom <code>RNDINTRANGE(1, 6) + RNDINTRANGE(1, 6)</code> takes the result of two six-sided dice (see also &quot;<a href="#Dice"><strong>Dice</strong></a>&quot;).</li>
-<li>Sampling a <strong>Bates distribution</strong> involves sampling <em>n</em> random numbers by <code>RNDRANGE(minimum, maximum)</code>, then finding the mean of those numbers (see the appendix).</li>
+<li>Sampling a <strong>Bates distribution</strong> involves sampling <em>n</em> random numbers by <code>RNDRANGE(minimum, maximum)</code>, then finding the mean of those numbers (strategy 8).</li>
 <li>A <strong>compound Poisson distribution</strong> models the sum<sup><a href="#Note17"><strong>(17)</strong></a></sup>
 of <em>n</em> random numbers each generated the same way, where <em>n</em> follows a <a href="#Poisson_Distribution"><strong>Poisson distribution</strong></a> (e.g., <code>n = Poisson(10)</code> for an average of 10 numbers).</li>
 <li>A <strong>P&oacute;lya&ndash;Aeppli distribution</strong> is a compound Poisson distribution in which the random numbers are generated by <code>NegativeBinomial(1, 1-p)+1</code> for a fixed <code>p</code>.</li>
@@ -2010,12 +2012,9 @@ method for generating multiple random points in one call.</p>
 </ol>
 </blockquote>
 
-<p><a id=Random_Numbers_with_a_Given_Positive_Sum></a></p>
+<p><a id=Random_Integers_with_a_Given_Positive_Sum></a></p>
 
-<h3>Random Numbers with a Given Positive Sum</h3>
-
-<p>Generating N <code>GammaDist(total, 1)</code> numbers and dividing them by their sum<sup><a href="#Note17"><strong>(17)</strong></a></sup>
- will result in N numbers that (approximately) sum to <code>total</code>, where the combination of numbers is chosen uniformly at random (see a <a href="https://en.wikipedia.org/wiki/Dirichlet_distribution#Gamma_distribution"><strong>Wikipedia article</strong></a>).  For example, if <code>total</code> is 1, the numbers will (approximately) sum to 1.  Note that in the exceptional case that all numbers are 0, the process should repeat.</p>
+<h3>Random Integers with a Given Positive Sum</h3>
 
 <p>The following pseudocode shows how to generate integers with a given positive sum, where the combination is chosen uniformly at random from among all possible combinations. (The algorithm for this was presented in (Smith and Tromble 2004)<sup><a href="#Note27"><strong>(27)</strong></a></sup>.)  In the pseudocode below&mdash;</p>
 
@@ -2033,17 +2032,15 @@ method for generating multiple random points in one call.</p>
     ret = NewList()
     AddItem(ls, 0)
     while size(ls) &lt; n
-            c = RNDINTEXCRANGE(1, total)
-            found = false
-            j = 1
-            while j &lt; size(ls)
-              if ls[j] == c
-                found = true
-                break
-              end
-              j = j + 1
-            end
-            if found == false: AddItem(ls, c)
+      c = RNDINTEXCRANGE(1, total)
+      found = false
+      for j in 1...size(ls)
+        if ls[j] == c
+          found = true
+          break
+        end
+      end
+      if found == false: AddItem(ls, c)
     end
     Sort(ls)
     AddItem(ls, total)
@@ -2063,12 +2060,26 @@ END METHOD
 <blockquote>
 <p><strong>Notes:</strong></p>
 
-<ul>
+<ol>
 <li>Generating a uniformly randomly chosen combination of <code>N</code> numbers with a given positive average <code>avg</code>, is equivalent to generating a uniformly randomly chosen combination of <code>N</code> numbers with the sum <code>N * avg</code>.</li>
 <li>Generating a uniformly randomly chosen combination of <code>N</code> numbers <code>min</code> or greater and with a given positive sum <code>sum</code> is equivalent to generating a uniformly randomly chosen combination of <code>N</code> numbers with the sum <code>sum - n * min</code>, then adding <code>min</code> to each number generated this way.</li>
-<li>The <strong>Dirichlet distribution</strong>, as defined in some places (e.g., <em>Mathematica</em>; Devroye 1986, p. 594), models a uniformly randomly chosen combination of <em>n</em> random numbers that sum to 1, and can be sampled by generating <em>n</em>+1 random <a href="#Gamma_Distribution"><strong>gamma-distributed</strong></a> numbers, each with separate parameters, taking their sum<sup><a href="#Note17"><strong>(17)</strong></a></sup>
-, and dividing the first <em>n</em> numbers by that sum.</li>
-</ul>
+</ol>
+</blockquote>
+
+<p><a id=Random_Numbers_with_a_Given_Positive_Sum></a></p>
+
+<h3>Random Numbers with a Given Positive Sum</h3>
+
+<p>Generating <em>n</em> <code>GammaDist(total, 1)</code> numbers and dividing them by their sum<sup><a href="#Note17"><strong>(17)</strong></a></sup>
+ will result in <em>n</em> numbers that (approximately) sum to <code>total</code>, where the combination of numbers is chosen uniformly at random (see a <a href="https://en.wikipedia.org/wiki/Dirichlet_distribution#Gamma_distribution"><strong>Wikipedia article</strong></a>).  For example, if <code>total</code> is 1, the numbers will (approximately) sum to 1.  Note that in the exceptional case that all numbers are 0, the process should repeat.</p>
+
+<blockquote>
+<p><strong>Notes:</strong></p>
+
+<ol>
+<li>Notes 1 and 2 in the previous section apply here.</li>
+<li>The <strong>Dirichlet distribution</strong>, as defined in some places (e.g., <em>Mathematica</em>; Devroye 1986, p. 594), models a uniformly randomly chosen combination of <em>n</em> random numbers that sum to 1, and can be sampled by generating <em>n</em>+1 random <a href="#Gamma_Distribution"><strong>gamma-distributed</strong></a> numbers, each with separate parameters, taking their sum<sup><a href="#Note17"><strong>(17)</strong></a></sup>, and dividing the first <em>n</em> numbers by that sum.</li>
+</ol>
 </blockquote>
 
 <p><a id=Multinomial_Distribution></a></p>

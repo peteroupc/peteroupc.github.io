@@ -1061,16 +1061,16 @@ of failures of each kind of failure.
        vmax]].
      - ngrad: Takes two parameters (u and v) and returns
        the norm of the gradient (stretch factor)
-       at the given point.  Can be null, in which
+       at the given point.  Can be None, in which
        the norm-of-gradient is calculated numerically.
      - gmax: Maximum norm-of-gradient
        for entire surface.
        """
     while True:
-       u=self.rndexcrange(bounds[0][0],bounds[0][1])
-       v=self.rndexcrange(bounds[0][0],bounds[0][1])
+       u=self.rndrangemaxexc(bounds[0][0],bounds[0][1])
+       v=self.rndrangemaxexc(bounds[1][0],bounds[1][1])
        pt=f(u,v)
-       nog=self._numgrad(f,u,v) if ngrad==None else ngrad(u,v)
+       nog=self._numngrad(f,u,v) if ngrad==None else ngrad(u,v)
        if nog>=self.rndrange(gmax):
           return pt
 
