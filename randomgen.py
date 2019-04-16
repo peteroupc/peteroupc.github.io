@@ -1026,6 +1026,54 @@ of failures of each kind of failure.
   def _sumsq(self, vec):
       return sum([x*x for x in vec])
 
+  def _numngrad(self, f, u, v):
+    """ Numerical norm of gradient. """
+    eu=f(u,v)
+    du=None
+    dv=None
+    edu=f(u+0.00001,v)
+    if edu[0]==0 && edu[1]==0 && edu[2]==0:
+      edu=f(u-0.00001,v)
+      du=[(eu[i]-edu[i])/0.00001 for i in range(3)]
+    else:
+      du=[(edu[i]-eu[i])/0.00001 for i in range(3)]
+    edu=f(u,v+0.00001)
+    if edu[0]==0 && edu[1]==0 && edu[2]==0:
+      edu=f(u,v-0.00001)
+      dv=[(eu[i]-edu[i])/0.00001 for i in range(3)]
+    else:
+      dv=[(edu[i]-eu[i])/0.00001 for i in range(3)]
+    gx=du[1] * dv[2] - du[2] * dv[1]
+    gy=du[2] * dv[0] - du[0] * dv[2]
+    gz=du[0] * dv[1] - du[1] * dv[0]
+    return math.sqrt(gx*gx+gy*gy+gz*gz)
+
+  def surface_point(self, f, bounds, ngrad, gmax):
+    """ Generates a uniform random point on
+        a parametric surface, using a rejection
+        approach developed by Williamson, J.F.,
+        Physics in Medicine & Biology 32(10), 1987.
+     - f: Takes two parameters (u and v) and returns
+       a 3-element array expressing
+       a 3-dimensional position at the given point.
+     - bounds: Two 2-element arrays expressing bounds
+       for u and v.  Of the form [[umin, umax], [vmin,
+       vmax]].
+     - ngrad: Takes two parameters (u and v) and returns
+       the norm of the gradient (stretch factor)
+       at the given point.  Can be null, in which
+       the norm-of-gradient is calculated numerically.
+     - gmax: Maximum norm-of-gradient
+       for entire surface.
+       """
+    while True:
+       u=self.rndexcrange(bounds[0][0],bounds[0][1])
+       v=self.rndexcrange(bounds[0][0],bounds[0][1])
+       pt=f(u,v)
+       nog=self._numgrad(f,u,v) if ngrad==None else ngrad(u,v)
+       if nog>=self.rndrange(gmax):
+          return pt
+
   def geoellipsoid_point(self, a=6378.137, \
         invf=298.2572236):
      """ Generates an independent and uniform random
@@ -1044,17 +1092,25 @@ of failures of each kind of failure.
      semimp4=semim*semim*semim*semim
      semiminv=1.0/semim
      while True:
-       # Generate a spherical point, then selectively
-       # reject it based on the difference in stretching
-       # between the spherical point and the same point on
-       # the ellipsoid.  This rejection approach for sampling
-       # curved surfaces was developed by Williams, J.F.,
-       # Phys. in Med. and Biol. 32(10), 1987.
+       # Generate an ellipsoidal point, then accept or
+       # reject it depending on its stretch factor (norm-of-
+       # gradient).  This rejection approach for sampling
+       # curved surfaces was developed by Williamson, J.F.,
+       # Physics in Medicine & Biology 32(10), 1987.
+       # Generate a spherical point
        pt=self.hypersphere_point(3)
+       # Make it ellipsoidal
        pz=pt[2]*semim
+       # g is:
+       # - the norm of the gradient for (pt[0],pt[1],pz),
+       #   divided by
+       # - the maximum possible value of that norm for
+       #   the whole ellipsoid
        g=semiminv*math.sqrt(pz*pz+semimp4*(pt[0]*pt[0]+ \
            pt[1]*pt[1]))
        if self.rndu01()<=g:
+           # Accept the equivalent point
+           # on the geoellipsoid
            return [pt[0]*a,pt[1]*a,pt[2]*b]
 
   def hypersphere_point(self, dims, radius = 1):
