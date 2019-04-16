@@ -1032,13 +1032,13 @@ of failures of each kind of failure.
     du=None
     dv=None
     edu=f(u+0.00001,v)
-    if edu[0]==0 && edu[1]==0 && edu[2]==0:
+    if edu[0]==0 and edu[1]==0 and edu[2]==0:
       edu=f(u-0.00001,v)
       du=[(eu[i]-edu[i])/0.00001 for i in range(3)]
     else:
       du=[(edu[i]-eu[i])/0.00001 for i in range(3)]
     edu=f(u,v+0.00001)
-    if edu[0]==0 && edu[1]==0 && edu[2]==0:
+    if edu[0]==0 and edu[1]==0 and edu[2]==0:
       edu=f(u,v-0.00001)
       dv=[(eu[i]-edu[i])/0.00001 for i in range(3)]
     else:
