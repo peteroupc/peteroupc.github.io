@@ -77,9 +77,9 @@ All the random number methods presented on this page are ultimately based on an 
         - [**Continuous Weighted Choice**](#Continuous_Weighted_Choice)
     - [**Mixtures of Distributions**](#Mixtures_of_Distributions)
     - [**Transformations of Random Numbers**](#Transformations_of_Random_Numbers)
+        - [**Censored and Truncated Random Numbers**](#Censored_and_Truncated_Random_Numbers)
     - [**Random Numbers from a Distribution of Data Points**](#Random_Numbers_from_a_Distribution_of_Data_Points)
     - [**Random Numbers from an Arbitrary Distribution**](#Random_Numbers_from_an_Arbitrary_Distribution)
-    - [**Censored and Truncated Distributions**](#Censored_and_Truncated_Distributions)
     - [**Gibbs Sampling**](#Gibbs_Sampling)
 - [**Specific Non-Uniform Distributions**](#Specific_Non_Uniform_Distributions)
     - [**Dice**](#Dice)
@@ -356,7 +356,7 @@ In practice, memory is usually divided into _bytes_, or 8-bit nonnegative intege
 This section defines methods that generate uniform random real numbers.
 
 However, whenever possible, **applications should work with random integers**, rather than other random real numbers.  This is because:
-- Computers can represent integers more naturally than other real numbers, making random integer generation algorithms more portable and less prone to inaccuracy than real-number generators.
+- Computers can represent integers more naturally than other real numbers, making random integer generation algorithms more portable and less prone to inaccuracy than real number generation algorithms.
 - No computer can choose from among all real numbers between two others, since there are infinitely many of them.
 
 <a id=RNDU01_Family_Random_Numbers_Bounded_by_0_and_1></a>
@@ -872,9 +872,10 @@ The following pseudocode implements a method `WeightedChoice` that takes a singl
 > **Examples:**
 >
 > 1. Assume we have the following list: `["apples", "oranges", "bananas", "grapes"]`, and `weights` is the following: `[3, 15, 1, 2]`.  The weight for "apples" is 3, and the weight for "oranges" is 15.  Since "oranges" has a higher weight than "apples", the index for "oranges" (1) is more likely to be chosen than the index for "apples" (0) with the `WeightedChoice` method.  The following idiom implements how to get a randomly chosen item from the list with that method: `item = list[WeightedChoice(weights)]`.
-> 2. **Requires random real numbers:** Assume the weights from example 1 are used and the list contains ranges of numbers instead of strings: `[[0, 5], [5, 10], [10, 11], [11, 13]]`.  If a random range is chosen, a random number can be chosen from that range using code like the following: `number = RNDRANGEMaxExc(item[0], item[1])`. (See also "[**Mixtures of Distributions**](#Mixtures_of_Distributions)".)
-> 3. **Requires random real numbers:** Assume the weights from example 1 are used and the list contains the following: `[0, 5, 10, 11, 13]` (one more item than the weights).  This expresses four ranges, the same as in example 2.  After a random index is chosen with `index = WeightedChoice(weights)`, a random number can be chosen from the corresponding range using code like the following: `number = RNDRANGEMaxExc(list[index], list[index + 1])`. (This is how the C++ library expresses a _piecewise constant distribution_.)
+> 2. Assume the weights from example 1 are used and the list contains ranges of numbers instead of strings: `[[0, 5], [5, 10], [10, 11], [11, 13]]`.  If a random range is chosen, a random integer can be chosen from that range using code like the following: `number = RNDINTEXCRANGE(item[0], item[1])`. (See also "[**Mixtures of Distributions**](#Mixtures_of_Distributions)".)
+> 3. **Piecewise constant distribution.** Assume the weights from example 1 are used and the list contains the following: `[0, 5, 10, 11, 13]` (one more item than the weights).  This expresses four ranges, the same as in example 2.  After a random index is chosen with `index = WeightedChoice(weights)`, a random integer can be chosen from the corresponding range using code like the following: `number = RNDINTEXCRANGE(list[index], list[index + 1])`.
 > 4. A [**Markov chain**](https://en.wikipedia.org/wiki/Markov_chain) models one or more _states_ (for example, individual letters or syllables), and stores the probabilities to transition from one state to another (e.g., "b" to "e" with a chance of 20 percent, or "b" to "b" with a chance of 1 percent).  Thus, each state can be seen as having its own list of _weights_ for each relevant state transition.  For example, a Markov chain for generating **"pronounceable" words**, or words similar to natural-language words, can include "start" and "stop" states for the start and end of the word, respectively.
+> 5. **Requires random real numbers:** In examples 2 and 3, using `RNDRANGEMaxExc` rather than `RNDINTEXCRANGE` chooses a random real number from the chosen range.  Generating random real numbers is discouraged, however.
 
 <a id=Weighted_Choice_Without_Replacement_Multiple_Copies></a>
 #### Weighted Choice Without Replacement (Multiple Copies)
@@ -1084,16 +1085,22 @@ A _mixture_ consists of two or more probability distributions with separate prob
 
 > **Examples:**
 >
-> 1. One mixture consists of two normal distributions with two different means: 1 and -1, but the mean 1 normal will be sampled 80% of the time.  The following pseudocode shows how this mixture can be sampled:
+> 1. One mixture consists of three six-sided virtual die rolls and one six-sided virtual die roll, but there is an 80% chance to roll one six-sided virtual die rather than three.  The following pseudocode shows how this mixture can be sampled:
 >
 >         index = WeightedChoice([80, 20])
 >         number = 0
->         // If index 0 was chosen, sample from the mean 1 normal
->         if index==0: number = Normal(1, 1)
->         // Else index 1 was chosen, so sample from the mean -1 normal
->         else: number = Normal(-1, 1)
+>         // If index 0 was chosen, roll one die
+>         if index==0: number = RNDINTRANGE(1,6)
+>         // Else index 1 was chosen, so roll three dice
+>         else: number = RNDINTRANGE(1,6) +
+>            RNDINTRANGE(1,6) + RNDINTRANGE(1,6)
 >
-> 2. A **hyperexponential distribution** is a mixture of [**exponential distributions**](#Gamma_Distribution), each one with a separate weight and separate rate.  An example is below.
+> 2. Choosing, independently and uniformly, a random point from a complex shape (in any number of dimensions) is equivalent to doing such sampling from a mixture of simpler shapes that make up the complex shape (here, the `weights` list holds the n-dimensional "volume" of each simpler shape).  For example, a simple closed 2D polygon can be [**_triangulated_**](https://en.wikipedia.org/wiki/Polygon_triangulation), or decomposed into [**triangles**](#Random_Points_Inside_a_Simplex), and a mixture of those triangles can be sampled.<sup>[**(15)**](#Note15)</sup>
+> 3. Take a set of nonoverlapping integer ranges.  To choose a random integer from those ranges independently and uniformly:
+>     - Create a list (`weights`) of weights for each range.  Each range is given a weight of `(mx - mn) + 1`, where `mn` is that range's minimum and `mx` is its maximum.
+>     - Choose an index using `WeightedChoice(weights)`, then generate `RNDINTRANGE(mn, mx)`, where `mn` is the corresponding range's minimum and `mx` is its maximum.
+> 4. **Requires random real numbers:** Example 4 can be adapted to nonoverlapping real numbers by assigning weights `mx - mn` instead of `(mx - mn) + 1` and using `RNDRANGEMaxExc` instead of `RNDINTRANGE`.  Generating random real numbers is discouraged, though.
+> 5. **Requires random real numbers:** A **hyperexponential distribution** is a mixture of [**exponential distributions**](#Gamma_Distribution), each one with a separate weight and separate rate.  An example is below.
 >
 >         index = WeightedChoice([0.6, 0.3, 0.1])
 >         // Rates of the three exponential distributions
@@ -1101,12 +1108,6 @@ A _mixture_ consists of two or more probability distributions with separate prob
 >         // Generate an exponential random number with chosen rate
 >         number = -ln(RNDU01ZeroOneExc()) / rates[index]
 >
-> 3. Choosing, independently and uniformly, a random point from a complex shape (in any number of dimensions) is equivalent to doing such sampling from a mixture of simpler shapes that make up the complex shape (here, the `weights` list holds the n-dimensional "volume" of each simpler shape).  For example, a simple closed 2D polygon can be [**_triangulated_**](https://en.wikipedia.org/wiki/Polygon_triangulation), or decomposed into [**triangles**](#Random_Points_Inside_a_Simplex), and a mixture of those triangles can be sampled.<sup>[**(15)**](#Note15)</sup>
-> 4. For generating a random integer from multiple nonoverlapping ranges of integers&mdash;
->     - each range has a weight of `(mx - mn) + 1`, where `mn` is that range's minimum and `mx` is its maximum, and
->     - the chosen range is sampled by generating `RNDINTRANGE(mn, mx)`, where `mn` is the that range's minimum and `mx` is its maximum.
->
->     For generating random numbers, that may or may not be integers, from nonoverlapping number ranges, each weight is `mx - mn` instead and the number is sampled by `RNDRANGEMaxExc(mn, mx)` instead.
 
 <a id=Transformations_of_Random_Numbers></a>
 ### Transformations of Random Numbers
@@ -1136,16 +1137,30 @@ If the probability distributions are the same, then strategies 1 to 3 make highe
 >
 > 1. The idiom `min(RNDINTRANGE(1, 6), RNDINTRANGE(1, 6))` takes the lowest of two six-sided die results.  Due to this approach, 1 is more likely to occur than 6.
 > 2. The idiom `RNDINTRANGE(1, 6) + RNDINTRANGE(1, 6)` takes the result of two six-sided dice (see also "[**Dice**](#Dice)").
-> 3. Sampling a **Bates distribution** involves sampling _n_ random numbers by `RNDRANGE(minimum, maximum)`, then finding the mean of those numbers (strategy 8).
-> 4. A **compound Poisson distribution** models the sum<sup>[**(17)**](#Note17)</sup>
+>
+> **Requires random real numbers:**
+>
+> 1. Sampling a **Bates distribution** involves sampling _n_ random numbers by `RNDRANGE(minimum, maximum)`, then finding the mean of those numbers (strategy 8).
+> 2. A **compound Poisson distribution** models the sum<sup>[**(17)**](#Note17)</sup>
  of _n_ random numbers each generated the same way, where _n_ follows a [**Poisson distribution**](#Poisson_Distribution) (e.g., `n = Poisson(10)` for an average of 10 numbers).
-> 5. A **P&oacute;lya&ndash;Aeppli distribution** is a compound Poisson distribution in which the random numbers are generated by `NegativeBinomial(1, 1-p)+1` for a fixed `p`.
-> 6. A **hypoexponential distribution** models the sum<sup>[**(17)**](#Note17)</sup>
+> 3. A **P&oacute;lya&ndash;Aeppli distribution** is a compound Poisson distribution in which the random numbers are generated by `NegativeBinomial(1, 1-p)+1` for a fixed `p`.
+> 4. A **hypoexponential distribution** models the sum<sup>[**(17)**](#Note17)</sup>
  of _n_ random numbers that follow an exponential distribution and each have a separate `lamda` parameter (see "[**Gamma Distribution**](#Gamma_Distribution)").
-> 7. A random point (`x`, `y`) can be transformed (strategy 9) to derive a point with **correlated random** coordinates (old `x`, new `x`) as follows (see (Saucier 2000)<sup>[**(19)**](#Note19)</sup>, sec. 3.8): `[x, y*sqrt(1 - rho * rho) + rho * x]`, where `x` and `y` are independent random numbers generated the same way, and `rho` is a _correlation coefficient_ in the interval \[-1, 1\] (if `rho` is 0, the variables are uncorrelated).
+> 5. A random point (`x`, `y`) can be transformed (strategy 9) to derive a point with **correlated random** coordinates (old `x`, new `x`) as follows (see (Saucier 2000)<sup>[**(19)**](#Note19)</sup>, sec. 3.8): `[x, y*sqrt(1 - rho * rho) + rho * x]`, where `x` and `y` are independent random numbers generated the same way, and `rho` is a _correlation coefficient_ in the interval \[-1, 1\] (if `rho` is 0, the variables are uncorrelated).
+
+<a id=Censored_and_Truncated_Random_Numbers></a>
+#### Censored and Truncated Random Numbers
+
+To generate a _censored_ random number, generate a random number as usual, then&mdash;
+- if that number is less than a minimum threshold, use the minimum threshold instead, and/or
+- if that number is greater than a maximum threshold, use the maximum threshold instead.
+
+To generate a _truncated_ probability distribution, generate random numbers as usual until a number generated this way is not less than a minimum threshold, not greater than a maximum threshold, or both.
 
 <a id=Random_Numbers_from_a_Distribution_of_Data_Points></a>
 ### Random Numbers from a Distribution of Data Points
+
+**Requires random real numbers.**
 
 **Density estimation models.** Generating random numbers (or data points) based on how a list of numbers (or data points) is distributed involves a family of data models called [**density estimation**](http://scikit-learn.org/stable/modules/density.html) models, including the ones given below.  These models seek to describe the distribution of data points in a given data set, where areas with more points are more likely to be sampled.
 
@@ -1166,6 +1181,8 @@ If the probability distributions are the same, then strategies 1 to 3 make highe
 
 <a id=Random_Numbers_from_an_Arbitrary_Distribution></a>
 ### Random Numbers from an Arbitrary Distribution
+
+**Requires random real numbers.**
 
 Many probability distributions can be defined in terms of any of the following:
 
@@ -1194,17 +1211,10 @@ Depending on what information is known about the distribution, random numbers th
 
 > **Note:** Lists of PDFs, CDFs, or inverse CDFs are outside the scope of this page.
 
-<a id=Censored_and_Truncated_Distributions></a>
-### Censored and Truncated Distributions
-
-To sample from a _censored_ probability distribution, generate a random number from that distribution and&mdash;
-- if that number is less than a minimum threshold, use the minimum threshold instead, and/or
-- if that number is greater than a maximum threshold, use the maximum threshold instead.
-
-To sample from a _truncated_ probability distribution, generate a random number from that distribution and, if that number is less than a minimum threshold and/or higher than a maximum threshold, repeat this process.
-
 <a id=Gibbs_Sampling></a>
 ### Gibbs Sampling
+
+**Usually requires random real numbers.**
 
 Gibbs sampling<sup>[**(24)**](#Note24)</sup> is a Markov-chain Monte Carlo algorithm.  It involves repeatedly generating random numbers from two or more distributions, each of which uses a random number from the previous distribution (_conditional distributions_); however, the resulting random numbers will not be chosen independently of each other.
 
@@ -1913,6 +1923,8 @@ Miscellaneous:
 
 <a id=Geometric_Sampling></a>
 ## Geometric Sampling
+
+**Requires random real numbers.**
 
 This section contains ways to do independent and uniform random sampling of points in or on geometric shapes.
 

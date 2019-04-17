@@ -1693,7 +1693,7 @@ were intended for readers with normal and <a href="#Defective_and_Animal_Color_V
 
 <ul>
 <li>generate <code>color = [RNDU01(), RNDU01(), RNDU01()]</code> until <a href="#Luminance_Factor_Grayscale"><strong><code>Luminance(color)</code></strong></a> is less than a given threshold, e.g., 0.5, or</li>
-<li>generate <code>color = [RNDU01() * maxComp, RNDU01() * maxComp, RNDU01() * maxComp]</code>, where <code>maxComp</code> is the
+<li>generate <code>color = [RNDRANGE(0, maxComp), RNDRANGE(0, maxComp), RNDRANGE(0, maxComp)]</code>, where <code>maxComp</code> is the
 maximum value of each color component, e.g., 0.5.</li>
 </ul></li>
 <li>To generate a random <strong>light color</strong>, either&mdash;

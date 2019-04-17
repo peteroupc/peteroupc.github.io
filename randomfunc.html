@@ -111,10 +111,13 @@
 <li><a href="#Continuous_Weighted_Choice"><strong>Continuous Weighted Choice</strong></a></li>
 </ul></li>
 <li><a href="#Mixtures_of_Distributions"><strong>Mixtures of Distributions</strong></a></li>
-<li><a href="#Transformations_of_Random_Numbers"><strong>Transformations of Random Numbers</strong></a></li>
+<li><a href="#Transformations_of_Random_Numbers"><strong>Transformations of Random Numbers</strong></a>
+
+<ul>
+<li><a href="#Censored_and_Truncated_Random_Numbers"><strong>Censored and Truncated Random Numbers</strong></a></li>
+</ul></li>
 <li><a href="#Random_Numbers_from_a_Distribution_of_Data_Points"><strong>Random Numbers from a Distribution of Data Points</strong></a></li>
 <li><a href="#Random_Numbers_from_an_Arbitrary_Distribution"><strong>Random Numbers from an Arbitrary Distribution</strong></a></li>
-<li><a href="#Censored_and_Truncated_Distributions"><strong>Censored and Truncated Distributions</strong></a></li>
 <li><a href="#Gibbs_Sampling"><strong>Gibbs Sampling</strong></a></li>
 </ul></li>
 <li><a href="#Specific_Non_Uniform_Distributions"><strong>Specific Non-Uniform Distributions</strong></a>
@@ -460,7 +463,7 @@ END METHOD
 <p>However, whenever possible, <strong>applications should work with random integers</strong>, rather than other random real numbers.  This is because:</p>
 
 <ul>
-<li>Computers can represent integers more naturally than other real numbers, making random integer generation algorithms more portable and less prone to inaccuracy than real-number generators.</li>
+<li>Computers can represent integers more naturally than other real numbers, making random integer generation algorithms more portable and less prone to inaccuracy than real number generation algorithms.</li>
 <li>No computer can choose from among all real numbers between two others, since there are infinitely many of them.</li>
 </ul>
 
@@ -1102,9 +1105,10 @@ method for generating multiple random points in one call.</p>
 
 <ol>
 <li>Assume we have the following list: <code>[&quot;apples&quot;, &quot;oranges&quot;, &quot;bananas&quot;, &quot;grapes&quot;]</code>, and <code>weights</code> is the following: <code>[3, 15, 1, 2]</code>.  The weight for &quot;apples&quot; is 3, and the weight for &quot;oranges&quot; is 15.  Since &quot;oranges&quot; has a higher weight than &quot;apples&quot;, the index for &quot;oranges&quot; (1) is more likely to be chosen than the index for &quot;apples&quot; (0) with the <code>WeightedChoice</code> method.  The following idiom implements how to get a randomly chosen item from the list with that method: <code>item = list[WeightedChoice(weights)]</code>.</li>
-<li><strong>Requires random real numbers:</strong> Assume the weights from example 1 are used and the list contains ranges of numbers instead of strings: <code>[[0, 5], [5, 10], [10, 11], [11, 13]]</code>.  If a random range is chosen, a random number can be chosen from that range using code like the following: <code>number = RNDRANGEMaxExc(item[0], item[1])</code>. (See also &quot;<a href="#Mixtures_of_Distributions"><strong>Mixtures of Distributions</strong></a>&quot;.)</li>
-<li><strong>Requires random real numbers:</strong> Assume the weights from example 1 are used and the list contains the following: <code>[0, 5, 10, 11, 13]</code> (one more item than the weights).  This expresses four ranges, the same as in example 2.  After a random index is chosen with <code>index = WeightedChoice(weights)</code>, a random number can be chosen from the corresponding range using code like the following: <code>number = RNDRANGEMaxExc(list[index], list[index + 1])</code>. (This is how the C++ library expresses a <em>piecewise constant distribution</em>.)</li>
+<li>Assume the weights from example 1 are used and the list contains ranges of numbers instead of strings: <code>[[0, 5], [5, 10], [10, 11], [11, 13]]</code>.  If a random range is chosen, a random integer can be chosen from that range using code like the following: <code>number = RNDINTEXCRANGE(item[0], item[1])</code>. (See also &quot;<a href="#Mixtures_of_Distributions"><strong>Mixtures of Distributions</strong></a>&quot;.)</li>
+<li><strong>Piecewise constant distribution.</strong> Assume the weights from example 1 are used and the list contains the following: <code>[0, 5, 10, 11, 13]</code> (one more item than the weights).  This expresses four ranges, the same as in example 2.  After a random index is chosen with <code>index = WeightedChoice(weights)</code>, a random integer can be chosen from the corresponding range using code like the following: <code>number = RNDINTEXCRANGE(list[index], list[index + 1])</code>.</li>
 <li>A <a href="https://en.wikipedia.org/wiki/Markov_chain"><strong>Markov chain</strong></a> models one or more <em>states</em> (for example, individual letters or syllables), and stores the probabilities to transition from one state to another (e.g., &quot;b&quot; to &quot;e&quot; with a chance of 20 percent, or &quot;b&quot; to &quot;b&quot; with a chance of 1 percent).  Thus, each state can be seen as having its own list of <em>weights</em> for each relevant state transition.  For example, a Markov chain for generating <strong>&quot;pronounceable&quot; words</strong>, or words similar to natural-language words, can include &quot;start&quot; and &quot;stop&quot; states for the start and end of the word, respectively.</li>
+<li><strong>Requires random real numbers:</strong> In examples 2 and 3, using <code>RNDRANGEMaxExc</code> rather than <code>RNDINTEXCRANGE</code> chooses a random real number from the chosen range.  Generating random real numbers is discouraged, however.</li>
 </ol>
 </blockquote>
 
@@ -1337,16 +1341,25 @@ above for returning more than one random number in one call.</p>
 <p><strong>Examples:</strong></p>
 
 <ol>
-<li><p>One mixture consists of two normal distributions with two different means: 1 and -1, but the mean 1 normal will be sampled 80% of the time.  The following pseudocode shows how this mixture can be sampled:</p>
+<li><p>One mixture consists of three six-sided virtual die rolls and one six-sided virtual die roll, but there is an 80% chance to roll one six-sided virtual die rather than three.  The following pseudocode shows how this mixture can be sampled:</p>
 
 <pre>index = WeightedChoice([80, 20])
 number = 0
-// If index 0 was chosen, sample from the mean 1 normal
-if index==0: number = Normal(1, 1)
-// Else index 1 was chosen, so sample from the mean -1 normal
-else: number = Normal(-1, 1)
+// If index 0 was chosen, roll one die
+if index==0: number = RNDINTRANGE(1,6)
+// Else index 1 was chosen, so roll three dice
+else: number = RNDINTRANGE(1,6) +
+   RNDINTRANGE(1,6) + RNDINTRANGE(1,6)
 </pre></li>
-<li><p>A <strong>hyperexponential distribution</strong> is a mixture of <a href="#Gamma_Distribution"><strong>exponential distributions</strong></a>, each one with a separate weight and separate rate.  An example is below.</p>
+<li><p>Choosing, independently and uniformly, a random point from a complex shape (in any number of dimensions) is equivalent to doing such sampling from a mixture of simpler shapes that make up the complex shape (here, the <code>weights</code> list holds the n-dimensional &quot;volume&quot; of each simpler shape).  For example, a simple closed 2D polygon can be <a href="https://en.wikipedia.org/wiki/Polygon_triangulation"><strong><em>triangulated</em></strong></a>, or decomposed into <a href="#Random_Points_Inside_a_Simplex"><strong>triangles</strong></a>, and a mixture of those triangles can be sampled.<sup><a href="#Note15"><strong>(15)</strong></a></sup></p></li>
+<li>Take a set of nonoverlapping integer ranges.  To choose a random integer from those ranges independently and uniformly:
+
+<ul>
+<li>Create a list (<code>weights</code>) of weights for each range.  Each range is given a weight of <code>(mx - mn) + 1</code>, where <code>mn</code> is that range&#39;s minimum and <code>mx</code> is its maximum.</li>
+<li>Choose an index using <code>WeightedChoice(weights)</code>, then generate <code>RNDINTRANGE(mn, mx)</code>, where <code>mn</code> is the corresponding range&#39;s minimum and <code>mx</code> is its maximum.</li>
+</ul></li>
+<li><strong>Requires random real numbers:</strong> Example 4 can be adapted to nonoverlapping real numbers by assigning weights <code>mx - mn</code> instead of <code>(mx - mn) + 1</code> and using <code>RNDRANGEMaxExc</code> instead of <code>RNDINTRANGE</code>.  Generating random real numbers is discouraged, though.</li>
+<li><p><strong>Requires random real numbers:</strong> A <strong>hyperexponential distribution</strong> is a mixture of <a href="#Gamma_Distribution"><strong>exponential distributions</strong></a>, each one with a separate weight and separate rate.  An example is below.</p>
 
 <pre>index = WeightedChoice([0.6, 0.3, 0.1])
 // Rates of the three exponential distributions
@@ -1354,15 +1367,6 @@ rates = [0.3, 0.1, 0.05]
 // Generate an exponential random number with chosen rate
 number = -ln(RNDU01ZeroOneExc()) / rates[index]
 </pre></li>
-<li><p>Choosing, independently and uniformly, a random point from a complex shape (in any number of dimensions) is equivalent to doing such sampling from a mixture of simpler shapes that make up the complex shape (here, the <code>weights</code> list holds the n-dimensional &quot;volume&quot; of each simpler shape).  For example, a simple closed 2D polygon can be <a href="https://en.wikipedia.org/wiki/Polygon_triangulation"><strong><em>triangulated</em></strong></a>, or decomposed into <a href="#Random_Points_Inside_a_Simplex"><strong>triangles</strong></a>, and a mixture of those triangles can be sampled.<sup><a href="#Note15"><strong>(15)</strong></a></sup></p></li>
-<li><p>For generating a random integer from multiple nonoverlapping ranges of integers&mdash;</p>
-
-<ul>
-<li>each range has a weight of <code>(mx - mn) + 1</code>, where <code>mn</code> is that range&#39;s minimum and <code>mx</code> is its maximum, and</li>
-<li>the chosen range is sampled by generating <code>RNDINTRANGE(mn, mx)</code>, where <code>mn</code> is the that range&#39;s minimum and <code>mx</code> is its maximum.</li>
-</ul>
-
-<p>For generating random numbers, that may or may not be integers, from nonoverlapping number ranges, each weight is <code>mx - mn</code> instead and the number is sampled by <code>RNDRANGEMaxExc(mn, mx)</code> instead.</p></li>
 </ol>
 </blockquote>
 
@@ -1399,6 +1403,11 @@ and/or discarding some of them.</p>
 <ol>
 <li>The idiom <code>min(RNDINTRANGE(1, 6), RNDINTRANGE(1, 6))</code> takes the lowest of two six-sided die results.  Due to this approach, 1 is more likely to occur than 6.</li>
 <li>The idiom <code>RNDINTRANGE(1, 6) + RNDINTRANGE(1, 6)</code> takes the result of two six-sided dice (see also &quot;<a href="#Dice"><strong>Dice</strong></a>&quot;).</li>
+</ol>
+
+<p><strong>Requires random real numbers:</strong></p>
+
+<ol>
 <li>Sampling a <strong>Bates distribution</strong> involves sampling <em>n</em> random numbers by <code>RNDRANGE(minimum, maximum)</code>, then finding the mean of those numbers (strategy 8).</li>
 <li>A <strong>compound Poisson distribution</strong> models the sum<sup><a href="#Note17"><strong>(17)</strong></a></sup>
 of <em>n</em> random numbers each generated the same way, where <em>n</em> follows a <a href="#Poisson_Distribution"><strong>Poisson distribution</strong></a> (e.g., <code>n = Poisson(10)</code> for an average of 10 numbers).</li>
@@ -1409,9 +1418,24 @@ of <em>n</em> random numbers that follow an exponential distribution and each ha
 </ol>
 </blockquote>
 
+<p><a id=Censored_and_Truncated_Random_Numbers></a></p>
+
+<h4>Censored and Truncated Random Numbers</h4>
+
+<p>To generate a <em>censored</em> random number, generate a random number as usual, then&mdash;</p>
+
+<ul>
+<li>if that number is less than a minimum threshold, use the minimum threshold instead, and/or</li>
+<li>if that number is greater than a maximum threshold, use the maximum threshold instead.</li>
+</ul>
+
+<p>To generate a <em>truncated</em> probability distribution, generate random numbers as usual until a number generated this way is not less than a minimum threshold, not greater than a maximum threshold, or both.</p>
+
 <p><a id=Random_Numbers_from_a_Distribution_of_Data_Points></a></p>
 
 <h3>Random Numbers from a Distribution of Data Points</h3>
+
+<p><strong>Requires random real numbers.</strong></p>
 
 <p><strong>Density estimation models.</strong> Generating random numbers (or data points) based on how a list of numbers (or data points) is distributed involves a family of data models called <a href="http://scikit-learn.org/stable/modules/density.html"><strong>density estimation</strong></a> models, including the ones given below.  These models seek to describe the distribution of data points in a given data set, where areas with more points are more likely to be sampled.</p>
 
@@ -1440,6 +1464,8 @@ of the differences between each of those points and that mean (here, the weight 
 <p><a id=Random_Numbers_from_an_Arbitrary_Distribution></a></p>
 
 <h3>Random Numbers from an Arbitrary Distribution</h3>
+
+<p><strong>Requires random real numbers.</strong></p>
 
 <p>Many probability distributions can be defined in terms of any of the following:</p>
 
@@ -1472,22 +1498,11 @@ of <code>weights</code>&#39;s items, then generate <a href="#Continuous_Weighted
 <p><strong>Note:</strong> Lists of PDFs, CDFs, or inverse CDFs are outside the scope of this page.</p>
 </blockquote>
 
-<p><a id=Censored_and_Truncated_Distributions></a></p>
-
-<h3>Censored and Truncated Distributions</h3>
-
-<p>To sample from a <em>censored</em> probability distribution, generate a random number from that distribution and&mdash;</p>
-
-<ul>
-<li>if that number is less than a minimum threshold, use the minimum threshold instead, and/or</li>
-<li>if that number is greater than a maximum threshold, use the maximum threshold instead.</li>
-</ul>
-
-<p>To sample from a <em>truncated</em> probability distribution, generate a random number from that distribution and, if that number is less than a minimum threshold and/or higher than a maximum threshold, repeat this process.</p>
-
 <p><a id=Gibbs_Sampling></a></p>
 
 <h3>Gibbs Sampling</h3>
+
+<p><strong>Usually requires random real numbers.</strong></p>
 
 <p>Gibbs sampling<sup><a href="#Note24"><strong>(24)</strong></a></sup> is a Markov-chain Monte Carlo algorithm.  It involves repeatedly generating random numbers from two or more distributions, each of which uses a random number from the previous distribution (<em>conditional distributions</em>); however, the resulting random numbers will not be chosen independently of each other.</p>
 

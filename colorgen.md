@@ -1401,7 +1401,7 @@ The following techniques can be used to generate random RGB colors. Note that fo
 - Generating a random **8-bpc encoded RGB color** is equivalent to calling `From888(RNDINT(16777215))`.
 - To generate a random **dark color**, either&mdash;
     - generate `color = [RNDU01(), RNDU01(), RNDU01()]` until [**`Luminance(color)`**](#Luminance_Factor_Grayscale) is less than a given threshold, e.g., 0.5, or
-    - generate `color = [RNDU01() * maxComp, RNDU01() * maxComp, RNDU01() * maxComp]`, where `maxComp` is the
+    - generate `color = [RNDRANGE(0, maxComp), RNDRANGE(0, maxComp), RNDRANGE(0, maxComp)]`, where `maxComp` is the
        maximum value of each color component, e.g., 0.5.
 - To generate a random **light color**, either&mdash;
     - generate `color = [RNDU01(), RNDU01(), RNDU01()]` until [**`Luminance(color)`**](#Luminance_Factor_Grayscale) is greater than a given threshold, e.g., 0.5, or
