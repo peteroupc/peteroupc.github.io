@@ -83,6 +83,10 @@ All the random number methods presented on this page are ultimately based on an 
     - [**Gibbs Sampling**](#Gibbs_Sampling)
 - [**Specific Non-Uniform Distributions**](#Specific_Non_Uniform_Distributions)
     - [**Dice**](#Dice)
+        - [**Optimization for Many Dice**](#Optimization_for_Many_Dice)
+    - [**Hypergeometric Distribution**](#Hypergeometric_Distribution)
+    - [**Random Integers with a Given Positive Sum**](#Random_Integers_with_a_Given_Positive_Sum)
+    - [**Multinomial Distribution**](#Multinomial_Distribution)
     - [**Normal (Gaussian) Distribution**](#Normal_Gaussian_Distribution)
     - [**Binomial Distribution**](#Binomial_Distribution)
     - [**Poisson Distribution**](#Poisson_Distribution)
@@ -91,11 +95,8 @@ All the random number methods presented on this page are ultimately based on an 
     - [**Negative Binomial Distribution**](#Negative_Binomial_Distribution)
     - [**von Mises Distribution**](#von_Mises_Distribution)
     - [**Stable Distribution**](#Stable_Distribution)
-    - [**Hypergeometric Distribution**](#Hypergeometric_Distribution)
     - [**Multivariate Normal (Multinormal) Distribution**](#Multivariate_Normal_Multinormal_Distribution)
-    - [**Random Integers with a Given Positive Sum**](#Random_Integers_with_a_Given_Positive_Sum)
     - [**Random Numbers with a Given Positive Sum**](#Random_Numbers_with_a_Given_Positive_Sum)
-    - [**Multinomial Distribution**](#Multinomial_Distribution)
     - [**Gaussian and Other Copulas**](#Gaussian_and_Other_Copulas)
     - [**Index of Non-Uniform Distributions**](#Index_of_Non_Uniform_Distributions)
 - [**Geometric Sampling**](#Geometric_Sampling)
@@ -509,6 +510,13 @@ the following idioms in an `if` condition:
 > - True with odds of 100 to 1: `RNDINTEXC(101) < 1`.
 > - True with 20% probability: `RNDINTEXC(100) < 20`.
 
+The following helper method generates 1 with probability `x`/`y` and 0 otherwise:
+
+    METHOD ZeroOrOne(x,y)
+      if RNDINTEXC(y)<x: return 1
+      return 0
+    END METHOD
+
 <a id=Random_Sampling></a>
 ### Random Sampling
 
@@ -765,7 +773,7 @@ A _random walk_ is a process with random behavior over time.  A simple form of r
 
 There are several kinds of random walks.
 
-1. A **white noise process** is simulated by creating a list of random numbers generated the same way.  Such a process generally models behavior over time that does not depend on the time or the current state.  Examples include `Normal(0, 1)` (for modeling _Gaussian white noise_) and `Binomial(1, p)` (for modeling a _Bernoulli process_, where each number is 0 or 1 depending on the probability `p`).
+1. A **white noise process** is simulated by creating a list of random numbers generated the same way.  Such a process generally models behavior over time that does not depend on the time or the current state.  Examples include `Normal(0, 1)` (for modeling _Gaussian white noise_) and `ZeroOrOne(px,py)` (for modeling a _Bernoulli process_, where each number is 0 or 1 depending on the probability `px`/`py`).
 2. **Requires random real numbers:** A **continuous-time process** models random behavior at every moment, not just at discrete times.  There are two popular examples:
     - A _Wiener process_ has random states and jumps that are normally distributed (a process of this kind is also known as _Brownian motion_). For a random walk that follows a Wiener process, `STATEJUMP()` is `Normal(mu * timediff, sigma * sqrt(timediff))`, where  `mu` is the average value per time unit, `sigma` is the volatility, and `timediff` is the time difference between samples.
     - In a _Poisson process_, the time between each event is a random exponential variable, namely, `-ln(RNDU01ZeroOneExc()) / rate`, where `rate` is the average number of events per time unit. An _inhomogeneous Poisson process_ results if `rate` can vary with the "timestamp" before each event jump.
@@ -774,8 +782,8 @@ There are several kinds of random walks.
 >
 > 1. If `STATEJUMP()` is `RNDINT(1) * 2 - 1`, the random walk generates numbers that each differ from the last by -1 or 1, chosen at random.
 > 2. If `STATEJUMP()` is `RNDRANGE(-1, 1)`, the random state is advanced by a random real number in the interval [-1, 1].
-> 3. **Requires random real numbers:** If `STATEJUMP()` is `Binomial(1, p)`, the random walk models a _binomial process_, where the state is advanced with probability `p`.
-> 4. **Requires random real numbers:** If `STATEJUMP()` is `Binomial(1, p) * 2 - 1`, the random walk generates numbers that each differ from the last by -1 or 1 depending on the probability `p`.
+> 3. **Binomial process:** If `STATEJUMP()` is `ZeroOrOne(px,py)`, the random walk advances the state with probability `px`/`py`.
+> 4. If `STATEJUMP()` is `ZeroOrOne(px,py) * 2 - 1`, the random walk generates numbers that each differ from the last by -1 or 1 depending on the probability `px`/`py`.
 
 <a id=Randomization_in_Statistical_Testing></a>
 ### Randomization in Statistical Testing
@@ -1005,6 +1013,8 @@ If the number of items in a list is not known in advance, then the following pse
 <a id=Continuous_Weighted_Choice></a>
 #### Continuous Weighted Choice
 
+**Requires random real numbers.**
+
 The continuous weighted choice method generates a random number that follows a continuous probability distribution (here, a [**_piecewise linear distribution_**](http://en.cppreference.com/w/cpp/numeric/random/piecewise_linear_distribution)).
 
 The pseudocode below takes two lists as follows:
@@ -1085,7 +1095,7 @@ A _mixture_ consists of two or more probability distributions with separate prob
 
 > **Examples:**
 >
-> 1. One mixture consists of three six-sided virtual die rolls and one six-sided virtual die roll, but there is an 80% chance to roll one six-sided virtual die rather than three.  The following pseudocode shows how this mixture can be sampled:
+> 1. One mixture consists of the sum of three six-sided virtual die rolls and the result of one six-sided die roll, but there is an 80% chance to roll one six-sided virtual die rather than three.  The following pseudocode shows how this mixture can be sampled:
 >
 >         index = WeightedChoice([80, 20])
 >         number = 0
@@ -1099,7 +1109,7 @@ A _mixture_ consists of two or more probability distributions with separate prob
 > 3. Take a set of nonoverlapping integer ranges.  To choose a random integer from those ranges independently and uniformly:
 >     - Create a list (`weights`) of weights for each range.  Each range is given a weight of `(mx - mn) + 1`, where `mn` is that range's minimum and `mx` is its maximum.
 >     - Choose an index using `WeightedChoice(weights)`, then generate `RNDINTRANGE(mn, mx)`, where `mn` is the corresponding range's minimum and `mx` is its maximum.
-> 4. **Requires random real numbers:** Example 4 can be adapted to nonoverlapping real numbers by assigning weights `mx - mn` instead of `(mx - mn) + 1` and using `RNDRANGEMaxExc` instead of `RNDINTRANGE`.  Generating random real numbers is discouraged, though.
+> 4. **Requires random real numbers:** Example 3 can be adapted to nonoverlapping real numbers by assigning weights `mx - mn` instead of `(mx - mn) + 1` and using `RNDRANGEMaxExc` instead of `RNDINTRANGE`.  Generating random real numbers is discouraged, though.
 > 5. **Requires random real numbers:** A **hyperexponential distribution** is a mixture of [**exponential distributions**](#Gamma_Distribution), each one with a separate weight and separate rate.  An example is below.
 >
 >         index = WeightedChoice([0.6, 0.3, 0.1])
@@ -1235,28 +1245,8 @@ The following method generates a random result of rolling virtual dice.<sup>[**(
         if dice == 0: return 0
         if sides == 1: return dice
         ret = 0
-        if dice > 50
-            // If there are many dice to roll,
-            // use a faster approach, noting that
-            // the dice-roll distribution approaches
-            // a "discrete" normal distribution as the
-            // number of dice increases.
-            mean = dice * (sides + 1) * 0.5
-            sigma = sqrt(dice * (sides * sides - 1) / 12)
-            ret = -1
-            while ret < dice or ret > dice * sides
-                ret = round(Normal(mean, sigma))
-            end
-        else
-             i = 0
-             while i < dice
-                  ret = ret + RNDINTRANGE(1, sides)
-                  i = i + 1
-              end
-        end
-        ret = ret + bonus
-        if ret < 0: ret = 0
-        return ret
+        for i in 0...dice: ret=ret+RNDINTRANGE(1, sides)
+        return max(0, ret + bonus)
     END METHOD
 
 > **Examples:** The result of rolling&mdash;
@@ -1264,15 +1254,132 @@ The following method generates a random result of rolling virtual dice.<sup>[**(
 > - three ten-sided virtual dice, with 4 added ("3d10 + 4"), is `DiceRoll(3,10,4)`, and
 > - two six-sided virtual dice, with 2 subtracted ("2d6 - 2"), is `DiceRoll(2,6,-2)`.
 
+<a id=Optimization_for_Many_Dice></a>
+#### Optimization for Many Dice
+
+**Requires random real numbers.** If there are many dice to roll, the following pseudocode implements a faster alternative, which uses the fact that the dice-roll distribution approaches a "discrete" normal distribution as the number of dice increases.
+
+    METHOD DiceRoll2(dice, sides, bonus)
+      if dice < 50: return DiceRoll(dice,sides,bonus)
+      mean = dice * (sides + 1) * 0.5
+      sigma = sqrt(dice * (sides * sides - 1) / 12)
+      ret = -1
+      while ret < dice or ret > dice * sides
+        ret = round(Normal(mean, sigma))
+      end
+      return max(0, ret + bonus)
+    END METHOD
+
+<a id=Hypergeometric_Distribution></a>
+### Hypergeometric Distribution
+
+The following method generates a random integer that follows a _hypergeometric distribution_.
+When a given number of items are drawn at random without replacement from a collection of items
+each labeled either `1` or `0`,  the random integer expresses the number of items drawn
+this way that are labeled `1`.  In the method below, `trials` is the number of items
+drawn at random, `ones` is the number of items labeled `1` in the set, and `count` is
+the number of items labeled `1` or `0` in that set.
+
+    METHOD Hypergeometric(trials, ones, count)
+        if ones < 0 or count < 0 or trials < 0 or ones > count or trials > count
+          return error
+        end
+        if ones == 0: return 0
+        successes = 0
+        i = 0
+        currentCount = count
+        currentOnes = ones
+        while i < trials and currentOnes > 0
+          if RNDINTEXC(currentCount) < currentOnes
+            currentOnes = currentOnes - 1
+            successes = successes + 1
+          end
+          currentCount = currentCount - 1
+          i = i + 1
+        end
+        return successes
+    END METHOD
+
+> **Example:** In a 52-card deck of Anglo-American playing cards, 12 of the cards are face cards (jacks, queens, or kings).  After the deck is shuffled and seven cards are drawn, the number of face cards drawn this way follows a hypergeometric distribution where `trials` is 7, `ones` is
+12, and `count` is 52.
+
+<a id=Random_Integers_with_a_Given_Positive_Sum></a>
+### Random Integers with a Given Positive Sum
+
+The following pseudocode shows how to generate integers with a given positive sum, where the combination is chosen uniformly at random from among all possible combinations. (The algorithm for this was presented in (Smith and Tromble 2004)<sup>[**(26)**](#Note26)</sup>.)  In the pseudocode below&mdash;
+
+- the method `PositiveIntegersWithSum` returns `n` integers greater than 0 that sum to `total`,
+- the method `IntegersWithSum` returns `n` integers 0 or greater that sum to `total`, and
+- `Sort(list)` sorts the items in `list` in ascending order (note that sort algorithms are outside the scope of this document).
+
+&nbsp;
+
+    METHOD PositiveIntegersWithSum(n, total)
+        if n <= 0 or total <=0: return error
+        ls = NewList()
+        ret = NewList()
+        AddItem(ls, 0)
+        while size(ls) < n
+          c = RNDINTEXCRANGE(1, total)
+          found = false
+          for j in 1...size(ls)
+            if ls[j] == c
+              found = true
+              break
+            end
+          end
+          if found == false: AddItem(ls, c)
+        end
+        Sort(ls)
+        AddItem(ls, total)
+        for i in 1...size(ls): AddItem(ret,
+            list[i] - list[i - 1])
+        return ret
+    END METHOD
+
+    METHOD IntegersWithSum(n, total)
+      if n <= 0 or total <=0: return error
+      ret = PositiveIntegersWithSum(n, total + n)
+      for i in 0...size(ret): ret[i] = ret[i] - 1
+      return ret
+    END METHOD
+
+> **Notes:**
+>
+> 1. Generating a uniformly randomly chosen combination of `N` numbers with a given positive average `avg`, is equivalent to generating a uniformly randomly chosen combination of `N` numbers with the sum `N * avg`.
+> 2. Generating a uniformly randomly chosen combination of `N` numbers `min` or greater and with a given positive sum `sum` is equivalent to generating a uniformly randomly chosen combination of `N` numbers with the sum `sum - n * min`, then adding `min` to each number generated this way.
+>
+
+<a id=Multinomial_Distribution></a>
+### Multinomial Distribution
+
+The _multinomial distribution_ models the number of times each of several mutually exclusive events happens among a given number of trials, where each event can have a separate probability of happening.  In the pseudocode below, `trials` is the number of trials, and `weights` is a list of the relative probabilities of each event.  The method tallies the events as they happen and returns a list (with the same size as `weights`) containing the number of successes for each event.
+
+    METHOD Multinomial(trials, weights)
+        if trials < 0: return error
+        // create a list of successes
+        list = NewList()
+        for i in 0...size(weights): AddItem(list, 0)
+        for i in 0...trials
+            // Choose an index
+            index = WeightedChoice(weights)
+            // Tally the event at the chosen index
+            list[index] = list[index] + 1
+        end
+        return list
+    END METHOD
+
 <a id=Normal_Gaussian_Distribution></a>
 ### Normal (Gaussian) Distribution
+
+**Requires random real numbers.**
 
 The [**_normal distribution_**](https://en.wikipedia.org/wiki/Normal_distribution) (also called the Gaussian distribution) takes the following two parameters:
 - `mu` (&mu;) is the mean (average), or where the peak of the distribution's "bell curve" is.
 - `sigma` (&sigma;), the standard deviation, affects how wide the "bell curve" appears. The
 probability that a normally-distributed random number will be within one standard deviation from the mean is about 68.3%; within two standard deviations (2 times `sigma`), about 95.4%; and within three standard deviations, about 99.7%.  (Some publications give &sigma;<sup>2</sup>, or variance, rather than standard deviation, as the second parameter.  In this case, the standard deviation is the variance's square root.)
 
-There are a number of methods for normal random number generation.<sup>[**(26)**](#Note26)</sup> The pseudocode below uses the polar method to generate two normal random numbers. (Ways to adapt the pseudocode to output only one random number at a time, rather than two, are outside the scope of this document.  In this document, the name `Normal` means a method that returns only one normally-distributed random number rather than two.)
+There are a number of methods for normal random number generation.<sup>[**(27)**](#Note27)</sup> The pseudocode below uses the polar method to generate two normal random numbers. (Ways to adapt the pseudocode to output only one random number at a time, rather than two, are outside the scope of this document.  In this document, the name `Normal` means a method that returns only one normally-distributed random number rather than two.)
 
     METHOD Normal2(mu, sigma)
       while true
@@ -1304,6 +1411,8 @@ The following method implements a ratio-of-uniforms technique and can be used in
 <a id=Binomial_Distribution></a>
 ### Binomial Distribution
 
+**Requires random real numbers.**
+
 A random integer that follows a _binomial distribution_ expresses the number of successes that have happened after a given number of independently performed trials (expressed as `trials` below), where the probability of a success in each trial is `p` (where `p <= 0` means never, `p >= 1` means always, and `p = 0.5` means an equal chance of success or failure).
 
     METHOD Binomial(trials, p)
@@ -1328,11 +1437,11 @@ A random integer that follows a _binomial distribution_ expresses the number of 
         end
         if p == 0.5
             while i < trials
-                if RNDINT(1) == 0
-                    // Success
-                    count = count + 1
-                end
-                i = i + 1
+              if RNDINT(1) == 0
+                // Success
+                count = count + 1
+              end
+              i = i + 1
             end
         else
             while i < trials
@@ -1353,6 +1462,8 @@ A random integer that follows a _binomial distribution_ expresses the number of 
 
 <a id=Poisson_Distribution></a>
 ### Poisson Distribution
+
+**Requires random real numbers.**
 
 The following method generates a random integer that follows a _Poisson distribution_ and is based on Knuth's method from 1969.  In the method&mdash;
 
@@ -1384,6 +1495,8 @@ The following method generates a random integer that follows a _Poisson distribu
 
 <a id=Gamma_Distribution></a>
 ### Gamma Distribution
+
+**Requires random real numbers.**
 
 The following method generates a random number that follows a _gamma distribution_ and is based on Marsaglia and Tsang's method from 2000.  Usually, the number expresses either&mdash;
 
@@ -1434,6 +1547,8 @@ Distributions based on the gamma distribution:
 <a id=Beta_Distribution></a>
 ### Beta Distribution
 
+**Requires random real numbers.**
+
 In the following method, which generates a random number that follows a _beta distribution_, `a` and `b` are two parameters each greater than 0.  The range of the beta distribution is [0, 1).
 
     METHOD BetaDist(self, a, b, nc)
@@ -1448,6 +1563,8 @@ In the following method, which generates a random number that follows a _beta di
 
 <a id=Negative_Binomial_Distribution></a>
 ### Negative Binomial Distribution
+
+**Requires random real numbers.**
 
 A random integer that follows a _negative binomial distribution_ expresses the number of failures that have happened after seeing a given number of successes (expressed as `successes` below), where the probability of a success in each case is `p` (where `p <= 0` means never, `p >= 1` means always, and `p = 0.5` means an equal chance of success or failure).
 
@@ -1494,6 +1611,8 @@ A random integer that follows a _negative binomial distribution_ expresses the n
 <a id=von_Mises_Distribution></a>
 ### von Mises Distribution
 
+**Requires random real numbers.**
+
 The _von Mises distribution_ describes a distribution of circular angles. In the following method, which generates a random number from that distribution&mdash;
 
 - `mean` is the mean angle,
@@ -1531,6 +1650,8 @@ The algorithm below is based on the Best&ndash;Fisher algorithm from 1979 (as de
 <a id=Stable_Distribution></a>
 ### Stable Distribution
 
+**Requires random real numbers.**
+
 As more and more independent random numbers from the same distribution are added
 together, their distribution tends to a [**_stable distribution_**](https://en.wikipedia.org/wiki/Stable_distribution),
 which resembles a curve with a single peak, but with generally "fatter" tails than the normal distribution.  The pseudocode below uses the Chambers&ndash;Mallows&ndash;Stuck algorithm.  The `Stable` method, implemented below, takes two parameters:
@@ -1567,41 +1688,10 @@ Extended versions of the stable distribution:
 - **Four-parameter stable distribution**: `Stable(alpha, beta) * sigma + mu`, where `mu` is the mean and ` sigma` is the scale.  If `alpha` and `beta` are 1, the result is a **Landau distribution**.
 - **"Type 0" stable distribution**: `Stable(alpha, beta) * sigma + (mu - sigma * beta * x)`, where `x` is `ln(sigma)*2.0/pi` if `alpha` is 1, and `tan(pi*0.5*alpha)` otherwise.
 
-<a id=Hypergeometric_Distribution></a>
-### Hypergeometric Distribution
-
-The following method generates a random integer that follows a _hypergeometric distribution_.
-When a given number of items are drawn at random without replacement from a collection of items
-each labeled either `1` or `0`,  the random integer expresses the number of items drawn
-this way that are labeled `1`.  In the method below, `trials` is the number of items
-drawn at random, `ones` is the number of items labeled `1` in the set, and `count` is
-the number of items labeled `1` or `0` in that set.
-
-    METHOD Hypergeometric(trials, ones, count)
-        if ones < 0 or count < 0 or trials < 0 or ones > count or trials > count
-          return error
-        end
-        if ones == 0: return 0
-        successes = 0
-        i = 0
-        currentCount = count
-        currentOnes = ones
-        while i < trials and currentOnes > 0
-          if RNDINTEXC(currentCount) < currentOnes
-            currentOnes = currentOnes - 1
-            successes = successes + 1
-          end
-          currentCount = currentCount - 1
-          i = i + 1
-        end
-        return successes
-    END METHOD
-
-> **Example:** In a 52-card deck of Anglo-American playing cards, 12 of the cards are face cards (jacks, queens, or kings).  After the deck is shuffled and seven cards are drawn, the number of face cards drawn this way follows a hypergeometric distribution where `trials` is 7, `ones` is
-12, and `count` is 52.
-
 <a id=Multivariate_Normal_Multinormal_Distribution></a>
 ### Multivariate Normal (Multinormal) Distribution
+
+**Requires random real numbers.**
 
 The following pseudocode calculates a random point in space that follows a [**_multivariate normal (multinormal) distribution_**](https://en.wikipedia.org/wiki/Multivariate_normal_distribution).  The method `MultivariateNormal` takes the following parameters:
 
@@ -1686,85 +1776,23 @@ The following pseudocode calculates a random point in space that follows a [**_m
 > 4. A **Rice (Rician) distribution** is a Beckmann distribution in which the binormal random pair is generated with `m1 = m2 = a / sqrt(2)`, `rho = 0`, and `s1 = s2 = b`, where `a` and `b` are the parameters to the Rice distribution.
 > 5. A **Rice&ndash;Norton distributed** random variable is the norm (see the appendix) of the following point: `MultivariateNormal([v,v,v],[[w,0,0],[0,w,0],[0,0,w]])`, where `v = a/sqrt(m*2)`, `w = b*b/m`, and `a`, `b`, and `m` are the parameters to the Rice&ndash;Norton distribution.
 
-<a id=Random_Integers_with_a_Given_Positive_Sum></a>
-### Random Integers with a Given Positive Sum
-
-The following pseudocode shows how to generate integers with a given positive sum, where the combination is chosen uniformly at random from among all possible combinations. (The algorithm for this was presented in (Smith and Tromble 2004)<sup>[**(27)**](#Note27)</sup>.)  In the pseudocode below&mdash;
-
-- the method `PositiveIntegersWithSum` returns `n` integers greater than 0 that sum to `total`,
-- the method `IntegersWithSum` returns `n` integers 0 or greater that sum to `total`, and
-- `Sort(list)` sorts the items in `list` in ascending order (note that sort algorithms are outside the scope of this document).
-
-&nbsp;
-
-    METHOD PositiveIntegersWithSum(n, total)
-        if n <= 0 or total <=0: return error
-        ls = NewList()
-        ret = NewList()
-        AddItem(ls, 0)
-        while size(ls) < n
-          c = RNDINTEXCRANGE(1, total)
-          found = false
-          for j in 1...size(ls)
-            if ls[j] == c
-              found = true
-              break
-            end
-          end
-          if found == false: AddItem(ls, c)
-        end
-        Sort(ls)
-        AddItem(ls, total)
-        for i in 1...size(ls): AddItem(ret,
-            list[i] - list[i - 1])
-        return ret
-    END METHOD
-
-    METHOD IntegersWithSum(n, total)
-      if n <= 0 or total <=0: return error
-      ret = PositiveIntegersWithSum(n, total + n)
-      for i in 0...size(ret): ret[i] = ret[i] - 1
-      return ret
-    END METHOD
-
-> **Notes:**
->
-> 1. Generating a uniformly randomly chosen combination of `N` numbers with a given positive average `avg`, is equivalent to generating a uniformly randomly chosen combination of `N` numbers with the sum `N * avg`.
-> 2. Generating a uniformly randomly chosen combination of `N` numbers `min` or greater and with a given positive sum `sum` is equivalent to generating a uniformly randomly chosen combination of `N` numbers with the sum `sum - n * min`, then adding `min` to each number generated this way.
->
-
 <a id=Random_Numbers_with_a_Given_Positive_Sum></a>
 ### Random Numbers with a Given Positive Sum
+
+**Requires random real numbers.**
 
 Generating _n_ `GammaDist(total, 1)` numbers and dividing them by their sum<sup>[**(17)**](#Note17)</sup>
  will result in _n_ numbers that (approximately) sum to `total`, where the combination of numbers is chosen uniformly at random (see a [**Wikipedia article**](https://en.wikipedia.org/wiki/Dirichlet_distribution#Gamma_distribution)).  For example, if `total` is 1, the numbers will (approximately) sum to 1.  Note that in the exceptional case that all numbers are 0, the process should repeat.
 
 > **Notes:**
 >
-> 1. Notes 1 and 2 in the previous section apply here.
+> 1. Notes 1 and 2 in the section "Random Integers with a Given Positive Sum" apply here.
 > 2. The **Dirichlet distribution**, as defined in some places (e.g., _Mathematica_; Devroye 1986, p. 594), models a uniformly randomly chosen combination of _n_ random numbers that sum to 1, and can be sampled by generating _n_+1 random [**gamma-distributed**](#Gamma_Distribution) numbers, each with separate parameters, taking their sum<sup>[**(17)**](#Note17)</sup>, and dividing the first _n_ numbers by that sum.
-
-<a id=Multinomial_Distribution></a>
-### Multinomial Distribution
-
-The _multinomial distribution_ models the number of times each of several mutually exclusive events happens among a given number of trials, where each event can have a separate probability of happening.  In the pseudocode below, `trials` is the number of trials, and `weights` is a list of the relative probabilities of each event.  The method tallies the events as they happen and returns a list (with the same size as `weights`) containing the number of successes for each event.
-
-    METHOD Multinomial(trials, weights)
-        if trials < 0: return error
-        // create a list of successes
-        list = NewList()
-        for i in 0...size(weights): AddItem(list, 0)
-        for i in 0...trials
-            // Choose an index
-            index = WeightedChoice(weights)
-            // Tally the event at the chosen index
-            list[index] = list[index] + 1
-        end
-        return list
-    END METHOD
 
 <a id=Gaussian_and_Other_Copulas></a>
 ### Gaussian and Other Copulas
+
+**Requires random real numbers.**
 
 A _copula_ is a distribution describing the dependence between random numbers.
 
@@ -1808,6 +1836,8 @@ Other kinds of copulas describe different kinds of dependence between random num
 
 <a id=Index_of_Non_Uniform_Distributions></a>
 ### Index of Non-Uniform Distributions
+
+**Many distributions here require random real numbers.**
 
 Most commonly used:
 - **Beta distribution**: See [**Beta Distribution**](#Beta_Distribution).
@@ -2084,15 +2114,15 @@ provided the PDF's values are all 0 or greater and the area under the PDF's curv
 - The [**MathWorld article "Dice"**](http://mathworld.wolfram.com/Dice.html) provided the mean of the dice roll distribution.
 - S. Eger, "Stirling's approximation for central extended binomial coefficients", 2014, helped suggest the variance of the dice roll distribution.</small>
 
-<small><sup id=Note26>(26)</sup> For example, besides the methods given in this section's main text:
+<small><sup id=Note26>(26)</sup> Smith and Tromble, "[**Sampling Uniformly from the Unit Simplex**](http://www.cs.cmu.edu/~nasmith/papers/smith+tromble.tr04.pdf)", 2004.</small>
+
+<small><sup id=Note27>(27)</sup> For example, besides the methods given in this section's main text:
 
 1. In the _Box&ndash;Muller transformation_, `mu + radius * cos(angle)` and `mu + radius * sin(angle)`, where `angle = RNDRANGEMaxExc(0, 2 * pi)` and `radius = sqrt(-2 * ln(RNDU01ZeroExc())) * sigma`, are two independent normally-distributed random numbers.
 2. Computing the sum of twelve `RNDU01OneExc()` numbers (see Note 32) and subtracting the sum by 6 (see also [**"Irwin&ndash;Hall distribution" on Wikipedia**](https://en.wikipedia.org/wiki/Irwin%E2%80%93Hall_distribution)) results in approximate standard normal (`mu`=0, `sigma`=1) random numbers, whose values are not less than -6 or greater than 6; on the other hand, in a standard normal distribution, results less than -6 or greater than 6 will occur only with a generally negligible probability.
 3. Generating `RNDU01ZeroOneExc()`, then running the standard normal distribution's inverse cumulative distribution function on that number, results in a random number from that distribution.  An approximation is found in M. Wichura, _Applied Statistics_ 37(3), 1988.  See also [**"A literate program to compute the inverse of the normal CDF"**](https://www.johndcook.com/blog/normal_cdf_inverse/).
 
 In 2007, Thomas, D., et al. gave a survey of normal random number methods in "Gaussian Random Number Generators", _ACM Computing Surveys_ 39(4), 2007, article 11.</small>
-
-<small><sup id=Note27>(27)</sup> Smith and Tromble, "[**Sampling Uniformly from the Unit Simplex**](http://www.cs.cmu.edu/~nasmith/papers/smith+tromble.tr04.pdf)", 2004.</small>
 
 <small><sup id=Note28>(28)</sup> Hofert, M., and Maechler, M.  "Nested Archimedean Copulas Meet R: The nacopula Package".  Journal of Statistical Software 39(9), 2011, pp. 1-20.</small>
 
