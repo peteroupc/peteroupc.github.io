@@ -888,7 +888,7 @@ The following pseudocode implements a method `WeightedChoice` that takes a singl
 <a id=Weighted_Choice_Without_Replacement_Multiple_Copies></a>
 #### Weighted Choice Without Replacement (Multiple Copies)
 
-To implement weighted choice _without replacement_ (which can be thought of as drawing a ball _without_ putting it back), generate an index by `WeightedChoice`, and then decrease the weight for the chosen index by 1.  In this way, **each weight behaves like the number of "copies" of each item**. This technique, though, will only work properly if all the weights are integers 0 or greater.  The pseudocode below is an example of this.
+For positive integer weights, to implement weighted choice _without replacement_ (which can be thought of as drawing a ball _without_ putting it back), generate an index by `WeightedChoice`, and then decrease the weight for the chosen index by 1.  In this way, **each weight behaves like the number of "copies" of each item**. The pseudocode below is an example of this.
 
     // Get the sum of weights.
     // NOTE: This code assumes--
@@ -1775,6 +1775,7 @@ The following pseudocode calculates a random point in space that follows a [**_m
 > 3. A **Beckmann distribution** can be sampled by calculating `sqrt(x*x+y*y)`, where `x` and `y` are the two numbers in a binormal random pair (see example 1).
 > 4. A **Rice (Rician) distribution** is a Beckmann distribution in which the binormal random pair is generated with `m1 = m2 = a / sqrt(2)`, `rho = 0`, and `s1 = s2 = b`, where `a` and `b` are the parameters to the Rice distribution.
 > 5. A **Rice&ndash;Norton distributed** random variable is the norm (see the appendix) of the following point: `MultivariateNormal([v,v,v],[[w,0,0],[0,w,0],[0,0,w]])`, where `v = a/sqrt(m*2)`, `w = b*b/m`, and `a`, `b`, and `m` are the parameters to the Rice&ndash;Norton distribution.
+> 6. A **standard [**complex normal distribution**](https://en.wikipedia.org/wiki/Complex_normal_distribution)** is a binormal distribution in which the binormal random pair is generated with `s1 = s2 = sqrt(0.5)` and treated as the real and imaginary parts of a complex number.
 
 <a id=Random_Numbers_with_a_Given_Positive_Sum></a>
 ### Random Numbers with a Given Positive Sum
@@ -1942,6 +1943,7 @@ Miscellaneous:
 - **Skewed normal distribution**: `Normal(0, x) + mu + alpha * abs(Normal(0, x))`, where `x` is `sigma / sqrt(alpha * alpha + 1.0)`, `mu` and `sigma` have the same meaning as in the normal distribution, and `alpha` is a shape parameter.
 - **Snedecor's (Fisher's) _F_-distribution**: `GammaDist(m * 0.5, n) / (GammaDist(n * 0.5 + Poisson(sms * 0.5)) * m, 1)`, where `m` and `n` are the numbers of degrees of freedom of two random numbers with a chi-squared distribution, and if `sms` is other than 0, one of those distributions is _noncentral_ with sum of mean squares equal to `sms`.
 - **Stable distribution**: See [**Stable Distribution**](#Stable_Distribution).
+- **Standard complex normal distribution**: See [**Multivariate Normal (Multinormal) Distribution**](#Multivariate_Normal_Multinormal_Distribution).
 - **Suzuki distribution**: See Rayleigh distribution.
 - **Tukey lambda distribution**: `(pow(x, lamda)-pow(1.0-x,lamda))/lamda`, where `x` is `RNDU01()` and `lamda` is a shape parameter (if 0, the result is a logistic distribution).
 - **"Type 0" stable distribution**: See [**Stable Distribution**](#Stable_Distribution).

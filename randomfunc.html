@@ -1128,7 +1128,7 @@ method for generating multiple random points in one call.</p>
 
 <h4>Weighted Choice Without Replacement (Multiple Copies)</h4>
 
-<p>To implement weighted choice <em>without replacement</em> (which can be thought of as drawing a ball <em>without</em> putting it back), generate an index by <code>WeightedChoice</code>, and then decrease the weight for the chosen index by 1.  In this way, <strong>each weight behaves like the number of &quot;copies&quot; of each item</strong>. This technique, though, will only work properly if all the weights are integers 0 or greater.  The pseudocode below is an example of this.</p>
+<p>For positive integer weights, to implement weighted choice <em>without replacement</em> (which can be thought of as drawing a ball <em>without</em> putting it back), generate an index by <code>WeightedChoice</code>, and then decrease the weight for the chosen index by 1.  In this way, <strong>each weight behaves like the number of &quot;copies&quot; of each item</strong>. The pseudocode below is an example of this.</p>
 
 <pre>// Get the sum of weights.
 // NOTE: This code assumes--
@@ -2139,6 +2139,7 @@ method for generating multiple random points in one call.</p>
 <li>A <strong>Beckmann distribution</strong> can be sampled by calculating <code>sqrt(x*x+y*y)</code>, where <code>x</code> and <code>y</code> are the two numbers in a binormal random pair (see example 1).</li>
 <li>A <strong>Rice (Rician) distribution</strong> is a Beckmann distribution in which the binormal random pair is generated with <code>m1 = m2 = a / sqrt(2)</code>, <code>rho = 0</code>, and <code>s1 = s2 = b</code>, where <code>a</code> and <code>b</code> are the parameters to the Rice distribution.</li>
 <li>A <strong>Rice&ndash;Norton distributed</strong> random variable is the norm (see the appendix) of the following point: <code>MultivariateNormal([v,v,v],[[w,0,0],[0,w,0],[0,0,w]])</code>, where <code>v = a/sqrt(m*2)</code>, <code>w = b*b/m</code>, and <code>a</code>, <code>b</code>, and <code>m</code> are the parameters to the Rice&ndash;Norton distribution.</li>
+<li>A <strong>standard <a href="https://en.wikipedia.org/wiki/Complex_normal_distribution"><strong>complex normal distribution</strong></a></strong> is a binormal distribution in which the binormal random pair is generated with <code>s1 = s2 = sqrt(0.5)</code> and treated as the real and imaginary parts of a complex number.</li>
 </ol>
 </blockquote>
 
@@ -2332,6 +2333,7 @@ the two parameters of the beta distribution, and <code>trials</code> is a parame
 <li><strong>Skewed normal distribution</strong>: <code>Normal(0, x) + mu + alpha * abs(Normal(0, x))</code>, where <code>x</code> is <code>sigma / sqrt(alpha * alpha + 1.0)</code>, <code>mu</code> and <code>sigma</code> have the same meaning as in the normal distribution, and <code>alpha</code> is a shape parameter.</li>
 <li><strong>Snedecor&#39;s (Fisher&#39;s) <em>F</em>-distribution</strong>: <code>GammaDist(m * 0.5, n) / (GammaDist(n * 0.5 + Poisson(sms * 0.5)) * m, 1)</code>, where <code>m</code> and <code>n</code> are the numbers of degrees of freedom of two random numbers with a chi-squared distribution, and if <code>sms</code> is other than 0, one of those distributions is <em>noncentral</em> with sum of mean squares equal to <code>sms</code>.</li>
 <li><strong>Stable distribution</strong>: See <a href="#Stable_Distribution"><strong>Stable Distribution</strong></a>.</li>
+<li><strong>Standard complex normal distribution</strong>: See <a href="#Multivariate_Normal_Multinormal_Distribution"><strong>Multivariate Normal (Multinormal) Distribution</strong></a>.</li>
 <li><strong>Suzuki distribution</strong>: See Rayleigh distribution.</li>
 <li><strong>Tukey lambda distribution</strong>: <code>(pow(x, lamda)-pow(1.0-x,lamda))/lamda</code>, where <code>x</code> is <code>RNDU01()</code> and <code>lamda</code> is a shape parameter (if 0, the result is a logistic distribution).</li>
 <li><strong>&quot;Type 0&quot; stable distribution</strong>: See <a href="#Stable_Distribution"><strong>Stable Distribution</strong></a>.</li>
