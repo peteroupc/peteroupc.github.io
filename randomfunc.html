@@ -969,22 +969,26 @@ END METHOD
 END METHOD
 </pre>
 
+<p>There are several kinds of random walks.</p>
+
+<ol>
+<li>A <strong>white noise process</strong> is simulated by creating a list of random numbers generated the same way.  Such a process generally models behavior over time that does not depend on the time or the current state.  Examples include <code>Normal(0, 1)</code> (for modeling <em>Gaussian white noise</em>) and <code>Binomial(1, p)</code> (for modeling a <em>Bernoulli process</em>, where each number is 0 or 1 depending on the probability <code>p</code>).</li>
+<li><strong>Requires random real numbers:</strong> A <strong>continuous-time process</strong> models random behavior at every moment, not just at discrete times.  There are two popular examples:
+
+<ul>
+<li>A <em>Wiener process</em> has random states and jumps that are normally distributed (a process of this kind is also known as <em>Brownian motion</em>). For a random walk that follows a Wiener process, <code>STATEJUMP()</code> is <code>Normal(mu * timediff, sigma * sqrt(timediff))</code>, where  <code>mu</code> is the average value per time unit, <code>sigma</code> is the volatility, and <code>timediff</code> is the time difference between samples.</li>
+<li>In a <em>Poisson process</em>, the time between each event is a random exponential variable, namely, <code>-ln(RNDU01ZeroOneExc()) / rate</code>, where <code>rate</code> is the average number of events per time unit. An <em>inhomogeneous Poisson process</em> results if <code>rate</code> can vary with the &quot;timestamp&quot; before each event jump.</li>
+</ul></li>
+</ol>
+
 <blockquote>
 <p><strong>Examples:</strong></p>
 
 <ol>
 <li>If <code>STATEJUMP()</code> is <code>RNDINT(1) * 2 - 1</code>, the random walk generates numbers that each differ from the last by -1 or 1, chosen at random.</li>
 <li>If <code>STATEJUMP()</code> is <code>RNDRANGE(-1, 1)</code>, the random state is advanced by a random real number in the interval [-1, 1].</li>
-<li>If <code>STATEJUMP()</code> is <code>Binomial(1, p)</code>, the random walk models a <em>binomial process</em>, where the state is advanced with probability <code>p</code>.</li>
-<li>If <code>STATEJUMP()</code> is <code>Binomial(1, p) * 2 - 1</code>, the random walk generates numbers that each differ from the last by -1 or 1 depending on the probability <code>p</code>.</li>
-</ol>
-
-<p><strong>Notes:</strong></p>
-
-<ol>
-<li> A random process can also be simulated by creating a list of random numbers generated the same way.  Such a process generally models behavior over time that does not depend on the time or the current state.  Examples of this include <code>Normal(0, 1)</code> (for modeling <em>Gaussian white noise</em>) and <code>Binomial(1, p)</code> (for modeling a <em>Bernoulli process</em>, where each number is 0 or 1 depending on the probability <code>p</code>).</li>
-<li> Some random walks model random behavior at every moment, not just at discrete times.  One example is a <em>Wiener process</em>, with random states and jumps that are normally distributed (a process of this kind is also known as <em>Brownian motion</em>).  (For a random walk that follows a Wiener process, <code>STATEJUMP()</code> is <code>Normal(mu * timediff, sigma * sqrt(timediff))</code>, where  <code>mu</code> is the average value per time unit, <code>sigma</code> is the volatility, and <code>timediff</code> is the time difference between samples.)</li>
-<li> Some random walks model state changes happening at random times. One example is a <em>Poisson process</em>, in which the time between each event is a random exponential variable (that random variable is <code>-ln(RNDU01ZeroOneExc()) / rate</code>, where <code>rate</code> is the average number of events per time unit; an <em>inhomogeneous Poisson process</em> results if <code>rate</code> can vary with the &quot;timestamp&quot; before each event jump).</li>
+<li><strong>Requires random real numbers:</strong> If <code>STATEJUMP()</code> is <code>Binomial(1, p)</code>, the random walk models a <em>binomial process</em>, where the state is advanced with probability <code>p</code>.</li>
+<li><strong>Requires random real numbers:</strong> If <code>STATEJUMP()</code> is <code>Binomial(1, p) * 2 - 1</code>, the random walk generates numbers that each differ from the last by -1 or 1 depending on the probability <code>p</code>.</li>
 </ol>
 </blockquote>
 
@@ -1097,15 +1101,10 @@ method for generating multiple random points in one call.</p>
 <p><strong>Examples:</strong></p>
 
 <ol>
-<li><p>Assume we have the following list: <code>[&quot;apples&quot;, &quot;oranges&quot;, &quot;bananas&quot;, &quot;grapes&quot;]</code>, and <code>weights</code> is the following: <code>[3, 15, 1, 2]</code>.  The weight for &quot;apples&quot; is 3, and the weight for &quot;oranges&quot; is 15.  Since &quot;oranges&quot; has a higher weight than &quot;apples&quot;, the index for &quot;oranges&quot; (1) is more likely to be chosen than the index for &quot;apples&quot; (0) with the <code>WeightedChoice</code> method.  The following pseudocode implements how to get a randomly chosen item from the list with that method.</p>
-
-<pre> index = WeightedChoice(weights)
- // Get the actual item
- item = list[index]
-</pre></li>
-<li><p>Assume the weights from example 1 are used and the list contains ranges of numbers instead of strings: <code>[[0, 5], [5, 10], [10, 11], [11, 13]]</code>.  If a random range is chosen, a random number can be chosen from that range using code like the following: <code>number = RNDRANGEMaxExc(item[0], item[1])</code>. (See also &quot;<a href="#Mixtures_of_Distributions"><strong>Mixtures of Distributions</strong></a>&quot;.)</p></li>
-<li>Assume the weights from example 1 are used and the list contains the following: <code>[0, 5, 10, 11, 13]</code> (one more item than the weights).  This expresses four ranges, the same as in example 2.  After a random index is chosen with <code>index = WeightedChoice(weights)</code>, a random number can be chosen from the corresponding range using code like the following: <code>number = RNDRANGEMaxExc(list[index], list[index + 1])</code>. (This is how the C++ library expresses a <em>piecewise constant distribution</em>.)</li>
-<li>A <a href="https://en.wikipedia.org/wiki/Markov_chain"><strong>Markov chain</strong></a> models one or more <em>states</em> (for example, individual letters or syllables), and stores the probabilities to transition from one state to another (e.g., &quot;b&quot; to &quot;e&quot; with a probability of 0.2, or &quot;b&quot; to &quot;b&quot; with a probability of 0.01).  Thus, each state can be seen as having its own list of <em>weights</em> for each relevant state transition.  For example, a Markov chain for generating <strong>&quot;pronounceable&quot; words</strong>, or words similar to natural-language words, can include &quot;start&quot; and &quot;stop&quot; states for the start and end of the word, respectively.</li>
+<li>Assume we have the following list: <code>[&quot;apples&quot;, &quot;oranges&quot;, &quot;bananas&quot;, &quot;grapes&quot;]</code>, and <code>weights</code> is the following: <code>[3, 15, 1, 2]</code>.  The weight for &quot;apples&quot; is 3, and the weight for &quot;oranges&quot; is 15.  Since &quot;oranges&quot; has a higher weight than &quot;apples&quot;, the index for &quot;oranges&quot; (1) is more likely to be chosen than the index for &quot;apples&quot; (0) with the <code>WeightedChoice</code> method.  The following idiom implements how to get a randomly chosen item from the list with that method: <code>item = list[WeightedChoice(weights)]</code>.</li>
+<li><strong>Requires random real numbers:</strong> Assume the weights from example 1 are used and the list contains ranges of numbers instead of strings: <code>[[0, 5], [5, 10], [10, 11], [11, 13]]</code>.  If a random range is chosen, a random number can be chosen from that range using code like the following: <code>number = RNDRANGEMaxExc(item[0], item[1])</code>. (See also &quot;<a href="#Mixtures_of_Distributions"><strong>Mixtures of Distributions</strong></a>&quot;.)</li>
+<li><strong>Requires random real numbers:</strong> Assume the weights from example 1 are used and the list contains the following: <code>[0, 5, 10, 11, 13]</code> (one more item than the weights).  This expresses four ranges, the same as in example 2.  After a random index is chosen with <code>index = WeightedChoice(weights)</code>, a random number can be chosen from the corresponding range using code like the following: <code>number = RNDRANGEMaxExc(list[index], list[index + 1])</code>. (This is how the C++ library expresses a <em>piecewise constant distribution</em>.)</li>
+<li>A <a href="https://en.wikipedia.org/wiki/Markov_chain"><strong>Markov chain</strong></a> models one or more <em>states</em> (for example, individual letters or syllables), and stores the probabilities to transition from one state to another (e.g., &quot;b&quot; to &quot;e&quot; with a chance of 20 percent, or &quot;b&quot; to &quot;b&quot; with a chance of 1 percent).  Thus, each state can be seen as having its own list of <em>weights</em> for each relevant state transition.  For example, a Markov chain for generating <strong>&quot;pronounceable&quot; words</strong>, or words similar to natural-language words, can include &quot;start&quot; and &quot;stop&quot; states for the start and end of the word, respectively.</li>
 </ol>
 </blockquote>
 
