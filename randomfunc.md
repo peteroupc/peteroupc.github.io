@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on June 4, 2017; last updated on Apr. 16, 2019.
+Begun on June 4, 2017; last updated on Apr. 17, 2019.
 
 Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.
 
@@ -310,7 +310,7 @@ where `MAXINT` is an integer greater than 0, the following pseudocode for `RNDIN
 >         // Choose a random date-and-time
 >         // in [dtnum1, dtnum2].  Any other
 >         // random selection strategy can be
->         // used here.
+>         // used here instead.
 >         num = RNDINTRANGE(date1, date2)
 >         result = NUMBER_TO_DATETIME(num)
 
@@ -357,7 +357,7 @@ In practice, memory is usually divided into _bytes_, or 8-bit nonnegative intege
 This section defines methods that generate uniform random real numbers.
 
 However, whenever possible, **applications should work with random integers**, rather than other random real numbers.  This is because:
-- Computers can represent integers more naturally than other real numbers, making random integer generation algorithms more portable and less prone to inaccuracy than real number generation algorithms.
+- Computers can represent integers more naturally than other real numbers, making random integer generation algorithms more portable and more numerically stable than real number generation algorithms.
 - No computer can choose from among all real numbers between two others, since there are infinitely many of them.
 
 <a id=RNDU01_Family_Random_Numbers_Bounded_by_0_and_1></a>
@@ -1109,7 +1109,7 @@ A _mixture_ consists of two or more probability distributions with separate prob
 > 3. Take a set of nonoverlapping integer ranges.  To choose a random integer from those ranges independently and uniformly:
 >     - Create a list (`weights`) of weights for each range.  Each range is given a weight of `(mx - mn) + 1`, where `mn` is that range's minimum and `mx` is its maximum.
 >     - Choose an index using `WeightedChoice(weights)`, then generate `RNDINTRANGE(mn, mx)`, where `mn` is the corresponding range's minimum and `mx` is its maximum.
-> 4. **Requires random real numbers:** Example 3 can be adapted to nonoverlapping real numbers by assigning weights `mx - mn` instead of `(mx - mn) + 1` and using `RNDRANGEMaxExc` instead of `RNDINTRANGE`.  Generating random real numbers is discouraged, though.
+> 4. **Requires random real numbers:** Example 3 can be adapted to nonoverlapping real number ranges by assigning weights `mx - mn` instead of `(mx - mn) + 1` and using `RNDRANGEMaxExc` instead of `RNDINTRANGE`.  Generating random real numbers is discouraged, though.
 > 5. **Requires random real numbers:** A **hyperexponential distribution** is a mixture of [**exponential distributions**](#Gamma_Distribution), each one with a separate weight and separate rate.  An example is below.
 >
 >         index = WeightedChoice([0.6, 0.3, 0.1])
@@ -1165,7 +1165,7 @@ To generate a _censored_ random number, generate a random number as usual, then&
 - if that number is less than a minimum threshold, use the minimum threshold instead, and/or
 - if that number is greater than a maximum threshold, use the maximum threshold instead.
 
-To generate a _truncated_ probability distribution, generate random numbers as usual until a number generated this way is not less than a minimum threshold, not greater than a maximum threshold, or both.
+To generate a _truncated_ random number, generate random numbers as usual until a number generated this way is not less than a minimum threshold, not greater than a maximum threshold, or both.
 
 <a id=Random_Numbers_from_a_Distribution_of_Data_Points></a>
 ### Random Numbers from a Distribution of Data Points
@@ -1257,7 +1257,7 @@ The following method generates a random result of rolling virtual dice.<sup>[**(
 <a id=Optimization_for_Many_Dice></a>
 #### Optimization for Many Dice
 
-**Requires random real numbers.** If there are many dice to roll, the following pseudocode implements a faster alternative, which uses the fact that the dice-roll distribution approaches a "discrete" normal distribution as the number of dice increases.
+**Requires random real numbers.** If there are many dice to roll, the following pseudocode implements a faster approximation, which uses the fact that the dice-roll distribution approaches a "discrete" normal distribution as the number of dice increases.
 
     METHOD DiceRoll2(dice, sides, bonus)
       if dice < 50: return DiceRoll(dice,sides,bonus)
@@ -1273,12 +1273,7 @@ The following method generates a random result of rolling virtual dice.<sup>[**(
 <a id=Hypergeometric_Distribution></a>
 ### Hypergeometric Distribution
 
-The following method generates a random integer that follows a _hypergeometric distribution_.
-When a given number of items are drawn at random without replacement from a collection of items
-each labeled either `1` or `0`,  the random integer expresses the number of items drawn
-this way that are labeled `1`.  In the method below, `trials` is the number of items
-drawn at random, `ones` is the number of items labeled `1` in the set, and `count` is
-the number of items labeled `1` or `0` in that set.
+The following method generates a random integer that follows a _hypergeometric distribution_.  When a given number of items are drawn at random without replacement from a collection of items each labeled either `1` or `0`,  the random integer expresses the number of items drawn this way that are labeled `1`.  In the method below, `trials` is the number of items drawn at random, `ones` is the number of items labeled `1` in the set, and `count` is the number of items labeled `1` or `0` in that set.
 
     METHOD Hypergeometric(trials, ones, count)
         if ones < 0 or count < 0 or trials < 0 or ones > count or trials > count
@@ -1348,7 +1343,6 @@ The following pseudocode shows how to generate integers with a given positive su
 >
 > 1. Generating a uniformly randomly chosen combination of `N` numbers with a given positive average `avg`, is equivalent to generating a uniformly randomly chosen combination of `N` numbers with the sum `N * avg`.
 > 2. Generating a uniformly randomly chosen combination of `N` numbers `min` or greater and with a given positive sum `sum` is equivalent to generating a uniformly randomly chosen combination of `N` numbers with the sum `sum - n * min`, then adding `min` to each number generated this way.
->
 
 <a id=Multinomial_Distribution></a>
 ### Multinomial Distribution
@@ -1652,9 +1646,7 @@ The algorithm below is based on the Best&ndash;Fisher algorithm from 1979 (as de
 
 **Requires random real numbers.**
 
-As more and more independent random numbers from the same distribution are added
-together, their distribution tends to a [**_stable distribution_**](https://en.wikipedia.org/wiki/Stable_distribution),
-which resembles a curve with a single peak, but with generally "fatter" tails than the normal distribution.  The pseudocode below uses the Chambers&ndash;Mallows&ndash;Stuck algorithm.  The `Stable` method, implemented below, takes two parameters:
+As more and more independent random numbers from the same distribution are added together, their distribution tends to a [**_stable distribution_**](https://en.wikipedia.org/wiki/Stable_distribution), which resembles a curve with a single peak, but with generally "fatter" tails than the normal distribution.  The pseudocode below uses the Chambers&ndash;Mallows&ndash;Stuck algorithm.  The `Stable` method, implemented below, takes two parameters:
 
 - `alpha` is a stability index in the interval (0, 2].
 - `beta` is a skewness in the interval [-1, 1]; if `beta` is 0, the curve is symmetric.

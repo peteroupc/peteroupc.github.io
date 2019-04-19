@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
-<p>Begun on June 4, 2017; last updated on Apr. 16, 2019.</p>
+<p>Begun on June 4, 2017; last updated on Apr. 17, 2019.</p>
 
 <p>Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.</p>
 
@@ -407,7 +407,7 @@ dtnum2 = DATETIME_TO_NUMBER(date2)
 // Choose a random date-and-time
 // in [dtnum1, dtnum2].  Any other
 // random selection strategy can be
-// used here.
+// used here instead.
 num = RNDINTRANGE(date1, date2)
 result = NUMBER_TO_DATETIME(num)
 </pre></li>
@@ -467,7 +467,7 @@ END METHOD
 <p>However, whenever possible, <strong>applications should work with random integers</strong>, rather than other random real numbers.  This is because:</p>
 
 <ul>
-<li>Computers can represent integers more naturally than other real numbers, making random integer generation algorithms more portable and less prone to inaccuracy than real number generation algorithms.</li>
+<li>Computers can represent integers more naturally than other real numbers, making random integer generation algorithms more portable and more numerically stable than real number generation algorithms.</li>
 <li>No computer can choose from among all real numbers between two others, since there are infinitely many of them.</li>
 </ul>
 
@@ -1372,7 +1372,7 @@ else: number = RNDINTRANGE(1,6) +
 <li>Create a list (<code>weights</code>) of weights for each range.  Each range is given a weight of <code>(mx - mn) + 1</code>, where <code>mn</code> is that range&#39;s minimum and <code>mx</code> is its maximum.</li>
 <li>Choose an index using <code>WeightedChoice(weights)</code>, then generate <code>RNDINTRANGE(mn, mx)</code>, where <code>mn</code> is the corresponding range&#39;s minimum and <code>mx</code> is its maximum.</li>
 </ul></li>
-<li><strong>Requires random real numbers:</strong> Example 3 can be adapted to nonoverlapping real numbers by assigning weights <code>mx - mn</code> instead of <code>(mx - mn) + 1</code> and using <code>RNDRANGEMaxExc</code> instead of <code>RNDINTRANGE</code>.  Generating random real numbers is discouraged, though.</li>
+<li><strong>Requires random real numbers:</strong> Example 3 can be adapted to nonoverlapping real number ranges by assigning weights <code>mx - mn</code> instead of <code>(mx - mn) + 1</code> and using <code>RNDRANGEMaxExc</code> instead of <code>RNDINTRANGE</code>.  Generating random real numbers is discouraged, though.</li>
 <li><p><strong>Requires random real numbers:</strong> A <strong>hyperexponential distribution</strong> is a mixture of <a href="#Gamma_Distribution"><strong>exponential distributions</strong></a>, each one with a separate weight and separate rate.  An example is below.</p>
 
 <pre>index = WeightedChoice([0.6, 0.3, 0.1])
@@ -1443,7 +1443,7 @@ of <em>n</em> random numbers that follow an exponential distribution and each ha
 <li>if that number is greater than a maximum threshold, use the maximum threshold instead.</li>
 </ul>
 
-<p>To generate a <em>truncated</em> probability distribution, generate random numbers as usual until a number generated this way is not less than a minimum threshold, not greater than a maximum threshold, or both.</p>
+<p>To generate a <em>truncated</em> random number, generate random numbers as usual until a number generated this way is not less than a minimum threshold, not greater than a maximum threshold, or both.</p>
 
 <p><a id=Random_Numbers_from_a_Distribution_of_Data_Points></a></p>
 
@@ -1560,7 +1560,7 @@ END METHOD
 
 <h4>Optimization for Many Dice</h4>
 
-<p><strong>Requires random real numbers.</strong> If there are many dice to roll, the following pseudocode implements a faster alternative, which uses the fact that the dice-roll distribution approaches a &quot;discrete&quot; normal distribution as the number of dice increases.</p>
+<p><strong>Requires random real numbers.</strong> If there are many dice to roll, the following pseudocode implements a faster approximation, which uses the fact that the dice-roll distribution approaches a &quot;discrete&quot; normal distribution as the number of dice increases.</p>
 
 <pre>METHOD DiceRoll2(dice, sides, bonus)
   if dice &lt; 50: return DiceRoll(dice,sides,bonus)
@@ -1578,12 +1578,7 @@ END METHOD
 
 <h3>Hypergeometric Distribution</h3>
 
-<p>The following method generates a random integer that follows a <em>hypergeometric distribution</em>.
-When a given number of items are drawn at random without replacement from a collection of items
-each labeled either <code>1</code> or <code>0</code>,  the random integer expresses the number of items drawn
-this way that are labeled <code>1</code>.  In the method below, <code>trials</code> is the number of items
-drawn at random, <code>ones</code> is the number of items labeled <code>1</code> in the set, and <code>count</code> is
-the number of items labeled <code>1</code> or <code>0</code> in that set.</p>
+<p>The following method generates a random integer that follows a <em>hypergeometric distribution</em>.  When a given number of items are drawn at random without replacement from a collection of items each labeled either <code>1</code> or <code>0</code>,  the random integer expresses the number of items drawn this way that are labeled <code>1</code>.  In the method below, <code>trials</code> is the number of items drawn at random, <code>ones</code> is the number of items labeled <code>1</code> in the set, and <code>count</code> is the number of items labeled <code>1</code> or <code>0</code> in that set.</p>
 
 <pre>METHOD Hypergeometric(trials, ones, count)
     if ones &lt; 0 or count &lt; 0 or trials &lt; 0 or ones &gt; count or trials &gt; count
@@ -2005,9 +2000,7 @@ END METHOD
 
 <p><strong>Requires random real numbers.</strong></p>
 
-<p>As more and more independent random numbers from the same distribution are added
-together, their distribution tends to a <a href="https://en.wikipedia.org/wiki/Stable_distribution"><strong><em>stable distribution</em></strong></a>,
-which resembles a curve with a single peak, but with generally &quot;fatter&quot; tails than the normal distribution.  The pseudocode below uses the Chambers&ndash;Mallows&ndash;Stuck algorithm.  The <code>Stable</code> method, implemented below, takes two parameters:</p>
+<p>As more and more independent random numbers from the same distribution are added together, their distribution tends to a <a href="https://en.wikipedia.org/wiki/Stable_distribution"><strong><em>stable distribution</em></strong></a>, which resembles a curve with a single peak, but with generally &quot;fatter&quot; tails than the normal distribution.  The pseudocode below uses the Chambers&ndash;Mallows&ndash;Stuck algorithm.  The <code>Stable</code> method, implemented below, takes two parameters:</p>
 
 <ul>
 <li><code>alpha</code> is a stability index in the interval (0, 2].</li>
