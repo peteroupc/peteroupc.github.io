@@ -256,6 +256,10 @@ Returns 'list'. """
       if numsum>0:
         return [(p/numsum)*sum for p in nums]
 
+  def zero_or_one(self, px, py):
+    """ Returns 1 at probability px/py, 0 otherwise. """
+    return 1 if self.rndintexc(py) < px else 0
+
   def weighted_choice(self, weights):
     return self._weighted_choice_n(weights,1,0)[0]
 
