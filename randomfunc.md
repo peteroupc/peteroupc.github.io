@@ -34,6 +34,7 @@ All the random number methods presented on this page are ultimately based on an 
 - **Requests to provide an implementation of any method given here in other programming languages, in addition to Python.**
 - **If there is enough interest by readers, I may discuss approaches to generate random graphs or matrices.** <!-- Generating a random maze is equivalent to generating a random spanning tree of a mesh graph.  Generating a random path is equivalent to a simple random walk of a (weighted or unweighted) graph. -->
 - **Suggestions to add probability distributions to this document.**
+- **Ways to implement any of the randomization methods given in "Randomization with Real Numbers" using only random integers.
 - **Suggestions to trim the size of this document, such as by limiting it to the most common and most useful methods for generating random numbers.**
 
 <a id=Contents></a>
@@ -49,10 +50,6 @@ All the random number methods presented on this page are ultimately based on an 
     - [**`RNDINTEXC`: Random Integers in \[0, N)**](#RNDINTEXC_Random_Integers_in_0_N)
     - [**`RNDINTEXCRANGE`: Random Integers in \[N, M)**](#RNDINTEXCRANGE_Random_Integers_in_N_M)
     - [**Uniform Random Bits**](#Uniform_Random_Bits)
-    - [**Uniform Random Real Numbers**](#Uniform_Random_Real_Numbers)
-        - [**`RNDU01` Family: Random Numbers Bounded by 0 and 1**](#RNDU01_Family_Random_Numbers_Bounded_by_0_and_1)
-        - [**Alternative Implementation for `RNDU01`**](#Alternative_Implementation_for_RNDU01)
-        - [**`RNDRANGE` Family: Random Numbers in an Arbitrary Interval**](#RNDRANGE_Family_Random_Numbers_in_an_Arbitrary_Interval)
     - [**Certain Programming Environments**](#Certain_Programming_Environments)
 - [**Randomization Techniques**](#Randomization_Techniques)
     - [**Boolean (True/False) Conditions**](#Boolean_True_False_Conditions)
@@ -63,30 +60,37 @@ All the random number methods presented on this page are ultimately based on an 
         - [**Random Character Strings**](#Random_Character_Strings)
         - [**Pseudocode for Random Sampling**](#Pseudocode_for_Random_Sampling)
     - [**Rejection Sampling**](#Rejection_Sampling)
-    - [**Monte Carlo Sampling: Expected Values and Integration**](#Monte_Carlo_Sampling_Expected_Values_and_Integration)
     - [**Random Walks**](#Random_Walks)
     - [**Randomization in Statistical Testing**](#Randomization_in_Statistical_Testing)
-    - [**Low-Discrepancy Sequences**](#Low_Discrepancy_Sequences)
     - [**A Note on Sorting Random Numbers**](#A_Note_on_Sorting_Random_Numbers)
 - [**General Non-Uniform Distributions**](#General_Non_Uniform_Distributions)
     - [**Weighted Choice**](#Weighted_Choice)
         - [**Weighted Choice With Replacement**](#Weighted_Choice_With_Replacement)
         - [**Weighted Choice Without Replacement (Multiple Copies)**](#Weighted_Choice_Without_Replacement_Multiple_Copies)
         - [**Weighted Choice Without Replacement (Single Copies)**](#Weighted_Choice_Without_Replacement_Single_Copies)
-        - [**Weighted Choice Without Replacement (Indefinite-Size List)**](#Weighted_Choice_Without_Replacement_Indefinite_Size_List)
-        - [**Continuous Weighted Choice**](#Continuous_Weighted_Choice)
     - [**Mixtures of Distributions**](#Mixtures_of_Distributions)
     - [**Transformations of Random Numbers**](#Transformations_of_Random_Numbers)
         - [**Censored and Truncated Random Numbers**](#Censored_and_Truncated_Random_Numbers)
-    - [**Random Numbers from a Distribution of Data Points**](#Random_Numbers_from_a_Distribution_of_Data_Points)
-    - [**Random Numbers from an Arbitrary Distribution**](#Random_Numbers_from_an_Arbitrary_Distribution)
-    - [**Gibbs Sampling**](#Gibbs_Sampling)
 - [**Specific Non-Uniform Distributions**](#Specific_Non_Uniform_Distributions)
     - [**Dice**](#Dice)
-        - [**Optimization for Many Dice**](#Optimization_for_Many_Dice)
     - [**Hypergeometric Distribution**](#Hypergeometric_Distribution)
     - [**Random Integers with a Given Positive Sum**](#Random_Integers_with_a_Given_Positive_Sum)
     - [**Multinomial Distribution**](#Multinomial_Distribution)
+- [**Randomization with Real Numbers**](#Randomization_with_Real_Numbers)
+    - [**Uniform Random Real Numbers**](#Uniform_Random_Real_Numbers)
+        - [**`RNDU01` Family: Random Numbers Bounded by 0 and 1**](#RNDU01_Family_Random_Numbers_Bounded_by_0_and_1)
+        - [**Alternative Implementation for `RNDU01`**](#Alternative_Implementation_for_RNDU01)
+        - [**`RNDRANGE` Family: Random Numbers in an Arbitrary Interval**](#RNDRANGE_Family_Random_Numbers_in_an_Arbitrary_Interval)
+    - [**Monte Carlo Sampling: Expected Values and Integration**](#Monte_Carlo_Sampling_Expected_Values_and_Integration)
+    - [**Continuous Random Walks**](#Continuous_Random_Walks)
+    - [**Low-Discrepancy Sequences**](#Low_Discrepancy_Sequences)
+    - [**Weighted Choice Involving Real Numbers**](#Weighted_Choice_Involving_Real_Numbers)
+        - [**Weighted Choice Without Replacement (Indefinite-Size List)**](#Weighted_Choice_Without_Replacement_Indefinite_Size_List)
+        - [**Continuous Weighted Choice**](#Continuous_Weighted_Choice)
+    - [**Random Numbers from a Distribution of Data Points**](#Random_Numbers_from_a_Distribution_of_Data_Points)
+    - [**Random Numbers from an Arbitrary Distribution**](#Random_Numbers_from_an_Arbitrary_Distribution)
+    - [**Gibbs Sampling**](#Gibbs_Sampling)
+        - [**Dice: Optimization for Many Dice**](#Dice_Optimization_for_Many_Dice)
     - [**Normal (Gaussian) Distribution**](#Normal_Gaussian_Distribution)
     - [**Binomial Distribution: Optimization for Many Trials**](#Binomial_Distribution_Optimization_for_Many_Trials)
     - [**Poisson Distribution**](#Poisson_Distribution)
@@ -99,11 +103,11 @@ All the random number methods presented on this page are ultimately based on an 
     - [**Random Real Numbers with a Given Positive Sum**](#Random_Real_Numbers_with_a_Given_Positive_Sum)
     - [**Gaussian and Other Copulas**](#Gaussian_and_Other_Copulas)
     - [**Index of Non-Uniform Distributions**](#Index_of_Non_Uniform_Distributions)
-- [**Geometric Sampling**](#Geometric_Sampling)
-    - [**Random Points Inside a Simplex**](#Random_Points_Inside_a_Simplex)
-    - [**Random Points on the Surface of a Hypersphere**](#Random_Points_on_the_Surface_of_a_Hypersphere)
-    - [**Random Points Inside a Ball or Shell**](#Random_Points_Inside_a_Ball_or_Shell)
-    - [**Random Latitude and Longitude**](#Random_Latitude_and_Longitude)
+    - [**Geometric Sampling**](#Geometric_Sampling)
+        - [**Random Points Inside a Simplex**](#Random_Points_Inside_a_Simplex)
+        - [**Random Points on the Surface of a Hypersphere**](#Random_Points_on_the_Surface_of_a_Hypersphere)
+        - [**Random Points Inside a Ball or Shell**](#Random_Points_Inside_a_Ball_or_Shell)
+        - [**Random Latitude and Longitude**](#Random_Latitude_and_Longitude)
 - [**Acknowledgments**](#Acknowledgments)
 - [**Notes**](#Notes)
 - [**Appendix**](#Appendix)
@@ -357,7 +361,7 @@ In practice, memory is usually divided into _bytes_, or 8-bit nonnegative intege
 For certain programming environments, there are special considerations:
 
 - Shell scripts and Microsoft Windows batch files are designed for running other programs, rather than general-purpose programming.  However, batch files and `bash` (a shell script interpreter) might support a variable which returns a random integer in the interval \[0, 32767\] (called `%RANDOM%` or `$RANDOM`, respectively); neither variable is designed for information security.
-- Query languages such as SQL have no procedural elements such as loops and branches.  Moreover, standard SQL does not include an RNG in its suite of functionality, but popular SQL dialects often do &mdash; with idiosyncratic behavior.<sup>[**(6)**](#Note6)</sup>
+- Query languages such as SQL have no procedural elements such as loops and branches.  Moreover, standard SQL does not include an RNG in its suite of functionality, but popular SQL dialects often do &mdash; with idiosyncratic behavior.<sup>[**(4)**](#Note4)</sup>
 
 Whenever possible, the methods in this document should be implemented in a more general-purpose programming language than query languages, shell scripts, and batch files, especially if information security is a goal.
 
@@ -430,7 +434,7 @@ _Sampling without replacement_  essentially means taking a random item _without_
 <a id=Shuffling></a>
 #### Shuffling
 
-The [**Fisher&ndash;Yates shuffle method**](https://en.wikipedia.org/wiki/Fisher-Yates_shuffle) shuffles a list (puts its items in a random order) such that all permutations (arrangements) of that list are equally likely to occur, assuming the RNG it uses can choose any one of those permutations.  However, that method is also easy to write incorrectly &mdash; see also (Atwood 2007)<sup>[**(7)**](#Note7)</sup>.  The following pseudocode is designed to shuffle a list's contents.
+The [**Fisher&ndash;Yates shuffle method**](https://en.wikipedia.org/wiki/Fisher-Yates_shuffle) shuffles a list (puts its items in a random order) such that all permutations (arrangements) of that list are equally likely to occur, assuming the RNG it uses can choose any one of those permutations.  However, that method is also easy to write incorrectly &mdash; see also (Atwood 2007)<sup>[**(5)**](#Note5)</sup>.  The following pseudocode is designed to shuffle a list's contents.
 
     METHOD Shuffle(list)
        // NOTE: Check size of the list early to prevent
@@ -498,7 +502,7 @@ The following are examples of character lists:
 > **Notes:**
 >
 > 1. If the list of characters is fixed, the list can be created in advance at runtime or compile time, or (if every character takes up the same number of code units) a string type as provided in the programming language can be used to store the list as a string.
-> 2. **Unique random strings:** Often applications need to generate a string of characters that's not only random, but also unique.  This can be done by storing a list (such as a hash table) of strings already generated and checking newly generated strings against that list.<sup>[**(8)**](#Note8)</sup>
+> 2. **Unique random strings:** Often applications need to generate a string of characters that's not only random, but also unique.  This can be done by storing a list (such as a hash table) of strings already generated and checking newly generated strings against that list.<sup>[**(6)**](#Note6)</sup>
 > 3. **Word generation:** This technique could also be used to generate "pronounceable" words, but this is less flexible than other approaches; see also "[**Weighted Choice With Replacement**](#Weighted_Choice_With_Replacement)".
 
 <a id=Pseudocode_for_Random_Sampling></a>
@@ -578,7 +582,7 @@ The following pseudocode implements two methods:
 > 1. Assume a file (`file`) has the lines `"f"`, `"o"`, `"o"`, `"d"`, in that order.  If we modify `RandomKItemsFromFile` as given in notes 2 and 3 there, and treat `MEETS_CRITERIA(item)` above as `item == "o"` (in note 1 of that method), then we can choose a random line number of an "o" line by `RandomKItemsFromFile(file, 1)`.
 > 2. Removing `k` random items from a list of `n` items (`list`) is equivalent to generating a new
 list by `RandomKItemsInOrder(list, n - k)`.
-> 3. **Filtering:** If an application needs to sample the same list (with or without replacement) repeatedly, but only from among a selection of that list's items, it can create a list of items it wants to sample from (or a list of indices to those items), and sample from the new list instead.<sup>[**(9)**](#Note9)</sup>  This won't work well, though, for lists of indefinite or very large size.
+> 3. **Filtering:** If an application needs to sample the same list (with or without replacement) repeatedly, but only from among a selection of that list's items, it can create a list of items it wants to sample from (or a list of indices to those items), and sample from the new list instead.<sup>[**(7)**](#Note7)</sup>  This won't work well, though, for lists of indefinite or very large size.
 
 <a id=Rejection_Sampling></a>
 ### Rejection Sampling
@@ -630,14 +634,14 @@ There are several kinds of random walks.
 Statistical testing uses shuffling and _bootstrapping_ to help draw conclusions on data through randomization.
 
 - [**Shuffling**](#Shuffling) is used when each item in a data set belongs to one of several mutually exclusive groups.  Here, one or more **simulated data sets** are generated by shuffling the original data set and regrouping each item in the shuffled data set in order, such that the number of items in each group for the simulated data set is the same as for the original data set.
-- [**_Bootstrapping_**](https://en.wikipedia.org/wiki/Bootstrapping_%28statistics%29) is a method of creating one or more random samples (simulated data sets) of an existing data set, where the items in each sample are chosen [**at random with replacement**](#Sampling_With_Replacement_Choosing_a_Random_Item_from_a_List).  (Each random sample can contain duplicates this way.)  See also (Brownlee 2018)<sup>[**(10)**](#Note10)</sup>.
+- [**_Bootstrapping_**](https://en.wikipedia.org/wiki/Bootstrapping_%28statistics%29) is a method of creating one or more random samples (simulated data sets) of an existing data set, where the items in each sample are chosen [**at random with replacement**](#Sampling_With_Replacement_Choosing_a_Random_Item_from_a_List).  (Each random sample can contain duplicates this way.)  See also (Brownlee 2018)<sup>[**(8)**](#Note8)</sup>.
 
 After creating the simulated data sets, one or more statistics, such as the mean, are calculated for each simulated data set as well as the original data set, then the statistics for the simulated data sets are compared with those of the original (such comparisons are outside the scope of this document).
 
 <a id=A_Note_on_Sorting_Random_Numbers></a>
 ### A Note on Sorting Random Numbers
 
-In general, sorting random numbers is no different from sorting any other data. (Sorting algorithms are outside this document's scope.) <sup>[**(12)**](#Note12)</sup>
+In general, sorting random numbers is no different from sorting any other data. (Sorting algorithms are outside this document's scope.) <sup>[**(9)**](#Note9)</sup>
 
 <a id=General_Non_Uniform_Distributions></a>
 ## General Non-Uniform Distributions
@@ -789,7 +793,7 @@ A _mixture_ consists of two or more probability distributions with separate prob
 >         else: number = RNDINTRANGE(1,6) +
 >            RNDINTRANGE(1,6) + RNDINTRANGE(1,6)
 >
-> 2. Choosing, independently and uniformly, a random point from a complex shape (in any number of dimensions) is equivalent to doing such sampling from a mixture of simpler shapes that make up the complex shape (here, the `weights` list holds the n-dimensional "volume" of each simpler shape).  For example, a simple closed 2D polygon can be [**_triangulated_**](https://en.wikipedia.org/wiki/Polygon_triangulation), or decomposed into [**triangles**](#Random_Points_Inside_a_Simplex), and a mixture of those triangles can be sampled.<sup>[**(15)**](#Note15)</sup>
+> 2. Choosing, independently and uniformly, a random point from a complex shape (in any number of dimensions) is equivalent to doing such sampling from a mixture of simpler shapes that make up the complex shape (here, the `weights` list holds the n-dimensional "volume" of each simpler shape).  For example, a simple closed 2D polygon can be [**_triangulated_**](https://en.wikipedia.org/wiki/Polygon_triangulation), or decomposed into [**triangles**](#Random_Points_Inside_a_Simplex), and a mixture of those triangles can be sampled.<sup>[**(10)**](#Note10)</sup>
 > 3. Take a set of nonoverlapping integer ranges.  To choose a random integer from those ranges independently and uniformly:
 >     - Create a list (`weights`) of weights for each range.  Each range is given a weight of `(mx - mn) + 1`, where `mn` is that range's minimum and `mx` is its maximum.
 >     - Choose an index using `WeightedChoice(weights)`, then generate `RNDINTRANGE(mn, mx)`, where `mn` is the corresponding range's minimum and `mx` is its maximum.
@@ -809,9 +813,9 @@ A _mixture_ consists of two or more probability distributions with separate prob
 Random numbers can be generated by combining and/or transforming one or more random numbers
 and/or discarding some of them.
 
-As an example, [**"Probability and Games: Damage Rolls"**](http://www.redblobgames.com/articles/probability/damage-rolls.html) by Red Blob Games includes interactive graphics showing score distributions for lowest-of, highest-of, drop-the-lowest, and reroll game mechanics.<sup>[**(16)**](#Note16)</sup>  These and similar distributions can be generalized as follows.
+As an example, [**"Probability and Games: Damage Rolls"**](http://www.redblobgames.com/articles/probability/damage-rolls.html) by Red Blob Games includes interactive graphics showing score distributions for lowest-of, highest-of, drop-the-lowest, and reroll game mechanics.<sup>[**(11)**](#Note11)</sup>  These and similar distributions can be generalized as follows.
 
-Generate one or more random numbers, each with a separate probability distribution, then<sup>[**(17)**](#Note17)</sup>:
+Generate one or more random numbers, each with a separate probability distribution, then<sup>[**(12)**](#Note12)</sup>:
 
 1. **Highest-of:**  Choose the highest generated number.
 2. **Drop-the-lowest:**  Add all generated numbers except the lowest.
@@ -821,7 +825,7 @@ Generate one or more random numbers, each with a separate probability distributi
 6. **Reroll-the-highest:**  Add all generated numbers except the highest, then add a number generated randomly by a separate probability distribution.
 7. **Sum:** Add all generated numbers.
 8. **Mean:** Find the mean of all generated numbers (see the appendix).
-9. **Geometric transformation:** Treat the numbers as an _n_-dimensional point, then apply a geometric transformation, such as a rotation or other _affine transformation_<sup>[**(18)**](#Note18)</sup>, to that point.
+9. **Geometric transformation:** Treat the numbers as an _n_-dimensional point, then apply a geometric transformation, such as a rotation or other _affine transformation_<sup>[**(13)**](#Note13)</sup>, to that point.
 
 If the probability distributions are the same, then strategies 1 to 3 make higher numbers more likely, and strategies 4 to 6, lower numbers.
 
@@ -831,17 +835,17 @@ If the probability distributions are the same, then strategies 1 to 3 make highe
 >
 > 1. The idiom `min(RNDINTRANGE(1, 6), RNDINTRANGE(1, 6))` takes the lowest of two six-sided die results (strategy 4).  Due to this approach, 1 is more likely to occur than 6.
 > 2. The idiom `RNDINTRANGE(1, 6) + RNDINTRANGE(1, 6)` takes the result of two six-sided dice (see also "[**Dice**](#Dice)") (strategy 7).
-> 3. A [**binomial distribution**](#Binomial_Distribution_Optimization_for_Many_Trials) models the sum of `n` random numbers each generated by `ZeroOrOne(px,py)` (strategy 7), that is, the number of successes in `n` independent trials, each with a success probability of `px`/`py`.<sup>[**(19)**](#Note19)</sup>
+> 3. A [**binomial distribution**](#Binomial_Distribution_Optimization_for_Many_Trials) models the sum of `n` random numbers each generated by `ZeroOrOne(px,py)` (strategy 7), that is, the number of successes in `n` independent trials, each with a success probability of `px`/`py`.<sup>[**(14)**](#Note14)</sup>
 >
 > **Requires random real numbers:**
 >
 > 1. Sampling a **Bates distribution** involves sampling _n_ random numbers by `RNDRANGE(minimum, maximum)`, then finding the mean of those numbers (strategy 8).
-> 2. A **compound Poisson distribution** models the sum<sup>[**(17)**](#Note17)</sup>
+> 2. A **compound Poisson distribution** models the sum<sup>[**(12)**](#Note12)</sup>
  of _n_ random numbers each generated the same way, where _n_ follows a [**Poisson distribution**](#Poisson_Distribution) (e.g., `n = Poisson(10)` for an average of 10 numbers) (strategy 7).
 > 3. A **P&oacute;lya&ndash;Aeppli distribution** is a compound Poisson distribution in which the random numbers are generated by `NegativeBinomial(1, 1-p)+1` for a fixed `p`.
-> 4. A **hypoexponential distribution** models the sum<sup>[**(17)**](#Note17)</sup>
+> 4. A **hypoexponential distribution** models the sum<sup>[**(12)**](#Note12)</sup>
  of _n_ random numbers that follow an exponential distribution and each have a separate `lamda` parameter (see "[**Gamma Distribution**](#Gamma_Distribution)").
-> 5. A random point (`x`, `y`) can be transformed (strategy 9) to derive a point with **correlated random** coordinates (old `x`, new `x`) as follows (see (Saucier 2000)<sup>[**(20)**](#Note20)</sup>, sec. 3.8): `[x, y*sqrt(1 - rho * rho) + rho * x]`, where `x` and `y` are independent random numbers generated the same way, and `rho` is a _correlation coefficient_ in the interval \[-1, 1\] (if `rho` is 0, the variables are uncorrelated).
+> 5. A random point (`x`, `y`) can be transformed (strategy 9) to derive a point with **correlated random** coordinates (old `x`, new `x`) as follows (see (Saucier 2000)<sup>[**(15)**](#Note15)</sup>, sec. 3.8): `[x, y*sqrt(1 - rho * rho) + rho * x]`, where `x` and `y` are independent random numbers generated the same way, and `rho` is a _correlation coefficient_ in the interval \[-1, 1\] (if `rho` is 0, the variables are uncorrelated).
 
 <a id=Censored_and_Truncated_Random_Numbers></a>
 #### Censored and Truncated Random Numbers
@@ -851,6 +855,7 @@ To generate a _censored_ random number, generate a random number as usual, then&
 - if that number is greater than a maximum threshold, use the maximum threshold instead.
 
 To generate a _truncated_ random number, generate random numbers as usual until a number generated this way is not less than a minimum threshold, not greater than a maximum threshold, or both.
+
 <a id=Specific_Non_Uniform_Distributions></a>
 ## Specific Non-Uniform Distributions
 
@@ -859,7 +864,7 @@ This section contains information on some of the most common non-uniform probabi
 <a id=Dice></a>
 ### Dice
 
-The following method generates a random result of rolling virtual dice.<sup>[**(26)**](#Note26)</sup>  It takes three parameters: the number of dice (`dice`), the number of sides in each die (`sides`), and a number to add to the result (`bonus`) (which can be negative, but the result of the subtraction is 0 if that result is greater).
+The following method generates a random result of rolling virtual dice. It takes three parameters: the number of dice (`dice`), the number of sides in each die (`sides`), and a number to add to the result (`bonus`) (which can be negative, but the result of the subtraction is 0 if that result is greater).
 
     METHOD DiceRoll(dice, sides, bonus)
         if dice < 0 or sides < 1: return error
@@ -872,7 +877,6 @@ The following method generates a random result of rolling virtual dice.<sup>[**(
 > - four six-sided virtual dice ("4d6") is `DiceRoll(4,6,0)`,
 > - three ten-sided virtual dice, with 4 added ("3d10 + 4"), is `DiceRoll(3,10,4)`, and
 > - two six-sided virtual dice, with 2 subtracted ("2d6 - 2"), is `DiceRoll(2,6,-2)`.
-
 
 <a id=Hypergeometric_Distribution></a>
 ### Hypergeometric Distribution
@@ -905,7 +909,7 @@ The following method generates a random integer that follows a _hypergeometric d
 <a id=Random_Integers_with_a_Given_Positive_Sum></a>
 ### Random Integers with a Given Positive Sum
 
-The following pseudocode shows how to generate integers with a given positive sum, where the combination is chosen uniformly at random from among all possible combinations. (The algorithm for this was presented in (Smith and Tromble 2004)<sup>[**(27)**](#Note27)</sup>.)  In the pseudocode below&mdash;
+The following pseudocode shows how to generate integers with a given positive sum, where the combination is chosen uniformly at random from among all possible combinations. (The algorithm for this was presented in (Smith and Tromble 2004)<sup>[**(16)**](#Note16)</sup>.)  In the pseudocode below&mdash;
 
 - the method `PositiveIntegersWithSum` returns `n` integers greater than 0 that sum to `total`,
 - the method `IntegersWithSum` returns `n` integers 0 or greater that sum to `total`, and
@@ -967,6 +971,7 @@ The _multinomial distribution_ models the number of times each of several mutual
         return list
     END METHOD
 
+<a id=Randomization_with_Real_Numbers></a>
 ## Randomization with Real Numbers
 
 This section describes randomization methods that use random real numbers, not just random integers.
@@ -974,7 +979,6 @@ This section describes randomization methods that use random real numbers, not j
 However, whenever possible, **applications should work with random integers**, rather than other random real numbers.  This is because:
 - Computers can represent integers more naturally than other real numbers, making random integer generation algorithms more portable and more numerically stable than real number generation algorithms.
 - No computer can choose from among all real numbers between two others, since there are infinitely many of them.
-
 
 <a id=Uniform_Random_Real_Numbers></a>
 ### Uniform Random Real Numbers
@@ -1024,7 +1028,7 @@ In the idioms above:
 <a id=Alternative_Implementation_for_RNDU01></a>
 #### Alternative Implementation for `RNDU01`
 
-For Java's `double` and `float` (or generally, any fixed-precision binary floating-point format with fixed exponent range), the following pseudocode for `RNDU01()` can be used instead. See also (Downey 2007)<sup>[**(4)**](#Note4)</sup>.  In the pseudocode below, `SIGBITS` is the binary floating-point format's precision (the number of binary digits the format can represent without loss; e.g., 53 for Java's `double`).
+For Java's `double` and `float` (or generally, any fixed-precision binary floating-point format with fixed exponent range), the following pseudocode for `RNDU01()` can be used instead. See also (Downey 2007)<sup>[**(17)**](#Note17)</sup>.  In the pseudocode below, `SIGBITS` is the binary floating-point format's precision (the number of binary digits the format can represent without loss; e.g., 53 for Java's `double`).
 
     METHOD RNDU01()
         e=-SIGBITS
@@ -1084,7 +1088,7 @@ For other number formats (including Java's `double` and `float`), the pseudocode
        end
     END METHOD
 
-**REMARK:** Multiplying by `RNDU01()` in both cases above is not ideal, since doing so merely stretches that number to fit the range if the range is greater than 1.  There may be more sophisticated ways to fill the gaps that result this way in `RNDRANGE`.<sup>[**(5)**](#Note5)</sup>
+**REMARK:** Multiplying by `RNDU01()` in both cases above is not ideal, since doing so merely stretches that number to fit the range if the range is greater than 1.  There may be more sophisticated ways to fill the gaps that result this way in `RNDRANGE`.<sup>[**(18)**](#Note18)</sup>
 
 Three related methods can be derived from `RNDRANGE` as follows:
 
@@ -1098,7 +1102,6 @@ Three related methods can be derived from `RNDRANGE` as follows:
 > **Example:** To generate a random point inside an N-dimensional box, generate `RNDRANGEMaxExc(mn, mx)` for each coordinate, where `mn` and `mx` are the lower and upper bounds for that coordinate.  For example&mdash;
 > - to generate a random point inside a rectangle bounded in \[0, 2\) along the X axis and \[3, 6\) along the Y axis, generate `[RNDRANGEMaxExc(0,2), RNDRANGEMaxExc(3,6)]`, and
 > - to generate a complex number with real and imaginary parts bounded in \[0, 1\], generate `[RNDU01(), RNDU01()]`.
-
 
 <a id=Monte_Carlo_Sampling_Expected_Values_and_Integration></a>
 ### Monte Carlo Sampling: Expected Values and Integration
@@ -1132,10 +1135,10 @@ If the sampling domain is also limited to random numbers meeting a given conditi
 
 A third application of Monte Carlo sampling is [**stochastic optimization**](http://mathworld.wolfram.com/StochasticOptimization.html) for finding the minimum or maximum value of a function; one example is _simulated annealing_.
 
+<a id=Continuous_Random_Walks></a>
 ### Continuous Random Walks
 
 -. If `STATEJUMP()` is `RNDRANGE(-1, 1)`, the random state is advanced by a random real number in the interval [-1, 1].
-
 
 - **Requires random real numbers:** A **continuous-time process** models random behavior at every moment, not just at discrete times.  There are two popular examples:
     - A _Wiener process_ has random states and jumps that are normally distributed (a process of this kind is also known as _Brownian motion_). For a random walk that follows a Wiener process, `STATEJUMP()` is `Normal(mu * timediff, sigma * sqrt(timediff))`, where  `mu` is the average value per time unit, `sigma` is the volatility, and `timediff` is the time difference between samples.
@@ -1148,7 +1151,7 @@ A third application of Monte Carlo sampling is [**stochastic optimization**](htt
 
 A [**_low-discrepancy sequence_**](https://en.wikipedia.org/wiki/Low-discrepancy_sequence) (or _quasirandom sequence_) is a sequence of numbers that follow a uniform distribution, but are less likely to form "clumps" than independent uniform random numbers are.  The following are examples:
 - Sobol and Halton sequences are too complicated to show here.
-- Linear congruential generators with modulus `m`, a full period, and "good lattice structure"; a sequence of `n`-dimensional points is then `[MLCG(i), MLCG(i+1), ..., MLCG(i+n-1)]` for each integer `i` in the interval \[1, `m`\] (L'Ecuyer 1999)<sup>[**(11)**](#Note11)</sup> (see example pseudocode below).
+- Linear congruential generators with modulus `m`, a full period, and "good lattice structure"; a sequence of `n`-dimensional points is then `[MLCG(i), MLCG(i+1), ..., MLCG(i+n-1)]` for each integer `i` in the interval \[1, `m`\] (L'Ecuyer 1999)<sup>[**(19)**](#Note19)</sup> (see example pseudocode below).
 
 &nbsp;
 
@@ -1161,6 +1164,7 @@ In most cases, RNGs can be used to generate a "seed" to start the low-discrepanc
 
 In Monte Carlo integration and other estimations (described earlier), low-discrepancy sequences are often used to achieve more efficient "random" sampling.
 
+<a id=Weighted_Choice_Involving_Real_Numbers></a>
 ### Weighted Choice Involving Real Numbers
 
 &nbsp;
@@ -1170,7 +1174,7 @@ In Monte Carlo integration and other estimations (described earlier), low-discre
 
 **Requires random real numbers.**
 
-If the number of items in a list is not known in advance, then the following pseudocode implements a `RandomKItemsFromFileWeighted` that selects up to `k` random items from a file (`file`) of indefinite size (similarly to [**`RandomKItemsFromFile`**](#Pseudocode_for_Random_Sampling)).  See (Efraimidis and Spirakis 2005)<sup>[**(13)**](#Note13)</sup>, and see also (Efraimidis 2015)<sup>[**(14)**](#Note14)</sup>.  In the pseudocode below, `WEIGHT_OF_ITEM(item, thisIndex)` is a placeholder for arbitrary code that calculates the weight of an individual item based on its value and its index (starting at 0); the item is ignored if its weight is 0 or less.
+If the number of items in a list is not known in advance, then the following pseudocode implements a `RandomKItemsFromFileWeighted` that selects up to `k` random items from a file (`file`) of indefinite size (similarly to [**`RandomKItemsFromFile`**](#Pseudocode_for_Random_Sampling)).  See (Efraimidis and Spirakis 2005)<sup>[**(20)**](#Note20)</sup>, and see also (Efraimidis 2015)<sup>[**(21)**](#Note21)</sup>.  In the pseudocode below, `WEIGHT_OF_ITEM(item, thisIndex)` is a placeholder for arbitrary code that calculates the weight of an individual item based on its value and its index (starting at 0); the item is ignored if its weight is 0 or less.
 
     METHOD RandomKItemsFromFileWeighted(file, k)
       list = NewList()
@@ -1223,7 +1227,7 @@ If the number of items in a list is not known in advance, then the following pse
       return list
     end
 
-> **Note:** Weighted choice _with replacement_ can be implemented by doing one or more concurrent runs of `RandomKItemsFromFileWeighted(file, 1)` (making sure each run traverses `file` the same way for multiple runs as for a single run) (Efraimidis 2015)<sup>[**(14)**](#Note14)</sup>.
+> **Note:** Weighted choice _with replacement_ can be implemented by doing one or more concurrent runs of `RandomKItemsFromFileWeighted(file, 1)` (making sure each run traverses `file` the same way for multiple runs as for a single run) (Efraimidis 2015)<sup>[**(21)**](#Note21)</sup>.
 
 <a id=Continuous_Weighted_Choice></a>
 #### Continuous Weighted Choice
@@ -1300,7 +1304,6 @@ The pseudocode below takes two lists as follows:
 >
 > **Example**: Assume `values` is the following: `[0, 1, 2, 2.5, 3]`, and `weights` is the following: `[0.2, 0.8, 0.5, 0.3, 0.1]`.  The weight for 2 is 0.5, and that for 2.5 is 0.3.  Since 2 has a higher weight than 2.5, numbers near 2 are more likely to be chosen than numbers near 2.5 with the `ContinuousWeightedChoice` method.
 
-
 <a id=Random_Numbers_from_a_Distribution_of_Data_Points></a>
 ### Random Numbers from a Distribution of Data Points
 
@@ -1312,8 +1315,8 @@ The pseudocode below takes two lists as follows:
 2. **Gaussian** [**mixture models**](https://en.wikipedia.org/wiki/Mixture_model) are also mixtures, in this case, mixtures of one or more [**Gaussian (normal) distributions**](#Normal_Gaussian_Distribution).
 3. **Kernel distributions** are mixtures of sampling distributions, one for each data point. Estimating a kernel distribution is called [**_kernel density estimation_**](https://en.wikipedia.org/wiki/Kernel_density_estimation).  To sample from a kernel distribution:
     1. Choose one of the numbers or points in the list at random [**with replacement**](#Sampling_With_Replacement_Choosing_a_Random_Item_from_a_List).
-    2. Add a randomized "jitter" to the chosen number or point; for example, add a separately generated `Normal(0, sigma)` to the chosen number or each component of the chosen point, where `sigma` is the _bandwidth_<sup>[**(21)**](#Note21)</sup>.
-4. **Stochastic interpolation** is described in (Saucier 2000)<sup>[**(20)**](#Note20)</sup>, sec. 5.3.4.  It involves choosing a data point at random, taking the mean of that point and its _k_ nearest neighbors, and shifting that mean by a random weighted sum<sup>[**(17)**](#Note17)</sup>
+    2. Add a randomized "jitter" to the chosen number or point; for example, add a separately generated `Normal(0, sigma)` to the chosen number or each component of the chosen point, where `sigma` is the _bandwidth_<sup>[**(22)**](#Note22)</sup>.
+4. **Stochastic interpolation** is described in (Saucier 2000)<sup>[**(15)**](#Note15)</sup>, sec. 5.3.4.  It involves choosing a data point at random, taking the mean of that point and its _k_ nearest neighbors, and shifting that mean by a random weighted sum<sup>[**(12)**](#Note12)</sup>
  of the differences between each of those points and that mean (here, the weight is `RNDRANGE((1-sqrt(k*3))/(k+1.0), (1+sqrt(k*3))/(k+1.0))` for each point). This approach assumes that the lowest and highest values of each dimension are 0 and 1, respectively, so that arbitrary data points have to be shifted and scaled accordingly.
 5. **Fitting a known distribution** (such as the normal distribution), with unknown parameters, to data can be done by [**maximum likelihood estimation**](https://en.wikipedia.org/wiki/Maximum_likelihood_estimation) or the [**method of moments**](https://en.wikipedia.org/wiki/Method_of_moments), among other ways.  If several kinds of distributions are possible fitting choices, then the kind showing the best _goodness of fit_ for the data (e.g., chi-squared goodness of fit) is chosen.
 
@@ -1321,7 +1324,7 @@ The pseudocode below takes two lists as follows:
 
 **Generative models.** These are machine-learning models that take random numbers as input and generate outputs (such as images or sounds) that are similar to examples they have already seen.  [**_Generative adversarial networks_**](https://en.wikipedia.org/wiki/Generative_adversarial_network) are one kind of generative model.
 
-> **Note:** A comprehensive survey of density estimation, regression, or generative models, or how to fit such models to data, are outside the scope of this document.<sup>[**(22)**](#Note22)</sup>
+> **Note:** A comprehensive survey of density estimation, regression, or generative models, or how to fit such models to data, are outside the scope of this document.<sup>[**(23)**](#Note23)</sup>
 
 <a id=Random_Numbers_from_an_Arbitrary_Distribution></a>
 ### Random Numbers from an Arbitrary Distribution
@@ -1331,7 +1334,7 @@ The pseudocode below takes two lists as follows:
 Many probability distributions can be defined in terms of any of the following:
 
 * The [**_cumulative distribution function_**](https://en.wikipedia.org/wiki/Cumulative_distribution_function), or _CDF_, returns, for each number, the probability for a randomly generated variable to be equal to or less than that number; the probability is in the interval [0, 1].
-* The [**_probability density function_**](https://en.wikipedia.org/wiki/Probability_density_function), or _PDF_, is, roughly and intuitively, a curve of weights 0 or greater, where for each number, the greater its weight, the more likely a number close to that number is randomly chosen.<sup>[**(23)**](#Note23)</sup>
+* The [**_probability density function_**](https://en.wikipedia.org/wiki/Probability_density_function), or _PDF_, is, roughly and intuitively, a curve of weights 0 or greater, where for each number, the greater its weight, the more likely a number close to that number is randomly chosen.<sup>[**(24)**](#Note24)</sup>
 * The _inverse cumulative distribution function_ (_inverse CDF_) is the inverse of the CDF and maps numbers in the interval [0, 1\) to numbers in the distribution, from low to high.
 
 Depending on what information is known about the distribution, random numbers that approximately follow that distribution can be generated as follows:
@@ -1342,9 +1345,9 @@ Depending on what information is known about the distribution, random numbers th
     - [**Rejection sampling.**](#Rejection_Sampling)  If the PDF can be more easily sampled by another distribution with its own PDF (`PDF2`) that "dominates" `PDF` in the sense that `PDF2(x) >= PDF(x)` at every valid `x`, then generate random numbers with that distribution until a number (`n`) that satisfies `PDF(n) >= RNDRANGEMaxExc(0, PDF2(n))` is generated this way (that is, sample points in `PDF2` until a point falls within `PDF`). (See also Saucier 2000, pp. 6-7, 39; Devroye 1986, pp. 41-43; and "[**Generating Pseudorandom Numbers**](https://mathworks.com/help/stats/generating-random-data.html)".)
 
         For example, a custom distribution's PDF, `PDF`, is `exp(-abs(x*x*x))`, and the exponential distribution's PDF, `PDF2`, is `exp(-x)`.  The exponential PDF "dominates" the other PDF (at every `x` 0 or greater) if we multiply it by 1.5, so that `PDF2` is now `1.5 * exp(-x)`.  Now we can generate numbers from our custom distribution by sampling exponential points until a point falls within `PDF`.  This is done by generating `n = -ln(RNDU01ZeroOneExc())` until `PDF(n) >= RNDRANGEMaxExc(0, PDF2(n))`.
-    - [**Markov-chain Monte Carlo**](https://en.wikipedia.org/wiki/Markov_chain_Monte_Carlo) **(MCMC).** If many random numbers from the given PDF need to be generated, then an MCMC algorithm can be used, with the disadvantage that the resulting random numbers will not be chosen independently of each other.  MCMC algorithms include Metropolis&ndash;Hastings and slice sampling (Neal 2003)<sup>[**(24)**](#Note24)</sup>. Generally, as more numbers are generated, the MCMC algorithm converges to the given distribution; this is why usually, random numbers from the first few (e.g., first 1000) iterations are ignored ("burn in").  MCMC can also be used to find a suitable sampling range for the Piecewise interpolation method, above.  The [**Python sample code**](https://peteroupc.github.io/randomgen.zip) includes methods called `mcmc` and `mcmc2` that implement Metropolis&ndash;Hastings for PDFs that take single numbers or two-dimensional points, respectively, and a method called `slicesample` that implements slice sampling.
+    - [**Markov-chain Monte Carlo**](https://en.wikipedia.org/wiki/Markov_chain_Monte_Carlo) **(MCMC).** If many random numbers from the given PDF need to be generated, then an MCMC algorithm can be used, with the disadvantage that the resulting random numbers will not be chosen independently of each other.  MCMC algorithms include Metropolis&ndash;Hastings and slice sampling (Neal 2003)<sup>[**(25)**](#Note25)</sup>. Generally, as more numbers are generated, the MCMC algorithm converges to the given distribution; this is why usually, random numbers from the first few (e.g., first 1000) iterations are ignored ("burn in").  MCMC can also be used to find a suitable sampling range for the Piecewise interpolation method, above.  The [**Python sample code**](https://peteroupc.github.io/randomgen.zip) includes methods called `mcmc` and `mcmc2` that implement Metropolis&ndash;Hastings for PDFs that take single numbers or two-dimensional points, respectively, and a method called `slicesample` that implements slice sampling.
 
-- **PDF and a uniform random variable in the interval \[0, 1\) (`randomVariable`)** are known: Create `list` and `weights` as given in the Piecewise interpolation method, above, then divide each item in `weights` by the sum<sup>[**(17)**](#Note17)</sup>
+- **PDF and a uniform random variable in the interval \[0, 1\) (`randomVariable`)** are known: Create `list` and `weights` as given in the Piecewise interpolation method, above, then divide each item in `weights` by the sum<sup>[**(12)**](#Note12)</sup>
  of `weights`'s items, then generate [**`ContinuousWeightedChoice(list, weights)`**](#Continuous_Weighted_Choice) (except that method is modified to use `value = randomVariable` rather than `value = RNDRANGEMaxExc(0, sum)`).
 
 - **Inverse CDF is known:** Generate `ICDF(RNDU01ZeroOneExc())`, where `ICDF(X)` is the inverse CDF ([**_inverse transform sampling_**](https://en.wikipedia.org/wiki/Inverse_transform_sampling)).
@@ -1360,14 +1363,14 @@ Depending on what information is known about the distribution, random numbers th
 
 **Usually requires random real numbers.**
 
-Gibbs sampling<sup>[**(25)**](#Note25)</sup> is a Markov-chain Monte Carlo algorithm.  It involves repeatedly generating random numbers from two or more distributions, each of which uses a random number from the previous distribution (_conditional distributions_); however, the resulting random numbers will not be chosen independently of each other.
+Gibbs sampling<sup>[**(26)**](#Note26)</sup> is a Markov-chain Monte Carlo algorithm.  It involves repeatedly generating random numbers from two or more distributions, each of which uses a random number from the previous distribution (_conditional distributions_); however, the resulting random numbers will not be chosen independently of each other.
 
 > **Example:** In one Gibbs sampler, an initial value for `y` is chosen, then multiple `x`, `y` pairs of random numbers are generated, where `x = BetaDist(y, 5)` then `y = Poisson(x * 10)`.
 
-<a id=Optimization_for_Many_Dice></a>
+<a id=Dice_Optimization_for_Many_Dice></a>
 #### Dice: Optimization for Many Dice
 
-**Requires random real numbers.** If there are many dice to roll, the following pseudocode implements a faster approximation, which uses the fact that the dice-roll distribution approaches a "discrete" normal distribution as the number of dice increases.
+**Requires random real numbers.** If there are many dice to roll, the following pseudocode implements a faster approximation, which uses the fact that the dice-roll distribution approaches a "discrete" normal distribution as the number of dice increases.<sup>[**(27)**](#Note27)</sup>
 
     METHOD DiceRoll2(dice, sides, bonus)
       if dice < 50: return DiceRoll(dice,sides,bonus)
@@ -1379,7 +1382,6 @@ Gibbs sampling<sup>[**(25)**](#Note25)</sup> is a Markov-chain Monte Carlo algor
       end
       return max(0, ret + bonus)
     END METHOD
-
 
 <a id=Normal_Gaussian_Distribution></a>
 ### Normal (Gaussian) Distribution
@@ -1785,13 +1787,13 @@ The following pseudocode calculates a random point in space that follows a [**_m
 
 **Requires random real numbers.**
 
-Generating _n_ `GammaDist(total, 1)` numbers and dividing them by their sum<sup>[**(17)**](#Note17)</sup>
+Generating _n_ `GammaDist(total, 1)` numbers and dividing them by their sum<sup>[**(12)**](#Note12)</sup>
  will result in _n_ numbers that (approximately) sum to `total`, where the combination of numbers is chosen uniformly at random (see a [**Wikipedia article**](https://en.wikipedia.org/wiki/Dirichlet_distribution#Gamma_distribution)).  For example, if `total` is 1, the numbers will (approximately) sum to 1.  Note that in the exceptional case that all numbers are 0, the process should repeat.
 
 > **Notes:**
 >
 > 1. Notes 1 and 2 in the section "Random Integers with a Given Positive Sum" apply here.
-> 2. The **Dirichlet distribution**, as defined in some places (e.g., _Mathematica_; Devroye 1986, p. 594), models a uniformly randomly chosen combination of _n_ random numbers that sum to 1, and can be sampled by generating _n_+1 random [**gamma-distributed**](#Gamma_Distribution) numbers, each with separate parameters, taking their sum<sup>[**(17)**](#Note17)</sup>, and dividing the first _n_ numbers by that sum.
+> 2. The **Dirichlet distribution**, as defined in some places (e.g., _Mathematica_; Devroye 1986, p. 594), models a uniformly randomly chosen combination of _n_ random numbers that sum to 1, and can be sampled by generating _n_+1 random [**gamma-distributed**](#Gamma_Distribution) numbers, each with separate parameters, taking their sum<sup>[**(12)**](#Note12)</sup>, and dividing the first _n_ numbers by that sum.
 
 <a id=Gaussian_and_Other_Copulas></a>
 ### Gaussian and Other Copulas
@@ -1957,14 +1959,14 @@ Miscellaneous:
 - **Zipf distribution**: See zeta distribution.
 
 <a id=Geometric_Sampling></a>
-## Geometric Sampling
+### Geometric Sampling
 
 **Requires random real numbers.**
 
 This section contains ways to do independent and uniform random sampling of points in or on geometric shapes.
 
 <a id=Random_Points_Inside_a_Simplex></a>
-### Random Points Inside a Simplex
+#### Random Points Inside a Simplex
 
 The following pseudocode generates a random point inside an _n_-dimensional simplex (simplest convex figure, such as a line segment, triangle, or tetrahedron).  It takes an array _points_, a list consisting of the _n_ plus one vertices of the simplex, all of a single dimension _n_ or greater.
 
@@ -1997,7 +1999,7 @@ The following pseudocode generates a random point inside an _n_-dimensional simp
     END METHOD
 
 <a id=Random_Points_on_the_Surface_of_a_Hypersphere></a>
-### Random Points on the Surface of a Hypersphere
+#### Random Points on the Surface of a Hypersphere
 
 The following pseudocode shows how to generate a random N-dimensional point on the surface of an N-dimensional hypersphere, centered at the origin, of radius `radius` (if `radius` is 1, the result can also serve as a unit vector in N-dimensional space).  Here, `Norm` is given in the appendix.  See also (Weisstein)<sup>[**(30)**](#Note30)</sup>.
 
@@ -2018,9 +2020,9 @@ The following pseudocode shows how to generate a random N-dimensional point on t
 > **Example:** To generate a random point on the surface of a cylinder running along the Z axis, generate random X and Y coordinates on the edge of a circle (2-dimensional hypersphere) and generate a random Z coordinate by `RNDRANGE(mn, mx)`, where `mn` and `mx` are the highest and lowest Z coordinates possible.
 
 <a id=Random_Points_Inside_a_Ball_or_Shell></a>
-### Random Points Inside a Ball or Shell
+#### Random Points Inside a Ball or Shell
 
-To generate a random N-dimensional point on or inside an N-dimensional ball, centered at the origin, of radius R, follow the pseudocode in `RandomPointInHypersphere`, except replace `Norm(ret)` with `sqrt( S - ln(RNDU01ZeroExc()))`, where `S` is the sum of squares of the numbers in `ret`<sup>[**(17)**](#Note17)</sup>
+To generate a random N-dimensional point on or inside an N-dimensional ball, centered at the origin, of radius R, follow the pseudocode in `RandomPointInHypersphere`, except replace `Norm(ret)` with `sqrt( S - ln(RNDU01ZeroExc()))`, where `S` is the sum of squares of the numbers in `ret`<sup>[**(12)**](#Note12)</sup>
 .  For discs and spheres (2- or 3-dimensional balls), an alternative is to generate a vector (list) of N `RNDRANGE(-R, R)` random numbers<sup>[**(31)**](#Note31)</sup> until its _norm_ is R or less (see the [**appendix**](#Appendix)).<sup>[**(32)**](#Note32)</sup>
 
 To generate a random point on or inside an N-dimensional spherical shell (a hollow ball), centered at the origin, with inner radius A and outer radius B (where A is less than B), either&mdash;
@@ -2032,7 +2034,7 @@ To generate a random point on or inside an N-dimensional spherical shell (a holl
 > **Note:** The Python sample code contains a method for generating a random point on the surface of an ellipsoid modeling the Earth.
 
 <a id=Random_Latitude_and_Longitude></a>
-### Random Latitude and Longitude
+#### Random Latitude and Longitude
 
 To generate a random point on the surface of a sphere in the form of a latitude and longitude (in radians with west and south coordinates negative)&mdash;
 
@@ -2067,61 +2069,61 @@ If an item uses a nonuniform distribution, but otherwise meets this definition, 
 
 If an application is concerned about these issues, it should treat the `RNDU01OneExc()` implementation (e.g., `Math.random()`) as the underlying RNG for `RNDINT` and implement `RNDINTEXC` through `RNDINT` instead.</small>
 
-<small><sup id=Note4>(4)</sup> Downey, A. B. "[**Generating Pseudo-random Floating Point Values**](http://allendowney.com/research/rand/)", 2007.</small>
+<small><sup id=Note4>(4)</sup> Describing differences between SQL dialects is outside the scope of this document, but [**Flourish SQL**](http://flourishlib.com/docs/FlourishSQL) describes many such differences, including those concerning RNGs.</small>
 
-<small><sup id=Note5>(5)</sup> See, for example, the _Stack Overflow_ question "How to generate a number in arbitrary range using random()={0..1} preserving uniformness and density?", `questions/8019589`.</small>
+<small><sup id=Note5>(5)</sup> Jeff Atwood, "[**The danger of na&iuml;vet&eacute;**](https://blog.codinghorror.com/the-danger-of-naivete/)", Dec. 7, 2007.</small>
 
-<small><sup id=Note6>(6)</sup> Describing differences between SQL dialects is outside the scope of this document, but [**Flourish SQL**](http://flourishlib.com/docs/FlourishSQL) describes many such differences, including those concerning RNGs.</small>
+<small><sup id=Note6>(6)</sup> If the strings identify database records, file system paths, or other shared resources, special considerations apply, including the need to synchronize access to those resources.  For uniquely identifying database records, alternatives to random strings include auto-incrementing or sequentially assigned row numbers.</small>
 
-<small><sup id=Note7>(7)</sup> Jeff Atwood, "[**The danger of na&iuml;vet&eacute;**](https://blog.codinghorror.com/the-danger-of-naivete/)", Dec. 7, 2007.</small>
+<small><sup id=Note7>(7)</sup> See also the _Stack Overflow_ question "Random index of a non zero value in a numpy array".</small>
 
-<small><sup id=Note8>(8)</sup> If the strings identify database records, file system paths, or other shared resources, special considerations apply, including the need to synchronize access to those resources.  For uniquely identifying database records, alternatives to random strings include auto-incrementing or sequentially assigned row numbers.</small>
+<small><sup id=Note8>(8)</sup> Brownlee, J. "[**A Gentle Introduction to the Bootstrap Method**](https://machinelearningmastery.com/a-gentle-introduction-to-the-bootstrap-method/)", _Machine Learning Mastery_, May 25, 2018.</small>
 
-<small><sup id=Note9>(9)</sup> See also the _Stack Overflow_ question "Random index of a non zero value in a numpy array".</small>
+<small><sup id=Note9>(9)</sup> Jon Louis Bentley and James B. Saxe, "Generating Sorted Lists of Random Numbers", _ACM Trans. Math. Softw._ 6 (1980), pp. 359-364, describes a way to generate random numbers in sorted order, but it's not given here because it relies on generating real numbers in the interval [0, 1], which is inherently imperfect because computers can't choose among all random numbers between 0 and 1, and there are infinitely many of them.</small>
 
-<small><sup id=Note10>(10)</sup> Brownlee, J. "[**A Gentle Introduction to the Bootstrap Method**](https://machinelearningmastery.com/a-gentle-introduction-to-the-bootstrap-method/)", _Machine Learning Mastery_, May 25, 2018.</small>
+<small><sup id=Note10>(10)</sup> The [**Python sample code**](https://peteroupc.github.io/randomgen.zip) includes a `ConvexPolygonSampler` class that implements this kind of sampling for convex polygons; unlike other polygons, convex polygons are trivial to decompose into triangles.</small>
 
-<small><sup id=Note11>(11)</sup> P. L'Ecuyer, "Tables of Linear Congruential Generators of Different Sizes and Good Lattice Structure", January 1999.</small>
+<small><sup id=Note11>(11)</sup> That article also mentions a critical-hit distribution, which is actually a [**mixture**](#Mixtures_of_Distributions) of two distributions: one roll of dice and the sum of two rolls of dice.</small>
 
-<small><sup id=Note12>(12)</sup> Jon Louis Bentley and James B. Saxe, "Generating Sorted Lists of Random Numbers", _ACM Trans. Math. Softw._ 6 (1980), pp. 359-364, describes a way to generate random numbers in sorted order, but it's not given here because it relies on generating real numbers in the interval [0, 1], which is inherently imperfect because computers can't choose among all random numbers between 0 and 1, and there are infinitely many of them.</small>
+<small><sup id=Note12>(12)</sup> [**Kahan summation**](https://en.wikipedia.org/wiki/Kahan_summation_algorithm) can be a more robust way than the na&iuml;ve approach to compute the sum of three or more numbers.</small>
 
-<small><sup id=Note13>(13)</sup> Efraimidis, P. and Spirakis, P. "[**Weighted Random Sampling (2005; Efraimidis, Spirakis)**](http://utopia.duth.gr/~pefraimi/research/data/2007EncOfAlg.pdf)", 2005.</small>
+<small><sup id=Note13>(13)</sup> An _affine transformation_ is one that keeps straight lines straight and parallel lines parallel.</small>
 
-<small><sup id=Note14>(14)</sup> Efraimidis, P. "Weighted Random Sampling over Data Streams". arXiv:1012.0256v2 [cs.DS], 2015.</small>
+<small><sup id=Note14>(14)</sup> If `px`/`py` is `1`/`2`, the binomial distribution models the task "Flip N coins, then count the number of heads", and the random sum is known as [**_Hamming distance_**](https://en.wikipedia.org/wiki/Hamming_distance) (treating each trial as a "bit" that's set to 1 for a success and 0 for a failure).  If `px` is `1`, then this distribution models the task "Roll `n` `py`-sided dice, then count the number of dice that show the number 1."</small>
 
-<small><sup id=Note15>(15)</sup> The [**Python sample code**](https://peteroupc.github.io/randomgen.zip) includes a `ConvexPolygonSampler` class that implements this kind of sampling for convex polygons; unlike other polygons, convex polygons are trivial to decompose into triangles.</small>
+<small><sup id=Note15>(15)</sup> Saucier, R. "Computer Generation of Statistical Distributions", March 2000.</small>
 
-<small><sup id=Note16>(16)</sup> That article also mentions a critical-hit distribution, which is actually a [**mixture**](#Mixtures_of_Distributions) of two distributions: one roll of dice and the sum of two rolls of dice.</small>
+<small><sup id=Note16>(16)</sup> Smith and Tromble, "[**Sampling Uniformly from the Unit Simplex**](http://www.cs.cmu.edu/~nasmith/papers/smith+tromble.tr04.pdf)", 2004.</small>
 
-<small><sup id=Note17>(17)</sup> [**Kahan summation**](https://en.wikipedia.org/wiki/Kahan_summation_algorithm) can be a more robust way than the na&iuml;ve approach to compute the sum of three or more numbers.</small>
+<small><sup id=Note17>(17)</sup> Downey, A. B. "[**Generating Pseudo-random Floating Point Values**](http://allendowney.com/research/rand/)", 2007.</small>
 
-<small><sup id=Note18>(18)</sup> An _affine transformation_ is one that keeps straight lines straight and parallel lines parallel.</small>
+<small><sup id=Note18>(18)</sup> See, for example, the _Stack Overflow_ question "How to generate a number in arbitrary range using random()={0..1} preserving uniformness and density?", `questions/8019589`.</small>
 
-<small><sup id=Note19>(19)</sup> If `px`/`py` is `1`/`2`, the binomial distribution models the task "Flip N coins, then count the number of heads", and the random sum is known as [**_Hamming distance_**](https://en.wikipedia.org/wiki/Hamming_distance) (treating each trial as a "bit" that's set to 1 for a success and 0 for a failure).  If `px` is `1`, then this distribution models the task "Roll `n` `py`-sided dice, then count the number of dice that show the number 1."</small>
+<small><sup id=Note19>(19)</sup> P. L'Ecuyer, "Tables of Linear Congruential Generators of Different Sizes and Good Lattice Structure", January 1999.</small>
 
-<small><sup id=Note20>(20)</sup> Saucier, R. "Computer Generation of Statistical Distributions", March 2000.</small>
+<small><sup id=Note20>(20)</sup> Efraimidis, P. and Spirakis, P. "[**Weighted Random Sampling (2005; Efraimidis, Spirakis)**](http://utopia.duth.gr/~pefraimi/research/data/2007EncOfAlg.pdf)", 2005.</small>
 
-<small><sup id=Note21>(21)</sup> "Jitter", as used in this step, follows a distribution formally called a _kernel_, of which the normal distribution is one example.  _Bandwidth_ should be as low or as high as allows the estimated distribution to fit the data and remain smooth.  A more complex kind of "jitter" (for multi-component data points) consists of a point generated from a [**multinormal distribution**](https://en.wikipedia.org/wiki/Multivariate_normal_distribution) with all the means equal to 0 and a _covariance matrix_ that, in this context, serves as a _bandwidth matrix_.  "Jitter" and bandwidth are not further discussed in this document.</small>
+<small><sup id=Note21>(21)</sup> Efraimidis, P. "Weighted Random Sampling over Data Streams". arXiv:1012.0256v2 [cs.DS], 2015.</small>
 
-<small><sup id=Note22>(22)</sup> Other references on density estimation include [**a Wikipedia article on multiple-variable kernel density estimation**](https://en.wikipedia.org/wiki/Multivariate_kernel_density_estimation), and a [**blog post by M. Kay**](http://mark-kay.net/2013/12/24/kernel-density-estimation/).</small>
+<small><sup id=Note22>(22)</sup> "Jitter", as used in this step, follows a distribution formally called a _kernel_, of which the normal distribution is one example.  _Bandwidth_ should be as low or as high as allows the estimated distribution to fit the data and remain smooth.  A more complex kind of "jitter" (for multi-component data points) consists of a point generated from a [**multinormal distribution**](https://en.wikipedia.org/wiki/Multivariate_normal_distribution) with all the means equal to 0 and a _covariance matrix_ that, in this context, serves as a _bandwidth matrix_.  "Jitter" and bandwidth are not further discussed in this document.</small>
 
-<small><sup id=Note23>(23)</sup> More formally&mdash;
+<small><sup id=Note23>(23)</sup> Other references on density estimation include [**a Wikipedia article on multiple-variable kernel density estimation**](https://en.wikipedia.org/wiki/Multivariate_kernel_density_estimation), and a [**blog post by M. Kay**](http://mark-kay.net/2013/12/24/kernel-density-estimation/).</small>
+
+<small><sup id=Note24>(24)</sup> More formally&mdash;
 - the PDF is the _derivative_ (instantaneous rate of change) of the distribution's CDF (that is, PDF(x) = CDF&prime;(x)), and
 - the CDF is also defined as the _integral_ ("area under the curve") of the PDF,
 
 provided the PDF's values are all 0 or greater and the area under the PDF's curve is 1.</small>
 
-<small><sup id=Note24>(24)</sup> Neal, R. M., [**"Slice sampling"**](https://projecteuclid.org/euclid.aos/1056562461), _Annals of Statistics_ 31(3), pp. 705-767 (2003).</small>
+<small><sup id=Note25>(25)</sup> Neal, R. M., [**"Slice sampling"**](https://projecteuclid.org/euclid.aos/1056562461), _Annals of Statistics_ 31(3), pp. 705-767 (2003).</small>
 
-<small><sup id=Note25>(25)</sup> _See also_ Casella, G., and George, E.I., "Explaining the Gibbs Sampler", The American Statistician 46:3 (1992).</small>
+<small><sup id=Note26>(26)</sup> _See also_ Casella, G., and George, E.I., "Explaining the Gibbs Sampler", The American Statistician 46:3 (1992).</small>
 
-<small><sup id=Note26>(26)</sup> The "Dice" section used the following sources:
+<small><sup id=Note27>(27)</sup> The "Dice" and "Dice: Optimization for Many Dice" sections used the following sources:
 
 - Red Blob Games, [**"Probability and Games: Damage Rolls"**](http://www.redblobgames.com/articles/probability/damage-rolls.html) was the main source for the dice-roll distribution.  The method `random(N)` in that document corresponds to `RNDINTEXC(N)` in this document.
 - The [**MathWorld article "Dice"**](http://mathworld.wolfram.com/Dice.html) provided the mean of the dice roll distribution.
 - S. Eger, "Stirling's approximation for central extended binomial coefficients", 2014, helped suggest the variance of the dice roll distribution.</small>
-
-<small><sup id=Note27>(27)</sup> Smith and Tromble, "[**Sampling Uniformly from the Unit Simplex**](http://www.cs.cmu.edu/~nasmith/papers/smith+tromble.tr04.pdf)", 2004.</small>
 
 <small><sup id=Note28>(28)</sup> For example, besides the methods given in this section's main text:
 
