@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on June 4, 2017; last updated on Apr. 21, 2019.
+Begun on June 4, 2017; last updated on Apr. 22, 2019.
 
 Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.
 
@@ -305,8 +305,8 @@ where `MAXINT` is an integer greater than 0, the following pseudocode for `RNDIN
 > **Examples:**
 >
 > 1. To simulate rolling an N-sided die (N greater than 1), generate a random number in the interval \[1, N\] by `RNDINTRANGE(1, N)`.
-> 2. Generating a random integer with one base-10 digit is equivalent to generating `RNDINTRANGE(0, 9)`.
-> 3. Generating a random integer with N base-10 digits (where N is 2 or greater), where the first digit can't be 0, is equivalent to generating `RNDINTRANGE(pow(10, N-1), pow(10, N) - 1)`.
+> 2. To generate a random integer with one base-10 digit, generate `RNDINTRANGE(0, 9)`.
+> 3. To generate a random integer with N base-10 digits (where N is 2 or greater), where the first digit can't be 0, generate `RNDINTRANGE(pow(10, N-1), pow(10, N) - 1)`.
 > 4. Pseudocode like the following can be used to choose a **random date-and-time** bounded by two dates-and-times (`date1`, `date2`).  In the following pseudocode, `DATETIME_TO_NUMBER` and `NUMBER_TO_DATETIME` convert a date-and-time to or from a number, respectively, at the required granularity, for instance, month, day, or hour granularity (the details of such conversion depend on the date-and-time format and are outside the scope of this document).
 >
 >         dtnum1 = DATETIME_TO_NUMBER(date1)
@@ -2077,7 +2077,8 @@ If an application is concerned about these issues, it should treat the `RNDU01On
 
 <small><sup id=Note5>(5)</sup> Jeff Atwood, "[**The danger of na&iuml;vet&eacute;**](https://blog.codinghorror.com/the-danger-of-naivete/)", Dec. 7, 2007.</small>
 
-<small><sup id=Note6>(6)</sup> If the strings identify database records, file system paths, or other shared resources, special considerations apply, including the need to synchronize access to those resources.  For uniquely identifying database records, alternatives to random strings include auto-incrementing or sequentially assigned row numbers.</small>
+<small><sup id=Note6>(6)</sup> If the strings identify database records, file system paths, or other shared resources, special considerations apply, including the need to synchronize access to those resources.  For uniquely identifying database records, alternatives to random strings include auto-incrementing or sequentially assigned row numbers. 
+An important consideration with respect to unique random strings is the nature of the underlying RNG (see my [**RNG recommendation document**](https://peteroupc.github.io/random.html#Unique_Random_Numbers)).</small>
 
 <small><sup id=Note7>(7)</sup> See also the _Stack Overflow_ question "Random index of a non zero value in a numpy array".</small>
 

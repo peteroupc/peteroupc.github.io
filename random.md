@@ -369,7 +369,7 @@ For shuffling purposes, `B` can usually be calculated for different lists using 
 <a id=Unique_Random_Numbers></a>
 ### Unique Random Numbers
 
-Some applications require generating unique random numbers, especially to identify database records or other shared resources.  An application that can tolerate a non-negligible probability of having a duplicate after generating 2<sup>`B`/2<sup> random numbers (see "[**Birthday problem**](https://en.wikipedia.org/wiki/Birthday_problem)") can generate random `B`-bit numbers using an RNG described earlier in "Shuffling".  A popular choice is 128-bit UUIDs (universally unique identifiers) that each include a 124-bit random number.
+Some applications require generating unique random numbers, especially to identify database records or other shared resources.  An application that can tolerate a non-negligible probability of having a duplicate after generating 2<sup>`B`/2</sup> random numbers (see "[**Birthday problem**](https://en.wikipedia.org/wiki/Birthday_problem)") can generate random `B`-bit numbers using an RNG described earlier in "Shuffling".  A popular choice is 128-bit UUIDs (universally unique identifiers) that each include a 124-bit random number.
 
 <a id=GPU_Programming_Environments></a>
 ### GPU Programming Environments
