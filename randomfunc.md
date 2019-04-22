@@ -468,7 +468,7 @@ The [**Fisher&ndash;Yates shuffle method**](https://en.wikipedia.org/wiki/Fisher
        return list
     END METHOD
 
-An important consideration with respect to shuffling is the nature of the underlying RNG, as I discuss in further detail in my [**RNG recommendation document on shuffling**](https://peteroupc.github.io/random.html#Shuffling).
+The choice of underlying RNG is important when it comes to shuffling; see my [**RNG recommendation document on shuffling**](https://peteroupc.github.io/random.html#Shuffling).
 
 <a id=Random_Character_Strings></a>
 #### Random Character Strings
@@ -2077,8 +2077,7 @@ If an application is concerned about these issues, it should treat the `RNDU01On
 
 <small><sup id=Note5>(5)</sup> Jeff Atwood, "[**The danger of na&iuml;vet&eacute;**](https://blog.codinghorror.com/the-danger-of-naivete/)", Dec. 7, 2007.</small>
 
-<small><sup id=Note6>(6)</sup> If the strings identify database records, file system paths, or other shared resources, special considerations apply, including the need to synchronize access to those resources.  For uniquely identifying database records, alternatives to random strings include auto-incrementing or sequentially assigned row numbers. 
-An important consideration with respect to unique random strings is the nature of the underlying RNG (see my [**RNG recommendation document**](https://peteroupc.github.io/random.html#Unique_Random_Numbers)).</small>
+<small><sup id=Note6>(6)</sup> If the strings identify database records, file system paths, or other shared resources, special considerations apply, including the need to synchronize access to those resources.  For uniquely identifying database records, alternatives to random strings include auto-incrementing or sequentially assigned row numbers. The choice of underlying RNG is important when it comes to unique random strings; see my [**RNG recommendation document**](https://peteroupc.github.io/random.html#Unique_Random_Numbers).</small>
 
 <small><sup id=Note7>(7)</sup> See also the _Stack Overflow_ question "Random index of a non zero value in a numpy array".</small>
 

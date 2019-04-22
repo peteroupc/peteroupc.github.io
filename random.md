@@ -369,7 +369,11 @@ For shuffling purposes, `B` can usually be calculated for different lists using 
 <a id=Unique_Random_Numbers></a>
 ### Unique Random Numbers
 
-Some applications require generating unique random numbers, especially to identify database records or other shared resources.  An application that can tolerate a non-negligible probability of having a duplicate after generating 2<sup>`B`/2</sup> random numbers (see "[**Birthday problem**](https://en.wikipedia.org/wiki/Birthday_problem)") can generate random `B`-bit numbers using an RNG described earlier in "Shuffling".  A popular choice is 128-bit UUIDs (universally unique identifiers) that each include a 124-bit random number.
+Some applications require generating unique random numbers, especially to identify database records or other shared resources.  Generating random numbers of fixed size is not enough to ensure uniqueness, since the chance always exists of producing the same random number again.  However, this chance decreases as that fixed size increases (see "[**Birthday problem**](https://en.wikipedia.org/wiki/Birthday_problem)").  An application that can tolerate the chance of randomly generating a duplicate "unique" `B`-bit number can generate random `B`-bit numbers using an RNG described earlier in "Shuffling".  The following illustrates some choices for the number of bits:
+
+- For 124-bit random numbers (including those found in version-4 UUIDs, or universally unique identifiers), an application has a 50% chance of having a duplicate number after generating about 5.4 billion billion random 124-bit numbers.
+- For 160-bit random numbers, that duplicate chance exists with about 1.4 million billion billion numbers.
+- For 192-bit random numbers, that duplicate chance exists with about 93 billion billion billion numbers.
 
 <a id=GPU_Programming_Environments></a>
 ### GPU Programming Environments

@@ -553,7 +553,13 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 
 <h3>Unique Random Numbers</h3>
 
-<p>Some applications require generating unique random numbers, especially to identify database records or other shared resources.  An application that can tolerate a non-negligible probability of having a duplicate after generating 2<sup><code>B</code>/2</sup> random numbers (see &quot;<a href="https://en.wikipedia.org/wiki/Birthday_problem"><strong>Birthday problem</strong></a>&quot;) can generate random <code>B</code>-bit numbers using an RNG described earlier in &quot;Shuffling&quot;.  A popular choice is 128-bit UUIDs (universally unique identifiers) that each include a 124-bit random number.</p>
+<p>Some applications require generating unique random numbers, especially to identify database records or other shared resources.  Generating random numbers of fixed size is not enough to ensure uniqueness, since the chance always exists of producing the same random number again.  However, this chance decreases as that fixed size increases (see &quot;<a href="https://en.wikipedia.org/wiki/Birthday_problem"><strong>Birthday problem</strong></a>&quot;).  An application that can tolerate the chance of randomly generating a duplicate &quot;unique&quot; <code>B</code>-bit number can generate random <code>B</code>-bit numbers using an RNG described earlier in &quot;Shuffling&quot;.  The following illustrates some choices for the number of bits:</p>
+
+<ul>
+<li>For 124-bit random numbers (including those found in version-4 UUIDs, or universally unique identifiers), an application has a 50% chance of having a duplicate number after generating about 5.4 billion billion random 124-bit numbers.</li>
+<li>For 160-bit random numbers, that duplicate chance exists with about 1.4 million billion billion numbers.</li>
+<li>For 192-bit random numbers, that duplicate chance exists with about 93 billion billion billion numbers.</li>
+</ul>
 
 <p><a id=GPU_Programming_Environments></a></p>
 

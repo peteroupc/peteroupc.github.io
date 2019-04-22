@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
-<p>Begun on June 4, 2017; last updated on Apr. 21, 2019.</p>
+<p>Begun on June 4, 2017; last updated on Apr. 22, 2019.</p>
 
 <p>Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.</p>
 
@@ -405,8 +405,8 @@ END METHOD
 
 <ol>
 <li>To simulate rolling an N-sided die (N greater than 1), generate a random number in the interval [1, N] by <code>RNDINTRANGE(1, N)</code>.</li>
-<li>Generating a random integer with one base-10 digit is equivalent to generating <code>RNDINTRANGE(0, 9)</code>.</li>
-<li>Generating a random integer with N base-10 digits (where N is 2 or greater), where the first digit can&#39;t be 0, is equivalent to generating <code>RNDINTRANGE(pow(10, N-1), pow(10, N) - 1)</code>.</li>
+<li>To generate a random integer with one base-10 digit, generate <code>RNDINTRANGE(0, 9)</code>.</li>
+<li>To generate a random integer with N base-10 digits (where N is 2 or greater), where the first digit can&#39;t be 0, generate <code>RNDINTRANGE(pow(10, N-1), pow(10, N) - 1)</code>.</li>
 <li><p>Pseudocode like the following can be used to choose a <strong>random date-and-time</strong> bounded by two dates-and-times (<code>date1</code>, <code>date2</code>).  In the following pseudocode, <code>DATETIME_TO_NUMBER</code> and <code>NUMBER_TO_DATETIME</code> convert a date-and-time to or from a number, respectively, at the required granularity, for instance, month, day, or hour granularity (the details of such conversion depend on the date-and-time format and are outside the scope of this document).</p>
 
 <pre>dtnum1 = DATETIME_TO_NUMBER(date1)
@@ -609,7 +609,7 @@ END METHOD
 END METHOD
 </pre>
 
-<p>An important consideration with respect to shuffling is the nature of the underlying RNG, as I discuss in further detail in my <a href="https://peteroupc.github.io/random.html#Shuffling"><strong>RNG recommendation document on shuffling</strong></a>.</p>
+<p>The choice of underlying RNG is important when it comes to shuffling; see my <a href="https://peteroupc.github.io/random.html#Shuffling"><strong>RNG recommendation document on shuffling</strong></a>.</p>
 
 <p><a id=Random_Character_Strings></a></p>
 
@@ -2498,7 +2498,7 @@ END METHOD
 
 <p><small><sup id=Note5>(5)</sup> Jeff Atwood, &quot;<a href="https://blog.codinghorror.com/the-danger-of-naivete/"><strong>The danger of na&iuml;vet&eacute;</strong></a>&quot;, Dec. 7, 2007.</small></p>
 
-<p><small><sup id=Note6>(6)</sup> If the strings identify database records, file system paths, or other shared resources, special considerations apply, including the need to synchronize access to those resources.  For uniquely identifying database records, alternatives to random strings include auto-incrementing or sequentially assigned row numbers.</small></p>
+<p><small><sup id=Note6>(6)</sup> If the strings identify database records, file system paths, or other shared resources, special considerations apply, including the need to synchronize access to those resources.  For uniquely identifying database records, alternatives to random strings include auto-incrementing or sequentially assigned row numbers. The choice of underlying RNG is important when it comes to unique random strings; see my <a href="https://peteroupc.github.io/random.html#Unique_Random_Numbers"><strong>RNG recommendation document</strong></a>.</small></p>
 
 <p><small><sup id=Note7>(7)</sup> See also the <em>Stack Overflow</em> question &quot;Random index of a non zero value in a numpy array&quot;.</small></p>
 
