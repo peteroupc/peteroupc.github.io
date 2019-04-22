@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
-<p>Begun on June 4, 2017; last updated on Apr. 20, 2019.</p>
+<p>Begun on June 4, 2017; last updated on Apr. 21, 2019.</p>
 
 <p>Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.</p>
 
@@ -46,7 +46,7 @@
 <li><strong>Requests to provide an implementation of any method given here in other programming languages, in addition to Python.</strong></li>
 <li><strong>If there is enough interest by readers, I may discuss approaches to generate random graphs or matrices.</strong> &lt;!-- Generating a random maze is equivalent to generating a random spanning tree of a mesh graph.  Generating a random path is equivalent to a simple random walk of a (weighted or unweighted) graph. --&gt;</li>
 <li><strong>Suggestions to add probability distributions to this document.</strong></li>
-<li>**Ways to implement any of the randomization methods given in &quot;Randomization with Real Numbers&quot; using only random integers.</li>
+<li><strong>Ways to implement any of the randomization methods given in &quot;Randomization with Real Numbers&quot; using only random integers.</strong></li>
 <li><strong>Suggestions to trim the size of this document, such as by limiting it to the most common and most useful methods for generating random numbers.</strong></li>
 </ul>
 
@@ -136,11 +136,8 @@
 </ul></li>
 <li><a href="#Random_Numbers_from_a_Distribution_of_Data_Points"><strong>Random Numbers from a Distribution of Data Points</strong></a></li>
 <li><a href="#Random_Numbers_from_an_Arbitrary_Distribution"><strong>Random Numbers from an Arbitrary Distribution</strong></a></li>
-<li><a href="#Gibbs_Sampling"><strong>Gibbs Sampling</strong></a>
-
-<ul>
+<li><a href="#Gibbs_Sampling"><strong>Gibbs Sampling</strong></a></li>
 <li><a href="#Dice_Optimization_for_Many_Dice"><strong>Dice: Optimization for Many Dice</strong></a></li>
-</ul></li>
 <li><a href="#Normal_Gaussian_Distribution"><strong>Normal (Gaussian) Distribution</strong></a></li>
 <li><a href="#Binomial_Distribution_Optimization_for_Many_Trials"><strong>Binomial Distribution: Optimization for Many Trials</strong></a></li>
 <li><a href="#Poisson_Distribution"><strong>Poisson Distribution</strong></a></li>
@@ -1219,7 +1216,7 @@ END METHOD
 <p>However, whenever possible, <strong>applications should work with random integers</strong>, rather than other random real numbers.  This is because:</p>
 
 <ul>
-<li>Computers can represent integers more naturally than other real numbers, making random integer generation algorithms more portable and more numerically stable than real number generation algorithms.</li>
+<li>Computers can represent integers more naturally than other real numbers, making random integer generation algorithms more portable and more numerically stable than random real number generation algorithms.</li>
 <li>No computer can choose from among all real numbers between two others, since there are infinitely many of them.</li>
 </ul>
 
@@ -1305,8 +1302,10 @@ END METHOD
     if sig==0 and RNDINT(1)==0: e = e + 1
     sig = sig + (1 &lt;&lt; (SIGBITS - 1))
     // NOTE: This multiplication should result in
-    // a floating-point number; if `e` is sufficiently
+    // a real number, not necessarily an integer;
+    // if `e` is sufficiently
     // small, the number might underflow to 0
+    // depending on the number format
     return sig * pow(2, e)
 END METHOD
 </pre>
@@ -1696,9 +1695,11 @@ of <code>weights</code>&#39;s items, then generate <a href="#Continuous_Weighted
 
 <p><a id=Dice_Optimization_for_Many_Dice></a></p>
 
-<h4>Dice: Optimization for Many Dice</h4>
+<h3>Dice: Optimization for Many Dice</h3>
 
-<p><strong>Requires random real numbers.</strong> If there are many dice to roll, the following pseudocode implements a faster approximation, which uses the fact that the dice-roll distribution approaches a &quot;discrete&quot; normal distribution as the number of dice increases.<sup><a href="#Note27"><strong>(27)</strong></a></sup></p>
+<p><strong>Requires random real numbers.</strong></p>
+
+<p>If there are many dice to roll, the following pseudocode implements a faster approximation, which uses the fact that the dice-roll distribution approaches a &quot;discrete&quot; normal distribution as the number of dice increases.<sup><a href="#Note27"><strong>(27)</strong></a></sup></p>
 
 <pre>METHOD DiceRoll2(dice, sides, bonus)
   if dice &lt; 50: return DiceRoll(dice,sides,bonus)

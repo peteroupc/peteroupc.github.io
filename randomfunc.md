@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on June 4, 2017; last updated on Apr. 20, 2019.
+Begun on June 4, 2017; last updated on Apr. 21, 2019.
 
 Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.
 
@@ -34,7 +34,7 @@ All the random number methods presented on this page are ultimately based on an 
 - **Requests to provide an implementation of any method given here in other programming languages, in addition to Python.**
 - **If there is enough interest by readers, I may discuss approaches to generate random graphs or matrices.** <!-- Generating a random maze is equivalent to generating a random spanning tree of a mesh graph.  Generating a random path is equivalent to a simple random walk of a (weighted or unweighted) graph. -->
 - **Suggestions to add probability distributions to this document.**
-- **Ways to implement any of the randomization methods given in "Randomization with Real Numbers" using only random integers.
+- **Ways to implement any of the randomization methods given in "Randomization with Real Numbers" using only random integers.**
 - **Suggestions to trim the size of this document, such as by limiting it to the most common and most useful methods for generating random numbers.**
 
 <a id=Contents></a>
@@ -90,7 +90,7 @@ All the random number methods presented on this page are ultimately based on an 
     - [**Random Numbers from a Distribution of Data Points**](#Random_Numbers_from_a_Distribution_of_Data_Points)
     - [**Random Numbers from an Arbitrary Distribution**](#Random_Numbers_from_an_Arbitrary_Distribution)
     - [**Gibbs Sampling**](#Gibbs_Sampling)
-        - [**Dice: Optimization for Many Dice**](#Dice_Optimization_for_Many_Dice)
+    - [**Dice: Optimization for Many Dice**](#Dice_Optimization_for_Many_Dice)
     - [**Normal (Gaussian) Distribution**](#Normal_Gaussian_Distribution)
     - [**Binomial Distribution: Optimization for Many Trials**](#Binomial_Distribution_Optimization_for_Many_Trials)
     - [**Poisson Distribution**](#Poisson_Distribution)
@@ -977,7 +977,7 @@ The _multinomial distribution_ models the number of times each of several mutual
 This section describes randomization methods that use random real numbers, not just random integers.
 
 However, whenever possible, **applications should work with random integers**, rather than other random real numbers.  This is because:
-- Computers can represent integers more naturally than other real numbers, making random integer generation algorithms more portable and more numerically stable than real number generation algorithms.
+- Computers can represent integers more naturally than other real numbers, making random integer generation algorithms more portable and more numerically stable than random real number generation algorithms.
 - No computer can choose from among all real numbers between two others, since there are infinitely many of them.
 
 <a id=Uniform_Random_Real_Numbers></a>
@@ -1040,8 +1040,10 @@ For Java's `double` and `float` (or generally, any fixed-precision binary floati
         if sig==0 and RNDINT(1)==0: e = e + 1
         sig = sig + (1 << (SIGBITS - 1))
         // NOTE: This multiplication should result in
-        // a floating-point number; if `e` is sufficiently
+        // a real number, not necessarily an integer;
+        // if `e` is sufficiently
         // small, the number might underflow to 0
+        // depending on the number format
         return sig * pow(2, e)
     END METHOD
 
@@ -1368,9 +1370,11 @@ Gibbs sampling<sup>[**(26)**](#Note26)</sup> is a Markov-chain Monte Carlo algor
 > **Example:** In one Gibbs sampler, an initial value for `y` is chosen, then multiple `x`, `y` pairs of random numbers are generated, where `x = BetaDist(y, 5)` then `y = Poisson(x * 10)`.
 
 <a id=Dice_Optimization_for_Many_Dice></a>
-#### Dice: Optimization for Many Dice
+### Dice: Optimization for Many Dice
 
-**Requires random real numbers.** If there are many dice to roll, the following pseudocode implements a faster approximation, which uses the fact that the dice-roll distribution approaches a "discrete" normal distribution as the number of dice increases.<sup>[**(27)**](#Note27)</sup>
+**Requires random real numbers.**
+
+If there are many dice to roll, the following pseudocode implements a faster approximation, which uses the fact that the dice-roll distribution approaches a "discrete" normal distribution as the number of dice increases.<sup>[**(27)**](#Note27)</sup>
 
     METHOD DiceRoll2(dice, sides, bonus)
       if dice < 50: return DiceRoll(dice,sides,bonus)

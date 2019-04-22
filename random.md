@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on Mar. 5, 2016; last updated on Apr. 4, 2019.
+Begun on Mar. 5, 2016; last updated on Apr. 22, 2019.
 
 Most apps that use random numbers care about either unpredictability, speed/high quality, or repeatability.  This article explains the three kinds of RNGs and gives recommendations on each kind.
 
@@ -79,6 +79,7 @@ so that as a result, many applications use RNGs, especially built-in RNGs, that 
 - [**RNG Topics**](#RNG_Topics)
     - [**How to Initialize RNGs**](#How_to_Initialize_RNGs)
     - [**Shuffling**](#Shuffling)
+    - [**Unique Random Numbers**](#Unique_Random_Numbers)
     - [**GPU Programming Environments**](#GPU_Programming_Environments)
 - [**Hash Functions**](#Hash_Functions)
 - [**Guidelines for New RNG APIs**](#Guidelines_for_New_RNG_APIs)
@@ -363,7 +364,12 @@ An application that shuffles a list can do the shuffling&mdash;
     - has a state length of `B` bits or greater, and
     - qualifies as a statistical RNG except it's initialized with a seed derived from data with at least **`B` bits of** [**_entropy_**](#Nondeterministic_Sources_and_Seed_Generation), or "randomness".
 
-Here, `B` can usually be calculated for different lists using the Python code in the [**appendix**](#Suggested_Entropy_Size); see also (van Staveren 2000, "Lack of randomness")<sup>[**(25)**](#Note25)</sup>.  For example, `B` is 226 (bits) for a 52-item list.  An application MAY limit `B` to 256 or greater, in cases when variety of permutations is not important.
+For shuffling purposes, `B` can usually be calculated for different lists using the Python code in the [**appendix**](#Suggested_Entropy_Size); see also (van Staveren 2000, "Lack of randomness")<sup>[**(25)**](#Note25)</sup>.  For example, `B` is 226 (bits) for a 52-item list.  An application MAY limit `B` to 256 or greater, in cases when variety of permutations is not important.
+
+<a id=Unique_Random_Numbers></a>
+### Unique Random Numbers
+
+Some applications require generating unique random numbers, especially to identify database records or other shared resources.  An application that can tolerate a non-negligible probability of having a duplicate after generating 2<sup>`B`/2<sup> random numbers (see "[**Birthday problem**](https://en.wikipedia.org/wiki/Birthday_problem)") can generate random `B`-bit numbers using an RNG described earlier in "Shuffling".  A popular choice is 128-bit UUIDs (universally unique identifiers) that each include a 124-bit random number.
 
 <a id=GPU_Programming_Environments></a>
 ### GPU Programming Environments
