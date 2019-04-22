@@ -126,7 +126,7 @@ All the random number methods presented on this page are ultimately based on an 
 <a id=Uniform_Random_Numbers></a>
 ## Uniform Random Numbers
 
-This section describes how an underlying RNG can be used to generate independent uniformly-distributed random numbers.  Here is an overview of the methods described in this section.
+This section describes how an underlying RNG can be used to generate independent uniformly-distributed random numbers.  Here is an overview of the methods described in this document.
 
 * Random Integers: `RNDINT`, `RNDINTEXC`, `RNDINTRANGE`, `RNDINTEXCRANGE`.
 * Random Numbers in 0-1 Bounded Interval: `RNDU01`, `RNDU01ZeroExc`, `RNDU01OneExc`, `RNDU01ZeroOneExc`.
@@ -351,133 +351,6 @@ The idiom `RNDINT((1 << b) - 1)` is a na&iuml;ve way of generating a **uniform r
 
 In practice, memory is usually divided into _bytes_, or 8-bit nonnegative integers in the interval [0, 255].  In this case, a block of memory can be filled with random bits by setting each byte in the block to `RNDINT(255)`. (There may be faster, RNG-specific ways to fill memory with random bytes, such as with RNGs that generate random numbers in parallel.  These ways are not detailed in this document.)
 
-<a id=Uniform_Random_Real_Numbers></a>
-### Uniform Random Real Numbers
-
-This section defines methods that generate uniform random real numbers.
-
-However, whenever possible, **applications should work with random integers**, rather than other random real numbers.  This is because:
-- Computers can represent integers more naturally than other real numbers, making random integer generation algorithms more portable and more numerically stable than real number generation algorithms.
-- No computer can choose from among all real numbers between two others, since there are infinitely many of them.
-
-<a id=RNDU01_Family_Random_Numbers_Bounded_by_0_and_1></a>
-#### `RNDU01` Family: Random Numbers Bounded by 0 and 1
-
-This section defines four methods that generate a **random number bounded by 0 and 1**.  There are several ways to implement each of those four methods; for each method, the ways are ordered from most preferred to least preferred, and `X` and `INVX` are defined later.
-
-- **`RNDU01()`, interval [0, 1]**:
-    - For Java `float` or `double`, use the alternative implementation given later.
-    - `RNDINT(X) * INVX`.
-    - `RNDINT(X) / X`, if the number format can represent `X`.
-- **`RNDU01OneExc()`, interval [0, 1)**:
-    - Generate `RNDU01()` in a loop until a number other than 1.0 is generated this way.
-    - `RNDINT(X - 1) * INVX`.
-    - `RNDINTEXC(X) * INVX`.
-    - `RNDINT(X - 1) / X`, if the number format can represent `X`.
-    - `RNDINTEXC(X) / X`, if the number format can represent `X`.
-
-    Note that `RNDU01OneExc()` corresponds to `Math.random()` in Java and JavaScript.  See also "Generating uniform doubles in the unit interval" in the [**`xoroshiro+` remarks page**](http://xoroshiro.di.unimi.it/#remarks).
-- **`RNDU01ZeroExc()`, interval (0, 1]**:
-    - Generate `RNDU01()` in a loop until a number other than 0.0 is generated this way.
-    - `(RNDINT(X - 1) + 1) * INVX`.
-    - `(RNDINTEXC(X) + 1) * INVX`.
-    - `(RNDINT(X - 1) + 1) / X`, if the number format can represent `X`.
-    - `(RNDINTEXC(X) + 1) / X`, if the number format can represent `X`.
-    - `1.0 - RNDU01OneExc()` (but this is recommended only if the set of numbers `RNDU01OneExc()` could return &mdash; as opposed to their probability &mdash; is evenly distributed).
-- **`RNDU01ZeroOneExc()`, interval (0, 1)**:
-    - Generate `RNDU01()` in a loop until a number other than 0.0 or 1.0 is generated this way.
-    - `(RNDINT(X - 2) + 1) * INVX`.
-    - `(RNDINTEXC(X - 1) + 1) * INVX`.
-    - `(RNDINT(X - 2) + 1) / X`, if the number format can represent `X`.
-    - `(RNDINTEXC(X - 1) + 1) / X`, if the number format can represent `X`.
-
-In the idioms above:
-
-- `X` is the highest integer `p` such that all multiples of `1/p` in the interval [0, 1] are representable in the number format in question.  For example&mdash;
-    - for the 64-bit IEEE 754 binary floating-point format (e.g., Java `double`), `X` is 2<sup>53</sup> (9007199254740992),
-    - for the 32-bit IEEE 754 binary floating-point format (e.g., Java `float`), `X` is 2<sup>24</sup> (16777216),
-    - for the 64-bit IEEE 754 decimal floating-point format, `X` is 10<sup>16</sup>, and
-    - for the .NET Framework decimal format (`System.Decimal`), `X` is 10<sup>28</sup>.
-- `INVX` is the constant 1 divided by `X`.
-
-<a id=Alternative_Implementation_for_RNDU01></a>
-#### Alternative Implementation for `RNDU01`
-
-For Java's `double` and `float` (or generally, any fixed-precision binary floating-point format with fixed exponent range), the following pseudocode for `RNDU01()` can be used instead. See also (Downey 2007)<sup>[**(4)**](#Note4)</sup>.  In the pseudocode below, `SIGBITS` is the binary floating-point format's precision (the number of binary digits the format can represent without loss; e.g., 53 for Java's `double`).
-
-    METHOD RNDU01()
-        e=-SIGBITS
-        while true
-            if RNDINT(1)==0: e = e - 1
-          else: break
-        end
-        sig = RNDINT((1 << (SIGBITS - 1)) - 1)
-        if sig==0 and RNDINT(1)==0: e = e + 1
-        sig = sig + (1 << (SIGBITS - 1))
-        // NOTE: This multiplication should result in
-        // a floating-point number; if `e` is sufficiently
-        // small, the number might underflow to 0
-        return sig * pow(2, e)
-    END METHOD
-
-<a id=RNDRANGE_Family_Random_Numbers_in_an_Arbitrary_Interval></a>
-#### `RNDRANGE` Family: Random Numbers in an Arbitrary Interval
-
-**`RNDRANGE`** generates a **random number in the interval \[`minInclusive`, `maxInclusive`\]**.
-
-For arbitrary-precision or non-negative number formats, the following pseudocode implements `RNDRANGE()`.
-
-    METHOD RNDRANGE(minInclusive, maxInclusive)
-        if minInclusive > maxInclusive: return error
-        return minInclusive + (maxInclusive - minInclusive) * RNDU01()
-    END METHOD
-
-For other number formats (including Java's `double` and `float`), the pseudocode above can overflow if the difference between `maxInclusive` and `minInclusive` exceeds the maximum possible value for the format.  For such formats, the following pseudocode for `RNDRANGE()` can be used instead.  In the pseudocode below, `NUM_MAX` is the highest possible finite number for the number format.  The pseudocode assumes that the highest possible value is positive and the lowest possible value is negative.
-
-    METHOD RNDRANGE(minInclusive, maxInclusive)
-       if minInclusive > maxInclusive: return error
-       if minInclusive == maxInclusive: return minInclusive
-       // usual: Difference does not exceed maxInclusive
-       usual=minInclusive >= 0 or
-           minInclusive + NUM_MAX >= maxInclusive
-       rng=NUM_MAX
-       if usual: rng = (maxInclusive - minInclusive)
-       while true
-         ret = rng * RNDU01()
-         if usual: return minInclusive + ret
-         // NOTE: If the number format has positive and negative
-         // zero, as is the case for Java `float` and
-         // `double` and .NET's implementation of `System.Decimal`,
-         // for example, use the following:
-         negative = RNDINT(1) == 0
-         if negative: ret = 0 - ret
-         if negative and ret == 0: continue
-         // NOTE: For fixed-precision fixed-point numbers implemented
-         // using number formats that range from [-1-max, max] (such as Java's
-         // `short`, `int`, and `long`), use the following line
-         // instead of the preceding three lines, where `QUANTUM` is the
-         // smallest representable number greater than 0
-         // in the fixed-point format:
-         // if RNDINT(1) == 0: ret = (0 - QUANTUM) - ret
-         if ret >= minInclusive and ret <= maxInclusive: return ret
-       end
-    END METHOD
-
-**REMARK:** Multiplying by `RNDU01()` in both cases above is not ideal, since doing so merely stretches that number to fit the range if the range is greater than 1.  There may be more sophisticated ways to fill the gaps that result this way in `RNDRANGE`.<sup>[**(5)**](#Note5)</sup>
-
-Three related methods can be derived from `RNDRANGE` as follows:
-
-- **`RNDRANGEMaxExc`, interval \[`mn`, `mx`\)**:
-    - Generate `RNDRANGE(mn, mx)` in a loop until a number other than `mx` is generated this way.  Return an error if `mn >= mx`.
-- **`RNDRANGEMinExc`, interval \[`mn`, `mx`\)**:
-    - Generate `RNDRANGE(mn, mx)` in a loop until a number other than `mn` is generated this way.  Return an error if `mn >= mx`.
-- **`RNDRANGEMinMaxExc`, interval \(`mn`, `mx`\)**:
-    - Generate `RNDRANGE(mn, mx)` in a loop until a number other than `mn` or `mx` is generated this way.  Return an error if `mn >= mx`.
-
-> **Example:** To generate a random point inside an N-dimensional box, generate `RNDRANGEMaxExc(mn, mx)` for each coordinate, where `mn` and `mx` are the lower and upper bounds for that coordinate.  For example&mdash;
-> - to generate a random point inside a rectangle bounded in \[0, 2\) along the X axis and \[3, 6\) along the Y axis, generate `[RNDRANGEMaxExc(0,2), RNDRANGEMaxExc(3,6)]`, and
-> - to generate a complex number with real and imaginary parts bounded in \[0, 1\], generate `[RNDU01(), RNDU01()]`.
-
 <a id=Certain_Programming_Environments></a>
 ### Certain Programming Environments
 
@@ -536,7 +409,7 @@ _Sampling with replacement_  essentially means taking a random item and putting 
 _Sampling without replacement_  essentially means taking a random item _without_ putting it back.   There are several approaches for doing a uniform random choice of `k` unique items or values from among `n` available items or values, depending on such things as whether `n` is known and how big `n` and `k` are.
 
 1. **If `n` is not known in advance:** Use the _reservoir sampling_ method; see the `RandomKItemsFromFile` method, in [**pseudocode given later**](#Pseudocode_for_Random_Sampling).
-2. **If `n` is relatively small (for example, if there are 200 available items, or there is a range of numbers from 0 to 200 to choose from):**  If **items are to be chosen from a list in relative order**, then the `RandomKItemsInOrder` method, in [**pseudocode given later**](#Pseudocode_for_Random_Sampling), demonstrates a solution.  Otherwise, one of the following will choose `k` items **in random order**:
+2. **If `n` is relatively small (for example, if there are 200 available items, or there is a range of numbers from 0 through 200 to choose from):**  If **items are to be chosen from a list in relative order**, then the `RandomKItemsInOrder` method, in [**pseudocode given later**](#Pseudocode_for_Random_Sampling), demonstrates a solution.  Otherwise, one of the following will choose `k` items **in random order**:
     - Store all the items in a list, [**shuffle**](#Shuffling) that list, then choose the first `k` items from that list.
     - If the items are already stored in a list and the list's order can be changed, then shuffle that list and choose the first `k` items from the shuffled list.
     - If the items are already stored in a list and the list's order can't be changed, then store the indices to those items in another list, shuffle the latter list, then choose the first `k` indices (or the items corresponding to those indices) from the latter list.
@@ -728,38 +601,6 @@ Example criteria include checking&mdash;
 
 (KD-trees, hash tables, red-black trees, prime-number testing algorithms, and regular expressions are outside the scope of this document.)
 
-<a id=Monte_Carlo_Sampling_Expected_Values_and_Integration></a>
-### Monte Carlo Sampling: Expected Values and Integration
-
-**Requires random real numbers.**
-
-Randomization is the core of **Monte Carlo sampling**; it can be used to estimate the **expected value** of a function given a random process or sampling distribution.  The following pseudocode estimates the expected value of a list of random numbers generated the same way.  Here, `EFUNC` is the function, and `MeanAndVariance` is given in the [**appendix**](#Mean_and_Variance_Calculation).  `Expectation` returns a list of two numbers &mdash; the estimated expected value and its standard error.
-
-    METHOD Expectation(numbers)
-      ret=[]
-      for i in 0...size(numbers)
-         AddItem(ret,EFUNC(numbers[i]))
-      end
-      merr=MeanAndVariance(ret)
-      merr[1]=merr[1]*(size(ret)-1.0)/size(ret)
-      merr[1]=sqrt(merr[1]/size(ret))
-      return merr
-    END METHOD
-
-Examples of expected values include the following:
-
-- The **`n`th raw moment** (mean of `n`th powers) if `EFUNC(x)` is `pow(x, n)`.
-- The **mean**, if `EFUNC(x)` is `x`.
-- The **`n`th sample central moment**, if `EFUNC(x)` is `pow(x-m, n)`, where `m` is the mean of the sampled numbers.
-- The (biased) **sample variance**, the second sample central moment.
-- The **probability**, if `EFUNC(x)` is `1` if some condition is met or `0` otherwise.
-
-If the sampling domain is also limited to random numbers meeting a given condition (such as `x < 2` or `x != 10`), then the estimated expected value is also called the estimated _conditional expectation_.
-
-[**Monte Carlo integration**](https://en.wikipedia.org/wiki/Monte_Carlo_integration) is a way to estimate a multidimensional integral; randomly sampled numbers are put into a list (`nums`) and the estimated integral and its standard error are then calculated with `Expectation(nums)` with `EFUNC(x) = x`, and multiplied by the volume of the sampling domain.
-
-A third application of Monte Carlo sampling is [**stochastic optimization**](http://mathworld.wolfram.com/StochasticOptimization.html) for finding the minimum or maximum value of a function; one example is _simulated annealing_.
-
 <a id=Random_Walks></a>
 ### Random Walks
 
@@ -776,16 +617,12 @@ A _random walk_ is a process with random behavior over time.  A simple form of r
 There are several kinds of random walks.
 
 1. A **white noise process** is simulated by creating a list of random numbers generated the same way.  Such a process generally models behavior over time that does not depend on the time or the current state.  Examples include `Normal(0, 1)` (for modeling _Gaussian white noise_) and `ZeroOrOne(px,py)` (for modeling a _Bernoulli process_, where each number is 0 or 1 depending on the probability `px`/`py`).
-2. **Requires random real numbers:** A **continuous-time process** models random behavior at every moment, not just at discrete times.  There are two popular examples:
-    - A _Wiener process_ has random states and jumps that are normally distributed (a process of this kind is also known as _Brownian motion_). For a random walk that follows a Wiener process, `STATEJUMP()` is `Normal(mu * timediff, sigma * sqrt(timediff))`, where  `mu` is the average value per time unit, `sigma` is the volatility, and `timediff` is the time difference between samples.
-    - In a _Poisson process_, the time between each event is a random exponential variable, namely, `-ln(RNDU01ZeroOneExc()) / rate`, where `rate` is the average number of events per time unit. An _inhomogeneous Poisson process_ results if `rate` can vary with the "timestamp" before each event jump.
 
 > **Examples:**
 >
 > 1. If `STATEJUMP()` is `RNDINT(1) * 2 - 1`, the random walk generates numbers that each differ from the last by -1 or 1, chosen at random.
-> 2. If `STATEJUMP()` is `RNDRANGE(-1, 1)`, the random state is advanced by a random real number in the interval [-1, 1].
+> 2. If `STATEJUMP()` is `ZeroOrOne(px,py) * 2 - 1`, the random walk generates numbers that each differ from the last by -1 or 1 depending on the probability `px`/`py`.
 > 3. **Binomial process:** If `STATEJUMP()` is `ZeroOrOne(px,py)`, the random walk advances the state with probability `px`/`py`.
-> 4. If `STATEJUMP()` is `ZeroOrOne(px,py) * 2 - 1`, the random walk generates numbers that each differ from the last by -1 or 1 depending on the probability `px`/`py`.
 
 <a id=Randomization_in_Statistical_Testing></a>
 ### Randomization in Statistical Testing
@@ -796,26 +633,6 @@ Statistical testing uses shuffling and _bootstrapping_ to help draw conclusions 
 - [**_Bootstrapping_**](https://en.wikipedia.org/wiki/Bootstrapping_%28statistics%29) is a method of creating one or more random samples (simulated data sets) of an existing data set, where the items in each sample are chosen [**at random with replacement**](#Sampling_With_Replacement_Choosing_a_Random_Item_from_a_List).  (Each random sample can contain duplicates this way.)  See also (Brownlee 2018)<sup>[**(10)**](#Note10)</sup>.
 
 After creating the simulated data sets, one or more statistics, such as the mean, are calculated for each simulated data set as well as the original data set, then the statistics for the simulated data sets are compared with those of the original (such comparisons are outside the scope of this document).
-
-<a id=Low_Discrepancy_Sequences></a>
-### Low-Discrepancy Sequences
-
-**Requires random real numbers.**
-
-A [**_low-discrepancy sequence_**](https://en.wikipedia.org/wiki/Low-discrepancy_sequence) (or _quasirandom sequence_) is a sequence of numbers that follow a uniform distribution, but are less likely to form "clumps" than independent uniform random numbers are.  The following are examples:
-- Sobol and Halton sequences are too complicated to show here.
-- Linear congruential generators with modulus `m`, a full period, and "good lattice structure"; a sequence of `n`-dimensional points is then `[MLCG(i), MLCG(i+1), ..., MLCG(i+n-1)]` for each integer `i` in the interval \[1, `m`\] (L'Ecuyer 1999)<sup>[**(11)**](#Note11)</sup> (see example pseudocode below).
-
-&nbsp;
-
-    METHOD MLCG(seed) // m = 262139
-      if seed<=0: return error
-      return rem(92717*seed,262139)/262139.0
-    END METHOD
-
-In most cases, RNGs can be used to generate a "seed" to start the low-discrepancy sequence at.
-
-In Monte Carlo integration and other estimations (described earlier), low-discrepancy sequences are often used to achieve more efficient "random" sampling.
 
 <a id=A_Note_on_Sorting_Random_Numbers></a>
 ### A Note on Sorting Random Numbers
@@ -952,6 +769,402 @@ Weighted choice can also choose items from a list, where each item has a separat
 
 The technique presented here can solve the problem of sorting a list of items such that higher-weighted items are more likely to appear first.
 
+<a id=Mixtures_of_Distributions></a>
+### Mixtures of Distributions
+
+A _mixture_ consists of two or more probability distributions with separate probabilities of being sampled. To generate random content from a mixture&mdash;
+
+1. generate `index = WeightedChoice(weights)`, where `weights` is a list of relative probabilities that each distribution in the mixture will be sampled, then
+2. based on the value of `index`, generate the random content from the corresponding distribution.
+
+> **Examples:**
+>
+> 1. One mixture consists of the sum of three six-sided virtual die rolls and the result of one six-sided die roll, but there is an 80% chance to roll one six-sided virtual die rather than three.  The following pseudocode shows how this mixture can be sampled:
+>
+>         index = WeightedChoice([80, 20])
+>         number = 0
+>         // If index 0 was chosen, roll one die
+>         if index==0: number = RNDINTRANGE(1,6)
+>         // Else index 1 was chosen, so roll three dice
+>         else: number = RNDINTRANGE(1,6) +
+>            RNDINTRANGE(1,6) + RNDINTRANGE(1,6)
+>
+> 2. Choosing, independently and uniformly, a random point from a complex shape (in any number of dimensions) is equivalent to doing such sampling from a mixture of simpler shapes that make up the complex shape (here, the `weights` list holds the n-dimensional "volume" of each simpler shape).  For example, a simple closed 2D polygon can be [**_triangulated_**](https://en.wikipedia.org/wiki/Polygon_triangulation), or decomposed into [**triangles**](#Random_Points_Inside_a_Simplex), and a mixture of those triangles can be sampled.<sup>[**(15)**](#Note15)</sup>
+> 3. Take a set of nonoverlapping integer ranges.  To choose a random integer from those ranges independently and uniformly:
+>     - Create a list (`weights`) of weights for each range.  Each range is given a weight of `(mx - mn) + 1`, where `mn` is that range's minimum and `mx` is its maximum.
+>     - Choose an index using `WeightedChoice(weights)`, then generate `RNDINTRANGE(mn, mx)`, where `mn` is the corresponding range's minimum and `mx` is its maximum.
+> 4. **Requires random real numbers:** Example 3 can be adapted to nonoverlapping real number ranges by assigning weights `mx - mn` instead of `(mx - mn) + 1` and using `RNDRANGEMaxExc` instead of `RNDINTRANGE`.  Generating random real numbers is discouraged, though.
+> 5. **Requires random real numbers:** A **hyperexponential distribution** is a mixture of [**exponential distributions**](#Gamma_Distribution), each one with a separate weight and separate rate.  An example is below.
+>
+>         index = WeightedChoice([0.6, 0.3, 0.1])
+>         // Rates of the three exponential distributions
+>         rates = [0.3, 0.1, 0.05]
+>         // Generate an exponential random number with chosen rate
+>         number = -ln(RNDU01ZeroOneExc()) / rates[index]
+>
+
+<a id=Transformations_of_Random_Numbers></a>
+### Transformations of Random Numbers
+
+Random numbers can be generated by combining and/or transforming one or more random numbers
+and/or discarding some of them.
+
+As an example, [**"Probability and Games: Damage Rolls"**](http://www.redblobgames.com/articles/probability/damage-rolls.html) by Red Blob Games includes interactive graphics showing score distributions for lowest-of, highest-of, drop-the-lowest, and reroll game mechanics.<sup>[**(16)**](#Note16)</sup>  These and similar distributions can be generalized as follows.
+
+Generate one or more random numbers, each with a separate probability distribution, then<sup>[**(17)**](#Note17)</sup>:
+
+1. **Highest-of:**  Choose the highest generated number.
+2. **Drop-the-lowest:**  Add all generated numbers except the lowest.
+3. **Reroll-the-lowest:**  Add all generated numbers except the lowest, then add a number generated randomly by a separate probability distribution.
+4. **Lowest-of:**  Choose the lowest generated number.
+5. **Drop-the-highest:**  Add all generated numbers except the highest.
+6. **Reroll-the-highest:**  Add all generated numbers except the highest, then add a number generated randomly by a separate probability distribution.
+7. **Sum:** Add all generated numbers.
+8. **Mean:** Find the mean of all generated numbers (see the appendix).
+9. **Geometric transformation:** Treat the numbers as an _n_-dimensional point, then apply a geometric transformation, such as a rotation or other _affine transformation_<sup>[**(18)**](#Note18)</sup>, to that point.
+
+If the probability distributions are the same, then strategies 1 to 3 make higher numbers more likely, and strategies 4 to 6, lower numbers.
+
+> **Note:** Variants of strategy 4 &mdash; e.g., choosing the second-, third-, or nth-lowest number &mdash; are formally called second-, third-, or nth-**order statistics distributions**, respectively.
+>
+> **Examples:**
+>
+> 1. The idiom `min(RNDINTRANGE(1, 6), RNDINTRANGE(1, 6))` takes the lowest of two six-sided die results (strategy 4).  Due to this approach, 1 is more likely to occur than 6.
+> 2. The idiom `RNDINTRANGE(1, 6) + RNDINTRANGE(1, 6)` takes the result of two six-sided dice (see also "[**Dice**](#Dice)") (strategy 7).
+> 3. A [**binomial distribution**](#Binomial_Distribution_Optimization_for_Many_Trials) models the sum of `n` random numbers each generated by `ZeroOrOne(px,py)` (strategy 7), that is, the number of successes in `n` independent trials, each with a success probability of `px`/`py`.<sup>[**(19)**](#Note19)</sup>
+>
+> **Requires random real numbers:**
+>
+> 1. Sampling a **Bates distribution** involves sampling _n_ random numbers by `RNDRANGE(minimum, maximum)`, then finding the mean of those numbers (strategy 8).
+> 2. A **compound Poisson distribution** models the sum<sup>[**(17)**](#Note17)</sup>
+ of _n_ random numbers each generated the same way, where _n_ follows a [**Poisson distribution**](#Poisson_Distribution) (e.g., `n = Poisson(10)` for an average of 10 numbers) (strategy 7).
+> 3. A **P&oacute;lya&ndash;Aeppli distribution** is a compound Poisson distribution in which the random numbers are generated by `NegativeBinomial(1, 1-p)+1` for a fixed `p`.
+> 4. A **hypoexponential distribution** models the sum<sup>[**(17)**](#Note17)</sup>
+ of _n_ random numbers that follow an exponential distribution and each have a separate `lamda` parameter (see "[**Gamma Distribution**](#Gamma_Distribution)").
+> 5. A random point (`x`, `y`) can be transformed (strategy 9) to derive a point with **correlated random** coordinates (old `x`, new `x`) as follows (see (Saucier 2000)<sup>[**(20)**](#Note20)</sup>, sec. 3.8): `[x, y*sqrt(1 - rho * rho) + rho * x]`, where `x` and `y` are independent random numbers generated the same way, and `rho` is a _correlation coefficient_ in the interval \[-1, 1\] (if `rho` is 0, the variables are uncorrelated).
+
+<a id=Censored_and_Truncated_Random_Numbers></a>
+#### Censored and Truncated Random Numbers
+
+To generate a _censored_ random number, generate a random number as usual, then&mdash;
+- if that number is less than a minimum threshold, use the minimum threshold instead, and/or
+- if that number is greater than a maximum threshold, use the maximum threshold instead.
+
+To generate a _truncated_ random number, generate random numbers as usual until a number generated this way is not less than a minimum threshold, not greater than a maximum threshold, or both.
+<a id=Specific_Non_Uniform_Distributions></a>
+## Specific Non-Uniform Distributions
+
+This section contains information on some of the most common non-uniform probability distributions.
+
+<a id=Dice></a>
+### Dice
+
+The following method generates a random result of rolling virtual dice.<sup>[**(26)**](#Note26)</sup>  It takes three parameters: the number of dice (`dice`), the number of sides in each die (`sides`), and a number to add to the result (`bonus`) (which can be negative, but the result of the subtraction is 0 if that result is greater).
+
+    METHOD DiceRoll(dice, sides, bonus)
+        if dice < 0 or sides < 1: return error
+        ret = 0
+        for i in 0...dice: ret=ret+RNDINTRANGE(1, sides)
+        return max(0, ret + bonus)
+    END METHOD
+
+> **Examples:** The result of rolling&mdash;
+> - four six-sided virtual dice ("4d6") is `DiceRoll(4,6,0)`,
+> - three ten-sided virtual dice, with 4 added ("3d10 + 4"), is `DiceRoll(3,10,4)`, and
+> - two six-sided virtual dice, with 2 subtracted ("2d6 - 2"), is `DiceRoll(2,6,-2)`.
+
+
+<a id=Hypergeometric_Distribution></a>
+### Hypergeometric Distribution
+
+The following method generates a random integer that follows a _hypergeometric distribution_.  When a given number of items are drawn at random without replacement from a collection of items each labeled either `1` or `0`,  the random integer expresses the number of items drawn this way that are labeled `1`.  In the method below, `trials` is the number of items drawn at random, `ones` is the number of items labeled `1` in the set, and `count` is the number of items labeled `1` or `0` in that set.
+
+    METHOD Hypergeometric(trials, ones, count)
+        if ones < 0 or count < 0 or trials < 0 or ones > count or trials > count
+          return error
+        end
+        if ones == 0: return 0
+        successes = 0
+        i = 0
+        currentCount = count
+        currentOnes = ones
+        while i < trials and currentOnes > 0
+          if RNDINTEXC(currentCount) < currentOnes
+            currentOnes = currentOnes - 1
+            successes = successes + 1
+          end
+          currentCount = currentCount - 1
+          i = i + 1
+        end
+        return successes
+    END METHOD
+
+> **Example:** In a 52-card deck of Anglo-American playing cards, 12 of the cards are face cards (jacks, queens, or kings).  After the deck is shuffled and seven cards are drawn, the number of face cards drawn this way follows a hypergeometric distribution where `trials` is 7, `ones` is
+12, and `count` is 52.
+
+<a id=Random_Integers_with_a_Given_Positive_Sum></a>
+### Random Integers with a Given Positive Sum
+
+The following pseudocode shows how to generate integers with a given positive sum, where the combination is chosen uniformly at random from among all possible combinations. (The algorithm for this was presented in (Smith and Tromble 2004)<sup>[**(27)**](#Note27)</sup>.)  In the pseudocode below&mdash;
+
+- the method `PositiveIntegersWithSum` returns `n` integers greater than 0 that sum to `total`,
+- the method `IntegersWithSum` returns `n` integers 0 or greater that sum to `total`, and
+- `Sort(list)` sorts the items in `list` in ascending order (note that sort algorithms are outside the scope of this document).
+
+&nbsp;
+
+    METHOD PositiveIntegersWithSum(n, total)
+        if n <= 0 or total <=0: return error
+        ls = NewList()
+        ret = NewList()
+        AddItem(ls, 0)
+        while size(ls) < n
+          c = RNDINTEXCRANGE(1, total)
+          found = false
+          for j in 1...size(ls)
+            if ls[j] == c
+              found = true
+              break
+            end
+          end
+          if found == false: AddItem(ls, c)
+        end
+        Sort(ls)
+        AddItem(ls, total)
+        for i in 1...size(ls): AddItem(ret,
+            list[i] - list[i - 1])
+        return ret
+    END METHOD
+
+    METHOD IntegersWithSum(n, total)
+      if n <= 0 or total <=0: return error
+      ret = PositiveIntegersWithSum(n, total + n)
+      for i in 0...size(ret): ret[i] = ret[i] - 1
+      return ret
+    END METHOD
+
+> **Notes:**
+>
+> 1. Generating a uniformly randomly chosen combination of `N` numbers with a given positive average `avg`, is equivalent to generating a uniformly randomly chosen combination of `N` numbers with the sum `N * avg`.
+> 2. Generating a uniformly randomly chosen combination of `N` numbers `min` or greater and with a given positive sum `sum` is equivalent to generating a uniformly randomly chosen combination of `N` numbers with the sum `sum - n * min`, then adding `min` to each number generated this way.
+
+<a id=Multinomial_Distribution></a>
+### Multinomial Distribution
+
+The _multinomial distribution_ models the number of times each of several mutually exclusive events happens among a given number of trials, where each event can have a separate probability of happening.  In the pseudocode below, `trials` is the number of trials, and `weights` is a list of the relative probabilities of each event.  The method tallies the events as they happen and returns a list (with the same size as `weights`) containing the number of successes for each event.
+
+    METHOD Multinomial(trials, weights)
+        if trials < 0: return error
+        // create a list of successes
+        list = NewList()
+        for i in 0...size(weights): AddItem(list, 0)
+        for i in 0...trials
+            // Choose an index
+            index = WeightedChoice(weights)
+            // Tally the event at the chosen index
+            list[index] = list[index] + 1
+        end
+        return list
+    END METHOD
+
+## Randomization with Real Numbers
+
+This section describes randomization methods that use random real numbers, not just random integers.
+
+However, whenever possible, **applications should work with random integers**, rather than other random real numbers.  This is because:
+- Computers can represent integers more naturally than other real numbers, making random integer generation algorithms more portable and more numerically stable than real number generation algorithms.
+- No computer can choose from among all real numbers between two others, since there are infinitely many of them.
+
+
+<a id=Uniform_Random_Real_Numbers></a>
+### Uniform Random Real Numbers
+
+This section defines methods that generate uniform random real numbers.
+
+<a id=RNDU01_Family_Random_Numbers_Bounded_by_0_and_1></a>
+#### `RNDU01` Family: Random Numbers Bounded by 0 and 1
+
+This section defines four methods that generate a **random number bounded by 0 and 1**.  There are several ways to implement each of those four methods; for each method, the ways are ordered from most preferred to least preferred, and `X` and `INVX` are defined later.
+
+- **`RNDU01()`, interval [0, 1]**:
+    - For Java `float` or `double`, use the alternative implementation given later.
+    - `RNDINT(X) * INVX`.
+    - `RNDINT(X) / X`, if the number format can represent `X`.
+- **`RNDU01OneExc()`, interval [0, 1)**:
+    - Generate `RNDU01()` in a loop until a number other than 1.0 is generated this way.
+    - `RNDINT(X - 1) * INVX`.
+    - `RNDINTEXC(X) * INVX`.
+    - `RNDINT(X - 1) / X`, if the number format can represent `X`.
+    - `RNDINTEXC(X) / X`, if the number format can represent `X`.
+
+    Note that `RNDU01OneExc()` corresponds to `Math.random()` in Java and JavaScript.  See also "Generating uniform doubles in the unit interval" in the [**`xoroshiro+` remarks page**](http://xoroshiro.di.unimi.it/#remarks).
+- **`RNDU01ZeroExc()`, interval (0, 1]**:
+    - Generate `RNDU01()` in a loop until a number other than 0.0 is generated this way.
+    - `(RNDINT(X - 1) + 1) * INVX`.
+    - `(RNDINTEXC(X) + 1) * INVX`.
+    - `(RNDINT(X - 1) + 1) / X`, if the number format can represent `X`.
+    - `(RNDINTEXC(X) + 1) / X`, if the number format can represent `X`.
+    - `1.0 - RNDU01OneExc()` (but this is recommended only if the set of numbers `RNDU01OneExc()` could return &mdash; as opposed to their probability &mdash; is evenly distributed).
+- **`RNDU01ZeroOneExc()`, interval (0, 1)**:
+    - Generate `RNDU01()` in a loop until a number other than 0.0 or 1.0 is generated this way.
+    - `(RNDINT(X - 2) + 1) * INVX`.
+    - `(RNDINTEXC(X - 1) + 1) * INVX`.
+    - `(RNDINT(X - 2) + 1) / X`, if the number format can represent `X`.
+    - `(RNDINTEXC(X - 1) + 1) / X`, if the number format can represent `X`.
+
+In the idioms above:
+
+- `X` is the highest integer `p` such that all multiples of `1/p` in the interval [0, 1] are representable in the number format in question.  For example&mdash;
+    - for the 64-bit IEEE 754 binary floating-point format (e.g., Java `double`), `X` is 2<sup>53</sup> (9007199254740992),
+    - for the 32-bit IEEE 754 binary floating-point format (e.g., Java `float`), `X` is 2<sup>24</sup> (16777216),
+    - for the 64-bit IEEE 754 decimal floating-point format, `X` is 10<sup>16</sup>, and
+    - for the .NET Framework decimal format (`System.Decimal`), `X` is 10<sup>28</sup>.
+- `INVX` is the constant 1 divided by `X`.
+
+<a id=Alternative_Implementation_for_RNDU01></a>
+#### Alternative Implementation for `RNDU01`
+
+For Java's `double` and `float` (or generally, any fixed-precision binary floating-point format with fixed exponent range), the following pseudocode for `RNDU01()` can be used instead. See also (Downey 2007)<sup>[**(4)**](#Note4)</sup>.  In the pseudocode below, `SIGBITS` is the binary floating-point format's precision (the number of binary digits the format can represent without loss; e.g., 53 for Java's `double`).
+
+    METHOD RNDU01()
+        e=-SIGBITS
+        while true
+            if RNDINT(1)==0: e = e - 1
+          else: break
+        end
+        sig = RNDINT((1 << (SIGBITS - 1)) - 1)
+        if sig==0 and RNDINT(1)==0: e = e + 1
+        sig = sig + (1 << (SIGBITS - 1))
+        // NOTE: This multiplication should result in
+        // a floating-point number; if `e` is sufficiently
+        // small, the number might underflow to 0
+        return sig * pow(2, e)
+    END METHOD
+
+<a id=RNDRANGE_Family_Random_Numbers_in_an_Arbitrary_Interval></a>
+#### `RNDRANGE` Family: Random Numbers in an Arbitrary Interval
+
+**`RNDRANGE`** generates a **random number in the interval \[`minInclusive`, `maxInclusive`\]**.
+
+For arbitrary-precision or non-negative number formats, the following pseudocode implements `RNDRANGE()`.
+
+    METHOD RNDRANGE(minInclusive, maxInclusive)
+        if minInclusive > maxInclusive: return error
+        return minInclusive + (maxInclusive - minInclusive) * RNDU01()
+    END METHOD
+
+For other number formats (including Java's `double` and `float`), the pseudocode above can overflow if the difference between `maxInclusive` and `minInclusive` exceeds the maximum possible value for the format.  For such formats, the following pseudocode for `RNDRANGE()` can be used instead.  In the pseudocode below, `NUM_MAX` is the highest possible finite number for the number format.  The pseudocode assumes that the highest possible value is positive and the lowest possible value is negative.
+
+    METHOD RNDRANGE(minInclusive, maxInclusive)
+       if minInclusive > maxInclusive: return error
+       if minInclusive == maxInclusive: return minInclusive
+       // usual: Difference does not exceed maxInclusive
+       usual=minInclusive >= 0 or
+           minInclusive + NUM_MAX >= maxInclusive
+       rng=NUM_MAX
+       if usual: rng = (maxInclusive - minInclusive)
+       while true
+         ret = rng * RNDU01()
+         if usual: return minInclusive + ret
+         // NOTE: If the number format has positive and negative
+         // zero, as is the case for Java `float` and
+         // `double` and .NET's implementation of `System.Decimal`,
+         // for example, use the following:
+         negative = RNDINT(1) == 0
+         if negative: ret = 0 - ret
+         if negative and ret == 0: continue
+         // NOTE: For fixed-precision fixed-point numbers implemented
+         // using number formats that range from [-1-max, max] (such as Java's
+         // `short`, `int`, and `long`), use the following line
+         // instead of the preceding three lines, where `QUANTUM` is the
+         // smallest representable number greater than 0
+         // in the fixed-point format:
+         // if RNDINT(1) == 0: ret = (0 - QUANTUM) - ret
+         if ret >= minInclusive and ret <= maxInclusive: return ret
+       end
+    END METHOD
+
+**REMARK:** Multiplying by `RNDU01()` in both cases above is not ideal, since doing so merely stretches that number to fit the range if the range is greater than 1.  There may be more sophisticated ways to fill the gaps that result this way in `RNDRANGE`.<sup>[**(5)**](#Note5)</sup>
+
+Three related methods can be derived from `RNDRANGE` as follows:
+
+- **`RNDRANGEMaxExc`, interval \[`mn`, `mx`\)**:
+    - Generate `RNDRANGE(mn, mx)` in a loop until a number other than `mx` is generated this way.  Return an error if `mn >= mx`.
+- **`RNDRANGEMinExc`, interval \[`mn`, `mx`\)**:
+    - Generate `RNDRANGE(mn, mx)` in a loop until a number other than `mn` is generated this way.  Return an error if `mn >= mx`.
+- **`RNDRANGEMinMaxExc`, interval \(`mn`, `mx`\)**:
+    - Generate `RNDRANGE(mn, mx)` in a loop until a number other than `mn` or `mx` is generated this way.  Return an error if `mn >= mx`.
+
+> **Example:** To generate a random point inside an N-dimensional box, generate `RNDRANGEMaxExc(mn, mx)` for each coordinate, where `mn` and `mx` are the lower and upper bounds for that coordinate.  For example&mdash;
+> - to generate a random point inside a rectangle bounded in \[0, 2\) along the X axis and \[3, 6\) along the Y axis, generate `[RNDRANGEMaxExc(0,2), RNDRANGEMaxExc(3,6)]`, and
+> - to generate a complex number with real and imaginary parts bounded in \[0, 1\], generate `[RNDU01(), RNDU01()]`.
+
+
+<a id=Monte_Carlo_Sampling_Expected_Values_and_Integration></a>
+### Monte Carlo Sampling: Expected Values and Integration
+
+**Requires random real numbers.**
+
+Randomization is the core of **Monte Carlo sampling**; it can be used to estimate the **expected value** of a function given a random process or sampling distribution.  The following pseudocode estimates the expected value of a list of random numbers generated the same way.  Here, `EFUNC` is the function, and `MeanAndVariance` is given in the [**appendix**](#Mean_and_Variance_Calculation).  `Expectation` returns a list of two numbers &mdash; the estimated expected value and its standard error.
+
+    METHOD Expectation(numbers)
+      ret=[]
+      for i in 0...size(numbers)
+         AddItem(ret,EFUNC(numbers[i]))
+      end
+      merr=MeanAndVariance(ret)
+      merr[1]=merr[1]*(size(ret)-1.0)/size(ret)
+      merr[1]=sqrt(merr[1]/size(ret))
+      return merr
+    END METHOD
+
+Examples of expected values include the following:
+
+- The **`n`th raw moment** (mean of `n`th powers) if `EFUNC(x)` is `pow(x, n)`.
+- The **mean**, if `EFUNC(x)` is `x`.
+- The **`n`th sample central moment**, if `EFUNC(x)` is `pow(x-m, n)`, where `m` is the mean of the sampled numbers.
+- The (biased) **sample variance**, the second sample central moment.
+- The **probability**, if `EFUNC(x)` is `1` if some condition is met or `0` otherwise.
+
+If the sampling domain is also limited to random numbers meeting a given condition (such as `x < 2` or `x != 10`), then the estimated expected value is also called the estimated _conditional expectation_.
+
+[**Monte Carlo integration**](https://en.wikipedia.org/wiki/Monte_Carlo_integration) is a way to estimate a multidimensional integral; randomly sampled numbers are put into a list (`nums`) and the estimated integral and its standard error are then calculated with `Expectation(nums)` with `EFUNC(x) = x`, and multiplied by the volume of the sampling domain.
+
+A third application of Monte Carlo sampling is [**stochastic optimization**](http://mathworld.wolfram.com/StochasticOptimization.html) for finding the minimum or maximum value of a function; one example is _simulated annealing_.
+
+### Continuous Random Walks
+
+-. If `STATEJUMP()` is `RNDRANGE(-1, 1)`, the random state is advanced by a random real number in the interval [-1, 1].
+
+
+- **Requires random real numbers:** A **continuous-time process** models random behavior at every moment, not just at discrete times.  There are two popular examples:
+    - A _Wiener process_ has random states and jumps that are normally distributed (a process of this kind is also known as _Brownian motion_). For a random walk that follows a Wiener process, `STATEJUMP()` is `Normal(mu * timediff, sigma * sqrt(timediff))`, where  `mu` is the average value per time unit, `sigma` is the volatility, and `timediff` is the time difference between samples.
+    - In a _Poisson process_, the time between each event is a random exponential variable, namely, `-ln(RNDU01ZeroOneExc()) / rate`, where `rate` is the average number of events per time unit. An _inhomogeneous Poisson process_ results if `rate` can vary with the "timestamp" before each event jump.
+
+<a id=Low_Discrepancy_Sequences></a>
+### Low-Discrepancy Sequences
+
+**Requires random real numbers.**
+
+A [**_low-discrepancy sequence_**](https://en.wikipedia.org/wiki/Low-discrepancy_sequence) (or _quasirandom sequence_) is a sequence of numbers that follow a uniform distribution, but are less likely to form "clumps" than independent uniform random numbers are.  The following are examples:
+- Sobol and Halton sequences are too complicated to show here.
+- Linear congruential generators with modulus `m`, a full period, and "good lattice structure"; a sequence of `n`-dimensional points is then `[MLCG(i), MLCG(i+1), ..., MLCG(i+n-1)]` for each integer `i` in the interval \[1, `m`\] (L'Ecuyer 1999)<sup>[**(11)**](#Note11)</sup> (see example pseudocode below).
+
+&nbsp;
+
+    METHOD MLCG(seed) // m = 262139
+      if seed<=0: return error
+      return rem(92717*seed,262139)/262139.0
+    END METHOD
+
+In most cases, RNGs can be used to generate a "seed" to start the low-discrepancy sequence at.
+
+In Monte Carlo integration and other estimations (described earlier), low-discrepancy sequences are often used to achieve more efficient "random" sampling.
+
+### Weighted Choice Involving Real Numbers
+
+&nbsp;
+
 <a id=Weighted_Choice_Without_Replacement_Indefinite_Size_List></a>
 #### Weighted Choice Without Replacement (Indefinite-Size List)
 
@@ -1087,88 +1300,6 @@ The pseudocode below takes two lists as follows:
 >
 > **Example**: Assume `values` is the following: `[0, 1, 2, 2.5, 3]`, and `weights` is the following: `[0.2, 0.8, 0.5, 0.3, 0.1]`.  The weight for 2 is 0.5, and that for 2.5 is 0.3.  Since 2 has a higher weight than 2.5, numbers near 2 are more likely to be chosen than numbers near 2.5 with the `ContinuousWeightedChoice` method.
 
-<a id=Mixtures_of_Distributions></a>
-### Mixtures of Distributions
-
-A _mixture_ consists of two or more probability distributions with separate probabilities of being sampled. To generate random content from a mixture&mdash;
-
-1. generate `index = WeightedChoice(weights)`, where `weights` is a list of relative probabilities that each distribution in the mixture will be sampled, then
-2. based on the value of `index`, generate the random content from the corresponding distribution.
-
-> **Examples:**
->
-> 1. One mixture consists of the sum of three six-sided virtual die rolls and the result of one six-sided die roll, but there is an 80% chance to roll one six-sided virtual die rather than three.  The following pseudocode shows how this mixture can be sampled:
->
->         index = WeightedChoice([80, 20])
->         number = 0
->         // If index 0 was chosen, roll one die
->         if index==0: number = RNDINTRANGE(1,6)
->         // Else index 1 was chosen, so roll three dice
->         else: number = RNDINTRANGE(1,6) +
->            RNDINTRANGE(1,6) + RNDINTRANGE(1,6)
->
-> 2. Choosing, independently and uniformly, a random point from a complex shape (in any number of dimensions) is equivalent to doing such sampling from a mixture of simpler shapes that make up the complex shape (here, the `weights` list holds the n-dimensional "volume" of each simpler shape).  For example, a simple closed 2D polygon can be [**_triangulated_**](https://en.wikipedia.org/wiki/Polygon_triangulation), or decomposed into [**triangles**](#Random_Points_Inside_a_Simplex), and a mixture of those triangles can be sampled.<sup>[**(15)**](#Note15)</sup>
-> 3. Take a set of nonoverlapping integer ranges.  To choose a random integer from those ranges independently and uniformly:
->     - Create a list (`weights`) of weights for each range.  Each range is given a weight of `(mx - mn) + 1`, where `mn` is that range's minimum and `mx` is its maximum.
->     - Choose an index using `WeightedChoice(weights)`, then generate `RNDINTRANGE(mn, mx)`, where `mn` is the corresponding range's minimum and `mx` is its maximum.
-> 4. **Requires random real numbers:** Example 3 can be adapted to nonoverlapping real number ranges by assigning weights `mx - mn` instead of `(mx - mn) + 1` and using `RNDRANGEMaxExc` instead of `RNDINTRANGE`.  Generating random real numbers is discouraged, though.
-> 5. **Requires random real numbers:** A **hyperexponential distribution** is a mixture of [**exponential distributions**](#Gamma_Distribution), each one with a separate weight and separate rate.  An example is below.
->
->         index = WeightedChoice([0.6, 0.3, 0.1])
->         // Rates of the three exponential distributions
->         rates = [0.3, 0.1, 0.05]
->         // Generate an exponential random number with chosen rate
->         number = -ln(RNDU01ZeroOneExc()) / rates[index]
->
-
-<a id=Transformations_of_Random_Numbers></a>
-### Transformations of Random Numbers
-
-Random numbers can be generated by combining and/or transforming one or more random numbers
-and/or discarding some of them.
-
-As an example, [**"Probability and Games: Damage Rolls"**](http://www.redblobgames.com/articles/probability/damage-rolls.html) by Red Blob Games includes interactive graphics showing score distributions for lowest-of, highest-of, drop-the-lowest, and reroll game mechanics.<sup>[**(16)**](#Note16)</sup>  These and similar distributions can be generalized as follows.
-
-Generate one or more random numbers, each with a separate probability distribution, then<sup>[**(17)**](#Note17)</sup>:
-
-1. **Highest-of:**  Choose the highest generated number.
-2. **Drop-the-lowest:**  Add all generated numbers except the lowest.
-3. **Reroll-the-lowest:**  Add all generated numbers except the lowest, then add a number generated randomly by a separate probability distribution.
-4. **Lowest-of:**  Choose the lowest generated number.
-5. **Drop-the-highest:**  Add all generated numbers except the highest.
-6. **Reroll-the-highest:**  Add all generated numbers except the highest, then add a number generated randomly by a separate probability distribution.
-7. **Sum:** Add all generated numbers.
-8. **Mean:** Find the mean of all generated numbers (see the appendix).
-9. **Geometric transformation:** Treat the numbers as an _n_-dimensional point, then apply a geometric transformation, such as a rotation or other _affine transformation_<sup>[**(18)**](#Note18)</sup>, to that point.
-
-If the probability distributions are the same, then strategies 1 to 3 make higher numbers more likely, and strategies 4 to 6, lower numbers.
-
-> **Note:** Variants of strategy 4 &mdash; e.g., choosing the second-, third-, or nth-lowest number &mdash; are formally called second-, third-, or nth-**order statistics distributions**, respectively.
->
-> **Examples:**
->
-> 1. The idiom `min(RNDINTRANGE(1, 6), RNDINTRANGE(1, 6))` takes the lowest of two six-sided die results (strategy 4).  Due to this approach, 1 is more likely to occur than 6.
-> 2. The idiom `RNDINTRANGE(1, 6) + RNDINTRANGE(1, 6)` takes the result of two six-sided dice (see also "[**Dice**](#Dice)") (strategy 7).
-> 3. A [**binomial distribution**](#Binomial_Distribution_Optimization_for_Many_Trials) models the sum of `n` random numbers each generated by `ZeroOrOne(px,py)` (strategy 7), that is, the number of successes in `n` independent trials, each with a success probability of `px`/`py`.<sup>[**(19)**](#Note19)</sup>
->
-> **Requires random real numbers:**
->
-> 1. Sampling a **Bates distribution** involves sampling _n_ random numbers by `RNDRANGE(minimum, maximum)`, then finding the mean of those numbers (strategy 8).
-> 2. A **compound Poisson distribution** models the sum<sup>[**(17)**](#Note17)</sup>
- of _n_ random numbers each generated the same way, where _n_ follows a [**Poisson distribution**](#Poisson_Distribution) (e.g., `n = Poisson(10)` for an average of 10 numbers) (strategy 7).
-> 3. A **P&oacute;lya&ndash;Aeppli distribution** is a compound Poisson distribution in which the random numbers are generated by `NegativeBinomial(1, 1-p)+1` for a fixed `p`.
-> 4. A **hypoexponential distribution** models the sum<sup>[**(17)**](#Note17)</sup>
- of _n_ random numbers that follow an exponential distribution and each have a separate `lamda` parameter (see "[**Gamma Distribution**](#Gamma_Distribution)").
-> 5. A random point (`x`, `y`) can be transformed (strategy 9) to derive a point with **correlated random** coordinates (old `x`, new `x`) as follows (see (Saucier 2000)<sup>[**(20)**](#Note20)</sup>, sec. 3.8): `[x, y*sqrt(1 - rho * rho) + rho * x]`, where `x` and `y` are independent random numbers generated the same way, and `rho` is a _correlation coefficient_ in the interval \[-1, 1\] (if `rho` is 0, the variables are uncorrelated).
-
-<a id=Censored_and_Truncated_Random_Numbers></a>
-#### Censored and Truncated Random Numbers
-
-To generate a _censored_ random number, generate a random number as usual, then&mdash;
-- if that number is less than a minimum threshold, use the minimum threshold instead, and/or
-- if that number is greater than a maximum threshold, use the maximum threshold instead.
-
-To generate a _truncated_ random number, generate random numbers as usual until a number generated this way is not less than a minimum threshold, not greater than a maximum threshold, or both.
 
 <a id=Random_Numbers_from_a_Distribution_of_Data_Points></a>
 ### Random Numbers from a Distribution of Data Points
@@ -1233,32 +1364,8 @@ Gibbs sampling<sup>[**(25)**](#Note25)</sup> is a Markov-chain Monte Carlo algor
 
 > **Example:** In one Gibbs sampler, an initial value for `y` is chosen, then multiple `x`, `y` pairs of random numbers are generated, where `x = BetaDist(y, 5)` then `y = Poisson(x * 10)`.
 
-<a id=Specific_Non_Uniform_Distributions></a>
-## Specific Non-Uniform Distributions
-
-This section contains information on some of the most common non-uniform probability distributions.
-
-<a id=Dice></a>
-### Dice
-
-The following method generates a random result of rolling virtual dice.<sup>[**(26)**](#Note26)</sup>  It takes three parameters: the number of dice (`dice`), the number of sides in each die (`sides`), and a number to add to the result (`bonus`) (which can be negative, but the result of the subtraction is 0 if that result is greater).
-
-    METHOD DiceRoll(dice, sides, bonus)
-        if dice < 0 or sides < 1: return error
-        if dice == 0: return 0
-        if sides == 1: return dice
-        ret = 0
-        for i in 0...dice: ret=ret+RNDINTRANGE(1, sides)
-        return max(0, ret + bonus)
-    END METHOD
-
-> **Examples:** The result of rolling&mdash;
-> - four six-sided virtual dice ("4d6") is `DiceRoll(4,6,0)`,
-> - three ten-sided virtual dice, with 4 added ("3d10 + 4"), is `DiceRoll(3,10,4)`, and
-> - two six-sided virtual dice, with 2 subtracted ("2d6 - 2"), is `DiceRoll(2,6,-2)`.
-
 <a id=Optimization_for_Many_Dice></a>
-#### Optimization for Many Dice
+#### Dice: Optimization for Many Dice
 
 **Requires random real numbers.** If there are many dice to roll, the following pseudocode implements a faster approximation, which uses the fact that the dice-roll distribution approaches a "discrete" normal distribution as the number of dice increases.
 
@@ -1273,98 +1380,6 @@ The following method generates a random result of rolling virtual dice.<sup>[**(
       return max(0, ret + bonus)
     END METHOD
 
-<a id=Hypergeometric_Distribution></a>
-### Hypergeometric Distribution
-
-The following method generates a random integer that follows a _hypergeometric distribution_.  When a given number of items are drawn at random without replacement from a collection of items each labeled either `1` or `0`,  the random integer expresses the number of items drawn this way that are labeled `1`.  In the method below, `trials` is the number of items drawn at random, `ones` is the number of items labeled `1` in the set, and `count` is the number of items labeled `1` or `0` in that set.
-
-    METHOD Hypergeometric(trials, ones, count)
-        if ones < 0 or count < 0 or trials < 0 or ones > count or trials > count
-          return error
-        end
-        if ones == 0: return 0
-        successes = 0
-        i = 0
-        currentCount = count
-        currentOnes = ones
-        while i < trials and currentOnes > 0
-          if RNDINTEXC(currentCount) < currentOnes
-            currentOnes = currentOnes - 1
-            successes = successes + 1
-          end
-          currentCount = currentCount - 1
-          i = i + 1
-        end
-        return successes
-    END METHOD
-
-> **Example:** In a 52-card deck of Anglo-American playing cards, 12 of the cards are face cards (jacks, queens, or kings).  After the deck is shuffled and seven cards are drawn, the number of face cards drawn this way follows a hypergeometric distribution where `trials` is 7, `ones` is
-12, and `count` is 52.
-
-<a id=Random_Integers_with_a_Given_Positive_Sum></a>
-### Random Integers with a Given Positive Sum
-
-The following pseudocode shows how to generate integers with a given positive sum, where the combination is chosen uniformly at random from among all possible combinations. (The algorithm for this was presented in (Smith and Tromble 2004)<sup>[**(27)**](#Note27)</sup>.)  In the pseudocode below&mdash;
-
-- the method `PositiveIntegersWithSum` returns `n` integers greater than 0 that sum to `total`,
-- the method `IntegersWithSum` returns `n` integers 0 or greater that sum to `total`, and
-- `Sort(list)` sorts the items in `list` in ascending order (note that sort algorithms are outside the scope of this document).
-
-&nbsp;
-
-    METHOD PositiveIntegersWithSum(n, total)
-        if n <= 0 or total <=0: return error
-        ls = NewList()
-        ret = NewList()
-        AddItem(ls, 0)
-        while size(ls) < n
-          c = RNDINTEXCRANGE(1, total)
-          found = false
-          for j in 1...size(ls)
-            if ls[j] == c
-              found = true
-              break
-            end
-          end
-          if found == false: AddItem(ls, c)
-        end
-        Sort(ls)
-        AddItem(ls, total)
-        for i in 1...size(ls): AddItem(ret,
-            list[i] - list[i - 1])
-        return ret
-    END METHOD
-
-    METHOD IntegersWithSum(n, total)
-      if n <= 0 or total <=0: return error
-      ret = PositiveIntegersWithSum(n, total + n)
-      for i in 0...size(ret): ret[i] = ret[i] - 1
-      return ret
-    END METHOD
-
-> **Notes:**
->
-> 1. Generating a uniformly randomly chosen combination of `N` numbers with a given positive average `avg`, is equivalent to generating a uniformly randomly chosen combination of `N` numbers with the sum `N * avg`.
-> 2. Generating a uniformly randomly chosen combination of `N` numbers `min` or greater and with a given positive sum `sum` is equivalent to generating a uniformly randomly chosen combination of `N` numbers with the sum `sum - n * min`, then adding `min` to each number generated this way.
-
-<a id=Multinomial_Distribution></a>
-### Multinomial Distribution
-
-The _multinomial distribution_ models the number of times each of several mutually exclusive events happens among a given number of trials, where each event can have a separate probability of happening.  In the pseudocode below, `trials` is the number of trials, and `weights` is a list of the relative probabilities of each event.  The method tallies the events as they happen and returns a list (with the same size as `weights`) containing the number of successes for each event.
-
-    METHOD Multinomial(trials, weights)
-        if trials < 0: return error
-        // create a list of successes
-        list = NewList()
-        for i in 0...size(weights): AddItem(list, 0)
-        for i in 0...trials
-            // Choose an index
-            index = WeightedChoice(weights)
-            // Tally the event at the chosen index
-            list[index] = list[index] + 1
-        end
-        return list
-    END METHOD
 
 <a id=Normal_Gaussian_Distribution></a>
 ### Normal (Gaussian) Distribution
@@ -2068,7 +2083,7 @@ If an application is concerned about these issues, it should treat the `RNDU01On
 
 <small><sup id=Note11>(11)</sup> P. L'Ecuyer, "Tables of Linear Congruential Generators of Different Sizes and Good Lattice Structure", January 1999.</small>
 
-<small><sup id=Note12>(12)</sup> Jon Louis Bentley and James B. Saxe, "Generating Sorted Lists of Random Numbers", _ACM Trans. Math. Softw._ 6 (1980), pp. 359-364, describes a way to generate random numbers in sorted order, but it's not given here because it relies on a method akin to `RNDU01()`, which is inherently imperfect because computers can't choose among all random numbers between 0 and 1, and there are infinitely many of them.</small>
+<small><sup id=Note12>(12)</sup> Jon Louis Bentley and James B. Saxe, "Generating Sorted Lists of Random Numbers", _ACM Trans. Math. Softw._ 6 (1980), pp. 359-364, describes a way to generate random numbers in sorted order, but it's not given here because it relies on generating real numbers in the interval [0, 1], which is inherently imperfect because computers can't choose among all random numbers between 0 and 1, and there are infinitely many of them.</small>
 
 <small><sup id=Note13>(13)</sup> Efraimidis, P. and Spirakis, P. "[**Weighted Random Sampling (2005; Efraimidis, Spirakis)**](http://utopia.duth.gr/~pefraimi/research/data/2007EncOfAlg.pdf)", 2005.</small>
 
