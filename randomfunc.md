@@ -1140,9 +1140,10 @@ A third application of Monte Carlo sampling is [**stochastic optimization**](htt
 <a id=Continuous_Random_Walks></a>
 ### Continuous Random Walks
 
--. If `STATEJUMP()` is `RNDRANGE(-1, 1)`, the random state is advanced by a random real number in the interval [-1, 1].
+**Requires random real numbers.**
 
-- **Requires random real numbers:** A **continuous-time process** models random behavior at every moment, not just at discrete times.  There are two popular examples:
+- If `STATEJUMP()` is `RNDRANGE(-1, 1)`, the random state is advanced by a random real number in the interval [-1, 1].
+- A **continuous-time process** models random behavior at every moment, not just at discrete times.  There are two popular examples:
     - A _Wiener process_ has random states and jumps that are normally distributed (a process of this kind is also known as _Brownian motion_). For a random walk that follows a Wiener process, `STATEJUMP()` is `Normal(mu * timediff, sigma * sqrt(timediff))`, where  `mu` is the average value per time unit, `sigma` is the volatility, and `timediff` is the time difference between samples.
     - In a _Poisson process_, the time between each event is a random exponential variable, namely, `-ln(RNDU01ZeroOneExc()) / rate`, where `rate` is the average number of events per time unit. An _inhomogeneous Poisson process_ results if `rate` can vary with the "timestamp" before each event jump.
 

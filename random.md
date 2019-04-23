@@ -364,12 +364,14 @@ An application that shuffles a list can do the shuffling&mdash;
     - has a state length of `B` bits or greater, and
     - qualifies as a statistical RNG except it's initialized with a seed derived from data with at least **`B` bits of** [**_entropy_**](#Nondeterministic_Sources_and_Seed_Generation), or "randomness".
 
-For shuffling purposes, `B` can usually be calculated for different lists using the Python code in the [**appendix**](#Suggested_Entropy_Size); see also (van Staveren 2000, "Lack of randomness")<sup>[**(25)**](#Note25)</sup>.  For example, `B` is 226 (bits) for a 52-item list.  An application MAY limit `B` to 256 or greater, in cases when variety of permutations is not important.
+For shuffling purposes, `B` can usually be calculated for different lists using the Python code in the [**appendix**](#Suggested_Entropy_Size); see also (van Staveren 2000, "Lack of randomness")<sup>[**(25)**](#Note25)</sup>.  For example, `B` is 226 (bits) for a 52-item list.  For shuffling purposes, an application MAY limit `B` to 256 or greater, in cases when variety of permutations is not important.
 
 <a id=Unique_Random_Numbers></a>
 ### Unique Random Numbers
 
-Some applications require generating unique random numbers, especially to identify database records or other shared resources.  Generating random numbers of fixed size is not enough to ensure uniqueness, since the chance always exists of producing the same random number again.  However, this chance decreases as that fixed size increases (see "[**Birthday problem**](https://en.wikipedia.org/wiki/Birthday_problem)").  An application that can tolerate the chance of randomly generating a duplicate "unique" `B`-bit number can generate random `B`-bit numbers using an RNG described earlier in "Shuffling".  The following illustrates some choices for the number of bits:
+Some applications require generating unique identifiers, especially to identify database records or other shared resources.  Such identifiers include auto-incremented numbers, sequentially assigned numbers, random numbers, and combinations of these.  Whenever practical, an application SHOULD check an identifier for uniqueness before treating it as uniquely identifying a resource.
+
+Generating random "unique" numbers of fixed size, without checking them for uniqueness, runs the risk of producing the same random number of that size again.  However, this risk decreases as that fixed size increases (see "[**Birthday problem**](https://en.wikipedia.org/wiki/Birthday_problem)").  An application that can tolerate the chance of randomly generating a duplicate "unique" `B`-bit number can generate random `B`-bit numbers using an RNG described earlier in "Shuffling".  The following illustrates some choices for the number of bits:
 
 - For 124-bit random numbers (including those found in version-4 UUIDs, or universally unique identifiers), an application has a 50% chance of having a duplicate number after generating about 5.4 billion billion random 124-bit numbers.
 - For 160-bit random numbers, that duplicate chance exists with about 1.4 million billion billion numbers.

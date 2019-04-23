@@ -1427,10 +1427,11 @@ END METHOD
 
 <h3>Continuous Random Walks</h3>
 
-<p>-. If <code>STATEJUMP()</code> is <code>RNDRANGE(-1, 1)</code>, the random state is advanced by a random real number in the interval [-1, 1].</p>
+<p><strong>Requires random real numbers.</strong></p>
 
 <ul>
-<li><strong>Requires random real numbers:</strong> A <strong>continuous-time process</strong> models random behavior at every moment, not just at discrete times.  There are two popular examples:
+<li>If <code>STATEJUMP()</code> is <code>RNDRANGE(-1, 1)</code>, the random state is advanced by a random real number in the interval [-1, 1].</li>
+<li>A <strong>continuous-time process</strong> models random behavior at every moment, not just at discrete times.  There are two popular examples:
 
 <ul>
 <li>A <em>Wiener process</em> has random states and jumps that are normally distributed (a process of this kind is also known as <em>Brownian motion</em>). For a random walk that follows a Wiener process, <code>STATEJUMP()</code> is <code>Normal(mu * timediff, sigma * sqrt(timediff))</code>, where  <code>mu</code> is the average value per time unit, <code>sigma</code> is the volatility, and <code>timediff</code> is the time difference between samples.</li>
