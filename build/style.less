@@ -152,24 +152,10 @@ pre {
 //////////////////////////////////////////////////////////////////////
 //  Colors
 //////////////////////////////////////////////////////////////////////
-
-@primary: #00b1e7;
-@secondary: #e040db;
-
-@primary50: mix(#fff,@primary,85%);
-@primary100: mix(#fff,@primary,70%);
-@primary200: mix(#fff,@primary,50%);
-@primary400: mix(#fff,@primary,15%);
-@primary600: mix(#000,@primary,15%);
-
-@secondary50: mix(#fff,@secondary,85%);
-@secondary200: mix(#fff,@secondary,50%);
-@secondary700: mix(#000,@secondary,30%);
-
-body {
+.colors(@primary,@secondary,
+   @primary50,@primary100,@primary200,@primary400,@primary600,
+   @secondary50,@secondary200,@secondary700){
  .background-text-primary(@primary50);
-}
-
 a:link,a:hover,a:visited {
  color:@secondary;
  h1 &, h2 & {
@@ -292,6 +278,45 @@ aside, div {
     .background-text-primary(@primary100);
  }
 }
+}
+
+@primary: #00b1e7;
+@secondary: #e040db;
+
+@primary50: mix(#fff,@primary,85%);
+@primary100: mix(#fff,@primary,70%);
+@primary200: mix(#fff,@primary,50%);
+@primary400: mix(#fff,@primary,15%);
+@primary600: mix(#000,@primary,15%);
+
+@secondary50: mix(#fff,@secondary,85%);
+@secondary200: mix(#fff,@secondary,50%);
+@secondary700: mix(#000,@secondary,30%);
+body {
+.colors(@primary,@secondary,
+   @primary50,@primary100,@primary200,@primary400,@primary600,
+   @secondary50,@secondary200,@secondary700);
+}
+@media (prefers-color-scheme:dark) {
+  @primary: mix(#000, #00b1e7, 70%);
+  @secondary: mix(#000, #e040db, 70%);
+
+  @primary50: mix(#000,@primary,85%);
+  @primary100: mix(#000,@primary,70%);
+  @primary200: mix(#000,@primary,50%);
+  @primary400: mix(#000,@primary,15%);
+  @primary600: mix(#fff,@primary,15%);
+
+  @secondary50: mix(#000,@secondary,85%);
+  @secondary200: mix(#000,@secondary,50%);
+  @secondary700: mix(#fff,@secondary,30%);
+body {
+.colors(@primary,@secondary,
+   @primary50,@primary100,@primary200,@primary400,@primary600,
+   @secondary50,@secondary200,@secondary700);
+}
+}
+
 @import "print.less";
 
 //////////////////////////////////////////////////////////////////////

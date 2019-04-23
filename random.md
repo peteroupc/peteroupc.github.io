@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on Mar. 5, 2016; last updated on Apr. 22, 2019.
+Begun on Mar. 5, 2016; last updated on Apr. 23, 2019.
 
 Most apps that use random numbers care about either unpredictability, speed/high quality, or repeatability.  This article explains the three kinds of RNGs and gives recommendations on each kind.
 
@@ -123,7 +123,7 @@ See "[**Cryptographic RNGs: Requirements**](#Cryptographic_RNGs_Requirements)" f
 ### Examples
 
 Examples of cryptographic RNG implementations are:
-- Randomness extractors or cryptographic [**hash functions**](#Hash_Functions) that take very hard-to-predict signals from two or more [**nondeterministic sources**](#Nondeterministic_Sources) as input.
+- Randomness extractors or cryptographic [**hash functions**](#Hash_Functions) that take very hard-to-predict signals from two or more [**nondeterministic sources**](#Nondeterministic_Sources_and_Seed_Generation) as input.
 - A "fast-key-erasure" random number generator described by D.J. Bernstein in his blog (Bernstein 2017)<sup>[**(5)**](#Note5)</sup>.
 - An RNG implementation complying with NIST SP 800-90A.  The SP 800-90 series goes into further detail on how RNGs appropriate for information security can be constructed, and inspired much of the "Cryptographic RNGs" section.
 
@@ -279,7 +279,7 @@ _Entropy_ is a value that describes how hard it is to predict a nondeterministic
 
 In general, especially for cryptographic RNGs, **to generate an N-bit seed, enough data needs to be gathered from nondeterministic sources to reach N bits of entropy or more**.
 
-Once data with enough entropy is gathered, it might need to be condensed into a seed to initialize a PRNG with. Following (Cliff et al., 2009)<sup>[**(18)**](#Note18)</sup>, it is suggested to generate an N-bit seed by using an HMAC (hash-based message authentication code) algorithm, with outputs at least N times 3 bits long, on data with at least N times 3 bits of entropy, then truncating the output to N bits.  See also NIST SP 800-90B sec. 3.1.5.1 and RFC 4086 sec. 4.2 and 5.2.
+Once data with enough entropy is gathered, it might need to be condensed into a seed to initialize a PRNG with. Following (Cliff et al., 2009)<sup>[**(18)**](#Note18)</sup>, it is suggested to generate an N-bit seed by using an HMAC (hash-based message authentication code) algorithm, with outputs at least N times 3 bits long, on data with at least as many bits of entropy as the output size in bits, then truncating the output to N bits.  See also NIST SP 800-90B sec. 3.1.5.1 and RFC 4086 sec. 4.2 and 5.2.
 
 <a id=Existing_RNG_APIs_in_Programming_Languages></a>
 ## Existing RNG APIs in Programming Languages
@@ -327,7 +327,7 @@ As much as possible, **applications SHOULD use existing libraries and techniques
 <a id=RNG_Topics></a>
 ## RNG Topics
 
-&nbsp;
+This section discusses several important points on the use and selection of RNGs, including things to consider when shuffling, generating "unique" random numbers, or initializing RNGs.
 
 <a id=How_to_Initialize_RNGs></a>
 ### How to Initialize RNGs
@@ -369,9 +369,9 @@ For shuffling purposes, `B` can usually be calculated for different lists using 
 <a id=Unique_Random_Numbers></a>
 ### Unique Random Numbers
 
-Some applications require generating unique identifiers, especially to identify database records or other shared resources.  Such identifiers include auto-incremented numbers, sequentially assigned numbers, random numbers, and combinations of these.  Whenever practical, an application SHOULD check an identifier for uniqueness before treating it as uniquely identifying a resource.
+Some applications require generating unique identifiers, especially to identify database records or other shared resources.  Such identifiers include auto-incremented numbers, sequentially assigned numbers, random numbers, and combinations of these.  Whenever practical, an application SHOULD check an identifier it generates for uniqueness before treating it as uniquely identifying a resource.
 
-Generating random "unique" numbers of fixed size, without checking them for uniqueness, runs the risk of producing the same random number of that size again.  However, this risk decreases as that fixed size increases (see "[**Birthday problem**](https://en.wikipedia.org/wiki/Birthday_problem)").  An application that can tolerate the chance of randomly generating a duplicate "unique" `B`-bit number can generate random `B`-bit numbers using an RNG described earlier in "Shuffling".  The following illustrates some choices for the number of bits:
+Generating random "unique" numbers of fixed size, without checking them for uniqueness, runs the risk of producing the same random number of that size again.  However, this risk decreases as that fixed size increases (see "[**Birthday problem**](https://en.wikipedia.org/wiki/Birthday_problem)").  An application that can tolerate the risk of randomly generating a duplicate "unique" `B`-bit number can generate random `B`-bit numbers, using an RNG described earlier in "Shuffling", without checking them for uniqueness.  The following illustrates some choices for the number of bits:
 
 - For 124-bit random numbers (including those found in version-4 UUIDs, or universally unique identifiers), an application has a 50% chance of having a duplicate number after generating about 5.4 billion billion random 124-bit numbers.
 - For 160-bit random numbers, that duplicate chance exists with about 1.4 million billion billion numbers.
@@ -450,7 +450,7 @@ If a statistical RNG implementation uses a PRNG, the following requirements appl
 
 A **programming language API** designed for reuse by applications could implement RNGs using the following guidelines:
 
-1.  The RNG API can include a method that fills one or more memory units (such as 8-bit bytes) completely with random bits (see example 1).
+1.  The RNG API can include a method that fills one or more memory units (such as 8-bit bytes) completely with random bits.  See example 1.
 2.  If the API implements an automatically-initialized RNG, it SHOULD NOT allow applications to initialize that same RNG with a seed for repeatable "randomness"<sup>[**(31)**](#Note31)</sup> (it MAY provide a separate PRNG to accept such a seed). See example 2.
 3.  If the API provides a PRNG that an application can seed for repeatable "randomness", it SHOULD document that PRNG and any methods the API provides that use that PRNG (such as shuffling and Gaussian number generation), and SHOULD NOT change that PRNG or those methods in a way that would change the "random" numbers they deliver for a given seed. See example 2.
 4.  My document on [**random number generation methods**](https://peteroupc.github.io/randomfunc.html) includes details on twelve uniform random number methods. In my opinion, a new programming language's **standard library** ought to include those twelve methods separately for cryptographic and for statistical RNGs.
