@@ -555,7 +555,7 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 
 <p>Some applications require generating unique identifiers, especially to identify database records or other shared resources.  Such identifiers include auto-incremented numbers, sequentially assigned numbers, random numbers, and combinations of these.  Whenever practical, an application SHOULD check an identifier it generates for uniqueness before treating it as uniquely identifying a resource.</p>
 
-<p>Generating random &quot;unique&quot; numbers of fixed size, without checking them for uniqueness, runs the risk of producing the same random number of that size again.  However, this risk decreases as that fixed size increases (see &quot;<a href="https://en.wikipedia.org/wiki/Birthday_problem"><strong>Birthday problem</strong></a>&quot;).  An application that can tolerate the risk of randomly generating a duplicate &quot;unique&quot; <code>B</code>-bit number can generate random <code>B</code>-bit numbers, using an RNG described earlier in &quot;Shuffling&quot;, without checking them for uniqueness.  The following illustrates some choices for the number of bits:</p>
+<p>Generating random &quot;unique&quot; numbers of fixed size, without checking them for uniqueness, runs the risk of producing the same random number of that size again.  However, this risk decreases as that fixed size increases (see &quot;<a href="https://en.wikipedia.org/wiki/Birthday_problem"><strong>Birthday problem</strong></a>&quot;).  An application that can tolerate the risk of randomly generating a duplicate &quot;unique&quot; <code>B</code>-bit number can generate random <code>B</code>-bit numbers, using an RNG described earlier in &quot;Shuffling&quot;, with or without checking them for uniqueness.  The following illustrates some choices for the number of bits:</p>
 
 <ul>
 <li>For 124-bit random numbers (including those found in version-4 UUIDs, or universally unique identifiers), an application has a 50% chance for duplicate number after generating about 5.4 billion billion random 124-bit numbers.</li>
@@ -824,7 +824,14 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!"></a
 </p>
 </div>
 </nav><script>
-document.getElementById("sharer").href="//www.facebook.com/sharer/sharer.php?u="+
+if("share" in navigator){
+ document.getElementById("sharer").href="javascript:void(null)";
+ document.getElementById("sharer").innerHTML="Share This Page";
+ navigator.share({title:document.title,url:document.location.href}).then(
+   function(){});
+} else {
+ document.getElementById("sharer").href="//www.facebook.com/sharer/sharer.php?u="+
     encodeURIComponent(document.location.href)
+}
 </script>
 </body></html>

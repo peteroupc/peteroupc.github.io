@@ -312,7 +312,14 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!"></a
 </p>
 </div>
 </nav><script>
-document.getElementById("sharer").href="//www.facebook.com/sharer/sharer.php?u="+
+if("share" in navigator){
+ document.getElementById("sharer").href="javascript:void(null)";
+ document.getElementById("sharer").innerHTML="Share This Page";
+ navigator.share({title:document.title,url:document.location.href}).then(
+   function(){});
+} else {
+ document.getElementById("sharer").href="//www.facebook.com/sharer/sharer.php?u="+
     encodeURIComponent(document.location.href)
+}
 </script>
 </body></html>
