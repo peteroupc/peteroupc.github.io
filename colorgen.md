@@ -1005,7 +1005,7 @@ Alpha blends can support the following color operations.
 
 _Binarization_, also known as _thresholding_, involves classifying pixels or colors into one of two categories (usually black or white).  It involves applying a function to a pixel or color and returning 1 if the result is greater than a threshold, or 0 otherwise.  The following are examples of binarization with RGB colors in 0-1 format.
 
-- **Black and white.** Generate `[0, 0, 0]` (black) if a _light-dark factor_ (such as the color's [**CIELAB**](#CIELAB) lightness (_L*_) divided by 100) is less than 0.5, or `[1, 1, 1]` (white) otherwise.
+- **Black and white.** Generate `[0, 0, 0]` (black) if a _light-dark factor_ (such as the color's [**CIELAB**](#CIELAB) lightness, _L*_, divided by 100) is less than 0.5, or `[1, 1, 1]` (white) otherwise.
 - **Contrasting color.** Generate `[1, 1, 1]` (white) if a _light-dark factor_ is less than 0.5, or `[0, 0, 0]` (black) otherwise.
 
 Other forms of binarization may classify pixels based at least in part on their positions in the image.
@@ -1604,7 +1604,9 @@ The following topics would greatly enrich this document:
 <small><sup id=Note4>(4)</sup> Color perception is influenced by the three things that make color possible:
 - _Light._ For example, natural daylight and sunlight change how they render colors depending on time of day and year, place, and weather.
 - _Objects._ A material's surface properties such as gloss, transparency, haze, and more affect color perception.
-- _Observers._ Different observers "see" colors differently due to aging, culture, defective color vision, personal experience, kind of observer (human, camera, lens, animal, etc.), and more. B. MacEvoy documents the [**wide observer variation**](http://www.handprint.com/HP/WCL/color2.html#individualdiffs) even among people with normal color vision.</small>
+- _Observers._ Different observers "see" colors differently due to aging, culture, defective color vision, personal experience, kind of observer (human, camera, lens, animal, etc.), and more. B. MacEvoy documents the [**wide observer variation**](http://www.handprint.com/HP/WCL/color2.html#individualdiffs) even among people with normal color vision.
+
+For a detailed overview on phenomena involving human color vision, see section 9 of Kirk, R., "Standard Colour Spaces", [**FilmLight Technical Note**](https://www.filmlight.ltd.uk/support/documents/other/legacy_tl.php), version 4.0, 2004-2018.</small>
 
 <small><sup id=Note5>(5)</sup> Standing for long, medium, and short wavelength, respectively.  It's not quite accurate to speak of "red", "green", and "blue" cones, respectively.</small>
 
