@@ -967,7 +967,7 @@ An **_encoded RGB_ color** needs to be converted to linear RGB (in the same RGB 
 > 3. An application can consider a color **dark** if `Luminance(color)` is lower than some threshold, say, 15.
 > 4. An application can consider a color **light** if `Luminance(color)` is greater than some threshold, say, 70.
 >
-> **Note:** Although an application should favor implementing `Luminance(color)` to output luminance factor, that method could also be implemented to output any of the following values, which are similar to luminance factor:
+> **Note:** `Luminance(color)` could also be implemented to output any of the following values, or in general, any other single number, from 0 through 1, that summarizes a color.
 >
 > 1. **Single channel** of a multicomponent color; for example, `color[0]`, `color[1]`, or `color[2]` for an RGB color's red, green, or blue component, respectively.
 > 2. **Average** of the multicomponent color's components (see [**Alpha Blending**](#Alpha_Blending)).
@@ -1005,8 +1005,8 @@ Alpha blends can support the following color operations.
 
 _Binarization_, also known as _thresholding_, involves classifying pixels or colors into one of two categories (usually black or white).  It involves applying a function to a pixel or color and returning 1 if the result is greater than a threshold, or 0 otherwise.  The following are examples of binarization with RGB colors in 0-1 format.
 
-- **Black and white.** Generate `[0, 0, 0]` (black) if `Luminance(color) < 0.5`, or `[1, 1, 1]` (white) otherwise.
-- **Contrasting color.** Generate `[1, 1, 1]` (white) if `Luminance(color) < 0.5`, or `[0, 0, 0]` (black) otherwise.
+- **Black and white.** Generate `[0, 0, 0]` (black) if a _light-dark factor_ (such as the color's [**CIELAB**](#CIELAB) lightness (_L*_) divided by 100) is less than 0.5, or `[1, 1, 1]` (white) otherwise.
+- **Contrasting color.** Generate `[1, 1, 1]` (white) if a _light-dark factor_ is less than 0.5, or `[0, 0, 0]` (black) otherwise.
 
 Other forms of binarization may classify pixels based at least in part on their positions in the image.
 
@@ -1394,19 +1394,25 @@ where `value` is a number 0 or greater and 1 or less (0 and 1 are the start and 
 <a id=Generating_a_Random_Color></a>
 ## Generating a Random Color
 
-The following techniques can be used to generate random RGB colors. Note that for best results, these techniques need to use [**_linear RGB_ colors**](#RGB_Color_Spaces) rather than encoded RGB colors, unless noted otherwise.  In this section, `RNDRANGE`, `RNDU01`, `RNDINT`, and `RNDINTEXC` are methods defined in my article on [**random number generation methods**](https://peteroupc.github.io/randomfunc.html).
+The following techniques can be used to generate random RGB colors. In this section:
+
+- `RNDRANGE`, `RNDU01`, `RNDINT`, and `RNDINTEXC` are methods defined in my article on [**random number generation methods**](https://peteroupc.github.io/randomfunc.html).
+- The ***light-dark factor*** referred to in some techniques is the color's [**CIELAB**](#CIELAB) lightness (_L*_) divided by 100, or is another value from 0 through 1 that expresses a color's lightness (in terms of human perception), or is [**`Luminance(color)`**](#Luminance_Factor_Grayscale) as a last resort.
+- For best results, these techniques need to use [**_linear RGB_ colors**](#RGB_Color_Spaces) rather than encoded RGB colors, unless noted otherwise.
+
+The techniques follow.
 
 - Generating a random string in the [**HTML color format**](#HTML_Format_and_Other_Text_Formats) is equivalent to generating a [**random hexadecimal string**](https://peteroupc.github.io/randomfunc.html#Creating_a_Random_Character_String) with length 6, then inserting the string "#" at the beginning of that string.
 - Generating a random color in the **0-1 format** is equivalent to generating `[RNDU01(), RNDU01(), RNDU01()]`.
 - Generating a random **8-bpc encoded RGB color** is equivalent to calling `From888(RNDINT(16777215))`.
 - To generate a random **dark color**, either&mdash;
-    - generate `color = [RNDU01(), RNDU01(), RNDU01()]` until [**`Luminance(color)`**](#Luminance_Factor_Grayscale) is less than a given threshold, e.g., 0.5, or
+    - generate `color = [RNDU01(), RNDU01(), RNDU01()]` until a _light-dark factor_  is less than a given threshold, e.g., 0.5, or
     - generate `color = [RNDRANGE(0, maxComp), RNDRANGE(0, maxComp), RNDRANGE(0, maxComp)]`, where `maxComp` is the
        maximum value of each color component, e.g., 0.5.
 - To generate a random **light color**, either&mdash;
-    - generate `color = [RNDU01(), RNDU01(), RNDU01()]` until [**`Luminance(color)`**](#Luminance_Factor_Grayscale) is greater than a given threshold, e.g., 0.5, or
+    - generate `color = [RNDU01(), RNDU01(), RNDU01()]` until a _light-dark factor_ is greater than a given threshold, e.g., 0.5, or
     - generate `color = [minComp + RNDU01() * (1.0 - minComp), minComp + RNDU01() * (1.0 - minComp), minComp + RNDU01() * (1.0 - minComp)]`, where `minComp` is the minimum value of each color component, e.g., 0.5.
-- One way to generate a random **pastel color** is to generate `color = [RNDU01(), RNDU01(), RNDU01()]` until [**`Luminance(color)`**](#Luminance_Factor_Grayscale) is greater than 0.75 and less than 0.9.
+- One way to generate a random **pastel color** is to generate `color = [RNDU01(), RNDU01(), RNDU01()]` until a _light-dark factor_ is greater than 0.75 and less than 0.9.
 - To generate a **random color at or between two others** (`color1` and `color2`), generate `Lerp3(color1, color2, RNDU01())`.
 - To generate a **random shade** of a given color, generate `Lerp3(color1, [0, 0, 0], RNDRANGE(0.2, 1.0))`.
 - To generate a **random tint** of a given color, generate `Lerp3(color1, [1, 1, 1], RNDRANGE(0.0, 0.9))`.

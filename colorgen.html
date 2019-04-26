@@ -1147,7 +1147,7 @@ END METHOD
 <li>An application can consider a color <strong>light</strong> if <code>Luminance(color)</code> is greater than some threshold, say, 70.</li>
 </ol>
 
-<p><strong>Note:</strong> Although an application should favor implementing <code>Luminance(color)</code> to output luminance factor, that method could also be implemented to output any of the following values, which are similar to luminance factor:</p>
+<p><strong>Note:</strong> <code>Luminance(color)</code> could also be implemented to output any of the following values, or in general, any other single number, from 0 through 1, that summarizes a color.</p>
 
 <ol>
 <li><strong>Single channel</strong> of a multicomponent color; for example, <code>color[0]</code>, <code>color[1]</code>, or <code>color[2]</code> for an RGB color&#39;s red, green, or blue component, respectively.</li>
@@ -1196,8 +1196,8 @@ END METHOD
 <p><em>Binarization</em>, also known as <em>thresholding</em>, involves classifying pixels or colors into one of two categories (usually black or white).  It involves applying a function to a pixel or color and returning 1 if the result is greater than a threshold, or 0 otherwise.  The following are examples of binarization with RGB colors in 0-1 format.</p>
 
 <ul>
-<li><strong>Black and white.</strong> Generate <code>[0, 0, 0]</code> (black) if <code>Luminance(color) &lt; 0.5</code>, or <code>[1, 1, 1]</code> (white) otherwise.</li>
-<li><strong>Contrasting color.</strong> Generate <code>[1, 1, 1]</code> (white) if <code>Luminance(color) &lt; 0.5</code>, or <code>[0, 0, 0]</code> (black) otherwise.</li>
+<li><strong>Black and white.</strong> Generate <code>[0, 0, 0]</code> (black) if a <em>light-dark factor</em> (such as the color&#39;s <a href="#CIELAB"><strong>CIELAB</strong></a> lightness (<em>L*</em>) divided by 100) is less than 0.5, or <code>[1, 1, 1]</code> (white) otherwise.</li>
+<li><strong>Contrasting color.</strong> Generate <code>[1, 1, 1]</code> (white) if a <em>light-dark factor</em> is less than 0.5, or <code>[0, 0, 0]</code> (black) otherwise.</li>
 </ul>
 
 <p>Other forms of binarization may classify pixels based at least in part on their positions in the image.</p>
@@ -1683,7 +1683,15 @@ were intended for readers with normal and <a href="#Defective_and_Animal_Color_V
 
 <h2>Generating a Random Color</h2>
 
-<p>The following techniques can be used to generate random RGB colors. Note that for best results, these techniques need to use <a href="#RGB_Color_Spaces"><strong><em>linear RGB</em> colors</strong></a> rather than encoded RGB colors, unless noted otherwise.  In this section, <code>RNDRANGE</code>, <code>RNDU01</code>, <code>RNDINT</code>, and <code>RNDINTEXC</code> are methods defined in my article on <a href="https://peteroupc.github.io/randomfunc.html"><strong>random number generation methods</strong></a>.</p>
+<p>The following techniques can be used to generate random RGB colors. In this section:</p>
+
+<ul>
+<li><code>RNDRANGE</code>, <code>RNDU01</code>, <code>RNDINT</code>, and <code>RNDINTEXC</code> are methods defined in my article on <a href="https://peteroupc.github.io/randomfunc.html"><strong>random number generation methods</strong></a>.</li>
+<li>The <strong><em>light-dark factor</em></strong> referred to in some techniques is the color&#39;s <a href="#CIELAB"><strong>CIELAB</strong></a> lightness (<em>L*</em>) divided by 100, or is another value from 0 through 1 that expresses a color&#39;s lightness (in terms of human perception), or is <a href="#Luminance_Factor_Grayscale"><strong><code>Luminance(color)</code></strong></a> as a last resort.</li>
+<li>For best results, these techniques need to use <a href="#RGB_Color_Spaces"><strong><em>linear RGB</em> colors</strong></a> rather than encoded RGB colors, unless noted otherwise.</li>
+</ul>
+
+<p>The techniques follow.</p>
 
 <ul>
 <li>Generating a random string in the <a href="#HTML_Format_and_Other_Text_Formats"><strong>HTML color format</strong></a> is equivalent to generating a <a href="https://peteroupc.github.io/randomfunc.html#Creating_a_Random_Character_String"><strong>random hexadecimal string</strong></a> with length 6, then inserting the string &quot;#&quot; at the beginning of that string.</li>
@@ -1692,17 +1700,17 @@ were intended for readers with normal and <a href="#Defective_and_Animal_Color_V
 <li>To generate a random <strong>dark color</strong>, either&mdash;
 
 <ul>
-<li>generate <code>color = [RNDU01(), RNDU01(), RNDU01()]</code> until <a href="#Luminance_Factor_Grayscale"><strong><code>Luminance(color)</code></strong></a> is less than a given threshold, e.g., 0.5, or</li>
+<li>generate <code>color = [RNDU01(), RNDU01(), RNDU01()]</code> until a <em>light-dark factor</em>  is less than a given threshold, e.g., 0.5, or</li>
 <li>generate <code>color = [RNDRANGE(0, maxComp), RNDRANGE(0, maxComp), RNDRANGE(0, maxComp)]</code>, where <code>maxComp</code> is the
 maximum value of each color component, e.g., 0.5.</li>
 </ul></li>
 <li>To generate a random <strong>light color</strong>, either&mdash;
 
 <ul>
-<li>generate <code>color = [RNDU01(), RNDU01(), RNDU01()]</code> until <a href="#Luminance_Factor_Grayscale"><strong><code>Luminance(color)</code></strong></a> is greater than a given threshold, e.g., 0.5, or</li>
+<li>generate <code>color = [RNDU01(), RNDU01(), RNDU01()]</code> until a <em>light-dark factor</em> is greater than a given threshold, e.g., 0.5, or</li>
 <li>generate <code>color = [minComp + RNDU01() * (1.0 - minComp), minComp + RNDU01() * (1.0 - minComp), minComp + RNDU01() * (1.0 - minComp)]</code>, where <code>minComp</code> is the minimum value of each color component, e.g., 0.5.</li>
 </ul></li>
-<li>One way to generate a random <strong>pastel color</strong> is to generate <code>color = [RNDU01(), RNDU01(), RNDU01()]</code> until <a href="#Luminance_Factor_Grayscale"><strong><code>Luminance(color)</code></strong></a> is greater than 0.75 and less than 0.9.</li>
+<li>One way to generate a random <strong>pastel color</strong> is to generate <code>color = [RNDU01(), RNDU01(), RNDU01()]</code> until a <em>light-dark factor</em> is greater than 0.75 and less than 0.9.</li>
 <li>To generate a <strong>random color at or between two others</strong> (<code>color1</code> and <code>color2</code>), generate <code>Lerp3(color1, color2, RNDU01())</code>.</li>
 <li>To generate a <strong>random shade</strong> of a given color, generate <code>Lerp3(color1, [0, 0, 0], RNDRANGE(0.2, 1.0))</code>.</li>
 <li>To generate a <strong>random tint</strong> of a given color, generate <code>Lerp3(color1, [1, 1, 1], RNDRANGE(0.0, 0.9))</code>.</li>
