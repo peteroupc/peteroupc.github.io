@@ -967,7 +967,7 @@ An **_encoded RGB_ color** needs to be converted to linear RGB (in the same RGB 
 > 3. An application can consider a color **dark** if `Luminance(color)` is lower than some threshold, say, 15.
 > 4. An application can consider a color **light** if `Luminance(color)` is greater than some threshold, say, 70.
 >
-> **Note:** `Luminance(color)` could also be implemented to output any of the following values, or in general, any other single number, from 0 through 1, that summarizes a color.
+> **Note:** `Luminance(color)` could also be implemented to output any of the following values, or in general, any other single number that summarizes a color and ranges from 0 for "minimum intensity" through 1 for "maximum intensity".
 >
 > 1. **Single channel** of a multicomponent color; for example, `color[0]`, `color[1]`, or `color[2]` for an RGB color's red, green, or blue component, respectively.
 > 2. **Average** of the multicomponent color's components (see [**Alpha Blending**](#Alpha_Blending)).
@@ -996,7 +996,7 @@ Alpha blends can support the following color operations.
 - **Tint.** Generating a tint of a color (mixing with white) can be done by alpha blending that color with white (such as `[1, 1, 1]` in RGB).
 - **Tone.** Generating a tone of a color (mixing with gray) can be done by alpha blending that color with gray (such as `[0.5, 0.5, 0.5]` in RGB).
 - **Averaging.** Averaging two colors results by alpha blending with `alpha` set to 0.5.
-- **Colorize.** `color1` is black, `color2` is the destination color, and `alpha` is `Luminance(srcColor)`, where `srcColor` is the source color.  RGB example: `Lerp3([0, 0, 0], destinationColor, Luminance(srcColor))`.  The destination color is usually the same for each pixel in an image.
+- **Colorize.** `color1` is black, `color2` is the destination color, and `alpha` is a single number that summarizes the source color and ranges from 0 for "minimum intensity" through 1 for "maximum intensity".  RGB example: `Lerp3([0, 0, 0], destinationColor, Luminance(srcColor))`, where `Luminance` is as described in [**"Luminance Factor (Grayscale)"**](#Luminance_Factor_Grayscale).  The destination color is usually the same for each pixel in an image.
 - Converting an RGBA color to an RGB color on white can be done as follows: `Lerp3([color[0], color[1], color[2]], [1, 1, 1], color[3])`.
 - Converting an RGBA color to an RGB color over `color2`, another RGB color, can be done as follows: `Lerp3([color[0], color[1], color[2]], color2, color[3])`.
 

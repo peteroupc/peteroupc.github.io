@@ -1147,7 +1147,7 @@ END METHOD
 <li>An application can consider a color <strong>light</strong> if <code>Luminance(color)</code> is greater than some threshold, say, 70.</li>
 </ol>
 
-<p><strong>Note:</strong> <code>Luminance(color)</code> could also be implemented to output any of the following values, or in general, any other single number, from 0 through 1, that summarizes a color.</p>
+<p><strong>Note:</strong> <code>Luminance(color)</code> could also be implemented to output any of the following values, or in general, any other single number that summarizes a color and ranges from 0 for &quot;minimum intensity&quot; through 1 for &quot;maximum intensity&quot;.</p>
 
 <ol>
 <li><strong>Single channel</strong> of a multicomponent color; for example, <code>color[0]</code>, <code>color[1]</code>, or <code>color[2]</code> for an RGB color&#39;s red, green, or blue component, respectively.</li>
@@ -1184,7 +1184,7 @@ END METHOD
 <li><strong>Tint.</strong> Generating a tint of a color (mixing with white) can be done by alpha blending that color with white (such as <code>[1, 1, 1]</code> in RGB).</li>
 <li><strong>Tone.</strong> Generating a tone of a color (mixing with gray) can be done by alpha blending that color with gray (such as <code>[0.5, 0.5, 0.5]</code> in RGB).</li>
 <li><strong>Averaging.</strong> Averaging two colors results by alpha blending with <code>alpha</code> set to 0.5.</li>
-<li><strong>Colorize.</strong> <code>color1</code> is black, <code>color2</code> is the destination color, and <code>alpha</code> is <code>Luminance(srcColor)</code>, where <code>srcColor</code> is the source color.  RGB example: <code>Lerp3([0, 0, 0], destinationColor, Luminance(srcColor))</code>.  The destination color is usually the same for each pixel in an image.</li>
+<li><strong>Colorize.</strong> <code>color1</code> is black, <code>color2</code> is the destination color, and <code>alpha</code> is a single number that summarizes the source color and ranges from 0 for &quot;minimum intensity&quot; through 1 for &quot;maximum intensity&quot;.  RGB example: <code>Lerp3([0, 0, 0], destinationColor, Luminance(srcColor))</code>, where <code>Luminance</code> is as described in <a href="#Luminance_Factor_Grayscale"><strong>&quot;Luminance Factor (Grayscale)&quot;</strong></a>.  The destination color is usually the same for each pixel in an image.</li>
 <li>Converting an RGBA color to an RGB color on white can be done as follows: <code>Lerp3([color[0], color[1], color[2]], [1, 1, 1], color[3])</code>.</li>
 <li>Converting an RGBA color to an RGB color over <code>color2</code>, another RGB color, can be done as follows: <code>Lerp3([color[0], color[1], color[2]], color2, color[3])</code>.</li>
 </ul>
