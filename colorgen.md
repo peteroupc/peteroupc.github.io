@@ -997,8 +997,8 @@ Alpha blends can support the following color operations.
 - **Tone.** Generating a tone of a color (mixing with gray) can be done by alpha blending that color with gray (such as `[0.5, 0.5, 0.5]` in RGB).
 - **Averaging.** Averaging two colors results by alpha blending with `alpha` set to 0.5.
 - **Colorize.** `color1` is black, `color2` is the destination color, and `alpha` is `Luminance(srcColor)`, where `srcColor` is the source color.  RGB example: `Lerp3([0, 0, 0], destinationColor, Luminance(srcColor))`.  The destination color is usually the same for each pixel in an image.
-- Converting an RGBA color to an RGB color on white is equivalent to `Lerp3([color[0], color[1], color[2]], [1, 1, 1], color[3])`.
-- Converting an RGBA color to an RGB color over `color2`, another RGB color, is equivalent to `Lerp3([color[0], color[1], color[2]], color2, color[3])`.
+- Converting an RGBA color to an RGB color on white can be done as follows: `Lerp3([color[0], color[1], color[2]], [1, 1, 1], color[3])`.
+- Converting an RGBA color to an RGB color over `color2`, another RGB color, can be done as follows: `Lerp3([color[0], color[1], color[2]], color2, color[3])`.
 
 <a id=Binarization></a>
 ### Binarization
@@ -1313,7 +1313,7 @@ There are several methods of finding the kind or kinds of colors that appear mos
 > 2. Reducing the number of colors in an image usually involves finding that image's dominant colors and either&mdash;
 >     - applying a "nearest neighbor" approach (replacing that image's colors with their [**nearest dominant colors**](#Nearest_Colors)), or
 >     - applying a [**"dithering"**](https://en.wikipedia.org/wiki/Dither) technique (especially to reduce undesirable color "banding" in certain cases), which is outside the scope of this document, however.<sup>[**(38)**](#Note38)</sup>
-> 3. Finding the number of _unique_ colors in an image color list is equivalent to storing those colors as keys in a hash table, then counting the number of keys stored this way.<sup>[**(39)**](#Note39)</sup>
+> 3. Finding the number of _unique_ colors in an image color list can be done by storing those colors as keys in a hash table, then counting the number of keys stored this way.<sup>[**(39)**](#Note39)</sup>
 > 4. **Extracting a scene's "true colors"**: For applications where matching colors from the real world is important, colors need to be measured using a [**color measurement device**](https://peteroupc.github.io/suppcolor.html#Color_Measurement_Devices), or be calculated from [**_scene-referred_ image data**](http://eilv.cie.co.at/term/567)<sup>[**(40)**](#Note40)</sup>. PNG and many other image formats store image data commonly interpreted as [**sRGB**](#sRGB) by default; however, sRGB is an [**_output-referred_**](http://eilv.cie.co.at/term/565) color space, not a scene-referred one (it's based on the color output of cathode-ray-tube monitors), making sRGB images unsuitable for real-world color-matching without more.<br>Getting scene-referred image data from a digital camera, including a smartphone camera, is not trivial and is not discussed in detail in this document.  It requires knowing, among other things, whether the camera offers access to raw image data, the format of that raw data, and possibly whether the camera does color rendering (which happens before generating output-referred image data).  A raw image's colors can be estimated by the use of a raw image of a color calibration chart (test target) or by another technique.  The ISO 17321 series and IEC 61966-9 touch on this subject.
 
 <a id=Color_Maps></a>
@@ -1339,11 +1339,11 @@ The [**_ColorBrewer 2.0_**](http://colorbrewer2.org/) Web site's suggestions for
 
 If each color in a color map has a name, number, or code associated with it, the color map is also called a _color collection_.  Examples of names are "red", "vivid green", "orange", "lemonchiffon", and "5RP 5/6"<sup>[**(42)**](#Note42)</sup>.  A survey of color collections or color atlases is not covered in this document, but some of them are discussed in some detail in my [**colors tutorial for the HTML 3D Library**](https://peteroupc.github.io/html3dutil/tutorial-colors.html#What_Do_Some_Colors_Look_Like).
 
-Converting a color (such as an RGB color) to a color name is equivalent to&mdash;
+Converting a color (such as an RGB color) to a color name can be done by&mdash;
 - retrieving the name keyed to that color in a hash table (or returning an error if that color doesn't exist in the hash table)<sup>[**(39)**](#Note39)</sup>, or
 - finding the [**nearest color**](#Nearest_Colors) to that color among the named colors, and returning the name of the color found this way.
 
-Converting a color name to a color is equivalent to retrieving the color keyed to that name (or optionally, its lower-cased form) in a hash table, or returning an error if no such color exists.<sup>[**(39)**](#Note39)</sup>
+Converting a color name to a color can be done by retrieving the color keyed to that name (or optionally, its lower-cased form) in a hash table, or returning an error if no such color exists.<sup>[**(39)**](#Note39)</sup>
 
 If each name, number, or code in a color map is associated with one or several colors, optionally with a weighting factor for each color, then the color map is also known as a _color dictionary_(Venn et al.)<sup>[**(43)**](#Note43)</sup>.
 
@@ -1394,7 +1394,7 @@ where `value` is a number 0 or greater and 1 or less (0 and 1 are the start and 
 <a id=Generating_a_Random_Color></a>
 ## Generating a Random Color
 
-The following techniques can be used to generate random RGB colors. In this section:
+The following techniques can be used to generate random colors. In this section:
 
 - `RNDRANGE`, `RNDU01`, `RNDINT`, and `RNDINTEXC` are methods defined in my article on [**random number generation methods**](https://peteroupc.github.io/randomfunc.html).
 - The ***light-dark factor*** referred to in some techniques is the color's [**CIELAB**](#CIELAB) lightness (_L*_) divided by 100, or is another value from 0 through 1 that expresses a color's lightness (in terms of human perception), or is [**`Luminance(color)`**](#Luminance_Factor_Grayscale) as a last resort.
@@ -1402,27 +1402,27 @@ The following techniques can be used to generate random RGB colors. In this sect
 
 The techniques follow.
 
-- Generating a random string in the [**HTML color format**](#HTML_Format_and_Other_Text_Formats) is equivalent to generating a [**random hexadecimal string**](https://peteroupc.github.io/randomfunc.html#Creating_a_Random_Character_String) with length 6, then inserting the string "#" at the beginning of that string.
-- Generating a random color in the **0-1 format** is equivalent to generating `[RNDU01(), RNDU01(), RNDU01()]`.
-- Generating a random **8-bpc encoded RGB color** is equivalent to calling `From888(RNDINT(16777215))`.
-- To generate a random **dark color**, either&mdash;
+- Generating a random string in the [**HTML color format**](#HTML_Format_and_Other_Text_Formats) can be done by generating a [**random hexadecimal string**](https://peteroupc.github.io/randomfunc.html#Creating_a_Random_Character_String) with length 6, then inserting the string "#" at the beginning of that string.
+- Generating a random three-component color in the **0-1 format** can be done as follows: `[RNDU01(), RNDU01(), RNDU01()]`.
+- Generating a random **8-bpc encoded RGB color** can be done as follows: `From888(RNDINT(16777215))`.
+- To generate a random **dark RGB color**, either&mdash;
     - generate `color = [RNDU01(), RNDU01(), RNDU01()]` until a _light-dark factor_  is less than a given threshold, e.g., 0.5, or
     - generate `color = [RNDRANGE(0, maxComp), RNDRANGE(0, maxComp), RNDRANGE(0, maxComp)]`, where `maxComp` is the
        maximum value of each color component, e.g., 0.5.
-- To generate a random **light color**, either&mdash;
+- To generate a random **light RGB color**, either&mdash;
     - generate `color = [RNDU01(), RNDU01(), RNDU01()]` until a _light-dark factor_ is greater than a given threshold, e.g., 0.5, or
     - generate `color = [minComp + RNDU01() * (1.0 - minComp), minComp + RNDU01() * (1.0 - minComp), minComp + RNDU01() * (1.0 - minComp)]`, where `minComp` is the minimum value of each color component, e.g., 0.5.
-- One way to generate a random **pastel color** is to generate `color = [RNDU01(), RNDU01(), RNDU01()]` until a _light-dark factor_ is greater than 0.75 and less than 0.9.
-- To generate a **random color at or between two others** (`color1` and `color2`), generate `Lerp3(color1, color2, RNDU01())`.
-- To generate a **random shade** of a given color, generate `Lerp3(color1, [0, 0, 0], RNDRANGE(0.2, 1.0))`.
-- To generate a **random tint** of a given color, generate `Lerp3(color1, [1, 1, 1], RNDRANGE(0.0, 0.9))`.
-- To generate a **random tone** of a given color, generate `Lerp3(color1, [0.5, 0.5, 0.5], RNDRANGE(0.0, 0.9))`.
-- To generate a **random monochrome color**, generate `HslToRgb(H, RNDU01(),RNDU01())`, where `H` is an arbitrary [**hue**](#HSV).
+- One way to generate a random **pastel RGB color** is to generate `color = [RNDU01(), RNDU01(), RNDU01()]` until a _light-dark factor_ is greater than 0.75 and less than 0.9.
+- To generate a **random three-component color at or between two others** (`color1` and `color2`), generate `Lerp3(color1, color2, RNDU01())`.
+- To generate a **random shade** of a given RGB color, generate `Lerp3(color1, [0, 0, 0], RNDRANGE(0.2, 1.0))`.
+- To generate a **random tint** of a given RGB color, generate `Lerp3(color1, [1, 1, 1], RNDRANGE(0.0, 0.9))`.
+- To generate a **random tone** of a given RGB color, generate `Lerp3(color1, [0.5, 0.5, 0.5], RNDRANGE(0.0, 0.9))`.
+- To generate a **random monochrome RGB color**, generate `HslToRgb(H, RNDU01(),RNDU01())`, where `H` is an arbitrary [**hue**](#HSV).
 - **Random color sampling:**
     - To select a random continuous color from a color map (`colormap`): `ColorMapContinuous(colormap, RNDU01())`.
-    - To select one random color from a color map (`colormap`): `colormap[RNDINTEXC(size(colormap))]`.  See also [**"Choosing a Random Item from a List"**](https://peteroupc.github.io/randomfunc.html#Sampling_With_Replacement_Choosing_a_Random_Item_from_a_List).
-    - To select several random colors from a color map: See [**"Choosing Several Unique Items"**](https://peteroupc.github.io/randomfunc.html#Sampling_Without_Replacement_Choosing_Several_Unique_Items).
-- **Similar random colors:** Generating a random color that's similar to another is equivalent to generating a random color (`color1`) until `COLORDIFF(color1, color2)` (defined [**earlier**](#Color_Differences)) is less than a predetermined threshold, where `color2` is the color to compare.
+    - To select one random color from a color map (`colormap`): `colormap[RNDINTEXC(size(colormap))]`.  See also [**"Sampling With Replacement: Choosing a Random Item from a List"**](https://peteroupc.github.io/randomfunc.html#Sampling_With_Replacement_Choosing_a_Random_Item_from_a_List).
+    - To select several random colors from a color map: See [**"Sampling Without Replacement: Choosing Several Unique Items"**](https://peteroupc.github.io/randomfunc.html#Sampling_Without_Replacement_Choosing_Several_Unique_Items).
+- **Similar random colors:** Generating a random color that's similar to another can be done by generating a random color (`color1`) until `COLORDIFF(color1, color2)` (defined [**earlier**](#Color_Differences)) is less than a predetermined threshold, where `color2` is the color to compare.
 - **Image noise:** This alters a color using random numbers, such as by adding or multiplying random numbers to that color.  For example, in _uniform noise_, each component of a multicomponent color is changed to  `min(1,max(0,c+RNDRANGE(-level, level)))`, where `c` is the value of the previous component and `level` is the noise level.  Other kinds of image noise include noise following a Gaussian, Poisson, or other [**probability distribution**](https://peteroupc.github.io/randomfunc.html#Specific_Non_Uniform_Distributions), and _salt-and-pepper noise_ that involves replacing each pixel by black or white at a predetermined probability each.
 
 > **Note:** The methods in this section can also be implemented by using a [**_hash function_**](https://peteroupc.github.io/random.html#Hash_Functions) to convert arbitrary data to "random" bits which can be used either directly or to initialize a pseudorandom number generator which can generate further "random" bits.  For example, `From888(MD5_24("Hello World"))`, where `MD5_24()` is the first 24 bits of the MD5 hash, can be interpreted as an 8-bpc encoded RGB color.
