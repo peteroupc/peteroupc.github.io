@@ -51,7 +51,7 @@ This document presents an overview of many common color topics that are of gener
 - [**Other Color Models**](#Other_Color_Models)
     - [**CIE XYZ**](#CIE_XYZ)
         - [**Encoding XYZ Through RGB**](#Encoding_XYZ_Through_RGB)
-    - [**Conversion Matrices Between XYZ and RGB**](#Conversion_Matrices_Between_XYZ_and_RGB)
+        - [**Conversion Matrices Between XYZ and RGB**](#Conversion_Matrices_Between_XYZ_and_RGB)
         - [**Chromaticity Coordinates**](#Chromaticity_Coordinates)
     - [**CIELAB**](#CIELAB)
     - [**CIELUV**](#CIELUV)
@@ -637,33 +637,37 @@ The conversion between RGB and XYZ varies by [**RGB color space**](#RGB_Color_Sp
 
     METHOD XYZFromsRGBD50(rgb)
         lin=SRGBToLinear3(rgb)
+        // D65/2 sRGB matrix adapted to D50/2
         return Apply3x3Matrix(lin, [
-           0.48503604, 0.34889857, 0.13026539,
-           0.25009671, 0.69779714, 0.052106158,
-           0.022736064, 0.11629952, 0.6860644])
+           0.436027535573195, 0.385097932872408, 0.143074531554397,
+           0.222478677613186, 0.716902127457834, 0.0606191949289806,
+           0.0139242392790820, 0.0970836931437703, 0.714092067577148])
     END METHOD
 
     METHOD XYZTosRGBD50(xyz)
+        // D65/2 sRGB matrix adapted to D50/2
         rgb=Apply3x3Matrix(xyz, [
-           2.7555606, -1.3071249, -0.42393240,
-           -0.99337280, 1.9226694, 0.042589564,
-           0.077074657, -0.28260708, 1.4644185])
+           3.13424933163426, -1.61717292521282, -0.490692377104512,
+           -0.978746070339639, 1.91611436125945, 0.0334415219513205,
+           0.0719490494816283, -0.228969853236611, 1.40540126012171])
         return SRGBFromLinear3(rgb)
     END METHOD
 
     METHOD XYZFromsRGB(rgb)
         lin=SRGBToLinear3(rgb)
+        // D65/2 sRGB matrix
         return Apply3x3Matrix(lin, [
-          0.41245644, 0.35757608, 0.18043748,
-          0.21267285, 0.71515216, 0.072174993,
-          0.019333896, 0.11919203, 0.95030408])
+          0.4123907992659591, 0.35758433938387796, 0.18048078840183424
+           0.21263900587151016, 0.7151686787677559, 0.0721923153607337
+           0.01933081871559181, 0.11919477979462596, 0.9505321522496605])
     END METHOD
 
     METHOD XYZTosRGB(xyz)
+        // D65/2 sRGB matrix
         rgb=Apply3x3Matrix(xyz, [
-           3.2404542, -1.5371385, -0.49853141,
-           -0.96926603, 1.8760108, 0.041556018,
-           0.055643431, -0.20402591, 1.0572252])
+           3.2409699419045235, -1.5373831775700944, -0.49861076029300355,
+            -0.9692436362808797, 1.8759675015077204, 0.0415550574071756,
+            0.05563007969699365, -0.20397695888897652, 1.0569715142428786])
         return SRGBFromLinear3(rgb)
     END METHOD
 
@@ -689,7 +693,7 @@ The following summarizes the transformations needed to convert a color from (rel
 The corresponding conversions to XYZ are then the inverse of the conversions just given.
 
 <a id=Conversion_Matrices_Between_XYZ_and_RGB></a>
-### Conversion Matrices Between XYZ and RGB
+#### Conversion Matrices Between XYZ and RGB
 
 The following methods calculate a 3&times;3 matrix to convert from a linear RGB color to XYZ form (`RGBToXYZMatrix`) and back (`XYZToRGBMatrix`), given the RGB color space's red, green, blue, and white points. Each point is expressed as a relative XYZ color with arbitrary X and Z components and a Y component of 1.  For example, `xr` and `zr` are the red point's X and Z components, respectively.  See [**brucelindbloom.com**](http://www.brucelindbloom.com/index.html?Eqn_RGB_XYZ_Matrix.html) for more information.
 
@@ -819,11 +823,13 @@ In the following pseudocode:
     END METHOD
 
     METHOD SRGBToLab(rgb)
-        return XYZToLab(XYZFromsRGB(rgb), [0.95047, 1, 1.08883])
+        return XYZToLab(XYZFromsRGB(rgb),
+          [0.9504559270516716, 1, 1.0890577507598784])
     END METHOD
 
     METHOD SRGBFromLab(lab)
-        return XYZTosRGB(LabToXYZ(lab, [0.95047, 1, 1.08883]))
+        return XYZTosRGB(LabToXYZ(lab,
+          [0.9504559270516716, 1, 1.0890577507598784]))
     END METHOD
 
     METHOD SRGBToLabD50(rgb)
@@ -909,19 +915,21 @@ In the following pseudocode&mdash;
     END METHOD
 
     METHOD SRGBToLuv(rgb)
-        return XYZToLuv(XYZFromsRGB(rgb), [0.9504559, 1, 1.089058])
+        return XYZToLuv(XYZFromsRGB(rgb),
+          [0.9504559270516716, 1, 1.0890577507598784])
     END METHOD
 
-    METHOD SRGBFromLuv(luv)
-        return XYZTosRGB(LuvToXYZ(luv, [0.9504559, 1, 1.089058]))
+    METHOD SRGBFromLuv(lab)
+        return XYZTosRGB(LuvToXYZ(lab,
+          [0.9504559270516716, 1, 1.0890577507598784]))
     END METHOD
 
     METHOD SRGBToLuvD50(rgb)
-        return XYZToLuv(XYZFromsRGBD50(rgb), [0.9642957, 1, 0.8251046])
+        return XYZToLuv(XYZFromsRGBD50(rgb), [0.9642, 1, 0.8251])
     END METHOD
 
-    METHOD SRGBFromLuvD50(luv)
-        return XYZTosRGBD50(LuvToXYZ(luv, [0.9642957, 1, 0.8251046]))
+    METHOD SRGBFromuvD50(lab)
+        return XYZTosRGBD50(LuvToXYZ(lab, [0.9642, 1, 0.8251]))
     END METHOD
 
     METHOD LuvToSaturation(luv)
