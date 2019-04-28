@@ -51,6 +51,7 @@ This document presents an overview of many common color topics that are of gener
 - [**Other Color Models**](#Other_Color_Models)
     - [**CIE XYZ**](#CIE_XYZ)
         - [**Encoding XYZ Through RGB**](#Encoding_XYZ_Through_RGB)
+    - [**Conversion Matrices Between XYZ and RGB**](#Conversion_Matrices_Between_XYZ_and_RGB)
         - [**Chromaticity Coordinates**](#Chromaticity_Coordinates)
     - [**CIELAB**](#CIELAB)
     - [**CIELUV**](#CIELUV)
@@ -626,7 +627,7 @@ The conversion between RGB and XYZ varies by [**RGB color space**](#RGB_Color_Sp
 
 &nbsp;
 
-    // Applies a 3x3 matrix transformation
+    // Applies a 3&times;3 matrix transformation
     METHOD Apply3x3Matrix(xyz, xyzmatrix)
         r=xyz[0]*xyzmatrix[0]+xyz[1]*xyzmatrix[1]+xyz[2]*xyzmatrix[2]
         g=xyz[0]*xyzmatrix[3]+xyz[1]*xyzmatrix[4]+xyz[2]*xyzmatrix[5]
@@ -636,36 +637,39 @@ The conversion between RGB and XYZ varies by [**RGB color space**](#RGB_Color_Sp
 
     METHOD XYZFromsRGBD50(rgb)
         lin=SRGBToLinear3(rgb)
-        return Apply3x3Matrix(lin, [0.4360657, 0.3851515, 0.1430784,
-                0.2224932, 0.7168870, 0.06061981, 0.01392392,
-                0.09708132, 0.7140994])
+        return Apply3x3Matrix(lin, [
+           0.48503604, 0.34889857, 0.13026539,
+           0.25009671, 0.69779714, 0.052106158,
+           0.022736064, 0.11629952, 0.6860644])
     END METHOD
 
     METHOD XYZTosRGBD50(xyz)
-        rgb=Apply3x3Matrix(xyz, [3.134136, -1.617386, -0.4906622,
-                 -0.9787955, 1.916254, 0.03344287, 0.07195539,
-                 -0.2289768, 1.405386])
+        rgb=Apply3x3Matrix(xyz, [
+           2.7555606, -1.3071249, -0.42393240,
+           -0.99337280, 1.9226694, 0.042589564,
+           0.077074657, -0.28260708, 1.4644185])
         return SRGBFromLinear3(rgb)
     END METHOD
 
     METHOD XYZFromsRGB(rgb)
         lin=SRGBToLinear3(rgb)
-        // NOTE: Official matrix is rounded to nearest 1/10000
-        return Apply3x3Matrix(lin, [0.4123908, 0.3575843, 0.1804808,
-                0.2126390, 0.7151687, 0.07219232, 0.01933082,
-                0.1191948, 0.9505322])
+        return Apply3x3Matrix(lin, [
+          0.41245644, 0.35757608, 0.18043748,
+          0.21267285, 0.71515216, 0.072174993,
+          0.019333896, 0.11919203, 0.95030408])
     END METHOD
 
     METHOD XYZTosRGB(xyz)
-        rgb=Apply3x3Matrix(xyz, [3.240970, -1.537383, -0.4986108,
-                -0.9692436, 1.875968, 0.04155506, 0.05563008,
-                -0.2039770, 1.056972])
+        rgb=Apply3x3Matrix(xyz, [
+           3.2404542, -1.5371385, -0.49853141,
+           -0.96926603, 1.8760108, 0.041556018,
+           0.055643431, -0.20402591, 1.0572252])
         return SRGBFromLinear3(rgb)
     END METHOD
 
 > **Notes:**
 >
-> 1. In the pseudocode just given, 3x3 matrices are used to transform a linear RGB color to or from XYZ form.  The matrix shown in `XYZTosRGB` or `XYZTosRGBD50` is the [**inverse of the matrix**](http://peteroupc.github.io/html3dutil/tutorial-matrixdetails.html#Matrix_Inversions) shown in `XYZFromsRGB` or `XYZFromsRGBD50`, respectively.<sup>[**(18)**](#Note18)</sup>
+> 1. In the pseudocode just given, 3&times;3 matrices are used to transform a linear RGB color to or from XYZ form (see [**"Conversion Matrices Between XYZ and RGB"**](#Conversion_Matrices_Between_XYZ_and_RGB)).
 > 2. `XYZTosRGB` and `XYZTosRGBD50` can return sRGB colors with components less than 0 or greater than 1, to make out-of-range XYZ colors easier to identify.  If that is not desired, then the sRGB color can be converted to an in-range one. There are many such _gamut mapping_ conversions; for example, one such conversion involves clamping each component of the sRGB color using the idiom `min(max(compo,0), 1)`, where `compo` is that component.
 > 3. XYZ colors that have undergone **black point compensation** (see also ISO 18619) can be expressed as `Lerp3(wpoint, xyz, (1.0 - blackDest) / (1.0 - blackSrc))`, where&mdash;
 >     - `wpoint` is the white point as an absolute or relative XYZ color,
@@ -677,12 +681,41 @@ The conversion between RGB and XYZ varies by [**RGB color space**](#RGB_Color_Sp
 
 The following summarizes the transformations needed to convert a color from (relative) XYZ through RGB to an encoding form suitable for images or video.
 
-1. An XYZ-to-linear-RGB transform.  This is usually a [**matrix**](http://www.brucelindbloom.com/index.html?Eqn_RGB_XYZ_Matrix.html) generated using the [**RGB color space**](#RGB_Color_Spaces)'s red, green, blue, and white points (see the methods in the previous section), but can also include a [**_chromatic adaptation transform_**](https://en.wikipedia.org/wiki/Chromatic_adaptation) if the XYZ and RGB color spaces use different white points (see the `XYZFromsRGBD50` and `XYZTosRGBD50` methods above)<sup>[**(18)**](#Note18)</sup>.
+1. An XYZ-to-linear-RGB transform.  This is usually a [**matrix**](#Conversion_Matrices_Between_XYZ_and_RGB) generated using the [**RGB color space**](#RGB_Color_Spaces)'s red, green, blue, and white points, but can also include a [**_chromatic adaptation transform_**](https://en.wikipedia.org/wiki/Chromatic_adaptation) if the XYZ and RGB color spaces use different white points (see the `XYZFromsRGBD50` and `XYZTosRGBD50` methods above)<sup>[**(18)**](#Note18)</sup>.
 2. A linear-to-encoded-RGB transform.  This is the RGB color space's "transfer function".  This can be left out if linear RGB colors are desired.
 3. A pixel encoding transform.  This transforms the RGB color into [**Y&prime;C<sub>_B_</sub>C<sub>_R_</sub>**](#Y_prime_C_B_C_R_and_Other_Video_Color_Formats) or another form.  This can be left out.
 4. The final color form is serialized into a binary, text, or other representation (see also "[**Representing RGB Colors**](#Representing_RGB_Colors)").
 
 The corresponding conversions to XYZ are then the inverse of the conversions just given.
+
+<a id=Conversion_Matrices_Between_XYZ_and_RGB></a>
+### Conversion Matrices Between XYZ and RGB
+
+The following methods calculate a 3&times;3 matrix to convert from a linear RGB color to XYZ form (`RGBToXYZMatrix`) and back (`XYZToRGBMatrix`), given the RGB color space's red, green, blue, and white points. Each point is expressed as a relative XYZ color with arbitrary X and Z components and a Y component of 1.  For example, `xr` and `zr` are the red point's X and Z components, respectively.  See [**brucelindbloom.com**](http://www.brucelindbloom.com/index.html?Eqn_RGB_XYZ_Matrix.html) for more information.
+
+    METHOD RGBToXYZMatrix(xr,zr,xg,zg,xb,zb,xw,zw)
+     s1=(xb*zg - xb*zw - xg*zb + xg*zw + xw*zb - xw*zg)
+     s2=(xb*zg - xb*zr - xg*zb + xg*zr + xr*zb - xr*zg)
+     s3=(-xb*zr + xb*zw + xr*zb - xr*zw - xw*zb + xw*zr)
+     sz=(-xr*(zg - zr) + xw*(zg - zr) + zr*(xg - xr) -
+        zw*(xg - xr)) /
+        ((xb - xr)*(zg - zr) - (xg - xr)*(zb - zr))
+     sx=s1/s2
+     sy=s3/s2
+     return [xr*sx,xg*sy,xb*sz,sx,sy,sz,zr*sx,zg*sy,zb*sz]
+    END METHOD
+
+    METHOD XYZToRGBMatrix(xr,zr,xg,zg,xb,zb,xw,zw)
+     // NOTE: Inverse of RGBToXYZMatrix
+     d1=(xb*zg - xb*zw - xg*zb + xg*zw + xw*zb - xw*zg)
+     d2=(xb*zr - xb*zw - xr*zb + xr*zw + xw*zb - xw*zr)
+     d3=(xg*zr - xg*zw - xr*zg + xr*zw + xw*zg - xw*zr)
+     return [(zb - zg)/d1,(xb*zg - xg*zb)/d1,
+      (-xb + xg)/d1, (zb - zr)/d2,
+      (xb*zr - xr*zb)/d2,(-xb + xr)/d2,
+      (zg - zr)/d3,(xg*zr - xr*zg)/d3,
+      (-xg + xr)/d3]
+    END METHOD
 
 <a id=Chromaticity_Coordinates></a>
 #### Chromaticity Coordinates
@@ -786,19 +819,19 @@ In the following pseudocode:
     END METHOD
 
     METHOD SRGBToLab(rgb)
-        return XYZToLab(XYZFromsRGB(rgb), [0.9504559, 1, 1.089058])
+        return XYZToLab(XYZFromsRGB(rgb), [0.95047, 1, 1.08883])
     END METHOD
 
     METHOD SRGBFromLab(lab)
-        return XYZTosRGB(LabToXYZ(lab, [0.9504559, 1, 1.089058]))
+        return XYZTosRGB(LabToXYZ(lab, [0.95047, 1, 1.08883]))
     END METHOD
 
     METHOD SRGBToLabD50(rgb)
-        return XYZToLab(XYZFromsRGBD50(rgb), [0.9642957, 1, 0.8251046])
+        return XYZToLab(XYZFromsRGBD50(rgb), [0.9642, 1, 0.8251])
     END METHOD
 
     METHOD SRGBFromLabD50(lab)
-        return XYZTosRGBD50(LabToXYZ(lab, [0.9642957, 1, 0.8251046]))
+        return XYZTosRGBD50(LabToXYZ(lab, [0.9642, 1, 0.8251]))
     END METHOD
 
        // -- Derived values from CIELAB colors
@@ -1087,7 +1120,7 @@ Porter and Duff (1984) define twelve formulas for combining (compositing) two RG
 <a id=Color_Matrices></a>
 ### Color Matrices
 
-A _color matrix_ is a 9-item (3x3) list for transforming a three-component color. The following are examples of color matrices:
+A _color matrix_ is a 9-item (3&times;3) list for transforming a three-component color. The following are examples of color matrices:
 
 - **Sepia.** Sepia matrices can have the form `[r*sw[0], g*sw[0], b*sw[0], r*sw[1], g*sw[1], b*sw[1], r*sw[2], g*sw[2], b*sw[2]]`, where `r`, `g`, and `b` are as defined in the section "[**Luminance Factor (Grayscale)**](#Luminance_Factor_Grayscale)", and `sw` is the RGB color for "sepia white" (an arbitrary choice).  An example for linear sRGB is: `[0.207,0.696,0.07,0.212,0.712,0.072,0.16,0.538,0.054]`.
 - **Saturate.** `[s+(1-s)*r, (1-s)*g, (1-s)*b, (1-s)*r, s+(1-s)*g,(1-s)*b,(1-s)*r,(1-s)*g,s+(1-s)*b]`, where `s` ranges
