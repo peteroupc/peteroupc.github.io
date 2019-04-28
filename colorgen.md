@@ -193,7 +193,7 @@ Among RGB color spaces, one of the most popular is the _sRGB color space_.  In s
 
 For background, see the [**sRGB proposal**](https://www.w3.org/Graphics/Color/sRGB), which recommends RGB image data in an unidentified RGB color space to be treated as sRGB.
 
-The following methods convert colors between linear and encoded sRGB. (Note that the threshold `0.0031308` is that of IEC 61966-2-1, the official sRGB standard; the sRGB proposal has a different value for this threshold.)
+The following methods convert colors between linear and encoded sRGB. (Note that the thresholds `0.0031308` and `0.4045` are those of IEC 61966-2-1, the official sRGB standard; the sRGB proposal has a different value for these thresholds.)
 
     // Convert a color component from encoded to linear sRGB
     // NOTE: This is not gamma decoding; it's similar to, but
@@ -1033,21 +1033,21 @@ The following techniques generate new colors that are related to existing colors
 
 There are two kinds of contrast ratio, among other kinds not covered in this document.
 
-**WCAG Contrast Ratio.** One kind of contrast ratio quantifies how differently two colors appear.  In the pseudocode below, `ContrastRatioWCAG` implements the contrast ratio formula described in the [**Web Content Accessibility Guidelines 2.0 (WCAG)**](https://www.w3.org/TR/2008/REC-WCAG20-20081211/#visual-audio-contrast-contrast), where `RelLum(color)`&mdash;
-- is the "relative luminance" of a color as defined in the WCAG, and
-- is equivalent to [**`Luminance(color)`**](#Luminance_Factor_Grayscale) whenever WCAG conformity is not important.
+**Contrast Ratio.** One kind of contrast ratio quantifies how differently two colors appear. Broadly speaking, a _contrasting color_ is a foreground (text) color with high contrast, especially, high luminance contrast, to the background color or vice versa.  In general, under the WCAG, a contrasting color is one whose contrast ratio with another color is 4.5 or greater (or 7 or greater for a stricter conformance level).
 
-&nbsp;
-
-    METHOD ContrastRatioWCAG(color1, color2)
-        rl1=RelLum(color1)
-        rl2=RelLum(color2)
-        return (max(rl1,rl2)+0.05)/(min(rl1,rl2)+0.05)
-    END METHOD
-
-> **Note:** For 8-bpc encoded sRGB colors, `RelLum(color)` is effectively equivalent to `LuminanceSRGB(color)`, but with the WCAG using a different version of `SRGBToLinear`, with 0.03928 (the value used in the sRGB proposal) rather than 0.04045, but this difference doesn't affect the result for such 8-bpc colors.
-
-Broadly speaking, a _contrasting color_ is a foreground (text) color with high contrast to the background color or vice versa.  In general, under the WCAG, a contrasting color is one whose contrast ratio with another color is 4.5 or greater (or 7 or greater for a stricter conformance level). Also, according to [**"Understanding WCAG 2.0"**](https://www.w3.org/TR/UNDERSTANDING-WCAG20/visual-audio-contrast-contrast.html), "effective luminance contrast can generally be computed without regard to specific [**color deficiency**](#Defective_and_Animal_Color_Vision), except for the use of predominantly long wavelength colors [such as red] against darker colors ... for [people with] protanopia".
+> **Example:** The [**Web Content Accessibility Guidelines 2.0 (WCAG)**](https://www.w3.org/TR/2008/REC-WCAG20-20081211/#visual-audio-contrast-contrast), includes a contrast ratio formula implemented in the pseudocode below, where `RelLum(color)`&mdash;
+> - is the "relative luminance" of a color as defined in the WCAG, and
+> - is equivalent to [**`Luminance(color)`**](#Luminance_Factor_Grayscale) whenever WCAG conformity is not important.
+>
+> &nbsp;
+>
+>     METHOD ContrastRatioWCAG(color1, color2)
+>         rl1=RelLum(color1)
+>         rl2=RelLum(color2)
+>         return (max(rl1,rl2)+0.05)/(min(rl1,rl2)+0.05)
+>     END METHOD
+>
+> For 8-bpc encoded sRGB colors, `RelLum(color)` is effectively equivalent to `LuminanceSRGB(color)`, but with the WCAG using a different version of `SRGBToLinear`, with 0.03928 (the value used in the sRGB proposal) rather than 0.04045, but this difference doesn't affect the result for such 8-bpc colors.
 
 **Opacity.** In certain industries, a material's _contrast ratio_ or _opacity_ can be found by dividing the Y component of the material's [**XYZ color**](#CIE_XYZ) measured over a black surface by the Y component of the material's XYZ color measured over a white surface.  Details of the measurement depend on the industry and material.
 
@@ -1106,7 +1106,7 @@ In the following pseudocode, `TransformColor` transforms an RGB color (`color`) 
 More generally&mdash;
 
 - an N&times;N matrix can be used to transform an N-component color, and
-- an (N+1)&times;(N+1) matrix can be used to transform a color consisting of N components followed by the number 1; if this is done, the first N components of the transformed color are divided by the last component.
+- an (N+1)&times;(N+1) matrix can be used to transform a color consisting of N components followed by the number 1; if this is done, the first N components of the transformed color are divided by its last component.
 
 <a id=Lighten_Darken></a>
 ### Lighten/Darken

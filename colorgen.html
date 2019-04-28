@@ -271,7 +271,7 @@
 
 <p>For background, see the <a href="https://www.w3.org/Graphics/Color/sRGB"><strong>sRGB proposal</strong></a>, which recommends RGB image data in an unidentified RGB color space to be treated as sRGB.</p>
 
-<p>The following methods convert colors between linear and encoded sRGB. (Note that the threshold <code>0.0031308</code> is that of IEC 61966-2-1, the official sRGB standard; the sRGB proposal has a different value for this threshold.)</p>
+<p>The following methods convert colors between linear and encoded sRGB. (Note that the thresholds <code>0.0031308</code> and <code>0.4045</code> are those of IEC 61966-2-1, the official sRGB standard; the sRGB proposal has a different value for these thresholds.)</p>
 
 <pre>// Convert a color component from encoded to linear sRGB
 // NOTE: This is not gamma decoding; it&#39;s similar to, but
@@ -1232,7 +1232,10 @@ END METHOD
 
 <p>There are two kinds of contrast ratio, among other kinds not covered in this document.</p>
 
-<p><strong>WCAG Contrast Ratio.</strong> One kind of contrast ratio quantifies how differently two colors appear.  In the pseudocode below, <code>ContrastRatioWCAG</code> implements the contrast ratio formula described in the <a href="https://www.w3.org/TR/2008/REC-WCAG20-20081211/#visual-audio-contrast-contrast"><strong>Web Content Accessibility Guidelines 2.0 (WCAG)</strong></a>, where <code>RelLum(color)</code>&mdash;</p>
+<p><strong>Contrast Ratio.</strong> One kind of contrast ratio quantifies how differently two colors appear. Broadly speaking, a <em>contrasting color</em> is a foreground (text) color with high contrast, especially, high luminance contrast, to the background color or vice versa.  In general, under the WCAG, a contrasting color is one whose contrast ratio with another color is 4.5 or greater (or 7 or greater for a stricter conformance level).</p>
+
+<blockquote>
+<p><strong>Example:</strong> The <a href="https://www.w3.org/TR/2008/REC-WCAG20-20081211/#visual-audio-contrast-contrast"><strong>Web Content Accessibility Guidelines 2.0 (WCAG)</strong></a>, includes a contrast ratio formula implemented in the pseudocode below, where <code>RelLum(color)</code>&mdash;</p>
 
 <ul>
 <li>is the &quot;relative luminance&quot; of a color as defined in the WCAG, and</li>
@@ -1248,11 +1251,8 @@ END METHOD
 END METHOD
 </pre>
 
-<blockquote>
-<p><strong>Note:</strong> For 8-bpc encoded sRGB colors, <code>RelLum(color)</code> is effectively equivalent to <code>LuminanceSRGB(color)</code>, but with the WCAG using a different version of <code>SRGBToLinear</code>, with 0.03928 (the value used in the sRGB proposal) rather than 0.04045, but this difference doesn&#39;t affect the result for such 8-bpc colors.</p>
+<p>For 8-bpc encoded sRGB colors, <code>RelLum(color)</code> is effectively equivalent to <code>LuminanceSRGB(color)</code>, but with the WCAG using a different version of <code>SRGBToLinear</code>, with 0.03928 (the value used in the sRGB proposal) rather than 0.04045, but this difference doesn&#39;t affect the result for such 8-bpc colors.</p>
 </blockquote>
-
-<p>Broadly speaking, a <em>contrasting color</em> is a foreground (text) color with high contrast to the background color or vice versa.  In general, under the WCAG, a contrasting color is one whose contrast ratio with another color is 4.5 or greater (or 7 or greater for a stricter conformance level). Also, according to <a href="https://www.w3.org/TR/UNDERSTANDING-WCAG20/visual-audio-contrast-contrast.html"><strong>&quot;Understanding WCAG 2.0&quot;</strong></a>, &quot;effective luminance contrast can generally be computed without regard to specific <a href="#Defective_and_Animal_Color_Vision"><strong>color deficiency</strong></a>, except for the use of predominantly long wavelength colors [such as red] against darker colors ... for [people with] protanopia&quot;.</p>
 
 <p><strong>Opacity.</strong> In certain industries, a material&#39;s <em>contrast ratio</em> or <em>opacity</em> can be found by dividing the Y component of the material&#39;s <a href="#CIE_XYZ"><strong>XYZ color</strong></a> measured over a black surface by the Y component of the material&#39;s XYZ color measured over a white surface.  Details of the measurement depend on the industry and material.</p>
 
@@ -1323,7 +1323,7 @@ END METHOD
 
 <ul>
 <li>an N&times;N matrix can be used to transform an N-component color, and</li>
-<li>an (N+1)&times;(N+1) matrix can be used to transform a color consisting of N components followed by the number 1; if this is done, the first N components of the transformed color are divided by the last component.</li>
+<li>an (N+1)&times;(N+1) matrix can be used to transform a color consisting of N components followed by the number 1; if this is done, the first N components of the transformed color are divided by its last component.</li>
 </ul>
 
 <p><a id=Lighten_Darken></a></p>
