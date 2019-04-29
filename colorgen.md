@@ -1046,7 +1046,7 @@ Alpha blends can support the following color operations.
 
 _Binarization_, also known as _thresholding_, involves classifying pixels or colors into one of two categories (usually black or white).  It involves applying a function to a pixel or color and returning 1 if the result is greater than a threshold, or 0 otherwise.  The following are examples of binarization with RGB colors in 0-1 format.
 
-- **Black and white.** Generate `[0, 0, 0]` (black) if a _light-dark factor_ (such as the color's [**CIELAB**](#CIELAB) lightness, _L*_, divided by 100) is less than 0.5, or `[1, 1, 1]` (white) otherwise.
+- **Black and white.** Generate `[1, 1, 1]` (white) if a _light-dark factor_ (such as the color's [**CIELAB**](#CIELAB) lightness, _L*_, divided by 100) is greater than 0.5, or `[0, 0, 0]` (black) otherwise.
 - **Contrasting color.** Generate `[1, 1, 1]` (white) if a _light-dark factor_ is less than 0.5, or `[0, 0, 0]` (black) otherwise.
 
 Other forms of binarization may classify pixels based at least in part on their positions in the image.
@@ -1057,7 +1057,7 @@ Other forms of binarization may classify pixels based at least in part on their 
 The following techniques generate new colors that are related to existing colors.
 
 - **Color harmonies**<sup>[**(30)**](#Note30)</sup> result by generating several colors that differ in hue (hue angle).  For each color harmony given below, the following numbers are added to a hue angle<sup>[**(13)**](#Note13)</sup> to generate the hues for the colors that make up that harmony:
-    - **Analogous**: 0, Y, -Y, where Y is 2&pi;/3 or less. In general, _analogous colors_ are two, four, or more colors spaced at equal hue intervals from a central color.
+    - **Analogous**: 0, Y, -Y, where Y is 2&pi;/3 or less. In general, _analogous colors_ are two, four, or a higher even number of colors spaced at equal hue intervals from a central color.
     - **Complementary**: 0, &pi;.  This is the base hue with its opposite hue.
     - **Split complementary**: 0, &pi; - Y, &pi; + Y, where Y is greater than 0 and &pi;/2 or less.  The base hue and two hues close to the opposite hue.
     - **Triadic**: 0, 2&pi;/3, 4&pi;/3.  Base hue and the two hues at 120 degrees from that hue.
@@ -1074,7 +1074,7 @@ The following techniques generate new colors that are related to existing colors
 
 There are two kinds of contrast ratio, among other kinds not covered in this document.
 
-**Contrast Ratio.** One kind of contrast ratio quantifies how differently two colors appear. Broadly speaking, a _contrasting color_ is a foreground (text) color with high contrast, especially, high luminance contrast, to the background color or vice versa.  In general, under the WCAG, a contrasting color is one whose contrast ratio with another color is 4.5 or greater (or 7 or greater for a stricter conformance level).
+**Contrast Ratio.** One kind of contrast ratio quantifies how differently two colors appear. Broadly speaking, a _contrasting color_ is a foreground (text) color with high contrast, especially high luminance contrast, to the background color or vice versa.
 
 > **Example:** The [**Web Content Accessibility Guidelines 2.0 (WCAG)**](https://www.w3.org/TR/2008/REC-WCAG20-20081211/#visual-audio-contrast-contrast), includes a contrast ratio formula implemented in the pseudocode below, where `RelLum(color)`&mdash;
 > - is the "relative luminance" of a color as defined in the WCAG, and
@@ -1088,7 +1088,7 @@ There are two kinds of contrast ratio, among other kinds not covered in this doc
 >         return (max(rl1,rl2)+0.05)/(min(rl1,rl2)+0.05)
 >     END METHOD
 >
-> For 8-bpc encoded sRGB colors, `RelLum(color)` is effectively equivalent to `LuminanceSRGB(color)`, but with the WCAG using a different version of `SRGBToLinear`, with 0.03928 (the value used in the sRGB proposal) rather than 0.04045, but this difference doesn't affect the result for such 8-bpc colors.
+> For 8-bpc encoded sRGB colors, `RelLum(color)` is effectively equivalent to `LuminanceSRGB(color)`, but with the WCAG using a different version of `SRGBToLinear`, with 0.03928 (the value used in the sRGB proposal) rather than 0.04045, but this difference doesn't affect the result for such 8-bpc colors.  In general, under the WCAG, a contrasting color is one whose contrast ratio with another color is 4.5 or greater (or 7 or greater for a stricter conformance level).
 
 **Opacity.** In certain industries, a material's _contrast ratio_ or _opacity_ can be found by dividing the Y component of the material's [**XYZ color**](#CIE_XYZ) measured over a black surface by the Y component of the material's XYZ color measured over a white surface.  Details of the measurement depend on the industry and material.
 
