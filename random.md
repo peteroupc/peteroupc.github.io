@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on Mar. 5, 2016; last updated on Apr. 23, 2019.
+Begun on Mar. 5, 2016; last updated on May 4, 2019.
 
 Most apps that use random numbers care about either unpredictability, speed/high quality, or repeatability.  This article explains the three kinds of RNGs and gives recommendations on each kind.
 
@@ -373,7 +373,7 @@ Some applications require generating unique identifiers, especially to identify 
 
 Generating random "unique" numbers of fixed size, without checking them for uniqueness, runs the risk of producing the same random number of that size again.  However, this risk decreases as that fixed size increases (see "[**Birthday problem**](https://en.wikipedia.org/wiki/Birthday_problem)").  An application that can tolerate the risk of randomly generating a duplicate "unique" `B`-bit number can generate random `B`-bit numbers, using an RNG described earlier in "Shuffling", with or without checking them for uniqueness.  The following illustrates some choices for the number of bits:
 
-- For 124-bit random numbers (including those found in version-4 UUIDs, or universally unique identifiers), an application has a 50% chance for duplicate number after generating about 5.4 billion billion random 124-bit numbers.
+- For 124-bit random numbers (including those found in version-4 UUIDs, or universally unique identifiers), an application has a 50% chance for duplicate numbers after generating about 5.4 billion billion random 124-bit numbers.
 - For 160-bit random numbers, that duplicate chance exists with about 1.4 million billion billion numbers.
 - For 192-bit random numbers, that duplicate chance exists with about 93 billion billion billion numbers.
 
