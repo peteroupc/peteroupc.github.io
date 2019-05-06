@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on Mar. 5, 2016; last updated on May 4, 2019.
+Begun on Mar. 5, 2016; last updated on May 5, 2019.
 
 Most apps that use random numbers care about either unpredictability, speed/high quality, or repeatability.  This article explains the three kinds of RNGs and gives recommendations on each kind.
 
@@ -369,13 +369,19 @@ For shuffling purposes, `B` can usually be calculated for different lists using 
 <a id=Unique_Random_Numbers></a>
 ### Unique Random Numbers
 
-Some applications require generating unique identifiers, especially to identify database records or other shared resources.  Such identifiers include auto-incremented numbers, sequentially assigned numbers, random numbers, and combinations of these.  Whenever practical, an application SHOULD check an identifier it generates for uniqueness before treating it as uniquely identifying a resource.
+Some applications require generating unique identifiers, especially to identify database records or other shared resources.  Such identifiers include auto-incremented numbers, sequentially assigned numbers, random numbers, and combinations of these.  Whenever practical, an application SHOULD NOT treat an identifier as uniquely identifying a resource unless&mdash;
 
-Generating random "unique" numbers of fixed size, without checking them for uniqueness, runs the risk of producing the same random number of that size again.  However, this risk decreases as that fixed size increases (see "[**Birthday problem**](https://en.wikipedia.org/wiki/Birthday_problem)").  An application that can tolerate the risk of randomly generating a duplicate "unique" `B`-bit number can generate random `B`-bit numbers, using an RNG described earlier in "Shuffling", with or without checking them for uniqueness.  The following illustrates some choices for the number of bits:
+- it checks that identifier for uniqueness, or
+- it generates that identifier in a way that ensures uniqueness of identifiers in the desired range.
 
-- For 124-bit random numbers (including those found in version-4 UUIDs, or universally unique identifiers), an application has a 50% chance for duplicate numbers after generating about 5.4 billion billion random 124-bit numbers.
-- For 160-bit random numbers, that duplicate chance exists with about 1.4 million billion billion numbers.
-- For 192-bit random numbers, that duplicate chance exists with about 93 billion billion billion numbers.
+Depending on the RNG, generating random "unique" numbers of fixed size, without checking them for uniqueness, may run the risk of producing the same random number of that size again.  However, this risk decreases as that fixed size increases (see "[**Birthday problem**](https://en.wikipedia.org/wiki/Birthday_problem)").<sup>[**(32)**](#Note32)</sup>
+
+An application can generate "unique" random `B`-bit numbers&mdash;
+
+- using a cryptographic RNG with a security strength of at least `B` bits, if it can tolerate the risk of randomly generating a duplicate "unique" `B`-bit number, or
+- if a noncryptographic RNG is otherwise appropriate, using a PRNG that generates unique `B`-bit numbers, such as the following:
+    - A so-called "full-period" or "1-dimensionally equidistributed" PRNG (which is usually a linear congruential generator) that outputs `B`-bit numbers will cycle through all `B`-bit numbers except 0.
+    - A `B`-bit counter with one or more reversible operations applied to it will cycle through all `B`-bit numbers.
 
 <a id=GPU_Programming_Environments></a>
 ### GPU Programming Environments
@@ -464,7 +470,8 @@ A **programming language API** designed for reuse by applications could implemen
 ## Acknowledgments
 
 I acknowledge&mdash;
-- the commenters to the CodeProject version of this page (as well as a similar article of mine on CodeProject), including "Cryptonite" and member 3027120, and
+- the commenters to the CodeProject version of this page (as well as a similar article of mine on CodeProject), including "Cryptonite" and member 3027120,
+- Severin Pappadeux, and
 - Lee Daniel Crocker, who reviewed this document and gave comments.
 
 <a id=Notes></a>
@@ -533,6 +540,11 @@ Implementations of floating-point numbers and floating-point math can also diffe
 <small><sup id=Note30>(30)</sup> Such arbitrary data can include process identifiers, time stamps, environment variables, random numbers, virtual machine guest identifiers, and/or other data specific to the session or to the instance of the RNG.  See also NIST SP800-90A and the references below.<br/>Everspaugh, A., Zhai, Y., et al.  "Not-So-Random Numbers in Virtualized Linux and the Whirlwind RNG", 2014.<br>Ristenpart, T., Yilek, S. "When Good Randomness Goes Bad: Virtual Machine Reset Vulnerabilities and Hedging Deployed Cryptography", 2010.</small>
 
 <small><sup id=Note31>(31)</sup> Allowing applications to do so would hamper forward compatibility &mdash; the API would then be less free to change how the RNG is implemented in the future (e.g., to use a cryptographic or otherwise "better" RNG), or to make improvements or bug fixes in methods that use that RNG (such as shuffling and Gaussian number generation).  (As a notable example, the V8 JavaScript engine recently changed its `Math.random()` implementation to use a variant of `xorshift128+`, which is backward compatible because nothing in JavaScript allows  `Math.random()` to be seeded.)  Nevertheless, APIs can still allow applications to provide additional input ("entropy") to the RNG in order to increase its randomness rather than to ensure repeatability.</small>
+
+<small><sup id=Note32>(32)</sup> For example, in theory, an application has a 50% chance for duplicate numbers after generating&mdash;
+- about 5.4 billion billion random 124-bit numbers (including those found in version-4 UUIDs, or universally unique identifiers),
+- about 1.4 million billion billion random 160-bit numbers, or
+- about 93 billion billion billion random 192-bit numbers.</small>
 
 <a id=Appendix></a>
 ## Appendix
