@@ -2104,7 +2104,7 @@ If an application is concerned about these issues, it should treat the `RNDU01On
 
 <small><sup id=Note18>(18)</sup> See, for example, the _Stack Overflow_ question "How to generate a number in arbitrary range using random()={0..1} preserving uniformness and density?", `questions/8019589`.</small>
 
-<small><sup id=Note19>(19)</sup> P. L'Ecuyer, "Tables of Linear Congruential Generators of Different Sizes and Good Lattice Structure", January 1999.</small>
+<small><sup id=Note19>(19)</sup> P. L'Ecuyer, "Tables of Linear Congruential Generators of Different Sizes and Good Lattice Structure", _Mathematics of Computation_ 68(225), January 1999.</small>
 
 <small><sup id=Note20>(20)</sup> Efraimidis, P. and Spirakis, P. "[**Weighted Random Sampling (2005; Efraimidis, Spirakis)**](http://utopia.duth.gr/~pefraimi/research/data/2007EncOfAlg.pdf)", 2005.</small>
 

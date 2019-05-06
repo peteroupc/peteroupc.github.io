@@ -379,9 +379,9 @@ Depending on the RNG, generating random "unique" numbers of fixed size, without 
 An application can generate "unique" random `B`-bit numbers&mdash;
 
 - using a cryptographic RNG with a security strength of at least `B` bits, if it can tolerate the risk of randomly generating a duplicate "unique" `B`-bit number, or
-- if a noncryptographic RNG is otherwise appropriate, using a PRNG that generates unique `B`-bit numbers, such as the following:
-    - A so-called "full-period" or "1-dimensionally equidistributed" PRNG (which is usually a linear congruential generator) that outputs `B`-bit numbers will cycle through all `B`-bit numbers except 0.
-    - A `B`-bit counter with one or more reversible operations applied to it will cycle through all `B`-bit numbers.
+- if a noncryptographic RNG is otherwise appropriate, using a PRNG that generates unique `B`-bit numbers, such as&mdash;
+    - a so-called "full-period" or "1-dimensionally equidistributed" PRNG (which is usually a [**linear congruential generator**](https://en.wikipedia.org/wiki/Linear_congruential_generator)) that outputs `B`-bit numbers<sup>[**(33)**](#Note33)</sup>, or
+    - a `B`-bit counter with one or more reversible operations applied to it.
 
 <a id=GPU_Programming_Environments></a>
 ### GPU Programming Environments
@@ -545,6 +545,8 @@ Implementations of floating-point numbers and floating-point math can also diffe
 <small><sup id=Note31>(31)</sup> Such arbitrary data can include process identifiers, time stamps, environment variables, random numbers, virtual machine guest identifiers, and/or other data specific to the session or to the instance of the RNG.  See also NIST SP800-90A and the references below.<br/>Everspaugh, A., Zhai, Y., et al.  "Not-So-Random Numbers in Virtualized Linux and the Whirlwind RNG", 2014.<br>Ristenpart, T., Yilek, S. "When Good Randomness Goes Bad: Virtual Machine Reset Vulnerabilities and Hedging Deployed Cryptography", 2010.</small>
 
 <small><sup id=Note32>(32)</sup> Allowing applications to do so would hamper forward compatibility &mdash; the API would then be less free to change how the RNG is implemented in the future (e.g., to use a cryptographic or otherwise "better" RNG), or to make improvements or bug fixes in methods that use that RNG (such as shuffling and Gaussian number generation).  (As a notable example, the V8 JavaScript engine recently changed its `Math.random()` implementation to use a variant of `xorshift128+`, which is backward compatible because nothing in JavaScript allows  `Math.random()` to be seeded.)  Nevertheless, APIs can still allow applications to provide additional input ("entropy") to the RNG in order to increase its randomness rather than to ensure repeatability.</small>
+
+<small><sup id=Note33>(33)</sup> For suggested linear congruential generators for generating unique random numbers, see P. L'Ecuyer, "Tables of Linear Congruential Generators of Different Sizes and Good Lattice Structure", _Mathematics of Computation_ 68(225), January 1999.</small>
 
 <a id=Appendix></a>
 ## Appendix
