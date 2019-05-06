@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
-<p>Begun on June 4, 2017; last updated on Apr. 22, 2019.</p>
+<p>Begun on June 4, 2017; last updated on May 6, 2019.</p>
 
 <p>Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.</p>
 
@@ -567,7 +567,7 @@ END METHOD
 <li>a self-sorting data structure such as a <a href="https://en.wikipedia.org/wiki/Red%E2%80%93black_tree"><strong>red&ndash;black tree</strong></a>, if the random items are to be retrieved in sorted order or in index order.</li>
 </ul>
 
-<p>Although constant-memory sampling without replacement is possible with <a href="https://en.wikipedia.org/wiki/Linear_congruential_generator"><strong><em>linear congruential generators</em></strong></a>, seeded with an RNG, this is not recommended because of the relatively small number of sequences that can be sampled this way.</p></li>
+<p>Many applications require generating unique random numbers to identify database records or other shared resources.  In this case, the choice of underlying RNG is important; see my <a href="https://peteroupc.github.io/random.html#Unique_Random_Numbers"><strong>RNG recommendation document</strong></a>.</p></li>
 </ol>
 
 <p><a id=Shuffling></a></p>

@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
-<p>Begun on Mar. 5, 2016; last updated on May 5, 2019.</p>
+<p>Begun on Mar. 5, 2016; last updated on May 6, 2019.</p>
 
 <p>Most apps that use random numbers care about either unpredictability, speed/high quality, or repeatability.  This article explains the three kinds of RNGs and gives recommendations on each kind.</p>
 
@@ -560,19 +560,21 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 <li>it generates that identifier in a way that ensures uniqueness of identifiers in the desired range.</li>
 </ul>
 
-<p>Depending on the RNG, generating random &quot;unique&quot; numbers of fixed size, without checking them for uniqueness, may run the risk of producing the same random number of that size again.  However, this risk decreases as that fixed size increases (see &quot;<a href="https://en.wikipedia.org/wiki/Birthday_problem"><strong>Birthday problem</strong></a>&quot;).<sup><a href="#Note26"><strong>(26)</strong></a></sup></p>
+<p>Depending on the RNG, generating &quot;unique&quot; random numbers of fixed size, without checking them for uniqueness, may run the risk of producing the same random number of that size again.  However, this risk decreases as that fixed size increases (see &quot;<a href="https://en.wikipedia.org/wiki/Birthday_problem"><strong>Birthday problem</strong></a>&quot;).<sup><a href="#Note26"><strong>(26)</strong></a></sup></p>
 
 <p>An application can generate &quot;unique&quot; random <code>B</code>-bit numbers&mdash;</p>
 
-<ul>
-<li>using a cryptographic RNG with a security strength of at least <code>B</code> bits, if it can tolerate the risk of randomly generating a duplicate &quot;unique&quot; <code>B</code>-bit number, or</li>
+<ol>
+<li>using a cryptographic RNG with a security strength of at least <code>B</code> bits, if the application can tolerate the risk of randomly generating a duplicate &quot;unique&quot; <code>B</code>-bit number, or</li>
 <li>if a noncryptographic RNG is otherwise appropriate, using a PRNG that generates unique <code>B</code>-bit numbers, such as&mdash;
 
 <ul>
-<li>a so-called &quot;full-period&quot; or &quot;1-dimensionally equidistributed&quot; PRNG (which is usually a <a href="https://en.wikipedia.org/wiki/Linear_congruential_generator"><strong>linear congruential generator</strong></a>) that outputs <code>B</code>-bit numbers<sup><a href="#Note33"><strong>(33)</strong></a></sup>, or</li>
+<li>a so-called &quot;full-period&quot; or &quot;1-dimensionally equidistributed&quot; PRNG (which is usually a <a href="https://en.wikipedia.org/wiki/Linear_congruential_generator"><strong>linear congruential generator</strong></a>) that outputs <code>B</code>-bit numbers<sup><a href="#Note27"><strong>(27)</strong></a></sup>, or</li>
 <li>a <code>B</code>-bit counter with one or more reversible operations applied to it.</li>
 </ul></li>
-</ul>
+</ol>
+
+<p>An application MAY generate a unique identifier consisting of one number using approach 1 and another using approach 2.  In that case, <code>B</code> SHOULD be 128 or greater if the identifier is generated for information security purposes.</p>
 
 <p><a id=GPU_Programming_Environments></a></p>
 
@@ -581,11 +583,11 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 <p>In general, GL Shading Language (GLSL) and other programming environments designed for execution on a graphics processing unit (GPU) are stateless (they read from and write to data without storing any state themselves).  Approaches that have been used for random number generation in GPU environments include&mdash;</p>
 
 <ul>
-<li>using <a href="#Hash_Functions"><strong>hash functions</strong></a>, whose output is determined solely by the input rather than both the input and state (as with PRNGs)<sup><a href="#Note27"><strong>(27)</strong></a></sup>, and</li>
-<li>sampling &quot;noise textures&quot; with random data in each pixel (Peters 2016)<sup><a href="#Note28"><strong>(28)</strong></a></sup>.</li>
+<li>using <a href="#Hash_Functions"><strong>hash functions</strong></a>, whose output is determined solely by the input rather than both the input and state (as with PRNGs)<sup><a href="#Note28"><strong>(28)</strong></a></sup>, and</li>
+<li>sampling &quot;noise textures&quot; with random data in each pixel (Peters 2016)<sup><a href="#Note29"><strong>(29)</strong></a></sup>.</li>
 </ul>
 
-<p>(L&#39;Ecuyer et al. 2015)<sup><a href="#Note29"><strong>(29)</strong></a></sup> discusses parallel generation of random numbers using PRNGs, especially on GPUs.</p>
+<p>(L&#39;Ecuyer et al. 2015)<sup><a href="#Note30"><strong>(30)</strong></a></sup> discusses parallel generation of random numbers using PRNGs, especially on GPUs.</p>
 
 <p><a id=Hash_Functions></a></p>
 
@@ -593,7 +595,7 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 
 <p>A seemingly random number can be generated from arbitrary data using a <em>hash function</em>.</p>
 
-<p>A <em>hash function</em> is a function that takes an arbitrary input of any size (such as an array of 8-bit bytes or a sequence of characters) and returns an output with a fixed number of bits. That output is also known as a <em>hash code</em>. (By definition, hash functions are deterministic<sup><a href="#Note30"><strong>(30)</strong></a></sup>.)</p>
+<p>A <em>hash function</em> is a function that takes an arbitrary input of any size (such as an array of 8-bit bytes or a sequence of characters) and returns an output with a fixed number of bits. That output is also known as a <em>hash code</em>. (By definition, hash functions are deterministic<sup><a href="#Note31"><strong>(31)</strong></a></sup>.)</p>
 
 <p>A hash code can be used as follows:</p>
 
@@ -635,7 +637,7 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 <ul>
 <li>MUST have as many bits as the PRNG&#39;s <em>state length</em>,</li>
 <li>MUST consist of data that ultimately derives from the output of one or more <a href="#Nondeterministic_Sources_and_Seed_Generation"><strong>nondeterministic sources</strong></a>, where the output is at least as hard to predict as ideal random data with as many bits as the <em>security strength</em>, and</li>
-<li>MAY be mixed with arbitrary data other than the seed as long as the result is no easier to predict<sup><a href="#Note31"><strong>(31)</strong></a></sup>.</li>
+<li>MAY be mixed with arbitrary data other than the seed as long as the result is no easier to predict<sup><a href="#Note32"><strong>(32)</strong></a></sup>.</li>
 </ul></li>
 <li><p>The RNG SHOULD reseed itself from time to time, using a newly generated seed as described earlier.  If the RNG reseeds if it would generate more than a threshold number of bits without reseeding, that threshold SHOULD be 2<sup>67</sup> or less.</p></li>
 </ol>
@@ -668,7 +670,7 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 
 <ol>
 <li> The RNG API can include a method that fills one or more memory units (such as 8-bit bytes) completely with random bits.  See example 1.</li>
-<li> If the API implements an automatically-initialized RNG, it SHOULD NOT allow applications to initialize that same RNG with a seed for repeatable &quot;randomness&quot;<sup><a href="#Note32"><strong>(32)</strong></a></sup> (it MAY provide a separate PRNG to accept such a seed). See example 2.</li>
+<li> If the API implements an automatically-initialized RNG, it SHOULD NOT allow applications to initialize that same RNG with a seed for repeatable &quot;randomness&quot;<sup><a href="#Note33"><strong>(33)</strong></a></sup> (it MAY provide a separate PRNG to accept such a seed). See example 2.</li>
 <li> If the API provides a PRNG that an application can seed for repeatable &quot;randomness&quot;, it SHOULD document that PRNG and any methods the API provides that use that PRNG (such as shuffling and Gaussian number generation), and SHOULD NOT change that PRNG or those methods in a way that would change the &quot;random&quot; numbers they deliver for a given seed. See example 2.</li>
 <li> My document on <a href="https://peteroupc.github.io/randomfunc.html"><strong>random number generation methods</strong></a> includes details on twelve uniform random number methods. In my opinion, a new programming language&#39;s <strong>standard library</strong> ought to include those twelve methods separately for cryptographic and for statistical RNGs.</li>
 </ol>
@@ -758,19 +760,19 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 <li>about 93 billion billion billion random 192-bit numbers.</small></li>
 </ul>
 
-<p><small><sup id=Note27>(27)</sup> The only binary floating-point numbers supported by some GPUs are 16-bit (with 10 significant bits of precision), notably not 32- or 64-bit as is otherwise common. An application ought to choose hash functions that deliver acceptable &quot;noise&quot; regardless of the size of floating-point numbers supported by the GPU.</small></p>
+<p><small><sup id=Note27>(27)</sup> For suggested linear congruential generators for generating unique random numbers, see P. L&#39;Ecuyer, &quot;Tables of Linear Congruential Generators of Different Sizes and Good Lattice Structure&quot;, <em>Mathematics of Computation</em> 68(225), January 1999.</small></p>
 
-<p><small><sup id=Note28>(28)</sup> C. Peters, &quot;<a href="http://momentsingraphics.de/?p=127"><strong>Free blue noise textures</strong></a>&quot;, <em>Moments in Graphics</em>, Dec. 22, 2016.  That article discusses the sampling of <em>blue noise</em>, not independent uniformly-distributed random numbers, but a similar approach applies to textures of noise however generated.</small></p>
+<p><small><sup id=Note28>(28)</sup> The only binary floating-point numbers supported by some GPUs are 16-bit (with 10 significant bits of precision), notably not 32- or 64-bit as is otherwise common. An application ought to choose hash functions that deliver acceptable &quot;noise&quot; regardless of the size of floating-point numbers supported by the GPU.</small></p>
 
-<p><small><sup id=Note29>(29)</sup> P. L&#39;Ecuyer, D. Munger, et al.  &quot;Random Numbers for Parallel Computers: Requirements and Methods, With Emphasis on GPUs&quot;. April 17, 2015.</small></p>
+<p><small><sup id=Note29>(29)</sup> C. Peters, &quot;<a href="http://momentsingraphics.de/?p=127"><strong>Free blue noise textures</strong></a>&quot;, <em>Moments in Graphics</em>, Dec. 22, 2016.  That article discusses the sampling of <em>blue noise</em>, not independent uniformly-distributed random numbers, but a similar approach applies to textures of noise however generated.</small></p>
 
-<p><small><sup id=Note30>(30)</sup> Note that although PRNGs can also act like hash functions (if they&#39;re seeded with the input and the PRNG is &quot;large enough&quot; for the input), some PRNGs (such as <code>xorshift128+</code>) are not well suited to serve as hash functions, because they don&#39;t mix their state before generating a random number from that state.</small></p>
+<p><small><sup id=Note30>(30)</sup> P. L&#39;Ecuyer, D. Munger, et al.  &quot;Random Numbers for Parallel Computers: Requirements and Methods, With Emphasis on GPUs&quot;. April 17, 2015.</small></p>
 
-<p><small><sup id=Note31>(31)</sup> Such arbitrary data can include process identifiers, time stamps, environment variables, random numbers, virtual machine guest identifiers, and/or other data specific to the session or to the instance of the RNG.  See also NIST SP800-90A and the references below.<br/>Everspaugh, A., Zhai, Y., et al.  &quot;Not-So-Random Numbers in Virtualized Linux and the Whirlwind RNG&quot;, 2014.<br>Ristenpart, T., Yilek, S. &quot;When Good Randomness Goes Bad: Virtual Machine Reset Vulnerabilities and Hedging Deployed Cryptography&quot;, 2010.</small></p>
+<p><small><sup id=Note31>(31)</sup> Note that although PRNGs can also act like hash functions (if they&#39;re seeded with the input and the PRNG is &quot;large enough&quot; for the input), some PRNGs (such as <code>xorshift128+</code>) are not well suited to serve as hash functions, because they don&#39;t mix their state before generating a random number from that state.</small></p>
 
-<p><small><sup id=Note32>(32)</sup> Allowing applications to do so would hamper forward compatibility &mdash; the API would then be less free to change how the RNG is implemented in the future (e.g., to use a cryptographic or otherwise &quot;better&quot; RNG), or to make improvements or bug fixes in methods that use that RNG (such as shuffling and Gaussian number generation).  (As a notable example, the V8 JavaScript engine recently changed its <code>Math.random()</code> implementation to use a variant of <code>xorshift128+</code>, which is backward compatible because nothing in JavaScript allows  <code>Math.random()</code> to be seeded.)  Nevertheless, APIs can still allow applications to provide additional input (&quot;entropy&quot;) to the RNG in order to increase its randomness rather than to ensure repeatability.</small></p>
+<p><small><sup id=Note32>(32)</sup> Such arbitrary data can include process identifiers, time stamps, environment variables, random numbers, virtual machine guest identifiers, and/or other data specific to the session or to the instance of the RNG.  See also NIST SP800-90A and the references below.<br/>Everspaugh, A., Zhai, Y., et al.  &quot;Not-So-Random Numbers in Virtualized Linux and the Whirlwind RNG&quot;, 2014.<br>Ristenpart, T., Yilek, S. &quot;When Good Randomness Goes Bad: Virtual Machine Reset Vulnerabilities and Hedging Deployed Cryptography&quot;, 2010.</small></p>
 
-<p><small><sup id=Note33>(33)</sup> For suggested linear congruential generators for generating unique random numbers, see P. L&#39;Ecuyer, &quot;Tables of Linear Congruential Generators of Different Sizes and Good Lattice Structure&quot;, <em>Mathematics of Computation</em> 68(225), January 1999.</small></p>
+<p><small><sup id=Note33>(33)</sup> Allowing applications to do so would hamper forward compatibility &mdash; the API would then be less free to change how the RNG is implemented in the future (e.g., to use a cryptographic or otherwise &quot;better&quot; RNG), or to make improvements or bug fixes in methods that use that RNG (such as shuffling and Gaussian number generation).  (As a notable example, the V8 JavaScript engine recently changed its <code>Math.random()</code> implementation to use a variant of <code>xorshift128+</code>, which is backward compatible because nothing in JavaScript allows  <code>Math.random()</code> to be seeded.)  Nevertheless, APIs can still allow applications to provide additional input (&quot;entropy&quot;) to the RNG in order to increase its randomness rather than to ensure repeatability.</small></p>
 
 <p><a id=Appendix></a></p>
 

@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on June 4, 2017; last updated on Apr. 22, 2019.
+Begun on June 4, 2017; last updated on May 6, 2019.
 
 Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.
 
@@ -429,7 +429,7 @@ _Sampling without replacement_  essentially means taking a random item _without_
     - a compressed bit set (e.g, "roaring bitmap", EWAH), and
     - a self-sorting data structure such as a [**red&ndash;black tree**](https://en.wikipedia.org/wiki/Red%E2%80%93black_tree), if the random items are to be retrieved in sorted order or in index order.
 
-    Although constant-memory sampling without replacement is possible with [**_linear congruential generators_**](https://en.wikipedia.org/wiki/Linear_congruential_generator), seeded with an RNG, this is not recommended because of the relatively small number of sequences that can be sampled this way.
+    Many applications require generating unique random numbers to identify database records or other shared resources.  In this case, the choice of underlying RNG is important; see my [**RNG recommendation document**](https://peteroupc.github.io/random.html#Unique_Random_Numbers).
 
 <a id=Shuffling></a>
 #### Shuffling
