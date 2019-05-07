@@ -380,10 +380,10 @@ An application can generate "unique" random `B`-bit numbers&mdash;
 
 1. using a cryptographic RNG with a security strength of at least `B` bits, if the application can tolerate the risk of randomly generating a duplicate "unique" `B`-bit number, or
 2. if a noncryptographic RNG is otherwise appropriate, using a PRNG that generates unique `B`-bit numbers, such as&mdash;
-    - a so-called "full-period" or "1-dimensionally equidistributed" PRNG (which is usually a [**linear congruential generator**](https://en.wikipedia.org/wiki/Linear_congruential_generator)) that outputs `B`-bit numbers<sup>[**(27)**](#Note27)</sup>, or
+    - a so-called "full-period" or "1-dimensionally equidistributed" PRNG (which is usually a [**linear congruential generator**](https://en.wikipedia.org/wiki/Linear_congruential_generator)) that has a state length of `B` bits and outputs `B`-bit numbers<sup>[**(27)**](#Note27)</sup>, or
     - a `B`-bit counter with one or more reversible operations applied to it.
 
-An application MAY generate a unique identifier consisting of one number using approach 1 and another using approach 2.  In that case, `B` SHOULD be 128 or greater if the identifier is generated for information security purposes.
+An application can instead generate a unique identifier that includes one number using approach 1 and another using approach 2.  In that case, `B` SHOULD be 128 or greater if the identifier is generated for information security purposes.
 
 <a id=GPU_Programming_Environments></a>
 ### GPU Programming Environments
