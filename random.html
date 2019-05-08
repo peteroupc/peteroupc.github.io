@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
-<p>Begun on Mar. 5, 2016; last updated on May 6, 2019.</p>
+<p>Begun on Mar. 5, 2016; last updated on May 8, 2019.</p>
 
 <p>Most apps that use random numbers care about either unpredictability, speed/high quality, or repeatability.  This article explains the three kinds of RNGs and gives recommendations on each kind.</p>
 
@@ -506,7 +506,7 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 
 <p>For <strong>cryptographic RNGs</strong>, an application SHOULD use only one thread-safe instance of the RNG for the entire application to use.</p>
 
-<p>For <strong>statistical RNGs</strong>, an application SHOULD use only one thread-safe instance of the RNG for the entire application to use.  (If doing so is a performance bottleneck for the application and a PRNG is used, the application MAY instead create one RNG instance for each thread, as described below for seeded PRNGs.)</p>
+<p>For <strong>statistical RNGs</strong>, an application SHOULD use only one thread-safe instance of the RNG for the entire application to use.  (If doing so is a performance bottleneck for the application and a PRNG is used, the application MAY instead create one or more RNG instances as described below for seeded PRNGs.)</p>
 
 <p>For <strong>seeded PRNGs</strong>, to <strong>reduce the chance of correlated random numbers or identical random number sequences</strong>, an application is encouraged to create one or more instances of a PRNG, where each instance&mdash;</p>
 
@@ -560,21 +560,15 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 <li>it generates that identifier in a way that ensures uniqueness of identifiers in the desired range.</li>
 </ul>
 
-<p>Depending on the RNG, generating &quot;unique&quot; random numbers of fixed size, without checking them for uniqueness, may run the risk of producing the same random number of that size again.  However, this risk decreases as that fixed size increases (see &quot;<a href="https://en.wikipedia.org/wiki/Birthday_problem"><strong>Birthday problem</strong></a>&quot;).<sup><a href="#Note26"><strong>(26)</strong></a></sup></p>
-
-<p>An application can generate &quot;unique&quot; random <code>B</code>-bit numbers&mdash;</p>
-
-<ol>
-<li>using a cryptographic RNG with a security strength of at least <code>B</code> bits, if the application can tolerate the risk of randomly generating a duplicate &quot;unique&quot; <code>B</code>-bit number, or</li>
-<li>if a noncryptographic RNG is otherwise appropriate, using a PRNG that generates unique <code>B</code>-bit numbers, such as&mdash;
+<p>An application can generate unique (not necessarily random) <code>B</code>-bit numbers&mdash;</p>
 
 <ul>
-<li>a so-called &quot;full-period&quot; or &quot;1-dimensionally equidistributed&quot; PRNG (which is usually a <a href="https://en.wikipedia.org/wiki/Linear_congruential_generator"><strong>linear congruential generator</strong></a>) that has a state length of <code>B</code> bits and outputs <code>B</code>-bit numbers<sup><a href="#Note27"><strong>(27)</strong></a></sup>, or</li>
-<li>a <code>B</code>-bit counter with one or more reversible operations applied to it.</li>
-</ul></li>
-</ol>
+<li>using a <code>B</code>-bit counter (monotonically increasing number),</li>
+<li>using a <code>B</code>-bit counter with one or more reversible operations applied to it, or</li>
+<li>using a so-called &quot;full-period&quot; PRNG (which is usually a <a href="https://en.wikipedia.org/wiki/Linear_congruential_generator"><strong>linear congruential generator</strong></a>) that has a state length of <code>B</code> bits and outputs <code>B</code>-bit numbers<sup><a href="#Note26"><strong>(26)</strong></a></sup>.</li>
+</ul>
 
-<p>An application can instead generate a unique identifier that includes one number using approach 1 and another using approach 2.  In that case, <code>B</code> SHOULD be 128 or greater if the identifier is generated for information security purposes.</p>
+<p>An application that generates unique random identifiers SHOULD do so by combining a <em>unique</em> <code>B</code>-bit number, generated in a way mentioned above, with a <em>random</em> <code>C</code>-bit number generated using a cryptographic RNG with a security strength of at least <code>C</code> bits, where <code>C</code> SHOULD be 128 or greater.  (In general, generating only the random number this way can&#39;t ensure uniqueness by itself, but might be acceptable for applications that can tolerate the risk of generating duplicate random numbers this way, or for applications that check that random number for uniqueness.<sup><a href="#Note27"><strong>(27)</strong></a></sup>)</p>
 
 <p><a id=GPU_Programming_Environments></a></p>
 
@@ -752,15 +746,15 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 
 <p><small><sup id=Note25>(25)</sup> van Staveren, Hans. <a href="https://sater.home.xs4all.nl/doc.html"><strong>&quot;Big Deal: A new program for dealing bridge hands&quot;</strong></a>, Sep. 8, 2000</small></p>
 
-<p><small><sup id=Note26>(26)</sup> For example, in theory, an application has a 50% chance for duplicate numbers after generating&mdash;</p>
+<p><small><sup id=Note26>(26)</sup> For suggested linear congruential generators for generating unique random numbers, see P. L&#39;Ecuyer, &quot;Tables of Linear Congruential Generators of Different Sizes and Good Lattice Structure&quot;, <em>Mathematics of Computation</em> 68(225), January 1999.</small></p>
+
+<p><small><sup id=Note27>(27)</sup> In theory, generating two or more random numbers of fixed size runs the risk of producing a duplicate number this way.  However, this risk decreases as that fixed size increases (see &quot;<a href="https://en.wikipedia.org/wiki/Birthday_problem"><strong>Birthday problem</strong></a>&quot;).  For example, in theory, an application has a 50% chance for duplicate numbers after generating&mdash;</p>
 
 <ul>
 <li>about 5.4 billion billion random 124-bit numbers (including those found in version-4 UUIDs, or universally unique identifiers),</li>
 <li>about 1.4 million billion billion random 160-bit numbers, or</li>
 <li>about 93 billion billion billion random 192-bit numbers.</small></li>
 </ul>
-
-<p><small><sup id=Note27>(27)</sup> For suggested linear congruential generators for generating unique random numbers, see P. L&#39;Ecuyer, &quot;Tables of Linear Congruential Generators of Different Sizes and Good Lattice Structure&quot;, <em>Mathematics of Computation</em> 68(225), January 1999.</small></p>
 
 <p><small><sup id=Note28>(28)</sup> The only binary floating-point numbers supported by some GPUs are 16-bit (with 10 significant bits of precision), notably not 32- or 64-bit as is otherwise common. An application ought to choose hash functions that deliver acceptable &quot;noise&quot; regardless of the size of floating-point numbers supported by the GPU.</small></p>
 
