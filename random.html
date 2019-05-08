@@ -560,15 +560,15 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 <li>it generates that identifier in a way that ensures uniqueness of identifiers in the desired range.</li>
 </ul>
 
-<p>An application can generate unique (not necessarily random) <code>B</code>-bit numbers&mdash;</p>
+<p>An application can generate unique (not necessarily random) <code>B</code>-bit integers&mdash;</p>
 
 <ul>
 <li>using a <code>B</code>-bit counter (monotonically increasing number),</li>
 <li>using a <code>B</code>-bit counter with one or more reversible operations applied to it, or</li>
-<li>using a so-called &quot;full-period&quot; PRNG (which is usually a <a href="https://en.wikipedia.org/wiki/Linear_congruential_generator"><strong>linear congruential generator</strong></a>) that has a state length of <code>B</code> bits and outputs <code>B</code>-bit numbers<sup><a href="#Note26"><strong>(26)</strong></a></sup>.</li>
+<li>using a so-called &quot;full-period&quot; PRNG (which is usually a <a href="https://en.wikipedia.org/wiki/Linear_congruential_generator"><strong>linear congruential generator</strong></a>) that has a state length of <code>B</code> bits and outputs <code>B</code>-bit integers<sup><a href="#Note26"><strong>(26)</strong></a></sup>.</li>
 </ul>
 
-<p>An application that generates unique random identifiers SHOULD do so by combining a <em>unique</em> <code>B</code>-bit number, generated in a way mentioned above, with a <em>random</em> <code>C</code>-bit number generated using a cryptographic RNG with a security strength of at least <code>C</code> bits, where <code>C</code> SHOULD be 128 or greater.  (In general, generating only the random number this way can&#39;t ensure uniqueness by itself, but might be acceptable for applications that can tolerate the risk of generating duplicate random numbers this way, or for applications that check that random number for uniqueness.<sup><a href="#Note27"><strong>(27)</strong></a></sup>)</p>
+<p>An application that generates unique random identifiers SHOULD do so by combining a <em>unique</em> <code>B</code>-bit integer, generated in a way mentioned above, with a <em>random</em> <code>C</code>-bit integer generated using a cryptographic RNG with a security strength of at least <code>C</code> bits, where <code>C</code> SHOULD be 128 or greater.  (In general, generating only the random number this way can&#39;t ensure uniqueness by itself, but might be acceptable for applications that can tolerate the risk of generating duplicate random numbers this way, or for applications that check that random number for uniqueness.<sup><a href="#Note27"><strong>(27)</strong></a></sup>)</p>
 
 <p><a id=GPU_Programming_Environments></a></p>
 
@@ -751,9 +751,9 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 <p><small><sup id=Note27>(27)</sup> In theory, generating two or more random numbers of fixed size runs the risk of producing a duplicate number this way.  However, this risk decreases as that fixed size increases (see &quot;<a href="https://en.wikipedia.org/wiki/Birthday_problem"><strong>Birthday problem</strong></a>&quot;).  For example, in theory, an application has a 50% chance for duplicate numbers after generating&mdash;</p>
 
 <ul>
-<li>about 5.4 billion billion random 124-bit numbers (including those found in version-4 UUIDs, or universally unique identifiers),</li>
-<li>about 1.4 million billion billion random 160-bit numbers, or</li>
-<li>about 93 billion billion billion random 192-bit numbers.</small></li>
+<li>about 5.4 billion billion random 124-bit integers (including those found in version-4 UUIDs, or universally unique identifiers),</li>
+<li>about 1.4 million billion billion random 160-bit integers, or</li>
+<li>about 93 billion billion billion random 192-bit integers.</small></li>
 </ul>
 
 <p><small><sup id=Note28>(28)</sup> The only binary floating-point numbers supported by some GPUs are 16-bit (with 10 significant bits of precision), notably not 32- or 64-bit as is otherwise common. An application ought to choose hash functions that deliver acceptable &quot;noise&quot; regardless of the size of floating-point numbers supported by the GPU.</small></p>

@@ -374,13 +374,13 @@ Some applications require generating unique identifiers, especially to identify 
 - it checks that identifier for uniqueness, or
 - it generates that identifier in a way that ensures uniqueness of identifiers in the desired range.
 
-An application can generate unique (not necessarily random) `B`-bit numbers&mdash;
+An application can generate unique (not necessarily random) `B`-bit integers&mdash;
 
 - using a `B`-bit counter (monotonically increasing number),
 - using a `B`-bit counter with one or more reversible operations applied to it, or
-- using a so-called "full-period" PRNG (which is usually a [**linear congruential generator**](https://en.wikipedia.org/wiki/Linear_congruential_generator)) that has a state length of `B` bits and outputs `B`-bit numbers<sup>[**(26)**](#Note26)</sup>.
+- using a so-called "full-period" PRNG (which is usually a [**linear congruential generator**](https://en.wikipedia.org/wiki/Linear_congruential_generator)) that has a state length of `B` bits and outputs `B`-bit integers<sup>[**(26)**](#Note26)</sup>.
 
-An application that generates unique random identifiers SHOULD do so by combining a _unique_ `B`-bit number, generated in a way mentioned above, with a _random_ `C`-bit number generated using a cryptographic RNG with a security strength of at least `C` bits, where `C` SHOULD be 128 or greater.  (In general, generating only the random number this way can't ensure uniqueness by itself, but might be acceptable for applications that can tolerate the risk of generating duplicate random numbers this way, or for applications that check that random number for uniqueness.<sup>[**(27)**](#Note27)</sup>)
+An application that generates unique random identifiers SHOULD do so by combining a _unique_ `B`-bit integer, generated in a way mentioned above, with a _random_ `C`-bit integer generated using a cryptographic RNG with a security strength of at least `C` bits, where `C` SHOULD be 128 or greater.  (In general, generating only the random number this way can't ensure uniqueness by itself, but might be acceptable for applications that can tolerate the risk of generating duplicate random numbers this way, or for applications that check that random number for uniqueness.<sup>[**(27)**](#Note27)</sup>)
 
 <a id=GPU_Programming_Environments></a>
 ### GPU Programming Environments
@@ -531,9 +531,9 @@ Implementations of floating-point numbers and floating-point math can also diffe
 <small><sup id=Note26>(26)</sup> For suggested linear congruential generators for generating unique random numbers, see P. L'Ecuyer, "Tables of Linear Congruential Generators of Different Sizes and Good Lattice Structure", _Mathematics of Computation_ 68(225), January 1999.</small>
 
 <small><sup id=Note27>(27)</sup> In theory, generating two or more random numbers of fixed size runs the risk of producing a duplicate number this way.  However, this risk decreases as that fixed size increases (see "[**Birthday problem**](https://en.wikipedia.org/wiki/Birthday_problem)").  For example, in theory, an application has a 50% chance for duplicate numbers after generating&mdash;
-- about 5.4 billion billion random 124-bit numbers (including those found in version-4 UUIDs, or universally unique identifiers),
-- about 1.4 million billion billion random 160-bit numbers, or
-- about 93 billion billion billion random 192-bit numbers.</small>
+- about 5.4 billion billion random 124-bit integers (including those found in version-4 UUIDs, or universally unique identifiers),
+- about 1.4 million billion billion random 160-bit integers, or
+- about 93 billion billion billion random 192-bit integers.</small>
 
 <small><sup id=Note28>(28)</sup> The only binary floating-point numbers supported by some GPUs are 16-bit (with 10 significant bits of precision), notably not 32- or 64-bit as is otherwise common. An application ought to choose hash functions that deliver acceptable "noise" regardless of the size of floating-point numbers supported by the GPU.</small>
 
