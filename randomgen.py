@@ -841,9 +841,97 @@ of failures of each kind of failure.
             ret[j][i]=(matrix[j][i]-sum)*1.0/ret[j][j]
       return ret
 
+    def spsa_minimize(func,guess,iterations=200,constrain=nil,a=nil,c=nil,acap=nil)
+      """Tries to find a choice of parameters that minimizes the value
+of a scoring function, also called the objective function or loss
+function, starting from an initial guess.  This method uses an
+algorithm called "simultaneous perturbation
+stochastic approximation", which is a randomized
+search for the minimum value of the objective function.
+func - Objective function, a function that calculates a score for the
+ given array of parameters and returns that score.  The score is a
+ single number; the lower the score, the better.
+ The score can be negative.  (Note that the problem of maximizing
+ the score is the same as minimizing it except
+ that the score's sign is reversed at the end.)
+guess - Initial guess for the best choice of parameters.  This is an
+ array of parameters, each of which is a number. This array has
+ as many items as the array passed to 'func'.
+iterations - Maximum number of iterations in which to run the
+ optimization process.  Default is 200.
+constrain - Optional. A function that takes the given array of
+ parameters and constrains them to fit the bounds of a valid
+ array of parameters. The array is modified in place.
+a - Optional.  A setting used in the optimization process; greater than 0.
+c - Optional.  A setting used in the optimization process; greater than 0. As a guideline,
+  'c' is about equal to the "standard deviation of the measurement noise"
+  for several measurements at the initial guess, and is a "small positive
+  number" if measurements are noise-free (Spall 1998).  Default
+  is 0.001.
+acap - Optional.  A setting used in the optimization process; an
+  integer greater than 0.
+"""
+   # c>0; a>0; acap is an integer > 0
+   if c==None:c=0.001 # Guideline (Spall 1998)
+   if acap==None:acap=max([1,int(iterations/10)]) # Guideline (Spall 1998)
+   if a==None:
+     # Guideline (Spall 1998).  Assume the desired
+     # movement in early iterations is 1/10 of magnitude
+     # (norm) of ghat(guess,func,c,acap):
+     # > ghats=[_norm(ghat(guess,func,c,acap)) for i in range(5)]
+     # > meanghat=sum(ghats)/len(ghats)
+     # > movementRatio=desiredMovement/meanghat
+     movementRatio=0.1
+     a=((acap+1)**1.0)*movementRatio
+   if a<=0 or c<=0 or acap<=0: raise ValueError
+   g=1.0/6
+   low=[x for x in guess]
+   high=[x for x in guess]
+   curguess=[x for x in guess]
+   newguess=[x for x in guess]
+   oldvalue=func(guess)
+   bestguess=[x for x in guess]
+   bestvalue=oldvalue
+   nochangecount=0
+   for i in range(iterations):
+      ci=c*1.0/(1+i)**g
+      d=[ci*(self.rndint(1)*2-1) for x in curguess]
+      for j in rrange(len(curguess)):
+        high[j]=curguess[j]+d[j]
+        low[j]=curguess[j]-d[j]
+      gr=(func(high)-func(low))
+      ai=a*1.0/(1+i+acap)
+      for j in range(len(curguess)):
+        newguess[j]=curguess[j]-ai*gr/(d[j]*2.0)
+      # constraint
+      if constrain!=None:constrain(newguess)
+      newvalue=func(newguess)
+      if newvalue>oldvalue+10: continue
+      # update current guess
+      for j in range(len(curguess)):
+        curguess[j]=newguess[j]
+      if newvalue<bestvalue:
+        bestvalue=newvalue
+        for j in range(len(curguess)):
+          bestguess[j]=newguess[j]
+      # NOTE: Here, 1e-5 is a tolerance
+      # between successive iterations
+      # of the algorithm; values within
+      # tolerance are treated as changing
+      # little
+      if abs(newvalue-oldvalue)<1e-5:
+         nochangecount+=1
+         if nochangecount>10: break
+      else:
+         nochangecount=0
+      oldvalue=newvalue
+   return bestguess
+
   def monte_carlo_integrate(self, func, bounds, samples=1000):
     """
-    Monte Carlo integral of a function.
+    Estimates the integral (volume) of a function within the
+    given bounds using Monte Carlo integration, which generates
+    an estimate using the help of randomization.
     func - Function to integrate.  Takes the same number
        of parameters as the length of bounds.
     bounds - Bounds of integration at each dimension.

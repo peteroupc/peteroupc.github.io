@@ -1076,7 +1076,7 @@ There are two kinds of contrast ratio, among other kinds not covered in this doc
 
 **Contrast Ratio.** One kind of contrast ratio quantifies how differently two colors appear. Broadly speaking, a _contrasting color_ is a foreground (text) color with high contrast, especially high luminance contrast, to the background color or vice versa.
 
-> **Example:** The [**Web Content Accessibility Guidelines 2.0 (WCAG)**](https://www.w3.org/TR/2008/REC-WCAG20-20081211/#visual-audio-contrast-contrast), includes a contrast ratio formula implemented in the pseudocode below, where `RelLum(color)`&mdash;
+> **Example:** The [**Web Content Accessibility Guidelines 2.0 (WCAG)**](https://www.w3.org/TR/2008/REC-WCAG20-20081211/#visual-audio-contrast-contrast) includes a contrast ratio formula implemented in the pseudocode below, where `RelLum(color)`&mdash;
 > - is the "relative luminance" of a color as defined in the WCAG, and
 > - is equivalent to [**`Luminance(color)`**](#Luminance_Factor_Grayscale) whenever WCAG conformity is not important.
 >
