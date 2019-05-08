@@ -826,9 +826,9 @@ of failures of each kind of failure.
       for i in range(0,numrows):
         ret[0][i]=matrix[0][i]*1.0/s1
       for i in range(0,numrows):
-        sum=0.0
-        for j in range(i): sum = sum + ret[j][i]*ret[j][i]
-        sq=matrix[i][i]-sum
+        msum=0.0
+        for j in range(i): msum = msum + ret[j][i]*ret[j][i]
+        sq=matrix[i][i]-msum
         if sq<0: sq=0 # For robustness
         ret[i][i]=math.sqrt(sq)
       for j in range(0,numrows):
@@ -836,13 +836,14 @@ of failures of each kind of failure.
           # For robustness
           if ret[j][j]==0: ret[j][i]=0
           if ret[j][j]!=0:
-            sum=0
-            for k in range(j):sum = sum + ret[k][i]*ret[k][j]
-            ret[j][i]=(matrix[j][i]-sum)*1.0/ret[j][j]
+            msum=0
+            for k in range(j):msum = msum + ret[k][i]*ret[k][j]
+            ret[j][i]=(matrix[j][i]-msum)*1.0/ret[j][j]
       return ret
 
-    def spsa_minimize(func,guess,iterations=200,constrain=nil,a=nil,c=nil,acap=nil)
-      """Tries to find a choice of parameters that minimizes the value
+  def spsa_minimize(self,func,guess,iterations=200,constrain=None, \
+    a=None,c=None,acap=None):
+   """Tries to find a choice of parameters that minimizes the value
 of a scoring function, also called the objective function or loss
 function, starting from an initial guess.  This method uses an
 algorithm called "simultaneous perturbation
@@ -896,7 +897,7 @@ acap - Optional.  A setting used in the optimization process; an
    for i in range(iterations):
       ci=c*1.0/(1+i)**g
       d=[ci*(self.rndint(1)*2-1) for x in curguess]
-      for j in rrange(len(curguess)):
+      for j in range(len(curguess)):
         high[j]=curguess[j]+d[j]
         low[j]=curguess[j]-d[j]
       gr=(func(high)-func(low))
