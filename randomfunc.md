@@ -81,7 +81,7 @@ All the random number methods presented on this page are ultimately based on an 
         - [**`RNDU01` Family: Random Numbers Bounded by 0 and 1**](#RNDU01_Family_Random_Numbers_Bounded_by_0_and_1)
         - [**Alternative Implementation for `RNDU01`**](#Alternative_Implementation_for_RNDU01)
         - [**`RNDRANGE` Family: Random Numbers in an Arbitrary Interval**](#RNDRANGE_Family_Random_Numbers_in_an_Arbitrary_Interval)
-    - [**Monte Carlo Sampling: Expected Values and Integration**](#Monte_Carlo_Sampling_Expected_Values_and_Integration)
+    - [**Monte Carlo Sampling: Expected Values, Integration, and Optimization**](#Monte_Carlo_Sampling_Expected_Values_Integration_and_Optimization)
     - [**Continuous Random Walks**](#Continuous_Random_Walks)
     - [**Low-Discrepancy Sequences**](#Low_Discrepancy_Sequences)
     - [**Weighted Choice Involving Real Numbers**](#Weighted_Choice_Involving_Real_Numbers)
@@ -1105,8 +1105,8 @@ Three related methods can be derived from `RNDRANGE` as follows:
 > - to generate a random point inside a rectangle bounded in \[0, 2\) along the X axis and \[3, 6\) along the Y axis, generate `[RNDRANGEMaxExc(0,2), RNDRANGEMaxExc(3,6)]`, and
 > - to generate a complex number with real and imaginary parts bounded in \[0, 1\], generate `[RNDU01(), RNDU01()]`.
 
-<a id=Monte_Carlo_Sampling_Expected_Values_and_Integration></a>
-### Monte Carlo Sampling: Expected Values and Integration
+<a id=Monte_Carlo_Sampling_Expected_Values_Integration_and_Optimization></a>
+### Monte Carlo Sampling: Expected Values, Integration, and Optimization
 
 **Requires random real numbers.**
 
@@ -1135,7 +1135,7 @@ If the sampling domain is also limited to random numbers meeting a given conditi
 
 [**Monte Carlo integration**](https://en.wikipedia.org/wiki/Monte_Carlo_integration) is a way to estimate a multidimensional integral; randomly sampled numbers are put into a list (`nums`) and the estimated integral and its standard error are then calculated with `Expectation(nums)` with `EFUNC(x) = x`, and multiplied by the volume of the sampling domain.
 
-A third application of Monte Carlo sampling is [**stochastic optimization**](http://mathworld.wolfram.com/StochasticOptimization.html) for finding the minimum or maximum value of a function with one or more variables; examples include _simulated annealing_ and [**_simultaneous perturbation stochastic approximation_**](https://en.wikipedia.org/wiki/Simultaneous_perturbation_stochastic_approximation) (see also (Spall 1998)<sup>[**(19)**](#Note19)</sup>).
+A third application of Monte Carlo sampling is [**stochastic optimization**](http://mathworld.wolfram.com/StochasticOptimization.html) for finding the minimum or maximum value of a function with one or more variables; examples include [**_simulated annealing_**](https://en.wikipedia.org/wiki/Simulated_annealing) and [**_simultaneous perturbation stochastic approximation_**](https://en.wikipedia.org/wiki/Simultaneous_perturbation_stochastic_approximation) (see also (Spall 1998)<sup>[**(19)**](#Note19)</sup>).
 
 <a id=Continuous_Random_Walks></a>
 ### Continuous Random Walks

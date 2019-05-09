@@ -125,7 +125,7 @@
 <li><a href="#Alternative_Implementation_for_RNDU01"><strong>Alternative Implementation for <code>RNDU01</code></strong></a></li>
 <li><a href="#RNDRANGE_Family_Random_Numbers_in_an_Arbitrary_Interval"><strong><code>RNDRANGE</code> Family: Random Numbers in an Arbitrary Interval</strong></a></li>
 </ul></li>
-<li><a href="#Monte_Carlo_Sampling_Expected_Values_and_Integration"><strong>Monte Carlo Sampling: Expected Values and Integration</strong></a></li>
+<li><a href="#Monte_Carlo_Sampling_Expected_Values_Integration_and_Optimization"><strong>Monte Carlo Sampling: Expected Values, Integration, and Optimization</strong></a></li>
 <li><a href="#Continuous_Random_Walks"><strong>Continuous Random Walks</strong></a></li>
 <li><a href="#Low_Discrepancy_Sequences"><strong>Low-Discrepancy Sequences</strong></a></li>
 <li><a href="#Weighted_Choice_Involving_Real_Numbers"><strong>Weighted Choice Involving Real Numbers</strong></a>
@@ -1387,9 +1387,9 @@ END METHOD
 </ul>
 </blockquote>
 
-<p><a id=Monte_Carlo_Sampling_Expected_Values_and_Integration></a></p>
+<p><a id=Monte_Carlo_Sampling_Expected_Values_Integration_and_Optimization></a></p>
 
-<h3>Monte Carlo Sampling: Expected Values and Integration</h3>
+<h3>Monte Carlo Sampling: Expected Values, Integration, and Optimization</h3>
 
 <p><strong>Requires random real numbers.</strong></p>
 
@@ -1421,7 +1421,7 @@ END METHOD
 
 <p><a href="https://en.wikipedia.org/wiki/Monte_Carlo_integration"><strong>Monte Carlo integration</strong></a> is a way to estimate a multidimensional integral; randomly sampled numbers are put into a list (<code>nums</code>) and the estimated integral and its standard error are then calculated with <code>Expectation(nums)</code> with <code>EFUNC(x) = x</code>, and multiplied by the volume of the sampling domain.</p>
 
-<p>A third application of Monte Carlo sampling is <a href="http://mathworld.wolfram.com/StochasticOptimization.html"><strong>stochastic optimization</strong></a> for finding the minimum or maximum value of a function with one or more variables; examples include <em>simulated annealing</em> and <a href="https://en.wikipedia.org/wiki/Simultaneous_perturbation_stochastic_approximation"><strong><em>simultaneous perturbation stochastic approximation</em></strong></a> (see also (Spall 1998)<sup><a href="#Note19"><strong>(19)</strong></a></sup>).</p>
+<p>A third application of Monte Carlo sampling is <a href="http://mathworld.wolfram.com/StochasticOptimization.html"><strong>stochastic optimization</strong></a> for finding the minimum or maximum value of a function with one or more variables; examples include <a href="https://en.wikipedia.org/wiki/Simulated_annealing"><strong><em>simulated annealing</em></strong></a> and <a href="https://en.wikipedia.org/wiki/Simultaneous_perturbation_stochastic_approximation"><strong><em>simultaneous perturbation stochastic approximation</em></strong></a> (see also (Spall 1998)<sup><a href="#Note19"><strong>(19)</strong></a></sup>).</p>
 
 <p><a id=Continuous_Random_Walks></a></p>
 

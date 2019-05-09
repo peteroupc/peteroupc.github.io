@@ -862,7 +862,7 @@ iterations - Maximum number of iterations in which to run the
  optimization process.  Default is 200.
 constrain - Optional. A function that takes the given array of
  parameters and constrains them to fit the bounds of a valid
- array of parameters. The array is modified in place.
+ array of parameters. This function modifies the array in place.
 a - Optional.  A setting used in the optimization process; greater than 0.
 c - Optional.  A setting used in the optimization process; greater than 0. As a guideline,
   'c' is about equal to the "standard deviation of the measurement noise"
