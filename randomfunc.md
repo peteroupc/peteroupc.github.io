@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on June 4, 2017; last updated on May 7, 2019.
+Begun on June 4, 2017; last updated on May 10, 2019.
 
 Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.
 
@@ -87,6 +87,7 @@ All the random number methods presented on this page are ultimately based on an 
     - [**Weighted Choice Involving Real Numbers**](#Weighted_Choice_Involving_Real_Numbers)
         - [**Weighted Choice Without Replacement (Indefinite-Size List)**](#Weighted_Choice_Without_Replacement_Indefinite_Size_List)
         - [**Continuous Weighted Choice**](#Continuous_Weighted_Choice)
+    - [**Mixtures: Additional Examples**](#Mixtures_Additional_Examples)
     - [**Random Numbers from a Distribution of Data Points**](#Random_Numbers_from_a_Distribution_of_Data_Points)
     - [**Random Numbers from an Arbitrary Distribution**](#Random_Numbers_from_an_Arbitrary_Distribution)
     - [**Gibbs Sampling**](#Gibbs_Sampling)
@@ -130,13 +131,7 @@ All the random number methods presented on this page are ultimately based on an 
 <a id=Uniform_Random_Numbers></a>
 ## Uniform Random Numbers
 
-This section describes how an underlying RNG can be used to generate independent uniformly-distributed random numbers.  Here is an overview of the methods described in this document.
-
-* Random Integers: `RNDINT`, `RNDINTEXC`, `RNDINTRANGE`, `RNDINTEXCRANGE`.
-* Random Numbers in 0-1 Bounded Interval: `RNDU01`, `RNDU01ZeroExc`, `RNDU01OneExc`, `RNDU01ZeroOneExc`.
-* Random Numbers in Arbitrary Interval: `RNDRANGE`, `RNDRANGEMinExc`, `RNDRANGEMaxExc`, `RNDRANGEMinMaxExc`.
-
-One method, `RNDINT`, described next, can serve as the basis for the remaining methods.
+This section describes how an underlying RNG can be used to generate independent uniformly-distributed random integers.  This section describes four methods: `RNDINT`, `RNDINTEXC`, `RNDINTRANGE`, `RNDINTEXCRANGE`.  Of these, `RNDINT`, described next, can serve as the basis for the remaining methods.
 
 <a id=RNDINT_Random_Integers_in_0_N></a>
 ### `RNDINT`: Random Integers in [0, N]
@@ -429,7 +424,7 @@ _Sampling without replacement_  essentially means taking a random item _without_
     - a compressed bit set (e.g, "roaring bitmap", EWAH), and
     - a self-sorting data structure such as a [**red&ndash;black tree**](https://en.wikipedia.org/wiki/Red%E2%80%93black_tree), if the random items are to be retrieved in sorted order or in index order.
 
-    Many applications require generating unique random numbers to identify database records or other shared resources.  In this case, the choice of underlying RNG is important; see my [**RNG recommendation document**](https://peteroupc.github.io/random.html#Unique_Random_Numbers).
+    Many applications require generating unique random numbers to identify database records or other shared resources.  In this case, the choice of underlying RNG is important; see my [**RNG recommendation document**](https://peteroupc.github.io/random.html#Unique_Random_Identifiers).
 
 <a id=Shuffling></a>
 #### Shuffling
@@ -618,9 +613,7 @@ A _random walk_ is a process with random behavior over time.  A simple form of r
       return list
     END METHOD
 
-There are several kinds of random walks.
-
-1. A **white noise process** is simulated by creating a list of random numbers generated the same way.  Such a process generally models behavior over time that does not depend on the time or the current state.  Examples include `Normal(0, 1)` (for modeling _Gaussian white noise_) and `ZeroOrOne(px,py)` (for modeling a _Bernoulli process_, where each number is 0 or 1 depending on the probability `px`/`py`).
+> **Note:** A **white noise process** is simulated by creating a list of random numbers generated independently and in the same way.  Such a process generally models behavior over time that does not depend on the time or the current state.  Examples include `Normal(0, 1)` (for modeling _Gaussian white noise_; requires random real numbers) and `ZeroOrOne(px,py)` (for modeling a _Bernoulli process_, where each number is 0 or 1 depending on the probability `px`/`py`).
 
 > **Examples:**
 >
@@ -797,15 +790,6 @@ A _mixture_ consists of two or more probability distributions with separate prob
 > 3. Take a set of nonoverlapping integer ranges.  To choose a random integer from those ranges independently and uniformly:
 >     - Create a list (`weights`) of weights for each range.  Each range is given a weight of `(mx - mn) + 1`, where `mn` is that range's minimum and `mx` is its maximum.
 >     - Choose an index using `WeightedChoice(weights)`, then generate `RNDINTRANGE(mn, mx)`, where `mn` is the corresponding range's minimum and `mx` is its maximum.
-> 4. **Requires random real numbers:** Example 3 can be adapted to nonoverlapping real number ranges by assigning weights `mx - mn` instead of `(mx - mn) + 1` and using `RNDRANGEMaxExc` instead of `RNDINTRANGE`.  Generating random real numbers is discouraged, though.
-> 5. **Requires random real numbers:** A **hyperexponential distribution** is a mixture of [**exponential distributions**](#Gamma_Distribution), each one with a separate weight and separate rate.  An example is below.
->
->         index = WeightedChoice([0.6, 0.3, 0.1])
->         // Rates of the three exponential distributions
->         rates = [0.3, 0.1, 0.05]
->         // Generate an exponential random number with chosen rate
->         number = -ln(RNDU01ZeroOneExc()) / rates[index]
->
 
 <a id=Transformations_of_Random_Numbers></a>
 ### Transformations of Random Numbers
@@ -983,7 +967,10 @@ However, whenever possible, **applications should work with random integers**, r
 <a id=Uniform_Random_Real_Numbers></a>
 ### Uniform Random Real Numbers
 
-This section defines methods that generate uniform random real numbers.
+This section defines the following methods that generate uniform random real numbers:
+
+* Random Numbers in 0-1 Bounded Interval: `RNDU01`, `RNDU01ZeroExc`, `RNDU01OneExc`, `RNDU01ZeroOneExc`.
+* Random Numbers in Arbitrary Interval: `RNDRANGE`, `RNDRANGEMinExc`, `RNDRANGEMaxExc`, `RNDRANGEMinMaxExc`.
 
 <a id=RNDU01_Family_Random_Numbers_Bounded_by_0_and_1></a>
 #### `RNDU01` Family: Random Numbers Bounded by 0 and 1
@@ -1307,6 +1294,22 @@ The pseudocode below takes two lists as follows:
 >
 > **Example**: Assume `values` is the following: `[0, 1, 2, 2.5, 3]`, and `weights` is the following: `[0.2, 0.8, 0.5, 0.3, 0.1]`.  The weight for 2 is 0.5, and that for 2.5 is 0.3.  Since 2 has a higher weight than 2.5, numbers near 2 are more likely to be chosen than numbers near 2.5 with the `ContinuousWeightedChoice` method.
 
+<a id=Mixtures_Additional_Examples></a>
+### Mixtures: Additional Examples
+
+**Requires random real numbers.**
+
+1. Example 3 in "[**Mixtures of Distributions**](#Mixtures_of_Distributions)" can be adapted to nonoverlapping real number ranges by assigning weights `mx - mn` instead of `(mx - mn) + 1` and using `RNDRANGEMaxExc` instead of `RNDINTRANGE`.
+2. A **hyperexponential distribution** is a mixture of [**exponential distributions**](#Gamma_Distribution), each one with a separate weight and separate rate.  An example is below.
+
+         index = WeightedChoice([0.6, 0.3, 0.1])
+         // Rates of the three exponential distributions
+         rates = [0.3, 0.1, 0.05]
+         // Generate an exponential random number with chosen rate
+         number = -ln(RNDU01ZeroOneExc()) / rates[index]
+
+&nbsp;
+
 <a id=Random_Numbers_from_a_Distribution_of_Data_Points></a>
 ### Random Numbers from a Distribution of Data Points
 
@@ -1563,15 +1566,13 @@ Distributions based on the gamma distribution:
 
 In the following method, which generates a random number that follows a _beta distribution_, `a` and `b` are two parameters each greater than 0.  The range of the beta distribution is [0, 1).
 
-    METHOD BetaDist(self, a, b, nc)
+    METHOD BetaDist(self, a, b)
       if b==1 and a==1: return RNDU01()
       if a==1: return 1.0-pow(RNDU01(),1.0/b)
       if b==1: return pow(RNDU01(),1.0/a)
       x=GammaDist(a,1)
       return x/(x+GammaDist(b,1))
     END METHOD
-
-> **Note:** A **noncentral beta distribution** is sampled by generating `BetaDist(a + Poisson(nc), b)`, where `nc` is greater than 0.
 
 <a id=Negative_Binomial_Distribution></a>
 ### Negative Binomial Distribution
@@ -1785,7 +1786,7 @@ The following pseudocode calculates a random point in space that follows a [**_m
 > 3. A **Beckmann distribution** can be sampled by calculating `sqrt(x*x+y*y)`, where `x` and `y` are the two numbers in a binormal random pair (see example 1).
 > 4. A **Rice (Rician) distribution** is a Beckmann distribution in which the binormal random pair is generated with `m1 = m2 = a / sqrt(2)`, `rho = 0`, and `s1 = s2 = b`, where `a` and `b` are the parameters to the Rice distribution.
 > 5. A **Rice&ndash;Norton distributed** random variable is the norm (see the appendix) of the following point: `MultivariateNormal([v,v,v],[[w,0,0],[0,w,0],[0,0,w]])`, where `v = a/sqrt(m*2)`, `w = b*b/m`, and `a`, `b`, and `m` are the parameters to the Rice&ndash;Norton distribution.
-> 6. A **standard [**complex normal distribution**](https://en.wikipedia.org/wiki/Complex_normal_distribution)** is a binormal distribution in which the binormal random pair is generated with `s1 = s2 = sqrt(0.5)` and treated as the real and imaginary parts of a complex number.
+> 6. A **standard [**complex normal distribution**](https://en.wikipedia.org/wiki/Complex_normal_distribution)** is a binormal distribution in which the binormal random pair is generated with `s1 = s2 = sqrt(0.5)` and `mu1 = mu2 = 0` and treated as the real and imaginary parts of a complex number.
 
 <a id=Random_Real_Numbers_with_a_Given_Positive_Sum></a>
 ### Random Real Numbers with a Given Positive Sum
@@ -1835,7 +1836,8 @@ Each of the resulting uniform numbers will be in the interval [0, 1], and each o
 >            copula = GaussianCopula([[1, rho], [rho, 1]])
 >            // Transform to exponentials using that
 >            // distribution's inverse CDF
->            return [-ln(copula[0]) / rate1, -ln(copula[1]) / rate2]
+>            return [-ln(copula[0]) / rate1,
+>              -ln(copula[1]) / rate2]
 >         END METHOD
 
 Other kinds of copulas describe different kinds of dependence between random numbers.  Examples of other copulas are&mdash;
@@ -1912,7 +1914,7 @@ Miscellaneous:
 - **Half-normal distribution**. Parameterizations include:
     - _Mathematica_: `abs(Normal(0, sqrt(pi * 0.5) / invscale)))`, where `invscale` is a parameter of the half-normal distribution.
     - MATLAB: `abs(Normal(mu, sigma)))`, where `mu` and `sigma` are the same as in the normal distribution.
-- **Hyperexponential distribution**: See [**Mixtures of Distributions**](#Mixtures_of_Distributions).
+- **Hyperexponential distribution**: See [**Mixtures: Additional Examples**](#Mixtures_Additional_Examples).
 - **Hypergeometric distribution**: See [**Hypergeometric Distribution**](#Hypergeometric_Distribution).
 - **Hypoexponential distribution**: See [**Transformations of Random Numbers**](#Transformations_of_Random_Numbers).
 - **Inverse chi-squared distribution**: `df * scale / (GammaDist(df * 0.5, 2))`, where `df` is the number of degrees of freedom and `scale` is the scale, usually `1.0 / df`.
@@ -1934,7 +1936,7 @@ Miscellaneous:
 - **Multivariate _t_-distribution**: See the [**Python sample code**](https://peteroupc.github.io/randomgen.zip).
 - **Negative binomial distribution**: See [**Negative Binomial Distribution**](#Negative_Binomial_Distribution).
 - **Negative multinomial distribution**: See the [**Python sample code**](https://peteroupc.github.io/randomgen.zip).
-- **Noncentral beta distribution**: See [**Beta Distribution**](#Beta_Distribution).
+- **Noncentral beta distribution**: `BetaDist(a + Poisson(nc), b)`, where `nc` (a noncentrality), `a`, and `b` are greater than 0.
 - **Parabolic distribution**: `min + (max - min) * BetaDist(2, 2)`, where `min` is the minimum value and `max` is the maximum value (Saucier 2000, p. 30).
 - **Pascal distribution**: `NegativeBinomial(successes, p) + successes`, where `successes` and `p` have the same meaning as in the negative binomial distribution, except `successes` is always an integer.
 - **Pearson VI distribution**: `GammaDist(v, 1) / (GammaDist(w, 1))`, where `v` and `w` are shape parameters greater than 0 (Saucier 2000, p. 33; there, an additional `b` parameter is defined, but that parameter is canceled out in the source code).
@@ -2078,7 +2080,7 @@ If an application is concerned about these issues, it should treat the `RNDU01On
 
 <small><sup id=Note5>(5)</sup> Jeff Atwood, "[**The danger of na&iuml;vet&eacute;**](https://blog.codinghorror.com/the-danger-of-naivete/)", Dec. 7, 2007.</small>
 
-<small><sup id=Note6>(6)</sup> If the strings identify database records, file system paths, or other shared resources, special considerations apply, including the need to synchronize access to those resources.  For uniquely identifying database records, alternatives to random strings include auto-incrementing or sequentially assigned row numbers. The choice of underlying RNG is important when it comes to unique random strings; see my [**RNG recommendation document**](https://peteroupc.github.io/random.html#Unique_Random_Numbers).</small>
+<small><sup id=Note6>(6)</sup> If the strings identify database records, file system paths, or other shared resources, special considerations apply, including the need to synchronize access to those resources.  For uniquely identifying database records, alternatives to random strings include auto-incrementing or sequentially assigned row numbers. The choice of underlying RNG is important when it comes to unique random strings; see my [**RNG recommendation document**](https://peteroupc.github.io/random.html#Unique_Random_Identifiers).</small>
 
 <small><sup id=Note7>(7)</sup> See also the _Stack Overflow_ question "Random index of a non zero value in a numpy array".</small>
 

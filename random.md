@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on Mar. 5, 2016; last updated on May 9, 2019.
+Begun on Mar. 5, 2016; last updated on May 10, 2019.
 
 Most apps that use random numbers care about either unpredictability, speed/high quality, or repeatability.  This article explains the three kinds of RNGs and gives recommendations on each kind.
 
@@ -79,7 +79,7 @@ so that as a result, many applications use RNGs, especially built-in RNGs, that 
 - [**RNG Topics**](#RNG_Topics)
     - [**How to Initialize RNGs**](#How_to_Initialize_RNGs)
     - [**Shuffling**](#Shuffling)
-    - [**Unique Random Numbers**](#Unique_Random_Numbers)
+    - [**Unique Random Identifiers**](#Unique_Random_Identifiers)
     - [**GPU Programming Environments**](#GPU_Programming_Environments)
 - [**Hash Functions**](#Hash_Functions)
 - [**Guidelines for New RNG APIs**](#Guidelines_for_New_RNG_APIs)
@@ -366,13 +366,13 @@ An application that shuffles a list can do the shuffling&mdash;
 
 For shuffling purposes, `B` can usually be calculated for different lists using the Python code in the [**appendix**](#Suggested_Entropy_Size); see also (van Staveren 2000, "Lack of randomness")<sup>[**(27)**](#Note27)</sup>.  For example, `B` is 226 (bits) for a 52-item list.  For shuffling purposes, an application MAY limit `B` to 256 or greater, in cases when variety of permutations is not important.
 
-<a id=Unique_Random_Numbers></a>
-### Unique Random Numbers
+<a id=Unique_Random_Identifiers></a>
+### Unique Random Identifiers
 
 Some applications require generating unique identifiers, especially to identify database records or other shared resources.  Such identifiers include auto-incremented numbers, sequentially assigned numbers, random numbers, and combinations of these.  Whenever practical, an application SHOULD NOT treat an identifier as uniquely identifying a resource unless&mdash;
 
-- it checks that identifier for uniqueness, or
-- it generates that identifier in a way that ensures uniqueness of identifiers in the desired range.
+- it checks that identifier for uniqueness within the desired scope and range, or
+- it generates that identifier in a way that ensures uniqueness of identifiers within that scope and range.
 
 An application can generate unique (not necessarily random) `B`-bit integers&mdash;
 
