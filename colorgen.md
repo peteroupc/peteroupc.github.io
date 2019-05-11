@@ -1386,7 +1386,7 @@ Converting a color (such as an RGB color) to a color name can be done by&mdash;
 
 Converting a color name to a color can be done by retrieving the color keyed to that name (or optionally, its lower-cased form) in a hash table, or returning an error if no such color exists.<sup>[**(39)**](#Note39)</sup>
 
-If each name, number, or code in a color map is associated with one or several colors, optionally with a weighting factor for each color, then the color map is also known as a _color dictionary_(Venn et al.)<sup>[**(43)**](#Note43)</sup>.
+If each name, number, or code in a color map is associated with one or several colors, optionally with a weighting factor for each color, then the color map is also known as a _color dictionary_ (Venn et al.)<sup>[**(43)**](#Note43)</sup>.
 
 > **Notes:**
 >
@@ -1672,7 +1672,7 @@ For a detailed overview on phenomena involving human color vision, see section 9
 
 <small><sup id=Note14>(14)</sup> Smith, A.R. and Lyons, E.R., 1996. HWB&mdash;A more intuitive hue-based color model. Journal of graphics tools, 1(1), pp. 3-17.</small>
 
-<small><sup id=Note15>(15)</sup> The prime symbol appears near Y because the conversion from RGB usually involves [**encoded RGB colors**](#RGB_Color_Spaces), so that Y&prime; (_luma_) will be similar to luminance, but not the same as luminance (Y).  (See C. Poynton, [**"_YUV_ and _luminance_ considered harmful"**](http://poynton.ca/PDFs/YUV_and_luminance_harmful.pdf).)  However, that symbol is left out in function names and other names in the pseudocode for convenience only.</small>
+<small><sup id=Note15>(15)</sup> The prime symbol appears near Y because the conversion from RGB usually involves [**encoded RGB colors**](#RGB_Color_Spaces), so that Y&prime; (_luma_) is not the same as luminance (Y).  (See C. Poynton, [**"_YUV_ and _luminance_ considered harmful"**](http://poynton.ca/PDFs/YUV_and_luminance_harmful.pdf).)  However, that symbol is left out in function names and other names in the pseudocode for convenience only.</small>
 
 <small><sup id=Note16>(16)</sup> In interior and architectural design, the luminance factor multiplied by 100 is also known as _light reflectance value_ (LRV).</small>
 

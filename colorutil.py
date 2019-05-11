@@ -787,11 +787,11 @@ Converts a color component from linearized to companded sRGB.
   return math.pow(c, 1.0 / 2.4) * 1.055 - 0.055
 
 def linearFromsRGB3(c):
-   """ Convert a color from companded to linearized RGB.  """
+   """ Convert a color from encoded to linear RGB.  """
    return [linearFromsRGB(c[0]), linearFromsRGB(c[1]), linearFromsRGB(c[2])]
 
 def linearTosRGB3(c):
-   """ Convert a color from linearized to companded sRGB. """
+   """ Convert a color from linear to encoded sRGB. """
    return [linearTosRGB(c[0]), linearTosRGB(c[1]), linearTosRGB(c[2])]
 
 def rgbToHsv(rgb):
@@ -930,27 +930,31 @@ def _apply3x3Matrix(xyz, xyzmatrix):
 
 def xyzFromsRGBD50(rgb):
     lin=linearFromsRGB3(rgb)
-    return _apply3x3Matrix(lin, [0.4360657, 0.3851515, 0.1430784,
-            0.2224932, 0.7168870, 0.06061981, 0.01392392,
-            0.09708132, 0.7140994])
+    return _apply3x3Matrix(lin, [
+           0.436027535573195, 0.385097932872408, 0.143074531554397,
+           0.222478677613186, 0.716902127457834, 0.0606191949289806,
+           0.0139242392790820, 0.0970836931437703, 0.714092067577148])
 
 def xyzTosRGBD50(xyz):
-    rgb=_apply3x3Matrix(xyz, [3.134136, -1.617386, -0.4906622,
-             -0.9787955, 1.916254, 0.03344287, 0.07195539,
-             -0.2289768, 1.405386])
+    rgb=_apply3x3Matrix(xyz, [
+           3.13424933163426, -1.61717292521282, -0.490692377104512,
+           -0.978746070339639, 1.91611436125945, 0.0334415219513205,
+           0.0719490494816283, -0.228969853236611, 1.40540126012171])
     return linearTosRGB3(rgb)
 
 def xyzFromsRGB(rgb):
     lin=linearFromsRGB3(rgb)
     # NOTE: Official matrix is rounded to nearest 1/10000
-    return _apply3x3Matrix(lin, [0.4123908, 0.3575843, 0.1804808,
-            0.2126390, 0.7151687, 0.07219232, 0.01933082,
-            0.1191948, 0.9505322])
+    return _apply3x3Matrix(lin, [
+          0.4123907992659591, 0.35758433938387796, 0.18048078840183424
+           0.21263900587151016, 0.7151686787677559, 0.0721923153607337
+           0.01933081871559181, 0.11919477979462596, 0.9505321522496605])
 
 def xyzTosRGB(xyz):
-    rgb=_apply3x3Matrix(xyz, [3.240970, -1.537383, -0.4986108,
-            -0.9692436, 1.875968, 0.04155506, 0.05563008,
-            -0.2039770, 1.056972])
+    rgb=_apply3x3Matrix(xyz, [
+           3.2409699419045235, -1.5373831775700944, -0.49861076029300355,
+            -0.9692436362808797, 1.8759675015077204, 0.0415550574071756,
+            0.05563007969699365, -0.20397695888897652, 1.0569715142428786])
     return linearTosRGB3(rgb)
 
 def wavelengthTosRGB(wavelength):
@@ -1017,6 +1021,11 @@ def labHueDifference(lab1,lab2):
 def lchToLab(lch):
   # NOTE: Assumes hue is in radians, not degrees
   return [lch[0], lch[1] * math.cos(lch[2]), lch[1] * math.sin(lch[2])]
+
+def lchDegreesToLab(lch):
+  # NOTE: Assumes hue is in degrees, not radians
+  h=lch[2]*math.pi/180
+  return [lch[0], lch[1] * math.cos(h), lch[1] * math.sin(h)]
 
 def euclideanDist(color1,color2):
    d1=color2[0] - color1[0]
@@ -1137,7 +1146,7 @@ def ciede2000(lab1, lab2):
 def sRGBLuminance(x):
   """
   Finds the relative color of a companded sRGB color, where
-  white is the D65 white point.
+  white is the D65/2 white point.
   `x` -> 3-item list or tuple of a companded sRGB color.
   """
   lin=linearFromsRGB3(x)
@@ -1146,7 +1155,7 @@ def sRGBLuminance(x):
 def sRGBGrayscale(x):
   """
   Finds the grayscale version of a companded sRGB color, where
-  white is the D65 white point.
+  white is the D65/2 white point.
   `x` -> 3-item list or tuple of a companded sRGB color.
   """
   rellum=sRGBLuminance(x)
@@ -1163,25 +1172,31 @@ def sRGBContrastRatio(color1,color2):
   l2=srgbLuminance(color2)
   return (max(l1,l2)+0.05)/(min(l1,l2)+0.05)
 
+def d50_2xyz():
+  return [0.9642, 1, 0.8251]
+
+def d65_2xyz():
+  return [0.9504559270516716, 1, 1.0890577507598784]
+
 def sRGBToLab(rgb):
     """ Converts a companded sRGB color to CIELAB,
-           with white being the D65 white point.  """
-    return xyzToLab(xyzFromsRGB(rgb), [0.9504559, 1, 1.089058])
+           with white being the D65/2 white point.  """
+    return xyzToLab(xyzFromsRGB(rgb), d65_2xyz())
 
 def sRGBFromLab(lab):
     """ Converts a CIELAB color to companded sRGB,
-           with white being the D65 white point.  """
-    return xyzTosRGB(labToXYZ(lab, [0.9504559, 1, 1.089058]))
+           with white being the D65/2 white point.  """
+    return xyzTosRGB(labToXYZ(lab, d65_2xyz()))
 
 def sRGBToLabD50(rgb):
     """ Converts a companded sRGB color to CIELAB,
-           with white being the D50 white point.  """
-    return xyzToLab(xyzFromsRGBD50(rgb), [0.9642957, 1, 0.8251046])
+           with white being the D50/2 white point.  """
+    return xyzToLab(xyzFromsRGBD50(rgb), d50_2xyz()])
 
 def sRGBFromLabD50(lab):
     """ Converts a CIELAB color to companded sRGB,
-           with white being the D50 white point.  """
-    return xyzTosRGBD50(labToXYZ(lab, [0.9642957, 1, 0.8251046]))
+           with white being the D50/2 white point.  """
+    return xyzTosRGBD50(labToXYZ(lab, d50_2xyz()))
 
 ###############
 

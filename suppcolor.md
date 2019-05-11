@@ -31,18 +31,18 @@ This document presents supplemental topics about color.  They add to my article 
 
 - The [**pseudocode conventions**](https://peteroupc.github.io/pseudocode.html) apply to this document.
 - **CIE.** French initials for the International Commission on Illumination.
-- **RGB.** Red-green-blue.
+- **RGB.** Red&ndash;green&ndash;blue.
 
 <a id=Kinds_of_Color_Spaces></a>
 ## Kinds of Color Spaces
 
 _Color spaces_ are designed to organize colors.  They can be categorized as any of the following:
 
-- **Light-mixture** color spaces are based on mixtures of colored light sources (such as RGB, red-green-blue).  (The term "additive mixture" is better used to mean [**_additive mixture of color stimuli_**](http://eilv.cie.co.at/term/24), rather than light mixture.)
-- **Colorant-mixture** color spaces are based on mixtures of inks, dyes, or other colorants (such as CMYK, cyan-magenta-yellow-black). ("Subtractive mixture" is an inferior term.)
+- **Light-mixture** color spaces are based on mixtures of colored light sources (such as RGB, red&ndash;green&ndash;blue).  (The term "additive mixture" is better used to mean [**_additive mixture of color stimuli_**](http://eilv.cie.co.at/term/24), rather than light mixture.)
+- **Colorant-mixture** color spaces are based on mixtures of inks, dyes, or other colorants (such as CMYK, cyan&ndash;magenta&ndash;yellow&ndash;black). ("Subtractive mixture" is an inferior term.)
 - **Hue-based** color spaces have three dimensions, one of which is hue.  Examples include HSL, HSV, and CIE _L\*C\*h_.
-- **Lightness-based** color spaces have three dimensions, one of which is a light-dark dimension.  Examples include HSL, CIE _L\*C\*h_, CIE XYZ, and Y&prime;C<sub>_B_</sub>C<sub>_R_</sub>.  Of these color spaces:
-- **Opponent** color spaces are lightness-based color spaces arranged in three axes: black/white, red/green, and blue/yellow.  Examples include CIELAB and Hunter L,a,b.
+- **Light/dark** color spaces have three dimensions, one of which is a light/dark dimension.  Examples include HSL, CIE _L\*C\*h_, CIE XYZ, and Y&prime;C<sub>_B_</sub>C<sub>_R_</sub>.  Of these color spaces:
+- **Opponent** color spaces are light/dark color spaces arranged in three axes: black/white, red/green, and blue/yellow.  Examples include CIELAB and Hunter L,a,b.
 - It's discouraged to speak of **"device-dependent"** and **"device-independent"** color spaces, because the difference between the two is not always clear.  While color spaces based on how humans perceive color, such as XYZ, may be considered "device independent", some RGB color spaces may also be, depending on whether they are convertible, without loss, to XYZ and back (_colorimetric color spaces_).
 
 <a id=Primary_Colors></a>
@@ -54,7 +54,7 @@ For light-mixture and colorant-mixture color spaces, the colors of the light sou
 
 For opponent color spaces, the four so-called _unique hues_ red, green, blue, and yellow, and maybe white and black, can be called "primary colors"; such "primary colors", however, generally serve as axes only.
 
-"Primary colors" can be, and often are, imaginary.  For example, the [**ACES2065-1 RGB color space**](http://www.oscars.org/science-technology/sci-tech-projects/aces), include imaginary points for one or more "primary colors" in exchange for covering a range of colors not normally possible otherwise.
+"Primary colors" can be, and often are, imaginary.  For example, the [**ACES2065-1 RGB color space**](http://www.oscars.org/science-technology/sci-tech-projects/aces), and certain other RGB color spaces, include imaginary points for one or more "primary colors" in exchange for covering a range of colors not normally possible otherwise.
 
 <a id=Calculating_the_Mean_Hue_Angle></a>
 ## Calculating the Mean Hue Angle

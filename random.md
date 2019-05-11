@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on Mar. 5, 2016; last updated on May 10, 2019.
+Begun on Mar. 5, 2016; last updated on May 11, 2019.
 
 Most apps that use random numbers care about either unpredictability, speed/high quality, or repeatability.  This article explains the three kinds of RNGs and gives recommendations on each kind.
 
@@ -540,7 +540,7 @@ Implementations of floating-point numbers and floating-point math can also diffe
 <small><sup id=Note28>(28)</sup> For suggested linear congruential generators for generating unique random numbers, see P. L'Ecuyer, "Tables of Linear Congruential Generators of Different Sizes and Good Lattice Structure", _Mathematics of Computation_ 68(225), January 1999.</small>
 
 <small><sup id=Note29>(29)</sup> In theory, generating two or more random numbers of fixed size runs the risk of producing a duplicate number this way.  However, this risk decreases as that fixed size increases (see "[**Birthday problem**](https://en.wikipedia.org/wiki/Birthday_problem)").  For example, in theory, an application has a 50% chance for duplicate numbers after generating&mdash;
-- about 5.4 billion billion random 124-bit integers (including those found in version-4 UUIDs, or universally unique identifiers),
+- about 2.7 billion billion random 122-bit integers (including those found in version-4 UUIDs, or universally unique identifiers),
 - about 1.4 million billion billion random 160-bit integers, or
 - about 93 billion billion billion random 192-bit integers.</small>
 

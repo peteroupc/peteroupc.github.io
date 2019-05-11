@@ -44,7 +44,7 @@
 <ul>
 <li>The <a href="https://peteroupc.github.io/pseudocode.html"><strong>pseudocode conventions</strong></a> apply to this document.</li>
 <li><strong>CIE.</strong> French initials for the International Commission on Illumination.</li>
-<li><strong>RGB.</strong> Red-green-blue.</li>
+<li><strong>RGB.</strong> Red&ndash;green&ndash;blue.</li>
 </ul>
 
 <p><a id=Kinds_of_Color_Spaces></a></p>
@@ -54,11 +54,11 @@
 <p><em>Color spaces</em> are designed to organize colors.  They can be categorized as any of the following:</p>
 
 <ul>
-<li><strong>Light-mixture</strong> color spaces are based on mixtures of colored light sources (such as RGB, red-green-blue).  (The term &quot;additive mixture&quot; is better used to mean <a href="http://eilv.cie.co.at/term/24"><strong><em>additive mixture of color stimuli</em></strong></a>, rather than light mixture.)</li>
-<li><strong>Colorant-mixture</strong> color spaces are based on mixtures of inks, dyes, or other colorants (such as CMYK, cyan-magenta-yellow-black). (&quot;Subtractive mixture&quot; is an inferior term.)</li>
+<li><strong>Light-mixture</strong> color spaces are based on mixtures of colored light sources (such as RGB, red&ndash;green&ndash;blue).  (The term &quot;additive mixture&quot; is better used to mean <a href="http://eilv.cie.co.at/term/24"><strong><em>additive mixture of color stimuli</em></strong></a>, rather than light mixture.)</li>
+<li><strong>Colorant-mixture</strong> color spaces are based on mixtures of inks, dyes, or other colorants (such as CMYK, cyan&ndash;magenta&ndash;yellow&ndash;black). (&quot;Subtractive mixture&quot; is an inferior term.)</li>
 <li><strong>Hue-based</strong> color spaces have three dimensions, one of which is hue.  Examples include HSL, HSV, and CIE <em>L*C*h</em>.</li>
-<li><strong>Lightness-based</strong> color spaces have three dimensions, one of which is a light-dark dimension.  Examples include HSL, CIE <em>L*C*h</em>, CIE XYZ, and Y&prime;C<sub><em>B</em></sub>C<sub><em>R</em></sub>.  Of these color spaces:</li>
-<li><strong>Opponent</strong> color spaces are lightness-based color spaces arranged in three axes: black/white, red/green, and blue/yellow.  Examples include CIELAB and Hunter L,a,b.</li>
+<li><strong>Light/dark</strong> color spaces have three dimensions, one of which is a light/dark dimension.  Examples include HSL, CIE <em>L*C*h</em>, CIE XYZ, and Y&prime;C<sub><em>B</em></sub>C<sub><em>R</em></sub>.  Of these color spaces:</li>
+<li><strong>Opponent</strong> color spaces are light/dark color spaces arranged in three axes: black/white, red/green, and blue/yellow.  Examples include CIELAB and Hunter L,a,b.</li>
 <li>It&#39;s discouraged to speak of <strong>&quot;device-dependent&quot;</strong> and <strong>&quot;device-independent&quot;</strong> color spaces, because the difference between the two is not always clear.  While color spaces based on how humans perceive color, such as XYZ, may be considered &quot;device independent&quot;, some RGB color spaces may also be, depending on whether they are convertible, without loss, to XYZ and back (<em>colorimetric color spaces</em>).</li>
 </ul>
 
@@ -72,7 +72,7 @@
 
 <p>For opponent color spaces, the four so-called <em>unique hues</em> red, green, blue, and yellow, and maybe white and black, can be called &quot;primary colors&quot;; such &quot;primary colors&quot;, however, generally serve as axes only.</p>
 
-<p>&quot;Primary colors&quot; can be, and often are, imaginary.  For example, the <a href="http://www.oscars.org/science-technology/sci-tech-projects/aces"><strong>ACES2065-1 RGB color space</strong></a>, include imaginary points for one or more &quot;primary colors&quot; in exchange for covering a range of colors not normally possible otherwise.</p>
+<p>&quot;Primary colors&quot; can be, and often are, imaginary.  For example, the <a href="http://www.oscars.org/science-technology/sci-tech-projects/aces"><strong>ACES2065-1 RGB color space</strong></a>, and certain other RGB color spaces, include imaginary points for one or more &quot;primary colors&quot; in exchange for covering a range of colors not normally possible otherwise.</p>
 
 <p><a id=Calculating_the_Mean_Hue_Angle></a></p>
 
