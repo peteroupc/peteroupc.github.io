@@ -463,7 +463,12 @@ A **programming language API** designed for reuse by applications could implemen
 1.  The RNG API can include a method that fills one or more memory units (such as 8-bit bytes) completely with random bits.  See example 1.
 2.  If the API implements an automatically-initialized RNG, it SHOULD NOT allow applications to initialize that same RNG with a seed for repeatable "randomness"<sup>[**(35)**](#Note35)</sup> (it MAY provide a separate PRNG to accept such a seed). See example 2.
 3.  If the API provides a PRNG that an application can seed for repeatable "randomness", it SHOULD document that PRNG and any methods the API provides that use that PRNG (such as shuffling and Gaussian number generation), and SHOULD NOT change that PRNG or those methods in a way that would change the "random" numbers they deliver for a given seed. See example 2.
-4.  My document on [**random number generation methods**](https://peteroupc.github.io/randomfunc.html) includes details on twelve uniform random number methods. In my opinion, a new programming language's **standard library** ought to include those twelve methods separately for cryptographic and for statistical RNGs.
+4.  A new programming language's **standard library** ought to include the following methods for generating independent uniform random numbers (see my document on [**random number generation methods**](https://peteroupc.github.io/randomfunc.html) for details).
+    - Four methods for random integers: 0 to `n` inclusive, 0 to `n` exclusive, `a` to `b` inclusive, and `a` to `b` exclusive.
+    - Four methods for random numbers bounded by 0 and 1, with and without the endpoints.
+    - Four methods for random numbers bounded by `a` and `b`, with and without the endpoints.
+
+&nbsp;
 
 > **Examples:**
 >

@@ -673,8 +673,16 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 <li> The RNG API can include a method that fills one or more memory units (such as 8-bit bytes) completely with random bits.  See example 1.</li>
 <li> If the API implements an automatically-initialized RNG, it SHOULD NOT allow applications to initialize that same RNG with a seed for repeatable &quot;randomness&quot;<sup><a href="#Note35"><strong>(35)</strong></a></sup> (it MAY provide a separate PRNG to accept such a seed). See example 2.</li>
 <li> If the API provides a PRNG that an application can seed for repeatable &quot;randomness&quot;, it SHOULD document that PRNG and any methods the API provides that use that PRNG (such as shuffling and Gaussian number generation), and SHOULD NOT change that PRNG or those methods in a way that would change the &quot;random&quot; numbers they deliver for a given seed. See example 2.</li>
-<li> My document on <a href="https://peteroupc.github.io/randomfunc.html"><strong>random number generation methods</strong></a> includes details on twelve uniform random number methods. In my opinion, a new programming language&#39;s <strong>standard library</strong> ought to include those twelve methods separately for cryptographic and for statistical RNGs.</li>
+<li> A new programming language&#39;s <strong>standard library</strong> ought to include the following methods for generating independent uniform random numbers (see my document on <a href="https://peteroupc.github.io/randomfunc.html"><strong>random number generation methods</strong></a> for details).
+
+<ul>
+<li>Four methods for random integers: 0 to <code>n</code> inclusive, 0 to <code>n</code> exclusive, <code>a</code> to <code>b</code> inclusive, and <code>a</code> to <code>b</code> exclusive.</li>
+<li>Four methods for random numbers bounded by 0 and 1, with and without the endpoints.</li>
+<li>Four methods for random numbers bounded by <code>a</code> and <code>b</code>, with and without the endpoints.</li>
+</ul></li>
 </ol>
+
+<p>&nbsp;</p>
 
 <blockquote>
 <p><strong>Examples:</strong></p>
