@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on Mar. 5, 2016; last updated on May 11, 2019.
+Begun on Mar. 5, 2016; last updated on May 14, 2019.
 
 Most apps that use random numbers care about either unpredictability, speed/high quality, or repeatability.  This article explains the three kinds of RNGs and gives recommendations on each kind.
 
@@ -85,6 +85,7 @@ so that as a result, many applications use RNGs, especially built-in RNGs, that 
 - [**Guidelines for New RNG APIs**](#Guidelines_for_New_RNG_APIs)
     - [**Cryptographic RNGs: Requirements**](#Cryptographic_RNGs_Requirements)
     - [**Statistical RNGs: Requirements**](#Statistical_RNGs_Requirements)
+    - [**Designs for PRNGs**](#Designs_for_PRNGs)
     - [**Implementing New RNG APIs**](#Implementing_New_RNG_APIs)
 - [**Acknowledgments**](#Acknowledgments)
 - [**Notes**](#Notes)
@@ -307,7 +308,7 @@ As much as possible, **applications SHOULD use existing libraries and techniques
 <small>(B) JavaScript's `Math.random()` (which ranges 0 or greater and less than 1) is implemented using `xorshift128+` (or a variant) in the V8 engine, Firefox, and certain other modern browsers as of late 2017; `Math.random()` uses an "implementation-dependent algorithm or strategy", though (see ECMAScript sec. 20.2.2.27).</small>
 
 <small>(C) A cryptographic RNG implementation can&mdash;
-   - read from the `/dev/urandom` device in most Unix-based systems (using the `open` and `read` system calls where available)<sup>[**(21)**](#Note21)</sup>,
+   - read from the `/dev/urandom` device in Linux-based systems (using the `open` and `read` system calls where available)<sup>[**(21)**](#Note21)</sup>,
    - call the `arc4random` or `arc4random_buf` method on FreeBSD or macOS, or
    - call the `getentropy` method on OpenBSD, or
    - call the `BCryptGenRandom` API in Windows 7 and later,</small>
@@ -392,7 +393,7 @@ An application that generates unique random identifiers SHOULD do so by combinin
 
 In general, GL Shading Language (GLSL) and other programming environments designed for execution on a graphics processing unit (GPU) are stateless (they read from and write to data without storing any state themselves).  Approaches that have been used for random number generation in GPU environments include&mdash;
 
-- using [**hash functions**](#Hash_Functions), whose output is determined solely by the input rather than both the input and state (as with PRNGs)<sup>[**(30)**](#Note30)</sup>, and
+- stateless functions (see "[**Designs for PRNGs**](#Designs_for_PRNGs)")<sup>[**(30)**](#Note30)</sup>, and
 - sampling "noise textures" with random data in each pixel (Peters 2016)<sup>[**(31)**](#Note31)</sup>.
 
 (L'Ecuyer et al. 2015)<sup>[**(32)**](#Note32)</sup> discusses parallel generation of random numbers using PRNGs, especially on GPUs.
@@ -455,6 +456,20 @@ If a statistical RNG implementation uses a PRNG, the following requirements appl
 
 3. The RNG MAY reseed itself from time to time, using a newly generated seed as described earlier.  If the RNG reseeds if it would generate more than a threshold number of values without reseeding, that threshold SHOULD be 2<sup>L</sup> or less, where _L_ is the PRNG's state length.
 
+<a id=Designs_for_PRNGs></a>
+### Designs for PRNGs
+
+There are several possible ways to implement a PRNG:
+
+1. As an object that uses an internal state and the following methods:
+    - An initializer method that takes a seed and converts it to an internal state.  This method is called while generating the PRNG object.
+    - A method that takes no parameters.  It uses only the internal state to output one or more "random" numbers and update the internal state.  This method is available after the initializer is called.
+2. As a function that takes a seed and outputs one or more "random" numbers.  An example is a [**hash function**](#Hash_Functions).
+3. As a function that takes an internal state and outputs one or more "random" numbers.  This can be used if the application has its own logic for converting a seed to an internal state appropriate for the PRNG.
+4. As a function that takes an internal state and outputs a new internal state and one or more "random" numbers.  This is how PRNGs can be implemented as so-called "pure functions" in functional programming languages (as in the package `AC-Random` for the Haskell language).
+
+Of the designs just given, the first is _stateful_ and the last three are _stateless functions_.
+
 <a id=Implementing_New_RNG_APIs></a>
 ### Implementing New RNG APIs
 
@@ -508,9 +523,9 @@ I acknowledge&mdash;
 
 <small><sup id=Note11>(11)</sup> Blackman, D., Vigna, S. "Scrambled Linear Pseudorandom Number Generators", 2018.</small>
 
-<small><sup id=Note12>(12)</sup> An algorithm can become nondeterministic in many ways.  [**For example**](https://keras.io/getting-started/faq/#how-can-i-obtain-reproducible-results-using-keras-during-development), different results can happen because parallel operations can finish in a different order, items can be assigned differently to hash table buckets, or floating-point addition can be carried out in a different order.
+<small><sup id=Note12>(12)</sup> An algorithm can become nondeterministic in many ways.  [**For example**](https://keras.io/getting-started/faq/#how-can-i-obtain-reproducible-results-using-keras-during-development), different results can happen because parallel operations can finish in a different order, items can be assigned differently to hash table buckets, or mathematical operations on floating-point numbers can be carried out in a different order (and lead to different results if rounding occurs after each operation).
 
-Implementations of floating-point numbers and floating-point math can also differ, especially for math functions for which specifications don't always require delivering as-accurate-as-possible results (examples are the x87 `FSIN` instruction and the difference between `Math` and `StrictMath` in Java).  Applications SHOULD avoid generating "random" floating-point numbers when they desire repeatable "randomness".</small>
+Implementations of floating-point numbers and math operations on such numbers can also differ, especially for math functions for which specifications don't always require delivering as-accurate-as-possible results (examples are the x87 `FSIN` instruction and the difference between `Math` and `StrictMath` in Java).  Applications SHOULD avoid generating "random" floating-point numbers when they desire repeatable "randomness".</small>
 
 <small><sup id=Note13>(13)</sup> Noise functions include functions that combine several outputs of a noise function, including by [**fractional Brownian motion**](https://en.wikipedia.org/wiki/Fractional_Brownian_motion).  By definition, noise functions are deterministic.</small>
 
@@ -549,7 +564,7 @@ Implementations of floating-point numbers and floating-point math can also diffe
 - about 1.4 million billion billion random 160-bit integers, or
 - about 93 billion billion billion random 192-bit integers.</small>
 
-<small><sup id=Note30>(30)</sup> The only binary floating-point numbers supported by some GPUs are 16-bit (with 10 significant bits of precision), notably not 32- or 64-bit as is otherwise common. An application ought to choose hash functions that deliver acceptable "noise" regardless of the size of floating-point numbers supported by the GPU.</small>
+<small><sup id=Note30>(30)</sup> The only binary floating-point numbers supported by some GPUs are 16-bit (with 10 significant bits of precision), notably not 32- or 64-bit as is otherwise common. An application ought to choose stateless functions that deliver acceptable "random" numbers regardless of the size of floating-point numbers supported by the GPU.</small>
 
 <small><sup id=Note31>(31)</sup> C. Peters, "[**Free blue noise textures**](http://momentsingraphics.de/?p=127)", _Moments in Graphics_, Dec. 22, 2016.  That article discusses the sampling of _blue noise_, not independent uniformly-distributed random numbers, but a similar approach applies to textures of noise however generated.</small>
 
