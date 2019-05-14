@@ -1119,7 +1119,7 @@ Porter and Duff (1984) define twelve formulas for combining (compositing) two RG
 - **Darken**: `min(src, dst)`.
 - **Add**: `min(1.0, src + dst)`.
 - **Subtract**: `max(0.0, src - dst)`.
-- **Multiply**: `(src + dst)`.
+- **Multiply**: `(src * dst)`.
 - **Screen**: `1 - (1 - dst) * (1 - src)`.
 - **Average**: `src + (dst - src) * 0.5`.
 - **Difference**: `abs(src - dst)`.
