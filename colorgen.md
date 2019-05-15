@@ -401,7 +401,7 @@ The following pseudocode converts colors between RGB and HSV.  The transformatio
         else
                 h=4+(rgb[0]-rgb[1])/(mx-mn)
         end
-        if h < 6: h = 6 - rem(-h, 6)
+        if h < 0: h = 6 - rem(-h, 6)
         if h >= 6: h = rem(h, 6)
         return [h * (pi / 3), s, mx]
     END METHOD

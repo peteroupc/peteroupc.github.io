@@ -496,7 +496,7 @@ of colors in these models varies by <a href="#RGB_Color_Spaces"><strong>RGB colo
     else
             h=4+(rgb[0]-rgb[1])/(mx-mn)
     end
-    if h &lt; 6: h = 6 - rem(-h, 6)
+    if h &lt; 0: h = 6 - rem(-h, 6)
     if h &gt;= 6: h = rem(h, 6)
     return [h * (pi / 3), s, mx]
 END METHOD

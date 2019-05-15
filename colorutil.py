@@ -807,7 +807,7 @@ def rgbToHsv(rgb):
             h=2+(rgb[2]-rgb[0])*1.0/(mx-mn)
     if rgb[2]==mx:
             h=4+(rgb[0]-rgb[1])*1.0/(mx-mn)
-    if h < 6:
+    if h < 0:
         h = 6 - ((-h)% 6)
     if h >= 6:
         h = (h % 6)
