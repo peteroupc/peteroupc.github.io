@@ -1717,11 +1717,11 @@ where `FUNC` is an arbitrary function of one or more variables) can be done to a
 
 <small><sup id=Note33>(33)</sup> The hue rotation angle is in radians, and the angle is greater than -2&pi; and less than 2&pi;. Degrees can be converted to radians by multiplying by `pi / 180`.</small>
 
-<small><sup id=Note34>(34)</sup> This is often called the "CMY" ("cyan-magenta-yellow") version of the RGB color (although the resulting color is not necessarily based on a proportion of cyan, magenta, and yellow inks; see also "[**CMYK and Other Ink-Mixture Color Models**](#CMYK_and_Other_Ink_Mixture_Color_Models)").  If such an operation is used, the conversions between "CMY" and RGB are exactly the same.</small>
+<small><sup id=Note34>(34)</sup> This is often called the "CMY" ("cyan&ndash;magenta&ndash;yellow") version of the RGB color (although the resulting color is not necessarily based on a proportion of cyan, magenta, and yellow inks; see also "[**CMYK and Other Ink-Mixture Color Models**](#CMYK_and_Other_Ink_Mixture_Color_Models)").  If such an operation is used, the conversions between "CMY" and RGB are exactly the same.</small>
 
 <small><sup id=Note35>(35)</sup> The "E" here stands for the German word _Empfindung_.</small>
 
-<small><sup id=Note36>(36)</sup> T. Riemersma, [**"Colour metric"**](https://www.compuphase.com/cmetric.htm), "A low-cost approximation".</small>
+<small><sup id=Note36>(36)</sup> T. Riemersma, [**"Colour metric"**](https://www.compuphase.com/cmetric.htm), section "A low-cost approximation".</small>
 
 <small><sup id=Note37>(37)</sup> Huang, M., Cui, G., et al. (2015). "Power functions improving the performance of color-difference formulas." Optical Society of America, 23(1), 597&ndash;610.</small>
 
