@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
-<p>Begun on Mar. 5, 2016; last updated on May 14, 2019.</p>
+<p>Begun on Mar. 5, 2016; last updated on May 15, 2019.</p>
 
 <p>Most apps that use random numbers care about either unpredictability, speed/high quality, or repeatability.  This article explains the three kinds of RNGs and gives recommendations on each kind.</p>
 
@@ -566,7 +566,7 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 <ul>
 <li>using a <code>B</code>-bit counter (monotonically increasing number),</li>
 <li>using a <code>B</code>-bit counter with one or more reversible operations applied to it, or</li>
-<li>using a so-called &quot;full-period&quot; PRNG (which is usually a <a href="https://en.wikipedia.org/wiki/Linear_congruential_generator"><strong>linear congruential generator</strong></a>) that has a state length of <code>B</code> bits and outputs <code>B</code>-bit integers<sup><a href="#Note28"><strong>(28)</strong></a></sup>.</li>
+<li>using a so-called &quot;full-period&quot; PRNG (which can be a <a href="https://en.wikipedia.org/wiki/Linear_congruential_generator"><strong>linear congruential generator</strong></a>) that has a state length of <code>B</code> bits and outputs <code>B</code>-bit integers<sup><a href="#Note28"><strong>(28)</strong></a></sup>.</li>
 </ul>
 
 <p>An application that generates unique random identifiers SHOULD do so by combining&mdash;</p>
@@ -786,9 +786,9 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 
 <p><small><sup id=Note27>(27)</sup> van Staveren, Hans. <a href="https://sater.home.xs4all.nl/doc.html"><strong>&quot;Big Deal: A new program for dealing bridge hands&quot;</strong></a>, Sep. 8, 2000</small></p>
 
-<p><small><sup id=Note28>(28)</sup> For suggested linear congruential generators for generating unique random numbers, see P. L&#39;Ecuyer, &quot;Tables of Linear Congruential Generators of Different Sizes and Good Lattice Structure&quot;, <em>Mathematics of Computation</em> 68(225), January 1999.</small></p>
+<p><small><sup id=Note28>(28)</sup> For suggested linear congruential generators for generating unique random numbers, see P. L&#39;Ecuyer, &quot;Tables of Linear Congruential Generators of Different Sizes and Good Lattice Structure&quot;, <em>Mathematics of Computation</em> 68(225), January 1999.  Another choice for <em>n</em>-bit unique integers is an <em>n</em>-bit <a href="https://en.wikipedia.org/wiki/Linear-feedback_shift_register"><strong>linear-feedback shift register</strong></a> generator with the right parameters, which cycles &quot;randomly&quot; through all but one <em>n</em>-bit integers; see P. Alfke, &quot;Efficient Shift Registers, LFSR Counters, and Long Pseudo-Random Sequence Generators&quot;, Xilinx Application Note XAPP 052, July 7, 1996.</small></p>
 
-<p><small><sup id=Note29>(29)</sup> In theory, generating two or more random numbers of fixed size runs the risk of producing a duplicate number this way.  However, this risk decreases as that fixed size increases (see &quot;<a href="https://en.wikipedia.org/wiki/Birthday_problem"><strong>Birthday problem</strong></a>&quot;).  For example, in theory, an application has a 50% chance for duplicate numbers after generating&mdash;</p>
+<p><small><sup id=Note29>(29)</sup> In theory, generating two or more random integers of fixed size runs the risk of producing a duplicate number this way.  However, this risk decreases as that fixed size increases (see &quot;<a href="https://en.wikipedia.org/wiki/Birthday_problem"><strong>Birthday problem</strong></a>&quot;).  For example, in theory, an application has a 50% chance for duplicate numbers after generating&mdash;</p>
 
 <ul>
 <li>about 2.7 billion billion random 122-bit integers (including those found in version-4 UUIDs, or universally unique identifiers),</li>
