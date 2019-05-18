@@ -806,7 +806,8 @@ This object&#39;s type is not a number type.</li>
 
 <ul>
 <li>System.InvalidOperationException:
-This object&#39;s type is not a number type, including if this object is CBORObject.Null.</li>
+This object&#39;s type is not a number type, including if this object is CBORObject.Null. To check the CBOR object for null before conversion, use the following idiom (originally written in C# for the .NET version):  <code>(cbor==null || cbor.IsNull) ? null :
+        cbor.AsEDecimal()</code> .</li>
 </ul>
 
 <p><a id="AsEFloat"></a></p>
@@ -820,13 +821,14 @@ This object&#39;s type is not a number type, including if this object is CBORObj
 
 <p><b>Return Value:</b></p>
 
-<p>An arbitrary-precision binary floating point number for this object&#39;s value. Note that if this object is a decimal number with a fractional part, the conversion may lose information depending on the number. If this object is a rational number with a nonterminating binary expansion, returns a binary floating-point number rounded to 113 bits.</p>
+<p>An arbitrary-precision binary floating point number for this object&#39;s value. Note that if this object is a decimal number with a fractional part, the conversion may lose information depending on the number. If this object is a rational number with a nonterminating binary expansion, returns a binary floating-point number rounded to a high but limited precision.</p>
 
 <p><b>Exceptions:</b></p>
 
 <ul>
 <li>System.InvalidOperationException:
-This object&#39;s type is not a number type, including if this object is CBORObject.Null.</li>
+This object&#39;s type is not a number type, including if this object is CBORObject.Null. To check the CBOR object for null before conversion, use the following idiom (originally written in C# for the .NET version):  <code>(cbor==null || cbor.IsNull) ? null :
+        cbor.AsEFloat()</code> .</li>
 </ul>
 
 <p><a id="AsEInteger"></a></p>
@@ -846,7 +848,8 @@ This object&#39;s type is not a number type, including if this object is CBORObj
 
 <ul>
 <li><p>System.InvalidOperationException:
-This object&#39;s type is not a number type, including if this object is CBORObject.Null.</p></li>
+This object&#39;s type is not a number type, including if this object is CBORObject.Null. To check the CBOR object for null before conversion, use the following idiom (originally written in C# for the .NET version):  <code>(cbor==null || cbor.IsNull) ? null :
+        cbor.AsEInteger()</code> .</p></li>
 <li><p>System.OverflowException:
 This object&#39;s value is infinity or not-a-number (NaN).</p></li>
 </ul>
@@ -868,7 +871,8 @@ This object&#39;s value is infinity or not-a-number (NaN).</p></li>
 
 <ul>
 <li>System.InvalidOperationException:
-This object&#39;s type is not a number type, including if this object is CBORObject.Null.</li>
+This object&#39;s type is not a number type, including if this object is CBORObject.Null. To check the CBOR object for null before conversion, use the following idiom (originally written in C# for the .NET version):  <code>(cbor==null || cbor.IsNull) ? null :
+        cbor.AsERational()</code> .</li>
 </ul>
 
 <p><a id="AsInt16"></a></p>
@@ -995,12 +999,6 @@ This object&#39;s type is not a number type.</li>
 
 <p>Gets the value of this object as a text string.</p>
 
-<p>The following example code (originally written in C# for the .NET Framework) shows an idiom for returning a string value if a CBOR object is a text string, or  <code>null</code> if the CBOR object is CBOR null.</p>
-
-<pre>CBORObject obj = CBORObject.FromString(&quot;test&quot;);
-            string str = obj.IsNull ? null : obj.AsString();
-</pre>
-
 <p><b>Return Value:</b></p>
 
 <p>Gets this object&#39;s string.</p>
@@ -1009,7 +1007,7 @@ This object&#39;s type is not a number type.</li>
 
 <ul>
 <li>System.InvalidOperationException:
-This object&#39;s type is not a string, including if this object is CBORObject.Null.</li>
+This object&#39;s type is not a string, including if this object is CBORObject.Null. To check the CBOR object for null before conversion, use the following idiom (originally written in C# for the .NET version): <code>(cbor==null || cbor.IsNull) ? null : cbor.AsString()</code> .</li>
 </ul>
 
 <p><a id="AsUInt16"></a></p>
