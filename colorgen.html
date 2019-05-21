@@ -1602,21 +1602,28 @@ END METHOD
 <li>For each color in the image color list, find its <a href="#Nearest_Colors"><strong>nearest color</strong></a> in the color palette, and add 1 to the nearest color&#39;s corresponding value in the histogram.</li>
 <li>Find the color or colors in the color palette with the highest histogram values, and return those colors as the dominant colors.</li>
 </ul></li>
-<li><p><strong>Posterization.</strong> This involves rounding each component of a multicomponent color to the nearest multiple of 1/<em>n</em>, where <em>n</em> is the desired number of levels per channel.  The rounding can be up, down, or otherwise.</p></li>
+<li><p><strong>Posterization.</strong> This involves rounding each component of a multicomponent color to the nearest multiple of 1/<em>n</em>, where <em>n</em> is 1 plus the desired number of levels per channel.  The rounding can be up, down, or otherwise.</p></li>
 </ol>
 
 <blockquote>
 <p><strong>Notes:</strong></p>
 
 <ol>
-<li>For all these techniques, in the case of a raster image, an implementation can scale down that image before proceeding to find its dominant colors.  Algorithms to resize or &quot;resample&quot; images are out of scope for this page, however.</li>
-<li>Reducing the number of colors in an image usually involves finding that image&#39;s dominant colors and either&mdash;
+<li><strong>Scale down</strong>: For all these techniques, in the case of a raster image, an implementation can scale down that image before proceeding to find its dominant colors.  Algorithms to resize or &quot;resample&quot; images are out of scope for this page, however.</li>
+<li><strong>Color reduction</strong>: Reducing the number of colors in an image usually involves finding that image&#39;s dominant colors and either&mdash;
 
 <ul>
 <li>applying a &quot;nearest neighbor&quot; approach (replacing that image&#39;s colors with their <a href="#Nearest_Colors"><strong>nearest dominant colors</strong></a>), or</li>
 <li>applying a <a href="https://en.wikipedia.org/wiki/Dither"><strong>&quot;dithering&quot;</strong></a> technique (especially to reduce undesirable color &quot;banding&quot; in certain cases), which is outside the scope of this document, however.<sup><a href="#Note38"><strong>(38)</strong></a></sup></li>
 </ul></li>
-<li>Finding the number of <em>unique</em> colors in an image color list can be done by storing those colors as keys in a hash table, then counting the number of keys stored this way.<sup><a href="#Note39"><strong>(39)</strong></a></sup></li>
+<li><strong>Unique colors</strong>: Finding the number of unique colors in an image color list can be done by storing those colors as keys in a hash table, then counting the number of keys stored this way.<sup><a href="#Note39"><strong>(39)</strong></a></sup></li>
+<li><strong>Disqualifying dominant colors</strong>:  An application can disqualify certain kinds of colors from being dominant by&mdash;
+
+<ul>
+<li>ignoring those colors while sampling the image color list, or</li>
+<li>deleting those colors from the dominant color list,
+and using a substitute color as the dominant color if no dominant color remains.  For example, an application can ignore or exclude gray or nearly gray colors this way.</li>
+</ul></li>
 <li><strong>Extracting a scene&#39;s &quot;true colors&quot;</strong>: For applications where matching colors from the real world is important, colors need to be measured using a <a href="https://peteroupc.github.io/suppcolor.html#Color_Measurement_Devices"><strong>color measurement device</strong></a>, or be calculated from <a href="http://eilv.cie.co.at/term/567"><strong><em>scene-referred</em> image data</strong></a><sup><a href="#Note40"><strong>(40)</strong></a></sup>. PNG and many other image formats store image data commonly interpreted as <a href="#sRGB"><strong>sRGB</strong></a> by default; however, sRGB is an <a href="http://eilv.cie.co.at/term/565"><strong><em>output-referred</em></strong></a> color space, not a scene-referred one (it&#39;s based on the color output of cathode-ray-tube monitors), making sRGB images unsuitable for real-world color-matching without more.<br>Getting scene-referred image data from a digital camera, including a smartphone camera, is not trivial and is not discussed in detail in this document.  It requires knowing, among other things, whether the camera offers access to raw image data, the format of that raw data, and possibly whether the camera does color rendering (which happens before generating output-referred image data).  A raw image&#39;s colors can be estimated by the use of a raw image of a color calibration chart (test target) or by another technique.  The ISO 17321 series and IEC 61966-9 touch on this subject.</li>
 </ol>
 </blockquote>
