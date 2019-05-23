@@ -155,7 +155,9 @@ pre {
 .colors(@primary,@secondary,
    @primary50,@primary100,@primary200,@primary400,@primary600,
    @secondary50,@secondary200,@secondary700){
- .background-text-primary(@primary50);
+
+.background-text-primary(@primary50);
+
 a:link,a:hover,a:visited {
  color:@secondary;
  h1 &, h2 & {
@@ -298,8 +300,7 @@ body {
    @secondary50,@secondary200,@secondary700);
 }
 @media (prefers-color-scheme:dark) {
-  @primary: mix(#000, #00b1e7, 70%);
-  @secondary: mix(#000, #e040db, 70%);
+  @secondary: mix(#fff, #e040db, 70%); // use lighter secondary
 
   @primary50: mix(#000,@primary,85%);
   @primary100: mix(#000,@primary,70%);
