@@ -61,7 +61,7 @@ This document presents an overview of many common color topics that are of gener
     - [**Alpha Blending**](#Alpha_Blending)
     - [**Binarization**](#Binarization)
     - [**Color Schemes and Harmonies**](#Color_Schemes_and_Harmonies)
-    - [**Contrast Ratio**](#Contrast_Ratio)
+    - [**Contrast Between Two Colors**](#Contrast_Between_Two_Colors)
     - [**Porter&ndash;Duff Formulas**](#Porter_ndash_Duff_Formulas)
     - [**Blend Modes**](#Blend_Modes)
     - [**Color Matrices**](#Color_Matrices)
@@ -1069,12 +1069,12 @@ The following techniques generate new colors that are related to existing colors
 - **Monochrome colors**: Colors with the same hue; for example, different [**shades, tints, and/or tones**](#Alpha_Blending) of a given color are monochrome colors.
 - **Achromatic colors**: Colors without hue; that is, black, white, and/or shades of gray.
 
-<a id=Contrast_Ratio></a>
-### Contrast Ratio
+<a id=Contrast_Between_Two_Colors></a>
+### Contrast Between Two Colors
 
-There are two kinds of contrast ratio, among other kinds not covered in this document.
+There are several ways to find the contrast between two colors.
 
-**Contrast Ratio.** One kind of contrast ratio quantifies how differently two colors appear. Broadly speaking, a _contrasting color_ is a foreground (text) color with high contrast, especially high luminance contrast, to the background color or vice versa.
+**Luminance Contrast.** Luminance contrast formulas quantify how differently a foreground (text) color appears over a background color or vice versa, in terms of the luminance of both colors.  In general, the greater the difference, the higher the contrast.
 
 > **Example:** The [**Web Content Accessibility Guidelines 2.0 (WCAG)**](https://www.w3.org/TR/2008/REC-WCAG20-20081211/#visual-audio-contrast-contrast) includes a contrast ratio formula implemented in the pseudocode below, where `RelLum(color)`&mdash;
 > - is the "relative luminance" of a color as defined in the WCAG, and
