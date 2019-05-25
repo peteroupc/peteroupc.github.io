@@ -17,7 +17,7 @@
 <ul>
 <li><p><b>NFD</b>(Normalization Form D) decomposes combined forms to their constituent haracters (E plus acute, for example), then reorders combining marks o a standardized order. This is called canonical decomposition.</p></li>
 <li><p><b>NFC</b>does canonical decomposition, then combines certain constituent haracters to their composites (E-acute, for example). This is called anonical composition.</p></li>
-<li><p>Two normalization forms,<b>NFKC</b>and<b>NFKD</b>, are similar to NFC and NFD, except they also &quot;decompose&quot; certain characters, such as ligatures, font or positional variants, and subscripts, whose visual distinction can matter in some contexts. This is called compatibility decomposition.</p></li>
+<li><p>Two normalization forms,<b>NFKC</b>and<b>NFKD</b>, are similar to NFC and NFD, except they also &quot;decompose&quot; certain haracters, such as ligatures, font or positional variants, and ubscripts, whose visual distinction can matter in some contexts. This s called compatibility decomposition.</p></li>
 </ul>
 
 <p>For more information, see Standard Annex 15 at <code>http://www.unicode.org/reports/tr15/
@@ -59,12 +59,13 @@
     PeterO.Text.ICharacterInput input);
 </pre>
 
-<p>Initializes a new instance of the<a href="PeterO.Text.NormalizingCharacterInput.html">PeterO.Text.NormalizingCharacterInput</a> class.</p>
+<p>Initializes a new instance of the <a href="PeterO.Text.NormalizingCharacterInput.html">PeterO.Text.NormalizingCharacterInput</a> class.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>input</i>: An ICharacterInput object.</li>
+<li><i>input</i>: The parameter <i>input</i>
+is an ICharacterInput object.</li>
 </ul>
 
 <p><a id="Void_ctor_ICharacterInput_Normalization"></a></p>
@@ -76,13 +77,15 @@
     PeterO.Text.Normalization form);
 </pre>
 
-<p>Initializes a new instance of the<a href="PeterO.Text.NormalizingCharacterInput.html">PeterO.Text.NormalizingCharacterInput</a> class.</p>
+<p>Initializes a new instance of the <a href="PeterO.Text.NormalizingCharacterInput.html">PeterO.Text.NormalizingCharacterInput</a> class.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>stream</i>: An ICharacterInput object.</p></li>
-<li><p><i>form</i>: A Normalization object.</p></li>
+<li><p><i>stream</i>: The parameter <i>stream</i>
+is an ICharacterInput object.</p></li>
+<li><p><i>form</i>: The parameter <i>form</i>
+is a Normalization object.</p></li>
 </ul>
 
 <p><a id="Void_ctor_String"></a></p>
@@ -93,12 +96,13 @@
     string str);
 </pre>
 
-<p>Initializes a new instance of the<a href="PeterO.Text.NormalizingCharacterInput.html">PeterO.Text.NormalizingCharacterInput</a> class.</p>
+<p>Initializes a new instance of the <a href="PeterO.Text.NormalizingCharacterInput.html">PeterO.Text.NormalizingCharacterInput</a> class.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>str</i>: A string object.</li>
+<li><i>str</i>: The parameter <i>str</i>
+is a text string.</li>
 </ul>
 
 <p><a id="Void_ctor_String_Int32_Int32_Normalization"></a></p>
@@ -112,15 +116,19 @@
     PeterO.Text.Normalization form);
 </pre>
 
-<p>Initializes a new instance of the<a href="PeterO.Text.NormalizingCharacterInput.html">PeterO.Text.NormalizingCharacterInput</a> class.</p>
+<p>Initializes a new instance of the <a href="PeterO.Text.NormalizingCharacterInput.html">PeterO.Text.NormalizingCharacterInput</a> class.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>str</i>: A string object.</p></li>
-<li><p><i>index</i>: A 32-bit signed integer.</p></li>
-<li><p><i>length</i>: Another 32-bit signed integer.</p></li>
-<li><p><i>form</i>: A Normalization object.</p></li>
+<li><p><i>str</i>: The parameter <i>str</i>
+is a text string.</p></li>
+<li><p><i>index</i>: The parameter <i>index</i>
+is a 32-bit signed integer.</p></li>
+<li><p><i>length</i>: The parameter <i>length</i>
+is a 32-bit signed integer.</p></li>
+<li><p><i>form</i>: The parameter <i>form</i>
+is a Normalization object.</p></li>
 </ul>
 
 <p><a id="Void_ctor_String_Normalization"></a></p>
@@ -132,20 +140,22 @@
     PeterO.Text.Normalization form);
 </pre>
 
-<p>Initializes a new instance of the<a href="PeterO.Text.NormalizingCharacterInput.html">PeterO.Text.NormalizingCharacterInput</a> class.</p>
+<p>Initializes a new instance of the <a href="PeterO.Text.NormalizingCharacterInput.html">PeterO.Text.NormalizingCharacterInput</a> class.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>str</i>: A string object.</p></li>
-<li><p><i>form</i>: A Normalization object.</p></li>
+<li><p><i>str</i>: The parameter <i>str</i>
+is a text string.</p></li>
+<li><p><i>form</i>: The parameter <i>form</i>
+is a Normalization object.</p></li>
 </ul>
 
 <p><b>Exceptions:</b></p>
 
 <ul>
 <li>System.ArgumentNullException:
-The parameter  <i>str</i>
+The parameter <i>str</i>
 is null.</li>
 </ul>
 
@@ -157,12 +167,13 @@ is null.</li>
     System.Collections.Generic.IList characterList);
 </pre>
 
-<p>Initializes a new instance of the<a href="PeterO.Text.NormalizingCharacterInput.html">PeterO.Text.NormalizingCharacterInput</a> class.</p>
+<p>Initializes a new instance of the <a href="PeterO.Text.NormalizingCharacterInput.html">PeterO.Text.NormalizingCharacterInput</a> class.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>characterList</i>: An IList object.</li>
+<li><i>characterList</i>: The parameter <i>characterList</i>
+is an IList object.</li>
 </ul>
 
 <p><a id="Void_ctor_IList_1_Normalization"></a></p>
@@ -174,13 +185,15 @@ is null.</li>
     PeterO.Text.Normalization form);
 </pre>
 
-<p>Initializes a new instance of the<a href="PeterO.Text.NormalizingCharacterInput.html">PeterO.Text.NormalizingCharacterInput</a> class.</p>
+<p>Initializes a new instance of the <a href="PeterO.Text.NormalizingCharacterInput.html">PeterO.Text.NormalizingCharacterInput</a> class.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>characterList</i>: An IList object.</p></li>
-<li><p><i>form</i>: A Normalization object.</p></li>
+<li><p><i>characterList</i>: The parameter <i>characterList</i>
+is an IList object.</p></li>
+<li><p><i>form</i>: The parameter <i>form</i>
+is a Normalization object.</p></li>
 </ul>
 
 <p><a id="GetChars_PeterO_Text_ICharacterInput_PeterO_Text_Normalization"></a></p>
