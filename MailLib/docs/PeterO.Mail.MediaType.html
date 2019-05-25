@@ -11,13 +11,17 @@
 
 <p>Specifies what kind of data a message body is.</p>
 
-<p>A media type consists of a top-level type (the general category of the data), a subtype (the specific type), and an optional list of parameters. For example, the media type <code>text/plain; charset = utf-8</code>  is a text media type (&quot;text&quot;), namely, a plain text type (&quot;plain&quot;), and the parameters say that the data uses UTF-8, a Unicode character encoding (&quot;charset = utf-8&quot;). Other top-level types include &quot;audio&quot;, &quot;video&quot;, and &quot;application&quot;.</p>
+<p>A media type consists of a top-level type (the general category of the data), a subtype (the specific type), and an optional list of parameters. For example, the media type <code>text/plain; charset = utf-8
+</code> is a text media type (&quot;text&quot;), namely, a plain text type (&quot;plain&quot;), and he parameters say that the data uses UTF-8, a Unicode character ncoding (&quot;charset = utf-8&quot;). Other top-level types include &quot;audio&quot;, video&quot;, and &quot;application&quot;.</p>
 
 <p>A media type is sometimes known as a &quot;MIME type&quot;, for Multipurpose Internet Mail Extensions, the standard that introduced media types.</p>
 
 <p>This type is immutable, meaning its values can&#39;t be changed once it&#39; s created. To create a changeable media type object, use the MediaTypeBuilder class.</p>
 
-<p><b>Note:</b> According to RFC 2049, unrecognized subtypes of the top-level type  <code>multipart</code>  must be treated as <code>multipart/mixed</code>  and unrecognized media types as the media type  <code>application/octet-stream</code> .</p>
+<p><b>Note:</b>According to RFC 2049, unrecognized subtypes of the top-level type <code>multipart
+</code> must be treated as <code>multipart/mixed
+</code> and unrecognized media types as the media type <code>application/octet-stream
+</code> .</p>
 
 <h3>Member Summary</h3>
 
@@ -90,7 +94,9 @@
 
 <p><b>Returns:</b></p>
 
-<p><code>true</code>  If this is a multipart media type; otherwise, . <code>false</code> .</p>
+<p><code>true
+</code> If this is a multipart media type; otherwise, . <code>false
+</code> .</p>
 
 <p><a id="IsText"></a></p>
 
@@ -103,7 +109,9 @@
 
 <p><b>Returns:</b></p>
 
-<p><code>true</code> If this is a text media type; otherwise, . <code>false</code> .</p>
+<p><code>true
+</code> If this is a text media type; otherwise, . <code>false
+</code> .</p>
 
 <p><a id="Parameters"></a></p>
 
@@ -170,13 +178,15 @@
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>obj</i>: The parameter  <i>obj</i>
+<li><i>obj</i>: The parameter <i>obj</i>
 is an arbitrary object.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p><code>true</code>  if this object and another object are equal; otherwise,  <code>false</code> .</p>
+<p><code>true
+</code> if this object and another object are equal; otherwise, <code>false
+</code> .</p>
 
 <p><a id="GetCharset"></a></p>
 
@@ -253,7 +263,7 @@ Name is empty.</p></li>
 <p><b>Return Value:</b></p>
 
 <p>A media type object, or MediaType.TextPlainAscii if <i>mediaTypeValue</i>
- is empty or syntactically invalid.</p>
+is empty or syntactically invalid.</p>
 
 <p><a id="Parse_string_PeterO_Mail_MediaType"></a></p>
 

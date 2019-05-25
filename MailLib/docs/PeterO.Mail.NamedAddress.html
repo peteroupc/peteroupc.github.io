@@ -34,34 +34,22 @@
     string address);
 </pre>
 
-<p>Initializes a new instance of the <a href="PeterO.Mail.NamedAddress.html">PeterO.Mail.NamedAddress</a> class. Examples:</p>
-
-<ul>
-<li><p><code>john@example.com</code></p></li>
-<li><p><code>&quot;John Doe&quot; &lt;john@example.com&gt;</code></p></li>
-<li><p><code>=?utf-8?q?John</code>  <code>=</code>  <code>27s_Office?=
-        &lt;john@example.com&gt;</code></p></li>
-<li><p><code>John &lt;john@example.com&gt;</code></p></li>
-<li><p><code>&quot;Group&quot; : Tom &lt;tom@example.com&gt;, Jane
-        &lt;jane@example.com&gt;;</code></p></li>
-</ul>
+<p>Initializes a new instance of the<a href="PeterO.Mail.NamedAddress.html">PeterO.Mail.NamedAddress</a> class.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>address</i>: A text string identifying a single email address or a group of email addresses. Comments, or text within parentheses, can appear. Multiple email addresses are not allowed unless they appear in the group syntax given above. Encoded words under RFC 2047 that appear within comments or display names will be decoded.An RFC 2047 encoded word consists of &quot;=?&quot;, a character encoding name, such as  <code>utf-8</code> , either &quot;?B?&quot; or &quot;?Q?&quot; (in upper or lower case), a series of bytes in the character encoding, further encoded using B or Q encoding, and finally &quot;?=&quot;. B encoding uses Base64, while in Q encoding, spaces are changed to &quot;_&quot;, equals are changed to &quot;=3D&quot;, and most bytes other than the basic digits 0 to 9 (0x30 to 0x39) and the basic letters A/a to Z/z (0x41 to 0x5a, 0x61 to 0x7a) are changed to &quot;=&quot; followed by their 2-digit hexadecimal form. An encoded word&#39;s maximum length is 75 characters. See the third example.</li>
+<li><i>address</i>: A string object.</li>
 </ul>
-
-<p>.</p>
 
 <p><b>Exceptions:</b></p>
 
 <ul>
 <li><p>System.ArgumentNullException:
-The parameter <i>address</i>
+The parameter  <i>address</i>
 is null.</p></li>
 <li><p>System.ArgumentException:
-The named address has an invalid syntax.</p></li>
+Address has an invalid syntax.; Address has an invalid syntax.</p></li>
 </ul>
 
 <p><a id="Void_ctor_String_Address"></a></p>
@@ -73,20 +61,20 @@ The named address has an invalid syntax.</p></li>
     PeterO.Mail.Address address);
 </pre>
 
-<p>Initializes a new instance of the <a href="PeterO.Mail.NamedAddress.html">PeterO.Mail.NamedAddress</a> class using the given display name and email address.</p>
+<p>Initializes a new instance of the<a href="PeterO.Mail.NamedAddress.html">PeterO.Mail.NamedAddress</a> class.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>displayName</i>: The display name of the email address. Can be null or empty. Encoded words under RFC 2047 will not be decoded.</p></li>
-<li><p><i>address</i>: An email address.</p></li>
+<li><p><i>displayName</i>: A string object.</p></li>
+<li><p><i>address</i>: An Address object.</p></li>
 </ul>
 
 <p><b>Exceptions:</b></p>
 
 <ul>
 <li>System.ArgumentNullException:
-The parameter <i>address</i>
+The parameter  <i>address</i>
 is null.</li>
 </ul>
 
@@ -99,23 +87,21 @@ is null.</li>
     string address);
 </pre>
 
-<p>Initializes a new instance of the <a href="PeterO.Mail.NamedAddress.html">PeterO.Mail.NamedAddress</a> class using the given display name and email address.</p>
+<p>Initializes a new instance of the<a href="PeterO.Mail.NamedAddress.html">PeterO.Mail.NamedAddress</a> class.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>displayName</i>: The display name of the email address. Can be null or empty. Encoded words under RFC 2047 will not be decoded.</p></li>
-<li><p><i>address</i>: An email address.</p></li>
+<li><p><i>displayName</i>: A string object.</p></li>
+<li><p><i>address</i>: Another string object.</p></li>
 </ul>
 
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li><p>System.ArgumentNullException:
-The parameter <i>address</i>
-is null.</p></li>
-<li><p>System.ArgumentException:
-The display name or address has an invalid syntax.</p></li>
+<li>System.ArgumentNullException:
+The parameter  <i>address</i>
+is null.</li>
 </ul>
 
 <p><a id="Void_ctor_String_String_String"></a></p>
@@ -128,21 +114,21 @@ The display name or address has an invalid syntax.</p></li>
     string domain);
 </pre>
 
-<p>Initializes a new instance of the <a href="PeterO.Mail.NamedAddress.html">PeterO.Mail.NamedAddress</a> class using the given name and an email address made up of its local part and domain.</p>
+<p>Initializes a new instance of the<a href="PeterO.Mail.NamedAddress.html">PeterO.Mail.NamedAddress</a> class.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>displayName</i>: The display name of the email address. Can be null or empty.</p></li>
-<li><p><i>localPart</i>: The local part of the email address (before the &quot;@&quot;).</p></li>
-<li><p><i>domain</i>: The domain of the email address (before the &quot;@&quot;).</p></li>
+<li><p><i>displayName</i>: A string object.</p></li>
+<li><p><i>localPart</i>: Another string object.</p></li>
+<li><p><i>domain</i>: A string object. (3).</p></li>
 </ul>
 
 <p><b>Exceptions:</b></p>
 
 <ul>
 <li>System.ArgumentNullException:
-The parameter <i>localPart</i>
+The parameter  <i>localPart</i>
 or  <i>domain</i>
 is null.</li>
 </ul>
@@ -156,25 +142,24 @@ is null.</li>
     System.Collections.Generic.IList mailboxes);
 </pre>
 
-<p>Initializes a new instance of the <a href="PeterO.Mail.NamedAddress.html">PeterO.Mail.NamedAddress</a> class. Takes a group name and several named email addresses as parameters, and forms a group with them.</p>
+<p>Initializes a new instance of the<a href="PeterO.Mail.NamedAddress.html">PeterO.Mail.NamedAddress</a> class.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>groupName</i>: The group&#39;s name.</p></li>
-<li><p><i>mailboxes</i>: A list of named addresses that make up the group.</p></li>
+<li><p><i>groupName</i>: A string object.</p></li>
+<li><p><i>mailboxes</i>: An IList object.</p></li>
 </ul>
 
 <p><b>Exceptions:</b></p>
 
 <ul>
 <li><p>System.ArgumentNullException:
-The parameter <i>groupName</i>
+The parameter  <i>groupName</i>
 or  <i>mailboxes</i>
 is null.</p></li>
 <li><p>System.ArgumentException:
-The parameter <i>groupName</i>
-is empty, or an item in the list is itself a group.</p></li>
+GroupName is empty.; A mailbox in the list is a group.</p></li>
 </ul>
 
 <p><a id="Address"></a></p>
@@ -227,7 +212,9 @@ is empty, or an item in the list is itself a group.</p></li>
 
 <p><b>Returns:</b></p>
 
-<p><code>true</code>  If this represents a group of addresses; otherwise, .  <code>false</code> .</p>
+<p><code>true
+</code> If this represents a group of addresses; otherwise, . <code>false
+</code> .</p>
 
 <p><a id="Name"></a></p>
 
@@ -260,7 +247,9 @@ is empty, or an item in the list is itself a group.</p></li>
 
 <p><b>Return Value:</b></p>
 
-<p>Either  <code>true</code>  or  <code>false</code> .</p>
+<p>Either <code>true
+</code> or <code>false
+</code> .</p>
 
 <p><a id="Equals_object"></a></p>
 
@@ -275,13 +264,15 @@ is empty, or an item in the list is itself a group.</p></li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>obj</i>: The parameter  <i>obj</i>
+<li><i>obj</i>: The parameter <i>obj</i>
 is an arbitrary object.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p><code>true</code>  if this object and another object are equal; otherwise,  <code>false</code> .</p>
+<p><code>true
+</code> if this object and another object are equal; otherwise, <code>false
+</code> .</p>
 
 <p><a id="GetHashCode"></a></p>
 
@@ -314,8 +305,8 @@ is an arbitrary object.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>A list of addresses generated from the  <i>addressValue</i>
- parameter.</p>
+<p>A list of addresses generated from the <i>addressValue</i>
+parameter.</p>
 
 <p><a id="ToString"></a></p>
 

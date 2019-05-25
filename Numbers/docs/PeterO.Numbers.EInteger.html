@@ -18,7 +18,8 @@
 <p>It is not recommended to implement security-sensitive algorithms using the methods in this class, for several reasons:</p>
 
 <ul>
-<li><p><code>EInteger</code> objects are immutable, so they can&#39;t be modified, and the memory they ccupy is not guaranteed to be cleared in a timely fashion due to arbage collection. This is relevant for applications that use any-bit-long numbers as secret parameters.</p></li>
+<li><p><code>EInteger
+</code> objects are immutable, so they can&#39;t be modified, and the memory they ccupy is not guaranteed to be cleared in a timely fashion due to arbage collection. This is relevant for applications that use any-bit-long numbers as secret parameters.</p></li>
 <li><p>The methods in this class (especially those that involve arithmetic) are not guaranteed to run in constant time for all relevant inputs. Certain attacks that involve encrypted communications have exploited the timing and other aspects of such communications to derive keying material or cleartext indirectly.</p></li>
 </ul>
 
@@ -142,7 +143,9 @@
 
 <p><b>Returns:</b></p>
 
-<p><code>true</code> if this value is even; otherwise,  <code>false</code> .</p>
+<p><code>true
+</code> if this value is even; otherwise, <code>false
+</code> .</p>
 
 <p><a id="IsPowerOfTwo"></a></p>
 
@@ -155,7 +158,11 @@
 
 <p><b>Returns:</b></p>
 
-<p><code>true</code> if this object&#39;s value is a power of two; otherwise,  <code>false</code> . <code>true</code> if this object&#39; s value is a power of two; otherwise,  <code>false</code> .</p>
+<p><code>true
+</code> if this object&#39;s value is a power of two; otherwise, <code>false
+</code> . <code>true
+</code> if this object&#39; s value is a power of two; otherwise, <code>false
+</code> .</p>
 
 <p><a id="IsZero"></a></p>
 
@@ -168,7 +175,9 @@
 
 <p><b>Returns:</b></p>
 
-<p><code>true</code> if this value is 0; otherwise,  <code>false</code> .</p>
+<p><code>true
+</code> if this value is 0; otherwise, <code>false
+</code> .</p>
 
 <p><a id="One"></a></p>
 
@@ -411,7 +420,9 @@ This object&#39; s value is too big to fit a 64-bit signed integer.</li>
 
 <p><b>Return Value:</b></p>
 
-<p><code>true</code> if this object&#39;s value is from -2147483648 through 2147483647; otherwise,  <code>false</code> .</p>
+<p><code>true
+</code> if this object&#39;s value is from -2147483648 through 2147483647; otherwise, <code>false
+</code> .</p>
 
 <p><a id="CanFitInInt64"></a></p>
 
@@ -424,7 +435,9 @@ This object&#39; s value is too big to fit a 64-bit signed integer.</li>
 
 <p><b>Return Value:</b></p>
 
-<p><code>true</code> if this object&#39;s value is from -9223372036854775808 through 223372036854775807; otherwise,  <code>false</code> .</p>
+<p><code>true
+</code> if this object&#39;s value is from -9223372036854775808 through 223372036854775807; otherwise, <code>false
+</code> .</p>
 
 <p><a id="CompareTo_int"></a></p>
 
@@ -573,7 +586,9 @@ is an arbitrary object.</li>
 
 <p><b>Return Value:</b></p>
 
-<p><code>true</code> if this object and another object are equal; otherwise,  <code>false</code> .</p>
+<p><code>true
+</code> if this object and another object are equal; otherwise, <code>false
+</code> .</p>
 
 <p><a id="Equals_PeterO_Numbers_EInteger"></a></p>
 
@@ -593,7 +608,9 @@ is an arbitrary object.</li>
 
 <p><b>Return Value:</b></p>
 
-<p><code>true</code> if this object and another object are equal; otherwise,  <code>false</code> .</p>
+<p><code>true
+</code> if this object and another object are equal; otherwise, <code>false
+</code> .</p>
 
 <p><a id="FromByte_byte"></a></p>
 
@@ -630,11 +647,17 @@ is an arbitrary object.</li>
 
 <ul>
 <li><p><i>bytes</i>: A byte array consisting of the two&#39;s-complement form (see<a href="PeterO.Numbers.EDecimal.html">
-    &#x22;Forms of numbers&#x22;
+     &#x22;Forms of numbers&#x22;
   </a>) of the arbitrary-precision integer to create. The byte array is encoded sing the following rules:</p></li>
 <li><p>Positive numbers have the first byte&#39;s highest bit cleared, and negative numbers have the bit set.</p></li>
-<li><p>The last byte contains the lowest 8-bits, the next-to-last contains the next lowest 8 bits, and so on. For example, the number 300 can be encoded as <code>0x01, 0x2C</code> and 200 as <code>0x00, 0xC8</code> . (Note that the second example contains a set high bit in <code>0xC8</code> , so an additional 0 is added at the start to ensure it&#39;s interpreted as positive.)</p></li>
-<li><p>To encode negative numbers, take the absolute value of the number, subtract by 1, encode the number into bytes, and toggle each bit of each byte. Any further bits that appear beyond the most significant bit of the number will be all ones. For example, the number -450 can be encoded as <code>0xfe, 0x70</code> and -52869 as <code>0xff, 0x31, 0x7B</code> . (Note that the second example contains a cleared high bit in <code>0x31, 0x7B</code> , so an additional 0xff is added at the start to ensure it&#39;s interpreted as negative.)</p></li>
+<li><p>The last byte contains the lowest 8-bits, the next-to-last contains the next lowest 8 bits, and so on. For example, the number 300 can be encoded as <code>0x01, 0x2C
+</code> and 200 as <code>0x00, 0xC8
+</code> . (Note that the second example contains a set high bit in <code>0xC8
+</code> , so an additional 0 is added at the start to ensure it&#39;s interpreted s positive.)</p></li>
+<li><p>To encode negative numbers, take the absolute value of the number, subtract by 1, encode the number into bytes, and toggle each bit of each byte. Any further bits that appear beyond the most significant bit of the number will be all ones. For example, the number -450 can be encoded as <code>0xfe, 0x70
+</code> and -52869 as <code>0xff, 0x31, 0x7B
+</code> . (Note that the second example contains a cleared high bit in <code>0x31, 0x7B
+</code> , so an additional 0xff is added at the start to ensure it&#39;s nterpreted as negative.)</p></li>
 </ul>
 
 <p>For little-endian, the byte order is reversed from the byte order just discussed.</p>
@@ -784,7 +807,7 @@ is null.</p></li>
 <li><p>System.FormatException:
 The string portion is empty or in an invalid format.</p></li>
 <li><p>System.ArgumentException:
-&quot;Doesn&#39;t satisfy (endIndex - index) % 4 == 0&quot;.</p></li>
+Doesn&#39;t satisfy (endIndex - index) % 4 == 0&quot;.</p></li>
 </ul>
 
 <p><a id="FromSByte_sbyte"></a></p>
@@ -1064,9 +1087,11 @@ is a 32-bit signed integer.</li>
 
 <p><b>Return Value:</b></p>
 
-<p><code>true</code> if a bit is set in the two&#39; s-complement form (see<a href="PeterO.Numbers.EDecimal.html">
+<p><code>true
+</code> if a bit is set in the two&#39; s-complement form (see<a href="PeterO.Numbers.EDecimal.html">
          &#x22;Forms of numbers&#x22;
-      </a>) of this object&#39; s value; otherwise,  <code>false</code> .</p>
+      </a>) of this object&#39; s value; otherwise, <code>false
+</code> .</p>
 
 <p><a id="GetSignedBitLength"></a></p>
 
@@ -1099,7 +1124,8 @@ is a 32-bit signed integer.</li>
 
 <p><b>Return Value:</b></p>
 
-<p><code>true</code> if a bit is set in this number&#39;s absolute value.</p>
+<p><code>true
+</code> if a bit is set in this number&#39;s absolute value.</p>
 
 <p><a id="GetUnsignedBitLength"></a></p>
 
@@ -1493,9 +1519,11 @@ is null.</li>
 
 <p><b>Return Value:</b></p>
 
-<p><code>true</code> if <i>thisValue</i>
+<p><code>true
+</code> if <i>thisValue</i>
 is greater than <i>otherValue</i>
-; otherwise,  <code>false</code> .</p>
+; otherwise, <code>false
+</code> .</p>
 
 <p><a id="op_GreaterThanOrEqual"></a></p>
 
@@ -1517,9 +1545,11 @@ is greater than <i>otherValue</i>
 
 <p><b>Return Value:</b></p>
 
-<p><code>true</code> if <i>thisValue</i>
+<p><code>true
+</code> if <i>thisValue</i>
 is at least <i>otherValue</i>
-; otherwise,  <code>false</code> .</p>
+; otherwise, <code>false
+</code> .</p>
 
 <p><a id="op_LeftShift"></a></p>
 
@@ -1571,9 +1601,11 @@ is null.</li>
 
 <p><b>Return Value:</b></p>
 
-<p><code>true</code> if <i>thisValue</i>
+<p><code>true
+</code> if <i>thisValue</i>
 is less than <i>otherValue</i>
-; otherwise,  <code>false</code> .</p>
+; otherwise, <code>false
+</code> .</p>
 
 <p><a id="op_LessThanOrEqual"></a></p>
 
@@ -1595,9 +1627,11 @@ is less than <i>otherValue</i>
 
 <p><b>Return Value:</b></p>
 
-<p><code>true</code> if <i>thisValue</i>
+<p><code>true
+</code> if <i>thisValue</i>
 is up to <i>otherValue</i>
-; otherwise,  <code>false</code> .</p>
+; otherwise, <code>false
+</code> .</p>
 
 <p><a id="op_Modulus"></a></p>
 
@@ -2072,12 +2106,17 @@ This value is less than 0 or greater than 255.</li>
     bool littleEndian);
 </pre>
 
-<p>Returns a byte array of this integer&#39;s value. The byte array will take the number&#39;s two&#39; s-complement form (see<a href="PeterO.Numbers.EDecimal.html">&#x22;Forms of numbers&#x22;</a> ), using the fewest bytes necessary to store its value unambiguously. If this value is negative, the bits that appear beyond the most significant bit of the number will be all ones. The resulting byte array can be passed to the  <code>FromBytes()</code>  method (with the same byte order) to reconstruct this integer&#39;s value.</p>
+<p>Returns a byte array of this integer&#39;s value. The byte array will take the number&#39;s two&#39; s-complement form (see<a href="PeterO.Numbers.EDecimal.html">
+        &#x22;Forms of numbers&#x22;
+      </a>), using the fewest bytes necessary to store its value unambiguously. If his value is negative, the bits that appear beyond the most significant it of the number will be all ones. The resulting byte array can be passed o the <code>FromBytes()
+</code> method (with the same byte order) to reconstruct this integer&#39;s value.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>littleEndian</i>: Either  <code>true</code>  or  <code>false</code> .</li>
+<li><i>littleEndian</i>: Either <code>true
+</code> or <code>false
+</code> .</li>
 </ul>
 
 <p><b>Return Value:</b></p>

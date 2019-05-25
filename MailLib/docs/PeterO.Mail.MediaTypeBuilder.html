@@ -22,7 +22,7 @@
 <li><code><a href="#SetTopLevelType_string">SetTopLevelType(string)</a></code> - Sets this media type&#39;s top-level type.</li>
 <li><code><a href="#SubType">SubType</a></code> - Gets or sets this value&#39;s subtype.</li>
 <li><code><a href="#ToMediaType">ToMediaType()</a></code> - Converts this builder to an immutable media type object.</li>
-<li><code><a href="#ToString">ToString()</a></code> - Converts this object to a text string of the media type it represents, in the same form as MediaType.</li>
+<li><code><a href="#ToString">ToString()</a></code> - Converts this object to a text string of the media type it represents, in the same form asMediaType.</li>
 <li><code><a href="#TopLevelType">TopLevelType</a></code> - Gets or sets this value&#39;s top-level type.</li>
 </ul>
 
@@ -34,20 +34,19 @@
     PeterO.Mail.MediaType mt);
 </pre>
 
-<p>Initializes a new instance of the <a href="PeterO.Mail.MediaTypeBuilder.html">PeterO.Mail.MediaTypeBuilder</a> class using the data from another media type.</p>
+<p>Initializes a new instance of the<a href="PeterO.Mail.MediaTypeBuilder.html">PeterO.Mail.MediaTypeBuilder</a> class.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>mt</i>: The parameter  <i>mt</i>
-is a MediaType object.</li>
+<li><i>mt</i>: A MediaType object.</li>
 </ul>
 
 <p><b>Exceptions:</b></p>
 
 <ul>
 <li>System.ArgumentNullException:
-The parameter <i>mt</i>
+The parameter  <i>mt</i>
 is null.</li>
 </ul>
 
@@ -60,13 +59,13 @@ is null.</li>
     string subtype);
 </pre>
 
-<p>Initializes a new instance of the <a href="PeterO.Mail.MediaTypeBuilder.html">PeterO.Mail.MediaTypeBuilder</a> class.</p>
+<p>Initializes a new instance of the<a href="PeterO.Mail.MediaTypeBuilder.html">PeterO.Mail.MediaTypeBuilder</a> class.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>type</i>: The media type&#39;s top-level type.</p></li>
-<li><p><i>subtype</i>: The media type&#39;s subtype.</p></li>
+<li><p><i>type</i>: A string object.</p></li>
+<li><p><i>subtype</i>: Another string object.</p></li>
 </ul>
 
 <p><a id="Void_ctor"></a></p>
@@ -76,7 +75,7 @@ is null.</li>
 <pre>public MediaTypeBuilder();
 </pre>
 
-<p>Initializes a new instance of the <a href="PeterO.Mail.MediaTypeBuilder.html">PeterO.Mail.MediaTypeBuilder</a> class, using the type &quot;application/octet-stream&quot; .</p>
+<p>Initializes a new instance of the MediaTypeBuilder class.</p>
 
 <p><a id="IsMultipart"></a></p>
 
@@ -89,7 +88,9 @@ is null.</li>
 
 <p><b>Returns:</b></p>
 
-<p><code>true</code>  If this is a multipart media type; otherwise, . <code>false</code> .</p>
+<p><code>true
+</code> If this is a multipart media type; otherwise, . <code>false
+</code> .</p>
 
 <p><a id="IsText"></a></p>
 
@@ -102,7 +103,9 @@ is null.</li>
 
 <p><b>Returns:</b></p>
 
-<p><code>true</code>  If this is a text media type; otherwise, . <code>false</code> .</p>
+<p><code>true
+</code> If this is a text media type; otherwise, . <code>false
+</code> .</p>
 
 <p><a id="SubType"></a></p>
 
@@ -185,7 +188,7 @@ is null.</li>
 <ul>
 <li><p>System.ArgumentNullException:
 The parameter <i>value</i>
-or  <i>name</i>
+or <i>name</i>
 is null.</p></li>
 <li><p>System.ArgumentException:
 The parameter <i>name</i>
@@ -274,7 +277,8 @@ is syntactically invalid for a top-level type.</p></li>
 <pre>public override string ToString();
 </pre>
 
-<p>Converts this object to a text string of the media type it represents, in the same form as  <code>MediaType.ToString</code></p>
+<p>Converts this object to a text string of the media type it represents, in the same form as <code>MediaType.ToString
+</code></p>
 
 <p><b>Return Value:</b></p>
 

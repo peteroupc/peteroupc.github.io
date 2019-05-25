@@ -29,22 +29,22 @@
     string addressValue);
 </pre>
 
-<p>Initializes a new instance of the <a href="PeterO.Mail.Address.html">PeterO.Mail.Address</a> class.</p>
+<p>Initializes a new instance of the<a href="PeterO.Mail.Address.html">PeterO.Mail.Address</a> class.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>addressValue</i>: An email address.</li>
+<li><i>addressValue</i>: A string object.</li>
 </ul>
 
 <p><b>Exceptions:</b></p>
 
 <ul>
 <li><p>System.ArgumentNullException:
-The parameter <i>addressValue</i>
+The parameter  <i>addressValue</i>
 is null.</p></li>
 <li><p>System.ArgumentException:
-The email address contains invalid syntax. For example, it doesn&#39;t contain an &#39;@&#39; sign or either side of the &#39;@&#39; contains invalid characters, the address is too long, or the address contains comments (text within parentheses).</p></li>
+AddressValue is empty.; Address doesn&#39;t contain a &#39;@&#39; sign; Invalid local part; Expected &#39;@&#39; sign after local part; Expected domain after &#39;@&#39;; Invalid domain; Address too long.</p></li>
 </ul>
 
 <p><a id="Domain"></a></p>
@@ -86,13 +86,15 @@ The email address contains invalid syntax. For example, it doesn&#39;t contain a
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>obj</i>: The parameter  <i>obj</i>
+<li><i>obj</i>: The parameter <i>obj</i>
 is an arbitrary object.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p><code>true</code>  if this object and another object are equal; otherwise,  <code>false</code> .</p>
+<p><code>true
+</code> if this object and another object are equal; otherwise, <code>false
+</code> .</p>
 
 <p><a id="GetHashCode"></a></p>
 
