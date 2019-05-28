@@ -6,7 +6,7 @@
 
 <h1>com.upokecenter.cbor.CBOREncodeOptions</h1>
 
-<pre>public final class CBOREncodeOptions extends Object
+<pre>public final class CBOREncodeOptions extends java.lang.Object
 </pre>
 
 <p>Specifies options for encoding and decoding CBOR objects.</p>
@@ -17,7 +17,8 @@
 <li><code>static CBOREncodeOptions Default</code><br>
 Default options for CBOR objects.</li>
 <li><code>static CBOREncodeOptions DefaultCtap2Canonical</code><br>
-Not documented yet.</li>
+Default options for CBOR objects serialized using the CTAP2 canonicalization
+(used in Web Authentication, among other specifications).</li>
 </ul>
 
 <h2>Constructors</h2>
@@ -57,16 +58,17 @@ encoding under certain circumstances.</li>
 </pre>
 
 <p>Default options for CBOR objects. Disallow duplicate keys, and always encode
- strings using definite-length encoding. These are recommended
- settings for the options that may be adopted by certain CBORObject
- methods in the next major version.</p>
+ strings using definite-length encoding.</p>
 
 <h3>DefaultCtap2Canonical</h3>
 
 <pre>public static final CBOREncodeOptions DefaultCtap2Canonical
 </pre>
 
-<p>Not documented yet.</p>
+<p>Default options for CBOR objects serialized using the CTAP2 canonicalization
+ (used in Web Authentication, among other specifications). Disallow
+ duplicate keys, and always encode strings using definite-length
+ encoding.</p>
 
 <h2>Method Details</h2>
 

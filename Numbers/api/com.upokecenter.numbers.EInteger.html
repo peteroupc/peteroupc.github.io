@@ -105,7 +105,8 @@ Returns the greatest common divisor of this integer and the given integer.</li>
 <li><code>int GetDigitCount()</code><br>
 Returns the number of decimal digits used by this integer.</li>
 <li><code>EInteger GetDigitCountAsEInteger()</code><br>
-Returns the number of decimal digits used by this integer.</li>
+Returns the number of decimal digits used by this integer, in the form of an
+arbitrary-precision integer.</li>
 <li><code>int GetLowBit()</code><br>
 Gets the lowest set bit in this number&#39;s absolute value.</li>
 <li><code>EInteger GetLowBitAsEInteger()</code><br>
@@ -120,7 +121,7 @@ Finds the minimum number of bits needed to represent this object&#39;s value,
 except for its sign.</li>
 <li><code>EInteger GetSignedBitLengthAsEInteger()</code><br>
 Finds the minimum number of bits needed to represent this object&#39;s value,
-except for its sign.</li>
+except for its sign, in the form of an arbitrary-precision integer.</li>
 <li><code>static EInteger getTen()</code><br>
 Gets the number 10 as an arbitrary-precision integer.</li>
 <li><code>boolean GetUnsignedBit​(int index)</code><br>
@@ -950,8 +951,8 @@ null.</li>
 <pre>public EInteger GetDigitCountAsEInteger()
 </pre>
 
-<p>Returns the number of decimal digits used by this integer.<p> TODO: Adjust
- this documentation for this new API </p></p>
+<p>Returns the number of decimal digits used by this integer, in the form of an
+ arbitrary-precision integer.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -1052,9 +1053,9 @@ otherwise, <code>false</code> .</li>
 </pre>
 
 <p>Finds the minimum number of bits needed to represent this object&#39;s value,
- except for its sign. If the value is negative, finds the number of
- bits in the value equal to this object&#39;s absolute value minus 1.<p>
- TODO: Adjust this documentation for the new API. </p></p>
+ except for its sign, in the form of an arbitrary-precision integer.
+ If the value is negative, finds the number of bits in the value equal
+ to this object&#39;s absolute value minus 1.</p>
 
 <p><strong>Returns:</strong></p>
 
