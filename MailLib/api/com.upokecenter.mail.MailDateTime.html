@@ -6,7 +6,7 @@
 
 <h1>com.upokecenter.mail.MailDateTime</h1>
 
-<pre>public final class MailDateTime extends Object
+<pre>public final class MailDateTime extends java.lang.Object
 </pre>
 
 <p>Contains methods for parsing and generating date-time strings following the
@@ -15,23 +15,23 @@
 <h2>Methods</h2>
 
 <ul>
-<li><code>static String GenerateDateString​(int[] dateTime)</code><br>
+<li><code>static java.lang.String GenerateDateString​(int[] dateTime)</code><br>
 Generates a date-time string following the Internet Message Format (RFC
 5322) from an 8-element array.</li>
-<li><code>static String GenerateDateString​(int[] dateTime,
+<li><code>static java.lang.String GenerateDateString​(int[] dateTime,
               boolean gmt)</code><br>
 Generates a date-time string following the Internet Message Format (RFC
 5322) from an 8-element array, optionally using a &quot;GMT&quot; time zone
 indicator.</li>
-<li><code>static int[] ParseDateString​(String str)</code><br>
+<li><code>static int[] ParseDateString​(java.lang.String str)</code><br>
 Gets the date and time extracted from a date-time string following the
 Internet Message Format (RFC 5322).</li>
-<li><code>static int[] ParseDateString​(String str,
+<li><code>static int[] ParseDateString​(java.lang.String str,
            boolean parseObsoleteZones)</code><br>
 Gets the date and time extracted from a date-time string following the
 Internet Message Format (RFC 5322), with an option to allow obsolete
 time zone strings to appear in the date-time string.</li>
-<li><code>static int[] ParseDateStringHttp​(String v)</code><br>
+<li><code>static int[] ParseDateStringHttp​(java.lang.String v)</code><br>
 Parses a date string in one of the three formats allowed by HTTP/1.1.</li>
 </ul>
 
@@ -39,7 +39,7 @@ Parses a date string in one of the three formats allowed by HTTP/1.1.</li>
 
 <h3>GenerateDateString</h3>
 
-<pre>public static String GenerateDateString​(int[] dateTime)
+<pre>public static java.lang.String GenerateDateString​(int[] dateTime)
 </pre>
 
 <p>Generates a date-time string following the Internet Message Format (RFC
@@ -62,13 +62,14 @@ for information on the format of this parameter.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>IllegalArgumentException</code> - The parameter <code>dateTime</code> is null or
-invalid, including if the year (<code>dateTime[0]</code>) is less than 0.</li>
+<li><code>java.lang.IllegalArgumentException</code> - The parameter <code>dateTime</code> is null or
+invalid, including if the year (<code>dateTime[0]</code>) is less than
+0.</li>
 </ul>
 
 <h3>GenerateDateString</h3>
 
-<pre>public static String GenerateDateString​(int[] dateTime, boolean gmt)
+<pre>public static java.lang.String GenerateDateString​(int[] dateTime, boolean gmt)
 </pre>
 
 <p>Generates a date-time string following the Internet Message Format (RFC
@@ -93,15 +94,16 @@ for information on the format of this parameter.</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>IllegalArgumentException</code> - The parameter <code>dateTime</code> is null or
-invalid, including if the year (<code>dateTime[0]</code>) is less than 0.</p></li>
-<li><p><code>UnsupportedOperationException</code> - The time zone offset is other than 0
+<li><p><code>java.lang.IllegalArgumentException</code> - The parameter <code>dateTime</code> is null or
+invalid, including if the year (<code>dateTime[0]</code>) is less than
+0.</p></li>
+<li><p><code>java.lang.UnsupportedOperationException</code> - The time zone offset is other than 0
 and <code>gmt</code> is true.</p></li>
 </ul>
 
 <h3>ParseDateString</h3>
 
-<pre>public static int[] ParseDateString​(String str, boolean parseObsoleteZones)
+<pre>public static int[] ParseDateString​(java.lang.String str, boolean parseObsoleteZones)
 </pre>
 
 <p>Gets the date and time extracted from a date-time string following the
@@ -109,24 +111,24 @@ and <code>gmt</code> is true.</p></li>
  time zone strings to appear in the date-time string. If an array is
  returned, the elements of that array (starting from 0) are as
  follows: <ul> <li>0 - The year. For example, the value 2000 means
- 2000 C.E.</li> <li>1 - Month of the year, from 1 (January) through 12
- (December).</li> <li>2 - Day of the month, from 1 through 31.</li>
- <li>3 - Hour of the day, from 0 through 23.</li> <li>4 - Minute of
- the hour, from 0 through 59.</li> <li>5 - Second of the minute, from
- 0 through 60 (this value can go up to 60 to accommodate leap
- seconds). (Leap seconds are additional seconds added to adjust
+ 2000 C.E. </li> <li>1 - Month of the year, from 1 (January) through
+ 12 (December). </li> <li>2 - Day of the month, from 1 through 31.
+ </li> <li>3 - Hour of the day, from 0 through 23. </li> <li>4 -
+ Minute of the hour, from 0 through 59. </li> <li>5 - Second of the
+ minute, from 0 through 60 (this value can go up to 60 to accommodate
+ leap seconds). (Leap seconds are additional seconds added to adjust
  international atomic time, or TAI, to an approximation of
- astronomical time known as coordinated universal time, or UTC.)</li>
+ astronomical time known as coordinated universal time, or UTC.) </li>
  <li>6 - Milliseconds of the second, from 0 through 999. Will always
- be 0.</li> <li>7 - Number of minutes to subtract from this date and
- time to get global time. This number can be positive or
- negative.</li></ul></p>
+ be 0. </li> <li>7 - Number of minutes to subtract from this date and
+ time to get global time. This number can be positive or negative.
+ </li> </ul></p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
 <li><p><code>str</code> - A date-time string.</p></li>
-<li><p><code>parseObsoleteZones</code> - If set to <code>true</code>, this method allows
+<li><p><code>parseObsoleteZones</code> - If set to <code>true </code> , this method allows
 obsolete time zones (single-letter time zones, &quot;GMT&quot;, &quot;UT&quot;, and
 certain three-letter combinations) to appear in the date-time string.</p></li>
 </ul>
@@ -141,7 +143,7 @@ string&#39;s year would overflow the range of a 32-bit signed integer.</li>
 
 <h3>ParseDateString</h3>
 
-<pre>public static int[] ParseDateString​(String str)
+<pre>public static int[] ParseDateString​(java.lang.String str)
 </pre>
 
 <p>Gets the date and time extracted from a date-time string following the
@@ -166,7 +168,7 @@ string&#39;s year would overflow the range of a 32-bit signed integer.</li>
 
 <h3>ParseDateStringHttp</h3>
 
-<pre>public static int[] ParseDateStringHttp​(String v)
+<pre>public static int[] ParseDateStringHttp​(java.lang.String v)
 </pre>
 
 <p>Parses a date string in one of the three formats allowed by HTTP/1.1.</p>

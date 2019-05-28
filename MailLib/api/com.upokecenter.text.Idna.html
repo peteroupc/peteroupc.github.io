@@ -6,7 +6,7 @@
 
 <h1>com.upokecenter.text.Idna</h1>
 
-<pre>public final class Idna extends Object
+<pre>public final class Idna extends java.lang.Object
 </pre>
 
 <p>Contains methods that implement Internationalized Domain Names in
@@ -40,12 +40,12 @@
 <h2>Methods</h2>
 
 <ul>
-<li><code>static String DecodeDomainName​(String value)</code><br>
+<li><code>static java.lang.String DecodeDomainName​(java.lang.String value)</code><br>
 Tries to encode each XN-label of the given domain name into Unicode.</li>
-<li><code>static String EncodeDomainName​(String value)</code><br>
+<li><code>static java.lang.String EncodeDomainName​(java.lang.String value)</code><br>
 Tries to encode each label of a domain name with code points outside the
 Basic Latin range (U + 0000 to U + 007F) into an XN-label.</li>
-<li><code>static boolean IsValidDomainName​(String str,
+<li><code>static boolean IsValidDomainName​(java.lang.String str,
              boolean lookupRules)</code><br>
 Determines whether the given string is a domain name containing only
 U-labels, A-labels, NR-LDH labels, or any combination of these,
@@ -56,7 +56,7 @@ separated by dots (&quot;.&quot;).</li>
 
 <h3>DecodeDomainName</h3>
 
-<pre>public static String DecodeDomainName​(String value)
+<pre>public static java.lang.String DecodeDomainName​(java.lang.String value)
 </pre>
 
 <p>Tries to encode each XN-label of the given domain name into Unicode. This
@@ -79,12 +79,12 @@ where this is not possible remain unchanged.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>NullPointerException</code> - The parameter <code>value</code> is null.</li>
+<li><code>java.lang.NullPointerException</code> - The parameter <code>value</code> is null.</li>
 </ul>
 
 <h3>EncodeDomainName</h3>
 
-<pre>public static String EncodeDomainName​(String value)
+<pre>public static java.lang.String EncodeDomainName​(java.lang.String value)
 </pre>
 
 <p>Tries to encode each label of a domain name with code points outside the
@@ -109,12 +109,12 @@ where this is not possible remain unchanged.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>NullPointerException</code> - The parameter <code>value</code> is null.</li>
+<li><code>java.lang.NullPointerException</code> - The parameter <code>value</code> is null.</li>
 </ul>
 
 <h3>IsValidDomainName</h3>
 
-<pre>public static boolean IsValidDomainName​(String str, boolean lookupRules)
+<pre>public static boolean IsValidDomainName​(java.lang.String str, boolean lookupRules)
 </pre>
 
 <p>Determines whether the given string is a domain name containing only

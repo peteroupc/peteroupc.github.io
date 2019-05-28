@@ -6,7 +6,7 @@
 
 <h1>com.upokecenter.mail.MediaType</h1>
 
-<pre>public final class MediaType extends Object
+<pre>public final class MediaType extends java.lang.Object
 </pre>
 
 <p>Specifies what kind of data a message body is.</p> <p>A media type
@@ -47,22 +47,22 @@ basic Latin range (U + 0000 to U + 007F).</li>
 <h2>Methods</h2>
 
 <ul>
-<li><code>boolean equals​(Object obj)</code><br>
+<li><code>boolean equals​(java.lang.Object obj)</code><br>
 Determines whether this object and another object are equal.</li>
-<li><code>String GetCharset()</code><br>
+<li><code>java.lang.String GetCharset()</code><br>
 Gets this media type&#39;s &quot;charset&quot; parameter, naming a character encoding used
 to represent text in the data that uses this media type.</li>
-<li><code>String GetParameter​(String name)</code><br>
+<li><code>java.lang.String GetParameter​(java.lang.String name)</code><br>
 Gets the value of a parameter in this media type, such as &quot;charset&quot; or
 &quot;format&quot;.</li>
-<li><code>Map&lt;String,String&gt; getParameters()</code><br>
+<li><code>java.util.Map&lt;java.lang.String,​java.lang.String&gt; getParameters()</code><br>
 Gets a list of the parameters contained in this media type object.</li>
-<li><code>String getSubType()</code><br>
+<li><code>java.lang.String getSubType()</code><br>
 Gets this media type&#39;s subtype (for example, &quot;plain&quot; in &quot;text/plain&quot;).</li>
-<li><code>String getTopLevelType()</code><br>
+<li><code>java.lang.String getTopLevelType()</code><br>
 Gets the name of this media type&#39;s top-level type (such as &quot;text&quot; in
 &quot;text/plain&quot;, or &quot;audio&quot; in &quot;audio/basic&quot;).</li>
-<li><code>String getTypeAndSubType()</code><br>
+<li><code>java.lang.String getTypeAndSubType()</code><br>
 Gets the top level type and subtype of this media type, separated by a
 slash; for example, &quot;text/plain&quot;.</li>
 <li><code>int hashCode()</code><br>
@@ -71,19 +71,19 @@ Calculates the hash code of this object.</li>
 Gets a value indicating whether this is a multipart media type.</li>
 <li><code>boolean isText()</code><br>
 Gets a value indicating whether this is a text media type (&quot;text/*&quot;).</li>
-<li><code>static MediaType Parse​(String mediaTypeValue)</code><br>
+<li><code>static MediaType Parse​(java.lang.String mediaTypeValue)</code><br>
 Parses a media type string and returns a media type object.</li>
-<li><code>static MediaType Parse​(String str,
+<li><code>static MediaType Parse​(java.lang.String str,
  MediaType defaultValue)</code><br>
 Parses a media type string and returns a media type object, or the default
 value if the string is invalid.</li>
-<li><code>String ToSingleLineString()</code><br>
+<li><code>java.lang.String ToSingleLineString()</code><br>
 Converts this media type to a text string form suitable for inserting in
 HTTP headers.</li>
-<li><code>String toString()</code><br>
+<li><code>java.lang.String toString()</code><br>
 Converts this media type to a text string form suitable for inserting in
 email headers.</li>
-<li><code>String ToUriSafeString()</code><br>
+<li><code>java.lang.String ToUriSafeString()</code><br>
 Converts this media type to a text string form suitable for data URIs.</li>
 </ul>
 
@@ -125,7 +125,7 @@ Converts this media type to a text string form suitable for data URIs.</li>
 
 <h3>getTopLevelType</h3>
 
-<pre>public final String getTopLevelType()
+<pre>public final java.lang.String getTopLevelType()
 </pre>
 
 <p>Gets the name of this media type&#39;s top-level type (such as &quot;text&quot; in
@@ -141,7 +141,7 @@ Converts this media type to a text string form suitable for data URIs.</li>
 
 <h3>equals</h3>
 
-<pre>public boolean equals​(Object obj)
+<pre>public boolean equals​(java.lang.Object obj)
 </pre>
 
 <p>Determines whether this object and another object are equal.</p>
@@ -149,7 +149,7 @@ Converts this media type to a text string form suitable for data URIs.</li>
 <p><strong>Overrides:</strong></p>
 
 <ul>
-<li><code>equals</code> in class <code>Object</code></li>
+<li><code>equals</code> in class <code>java.lang.Object</code></li>
 </ul>
 
 <p><strong>Parameters:</strong></p>
@@ -176,7 +176,7 @@ Converts this media type to a text string form suitable for data URIs.</li>
 <p><strong>Overrides:</strong></p>
 
 <ul>
-<li><code>hashCode</code> in class <code>Object</code></li>
+<li><code>hashCode</code> in class <code>java.lang.Object</code></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -187,7 +187,7 @@ Converts this media type to a text string form suitable for data URIs.</li>
 
 <h3>getSubType</h3>
 
-<pre>public final String getSubType()
+<pre>public final java.lang.String getSubType()
 </pre>
 
 <p>Gets this media type&#39;s subtype (for example, &quot;plain&quot; in &quot;text/plain&quot;). The
@@ -229,7 +229,7 @@ false</code>.</li>
 
 <h3>getParameters</h3>
 
-<pre>public final Map&lt;String,String&gt; getParameters()
+<pre>public final java.util.Map&lt;java.lang.String,​java.lang.String&gt; getParameters()
 </pre>
 
 <p>Gets a list of the parameters contained in this media type object.</p>
@@ -246,7 +246,7 @@ order; this is at least the case in version 0.10.0.</li>
 
 <h3>toString</h3>
 
-<pre>public String toString()
+<pre>public java.lang.String toString()
 </pre>
 
 <p>Converts this media type to a text string form suitable for inserting in
@@ -258,7 +258,7 @@ order; this is at least the case in version 0.10.0.</li>
 <p><strong>Overrides:</strong></p>
 
 <ul>
-<li><code>toString</code> in class <code>Object</code></li>
+<li><code>toString</code> in class <code>java.lang.Object</code></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -269,7 +269,7 @@ order; this is at least the case in version 0.10.0.</li>
 
 <h3>ToSingleLineString</h3>
 
-<pre>public String ToSingleLineString()
+<pre>public java.lang.String ToSingleLineString()
 </pre>
 
 <p>Converts this media type to a text string form suitable for inserting in
@@ -285,7 +285,7 @@ order; this is at least the case in version 0.10.0.</li>
 
 <h3>ToUriSafeString</h3>
 
-<pre>public String ToUriSafeString()
+<pre>public java.lang.String ToUriSafeString()
 </pre>
 
 <p>Converts this media type to a text string form suitable for data URIs.
@@ -303,7 +303,7 @@ order; this is at least the case in version 0.10.0.</li>
 
 <h3>GetCharset</h3>
 
-<pre>public String GetCharset()
+<pre>public java.lang.String GetCharset()
 </pre>
 
 <p>Gets this media type&#39;s &quot;charset&quot; parameter, naming a character encoding used
@@ -324,7 +324,7 @@ none.</li>
 
 <h3>GetParameter</h3>
 
-<pre>public String GetParameter​(String name)
+<pre>public java.lang.String GetParameter​(java.lang.String name)
 </pre>
 
 <p>Gets the value of a parameter in this media type, such as &quot;charset&quot; or
@@ -349,13 +349,13 @@ doesn&#39;t exist.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>NullPointerException</code> - The parameter <code>name</code> is null.</p></li>
-<li><p><code>IllegalArgumentException</code> - Name is empty.</p></li>
+<li><p><code>java.lang.NullPointerException</code> - The parameter <code>name</code> is null.</p></li>
+<li><p><code>java.lang.IllegalArgumentException</code> - Name is empty.</p></li>
 </ul>
 
 <h3>getTypeAndSubType</h3>
 
-<pre>public final String getTypeAndSubType()
+<pre>public final java.lang.String getTypeAndSubType()
 </pre>
 
 <p>Gets the top level type and subtype of this media type, separated by a
@@ -371,7 +371,7 @@ slash; for example, &quot;text/plain&quot;.</li>
 
 <h3>Parse</h3>
 
-<pre>public static MediaType Parse​(String mediaTypeValue)
+<pre>public static MediaType Parse​(java.lang.String mediaTypeValue)
 </pre>
 
 <p>Parses a media type string and returns a media type object. For further
@@ -393,7 +393,7 @@ mediaTypeValue</code> is empty or syntactically invalid.</li>
 
 <h3>Parse</h3>
 
-<pre>public static MediaType Parse​(String str, MediaType defaultValue)
+<pre>public static MediaType Parse​(java.lang.String str, MediaType defaultValue)
 </pre>
 
 <p>Parses a media type string and returns a media type object, or the default
@@ -439,7 +439,7 @@ invalid. Can be null.</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>NullPointerException</code> - The parameter <code>str</code> is null.</li>
+<li><code>java.lang.NullPointerException</code> - The parameter <code>str</code> is null.</li>
 </ul>
 
 <p><a href="/MailLib/">Back to MailLib start page.</a></p>

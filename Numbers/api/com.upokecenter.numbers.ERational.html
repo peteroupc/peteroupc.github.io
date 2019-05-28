@@ -6,13 +6,13 @@
 
 <h1>com.upokecenter.numbers.ERational</h1>
 
-<pre>public final class ERational extends Object implements Comparable&lt;ERational&gt;
+<pre>public final class ERational extends java.lang.Object implements java.lang.Comparable&lt;ERational&gt;
 </pre>
 
 <p>Represents an arbitrary-precision rational number. This class can&#39;t be
  inherited. (The &quot;E&quot; stands for &quot;extended&quot;, meaning that instances of
  this class can be values other than numbers proper, such as infinity
- and not-a-number.) <p><b>Thread safety:</b> Instances of this class
+ and not-a-number.) <p><b>Thread safety: </b> Instances of this class
  are immutable, so they are inherently safe for use by multiple
  threads. Multiple instances of this object with the same properties
  are interchangeable, so they should not be compared using the &quot;==&quot;
@@ -44,10 +44,9 @@ A rational number for zero.</li>
 
 <ul>
 <li><code>ERational​(EInteger numerator,
-     EInteger denominator)</code><br>
-Deprecated.
-Use the ERational.Create method instead.
-Use the ERational.Create method instead.</li>
+     EInteger denominator) ERational</code><br>
+Initializes a new instance of the ERational
+class.</li>
 </ul>
 
 <h2>Methods</h2>
@@ -91,7 +90,7 @@ object.</li>
 <li><code>boolean equals​(ERational other)</code><br>
 Determines whether this object&#39;s numerator, denominator, and properties are
 equal to those of another object.</li>
-<li><code>boolean equals​(Object obj)</code><br>
+<li><code>boolean equals​(java.lang.Object obj)</code><br>
 Determines whether this object&#39;s numerator, denominator, and properties are
 equal to those of another object and that other object is an
 arbitrary-precision rational number.</li>
@@ -121,9 +120,9 @@ Converts a 32-bit signed integer to an arbitrary-precision rational number.</li>
 Converts a 64-bit signed integer to an arbitrary-precision rational number.</li>
 <li><code>static ERational FromSingle​(float flt)</code><br>
 Converts a 32-bit binary floating-point number to a rational number.</li>
-<li><code>static ERational FromString​(String str)</code><br>
+<li><code>static ERational FromString​(java.lang.String str)</code><br>
 Creates a rational number from a text string that represents a number.</li>
-<li><code>static ERational FromString​(String str,
+<li><code>static ERational FromString​(java.lang.String str,
       int offset,
       int length)</code><br>
 Creates a rational number from a text string that represents a number.</li>
@@ -267,7 +266,7 @@ least-significant bits of its two&#39;s-complement form as a 64-bit
 signed integer.</li>
 <li><code>float ToSingle()</code><br>
 Converts this value to a 32-bit binary floating-point number.</li>
-<li><code>String toString()</code><br>
+<li><code>java.lang.String toString()</code><br>
 Converts this object to a text string.</li>
 </ul>
 
@@ -454,7 +453,7 @@ returns the diagnostic information.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>IllegalArgumentException</code> - The denominator is zero.</li>
+<li><code>java.lang.IllegalArgumentException</code> - The denominator is zero.</li>
 </ul>
 
 <h3>Create</h3>
@@ -480,7 +479,7 @@ returns the diagnostic information.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>IllegalArgumentException</code> - The denominator is zero.</li>
+<li><code>java.lang.IllegalArgumentException</code> - The denominator is zero.</li>
 </ul>
 
 <h3>CreateNaN</h3>
@@ -506,7 +505,7 @@ object. If none is needed, should be zero.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>IllegalArgumentException</code> - The parameter &quot;diag&quot; is less than 0.</li>
+<li><code>java.lang.IllegalArgumentException</code> - The parameter &quot;diag&quot; is less than 0.</li>
 </ul>
 
 <h3>CreateNaN</h3>
@@ -535,8 +534,8 @@ object. If none is needed, should be zero.</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>IllegalArgumentException</code> - The parameter &quot;diag&quot; is less than 0.</p></li>
-<li><p><code>NullPointerException</code> - The parameter &quot;diag&quot; is null.</p></li>
+<li><p><code>java.lang.IllegalArgumentException</code> - The parameter &quot;diag&quot; is less than 0.</p></li>
+<li><p><code>java.lang.NullPointerException</code> - The parameter &quot;diag&quot; is null.</p></li>
 </ul>
 
 <h3>FromDouble</h3>
@@ -625,7 +624,7 @@ object. If none is needed, should be zero.</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>NullPointerException</code> - The parameter &quot;ef&quot; is null.</li>
+<li><code>java.lang.NullPointerException</code> - The parameter &quot;ef&quot; is null.</li>
 </ul>
 
 <h3>FromEFloat</h3>
@@ -650,7 +649,7 @@ object. If none is needed, should be zero.</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>NullPointerException</code> - The parameter &quot;ef&quot; is null.</li>
+<li><code>java.lang.NullPointerException</code> - The parameter &quot;ef&quot; is null.</li>
 </ul>
 
 <h3>FromEInteger</h3>
@@ -697,11 +696,11 @@ number.</li>
 
 <h3>FromString</h3>
 
-<pre>public static ERational FromString​(String str)
+<pre>public static ERational FromString​(java.lang.String str)
 </pre>
 
 <p>Creates a rational number from a text string that represents a number. See
- <code>FromString(String, int, int)</code> for more information.</p>
+ <code>FromString(String, int, int) </code> for more information.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -719,13 +718,13 @@ given string.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>NumberFormatException</code> - The parameter &quot;str&quot; is not a correctly
+<li><code>java.lang.NumberFormatException</code> - The parameter &quot;str&quot; is not a correctly
 formatted number string.</li>
 </ul>
 
 <h3>FromString</h3>
 
-<pre>public static ERational FromString​(String str, int offset, int length)
+<pre>public static ERational FromString​(java.lang.String str, int offset, int length)
 </pre>
 
 <p>Creates a rational number from a text string that represents a number.
@@ -763,9 +762,9 @@ str</code> (but not more than <code>str</code> &#39;s length).</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>NumberFormatException</code> - The parameter &quot;str&quot; is not a correctly
+<li><p><code>java.lang.NumberFormatException</code> - The parameter &quot;str&quot; is not a correctly
 formatted number string.</p></li>
-<li><p><code>NullPointerException</code> - The parameter &quot;str&quot; is null.</p></li>
+<li><p><code>java.lang.NullPointerException</code> - The parameter &quot;str&quot; is null.</p></li>
 </ul>
 
 <h3>CompareToTotalMagnitude</h3>
@@ -866,7 +865,7 @@ operand is NaN.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>NullPointerException</code> - The parameter &quot;otherValue&quot; is null.</li>
+<li><code>java.lang.NullPointerException</code> - The parameter &quot;otherValue&quot; is null.</li>
 </ul>
 
 <h3>compareTo</h3>
@@ -879,7 +878,7 @@ operand is NaN.</li>
 <p><strong>Specified by:</strong></p>
 
 <ul>
-<li><code>compareTo</code> in interface <code>Comparable&lt;ERational&gt;</code></li>
+<li><code>compareTo</code> in interface <code>java.lang.Comparable&lt;ERational&gt;</code></li>
 </ul>
 
 <p><strong>Parameters:</strong></p>
@@ -898,7 +897,7 @@ less, or a positive number if this instance is greater.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>IllegalArgumentException</code> - Doesn&#39;t satisfy this.isFinite(); doesn&#39;t
+<li><code>java.lang.IllegalArgumentException</code> - Doesn&#39;t satisfy this.isFinite(); doesn&#39;t
 satisfy other.isFinite().</li>
 </ul>
 
@@ -925,7 +924,7 @@ less, or a positive number if this instance is greater.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>IllegalArgumentException</code> - Doesn&#39;t satisfy this.isFinite(); doesn&#39;t
+<li><code>java.lang.IllegalArgumentException</code> - Doesn&#39;t satisfy this.isFinite(); doesn&#39;t
 satisfy other.isFinite().</li>
 </ul>
 
@@ -952,7 +951,7 @@ less, or a positive number if this instance is greater.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>IllegalArgumentException</code> - Doesn&#39;t satisfy this.isFinite(); doesn&#39;t
+<li><code>java.lang.IllegalArgumentException</code> - Doesn&#39;t satisfy this.isFinite(); doesn&#39;t
 satisfy other.isFinite().</li>
 </ul>
 
@@ -979,7 +978,7 @@ satisfy other.isFinite().</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>NullPointerException</code> - The parameter &quot;other&quot; is null.</li>
+<li><code>java.lang.NullPointerException</code> - The parameter &quot;other&quot; is null.</li>
 </ul>
 
 <h3>Divide</h3>
@@ -1005,12 +1004,12 @@ satisfy other.isFinite().</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>NullPointerException</code> - The parameter &quot;otherValue&quot; is null.</li>
+<li><code>java.lang.NullPointerException</code> - The parameter &quot;otherValue&quot; is null.</li>
 </ul>
 
 <h3>equals</h3>
 
-<pre>public boolean equals​(Object obj)
+<pre>public boolean equals​(java.lang.Object obj)
 </pre>
 
 <p>Determines whether this object&#39;s numerator, denominator, and properties are
@@ -1021,7 +1020,7 @@ satisfy other.isFinite().</li>
 <p><strong>Overrides:</strong></p>
 
 <ul>
-<li><code>equals</code> in class <code>Object</code></li>
+<li><code>equals</code> in class <code>java.lang.Object</code></li>
 </ul>
 
 <p><strong>Parameters:</strong></p>
@@ -1068,7 +1067,7 @@ satisfy other.isFinite().</li>
 <p><strong>Overrides:</strong></p>
 
 <ul>
-<li><code>hashCode</code> in class <code>Object</code></li>
+<li><code>hashCode</code> in class <code>java.lang.Object</code></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -1187,7 +1186,7 @@ this class); otherwise, <code>false</code> .</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>NullPointerException</code> - The parameter &quot;otherValue&quot; is null.</li>
+<li><code>java.lang.NullPointerException</code> - The parameter &quot;otherValue&quot; is null.</li>
 </ul>
 
 <h3>Negate</h3>
@@ -1227,7 +1226,7 @@ this class); otherwise, <code>false</code> .</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>NullPointerException</code> - The parameter &quot;otherValue&quot; is null.</li>
+<li><code>java.lang.NullPointerException</code> - The parameter &quot;otherValue&quot; is null.</li>
 </ul>
 
 <h3>Subtract</h3>
@@ -1252,7 +1251,7 @@ this class); otherwise, <code>false</code> .</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>NullPointerException</code> - The parameter &quot;otherValue&quot; is null.</li>
+<li><code>java.lang.NullPointerException</code> - The parameter &quot;otherValue&quot; is null.</li>
 </ul>
 
 <h3>ToDouble</h3>
@@ -1289,7 +1288,7 @@ exceeds the range of a 64-bit floating point number.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>ArithmeticException</code> - This object&#39;s value is infinity or
+<li><code>java.lang.ArithmeticException</code> - This object&#39;s value is infinity or
 not-a-number (NaN).</li>
 </ul>
 
@@ -1311,7 +1310,7 @@ not-a-number (NaN).</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>ArithmeticException</code> - This object&#39;s value is infinity or
+<li><code>java.lang.ArithmeticException</code> - This object&#39;s value is infinity or
 not-a-number (NaN).</li>
 </ul>
 
@@ -1332,7 +1331,7 @@ not-a-number (NaN).</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>ArithmeticException</code> - This object&#39;s value is infinity or
+<li><code>java.lang.ArithmeticException</code> - This object&#39;s value is infinity or
 not-a-number (NaN).</li>
 </ul>
 
@@ -1644,7 +1643,7 @@ value exceeds the range of a 32-bit floating point number.</li>
 
 <h3>toString</h3>
 
-<pre>public String toString()
+<pre>public java.lang.String toString()
 </pre>
 
 <p>Converts this object to a text string.</p>
@@ -1652,7 +1651,7 @@ value exceeds the range of a 32-bit floating point number.</li>
 <p><strong>Overrides:</strong></p>
 
 <ul>
-<li><code>toString</code> in class <code>Object</code></li>
+<li><code>toString</code> in class <code>java.lang.Object</code></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -1681,7 +1680,7 @@ the following form: <code>[-]numerator/denominator</code> .</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>ArithmeticException</code> - This value is infinity or not-a-number, or
+<li><code>java.lang.ArithmeticException</code> - This value is infinity or not-a-number, or
 the truncated integer is less than 0 or greater than 255.</li>
 </ul>
 
@@ -1718,7 +1717,7 @@ value is infinity or not-a-number.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>ArithmeticException</code> - This value is infinity or not-a-number, is not
+<li><code>java.lang.ArithmeticException</code> - This value is infinity or not-a-number, is not
 an exact integer, or is less than 0 or greater than 255.</li>
 </ul>
 
@@ -1758,7 +1757,7 @@ an exact integer, or is less than 0 or greater than 255.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>ArithmeticException</code> - This value is infinity or not-a-number, or
+<li><code>java.lang.ArithmeticException</code> - This value is infinity or not-a-number, or
 the truncated integer is less than -32768 or greater than 32767.</li>
 </ul>
 
@@ -1796,7 +1795,7 @@ value is infinity or not-a-number.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>ArithmeticException</code> - This value is infinity or not-a-number, is not
+<li><code>java.lang.ArithmeticException</code> - This value is infinity or not-a-number, is not
 an exact integer, or is less than -32768 or greater than 32767.</li>
 </ul>
 
@@ -1836,7 +1835,7 @@ an exact integer, or is less than -32768 or greater than 32767.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>ArithmeticException</code> - This value is infinity or not-a-number, or
+<li><code>java.lang.ArithmeticException</code> - This value is infinity or not-a-number, or
 the truncated integer is less than -2147483648 or greater than
 2147483647.</li>
 </ul>
@@ -1875,7 +1874,7 @@ value is infinity or not-a-number.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>ArithmeticException</code> - This value is infinity or not-a-number, is not
+<li><code>java.lang.ArithmeticException</code> - This value is infinity or not-a-number, is not
 an exact integer, or is less than -2147483648 or greater than
 2147483647.</li>
 </ul>
@@ -1916,7 +1915,7 @@ an exact integer, or is less than -2147483648 or greater than
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>ArithmeticException</code> - This value is infinity or not-a-number, or
+<li><code>java.lang.ArithmeticException</code> - This value is infinity or not-a-number, or
 the truncated integer is less than -9223372036854775808 or greater
 than 9223372036854775807.</li>
 </ul>
@@ -1955,7 +1954,7 @@ value is infinity or not-a-number.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>ArithmeticException</code> - This value is infinity or not-a-number, is not
+<li><code>java.lang.ArithmeticException</code> - This value is infinity or not-a-number, is not
 an exact integer, or is less than -9223372036854775808 or greater
 than 9223372036854775807.</li>
 </ul>

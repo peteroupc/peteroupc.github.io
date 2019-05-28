@@ -6,7 +6,7 @@
 
 <h1>com.upokecenter.util.RDFTerm</h1>
 
-<pre>public final class RDFTerm extends Object
+<pre>public final class RDFTerm extends java.lang.Object
 </pre>
 
 <h2>Fields</h2>
@@ -37,35 +37,35 @@ Type value for a piece of data serialized to a string.</li>
 <h2>Methods</h2>
 
 <ul>
-<li><code>boolean equals​(Object obj)</code><br>
+<li><code>boolean equals​(java.lang.Object obj)</code><br>
 Not documented yet.</li>
-<li><code>static RDFTerm fromBlankNode​(String name)</code><br>
+<li><code>static RDFTerm fromBlankNode​(java.lang.String name)</code><br>
 Not documented yet.</li>
-<li><code>static RDFTerm fromIRI​(String iri)</code><br>
+<li><code>static RDFTerm fromIRI​(java.lang.String iri)</code><br>
 Not documented yet.</li>
-<li><code>static RDFTerm fromLangString​(String str,
-          String languageTag)</code><br>
+<li><code>static RDFTerm fromLangString​(java.lang.String str,
+          java.lang.String languageTag)</code><br>
 Not documented yet.</li>
-<li><code>static RDFTerm fromTypedString​(String str)</code><br>
+<li><code>static RDFTerm fromTypedString​(java.lang.String str)</code><br>
 Not documented yet.</li>
-<li><code>static RDFTerm fromTypedString​(String str,
-           String iri)</code><br>
+<li><code>static RDFTerm fromTypedString​(java.lang.String str,
+           java.lang.String iri)</code><br>
 Not documented yet.</li>
 <li><code>int getKind()</code><br>
 Not documented yet.</li>
-<li><code>String getTypeOrLanguage()</code><br>
+<li><code>java.lang.String getTypeOrLanguage()</code><br>
 Gets the language tag or data type for this RDF literal.</li>
-<li><code>String getValue()</code><br>
+<li><code>java.lang.String getValue()</code><br>
 Gets the IRI, blank node identifier, or lexical form of an RDF literal.</li>
 <li><code>int hashCode()</code><br>
 Not documented yet.</li>
 <li><code>boolean isBlank()</code><br>
 Gets a value indicating whether this term is a blank node.</li>
-<li><code>boolean isIRI​(String str)</code><br>
+<li><code>boolean isIRI​(java.lang.String str)</code><br>
 Not documented yet.</li>
 <li><code>boolean isOrdinaryString()</code><br>
 Not documented yet.</li>
-<li><code>String toString()</code><br>
+<li><code>java.lang.String toString()</code><br>
 Gets a string representation of this RDF term in N-Triples format.</li>
 </ul>
 
@@ -145,7 +145,7 @@ Gets a string representation of this RDF term in N-Triples format.</li>
 
 <h3>fromBlankNode</h3>
 
-<pre>public static RDFTerm fromBlankNode​(String name)
+<pre>public static RDFTerm fromBlankNode​(java.lang.String name)
 </pre>
 
 <p>Not documented yet.</p>
@@ -165,13 +165,13 @@ Gets a string representation of this RDF term in N-Triples format.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>NullPointerException</code> - The parameter <code>name</code> is null.</p></li>
-<li><p><code>IllegalArgumentException</code> - Name is empty.</p></li>
+<li><p><code>java.lang.NullPointerException</code> - The parameter <code>name</code> is null.</p></li>
+<li><p><code>java.lang.IllegalArgumentException</code> - Name is empty.</p></li>
 </ul>
 
 <h3>fromIRI</h3>
 
-<pre>public static RDFTerm fromIRI​(String iri)
+<pre>public static RDFTerm fromIRI​(java.lang.String iri)
 </pre>
 
 <p>Not documented yet.</p>
@@ -191,12 +191,12 @@ Gets a string representation of this RDF term in N-Triples format.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>NullPointerException</code> - The parameter <code>iri</code> is null.</li>
+<li><code>java.lang.NullPointerException</code> - The parameter <code>iri</code> is null.</li>
 </ul>
 
 <h3>fromLangString</h3>
 
-<pre>public static RDFTerm fromLangString​(String str, String languageTag)
+<pre>public static RDFTerm fromLangString​(java.lang.String str, java.lang.String languageTag)
 </pre>
 
 <p>Not documented yet.</p>
@@ -217,14 +217,14 @@ Gets a string representation of this RDF term in N-Triples format.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>NullPointerException</code> - The parameter <code>str</code> or <code>
+<li><p><code>java.lang.NullPointerException</code> - The parameter <code>str</code> or <code>
 languageTag</code> is null.</p></li>
-<li><p><code>IllegalArgumentException</code> - LanguageTag is empty.</p></li>
+<li><p><code>java.lang.IllegalArgumentException</code> - LanguageTag is empty.</p></li>
 </ul>
 
 <h3>fromTypedString</h3>
 
-<pre>public static RDFTerm fromTypedString​(String str)
+<pre>public static RDFTerm fromTypedString​(java.lang.String str)
 </pre>
 
 <p>Not documented yet.</p>
@@ -243,7 +243,7 @@ languageTag</code> is null.</p></li>
 
 <h3>fromTypedString</h3>
 
-<pre>public static RDFTerm fromTypedString​(String str, String iri)
+<pre>public static RDFTerm fromTypedString​(java.lang.String str, java.lang.String iri)
 </pre>
 
 <p>Not documented yet.</p>
@@ -264,14 +264,14 @@ languageTag</code> is null.</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>NullPointerException</code> - The parameter <code>str</code> or <code>
+<li><p><code>java.lang.NullPointerException</code> - The parameter <code>str</code> or <code>
 iri</code> is null.</p></li>
-<li><p><code>IllegalArgumentException</code> - Iri is empty.</p></li>
+<li><p><code>java.lang.IllegalArgumentException</code> - Iri is empty.</p></li>
 </ul>
 
 <h3>equals</h3>
 
-<pre>public final boolean equals​(Object obj)
+<pre>public final boolean equals​(java.lang.Object obj)
 </pre>
 
 <p>Not documented yet.</p>
@@ -279,7 +279,7 @@ iri</code> is null.</p></li>
 <p><strong>Overrides:</strong></p>
 
 <ul>
-<li><code>equals</code> in class <code>Object</code></li>
+<li><code>equals</code> in class <code>java.lang.Object</code></li>
 </ul>
 
 <p><strong>Parameters:</strong></p>
@@ -310,7 +310,7 @@ iri</code> is null.</p></li>
 
 <h3>getTypeOrLanguage</h3>
 
-<pre>public String getTypeOrLanguage()
+<pre>public java.lang.String getTypeOrLanguage()
 </pre>
 
 <p>Gets the language tag or data type for this RDF literal.</p>
@@ -323,7 +323,7 @@ iri</code> is null.</p></li>
 
 <h3>getValue</h3>
 
-<pre>public String getValue()
+<pre>public java.lang.String getValue()
 </pre>
 
 <p>Gets the IRI, blank node identifier, or lexical form of an RDF literal.</p>
@@ -344,7 +344,7 @@ iri</code> is null.</p></li>
 <p><strong>Overrides:</strong></p>
 
 <ul>
-<li><code>hashCode</code> in class <code>Object</code></li>
+<li><code>hashCode</code> in class <code>java.lang.Object</code></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -368,7 +368,7 @@ iri</code> is null.</p></li>
 
 <h3>isIRI</h3>
 
-<pre>public boolean isIRI​(String str)
+<pre>public boolean isIRI​(java.lang.String str)
 </pre>
 
 <p>Not documented yet.</p>
@@ -400,7 +400,7 @@ iri</code> is null.</p></li>
 
 <h3>toString</h3>
 
-<pre>public final String toString()
+<pre>public final java.lang.String toString()
 </pre>
 
 <p>Gets a string representation of this RDF term in N-Triples format. The
@@ -409,7 +409,7 @@ iri</code> is null.</p></li>
 <p><strong>Overrides:</strong></p>
 
 <ul>
-<li><code>toString</code> in class <code>Object</code></li>
+<li><code>toString</code> in class <code>java.lang.Object</code></li>
 </ul>
 
 <p><strong>Returns:</strong></p>

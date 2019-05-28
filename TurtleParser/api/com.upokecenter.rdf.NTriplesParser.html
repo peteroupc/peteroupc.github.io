@@ -6,10 +6,116 @@
 
 <h1>com.upokecenter.rdf.NTriplesParser</h1>
 
-<pre>public static class NTriplesParser extends Object
+<pre>public final class NTriplesParser extends java.lang.Object implements IRDFParser
 </pre>
 
 <h2>Methods</h2>
+
+<ul>
+<li><code>NTriplesParser​(com.upokecenter.util.IByteReader stream)</code><br>
+Initializes a new instance of the {@link com.upokecenter.Rdf.getNTriplesParser()}
+class.</li>
+<li><code>NTriplesParser​(java.lang.String str)</code><br>
+Initializes a new instance of the {@link com.upokecenter.Rdf.getNTriplesParser()}
+class.</li>
+<li><code>static boolean isAsciiChar​(int c,
+       java.lang.String asciiChars)</code><br>
+Not documented yet.</li>
+<li><code>java.util.Set&lt;RDFTriple&gt; Parse()</code><br>
+Not documented yet.</li>
+</ul>
+
+<h2>Constructors</h2>
+
+<ul>
+<li><code>NTriplesParser​(com.upokecenter.util.IByteReader stream)</code><br>
+Initializes a new instance of the {@link com.upokecenter.Rdf.getNTriplesParser()}
+class.</li>
+<li><code>NTriplesParser​(java.lang.String str)</code><br>
+Initializes a new instance of the {@link com.upokecenter.Rdf.getNTriplesParser()}
+class.</li>
+</ul>
+
+<h2>Method Details</h2>
+
+<h3>NTriplesParser</h3>
+
+<pre>public NTriplesParser​(com.upokecenter.util.IByteReader stream)
+</pre>
+
+<p>Initializes a new instance of the {@link com.upokecenter.Rdf.getNTriplesParser()}
+ class.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>stream</code> - A PeterO.IByteReader object.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>java.lang.NullPointerException</code> - The parameter <code>stream</code> is null.</li>
+</ul>
+
+<h3>NTriplesParser</h3>
+
+<pre>public NTriplesParser​(java.lang.String str)
+</pre>
+
+<p>Initializes a new instance of the {@link com.upokecenter.Rdf.getNTriplesParser()}
+ class.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>str</code> - The parameter <code>str</code> is a text string.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>java.lang.NullPointerException</code> - The parameter &quot;stream&quot; is null.</li>
+</ul>
+
+<h3>isAsciiChar</h3>
+
+<pre>public static boolean isAsciiChar​(int c, java.lang.String asciiChars)
+</pre>
+
+<p>Not documented yet.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>c</code> - The parameter <code>c</code> is not documented yet.</p></li>
+<li><p><code>asciiChars</code> - The parameter <code>asciiChars</code> is not documented yet.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>Either <code>true</code> or <code>false</code>.</li>
+</ul>
+
+<h3>Parse</h3>
+
+<pre>public java.util.Set&lt;RDFTriple&gt; Parse()
+</pre>
+
+<p>Not documented yet.</p>
+
+<p><strong>Specified by:</strong></p>
+
+<ul>
+<li><code>Parse</code> in interface <code>IRDFParser</code></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An ISet(RDFTriple) object.</li>
+</ul>
 
 <p><a href="/TurtleParser/">Back to TurtleParser start page.</a></p>
 </div><nav id="navigation"><ul>

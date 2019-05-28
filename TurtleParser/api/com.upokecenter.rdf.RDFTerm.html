@@ -6,10 +6,417 @@
 
 <h1>com.upokecenter.rdf.RDFTerm</h1>
 
-<pre>public static class RDFTerm extends Object
+<pre>public final class RDFTerm extends java.lang.Object
 </pre>
 
+<h2>Fields</h2>
+
+<ul>
+<li><code>static RDFTerm A</code><br>
+Predicate for RDF types.</li>
+<li><code>static int BLANK</code><br>
+Type value for a blank node.</li>
+<li><code>static RDFTerm FALSE</code><br>
+object for false.</li>
+<li><code>static RDFTerm FIRST</code><br>
+Predicate for the first object in a list.</li>
+<li><code>static int IRI</code><br>
+Type value for an IRI (Internationalized Resource Identifier.).</li>
+<li><code>static int LANGSTRING</code><br>
+Type value for a string with a language tag.</li>
+<li><code>static RDFTerm NIL</code><br>
+object for nil, the end of a list, or an empty list.</li>
+<li><code>static RDFTerm REST</code><br>
+Predicate for the remaining objects in a list.</li>
+<li><code>static RDFTerm TRUE</code><br>
+object for true.</li>
+<li><code>static int TYPEDSTRING</code><br>
+Type value for a piece of data serialized to a string.</li>
+</ul>
+
 <h2>Methods</h2>
+
+<ul>
+<li><code>boolean equals​(java.lang.Object obj)</code><br>
+Not documented yet.</li>
+<li><code>static RDFTerm fromBlankNode​(java.lang.String name)</code><br>
+Not documented yet.</li>
+<li><code>static RDFTerm fromIRI​(java.lang.String iri)</code><br>
+Not documented yet.</li>
+<li><code>static RDFTerm fromLangString​(java.lang.String str,
+          java.lang.String languageTag)</code><br>
+Not documented yet.</li>
+<li><code>static RDFTerm fromTypedString​(java.lang.String str)</code><br>
+Not documented yet.</li>
+<li><code>static RDFTerm fromTypedString​(java.lang.String str,
+           java.lang.String iri)</code><br>
+Not documented yet.</li>
+<li><code>int getKind()</code><br>
+Not documented yet.</li>
+<li><code>java.lang.String getTypeOrLanguage()</code><br>
+Gets the language tag or data type for this RDF literal.</li>
+<li><code>java.lang.String getValue()</code><br>
+Gets the IRI, blank node identifier, or lexical form of an RDF literal.</li>
+<li><code>int hashCode()</code><br>
+Not documented yet.</li>
+<li><code>boolean isBlank()</code><br>
+Gets a value indicating whether this term is a blank node.</li>
+<li><code>boolean isIRI​(java.lang.String str)</code><br>
+Not documented yet.</li>
+<li><code>boolean isOrdinaryString()</code><br>
+Not documented yet.</li>
+<li><code>java.lang.String toString()</code><br>
+Gets a string representation of this RDF term in N-Triples format.</li>
+</ul>
+
+<h2>Field Details</h2>
+
+<h3>BLANK</h3>
+
+<pre>public static final int BLANK
+</pre>
+
+<p>Type value for a blank node.</p>
+
+<h3>IRI</h3>
+
+<pre>public static final int IRI
+</pre>
+
+<p>Type value for an IRI (Internationalized Resource Identifier.).</p>
+
+<h3>LANGSTRING</h3>
+
+<pre>public static final int LANGSTRING
+</pre>
+
+<p>Type value for a string with a language tag.</p>
+
+<h3>TYPEDSTRING</h3>
+
+<pre>public static final int TYPEDSTRING
+</pre>
+
+<p>Type value for a piece of data serialized to a string.</p>
+
+<h3>A</h3>
+
+<pre>public static final RDFTerm A
+</pre>
+
+<p>Predicate for RDF types.</p>
+
+<h3>FIRST</h3>
+
+<pre>public static final RDFTerm FIRST
+</pre>
+
+<p>Predicate for the first object in a list.</p>
+
+<h3>NIL</h3>
+
+<pre>public static final RDFTerm NIL
+</pre>
+
+<p>object for nil, the end of a list, or an empty list.</p>
+
+<h3>REST</h3>
+
+<pre>public static final RDFTerm REST
+</pre>
+
+<p>Predicate for the remaining objects in a list.</p>
+
+<h3>FALSE</h3>
+
+<pre>public static final RDFTerm FALSE
+</pre>
+
+<p>object for false.</p>
+
+<h3>TRUE</h3>
+
+<pre>public static final RDFTerm TRUE
+</pre>
+
+<p>object for true.</p>
+
+<h2>Method Details</h2>
+
+<h3>fromBlankNode</h3>
+
+<pre>public static RDFTerm fromBlankNode​(java.lang.String name)
+</pre>
+
+<p>Not documented yet.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>name</code> - The parameter <code>name</code> is not documented yet.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A RDFTerm object.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>java.lang.NullPointerException</code> - The parameter <code>name</code> is null.</p></li>
+<li><p><code>java.lang.IllegalArgumentException</code> - Name is empty.</p></li>
+</ul>
+
+<h3>fromIRI</h3>
+
+<pre>public static RDFTerm fromIRI​(java.lang.String iri)
+</pre>
+
+<p>Not documented yet.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>iri</code> - The parameter <code>iri</code> is not documented yet.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A RDFTerm object.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>java.lang.NullPointerException</code> - The parameter <code>iri</code> is null.</li>
+</ul>
+
+<h3>fromLangString</h3>
+
+<pre>public static RDFTerm fromLangString​(java.lang.String str, java.lang.String languageTag)
+</pre>
+
+<p>Not documented yet.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>str</code> - The parameter <code>str</code> is not documented yet.</p></li>
+<li><p><code>languageTag</code> - The parameter <code>languageTag</code> is not documented yet.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A RDFTerm object.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>java.lang.NullPointerException</code> - The parameter <code>str</code> or <code>
+languageTag</code> is null.</p></li>
+<li><p><code>java.lang.IllegalArgumentException</code> - LanguageTag is empty.</p></li>
+</ul>
+
+<h3>fromTypedString</h3>
+
+<pre>public static RDFTerm fromTypedString​(java.lang.String str)
+</pre>
+
+<p>Not documented yet.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>str</code> - The parameter <code>str</code> is not documented yet.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A RDFTerm object.</li>
+</ul>
+
+<h3>fromTypedString</h3>
+
+<pre>public static RDFTerm fromTypedString​(java.lang.String str, java.lang.String iri)
+</pre>
+
+<p>Not documented yet.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>str</code> - The parameter <code>str</code> is not documented yet.</p></li>
+<li><p><code>iri</code> - The parameter <code>iri</code> is not documented yet.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A RDFTerm object.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>java.lang.NullPointerException</code> - The parameter <code>str</code> or <code>
+iri</code> is null.</p></li>
+<li><p><code>java.lang.IllegalArgumentException</code> - Iri is empty.</p></li>
+</ul>
+
+<h3>equals</h3>
+
+<pre>public final boolean equals​(java.lang.Object obj)
+</pre>
+
+<p>Not documented yet.</p>
+
+<p><strong>Overrides:</strong></p>
+
+<ul>
+<li><code>equals</code> in class <code>java.lang.Object</code></li>
+</ul>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>obj</code> - The parameter <code>obj</code> is not documented yet.</p></li>
+<li><p><code>obj</code> - The parameter <code>obj</code> is not documented yet.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The return value is not documented yet.</li>
+</ul>
+
+<h3>getKind</h3>
+
+<pre>public int getKind()
+</pre>
+
+<p>Not documented yet.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A 32-bit signed integer.</li>
+</ul>
+
+<h3>getTypeOrLanguage</h3>
+
+<pre>public java.lang.String getTypeOrLanguage()
+</pre>
+
+<p>Gets the language tag or data type for this RDF literal.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A text string.</li>
+</ul>
+
+<h3>getValue</h3>
+
+<pre>public java.lang.String getValue()
+</pre>
+
+<p>Gets the IRI, blank node identifier, or lexical form of an RDF literal.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A text string.</li>
+</ul>
+
+<h3>hashCode</h3>
+
+<pre>public final int hashCode()
+</pre>
+
+<p>Not documented yet.</p>
+
+<p><strong>Overrides:</strong></p>
+
+<ul>
+<li><code>hashCode</code> in class <code>java.lang.Object</code></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The return value is not documented yet.</li>
+</ul>
+
+<h3>isBlank</h3>
+
+<pre>public boolean isBlank()
+</pre>
+
+<p>Gets a value indicating whether this term is a blank node.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>Either <code>true</code> or <code>false</code>.</li>
+</ul>
+
+<h3>isIRI</h3>
+
+<pre>public boolean isIRI​(java.lang.String str)
+</pre>
+
+<p>Not documented yet.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>str</code> - The parameter <code>str</code> is not documented yet.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>Either <code>true</code> or <code>false</code>.</li>
+</ul>
+
+<h3>isOrdinaryString</h3>
+
+<pre>public boolean isOrdinaryString()
+</pre>
+
+<p>Not documented yet.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>Either <code>true</code> or <code>false</code>.</li>
+</ul>
+
+<h3>toString</h3>
+
+<pre>public final java.lang.String toString()
+</pre>
+
+<p>Gets a string representation of this RDF term in N-Triples format. The
+ string will not end in a line break.</p>
+
+<p><strong>Overrides:</strong></p>
+
+<ul>
+<li><code>toString</code> in class <code>java.lang.Object</code></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A string representation of this object.</li>
+</ul>
 
 <p><a href="/TurtleParser/">Back to TurtleParser start page.</a></p>
 </div><nav id="navigation"><ul>

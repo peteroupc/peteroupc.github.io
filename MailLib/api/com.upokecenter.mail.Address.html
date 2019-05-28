@@ -6,7 +6,7 @@
 
 <h1>com.upokecenter.mail.Address</h1>
 
-<pre>public class Address extends Object
+<pre>public class Address extends java.lang.Object
 </pre>
 
 <p>Represents an email address.</p>
@@ -14,25 +14,25 @@
 <h2>Methods</h2>
 
 <ul>
-<li><code>Address​(String addressValue) Address</code><br>
+<li><code>Address​(java.lang.String addressValue) Address</code><br>
 Initializes a new instance of the Address
 class.</li>
-<li><code>boolean equals​(Object obj)</code><br>
+<li><code>boolean equals​(java.lang.Object obj)</code><br>
 Determines whether this object and another object are equal.</li>
-<li><code>String getDomain()</code><br>
+<li><code>java.lang.String getDomain()</code><br>
 Gets the domain of this email address (the part after the &quot;@&quot; sign).</li>
-<li><code>String getLocalPart()</code><br>
+<li><code>java.lang.String getLocalPart()</code><br>
 Gets the local part of this email address (the part before the &quot;@&quot; sign).</li>
 <li><code>int hashCode()</code><br>
 Returns a hash code for this address object.</li>
-<li><code>String toString()</code><br>
+<li><code>java.lang.String toString()</code><br>
 Converts this address object to a text string.</li>
 </ul>
 
 <h2>Constructors</h2>
 
 <ul>
-<li><code>Address​(String addressValue) Address</code><br>
+<li><code>Address​(java.lang.String addressValue) Address</code><br>
 Initializes a new instance of the Address
 class.</li>
 </ul>
@@ -41,7 +41,7 @@ class.</li>
 
 <h3>Address</h3>
 
-<pre>public Address​(String addressValue)
+<pre>public Address​(java.lang.String addressValue)
 </pre>
 
 <p>Initializes a new instance of the <code>Address</code>
@@ -50,23 +50,22 @@ class.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>addressValue</code> - An email address.</li>
+<li><code>addressValue</code> - The parameter <code>addressValue</code> is a text string.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>NullPointerException</code> - The parameter <code>addressValue</code> is
+<li><p><code>java.lang.NullPointerException</code> - The parameter <code>addressValue</code> is
 null.</p></li>
-<li><p><code>IllegalArgumentException</code> - The email address contains invalid syntax.
-For example, it doesn&#39;t contain an &#39;@&#39; sign or either side of the &#39;@&#39;
-contains invalid characters, the address is too long, or the address
-contains comments (text within parentheses).</p></li>
+<li><p><code>java.lang.IllegalArgumentException</code> - AddressValue is empty.; Address doesn&#39;t
+contain a &#39;@&#39; sign; Invalid local part; Expected &#39;@&#39; sign after local
+part; Expected domain after &#39;@&#39;; Invalid domain; Address too long.</p></li>
 </ul>
 
 <h3>Address</h3>
 
-<pre>public Address​(String addressValue)
+<pre>public Address​(java.lang.String addressValue)
 </pre>
 
 <p>Initializes a new instance of the <code>Address</code>
@@ -75,23 +74,22 @@ contains comments (text within parentheses).</p></li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>addressValue</code> - An email address.</li>
+<li><code>addressValue</code> - The parameter <code>addressValue</code> is a text string.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>NullPointerException</code> - The parameter <code>addressValue</code> is
+<li><p><code>java.lang.NullPointerException</code> - The parameter <code>addressValue</code> is
 null.</p></li>
-<li><p><code>IllegalArgumentException</code> - The email address contains invalid syntax.
-For example, it doesn&#39;t contain an &#39;@&#39; sign or either side of the &#39;@&#39;
-contains invalid characters, the address is too long, or the address
-contains comments (text within parentheses).</p></li>
+<li><p><code>java.lang.IllegalArgumentException</code> - AddressValue is empty.; Address doesn&#39;t
+contain a &#39;@&#39; sign; Invalid local part; Expected &#39;@&#39; sign after local
+part; Expected domain after &#39;@&#39;; Invalid domain; Address too long.</p></li>
 </ul>
 
 <h3>equals</h3>
 
-<pre>public boolean equals​(Object obj)
+<pre>public boolean equals​(java.lang.Object obj)
 </pre>
 
 <p>Determines whether this object and another object are equal.</p>
@@ -99,7 +97,7 @@ contains comments (text within parentheses).</p></li>
 <p><strong>Overrides:</strong></p>
 
 <ul>
-<li><code>equals</code> in class <code>Object</code></li>
+<li><code>equals</code> in class <code>java.lang.Object</code></li>
 </ul>
 
 <p><strong>Parameters:</strong></p>
@@ -112,12 +110,12 @@ contains comments (text within parentheses).</p></li>
 
 <ul>
 <li><code>true</code> if this object and another object are equal; otherwise,
-<code>false</code>.</li>
+<code>false</code> .</li>
 </ul>
 
 <h3>getLocalPart</h3>
 
-<pre>public final String getLocalPart()
+<pre>public final java.lang.String getLocalPart()
 </pre>
 
 <p>Gets the local part of this email address (the part before the &quot;@&quot; sign).</p>
@@ -130,7 +128,7 @@ contains comments (text within parentheses).</p></li>
 
 <h3>toString</h3>
 
-<pre>public String toString()
+<pre>public java.lang.String toString()
 </pre>
 
 <p>Converts this address object to a text string.</p>
@@ -138,7 +136,7 @@ contains comments (text within parentheses).</p></li>
 <p><strong>Overrides:</strong></p>
 
 <ul>
-<li><code>toString</code> in class <code>Object</code></li>
+<li><code>toString</code> in class <code>java.lang.Object</code></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -158,7 +156,7 @@ contains comments (text within parentheses).</p></li>
 <p><strong>Overrides:</strong></p>
 
 <ul>
-<li><code>hashCode</code> in class <code>Object</code></li>
+<li><code>hashCode</code> in class <code>java.lang.Object</code></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -169,7 +167,7 @@ contains comments (text within parentheses).</p></li>
 
 <h3>getDomain</h3>
 
-<pre>public final String getDomain()
+<pre>public final java.lang.String getDomain()
 </pre>
 
 <p>Gets the domain of this email address (the part after the &quot;@&quot; sign).</p>

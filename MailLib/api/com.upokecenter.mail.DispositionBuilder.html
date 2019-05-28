@@ -6,7 +6,7 @@
 
 <h1>com.upokecenter.mail.DispositionBuilder</h1>
 
-<pre>public class DispositionBuilder extends Object
+<pre>public class DispositionBuilder extends java.lang.Object
 </pre>
 
 <p>A mutable data type that allows a content disposition to be built.</p>
@@ -15,15 +15,12 @@
 
 <ul>
 <li><code>DispositionBuilder() DispositionBuilder</code><br>
-Initializes a new instance of the DispositionBuilder class using the disposition
-type &quot;attachment&quot; .</li>
+Initializes a new instance of the DispositionBuilder class.</li>
 <li><code>DispositionBuilder​(ContentDisposition mt) DispositionBuilder</code><br>
-Initializes a new instance of the DispositionBuilder class using the data from
-the given content disposition.</li>
-<li><code>DispositionBuilder​(String type) DispositionBuilder</code><br>
-Initializes a new instance of the DispositionBuilder class using the given
-disposition type.</li>
-<li><code>String getDispositionType()</code><br>
+Initializes a new instance of the DispositionBuilder class.</li>
+<li><code>DispositionBuilder​(java.lang.String type) DispositionBuilder</code><br>
+Initializes a new instance of the DispositionBuilder class.</li>
+<li><code>java.lang.String getDispositionType()</code><br>
 Gets this value&#39;s disposition type, such as &quot;inline&quot; or &quot;attachment&quot;.</li>
 <li><code>boolean isMultipart()</code><br>
 Deprecated.
@@ -33,17 +30,17 @@ Irrelevant for content dispositions; will be removed in the future.</li>
 Deprecated.
 Irrelevant for content dispositions; will be removed in the future.
 Irrelevant for content dispositions; will be removed in the future.</li>
-<li><code>DispositionBuilder RemoveParameter​(String name)</code><br>
+<li><code>DispositionBuilder RemoveParameter​(java.lang.String name)</code><br>
 Removes a parameter from this content disposition.</li>
-<li><code>void setDispositionType​(String value)</code><br></li>
-<li><code>DispositionBuilder SetDispositionType​(String str)</code><br>
+<li><code>void setDispositionType​(java.lang.String value)</code><br></li>
+<li><code>DispositionBuilder SetDispositionType​(java.lang.String str)</code><br>
 Sets the disposition type, such as &quot;inline&quot;.</li>
-<li><code>DispositionBuilder SetParameter​(String name,
-        String value)</code><br>
+<li><code>DispositionBuilder SetParameter​(java.lang.String name,
+        java.lang.String value)</code><br>
 Sets a parameter of this content disposition.</li>
 <li><code>ContentDisposition ToDisposition()</code><br>
 Converts this object to an immutable ContentDisposition object.</li>
-<li><code>String toString()</code><br>
+<li><code>java.lang.String toString()</code><br>
 Converts this object to a text string.</li>
 </ul>
 
@@ -51,14 +48,11 @@ Converts this object to a text string.</li>
 
 <ul>
 <li><code>DispositionBuilder() DispositionBuilder</code><br>
-Initializes a new instance of the DispositionBuilder class using the disposition
-type &quot;attachment&quot; .</li>
+Initializes a new instance of the DispositionBuilder class.</li>
 <li><code>DispositionBuilder​(ContentDisposition mt) DispositionBuilder</code><br>
-Initializes a new instance of the DispositionBuilder class using the data from
-the given content disposition.</li>
-<li><code>DispositionBuilder​(String type) DispositionBuilder</code><br>
-Initializes a new instance of the DispositionBuilder class using the given
-disposition type.</li>
+Initializes a new instance of the DispositionBuilder class.</li>
+<li><code>DispositionBuilder​(java.lang.String type) DispositionBuilder</code><br>
+Initializes a new instance of the DispositionBuilder class.</li>
 </ul>
 
 <h2>Method Details</h2>
@@ -68,16 +62,14 @@ disposition type.</li>
 <pre>public DispositionBuilder()
 </pre>
 
-<p>Initializes a new instance of the <code>DispositionBuilder</code> class using the disposition
- type &quot;attachment&quot; .</p>
+<p>Initializes a new instance of the <code>DispositionBuilder</code> class.</p>
 
 <h3>DispositionBuilder</h3>
 
 <pre>public DispositionBuilder​(ContentDisposition mt)
 </pre>
 
-<p>Initializes a new instance of the <code>DispositionBuilder</code> class using the data from
- the given content disposition.</p>
+<p>Initializes a new instance of the <code>DispositionBuilder</code> class.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -88,16 +80,15 @@ disposition type.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>NullPointerException</code> - The parameter <code>mt</code> is null.</li>
+<li><code>java.lang.NullPointerException</code> - The parameter <code>mt</code> is null.</li>
 </ul>
 
 <h3>DispositionBuilder</h3>
 
-<pre>public DispositionBuilder​(String type)
+<pre>public DispositionBuilder​(java.lang.String type)
 </pre>
 
-<p>Initializes a new instance of the <code>DispositionBuilder</code> class using the given
- disposition type.</p>
+<p>Initializes a new instance of the <code>DispositionBuilder</code> class.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -108,12 +99,12 @@ disposition type.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>NullPointerException</code> - The parameter <code>type</code> is null.</li>
+<li><code>java.lang.NullPointerException</code> - The parameter <code>type</code> is null.</li>
 </ul>
 
 <h3>getDispositionType</h3>
 
-<pre>public final String getDispositionType()
+<pre>public final java.lang.String getDispositionType()
 </pre>
 
 <p>Gets this value&#39;s disposition type, such as &quot;inline&quot; or &quot;attachment&quot;.</p>
@@ -126,7 +117,7 @@ disposition type.</li>
 
 <h3>setDispositionType</h3>
 
-<pre>public final void setDispositionType​(String value)
+<pre>public final void setDispositionType​(java.lang.String value)
 </pre>
 
 <h3>isText</h3>
@@ -142,7 +133,7 @@ disposition type.</li>
 
 <ul>
 <li><code>true</code> If this is a text media type; otherwise, . <code>
-false</code>.</li>
+false</code> .</li>
 </ul>
 
 <h3>isMultipart</h3>
@@ -158,7 +149,7 @@ false</code>.</li>
 
 <ul>
 <li><code>true</code> If this is a multipart media type; otherwise, . <code>
-false</code>.</li>
+false</code> .</li>
 </ul>
 
 <h3>ToDisposition</h3>
@@ -176,7 +167,7 @@ false</code>.</li>
 
 <h3>SetDispositionType</h3>
 
-<pre>public DispositionBuilder SetDispositionType​(String str)
+<pre>public DispositionBuilder SetDispositionType​(java.lang.String str)
 </pre>
 
 <p>Sets the disposition type, such as &quot;inline&quot;.</p>
@@ -196,13 +187,13 @@ false</code>.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>NullPointerException</code> - The parameter <code>str</code> is null.</p></li>
-<li><p><code>IllegalArgumentException</code> - Str is empty.</p></li>
+<li><p><code>java.lang.NullPointerException</code> - The parameter <code>str</code> is null.</p></li>
+<li><p><code>java.lang.IllegalArgumentException</code> - Str is empty.</p></li>
 </ul>
 
 <h3>RemoveParameter</h3>
 
-<pre>public DispositionBuilder RemoveParameter​(String name)
+<pre>public DispositionBuilder RemoveParameter​(java.lang.String name)
 </pre>
 
 <p>Removes a parameter from this content disposition. Does nothing if the
@@ -226,12 +217,12 @@ letters A to Z (U + 0041 to U + 005A) in both strings to lower case.).</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>NullPointerException</code> - The parameter <code>name</code> is null.</li>
+<li><code>java.lang.NullPointerException</code> - The parameter <code>name</code> is null.</li>
 </ul>
 
 <h3>SetParameter</h3>
 
-<pre>public DispositionBuilder SetParameter​(String name, String value)
+<pre>public DispositionBuilder SetParameter​(java.lang.String name, java.lang.String value)
 </pre>
 
 <p>Sets a parameter of this content disposition.</p>
@@ -256,15 +247,15 @@ letters A to Z (U + 0041 to U + 005A) in both strings to lower case.).</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>NullPointerException</code> - Either <code>value</code> or <code>name</code> is
+<li><p><code>java.lang.NullPointerException</code> - Either <code>value</code> or <code>name</code> is
 null.</p></li>
-<li><p><code>IllegalArgumentException</code> - The parameter <code>name</code> is empty, or it
+<li><p><code>java.lang.IllegalArgumentException</code> - The parameter <code>name</code> is empty, or it
 isn&#39;t a well-formed parameter name.</p></li>
 </ul>
 
 <h3>toString</h3>
 
-<pre>public String toString()
+<pre>public java.lang.String toString()
 </pre>
 
 <p>Converts this object to a text string.</p>
@@ -272,7 +263,7 @@ isn&#39;t a well-formed parameter name.</p></li>
 <p><strong>Overrides:</strong></p>
 
 <ul>
-<li><code>toString</code> in class <code>Object</code></li>
+<li><code>toString</code> in class <code>java.lang.Object</code></li>
 </ul>
 
 <p><strong>Returns:</strong></p>

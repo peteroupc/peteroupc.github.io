@@ -6,13 +6,13 @@
 
 <h1>com.upokecenter.numbers.EDecimal</h1>
 
-<pre>public final class EDecimal extends Object implements Comparable&lt;EDecimal&gt;
+<pre>public final class EDecimal extends java.lang.Object implements java.lang.Comparable&lt;EDecimal&gt;
 </pre>
 
 <p>Represents an arbitrary-precision decimal floating-point number. (The &quot;E&quot;
  stands for &quot;extended&quot;, meaning that instances of this class can be
  values other than numbers proper, such as infinity and not-a-number.)
- <p><b>About decimal arithmetic</b> </p> <p>Decimal (base-10)
+ <p><b>About decimal arithmetic </b> </p> <p>Decimal (base-10)
  arithmetic, such as that provided by this class, is appropriate for
  calculations involving such real-world data as prices and other sums
  of money, tax rates, and measurements. These calculations often
@@ -21,15 +21,15 @@
  calculations also rely on rounding behavior in which the result after
  rounding is a decimal number (for example, multiplying a price by a
  premium rate, then rounding, should result in a decimal amount of
- money). </p> <p>On the other hand, most implementations of
- <code>float</code> and <code>double</code> , including in C# and Java, store
- numbers in a binary (base-2) floating-point format and use binary
- floating-point arithmetic. Many decimal numbers can&#39;t be represented
- exactly in binary floating-point format (regardless of its length).
- Applying binary arithmetic to numbers intended to be decimals can
- sometimes lead to unintuitive results, as is shown in the description
- for the FromDouble() method of this class. </p> <p><b>About EDecimal
- instances</b> </p> <p>Each instance of this class consists of an
+ money). </p> <p>On the other hand, most implementations of <code>float
+ </code> and <code>double </code> , including in C# and Java, store numbers in
+ a binary (base-2) floating-point format and use binary floating-point
+ arithmetic. Many decimal numbers can&#39;t be represented exactly in
+ binary floating-point format (regardless of its length). Applying
+ binary arithmetic to numbers intended to be decimals can sometimes
+ lead to unintuitive results, as is shown in the description for the
+ FromDouble() method of this class. </p> <p><b>About EDecimal
+ instances </b> </p> <p>Each instance of this class consists of an
  integer mantissa (significand) and an integer exponent, both
  arbitrary-precision. The value of the number equals mantissa
  (significand) * 10^exponent. </p> <p>The mantissa (significand) is
@@ -48,61 +48,61 @@
  same value. In the first case, 100 * 10^-2 (100 with decimal point
  moved left by 2), and in the second case, 1 * 10^0 (1 with decimal
  point moved 0). </p> <p>This class also supports values for negative
- zero, not-a-number (NaN) values, and infinity. <b>Negative zero</b>
+ zero, not-a-number (NaN) values, and infinity. <b>Negative zero </b>
  is generally used when a negative number is rounded to 0; it has the
- same mathematical value as positive zero. <b>Infinity</b> is
+ same mathematical value as positive zero. <b>Infinity </b> is
  generally used when a non-zero number is divided by zero, or when a
  very high or very low number can&#39;t be represented in a given exponent
- range. <b>Not-a-number</b> is generally used to signal errors. </p>
+ range. <b>Not-a-number </b> is generally used to signal errors. </p>
  <p>This class implements the General Decimal Arithmetic Specification
  version 1.70 (except part of chapter 6):
- <code><a href="http://speleotrove.com/decimal/decarith.html">http://speleotrove.com/decimal/decarith.html</a></code> </p> <p><b>Errors
- and Exceptions</b> </p> <p>Passing a signaling NaN to any arithmetic
- operation shown here will signal the flag FlagInvalid and return a
- quiet NaN, even if another operand to that operation is a quiet NaN,
- unless noted otherwise. </p> <p>Passing a quiet NaN to any arithmetic
- operation shown here will return a quiet NaN, unless noted otherwise.
- Invalid operations will also return a quiet NaN, as stated in the
- individual methods. </p> <p>Unless noted otherwise, passing a null
- arbitrary-precision decimal argument to any method here will throw an
- exception. </p> <p>When an arithmetic operation signals the flag
- FlagInvalid, FlagOverflow, or FlagDivideByZero, it will not throw an
- exception too, unless the flag&#39;s trap is enabled in the arithmetic
- context (see EContext&#39;s Traps property). </p> <p>If an operation
- requires creating an intermediate value that might be too big to fit
- in memory (or might require more than 2 gigabytes of memory to store
- -- due to the current use of a 32-bit integer internally as a
- length), the operation may signal an invalid-operation flag and
- return not-a-number (NaN). In certain rare cases, the compareTo
- method may throw OutOfMemoryError (called OutOfMemoryError in
- Java) in the same circumstances. </p> <p><b>Serialization</b> </p>
- <p>An arbitrary-precision decimal value can be serialized (converted
- to a stable format) in one of the following ways: </p> <ul> <li>By
- calling the toString() method, which will always return distinct
- strings for distinct arbitrary-precision decimal values. </li> <li>By
- calling the UnsignedMantissa, Exponent, and IsNegative properties,
- and calling the IsInfinity, IsQuietNaN, and IsSignalingNaN methods.
- The return values combined will uniquely identify a particular
- arbitrary-precision decimal value. </li> </ul> <p><b>Thread
- safety</b> </p> <p>Instances of this class are immutable, so they are
- inherently safe for use by multiple threads. Multiple instances of
- this object with the same properties are interchangeable, so they
- should not be compared using the &quot;==&quot; operator (which might only
- check if each side of the operator is the same instance). </p>
- <p><b>Comparison considerations</b> </p> <p>This class&#39;s natural
- ordering (under the compareTo method) is not consistent with the
- Equals method. This means that two values that compare as equal under
- the compareTo method might not be equal under the Equals method. The
- compareTo method compares the mathematical values of the two
- instances passed to it (and considers two different NaN values as
- equal), while two instances with the same mathematical value, but
- different exponents, will be considered unequal under the Equals
- method. </p> <p><b>Security note</b> </p> <p>It is not recommended to
- implement security-sensitive algorithms using the methods in this
- class, for several reasons: </p> <ul> <li><code>EDecimal</code> objects are
- immutable, so they can&#39;t be modified, and the memory they occupy is
- not guaranteed to be cleared in a timely fashion due to garbage
- collection. This is relevant for applications that use
+ <code><a href="http://speleotrove.com/decimal/decarith.html">http://speleotrove.com/decimal/decarith.html</a> </code> </p>
+ <p><b>Errors and Exceptions </b> </p> <p>Passing a signaling NaN to
+ any arithmetic operation shown here will signal the flag FlagInvalid
+ and return a quiet NaN, even if another operand to that operation is
+ a quiet NaN, unless noted otherwise. </p> <p>Passing a quiet NaN to
+ any arithmetic operation shown here will return a quiet NaN, unless
+ noted otherwise. Invalid operations will also return a quiet NaN, as
+ stated in the individual methods. </p> <p>Unless noted otherwise,
+ passing a null arbitrary-precision decimal argument to any method
+ here will throw an exception. </p> <p>When an arithmetic operation
+ signals the flag FlagInvalid, FlagOverflow, or FlagDivideByZero, it
+ will not throw an exception too, unless the flag&#39;s trap is enabled in
+ the arithmetic context (see EContext&#39;s Traps property). </p> <p>If an
+ operation requires creating an intermediate value that might be too
+ big to fit in memory (or might require more than 2 gigabytes of
+ memory to store -- due to the current use of a 32-bit integer
+ internally as a length), the operation may signal an
+ invalid-operation flag and return not-a-number (NaN). In certain rare
+ cases, the compareTo method may throw OutOfMemoryError (called
+ OutOfMemoryError in Java) in the same circumstances. </p>
+ <p><b>Serialization </b> </p> <p>An arbitrary-precision decimal value
+ can be serialized (converted to a stable format) in one of the
+ following ways: </p> <ul> <li>By calling the toString() method, which
+ will always return distinct strings for distinct arbitrary-precision
+ decimal values. </li> <li>By calling the UnsignedMantissa, Exponent,
+ and IsNegative properties, and calling the IsInfinity, IsQuietNaN,
+ and IsSignalingNaN methods. The return values combined will uniquely
+ identify a particular arbitrary-precision decimal value. </li> </ul>
+ <p><b>Thread safety </b> </p> <p>Instances of this class are
+ immutable, so they are inherently safe for use by multiple threads.
+ Multiple instances of this object with the same properties are
+ interchangeable, so they should not be compared using the &quot;==&quot;
+ operator (which might only check if each side of the operator is the
+ same instance). </p> <p><b>Comparison considerations </b> </p>
+ <p>This class&#39;s natural ordering (under the compareTo method) is not
+ consistent with the Equals method. This means that two values that
+ compare as equal under the compareTo method might not be equal under
+ the Equals method. The compareTo method compares the mathematical
+ values of the two instances passed to it (and considers two different
+ NaN values as equal), while two instances with the same mathematical
+ value, but different exponents, will be considered unequal under the
+ Equals method. </p> <p><b>Security note </b> </p> <p>It is not
+ recommended to implement security-sensitive algorithms using the
+ methods in this class, for several reasons: </p> <ul> <li><code>EDecimal
+ </code> objects are immutable, so they can&#39;t be modified, and the memory
+ they occupy is not guaranteed to be cleared in a timely fashion due
+ to garbage collection. This is relevant for applications that use
  many-digit-long numbers as secret parameters. </li> <li>The methods
  in this class (especially those that involve arithmetic) are not
  guaranteed to run in constant time for all relevant inputs. Certain
@@ -110,52 +110,52 @@
  timing and other aspects of such communications to derive keying
  material or cleartext indirectly. </li> </ul> <p>Applications should
  instead use dedicated security libraries to handle big numbers in
- security-sensitive algorithms. </p> <p><b>Forms of numbers</b> </p>
+ security-sensitive algorithms. </p> <p><b>Forms of numbers </b> </p>
  <p>There are several other types of numbers that are mentioned in
  this class and elsewhere in this documentation. For reference, they
- are specified here. </p> <p><b>Unsigned integer</b> : An integer
+ are specified here. </p> <p><b>Unsigned integer </b> : An integer
  that&#39;s always 0 or greater, with the following maximum values: </p>
  <ul> <li>8-bit unsigned integer, or <i> byte </i> : 255. </li>
  <li>16-bit unsigned integer: 65535. </li> <li>32-bit unsigned
  integer: (2 <sup> 32 </sup> -1). </li> <li>64-bit unsigned integer:
- (2 <sup> 64 </sup> -1). </li> </ul> <p><b>Signed integer</b> : An
+ (2 <sup> 64 </sup> -1). </li> </ul> <p><b>Signed integer </b> : An
  integer in <i> two&#39;s-complement form </i> , with the following
  ranges: </p> <ul> <li>8-bit signed integer: -128 to 127. </li>
  <li>16-bit signed integer: -32768 to 32767. </li> <li>32-bit signed
  integer: -2 <sup> 31 </sup> to (2 <sup> 31 </sup> - 1). </li>
  <li>64-bit signed integer: -2 <sup> 63 </sup> to (2 <sup> 63 </sup> -
- 1). </li> </ul> <p><b>Two&#39;s complement form</b> : In <i> two&#39;
+ 1). </li> </ul> <p><b>Two&#39;s complement form </b> : In <i> two&#39;
  s-complement form </i> , nonnegative numbers have the highest (most
  significant) bit set to zero, and negative numbers have that bit (and
  all bits beyond) set to one, and a negative number is stored in such
  form by decreasing its absolute value by 1 and swapping the bits of
- the resulting number. </p> <p><b>64-bit floating-point number</b> : A
- 64-bit binary floating-point number, in the form <i> significand </i></p>
+ the resulting number. </p> <p><b>64-bit floating-point number </b> :
+ A 64-bit binary floating-point number, in the form <i> significand
+ </i> * 2 <sup> <i> exponent </i> </sup> . The significand is 53 bits
+ long (Precision) and the exponent ranges from -1074 (EMin) to 971
+ (EMax). The number is stored in the following format (commonly called
+ the IEEE 754 format): </p> <pre>|C|BBB...BBB|AAAAAA...AAAAAA|
+ </pre> <ul> <li>A. Low 52 bits (Precision minus 1 bits): Lowest bits
+ of the significand. </li> <li>B. Next 11 bits: Exponent area: <ul>
+ <li>If all bits are ones, this value is infinity if all bits in area
+ A are zeros, or not-a-number (NaN) otherwise. </li> <li>If all bits
+ are zeros, this is a subnormal number. The exponent is EMin and the
+ highest bit of the significand is zero. </li> <li>If any other
+ number, the exponent is this value reduced by 1, then raised by EMin,
+ and the highest bit of the significand is one. </li> </ul> </li>
+ <li>C. Highest bit: If one, this is a negative number. </li> </ul>
+ <p>The elements described above are in the same order as the order of
+ each bit of each element, that is, either most significant first or
+ least significant first. </p> <p><b>32-bit binary floating-point
+ number </b> : A 32-bit binary number which is stored similarly to a
+ <i> 64-bit floating-point number </i> , except that: </p> <ul>
+ <li>Precision is 24 bits. </li> <li>EMin is -149. </li> <li>EMax is</p>
 
-<ul>
-<li>2 <sup> <i> exponent </i> </sup> . The significand is 53 bits long
-(Precision) and the exponent ranges from -1074 (EMin) to 971 (EMax).
-The number is stored in the following format (commonly called the
-IEEE 754 format): </p> <pre>|C|BBB...BBB|AAAAAA...AAAAAA| </pre>
-<ul> <li>A. Low 52 bits (Precision minus 1 bits): Lowest bits of the
-significand. </li> <li>B. Next 11 bits: Exponent area: <ul> <li>If
-all bits are ones, this value is infinity if all bits in area A are
-zeros, or not-a-number (NaN) otherwise. </li> <li>If all bits are
-zeros, this is a subnormal number. The exponent is EMin and the
-highest bit of the significand is zero. </li> <li>If any other
-number, the exponent is this value reduced by 1, then raised by EMin,
-and the highest bit of the significand is one. </li> </ul> </li>
-<li>C. Highest bit: If one, this is a negative number. </li> </ul>
-<p>The elements described above are in the same order as the order of
-each bit of each element, that is, either most significant first or
-least significant first. </p> <p><b>32-bit binary floating-point
-number</b> : A 32-bit binary number which is stored similarly to a
-<i> 64-bit floating-point number </i> , except that: </p> <ul>
-<li>Precision is 24 bits. </li> <li>EMin is -149. </li> <li>EMax is</li>
+<ol>
 <li></li> <li>A. The low 23 bits (Precision minus 1 bits) are the
 lowest bits of the significand. </li> <li>B. The next 8 bits are the
 exponent area. </li> <li>C. If the highest bit is one, this is a
-negative number. </li> </ul> <p><b>.NET Framework decimal</b> : A
+negative number. </li> </ul> <p><b>.NET Framework decimal </b> : A
 128-bit decimal floating-point number, in the form <i> significand
 </i> * 10 <sup> - <i> scale </i> </sup> , where the scale ranges from
 0 to 28. The number is stored in the following format: </p> <ul>
@@ -167,7 +167,7 @@ unused. </li> <li>If the highest bit is one, it&#39;s a negative number.
 </li> </ul> <p>The elements described above are in the same order as
 the order of each bit of each element, that is, either most
 significant first or least significant first. </p></li>
-</ul>
+</ol>
 
 <h2>Fields</h2>
 
@@ -202,7 +202,7 @@ positive).</li>
 Finds the absolute value of this object (if it&#39;s negative, it becomes
 positive).</li>
 <li><code>EDecimal Add​(int intValue)</code><br>
-Adds this object and another object.</li>
+Adds this object and an 32-bit signed integer and returns the result.</li>
 <li><code>EDecimal Add​(EDecimal otherValue)</code><br>
 Adds this object and another decimal number and returns the result.</li>
 <li><code>EDecimal Add​(EDecimal otherValue,
@@ -247,7 +247,7 @@ Creates a not-a-number arbitrary-precision decimal number.</li>
      EContext ctx)</code><br>
 Creates a not-a-number arbitrary-precision decimal number.</li>
 <li><code>EDecimal Divide​(int intValue)</code><br>
-Divides this instance by the value of an arbitrary-precision integer.</li>
+Divides this object by an 32-bit signed integer and returns the result.</li>
 <li><code>EDecimal Divide​(EDecimal divisor)</code><br>
 Divides this object by another decimal number and returns the result.</li>
 <li><code>EDecimal Divide​(EDecimal divisor,
@@ -336,7 +336,7 @@ and the formula in RemainderNaturalScale.</li>
 <li><code>boolean equals​(EDecimal other)</code><br>
 Determines whether this object&#39;s mantissa (significand), exponent, and
 properties are equal to those of another object.</li>
-<li><code>boolean equals​(Object obj)</code><br>
+<li><code>boolean equals​(java.lang.Object obj)</code><br>
 Determines whether this object&#39;s mantissa (significand), exponent, and
 properties are equal to those of another object and that other object
 is an arbitrary-precision decimal number.</li>
@@ -364,18 +364,18 @@ Creates a decimal number from a 32-bit signed integer.</li>
 Creates a decimal number from a 64-bit signed integer.</li>
 <li><code>static EDecimal FromSingle​(float flt)</code><br>
 Creates a decimal number from a 32-bit binary floating-point number.</li>
-<li><code>static EDecimal FromString​(String str)</code><br>
+<li><code>static EDecimal FromString​(java.lang.String str)</code><br>
 Creates a decimal number from a text string that represents a number.</li>
-<li><code>static EDecimal FromString​(String str,
+<li><code>static EDecimal FromString​(java.lang.String str,
       int offset,
       int length)</code><br>
 Creates a decimal number from a text string that represents a number.</li>
-<li><code>static EDecimal FromString​(String str,
+<li><code>static EDecimal FromString​(java.lang.String str,
       int offset,
       int length,
       EContext ctx)</code><br>
 Creates a decimal number from a text string that represents a number.</li>
-<li><code>static EDecimal FromString​(String str,
+<li><code>static EDecimal FromString​(java.lang.String str,
       EContext ctx)</code><br>
 Creates a decimal number from a text string that represents a number.</li>
 <li><code>EInteger getExponent()</code><br>
@@ -472,8 +472,7 @@ the right.</li>
 Returns a number similar to this number but with the decimal point moved to
 the right.</li>
 <li><code>EDecimal Multiply​(int intValue)</code><br>
-Multiplies this instance by the value of an arbitrary-precision integer
-object.</li>
+Multiplies this object by the given 32-bit signed integer.</li>
 <li><code>EDecimal Multiply​(EDecimal otherValue)</code><br>
 Multiplies two decimal numbers.</li>
 <li><code>EDecimal Multiply​(EDecimal op,
@@ -552,7 +551,9 @@ Finds the distance to the closest multiple of the given divisor, based on
 the result of dividing this object&#39;s value by another object&#39;s value.</li>
 <li><code>EDecimal RemainderNoRoundAfterDivide​(EDecimal divisor,
                        EContext ctx)</code><br>
-Not documented yet.</li>
+Finds the remainder that results when dividing two arbitrary-precision
+decimal numbers, except the intermediate division is not adjusted to
+fit the precision of the given arithmetic context.</li>
 <li><code>EDecimal RoundToExponent​(int exponentSmall)</code><br>
 Returns a decimal number with the same value as this object but rounded to a
 new exponent if necessary, using the HalfEven rounding mode.</li>
@@ -594,10 +595,11 @@ be inexact.</li>
 Returns a decimal number with the same value as this object but rounded to
 an integer, and signals an inexact flag if the result would be
 inexact.</li>
-<li><code>EDecimal RoundToIntegerNoRoundedFlag​(EContext ctx) FlagInexact FlagRounded</code><br>
+<li><code>EDecimal RoundToIntegerNoRoundedFlag​(EContext ctx) FlagInexact  FlagRounded
+</code><br>
 Returns a decimal number with the same value as this object but rounded to
-an integer, without adding the FlagInexact or
-FlagRounded flags.</li>
+an integer, without adding the FlagInexact  or FlagRounded
+flags.</li>
 <li><code>EDecimal RoundToIntegralExact​(EContext ctx)</code><br>
 Deprecated.
 Renamed to RoundToIntegerExact.
@@ -628,8 +630,7 @@ Deprecated.
 Renamed to Sqrt.
 Renamed to Sqrt.</li>
 <li><code>EDecimal Subtract​(int intValue)</code><br>
-Subtracts an arbitrary-precision integer from this arbitrary-precision
-integer.</li>
+Subtracts a 32-bit signed integer from this instance and returns the result.</li>
 <li><code>EDecimal Subtract​(EDecimal otherValue)</code><br>
 Subtracts an arbitrary-precision decimal number from this instance and
 returns the result.</li>
@@ -662,7 +663,7 @@ Renamed to ToEIntegerIfExact.</li>
 <li><code>EInteger ToEIntegerIfExact()</code><br>
 Converts this value to an arbitrary-precision integer, checking whether the
 fractional part of the value would be lost.</li>
-<li><code>String ToEngineeringString()</code><br>
+<li><code>java.lang.String ToEngineeringString()</code><br>
 Same as toString(), except that when an exponent is used it will be a
 multiple of 3.</li>
 <li><code>EFloat ToExtendedFloat()</code><br>
@@ -702,12 +703,12 @@ value.</li>
 Truncates this number&#39;s value to an integer and returns the
 least-significant bits of its two&#39;s-complement form as a 64-bit
 signed integer.</li>
-<li><code>String ToPlainString()</code><br>
+<li><code>java.lang.String ToPlainString()</code><br>
 Converts this value to a string, but without using exponential notation.</li>
 <li><code>float ToSingle()</code><br>
 Converts this value to its closest equivalent as a 32-bit floating-point
 number.</li>
-<li><code>String toString()</code><br>
+<li><code>java.lang.String toString()</code><br>
 Converts this value to a string.</li>
 <li><code>EDecimal Ulp()</code><br>
 Returns the unit in the last place.</li>
@@ -879,7 +880,7 @@ value is negative (including a negative NaN).</li>
 <pre>public static EDecimal Create​(int mantissaSmall, int exponentSmall)
 </pre>
 
-<p>Creates a number with the value <code>exponent*10^mantissa</code></p>
+<p>Creates a number with the value <code>exponent*10^mantissa </code></p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -899,7 +900,7 @@ value is negative (including a negative NaN).</li>
 <pre>public static EDecimal Create​(EInteger mantissa, EInteger exponent)
 </pre>
 
-<p>Creates a number with the value <code>exponent*10^mantissa</code></p>
+<p>Creates a number with the value <code>exponent*10^mantissa </code></p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -917,7 +918,7 @@ value is negative (including a negative NaN).</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>NullPointerException</code> - The parameter &quot;mantissa&quot; or &quot;exponent&quot;
+<li><code>java.lang.NullPointerException</code> - The parameter &quot;mantissa&quot; or &quot;exponent&quot;
 is null.</li>
 </ul>
 
@@ -973,7 +974,7 @@ required to do so.</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>NullPointerException</code> - The parameter &quot;diag&quot; is null or is less
+<li><code>java.lang.NullPointerException</code> - The parameter &quot;diag&quot; is null or is less
 than 0.</li>
 </ul>
 
@@ -988,13 +989,13 @@ than 0.</li>
  number to a string first. Remember, though, that the exact value of a
  64-bit binary floating-point number is not always the value that
  results when passing a literal decimal number (for example, calling
- <code>ExtendedDecimal.FromDouble(0.1f)</code>), since not all decimal
+ <code>ExtendedDecimal.FromDouble(0.1f) </code>), since not all decimal
  numbers can be converted to exact binary numbers (in the example
  given, the resulting arbitrary-precision decimal will be the value of
  the closest &quot;double&quot; to 0.1, not 0.1 exactly). To create an
  arbitrary-precision decimal number from a decimal number, use
  FromString instead in most cases (for example:
- <code>ExtendedDecimal.FromString(&quot;0.1&quot;)</code>).</p>
+ <code>ExtendedDecimal.FromString(&quot;0.1&quot;) </code>).</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1071,7 +1072,7 @@ than 0.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>NullPointerException</code> - The parameter &quot;bigfloat&quot; is null.</li>
+<li><code>java.lang.NullPointerException</code> - The parameter &quot;bigfloat&quot; is null.</li>
 </ul>
 
 <h3>FromInt32</h3>
@@ -1125,13 +1126,13 @@ integer.</li>
  number to a string first. Remember, though, that the exact value of a
  32-bit binary floating-point number is not always the value that
  results when passing a literal decimal number (for example, calling
- <code>ExtendedDecimal.FromSingle(0.1f)</code>), since not all decimal
+ <code>ExtendedDecimal.FromSingle(0.1f) </code>), since not all decimal
  numbers can be converted to exact binary numbers (in the example
  given, the resulting arbitrary-precision decimal will be the the
  value of the closest &quot;float&quot; to 0.1, not 0.1 exactly). To create an
  arbitrary-precision decimal number from a decimal number, use
  FromString instead in most cases (for example:
- <code>ExtendedDecimal.FromString(&quot;0.1&quot;)</code>).</p>
+ <code>ExtendedDecimal.FromString(&quot;0.1&quot;) </code>).</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1148,11 +1149,11 @@ number.</li>
 
 <h3>FromString</h3>
 
-<pre>public static EDecimal FromString​(String str)
+<pre>public static EDecimal FromString​(java.lang.String str)
 </pre>
 
 <p>Creates a decimal number from a text string that represents a number. See
- <code>FromString(String, int, int, EContext)</code> for more information.</p>
+ <code>FromString(String, int, int, EContext) </code> for more information.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1170,24 +1171,24 @@ given string.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>NumberFormatException</code> - The parameter &quot;str&quot; is not a correctly
+<li><code>java.lang.NumberFormatException</code> - The parameter &quot;str&quot; is not a correctly
 formatted number string.</li>
 </ul>
 
 <h3>FromString</h3>
 
-<pre>public static EDecimal FromString​(String str, EContext ctx)
+<pre>public static EDecimal FromString​(java.lang.String str, EContext ctx)
 </pre>
 
 <p>Creates a decimal number from a text string that represents a number. See
- <code>FromString(String, int, int, EContext)</code> for more information.</p>
+ <code>FromString(String, int, int, EContext) </code> for more information.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
 <li><p><code>str</code> - A string that represents a number.</p></li>
 <li><p><code>ctx</code> - An arithmetic context to control precision, rounding, and
-exponent range of the result. If <code>HasFlags</code> of the context is
+exponent range of the result. If <code>HasFlags </code> of the context is
 true, will also store the flags resulting from the operation (the
 flags are in addition to the pre-existing flags). Can be null, in
 which case the precision is unlimited and rounding isn&#39;t needed.</p></li>
@@ -1203,16 +1204,16 @@ given string.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>NullPointerException</code> - The parameter &quot;str&quot; is null.</li>
+<li><code>java.lang.NullPointerException</code> - The parameter &quot;str&quot; is null.</li>
 </ul>
 
 <h3>FromString</h3>
 
-<pre>public static EDecimal FromString​(String str, int offset, int length)
+<pre>public static EDecimal FromString​(java.lang.String str, int offset, int length)
 </pre>
 
 <p>Creates a decimal number from a text string that represents a number. See
- <code>FromString(String, int, int, EContext)</code> for more information.</p>
+ <code>FromString(String, int, int, EContext) </code> for more information.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1234,14 +1235,14 @@ given string.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>NumberFormatException</code> - The parameter &quot;str&quot; is not a correctly
+<li><p><code>java.lang.NumberFormatException</code> - The parameter &quot;str&quot; is not a correctly
 formatted number string.</p></li>
-<li><p><code>NullPointerException</code> - The parameter &quot;str&quot; is null.</p></li>
+<li><p><code>java.lang.NullPointerException</code> - The parameter &quot;str&quot; is null.</p></li>
 </ul>
 
 <h3>FromString</h3>
 
-<pre>public static EDecimal FromString​(String str, int offset, int length, EContext ctx)
+<pre>public static EDecimal FromString​(java.lang.String str, int offset, int length, EContext ctx)
 </pre>
 
 <p>Creates a decimal number from a text string that represents a number.
@@ -1270,7 +1271,7 @@ str</code> begins.</p></li>
 <li><p><code>length</code> - The length, in code units, of the desired portion of <code>
 str</code> (but not more than <code>str</code> &#39;s length).</p></li>
 <li><p><code>ctx</code> - An arithmetic context to control precision, rounding, and
-exponent range of the result. If <code>HasFlags</code> of the context is
+exponent range of the result. If <code>HasFlags </code> of the context is
 true, will also store the flags resulting from the operation (the
 flags are in addition to the pre-existing flags). Can be null, in
 which case the precision is unlimited and rounding isn&#39;t needed.</p></li>
@@ -1286,8 +1287,8 @@ given string.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>NullPointerException</code> - The parameter &quot;str&quot; is null.</p></li>
-<li><p><code>IllegalArgumentException</code> - Either &quot;offset&quot; or &quot;length&quot; is less than 0
+<li><p><code>java.lang.NullPointerException</code> - The parameter &quot;str&quot; is null.</p></li>
+<li><p><code>java.lang.IllegalArgumentException</code> - Either &quot;offset&quot; or &quot;length&quot; is less than 0
 or greater than &quot;str&quot; &#39;s length, or &quot;str&quot; &#39;s length minus &quot;offset&quot; is
 less than &quot;length&quot;.</p></li>
 </ul>
@@ -1305,7 +1306,7 @@ less than &quot;length&quot;.</p></li>
 <li><p><code>first</code> - The first value to compare.</p></li>
 <li><p><code>second</code> - The second value to compare.</p></li>
 <li><p><code>ctx</code> - An arithmetic context to control precision, rounding, and
-exponent range of the result. If <code>HasFlags</code> of the context is
+exponent range of the result. If <code>HasFlags </code> of the context is
 true, will also store the flags resulting from the operation (the
 flags are in addition to the pre-existing flags). Can be null, in
 which case the precision is unlimited and rounding isn&#39;t needed.</p></li>
@@ -1351,7 +1352,7 @@ which case the precision is unlimited and rounding isn&#39;t needed.</p></li>
 <li><p><code>first</code> - The first value to compare.</p></li>
 <li><p><code>second</code> - The second value to compare.</p></li>
 <li><p><code>ctx</code> - An arithmetic context to control precision, rounding, and
-exponent range of the result. If <code>HasFlags</code> of the context is
+exponent range of the result. If <code>HasFlags </code> of the context is
 true, will also store the flags resulting from the operation (the
 flags are in addition to the pre-existing flags). Can be null, in
 which case the precision is unlimited and rounding isn&#39;t needed.</p></li>
@@ -1397,7 +1398,7 @@ which case the precision is unlimited and rounding isn&#39;t needed.</p></li>
 <li><p><code>first</code> - The first value to compare.</p></li>
 <li><p><code>second</code> - The second value to compare.</p></li>
 <li><p><code>ctx</code> - An arithmetic context to control precision, rounding, and
-exponent range of the result. If <code>HasFlags</code> of the context is
+exponent range of the result. If <code>HasFlags </code> of the context is
 true, will also store the flags resulting from the operation (the
 flags are in addition to the pre-existing flags). Can be null, in
 which case the precision is unlimited and rounding isn&#39;t needed.</p></li>
@@ -1443,7 +1444,7 @@ which case the precision is unlimited and rounding isn&#39;t needed.</p></li>
 <li><p><code>first</code> - The first value to compare.</p></li>
 <li><p><code>second</code> - The second value to compare.</p></li>
 <li><p><code>ctx</code> - An arithmetic context to control precision, rounding, and
-exponent range of the result. If <code>HasFlags</code> of the context is
+exponent range of the result. If <code>HasFlags </code> of the context is
 true, will also store the flags resulting from the operation (the
 flags are in addition to the pre-existing flags). Can be null, in
 which case the precision is unlimited and rounding isn&#39;t needed.</p></li>
@@ -1487,7 +1488,7 @@ which case the precision is unlimited and rounding isn&#39;t needed.</p></li>
 
 <ul>
 <li><code>ctx</code> - An arithmetic context to control precision, rounding, and
-exponent range of the result. If <code>HasFlags</code> of the context is
+exponent range of the result. If <code>HasFlags </code> of the context is
 true, will also store the flags resulting from the operation (the
 flags are in addition to the pre-existing flags). <i> This parameter
 can&#39;t be null, as π can never be represented exactly. </i> .</li>
@@ -1539,7 +1540,7 @@ value is signaling NaN.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>NullPointerException</code> - The parameter &quot;other&quot; is null.</li>
+<li><code>java.lang.NullPointerException</code> - The parameter &quot;other&quot; is null.</li>
 </ul>
 
 <h3>Abs</h3>
@@ -1554,7 +1555,7 @@ value is signaling NaN.</li>
 
 <ul>
 <li><code>context</code> - An arithmetic context to control precision, rounding, and
-exponent range of the result. If <code>HasFlags</code> of the context is
+exponent range of the result. If <code>HasFlags </code> of the context is
 true, will also store the flags resulting from the operation (the
 flags are in addition to the pre-existing flags). Can be null, in
 which case the precision is unlimited and no rounding is needed.</li>
@@ -1599,7 +1600,7 @@ quiet NaN if this value is signaling NaN.</li>
 <ul>
 <li><p><code>otherValue</code> - The number to add to.</p></li>
 <li><p><code>ctx</code> - An arithmetic context to control precision, rounding, and
-exponent range of the result. If <code>HasFlags</code> of the context is
+exponent range of the result. If <code>HasFlags </code> of the context is
 true, will also store the flags resulting from the operation (the
 flags are in addition to the pre-existing flags). Can be null, in
 which case the precision is unlimited and no rounding is needed.</p></li>
@@ -1629,7 +1630,7 @@ which case the precision is unlimited and no rounding is needed.</p></li>
 <p><strong>Specified by:</strong></p>
 
 <ul>
-<li><code>compareTo</code> in interface <code>Comparable&lt;EDecimal&gt;</code></li>
+<li><code>compareTo</code> in interface <code>java.lang.Comparable&lt;EDecimal&gt;</code></li>
 </ul>
 
 <p><strong>Parameters:</strong></p>
@@ -1672,7 +1673,7 @@ null.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>IllegalArgumentException</code> - Doesn&#39;t satisfy this.isFinite(); doesn&#39;t
+<li><code>java.lang.IllegalArgumentException</code> - Doesn&#39;t satisfy this.isFinite(); doesn&#39;t
 satisfy other.isFinite().</li>
 </ul>
 
@@ -1692,7 +1693,7 @@ satisfy other.isFinite().</li>
 <ul>
 <li><p><code>other</code> - An arbitrary-precision decimal number.</p></li>
 <li><p><code>ctx</code> - An arithmetic context. The precision, rounding, and exponent
-range are ignored. If <code>HasFlags</code> of the context is true, will
+range are ignored. If <code>HasFlags </code> of the context is true, will
 store the flags resulting from the operation (the flags are in
 addition to the pre-existing flags). Can be null.</p></li>
 </ul>
@@ -1756,8 +1757,8 @@ object is less than the other value, or 1 if this object is greater.</li>
 <ul>
 <li><p><code>other</code> - An arbitrary-precision decimal number to compare with this one.</p></li>
 <li><p><code>ctx</code> - An arithmetic context. Flags will be set in this context only if
-<code>HasFlags</code> and <code>IsSimplified</code> of the context are true and
-only if an operand needed to be rounded before carrying out the
+<code>HasFlags </code> and <code>IsSimplified </code> of the context are true
+and only if an operand needed to be rounded before carrying out the
 operation. Can be null.</p></li>
 </ul>
 
@@ -1815,7 +1816,7 @@ object is less than the other value, or 1 if this object is greater.</li>
 <ul>
 <li><p><code>other</code> - An arbitrary-precision decimal number.</p></li>
 <li><p><code>ctx</code> - An arithmetic context. The precision, rounding, and exponent
-range are ignored. If <code>HasFlags</code> of the context is true, will
+range are ignored. If <code>HasFlags </code> of the context is true, will
 store the flags resulting from the operation (the flags are in
 addition to the pre-existing flags). Can be null.</p></li>
 </ul>
@@ -1865,7 +1866,7 @@ exact because it would have a nonterminating decimal expansion.</li>
 <ul>
 <li><p><code>divisor</code> - The number to divide by.</p></li>
 <li><p><code>ctx</code> - An arithmetic context to control precision, rounding, and
-exponent range of the result. If <code>HasFlags</code> of the context is
+exponent range of the result. If <code>HasFlags </code> of the context is
 true, will also store the flags resulting from the operation (the
 flags are in addition to the pre-existing flags). Can be null, in
 which case the precision is unlimited and no rounding is needed.</p></li>
@@ -1923,7 +1924,7 @@ and exponent range of the result. This context will be used only in
 the division portion of the remainder calculation; as a result, it&#39;s
 possible for the remainder to have a higher precision than given in
 this context. Flags will be set on the given context only if the
-context&#39;s <code>HasFlags</code> is true and the integer part of the
+context&#39;s <code>HasFlags </code> is true and the integer part of the
 division result doesn&#39;t fit the precision and exponent range without
 rounding. Can be null, in which the precision is unlimited and no
 additional rounding, other than the rounding down to an integer after
@@ -1975,7 +1976,7 @@ and exponent range of the result. This context will be used only in
 the division portion of the remainder calculation; as a result, it&#39;s
 possible for the remainder to have a higher precision than given in
 this context. Flags will be set on the given context only if the
-context&#39;s <code>HasFlags</code> is true and the integer part of the
+context&#39;s <code>HasFlags </code> is true and the integer part of the
 division result doesn&#39;t fit the precision and exponent range without
 rounding. Can be null, in which the precision is unlimited and no
 additional rounding, other than the rounding down to an integer after
@@ -2011,7 +2012,7 @@ if the result must be scaled down to have the same exponent as this
 value. If the precision given in the context is other than 0, calls
 the Quantize method with both arguments equal to the result of the
 operation (and can signal FlagInvalid and return NaN if the result
-doesn&#39;t fit the given precision). If <code>HasFlags</code> of the context
+doesn&#39;t fit the given precision). If <code>HasFlags </code> of the context
 is true, will also store the flags resulting from the operation (the
 flags are in addition to the pre-existing flags). Can be null, in
 which case the default rounding mode is HalfEven.</p></li>
@@ -2053,7 +2054,7 @@ if the result must be scaled down to have the same exponent as this
 value. If the precision given in the context is other than 0, calls
 the Quantize method with both arguments equal to the result of the
 operation (and can signal FlagInvalid and return NaN if the result
-doesn&#39;t fit the given precision). If <code>HasFlags</code> of the context
+doesn&#39;t fit the given precision). If <code>HasFlags </code> of the context
 is true, will also store the flags resulting from the operation (the
 flags are in addition to the pre-existing flags). Can be null, in
 which case the default rounding mode is HalfEven.</p></li>
@@ -2158,7 +2159,7 @@ if the result must be scaled down to have the same exponent as this
 value. If the precision given in the context is other than 0, calls
 the Quantize method with both arguments equal to the result of the
 operation (and can signal FlagInvalid and return NaN if the result
-doesn&#39;t fit the given precision). If <code>HasFlags</code> of the context
+doesn&#39;t fit the given precision). If <code>HasFlags </code> of the context
 is true, will also store the flags resulting from the operation (the
 flags are in addition to the pre-existing flags). Can be null, in
 which case the default rounding mode is HalfEven.</p></li>
@@ -2359,7 +2360,7 @@ the rounding mode is ERounding.None and the result is not exact.</li>
 <li><p><code>divisor</code> - The number to divide by.</p></li>
 <li><p><code>ctx</code> - An arithmetic context object to control the precision. The
 rounding and exponent range settings of this context are ignored. If
-<code>HasFlags</code> of the context is true, will also store the flags
+<code>HasFlags </code> of the context is true, will also store the flags
 resulting from the operation (the flags are in addition to the
 pre-existing flags). Can be null, in which case the precision is
 unlimited.</p></li>
@@ -2426,7 +2427,7 @@ are equal to those of another object; otherwise, <code>false</code> .</li>
 
 <h3>equals</h3>
 
-<pre>public boolean equals​(Object obj)
+<pre>public boolean equals​(java.lang.Object obj)
 </pre>
 
 <p>Determines whether this object&#39;s mantissa (significand), exponent, and
@@ -2437,7 +2438,7 @@ are equal to those of another object; otherwise, <code>false</code> .</li>
 <p><strong>Overrides:</strong></p>
 
 <ul>
-<li><code>equals</code> in class <code>Object</code></li>
+<li><code>equals</code> in class <code>java.lang.Object</code></li>
 </ul>
 
 <p><strong>Parameters:</strong></p>
@@ -2464,7 +2465,7 @@ are equal to those of another object; otherwise, <code>false</code> .</li>
 
 <ul>
 <li><code>ctx</code> - An arithmetic context to control precision, rounding, and
-exponent range of the result. If <code>HasFlags</code> of the context is
+exponent range of the result. If <code>HasFlags </code> of the context is
 true, will also store the flags resulting from the operation (the
 flags are in addition to the pre-existing flags). <i> This parameter
 can&#39;t be null, as the exponential function&#39;s results are generally
@@ -2492,7 +2493,7 @@ precision is unlimited (the context&#39;s Precision property is 0).</li>
 <p><strong>Overrides:</strong></p>
 
 <ul>
-<li><code>hashCode</code> in class <code>Object</code></li>
+<li><code>hashCode</code> in class <code>java.lang.Object</code></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -2600,7 +2601,7 @@ otherwise, <code>false</code> .</li>
 
 <ul>
 <li><code>ctx</code> - An arithmetic context to control precision, rounding, and
-exponent range of the result. If <code>HasFlags</code> of the context is
+exponent range of the result. If <code>HasFlags </code> of the context is
 true, will also store the flags resulting from the operation (the
 flags are in addition to the pre-existing flags). <i> This parameter
 can&#39;t be null, as the ln function&#39;s results are generally not exact.
@@ -2634,7 +2635,7 @@ this object&#39;s value is 0.</li>
 
 <ul>
 <li><code>ctx</code> - An arithmetic context to control precision, rounding, and
-exponent range of the result. If <code>HasFlags</code> of the context is
+exponent range of the result. If <code>HasFlags </code> of the context is
 true, will also store the flags resulting from the operation (the
 flags are in addition to the pre-existing flags). <i> This parameter
 can&#39;t be null, as the ln function&#39;s results are generally not exact.
@@ -2689,7 +2690,7 @@ than 0.</li>
 left. If this number is negative, instead moves the decimal point to
 the right by this number&#39;s absolute value.</p></li>
 <li><p><code>ctx</code> - An arithmetic context to control precision, rounding, and
-exponent range of the result. If <code>HasFlags</code> of the context is
+exponent range of the result. If <code>HasFlags </code> of the context is
 true, will also store the flags resulting from the operation (the
 flags are in addition to the pre-existing flags). Can be null, in
 which case the precision is unlimited and rounding isn&#39;t needed.</p></li>
@@ -2740,7 +2741,7 @@ than 0.</li>
 the left. If this number is negative, instead moves the decimal point
 to the right by this number&#39;s absolute value.</p></li>
 <li><p><code>ctx</code> - An arithmetic context to control precision, rounding, and
-exponent range of the result. If <code>HasFlags</code> of the context is
+exponent range of the result. If <code>HasFlags </code> of the context is
 true, will also store the flags resulting from the operation (the
 flags are in addition to the pre-existing flags). Can be null, in
 which case the precision is unlimited and rounding isn&#39;t needed.</p></li>
@@ -2791,7 +2792,7 @@ than 0.</li>
 right. If this number is negative, instead moves the decimal point to
 the left by this number&#39;s absolute value.</p></li>
 <li><p><code>ctx</code> - An arithmetic context to control precision, rounding, and
-exponent range of the result. If <code>HasFlags</code> of the context is
+exponent range of the result. If <code>HasFlags </code> of the context is
 true, will also store the flags resulting from the operation (the
 flags are in addition to the pre-existing flags). Can be null, in
 which case the precision is unlimited and rounding isn&#39;t needed.</p></li>
@@ -2842,7 +2843,7 @@ than 0.</li>
 the right. If this number is negative, instead moves the decimal
 point to the left by this number&#39;s absolute value.</p></li>
 <li><p><code>ctx</code> - An arithmetic context to control precision, rounding, and
-exponent range of the result. If <code>HasFlags</code> of the context is
+exponent range of the result. If <code>HasFlags </code> of the context is
 true, will also store the flags resulting from the operation (the
 flags are in addition to the pre-existing flags). Can be null, in
 which case the precision is unlimited and rounding isn&#39;t needed.</p></li>
@@ -2890,7 +2891,7 @@ to more than 0.</li>
 <ul>
 <li><p><code>op</code> - Another decimal number.</p></li>
 <li><p><code>ctx</code> - An arithmetic context to control precision, rounding, and
-exponent range of the result. If <code>HasFlags</code> of the context is
+exponent range of the result. If <code>HasFlags </code> of the context is
 true, will also store the flags resulting from the operation (the
 flags are in addition to the pre-existing flags). Can be null, in
 which case the precision is unlimited and rounding isn&#39;t needed.</p></li>
@@ -2907,13 +2908,12 @@ which case the precision is unlimited and rounding isn&#39;t needed.</p></li>
 <pre>public EDecimal Add​(int intValue)
 </pre>
 
-<p>Adds this object and another object.<p/><pre>EInteger result =
- EInteger.FromString(&quot;5&quot;).Add(200);</pre></p>
+<p>Adds this object and an 32-bit signed integer and returns the result.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>intValue</code> - The parameter <code>intValue</code> is a 32-bit signed integer.</li>
+<li><code>intValue</code> - The parameter <code>intValue</code> is not documented yet.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -2927,13 +2927,12 @@ which case the precision is unlimited and rounding isn&#39;t needed.</p></li>
 <pre>public EDecimal Subtract​(int intValue)
 </pre>
 
-<p>Subtracts an arbitrary-precision integer from this arbitrary-precision
- integer.</p>
+<p>Subtracts a 32-bit signed integer from this instance and returns the result.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>intValue</code> - The parameter <code>intValue</code> is a 32-bit signed integer.</li>
+<li><code>intValue</code> - The parameter <code>intValue</code> is not documented yet.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -2947,14 +2946,13 @@ which case the precision is unlimited and rounding isn&#39;t needed.</p></li>
 <pre>public EDecimal Multiply​(int intValue)
 </pre>
 
-<p>Multiplies this instance by the value of an arbitrary-precision integer
- object.<p/><pre>EInteger result =
- EInteger.FromString(&quot;5&quot;).Multiply(200);</pre></p>
+<p>Multiplies this object by the given 32-bit signed integer. The resulting
+ exponent will be the sum of the exponents of the two numbers.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>intValue</code> - The parameter <code>intValue</code> is a 32-bit signed integer.</li>
+<li><code>intValue</code> - The parameter <code>intValue</code> is not documented yet.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -2968,28 +2966,22 @@ which case the precision is unlimited and rounding isn&#39;t needed.</p></li>
 <pre>public EDecimal Divide​(int intValue)
 </pre>
 
-<p>Divides this instance by the value of an arbitrary-precision integer. The
- result is rounded down (the fractional part is discarded). Except if
- the result is 0, it will be negative if this object is positive and
- the other is negative, or vice versa, and will be positive if both
- are positive or both are negative.</p>
+<p>Divides this object by an 32-bit signed integer and returns the result. When
+ possible, the result will be exact.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>intValue</code> - The divisor.</li>
+<li><code>intValue</code> - The parameter <code>intValue</code> is not documented yet.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>The quotient of the two objects.</li>
-</ul>
-
-<p><strong>Throws:</strong></p>
-
-<ul>
-<li><code>ArithmeticException</code> - Attempted to divide by zero.</li>
+<li>The quotient of the two numbers. Returns infinity if the divisor is
+0 and the dividend is nonzero. Returns not-a-number (NaN) if the
+divisor and the dividend are 0. Returns NaN if the result can&#39;t be
+exact because it would have a nonterminating decimal expansion.</li>
 </ul>
 
 <h3>MultiplyAndAdd</h3>
@@ -3025,7 +3017,7 @@ which case the precision is unlimited and rounding isn&#39;t needed.</p></li>
 <li><p><code>op</code> - The value to multiply.</p></li>
 <li><p><code>augend</code> - The value to add.</p></li>
 <li><p><code>ctx</code> - An arithmetic context to control precision, rounding, and
-exponent range of the result. If <code>HasFlags</code> of the context is
+exponent range of the result. If <code>HasFlags </code> of the context is
 true, will also store the flags resulting from the operation (the
 flags are in addition to the pre-existing flags). Can be null, in
 which case the precision is unlimited and rounding isn&#39;t needed. If
@@ -3053,7 +3045,7 @@ multiplying and adding.</p></li>
 <li><p><code>op</code> - The value to multiply.</p></li>
 <li><p><code>subtrahend</code> - The value to subtract.</p></li>
 <li><p><code>ctx</code> - An arithmetic context to control precision, rounding, and
-exponent range of the result. If <code>HasFlags</code> of the context is
+exponent range of the result. If <code>HasFlags </code> of the context is
 true, will also store the flags resulting from the operation (the
 flags are in addition to the pre-existing flags). Can be null, in
 which case the precision is unlimited and rounding isn&#39;t needed. If
@@ -3071,7 +3063,7 @@ multiplying and subtracting.</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>NullPointerException</code> - The parameter &quot;op&quot; or &quot;subtrahend&quot; is
+<li><code>java.lang.NullPointerException</code> - The parameter &quot;op&quot; or &quot;subtrahend&quot; is
 null.</li>
 </ul>
 
@@ -3102,7 +3094,7 @@ signaling NaN.</li>
 
 <ul>
 <li><code>context</code> - An arithmetic context to control precision, rounding, and
-exponent range of the result. If <code>HasFlags</code> of the context is
+exponent range of the result. If <code>HasFlags </code> of the context is
 true, will also store the flags resulting from the operation (the
 flags are in addition to the pre-existing flags). Can be null, in
 which case the precision is unlimited and rounding isn&#39;t needed.</li>
@@ -3128,7 +3120,7 @@ NaN if this value is signaling NaN.</li>
 <ul>
 <li><code>ctx</code> - An arithmetic context object to control the precision and
 exponent range of the result. The rounding mode from this context is
-ignored. If <code>HasFlags</code> of the context is true, will also store
+ignored. If <code>HasFlags </code> of the context is true, will also store
 the flags resulting from the operation (the flags are in addition to
 the pre-existing flags).</li>
 </ul>
@@ -3154,7 +3146,7 @@ null, the precision is 0, or &quot;ctx&quot; has an unlimited exponent range.</l
 <ul>
 <li><code>ctx</code> - An arithmetic context object to control the precision and
 exponent range of the result. The rounding mode from this context is
-ignored. If <code>HasFlags</code> of the context is true, will also store
+ignored. If <code>HasFlags </code> of the context is true, will also store
 the flags resulting from the operation (the flags are in addition to
 the pre-existing flags).</li>
 </ul>
@@ -3184,7 +3176,7 @@ unlimited exponent range.</li>
 value will approach.</p></li>
 <li><p><code>ctx</code> - An arithmetic context object to control the precision and
 exponent range of the result. The rounding mode from this context is
-ignored. If <code>HasFlags</code> of the context is true, will also store
+ignored. If <code>HasFlags </code> of the context is true, will also store
 the flags resulting from the operation (the flags are in addition to
 the pre-existing flags).</p></li>
 </ul>
@@ -3236,7 +3228,7 @@ the precision and exponent range are unlimited.</li>
 <li><p><code>exponent</code> - An arbitrary-precision decimal number expressing the
 exponent to raise this object&#39;s value to.</p></li>
 <li><p><code>ctx</code> - An arithmetic context to control precision, rounding, and
-exponent range of the result. If <code>HasFlags</code> of the context is
+exponent range of the result. If <code>HasFlags </code> of the context is
 true, will also store the flags resulting from the operation (the
 flags are in addition to the pre-existing flags). Can be null, in
 which case the precision is unlimited and rounding isn&#39;t needed.</p></li>
@@ -3265,7 +3257,7 @@ property is 0), and the exponent has a fractional part.</li>
 <ul>
 <li><p><code>exponentSmall</code> - The exponent to raise this object&#39;s value to.</p></li>
 <li><p><code>ctx</code> - An arithmetic context to control precision, rounding, and
-exponent range of the result. If <code>HasFlags</code> of the context is
+exponent range of the result. If <code>HasFlags </code> of the context is
 true, will also store the flags resulting from the operation (the
 flags are in addition to the pre-existing flags). Can be null, in
 which case the precision is unlimited and rounding isn&#39;t needed.</p></li>
@@ -3324,7 +3316,7 @@ exponent are both 0.</li>
  value&#39;s exponent and the desired exponent is too big, depending on
  the maximum precision. If rounding to a number of decimal places is
  desired, it&#39;s better to use the RoundToExponent and RoundToIntegral
- methods instead. </p> <p><b>Remark:</b> This method can be used to
+ methods instead. </p> <p><b>Remark: </b> This method can be used to
  implement fixed-point decimal arithmetic, in which each decimal
  number has a fixed number of digits after the decimal point. The
  following code example returns a fixed-point number with up to 20
@@ -3347,7 +3339,7 @@ places from the number. For example, -3 means round to the thousandth
 (10^-3, 0.0001), and 3 means round to the thousand (10^3, 1000). A
 value of 0 rounds the number to an integer.</p></li>
 <li><p><code>ctx</code> - An arithmetic context to control precision and rounding of the
-result. If <code>HasFlags</code> of the context is true, will also store
+result. If <code>HasFlags </code> of the context is true, will also store
 the flags resulting from the operation (the flags are in addition to
 the pre-existing flags). Can be null, in which case the default
 rounding mode is HalfEven.</p></li>
@@ -3369,7 +3361,7 @@ exponent is outside that range.</li>
 </pre>
 
 <p>Returns a decimal number with the same value as this one but a new exponent.
- <p><b>Remark:</b> This method can be used to implement fixed-point
+ <p><b>Remark: </b> This method can be used to implement fixed-point
  decimal arithmetic, in which a fixed number of digits come after the
  decimal point. A fixed-point decimal arithmetic in which no digits
  come after the decimal point (a desired exponent of 0) is considered
@@ -3408,7 +3400,7 @@ not exact.</li>
  value&#39;s exponent and the desired exponent is too big, depending on
  the maximum precision. If rounding to a number of decimal places is
  desired, it&#39;s better to use the RoundToExponent and RoundToIntegral
- methods instead. </p> <p><b>Remark:</b> This method can be used to
+ methods instead. </p> <p><b>Remark: </b> This method can be used to
  implement fixed-point decimal arithmetic, in which each decimal
  number has a fixed number of digits after the decimal point. The
  following code example returns a fixed-point number with up to 20
@@ -3429,7 +3421,7 @@ places from the number. For example, -3 means round to the thousandth
 (10^-3, 0.0001), and 3 means round to the thousand (10^3, 1000). A
 value of 0 rounds the number to an integer.</p></li>
 <li><p><code>ctx</code> - An arithmetic context to control precision and rounding of the
-result. If <code>HasFlags</code> of the context is true, will also store
+result. If <code>HasFlags </code> of the context is true, will also store
 the flags resulting from the operation (the flags are in addition to
 the pre-existing flags). Can be null, in which case the default
 rounding mode is HalfEven.</p></li>
@@ -3457,7 +3449,7 @@ exponent is outside that range.</li>
  the desired exponent is too big, depending on the maximum precision.
  If rounding to a number of decimal places is desired, it&#39;s better to
  use the RoundToExponent and RoundToIntegral methods instead. </p>
- <p><b>Remark:</b> This method can be used to implement fixed-point
+ <p><b>Remark: </b> This method can be used to implement fixed-point
  decimal arithmetic, in which a fixed number of digits come after the
  decimal point. A fixed-point decimal arithmetic in which no digits
  come after the decimal point (a desired exponent of 0) is considered
@@ -3474,7 +3466,7 @@ from the number. For example, -3 means round to the sixteenth
 (10b^-3, 0.0001b), and 3 means round to the sixteen-place (10b^3,
 1000b). A value of 0 rounds the number to an integer.</p></li>
 <li><p><code>ctx</code> - An arithmetic context to control precision and rounding of the
-result. If <code>HasFlags</code> of the context is true, will also store
+result. If <code>HasFlags </code> of the context is true, will also store
 the flags resulting from the operation (the flags are in addition to
 the pre-existing flags). Can be null, in which case the default
 rounding mode is HalfEven.</p></li>
@@ -3503,7 +3495,7 @@ exponent is outside that range.</li>
 
 <ul>
 <li><code>ctx</code> - An arithmetic context to control precision, rounding, and
-exponent range of the result. If <code>HasFlags</code> of the context is
+exponent range of the result. If <code>HasFlags </code> of the context is
 true, will also store the flags resulting from the operation (the
 flags are in addition to the pre-existing flags). Can be null, in
 which case the precision is unlimited and rounding isn&#39;t needed.</li>
@@ -3531,13 +3523,13 @@ there may still be some trailing zeros in the mantissa (significand).</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>divisor</code> - The number to divide by, .</p></li>
+<li><p><code>divisor</code> - The number to divide by.</p></li>
 <li><p><code>ctx</code> - An arithmetic context object to control the precision, rounding,
 and exponent range of the result, and of the intermediate integer
-division. If <code>HasFlags</code> of the context is true, will also store
-the flags resulting from the operation (the flags are in addition to
-the pre-existing flags). Can be null, in which the precision is
-unlimited.</p></li>
+division. If <code>HasFlags </code> of the context is true, will also
+store the flags resulting from the operation (the flags are in
+addition to the pre-existing flags). Can be null, in which the
+precision is unlimited.</p></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -3553,15 +3545,20 @@ the given precision.</li>
 <pre>public EDecimal RemainderNoRoundAfterDivide​(EDecimal divisor, EContext ctx)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Finds the remainder that results when dividing two arbitrary-precision
+ decimal numbers, except the intermediate division is not adjusted to
+ fit the precision of the given arithmetic context. The value of this
+ object is divided by the absolute value of the other object; the
+ remainder has the same sign (positive or negative) as this object&#39;s
+ value.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>divisor</code> - The number to divide by, .</p></li>
+<li><p><code>divisor</code> - The number to divide by.</p></li>
 <li><p><code>ctx</code> - An arithmetic context object to control the precision, rounding,
 and exponent range of the result, but not also of the intermediate
-integer division. If <code>HasFlags</code> of the context is true, will
+integer division. If <code>HasFlags </code> of the context is true, will
 also store the flags resulting from the operation (the flags are in
 addition to the pre-existing flags). Can be null, in which the
 precision is unlimited.</p></li>
@@ -3581,7 +3578,7 @@ the given precision.</li>
 </pre>
 
 <p>Calculates the remainder of a number by the formula <code>&quot;this&quot; - ((&quot;this&quot; /
- &quot;divisor&quot;) * &quot;divisor&quot;)</code></p>
+ &quot;divisor&quot;) * &quot;divisor&quot;) </code></p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -3612,7 +3609,7 @@ and exponent range of the result. This context will be used only in
 the division portion of the remainder calculation; as a result, it&#39;s
 possible for the return value to have a higher precision than given
 in this context. Flags will be set on the given context only if the
-context&#39;s <code>HasFlags</code> is true and the integer part of the
+context&#39;s <code>HasFlags </code> is true and the integer part of the
 division result doesn&#39;t fit the precision and exponent range without
 rounding. Can be null, in which the precision is unlimited and no
 additional rounding, other than the rounding down to an integer after
@@ -3652,7 +3649,7 @@ division, is needed.</p></li>
 <li><p><code>divisor</code> - The number to divide by.</p></li>
 <li><p><code>ctx</code> - An arithmetic context object to control the precision. The
 rounding and exponent range settings of this context are ignored (the
-rounding mode is always treated as HalfEven). If <code>HasFlags</code> of
+rounding mode is always treated as HalfEven). If <code>HasFlags </code> of
 the context is true, will also store the flags resulting from the
 operation (the flags are in addition to the pre-existing flags). Can
 be null, in which the precision is unlimited.</p></li>
@@ -3685,7 +3682,7 @@ places from the number. For example, -3 means round to the thousandth
 (10^-3, 0.0001), and 3 means round to the thousand (10^3, 1000). A
 value of 0 rounds the number to an integer.</p></li>
 <li><p><code>ctx</code> - An arithmetic context to control precision, rounding, and
-exponent range of the result. If <code>HasFlags</code> of the context is
+exponent range of the result. If <code>HasFlags </code> of the context is
 true, will also store the flags resulting from the operation (the
 flags are in addition to the pre-existing flags). Can be null, in
 which case the default rounding mode is HalfEven.</p></li>
@@ -3800,7 +3797,7 @@ places from the number. For example, -3 means round to the thousandth
 (10^-3, 0.0001), and 3 means round to the thousand (10^3, 1000). A
 value of 0 rounds the number to an integer.</p></li>
 <li><p><code>ctx</code> - An arithmetic context to control precision, rounding, and
-exponent range of the result. If <code>HasFlags</code> of the context is
+exponent range of the result. If <code>HasFlags </code> of the context is
 true, will also store the flags resulting from the operation (the
 flags are in addition to the pre-existing flags). Can be null, in
 which case the default rounding mode is HalfEven.</p></li>
@@ -3865,7 +3862,7 @@ places from the number. For example, -3 means round to the thousandth
 (10^-3, 0.0001), and 3 means round to the thousand (10^3, 1000). A
 value of 0 rounds the number to an integer.</p></li>
 <li><p><code>ctx</code> - An arithmetic context to control precision, rounding, and
-exponent range of the result. If <code>HasFlags</code> of the context is
+exponent range of the result. If <code>HasFlags </code> of the context is
 true, will also store the flags resulting from the operation (the
 flags are in addition to the pre-existing flags). Can be null, in
 which case the default rounding mode is HalfEven.</p></li>
@@ -3902,7 +3899,7 @@ places from the number. For example, -3 means round to the thousandth
 (10^-3, 0.0001), and 3 means round to the thousand (10^3, 1000). A
 value of 0 rounds the number to an integer.</p></li>
 <li><p><code>ctx</code> - An arithmetic context to control precision, rounding, and
-exponent range of the result. If <code>HasFlags</code> of the context is
+exponent range of the result. If <code>HasFlags </code> of the context is
 true, will also store the flags resulting from the operation (the
 flags are in addition to the pre-existing flags). Can be null, in
 which case the default rounding mode is HalfEven.</p></li>
@@ -3961,7 +3958,7 @@ the given exponent.</li>
 
 <ul>
 <li><code>ctx</code> - An arithmetic context to control precision, rounding, and
-exponent range of the result. If <code>HasFlags</code> of the context is
+exponent range of the result. If <code>HasFlags </code> of the context is
 true, will also store the flags resulting from the operation (the
 flags are in addition to the pre-existing flags). Can be null, in
 which case the default rounding mode is HalfEven.</li>
@@ -3985,17 +3982,17 @@ context.</li>
 </pre>
 
 <p>Returns a decimal number with the same value as this object but rounded to
- an integer, without adding the <code>FlagInexact</code> or
- <code>FlagRounded</code> flags.</p>
+ an integer, without adding the <code>FlagInexact </code> or <code>FlagRounded
+ </code> flags.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
 <li><code>ctx</code> - An arithmetic context to control precision and rounding of the
-result. If <code>HasFlags</code> of the context is true, will also store
+result. If <code>HasFlags </code> of the context is true, will also store
 the flags resulting from the operation (the flags are in addition to
 the pre-existing flags), except that this function will never add the
-<code>FlagRounded</code> and <code>FlagInexact</code> flags (the only
+<code>FlagRounded </code> and <code>FlagInexact </code> flags (the only
 difference between this and RoundToExponentExact). Can be null, in
 which case the default rounding mode is HalfEven.</li>
 </ul>
@@ -4024,7 +4021,7 @@ outside of the valid range of the arithmetic context.</li>
 
 <ul>
 <li><code>ctx</code> - An arithmetic context to control precision, rounding, and
-exponent range of the result. If <code>HasFlags</code> of the context is
+exponent range of the result. If <code>HasFlags </code> of the context is
 true, will also store the flags resulting from the operation (the
 flags are in addition to the pre-existing flags). Can be null, in
 which case the default rounding mode is HalfEven.</li>
@@ -4055,10 +4052,10 @@ context.</li>
 
 <ul>
 <li><code>ctx</code> - An arithmetic context to control precision and rounding of the
-result. If <code>HasFlags</code> of the context is true, will also store
+result. If <code>HasFlags </code> of the context is true, will also store
 the flags resulting from the operation (the flags are in addition to
 the pre-existing flags), except that this function will never add the
-<code>FlagRounded</code> and <code>FlagInexact</code> flags (the only
+<code>FlagRounded </code> and <code>FlagInexact </code> flags (the only
 difference between this and RoundToExponentExact). Can be null, in
 which case the default rounding mode is HalfEven.</li>
 </ul>
@@ -4086,7 +4083,7 @@ outside of the valid range of the arithmetic context.</li>
 
 <ul>
 <li><code>ctx</code> - An arithmetic context to control precision, rounding, and
-exponent range of the result. If <code>HasFlags</code> of the context is
+exponent range of the result. If <code>HasFlags </code> of the context is
 true, will also store the flags resulting from the operation (the
 flags are in addition to the pre-existing flags). Can be null, in
 which case the precision is unlimited and no rounding is needed.</li>
@@ -4131,7 +4128,7 @@ the precision and exponent range are unlimited.</li>
 <ul>
 <li><p><code>places</code> - The power of 10 to scale by.</p></li>
 <li><p><code>ctx</code> - An arithmetic context to control precision, rounding, and
-exponent range of the result. If <code>HasFlags</code> of the context is
+exponent range of the result. If <code>HasFlags </code> of the context is
 true, will also store the flags resulting from the operation (the
 flags are in addition to the pre-existing flags). Can be null, in
 which case the precision is unlimited and no rounding is needed.</p></li>
@@ -4174,7 +4171,7 @@ which case the precision is unlimited and no rounding is needed.</p></li>
 <ul>
 <li><p><code>bigPlaces</code> - The power of 10 to scale by.</p></li>
 <li><p><code>ctx</code> - An arithmetic context to control precision, rounding, and
-exponent range of the result. If <code>HasFlags</code> of the context is
+exponent range of the result. If <code>HasFlags </code> of the context is
 true, will also store the flags resulting from the operation (the
 flags are in addition to the pre-existing flags). Can be null, in
 which case the precision is unlimited and no rounding is needed.</p></li>
@@ -4197,7 +4194,7 @@ which case the precision is unlimited and no rounding is needed.</p></li>
 
 <ul>
 <li><code>ctx</code> - An arithmetic context to control precision, rounding, and
-exponent range of the result. If <code>HasFlags</code> of the context is
+exponent range of the result. If <code>HasFlags </code> of the context is
 true, will also store the flags resulting from the operation (the
 flags are in addition to the pre-existing flags). <i> This parameter
 can&#39;t be null, as the square root function&#39;s results are generally
@@ -4228,7 +4225,7 @@ precision is unlimited (the context&#39;s Precision property is 0).</li>
 
 <ul>
 <li><code>ctx</code> - An arithmetic context to control precision, rounding, and
-exponent range of the result. If <code>HasFlags</code> of the context is
+exponent range of the result. If <code>HasFlags </code> of the context is
 true, will also store the flags resulting from the operation (the
 flags are in addition to the pre-existing flags). <i> This parameter
 can&#39;t be null, as the square root function&#39;s results are generally
@@ -4278,7 +4275,7 @@ precision is unlimited (the context&#39;s Precision property is 0).</li>
 <ul>
 <li><p><code>otherValue</code> - The number to subtract from this instance&#39;s value.</p></li>
 <li><p><code>ctx</code> - An arithmetic context to control precision, rounding, and
-exponent range of the result. If <code>HasFlags</code> of the context is
+exponent range of the result. If <code>HasFlags </code> of the context is
 true, will also store the flags resulting from the operation (the
 flags are in addition to the pre-existing flags). Can be null, in
 which case the precision is unlimited and no rounding is needed.</p></li>
@@ -4293,7 +4290,7 @@ which case the precision is unlimited and no rounding is needed.</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>NullPointerException</code> - The parameter &quot;otherValue&quot; is null.</li>
+<li><code>java.lang.NullPointerException</code> - The parameter &quot;otherValue&quot; is null.</li>
 </ul>
 
 <h3>ToDouble</h3>
@@ -4338,7 +4335,7 @@ exceeds the range of a 64-bit floating point number.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>ArithmeticException</code> - This object&#39;s value is infinity or
+<li><code>java.lang.ArithmeticException</code> - This object&#39;s value is infinity or
 not-a-number (NaN).</li>
 </ul>
 
@@ -4360,7 +4357,7 @@ not-a-number (NaN).</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>ArithmeticException</code> - This object&#39;s value is infinity or
+<li><code>java.lang.ArithmeticException</code> - This object&#39;s value is infinity or
 not-a-number (NaN).</li>
 </ul>
 
@@ -4381,13 +4378,13 @@ not-a-number (NaN).</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>ArithmeticException</code> - This object&#39;s value is infinity or
+<li><code>java.lang.ArithmeticException</code> - This object&#39;s value is infinity or
 not-a-number (NaN).</li>
 </ul>
 
 <h3>ToEngineeringString</h3>
 
-<pre>public String ToEngineeringString()
+<pre>public java.lang.String ToEngineeringString()
 </pre>
 
 <p>Same as toString(), except that when an exponent is used it will be a
@@ -4432,7 +4429,7 @@ not-a-number (NaN).</li>
 
 <h3>ToPlainString</h3>
 
-<pre>public String ToPlainString()
+<pre>public java.lang.String ToPlainString()
 </pre>
 
 <p>Converts this value to a string, but without using exponential notation.</p>
@@ -4469,7 +4466,7 @@ value exceeds the range of a 32-bit floating point number.</li>
 
 <h3>toString</h3>
 
-<pre>public String toString()
+<pre>public java.lang.String toString()
 </pre>
 
 <p>Converts this value to a string. Returns a value compatible with this
@@ -4478,7 +4475,7 @@ value exceeds the range of a 32-bit floating point number.</li>
 <p><strong>Overrides:</strong></p>
 
 <ul>
-<li><code>toString</code> in class <code>Object</code></li>
+<li><code>toString</code> in class <code>java.lang.Object</code></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -4544,7 +4541,7 @@ decimal point.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>ArithmeticException</code> - This value is infinity or not-a-number, or
+<li><code>java.lang.ArithmeticException</code> - This value is infinity or not-a-number, or
 the truncated integer is less than 0 or greater than 255.</li>
 </ul>
 
@@ -4581,7 +4578,7 @@ value is infinity or not-a-number.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>ArithmeticException</code> - This value is infinity or not-a-number, is not
+<li><code>java.lang.ArithmeticException</code> - This value is infinity or not-a-number, is not
 an exact integer, or is less than 0 or greater than 255.</li>
 </ul>
 
@@ -4621,7 +4618,7 @@ an exact integer, or is less than 0 or greater than 255.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>ArithmeticException</code> - This value is infinity or not-a-number, or
+<li><code>java.lang.ArithmeticException</code> - This value is infinity or not-a-number, or
 the truncated integer is less than -32768 or greater than 32767.</li>
 </ul>
 
@@ -4659,7 +4656,7 @@ value is infinity or not-a-number.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>ArithmeticException</code> - This value is infinity or not-a-number, is not
+<li><code>java.lang.ArithmeticException</code> - This value is infinity or not-a-number, is not
 an exact integer, or is less than -32768 or greater than 32767.</li>
 </ul>
 
@@ -4699,7 +4696,7 @@ an exact integer, or is less than -32768 or greater than 32767.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>ArithmeticException</code> - This value is infinity or not-a-number, or
+<li><code>java.lang.ArithmeticException</code> - This value is infinity or not-a-number, or
 the truncated integer is less than -2147483648 or greater than
 2147483647.</li>
 </ul>
@@ -4738,7 +4735,7 @@ value is infinity or not-a-number.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>ArithmeticException</code> - This value is infinity or not-a-number, is not
+<li><code>java.lang.ArithmeticException</code> - This value is infinity or not-a-number, is not
 an exact integer, or is less than -2147483648 or greater than
 2147483647.</li>
 </ul>
@@ -4760,7 +4757,7 @@ an exact integer, or is less than -2147483648 or greater than
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>ArithmeticException</code> - This value is infinity or not-a-number, or
+<li><code>java.lang.ArithmeticException</code> - This value is infinity or not-a-number, or
 the truncated integer is less than -9223372036854775808 or greater
 than 9223372036854775807.</li>
 </ul>
@@ -4799,7 +4796,7 @@ value is infinity or not-a-number.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>ArithmeticException</code> - This value is infinity or not-a-number, is not
+<li><code>java.lang.ArithmeticException</code> - This value is infinity or not-a-number, is not
 an exact integer, or is less than -9223372036854775808 or greater
 than 9223372036854775807.</li>
 </ul>

@@ -6,7 +6,7 @@
 
 <h1>com.upokecenter.text.ProtocolStrings</h1>
 
-<pre>public final class ProtocolStrings extends Object
+<pre>public final class ProtocolStrings extends java.lang.Object
 </pre>
 
 <p><p>Contains methods for preparing user-facing protocol strings (such as user
@@ -37,37 +37,37 @@
 <h2>Methods</h2>
 
 <ul>
-<li><code>static boolean IsInFreeformClass​(String str)</code><br>
+<li><code>static boolean IsInFreeformClass​(java.lang.String str)</code><br>
 Determines whether the given string belongs in RFC 8264&#39;s FreeformClass.</li>
-<li><code>static boolean IsInIdentifierClass​(String str)</code><br>
+<li><code>static boolean IsInIdentifierClass​(java.lang.String str)</code><br>
 Determines whether the given string belongs in RFC 8264&#39;s IdentifierClass.</li>
-<li><code>static String NicknameEnforce​(String str)</code><br>
+<li><code>static java.lang.String NicknameEnforce​(java.lang.String str)</code><br>
 Checks the validity of a string serving as a &quot;memorable, human-friendly
 name&quot; for something (see RFC 8266), as opposed to that thing&#39;s
 identity for authentication or authorization purposes (see sec.</li>
-<li><code>static String NicknameForComparison​(String str)</code><br>
+<li><code>static java.lang.String NicknameForComparison​(java.lang.String str)</code><br>
 Prepares for comparison a string serving as a &quot;memorable, human-friendly
 name&quot; for something (see RFC 8266), as opposed to that thing&#39;s
 identity for authentication or authorization purposes (see sec.</li>
-<li><code>static String OpaqueStringEnforce​(String str)</code><br>
+<li><code>static java.lang.String OpaqueStringEnforce​(java.lang.String str)</code><br>
 Checks the validity of a string serving as an arbitrary single-line sequence
 of characters, such as a passphrase.</li>
-<li><code>static String UsernameEnforce​(String str)</code><br>
+<li><code>static java.lang.String UsernameEnforce​(java.lang.String str)</code><br>
 Checks the validity of a string that can serve to identify a user or account
 (a &quot;username&quot;), where the string is made of one or more parts called
 &quot;userparts&quot; separated by spaces (U+0020) and where the case of
 letters in the string is mapped to lowercase.</li>
-<li><code>static String UsernameEnforce​(String str,
+<li><code>static java.lang.String UsernameEnforce​(java.lang.String str,
            boolean preserveCase)</code><br>
 Checks the validity of a string that can serve to identify a user or account
 (a &quot;username&quot;), where the string is made of one or more parts called
 &quot;userparts&quot; separated by spaces (U+0020) and where the case of
 letters in the string is either mapped to lowercase or preserved.</li>
-<li><code>static String UserpartEnforce​(String str)</code><br>
+<li><code>static java.lang.String UserpartEnforce​(java.lang.String str)</code><br>
 Checks the validity of a string without spaces that can serve to identify a
 user or account (a &quot;userpart&quot;), where the case of letters in the
 string is mapped to lowercase.</li>
-<li><code>static String UserpartEnforce​(String str,
+<li><code>static java.lang.String UserpartEnforce​(java.lang.String str,
            boolean preserveCase)</code><br>
 Checks the validity of a string without spaces that can serve to identify a
 user or account (a &quot;userpart&quot;), where the case of letters in the
@@ -78,7 +78,7 @@ string is either mapped to lowercase or preserved.</li>
 
 <h3>IsInIdentifierClass</h3>
 
-<pre>public static boolean IsInIdentifierClass​(String str)
+<pre>public static boolean IsInIdentifierClass​(java.lang.String str)
 </pre>
 
 <p>Determines whether the given string belongs in RFC 8264&#39;s IdentifierClass.
@@ -104,7 +104,7 @@ str</code> is null.</li>
 
 <h3>IsInFreeformClass</h3>
 
-<pre>public static boolean IsInFreeformClass​(String str)
+<pre>public static boolean IsInFreeformClass​(java.lang.String str)
 </pre>
 
 <p>Determines whether the given string belongs in RFC 8264&#39;s FreeformClass. In
@@ -130,7 +130,7 @@ str</code> is null.</li>
 
 <h3>UserpartEnforce</h3>
 
-<pre>public static String UserpartEnforce​(String str)
+<pre>public static java.lang.String UserpartEnforce​(java.lang.String str)
 </pre>
 
 <p>Checks the validity of a string without spaces that can serve to identify a
@@ -157,7 +157,7 @@ values of this method should be compared code point by code point
 
 <h3>UsernameEnforce</h3>
 
-<pre>public static String UsernameEnforce​(String str)
+<pre>public static java.lang.String UsernameEnforce​(java.lang.String str)
 </pre>
 
 <p>Checks the validity of a string that can serve to identify a user or account
@@ -191,7 +191,7 @@ point (see RFC 8265, sec. 3.3.4).</li>
 
 <h3>UserpartEnforce</h3>
 
-<pre>public static String UserpartEnforce​(String str, boolean preserveCase)
+<pre>public static java.lang.String UserpartEnforce​(java.lang.String str, boolean preserveCase)
 </pre>
 
 <p>Checks the validity of a string without spaces that can serve to identify a
@@ -221,7 +221,7 @@ code point by code point (see RFC 8265, secs. 3.3.4 and 3.4.4).</li>
 
 <h3>UsernameEnforce</h3>
 
-<pre>public static String UsernameEnforce​(String str, boolean preserveCase)
+<pre>public static java.lang.String UsernameEnforce​(java.lang.String str, boolean preserveCase)
 </pre>
 
 <p>Checks the validity of a string that can serve to identify a user or account
@@ -259,7 +259,7 @@ point by code point (see RFC 8265, secs. 3.3.4 and 3.4.4).</li>
 
 <h3>OpaqueStringEnforce</h3>
 
-<pre>public static String OpaqueStringEnforce​(String str)
+<pre>public static java.lang.String OpaqueStringEnforce​(java.lang.String str)
 </pre>
 
 <p>Checks the validity of a string serving as an arbitrary single-line sequence
@@ -290,7 +290,7 @@ values of this method should be compared code point by code point
 
 <h3>NicknameEnforce</h3>
 
-<pre>public static String NicknameEnforce​(String str)
+<pre>public static java.lang.String NicknameEnforce​(java.lang.String str)
 </pre>
 
 <p>Checks the validity of a string serving as a &quot;memorable, human-friendly
@@ -318,7 +318,7 @@ instead.</li>
 
 <h3>NicknameForComparison</h3>
 
-<pre>public static String NicknameForComparison​(String str)
+<pre>public static java.lang.String NicknameForComparison​(java.lang.String str)
 </pre>
 
 <p>Prepares for comparison a string serving as a &quot;memorable, human-friendly

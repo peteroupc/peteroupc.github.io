@@ -6,7 +6,7 @@
 
 <h1>com.upokecenter.numbers.EFloat</h1>
 
-<pre>public final class EFloat extends Object implements Comparable&lt;EFloat&gt;
+<pre>public final class EFloat extends java.lang.Object implements java.lang.Comparable&lt;EFloat&gt;
 </pre>
 
 <p>Represents an arbitrary-precision binary floating-point number. (The &quot;E&quot;
@@ -210,7 +210,7 @@ and the formula in RemainderNaturalScale.</li>
 <li><code>boolean equals​(EFloat other)</code><br>
 Determines whether this object&#39;s mantissa (significand), exponent, and
 properties are equal to those of another object.</li>
-<li><code>boolean equals​(Object obj)</code><br>
+<li><code>boolean equals​(java.lang.Object obj)</code><br>
 Determines whether this object&#39;s mantissa (significand), exponent, and
 properties are equal to those of another object and that other object
 is an arbitrary-precision binary float.</li>
@@ -234,19 +234,19 @@ Converts a 32-bit signed integer to an arbitrary-precision binary float.</li>
 Converts a 64-bit signed integer to an arbitrary-precision binary float.</li>
 <li><code>static EFloat FromSingle​(float flt)</code><br>
 Creates a binary float from a 32-bit floating-point number.</li>
-<li><code>static EFloat FromString​(String str)</code><br>
+<li><code>static EFloat FromString​(java.lang.String str)</code><br>
 Creates a binary float from a text string that represents a number, using an
 unlimited precision context.</li>
-<li><code>static EFloat FromString​(String str,
+<li><code>static EFloat FromString​(java.lang.String str,
       int offset,
       int length)</code><br>
 Creates a binary float from a text string that represents a number.</li>
-<li><code>static EFloat FromString​(String str,
+<li><code>static EFloat FromString​(java.lang.String str,
       int offset,
       int length,
       EContext ctx)</code><br>
 Creates a binary float from a text string that represents a number.</li>
-<li><code>static EFloat FromString​(String str,
+<li><code>static EFloat FromString​(java.lang.String str,
       EContext ctx)</code><br>
 Creates a binary float from a text string that represents a number.</li>
 <li><code>EInteger getExponent()</code><br>
@@ -511,7 +511,7 @@ Renamed to ToEIntegerIfExact.</li>
 <li><code>EInteger ToEIntegerIfExact()</code><br>
 Converts this value to an arbitrary-precision integer, checking whether the
 value contains a fractional part.</li>
-<li><code>String ToEngineeringString()</code><br>
+<li><code>java.lang.String ToEngineeringString()</code><br>
 Converts this value to an arbitrary-precision decimal number, then returns
 the value of that decimal&#39;s ToEngineeringString method.</li>
 <li><code>EDecimal ToExtendedDecimal()</code><br>
@@ -551,15 +551,15 @@ value.</li>
 Truncates this number&#39;s value to an integer and returns the
 least-significant bits of its two&#39;s-complement form as a 64-bit
 signed integer.</li>
-<li><code>String ToPlainString()</code><br>
+<li><code>java.lang.String ToPlainString()</code><br>
 Converts this value to a string, but without exponential notation.</li>
-<li><code>String ToShortestString​(EContext ctx)</code><br>
+<li><code>java.lang.String ToShortestString​(EContext ctx)</code><br>
 Returns a string representation of this number&#39;s value after rounding to the
 given precision (using the given arithmetic context).</li>
 <li><code>float ToSingle()</code><br>
 Converts this value to its closest equivalent as 32-bit floating-point
 number.</li>
-<li><code>String toString()</code><br>
+<li><code>java.lang.String toString()</code><br>
 Converts this number&#39;s value to a text string.</li>
 <li><code>EFloat Ulp()</code><br>
 Returns the unit in the last place.</li>
@@ -769,7 +769,7 @@ value is negative (including a negative NaN).</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>NullPointerException</code> - The parameter &quot;mantissa (significand)&quot;
+<li><code>java.lang.NullPointerException</code> - The parameter &quot;mantissa (significand)&quot;
 or <code>exponent</code> is null.</li>
 </ul>
 
@@ -796,7 +796,7 @@ object. If none is needed, should be zero.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>IllegalArgumentException</code> - The parameter <code>diag</code> is less than 0.</li>
+<li><code>java.lang.IllegalArgumentException</code> - The parameter <code>diag</code> is less than 0.</li>
 </ul>
 
 <h3>CreateNaN</h3>
@@ -831,7 +831,7 @@ do so.</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>NullPointerException</code> - The parameter <code>diag</code> is null.</li>
+<li><code>java.lang.NullPointerException</code> - The parameter <code>diag</code> is null.</li>
 </ul>
 
 <h3>FromDouble</h3>
@@ -900,7 +900,7 @@ number.</li>
 
 <h3>FromString</h3>
 
-<pre>public static EFloat FromString​(String str, int offset, int length, EContext ctx)
+<pre>public static EFloat FromString​(java.lang.String str, int offset, int length, EContext ctx)
 </pre>
 
 <p>Creates a binary float from a text string that represents a number. Note
@@ -942,15 +942,15 @@ str</code> (but not more than <code>str</code> &#39;s length).</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>NullPointerException</code> - The parameter <code>str</code> is null.</p></li>
-<li><p><code>IllegalArgumentException</code> - Either <code>offset</code> or <code>length</code> is
+<li><p><code>java.lang.NullPointerException</code> - The parameter <code>str</code> is null.</p></li>
+<li><p><code>java.lang.IllegalArgumentException</code> - Either <code>offset</code> or <code>length</code> is
 less than 0 or greater than <code>str</code> &#39;s length, or <code>str</code> &#39; s
 length minus <code>offset</code> is less than <code>length</code> .</p></li>
 </ul>
 
 <h3>FromString</h3>
 
-<pre>public static EFloat FromString​(String str)
+<pre>public static EFloat FromString​(java.lang.String str)
 </pre>
 
 <p>Creates a binary float from a text string that represents a number, using an
@@ -971,7 +971,7 @@ length minus <code>offset</code> is less than <code>length</code> .</p></li>
 
 <h3>FromString</h3>
 
-<pre>public static EFloat FromString​(String str, EContext ctx)
+<pre>public static EFloat FromString​(java.lang.String str, EContext ctx)
 </pre>
 
 <p>Creates a binary float from a text string that represents a number. For more
@@ -995,12 +995,12 @@ exponent range to apply to the parsed number. Can be null.</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>NullPointerException</code> - The parameter <code>str</code> is null.</li>
+<li><code>java.lang.NullPointerException</code> - The parameter <code>str</code> is null.</li>
 </ul>
 
 <h3>FromString</h3>
 
-<pre>public static EFloat FromString​(String str, int offset, int length)
+<pre>public static EFloat FromString​(java.lang.String str, int offset, int length)
 </pre>
 
 <p>Creates a binary float from a text string that represents a number. For more
@@ -1026,8 +1026,8 @@ str</code> (but not more than <code>str</code> &#39;s length).</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>NullPointerException</code> - The parameter <code>str</code> is null.</p></li>
-<li><p><code>IllegalArgumentException</code> - Either &quot;offset&quot; or &quot;length&quot; is less than 0
+<li><p><code>java.lang.NullPointerException</code> - The parameter <code>str</code> is null.</p></li>
+<li><p><code>java.lang.IllegalArgumentException</code> - Either &quot;offset&quot; or &quot;length&quot; is less than 0
 or greater than &quot;str&quot;&#39;s length, or &quot;str&quot;&#39;s length minus &quot;offset&quot; is
 less than &quot;length&quot;.</p></li>
 </ul>
@@ -1368,7 +1368,7 @@ quiet NaN if this value is signaling NaN.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>ArithmeticException</code> - Attempted to divide by zero.</li>
+<li><code>java.lang.ArithmeticException</code> - Attempted to divide by zero.</li>
 </ul>
 
 <h3>Add</h3>
@@ -1433,7 +1433,7 @@ which case the precision is unlimited and no rounding is needed.</p></li>
 <p><strong>Specified by:</strong></p>
 
 <ul>
-<li><code>compareTo</code> in interface <code>Comparable&lt;EFloat&gt;</code></li>
+<li><code>compareTo</code> in interface <code>java.lang.Comparable&lt;EFloat&gt;</code></li>
 </ul>
 
 <p><strong>Parameters:</strong></p>
@@ -1625,7 +1625,7 @@ other value, or 1 if this object is greater.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>NullPointerException</code> - The parameter <code>other</code> is null.</li>
+<li><code>java.lang.NullPointerException</code> - The parameter <code>other</code> is null.</li>
 </ul>
 
 <h3>Divide</h3>
@@ -2066,7 +2066,7 @@ are equal to those of another object; otherwise, <code>false</code> .</li>
 
 <h3>equals</h3>
 
-<pre>public boolean equals​(Object obj)
+<pre>public boolean equals​(java.lang.Object obj)
 </pre>
 
 <p>Determines whether this object&#39;s mantissa (significand), exponent, and
@@ -2077,7 +2077,7 @@ are equal to those of another object; otherwise, <code>false</code> .</li>
 <p><strong>Overrides:</strong></p>
 
 <ul>
-<li><code>equals</code> in class <code>Object</code></li>
+<li><code>equals</code> in class <code>java.lang.Object</code></li>
 </ul>
 
 <p><strong>Parameters:</strong></p>
@@ -2153,7 +2153,7 @@ precision is unlimited (the context&#39;s Precision property is 0).</li>
 <p><strong>Overrides:</strong></p>
 
 <ul>
-<li><code>hashCode</code> in class <code>Object</code></li>
+<li><code>hashCode</code> in class <code>java.lang.Object</code></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -2642,7 +2642,7 @@ multiplying and subtracting.</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>NullPointerException</code> - The parameter <code>op</code> or <code>
+<li><code>java.lang.NullPointerException</code> - The parameter <code>op</code> or <code>
 subtrahend</code> is null.</li>
 </ul>
 
@@ -3712,7 +3712,7 @@ which case the precision is unlimited and no rounding is needed.</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>NullPointerException</code> - The parameter <code>otherValue</code> is
+<li><code>java.lang.NullPointerException</code> - The parameter <code>otherValue</code> is
 null.</li>
 </ul>
 
@@ -3760,7 +3760,7 @@ null.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>ArithmeticException</code> - This object&#39;s value is infinity or
+<li><code>java.lang.ArithmeticException</code> - This object&#39;s value is infinity or
 not-a-number (NaN).</li>
 </ul>
 
@@ -3782,7 +3782,7 @@ not-a-number (NaN).</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>ArithmeticException</code> - This object&#39;s value is infinity or
+<li><code>java.lang.ArithmeticException</code> - This object&#39;s value is infinity or
 not-a-number (NaN).</li>
 </ul>
 
@@ -3803,13 +3803,13 @@ not-a-number (NaN).</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>ArithmeticException</code> - This object&#39;s value is infinity or
+<li><code>java.lang.ArithmeticException</code> - This object&#39;s value is infinity or
 not-a-number (NaN).</li>
 </ul>
 
 <h3>ToEngineeringString</h3>
 
-<pre>public String ToEngineeringString()
+<pre>public java.lang.String ToEngineeringString()
 </pre>
 
 <p>Converts this value to an arbitrary-precision decimal number, then returns
@@ -3838,7 +3838,7 @@ not-a-number (NaN).</li>
 
 <h3>ToPlainString</h3>
 
-<pre>public String ToPlainString()
+<pre>public java.lang.String ToPlainString()
 </pre>
 
 <p>Converts this value to a string, but without exponential notation.</p>
@@ -3851,7 +3851,7 @@ not-a-number (NaN).</li>
 
 <h3>ToShortestString</h3>
 
-<pre>public String ToShortestString​(EContext ctx)
+<pre>public java.lang.String ToShortestString​(EContext ctx)
 </pre>
 
 <p>Returns a string representation of this number&#39;s value after rounding to the
@@ -3909,7 +3909,7 @@ value exceeds the range of a 32-bit floating point number.</li>
 
 <h3>toString</h3>
 
-<pre>public String toString()
+<pre>public java.lang.String toString()
 </pre>
 
 <p>Converts this number&#39;s value to a text string.</p>
@@ -3917,7 +3917,7 @@ value exceeds the range of a 32-bit floating point number.</li>
 <p><strong>Overrides:</strong></p>
 
 <ul>
-<li><code>toString</code> in class <code>Object</code></li>
+<li><code>toString</code> in class <code>java.lang.Object</code></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -3962,7 +3962,7 @@ more than five digits after the decimal point.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>ArithmeticException</code> - This value is infinity or not-a-number, or
+<li><code>java.lang.ArithmeticException</code> - This value is infinity or not-a-number, or
 the truncated integer is less than 0 or greater than 255.</li>
 </ul>
 
@@ -3999,7 +3999,7 @@ value is infinity or not-a-number.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>ArithmeticException</code> - This value is infinity or not-a-number, is not
+<li><code>java.lang.ArithmeticException</code> - This value is infinity or not-a-number, is not
 an exact integer, or is less than 0 or greater than 255.</li>
 </ul>
 
@@ -4039,7 +4039,7 @@ an exact integer, or is less than 0 or greater than 255.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>ArithmeticException</code> - This value is infinity or not-a-number, or
+<li><code>java.lang.ArithmeticException</code> - This value is infinity or not-a-number, or
 the truncated integer is less than -32768 or greater than 32767.</li>
 </ul>
 
@@ -4077,7 +4077,7 @@ value is infinity or not-a-number.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>ArithmeticException</code> - This value is infinity or not-a-number, is not
+<li><code>java.lang.ArithmeticException</code> - This value is infinity or not-a-number, is not
 an exact integer, or is less than -32768 or greater than 32767.</li>
 </ul>
 
@@ -4117,7 +4117,7 @@ an exact integer, or is less than -32768 or greater than 32767.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>ArithmeticException</code> - This value is infinity or not-a-number, or
+<li><code>java.lang.ArithmeticException</code> - This value is infinity or not-a-number, or
 the truncated integer is less than -2147483648 or greater than
 2147483647.</li>
 </ul>
@@ -4156,7 +4156,7 @@ value is infinity or not-a-number.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>ArithmeticException</code> - This value is infinity or not-a-number, is not
+<li><code>java.lang.ArithmeticException</code> - This value is infinity or not-a-number, is not
 an exact integer, or is less than -2147483648 or greater than
 2147483647.</li>
 </ul>
@@ -4197,7 +4197,7 @@ an exact integer, or is less than -2147483648 or greater than
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>ArithmeticException</code> - This value is infinity or not-a-number, or
+<li><code>java.lang.ArithmeticException</code> - This value is infinity or not-a-number, or
 the truncated integer is less than -9223372036854775808 or greater
 than 9223372036854775807.</li>
 </ul>
@@ -4236,7 +4236,7 @@ value is infinity or not-a-number.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>ArithmeticException</code> - This value is infinity or not-a-number, is not
+<li><code>java.lang.ArithmeticException</code> - This value is infinity or not-a-number, is not
 an exact integer, or is less than -9223372036854775808 or greater
 than 9223372036854775807.</li>
 </ul>

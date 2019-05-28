@@ -6,7 +6,7 @@
 
 <h1>com.upokecenter.mail.DataUris</h1>
 
-<pre>public final class DataUris extends Object
+<pre>public final class DataUris extends java.lang.Object
 </pre>
 
 <p>Contains methods for parsing and generating Data URIs (uniform resource
@@ -18,16 +18,16 @@
 <h2>Methods</h2>
 
 <ul>
-<li><code>static byte[] DataUriBytes​(String uri)</code><br>
+<li><code>static byte[] DataUriBytes​(java.lang.String uri)</code><br>
 Extracts the data from a Data URI (uniform resource identifier) in the form
 of a byte array.</li>
-<li><code>static MediaType DataUriMediaType​(String uri)</code><br>
+<li><code>static MediaType DataUriMediaType​(java.lang.String uri)</code><br>
 Extracts the media type from a Data URI (uniform resource identifier).</li>
-<li><code>static String MakeDataUri​(byte[] bytes,
+<li><code>static java.lang.String MakeDataUri​(byte[] bytes,
        MediaType mediaType)</code><br>
 Encodes data with the given media type in a Data URI (uniform resource
 identifier).</li>
-<li><code>static String MakeDataUri​(String textString)</code><br>
+<li><code>static java.lang.String MakeDataUri​(java.lang.String textString)</code><br>
 Encodes text as a Data URI (uniform resource identifier).</li>
 </ul>
 
@@ -35,7 +35,7 @@ Encodes text as a Data URI (uniform resource identifier).</li>
 
 <h3>DataUriMediaType</h3>
 
-<pre>public static MediaType DataUriMediaType​(String uri)
+<pre>public static MediaType DataUriMediaType​(java.lang.String uri)
 </pre>
 
 <p>Extracts the media type from a Data URI (uniform resource identifier).</p>
@@ -55,7 +55,7 @@ syntactically invalid, or is not a Data URI.</li>
 
 <h3>DataUriBytes</h3>
 
-<pre>public static byte[] DataUriBytes​(String uri)
+<pre>public static byte[] DataUriBytes​(java.lang.String uri)
 </pre>
 
 <p>Extracts the data from a Data URI (uniform resource identifier) in the form
@@ -76,7 +76,7 @@ syntactically invalid, or is not a data URI.</li>
 
 <h3>MakeDataUri</h3>
 
-<pre>public static String MakeDataUri​(String textString)
+<pre>public static java.lang.String MakeDataUri​(java.lang.String textString)
 </pre>
 
 <p>Encodes text as a Data URI (uniform resource identifier).</p>
@@ -96,13 +96,13 @@ syntactically invalid, or is not a data URI.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>NullPointerException</code> - The parameter <code>textString</code> is
+<li><code>java.lang.NullPointerException</code> - The parameter <code>textString</code> is
 null.</li>
 </ul>
 
 <h3>MakeDataUri</h3>
 
-<pre>public static String MakeDataUri​(byte[] bytes, MediaType mediaType)
+<pre>public static java.lang.String MakeDataUri​(byte[] bytes, MediaType mediaType)
 </pre>
 
 <p>Encodes data with the given media type in a Data URI (uniform resource
@@ -124,7 +124,7 @@ null.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>NullPointerException</code> - The parameter <code>bytes</code> or <code>
+<li><code>java.lang.NullPointerException</code> - The parameter <code>bytes</code> or <code>
 mediaType</code> is null.</li>
 </ul>
 

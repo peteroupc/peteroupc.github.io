@@ -6,46 +6,46 @@
 
 <h1>com.upokecenter.text.NormalizerInput</h1>
 
-<pre>public final class NormalizerInput extends Object implements com.upokecenter.text.ICharacterInput
+<pre>public final class NormalizerInput extends java.lang.Object implements com.upokecenter.text.ICharacterInput
 </pre>
 
 <p>A character input class that implements the Unicode normalization
  algorithm and contains methods and functionality to test and convert
  text strings for normalization. This is similar to the deprecated
- Normalizer class, except it implements the ICharacterInput
- interface.</p> <p>The Unicode Standard includes characters, such as
- an acute accent, that can be combined with other characters to make
- new characters. For example, the letter E combines with an acute
- accent to make E-acute (É). In some cases, the combined form
- (E-acute) should be treated as equivalent to the uncombined form (E
- plus acute). For this reason, the standard defines four
- <i>normalization forms</i> that convert strings to a single
- equivalent form:</p> <ul> <li><b>NFD</b> (Normalization Form D)
- decomposes combined forms to their constituent characters (E plus
- acute, for example), then reorders combining marks to a standardized
- order. This is called canonical decomposition.</li> <li><b>NFC</b>
- does canonical decomposition, then combines certain constituent
- characters to their composites (E-acute, for example). This is called
- canonical composition.</li> <li>Two normalization forms, <b>NFKC</b>
- and <b>NFKD</b>, are similar to NFC and NFD, except they also
- "decompose" certain characters, such as ligatures, font or positional
+ Normalizer class, except it implements the ICharacterInput interface.
+ </p> <p>The Unicode Standard includes characters, such as an acute
+ accent, that can be combined with other characters to make new
+ characters. For example, the letter E combines with an acute accent
+ to make E-acute (É). In some cases, the combined form (E-acute)
+ should be treated as equivalent to the uncombined form (E plus
+ acute). For this reason, the standard defines four <i> normalization
+ forms </i> that convert strings to a single equivalent form: </p>
+
+<p><ul> <li><b>NFD </b> (Normalization Form D) decomposes combined forms
+ to their constituent characters (E plus acute, for example), then
+ reorders combining marks to a standardized order. This is called
+ canonical decomposition. </li> <li><b>NFC </b> does canonical
+ decomposition, then combines certain constituent characters to their
+ composites (E-acute, for example). This is called canonical
+ composition. </li> <li>Two normalization forms, <b>NFKC </b> and
+ <b>NFKD </b> , are similar to NFC and NFD, except they also
+ &quot;decompose&quot; certain characters, such as ligatures, font or positional
  variants, and subscripts, whose visual distinction can matter in some
- contexts. This is called compatibility decomposition.</li></ul>
+ contexts. This is called compatibility decomposition. </li> </ul>
  <p>For more information, see Standard Annex 15 at
- <code>http://www.unicode.org/reports/tr15/</code>.</p> <p><b>Thread
- safety:</b> This class is mutable; its properties can be changed.
+ <code><a href="http://www.unicode.org/reports/tr15/">http://www.unicode.org/reports/tr15/</a> </code> . </p> <p><b>Thread
+ safety: </b> This class is mutable; its properties can be changed.
  None of its instance methods are designed to be thread safe.
  Therefore, access to objects from this class must be synchronized if
- multiple threads can access them at the same time.</p> <p>NOTICE:
- While this class's source code is in the public domain, the class
+ multiple threads can access them at the same time. </p> <p>NOTICE:
+ While this class&#39;s source code is in the public domain, the class
  uses an class, called NormalizationData, that includes data
  derived from the Unicode Character Database. In case doing so is
  required, the permission notice for the Unicode Character Database is
- given here:</p> <p>COPYRIGHT AND PERMISSION NOTICE</p> <p>Copyright
+ given here: </p> <p>COPYRIGHT AND PERMISSION NOTICE </p> <p>Copyright
  (c) 1991-2014 Unicode, Inc. All rights reserved. Distributed under
- the Terms of Use in http://www.unicode.org/copyright.html.</p>
-
-<p><p>Permission is hereby granted, free of charge, to any person
+ the Terms of Use in <a href="http://www.unicode.org/copyright.html">http://www.unicode.org/copyright.html</a>. </p>
+ <p>Permission is hereby granted, free of charge, to any person
  obtaining a copy of the Unicode data files and any associated
  documentation (the &quot;Data Files&quot;) or Unicode software and any
  associated documentation (the &quot;Software&quot;) to deal in the Data Files
@@ -58,7 +58,7 @@
  appear in associated documentation, and (c) there is clear notice in
  each modified Data File or in the Software as well as in the
  documentation associated with the Data File(s) or Software that the
- data or software has been modified.</p> <p>THE DATA FILES AND
+ data or software has been modified. </p> <p>THE DATA FILES AND
  SOFTWARE ARE PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS
  OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT
@@ -67,41 +67,38 @@
  SPECIAL INDIRECT OR CONSEQUENTIAL DAMAGES, OR ANY DAMAGES WHATSOEVER
  RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF
  CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN
- CONNECTION WITH THE USE OR PERFORMANCE OF THE DATA FILES OR
- SOFTWARE.</p> <p>Except as contained in this notice, the name of a
- copyright holder shall not be used in advertising or otherwise to
- promote the sale, use or other dealings in these Data Files or
- Software without prior written authorization of the copyright
- holder.</p></p>
+ CONNECTION WITH THE USE OR PERFORMANCE OF THE DATA FILES OR SOFTWARE.
+ </p> <p>Except as contained in this notice, the name of a copyright
+ holder shall not be used in advertising or otherwise to promote the
+ sale, use or other dealings in these Data Files or Software without
+ prior written authorization of the copyright holder. </p></p>
 
 <h2>Methods</h2>
 
 <ul>
 <li><code>NormalizerInput​(com.upokecenter.text.ICharacterInput input) NormalizerInput</code><br>
-Initializes a new instance of the NormalizerInput class using Normalization Form
-C.</li>
+Initializes a new instance of the NormalizerInput class.</li>
 <li><code>NormalizerInput​(com.upokecenter.text.ICharacterInput stream,
            Normalization form) NormalizerInput</code><br>
 Initializes a new instance of the NormalizerInput class.</li>
-<li><code>NormalizerInput​(String str) NormalizerInput</code><br>
-Initializes a new instance of the NormalizerInput class using Normalization Form
-C.</li>
-<li><code>NormalizerInput​(String str,
+<li><code>NormalizerInput​(java.lang.String str) NormalizerInput</code><br>
+Initializes a new instance of the NormalizerInput class.</li>
+<li><code>NormalizerInput​(java.lang.String str,
            int index,
            int length,
            Normalization form) NormalizerInput</code><br>
 Initializes a new instance of the NormalizerInput class.</li>
-<li><code>NormalizerInput​(String str,
+<li><code>NormalizerInput​(java.lang.String str,
            Normalization form) NormalizerInput</code><br>
 Initializes a new instance of the NormalizerInput class.</li>
 <li><code>static boolean IsNormalized​(com.upokecenter.text.ICharacterInput chars,
         Normalization form)</code><br>
 Determines whether the text provided by a character input is normalized.</li>
-<li><code>static boolean IsNormalized​(String str,
+<li><code>static boolean IsNormalized​(java.lang.String str,
         Normalization form)</code><br>
 Determines whether the given string is in the given Unicode normalization
 form.</li>
-<li><code>static String Normalize​(String str,
+<li><code>static java.lang.String Normalize​(java.lang.String str,
      Normalization form)</code><br>
 Converts a string to the given Unicode normalization form.</li>
 <li><code>int Read​(int[] chars,
@@ -116,20 +113,18 @@ Reads a Unicode character from a data source.</li>
 
 <ul>
 <li><code>NormalizerInput​(com.upokecenter.text.ICharacterInput input) NormalizerInput</code><br>
-Initializes a new instance of the NormalizerInput class using Normalization Form
-C.</li>
+Initializes a new instance of the NormalizerInput class.</li>
 <li><code>NormalizerInput​(com.upokecenter.text.ICharacterInput stream,
            Normalization form) NormalizerInput</code><br>
 Initializes a new instance of the NormalizerInput class.</li>
-<li><code>NormalizerInput​(String str) NormalizerInput</code><br>
-Initializes a new instance of the NormalizerInput class using Normalization Form
-C.</li>
-<li><code>NormalizerInput​(String str,
+<li><code>NormalizerInput​(java.lang.String str) NormalizerInput</code><br>
+Initializes a new instance of the NormalizerInput class.</li>
+<li><code>NormalizerInput​(java.lang.String str,
            int index,
            int length,
            Normalization form) NormalizerInput</code><br>
 Initializes a new instance of the NormalizerInput class.</li>
-<li><code>NormalizerInput​(String str,
+<li><code>NormalizerInput​(java.lang.String str,
            Normalization form) NormalizerInput</code><br>
 Initializes a new instance of the NormalizerInput class.</li>
 </ul>
@@ -138,16 +133,15 @@ Initializes a new instance of the NormalizerInput class.</li>
 
 <h3>NormalizerInput</h3>
 
-<pre>public NormalizerInput​(String str)
+<pre>public NormalizerInput​(java.lang.String str)
 </pre>
 
-<p>Initializes a new instance of the <code>NormalizerInput</code> class using Normalization Form
- C.</p>
+<p>Initializes a new instance of the <code>NormalizerInput</code> class.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>str</code> - A string specifying the text to normalize.</li>
+<li><code>str</code> - The parameter <code>str</code> is a text string.</li>
 </ul>
 
 <h3>NormalizerInput</h3>
@@ -155,8 +149,7 @@ Initializes a new instance of the NormalizerInput class.</li>
 <pre>public NormalizerInput​(com.upokecenter.text.ICharacterInput input)
 </pre>
 
-<p>Initializes a new instance of the <code>NormalizerInput</code> class using Normalization Form
- C.</p>
+<p>Initializes a new instance of the <code>NormalizerInput</code> class.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -166,27 +159,7 @@ Initializes a new instance of the NormalizerInput class.</li>
 
 <h3>NormalizerInput</h3>
 
-<pre>public NormalizerInput​(String str, int index, int length, Normalization form)
-</pre>
-
-<p>Initializes a new instance of the <code>NormalizerInput</code> class. Uses a portion of a
- string as the input.</p>
-
-<p><strong>Parameters:</strong></p>
-
-<ul>
-<li><p><code>str</code> - The parameter <code>str</code> is a text string.</p></li>
-<li><p><code>index</code> - A zero-based index showing where the desired portion of <code>
-str</code> begins.</p></li>
-<li><p><code>length</code> - The number of elements in the desired portion of <code>str</code>
-(but not more than <code>str</code> &#39;s length).</p></li>
-<li><p><code>form</code> - Specifies the normalization form to use when normalizing the
-text.</p></li>
-</ul>
-
-<h3>NormalizerInput</h3>
-
-<pre>public NormalizerInput​(String str, Normalization form)
+<pre>public NormalizerInput​(java.lang.String str, int index, int length, Normalization form)
 </pre>
 
 <p>Initializes a new instance of the <code>NormalizerInput</code> class.</p>
@@ -195,8 +168,23 @@ text.</p></li>
 
 <ul>
 <li><p><code>str</code> - The parameter <code>str</code> is a text string.</p></li>
-<li><p><code>form</code> - Specifies the normalization form to use when normalizing the
-text.</p></li>
+<li><p><code>index</code> - The parameter <code>index</code> is a 32-bit signed integer.</p></li>
+<li><p><code>length</code> - The parameter <code>length</code> is a 32-bit signed integer.</p></li>
+<li><p><code>form</code> - The parameter <code>form</code> is a Normalization object.</p></li>
+</ul>
+
+<h3>NormalizerInput</h3>
+
+<pre>public NormalizerInput​(java.lang.String str, Normalization form)
+</pre>
+
+<p>Initializes a new instance of the <code>NormalizerInput</code> class.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>str</code> - The parameter <code>str</code> is a text string.</p></li>
+<li><p><code>form</code> - The parameter <code>form</code> is a Normalization object.</p></li>
 </ul>
 
 <h3>NormalizerInput</h3>
@@ -210,14 +198,13 @@ text.</p></li>
 
 <ul>
 <li><p><code>stream</code> - The parameter <code>stream</code> is an ICharacterInput object.</p></li>
-<li><p><code>form</code> - Specifies the normalization form to use when normalizing the
-text.</p></li>
+<li><p><code>form</code> - The parameter <code>form</code> is a Normalization object.</p></li>
 </ul>
 
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>NullPointerException</code> - The parameter <code>stream</code> is null.</li>
+<li><code>java.lang.NullPointerException</code> - The parameter <code>stream</code> is null.</li>
 </ul>
 
 <h3>IsNormalized</h3>
@@ -237,18 +224,18 @@ text.</p></li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li><code>true</code> if the text is normalized; otherwise, <code>false</code>.</li>
+<li><code>true</code> if the text is normalized; otherwise, <code>false</code> .</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>NullPointerException</code> - The parameter <code>chars</code> is null.</li>
+<li><code>java.lang.NullPointerException</code> - The parameter <code>chars</code> is null.</li>
 </ul>
 
 <h3>Normalize</h3>
 
-<pre>public static String Normalize​(String str, Normalization form)
+<pre>public static java.lang.String Normalize​(java.lang.String str, Normalization form)
 </pre>
 
 <p>Converts a string to the given Unicode normalization form.</p>
@@ -269,14 +256,14 @@ text.</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>IllegalArgumentException</code> - The parameter <code>str</code> contains an
+<li><p><code>java.lang.IllegalArgumentException</code> - The parameter <code>str</code> contains an
 unpaired surrogate code point.</p></li>
-<li><p><code>NullPointerException</code> - The parameter <code>str</code> is null.</p></li>
+<li><p><code>java.lang.NullPointerException</code> - The parameter <code>str</code> is null.</p></li>
 </ul>
 
 <h3>IsNormalized</h3>
 
-<pre>public static boolean IsNormalized​(String str, Normalization form)
+<pre>public static boolean IsNormalized​(java.lang.String str, Normalization form)
 </pre>
 
 <p>Determines whether the given string is in the given Unicode normalization
@@ -294,14 +281,14 @@ text.</p></li>
 
 <ul>
 <li><code>true</code> if the given string is in the given Unicode
-normalization form; otherwise, <code>false</code>. Returns <code>false</code>
+normalization form; otherwise, <code>false</code> . Returns <code>false</code>
 if the string contains an unpaired surrogate code point.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>NullPointerException</code> - The parameter <code>str</code> is null.</li>
+<li><code>java.lang.NullPointerException</code> - The parameter <code>str</code> is null.</li>
 </ul>
 
 <h3>ReadChar</h3>
@@ -357,10 +344,10 @@ source is reached.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>NullPointerException</code> - The parameter <code>chars</code> is null.</p></li>
-<li><p><code>IllegalArgumentException</code> - Either <code>index</code> or <code>length</code> is
+<li><p><code>java.lang.NullPointerException</code> - The parameter <code>chars</code> is null.</p></li>
+<li><p><code>java.lang.IllegalArgumentException</code> - Either <code>index</code> or <code>length</code> is
 less than 0 or greater than <code>chars</code> &#39;s length, or <code>chars</code>
-&#39; s length minus <code>index</code> is less than <code>length</code>.</p></li>
+&#39; s length minus <code>index</code> is less than <code>length</code> .</p></li>
 </ul>
 
 <p><a href="/MailLib/">Back to MailLib start page.</a></p>
