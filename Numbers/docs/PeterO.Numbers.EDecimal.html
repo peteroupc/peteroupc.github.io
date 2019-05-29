@@ -105,7 +105,7 @@
 <ul>
 <li><p>A. Low 52 bits (Precision minus 1 bits): Lowest bits of the significand.</p></li>
 <li><p>B. Next 11 bits: Exponent area:</p></li>
-<li><p>If all bits are ones, this value is infinity if all bits in area A are zeros, or not-a-number (NaN) otherwise.</p></li>
+<li><p>If all bits are ones, this value is infinity (positive or negative depending on the C bit) if all bits in area A are zeros, or not-a-number (NaN) otherwise.</p></li>
 <li><p>If all bits are zeros, this is a subnormal number. The exponent is EMin and the highest bit of the significand is zero.</p></li>
 <li><p>If any other number, the exponent is this value reduced by 1, then raised by EMin, and the highest bit of the significand is one.</p></li>
 <li><p>C. Highest bit: If one, this is a negative number.</p></li>
@@ -283,7 +283,7 @@
 <li><code><a href="#SquareRoot_PeterO_Numbers_EContext">SquareRoot(PeterO.Numbers.EContext)</a></code> - Finds the square root of this object&#39;s value.</li>
 <li><code><a href="#Subtract_PeterO_Numbers_EDecimal">Subtract(PeterO.Numbers.EDecimal)</a></code> - Subtracts an arbitrary-precision decimal number from this instance and returns the result.</li>
 <li><code><a href="#Subtract_PeterO_Numbers_EDecimal_PeterO_Numbers_EContext">Subtract(PeterO.Numbers.EDecimal, PeterO.Numbers.EContext)</a></code> - Subtracts an arbitrary-precision decimal number from this instance.</li>
-<li><code><a href="#Subtract_int">Subtract(int)</a></code> - Subtracts a 32-bit signed integer from this instance and returns the result.</li>
+<li><code><a href="#Subtract_int">Subtract(int)</a></code> - Subtracts a 32-bit signed integer from this object and returns the result.</li>
 <li><code><a href="#Ten">public static readonly PeterO.Numbers.EDecimal Ten;</a></code> - Represents the number 10.</li>
 <li><code><a href="#ToByteChecked">ToByteChecked()</a></code> - Converts this number&#39;s value to a byte (from 0 to 255) if it can fit in a byte (from 0 to 255) after truncating to an integer.</li>
 <li><code><a href="#ToByteIfExact">ToByteIfExact()</a></code> - Converts this number&#39;s value to a byte (from 0 to 255) if it can fit in a byte (from 0 to 255) without rounding to a different numerical value.</li>
@@ -550,8 +550,7 @@
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>intValue</i>: The parameter <i>intValue</i>
-is not documented yet.</li>
+<li><i>intValue</i>: A 32-bit signed integer to add to this object.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -938,8 +937,7 @@ The parameter &quot;diag&quot; is null or is less than 0.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>intValue</i>: The parameter <i>intValue</i>
-is not documented yet.</li>
+<li><i>intValue</i>: A 32-bit signed integer, the divisor, to divide this object by.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -2419,8 +2417,7 @@ The parameter &quot;str&quot; is null.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>intValue</i>: The parameter <i>intValue</i>
-is not documented yet.</li>
+<li><i>intValue</i>: A 32-bit signed integer to multiply this object by.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -3662,13 +3659,12 @@ is null or the precision is unlimited (the context&#39;s Precision property s 0)
     int intValue);
 </pre>
 
-<p>Subtracts a 32-bit signed integer from this instance and returns the result.</p>
+<p>Subtracts a 32-bit signed integer from this object and returns the result.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>intValue</i>: The parameter <i>intValue</i>
-is not documented yet.</li>
+<li><i>intValue</i>: A 32-bit signed integer to subtract from this object.</li>
 </ul>
 
 <p><b>Return Value:</b></p>

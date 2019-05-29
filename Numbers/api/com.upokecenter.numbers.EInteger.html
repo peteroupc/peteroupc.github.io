@@ -114,14 +114,15 @@ Deprecated.
 This method may overflow.
 This method may overflow.</li>
 <li><code>EInteger GetLowBitAsEInteger()</code><br>
-Gets the lowest set bit in this number&#39;s absolute value.</li>
+Gets the lowest set bit in this number&#39;s absolute value, in the form of an
+arbitrary-precision integer.</li>
 <li><code>static EInteger getOne()</code><br>
 Gets the number 1 as an arbitrary-precision integer.</li>
 <li><code>boolean GetSignedBit​(int index) &quot;Forms of numbers&quot;</code><br>
 Returns whether a bit is set in the two&#39;s-complement form (see &quot;Forms of numbers&quot; ) of this
 object&#39; s value.</li>
 <li><code>boolean GetSignedBit​(EInteger bigIndex) &quot;Forms of numbers&quot;</code><br>
-Returns whether a bit is set in the two&#39;s-complement form (see &quot;Forms of numbers&quot;) of this
+Returns whether a bit is set in the two&#39;s-complement form (see &quot;Forms of numbers&quot; ) of this
 object&#39; s value.</li>
 <li><code>int GetSignedBitLength()</code><br>
 Deprecated.
@@ -185,7 +186,7 @@ Returns an arbitrary-precision integer with the bits shifted to the left by
 a number of bits.</li>
 <li><code>EInteger ShiftLeft​(EInteger eshift)</code><br>
 Returns an arbitrary-precision integer with the bits shifted to the left by
-a number of bits.</li>
+a number of bits given as an arbitrary-precision integer.</li>
 <li><code>EInteger ShiftRight​(int numberBits)</code><br>
 Returns an arbitrary-precision integer with the bits shifted to the right.</li>
 <li><code>EInteger ShiftRight​(EInteger eshift)</code><br>
@@ -1042,8 +1043,9 @@ value is 0.</li>
 <pre>public EInteger GetLowBitAsEInteger()
 </pre>
 
-<p>Gets the lowest set bit in this number&#39;s absolute value. (This will also be
- the lowest set bit in the number&#39;s two&#39;s-complement form (see <code>&quot;Forms of numbers&quot; </code>).).</p>
+<p>Gets the lowest set bit in this number&#39;s absolute value, in the form of an
+ arbitrary-precision integer. (This will also be the lowest set bit in
+ the number&#39;s two&#39;s-complement form (see <code>&quot;Forms of numbers&quot; </code>).).</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -1057,13 +1059,13 @@ value is 0 or odd.</li>
 <pre>public boolean GetSignedBit​(EInteger bigIndex)
 </pre>
 
-<p>Returns whether a bit is set in the two&#39;s-complement form (see <code>&quot;Forms of numbers&quot;</code>) of this
+<p>Returns whether a bit is set in the two&#39;s-complement form (see <code>&quot;Forms of numbers&quot; </code>) of this
  object&#39; s value.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>bigIndex</code> - An EInteger object.</li>
+<li><code>bigIndex</code> - An arbitrary-precision integer.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -1071,7 +1073,7 @@ value is 0 or odd.</li>
 <ul>
 <li><code>true</code> if a bit is set in the two&#39; s-complement form (see
 <code>EDecimal</code>) of this object&#39; s value;
-otherwise, <code>false</code>.</li>
+otherwise, <code>false</code> .</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -1152,7 +1154,7 @@ a 32-bit signed integer.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>bigIndex</code> - An EInteger object.</li>
+<li><code>bigIndex</code> - An arbitrary-precision integer.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -1405,13 +1407,15 @@ null.</li>
 
 <p>Returns an arbitrary-precision integer with the bits shifted to the right.
  For this operation, the arbitrary-precision integer is treated as a
- two&#39;s-complement form (see <code>&quot;Forms of numbers&quot;</code>). Thus, for negative values, the
- arbitrary-precision integer is sign-extended.<p>TODO: Edit this</p></p>
+ two&#39;s-complement form (see <code>&quot;Forms of numbers&quot; </code>). Thus, for negative values, the
+ arbitrary-precision integer is sign-extended.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>eshift</code> - An EInteger object.</li>
+<li><code>eshift</code> - The number of bits to shift. Can be negative, in which case
+this is the same as shiftLeft with the absolute value of this
+parameter.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -1432,14 +1436,16 @@ null.</li>
 </pre>
 
 <p>Returns an arbitrary-precision integer with the bits shifted to the left by
- a number of bits. A value of 1 doubles this value, a value of 2
- multiplies it by 4, a value of 3 by 8, a value of 4 by 16, and so
- on.<p>TODO: Edit this</p></p>
+ a number of bits given as an arbitrary-precision integer. A value of
+ 1 doubles this value, a value of 2 multiplies it by 4, a value of 3
+ by 8, a value of 4 by 16, and so on.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>eshift</code> - An EInteger object.</li>
+<li><code>eshift</code> - The number of bits to shift. Can be negative, in which case
+this is the same as shiftRight with the absolute value of this
+parameter.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -1490,7 +1496,9 @@ parameter.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>numberBits</code> - Number of bits to shift right.</li>
+<li><code>numberBits</code> - The number of bits to shift. Can be negative, in which
+case this is the same as shiftLeft with the absolute value of this
+parameter.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>

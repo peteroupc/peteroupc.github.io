@@ -95,17 +95,11 @@
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>precision</i>: The parameter <i>precision</i>
-is a 32-bit signed integer.</p></li>
-<li><p><i>rounding</i>: The parameter <i>rounding</i>
-is an ERounding object.</p></li>
-<li><p><i>exponentMinSmall</i>: The parameter <i>exponentMinSmall</i>
-is a 32-bit signed integer.</p></li>
-<li><p><i>exponentMaxSmall</i>: The parameter <i>exponentMaxSmall</i>
-is a 32-bit signed integer.</p></li>
-<li><p><i>clampNormalExponents</i>: Either <code>true
-</code> or <code>false
-</code> .</p></li>
+<li><p><i>precision</i>: Maximum precision, in decimal digits, of a number&#39;s significand.</p></li>
+<li><p><i>rounding</i>: The rounding mode for this context.</p></li>
+<li><p><i>exponentMinSmall</i>: Smallest exponent of a number, as a power of 10.</p></li>
+<li><p><i>exponentMaxSmall</i>: Largest exponent of a number, as a power of 10.</p></li>
+<li><p><i>clampNormalExponents</i>: The value of the &quot;ClampNormalExponents&quot; property for this context.</p></li>
 </ul>
 
 <p><a id="Void_ctor_EInteger_ERounding_EInteger_EInteger_Boolean"></a></p>
@@ -113,31 +107,23 @@ is a 32-bit signed integer.</p></li>
 <h3>EContext Constructor</h3>
 
 <pre>public EContext(
-    PeterO.Numbers.EInteger precision,
+    PeterO.Numbers.EInteger bigintPrecision,
     PeterO.Numbers.ERounding rounding,
-    PeterO.Numbers.EInteger exponentMinSmall,
-    PeterO.Numbers.EInteger exponentMaxSmall,
+    PeterO.Numbers.EInteger exponentMin,
+    PeterO.Numbers.EInteger exponentMax,
     bool clampNormalExponents);
 </pre>
 
-<p>Initializes a new instance of the <a href="PeterO.Numbers.EContext.html">PeterO.Numbers.EContext</a> class.</p>
-
-<p>TODO: Adjust this documentation for the new API.</p>
+<p>Initializes a new instance of the <a href="PeterO.Numbers.EContext.html">PeterO.Numbers.EContext</a> class, using arbitrary-precision integers to hold the precision and exponent range.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>precision</i>: The parameter <i>precision</i>
-is a 32-bit signed integer.</p></li>
-<li><p><i>rounding</i>: The parameter <i>rounding</i>
-is an ERounding object.</p></li>
-<li><p><i>exponentMinSmall</i>: The parameter <i>exponentMinSmall</i>
-is a 32-bit signed integer.</p></li>
-<li><p><i>exponentMaxSmall</i>: The parameter <i>exponentMaxSmall</i>
-is a 32-bit signed integer.</p></li>
-<li><p><i>clampNormalExponents</i>: Either <code>true
-</code> or <code>false
-</code> .</p></li>
+<li><p><i>bigintPrecision</i>: Maximum precision, in decimal digits, of a number&#39;s significand.</p></li>
+<li><p><i>rounding</i>: The rounding mode for this context.</p></li>
+<li><p><i>exponentMin</i>: Smallest exponent of a number, as a power of 10.</p></li>
+<li><p><i>exponentMax</i>: Largest exponent of a number, as a power of 10.</p></li>
+<li><p><i>clampNormalExponents</i>: The value of the &quot;ClampNormalExponents&quot; property for this context.</p></li>
 </ul>
 
 <p><a id="Basic"></a></p>
@@ -344,8 +330,6 @@ is a 32-bit signed integer.</p></li>
 <p><b>Returns:</b></p>
 
 <p><code>true
-</code> if the EMax and EMin properties refer to the number&#39;s Exponent property djusted to the number&#39;s precision, or just the number&#39;s Exponent roperty; otherwise, <code>false
-</code> .. The default value is true, meaning that EMax and EMin refer to the djusted exponent. Setting this value to false (using WithAdjustExponent) s useful for modeling floating point representations with an integer antissa (significand) and an integer exponent, such as Java&#39;s BigDecimal. <code>true
 </code> if the EMax and EMin properties refer to the number&#39;s Exponent property djusted to the number&#39;s precision, or false if they refer to just the umber&#39;s Exponent property.</p>
 
 <p><a id="ClampNormalExponents"></a></p>
@@ -891,7 +875,7 @@ is null.</li>
     int traps);
 </pre>
 
-<p>Copies this EContext with Traps set to the given value.</p>
+<p>Copies this EContext with Traps set to the given value. (Also sets HasFlags on the copy to  <code>True</code> , but this may change in version 2.0 of this library.).</p>
 
 <p><b>Parameters:</b></p>
 
