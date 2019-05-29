@@ -103,12 +103,16 @@ Converts a portion of a string to an arbitrary-precision integer.</li>
 <li><code>EInteger Gcd​(EInteger bigintSecond)</code><br>
 Returns the greatest common divisor of this integer and the given integer.</li>
 <li><code>int GetDigitCount()</code><br>
-Returns the number of decimal digits used by this integer.</li>
+Deprecated.
+This method may overflow.
+This method may overflow.</li>
 <li><code>EInteger GetDigitCountAsEInteger()</code><br>
 Returns the number of decimal digits used by this integer, in the form of an
 arbitrary-precision integer.</li>
 <li><code>int GetLowBit()</code><br>
-Gets the lowest set bit in this number&#39;s absolute value.</li>
+Deprecated.
+This method may overflow.
+This method may overflow.</li>
 <li><code>EInteger GetLowBitAsEInteger()</code><br>
 Gets the lowest set bit in this number&#39;s absolute value.</li>
 <li><code>static EInteger getOne()</code><br>
@@ -116,9 +120,13 @@ Gets the number 1 as an arbitrary-precision integer.</li>
 <li><code>boolean GetSignedBit​(int index) &quot;Forms of numbers&quot;</code><br>
 Returns whether a bit is set in the two&#39;s-complement form (see &quot;Forms of numbers&quot; ) of this
 object&#39; s value.</li>
+<li><code>boolean GetSignedBit​(EInteger bigIndex) &quot;Forms of numbers&quot;</code><br>
+Returns whether a bit is set in the two&#39;s-complement form (see &quot;Forms of numbers&quot;) of this
+object&#39; s value.</li>
 <li><code>int GetSignedBitLength()</code><br>
-Finds the minimum number of bits needed to represent this object&#39;s value,
-except for its sign.</li>
+Deprecated.
+This method may overflow.
+This method may overflow.</li>
 <li><code>EInteger GetSignedBitLengthAsEInteger()</code><br>
 Finds the minimum number of bits needed to represent this object&#39;s value,
 except for its sign, in the form of an arbitrary-precision integer.</li>
@@ -126,9 +134,12 @@ except for its sign, in the form of an arbitrary-precision integer.</li>
 Gets the number 10 as an arbitrary-precision integer.</li>
 <li><code>boolean GetUnsignedBit​(int index)</code><br>
 Returns whether a bit is set in this number&#39;s absolute value.</li>
+<li><code>boolean GetUnsignedBit​(EInteger bigIndex)</code><br>
+Returns whether a bit is set in this number&#39;s absolute value.</li>
 <li><code>int GetUnsignedBitLength()</code><br>
-Finds the minimum number of bits needed to represent this number&#39;s absolute
-value.</li>
+Deprecated.
+This method may overflow.
+This method may overflow.</li>
 <li><code>EInteger GetUnsignedBitLengthAsEInteger()</code><br>
 Finds the minimum number of bits needed to represent this number&#39;s absolute
 value.</li>
@@ -139,7 +150,8 @@ Returns the hash code for this instance.</li>
 <li><code>boolean isEven()</code><br>
 Gets a value indicating whether this value is even.</li>
 <li><code>boolean isPowerOfTwo()</code><br>
-Gets a value indicating whether this object&#39;s value is a power of two.</li>
+Gets a value indicating whether this object&#39;s value is a power of two, and
+greater than 0.</li>
 <li><code>boolean isZero()</code><br>
 Gets a value indicating whether this value is 0.</li>
 <li><code>EInteger Mod​(EInteger divisor)</code><br>
@@ -171,7 +183,12 @@ of an arbitrary-precision integer.</li>
 <li><code>EInteger ShiftLeft​(int numberBits)</code><br>
 Returns an arbitrary-precision integer with the bits shifted to the left by
 a number of bits.</li>
+<li><code>EInteger ShiftLeft​(EInteger eshift)</code><br>
+Returns an arbitrary-precision integer with the bits shifted to the left by
+a number of bits.</li>
 <li><code>EInteger ShiftRight​(int numberBits)</code><br>
+Returns an arbitrary-precision integer with the bits shifted to the right.</li>
+<li><code>EInteger ShiftRight​(EInteger eshift)</code><br>
 Returns an arbitrary-precision integer with the bits shifted to the right.</li>
 <li><code>int signum()</code><br>
 Gets the sign of this object&#39;s value.</li>
@@ -275,14 +292,14 @@ Converts this object to a text string in base 10.</li>
 <pre>public final boolean isPowerOfTwo()
 </pre>
 
-<p>Gets a value indicating whether this object&#39;s value is a power of two.</p>
+<p>Gets a value indicating whether this object&#39;s value is a power of two, and
+ greater than 0.</p>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li><code>true</code> if this object&#39;s value is a power of two; otherwise,
-<code>false</code> . <code>true</code> if this object&#39; s value is a power of
-two; otherwise, <code>false</code> .</li>
+<li><code>true</code> if this object&#39; s value is a power of two, and greater
+than 0; otherwise, <code>false</code> .</li>
 </ul>
 
 <h3>isZero</h3>
@@ -963,16 +980,25 @@ if this number is 0.</li>
 
 <h3>GetDigitCount</h3>
 
-<pre>public int GetDigitCount()
+<pre>@Deprecated public int GetDigitCount()
 </pre>
 
-<p>Returns the number of decimal digits used by this integer.</p>
+<p>Deprecated.</p>
+
+<div class='deprecationComment'>This method may overflow. Use GetDigitCountAsEInteger instead.</div>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
 <li>The number of digits in the decimal form of this integer. Returns 1
 if this number is 0.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>java.lang.ArithmeticException</code> - The return value would exceed the range of
+a 32-bit signed integer.</li>
 </ul>
 
 <h3>hashCode</h3>
@@ -997,17 +1023,18 @@ if this number is 0.</li>
 
 <h3>GetLowBit</h3>
 
-<pre>public int GetLowBit()
+<pre>@Deprecated public int GetLowBit()
 </pre>
 
-<p>Gets the lowest set bit in this number&#39;s absolute value. (This will also be
- the lowest set bit in the number&#39;s two&#39;s-complement form (see <code>&quot;Forms of numbers&quot; </code>).).</p>
+<p>Deprecated.</p>
+
+<div class='deprecationComment'>This method may overflow. Use GetLowBitAsEInteger instead.</div>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
 <li>The lowest bit set in the number, starting at 0. Returns -1 if this
-value is 0 or odd.</li>
+value is 0.</li>
 </ul>
 
 <h3>GetLowBitAsEInteger</h3>
@@ -1023,6 +1050,34 @@ value is 0 or odd.</li>
 <ul>
 <li>The lowest bit set in the number, starting at 0. Returns -1 if this
 value is 0 or odd.</li>
+</ul>
+
+<h3>GetSignedBit</h3>
+
+<pre>public boolean GetSignedBit​(EInteger bigIndex)
+</pre>
+
+<p>Returns whether a bit is set in the two&#39;s-complement form (see <code>&quot;Forms of numbers&quot;</code>) of this
+ object&#39; s value.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>bigIndex</code> - An EInteger object.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li><code>true</code> if a bit is set in the two&#39; s-complement form (see
+<code>EDecimal</code>) of this object&#39; s value;
+otherwise, <code>false</code>.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>java.lang.NullPointerException</code> - The parameter <code>bigIndex</code> is null.</li>
 </ul>
 
 <h3>GetSignedBit</h3>
@@ -1066,12 +1121,12 @@ object&#39;s value is 0 or negative 1.</li>
 
 <h3>GetSignedBitLength</h3>
 
-<pre>public int GetSignedBitLength()
+<pre>@Deprecated public int GetSignedBitLength()
 </pre>
 
-<p>Finds the minimum number of bits needed to represent this object&#39;s value,
- except for its sign. If the value is negative, finds the number of
- bits in the value equal to this object&#39;s absolute value minus 1.</p>
+<p>Deprecated.</p>
+
+<div class='deprecationComment'>This method may overflow. Use GetSignedBitLengthAsEInteger instead.</div>
 
 <p><strong>Returns:</strong></p>
 
@@ -1085,6 +1140,31 @@ object&#39;s value is 0 or negative 1.</li>
 <ul>
 <li><code>java.lang.ArithmeticException</code> - The return value would exceed the range of
 a 32-bit signed integer.</li>
+</ul>
+
+<h3>GetUnsignedBit</h3>
+
+<pre>public boolean GetUnsignedBit​(EInteger bigIndex)
+</pre>
+
+<p>Returns whether a bit is set in this number&#39;s absolute value.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>bigIndex</code> - An EInteger object.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li><code>true</code> if a bit is set in this number&#39;s absolute value.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>java.lang.NullPointerException</code> - The parameter <code>bigIndex</code> is null.</li>
 </ul>
 
 <h3>GetUnsignedBit</h3>
@@ -1124,11 +1204,12 @@ object&#39;s value is 0, and returns 1 if the value is negative 1.</li>
 
 <h3>GetUnsignedBitLength</h3>
 
-<pre>public int GetUnsignedBitLength()
+<pre>@Deprecated public int GetUnsignedBitLength()
 </pre>
 
-<p>Finds the minimum number of bits needed to represent this number&#39;s absolute
- value.</p>
+<p>Deprecated.</p>
+
+<div class='deprecationComment'>This method may overflow. Use GetUnsignedBitLengthAsEInteger instead.</div>
 
 <p><strong>Returns:</strong></p>
 
@@ -1315,6 +1396,62 @@ null.</li>
 <ul>
 <li><p><code>java.lang.ArithmeticException</code> - Attempted to divide by zero.</p></li>
 <li><p><code>java.lang.NullPointerException</code> - The parameter <code>divisor</code> is null.</p></li>
+</ul>
+
+<h3>ShiftRight</h3>
+
+<pre>public EInteger ShiftRight​(EInteger eshift)
+</pre>
+
+<p>Returns an arbitrary-precision integer with the bits shifted to the right.
+ For this operation, the arbitrary-precision integer is treated as a
+ two&#39;s-complement form (see <code>&quot;Forms of numbers&quot;</code>). Thus, for negative values, the
+ arbitrary-precision integer is sign-extended.<p>TODO: Edit this</p></p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>eshift</code> - An EInteger object.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An arbitrary-precision integer.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>java.lang.NullPointerException</code> - The parameter <code>eshift</code> is null.</li>
+</ul>
+
+<h3>ShiftLeft</h3>
+
+<pre>public EInteger ShiftLeft​(EInteger eshift)
+</pre>
+
+<p>Returns an arbitrary-precision integer with the bits shifted to the left by
+ a number of bits. A value of 1 doubles this value, a value of 2
+ multiplies it by 4, a value of 3 by 8, a value of 4 by 16, and so
+ on.<p>TODO: Edit this</p></p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>eshift</code> - An EInteger object.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An arbitrary-precision integer.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>java.lang.NullPointerException</code> - The parameter <code>eshift</code> is null.</li>
 </ul>
 
 <h3>ShiftLeft</h3>
