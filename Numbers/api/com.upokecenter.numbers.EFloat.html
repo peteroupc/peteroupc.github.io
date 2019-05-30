@@ -219,6 +219,7 @@ equal to those of another object.</li>
 <li><code>EFloat Exp​(EContext ctx)</code><br>
 Finds e (the base of natural logarithms) raised to the power of this
 object&#39;s value.</li>
+<li><code>static EFloat FromBoolean​(boolean boolValue)</code><br></li>
 <li><code>static EFloat FromByte​(byte inputByte)</code><br>
 Converts a byte (from 0 to 255) to an arbitrary-precision binary float.</li>
 <li><code>static EFloat FromDouble​(double dbl)</code><br>
@@ -1688,9 +1689,8 @@ not exact.</li>
 <pre>@Deprecated public EFloat[] DivideAndRemainderNaturalScale​(EFloat divisor)
 </pre>
 
-<p>Deprecated.</p>
-
-<div class='deprecationComment'>Renamed to DivRemNaturalScale.</div>
+<p>Deprecated.
+Renamed to DivRemNaturalScale.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1710,9 +1710,8 @@ order.</li>
 <pre>@Deprecated public EFloat[] DivideAndRemainderNaturalScale​(EFloat divisor, EContext ctx)
 </pre>
 
-<p>Deprecated.</p>
-
-<div class='deprecationComment'>Renamed to DivRemNaturalScale.</div>
+<p>Deprecated.
+Renamed to DivRemNaturalScale.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -3437,9 +3436,8 @@ outside of the valid range of the arithmetic context.</li>
 <pre>@Deprecated public EFloat RoundToIntegralExact​(EContext ctx)
 </pre>
 
-<p>Deprecated.</p>
-
-<div class='deprecationComment'>Renamed to RoundToIntegerExact.</div>
+<p>Deprecated.
+Renamed to RoundToIntegerExact.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -3468,9 +3466,8 @@ context.</li>
 <pre>@Deprecated public EFloat RoundToIntegralNoRoundedFlag​(EContext ctx)
 </pre>
 
-<p>Deprecated.</p>
-
-<div class='deprecationComment'>Renamed to RoundToIntegerNoRoundedFlag.</div>
+<p>Deprecated.
+Renamed to RoundToIntegerNoRoundedFlag.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -3639,9 +3636,8 @@ precision is unlimited (the context&#39;s Precision property is 0).</li>
 <pre>@Deprecated public EFloat SquareRoot​(EContext ctx)
 </pre>
 
-<p>Deprecated.</p>
-
-<div class='deprecationComment'>Renamed to Sqrt.</div>
+<p>Deprecated.
+Renamed to Sqrt.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -3769,9 +3765,8 @@ not-a-number (NaN).</li>
 <pre>@Deprecated public EInteger ToEIntegerExact()
 </pre>
 
-<p>Deprecated.</p>
-
-<div class='deprecationComment'>Renamed to ToEIntegerIfExact.</div>
+<p>Deprecated.
+Renamed to ToEIntegerIfExact.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -3826,9 +3821,8 @@ not-a-number (NaN).</li>
 <pre>@Deprecated public EDecimal ToExtendedDecimal()
 </pre>
 
-<p>Deprecated.</p>
-
-<div class='deprecationComment'>Renamed to ToEDecimal.</div>
+<p>Deprecated.
+Renamed to ToEDecimal.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -4160,6 +4154,11 @@ value is infinity or not-a-number.</li>
 an exact integer, or is less than -2147483648 or greater than
 2147483647.</li>
 </ul>
+
+<h3>FromBoolean</h3>
+
+<pre>public static EFloat FromBoolean​(boolean boolValue)
+</pre>
 
 <h3>FromInt32</h3>
 

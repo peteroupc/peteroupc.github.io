@@ -341,6 +341,7 @@ is an arbitrary-precision decimal number.</li>
 <li><code>EDecimal Exp​(EContext ctx)</code><br>
 Finds e (the base of natural logarithms) raised to the power of this
 object&#39;s value.</li>
+<li><code>static EDecimal FromBoolean​(boolean boolValue)</code><br></li>
 <li><code>static EDecimal FromByte​(byte inputByte)</code><br>
 Converts a byte (from 0 to 255) to an arbitrary-precision decimal number.</li>
 <li><code>static EDecimal FromDouble​(double dbl)</code><br>
@@ -1031,9 +1032,8 @@ than 0.</li>
 <pre>@Deprecated public static EDecimal FromExtendedFloat​(EFloat ef)
 </pre>
 
-<p>Deprecated.</p>
-
-<div class='deprecationComment'>Renamed to FromEFloat.</div>
+<p>Deprecated.
+Renamed to FromEFloat.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1072,6 +1072,11 @@ than 0.</li>
 <ul>
 <li><code>java.lang.NullPointerException</code> - The parameter &quot;bigfloat&quot; is null.</li>
 </ul>
+
+<h3>FromBoolean</h3>
+
+<pre>public static EDecimal FromBoolean​(boolean boolValue)
+</pre>
 
 <h3>FromInt32</h3>
 
@@ -1887,9 +1892,8 @@ not exact.</li>
 <pre>@Deprecated public EDecimal[] DivideAndRemainderNaturalScale​(EDecimal divisor)
 </pre>
 
-<p>Deprecated.</p>
-
-<div class='deprecationComment'>Renamed to DivRemNaturalScale.</div>
+<p>Deprecated.
+Renamed to DivRemNaturalScale.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1909,9 +1913,8 @@ order.</li>
 <pre>@Deprecated public EDecimal[] DivideAndRemainderNaturalScale​(EDecimal divisor, EContext ctx)
 </pre>
 
-<p>Deprecated.</p>
-
-<div class='deprecationComment'>Renamed to DivRemNaturalScale.</div>
+<p>Deprecated.
+Renamed to DivRemNaturalScale.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -4012,9 +4015,8 @@ outside of the valid range of the arithmetic context.</li>
 <pre>@Deprecated public EDecimal RoundToIntegralExact​(EContext ctx)
 </pre>
 
-<p>Deprecated.</p>
-
-<div class='deprecationComment'>Renamed to RoundToIntegerExact.</div>
+<p>Deprecated.
+Renamed to RoundToIntegerExact.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -4043,9 +4045,8 @@ context.</li>
 <pre>@Deprecated public EDecimal RoundToIntegralNoRoundedFlag​(EContext ctx)
 </pre>
 
-<p>Deprecated.</p>
-
-<div class='deprecationComment'>Renamed to RoundToIntegerNoRoundedFlag.</div>
+<p>Deprecated.
+Renamed to RoundToIntegerNoRoundedFlag.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -4216,9 +4217,8 @@ precision is unlimited (the context&#39;s Precision property is 0).</li>
 <pre>@Deprecated public EDecimal SquareRoot​(EContext ctx)
 </pre>
 
-<p>Deprecated.</p>
-
-<div class='deprecationComment'>Renamed to Sqrt.</div>
+<p>Deprecated.
+Renamed to Sqrt.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -4343,9 +4343,8 @@ not-a-number (NaN).</li>
 <pre>@Deprecated public EInteger ToEIntegerExact()
 </pre>
 
-<p>Deprecated.</p>
-
-<div class='deprecationComment'>Renamed to ToEIntegerIfExact.</div>
+<p>Deprecated.
+Renamed to ToEIntegerIfExact.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -4400,9 +4399,8 @@ not-a-number (NaN).</li>
 <pre>@Deprecated public EFloat ToExtendedFloat()
 </pre>
 
-<p>Deprecated.</p>
-
-<div class='deprecationComment'>Renamed to ToEFloat.</div>
+<p>Deprecated.
+Renamed to ToEFloat.</p>
 
 <p><strong>Returns:</strong></p>
 
