@@ -6,7 +6,7 @@
 
 <h1>com.upokecenter.util.DataIO</h1>
 
-<pre>public final class DataIO extends Object
+<pre>public final class DataIO extends java.lang.Object
 </pre>
 
 <p>Convenience class that contains static methods for wrapping byte arrays and
@@ -25,7 +25,7 @@ Use ToReader instead.</li>
 Deprecated.
 Use ToReader instead.
 Use ToReader instead.</li>
-<li><code>static IByteReader ToByteReader​(InputStream input)</code><br>
+<li><code>static IByteReader ToByteReader​(java.io.InputStream input)</code><br>
 Deprecated.
 Use ToReader instead.
 Use ToReader instead.</li>
@@ -35,12 +35,12 @@ Wraps a byte array into a byte reader.</li>
     int offset,
     int length)</code><br>
 Wraps a portion of a byte array into a byte reader object.</li>
-<li><code>static IReader ToReader​(InputStream input)</code><br>
+<li><code>static IReader ToReader​(java.io.InputStream input)</code><br>
 Wraps an input stream into a reader object.</li>
 <li><code>static IWriter ToWriter​(IByteWriter output)</code><br>
 Wraps a byte writer (one that only implements a ReadByte method) to a writer
 (one that also implements a three-parameter Read method.)</li>
-<li><code>static IWriter ToWriter​(OutputStream output)</code><br>
+<li><code>static IWriter ToWriter​(java.io.OutputStream output)</code><br>
 Wraps an output stream into a writer object.</li>
 </ul>
 
@@ -54,10 +54,10 @@ Wraps an output stream into a writer object.</li>
 <p>Wraps a byte array into a byte reader. The reader will start at the
  beginning of the byte array. <p>In the .NET implementation, this
  method is implemented as an extension method to any byte array object
- and can be called as follows: <code>bytes.ToByteReader()</code>. If the
+ and can be called as follows: <code>bytes.ToByteReader() </code> . If the
  object&#39;s class already has a ToByteReader method with the same
- parameters, that method takes precedence over this extension
- method.</p></p>
+ parameters, that method takes precedence over this extension method.
+ </p></p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -74,7 +74,7 @@ Wraps an output stream into a writer object.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>NullPointerException</code> - The parameter <code>bytes</code> is null.</li>
+<li><code>java.lang.NullPointerException</code> - The parameter <code>bytes</code> is null.</li>
 </ul>
 
 <h3>ToReader</h3>
@@ -85,9 +85,9 @@ Wraps an output stream into a writer object.</li>
 <p>Wraps a portion of a byte array into a byte reader object. <p>In the .NET
  implementation, this method is implemented as an extension method to
  any byte array object and can be called as follows:
- <code>bytes.ToByteReader(offset, length)</code>. If the object&#39;s class
+ <code>bytes.ToByteReader(offset, length) </code> . If the object&#39;s class
  already has a ToByteReader method with the same parameters, that
- method takes precedence over this extension method.</p></p>
+ method takes precedence over this extension method. </p></p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -108,24 +108,24 @@ not more than &quot;bytes&quot; &#39;s length).</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>IllegalArgumentException</code> - Either <code>offset</code> or <code>length</code> is
+<li><p><code>java.lang.IllegalArgumentException</code> - Either <code>offset</code> or <code>length</code> is
 less than 0 or greater than <code>bytes</code> &#39;s length, or <code>bytes</code>
-&#39; s length minus <code>offset</code> is less than <code>length</code>.</p></li>
-<li><p><code>NullPointerException</code> - The parameter <code>bytes</code> is null.</p></li>
+&#39; s length minus <code>offset</code> is less than <code>length</code> .</p></li>
+<li><p><code>java.lang.NullPointerException</code> - The parameter <code>bytes</code> is null.</p></li>
 </ul>
 
 <h3>ToReader</h3>
 
-<pre>public static IReader ToReader​(InputStream input)
+<pre>public static IReader ToReader​(java.io.InputStream input)
 </pre>
 
 <p>Wraps an input stream into a reader object. If an IOException is thrown by
  the input stream, the reader object throws InvalidOperationException
  instead. <p>In the .NET implementation, this method is implemented as
  an extension method to any object implementing InputStream and can be
- called as follows: <code>input.ToByteReader()</code>. If the object&#39;s class
- already has a ToByteReader method with the same parameters, that
- method takes precedence over this extension method.</p></p>
+ called as follows: <code>input.ToByteReader() </code> . If the object&#39;s
+ class already has a ToByteReader method with the same parameters,
+ that method takes precedence over this extension method. </p></p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -142,7 +142,7 @@ less than 0 or greater than <code>bytes</code> &#39;s length, or <code>bytes</co
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>NullPointerException</code> - The parameter <code>input</code> is null.</li>
+<li><code>java.lang.NullPointerException</code> - The parameter <code>input</code> is null.</li>
 </ul>
 
 <h3>ToByteReader</h3>
@@ -150,9 +150,8 @@ less than 0 or greater than <code>bytes</code> &#39;s length, or <code>bytes</co
 <pre>@Deprecated public static IByteReader ToByteReader​(byte[] bytes, int offset, int length)
 </pre>
 
-<p>Deprecated.</p>
-
-<div class='deprecationComment'>Use ToReader instead.</div>
+<p>Deprecated.
+Use ToReader instead.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -173,20 +172,19 @@ bytes</code> begins.</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>IllegalArgumentException</code> - Either <code>offset</code> or <code>length</code> is
+<li><p><code>java.lang.IllegalArgumentException</code> - Either <code>offset</code> or <code>length</code> is
 less than 0 or greater than <code>bytes</code> &#39;s length, or <code>bytes</code>
-&#39; s length minus <code>offset</code> is less than <code>length</code>.</p></li>
-<li><p><code>NullPointerException</code> - The parameter <code>bytes</code> is null.</p></li>
+&#39; s length minus <code>offset</code> is less than <code>length</code> .</p></li>
+<li><p><code>java.lang.NullPointerException</code> - The parameter <code>bytes</code> is null.</p></li>
 </ul>
 
 <h3>ToByteReader</h3>
 
-<pre>@Deprecated public static IByteReader ToByteReader​(InputStream input)
+<pre>@Deprecated public static IByteReader ToByteReader​(java.io.InputStream input)
 </pre>
 
-<p>Deprecated.</p>
-
-<div class='deprecationComment'>Use ToReader instead.</div>
+<p>Deprecated.
+Use ToReader instead.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -203,7 +201,7 @@ less than 0 or greater than <code>bytes</code> &#39;s length, or <code>bytes</co
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>NullPointerException</code> - The parameter <code>input</code> is null.</li>
+<li><code>java.lang.NullPointerException</code> - The parameter <code>input</code> is null.</li>
 </ul>
 
 <h3>ToByteReader</h3>
@@ -211,9 +209,8 @@ less than 0 or greater than <code>bytes</code> &#39;s length, or <code>bytes</co
 <pre>@Deprecated public static IByteReader ToByteReader​(byte[] bytes)
 </pre>
 
-<p>Deprecated.</p>
-
-<div class='deprecationComment'>Use ToReader instead.</div>
+<p>Deprecated.
+Use ToReader instead.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -230,21 +227,21 @@ less than 0 or greater than <code>bytes</code> &#39;s length, or <code>bytes</co
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>NullPointerException</code> - The parameter <code>bytes</code> is null.</li>
+<li><code>java.lang.NullPointerException</code> - The parameter <code>bytes</code> is null.</li>
 </ul>
 
 <h3>ToWriter</h3>
 
-<pre>public static IWriter ToWriter​(OutputStream output)
+<pre>public static IWriter ToWriter​(java.io.OutputStream output)
 </pre>
 
 <p>Wraps an output stream into a writer object. If an IOException is thrown by
  the input stream, the writer object throws InvalidOperationException
  instead. <p>In the .NET implementation, this method is implemented as
  an extension method to any object implementing InputStream and can be
- called as follows: <code>output.ToWriter()</code>. If the object&#39;s class
+ called as follows: <code>output.ToWriter() </code> . If the object&#39;s class
  already has a ToWriter method with the same parameters, that method
- takes precedence over this extension method.</p></p>
+ takes precedence over this extension method. </p></p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -261,7 +258,7 @@ less than 0 or greater than <code>bytes</code> &#39;s length, or <code>bytes</co
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>NullPointerException</code> - The parameter <code>output</code> is null.</li>
+<li><code>java.lang.NullPointerException</code> - The parameter <code>output</code> is null.</li>
 </ul>
 
 <h3>ToWriter</h3>
@@ -273,9 +270,9 @@ less than 0 or greater than <code>bytes</code> &#39;s length, or <code>bytes</co
  (one that also implements a three-parameter Read method.) <p>In the
  .NET implementation, this method is implemented as an extension
  method to any object implementing IByteWriter and can be called as
- follows: <code>output.ToWriter()</code>. If the object&#39;s class already has
- a ToWriter method with the same parameters, that method takes
- precedence over this extension method.</p></p>
+ follows: <code>output.ToWriter() </code> . If the object&#39;s class already
+ has a ToWriter method with the same parameters, that method takes
+ precedence over this extension method. </p></p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -292,7 +289,7 @@ less than 0 or greater than <code>bytes</code> &#39;s length, or <code>bytes</co
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>NullPointerException</code> - The parameter <code>output</code> is null.</li>
+<li><code>java.lang.NullPointerException</code> - The parameter <code>output</code> is null.</li>
 </ul>
 
 <p><a href="/Encoding/">Back to Encoding start page.</a></p>

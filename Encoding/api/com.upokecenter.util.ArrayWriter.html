@@ -6,7 +6,7 @@
 
 <h1>com.upokecenter.util.ArrayWriter</h1>
 
-<pre>public final class ArrayWriter extends Object implements IWriter
+<pre>public final class ArrayWriter extends java.lang.Object implements IWriter
 </pre>
 
 <p>An array of bytes that grows as needed.</p>
@@ -16,10 +16,9 @@
 <ul>
 <li><code>ArrayWriter() com.upokecenter.ArrayWriter</code><br>
 Initializes a new instance of the com.upokecenter.ArrayWriter class
-with a default buffer size.</li>
+with a default backing store size of 16.</li>
 <li><code>ArrayWriter​(int initialSize) com.upokecenter.ArrayWriter</code><br>
-Initializes a new instance of the com.upokecenter.ArrayWriter class
-with the given initial buffer size.</li>
+Initializes a new instance of the com.upokecenter.ArrayWriter class.</li>
 <li><code>void Clear()</code><br>
 Offers a fast way to reset the length of the array writer&#39;s data to 0.</li>
 <li><code>byte[] ToArray()</code><br>
@@ -37,10 +36,9 @@ Writes an 8-bit byte to the array.</li>
 <ul>
 <li><code>ArrayWriter() com.upokecenter.ArrayWriter</code><br>
 Initializes a new instance of the com.upokecenter.ArrayWriter class
-with a default buffer size.</li>
+with a default backing store size of 16.</li>
 <li><code>ArrayWriter​(int initialSize) com.upokecenter.ArrayWriter</code><br>
-Initializes a new instance of the com.upokecenter.ArrayWriter class
-with the given initial buffer size.</li>
+Initializes a new instance of the com.upokecenter.ArrayWriter class.</li>
 </ul>
 
 <h2>Method Details</h2>
@@ -51,21 +49,19 @@ with the given initial buffer size.</li>
 </pre>
 
 <p>Initializes a new instance of the <code>com.upokecenter.ArrayWriter</code> class
- with a default buffer size.</p>
+ with a default backing store size of 16.</p>
 
 <h3>ArrayWriter</h3>
 
 <pre>public ArrayWriter​(int initialSize)
 </pre>
 
-<p>Initializes a new instance of the <code>com.upokecenter.ArrayWriter</code> class
- with the given initial buffer size.</p>
+<p>Initializes a new instance of the <code>com.upokecenter.ArrayWriter</code> class.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>initialSize</code> - The parameter <code>initialSize</code> is a 32-bit signed
-integer.</li>
+<li><code>initialSize</code> - The initial size of the array writer&#39;s backing store.</li>
 </ul>
 
 <h3>Clear</h3>
@@ -134,10 +130,10 @@ src</code> begins.</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>NullPointerException</code> - The parameter <code>src</code> is null.</p></li>
-<li><p><code>IllegalArgumentException</code> - Either <code>offset</code> or <code>length</code> is
+<li><p><code>java.lang.NullPointerException</code> - The parameter <code>src</code> is null.</p></li>
+<li><p><code>java.lang.IllegalArgumentException</code> - Either <code>offset</code> or <code>length</code> is
 less than 0 or greater than <code>src</code> &#39;s length, or <code>src</code> &#39; s
-length minus <code>offset</code> is less than <code>length</code>.</p></li>
+length minus <code>offset</code> is less than <code>length</code> .</p></li>
 </ul>
 
 <p><a href="/Encoding/">Back to Encoding start page.</a></p>
