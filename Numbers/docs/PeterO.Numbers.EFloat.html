@@ -87,6 +87,7 @@
 <li><code><a href="#Equals_object">Equals(object)</a></code> - Determines whether this object&#39;s mantissa (significand), exponent, and properties are equal to those of another object and that other object is an arbitrary-precision binary float.</li>
 <li><code><a href="#Exp_PeterO_Numbers_EContext">Exp(PeterO.Numbers.EContext)</a></code> - Finds e (the base of natural logarithms) raised to the power of this object&#39;s value.</li>
 <li><code><a href="#Exponent">Exponent</a></code> - Gets this object&#39;s exponent.</li>
+<li><code><a href="#FromBoolean_bool">FromBoolean(bool)</a></code> - Converts a boolean value (true or false) to an arbitrary-precision binary number.</li>
 <li><code><a href="#FromByte_byte">FromByte(byte)</a></code> - Converts a byte (from 0 to 255) to an arbitrary-precision binary float.</li>
 <li><code><a href="#FromDouble_double">FromDouble(double)</a></code> - Creates a binary float from a 64-bit floating-point number.</li>
 <li><code><a href="#FromEInteger_PeterO_Numbers_EInteger">FromEInteger(PeterO.Numbers.EInteger)</a></code> - Converts an arbitrary-precision integer to the same value as a binary float.</li>
@@ -1243,6 +1244,20 @@ is an arbitrary object.</li>
 <p><b>Return Value:</b></p>
 
 <p>Exponential of this object. If this object&#39;s value is 1, returns an approximation to &quot; e&quot; within the given precision. Signals FlagInvalid and returns not-a-number (NaN) if the parameter &quot;ctx&quot; is null or the precision is unlimited (the context&#39;s Precision property is 0).</p>
+
+<p><a id="FromBoolean_bool"></a></p>
+
+<h3>FromBoolean</h3>
+
+<pre>public static PeterO.Numbers.EFloat FromBoolean(
+    bool boolValue);
+</pre>
+
+<p>Converts a boolean value (true or false) to an arbitrary-precision binary number.</p>
+
+<p><b>Return Value:</b></p>
+
+<p>One if  <code>boolValue</code>  is  <code>true</code> ; otherwise, zero.</p>
 
 <p><a id="FromByte_byte"></a></p>
 
