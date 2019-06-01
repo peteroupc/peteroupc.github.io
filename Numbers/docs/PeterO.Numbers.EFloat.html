@@ -62,6 +62,7 @@
 <li><code><a href="#CompareToTotal_PeterO_Numbers_EFloat_PeterO_Numbers_EContext">CompareToTotal(PeterO.Numbers.EFloat, PeterO.Numbers.EContext)</a></code> - Compares the values of this object and another object, imposing a total ordering on all possible values.</li>
 <li><code><a href="#CompareToWithContext_PeterO_Numbers_EFloat_PeterO_Numbers_EContext">CompareToWithContext(PeterO.Numbers.EFloat, PeterO.Numbers.EContext)</a></code> - Compares the mathematical values of this object and another object.</li>
 <li><code><a href="#CompareTo_PeterO_Numbers_EFloat">CompareTo(PeterO.Numbers.EFloat)</a></code> - Compares the mathematical values of this object and another object, accepting NaN values.</li>
+<li><code><a href="#Copy">Copy()</a></code> - Not documented yet.</li>
 <li><code><a href="#CopySign_PeterO_Numbers_EFloat">CopySign(PeterO.Numbers.EFloat)</a></code> - Returns a number with the same value as this one, but copying the sign (positive or negative) of another number.</li>
 <li><code><a href="#CreateNaN_PeterO_Numbers_EInteger">CreateNaN(PeterO.Numbers.EInteger)</a></code> - Creates a not-a-number arbitrary-precision binary float.</li>
 <li><code><a href="#CreateNaN_PeterO_Numbers_EInteger_bool_bool_PeterO_Numbers_EContext">CreateNaN(PeterO.Numbers.EInteger, bool, bool, PeterO.Numbers.EContext)</a></code> - Creates a not-a-number arbitrary-precision binary float.</li>
@@ -434,7 +435,7 @@
 
 <p><b>Return Value:</b></p>
 
-<p>An arbitrary-precision binary float. Returns signaling NaN if this value is signaling NaN.</p>
+<p>An arbitrary-precision binary float. Returns signaling NaN if this value is signaling NaN. (In this sense, this method is similar to the &quot;copy-abs&quot; operation in the General Decimal Arithmetic Specification, except this method does not necessarily return a copy of this object.).</p>
 
 <p><a id="Add_int"></a></p>
 
@@ -667,6 +668,19 @@ is a 32-bit signed integer.</li>
 
 <p>Quiet NaN if this object or the other object is NaN, or 0 if both objects have the same value, or -1 if this object is less than the other value, or 1 if this object is greater.</p>
 
+<p><a id="Copy"></a></p>
+
+<h3>Copy</h3>
+
+<pre>public PeterO.Numbers.EFloat Copy();
+</pre>
+
+<p>Not documented yet.</p>
+
+<p><b>Return Value:</b></p>
+
+<p>An EFloat object.</p>
+
 <p><a id="CopySign_PeterO_Numbers_EFloat"></a></p>
 
 <h3>CopySign</h3>
@@ -675,7 +689,7 @@ is a 32-bit signed integer.</li>
     PeterO.Numbers.EFloat other);
 </pre>
 
-<p>Returns a number with the same value as this one, but copying the sign (positive or negative) of another number.</p>
+<p>Returns a number with the same value as this one, but copying the sign (positive or negative) of another number. (This method is similar to the &quot;copy-sign&quot; operation in the General Decimal Arithmetic Specification, except this method does not necessarily return a copy of this object.).</p>
 
 <p><b>Parameters:</b></p>
 
@@ -1255,9 +1269,20 @@ is an arbitrary object.</li>
 
 <p>Converts a boolean value (true or false) to an arbitrary-precision binary number.</p>
 
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>boolValue</i>: The parameter  <i>boolValue</i>
+is not documented yet.</li>
+</ul>
+
 <p><b>Return Value:</b></p>
 
 <p>One if  <code>boolValue</code>  is  <code>true</code> ; otherwise, zero.</p>
+
+<p><b>Return Value:</b></p>
+
+<p>An EFloat object.</p>
 
 <p><a id="FromByte_byte"></a></p>
 
@@ -2326,7 +2351,7 @@ is null.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>An arbitrary-precision binary float. If this value is positive zero, returns negative zero. Returns signaling NaN if this value is signaling NaN.</p>
+<p>An arbitrary-precision binary float. If this value is positive zero, returns negative zero. Returns signaling NaN if this value is signaling NaN. (In this sense, this method is similar to the &quot;copy-negate&quot; operation in the General Decimal Arithmetic Specification, except this method does not necessarily return a copy of this object.).</p>
 
 <p><a id="NextMinus_PeterO_Numbers_EContext"></a></p>
 
