@@ -137,7 +137,7 @@
     PeterO.Numbers.EInteger denominator);
 </pre>
 
-<p>Initializes a new instance of the <a href="PeterO.Numbers.ERational.html">PeterO.Numbers.ERational</a> class.</p>
+<p>Initializes a new instance of the<a href="PeterO.Numbers.ERational.html">PeterO.Numbers.ERational</a> class.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -149,8 +149,12 @@
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li>System.ArgumentException:
-The denominator is zero.</li>
+<li><p>System.ArgumentException:
+The denominator is zero.</p></li>
+<li><p>System.ArgumentNullException:
+The parameter  <i>numerator</i>
+or  <i>denominator</i>
+is null.</p></li>
 </ul>
 
 <p><a id="NaN"></a></p>
@@ -515,7 +519,7 @@ Doesn&#39;t satisfy this.IsFinite; doesn&#39;t satisfy other.IsFinite.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>An ERational object.</p>
+<p>An arbitrary-precision binary rational number.</p>
 
 <p><a id="CopySign_PeterO_Numbers_ERational"></a></p>
 
@@ -744,6 +748,8 @@ is an arbitrary object.</li>
 
 <p>Converts a boolean value (true or false) to an arbitrary-precision rational number.</p>
 
+<p>Converts a boolean value (true or false) to an arbitrary-precision rational number.</p>
+
 <p><b>Parameters:</b></p>
 
 <ul>
@@ -757,7 +763,7 @@ is not documented yet.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>An ERational object.</p>
+<p>One if  <code>boolValue</code>  is  <code>true</code>  ; otherwise, zero.</p>
 
 <p><a id="FromByte_byte"></a></p>
 
