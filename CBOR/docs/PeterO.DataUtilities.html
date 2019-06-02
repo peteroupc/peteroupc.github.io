@@ -51,6 +51,14 @@
 
 <p>Gets the Unicode code point at the given index of the string.</p>
 
+<p>The following example shows how to iterate a text string code point by code point.</p>
+
+<pre>for(var i=0;i&lt;str.Length;i++) { int codePoint =
+        DataUtilities.CodePointAt(str,i);
+        Console.WriteLine(&quot;codePoint:&quot;+codePoint); if(codePoint &gt;= 0x10000) {
+        i++; /* Supplementary code point */ } }
+</pre>
+
 <p><b>Parameters:</b></p>
 
 <ul>
@@ -62,7 +70,7 @@ is a text string.</p></li>
 <p><b>Return Value:</b></p>
 
 <p>The Unicode code point at the given position. Returns -1 if <i>index</i>
-is less than 0, or is the string&#39;s length or greater. Returns the eplacement character (U+FFFD) if the current character is an unpaired urrogate code point.</p>
+is less than 0, or is the string&#39;s length or greater. Returns the eplacement character (U+FFFD) if the current character is an unpaired urrogate code point. If the return value is 65536 (0x10000) or greater, he code point takes up two UTF-16 code units.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -84,6 +92,14 @@ is null.</li>
 
 <p>Gets the Unicode code point at the given index of the string.</p>
 
+<p>The following example shows how to iterate a text string code point by code point, terminating the loop when an unpaired surrogate is found.</p>
+
+<pre>for(var i=0;i&lt;str.Length;i++) { int codePoint =
+        DataUtilities.CodePointAt(str, i, 2); if(codePoint &lt; 0) { break; /*
+        Unpaired surrogate */ } Console.WriteLine(&quot;codePoint:&quot;+codePoint);
+        if(codePoint &gt;= 0x10000) { i++; /* Supplementary code point */ } }
+</pre>
+
 <p><b>Parameters:</b></p>
 
 <ul>
@@ -97,7 +113,7 @@ is a text string.</p></li>
 
 <p>The Unicode code point at the current position. Returns -1 if <i>index</i>
 is less than 0, or is the string&#39;s length or greater. Returns a value as pecified under <i>surrogateBehavior</i>
-if the previous character is an unpaired surrogate code point.</p>
+if the previous character is an unpaired surrogate code point. If the eturn value is 65536 (0x10000) or greater, the code point takes up two TF-16 code units.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -129,7 +145,7 @@ is a text string.</p></li>
 <p><b>Return Value:</b></p>
 
 <p>The Unicode code point at the previous position. Returns -1 if <i>index</i>
-is 0 or less, or is greater than the string&#39;s length. Returns the eplacement character (U+FFFD) if the previous character is an unpaired urrogate code point.</p>
+is 0 or less, or is greater than the string&#39;s length. Returns the eplacement character (U+FFFD) if the previous character is an unpaired urrogate code point. If the return value is 65536 (0x10000) or greater, he code point takes up two UTF-16 code units.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -164,7 +180,7 @@ is a text string.</p></li>
 
 <p>The Unicode code point at the previous position. Returns -1 if <i>index</i>
 is 0 or less, or is greater than the string&#39;s length. Returns a value as pecified under <i>surrogateBehavior</i>
-if the previous character is an unpaired surrogate code point.</p>
+if the previous character is an unpaired surrogate code point. If the eturn value is 65536 (0x10000) or greater, the code point takes up two TF-16 code units.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -239,7 +255,7 @@ is null.</li>
 <p>REMARK: It is not recommended to use <code>Encoding.UTF8.GetBytes
 </code> in .NET, or the <code>getBytes()
 </code> method in Java to do this. For instance, <code>getBytes()
-</code> encodes text strings in an unspecified character encoding. Both ehaviors can be undesirable.</p>
+</code> encodes text strings in a default (so not fixed) character encoding, hich can be undesirable.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -279,7 +295,7 @@ is false, or an internal error occurred.</p></li>
 <p>REMARK: It is not recommended to use <code>Encoding.UTF8.GetBytes
 </code> in .NET, or the <code>getBytes()
 </code> method in Java to do this. For instance, <code>getBytes()
-</code> encodes text strings in an unspecified character encoding. Both ehaviors can be undesirable.</p>
+</code> encodes text strings in a default (so not fixed) character encoding, hich can be undesirable.</p>
 
 <p><b>Parameters:</b></p>
 

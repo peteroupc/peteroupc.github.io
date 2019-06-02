@@ -6,7 +6,7 @@
 
 <h1>com.upokecenter.cbor.JSONOptions</h1>
 
-<pre>public final class JSONOptions extends Object
+<pre>public final class JSONOptions extends java.lang.Object
 </pre>
 
 <p>Includes options to control how CBOR objects are converted to JSON.</p>
@@ -26,7 +26,11 @@ Initializes a new instance of the JSONOptions
 class with default options.</li>
 <li><code>JSONOptions​(boolean base64Padding) JSONOptions</code><br>
 Initializes a new instance of the JSONOptions
-class with the given values for the options.</li>
+class with the given value for the Base64Padding option.</li>
+<li><code>JSONOptions​(boolean base64Padding,
+       boolean replaceSurrogates) JSONOptions</code><br>
+Initializes a new instance of the JSONOptions class with the given
+values for the options.</li>
 </ul>
 
 <h2>Methods</h2>
@@ -35,6 +39,11 @@ class with the given values for the options.</li>
 <li><code>boolean getBase64Padding()</code><br>
 Gets a value indicating whether padding is written out when writing
 base64url or traditional base64 to JSON.</li>
+<li><code>boolean getReplaceSurrogates() char</code><br>
+Gets a value indicating whether surrogate code points not part of a
+surrogate pair (which consists of two consecutive char  s
+forming one Unicode code point) are each replaced with a replacement
+character (U + FFFD).</li>
 </ul>
 
 <h2>Field Details</h2>
@@ -54,13 +63,32 @@ base64url or traditional base64 to JSON.</li>
 </pre>
 
 <p>Gets a value indicating whether padding is written out when writing
- base64url or traditional base64 to JSON.<p>The padding character is
- &#39;=&#39;.</p></p>
+ base64url or traditional base64 to JSON.<p> The padding character is
+ &#39;=&#39;. </p></p>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
 <li>The default is false, no padding.</li>
+</ul>
+
+<h3>getReplaceSurrogates</h3>
+
+<pre>public final boolean getReplaceSurrogates()
+</pre>
+
+<p>Gets a value indicating whether surrogate code points not part of a
+ surrogate pair (which consists of two consecutive <code>char </code> s
+ forming one Unicode code point) are each replaced with a replacement
+ character (U + FFFD). The default is false; an exception is thrown when
+ such code points are encountered.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>True, if surrogate code points not part of a surrogate pair are each
+replaced with a replacement character, or false if an exception is
+thrown when such code points are encountered.</li>
 </ul>
 
 <p><a href="/CBOR/">Back to CBOR start page.</a></p>

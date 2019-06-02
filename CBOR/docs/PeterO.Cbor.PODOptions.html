@@ -9,14 +9,13 @@
 <pre>public class PODOptions
 </pre>
 
-<p>Options for converting &quot;plain old data&quot; objects to CBOR objects.</p>
+<p>Options for converting &quot;plain old data&quot; objects (better known as POCOs in .NET or POJOs in Java) to CBOR objects.</p>
 
 <h3>Member Summary</h3>
 
 <ul>
 <li><code><a href="#Default">public static readonly PeterO.Cbor.PODOptions Default;</a></code> - The default settings for &quot;plain old data&quot; options.</li>
-<li><code><a href="#RemoveIsPrefix">RemoveIsPrefix</a></code> - Gets a value indicating whether the &quot;Is&quot; prefix in property names is removed before they are used as keys.</li>
-<li><code><a href="#UseCamelCase">UseCamelCase</a></code> - Gets a value indicating whether property names are converted to camel case before they are used as keys.</li>
+<li><code><a href="#UseCamelCase">UseCamelCase</a></code> -  Gets a value indicating whether property names are converted to camel case before they are used as keys.</li>
 </ul>
 
 <p><a id="Void_ctor_Boolean_Boolean"></a></p>
@@ -34,7 +33,7 @@
 
 <ul>
 <li><p><i>removeIsPrefix</i>: If set to <code>true
-</code> remove is prefix. NOTE: May be ignored in future versions of this ibrary.</p></li>
+</code> remove is prefix.</p></li>
 <li><p><i>useCamelCase</i>: If set to <code>true
 </code> use camel case.</p></li>
 </ul>
@@ -48,23 +47,6 @@
 
 <p>The default settings for &quot;plain old data&quot; options.</p>
 
-<p><a id="RemoveIsPrefix"></a></p>
-
-<h3>RemoveIsPrefix</h3>
-
-<pre>public bool RemoveIsPrefix { get; }
-</pre>
-
-<p><b>Deprecated.</b> Property name conversion may change, making this property obsolete.</p>
-
-<p>Gets a value indicating whether the &quot;Is&quot; prefix in property names is removed before they are used as keys.</p>
-
-<p><b>Returns:</b></p>
-
-<p><code>true
-</code> If the prefix is removed; otherwise, . <code>false
-</code> .</p>
-
 <p><a id="UseCamelCase"></a></p>
 
 <h3>UseCamelCase</h3>
@@ -72,13 +54,30 @@
 <pre>public bool UseCamelCase { get; }
 </pre>
 
-<p>Gets a value indicating whether property names are converted to camel case before they are used as keys.</p>
+<p>Gets a value indicating whether property names are converted to camel case before they are used as keys. This option changes the behavior of key name serialization as follows. If &quot;useCamelCase&quot; is <code>false
+</code> :</p>
+
+<ul>
+<li><p>In the .NET version, all key names are capitalized, meaning the first letter in the name is converted to upper case if it&#39;s a basic lower-case letter (&quot;a&quot; to &quot;z&quot;). (For example, &quot;Name&quot; and &quot;IsName&quot; both remain unchanged.)</p></li>
+<li><p>In the Java version, for each eligible method name, the word &quot;get&quot; or &quot;set&quot; is removed from the name if the name starts with that word, then the name is capitalized. (For example, &quot;getName&quot; and &quot;setName&quot; both become &quot;Name&quot;, and &quot;isName&quot; becomes &quot;IsName&quot;.)</p></li>
+</ul>
+
+<p>If &quot;useCamelCase&quot; is <code>true
+</code> :</p>
+
+<ul>
+<li><p>In the .NET version, for each eligible property name, the word &quot;Is&quot; is removed from the name if the name starts with that word, then the name is converted to camel case, meaning the first letter in the name is converted to lower case if it&#39;s a basic upper-case letter (&quot;A&quot; to &quot;Z&quot;). (For example, &quot;Name&quot; and &quot;IsName&quot; both become &quot;name&quot;.)</p></li>
+<li><p>In the Java version, for each eligible method name, the word &quot;get&quot;, &quot;set&quot;, or &quot;is&quot; is removed from the name if the name starts with that word, then the name is converted to camel case. (For example, &quot;getName&quot;, &quot;setName&quot;, and &quot;isName&quot; all become &quot;name&quot;.)</p></li>
+</ul>
+
+<p>In the description above, a name &quot;starts with&quot; a word if that word begins the name and is followed by a character other than a basic digit or lower-case letter, that is, other than &quot;a&quot; to &quot;z&quot; or &quot;0&quot; to &quot;9&quot;.</p>
 
 <p><b>Returns:</b></p>
 
 <p><code>true
-</code> If the names are converted to camel case; otherwise, . <code>false
-</code> .</p>
+</code> If the names are converted to camel case; otherwise, <code>false
+</code> . This property is <code>true
+</code> by default.</p>
 
 <p><a href="/CBOR/">Back to CBOR start page.</a></p>
 </div><nav id="navigation"><ul>

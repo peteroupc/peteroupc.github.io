@@ -16,6 +16,7 @@
 <ul>
 <li><code><a href="#Base64Padding">Base64Padding</a></code> - Gets a value indicating whether padding is written out when writing base64url or traditional base64 to JSON.</li>
 <li><code><a href="#Default">public static readonly PeterO.Cbor.JSONOptions Default;</a></code> - The default options for converting CBOR objects to JSON.</li>
+<li><code><a href="#ReplaceSurrogates">ReplaceSurrogates</a></code> - Gets a value indicating whether surrogate code points not part of a surrogate pair (which consists of two consecutivechar s forming one Unicode code point) are each replaced with a replacement haracter (U+FFFD).</li>
 </ul>
 
 <p><a id="Void_ctor_Boolean"></a></p>
@@ -26,14 +27,31 @@
     bool base64Padding);
 </pre>
 
-<p>Initializes a new instance of the<a href="PeterO.Cbor.JSONOptions.html">PeterO.Cbor.JSONOptions</a> class with the given values for the options.</p>
-
-<p>NOTE: The base64Padding parameter may have no effect in the future. A future version may, by default, include necessary padding when writing traditional base64 to JSON and include no padding when writing base64url to JSON, in accordance with the revision of the CBOR specification.</p>
+<p>Initializes a new instance of the <a href="PeterO.Cbor.JSONOptions.html">PeterO.Cbor.JSONOptions</a> class with the given value for the Base64Padding option.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
 <li><i>base64Padding</i>: Whether padding is included when writing data in base64url or traditional base64 format to JSON.</li>
+</ul>
+
+<p><a id="Void_ctor_Boolean_Boolean"></a></p>
+
+<h3>JSONOptions Constructor</h3>
+
+<pre>public JSONOptions(
+    bool base64Padding,
+    bool replaceSurrogates);
+</pre>
+
+<p>Initializes a new instance of the <a href="PeterO.Cbor.JSONOptions.html">PeterO.Cbor.JSONOptions</a> class with the given values for the options.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>base64Padding</i>: Whether padding is included when writing data in base64url or traditional base64 format to JSON.</p></li>
+<li><p><i>replaceSurrogates</i>: Whether surrogate code points not part of a surrogate pair (which consists of two consecutive <code>char
+</code> s forming one Unicode code point) are each replaced with a replacement haracter (U+FFFD). The default is false; an exception is thrown when such ode points are encountered.</p></li>
 </ul>
 
 <p><a id="Default"></a></p>
@@ -52,8 +70,6 @@
 <pre>public bool Base64Padding { get; }
 </pre>
 
-<p><b>Deprecated.</b> This option may have no effect in the future.  A future version may, by default, include necessary padding when writing traditional base64 to JSON and include no padding when writing base64url to JSON, in accordance with the revision of the CBOR specification.</p>
-
 <p>Gets a value indicating whether padding is written out when writing base64url or traditional base64 to JSON.</p>
 
 <p>The padding character is &#39;=&#39;.</p>
@@ -61,6 +77,20 @@
 <p><b>Returns:</b></p>
 
 <p>The default is false, no padding.</p>
+
+<p><a id="ReplaceSurrogates"></a></p>
+
+<h3>ReplaceSurrogates</h3>
+
+<pre>public bool ReplaceSurrogates { get; }
+</pre>
+
+<p>Gets a value indicating whether surrogate code points not part of a surrogate pair (which consists of two consecutive <code>char
+</code> s forming one Unicode code point) are each replaced with a replacement haracter (U+FFFD). The default is false; an exception is thrown when such ode points are encountered.</p>
+
+<p><b>Returns:</b></p>
+
+<p>True, if surrogate code points not part of a surrogate pair are each replaced with a replacement character, or false if an exception is thrown when such code points are encountered.</p>
 
 <p><a href="/CBOR/">Back to CBOR start page.</a></p>
 </div><nav id="navigation"><ul>

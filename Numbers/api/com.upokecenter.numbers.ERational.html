@@ -69,6 +69,8 @@ ordering on all possible values.</li>
 <li><code>int CompareToTotalMagnitude​(ERational other)</code><br>
 Compares the absolute values of this object and another object, imposing a
 total ordering on all possible values (ignoring their signs).</li>
+<li><code>ERational Copy()</code><br>
+Not documented yet.</li>
 <li><code>ERational CopySign​(ERational other)</code><br>
 Returns a number with the same value as this one, but copying the sign
 (positive or negative) of another number.</li>
@@ -94,7 +96,9 @@ equal to those of another object.</li>
 Determines whether this object&#39;s numerator, denominator, and properties are
 equal to those of another object and that other object is an
 arbitrary-precision rational number.</li>
-<li><code>static ERational FromBoolean​(boolean boolValue)</code><br></li>
+<li><code>static ERational FromBoolean​(boolean boolValue)</code><br>
+Converts a boolean value (true or false) to an arbitrary-precision rational
+number.</li>
 <li><code>static ERational FromByte​(byte inputByte)</code><br>
 Converts a byte (from 0 to 255) to an arbitrary-precision rational number.</li>
 <li><code>static ERational FromDouble​(double flt)</code><br>
@@ -330,6 +334,19 @@ Converts this object to a text string.</li>
 <p>A rational number for zero.</p>
 
 <h2>Method Details</h2>
+
+<h3>Copy</h3>
+
+<pre>public ERational Copy()
+</pre>
+
+<p>Not documented yet.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An arbitrary-precision binary rational number.</li>
+</ul>
 
 <h3>getDenominator</h3>
 
@@ -1876,6 +1893,9 @@ an exact integer, or is less than -2147483648 or greater than
 <pre>public static ERational FromBoolean​(boolean boolValue)
 </pre>
 
+<p>Converts a boolean value (true or false) to an arbitrary-precision rational
+ number.</p>
+
 <p><strong>Parameters:</strong></p>
 
 <ul>
@@ -1885,7 +1905,7 @@ an exact integer, or is less than -2147483648 or greater than
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>An ERational object.</li>
+<li>One if <code>boolValue</code> is <code>true</code> ; otherwise, zero.</li>
 </ul>
 
 <h3>FromInt32</h3>

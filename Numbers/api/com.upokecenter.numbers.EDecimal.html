@@ -225,9 +225,15 @@ ordering on all possible values.</li>
 <li><code>int CompareToTotalMagnitude​(EDecimal other)</code><br>
 Compares the absolute values of this object and another object, imposing a
 total ordering on all possible values (ignoring their signs).</li>
+<li><code>int CompareToTotalMagnitude​(EDecimal other,
+                   EContext ctx)</code><br>
+Compares the values of this object and another object, imposing a total
+ordering on all possible values.</li>
 <li><code>EDecimal CompareToWithContext​(EDecimal other,
                 EContext ctx)</code><br>
 Compares the mathematical values of this object and another object.</li>
+<li><code>EDecimal Copy()</code><br>
+Not documented yet.</li>
 <li><code>EDecimal CopySign​(EDecimal other)</code><br>
 Returns a number with the same value as this one, but copying the sign
 (positive or negative) of another number.</li>
@@ -341,7 +347,9 @@ is an arbitrary-precision decimal number.</li>
 <li><code>EDecimal Exp​(EContext ctx)</code><br>
 Finds e (the base of natural logarithms) raised to the power of this
 object&#39;s value.</li>
-<li><code>static EDecimal FromBoolean​(boolean boolValue)</code><br></li>
+<li><code>static EDecimal FromBoolean​(boolean boolValue)</code><br>
+Converts a boolean value (true or false) to an arbitrary-precision decimal
+number.</li>
 <li><code>static EDecimal FromByte​(byte inputByte)</code><br>
 Converts a byte (from 0 to 255) to an arbitrary-precision decimal number.</li>
 <li><code>static EDecimal FromDouble​(double dbl)</code><br>
@@ -775,6 +783,19 @@ Returns the unit in the last place.</li>
 
 <h2>Method Details</h2>
 
+<h3>Copy</h3>
+
+<pre>public EDecimal Copy()
+</pre>
+
+<p>Not documented yet.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An EDecimal object.</li>
+</ul>
+
 <h3>getExponent</h3>
 
 <pre>public final EInteger getExponent()
@@ -1078,6 +1099,9 @@ Renamed to FromEFloat.</p>
 <pre>public static EDecimal FromBoolean​(boolean boolValue)
 </pre>
 
+<p>Converts a boolean value (true or false) to an arbitrary-precision decimal
+ number.</p>
+
 <p><strong>Parameters:</strong></p>
 
 <ul>
@@ -1087,7 +1111,7 @@ Renamed to FromEFloat.</p>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>An EDecimal object.</li>
+<li>One if <code>boolValue</code> is <code>true</code> ; otherwise, zero.</li>
 </ul>
 
 <h3>FromInt32</h3>
@@ -1529,7 +1553,10 @@ precision is unlimited (the context&#39;s Precision property is 0).</li>
 
 <ul>
 <li>An arbitrary-precision decimal number. Returns signaling NaN if this
-value is signaling NaN.</li>
+value is signaling NaN. (In this sense, this method is similar to the
+&quot;copy-abs&quot; operation in the General Decimal Arithmetic Specification,
+except this method does not necessarily return a copy of this
+object.).</li>
 </ul>
 
 <h3>CopySign</h3>
@@ -1538,7 +1565,10 @@ value is signaling NaN.</li>
 </pre>
 
 <p>Returns a number with the same value as this one, but copying the sign
- (positive or negative) of another number.</p>
+ (positive or negative) of another number. (This method is similar to
+ the &quot;copy-sign&quot; operation in the General Decimal Arithmetic
+ Specification, except this method does not necessarily return a copy
+ of this object.).</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1766,6 +1796,41 @@ object is less than the other value, or 1 if this object is greater.</li>
  <li>Infinity has a higher &quot;absolute value&quot; than any finite number.
  </li> <li>Negative numbers are less than positive numbers. </li>
  </ul></p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>other</code> - An arbitrary-precision decimal number to compare with this one.</p></li>
+<li><p><code>ctx</code> - An arithmetic context. Flags will be set in this context only if
+<code>HasFlags </code> and <code>IsSimplified </code> of the context are true
+and only if an operand needed to be rounded before carrying out the
+operation. Can be null.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The number 0 if both objects have the same value, or -1 if this
+object is less than the other value, or 1 if this object is greater.
+Does not signal flags if either value is signaling NaN.</li>
+</ul>
+
+<h3>CompareToTotalMagnitude</h3>
+
+<pre>public int CompareToTotalMagnitude​(EDecimal other, EContext ctx)
+</pre>
+
+<p>Compares the values of this object and another object, imposing a total
+ ordering on all possible values. In this method: <ul> <li>For objects
+ with the same value, the one with the higher exponent has a greater
+ &quot;absolute value&quot;. </li> <li>Negative zero is less than positive zero.
+ </li> <li>Quiet NaN has a higher &quot;absolute value&quot; than signaling NaN.
+ If both objects are quiet NaN or both are signaling NaN, the one with
+ the higher diagnostic information has a greater &quot;absolute value&quot;.
+ </li> <li>NaN has a higher &quot;absolute value&quot; than infinity. </li>
+ <li>Infinity has a higher &quot;absolute value&quot; than any finite number.
+ </li> <li>Negative numbers are less than positive numbers. </li>
+ </ul><p> TODO: Edit this doc to account for magnitude </p></p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -3093,7 +3158,10 @@ null.</li>
 <ul>
 <li>An arbitrary-precision decimal number. If this value is positive
 zero, returns negative zero. Returns signaling NaN if this value is
-signaling NaN.</li>
+signaling NaN. (In this sense, this method is similar to the
+&quot;copy-negate&quot; operation in the General Decimal Arithmetic
+Specification, except this method does not necessarily return a copy
+of this object.).</li>
 </ul>
 
 <h3>Negate</h3>
