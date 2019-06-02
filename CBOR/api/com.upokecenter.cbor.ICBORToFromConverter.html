@@ -9,54 +9,73 @@
 <pre>public interface ICBORToFromConverter&lt;T&gt; extends ICBORConverter&lt;T&gt;
 </pre>
 
-<p>Classes that implement this interface can support conversions from CBOR
- objects to a custom type and back.</p>
+<p>Interface implemented by classes that convert objects of arbitrary types to
+ and from CBOR objects.</p>
 
 <h2>Methods</h2>
 
 <ul>
-<li><code>T FromCBORObject​(CBORObject obj)</code><br>
-Converts a CBOR object to a custom type.</li>
+<li><code>T FromCBORObject​(CBORObject cbor)</code><br>
+Converts a CBOR object to an object of a type supported by the implementing
+class.</li>
 </ul>
 
 <h2>Method Details</h2>
 
 <h3>FromCBORObject</h3>
 
-<pre>T FromCBORObject​(CBORObject obj)
+<pre>T FromCBORObject​(CBORObject cbor)
 </pre>
 
-<p>Converts a CBOR object to a custom type.</p>
+<p>Converts a CBOR object to an object of a type supported by the implementing
+ class.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>obj</code> - A CBOR object to convert to the custom type.</li>
+<li><code>cbor</code> - A CBOR object to convert.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>An object of the custom type after conversion.</li>
+<li>The converted object.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>CBORException</code> - An error occurred in the
+conversion; for example, the conversion doesn&#39;t support the given
+CBOR object.</li>
 </ul>
 
 <h3>FromCBORObject</h3>
 
-<pre>T FromCBORObject​(CBORObject obj)
+<pre>T FromCBORObject​(CBORObject cbor)
 </pre>
 
-<p>Converts a CBOR object to a custom type.</p>
+<p>Converts a CBOR object to an object of a type supported by the implementing
+ class.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>obj</code> - A CBOR object to convert to the custom type.</li>
+<li><code>cbor</code> - A CBOR object to convert.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>An object of the custom type after conversion.</li>
+<li>The converted object.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>CBORException</code> - An error occurred in the
+conversion; for example, the conversion doesn&#39;t support the given
+CBOR object.</li>
 </ul>
 
 <p><a href="/CBOR/">Back to CBOR start page.</a></p>
