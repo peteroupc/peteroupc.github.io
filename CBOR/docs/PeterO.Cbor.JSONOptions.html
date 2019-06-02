@@ -26,7 +26,9 @@
     bool base64Padding);
 </pre>
 
-<p>Initializes a new instance of the <a href="PeterO.Cbor.JSONOptions.html">PeterO.Cbor.JSONOptions</a> class with the given values for the options.</p>
+<p>Initializes a new instance of the<a href="PeterO.Cbor.JSONOptions.html">PeterO.Cbor.JSONOptions</a> class with the given values for the options.</p>
+
+<p>NOTE: The base64Padding parameter may have no effect in the future. A future version may, by default, include necessary padding when writing traditional base64 to JSON and include no padding when writing base64url to JSON, in accordance with the revision of the CBOR specification.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -49,6 +51,8 @@
 
 <pre>public bool Base64Padding { get; }
 </pre>
+
+<p><b>Deprecated.</b> This option may have no effect in the future.  A future version may, by default, include necessary padding when writing traditional base64 to JSON and include no padding when writing base64url to JSON, in accordance with the revision of the CBOR specification.</p>
 
 <p>Gets a value indicating whether padding is written out when writing base64url or traditional base64 to JSON.</p>
 

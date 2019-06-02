@@ -9,7 +9,10 @@
 <pre>public sealed class CBORTypeMapper
 </pre>
 
-<p>Holds converters to customize the serialization and deserialization behavior of  <code>CBORObject.FromObject</code>  and <code>CBORObject#ToObject</code> , as well as type filters for <code>ToObject</code></p>
+<p>Holds converters to customize the serialization and deserialization behavior of <code>CBORObject.FromObject
+</code> and <code>CBORObject#ToObject
+</code> , as well as type filters for <code>ToObject
+</code></p>
 
 <h3>Member Summary</h3>
 
@@ -27,7 +30,7 @@
 <pre>public CBORTypeMapper();
 </pre>
 
-<p>Initializes a new instance of the CBORTypeMapper class.</p>
+<p>Initializes a new instance of the <a href="PeterO.Cbor.CBORTypeMapper.html">PeterO.Cbor.CBORTypeMapper</a> class.</p>
 
 <p><a id="AddConverter_T_System_Type_PeterO_Cbor_ICBORConverter_T"></a></p>
 
@@ -44,7 +47,7 @@
 
 <ul>
 <li><p><i>type</i>: A Type object specifying the type that the converter converts to CBOR objects.</p></li>
-<li><p><i>converter</i>: The parameter  <i>converter</i>
+<li><p><i>converter</i>: The parameter <i>converter</i>
 is an ICBORConverter object.</p></li>
 <li><p>&lt;T&gt;: Must be the same as the &quot;type&quot; parameter.</p></li>
 </ul>
@@ -58,10 +61,10 @@ is an ICBORConverter object.</p></li>
 <ul>
 <li><p>System.ArgumentNullException:
 The parameter <i>type</i>
-or  <i>converter</i>
+or <i>converter</i>
 is null.</p></li>
 <li><p>System.ArgumentException:
-&quot;Converter doesn&#39;t contain a proper ToCBORObject method&quot;.</p></li>
+Converter doesn&#39;t contain a proper ToCBORObject method&quot;.</p></li>
 </ul>
 
 <p><a id="AddTypeName_string"></a></p>
@@ -77,7 +80,9 @@ is null.</p></li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>name</i>: The fully qualified name of a Java or .NET class (e.g.,  <code>java.math.BigInteger</code>  or  <code>System.Globalization.CultureInfo</code> ).</li>
+<li><i>name</i>: The fully qualified name of a Java or .NET class (e.g., <code>java.math.BigInteger
+</code> or <code>System.Globalization.CultureInfo
+</code> ).</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -88,10 +93,10 @@ is null.</p></li>
 
 <ul>
 <li><p>System.ArgumentNullException:
-The parameter  <i>name</i>
+The parameter <i>name</i>
 is null.</p></li>
 <li><p>System.ArgumentException:
-The parameter  <i>name</i>
+The parameter <i>name</i>
 is empty.</p></li>
 </ul>
 
@@ -119,10 +124,10 @@ is empty.</p></li>
 
 <ul>
 <li><p>System.ArgumentNullException:
-The parameter  <i>prefix</i>
+The parameter <i>prefix</i>
 is null.</p></li>
 <li><p>System.ArgumentException:
-The parameter  <i>prefix</i>
+The parameter <i>prefix</i>
 is empty.</p></li>
 </ul>
 
@@ -139,12 +144,16 @@ is empty.</p></li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>typeName</i>: The fully qualified name of a Java or .NET class (e.g.,  <code>java.math.BigInteger</code>  or  <code>System.Globalization.CultureInfo</code> ).</li>
+<li><i>typeName</i>: The fully qualified name of a Java or .NET class (e.g., <code>java.math.BigInteger
+</code> or <code>System.Globalization.CultureInfo
+</code> ).</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p>Either  <code>true</code>  if the given Java or .NET type name fits the filters given in this mapper, or  <code>false</code>  otherwise.</p>
+<p>Either <code>true
+</code> if the given Java or .NET type name fits the filters given in this apper, or <code>false
+</code> otherwise.</p>
 
 <p><a href="/CBOR/">Back to CBOR start page.</a></p>
 </div><nav id="navigation"><ul>

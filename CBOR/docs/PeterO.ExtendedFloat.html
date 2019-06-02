@@ -7,13 +7,18 @@
 <h2>PeterO.ExtendedFloat</h2>
 
 <pre>public sealed class ExtendedFloat :
-    System.IComparable,
-    System.IEquatable
+    System.IEquatable,
+    System.IComparable
 </pre>
 
 <p><b>Deprecated.</b> Use EFloat from PeterO.Numbers/com.upokecenter.numbers and the output of this class&#39;s ToString method.</p>
 
-<p><b>This class is largely obsolete. It will be replaced by a new version of this class in a different namespace/package and library, called <code>PeterO.Numbers.EFloat</code> in the<a href="https://www.nuget.org/packages/PeterO.Numbers"> <code>PeterO.Numbers</code> </a>library (in .NET), or <code>com.upokecenter.numbers.EFloat</code> in the<a href="https://github.com/peteroupc/numbers-java"> <code>com.github.peteroupc/numbers</code> </a>artifact (in Java). This new class can be used in the <code>CBORObject.FromObject(object)</code> method (by including the new library in your code, among other hings).</b></p>
+<p><b>This class is largely obsolete. It will be replaced by a new version of this class in a different namespace/package and library, called <code>PeterO.Numbers.EFloat
+</code> in the<a href="https://www.nuget.org/packages/PeterO.Numbers"> <code>PeterO.Numbers
+</code> </a>library (in .NET), or <code>com.upokecenter.numbers.EFloat
+</code> in the<a href="https://github.com/peteroupc/numbers-java"> <code>com.github.peteroupc/numbers
+</code> </a>artifact (in Java). This new class can be used in the <code>CBORObject.FromObject(object)
+</code> method (by including the new library in your code, among other hings).</b></p>
 
 <p>Represents an arbitrary-precision binary floating-point number. Consists of an integer mantissa and an integer exponent, both arbitrary-precision. The value of the number equals mantissa * 2^exponent. This class also supports values for negative zero, not-a-number (NaN) values, and infinity.</p>
 
@@ -168,7 +173,9 @@
 
 <p><b>Returns:</b></p>
 
-<p><code>true</code>  If this object is negative, including negative zero; otherwise, .  <code>false</code> .</p>
+<p><code>true
+</code> If this object is negative, including negative zero; otherwise, . <code>false
+</code> .</p>
 
 <p><a id="Mantissa"></a></p>
 
@@ -280,7 +287,7 @@
 <ul>
 <li>System.ArgumentNullException:
 The parameter <i>mantissa</i>
-or  <i>exponent</i>
+or <i>exponent</i>
 is null.</li>
 </ul>
 
@@ -303,7 +310,9 @@ is an arbitrary object.</li>
 
 <p><b>Return Value:</b></p>
 
-<p><code>true</code> if the objects are equal; otherwise,  <code>false</code> .</p>
+<p><code>true
+</code> if the objects are equal; otherwise, <code>false
+</code> .</p>
 
 <p><a id="Equals_PeterO_ExtendedFloat"></a></p>
 
@@ -325,7 +334,9 @@ is an arbitrary object.</li>
 
 <p><b>Return Value:</b></p>
 
-<p><code>true</code>  if this object&#39;s mantissa and exponent are equal to those of another object; otherwise,  <code>false</code> .</p>
+<p><code>true
+</code> if this object&#39;s mantissa and exponent are equal to those of another bject; otherwise, <code>false
+</code> .</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -355,7 +366,9 @@ is null.</li>
 
 <p><b>Return Value:</b></p>
 
-<p><code>true</code>  if this object&#39;s mantissa and exponent are equal to those of another object; otherwise,  <code>false</code> .</p>
+<p><code>true
+</code> if this object&#39;s mantissa and exponent are equal to those of another bject; otherwise, <code>false
+</code> .</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -398,7 +411,9 @@ is null.</li>
 
 <p><b>Deprecated.</b> Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</p>
 
-<p>Creates a binary float from a text string that represents a number. Note that if the string contains a negative exponent, the resulting value might not be exact, in which case the resulting binary float will be an approximation of this decimal number&#39;s value. (NOTE: This documentation previously said the binary float will contain enough precision to accurately convert it to a 32-bit or 64-bit floating point number. Due to double rounding, this will generally not be the case for certain numbers converted from decimal to ExtendedFloat via this method and in turn converted to <code>double</code>  or  <code>float</code> .)The format of the string generally consists of:</p>
+<p>Creates a binary float from a text string that represents a number. Note that if the string contains a negative exponent, the resulting value might not be exact, in which case the resulting binary float will be an approximation of this decimal number&#39;s value. (NOTE: This documentation previously said the binary float will contain enough precision to accurately convert it to a 32-bit or 64-bit floating point number. Due to double rounding, this will generally not be the case for certain numbers converted from decimal to ExtendedFloat via this method and in turn converted to <code>double
+</code> or <code>float
+</code> .)The format of the string generally consists of:</p>
 
 <ul>
 <li><p>An optional plus sign (&quot;+&quot; , U+002B) or minus sign (&quot;-&quot;, U+002D) (if &#39;-&#39; , the value is negative.)</p></li>
@@ -413,12 +428,12 @@ is null.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>str</i>: The parameter  <i>str</i>
+<li><p><i>str</i>: The parameter <i>str</i>
 is a text string.</p></li>
-<li><p><i>offset</i>: A zero-based index showing where the desired portion of  <i>str</i>
+<li><p><i>offset</i>: A zero-based index showing where the desired portion of <i>str</i>
 begins.</p></li>
-<li><p><i>length</i>: The length, in code units, of the desired portion of  <i>str</i>
-(but not more than  <i>str</i>
+<li><p><i>length</i>: The length, in code units, of the desired portion of <i>str</i>
+(but not more than <i>str</i>
 &#39;s length).</p></li>
 <li><p><i>ctx</i>: A PrecisionContext object specifying the precision, rounding, and exponent range to apply to the parsed number. Can be null.</p></li>
 </ul>
@@ -434,12 +449,12 @@ begins.</p></li>
 The parameter <i>str</i>
 is null.</p></li>
 <li><p>System.ArgumentException:
-Either  <i>offset</i>
-or  <i>length</i>
-is less than 0 or greater than  <i>str</i>
-&#39;s length, or  <i>str</i>
-&#39; s length minus  <i>offset</i>
-is less than  <i>length</i>
+Either <i>offset</i>
+or <i>length</i>
+is less than 0 or greater than <i>str</i>
+&#39;s length, or <i>str</i>
+&#39; s length minus <i>offset</i>
+is less than <i>length</i>
 .</p></li>
 </ul>
 
@@ -467,7 +482,9 @@ is less than  <i>length</i>
 
 <p><b>Return Value:</b></p>
 
-<p><code>true</code> if this object is positive or negative infinity; otherwise,  <code>false</code> .</p>
+<p><code>true
+</code> if this object is positive or negative infinity; otherwise, <code>false
+</code> .</p>
 
 <p><a id="IsNaN"></a></p>
 
@@ -480,7 +497,9 @@ is less than  <i>length</i>
 
 <p><b>Return Value:</b></p>
 
-<p><code>true</code> if this object is a not-a-number value; otherwise,  <code>false</code> .</p>
+<p><code>true
+</code> if this object is a not-a-number value; otherwise, <code>false
+</code> .</p>
 
 <p><a id="IsNegativeInfinity"></a></p>
 
@@ -495,7 +514,9 @@ is less than  <i>length</i>
 
 <p><b>Return Value:</b></p>
 
-<p><code>true</code> if this object is negative infinity; otherwise,  <code>false</code> .</p>
+<p><code>true
+</code> if this object is negative infinity; otherwise, <code>false
+</code> .</p>
 
 <p><a id="IsPositiveInfinity"></a></p>
 
@@ -510,7 +531,9 @@ is less than  <i>length</i>
 
 <p><b>Return Value:</b></p>
 
-<p><code>true</code> if this object is positive infinity; otherwise,  <code>false</code> .</p>
+<p><code>true
+</code> if this object is positive infinity; otherwise, <code>false
+</code> .</p>
 
 <p><a id="IsQuietNaN"></a></p>
 
@@ -525,7 +548,9 @@ is less than  <i>length</i>
 
 <p><b>Return Value:</b></p>
 
-<p><code>true</code> if this object is a quiet not-a-number value; otherwise,  <code>false</code> .</p>
+<p><code>true
+</code> if this object is a quiet not-a-number value; otherwise, <code>false
+</code> .</p>
 
 <p><a id="IsSignalingNaN"></a></p>
 
@@ -540,7 +565,9 @@ is less than  <i>length</i>
 
 <p><b>Return Value:</b></p>
 
-<p><code>true</code> if this object is a signaling not-a-number value; otherwise,  <code>false</code> .</p>
+<p><code>true
+</code> if this object is a signaling not-a-number value; otherwise, <code>false
+</code> .</p>
 
 <p><a id="ToString"></a></p>
 

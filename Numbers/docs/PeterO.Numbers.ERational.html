@@ -23,6 +23,7 @@
 <li><code><a href="#CompareToTotalMagnitude_PeterO_Numbers_ERational">CompareToTotalMagnitude(PeterO.Numbers.ERational)</a></code> - Compares the absolute values of this object and another object, imposing a total ordering on all possible values (ignoring their signs).</li>
 <li><code><a href="#CompareToTotal_PeterO_Numbers_ERational">CompareToTotal(PeterO.Numbers.ERational)</a></code> - Compares the values of this object and another object, imposing a total ordering on all possible values.</li>
 <li><code><a href="#CompareTo_PeterO_Numbers_ERational">CompareTo(PeterO.Numbers.ERational)</a></code> - Compares an arbitrary-precision rational number with this instance.</li>
+<li><code><a href="#Copy">Copy()</a></code> - Not documented yet.</li>
 <li><code><a href="#CopySign_PeterO_Numbers_ERational">CopySign(PeterO.Numbers.ERational)</a></code> - Returns a number with the same value as this one, but copying the sign (positive or negative) of another number.</li>
 <li><code><a href="#CreateNaN_PeterO_Numbers_EInteger">CreateNaN(PeterO.Numbers.EInteger)</a></code> - Creates a not-a-number arbitrary-precision rational number.</li>
 <li><code><a href="#CreateNaN_PeterO_Numbers_EInteger_bool_bool">CreateNaN(PeterO.Numbers.EInteger, bool, bool)</a></code> - Creates a not-a-number arbitrary-precision rational number.</li>
@@ -148,8 +149,12 @@
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li>System.ArgumentException:
-The denominator is zero.</li>
+<li><p>System.ArgumentException:
+The denominator is zero.</p></li>
+<li><p>System.ArgumentNullException:
+The parameter <i>numerator</i>
+or <i>denominator</i>
+is null.</p></li>
 </ul>
 
 <p><a id="NaN"></a></p>
@@ -503,6 +508,19 @@ Doesn&#39;t satisfy this.IsFinite; doesn&#39;t satisfy other.IsFinite.</li>
 
 <p>The number 0 if both objects have the same value, or -1 if this object is less than the other value, or 1 if this object is greater.</p>
 
+<p><a id="Copy"></a></p>
+
+<h3>Copy</h3>
+
+<pre>public PeterO.Numbers.ERational Copy();
+</pre>
+
+<p>Not documented yet.</p>
+
+<p><b>Return Value:</b></p>
+
+<p>An arbitrary-precision binary rational number.</p>
+
 <p><a id="CopySign_PeterO_Numbers_ERational"></a></p>
 
 <h3>CopySign</h3>
@@ -730,6 +748,8 @@ is an arbitrary object.</li>
 
 <p>Converts a boolean value (true or false) to an arbitrary-precision rational number.</p>
 
+<p>Converts a boolean value (true or false) to an arbitrary-precision rational number.</p>
+
 <p><b>Parameters:</b></p>
 
 <ul>
@@ -743,7 +763,7 @@ is not documented yet.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>An ERational object.</p>
+<p>One if  <code>boolValue</code>  is  <code>true</code>  ; otherwise, zero.</p>
 
 <p><a id="FromByte_byte"></a></p>
 

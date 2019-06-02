@@ -14,11 +14,11 @@
  <p>Many of these methods work with text encoded in UTF-8, an encoding
  form of the Unicode Standard which uses one byte to encode the most
  basic characters and two to four bytes to encode other characters.
- For example, the <code>GetUtf8 </code> method converts a text string to an
+ For example, the <code>GetUtf8</code> method converts a text string to an
  array of bytes in UTF-8. </p> <p>In C# and Java, text strings are
- represented as sequences of 16-bit values called <code>char </code> s.
- These sequences are well-formed under UTF-16, a 16-bit encoding form
- of Unicode, except if they contain unpaired surrogate code points. (A
+ represented as sequences of 16-bit values called <code>char</code> s. These
+ sequences are well-formed under UTF-16, a 16-bit encoding form of
+ Unicode, except if they contain unpaired surrogate code points. (A
  surrogate code point is used to encode supplementary characters,
  those with code points U + 10000 or higher, in UTF-16. A surrogate pair
  is a high surrogate [U + D800 to U + DBFF] followed by a low surrogate
@@ -212,12 +212,12 @@ greater than the length of &quot;data&quot; .</p></li>
 </pre>
 
 <p>Encodes a string in UTF-8 as a byte array. This method does not insert a
- byte-order mark (U + FEFF) at the beginning of the encoded byte array.
- </p> <p>REMARK: It is not recommended to use
- <code>Encoding.UTF8.GetBytes </code> in .NET, or the <code>getBytes() </code>
- method in Java to do this. For instance, <code>getBytes() </code> encodes
- text strings in a default (so not fixed) character encoding, which
- can be undesirable. </p>
+ byte-order mark (U + FEFF) at the beginning of the encoded byte
+ array.</p> <p>REMARK: It is not recommended to use
+ <code>Encoding.UTF8.GetBytes</code> in .NET, or the <code>getBytes()</code>
+ method in Java to do this. For instance, <code>getBytes()</code> encodes
+ text strings in an unspecified character encoding. Both behaviors can
+ be undesirable.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -249,12 +249,12 @@ occurred.</p></li>
 </pre>
 
 <p>Encodes a string in UTF-8 as a byte array. This method does not insert a
- byte-order mark (U + FEFF) at the beginning of the encoded byte array.
- </p> <p>REMARK: It is not recommended to use
- <code>Encoding.UTF8.GetBytes </code> in .NET, or the <code>getBytes() </code>
- method in Java to do this. For instance, <code>getBytes() </code> encodes
- text strings in a default (so not fixed) character encoding, which
- can be undesirable. </p>
+ byte-order mark (U + FEFF) at the beginning of the encoded byte
+ array.</p> <p>REMARK: It is not recommended to use
+ <code>Encoding.UTF8.GetBytes</code> in .NET, or the <code>getBytes()</code>
+ method in Java to do this. For instance, <code>getBytes()</code> encodes
+ text strings in an unspecified character encoding. Both behaviors can
+ be undesirable.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -331,8 +331,7 @@ replace</code> is false.</li>
 <li>The Unicode code point at the previous position. Returns -1 if
 <code>index</code> is 0 or less, or is greater than the string&#39;s length.
 Returns the replacement character (U + FFFD) if the previous character
-is an unpaired surrogate code point. If the return value is 65536
-(0x10000) or greater, the code point takes up two UTF-16 code units.</li>
+is an unpaired surrogate code point.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -365,9 +364,7 @@ surrogate code point; if neither 0 nor 1, return -1.</p></li>
 <li>The Unicode code point at the previous position. Returns -1 if
 <code>index</code> is 0 or less, or is greater than the string&#39;s length.
 Returns a value as specified under <code>surrogateBehavior</code> if the
-previous character is an unpaired surrogate code point. If the return
-value is 65536 (0x10000) or greater, the code point takes up two
-UTF-16 code units.</li>
+previous character is an unpaired surrogate code point.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -381,12 +378,7 @@ UTF-16 code units.</li>
 <pre>public static int CodePointAt​(java.lang.String str, int index)
 </pre>
 
-<p>Gets the Unicode code point at the given index of the string.<p/><p>The
- following example shows how to iterate a text string code point by
- code point. </p> <pre>for (var i = 0;i&lt;str.length(); ++i) { int
- codePoint = DataUtilities.CodePointAt(str, i);
- Console.WriteLine(&quot;codePoint:&quot;+codePoint); if (codePoint &gt;=
- 0x10000) { i++; /* Supplementary code point */ } } </pre></p>
+<p>Gets the Unicode code point at the given index of the string.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -401,8 +393,7 @@ UTF-16 code units.</li>
 <li>The Unicode code point at the given position. Returns -1 if <code>
 index</code> is less than 0, or is the string&#39;s length or greater. Returns
 the replacement character (U + FFFD) if the current character is an
-unpaired surrogate code point. If the return value is 65536 (0x10000)
-or greater, the code point takes up two UTF-16 code units.</li>
+unpaired surrogate code point.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -416,14 +407,7 @@ or greater, the code point takes up two UTF-16 code units.</li>
 <pre>public static int CodePointAt​(java.lang.String str, int index, int surrogateBehavior)
 </pre>
 
-<p>Gets the Unicode code point at the given index of the string.<p/><p>The
- following example shows how to iterate a text string code point by
- code point, terminating the loop when an unpaired surrogate is found.
- </p> <pre>for (var i = 0;i&lt;str.length(); ++i) { int codePoint =
- DataUtilities.CodePointAt(str, i, 2); if (codePoint &lt; 0) { break;
- /* Unpaired surrogate <em>/ } Console.WriteLine(&quot;codePoint:&quot;+codePoint);
- if (codePoint &gt;= 0x10000) { i++; /</em> Supplementary code point */ } }
- </pre></p>
+<p>Gets the Unicode code point at the given index of the string.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -442,9 +426,7 @@ surrogate code point; if neither 0 nor 1, return -1.</p></li>
 <li>The Unicode code point at the current position. Returns -1 if <code>
 index</code> is less than 0, or is the string&#39;s length or greater. Returns
 a value as specified under <code>surrogateBehavior</code> if the previous
-character is an unpaired surrogate code point. If the return value is
-65536 (0x10000) or greater, the code point takes up two UTF-16 code
-units.</li>
+character is an unpaired surrogate code point.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>

@@ -45,6 +45,7 @@
 <li><code><a href="#Divide_int">Divide(int)</a></code> - Divides this instance by the value of an arbitrary-precision integer.</li>
 <li><code><a href="#Equals_PeterO_Numbers_EInteger">Equals(PeterO.Numbers.EInteger)</a></code> - Determines whether this object and another object are equal.</li>
 <li><code><a href="#Equals_object">Equals(object)</a></code> - Determines whether this object and another object are equal and have the same type.</li>
+<li><code><a href="#FromBoolean_bool">FromBoolean(bool)</a></code> - Not documented yet.</li>
 <li><code><a href="#FromByte_byte">FromByte(byte)</a></code> - Converts a byte (from 0 to 255) to an arbitrary-precision integer.</li>
 <li><code><a href="#FromBytes_byte_bool">FromBytes(byte[], bool)</a></code> - Initializes an arbitrary-precision integer from an array of bytes.</li>
 <li><code><a href="#FromInt16_short">FromInt16(short)</a></code> - Converts a 16-bit signed integer to an arbitrary-precision integer.</li>
@@ -616,6 +617,27 @@ is an arbitrary object.</li>
 </code> if this object and another object are equal; otherwise, <code>false
 </code> .</p>
 
+<p><a id="FromBoolean_bool"></a></p>
+
+<h3>FromBoolean</h3>
+
+<pre>public static PeterO.Numbers.EInteger FromBoolean(
+    bool boolValue);
+</pre>
+
+<p>Not documented yet.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>boolValue</i>: The parameter  <i>boolValue</i>
+is not documented yet.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>An EInteger object.</p>
+
 <p><a id="FromByte_byte"></a></p>
 
 <h3>FromByte</h3>
@@ -1130,7 +1152,7 @@ is a 32-bit signed integer.</li>
 </pre>
 
 <p>Returns whether a bit is set in the two&#39;s-complement form (see<a href="PeterO.Numbers.EDecimal.html">
-        &#x22;Forms of numbers&#x22;
+         &#x22;Forms of numbers&#x22;
       </a>) of this object&#39; s value.</p>
 
 <p><b>Parameters:</b></p>
@@ -1143,7 +1165,7 @@ is a 32-bit signed integer.</li>
 
 <p><code>true
 </code> if a bit is set in the two&#39; s-complement form (see<a href="PeterO.Numbers.EDecimal.html">
-        &#x22;Forms of numbers&#x22;
+         &#x22;Forms of numbers&#x22;
       </a>) of this object&#39; s value; otherwise, <code>false
 </code> .</p>
 
@@ -2127,7 +2149,7 @@ is null.</p></li>
 
 <ul>
 <li>System.ArgumentNullException:
-The parameter  <i>eshift</i>
+The parameter <i>eshift</i>
 is null.</li>
 </ul>
 
@@ -2162,7 +2184,7 @@ is null.</li>
 </pre>
 
 <p>Returns an arbitrary-precision integer with the bits shifted to the right. For this operation, the arbitrary-precision integer is treated as a two&#39;s-complement form (see<a href="PeterO.Numbers.EDecimal.html">
-        &#x22;Forms of numbers&#x22;
+         &#x22;Forms of numbers&#x22;
       </a>). Thus, for negative values, the arbitrary-precision integer is ign-extended.</p>
 
 <p><b>Parameters:</b></p>

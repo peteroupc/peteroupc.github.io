@@ -147,10 +147,12 @@
 <li><code><a href="#CompareToBinary_PeterO_Numbers_EFloat">CompareToBinary(PeterO.Numbers.EFloat)</a></code> - Compares an arbitrary-precision binary float with this instance.</li>
 <li><code><a href="#CompareToSignal_PeterO_Numbers_EDecimal_PeterO_Numbers_EContext">CompareToSignal(PeterO.Numbers.EDecimal, PeterO.Numbers.EContext)</a></code> - Compares the mathematical values of this object and another object, treating quiet NaN as signaling.</li>
 <li><code><a href="#CompareToTotalMagnitude_PeterO_Numbers_EDecimal">CompareToTotalMagnitude(PeterO.Numbers.EDecimal)</a></code> - Compares the absolute values of this object and another object, imposing a total ordering on all possible values (ignoring their signs).</li>
+<li><code><a href="#CompareToTotalMagnitude_PeterO_Numbers_EDecimal_PeterO_Numbers_EContext">CompareToTotalMagnitude(PeterO.Numbers.EDecimal, PeterO.Numbers.EContext)</a></code> - Compares the values of this object and another object, imposing a total ordering on all possible values.</li>
 <li><code><a href="#CompareToTotal_PeterO_Numbers_EDecimal">CompareToTotal(PeterO.Numbers.EDecimal)</a></code> - Compares the values of this object and another object, imposing a total ordering on all possible values.</li>
 <li><code><a href="#CompareToTotal_PeterO_Numbers_EDecimal_PeterO_Numbers_EContext">CompareToTotal(PeterO.Numbers.EDecimal, PeterO.Numbers.EContext)</a></code> - Compares the values of this object and another object, imposing a total ordering on all possible values.</li>
 <li><code><a href="#CompareToWithContext_PeterO_Numbers_EDecimal_PeterO_Numbers_EContext">CompareToWithContext(PeterO.Numbers.EDecimal, PeterO.Numbers.EContext)</a></code> - Compares the mathematical values of this object and another object.</li>
 <li><code><a href="#CompareTo_PeterO_Numbers_EDecimal">CompareTo(PeterO.Numbers.EDecimal)</a></code> - Compares the mathematical values of this object and another object, accepting NaN values.</li>
+<li><code><a href="#Copy">Copy()</a></code> - Not documented yet.</li>
 <li><code><a href="#CopySign_PeterO_Numbers_EDecimal">CopySign(PeterO.Numbers.EDecimal)</a></code> - Returns a number with the same value as this one, but copying the sign (positive or negative) of another number.</li>
 <li><code><a href="#CreateNaN_PeterO_Numbers_EInteger">CreateNaN(PeterO.Numbers.EInteger)</a></code> - Creates a not-a-number arbitrary-precision decimal number.</li>
 <li><code><a href="#CreateNaN_PeterO_Numbers_EInteger_bool_bool_PeterO_Numbers_EContext">CreateNaN(PeterO.Numbers.EInteger, bool, bool, PeterO.Numbers.EContext)</a></code> - Creates a not-a-number arbitrary-precision decimal number.</li>
@@ -536,7 +538,7 @@
 
 <p><b>Return Value:</b></p>
 
-<p>An arbitrary-precision decimal number. Returns signaling NaN if this value is signaling NaN.</p>
+<p>An arbitrary-precision decimal number. Returns signaling NaN if this value is signaling NaN. (In this sense, this method is similar to the &quot;copy-abs&quot; operation in the General Decimal Arithmetic Specification, except this method does not necessarily return a copy of this object.).</p>
 
 <p><a id="Add_int"></a></p>
 
@@ -767,6 +769,41 @@ Doesn&#39;t satisfy this.IsFinite; doesn&#39;t satisfy other.IsFinite.</li>
 
 <p>The number 0 if both objects have the same value, or -1 if this object is less than the other value, or 1 if this object is greater.</p>
 
+<p><a id="CompareToTotalMagnitude_PeterO_Numbers_EDecimal_PeterO_Numbers_EContext"></a></p>
+
+<h3>CompareToTotalMagnitude</h3>
+
+<pre>public int CompareToTotalMagnitude(
+    PeterO.Numbers.EDecimal other,
+    PeterO.Numbers.EContext ctx);
+</pre>
+
+<p>Compares the values of this object and another object, imposing a total ordering on all possible values. In this method:</p>
+
+<ul>
+<li><p>For objects with the same value, the one with the higher exponent has a greater &quot;absolute value&quot;.</p></li>
+<li><p>Negative zero is less than positive zero.</p></li>
+<li><p>Quiet NaN has a higher &quot;absolute value&quot; than signaling NaN. If both objects are quiet NaN or both are signaling NaN, the one with the higher diagnostic information has a greater &quot;absolute value&quot;.</p></li>
+<li><p>NaN has a higher &quot;absolute value&quot; than infinity.</p></li>
+<li><p>Infinity has a higher &quot;absolute value&quot; than any finite number.</p></li>
+<li><p>Negative numbers are less than positive numbers.</p></li>
+</ul>
+
+<p>TODO: Edit this doc to account for magnitude</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>other</i>: An arbitrary-precision decimal number to compare with this one.</p></li>
+<li><p><i>ctx</i>: An arithmetic context. Flags will be set in this context only if <code>HasFlags
+</code> and <code>IsSimplified
+</code> of the context are true and only if an operand needed to be rounded efore carrying out the operation. Can be null.</p></li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>The number 0 if both objects have the same value, or -1 if this object is less than the other value, or 1 if this object is greater. Does not signal flags if either value is signaling NaN.</p>
+
 <p><a id="CompareToWithContext_PeterO_Numbers_EDecimal_PeterO_Numbers_EContext"></a></p>
 
 <h3>CompareToWithContext</h3>
@@ -792,6 +829,19 @@ Doesn&#39;t satisfy this.IsFinite; doesn&#39;t satisfy other.IsFinite.</li>
 
 <p>Quiet NaN if this object or the other object is NaN, or 0 if both objects have the same value, or -1 if this object is less than the other value, or 1 if this object is greater.</p>
 
+<p><a id="Copy"></a></p>
+
+<h3>Copy</h3>
+
+<pre>public PeterO.Numbers.EDecimal Copy();
+</pre>
+
+<p>Not documented yet.</p>
+
+<p><b>Return Value:</b></p>
+
+<p>An EDecimal object.</p>
+
 <p><a id="CopySign_PeterO_Numbers_EDecimal"></a></p>
 
 <h3>CopySign</h3>
@@ -800,7 +850,7 @@ Doesn&#39;t satisfy this.IsFinite; doesn&#39;t satisfy other.IsFinite.</li>
     PeterO.Numbers.EDecimal other);
 </pre>
 
-<p>Returns a number with the same value as this one, but copying the sign (positive or negative) of another number.</p>
+<p>Returns a number with the same value as this one, but copying the sign (positive or negative) of another number. (This method is similar to the &quot;copy-sign&quot; operation in the General Decimal Arithmetic Specification, except this method does not necessarily return a copy of this object.).</p>
 
 <p><b>Parameters:</b></p>
 
@@ -1458,6 +1508,8 @@ is an arbitrary object.</li>
 
 <p>Converts a boolean value (true or false) to an arbitrary-precision decimal number.</p>
 
+<p>Converts a boolean value (true or false) to an arbitrary-precision decimal number.</p>
+
 <p><b>Parameters:</b></p>
 
 <ul>
@@ -1471,7 +1523,7 @@ is not documented yet.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>An EDecimal object.</p>
+<p>One if  <code>boolValue</code>  is  <code>true</code>  ; otherwise, zero.</p>
 
 <p><a id="FromByte_byte"></a></p>
 
@@ -2604,7 +2656,7 @@ The parameter &quot;op&quot; or &quot;subtrahend&quot; is null.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>An arbitrary-precision decimal number. If this value is positive zero, returns negative zero. Returns signaling NaN if this value is signaling NaN.</p>
+<p>An arbitrary-precision decimal number. If this value is positive zero, returns negative zero. Returns signaling NaN if this value is signaling NaN. (In this sense, this method is similar to the &quot;copy-negate&quot; operation in the General Decimal Arithmetic Specification, except this method does not necessarily return a copy of this object.).</p>
 
 <p><a id="NextMinus_PeterO_Numbers_EContext"></a></p>
 
