@@ -13,18 +13,17 @@
  range of arbitrary-precision numbers. (The &quot;E&quot; stands for &quot;extended&quot;,
  and has this prefix to group it with the other classes common to this
  library, particularly EDecimal, EFloat, and ERational.). <p><b>Thread
- safety: </b> With one exception, instances of this class are
- immutable and are safe to use among multiple threads. The one
- exception involves the <code>Flags </code> property. If the context&#39;s
- <code>HasFlags </code> property (a read-only property) is <code>true </code> ,
- the <code>Flags </code> property is mutable, thus making the context
- mutable. This class doesn&#39;t synchronize access to such mutable
- contexts, so applications should provide their own synchronization if
- a context with the <code>HasFlags </code> property set to <code>true </code> will
- be shared among multiple threads and at least one of those threads
- needs to write the <code>Flags </code> property (which can happen, for
- example, by passing the context to most methods of <code>EDecimal </code>
- such as <code>Add </code>). </p></p>
+ safety:</b> With one exception, instances of this class are immutable
+ and are safe to use among multiple threads. The one exception
+ involves the <code>Flags</code> property. If the context&#39;s <code>HasFlags</code>
+ property (a read-only property) is <code>true</code> , the <code>Flags</code>
+ property is mutable, thus making the context mutable. This class
+ doesn&#39;t synchronize access to such mutable contexts, so applications
+ should provide their own synchronization if a context with the
+ <code>HasFlags</code> property set to <code>true</code> will be shared among
+ multiple threads and at least one of those threads needs to write the
+ <code>Flags</code> property (which can happen, for example, by passing the
+ context to most methods of <code>EDecimal</code> such as <code>Add</code>). </p></p>
 
 <h2>Fields</h2>
 
@@ -172,7 +171,7 @@ Copies this arithmetic context and sets the copy&#39;s exponent range.</li>
 <li><code>EContext WithBigPrecision​(EInteger bigintPrecision)</code><br>
 Copies this EContext and gives it a particular precision value.</li>
 <li><code>EContext WithBlankFlags() HasFlags</code><br>
-Copies this EContext with HasFlags  set to true and a Flags value of
+Copies this EContext with HasFlags set to true and a Flags value of
 0.</li>
 <li><code>EContext WithExponentClamp​(boolean clamp)</code><br>
 Copies this arithmetic context and sets the copy&#39;s &quot;ClampNormalExponents&quot;
@@ -181,7 +180,7 @@ flag to the given value.</li>
              int exponentMaxSmall)</code><br>
 Copies this arithmetic context and sets the copy&#39;s exponent range.</li>
 <li><code>EContext WithNoFlags() HasFlags</code><br>
-Copies this EContext with HasFlags  set to false and a Flags value of
+Copies this EContext with HasFlags set to false and a Flags value of
 0.</li>
 <li><code>EContext WithPrecision​(int precision)</code><br>
 Copies this EContext and gives it a particular precision value.</li>
@@ -326,7 +325,7 @@ Copies this EContext with an unlimited exponent range.</li>
 
 <p>An arithmetic context for the .NET Framework decimal format (see <code>&quot;Forms of numbers&quot; </code>), 96 bits
  precision, and a valid exponent range of -28 to 0. The default
- rounding mode is HalfEven. (The <code>&quot;Cli&quot; </code> stands for &quot;Common
+ rounding mode is HalfEven. (The <code>&quot;Cli&quot;</code> stands for &quot;Common
  Language Infrastructure&quot;, which defined this format as the .NET
  Framework decimal format in version 1, but leaves it unspecified in
  later versions.).</p>
@@ -463,13 +462,13 @@ HasExponentRange is false, this value will be 0.</li>
 </pre>
 
 <p>Gets the flags that are set from converting numbers according to this
- arithmetic context. If <code>HasFlags </code> is false, this value will be</p>
+ arithmetic context. If <code>HasFlags</code> is false, this value will be</p>
 
 <ol>
 <li>This value is a combination of bit fields. To retrieve a
 particular flag, use the AND operation on the return value of this
-method. For example: <code>(this.getFlags() &amp; EContext.FlagInexact) != 0
-</code> returns <code>true </code> if the Inexact flag is set.</li>
+method. For example: <code>(this.getFlags() &amp; EContext.FlagInexact) !=
+0</code> returns <code>true</code> if the Inexact flag is set.</li>
 </ol>
 
 <p><strong>Returns:</strong></p>
@@ -564,7 +563,7 @@ digits; otherwise, <code>false</code> . The default is false.</li>
  simplified arithmetic, infinity, not-a-number, and subnormal numbers
  are not allowed, and negative zero is treated the same as positive
  zero. For further details, see
- <code><a href="http://speleotrove.com/decimal/dax3274.html">http://speleotrove.com/decimal/dax3274.html</a> </code></p>
+ <code><a href="http://speleotrove.com/decimal/dax3274.html">http://speleotrove.com/decimal/dax3274.html</a></code></p>
 
 <p><strong>Returns:</strong></p>
 
@@ -616,9 +615,9 @@ represented in the given precision and exponent range.</li>
 </pre>
 
 <p>Gets the traps that are set for each flag in the context. Whenever a flag is
- signaled, even if <code>HasFlags </code> is false, and the flag&#39;s trap is
+ signaled, even if <code>HasFlags</code> is false, and the flag&#39;s trap is
  enabled, the operation will throw a TrapException. <p>For example, if
- Traps equals <code>FlagInexact </code> and FlagSubnormal, a TrapException
+ Traps equals <code>FlagInexact</code> and FlagSubnormal, a TrapException
  will be thrown if an operation&#39;s return value is not the same as the
  exact result (FlagInexact) or if the return value&#39;s exponent is lower
  than the lowest allowed (FlagSubnormal). </p></p>
@@ -836,7 +835,7 @@ is null.</li>
 <pre>public EContext WithBlankFlags()
 </pre>
 
-<p>Copies this EContext with <code>HasFlags </code> set to true and a Flags value of
+<p>Copies this EContext with <code>HasFlags</code> set to true and a Flags value of
  0.</p>
 
 <p><strong>Returns:</strong></p>
@@ -890,7 +889,7 @@ is null.</li>
 <pre>public EContext WithNoFlags()
 </pre>
 
-<p>Copies this EContext with <code>HasFlags </code> set to false and a Flags value of
+<p>Copies this EContext with <code>HasFlags</code> set to false and a Flags value of
  0.</p>
 
 <p><strong>Returns:</strong></p>
@@ -984,7 +983,7 @@ the copy.</li>
 </pre>
 
 <p>Copies this EContext with Traps set to the given value. (Also sets HasFlags
- on the copy to <code>True </code> , but this may change in version 2.0 of
+ on the copy to <code>True</code> , but this may change in version 2.0 of
  this library.).</p>
 
 <p><strong>Parameters:</strong></p>
