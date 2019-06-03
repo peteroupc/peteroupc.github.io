@@ -15,15 +15,14 @@
 <p>A character input class that implements the Unicode normalization algorithm and contains methods and functionality to test and convert text strings for normalization. This is similar to the deprecated Normalizer class, except it implements the ICharacterInput interface.</p>
 
 <ul>
-<li><p><b>NFD</b>(Normalization Form D) decomposes combined forms to their constituent haracters (E plus acute, for example), then reorders combining marks o a standardized order. This is called canonical decomposition.</p></li>
-<li><p><b>NFC</b>does canonical decomposition, then combines certain constituent haracters to their composites (E-acute, for example). This is called anonical composition.</p></li>
-<li><p>Two normalization forms,<b>NFKC</b>and<b>NFKD</b>, are similar to NFC and NFD, except they also &quot;decompose&quot; certain haracters, such as ligatures, font or positional variants, and ubscripts, whose visual distinction can matter in some contexts. This s called compatibility decomposition.</p></li>
+<li><p><b>NFD</b> (Normalization Form D) decomposes combined forms to their constituent characters (E plus acute, for example), then reorders combining marks to a standardized order. This is called canonical decomposition.</p></li>
+<li><p><b>NFC</b> does canonical decomposition, then combines certain constituent characters to their composites (E-acute, for example). This is called canonical composition.</p></li>
+<li><p>Two normalization forms,<b>NFKC</b> and<b>NFKD</b> , are similar to NFC and NFD, except they also &quot;decompose&quot; certain characters, such as ligatures, font or positional variants, and subscripts, whose visual distinction can matter in some contexts. This is called compatibility decomposition.</p></li>
 </ul>
 
-<p>For more information, see Standard Annex 15 at <code>http://www.unicode.org/reports/tr15/
-</code> .</p>
+<p>For more information, see Standard Annex 15 at <code>http://www.unicode.org/reports/tr15/</code>  .</p>
 
-<p><b>Thread safety:</b>This class is mutable; its properties can be changed. None of its nstance methods are designed to be thread safe. Therefore, access to bjects from this class must be synchronized if multiple threads can ccess them at the same time.</p>
+<p><b>Thread safety:</b> This class is mutable; its properties can be changed. None of its instance methods are designed to be thread safe. Therefore, access to objects from this class must be synchronized if multiple threads can access them at the same time.</p>
 
 <p>NOTICE: While this class&#39;s source code is in the public domain, the class uses an internal class, called NormalizationData, that includes data derived from the Unicode Character Database. In case doing so is required, the permission notice for the Unicode Character Database is given here:</p>
 
@@ -283,9 +282,7 @@ is null.</li>
 
 <p><b>Return Value:</b></p>
 
-<p><code>true
-</code> if the given list of characters is in the given Unicode normalization orm; otherwise, <code>false
-</code> .</p>
+<p><code>true</code>  if the given list of characters is in the given Unicode normalization form; otherwise, <code>false</code>  .</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -314,9 +311,7 @@ The parameter &quot;charList&quot; is null.</li>
 
 <p><b>Return Value:</b></p>
 
-<p><code>true
-</code> if the text is normalized; otherwise, <code>false
-</code> .</p>
+<p><code>true</code>  if the text is normalized; otherwise, <code>false</code>  .</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -346,10 +341,7 @@ is null.</li>
 
 <p><b>Return Value:</b></p>
 
-<p><code>true
-</code> if the given string is in the given Unicode normalization form; therwise, <code>false
-</code> . Returns <code>false
-</code> if the string contains an unpaired surrogate code point.</p>
+<p><code>true</code>  if the given string is in the given Unicode normalization form; otherwise, <code>false</code>  . Returns <code>false</code>  if the string contains an unpaired surrogate code point.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -381,9 +373,7 @@ is null.</li>
 
 <p><b>Return Value:</b></p>
 
-<p><code>true
-</code> if the given list of characters is in the given Unicode normalization orm; otherwise, <code>false
-</code> .</p>
+<p><code>true</code>  if the given list of characters is in the given Unicode normalization form; otherwise, <code>false</code>  .</p>
 
 <p><b>Exceptions:</b></p>
 
