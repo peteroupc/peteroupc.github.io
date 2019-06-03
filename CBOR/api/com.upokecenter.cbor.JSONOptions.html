@@ -37,8 +37,9 @@ values for the options.</li>
 
 <ul>
 <li><code>boolean getBase64Padding()</code><br>
-Gets a value indicating whether padding is written out when writing
-base64url or traditional base64 to JSON.</li>
+Deprecated.
+This option may have no effect in the future.
+This option may have no effect in the future.</li>
 <li><code>boolean getReplaceSurrogates() char</code><br>
 Gets a value indicating whether surrogate code points not part of a
 surrogate pair (which consists of two consecutive char  s
@@ -59,12 +60,14 @@ character (U + FFFD).</li>
 
 <h3>getBase64Padding</h3>
 
-<pre>public final boolean getBase64Padding()
+<pre>@Deprecated public final boolean getBase64Padding()
 </pre>
 
-<p>Gets a value indicating whether padding is written out when writing
- base64url or traditional base64 to JSON.<p> The padding character is
- &#39;=&#39;. </p></p>
+<p>Deprecated.
+This option may have no effect in the future. A future version may, by
+ default, include necessary padding when writing traditional base64 to JSON
+ and include no padding when writing base64url to JSON, in accordance with
+ the revision of the CBOR specification.</p>
 
 <p><strong>Returns:</strong></p>
 
