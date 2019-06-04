@@ -23,7 +23,7 @@
 <li><code><a href="#CompareToTotalMagnitude_PeterO_Numbers_ERational">CompareToTotalMagnitude(PeterO.Numbers.ERational)</a></code> - Compares the absolute values of this object and another object, imposing a total ordering on all possible values (ignoring their signs).</li>
 <li><code><a href="#CompareToTotal_PeterO_Numbers_ERational">CompareToTotal(PeterO.Numbers.ERational)</a></code> - Compares the values of this object and another object, imposing a total ordering on all possible values.</li>
 <li><code><a href="#CompareTo_PeterO_Numbers_ERational">CompareTo(PeterO.Numbers.ERational)</a></code> - Compares an arbitrary-precision rational number with this instance.</li>
-<li><code><a href="#Copy">Copy()</a></code> - Not documented yet.</li>
+<li><code><a href="#Copy">Copy()</a></code> - Creates a copy of this arbitrary-precision rational number.</li>
 <li><code><a href="#CopySign_PeterO_Numbers_ERational">CopySign(PeterO.Numbers.ERational)</a></code> - Returns a number with the same value as this one, but copying the sign (positive or negative) of another number.</li>
 <li><code><a href="#CreateNaN_PeterO_Numbers_EInteger">CreateNaN(PeterO.Numbers.EInteger)</a></code> - Creates a not-a-number arbitrary-precision rational number.</li>
 <li><code><a href="#CreateNaN_PeterO_Numbers_EInteger_bool_bool">CreateNaN(PeterO.Numbers.EInteger, bool, bool)</a></code> - Creates a not-a-number arbitrary-precision rational number.</li>
@@ -505,7 +505,7 @@ Doesn&#39;t satisfy this.IsFinite; doesn&#39;t satisfy other.IsFinite.</li>
 <pre>public PeterO.Numbers.ERational Copy();
 </pre>
 
-<p>Not documented yet.</p>
+<p>Creates a copy of this arbitrary-precision rational number.</p>
 
 <p><b>Return Value:</b></p>
 
@@ -609,7 +609,7 @@ The denominator is zero.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>diag</i>: An integer, 0 or greater, to use as diagnostic information associated with this object. If none is needed, should be zero. To get the diagnostic information from another ERational object, use that object&#39;s  <code>UnsignedNumerator</code>  property.</li>
+<li><i>diag</i>: An integer, 0 or greater, to use as diagnostic information associated with this object. If none is needed, should be zero. To get the diagnostic information from another arbitrary-precision binary rational number, use that object&#39;s <code>UnsignedNumerator</code>  property.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -638,7 +638,7 @@ The parameter &quot;diag&quot; is less than 0.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>diag</i>: An integer, 0 or greater, to use as diagnostic information associated with this object. If none is needed, should be zero. To get the diagnostic information from another ERational object, use that object&#39;s  <code>UnsignedNumerator</code>  property.</p></li>
+<li><p><i>diag</i>: An integer, 0 or greater, to use as diagnostic information associated with this object. If none is needed, should be zero. To get the diagnostic information from another arbitrary-precision binary rational number, use that object&#39;s <code>UnsignedNumerator</code>  property.</p></li>
 <li><p><i>signaling</i>: Whether the return value will be signaling (true) or quiet (false).</p></li>
 <li><p><i>negative</i>: Whether the return value is negative.</p></li>
 </ul>

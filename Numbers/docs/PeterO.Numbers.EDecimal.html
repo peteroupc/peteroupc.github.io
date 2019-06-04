@@ -148,7 +148,7 @@
 <li><code><a href="#CompareToTotal_PeterO_Numbers_EDecimal_PeterO_Numbers_EContext">CompareToTotal(PeterO.Numbers.EDecimal, PeterO.Numbers.EContext)</a></code> - Compares the values of this object and another object, imposing a total ordering on all possible values.</li>
 <li><code><a href="#CompareToWithContext_PeterO_Numbers_EDecimal_PeterO_Numbers_EContext">CompareToWithContext(PeterO.Numbers.EDecimal, PeterO.Numbers.EContext)</a></code> - Compares the mathematical values of this object and another object.</li>
 <li><code><a href="#CompareTo_PeterO_Numbers_EDecimal">CompareTo(PeterO.Numbers.EDecimal)</a></code> - Compares the mathematical values of this object and another object, accepting NaN values.</li>
-<li><code><a href="#Copy">Copy()</a></code> - Not documented yet.</li>
+<li><code><a href="#Copy">Copy()</a></code> - Creates a copy of this arbitrary-precision binary number.</li>
 <li><code><a href="#CopySign_PeterO_Numbers_EDecimal">CopySign(PeterO.Numbers.EDecimal)</a></code> - Returns a number with the same value as this one, but copying the sign (positive or negative) of another number.</li>
 <li><code><a href="#CreateNaN_PeterO_Numbers_EInteger">CreateNaN(PeterO.Numbers.EInteger)</a></code> - Creates a not-a-number arbitrary-precision decimal number.</li>
 <li><code><a href="#CreateNaN_PeterO_Numbers_EInteger_bool_bool_PeterO_Numbers_EContext">CreateNaN(PeterO.Numbers.EInteger, bool, bool, PeterO.Numbers.EContext)</a></code> - Creates a not-a-number arbitrary-precision decimal number.</li>
@@ -816,7 +816,7 @@ Doesn&#39;t satisfy this.IsFinite; doesn&#39;t satisfy other.IsFinite.</li>
 <pre>public PeterO.Numbers.EDecimal Copy();
 </pre>
 
-<p>Not documented yet.</p>
+<p>Creates a copy of this arbitrary-precision binary number.</p>
 
 <p><b>Return Value:</b></p>
 
@@ -913,7 +913,7 @@ The parameter &quot;mantissa&quot; or &quot;exponent&quot; is null.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>diag</i>: An integer, 0 or greater, to use as diagnostic information associated with this object. If none is needed, should be zero. To get the diagnostic information from another EDecimal object, use that object&#39;s  <code>UnsignedMantissa</code>  property.</li>
+<li><i>diag</i>: An integer, 0 or greater, to use as diagnostic information associated with this object. If none is needed, should be zero. To get the diagnostic information from another EDecimal object, use that object&#39;s <code>UnsignedMantissa</code>  property.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -936,7 +936,7 @@ The parameter &quot;mantissa&quot; or &quot;exponent&quot; is null.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>diag</i>: An integer, 0 or greater, to use as diagnostic information associated with this object. If none is needed, should be zero. To get the diagnostic information from another EDecimal object, use that object&#39;s  <code>UnsignedMantissa</code>  property.</p></li>
+<li><p><i>diag</i>: An integer, 0 or greater, to use as diagnostic information associated with this object. If none is needed, should be zero. To get the diagnostic information from another EDecimal object, use that object&#39;s <code>UnsignedMantissa</code>  property.</p></li>
 <li><p><i>signaling</i>: Whether the return value will be signaling (true) or quiet (false).</p></li>
 <li><p><i>negative</i>: Whether the return value is negative.</p></li>
 <li><p><i>ctx</i>: An arithmetic context to control the precision (in decimal digits) of the diagnostic information. The rounding and exponent range of this context will be ignored. Can be null. The only flag that can be signaled in this context is FlagInvalid, which happens if diagnostic information needs to be truncated and too much memory is required to do so.</p></li>
