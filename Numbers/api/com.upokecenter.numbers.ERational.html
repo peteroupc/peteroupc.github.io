@@ -12,7 +12,7 @@
 <p>Represents an arbitrary-precision rational number. This class can&#39;t be
  inherited. (The &quot;E&quot; stands for &quot;extended&quot;, meaning that instances of
  this class can be values other than numbers proper, such as infinity
- and not-a-number.) <p><b>Thread safety: </b> Instances of this class
+ and not-a-number.) <p><b>Thread safety:</b> Instances of this class
  are immutable, so they are inherently safe for use by multiple
  threads. Multiple instances of this object with the same properties
  are interchangeable, so they should not be compared using the &quot;==&quot;
@@ -70,7 +70,7 @@ ordering on all possible values.</li>
 Compares the absolute values of this object and another object, imposing a
 total ordering on all possible values (ignoring their signs).</li>
 <li><code>ERational Copy()</code><br>
-Not documented yet.</li>
+Creates a copy of this arbitrary-precision rational number.</li>
 <li><code>ERational CopySign​(ERational other)</code><br>
 Returns a number with the same value as this one, but copying the sign
 (positive or negative) of another number.</li>
@@ -97,8 +97,7 @@ Determines whether this object&#39;s numerator, denominator, and properties are
 equal to those of another object and that other object is an
 arbitrary-precision rational number.</li>
 <li><code>static ERational FromBoolean​(boolean boolValue)</code><br>
-Converts a boolean value (true or false) to an arbitrary-precision rational
-number.</li>
+Not documented yet.</li>
 <li><code>static ERational FromByte​(byte inputByte)</code><br>
 Converts a byte (from 0 to 255) to an arbitrary-precision rational number.</li>
 <li><code>static ERational FromDouble​(double flt)</code><br>
@@ -340,7 +339,7 @@ Converts this object to a text string.</li>
 <pre>public ERational Copy()
 </pre>
 
-<p>Not documented yet.</p>
+<p>Creates a copy of this arbitrary-precision rational number.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -510,8 +509,11 @@ returns the diagnostic information.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>diag</code> - A number to use as diagnostic information associated with this
-object. If none is needed, should be zero.</li>
+<li><code>diag</code> - An integer, 0 or greater, to use as diagnostic information
+associated with this object. If none is needed, should be zero. To
+get the diagnostic information from another arbitrary-precision
+binary rational number, use that object&#39;s <code>UnsignedNumerator</code>
+property.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -536,8 +538,11 @@ object. If none is needed, should be zero.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>diag</code> - A number to use as diagnostic information associated with this
-object. If none is needed, should be zero.</p></li>
+<li><p><code>diag</code> - An integer, 0 or greater, to use as diagnostic information
+associated with this object. If none is needed, should be zero. To
+get the diagnostic information from another arbitrary-precision
+binary rational number, use that object&#39;s <code>UnsignedNumerator</code>
+property.</p></li>
 <li><p><code>signaling</code> - Whether the return value will be signaling (true) or quiet
 (false).</p></li>
 <li><p><code>negative</code> - Whether the return value is negative.</p></li>
@@ -716,7 +721,7 @@ number.</li>
 </pre>
 
 <p>Creates a rational number from a text string that represents a number. See
- <code>FromString(String, int, int) </code> for more information.</p>
+ <code>FromString(String, int, int)</code> for more information.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1893,19 +1898,18 @@ an exact integer, or is less than -2147483648 or greater than
 <pre>public static ERational FromBoolean​(boolean boolValue)
 </pre>
 
-<p>Converts a boolean value (true or false) to an arbitrary-precision rational
- number.</p>
+<p>Not documented yet.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>boolValue</code> - The parameter <code>boolValue</code> is not documented yet.</li>
+<li><code>boolValue</code> - Not documented yet.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>One if <code>boolValue</code> is <code>true</code> ; otherwise, zero.</li>
+<li>An ERational object.</li>
 </ul>
 
 <h3>FromInt32</h3>
