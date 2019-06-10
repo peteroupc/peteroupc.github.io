@@ -203,9 +203,9 @@ An algorithm is _consistent_ if the output it delivers, given the same input, is
 
 In practice, however, it's not easy to ensure an algorithm (especially an RNG) is both deterministic and consistent.  There are many ways an algorithm can be nondeterministic or inconsistent.  For example, different results can happen because&mdash;
 
-- parallel operations can finish in a different order (see "[**Keras documentation**](https://keras.io/getting-started/faq/#how-can-i-obtain-reproducible-results-using-keras-during-development)),
+- parallel operations can finish in a different order (see "[**Keras documentation**](https://keras.io/getting-started/faq/#how-can-i-obtain-reproducible-results-using-keras-during-development)"),
 - items can be assigned differently to hash table buckets,
-- mathematical operations on floating-point numbers can be carried out in a different order (and lead to different results if rounding occurs after each operation), or
+- mathematical operations on floating-point numbers can be carried out in a different order (and can lead to different results if rounding occurs after each operation), or
 - floating-point numbers and math operations on such numbers can subtly differ across software and hardware implementations (for example, the IEEE 754 floating-point number standard does not require delivering as-accurate-as-possible results for many math functions it defines &mdash; see, for example, the x87 `FSIN` instruction and the difference between `Math` and `StrictMath` in Java).
 
 If an application chooses to use a seeded PRNG for repeatable "randomness", the application&mdash;
