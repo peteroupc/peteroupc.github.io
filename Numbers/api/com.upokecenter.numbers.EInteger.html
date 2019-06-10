@@ -16,11 +16,11 @@
  multiple threads. Multiple instances of this object with the same
  value are interchangeable, but they should be compared using the
  &quot;Equals&quot; method rather than the &quot;==&quot; operator. </p> <p><b>Security
- note </b> </p> <p>It is not recommended to implement
+ note</b> </p> <p>It is not recommended to implement
  security-sensitive algorithms using the methods in this class, for
- several reasons: </p> <ul> <li><code>EInteger </code> objects are
- immutable, so they can&#39;t be modified, and the memory they occupy is
- not guaranteed to be cleared in a timely fashion due to garbage
+ several reasons: </p> <ul> <li><code>EInteger</code> objects are immutable,
+ so they can&#39;t be modified, and the memory they occupy is not
+ guaranteed to be cleared in a timely fashion due to garbage
  collection. This is relevant for applications that use many-bit-long
  numbers as secret parameters. </li> <li>The methods in this class
  (especially those that involve arithmetic) are not guaranteed to run
@@ -75,7 +75,7 @@ quotient and remainder.</li>
 Determines whether this object and another object are equal and have the
 same type.</li>
 <li><code>static EInteger FromBoolean​(boolean boolValue)</code><br>
-Not documented yet.</li>
+Converts a boolean value (true or false) to an arbitrary-precision integer.</li>
 <li><code>static EInteger FromByte​(byte inputByte)</code><br>
 Converts a byte (from 0 to 255) to an arbitrary-precision integer.</li>
 <li><code>static EInteger FromBytes​(byte[] bytes,
@@ -348,19 +348,19 @@ using the following rules: <ul> <li>Positive numbers have the first
 byte&#39;s highest bit cleared, and negative numbers have the bit set.
 </li> <li>The last byte contains the lowest 8-bits, the next-to-last
 contains the next lowest 8 bits, and so on. For example, the number
-300 can be encoded as <code>0x01, 0x2c </code> and 200 as <code>0x00,
-0xc8 </code> . (Note that the second example contains a set high bit in
-<code>0xc8 </code> , so an additional 0 is added at the start to ensure
+300 can be encoded as <code>0x01, 0x2c</code> and 200 as <code>0x00,
+0xc8</code> . (Note that the second example contains a set high bit in
+<code>0xc8</code> , so an additional 0 is added at the start to ensure
 it&#39;s interpreted as positive.) </li> <li>To encode negative numbers,
 take the absolute value of the number, subtract by 1, encode the
 number into bytes, and toggle each bit of each byte. Any further bits
 that appear beyond the most significant bit of the number will be all
 ones. For example, the number -450 can be encoded as <code>0xfe,
-0x70 </code> and -52869 as <code>0xff, 0x31, 0x7b </code> . (Note that the
-second example contains a cleared high bit in <code>0x31, 0x7b </code> ,
-so an additional 0xff is added at the start to ensure it&#39;s
-interpreted as negative.) </li> </ul> <p>For little-endian, the byte
-order is reversed from the byte order just discussed. </p> .</p></li>
+0x70</code> and -52869 as <code>0xff, 0x31, 0x7b</code> . (Note that the second
+example contains a cleared high bit in <code>0x31, 0x7b</code> , so an
+additional 0xff is added at the start to ensure it&#39;s interpreted as
+negative.) </li> </ul> <p>For little-endian, the byte order is
+reversed from the byte order just discussed. </p> .</p></li>
 <li><p><code>littleEndian</code> - If true, the byte order is little-endian, or
 least-significant-byte first. If false, the byte order is big-endian,
 or most-significant-byte first.</p></li>
@@ -384,18 +384,18 @@ is 0.</li>
 <pre>public static EInteger FromBoolean​(boolean boolValue)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Converts a boolean value (true or false) to an arbitrary-precision integer.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>boolValue</code> - The parameter <code>boolValue</code> is not documented yet.</li>
+<li><code>boolValue</code> - Either true or false.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>An arbitrary-precision integer.</li>
+<li>The number 1 if <code>boolValue</code> is true; otherwise, 0.</li>
 </ul>
 
 <h3>FromInt32</h3>
@@ -733,7 +733,7 @@ less, or a positive number if this instance is greater.</li>
 </pre>
 
 <p>Adds this object and another object.<p/><pre>EInteger result =
- EInteger.FromString(&quot;5&quot;).Add(200); </pre></p>
+ EInteger.FromString(&quot;5&quot;).Add(200);</pre></p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -774,7 +774,7 @@ less, or a positive number if this instance is greater.</li>
 
 <p>Multiplies this instance by the value of an arbitrary-precision integer
  object.<p/><pre>EInteger result =
- EInteger.FromString(&quot;5&quot;).Multiply(200); </pre></p>
+ EInteger.FromString(&quot;5&quot;).Multiply(200);</pre></p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1587,13 +1587,13 @@ null.</li>
  fewest bytes necessary to store its value unambiguously. If this
  value is negative, the bits that appear beyond the most significant
  bit of the number will be all ones. The resulting byte array can be
- passed to the <code>FromBytes() </code> method (with the same byte order)
- to reconstruct this integer&#39;s value.</p>
+ passed to the <code>FromBytes()</code> method (with the same byte order) to
+ reconstruct this integer&#39;s value.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>littleEndian</code> - Either <code>true </code> or <code>false </code> .</li>
+<li><code>littleEndian</code> - Either <code>true</code> or <code>false</code> .</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
