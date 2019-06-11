@@ -57,7 +57,7 @@
 <li><code><a href="#Add_int">Add(int)</a></code> - Adds this object and another object.</li>
 <li><code><a href="#CompareToSignal_PeterO_Numbers_EFloat_PeterO_Numbers_EContext">CompareToSignal(PeterO.Numbers.EFloat, PeterO.Numbers.EContext)</a></code> - Compares the mathematical values of this object and another object, treating quiet NaN as signaling.</li>
 <li><code><a href="#CompareToTotalMagnitude_PeterO_Numbers_EFloat">CompareToTotalMagnitude(PeterO.Numbers.EFloat)</a></code> - Compares the absolute values of this object and another object, imposing a total ordering on all possible values (ignoring their signs).</li>
-<li><code><a href="#CompareToTotalMagnitude_PeterO_Numbers_EFloat_PeterO_Numbers_EContext">CompareToTotalMagnitude(PeterO.Numbers.EFloat, PeterO.Numbers.EContext)</a></code> - Compares the values of this object and another object, imposing a total ordering on all possible values.</li>
+<li><code><a href="#CompareToTotalMagnitude_PeterO_Numbers_EFloat_PeterO_Numbers_EContext">CompareToTotalMagnitude(PeterO.Numbers.EFloat, PeterO.Numbers.EContext)</a></code> - Compares the values of this object and another object, imposing a total ordering on all possible values (ignoring their signs).</li>
 <li><code><a href="#CompareToTotal_PeterO_Numbers_EFloat">CompareToTotal(PeterO.Numbers.EFloat)</a></code> - Compares the values of this object and another object, imposing a total ordering on all possible values.</li>
 <li><code><a href="#CompareToTotal_PeterO_Numbers_EFloat_PeterO_Numbers_EContext">CompareToTotal(PeterO.Numbers.EFloat, PeterO.Numbers.EContext)</a></code> - Compares the values of this object and another object, imposing a total ordering on all possible values.</li>
 <li><code><a href="#CompareToWithContext_PeterO_Numbers_EFloat_PeterO_Numbers_EContext">CompareToWithContext(PeterO.Numbers.EFloat, PeterO.Numbers.EContext)</a></code> - Compares the mathematical values of this object and another object.</li>
@@ -639,7 +639,7 @@ is a 32-bit signed integer.</li>
     PeterO.Numbers.EContext ctx);
 </pre>
 
-<p>Compares the values of this object and another object, imposing a total ordering on all possible values. In this method:</p>
+<p>Compares the values of this object and another object, imposing a total ordering on all possible values (ignoring their signs). In this method:</p>
 
 <ul>
 <li><p>For objects with the same value, the one with the higher exponent has a greater &quot;absolute value&quot;.</p></li>
@@ -650,8 +650,6 @@ is a 32-bit signed integer.</li>
 <li><p>Negative numbers are less than positive numbers.</p></li>
 </ul>
 
-<p>TODO: Edit this</p>
-
 <p><b>Parameters:</b></p>
 
 <ul>
@@ -661,7 +659,7 @@ is a 32-bit signed integer.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>The number 0 if both objects have the same value, or -1 if this object is less than the other value, or 1 if this object is greater. Does not signal flags if either value is signaling NaN.</p>
+<p>The number 0 if both objects have the same value (ignoring their signs), or -1 if this object is less than the other value (ignoring their signs), or 1 if this object is greater (ignoring their signs). Does not signal flags if either value is signaling NaN.</p>
 
 <p><a id="CompareToWithContext_PeterO_Numbers_EFloat_PeterO_Numbers_EContext"></a></p>
 

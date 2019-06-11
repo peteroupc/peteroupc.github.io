@@ -231,7 +231,7 @@ total ordering on all possible values (ignoring their signs).</li>
 <li><code>int CompareToTotalMagnitude​(EDecimal other,
                    EContext ctx)</code><br>
 Compares the values of this object and another object, imposing a total
-ordering on all possible values.</li>
+ordering on all possible values (ignoring their signs).</li>
 <li><code>EDecimal CompareToWithContext​(EDecimal other,
                 EContext ctx)</code><br>
 Compares the mathematical values of this object and another object.</li>
@@ -1787,8 +1787,9 @@ other value, or 1 if this object is greater.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>The number 0 if both objects have the same value, or -1 if this
-object is less than the other value, or 1 if this object is greater.</li>
+<li>The number 0 if both objects have the same value (ignoring their
+signs), or -1 if this object is less than the other value (ignoring
+their signs), or 1 if this object is greater (ignoring their signs).</li>
 </ul>
 
 <h3>CompareToTotal</h3>
@@ -1832,16 +1833,16 @@ Does not signal flags if either value is signaling NaN.</li>
 </pre>
 
 <p>Compares the values of this object and another object, imposing a total
- ordering on all possible values. In this method: <ul> <li>For objects
- with the same value, the one with the higher exponent has a greater
- &quot;absolute value&quot;. </li> <li>Negative zero is less than positive zero.
- </li> <li>Quiet NaN has a higher &quot;absolute value&quot; than signaling NaN.
- If both objects are quiet NaN or both are signaling NaN, the one with
- the higher diagnostic information has a greater &quot;absolute value&quot;.
- </li> <li>NaN has a higher &quot;absolute value&quot; than infinity. </li>
- <li>Infinity has a higher &quot;absolute value&quot; than any finite number.
- </li> <li>Negative numbers are less than positive numbers. </li>
- </ul><p> TODO: Edit this doc to account for magnitude </p></p>
+ ordering on all possible values (ignoring their signs). In this
+ method: <ul> <li>For objects with the same value, the one with the
+ higher exponent has a greater &quot;absolute value&quot;. </li> <li>Negative
+ zero is less than positive zero. </li> <li>Quiet NaN has a higher
+ &quot;absolute value&quot; than signaling NaN. If both objects are quiet NaN or
+ both are signaling NaN, the one with the higher diagnostic
+ information has a greater &quot;absolute value&quot;. </li> <li>NaN has a
+ higher &quot;absolute value&quot; than infinity. </li> <li>Infinity has a
+ higher &quot;absolute value&quot; than any finite number. </li> <li>Negative
+ numbers are less than positive numbers. </li> </ul></p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1856,8 +1857,9 @@ operation. Can be null.</p></li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>The number 0 if both objects have the same value, or -1 if this
-object is less than the other value, or 1 if this object is greater.
+<li>The number 0 if both objects have the same value (ignoring their
+signs), or -1 if this object is less than the other value (ignoring
+their signs), or 1 if this object is greater (ignoring their signs).
 Does not signal flags if either value is signaling NaN.</li>
 </ul>
 

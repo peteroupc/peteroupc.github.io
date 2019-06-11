@@ -445,7 +445,7 @@
 <pre>public PeterO.Numbers.EInteger Precision { get; }
 </pre>
 
-<p>Gets the maximum length of a converted number in digits, ignoring the radix point and exponent. For example, if precision is 3, a converted number&#39;s mantissa (significand) can range from 0 to 999 (up to three digits long). If 0, converted numbers can have any precision.</p>
+<p>Gets the maximum length of a converted number in digits, ignoring the radix point and exponent. For example, if precision is 3, a converted number&#39;s mantissa (significand) can range from 0 to 999 (up to three digits long). If 0, converted numbers can have any precision.Not-a-number (NaN) values can carry an optional number, its payload, that serves as its &quot;diagnostic information&quot;, In general, if an operation requires copying an NaN&#39;s payload, only up to as many digits of that payload as the precision given in this context, namely the least significant digits, are copied.</p>
 
 <p><b>Returns:</b></p>
 

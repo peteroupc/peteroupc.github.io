@@ -143,7 +143,7 @@
 <li><code><a href="#CompareToBinary_PeterO_Numbers_EFloat">CompareToBinary(PeterO.Numbers.EFloat)</a></code> - Compares an arbitrary-precision binary float with this instance.</li>
 <li><code><a href="#CompareToSignal_PeterO_Numbers_EDecimal_PeterO_Numbers_EContext">CompareToSignal(PeterO.Numbers.EDecimal, PeterO.Numbers.EContext)</a></code> - Compares the mathematical values of this object and another object, treating quiet NaN as signaling.</li>
 <li><code><a href="#CompareToTotalMagnitude_PeterO_Numbers_EDecimal">CompareToTotalMagnitude(PeterO.Numbers.EDecimal)</a></code> - Compares the absolute values of this object and another object, imposing a total ordering on all possible values (ignoring their signs).</li>
-<li><code><a href="#CompareToTotalMagnitude_PeterO_Numbers_EDecimal_PeterO_Numbers_EContext">CompareToTotalMagnitude(PeterO.Numbers.EDecimal, PeterO.Numbers.EContext)</a></code> - Compares the values of this object and another object, imposing a total ordering on all possible values.</li>
+<li><code><a href="#CompareToTotalMagnitude_PeterO_Numbers_EDecimal_PeterO_Numbers_EContext">CompareToTotalMagnitude(PeterO.Numbers.EDecimal, PeterO.Numbers.EContext)</a></code> - Compares the values of this object and another object, imposing a total ordering on all possible values (ignoring their signs).</li>
 <li><code><a href="#CompareToTotal_PeterO_Numbers_EDecimal">CompareToTotal(PeterO.Numbers.EDecimal)</a></code> - Compares the values of this object and another object, imposing a total ordering on all possible values.</li>
 <li><code><a href="#CompareToTotal_PeterO_Numbers_EDecimal_PeterO_Numbers_EContext">CompareToTotal(PeterO.Numbers.EDecimal, PeterO.Numbers.EContext)</a></code> - Compares the values of this object and another object, imposing a total ordering on all possible values.</li>
 <li><code><a href="#CompareToWithContext_PeterO_Numbers_EDecimal_PeterO_Numbers_EContext">CompareToWithContext(PeterO.Numbers.EDecimal, PeterO.Numbers.EContext)</a></code> - Compares the mathematical values of this object and another object.</li>
@@ -178,7 +178,7 @@
 <li><code><a href="#Equals_object">Equals(object)</a></code> - Determines whether this object&#39;s mantissa (significand), exponent, and properties are equal to those of another object and that other object is an arbitrary-precision decimal number.</li>
 <li><code><a href="#Exp_PeterO_Numbers_EContext">Exp(PeterO.Numbers.EContext)</a></code> - Finds e (the base of natural logarithms) raised to the power of this object&#39;s value.</li>
 <li><code><a href="#Exponent">Exponent</a></code> - Gets this object&#39;s exponent.</li>
-<li><code><a href="#FromBoolean_bool">FromBoolean(bool)</a></code> - Converts a boolean value (true or false) to an arbitrary-precision decimal number.</li>
+<li><code><a href="#FromBoolean_bool">FromBoolean(bool)</a></code> - Not documented yet.</li>
 <li><code><a href="#FromByte_byte">FromByte(byte)</a></code> - Converts a byte (from 0 to 255) to an arbitrary-precision decimal number.</li>
 <li><code><a href="#FromDecimal_System_Decimal">FromDecimal(System.Decimal)</a></code> - Converts adecimal under the Common Language Infrastructure (seePeterO.</li>
 <li><code><a href="#FromDouble_double">FromDouble(double)</a></code> - Creates a decimal number from a 64-bit binary floating-point number.</li>
@@ -750,7 +750,7 @@ Doesn&#39;t satisfy this.IsFinite; doesn&#39;t satisfy other.IsFinite.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>The number 0 if both objects have the same value, or -1 if this object is less than the other value, or 1 if this object is greater.</p>
+<p>The number 0 if both objects have the same value (ignoring their signs), or -1 if this object is less than the other value (ignoring their signs), or 1 if this object is greater (ignoring their signs).</p>
 
 <p><a id="CompareToTotalMagnitude_PeterO_Numbers_EDecimal_PeterO_Numbers_EContext"></a></p>
 
@@ -761,7 +761,7 @@ Doesn&#39;t satisfy this.IsFinite; doesn&#39;t satisfy other.IsFinite.</li>
     PeterO.Numbers.EContext ctx);
 </pre>
 
-<p>Compares the values of this object and another object, imposing a total ordering on all possible values. In this method:</p>
+<p>Compares the values of this object and another object, imposing a total ordering on all possible values (ignoring their signs). In this method:</p>
 
 <ul>
 <li><p>For objects with the same value, the one with the higher exponent has a greater &quot;absolute value&quot;.</p></li>
@@ -772,8 +772,6 @@ Doesn&#39;t satisfy this.IsFinite; doesn&#39;t satisfy other.IsFinite.</li>
 <li><p>Negative numbers are less than positive numbers.</p></li>
 </ul>
 
-<p>TODO: Edit this doc to account for magnitude</p>
-
 <p><b>Parameters:</b></p>
 
 <ul>
@@ -783,7 +781,7 @@ Doesn&#39;t satisfy this.IsFinite; doesn&#39;t satisfy other.IsFinite.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>The number 0 if both objects have the same value, or -1 if this object is less than the other value, or 1 if this object is greater. Does not signal flags if either value is signaling NaN.</p>
+<p>The number 0 if both objects have the same value (ignoring their signs), or -1 if this object is less than the other value (ignoring their signs), or 1 if this object is greater (ignoring their signs). Does not signal flags if either value is signaling NaN.</p>
 
 <p><a id="CompareToWithContext_PeterO_Numbers_EDecimal_PeterO_Numbers_EContext"></a></p>
 
@@ -1472,9 +1470,7 @@ is an arbitrary object.</li>
     bool boolValue);
 </pre>
 
-<p>Converts a boolean value (true or false) to an arbitrary-precision decimal number.</p>
-
-<p>Converts a boolean value (true or false) to an arbitrary-precision decimal number.</p>
+<p>Not documented yet.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -1485,11 +1481,7 @@ is not documented yet.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>One if  <code>boolValue</code>  is  <code>true</code> ; otherwise, zero.</p>
-
-<p><b>Return Value:</b></p>
-
-<p>One if  <code>boolValue</code>  is  <code>true</code>  ; otherwise, zero.</p>
+<p>An EDecimal object.</p>
 
 <p><a id="FromByte_byte"></a></p>
 
