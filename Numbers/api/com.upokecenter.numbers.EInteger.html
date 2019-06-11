@@ -40,6 +40,8 @@ Returns the absolute value of this object&#39;s value.</li>
 Adds this object and another object.</li>
 <li><code>EInteger Add​(EInteger bigintAugend)</code><br>
 Adds this object and another object.</li>
+<li><code>EInteger And​(EInteger b)</code><br>
+Does an AND operation between two arbitrary-precision integer values.</li>
 <li><code>int AsInt32Checked()</code><br>
 Deprecated.
 Renamed to ToInt32Checked.
@@ -172,6 +174,11 @@ Multiplies this instance by the value of an arbitrary-precision integer
 object.</li>
 <li><code>EInteger Negate()</code><br>
 Gets the value of this object with the sign reversed.</li>
+<li><code>EInteger Not()</code><br>
+Returns an arbitrary-precision integer with every bit flipped.</li>
+<li><code>EInteger Or​(EInteger second)</code><br>
+Does an OR operation between two arbitrary-precision integer
+instances.</li>
 <li><code>EInteger Pow​(int powerSmall)</code><br>
 Raises an arbitrary-precision integer to a power.</li>
 <li><code>EInteger PowBigIntVar​(EInteger power)</code><br>
@@ -234,6 +241,8 @@ Generates a string representing the value of this object, in the given
 radix.</li>
 <li><code>java.lang.String toString()</code><br>
 Converts this object to a text string in base 10.</li>
+<li><code>EInteger Xor​(EInteger b)</code><br>
+Finds the exclusive &quot;or&quot; of two arbitrary-precision integer objects.</li>
 </ul>
 
 <h2>Method Details</h2>
@@ -1494,6 +1503,112 @@ parameter.</li>
 
 <ul>
 <li>An arbitrary-precision integer.</li>
+</ul>
+
+<h3>Not</h3>
+
+<pre>public EInteger Not()
+</pre>
+
+<p>Returns an arbitrary-precision integer with every bit flipped.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An arbitrary-precision integer.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>java.lang.NullPointerException</code> - The parameter <code>valueA</code> is null.</li>
+</ul>
+
+<h3>And</h3>
+
+<pre>public EInteger And​(EInteger b)
+</pre>
+
+<p>Does an AND operation between two arbitrary-precision integer values.<p>Each
+ arbitrary-precision integer is treated as a two&#39;s-complement form
+ (see <code>&quot;Forms of numbers&quot;</code>)
+ for the purposes of this operator.</p></p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>b</code> - The second arbitrary-precision integer.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An arbitrary-precision integer.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>java.lang.NullPointerException</code> - The parameter <code>a</code> or <code>b</code> is
+null.</li>
+</ul>
+
+<h3>Or</h3>
+
+<pre>public EInteger Or​(EInteger second)
+</pre>
+
+<p>Does an OR operation between two arbitrary-precision integer
+ instances.<p>Each arbitrary-precision integer is treated as a
+ two&#39;s-complement form (see <code>&quot;Forms of numbers&quot;</code>) for the purposes of this operator.</p></p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>second</code> - The second operand.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An arbitrary-precision integer.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>java.lang.NullPointerException</code> - The parameter <code>first</code> or <code>
+second</code> is null.</li>
+</ul>
+
+<h3>Xor</h3>
+
+<pre>public EInteger Xor​(EInteger b)
+</pre>
+
+<p>Finds the exclusive &quot;or&quot; of two arbitrary-precision integer objects. <p>Each
+ arbitrary-precision integer is treated as a two&#39;s-complement form
+ (see <code>&quot;Forms of numbers&quot;</code>)
+ for the purposes of this operator.</p></p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>b</code> - The second arbitrary-precision integer.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An arbitrary-precision integer in which each bit is set if it&#39;s set
+in one input integer but not the other.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>java.lang.NullPointerException</code> - The parameter <code>a</code> or <code>b</code> is
+null.</li>
 </ul>
 
 <h3>ShiftRight</h3>
