@@ -130,7 +130,7 @@ total ordering on all possible values (ignoring their signs).</li>
 <li><code>int CompareToTotalMagnitude​(EFloat other,
                    EContext ctx)</code><br>
 Compares the values of this object and another object, imposing a total
-ordering on all possible values.</li>
+ordering on all possible values (ignoring their signs).</li>
 <li><code>EFloat CompareToWithContext​(EFloat other,
                 EContext ctx)</code><br>
 Compares the mathematical values of this object and another object.</li>
@@ -227,8 +227,7 @@ equal to those of another object.</li>
 Finds e (the base of natural logarithms) raised to the power of this
 object&#39;s value.</li>
 <li><code>static EFloat FromBoolean​(boolean boolValue)</code><br>
-Converts a boolean value (true or false) to an arbitrary-precision binary
-number.</li>
+Not documented yet.</li>
 <li><code>static EFloat FromByte​(byte inputByte)</code><br>
 Converts a byte (from 0 to 255) to an arbitrary-precision binary float.</li>
 <li><code>static EFloat FromDouble​(double dbl)</code><br>
@@ -1559,16 +1558,16 @@ Does not signal flags if either value is signaling NaN.</li>
 </pre>
 
 <p>Compares the values of this object and another object, imposing a total
- ordering on all possible values. In this method: <ul> <li>For objects
- with the same value, the one with the higher exponent has a greater
- &quot;absolute value&quot;. </li> <li>Negative zero is less than positive zero.
- </li> <li>Quiet NaN has a higher &quot;absolute value&quot; than signaling NaN.
- If both objects are quiet NaN or both are signaling NaN, the one with
- the higher diagnostic information has a greater &quot;absolute value&quot;.
- </li> <li>NaN has a higher &quot;absolute value&quot; than infinity. </li>
- <li>Infinity has a higher &quot;absolute value&quot; than any finite number.
- </li> <li>Negative numbers are less than positive numbers. </li>
- </ul><p> TODO: Edit this </p></p>
+ ordering on all possible values (ignoring their signs). In this
+ method: <ul> <li>For objects with the same value, the one with the
+ higher exponent has a greater &quot;absolute value&quot;. </li> <li>Negative
+ zero is less than positive zero. </li> <li>Quiet NaN has a higher
+ &quot;absolute value&quot; than signaling NaN. If both objects are quiet NaN or
+ both are signaling NaN, the one with the higher diagnostic
+ information has a greater &quot;absolute value&quot;. </li> <li>NaN has a
+ higher &quot;absolute value&quot; than infinity. </li> <li>Infinity has a
+ higher &quot;absolute value&quot; than any finite number. </li> <li>Negative
+ numbers are less than positive numbers. </li> </ul></p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1583,8 +1582,9 @@ operation. Can be null.</p></li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>The number 0 if both objects have the same value, or -1 if this
-object is less than the other value, or 1 if this object is greater.
+<li>The number 0 if both objects have the same value (ignoring their
+signs), or -1 if this object is less than the other value (ignoring
+their signs), or 1 if this object is greater (ignoring their signs).
 Does not signal flags if either value is signaling NaN.</li>
 </ul>
 
@@ -4255,19 +4255,18 @@ an exact integer, or is less than -2147483648 or greater than
 <pre>public static EFloat FromBoolean​(boolean boolValue)
 </pre>
 
-<p>Converts a boolean value (true or false) to an arbitrary-precision binary
- number.</p>
+<p>Not documented yet.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>boolValue</code> - The parameter <code>boolValue</code> is not documented yet.</li>
+<li><code>boolValue</code> - Not documented yet.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>One if <code>boolValue</code> is <code>true</code> ; otherwise, zero.</li>
+<li>An EFloat object.</li>
 </ul>
 
 <h3>FromInt32</h3>

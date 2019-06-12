@@ -351,7 +351,8 @@ is an arbitrary-precision decimal number.</li>
 Finds e (the base of natural logarithms) raised to the power of this
 object&#39;s value.</li>
 <li><code>static EDecimal FromBoolean​(boolean boolValue)</code><br>
-Not documented yet.</li>
+Converts a boolean value (true or false) to an arbitrary-precision decimal
+number.</li>
 <li><code>static EDecimal FromByte​(byte inputByte)</code><br>
 Converts a byte (from 0 to 255) to an arbitrary-precision decimal number.</li>
 <li><code>static EDecimal FromDouble​(double dbl)</code><br>
@@ -1111,18 +1112,19 @@ Renamed to FromEFloat.</p>
 <pre>public static EDecimal FromBoolean​(boolean boolValue)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Converts a boolean value (true or false) to an arbitrary-precision decimal
+ number.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>boolValue</code> - The parameter <code>boolValue</code> is not documented yet.</li>
+<li><code>boolValue</code> - Either true or false.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>An EDecimal object.</li>
+<li>The number 1 if <code>boolValue</code> is true; otherwise, 0.</li>
 </ul>
 
 <h3>FromInt32</h3>

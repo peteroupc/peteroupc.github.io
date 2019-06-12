@@ -97,7 +97,8 @@ Determines whether this object&#39;s numerator, denominator, and properties are
 equal to those of another object and that other object is an
 arbitrary-precision rational number.</li>
 <li><code>static ERational FromBoolean​(boolean boolValue)</code><br>
-Not documented yet.</li>
+Converts a boolean value (true or false) to an arbitrary-precision rational
+number.</li>
 <li><code>static ERational FromByte​(byte inputByte)</code><br>
 Converts a byte (from 0 to 255) to an arbitrary-precision rational number.</li>
 <li><code>static ERational FromDouble​(double flt)</code><br>
@@ -1898,18 +1899,19 @@ an exact integer, or is less than -2147483648 or greater than
 <pre>public static ERational FromBoolean​(boolean boolValue)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Converts a boolean value (true or false) to an arbitrary-precision rational
+ number.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>boolValue</code> - The parameter <code>boolValue</code> is not documented yet.</li>
+<li><code>boolValue</code> - Either true or false.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>An arbitrary-precision binary rational number.</li>
+<li>The number 1 if <code>boolValue</code> is true; otherwise, 0.</li>
 </ul>
 
 <h3>FromInt32</h3>
