@@ -40,7 +40,7 @@ Returns the absolute value of this object&#39;s value.</li>
 Adds this object and another object.</li>
 <li><code>EInteger Add​(EInteger bigintAugend)</code><br>
 Adds this object and another object.</li>
-<li><code>EInteger And​(EInteger b)</code><br>
+<li><code>EInteger And​(EInteger other)</code><br>
 Does an AND operation between two arbitrary-precision integer values.</li>
 <li><code>int AsInt32Checked()</code><br>
 Deprecated.
@@ -159,6 +159,9 @@ Gets a value indicating whether this object&#39;s value is a power of two, and
 greater than 0.</li>
 <li><code>boolean isZero()</code><br>
 Gets a value indicating whether this value is 0.</li>
+<li><code>EInteger Mod​(int smallDivisor)</code><br>
+Finds the modulus remainder that results when this instance is divided by
+the value of an arbitrary-precision integer.</li>
 <li><code>EInteger Mod​(EInteger divisor)</code><br>
 Finds the modulus remainder that results when this instance is divided by
 the value of an arbitrary-precision integer.</li>
@@ -180,7 +183,8 @@ Returns an arbitrary-precision integer with every bit flipped.</li>
 Does an OR operation between two arbitrary-precision integer instances.</li>
 <li><code>EInteger Pow​(int powerSmall)</code><br>
 Raises an arbitrary-precision integer to a power.</li>
-<li><code>EInteger Pow​(EInteger bigPower)</code><br></li>
+<li><code>EInteger Pow​(EInteger bigPower)</code><br>
+Not documented yet.</li>
 <li><code>EInteger PowBigIntVar​(EInteger power)</code><br>
 Raises an arbitrary-precision integer to a power, which is given as another
 arbitrary-precision integer.</li>
@@ -1278,6 +1282,35 @@ a 32-bit signed integer.</li>
 <li><code>java.lang.NullPointerException</code> - The parameter <code>divisor</code> is null.</li>
 </ul>
 
+<h3>Mod</h3>
+
+<pre>public EInteger Mod​(int smallDivisor)
+</pre>
+
+<p>Finds the modulus remainder that results when this instance is divided by
+ the value of an arbitrary-precision integer. The modulus remainder is
+ the same as the normal remainder if the normal remainder is positive,
+ and equals divisor plus normal remainder if the normal remainder is
+ negative.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>smallDivisor</code> - A 32-bit signed integer.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An arbitrary-precision integer.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>java.lang.NullPointerException</code> - The parameter <code>divisor</code> is null.</li>
+</ul>
+
 <h3>ModPow</h3>
 
 <pre>public EInteger ModPow​(EInteger pow, EInteger mod)
@@ -1350,6 +1383,27 @@ null.</li>
 
 <pre>public EInteger Pow​(EInteger bigPower)
 </pre>
+
+<p>Not documented yet.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>bigPower</code> - Not documented yet.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An EInteger object.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>java.lang.NullPointerException</code> - The parameter <code>bigPower</code> is null.</p></li>
+<li><p><code>java.lang.IllegalArgumentException</code> - BigPower is negative.</p></li>
+</ul>
 
 <h3>Pow</h3>
 
@@ -1531,18 +1585,18 @@ parameter.</li>
 
 <h3>And</h3>
 
-<pre>public EInteger And​(EInteger b)
+<pre>public EInteger And​(EInteger other)
 </pre>
 
-<p>Does an AND operation between two arbitrary-precision integer values.<p>
- Each arbitrary-precision integer is treated as a two&#39;s-complement
- form (see <code>&quot;Forms of numbers&quot;
- </code>) for the purposes of this operator. </p></p>
+<p>Does an AND operation between two arbitrary-precision integer values.<p>Each
+ arbitrary-precision integer is treated as a two&#39;s-complement form
+ (see <code>&quot;Forms of numbers&quot;</code>)
+ for the purposes of this operator.</p></p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>b</code> - The second arbitrary-precision integer.</li>
+<li><code>other</code> - An EInteger object.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
