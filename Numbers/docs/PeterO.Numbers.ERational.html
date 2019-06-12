@@ -33,7 +33,7 @@
 <li><code><a href="#Divide_PeterO_Numbers_ERational">Divide(PeterO.Numbers.ERational)</a></code> - Divides this instance by the value of an arbitrary-precision rational number object.</li>
 <li><code><a href="#Equals_PeterO_Numbers_ERational">Equals(PeterO.Numbers.ERational)</a></code> - Determines whether this object&#39;s numerator, denominator, and properties are equal to those of another object.</li>
 <li><code><a href="#Equals_object">Equals(object)</a></code> - Determines whether this object&#39;s numerator, denominator, and properties are equal to those of another object and that other object is an arbitrary-precision rational number.</li>
-<li><code><a href="#FromBoolean_bool">FromBoolean(bool)</a></code> - Not documented yet.</li>
+<li><code><a href="#FromBoolean_bool">FromBoolean(bool)</a></code> - Converts a boolean value (true or false) to an arbitrary-precision rational number.</li>
 <li><code><a href="#FromByte_byte">FromByte(byte)</a></code> - Converts a byte (from 0 to 255) to an arbitrary-precision rational number.</li>
 <li><code><a href="#FromDecimal_System_Decimal">FromDecimal(System.Decimal)</a></code> - Converts adecimal under the Common Language Infrastructure (usually a .</li>
 <li><code><a href="#FromDouble_double">FromDouble(double)</a></code> - Converts a 64-bit floating-point number to a rational number.</li>
@@ -732,18 +732,18 @@ is an arbitrary object.</li>
     bool boolValue);
 </pre>
 
-<p>Not documented yet.</p>
+<p>Converts a boolean value (true or false) to an arbitrary-precision rational number.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>boolValue</i>: The parameter <i>boolValue</i>
-is not documented yet.</li>
+<li><i>boolValue</i>: Either true or false.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p>An arbitrary-precision binary rational number.</p>
+<p>The number 1 if <i>boolValue</i>
+is true; otherwise, 0.</p>
 
 <p><a id="FromByte_byte"></a></p>
 

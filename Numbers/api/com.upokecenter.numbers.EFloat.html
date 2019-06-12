@@ -227,7 +227,8 @@ equal to those of another object.</li>
 Finds e (the base of natural logarithms) raised to the power of this
 object&#39;s value.</li>
 <li><code>static EFloat FromBoolean​(boolean boolValue)</code><br>
-Not documented yet.</li>
+Converts a boolean value (either true or false) to an arbitrary-precision
+binary float.</li>
 <li><code>static EFloat FromByte​(byte inputByte)</code><br>
 Converts a byte (from 0 to 255) to an arbitrary-precision binary float.</li>
 <li><code>static EFloat FromDouble​(double dbl)</code><br>
@@ -4255,18 +4256,19 @@ an exact integer, or is less than -2147483648 or greater than
 <pre>public static EFloat FromBoolean​(boolean boolValue)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Converts a boolean value (either true or false) to an arbitrary-precision
+ binary float.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>boolValue</code> - Not documented yet.</li>
+<li><code>boolValue</code> - Either true or false.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>An EFloat object.</li>
+<li>The number 1 if <code>boolValue</code> is true, otherwise, 0.</li>
 </ul>
 
 <h3>FromInt32</h3>

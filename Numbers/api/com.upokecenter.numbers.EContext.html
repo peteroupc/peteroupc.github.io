@@ -145,7 +145,8 @@ exponent.</li>
 <li><code>boolean getHasFlags()</code><br>
 Gets a value indicating whether this context has a mutable Flags field.</li>
 <li><code>boolean getHasFlagsOrTraps()</code><br>
-Gets a value not documented yet.</li>
+Gets a value indicating whether this context has a mutable Flags field, one
+or more trap enablers, or both.</li>
 <li><code>boolean getHasMaxPrecision()</code><br>
 Gets a value indicating whether this context defines a maximum precision.</li>
 <li><code>EInteger getPrecision()</code><br>
@@ -184,8 +185,9 @@ Copies this arithmetic context and sets the copy&#39;s exponent range.</li>
 <li><code>EContext WithNoFlags() HasFlags</code><br>
 Copies this EContext with HasFlags set to false and a Flags value of
 0.</li>
-<li><code>EContext WithNoFlagsOrTraps()</code><br>
-Not documented yet.</li>
+<li><code>EContext WithNoFlagsOrTraps() HasFlags</code><br>
+Copies this EContext with HasFlags set to false, a Traps value of 0,
+and a Flags value of 0.</li>
 <li><code>EContext WithPrecision​(int precision)</code><br>
 Copies this EContext and gives it a particular precision value.</li>
 <li><code>EContext WithPrecisionInBits​(boolean isPrecisionBits)</code><br>
@@ -769,12 +771,14 @@ any exponent less than EMax.</li>
 <pre>public final boolean getHasFlagsOrTraps()
 </pre>
 
-<p>Gets a value not documented yet.</p>
+<p>Gets a value indicating whether this context has a mutable Flags field, one
+ or more trap enablers, or both.</p>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A value not documented yet.</li>
+<li><code>true</code> if this context has a mutable Flags field, one or more
+trap enablers, or both; otherwise, <code>false</code> .</li>
 </ul>
 
 <h3>WithAdjustExponent</h3>
@@ -831,12 +835,13 @@ null.</p></li>
 <pre>public EContext WithNoFlagsOrTraps()
 </pre>
 
-<p>Not documented yet.</p>
+<p>Copies this EContext with <code>HasFlags</code> set to false, a Traps value of 0,
+ and a Flags value of 0.</p>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>An EContext object.</li>
+<li>A context object for arbitrary-precision arithmetic settings.</li>
 </ul>
 
 <h3>WithBigPrecision</h3>

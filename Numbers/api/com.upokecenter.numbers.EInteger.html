@@ -161,7 +161,7 @@ greater than 0.</li>
 Gets a value indicating whether this value is 0.</li>
 <li><code>EInteger Mod​(int smallDivisor)</code><br>
 Finds the modulus remainder that results when this instance is divided by
-the value of an arbitrary-precision integer.</li>
+the value of another integer.</li>
 <li><code>EInteger Mod​(EInteger divisor)</code><br>
 Finds the modulus remainder that results when this instance is divided by
 the value of an arbitrary-precision integer.</li>
@@ -184,7 +184,7 @@ Does an OR operation between two arbitrary-precision integer instances.</li>
 <li><code>EInteger Pow​(int powerSmall)</code><br>
 Raises an arbitrary-precision integer to a power.</li>
 <li><code>EInteger Pow​(EInteger bigPower)</code><br>
-Not documented yet.</li>
+Raises an arbitrary-precision integer to a power.</li>
 <li><code>EInteger PowBigIntVar​(EInteger power)</code><br>
 Raises an arbitrary-precision integer to a power, which is given as another
 arbitrary-precision integer.</li>
@@ -245,7 +245,7 @@ Generates a string representing the value of this object, in the given
 radix.</li>
 <li><code>java.lang.String toString()</code><br>
 Converts this object to a text string in base 10.</li>
-<li><code>EInteger Xor​(EInteger b)</code><br>
+<li><code>EInteger Xor​(EInteger other)</code><br>
 Finds the exclusive &quot;or&quot; of two arbitrary-precision integer objects.</li>
 </ul>
 
@@ -1279,7 +1279,9 @@ a 32-bit signed integer.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>java.lang.NullPointerException</code> - The parameter <code>divisor</code> is null.</li>
+<li><p><code>java.lang.IllegalArgumentException</code> - The parameter <code>divisor</code> is less than
+0.</p></li>
+<li><p><code>java.lang.NullPointerException</code> - The parameter <code>divisor</code> is null.</p></li>
 </ul>
 
 <h3>Mod</h3>
@@ -1288,27 +1290,27 @@ a 32-bit signed integer.</li>
 </pre>
 
 <p>Finds the modulus remainder that results when this instance is divided by
- the value of an arbitrary-precision integer. The modulus remainder is
- the same as the normal remainder if the normal remainder is positive,
- and equals divisor plus normal remainder if the normal remainder is
- negative.</p>
+ the value of another integer. The modulus remainder is the same as
+ the normal remainder if the normal remainder is positive, and equals
+ divisor plus normal remainder if the normal remainder is negative.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>smallDivisor</code> - A 32-bit signed integer.</li>
+<li><code>smallDivisor</code> - The divisor of the modulus.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>An arbitrary-precision integer.</li>
+<li>The modulus remainder.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>java.lang.NullPointerException</code> - The parameter <code>divisor</code> is null.</li>
+<li><code>java.lang.IllegalArgumentException</code> - The parameter <code>divisor</code> is less than
+0.</li>
 </ul>
 
 <h3>ModPow</h3>
@@ -1384,18 +1386,18 @@ null.</li>
 <pre>public EInteger Pow​(EInteger bigPower)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Raises an arbitrary-precision integer to a power.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>bigPower</code> - Not documented yet.</li>
+<li><code>bigPower</code> - The exponent to raise this integer to.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>An EInteger object.</li>
+<li>The result. Returns 1 if <code>bigPower</code> is 0.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -1415,7 +1417,7 @@ null.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>powerSmall</code> - The exponent to raise to.</li>
+<li><code>powerSmall</code> - The exponent to raise this integer to.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -1588,15 +1590,15 @@ parameter.</li>
 <pre>public EInteger And​(EInteger other)
 </pre>
 
-<p>Does an AND operation between two arbitrary-precision integer values.<p>Each
- arbitrary-precision integer is treated as a two&#39;s-complement form
- (see <code>&quot;Forms of numbers&quot;</code>)
- for the purposes of this operator.</p></p>
+<p>Does an AND operation between two arbitrary-precision integer values.<p>
+ Each arbitrary-precision integer is treated as a two&#39;s-complement
+ form (see <code>&quot;Forms of numbers&quot;
+ </code>) for the purposes of this operator. </p></p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>other</code> - An EInteger object.</li>
+<li><code>other</code> - An arbitrary-precision integer.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -1637,13 +1639,15 @@ null.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>java.lang.NullPointerException</code> - The parameter <code>first</code> or <code>
-second</code> is null.</li>
+<li><p><code>java.lang.NullPointerException</code> - The parameter <code>first</code> or <code>
+second</code> is null.</p></li>
+<li><p><code>java.lang.IllegalArgumentException</code> - Doesn&#39;t satisfy biggerCount&gt;0; doesn&#39;t
+satisfy biggerCount == CountWords(result).</p></li>
 </ul>
 
 <h3>Xor</h3>
 
-<pre>public EInteger Xor​(EInteger b)
+<pre>public EInteger Xor​(EInteger other)
 </pre>
 
 <p>Finds the exclusive &quot;or&quot; of two arbitrary-precision integer objects. <p>Each
@@ -1654,7 +1658,7 @@ second</code> is null.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>b</code> - The second arbitrary-precision integer.</li>
+<li><code>other</code> - An arbitrary-precision integer.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -1667,8 +1671,10 @@ in one input integer but not the other.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>java.lang.NullPointerException</code> - The parameter <code>a</code> or <code>b</code> is
-null.</li>
+<li><p><code>java.lang.NullPointerException</code> - The parameter <code>a</code> or <code>b</code> is
+null.</p></li>
+<li><p><code>java.lang.IllegalArgumentException</code> - Doesn&#39;t satisfy smallerCount ==
+CountWords(result).</p></li>
 </ul>
 
 <h3>ShiftRight</h3>
