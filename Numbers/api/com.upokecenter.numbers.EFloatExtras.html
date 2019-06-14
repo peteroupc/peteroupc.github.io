@@ -19,9 +19,13 @@
 EFloat ed2,
 EContext ec)</code><br>
 Not documented yet.</li>
+<li><code>static EFloat BooleanToEFloat​(boolean b,
+           EContext ec)</code><br>
+Converts a boolean value (either true or false) to an arbitrary-precision
+binary floating-point number.</li>
 <li><code>static EFloat BoolToEFloat​(boolean b,
         EContext ec)</code><br>
-Not documented yet.</li>
+Deprecated. </li>
 <li><code>static EFloat Canonical​(EFloat ed)</code><br>
 Returns a canonical version of the given arbitrary-precision number object.</li>
 <li><code>static int CompareTotal​(EFloat ed,
@@ -160,22 +164,45 @@ Not documented yet.</li>
 
 <h3>BoolToEFloat</h3>
 
-<pre>public static EFloat BoolToEFloat​(boolean b, EContext ec)
+<pre>@Deprecated public static EFloat BoolToEFloat​(boolean b, EContext ec)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Deprecated.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>b</code> - The parameter <code>b</code> is not documented yet.</p></li>
-<li><p><code>ec</code> - The parameter <code>ec</code> is not documented yet.</p></li>
+<li><p><code>b</code> - Either true or false.</p></li>
+<li><p><code>ec</code> - A context used for rounding the result. Can be null.</p></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>An arbitrary-precision binary floating-point number.</li>
+<li>Either 1 if <code>b</code> is true, or 0 if <code>b</code> is false.. The
+result will be rounded as specified by the given context, if any.</li>
+</ul>
+
+<h3>BooleanToEFloat</h3>
+
+<pre>public static EFloat BooleanToEFloat​(boolean b, EContext ec)
+</pre>
+
+<p>Converts a boolean value (either true or false) to an arbitrary-precision
+ binary floating-point number.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>b</code> - Either true or false.</p></li>
+<li><p><code>ec</code> - A context used for rounding the result. Can be null.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>Either 1 if <code>b</code> is true, or 0 if <code>b</code> is false.. The
+result will be rounded as specified by the given context, if any.</li>
 </ul>
 
 <h3>IsCanonical</h3>
@@ -602,6 +629,14 @@ context.</li>
  &quot;absolute value&quot; than infinity.</li> <li>Infinity has a higher
  &quot;absolute value&quot; than any finite number.</li> <li>Negative numbers
  are less than positive numbers.</li></ul></p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>ed</code> - Not documented yet.</p></li>
+<li><p><code>other</code> - Not documented yet.</p></li>
+<li><p><code>ec</code> - Not documented yet. (3).</p></li>
+</ul>
 
 <p><strong>Returns:</strong></p>
 
