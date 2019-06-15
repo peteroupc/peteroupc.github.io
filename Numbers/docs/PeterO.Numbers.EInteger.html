@@ -129,7 +129,7 @@
 <li><code><a href="#op_Addition">PeterO.Numbers.EInteger operator +(PeterO.Numbers.EInteger, PeterO.Numbers.EInteger)</a></code> - Adds two arbitrary-precision integer objects and returns the result.</li>
 <li><code><a href="#op_BitwiseAnd">PeterO.Numbers.EInteger operator &amp;(PeterO.Numbers.EInteger, PeterO.Numbers.EInteger)</a></code> - Does an AND operation between two arbitrary-precision integer values.</li>
 <li><code><a href="#op_BitwiseOr">PeterO.Numbers.EInteger operator |(PeterO.Numbers.EInteger, PeterO.Numbers.EInteger)</a></code> - Does an OR operation between two arbitrary-precision integer instances.</li>
-<li><code><a href="#op_Decrement">PeterO.Numbers.EInteger operator --(PeterO.Numbers.EInteger)</a></code> - Not documented yet.</li>
+<li><code><a href="#op_Decrement">PeterO.Numbers.EInteger operator --(PeterO.Numbers.EInteger)</a></code> - Subtracts one from an arbitrary-precision integer.</li>
 <li><code><a href="#op_Division">PeterO.Numbers.EInteger operator /(PeterO.Numbers.EInteger, PeterO.Numbers.EInteger)</a></code> - Divides an arbitrary-precision integer by the value of an arbitrary-precision integer object.</li>
 <li><code><a href="#op_ExclusiveOr">PeterO.Numbers.EInteger operator ^(PeterO.Numbers.EInteger, PeterO.Numbers.EInteger)</a></code> - Finds the exclusive &quot;or&quot; of two arbitrary-precision integer objects.</li>
 <li><code><a href="#op_GreaterThan">bool operator &gt;(PeterO.Numbers.EInteger, PeterO.Numbers.EInteger)</a></code> - Determines whether an arbitrary-precision integer is greater than another arbitrary-precision integer.</li>
@@ -1589,7 +1589,7 @@ is null.</li>
     PeterO.Numbers.EInteger otherValue);
 </pre>
 
-<p>Does an AND operation between two arbitrary-precision integer values.</p>
+<p>Does an AND operation between two arbitrary-precision integer values. For each bit of the result, that bit is 1 if the corresponding bits of the two operands are both 1, or is 0 otherwise.</p>
 
 <p>Each arbitrary-precision integer is treated as a two&#39;s-complement form see<a href="PeterO.Numbers.EDecimal.html">
          &#x22;Forms of numbers&#x22;
@@ -1622,7 +1622,7 @@ The parameter &quot;a&quot; or &quot;b&quot; is null.</li>
     PeterO.Numbers.EInteger otherValue);
 </pre>
 
-<p>Does an OR operation between two arbitrary-precision integer instances.</p>
+<p>Does an OR operation between two arbitrary-precision integer instances. For each bit of the result, that bit is 1 if either or both of the corresponding bits of the two operands are 1, or is 0 otherwise.</p>
 
 <p>Each arbitrary-precision integer is treated as a two&#39;s-complement form see<a href="PeterO.Numbers.EDecimal.html">
          &#x22;Forms of numbers&#x22;
@@ -1654,24 +1654,23 @@ The parameter &quot;first&quot; or &quot;second&quot; is null.</li>
     PeterO.Numbers.EInteger bthis);
 </pre>
 
-<p>Not documented yet.</p>
+<p>Subtracts one from an arbitrary-precision integer.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>bthis</i>: The parameter  <i>bthis</i>
-is not documented yet.</li>
+<li><i>bthis</i>: An arbitrary-precision integer.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p>An EInteger object.</p>
+<p>The given arbitrary-precision integer minus one.</p>
 
 <p><b>Exceptions:</b></p>
 
 <ul>
 <li>System.ArgumentNullException:
-The parameter  <i>bthis</i>
+The parameter <i>bthis</i>
 is null.</li>
 </ul>
 
@@ -1714,7 +1713,7 @@ is null.</li>
     PeterO.Numbers.EInteger b);
 </pre>
 
-<p>Finds the exclusive &quot;or&quot; of two arbitrary-precision integer objects.Each arbitrary-precision integer is treated as a two&#39;s-complement form (see<a href="PeterO.Numbers.EDecimal.html">
+<p>Finds the exclusive &quot;or&quot; of two arbitrary-precision integer objects. For each bit of the result, that bit is 1 if either of the corresponding bits of the two operands, but not both, is 1, or is 0 otherwise.Each arbitrary-precision integer is treated as a two&#39;s-complement form (see<a href="PeterO.Numbers.EDecimal.html">
            &#x22;Forms of numbers&#x22;
         </a>) for the purposes of this operator.</p>
 
@@ -1799,19 +1798,19 @@ is at least <i>otherValue</i>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>bthis</i>: The parameter  <i>bthis</i>
+<li><i>bthis</i>: The parameter <i>bthis</i>
 is not documented yet.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p>An EInteger object.</p>
+<p>An arbitrary-precision integer.</p>
 
 <p><b>Exceptions:</b></p>
 
 <ul>
 <li>System.ArgumentNullException:
-The parameter  <i>bthis</i>
+The parameter <i>bthis</i>
 is null.</li>
 </ul>
 

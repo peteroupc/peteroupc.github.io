@@ -111,14 +111,18 @@ Returns the number 10, the decimal radix.</li>
 <li><code>static EDecimal Rescale​(EDecimal ed,
    EDecimal scale,
    EContext ec)</code><br>
-Not documented yet.</li>
+Returns an arbitrary-precision decimal number with the same value as this
+object but with the given exponent, expressed as an
+arbitrary-precision decimal number.</li>
 <li><code>static EDecimal Rotate​(EDecimal ed,
   EDecimal ed2,
   EContext ec)</code><br>
 Rotates the digits of an arbitrary-precision decimal number&#39;s mantissa.</li>
 <li><code>static boolean SameQuantum​(EDecimal ed1,
        EDecimal ed2)</code><br>
-Not documented yet.</li>
+Returns whether two arbitrary-precision numbers have the same exponent, they
+both are not-a-number (NaN), or they both are infinity (positive
+and/or negative).</li>
 <li><code>static EDecimal ScaleB​(EDecimal ed,
   EDecimal ed2,
   EContext ec)</code><br>
@@ -129,7 +133,8 @@ Not documented yet.</li>
 Shifts the digits of an arbitrary-precision decimal number&#39;s mantissa.</li>
 <li><code>static EDecimal Trim​(EDecimal ed1,
 EContext ec)</code><br>
-Not documented yet.</li>
+Returns an arbitrary-precision number with the same value as this one but
+with certain trailing zeros removed from its mantissa.</li>
 <li><code>static EDecimal Xor​(EDecimal ed1,
 EDecimal ed2,
 EContext ec)</code><br>
@@ -826,19 +831,23 @@ negative) as the second given number object.</li>
 <pre>public static boolean SameQuantum​(EDecimal ed1, EDecimal ed2)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Returns whether two arbitrary-precision numbers have the same exponent, they
+ both are not-a-number (NaN), or they both are infinity (positive
+ and/or negative).</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>ed1</code> - The parameter <code>ed1</code> is not documented yet.</p></li>
-<li><p><code>ed2</code> - The parameter <code>ed2</code> is not documented yet.</p></li>
+<li><p><code>ed1</code> - The first arbitrary-precision number.</p></li>
+<li><p><code>ed2</code> - The second arbitrary-precision number.</p></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>Either <code>true</code> or <code>false</code> .</li>
+<li>Either <code>true</code> if the given arbitrary-precision numbers have
+the same exponent, they both are not-a-number (NaN), or they both are
+infinity (positive and/or negative); otherwise, <code>false</code> .</li>
 </ul>
 
 <h3>Trim</h3>
@@ -846,19 +855,30 @@ negative) as the second given number object.</li>
 <pre>public static EDecimal Trim​(EDecimal ed1, EContext ec)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Returns an arbitrary-precision number with the same value as this one but
+ with certain trailing zeros removed from its mantissa. If the
+ number&#39;s exponent is 0, it is returned unchanged (but may be rounded
+ depending on the arithmetic context); if that exponent is greater 0,
+ its trailing zeros are removed from the mantissa (then rounded if
+ necessary); if that exponent is less than 0, its trailing zeros are
+ removed from the mantissa until the exponent reaches 0 (then the
+ number is rounded if necessary).</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>ed1</code> - The parameter <code>ed1</code> is not documented yet.</p></li>
-<li><p><code>ec</code> - The parameter <code>ec</code> is not documented yet.</p></li>
+<li><p><code>ed1</code> - An arbitrary-precision number.</p></li>
+<li><p><code>ec</code> - An arithmetic context to control the precision, rounding, and
+exponent range of the result. Can be null.</p></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>An EDecimal object.</li>
+<li>An arbitrary-precision number with the same value as this one but
+with certain trailing zeros removed from its mantissa. If <code>ed1</code>
+is not-a-number (NaN) or infinity, it is generally returned
+unchanged.</li>
 </ul>
 
 <h3>Rescale</h3>
@@ -866,20 +886,43 @@ negative) as the second given number object.</li>
 <pre>public static EDecimal Rescale​(EDecimal ed, EDecimal scale, EContext ec)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Returns an arbitrary-precision decimal number with the same value as this
+ object but with the given exponent, expressed as an
+ arbitrary-precision decimal number. <p>Note that this is not always
+ the same as rounding to a given number of decimal places, since it
+ can fail if the difference between this value&#39;s exponent and the
+ desired exponent is too big, depending on the maximum precision. If
+ rounding to a number of decimal places is desired, it&#39;s better to use
+ the RoundToExponent and RoundToIntegral methods instead. </p>
+ <p><b>Remark:</b> This method can be used to implement fixed-point
+ decimal arithmetic, in which a fixed number of digits come after the
+ decimal point. A fixed-point decimal arithmetic in which no digits
+ come after the decimal point (a desired exponent of 0) is considered
+ an &quot;integer arithmetic&quot; . </p></p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>ed</code> - The parameter <code>ed</code> is not documented yet.</p></li>
-<li><p><code>scale</code> - The parameter <code>scale</code> is not documented yet.</p></li>
-<li><p><code>ec</code> - The parameter <code>ec</code> is not documented yet.</p></li>
+<li><p><code>ed</code> - An arbitrary-precision decimal number whose exponent is to be
+changed.</p></li>
+<li><p><code>scale</code> - The desired exponent of the result, expressed as an
+arbitrary-precision decimal number. The exponent is the number of
+fractional digits in the result, expressed as a negative number. Can
+also be positive, which eliminates lower-order places from the
+number. For example, -3 means round to the thousandth (10^-3,
+0.0001), and 3 means round to the thousands-place (10^3, 1000). A
+value of 0 rounds the number to an integer.</p></li>
+<li><p><code>ec</code> - The parameter <code>ec</code> is an EContext object.</p></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>An EDecimal object.</li>
+<li>An arbitrary-precision decimal number with the same value as this
+object but with the exponent changed. Signals FlagInvalid and returns
+not-a-number (NaN) if the result can&#39;t fit the given precision
+without rounding, or if the arithmetic context defines an exponent
+range and the given exponent is outside that range.</li>
 </ul>
 
 <h3>And</h3>

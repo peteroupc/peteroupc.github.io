@@ -40,12 +40,12 @@
 <li><code><a href="#NumberClass_PeterO_Numbers_EDecimal_PeterO_Numbers_EContext">NumberClass(PeterO.Numbers.EDecimal, PeterO.Numbers.EContext)</a></code> - Finds the number class for an arbitrary-precision decimal number object.</li>
 <li><code><a href="#Or_PeterO_Numbers_EDecimal_PeterO_Numbers_EDecimal_PeterO_Numbers_EContext">Or(PeterO.Numbers.EDecimal, PeterO.Numbers.EDecimal, PeterO.Numbers.EContext)</a></code> - Performs a logical OR operation on two decimal numbers in the form oflogical operands.</li>
 <li><code><a href="#Radix_PeterO_Numbers_EContext">Radix(PeterO.Numbers.EContext)</a></code> - Returns the number 10, the decimal radix.</li>
-<li><code><a href="#Rescale_PeterO_Numbers_EDecimal_PeterO_Numbers_EDecimal_PeterO_Numbers_EContext">Rescale(PeterO.Numbers.EDecimal, PeterO.Numbers.EDecimal, PeterO.Numbers.EContext)</a></code> - Not documented yet.</li>
+<li><code><a href="#Rescale_PeterO_Numbers_EDecimal_PeterO_Numbers_EDecimal_PeterO_Numbers_EContext">Rescale(PeterO.Numbers.EDecimal, PeterO.Numbers.EDecimal, PeterO.Numbers.EContext)</a></code> - Returns an arbitrary-precision decimal number with the same value as this object but with the given exponent, expressed as an arbitrary-precision decimal number.</li>
 <li><code><a href="#Rotate_PeterO_Numbers_EDecimal_PeterO_Numbers_EDecimal_PeterO_Numbers_EContext">Rotate(PeterO.Numbers.EDecimal, PeterO.Numbers.EDecimal, PeterO.Numbers.EContext)</a></code> - Rotates the digits of an arbitrary-precision decimal number&#39;s mantissa.</li>
-<li><code><a href="#SameQuantum_PeterO_Numbers_EDecimal_PeterO_Numbers_EDecimal">SameQuantum(PeterO.Numbers.EDecimal, PeterO.Numbers.EDecimal)</a></code> - Not documented yet.</li>
+<li><code><a href="#SameQuantum_PeterO_Numbers_EDecimal_PeterO_Numbers_EDecimal">SameQuantum(PeterO.Numbers.EDecimal, PeterO.Numbers.EDecimal)</a></code> - Returns whether two arbitrary-precision numbers have the same exponent, they both are not-a-number (NaN), or they both are infinity (positive and/or negative).</li>
 <li><code><a href="#ScaleB_PeterO_Numbers_EDecimal_PeterO_Numbers_EDecimal_PeterO_Numbers_EContext">ScaleB(PeterO.Numbers.EDecimal, PeterO.Numbers.EDecimal, PeterO.Numbers.EContext)</a></code> - Not documented yet.</li>
 <li><code><a href="#Shift_PeterO_Numbers_EDecimal_PeterO_Numbers_EDecimal_PeterO_Numbers_EContext">Shift(PeterO.Numbers.EDecimal, PeterO.Numbers.EDecimal, PeterO.Numbers.EContext)</a></code> - Shifts the digits of an arbitrary-precision decimal number&#39;s mantissa.</li>
-<li><code><a href="#Trim_PeterO_Numbers_EDecimal_PeterO_Numbers_EContext">Trim(PeterO.Numbers.EDecimal, PeterO.Numbers.EContext)</a></code> - Not documented yet.</li>
+<li><code><a href="#Trim_PeterO_Numbers_EDecimal_PeterO_Numbers_EContext">Trim(PeterO.Numbers.EDecimal, PeterO.Numbers.EContext)</a></code> - Returns an arbitrary-precision number with the same value as this one but with certain trailing zeros removed from its mantissa.</li>
 <li><code><a href="#Xor_PeterO_Numbers_EDecimal_PeterO_Numbers_EDecimal_PeterO_Numbers_EContext">Xor(PeterO.Numbers.EDecimal, PeterO.Numbers.EDecimal, PeterO.Numbers.EContext)</a></code> - Performs a logical exclusive-OR (XOR) operation on two decimal numbers in the form oflogical operands.</li>
 </ul>
 
@@ -59,7 +59,7 @@
     PeterO.Numbers.EContext ec);
 </pre>
 
-<p>Performs a logical AND operation on two decimal numbers in the form of<i>logical operands</i>. A  <code>logical operand</code>  is a non-negative base-10 number with an Exponent property of 0 and no other base-10 digits than 0 or 1 (examples include  <code>01001</code>  and <code>111001</code> , but not  <code>02001</code>  or  <code>99999</code>  ). The logical AND operation sets each digit of the result to 1 if the corresponding digits of each logical operand are both 1, and to 0 otherwise. For example,  <code>01001 AND 111010 = 01000</code></p>
+<p>Performs a logical AND operation on two decimal numbers in the form of<i>logical operands</i>. A <code>logical operand</code>  is a non-negative base-10 number with an Exponent property of 0 and no other base-10 digits than 0 or 1 (examples include <code>01001</code>  and <code>111001</code>  , but not <code>02001</code>  or <code>99999</code>  ). The logical AND operation sets each digit of the result to 1 if the corresponding digits of each logical operand are both 1, and to 0 otherwise. For example, <code>01001 AND 111010 = 01000</code></p>
 
 <p><b>Parameters:</b></p>
 
@@ -71,8 +71,8 @@
 
 <p><b>Return Value:</b></p>
 
-<p>The result of the logical AND operation as a logical operand. Signals an invalid operation and returns not-a-number (NaN) if  <i>ed1</i>
-,  <i>ed2</i>
+<p>The result of the logical AND operation as a logical operand. Signals an invalid operation and returns not-a-number (NaN) if <i>ed1</i>
+, <i>ed2</i>
 , or both are not logical operands.</p>
 
 <p><a id="BooleanToEDecimal_bool_PeterO_Numbers_EContext"></a></p>
@@ -260,7 +260,8 @@ is false.. The result will be rounded as specified by the given context, f any.<
 
 <ul>
 <li><p><i>ed</i>: An arbitrary-precision number object with the value the result will have.</p></li>
-<li><p><i>other</i>: An EDecimal object.</p></li>
+<li><p><i>other</i>: The parameter <i>other</i>
+is an EDecimal object.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -299,7 +300,7 @@ is a 32-bit signed integer.</p></li>
     PeterO.Numbers.EContext ec);
 </pre>
 
-<p>Performs a logical NOT operation on a decimal numbers in the form of a<i>logical operand</i>. A  <code>logical operand</code>  is a non-negative base-10 number with an Exponent property of 0 and no other base-10 digits than 0 or 1 (examples include  <code>01001</code>  and  <code>111001</code> , but not  <code>02001</code>  or  <code>99999</code>  ). The logical NOT operation sets each digit of the result to 1 if the corresponding digit is 0, and to 0 otherwise; it can set no more digits than the maximum precision, however. For example, if the maximum precision is 8 digits, then  <code>NOT 111010 = 11000101</code></p>
+<p>Performs a logical NOT operation on a decimal numbers in the form of a<i>logical operand</i>. A <code>logical operand</code>  is a non-negative base-10 number with an Exponent property of 0 and no other base-10 digits than 0 or 1 (examples include <code>01001</code>  and <code>111001</code>  , but not <code>02001</code>  or <code>99999</code>  ). The logical NOT operation sets each digit of the result to 1 if the corresponding digit is 0, and to 0 otherwise; it can set no more digits than the maximum precision, however. For example, if the maximum precision is 8 digits, then <code>NOT 111010 = 11000101</code></p>
 
 <p><b>Parameters:</b></p>
 
@@ -310,8 +311,8 @@ is a 32-bit signed integer.</p></li>
 
 <p><b>Return Value:</b></p>
 
-<p>The result of the logical NOT operation as a logical operand. Signals an invalid operation and returns not-a-number (NaN) if  <i>ed1</i>
- is not a logical operand.</p>
+<p>The result of the logical NOT operation as a logical operand. Signals an invalid operation and returns not-a-number (NaN) if <i>ed1</i>
+is not a logical operand.</p>
 
 <p><a id="IsCanonical_PeterO_Numbers_EDecimal"></a></p>
 
@@ -663,22 +664,21 @@ is less than 0 or greater than 9 .</li>
     PeterO.Numbers.EContext ec);
 </pre>
 
-<p>Not documented yet.</p>
+<p>Returns an arbitrary-precision decimal number with the same value as this object but with the given exponent, expressed as an arbitrary-precision decimal number.Note that this is not always the same as rounding to a given number of decimal places, since it can fail if the difference between this value&#39;s exponent and the desired exponent is too big, depending on the maximum precision. If rounding to a number of decimal places is desired, it&#39;s better to use the RoundToExponent and RoundToIntegral methods instead.</p>
+
+<p><b>Remark:</b> This method can be used to implement fixed-point decimal arithmetic, in which a fixed number of digits come after the decimal point. A fixed-point decimal arithmetic in which no digits come after the decimal point (a desired exponent of 0) is considered an &quot;integer arithmetic&quot; .</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>ed</i>: The parameter <i>ed</i>
-is not documented yet.</p></li>
-<li><p><i>scale</i>: The parameter <i>scale</i>
-is not documented yet.</p></li>
-<li><p><i>ec</i>: The parameter <i>ec</i>
-is not documented yet.</p></li>
+<li><p><i>ed</i>: An arbitrary-precision decimal number whose exponent is to be changed.</p></li>
+<li><p><i>scale</i>: The desired exponent of the result, expressed as an arbitrary-precision decimal number. The exponent is the number of fractional digits in the result, expressed as a negative number. Can also be positive, which eliminates lower-order places from the number. For example, -3 means round to the thousandth (10^-3, 0.0001), and 3 means round to the thousands-place (10^3, 1000). A value of 0 rounds the number to an integer.</p></li>
+<li><p><i>ec</i>: An EContext object.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p>An EDecimal object.</p>
+<p>An arbitrary-precision decimal number with the same value as this object but with the exponent changed. Signals FlagInvalid and returns not-a-number (NaN) if the result can&#39;t fit the given precision without rounding, or if the arithmetic context defines an exponent range and the given exponent is outside that range.</p>
 
 <p><a id="Rotate_PeterO_Numbers_EDecimal_PeterO_Numbers_EDecimal_PeterO_Numbers_EContext"></a></p>
 
@@ -715,20 +715,18 @@ is not an integer, is negative, has an exponent other than 0, or has an bsolute 
     PeterO.Numbers.EDecimal ed2);
 </pre>
 
-<p>Not documented yet.</p>
+<p>Returns whether two arbitrary-precision numbers have the same exponent, they both are not-a-number (NaN), or they both are infinity (positive and/or negative).</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>ed1</i>: The parameter <i>ed1</i>
-is not documented yet.</p></li>
-<li><p><i>ed2</i>: The parameter <i>ed2</i>
-is not documented yet.</p></li>
+<li><p><i>ed1</i>: The first arbitrary-precision number.</p></li>
+<li><p><i>ed2</i>: The second arbitrary-precision number.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p>Either <code>true</code>  or <code>false</code>  .</p>
+<p>Either <code>true</code>  if the given arbitrary-precision numbers have the same exponent, they both are not-a-number (NaN), or they both are infinity (positive and/or negative); otherwise, <code>false</code>  .</p>
 
 <p><a id="ScaleB_PeterO_Numbers_EDecimal_PeterO_Numbers_EDecimal_PeterO_Numbers_EContext"></a></p>
 
@@ -810,20 +808,19 @@ is null.</li>
     PeterO.Numbers.EContext ec);
 </pre>
 
-<p>Not documented yet.</p>
+<p>Returns an arbitrary-precision number with the same value as this one but with certain trailing zeros removed from its mantissa. If the number&#39;s exponent is 0, it is returned unchanged (but may be rounded depending on the arithmetic context); if that exponent is greater 0, its trailing zeros are removed from the mantissa (then rounded if necessary); if that exponent is less than 0, its trailing zeros are removed from the mantissa until the exponent reaches 0 (then the number is rounded if necessary).</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>ed1</i>: The parameter <i>ed1</i>
-is not documented yet.</p></li>
-<li><p><i>ec</i>: The parameter <i>ec</i>
-is not documented yet.</p></li>
+<li><p><i>ed1</i>: An arbitrary-precision number.</p></li>
+<li><p><i>ec</i>: An arithmetic context to control the precision, rounding, and exponent range of the result. Can be null.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p>An EDecimal object.</p>
+<p>An arbitrary-precision number with the same value as this one but with certain trailing zeros removed from its mantissa. If <i>ed1</i>
+ is not-a-number (NaN) or infinity, it is generally returned unchanged.</p>
 
 <p><a id="Xor_PeterO_Numbers_EDecimal_PeterO_Numbers_EDecimal_PeterO_Numbers_EContext"></a></p>
 

@@ -20,10 +20,10 @@
 <li><code><a href="#Canonical_PeterO_Numbers_EFloat">Canonical(PeterO.Numbers.EFloat)</a></code> - Returns a canonical version of the given arbitrary-precision number object.</li>
 <li><code><a href="#CompareTotalMagnitude_PeterO_Numbers_EFloat_PeterO_Numbers_EFloat_PeterO_Numbers_EContext">CompareTotalMagnitude(PeterO.Numbers.EFloat, PeterO.Numbers.EFloat, PeterO.Numbers.EContext)</a></code> - Compares the absolute values of two arbitrary-precision number objects, imposing a total ordering on all possible values (ignoring their signs).</li>
 <li><code><a href="#CompareTotal_PeterO_Numbers_EFloat_PeterO_Numbers_EFloat_PeterO_Numbers_EContext">CompareTotal(PeterO.Numbers.EFloat, PeterO.Numbers.EFloat, PeterO.Numbers.EContext)</a></code> - Compares the values of one arbitrary-precision number object and another object, imposing a total ordering on all possible values.</li>
-<li><code><a href="#CopyAbs_PeterO_Numbers_EFloat">CopyAbs(PeterO.Numbers.EFloat)</a></code> - Not documented yet.</li>
-<li><code><a href="#CopyNegate_PeterO_Numbers_EFloat">CopyNegate(PeterO.Numbers.EFloat)</a></code> - Not documented yet.</li>
-<li><code><a href="#CopySign_PeterO_Numbers_EFloat_PeterO_Numbers_EFloat">CopySign(PeterO.Numbers.EFloat, PeterO.Numbers.EFloat)</a></code> - Not documented yet.</li>
-<li><code><a href="#Copy_PeterO_Numbers_EFloat">Copy(PeterO.Numbers.EFloat)</a></code> - Not documented yet.</li>
+<li><code><a href="#CopyAbs_PeterO_Numbers_EFloat">CopyAbs(PeterO.Numbers.EFloat)</a></code> - Returns an arbitrary-precision number object with the same value as the given number object but with a nonnegative sign (that is, the given number object&#39;s absolute value).</li>
+<li><code><a href="#CopyNegate_PeterO_Numbers_EFloat">CopyNegate(PeterO.Numbers.EFloat)</a></code> - Returns an arbitrary-precision number object with the sign reversed from the given number object.</li>
+<li><code><a href="#CopySign_PeterO_Numbers_EFloat_PeterO_Numbers_EFloat">CopySign(PeterO.Numbers.EFloat, PeterO.Numbers.EFloat)</a></code> - Returns an arbitrary-precision number object with the same value as the first given number object but with a the same sign (positive or negative) as the second given number object.</li>
+<li><code><a href="#Copy_PeterO_Numbers_EFloat">Copy(PeterO.Numbers.EFloat)</a></code> - Creates a copy of the given arbitrary-precision number object.</li>
 <li><code><a href="#Int32ToEFloat_int_PeterO_Numbers_EContext">Int32ToEFloat(int, PeterO.Numbers.EContext)</a></code> - Creates a binary floating-point number from a 32-bit signed integer.</li>
 <li><code><a href="#Invert_PeterO_Numbers_EFloat_PeterO_Numbers_EContext">Invert(PeterO.Numbers.EFloat, PeterO.Numbers.EContext)</a></code> - Not documented yet.</li>
 <li><code><a href="#IsCanonical_PeterO_Numbers_EFloat">IsCanonical(PeterO.Numbers.EFloat)</a></code> - Returns whether the given arbitrary-precision number object is in a canonical form.</li>
@@ -41,12 +41,12 @@
 <li><code><a href="#NumberClass_PeterO_Numbers_EFloat_PeterO_Numbers_EContext">NumberClass(PeterO.Numbers.EFloat, PeterO.Numbers.EContext)</a></code> - Finds the number class for an arbitrary-precision decimal number object.</li>
 <li><code><a href="#Or_PeterO_Numbers_EFloat_PeterO_Numbers_EFloat_PeterO_Numbers_EContext">Or(PeterO.Numbers.EFloat, PeterO.Numbers.EFloat, PeterO.Numbers.EContext)</a></code> - Performs a logical OR operation on two binary numbers in the form oflogical operands.</li>
 <li><code><a href="#Radix_PeterO_Numbers_EContext">Radix(PeterO.Numbers.EContext)</a></code> - Returns the number 2, the binary radix.</li>
-<li><code><a href="#Rescale_PeterO_Numbers_EFloat_PeterO_Numbers_EFloat_PeterO_Numbers_EContext">Rescale(PeterO.Numbers.EFloat, PeterO.Numbers.EFloat, PeterO.Numbers.EContext)</a></code> - Not documented yet.</li>
+<li><code><a href="#Rescale_PeterO_Numbers_EFloat_PeterO_Numbers_EFloat_PeterO_Numbers_EContext">Rescale(PeterO.Numbers.EFloat, PeterO.Numbers.EFloat, PeterO.Numbers.EContext)</a></code> - Returns an arbitrary-precision binary number with the same value as this object but with the given exponent, expressed as an arbitrary-precision binary number.</li>
 <li><code><a href="#Rotate_PeterO_Numbers_EFloat_PeterO_Numbers_EFloat_PeterO_Numbers_EContext">Rotate(PeterO.Numbers.EFloat, PeterO.Numbers.EFloat, PeterO.Numbers.EContext)</a></code> - Rotates the digits of an arbitrary-precision binary number&#39;s mantissa.</li>
-<li><code><a href="#SameQuantum_PeterO_Numbers_EFloat_PeterO_Numbers_EFloat">SameQuantum(PeterO.Numbers.EFloat, PeterO.Numbers.EFloat)</a></code> - Not documented yet.</li>
+<li><code><a href="#SameQuantum_PeterO_Numbers_EFloat_PeterO_Numbers_EFloat">SameQuantum(PeterO.Numbers.EFloat, PeterO.Numbers.EFloat)</a></code> - Returns whether two arbitrary-precision numbers have the same exponent, they both are not-a-number (NaN), or they both are infinity (positive and/or negative).</li>
 <li><code><a href="#ScaleB_PeterO_Numbers_EFloat_PeterO_Numbers_EFloat_PeterO_Numbers_EContext">ScaleB(PeterO.Numbers.EFloat, PeterO.Numbers.EFloat, PeterO.Numbers.EContext)</a></code> - Not documented yet.</li>
 <li><code><a href="#Shift_PeterO_Numbers_EFloat_PeterO_Numbers_EFloat_PeterO_Numbers_EContext">Shift(PeterO.Numbers.EFloat, PeterO.Numbers.EFloat, PeterO.Numbers.EContext)</a></code> - Shifts the bits of an arbitrary-precision binary floating point number&#39;s mantissa.</li>
-<li><code><a href="#Trim_PeterO_Numbers_EFloat_PeterO_Numbers_EContext">Trim(PeterO.Numbers.EFloat, PeterO.Numbers.EContext)</a></code> - Not documented yet.</li>
+<li><code><a href="#Trim_PeterO_Numbers_EFloat_PeterO_Numbers_EContext">Trim(PeterO.Numbers.EFloat, PeterO.Numbers.EContext)</a></code> - Returns an arbitrary-precision number with the same value as this one but with certain trailing zeros removed from its mantissa.</li>
 <li><code><a href="#Xor_PeterO_Numbers_EFloat_PeterO_Numbers_EFloat_PeterO_Numbers_EContext">Xor(PeterO.Numbers.EFloat, PeterO.Numbers.EFloat, PeterO.Numbers.EContext)</a></code> - Performs a logical exclusive-OR (XOR) operation on two binary numbers in the form oflogical operands.</li>
 </ul>
 
@@ -220,18 +220,17 @@ is false.. The result will be rounded as specified by the given context, f any.<
     PeterO.Numbers.EFloat ed);
 </pre>
 
-<p>Not documented yet.</p>
+<p>Creates a copy of the given arbitrary-precision number object.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>ed</i>: The parameter <i>ed</i>
-is not documented yet.</li>
+<li><i>ed</i>: An arbitrary-precision number object to copy.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p>An arbitrary-precision binary floating-point number.</p>
+<p>A copy of the given arbitrary-precision number object.</p>
 
 <p><a id="CopyAbs_PeterO_Numbers_EFloat"></a></p>
 
@@ -241,17 +240,17 @@ is not documented yet.</li>
     PeterO.Numbers.EFloat ed);
 </pre>
 
-<p>Not documented yet.</p>
+<p>Returns an arbitrary-precision number object with the same value as the given number object but with a nonnegative sign (that is, the given number object&#39;s absolute value).</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>ed</i>: Not documented yet.</li>
+<li><i>ed</i>: An arbitrary-precision number object.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p>An EFloat object.</p>
+<p>An arbitrary-precision number object with the same value as the given number object but with a nonnegative sign.</p>
 
 <p><a id="CopyNegate_PeterO_Numbers_EFloat"></a></p>
 
@@ -261,17 +260,17 @@ is not documented yet.</li>
     PeterO.Numbers.EFloat ed);
 </pre>
 
-<p>Not documented yet.</p>
+<p>Returns an arbitrary-precision number object with the sign reversed from the given number object.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>ed</i>: Not documented yet.</li>
+<li><i>ed</i>: An arbitrary-precision number object.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p>An EFloat object.</p>
+<p>An arbitrary-precision number object with the sign reversed from the given number object.</p>
 
 <p><a id="CopySign_PeterO_Numbers_EFloat_PeterO_Numbers_EFloat"></a></p>
 
@@ -282,20 +281,19 @@ is not documented yet.</li>
     PeterO.Numbers.EFloat other);
 </pre>
 
-<p>Not documented yet.</p>
+<p>Returns an arbitrary-precision number object with the same value as the first given number object but with a the same sign (positive or negative) as the second given number object.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>ed</i>: The parameter <i>ed</i>
-is not documented yet.</p></li>
+<li><p><i>ed</i>: An arbitrary-precision number object with the value the result will have.</p></li>
 <li><p><i>other</i>: The parameter <i>other</i>
-is not documented yet.</p></li>
+is an EDecimal object.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p>An arbitrary-precision binary floating-point number.</p>
+<p>An arbitrary-precision number object with the same value as the first given number object but with a the same sign (positive or negative) as the second given number object.</p>
 
 <p><a id="Int32ToEFloat_int_PeterO_Numbers_EContext"></a></p>
 
@@ -693,22 +691,21 @@ is less than 0 or greater than 9 .</li>
     PeterO.Numbers.EContext ec);
 </pre>
 
-<p>Not documented yet.</p>
+<p>Returns an arbitrary-precision binary number with the same value as this object but with the given exponent, expressed as an arbitrary-precision binary number.Note that this is not always the same as rounding to a given number of binary places, since it can fail if the difference between this value&#39;s exponent and the desired exponent is too big, depending on the maximum precision. If rounding to a number of binary places is desired, it&#39;s better to use the RoundToExponent and RoundToIntegral methods instead.</p>
+
+<p><b>Remark:</b> This method can be used to implement fixed-point binary arithmetic, in which a fixed number of digits come after the binary point. A fixed-point binary arithmetic in which no digits come after the binary point (a desired exponent of 0) is considered an &quot;integer arithmetic&quot; .</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>ed</i>: The parameter <i>ed</i>
-is not documented yet.</p></li>
-<li><p><i>scale</i>: The parameter <i>scale</i>
-is not documented yet.</p></li>
-<li><p><i>ec</i>: The parameter <i>ec</i>
-is not documented yet.</p></li>
+<li><p><i>ed</i>: An arbitrary-precision binary number whose exponent is to be changed.</p></li>
+<li><p><i>scale</i>: The desired exponent of the result, expressed as an arbitrary-precision binary number. The exponent is the number of fractional digits in the result, expressed as a negative number. Can also be positive, which eliminates lower-order places from the number. For example, -3 means round to the sixteenth (10b^-3, 0.0001b), and 3 means round to the sixteens-place (10b^3, 1000b). A value of 0 rounds the number to an integer.</p></li>
+<li><p><i>ec</i>: An arithmetic context to control precision and rounding of the result. If <code>HasFlags</code>  of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null, in which case the default rounding mode is HalfEven.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p>An arbitrary-precision binary floating-point number.</p>
+<p>An arbitrary-precision binary number with the same value as this object but with the exponent changed. Signals FlagInvalid and returns not-a-number (NaN) if the result can&#39;t fit the given precision without rounding, or if the arithmetic context defines an exponent range and the given exponent is outside that range.</p>
 
 <p><a id="Rotate_PeterO_Numbers_EFloat_PeterO_Numbers_EFloat_PeterO_Numbers_EContext"></a></p>
 
@@ -745,20 +742,18 @@ is not an integer, is negative, has an exponent other than 0, or has an bsolute 
     PeterO.Numbers.EFloat ed2);
 </pre>
 
-<p>Not documented yet.</p>
+<p>Returns whether two arbitrary-precision numbers have the same exponent, they both are not-a-number (NaN), or they both are infinity (positive and/or negative).</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>ed1</i>: The parameter <i>ed1</i>
-is not documented yet.</p></li>
-<li><p><i>ed2</i>: The parameter <i>ed2</i>
-is not documented yet.</p></li>
+<li><p><i>ed1</i>: The first arbitrary-precision number.</p></li>
+<li><p><i>ed2</i>: The second arbitrary-precision number.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p>Either <code>true</code>  or <code>false</code>  .</p>
+<p>Either <code>true</code>  if the given arbitrary-precision numbers have the same exponent, they both are not-a-number (NaN), or they both are infinity (positive and/or negative); otherwise, <code>false</code>  .</p>
 
 <p><a id="ScaleB_PeterO_Numbers_EFloat_PeterO_Numbers_EFloat_PeterO_Numbers_EContext"></a></p>
 
@@ -840,20 +835,19 @@ is null.</li>
     PeterO.Numbers.EContext ec);
 </pre>
 
-<p>Not documented yet.</p>
+<p>Returns an arbitrary-precision number with the same value as this one but with certain trailing zeros removed from its mantissa. If the number&#39;s exponent is 0, it is returned unchanged (but may be rounded depending on the arithmetic context); if that exponent is greater 0, its trailing zeros are removed from the mantissa (then rounded if necessary); if that exponent is less than 0, its trailing zeros are removed from the mantissa until the exponent reaches 0 (then the number is rounded if necessary).</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>ed1</i>: The parameter <i>ed1</i>
-is not documented yet.</p></li>
-<li><p><i>ec</i>: The parameter <i>ec</i>
-is not documented yet.</p></li>
+<li><p><i>ed1</i>: An arbitrary-precision number.</p></li>
+<li><p><i>ec</i>: An arithmetic context to control the precision, rounding, and exponent range of the result. Can be null.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p>An arbitrary-precision binary floating-point number.</p>
+<p>An arbitrary-precision number with the same value as this one but with certain trailing zeros removed from its mantissa. If <i>ed1</i>
+ is not-a-number (NaN) or infinity, it is generally returned unchanged.</p>
 
 <p><a id="Xor_PeterO_Numbers_EFloat_PeterO_Numbers_EFloat_PeterO_Numbers_EContext"></a></p>
 
@@ -865,8 +859,7 @@ is not documented yet.</p></li>
     PeterO.Numbers.EContext ec);
 </pre>
 
-<p>Performs a logical exclusive-OR (XOR) operation on two binary numbers in the form of<i>logical operands</i>. A  <code>logical operand</code>  is a non-negative base-2 number with an Exponent property of 0 (examples include the base-2 numbers  <code>01001</code>  and  <code>111001</code>  ). The logical exclusive-OR operation sets each digit of the result to 1 if either corresponding digit of the logical operands, but not both, is 1, and to 0 otherwise. For example,  <code>01001 XOR 111010 =
-            101010</code></p>
+<p>Performs a logical exclusive-OR (XOR) operation on two binary numbers in the form of<i>logical operands</i>. A <code>logical operand</code>  is a non-negative base-2 number with an Exponent property of 0 (examples include the base-2 numbers <code>01001</code>  and <code>111001</code>  ). The logical exclusive-OR operation sets each digit of the result to 1 if either corresponding digit of the logical operands, but not both, is 1, and to 0 otherwise. For example, <code>01001 XOR 111010 = 101010</code></p>
 
 <p><b>Parameters:</b></p>
 
@@ -878,8 +871,8 @@ is not documented yet.</p></li>
 
 <p><b>Return Value:</b></p>
 
-<p>The result of the logical exclusive-OR operation as a logical operand. Signals an invalid operation and returns not-a-number (NaN) if  <i>ed1</i>
-,  <i>ed2</i>
+<p>The result of the logical exclusive-OR operation as a logical operand. Signals an invalid operation and returns not-a-number (NaN) if <i>ed1</i>
+, <i>ed2</i>
 , or both are not logical operands.</p>
 
 <p><a href="/Numbers/">Back to Numbers start page.</a></p>

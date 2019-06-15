@@ -41,14 +41,19 @@ Compares the absolute values of two arbitrary-precision number objects,
 imposing a total ordering on all possible values (ignoring their
 signs).</li>
 <li><code>static EFloat Copy​(EFloat ed)</code><br>
-Not documented yet.</li>
+Creates a copy of the given arbitrary-precision number object.</li>
 <li><code>static EFloat CopyAbs​(EFloat ed)</code><br>
-Not documented yet.</li>
+Returns an arbitrary-precision number object with the same value as the
+given number object but with a nonnegative sign (that is, the given
+number object&#39;s absolute value).</li>
 <li><code>static EFloat CopyNegate​(EFloat ed)</code><br>
-Not documented yet.</li>
+Returns an arbitrary-precision number object with the sign reversed from the
+given number object.</li>
 <li><code>static EFloat CopySign​(EFloat ed,
     EFloat other)</code><br>
-Not documented yet.</li>
+Returns an arbitrary-precision number object with the same value as the
+first given number object but with a the same sign (positive or
+negative) as the second given number object.</li>
 <li><code>static EFloat Int32ToEFloat​(int i32,
          EContext ec)</code><br>
 Creates a binary floating-point number from a 32-bit signed integer.</li>
@@ -104,14 +109,18 @@ Returns the number 2, the binary radix.</li>
 <li><code>static EFloat Rescale​(EFloat ed,
    EFloat scale,
    EContext ec)</code><br>
-Not documented yet.</li>
+Returns an arbitrary-precision binary number with the same value as this
+object but with the given exponent, expressed as an
+arbitrary-precision binary number.</li>
 <li><code>static EFloat Rotate​(EFloat ed,
   EFloat ed2,
   EContext ec)</code><br>
 Rotates the digits of an arbitrary-precision binary number&#39;s mantissa.</li>
 <li><code>static boolean SameQuantum​(EFloat ed1,
        EFloat ed2)</code><br>
-Not documented yet.</li>
+Returns whether two arbitrary-precision numbers have the same exponent, they
+both are not-a-number (NaN), or they both are infinity (positive
+and/or negative).</li>
 <li><code>static EFloat ScaleB​(EFloat ed,
   EFloat ed2,
   EContext ec)</code><br>
@@ -123,7 +132,8 @@ Shifts the bits of an arbitrary-precision binary floating point number&#39;s
 mantissa.</li>
 <li><code>static EFloat Trim​(EFloat ed1,
 EContext ec)</code><br>
-Not documented yet.</li>
+Returns an arbitrary-precision number with the same value as this one but
+with certain trailing zeros removed from its mantissa.</li>
 <li><code>static EFloat Xor​(EFloat ed1,
 EFloat ed2,
 EContext ec)</code><br>
@@ -727,18 +737,18 @@ their signs). Does not signal flags if either value is signaling NaN.</li>
 <pre>public static EFloat Copy​(EFloat ed)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Creates a copy of the given arbitrary-precision number object.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>ed</code> - The parameter <code>ed</code> is not documented yet.</li>
+<li><code>ed</code> - An arbitrary-precision number object to copy.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>An arbitrary-precision binary floating-point number.</li>
+<li>A copy of the given arbitrary-precision number object.</li>
 </ul>
 
 <h3>Canonical</h3>
@@ -766,18 +776,21 @@ their signs). Does not signal flags if either value is signaling NaN.</li>
 <pre>public static EFloat CopyAbs​(EFloat ed)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Returns an arbitrary-precision number object with the same value as the
+ given number object but with a nonnegative sign (that is, the given
+ number object&#39;s absolute value).</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>ed</code> - The parameter <code>ed</code> is not documented yet.</li>
+<li><code>ed</code> - An arbitrary-precision number object.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>An arbitrary-precision binary floating-point number.</li>
+<li>An arbitrary-precision number object with the same value as the
+given number object but with a nonnegative sign.</li>
 </ul>
 
 <h3>CopyNegate</h3>
@@ -785,18 +798,20 @@ their signs). Does not signal flags if either value is signaling NaN.</li>
 <pre>public static EFloat CopyNegate​(EFloat ed)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Returns an arbitrary-precision number object with the sign reversed from the
+ given number object.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>ed</code> - The parameter <code>ed</code> is not documented yet.</li>
+<li><code>ed</code> - An arbitrary-precision number object.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>An arbitrary-precision binary floating-point number.</li>
+<li>An arbitrary-precision number object with the sign reversed from the
+given number object.</li>
 </ul>
 
 <h3>CopySign</h3>
@@ -804,19 +819,24 @@ their signs). Does not signal flags if either value is signaling NaN.</li>
 <pre>public static EFloat CopySign​(EFloat ed, EFloat other)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Returns an arbitrary-precision number object with the same value as the
+ first given number object but with a the same sign (positive or
+ negative) as the second given number object.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>ed</code> - The parameter <code>ed</code> is not documented yet.</p></li>
-<li><p><code>other</code> - The parameter <code>other</code> is not documented yet.</p></li>
+<li><p><code>ed</code> - An arbitrary-precision number object with the value the result
+will have.</p></li>
+<li><p><code>other</code> - The parameter <code>other</code> is an EDecimal object.</p></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>An arbitrary-precision binary floating-point number.</li>
+<li>An arbitrary-precision number object with the same value as the
+first given number object but with a the same sign (positive or
+negative) as the second given number object.</li>
 </ul>
 
 <h3>SameQuantum</h3>
@@ -824,19 +844,23 @@ their signs). Does not signal flags if either value is signaling NaN.</li>
 <pre>public static boolean SameQuantum​(EFloat ed1, EFloat ed2)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Returns whether two arbitrary-precision numbers have the same exponent, they
+ both are not-a-number (NaN), or they both are infinity (positive
+ and/or negative).</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>ed1</code> - The parameter <code>ed1</code> is not documented yet.</p></li>
-<li><p><code>ed2</code> - The parameter <code>ed2</code> is not documented yet.</p></li>
+<li><p><code>ed1</code> - The first arbitrary-precision number.</p></li>
+<li><p><code>ed2</code> - The second arbitrary-precision number.</p></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>Either <code>true</code> or <code>false</code> .</li>
+<li>Either <code>true</code> if the given arbitrary-precision numbers have
+the same exponent, they both are not-a-number (NaN), or they both are
+infinity (positive and/or negative); otherwise, <code>false</code> .</li>
 </ul>
 
 <h3>Trim</h3>
@@ -844,19 +868,30 @@ their signs). Does not signal flags if either value is signaling NaN.</li>
 <pre>public static EFloat Trim​(EFloat ed1, EContext ec)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Returns an arbitrary-precision number with the same value as this one but
+ with certain trailing zeros removed from its mantissa. If the
+ number&#39;s exponent is 0, it is returned unchanged (but may be rounded
+ depending on the arithmetic context); if that exponent is greater 0,
+ its trailing zeros are removed from the mantissa (then rounded if
+ necessary); if that exponent is less than 0, its trailing zeros are
+ removed from the mantissa until the exponent reaches 0 (then the
+ number is rounded if necessary).</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>ed1</code> - The parameter <code>ed1</code> is not documented yet.</p></li>
-<li><p><code>ec</code> - The parameter <code>ec</code> is not documented yet.</p></li>
+<li><p><code>ed1</code> - An arbitrary-precision number.</p></li>
+<li><p><code>ec</code> - An arithmetic context to control the precision, rounding, and
+exponent range of the result. Can be null.</p></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>An arbitrary-precision binary floating-point number.</li>
+<li>An arbitrary-precision number with the same value as this one but
+with certain trailing zeros removed from its mantissa. If <code>ed1</code>
+is not-a-number (NaN) or infinity, it is generally returned
+unchanged.</li>
 </ul>
 
 <h3>Rescale</h3>
@@ -864,20 +899,47 @@ their signs). Does not signal flags if either value is signaling NaN.</li>
 <pre>public static EFloat Rescale​(EFloat ed, EFloat scale, EContext ec)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Returns an arbitrary-precision binary number with the same value as this
+ object but with the given exponent, expressed as an
+ arbitrary-precision binary number. <p>Note that this is not always
+ the same as rounding to a given number of binary places, since it can
+ fail if the difference between this value&#39;s exponent and the desired
+ exponent is too big, depending on the maximum precision. If rounding
+ to a number of binary places is desired, it&#39;s better to use the
+ RoundToExponent and RoundToIntegral methods instead. </p>
+ <p><b>Remark:</b> This method can be used to implement fixed-point
+ binary arithmetic, in which a fixed number of digits come after the
+ binary point. A fixed-point binary arithmetic in which no digits come
+ after the binary point (a desired exponent of 0) is considered an
+ &quot;integer arithmetic&quot; . </p></p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>ed</code> - The parameter <code>ed</code> is not documented yet.</p></li>
-<li><p><code>scale</code> - The parameter <code>scale</code> is not documented yet.</p></li>
-<li><p><code>ec</code> - The parameter <code>ec</code> is not documented yet.</p></li>
+<li><p><code>ed</code> - An arbitrary-precision binary number whose exponent is to be
+changed.</p></li>
+<li><p><code>scale</code> - The desired exponent of the result, expressed as an
+arbitrary-precision binary number. The exponent is the number of
+fractional digits in the result, expressed as a negative number. Can
+also be positive, which eliminates lower-order places from the
+number. For example, -3 means round to the sixteenth (10b^-3,
+0.0001b), and 3 means round to the sixteens-place (10b^3, 1000b). A
+value of 0 rounds the number to an integer.</p></li>
+<li><p><code>ec</code> - An arithmetic context to control precision and rounding of the
+result. If <code>HasFlags</code> of the context is true, will also store
+the flags resulting from the operation (the flags are in addition to
+the pre-existing flags). Can be null, in which case the default
+rounding mode is HalfEven.</p></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>An arbitrary-precision binary floating-point number.</li>
+<li>An arbitrary-precision binary number with the same value as this
+object but with the exponent changed. Signals FlagInvalid and returns
+not-a-number (NaN) if the result can&#39;t fit the given precision
+without rounding, or if the arithmetic context defines an exponent
+range and the given exponent is outside that range.</li>
 </ul>
 
 <h3>And</h3>
