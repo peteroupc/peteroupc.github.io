@@ -17,15 +17,15 @@
 <li><code><a href="#And_PeterO_Numbers_EDecimal_PeterO_Numbers_EDecimal_PeterO_Numbers_EContext">And(PeterO.Numbers.EDecimal, PeterO.Numbers.EDecimal, PeterO.Numbers.EContext)</a></code> - Performs a logical AND operation on two decimal numbers in the form oflogical operands.</li>
 <li><code><a href="#BooleanToEDecimal_bool_PeterO_Numbers_EContext">BooleanToEDecimal(bool, PeterO.Numbers.EContext)</a></code> - Converts a boolean value (either true or false) to an arbitrary-precision decimal number.</li>
 <li><code><a href="#Canonical_PeterO_Numbers_EDecimal">Canonical(PeterO.Numbers.EDecimal)</a></code> - Returns a canonical version of the given arbitrary-precision number object.</li>
-<li><code><a href="#CompareTotalMagnitude_PeterO_Numbers_EDecimal_PeterO_Numbers_EDecimal_PeterO_Numbers_EContext">CompareTotalMagnitude(PeterO.Numbers.EDecimal, PeterO.Numbers.EDecimal, PeterO.Numbers.EContext)</a></code> - Not documented yet.</li>
+<li><code><a href="#CompareTotalMagnitude_PeterO_Numbers_EDecimal_PeterO_Numbers_EDecimal_PeterO_Numbers_EContext">CompareTotalMagnitude(PeterO.Numbers.EDecimal, PeterO.Numbers.EDecimal, PeterO.Numbers.EContext)</a></code> - Compares the absolute values of two arbitrary-precision number objects, imposing a total ordering on all possible values (ignoring their signs).</li>
 <li><code><a href="#CompareTotal_PeterO_Numbers_EDecimal_PeterO_Numbers_EDecimal_PeterO_Numbers_EContext">CompareTotal(PeterO.Numbers.EDecimal, PeterO.Numbers.EDecimal, PeterO.Numbers.EContext)</a></code> - Compares the values of one arbitrary-precision number object and another object, imposing a total ordering on all possible values.</li>
 <li><code><a href="#CopyAbs_PeterO_Numbers_EDecimal">CopyAbs(PeterO.Numbers.EDecimal)</a></code> - Returns an arbitrary-precision number object with the same value as the given number object but with a nonnegative sign (that is, the given number object&#39;s absolute value).</li>
 <li><code><a href="#CopyNegate_PeterO_Numbers_EDecimal">CopyNegate(PeterO.Numbers.EDecimal)</a></code> - Returns an arbitrary-precision number object with the sign reversed from the given number object.</li>
 <li><code><a href="#CopySign_PeterO_Numbers_EDecimal_PeterO_Numbers_EDecimal">CopySign(PeterO.Numbers.EDecimal, PeterO.Numbers.EDecimal)</a></code> - Returns an arbitrary-precision number object with the same value as the first given number object but with a the same sign (positive or negative) as the second given number object.</li>
-<li><code><a href="#Copy_PeterO_Numbers_EDecimal">Copy(PeterO.Numbers.EDecimal)</a></code> - Not documented yet.</li>
-<li><code><a href="#Int32ToEDecimal_int_PeterO_Numbers_EContext">Int32ToEDecimal(int, PeterO.Numbers.EContext)</a></code> - Creates a decimal number from a 32-bit signed integer.</li>
+<li><code><a href="#Copy_PeterO_Numbers_EDecimal">Copy(PeterO.Numbers.EDecimal)</a></code> - Creates a copy of the given arbitrary-precision number object.</li>
+<li><code><a href="#Int32ToEDecimal_int_PeterO_Numbers_EContext">Int32ToEDecimal(int, PeterO.Numbers.EContext)</a></code> - Creates an arbitrary-precision decimal number from a 32-bit signed integer.</li>
 <li><code><a href="#Invert_PeterO_Numbers_EDecimal_PeterO_Numbers_EContext">Invert(PeterO.Numbers.EDecimal, PeterO.Numbers.EContext)</a></code> - Performs a logical NOT operation on a decimal numbers in the form of alogical operand.</li>
-<li><code><a href="#IsCanonical_PeterO_Numbers_EDecimal">IsCanonical(PeterO.Numbers.EDecimal)</a></code> - Not documented yet.</li>
+<li><code><a href="#IsCanonical_PeterO_Numbers_EDecimal">IsCanonical(PeterO.Numbers.EDecimal)</a></code> - Returns whether the given arbitrary-precision number object is in a canonical form.</li>
 <li><code><a href="#IsFinite_PeterO_Numbers_EDecimal">IsFinite(PeterO.Numbers.EDecimal)</a></code> - Returns whether the given arbitrary-precision number object is neither null nor infinity nor not-a-number (NaN).</li>
 <li><code><a href="#IsInfinite_PeterO_Numbers_EDecimal">IsInfinite(PeterO.Numbers.EDecimal)</a></code> - Returns whether the given arbitrary-precision number object is positive or negative infinity.</li>
 <li><code><a href="#IsNaN_PeterO_Numbers_EDecimal">IsNaN(PeterO.Numbers.EDecimal)</a></code> - Returns whether the given arbitrary-precision number object is a not-a-number (NaN).</li>
@@ -34,7 +34,7 @@
 <li><code><a href="#IsSignalingNaN_PeterO_Numbers_EDecimal">IsSignalingNaN(PeterO.Numbers.EDecimal)</a></code> - Returns whether the given arbitrary-precision number object is a signaling not-a-number (NaN).</li>
 <li><code><a href="#IsSigned_PeterO_Numbers_EDecimal">IsSigned(PeterO.Numbers.EDecimal)</a></code> - Returns whether the given arbitrary-precision number object is negative (including negative infinity, negative not-a-number [NaN], or negative zero).</li>
 <li><code><a href="#IsSubnormal_PeterO_Numbers_EDecimal_PeterO_Numbers_EContext">IsSubnormal(PeterO.Numbers.EDecimal, PeterO.Numbers.EContext)</a></code> - Returns whether the given number is asubnormalnumber.</li>
-<li><code><a href="#IsZero_PeterO_Numbers_EDecimal">IsZero(PeterO.Numbers.EDecimal)</a></code> - Not documented yet.</li>
+<li><code><a href="#IsZero_PeterO_Numbers_EDecimal">IsZero(PeterO.Numbers.EDecimal)</a></code> - Returns whether the given arbitrary-precision number object is zero (positive zero or negative zero).</li>
 <li><code><a href="#LogB_PeterO_Numbers_EDecimal_PeterO_Numbers_EContext">LogB(PeterO.Numbers.EDecimal, PeterO.Numbers.EContext)</a></code> - Not documented yet.</li>
 <li><code><a href="#NumberClassString_int">NumberClassString(int)</a></code> - Converts a number class identifier (ranging from 1 to 9) to a text string.</li>
 <li><code><a href="#NumberClass_PeterO_Numbers_EDecimal_PeterO_Numbers_EContext">NumberClass(PeterO.Numbers.EDecimal, PeterO.Numbers.EContext)</a></code> - Finds the number class for an arbitrary-precision decimal number object.</li>
@@ -44,7 +44,7 @@
 <li><code><a href="#Rotate_PeterO_Numbers_EDecimal_PeterO_Numbers_EDecimal_PeterO_Numbers_EContext">Rotate(PeterO.Numbers.EDecimal, PeterO.Numbers.EDecimal, PeterO.Numbers.EContext)</a></code> - Rotates the digits of an arbitrary-precision decimal number&#39;s mantissa.</li>
 <li><code><a href="#SameQuantum_PeterO_Numbers_EDecimal_PeterO_Numbers_EDecimal">SameQuantum(PeterO.Numbers.EDecimal, PeterO.Numbers.EDecimal)</a></code> - Not documented yet.</li>
 <li><code><a href="#ScaleB_PeterO_Numbers_EDecimal_PeterO_Numbers_EDecimal_PeterO_Numbers_EContext">ScaleB(PeterO.Numbers.EDecimal, PeterO.Numbers.EDecimal, PeterO.Numbers.EContext)</a></code> - Not documented yet.</li>
-<li><code><a href="#Shift_PeterO_Numbers_EDecimal_PeterO_Numbers_EDecimal_PeterO_Numbers_EContext">Shift(PeterO.Numbers.EDecimal, PeterO.Numbers.EDecimal, PeterO.Numbers.EContext)</a></code> - Rotates the digits of an arbitrary-precision decimal number&#39;s mantissa.</li>
+<li><code><a href="#Shift_PeterO_Numbers_EDecimal_PeterO_Numbers_EDecimal_PeterO_Numbers_EContext">Shift(PeterO.Numbers.EDecimal, PeterO.Numbers.EDecimal, PeterO.Numbers.EContext)</a></code> - Shifts the digits of an arbitrary-precision decimal number&#39;s mantissa.</li>
 <li><code><a href="#Trim_PeterO_Numbers_EDecimal_PeterO_Numbers_EContext">Trim(PeterO.Numbers.EDecimal, PeterO.Numbers.EContext)</a></code> - Not documented yet.</li>
 <li><code><a href="#Xor_PeterO_Numbers_EDecimal_PeterO_Numbers_EDecimal_PeterO_Numbers_EContext">Xor(PeterO.Numbers.EDecimal, PeterO.Numbers.EDecimal, PeterO.Numbers.EContext)</a></code> - Performs a logical exclusive-OR (XOR) operation on two decimal numbers in the form oflogical operands.</li>
 </ul>
@@ -163,7 +163,15 @@ is false.. The result will be rounded as specified by the given context, f any.<
     PeterO.Numbers.EContext ec);
 </pre>
 
-<p>Not documented yet.</p>
+<p>Compares the absolute values of two arbitrary-precision number objects, imposing a total ordering on all possible values (ignoring their signs). In this method:</p>
+
+<ul>
+<li><p>For objects with the same value, the one with the higher exponent has a greater &quot;absolute value&quot;.</p></li>
+<li><p>Negative zero and positive zero are considered equal.</p></li>
+<li><p>Quiet NaN has a higher &quot;absolute value&quot; than signaling NaN. If both objects are quiet NaN or both are signaling NaN, the one with the higher diagnostic information has a greater &quot;absolute value&quot;.</p></li>
+<li><p>NaN has a higher &quot;absolute value&quot; than infinity.</p></li>
+<li><p>Infinity has a higher &quot;absolute value&quot; than any finite number.</p></li>
+</ul>
 
 <p><b>Parameters:</b></p>
 
@@ -175,7 +183,7 @@ is false.. The result will be rounded as specified by the given context, f any.<
 
 <p><b>Return Value:</b></p>
 
-<p>A value not documented yet.</p>
+<p>The number 0 if both objects have the same value (ignoring their signs), or -1 if the first object is less than the other value (ignoring their signs), or 1 if the first object is greater (ignoring their signs). Does not signal flags if either value is signaling NaN.</p>
 
 <p><a id="Copy_PeterO_Numbers_EDecimal"></a></p>
 
@@ -185,18 +193,17 @@ is false.. The result will be rounded as specified by the given context, f any.<
     PeterO.Numbers.EDecimal ed);
 </pre>
 
-<p>Not documented yet.</p>
+<p>Creates a copy of the given arbitrary-precision number object.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>ed</i>: The parameter <i>ed</i>
-is not documented yet.</li>
+<li><i>ed</i>: An arbitrary-precision number object to copy.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p>An EDecimal object.</p>
+<p>A copy of the given arbitrary-precision number object.</p>
 
 <p><a id="CopyAbs_PeterO_Numbers_EDecimal"></a></p>
 
@@ -269,7 +276,7 @@ is not documented yet.</li>
     PeterO.Numbers.EContext ec);
 </pre>
 
-<p>Creates a decimal number from a 32-bit signed integer.</p>
+<p>Creates an arbitrary-precision decimal number from a 32-bit signed integer.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -314,13 +321,12 @@ is a 32-bit signed integer.</p></li>
     PeterO.Numbers.EDecimal ed);
 </pre>
 
-<p>Not documented yet.</p>
+<p>Returns whether the given arbitrary-precision number object is in a canonical form. For the current version of EDecimal, all EDecimal objects are in a canonical form.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>ed</i>: The parameter <i>ed</i>
-is not documented yet.</li>
+<li><i>ed</i>: An arbitrary-precision number object.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -499,18 +505,17 @@ is not documented yet.</li>
     PeterO.Numbers.EDecimal ed);
 </pre>
 
-<p>Not documented yet.</p>
+<p>Returns whether the given arbitrary-precision number object is zero (positive zero or negative zero).</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>ed</i>: The parameter <i>ed</i>
-is not documented yet.</li>
+<li><i>ed</i>: An arbitrary-precision number object.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p>Either <code>true</code>  or <code>false</code>  .</p>
+<p><code>true</code>  if the given number has a value of zero (positive zero or negative zero); otherwise, <code>false</code>  .</p>
 
 <p><a id="LogB_PeterO_Numbers_EDecimal_PeterO_Numbers_EContext"></a></p>
 
@@ -564,7 +569,7 @@ is null.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>A 32-bit signed integer identifying the given number class as follows: 0 = positive normal; 1 = negative normal, 2 = positive subnormal, 3 = negative subnormal, 4 = positive zero, 5 = negative zero, 6 = positive infinity, 7 = negative infinity, 8 = quiet not-a-number (NaN), 9 = signaling NaN.</p>
+<p>A 32-bit signed integer identifying the given number object, number class as follows: 0 = positive normal; 1 = negative normal, 2 = positive subnormal, 3 = negative subnormal, 4 = positive zero, 5 = negative zero, 6 = positive infinity, 7 = negative infinity, 8 = quiet not-a-number (NaN), 9 = signaling NaN.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -690,14 +695,14 @@ is not documented yet.</p></li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>ed</i>: An arbitrary-precision number containing the mantissa to rotate. If this mantissa contains more digits than the precision, the most-significant digits are chopped off the mantissa.</p></li>
+<li><p><i>ed</i>: An arbitrary-precision number containing the mantissa to rotate. If this mantissa contains more digits than the precision, the most-significant digits are chopped off the mantissa before the rotation begins.</p></li>
 <li><p><i>ed2</i>: An arbitrary-precision number indicating the number of digits to rotate the first operand&#39;s mantissa. Must be an integer with an exponent of 0. If this parameter is positive, the mantissa is shifted to the left by the given number of digits and the most-significant digits shifted out of the mantissa become the least-significant digits instead. If this parameter is negative, the mantissa is shifted to the right by the given number of digits and the least-significant digits shifted out of the mantissa become the most-significant digits instead.</p></li>
 <li><p><i>ec</i>: A context that specifies the precision of arbitrary-precision numbers. If this parameter is null or specifies an unlimited precision, this method has the same behavior as <code>Shift</code>  .</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p>An arbitrary-precision decimal number whose mantissa is rotated the given number of bits. Signals an invalid operation and returns NaN (not-a-number) if <i>ed2</i>
+<p>An arbitrary-precision decimal number whose mantissa is rotated the given number of digits. Signals an invalid operation and returns NaN (not-a-number) if <i>ed2</i>
 is a signaling NaN or if <i>ed2</i>
 is not an integer, is negative, has an exponent other than 0, or has an bsolute value that exceeds the maximum precision specified in the ontext.</p>
 
@@ -771,19 +776,19 @@ is null.</li>
     PeterO.Numbers.EContext ec);
 </pre>
 
-<p>Rotates the digits of an arbitrary-precision decimal number&#39;s mantissa.</p>
+<p>Shifts the digits of an arbitrary-precision decimal number&#39;s mantissa.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>ed</i>: An arbitrary-precision number containing the mantissa to rotate. If this mantissa contains more digits than the precision, the most-significant digits are chopped off the mantissa.</p></li>
-<li><p><i>ed2</i>: An arbitrary-precision number indicating the number of digits to rotate the first operand&#39;s mantissa. Must be an integer with an exponent of 0. If this parameter is positive, the mantissa is shifted to the left by the given number of digits . If this parameter is negative, the mantissa is shifted to the right by the given number of digits.</p></li>
+<li><p><i>ed</i>: An arbitrary-precision number containing the mantissa to shift.</p></li>
+<li><p><i>ed2</i>: An arbitrary-precision number indicating the number of digits to shift the first operand&#39;s mantissa. Must be an integer with an exponent of 0. If this parameter is positive, the mantissa is shifted to the left by the given number of digits . If this parameter is negative, the mantissa is shifted to the right by the given number of digits.</p></li>
 <li><p><i>ec</i>: A context that specifies the precision of arbitrary-precision numbers. Can be null.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p>An arbitrary-precision decimal number whose mantissa is rotated the given number of bits. Signals an invalid operation and returns NaN (not-a-number) if <i>ed2</i>
+<p>An arbitrary-precision decimal number whose mantissa is shifted the given number of digits. Signals an invalid operation and returns NaN (not-a-number) if <i>ed2</i>
 is a signaling NaN or if <i>ed2</i>
 is not an integer, is negative, has an exponent other than 0, or has an bsolute value that exceeds the maximum precision specified in the ontext.</p>
 

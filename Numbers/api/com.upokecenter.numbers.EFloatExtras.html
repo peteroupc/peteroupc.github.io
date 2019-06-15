@@ -37,7 +37,9 @@ object, imposing a total ordering on all possible values.</li>
 <li><code>static int CompareTotalMagnitude​(EFloat ed,
                  EFloat other,
                  EContext ec)</code><br>
-Not documented yet.</li>
+Compares the absolute values of two arbitrary-precision number objects,
+imposing a total ordering on all possible values (ignoring their
+signs).</li>
 <li><code>static EFloat Copy​(EFloat ed)</code><br>
 Not documented yet.</li>
 <li><code>static EFloat CopyAbs​(EFloat ed)</code><br>
@@ -54,7 +56,8 @@ Creates a binary floating-point number from a 32-bit signed integer.</li>
   EContext ec)</code><br>
 Not documented yet.</li>
 <li><code>static boolean IsCanonical​(EFloat ed)</code><br>
-Not documented yet.</li>
+Returns whether the given arbitrary-precision number object is in a
+canonical form.</li>
 <li><code>static boolean IsFinite​(EFloat ed)</code><br>
 Returns whether the given arbitrary-precision number object is neither null
 nor infinity nor not-a-number (NaN).</li>
@@ -81,7 +84,8 @@ negative zero).</li>
        EContext ec)</code><br>
 Returns whether the given number is a  subnormal  number.</li>
 <li><code>static boolean IsZero​(EFloat ed)</code><br>
-Not documented yet.</li>
+Returns whether the given arbitrary-precision number object is zero
+(positive zero or negative zero).</li>
 <li><code>static EFloat LogB​(EFloat ed,
 EContext ec)</code><br>
 Not documented yet.</li>
@@ -115,7 +119,8 @@ Not documented yet.</li>
 <li><code>static EFloat Shift​(EFloat ed,
  EFloat ed2,
  EContext ec)</code><br>
-Not documented yet.</li>
+Shifts the bits of an arbitrary-precision binary floating point number&#39;s
+mantissa.</li>
 <li><code>static EFloat Trim​(EFloat ed1,
 EContext ec)</code><br>
 Not documented yet.</li>
@@ -123,7 +128,7 @@ Not documented yet.</li>
 EFloat ed2,
 EContext ec)</code><br>
 Performs a logical exclusive-OR (XOR) operation on two binary numbers in the
-form of logical operands.</li>
+form of  logical operands  .</li>
 </ul>
 
 <h2>Method Details</h2>
@@ -219,12 +224,14 @@ result will be rounded as specified by the given context, if any.</li>
 <pre>public static boolean IsCanonical​(EFloat ed)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Returns whether the given arbitrary-precision number object is in a
+ canonical form. For the current version of EDecimal, all EDecimal
+ objects are in a canonical form.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>ed</code> - The parameter <code>ed</code> is not documented yet.</li>
+<li><code>ed</code> - An arbitrary-precision number object.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -442,11 +449,11 @@ between normal and subnormal numbers. Can be null.</p></li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A 32-bit signed integer identifying the given number class as
-follows: 0 = positive normal; 1 = negative normal, 2 = positive
-subnormal, 3 = negative subnormal, 4 = positive zero, 5 = negative
-zero, 6 = positive infinity, 7 = negative infinity, 8 = quiet
-not-a-number (NaN), 9 = signaling NaN.</li>
+<li>A 32-bit signed integer identifying the given number object, number
+class as follows: 0 = positive normal; 1 = negative normal, 2 =
+positive subnormal, 3 = negative subnormal, 4 = positive zero, 5 =
+negative zero, 6 = positive infinity, 7 = negative infinity, 8 =
+quiet not-a-number (NaN), 9 = signaling NaN.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -494,18 +501,20 @@ or HasExponentRange of the given context is <code>false</code> .</li>
 <pre>public static boolean IsZero​(EFloat ed)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Returns whether the given arbitrary-precision number object is zero
+ (positive zero or negative zero).</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>ed</code> - The parameter <code>ed</code> is not documented yet.</li>
+<li><code>ed</code> - An arbitrary-precision number object.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>Either <code>true</code> or <code>false</code> .</li>
+<li><code>true</code> if the given number has a value of zero (positive zero
+or negative zero); otherwise, <code>false</code> .</li>
 </ul>
 
 <h3>LogB</h3>
@@ -567,20 +576,33 @@ is null.</li>
 <pre>public static EFloat Shift​(EFloat ed, EFloat ed2, EContext ec)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Shifts the bits of an arbitrary-precision binary floating point number&#39;s
+ mantissa.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>ed</code> - The parameter <code>ed</code> is not documented yet.</p></li>
-<li><p><code>ed2</code> - The parameter <code>ed2</code> is not documented yet.</p></li>
-<li><p><code>ec</code> - The parameter <code>ec</code> is not documented yet.</p></li>
+<li><p><code>ed</code> - An arbitrary-precision binary floating point number containing the
+mantissa to shift.</p></li>
+<li><p><code>ed2</code> - An arbitrary-precision number indicating the number of bits to
+shift the first operand&#39;s mantissa. Must be an integer with an
+exponent of 0. If this parameter is positive, the mantissa is shifted
+to the left by the given number of bits. If this parameter is
+negative, the mantissa is shifted to the right by the given number of
+bits.</p></li>
+<li><p><code>ec</code> - A context that specifies the precision of arbitrary-precision
+numbers. Can be null.</p></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>An arbitrary-precision binary floating-point number.</li>
+<li>An arbitrary-precision decimal number whose mantissa is shifted the
+given number of bits. Signals an invalid operation and returns NaN
+(not-a-number) if <code>ed2</code> is a signaling NaN or if <code>ed2</code> is
+not an integer, is negative, has an exponent other than 0, or has an
+absolute value that exceeds the maximum precision specified in the
+context.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -668,13 +690,23 @@ greater. Does not signal flags if either value is signaling NaN.</li>
 <pre>public static int CompareTotalMagnitude​(EFloat ed, EFloat other, EContext ec)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Compares the absolute values of two arbitrary-precision number objects,
+ imposing a total ordering on all possible values (ignoring their
+ signs). In this method: <ul> <li>For objects with the same value, the
+ one with the higher exponent has a greater &quot;absolute value&quot;. </li>
+ <li>Negative zero and positive zero are considered equal. </li>
+ <li>Quiet NaN has a higher &quot;absolute value&quot; than signaling NaN. If
+ both objects are quiet NaN or both are signaling NaN, the one with
+ the higher diagnostic information has a greater &quot;absolute value&quot;.
+ </li> <li>NaN has a higher &quot;absolute value&quot; than infinity. </li>
+ <li>Infinity has a higher &quot;absolute value&quot; than any finite number.
+ </li> </ul></p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>ed</code> - The parameter <code>ed</code> is not documented yet.</p></li>
-<li><p><code>other</code> - The parameter <code>other</code> is not documented yet.</p></li>
+<li><p><code>ed</code> - The first arbitrary-precision number to compare.</p></li>
+<li><p><code>other</code> - The second arbitrary-precision number to compare.</p></li>
 <li><p><code>ec</code> - An arithmetic context. Flags will be set in this context only if
 <code>HasFlags</code> and <code>IsSimplified</code> of the context are true and
 only if an operand needed to be rounded before carrying out the
@@ -684,7 +716,10 @@ operation. Can be null.</p></li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A 32-bit signed integer.</li>
+<li>The number 0 if both objects have the same value (ignoring their
+signs), or -1 if the first object is less than the other value
+(ignoring their signs), or 1 if the first object is greater (ignoring
+their signs). Does not signal flags if either value is signaling NaN.</li>
 </ul>
 
 <h3>Copy</h3>
@@ -736,13 +771,13 @@ operation. Can be null.</p></li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>ed</code> - Not documented yet.</li>
+<li><code>ed</code> - The parameter <code>ed</code> is not documented yet.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>An EFloat object.</li>
+<li>An arbitrary-precision binary floating-point number.</li>
 </ul>
 
 <h3>CopyNegate</h3>
@@ -755,13 +790,13 @@ operation. Can be null.</p></li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>ed</code> - Not documented yet.</li>
+<li><code>ed</code> - The parameter <code>ed</code> is not documented yet.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>An EFloat object.</li>
+<li>An arbitrary-precision binary floating-point number.</li>
 </ul>
 
 <h3>CopySign</h3>
@@ -912,7 +947,7 @@ ed1</code> is not a logical operand.</li>
 </pre>
 
 <p>Performs a logical exclusive-OR (XOR) operation on two binary numbers in the
- form of <i>logical operands</i>. A <code>logical operand</code> is a
+ form of <i> logical operands </i> . A <code>logical operand</code> is a
  non-negative base-2 number with an Exponent property of 0 (examples
  include the base-2 numbers <code>01001</code> and <code>111001</code>). The
  logical exclusive-OR operation sets each digit of the result to 1 if
@@ -936,7 +971,7 @@ precision are discarded. This parameter can be null.</p></li>
 <ul>
 <li>The result of the logical exclusive-OR operation as a logical
 operand. Signals an invalid operation and returns not-a-number (NaN)
-if <code>ed1</code>, <code>ed2</code>, or both are not logical operands.</li>
+if <code>ed1</code> , <code>ed2</code> , or both are not logical operands.</li>
 </ul>
 
 <h3>Or</h3>
