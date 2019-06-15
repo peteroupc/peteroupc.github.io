@@ -25,7 +25,7 @@
  float argument to any method here will throw an exception. </p>
  <p>When an arithmetic operation signals the flag FlagInvalid,
  FlagOverflow, or FlagDivideByZero, it will not throw an exception
- too, unless the operation&#39;s trap is enabled in the precision context
+ too, unless the operation&#39;s trap is enabled in the arithmetic context
  (see EContext&#39;s Traps property). </p> <p>An arbitrary-precision
  binary float value can be serialized in one of the following ways:
  </p> <ul> <li>By calling the toString() method. However, not all
@@ -146,12 +146,12 @@ Creates a number with the value exponent*2^mantissa (significand).</li>
   EInteger exponent)</code><br>
 Creates a number with the value exponent*2^mantissa (significand).</li>
 <li><code>static EFloat CreateNaN​(EInteger diag)</code><br>
-Creates a not-a-number arbitrary-precision binary float.</li>
+Creates a not-a-number arbitrary-precision binary floating-point number.</li>
 <li><code>static EFloat CreateNaN​(EInteger diag,
      boolean signaling,
      boolean negative,
      EContext ctx)</code><br>
-Creates a not-a-number arbitrary-precision binary float.</li>
+Creates a not-a-number arbitrary-precision binary floating-point number.</li>
 <li><code>EFloat Divide​(int intValue)</code><br>
 Divides this instance by the value of an arbitrary-precision integer.</li>
 <li><code>EFloat Divide​(EFloat divisor)</code><br>
@@ -159,7 +159,7 @@ Divides this object by another binary float and returns the result.</li>
 <li><code>EFloat Divide​(EFloat divisor,
   EContext ctx)</code><br>
 Divides this arbitrary-precision binary float by another arbitrary-precision
-binary float.</li>
+binary floating-point number.</li>
 <li><code>EFloat[] DivideAndRemainderNaturalScale​(EFloat divisor)</code><br>
 Deprecated.
 Renamed to DivRemNaturalScale.
@@ -219,7 +219,7 @@ properties are equal to those of another object.</li>
 <li><code>boolean equals​(java.lang.Object obj)</code><br>
 Determines whether this object&#39;s mantissa (significand), exponent, and
 properties are equal to those of another object and that other object
-is an arbitrary-precision binary float.</li>
+is an arbitrary-precision binary floating-point number.</li>
 <li><code>boolean EqualsInternal​(EFloat otherValue)</code><br>
 Determines whether this object&#39;s mantissa (significand) and exponent are
 equal to those of another object.</li>
@@ -230,17 +230,21 @@ object&#39;s value.</li>
 Converts a boolean value (either true or false) to an arbitrary-precision
 binary float.</li>
 <li><code>static EFloat FromByte​(byte inputByte)</code><br>
-Converts a byte (from 0 to 255) to an arbitrary-precision binary float.</li>
+Converts a byte (from 0 to 255) to an arbitrary-precision binary
+floating-point number.</li>
 <li><code>static EFloat FromDouble​(double dbl)</code><br>
 Creates a binary float from a 64-bit floating-point number.</li>
 <li><code>static EFloat FromEInteger​(EInteger bigint)</code><br>
 Converts an arbitrary-precision integer to the same value as a binary float.</li>
 <li><code>static EFloat FromInt16​(short inputInt16)</code><br>
-Converts a 16-bit signed integer to an arbitrary-precision binary float.</li>
+Converts a 16-bit signed integer to an arbitrary-precision binary
+floating-point number.</li>
 <li><code>static EFloat FromInt32​(int inputInt32)</code><br>
-Converts a 32-bit signed integer to an arbitrary-precision binary float.</li>
+Converts a 32-bit signed integer to an arbitrary-precision binary
+floating-point number.</li>
 <li><code>static EFloat FromInt64​(long inputInt64)</code><br>
-Converts a 64-bit signed integer to an arbitrary-precision binary float.</li>
+Converts a 64-bit signed integer to an arbitrary-precision binary
+floating-point number.</li>
 <li><code>static EFloat FromSingle​(float flt)</code><br>
 Creates a binary float from a 32-bit floating-point number.</li>
 <li><code>static EFloat FromString​(java.lang.String str)</code><br>
@@ -808,7 +812,7 @@ or <code>exponent</code> is null.</li>
 <pre>public static EFloat CreateNaN​(EInteger diag)
 </pre>
 
-<p>Creates a not-a-number arbitrary-precision binary float.</p>
+<p>Creates a not-a-number arbitrary-precision binary floating-point number.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -837,7 +841,7 @@ UnsignedMantissa</code> property.</li>
 <pre>public static EFloat CreateNaN​(EInteger diag, boolean signaling, boolean negative, EContext ctx)
 </pre>
 
-<p>Creates a not-a-number arbitrary-precision binary float.</p>
+<p>Creates a not-a-number arbitrary-precision binary floating-point number.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -908,7 +912,7 @@ do so.</p></li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>An arbitrary-precision binary float.</li>
+<li>An arbitrary-precision binary floating-point number.</li>
 </ul>
 
 <h3>FromSingle</h3>
@@ -972,7 +976,8 @@ str</code> (but not more than <code>str</code> &#39;s length).</p></li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>The parsed number, converted to arbitrary-precision binary float.</li>
+<li>The parsed number, converted to arbitrary-precision binary
+floating-point number.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -1002,7 +1007,8 @@ length minus <code>offset</code> is less than <code>length</code> .</p></li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>The parsed number, converted to arbitrary-precision binary float.</li>
+<li>The parsed number, converted to arbitrary-precision binary
+floating-point number.</li>
 </ul>
 
 <h3>FromString</h3>
@@ -1011,21 +1017,22 @@ length minus <code>offset</code> is less than <code>length</code> .</p></li>
 </pre>
 
 <p>Creates a binary float from a text string that represents a number. For more
- information, see the <code>FromString(String, int, int, EContext)</code>
+ information, see the <code>FromString(string, int, int, EContext)</code>
  method.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
 <li><p><code>str</code> - A text string to convert to a binary float.</p></li>
-<li><p><code>ctx</code> - A precision context specifying the precision, rounding, and
+<li><p><code>ctx</code> - An arithmetic context specifying the precision, rounding, and
 exponent range to apply to the parsed number. Can be null.</p></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>The parsed number, converted to arbitrary-precision binary float.</li>
+<li>The parsed number, converted to arbitrary-precision binary
+floating-point number.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -1056,7 +1063,7 @@ str</code> (but not more than <code>str</code> &#39;s length).</p></li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>An arbitrary-precision binary float.</li>
+<li>An arbitrary-precision binary floating-point number.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -1103,8 +1110,8 @@ which case the precision is unlimited and rounding isn&#39;t needed.</p></li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>first</code> - An arbitrary-precision binary float.</p></li>
-<li><p><code>second</code> - Another arbitrary-precision binary float.</p></li>
+<li><p><code>first</code> - An arbitrary-precision binary floating-point number.</p></li>
+<li><p><code>second</code> - Another arbitrary-precision binary floating-point number.</p></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -1136,7 +1143,7 @@ which case the precision is unlimited and rounding isn&#39;t needed.</p></li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>An arbitrary-precision binary float.</li>
+<li>An arbitrary-precision binary floating-point number.</li>
 </ul>
 
 <h3>MaxMagnitude</h3>
@@ -1228,7 +1235,7 @@ which case the precision is unlimited and rounding isn&#39;t needed.</p></li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>An arbitrary-precision binary float.</li>
+<li>An arbitrary-precision binary floating-point number.</li>
 </ul>
 
 <h3>MinMagnitude</h3>
@@ -1288,11 +1295,11 @@ precision is unlimited (the context&#39;s Precision property is 0).</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>An arbitrary-precision binary float. Returns signaling NaN if this
-value is signaling NaN. (In this sense, this method is similar to the
-&quot;copy-abs&quot; operation in the General Decimal Arithmetic Specification,
-except this method does not necessarily return a copy of this
-object.).</li>
+<li>An arbitrary-precision binary floating-point number. Returns
+signaling NaN if this value is signaling NaN. (In this sense, this
+method is similar to the &quot;copy-abs&quot; operation in the General Decimal
+Arithmetic Specification, except this method does not necessarily
+return a copy of this object.).</li>
 </ul>
 
 <h3>Abs</h3>
@@ -1420,7 +1427,7 @@ quiet NaN if this value is signaling NaN.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>otherValue</code> - An arbitrary-precision binary float.</li>
+<li><code>otherValue</code> - An arbitrary-precision binary floating-point number.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -1478,7 +1485,7 @@ which case the precision is unlimited and no rounding is needed.</p></li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>other</code> - An arbitrary-precision binary float.</li>
+<li><code>other</code> - An arbitrary-precision binary floating-point number.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -1503,7 +1510,7 @@ or if &quot;other&quot; is null, or 0 if both values are equal.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>other</code> - An arbitrary-precision binary float.</p></li>
+<li><p><code>other</code> - An arbitrary-precision binary floating-point number.</p></li>
 <li><p><code>ctx</code> - An arithmetic context. The precision, rounding, and exponent
 range are ignored. If <code>HasFlags</code> of the context is true, will
 store the flags resulting from the operation (the flags are in
@@ -1662,7 +1669,7 @@ object is less than the other value, or 1 if this object is greater.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>other</code> - An arbitrary-precision binary float.</p></li>
+<li><p><code>other</code> - An arbitrary-precision binary floating-point number.</p></li>
 <li><p><code>ctx</code> - An arithmetic context. The precision, rounding, and exponent
 range are ignored. If <code>HasFlags</code> of the context is true, will
 store the flags resulting from the operation (the flags are in
@@ -1697,7 +1704,7 @@ other value, or 1 if this object is greater.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>An arbitrary-precision binary float.</li>
+<li>An arbitrary-precision binary floating-point number.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -1735,8 +1742,8 @@ exact because it would have a nonterminating binary expansion.</li>
 </pre>
 
 <p>Divides this arbitrary-precision binary float by another arbitrary-precision
- binary float. The preferred exponent for the result is this object&#39;s
- exponent minus the divisor&#39;s exponent.</p>
+ binary floating-point number. The preferred exponent for the result
+ is this object&#39;s exponent minus the divisor&#39;s exponent.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2130,7 +2137,7 @@ order.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>other</code> - An arbitrary-precision binary float.</li>
+<li><code>other</code> - An arbitrary-precision binary floating-point number.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -2147,8 +2154,9 @@ are equal to those of another object; otherwise, <code>false</code> .</li>
 
 <p>Determines whether this object&#39;s mantissa (significand), exponent, and
  properties are equal to those of another object and that other object
- is an arbitrary-precision binary float. Not-a-number values are
- considered equal if the rest of their properties are equal.</p>
+ is an arbitrary-precision binary floating-point number. Not-a-number
+ values are considered equal if the rest of their properties are
+ equal.</p>
 
 <p><strong>Overrides:</strong></p>
 
@@ -2179,7 +2187,7 @@ are equal to those of another object; otherwise, <code>false</code> .</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>otherValue</code> - An arbitrary-precision binary float.</li>
+<li><code>otherValue</code> - An arbitrary-precision binary floating-point number.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -2732,10 +2740,10 @@ subtrahend</code> is null.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>An arbitrary-precision binary float. If this value is positive zero,
-returns negative zero. Returns signaling NaN if this value is
-signaling NaN. (In this sense, this method is similar to the
-&quot;copy-negate&quot; operation in the General Decimal Arithmetic
+<li>An arbitrary-precision binary floating-point number. If this value
+is positive zero, returns negative zero. Returns signaling NaN if
+this value is signaling NaN. (In this sense, this method is similar
+to the &quot;copy-negate&quot; operation in the General Decimal Arithmetic
 Specification, except this method does not necessarily return a copy
 of this object.).</li>
 </ul>
@@ -2761,9 +2769,9 @@ which case the precision is unlimited and rounding isn&#39;t needed.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>An arbitrary-precision binary float. If this value is positive zero,
-returns positive zero. Signals FlagInvalid and returns quiet NaN if
-this value is signaling NaN.</li>
+<li>An arbitrary-precision binary floating-point number. If this value
+is positive zero, returns positive zero. Signals FlagInvalid and
+returns quiet NaN if this value is signaling NaN.</li>
 </ul>
 
 <h3>NextMinus</h3>
@@ -3203,7 +3211,7 @@ the given precision.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>An arbitrary-precision binary float.</li>
+<li>An arbitrary-precision binary floating-point number.</li>
 </ul>
 
 <h3>RemainderNaturalScale</h3>
@@ -3310,7 +3318,7 @@ which case the default rounding mode is HalfEven.</p></li>
 <li>A binary float rounded to the closest value representable in the
 given precision. If the result can&#39;t fit the precision, additional
 digits are discarded to make it fit. Signals FlagInvalid and returns
-not-a-number (NaN) if the precision context defines an exponent
+not-a-number (NaN) if the arithmetic context defines an exponent
 range, the new exponent must be changed to the given exponent when
 rounding, and the given exponent is outside of the valid range of the
 arithmetic context.</li>
@@ -3348,7 +3356,7 @@ which case the default rounding mode is HalfEven.</p></li>
 <li>A binary float rounded to the closest value representable in the
 given precision. If the result can&#39;t fit the precision, additional
 digits are discarded to make it fit. Signals FlagInvalid and returns
-not-a-number (NaN) if the precision context defines an exponent
+not-a-number (NaN) if the arithmetic context defines an exponent
 range, the new exponent must be changed to the given exponent when
 rounding, and the given exponent is outside of the valid range of the
 arithmetic context.</li>
@@ -3522,7 +3530,7 @@ which case the default rounding mode is HalfEven.</li>
 <li>A binary float rounded to the closest integer representable in the
 given precision. If the result can&#39;t fit the precision, additional
 digits are discarded to make it fit. Signals FlagInvalid and returns
-not-a-number (NaN) if the precision context defines an exponent
+not-a-number (NaN) if the arithmetic context defines an exponent
 range, the new exponent must be changed to 0 when rounding, and 0 is
 outside of the valid range of the arithmetic context.</li>
 </ul>
@@ -3583,7 +3591,7 @@ which case the default rounding mode is HalfEven.</li>
 <li>A binary float rounded to the closest integer representable in the
 given precision. If the result can&#39;t fit the precision, additional
 digits are discarded to make it fit. Signals FlagInvalid and returns
-not-a-number (NaN) if the precision context defines an exponent
+not-a-number (NaN) if the arithmetic context defines an exponent
 range, the new exponent must be changed to 0 when rounding, and 0 is
 outside of the valid range of the arithmetic context.</li>
 </ul>
@@ -3630,7 +3638,7 @@ the precision and exponent range are unlimited.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>An arbitrary-precision binary float.</li>
+<li>An arbitrary-precision binary floating-point number.</li>
 </ul>
 
 <h3>ScaleByPowerOfTwo</h3>
@@ -4098,7 +4106,8 @@ an exact integer, or is less than 0 or greater than 255.</li>
 <pre>public static EFloat FromByte​(byte inputByte)
 </pre>
 
-<p>Converts a byte (from 0 to 255) to an arbitrary-precision binary float.</p>
+<p>Converts a byte (from 0 to 255) to an arbitrary-precision binary
+ floating-point number.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -4109,7 +4118,8 @@ an exact integer, or is less than 0 or greater than 255.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>This number&#39;s value as an arbitrary-precision binary float.</li>
+<li>This number&#39;s value as an arbitrary-precision binary floating-point
+number.</li>
 </ul>
 
 <h3>ToInt16Checked</h3>
@@ -4176,7 +4186,8 @@ an exact integer, or is less than -32768 or greater than 32767.</li>
 <pre>public static EFloat FromInt16​(short inputInt16)
 </pre>
 
-<p>Converts a 16-bit signed integer to an arbitrary-precision binary float.</p>
+<p>Converts a 16-bit signed integer to an arbitrary-precision binary
+ floating-point number.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -4187,7 +4198,8 @@ an exact integer, or is less than -32768 or greater than 32767.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>This number&#39;s value as an arbitrary-precision binary float.</li>
+<li>This number&#39;s value as an arbitrary-precision binary floating-point
+number.</li>
 </ul>
 
 <h3>ToInt32Checked</h3>
@@ -4276,7 +4288,8 @@ an exact integer, or is less than -2147483648 or greater than
 <pre>public static EFloat FromInt32​(int inputInt32)
 </pre>
 
-<p>Converts a 32-bit signed integer to an arbitrary-precision binary float.</p>
+<p>Converts a 32-bit signed integer to an arbitrary-precision binary
+ floating-point number.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -4287,7 +4300,8 @@ an exact integer, or is less than -2147483648 or greater than
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>This number&#39;s value as an arbitrary-precision binary float.</li>
+<li>This number&#39;s value as an arbitrary-precision binary floating-point
+number.</li>
 </ul>
 
 <h3>ToInt64Checked</h3>
@@ -4356,7 +4370,8 @@ than 9223372036854775807.</li>
 <pre>public static EFloat FromInt64​(long inputInt64)
 </pre>
 
-<p>Converts a 64-bit signed integer to an arbitrary-precision binary float.</p>
+<p>Converts a 64-bit signed integer to an arbitrary-precision binary
+ floating-point number.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -4367,7 +4382,8 @@ than 9223372036854775807.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>This number&#39;s value as an arbitrary-precision binary float.</li>
+<li>This number&#39;s value as an arbitrary-precision binary floating-point
+number.</li>
 </ul>
 
 <p><a href="/Numbers/">Back to Numbers start page.</a></p>

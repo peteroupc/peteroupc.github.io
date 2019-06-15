@@ -324,7 +324,9 @@
 <li><code><a href="#UnsignedMantissa">UnsignedMantissa</a></code> - Gets the absolute value of this object&#39;s unscaled value, or mantissa.</li>
 <li><code><a href="#Zero">public static readonly PeterO.Numbers.EDecimal Zero;</a></code> - Represents the number 0.</li>
 <li><code><a href="#op_Addition">PeterO.Numbers.EDecimal operator +(PeterO.Numbers.EDecimal, PeterO.Numbers.EDecimal)</a></code> - Adds two arbitrary-precision decimal floating-point numbers and returns the result.</li>
+<li><code><a href="#op_Decrement">PeterO.Numbers.EDecimal operator --(PeterO.Numbers.EDecimal)</a></code> - Not documented yet.</li>
 <li><code><a href="#op_Division">PeterO.Numbers.EDecimal operator /(PeterO.Numbers.EDecimal, PeterO.Numbers.EDecimal)</a></code> - Divides this object by another decimal number and returns the result.</li>
+<li><code><a href="#op_Increment">PeterO.Numbers.EDecimal operator ++(PeterO.Numbers.EDecimal)</a></code> - Not documented yet.</li>
 <li><code><a href="#op_Modulus">PeterO.Numbers.EDecimal operator %(PeterO.Numbers.EDecimal, PeterO.Numbers.EDecimal)</a></code> - Finds the remainder when dividing one arbitrary-precision decimal number by another.</li>
 <li><code><a href="#op_Multiply">PeterO.Numbers.EDecimal operator *(PeterO.Numbers.EDecimal, PeterO.Numbers.EDecimal)</a></code> - Multiplies two decimal numbers.</li>
 <li><code><a href="#op_Subtraction">PeterO.Numbers.EDecimal operator -(PeterO.Numbers.EDecimal, PeterO.Numbers.EDecimal)</a></code> - Subtracts one arbitrary-precision decimal number from another and returns the result.</li>
@@ -2674,6 +2676,35 @@ or <i>otherValue</i>
 is null.</li>
 </ul>
 
+<p><a id="op_Decrement"></a></p>
+
+<h3>Operator <code>--</code></h3>
+
+<pre>public static PeterO.Numbers.EDecimal operator --(
+    PeterO.Numbers.EDecimal bthis);
+</pre>
+
+<p>Not documented yet.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>bthis</i>: The parameter  <i>bthis</i>
+is not documented yet.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>An EDecimal object.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter  <i>bthis</i>
+is null.</li>
+</ul>
+
 <p><a id="op_Division"></a></p>
 
 <h3>Operator <code>/</code></h3>
@@ -2701,6 +2732,35 @@ is null.</li>
 <ul>
 <li>System.ArgumentNullException:
 The parameter <i>dividend</i>
+is null.</li>
+</ul>
+
+<p><a id="op_Increment"></a></p>
+
+<h3>Operator <code>++</code></h3>
+
+<pre>public static PeterO.Numbers.EDecimal operator ++(
+    PeterO.Numbers.EDecimal bthis);
+</pre>
+
+<p>Not documented yet.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>bthis</i>: The parameter  <i>bthis</i>
+is not documented yet.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>An EDecimal object.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter  <i>bthis</i>
 is null.</li>
 </ul>
 
@@ -3229,7 +3289,7 @@ is null or the precision is unlimited (the context&#39;s Precision property s 0)
 
 <p><b>Return Value:</b></p>
 
-<p>A decimal number rounded to the closest value representable in the given precision. If the result can&#39;t fit the precision, additional digits are discarded to make it fit. Signals FlagInvalid and returns not-a-number (NaN) if the precision context defines an exponent range, the new exponent must be changed to the given exponent when rounding, and the given exponent is outside of the valid range of the arithmetic context.</p>
+<p>A decimal number rounded to the closest value representable in the given precision. If the result can&#39;t fit the precision, additional digits are discarded to make it fit. Signals FlagInvalid and returns not-a-number (NaN) if the arithmetic context defines an exponent range, the new exponent must be changed to the given exponent when rounding, and the given exponent is outside of the valid range of the arithmetic context.</p>
 
 <p><a id="RoundToExponent_int_PeterO_Numbers_ERounding"></a></p>
 
@@ -3293,7 +3353,7 @@ is null or the precision is unlimited (the context&#39;s Precision property s 0)
 
 <p><b>Return Value:</b></p>
 
-<p>A decimal number rounded to the closest value representable in the given precision. If the result can&#39;t fit the precision, additional digits are discarded to make it fit. Signals FlagInvalid and returns not-a-number (NaN) if the precision context defines an exponent range, the new exponent must be changed to the given exponent when rounding, and the given exponent is outside of the valid range of the arithmetic context.</p>
+<p>A decimal number rounded to the closest value representable in the given precision. If the result can&#39;t fit the precision, additional digits are discarded to make it fit. Signals FlagInvalid and returns not-a-number (NaN) if the arithmetic context defines an exponent range, the new exponent must be changed to the given exponent when rounding, and the given exponent is outside of the valid range of the arithmetic context.</p>
 
 <p><a id="RoundToExponent_PeterO_Numbers_EInteger_PeterO_Numbers_ERounding"></a></p>
 
@@ -3421,7 +3481,7 @@ is null or the precision is unlimited (the context&#39;s Precision property s 0)
 
 <p><b>Return Value:</b></p>
 
-<p>A decimal number rounded to the closest integer representable in the given precision. If the result can&#39;t fit the precision, additional digits are discarded to make it fit. Signals FlagInvalid and returns not-a-number (NaN) if the precision context defines an exponent range, the new exponent must be changed to 0 when rounding, and 0 is outside of the valid range of the arithmetic context.</p>
+<p>A decimal number rounded to the closest integer representable in the given precision. If the result can&#39;t fit the precision, additional digits are discarded to make it fit. Signals FlagInvalid and returns not-a-number (NaN) if the arithmetic context defines an exponent range, the new exponent must be changed to 0 when rounding, and 0 is outside of the valid range of the arithmetic context.</p>
 
 <p><a id="RoundToIntegralExact_PeterO_Numbers_EContext"></a></p>
 
@@ -3465,7 +3525,7 @@ is null or the precision is unlimited (the context&#39;s Precision property s 0)
 
 <p><b>Return Value:</b></p>
 
-<p>A decimal number rounded to the closest integer representable in the given precision. If the result can&#39;t fit the precision, additional digits are discarded to make it fit. Signals FlagInvalid and returns not-a-number (NaN) if the precision context defines an exponent range, the new exponent must be changed to 0 when rounding, and 0 is outside of the valid range of the arithmetic context.</p>
+<p>A decimal number rounded to the closest integer representable in the given precision. If the result can&#39;t fit the precision, additional digits are discarded to make it fit. Signals FlagInvalid and returns not-a-number (NaN) if the arithmetic context defines an exponent range, the new exponent must be changed to 0 when rounding, and 0 is outside of the valid range of the arithmetic context.</p>
 
 <p><a id="RoundToPrecision_PeterO_Numbers_EContext"></a></p>
 
