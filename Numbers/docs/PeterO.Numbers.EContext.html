@@ -27,8 +27,8 @@
 <li><code><a href="#Decimal128">public static readonly PeterO.Numbers.EContext Decimal128;</a></code> - An arithmetic context for the IEEE-754-2008 decimal128 format.</li>
 <li><code><a href="#Decimal32">public static readonly PeterO.Numbers.EContext Decimal32;</a></code> - An arithmetic context for the IEEE-754-2008 decimal32 format.</li>
 <li><code><a href="#Decimal64">public static readonly PeterO.Numbers.EContext Decimal64;</a></code> - An arithmetic context for the IEEE-754-2008 decimal64 format.</li>
-<li><code><a href="#EMax">EMax</a></code> - Gets the highest exponent possible when a converted number is expressed in scientific notation with one digit before the radix point.</li>
-<li><code><a href="#EMin">EMin</a></code> - Gets the lowest exponent possible when a converted number is expressed in scientific notation with one digit before the radix point.</li>
+<li><code><a href="#EMax">EMax</a></code> - Gets the highest exponent possible when a converted number is expressed in scientific notation with one nonzero digit before the radix point.</li>
+<li><code><a href="#EMin">EMin</a></code> - Gets the lowest exponent possible when a converted number is expressed in scientific notation with one nonzero digit before the radix point.</li>
 <li><code><a href="#ExponentWithinRange_PeterO_Numbers_EInteger">ExponentWithinRange(PeterO.Numbers.EInteger)</a></code> - Determines whether a number can have the given Exponent property under this arithmetic context.</li>
 <li><code><a href="#FlagClamped">public static int FlagClamped = 32;</a></code> - Signals that the exponent was adjusted to fit the exponent range.</li>
 <li><code><a href="#FlagDivideByZero">public static int FlagDivideByZero = 128;</a></code> - Signals a division of a nonzero number by zero.</li>
@@ -343,11 +343,11 @@
 <pre>public PeterO.Numbers.EInteger EMax { get; }
 </pre>
 
-<p>Gets the highest exponent possible when a converted number is expressed in scientific notation with one digit before the radix point. For example, with a precision of 3 and an EMax of 100, the maximum value possible is 9.99E + 100. (This is not the same as the highest possible Exponent property.) If HasExponentRange is false, this value will be 0.</p>
+<p>Gets the highest exponent possible when a converted number is expressed in scientific notation with one nonzero digit before the radix point. For example, with a precision of 3 and an EMax of 100, the maximum value possible is 9.99E + 100. (This is not the same as the highest possible Exponent property.) If HasExponentRange is false, this value will be 0.</p>
 
 <p><b>Returns:</b></p>
 
-<p>The highest exponent possible when a converted number is expressed in scientific notation with one digit before the radix point. For example, with a precision of 3 and an EMax of 100, the maximum value possible is 9.99E + 100. (This is not the same as the highest possible Exponent property.) If HasExponentRange is false, this value will be 0.</p>
+<p>The highest exponent possible when a converted number is expressed in scientific notation with one nonzero digit before the radix point. For example, with a precision of 3 and an EMax of 100, the maximum value possible is 9.99E + 100. (This is not the same as the highest possible Exponent property.) If HasExponentRange is false, this value will be 0.</p>
 
 <p><a id="EMin"></a></p>
 
@@ -356,11 +356,11 @@
 <pre>public PeterO.Numbers.EInteger EMin { get; }
 </pre>
 
-<p>Gets the lowest exponent possible when a converted number is expressed in scientific notation with one digit before the radix point. For example, with a precision of 3 and an EMin of -100, the next value that comes after 0 is 0.001E-100. (If AdjustExponent is false, this property specifies the lowest possible Exponent property instead.) If HasExponentRange is false, this value will be 0.</p>
+<p>Gets the lowest exponent possible when a converted number is expressed in scientific notation with one nonzero digit before the radix point. For example, with a precision of 3 and an EMin of -100, the next value that comes after 0 is 0.001E-100. (If AdjustExponent is false, this property specifies the lowest possible Exponent property instead.) If HasExponentRange is false, this value will be 0.</p>
 
 <p><b>Returns:</b></p>
 
-<p>The lowest exponent possible when a converted number is expressed in scientific notation with one digit before the radix point. For example, with a precision of 3 and an EMin of -100, the next value that comes after 0 is 0.001E-100. (If AdjustExponent is false, this property specifies the lowest possible Exponent property instead.) If HasExponentRange is false, this value will be 0.</p>
+<p>The lowest exponent possible when a converted number is expressed in scientific notation with one nonzero digit before the radix point. For example, with a precision of 3 and an EMin of -100, the next value that comes after 0 is 0.001E-100. (If AdjustExponent is false, this property specifies the lowest possible Exponent property instead.) If HasExponentRange is false, this value will be 0.</p>
 
 <p><a id="Flags"></a></p>
 

@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
-<p>Begun on Mar. 5, 2016; last updated on June 9, 2019.</p>
+<p>Begun on Mar. 5, 2016; last updated on June 16, 2019.</p>
 
 <p>Most apps that use random numbers care about either unpredictability, speed/high quality, or repeatability.  This article explains the three kinds of RNGs and gives recommendations on each kind.</p>
 
@@ -107,9 +107,8 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 
 <ul>
 <li><a href="#When_to_Use_a_Seeded_PRNG"><strong>When to Use a Seeded PRNG</strong></a></li>
-<li><a href="#Determinism_and_Consistency"><strong>Determinism and Consistency</strong></a></li>
-<li><a href="#Seed_Generation_for_Seeded_PRNGs"><strong>Seed Generation for Seeded PRNGs</strong></a></li>
-<li><a href="#Examples_2"><strong>Examples</strong></a>
+<li><a href="#Seeded_PRNG_Recommendations"><strong>Seeded PRNG Recommendations</strong></a></li>
+<li><a href="#Seeded_PRNG_Use_Cases"><strong>Seeded PRNG Use Cases</strong></a>
 
 <ul>
 <li><a href="#Games"><strong>Games</strong></a></li>
@@ -133,6 +132,7 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 <li><a href="#Shuffling"><strong>Shuffling</strong></a></li>
 <li><a href="#Unique_Random_Identifiers"><strong>Unique Random Identifiers</strong></a></li>
 <li><a href="#GPU_Programming_Environments"><strong>GPU Programming Environments</strong></a></li>
+<li><a href="#Determinism_and_Consistency"><strong>Determinism and Consistency</strong></a></li>
 </ul></li>
 <li><a href="#Hash_Functions"><strong>Hash Functions</strong></a></li>
 <li><a href="#Guidelines_for_New_RNG_APIs"><strong>Guidelines for New RNG APIs</strong></a>
@@ -275,61 +275,28 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 <li>by distributing the &quot;random&quot; numbers or results to networked users as they are generated, and</li>
 </ul></li>
 </ul></li>
-<li>any feature that uses such a PRNG to generate that &quot;random&quot; result will be deterministic and consistent (see next section) for as long as that feature is still in use by that application.</li>
+<li>any feature that uses such a PRNG to generate that &quot;random&quot; result will be deterministic and consistent (see &quot;Determinism and Consistency&quot;) for as long as that feature is still in use by that application.</li>
 </ol>
 
-<p><a id=Determinism_and_Consistency></a></p>
+<p><a id=Seeded_PRNG_Recommendations></a></p>
 
-<h3>Determinism and Consistency</h3>
-
-<p>For an RNG algorithm to generate &quot;random&quot; numbers that are reproducible across computers, it needs to be both <em>deterministic</em> and <em>consistent</em>.</p>
-
-<p>An algorithm is <em>deterministic</em> if it delivers the same output given the same input every time.  An algorithm that relies on behavior that may change outside its control (such as accessing the file system or the computer&#39;s clock) is not deterministic (e.g., because the time may be different on each run, or other programs may read and write to the same files the algorithm does).</p>
-
-<p>An algorithm is <em>consistent</em> if the output it delivers, given the same input, is the same&mdash;</p>
-
-<ul>
-<li>across time,</li>
-<li>across different executions of the algorithm,</li>
-<li>across versions of the application that uses the algorithm,</li>
-<li>across supported hardware, and</li>
-<li>across supported operating systems.</li>
-</ul>
-
-<p>In practice, however, it&#39;s not easy to ensure an algorithm (especially an RNG) is both deterministic and consistent.  There are many ways an algorithm can be nondeterministic or inconsistent.  For example, different results can happen because&mdash;</p>
-
-<ul>
-<li>parallel operations can finish in a different order (see &quot;<a href="https://keras.io/getting-started/faq/#how-can-i-obtain-reproducible-results-using-keras-during-development"><strong>Keras documentation</strong></a>&quot;),</li>
-<li>items can be assigned differently to hash table buckets,</li>
-<li>mathematical operations on floating-point numbers can be carried out in a different order (and can lead to different results if rounding occurs after each operation), or</li>
-<li>floating-point numbers and math operations on such numbers can subtly differ across software and hardware implementations (for example, the IEEE 754 floating-point number standard does not require delivering as-accurate-as-possible results for many math functions it defines &mdash; see, for example, the x87 <code>FSIN</code> instruction and the difference between <code>Math</code> and <code>StrictMath</code> in Java).</li>
-</ul>
+<h3>Seeded PRNG Recommendations</h3>
 
 <p>If an application chooses to use a seeded PRNG for repeatable &quot;randomness&quot;, the application&mdash;</p>
 
 <ul>
-<li>SHOULD choose a PRNG with implementation-independent behavior that will not change in the future,</li>
 <li>SHOULD choose a PRNG that meets or exceeds the requirements of a <a href="#Statistical_RNGs"><strong>statistical RNG</strong></a> (except the seed is application-defined instead) and is reasonably fast,</li>
-<li>SHOULD document the chosen PRNG being used as well as all the parameters for that PRNG, and</li>
+<li>SHOULD choose a PRNG implementation with implementation-independent behavior that will not change in the future,</li>
+<li>SHOULD document the chosen PRNG being used as well as all the parameters for that PRNG,</li>
+<li>SHOULD, as much as possible, generate seeds for the PRNG using hard-to-predict data (e.g., the output of a cryptographic RNG) or as described in <a href="#Nondeterministic_Sources_and_Seed_Generation"><strong>Nondeterministic Sources and Seed Generation</strong></a>, and</li>
 <li>SHOULD NOT seed the PRNG with floating-point numbers or generate floating-point numbers with that PRNG.</li>
 </ul>
 
-<p><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Random.html"><strong><code>java.util.Random</code></strong></a> is one example of a PRNG with deterministic and consistent behavior, but none of the following is such a PRNG:</p>
+<p>For example, an application could implement a seeded PRNG using a third-party library that specifically says it implements an algorithm mentioned in the <a href="#Examples_and_Non-Examples"><strong>statistical RNG examples</strong></a>, and could initialize that PRNG using a bit sequence from a cryptographic RNG.  The developers could also mention the use of the specific PRNG chosen on any code that uses it, to alert other developers that the PRNG needs to remain unchanged.</p>
 
-<ul>
-<li>The C <a href="http://en.cppreference.com/w/cpp/numeric/random/rand"><strong><code>rand</code> method</strong></a>, as well as C++&#39;s random number distribution classes, such as <a href="http://en.cppreference.com/w/cpp/numeric/random/uniform_int_distribution"><strong><code>std::uniform_int_distribution</code></strong></a>, use implementation-defined algorithms for random number generation.</li>
-<li>.NET&#39;s <a href="https://docs.microsoft.com/dotnet/api/system.random"><strong><code>System.Random</code></strong></a> has random number generation behavior that could change in the future.</li>
-</ul>
+<p><a id=Seeded_PRNG_Use_Cases></a></p>
 
-<p><a id=Seed_Generation_for_Seeded_PRNGs></a></p>
-
-<h3>Seed Generation for Seeded PRNGs</h3>
-
-<p>As much as possible, an application SHOULD generate seeds for a seeded PRNG using hard-to-predict data (e.g., the output of a cryptographic RNG) or as described in <a href="#Nondeterministic_Sources_and_Seed_Generation"><strong>Nondeterministic Sources and Seed Generation</strong></a>.</p>
-
-<p><a id=Examples_2></a></p>
-
-<h3>Examples</h3>
+<h3>Seeded PRNG Use Cases</h3>
 
 <p>Custom seeds can come into play in the following situations, among others.</p>
 
@@ -619,6 +586,40 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 </ul>
 
 <p>(L&#39;Ecuyer et al. 2015)<sup><a href="#Note32"><strong>(32)</strong></a></sup> discusses parallel generation of random numbers using PRNGs, especially on GPUs.</p>
+
+<p><a id=Determinism_and_Consistency></a></p>
+
+<h3>Determinism and Consistency</h3>
+
+<p>For an RNG algorithm to generate &quot;random&quot; numbers that are reproducible across computers, it needs to be both <em>deterministic</em> and <em>consistent</em>.  (These factors are only important for seeded PRNGs, not necessarily for cryptographic or statistical RNGs.)</p>
+
+<p>An algorithm is <em>deterministic</em> if it delivers the same output given the same input every time.  An algorithm that relies on behavior that may change outside its control (such as accessing the file system or the computer&#39;s clock) is not deterministic (e.g., because the time may be different on each run, or other programs may read and write to the same files the algorithm does).</p>
+
+<p>An algorithm is <em>consistent</em> if the output it delivers, given the same input, is the same&mdash;</p>
+
+<ul>
+<li>across time,</li>
+<li>across different executions of the algorithm,</li>
+<li>across versions of the application that uses the algorithm,</li>
+<li>across supported hardware, and</li>
+<li>across supported operating systems.</li>
+</ul>
+
+<p>In practice, however, it&#39;s not easy to ensure an algorithm (especially an RNG) is both deterministic and consistent.  There are many ways an algorithm can be nondeterministic or inconsistent.  For example, different results can happen because&mdash;</p>
+
+<ul>
+<li>parallel operations can finish in a different order (see &quot;<a href="https://keras.io/getting-started/faq/#how-can-i-obtain-reproducible-results-using-keras-during-development"><strong>Keras documentation</strong></a>&quot;),</li>
+<li>items can be assigned differently to hash table buckets,</li>
+<li>mathematical operations on floating-point numbers can be carried out in a different order (and can lead to different results if rounding occurs after each operation), or</li>
+<li>floating-point numbers and math operations on such numbers can subtly differ across software and hardware implementations (for example, the IEEE 754 floating-point number standard does not require delivering as-accurate-as-possible results for many math functions it defines &mdash; see, for example, the x87 <code>FSIN</code> instruction and the difference between <code>Math</code> and <code>StrictMath</code> in Java).</li>
+</ul>
+
+<p><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Random.html"><strong><code>java.util.Random</code></strong></a> is one example of a PRNG with deterministic and consistent behavior, but none of the following is such a PRNG:</p>
+
+<ul>
+<li>The C <a href="http://en.cppreference.com/w/cpp/numeric/random/rand"><strong><code>rand</code> method</strong></a>, as well as C++&#39;s random number distribution classes, such as <a href="http://en.cppreference.com/w/cpp/numeric/random/uniform_int_distribution"><strong><code>std::uniform_int_distribution</code></strong></a>, use implementation-defined algorithms for random number generation.</li>
+<li>.NET&#39;s <a href="https://docs.microsoft.com/dotnet/api/system.random"><strong><code>System.Random</code></strong></a> has random number generation behavior that could change in the future.</li>
+</ul>
 
 <p><a id=Hash_Functions></a></p>
 
