@@ -74,6 +74,7 @@ so that as a result, many applications use RNGs, especially built-in RNGs, that 
     - [**Examples of Nondeterministic Sources**](#Examples_of_Nondeterministic_Sources)
     - [**Entropy**](#Entropy)
     - [**Seed Generation**](#Seed_Generation)
+    - [**Wildly Different Seeds**](#Wildly_Different_Seeds)
 - [**Existing RNG APIs in Programming Languages**](#Existing_RNG_APIs_in_Programming_Languages)
 - [**RNG Topics**](#RNG_Topics)
     - [**How to Initialize RNGs**](#How_to_Initialize_RNGs)
@@ -193,11 +194,11 @@ If an application chooses to use a seeded PRNG for repeatable "randomness", the 
 
 - SHOULD choose a PRNG that meets or exceeds the requirements of a [**statistical RNG**](#Statistical_RNGs) (except the seed is application-defined instead) and is reasonably fast,
 - SHOULD choose a PRNG implementation with implementation-independent behavior that will not change in the future,
-- SHOULD document the chosen PRNG being used as well as all the parameters for that PRNG,
-- SHOULD, as much as possible, generate seeds for the PRNG using hard-to-predict data (e.g., the output of a cryptographic RNG) or as described in [**Nondeterministic Sources and Seed Generation**](#Nondeterministic_Sources_and_Seed_Generation), and
+- ought to document the chosen PRNG being used as well as all the parameters for that PRNG,
+- ought to generate seeds for the PRNG that are likely to differ wildly from previous seeds, and
 - SHOULD NOT seed the PRNG with floating-point numbers or generate floating-point numbers with that PRNG.
 
-For example, an application could implement a seeded PRNG using a third-party library that specifically says it implements an algorithm mentioned in the [**statistical RNG examples**](#Examples_and_Non-Examples), and could initialize that PRNG using a bit sequence from a cryptographic RNG.  The developers could also mention the use of the specific PRNG chosen on any code that uses it, to alert other developers that the PRNG needs to remain unchanged.
+For example, an application could implement a seeded PRNG using a third-party library that specifically says it implements an algorithm mentioned in the [**statistical RNG examples**](#Examples_and_Non-Examples), and could initialize that PRNG using a bit sequence from a cryptographic RNG (see "[**Wildly Different Seeds**](#Wildly_Different_Seeds)").  The developers could also mention the use of the specific PRNG chosen on any code that uses it, to alert other developers that the PRNG needs to remain unchanged.
 
 <a id=Seeded_PRNG_Use_Cases></a>
 ### Seeded PRNG Use Cases
@@ -264,10 +265,7 @@ Examples of nondeterministic sources are&mdash;
 
 RFC 4086, "Randomness Requirements for Security", section 3, contains a survey of nondeterministic sources.
 
-> **Notes:**
->
-> 1. Online services that make random numbers available to applications, as well as outputs of audio and video devices (see RFC 4086 sec. 3.2.1, (Liebow-Feeser 2017a)<sup>[**(17)**](#Note17)</sup>, and  (Liebow-Feeser 2017b)<sup>[**(18)**](#Note18)</sup>), are additional nondeterministic sources.  However, online services require Internet or other network access, and some of them require access credentials.  Also, many mobile operating systems require applications to declare network, camera, and microphone access to users upon installation.  For these reasons, these kinds of sources are NOT RECOMMENDED if other approaches are adequate.
-> 2. For noncryptographic RNGs, timestamps from the system clock are commonly used.  Timestamps with millisecond or coarser granularity are not encouraged, however, because multiple instances of a PRNG automatically seeded with a timestamp, when they are created at about the same time, run the risk of starting with the same seed and therefore generating the same sequence of random numbers.<sup>[**(19)**](#Note19)</sup>
+> **Note:** Online services that make random numbers available to applications, as well as outputs of audio and video devices (see RFC 4086 sec. 3.2.1, (Liebow-Feeser 2017a)<sup>[**(17)**](#Note17)</sup>, and  (Liebow-Feeser 2017b)<sup>[**(18)**](#Note18)</sup>), are additional nondeterministic sources.  However, online services require Internet or other network access, and some of them require access credentials.  Also, many mobile operating systems require applications to declare network, camera, and microphone access to users upon installation.  For these reasons, these kinds of sources are NOT RECOMMENDED if other approaches are adequate.
 
 <a id=Entropy></a>
 ### Entropy
@@ -279,7 +277,23 @@ _Entropy_ is a value that describes how hard it is to predict a nondeterministic
 
 In general, especially for cryptographic RNGs, **to generate an N-bit seed, enough data needs to be gathered from nondeterministic sources to reach N bits of entropy or more**.
 
-Once data with enough entropy is gathered, it might need to be condensed into a seed to initialize a PRNG with. Following (Cliff et al., 2009)<sup>[**(20)**](#Note20)</sup>, it is suggested to generate an N-bit seed using an HMAC (hash-based message authentication code); in that sense, take data with at least as many bits of entropy as the HMAC size in bits, generate the HMAC with that data, then truncate the HMAC to N bits.  See also NIST SP 800-90B sec. 3.1.5.1 and RFC 4086 sec. 4.2 and 5.2.
+Once data with enough entropy is gathered, it might need to be condensed into a seed to initialize a PRNG with. Following (Cliff et al., 2009)<sup>[**(19)**](#Note19)</sup>, it is suggested to generate an N-bit seed using an HMAC (hash-based message authentication code); in that sense, take data with at least as many bits of entropy as the HMAC size in bits, generate the HMAC with that data, then truncate the HMAC to N bits.  See also NIST SP 800-90B sec. 3.1.5.1 and RFC 4086 sec. 4.2 and 5.2.
+
+<a id=Wildly_Different_Seeds></a>
+### Wildly Different Seeds
+
+For noncryptographic and seeded PRNGs, an application ought to generate seeds that vary wildly from previously generated seeds, to reduce the risk of using the same seed and therefore generating the same sequence of "random" numbers<sup>[**(20)**](#Note20)</sup>.  In this sense, the following kinds of seeds are preferred, from most to least:
+
+1. A bit sequence from a cryptographic RNG.
+2. A seed extracted from hard-to-predict sources (see "Seed Generation" above).
+3. A hash of several cycle counters.
+4. A hash of timestamps with finer than millisecond granularity.
+5. A hash of the concatenation of a monotonic counter and additional data.
+6. A hash of a monotonic counter.
+7. A timestamp with finer than millisecond granularity.
+8. A monotonic counter starting "randomly" or at a timestamp.
+9. A monotonic counter starting at 0.
+10. A timestamp with millisecond or coarser granularity.
 
 <a id=Existing_RNG_APIs_in_Programming_Languages></a>
 ## Existing RNG APIs in Programming Languages
@@ -563,9 +577,9 @@ I acknowledge&mdash;
 
 <small><sup id=Note18>(18)</sup> Liebow-Feeser, J., "LavaRand in Production: The Nitty-Gritty Technical Details", blog.cloudflare.com, Nov. 6, 2017.</small>
 
-<small><sup id=Note19>(19)</sup> For example, many questions on _Stack Overflow_ highlight the pitfalls of creating a new instance of .NET's `System.Random` each time a random number is needed, rather than only once in the application.  See also the section "How to Initialize RNGs".</small>
+<small><sup id=Note19>(19)</sup> Cliff, Y., Boyd, C., Gonzalez Nieto, J.  "How to Extract and Expand Randomness: A Summary and Explanation of Existing Results", 2009.</small>
 
-<small><sup id=Note20>(20)</sup> Cliff, Y., Boyd, C., Gonzalez Nieto, J.  "How to Extract and Expand Randomness: A Summary and Explanation of Existing Results", 2009.</small>
+<small><sup id=Note20>(20)</sup> For example, many questions on _Stack Overflow_ highlight the pitfalls of creating a new instance of .NET's `System.Random` each time a random number is needed, rather than only once in the application.  See also the section "How to Initialize RNGs".</small>
 
 <small><sup id=Note21>(21)</sup> Using the similar `/dev/random` is NOT RECOMMENDED, since in some implementations it can block for seconds at a time, especially if not enough randomness is available.  See also [**"Myths about /dev/urandom"**](https://www.2uo.de/myths-about-urandom).</small>
 

@@ -1733,9 +1733,11 @@ is a 64-bit signed integer.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>obj</i>: The parameter <i>obj</i>
-is an arbitrary object.<b>NOTE:</b> For security reasons, whenever possible, an application should not base this parameter on user input or other externally supplied data unless the application limits this parameter&#39;s inputs to types specially handled by this method (such as <code>int</code>  or <code>String</code>  ) and/or to plain-old-data types (POCO or POJO types) within the control of the application. If the plain-old-data type references other data types, those types should likewise meet either criterion above.</li>
+<li><i>obj</i>: The parameter  <i>obj</i>
+is an arbitrary object.<b>NOTE:</b> For security reasons, whenever possible, an application should not base this parameter on user input or other externally supplied data unless the application limits this parameter&#39;s inputs to types specially handled by this method (such as  <code>int</code>  or  <code>String</code>  ) and/or to plain-old-data types (POCO or POJO types) within the control of the application. If the plain-old-data type references other data types, those types should likewise meet either criterion above.</li>
 </ul>
+
+<p>.</p>
 
 <p><b>Return Value:</b></p>
 
@@ -1755,9 +1757,14 @@ is an arbitrary object.<b>NOTE:</b> For security reasons, whenever possible, an 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>obj</i>: The parameter <i>obj</i>
-is an arbitrary object.<b>NOTE:</b> For security reasons, whenever possible, an application should not base this parameter on user input or other externally supplied data unless the application limits this parameter&#39;s inputs to types specially handled by this method (such as <code>int</code>  or <code>String</code>  ) and/or to plain-old-data types (POCO or POJO types) within the control of the application. If the plain-old-data type references other data types, those types should likewise meet either criterion above.</p></li>
-<li><p><i>mapper</i>: An object containing optional converters to convert objects of certain types to CBOR objects.</p></li>
+<li><i>obj</i>: The parameter  <i>obj</i>
+is an arbitrary object.<b>NOTE:</b> For security reasons, whenever possible, an application should not base this parameter on user input or other externally supplied data unless the application limits this parameter&#39;s inputs to types specially handled by this method (such as  <code>int</code>  or  <code>String</code>  ) and/or to plain-old-data types (POCO or POJO types) within the control of the application. If the plain-old-data type references other data types, those types should likewise meet either criterion above.</li>
+</ul>
+
+<p>.</p>
+
+<ul>
+<li><i>mapper</i>: An object containing optional converters to convert objects of certain types to CBOR objects.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -1785,31 +1792,31 @@ is null.</li>
 <p>Generates a CBORObject from an arbitrary object, using the given options to control how certain objects are converted to CBOR objects. The following cases are checked in the logical order given (rather than the strict order in which they are implemented by this library):</p>
 
 <ul>
-<li><p><code>null</code>  is converted to <code>CBORObject.Null</code>  .</p></li>
-<li><p>A <code>CBORObject</code>  is returned as itself.</p></li>
-<li><p>If the object is of a type corresponding to a type converter mentioned in the <i>mapper</i>
-parameter, that converter will be used to convert the object to a BOR object. Type converters can be used to override the default onversion behavior of almost any object.</p></li>
-<li><p>A <code>char</code>  is converted to an integer (from 0 through 65535), and returns a CBOR object of that integer. (This is a change in version 4.0 from previous versions, which converted <code>char</code>  , except surrogate code points from 0xd800 through 0xdfff, into single-character text strings.)</p></li>
-<li><p>A <code>bool</code>  ( <code>boolean</code>  in Java) is converted to <code>CBORObject.True</code>  or <code>CBORObject.False</code>  .</p></li>
-<li><p>A <code>byte</code>  is converted to a CBOR integer from 0 through 255.</p></li>
-<li><p>A primitive integer type ( <code>int</code>  , <code>short</code>  , <code>long</code>  , as well as <code>sbyte</code>  , <code>ushort</code>  , <code>uint</code>  , and <code>ulong</code>  in .NET) is converted to the corresponding CBOR integer.</p></li>
-<li><p>A primitive floating-point type ( <code>float</code>  , <code>double</code>  , as well as <code>decimal</code>  in .NET) is converted to the corresponding CBOR number.</p></li>
-<li><p>A <code>String</code>  is converted to a CBOR text string. To create a CBOR byte string object from <code>String</code>  , see the example given in<strong>PeterO.Cbor.CBORObject.FromObject(System.Byte[])</strong>.</p></li>
-<li><p>A number of type <code>EDecimal</code>  , <code>EFloat</code>  , <code>EInteger</code>  , and <code>ERational</code>  in the<a href="https://www.nuget.org/packages/PeterO.Numbers"> <code>PeterO.Numbers</code> </a>library (in .NET) or the<a href="https://github.com/peteroupc/numbers-java"> <code>com.github.peteroupc/numbers</code> </a>artifact (in Java) is converted to the corresponding CBOR number.</p></li>
-<li><p>An array other than <code>byte[]</code>  is converted to a CBOR array. In the .NET version, a multidimensional array is converted to an array of arrays.</p></li>
-<li><p>A <code>byte[]</code>  (1-dimensional byte array) is converted to a CBOR byte string; the byte array is copied to a new byte array in this process. (This method can&#39;t be used to decode CBOR data from a byte array; for that, use the<b>DecodeFromBytes</b> method instead.)</p></li>
+<li><p><code>null</code>  is converted to  <code>CBORObject.Null</code> .</p></li>
+<li><p>A  <code>CBORObject</code>  is returned as itself.</p></li>
+<li><p>If the object is of a type corresponding to a type converter mentioned in the  <i>mapper</i>
+parameter, that converter will be used to convert the object to a CBOR object. Type converters can be used to override the default conversion behavior of almost any object.</p></li>
+<li><p>A  <code>char</code>  is converted to an integer (from 0 through 65535), and returns a CBOR object of that integer. (This is a change in version 4.0 from previous versions, which converted <code>char</code> , except surrogate code points from 0xd800 through 0xdfff, into single-character text strings.)</p></li>
+<li><p>A  <code>bool</code>  (  <code>boolean</code>  in Java) is converted to <code>CBORObject.True</code>  or  <code>CBORObject.False</code> .</p></li>
+<li><p>A  <code>byte</code>  is converted to a CBOR integer from 0 through 255.</p></li>
+<li><p>A primitive integer type (  <code>int</code> ,  <code>short</code> , <code>long</code> , as well as  <code>sbyte</code> ,  <code>ushort</code> ,  <code>uint</code> , and  <code>ulong</code>  in .NET) is converted to the corresponding CBOR integer.</p></li>
+<li><p>A primitive floating-point type (  <code>float</code> , <code>double</code> , as well as  <code>decimal</code>  in .NET) is converted to the corresponding CBOR number.</p></li>
+<li><p>A  <code>String</code>  is converted to a CBOR text string. To create a CBOR byte string object from  <code>String</code> , see the example given in<strong>PeterO.Cbor.CBORObject.FromObject(System.Byte[])</strong>.</p></li>
+<li><p>A number of type  <code>EDecimal</code> ,  <code>EFloat</code> , <code>EInteger</code> , and  <code>ERational</code>  in the<a href="https://www.nuget.org/packages/PeterO.Numbers"> <code>PeterO.Numbers</code> </a>library (in .NET) or the<a href="https://github.com/peteroupc/numbers-java"> <code>com.github.peteroupc/numbers</code> </a>artifact (in Java) is converted to the corresponding CBOR number.</p></li>
+<li><p>An array other than  <code>byte[]</code>  is converted to a CBOR array. In the .NET version, a multidimensional array is converted to an array of arrays.</p></li>
+<li><p>A  <code>byte[]</code>  (1-dimensional byte array) is converted to a CBOR byte string; the byte array is copied to a new byte array in this process. (This method can&#39;t be used to decode CBOR data from a byte array; for that, use the <b>DecodeFromBytes</b> method instead.)</p></li>
 <li><p>An object implementing IDictionary (Map in Java) is converted to a CBOR map containing the keys and values enumerated.</p></li>
 <li><p>An object implementing IEnumerable (Iterable in Java) is converted to a CBOR array containing the items enumerated.</p></li>
-<li><p>An enumeration ( <code>Enum</code>  ) object is converted to its<i>underlying value</i>in the .NET version, or the result of its <code>ordinal()</code>  method in the Java version.</p></li>
-<li><p>An object of type <code>DateTime</code>  , <code>Uri</code>  , or <code>Guid</code>  ( <code>Date</code>  , <code>URI</code>  , or <code>UUID</code>  , respectively, in Java) will be converted to a tagged CBOR object of the appropriate kind. <code>DateTime</code>  / <code>Date</code>  will be converted to a tag-0 string following the date format used in the Atom syndication format.</p></li>
-<li><p>If the object is a type not specially handled above, this method checks the <i>obj</i>
+<li><p>An enumeration (  <code>Enum</code>  ) object is converted to its<i>underlying value</i> in the .NET version, or the result of its <code>ordinal()</code>  method in the Java version.</p></li>
+<li><p>An object of type  <code>DateTime</code> ,  <code>Uri</code> , or <code>Guid</code>  (  <code>Date</code> ,  <code>URI</code> , or  <code>UUID</code> , respectively, in Java) will be converted to a tagged CBOR object of the appropriate kind.  <code>DateTime</code>  /  <code>Date</code>  will be converted to a tag-0 string following the date format used in the Atom syndication format.</p></li>
+<li><p>If the object is a type not specially handled above, this method checks the  <i>obj</i>
 parameter for eligible getters as follows:</p></li>
 <li><p>(*) In the .NET version, eligible getters are the public, nonstatic getters of read/write properties (and also those of read-only properties in the case of a compiler-generated type). If a class has two properties of the form &quot;X&quot; and &quot;IsX&quot;, where &quot;X&quot; is any name, or has multiple properties with the same name, those properties are ignored.</p></li>
 <li><p>(*) In the Java version, eligible getters are public, nonstatic methods starting with &quot;get&quot; or &quot;is&quot; (either word followed by a character other than a basic digit or lower-case letter, that is, other than &quot;a&quot; to &quot;z&quot; or &quot;0&quot; to &quot;9&quot;), that take no parameters and do not return void, except that methods named &quot;getClass&quot; are not eligible getters. If a class has two otherwise eligible getters of the form &quot;isX&quot; and &quot;getX&quot;, where &quot;X&quot; is the same in both, or two such getters with the same name but different return type, they are not eligible getters.</p></li>
-<li><p>Then, the method returns a CBOR map with each eligible getter&#39;s name or property name as each key, and with the corresponding value returned by that getter as that key&#39;s value. Before adding a key-value pair to the map, the key&#39;s name is adjusted according to the rules described in the <a href="PeterO.Cbor.PODOptions.html">PeterO.Cbor.PODOptions</a>documentation. Note that for security reasons, certain types are not upported even if they contain eligible getters.</p></li>
+<li><p>Then, the method returns a CBOR map with each eligible getter&#39;s name or property name as each key, and with the corresponding value returned by that getter as that key&#39;s value. Before adding a key-value pair to the map, the key&#39;s name is adjusted according to the rules described in the<a href="PeterO.Cbor.PODOptions.html">PeterO.Cbor.PODOptions</a> documentation. Note that for security reasons, certain types are not supported even if they contain eligible getters.</p></li>
 </ul>
 
-<p><b>REMARK:</b> .NET enumeration ( <code>Enum</code>  ) constants could also have been converted to text strings with <code>ToString()</code>  , but that method will return multiple names if the given Enum object is a combination of Enum objects (e.g. if the object is <code>FileAccess.Read | FileAccess.Write</code>  ). More generally, if Enums are converted to text strings, constants from Enum types with the <code>Flags</code>  attribute, and constants from the same Enum type that share an underlying value, should not be passed to this method.</p>
+<p><b>REMARK:</b>.NET enumeration (  <code>Enum</code>  ) constants could also have been converted to text strings with <code>ToString()</code> , but that method will return multiple names if the given Enum object is a combination of Enum objects (e.g. if the object is  <code>FileAccess.Read | FileAccess.Write</code>  ). More generally, if Enums are converted to text strings, constants from Enum types with the  <code>Flags</code>  attribute, and constants from the same Enum type that share an underlying value, should not be passed to this method.</p>
 
 <p>REMARK: A certain consistency between .NET and Java and between FromObject and ToObject are sought for version 4.0. It is also hoped that--</p>
 
@@ -1821,7 +1828,12 @@ parameter for eligible getters as follows:</p></li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>obj</i>: An arbitrary object to convert to a CBOR object.<b>NOTE:</b> For security reasons, whenever possible, an application should not base this parameter on user input or other externally supplied data unless the application limits this parameter&#39;s inputs to types specially handled by this method (such as <code>int</code>  or <code>String</code>  ) and/or to plain-old-data types (POCO or POJO types) within the control of the application. If the plain-old-data type references other data types, those types should likewise meet either criterion above.</p></li>
+<li><i>obj</i>: An arbitrary object to convert to a CBOR object.<b>NOTE:</b> For security reasons, whenever possible, an application should not base this parameter on user input or other externally supplied data unless the application limits this parameter&#39;s inputs to types specially handled by this method (such as  <code>int</code>  or  <code>String</code>  ) and/or to plain-old-data types (POCO or POJO types) within the control of the application. If the plain-old-data type references other data types, those types should likewise meet either criterion above.</li>
+</ul>
+
+<p>.</p>
+
+<ul>
 <li><p><i>mapper</i>: An object containing optional converters to convert objects of certain types to CBOR objects.</p></li>
 <li><p><i>options</i>: An object containing options to control how certain objects are converted to CBOR objects.</p></li>
 </ul>
@@ -1852,9 +1864,14 @@ is null.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>obj</i>: The parameter <i>obj</i>
-is an arbitrary object.<b>NOTE:</b> For security reasons, whenever possible, an application should not base this parameter on user input or other externally supplied data unless the application limits this parameter&#39;s inputs to types specially handled by this method (such as <code>int</code>  or <code>String</code>  ) and/or to plain-old-data types (POCO or POJO types) within the control of the application. If the plain-old-data type references other data types, those types should likewise meet either criterion above.</p></li>
-<li><p><i>options</i>: An object containing options to control how certain objects are converted to CBOR objects.</p></li>
+<li><i>obj</i>: The parameter  <i>obj</i>
+is an arbitrary object.<b>NOTE:</b> For security reasons, whenever possible, an application should not base this parameter on user input or other externally supplied data unless the application limits this parameter&#39;s inputs to types specially handled by this method (such as  <code>int</code>  or  <code>String</code>  ) and/or to plain-old-data types (POCO or POJO types) within the control of the application. If the plain-old-data type references other data types, those types should likewise meet either criterion above.</li>
+</ul>
+
+<p>.</p>
+
+<ul>
+<li><i>options</i>: An object containing options to control how certain objects are converted to CBOR objects.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
