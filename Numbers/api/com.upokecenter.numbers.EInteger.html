@@ -178,7 +178,7 @@ object.</li>
 <li><code>EInteger Negate()</code><br>
 Gets the value of this object with the sign reversed.</li>
 <li><code>EInteger Not()</code><br>
-Returns an arbitrary-precision integer with every bit flipped.</li>
+Returns an arbitrary-precision integer with every bit flipped from this one.</li>
 <li><code>EInteger Or​(EInteger second)</code><br>
 Does an OR operation between two arbitrary-precision integer instances.</li>
 <li><code>EInteger Pow​(int powerSmall)</code><br>
@@ -1309,8 +1309,8 @@ a 32-bit signed integer.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>java.lang.IllegalArgumentException</code> - The parameter <code>divisor</code> is less than
-0.</li>
+<li><code>java.lang.IllegalArgumentException</code> - The parameter <code>smallDivisor</code> is less
+than 0.</li>
 </ul>
 
 <h3>ModPow</h3>
@@ -1571,18 +1571,12 @@ parameter.</li>
 <pre>public EInteger Not()
 </pre>
 
-<p>Returns an arbitrary-precision integer with every bit flipped.</p>
+<p>Returns an arbitrary-precision integer with every bit flipped from this one.</p>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
 <li>An arbitrary-precision integer.</li>
-</ul>
-
-<p><strong>Throws:</strong></p>
-
-<ul>
-<li><code>java.lang.NullPointerException</code> - The parameter <code>valueA</code> is null.</li>
 </ul>
 
 <h3>And</h3>
@@ -1610,8 +1604,7 @@ parameter.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>java.lang.NullPointerException</code> - The parameter <code>a</code> or <code>b</code> is
-null.</li>
+<li><code>java.lang.NullPointerException</code> - The parameter <code>other</code> is null.</li>
 </ul>
 
 <h3>Or</h3>
@@ -1639,8 +1632,7 @@ null.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>first</code> or <code>
-second</code> is null.</p></li>
+<li><p><code>java.lang.NullPointerException</code> - The parameter <code>second</code> is null.</p></li>
 <li><p><code>java.lang.IllegalArgumentException</code> - Doesn&#39;t satisfy biggerCount&gt;0; doesn&#39;t
 satisfy biggerCount == CountWords(result).</p></li>
 </ul>
@@ -1652,8 +1644,8 @@ satisfy biggerCount == CountWords(result).</p></li>
 
 <p>Finds the exclusive &quot;or&quot; of two arbitrary-precision integer objects. <p>Each
  arbitrary-precision integer is treated as a two&#39;s-complement form
- (see <code>&quot;Forms of numbers&quot; </code>)
- for the purposes of this operator. </p></p>
+ (see <code>&quot;Forms of numbers&quot;</code>)
+ for the purposes of this operator.</p></p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1671,10 +1663,9 @@ in one input integer but not the other.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>a</code> or <code>b</code> is
-null.</p></li>
 <li><p><code>java.lang.IllegalArgumentException</code> - Doesn&#39;t satisfy smallerCount ==
 CountWords(result).</p></li>
+<li><p><code>java.lang.NullPointerException</code> - The parameter <code>other</code> is null.</p></li>
 </ul>
 
 <h3>ShiftRight</h3>
