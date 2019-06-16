@@ -123,7 +123,7 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 <li><a href="#Examples_of_Nondeterministic_Sources"><strong>Examples of Nondeterministic Sources</strong></a></li>
 <li><a href="#Entropy"><strong>Entropy</strong></a></li>
 <li><a href="#Seed_Generation"><strong>Seed Generation</strong></a></li>
-<li><a href="#Wildly_Different_Seeds"><strong>Wildly Different Seeds</strong></a></li>
+<li><a href="#Wildly_Varying_Seeds"><strong>Wildly Varying Seeds</strong></a></li>
 </ul></li>
 <li><a href="#Existing_RNG_APIs_in_Programming_Languages"><strong>Existing RNG APIs in Programming Languages</strong></a></li>
 <li><a href="#RNG_Topics"><strong>RNG Topics</strong></a>
@@ -289,11 +289,11 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 <li>SHOULD choose a PRNG that meets or exceeds the requirements of a <a href="#Statistical_RNGs"><strong>statistical RNG</strong></a> (except the seed is application-defined instead) and is reasonably fast,</li>
 <li>SHOULD choose a PRNG implementation with implementation-independent behavior that will not change in the future,</li>
 <li>ought to document the chosen PRNG being used as well as all the parameters for that PRNG,</li>
-<li>ought to generate seeds for the PRNG that are likely to differ wildly from previous seeds, and</li>
+<li>ought to generate seeds for the PRNG that are likely to vary wildly from previous seeds, and</li>
 <li>SHOULD NOT seed the PRNG with floating-point numbers or generate floating-point numbers with that PRNG.</li>
 </ul>
 
-<p>For example, an application could implement a seeded PRNG using a third-party library that specifically says it implements an algorithm mentioned in the <a href="#Examples_and_Non-Examples"><strong>statistical RNG examples</strong></a>, and could initialize that PRNG using a bit sequence from a cryptographic RNG (see &quot;<a href="#Wildly_Different_Seeds"><strong>Wildly Different Seeds</strong></a>&quot;).  The developers could also mention the use of the specific PRNG chosen on any code that uses it, to alert other developers that the PRNG needs to remain unchanged.</p>
+<p>For example, an application could implement a seeded PRNG using a third-party library that specifically says it implements an algorithm mentioned in the <a href="#Examples_and_Non-Examples"><strong>statistical RNG examples</strong></a>, and could initialize that PRNG using a bit sequence from a cryptographic RNG (see &quot;<a href="#Wildly_Varying_Seeds"><strong>Wildly Varying Seeds</strong></a>&quot;).  The developers could also mention the use of the specific PRNG chosen on any code that uses it, to alert other developers that the PRNG needs to remain unchanged.</p>
 
 <p><a id=Seeded_PRNG_Use_Cases></a></p>
 
@@ -396,22 +396,21 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 
 <p>Once data with enough entropy is gathered, it might need to be condensed into a seed to initialize a PRNG with. Following (Cliff et al., 2009)<sup><a href="#Note19"><strong>(19)</strong></a></sup>, it is suggested to generate an N-bit seed using an HMAC (hash-based message authentication code); in that sense, take data with at least as many bits of entropy as the HMAC size in bits, generate the HMAC with that data, then truncate the HMAC to N bits.  See also NIST SP 800-90B sec. 3.1.5.1 and RFC 4086 sec. 4.2 and 5.2.</p>
 
-<p><a id=Wildly_Different_Seeds></a></p>
+<p><a id=Wildly_Varying_Seeds></a></p>
 
-<h3>Wildly Different Seeds</h3>
+<h3>Wildly Varying Seeds</h3>
 
-<p>For noncryptographic and seeded PRNGs, an application ought to generate seeds that vary wildly from previously generated seeds, to reduce the risk of using the same seed and therefore generating the same sequence of &quot;random&quot; numbers<sup><a href="#Note20"><strong>(20)</strong></a></sup>.  In this sense, the following kinds of seeds are preferred, from most to least:</p>
+<p>For noncryptographic and seeded PRNGs, an application ought to generate seeds likely to vary wildly from previously generated seeds, to reduce the risk of using the same seed and therefore generating the same sequence of &quot;random&quot; numbers<sup><a href="#Note20"><strong>(20)</strong></a></sup>.  In this sense, the following kinds of seeds are preferred, from most to least:</p>
 
 <ol>
 <li>A bit sequence from a cryptographic RNG.</li>
 <li>A seed extracted from hard-to-predict sources (see &quot;Seed Generation&quot; above).</li>
 <li>A hash of several cycle counters.</li>
 <li>A hash of timestamps with finer than millisecond granularity.</li>
-<li>A hash of the concatenation of a monotonic counter and additional data.</li>
-<li>A hash of a monotonic counter.</li>
+<li>A hash of the concatenation of a monotonically increasing number and additional data.</li>
+<li>A hash of a monotonically increasing number.</li>
 <li>A timestamp with finer than millisecond granularity.</li>
-<li>A monotonic counter starting &quot;randomly&quot; or at a timestamp.</li>
-<li>A monotonic counter starting at 0.</li>
+<li>A monotonically increasing number starting &quot;randomly&quot; or at a timestamp.</li>
 <li>A timestamp with millisecond or coarser granularity.</li>
 </ol>
 

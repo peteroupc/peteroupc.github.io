@@ -74,7 +74,7 @@ so that as a result, many applications use RNGs, especially built-in RNGs, that 
     - [**Examples of Nondeterministic Sources**](#Examples_of_Nondeterministic_Sources)
     - [**Entropy**](#Entropy)
     - [**Seed Generation**](#Seed_Generation)
-    - [**Wildly Different Seeds**](#Wildly_Different_Seeds)
+    - [**Wildly Varying Seeds**](#Wildly_Varying_Seeds)
 - [**Existing RNG APIs in Programming Languages**](#Existing_RNG_APIs_in_Programming_Languages)
 - [**RNG Topics**](#RNG_Topics)
     - [**How to Initialize RNGs**](#How_to_Initialize_RNGs)
@@ -195,10 +195,10 @@ If an application chooses to use a seeded PRNG for repeatable "randomness", the 
 - SHOULD choose a PRNG that meets or exceeds the requirements of a [**statistical RNG**](#Statistical_RNGs) (except the seed is application-defined instead) and is reasonably fast,
 - SHOULD choose a PRNG implementation with implementation-independent behavior that will not change in the future,
 - ought to document the chosen PRNG being used as well as all the parameters for that PRNG,
-- ought to generate seeds for the PRNG that are likely to differ wildly from previous seeds, and
+- ought to generate seeds for the PRNG that are likely to vary wildly from previous seeds, and
 - SHOULD NOT seed the PRNG with floating-point numbers or generate floating-point numbers with that PRNG.
 
-For example, an application could implement a seeded PRNG using a third-party library that specifically says it implements an algorithm mentioned in the [**statistical RNG examples**](#Examples_and_Non-Examples), and could initialize that PRNG using a bit sequence from a cryptographic RNG (see "[**Wildly Different Seeds**](#Wildly_Different_Seeds)").  The developers could also mention the use of the specific PRNG chosen on any code that uses it, to alert other developers that the PRNG needs to remain unchanged.
+For example, an application could implement a seeded PRNG using a third-party library that specifically says it implements an algorithm mentioned in the [**statistical RNG examples**](#Examples_and_Non-Examples), and could initialize that PRNG using a bit sequence from a cryptographic RNG (see "[**Wildly Varying Seeds**](#Wildly_Varying_Seeds)").  The developers could also mention the use of the specific PRNG chosen on any code that uses it, to alert other developers that the PRNG needs to remain unchanged.
 
 <a id=Seeded_PRNG_Use_Cases></a>
 ### Seeded PRNG Use Cases
@@ -279,21 +279,20 @@ In general, especially for cryptographic RNGs, **to generate an N-bit seed, enou
 
 Once data with enough entropy is gathered, it might need to be condensed into a seed to initialize a PRNG with. Following (Cliff et al., 2009)<sup>[**(19)**](#Note19)</sup>, it is suggested to generate an N-bit seed using an HMAC (hash-based message authentication code); in that sense, take data with at least as many bits of entropy as the HMAC size in bits, generate the HMAC with that data, then truncate the HMAC to N bits.  See also NIST SP 800-90B sec. 3.1.5.1 and RFC 4086 sec. 4.2 and 5.2.
 
-<a id=Wildly_Different_Seeds></a>
-### Wildly Different Seeds
+<a id=Wildly_Varying_Seeds></a>
+### Wildly Varying Seeds
 
-For noncryptographic and seeded PRNGs, an application ought to generate seeds that vary wildly from previously generated seeds, to reduce the risk of using the same seed and therefore generating the same sequence of "random" numbers<sup>[**(20)**](#Note20)</sup>.  In this sense, the following kinds of seeds are preferred, from most to least:
+For noncryptographic and seeded PRNGs, an application ought to generate seeds likely to vary wildly from previously generated seeds, to reduce the risk of using the same seed and therefore generating the same sequence of "random" numbers<sup>[**(20)**](#Note20)</sup>.  In this sense, the following kinds of seeds are preferred, from most to least:
 
 1. A bit sequence from a cryptographic RNG.
 2. A seed extracted from hard-to-predict sources (see "Seed Generation" above).
 3. A hash of several cycle counters.
 4. A hash of timestamps with finer than millisecond granularity.
-5. A hash of the concatenation of a monotonic counter and additional data.
-6. A hash of a monotonic counter.
+5. A hash of the concatenation of a monotonically increasing number and additional data.
+6. A hash of a monotonically increasing number.
 7. A timestamp with finer than millisecond granularity.
-8. A monotonic counter starting "randomly" or at a timestamp.
-9. A monotonic counter starting at 0.
-10. A timestamp with millisecond or coarser granularity.
+8. A monotonically increasing number starting "randomly" or at a timestamp.
+9. A timestamp with millisecond or coarser granularity.
 
 <a id=Existing_RNG_APIs_in_Programming_Languages></a>
 ## Existing RNG APIs in Programming Languages
