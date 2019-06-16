@@ -35,7 +35,7 @@ so that as a result, many applications use RNGs, especially built-in RNGs, that 
 - Generation of random numbers or keying material based at least in part on a password (e.g. _key derivation functions_).
 - Generation of random numbers that follow a nonuniform distribution; I discuss this topic in [**another document**](https://peteroupc.github.io/randomfunc.html).
 - Low-discrepancy sequences (quasirandom sequences), such as Sobol sequences.  Their structure differs in an essential way from independent uniform random numbers.
-- Applications for which the selection of RNGs is constrained by regulatory requirements.
+- Applications for which the selection of RNGs is limited by regulatory requirements.
 
 **The following table summarizes the kinds of RNGs covered in this document:**
 
@@ -193,12 +193,12 @@ By using a seeded PRNG for repeatable "randomness", an application will be tied 
 If an application chooses to use a seeded PRNG for repeatable "randomness", the application&mdash;
 
 - SHOULD choose a PRNG that meets or exceeds the requirements of a [**statistical RNG**](#Statistical_RNGs) (except the seed is application-defined instead) and is reasonably fast,
-- SHOULD choose a PRNG implementation with implementation-independent behavior that will not change in the future,
+- SHOULD choose a PRNG implementation with consistent behavior that will not change in the future,
 - ought to document the chosen PRNG being used as well as all the parameters for that PRNG,
 - ought to generate seeds for the PRNG that are likely to vary wildly from previous seeds, and
 - SHOULD NOT seed the PRNG with floating-point numbers or generate floating-point numbers with that PRNG.
 
-For example, an application could implement a seeded PRNG using a third-party library that specifically says it implements an algorithm mentioned in the [**statistical RNG examples**](#Examples_and_Non-Examples), and could initialize that PRNG using a bit sequence from a cryptographic RNG (see "[**Wildly Varying Seeds**](#Wildly_Varying_Seeds)").  The developers could also mention the use of the specific PRNG chosen on any code that uses it, to alert other developers that the PRNG needs to remain unchanged.
+For example, an application could implement a seeded PRNG using a third-party library that specifically says it implements an algorithm mentioned in the [**statistical RNG examples**](#Examples_and_Non_Examples), and could initialize that PRNG using a bit sequence from a cryptographic RNG (see "[**Wildly Varying Seeds**](#Wildly_Varying_Seeds)").  The developers could also mention the use of the specific PRNG chosen on any code that uses it, to alert other developers that the PRNG needs to remain unchanged.
 
 <a id=Seeded_PRNG_Use_Cases></a>
 ### Seeded PRNG Use Cases
