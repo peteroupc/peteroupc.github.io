@@ -9,9 +9,7 @@
 <pre>public interface ICharacterInput
 </pre>
 
-<p>An interface for reading Unicode code points from a data source.</p>
-
-<h3>Member Summary</h3>
+<p>An interface for reading Unicode code points from a data source.  ### Member Summary</p>
 
 <ul>
 <li><code><a href="#Read_int_int_int">Read(int[], int, int)</a></code> - Reads a sequence of Unicode code points from a data source.</li>
@@ -28,16 +26,14 @@
     int length);
 </pre>
 
-<p>Reads a sequence of Unicode code points from a data source.</p>
-
-<p><b>Parameters:</b></p>
+<p>Reads a sequence of Unicode code points from a data source.  <b>Parameters:</b></p>
 
 <ul>
 <li><p><i>chars</i>: Output buffer.</p></li>
-<li><p><i>index</i>: A zero-based index showing where the desired portion of <i>chars</i>
+<li><p><i>index</i>: A zero-based index showing where the desired portion of  <i>chars</i>
 begins.</p></li>
-<li><p><i>length</i>: The number of elements in the desired portion of <i>chars</i>
-(but not more than <i>chars</i>
+<li><p><i>length</i>: The number of elements in the desired portion of  <i>chars</i>
+(but not more than  <i>chars</i>
 &#39;s length).</p></li>
 </ul>
 
@@ -59,9 +55,7 @@ Should be thrown if &quot;chars&quot; is null.</li>
 <pre>int ReadChar();
 </pre>
 
-<p>Reads a Unicode code point from a data source.</p>
-
-<p><b>Return Value:</b></p>
+<p>Reads a Unicode code point from a data source.  <b>Return Value:</b></p>
 
 <p>Either a Unicode code point (from 0-0xd7ff or from 0xe000 to 0x10ffff), or the value -1 indicating the end of the source.</p>
 

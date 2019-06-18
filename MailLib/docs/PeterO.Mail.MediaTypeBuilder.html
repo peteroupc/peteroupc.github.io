@@ -9,9 +9,7 @@
 <pre>public sealed class MediaTypeBuilder
 </pre>
 
-<p>A mutable media type object.</p>
-
-<h3>Member Summary</h3>
+<p>A mutable media type object.  ### Member Summary</p>
 
 <ul>
 <li><code><a href="#IsMultipart">IsMultipart</a></code> - Gets a value indicating whether this is a multipart media type.</li>
@@ -26,60 +24,6 @@
 <li><code><a href="#ToString">ToString()</a></code> - Converts this object to a text string of the media type it represents, in the same form as MediaType.</li>
 </ul>
 
-<p><a id="Void_ctor_MediaType"></a></p>
-
-<h3>MediaTypeBuilder Constructor</h3>
-
-<pre>public MediaTypeBuilder(
-    PeterO.Mail.MediaType mt);
-</pre>
-
-<p>Initializes a new instance of the <a href="PeterO.Mail.MediaTypeBuilder.html">PeterO.Mail.MediaTypeBuilder</a> class.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><i>mt</i>: The parameter <i>mt</i>
-is a MediaType object.</li>
-</ul>
-
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li>System.ArgumentNullException:
-The parameter <i>mt</i>
-is null.</li>
-</ul>
-
-<p><a id="Void_ctor_String_String"></a></p>
-
-<h3>MediaTypeBuilder Constructor</h3>
-
-<pre>public MediaTypeBuilder(
-    string type,
-    string subtype);
-</pre>
-
-<p>Initializes a new instance of the <a href="PeterO.Mail.MediaTypeBuilder.html">PeterO.Mail.MediaTypeBuilder</a> class.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><p><i>type</i>: The parameter <i>type</i>
-is a text string.</p></li>
-<li><p><i>subtype</i>: The parameter <i>subtype</i>
-is a text string.</p></li>
-</ul>
-
-<p><a id="Void_ctor"></a></p>
-
-<h3>MediaTypeBuilder Constructor</h3>
-
-<pre>public MediaTypeBuilder();
-</pre>
-
-<p>Initializes a new instance of the <a href="PeterO.Mail.MediaTypeBuilder.html">PeterO.Mail.MediaTypeBuilder</a> class.</p>
-
 <p><a id="IsMultipart"></a></p>
 
 <h3>IsMultipart</h3>
@@ -87,11 +31,9 @@ is a text string.</p></li>
 <pre>public bool IsMultipart { get; }
 </pre>
 
-<p>Gets a value indicating whether this is a multipart media type.</p>
+<p>Gets a value indicating whether this is a multipart media type.  <b>Returns:</b></p>
 
-<p><b>Returns:</b></p>
-
-<p><code>true</code>  If this is a multipart media type; otherwise, . <code>false</code>  .</p>
+<p><code>true</code> true If this is a multipart media type; otherwise, .  <code>false</code> false .</p>
 
 <p><a id="IsText"></a></p>
 
@@ -100,11 +42,9 @@ is a text string.</p></li>
 <pre>public bool IsText { get; }
 </pre>
 
-<p>Gets a value indicating whether this is a text media type.</p>
+<p>Gets a value indicating whether this is a text media type.  <b>Returns:</b></p>
 
-<p><b>Returns:</b></p>
-
-<p><code>true</code>  If this is a text media type; otherwise, . <code>false</code>  .</p>
+<p><code>true</code> true If this is a text media type; otherwise, .  <code>false</code> false .</p>
 
 <p><a id="SubType"></a></p>
 
@@ -113,9 +53,7 @@ is a text string.</p></li>
 <pre>public string SubType { get; set; }
 </pre>
 
-<p>Gets or sets this value&#39;s subtype.</p>
-
-<p><b>Returns:</b></p>
+<p>Gets or sets this value&#39;s subtype.  <b>Returns:</b></p>
 
 <p>This value&#39;s subtype.</p>
 
@@ -126,9 +64,7 @@ is a text string.</p></li>
 <pre>public string TopLevelType { get; set; }
 </pre>
 
-<p>Gets or sets this value&#39;s top-level type.</p>
-
-<p><b>Returns:</b></p>
+<p>Gets or sets this value&#39;s top-level type.  <b>Returns:</b></p>
 
 <p>This value&#39;s top-level type.</p>
 
@@ -140,9 +76,7 @@ is a text string.</p></li>
     string name);
 </pre>
 
-<p>Removes a parameter from this builder object. Does nothing if the parameter&#39;s name doesn&#39;t exist.</p>
-
-<p><b>Parameters:</b></p>
+<p>Removes a parameter from this builder object. Does nothing if the parameter&#39;s name doesn&#39;t exist.  <b>Parameters:</b></p>
 
 <ul>
 <li><i>name</i>: Name of the parameter to remove. The name is compared using a basic case-insensitive comparison. (Two strings are equal in such a comparison, if they match after converting the basic upper-case letters A to Z (U+0041 to U+005A) in both strings to lower case.).</li>
@@ -156,7 +90,7 @@ is a text string.</p></li>
 
 <ul>
 <li>System.ArgumentNullException:
-The parameter <i>name</i>
+The parameter  <i>name</i>
 is null.</li>
 </ul>
 
@@ -169,9 +103,7 @@ is null.</li>
     string value);
 </pre>
 
-<p>Sets a parameter&#39;s name and value for this media type.</p>
-
-<p><b>Parameters:</b></p>
+<p>Sets a parameter&#39;s name and value for this media type.  <b>Parameters:</b></p>
 
 <ul>
 <li><p><i>name</i>: Name of the parameter to set, such as &quot;charset&quot; . The name is compared using a basic case-insensitive comparison. (Two strings are equal in such a comparison, if they match after converting the basic upper-case letters A to Z (U+0041 to U+005A) in both strings to lower case.).</p></li>
@@ -186,11 +118,11 @@ is null.</li>
 
 <ul>
 <li><p>System.ArgumentNullException:
-The parameter <i>value</i>
-or <i>name</i>
+The parameter  <i>value</i>
+or  <i>name</i>
 is null.</p></li>
 <li><p>System.ArgumentException:
-The parameter <i>name</i>
+The parameter  <i>name</i>
 is empty or syntactically invalid.</p></li>
 </ul>
 
@@ -202,9 +134,7 @@ is empty or syntactically invalid.</p></li>
     string str);
 </pre>
 
-<p>Sets this media type&#39;s subtype, such as &quot;plain&quot; or &quot;xml&quot; .</p>
-
-<p><b>Parameters:</b></p>
+<p>Sets this media type&#39;s subtype, such as &quot;plain&quot; or &quot;xml&quot; .  <b>Parameters:</b></p>
 
 <ul>
 <li><i>str</i>: A text string naming a media subtype.</li>
@@ -218,10 +148,10 @@ is empty or syntactically invalid.</p></li>
 
 <ul>
 <li><p>System.ArgumentNullException:
-The parameter <i>str</i>
+The parameter  <i>str</i>
 is null.</p></li>
 <li><p>System.ArgumentException:
-The parameter <i>str</i>
+The parameter  <i>str</i>
 is empty or syntactically invalid.</p></li>
 </ul>
 
@@ -233,9 +163,7 @@ is empty or syntactically invalid.</p></li>
     string str);
 </pre>
 
-<p>Sets this media type&#39;s top-level type.</p>
-
-<p><b>Parameters:</b></p>
+<p>Sets this media type&#39;s top-level type.  <b>Parameters:</b></p>
 
 <ul>
 <li><i>str</i>: A text string naming a top-level type, such as &quot;text&quot; or &quot;audio&quot; .</li>
@@ -249,10 +177,10 @@ is empty or syntactically invalid.</p></li>
 
 <ul>
 <li><p>System.ArgumentNullException:
-The parameter <i>str</i>
+The parameter  <i>str</i>
 is null.</p></li>
 <li><p>System.ArgumentException:
-The parameter <i>str</i>
+The parameter  <i>str</i>
 is syntactically invalid for a top-level type.</p></li>
 </ul>
 
@@ -263,9 +191,7 @@ is syntactically invalid for a top-level type.</p></li>
 <pre>public PeterO.Mail.MediaType ToMediaType();
 </pre>
 
-<p>Converts this builder to an immutable media type object.</p>
-
-<p><b>Return Value:</b></p>
+<p>Converts this builder to an immutable media type object.  <b>Return Value:</b></p>
 
 <p>A MediaType object.</p>
 
@@ -276,9 +202,7 @@ is syntactically invalid for a top-level type.</p></li>
 <pre>public override string ToString();
 </pre>
 
-<p>Converts this object to a text string of the media type it represents, in the same form as <code>MediaType.ToString</code></p>
-
-<p><b>Return Value:</b></p>
+<p>Converts this object to a text string of the media type it represents, in the same form as  <code>MediaType.ToString</code> MediaType.ToString  <b>Return Value:</b></p>
 
 <p>A string representation of this object.</p>
 

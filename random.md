@@ -282,7 +282,7 @@ Once data with enough entropy is gathered, it might need to be condensed into a 
 <a id=Wildly_Varying_Seeds></a>
 ### Wildly Varying Seeds
 
-For noncryptographic and seeded PRNGs, an application ought to generate seeds likely to vary wildly from previously generated seeds, to reduce the risk of using the same seed and therefore generating the same sequence of "random" numbers<sup>[**(20)**](#Note20)</sup>.  In this sense, the following kinds of seeds are preferred, from most to least:
+For noncryptographic and seeded PRNGs, an application ought to generate seeds likely to vary wildly from previously generated seeds, to reduce the risk of correlated "random" numbers or sequences.  In this sense, the following kinds of seeds are preferred, from most to least:
 
 1. A bit sequence from a cryptographic RNG.
 2. A seed extracted from hard-to-predict sources (see "Seed Generation" above).
@@ -291,8 +291,8 @@ For noncryptographic and seeded PRNGs, an application ought to generate seeds li
 5. A hash of the concatenation of a monotonically increasing number and additional data.
 6. A hash of a monotonically increasing number.
 7. A timestamp with finer than millisecond granularity.
-8. A monotonically increasing number starting "randomly" or at a timestamp.
-9. A timestamp with millisecond or coarser granularity.
+
+It is NOT RECOMMENDED to seed a PRNG (especially several at once) with sequential counters, linearly related numbers, or timestamps with millisecond or coarser granularity, since these kinds of seeds can cause undesirable correlations in some PRNGs or introduce the risk of generating the same "random" sequence accidentally<sup>[**(20)**](#Note20)</sup>.
 
 <a id=Existing_RNG_APIs_in_Programming_Languages></a>
 ## Existing RNG APIs in Programming Languages
@@ -333,7 +333,7 @@ As much as possible, **applications SHOULD use existing libraries and techniques
 
 <small>(F) Calling the `setSeed` method of `SecureRandom` before use is RECOMMENDED. The data passed to the method SHOULD be data described in note (C). (Despite the name, `setSeed` _supplements_ the existing seed, according to the documentation.)  See also (Klyubin 2013)<sup>[**(22)**](#Note22)</sup>.  Using the `SecureRandom` implementation `"SHA1PRNG"` is NOT RECOMMENDED, because of weaknesses in seeding and RNG quality in implementations as of 2013 (Michaelis et al., 2013)<sup>[**(23)**](#Note23)</sup>.</small>
 
-<small>(G) [**`std::random_device`**](http://en.cppreference.com/w/cpp/numeric/random/random_device), introduced in C++11, is NOT RECOMMENDED because its specification leaves considerably much to be desired.  For example,  `std::random_device` can fall back to a pseudorandom number generator of unspecified quality without much warning.  At best, `std::random_device` SHOULD only be used to supplement other techniques for random number generation.</small>
+<small>(G) [**`std::random_device`**](http://en.cppreference.com/w/cpp/numeric/random/random_device), introduced in C++11, is NOT RECOMMENDED because its specification leaves considerably much to be desired.  For example,  `std::random_device` can fall back to a pseudorandom number generator of unspecified quality without much warning.  At best, `std::random_device` SHOULD NOT be used except to supplement other techniques for random number generation.</small>
 
 <small>(H) The .NET Framework's `System.Random` class uses a seed of at most 32 bits, so doesn't meet the statistical RNG requirements.  However, a subclass of `System.Random` might be implemented to meet those requirements.</small>
 
@@ -351,7 +351,7 @@ For **statistical RNGs**, an application SHOULD use only one thread-safe instanc
 
 For **seeded PRNGs**, to **reduce the chance of correlated random numbers or identical random number sequences**, an application is encouraged to create one or more instances of a PRNG, where each instance&mdash;
 - is accessible to only one thread, task, or subtask of the application (such as with thread-local storage),
-- is initialized with a seed that is unrelated to the other seeds (using sequential or linearly related seeds can cause [**undesirable correlations**](https://blogs.unity3d.com/2015/01/07/a-primer-on-repeatable-random-numbers/) in some PRNGs), and
+- is initialized with a seed that is unrelated to the other seeds (see "[Wildly Varying Seeds](#Wildly_Varying_Seeds)"), and
 - MAY use a different conforming RNG scheme from the others.
 
 (L'Ecuyer et al. 2015)<sup>[**(24)**](#Note24)</sup>, section 4, goes in greater detail on ways to initialize PRNGs for generating random numbers in parallel, including how to ensure repeatable "randomness" this way if that is desired.
@@ -578,7 +578,7 @@ I acknowledge&mdash;
 
 <small><sup id=Note19>(19)</sup> Cliff, Y., Boyd, C., Gonzalez Nieto, J.  "How to Extract and Expand Randomness: A Summary and Explanation of Existing Results", 2009.</small>
 
-<small><sup id=Note20>(20)</sup> For example, many questions on _Stack Overflow_ highlight the pitfalls of creating a new instance of .NET's `System.Random` each time a random number is needed, rather than only once in the application.  See also the section "How to Initialize RNGs".</small>
+<small><sup id=Note20>(20)</sup> For example, many questions on _Stack Overflow_ highlight the pitfalls of creating a new instance of .NET's `System.Random` each time a random number is needed, rather than only once in the application.  See also Johansen, R. S., "[A Primer on Repeatable Random Numbers](https://blogs.unity3d.com/2015/01/07/a-primer-on-repeatable-random-numbers/)", Unity Blog, Jan. 7, 2015, and the section "How to Initialize RNGs".</small>
 
 <small><sup id=Note21>(21)</sup> Using the similar `/dev/random` is NOT RECOMMENDED, since in some implementations it can block for seconds at a time, especially if not enough randomness is available.  See also [**"Myths about /dev/urandom"**](https://www.2uo.de/myths-about-urandom).</small>
 

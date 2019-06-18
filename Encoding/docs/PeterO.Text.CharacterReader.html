@@ -10,223 +10,11 @@
     PeterO.Text.ICharacterInput
 </pre>
 
-<p>A general-purpose character input for reading text from byte streams and text strings. When reading byte streams, this class supports the UTF-8 character encoding by default, but can be configured to support UTF-16 and UTF-32 as well.</p>
-
-<h3>Member Summary</h3>
+<p>A general-purpose character input for reading text from byte streams and text strings. When reading byte streams, this class supports the UTF-8 character encoding by default, but can be configured to support UTF-16 and UTF-32 as well.  ### Member Summary</p>
 
 <ul>
 <li><code><a href="#Read_int_int_int">Read(int[], int, int)</a></code> - Reads a series of code points from a Unicode stream or a string.</li>
 <li><code><a href="#ReadChar">ReadChar()</a></code> - Reads the next character from a Unicode stream or a string.</li>
-</ul>
-
-<p><a id="Void_ctor_String"></a></p>
-
-<h3>CharacterReader Constructor</h3>
-
-<pre>public CharacterReader(
-    string str);
-</pre>
-
-<p>Initializes a new instance of the <a href="PeterO.Text.CharacterReader.html">PeterO.Text.CharacterReader</a> class.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><i>str</i>: The parameter <i>str</i>
-is a text string.</li>
-</ul>
-
-<p><a id="Void_ctor_String_Boolean"></a></p>
-
-<h3>CharacterReader Constructor</h3>
-
-<pre>public CharacterReader(
-    string str,
-    bool skipByteOrderMark);
-</pre>
-
-<p>Initializes a new instance of the <a href="PeterO.Text.CharacterReader.html">PeterO.Text.CharacterReader</a> class.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><p><i>str</i>: The parameter <i>str</i>
-is a text string.</p></li>
-<li><p><i>skipByteOrderMark</i>: Either <code>true</code>  or <code>false</code>  .</p></li>
-</ul>
-
-<p><a id="Void_ctor_String_Boolean_Boolean"></a></p>
-
-<h3>CharacterReader Constructor</h3>
-
-<pre>public CharacterReader(
-    string str,
-    bool skipByteOrderMark,
-    bool errorThrow);
-</pre>
-
-<p>Initializes a new instance of the <a href="PeterO.Text.CharacterReader.html">PeterO.Text.CharacterReader</a> class.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><p><i>str</i>: The parameter <i>str</i>
-is a text string.</p></li>
-<li><p><i>skipByteOrderMark</i>: Either <code>true</code>  or <code>false</code>  .</p></li>
-<li><p><i>errorThrow</i>: Either <code>true</code>  or <code>false</code>  .</p></li>
-</ul>
-
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li>System.ArgumentNullException:
-The parameter <i>str</i>
-is null.</li>
-</ul>
-
-<p><a id="Void_ctor_String_Int32_Int32"></a></p>
-
-<h3>CharacterReader Constructor</h3>
-
-<pre>public CharacterReader(
-    string str,
-    int offset,
-    int length);
-</pre>
-
-<p>Initializes a new instance of the <a href="PeterO.Text.CharacterReader.html">PeterO.Text.CharacterReader</a> class.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><p><i>str</i>: The parameter <i>str</i>
-is a text string.</p></li>
-<li><p><i>offset</i>: The parameter <i>offset</i>
-is a 32-bit signed integer.</p></li>
-<li><p><i>length</i>: The parameter <i>length</i>
-is a 32-bit signed integer.</p></li>
-</ul>
-
-<p><a id="Void_ctor_String_Int32_Int32_Boolean_Boolean"></a></p>
-
-<h3>CharacterReader Constructor</h3>
-
-<pre>public CharacterReader(
-    string str,
-    int offset,
-    int length,
-    bool skipByteOrderMark,
-    bool errorThrow);
-</pre>
-
-<p>Initializes a new instance of the <a href="PeterO.Text.CharacterReader.html">PeterO.Text.CharacterReader</a> class.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><p><i>str</i>: The parameter <i>str</i>
-is a text string.</p></li>
-<li><p><i>offset</i>: The parameter <i>offset</i>
-is a 32-bit signed integer.</p></li>
-<li><p><i>length</i>: The parameter <i>length</i>
-is a 32-bit signed integer.</p></li>
-<li><p><i>skipByteOrderMark</i>: Either <code>true</code>  or <code>false</code>  .</p></li>
-<li><p><i>errorThrow</i>: Either <code>true</code>  or <code>false</code>  .</p></li>
-</ul>
-
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li>System.ArgumentNullException:
-The parameter <i>str</i>
-is null.</li>
-</ul>
-
-<p><a id="Void_ctor_Stream"></a></p>
-
-<h3>CharacterReader Constructor</h3>
-
-<pre>public CharacterReader(
-    System.IO.Stream stream);
-</pre>
-
-<p>Initializes a new instance of the <a href="PeterO.Text.CharacterReader.html">PeterO.Text.CharacterReader</a> class.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><i>stream</i>: A readable data stream.</li>
-</ul>
-
-<p><a id="Void_ctor_Stream_Int32"></a></p>
-
-<h3>CharacterReader Constructor</h3>
-
-<pre>public CharacterReader(
-    System.IO.Stream stream,
-    int mode);
-</pre>
-
-<p>Initializes a new instance of the <a href="PeterO.Text.CharacterReader.html">PeterO.Text.CharacterReader</a> class.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><p><i>stream</i>: A readable data stream.</p></li>
-<li><p><i>mode</i>: The parameter <i>mode</i>
-is a 32-bit signed integer.</p></li>
-</ul>
-
-<p><a id="Void_ctor_Stream_Int32_Boolean"></a></p>
-
-<h3>CharacterReader Constructor</h3>
-
-<pre>public CharacterReader(
-    System.IO.Stream stream,
-    int mode,
-    bool errorThrow);
-</pre>
-
-<p>Initializes a new instance of the <a href="PeterO.Text.CharacterReader.html">PeterO.Text.CharacterReader</a> class.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><p><i>stream</i>: A readable data stream.</p></li>
-<li><p><i>mode</i>: The parameter <i>mode</i>
-is a 32-bit signed integer.</p></li>
-<li><p><i>errorThrow</i>: Either <code>true</code>  or <code>false</code>  .</p></li>
-</ul>
-
-<p><a id="Void_ctor_Stream_Int32_Boolean_Boolean"></a></p>
-
-<h3>CharacterReader Constructor</h3>
-
-<pre>public CharacterReader(
-    System.IO.Stream stream,
-    int mode,
-    bool errorThrow,
-    bool dontSkipUtf8Bom);
-</pre>
-
-<p>Initializes a new instance of the <a href="PeterO.Text.CharacterReader.html">PeterO.Text.CharacterReader</a> class.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><p><i>stream</i>: A readable data stream.</p></li>
-<li><p><i>mode</i>: The parameter <i>mode</i>
-is a 32-bit signed integer.</p></li>
-<li><p><i>errorThrow</i>: Either <code>true</code>  or <code>false</code>  .</p></li>
-<li><p><i>dontSkipUtf8Bom</i>: Either <code>true</code>  or <code>false</code>  .</p></li>
-</ul>
-
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li>System.ArgumentNullException:
-The parameter <i>stream</i>
-is null.</li>
 </ul>
 
 <p><a id="Read_int_int_int"></a></p>
@@ -239,37 +27,35 @@ is null.</li>
     int length);
 </pre>
 
-<p>Reads a series of code points from a Unicode stream or a string.</p>
-
-<p><b>Parameters:</b></p>
+<p>Reads a series of code points from a Unicode stream or a string.  <b>Parameters:</b></p>
 
 <ul>
 <li><p><i>chars</i>: An array where the code points that were read will be stored.</p></li>
-<li><p><i>index</i>: A zero-based index showing where the desired portion of <i>chars</i>
+<li><p><i>index</i>: A zero-based index showing where the desired portion of  <i>chars</i>
 begins.</p></li>
-<li><p><i>length</i>: The number of elements in the desired portion of <i>chars</i>
-(but not more than <i>chars</i>
+<li><p><i>length</i>: The number of elements in the desired portion of  <i>chars</i>
+(but not more than  <i>chars</i>
 &#39;s length).</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p>The number of code points read from the stream. This can be less than the <i>length</i>
-parameter if the end of the stream is reached.</p>
+<p>The number of code points read from the stream. This can be less than the  <i>length</i>
+ parameter if the end of the stream is reached.</p>
 
 <p><b>Exceptions:</b></p>
 
 <ul>
 <li><p>System.ArgumentNullException:
-The parameter <i>chars</i>
+The parameter  <i>chars</i>
 is null.</p></li>
 <li><p>System.ArgumentException:
-Either <i>index</i>
-or <i>length</i>
-is less than 0 or greater than <i>chars</i>
-&#39;s length, or <i>chars</i>
-&#39;s length minus <i>index</i>
-is less than <i>length</i>
+Either  <i>index</i>
+or  <i>length</i>
+is less than 0 or greater than  <i>chars</i>
+&#39;s length, or  <i>chars</i>
+&#39;s length minus  <i>index</i>
+is less than  <i>length</i>
 .</p></li>
 </ul>
 
@@ -280,9 +66,7 @@ is less than <i>length</i>
 <pre>public sealed int ReadChar();
 </pre>
 
-<p>Reads the next character from a Unicode stream or a string.</p>
-
-<p><b>Return Value:</b></p>
+<p>Reads the next character from a Unicode stream or a string.  <b>Return Value:</b></p>
 
 <p>The next character, or -1 if the end of the string or stream was reached.</p>
 

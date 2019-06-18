@@ -10,9 +10,7 @@
     System.IDisposable
 </pre>
 
-<p>Not documented yet.</p>
-
-<h3>Member Summary</h3>
+<p>Not documented yet.  ### Member Summary</p>
 
 <ul>
 <li><code><a href="#Create_string">Create(string)</a></code> - Not documented yet.</li>
@@ -39,11 +37,27 @@
 <pre>public bool IsEmptyElement { get; }
 </pre>
 
-<p>Gets a value indicating whether the currently read element is found to be empty.</p>
+<p>Gets a value indicating whether the currently read element is found to be empty.  <b>Returns:</b></p>
 
-<p><b>Returns:</b></p>
+<p><code>true</code> true if the currently read element is found to be empty; otherwise,  <code>false</code> false .</p>
 
-<p><code>true</code>  if the currently read element is found to be empty; otherwise, <code>false</code>  .</p>
+<p><b>Return Value:</b></p>
+
+<p>A text string.</p>
+
+<p><a id="this_string"></a></p>
+
+<h3>Item</h3>
+
+<pre>public string this[string attribute] { get; }
+</pre>
+
+<p>Gets an attribute from the currently read element.  <b>Parameters:</b></p>
+
+<ul>
+<li><i>attribute</i>: The parameter  <i>attribute</i>
+is not documented yet.</li>
+</ul>
 
 <p><b>Return Value:</b></p>
 
@@ -56,9 +70,7 @@
 <pre>public string LocalName { get; }
 </pre>
 
-<p>Gets a value not documented yet.</p>
-
-<p><b>Returns:</b></p>
+<p>Gets a value not documented yet.  <b>Returns:</b></p>
 
 <p>A value not documented yet.</p>
 
@@ -76,9 +88,7 @@ This element&#39;s content was already read or being read.</li>
 <pre>public string Name { get; }
 </pre>
 
-<p>Gets a value not documented yet.</p>
-
-<p><b>Returns:</b></p>
+<p>Gets a value not documented yet.  <b>Returns:</b></p>
 
 <p>A value not documented yet.</p>
 
@@ -96,9 +106,7 @@ This element&#39;s content was already read or being read.</li>
 <pre>public string NamespaceName { get; }
 </pre>
 
-<p>Gets a value not documented yet.</p>
-
-<p><b>Returns:</b></p>
+<p>Gets a value not documented yet.  <b>Returns:</b></p>
 
 <p>A value not documented yet.</p>
 
@@ -117,12 +125,10 @@ This element&#39;s content was already read or being read.</li>
     string file);
 </pre>
 
-<p>Not documented yet.</p>
-
-<p><b>Parameters:</b></p>
+<p>Not documented yet.  <b>Parameters:</b></p>
 
 <ul>
-<li><i>file</i>: The parameter <i>file</i>
+<li><i>file</i>: The parameter  <i>file</i>
 is not documented yet.</li>
 </ul>
 
@@ -134,7 +140,7 @@ is not documented yet.</li>
 
 <ul>
 <li>System.ArgumentNullException:
-The parameter <i>file</i>
+The parameter  <i>file</i>
 is null.</li>
 </ul>
 
@@ -146,12 +152,10 @@ is null.</li>
     System.Xml.XmlReader reader);
 </pre>
 
-<p>Not documented yet.</p>
-
-<p><b>Parameters:</b></p>
+<p>Not documented yet.  <b>Parameters:</b></p>
 
 <ul>
-<li><i>reader</i>: The parameter <i>reader</i>
+<li><i>reader</i>: The parameter  <i>reader</i>
 is not documented yet.</li>
 </ul>
 
@@ -163,7 +167,7 @@ is not documented yet.</li>
 
 <ul>
 <li>System.ArgumentNullException:
-The parameter <i>reader</i>
+The parameter  <i>reader</i>
 is null.</li>
 </ul>
 
@@ -174,9 +178,7 @@ is null.</li>
 <pre>public PeterO.XEReader Current();
 </pre>
 
-<p>Not documented yet.</p>
-
-<p><b>Return Value:</b></p>
+<p>Not documented yet.  <b>Return Value:</b></p>
 
 <p>A XEReader object.</p>
 
@@ -187,9 +189,7 @@ is null.</li>
 <pre>public sealed void Dispose();
 </pre>
 
-<p>Not documented yet.</p>
-
-<p><a id="IsElement_string"></a></p>
+<p>Not documented yet.  <a id="IsElement_string"></a></p>
 
 <h3>IsElement</h3>
 
@@ -197,18 +197,16 @@ is null.</li>
     string localName);
 </pre>
 
-<p>Not documented yet.</p>
-
-<p><b>Parameters:</b></p>
+<p>Not documented yet.  <b>Parameters:</b></p>
 
 <ul>
-<li><i>localName</i>: The parameter <i>localName</i>
+<li><i>localName</i>: The parameter  <i>localName</i>
 is not documented yet.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p>Either <code>true</code>  or <code>false</code>  .</p>
+<p>Either  <code>true</code> true or  <code>false</code> false .</p>
 
 <p><a id="IsElement_string_string"></a></p>
 
@@ -219,20 +217,18 @@ is not documented yet.</li>
     string namespaceName);
 </pre>
 
-<p>Not documented yet.</p>
-
-<p><b>Parameters:</b></p>
+<p>Not documented yet.  <b>Parameters:</b></p>
 
 <ul>
-<li><p><i>localName</i>: The parameter <i>localName</i>
+<li><p><i>localName</i>: The parameter  <i>localName</i>
 is not documented yet.</p></li>
-<li><p><i>namespaceName</i>: The parameter <i>namespaceName</i>
+<li><p><i>namespaceName</i>: The parameter  <i>namespaceName</i>
 is not documented yet.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p>Either <code>true</code>  or <code>false</code>  .</p>
+<p>Either  <code>true</code> true or  <code>false</code> false .</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -249,18 +245,16 @@ This element&#39;s content was already read or being read.</li>
     string localName);
 </pre>
 
-<p>Not documented yet.</p>
-
-<p><b>Parameters:</b></p>
+<p>Not documented yet.  <b>Parameters:</b></p>
 
 <ul>
-<li><i>localName</i>: The parameter <i>localName</i>
+<li><i>localName</i>: The parameter  <i>localName</i>
 is not documented yet.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p>Either <code>true</code>  or <code>false</code>  .</p>
+<p>Either  <code>true</code> true or  <code>false</code> false .</p>
 
 <p><a id="MoveNext_string_string"></a></p>
 
@@ -271,20 +265,18 @@ is not documented yet.</li>
     string namespaceName);
 </pre>
 
-<p>Not documented yet.</p>
-
-<p><b>Parameters:</b></p>
+<p>Not documented yet.  <b>Parameters:</b></p>
 
 <ul>
-<li><p><i>localName</i>: The parameter <i>localName</i>
+<li><p><i>localName</i>: The parameter  <i>localName</i>
 is not documented yet.</p></li>
-<li><p><i>namespaceName</i>: The parameter <i>namespaceName</i>
+<li><p><i>namespaceName</i>: The parameter  <i>namespaceName</i>
 is not documented yet.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p>Either <code>true</code>  or <code>false</code>  .</p>
+<p>Either  <code>true</code> true or  <code>false</code> false .</p>
 
 <p><a id="MoveNext"></a></p>
 
@@ -293,11 +285,9 @@ is not documented yet.</p></li>
 <pre>public bool MoveNext();
 </pre>
 
-<p>Not documented yet.</p>
+<p>Not documented yet.  <b>Return Value:</b></p>
 
-<p><b>Return Value:</b></p>
-
-<p>Either <code>true</code>  or <code>false</code>  .</p>
+<p>Either  <code>true</code> true or  <code>false</code> false .</p>
 
 <p><a id="ReadContent"></a></p>
 
@@ -306,9 +296,7 @@ is not documented yet.</p></li>
 <pre>public string ReadContent();
 </pre>
 
-<p>Not documented yet.</p>
-
-<p><b>Return Value:</b></p>
+<p>Not documented yet.  <b>Return Value:</b></p>
 
 <p>A text string.</p>
 

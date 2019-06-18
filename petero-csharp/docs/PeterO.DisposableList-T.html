@@ -15,9 +15,7 @@
     where T : System.IDisposableT
 </pre>
 
-<p>Holds a list of disposable objects, which can all be disposed at once when this object is disposed.</p>
-
-<h3>Member Summary</h3>
+<p>Holds a list of disposable objects, which can all be disposed at once when this object is disposed.  ### Member Summary</p>
 
 <ul>
 <li><code><a href="#Add_T">Add(T)</a></code> -</li>
@@ -41,15 +39,6 @@
 <li>&lt;T&gt;: Any object type that implements IDisposable.</li>
 </ul>
 
-<p><a id="Void_ctor"></a></p>
-
-<h3>DisposableList Constructor</h3>
-
-<pre>public DisposableList();
-</pre>
-
-<p>Initializes a new instance of the <a href="PeterO.DisposableList.html">PeterO.DisposableList`1</a> class.</p>
-
 <p><a id="Count"></a></p>
 
 <h3>Count</h3>
@@ -57,9 +46,7 @@
 <pre>public sealed int Count { get; }
 </pre>
 
-<p>Gets a value not documented yet.</p>
-
-<p><b>Returns:</b></p>
+<p>Gets a value not documented yet.  <b>Returns:</b></p>
 
 <p>A value not documented yet.</p>
 
@@ -70,28 +57,27 @@
 <pre>public sealed bool IsReadOnly { get; }
 </pre>
 
-<p>Gets a value indicating whether this list is read only.</p>
+<p>Gets a value indicating whether this list is read only.  <b>Returns:</b></p>
 
-<p><b>Returns:</b></p>
+<p><code>true</code> true if this list is read only; otherwise,  <code>false</code> false .</p>
 
-<p><code>true</code>  if this list is read only; otherwise, <code>false</code>  .</p>
+<p><a id="this_int"></a></p>
 
-<p><a id="Add_T"></a></p>
+<h3>Item</h3>
 
-<h3>Add</h3>
-
-<pre>public sealed void Add(
-    T item);
+<pre>public sealed T this[int item] { get; set; }
 </pre>
 
-<p>Not documented yet.</p>
-
-<p><b>Parameters:</b></p>
+<p>Not documented yet.  <b>Parameters:</b></p>
 
 <ul>
-<li><i>item</i>: The parameter <i>item</i>
+<li><i>item</i>: The parameter  <i>item</i>
 is not documented yet.</li>
 </ul>
+
+<p><b>Return Value:</b></p>
+
+<p>A T object.</p>
 
 <p><a id="Clear"></a></p>
 
@@ -100,112 +86,23 @@ is not documented yet.</li>
 <pre>public sealed void Clear();
 </pre>
 
-<p>Not documented yet.</p>
-
-<p><a id="Contains_T"></a></p>
-
-<h3>Contains</h3>
-
-<pre>public sealed bool Contains(
-    T item);
-</pre>
-
-<p>Not documented yet.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><i>item</i>: The parameter <i>item</i>
-is not documented yet.</li>
-</ul>
-
-<p><b>Return Value:</b></p>
-
-<p>Either <code>true</code>  or <code>false</code>  .</p>
-
-<p><a id="Dispose"></a></p>
+<p>Not documented yet.  <a id="Dispose"></a></p>
 
 <h3>Dispose</h3>
 
 <pre>public sealed void Dispose();
 </pre>
 
-<p>Not documented yet.</p>
-
-<p><a id="GetEnumerator"></a></p>
+<p>Not documented yet.  <a id="GetEnumerator"></a></p>
 
 <h3>GetEnumerator</h3>
 
 <pre>public sealed System.Collections.Generic.IEnumerator&lt;T&gt; GetEnumerator();
 </pre>
 
-<p>Not documented yet.</p>
-
-<p><b>Return Value:</b></p>
+<p>Not documented yet.  <b>Return Value:</b></p>
 
 <p>An IEnumerator(T) object.</p>
-
-<p><a id="IndexOf_T"></a></p>
-
-<h3>IndexOf</h3>
-
-<pre>public sealed int IndexOf(
-    T item);
-</pre>
-
-<p>Not documented yet.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><i>item</i>: The parameter <i>item</i>
-is not documented yet.</li>
-</ul>
-
-<p><b>Return Value:</b></p>
-
-<p>A 32-bit signed integer.</p>
-
-<p><a id="Insert_int_T"></a></p>
-
-<h3>Insert</h3>
-
-<pre>public sealed void Insert(
-    int index,
-    T item);
-</pre>
-
-<p>Not documented yet.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><p><i>index</i>: The parameter <i>index</i>
-is not documented yet.</p></li>
-<li><p><i>item</i>: The parameter <i>item</i>
-is not documented yet.</p></li>
-</ul>
-
-<p><a id="Remove_T"></a></p>
-
-<h3>Remove</h3>
-
-<pre>public sealed bool Remove(
-    T item);
-</pre>
-
-<p>Not documented yet.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><i>item</i>: The parameter <i>item</i>
-is not documented yet.</li>
-</ul>
-
-<p><b>Return Value:</b></p>
-
-<p>Either <code>true</code>  or <code>false</code>  .</p>
 
 <p><a id="RemoveAt_int"></a></p>
 
@@ -215,12 +112,10 @@ is not documented yet.</li>
     int index);
 </pre>
 
-<p>Removes an item at a given index from the list.</p>
-
-<p><b>Parameters:</b></p>
+<p>Removes an item at a given index from the list.  <b>Parameters:</b></p>
 
 <ul>
-<li><i>index</i>: The parameter <i>index</i>
+<li><i>index</i>: The parameter  <i>index</i>
 is not documented yet.</li>
 </ul>
 

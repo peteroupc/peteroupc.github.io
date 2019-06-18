@@ -9,9 +9,7 @@
 <pre>public static class MailDateTime
 </pre>
 
-<p>Contains methods for parsing and generating date-time strings following the Internet Message Format (RFC 5322).</p>
-
-<h3>Member Summary</h3>
+<p>Contains methods for parsing and generating date-time strings following the Internet Message Format (RFC 5322).  ### Member Summary</p>
 
 <ul>
 <li><code><a href="#GenerateDateString_int">GenerateDateString(int[])</a></code> - Generates a date-time string following the Internet Message Format (RFC 5322) from an 8-element array.</li>
@@ -29,12 +27,10 @@
     int[] dateTime);
 </pre>
 
-<p>Generates a date-time string following the Internet Message Format (RFC 5322) from an 8-element array.</p>
-
-<p><b>Parameters:</b></p>
+<p>Generates a date-time string following the Internet Message Format (RFC 5322) from an 8-element array.  <b>Parameters:</b></p>
 
 <ul>
-<li><i>dateTime</i>: The date and time in the form of an 8-element array. See<strong>PeterO.Mail.MailDateTime.ParseDateString(System.String,System.Boolean)</strong>for information on the format of this parameter.</li>
+<li><i>dateTime</i>: The date and time in the form of an 8-element array. See <strong>M:PeterO.Mail.MailDateTime.ParseDateString(System.String,System.Boolean)</strong> for information on the format of this parameter.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -45,8 +41,8 @@
 
 <ul>
 <li>System.ArgumentException:
-The parameter <i>dateTime</i>
-is null or invalid, including if the year ( <code>dateTime[0]</code>  ) is less than 0.</li>
+The parameter  <i>dateTime</i>
+is null or invalid, including if the year (  <code>dateTime[0]</code> dateTime[0] ) is less than 0.</li>
 </ul>
 
 <p><a id="GenerateDateString_int_bool"></a></p>
@@ -58,12 +54,10 @@ is null or invalid, including if the year ( <code>dateTime[0]</code>  ) is less 
     bool gmt);
 </pre>
 
-<p>Generates a date-time string following the Internet Message Format (RFC 5322) from an 8-element array, optionally using a &quot;GMT&quot; time zone indicator.</p>
-
-<p><b>Parameters:</b></p>
+<p>Generates a date-time string following the Internet Message Format (RFC 5322) from an 8-element array, optionally using a &quot;GMT&quot; time zone indicator.  <b>Parameters:</b></p>
 
 <ul>
-<li><p><i>dateTime</i>: The date and time in the form of an 8-element array. See<strong>PeterO.Mail.MailDateTime.ParseDateString(System.String,System.Boolean)</strong>for information on the format of this parameter.</p></li>
+<li><p><i>dateTime</i>: The date and time in the form of an 8-element array. See <strong>M:PeterO.Mail.MailDateTime.ParseDateString(System.String,System.Boolean)</strong> for information on the format of this parameter.</p></li>
 <li><p><i>gmt</i>: If true, uses the string &quot;GMT&quot; as the time zone offset.</p></li>
 </ul>
 
@@ -75,10 +69,10 @@ is null or invalid, including if the year ( <code>dateTime[0]</code>  ) is less 
 
 <ul>
 <li><p>System.ArgumentException:
-The parameter <i>dateTime</i>
-is null or invalid, including if the year ( <code>dateTime[0]</code>  ) is less than 0.</p></li>
+The parameter  <i>dateTime</i>
+is null or invalid, including if the year (  <code>dateTime[0]</code> dateTime[0] ) is less than 0.</p></li>
 <li><p>System.NotSupportedException:
-The time zone offset is other than 0 and <i>gmt</i>
+The time zone offset is other than 0 and  <i>gmt</i>
 is true.</p></li>
 </ul>
 
@@ -90,19 +84,17 @@ is true.</p></li>
     string str);
 </pre>
 
-<p>Gets the date and time extracted from a date-time string following the Internet Message Format (RFC 5322). However, this method does not allow obsolete time zone strings to appear in the date-time string. See<strong>PeterO.Mail.MailDateTime.ParseDateString(System.String,System.Boolean)</strong>for information on the format of this method&#39;s return value.</p>
-
-<p><b>Parameters:</b></p>
+<p>Gets the date and time extracted from a date-time string following the Internet Message Format (RFC 5322). However, this method does not allow obsolete time zone strings to appear in the date-time string. See <strong>M:PeterO.Mail.MailDateTime.ParseDateString(System.String,System.Boolean)</strong> for information on the format of this method&#39;s return value.  <b>Parameters:</b></p>
 
 <ul>
-<li><i>str</i>: The parameter <i>str</i>
+<li><i>str</i>: The parameter  <i>str</i>
 is not documented yet.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p>An 8-element array containing the date and time, or <code>null</code>  if <i>str</i>
-is null, empty, or syntactically invalid, or if the string&#39;s year would verflow the range of a 32-bit signed integer.</p>
+<p>An 8-element array containing the date and time, or  <code>null</code> null if  <i>str</i>
+ is null, empty, or syntactically invalid, or if the string&#39;s year would overflow the range of a 32-bit signed integer.</p>
 
 <p><a id="ParseDateString_string_bool"></a></p>
 
@@ -123,20 +115,20 @@ is null, empty, or syntactically invalid, or if the string&#39;s year would verf
 <li><p>4 - Minute of the hour, from 0 through 59.</p></li>
 <li><p>5 - Second of the minute, from 0 through 60 (this value can go up to 60 to accommodate leap seconds). (Leap seconds are additional seconds added to adjust international atomic time, or TAI, to an approximation of astronomical time known as coordinated universal time, or UTC.)</p></li>
 <li><p>6 - Milliseconds of the second, from 0 through 999. Will always be 0.</p></li>
-<li><p>7 - Number of minutes to subtract from this date and time to get global time. This number can be positive or negative.</p></li>
-</ul>
+<li><p>7 - Number of minutes to subtract from this date and time to get global time. This number can be positive or negative.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>str</i>: A date-time string.</p></li>
-<li><p><i>parseObsoleteZones</i>: If set to <code>true</code>  , this method allows obsolete time zones (single-letter time zones, &quot;GMT&quot;, &quot;UT&quot;, and certain three-letter combinations) to appear in the date-time string.</p></li>
+<li><p><i>parseObsoleteZones</i>: If set to  <code>true</code> true , this method allows obsolete time zones (single-letter time zones, &quot;GMT&quot;, &quot;UT&quot;, and certain three-letter combinations) to appear in the date-time string.</p></li>
+</ul></li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p>An 8-element array containing the date and time, or <code>null</code>  if <i>str</i>
-is null, empty, or syntactically invalid, or if the string&#39;s year would verflow the range of a 32-bit signed integer.</p>
+<p>An 8-element array containing the date and time, or  <code>null</code> null if  <i>str</i>
+ is null, empty, or syntactically invalid, or if the string&#39;s year would overflow the range of a 32-bit signed integer.</p>
 
 <p><a id="ParseDateStringHttp_string"></a></p>
 
@@ -146,12 +138,10 @@ is null, empty, or syntactically invalid, or if the string&#39;s year would verf
     string v);
 </pre>
 
-<p>Parses a date string in one of the three formats allowed by HTTP/1.1.</p>
-
-<p><b>Parameters:</b></p>
+<p>Parses a date string in one of the three formats allowed by HTTP/1.1.  <b>Parameters:</b></p>
 
 <ul>
-<li><i>v</i>: The parameter <i>v</i>
+<li><i>v</i>: The parameter  <i>v</i>
 is not documented yet.</li>
 </ul>
 
