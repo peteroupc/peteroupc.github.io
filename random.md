@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on Mar. 5, 2016; last updated on June 16, 2019.
+Begun on Mar. 5, 2016; last updated on June 17, 2019.
 
 Most apps that use random numbers care about either unpredictability, speed/high quality, or repeatability.  This article explains the three kinds of RNGs and gives recommendations on each kind.
 
@@ -192,7 +192,7 @@ By using a seeded PRNG for repeatable "randomness", an application will be tied 
 
 If an application chooses to use a seeded PRNG for repeatable "randomness", the application&mdash;
 
-- SHOULD choose a PRNG that meets or exceeds the requirements of a [**statistical RNG**](#Statistical_RNGs) (except the seed is application-defined instead) and is reasonably fast,
+- SHOULD choose a PRNG that meets or exceeds the requirements of a [**statistical RNG**](#Statistical_RNGs) (except the seed is application-defined instead),
 - SHOULD choose a PRNG implementation with consistent behavior that will not change in the future,
 - ought to document the chosen PRNG being used as well as all the parameters for that PRNG,
 - ought to generate seeds for the PRNG that are likely to vary wildly from previous seeds, and
