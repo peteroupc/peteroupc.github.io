@@ -394,7 +394,7 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 
 <p>In general, especially for cryptographic RNGs, <strong>to generate an N-bit seed, enough data needs to be gathered from nondeterministic sources to reach N bits of entropy or more</strong>.</p>
 
-<p>Once data with enough entropy is gathered, it might need to be condensed into a seed to initialize a PRNG with. Following (Cliff et al., 2009)<sup><a href="#Note19"><strong>(19)</strong></a></sup>, it is suggested to generate an N-bit seed using an HMAC (hash-based message authentication code); in that sense, take data with at least as many bits of entropy as the HMAC size in bits, generate the HMAC with that data, then truncate the HMAC to N bits.  See also NIST SP 800-90B sec. 3.1.5.1 and RFC 4086 sec. 4.2 and 5.2.</p>
+<p>Once data with enough entropy is gathered, it might need to be condensed into a seed to initialize a PRNG with. Following (Cliff et al., 2009)<sup><a href="#Note19"><strong>(19)</strong></a></sup>, it is suggested to generate an N-bit seed using an HMAC (hash-based message authentication code) at least N times 3 bits long; in that sense, take data with at least as many bits of entropy as the HMAC size in bits, generate the HMAC with that data, then take the HMAC&#39;s first N bits.  See also NIST SP 800-90B sec. 3.1.5.1 and RFC 4086 sec. 4.2 and 5.2.</p>
 
 <p><a id=Wildly_Varying_Seeds></a></p>
 
