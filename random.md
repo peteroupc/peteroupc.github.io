@@ -286,9 +286,9 @@ For noncryptographic and seeded PRNGs, an application ought to generate seeds li
 
 1. A bit sequence from a cryptographic RNG.
 2. A seed extracted from hard-to-predict sources (see "Seed Generation" above).
-3. A hash of several cycle counters.
-4. A hash of timestamps with finer than millisecond granularity.
-5. A hash of the concatenation of a monotonically increasing number and additional data.
+3. A hash generated using several timestamps and additional data chosen by the application.  Here, timestamps with finer than millisecond granularity (including cycle counters) are preferred.
+4. A hash generated using a monotonically increasing number and additional data chosen by the application.
+5. A hash of one or more timestamps.
 6. A hash of a monotonically increasing number.
 7. A timestamp with finer than millisecond granularity.
 

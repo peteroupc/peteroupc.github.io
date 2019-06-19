@@ -996,8 +996,14 @@ ed1</code> , <code>ed2</code> , or both are not logical operands.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>ed1</code> - The parameter <code>ed1</code> is not documented yet.</p></li>
-<li><p><code>ec</code> - The parameter <code>ec</code> is not documented yet.</p></li>
+<li><p><code>ed1</code> - The operand to the logical NOT operation.</p></li>
+<li><p><code>ec</code> - An arithmetic context to control the maximum precision of
+arbitrary-precision numbers. If a logical operand passed to this
+method has more bits than the maximum precision specified in this
+context, the operand&#39;s most significant bits that exceed that
+precision are discarded. This parameter cannot be null and must
+specify a maximum precision (unlimited precision contexts are not
+allowed).</p></li>
 </ul>
 
 <p><strong>Returns:</strong></p>

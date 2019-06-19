@@ -132,10 +132,10 @@ Gets a value indicating whether a converted number&#39;s Exponent property will
 not be higher than EMax + 1 - Precision.</li>
 <li><code>EInteger getEMax()</code><br>
 Gets the highest exponent possible when a converted number is expressed in
-scientific notation with one digit before the radix point.</li>
+scientific notation with one nonzero digit before the radix point.</li>
 <li><code>EInteger getEMin()</code><br>
 Gets the lowest exponent possible when a converted number is expressed in
-scientific notation with one digit before the radix point.</li>
+scientific notation with one nonzero digit before the radix point.</li>
 <li><code>int getFlags()</code><br>
 Gets the flags that are set from converting numbers according to this
 arithmetic context.</li>
@@ -422,9 +422,9 @@ than EMax + 1 - Precision.</li>
 </pre>
 
 <p>Gets the highest exponent possible when a converted number is expressed in
- scientific notation with one digit before the radix point. For
- example, with a precision of 3 and an EMax of 100, the maximum value
- possible is 9.99E + 100. (This is not the same as the highest
+ scientific notation with one nonzero digit before the radix point.
+ For example, with a precision of 3 and an EMax of 100, the maximum
+ value possible is 9.99E + 100. (This is not the same as the highest
  possible Exponent property.) If HasExponentRange is false, this value
  will be 0.</p>
 
@@ -432,9 +432,9 @@ than EMax + 1 - Precision.</li>
 
 <ul>
 <li>The highest exponent possible when a converted number is expressed
-in scientific notation with one digit before the radix point. For
-example, with a precision of 3 and an EMax of 100, the maximum value
-possible is 9.99E + 100. (This is not the same as the highest
+in scientific notation with one nonzero digit before the radix point.
+For example, with a precision of 3 and an EMax of 100, the maximum
+value possible is 9.99E + 100. (This is not the same as the highest
 possible Exponent property.) If HasExponentRange is false, this value
 will be 0.</li>
 </ul>
@@ -445,21 +445,21 @@ will be 0.</li>
 </pre>
 
 <p>Gets the lowest exponent possible when a converted number is expressed in
- scientific notation with one digit before the radix point. For
- example, with a precision of 3 and an EMin of -100, the next value
- that comes after 0 is 0.001E-100. (If AdjustExponent is false, this
- property specifies the lowest possible Exponent property instead.) If
- HasExponentRange is false, this value will be 0.</p>
+ scientific notation with one nonzero digit before the radix point.
+ For example, with a precision of 3 and an EMin of -100, the next
+ value that comes after 0 is 0.001E-100. (If AdjustExponent is false,
+ this property specifies the lowest possible Exponent property
+ instead.) If HasExponentRange is false, this value will be 0.</p>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
 <li>The lowest exponent possible when a converted number is expressed in
-scientific notation with one digit before the radix point. For
-example, with a precision of 3 and an EMin of -100, the next value
-that comes after 0 is 0.001E-100. (If AdjustExponent is false, this
-property specifies the lowest possible Exponent property instead.) If
-HasExponentRange is false, this value will be 0.</li>
+scientific notation with one nonzero digit before the radix point.
+For example, with a precision of 3 and an EMin of -100, the next
+value that comes after 0 is 0.001E-100. (If AdjustExponent is false,
+this property specifies the lowest possible Exponent property
+instead.) If HasExponentRange is false, this value will be 0.</li>
 </ul>
 
 <h3>getFlags</h3>

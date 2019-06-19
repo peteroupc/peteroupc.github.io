@@ -405,9 +405,9 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 <ol>
 <li>A bit sequence from a cryptographic RNG.</li>
 <li>A seed extracted from hard-to-predict sources (see &quot;Seed Generation&quot; above).</li>
-<li>A hash of several cycle counters.</li>
-<li>A hash of timestamps with finer than millisecond granularity.</li>
-<li>A hash of the concatenation of a monotonically increasing number and additional data.</li>
+<li>A hash generated using several timestamps and additional data chosen by the application.  Here, timestamps with finer than millisecond granularity (including cycle counters) are preferred.</li>
+<li>A hash generated using a monotonically increasing number and additional data chosen by the application.</li>
+<li>A hash of one or more timestamps.</li>
 <li>A hash of a monotonically increasing number.</li>
 <li>A timestamp with finer than millisecond granularity.</li>
 </ol>

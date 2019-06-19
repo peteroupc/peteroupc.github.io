@@ -186,14 +186,14 @@ to 255).</li>
 <li><code>double ToDouble()</code><br>
 Converts this value to a 64-bit floating-point number.</li>
 <li><code>EDecimal ToEDecimal()</code><br>
-Converts this rational number to a decimal number.</li>
+Converts this rational number to an arbitrary-precision decimal number.</li>
 <li><code>EDecimal ToEDecimal​(EContext ctx)</code><br>
-Converts this rational number to a decimal number and rounds the result to
-the given precision.</li>
+Converts this rational number to an arbitrary-precision decimal number and
+rounds the result to the given precision.</li>
 <li><code>EDecimal ToEDecimalExactIfPossible​(EContext ctx)</code><br>
-Converts this rational number to a decimal number, but if the result would
-have a nonterminating decimal expansion, rounds that result to the
-given precision.</li>
+Converts this rational number to an arbitrary-precision decimal number, but
+if the result would have a nonterminating decimal expansion, rounds
+that result to the given precision.</li>
 <li><code>EFloat ToEFloat()</code><br>
 Converts this rational number to a binary float.</li>
 <li><code>EFloat ToEFloat​(EContext ctx)</code><br>
@@ -615,7 +615,8 @@ Renamed to FromEFloat.</p>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>ef</code> - The number to convert as an arbitrary-precision binary float.</li>
+<li><code>ef</code> - The number to convert as an arbitrary-precision binary
+floating-point number.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -659,7 +660,8 @@ Renamed to FromEFloat.</p>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>ef</code> - The number to convert as an arbitrary-precision binary float.</li>
+<li><code>ef</code> - The number to convert as an arbitrary-precision binary
+floating-point number.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -933,7 +935,7 @@ satisfy other.isFinite().</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>other</code> - An arbitrary-precision binary float.</li>
+<li><code>other</code> - An arbitrary-precision binary floating-point number.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -1361,7 +1363,7 @@ not-a-number (NaN).</li>
 <pre>public EDecimal ToEDecimal()
 </pre>
 
-<p>Converts this rational number to a decimal number.</p>
+<p>Converts this rational number to an arbitrary-precision decimal number.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -1376,8 +1378,8 @@ expansion.</li>
 <pre>public EDecimal ToEDecimal​(EContext ctx)
 </pre>
 
-<p>Converts this rational number to a decimal number and rounds the result to
- the given precision.</p>
+<p>Converts this rational number to an arbitrary-precision decimal number and
+ rounds the result to the given precision.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1402,9 +1404,9 @@ can&#39;t be exact because it has a nonterminating decimal expansion.</li>
 <pre>public EDecimal ToEDecimalExactIfPossible​(EContext ctx)
 </pre>
 
-<p>Converts this rational number to a decimal number, but if the result would
- have a nonterminating decimal expansion, rounds that result to the
- given precision.</p>
+<p>Converts this rational number to an arbitrary-precision decimal number, but
+ if the result would have a nonterminating decimal expansion, rounds
+ that result to the given precision.</p>
 
 <p><strong>Parameters:</strong></p>
 
