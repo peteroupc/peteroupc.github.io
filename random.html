@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
-<p>Begun on Mar. 5, 2016; last updated on June 17, 2019.</p>
+<p>Begun on Mar. 5, 2016; last updated on June 19, 2019.</p>
 
 <p>Most apps that use random numbers care about either unpredictability, speed/high quality, or repeatability.  This article explains the three kinds of RNGs and gives recommendations on each kind.</p>
 
@@ -405,10 +405,10 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 <ol>
 <li>A bit sequence from a cryptographic RNG.</li>
 <li>A seed extracted from hard-to-predict sources (see &quot;Seed Generation&quot; above).</li>
-<li>A hash generated using several timestamps and additional data chosen by the application.  Here, timestamps with finer than millisecond granularity (including cycle counters) are preferred.</li>
-<li>A hash generated using a monotonically increasing number and additional data chosen by the application.</li>
+<li>A hash generated using several timestamps and additional data chosen by the application.  Here, timestamps with finer than millisecond granularity (including CPU cycle counters) are preferred.</li>
+<li>A hash generated using a sequential counter and additional data chosen by the application.</li>
 <li>A hash of one or more timestamps.</li>
-<li>A hash of a monotonically increasing number.</li>
+<li>A hash of a sequential counter.</li>
 <li>A timestamp with finer than millisecond granularity.</li>
 </ol>
 

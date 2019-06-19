@@ -12,19 +12,20 @@
 <p>Represents an email message, and contains methods and properties for
  accessing and modifying email message data. This class implements the
  Internet Message Format (RFC 5322) and Multipurpose Internet Mail
- Extensions (MIME; RFC 2045-2047, RFC 2049). </p> <p><b>Thread safety:
- </b> This class is mutable; its properties can be changed. None of
- its instance methods are designed to be thread safe. Therefore,
- access to objects from this class must be synchronized if multiple
- threads can access them at the same time. </p> <p>The following lists
- known deviations from the mail specifications (Internet Message
- Format and MIME): </p> <ul> <li>The content-transfer-encodings
- "quoted-printable" and "base64" are treated as 7bit instead if they
- occur in a message or body part with content type "multipart/*"
- or "message/*" (other than "message/global",
- "message/global-headers", "message/global-disposition-notification",
- or "message/global-delivery-status"). </li> <li>If a message has two
- or more Content-Type header fields, it is treated as having a content
+ Extensions (MIME; RFC 2045-2047, RFC 2049). </p> <p><b>Thread
+ safety:</b> This class is mutable; its properties can be changed.
+ None of its instance methods are designed to be thread safe.
+ Therefore, access to objects from this class must be synchronized if
+ multiple threads can access them at the same time. </p> <p>The
+ following lists known deviations from the mail specifications
+ (Internet Message Format and MIME): </p> <ul> <li>The
+ content-transfer-encodings "quoted-printable" and "base64" are
+ treated as 7bit instead if they occur in a message or body part with
+ content type "multipart/*" or "message/*" (other than
+ "message/global", "message/global-headers",
+ "message/global-disposition-notification", or
+ "message/global-delivery-status"). </li> <li>If a message has two or
+ more Content-Type header fields, it is treated as having a content
  type of "application/octet-stream", unless one or more of the header
  fields is syntactically invalid. </li> <li>Illegal UTF-8 byte
  sequences appearing in header field values are replaced with
@@ -47,9 +48,9 @@
  the transfer encoding is absent, declared as 7bit, or treated as
  7bit, 8-bit bytes are still allowed: </li> <li>(a) The preamble and
  epilogue of multipart messages, which will be ignored. </li> <li>(b)
- If the charset is declared to be <code>utf-8 </code> . </li> <li>(c) If the
+ If the charset is declared to be <code>utf-8</code> . </li> <li>(c) If the
  content type is "text/html" and the charset is declared to be
- <code>us-ascii </code> , "windows-1252", "windows-1251", or
+ <code>us-ascii</code> , "windows-1252", "windows-1251", or
  "iso-8859-*" (all single byte encodings). </li> <li>(d) In
  non-MIME message bodies and in text/plain message bodies. Any 8-bit
  bytes are replaced with the substitute character byte (0x1a). </li>
@@ -58,40 +59,40 @@
  followed by colon, that text and the rest of the text is skipped up
  to and including a line feed (U + 000A). (See also RFC 4155, which
  describes the so-called "mbox" convention with "From" lines of this
- kind.) </li> <li>The name <code>ascii </code> is treated as a synonym for
- <code>us-ascii </code> , despite being a reserved name under RFC 2046. The
- name <code>cp1252 </code> and <code>utf8 </code> are treated as synonyms for
- <code>windows-1252 </code> and <code>utf-8 </code> , respectively, even though
- they are not IANA registered aliases. </li> <li>The following
- deviations involve encoded words under RFC 2047: </li> <li>(a) If a
- sequence of encoded words decodes to a string with a CTL character
- (U + 007F, or a character less than U + 0020 and not TAB) after being
- converted to Unicode, the encoded words are left un-decoded. </li>
- <li>(b) This implementation can decode encoded words regardless of
- the character length of the line in which they appear. This
- implementation can generate a header field line with one or more
- encoded words even if that line is more than 76 characters long.
- (This implementation follows the recommendation in RFC 5322 to limit
- header field lines to no more than 78 characters, where possible.)
- </li> </ul> <p>It would be appreciated if users of this library
- contact the author if they find other ways in which this
- implementation deviates from the mail specifications or other
- applicable specifications. </p> <p>Note that this class currently
- doesn't support the "padding" parameter for message bodies with the
- media type "application/octet-stream" or treated as that media type
- (see RFC 2046 sec. 4.5.1). </p> <p>Note that this implementation can
- decode an RFC 2047 encoded word that uses ISO-2022-JP (the only
- supported encoding that uses code switching) even if the encoded
- word's payload ends in a different mode from "ASCII mode". (Each
- encoded word still starts in "ASCII mode", though.) This, however, is
- not a deviation to RFC 2047 because the relevant rule only concerns
- bringing the output device back to "ASCII mode" after the decoded
- text is displayed (see last paragraph of sec. 6.2) -- since the
- decoded text is converted to Unicode rather than kept as ISO-2022-JP,
- this is not applicable since there is no such thing as "ASCII mode"
- in the Unicode Standard. </p> <p>Note that this library (the MailLib
- library) has no facilities for sending and receiving email messages,
- since that's outside this library's scope. </p>
+ kind.) </li> <li>The name <code>ascii</code> is treated as a synonym for
+ <code>us-ascii</code> , despite being a reserved name under RFC 2046. The
+ name <code>cp1252</code> and <code>utf8</code> are treated as synonyms for
+ <code>windows-1252</code> and <code>utf-8</code> , respectively, even though they
+ are not IANA registered aliases. </li> <li>The following deviations
+ involve encoded words under RFC 2047: </li> <li>(a) If a sequence of
+ encoded words decodes to a string with a CTL character (U + 007F, or a
+ character less than U + 0020 and not TAB) after being converted to
+ Unicode, the encoded words are left un-decoded. </li> <li>(b) This
+ implementation can decode encoded words regardless of the character
+ length of the line in which they appear. This implementation can
+ generate a header field line with one or more encoded words even if
+ that line is more than 76 characters long. (This implementation
+ follows the recommendation in RFC 5322 to limit header field lines to
+ no more than 78 characters, where possible.) </li> </ul> <p>It would
+ be appreciated if users of this library contact the author if they
+ find other ways in which this implementation deviates from the mail
+ specifications or other applicable specifications. </p> <p>Note that
+ this class currently doesn't support the "padding" parameter for
+ message bodies with the media type "application/octet-stream" or
+ treated as that media type (see RFC 2046 sec. 4.5.1). </p> <p>Note
+ that this implementation can decode an RFC 2047 encoded word that
+ uses ISO-2022-JP (the only supported encoding that uses code
+ switching) even if the encoded word's payload ends in a different
+ mode from "ASCII mode". (Each encoded word still starts in "ASCII
+ mode", though.) This, however, is not a deviation to RFC 2047 because
+ the relevant rule only concerns bringing the output device back to
+ "ASCII mode" after the decoded text is displayed (see last paragraph
+ of sec. 6.2) -- since the decoded text is converted to Unicode rather
+ than kept as ISO-2022-JP, this is not applicable since there is no
+ such thing as "ASCII mode" in the Unicode Standard. </p> <p>Note that
+ this library (the MailLib library) has no facilities for sending and
+ receiving email messages, since that's outside this library's scope.
+ </p>
 
 <h2>Methods</h2>
 
@@ -223,12 +224,12 @@ Removes a header field by index.</li>
 Removes all instances of the given header field from this message.</li>
 <li><code>Message SelectLanguageMessage​(java.util.List&lt;java.lang.String&gt; languages) multipart/multilingual</code><br>
 Selects a body part for a multiple-language message (
-multipart/multilingual ) according to the given language
+multipart/multilingual) according to the given language
 priority list.</li>
 <li><code>Message SelectLanguageMessage​(java.util.List&lt;java.lang.String&gt; languages,
                  boolean preferOriginals) multipart/multilingual</code><br>
 Selects a body part for a multiple-language message (
-multipart/multilingual ) according to the given language
+multipart/multilingual) according to the given language
 priority list and original-language preference.</li>
 <li><code>Message SetBody​(byte[] bytes)</code><br>
 Sets the body of this message to the given byte array.</li>
@@ -483,9 +484,9 @@ Gets this message's media type. When getting, the media type may differ in
 <p>Gets a file name suggested by this message for saving the message's body
  to a file. For more information on the algorithm, see
  ContentDisposition.MakeFilename. </p> <p>This method generates a file
- name based on the <code>filename </code> parameter of the
- Content-Disposition header field, if it exists, or on the <code>name
- </code> parameter of the Content-Type header field, otherwise. </p>
+ name based on the <code>filename</code> parameter of the
+ Content-Disposition header field, if it exists, or on the <code>name</code>
+ parameter of the Content-Type header field, otherwise. </p>
 
 <p><strong>Returns:</strong></p>
 
@@ -685,9 +686,9 @@ syntactically invalid.</p></li>
  invalid syntax, has no addresses, or appears more than once, this
  method will generate a synthetic header field with the display-name
  set to the contents of all of the header fields with the same name,
- and the address set to <code>me@[header-name]-address.invalid </code> as
- the address (a <code>.invalid </code> address is a reserved address that
- can never belong to anyone). (An exception is that the Resent-*
+ and the address set to <code>me@[header-name]-address.invalid</code> as the
+ address (a <code>.invalid</code> address is a reserved address that can
+ never belong to anyone). (An exception is that the Resent-*
  header fields may appear more than once.) The generated message
  should always have a From header field. </p> <p>If a Date and/or
  Message-ID header field doesn&#39;t exist, a field with that name will be
@@ -1366,7 +1367,7 @@ try { if (fs != null) {
  fs.close();
  } } catch (java.io.IOException ex) {}
 }
-} } </pre></p>
+} }</pre></p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1491,7 +1492,7 @@ try { if (fs != null) {
  fs.close();
  } } catch (java.io.IOException ex) {}
 }
-} } </pre></p>
+} }</pre></p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1593,7 +1594,7 @@ on this file name&#39;s extension. If the file name has an extension
 </pre>
 
 <p>Selects a body part for a multiple-language message (
- <code>multipart/multilingual </code>) according to the given language
+ <code>multipart/multilingual</code>) according to the given language
  priority list.</p>
 
 <p><strong>Parameters:</strong></p>
@@ -1627,7 +1628,7 @@ null.</li>
 </pre>
 
 <p>Selects a body part for a multiple-language message (
- <code>multipart/multilingual </code>) according to the given language
+ <code>multipart/multilingual</code>) according to the given language
  priority list and original-language preference.</p>
 
 <p><strong>Parameters:</strong></p>

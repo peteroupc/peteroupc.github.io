@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on Mar. 5, 2016; last updated on June 17, 2019.
+Begun on Mar. 5, 2016; last updated on June 19, 2019.
 
 Most apps that use random numbers care about either unpredictability, speed/high quality, or repeatability.  This article explains the three kinds of RNGs and gives recommendations on each kind.
 
@@ -277,7 +277,7 @@ _Entropy_ is a value that describes how hard it is to predict a nondeterministic
 
 In general, especially for cryptographic RNGs, **to generate an N-bit seed, enough data needs to be gathered from nondeterministic sources to reach N bits of entropy or more**.
 
-Once data with enough entropy is gathered, it might need to be condensed into a seed to initialize a PRNG with. Following (Cliff et al., 2009)<sup>[**(19)**](#Note19)</sup>, it is suggested to generate an N-bit seed using an HMAC (hash-based message authentication code); in that sense, take data with at least as many bits of entropy as the HMAC size in bits, generate the HMAC with that data, then truncate the HMAC to N bits.  See also NIST SP 800-90B sec. 3.1.5.1 and RFC 4086 sec. 4.2 and 5.2.
+Once data with enough entropy is gathered, it might need to be condensed into a seed to initialize a PRNG with. Following (Cliff et al., 2009)<sup>[**(19)**](#Note19)</sup>, it is suggested to generate an N-bit seed using an HMAC (hash-based message authentication code) at least N times 3 bits long; in that sense, take data with at least as many bits of entropy as the HMAC size in bits, generate the HMAC with that data, then take the HMAC's first N bits.  See also NIST SP 800-90B sec. 3.1.5.1 and RFC 4086 sec. 4.2 and 5.2.
 
 <a id=Wildly_Varying_Seeds></a>
 ### Wildly Varying Seeds
@@ -286,10 +286,10 @@ For noncryptographic and seeded PRNGs, an application ought to generate seeds li
 
 1. A bit sequence from a cryptographic RNG.
 2. A seed extracted from hard-to-predict sources (see "Seed Generation" above).
-3. A hash generated using several timestamps and additional data chosen by the application.  Here, timestamps with finer than millisecond granularity (including cycle counters) are preferred.
-4. A hash generated using a monotonically increasing number and additional data chosen by the application.
+3. A hash generated using several timestamps and additional data chosen by the application.  Here, timestamps with finer than millisecond granularity (including CPU cycle counters) are preferred.
+4. A hash generated using a sequential counter and additional data chosen by the application.
 5. A hash of one or more timestamps.
-6. A hash of a monotonically increasing number.
+6. A hash of a sequential counter.
 7. A timestamp with finer than millisecond granularity.
 
 It is NOT RECOMMENDED to seed a PRNG (especially several at once) with sequential counters, linearly related numbers, or timestamps with millisecond or coarser granularity, since these kinds of seeds can cause undesirable correlations in some PRNGs or introduce the risk of generating the same "random" sequence accidentally<sup>[**(20)**](#Note20)</sup>.
