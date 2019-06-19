@@ -400,7 +400,7 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 
 <h3>Wildly Varying Seeds</h3>
 
-<p>For noncryptographic and seeded PRNGs, an application ought to generate seeds likely to vary wildly from previously generated seeds, to reduce the risk of using the same seed and therefore generating the same sequence of &quot;random&quot; numbers<sup><a href="#Note20"><strong>(20)</strong></a></sup>.  In this sense, the following kinds of seeds are preferred, from most to least:</p>
+<p>For noncryptographic and seeded PRNGs, an application ought to generate seeds likely to vary wildly from previously generated seeds, to reduce the risk of correlated &quot;random&quot; numbers or sequences.  In this sense, the following kinds of seeds are preferred, from most to least:</p>
 
 <ol>
 <li>A bit sequence from a cryptographic RNG.</li>
@@ -410,9 +410,9 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 <li>A hash of the concatenation of a monotonically increasing number and additional data.</li>
 <li>A hash of a monotonically increasing number.</li>
 <li>A timestamp with finer than millisecond granularity.</li>
-<li>A monotonically increasing number starting &quot;randomly&quot; or at a timestamp.</li>
-<li>A timestamp with millisecond or coarser granularity.</li>
 </ol>
+
+<p>It is NOT RECOMMENDED to seed a PRNG (especially several at once) with sequential counters, linearly related numbers, or timestamps with millisecond or coarser granularity, since these kinds of seeds can cause undesirable correlations in some PRNGs or introduce the risk of generating the same &quot;random&quot; sequence accidentally<sup><a href="#Note20"><strong>(20)</strong></a></sup>.</p>
 
 <p><a id=Existing_RNG_APIs_in_Programming_Languages></a></p>
 
@@ -501,7 +501,7 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 
 <p><small>(F) Calling the <code>setSeed</code> method of <code>SecureRandom</code> before use is RECOMMENDED. The data passed to the method SHOULD be data described in note (C). (Despite the name, <code>setSeed</code> <em>supplements</em> the existing seed, according to the documentation.)  See also (Klyubin 2013)<sup><a href="#Note22"><strong>(22)</strong></a></sup>.  Using the <code>SecureRandom</code> implementation <code>&quot;SHA1PRNG&quot;</code> is NOT RECOMMENDED, because of weaknesses in seeding and RNG quality in implementations as of 2013 (Michaelis et al., 2013)<sup><a href="#Note23"><strong>(23)</strong></a></sup>.</small></p>
 
-<p><small>(G) <a href="http://en.cppreference.com/w/cpp/numeric/random/random_device"><strong><code>std::random_device</code></strong></a>, introduced in C++11, is NOT RECOMMENDED because its specification leaves considerably much to be desired.  For example,  <code>std::random_device</code> can fall back to a pseudorandom number generator of unspecified quality without much warning.  At best, <code>std::random_device</code> SHOULD only be used to supplement other techniques for random number generation.</small></p>
+<p><small>(G) <a href="http://en.cppreference.com/w/cpp/numeric/random/random_device"><strong><code>std::random_device</code></strong></a>, introduced in C++11, is NOT RECOMMENDED because its specification leaves considerably much to be desired.  For example,  <code>std::random_device</code> can fall back to a pseudorandom number generator of unspecified quality without much warning.  At best, <code>std::random_device</code> SHOULD NOT be used except to supplement other techniques for random number generation.</small></p>
 
 <p><small>(H) The .NET Framework&#39;s <code>System.Random</code> class uses a seed of at most 32 bits, so doesn&#39;t meet the statistical RNG requirements.  However, a subclass of <code>System.Random</code> might be implemented to meet those requirements.</small></p>
 
@@ -523,7 +523,7 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 
 <ul>
 <li>is accessible to only one thread, task, or subtask of the application (such as with thread-local storage),</li>
-<li>is initialized with a seed that is unrelated to the other seeds (using sequential or linearly related seeds can cause <a href="https://blogs.unity3d.com/2015/01/07/a-primer-on-repeatable-random-numbers/"><strong>undesirable correlations</strong></a> in some PRNGs), and</li>
+<li>is initialized with a seed that is unrelated to the other seeds (see &quot;<a href="#Wildly_Varying_Seeds"><strong>Wildly Varying Seeds</strong></a>&quot;), and</li>
 <li>MAY use a different conforming RNG scheme from the others.</li>
 </ul>
 
@@ -812,7 +812,7 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 
 <p><small><sup id=Note19>(19)</sup> Cliff, Y., Boyd, C., Gonzalez Nieto, J.  &quot;How to Extract and Expand Randomness: A Summary and Explanation of Existing Results&quot;, 2009.</small></p>
 
-<p><small><sup id=Note20>(20)</sup> For example, many questions on <em>Stack Overflow</em> highlight the pitfalls of creating a new instance of .NET&#39;s <code>System.Random</code> each time a random number is needed, rather than only once in the application.  See also the section &quot;How to Initialize RNGs&quot;.</small></p>
+<p><small><sup id=Note20>(20)</sup> For example, many questions on <em>Stack Overflow</em> highlight the pitfalls of creating a new instance of .NET&#39;s <code>System.Random</code> each time a random number is needed, rather than only once in the application.  See also Johansen, R. S., &quot;<a href="https://blogs.unity3d.com/2015/01/07/a-primer-on-repeatable-random-numbers/"><strong>A Primer on Repeatable Random Numbers</strong></a>&quot;, Unity Blog, Jan. 7, 2015, and the section &quot;How to Initialize RNGs&quot;.</small></p>
 
 <p><small><sup id=Note21>(21)</sup> Using the similar <code>/dev/random</code> is NOT RECOMMENDED, since in some implementations it can block for seconds at a time, especially if not enough randomness is available.  See also <a href="https://www.2uo.de/myths-about-urandom"><strong>&quot;Myths about /dev/urandom&quot;</strong></a>.</small></p>
 

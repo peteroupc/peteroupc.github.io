@@ -351,7 +351,7 @@ For **statistical RNGs**, an application SHOULD use only one thread-safe instanc
 
 For **seeded PRNGs**, to **reduce the chance of correlated random numbers or identical random number sequences**, an application is encouraged to create one or more instances of a PRNG, where each instance&mdash;
 - is accessible to only one thread, task, or subtask of the application (such as with thread-local storage),
-- is initialized with a seed that is unrelated to the other seeds (see "[Wildly Varying Seeds](#Wildly_Varying_Seeds)"), and
+- is initialized with a seed that is unrelated to the other seeds (see "[**Wildly Varying Seeds**](#Wildly_Varying_Seeds)"), and
 - MAY use a different conforming RNG scheme from the others.
 
 (L'Ecuyer et al. 2015)<sup>[**(24)**](#Note24)</sup>, section 4, goes in greater detail on ways to initialize PRNGs for generating random numbers in parallel, including how to ensure repeatable "randomness" this way if that is desired.
@@ -578,7 +578,7 @@ I acknowledge&mdash;
 
 <small><sup id=Note19>(19)</sup> Cliff, Y., Boyd, C., Gonzalez Nieto, J.  "How to Extract and Expand Randomness: A Summary and Explanation of Existing Results", 2009.</small>
 
-<small><sup id=Note20>(20)</sup> For example, many questions on _Stack Overflow_ highlight the pitfalls of creating a new instance of .NET's `System.Random` each time a random number is needed, rather than only once in the application.  See also Johansen, R. S., "[A Primer on Repeatable Random Numbers](https://blogs.unity3d.com/2015/01/07/a-primer-on-repeatable-random-numbers/)", Unity Blog, Jan. 7, 2015, and the section "How to Initialize RNGs".</small>
+<small><sup id=Note20>(20)</sup> For example, many questions on _Stack Overflow_ highlight the pitfalls of creating a new instance of .NET's `System.Random` each time a random number is needed, rather than only once in the application.  See also Johansen, R. S., "[**A Primer on Repeatable Random Numbers**](https://blogs.unity3d.com/2015/01/07/a-primer-on-repeatable-random-numbers/)", Unity Blog, Jan. 7, 2015, and the section "How to Initialize RNGs".</small>
 
 <small><sup id=Note21>(21)</sup> Using the similar `/dev/random` is NOT RECOMMENDED, since in some implementations it can block for seconds at a time, especially if not enough randomness is available.  See also [**"Myths about /dev/urandom"**](https://www.2uo.de/myths-about-urandom).</small>
 
