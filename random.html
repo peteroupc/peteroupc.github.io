@@ -307,25 +307,26 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 
 <h4>Games</h4>
 
-<p>Many kinds of game software generate seemingly &quot;random&quot; game content that needs to be repeatedly regenerated, such as&mdash;</p>
+<p>Many kinds of game software generate seemingly &quot;random&quot; game content that might need to be repeatedly regenerated, such as&mdash;</p>
 
 <ul>
 <li>procedurally generated maps for a role-playing game,</li>
 <li><a href="#Shuffling"><strong>shuffling</strong></a> a digital deck of cards for a solitaire game, or</li>
-<li>a game board or puzzle board that normally varies every session,</li>
+<li>a game board or puzzle board that normally varies every session.</li>
 </ul>
 
-<p>In general, the bigger that &quot;random&quot; content is, the greater the justification to use a seeded PRNG and a custom seed to generate that content.  But if repeatable &quot;randomness&quot; is needed only at the start of the game session (e.g., to create a &quot;random&quot; game board or a &quot;random&quot; order of digital cards), the application SHOULD consider using a cryptographic or statistical RNG (rather than a seeded PRNG) to generate the &quot;random&quot; content and to store that content rather than a seed, especially if that content uses relatively few &quot;random&quot; numbers (say, no more than a hundred).</p>
+<p>In general, the bigger that &quot;random&quot; content is, the greater the justification to use a seeded PRNG and a custom seed to generate that content.  However, using seeded PRNGs is NOT RECOMMENDED in the following cases:</p>
 
-<p>If a seeded PRNG is used, an application can consider showing users a &quot;code&quot; or &quot;password&quot; based on the custom seed, such as a barcode or a string of letters and digits.</p>
-
-<p>Using seeded PRNGs is NOT RECOMMENDED in networked games where multiple computers (e.g., multiple players, or a client and server) have a shared view of the game state and random numbers are used to update that game state, because randomness increases the risk of a player gaining an unfair advantage, a risk already present when maintaining a game state shared by multiple computers.</p>
+<ul>
+<li>If repeatable &quot;randomness&quot; is needed only at the start of the game session (e.g., to create a &quot;random&quot; game board or a &quot;random&quot; order of digital cards) and the repeatable &quot;random&quot; content is small (say, no more than a hundred numbers).</li>
+<li>In a networked game where multiple computers (e.g., multiple players, or a client and server) have a shared view of the game state and random numbers are used to update that game state.  This is because randomness increases the risk of a player gaining an unfair advantage, a risk already present, in general, when maintaining a game state shared by multiple computers.</li>
+</ul>
 
 <blockquote>
 <p><strong>Examples:</strong></p>
 
 <ol>
-<li><p>Suppose a game generates a map with random terrain (which uses lots of random numbers) and shows the player a &quot;code&quot; to generate that map. In this case, the game&mdash;</p>
+<li><p>Suppose a game generates a map with random terrain (which uses lots of random numbers) and shows the player a &quot;code&quot; to generate that map (such as a barcode or a string of letters and digits). In this case, the game&mdash;</p>
 
 <ul>
 <li>MAY change the algorithm it uses to generate random maps, but</li>

@@ -217,7 +217,7 @@ Many kinds of game software generate seemingly "random" game content that might 
 In general, the bigger that "random" content is, the greater the justification to use a seeded PRNG and a custom seed to generate that content.  However, using seeded PRNGs is NOT RECOMMENDED in the following cases:
 
 - If repeatable "randomness" is needed only at the start of the game session (e.g., to create a "random" game board or a "random" order of digital cards) and the repeatable "random" content is small (say, no more than a hundred numbers).
-- In a networked game where multiple computers (e.g., multiple players, or a client and server) have a shared view of the game state and random numbers are used to update that game state.  This is because randomness increases the risk of a player gaining an unfair advantage, a risk already present when maintaining a game state shared by multiple computers.
+- In a networked game where multiple computers (e.g., multiple players, or a client and server) have a shared view of the game state and random numbers are used to update that game state.  This is because randomness increases the risk of a player gaining an unfair advantage, a risk already present, in general, when maintaining a game state shared by multiple computers.
 
 > **Examples:**
 >
