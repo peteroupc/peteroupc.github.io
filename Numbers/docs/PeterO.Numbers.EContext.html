@@ -71,6 +71,50 @@
 <li><code><a href="#WithUnlimitedExponents">WithUnlimitedExponents()</a></code> - Copies this EContext with an unlimited exponent range.</li>
 </ul>
 
+<p><a id="Void_ctor_Int32_ERounding_Int32_Int32_Boolean"></a></p>
+
+<h3>EContext Constructor</h3>
+
+<pre>public EContext(
+    int precision,
+    PeterO.Numbers.ERounding rounding,
+    int exponentMinSmall,
+    int exponentMaxSmall,
+    bool clampNormalExponents);
+</pre>
+
+<p>Initializes a new instance of the <a href="PeterO.Numbers.EContext.html">PeterO.Numbers.EContext</a> class.  <b>Parameters:</b></p>
+
+<ul>
+<li><p><i>precision</i>: Maximum precision, in decimal digits, of a number&#39;s significand.</p></li>
+<li><p><i>rounding</i>: The rounding mode for this context.</p></li>
+<li><p><i>exponentMinSmall</i>: Smallest exponent of a number, as a power of 10.</p></li>
+<li><p><i>exponentMaxSmall</i>: Largest exponent of a number, as a power of 10.</p></li>
+<li><p><i>clampNormalExponents</i>: The value of the &quot;ClampNormalExponents&quot; property for this context.</p></li>
+</ul>
+
+<p><a id="Void_ctor_EInteger_ERounding_EInteger_EInteger_Boolean"></a></p>
+
+<h3>EContext Constructor</h3>
+
+<pre>public EContext(
+    PeterO.Numbers.EInteger bigintPrecision,
+    PeterO.Numbers.ERounding rounding,
+    PeterO.Numbers.EInteger exponentMin,
+    PeterO.Numbers.EInteger exponentMax,
+    bool clampNormalExponents);
+</pre>
+
+<p>Initializes a new instance of the <a href="PeterO.Numbers.EContext.html">PeterO.Numbers.EContext</a> class, using arbitrary-precision integers to hold the precision and exponent range.  <b>Parameters:</b></p>
+
+<ul>
+<li><p><i>bigintPrecision</i>: Maximum precision, in decimal digits, of a number&#39;s significand.</p></li>
+<li><p><i>rounding</i>: The rounding mode for this context.</p></li>
+<li><p><i>exponentMin</i>: Smallest exponent of a number, as a power of 10.</p></li>
+<li><p><i>exponentMax</i>: Largest exponent of a number, as a power of 10.</p></li>
+<li><p><i>clampNormalExponents</i>: The value of the &quot;ClampNormalExponents&quot; property for this context.</p></li>
+</ul>
+
 <p><a id="Basic"></a></p>
 
 <h3>Basic</h3>

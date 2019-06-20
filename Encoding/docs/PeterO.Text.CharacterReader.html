@@ -17,6 +17,198 @@
 <li><code><a href="#ReadChar">ReadChar()</a></code> - Reads the next character from a Unicode stream or a string.</li>
 </ul>
 
+<p><a id="Void_ctor_String"></a></p>
+
+<h3>CharacterReader Constructor</h3>
+
+<pre>public CharacterReader(
+    string str);
+</pre>
+
+<p>Initializes a new instance of the <a href="PeterO.Text.CharacterReader.html">PeterO.Text.CharacterReader</a> class.  <b>Parameters:</b></p>
+
+<ul>
+<li><i>str</i>: The parameter  <i>str</i>
+is a text string.</li>
+</ul>
+
+<p><a id="Void_ctor_String_Boolean"></a></p>
+
+<h3>CharacterReader Constructor</h3>
+
+<pre>public CharacterReader(
+    string str,
+    bool skipByteOrderMark);
+</pre>
+
+<p>Initializes a new instance of the <a href="PeterO.Text.CharacterReader.html">PeterO.Text.CharacterReader</a> class.  <b>Parameters:</b></p>
+
+<ul>
+<li><p><i>str</i>: The parameter  <i>str</i>
+is a text string.</p></li>
+<li><p><i>skipByteOrderMark</i>: Either  <code>true</code> true or  <code>false</code> false .</p></li>
+</ul>
+
+<p><a id="Void_ctor_String_Boolean_Boolean"></a></p>
+
+<h3>CharacterReader Constructor</h3>
+
+<pre>public CharacterReader(
+    string str,
+    bool skipByteOrderMark,
+    bool errorThrow);
+</pre>
+
+<p>Initializes a new instance of the <a href="PeterO.Text.CharacterReader.html">PeterO.Text.CharacterReader</a> class.  <b>Parameters:</b></p>
+
+<ul>
+<li><p><i>str</i>: The parameter  <i>str</i>
+is a text string.</p></li>
+<li><p><i>skipByteOrderMark</i>: Either  <code>true</code> true or  <code>false</code> false .</p></li>
+<li><p><i>errorThrow</i>: Either  <code>true</code> true or  <code>false</code> false .</p></li>
+</ul>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter  <i>str</i>
+is null.</li>
+</ul>
+
+<p><a id="Void_ctor_String_Int32_Int32"></a></p>
+
+<h3>CharacterReader Constructor</h3>
+
+<pre>public CharacterReader(
+    string str,
+    int offset,
+    int length);
+</pre>
+
+<p>Initializes a new instance of the <a href="PeterO.Text.CharacterReader.html">PeterO.Text.CharacterReader</a> class.  <b>Parameters:</b></p>
+
+<ul>
+<li><p><i>str</i>: The parameter  <i>str</i>
+is a text string.</p></li>
+<li><p><i>offset</i>: The parameter  <i>offset</i>
+is a 32-bit signed integer.</p></li>
+<li><p><i>length</i>: The parameter  <i>length</i>
+is a 32-bit signed integer.</p></li>
+</ul>
+
+<p><a id="Void_ctor_String_Int32_Int32_Boolean_Boolean"></a></p>
+
+<h3>CharacterReader Constructor</h3>
+
+<pre>public CharacterReader(
+    string str,
+    int offset,
+    int length,
+    bool skipByteOrderMark,
+    bool errorThrow);
+</pre>
+
+<p>Initializes a new instance of the <a href="PeterO.Text.CharacterReader.html">PeterO.Text.CharacterReader</a> class.  <b>Parameters:</b></p>
+
+<ul>
+<li><p><i>str</i>: The parameter  <i>str</i>
+is a text string.</p></li>
+<li><p><i>offset</i>: The parameter  <i>offset</i>
+is a 32-bit signed integer.</p></li>
+<li><p><i>length</i>: The parameter  <i>length</i>
+is a 32-bit signed integer.</p></li>
+<li><p><i>skipByteOrderMark</i>: Either  <code>true</code> true or  <code>false</code> false .</p></li>
+<li><p><i>errorThrow</i>: Either  <code>true</code> true or  <code>false</code> false .</p></li>
+</ul>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter  <i>str</i>
+is null.</li>
+</ul>
+
+<p><a id="Void_ctor_Stream"></a></p>
+
+<h3>CharacterReader Constructor</h3>
+
+<pre>public CharacterReader(
+    System.IO.Stream stream);
+</pre>
+
+<p>Initializes a new instance of the <a href="PeterO.Text.CharacterReader.html">PeterO.Text.CharacterReader</a> class.  <b>Parameters:</b></p>
+
+<ul>
+<li><i>stream</i>: A readable data stream.</li>
+</ul>
+
+<p><a id="Void_ctor_Stream_Int32"></a></p>
+
+<h3>CharacterReader Constructor</h3>
+
+<pre>public CharacterReader(
+    System.IO.Stream stream,
+    int mode);
+</pre>
+
+<p>Initializes a new instance of the <a href="PeterO.Text.CharacterReader.html">PeterO.Text.CharacterReader</a> class.  <b>Parameters:</b></p>
+
+<ul>
+<li><p><i>stream</i>: A readable data stream.</p></li>
+<li><p><i>mode</i>: The parameter  <i>mode</i>
+is a 32-bit signed integer.</p></li>
+</ul>
+
+<p><a id="Void_ctor_Stream_Int32_Boolean"></a></p>
+
+<h3>CharacterReader Constructor</h3>
+
+<pre>public CharacterReader(
+    System.IO.Stream stream,
+    int mode,
+    bool errorThrow);
+</pre>
+
+<p>Initializes a new instance of the <a href="PeterO.Text.CharacterReader.html">PeterO.Text.CharacterReader</a> class.  <b>Parameters:</b></p>
+
+<ul>
+<li><p><i>stream</i>: A readable data stream.</p></li>
+<li><p><i>mode</i>: The parameter  <i>mode</i>
+is a 32-bit signed integer.</p></li>
+<li><p><i>errorThrow</i>: Either  <code>true</code> true or  <code>false</code> false .</p></li>
+</ul>
+
+<p><a id="Void_ctor_Stream_Int32_Boolean_Boolean"></a></p>
+
+<h3>CharacterReader Constructor</h3>
+
+<pre>public CharacterReader(
+    System.IO.Stream stream,
+    int mode,
+    bool errorThrow,
+    bool dontSkipUtf8Bom);
+</pre>
+
+<p>Initializes a new instance of the <a href="PeterO.Text.CharacterReader.html">PeterO.Text.CharacterReader</a> class.  <b>Parameters:</b></p>
+
+<ul>
+<li><p><i>stream</i>: A readable data stream.</p></li>
+<li><p><i>mode</i>: The parameter  <i>mode</i>
+is a 32-bit signed integer.</p></li>
+<li><p><i>errorThrow</i>: Either  <code>true</code> true or  <code>false</code> false .</p></li>
+<li><p><i>dontSkipUtf8Bom</i>: Either  <code>true</code> true or  <code>false</code> false .</p></li>
+</ul>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter  <i>stream</i>
+is null.</li>
+</ul>
+
 <p><a id="Read_int_int_int"></a></p>
 
 <h3>Read</h3>

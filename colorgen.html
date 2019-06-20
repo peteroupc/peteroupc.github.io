@@ -1190,7 +1190,7 @@ END METHOD
 <li>An application can consider a color <strong>light</strong> if <code>Luminance(color)</code> is greater than some threshold, say, 70.</li>
 </ol>
 
-<p><strong>Note:</strong> <code>Luminance(color)</code> could also be implemented to output any of the following values, or in general, any other single number that summarizes a color and ranges from 0 for &quot;minimum intensity&quot; through 1 for &quot;maximum intensity&quot;.</p>
+<p><strong>Note:</strong> <code>Luminance(color)</code> belongs to a family of functions that output a single number that summarizes a color and ranges from 0 for &quot;minimum intensity&quot; through 1 for &quot;maximum intensity&quot;. The following are other functions in this family.</p>
 
 <ol>
 <li><strong>Single channel</strong> of a multicomponent color; for example, <code>color[0]</code>, <code>color[1]</code>, or <code>color[2]</code> for an RGB color&#39;s red, green, or blue component, respectively.</li>
@@ -1738,8 +1738,14 @@ were intended for readers with normal and <a href="#Defective_and_Animal_Color_V
 
 <ul>
 <li><code>RNDRANGE</code>, <code>RNDU01</code>, <code>RNDINT</code>, and <code>RNDINTEXC</code> are methods defined in my article on <a href="https://peteroupc.github.io/randomfunc.html"><strong>random number generation methods</strong></a>.</li>
-<li>The <strong><em>light-dark factor</em></strong> referred to in some techniques is the color&#39;s <a href="#CIELAB"><strong>CIELAB</strong></a> lightness (<em>L*</em>) divided by 100, or is another value from 0 through 1 that expresses a color&#39;s lightness (in terms of human perception), or is <a href="#Luminance_Factor_Grayscale"><strong><code>Luminance(color)</code></strong></a> as a last resort.</li>
-<li>For best results, these techniques need to use <a href="#RGB_Color_Spaces"><strong><em>linear RGB</em> colors</strong></a> rather than encoded RGB colors, unless noted otherwise.</li>
+<li><p>Some techniques here refer to a <strong><em>light-dark factor</em></strong>.  This factor can be implemented by any of the following, in order of preference from most to least.</p>
+
+<ol>
+<li>The color&#39;s <a href="#CIELAB"><strong>CIELAB</strong></a> lightness (<em>L*</em>) divided by 100, or another value from 0 through 1 that expresses a color&#39;s lightness (in terms of human perception).</li>
+<li><a href="#Luminance_Factor_Grayscale"><strong><code>Luminance(color)</code></strong></a>.</li>
+<li>Any other single number that summarizes a color and ranges from 0 (&quot;minimum intensity&quot;) to 1 (&quot;maximum intensity&quot;).</li>
+</ol></li>
+<li><p>For best results, these techniques need to use <a href="#RGB_Color_Spaces"><strong><em>linear RGB</em> colors</strong></a> rather than encoded RGB colors, unless noted otherwise.</p></li>
 </ul>
 
 <p>The techniques follow.</p>

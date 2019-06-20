@@ -17,7 +17,44 @@
 <li><code><a href="#ReplaceSurrogates">ReplaceSurrogates</a></code> - Gets a value indicating whether surrogate code points not part of a surrogate pair (which consists of two consecutive char s forming one Unicode code point) are each replaced with a replacement character (U+FFFD).</li>
 </ul>
 
-<p><a id="Default"></a></p>
+<p><a id="Void_ctor_Boolean"></a></p>
+
+<h3>JSONOptions Constructor</h3>
+
+<pre>public JSONOptions(
+    bool base64Padding);
+</pre>
+
+<p>Initializes a new instance of the <a href="PeterO.Cbor.JSONOptions.html">PeterO.Cbor.JSONOptions</a> class with the given value for the Base64Padding option.  <b>Parameters:</b></p>
+
+<ul>
+<li><i>base64Padding</i>: Whether padding is included when writing data in base64url or traditional base64 format to JSON.</li>
+</ul>
+
+<p><a id="Void_ctor_Boolean_Boolean"></a></p>
+
+<h3>JSONOptions Constructor</h3>
+
+<pre>public JSONOptions(
+    bool base64Padding,
+    bool replaceSurrogates);
+</pre>
+
+<p>Initializes a new instance of the <a href="PeterO.Cbor.JSONOptions.html">PeterO.Cbor.JSONOptions</a> class with the given values for the options.  <b>Parameters:</b></p>
+
+<ul>
+<li><p><i>base64Padding</i>: Whether padding is included when writing data in base64url or traditional base64 format to JSON.</p></li>
+<li><p><i>replaceSurrogates</i>: Whether surrogate code points not part of a surrogate pair (which consists of two consecutive  <code>char</code> char s forming one Unicode code point) are each replaced with a replacement character (U+FFFD). The default is false; an exception is thrown when such code points are encountered.</p></li>
+</ul>
+
+<p><a id="Void_ctor"></a></p>
+
+<h3>JSONOptions Constructor</h3>
+
+<pre>public JSONOptions();
+</pre>
+
+<p>Initializes a new instance of the <a href="PeterO.Cbor.JSONOptions.html">PeterO.Cbor.JSONOptions</a> class with default options.  <a id="Default"></a></p>
 
 <h3>Default</h3>
 
