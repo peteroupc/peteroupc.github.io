@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
-<p>Begun on Mar. 5, 2016; last updated on June 19, 2019.</p>
+<p>Begun on Mar. 5, 2016; last updated on June 20, 2019.</p>
 
 <p>Most apps that use random numbers care about either unpredictability, speed/high quality, or repeatability.  This article explains the three kinds of RNGs and gives recommendations on each kind.</p>
 
@@ -293,7 +293,9 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 <li>SHOULD NOT seed the PRNG with floating-point numbers or generate floating-point numbers with that PRNG.</li>
 </ul>
 
-<p>For example, an application could implement a seeded PRNG using a third-party library that specifically says it implements an algorithm mentioned in the <a href="#Examples_and_Non_Examples"><strong>statistical RNG examples</strong></a>, and could initialize that PRNG using a bit sequence from a cryptographic RNG (see &quot;<a href="#Wildly_Varying_Seeds"><strong>Wildly Varying Seeds</strong></a>&quot;).  The developers could also mention the use of the specific PRNG chosen on any code that uses it, to alert other developers that the PRNG needs to remain unchanged.</p>
+<blockquote>
+<p><strong>Example:</strong> An application could implement a seeded PRNG using a third-party library that specifically says it implements an algorithm mentioned in the <a href="#Examples_and_Non_Examples"><strong>statistical RNG examples</strong></a>, and could initialize that PRNG using a bit sequence from a cryptographic RNG (see &quot;<a href="#Wildly_Varying_Seeds"><strong>Wildly Varying Seeds</strong></a>&quot;).  The developers could also mention the use of the specific PRNG chosen on any code that uses it, to alert other developers that the PRNG needs to remain unchanged.</p>
+</blockquote>
 
 <p><a id=Seeded_PRNG_Use_Cases></a></p>
 
@@ -305,7 +307,7 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 
 <h4>Games</h4>
 
-<p>Many kinds of games generate game content based on apparent randomness, such as&mdash;</p>
+<p>Many kinds of game software generate game content based on apparent randomness, such as&mdash;</p>
 
 <ul>
 <li>procedurally generated maps for a role-playing game,</li>
@@ -315,21 +317,26 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 
 <p>where the game might need to generate the same content of that kind multiple times.</p>
 
-<p>In general, such a game SHOULD NOT use a PRNG with a custom seed for such purposes unless&mdash;</p>
+<p>In general, if repeatable &quot;randomness&quot; is needed only at the start of the game session (e.g., to create a &quot;random&quot; game board or a &quot;random&quot; order of digital cards), the application SHOULD consider using an RNG other than a seeded RNG to generate the &quot;random&quot; content and to store that content rather than a seed, especially if that content uses relatively few &quot;random&quot; numbers (say, no more than a hundred).  In general, the bigger the &quot;random&quot; content, the greater the justification to use a seeded PRNG and a custom seed to generate that content.</p>
 
-<ol>
-<li>generating the random content uses relatively many random numbers (say, more than a few thousand), and the application finds it impractical to store or distribute the content or the numbers for later use (this is often the case for maps with random procedural terrain, but not for puzzle game boards or card shuffling), or</li>
-<li>the game makes the seed (or a &quot;code&quot; or &quot;password&quot; based on the seed, such as a barcode or a string of letters and digits) accessible to the player, to allow the player to regenerate the content.</li>
-</ol>
+<p>If a seeded PRNG is used, an application can consider showing users a &quot;code&quot; or &quot;password&quot; based on the custom seed, such as a barcode or a string of letters and digits.</p>
 
 <blockquote>
-<p><strong>Example:</strong> Suppose a game generates a map with random terrain and shows the player a &quot;code&quot; to generate that map. In this case, the game&mdash;</p>
+<p><strong>Examples:</strong></p>
+
+<ol>
+<li><p>Suppose a game generates a map with random terrain (which uses lots of random numbers) and shows the player a &quot;code&quot; to generate that map. In this case, the game&mdash;</p></li>
+</ol>
 
 <ul>
 <li>MAY change the algorithm it uses to generate random maps, but</li>
 <li>SHOULD use, in connection with the new algorithm, &quot;codes&quot; that can&#39;t be confused with &quot;codes&quot; it used for previous algorithms, and</li>
-<li>SHOULD continue to generate the same random map using an old &quot;code&quot; when the player enters it, even after the change to a new algorithm.</li>
+<li><p>SHOULD continue to generate the same random map using an old &quot;code&quot; when the player enters it, even after the change to a new algorithm.</p></li>
 </ul>
+
+<ol>
+<li>Suppose a game implements a chapter that involves navigating a randomly generated dungeon with randomly scattered monsters and items.  If the layout of the dungeon, monsters, and items has to be the same for a given week and for all players, the game can seed a PRNG with a hash generated from the current week, the current month, the current year, and, optionally, a constant sequence of bits.</li>
+</ol>
 </blockquote>
 
 <p><a id=Unit_Tests></a></p>
@@ -342,12 +349,9 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 
 <h4>Noise</h4>
 
-<p><em>Noise</em> is a randomized variation in images, sound, and other data.  (See also Red Blob Games, <a href="http://www.redblobgames.com/articles/noise/introduction.html"><strong>&quot;Noise Functions and Map Generation&quot;</strong></a>).  For the purposes of RNG recommendations, there are two kinds of noise:</p>
+<p><em>Noise</em> is a randomized variation in images, sound, and other data.  (See also Red Blob Games, <a href="http://www.redblobgames.com/articles/noise/introduction.html"><strong>&quot;Noise Functions and Map Generation&quot;</strong></a>).  There are no RNG considerations that are specific to noise, with the exception of <em>procedural noise</em>.</p>
 
-<ol>
-<li><p><strong><em>Procedural noise</em></strong> is generated using a <em>noise function</em>, which is a function that takes an <em>n</em>-dimensional point and, optionally, additional data such as gradients or hash values, and outputs a seemingly random number.<sup><a href="#Note13"><strong>(13)</strong></a></sup>  Procedural noise includes <a href="https://en.wikipedia.org/wiki/Cellular_noise"><strong>cellular noise</strong></a>, <a href="https://en.wikipedia.org/wiki/Value_noise"><strong>value noise</strong></a>, and <a href="https://en.wikipedia.org/wiki/Gradient_noise"><strong>gradient noise</strong></a> (such as <a href="https://en.wikipedia.org/wiki/Perlin_noise"><strong>Perlin noise</strong></a>).  The same instance of a procedural noise implementation SHOULD NOT output different &quot;random&quot; numbers when given the same <em>n</em>-dimensional point.  Such an instance SHOULD be initialized either with &quot;hard-coded&quot; data only or RNG-generated data.</p></li>
-<li><p><strong><em>Nonprocedural noise</em></strong> is generated using the help of an RNG.  Nonprocedural noise includes <a href="https://en.wikipedia.org/wiki/Colors_of_noise"><strong>colored noise</strong></a> (including white noise and pink noise), periodic noise, and noise following a Gaussian or other <a href="https://peteroupc.github.io/randomfunc.html#Specific_Non_Uniform_Distributions"><strong>probability distribution</strong></a>.  For nonprocedural noise, the same considerations apply to any RNGs the noise implementation uses as in cases not involving noise.</p></li>
-</ol>
+<p><strong><em>Procedural noise</em></strong> is noise generated using a <em>noise function</em>, which is a function that takes an <em>n</em>-dimensional point and, optionally, additional data such as gradients or hash values, and outputs a seemingly random number.<sup><a href="#Note13"><strong>(13)</strong></a></sup>  Procedural noise includes <a href="https://en.wikipedia.org/wiki/Cellular_noise"><strong>cellular noise</strong></a>, <a href="https://en.wikipedia.org/wiki/Value_noise"><strong>value noise</strong></a>, and <a href="https://en.wikipedia.org/wiki/Gradient_noise"><strong>gradient noise</strong></a> (such as <a href="https://en.wikipedia.org/wiki/Perlin_noise"><strong>Perlin noise</strong></a>).<sup><a href="#Note36"><strong>(36)</strong></a></sup>  The same instance of a procedural noise implementation SHOULD NOT output different &quot;random&quot; numbers when given the same <em>n</em>-dimensional point.  Such an instance SHOULD be initialized either with &quot;hard-coded&quot; data only or with RNG-generated data.</p>
 
 <p><a id=Verifiable_Random_Numbers></a></p>
 
@@ -849,6 +853,8 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 <p><small><sup id=Note34>(34)</sup> Such arbitrary data can include process identifiers, time stamps, environment variables, random numbers, virtual machine guest identifiers, and/or other data specific to the session or to the instance of the RNG.  See also NIST SP800-90A and the references below.<br/>Everspaugh, A., Zhai, Y., et al.  &quot;Not-So-Random Numbers in Virtualized Linux and the Whirlwind RNG&quot;, 2014.<br>Ristenpart, T., Yilek, S. &quot;When Good Randomness Goes Bad: Virtual Machine Reset Vulnerabilities and Hedging Deployed Cryptography&quot;, 2010.</small></p>
 
 <p><small><sup id=Note35>(35)</sup> Allowing applications to do so would hamper forward compatibility &mdash; the API would then be less free to change how the RNG is implemented in the future (e.g., to use a cryptographic or otherwise &quot;better&quot; RNG), or to make improvements or bug fixes in methods that use that RNG (such as shuffling and Gaussian number generation).  (As a notable example, the V8 JavaScript engine recently changed its <code>Math.random()</code> implementation to use a variant of <code>xorshift128+</code>, which is backward compatible because nothing in JavaScript allows  <code>Math.random()</code> to be seeded.)  Nevertheless, APIs can still allow applications to provide additional input (&quot;entropy&quot;) to the RNG in order to increase its randomness rather than to ensure repeatability.</small></p>
+
+<p><small><sup id=Note36>(36)</sup> Besides procedural noise, other kinds of noise include <a href="https://en.wikipedia.org/wiki/Colors_of_noise"><strong>colored noise</strong></a> (including white noise and pink noise), periodic noise, and noise following a Gaussian or other <a href="https://peteroupc.github.io/randomfunc.html#Specific_Non_Uniform_Distributions"><strong>probability distribution</strong></a>.</small></p>
 
 <p><a id=Appendix></a></p>
 
