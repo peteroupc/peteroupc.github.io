@@ -12,19 +12,13 @@
 <p>Contains methods for parsing and generating Data URIs (uniform resource identifiers). Data URIs are described in RFC 2397. Examples for Data URIs follow.</p>
 
 <pre>data:, hello%20world
+
+data:text/markdown, hello%20world
+
+data:application/octet-stream;base64, AAAAAA==
 </pre>
 
-<p>data:, hello%20world</p>
-
-<pre>data:text/markdown, hello%20world
-</pre>
-
-<p>data:text/markdown, hello%20world</p>
-
-<pre>data:application/octet-stream;base64, AAAAAA==
-</pre>
-
-<p>data:application/octet-stream;base64, AAAAAA==  ### Member Summary</p>
+<p>### Member Summary</p>
 
 <ul>
 <li><code><a href="#DataUriBytes_string">DataUriBytes(string)</a></code> - Extracts the data from a Data URI (uniform resource identifier) in the form of a byte array.</li>
