@@ -307,7 +307,7 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 
 <h4>Games</h4>
 
-<p>Many kinds of game software generate game content based on apparent randomness, such as&mdash;</p>
+<p>Many kinds of game software generate seemingly &quot;random&quot; game content that needs to be repeatedly regenerated, such as&mdash;</p>
 
 <ul>
 <li>procedurally generated maps for a role-playing game,</li>
@@ -315,27 +315,24 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 <li>a game board or puzzle board that normally varies every session,</li>
 </ul>
 
-<p>where the game might need to generate the same content of that kind multiple times.</p>
-
-<p>In general, if repeatable &quot;randomness&quot; is needed only at the start of the game session (e.g., to create a &quot;random&quot; game board or a &quot;random&quot; order of digital cards), the application SHOULD consider using an RNG other than a seeded RNG to generate the &quot;random&quot; content and to store that content rather than a seed, especially if that content uses relatively few &quot;random&quot; numbers (say, no more than a hundred).  In general, the bigger the &quot;random&quot; content, the greater the justification to use a seeded PRNG and a custom seed to generate that content.</p>
+<p>In general, the bigger that &quot;random&quot; content is, the greater the justification to use a seeded PRNG and a custom seed to generate that content.  But if repeatable &quot;randomness&quot; is needed only at the start of the game session (e.g., to create a &quot;random&quot; game board or a &quot;random&quot; order of digital cards), the application SHOULD consider using a cryptographic or statistical RNG (rather than a seeded PRNG) to generate the &quot;random&quot; content and to store that content rather than a seed, especially if that content uses relatively few &quot;random&quot; numbers (say, no more than a hundred).</p>
 
 <p>If a seeded PRNG is used, an application can consider showing users a &quot;code&quot; or &quot;password&quot; based on the custom seed, such as a barcode or a string of letters and digits.</p>
+
+<p>Using seeded PRNGs is NOT RECOMMENDED in networked games where multiple computers (e.g., multiple players, or a client and server) have a shared view of the game state and random numbers are used to update that game state, because randomness increases the risk of a player gaining an unfair advantage, a risk already present when maintaining a game state shared by multiple computers.</p>
 
 <blockquote>
 <p><strong>Examples:</strong></p>
 
 <ol>
-<li><p>Suppose a game generates a map with random terrain (which uses lots of random numbers) and shows the player a &quot;code&quot; to generate that map. In this case, the game&mdash;</p></li>
-</ol>
+<li><p>Suppose a game generates a map with random terrain (which uses lots of random numbers) and shows the player a &quot;code&quot; to generate that map. In this case, the game&mdash;</p>
 
 <ul>
 <li>MAY change the algorithm it uses to generate random maps, but</li>
 <li>SHOULD use, in connection with the new algorithm, &quot;codes&quot; that can&#39;t be confused with &quot;codes&quot; it used for previous algorithms, and</li>
-<li><p>SHOULD continue to generate the same random map using an old &quot;code&quot; when the player enters it, even after the change to a new algorithm.</p></li>
-</ul>
-
-<ol>
-<li>Suppose a game implements a chapter that involves navigating a randomly generated dungeon with randomly scattered monsters and items.  If the layout of the dungeon, monsters, and items has to be the same for a given week and for all players, the game can seed a PRNG with a hash generated from the current week, the current month, the current year, and, optionally, a constant sequence of bits.</li>
+<li>SHOULD continue to generate the same random map using an old &quot;code&quot; when the player enters it, even after the change to a new algorithm.</li>
+</ul></li>
+<li><p>Suppose a game implements a chapter that involves navigating a randomly generated dungeon with randomly scattered monsters and items.  If the layout of the dungeon, monsters, and items has to be the same for a given week and for all players, the game can seed a PRNG with a hash generated from the current week, the current month, the current year, and, optionally, a constant sequence of bits.</p></li>
 </ol>
 </blockquote>
 

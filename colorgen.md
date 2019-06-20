@@ -1008,7 +1008,7 @@ An **_encoded RGB_ color** needs to be converted to linear RGB (in the same RGB 
 > 3. An application can consider a color **dark** if `Luminance(color)` is lower than some threshold, say, 15.
 > 4. An application can consider a color **light** if `Luminance(color)` is greater than some threshold, say, 70.
 >
-> **Note:** `Luminance(color)` could also be implemented to output any of the following values, or in general, any other single number that summarizes a color and ranges from 0 for "minimum intensity" through 1 for "maximum intensity".
+> **Note:** `Luminance(color)` belongs to a family of functions that output a single number that summarizes a color and ranges from 0 for "minimum intensity" through 1 for "maximum intensity". The following are other functions in this family.
 >
 > 1. **Single channel** of a multicomponent color; for example, `color[0]`, `color[1]`, or `color[2]` for an RGB color's red, green, or blue component, respectively.
 > 2. **Average** of the multicomponent color's components (see [**Alpha Blending**](#Alpha_Blending)).
@@ -1443,7 +1443,11 @@ where `value` is a number 0 or greater and 1 or less (0 and 1 are the start and 
 The following techniques can be used to generate random colors. In this section:
 
 - `RNDRANGE`, `RNDU01`, `RNDINT`, and `RNDINTEXC` are methods defined in my article on [**random number generation methods**](https://peteroupc.github.io/randomfunc.html).
-- The ***light-dark factor*** referred to in some techniques is the color's [**CIELAB**](#CIELAB) lightness (_L*_) divided by 100, or is another value from 0 through 1 that expresses a color's lightness (in terms of human perception), or is [**`Luminance(color)`**](#Luminance_Factor_Grayscale) as a last resort.
+- Some techniques here refer to a ***light-dark factor***.  This factor can be implemented by any of the following, in order of preference from most to least.
+    1. The color's [**CIELAB**](#CIELAB) lightness (_L*_) divided by 100, or another value from 0 through 1 that expresses a color's lightness (in terms of human perception).
+    2. [**`Luminance(color)`**](#Luminance_Factor_Grayscale).
+    3. Any other single number that summarizes a color and ranges from 0 ("minimum intensity") to 1 ("maximum intensity").
+
 - For best results, these techniques need to use [**_linear RGB_ colors**](#RGB_Color_Spaces) rather than encoded RGB colors, unless noted otherwise.
 
 The techniques follow.
