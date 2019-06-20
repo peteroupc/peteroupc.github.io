@@ -208,7 +208,7 @@ Custom seeds can come into play in the following situations, among others.
 <a id=Games></a>
 #### Games
 
-Many kinds of games generate game content based on apparent randomness, such as&mdash;
+Many kinds of game software generate game content based on apparent randomness, such as&mdash;
 
 - procedurally generated maps for a role-playing game,
 - [**shuffling**](#Shuffling) a digital deck of cards for a solitaire game, or
@@ -216,16 +216,19 @@ Many kinds of games generate game content based on apparent randomness, such as&
 
 where the game might need to generate the same content of that kind multiple times.
 
-In general, such a game SHOULD NOT use a PRNG with a custom seed for such purposes unless&mdash;
+In general, if repeatable "randomness" is needed only at the start of the game session (e.g., to create a "random" game board or a "random" order of digital cards), the application SHOULD consider using an RNG other than a seeded RNG to generate the "random" content and to store that content rather than a seed, especially if that content is relatively few bits long (say, no more than 300 bits long).  In general, the bigger the "random" content, the greater the justification to use a seeded PRNG and a custom seed to generate that content.
 
-1. generating the random content uses relatively many random numbers (say, more than a few thousand), and the application finds it impractical to store or distribute the content or the numbers for later use (this is often the case for maps with random procedural terrain, but not for puzzle game boards or card shuffling), or
-2. the game makes the seed (or a "code" or "password" based on the seed, such as a barcode or a string of letters and digits) accessible to the player, to allow the player to regenerate the content.
+If a seeded PRNG is used, an application can consider showing users a "code" or "password" based on the custom seed, such as a barcode or a string of letters and digits.
 
-> **Example:** Suppose a game generates a map with random terrain and shows the player a "code" to generate that map. In this case, the game&mdash;
+> **Examples:**
+> 
+> 1. Suppose a game generates a map with random terrain (which uses lots of random numbers) and shows the player a "code" to generate that map. In this case, the game&mdash;
 >
 > - MAY change the algorithm it uses to generate random maps, but
 > - SHOULD use, in connection with the new algorithm, "codes" that can't be confused with "codes" it used for previous algorithms, and
 > - SHOULD continue to generate the same random map using an old "code" when the player enters it, even after the change to a new algorithm.
+> 
+> 2. Suppose a game implements a chapter that involves navigating a randomly generated dungeon with randomly scattered monsters and items.  If the layout of the dungeon, monsters, and items has to be the same for a given week and for all players, the game can seed a PRNG with a hash generated from the current week, the current month, the current year, and, optionally, a constant sequence of bits.
 
 <a id=Unit_Tests></a>
 #### Unit Tests
