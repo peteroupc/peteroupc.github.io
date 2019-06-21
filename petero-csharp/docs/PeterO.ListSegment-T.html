@@ -16,16 +16,16 @@
 <p>Specifies a segment of a list defined by an offset and length. This class cannot be inherited.  ### Member Summary</p>
 
 <ul>
-<li><code><a href="#Add_T">Add(T)</a></code> -</li>
+<li><code><a href="#Add_T">Add(T)</a></code> - This method is not supported.</li>
 <li><code><a href="#Clear">Clear()</a></code> - This method is not supported.</li>
-<li><code><a href="#Contains_T">Contains(T)</a></code> -</li>
-<li><code><a href="#CopyTo_PeterO_T_int">CopyTo(PeterO.T&lt;&gt;[], int)</a></code> -</li>
+<li><code><a href="#Contains_T">Contains(T)</a></code> - Not documented yet.</li>
+<li><code><a href="#CopyTo_PeterO_T_int">CopyTo(PeterO.T&lt;&gt;[], int)</a></code> - Not documented yet.</li>
 <li><code><a href="#Count">Count</a></code> - Gets a value not documented yet.</li>
 <li><code><a href="#GetEnumerator">GetEnumerator()</a></code> - Not documented yet.</li>
-<li><code><a href="#IndexOf_T">IndexOf(T)</a></code> -</li>
-<li><code><a href="#Insert_int_T">Insert(int, T)</a></code> -</li>
+<li><code><a href="#IndexOf_T">IndexOf(T)</a></code> - Not documented yet.</li>
+<li><code><a href="#Insert_int_T">Insert(int, T)</a></code> - This method is not supported.</li>
 <li><code><a href="#IsReadOnly">IsReadOnly</a></code> - Gets a value indicating whether this list segment is read only.</li>
-<li><code><a href="#Remove_T">Remove(T)</a></code> -</li>
+<li><code><a href="#Remove_T">Remove(T)</a></code> - This method is not supported.</li>
 <li><code><a href="#RemoveAt_int">RemoveAt(int)</a></code> - This method is not supported.</li>
 <li><code><a href="#StartIndex">StartIndex</a></code> - Gets the starting index within the underlying list for this list segment.</li>
 <li><code><a href="#this_int">this[int]</a></code> - Not documented yet.</li>
@@ -35,6 +35,35 @@
 
 <ul>
 <li>&lt;T&gt;: Any object type.</li>
+</ul>
+
+<p><a id="Void_ctor_IList_1_Int32_Int32"></a></p>
+
+<h3>ListSegment Constructor</h3>
+
+<pre>public ListSegment(
+    System.Collections.Generic.IList&lt;T&gt; list,
+    int start,
+    int count);
+</pre>
+
+<p>Initializes a new instance of the <a href="PeterO.ListSegment.html">PeterO.ListSegment</a> class.  <b>Parameters:</b></p>
+
+<ul>
+<li><p><i>list</i>: The parameter  <i>list</i>
+is an IList object.</p></li>
+<li><p><i>start</i>: The parameter  <i>start</i>
+is a 32-bit signed integer.</p></li>
+<li><p><i>count</i>: The parameter  <i>count</i>
+is a 32-bit signed integer.</p></li>
+</ul>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter  <i>list</i>
+is null.</li>
 </ul>
 
 <p><a id="Count"></a></p>
@@ -55,9 +84,9 @@
 <pre>public sealed bool IsReadOnly { get; }
 </pre>
 
-<p>Gets a value indicating whether this list segment is read only.</p>
+<p>Gets a value indicating whether this list segment is read only.  The read-only status of the list segment is the same as that of the underlying list. However, operations that would change the list segment&#39;s size, such as adding and removing items, are not supported.</p>
 
-<p>The read-only status of the list segment is the same as that of the underlying list. However, operations that would change the list segment&#39;s size, such as adding and removing items, are not supported.  <b>Returns:</b></p>
+<p><b>Returns:</b></p>
 
 <p><code>true</code>  if this list segment is read only; otherwise,  <code>false</code>  .</p>
 
@@ -90,6 +119,28 @@ is not documented yet.</li>
 
 <p>The starting index within the underlying list for this list segment.</p>
 
+<p><a id="Add_T"></a></p>
+
+<h3>Add</h3>
+
+<pre>public sealed void Add(
+    T item);
+</pre>
+
+<p>This method is not supported.  <b>Parameters:</b></p>
+
+<ul>
+<li><i>item</i>: The parameter  <i>item</i>
+is not documented yet.</li>
+</ul>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.NotSupportedException:
+Always thrown, because changing the size of a list segment is not supported.</li>
+</ul>
+
 <p><a id="Clear"></a></p>
 
 <h3>Clear</h3>
@@ -104,6 +155,52 @@ is not documented yet.</li>
 Always thrown, because changing the size of a list segment is not supported.</li>
 </ul>
 
+<p><a id="Contains_T"></a></p>
+
+<h3>Contains</h3>
+
+<pre>public sealed bool Contains(
+    T item);
+</pre>
+
+<p>Not documented yet.  <b>Parameters:</b></p>
+
+<ul>
+<li><i>item</i>: The parameter  <i>item</i>
+is not documented yet.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>Either  <code>true</code>  or  <code>false</code>  .</p>
+
+<p><a id="CopyTo_PeterO_T_int"></a></p>
+
+<h3>CopyTo</h3>
+
+<pre>public sealed void CopyTo(
+    PeterO.T&lt;&gt;[] array,
+    int arrayIndex);
+</pre>
+
+<p>Not documented yet.  <b>Parameters:</b></p>
+
+<ul>
+<li><p><i>array</i>: The parameter  <i>array</i>
+is not documented yet.</p></li>
+<li><p><i>arrayIndex</i>: The parameter  <i>arrayIndex</i>
+is not documented yet.</p></li>
+</ul>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li><p>System.ArgumentNullException:
+The parameter &quot;array&quot; is null.</p></li>
+<li><p>System.ArgumentException:
+Array index and count must fit the bounds of the array.</p></li>
+</ul>
+
 <p><a id="GetEnumerator"></a></p>
 
 <h3>GetEnumerator</h3>
@@ -114,6 +211,62 @@ Always thrown, because changing the size of a list segment is not supported.</li
 <p>Not documented yet.  <b>Return Value:</b></p>
 
 <p>An IEnumerator(T) object.</p>
+
+<p><a id="IndexOf_T"></a></p>
+
+<h3>IndexOf</h3>
+
+<pre>public sealed int IndexOf(
+    T item);
+</pre>
+
+<p>Not documented yet.  <b>Parameters:</b></p>
+
+<ul>
+<li><i>item</i>: The parameter  <i>item</i>
+is not documented yet.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>A 32-bit signed integer.</p>
+
+<p><a id="Insert_int_T"></a></p>
+
+<h3>Insert</h3>
+
+<pre>public sealed void Insert(
+    int index,
+    T item);
+</pre>
+
+<p>This method is not supported.  <b>Parameters:</b></p>
+
+<ul>
+<li><p><i>index</i>: The parameter  <i>index</i>
+is not documented yet.</p></li>
+<li><p><i>item</i>: The parameter  <i>item</i>
+is not documented yet.</p></li>
+</ul>
+
+<p><a id="Remove_T"></a></p>
+
+<h3>Remove</h3>
+
+<pre>public sealed bool Remove(
+    T item);
+</pre>
+
+<p>This method is not supported.  <b>Parameters:</b></p>
+
+<ul>
+<li><i>item</i>: The parameter  <i>item</i>
+is not documented yet.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>Either  <code>true</code>  or  <code>false</code>  .</p>
 
 <p><a id="RemoveAt_int"></a></p>
 

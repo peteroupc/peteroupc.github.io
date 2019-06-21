@@ -198,9 +198,9 @@ Either &quot;offset&quot; or &quot;length&quot; is less than 0 or greater than &
 <pre>public int Read7BitEncodedInt32LE();
 </pre>
 
-<p>Reads a signed 32-bit integer encoded in 7-bit encoding to the stream.</p>
+<p>Reads a signed 32-bit integer encoded in 7-bit encoding to the stream.  In 7-bit encoding, an integer is encoded in one or more bytes. Each byte contains 7 bits of the result, starting with the least-significant bits. If the eighth (highest) bit is 1, then the byte that follows it contains 7 more bits, and so on. Otherwise, the process stops and the resulting integer is returned. The return value of this method can be up to 32 bits long. If bit 32 is 1, the return value is negative; otherwise positive.</p>
 
-<p>In 7-bit encoding, an integer is encoded in one or more bytes. Each byte contains 7 bits of the result, starting with the least-significant bits. If the eighth (highest) bit is 1, then the byte that follows it contains 7 more bits, and so on. Otherwise, the process stops and the resulting integer is returned. The return value of this method can be up to 32 bits long. If bit 32 is 1, the return value is negative; otherwise positive.  <b>Return Value:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>A 32-bit signed integer.</p>
 
@@ -244,9 +244,9 @@ Either &quot;offset&quot; or &quot;length&quot; is less than 0 or greater than &
 <pre>public int Read7BitEncodedUInt32LE();
 </pre>
 
-<p>Reads an unsigned 32-bit integer encoded in 7-bit encoding to the stream.</p>
+<p>Reads an unsigned 32-bit integer encoded in 7-bit encoding to the stream.  In 7-bit encoding, an integer is encoded in one or more bytes. Each byte contains 7 bits of the result, starting with the least-significant bits. If the eighth (highest) bit is 1, then the byte that follows it contains 7 more bits, and so on. Otherwise, the process stops and the resulting integer is returned. The return value of this method can be up to 31 bits long and is positive.</p>
 
-<p>In 7-bit encoding, an integer is encoded in one or more bytes. Each byte contains 7 bits of the result, starting with the least-significant bits. If the eighth (highest) bit is 1, then the byte that follows it contains 7 more bits, and so on. Otherwise, the process stops and the resulting integer is returned. The return value of this method can be up to 31 bits long and is positive.  <b>Return Value:</b></p>
+<p><b>Return Value:</b></p>
 
 <p>A 32-bit signed integer.</p>
 
