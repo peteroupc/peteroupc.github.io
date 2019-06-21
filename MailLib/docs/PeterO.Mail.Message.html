@@ -51,7 +51,7 @@
 <li><code><a href="#AddAttachment_System_IO_Stream_PeterO_Mail_MediaType_string">AddAttachment(System.IO.Stream, PeterO.Mail.MediaType, string)</a></code> - Adds an attachment to this message in the form of data from the given readable stream, and with the given media type and file name.</li>
 <li><code><a href="#AddAttachment_System_IO_Stream_string">AddAttachment(System.IO.Stream, string)</a></code> - Adds an attachment to this message in the form of data from the given readable stream, and with the given file name.</li>
 <li><code><a href="#AddHeader_string_string">AddHeader(string, string)</a></code> - Adds a header field to the end of the message&#39;s header.</li>
-<li><code><a href="#AddHeader_System_Collections_Generic_KeyValuePair">AddHeader(System.Collections.Generic.KeyValuePair)</a></code> -</li>
+<li><code><a href="#AddHeader_System_Collections_Generic_KeyValuePair">AddHeader(System.Collections.Generic.KeyValuePair)</a></code> - Adds a header field to the end of the message&#39;s header.</li>
 <li><code><a href="#AddInline_PeterO_Mail_MediaType">AddInline(PeterO.Mail.MediaType)</a></code> - Adds an inline body part with an empty body and with the given media type to this message.</li>
 <li><code><a href="#AddInline_System_IO_Stream_PeterO_Mail_MediaType">AddInline(System.IO.Stream, PeterO.Mail.MediaType)</a></code> - Adds an inline body part to this message in the form of data from the given readable stream, and with the given media type.</li>
 <li><code><a href="#AddInline_System_IO_Stream_PeterO_Mail_MediaType_string">AddInline(System.IO.Stream, PeterO.Mail.MediaType, string)</a></code> - Adds an inline body part to this message in the form of data from the given readable stream, and with the given media type and file name.</li>
@@ -78,19 +78,19 @@
 <li><code><a href="#GetHeader_string">GetHeader(string)</a></code> - Gets the first instance of the header field with the specified name, using a basic case-insensitive comparison.</li>
 <li><code><a href="#GetHeaderArray_string">GetHeaderArray(string)</a></code> - Gets an array with the values of all header fields with the specified name, using a basic case-insensitive comparison.</li>
 <li><code><a href="#HeaderFields">HeaderFields</a></code> - Gets a snapshot of the header fields of this message, in the order in which they appear in the message.</li>
-<li><code><a href="#MakeMultilingualMessage_System_Collections_Generic_IList_System_Collections_Generic_IList">MakeMultilingualMessage(System.Collections.Generic.IList, System.Collections.Generic.IList)</a></code> -</li>
+<li><code><a href="#MakeMultilingualMessage_System_Collections_Generic_IList_System_Collections_Generic_IList">MakeMultilingualMessage(System.Collections.Generic.IList, System.Collections.Generic.IList)</a></code> - Generates a multilingual message (see RFC 8255) from a list of messages and a list of language strings.</li>
 <li><code><a href="#NewBodyPart">NewBodyPart()</a></code> - Creates a message object with no header fields.</li>
 <li><code><a href="#Parts">Parts</a></code> - Gets a list of all the parts of this message.</li>
 <li><code><a href="#RemoveHeader_int">RemoveHeader(int)</a></code> - Removes a header field by index.</li>
 <li><code><a href="#RemoveHeader_string">RemoveHeader(string)</a></code> - Removes all instances of the given header field from this message.</li>
-<li><code><a href="#SelectLanguageMessage_System_Collections_Generic_IList">SelectLanguageMessage(System.Collections.Generic.IList)</a></code> -</li>
-<li><code><a href="#SelectLanguageMessage_System_Collections_Generic_IList_bool">SelectLanguageMessage(System.Collections.Generic.IList, bool)</a></code> -</li>
+<li><code><a href="#SelectLanguageMessage_System_Collections_Generic_IList">SelectLanguageMessage(System.Collections.Generic.IList)</a></code> - Selects a body part for a multiple-language message ( multipart/multilingual ) according to the given language priority list.</li>
+<li><code><a href="#SelectLanguageMessage_System_Collections_Generic_IList_bool">SelectLanguageMessage(System.Collections.Generic.IList, bool)</a></code> - Selects a body part for a multiple-language message ( multipart/multilingual ) according to the given language priority list and original-language preference.</li>
 <li><code><a href="#SetBody_byte">SetBody(byte[])</a></code> - Sets the body of this message to the given byte array.</li>
 <li><code><a href="#SetCurrentDate">SetCurrentDate()</a></code> - Sets this message&#39;s Date header field to the current time as its value, with an unspecified time zone offset.</li>
 <li><code><a href="#SetDate_int">SetDate(int[])</a></code> - Sets this message&#39;s Date header field to the given date and time.</li>
 <li><code><a href="#SetHeader_int_string">SetHeader(int, string)</a></code> - Sets the value of a header field by index without changing its name.</li>
 <li><code><a href="#SetHeader_int_string_string">SetHeader(int, string, string)</a></code> - Sets the name and value of a header field by index.</li>
-<li><code><a href="#SetHeader_int_System_Collections_Generic_KeyValuePair">SetHeader(int, System.Collections.Generic.KeyValuePair)</a></code> -</li>
+<li><code><a href="#SetHeader_int_System_Collections_Generic_KeyValuePair">SetHeader(int, System.Collections.Generic.KeyValuePair)</a></code> - Sets the name and value of a header field by index.</li>
 <li><code><a href="#SetHeader_string_string">SetHeader(string, string)</a></code> - Sets the value of this message&#39;s header field.</li>
 <li><code><a href="#SetHtmlBody_string">SetHtmlBody(string)</a></code> - Sets the body of this message to the specified string in Hypertext Markup Language (HTML) format.</li>
 <li><code><a href="#SetTextAndHtml_string_string">SetTextAndHtml(string, string)</a></code> - Sets the body of this message to a multipart body with plain text and Hypertext Markup Language (HTML) versions of the same message.</li>
@@ -449,6 +449,36 @@ An I/O error occurred.</p></li>
 <li><p>System.ArgumentNullException:
 The parameter  <i>name</i>
 or  <i>value</i>
+is null.</p></li>
+<li><p>System.ArgumentException:
+The header field name is too long or contains an invalid character, or the header field&#39;s value is syntactically invalid.</p></li>
+</ul>
+
+<p><a id="AddHeader_System_Collections_Generic_KeyValuePair"></a></p>
+
+<h3>AddHeader</h3>
+
+<pre>public PeterO.Mail.Message AddHeader(
+    System.Collections.Generic.KeyValuePair header);
+</pre>
+
+<p>Adds a header field to the end of the message&#39;s header. Updates the ContentType and ContentDisposition properties if those header fields have been modified by this method.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>header</i>: A key/value pair. The key is the name of the header field, such as &quot;From&quot; or &quot;Content-ID&quot;. The value is the header field&#39;s value.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>This instance.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li><p>System.ArgumentNullException:
+The key or value of  <i>header</i>
 is null.</p></li>
 <li><p>System.ArgumentException:
 The header field name is too long or contains an invalid character, or the header field&#39;s value is syntactically invalid.</p></li>
@@ -859,6 +889,42 @@ is 0 or at least as high as the number of header fields.</li>
 Name is null.</li>
 </ul>
 
+<p><a id="MakeMultilingualMessage_System_Collections_Generic_IList_System_Collections_Generic_IList"></a></p>
+
+<h3>MakeMultilingualMessage</h3>
+
+<pre>public static PeterO.Mail.Message MakeMultilingualMessage(
+    System.Collections.Generic.IList messages,
+    System.Collections.Generic.IList languages);
+</pre>
+
+<p>Generates a multilingual message (see RFC 8255) from a list of messages and a list of language strings.  <b>Parameters:</b></p>
+
+<ul>
+<li><p><i>messages</i>: A list of messages forming the parts of the multilingual message object. Each message should have the same content, but be in a different language. Each message must have a From header field and use the same email address in that field as the other messages. The messages should be ordered in descending preference of language.</p></li>
+<li><p><i>languages</i>: A list of language strings corresponding to the messages given in the &quot;messages&quot; parameter. A language string at a given index corresponds to the message at the same index. Each language string must follow the syntax of the Content-Language header field (see LanguageTags.GetLanguageList).</p></li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>A Message object with the content type &quot;multipart/multilingual&quot; . It will begin with an explanatory body part and be followed by the messages given in the  <i>messages</i>
+ parameter in the order given.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li><p>System.ArgumentNullException:
+The parameter  <i>messages</i>
+or  <i>languages</i>
+is null.</p></li>
+<li><p>System.ArgumentException:
+The parameter  <i>messages</i>
+or  <i>languages</i>
+is empty, their lengths don&#39;t match, at least one message is &quot;null&quot;, each message doesn&#39;t contain the same email addresses in their From header fields,  <i>languages</i>
+contains a syntactically invalid language tag list,  <i>languages</i>
+contains the language tag &quot;zzx&quot; not appearing alone or at the end of the language tag list, or the first message contains no From header field.</p></li>
+</ul>
+
 <p><a id="NewBodyPart"></a></p>
 
 <h3>NewBodyPart</h3>
@@ -923,6 +989,60 @@ is 0 or at least as high as the number of header fields.</li>
 <ul>
 <li>System.ArgumentNullException:
 The parameter  <i>name</i>
+is null.</li>
+</ul>
+
+<p><a id="SelectLanguageMessage_System_Collections_Generic_IList"></a></p>
+
+<h3>SelectLanguageMessage</h3>
+
+<pre>public PeterO.Mail.Message SelectLanguageMessage(
+    System.Collections.Generic.IList languages);
+</pre>
+
+<p>Selects a body part for a multiple-language message (  <code>multipart/multilingual</code>  ) according to the given language priority list.  <b>Parameters:</b></p>
+
+<ul>
+<li><i>languages</i>: A list of basic language ranges, sorted in descending order of priority (see the LanguageTags.LanguageTagFilter method).</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>The best matching body part for the given languages. If the body part has no subject, then the top-level subject is used. If this message is not a multipart/multilingual message or has fewer than two body parts, returns this object. If no body part matches the given languages, returns the last body part if its language is &quot;zxx&quot;, or the second body part otherwise.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter  <i>languages</i>
+is null.</li>
+</ul>
+
+<p><a id="SelectLanguageMessage_System_Collections_Generic_IList_bool"></a></p>
+
+<h3>SelectLanguageMessage</h3>
+
+<pre>public PeterO.Mail.Message SelectLanguageMessage(
+    System.Collections.Generic.IList languages,
+    bool preferOriginals);
+</pre>
+
+<p>Selects a body part for a multiple-language message (  <code>multipart/multilingual</code>  ) according to the given language priority list and original-language preference.  <b>Parameters:</b></p>
+
+<ul>
+<li><p><i>languages</i>: A list of basic language ranges, sorted in descending order of priority (see the LanguageTags.LanguageTagFilter method).</p></li>
+<li><p><i>preferOriginals</i>: If true, a body part marked as the original language version is chosen if it matches one of the given language ranges, even if the original language has a lower priority than another language with a matching body part.</p></li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>The best matching body part for the given languages. If the body part has no subject, then the top-level subject is used. If this message is not a multipart/multilingual message or has fewer than two body parts, returns this object. If no body part matches the given languages, returns the last body part if its language is &quot;zxx&quot;, or the second body part otherwise.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter  <i>languages</i>
 is null.</li>
 </ul>
 
@@ -1073,6 +1193,39 @@ The parameter  <i>index</i>
 is 0 or at least as high as the number of header fields; or, the header field name is too long or contains an invalid character, or the header field&#39;s value is syntactically invalid.</p></li>
 <li><p>System.ArgumentNullException:
 The parameter  <i>value</i>
+is null.</p></li>
+</ul>
+
+<p><a id="SetHeader_int_System_Collections_Generic_KeyValuePair"></a></p>
+
+<h3>SetHeader</h3>
+
+<pre>public PeterO.Mail.Message SetHeader(
+    int index,
+    System.Collections.Generic.KeyValuePair header);
+</pre>
+
+<p>Sets the name and value of a header field by index. Updates the ContentType and ContentDisposition properties if those header fields have been modified by this method.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>index</i>: Zero-based index of the header field to set.</p></li>
+<li><p><i>header</i>: A key/value pair. The key is the name of the header field, such as &quot;From&quot; or &quot;Content-ID&quot;. The value is the header field&#39;s value.</p></li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>A Message object.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li><p>System.ArgumentException:
+The parameter  <i>index</i>
+is 0 or at least as high as the number of header fields; or, the header field name is too long or contains an invalid character, or the header field&#39;s value is syntactically invalid.</p></li>
+<li><p>System.ArgumentNullException:
+The key or value of  <i>header</i>
 is null.</p></li>
 </ul>
 

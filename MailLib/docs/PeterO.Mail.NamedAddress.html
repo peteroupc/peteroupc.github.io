@@ -131,6 +131,35 @@ or  <i>domain</i>
 is null.</li>
 </ul>
 
+<p><a id="Void_ctor_String_IList_1"></a></p>
+
+<h3>NamedAddress Constructor</h3>
+
+<pre>public NamedAddress(
+    string groupName,
+    System.Collections.Generic.IList mailboxes);
+</pre>
+
+<p>Initializes a new instance of the <a href="PeterO.Mail.NamedAddress.html">PeterO.Mail.NamedAddress</a> class.  <b>Parameters:</b></p>
+
+<ul>
+<li><p><i>groupName</i>: The parameter  <i>groupName</i>
+is a text string.</p></li>
+<li><p><i>mailboxes</i>: The parameter  <i>mailboxes</i>
+is an IList object.</p></li>
+</ul>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li><p>System.ArgumentNullException:
+The parameter  <i>groupName</i>
+or  <i>mailboxes</i>
+is null.</p></li>
+<li><p>System.ArgumentException:
+GroupName is empty.; A mailbox in the list is a group.</p></li>
+</ul>
+
 <p><a id="Address"></a></p>
 
 <h3>Address</h3>

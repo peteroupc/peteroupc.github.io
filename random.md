@@ -181,10 +181,7 @@ By using a seeded PRNG for repeatable "randomness", an application will be tied 
 1. the application might need to generate the same "random" result multiple times,
 2. the application either&mdash;
     - makes the seed (or a "code" or "password" based on the seed) accessible to the user, or
-    - finds it impractical to store or distribute the "random" numbers or results (rather than the seed) for later use, such as&mdash;
-        - by saving the result to a file,
-        - by storing the "random" numbers for the feature generating the result to "replay" later, or
-        - by distributing the "random" numbers or results to networked users as they are generated, and
+    - finds it impractical to store or distribute the "random" numbers or "random" content, rather than the seed, for later use (e.g., to store those numbers to "replay" later, to store that content in a "save file", or to distribute that content rather than a seed to networked users), and
 3. any feature that uses such a PRNG to generate that "random" result will be deterministic and consistent (see "Determinism and Consistency") for as long as that feature is still in use by that application.
 
 <a id=Seeded_PRNG_Recommendations></a>

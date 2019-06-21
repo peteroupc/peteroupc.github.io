@@ -12,7 +12,7 @@
 <p>Holds converters to customize the serialization and deserialization behavior of  <code>CBORObject.FromObject</code>  and  <code>CBORObject#ToObject</code>  , as well as type filters for  <code>ToObject</code>   ### Member Summary</p>
 
 <ul>
-<li><code><a href="#AddConverter_T_System_Type_PeterO_Cbor_ICBORConverter_T">AddConverter&lt;T&gt;(System.Type, PeterO.Cbor.ICBORConverter&lt;T&gt;)</a></code> -</li>
+<li><code><a href="#AddConverter_T_System_Type_PeterO_Cbor_ICBORConverter_T">AddConverter&lt;T&gt;(System.Type, PeterO.Cbor.ICBORConverter&lt;T&gt;)</a></code> - Registers an object that converts objects of a given type to CBOR objects (called a CBOR converter).</li>
 <li><code><a href="#AddTypeName_string">AddTypeName(string)</a></code> - Adds the fully qualified name of a Java or .</li>
 <li><code><a href="#AddTypePrefix_string">AddTypePrefix(string)</a></code> - Adds a prefix of a Java or .</li>
 <li><code><a href="#FilterTypeName_string">FilterTypeName(string)</a></code> - Returns whether the given Java or .</li>
@@ -25,7 +25,40 @@
 <pre>public CBORTypeMapper();
 </pre>
 
-<p>Initializes a new instance of the <a href="PeterO.Cbor.CBORTypeMapper.html">PeterO.Cbor.CBORTypeMapper</a> class.  <a id="AddTypeName_string"></a></p>
+<p>Initializes a new instance of the <a href="PeterO.Cbor.CBORTypeMapper.html">PeterO.Cbor.CBORTypeMapper</a> class.  <a id="AddConverter_T_System_Type_PeterO_Cbor_ICBORConverter_T"></a></p>
+
+<h3>AddConverter</h3>
+
+<pre>public PeterO.Cbor.CBORTypeMapper AddConverter&lt;T&gt;(
+    System.Type type,
+    PeterO.Cbor.ICBORConverter&lt;T&gt; converter);
+</pre>
+
+<p>Registers an object that converts objects of a given type to CBOR objects (called a CBOR converter).  <b>Parameters:</b></p>
+
+<ul>
+<li><p><i>type</i>: A Type object specifying the type that the converter converts to CBOR objects.</p></li>
+<li><p><i>converter</i>: The parameter  <i>converter</i>
+is an ICBORConverter object.</p></li>
+<li><p>&lt;T&gt;: Must be the same as the &quot;type&quot; parameter.</p></li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>This object.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li><p>System.ArgumentNullException:
+The parameter  <i>type</i>
+or  <i>converter</i>
+is null.</p></li>
+<li><p>System.ArgumentException:
+Converter doesn&#39;t contain a proper ToCBORObject method&quot;.</p></li>
+</ul>
+
+<p><a id="AddTypeName_string"></a></p>
 
 <h3>AddTypeName</h3>
 

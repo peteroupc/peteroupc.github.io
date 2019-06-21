@@ -4,6 +4,41 @@
 <div class="mainarea" id="top">
 <h1>PeterO.Cbor.ICBORConverter-T</h1>
 
+<h2>PeterO.Cbor.ICBORConverter<T></h2>
+
+<pre>public interface ICBORConverter&lt;T&gt;
+</pre>
+
+<p>Interface implemented by classes that convert objects of arbitrary types to CBOR objects.  ### Member Summary</p>
+
+<ul>
+<li><code><a href="#ToCBORObject_T">ToCBORObject(T)</a></code> - Converts an object to a CBOR object.</li>
+</ul>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li>&lt;T&gt;: Type to convert to a CBOR object.</li>
+</ul>
+
+<p><a id="ToCBORObject_T"></a></p>
+
+<h3>ToCBORObject</h3>
+
+<pre>PeterO.Cbor.CBORObject ToCBORObject(
+    T obj);
+</pre>
+
+<p>Converts an object to a CBOR object.  <b>Parameters:</b></p>
+
+<ul>
+<li><i>obj</i>: An object to convert to a CBOR object.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>A CBOR object.</p>
+
 <p><a href="/CBOR/">Back to CBOR start page.</a></p>
 </div><nav id="navigation"><ul>
 <li><a href="/">Back to start site.</a>
