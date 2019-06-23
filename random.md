@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on Mar. 5, 2016; last updated on June 20, 2019.
+Begun on Mar. 5, 2016; last updated on June 23, 2019.
 
 Most apps that use random numbers care about either unpredictability, speed/high quality, or repeatability.  This article explains the three kinds of RNGs and gives recommendations on each kind.
 
@@ -422,9 +422,10 @@ An algorithm is _consistent_ if the output it delivers, given the same input, is
 - across supported hardware, and
 - across supported operating systems.
 
-In practice, however, it's not easy to ensure an algorithm (especially an RNG) is both deterministic and consistent.  There are many ways an algorithm can be nondeterministic or inconsistent.
+In practice, however, it's not easy to ensure an algorithm (especially an RNG) is both deterministic and consistent.  There are many ways an algorithm can be nondeterministic or inconsistent, including the following:
 
-For example, differences in how **floating-point numbers** and floating-point math operations are implemented, in the order in which such operations are carried out (especially where multithreading is involved), or in how numbers are rounded after such operations, can lead to different results from run to run and from machine to machine.<sup>[**(34)**](#Note34)</sup> As another example, a **hash table** that lists its contents in a different order from run to run is not consistent, and two hash tables that assign the same item to different hash table buckets are not consistent with each other.
+- Differences in how **floating-point numbers** and floating-point math operations are implemented, in the order in which such operations are carried out (especially where multithreading is involved), or in how numbers are rounded after such operations, can lead to different results from run to run and from machine to machine.<sup>[**(34)**](#Note34)</sup>.
+- An application that relies on a **hash table** listing its contents in a predictable order might behave inconsistently if the hash table implementation doesn't guarantee this property in its documentation.<sup>[**(38)**](#Note38)</sup>
 
 [**`java.util.Random`**](https://docs.oracle.com/javase/8/docs/api/java/util/Random.html) is one example of a PRNG with deterministic and consistent behavior, but none of the following is such a PRNG:
 
@@ -610,6 +611,8 @@ I acknowledge&mdash;
 <small><sup id=Note36>(36)</sup> Such arbitrary data can include process identifiers, time stamps, environment variables, random numbers, virtual machine guest identifiers, and/or other data specific to the session or to the instance of the RNG.  See also NIST SP800-90A and the references below.<br/>Everspaugh, A., Zhai, Y., et al.  "Not-So-Random Numbers in Virtualized Linux and the Whirlwind RNG", 2014.<br>Ristenpart, T., Yilek, S. "When Good Randomness Goes Bad: Virtual Machine Reset Vulnerabilities and Hedging Deployed Cryptography", 2010.</small>
 
 <small><sup id=Note37>(37)</sup> Allowing applications to do so would hamper forward compatibility &mdash; the API would then be less free to change how the RNG is implemented in the future (e.g., to use a cryptographic or otherwise "better" RNG), or to make improvements or bug fixes in methods that use that RNG (such as shuffling and Gaussian number generation).  (As a notable example, the V8 JavaScript engine recently changed its `Math.random()` implementation to use a variant of `xorshift128+`, which is backward compatible because nothing in JavaScript allows  `Math.random()` to be seeded.)  Nevertheless, APIs can still allow applications to provide additional input ("entropy") to the RNG in order to increase its randomness rather than to ensure repeatability.</small>
+
+<small><sup id=Note38>(38)</sup> Some hash table implementations might use hash algorithms that could change in the future, or might use a random "seed" to change the hash code they generate for a particular item and for a particular hash table.</small>
 
 <a id=Appendix></a>
 ## Appendix

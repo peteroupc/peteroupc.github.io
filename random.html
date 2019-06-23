@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
-<p>Begun on Mar. 5, 2016; last updated on June 20, 2019.</p>
+<p>Begun on Mar. 5, 2016; last updated on June 23, 2019.</p>
 
 <p>Most apps that use random numbers care about either unpredictability, speed/high quality, or repeatability.  This article explains the three kinds of RNGs and gives recommendations on each kind.</p>
 
@@ -615,9 +615,12 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 <li>across supported operating systems.</li>
 </ul>
 
-<p>In practice, however, it&#39;s not easy to ensure an algorithm (especially an RNG) is both deterministic and consistent.  There are many ways an algorithm can be nondeterministic or inconsistent.</p>
+<p>In practice, however, it&#39;s not easy to ensure an algorithm (especially an RNG) is both deterministic and consistent.  There are many ways an algorithm can be nondeterministic or inconsistent, including the following:</p>
 
-<p>For example, differences in how <strong>floating-point numbers</strong> and floating-point math operations are implemented, in the order in which such operations are carried out (especially where multithreading is involved), or in how numbers are rounded after such operations, can lead to different results from run to run and from machine to machine.<sup><a href="#Note34"><strong>(34)</strong></a></sup> As another example, a <strong>hash table</strong> that lists its contents in a different order from run to run is not consistent, and two hash tables that assign the same item to different hash table buckets are not consistent with each other.</p>
+<ul>
+<li>Differences in how <strong>floating-point numbers</strong> and floating-point math operations are implemented, in the order in which such operations are carried out (especially where multithreading is involved), or in how numbers are rounded after such operations, can lead to different results from run to run and from machine to machine.<sup><a href="#Note34"><strong>(34)</strong></a></sup>.</li>
+<li>An application that relies on a <strong>hash table</strong> listing its contents in a predictable order might behave inconsistently if the hash table implementation doesn&#39;t guarantee this property in its documentation.<sup><a href="#Note38"><strong>(38)</strong></a></sup></li>
+</ul>
 
 <p><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Random.html"><strong><code>java.util.Random</code></strong></a> is one example of a PRNG with deterministic and consistent behavior, but none of the following is such a PRNG:</p>
 
@@ -844,6 +847,8 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 <p><small><sup id=Note36>(36)</sup> Such arbitrary data can include process identifiers, time stamps, environment variables, random numbers, virtual machine guest identifiers, and/or other data specific to the session or to the instance of the RNG.  See also NIST SP800-90A and the references below.<br/>Everspaugh, A., Zhai, Y., et al.  &quot;Not-So-Random Numbers in Virtualized Linux and the Whirlwind RNG&quot;, 2014.<br>Ristenpart, T., Yilek, S. &quot;When Good Randomness Goes Bad: Virtual Machine Reset Vulnerabilities and Hedging Deployed Cryptography&quot;, 2010.</small></p>
 
 <p><small><sup id=Note37>(37)</sup> Allowing applications to do so would hamper forward compatibility &mdash; the API would then be less free to change how the RNG is implemented in the future (e.g., to use a cryptographic or otherwise &quot;better&quot; RNG), or to make improvements or bug fixes in methods that use that RNG (such as shuffling and Gaussian number generation).  (As a notable example, the V8 JavaScript engine recently changed its <code>Math.random()</code> implementation to use a variant of <code>xorshift128+</code>, which is backward compatible because nothing in JavaScript allows  <code>Math.random()</code> to be seeded.)  Nevertheless, APIs can still allow applications to provide additional input (&quot;entropy&quot;) to the RNG in order to increase its randomness rather than to ensure repeatability.</small></p>
+
+<p><small><sup id=Note38>(38)</sup> Some hash table implementations might use hash algorithms that could change in the future, or might use a random &quot;seed&quot; to change the hash code they generate for a particular item and for a particular hash table.</small></p>
 
 <p><a id=Appendix></a></p>
 
