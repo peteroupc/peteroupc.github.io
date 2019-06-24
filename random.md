@@ -241,7 +241,12 @@ _Noise_ is a randomized variation in images, sound, and other data.  (See also R
 <a id=Verifiable_Random_Numbers></a>
 #### Verifiable Random Numbers
 
-_Verifiable random numbers_ are random numbers (such as seeds for PRNGs) that are disclosed along with all the information necessary to verify their generation.  Usually, such information includes random numbers and/or uncertain data to be determined and publicly disclosed in the future.  Generating verifiable randomness has been described in [**RFC 3797**](https://www.rfc-editor.org/rfc/rfc3797.txt), in (Lenstra et al., 2015)<sup>[**(15)**](#Note15)</sup>, in (Boneh et al., 2018)<sup>[**(16)**](#Note16)</sup> (which introduces the concept of _verifiable delay functions_, functions whose output deliberately takes time to compute but is easy to verify), and elsewhere.
+_Verifiable random numbers_ are random numbers (such as seeds for PRNGs) that are disclosed along with all the information necessary to verify their generation.  Usually, such information includes random numbers and/or uncertain data to be determined and publicly disclosed in the future.
+
+> **Examples:**
+>
+> 1. Generating verifiable randomness has been described in [**RFC 3797**](https://www.rfc-editor.org/rfc/rfc3797.txt), in (Lenstra et al., 2015)<sup>[**(15)**](#Note15)</sup>, in (Boneh et al., 2018)<sup>[**(16)**](#Note16)</sup> (which introduces the concept of _verifiable delay functions_, functions whose output deliberately takes time to compute but is easy to verify), and elsewhere.
+> 2. In a so-called [_commitment scheme_](https://www.soliditydeveloper.com/2019-06-23-randomness-blockchain/), two computers generate a random number, reveal their hash codes first, then reveal those numbers themselves, then each computer verifies the other's random number and hash code.  If verification succeeds, the two random numbers are hashed together to produce a final random number.
 
 <a id=Nondeterministic_Sources_and_Seed_Generation></a>
 ## Nondeterministic Sources and Seed Generation
