@@ -418,10 +418,8 @@
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li><p>System.ArgumentNullException:
-The key is null.</p></li>
-<li><p>System.InvalidOperationException:
-This object is not a map.</p></li>
+<li>System.ArgumentNullException:
+The key is null.</li>
 </ul>
 
 <p><a id="Keys"></a></p>
@@ -434,13 +432,6 @@ This object is not a map.</p></li>
 <p>Gets a collection of the keys of this CBOR object in an undefined order.  <b>Returns:</b></p>
 
 <p>A collection of the keys of this CBOR object.</p>
-
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li>System.InvalidOperationException:
-This object is not a map.</li>
-</ul>
 
 <p><a id="MostInnerTag"></a></p>
 
@@ -514,13 +505,6 @@ This object&#39;s type is not a number type, including the special not-a-number 
 <p>Gets a collection of the values of this CBOR object, if it&#39;s a map or an array. If this object is a map, returns one value for each key in the map in an undefined order. If this is an array, returns all the values of the array in the order they are listed. (This method can&#39;t be used to get the bytes in a CBOR byte string; for that, use the GetByteString method instead.).  <b>Returns:</b></p>
 
 <p>A collection of the values of this CBOR map or array.</p>
-
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li>System.InvalidOperationException:
-This object is not a map or an array.</li>
-</ul>
 
 <p><a id="Abs"></a></p>
 
@@ -707,10 +691,8 @@ Either or both operands are not numbers (as opposed to Not-a-Number, NaN).</li>
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li><p>System.InvalidOperationException:
-This object&#39;s type is not a number type.</p></li>
-<li><p>System.OverflowException:
-This object&#39;s value exceeds the range of a byte (would be less than 0 or greater than 255 when truncated to an integer).</p></li>
+<li>System.OverflowException:
+This object&#39;s value exceeds the range of a byte (would be less than 0 or greater than 255 when truncated to an integer).</li>
 </ul>
 
 <p><a id="AsDecimal"></a></p>
@@ -727,10 +709,8 @@ This object&#39;s value exceeds the range of a byte (would be less than 0 or gre
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li><p>System.InvalidOperationException:
-This object&#39;s type is not a number type.</p></li>
-<li><p>System.OverflowException:
-This object&#39;s value exceeds the range of a .NET decimal.</p></li>
+<li>System.OverflowException:
+This object&#39;s value exceeds the range of a .NET decimal.</li>
 </ul>
 
 <p><a id="AsDouble"></a></p>
@@ -743,13 +723,6 @@ This object&#39;s value exceeds the range of a .NET decimal.</p></li>
 <p>Converts this object to a 64-bit floating point number.  <b>Return Value:</b></p>
 
 <p>The closest 64-bit floating point number to this object. The return value can be positive infinity or negative infinity if this value exceeds the range of a 64-bit floating point number.</p>
-
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li>System.InvalidOperationException:
-This object&#39;s type is not a number type.</li>
-</ul>
 
 <p><a id="AsEDecimal"></a></p>
 
@@ -801,10 +774,8 @@ This object&#39;s type is not a number type, including if this object is CBORObj
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li><p>System.InvalidOperationException:
-This object&#39;s type is not a number type, including if this object is CBORObject.Null. To check the CBOR object for null before conversion, use the following idiom (originally written in C# for the .NET version):  <code>(cbor == null || cbor.IsNull) ? null : cbor.AsEInteger()</code>  .</p></li>
-<li><p>System.OverflowException:
-This object&#39;s value is infinity or not-a-number (NaN).</p></li>
+<li>System.InvalidOperationException:
+This object&#39;s type is not a number type, including if this object is CBORObject.Null. To check the CBOR object for null before conversion, use the following idiom (originally written in C# for the .NET version):  <code>(cbor == null || cbor.IsNull) ? null : cbor.AsEInteger()</code>  .</li>
 </ul>
 
 <p><a id="AsERational"></a></p>
@@ -839,10 +810,8 @@ This object&#39;s type is not a number type, including if this object is CBORObj
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li><p>System.InvalidOperationException:
-This object&#39;s type is not a number type.</p></li>
-<li><p>System.OverflowException:
-This object&#39;s value exceeds the range of a 16-bit signed integer.</p></li>
+<li>System.OverflowException:
+This object&#39;s value exceeds the range of a 16-bit signed integer.</li>
 </ul>
 
 <p><a id="AsInt32"></a></p>
@@ -867,10 +836,8 @@ This object&#39;s value exceeds the range of a 16-bit signed integer.</p></li>
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li><p>System.InvalidOperationException:
-This object&#39;s type is not a number type.</p></li>
-<li><p>System.OverflowException:
-This object&#39;s value exceeds the range of a 32-bit signed integer.</p></li>
+<li>System.OverflowException:
+This object&#39;s value exceeds the range of a 32-bit signed integer.</li>
 </ul>
 
 <p><a id="AsInt64"></a></p>
@@ -895,10 +862,8 @@ This object&#39;s value exceeds the range of a 32-bit signed integer.</p></li>
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li><p>System.InvalidOperationException:
-This object&#39;s type is not a number type.</p></li>
-<li><p>System.OverflowException:
-This object&#39;s value exceeds the range of a 64-bit signed integer.</p></li>
+<li>System.OverflowException:
+This object&#39;s value exceeds the range of a 64-bit signed integer.</li>
 </ul>
 
 <p><a id="AsSByte"></a></p>
@@ -922,13 +887,6 @@ This object&#39;s value exceeds the range of a 64-bit signed integer.</p></li>
 <p>Converts this object to a 32-bit floating point number.  <b>Return Value:</b></p>
 
 <p>The closest 32-bit floating point number to this object. The return value can be positive infinity or negative infinity if this object&#39;s value exceeds the range of a 32-bit floating point number.</p>
-
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li>System.InvalidOperationException:
-This object&#39;s type is not a number type.</li>
-</ul>
 
 <p><a id="AsString"></a></p>
 
@@ -998,10 +956,8 @@ This object&#39;s value is outside the range of a 32-bit unsigned integer.</li>
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li><p>System.InvalidOperationException:
-This object&#39;s type is not a number type.</p></li>
-<li><p>System.OverflowException:
-This object&#39;s value exceeds the range of a 64-bit unsigned integer.</p></li>
+<li>System.OverflowException:
+This object&#39;s value exceeds the range of a 64-bit unsigned integer.</li>
 </ul>
 
 <p><a id="CanFitInDouble"></a></p>
@@ -1261,17 +1217,6 @@ is a CBOREncodeOptions object.</p></li>
 
 <p>A CBOR object decoded from the given byte array.</p>
 
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li><p>PeterO.Cbor.CBORException:
-There was an error in reading or parsing the data. This includes cases where not all of the byte array represents a CBOR object. This exception is also thrown if the parameter  <i>data</i>
-is empty.</p></li>
-<li><p>System.ArgumentNullException:
-The parameter  <i>data</i>
-is null.</p></li>
-</ul>
-
 <p><a id="Divide_PeterO_Cbor_CBORObject_PeterO_Cbor_CBORObject"></a></p>
 
 <h3>Divide</h3>
@@ -1429,12 +1374,10 @@ The string is not in JSON format.</p></li>
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li><p>System.ArgumentNullException:
+<li>System.ArgumentNullException:
 The parameter  <i>str</i>
 or  <i>options</i>
-is null.</p></li>
-<li><p>PeterO.Cbor.CBORException:
-The string is not in JSON format.</p></li>
+is null.</li>
 </ul>
 
 <p><a id="FromObject_bool"></a></p>
@@ -1725,14 +1668,6 @@ parameter for eligible getters as follows:</p></li>
 
 <p>A CBOR object corresponding to the given object. Returns CBORObject.Null if the object is null.</p>
 
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li>System.ArgumentNullException:
-The parameter  <i>options</i>
-is null.</li>
-</ul>
-
 <p><a id="FromObject_object_PeterO_Cbor_PODOptions"></a></p>
 
 <h3>FromObject</h3>
@@ -1755,14 +1690,6 @@ is an arbitrary object. <b>NOTE:</b> For security reasons, whenever possible, an
 <p><b>Return Value:</b></p>
 
 <p>A CBOR object corresponding to the given object. Returns CBORObject.Null if the object is null.</p>
-
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li>System.ArgumentNullException:
-The parameter  <i>options</i>
-is null.</li>
-</ul>
 
 <p><a id="FromObject_PeterO_Cbor_CBORObject"></a></p>
 
@@ -2054,18 +1981,6 @@ is an arbitrary object.</p></li>
  is converted to a CBOR object and given the tag  <i>bigintTag</i>
  .</p>
 
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li><p>System.ArgumentException:
-The parameter  <i>bigintTag</i>
-is less than 0 or greater than 2^64-1, or  <i>valueOb</i>
-&#39;s type is unsupported.</p></li>
-<li><p>System.ArgumentNullException:
-The parameter  <i>bigintTag</i>
-is null.</p></li>
-</ul>
-
 <p><a id="FromObjectAndTag_object_int"></a></p>
 
 <h3>FromObjectAndTag</h3>
@@ -2260,12 +2175,9 @@ is less than 0.</p></li>
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li><p>System.ArgumentException:
+<li>System.ArgumentNullException:
 The parameter  <i>tagValue</i>
-is less than 0.</p></li>
-<li><p>System.ArgumentNullException:
-The parameter  <i>tagValue</i>
-is null.</p></li>
+is null.</li>
 </ul>
 
 <p><a id="HasTag_PeterO_Numbers_EInteger"></a></p>
@@ -2285,17 +2197,6 @@ is null.</p></li>
 <p><b>Return Value:</b></p>
 
 <p><code>true</code>  if this object has a tag of the given number; otherwise,  <code>false</code>  .</p>
-
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li><p>System.ArgumentNullException:
-The parameter  <i>bigTagValue</i>
-is null.</p></li>
-<li><p>System.ArgumentException:
-The parameter  <i>bigTagValue</i>
-is less than 0.</p></li>
-</ul>
 
 <p><a id="Insert_int_object"></a></p>
 
@@ -2320,12 +2221,10 @@ is less than 0.</p></li>
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li><p>System.InvalidOperationException:
-This object is not an array.</p></li>
-<li><p>System.ArgumentException:
+<li>System.ArgumentException:
 The parameter  <i>valueOb</i>
 has an unsupported type; or  <i>index</i>
-is not a valid index into this array.</p></li>
+is not a valid index into this array.</li>
 </ul>
 
 <p><a id="IsInfinity"></a></p>
@@ -2394,13 +2293,6 @@ is a CBOR object.</p></li>
 
 <p>The product of the two numbers.</p>
 
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li>System.ArgumentException:
-Either or both operands are not numbers (as opposed to Not-a-Number, NaN).</li>
-</ul>
-
 <p><a id="Negate"></a></p>
 
 <h3>Negate</h3>
@@ -2411,13 +2303,6 @@ Either or both operands are not numbers (as opposed to Not-a-Number, NaN).</li>
 <p>Gets this object&#39;s value with the sign reversed.  <b>Return Value:</b></p>
 
 <p>The reversed-sign form of this number.</p>
-
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li>System.InvalidOperationException:
-This object&#39;s type is not a number type.</li>
-</ul>
 
 <p><a id="NewArray"></a></p>
 
@@ -2602,16 +2487,6 @@ is a CBOREncodeOptions object.</p></li>
 
 <p>A CBOR object that was read.</p>
 
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li><p>System.ArgumentNullException:
-The parameter  <i>stream</i>
-is null.</p></li>
-<li><p>PeterO.Cbor.CBORException:
-There was an error in reading or parsing the data.</p></li>
-</ul>
-
 <p><a id="ReadJSON_System_IO_Stream"></a></p>
 
 <h3>ReadJSON</h3>
@@ -2635,9 +2510,6 @@ There was an error in reading or parsing the data.</p></li>
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li><p>System.ArgumentNullException:
-The parameter  <i>stream</i>
-is null.</p></li>
 <li><p>System.IO.IOException:
 An I/O error occurred.</p></li>
 <li><p>PeterO.Cbor.CBORException:
@@ -2666,18 +2538,6 @@ is a CBOREncodeOptions object.</p></li>
 <p><b>Return Value:</b></p>
 
 <p>A CBORObject object.</p>
-
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li><p>System.ArgumentNullException:
-The parameter  <i>stream</i>
-is null.</p></li>
-<li><p>System.IO.IOException:
-An I/O error occurred.</p></li>
-<li><p>PeterO.Cbor.CBORException:
-The data stream contains invalid encoding or is not in JSON format.</p></li>
-</ul>
 
 <p><a id="Remainder_PeterO_Cbor_CBORObject_PeterO_Cbor_CBORObject"></a></p>
 
@@ -2718,16 +2578,6 @@ is a CBOR object.</p></li>
 <p><b>Return Value:</b></p>
 
 <p><code>true</code>  if the item was removed; otherwise,  <code>false</code>  .</p>
-
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li><p>System.ArgumentNullException:
-The parameter  <i>obj</i>
-is null (as opposed to CBORObject.Null).</p></li>
-<li><p>System.InvalidOperationException:
-The object is not an array or map.</p></li>
-</ul>
 
 <p><a id="Remove_PeterO_Cbor_CBORObject"></a></p>
 
@@ -2805,13 +2655,11 @@ This object is not a CBOR array.</li>
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li><p>System.InvalidOperationException:
-This object is not a map or an array.</p></li>
-<li><p>System.ArgumentException:
+<li>System.ArgumentException:
 The parameter  <i>key</i>
 or  <i>valueOb</i>
 has an unsupported type, or this instance is a CBOR array and  <i>key</i>
-is less than 0, is the size of this array or greater, or is not a 32-bit signed integer (  <code>int</code>  ).</p></li>
+is less than 0, is the size of this array or greater, or is not a 32-bit signed integer (  <code>int</code>  ).</li>
 </ul>
 
 <p><a id="Subtract_PeterO_Cbor_CBORObject_PeterO_Cbor_CBORObject"></a></p>
@@ -2835,13 +2683,6 @@ is a CBOR object.</p></li>
 <p><b>Return Value:</b></p>
 
 <p>The difference of the two objects.</p>
-
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li>System.ArgumentException:
-Either or both operands are not numbers (as opposed to Not-a-Number, NaN).</li>
-</ul>
 
 <p><a id="ToJSONString_PeterO_Cbor_JSONOptions"></a></p>
 
@@ -2890,14 +2731,6 @@ Either or both operands are not numbers (as opposed to Not-a-Number, NaN).</li>
 <p><b>Return Value:</b></p>
 
 <p>A text string containing the converted object.</p>
-
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li>System.ArgumentNullException:
-The parameter  <i>options</i>
-is null.</li>
-</ul>
 
 <p><a id="ToJSONString"></a></p>
 
@@ -2979,19 +2812,6 @@ The given object&#39;s nesting is too deep, or another error occurred when seria
 
 <p>The converted object.</p>
 
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li><p>System.NotSupportedException:
-The given type  <i>t</i>
-, or this object&#39;s CBOR type, is not supported.</p></li>
-<li><p>System.ArgumentNullException:
-The parameter  <i>t</i>
-is null.</p></li>
-<li><p>System.CBORException:
-The given object&#39;s nesting is too deep, or another error occurred when serializing the object.</p></li>
-</ul>
-
 <p><a id="ToObject_System_Type_PeterO_Cbor_CBORTypeMapper_PeterO_Cbor_PODOptions"></a></p>
 
 <h3>ToObject</h3>
@@ -3060,19 +2880,6 @@ parameter, that converter will be used to convert the CBOR object to an object o
 
 <p>The converted object.</p>
 
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li><p>System.NotSupportedException:
-The given type  <i>t</i>
-, or this object&#39;s CBOR type, is not supported.</p></li>
-<li><p>System.ArgumentNullException:
-The parameter  <i>t</i>
-is null.</p></li>
-<li><p>System.CBORException:
-The given object&#39;s nesting is too deep, or another error occurred when serializing the object.</p></li>
-</ul>
-
 <p><a id="ToObject_System_Type_PeterO_Cbor_PODOptions"></a></p>
 
 <h3>ToObject</h3>
@@ -3092,19 +2899,6 @@ The given object&#39;s nesting is too deep, or another error occurred when seria
 <p><b>Return Value:</b></p>
 
 <p>The converted object.</p>
-
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li><p>System.NotSupportedException:
-The given type  <i>t</i>
-, or this object&#39;s CBOR type, is not supported.</p></li>
-<li><p>System.ArgumentNullException:
-The parameter  <i>t</i>
-is null.</p></li>
-<li><p>System.CBORException:
-The given object&#39;s nesting is too deep, or another error occurred when serializing the object.</p></li>
-</ul>
 
 <p><a id="ToObject_T_PeterO_Cbor_CBORTypeMapper"></a></p>
 
@@ -3126,13 +2920,6 @@ The given object&#39;s nesting is too deep, or another error occurred when seria
 <p><b>Return Value:</b></p>
 
 <p>The converted object.</p>
-
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li>System.NotSupportedException:
-The given type &quot;T&quot;, or this object&#39;s CBOR type, is not supported.</li>
-</ul>
 
 <p><a id="ToObject_T_PeterO_Cbor_CBORTypeMapper_PeterO_Cbor_PODOptions"></a></p>
 
@@ -3157,13 +2944,6 @@ The given type &quot;T&quot;, or this object&#39;s CBOR type, is not supported.<
 
 <p>The converted object.</p>
 
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li>System.NotSupportedException:
-The given type &quot;T&quot;, or this object&#39;s CBOR type, is not supported.</li>
-</ul>
-
 <p><a id="ToObject_T_PeterO_Cbor_PODOptions"></a></p>
 
 <h3>ToObject</h3>
@@ -3184,13 +2964,6 @@ The given type &quot;T&quot;, or this object&#39;s CBOR type, is not supported.<
 <p><b>Return Value:</b></p>
 
 <p>The converted object.</p>
-
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li>System.NotSupportedException:
-The given type &quot;T&quot;, or this object&#39;s CBOR type, is not supported.</li>
-</ul>
 
 <p><a id="ToObject_T"></a></p>
 
@@ -3267,16 +3040,6 @@ The given type &quot;T&quot;, or this object&#39;s CBOR type, is not supported.<
 <li><p><i>stream</i>: A writable data stream.</p></li>
 </ul>
 
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li><p>System.ArgumentNullException:
-The parameter  <i>stream</i>
-is null.</p></li>
-<li><p>System.IO.IOException:
-An I/O error occurred.</p></li>
-</ul>
-
 <p><a id="Write_byte_System_IO_Stream"></a></p>
 
 <h3>Write</h3>
@@ -3293,16 +3056,6 @@ An I/O error occurred.</p></li>
 <li><p><i>stream</i>: A writable data stream.</p></li>
 </ul>
 
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li><p>System.ArgumentNullException:
-The parameter  <i>stream</i>
-is null.</p></li>
-<li><p>System.IO.IOException:
-An I/O error occurred.</p></li>
-</ul>
-
 <p><a id="Write_double_System_IO_Stream"></a></p>
 
 <h3>Write</h3>
@@ -3317,16 +3070,6 @@ An I/O error occurred.</p></li>
 <ul>
 <li><p><i>value</i>: The value to write.</p></li>
 <li><p><i>stream</i>: A writable data stream.</p></li>
-</ul>
-
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li><p>System.ArgumentNullException:
-The parameter  <i>stream</i>
-is null.</p></li>
-<li><p>System.IO.IOException:
-An I/O error occurred.</p></li>
 </ul>
 
 <p><a id="Write_float_System_IO_Stream"></a></p>
@@ -3348,11 +3091,9 @@ An I/O error occurred.</p></li>
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li><p>System.ArgumentNullException:
+<li>System.ArgumentNullException:
 The parameter  <i>s</i>
-is null.</p></li>
-<li><p>System.IO.IOException:
-An I/O error occurred.</p></li>
+is null.</li>
 </ul>
 
 <p><a id="Write_int_System_IO_Stream"></a></p>
@@ -3371,16 +3112,6 @@ An I/O error occurred.</p></li>
 <li><p><i>stream</i>: A writable data stream.</p></li>
 </ul>
 
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li><p>System.ArgumentNullException:
-The parameter  <i>stream</i>
-is null.</p></li>
-<li><p>System.IO.IOException:
-An I/O error occurred.</p></li>
-</ul>
-
 <p><a id="Write_long_System_IO_Stream"></a></p>
 
 <h3>Write</h3>
@@ -3395,16 +3126,6 @@ An I/O error occurred.</p></li>
 <ul>
 <li><p><i>value</i>: The value to write.</p></li>
 <li><p><i>stream</i>: A writable data stream.</p></li>
-</ul>
-
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li><p>System.ArgumentNullException:
-The parameter  <i>stream</i>
-is null.</p></li>
-<li><p>System.IO.IOException:
-An I/O error occurred.</p></li>
 </ul>
 
 <p><a id="Write_object_System_IO_Stream_PeterO_Cbor_CBOREncodeOptions"></a></p>
@@ -3482,14 +3203,6 @@ is an arbitrary object.</p></li>
 <li><p><i>stream</i>: A writable data stream.</p></li>
 </ul>
 
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li>System.ArgumentNullException:
-The parameter  <i>stream</i>
-is null.</li>
-</ul>
-
 <p><a id="Write_PeterO_Numbers_EDecimal_System_IO_Stream"></a></p>
 
 <h3>Write</h3>
@@ -3513,16 +3226,6 @@ is null.</li>
 <li><p><i>bignum</i>: The arbitrary-precision decimal number to write. Can be null.</p></li>
 <li><p><i>stream</i>: Stream to write to.</p></li>
 </ul></li>
-</ul>
-
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li><p>System.ArgumentNullException:
-The parameter  <i>stream</i>
-is null.</p></li>
-<li><p>System.IO.IOException:
-An I/O error occurred.</p></li>
 </ul>
 
 <p><a id="Write_PeterO_Numbers_EFloat_System_IO_Stream"></a></p>
@@ -3550,16 +3253,6 @@ An I/O error occurred.</p></li>
 </ul></li>
 </ul>
 
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li><p>System.ArgumentNullException:
-The parameter  <i>stream</i>
-is null.</p></li>
-<li><p>System.IO.IOException:
-An I/O error occurred.</p></li>
-</ul>
-
 <p><a id="Write_PeterO_Numbers_EInteger_System_IO_Stream"></a></p>
 
 <h3>Write</h3>
@@ -3576,16 +3269,6 @@ An I/O error occurred.</p></li>
 <li><p><i>stream</i>: A writable data stream.</p></li>
 </ul>
 
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li><p>System.ArgumentNullException:
-The parameter  <i>stream</i>
-is null.</p></li>
-<li><p>System.IO.IOException:
-An I/O error occurred.</p></li>
-</ul>
-
 <p><a id="Write_PeterO_Numbers_ERational_System_IO_Stream"></a></p>
 
 <h3>Write</h3>
@@ -3600,16 +3283,6 @@ An I/O error occurred.</p></li>
 <ul>
 <li><p><i>rational</i>: An arbitrary-precision rational number.</p></li>
 <li><p><i>stream</i>: A writable data stream.</p></li>
-</ul>
-
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li><p>System.ArgumentNullException:
-The parameter  <i>stream</i>
-is null.</p></li>
-<li><p>System.IO.IOException:
-An I/O error occurred.</p></li>
 </ul>
 
 <p><a id="Write_sbyte_System_IO_Stream"></a></p>
@@ -3645,16 +3318,6 @@ is an 8-bit signed integer.</p></li>
 <li><p><i>stream</i>: A writable data stream.</p></li>
 </ul>
 
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li><p>System.ArgumentNullException:
-The parameter  <i>stream</i>
-is null.</p></li>
-<li><p>System.IO.IOException:
-An I/O error occurred.</p></li>
-</ul>
-
 <p><a id="Write_string_System_IO_Stream"></a></p>
 
 <h3>Write</h3>
@@ -3673,16 +3336,6 @@ An I/O error occurred.</p></li>
 <li><p><i>stream</i>: A writable data stream.</p></li>
 </ul>
 
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li><p>System.ArgumentNullException:
-The parameter  <i>stream</i>
-is null.</p></li>
-<li><p>System.IO.IOException:
-An I/O error occurred.</p></li>
-</ul>
-
 <p><a id="Write_string_System_IO_Stream_PeterO_Cbor_CBOREncodeOptions"></a></p>
 
 <h3>Write</h3>
@@ -3699,16 +3352,6 @@ An I/O error occurred.</p></li>
 <li><p><i>str</i>: The string to write. Can be null.</p></li>
 <li><p><i>stream</i>: A writable data stream.</p></li>
 <li><p><i>options</i>: Options for encoding the data to CBOR.</p></li>
-</ul>
-
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li><p>System.ArgumentNullException:
-The parameter  <i>stream</i>
-is null.</p></li>
-<li><p>System.IO.IOException:
-An I/O error occurred.</p></li>
 </ul>
 
 <p><a id="Write_uint_System_IO_Stream"></a></p>
@@ -3741,14 +3384,6 @@ An I/O error occurred.</p></li>
 <ul>
 <li><p><i>value</i>: A 64-bit unsigned integer.</p></li>
 <li><p><i>stream</i>: A writable data stream.</p></li>
-</ul>
-
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li>System.ArgumentNullException:
-The parameter  <i>stream</i>
-is null.</li>
 </ul>
 
 <p><a id="Write_ushort_System_IO_Stream"></a></p>
@@ -3801,11 +3436,9 @@ is an arbitrary object.</p></li>
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li><p>System.IO.IOException:
-An I/O error occurred.</p></li>
-<li><p>System.ArgumentNullException:
+<li>System.ArgumentNullException:
 The parameter  <i>outputStream</i>
-is null.</p></li>
+is null.</li>
 </ul>
 
 <p><a id="WriteJSONTo_System_IO_Stream_PeterO_Cbor_JSONOptions"></a></p>
@@ -3822,16 +3455,6 @@ is null.</p></li>
 <ul>
 <li><p><i>outputStream</i>: A writable data stream.</p></li>
 <li><p><i>options</i>: An object containing the options to control writing the CBOR object to JSON.</p></li>
-</ul>
-
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li><p>System.IO.IOException:
-An I/O error occurred.</p></li>
-<li><p>System.ArgumentNullException:
-The parameter  <i>outputStream</i>
-is null.</p></li>
 </ul>
 
 <p><a id="WriteTo_System_IO_Stream"></a></p>
@@ -3896,16 +3519,6 @@ is null.</p></li>
 <li><i>stream</i>: A writable data stream.</li>
 </ul>
 
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li><p>System.ArgumentNullException:
-The parameter  <i>stream</i>
-is null.</p></li>
-<li><p>System.IO.IOException:
-An I/O error occurred.</p></li>
-</ul>
-
 <p><a id="WriteTo_System_IO_Stream_PeterO_Cbor_CBOREncodeOptions"></a></p>
 
 <h3>WriteTo</h3>
@@ -3925,13 +3538,8 @@ An I/O error occurred.</p></li>
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li><p>System.ArgumentNullException:
-The parameter  <i>stream</i>
-is null.</p></li>
-<li><p>System.IO.IOException:
-An I/O error occurred.</p></li>
-<li><p>System.ArgumentException:
-Unexpected data type&quot;.</p></li>
+<li>System.ArgumentException:
+Unexpected data type&quot;.</li>
 </ul>
 
 <p><a id="WriteValue_System_IO_Stream_int_int"></a></p>
@@ -3982,11 +3590,8 @@ Unexpected data type&quot;.</p></li>
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li><p>System.ArgumentException:
-Value is from 24 to 31 and major type is 7.</p></li>
-<li><p>System.ArgumentNullException:
-The parameter  <i>outputStream</i>
-is null.</p></li>
+<li>System.ArgumentException:
+Value is from 24 to 31 and major type is 7.</li>
 </ul>
 
 <p><a id="WriteValue_System_IO_Stream_int_long"></a></p>
@@ -4010,16 +3615,6 @@ is null.</p></li>
 <p><b>Return Value:</b></p>
 
 <p>The number of bytes ordered to be written to the data stream.</p>
-
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li><p>System.ArgumentException:
-Value is from 24 to 31 and major type is 7.</p></li>
-<li><p>System.ArgumentNullException:
-The parameter  <i>outputStream</i>
-is null.</p></li>
-</ul>
 
 <p><a id="WriteValue_System_IO_Stream_int_PeterO_Numbers_EInteger"></a></p>
 
@@ -4077,14 +3672,6 @@ is null.</p></li>
 
 <p>The number of bytes ordered to be written to the data stream.</p>
 
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li>System.ArgumentNullException:
-The parameter  <i>outputStream</i>
-is null.</li>
-</ul>
-
 <p><a id="WriteValue_System_IO_Stream_int_ulong"></a></p>
 
 <h3>WriteValue</h3>
@@ -4106,17 +3693,6 @@ is null.</li>
 <p><b>Return Value:</b></p>
 
 <p>The number of bytes ordered to be written to the data stream.</p>
-
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li><p>System.ArgumentException:
-The parameter  <i>majorType</i>
-is 7 and value is greater than 255.</p></li>
-<li><p>System.ArgumentNullException:
-The parameter  <i>outputStream</i>
-is null.</p></li>
-</ul>
 
 <p><a href="/CBOR/">Back to CBOR start page.</a></p>
 </div><nav id="navigation"><ul>

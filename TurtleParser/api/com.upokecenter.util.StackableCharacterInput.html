@@ -9,14 +9,16 @@
 <pre>public final class StackableCharacterInput extends java.lang.Object implements IMarkableCharacterInput
 </pre>
 
+<p>A character input stream where additional inputs can be</p>
+
 <h2>Methods</h2>
 
 <ul>
-<li><code>StackableCharacterInput​(com.upokecenter.text.ICharacterInput source) com.upokecenter.StackableCharacterInput</code><br>
-Initializes a new instance of the com.upokecenter.StackableCharacterInput class.</li>
-<li><code>int getMarkPosition()</code><br>
+<li><code>StackableCharacterInput​(com.upokecenter.text.ICharacterInput source) StackableCharacterInput</code><br>
+Initializes a new instance of the StackableCharacterInput class.</li>
+<li><code>int GetMarkPosition()</code><br>
 Not documented yet.</li>
-<li><code>void moveBack​(int count)</code><br>
+<li><code>void MoveBack​(int count)</code><br>
 Not documented yet.</li>
 <li><code>void PushInput​(com.upokecenter.text.ICharacterInput input)</code><br>
 Not documented yet.</li>
@@ -26,19 +28,19 @@ int unitCount)</code><br>
 Not documented yet.</li>
 <li><code>int ReadChar()</code><br>
 Not documented yet.</li>
-<li><code>int setHardMark()</code><br>
+<li><code>int SetHardMark()</code><br>
 Not documented yet.</li>
-<li><code>void setMarkPosition​(int pos)</code><br>
+<li><code>void SetMarkPosition​(int pos)</code><br>
 Not documented yet.</li>
-<li><code>int setSoftMark()</code><br>
+<li><code>int SetSoftMark()</code><br>
 Not documented yet.</li>
 </ul>
 
 <h2>Constructors</h2>
 
 <ul>
-<li><code>StackableCharacterInput​(com.upokecenter.text.ICharacterInput source) com.upokecenter.StackableCharacterInput</code><br>
-Initializes a new instance of the com.upokecenter.StackableCharacterInput class.</li>
+<li><code>StackableCharacterInput​(com.upokecenter.text.ICharacterInput source) StackableCharacterInput</code><br>
+Initializes a new instance of the StackableCharacterInput class.</li>
 </ul>
 
 <h2>Method Details</h2>
@@ -48,7 +50,7 @@ Initializes a new instance of the com.upokecenter.StackableCharacterInput class.
 <pre>public StackableCharacterInput​(com.upokecenter.text.ICharacterInput source)
 </pre>
 
-<p>Initializes a new instance of the <code>com.upokecenter.StackableCharacterInput</code> class.</p>
+<p>Initializes a new instance of the <code>StackableCharacterInput</code> class.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -61,7 +63,7 @@ Initializes a new instance of the com.upokecenter.StackableCharacterInput class.
 <pre>public StackableCharacterInput​(com.upokecenter.text.ICharacterInput source)
 </pre>
 
-<p>Initializes a new instance of the <code>com.upokecenter.StackableCharacterInput</code> class.</p>
+<p>Initializes a new instance of the <code>StackableCharacterInput</code> class.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -69,12 +71,18 @@ Initializes a new instance of the com.upokecenter.StackableCharacterInput class.
 <li><code>source</code> - The parameter <code>source</code> is an ICharacterInput object.</li>
 </ul>
 
-<h3>getMarkPosition</h3>
+<h3>GetMarkPosition</h3>
 
-<pre>public int getMarkPosition()
+<pre>public int GetMarkPosition()
 </pre>
 
 <p>Not documented yet.</p>
+
+<p><strong>Specified by:</strong></p>
+
+<ul>
+<li><code>GetMarkPosition</code> in interface <code>IMarkableCharacterInput</code></li>
+</ul>
 
 <p><strong>Returns:</strong></p>
 
@@ -82,12 +90,18 @@ Initializes a new instance of the com.upokecenter.StackableCharacterInput class.
 <li>A 32-bit signed integer.</li>
 </ul>
 
-<h3>moveBack</h3>
+<h3>MoveBack</h3>
 
-<pre>public void moveBack​(int count)
+<pre>public void MoveBack​(int count)
 </pre>
 
 <p>Not documented yet.</p>
+
+<p><strong>Specified by:</strong></p>
+
+<ul>
+<li><code>MoveBack</code> in interface <code>IMarkableCharacterInput</code></li>
+</ul>
 
 <p><strong>Parameters:</strong></p>
 
@@ -106,12 +120,6 @@ Initializes a new instance of the com.upokecenter.StackableCharacterInput class.
 
 <ul>
 <li><code>input</code> - The parameter <code>input</code> is not documented yet.</li>
-</ul>
-
-<p><strong>Throws:</strong></p>
-
-<ul>
-<li><code>java.lang.NullPointerException</code> - The parameter <code>input</code> is null.</li>
 </ul>
 
 <h3>ReadChar</h3>
@@ -166,12 +174,18 @@ Initializes a new instance of the com.upokecenter.StackableCharacterInput class.
 <li><code>java.lang.NullPointerException</code> - The parameter <code>buf</code> is null.</li>
 </ul>
 
-<h3>setHardMark</h3>
+<h3>SetHardMark</h3>
 
-<pre>public int setHardMark()
+<pre>public int SetHardMark()
 </pre>
 
 <p>Not documented yet.</p>
+
+<p><strong>Specified by:</strong></p>
+
+<ul>
+<li><code>SetHardMark</code> in interface <code>IMarkableCharacterInput</code></li>
+</ul>
 
 <p><strong>Returns:</strong></p>
 
@@ -179,12 +193,18 @@ Initializes a new instance of the com.upokecenter.StackableCharacterInput class.
 <li>A 32-bit signed integer.</li>
 </ul>
 
-<h3>setMarkPosition</h3>
+<h3>SetMarkPosition</h3>
 
-<pre>public void setMarkPosition​(int pos)
+<pre>public void SetMarkPosition​(int pos)
 </pre>
 
 <p>Not documented yet.</p>
+
+<p><strong>Specified by:</strong></p>
+
+<ul>
+<li><code>SetMarkPosition</code> in interface <code>IMarkableCharacterInput</code></li>
+</ul>
 
 <p><strong>Parameters:</strong></p>
 
@@ -192,12 +212,18 @@ Initializes a new instance of the com.upokecenter.StackableCharacterInput class.
 <li><code>pos</code> - The parameter <code>pos</code> is not documented yet.</li>
 </ul>
 
-<h3>setSoftMark</h3>
+<h3>SetSoftMark</h3>
 
-<pre>public int setSoftMark()
+<pre>public int SetSoftMark()
 </pre>
 
 <p>Not documented yet.</p>
+
+<p><strong>Specified by:</strong></p>
+
+<ul>
+<li><code>SetSoftMark</code> in interface <code>IMarkableCharacterInput</code></li>
+</ul>
 
 <p><strong>Returns:</strong></p>
 

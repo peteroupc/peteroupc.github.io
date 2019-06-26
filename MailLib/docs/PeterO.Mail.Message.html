@@ -350,12 +350,10 @@ This value is being set and &quot;value&quot; is null.</li>
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li><p>System.ArgumentNullException:
+<li>System.ArgumentNullException:
 The parameter  <i>inputStream</i>
 or  <i>mediaType</i>
-is null.</p></li>
-<li><p>PeterO.Mail.MessageDataException:
-An I/O error occurred.</p></li>
+is null.</li>
 </ul>
 
 <p><a id="AddAttachment_System_IO_Stream_PeterO_Mail_MediaType_string"></a></p>
@@ -380,17 +378,6 @@ An I/O error occurred.</p></li>
 
 <p>A Message object for the generated attachment.</p>
 
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li><p>System.ArgumentNullException:
-The parameter  <i>inputStream</i>
-or  <i>mediaType</i>
-is null.</p></li>
-<li><p>PeterO.Mail.MessageDataException:
-An I/O error occurred.</p></li>
-</ul>
-
 <p><a id="AddAttachment_System_IO_Stream_string"></a></p>
 
 <h3>AddAttachment</h3>
@@ -414,11 +401,9 @@ An I/O error occurred.</p></li>
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li><p>System.ArgumentNullException:
+<li>System.ArgumentNullException:
 The parameter  <i>inputStream</i>
-is null.</p></li>
-<li><p>PeterO.Mail.MessageDataException:
-An I/O error occurred.</p></li>
+is null.</li>
 </ul>
 
 <p><a id="AddHeader_string_string"></a></p>
@@ -446,12 +431,10 @@ An I/O error occurred.</p></li>
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li><p>System.ArgumentNullException:
+<li>System.ArgumentNullException:
 The parameter  <i>name</i>
 or  <i>value</i>
-is null.</p></li>
-<li><p>System.ArgumentException:
-The header field name is too long or contains an invalid character, or the header field&#39;s value is syntactically invalid.</p></li>
+is null.</li>
 </ul>
 
 <p><a id="AddHeader_System_Collections_Generic_KeyValuePair"></a></p>
@@ -529,17 +512,6 @@ The header field name is too long or contains an invalid character, or the heade
 
 <p>A Message object for the generated body part.</p>
 
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li><p>System.ArgumentNullException:
-The parameter  <i>inputStream</i>
-or  <i>mediaType</i>
-is null.</p></li>
-<li><p>PeterO.Mail.MessageDataException:
-An I/O error occurred.</p></li>
-</ul>
-
 <p><a id="AddInline_System_IO_Stream_PeterO_Mail_MediaType_string"></a></p>
 
 <h3>AddInline</h3>
@@ -561,17 +533,6 @@ An I/O error occurred.</p></li>
 <p><b>Return Value:</b></p>
 
 <p>A Message object for the generated body part.</p>
-
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li><p>System.ArgumentNullException:
-The parameter  <i>inputStream</i>
-or  <i>mediaType</i>
-is null.</p></li>
-<li><p>PeterO.Mail.MessageDataException:
-An I/O error occurred.</p></li>
-</ul>
 
 <p><a id="AddInline_System_IO_Stream_string"></a></p>
 
@@ -596,11 +557,9 @@ An I/O error occurred.</p></li>
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li><p>System.ArgumentNullException:
+<li>System.ArgumentNullException:
 The parameter  <i>inputStream</i>
-or &quot;mediaType&quot; is null.</p></li>
-<li><p>PeterO.Mail.MessageDataException:
-An I/O error occurred.</p></li>
+or &quot;mediaType&quot; is null.</li>
 </ul>
 
 <p><a id="ClearHeaders"></a></p>
@@ -633,14 +592,6 @@ An I/O error occurred.</p></li>
 <p><b>Return Value:</b></p>
 
 <p>The header field value with valid encoded words decoded.</p>
-
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li>System.ArgumentNullException:
-The parameter  <i>name</i>
-is null.</li>
-</ul>
 
 <p><a id="FromMailtoUri_string"></a></p>
 
@@ -806,13 +757,6 @@ is empty.</p></li>
 
 <p>An HTML rendering of this message&#39;s text.</p>
 
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li>System.NotSupportedException:
-Either this message is a multipart message, so it doesn&#39;t have its own body text, or this message has no character encoding declared or assumed for it (which is usually the case for non-text messages), or the character encoding is not supported.</li>
-</ul>
-
 <p><a id="GetHeader_string"></a></p>
 
 <h3>GetHeader</h3>
@@ -882,13 +826,6 @@ is 0 or at least as high as the number of header fields.</li>
 
 <p>An array containing the values of all header fields with the given name, in the order they appear in the message. The array will be empty if no header field has that name.</p>
 
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li>System.ArgumentNullException:
-Name is null.</li>
-</ul>
-
 <p><a id="MakeMultilingualMessage_System_Collections_Generic_IList_System_Collections_Generic_IList"></a></p>
 
 <h3>MakeMultilingualMessage</h3>
@@ -956,14 +893,6 @@ contains the language tag &quot;zzx&quot; not appearing alone or at the end of t
 
 <p>This instance.</p>
 
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li>System.ArgumentException:
-The parameter  <i>index</i>
-is 0 or at least as high as the number of header fields.</li>
-</ul>
-
 <p><a id="RemoveHeader_string"></a></p>
 
 <h3>RemoveHeader</h3>
@@ -984,14 +913,6 @@ is 0 or at least as high as the number of header fields.</li>
 
 <p>This instance.</p>
 
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li>System.ArgumentNullException:
-The parameter  <i>name</i>
-is null.</li>
-</ul>
-
 <p><a id="SelectLanguageMessage_System_Collections_Generic_IList"></a></p>
 
 <h3>SelectLanguageMessage</h3>
@@ -1009,14 +930,6 @@ is null.</li>
 <p><b>Return Value:</b></p>
 
 <p>The best matching body part for the given languages. If the body part has no subject, then the top-level subject is used. If this message is not a multipart/multilingual message or has fewer than two body parts, returns this object. If no body part matches the given languages, returns the last body part if its language is &quot;zxx&quot;, or the second body part otherwise.</p>
-
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li>System.ArgumentNullException:
-The parameter  <i>languages</i>
-is null.</li>
-</ul>
 
 <p><a id="SelectLanguageMessage_System_Collections_Generic_IList_bool"></a></p>
 
@@ -1038,14 +951,6 @@ is null.</li>
 
 <p>The best matching body part for the given languages. If the body part has no subject, then the top-level subject is used. If this message is not a multipart/multilingual message or has fewer than two body parts, returns this object. If no body part matches the given languages, returns the last body part if its language is &quot;zxx&quot;, or the second body part otherwise.</p>
 
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li>System.ArgumentNullException:
-The parameter  <i>languages</i>
-is null.</li>
-</ul>
-
 <p><a id="SetBody_byte"></a></p>
 
 <h3>SetBody</h3>
@@ -1063,14 +968,6 @@ is null.</li>
 <p><b>Return Value:</b></p>
 
 <p>This object.</p>
-
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li>System.ArgumentNullException:
-The parameter  <i>bytes</i>
-is null.</li>
-</ul>
 
 <p><a id="SetCurrentDate"></a></p>
 
@@ -1151,18 +1048,6 @@ is null.</p></li>
 
 <p>This instance.</p>
 
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li><p>System.ArgumentException:
-The parameter  <i>index</i>
-is 0 or at least as high as the number of header fields; or, the header field name is too long or contains an invalid character, or the header field&#39;s value is syntactically invalid.</p></li>
-<li><p>System.ArgumentNullException:
-The parameter  <i>name</i>
-or  <i>value</i>
-is null.</p></li>
-</ul>
-
 <p><a id="SetHeader_int_string"></a></p>
 
 <h3>SetHeader</h3>
@@ -1188,12 +1073,9 @@ is null.</p></li>
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li><p>System.ArgumentException:
-The parameter  <i>index</i>
-is 0 or at least as high as the number of header fields; or, the header field name is too long or contains an invalid character, or the header field&#39;s value is syntactically invalid.</p></li>
-<li><p>System.ArgumentNullException:
+<li>System.ArgumentNullException:
 The parameter  <i>value</i>
-is null.</p></li>
+is null.</li>
 </ul>
 
 <p><a id="SetHeader_int_System_Collections_Generic_KeyValuePair"></a></p>
@@ -1221,12 +1103,9 @@ is null.</p></li>
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li><p>System.ArgumentException:
+<li>System.ArgumentException:
 The parameter  <i>index</i>
-is 0 or at least as high as the number of header fields; or, the header field name is too long or contains an invalid character, or the header field&#39;s value is syntactically invalid.</p></li>
-<li><p>System.ArgumentNullException:
-The key or value of  <i>header</i>
-is null.</p></li>
+is 0 or at least as high as the number of header fields; or, the header field name is too long or contains an invalid character, or the header field&#39;s value is syntactically invalid.</li>
 </ul>
 
 <p><a id="SetHeader_string_string"></a></p>
@@ -1251,17 +1130,6 @@ is null.</p></li>
 
 <p>This instance.</p>
 
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li><p>System.ArgumentException:
-The header field name is too long or contains an invalid character, or the header field&#39;s value is syntactically invalid.</p></li>
-<li><p>System.ArgumentNullException:
-The parameter  <i>name</i>
-or  <i>value</i>
-is null.</p></li>
-</ul>
-
 <p><a id="SetHtmlBody_string"></a></p>
 
 <h3>SetHtmlBody</h3>
@@ -1279,14 +1147,6 @@ is null.</p></li>
 <p><b>Return Value:</b></p>
 
 <p>This instance.</p>
-
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li>System.ArgumentNullException:
-The parameter  <i>str</i>
-is null.</li>
-</ul>
 
 <p><a id="SetTextAndHtml_string_string"></a></p>
 
@@ -1362,14 +1222,6 @@ is null.</li>
 <p><b>Return Value:</b></p>
 
 <p>This instance.</p>
-
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li>System.ArgumentNullException:
-The parameter  <i>str</i>
-is null.</li>
-</ul>
 
 <p><a id="ToMailtoUri"></a></p>
 

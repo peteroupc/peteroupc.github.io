@@ -164,14 +164,6 @@ is a Normalization object.</p></li>
 
 <p><code>true</code>  if the text is normalized; otherwise,  <code>false</code>  .</p>
 
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li>System.ArgumentNullException:
-The parameter  <i>chars</i>
-is null.</li>
-</ul>
-
 <p><a id="IsNormalized_string_PeterO_Text_Normalization"></a></p>
 
 <h3>IsNormalized</h3>
@@ -191,14 +183,6 @@ is null.</li>
 <p><b>Return Value:</b></p>
 
 <p><code>true</code>  if the given string is in the given Unicode normalization form; otherwise,  <code>false</code>  . Returns  <code>false</code>  if the string contains an unpaired surrogate code point.</p>
-
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li>System.ArgumentNullException:
-The parameter  <i>str</i>
-is null.</li>
-</ul>
 
 <p><a id="Normalize_string_PeterO_Text_Normalization"></a></p>
 
@@ -224,12 +208,9 @@ is null.</li>
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li><p>System.ArgumentException:
+<li>System.ArgumentException:
 The parameter  <i>str</i>
-contains an unpaired surrogate code point.</p></li>
-<li><p>System.ArgumentNullException:
-The parameter  <i>str</i>
-is null.</p></li>
+contains an unpaired surrogate code point.</li>
 </ul>
 
 <p><a id="Read_int_int_int"></a></p>
@@ -256,22 +237,6 @@ begins.</p></li>
 <p><b>Return Value:</b></p>
 
 <p>The number of Unicode code points read, or 0 if the end of the source is reached.</p>
-
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li><p>System.ArgumentNullException:
-The parameter  <i>chars</i>
-is null.</p></li>
-<li><p>System.ArgumentException:
-Either  <i>index</i>
-or  <i>length</i>
-is less than 0 or greater than  <i>chars</i>
-&#39;s length, or  <i>chars</i>
-&#39; s length minus  <i>index</i>
-is less than  <i>length</i>
-.</p></li>
-</ul>
 
 <p><a id="ReadChar"></a></p>
 

@@ -115,14 +115,6 @@ is a text string.</p></li>
 <p>The Unicode code point at the previous position. Returns -1 if  <i>index</i>
  is 0 or less, or is greater than the string&#39;s length. Returns the replacement character (U+FFFD) if the previous character is an unpaired surrogate code point. If the return value is 65536 (0x10000) or greater, the code point takes up two UTF-16 code units.</p>
 
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li>System.ArgumentNullException:
-The parameter  <i>str</i>
-is null.</li>
-</ul>
-
 <p><a id="CodePointBefore_string_int_int"></a></p>
 
 <h3>CodePointBefore</h3>
@@ -147,14 +139,6 @@ is a text string.</p></li>
 <p>The Unicode code point at the previous position. Returns -1 if  <i>index</i>
  is 0 or less, or is greater than the string&#39;s length. Returns a value as specified under  <i>surrogateBehavior</i>
  if the previous character is an unpaired surrogate code point. If the return value is 65536 (0x10000) or greater, the code point takes up two UTF-16 code units.</p>
-
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li>System.ArgumentNullException:
-The parameter  <i>str</i>
-is null.</li>
-</ul>
 
 <p><a id="CodePointCompare_string_string"></a></p>
 
@@ -195,14 +179,6 @@ is a text string.</li>
 
 <p>The number of Unicode code points in the given string.</p>
 
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li>System.ArgumentNullException:
-The parameter  <i>str</i>
-is null.</li>
-</ul>
-
 <p><a id="GetUtf8Bytes_string_bool"></a></p>
 
 <h3>GetUtf8Bytes</h3>
@@ -231,12 +207,9 @@ is a text string.</p></li>
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li><p>System.ArgumentNullException:
-The parameter  <i>str</i>
-is null.</p></li>
-<li><p>System.ArgumentException:
+<li>System.ArgumentException:
 The string contains an unpaired surrogate code point and  <i>replace</i>
-is false, or an internal error occurred.</p></li>
+is false, or an internal error occurred.</li>
 </ul>
 
 <p><a id="GetUtf8Bytes_string_bool_bool"></a></p>
@@ -266,17 +239,6 @@ is a text string.</p></li>
 
 <p>The string encoded in UTF-8.</p>
 
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li><p>System.ArgumentNullException:
-The parameter  <i>str</i>
-is null.</p></li>
-<li><p>System.ArgumentException:
-The string contains an unpaired surrogate code point and  <i>replace</i>
-is false, or an internal error occurred.</p></li>
-</ul>
-
 <p><a id="GetUtf8Length_string_bool"></a></p>
 
 <h3>GetUtf8Length</h3>
@@ -298,14 +260,6 @@ is a text string.</p></li>
 
 <p>The number of bytes needed to encode the given string in UTF-8, or -1 if the string contains an unpaired surrogate code point and  <i>replace</i>
  is false.</p>
-
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li>System.ArgumentNullException:
-The parameter  <i>str</i>
-is null.</li>
-</ul>
 
 <p><a id="GetUtf8String_byte_bool"></a></p>
 
@@ -365,9 +319,6 @@ is false.</p></li>
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li><p>System.ArgumentNullException:
-The parameter  <i>bytes</i>
-is null.</p></li>
 <li><p>System.ArgumentException:
 The portion of the byte array is not valid UTF-8 and  <i>replace</i>
 is false.</p></li>
@@ -476,11 +427,9 @@ is less than 0, or offset plus bytesCount is greater than the length of  <i>data
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li><p>System.IO.IOException:
-An I/O error occurred.</p></li>
-<li><p>System.ArgumentNullException:
+<li>System.ArgumentNullException:
 The parameter  <i>stream</i>
-is null.</p></li>
+is null.</li>
 </ul>
 
 <p><a id="ReadUtf8ToString_System_IO_Stream_int_bool"></a></p>
@@ -508,12 +457,9 @@ is null.</p></li>
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li><p>System.IO.IOException:
+<li>System.IO.IOException:
 An I/O error occurred; or, the string is not valid UTF-8 and  <i>replace</i>
-is false.</p></li>
-<li><p>System.ArgumentNullException:
-The parameter  <i>stream</i>
-is null.</p></li>
+is false.</li>
 </ul>
 
 <p><a id="ToLowerCaseAscii_string"></a></p>
@@ -586,18 +532,12 @@ is a text string.</li>
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li><p>System.ArgumentNullException:
-The parameter  <i>str</i>
-is null or  <i>stream</i>
-is null.</p></li>
-<li><p>System.ArgumentException:
+<li>System.ArgumentException:
 The parameter  <i>offset</i>
 is less than 0,  <i>length</i>
 is less than 0, or  <i>offset</i>
 plus  <i>length</i>
-is greater than the string&#39;s length.</p></li>
-<li><p>System.IO.IOException:
-An I/O error occurred.</p></li>
+is greater than the string&#39;s length.</li>
 </ul>
 
 <p><a id="WriteUtf8_string_int_int_System_IO_Stream_bool_bool"></a></p>
@@ -629,23 +569,6 @@ An I/O error occurred.</p></li>
 <p>0 if the entire string portion was written; or -1 if the string portion contains an unpaired surrogate code point and  <i>replace</i>
  is false.</p>
 
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li><p>System.ArgumentNullException:
-The parameter  <i>str</i>
-is null or  <i>stream</i>
-is null.</p></li>
-<li><p>System.ArgumentException:
-The parameter  <i>offset</i>
-is less than 0,  <i>length</i>
-is less than 0, or  <i>offset</i>
-plus  <i>length</i>
-is greater than the string&#39;s length.</p></li>
-<li><p>System.IO.IOException:
-An I/O error occurred.</p></li>
-</ul>
-
 <p><a id="WriteUtf8_string_System_IO_Stream_bool"></a></p>
 
 <h3>WriteUtf8</h3>
@@ -672,12 +595,10 @@ An I/O error occurred.</p></li>
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li><p>System.ArgumentNullException:
+<li>System.ArgumentNullException:
 The parameter  <i>str</i>
 is null or  <i>stream</i>
-is null.</p></li>
-<li><p>System.IO.IOException:
-An I/O error occurred.</p></li>
+is null.</li>
 </ul>
 
 <p><a href="/MailLib/">Back to MailLib start page.</a></p>
