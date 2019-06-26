@@ -38,8 +38,8 @@ values for the options.</li>
 <ul>
 <li><code>boolean getBase64Padding()</code><br>
 Deprecated.
-This option may have no effect in the future.
-This option may have no effect in the future.</li>
+This option now has no effect.
+This option now has no effect.</li>
 <li><code>boolean getReplaceSurrogates() char</code><br>
 Gets a value indicating whether surrogate code points not part of a
 surrogate pair (which consists of two consecutive char s
@@ -64,10 +64,10 @@ character (U + FFFD).</li>
 </pre>
 
 <p>Deprecated.
-This option may have no effect in the future. A future version may, by
- default, include necessary padding when writing traditional base64 to JSON
- and include no padding when writing base64url to JSON, in accordance with
- the revision of the CBOR specification.</p>
+This option now has no effect. This library now includes necessary padding
+ when writing traditional base64 to JSON and includes no padding when
+ writing base64url to JSON, in accordance with the revision of the CBOR
+ specification.</p>
 
 <p><strong>Returns:</strong></p>
 
