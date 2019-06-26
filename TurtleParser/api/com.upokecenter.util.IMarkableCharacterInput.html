@@ -9,28 +9,30 @@
 <pre>public interface IMarkableCharacterInput extends com.upokecenter.text.ICharacterInput
 </pre>
 
+<p>Not documented yet.</p>
+
 <h2>Methods</h2>
 
 <ul>
-<li><code>int getMarkPosition()</code><br>
+<li><code>int GetMarkPosition()</code><br>
 Gets the zero-based character position in the stream from the last-set mark.</li>
-<li><code>void moveBack​(int count)</code><br>
+<li><code>void MoveBack​(int count)</code><br>
 Moves the stream position back the given number of characters.</li>
-<li><code>int setHardMark()</code><br>
+<li><code>int SetHardMark()</code><br>
 Sets a mark on the stream&#39;s current position.</li>
-<li><code>void setMarkPosition​(int pos)</code><br>
+<li><code>void SetMarkPosition​(int pos)</code><br>
 Sets the stream&#39;s position from the last set mark.</li>
-<li><code>int setSoftMark()</code><br>
+<li><code>int SetSoftMark()</code><br>
 If no mark is set, sets a mark on the stream, and characters read before the
 currently set mark are no longer available, while characters read
-after will be available if moveBack is called.</li>
+after will be available if MoveBack is called.</li>
 </ul>
 
 <h2>Method Details</h2>
 
-<h3>getMarkPosition</h3>
+<h3>GetMarkPosition</h3>
 
-<pre>int getMarkPosition()
+<pre>int GetMarkPosition()
 </pre>
 
 <p>Gets the zero-based character position in the stream from the last-set mark.</p>
@@ -41,9 +43,9 @@ after will be available if moveBack is called.</li>
 <li>The return value is not documented yet.</li>
 </ul>
 
-<h3>moveBack</h3>
+<h3>MoveBack</h3>
 
-<pre>void moveBack​(int count)
+<pre>void MoveBack​(int count)
 </pre>
 
 <p>Moves the stream position back the given number of characters.</p>
@@ -54,9 +56,9 @@ after will be available if moveBack is called.</li>
 <li><code>count</code> - The parameter <code>count</code> is not documented yet.</li>
 </ul>
 
-<h3>setHardMark</h3>
+<h3>SetHardMark</h3>
 
-<pre>int setHardMark()
+<pre>int SetHardMark()
 </pre>
 
 <p>Sets a mark on the stream&#39;s current position.</p>
@@ -67,9 +69,9 @@ after will be available if moveBack is called.</li>
 <li>The return value is not documented yet.</li>
 </ul>
 
-<h3>setMarkPosition</h3>
+<h3>SetMarkPosition</h3>
 
-<pre>void setMarkPosition​(int pos)
+<pre>void SetMarkPosition​(int pos)
 </pre>
 
 <p>Sets the stream&#39;s position from the last set mark. <param name='pos'/>Zero-based character offset from the last set
@@ -82,15 +84,15 @@ after will be available if moveBack is called.</li>
 <li><p><code>pos</code> - The parameter <code>pos</code> is not documented yet.</p></li>
 </ul>
 
-<h3>setSoftMark</h3>
+<h3>SetSoftMark</h3>
 
-<pre>int setSoftMark()
+<pre>int SetSoftMark()
 </pre>
 
 <p>If no mark is set, sets a mark on the stream, and characters read before the
  currently set mark are no longer available, while characters read
- after will be available if moveBack is called. Otherwise, behaves
- like getMarkPosition.</p>
+ after will be available if MoveBack is called. Otherwise, behaves
+ like GetMarkPosition.</p>
 
 <p><strong>Returns:</strong></p>
 

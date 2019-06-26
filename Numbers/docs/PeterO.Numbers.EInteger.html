@@ -307,7 +307,7 @@ is null.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>An arbitrary-precision integer.</p>
+<p>An arbitrary-precision integer in which each bit is set if the corresponding bits of this integer and the other integer are both set.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -339,7 +339,7 @@ is null.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>An arbitrary-precision integer.</p>
+<p>An arbitrary-precision integer in which each bit is set if the corresponding bits of the two integers are both set.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -2992,16 +2992,14 @@ This value is outside the range of a 64-bit signed integer.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>An arbitrary-precision integer in which each bit is set if it&#39;s set in one input integer but not the other.</p>
+<p>An arbitrary-precision integer in which each bit is set if the corresponding bit is set in one input integer but not in the other.</p>
 
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li><p>System.ArgumentException:
-Doesn&#39;t satisfy smallerCount == CountWords(result).</p></li>
-<li><p>System.ArgumentNullException:
+<li>System.ArgumentNullException:
 The parameter  <i>other</i>
-is null.</p></li>
+is null.</li>
 </ul>
 
 <p><a id="Xor_PeterO_Numbers_EInteger_PeterO_Numbers_EInteger"></a></p>
@@ -3020,13 +3018,13 @@ is null.</p></li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>a</i>: The second arbitrary-precision integer.</p></li>
+<li><p><i>a</i>: The first arbitrary-precision integer.</p></li>
 <li><p><i>b</i>: The second arbitrary-precision integer.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p>An arbitrary-precision integer in which each bit is set if it&#39;s set in one input integer but not the other.</p>
+<p>An arbitrary-precision integer in which each bit is set if the corresponding bit is set in one input integer but not in the other.</p>
 
 <p><b>Exceptions:</b></p>
 
