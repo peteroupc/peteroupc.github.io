@@ -162,6 +162,27 @@ begins.</p></li>
 
 <p>A string consisting of the decoded text.</p>
 
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li><p>T:System.ArgumentNullException:
+The parameter  <i>enc</i>
+or  <i>bytes</i>
+is null.</p></li>
+<li><p>System.ArgumentException:
+Either  <i>offset</i>
+or  <i>length</i>
+is less than 0 or greater than  <i>bytes</i>
+&#39;s length, or  <i> bytes</i>
+&#39; s length minus  <i>offset</i>
+is less than  <i>length</i>
+.</p></li>
+<li><p>System.ArgumentNullException:
+The parameter  <i>enc</i>
+or  <i>bytes</i>
+is null.</p></li>
+</ul>
+
 <p><a id="DecodeToString_this_PeterO_Text_ICharacterEncoding_System_IO_Stream"></a></p>
 
 <h3>DecodeToString</h3>
@@ -285,10 +306,14 @@ is null.</li>
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li> T:System.ArgumentNullException:
+<li><p>T:System.ArgumentNullException:
 The parameter  <i> encoder</i>
 or  <i> input</i>
-is null.</li>
+is null.</p></li>
+<li><p>System.ArgumentNullException:
+The parameter  <i>encoder</i>
+or  <i>input</i>
+is null.</p></li>
 </ul>
 
 <p><a id="EncodeToBytes_this_PeterO_Text_ICharacterInput_PeterO_Text_ICharacterEncoding"></a></p>
@@ -378,6 +403,15 @@ is null.</li>
 
 <p>A byte array containing the encoded text string.</p>
 
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter  <i>str</i>
+or  <i>enc</i>
+is null.</li>
+</ul>
+
 <p><a id="EncodeToWriter_this_PeterO_Text_ICharacterInput_PeterO_Text_ICharacterEncoder_PeterO_IWriter"></a></p>
 
 <h3>EncodeToWriter</h3>
@@ -398,6 +432,15 @@ is null.</li>
 <li><p><i>input</i>: An object that implements a stream of universal code points.</p></li>
 <li><p><i>encoder</i>: An object that implements a character encoder.</p></li>
 <li><p><i>writer</i>: A byte writer to write the encoded bytes to.</p></li>
+</ul>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter  <i>encoder</i>
+or  <i>input</i>
+is null.</li>
 </ul>
 
 <p><a id="EncodeToWriter_this_PeterO_Text_ICharacterInput_PeterO_Text_ICharacterEncoder_System_IO_Stream"></a></p>
@@ -422,6 +465,15 @@ is null.</li>
 <li><p><i>output</i>: A writable data stream.</p></li>
 </ul>
 
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter  <i>encoder</i>
+or  <i>input</i>
+is null.</li>
+</ul>
+
 <p><a id="EncodeToWriter_this_PeterO_Text_ICharacterInput_PeterO_Text_ICharacterEncoding_PeterO_IWriter"></a></p>
 
 <h3>EncodeToWriter</h3>
@@ -442,6 +494,14 @@ is null.</li>
 <li><p><i>input</i>: An object that implements a stream of universal code points.</p></li>
 <li><p><i>encoding</i>: An object that implements a character encoding.</p></li>
 <li><p><i>writer</i>: A byte writer to write the encoded bytes to.</p></li>
+</ul>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter  <i>encoding</i>
+is null.</li>
 </ul>
 
 <p><a id="EncodeToWriter_this_PeterO_Text_ICharacterInput_PeterO_Text_ICharacterEncoding_System_IO_Stream"></a></p>
@@ -466,6 +526,14 @@ is null.</li>
 <li><p><i>output</i>: A writable data stream.</p></li>
 </ul>
 
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter  <i>encoding</i>
+is null.</li>
+</ul>
+
 <p><a id="EncodeToWriter_this_string_PeterO_Text_ICharacterEncoding_PeterO_IWriter"></a></p>
 
 <h3>EncodeToWriter</h3>
@@ -488,6 +556,15 @@ is null.</li>
 <li><p><i>writer</i>: A byte writer where the encoded bytes will be written to.</p></li>
 </ul>
 
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter  <i>str</i>
+or  <i>enc</i>
+is null.</li>
+</ul>
+
 <p><a id="EncodeToWriter_this_string_PeterO_Text_ICharacterEncoding_System_IO_Stream"></a></p>
 
 <h3>EncodeToWriter</h3>
@@ -508,6 +585,15 @@ is null.</li>
 <li><p><i>str</i>: A text string to encode.</p></li>
 <li><p><i>enc</i>: An object implementing a character encoding (gives access to an encoder and a decoder).</p></li>
 <li><p><i>output</i>: A writable data stream.</p></li>
+</ul>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter  <i>str</i>
+or  <i>enc</i>
+is null.</li>
 </ul>
 
 <p><a id="GetDecoderInput_this_PeterO_Text_ICharacterEncoding_PeterO_IByteReader"></a></p>
@@ -825,6 +911,14 @@ is null.</li>
 
 <p>A byte array containing the string encoded in the given text encoding.</p>
 
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter  <i>encoding</i>
+is null.</li>
+</ul>
+
 <p><a id="StringToInput_this_string"></a></p>
 
 <h3>StringToInput</h3>
@@ -847,6 +941,14 @@ is a text string.</li>
 <p><b>Return Value:</b></p>
 
 <p>An ICharacterInput object.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter  <i>str</i>
+is null.</li>
+</ul>
 
 <p><a id="StringToInput_this_string_int_int"></a></p>
 
@@ -881,14 +983,20 @@ begins.</p></li>
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li>System.ArgumentException:
+<li><p>T:System.ArgumentNullException:
+The parameter  <i>str</i>
+is null.</p></li>
+<li><p>System.ArgumentException:
 Either  <i>offset</i>
 or  <i>length</i>
 is less than 0 or greater than  <i>str</i>
 &#39;s length, or  <i>             str</i>
 &#39; s length minus  <i>offset</i>
 is less than  <i>length</i>
-.</li>
+.</p></li>
+<li><p>System.ArgumentNullException:
+The parameter  <i>str</i>
+is null.</p></li>
 </ul>
 
 <p><a href="/Encoding/">Back to Encoding start page.</a></p>

@@ -199,8 +199,11 @@ is an arbitrary object.</li>
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li>System.ArgumentException:
-Name is empty.</li>
+<li><p>System.ArgumentNullException:
+The parameter  <i>name</i>
+is null.</p></li>
+<li><p>System.ArgumentException:
+Name is empty.</p></li>
 </ul>
 
 <p><a id="Parse_string"></a></p>
@@ -251,6 +254,14 @@ Name is empty.</li>
 <p><b>Return Value:</b></p>
 
 <p>A MediaType object.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter  <i>str</i>
+is null.</li>
+</ul>
 
 <p><a id="ToSingleLineString"></a></p>
 

@@ -134,6 +134,14 @@ is a text string.</p></li>
 
 <p>This instance.</p>
 
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter  <i>name</i>
+is null.</li>
+</ul>
+
 <p><a id="SetParameter_string_string"></a></p>
 
 <h3>SetParameter</h3>
@@ -187,9 +195,12 @@ is empty or syntactically invalid.</p></li>
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li>System.ArgumentException:
+<li><p>System.ArgumentNullException:
 The parameter  <i>str</i>
-is empty or syntactically invalid.</li>
+is null.</p></li>
+<li><p>System.ArgumentException:
+The parameter  <i>str</i>
+is empty or syntactically invalid.</p></li>
 </ul>
 
 <p><a id="SetTopLevelType_string"></a></p>
@@ -213,9 +224,12 @@ is empty or syntactically invalid.</li>
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li>System.ArgumentException:
+<li><p>System.ArgumentNullException:
 The parameter  <i>str</i>
-is syntactically invalid for a top-level type.</li>
+is null.</p></li>
+<li><p>System.ArgumentException:
+The parameter  <i>str</i>
+is syntactically invalid for a top-level type.</p></li>
 </ul>
 
 <p><a id="ToMediaType"></a></p>

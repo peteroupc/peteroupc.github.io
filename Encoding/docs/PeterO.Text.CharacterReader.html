@@ -41,16 +41,20 @@ is a text string.</li>
     bool skipByteOrderMark);
 </pre>
 
-<p>Initializes a new instance of the <a href="PeterO.Text.CharacterReader.html">PeterO.Text.CharacterReader</a> class.    <b>Parameters:</b></p>
+<p>Initializes a new instance of the <a href="PeterO.Text.CharacterReader.html">PeterO.Text.CharacterReader</a> class.     <b>Parameters:</b></p>
 
 <ul>
 <li><p><i>str</i>:  The parameter  <i>str</i>
 is a text string.</p></li>
-<li><p><i>skipByteOrderMark</i>:  Either  <code>
-        true
-</code>  or  <code>
-        false
-</code>  .</p></li>
+<li><p><i>skipByteOrderMark</i>:  If true and the first character in the string is U+FEFF, skip that character.</p></li>
+</ul>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter  <i>str</i>
+is null.</li>
 </ul>
 
 <p><a id="Void_ctor_String_Boolean_Boolean"></a></p>
@@ -68,16 +72,8 @@ is a text string.</p></li>
 <ul>
 <li><p><i>str</i>:  The parameter  <i>str</i>
 is a text string.</p></li>
-<li><p><i>skipByteOrderMark</i>:  Either  <code>
-        true
-</code>  or  <code>
-        false
-</code>  .</p></li>
-<li><p><i>errorThrow</i>:  Either  <code>
-        true
-</code>  or  <code>
-        false
-</code>  .</p></li>
+<li><p><i>skipByteOrderMark</i>:  If true and the first character in the string is U+FEFF, skip that character.</p></li>
+<li><p><i>errorThrow</i>:  When encountering invalid encoding, throw an exception if this parameter is true, or replace it with U+FFFD (replacement character) if this parameter is false.</p></li>
 </ul>
 
 <p><b>Exceptions:</b></p>

@@ -68,9 +68,12 @@ is null or invalid, including if the year (  <code>dateTime[0]</code>  ) is less
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li>System.NotSupportedException:
+<li><p>System.ArgumentException:
+The parameter  <i>dateTime</i>
+is null or invalid, including if the year (  <code>dateTime[0]</code>  ) is less than 0.</p></li>
+<li><p>System.NotSupportedException:
 The time zone offset is other than 0 and  <i>gmt</i>
-is true.</li>
+is true.</p></li>
 </ul>
 
 <p><a id="ParseDateString_string"></a></p>
