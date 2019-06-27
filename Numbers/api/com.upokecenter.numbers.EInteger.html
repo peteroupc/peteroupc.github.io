@@ -1597,7 +1597,9 @@ parameter.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>An arbitrary-precision integer.</li>
+<li>An arbitrary-precision integer in which each bit is set if the
+corresponding bits of this integer and the other integer are both
+set.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -1655,16 +1657,14 @@ satisfy biggerCount == CountWords(result).</p></li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>An arbitrary-precision integer in which each bit is set if it&#39;s set
-in one input integer but not the other.</li>
+<li>An arbitrary-precision integer in which each bit is set if the
+corresponding bit is set in one input integer but not in the other.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.IllegalArgumentException</code> - Doesn&#39;t satisfy smallerCount ==
-CountWords(result).</p></li>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>other</code> is null.</p></li>
+<li><code>java.lang.NullPointerException</code> - The parameter <code>other</code> is null.</li>
 </ul>
 
 <h3>ShiftRight</h3>
