@@ -43,7 +43,7 @@
 
 <p>Note that this library (the MailLib library) has no facilities for sending and receiving email messages, since that&#39;s outside this library&#39;s scope.</p>
 
-<h3>Member Summary</h3>
+<p>Not documented yet. ### Member Summary</p>
 
 <ul>
 <li><code><a href="#AddAttachment_PeterO_Mail_MediaType">AddAttachment(PeterO.Mail.MediaType)</a></code> - Adds an attachment with an empty body and with the given media type to this message.</li>
@@ -71,7 +71,7 @@
 <li><code><a href="#GenerateBytes">GenerateBytes()</a></code> - Generates this message&#39;s data as a byte array, using the same algorithm as the Generate method.</li>
 <li><code><a href="#GetAddresses_string">GetAddresses(string)</a></code> - Gets a list of addresses contained in the header fields with the given name in this message.</li>
 <li><code><a href="#GetBody">GetBody()</a></code> - Gets the byte array for this message&#39;s body.</li>
-<li><code><a href="#GetBodyMessage">GetBodyMessage()</a></code> - Returns the mail message contained in this message&#39;s body.</li>
+<li><code><a href="#GetBodyMessage">GetBodyMessage()</a></code> - Not documented yet.</li>
 <li><code><a href="#GetDate">GetDate()</a></code> - Gets the date and time extracted from this message&#39;s Date header field (the value of which is found as though GetHeader(&quot;date&quot;) were called).</li>
 <li><code><a href="#GetFormattedBodyString">GetFormattedBodyString()</a></code> - Gets a Hypertext Markup Language (HTML) rendering of this message&#39;s text body.</li>
 <li><code><a href="#GetHeader_int">GetHeader(int)</a></code> - Gets the name and value of a header field by index.</li>
@@ -175,7 +175,7 @@ is null.</li>
 <pre>public string BodyString { get; }
 </pre>
 
-<p>Gets the body of this message as a text string.  <b>Returns:</b></p>
+<p>Gets the body of this message as a text string.  Not documented yet. Gets a value not documented yet. <b>Returns:</b></p>
 
 <p>The body of this message as a text string.</p>
 
@@ -206,7 +206,7 @@ Either this message is a multipart message, so it doesn&#39;t have its own body 
 <pre>public PeterO.Mail.ContentDisposition ContentDisposition { get; set; }
 </pre>
 
-<p>Gets or sets this message&#39;s content disposition. The content disposition specifies how a user agent should display or otherwise handle this message. Can be set to null. If set to a disposition or to null, updates the Content-Disposition header field as appropriate.  <b>Returns:</b></p>
+<p>Gets or sets this message&#39;s content disposition. The content disposition specifies how a user agent should display or otherwise handle this message. Can be set to null. If set to a disposition or to null, updates the Content-Disposition header field as appropriate.  Not documented yet. Gets a value not documented yet. <b>Returns:</b></p>
 
 <p>This message&#39;s content disposition, or null if none is specified.</p>
 
@@ -217,7 +217,7 @@ Either this message is a multipart message, so it doesn&#39;t have its own body 
 <pre>public PeterO.Mail.MediaType ContentType { get; set; }
 </pre>
 
-<p>Gets or sets this message&#39;s media type. When getting, the media type may differ in certain cases from the value of the Content-Type header field, if any, and may have a value even if the Content-Type header field is absent from this message. If set to a media type, updates the Content-Type header field as appropriate. Cannot be set to null.  <b>Returns:</b></p>
+<p>Gets or sets this message&#39;s media type. When getting, the media type may differ in certain cases from the value of the Content-Type header field, if any, and may have a value even if the Content-Type header field is absent from this message. If set to a media type, updates the Content-Type header field as appropriate. Cannot be set to null.  Not documented yet. Gets a value not documented yet. <b>Returns:</b></p>
 
 <p>This message&#39;s media type.</p>
 
@@ -239,7 +239,7 @@ This value is being set and &quot;value&quot; is null.</li>
 
 <p>This method generates a file name based on the  <code>filename</code>  parameter of the Content-Disposition header field, if it exists, or on the  <code>name</code>  parameter of the Content-Type header field, otherwise.</p>
 
-<p><b>Returns:</b></p>
+<p>Not documented yet. Gets a value not documented yet. <b>Returns:</b></p>
 
 <p>A suggested name for the file. Returns the empty string if there is no filename suggested by the content type or content disposition, or if that filename is an empty string.</p>
 
@@ -263,7 +263,7 @@ This value is being set and &quot;value&quot; is null.</li>
 <pre>public System.Collections.Generic.IList HeaderFields { get; }
 </pre>
 
-<p>Gets a snapshot of the header fields of this message, in the order in which they appear in the message. For each item in the list, the key is the header field&#39;s name (where any basic upper-case letters [U+0041 to U+005A] are converted to lower case) and the value is the header field&#39;s value.  <b>Returns:</b></p>
+<p>Gets a snapshot of the header fields of this message, in the order in which they appear in the message. For each item in the list, the key is the header field&#39;s name (where any basic upper-case letters [U+0041 to U+005A] are converted to lower case) and the value is the header field&#39;s value.  Not documented yet. Gets a value not documented yet. <b>Returns:</b></p>
 
 <p>A snapshot of the header fields of this message.</p>
 
@@ -274,7 +274,7 @@ This value is being set and &quot;value&quot; is null.</li>
 <pre>public System.Collections.Generic.IList Parts { get; }
 </pre>
 
-<p>Gets a list of all the parts of this message. This list is editable. This will only be used if the message is a multipart message.  <b>Returns:</b></p>
+<p>Gets a list of all the parts of this message. This list is editable. This will only be used if the message is a multipart message.  Not documented yet. Gets a value not documented yet. <b>Returns:</b></p>
 
 <p>A list of all the parts of this message. This list is editable. This will only be used if the message is a multipart message.</p>
 
@@ -285,7 +285,7 @@ This value is being set and &quot;value&quot; is null.</li>
 <pre>public string Subject { get; set; }
 </pre>
 
-<p>Gets or sets this message&#39;s subject.  <b>Returns:</b></p>
+<p>Gets or sets this message&#39;s subject.  Not documented yet. Gets a value not documented yet. <b>Returns:</b></p>
 
 <p>This message&#39;s subject.</p>
 
@@ -310,15 +310,20 @@ This value is being set and &quot;value&quot; is null.</li>
     PeterO.Mail.MediaType mediaType);
 </pre>
 
-<p>Adds an attachment with an empty body and with the given media type to this message. Before the new attachment is added, if this message isn&#39;t already a multipart message, it becomes a &quot;multipart/mixed&quot; message with the current body converted to an inline body part.  <b>Parameters:</b></p>
+<p>Adds an attachment with an empty body and with the given media type to this message. Before the new attachment is added, if this message isn&#39;t already a multipart message, it becomes a &quot;multipart/mixed&quot; message with the current body converted to an inline body part.   Not documented yet.  <b>Parameters:</b></p>
 
 <ul>
-<li><i>mediaType</i>: A media type to assign to the attachment.</li>
+<li><p><i>mediaType</i>: A media type to assign to the attachment.</p></li>
+<li><p><i>mediaType</i>: Not documented yet.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
 <p>A Message object for the generated attachment.</p>
+
+<p><b>Return Value:</b></p>
+
+<p>Not documented yet.</p>
 
 <p><a id="AddAttachment_System_IO_Stream_PeterO_Mail_MediaType"></a></p>
 
@@ -336,7 +341,7 @@ This value is being set and &quot;value&quot; is null.</li>
         return msg.AddAttachment(fs, mediaType); } }
 </pre>
 
-<p><b>Parameters:</b></p>
+<p>Not documented yet.  <b>Parameters:</b></p>
 
 <ul>
 <li><p><i>inputStream</i>: A readable data stream.</p></li>
@@ -346,6 +351,10 @@ This value is being set and &quot;value&quot; is null.</li>
 <p><b>Return Value:</b></p>
 
 <p>A Message object for the generated attachment.</p>
+
+<p><b>Return Value:</b></p>
+
+<p>Not documented yet.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -368,7 +377,7 @@ An I/O error occurred.</p></li>
     string filename);
 </pre>
 
-<p>Adds an attachment to this message in the form of data from the given readable stream, and with the given media type and file name. Before the new attachment is added, if this message isn&#39;t already a multipart message, it becomes a &quot;multipart/mixed&quot; message with the current body converted to an inline body part.  <b>Parameters:</b></p>
+<p>Adds an attachment to this message in the form of data from the given readable stream, and with the given media type and file name. Before the new attachment is added, if this message isn&#39;t already a multipart message, it becomes a &quot;multipart/mixed&quot; message with the current body converted to an inline body part.  Not documented yet.  <b>Parameters:</b></p>
 
 <ul>
 <li><p><i>inputStream</i>: A readable data stream.</p></li>
@@ -379,6 +388,10 @@ An I/O error occurred.</p></li>
 <p><b>Return Value:</b></p>
 
 <p>A Message object for the generated attachment.</p>
+
+<p><b>Return Value:</b></p>
+
+<p>Not documented yet.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -400,7 +413,7 @@ An I/O error occurred.</p></li>
     string filename);
 </pre>
 
-<p>Adds an attachment to this message in the form of data from the given readable stream, and with the given file name. Before the new attachment is added, if this message isn&#39;t already a multipart message, it becomes a &quot;multipart/mixed&quot; message with the current body converted to an inline body part.  <b>Parameters:</b></p>
+<p>Adds an attachment to this message in the form of data from the given readable stream, and with the given file name. Before the new attachment is added, if this message isn&#39;t already a multipart message, it becomes a &quot;multipart/mixed&quot; message with the current body converted to an inline body part.  Not documented yet.  <b>Parameters:</b></p>
 
 <ul>
 <li><p><i>inputStream</i>: A readable data stream.</p></li>
@@ -410,6 +423,10 @@ An I/O error occurred.</p></li>
 <p><b>Return Value:</b></p>
 
 <p>A Message object for the generated attachment.</p>
+
+<p><b>Return Value:</b></p>
+
+<p>Not documented yet.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -432,7 +449,7 @@ An I/O error occurred.</p></li>
 
 <p>Adds a header field to the end of the message&#39;s header. Updates the ContentType and ContentDisposition properties if those header fields have been modified by this method.</p>
 
-<p><b>Parameters:</b></p>
+<p>Not documented yet.  <b>Parameters:</b></p>
 
 <ul>
 <li><p><i>name</i>: Name of a header field, such as &quot;From&quot; or &quot;Content-ID&quot; .</p></li>
@@ -442,6 +459,10 @@ An I/O error occurred.</p></li>
 <p><b>Return Value:</b></p>
 
 <p>This instance.</p>
+
+<p><b>Return Value:</b></p>
+
+<p>Not documented yet.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -464,7 +485,7 @@ The header field name is too long or contains an invalid character, or the heade
 
 <p>Adds a header field to the end of the message&#39;s header. Updates the ContentType and ContentDisposition properties if those header fields have been modified by this method.</p>
 
-<p><b>Parameters:</b></p>
+<p>Not documented yet.  <b>Parameters:</b></p>
 
 <ul>
 <li><i>header</i>: A key/value pair. The key is the name of the header field, such as &quot;From&quot; or &quot;Content-ID&quot;. The value is the header field&#39;s value.</li>
@@ -473,6 +494,10 @@ The header field name is too long or contains an invalid character, or the heade
 <p><b>Return Value:</b></p>
 
 <p>This instance.</p>
+
+<p><b>Return Value:</b></p>
+
+<p>Not documented yet.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -492,15 +517,20 @@ The header field name is too long or contains an invalid character, or the heade
     PeterO.Mail.MediaType mediaType);
 </pre>
 
-<p>Adds an inline body part with an empty body and with the given media type to this message. Before the new body part is added, if this message isn&#39;t already a multipart message, it becomes a &quot;multipart/mixed&quot; message with the current body converted to an inline body part.  <b>Parameters:</b></p>
+<p>Adds an inline body part with an empty body and with the given media type to this message. Before the new body part is added, if this message isn&#39;t already a multipart message, it becomes a &quot;multipart/mixed&quot; message with the current body converted to an inline body part.   Not documented yet.  <b>Parameters:</b></p>
 
 <ul>
-<li><i>mediaType</i>: A media type to assign to the body part.</li>
+<li><p><i>mediaType</i>: A media type to assign to the body part.</p></li>
+<li><p><i>mediaType</i>: Not documented yet.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
 <p>A Message object for the generated body part.</p>
+
+<p><b>Return Value:</b></p>
+
+<p>Not documented yet.</p>
 
 <p><a id="AddInline_System_IO_Stream_PeterO_Mail_MediaType"></a></p>
 
@@ -518,7 +548,7 @@ The header field name is too long or contains an invalid character, or the heade
         { return msg.AddInline(fs, mediaType); } }
 </pre>
 
-<p><b>Parameters:</b></p>
+<p>Not documented yet.  <b>Parameters:</b></p>
 
 <ul>
 <li><p><i>inputStream</i>: A readable data stream.</p></li>
@@ -528,6 +558,10 @@ The header field name is too long or contains an invalid character, or the heade
 <p><b>Return Value:</b></p>
 
 <p>A Message object for the generated body part.</p>
+
+<p><b>Return Value:</b></p>
+
+<p>Not documented yet.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -550,7 +584,7 @@ An I/O error occurred.</p></li>
     string filename);
 </pre>
 
-<p>Adds an inline body part to this message in the form of data from the given readable stream, and with the given media type and file name. Before the new body part is added, if this message isn&#39;t already a multipart message, it becomes a &quot;multipart/mixed&quot; message with the current body converted to an inline body part.  <b>Parameters:</b></p>
+<p>Adds an inline body part to this message in the form of data from the given readable stream, and with the given media type and file name. Before the new body part is added, if this message isn&#39;t already a multipart message, it becomes a &quot;multipart/mixed&quot; message with the current body converted to an inline body part.  Not documented yet.  <b>Parameters:</b></p>
 
 <ul>
 <li><p><i>inputStream</i>: A readable data stream.</p></li>
@@ -561,6 +595,10 @@ An I/O error occurred.</p></li>
 <p><b>Return Value:</b></p>
 
 <p>A Message object for the generated body part.</p>
+
+<p><b>Return Value:</b></p>
+
+<p>Not documented yet.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -582,7 +620,7 @@ An I/O error occurred.</p></li>
     string filename);
 </pre>
 
-<p>Adds an inline body part to this message in the form of data from the given readable stream, and with the given file name. Before the new body part is added, if this message isn&#39;t already a multipart message, it becomes a &quot;multipart/mixed&quot; message with the current body converted to an inline body part.  <b>Parameters:</b></p>
+<p>Adds an inline body part to this message in the form of data from the given readable stream, and with the given file name. Before the new body part is added, if this message isn&#39;t already a multipart message, it becomes a &quot;multipart/mixed&quot; message with the current body converted to an inline body part.  Not documented yet.  <b>Parameters:</b></p>
 
 <ul>
 <li><p><i>inputStream</i>: A readable data stream.</p></li>
@@ -592,6 +630,10 @@ An I/O error occurred.</p></li>
 <p><b>Return Value:</b></p>
 
 <p>A Message object for the generated body part.</p>
+
+<p><b>Return Value:</b></p>
+
+<p>Not documented yet.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -610,9 +652,13 @@ An I/O error occurred.</p></li>
 <pre>public PeterO.Mail.Message ClearHeaders();
 </pre>
 
-<p>Deletes all header fields in this message. Also clears this message&#39;s content disposition and resets its content type to MediaType.TextPlainAscii.  <b>Return Value:</b></p>
+<p>Deletes all header fields in this message. Also clears this message&#39;s content disposition and resets its content type to MediaType.TextPlainAscii.  Not documented yet.  <b>Return Value:</b></p>
 
 <p>This object.</p>
+
+<p><b>Return Value:</b></p>
+
+<p>Not documented yet.</p>
 
 <p><a id="DecodeHeaderValue_string_string"></a></p>
 
@@ -623,7 +669,7 @@ An I/O error occurred.</p></li>
     string value);
 </pre>
 
-<p>Decodes RFC 2047 encoded words from the given header field value and returns a string with those words decoded. For an example of encoded words, see the constructor for PeterO.Mail.NamedAddress.  <b>Parameters:</b></p>
+<p>Decodes RFC 2047 encoded words from the given header field value and returns a string with those words decoded. For an example of encoded words, see the constructor for PeterO.Mail.NamedAddress.  Not documented yet.  <b>Parameters:</b></p>
 
 <ul>
 <li><p><i>name</i>: Name of the header field. This determines the syntax of the &quot;value&quot; parameter and is necessary to help this method interpret encoded words properly.</p></li>
@@ -633,6 +679,10 @@ An I/O error occurred.</p></li>
 <p><b>Return Value:</b></p>
 
 <p>The header field value with valid encoded words decoded.</p>
+
+<p><b>Return Value:</b></p>
+
+<p>Not documented yet.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -650,17 +700,22 @@ is null.</li>
     string uri);
 </pre>
 
-<p>Creates a message object from a MailTo URI (uniform resource identifier). The MailTo URI can contain key-value pairs that follow a question-mark, as in the following example: &quot;mailto:<a href="mailto:me@example.com">me@example.com</a>?subject=A%20Subject&quot;. In this example, &quot;subject&quot; is the subject of the email address. Only certain keys are supported, namely, &quot;to&quot;, &quot;cc&quot;, &quot;bcc&quot;, &quot;subject&quot;, &quot;in-reply-to&quot;, &quot;comments&quot;, &quot;keywords&quot;, and &quot;body&quot;. The first seven are header field names that will be used to set the returned message&#39;s corresponding header fields. The last, &quot;body&quot;, sets the body of the message to the given text. Keys other than these eight will be ignored.  <b>Parameters:</b></p>
+<p>Creates a message object from a MailTo URI (uniform resource identifier). The MailTo URI can contain key-value pairs that follow a question-mark, as in the following example: &quot;mailto:<a href="mailto:me@example.com">me@example.com</a>?subject=A%20Subject&quot;. In this example, &quot;subject&quot; is the subject of the email address. Only certain keys are supported, namely, &quot;to&quot;, &quot;cc&quot;, &quot;bcc&quot;, &quot;subject&quot;, &quot;in-reply-to&quot;, &quot;comments&quot;, &quot;keywords&quot;, and &quot;body&quot;. The first seven are header field names that will be used to set the returned message&#39;s corresponding header fields. The last, &quot;body&quot;, sets the body of the message to the given text. Keys other than these eight will be ignored.   Not documented yet.  <b>Parameters:</b></p>
 
 <ul>
-<li><i>uri</i>: The parameter  <i>uri</i>
-is a text string.</li>
+<li><p><i>uri</i>: The parameter  <i>uri</i>
+is a text string.</p></li>
+<li><p><i>uri</i>: Not documented yet.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
 <p>A Message object created from the given MailTo URI. Returs null if  <i>uri</i>
  is null, is syntactically invalid, or is not a MailTo URI.</p>
+
+<p><b>Return Value:</b></p>
+
+<p>Not documented yet.</p>
 
 <p><a id="FromMailtoUrl_string"></a></p>
 
@@ -698,9 +753,13 @@ is a text string.</li>
 
 <p>When encoding the message&#39;s body, if the message has a text content type (&quot;text/*&quot;), the line breaks are a CR byte (carriage return, 0x0d) followed by an LF byte (line feed, 0x0a), CR alone, or LF alone. If the message has any other content type, only CR followed by LF is considered a line break.</p>
 
-<p><b>Return Value:</b></p>
+<p>Not documented yet.  <b>Return Value:</b></p>
 
 <p>The generated message.</p>
+
+<p><b>Return Value:</b></p>
+
+<p>Not documented yet.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -716,9 +775,13 @@ The message can&#39;t be generated.</li>
 <pre>public byte[] GenerateBytes();
 </pre>
 
-<p>Generates this message&#39;s data as a byte array, using the same algorithm as the Generate method.  <b>Return Value:</b></p>
+<p>Generates this message&#39;s data as a byte array, using the same algorithm as the Generate method.  Not documented yet.  <b>Return Value:</b></p>
 
 <p>The generated message as a byte array.</p>
+
+<p><b>Return Value:</b></p>
+
+<p>Not documented yet.</p>
 
 <p><a id="GetAddresses_string"></a></p>
 
@@ -728,15 +791,20 @@ The message can&#39;t be generated.</li>
     string headerName);
 </pre>
 
-<p>Gets a list of addresses contained in the header fields with the given name in this message.  <b>Parameters:</b></p>
+<p>Gets a list of addresses contained in the header fields with the given name in this message.   Not documented yet.  <b>Parameters:</b></p>
 
 <ul>
-<li><i>headerName</i>: The name of the header fields to retrieve.</li>
+<li><p><i>headerName</i>: The name of the header fields to retrieve.</p></li>
+<li><p><i>headerName</i>: Not documented yet.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
 <p>A list of addresses, in the order in which they appear in this message&#39;s header fields of the given name.</p>
+
+<p><b>Return Value:</b></p>
+
+<p>Not documented yet.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -759,9 +827,13 @@ is empty.</p></li>
 <pre>public byte[] GetBody();
 </pre>
 
-<p>Gets the byte array for this message&#39;s body. This method doesn&#39; t make a copy of that byte array.  <b>Return Value:</b></p>
+<p>Gets the byte array for this message&#39;s body. This method doesn&#39; t make a copy of that byte array.  Not documented yet.  <b>Return Value:</b></p>
 
 <p>A byte array.</p>
+
+<p><b>Return Value:</b></p>
+
+<p>Not documented yet.</p>
 
 <p><a id="GetBodyMessage"></a></p>
 
@@ -770,9 +842,9 @@ is empty.</p></li>
 <pre>public PeterO.Mail.Message GetBodyMessage();
 </pre>
 
-<p>Returns the mail message contained in this message&#39;s body.  <b>Return Value:</b></p>
+<p>Not documented yet.   <b>Return Value:</b></p>
 
-<p>A message object if this object&#39;s content type is &quot;message/rfc822&quot;, &quot;message/news&quot;, or &quot;message/global&quot;, or null otherwise.</p>
+<p>Not documented yet.</p>
 
 <p><a id="GetDate"></a></p>
 
@@ -781,9 +853,13 @@ is empty.</p></li>
 <pre>public int[] GetDate();
 </pre>
 
-<p>Gets the date and time extracted from this message&#39;s Date header field (the value of which is found as though GetHeader(&quot;date&quot;) were called). See <strong>M:PeterO.Mail.MailDateTime.ParseDateString(System.String,System.Boolean)</strong> for more information on the format of the date-time array returned by this method.  <b>Return Value:</b></p>
+<p>Gets the date and time extracted from this message&#39;s Date header field (the value of which is found as though GetHeader(&quot;date&quot;) were called). See <strong>M:PeterO.Mail.MailDateTime.ParseDateString(System.String,System.Boolean)</strong> for more information on the format of the date-time array returned by this method.  Not documented yet.  <b>Return Value:</b></p>
 
 <p>An array containing eight elements. Returns null if the Date header doesn&#39;t exist, if the Date field is syntactically or semantically invalid, or if the field&#39;s year would overflow a 32-bit signed integer.</p>
+
+<p><b>Return Value:</b></p>
+
+<p>Not documented yet.</p>
 
 <p><a id="GetFormattedBodyString"></a></p>
 
@@ -801,10 +877,14 @@ is empty.</p></li>
 <li><p>does not prevent Markdown content from being interpreted as such merely because it&#39;s contained in a &quot;block-level HTML element&quot;, and</p></li>
 <li><p>does not deliberately use HTML escapes to obfuscate email addresses wrapped in angle-brackets.</p>
 
-<p><b>Return Value:</b></p></li>
+<p>Not documented yet.  <b>Return Value:</b></p></li>
 </ul>
 
 <p>An HTML rendering of this message&#39;s text.</p>
+
+<p><b>Return Value:</b></p>
+
+<p>Not documented yet.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -821,15 +901,20 @@ Either this message is a multipart message, so it doesn&#39;t have its own body 
     string name);
 </pre>
 
-<p>Gets the first instance of the header field with the specified name, using a basic case-insensitive comparison. (Two strings are equal in such a comparison, if they match after converting the basic upper-case letters A to Z (U+0041 to U+005A) in both strings to lower case.).  <b>Parameters:</b></p>
+<p>Gets the first instance of the header field with the specified name, using a basic case-insensitive comparison. (Two strings are equal in such a comparison, if they match after converting the basic upper-case letters A to Z (U+0041 to U+005A) in both strings to lower case.).   Not documented yet.  <b>Parameters:</b></p>
 
 <ul>
-<li><i>name</i>: The name of a header field.</li>
+<li><p><i>name</i>: The name of a header field.</p></li>
+<li><p><i>name</i>: Not documented yet.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
 <p>The value of the first header field with that name, or null if there is none.</p>
+
+<p><b>Return Value:</b></p>
+
+<p>Not documented yet.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -846,15 +931,20 @@ Name is null.</li>
     int index);
 </pre>
 
-<p>Gets the name and value of a header field by index.  <b>Parameters:</b></p>
+<p>Gets the name and value of a header field by index.   Not documented yet.  <b>Parameters:</b></p>
 
 <ul>
-<li><i>index</i>: Zero-based index of the header field to get.</li>
+<li><p><i>index</i>: Zero-based index of the header field to get.</p></li>
+<li><p><i>index</i>: Not documented yet.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
 <p>A key/value pair. The key is the name of the header field, such as &quot;From&quot; or &quot;Content-ID&quot;. The value is the header field&#39;s value.</p>
+
+<p><b>Return Value:</b></p>
+
+<p>Not documented yet.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -872,15 +962,20 @@ is 0 or at least as high as the number of header fields.</li>
     string name);
 </pre>
 
-<p>Gets an array with the values of all header fields with the specified name, using a basic case-insensitive comparison. (Two strings are equal in such a comparison, if they match after converting the basic upper-case letters A to Z (U+0041 to U+005A) in both strings to lower case.).  <b>Parameters:</b></p>
+<p>Gets an array with the values of all header fields with the specified name, using a basic case-insensitive comparison. (Two strings are equal in such a comparison, if they match after converting the basic upper-case letters A to Z (U+0041 to U+005A) in both strings to lower case.).   Not documented yet.  <b>Parameters:</b></p>
 
 <ul>
-<li><i>name</i>: The name of a header field.</li>
+<li><p><i>name</i>: The name of a header field.</p></li>
+<li><p><i>name</i>: Not documented yet.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
 <p>An array containing the values of all header fields with the given name, in the order they appear in the message. The array will be empty if no header field has that name.</p>
+
+<p><b>Return Value:</b></p>
+
+<p>Not documented yet.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -898,7 +993,7 @@ Name is null.</li>
     System.Collections.Generic.IList languages);
 </pre>
 
-<p>Generates a multilingual message (see RFC 8255) from a list of messages and a list of language strings.  <b>Parameters:</b></p>
+<p>Generates a multilingual message (see RFC 8255) from a list of messages and a list of language strings.  Not documented yet.  <b>Parameters:</b></p>
 
 <ul>
 <li><p><i>messages</i>: A list of messages forming the parts of the multilingual message object. Each message should have the same content, but be in a different language. Each message must have a From header field and use the same email address in that field as the other messages. The messages should be ordered in descending preference of language.</p></li>
@@ -909,6 +1004,10 @@ Name is null.</li>
 
 <p>A Message object with the content type &quot;multipart/multilingual&quot; . It will begin with an explanatory body part and be followed by the messages given in the  <i>messages</i>
  parameter in the order given.</p>
+
+<p><b>Return Value:</b></p>
+
+<p>Not documented yet.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -932,9 +1031,13 @@ contains the language tag &quot;zzx&quot; not appearing alone or at the end of t
 <pre>public static PeterO.Mail.Message NewBodyPart();
 </pre>
 
-<p>Creates a message object with no header fields.  <b>Return Value:</b></p>
+<p>Creates a message object with no header fields.  Not documented yet.  <b>Return Value:</b></p>
 
 <p>A message object with no header fields.</p>
+
+<p><b>Return Value:</b></p>
+
+<p>Not documented yet.</p>
 
 <p><a id="RemoveHeader_int"></a></p>
 
@@ -946,15 +1049,20 @@ contains the language tag &quot;zzx&quot; not appearing alone or at the end of t
 
 <p>Removes a header field by index. Updates the ContentType and ContentDisposition properties if those header fields have been modified by this method.</p>
 
-<p><b>Parameters:</b></p>
+<p>Not documented yet.  <b>Parameters:</b></p>
 
 <ul>
-<li><i>index</i>: Zero-based index of the header field to set.</li>
+<li><p><i>index</i>: Zero-based index of the header field to set.</p></li>
+<li><p><i>index</i>: Not documented yet.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
 <p>This instance.</p>
+
+<p><b>Return Value:</b></p>
+
+<p>Not documented yet.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -974,15 +1082,20 @@ is 0 or at least as high as the number of header fields.</li>
 
 <p>Removes all instances of the given header field from this message. If this is a multipart message, the header field is not removed from its body part headers. A basic case-insensitive comparison is used. (Two strings are equal in such a comparison, if they match after converting the basic upper-case letters A to Z (U+0041 to U+005A) in both strings to lower case.). Updates the ContentType and ContentDisposition properties if those header fields have been modified by this method.</p>
 
-<p><b>Parameters:</b></p>
+<p>Not documented yet.  <b>Parameters:</b></p>
 
 <ul>
-<li><i>name</i>: The name of the header field to remove.</li>
+<li><p><i>name</i>: The name of the header field to remove.</p></li>
+<li><p><i>name</i>: Not documented yet.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
 <p>This instance.</p>
+
+<p><b>Return Value:</b></p>
+
+<p>Not documented yet.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -1000,7 +1113,7 @@ is null.</li>
     System.Collections.Generic.IList languages);
 </pre>
 
-<p>Selects a body part for a multiple-language message (  <code>multipart/multilingual</code>  ) according to the given language priority list.  <b>Parameters:</b></p>
+<p>Selects a body part for a multiple-language message (  <code>multipart/multilingual</code>  ) according to the given language priority list.  Not documented yet.  <b>Parameters:</b></p>
 
 <ul>
 <li><i>languages</i>: A list of basic language ranges, sorted in descending order of priority (see the LanguageTags.LanguageTagFilter method).</li>
@@ -1009,6 +1122,10 @@ is null.</li>
 <p><b>Return Value:</b></p>
 
 <p>The best matching body part for the given languages. If the body part has no subject, then the top-level subject is used. If this message is not a multipart/multilingual message or has fewer than two body parts, returns this object. If no body part matches the given languages, returns the last body part if its language is &quot;zxx&quot;, or the second body part otherwise.</p>
+
+<p><b>Return Value:</b></p>
+
+<p>Not documented yet.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -1027,7 +1144,7 @@ is null.</li>
     bool preferOriginals);
 </pre>
 
-<p>Selects a body part for a multiple-language message (  <code>multipart/multilingual</code>  ) according to the given language priority list and original-language preference.  <b>Parameters:</b></p>
+<p>Selects a body part for a multiple-language message (  <code>multipart/multilingual</code>  ) according to the given language priority list and original-language preference.  Not documented yet.  <b>Parameters:</b></p>
 
 <ul>
 <li><p><i>languages</i>: A list of basic language ranges, sorted in descending order of priority (see the LanguageTags.LanguageTagFilter method).</p></li>
@@ -1037,6 +1154,10 @@ is null.</li>
 <p><b>Return Value:</b></p>
 
 <p>The best matching body part for the given languages. If the body part has no subject, then the top-level subject is used. If this message is not a multipart/multilingual message or has fewer than two body parts, returns this object. If no body part matches the given languages, returns the last body part if its language is &quot;zxx&quot;, or the second body part otherwise.</p>
+
+<p><b>Return Value:</b></p>
+
+<p>Not documented yet.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -1054,7 +1175,7 @@ is null.</li>
     byte[] bytes);
 </pre>
 
-<p>Sets the body of this message to the given byte array. This method doesn&#39;t make a copy of that byte array.  <b>Parameters:</b></p>
+<p>Sets the body of this message to the given byte array. This method doesn&#39;t make a copy of that byte array.  Not documented yet.  <b>Parameters:</b></p>
 
 <ul>
 <li><i>bytes</i>: A byte array.</li>
@@ -1063,6 +1184,10 @@ is null.</li>
 <p><b>Return Value:</b></p>
 
 <p>This object.</p>
+
+<p><b>Return Value:</b></p>
+
+<p>Not documented yet.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -1081,9 +1206,13 @@ is null.</li>
 
 <p>Sets this message&#39;s Date header field to the current time as its value, with an unspecified time zone offset. This method can be used when the message is considered complete and ready to be generated, for example, using the &quot;Generate()&quot; method.</p>
 
-<p><b>Return Value:</b></p>
+<p>Not documented yet.  <b>Return Value:</b></p>
 
 <p>This object.</p>
+
+<p><b>Return Value:</b></p>
+
+<p>Not documented yet.</p>
 
 <p><a id="SetDate_int"></a></p>
 
@@ -1093,7 +1222,7 @@ is null.</li>
     int[] dateTime);
 </pre>
 
-<p>Sets this message&#39;s Date header field to the given date and time.  <b>Parameters:</b></p>
+<p>Sets this message&#39;s Date header field to the given date and time.  Not documented yet.  <b>Parameters:</b></p>
 
 <ul>
 <li><p><i>dateTime</i>: An array containing eight elements. Each element of the array (starting from 0) is as follows:</p>
@@ -1115,6 +1244,10 @@ is null.</li>
 <p><b>Return Value:</b></p>
 
 <p>This object.</p>
+
+<p><b>Return Value:</b></p>
+
+<p>Not documented yet.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -1139,7 +1272,7 @@ is null.</p></li>
 
 <p>Sets the name and value of a header field by index. Updates the ContentType and ContentDisposition properties if those header fields have been modified by this method.</p>
 
-<p><b>Parameters:</b></p>
+<p>Not documented yet.  <b>Parameters:</b></p>
 
 <ul>
 <li><p><i>index</i>: Zero-based index of the header field to set.</p></li>
@@ -1150,6 +1283,10 @@ is null.</p></li>
 <p><b>Return Value:</b></p>
 
 <p>This instance.</p>
+
+<p><b>Return Value:</b></p>
+
+<p>Not documented yet.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -1174,7 +1311,7 @@ is null.</p></li>
 
 <p>Sets the value of a header field by index without changing its name. Updates the ContentType and ContentDisposition properties if those header fields have been modified by this method.</p>
 
-<p><b>Parameters:</b></p>
+<p>Not documented yet.  <b>Parameters:</b></p>
 
 <ul>
 <li><p><i>index</i>: Zero-based index of the header field to set.</p></li>
@@ -1184,6 +1321,10 @@ is null.</p></li>
 <p><b>Return Value:</b></p>
 
 <p>This instance.</p>
+
+<p><b>Return Value:</b></p>
+
+<p>Not documented yet.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -1207,7 +1348,7 @@ is null.</p></li>
 
 <p>Sets the name and value of a header field by index. Updates the ContentType and ContentDisposition properties if those header fields have been modified by this method.</p>
 
-<p><b>Parameters:</b></p>
+<p>Not documented yet.  <b>Parameters:</b></p>
 
 <ul>
 <li><p><i>index</i>: Zero-based index of the header field to set.</p></li>
@@ -1217,6 +1358,10 @@ is null.</p></li>
 <p><b>Return Value:</b></p>
 
 <p>A Message object.</p>
+
+<p><b>Return Value:</b></p>
+
+<p>Not documented yet.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -1240,7 +1385,7 @@ is null.</p></li>
 
 <p>Sets the value of this message&#39;s header field. If a header field with the same name exists, its value is replaced. If the header field&#39;s name occurs more than once, only the first instance of the header field is replaced. Updates the ContentType and ContentDisposition properties if those header fields have been modified by this method.</p>
 
-<p><b>Parameters:</b></p>
+<p>Not documented yet.  <b>Parameters:</b></p>
 
 <ul>
 <li><p><i>name</i>: The name of a header field, such as &quot;from&quot; or &quot;subject&quot; .</p></li>
@@ -1250,6 +1395,10 @@ is null.</p></li>
 <p><b>Return Value:</b></p>
 
 <p>This instance.</p>
+
+<p><b>Return Value:</b></p>
+
+<p>Not documented yet.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -1270,15 +1419,20 @@ is null.</p></li>
     string str);
 </pre>
 
-<p>Sets the body of this message to the specified string in Hypertext Markup Language (HTML) format. The character sequences CR (carriage return, &quot;\r&quot;, U+000D), LF (line feed, &quot;\n&quot;, U+000A), and CR/LF will be converted to CR/LF line breaks. Unpaired surrogate code points will be replaced with replacement characters.  <b>Parameters:</b></p>
+<p>Sets the body of this message to the specified string in Hypertext Markup Language (HTML) format. The character sequences CR (carriage return, &quot;\r&quot;, U+000D), LF (line feed, &quot;\n&quot;, U+000A), and CR/LF will be converted to CR/LF line breaks. Unpaired surrogate code points will be replaced with replacement characters.   Not documented yet.  <b>Parameters:</b></p>
 
 <ul>
-<li><i>str</i>: A string consisting of the message in HTML format.</li>
+<li><p><i>str</i>: A string consisting of the message in HTML format.</p></li>
+<li><p><i>str</i>: Not documented yet.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
 <p>This instance.</p>
+
+<p><b>Return Value:</b></p>
+
+<p>Not documented yet.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -1297,7 +1451,7 @@ is null.</li>
     string html);
 </pre>
 
-<p>Sets the body of this message to a multipart body with plain text and Hypertext Markup Language (HTML) versions of the same message. The character sequences CR (carriage return, &quot;\r&quot;, U+000D), LF (line feed, &quot;\n&quot;, U+000A), and CR/LF will be converted to CR/LF line breaks. Unpaired surrogate code points will be replaced with replacement characters.  <b>Parameters:</b></p>
+<p>Sets the body of this message to a multipart body with plain text and Hypertext Markup Language (HTML) versions of the same message. The character sequences CR (carriage return, &quot;\r&quot;, U+000D), LF (line feed, &quot;\n&quot;, U+000A), and CR/LF will be converted to CR/LF line breaks. Unpaired surrogate code points will be replaced with replacement characters.  Not documented yet.  <b>Parameters:</b></p>
 
 <ul>
 <li><p><i>text</i>: A string consisting of the plain text version of the message.</p></li>
@@ -1307,6 +1461,10 @@ is null.</li>
 <p><b>Return Value:</b></p>
 
 <p>This instance.</p>
+
+<p><b>Return Value:</b></p>
+
+<p>Not documented yet.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -1326,7 +1484,7 @@ is null.</li>
     string markdown);
 </pre>
 
-<p>Sets the body of this message to a multipart body with plain text, Markdown, and Hypertext Markup Language (HTML) versions of the same message. The character sequences CR (carriage return, &quot;\r&quot;, U+000D), LF (line feed, &quot;\n&quot;, U+000A), and CR/LF will be converted to CR/LF line breaks. Unpaired surrogate code points will be replaced with replacement characters.  <b>Parameters:</b></p>
+<p>Sets the body of this message to a multipart body with plain text, Markdown, and Hypertext Markup Language (HTML) versions of the same message. The character sequences CR (carriage return, &quot;\r&quot;, U+000D), LF (line feed, &quot;\n&quot;, U+000A), and CR/LF will be converted to CR/LF line breaks. Unpaired surrogate code points will be replaced with replacement characters.  Not documented yet.  <b>Parameters:</b></p>
 
 <ul>
 <li><p><i>text</i>: A string consisting of the plain text version of the message. Can be null, in which case the value of the &quot;markdown&quot; parameter is used as the plain text version.</p></li>
@@ -1336,6 +1494,10 @@ is null.</li>
 <p><b>Return Value:</b></p>
 
 <p>This instance.</p>
+
+<p><b>Return Value:</b></p>
+
+<p>Not documented yet.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -1353,15 +1515,20 @@ is null.</li>
     string str);
 </pre>
 
-<p>Sets the body of this message to the specified plain text string. The character sequences CR (carriage return, &quot;\r&quot;, U+000D), LF (line feed, &quot;\n&quot;, U+000A), and CR/LF will be converted to CR/LF line breaks. Unpaired surrogate code points will be replaced with replacement characters. This method changes this message&#39;s media type to plain text.  <b>Parameters:</b></p>
+<p>Sets the body of this message to the specified plain text string. The character sequences CR (carriage return, &quot;\r&quot;, U+000D), LF (line feed, &quot;\n&quot;, U+000A), and CR/LF will be converted to CR/LF line breaks. Unpaired surrogate code points will be replaced with replacement characters. This method changes this message&#39;s media type to plain text.   Not documented yet.  <b>Parameters:</b></p>
 
 <ul>
-<li><i>str</i>: A string consisting of the message in plain text format.</li>
+<li><p><i>str</i>: A string consisting of the message in plain text format.</p></li>
+<li><p><i>str</i>: Not documented yet.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
 <p>This instance.</p>
+
+<p><b>Return Value:</b></p>
+
+<p>Not documented yet.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -1378,9 +1545,13 @@ is null.</li>
 <pre>public string ToMailtoUri();
 </pre>
 
-<p>Generates a MailTo URI (uniform resource identifier) corresponding to this message. The following header fields, and only these, are used to generate the URI: To, Cc, Bcc, In-Reply-To, Subject, Keywords, Comments. The message body is included in the URI only if this message has a text media type and uses a supported character encoding (&quot;charset&quot; parameter). The To header field is included in the URI only if it has display names or group syntax.  <b>Return Value:</b></p>
+<p>Generates a MailTo URI (uniform resource identifier) corresponding to this message. The following header fields, and only these, are used to generate the URI: To, Cc, Bcc, In-Reply-To, Subject, Keywords, Comments. The message body is included in the URI only if this message has a text media type and uses a supported character encoding (&quot;charset&quot; parameter). The To header field is included in the URI only if it has display names or group syntax.  Not documented yet.  <b>Return Value:</b></p>
 
 <p>A MailTo URI corresponding to this message.</p>
+
+<p><b>Return Value:</b></p>
+
+<p>Not documented yet.</p>
 
 <p><a id="ToMailtoUrl"></a></p>
 

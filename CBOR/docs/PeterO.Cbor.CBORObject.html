@@ -596,6 +596,8 @@ has an unsupported type.</p></li>
         .Add(&quot;text string&quot;) .Add(CBORObject.FromObjectAndTag(9999, 1));
 </pre>
 
+<p>.</p>
+
 <p><b>Parameters:</b></p>
 
 <ul>
@@ -634,6 +636,8 @@ is not supported.</p></li>
         .Add(CBORObject.FromObject(5)) .Add(CBORObject.FromObject(&quot;text
         string&quot;)) .Add(CBORObject.FromObjectAndTag(9999, 1));
 </pre>
+
+<p>.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -860,6 +864,8 @@ This object&#39;s value exceeds the range of a 16-bit signed integer.</p></li>
         { Console.WriteLine(&quot;The value is &quot; + obj.AsInt32()); }
 </pre>
 
+<p>.</p>
+
 <p><b>Return Value:</b></p>
 
 <p>The closest 32-bit signed integer to this object.</p>
@@ -887,6 +893,8 @@ This object&#39;s value exceeds the range of a 32-bit signed integer.</p></li>
         handle the error Console.WriteLine(&quot;Not a 64-bit integer.&quot;); } else
         { Console.WriteLine(&quot;The value is &quot; + obj.AsInt64()); }
 </pre>
+
+<p>.</p>
 
 <p><b>Return Value:</b></p>
 
@@ -1249,6 +1257,8 @@ is null.</p></li>
         CBOREncodeOptions.Default).AsString(); }
 </pre>
 
+<p>.</p>
+
 <p><b>Parameters:</b></p>
 
 <ul>
@@ -1302,7 +1312,7 @@ is a CBOR object.</p></li>
     PeterO.Cbor.CBOREncodeOptions options);
 </pre>
 
-<p>Writes the binary representation of this CBOR object and returns a byte array of that representation, using the specified options for encoding the object to CBOR format. For the CTAP2 canonical ordering, which is useful for implementing Web Authentication, call this method as follows:  <code>EncodeToBytes(new CBOREncodeOptions(false, false, true))</code>   <b>Parameters:</b></p>
+<p>Writes the binary representation of this CBOR object and returns a byte array of that representation, using the specified options for encoding the object to CBOR format. For the CTAP2 canonical ordering, which is useful for implementing Web Authentication, call this method as follows:  <code>EncodeToBytes(new CBOREncodeOptions(false, false, true))</code>  .  <b>Parameters:</b></p>
 
 <ul>
 <li><i>options</i>: Options for encoding the data to CBOR.</li>
@@ -1490,6 +1500,8 @@ is a byte (from 0 to 255).</li>
         exception on invalid UTF-8 */ byte[] bytes = DataUtilities.GetUtf8Bytes(
         textString, true); CBORObject cbor = CBORObject.FromBytes(bytes);
 </pre>
+
+<p>.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -2880,7 +2892,7 @@ Either or both operands are not numbers (as opposed to Not-a-Number, NaN).</li>
           .ToJSONString()) .Append(&quot;:&quot;).Append(mapObj[key].ToJSONString());
           first=false; } } return builder.Append(&quot;}&quot;).ToString(); }</p>
 
-<p><b>Parameters:</b></p>
+<p>.  <b>Parameters:</b></p>
 
 <ul>
 <li><i>options</i>: An object containing the options to control writing the CBOR object to JSON.</li>
@@ -2935,6 +2947,8 @@ is null.</li>
 <pre>var array = (List&lt;String&gt;)cborArray.ToObject(
         typeof(List&lt;String&gt;));
 </pre>
+
+<p>.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -3046,6 +3060,8 @@ parameter, that converter will be used to convert the CBOR object to an object o
 
 <p>var array = (List<String>)cborArray.ToObject(
           typeof(List<String>));</p>
+
+<p>.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -3890,6 +3906,8 @@ is null.</p></li>
         outputStream.WriteByte((byte)0xff); }
 </pre>
 
+<p>.</p>
+
 <p><b>Parameters:</b></p>
 
 <ul>
@@ -3966,6 +3984,8 @@ Unexpected data type&quot;.</p></li>
         DataUtilities.GetUtf8Bytes(str, true); CBORObject.WriteValue(stream, 4,
         bytes.Length); stream.Write(bytes, 0, bytes.Length);
 </pre>
+
+<p>.</p>
 
 <p><b>Parameters:</b></p>
 
