@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
-<p>Begun on Mar. 5, 2016; last updated on June 24, 2019.</p>
+<p>Begun on Mar. 5, 2016; last updated on June 28, 2019.</p>
 
 <p>Most apps that use random numbers care about either unpredictability, speed/high quality, or repeatability.  This article explains the three kinds of RNGs and gives recommendations on each kind.</p>
 
@@ -567,7 +567,7 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 <p>An application can generate unique (not necessarily random) <code>B</code>-bit integers&mdash;</p>
 
 <ul>
-<li>using a <code>B</code>-bit counter (monotonically increasing number),</li>
+<li>using a <code>B</code>-bit counter (sequentially assigned number),</li>
 <li>using a <code>B</code>-bit counter with one or more reversible operations applied to it, or</li>
 <li>using a so-called &quot;full-period&quot; PRNG (which can be a <a href="https://en.wikipedia.org/wiki/Linear_congruential_generator"><strong>linear congruential generator</strong></a>) that has a state length of <code>B</code> bits and outputs <code>B</code>-bit integers<sup><a href="#Note25"><strong>(25)</strong></a></sup>.</li>
 </ul>

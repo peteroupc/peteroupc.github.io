@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on Mar. 5, 2016; last updated on June 24, 2019.
+Begun on Mar. 5, 2016; last updated on June 28, 2019.
 
 Most apps that use random numbers care about either unpredictability, speed/high quality, or repeatability.  This article explains the three kinds of RNGs and gives recommendations on each kind.
 
@@ -380,7 +380,7 @@ Some applications require generating unique identifiers, especially to identify 
 
 An application can generate unique (not necessarily random) `B`-bit integers&mdash;
 
-- using a `B`-bit counter (monotonically increasing number),
+- using a `B`-bit counter (sequentially assigned number),
 - using a `B`-bit counter with one or more reversible operations applied to it, or
 - using a so-called "full-period" PRNG (which can be a [**linear congruential generator**](https://en.wikipedia.org/wiki/Linear_congruential_generator)) that has a state length of `B` bits and outputs `B`-bit integers<sup>[**(25)**](#Note25)</sup>.
 
