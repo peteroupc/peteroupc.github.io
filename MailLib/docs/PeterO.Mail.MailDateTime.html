@@ -9,7 +9,7 @@
 <pre>public static class MailDateTime
 </pre>
 
-<p>Contains methods for parsing and generating date-time strings following the Internet Message Format (RFC 5322).  Not documented yet. ### Member Summary</p>
+<p>Contains methods for parsing and generating date-time strings following the Internet Message Format (RFC 5322).  ### Member Summary</p>
 
 <ul>
 <li><code><a href="#GenerateDateString_int">GenerateDateString(int[])</a></code> - Generates a date-time string following the Internet Message Format (RFC 5322) from an 8-element array.</li>
@@ -27,7 +27,7 @@
     int[] dateTime);
 </pre>
 
-<p>Generates a date-time string following the Internet Message Format (RFC 5322) from an 8-element array.  Not documented yet.  <b>Parameters:</b></p>
+<p>Generates a date-time string following the Internet Message Format (RFC 5322) from an 8-element array.  <b>Parameters:</b></p>
 
 <ul>
 <li><i>dateTime</i>: The date and time in the form of an 8-element array. See <strong>M:PeterO.Mail.MailDateTime.ParseDateString(System.String,System.Boolean)</strong> for information on the format of this parameter.</li>
@@ -36,10 +36,6 @@
 <p><b>Return Value:</b></p>
 
 <p>A date-time string.</p>
-
-<p><b>Return Value:</b></p>
-
-<p>Not documented yet.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -58,7 +54,7 @@ is null or invalid, including if the year (  <code>dateTime[0]</code>  ) is less
     bool gmt);
 </pre>
 
-<p>Generates a date-time string following the Internet Message Format (RFC 5322) from an 8-element array, optionally using a &quot;GMT&quot; time zone indicator.  Not documented yet.  <b>Parameters:</b></p>
+<p>Generates a date-time string following the Internet Message Format (RFC 5322) from an 8-element array, optionally using a &quot;GMT&quot; time zone indicator.  <b>Parameters:</b></p>
 
 <ul>
 <li><p><i>dateTime</i>: The date and time in the form of an 8-element array. See <strong>M:PeterO.Mail.MailDateTime.ParseDateString(System.String,System.Boolean)</strong> for information on the format of this parameter.</p></li>
@@ -68,10 +64,6 @@ is null or invalid, including if the year (  <code>dateTime[0]</code>  ) is less
 <p><b>Return Value:</b></p>
 
 <p>A date-time string.</p>
-
-<p><b>Return Value:</b></p>
-
-<p>Not documented yet.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -92,22 +84,17 @@ is true.</p></li>
     string str);
 </pre>
 
-<p>Gets the date and time extracted from a date-time string following the Internet Message Format (RFC 5322). However, this method does not allow obsolete time zone strings to appear in the date-time string. See <strong>M:PeterO.Mail.MailDateTime.ParseDateString(System.String,System.Boolean)</strong> for information on the format of this method&#39;s return value.   Not documented yet.  <b>Parameters:</b></p>
+<p>Gets the date and time extracted from a date-time string following the Internet Message Format (RFC 5322). However, this method does not allow obsolete time zone strings to appear in the date-time string. See <strong>M:PeterO.Mail.MailDateTime.ParseDateString(System.String,System.Boolean)</strong> for information on the format of this method&#39;s return value.  <b>Parameters:</b></p>
 
 <ul>
-<li><p><i>str</i>: The parameter  <i>str</i>
-is not documented yet.</p></li>
-<li><p><i>str</i>: Not documented yet.</p></li>
+<li><i>str</i>: The parameter  <i>str</i>
+is not documented yet.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
 <p>An 8-element array containing the date and time, or  <code>null</code>  if  <i>str</i>
  is null, empty, or syntactically invalid, or if the string&#39;s year would overflow the range of a 32-bit signed integer.</p>
-
-<p><b>Return Value:</b></p>
-
-<p>Not documented yet.</p>
 
 <p><a id="ParseDateString_string_bool"></a></p>
 
@@ -130,7 +117,7 @@ is not documented yet.</p></li>
 <li><p>6 - Milliseconds of the second, from 0 through 999. Will always be 0.</p></li>
 <li><p>7 - Number of minutes to subtract from this date and time to get global time. This number can be positive or negative.</p>
 
-<p>Not documented yet.  <b>Parameters:</b></p>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>str</i>: A date-time string.</p></li>
@@ -143,10 +130,6 @@ is not documented yet.</p></li>
 <p>An 8-element array containing the date and time, or  <code>null</code>  if  <i>str</i>
  is null, empty, or syntactically invalid, or if the string&#39;s year would overflow the range of a 32-bit signed integer.</p>
 
-<p><b>Return Value:</b></p>
-
-<p>Not documented yet.</p>
-
 <p><a id="ParseDateStringHttp_string"></a></p>
 
 <h3>ParseDateStringHttp</h3>
@@ -155,21 +138,16 @@ is not documented yet.</p></li>
     string v);
 </pre>
 
-<p>Parses a date string in one of the three formats allowed by HTTP/1.1.   Not documented yet.  <b>Parameters:</b></p>
+<p>Parses a date string in one of the three formats allowed by HTTP/1.1.  <b>Parameters:</b></p>
 
 <ul>
-<li><p><i>v</i>: The parameter  <i>v</i>
-is not documented yet.</p></li>
-<li><p><i>v</i>: Not documented yet.</p></li>
+<li><i>v</i>: The parameter  <i>v</i>
+is not documented yet.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
 <p>A 64-bit signed integer.</p>
-
-<p><b>Return Value:</b></p>
-
-<p>Not documented yet.</p>
 
 <p><a href="/MailLib/">Back to MailLib start page.</a></p>
 </div><nav id="navigation"><ul>

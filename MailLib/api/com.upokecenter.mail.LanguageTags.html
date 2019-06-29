@@ -9,53 +9,58 @@
 <pre>public final class LanguageTags extends java.lang.Object
 </pre>
 
-<p>Not documented yet.</p>
+<p>Contains methods for parsing and matching language tags.</p>
 
 <h2>Methods</h2>
 
 <ul>
 <li><code>static java.util.List&lt;java.lang.String&gt; GetLanguageList​(java.lang.String str)</code><br>
-Not documented yet.</li>
+Parses a language list from a Content-Language header field.</li>
 <li><code>static java.util.List&lt;StringAndQuality&gt; GetRangeListWithQuality​(java.lang.String str)</code><br>
-Not documented yet.</li>
+Parses a language range list from an Accept-Language header field.</li>
 <li><code>static boolean IsLanguageRange​(java.lang.String str)</code><br>
-Not documented yet.</li>
+Returns whether the given string is a basic language range under RFC 4647.</li>
 <li><code>static boolean IsLanguageRange​(java.lang.String str,
            boolean extended)</code><br>
-Not documented yet.</li>
+Returns whether the given string is a basic or extended language range under
+RFC 4647.</li>
 <li><code>static boolean IsPotentiallyValidLanguageTag​(java.lang.String str)</code><br>
-Not documented yet.</li>
+Returns true if (1) the given string is a well-formed language tag under RFC
+5646 (that is, the string follows the syntax given in section 2.1 of
+that RFC), and (2) the language tag contains at most one extended
+language subtag, no variant subtags with the same value, and no
+extension singleton subtags with the same value.</li>
 <li><code>static java.lang.String LanguageTagCase​(java.lang.String str)</code><br>
-Not documented yet.</li>
+Sets the given language tag to the case combination recommended by RFC 5646.</li>
 <li><code>static java.util.List&lt;java.lang.String&gt; LanguageTagFilter​(java.util.List&lt;java.lang.String&gt; ranges,
              java.util.List&lt;java.lang.String&gt; languages)</code><br>
-Not documented yet.</li>
+Finds the language tags that match a priority list of basic language ranges.</li>
 <li><code>static java.util.List&lt;java.lang.String&gt; LanguageTagFilter​(java.util.List&lt;java.lang.String&gt; ranges,
              java.util.List&lt;java.lang.String&gt; languages,
              boolean extended,
              boolean matchStarAtEnd)</code><br>
-Not documented yet.</li>
+Finds the language tags that match a priority list of language ranges.</li>
 <li><code>static java.lang.String LanguageTagLookup​(java.lang.String range,
              java.util.List&lt;java.lang.String&gt; languages,
              java.lang.String defaultValue)</code><br>
-Not documented yet.</li>
+Does a language tag lookup (under RFC 4647) for a matching language tag.</li>
 <li><code>static java.lang.String LanguageTagLookup​(java.lang.String range,
              java.util.List&lt;java.lang.String&gt; languages,
              java.lang.String defaultValue,
              boolean extended)</code><br>
-Not documented yet.</li>
+Does a language tag lookup (under RFC 4647) for a matching language tag.</li>
 <li><code>static java.lang.String LanguageTagLookup​(java.util.List&lt;java.lang.String&gt; ranges,
              java.util.List&lt;java.lang.String&gt; languages,
              java.lang.String defaultValue)</code><br>
-Not documented yet.</li>
+Does a language tag lookup (under RFC 4647) for a matching language tag.</li>
 <li><code>static java.lang.String LanguageTagLookup​(java.util.List&lt;java.lang.String&gt; ranges,
              java.util.List&lt;java.lang.String&gt; languages,
              java.lang.String defaultValue,
              boolean extended)</code><br>
-Not documented yet.</li>
+Does a language tag lookup (under RFC 4647) for a matching language tag.</li>
 <li><code>static boolean MatchesLanguageTag​(java.lang.String range,
               java.lang.String tag)</code><br>
-Not documented yet.</li>
+Determines whether the given language tag matches the given language range.</li>
 </ul>
 
 <h2>Method Details</h2>
@@ -65,19 +70,20 @@ Not documented yet.</li>
 <pre>public static boolean IsLanguageRange​(java.lang.String str)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Returns whether the given string is a basic language range under RFC 4647.
+ Examples include &quot;*&quot;, &quot;en-us&quot;, and &quot;fr&quot;.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>str</code> - Not documented yet.</p></li>
-<li><p><code>str</code> - The string to check. Can be null.</p></li>
+<li><code>str</code> - The string to check. Can be null.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>Not documented yet.</li>
+<li><code>true</code> if the given string is a basic language range;
+otherwise, <code>false</code> .</li>
 </ul>
 
 <h3>IsLanguageRange</h3>
@@ -85,7 +91,10 @@ Not documented yet.</li>
 <pre>public static boolean IsLanguageRange​(java.lang.String str, boolean extended)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Returns whether the given string is a basic or extended language range under
+ RFC 4647. Examples of basic (and extended) language ranges include
+ &quot;<em>&quot;, &quot;en-us&quot;, and &quot;fr&quot;. Examples of extended language ranges
+ include &quot;</em>-de&quot; and &quot;it-*&quot;.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -98,7 +107,9 @@ Not documented yet.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>Not documented yet.</li>
+<li><code>true</code> if the given string is a basic language range
+(depending on the <code>extended</code> parameter); otherwise, <code>
+false</code> .</li>
 </ul>
 
 <h3>LanguageTagCase</h3>
@@ -106,19 +117,21 @@ Not documented yet.</li>
 <pre>public static java.lang.String LanguageTagCase​(java.lang.String str)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Sets the given language tag to the case combination recommended by RFC 5646.
+ For example, &quot;en-us&quot; becomes &quot;en-US&quot;, and &quot;zh-hant&quot; becomes
+ &quot;zh-Hant&quot;.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>str</code> - Not documented yet.</p></li>
-<li><p><code>str</code> - A string of a language tag. Can be null.</p></li>
+<li><code>str</code> - A string of a language tag. Can be null.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>Not documented yet.</li>
+<li>A text string in the recommended case combination, or null if <code>
+str</code> is null.</li>
 </ul>
 
 <h3>GetLanguageList</h3>
@@ -126,7 +139,7 @@ Not documented yet.</li>
 <pre>public static java.util.List&lt;java.lang.String&gt; GetLanguageList​(java.lang.String str)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Parses a language list from a Content-Language header field.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -140,7 +153,9 @@ null.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>Not documented yet.</li>
+<li>A list of language tags. Returns an empty list if <code>str</code> is
+null or the empty string, or null if <code>str</code> syntactically
+invalid.</li>
 </ul>
 
 <h3>GetRangeListWithQuality</h3>
@@ -148,7 +163,7 @@ null.</li>
 <pre>public static java.util.List&lt;StringAndQuality&gt; GetRangeListWithQuality​(java.lang.String str)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Parses a language range list from an Accept-Language header field.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -163,7 +178,11 @@ appear. This parameter can be null.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>Not documented yet.</li>
+<li>A list of language ranges with their associated qualities. The list
+will be sorted in descending order by quality; if two or more
+language ranges have the same quality, they will be sorted in the
+order in which they appeared in the given string. Returns null if
+<code>str</code> is null or syntactically invalid.</li>
 </ul>
 
 <h3>LanguageTagFilter</h3>
@@ -171,7 +190,7 @@ appear. This parameter can be null.</li>
 <pre>public static java.util.List&lt;java.lang.String&gt; LanguageTagFilter​(java.util.List&lt;java.lang.String&gt; ranges, java.util.List&lt;java.lang.String&gt; languages, boolean extended, boolean matchStarAtEnd)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Finds the language tags that match a priority list of language ranges.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -191,7 +210,8 @@ it appears on that list.</p></li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>Not documented yet.</li>
+<li>A list of language tags that match the given range, in descending
+order of preference.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -210,7 +230,7 @@ tag.</p></li>
 <pre>public static boolean MatchesLanguageTag​(java.lang.String range, java.lang.String tag)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Determines whether the given language tag matches the given language range.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -223,7 +243,8 @@ tag.</p></li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>Not documented yet.</li>
+<li><code>true</code> if the language tag matches the language range by the
+filtering method under RFC 4647; otherwise, <code>false</code> .</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -239,7 +260,7 @@ tag.</li>
 <pre>public static java.lang.String LanguageTagLookup​(java.lang.String range, java.util.List&lt;java.lang.String&gt; languages, java.lang.String defaultValue)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Does a language tag lookup (under RFC 4647) for a matching language tag.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -255,7 +276,8 @@ found.</p></li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>Not documented yet.</li>
+<li>The matching language tag, or the parameter <code>defaultValue</code> if
+there is no matching language tag.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -273,7 +295,7 @@ potentially valid language tag.</p></li>
 <pre>public static java.lang.String LanguageTagLookup​(java.util.List&lt;java.lang.String&gt; ranges, java.util.List&lt;java.lang.String&gt; languages, java.lang.String defaultValue)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Does a language tag lookup (under RFC 4647) for a matching language tag.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -290,7 +312,8 @@ found.</p></li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>Not documented yet.</li>
+<li>The matching language tag, or the parameter <code>defaultValue</code> if
+there is no matching language tag.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -308,7 +331,7 @@ contains a value that is not a potentially valid language tag.</p></li>
 <pre>public static java.util.List&lt;java.lang.String&gt; LanguageTagFilter​(java.util.List&lt;java.lang.String&gt; ranges, java.util.List&lt;java.lang.String&gt; languages)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Finds the language tags that match a priority list of basic language ranges.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -323,7 +346,8 @@ descending preference.</p></li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>Not documented yet.</li>
+<li>A list of language tags that match the given range, in descending
+order of preference.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -341,7 +365,7 @@ contains a value that is not a potentially valid language tag.</p></li>
 <pre>public static java.lang.String LanguageTagLookup​(java.lang.String range, java.util.List&lt;java.lang.String&gt; languages, java.lang.String defaultValue, boolean extended)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Does a language tag lookup (under RFC 4647) for a matching language tag.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -358,7 +382,8 @@ it&#39;s a are basic language range.</p></li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>Not documented yet.</li>
+<li>The matching language tag, or the parameter <code>defaultValue</code> if
+there is no matching language tag.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -376,7 +401,7 @@ that is not a potentially valid language tag.</p></li>
 <pre>public static java.lang.String LanguageTagLookup​(java.util.List&lt;java.lang.String&gt; ranges, java.util.List&lt;java.lang.String&gt; languages, java.lang.String defaultValue, boolean extended)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Does a language tag lookup (under RFC 4647) for a matching language tag.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -395,7 +420,8 @@ ranges; otherwise, they are basic language ranges.</p></li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>Not documented yet.</li>
+<li>The matching language tag, or the parameter <code>defaultValue</code> if
+there is no matching language tag.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -414,19 +440,23 @@ tag.</p></li>
 <pre>public static boolean IsPotentiallyValidLanguageTag​(java.lang.String str)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Returns true if (1) the given string is a well-formed language tag under RFC
+ 5646 (that is, the string follows the syntax given in section 2.1 of
+ that RFC), and (2) the language tag contains at most one extended
+ language subtag, no variant subtags with the same value, and no
+ extension singleton subtags with the same value.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>str</code> - Not documented yet.</p></li>
-<li><p><code>str</code> - The string to check.</p></li>
+<li><code>str</code> - The string to check.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>Not documented yet.</li>
+<li><code>true</code> , if the string meets the conditions given in the
+summary, <code>false</code> otherwise.</li>
 </ul>
 
 <p><a href="/MailLib/">Back to MailLib start page.</a></p>

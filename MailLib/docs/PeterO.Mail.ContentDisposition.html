@@ -29,7 +29,7 @@
 
 <p>In this implementation, the first and second of these are syntactically invalid, so they trigger parse errors, while the third of these is syntactically valid, but the &quot;filename&quot; parameter is treated as &quot;=?UTF-8?Q?test.png?=&quot;, not &quot;test.png&quot; or something else -- RFC 2047 encoded words are not decoded at the moment a content disposition is parsed (using the Parse method).</p>
 
-<p>Not documented yet. ### Member Summary</p>
+<p>### Member Summary</p>
 
 <ul>
 <li><code><a href="#Attachment">public static readonly PeterO.Mail.ContentDisposition Attachment;</a></code> - The content disposition value &quot;attachment&quot;.</li>
@@ -73,7 +73,7 @@
 <pre>public string DispositionType { get; }
 </pre>
 
-<p>Gets a string containing this object&#39;s disposition type, such as &quot;inline&quot; or &quot;attachment&quot;. Note that under RFC 6266 sec. 4.2 and RFC 2183 sec. 2.8, unrecognized disposition types should be treated as &quot;attachment&quot;.  Not documented yet. Gets a value not documented yet. <b>Returns:</b></p>
+<p>Gets a string containing this object&#39;s disposition type, such as &quot;inline&quot; or &quot;attachment&quot;. Note that under RFC 6266 sec. 4.2 and RFC 2183 sec. 2.8, unrecognized disposition types should be treated as &quot;attachment&quot;.  <b>Returns:</b></p>
 
 <p>A string containing this object&#39;s disposition type, such as &quot;inline&quot; or &quot;attachment&quot;.</p>
 
@@ -84,7 +84,7 @@
 <pre>public bool IsAttachment { get; }
 </pre>
 
-<p>Gets a value indicating whether the disposition type is attachment.  Not documented yet. Gets a value not documented yet. <b>Returns:</b></p>
+<p>Gets a value indicating whether the disposition type is attachment.  <b>Returns:</b></p>
 
 <p><code>true</code>  If the disposition type is attachment; otherwise, .  <code>false</code>  .</p>
 
@@ -95,7 +95,7 @@
 <pre>public bool IsInline { get; }
 </pre>
 
-<p>Gets a value indicating whether the disposition type is inline.  Not documented yet. Gets a value not documented yet. <b>Returns:</b></p>
+<p>Gets a value indicating whether the disposition type is inline.  <b>Returns:</b></p>
 
 <p><code>true</code>  If the disposition type is inline; otherwise, .  <code>false</code>  .</p>
 
@@ -108,7 +108,7 @@
 
 <p>Gets a list of parameter names associated with this object and their values. For the &quot;filename&quot; parameter, the value of that parameter is not adapted with the ContentDisposition.MakeFilename method; see the documentation for the ContentDisposition class.</p>
 
-<p>Not documented yet. Gets a value not documented yet. <b>Returns:</b></p>
+<p><b>Returns:</b></p>
 
 <p>A read-only list of parameter names associated with this object and their values. NOTE: Previous versions erroneously stated that the list will be sorted by name. In fact, the names will not be guaranteed to appear in any particular order; this is at least the case in version 0.10.0.</p>
 
@@ -120,21 +120,16 @@
     object obj);
 </pre>
 
-<p>Determines whether this object and another object are equal.   Not documented yet.  <b>Parameters:</b></p>
+<p>Determines whether this object and another object are equal.  <b>Parameters:</b></p>
 
 <ul>
-<li><p><i>obj</i>: The parameter  <i>obj</i>
-is an arbitrary object.</p></li>
-<li><p><i>obj</i>: Not documented yet.</p></li>
+<li><i>obj</i>: The parameter  <i>obj</i>
+is an arbitrary object.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
 <p><code>true</code>  if the objects are equal; otherwise,  <code>false</code>  .</p>
-
-<p><b>Return Value:</b></p>
-
-<p>Not documented yet.</p>
 
 <p><a id="GetCreationDate"></a></p>
 
@@ -143,13 +138,9 @@ is an arbitrary object.</p></li>
 <pre>public int[] GetCreationDate();
 </pre>
 
-<p>Gets the date and time extracted from this content disposition&#39;s &quot;creation-date&quot; parameter, which specifies the date of creation of a file (RFC 2183 sec. 2.4). See <strong>M:PeterO.Mail.MailDateTime.ParseDateString(System.String,System.Boolean)</strong> for information on the format of this method&#39;s return value.  Not documented yet.  <b>Return Value:</b></p>
+<p>Gets the date and time extracted from this content disposition&#39;s &quot;creation-date&quot; parameter, which specifies the date of creation of a file (RFC 2183 sec. 2.4). See <strong>M:PeterO.Mail.MailDateTime.ParseDateString(System.String,System.Boolean)</strong> for information on the format of this method&#39;s return value.  <b>Return Value:</b></p>
 
 <p>The extracted date and time as an 8-element array, or  <code>null</code>  if the &quot;creation-date&quot; parameter doesn&#39;t exist, is an empty string, or is syntactically invalid, or if the parameter&#39;s year would overflow a 32-bit signed integer.</p>
-
-<p><b>Return Value:</b></p>
-
-<p>Not documented yet.</p>
 
 <p><a id="GetFilename"></a></p>
 
@@ -158,13 +149,9 @@ is an arbitrary object.</p></li>
 <pre>public string GetFilename();
 </pre>
 
-<p>Gets an adapted version of the &quot;filename&quot; parameter in this content disposition object by using the &quot;MakeFilename&quot; method.  Not documented yet.  <b>Return Value:</b></p>
+<p>Gets an adapted version of the &quot;filename&quot; parameter in this content disposition object by using the &quot;MakeFilename&quot; method.  <b>Return Value:</b></p>
 
 <p>The adapted file name in the form of a string. Returns the empty string if there is no &quot;filename&quot; parameter or that parameter is empty.</p>
-
-<p><b>Return Value:</b></p>
-
-<p>Not documented yet.</p>
 
 <p><a id="GetHashCode"></a></p>
 
@@ -173,13 +160,9 @@ is an arbitrary object.</p></li>
 <pre>public override int GetHashCode();
 </pre>
 
-<p>Calculates the hash code of this object. No application or process IDs are used in the hash code calculation.  Not documented yet.  <b>Return Value:</b></p>
+<p>Calculates the hash code of this object. No application or process IDs are used in the hash code calculation.  <b>Return Value:</b></p>
 
 <p>A 32-bit hash code.</p>
-
-<p><b>Return Value:</b></p>
-
-<p>Not documented yet.</p>
 
 <p><a id="GetModificationDate"></a></p>
 
@@ -188,13 +171,9 @@ is an arbitrary object.</p></li>
 <pre>public int[] GetModificationDate();
 </pre>
 
-<p>Gets the date and time extracted from this content disposition&#39;s &quot;modification-date&quot; parameter, which specifies the date of last modification of a file (RFC 2183 sec. 2.5). See <strong>M:PeterO.Mail.MailDateTime.ParseDateString(System.String,System.Boolean)</strong> for information on the format of this method&#39;s return value.  Not documented yet.  <b>Return Value:</b></p>
+<p>Gets the date and time extracted from this content disposition&#39;s &quot;modification-date&quot; parameter, which specifies the date of last modification of a file (RFC 2183 sec. 2.5). See <strong>M:PeterO.Mail.MailDateTime.ParseDateString(System.String,System.Boolean)</strong> for information on the format of this method&#39;s return value.  <b>Return Value:</b></p>
 
 <p>The extracted date and time as an 8-element array, or  <code>null</code>  if the &quot;modification-date&quot; parameter doesn&#39;t exist, is an empty string, or is syntactically invalid, or if the parameter&#39;s year would overflow a 32-bit signed integer.</p>
-
-<p><b>Return Value:</b></p>
-
-<p>Not documented yet.</p>
 
 <p><a id="GetParameter_string"></a></p>
 
@@ -204,20 +183,15 @@ is an arbitrary object.</p></li>
     string name);
 </pre>
 
-<p>Gets a parameter from this disposition object. For the &quot;filename&quot; parameter, the value of that parameter is not adapted with the ContentDisposition.MakeFilename method; see the documentation for the ContentDisposition class.   Not documented yet.  <b>Parameters:</b></p>
+<p>Gets a parameter from this disposition object. For the &quot;filename&quot; parameter, the value of that parameter is not adapted with the ContentDisposition.MakeFilename method; see the documentation for the ContentDisposition class.  <b>Parameters:</b></p>
 
 <ul>
-<li><p><i>name</i>: The name of the parameter to get. The name will be matched using a basic case-insensitive comparison. (Two strings are equal in such a comparison, if they match after converting the basic upper-case letters A to Z (U+0041 to U+005A) in both strings to lower case.). Can&#39;t be null.</p></li>
-<li><p><i>name</i>: Not documented yet.</p></li>
+<li><i>name</i>: The name of the parameter to get. The name will be matched using a basic case-insensitive comparison. (Two strings are equal in such a comparison, if they match after converting the basic upper-case letters A to Z (U+0041 to U+005A) in both strings to lower case.). Can&#39;t be null.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
 <p>The value of the parameter, or null if the parameter does not exist.</p>
-
-<p><b>Return Value:</b></p>
-
-<p>Not documented yet.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -237,13 +211,9 @@ is empty.</p></li>
 <pre>public int[] GetReadDate();
 </pre>
 
-<p>Gets the date and time extracted from this content disposition&#39;s &quot;read-date&quot; parameter, which specifies the date at which a file was last read (RFC 2183 sec. 2.6). See <strong>M:PeterO.Mail.MailDateTime.ParseDateString(System.String,System.Boolean)</strong> for information on the format of this method&#39;s return value.  Not documented yet.  <b>Return Value:</b></p>
+<p>Gets the date and time extracted from this content disposition&#39;s &quot;read-date&quot; parameter, which specifies the date at which a file was last read (RFC 2183 sec. 2.6). See <strong>M:PeterO.Mail.MailDateTime.ParseDateString(System.String,System.Boolean)</strong> for information on the format of this method&#39;s return value.  <b>Return Value:</b></p>
 
 <p>The extracted date and time as an 8-element array, or  <code>null</code>  if the &quot;read-date&quot; parameter doesn&#39;t exist, is an empty string, or is syntactically invalid, or if the parameter&#39;s year would overflow a 32-bit signed integer.</p>
-
-<p><b>Return Value:</b></p>
-
-<p>Not documented yet.</p>
 
 <p><a id="MakeFilename_string"></a></p>
 
@@ -279,11 +249,10 @@ is null or empty.</p></li>
 
 <p>To the extent that the &quot;name&quot; parameter is not allowed in message bodies other than those with the media type &quot;application/octet-stream&quot; or treated as that media-type, this is a deviation of RFC 2045 and 2046 (see also RFC 2045 sec. 5, which says that &quot;[t]here are NO globally meaningful parameters that apply to all media types&quot;). (Some email implementations may still write out the &quot;name&quot; parameter, even for media types other than  <code>application/octet-stream</code>  and even though RFC 2046 has deprecated that parameter.)</p>
 
-<p>Not documented yet.  <b>Parameters:</b></p>
+<p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>str</i>: A string representing a file name. Can be null.</p></li>
-<li><p><i>str</i>: Not documented yet.</p></li>
+<li><i>str</i>: A string representing a file name. Can be null.</li>
 </ul></li>
 </ul>
 
@@ -291,10 +260,6 @@ is null or empty.</p></li>
 
 <p>A string with the converted version of the file name. Among other things, encoded words under RFC 2047 are decoded (since they occur so frequently in Content-Disposition filenames); the value is decoded under RFC 2231 if possible; characters unsuitable for use in a filename (including the directory separators slash and backslash) are replaced with underscores; spaces and tabs are collapsed to a single space; leading and trailing spaces and tabs are removed; and the filename is truncated if it would otherwise be too long. Also, for reasons stated in the remarks, a character that is the combined form of a base character and a combining slash is replaced with &quot;!&quot; followed by the base character. The returned string will be in normalization form C. Returns the empty string if  <i>str</i>
  is null or empty.</p>
-
-<p><b>Return Value:</b></p>
-
-<p>Not documented yet.</p>
 
 <p><a id="Parse_string_PeterO_Mail_ContentDisposition"></a></p>
 
@@ -315,7 +280,7 @@ is null or empty.</p></li>
 
 <p>This implementation ignores keys (in parameter key-value pairs) that appear more than once in the content disposition. Nothing in RFCs 2045, 2183, 2231, 6266, or 7231 explicitly disallows such keys, or otherwise specifies error-handling behavior for such keys.</p>
 
-<p>Not documented yet.  <b>Parameters:</b></p>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>dispositionValue</i>: A text string that should be the value of a Content-Disposition header field.</p></li>
@@ -325,10 +290,6 @@ is null or empty.</p></li>
 <p><b>Return Value:</b></p>
 
 <p>A ContentDisposition object.</p>
-
-<p><b>Return Value:</b></p>
-
-<p>Not documented yet.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -346,22 +307,17 @@ is null.</li>
     string dispoValue);
 </pre>
 
-<p>Creates a new content disposition object from the value of a Content-Disposition header field.   Not documented yet.  <b>Parameters:</b></p>
+<p>Creates a new content disposition object from the value of a Content-Disposition header field.  <b>Parameters:</b></p>
 
 <ul>
-<li><p><i>dispoValue</i>: The parameter  <i>dispoValue</i>
-is a text string.</p></li>
-<li><p><i>dispoValue</i>: Not documented yet.</p></li>
+<li><i>dispoValue</i>: The parameter  <i>dispoValue</i>
+is a text string.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
 <p>A content disposition object, or ContentDisposition.Attachment&quot; if  <i>dispoValue</i>
  is empty or syntactically invalid.</p>
-
-<p><b>Return Value:</b></p>
-
-<p>Not documented yet.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -378,13 +334,9 @@ is null.</li>
 <pre>public string ToSingleLineString();
 </pre>
 
-<p>Converts this content disposition to a text string form suitable for inserting in HTTP headers. Notably, the string contains the value of a Content-Disposition header field (without the text necessarily starting with &quot;Content-Disposition&quot; followed by a space), and consists of a single line.  Not documented yet.  <b>Return Value:</b></p>
+<p>Converts this content disposition to a text string form suitable for inserting in HTTP headers. Notably, the string contains the value of a Content-Disposition header field (without the text necessarily starting with &quot;Content-Disposition&quot; followed by a space), and consists of a single line.  <b>Return Value:</b></p>
 
 <p>A text string form of this content disposition.</p>
-
-<p><b>Return Value:</b></p>
-
-<p>Not documented yet.</p>
 
 <p><a id="ToString"></a></p>
 
@@ -393,13 +345,9 @@ is null.</li>
 <pre>public override string ToString();
 </pre>
 
-<p>Converts this content disposition to a text string form suitable for inserting in email headers. Notably, the string contains the value of a Content-Disposition header field (without the text necessarily starting with &quot;Content-Disposition&quot; followed by a space), and consists of one or more lines.  Not documented yet.  <b>Return Value:</b></p>
+<p>Converts this content disposition to a text string form suitable for inserting in email headers. Notably, the string contains the value of a Content-Disposition header field (without the text necessarily starting with &quot;Content-Disposition&quot; followed by a space), and consists of one or more lines.  <b>Return Value:</b></p>
 
 <p>A text string form of this content disposition.</p>
-
-<p><b>Return Value:</b></p>
-
-<p>Not documented yet.</p>
 
 <p><a href="/MailLib/">Back to MailLib start page.</a></p>
 </div><nav id="navigation"><ul>

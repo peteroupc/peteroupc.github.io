@@ -58,10 +58,11 @@ Either convert the array to a String or wrap it in an ICharacterInput and
 call the corresponding overload instead.</li>
 <li><code>static boolean IsNormalized​(com.upokecenter.text.ICharacterInput chars,
         Normalization form)</code><br>
-Deprecated. Not documented yet.</li>
+Deprecated. Determines whether the text provided by a character input is normalized.</li>
 <li><code>static boolean IsNormalized​(java.lang.String str,
         Normalization form)</code><br>
-Deprecated. Not documented yet.</li>
+Deprecated. Determines whether the given string is in the given Unicode normalization
+form.</li>
 <li><code>static boolean IsNormalized​(java.util.List&lt;java.lang.Integer&gt; charList,
         Normalization form)</code><br>
 Deprecated.
@@ -71,13 +72,13 @@ Either convert the list to a String or wrap it in an ICharacterInput and
 call the corresponding overload instead.</li>
 <li><code>static java.lang.String Normalize​(java.lang.String str,
      Normalization form)</code><br>
-Deprecated. Not documented yet.</li>
+Deprecated. Converts a string to the given Unicode normalization form.</li>
 <li><code>int Read​(int[] chars,
 int index,
 int length)</code><br>
-Deprecated. Not documented yet.</li>
+Deprecated. Reads a sequence of Unicode code points from a data source.</li>
 <li><code>int ReadChar()</code><br>
-Deprecated. Not documented yet.</li>
+Deprecated. Reads a Unicode character from a data source.</li>
 </ul>
 
 <h2>Constructors</h2>
@@ -227,7 +228,7 @@ Deprecated. Initializes a new instance of the NormalizingCharacterInput class.</
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>Not documented yet.</li>
+<li><code>true</code> if the text is normalized; otherwise, <code>false</code> .</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -253,7 +254,7 @@ Deprecated. Initializes a new instance of the NormalizingCharacterInput class.</
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>Not documented yet.</li>
+<li>The parameter <code>str</code> converted to the given normalization form.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -282,7 +283,9 @@ text.</p></li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>Not documented yet.</li>
+<li><code>true</code> if the given string is in the given Unicode
+normalization form; otherwise, <code>false</code> . Returns <code>false</code>
+if the string contains an unpaired surrogate code point.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -425,7 +428,8 @@ normalization form; otherwise, <code>false</code> .</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>Not documented yet.</li>
+<li>Either a Unicode code point (from 0-0xd7ff or from 0xe000 to
+0x10ffff), or the value -1 indicating the end of the source.</li>
 </ul>
 
 <h3>Read</h3>
@@ -454,7 +458,8 @@ chars</code> begins.</p></li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>Not documented yet.</li>
+<li>The number of Unicode code points read, or 0 if the end of the
+source is reached.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>

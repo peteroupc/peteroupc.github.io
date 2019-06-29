@@ -9,7 +9,7 @@
 <pre>public final class MediaTypeBuilder extends java.lang.Object
 </pre>
 
-<p>Not documented yet.</p>
+<p>A mutable media type object.</p>
 
 <h2>Methods</h2>
 
@@ -22,28 +22,29 @@ Initializes a new instance of the MediaTypeBuilder class.</li>
             java.lang.String subtype) MediaTypeBuilder</code><br>
 Initializes a new instance of the MediaTypeBuilder class.</li>
 <li><code>java.lang.String getSubType()</code><br>
-Not documented yet.</li>
+Gets this value&#39;s subtype.</li>
 <li><code>java.lang.String getTopLevelType()</code><br>
-Not documented yet.</li>
+Gets this value&#39;s top-level type.</li>
 <li><code>boolean isMultipart()</code><br>
-Not documented yet.</li>
+Gets a value indicating whether this is a multipart media type.</li>
 <li><code>boolean isText()</code><br>
-Not documented yet.</li>
+Gets a value indicating whether this is a text media type.</li>
 <li><code>MediaTypeBuilder RemoveParameter​(java.lang.String name)</code><br>
-Not documented yet.</li>
+Removes a parameter from this builder object.</li>
 <li><code>MediaTypeBuilder SetParameter​(java.lang.String name,
         java.lang.String value)</code><br>
-Not documented yet.</li>
+Sets a parameter&#39;s name and value for this media type.</li>
 <li><code>void setSubType​(java.lang.String value)</code><br></li>
 <li><code>MediaTypeBuilder SetSubType​(java.lang.String str)</code><br>
-Not documented yet.</li>
+Sets this media type&#39;s subtype, such as &quot;plain&quot; or &quot;xml&quot; .</li>
 <li><code>void setTopLevelType​(java.lang.String value)</code><br></li>
 <li><code>MediaTypeBuilder SetTopLevelType​(java.lang.String str)</code><br>
-Not documented yet.</li>
+Sets this media type&#39;s top-level type.</li>
 <li><code>MediaType ToMediaType()</code><br>
-Not documented yet.</li>
-<li><code>java.lang.String toString()</code><br>
-Not documented yet.</li>
+Converts this builder to an immutable media type object.</li>
+<li><code>java.lang.String toString() MediaType.toString</code><br>
+Converts this object to a text string of the media type it represents, in
+the same form as MediaType.toString .</li>
 </ul>
 
 <h2>Constructors</h2>
@@ -105,7 +106,7 @@ Initializes a new instance of the MediaTypeBuilder class.</li>
 <pre>public final java.lang.String getTopLevelType()
 </pre>
 
-<p>Not documented yet.</p>
+<p>Gets this value&#39;s top-level type.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -123,7 +124,7 @@ Initializes a new instance of the MediaTypeBuilder class.</li>
 <pre>public final java.lang.String getSubType()
 </pre>
 
-<p>Not documented yet.</p>
+<p>Gets this value&#39;s subtype.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -141,7 +142,7 @@ Initializes a new instance of the MediaTypeBuilder class.</li>
 <pre>public final boolean isText()
 </pre>
 
-<p>Not documented yet.</p>
+<p>Gets a value indicating whether this is a text media type.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -155,7 +156,7 @@ false</code> .</li>
 <pre>public final boolean isMultipart()
 </pre>
 
-<p>Not documented yet.</p>
+<p>Gets a value indicating whether this is a multipart media type.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -169,12 +170,12 @@ false</code> .</li>
 <pre>public MediaType ToMediaType()
 </pre>
 
-<p>Not documented yet.</p>
+<p>Converts this builder to an immutable media type object.</p>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>Not documented yet.</li>
+<li>A MediaType object.</li>
 </ul>
 
 <h3>SetTopLevelType</h3>
@@ -182,20 +183,19 @@ false</code> .</li>
 <pre>public MediaTypeBuilder SetTopLevelType​(java.lang.String str)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Sets this media type&#39;s top-level type.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>str</code> - Not documented yet.</p></li>
-<li><p><code>str</code> - A text string naming a top-level type, such as &quot;text&quot; or &quot;audio&quot;
-.</p></li>
+<li><code>str</code> - A text string naming a top-level type, such as &quot;text&quot; or &quot;audio&quot;
+.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>Not documented yet.</li>
+<li>This instance.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -211,22 +211,22 @@ invalid for a top-level type.</p></li>
 <pre>public MediaTypeBuilder RemoveParameter​(java.lang.String name)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Removes a parameter from this builder object. Does nothing if the
+ parameter&#39;s name doesn&#39;t exist.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>name</code> - Not documented yet.</p></li>
-<li><p><code>name</code> - Name of the parameter to remove. The name is compared using a
+<li><code>name</code> - Name of the parameter to remove. The name is compared using a
 basic case-insensitive comparison. (Two strings are equal in such a
 comparison, if they match after converting the basic upper-case
-letters A to Z (U + 0041 to U + 005A) in both strings to lower case.).</p></li>
+letters A to Z (U + 0041 to U + 005A) in both strings to lower case.).</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>Not documented yet.</li>
+<li>This instance.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -240,7 +240,7 @@ letters A to Z (U + 0041 to U + 005A) in both strings to lower case.).</p></li>
 <pre>public MediaTypeBuilder SetParameter​(java.lang.String name, java.lang.String value)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Sets a parameter&#39;s name and value for this media type.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -256,7 +256,7 @@ case.).</p></li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>Not documented yet.</li>
+<li>This instance.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -273,19 +273,18 @@ syntactically invalid.</p></li>
 <pre>public MediaTypeBuilder SetSubType​(java.lang.String str)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Sets this media type&#39;s subtype, such as &quot;plain&quot; or &quot;xml&quot; .</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>str</code> - Not documented yet.</p></li>
-<li><p><code>str</code> - A text string naming a media subtype.</p></li>
+<li><code>str</code> - A text string naming a media subtype.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>Not documented yet.</li>
+<li>This instance.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -301,7 +300,8 @@ syntactically invalid.</p></li>
 <pre>public java.lang.String toString()
 </pre>
 
-<p>Not documented yet.</p>
+<p>Converts this object to a text string of the media type it represents, in
+ the same form as <code>MediaType.toString</code> .</p>
 
 <p><strong>Overrides:</strong></p>
 
@@ -312,7 +312,7 @@ syntactically invalid.</p></li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>Not documented yet.</li>
+<li>A string representation of this object.</li>
 </ul>
 
 <p><a href="/MailLib/">Back to MailLib start page.</a></p>

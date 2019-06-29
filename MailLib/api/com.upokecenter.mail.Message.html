@@ -9,7 +9,87 @@
 <pre>public final class Message extends java.lang.Object
 </pre>
 
-<p>Not documented yet.</p>
+<p>Represents an email message, and contains methods and properties for
+ accessing and modifying email message data. This class implements the
+ Internet Message Format (RFC 5322) and Multipurpose Internet Mail
+ Extensions (MIME; RFC 2045-2047, RFC 2049). </p> <p><b>Thread
+ safety:</b> This class is mutable; its properties can be changed. None
+ of its instance methods are designed to be thread safe. Therefore,
+ access to objects from this class must be synchronized if multiple
+ threads can access them at the same time. </p> <p>The following lists
+ known deviations from the mail specifications (Internet Message Format
+ and MIME): </p> <ul> <li>The content-transfer-encodings
+ "quoted-printable" and "base64" are treated as 7bit instead if they
+ occur in a message or body part with content type "multipart/*" or
+ "message/*" (other than "message/global",
+ "message/global-headers", "message/global-disposition-notification", or
+ "message/global-delivery-status"). </li> <li>If a message has two or
+ more Content-Type header fields, it is treated as having a content type
+ of "application/octet-stream", unless one or more of the header fields
+ is syntactically invalid. </li> <li>Illegal UTF-8 byte sequences
+ appearing in header field values are replaced with replacement
+ characters. Moreover, UTF-8 is parsed everywhere in header field
+ values, even in those parts of some structured header fields where this
+ appears not to be allowed. (UTF-8 is a character encoding for the
+ Unicode character set.) </li> <li>This implementation can parse a
+ message even if that message is without a From header field, without a
+ Date header field, or without both. </li> <li>The To and Cc header
+ fields are allowed to contain only comments and whitespace, but these
+ "empty" header fields will be omitted when generating. </li> <li>There
+ is no line length limit imposed when parsing header fields, except
+ header field names. </li> <li>There is no line length limit imposed
+ when parsing quoted-printable or base64 encoded bodies. </li> <li>If
+ the transfer encoding is absent and the content type is
+ "message/rfc822", bytes with values greater than 127 (called "8-bit
+ bytes" in the rest of this summary) are still allowed, despite the
+ default value of "7bit" for "Content-Transfer-Encoding". </li> <li>In
+ the following cases, if the transfer encoding is absent, declared as
+ 7bit, or treated as 7bit, 8-bit bytes are still allowed: </li> <li>(a)
+ The preamble and epilogue of multipart messages, which will be ignored.
+ </li> <li>(b) If the charset is declared to be <code>utf-8</code> . </li>
+ <li>(c) If the content type is "text/html" and the charset is declared
+ to be <code>us-ascii</code> , "windows-1252", "windows-1251", or
+ "iso-8859-*" (all single byte encodings). </li> <li>(d) In
+ non-MIME message bodies and in text/plain message bodies. Any 8-bit
+ bytes are replaced with the substitute character byte (0x1a). </li>
+ <li>If the message starts with the word "From" (and no other case
+ variations of that word) followed by one or more space (U + 0020) not
+ followed by colon, that text and the rest of the text is skipped up to
+ and including a line feed (U + 000A). (See also RFC 4155, which describes
+ the so-called "mbox" convention with "From" lines of this kind.) </li>
+ <li>The name <code>ascii</code> is treated as a synonym for <code>us-ascii</code> ,
+ despite being a reserved name under RFC 2046. The name <code>cp1252</code>
+ and <code>utf8</code> are treated as synonyms for <code>windows-1252</code> and
+ <code>utf-8</code> , respectively, even though they are not IANA registered
+ aliases. </li> <li>The following deviations involve encoded words under
+ RFC 2047: </li> <li>(a) If a sequence of encoded words decodes to a
+ string with a CTL character (U + 007F, or a character less than U + 0020
+ and not TAB) after being converted to Unicode, the encoded words are
+ left un-decoded. </li> <li>(b) This implementation can decode encoded
+ words regardless of the character length of the line in which they
+ appear. This implementation can generate a header field line with one
+ or more encoded words even if that line is more than 76 characters
+ long. (This implementation follows the recommendation in RFC 5322 to
+ limit header field lines to no more than 78 characters, where
+ possible.) </li> </ul> <p>It would be appreciated if users of this
+ library contact the author if they find other ways in which this
+ implementation deviates from the mail specifications or other
+ applicable specifications. </p> <p>Note that this class currently
+ doesn't support the "padding" parameter for message bodies with the
+ media type "application/octet-stream" or treated as that media type
+ (see RFC 2046 sec. 4.5.1). </p> <p>Note that this implementation can
+ decode an RFC 2047 encoded word that uses ISO-2022-JP (the only
+ supported encoding that uses code switching) even if the encoded word's
+ payload ends in a different mode from "ASCII mode". (Each encoded word
+ still starts in "ASCII mode", though.) This, however, is not a
+ deviation to RFC 2047 because the relevant rule only concerns bringing
+ the output device back to "ASCII mode" after the decoded text is
+ displayed (see last paragraph of sec. 6.2) -- since the decoded text is
+ converted to Unicode rather than kept as ISO-2022-JP, this is not
+ applicable since there is no such thing as "ASCII mode" in the Unicode
+ Standard. </p> <p>Note that this library (the MailLib library) has no
+ facilities for sending and receiving email messages, since that's
+ outside this library's scope. </p>
 
 <h2>Methods</h2>
 
@@ -21,143 +101,170 @@ Initializes a new instance of the Message class.</li>
 <li><code>Message​(java.io.InputStream stream) Message</code><br>
 Initializes a new instance of the Message class.</li>
 <li><code>Message AddAttachment​(MediaType mediaType)</code><br>
-Not documented yet.</li>
+Adds an attachment with an empty body and with the given media type to this
+message.</li>
 <li><code>Message AddAttachment​(java.io.InputStream inputStream,
          MediaType mediaType)</code><br>
-Not documented yet.</li>
+Adds an attachment to this message in the form of data from the given
+readable stream, and with the given media type.</li>
 <li><code>Message AddAttachment​(java.io.InputStream inputStream,
          MediaType mediaType,
          java.lang.String filename)</code><br>
-Not documented yet.</li>
+Adds an attachment to this message in the form of data from the given
+readable stream, and with the given media type and file name.</li>
 <li><code>Message AddAttachment​(java.io.InputStream inputStream,
          java.lang.String filename)</code><br>
-Not documented yet.</li>
+Adds an attachment to this message in the form of data from the given
+readable stream, and with the given file name.</li>
 <li><code>Message AddHeader​(java.lang.String name,
      java.lang.String value)</code><br>
-Not documented yet.</li>
+Adds a header field to the end of the message&#39;s header.</li>
 <li><code>Message AddHeader​(java.util.Map.Entry&lt;java.lang.String,​java.lang.String&gt; header)</code><br>
-Not documented yet.</li>
+Adds a header field to the end of the message&#39;s header.</li>
 <li><code>Message AddInline​(MediaType mediaType)</code><br>
-Not documented yet.</li>
+Adds an inline body part with an empty body and with the given media type to
+this message.</li>
 <li><code>Message AddInline​(java.io.InputStream inputStream,
      MediaType mediaType)</code><br>
-Not documented yet.</li>
+Adds an inline body part to this message in the form of data from the given
+readable stream, and with the given media type.</li>
 <li><code>Message AddInline​(java.io.InputStream inputStream,
      MediaType mediaType,
      java.lang.String filename)</code><br>
-Not documented yet.</li>
+Adds an inline body part to this message in the form of data from the given
+readable stream, and with the given media type and file name.</li>
 <li><code>Message AddInline​(java.io.InputStream inputStream,
      java.lang.String filename)</code><br>
-Not documented yet.</li>
+Adds an inline body part to this message in the form of data from the given
+readable stream, and with the given file name.</li>
 <li><code>Message ClearHeaders()</code><br>
-Not documented yet.</li>
+Deletes all header fields in this message.</li>
 <li><code>static java.lang.String DecodeHeaderValue​(java.lang.String name,
              java.lang.String value)</code><br>
-Not documented yet.</li>
+Decodes RFC 2047 encoded words from the given header field value and returns
+a string with those words decoded.</li>
 <li><code>static Message FromMailtoUri​(java.lang.String uri)</code><br>
-Not documented yet.</li>
+Creates a message object from a MailTo URI (uniform resource identifier).</li>
 <li><code>static Message FromMailtoUrl​(java.lang.String url)</code><br>
 Deprecated.
 Renamed to FromMailtoUri.
 Renamed to FromMailtoUri.</li>
 <li><code>java.lang.String Generate()</code><br>
-Not documented yet.</li>
+Generates this message&#39;s data in text form.</li>
 <li><code>byte[] GenerateBytes()</code><br>
-Not documented yet.</li>
+Generates this message&#39;s data as a byte array, using the same algorithm as
+the Generate method.</li>
 <li><code>java.util.List&lt;NamedAddress&gt; GetAddresses​(java.lang.String headerName)</code><br>
-Not documented yet.</li>
+Gets a list of addresses contained in the header fields with the given name
+in this message.</li>
 <li><code>java.util.List&lt;NamedAddress&gt; getBccAddresses()</code><br>
 Deprecated.
 Use GetAddresses(\Bcc) instead.
 Use GetAddresses(\Bcc) instead.</li>
 <li><code>byte[] GetBody()</code><br>
-Not documented yet.</li>
+Gets the byte array for this message&#39;s body.</li>
 <li><code>Message GetBodyMessage()</code><br>
-Not documented yet.</li>
+Returns the mail message contained in this message&#39;s body.</li>
 <li><code>java.lang.String getBodyString()</code><br>
-Not documented yet.</li>
+Gets the body of this message as a text string.</li>
 <li><code>java.util.List&lt;NamedAddress&gt; getCCAddresses()</code><br>
 Deprecated.
 Use GetAddresses(\Cc) instead.
 Use GetAddresses(\Cc) instead.</li>
 <li><code>ContentDisposition getContentDisposition()</code><br>
-Not documented yet.</li>
+Gets this message&#39;s content disposition.</li>
 <li><code>MediaType getContentType()</code><br>
-Not documented yet.</li>
+Gets this message&#39;s media type.</li>
 <li><code>int[] GetDate()</code><br>
-Not documented yet.</li>
+Gets the date and time extracted from this message&#39;s Date header field (the
+value of which is found as though GetHeader(&quot;date&quot;) were called).</li>
 <li><code>java.lang.String getFileName()</code><br>
-Not documented yet.</li>
+Gets a file name suggested by this message for saving the message&#39;s body
+to a file.</li>
 <li><code>java.lang.String GetFormattedBodyString()</code><br>
-Not documented yet.</li>
+Gets a Hypertext Markup Language (HTML) rendering of this message&#39;s text
+body.</li>
 <li><code>java.util.List&lt;NamedAddress&gt; getFromAddresses()</code><br>
 Deprecated.
 Use GetAddresses(\From) instead.
 Use GetAddresses(\From) instead.</li>
 <li><code>java.util.Map.Entry&lt;java.lang.String,​java.lang.String&gt; GetHeader​(int index)</code><br>
-Not documented yet.</li>
+Gets the name and value of a header field by index.</li>
 <li><code>java.lang.String GetHeader​(java.lang.String name)</code><br>
-Not documented yet.</li>
+Gets the first instance of the header field with the specified name, using a
+basic case-insensitive comparison.</li>
 <li><code>java.lang.String[] GetHeaderArray​(java.lang.String name)</code><br>
-Not documented yet.</li>
+Gets an array with the values of all header fields with the specified name,
+using a basic case-insensitive comparison.</li>
 <li><code>java.util.List&lt;java.util.Map.Entry&lt;java.lang.String,​java.lang.String&gt;&gt; getHeaderFields()</code><br>
-Not documented yet.</li>
+Gets a snapshot of the header fields of this message, in the order in which
+they appear in the message.</li>
 <li><code>java.util.List&lt;Message&gt; getParts()</code><br>
-Not documented yet.</li>
+Gets a list of all the parts of this message.</li>
 <li><code>java.lang.String getSubject()</code><br>
-Not documented yet.</li>
+Gets this message&#39;s subject.</li>
 <li><code>java.util.List&lt;NamedAddress&gt; getToAddresses()</code><br>
 Deprecated.
 Use GetAddresses(\To) instead.
 Use GetAddresses(\To) instead.</li>
 <li><code>static Message MakeMultilingualMessage​(java.util.List&lt;Message&gt; messages,
                    java.util.List&lt;java.lang.String&gt; languages)</code><br>
-Not documented yet.</li>
+Generates a multilingual message (see RFC 8255) from a list of messages and
+a list of language strings.</li>
 <li><code>static Message NewBodyPart()</code><br>
-Not documented yet.</li>
+Creates a message object with no header fields.</li>
 <li><code>Message RemoveHeader​(int index)</code><br>
-Not documented yet.</li>
+Removes a header field by index.</li>
 <li><code>Message RemoveHeader​(java.lang.String name)</code><br>
-Not documented yet.</li>
-<li><code>Message SelectLanguageMessage​(java.util.List&lt;java.lang.String&gt; languages)</code><br>
-Not documented yet.</li>
+Removes all instances of the given header field from this message.</li>
+<li><code>Message SelectLanguageMessage​(java.util.List&lt;java.lang.String&gt; languages) multipart/multilingual</code><br>
+Selects a body part for a multiple-language message (
+multipart/multilingual) according to the given language
+priority list.</li>
 <li><code>Message SelectLanguageMessage​(java.util.List&lt;java.lang.String&gt; languages,
-                 boolean preferOriginals)</code><br>
-Not documented yet.</li>
+                 boolean preferOriginals) multipart/multilingual</code><br>
+Selects a body part for a multiple-language message (
+multipart/multilingual) according to the given language
+priority list and original-language preference.</li>
 <li><code>Message SetBody​(byte[] bytes)</code><br>
-Not documented yet.</li>
+Sets the body of this message to the given byte array.</li>
 <li><code>void setContentDisposition​(ContentDisposition value)</code><br></li>
 <li><code>void setContentType​(MediaType value)</code><br></li>
 <li><code>Message SetCurrentDate()</code><br>
-Not documented yet.</li>
+Sets this message&#39;s Date header field to the current time as its value, with
+an unspecified time zone offset.</li>
 <li><code>Message SetDate​(int[] dateTime)</code><br>
-Not documented yet.</li>
+Sets this message&#39;s Date header field to the given date and time.</li>
 <li><code>Message SetHeader​(int index,
      java.lang.String value)</code><br>
-Not documented yet.</li>
+Sets the value of a header field by index without changing its name.</li>
 <li><code>Message SetHeader​(int index,
      java.lang.String name,
      java.lang.String value)</code><br>
-Not documented yet.</li>
+Sets the name and value of a header field by index.</li>
 <li><code>Message SetHeader​(int index,
      java.util.Map.Entry&lt;java.lang.String,​java.lang.String&gt; header)</code><br>
-Not documented yet.</li>
+Sets the name and value of a header field by index.</li>
 <li><code>Message SetHeader​(java.lang.String name,
      java.lang.String value)</code><br>
-Not documented yet.</li>
+Sets the value of this message&#39;s header field.</li>
 <li><code>Message SetHtmlBody​(java.lang.String str)</code><br>
-Not documented yet.</li>
+Sets the body of this message to the specified string in Hypertext Markup
+Language (HTML) format.</li>
 <li><code>void setSubject​(java.lang.String value)</code><br></li>
 <li><code>Message SetTextAndHtml​(java.lang.String text,
           java.lang.String html)</code><br>
-Not documented yet.</li>
+Sets the body of this message to a multipart body with plain text and
+Hypertext Markup Language (HTML) versions of the same message.</li>
 <li><code>Message SetTextAndMarkdown​(java.lang.String text,
               java.lang.String markdown)</code><br>
-Not documented yet.</li>
+Sets the body of this message to a multipart body with plain text, Markdown,
+and Hypertext Markup Language (HTML) versions of the same message.</li>
 <li><code>Message SetTextBody​(java.lang.String str)</code><br>
-Not documented yet.</li>
+Sets the body of this message to the specified plain text string.</li>
 <li><code>java.lang.String ToMailtoUri()</code><br>
-Not documented yet.</li>
+Generates a MailTo URI (uniform resource identifier) corresponding to this
+message.</li>
 <li><code>java.lang.String ToMailtoUrl()</code><br>
 Deprecated.
 Renamed to ToMailtoUri.
@@ -227,12 +334,12 @@ Initializes a new instance of the Message class.</li>
 <pre>public static Message NewBodyPart()
 </pre>
 
-<p>Not documented yet.</p>
+<p>Creates a message object with no header fields.</p>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>Not documented yet.</li>
+<li>A message object with no header fields.</li>
 </ul>
 
 <h3>SetCurrentDate</h3>
@@ -240,12 +347,15 @@ Initializes a new instance of the Message class.</li>
 <pre>public Message SetCurrentDate()
 </pre>
 
-<p>Not documented yet.</p>
+<p>Sets this message&#39;s Date header field to the current time as its value, with
+ an unspecified time zone offset. <p>This method can be used when the
+ message is considered complete and ready to be generated, for
+ example, using the &quot;Generate()&quot; method. </p></p>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>Not documented yet.</li>
+<li>This object.</li>
 </ul>
 
 <h3>getBccAddresses</h3>
@@ -267,7 +377,7 @@ Use GetAddresses(\Bcc) instead.</p>
 <pre>public final java.lang.String getBodyString()
 </pre>
 
-<p>Not documented yet.</p>
+<p>Gets the body of this message as a text string.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -304,80 +414,70 @@ Use GetAddresses(\Cc) instead.</p>
 <pre>public java.lang.String GetFormattedBodyString()
 </pre>
 
-<p>Not documented yet.<p> </p><p>REMARK: The Markdown implementation currently
+<p>Gets a Hypertext Markup Language (HTML) rendering of this message's text
+ body. This method currently supports text/plain, text/plain with
+ format = flowed, text/enriched, and text/markdown (original
+ Markdown). </p><p> </p><p>REMARK: The Markdown implementation currently
  supports all features of original Markdown, except that the
  implementation-- </p> <ul> <li>does not strictly check the placement
- of &quot;block-level HTML elements&quot;, </li> <li>does not prevent Markdown
- content from being interpreted as such merely because it&#39;s contained
- in a &quot;block-level HTML element&quot;, and </li> <li>does not deliberately
+ of "block-level HTML elements", </li> <li>does not prevent Markdown
+ content from being interpreted as such merely because it's contained
+ in a "block-level HTML element", and </li> <li>does not deliberately
  use HTML escapes to obfuscate email addresses wrapped in
- angle-brackets. </li> </ul></p>
+ angle-brackets. </li> </ul>
 
-<p><strong>Returns:</strong></p>
+**Returns:**
 
-<ul>
-<li>Not documented yet.</li>
-</ul>
+* An HTML rendering of this message's text.
 
-<p><strong>Throws:</strong></p>
+**Throws:**
 
-<ul>
-<li><code>java.lang.UnsupportedOperationException</code> - Either this message is a multipart
-message, so it doesn&#39;t have its own body text, or this message has no
-character encoding declared or assumed for it (which is usually the
-case for non-text messages), or the character encoding is not
-supported.</li>
-</ul>
+* <code>java.lang.UnsupportedOperationException</code> - Either this message is a multipart
+ message, so it doesn't have its own body text, or this message has no
+ character encoding declared or assumed for it (which is usually the
+ case for non-text messages), or the character encoding is not
+ supported.
 
-<h3>getContentDisposition</h3>
+### getContentDisposition
+    public final ContentDisposition getContentDisposition()
+Gets this message's content disposition. The content disposition specifies
+ how a user agent should display or otherwise handle this message. Can
+ be set to null. If set to a disposition or to null, updates the
+ Content-Disposition header field as appropriate.
 
-<pre>public final ContentDisposition getContentDisposition()
-</pre>
+**Returns:**
 
-<p>Not documented yet.</p>
+* This message's content disposition, or null if none is specified.
 
-<p><strong>Returns:</strong></p>
+### setContentDisposition
+    public final void setContentDisposition​(ContentDisposition value)
+### getContentType
+    public final MediaType getContentType()
+Gets this message's media type. When getting, the media type may differ in
+ certain cases from the value of the Content-Type header field, if
+ any, and may have a value even if the Content-Type header field is
+ absent from this message. If set to a media type, updates the
+ Content-Type header field as appropriate. Cannot be set to null.
 
-<ul>
-<li>This message&#39;s content disposition, or null if none is specified.</li>
-</ul>
+**Returns:**
 
-<h3>setContentDisposition</h3>
+* This message's media type.
 
-<pre>public final void setContentDisposition​(ContentDisposition value)
-</pre>
+**Throws:**
 
-<h3>getContentType</h3>
+* <code>java.lang.NullPointerException</code> - This value is being set and "value" is
+ null.
 
-<pre>public final MediaType getContentType()
-</pre>
-
-<p>Not documented yet.</p>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>This message&#39;s media type.</li>
-</ul>
-
-<p><strong>Throws:</strong></p>
-
-<ul>
-<li><code>java.lang.NullPointerException</code> - This value is being set and &quot;value&quot; is
-null.</li>
-</ul>
-
-<h3>setContentType</h3>
-
-<pre>public final void setContentType​(MediaType value)
-</pre>
-
-<h3>getFileName</h3>
-
-<pre>public final java.lang.String getFileName()
-</pre>
-
-<p>Not documented yet.</p>
+### setContentType
+    public final void setContentType​(MediaType value)
+### getFileName
+    public final java.lang.String getFileName()
+<p>Gets a file name suggested by this message for saving the message's body
+ to a file. For more information on the algorithm, see
+ ContentDisposition.MakeFilename. </p> <p>This method generates a file
+ name based on the <code>filename</code> parameter of the
+ Content-Disposition header field, if it exists, or on the <code>name</code>
+ parameter of the Content-Type header field, otherwise. </p>
 
 <p><strong>Returns:</strong></p>
 
@@ -392,19 +492,20 @@ if that filename is an empty string.</li>
 <pre>public java.util.List&lt;NamedAddress&gt; GetAddresses​(java.lang.String headerName)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Gets a list of addresses contained in the header fields with the given name
+ in this message.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>headerName</code> - Not documented yet.</p></li>
-<li><p><code>headerName</code> - The name of the header fields to retrieve.</p></li>
+<li><code>headerName</code> - The name of the header fields to retrieve.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>Not documented yet.</li>
+<li>A list of addresses, in the order in which they appear in this
+message&#39;s header fields of the given name.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -437,7 +538,11 @@ Use GetAddresses(\From) instead.</p>
 <pre>public final java.util.List&lt;java.util.Map.Entry&lt;java.lang.String,​java.lang.String&gt;&gt; getHeaderFields()
 </pre>
 
-<p>Not documented yet.</p>
+<p>Gets a snapshot of the header fields of this message, in the order in which
+ they appear in the message. For each item in the list, the key is the
+ header field&#39;s name (where any basic upper-case letters [U+0041 to
+ U + 005A] are converted to lower case) and the value is the header
+ field&#39;s value.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -450,7 +555,8 @@ Use GetAddresses(\From) instead.</p>
 <pre>public final java.util.List&lt;Message&gt; getParts()
 </pre>
 
-<p>Not documented yet.</p>
+<p>Gets a list of all the parts of this message. This list is editable. This
+ will only be used if the message is a multipart message.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -464,7 +570,7 @@ will only be used if the message is a multipart message.</li>
 <pre>public final java.lang.String getSubject()
 </pre>
 
-<p>Not documented yet.</p>
+<p>Gets this message&#39;s subject.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -496,7 +602,9 @@ Use GetAddresses(\To) instead.</p>
 <pre>public Message AddHeader​(java.util.Map.Entry&lt;java.lang.String,​java.lang.String&gt; header)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Adds a header field to the end of the message&#39;s header. <p>Updates the
+ ContentType and ContentDisposition properties if those header fields
+ have been modified by this method. </p></p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -509,7 +617,7 @@ value.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>Not documented yet.</li>
+<li>This instance.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -527,7 +635,9 @@ syntactically invalid.</p></li>
 <pre>public Message AddHeader​(java.lang.String name, java.lang.String value)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Adds a header field to the end of the message&#39;s header. <p>Updates the
+ ContentType and ContentDisposition properties if those header fields
+ have been modified by this method. </p></p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -539,7 +649,7 @@ syntactically invalid.</p></li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>Not documented yet.</li>
+<li>This instance.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -557,12 +667,33 @@ syntactically invalid.</p></li>
 <pre>public java.lang.String Generate()
 </pre>
 
-<p>Not documented yet.</p>
+<p>Generates this message&#39;s data in text form. <p>The generated message will
+ have only Basic Latin code points (U + 0000 to U + 007F), and the
+ transfer encoding will always be 7bit, quoted-printable, or base64
+ (the declared transfer encoding for this message will be ignored).
+ </p> <p>The following applies to the following header fields: From,
+ To, Cc, Bcc, Reply-To, Sender, Resent-To, Resent-From, Resent-Cc,
+ Resent-Bcc, and Resent-Sender. If the header field exists, but has an
+ invalid syntax, has no addresses, or appears more than once, this
+ method will generate a synthetic header field with the display-name
+ set to the contents of all of the header fields with the same name,
+ and the address set to <code>me@[header-name]-address.invalid</code> as the
+ address (a <code>.invalid</code> address is a reserved address that can
+ never belong to anyone). (An exception is that the Resent-*
+ header fields may appear more than once.) The generated message
+ should always have a From header field. </p> <p>If a Date and/or
+ Message-ID header field doesn&#39;t exist, a field with that name will be
+ generated (using the current local time for the Date field). </p>
+ <p>When encoding the message&#39;s body, if the message has a text
+ content type (&quot;text/*&quot;), the line breaks are a CR byte (carriage
+ return, 0x0d) followed by an LF byte (line feed, 0x0a), CR alone, or
+ LF alone. If the message has any other content type, only CR followed
+ by LF is considered a line break. </p></p>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>Not documented yet.</li>
+<li>The generated message.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -577,12 +708,13 @@ generated.</li>
 <pre>public byte[] GenerateBytes()
 </pre>
 
-<p>Not documented yet.</p>
+<p>Generates this message&#39;s data as a byte array, using the same algorithm as
+ the Generate method.</p>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>Not documented yet.</li>
+<li>The generated message as a byte array.</li>
 </ul>
 
 <h3>GetBody</h3>
@@ -590,12 +722,13 @@ generated.</li>
 <pre>public byte[] GetBody()
 </pre>
 
-<p>Not documented yet.</p>
+<p>Gets the byte array for this message&#39;s body. This method doesn&#39; t make a
+ copy of that byte array.</p>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>Not documented yet.</li>
+<li>A byte array.</li>
 </ul>
 
 <h3>GetDate</h3>
@@ -603,12 +736,19 @@ generated.</li>
 <pre>public int[] GetDate()
 </pre>
 
-<p>Not documented yet.</p>
+<p>Gets the date and time extracted from this message&#39;s Date header field (the
+ value of which is found as though GetHeader(&quot;date&quot;) were called). See
+ <see cref='M:PeterO.Mail.MailDateTime.ParseDateString(System.String,System.Boolean)'/>
+ for more information on the format of the date-time array returned by
+ this method.</p>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>Not documented yet.</li>
+<li>An array containing eight elements. Returns null if the Date header
+doesn&#39;t exist, if the Date field is syntactically or semantically
+invalid, or if the field&#39;s year would overflow a 32-bit signed
+integer.</li>
 </ul>
 
 <h3>SetDate</h3>
@@ -616,7 +756,7 @@ generated.</li>
 <pre>public Message SetDate​(int[] dateTime)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Sets this message&#39;s Date header field to the given date and time.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -641,7 +781,7 @@ be positive or negative. </li> </ul> .</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>Not documented yet.</li>
+<li>This object.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -658,12 +798,13 @@ year less than 0.</p></li>
 <pre>public Message GetBodyMessage()
 </pre>
 
-<p>Not documented yet.</p>
+<p>Returns the mail message contained in this message&#39;s body.</p>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>The return value is not documented yet.</li>
+<li>A message object if this object&#39;s content type is &quot;message/rfc822&quot;,
+&quot;message/news&quot;, or &quot;message/global&quot;, or null otherwise.</li>
 </ul>
 
 <h3>GetHeader</h3>
@@ -671,19 +812,19 @@ year less than 0.</p></li>
 <pre>public java.util.Map.Entry&lt;java.lang.String,​java.lang.String&gt; GetHeader​(int index)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Gets the name and value of a header field by index.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>index</code> - Not documented yet.</p></li>
-<li><p><code>index</code> - Zero-based index of the header field to get.</p></li>
+<li><code>index</code> - Zero-based index of the header field to get.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>Not documented yet.</li>
+<li>A key/value pair. The key is the name of the header field, such as
+&quot;From&quot; or &quot;Content-ID&quot;. The value is the header field&#39;s value.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -698,19 +839,22 @@ least as high as the number of header fields.</li>
 <pre>public java.lang.String GetHeader​(java.lang.String name)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Gets the first instance of the header field with the specified name, using a
+ basic case-insensitive comparison. (Two strings are equal in such a
+ comparison, if they match after converting the basic upper-case
+ letters A to Z (U + 0041 to U + 005A) in both strings to lower case.).</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>name</code> - Not documented yet.</p></li>
-<li><p><code>name</code> - The name of a header field.</p></li>
+<li><code>name</code> - The name of a header field.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>Not documented yet.</li>
+<li>The value of the first header field with that name, or null if there
+is none.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -724,19 +868,24 @@ least as high as the number of header fields.</li>
 <pre>public java.lang.String[] GetHeaderArray​(java.lang.String name)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Gets an array with the values of all header fields with the specified name,
+ using a basic case-insensitive comparison. (Two strings are equal in
+ such a comparison, if they match after converting the basic
+ upper-case letters A to Z (U + 0041 to U + 005A) in both strings to lower
+ case.).</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>name</code> - Not documented yet.</p></li>
-<li><p><code>name</code> - The name of a header field.</p></li>
+<li><code>name</code> - The name of a header field.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>Not documented yet.</li>
+<li>An array containing the values of all header fields with the given
+name, in the order they appear in the message. The array will be
+empty if no header field has that name.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -750,12 +899,14 @@ least as high as the number of header fields.</li>
 <pre>public Message ClearHeaders()
 </pre>
 
-<p>Not documented yet.</p>
+<p>Deletes all header fields in this message. Also clears this message&#39;s
+ content disposition and resets its content type to
+ MediaType.TextPlainAscii.</p>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>Not documented yet.</li>
+<li>This object.</li>
 </ul>
 
 <h3>RemoveHeader</h3>
@@ -763,19 +914,20 @@ least as high as the number of header fields.</li>
 <pre>public Message RemoveHeader​(int index)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Removes a header field by index. <p>Updates the ContentType and
+ ContentDisposition properties if those header fields have been
+ modified by this method. </p></p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>index</code> - Not documented yet.</p></li>
-<li><p><code>index</code> - Zero-based index of the header field to set.</p></li>
+<li><code>index</code> - Zero-based index of the header field to set.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>Not documented yet.</li>
+<li>This instance.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -790,19 +942,25 @@ least as high as the number of header fields.</li>
 <pre>public Message RemoveHeader​(java.lang.String name)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Removes all instances of the given header field from this message. If this
+ is a multipart message, the header field is not removed from its body
+ part headers. A basic case-insensitive comparison is used. (Two
+ strings are equal in such a comparison, if they match after
+ converting the basic upper-case letters A to Z (U + 0041 to U + 005A) in
+ both strings to lower case.). <p>Updates the ContentType and
+ ContentDisposition properties if those header fields have been
+ modified by this method. </p></p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>name</code> - Not documented yet.</p></li>
-<li><p><code>name</code> - The name of the header field to remove.</p></li>
+<li><code>name</code> - The name of the header field to remove.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>Not documented yet.</li>
+<li>This instance.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -816,7 +974,8 @@ least as high as the number of header fields.</li>
 <pre>public Message SetBody​(byte[] bytes)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Sets the body of this message to the given byte array. This method doesn&#39;t
+ make a copy of that byte array.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -827,7 +986,7 @@ least as high as the number of header fields.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>Not documented yet.</li>
+<li>This object.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -841,7 +1000,9 @@ least as high as the number of header fields.</li>
 <pre>public Message SetHeader​(int index, java.util.Map.Entry&lt;java.lang.String,​java.lang.String&gt; header)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Sets the name and value of a header field by index. <p>Updates the
+ ContentType and ContentDisposition properties if those header fields
+ have been modified by this method. </p></p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -855,7 +1016,7 @@ value.</p></li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>Not documented yet.</li>
+<li>A Message object.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -874,7 +1035,9 @@ null.</p></li>
 <pre>public Message SetHeader​(int index, java.lang.String name, java.lang.String value)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Sets the name and value of a header field by index. <p>Updates the
+ ContentType and ContentDisposition properties if those header fields
+ have been modified by this method. </p></p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -887,7 +1050,7 @@ null.</p></li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>Not documented yet.</li>
+<li>This instance.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -906,7 +1069,9 @@ value</code> is null.</p></li>
 <pre>public Message SetHeader​(int index, java.lang.String value)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Sets the value of a header field by index without changing its name.
+ <p>Updates the ContentType and ContentDisposition properties if those
+ header fields have been modified by this method. </p></p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -918,7 +1083,7 @@ value</code> is null.</p></li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>Not documented yet.</li>
+<li>This instance.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -936,7 +1101,9 @@ field&#39;s value is syntactically invalid.</p></li>
 <pre>public static java.lang.String DecodeHeaderValue​(java.lang.String name, java.lang.String value)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Decodes RFC 2047 encoded words from the given header field value and returns
+ a string with those words decoded. For an example of encoded words,
+ see the constructor for PeterO.Mail.NamedAddress.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -952,7 +1119,7 @@ example, if the name parameter is &quot;From&quot;, this parameter could be
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>Not documented yet.</li>
+<li>The header field value with valid encoded words decoded.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -966,7 +1133,12 @@ example, if the name parameter is &quot;From&quot;, this parameter could be
 <pre>public Message SetHeader​(java.lang.String name, java.lang.String value)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Sets the value of this message&#39;s header field. If a header field with the
+ same name exists, its value is replaced. If the header field&#39;s name
+ occurs more than once, only the first instance of the header field is
+ replaced. <p>Updates the ContentType and ContentDisposition
+ properties if those header fields have been modified by this method.
+ </p></p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -978,7 +1150,7 @@ example, if the name parameter is &quot;From&quot;, this parameter could be
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>Not documented yet.</li>
+<li>This instance.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -996,19 +1168,22 @@ value</code> is null.</p></li>
 <pre>public Message SetHtmlBody​(java.lang.String str)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Sets the body of this message to the specified string in Hypertext Markup
+ Language (HTML) format. The character sequences CR (carriage return,
+ &quot;\r&quot;, U+000D), LF (line feed, &quot;\n&quot;, U+000A), and CR/LF will be
+ converted to CR/LF line breaks. Unpaired surrogate code points will
+ be replaced with replacement characters.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>str</code> - Not documented yet.</p></li>
-<li><p><code>str</code> - A string consisting of the message in HTML format.</p></li>
+<li><code>str</code> - A string consisting of the message in HTML format.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>Not documented yet.</li>
+<li>This instance.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -1022,7 +1197,12 @@ value</code> is null.</p></li>
 <pre>public Message SetTextAndHtml​(java.lang.String text, java.lang.String html)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Sets the body of this message to a multipart body with plain text and
+ Hypertext Markup Language (HTML) versions of the same message. The
+ character sequences CR (carriage return, &quot;\r&quot;, U+000D), LF (line
+ feed, &quot;\n&quot;, U+000A), and CR/LF will be converted to CR/LF line
+ breaks. Unpaired surrogate code points will be replaced with
+ replacement characters.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1034,7 +1214,7 @@ value</code> is null.</p></li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>Not documented yet.</li>
+<li>This instance.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -1049,7 +1229,12 @@ html</code> is null.</li>
 <pre>public Message SetTextAndMarkdown​(java.lang.String text, java.lang.String markdown)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Sets the body of this message to a multipart body with plain text, Markdown,
+ and Hypertext Markup Language (HTML) versions of the same message.
+ The character sequences CR (carriage return, &quot;\r&quot;, U+000D), LF (line
+ feed, &quot;\n&quot;, U+000A), and CR/LF will be converted to CR/LF line
+ breaks. Unpaired surrogate code points will be replaced with
+ replacement characters.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1065,7 +1250,7 @@ HTML.</p></li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>Not documented yet.</li>
+<li>This instance.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -1079,19 +1264,23 @@ HTML.</p></li>
 <pre>public Message SetTextBody​(java.lang.String str)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Sets the body of this message to the specified plain text string. The
+ character sequences CR (carriage return, &quot;\r&quot;, U+000D), LF (line
+ feed, &quot;\n&quot;, U+000A), and CR/LF will be converted to CR/LF line
+ breaks. Unpaired surrogate code points will be replaced with
+ replacement characters. This method changes this message&#39;s media type
+ to plain text.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>str</code> - Not documented yet.</p></li>
-<li><p><code>str</code> - A string consisting of the message in plain text format.</p></li>
+<li><code>str</code> - A string consisting of the message in plain text format.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>Not documented yet.</li>
+<li>This instance.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -1105,19 +1294,21 @@ HTML.</p></li>
 <pre>public Message AddInline​(MediaType mediaType)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Adds an inline body part with an empty body and with the given media type to
+ this message. Before the new body part is added, if this message
+ isn&#39;t already a multipart message, it becomes a &quot;multipart/mixed&quot;
+ message with the current body converted to an inline body part.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>mediaType</code> - Not documented yet.</p></li>
-<li><p><code>mediaType</code> - A media type to assign to the body part.</p></li>
+<li><code>mediaType</code> - A media type to assign to the body part.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>Not documented yet.</li>
+<li>A Message object for the generated body part.</li>
 </ul>
 
 <h3>AddAttachment</h3>
@@ -1125,19 +1316,21 @@ HTML.</p></li>
 <pre>public Message AddAttachment​(MediaType mediaType)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Adds an attachment with an empty body and with the given media type to this
+ message. Before the new attachment is added, if this message isn&#39;t
+ already a multipart message, it becomes a &quot;multipart/mixed&quot; message
+ with the current body converted to an inline body part.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>mediaType</code> - Not documented yet.</p></li>
-<li><p><code>mediaType</code> - A media type to assign to the attachment.</p></li>
+<li><code>mediaType</code> - A media type to assign to the attachment.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>Not documented yet.</li>
+<li>A Message object for the generated attachment.</li>
 </ul>
 
 <h3>AddAttachment</h3>
@@ -1145,16 +1338,20 @@ HTML.</p></li>
 <pre>public Message AddAttachment​(java.io.InputStream inputStream, MediaType mediaType)
 </pre>
 
-<p>Not documented yet.<p>The following example (written in C# for the .NET
- version) is an extension method that adds an attachment from a byte
- array to a message. </p><pre>public static Message
- AddAttachmentFromBytes(this Message msg, byte[] bytes, MediaType
- mediaType) { {
+<p>Adds an attachment to this message in the form of data from the given
+ readable stream, and with the given media type. Before the new
+ attachment is added, if this message isn&#39;t already a multipart
+ message, it becomes a &quot;multipart/mixed&quot; message with the current body
+ converted to an inline body part.<p>The following example (written in
+ C# for the .NET version) is an extension method that adds an
+ attachment from a byte array to a message. </p><pre>public static
+ Message AddAttachmentFromBytes(this Message msg, byte[] bytes,
+ MediaType mediaType) { {
 java.io.ByteArrayInputStream fs = null;
 try {
-fs = new java.io.ByteArrayInputStream(bytes);
- return
- msg.AddAttachment(fs, mediaType);
+fs = new java.io.ByteArrayInputStream(bytes);</p>
+
+<p>return msg.AddAttachment(fs, mediaType);
 }
 finally {
 try { if (fs != null) {
@@ -1173,7 +1370,7 @@ try { if (fs != null) {
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>Not documented yet.</li>
+<li>A Message object for the generated attachment.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -1189,7 +1386,11 @@ try { if (fs != null) {
 <pre>public Message AddAttachment​(java.io.InputStream inputStream, java.lang.String filename)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Adds an attachment to this message in the form of data from the given
+ readable stream, and with the given file name. Before the new
+ attachment is added, if this message isn&#39;t already a multipart
+ message, it becomes a &quot;multipart/mixed&quot; message with the current body
+ converted to an inline body part.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1209,7 +1410,7 @@ on this file name&#39;s extension. If the file name has an extension
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>Not documented yet.</li>
+<li>A Message object for the generated attachment.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -1225,7 +1426,11 @@ null.</p></li>
 <pre>public Message AddAttachment​(java.io.InputStream inputStream, MediaType mediaType, java.lang.String filename)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Adds an attachment to this message in the form of data from the given
+ readable stream, and with the given media type and file name. Before
+ the new attachment is added, if this message isn&#39;t already a
+ multipart message, it becomes a &quot;multipart/mixed&quot; message with the
+ current body converted to an inline body part.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1242,7 +1447,7 @@ exists, or the entire string otherwise.</p></li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>Not documented yet.</li>
+<li>A Message object for the generated attachment.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -1258,9 +1463,13 @@ exists, or the entire string otherwise.</p></li>
 <pre>public Message AddInline​(java.io.InputStream inputStream, MediaType mediaType)
 </pre>
 
-<p>Not documented yet.<p>The following example (written in C# for the .NET
- version) is an extension method that adds an inline body part from a
- byte array to a message. </p><pre>public static Message
+<p>Adds an inline body part to this message in the form of data from the given
+ readable stream, and with the given media type. Before the new body
+ part is added, if this message isn&#39;t already a multipart message, it
+ becomes a &quot;multipart/mixed&quot; message with the current body converted
+ to an inline body part.<p>The following example (written in C# for
+ the .NET version) is an extension method that adds an inline body
+ part from a byte array to a message. </p><pre>public static Message
  AddInlineFromBytes(this Message msg, byte[] bytes, MediaType
  mediaType) { {
 java.io.ByteArrayInputStream fs = null;
@@ -1286,7 +1495,7 @@ try { if (fs != null) {
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>Not documented yet.</li>
+<li>A Message object for the generated body part.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -1302,7 +1511,11 @@ try { if (fs != null) {
 <pre>public Message AddInline​(java.io.InputStream inputStream, java.lang.String filename)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Adds an inline body part to this message in the form of data from the given
+ readable stream, and with the given file name. Before the new body
+ part is added, if this message isn&#39;t already a multipart message, it
+ becomes a &quot;multipart/mixed&quot; message with the current body converted
+ to an inline body part.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1322,7 +1535,7 @@ on this file name&#39;s extension. If the file name has an extension
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>Not documented yet.</li>
+<li>A Message object for the generated body part.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -1338,7 +1551,11 @@ on this file name&#39;s extension. If the file name has an extension
 <pre>public Message AddInline​(java.io.InputStream inputStream, MediaType mediaType, java.lang.String filename)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Adds an inline body part to this message in the form of data from the given
+ readable stream, and with the given media type and file name. Before
+ the new body part is added, if this message isn&#39;t already a multipart
+ message, it becomes a &quot;multipart/mixed&quot; message with the current body
+ converted to an inline body part.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1351,7 +1568,7 @@ on this file name&#39;s extension. If the file name has an extension
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>Not documented yet.</li>
+<li>A Message object for the generated body part.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -1367,7 +1584,9 @@ on this file name&#39;s extension. If the file name has an extension
 <pre>public Message SelectLanguageMessage​(java.util.List&lt;java.lang.String&gt; languages)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Selects a body part for a multiple-language message (
+ <code>multipart/multilingual</code>) according to the given language
+ priority list.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1379,7 +1598,12 @@ of priority (see the LanguageTags.LanguageTagFilter method).</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>Not documented yet.</li>
+<li>The best matching body part for the given languages. If the body
+part has no subject, then the top-level subject is used. If this
+message is not a multipart/multilingual message or has fewer than two
+body parts, returns this object. If no body part matches the given
+languages, returns the last body part if its language is &quot;zxx&quot;, or
+the second body part otherwise.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -1394,7 +1618,9 @@ null.</li>
 <pre>public Message SelectLanguageMessage​(java.util.List&lt;java.lang.String&gt; languages, boolean preferOriginals)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Selects a body part for a multiple-language message (
+ <code>multipart/multilingual</code>) according to the given language
+ priority list and original-language preference.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1410,7 +1636,12 @@ language with a matching body part.</p></li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>Not documented yet.</li>
+<li>The best matching body part for the given languages. If the body
+part has no subject, then the top-level subject is used. If this
+message is not a multipart/multilingual message or has fewer than two
+body parts, returns this object. If no body part matches the given
+languages, returns the last body part if its language is &quot;zxx&quot;, or
+the second body part otherwise.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -1425,7 +1656,8 @@ null.</li>
 <pre>public static Message MakeMultilingualMessage​(java.util.List&lt;Message&gt; messages, java.util.List&lt;java.lang.String&gt; languages)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Generates a multilingual message (see RFC 8255) from a list of messages and
+ a list of language strings.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1445,7 +1677,9 @@ LanguageTags.GetLanguageList).</p></li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>Not documented yet.</li>
+<li>A Message object with the content type &quot;multipart/multilingual&quot; . It
+will begin with an explanatory body part and be followed by the
+messages given in the <code>messages</code> parameter in the order given.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -1503,19 +1737,29 @@ Renamed to ToMailtoUri.</p>
 <pre>public static Message FromMailtoUri​(java.lang.String uri)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Creates a message object from a MailTo URI (uniform resource identifier).
+ The MailTo URI can contain key-value pairs that follow a
+ question-mark, as in the following example:
+ &quot;mailto:<a href="mailto:me@example.com">me@example.com</a>?subject=A%20Subject&quot;. In this example,
+ &quot;subject&quot; is the subject of the email address. Only certain keys are
+ supported, namely, &quot;to&quot;, &quot;cc&quot;, &quot;bcc&quot;, &quot;subject&quot;, &quot;in-reply-to&quot;,
+ &quot;comments&quot;, &quot;keywords&quot;, and &quot;body&quot;. The first seven are header field
+ names that will be used to set the returned message&#39;s corresponding
+ header fields. The last, &quot;body&quot;, sets the body of the message to the
+ given text. Keys other than these eight will be ignored.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>uri</code> - Not documented yet.</p></li>
-<li><p><code>uri</code> - The parameter <code>uri</code> is a text string.</p></li>
+<li><code>uri</code> - The parameter <code>uri</code> is a text string.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>Not documented yet.</li>
+<li>A Message object created from the given MailTo URI. Returs null if
+<code>uri</code> is null, is syntactically invalid, or is not a MailTo
+URI.</li>
 </ul>
 
 <h3>ToMailtoUri</h3>
@@ -1523,12 +1767,18 @@ Renamed to ToMailtoUri.</p>
 <pre>public java.lang.String ToMailtoUri()
 </pre>
 
-<p>Not documented yet.</p>
+<p>Generates a MailTo URI (uniform resource identifier) corresponding to this
+ message. The following header fields, and only these, are used to
+ generate the URI: To, Cc, Bcc, In-Reply-To, Subject, Keywords,
+ Comments. The message body is included in the URI only if this
+ message has a text media type and uses a supported character encoding
+ (&quot;charset&quot; parameter). The To header field is included in the URI
+ only if it has display names or group syntax.</p>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>Not documented yet.</li>
+<li>A MailTo URI corresponding to this message.</li>
 </ul>
 
 <p><a href="/MailLib/">Back to MailLib start page.</a></p>

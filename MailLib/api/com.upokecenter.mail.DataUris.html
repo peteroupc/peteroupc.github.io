@@ -9,20 +9,26 @@
 <pre>public final class DataUris extends java.lang.Object
 </pre>
 
-<p>Not documented yet.</p>
+<p>Contains methods for parsing and generating Data URIs (uniform resource
+ identifiers). Data URIs are described in RFC 2397. Examples for Data
+ URIs follow. <pre>data:, hello%20world</pre>
+ <pre>data:text/markdown, hello%20world</pre>
+ <pre>data:application/octet-stream;base64, AAAAAA==</pre> .</p>
 
 <h2>Methods</h2>
 
 <ul>
 <li><code>static byte[] DataUriBytes​(java.lang.String uri)</code><br>
-Not documented yet.</li>
+Extracts the data from a Data URI (uniform resource identifier) in the form
+of a byte array.</li>
 <li><code>static MediaType DataUriMediaType​(java.lang.String uri)</code><br>
-Not documented yet.</li>
+Extracts the media type from a Data URI (uniform resource identifier).</li>
 <li><code>static java.lang.String MakeDataUri​(byte[] bytes,
        MediaType mediaType)</code><br>
-Not documented yet.</li>
+Encodes data with the given media type in a Data URI (uniform resource
+identifier).</li>
 <li><code>static java.lang.String MakeDataUri​(java.lang.String textString)</code><br>
-Not documented yet.</li>
+Encodes text as a Data URI (uniform resource identifier).</li>
 </ul>
 
 <h2>Method Details</h2>
@@ -32,19 +38,19 @@ Not documented yet.</li>
 <pre>public static MediaType DataUriMediaType​(java.lang.String uri)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Extracts the media type from a Data URI (uniform resource identifier).</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>uri</code> - Not documented yet.</p></li>
-<li><p><code>uri</code> - The parameter <code>uri</code> is a text string.</p></li>
+<li><code>uri</code> - The parameter <code>uri</code> is a text string.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>Not documented yet.</li>
+<li>The media type. Returns null if <code>uri</code> is null, is
+syntactically invalid, or is not a Data URI.</li>
 </ul>
 
 <h3>DataUriBytes</h3>
@@ -52,19 +58,20 @@ Not documented yet.</li>
 <pre>public static byte[] DataUriBytes​(java.lang.String uri)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Extracts the data from a Data URI (uniform resource identifier) in the form
+ of a byte array.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>uri</code> - Not documented yet.</p></li>
-<li><p><code>uri</code> - The parameter <code>uri</code> is a text string.</p></li>
+<li><code>uri</code> - The parameter <code>uri</code> is a text string.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>Not documented yet.</li>
+<li>The data as a byte array. Returns null if <code>uri</code> is null, is
+syntactically invalid, or is not a data URI.</li>
 </ul>
 
 <h3>MakeDataUri</h3>
@@ -72,19 +79,18 @@ Not documented yet.</li>
 <pre>public static java.lang.String MakeDataUri​(java.lang.String textString)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Encodes text as a Data URI (uniform resource identifier).</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>textString</code> - Not documented yet.</p></li>
-<li><p><code>textString</code> - A text string to encode as a data URI.</p></li>
+<li><code>textString</code> - A text string to encode as a data URI.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>Not documented yet.</li>
+<li>A Data URI that encodes the given text.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -99,7 +105,8 @@ null.</li>
 <pre>public static java.lang.String MakeDataUri​(byte[] bytes, MediaType mediaType)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Encodes data with the given media type in a Data URI (uniform resource
+ identifier).</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -111,7 +118,7 @@ null.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>Not documented yet.</li>
+<li>A Data URI that encodes the given data and media type.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>

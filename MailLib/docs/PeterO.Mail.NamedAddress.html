@@ -9,7 +9,7 @@
 <pre>public class NamedAddress
 </pre>
 
-<p>Represents an email address and a name for that address. Can represent a group of email addresses instead.  Not documented yet. ### Member Summary</p>
+<p>Represents an email address and a name for that address. Can represent a group of email addresses instead.  ### Member Summary</p>
 
 <ul>
 <li><code><a href="#Address">Address</a></code> - Gets the email address associated with this object.</li>
@@ -167,7 +167,7 @@ GroupName is empty.; A mailbox in the list is a group.</p></li>
 <pre>public PeterO.Mail.Address Address { get; }
 </pre>
 
-<p>Gets the email address associated with this object.  Not documented yet. Gets a value not documented yet. <b>Returns:</b></p>
+<p>Gets the email address associated with this object.  <b>Returns:</b></p>
 
 <p>The email address associated with this object. This value is null if this object represents a group of addresses instead.</p>
 
@@ -178,7 +178,7 @@ GroupName is empty.; A mailbox in the list is a group.</p></li>
 <pre>public string DisplayName { get; }
 </pre>
 
-<p>Gets the display name for this email address. Returns null if the display name is absent.  Not documented yet. Gets a value not documented yet. <b>Returns:</b></p>
+<p>Gets the display name for this email address. Returns null if the display name is absent.  <b>Returns:</b></p>
 
 <p>The display name for this email address.</p>
 
@@ -189,7 +189,7 @@ GroupName is empty.; A mailbox in the list is a group.</p></li>
 <pre>public System.Collections.Generic.IList GroupAddresses { get; }
 </pre>
 
-<p>Gets a read-only list of addresses that make up the group, if this object represents a group, or an empty list otherwise.  Not documented yet. Gets a value not documented yet. <b>Returns:</b></p>
+<p>Gets a read-only list of addresses that make up the group, if this object represents a group, or an empty list otherwise.  <b>Returns:</b></p>
 
 <p>A list of addresses that make up the group, if this object represents a group, or an empty list otherwise.</p>
 
@@ -200,7 +200,7 @@ GroupName is empty.; A mailbox in the list is a group.</p></li>
 <pre>public bool IsGroup { get; }
 </pre>
 
-<p>Gets a value indicating whether this represents a group of addresses rather than a single address.  Not documented yet. Gets a value not documented yet. <b>Returns:</b></p>
+<p>Gets a value indicating whether this represents a group of addresses rather than a single address.  <b>Returns:</b></p>
 
 <p><code>true</code>  If this represents a group of addresses; otherwise, .  <code>false</code>  .</p>
 
@@ -211,7 +211,7 @@ GroupName is empty.; A mailbox in the list is a group.</p></li>
 <pre>public string Name { get; }
 </pre>
 
-<p>Gets the display name for this email address, or the email address&#39;s value if the display name is null. Returns an empty string if the address and display name are null.  Not documented yet. Gets a value not documented yet. <b>Returns:</b></p>
+<p>Gets the display name for this email address, or the email address&#39;s value if the display name is null. Returns an empty string if the address and display name are null.  <b>Returns:</b></p>
 
 <p>The name for this email address.</p>
 
@@ -223,20 +223,15 @@ GroupName is empty.; A mailbox in the list is a group.</p></li>
     PeterO.Mail.NamedAddress na);
 </pre>
 
-<p>Not documented yet.   Not documented yet.  <b>Parameters:</b></p>
+<p>Not documented yet.  <b>Parameters:</b></p>
 
 <ul>
-<li><p><i>na</i>: A named address object to compare with this one. Can be null.</p></li>
-<li><p><i>na</i>: Not documented yet.</p></li>
+<li><i>na</i>: A named address object to compare with this one. Can be null.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
 <p>Either  <code>true</code>  or  <code>false</code>  .</p>
-
-<p><b>Return Value:</b></p>
-
-<p>Not documented yet.</p>
 
 <p><a id="Equals_object"></a></p>
 
@@ -246,21 +241,16 @@ GroupName is empty.; A mailbox in the list is a group.</p></li>
     object obj);
 </pre>
 
-<p>Determines whether this object and another object are equal.   Not documented yet.  <b>Parameters:</b></p>
+<p>Determines whether this object and another object are equal.  <b>Parameters:</b></p>
 
 <ul>
-<li><p><i>obj</i>: The parameter  <i>obj</i>
-is an arbitrary object.</p></li>
-<li><p><i>obj</i>: Not documented yet.</p></li>
+<li><i>obj</i>: The parameter  <i>obj</i>
+is an arbitrary object.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
 <p><code>true</code>  if this object and another object are equal; otherwise,  <code>false</code>  .</p>
-
-<p><b>Return Value:</b></p>
-
-<p>Not documented yet.</p>
 
 <p><a id="GetHashCode"></a></p>
 
@@ -269,13 +259,9 @@ is an arbitrary object.</p></li>
 <pre>public override int GetHashCode();
 </pre>
 
-<p>Calculates the hash code of this object. No application or process IDs are used in the hash code calculation.  Not documented yet.  <b>Return Value:</b></p>
+<p>Calculates the hash code of this object. No application or process IDs are used in the hash code calculation.  <b>Return Value:</b></p>
 
 <p>A 32-bit hash code.</p>
-
-<p><b>Return Value:</b></p>
-
-<p>Not documented yet.</p>
 
 <p><a id="ParseAddresses_string"></a></p>
 
@@ -285,21 +271,16 @@ is an arbitrary object.</p></li>
     string addressValue);
 </pre>
 
-<p>Generates a list of NamedAddress objects from a comma-separated list of addresses. Each address must follow the syntax accepted by the one-argument constructor of NamedAddress.   Not documented yet.  <b>Parameters:</b></p>
+<p>Generates a list of NamedAddress objects from a comma-separated list of addresses. Each address must follow the syntax accepted by the one-argument constructor of NamedAddress.  <b>Parameters:</b></p>
 
 <ul>
-<li><p><i>addressValue</i>: A comma-separate list of addresses in the form of a text string.</p></li>
-<li><p><i>addressValue</i>: Not documented yet.</p></li>
+<li><i>addressValue</i>: A comma-separate list of addresses in the form of a text string.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
 <p>A list of addresses generated from the  <i>addressValue</i>
  parameter.</p>
-
-<p><b>Return Value:</b></p>
-
-<p>Not documented yet.</p>
 
 <p><a id="ToString"></a></p>
 
@@ -308,13 +289,9 @@ is an arbitrary object.</p></li>
 <pre>public override string ToString();
 </pre>
 
-<p>Converts this object to a text string. This will generally be the form of this NamedAddress object as it could appear in a &quot;To&quot; header field.  Not documented yet.  <b>Return Value:</b></p>
+<p>Converts this object to a text string. This will generally be the form of this NamedAddress object as it could appear in a &quot;To&quot; header field.  <b>Return Value:</b></p>
 
 <p>A string representation of this object.</p>
-
-<p><b>Return Value:</b></p>
-
-<p>Not documented yet.</p>
 
 <p><a href="/MailLib/">Back to MailLib start page.</a></p>
 </div><nav id="navigation"><ul>
