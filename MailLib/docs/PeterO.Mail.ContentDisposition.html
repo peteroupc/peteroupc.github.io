@@ -29,7 +29,7 @@
 
 <p>In this implementation, the first and second of these are syntactically invalid, so they trigger parse errors, while the third of these is syntactically valid, but the &quot;filename&quot; parameter is treated as &quot;=?UTF-8?Q?test.png?=&quot;, not &quot;test.png&quot; or something else -- RFC 2047 encoded words are not decoded at the moment a content disposition is parsed (using the Parse method).</p>
 
-<p>### Member Summary</p>
+<p>.  ### Member Summary</p>
 
 <ul>
 <li><code><a href="#Attachment">public static readonly PeterO.Mail.ContentDisposition Attachment;</a></code> - The content disposition value &quot;attachment&quot;.</li>
@@ -225,17 +225,17 @@ is empty.</p></li>
 
 <p>Converts a file name from the Content-Disposition header to a suitable name for saving data to a file. This method is idempotent; that is, calling the method again on the result doesn&#39;t change that result. Examples:</p>
 
-<p><code>&quot;=?utf-8?q?hello=2Etxt?=&quot; -&gt; &quot;hello.txt&quot;</code>  (RFC 2047 encoding)</p>
+<p><code>&quot;=?utf-8?q?hello=2Etxt?=&quot; -&gt; &quot;hello.txt&quot;</code>  (RFC 2047 encoding).</p>
 
-<p><code>&quot;=?utf-8?q?long_filename?=&quot; -&gt; &quot;long filename&quot;</code>  (RFC 2047 encoding)</p>
+<p><code>&quot;=?utf-8?q?long_filename?=&quot; -&gt; &quot;long filename&quot;</code>  (RFC 2047 encoding).</p>
 
-<p><code>&quot;utf-8&#39;en&#39;hello%2Etxt&quot; -&gt; &quot;hello.txt&quot;</code>  (RFC 2231 encoding)</p>
+<p><code>&quot;utf-8&#39;en&#39;hello%2Etxt&quot; -&gt; &quot;hello.txt&quot;</code>  (RFC 2231 encoding).</p>
 
-<p><code>&quot;nul.txt&quot; -&gt; &quot;_nul.txt&quot;</code>  (Reserved name)</p>
+<p><code>&quot;nul.txt&quot; -&gt; &quot;_nul.txt&quot;</code>  (Reserved name).</p>
 
-<p><code>&quot;dir1/dir2/file&quot; -&gt; &quot;dir1_dir2_file&quot;</code>  (Directory separators)</p>
+<p><code>&quot;dir1/dir2/file&quot; -&gt; &quot;dir1_dir2_file&quot;</code>  (Directory separators).</p>
 
-<p><b>Remarks:</b></p>
+<p>.  <b>Remarks:</b></p>
 
 <ul>
 <li><p>The exact file name conversion used by this method is not guaranteed to remain the same between versions of this library, with the exception that the return value will be in normalization form C, will not contain base + slash code points, will not be null, and will be an empty string only if  <i>str</i>
@@ -248,6 +248,8 @@ is null or empty.</p></li>
 <p>RFC 2046 sec. 4.5.1 (  <code>application/octet-stream</code>  subtype in Content-Type header field) cites an earlier RFC 1341, which &quot;defined the use of a &#39;NAME&#39; parameter which gave a <i> suggested </i> file name to be used if the data were written to a file&quot;. Also, RFC 2183 sec. 2.3 (  <code>filename</code>  parameter in Content-Disposition) confirms that the &quot; <i> suggested </i> filename&quot; in the  <code>filename</code>  parameter &quot;should be <i> used as a basis </i> for the actual filename, where possible&quot;, and that that file name should &quot;not [be] blindly use[d]&quot;. See also RFC 6266, section 4.3, which discusses the use of that parameter in Hypertext Transfer Protocol (HTTP).</p>
 
 <p>To the extent that the &quot;name&quot; parameter is not allowed in message bodies other than those with the media type &quot;application/octet-stream&quot; or treated as that media-type, this is a deviation of RFC 2045 and 2046 (see also RFC 2045 sec. 5, which says that &quot;[t]here are NO globally meaningful parameters that apply to all media types&quot;). (Some email implementations may still write out the &quot;name&quot; parameter, even for media types other than  <code>application/octet-stream</code>  and even though RFC 2046 has deprecated that parameter.)</p>
+
+<p>.</p>
 
 <p><b>Parameters:</b></p>
 

@@ -39,7 +39,7 @@
 
 <p>Note that this class currently doesn&#39;t support the &quot;padding&quot; parameter for message bodies with the media type &quot;application/octet-stream&quot; or treated as that media type (see RFC 2046 sec. 4.5.1).</p>
 
-<p>Note that this implementation can decode an RFC 2047 encoded word that uses ISO-2022-JP (the only supported encoding that uses code switching) even if the encoded word&#39;s payload ends in a different mode from &quot;ASCII mode&quot;. (Each encoded word still starts in &quot;ASCII mode&quot;, though.) This, however, is not a deviation to RFC 2047 because the relevant rule only concerns bringing the output device back to &quot;ASCII mode&quot; after the decoded text is displayed (see last paragraph of sec. 6.2) -- since the decoded text is converted to Unicode rather than kept as ISO-2022-JP, this is not applicable since there is no such thing as &quot;ASCII mode&quot; in the Unicode Standard.</p>
+<p>Note that this implementation can decode an RFC 2047 encoded word that uses ISO-2022-JP or ISO-2022-JP-2 (encodings that uses code switching) even if the encoded word&#39;s payload ends in a different mode from &quot;ASCII mode&quot;. (Each encoded word still starts in &quot;ASCII mode&quot;, though.) This, however, is not a deviation to RFC 2047 because the relevant rule only concerns bringing the output device back to &quot;ASCII mode&quot; after the decoded text is displayed (see last paragraph of sec. 6.2) -- since the decoded text is converted to Unicode rather than kept as ISO-2022-JP or ISO-2022-JP-2, this is not applicable since there is no such thing as &quot;ASCII mode&quot; in the Unicode Standard.</p>
 
 <p>Note that this library (the MailLib library) has no facilities for sending and receiving email messages, since that&#39;s outside this library&#39;s scope.</p>
 
@@ -336,6 +336,8 @@ This value is being set and &quot;value&quot; is null.</li>
         return msg.AddAttachment(fs, mediaType); } }
 </pre>
 
+<p>.</p>
+
 <p><b>Parameters:</b></p>
 
 <ul>
@@ -517,6 +519,8 @@ The header field name is too long or contains an invalid character, or the heade
         MediaType mediaType) { using(MemoryStream fs = new MemoryStream(bytes))
         { return msg.AddInline(fs, mediaType); } }
 </pre>
+
+<p>.</p>
 
 <p><b>Parameters:</b></p>
 
