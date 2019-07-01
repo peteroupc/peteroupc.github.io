@@ -22,10 +22,10 @@
 <li><code><a href="#LanguageTagCase_string">LanguageTagCase(string)</a></code> - Sets the given language tag to the case combination recommended by RFC 5646.</li>
 <li><code><a href="#LanguageTagFilter_System_Collections_Generic_IList_System_Collections_Generic_IList">LanguageTagFilter(System.Collections.Generic.IList, System.Collections.Generic.IList)</a></code> - Finds the language tags that match a priority list of basic language ranges.</li>
 <li><code><a href="#LanguageTagFilter_System_Collections_Generic_IList_System_Collections_Generic_IList_bool_bool">LanguageTagFilter(System.Collections.Generic.IList, System.Collections.Generic.IList, bool, bool)</a></code> - Finds the language tags that match a priority list of language ranges.</li>
-<li><code><a href="#LanguageTagLookup_string_System_Collections_Generic_IList_string">LanguageTagLookup(string, System.Collections.Generic.IList, string)</a></code> - Does a language tag lookup (under RFC 4647) for a matching language tag.</li>
-<li><code><a href="#LanguageTagLookup_string_System_Collections_Generic_IList_string_bool">LanguageTagLookup(string, System.Collections.Generic.IList, string, bool)</a></code> - Does a language tag lookup (under RFC 4647) for a matching language tag.</li>
 <li><code><a href="#LanguageTagLookup_System_Collections_Generic_IList_System_Collections_Generic_IList_string">LanguageTagLookup(System.Collections.Generic.IList, System.Collections.Generic.IList, string)</a></code> - Does a language tag lookup (under RFC 4647) for a matching language tag.</li>
 <li><code><a href="#LanguageTagLookup_System_Collections_Generic_IList_System_Collections_Generic_IList_string_bool">LanguageTagLookup(System.Collections.Generic.IList, System.Collections.Generic.IList, string, bool)</a></code> - Does a language tag lookup (under RFC 4647) for a matching language tag.</li>
+<li><code><a href="#LanguageTagLookup_string_System_Collections_Generic_IList_string">LanguageTagLookup(string, System.Collections.Generic.IList, string)</a></code> - Does a language tag lookup (under RFC 4647) for a matching language tag.</li>
+<li><code><a href="#LanguageTagLookup_string_System_Collections_Generic_IList_string_bool">LanguageTagLookup(string, System.Collections.Generic.IList, string, bool)</a></code> - Does a language tag lookup (under RFC 4647) for a matching language tag.</li>
 <li><code><a href="#MatchesLanguageTag_string_string">MatchesLanguageTag(string, string)</a></code> - Determines whether the given language tag matches the given language range.</li>
 </ul>
 
@@ -37,7 +37,9 @@
     string str);
 </pre>
 
-<p>Parses a language list from a Content-Language header field.  <b>Parameters:</b></p>
+<p>Parses a language list from a Content-Language header field.</p>
+
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>str</i>: A string following the syntax of a Content-Language header field (see RFC 3282). This is a comma-separated list of language tags. RFC 5322 comments (in parentheses) can appear. This parameter can be null.</li>
@@ -45,9 +47,9 @@
 
 <p><b>Return Value:</b></p>
 
-<p>A list of language tags. Returns an empty list if  <i>str</i>
- is null or the empty string, or null if  <i>str</i>
- syntactically invalid.</p>
+<p>A list of language tags. Returns an empty list if <i>str</i>
+is null or the empty string, or null if <i>str</i>
+syntactically invalid.</p>
 
 <p><a id="GetRangeListWithQuality_string"></a></p>
 
@@ -57,7 +59,9 @@
     string str);
 </pre>
 
-<p>Parses a language range list from an Accept-Language header field.  <b>Parameters:</b></p>
+<p>Parses a language range list from an Accept-Language header field.</p>
+
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>str</i>: A string following the syntax of an Accept-Language header field (see RFC 3282). This is a comma-separated list of language ranges, with an optional &quot;quality&quot; after the language tag (examples include &quot;en; q=0.5&quot; or &quot;de-DE&quot;). RFC 5322 comments (in parentheses) can appear. This parameter can be null.</li>
@@ -65,8 +69,8 @@
 
 <p><b>Return Value:</b></p>
 
-<p>A list of language ranges with their associated qualities. The list will be sorted in descending order by quality; if two or more language ranges have the same quality, they will be sorted in the order in which they appeared in the given string. Returns null if  <i>str</i>
- is null or syntactically invalid.</p>
+<p>A list of language ranges with their associated qualities. The list will be sorted in descending order by quality; if two or more language ranges have the same quality, they will be sorted in the order in which they appeared in the given string. Returns null if <i>str</i>
+is null or syntactically invalid.</p>
 
 <p><a id="IsLanguageRange_string"></a></p>
 
@@ -76,7 +80,9 @@
     string str);
 </pre>
 
-<p>Returns whether the given string is a basic language range under RFC 4647. Examples include &quot;*&quot;, &quot;en-us&quot;, and &quot;fr&quot;.  <b>Parameters:</b></p>
+<p>Returns whether the given string is a basic language range under RFC 4647. Examples include &quot;*&quot;, &quot;en-us&quot;, and &quot;fr&quot;.</p>
+
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>str</i>: The string to check. Can be null.</li>
@@ -84,7 +90,7 @@
 
 <p><b>Return Value:</b></p>
 
-<p><code>true</code>  if the given string is a basic language range; otherwise,  <code>false</code>  .</p>
+<p><code>true</code>  if the given string is a basic language range; otherwise, <code>false</code>  .</p>
 
 <p><a id="IsLanguageRange_string_bool"></a></p>
 
@@ -95,7 +101,9 @@
     bool extended);
 </pre>
 
-<p>Returns whether the given string is a basic or extended language range under RFC 4647. Examples of basic (and extended) language ranges include &quot;<em>&quot;, &quot;en-us&quot;, and &quot;fr&quot;. Examples of extended language ranges include &quot;</em>-de&quot; and &quot;it-*&quot;.  <b>Parameters:</b></p>
+<p>Returns whether the given string is a basic or extended language range under RFC 4647. Examples of basic (and extended) language ranges include &quot;<em>&quot;, &quot;en-us&quot;, and &quot;fr&quot;. Examples of extended language ranges include &quot;</em>-de&quot; and &quot;it-*&quot;.</p>
+
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>str</i>: The string to check. Can be null.</p></li>
@@ -104,8 +112,8 @@
 
 <p><b>Return Value:</b></p>
 
-<p><code>true</code>  if the given string is a basic language range (depending on the  <i>extended</i>
- parameter); otherwise,  <code>false</code>  .</p>
+<p><code>true</code>  if the given string is a basic language range (depending on the <i>extended</i>
+parameter); otherwise, <code>false</code>  .</p>
 
 <p><a id="IsPotentiallyValidLanguageTag_string"></a></p>
 
@@ -115,7 +123,9 @@
     string str);
 </pre>
 
-<p>Returns true if (1) the given string is a well-formed language tag under RFC 5646 (that is, the string follows the syntax given in section 2.1 of that RFC), and (2) the language tag contains at most one extended language subtag, no variant subtags with the same value, and no extension singleton subtags with the same value.  <b>Parameters:</b></p>
+<p>Returns true if (1) the given string is a well-formed language tag under RFC 5646 (that is, the string follows the syntax given in section 2.1 of that RFC), and (2) the language tag contains at most one extended language subtag, no variant subtags with the same value, and no extension singleton subtags with the same value.</p>
+
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>str</i>: The string to check.</li>
@@ -123,7 +133,7 @@
 
 <p><b>Return Value:</b></p>
 
-<p><code>true</code>  , if the string meets the conditions given in the summary,  <code>false</code>  otherwise.</p>
+<p><code>true</code>  , if the string meets the conditions given in the summary, <code>false</code>  otherwise.</p>
 
 <p><a id="LanguageTagCase_string"></a></p>
 
@@ -133,7 +143,9 @@
     string str);
 </pre>
 
-<p>Sets the given language tag to the case combination recommended by RFC 5646. For example, &quot;en-us&quot; becomes &quot;en-US&quot;, and &quot;zh-hant&quot; becomes &quot;zh-Hant&quot;.  <b>Parameters:</b></p>
+<p>Sets the given language tag to the case combination recommended by RFC 5646. For example, &quot;en-us&quot; becomes &quot;en-US&quot;, and &quot;zh-hant&quot; becomes &quot;zh-Hant&quot;.</p>
+
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>str</i>: A string of a language tag. Can be null.</li>
@@ -141,8 +153,8 @@
 
 <p><b>Return Value:</b></p>
 
-<p>A text string in the recommended case combination, or null if  <i>str</i>
- is null.</p>
+<p>A text string in the recommended case combination, or null if <i>str</i>
+is null.</p>
 
 <p><a id="LanguageTagFilter_System_Collections_Generic_IList_System_Collections_Generic_IList"></a></p>
 
@@ -153,7 +165,9 @@
     System.Collections.Generic.IList languages);
 </pre>
 
-<p>Finds the language tags that match a priority list of basic language ranges.  <b>Parameters:</b></p>
+<p>Finds the language tags that match a priority list of basic language ranges.</p>
+
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>ranges</i>: A list of basic language ranges (see documentation for the &quot;IsLanguageRange&quot; method), which should be given in order of descending preference.</p></li>
@@ -168,12 +182,12 @@
 
 <ul>
 <li><p>System.ArgumentNullException:
-The parameter  <i>languages</i>
-or  <i>ranges</i>
+The parameter <i>languages</i>
+or <i>ranges</i>
 is null.</p></li>
 <li><p>System.ArgumentException:
-The parameter  <i>ranges</i>
-contains a value that is not a basic language range, or  <i>languages</i>
+The parameter <i>ranges</i>
+contains a value that is not a basic language range, or <i>languages</i>
 contains a value that is not a potentially valid language tag.</p></li>
 </ul>
 
@@ -188,7 +202,9 @@ contains a value that is not a potentially valid language tag.</p></li>
     bool matchStarAtEnd);
 </pre>
 
-<p>Finds the language tags that match a priority list of language ranges.  <b>Parameters:</b></p>
+<p>Finds the language tags that match a priority list of language ranges.</p>
+
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>ranges</i>: A list of language ranges (see documentation for the &quot;IsLanguageRange&quot; method), which should be given in order of descending preference.</p></li>
@@ -205,12 +221,12 @@ contains a value that is not a potentially valid language tag.</p></li>
 
 <ul>
 <li><p>System.ArgumentNullException:
-The parameter  <i>languages</i>
-or  <i>ranges</i>
+The parameter <i>languages</i>
+or <i>ranges</i>
 is null.</p></li>
 <li><p>System.ArgumentException:
-The parameter  <i>ranges</i>
-contains a value that is not a basic or extended language range, or  <i>languages</i>
+The parameter <i>ranges</i>
+contains a value that is not a basic or extended language range, or <i>languages</i>
 contains a value that is not a potentially valid language tag.</p></li>
 </ul>
 
@@ -224,7 +240,9 @@ contains a value that is not a potentially valid language tag.</p></li>
     string defaultValue);
 </pre>
 
-<p>Does a language tag lookup (under RFC 4647) for a matching language tag.  <b>Parameters:</b></p>
+<p>Does a language tag lookup (under RFC 4647) for a matching language tag.</p>
+
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>range</i>: A basic language range (see the documentation for &quot;IsLanguageRange&quot;).</p></li>
@@ -234,18 +252,18 @@ contains a value that is not a potentially valid language tag.</p></li>
 
 <p><b>Return Value:</b></p>
 
-<p>The matching language tag, or the parameter  <i>defaultValue</i>
- if there is no matching language tag.</p>
+<p>The matching language tag, or the parameter <i>defaultValue</i>
+if there is no matching language tag.</p>
 
 <p><b>Exceptions:</b></p>
 
 <ul>
 <li><p>System.ArgumentNullException:
-The parameter  <i>languages</i>
+The parameter <i>languages</i>
 is null.</p></li>
 <li><p>System.ArgumentException:
-The parameter  <i>range</i>
-is not a basic language range, or  <i>languages</i>
+The parameter <i>range</i>
+is not a basic language range, or <i>languages</i>
 contains a value that is not a potentially valid language tag.</p></li>
 </ul>
 
@@ -260,7 +278,9 @@ contains a value that is not a potentially valid language tag.</p></li>
     bool extended);
 </pre>
 
-<p>Does a language tag lookup (under RFC 4647) for a matching language tag.  <b>Parameters:</b></p>
+<p>Does a language tag lookup (under RFC 4647) for a matching language tag.</p>
+
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>range</i>: A language range (see the documentation for &quot;IsLanguageRange&quot;).</p></li>
@@ -271,18 +291,18 @@ contains a value that is not a potentially valid language tag.</p></li>
 
 <p><b>Return Value:</b></p>
 
-<p>The matching language tag, or the parameter  <i>defaultValue</i>
- if there is no matching language tag.</p>
+<p>The matching language tag, or the parameter <i>defaultValue</i>
+if there is no matching language tag.</p>
 
 <p><b>Exceptions:</b></p>
 
 <ul>
 <li><p>System.ArgumentNullException:
-The parameter  <i>languages</i>
+The parameter <i>languages</i>
 is null.</p></li>
 <li><p>System.ArgumentException:
-The parameter  <i>range</i>
-is not a basic or extended language range, or  <i>languages</i>
+The parameter <i>range</i>
+is not a basic or extended language range, or <i>languages</i>
 contains a value that is not a potentially valid language tag.</p></li>
 </ul>
 
@@ -296,7 +316,9 @@ contains a value that is not a potentially valid language tag.</p></li>
     string defaultValue);
 </pre>
 
-<p>Does a language tag lookup (under RFC 4647) for a matching language tag.  <b>Parameters:</b></p>
+<p>Does a language tag lookup (under RFC 4647) for a matching language tag.</p>
+
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>ranges</i>: A list of basic language ranges (see documentation for the &quot;IsLanguageRange&quot; method), which should be given in order of descending preference.</p></li>
@@ -306,19 +328,19 @@ contains a value that is not a potentially valid language tag.</p></li>
 
 <p><b>Return Value:</b></p>
 
-<p>The matching language tag, or the parameter  <i>defaultValue</i>
- if there is no matching language tag.</p>
+<p>The matching language tag, or the parameter <i>defaultValue</i>
+if there is no matching language tag.</p>
 
 <p><b>Exceptions:</b></p>
 
 <ul>
 <li><p>System.ArgumentNullException:
-The parameter  <i>languages</i>
-or  <i>ranges</i>
+The parameter <i>languages</i>
+or <i>ranges</i>
 is null.</p></li>
 <li><p>System.ArgumentException:
-The parameter  <i>ranges</i>
-contains a value that is not a basic language range, or  <i>languages</i>
+The parameter <i>ranges</i>
+contains a value that is not a basic language range, or <i>languages</i>
 contains a value that is not a potentially valid language tag.</p></li>
 </ul>
 
@@ -333,7 +355,9 @@ contains a value that is not a potentially valid language tag.</p></li>
     bool extended);
 </pre>
 
-<p>Does a language tag lookup (under RFC 4647) for a matching language tag.  <b>Parameters:</b></p>
+<p>Does a language tag lookup (under RFC 4647) for a matching language tag.</p>
+
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>ranges</i>: A list of language ranges (see documentation for the &quot;IsLanguageRange&quot; method), which should be given in order of descending preference.</p></li>
@@ -344,19 +368,19 @@ contains a value that is not a potentially valid language tag.</p></li>
 
 <p><b>Return Value:</b></p>
 
-<p>The matching language tag, or the parameter  <i>defaultValue</i>
- if there is no matching language tag.</p>
+<p>The matching language tag, or the parameter <i>defaultValue</i>
+if there is no matching language tag.</p>
 
 <p><b>Exceptions:</b></p>
 
 <ul>
 <li><p>System.ArgumentNullException:
-The parameter  <i>languages</i>
-or  <i>ranges</i>
+The parameter <i>languages</i>
+or <i>ranges</i>
 is null.</p></li>
 <li><p>System.ArgumentException:
-The parameter  <i>ranges</i>
-contains a value that is not a basic or extended language range, or  <i>languages</i>
+The parameter <i>ranges</i>
+contains a value that is not a basic or extended language range, or <i>languages</i>
 contains a value that is not a potentially valid language tag.</p></li>
 </ul>
 
@@ -369,7 +393,9 @@ contains a value that is not a potentially valid language tag.</p></li>
     string tag);
 </pre>
 
-<p>Determines whether the given language tag matches the given language range.  <b>Parameters:</b></p>
+<p>Determines whether the given language tag matches the given language range.</p>
+
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>range</i>: A basic language range (see the documentation for &quot;IsLanguageRange&quot;).</p></li>
@@ -378,14 +404,14 @@ contains a value that is not a potentially valid language tag.</p></li>
 
 <p><b>Return Value:</b></p>
 
-<p><code>true</code>  if the language tag matches the language range by the filtering method under RFC 4647; otherwise,  <code>false</code>  .</p>
+<p><code>true</code>  if the language tag matches the language range by the filtering method under RFC 4647; otherwise, <code>false</code>  .</p>
 
 <p><b>Exceptions:</b></p>
 
 <ul>
 <li>System.ArgumentException:
-The parameter  <i>range</i>
-is not a basic language range, or  <i>tag</i>
+The parameter <i>range</i>
+is not a basic language range, or <i>tag</i>
 is not a potentially valid language tag.</li>
 </ul>
 

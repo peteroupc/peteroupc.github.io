@@ -19,6 +19,7 @@
 <li><code><a href="#CanRead">CanRead</a></code> - Gets a value indicating whether the underlying stream supports reading.</li>
 <li><code><a href="#CanSeek">CanSeek</a></code> - Gets a value indicating whether the underlying stream supports seeking.</li>
 <li><code><a href="#CanWrite">CanWrite</a></code> - Gets a value indicating whether the underlying stream supports writing.</li>
+<li><code><a href="#Dispose_bool">Dispose(bool)</a></code> - Not documented yet.</li>
 <li><code><a href="#Flush">Flush()</a></code> - Not documented yet.</li>
 <li><code><a href="#Length">Length</a></code> - Gets the partial stream&#39;s length in bytes.</li>
 <li><code><a href="#Position">Position</a></code> - Gets the partial stream&#39;s current byte position.</li>
@@ -38,14 +39,16 @@
     long length);
 </pre>
 
-<p>Initializes a new instance of the <a href="PeterO.PartialStream.html">PeterO.PartialStream</a> class.  <b>Parameters:</b></p>
+<p>Initializes a new instance of the <a href="PeterO.PartialStream.html">PeterO.PartialStream</a> class.</p>
+
+<p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>stream</i>: The parameter  <i>stream</i>
+<li><p><i>stream</i>: The parameter <i>stream</i>
 is not documented yet.</p></li>
-<li><p><i>start</i>: The parameter  <i>start</i>
+<li><p><i>start</i>: The parameter <i>start</i>
 is not documented yet.</p></li>
-<li><p><i>length</i>: The parameter  <i>length</i>
+<li><p><i>length</i>: The parameter <i>length</i>
 is not documented yet.</p></li>
 </ul>
 
@@ -60,16 +63,18 @@ is not documented yet.</p></li>
     bool closeOnDispose);
 </pre>
 
-<p>Initializes a new instance of the <a href="PeterO.PartialStream.html">PeterO.PartialStream</a> class.  <b>Parameters:</b></p>
+<p>Initializes a new instance of the <a href="PeterO.PartialStream.html">PeterO.PartialStream</a> class.</p>
+
+<p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>stream</i>: The parameter  <i>stream</i>
+<li><p><i>stream</i>: The parameter <i>stream</i>
 is not documented yet.</p></li>
-<li><p><i>start</i>: The parameter  <i>start</i>
+<li><p><i>start</i>: The parameter <i>start</i>
 is not documented yet.</p></li>
-<li><p><i>length</i>: The parameter  <i>length</i>
+<li><p><i>length</i>: The parameter <i>length</i>
 is not documented yet.</p></li>
-<li><p><i>closeOnDispose</i>: The parameter  <i>closeOnDispose</i>
+<li><p><i>closeOnDispose</i>: The parameter <i>closeOnDispose</i>
 is not documented yet.</p></li>
 </ul>
 
@@ -77,11 +82,11 @@ is not documented yet.</p></li>
 
 <ul>
 <li><p>System.ArgumentException:
-The parameter  <i>stream</i>
+The parameter <i>stream</i>
 doesn&#39;t support seeking, the length or start is less than 0 or greater than the underlying stream&#39;s length, or the partial stream would go beyond the underlying stream.</p></li>
 <li><p>System.ArgumentNullException:
-The parameter  <i>stream</i>
-or  <i>stream</i>
+The parameter <i>stream</i>
+or <i>stream</i>
 is null.</p></li>
 </ul>
 
@@ -92,9 +97,11 @@ is null.</p></li>
 <pre>public override bool CanRead { get; }
 </pre>
 
-<p>Gets a value indicating whether the underlying stream supports reading.  <b>Returns:</b></p>
+<p>Gets a value indicating whether the underlying stream supports reading.</p>
 
-<p><code>true</code>  If the underlying stream supports reading; otherwise, .  <code>false</code>  .</p>
+<p><b>Returns:</b></p>
+
+<p><code>true</code>  If the underlying stream supports reading; otherwise, . <code>false</code>  .</p>
 
 <p><a id="CanSeek"></a></p>
 
@@ -103,9 +110,11 @@ is null.</p></li>
 <pre>public override bool CanSeek { get; }
 </pre>
 
-<p>Gets a value indicating whether the underlying stream supports seeking.  <b>Returns:</b></p>
+<p>Gets a value indicating whether the underlying stream supports seeking.</p>
 
-<p><code>true</code>  If the underlying stream supports seeking; otherwise, .  <code>false</code>  .</p>
+<p><b>Returns:</b></p>
+
+<p><code>true</code>  If the underlying stream supports seeking; otherwise, . <code>false</code>  .</p>
 
 <p><a id="CanWrite"></a></p>
 
@@ -114,9 +123,11 @@ is null.</p></li>
 <pre>public override bool CanWrite { get; }
 </pre>
 
-<p>Gets a value indicating whether the underlying stream supports writing.  <b>Returns:</b></p>
+<p>Gets a value indicating whether the underlying stream supports writing.</p>
 
-<p><code>true</code>  If the underlying stream supports writing; otherwise, .  <code>false</code>  .</p>
+<p><b>Returns:</b></p>
+
+<p><code>true</code>  If the underlying stream supports writing; otherwise, . <code>false</code>  .</p>
 
 <p><a id="Length"></a></p>
 
@@ -125,7 +136,9 @@ is null.</p></li>
 <pre>public override long Length { get; }
 </pre>
 
-<p>Gets the partial stream&#39;s length in bytes.  <b>Returns:</b></p>
+<p>Gets the partial stream&#39;s length in bytes.</p>
+
+<p><b>Returns:</b></p>
 
 <p>The partial stream&#39;s length in bytes.</p>
 
@@ -136,9 +149,28 @@ is null.</p></li>
 <pre>public override long Position { get; set; }
 </pre>
 
-<p>Gets the partial stream&#39;s current byte position.  <b>Returns:</b></p>
+<p>Gets the partial stream&#39;s current byte position.</p>
+
+<p><b>Returns:</b></p>
 
 <p>The partial stream&#39;s current byte position.</p>
+
+<p><a id="Dispose_bool"></a></p>
+
+<h3>Dispose</h3>
+
+<pre>protected override void Dispose(
+    bool disposing);
+</pre>
+
+<p>Not documented yet.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>disposing</i>: The parameter <i>disposing</i>
+is not documented yet.</li>
+</ul>
 
 <p><a id="Flush"></a></p>
 
@@ -147,7 +179,9 @@ is null.</p></li>
 <pre>public override void Flush();
 </pre>
 
-<p>Not documented yet.  <a id="Read_byte_int_int"></a></p>
+<p>Not documented yet.</p>
+
+<p><a id="Read_byte_int_int"></a></p>
 
 <h3>Read</h3>
 
@@ -157,15 +191,17 @@ is null.</p></li>
     int count);
 </pre>
 
-<p>Not documented yet.  <b>Parameters:</b></p>
+<p>Not documented yet.</p>
+
+<p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>buffer</i>: The parameter  <i>buffer</i>
+<li><p><i>buffer</i>: The parameter <i>buffer</i>
 is not documented yet.</p></li>
-<li><p><i>offset</i>: A zero-based index showing where the desired portion of  <i>buffer</i>
+<li><p><i>offset</i>: A zero-based index showing where the desired portion of <i>buffer</i>
 begins.</p></li>
-<li><p><i>count</i>: The number of elements in the desired portion of  <i>buffer</i>
-(but not more than  <i>buffer</i>
+<li><p><i>count</i>: The number of elements in the desired portion of <i>buffer</i>
+(but not more than <i>buffer</i>
 &#39;s length).</p></li>
 </ul>
 
@@ -177,15 +213,15 @@ begins.</p></li>
 
 <ul>
 <li><p>T:System.ArgumentException:
-Either  <i> offset</i>
-or  <i> count</i>
-is less than 0 or greater than  <i>buffer</i>
-&#39;s length, or  <i> buffer</i>
-&#39; s length minus  <i>offset</i>
-is less than  <i>count</i>
+Either <i> offset</i>
+or <i> count</i>
+is less than 0 or greater than <i>buffer</i>
+&#39;s length, or <i> buffer</i>
+&#39; s length minus <i>offset</i>
+is less than <i>count</i>
 .</p></li>
 <li><p>System.ArgumentNullException:
-The parameter  <i>buffer</i>
+The parameter <i>buffer</i>
 is null.</p></li>
 <li><p>System.ArgumentException:
 Either &quot;offset&quot; or &quot;count&quot; is less than 0 or greater than &quot;buffer&quot;&#39;s length, or &quot;buffer&quot;&#39;s length minus &quot;offset&quot; is less than &quot;count&quot;.</p></li>
@@ -200,12 +236,14 @@ Either &quot;offset&quot; or &quot;count&quot; is less than 0 or greater than &q
     System.IO.SeekOrigin origin);
 </pre>
 
-<p>Not documented yet.  <b>Parameters:</b></p>
+<p>Not documented yet.</p>
+
+<p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>offset</i>: The parameter  <i>offset</i>
+<li><p><i>offset</i>: The parameter <i>offset</i>
 is not documented yet.</p></li>
-<li><p><i>origin</i>: The parameter  <i>origin</i>
+<li><p><i>origin</i>: The parameter <i>origin</i>
 is not documented yet.</p></li>
 </ul>
 
@@ -221,10 +259,12 @@ is not documented yet.</p></li>
     long value);
 </pre>
 
-<p>Not documented yet.  <b>Parameters:</b></p>
+<p>Not documented yet.</p>
+
+<p><b>Parameters:</b></p>
 
 <ul>
-<li><i>value</i>: The parameter  <i>value</i>
+<li><i>value</i>: The parameter <i>value</i>
 is not documented yet.</li>
 </ul>
 
@@ -238,15 +278,17 @@ is not documented yet.</li>
     int count);
 </pre>
 
-<p>Not documented yet.  <b>Parameters:</b></p>
+<p>Not documented yet.</p>
+
+<p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>buffer</i>: The parameter  <i>buffer</i>
+<li><p><i>buffer</i>: The parameter <i>buffer</i>
 is not documented yet.</p></li>
-<li><p><i>offset</i>: A zero-based index showing where the desired portion of  <i>buffer</i>
+<li><p><i>offset</i>: A zero-based index showing where the desired portion of <i>buffer</i>
 begins.</p></li>
-<li><p><i>count</i>: The number of elements in the desired portion of  <i>buffer</i>
-(but not more than  <i>buffer</i>
+<li><p><i>count</i>: The number of elements in the desired portion of <i>buffer</i>
+(but not more than <i>buffer</i>
 &#39;s length).</p></li>
 </ul>
 
@@ -254,12 +296,12 @@ begins.</p></li>
 
 <ul>
 <li>System.ArgumentException:
-Either  <i>offset</i>
-or  <i>count</i>
-is less than 0 or greater than  <i>buffer</i>
-&#39;s length, or  <i> buffer</i>
-&#39; s length minus  <i>offset</i>
-is less than  <i>count</i>
+Either <i>offset</i>
+or <i>count</i>
+is less than 0 or greater than <i>buffer</i>
+&#39;s length, or <i> buffer</i>
+&#39; s length minus <i>offset</i>
+is less than <i>count</i>
 .</li>
 </ul>
 
