@@ -19,9 +19,10 @@
 
 <ul>
 <li><p><code>EInteger</code>  objects are immutable, so they can&#39;t be modified, and the memory they occupy is not guaranteed to be cleared in a timely fashion due to garbage collection. This is relevant for applications that use many-bit-long numbers as secret parameters.</p></li>
-<li><p>The methods in this class (especially those that involve arithmetic) are not guaranteed to run in constant time for all relevant inputs. Certain attacks that involve encrypted communications have exploited the timing and other aspects of such communications to derive keying material or cleartext indirectly.</p>
+<li><p>The methods in this class (especially those that involve arithmetic) are not guaranteed to be &quot;constant-time&quot; (non-data-dependent) for all relevant inputs. Certain attacks that involve encrypted communications have exploited the timing and other aspects of such communications to derive keying material or cleartext indirectly.</p>
 
-<p>Applications should instead use dedicated security libraries to handle big numbers in security-sensitive algorithms.</p>
+<p>Applications should instead use dedicated security libraries to handle big numbers in security-sensitive algorithms.</p></li>
+</ul>
 
 <h3>Member Summary</h3>
 
@@ -146,7 +147,6 @@
 <li><code><a href="#Xor_PeterO_Numbers_EInteger">Xor(PeterO.Numbers.EInteger)</a></code> - Finds the exclusive &quot;or&quot; of two arbitrary-precision integer objects.</li>
 <li><code><a href="#Xor_PeterO_Numbers_EInteger_PeterO_Numbers_EInteger">Xor(PeterO.Numbers.EInteger, PeterO.Numbers.EInteger)</a></code> - Finds the exclusive &quot;or&quot; of two arbitrary-precision integer objects.</li>
 <li><code><a href="#Zero">Zero</a></code> - Gets the number zero as an arbitrary-precision integer.</li>
-</ul></li>
 </ul>
 
 <p><a id="IsEven"></a></p>

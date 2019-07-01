@@ -7,13 +7,18 @@
 <h2>PeterO.ExtendedRational</h2>
 
 <pre>public sealed class ExtendedRational :
-    System.IComparable,
-    System.IEquatable
+    System.IEquatable,
+    System.IComparable
 </pre>
 
 <p><b>Deprecated.</b> Use ERational from PeterO.Numbers/com.upokecenter.numbers and the output of this class&#39;s ToString method.</p>
 
-<p><b>This class is largely obsolete. It will be replaced by a new version of this class in a different namespace/package and library, called <code>PeterO.Numbers.ERational</code> in the<a href="https://www.nuget.org/packages/PeterO.Numbers"> <code>PeterO.Numbers</code> </a>library (in .NET), or <code>com.upokecenter.numbers.ERational</code> in the<a href="https://github.com/peteroupc/numbers-java"> <code>com.github.peteroupc/numbers</code> </a>artifact (in Java). This new class can be used in the <code>CBORObject.FromObject(object)</code> method (by including the new library in your code, among other hings).</b></p>
+<p><b>This class is largely obsolete. It will be replaced by a new version of this class in a different namespace/package and library, called <code>PeterO.Numbers.ERational
+</code> in the<a href="https://www.nuget.org/packages/PeterO.Numbers"> <code>PeterO.Numbers
+</code> </a>library (in .NET), or <code>com.upokecenter.numbers.ERational
+</code> in the<a href="https://github.com/peteroupc/numbers-java"> <code>com.github.peteroupc/numbers
+</code> </a>artifact (in Java). This new class can be used in the <code>CBORObject.FromObject(object)
+</code> method (by including the new library in your code, among other hings).</b></p>
 
 <p>Arbitrary-precision rational number. This class can&#39;t be inherited; this s a change in version 2.0 from previous versions, where the class was nadvertently left inheritable.<b>Thread safety:</b>Instances of this class are immutable, so they are inherently safe for se by multiple threads. Multiple instances of this object with the same roperties are interchangeable, so they should not be compared using the ==&quot; operator (which might only check if each side of the operator is he same instance).</p>
 
@@ -67,7 +72,7 @@
 <ul>
 <li>System.ArgumentNullException:
 The parameter <i>numerator</i>
-or  <i>denominator</i>
+or <i>denominator</i>
 is null.</li>
 </ul>
 
@@ -169,7 +174,9 @@ is null.</li>
 
 <p><b>Returns:</b></p>
 
-<p><code>true</code>  If this object is finite (not infinity or NaN); otherwise, .  <code>false</code> .</p>
+<p><code>true
+</code> If this object is finite (not infinity or NaN); otherwise, . <code>false
+</code> .</p>
 
 <p><a id="IsNegative"></a></p>
 
@@ -182,7 +189,9 @@ is null.</li>
 
 <p><b>Returns:</b></p>
 
-<p><code>true</code>  If this object&#39;s value is negative; otherwise, . <code>false</code> .</p>
+<p><code>true
+</code> If this object&#39;s value is negative; otherwise, . <code>false
+</code> .</p>
 
 <p><a id="IsZero"></a></p>
 
@@ -197,7 +206,9 @@ is null.</li>
 
 <p><b>Returns:</b></p>
 
-<p><code>true</code>  If this object&#39;s value equals 0; otherwise, . <code>false</code> .</p>
+<p><code>true
+</code> If this object&#39;s value equals 0; otherwise, . <code>false
+</code> .</p>
 
 <p><a id="Numerator"></a></p>
 
@@ -312,7 +323,7 @@ is a 32-bit signed integer.</p></li>
 <ul>
 <li>System.ArgumentNullException:
 The parameter <i>numerator</i>
-or  <i>denominator</i>
+or <i>denominator</i>
 is null.</li>
 </ul>
 
@@ -335,7 +346,9 @@ is an arbitrary object.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>Either <code>true</code> or <code>false</code> .</p>
+<p>Either <code>true
+</code> or <code>false
+</code> .</p>
 
 <p><a id="Equals_PeterO_ExtendedRational"></a></p>
 
@@ -356,7 +369,9 @@ is an ExtendedRational object.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>Either <code>true</code> or <code>false</code> .</p>
+<p>Either <code>true
+</code> or <code>false
+</code> .</p>
 
 <p><a id="GetHashCode"></a></p>
 

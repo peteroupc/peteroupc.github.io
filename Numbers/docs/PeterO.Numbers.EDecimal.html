@@ -61,7 +61,7 @@
 
 <p>It is not recommended to implement security-sensitive algorithms using the methods in this class, for several reasons:</p></li>
 <li><p><code>EDecimal</code>  objects are immutable, so they can&#39;t be modified, and the memory they occupy is not guaranteed to be cleared in a timely fashion due to garbage collection. This is relevant for applications that use many-digit-long numbers as secret parameters.</p></li>
-<li><p>The methods in this class (especially those that involve arithmetic) are not guaranteed to run in constant time for all relevant inputs. Certain attacks that involve encrypted communications have exploited the timing and other aspects of such communications to derive keying material or cleartext indirectly.</p>
+<li><p>The methods in this class (especially those that involve arithmetic) are not guaranteed to be &quot;constant-time&quot; (non-data-dependent) for all relevant inputs. Certain attacks that involve encrypted communications have exploited the timing and other aspects of such communications to derive keying material or cleartext indirectly.</p>
 
 <p>Applications should instead use dedicated security libraries to handle big numbers in security-sensitive algorithms.</p>
 
@@ -110,7 +110,8 @@
 <li><p>Next 7 bits are unused.</p></li>
 <li><p>If the highest bit is one, it&#39;s a negative number.</p>
 
-<p>The elements described above are in the same order as the order of each bit of each element, that is, either most significant first or least significant first.</p>
+<p>The elements described above are in the same order as the order of each bit of each element, that is, either most significant first or least significant first.</p></li>
+</ul>
 
 <h3>Member Summary</h3>
 
@@ -313,7 +314,6 @@
 <li><code><a href="#Ulp">Ulp()</a></code> - Returns the unit in the last place.</li>
 <li><code><a href="#UnsignedMantissa">UnsignedMantissa</a></code> - Gets the absolute value of this object&#39;s unscaled value, or mantissa.</li>
 <li><code><a href="#Zero">public static readonly PeterO.Numbers.EDecimal Zero;</a></code> - Represents the number 0.</li>
-</ul></li>
 </ul>
 
 <p><a id="NaN"></a></p>

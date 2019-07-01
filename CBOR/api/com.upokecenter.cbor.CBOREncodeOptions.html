@@ -6,7 +6,7 @@
 
 <h1>com.upokecenter.cbor.CBOREncodeOptions</h1>
 
-<pre>public final class CBOREncodeOptions extends java.lang.Object
+<pre>public final class CBOREncodeOptions extends Object
 </pre>
 
 <p>Specifies options for encoding and decoding CBOR objects.</p>
@@ -16,9 +16,18 @@
 <ul>
 <li><code>static CBOREncodeOptions Default</code><br>
 Default options for CBOR objects.</li>
-<li><code>static CBOREncodeOptions DefaultCtap2Canonical</code><br>
-Default options for CBOR objects serialized using the CTAP2 canonicalization
-(used in Web Authentication, among other specifications).</li>
+<li><code>static CBOREncodeOptions NoDuplicateKeys</code><br>
+Deprecated.
+Use &#39;new CBOREncodeOptions(true,false)&#39; instead.
+Use &#39;new CBOREncodeOptions(true,false)&#39; instead.</li>
+<li><code>static CBOREncodeOptions NoIndefLengthStrings</code><br>
+Deprecated.
+Use &#39;new CBOREncodeOptions(false,true)&#39; instead.
+Use &#39;new CBOREncodeOptions(false,true)&#39; instead.</li>
+<li><code>static CBOREncodeOptions None</code><br>
+Deprecated.
+Use &#39;new CBOREncodeOptions(true,true)&#39; instead.
+Use &#39;new CBOREncodeOptions(true,true)&#39; instead.</li>
 </ul>
 
 <h2>Constructors</h2>
@@ -38,19 +47,45 @@ Initializes a new instance of the CBOREncodeOptions class.</li>
 <h2>Methods</h2>
 
 <ul>
+<li><code>CBOREncodeOptions And​(CBOREncodeOptions o)</code><br>
+Deprecated.
+May be removed in a later version.
+May be removed in a later version.</li>
 <li><code>boolean getAllowDuplicateKeys()</code><br>
-Gets a value indicating whether to allow duplicate keys when reading CBOR
+Gets a value indicating whether to disallow duplicate keys when reading CBOR
 objects from a data stream.</li>
 <li><code>boolean getCtap2Canonical()</code><br>
 Gets a value indicating whether CBOR objects are written out using the CTAP2
-canonical CBOR encoding form, which is useful for implementing Web
-Authentication.</li>
+canonical CBOR encoding form.</li>
 <li><code>boolean getUseIndefLengthStrings()</code><br>
-Gets a value indicating whether to encode strings with an indefinite-length
-encoding under certain circumstances.</li>
+Gets a value indicating whether to always encode strings with a
+definite-length encoding.</li>
+<li><code>int getValue()</code><br>
+Deprecated.
+Option classes in this library will follow the form seen in JSONOptions in a
+later version; the approach used in this class is too complicated.
+Option classes in this library will follow the form seen in JSONOptions in a
+later version; the approach used in this class is too complicated.</li>
+<li><code>CBOREncodeOptions Or​(CBOREncodeOptions o)</code><br>
+Deprecated.
+May be removed in a later version.
+May be removed in a later version.</li>
 </ul>
 
 <h2>Field Details</h2>
+
+<h3>None</h3>
+
+<pre>@Deprecated public static final CBOREncodeOptions None
+</pre>
+
+<p>Deprecated.</p>
+
+<div class='deprecationComment'>Use 'new CBOREncodeOptions(true,true)' instead. Option classes in this
+ library will follow the form seen in JSONOptions in a later version; the
+ approach used in this class is too complicated.
+'CBOREncodeOptions.Default' contains recommended default options that may
+ be adopted by certain CBORObject methods in the next major version.</div>
 
 <h3>Default</h3>
 
@@ -58,17 +93,31 @@ encoding under certain circumstances.</li>
 </pre>
 
 <p>Default options for CBOR objects. Disallow duplicate keys, and always encode
- strings using definite-length encoding.</p>
+ strings using definite-length encoding. These are recommended
+ settings for the options that may be adopted by certain CBORObject
+ methods in the next major version.</p>
 
-<h3>DefaultCtap2Canonical</h3>
+<h3>NoIndefLengthStrings</h3>
 
-<pre>public static final CBOREncodeOptions DefaultCtap2Canonical
+<pre>@Deprecated public static final CBOREncodeOptions NoIndefLengthStrings
 </pre>
 
-<p>Default options for CBOR objects serialized using the CTAP2 canonicalization
- (used in Web Authentication, among other specifications). Disallow
- duplicate keys, and always encode strings using definite-length
- encoding.</p>
+<p>Deprecated.</p>
+
+<div class='deprecationComment'>Use 'new CBOREncodeOptions(false,true)' instead. Option classes in this
+ library will follow the form seen in JSONOptions in a later version; the
+ approach used in this class is too complicated.</div>
+
+<h3>NoDuplicateKeys</h3>
+
+<pre>@Deprecated public static final CBOREncodeOptions NoDuplicateKeys
+</pre>
+
+<p>Deprecated.</p>
+
+<div class='deprecationComment'>Use 'new CBOREncodeOptions(true,false)' instead. Option classes in this
+ library will follow the form seen in JSONOptions in a later version; the
+ approach used in this class is too complicated.</div>
 
 <h2>Method Details</h2>
 
@@ -77,15 +126,14 @@ encoding under certain circumstances.</li>
 <pre>public final boolean getUseIndefLengthStrings()
 </pre>
 
-<p>Gets a value indicating whether to encode strings with an indefinite-length
- encoding under certain circumstances.</p>
+<p>Gets a value indicating whether to always encode strings with a
+ definite-length encoding.</p>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A value indicating whether to encode strings with an
-indefinite-length encoding under certain circumstances. The default is
-false.</li>
+<li>A value indicating whether to always encode strings with a
+definite-length encoding.</li>
 </ul>
 
 <h3>getAllowDuplicateKeys</h3>
@@ -93,14 +141,14 @@ false.</li>
 <pre>public final boolean getAllowDuplicateKeys()
 </pre>
 
-<p>Gets a value indicating whether to allow duplicate keys when reading CBOR
+<p>Gets a value indicating whether to disallow duplicate keys when reading CBOR
  objects from a data stream. Used only when decoding CBOR objects.</p>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A value indicating whether to allow duplicate keys when reading CBOR
-objects from a data stream. The default is false.</li>
+<li>A value indicating whether to disallow duplicate keys when reading
+CBOR objects from a data stream.</li>
 </ul>
 
 <h3>getCtap2Canonical</h3>
@@ -109,16 +157,81 @@ objects from a data stream. The default is false.</li>
 </pre>
 
 <p>Gets a value indicating whether CBOR objects are written out using the CTAP2
- canonical CBOR encoding form, which is useful for implementing Web
- Authentication. In this form, CBOR tags are not used, map keys are
- written out in a canonical order, and non-integer numbers and integers
- 2^63 or greater are written as 64-bit binary floating-point numbers.</p>
+ canonical CBOR encoding form. In this form, CBOR tags are not used,
+ map keys are written out in a canonical order, and non-integer
+ numbers and integers 2^63 or greater are written as 64-bit binary
+ floating-point numbers.</p>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
 <li><code>true</code> if CBOR objects are written out using the CTAP2
-canonical CBOR encoding form; otherwise, <code>false</code> .</li>
+canonical CBOR encoding form; otherwise, <code>false</code>.. In this
+form, CBOR tags are not used, map keys are written out in a canonical
+order, and non-integer numbers and integers 2^63 or greater are
+written as 64-bit binary floating-point numbers.</li>
+</ul>
+
+<h3>getValue</h3>
+
+<pre>@Deprecated public final int getValue()
+</pre>
+
+<p>Deprecated.</p>
+
+<div class='deprecationComment'>Option classes in this library will follow the form seen in JSONOptions in a
+ later version; the approach used in this class is too complicated.</div>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>This options object&#39;s value.</li>
+</ul>
+
+<h3>Or</h3>
+
+<pre>@Deprecated public CBOREncodeOptions Or​(CBOREncodeOptions o)
+</pre>
+
+<p>Deprecated.</p>
+
+<div class='deprecationComment'>May be removed in a later version. Option classes in this library will
+ follow the form seen in JSONOptions in a later version; the approach used
+ in this class is too complicated.</div>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>o</code> - The parameter <code>o</code> is a CBOREncodeOptions object.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A new CBOREncodeOptions object.</li>
+</ul>
+
+<h3>And</h3>
+
+<pre>@Deprecated public CBOREncodeOptions And​(CBOREncodeOptions o)
+</pre>
+
+<p>Deprecated.</p>
+
+<div class='deprecationComment'>May be removed in a later version. Option classes in this library will
+ follow the form seen in JSONOptions in a later version; the approach used
+ in this class is too complicated.</div>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>o</code> - The parameter <code>o</code> is a CBOREncodeOptions object.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A CBOREncodeOptions object.</li>
 </ul>
 
 <p><a href="/CBOR/">Back to CBOR start page.</a></p>

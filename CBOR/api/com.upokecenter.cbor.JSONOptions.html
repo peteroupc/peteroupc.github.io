@@ -6,7 +6,7 @@
 
 <h1>com.upokecenter.cbor.JSONOptions</h1>
 
-<pre>public final class JSONOptions extends java.lang.Object
+<pre>public final class JSONOptions extends Object
 </pre>
 
 <p>Includes options to control how CBOR objects are converted to JSON.</p>
@@ -22,29 +22,19 @@ The default options for converting CBOR objects to JSON.</li>
 
 <ul>
 <li><code>JSONOptions() JSONOptions</code><br>
-Initializes a new instance of the JSONOptions class with default
-options.</li>
+Initializes a new instance of the JSONOptions
+class with default options.</li>
 <li><code>JSONOptions​(boolean base64Padding) JSONOptions</code><br>
-Initializes a new instance of the JSONOptions class with the given
-value for the Base64Padding option.</li>
-<li><code>JSONOptions​(boolean base64Padding,
-       boolean replaceSurrogates) JSONOptions</code><br>
-Initializes a new instance of the JSONOptions class with the given
-values for the options.</li>
+Initializes a new instance of the JSONOptions
+class with the given values for the options.</li>
 </ul>
 
 <h2>Methods</h2>
 
 <ul>
 <li><code>boolean getBase64Padding()</code><br>
-Deprecated.
-This option now has no effect.
-This option now has no effect.</li>
-<li><code>boolean getReplaceSurrogates() char</code><br>
-Gets a value indicating whether surrogate code points not part of a
-surrogate pair (which consists of two consecutive char s
-forming one Unicode code point) are each replaced with a replacement
-character (U + FFFD).</li>
+Gets a value indicating whether padding is written out when writing
+base64url or traditional base64 to JSON.</li>
 </ul>
 
 <h2>Field Details</h2>
@@ -60,38 +50,17 @@ character (U + FFFD).</li>
 
 <h3>getBase64Padding</h3>
 
-<pre>@Deprecated public final boolean getBase64Padding()
+<pre>public final boolean getBase64Padding()
 </pre>
 
-<p>Deprecated.
-This option now has no effect. This library now includes necessary padding
- when writing traditional base64 to JSON and includes no padding when
- writing base64url to JSON, in accordance with the revision of the CBOR
- specification.</p>
+<p>Gets a value indicating whether padding is written out when writing
+ base64url or traditional base64 to JSON.<p>The padding character is
+ &#39;=&#39;.</p></p>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
 <li>The default is false, no padding.</li>
-</ul>
-
-<h3>getReplaceSurrogates</h3>
-
-<pre>public final boolean getReplaceSurrogates()
-</pre>
-
-<p>Gets a value indicating whether surrogate code points not part of a
- surrogate pair (which consists of two consecutive <code>char</code> s
- forming one Unicode code point) are each replaced with a replacement
- character (U + FFFD). The default is false; an exception is thrown when
- such code points are encountered.</p>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>True, if surrogate code points not part of a surrogate pair are each
-replaced with a replacement character, or false if an exception is
-thrown when such code points are encountered.</li>
 </ul>
 
 <p><a href="/CBOR/">Back to CBOR start page.</a></p>

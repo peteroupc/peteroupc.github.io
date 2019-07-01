@@ -23,12 +23,12 @@
  fashion due to garbage collection. This is relevant for applications
  that use many-bit-long numbers as secret parameters. </li> <li>The
  methods in this class (especially those that involve arithmetic) are
- not guaranteed to run in constant time for all relevant inputs. Certain
- attacks that involve encrypted communications have exploited the timing
- and other aspects of such communications to derive keying material or
- cleartext indirectly. </li> </ul> <p>Applications should instead use
- dedicated security libraries to handle big numbers in
- security-sensitive algorithms. </p></p>
+ not guaranteed to be &quot;constant-time&quot; (non-data-dependent) for all
+ relevant inputs. Certain attacks that involve encrypted communications
+ have exploited the timing and other aspects of such communications to
+ derive keying material or cleartext indirectly. </li> </ul>
+ <p>Applications should instead use dedicated security libraries to
+ handle big numbers in security-sensitive algorithms. </p></p>
 
 <h2>Methods</h2>
 
@@ -745,7 +745,7 @@ less, or a positive number if this instance is greater.</li>
 </pre>
 
 <p>Adds this object and another object.<p/><pre>EInteger result =
- EInteger.FromString(&quot;5&quot;).Add(200);</pre></p>
+ EInteger.FromString(&quot;5&quot;).Add(200);</pre> .</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -786,7 +786,7 @@ less, or a positive number if this instance is greater.</li>
 
 <p>Multiplies this instance by the value of an arbitrary-precision integer
  object.<p/><pre>EInteger result =
- EInteger.FromString(&quot;5&quot;).Multiply(200);</pre></p>
+ EInteger.FromString(&quot;5&quot;).Multiply(200);</pre> .</p>
 
 <p><strong>Parameters:</strong></p>
 
