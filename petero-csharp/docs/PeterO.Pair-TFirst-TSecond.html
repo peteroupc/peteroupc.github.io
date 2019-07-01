@@ -16,6 +16,7 @@
 
 <ul>
 <li><code><a href="#Equals_object">Equals(object)</a></code> - Determines whether this object and another object are equal.</li>
+<li><code><a href="#Equals_PeterO_Pair_TFirst_TSecond">Equals(PeterO.Pair&lt;TFirst, TSecond&gt;)</a></code> - Not documented yet.</li>
 <li><code><a href="#First">First</a></code> - Gets the first object in the pair.</li>
 <li><code><a href="#GetHashCode">GetHashCode()</a></code> - Returns the hash code for this instance.</li>
 <li><code><a href="#Second">Second</a></code> - Gets the second object in the pair.</li>
@@ -41,9 +42,9 @@
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>first</i>: The parameter <i>first</i>
+<li><p><i>first</i>: The parameter  <i>first</i>
 is a TFirst object.</p></li>
-<li><p><i>second</i>: The parameter <i>second</i>
+<li><p><i>second</i>: The parameter  <i>second</i>
 is a TSecond object.</p></li>
 </ul>
 
@@ -54,9 +55,7 @@ is a TSecond object.</p></li>
 <pre>public TFirst First { get; }
 </pre>
 
-<p>Gets the first object in the pair.</p>
-
-<p><b>Returns:</b></p>
+<p>Gets the first object in the pair.  <b>Returns:</b></p>
 
 <p>The first object in the pair.</p>
 
@@ -67,9 +66,7 @@ is a TSecond object.</p></li>
 <pre>public TSecond Second { get; }
 </pre>
 
-<p>Gets the second object in the pair.</p>
-
-<p><b>Returns:</b></p>
+<p>Gets the second object in the pair.  <b>Returns:</b></p>
 
 <p>The second object in the pair.</p>
 
@@ -85,18 +82,35 @@ is a TSecond object.</p></li>
     object obj);
 </pre>
 
-<p>Determines whether this object and another object are equal.</p>
-
-<p><b>Parameters:</b></p>
+<p>Determines whether this object and another object are equal.  <b>Parameters:</b></p>
 
 <ul>
-<li><i>obj</i>: The parameter <i>obj</i>
+<li><i>obj</i>: The parameter  <i>obj</i>
 is not documented yet.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p><code>true</code>  if this object and another object are equal; otherwise, <code>false</code>  .</p>
+<p><code>true</code>  if this object and another object are equal; otherwise,  <code>false</code>  .</p>
+
+<p><a id="Equals_PeterO_Pair_TFirst_TSecond"></a></p>
+
+<h3>Equals</h3>
+
+<pre>public sealed bool Equals(
+    PeterO.Pair&lt;TFirst, TSecond&gt; other);
+</pre>
+
+<p>Not documented yet.  <b>Parameters:</b></p>
+
+<ul>
+<li><i>other</i>: The parameter  <i>other</i>
+is not documented yet.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>Either  <code>true</code>  or  <code>false</code>  .</p>
 
 <p><a id="GetHashCode"></a></p>
 
@@ -105,9 +119,7 @@ is not documented yet.</li>
 <pre>public override int GetHashCode();
 </pre>
 
-<p>Returns the hash code for this instance.</p>
-
-<p><b>Return Value:</b></p>
+<p>Returns the hash code for this instance.  <b>Return Value:</b></p>
 
 <p>A 32-bit signed integer.</p>
 
@@ -118,9 +130,7 @@ is not documented yet.</li>
 <pre>public override string ToString();
 </pre>
 
-<p>Converts this object to a text string.</p>
-
-<p><b>Return Value:</b></p>
+<p>Converts this object to a text string.  <b>Return Value:</b></p>
 
 <p>A text string.</p>
 

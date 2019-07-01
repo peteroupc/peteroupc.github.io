@@ -21,14 +21,16 @@
 <li><code><a href="#Add_T">Add(T)</a></code> - This method is not supported.</li>
 <li><code><a href="#Clear">Clear()</a></code> - This method is not supported.</li>
 <li><code><a href="#Contains_T">Contains(T)</a></code> - Not documented yet.</li>
+<li><code><a href="#CopyTo_PeterO_T_int">CopyTo(PeterO.T&lt;&gt;[], int)</a></code> - Not documented yet.</li>
 <li><code><a href="#Count">Count</a></code> - Gets a value not documented yet.</li>
 <li><code><a href="#GetEnumerator">GetEnumerator()</a></code> - Not documented yet.</li>
 <li><code><a href="#IndexOf_T">IndexOf(T)</a></code> - Not documented yet.</li>
 <li><code><a href="#Insert_int_T">Insert(int, T)</a></code> - This method is not supported.</li>
 <li><code><a href="#IsReadOnly">IsReadOnly</a></code> - Gets a value indicating whether this list segment is read only.</li>
-<li><code><a href="#RemoveAt_int">RemoveAt(int)</a></code> - This method is not supported.</li>
 <li><code><a href="#Remove_T">Remove(T)</a></code> - This method is not supported.</li>
+<li><code><a href="#RemoveAt_int">RemoveAt(int)</a></code> - This method is not supported.</li>
 <li><code><a href="#StartIndex">StartIndex</a></code> - Gets the starting index within the underlying list for this list segment.</li>
+<li><code><a href="#this_int">this[int]</a></code> - Not documented yet.</li>
 </ul>
 
 <p><b>Parameters:</b></p>
@@ -47,16 +49,14 @@
     int count);
 </pre>
 
-<p>Initializes a new instance of the  class.</p>
-
-<p><b>Parameters:</b></p>
+<p>Initializes a new instance of the  class.      <b>Parameters:</b></p>
 
 <ul>
-<li><p><i>list</i>: The parameter <i>list</i>
+<li><p><i>list</i>:  The parameter  <i>list</i>
 is an IList object.</p></li>
-<li><p><i>start</i>: The parameter <i>start</i>
+<li><p><i>start</i>:  The parameter  <i>start</i>
 is a 32-bit signed integer.</p></li>
-<li><p><i>count</i>: The parameter <i>count</i>
+<li><p><i>count</i>:  The parameter  <i>count</i>
 is a 32-bit signed integer.</p></li>
 </ul>
 
@@ -64,7 +64,7 @@ is a 32-bit signed integer.</p></li>
 
 <ul>
 <li>System.ArgumentNullException:
-The parameter <i>list</i>
+The parameter  <i>list</i>
 is null.</li>
 </ul>
 
@@ -75,9 +75,7 @@ is null.</li>
 <pre>public sealed int Count { get; }
 </pre>
 
-<p>Gets a value not documented yet.</p>
-
-<p><b>Returns:</b></p>
+<p>Gets a value not documented yet.  <b>Returns:</b></p>
 
 <p>A value not documented yet.</p>
 
@@ -88,13 +86,29 @@ is null.</li>
 <pre>public sealed bool IsReadOnly { get; }
 </pre>
 
-<p>Gets a value indicating whether this list segment is read only.</p>
-
-<p>The read-only status of the list segment is the same as that of the nderlying list. However, operations that would change the list segment&#39;s ize, such as adding and removing items, are not supported.</p>
+<p>Gets a value indicating whether this list segment is read only.  The read-only status of the list segment is the same as that of the underlying list. However, operations that would change the list segment&#39;s size, such as adding and removing items, are not supported.</p>
 
 <p><b>Returns:</b></p>
 
-<p><code>true</code>  if this list segment is read only; otherwise, <code>false</code>  .</p>
+<p><code>true</code>  if this list segment is read only; otherwise,  <code>false</code>  .</p>
+
+<p><a id="this_int"></a></p>
+
+<h3>Item</h3>
+
+<pre>public sealed T this[int index] { get; set; }
+</pre>
+
+<p>Not documented yet.  <b>Parameters:</b></p>
+
+<ul>
+<li><i>index</i>: The parameter  <i>index</i>
+is not documented yet.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>A T object.</p>
 
 <p><a id="StartIndex"></a></p>
 
@@ -103,9 +117,7 @@ is null.</li>
 <pre>public int StartIndex { get; }
 </pre>
 
-<p>Gets the starting index within the underlying list for this list segment.</p>
-
-<p><b>Returns:</b></p>
+<p>Gets the starting index within the underlying list for this list segment.  <b>Returns:</b></p>
 
 <p>The starting index within the underlying list for this list segment.</p>
 
@@ -117,12 +129,10 @@ is null.</li>
     T item);
 </pre>
 
-<p>This method is not supported.</p>
-
-<p><b>Parameters:</b></p>
+<p>This method is not supported.  <b>Parameters:</b></p>
 
 <ul>
-<li><i>item</i>: The parameter <i>item</i>
+<li><i>item</i>: The parameter  <i>item</i>
 is not documented yet.</li>
 </ul>
 
@@ -140,9 +150,7 @@ Always thrown, because changing the size of a list segment is not supported.</li
 <pre>public sealed void Clear();
 </pre>
 
-<p>This method is not supported.</p>
-
-<p><a id="Contains_T"></a></p>
+<p>This method is not supported.  <a id="Contains_T"></a></p>
 
 <h3>Contains</h3>
 
@@ -150,18 +158,43 @@ Always thrown, because changing the size of a list segment is not supported.</li
     T item);
 </pre>
 
-<p>Not documented yet.</p>
-
-<p><b>Parameters:</b></p>
+<p>Not documented yet.  <b>Parameters:</b></p>
 
 <ul>
-<li><i>item</i>: The parameter <i>item</i>
+<li><i>item</i>: The parameter  <i>item</i>
 is not documented yet.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p>Either <code>true</code>  or <code>false</code>  .</p>
+<p>Either  <code>true</code>  or  <code>false</code>  .</p>
+
+<p><a id="CopyTo_PeterO_T_int"></a></p>
+
+<h3>CopyTo</h3>
+
+<pre>public sealed void CopyTo(
+    PeterO.T&lt;&gt;[] array,
+    int arrayIndex);
+</pre>
+
+<p>Not documented yet.  <b>Parameters:</b></p>
+
+<ul>
+<li><p><i>array</i>: The parameter  <i>array</i>
+is not documented yet.</p></li>
+<li><p><i>arrayIndex</i>: The parameter  <i>arrayIndex</i>
+is not documented yet.</p></li>
+</ul>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li><p>System.ArgumentNullException:
+The parameter &quot;array&quot; is null.</p></li>
+<li><p>System.ArgumentException:
+Array index and count must fit the bounds of the array.</p></li>
+</ul>
 
 <p><a id="GetEnumerator"></a></p>
 
@@ -170,9 +203,7 @@ is not documented yet.</li>
 <pre>public sealed System.Collections.Generic.IEnumerator&lt;T&gt; GetEnumerator();
 </pre>
 
-<p>Not documented yet.</p>
-
-<p><b>Return Value:</b></p>
+<p>Not documented yet.  <b>Return Value:</b></p>
 
 <p>An IEnumerator(T) object.</p>
 
@@ -184,12 +215,10 @@ is not documented yet.</li>
     T item);
 </pre>
 
-<p>Not documented yet.</p>
-
-<p><b>Parameters:</b></p>
+<p>Not documented yet.  <b>Parameters:</b></p>
 
 <ul>
-<li><i>item</i>: The parameter <i>item</i>
+<li><i>item</i>: The parameter  <i>item</i>
 is not documented yet.</li>
 </ul>
 
@@ -206,14 +235,12 @@ is not documented yet.</li>
     T item);
 </pre>
 
-<p>This method is not supported.</p>
-
-<p><b>Parameters:</b></p>
+<p>This method is not supported.  <b>Parameters:</b></p>
 
 <ul>
-<li><p><i>index</i>: The parameter <i>index</i>
+<li><p><i>index</i>: The parameter  <i>index</i>
 is not documented yet.</p></li>
-<li><p><i>item</i>: The parameter <i>item</i>
+<li><p><i>item</i>: The parameter  <i>item</i>
 is not documented yet.</p></li>
 </ul>
 
@@ -225,18 +252,16 @@ is not documented yet.</p></li>
     T item);
 </pre>
 
-<p>This method is not supported.</p>
-
-<p><b>Parameters:</b></p>
+<p>This method is not supported.  <b>Parameters:</b></p>
 
 <ul>
-<li><i>item</i>: The parameter <i>item</i>
+<li><i>item</i>: The parameter  <i>item</i>
 is not documented yet.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p>Either <code>true</code>  or <code>false</code>  .</p>
+<p>Either  <code>true</code>  or  <code>false</code>  .</p>
 
 <p><a id="RemoveAt_int"></a></p>
 
@@ -246,12 +271,10 @@ is not documented yet.</li>
     int index);
 </pre>
 
-<p>This method is not supported.</p>
-
-<p><b>Parameters:</b></p>
+<p>This method is not supported.  <b>Parameters:</b></p>
 
 <ul>
-<li><i>index</i>: The parameter <i>index</i>
+<li><i>index</i>: The parameter  <i>index</i>
 is not documented yet.</li>
 </ul>
 

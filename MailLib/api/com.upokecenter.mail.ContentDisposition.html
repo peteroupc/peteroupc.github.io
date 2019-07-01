@@ -38,7 +38,7 @@
  valid, but the &quot;filename&quot; parameter is treated as
  &quot;=?UTF-8?Q?test.png?=&quot;, not &quot;test.png&quot; or something else -- RFC 2047
  encoded words are not decoded at the moment a content disposition is
- parsed (using the Parse method). </p></p>
+ parsed (using the Parse method). </p> .</p>
 
 <h2>Fields</h2>
 
@@ -277,12 +277,12 @@ case in version 0.10.0.</li>
  for saving data to a file. This method is idempotent; that is,
  calling the method again on the result doesn&#39;t change that result.
  <p>Examples: </p> <p><code>&quot;=?utf-8?q?hello=2Etxt?=&quot; -&gt;
- &quot;hello.txt&quot;</code> (RFC 2047 encoding) </p>
+ &quot;hello.txt&quot;</code> (RFC 2047 encoding). </p>
  <p><code>&quot;=?utf-8?q?long_filename?=&quot; -&gt; &quot;long filename&quot;</code> (RFC 2047
- encoding) </p> <p><code>&quot;utf-8&#39;en&#39;hello%2Etxt&quot; -&gt; &quot;hello.txt&quot;</code>
- (RFC 2231 encoding) </p> <p><code>&quot;nul.txt&quot; -&gt; &quot;_nul.txt&quot;</code>
- (Reserved name) </p> <p><code>&quot;dir1/dir2/file&quot; -&gt;
- &quot;dir1_dir2_file&quot;</code> (Directory separators) </p><p>
+ encoding). </p> <p><code>&quot;utf-8&#39;en&#39;hello%2Etxt&quot; -&gt; &quot;hello.txt&quot;</code>
+ (RFC 2231 encoding). </p> <p><code>&quot;nul.txt&quot; -&gt; &quot;_nul.txt&quot;</code>
+ (Reserved name). </p> <p><code>&quot;dir1/dir2/file&quot; -&gt;
+ &quot;dir1_dir2_file&quot;</code> (Directory separators). </p> .<p>
  </p><p><b>Remarks:</b> </p> <ul> <li>The exact file name conversion used
  by this method is not guaranteed to remain the same between versions
  of this library, with the exception that the return value will be in
@@ -329,7 +329,7 @@ case in version 0.10.0.</li>
  media types&quot;). (Some email implementations may still write out the
  &quot;name&quot; parameter, even for media types other than
  <code>application/octet-stream</code> and even though RFC 2046 has
- deprecated that parameter.) </p> </li> </ul></p>
+ deprecated that parameter.) </p> </li> </ul> .</p>
 
 <p><strong>Parameters:</strong></p>
 
