@@ -20,8 +20,8 @@
 <ul>
 <li><code><a href="#IsNormalized_string_PeterO_Text_Normalization">IsNormalized(string, PeterO.Text.Normalization)</a></code> - Returns whether this string is normalized.</li>
 <li><code><a href="#Normalize_string_PeterO_Text_Normalization">Normalize(string, PeterO.Text.Normalization)</a></code> - Converts a string to the given Unicode normalization form.</li>
-<li><code><a href="#ReadChar">ReadChar()</a></code> - Reads a Unicode character from a data source.</li>
 <li><code><a href="#Read_int_int_int">Read(int[], int, int)</a></code> - Reads a sequence of Unicode code points from a data source.</li>
+<li><code><a href="#ReadChar">ReadChar()</a></code> - Reads a Unicode character from a data source.</li>
 </ul>
 
 <p><a id="Void_ctor_String_Normalization"></a></p>
@@ -33,14 +33,12 @@
     PeterO.Text.Normalization form);
 </pre>
 
-<p>Initializes a new instance of the <a href="PeterO.Text.Normalizer.html">PeterO.Text.Normalizer</a> class.</p>
-
-<p><b>Parameters:</b></p>
+<p>Initializes a new instance of the <a href="PeterO.Text.Normalizer.html">PeterO.Text.Normalizer</a> class.    <b>Parameters:</b></p>
 
 <ul>
-<li><p><i>str</i>: The parameter <i>str</i>
+<li><p><i>str</i>:  The parameter  <i>str</i>
 is a text string.</p></li>
-<li><p><i>form</i>: The parameter <i>form</i>
+<li><p><i>form</i>:  The parameter  <i>form</i>
 is a Normalization object.</p></li>
 </ul>
 
@@ -53,19 +51,17 @@ is a Normalization object.</p></li>
     PeterO.Text.Normalization form);
 </pre>
 
-<p>Returns whether this string is normalized.</p>
-
-<p><b>Parameters:</b></p>
+<p>Returns whether this string is normalized.  <b>Parameters:</b></p>
 
 <ul>
 <li><p><i>str</i>: The string to check.</p></li>
-<li><p><i>form</i>: The parameter <i>form</i>
+<li><p><i>form</i>: The parameter  <i>form</i>
 is a Normalization object.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p><code>true</code>  if this string is normalized; otherwise, <code>false</code>  . Returns <code>false</code>  if the string contains an unpaired surrogate code point.</p>
+<p><code>true</code>  if this string is normalized; otherwise,  <code>false</code>  . Returns  <code>false</code>  if the string contains an unpaired surrogate code point.</p>
 
 <p><a id="Normalize_string_PeterO_Text_Normalization"></a></p>
 
@@ -76,9 +72,7 @@ is a Normalization object.</p></li>
     PeterO.Text.Normalization form);
 </pre>
 
-<p>Converts a string to the given Unicode normalization form.</p>
-
-<p><b>Parameters:</b></p>
+<p>Converts a string to the given Unicode normalization form.  <b>Parameters:</b></p>
 
 <ul>
 <li><p><i>str</i>: An arbitrary string.</p></li>
@@ -87,14 +81,14 @@ is a Normalization object.</p></li>
 
 <p><b>Return Value:</b></p>
 
-<p>The parameter <i>str</i>
-converted to the given normalization form.</p>
+<p>The parameter  <i>str</i>
+ converted to the given normalization form.</p>
 
 <p><b>Exceptions:</b></p>
 
 <ul>
 <li>System.ArgumentNullException:
-The parameter <i>str</i>
+The parameter  <i>str</i>
 is null.</li>
 </ul>
 
@@ -108,9 +102,7 @@ is null.</li>
     int length);
 </pre>
 
-<p>Reads a sequence of Unicode code points from a data source.</p>
-
-<p><b>Parameters:</b></p>
+<p>Reads a sequence of Unicode code points from a data source.  <b>Parameters:</b></p>
 
 <ul>
 <li><p><i>chars</i>: Output buffer.</p></li>
@@ -126,15 +118,15 @@ is null.</li>
 
 <ul>
 <li><p>System.ArgumentException:
-Either <i>index</i>
-or <i>length</i>
-is less than 0 or greater than <i>chars</i>
-&#39;s length, or <i>chars</i>
-&#39; s length minus <i>index</i>
-is less than <i>length</i>
+Either  <i>index</i>
+or  <i>length</i>
+is less than 0 or greater than  <i>chars</i>
+&#39;s length, or  <i>chars</i>
+&#39; s length minus  <i>index</i>
+is less than  <i>length</i>
 .</p></li>
 <li><p>System.ArgumentNullException:
-The parameter <i>chars</i>
+The parameter  <i>chars</i>
 is null.</p></li>
 </ul>
 
@@ -145,9 +137,7 @@ is null.</p></li>
 <pre>public int ReadChar();
 </pre>
 
-<p>Reads a Unicode character from a data source.</p>
-
-<p><b>Return Value:</b></p>
+<p>Reads a Unicode character from a data source.  <b>Return Value:</b></p>
 
 <p>Either a Unicode code point (from 0-0xd7ff or from 0xe000 to 0x10ffff), or the value -1 indicating the end of the source.</p>
 

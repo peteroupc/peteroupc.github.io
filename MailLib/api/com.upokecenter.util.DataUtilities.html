@@ -385,7 +385,7 @@ UTF-16 code units.</li>
  code point. </p> <pre>for (var i = 0;i&lt;str.length(); ++i) { int
  codePoint = DataUtilities.CodePointAt(str, i);
  Console.WriteLine(&quot;codePoint:&quot;+codePoint); if (codePoint &gt;=
- 0x10000) { i++; /* Supplementary code point */ } }</pre></p>
+ 0x10000) { i++; /* Supplementary code point */ } }</pre> .</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -422,7 +422,7 @@ or greater, the code point takes up two UTF-16 code units.</li>
  DataUtilities.CodePointAt(str, i, 2); if (codePoint &lt; 0) { break;
  /* Unpaired surrogate <em>/ } Console.WriteLine(&quot;codePoint:&quot;+codePoint);
  if (codePoint &gt;= 0x10000) { i++; /</em> Supplementary code point */ }
- }</pre></p>
+ }</pre> .</p>
 
 <p><strong>Parameters:</strong></p>
 
