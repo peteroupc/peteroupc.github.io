@@ -131,8 +131,8 @@
 <li><code><a href="#CompareToWithContext_PeterO_Numbers_EDecimal_PeterO_Numbers_EContext">CompareToWithContext(PeterO.Numbers.EDecimal, PeterO.Numbers.EContext)</a></code> - Compares the mathematical values of this object and another object.</li>
 <li><code><a href="#Copy">Copy()</a></code> - Creates a copy of this arbitrary-precision binary number.</li>
 <li><code><a href="#CopySign_PeterO_Numbers_EDecimal">CopySign(PeterO.Numbers.EDecimal)</a></code> - Returns a number with the same value as this one, but copying the sign (positive or negative) of another number.</li>
-<li><code><a href="#Create_int_int">Create(int, int)</a></code> - Creates a number with the value exponent*10^mantissa .</li>
-<li><code><a href="#Create_PeterO_Numbers_EInteger_PeterO_Numbers_EInteger">Create(PeterO.Numbers.EInteger, PeterO.Numbers.EInteger)</a></code> - Creates a number with the value exponent*10^mantissa .</li>
+<li><code><a href="#Create_int_int">Create(int, int)</a></code> - Creates a number with the value exponent*10^mantissa</li>
+<li><code><a href="#Create_PeterO_Numbers_EInteger_PeterO_Numbers_EInteger">Create(PeterO.Numbers.EInteger, PeterO.Numbers.EInteger)</a></code> - Creates a number with the value exponent*10^mantissa</li>
 <li><code><a href="#CreateNaN_PeterO_Numbers_EInteger">CreateNaN(PeterO.Numbers.EInteger)</a></code> - Creates a not-a-number arbitrary-precision decimal number.</li>
 <li><code><a href="#CreateNaN_PeterO_Numbers_EInteger_bool_bool_PeterO_Numbers_EContext">CreateNaN(PeterO.Numbers.EInteger, bool, bool, PeterO.Numbers.EContext)</a></code> - Creates a not-a-number arbitrary-precision decimal number.</li>
 <li><code><a href="#Divide_int">Divide(int)</a></code> - Divides this object by an 32-bit signed integer and returns the result.</li>
@@ -245,7 +245,7 @@
 <li><code><a href="#Quantize_PeterO_Numbers_EInteger_PeterO_Numbers_EContext">Quantize(PeterO.Numbers.EInteger, PeterO.Numbers.EContext)</a></code> - Returns an arbitrary-precision decimal number with the same value but a new exponent.</li>
 <li><code><a href="#Reduce_PeterO_Numbers_EContext">Reduce(PeterO.Numbers.EContext)</a></code> - Returns an object with the same numerical value as this one but with trailing zeros removed from its mantissa (significand).</li>
 <li><code><a href="#Remainder_PeterO_Numbers_EDecimal_PeterO_Numbers_EContext">Remainder(PeterO.Numbers.EDecimal, PeterO.Numbers.EContext)</a></code> - Finds the remainder that results when dividing two arbitrary-precision decimal numbers.</li>
-<li><code><a href="#RemainderNaturalScale_PeterO_Numbers_EDecimal">RemainderNaturalScale(PeterO.Numbers.EDecimal)</a></code> - Calculates the remainder of a number by the formula &quot;this&quot; - ((&quot;this&quot; / &quot;divisor&quot;) * &quot;divisor&quot;) .</li>
+<li><code><a href="#RemainderNaturalScale_PeterO_Numbers_EDecimal">RemainderNaturalScale(PeterO.Numbers.EDecimal)</a></code> - Calculates the remainder of a number by the formula &quot;this&quot; - ((&quot;this&quot; / &quot;divisor&quot;) * &quot;divisor&quot;)</li>
 <li><code><a href="#RemainderNaturalScale_PeterO_Numbers_EDecimal_PeterO_Numbers_EContext">RemainderNaturalScale(PeterO.Numbers.EDecimal, PeterO.Numbers.EContext)</a></code> - Calculates the remainder of a number by the formula &quot;this&quot; - ((&quot;this&quot; / &quot;divisor&quot;) * &quot;divisor&quot;).</li>
 <li><code><a href="#RemainderNear_PeterO_Numbers_EDecimal_PeterO_Numbers_EContext">RemainderNear(PeterO.Numbers.EDecimal, PeterO.Numbers.EContext)</a></code> - Finds the distance to the closest multiple of the given divisor, based on the result of dividing this object&#39;s value by another object&#39;s value.</li>
 <li><code><a href="#RemainderNoRoundAfterDivide_PeterO_Numbers_EDecimal_PeterO_Numbers_EContext">RemainderNoRoundAfterDivide(PeterO.Numbers.EDecimal, PeterO.Numbers.EContext)</a></code> - Finds the remainder that results when dividing two arbitrary-precision decimal numbers, except the intermediate division is not adjusted to fit the precision of the given arithmetic context.</li>
@@ -795,7 +795,7 @@ The parameter &quot;other&quot; is null.</li>
     int exponentSmall);
 </pre>
 
-<p>Creates a number with the value  <code>exponent*10^mantissa</code>  .  <b>Parameters:</b></p>
+<p>Creates a number with the value  <code>exponent*10^mantissa</code>      <b>Parameters:</b></p>
 
 <ul>
 <li><p><i>mantissaSmall</i>: Desired value for the mantissa.</p></li>
@@ -815,7 +815,7 @@ The parameter &quot;other&quot; is null.</li>
     PeterO.Numbers.EInteger exponent);
 </pre>
 
-<p>Creates a number with the value  <code>exponent*10^mantissa</code>  .  <b>Parameters:</b></p>
+<p>Creates a number with the value  <code>exponent*10^mantissa</code>       <b>Parameters:</b></p>
 
 <ul>
 <li><p><i>mantissa</i>: Desired value for the mantissa.</p></li>
@@ -3416,7 +3416,7 @@ is null.</li>
     PeterO.Numbers.EDecimal divisor);
 </pre>
 
-<p>Calculates the remainder of a number by the formula  <code>&quot;this&quot; - ((&quot;this&quot; / &quot;divisor&quot;) * &quot;divisor&quot;)</code>  .  <b>Parameters:</b></p>
+<p>Calculates the remainder of a number by the formula  <code>&quot;this&quot; - ((&quot;this&quot; / &quot;divisor&quot;) * &quot;divisor&quot;)</code>     <b>Parameters:</b></p>
 
 <ul>
 <li><i>divisor</i>: The number to divide by.</li>
