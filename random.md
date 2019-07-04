@@ -606,9 +606,9 @@ I acknowledge&mdash;
 
 <small><sup id=Note29>(29)</sup> P. L'Ecuyer, D. Munger, et al.  "Random Numbers for Parallel Computers: Requirements and Methods, With Emphasis on GPUs". April 17, 2015.</small>
 
-<small><sup id=Note30>(30)</sup> For example, the IEEE 754 floating-point number standard does not require delivering as-accurate-as-possible results for many math functions it defines &mdash; see, for instance, the x87 `FSIN` instruction and the difference between `Math` and `StrictMath` in Java. See also "[**Keras documentation**](https://keras.io/getting-started/faq/#how-can-i-obtain-reproducible-results-using-keras-during-development)".</small>
+<small><sup id=Note30>(30)</sup> For example, the IEEE 754 floating-point number standard does not require delivering as-accurate-as-possible results for many math functions it defines &mdash; see, for instance, the x87 `FSIN` instruction and the difference between `Math` and `StrictMath` in Java. See also [**Keras documentation**](https://keras.io/getting-started/faq/#how-can-i-obtain-reproducible-results-using-keras-during-development).</small>
 
-<small><sup id=Note31>(31)</sup> Some hash table implementations might use hash algorithms that could change in the future, or might use a random "seed" to change the hash code they generate for a particular item and for a particular hash table.</small>
+<small><sup id=Note31>(31)</sup> Some hash table implementations might use hash algorithms that could change in the future, or might use a random "seed" so that different hash tables might generate different hash codes for the same item.</small>
 
 <small><sup id=Note32>(32)</sup> Note that although PRNGs can also act like hash functions (if they're seeded with the input and the PRNG is "large enough" for the input), some PRNGs (such as `xorshift128+`) are not well suited to serve as hash functions, because they don't mix their state before generating a random number from that state.</small>
 

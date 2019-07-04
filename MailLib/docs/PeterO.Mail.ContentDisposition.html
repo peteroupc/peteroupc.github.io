@@ -29,8 +29,6 @@
 
 <p>In this implementation, the first and second of these are syntactically invalid, so they trigger parse errors, while the third of these is syntactically valid, but the &quot;filename&quot; parameter is treated as &quot;=?UTF-8?Q?test.png?=&quot;, not &quot;test.png&quot; or something else -- RFC 2047 encoded words are not decoded at the moment a content disposition is parsed (using the Parse method).</p>
 
-<p>.</p>
-
 <h3>Member Summary</h3>
 
 <ul>
@@ -237,7 +235,7 @@ is empty.</p></li>
 
 <p><code>&quot;dir1/dir2/file&quot; -&gt; &quot;dir1_dir2_file&quot;</code>  (Directory separators).</p>
 
-<p>.  <b>Remarks:</b></p>
+<p><b>Remarks:</b></p>
 
 <ul>
 <li><p>The exact file name conversion used by this method is not guaranteed to remain the same between versions of this library, with the exception that the return value will be in normalization form C, will not contain base + slash code points, will not be null, and will be an empty string only if  <i>str</i>

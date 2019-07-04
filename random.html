@@ -851,9 +851,9 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 
 <p><small><sup id=Note29>(29)</sup> P. L&#39;Ecuyer, D. Munger, et al.  &quot;Random Numbers for Parallel Computers: Requirements and Methods, With Emphasis on GPUs&quot;. April 17, 2015.</small></p>
 
-<p><small><sup id=Note30>(30)</sup> For example, the IEEE 754 floating-point number standard does not require delivering as-accurate-as-possible results for many math functions it defines &mdash; see, for instance, the x87 <code>FSIN</code> instruction and the difference between <code>Math</code> and <code>StrictMath</code> in Java. See also &quot;<a href="https://keras.io/getting-started/faq/#how-can-i-obtain-reproducible-results-using-keras-during-development"><strong>Keras documentation</strong></a>&quot;.</small></p>
+<p><small><sup id=Note30>(30)</sup> For example, the IEEE 754 floating-point number standard does not require delivering as-accurate-as-possible results for many math functions it defines &mdash; see, for instance, the x87 <code>FSIN</code> instruction and the difference between <code>Math</code> and <code>StrictMath</code> in Java. See also <a href="https://keras.io/getting-started/faq/#how-can-i-obtain-reproducible-results-using-keras-during-development"><strong>Keras documentation</strong></a>.</small></p>
 
-<p><small><sup id=Note31>(31)</sup> Some hash table implementations might use hash algorithms that could change in the future, or might use a random &quot;seed&quot; to change the hash code they generate for a particular item and for a particular hash table.</small></p>
+<p><small><sup id=Note31>(31)</sup> Some hash table implementations might use hash algorithms that could change in the future, or might use a random &quot;seed&quot; so that different hash tables might generate different hash codes for the same item.</small></p>
 
 <p><small><sup id=Note32>(32)</sup> Note that although PRNGs can also act like hash functions (if they&#39;re seeded with the input and the PRNG is &quot;large enough&quot; for the input), some PRNGs (such as <code>xorshift128+</code>) are not well suited to serve as hash functions, because they don&#39;t mix their state before generating a random number from that state.</small></p>
 
