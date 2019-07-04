@@ -60,6 +60,16 @@ Initializes a new instance of the RDFTriple class.</li>
 <li><p><code>objectRdf</code> - The object term.</p></li>
 </ul>
 
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>java.lang.NullPointerException</code> - The parameter <code>objectRdf</code> or <code>
+predicate</code> or <code>subject</code> is null.</p></li>
+<li><p><code>ArgumentException</code> - Doesn&#39;t satisfy predicate.kind==RDFTerm.IRI;
+doesn&#39;t satisfy subject.kind==RDFTerm.IRI ||
+subject.kind == RDFTerm.BLANK.</p></li>
+</ul>
+
 <h3>RDFTriple</h3>
 
 <pre>public RDFTriple​(RDFTriple triple)

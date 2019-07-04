@@ -10,9 +10,9 @@
 </pre>
 
 <p>A general-purpose character input for reading text from byte streams and
- text strings. When reading byte streams, this class supports the UTF-8
- character encoding by default, but can be configured to support UTF-16
- and UTF-32 as well.</p>
+ text strings. When reading byte streams, this class supports the
+ UTF-8 character encoding by default, but can be configured to support
+ UTF-16 and UTF-32 as well.</p>
 
 <h2>Methods</h2>
 
@@ -250,13 +250,13 @@ character) if this parameter is false.</p></li>
 the byte stream. This usually involves checking whether the stream
 begins with a byte-order mark (BOM, U + FEFF) or a non-zero basic code
 point (U + 0001 to U + 007F) before reading the rest of the stream. This
-value can be one of the following: <ul> <li> 0: UTF-8 only. </li>
-<li> 1: Detect UTF-16 using BOM or non-zero basic code point,
-otherwise UTF-8. </li> <li> 2: Detect UTF-16/UTF-32 using BOM or
+value can be one of the following: <ul> <li>0: UTF-8 only.</li>
+<li>1: Detect UTF-16 using BOM or non-zero basic code point,
+otherwise UTF-8.</li> <li>2: Detect UTF-16/UTF-32 using BOM or
 non-zero basic code point, otherwise UTF-8. (Tries to detect UTF-32
-first.) </li> <li> 3: Detect UTF-16 using BOM, otherwise UTF-8. </li>
-<li> 4: Detect UTF-16/UTF-32 using BOM, otherwise UTF-8. (Tries to
-detect UTF-32 first.) </li> </ul> .</p></li>
+first.)</li> <li>3: Detect UTF-16 using BOM, otherwise UTF-8.</li>
+<li>4: Detect UTF-16/UTF-32 using BOM, otherwise UTF-8. (Tries to
+detect UTF-32 first.)</li></ul>.</p></li>
 <li><p><code>errorThrow</code> - When encountering invalid encoding, throw an exception if
 this parameter is true, or replace it with U + FFFD (replacement
 character) if this parameter is false.</p></li>
@@ -279,13 +279,13 @@ character) if this parameter is false.</p></li>
 the byte stream. This usually involves checking whether the stream
 begins with a byte-order mark (BOM, U + FEFF) or a non-zero basic code
 point (U + 0001 to U + 007F) before reading the rest of the stream. This
-value can be one of the following: <ul> <li> 0: UTF-8 only. </li>
-<li> 1: Detect UTF-16 using BOM or non-zero basic code point,
-otherwise UTF-8. </li> <li> 2: Detect UTF-16/UTF-32 using BOM or
+value can be one of the following: <ul> <li>0: UTF-8 only.</li>
+<li>1: Detect UTF-16 using BOM or non-zero basic code point,
+otherwise UTF-8.</li> <li>2: Detect UTF-16/UTF-32 using BOM or
 non-zero basic code point, otherwise UTF-8. (Tries to detect UTF-32
-first.) </li> <li> 3: Detect UTF-16 using BOM, otherwise UTF-8. </li>
-<li> 4: Detect UTF-16/UTF-32 using BOM, otherwise UTF-8. (Tries to
-detect UTF-32 first.) </li> </ul> .</p></li>
+first.)</li> <li>3: Detect UTF-16 using BOM, otherwise UTF-8.</li>
+<li>4: Detect UTF-16/UTF-32 using BOM, otherwise UTF-8. (Tries to
+detect UTF-32 first.)</li></ul>.</p></li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -309,19 +309,19 @@ detect UTF-32 first.) </li> </ul> .</p></li>
 the byte stream. This usually involves checking whether the stream
 begins with a byte-order mark (BOM, U + FEFF) or a non-zero basic code
 point (U + 0001 to U + 007F) before reading the rest of the stream. This
-value can be one of the following: <ul> <li> 0: UTF-8 only. </li>
-<li> 1: Detect UTF-16 using BOM or non-zero basic code point,
-otherwise UTF-8. </li> <li> 2: Detect UTF-16/UTF-32 using BOM or
+value can be one of the following: <ul> <li>0: UTF-8 only.</li>
+<li>1: Detect UTF-16 using BOM or non-zero basic code point,
+otherwise UTF-8.</li> <li>2: Detect UTF-16/UTF-32 using BOM or
 non-zero basic code point, otherwise UTF-8. (Tries to detect UTF-32
-first.) </li> <li> 3: Detect UTF-16 using BOM, otherwise UTF-8. </li>
-<li> 4: Detect UTF-16/UTF-32 using BOM, otherwise UTF-8. (Tries to
-detect UTF-32 first.) </li> </ul> .</p></li>
+first.)</li> <li>3: Detect UTF-16 using BOM, otherwise UTF-8.</li>
+<li>4: Detect UTF-16/UTF-32 using BOM, otherwise UTF-8. (Tries to
+detect UTF-32 first.)</li></ul>.</p></li>
 <li><p><code>errorThrow</code> - If true, will throw an exception if invalid byte sequences
 (in the detected encoding) are found in the byte stream. If false,
 replaces those byte sequences with replacement characters (U + FFFD) as
 the stream is read.</p></li>
 <li><p><code>dontSkipUtf8Bom</code> - If the stream is detected as UTF-8 and this parameter
-is <code>true </code> , won&#39;t skip the BOM character if it occurs at the
+is <code>true</code>, won&#39;t skip the BOM character if it occurs at the
 start of the stream.</p></li>
 </ul>
 

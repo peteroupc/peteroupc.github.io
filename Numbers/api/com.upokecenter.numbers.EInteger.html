@@ -11,24 +11,25 @@
 
 <p>Represents an arbitrary-precision integer. (The &quot;E&quot; stands for &quot;extended&quot;,
  and has this prefix to group it with the other classes common to this
- library, particularly EDecimal, EFloat, and ERational.) <p>Instances of
- this class are immutable, so they are inherently safe for use by
- multiple threads. Multiple instances of this object with the same value
- are interchangeable, but they should be compared using the &quot;Equals&quot;
- method rather than the &quot;==&quot; operator. </p> <p><b>Security note</b> </p>
- <p>It is not recommended to implement security-sensitive algorithms
- using the methods in this class, for several reasons: </p> <ul>
- <li><code>EInteger</code> objects are immutable, so they can&#39;t be modified,
- and the memory they occupy is not guaranteed to be cleared in a timely
- fashion due to garbage collection. This is relevant for applications
- that use many-bit-long numbers as secret parameters. </li> <li>The
- methods in this class (especially those that involve arithmetic) are
- not guaranteed to be &quot;constant-time&quot; (non-data-dependent) for all
- relevant inputs. Certain attacks that involve encrypted communications
- have exploited the timing and other aspects of such communications to
- derive keying material or cleartext indirectly. </li> </ul>
- <p>Applications should instead use dedicated security libraries to
- handle big numbers in security-sensitive algorithms. </p></p>
+ library, particularly EDecimal, EFloat, and ERational.) <p>Instances
+ of this class are immutable, so they are inherently safe for use by
+ multiple threads. Multiple instances of this object with the same
+ value are interchangeable, but they should be compared using the
+ &quot;Equals&quot; method rather than the &quot;==&quot; operator.</p> <p><b>Security
+ note</b></p> <p>It is not recommended to implement security-sensitive
+ algorithms using the methods in this class, for several reasons:</p>
+ <ul> <li><code>EInteger</code> objects are immutable, so they can&#39;t be
+ modified, and the memory they occupy is not guaranteed to be cleared
+ in a timely fashion due to garbage collection. This is relevant for
+ applications that use many-bit-long numbers as secret
+ parameters.</li> <li>The methods in this class (especially those that
+ involve arithmetic) are not guaranteed to be &quot;constant-time&quot;
+ (non-data-dependent) for all relevant inputs. Certain attacks that
+ involve encrypted communications have exploited the timing and other
+ aspects of such communications to derive keying material or cleartext
+ indirectly.</li></ul> <p>Applications should instead use dedicated
+ security libraries to handle big numbers in security-sensitive
+ algorithms.</p></p>
 
 <h2>Methods</h2>
 
@@ -1645,8 +1646,8 @@ satisfy biggerCount == CountWords(result).</p></li>
 
 <p>Finds the exclusive &quot;or&quot; of two arbitrary-precision integer objects. <p>Each
  arbitrary-precision integer is treated as a two&#39;s-complement form
- (see <code>&quot;Forms of numbers&quot; </code>)
- for the purposes of this operator. </p></p>
+ (see <code>&quot;Forms of numbers&quot;</code>)
+ for the purposes of this operator.</p></p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1664,7 +1665,9 @@ corresponding bit is set in one input integer but not in the other.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>java.lang.NullPointerException</code> - The parameter <code>other</code> is null.</li>
+<li><p><code>java.lang.NullPointerException</code> - The parameter <code>other</code> is null.</p></li>
+<li><p><code>ArgumentException</code> - Doesn&#39;t satisfy smallerCount ==
+CountWords(result).</p></li>
 </ul>
 
 <h3>ShiftRight</h3>
