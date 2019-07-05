@@ -35,7 +35,7 @@
     int height);
 </pre>
 
-<p>Initializes a new instance of the <a href="PeterO.Png8BitIndexed.html">PeterO.Png8BitIndexed</a> class.  <b>Parameters:</b></p>
+<p>Initializes a new instance of the <a href="PeterO.Png8BitIndexed.html">PeterO.Png8BitIndexed</a> class.    <b>Parameters:</b></p>
 
 <ul>
 <li><p><i>width</i>: The parameter  <i>width</i>
@@ -145,11 +145,19 @@ is not documented yet.</p></li>
     string filename);
 </pre>
 
-<p>Not documented yet.  <b>Parameters:</b></p>
+<p>Not documented yet.    <b>Parameters:</b></p>
 
 <ul>
 <li><i>filename</i>: The parameter  <i>filename</i>
 is not documented yet.</li>
+</ul>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter  <i>filename</i>
+is null.</li>
 </ul>
 
 <p><a id="SetColor_int_byte"></a></p>
@@ -161,13 +169,24 @@ is not documented yet.</li>
     byte[] color);
 </pre>
 
-<p>Not documented yet.  <b>Parameters:</b></p>
+<p>Not documented yet.      <b>Parameters:</b></p>
 
 <ul>
 <li><p><i>index</i>: The parameter  <i>index</i>
 is not documented yet.</p></li>
 <li><p><i>color</i>: The parameter  <i>color</i>
 is not documented yet.</p></li>
+</ul>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li><p>System.ArgumentNullException:
+The parameter  <i>color</i>
+is null.</p></li>
+<li><p>System.ArgumentException:
+The parameter  <i>color</i>
+must have length 3 or more.</p></li>
 </ul>
 
 <p><a id="SetFilter_int_byte"></a></p>

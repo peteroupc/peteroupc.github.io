@@ -142,11 +142,14 @@ is null.</li>
     int length);
 </pre>
 
-<p>Reads a portion of a byte array from a data source and converts the bytes from a given encoding to a text string. Errors in decoding are handled by replacing erroneous bytes with the replacement character (U+FFFD). In the .NET implementation, this method is implemented as an extension method to any object implementing ICharacterEncoding and can be called as follows:  <code>enc.DecodeToString(bytes, offset, length)</code>  . If the object&#39;s class already has a DecodeToString method with the same parameters, that method takes precedence over this extension method.</p>
+<p>Reads a portion of a byte array from a data source and converts the bytes from a given encoding to a text string. Errors in decoding are handled by replacing erroneous bytes with the replacement character (U + FFFD). In the .NET implementation, this method is implemented as an extension method to any object implementing ICharacterEncoding and can be called as follows:  <code>enc.DecodeToString(bytes, offset,
+            length)</code> . If the object&#39;s class already has a DecodeToString method with the same parameters, that method takes precedence over this extension method.</p>
 
-<p>In the .NET implementation, this method is implemented as an extension method to any object implementing ICharacterEncoding and can be called as follows:  <code>enc.DecodeToString(bytes, offset, length)</code>  . If the object&#39;s class already has a  <code>DecodeToString</code>  method with the same parameters, that method takes precedence over this extension method.</p>
+<p>In the .NET implementation, this method is implemented as an extension method to any object implementing ICharacterEncoding and can be called as follows:  <code>enc.DecodeToString(bytes, offset,
+            length)</code> . If the object&#39;s class already has a  <code>DecodeToString</code>  method with the same parameters, that method takes precedence over this extension method.</p>
 
-<p><b>Parameters:</b></p>
+<pre>      &lt;b&gt;Parameters:&lt;/b&gt;
+</pre>
 
 <ul>
 <li><p><i>enc</i>: An object implementing a character encoding (gives access to an encoder and a decoder).</p></li>
@@ -177,6 +180,10 @@ is less than 0 or greater than  <i>bytes</i>
 &#39; s length minus  <i>offset</i>
 is less than  <i>length</i>
 .</p></li>
+<li><p>System.ArgumentNullException:
+The parameter  <i>enc</i>
+or  <i>bytes</i>
+is null.</p></li>
 </ul>
 
 <p><a id="DecodeToString_this_PeterO_Text_ICharacterEncoding_System_IO_Stream"></a></p>
@@ -956,11 +963,12 @@ is null.</li>
     int length);
 </pre>
 
-<p>Converts a portion of a text string to a character input. The resulting input can then be used to encode the text to bytes, or to read the string code point by code point, among other things. When reading the string, any unpaired surrogate characters are replaced with the replacement character (U+FFFD). In the .NET implementation, this method is implemented as an extension method to any String object and can be called as follows:  <code>str.StringToInput(offset, length)</code>  . If the object&#39;s class already has a StringToInput method with the same parameters, that method takes precedence over this extension method.</p>
+<p>Converts a portion of a text string to a character input. The resulting input can then be used to encode the text to bytes, or to read the string code point by code point, among other things. When reading the string, any unpaired surrogate characters are replaced with the replacement character (U + FFFD). In the .NET implementation, this method is implemented as an extension method to any String object and can be called as follows:  <code>str.StringToInput(offset, length)</code> . If the object&#39;s class already has a StringToInput method with the same parameters, that method takes precedence over this extension method.</p>
 
-<p>In the .NET implementation, this method is implemented as an extension method to any object implementing string and can be called as follows:  <code>str.StringToInput(offset, length)</code>  . If the object&#39;s class already has a  <code>StringToInput</code>  method with the same parameters, that method takes precedence over this extension method.</p>
+<p>In the .NET implementation, this method is implemented as an extension method to any object implementing string and can be called as follows:  <code>str.StringToInput(offset, length)</code> . If the object&#39;s class already has a  <code>StringToInput</code>  method with the same parameters, that method takes precedence over this extension method.</p>
 
-<p><b>Parameters:</b></p>
+<pre>     &lt;b&gt;Parameters:&lt;/b&gt;
+</pre>
 
 <ul>
 <li><p><i>str</i>: The parameter  <i>str</i>
@@ -990,6 +998,9 @@ is less than 0 or greater than  <i>str</i>
 &#39; s length minus  <i>offset</i>
 is less than  <i>length</i>
 .</p></li>
+<li><p>System.ArgumentNullException:
+The parameter  <i>str</i>
+is null.</p></li>
 </ul>
 
 <p><a href="/Encoding/">Back to Encoding start page.</a></p>

@@ -46,8 +46,11 @@
 <p>An arbitrary-precision decimal value can be serialized (converted to a stable format) in one of the following ways:</p>
 
 <ul>
-<li><p>By calling the toString() method, which will always return distinct strings for distinct arbitrary-precision decimal values.</p></li>
-<li><p>By calling the UnsignedMantissa, Exponent, and IsNegative properties, and calling the IsInfinity, IsQuietNaN, and IsSignalingNaN methods. The return values combined will uniquely identify a particular arbitrary-precision decimal value.</p>
+<li><p>By calling the toString() method, which will always return distinct strings for distinct arbitrary-precision decimal values.</p>
+
+<ul>
+<li>By calling the UnsignedMantissa, Exponent, and IsNegative properties, and calling the IsInfinity, IsQuietNaN, and IsSignalingNaN methods. The return values combined will uniquely identify a particular arbitrary-precision decimal value.</li>
+</ul>
 
 <p><b>Thread safety</b></p>
 
@@ -60,8 +63,11 @@
 <p><b>Security note</b></p>
 
 <p>It is not recommended to implement security-sensitive algorithms using the methods in this class, for several reasons:</p></li>
-<li><p><code>EDecimal</code>  objects are immutable, so they can&#39;t be modified, and the memory they occupy is not guaranteed to be cleared in a timely fashion due to garbage collection. This is relevant for applications that use many-digit-long numbers as secret parameters.</p></li>
-<li><p>The methods in this class (especially those that involve arithmetic) are not guaranteed to be &quot;constant-time&quot; (non-data-dependent) for all relevant inputs. Certain attacks that involve encrypted communications have exploited the timing and other aspects of such communications to derive keying material or cleartext indirectly.</p>
+<li><p><code>EDecimal</code>  objects are immutable, so they can&#39;t be modified, and the memory they occupy is not guaranteed to be cleared in a timely fashion due to garbage collection. This is relevant for applications that use many-digit-long numbers as secret parameters.</p>
+
+<ul>
+<li>The methods in this class (especially those that involve arithmetic) are not guaranteed to be &quot;constant-time&quot; (non-data-dependent) for all relevant inputs. Certain attacks that involve encrypted communications have exploited the timing and other aspects of such communications to derive keying material or cleartext indirectly.</li>
+</ul>
 
 <p>Applications should instead use dedicated security libraries to handle big numbers in security-sensitive algorithms.</p>
 
@@ -70,45 +76,63 @@
 <p>There are several other types of numbers that are mentioned in this class and elsewhere in this documentation. For reference, they are specified here.</p>
 
 <p><b>Unsigned integer</b> : An integer that&#39;s always 0 or greater, with the following maximum values:</p></li>
-<li><p>8-bit unsigned integer, or <i> byte </i> : 255.</p></li>
+<li><p>8-bit unsigned integer, or <i>byte</i> : 255.</p>
+
+<ul>
 <li><p>16-bit unsigned integer: 65535.</p></li>
-<li><p>32-bit unsigned integer: (2 <sup> 32 </sup> -1).</p></li>
-<li><p>64-bit unsigned integer: (2 <sup> 64 </sup> -1).</p>
+<li><p>32-bit unsigned integer: (2 <sup>32</sup> -1).</p></li>
+<li><p>64-bit unsigned integer: (2 <sup>64</sup> -1).</p></li>
+</ul>
 
-<p><b>Signed integer</b> : An integer in <i> two&#39;s-complement form </i> , with the following ranges:</p></li>
-<li><p>8-bit signed integer: -128 to 127.</p></li>
+<p><b>Signed integer</b> : An integer in <i>two&#39;s-complement form</i> , with the following ranges:</p></li>
+<li><p>8-bit signed integer: -128 to 127.</p>
+
+<ul>
 <li><p>16-bit signed integer: -32768 to 32767.</p></li>
-<li><p>32-bit signed integer: -2 <sup> 31 </sup> to (2 <sup> 31 </sup> - 1).</p></li>
-<li><p>64-bit signed integer: -2 <sup> 63 </sup> to (2 <sup> 63 </sup> - 1).</p>
+<li><p>32-bit signed integer: -2 <sup>31</sup> to (2 <sup>31</sup> - 1).</p></li>
+<li><p>64-bit signed integer: -2 <sup>63</sup> to (2 <sup>63</sup> - 1).</p></li>
+</ul>
 
-<p><b>Two&#39;s complement form</b> : In <i> two&#39; s-complement form </i> , nonnegative numbers have the highest (most significant) bit set to zero, and negative numbers have that bit (and all bits beyond) set to one, and a negative number is stored in such form by decreasing its absolute value by 1 and swapping the bits of the resulting number.</p>
+<p><b>Two&#39;s complement form</b> : In <i>two&#39; s-complement form</i> , nonnegative numbers have the highest (most significant) bit set to zero, and negative numbers have that bit (and all bits beyond) set to one, and a negative number is stored in such form by decreasing its absolute value by 1 and swapping the bits of the resulting number.</p>
 
-<p><b>64-bit floating-point number</b> : A 64-bit binary floating-point number, in the form <i> significand </i> * 2 <sup> <i> exponent </i> </sup> . The significand is 53 bits long (Precision) and the exponent ranges from -1074 (EMin) to 971 (EMax). The number is stored in the following format (commonly called the IEEE 754 format):</p>
+<p><b>64-bit floating-point number</b> : A 64-bit binary floating-point number, in the form <i>significand</i> * 2 <sup><i>exponent</i> </sup> . The significand is 53 bits long (Precision) and the exponent ranges from -1074 (EMin) to 971 (EMax). The number is stored in the following format (commonly called the IEEE 754 format):</p>
 
 <p>|C|BBB...BBB|AAAAAA...AAAAAA|</p></li>
-<li><p>A. Low 52 bits (Precision minus 1 bits): Lowest bits of the significand.</p></li>
-<li><p>B. Next 11 bits: Exponent area:</p></li>
-<li><p>If all bits are ones, this value is infinity (positive or negative depending on the C bit) if all bits in area A are zeros, or not-a-number (NaN) otherwise.</p></li>
+<li><p>A. Low 52 bits (Precision minus 1 bits): Lowest bits of the significand.</p>
+
+<ul>
+<li>B. Next 11 bits: Exponent area:</li>
+</ul></li>
+<li><p>If all bits are ones, this value is infinity (positive or negative depending on the C bit) if all bits in area A are zeros, or not-a-number (NaN) otherwise.</p>
+
+<ul>
 <li><p>If all bits are zeros, this is a subnormal number. The exponent is EMin and the highest bit of the significand is zero.</p></li>
 <li><p>If any other number, the exponent is this value reduced by 1, then raised by EMin, and the highest bit of the significand is one.</p></li>
-<li><p>C. Highest bit: If one, this is a negative number.</p>
+<li><p>C. Highest bit: If one, this is a negative number.</p></li>
+</ul>
 
 <p>The elements described above are in the same order as the order of each bit of each element, that is, either most significant first or least significant first.</p>
 
-<p><b>32-bit binary floating-point number</b> : A 32-bit binary number which is stored similarly to a <i> 64-bit floating-point number </i> , except that:</p></li>
-<li><p>Precision is 24 bits.</p></li>
+<p><b>32-bit binary floating-point number</b> : A 32-bit binary number which is stored similarly to a <i>64-bit floating-point number</i> , except that:</p></li>
+<li><p>Precision is 24 bits.</p>
+
+<ul>
 <li><p>EMin is -149.</p></li>
 <li><p>EMax is 104.</p></li>
 <li><p>A. The low 23 bits (Precision minus 1 bits) are the lowest bits of the significand.</p></li>
 <li><p>B. The next 8 bits are the exponent area.</p></li>
-<li><p>C. If the highest bit is one, this is a negative number.</p>
+<li><p>C. If the highest bit is one, this is a negative number.</p></li>
+</ul>
 
-<p><b>.NET Framework decimal</b> : A 128-bit decimal floating-point number, in the form <i> significand </i> * 10 <sup> - <i> scale </i> </sup> , where the scale ranges from 0 to 28. The number is stored in the following format:</p></li>
-<li><p>Low 96 bits are the significand, as a 96-bit unsigned integer (all 96-bit values are allowed, up to (2 <sup> 96 </sup> -1)).</p></li>
+<p><b>.NET Framework decimal</b> : A 128-bit decimal floating-point number, in the form <i>significand</i> * 10 <sup>- <i>scale</i> </sup> , where the scale ranges from 0 to 28. The number is stored in the following format:</p></li>
+<li><p>Low 96 bits are the significand, as a 96-bit unsigned integer (all 96-bit values are allowed, up to (2 <sup>96</sup> -1)).</p>
+
+<ul>
 <li><p>Next 16 bits are unused.</p></li>
 <li><p>Next 8 bits are the scale, stored as an 8-bit unsigned integer.</p></li>
 <li><p>Next 7 bits are unused.</p></li>
-<li><p>If the highest bit is one, it&#39;s a negative number.</p>
+<li><p>If the highest bit is one, it&#39;s a negative number.</p></li>
+</ul>
 
 <p>The elements described above are in the same order as the order of each bit of each element, that is, either most significant first or least significant first.</p></li>
 </ul>
@@ -131,8 +155,8 @@
 <li><code><a href="#CompareToWithContext_PeterO_Numbers_EDecimal_PeterO_Numbers_EContext">CompareToWithContext(PeterO.Numbers.EDecimal, PeterO.Numbers.EContext)</a></code> - Compares the mathematical values of this object and another object.</li>
 <li><code><a href="#Copy">Copy()</a></code> - Creates a copy of this arbitrary-precision binary number.</li>
 <li><code><a href="#CopySign_PeterO_Numbers_EDecimal">CopySign(PeterO.Numbers.EDecimal)</a></code> - Returns a number with the same value as this one, but copying the sign (positive or negative) of another number.</li>
-<li><code><a href="#Create_int_int">Create(int, int)</a></code> - Creates a number with the value exponent*10^mantissa</li>
-<li><code><a href="#Create_PeterO_Numbers_EInteger_PeterO_Numbers_EInteger">Create(PeterO.Numbers.EInteger, PeterO.Numbers.EInteger)</a></code> - Creates a number with the value exponent*10^mantissa</li>
+<li><code><a href="#Create_int_int">Create(int, int)</a></code> - Creates a number with the value exponent*10^mantissa.</li>
+<li><code><a href="#Create_PeterO_Numbers_EInteger_PeterO_Numbers_EInteger">Create(PeterO.Numbers.EInteger, PeterO.Numbers.EInteger)</a></code> - Creates a number with the value exponent*10^mantissa.</li>
 <li><code><a href="#CreateNaN_PeterO_Numbers_EInteger">CreateNaN(PeterO.Numbers.EInteger)</a></code> - Creates a not-a-number arbitrary-precision decimal number.</li>
 <li><code><a href="#CreateNaN_PeterO_Numbers_EInteger_bool_bool_PeterO_Numbers_EContext">CreateNaN(PeterO.Numbers.EInteger, bool, bool, PeterO.Numbers.EContext)</a></code> - Creates a not-a-number arbitrary-precision decimal number.</li>
 <li><code><a href="#Divide_int">Divide(int)</a></code> - Divides this object by an 32-bit signed integer and returns the result.</li>
@@ -245,7 +269,7 @@
 <li><code><a href="#Quantize_PeterO_Numbers_EInteger_PeterO_Numbers_EContext">Quantize(PeterO.Numbers.EInteger, PeterO.Numbers.EContext)</a></code> - Returns an arbitrary-precision decimal number with the same value but a new exponent.</li>
 <li><code><a href="#Reduce_PeterO_Numbers_EContext">Reduce(PeterO.Numbers.EContext)</a></code> - Returns an object with the same numerical value as this one but with trailing zeros removed from its mantissa (significand).</li>
 <li><code><a href="#Remainder_PeterO_Numbers_EDecimal_PeterO_Numbers_EContext">Remainder(PeterO.Numbers.EDecimal, PeterO.Numbers.EContext)</a></code> - Finds the remainder that results when dividing two arbitrary-precision decimal numbers.</li>
-<li><code><a href="#RemainderNaturalScale_PeterO_Numbers_EDecimal">RemainderNaturalScale(PeterO.Numbers.EDecimal)</a></code> - Calculates the remainder of a number by the formula &quot;this&quot; - ((&quot;this&quot; / &quot;divisor&quot;) * &quot;divisor&quot;)</li>
+<li><code><a href="#RemainderNaturalScale_PeterO_Numbers_EDecimal">RemainderNaturalScale(PeterO.Numbers.EDecimal)</a></code> - Calculates the remainder of a number by the formula &quot;this&quot; - ((&quot;this&quot; / &quot;divisor&quot;) * &quot;divisor&quot;).</li>
 <li><code><a href="#RemainderNaturalScale_PeterO_Numbers_EDecimal_PeterO_Numbers_EContext">RemainderNaturalScale(PeterO.Numbers.EDecimal, PeterO.Numbers.EContext)</a></code> - Calculates the remainder of a number by the formula &quot;this&quot; - ((&quot;this&quot; / &quot;divisor&quot;) * &quot;divisor&quot;).</li>
 <li><code><a href="#RemainderNear_PeterO_Numbers_EDecimal_PeterO_Numbers_EContext">RemainderNear(PeterO.Numbers.EDecimal, PeterO.Numbers.EContext)</a></code> - Finds the distance to the closest multiple of the given divisor, based on the result of dividing this object&#39;s value by another object&#39;s value.</li>
 <li><code><a href="#RemainderNoRoundAfterDivide_PeterO_Numbers_EDecimal_PeterO_Numbers_EContext">RemainderNoRoundAfterDivide(PeterO.Numbers.EDecimal, PeterO.Numbers.EContext)</a></code> - Finds the remainder that results when dividing two arbitrary-precision decimal numbers, except the intermediate division is not adjusted to fit the precision of the given arithmetic context.</li>
@@ -548,7 +572,8 @@
 
 <p>If this object or the other object is a quiet NaN or signaling NaN, this method will not trigger an error. Instead, NaN will compare greater than any other number, including infinity. Two different NaN values will be considered equal.</p>
 
-<p><b>Parameters:</b></p>
+<pre>&lt;b&gt;Parameters:&lt;/b&gt;
+</pre>
 
 <ul>
 <li><i>other</i>: An arbitrary-precision decimal number.</li>
@@ -596,7 +621,8 @@ Doesn&#39;t satisfy this.IsFinite; doesn&#39;t satisfy other.IsFinite.</li>
 
 <p>If this object or the other object is a quiet NaN or signaling NaN, this method will return a quiet NaN and will signal a FlagInvalid flag.</p>
 
-<p><b>Parameters:</b></p>
+<pre> &lt;b&gt;Parameters:&lt;/b&gt;
+</pre>
 
 <ul>
 <li><p><i>other</i>: An arbitrary-precision decimal number.</p></li>
@@ -739,7 +765,8 @@ Doesn&#39;t satisfy this.IsFinite; doesn&#39;t satisfy other.IsFinite.</li>
 
 <p>If this object or the other object is a quiet NaN or signaling NaN, this method returns a quiet NaN, and will signal a FlagInvalid flag if either is a signaling NaN.</p>
 
-<p><b>Parameters:</b></p>
+<pre> &lt;b&gt;Parameters:&lt;/b&gt;
+</pre>
 
 <ul>
 <li><p><i>other</i>: An arbitrary-precision decimal number.</p></li>
@@ -795,7 +822,7 @@ The parameter &quot;other&quot; is null.</li>
     int exponentSmall);
 </pre>
 
-<p>Creates a number with the value  <code>exponent*10^mantissa</code>      <b>Parameters:</b></p>
+<p>Creates a number with the value  <code>exponent*10^mantissa</code> .     <b>Parameters:</b></p>
 
 <ul>
 <li><p><i>mantissaSmall</i>: Desired value for the mantissa.</p></li>
@@ -815,7 +842,7 @@ The parameter &quot;other&quot; is null.</li>
     PeterO.Numbers.EInteger exponent);
 </pre>
 
-<p>Creates a number with the value  <code>exponent*10^mantissa</code>       <b>Parameters:</b></p>
+<p>Creates a number with the value  <code>exponent*10^mantissa</code> .      <b>Parameters:</b></p>
 
 <ul>
 <li><p><i>mantissa</i>: Desired value for the mantissa.</p></li>
@@ -1654,15 +1681,16 @@ The parameter &quot;str&quot; is null.</p></li>
 <p>The format of the string generally consists of:</p>
 
 <ul>
-<li><p>An optional plus sign (&quot;+&quot; , U+002B) or minus sign (&quot;-&quot;, U+002D) (if the minus sign, the value is negative.)</p></li>
+<li><p>An optional plus sign (&quot;+&quot; , U+002B) or minus sign (&quot;-&quot;, U + 002D) (if the minus sign, the value is negative.)</p></li>
 <li><p>One or more digits, with a single optional decimal point after the first digit and before the last digit.</p></li>
 <li><p>Optionally, &quot;E&quot;/&quot;e&quot; followed by an optional (positive exponent) or &quot;-&quot; (negative exponent) and followed by one or more digits specifying the exponent.</p>
 
 <p>The string can also be &quot;-INF&quot;, &quot;-Infinity&quot;, &quot;Infinity&quot;, &quot;INF&quot;, quiet NaN (&quot;NaN&quot; /&quot;-NaN&quot;) followed by any number of digits, or signaling NaN (&quot;sNaN&quot; /&quot;-sNaN&quot;) followed by any number of digits, all in any combination of upper and lower case.</p>
 
-<p>All characters mentioned above are the corresponding characters in the Basic Latin range. In particular, the digits must be the basic digits 0 to 9 (U+0030 to U+0039). The string is not allowed to contain white space characters, including spaces.</p>
+<p>All characters mentioned above are the corresponding characters in the Basic Latin range. In particular, the digits must be the basic digits 0 to 9 (U + 0030 to U + 0039). The string is not allowed to contain white space characters, including spaces.</p>
 
-<p><b>Parameters:</b></p>
+<pre>   &lt;b&gt;Parameters:&lt;/b&gt;
+</pre>
 
 <ul>
 <li><p><i>str</i>: A text string, a portion of which represents a number.</p></li>
@@ -3271,15 +3299,17 @@ is null.</li>
 
 <p><b>Remark:</b> This method can be used to implement fixed-point decimal arithmetic, in which each decimal number has a fixed number of digits after the decimal point. The following code example returns a fixed-point number with up to 20 digits before and exactly 5 digits after the decimal point:</p>
 
-<pre>/* After performing arithmetic operations, adjust the number to 5 digits
-        after the decimal point */ number = number.Quantize(-5, /* five digits
-        after the decimal point */EContext.ForPrecision(25) /* 25-digit
-        precision*/);
+<pre>/* After performing arithmetic operations, adjust the number
+            to 5 digits
+            after the decimal point */ number = number.Quantize(-5, /* five digits
+            after the decimal point */EContext.ForPrecision(25) /* 25-digit
+            precision*/);
 </pre>
 
 <p>A fixed-point decimal arithmetic in which no digits come after the decimal point (a desired exponent of 0) is considered an &quot;integer arithmetic&quot;.</p>
 
-<p><b>Parameters:</b></p>
+<pre>  &lt;b&gt;Parameters:&lt;/b&gt;
+</pre>
 
 <ul>
 <li><p><i>desiredExponentInt</i>: The desired exponent for the result. The exponent is the number of fractional digits in the result, expressed as a negative number. Can also be positive, which eliminates lower-order places from the number. For example, -3 means round to the thousandth (10^-3, 0.0001), and 3 means round to the thousand (10^3, 1000). A value of 0 rounds the number to an integer.</p></li>
@@ -3301,7 +3331,8 @@ is null.</li>
 
 <p>Returns an arbitrary-precision decimal number with the same value as this one but a new exponent. <b>Remark:</b> This method can be used to implement fixed-point decimal arithmetic, in which a fixed number of digits come after the decimal point. A fixed-point decimal arithmetic in which no digits come after the decimal point (a desired exponent of 0) is considered an &quot;integer arithmetic&quot; .</p>
 
-<p><b>Parameters:</b></p>
+<pre> &lt;b&gt;Parameters:&lt;/b&gt;
+</pre>
 
 <ul>
 <li><p><i>desiredExponentInt</i>: The desired exponent for the result. The exponent is the number of fractional digits in the result, expressed as a negative number. Can also be positive, which eliminates lower-order places from the number. For example, -3 means round to the thousandth (10^-3, 0.0001), and 3 means round to the thousand (10^3, 1000). A value of 0 rounds the number to an integer.</p></li>
@@ -3325,10 +3356,11 @@ is null.</li>
 
 <p><b>Remark:</b> This method can be used to implement fixed-point decimal arithmetic, in which a fixed number of digits come after the decimal point. A fixed-point decimal arithmetic in which no digits come after the decimal point (a desired exponent of 0) is considered an &quot;integer arithmetic&quot; .</p>
 
-<p><b>Parameters:</b></p>
+<pre> &lt;b&gt;Parameters:&lt;/b&gt;
+</pre>
 
 <ul>
-<li><p><i>otherValue</i>: An arbitrary-precision decimal number containing the desired exponent of the result. The mantissa (significand) is ignored. The exponent is the number of fractional digits in the result, expressed as a negative number. Can also be positive, which eliminates lower-order places from the number. For example, -3 means round to the thousandth (10^-3, 0.0001), and 3 means round to the thousands-place (10^3, 1000). A value of 0 rounds the number to an integer. The following examples for this parameter express a desired exponent of 3:  <code>10e3</code>  ,  <code>8888e3</code>  ,  <code>4.56e5</code>  .</p></li>
+<li><p><i>otherValue</i>: An arbitrary-precision decimal number containing the desired exponent of the result. The mantissa (significand) is ignored. The exponent is the number of fractional digits in the result, expressed as a negative number. Can also be positive, which eliminates lower-order places from the number. For example, -3 means round to the thousandth (10^-3, 0.0001), and 3 means round to the thousands-place (10^3, 1000). A value of 0 rounds the number to an integer. The following examples for this parameter express a desired exponent of 3:  <code>10e3</code> ,  <code>8888e3</code> ,  <code>4.56e5</code> .</p></li>
 <li><p><i>ctx</i>: An arithmetic context to control precision and rounding of the result. If  <code>HasFlags</code>  of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null, in which case the default rounding mode is HalfEven.</p></li>
 </ul>
 
@@ -3349,15 +3381,17 @@ is null.</li>
 
 <p><b>Remark:</b> This method can be used to implement fixed-point decimal arithmetic, in which each decimal number has a fixed number of digits after the decimal point. The following code example returns a fixed-point number with up to 20 digits before and exactly 5 digits after the decimal point:</p>
 
-<pre>// After performing arithmetic operations, adjust // the number to 5 //
-        digits after the decimal point number = number.Quantize(
-        EInteger.FromInt32(-5), // five digits after the decimal point
-        EContext.ForPrecision(25) // 25-digit precision);
+<pre> // After performing arithmetic operations, adjust // the
+            number to 5 //
+            digits after the decimal point number = number.Quantize(
+            EInteger.FromInt32(-5), // five digits after the decimal point
+            EContext.ForPrecision(25) // 25-digit precision);
 </pre>
 
 <p>A fixed-point decimal arithmetic in which no digits come after the decimal point (a desired exponent of 0) is considered an &quot;integer arithmetic&quot;.</p>
 
-<p><b>Parameters:</b></p>
+<pre>  &lt;b&gt;Parameters:&lt;/b&gt;
+</pre>
 
 <ul>
 <li><p><i>desiredExponent</i>: The desired exponent for the result. The exponent is the number of fractional digits in the result, expressed as a negative number. Can also be positive, which eliminates lower-order places from the number. For example, -3 means round to the thousandth (10^-3, 0.0001), and 3 means round to the thousand (10^3, 1000). A value of 0 rounds the number to an integer.</p></li>
@@ -3378,7 +3412,8 @@ is null.</li>
 
 <p>Returns an object with the same numerical value as this one but with trailing zeros removed from its mantissa (significand). For example, 1.00 becomes 1. If this object&#39;s value is 0, changes the exponent to 0.</p>
 
-<p><b>Parameters:</b></p>
+<pre>&lt;b&gt;Parameters:&lt;/b&gt;
+</pre>
 
 <ul>
 <li><i>ctx</i>: An arithmetic context to control the precision, rounding, and exponent range of the result. If  <code>HasFlags</code>  of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null, in which case the precision is unlimited and rounding isn&#39;t needed.</li>
@@ -3416,7 +3451,7 @@ is null.</li>
     PeterO.Numbers.EDecimal divisor);
 </pre>
 
-<p>Calculates the remainder of a number by the formula  <code>&quot;this&quot; - ((&quot;this&quot; / &quot;divisor&quot;) * &quot;divisor&quot;)</code>     <b>Parameters:</b></p>
+<p>Calculates the remainder of a number by the formula  <code>&quot;this&quot; - ((&quot;this&quot; / &quot;divisor&quot;) * &quot;divisor&quot;)</code> .    <b>Parameters:</b></p>
 
 <ul>
 <li><i>divisor</i>: The number to divide by.</li>

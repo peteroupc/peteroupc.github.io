@@ -20,7 +20,7 @@
 EDecimal ed2,
 EContext ec)</code><br>
 Performs a logical AND operation on two decimal numbers in the form of
-logical operands.</li>
+logical operands  .</li>
 <li><code>static EDecimal BooleanToEDecimal​(boolean b,
              EContext ec)</code><br>
 Converts a boolean value (either true or false) to an arbitrary-precision
@@ -58,7 +58,7 @@ Creates an arbitrary-precision decimal number from a 32-bit signed integer.</li>
 <li><code>static EDecimal Invert​(EDecimal ed1,
   EContext ec)</code><br>
 Performs a logical NOT operation on an arbitrary-precision decimal number in
-the form of a logical operand.</li>
+the form of a  logical operand  .</li>
 <li><code>static boolean IsCanonical​(EDecimal ed)</code><br>
 Returns whether the given arbitrary-precision number object is in a
 canonical form.</li>
@@ -104,7 +104,7 @@ Converts a number class identifier (ranging from 1 to 9) to a text string.</li>
 EDecimal ed2,
 EContext ec)</code><br>
 Performs a logical OR operation on two decimal numbers in the form of
-logical operands.</li>
+logical operands  .</li>
 <li><code>static EDecimal Radix​(EContext ec)</code><br>
 Returns the number 10, the decimal radix.</li>
 <li><code>static EDecimal Rescale​(EDecimal ed,
@@ -139,7 +139,7 @@ with certain trailing zeros removed from its mantissa.</li>
 EDecimal ed2,
 EContext ec)</code><br>
 Performs a logical exclusive-OR (XOR) operation on two decimal numbers in
-the form of logical operands.</li>
+the form of  logical operands  .</li>
 </ul>
 
 <h2>Method Details</h2>
@@ -947,14 +947,14 @@ range and the given exponent is outside that range.</li>
 <pre>public static EDecimal And​(EDecimal ed1, EDecimal ed2, EContext ec)
 </pre>
 
-<p>Performs a logical AND operation on two decimal numbers in the form of
- <i>logical operands</i>. A <code>logical operand</code> is a non-negative
+<p>Performs a logical AND operation on two decimal numbers in the form of <i>
+ logical operands </i> . A <code>logical operand</code> is a non-negative
  base-10 number with an Exponent property of 0 and no other base-10
- digits than 0 or 1 (examples include <code>01001</code> and <code>111001</code>,
+ digits than 0 or 1 (examples include <code>01001</code> and <code>111001</code> ,
  but not <code>02001</code> or <code>99999</code>). The logical AND operation
  sets each digit of the result to 1 if the corresponding digits of
  each logical operand are both 1, and to 0 otherwise. For example,
- <code>01001 AND 111010 = 01000</code>.</p>
+ <code>01001 AND 111010 = 01000</code> .</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -973,7 +973,7 @@ precision are discarded. This parameter can be null.</p></li>
 <ul>
 <li>The result of the logical AND operation as a logical operand.
 Signals an invalid operation and returns not-a-number (NaN) if <code>
-ed1</code>, <code>ed2</code>, or both are not logical operands.</li>
+ed1</code> , <code>ed2</code> , or both are not logical operands.</li>
 </ul>
 
 <h3>Invert</h3>
@@ -982,14 +982,14 @@ ed1</code>, <code>ed2</code>, or both are not logical operands.</li>
 </pre>
 
 <p>Performs a logical NOT operation on an arbitrary-precision decimal number in
- the form of a <i>logical operand</i>. A <code>logical operand</code> is a
- non-negative base-10 number with an Exponent property of 0 and no
+ the form of a <i> logical operand </i> . A <code>logical operand</code> is
+ a non-negative base-10 number with an Exponent property of 0 and no
  other base-10 digits than 0 or 1 (examples include <code>01001</code> and
  <code>111001</code> , but not <code>02001</code> or <code>99999</code>). The logical
  NOT operation sets each digit of the result to 1 if the corresponding
  digit is 0, and to 0 otherwise; it can set no more digits than the
  maximum precision, however. For example, if the maximum precision is
- 8 digits, then <code>NOT 111010 = 11000101</code>.</p>
+ 8 digits, then <code>NOT 111010 = 11000101</code> .</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1018,10 +1018,10 @@ ed1</code> is not a logical operand.</li>
 </pre>
 
 <p>Performs a logical exclusive-OR (XOR) operation on two decimal numbers in
- the form of <i>logical operands</i>. A <code>logical operand</code> is a
+ the form of <i> logical operands </i> . A <code>logical operand</code> is a
  non-negative base-10 number with an exponent of 0 and no other
  base-10 digits than 0 or 1 (examples include <code>01001</code> and
- <code>111001</code>, but not <code>02001</code> or <code>99999</code>). The logical
+ <code>111001</code> , but not <code>02001</code> or <code>99999</code>). The logical
  exclusive-OR operation sets each digit of the result to 1 if either
  corresponding digit of the logical operands, but not both, is 1, and
  to 0 otherwise. For example, <code>01001 XOR 111010 = 101010</code> .</p>
@@ -1049,14 +1049,14 @@ precision are discarded. This parameter can be null.</p></li>
 <pre>public static EDecimal Or​(EDecimal ed1, EDecimal ed2, EContext ec)
 </pre>
 
-<p>Performs a logical OR operation on two decimal numbers in the form of
- <i>logical operands</i>. A <code>logical operand</code> is a non-negative
+<p>Performs a logical OR operation on two decimal numbers in the form of <i>
+ logical operands </i> . A <code>logical operand</code> is a non-negative
  base-10 number with an Exponent property of 0 and no other base-10
- digits than 0 or 1 (examples include <code>01001</code> and <code>111001</code>,
+ digits than 0 or 1 (examples include <code>01001</code> and <code>111001</code> ,
  but not <code>02001</code> or <code>99999</code>). The logical OR operation sets
  each digit of the result to 1 if either or both of the corresponding
  digits of the logical operands are 1, and to 0 otherwise. For
- example, <code>01001 OR 111010 = 111011</code>.</p>
+ example, <code>01001 OR 111010 = 111011</code> .</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1074,8 +1074,8 @@ precision are discarded. This parameter can be null.</p></li>
 
 <ul>
 <li>The result of the logical OR operation as a logical operand. Signals
-an invalid operation and returns not-a-number (NaN) if <code>ed1</code>,
-<code>ed2</code>, or both are not logical operands.</li>
+an invalid operation and returns not-a-number (NaN) if <code>ed1</code> ,
+<code>ed2</code> , or both are not logical operands.</li>
 </ul>
 
 <p><a href="/Numbers/">Back to Numbers start page.</a></p>

@@ -239,56 +239,56 @@
 <pre>public static readonly PeterO.Cbor.CBORObject False;
 </pre>
 
-<p>Represents the value false.  <a id="NaN"></a></p>
+<p>Represents the value false. <a id="NaN"></a></p>
 
 <h3>NaN</h3>
 
 <pre>public static readonly PeterO.Cbor.CBORObject NaN;
 </pre>
 
-<p>A not-a-number value.  <a id="NegativeInfinity"></a></p>
+<p>A not-a-number value. <a id="NegativeInfinity"></a></p>
 
 <h3>NegativeInfinity</h3>
 
 <pre>public static readonly PeterO.Cbor.CBORObject NegativeInfinity;
 </pre>
 
-<p>The value negative infinity.  <a id="Null"></a></p>
+<p>The value negative infinity. <a id="Null"></a></p>
 
 <h3>Null</h3>
 
 <pre>public static readonly PeterO.Cbor.CBORObject Null;
 </pre>
 
-<p>Represents the value null.  <a id="PositiveInfinity"></a></p>
+<p>Represents the value null. <a id="PositiveInfinity"></a></p>
 
 <h3>PositiveInfinity</h3>
 
 <pre>public static readonly PeterO.Cbor.CBORObject PositiveInfinity;
 </pre>
 
-<p>The value positive infinity.  <a id="True"></a></p>
+<p>The value positive infinity. <a id="True"></a></p>
 
 <h3>True</h3>
 
 <pre>public static readonly PeterO.Cbor.CBORObject True;
 </pre>
 
-<p>Represents the value true.  <a id="Undefined"></a></p>
+<p>Represents the value true. <a id="Undefined"></a></p>
 
 <h3>Undefined</h3>
 
 <pre>public static readonly PeterO.Cbor.CBORObject Undefined;
 </pre>
 
-<p>Represents the value undefined.  <a id="Zero"></a></p>
+<p>Represents the value undefined. <a id="Zero"></a></p>
 
 <h3>Zero</h3>
 
 <pre>public static readonly PeterO.Cbor.CBORObject Zero;
 </pre>
 
-<p>Gets a CBOR object for the number zero.  <a id="Count"></a></p>
+<p>Gets a CBOR object for the number zero. <a id="Count"></a></p>
 
 <h3>Count</h3>
 
@@ -2867,7 +2867,7 @@ Either or both operands are not numbers (as opposed to Not-a-Number, NaN).</li>
 
 <ul>
 <li><p>If this object contains maps with non-string keys, the keys are converted to JSON strings before writing the map as a JSON string.</p></li>
-<li><p>If the CBOR object contains CBOR maps, or is a CBOR map itself, the keys to the map are written out to the JSON string in an undefined order. Map keys other than untagged text strings are converted to JSON strings before writing them out (for example,  <code>22(&quot;Test&quot;)</code>  is converted to  <code>&quot;Test&quot;</code>  and  <code>true</code>  is converted to  <code>&quot;true&quot;</code>  ). If, after such conversion, two or more map keys are identical, this method throws a CBORException.</p></li>
+<li><p>If the CBOR object contains CBOR maps, or is a CBOR map itself, the keys to the map are written out to the JSON string in an undefined order. Map keys other than untagged text strings are converted to JSON strings before writing them out (for example,  <code>22(&quot;Test&quot;)</code>  is converted to  <code>&quot;Test&quot;</code>  and  <code>true</code>  is converted to  <code>&quot;true&quot;</code>  ///). If, after such conversion, two or more map keys are identical, this method throws a CBORException.</p></li>
 <li><p>If a number in the form of an arbitrary-precision binary float has a very high binary exponent, it will be converted to a double before being converted to a JSON string. (The resulting double could overflow to infinity, in which case the arbitrary-precision binary float is converted to null.)</p></li>
 <li><p>The string will not begin with a byte-order mark (U+FEFF); RFC 8259 (the JSON specification) forbids placing a byte-order mark at the beginning of a JSON string.</p></li>
 <li><p>Byte strings are converted to Base64 URL without whitespace or padding by default (see section 4.1 of RFC 7049). A byte string will instead be converted to traditional base64 without whitespace and with padding if it has tag 22, or base16 for tag 23. (To create a CBOR object with a given tag, call the  <code>CBORObject.FromObjectAndTag</code>  method and pass the CBOR object and the desired tag number to that method.)</p></li>
@@ -3025,6 +3025,7 @@ parameter, that converter will be used to convert the CBOR object to an object o
 <li><p>If the type is a primitive integer type (  <code>byte</code>  ,  <code>int</code>  ,  <code>short</code>  ,  <code>long</code>  , as well as  <code>sbyte</code>  ,  <code>ushort</code>  ,  <code>uint</code>  , and  <code>ulong</code>  in .NET) or a primitive floating-point type (  <code>float</code>  ,  <code>double</code>  , as well as  <code>decimal</code>  in .NET), returns the result of the corresponding As* method.</p></li>
 <li><p>If the type is  <code>String</code>  , returns the result of AsString.</p></li>
 <li><p>If the type is  <code>EDecimal</code>  ,  <code>EFloat</code>  ,  <code>EInteger</code>  , or  <code>ERational</code>  in the <a href="https://www.nuget.org/packages/PeterO.Numbers">  <code>PeterO.Numbers</code>  </a> library (in .NET) or the <a href="https://github.com/peteroupc/numbers-java">  <code>com.github.peteroupc/numbers</code>  </a> artifact (in Java), returns the result of the corresponding As* method.</p></li>
+<li><p>In the .NET version, if the type is a nullable (e.g.,  <code>Nullable&lt;int&gt;</code>  or  <code>int?</code>  , returns  <code>null</code>  if this CBOR object is null, or this object&#39;s value converted to the nullable&#39;s underlying type (e.g.,  <code>int</code>  ).</p></li>
 <li><p>If the type is an enumeration (  <code>Enum</code>  ) type this CBOR object is a text string or an integer, returns the appropriate enumerated constant. (For example, if  <code>MyEnum</code>  includes an entry for  <code>MyValue</code>  , this method will return  <code>MyEnum.MyValue</code>  if the CBOR object represents  <code>&quot;MyValue&quot;</code>  or the underlying value for  <code>MyEnum.MyValue</code>  .) <b>Note:</b> If an integer is converted to a .NET Enum constant, and that integer is shared by more than one constant of the same type, it is undefined which constant from among them is returned. (For example, if  <code>MyEnum.Zero = 0</code>  and  <code>MyEnum.Null = 0</code>  , converting 0 to  <code>MyEnum</code>  may return either  <code>MyEnum.Zero</code>  or  <code>MyEnum.Null</code>  .) As a result, .NET Enum types with constants that share an underlying value should not be passed to this method.</p></li>
 <li><p>If the type is  <code>byte[]</code>  (a one-dimensional byte array) and this CBOR object is a byte string, returns a byte array which this CBOR byte string&#39;s data will be copied to. (This method can&#39;t be used to encode CBOR data to a byte array; for that, use the EncodeToBytes method instead.)</p></li>
 <li><p>If the type is a one-dimensional or multidimensional array type and this CBOR object is an array, returns an array containing the items in this CBOR object.</p></li>

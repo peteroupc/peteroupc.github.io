@@ -2984,11 +2984,10 @@ This value is outside the range of a 64-bit signed integer.</li>
     PeterO.Numbers.EInteger other);
 </pre>
 
-<p>Finds the exclusive &quot;or&quot; of two arbitrary-precision integer objects. Each arbitrary-precision integer is treated as a two&#39;s-complement form (see <a href="PeterO.Numbers.EDecimal.html">
-           &#x22;Forms of numbers&#x22;
-        </a> &quot;Forms of numbers&quot;  ) for the purposes of this operator.</p>
+<p>Finds the exclusive &quot;or&quot; of two arbitrary-precision integer objects. Each arbitrary-precision integer is treated as a two&#39;s-complement form (see <a href="PeterO.Numbers.EDecimal.html">&#x22;Forms of numbers&#x22;</a>&quot;Forms of numbers&quot; ) for the purposes of this operator.</p>
 
-<p><b>Parameters:</b></p>
+<pre>  &lt;b&gt;Parameters:&lt;/b&gt;
+</pre>
 
 <ul>
 <li><i>other</i>: An arbitrary-precision integer.</li>
@@ -3001,9 +3000,11 @@ This value is outside the range of a 64-bit signed integer.</li>
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li>System.ArgumentNullException:
+<li><p>System.ArgumentNullException:
 The parameter  <i>other</i>
-is null.</li>
+is null.</p></li>
+<li><p>System.ArgumentException:
+Doesn&#39;t satisfy smallerCount == CountWords(result).</p></li>
 </ul>
 
 <p><a id="Xor_PeterO_Numbers_EInteger_PeterO_Numbers_EInteger"></a></p>

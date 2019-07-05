@@ -19,7 +19,7 @@
 EFloat ed2,
 EContext ec)</code><br>
 Performs a logical AND operation on two binary numbers in the form of
-logical operands.</li>
+logical operands  .</li>
 <li><code>static EFloat BooleanToEFloat​(boolean b,
            EContext ec)</code><br>
 Converts a boolean value (either true or false) to an arbitrary-precision
@@ -57,7 +57,7 @@ Creates a binary floating-point number from a 32-bit signed integer.</li>
 <li><code>static EFloat Invert​(EFloat ed1,
   EContext ec)</code><br>
 Performs a logical NOT operation on a binary number in the form of a
-logical operand.</li>
+logical operand  .</li>
 <li><code>static boolean IsCanonical​(EFloat ed)</code><br>
 Returns whether the given arbitrary-precision number object is in a
 canonical form.</li>
@@ -103,7 +103,7 @@ Converts a number class identifier (ranging from 1 to 9) to a text string.</li>
 EFloat ed2,
 EContext ec)</code><br>
 Performs a logical OR operation on two binary numbers in the form of
-logical operands.</li>
+logical operands  .</li>
 <li><code>static EFloat Radix​(EContext ec)</code><br>
 Returns the number 2, the binary radix.</li>
 <li><code>static EFloat Rescale​(EFloat ed,
@@ -139,7 +139,7 @@ with certain trailing zeros removed from its mantissa.</li>
 EFloat ed2,
 EContext ec)</code><br>
 Performs a logical exclusive-OR (XOR) operation on two binary numbers in the
-form of logical operands.</li>
+form of  logical operands  .</li>
 </ul>
 
 <h2>Method Details</h2>
@@ -951,13 +951,13 @@ range and the given exponent is outside that range.</li>
 <pre>public static EFloat And​(EFloat ed1, EFloat ed2, EContext ec)
 </pre>
 
-<p>Performs a logical AND operation on two binary numbers in the form of
- <i>logical operands</i>. A <code>logical operand</code> is a non-negative
+<p>Performs a logical AND operation on two binary numbers in the form of <i>
+ logical operands </i> . A <code>logical operand</code> is a non-negative
  base-2 number with an Exponent property of 0 (examples include the
  base-2 numbers <code>01001</code> and <code>111001</code>). The logical AND
  operation sets each bit of the result to 1 if the corresponding bits
  of each logical operand are both 1, and to 0 otherwise. For example,
- <code>01001 AND 111010 = 01000</code>.</p>
+ <code>01001 AND 111010 = 01000</code> .</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -976,7 +976,7 @@ precision are discarded. This parameter can be null.</p></li>
 <ul>
 <li>The result of the logical AND operation as a logical operand.
 Signals an invalid operation and returns not-a-number (NaN) if <code>
-ed1</code>, <code>ed2</code>, or both are not logical operands.</li>
+ed1</code> , <code>ed2</code> , or both are not logical operands.</li>
 </ul>
 
 <h3>Invert</h3>
@@ -984,14 +984,14 @@ ed1</code>, <code>ed2</code>, or both are not logical operands.</li>
 <pre>public static EFloat Invert​(EFloat ed1, EContext ec)
 </pre>
 
-<p>Performs a logical NOT operation on a binary number in the form of a
- <i>logical operand</i>. A <code>logical operand</code> is a non-negative
+<p>Performs a logical NOT operation on a binary number in the form of a <i>
+ logical operand </i> . A <code>logical operand</code> is a non-negative
  base-2 number with an Exponent property of 0 (examples include
  <code>01001</code> and <code>111001</code>). The logical NOT operation sets each
  bit of the result to 1 if the corresponding bit is 0, and to 0
  otherwise; it can set no more bits than the maximum precision,
  however. For example, if the maximum precision is 8 bits, then <code>NOT
- 111010 = 11000101</code>.</p>
+ 111010 = 11000101</code> .</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1020,12 +1020,13 @@ ed1</code> is not a logical operand.</li>
 </pre>
 
 <p>Performs a logical exclusive-OR (XOR) operation on two binary numbers in the
- form of <i>logical operands</i>. A <code>logical operand</code> is a
+ form of <i> logical operands </i> . A <code>logical operand</code> is a
  non-negative base-2 number with an Exponent property of 0 (examples
  include the base-2 numbers <code>01001</code> and <code>111001</code>). The
  logical exclusive-OR operation sets each digit of the result to 1 if
  either corresponding digit of the logical operands, but not both, is
- 1, and to 0 otherwise. For example, <code>01001 XOR 111010 = 101010</code>.</p>
+ 1, and to 0 otherwise. For example, <code>01001 XOR 111010 = 101010</code>
+ .</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1044,7 +1045,7 @@ precision are discarded. This parameter can be null.</p></li>
 <ul>
 <li>The result of the logical exclusive-OR operation as a logical
 operand. Signals an invalid operation and returns not-a-number (NaN)
-if <code>ed1</code>, <code>ed2</code>, or both are not logical operands.</li>
+if <code>ed1</code> , <code>ed2</code> , or both are not logical operands.</li>
 </ul>
 
 <h3>Or</h3>
@@ -1052,8 +1053,8 @@ if <code>ed1</code>, <code>ed2</code>, or both are not logical operands.</li>
 <pre>public static EFloat Or​(EFloat ed1, EFloat ed2, EContext ec)
 </pre>
 
-<p>Performs a logical OR operation on two binary numbers in the form of
- <i>logical operands</i>. A <code>logical operand</code> is a non-negative
+<p>Performs a logical OR operation on two binary numbers in the form of <i>
+ logical operands </i> . A <code>logical operand</code> is a non-negative
  base-2 number with an Exponent property of 0 (examples include the
  base-2 numbers <code>01001</code> and <code>111001</code>). The logical OR
  operation sets each bit of the result to 1 if either or both of the
@@ -1076,8 +1077,8 @@ precision are discarded. This parameter can be null.</p></li>
 
 <ul>
 <li>The result of the logical OR operation as a logical operand. Signals
-an invalid operation and returns not-a-number (NaN) if <code>ed1</code>,
-<code>ed2</code>, or both are not logical operands.</li>
+an invalid operation and returns not-a-number (NaN) if <code>ed1</code> ,
+<code>ed2</code> , or both are not logical operands.</li>
 </ul>
 
 <p><a href="/Numbers/">Back to Numbers start page.</a></p>

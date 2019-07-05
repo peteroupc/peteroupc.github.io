@@ -38,7 +38,7 @@
     long length);
 </pre>
 
-<p>Initializes a new instance of the <a href="PeterO.PartialStream.html">PeterO.PartialStream</a> class.  <b>Parameters:</b></p>
+<p>Initializes a new instance of the <a href="PeterO.PartialStream.html">PeterO.PartialStream</a> class.     <b>Parameters:</b></p>
 
 <ul>
 <li><p><i>stream</i>: The parameter  <i>stream</i>
@@ -60,7 +60,7 @@ is not documented yet.</p></li>
     bool closeOnDispose);
 </pre>
 
-<p>Initializes a new instance of the <a href="PeterO.PartialStream.html">PeterO.PartialStream</a> class.  <b>Parameters:</b></p>
+<p>Initializes a new instance of the <a href="PeterO.PartialStream.html">PeterO.PartialStream</a> class.        <b>Parameters:</b></p>
 
 <ul>
 <li><p><i>stream</i>: The parameter  <i>stream</i>
@@ -238,7 +238,7 @@ is not documented yet.</li>
     int count);
 </pre>
 
-<p>Not documented yet.  <b>Parameters:</b></p>
+<p>Not documented yet.       <b>Parameters:</b></p>
 
 <ul>
 <li><p><i>buffer</i>: The parameter  <i>buffer</i>
@@ -253,14 +253,17 @@ begins.</p></li>
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li>System.ArgumentException:
+<li><p>System.ArgumentException:
 Either  <i>offset</i>
 or  <i>count</i>
 is less than 0 or greater than  <i>buffer</i>
 &#39;s length, or  <i> buffer</i>
 &#39; s length minus  <i>offset</i>
 is less than  <i>count</i>
-.</li>
+.</p></li>
+<li><p>System.ArgumentNullException:
+The parameter  <i>buffer</i>
+is null.</p></li>
 </ul>
 
 <p><a href="/petero-csharp/">Back to petero-csharp start page.</a></p>

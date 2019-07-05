@@ -71,7 +71,7 @@
 <p>Initializes a new instance of the <a href="PeterO.BinaryIO.html">PeterO.BinaryIO</a> class. Initializes a new BinaryIO instance.    <b>Parameters:</b></p>
 
 <ul>
-<li><i>stream</i>:  The parameter  <i>stream</i>
+<li><i>stream</i>: The parameter  <i>stream</i>
 is a Stream object.</li>
 </ul>
 
@@ -415,11 +415,19 @@ is not documented yet.</li>
     byte[] data);
 </pre>
 
-<p>Not documented yet.  <b>Parameters:</b></p>
+<p>Not documented yet.    <b>Parameters:</b></p>
 
 <ul>
 <li><i>data</i>: The parameter  <i>data</i>
 is not documented yet.</li>
+</ul>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter  <i>data</i>
+is null.</li>
 </ul>
 
 <p><a id="Write_byte_int_int"></a></p>
@@ -432,7 +440,7 @@ is not documented yet.</li>
     int length);
 </pre>
 
-<p>Not documented yet.  <b>Parameters:</b></p>
+<p>Not documented yet.       <b>Parameters:</b></p>
 
 <ul>
 <li><p><i>data</i>: The parameter  <i>data</i>
@@ -447,14 +455,17 @@ begins.</p></li>
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li>System.ArgumentException:
+<li><p>System.ArgumentException:
 Either  <i>offset</i>
 or  <i>length</i>
 is less than 0 or greater than  <i>data</i>
 &#39;s length, or  <i>             data</i>
 &#39; s length minus  <i>offset</i>
 is less than  <i>length</i>
-.</li>
+.</p></li>
+<li><p>System.ArgumentNullException:
+The parameter  <i>data</i>
+is null.</p></li>
 </ul>
 
 <p><a id="Write7BitEncodedInt32BE_int"></a></p>

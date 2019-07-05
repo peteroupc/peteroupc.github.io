@@ -86,11 +86,11 @@
 <p>Initializes a new instance of the <a href="PeterO.Numbers.EContext.html">PeterO.Numbers.EContext</a> class.       <b>Parameters:</b></p>
 
 <ul>
-<li><p><i>precision</i>:  Maximum precision, in decimal digits, of a number&#39;s significand.</p></li>
-<li><p><i>rounding</i>:  The rounding mode for this context.</p></li>
-<li><p><i>exponentMinSmall</i>:  Smallest exponent of a number, as a power of 10.</p></li>
-<li><p><i>exponentMaxSmall</i>:  Largest exponent of a number, as a power of 10.</p></li>
-<li><p><i>clampNormalExponents</i>:  The value of the &quot;ClampNormalExponents&quot; property for this context.</p></li>
+<li><p><i>precision</i>: Maximum precision, in decimal digits, of a number&#39;s significand.</p></li>
+<li><p><i>rounding</i>: The rounding mode for this context.</p></li>
+<li><p><i>exponentMinSmall</i>: Smallest exponent of a number, as a power of 10.</p></li>
+<li><p><i>exponentMaxSmall</i>: Largest exponent of a number, as a power of 10.</p></li>
+<li><p><i>clampNormalExponents</i>: The value of the &quot;ClampNormalExponents&quot; property for this context.</p></li>
 </ul>
 
 <p><a id="Void_ctor_EInteger_ERounding_EInteger_EInteger_Boolean"></a></p>
@@ -108,11 +108,11 @@
 <p>Initializes a new instance of the <a href="PeterO.Numbers.EContext.html">PeterO.Numbers.EContext</a> class, using arbitrary-precision integers to hold the precision and exponent range.       <b>Parameters:</b></p>
 
 <ul>
-<li><p><i>bigintPrecision</i>:  Maximum precision, in decimal digits, of a number&#39;s significand.</p></li>
-<li><p><i>rounding</i>:  The rounding mode for this context.</p></li>
-<li><p><i>exponentMin</i>:  Smallest exponent of a number, as a power of 10.</p></li>
-<li><p><i>exponentMax</i>:  Largest exponent of a number, as a power of 10.</p></li>
-<li><p><i>clampNormalExponents</i>:  The value of the &quot;ClampNormalExponents&quot; property for this context.</p></li>
+<li><p><i>bigintPrecision</i>: Maximum precision, in decimal digits, of a number&#39;s significand.</p></li>
+<li><p><i>rounding</i>: The rounding mode for this context.</p></li>
+<li><p><i>exponentMin</i>: Smallest exponent of a number, as a power of 10.</p></li>
+<li><p><i>exponentMax</i>: Largest exponent of a number, as a power of 10.</p></li>
+<li><p><i>clampNormalExponents</i>: The value of the &quot;ClampNormalExponents&quot; property for this context.</p></li>
 </ul>
 
 <p><a id="Basic"></a></p>
@@ -164,9 +164,7 @@
 <pre>public static readonly PeterO.Numbers.EContext CliDecimal;
 </pre>
 
-<p>An arithmetic context for the .NET Framework decimal format (see <a href="PeterO.Numbers.EDecimal.html">
-            &#x22;Forms of numbers&#x22;
-            </a> &quot;Forms of numbers&quot;  ), 96 bits precision, and a valid exponent range of -28 to 0. The default rounding mode is HalfEven. (The  <code>&quot;Cli&quot;</code>  stands for &quot;Common Language Infrastructure&quot;, which defined this format as the .NET Framework decimal format in version 1, but leaves it unspecified in later versions.).  <a id="Decimal128"></a></p>
+<p>An arithmetic context for the .NET Framework decimal format (see <a href="PeterO.Numbers.EDecimal.html">&#x22;Forms of numbers&#x22;</a>&quot;Forms of numbers&quot; ), 96 bits precision, and a valid exponent range of -28 to 0. The default rounding mode is HalfEven. (The  <code>&quot;Cli&quot;</code>  stands for &quot;Common Language Infrastructure&quot;, which defined this format as the .NET Framework decimal format in version 1, but leaves it unspecified in later versions.).  <a id="Decimal128"></a></p>
 
 <h3>Decimal128</h3>
 
@@ -381,9 +379,9 @@
 <pre>public bool IsSimplified { get; }
 </pre>
 
-<p>Gets a value indicating whether to use a &quot;simplified&quot; arithmetic. In the simplified arithmetic, infinity, not-a-number, and subnormal numbers are not allowed, and negative zero is treated the same as positive zero. For further details, see <a href="http://speleotrove.com/decimal/dax3274.html">  <code>http://speleotrove.com/decimal/dax3274.html</code>  </a> .  <b>Returns:</b></p>
+<p>Gets a value indicating whether to use a &quot;simplified&quot; arithmetic. In the simplified arithmetic, infinity, not-a-number, and subnormal numbers are not allowed, and negative zero is treated the same as positive zero. For further details, see <a href="http://speleotrove.com/decimal/dax3274.html"> <code>http://speleotrove.com/decimal/dax3274.html</code> </a> .   <b>Returns:</b></p>
 
-<p><code>true</code>  if to use a &quot;simplified&quot; arithmetic; otherwise,  <code>false</code>  In the simplified arithmetic, infinity, not-a-number, and subnormal numbers are not allowed, and negative zero is treated the same as positive zero. For further details, see <a href="http://speleotrove.com/decimal/dax3274.html">  <code>http://speleotrove.com/decimal/dax3274.html</code>  </a> .  <code>true</code>  if a &quot;simplified&quot; arithmetic will be used; otherwise,  <code>false</code>  .</p>
+<p><code>true</code>  if to use a &quot;simplified&quot; arithmetic; otherwise,  <code>false</code>  In the simplified arithmetic, infinity, not-a-number, and subnormal numbers are not allowed, and negative zero is treated the same as positive zero. For further details, see <a href="http://speleotrove.com/decimal/dax3274.html"> <code>http://speleotrove.com/decimal/dax3274.html</code> </a> .  <code>true</code>  if a &quot;simplified&quot; arithmetic will be used; otherwise,  <code>false</code> .</p>
 
 <p><a id="Precision"></a></p>
 

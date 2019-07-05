@@ -235,6 +235,19 @@ bignum with length 0 as having a value of -1.</li>
 
 <h2>Release Notes</h2>
 
+<h3>Version 4.0.0-beta1:</h3>
+
+<ul>
+<li>Support nullable types in CBORObject.ToObject.</li>
+<li>Update Numbers library to newer version</li>
+<li>JSONOptions.Base64Padding now has no effect.  The library will now write padding as necessary when
+writing traditional base64 to JSON and write no padding when writing base64url to JSON.</li>
+<li>JSONOptions.ReplaceSurrogates property added.</li>
+<li>Restrict valid shared reference indices to integers 0 or greater.</li>
+<li>Reject writing JSON where CBOR maps have two keys with the same string equivalent.</li>
+<li>Improve performance of CBOR object comparisons involving big floats.</li>
+</ul>
+
 <h3>Version 4.0.0-alpha2:</h3>
 
 <ul>
@@ -257,6 +270,18 @@ PODOptions.RemoveIsPrefix was removed.</li>
 <li>Certain other changes in CBOR object reading and validation were
 made; they are largely compatible with previous versions but may be
 backwards-incompatible in certain rare cases</li>
+</ul>
+
+<h3>Version 3.5.2</h3>
+
+<ul>
+<li>Update Numbers library used by this library to a version that doesn&#39;t depend on StyleCop.Analyzers in the package.</li>
+</ul>
+
+<h3>Version 3.5.1</h3>
+
+<ul>
+<li>Update Numbers library used by this library.</li>
 </ul>
 
 <h3>Version 3.5.0</h3>
