@@ -239,56 +239,56 @@
 <pre>public static readonly PeterO.Cbor.CBORObject False;
 </pre>
 
-<p>Represents the value false. <a id="NaN"></a></p>
+<p>Represents the value false.  <a id="NaN"></a></p>
 
 <h3>NaN</h3>
 
 <pre>public static readonly PeterO.Cbor.CBORObject NaN;
 </pre>
 
-<p>A not-a-number value. <a id="NegativeInfinity"></a></p>
+<p>A not-a-number value.  <a id="NegativeInfinity"></a></p>
 
 <h3>NegativeInfinity</h3>
 
 <pre>public static readonly PeterO.Cbor.CBORObject NegativeInfinity;
 </pre>
 
-<p>The value negative infinity. <a id="Null"></a></p>
+<p>The value negative infinity.  <a id="Null"></a></p>
 
 <h3>Null</h3>
 
 <pre>public static readonly PeterO.Cbor.CBORObject Null;
 </pre>
 
-<p>Represents the value null. <a id="PositiveInfinity"></a></p>
+<p>Represents the value null.  <a id="PositiveInfinity"></a></p>
 
 <h3>PositiveInfinity</h3>
 
 <pre>public static readonly PeterO.Cbor.CBORObject PositiveInfinity;
 </pre>
 
-<p>The value positive infinity. <a id="True"></a></p>
+<p>The value positive infinity.  <a id="True"></a></p>
 
 <h3>True</h3>
 
 <pre>public static readonly PeterO.Cbor.CBORObject True;
 </pre>
 
-<p>Represents the value true. <a id="Undefined"></a></p>
+<p>Represents the value true.  <a id="Undefined"></a></p>
 
 <h3>Undefined</h3>
 
 <pre>public static readonly PeterO.Cbor.CBORObject Undefined;
 </pre>
 
-<p>Represents the value undefined. <a id="Zero"></a></p>
+<p>Represents the value undefined.  <a id="Zero"></a></p>
 
 <h3>Zero</h3>
 
 <pre>public static readonly PeterO.Cbor.CBORObject Zero;
 </pre>
 
-<p>Gets a CBOR object for the number zero. <a id="Count"></a></p>
+<p>Gets a CBOR object for the number zero.  <a id="Count"></a></p>
 
 <h3>Count</h3>
 
@@ -1700,6 +1700,7 @@ parameter, that converter will be used to convert the object to a CBOR object. T
 <li><p>A primitive integer type (  <code>int</code>  ,  <code>short</code>  ,  <code>long</code>  , as well as  <code>sbyte</code>  ,  <code>ushort</code>  ,  <code>uint</code>  , and  <code>ulong</code>  in .NET) is converted to the corresponding CBOR integer.</p></li>
 <li><p>A primitive floating-point type (  <code>float</code>  ,  <code>double</code>  , as well as  <code>decimal</code>  in .NET) is converted to the corresponding CBOR number.</p></li>
 <li><p>A  <code>String</code>  is converted to a CBOR text string. To create a CBOR byte string object from  <code>String</code>  , see the example given in <strong>M:PeterO.Cbor.CBORObject.FromObject(System.Byte[])</strong> .</p></li>
+<li><p>In the .NET version, a nullable is converted to  <code>CBORObject.Null</code>  if the nullable&#39;s value is  <code>null</code>  , or converted according to the nullable&#39;s underlying type, if that type is supported by this method.</p></li>
 <li><p>A number of type  <code>EDecimal</code>  ,  <code>EFloat</code>  ,  <code>EInteger</code>  , and  <code>ERational</code>  in the <a href="https://www.nuget.org/packages/PeterO.Numbers">  <code>PeterO.Numbers</code>  </a> library (in .NET) or the <a href="https://github.com/peteroupc/numbers-java">  <code>com.github.peteroupc/numbers</code>  </a> artifact (in Java) is converted to the corresponding CBOR number.</p></li>
 <li><p>An array other than  <code>byte[]</code>  is converted to a CBOR array. In the .NET version, a multidimensional array is converted to an array of arrays.</p></li>
 <li><p>A  <code>byte[]</code>  (1-dimensional byte array) is converted to a CBOR byte string; the byte array is copied to a new byte array in this process. (This method can&#39;t be used to decode CBOR data from a byte array; for that, use the <b>DecodeFromBytes</b> method instead.)</p></li>
@@ -3435,7 +3436,7 @@ An I/O error occurred.</p></li>
 <li><p>Maps of CBORObject. The keys to the map are written out to the data stream in an undefined order.</p></li>
 <li><p>Null.</p></li>
 <li><p>Byte arrays, which will always be written as definite-length byte strings.</p></li>
-<li><p>String objects, which will be written as indefinite-length text strings if their size exceeds a certain threshold (this behavior may change in future versions of this library).</p></li>
+<li><p>String objects. The strings will be encoded using definite-length encoding regardless of their length.</p></li>
 <li><p>Any object accepted by the FromObject static methods.</p>
 
 <p><b>Parameters:</b></p>
@@ -3675,7 +3676,7 @@ An I/O error occurred.</p></li>
     System.IO.Stream stream);
 </pre>
 
-<p>Writes a string in CBOR format to a data stream. The string will be encoded using indefinite-length encoding if its length exceeds a certain threshold (this behavior may change in future versions of this library).</p>
+<p>Writes a string in CBOR format to a data stream. The string will be encoded using definite-length encoding regardless of its length.</p>
 
 <p><b>Parameters:</b></p>
 

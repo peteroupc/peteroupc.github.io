@@ -376,15 +376,15 @@ bytes</code> is null.</li>
  (U + FFFD). <p>In the .NET implementation, this method is implemented
  as an extension method to any object implementing ICharacterEncoding
  and can be called as follows: <code>enc.DecodeToString(bytes, offset,
- length)</code> . If the object&#39;s class already has a DecodeToString
+ length)</code>. If the object&#39;s class already has a DecodeToString
  method with the same parameters, that method takes precedence over
- this extension method. </p> <p>In the .NET implementation, this
- method is implemented as an extension method to any object
- implementing ICharacterEncoding and can be called as follows:
- <code>enc.DecodeToString(bytes, offset, length)</code> . If the object&#39;s
+ this extension method.</p> <p>In the .NET implementation, this method
+ is implemented as an extension method to any object implementing
+ ICharacterEncoding and can be called as follows:
+ <code>enc.DecodeToString(bytes, offset, length)</code>. If the object&#39;s
  class already has a <code>DecodeToString</code> method with the same
- parameters, that method takes precedence over this extension method.
- </p></p>
+ parameters, that method takes precedence over this extension
+ method.</p></p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -409,9 +409,9 @@ bytes</code> begins.</p></li>
 <ul>
 <li><p><code>java.lang.IllegalArgumentException</code> - Either <code>offset</code> or <code>length</code> is
 less than 0 or greater than <code>bytes</code> &#39;s length, or <code>bytes</code>
-&#39; s length minus <code>offset</code> is less than <code>length</code> .</p></li>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>enc</code> or <code>
-bytes</code> is null.</p></li>
+&#39; s length minus <code>offset</code> is less than <code>length</code>.</p></li>
+<li><p><code>java.lang.NullPointerException</code> - The parameter <code>enc</code> or <code>bytes</code> is
+null.</p></li>
 </ul>
 
 <h3>EncodeToBytes</h3>
@@ -1316,16 +1316,16 @@ str</code> is null.</li>
  string code point by code point, among other things. When reading the
  string, any unpaired surrogate characters are replaced with the
  replacement character (U + FFFD). <p>In the .NET implementation, this
- method is implemented as an extension method to any String object and
- can be called as follows: <code>str.StringToInput(offset, length)</code> .
+ method is implemented as an extension method to any string object and
+ can be called as follows: <code>str.StringToInput(offset, length)</code>.
  If the object&#39;s class already has a StringToInput method with the
  same parameters, that method takes precedence over this extension
- method. </p> <p>In the .NET implementation, this method is
- implemented as an extension method to any object implementing string
- and can be called as follows: <code>str.StringToInput(offset,
- length)</code> . If the object&#39;s class already has a
- <code>StringToInput</code> method with the same parameters, that method
- takes precedence over this extension method. </p></p>
+ method.</p> <p>In the .NET implementation, this method is implemented
+ as an extension method to any object implementing string and can be
+ called as follows: <code>str.StringToInput(offset, length)</code>. If the
+ object&#39;s class already has a <code>StringToInput</code> method with the
+ same parameters, that method takes precedence over this extension
+ method.</p></p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1348,7 +1348,7 @@ str</code> (but not more than <code>str</code> &#39;s length).</p></li>
 <ul>
 <li><p><code>java.lang.IllegalArgumentException</code> - Either <code>offset</code> or <code>length</code> is
 less than 0 or greater than <code>str</code> &#39;s length, or <code>str</code> &#39; s
-length minus <code>offset</code> is less than <code>length</code> .</p></li>
+length minus <code>offset</code> is less than <code>length</code>.</p></li>
 <li><p><code>java.lang.NullPointerException</code> - The parameter <code>str</code> is null.</p></li>
 </ul>
 

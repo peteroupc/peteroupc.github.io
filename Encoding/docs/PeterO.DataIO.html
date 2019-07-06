@@ -66,10 +66,9 @@ is null.</li>
 
 <p><b>Deprecated.</b> Use ToReader instead.</p>
 
-<p>Wraps a portion of a byte array into a byte reader. In the .NET implementation, this method is implemented as an extension method to any object implementing byte[] and can be called as follows:  <code>bytes.ToByteReader(offset, length)</code> . If the object&#39;s class already has a ToByteReader method with the same parameters, that method takes precedence over this extension method.</p>
+<p>Wraps a portion of a byte array into a byte reader. In the .NET implementation, this method is implemented as an extension method to any object implementing byte[] and can be called as follows:  <code>bytes.ToByteReader(offset, length)</code>  . If the object&#39;s class already has a ToByteReader method with the same parameters, that method takes precedence over this extension method.</p>
 
-<pre>     &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>bytes</i>: The byte array to wrap into a byte reader.</p></li>
@@ -98,9 +97,6 @@ is less than 0 or greater than  <i>bytes</i>
 &#39; s length minus  <i>offset</i>
 is less than  <i>length</i>
 .</p></li>
-<li><p>System.ArgumentNullException:
-The parameter  <i>bytes</i>
-is null.</p></li>
 </ul>
 
 <p><a id="ToByteReader_this_System_IO_Stream"></a></p>
@@ -171,10 +167,9 @@ is null.</li>
     int length);
 </pre>
 
-<p>Wraps a portion of a byte array into a byte reader object. In the .NET implementation, this method is implemented as an extension method to any byte array object and can be called as follows:  <code>bytes.ToByteReader(offset, length)</code> . If the object&#39;s class already has a ToByteReader method with the same parameters, that method takes precedence over this extension method.</p>
+<p>Wraps a portion of a byte array into a byte reader object. In the .NET implementation, this method is implemented as an extension method to any byte array object and can be called as follows:  <code>bytes.ToByteReader(offset, length)</code>  . If the object&#39;s class already has a ToByteReader method with the same parameters, that method takes precedence over this extension method.</p>
 
-<pre>     &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>bytes</i>: The byte array to wrap.</p></li>
@@ -200,9 +195,6 @@ is less than 0 or greater than  <i>bytes</i>
 &#39; s length minus  <i>offset</i>
 is less than  <i>length</i>
 .</p></li>
-<li><p>System.ArgumentNullException:
-The parameter  <i>bytes</i>
-is null.</p></li>
 </ul>
 
 <p><a id="ToReader_this_System_IO_Stream"></a></p>
