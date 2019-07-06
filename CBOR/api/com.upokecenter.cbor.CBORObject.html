@@ -3954,7 +3954,7 @@ or is not a 32-bit signed integer (<code>int</code>).</p></li>
  IList&lt;CBORObject&gt; keys){ if (mapObj == null) { throw
  new NullPointerException)nameof(mapObj));} if (keys == null) {
  throw new NullPointerException)nameof(keys));} if (obj.getType() !=
- CBORType.Map) { throw new ArgumentException(&quot;&#39;obj&#39; is not a map.&quot;); }
+ CBORType.Map) { throw new IllegalArgumentException(&quot;&#39;obj&#39; is not a map.&quot;); }
  StringBuilder builder = new StringBuilder(); var first = true;
  builder.Append(&quot;{&quot;); for (CBORObject key in keys) { if
  (mapObj.ContainsKey(key)) { if (!first) {builder.Append(&quot;, &quot;);} var
@@ -4265,7 +4265,7 @@ value is greater than 255.</p></li>
  if(outputStream == null){throw new
  NullPointerException(nameof(outputStream));}
  if(obj.getType() != CBORType.Map){ throw new
- ArgumentException("'obj' is not a map."); } int keyCount = 0;
+ IllegalArgumentException("'obj' is not a map."); } int keyCount = 0;
  for (CBORObject key in keys) {
  if(mapObj.ContainsKey(key)){ keyCount++; } }
  CBORObject.WriteValue(outputStream, 5, keyCount); for (CBORObject key
@@ -4283,7 +4283,7 @@ value is greater than 255.</p></li>
  if(outputStream == null){throw new
  NullPointerException(nameof(outputStream));}
  if(obj.getType() != CBORType.Map){ throw new
- ArgumentException("'obj' is not a map."); }
+ IllegalArgumentException("'obj' is not a map."); }
  outputStream.write((byte)0xbf); for (CBORObject key in keys)
  { if(mapObj.ContainsKey(key)){
  key.WriteTo(outputStream); mapObj.get(key).WriteTo(outputStream); }
