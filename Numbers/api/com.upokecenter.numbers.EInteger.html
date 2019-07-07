@@ -10,23 +10,23 @@
 </pre>
 
 <p>Represents an arbitrary-precision integer. (The &quot;E&quot; stands for &quot;extended&quot;,
- and has this prefix to group it with the other classes common to this
- library, particularly EDecimal, EFloat, and ERational.) <p>Instances
- of this class are immutable, so they are inherently safe for use by
- multiple threads. Multiple instances of this object with the same
- value are interchangeable, but they should be compared using the
- &quot;Equals&quot; method rather than the &quot;==&quot; operator. </p> <p><b>Security
- note</b> </p> <p>It is not recommended to implement
+ and has this prefix to group it with the other classes common to
+ this library, particularly EDecimal, EFloat, and ERational.)
+ <p>Instances of this class are immutable, so they are inherently
+ safe for use by multiple threads. Multiple instances of this object
+ with the same value are interchangeable, but they should be compared
+  using the &quot;Equals&quot; method rather than the &quot;==&quot; operator. </p>
+ <p><b>Security note</b> </p> <p>It is not recommended to implement
  security-sensitive algorithms using the methods in this class, for
- several reasons: </p> <ul> <li><code>EInteger</code> objects are immutable,
- so they can&#39;t be modified, and the memory they occupy is not
- guaranteed to be cleared in a timely fashion due to garbage
+ several reasons: </p> <ul> <li><code>EInteger</code> objects are
+ immutable, so they can&#39;t be modified, and the memory they occupy is
+ not guaranteed to be cleared in a timely fashion due to garbage
  collection. This is relevant for applications that use many-bit-long
  numbers as secret parameters. </li> <li>The methods in this class
  (especially those that involve arithmetic) are not guaranteed to be
- &quot;constant-time&quot; (non-data-dependent) for all relevant inputs. Certain
- attacks that involve encrypted communications have exploited the
- timing and other aspects of such communications to derive keying
+  &quot;constant-time&quot; (non-data-dependent) for all relevant inputs.
+ Certain attacks that involve encrypted communications have exploited
+ the timing and other aspects of such communications to derive keying
  material or cleartext indirectly. </li> </ul> <p>Applications should
  instead use dedicated security libraries to handle big numbers in
  security-sensitive algorithms. </p></p>
@@ -300,7 +300,8 @@ Finds the exclusive &quot;or&quot; of two arbitrary-precision integer objects.</
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li><code>true</code> if this value is even; otherwise, <code>false</code> .</li>
+<li><code>true</code> if this value is even; otherwise,
+  <code>false</code> .</li>
 </ul>
 
 <h3>isPowerOfTwo</h3>
@@ -315,7 +316,7 @@ Finds the exclusive &quot;or&quot; of two arbitrary-precision integer objects.</
 
 <ul>
 <li><code>true</code> if this object&#39; s value is a power of two, and greater
-than 0; otherwise, <code>false</code> .</li>
+than 0; otherwise, <code>false</code>.</li>
 </ul>
 
 <h3>isZero</h3>
@@ -328,7 +329,8 @@ than 0; otherwise, <code>false</code> .</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li><code>true</code> if this value is 0; otherwise, <code>false</code> .</li>
+<li><code>true</code> if this value is 0; otherwise,
+  <code>false</code> .</li>
 </ul>
 
 <h3>signum</h3>
@@ -355,8 +357,8 @@ than 0; otherwise, <code>false</code> .</li>
 
 <ul>
 <li><p><code>bytes</code> - A byte array consisting of the two&#39;s-complement form (see
-<code>&quot;Forms of numbers&quot; </code>) of the
-arbitrary-precision integer to create. The byte array is encoded
+<code>&quot;Forms of numbers&quot; </code>) of
+the arbitrary-precision integer to create. The byte array is encoded
 using the following rules: <ul> <li>Positive numbers have the first
 byte&#39;s highest bit cleared, and negative numbers have the bit set.
 </li> <li>The last byte contains the lowest 8-bits, the next-to-last
@@ -366,17 +368,17 @@ contains the next lowest 8 bits, and so on. For example, the number
 <code>0xc8</code> , so an additional 0 is added at the start to ensure
 it&#39;s interpreted as positive.) </li> <li>To encode negative numbers,
 take the absolute value of the number, subtract by 1, encode the
-number into bytes, and toggle each bit of each byte. Any further bits
-that appear beyond the most significant bit of the number will be all
-ones. For example, the number -450 can be encoded as <code>0xfe,
-0x70</code> and -52869 as <code>0xff, 0x31, 0x7b</code> . (Note that the second
-example contains a cleared high bit in <code>0x31, 0x7b</code> , so an
-additional 0xff is added at the start to ensure it&#39;s interpreted as
-negative.) </li> </ul> <p>For little-endian, the byte order is
-reversed from the byte order just discussed. </p> .</p></li>
+number into bytes, and toggle each bit of each byte. Any further
+bits that appear beyond the most significant bit of the number will
+be all ones. For example, the number -450 can be encoded as <code>
+0xfe, 0x70</code> and -52869 as <code>0xff, 0x31, 0x7b</code> . (Note that the
+second example contains a cleared high bit in <code>0x31, 0x7b</code> ,
+so an additional 0xff is added at the start to ensure it&#39;s
+interpreted as negative.) </li> </ul> <p>For little-endian, the byte
+order is reversed from the byte order just discussed. </p> .</p></li>
 <li><p><code>littleEndian</code> - If true, the byte order is little-endian, or
-least-significant-byte first. If false, the byte order is big-endian,
-or most-significant-byte first.</p></li>
+least-significant-byte first. If false, the byte order is
+big-endian, or most-significant-byte first.</p></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -464,9 +466,9 @@ number.</li>
 <ul>
 <li><p><code>str</code> - A string described by the FromRadixSubstring method.</p></li>
 <li><p><code>radix</code> - A base from 2 to 36. Depending on the radix, the string can use
-the basic digits 0 to 9 (U + 0030 to U + 0039) and then the basic letters
-A to Z (U + 0041 to U + 005A). For example, 0-9 in radix 10, and 0-9,
-then A-F in radix 16.</p></li>
+the basic digits 0 to 9 (U + 0030 to U + 0039) and then the basic
+letters A to Z (U + 0041 to U + 005A). For example, 0-9 in radix 10, and
+0-9, then A-F in radix 16.</p></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -499,9 +501,9 @@ with a minus sign (&quot;-&quot;, U+002D) to indicate a negative number. The
 desired portion is not allowed to contain white space characters,
 including spaces.</p></li>
 <li><p><code>radix</code> - A base from 2 to 36. Depending on the radix, the string can use
-the basic digits 0 to 9 (U + 0030 to U + 0039) and then the basic letters
-A to Z (U + 0041 to U + 005A). For example, 0-9 in radix 10, and 0-9,
-then A-F in radix 16.</p></li>
+the basic digits 0 to 9 (U + 0030 to U + 0039) and then the basic
+letters A to Z (U + 0041 to U + 005A). For example, 0-9 in radix 10, and
+0-9, then A-F in radix 16.</p></li>
 <li><p><code>index</code> - The index of the string that starts the string portion.</p></li>
 <li><p><code>endIndex</code> - The index of the string that ends the string portion. The
 length will be index + endIndex - 1.</p></li>
@@ -566,10 +568,10 @@ format.</p></li>
 
 <ul>
 <li><p><code>str</code> - A text string. The desired portion of the string must contain
-only basic digits 0 to 9 (U + 0030 to U + 0039), except that it may start
-with a minus sign (&quot;-&quot;, U+002D) to indicate a negative number. The
-desired portion is not allowed to contain white space characters,
-including spaces.</p></li>
+only basic digits 0 to 9 (U + 0030 to U + 0039), except that it may
+start with a minus sign (&quot;-&quot;, U+002D) to indicate a negative number.
+The desired portion is not allowed to contain white space
+characters, including spaces.</p></li>
 <li><p><code>index</code> - The index of the string that starts the string portion.</p></li>
 <li><p><code>endIndex</code> - The index of the string that ends the string portion. The
 length will be index + endIndex - 1.</p></li>
@@ -587,7 +589,7 @@ string portion.</li>
 <ul>
 <li><p><code>java.lang.IllegalArgumentException</code> - The parameter <code>index</code> is less than 0,
 <code>endIndex</code> is less than 0, or either is greater than the
-string&#39;s length, or <code>endIndex</code> is less than <code>index</code> .</p></li>
+string&#39;s length, or <code>endIndex</code> is less than <code>index</code>.</p></li>
 <li><p><code>java.lang.NullPointerException</code> - The parameter <code>str</code> is null.</p></li>
 </ul>
 
@@ -697,7 +699,7 @@ Renamed to ToInt64Unchecked.</p>
 
 <ul>
 <li><code>true</code> if this object&#39;s value is from -2147483648 through
-2147483647; otherwise, <code>false</code> .</li>
+2147483647; otherwise, <code>false</code>.</li>
 </ul>
 
 <h3>CanFitInInt64</h3>
@@ -711,7 +713,7 @@ Renamed to ToInt64Unchecked.</p>
 
 <ul>
 <li><code>true</code> if this object&#39;s value is from -9223372036854775808
-through 9223372036854775807; otherwise, <code>false</code> .</li>
+through 9223372036854775807; otherwise, <code>false</code>.</li>
 </ul>
 
 <h3>compareTo</h3>
@@ -746,7 +748,7 @@ less, or a positive number if this instance is greater.</li>
 </pre>
 
 <p>Adds this object and another object.<p/><pre>EInteger result =
- EInteger.FromString(&quot;5&quot;).Add(200);</pre> .</p>
+  EInteger.FromString(&quot;5&quot;).Add(200);</pre> .</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -787,7 +789,7 @@ less, or a positive number if this instance is greater.</li>
 
 <p>Multiplies this instance by the value of an arbitrary-precision integer
  object.<p/><pre>EInteger result =
- EInteger.FromString(&quot;5&quot;).Multiply(200);</pre> .</p>
+  EInteger.FromString(&quot;5&quot;).Multiply(200);</pre> .</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -956,14 +958,16 @@ quotient, and the second is the remainder.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>obj</code> - The parameter <code>obj</code> is an arbitrary object.</li>
+<li><code>obj</code> - The parameter
+  <code>obj</code>
+   is an arbitrary object.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
 <li><code>true</code> if this object and another object are equal; otherwise,
-<code>false</code> .</li>
+<code>false</code>.</li>
 </ul>
 
 <h3>Gcd</h3>
@@ -1072,8 +1076,8 @@ value is 0.</li>
 </pre>
 
 <p>Gets the lowest set bit in this number&#39;s absolute value, in the form of an
- arbitrary-precision integer. (This will also be the lowest set bit in
- the number&#39;s two&#39;s-complement form (see <code>&quot;Forms of numbers&quot; </code>).).</p>
+ arbitrary-precision integer. (This will also be the lowest set bit
+ in the number&#39;s two&#39;s-complement form (see <code>&quot;Forms of numbers&quot; </code>).).</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -1101,7 +1105,7 @@ value is 0 or odd.</li>
 <ul>
 <li><code>true</code> if a bit is set in the two&#39; s-complement form (see
 <code>EDecimal</code>) of this object&#39; s value;
-otherwise, <code>false</code> .</li>
+otherwise, <code>false</code>.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -1129,7 +1133,7 @@ otherwise, <code>false</code> .</li>
 <ul>
 <li><code>true</code> if a bit is set in the two&#39; s-complement form (see
 <code>EDecimal</code>) of this object&#39; s value;
-otherwise, <code>false</code> .</li>
+otherwise, <code>false</code>.</li>
 </ul>
 
 <h3>GetSignedBitLengthAsEInteger</h3>
@@ -1139,8 +1143,8 @@ otherwise, <code>false</code> .</li>
 
 <p>Finds the minimum number of bits needed to represent this object&#39;s value,
  except for its sign, in the form of an arbitrary-precision integer.
- If the value is negative, finds the number of bits in the value equal
- to this object&#39;s absolute value minus 1.</p>
+ If the value is negative, finds the number of bits in the value
+ equal to this object&#39;s absolute value minus 1.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -1155,7 +1159,8 @@ object&#39;s value is 0 or negative 1.</li>
 </pre>
 
 <p>Deprecated.
-This method may overflow. Use GetSignedBitLengthAsEInteger instead.</p>
+This method may overflow. Use GetSignedBitLengthAsEInteger
+instead.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -1237,7 +1242,8 @@ object&#39;s value is 0, and returns 1 if the value is negative 1.</li>
 </pre>
 
 <p>Deprecated.
-This method may overflow. Use GetUnsignedBitLengthAsEInteger instead.</p>
+This method may overflow. Use GetUnsignedBitLengthAsEInteger
+instead.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -1259,10 +1265,10 @@ a 32-bit signed integer.</li>
 </pre>
 
 <p>Finds the modulus remainder that results when this instance is divided by
- the value of an arbitrary-precision integer. The modulus remainder is
- the same as the normal remainder if the normal remainder is positive,
- and equals divisor plus normal remainder if the normal remainder is
- negative.</p>
+ the value of an arbitrary-precision integer. The modulus remainder
+ is the same as the normal remainder if the normal remainder is
+ positive, and equals divisor plus normal remainder if the normal
+ remainder is negative.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1397,7 +1403,9 @@ null.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>The result. Returns 1 if <code>bigPower</code> is 0.</li>
+<li>The result. Returns 1 if
+  <code>bigPower</code>
+   is 0.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -1550,7 +1558,8 @@ parameter.</li>
 
 <p>Returns an arbitrary-precision integer with the bits shifted to the left by
  a number of bits. A value of 1 doubles this value, a value of 2
- multiplies it by 4, a value of 3 by 8, a value of 4 by 16, and so on.</p>
+ multiplies it by 4, a value of 3 by 8, a value of 4 by 16, and so
+ on.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1586,7 +1595,7 @@ parameter.</li>
 
 <p>Does an AND operation between two arbitrary-precision integer values.<p>
  Each arbitrary-precision integer is treated as a two&#39;s-complement
- form (see <code>&quot;Forms of numbers&quot;
+  form (see <code>&quot;Forms of numbers&quot;
  </code>) for the purposes of this operator. </p></p>
 
 <p><strong>Parameters:</strong></p>
@@ -1616,7 +1625,7 @@ set.</li>
 
 <p>Does an OR operation between two arbitrary-precision integer instances.<p>
  Each arbitrary-precision integer is treated as a two&#39;s-complement
- form (see <code>&quot;Forms of numbers&quot;
+  form (see <code>&quot;Forms of numbers&quot;
  </code>) for the purposes of this operator. </p></p>
 
 <p><strong>Parameters:</strong></p>
@@ -1646,7 +1655,7 @@ satisfy biggerCount == CountWords(result).</p></li>
 
 <p>Finds the exclusive &quot;or&quot; of two arbitrary-precision integer objects. <p>Each
  arbitrary-precision integer is treated as a two&#39;s-complement form
- (see <code>&quot;Forms of numbers&quot; </code>)
+  (see <code>&quot;Forms of numbers&quot; </code>)
  for the purposes of this operator. </p></p>
 
 <p><strong>Parameters:</strong></p>
@@ -1761,13 +1770,15 @@ null.</li>
  fewest bytes necessary to store its value unambiguously. If this
  value is negative, the bits that appear beyond the most significant
  bit of the number will be all ones. The resulting byte array can be
- passed to the <code>FromBytes()</code> method (with the same byte order) to
- reconstruct this integer&#39;s value.</p>
+ passed to the <code>FromBytes()</code> method (with the same byte order)
+ to reconstruct this integer&#39;s value.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>littleEndian</code> - Either <code>true</code> or <code>false</code> .</li>
+<li><code>littleEndian</code> - Either
+  <code>true</code> or
+  <code>false</code> .</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
