@@ -27,7 +27,9 @@
 <pre>public CBORTypeMapper();
 </pre>
 
-<p>Initializes a new instance of the <a href="PeterO.Cbor.CBORTypeMapper.html">PeterO.Cbor.CBORTypeMapper</a> class.  <a id="AddConverter_T_System_Type_PeterO_Cbor_ICBORConverter_T"></a></p>
+<p>Initializes a new instance of the <a href="PeterO.Cbor.CBORTypeMapper.html">PeterO.Cbor.CBORTypeMapper</a> class.</p>
+
+<p><a id="AddConverter_T_System_Type_PeterO_Cbor_ICBORConverter_T"></a></p>
 
 <h3>AddConverter</h3>
 
@@ -36,7 +38,9 @@
     PeterO.Cbor.ICBORConverter&lt;T&gt; converter);
 </pre>
 
-<p>Registers an object that converts objects of a given type to CBOR objects (called a CBOR converter).  <b>Parameters:</b></p>
+<p>Registers an object that converts objects of a given type to CBOR objects (called a CBOR converter).</p>
+
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>type</i>: A Type object specifying the type that the converter converts to CBOR objects.</p></li>
@@ -68,7 +72,9 @@ Converter doesn&#39;t contain a proper ToCBORObject method&quot;.</p></li>
     string name);
 </pre>
 
-<p>Adds the fully qualified name of a Java or .NET type for use in type matching.  <b>Parameters:</b></p>
+<p>Adds the fully qualified name of a Java or .NET type for use in type matching.</p>
+
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>name</i>: The fully qualified name of a Java or .NET class (e.g.,  <code>java.math.BigInteger</code>  or  <code>System.Globalization.CultureInfo</code>  ).</li>
@@ -97,7 +103,9 @@ is empty.</p></li>
     string prefix);
 </pre>
 
-<p>Adds a prefix of a Java or .NET type for use in type matching. A type matches a prefix if its fully qualified name is or begins with that prefix, using codepoint-by-codepoint (case-sensitive) matching.  <b>Parameters:</b></p>
+<p>Adds a prefix of a Java or .NET type for use in type matching. A type matches a prefix if its fully qualified name is or begins with that prefix, using codepoint-by-codepoint (case-sensitive) matching.</p>
+
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>prefix</i>: The prefix of a Java or .NET type (e.g., <code>java.math.</code> or <code>System.Globalization</code>).</li>
@@ -126,7 +134,9 @@ is empty.</p></li>
     string typeName);
 </pre>
 
-<p>Returns whether the given Java or .NET type name fits the filters given in this mapper.  <b>Parameters:</b></p>
+<p>Returns whether the given Java or .NET type name fits the filters given in this mapper.</p>
+
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>typeName</i>: The fully qualified name of a Java or .NET class (e.g.,  <code>java.math.BigInteger</code>  or  <code>System.Globalization.CultureInfo</code>  ).</li>

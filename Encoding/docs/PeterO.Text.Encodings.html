@@ -142,14 +142,13 @@ is null.</li>
     int length);
 </pre>
 
-<p>Reads a portion of a byte array from a data source and converts the bytes from a given encoding to a text string. Errors in decoding are handled by replacing erroneous bytes with the replacement character (U + FFFD). In the.NET implementation, this method is implemented as an extension method to any object implementing ICharacterEncoding and can be called as follows:  <code>enc.DecodeToString(bytes, offset,
+<p>Reads a portion of a byte array from a data source and converts the bytes from a given encoding to a text string. Errors in decoding are handled by replacing erroneous bytes with the replacement character (U+FFFD). In the.NET implementation, this method is implemented as an extension method to any object implementing ICharacterEncoding and can be called as follows:  <code>enc.DecodeToString(bytes, offset,
             length)</code> . If the object&#39;s class already has a DecodeToString method with the same parameters, that method takes precedence over this extension method.</p>
 
 <p>In the.NET implementation, this method is implemented as an extension method to any object implementing ICharacterEncoding and can be called as follows:  <code>enc.DecodeToString(bytes, offset,
             length)</code> . If the object&#39;s class already has a  <code>DecodeToString</code>  method with the same parameters, that method takes precedence over this extension method.</p>
 
-<pre>      &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>enc</i>: An object implementing a character encoding (gives access to an encoder and a decoder).</p></li>
@@ -699,7 +698,9 @@ is null.</li>
     string name);
 </pre>
 
-<p>Returns a character encoding from the given name.  <b>Parameters:</b></p>
+<p>Returns a character encoding from the given name.</p>
+
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>name</i>: A string naming a character encoding. See the ResolveAlias method. Can be null.</li>
@@ -718,7 +719,9 @@ is null.</li>
     bool forEmail);
 </pre>
 
-<p>Returns a character encoding from the given name.  <b>Parameters:</b></p>
+<p>Returns a character encoding from the given name.</p>
+
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>name</i>: A string naming a character encoding. See the ResolveAlias method. Can be null.</p></li>
@@ -739,7 +742,9 @@ is null.</li>
     bool allowReplacement);
 </pre>
 
-<p>Returns a character encoding from the given name.  <b>Parameters:</b></p>
+<p>Returns a character encoding from the given name.</p>
+
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>name</i>: A string naming a character encoding. See the ResolveAlias method. Can be null.</p></li>
@@ -836,7 +841,9 @@ is null.</li>
     string name);
 </pre>
 
-<p>Resolves a character encoding&#39;s name to a canonical form, using rules more suitable for email.  <b>Parameters:</b></p>
+<p>Resolves a character encoding&#39;s name to a canonical form, using rules more suitable for email.</p>
+
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>name</i>: A string naming a character encoding. Can be null. Uses a modified version of the rules in the Encoding Standard to better conform, in some cases, to email standards like MIME. Encoding names and aliases not registered with the Internet Assigned Numbers Authority (IANA) are not supported, with the exception of  <code>ascii</code>  ,  <code>utf8</code>  ,  <code>cp1252</code>  , and names 10 characters or longer starting with  <code>iso-8859-</code>  . Also, the following additional encodings are supported. Note that the case combination  <code>GB18030</code>  , the combination registered with IANA, rather than  <code>gb18030</code>  can be retured by this method.</p>
@@ -963,12 +970,11 @@ is null.</li>
     int length);
 </pre>
 
-<p>Converts a portion of a text string to a character input. The resulting input can then be used to encode the text to bytes, or to read the string code point by code point, among other things. When reading the string, any unpaired surrogate characters are replaced with the replacement character (U + FFFD). In the.NET implementation, this method is implemented as an extension method to any String object and can be called as follows:  <code>str.StringToInput(offset, length)</code> . If the object&#39;s class already has a StringToInput method with the same parameters, that method takes precedence over this extension method.</p>
+<p>Converts a portion of a text string to a character input. The resulting input can then be used to encode the text to bytes, or to read the string code point by code point, among other things. When reading the string, any unpaired surrogate characters are replaced with the replacement character (U+FFFD). In the.NET implementation, this method is implemented as an extension method to any String object and can be called as follows:  <code>str.StringToInput(offset, length)</code> . If the object&#39;s class already has a StringToInput method with the same parameters, that method takes precedence over this extension method.</p>
 
 <p>In the.NET implementation, this method is implemented as an extension method to any object implementing string and can be called as follows:  <code>str.StringToInput(offset, length)</code> . If the object&#39;s class already has a  <code>StringToInput</code>  method with the same parameters, that method takes precedence over this extension method.</p>
 
-<pre>     &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>str</i>: The parameter  <i>str</i>
