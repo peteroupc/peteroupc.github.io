@@ -15,7 +15,7 @@
 
 <ul>
 <li><code><a href="#DispositionType">DispositionType</a></code> - Gets or sets this value&#39;s disposition type, such as &quot;inline&quot; or &quot;attachment&quot;.</li>
-<li><code><a href="#IsMultipart">IsMultipart</a></code> - Gets a value indicating whether this is a multipart media type.</li>
+<li><code><a href="#IsMultipart">IsMultipart</a></code> - Gets a value not documented yet.</li>
 <li><code><a href="#IsText">IsText</a></code> - Gets a value indicating whether this is a text media type.</li>
 <li><code><a href="#RemoveParameter_string">RemoveParameter(string)</a></code> - Removes a parameter from this content disposition.</li>
 <li><code><a href="#SetDispositionType_string">SetDispositionType(string)</a></code> - Sets the disposition type, such as &quot;inline&quot;.</li>
@@ -32,7 +32,9 @@
     PeterO.Mail.ContentDisposition mt);
 </pre>
 
-<p>Initializes a new instance of the <a href="PeterO.Mail.DispositionBuilder.html">PeterO.Mail.DispositionBuilder</a> class.    <b>Parameters:</b></p>
+<p>Initializes a new instance of the <a href="PeterO.Mail.DispositionBuilder.html">PeterO.Mail.DispositionBuilder</a> class.</p>
+
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>mt</i>: The parameter  <i>mt</i>
@@ -55,7 +57,9 @@ is null.</li>
     string type);
 </pre>
 
-<p>Initializes a new instance of the <a href="PeterO.Mail.DispositionBuilder.html">PeterO.Mail.DispositionBuilder</a> class.     <b>Parameters:</b></p>
+<p>Initializes a new instance of the <a href="PeterO.Mail.DispositionBuilder.html">PeterO.Mail.DispositionBuilder</a> class.</p>
+
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>type</i>: The parameter  <i>type</i>
@@ -79,7 +83,9 @@ Type is empty.</p></li>
 <pre>public DispositionBuilder();
 </pre>
 
-<p>Initializes a new instance of the <a href="PeterO.Mail.DispositionBuilder.html">PeterO.Mail.DispositionBuilder</a> class.  <a id="DispositionType"></a></p>
+<p>Initializes a new instance of the <a href="PeterO.Mail.DispositionBuilder.html">PeterO.Mail.DispositionBuilder</a> class.</p>
+
+<p><a id="DispositionType"></a></p>
 
 <h3>DispositionType</h3>
 
@@ -99,9 +105,9 @@ Type is empty.</p></li>
 
 <p><b>Deprecated.</b> Irrelevant for content dispositions; will be removed in the future.</p>
 
-<p>Gets a value indicating whether this is a multipart media type.  <b>Returns:</b></p>
+<p>Gets a value not documented yet.   <b>Returns:</b></p>
 
-<p><code>true</code>  If this is a multipart media type; otherwise, .  <code>false</code>  .</p>
+<p>A value not documented yet.</p>
 
 <p><a id="IsText"></a></p>
 
@@ -124,7 +130,9 @@ Type is empty.</p></li>
     string name);
 </pre>
 
-<p>Removes a parameter from this content disposition. Does nothing if the parameter&#39;s name doesn&#39;t exist.  <b>Parameters:</b></p>
+<p>Removes a parameter from this content disposition. Does nothing if the parameter&#39;s name doesn&#39;t exist.</p>
+
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>name</i>: The parameter to remove. The name is compared using a basic case-insensitive comparison. (Two strings are equal in such a comparison, if they match after converting the basic upper-case letters A to Z (U+0041 to U+005A) in both strings to lower case.).</li>
@@ -150,7 +158,9 @@ is null.</li>
     string str);
 </pre>
 
-<p>Sets the disposition type, such as &quot;inline&quot;.  <b>Parameters:</b></p>
+<p>Sets the disposition type, such as &quot;inline&quot;.</p>
+
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>str</i>: The parameter  <i>str</i>
@@ -180,7 +190,9 @@ Str is empty.</p></li>
     string value);
 </pre>
 
-<p>Sets a parameter of this content disposition.  <b>Parameters:</b></p>
+<p>Sets a parameter of this content disposition.</p>
+
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>name</i>: Name of the parameter to set. If this name already exists (compared using a basic case-insensitive comparison), it will be overwritten. (Two strings are equal in a basic case-insensitive comparison, if they match after converting the basic upper-case letters A to Z (U+0041 to U+005A) in both strings to lower case.).</p></li>
@@ -210,7 +222,9 @@ is empty, or it isn&#39;t a well-formed parameter name.</p></li>
 <pre>public PeterO.Mail.ContentDisposition ToDisposition();
 </pre>
 
-<p>Converts this object to an immutable ContentDisposition object.  <b>Return Value:</b></p>
+<p>Converts this object to an immutable ContentDisposition object.</p>
+
+<p><b>Return Value:</b></p>
 
 <p>A MediaType object.</p>
 
@@ -221,7 +235,9 @@ is empty, or it isn&#39;t a well-formed parameter name.</p></li>
 <pre>public override string ToString();
 </pre>
 
-<p>Converts this object to a text string.  <b>Return Value:</b></p>
+<p>Converts this object to a text string.</p>
+
+<p><b>Return Value:</b></p>
 
 <p>A string representation of this object.</p>
 

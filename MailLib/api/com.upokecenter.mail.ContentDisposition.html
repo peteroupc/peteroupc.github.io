@@ -12,17 +12,17 @@
 <p>Specifies how a message body should be displayed or handled by a mail
  user agent. This type is immutable; its contents can't be changed
  after it's created. To create a changeable disposition object, use
- the DispositionBuilder class. </p> <p><b>About the "filename"
- parameter</b> </p> <p>The "filename" parameter of a content
+  the DispositionBuilder class. </p> <p><b>About the "filename"
+  parameter</b> </p> <p>The "filename" parameter of a content
  disposition suggests a name to use when saving data to a file. For
- the "filename" parameter, the GetParameter method and Parameters
+  the "filename" parameter, the GetParameter method and Parameters
  property (<code>getParameters</code>) method in Java) do not adapt that
  parameter's value using the ContentDisposition.MakeFilename method.
- Thus, for example, the "filename" parameter, if any, returned by this
- method could have an arbitrary length, be encoded using RFC 2047
- encoded words (which some email and HTTP implementations still like
- to write out in headers, even though that RFC says encoded words
- "MUST NOT appear within a 'quoted-string'"; see
+  Thus, for example, the "filename" parameter, if any, returned by
+ this method could have an arbitrary length, be encoded using RFC
+ 2047 encoded words (which some email and HTTP implementations still
+ like to write out in headers, even though that RFC says encoded
+  words "MUST NOT appear within a 'quoted-string'"; see
  ContentDisposition.MakeFilename), or not be usable as is as a file
  name. </p> <p><b>Example:</b> An example of RFC 2047 encoded words
  is: </p> <p><b>=?UTF-8?Q?test?=</b> </p> <p>Content-Disposition
@@ -32,11 +32,11 @@
  filename==?UTF-8?Q?example?=</b> </p> <p><b>Content-Disposition:
  attachment; filename==?UTF-8?Q?test.png?=</b> </p>
  <p><b>Content-Disposition: attachment;
- filename=&quot;=?UTF-8?Q?test.png?=&quot;</b> </p> <p>In this implementation,
+  filename=&quot;=?UTF-8?Q?test.png?=&quot;</b> </p> <p>In this implementation,
  the first and second of these are syntactically invalid, so they
  trigger parse errors, while the third of these is syntactically
- valid, but the &quot;filename&quot; parameter is treated as
- &quot;=?UTF-8?Q?test.png?=&quot;, not &quot;test.png&quot; or something else -- RFC 2047
+  valid, but the &quot;filename&quot; parameter is treated as
+  &quot;=?UTF-8?Q?test.png?=&quot;, not &quot;test.png&quot; or something else -- RFC 2047
  encoded words are not decoded at the moment a content disposition is
  parsed (using the Parse method). </p></p>
 
@@ -44,9 +44,9 @@
 
 <ul>
 <li><code>static ContentDisposition Attachment</code><br>
-The content disposition value &quot;attachment&quot;.</li>
+The content disposition value &quot;attachment&quot; .</li>
 <li><code>static ContentDisposition Inline</code><br>
-The content disposition value &quot;inline&quot;.</li>
+The content disposition value &quot;inline&quot; .</li>
 </ul>
 
 <h2>Methods</h2>
@@ -62,8 +62,7 @@ file (RFC 2183 sec.</li>
 Gets a string containing this object&#39;s disposition type, such as &quot;inline&quot; or
 &quot;attachment&quot;.</li>
 <li><code>java.lang.String GetFilename()</code><br>
-Gets an adapted version of the &quot;filename&quot; parameter in this content
-disposition object by using the &quot;MakeFilename&quot; method.</li>
+Not documented yet.</li>
 <li><code>int[] GetModificationDate()</code><br>
 Gets the date and time extracted from this content disposition&#39;s
 &quot;modification-date&quot; parameter, which specifies the date of last
@@ -71,15 +70,13 @@ modification of a file (RFC 2183 sec.</li>
 <li><code>java.lang.String GetParameter​(java.lang.String name)</code><br>
 Gets a parameter from this disposition object.</li>
 <li><code>java.util.Map&lt;java.lang.String,​java.lang.String&gt; getParameters()</code><br>
-Gets a list of parameter names associated with this object and their values.</li>
+Gets a value not documented yet.</li>
 <li><code>int[] GetReadDate()</code><br>
-Gets the date and time extracted from this content disposition&#39;s &quot;read-date&quot;
-parameter, which specifies the date at which a file was last read
-(RFC 2183 sec.</li>
+Not documented yet.</li>
 <li><code>int hashCode()</code><br>
-Calculates the hash code of this object.</li>
+Not documented yet.</li>
 <li><code>boolean isAttachment()</code><br>
-Gets a value indicating whether the disposition type is attachment.</li>
+Gets a value not documented yet.</li>
 <li><code>boolean isInline()</code><br>
 Gets a value indicating whether the disposition type is inline.</li>
 <li><code>static java.lang.String MakeFilename​(java.lang.String str)</code><br>
@@ -107,14 +104,14 @@ inserting in email headers.</li>
 <pre>public static final ContentDisposition Attachment
 </pre>
 
-<p>The content disposition value &quot;attachment&quot;.</p>
+<p>The content disposition value &quot;attachment&quot; .</p>
 
 <h3>Inline</h3>
 
 <pre>public static final ContentDisposition Inline
 </pre>
 
-<p>The content disposition value &quot;inline&quot;.</p>
+<p>The content disposition value &quot;inline&quot; .</p>
 
 <h2>Method Details</h2>
 
@@ -124,9 +121,9 @@ inserting in email headers.</li>
 </pre>
 
 <p>Gets a string containing this object&#39;s disposition type, such as &quot;inline&quot; or
- &quot;attachment&quot;. Note that under RFC 6266 sec. 4.2 and RFC 2183 sec.
+  &quot;attachment&quot;. Note that under RFC 6266 sec. 4.2 and RFC 2183 sec.
  2.8, unrecognized disposition types should be treated as
- &quot;attachment&quot;.</p>
+  &quot;attachment&quot;.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -151,13 +148,15 @@ or &quot;attachment&quot;.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>obj</code> - The parameter <code>obj</code> is an arbitrary object.</li>
+<li><code>obj</code> - The parameter
+  <code>obj</code>
+   is an arbitrary object.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li><code>true</code> if the objects are equal; otherwise, <code>false</code> .</li>
+<li><code>true</code> if the objects are equal; otherwise, <code>false</code>.</li>
 </ul>
 
 <h3>hashCode</h3>
@@ -165,8 +164,7 @@ or &quot;attachment&quot;.</li>
 <pre>public int hashCode()
 </pre>
 
-<p>Calculates the hash code of this object. No application or process IDs are
- used in the hash code calculation.</p>
+<p>Not documented yet.</p>
 
 <p><strong>Overrides:</strong></p>
 
@@ -177,7 +175,7 @@ or &quot;attachment&quot;.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A 32-bit hash code.</li>
+<li>A 32-bit signed integer.</li>
 </ul>
 
 <h3>isInline</h3>
@@ -191,7 +189,7 @@ or &quot;attachment&quot;.</li>
 
 <ul>
 <li><code>true</code> If the disposition type is inline; otherwise, . <code>
-false</code> .</li>
+false</code>.</li>
 </ul>
 
 <h3>isAttachment</h3>
@@ -199,13 +197,12 @@ false</code> .</li>
 <pre>public final boolean isAttachment()
 </pre>
 
-<p>Gets a value indicating whether the disposition type is attachment.</p>
+<p>Gets a value not documented yet.</p>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li><code>true</code> If the disposition type is attachment; otherwise, .
-<code>false</code> .</li>
+<li>A value not documented yet.</li>
 </ul>
 
 <h3>getParameters</h3>
@@ -213,19 +210,12 @@ false</code> .</li>
 <pre>public final java.util.Map&lt;java.lang.String,​java.lang.String&gt; getParameters()
 </pre>
 
-<p>Gets a list of parameter names associated with this object and their values.
- <p>For the &quot;filename&quot; parameter, the value of that parameter is not
- adapted with the ContentDisposition.MakeFilename method; see the
- documentation for the ContentDisposition class. </p></p>
+<p>Gets a value not documented yet.</p>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A read-only list of parameter names associated with this object and
-their values. NOTE: Previous versions erroneously stated that the
-list will be sorted by name. In fact, the names will not be
-guaranteed to appear in any particular order; this is at least the
-case in version 0.10.0.</li>
+<li>A value not documented yet.</li>
 </ul>
 
 <h3>toString</h3>
@@ -234,9 +224,9 @@ case in version 0.10.0.</li>
 </pre>
 
 <p>Converts this content disposition to a text string form suitable for
- inserting in email headers. Notably, the string contains the value of
- a Content-Disposition header field (without the text necessarily
- starting with &quot;Content-Disposition&quot; followed by a space), and
+ inserting in email headers. Notably, the string contains the value
+ of a Content-Disposition header field (without the text necessarily
+  starting with &quot;Content-Disposition&quot; followed by a space), and
  consists of one or more lines.</p>
 
 <p><strong>Overrides:</strong></p>
@@ -259,7 +249,7 @@ case in version 0.10.0.</li>
 <p>Converts this content disposition to a text string form suitable for
  inserting in HTTP headers. Notably, the string contains the value of
  a Content-Disposition header field (without the text necessarily
- starting with &quot;Content-Disposition&quot; followed by a space), and
+  starting with &quot;Content-Disposition&quot; followed by a space), and
  consists of a single line.</p>
 
 <p><strong>Returns:</strong></p>
@@ -276,18 +266,18 @@ case in version 0.10.0.</li>
 <p>Converts a file name from the Content-Disposition header to a suitable name
  for saving data to a file. This method is idempotent; that is,
  calling the method again on the result doesn&#39;t change that result.
- <p>Examples: </p> <p><code>&quot;=?utf-8?q?hello=2Etxt?=&quot; -&gt;
- &quot;hello.txt&quot;</code> (RFC 2047 encoding). </p>
- <p><code>&quot;=?utf-8?q?long_filename?=&quot; -&gt; &quot;long filename&quot;</code> (RFC 2047
- encoding). </p> <p><code>&quot;utf-8&#39;en&#39;hello%2Etxt&quot; -&gt; &quot;hello.txt&quot;</code>
- (RFC 2231 encoding). </p> <p><code>&quot;nul.txt&quot; -&gt; &quot;_nul.txt&quot;</code>
- (Reserved name). </p> <p><code>&quot;dir1/dir2/file&quot; -&gt;
- &quot;dir1_dir2_file&quot;</code> (Directory separators). </p><p>
+  <p>Examples: </p> <p><code>&quot;=?utf-8?q?hello=2Etxt?=&quot; -&gt;
+  &quot;hello.txt&quot;</code> (RFC 2047 encoding). </p>
+  <p><code>&quot;=?utf-8?q?long_filename?=&quot; -&gt; &quot;long filename&quot;</code> (RFC
+  2047 encoding). </p> <p><code>&quot;utf-8&#39;en&#39;hello%2Etxt&quot; -&gt;
+  &quot;hello.txt&quot;</code> (RFC 2231 encoding). </p> <p><code>&quot;nul.txt&quot; -&gt;
+  &quot;_nul.txt&quot;</code> (Reserved name). </p> <p><code>&quot;dir1/dir2/file&quot; -&gt;
+  &quot;dir1_dir2_file&quot;</code> (Directory separators). </p><p>
  </p><p><b>Remarks:</b> </p> <ul> <li>The exact file name conversion used
  by this method is not guaranteed to remain the same between versions
  of this library, with the exception that the return value will be in
- normalization form C, will not contain base + slash code points, will
- not be null, and will be an empty string only if <paramref name='str'/> is null or empty. </li> <li>The string returned by this
+ normalization form C, will not contain base + slash code points,
+ will not be null, and will be an empty string only if <paramref name='str'/> is null or empty. </li> <li>The string returned by this
  method is normalized using Unicode normalization form C (NFC) (see
  the <code>NormalizerInput</code> class for details).
  Although most file systems preserve the normalization of file names,
@@ -299,37 +289,37 @@ case in version 0.10.0.</li>
  not in HFS Plus&#39;s version of NFD. If the filename will be used to
  save a file to an HFS Plus storage device, it is enough to normalize
  the return value with NFD for this purpose (because all base + slash
- code points were converted beforehand by MakeFilename to an alternate
- form). See also Apple&#39;s Technical Q&amp;A &quot;Text Encodings in VFS&quot; and
- Technical Note TN1150, &quot;HFS Plus Volume Format&quot;. </li> <li><p>Email
- and HTTP headers may specify suggested filenames using the
- Content-Disposition header field&#39;s <code>filename</code> parameter or, in
- practice, the Content-Type header field&#39;s <code>name</code> parameter. </p>
- <p>Although RFC 2047 encoded words appearing in both parameters are
- written out by some implementations, this practice is often
+ code points were converted beforehand by MakeFilename to an
+  alternate form). See also Apple&#39;s Technical Q&amp;A &quot;Text Encodings
+  in VFS&quot; and Technical Note TN1150, &quot;HFS Plus Volume Format&quot;. </li>
+ <li><p>Email and HTTP headers may specify suggested filenames using
+ the Content-Disposition header field&#39;s <code>filename</code> parameter or,
+ in practice, the Content-Type header field&#39;s <code>name</code> parameter.
+ </p> <p>Although RFC 2047 encoded words appearing in both parameters
+ are written out by some implementations, this practice is often
  discouraged (especially since the RFC itself says that encoded words
- &quot;MUST NOT appear within a &#39;quoted-string&#39;&quot;). Nevertheless, the
+  &quot;MUST NOT appear within a &#39;quoted-string&#39;&quot;). Nevertheless, the
  MakeFilename method has a basis in the RFCs to decode RFC 2047
  encoded words (and RFC 2231 encoding) in file names passed to this
- method. </p> <p>RFC 2046 sec. 4.5.1 (<code>application/octet-stream</code>
- subtype in Content-Type header field) cites an earlier RFC 1341,
- which &quot;defined the use of a &#39;NAME&#39; parameter which gave a <i>
- suggested </i> file name to be used if the data were written to a
- file&quot;. Also, RFC 2183 sec. 2.3 (<code>filename</code> parameter in
- Content-Disposition) confirms that the &quot; <i> suggested </i> filename&quot;
- in the <code>filename</code> parameter &quot;should be <i> used as a basis </i>
- for the actual filename, where possible&quot;, and that that file name
- should &quot;not [be] blindly use[d]&quot;. See also RFC 6266, section 4.3,
- which discusses the use of that parameter in Hypertext Transfer
- Protocol (HTTP). </p> <p>To the extent that the &quot;name&quot; parameter is
- not allowed in message bodies other than those with the media type
- &quot;application/octet-stream&quot; or treated as that media-type, this is a
- deviation of RFC 2045 and 2046 (see also RFC 2045 sec. 5, which says
- that &quot;[t]here are NO globally meaningful parameters that apply to all
- media types&quot;). (Some email implementations may still write out the
- &quot;name&quot; parameter, even for media types other than
- <code>application/octet-stream</code> and even though RFC 2046 has
- deprecated that parameter.) </p> </li> </ul> .</p>
+ method. </p> <p>RFC 2046 sec. 4.5.1 (
+ <code>application/octet-stream</code> subtype in Content-Type header
+  field) cites an earlier RFC 1341, which &quot;defined the use of a &#39;NAME&#39;
+ parameter which gave a <i> suggested </i> file name to be used if
+  the data were written to a file&quot;. Also, RFC 2183 sec. 2.3 (
+ <code>filename</code> parameter in Content-Disposition) confirms that the
+  &quot; <i> suggested </i> filename&quot; in the <code>filename</code> parameter
+  &quot;should be <i> used as a basis </i> for the actual filename, where
+  possible&quot;, and that that file name should &quot;not [be] blindly use[d]&quot;.
+ See also RFC 6266, section 4.3, which discusses the use of that
+ parameter in Hypertext Transfer Protocol (HTTP). </p> <p>To the
+  extent that the &quot;name&quot; parameter is not allowed in message bodies
+  other than those with the media type &quot;application/octet-stream&quot; or
+ treated as that media-type, this is a deviation of RFC 2045 and 2046
+  (see also RFC 2045 sec. 5, which says that &quot;[t]here are NO globally
+  meaningful parameters that apply to all media types&quot;). (Some email
+  implementations may still write out the &quot;name&quot; parameter, even for
+ media types other than <code>application/octet-stream</code> and even
+ though RFC 2046 has deprecated that parameter.) </p> </li> </ul> .</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -341,18 +331,18 @@ case in version 0.10.0.</li>
 
 <ul>
 <li>A string with the converted version of the file name. Among other
-things, encoded words under RFC 2047 are decoded (since they occur so
-frequently in Content-Disposition filenames); the value is decoded
-under RFC 2231 if possible; characters unsuitable for use in a
-filename (including the directory separators slash and backslash) are
-replaced with underscores; spaces and tabs are collapsed to a single
-space; leading and trailing spaces and tabs are removed; and the
-filename is truncated if it would otherwise be too long. Also, for
-reasons stated in the remarks, a character that is the combined form
-of a base character and a combining slash is replaced with &quot;!&quot;
+things, encoded words under RFC 2047 are decoded (since they occur
+so frequently in Content-Disposition filenames); the value is
+decoded under RFC 2231 if possible; characters unsuitable for use in
+a filename (including the directory separators slash and backslash)
+are replaced with underscores; spaces and tabs are collapsed to a
+single space; leading and trailing spaces and tabs are removed; and
+the filename is truncated if it would otherwise be too long. Also,
+for reasons stated in the remarks, a character that is the combined
+form of a base character and a combining slash is replaced with &quot;!&quot;
 followed by the base character. The returned string will be in
-normalization form C. Returns the empty string if <code>str</code> is null
-or empty.</li>
+normalization form C. Returns the empty string if <code>str</code> is
+null or empty.</li>
 </ul>
 
 <h3>GetFilename</h3>
@@ -360,15 +350,12 @@ or empty.</li>
 <pre>public java.lang.String GetFilename()
 </pre>
 
-<p>Gets an adapted version of the &quot;filename&quot; parameter in this content
- disposition object by using the &quot;MakeFilename&quot; method.</p>
+<p>Not documented yet.</p>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>The adapted file name in the form of a string. Returns the empty
-string if there is no &quot;filename&quot; parameter or that parameter is
-empty.</li>
+<li>A text string.</li>
 </ul>
 
 <h3>GetCreationDate</h3>
@@ -377,8 +364,8 @@ empty.</li>
 </pre>
 
 <p>Gets the date and time extracted from this content disposition&#39;s
- &quot;creation-date&quot; parameter, which specifies the date of creation of a
- file (RFC 2183 sec. 2.4). See <see cref='M:PeterO.Mail.MailDateTime.ParseDateString(System.String,System.Boolean)'/>
+  &quot;creation-date&quot; parameter, which specifies the date of creation of a
+ file (RFC 2183 sec. 2.4). See <see cref='M:PeterO.Mail.MailDateTime.ParseDateString(&#10;       System.String,System.Boolean)'/>
  for information on the format of this method&#39;s return value.</p>
 
 <p><strong>Returns:</strong></p>
@@ -396,8 +383,8 @@ overflow a 32-bit signed integer.</li>
 </pre>
 
 <p>Gets the date and time extracted from this content disposition&#39;s
- &quot;modification-date&quot; parameter, which specifies the date of last
- modification of a file (RFC 2183 sec. 2.5). See <see cref='M:PeterO.Mail.MailDateTime.ParseDateString(System.String,System.Boolean)'/>
+  &quot;modification-date&quot; parameter, which specifies the date of last
+ modification of a file (RFC 2183 sec. 2.5). See <see cref='M:PeterO.Mail.MailDateTime.ParseDateString(&#10;       System.String,System.Boolean)'/>
  for information on the format of this method&#39;s return value.</p>
 
 <p><strong>Returns:</strong></p>
@@ -405,8 +392,8 @@ overflow a 32-bit signed integer.</li>
 <ul>
 <li>The extracted date and time as an 8-element array, or <code>null</code>
 if the &quot;modification-date&quot; parameter doesn&#39;t exist, is an empty
-string, or is syntactically invalid, or if the parameter&#39;s year would
-overflow a 32-bit signed integer.</li>
+string, or is syntactically invalid, or if the parameter&#39;s year
+would overflow a 32-bit signed integer.</li>
 </ul>
 
 <h3>GetReadDate</h3>
@@ -414,18 +401,12 @@ overflow a 32-bit signed integer.</li>
 <pre>public int[] GetReadDate()
 </pre>
 
-<p>Gets the date and time extracted from this content disposition&#39;s &quot;read-date&quot;
- parameter, which specifies the date at which a file was last read
- (RFC 2183 sec. 2.6). See <see cref='M:PeterO.Mail.MailDateTime.ParseDateString(System.String,System.Boolean)'/>
- for information on the format of this method&#39;s return value.</p>
+<p>Not documented yet.</p>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>The extracted date and time as an 8-element array, or <code>null</code>
-if the &quot;read-date&quot; parameter doesn&#39;t exist, is an empty string, or is
-syntactically invalid, or if the parameter&#39;s year would overflow a
-32-bit signed integer.</li>
+<li>An array of 32-bit unsigned integers.</li>
 </ul>
 
 <h3>GetParameter</h3>
@@ -435,15 +416,15 @@ syntactically invalid, or if the parameter&#39;s year would overflow a
 
 <p>Gets a parameter from this disposition object. For the &quot;filename&quot; parameter,
  the value of that parameter is not adapted with the
- ContentDisposition.MakeFilename method; see the documentation for the
- ContentDisposition class.</p>
+ ContentDisposition.MakeFilename method; see the documentation for
+ the ContentDisposition class.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
 <li><code>name</code> - The name of the parameter to get. The name will be matched using
-a basic case-insensitive comparison. (Two strings are equal in such a
-comparison, if they match after converting the basic upper-case
+a basic case-insensitive comparison. (Two strings are equal in such
+a comparison, if they match after converting the basic upper-case
 letters A to Z (U + 0041 to U + 005A) in both strings to lower case.).
 Can&#39;t be null.</li>
 </ul>
@@ -505,13 +486,13 @@ null.</li>
  among other things, the content disposition string can contain
  comments (delimited by parentheses). </p> <p>RFC 2231 extensions
  allow each content disposition parameter to be associated with a
- character encoding and/or language, and support parameter values that
- span two or more key-value pairs. Parameters making use of RFC 2231
- extensions have names with an asterisk (&quot;<em>&quot;). Such a parameter
- will be ignored if it is ill-formed because of RFC 2231&#39;s rules
- (except for illegal percent-decoding or undecodable sequences for the
- given character encoding). Examples of RFC 2231 extensions follow
- (both examples encode the same &quot;filename&quot; parameter): </p>
+ character encoding and/or language, and support parameter values
+ that span two or more key-value pairs. Parameters making use of RFC
+  2231 extensions have names with an asterisk (&quot;<em>&quot;). Such a
+ parameter will be ignored if it is ill-formed because of RFC 2231&#39;s
+ rules (except for illegal percent-decoding or undecodable sequences
+ for the given character encoding). Examples of RFC 2231 extensions
+  follow (both examples encode the same &quot;filename&quot; parameter): </p>
  <p><b>inline; filename</em>=utf-8&#39;en&#39;filename.txt</b> </p>
  <p><b>inline; filename<em>0</em>=utf-8&#39;en&#39;file;
  filename<em>1</em>=name%2Etxt</b> </p> <p>This implementation

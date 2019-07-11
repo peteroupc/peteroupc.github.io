@@ -29,7 +29,9 @@
     int[] dateTime);
 </pre>
 
-<p>Generates a date-time string following the Internet Message Format (RFC 5322) from an 8-element array.  <b>Parameters:</b></p>
+<p>Generates a date-time string following the Internet Message Format (RFC 5322) from an 8-element array.</p>
+
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>dateTime</i>: The date and time in the form of an 8-element array. See <strong>M:PeterO.Mail.MailDateTime.ParseDateString(System.String,System.Boolean)</strong> for information on the format of this parameter.</li>
@@ -56,7 +58,9 @@ is null or invalid, including if the year (  <code>dateTime[0]</code>  ) is less
     bool gmt);
 </pre>
 
-<p>Generates a date-time string following the Internet Message Format (RFC 5322) from an 8-element array, optionally using a &quot;GMT&quot; time zone indicator.  <b>Parameters:</b></p>
+<p>Generates a date-time string following the Internet Message Format (RFC 5322) from an 8-element array, optionally using a &quot;GMT&quot; time zone indicator.</p>
+
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>dateTime</i>: The date and time in the form of an 8-element array. See <strong>M:PeterO.Mail.MailDateTime.ParseDateString(System.String,System.Boolean)</strong> for information on the format of this parameter.</p></li>
@@ -86,7 +90,9 @@ is true.</p></li>
     string str);
 </pre>
 
-<p>Gets the date and time extracted from a date-time string following the Internet Message Format (RFC 5322). However, this method does not allow obsolete time zone strings to appear in the date-time string. See <strong>M:PeterO.Mail.MailDateTime.ParseDateString(System.String,System.Boolean)</strong> for information on the format of this method&#39;s return value.  <b>Parameters:</b></p>
+<p>Gets the date and time extracted from a date-time string following the Internet Message Format (RFC 5322). However, this method does not allow obsolete time zone strings to appear in the date-time string. See <strong>M:PeterO.Mail.MailDateTime.ParseDateString(System.String,System.Boolean)</strong> for information on the format of this method&#39;s return value.</p>
+
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>str</i>: The parameter  <i>str</i>
@@ -117,14 +123,14 @@ is not documented yet.</li>
 <li><p>4 - Minute of the hour, from 0 through 59.</p></li>
 <li><p>5 - Second of the minute, from 0 through 60 (this value can go up to 60 to accommodate leap seconds). (Leap seconds are additional seconds added to adjust international atomic time, or TAI, to an approximation of astronomical time known as coordinated universal time, or UTC.)</p></li>
 <li><p>6 - Milliseconds of the second, from 0 through 999. Will always be 0.</p></li>
-<li><p>7 - Number of minutes to subtract from this date and time to get global time. This number can be positive or negative.</p>
+<li><p>7 - Number of minutes to subtract from this date and time to get global time. This number can be positive or negative.</p></li>
+</ul>
 
 <p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>str</i>: A date-time string.</p></li>
 <li><p><i>parseObsoleteZones</i>: If set to  <code>true</code>  , this method allows obsolete time zones (single-letter time zones, &quot;GMT&quot;, &quot;UT&quot;, and certain three-letter combinations) to appear in the date-time string.</p></li>
-</ul></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -140,7 +146,9 @@ is not documented yet.</li>
     string v);
 </pre>
 
-<p>Parses a date string in one of the three formats allowed by HTTP/1.1.  <b>Parameters:</b></p>
+<p>Parses a date string in one of the three formats allowed by HTTP/1.1.</p>
+
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>v</i>: A date-time string.</li>

@@ -23,7 +23,7 @@
 
 <ul>
 <li><code><a href="#ApplicationOctetStream">public static readonly PeterO.Mail.MediaType ApplicationOctetStream;</a></code> - Specifies the media type &quot;application/octet-stream&quot;, used for arbitrary binary data.</li>
-<li><code><a href="#Equals_object">Equals(object)</a></code> - Determines whether this object and another object are equal.</li>
+<li><code><a href="#Equals_object">Equals(object)</a></code> - Not documented yet.</li>
 <li><code><a href="#GetCharset">GetCharset()</a></code> - Gets this media type&#39;s &quot;charset&quot; parameter, naming a character encoding used to represent text in the data that uses this media type.</li>
 <li><code><a href="#GetHashCode">GetHashCode()</a></code> - Calculates the hash code of this object.</li>
 <li><code><a href="#GetParameter_string">GetParameter(string)</a></code> - Gets the value of a parameter in this media type, such as &quot;charset&quot; or &quot;format&quot;.</li>
@@ -31,13 +31,13 @@
 <li><code><a href="#IsText">IsText</a></code> - Gets a value indicating whether this is a text media type (&quot;text/*&quot;).</li>
 <li><code><a href="#MessageRfc822">public static readonly PeterO.Mail.MediaType MessageRfc822;</a></code> - Specifies the media type &quot;message/rfc822&quot;, used for Internet mail messages.</li>
 <li><code><a href="#Parameters">Parameters</a></code> - Gets a list of the parameters contained in this media type object.</li>
-<li><code><a href="#Parse_string">Parse(string)</a></code> - Parses a media type string and returns a media type object.</li>
+<li><code><a href="#Parse_string">Parse(string)</a></code> - Not documented yet.</li>
 <li><code><a href="#Parse_string_PeterO_Mail_MediaType">Parse(string, PeterO.Mail.MediaType)</a></code> - Parses a media type string and returns a media type object, or the default value if the string is invalid.</li>
 <li><code><a href="#SubType">SubType</a></code> - Gets this media type&#39;s subtype (for example, &quot;plain&quot; in &quot;text/plain&quot;).</li>
 <li><code><a href="#TextPlainAscii">public static readonly PeterO.Mail.MediaType TextPlainAscii;</a></code> - Specifies the media type &quot;text/plain&quot; and the &quot;charset&quot; parameter &quot;US-ASCII&quot;, used for plain text data.</li>
 <li><code><a href="#TextPlainUtf8">public static readonly PeterO.Mail.MediaType TextPlainUtf8;</a></code> - Specifies the media type &quot;text/plain&quot; and the &quot;charset&quot; parameter &quot;utf-8&quot;, used for plain text data that may contain characters outside the basic Latin range (U + 0000 to U + 007F).</li>
 <li><code><a href="#TopLevelType">TopLevelType</a></code> - Gets the name of this media type&#39;s top-level type (such as &quot;text&quot; in &quot;text/plain&quot;, or &quot;audio&quot; in &quot;audio/basic&quot;).</li>
-<li><code><a href="#ToSingleLineString">ToSingleLineString()</a></code> - Converts this media type to a text string form suitable for inserting in HTTP headers.</li>
+<li><code><a href="#ToSingleLineString">ToSingleLineString()</a></code> - Not documented yet.</li>
 <li><code><a href="#ToString">ToString()</a></code> - Converts this media type to a text string form suitable for inserting in email headers.</li>
 <li><code><a href="#ToUriSafeString">ToUriSafeString()</a></code> - Converts this media type to a text string form suitable for data URIs.</li>
 <li><code><a href="#TypeAndSubType">TypeAndSubType</a></code> - Gets the top level type and subtype of this media type, separated by a slash; for example, &quot;text/plain&quot;.</li>
@@ -145,16 +145,18 @@
     object obj);
 </pre>
 
-<p>Determines whether this object and another object are equal.  <b>Parameters:</b></p>
+<p>Not documented yet.</p>
+
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>obj</i>: The parameter  <i>obj</i>
-is an arbitrary object.</li>
+is not documented yet.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p><code>true</code>  if this object and another object are equal; otherwise,  <code>false</code>  .</p>
+<p>Either  <code>true</code>  or  <code>false</code>  .</p>
 
 <p><a id="GetCharset"></a></p>
 
@@ -163,7 +165,9 @@ is an arbitrary object.</li>
 <pre>public string GetCharset();
 </pre>
 
-<p>Gets this media type&#39;s &quot;charset&quot; parameter, naming a character encoding used to represent text in the data that uses this media type.  <b>Return Value:</b></p>
+<p>Gets this media type&#39;s &quot;charset&quot; parameter, naming a character encoding used to represent text in the data that uses this media type.</p>
+
+<p><b>Return Value:</b></p>
 
 <p>If the &quot;charset&quot; parameter is present and non-empty, returns the result of the Encodings.ResolveAliasForEmail method for that parameter, except that result&#39;s basic upper-case letters A to Z (U+0041 to U+005A) are converted to lower case. If the &quot;charset&quot; parameter is absent or empty, returns the default value, if any, for that parameter given the media type (e.g., &quot;us-ascii&quot; if the media type is &quot;text/plain&quot;; see RFC2046), or the empty string if there is none.</p>
 
@@ -174,7 +178,9 @@ is an arbitrary object.</li>
 <pre>public override int GetHashCode();
 </pre>
 
-<p>Calculates the hash code of this object. No application or process IDs are used in the hash code calculation.  <b>Return Value:</b></p>
+<p>Calculates the hash code of this object. No application or process IDs are used in the hash code calculation.</p>
+
+<p><b>Return Value:</b></p>
 
 <p>A 32-bit signed integer.</p>
 
@@ -186,7 +192,9 @@ is an arbitrary object.</li>
     string name);
 </pre>
 
-<p>Gets the value of a parameter in this media type, such as &quot;charset&quot; or &quot;format&quot;.  <b>Parameters:</b></p>
+<p>Gets the value of a parameter in this media type, such as &quot;charset&quot; or &quot;format&quot;.</p>
+
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>name</i>: Name of the parameter to get. The name is compared using a basic case-insensitive comparison. (Two strings are equal in such a comparison, if they match after converting the basic upper-case letters A to Z (U+0041 to U+005A) in both strings to lower case.).</li>
@@ -214,16 +222,18 @@ Name is empty.</p></li>
     string mediaTypeValue);
 </pre>
 
-<p>Parses a media type string and returns a media type object. For further information, see the overload taking a MediaType parameter.  <b>Parameters:</b></p>
+<p>Not documented yet.</p>
+
+<p><b>Parameters:</b></p>
 
 <ul>
-<li><i>mediaTypeValue</i>: A text string representing a media type. This media type can include parameters.</li>
+<li><i>mediaTypeValue</i>: The parameter  <i>mediaTypeValue</i>
+is not documented yet.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p>A media type object, or MediaType.TextPlainAscii if  <i>mediaTypeValue</i>
- is empty or syntactically invalid.</p>
+<p>A MediaType object.</p>
 
 <p><a id="Parse_string_PeterO_Mail_MediaType"></a></p>
 
@@ -270,9 +280,11 @@ is null.</li>
 <pre>public string ToSingleLineString();
 </pre>
 
-<p>Converts this media type to a text string form suitable for inserting in HTTP headers. Notably, the string contains the value of a Content-Type header field (without the text necessarily starting with &quot;Content-Type&quot; followed by a space), and consists of a single line.  <b>Return Value:</b></p>
+<p>Not documented yet.</p>
 
-<p>A text string form of this media type.</p>
+<p><b>Return Value:</b></p>
+
+<p>A text string.</p>
 
 <p><a id="ToString"></a></p>
 
@@ -281,7 +293,9 @@ is null.</li>
 <pre>public override string ToString();
 </pre>
 
-<p>Converts this media type to a text string form suitable for inserting in email headers. Notably, the string contains the value of a Content-Type header field (without the text necessarily starting with &quot;Content-Type&quot; followed by a space), and consists of one or more lines.  <b>Return Value:</b></p>
+<p>Converts this media type to a text string form suitable for inserting in email headers. Notably, the string contains the value of a Content-Type header field (without the text necessarily starting with &quot;Content-Type&quot; followed by a space), and consists of one or more lines.</p>
+
+<p><b>Return Value:</b></p>
 
 <p>A text string form of this media type.</p>
 
@@ -292,7 +306,9 @@ is null.</li>
 <pre>public string ToUriSafeString();
 </pre>
 
-<p>Converts this media type to a text string form suitable for data URIs. Notably, the string contains the value of a Content-Type header field (without the text necessarily starting with &quot;Content-Type&quot; followed by a space), consists of a single line, and uses percent-encoding as necessary or convenient so that the resulting string can validly appear in a URI path.  <b>Return Value:</b></p>
+<p>Converts this media type to a text string form suitable for data URIs. Notably, the string contains the value of a Content-Type header field (without the text necessarily starting with &quot;Content-Type&quot; followed by a space), consists of a single line, and uses percent-encoding as necessary or convenient so that the resulting string can validly appear in a URI path.</p>
+
+<p><b>Return Value:</b></p>
 
 <p>A text string form of this media type.</p>
 

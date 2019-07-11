@@ -416,10 +416,11 @@ An algorithm is _consistent_ if the output it delivers, given the same input, is
 - across supported hardware, and
 - across supported operating systems.
 
-In practice, however, it's not easy to ensure an algorithm (especially an RNG) is both deterministic and consistent.  There are many ways an algorithm can be nondeterministic or inconsistent, including the following:
+In practice, however, it's not easy to ensure an algorithm (especially an RNG) is both deterministic and consistent.  The following are some reasons an algorithm might produce different results from run to run or from machine to machine:
 
-- Differences in how **floating-point numbers** and floating-point math operations are implemented, in the order in which such operations are carried out (especially where multithreading is involved), or in how numbers are rounded after such operations, can lead to different results from run to run and from machine to machine.<sup>[**(30)**](#Note30)</sup>.
-- An application that relies on a **hash table** listing its contents in a predictable order might behave inconsistently if the hash table implementation doesn't guarantee this property in its documentation.<sup>[**(31)**](#Note31)</sup>
+- Differences in how **floating-point numbers** and floating-point math operations are implemented, in the order in which such operations are carried out (especially where multithreading is involved), or in how numbers are rounded after such operations.<sup>[**(30)**](#Note30)</sup>.
+- An application relies on **behavior that is not guaranteed**.  This includes _undefined behavior_ in C and C++, as well as expecting a _hash table_ to list its contents in a predictable order when that property is not guaranteed<sup>[**(31)**](#Note31)</sup>.
+- An application that relies on **compiler-dependent features** might behave differently depending on how it was compiled.  For example, in C and C++, the sizes of `int` and `long`, and the data formats of `float` and `double`, are not necessarily the same in all compilers.
 
 [**`java.util.Random`**](https://docs.oracle.com/javase/8/docs/api/java/util/Random.html) is one example of a PRNG with deterministic and consistent behavior, but none of the following is such a PRNG:
 

@@ -43,11 +43,11 @@
 <li><code><a href="#ForPrecision_int">ForPrecision(int)</a></code> - Creates a new arithmetic context using the given maximum number of digits, an unlimited exponent range, and the HalfUp rounding mode.</li>
 <li><code><a href="#ForPrecisionAndRounding_int_PeterO_Numbers_ERounding">ForPrecisionAndRounding(int, PeterO.Numbers.ERounding)</a></code> - Creates a new EContext object initialized with an unlimited exponent range, and the given rounding mode and maximum precision.</li>
 <li><code><a href="#ForRounding_PeterO_Numbers_ERounding">ForRounding(PeterO.Numbers.ERounding)</a></code> - Creates a new EContext object initialized with an unlimited precision, an unlimited exponent range, and the given rounding mode.</li>
-<li><code><a href="#HasExponentRange">HasExponentRange</a></code> -</li>
+<li><code><a href="#HasExponentRange">HasExponentRange</a></code> - Gets a value indicating whether this context defines a minimum and maximum exponent.</li>
 <li><code><a href="#HasFlags">HasFlags</a></code> - Gets a value indicating whether this context has a mutable Flags field.</li>
 <li><code><a href="#HasFlagsOrTraps">HasFlagsOrTraps</a></code> - Gets a value indicating whether this context has a mutable Flags field, one or more trap enablers, or both.</li>
 <li><code><a href="#HasMaxPrecision">HasMaxPrecision</a></code> - Gets a value indicating whether this context defines a maximum precision.</li>
-<li><code><a href="#IsPrecisionInBits">IsPrecisionInBits</a></code> -</li>
+<li><code><a href="#IsPrecisionInBits">IsPrecisionInBits</a></code> - Gets a value indicating whether this context&#39;s Precision property is in bits, rather than digits.</li>
 <li><code><a href="#IsSimplified">IsSimplified</a></code> - Gets a value indicating whether to use a &quot;simplified&quot; arithmetic.</li>
 <li><code><a href="#Precision">Precision</a></code> - Gets the maximum length of a converted number in digits, ignoring the radix point and exponent.</li>
 <li><code><a href="#Rounding">Rounding</a></code> - Gets the desired rounding mode when converting numbers that can&#39;t be represented in the given precision and exponent range.</li>
@@ -62,7 +62,7 @@
 <li><code><a href="#WithExponentClamp_bool">WithExponentClamp(bool)</a></code> - Copies this arithmetic context and sets the copy&#39;s &quot;ClampNormalExponents&quot; flag to the given value.</li>
 <li><code><a href="#WithExponentRange_int_int">WithExponentRange(int, int)</a></code> - Copies this arithmetic context and sets the copy&#39;s exponent range.</li>
 <li><code><a href="#WithNoFlags">WithNoFlags()</a></code> - Copies this EContext with HasFlags set to false and a Flags value of 0.</li>
-<li><code><a href="#WithNoFlagsOrTraps">WithNoFlagsOrTraps()</a></code> -</li>
+<li><code><a href="#WithNoFlagsOrTraps">WithNoFlagsOrTraps()</a></code> - Copies this EContext with HasFlags set to false, a Traps value of 0, and a Flags value of 0.</li>
 <li><code><a href="#WithPrecision_int">WithPrecision(int)</a></code> - Copies this EContext and gives it a particular precision value.</li>
 <li><code><a href="#WithPrecisionInBits_bool">WithPrecisionInBits(bool)</a></code> - Copies this EContext and sets the copy&#39;s &quot;IsPrecisionInBits&quot; property to the given value.</li>
 <li><code><a href="#WithRounding_PeterO_Numbers_ERounding">WithRounding(PeterO.Numbers.ERounding)</a></code> - Copies this EContext with the specified rounding mode.</li>
@@ -83,7 +83,7 @@
     bool clampNormalExponents);
 </pre>
 
-<p>Initializes a new instance of the <a href="PeterO.Numbers.EContext.html">PeterO.Numbers.EContext</a></p>
+<p>Initializes a new instance of the <a href="PeterO.Numbers.EContext.html">PeterO.Numbers.EContext</a>.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -107,7 +107,7 @@
     bool clampNormalExponents);
 </pre>
 
-<p>Initializes a new instance of the <a href="PeterO.Numbers.EContext.html">PeterO.Numbers.EContext</a> class,</p>
+<p>Initializes a new instance of the <a href="PeterO.Numbers.EContext.html">PeterO.Numbers.EContext</a> class,.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -328,6 +328,10 @@
 <pre>public bool HasExponentRange { get; }
 </pre>
 
+<p>Gets a value indicating whether this context defines a minimum and maximum exponent. If false, converted exponents can have any exponent and operations can&#39;t cause overflow or underflow.  <b>Returns:</b></p>
+
+<p><code>true</code>  if this context defines a minimum and maximum exponent; otherwise,  <code>false</code>  .. If false, converted exponents can have any exponent and operations can&#39;t cause overflow or underflow.  <code>true</code>  if this context defines a minimum and maximum exponent; otherwise,  <code>false</code>  .</p>
+
 <p><a id="HasFlags"></a></p>
 
 <h3>HasFlags</h3>
@@ -367,6 +371,10 @@
 
 <pre>public bool IsPrecisionInBits { get; }
 </pre>
+
+<p>Gets a value indicating whether this context&#39;s Precision property is in bits, rather than digits. The default is false.  <b>Returns:</b></p>
+
+<p><code>true</code>  if this context&#39;s Precision property is in bits, rather than digits; otherwise,  <code>false</code>  .. The default is false.  <code>true</code>  if this context&#39;s Precision property is in bits, rather than digits; otherwise,  <code>false</code>  . The default is false.</p>
 
 <p><a id="IsSimplified"></a></p>
 
@@ -689,6 +697,12 @@ is null.</li>
 
 <pre>public PeterO.Numbers.EContext WithNoFlagsOrTraps();
 </pre>
+
+<p>Copies this EContext with  <code>HasFlags</code>  set to false, a Traps value of 0, and a Flags value of 0.</p>
+
+<p><b>Return Value:</b></p>
+
+<p>A context object for arbitrary-precision arithmetic settings.</p>
 
 <p><a id="WithPrecision_int"></a></p>
 

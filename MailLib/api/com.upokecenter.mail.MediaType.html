@@ -13,19 +13,18 @@
  consists of a top-level type (the general category of the data), a
  subtype (the specific type), and an optional list of parameters. For
  example, the media type <code>text/plain; charset = utf-8</code> is a text
- media type ("text"), namely, a plain text type ("plain"), and the
- parameters say that the data uses UTF-8, a Unicode character encoding
- ("charset = utf-8"). Other top-level types include "audio", "video",
- and "application". </p> <p>A media type is sometimes known as a "MIME
- type", for Multipurpose Internet Mail Extensions, the standard that
- introduced media types. </p> <p>This type is immutable, meaning its
- values can't be changed once it' s created. To create a changeable
- media type object, use the MediaTypeBuilder class. </p>
-
-<p><p><b>Note:</b> According to RFC 2049, unrecognized subtypes of the
- top-level type <code>multipart</code> must be treated as
- <code>multipart/mixed</code> and unrecognized media types as the media type
- <code>application/octet-stream</code> . </p></p>
+  media type ("text"), namely, a plain text type ("plain"), and the
+ parameters say that the data uses UTF-8, a Unicode character
+  encoding ("charset = utf-8"). Other top-level types include "audio",
+  "video", and "application". </p> <p>A media type is sometimes known
+  as a "MIME type", for Multipurpose Internet Mail Extensions, the
+ standard that introduced media types. </p> <p>This type is
+ immutable, meaning its values can't be changed once it' s created.
+ To create a changeable media type object, use the MediaTypeBuilder
+ class. </p> <p><b>Note:</b> According to RFC 2049, unrecognized
+ subtypes of the top-level type <code>multipart</code> must be treated as
+ <code>multipart/mixed</code> and unrecognized media types as the media
+ type <code>application/octet-stream</code> . </p>
 
 <h2>Fields</h2>
 
@@ -48,7 +47,7 @@ basic Latin range (U + 0000 to U + 007F).</li>
 
 <ul>
 <li><code>boolean equals​(java.lang.Object obj)</code><br>
-Determines whether this object and another object are equal.</li>
+Not documented yet.</li>
 <li><code>java.lang.String GetCharset()</code><br>
 Gets this media type&#39;s &quot;charset&quot; parameter, naming a character encoding used
 to represent text in the data that uses this media type.</li>
@@ -72,14 +71,13 @@ Gets a value indicating whether this is a multipart media type.</li>
 <li><code>boolean isText()</code><br>
 Gets a value indicating whether this is a text media type (&quot;text/*&quot;).</li>
 <li><code>static MediaType Parse​(java.lang.String mediaTypeValue)</code><br>
-Parses a media type string and returns a media type object.</li>
+Not documented yet.</li>
 <li><code>static MediaType Parse​(java.lang.String str,
  MediaType defaultValue)</code><br>
 Parses a media type string and returns a media type object, or the default
 value if the string is invalid.</li>
 <li><code>java.lang.String ToSingleLineString()</code><br>
-Converts this media type to a text string form suitable for inserting in
-HTTP headers.</li>
+Not documented yet.</li>
 <li><code>java.lang.String toString()</code><br>
 Converts this media type to a text string form suitable for inserting in
 email headers.</li>
@@ -95,7 +93,7 @@ Converts this media type to a text string form suitable for data URIs.</li>
 </pre>
 
 <p>Specifies the media type &quot;text/plain&quot; and the &quot;charset&quot; parameter
- &quot;US-ASCII&quot;, used for plain text data.</p>
+  &quot;US-ASCII&quot;, used for plain text data.</p>
 
 <h3>TextPlainUtf8</h3>
 
@@ -129,8 +127,8 @@ Converts this media type to a text string form suitable for data URIs.</li>
 </pre>
 
 <p>Gets the name of this media type&#39;s top-level type (such as &quot;text&quot; in
- &quot;text/plain&quot;, or &quot;audio&quot; in &quot;audio/basic&quot;). The resulting string will
- be in lowercase letters.</p>
+  &quot;text/plain&quot;, or &quot;audio&quot; in &quot;audio/basic&quot;). The resulting string
+ will be in lowercase letters.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -144,7 +142,7 @@ Converts this media type to a text string form suitable for data URIs.</li>
 <pre>public boolean equals​(java.lang.Object obj)
 </pre>
 
-<p>Determines whether this object and another object are equal.</p>
+<p>Not documented yet.</p>
 
 <p><strong>Overrides:</strong></p>
 
@@ -155,14 +153,17 @@ Converts this media type to a text string form suitable for data URIs.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>obj</code> - The parameter <code>obj</code> is an arbitrary object.</li>
+<li><code>obj</code> - The parameter
+  <code>obj</code>
+   is not documented yet.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li><code>true</code> if this object and another object are equal; otherwise,
-<code>false</code> .</li>
+<li>Either
+  <code>true</code> or
+  <code>false</code> .</li>
 </ul>
 
 <h3>hashCode</h3>
@@ -210,7 +211,7 @@ Converts this media type to a text string form suitable for data URIs.</li>
 
 <ul>
 <li><code>true</code> If this is a text media type; otherwise, . <code>
-false</code> .</li>
+false</code>.</li>
 </ul>
 
 <h3>isMultipart</h3>
@@ -224,7 +225,7 @@ false</code> .</li>
 
 <ul>
 <li><code>true</code> If this is a multipart media type; otherwise, . <code>
-false</code> .</li>
+false</code>.</li>
 </ul>
 
 <h3>getParameters</h3>
@@ -251,9 +252,9 @@ order; this is at least the case in version 0.10.0.</li>
 
 <p>Converts this media type to a text string form suitable for inserting in
  email headers. Notably, the string contains the value of a
- Content-Type header field (without the text necessarily starting with
- &quot;Content-Type&quot; followed by a space), and consists of one or more
- lines.</p>
+ Content-Type header field (without the text necessarily starting
+  with &quot;Content-Type&quot; followed by a space), and consists of one or
+ more lines.</p>
 
 <p><strong>Overrides:</strong></p>
 
@@ -272,15 +273,12 @@ order; this is at least the case in version 0.10.0.</li>
 <pre>public java.lang.String ToSingleLineString()
 </pre>
 
-<p>Converts this media type to a text string form suitable for inserting in
- HTTP headers. Notably, the string contains the value of a
- Content-Type header field (without the text necessarily starting with
- &quot;Content-Type&quot; followed by a space), and consists of a single line.</p>
+<p>Not documented yet.</p>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A text string form of this media type.</li>
+<li>A text string.</li>
 </ul>
 
 <h3>ToUriSafeString</h3>
@@ -289,11 +287,11 @@ order; this is at least the case in version 0.10.0.</li>
 </pre>
 
 <p>Converts this media type to a text string form suitable for data URIs.
- Notably, the string contains the value of a Content-Type header field
- (without the text necessarily starting with &quot;Content-Type&quot; followed
- by a space), consists of a single line, and uses percent-encoding as
- necessary or convenient so that the resulting string can validly
- appear in a URI path.</p>
+ Notably, the string contains the value of a Content-Type header
+  field (without the text necessarily starting with &quot;Content-Type&quot;
+ followed by a space), consists of a single line, and uses
+ percent-encoding as necessary or convenient so that the resulting
+ string can validly appear in a URI path.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -328,7 +326,7 @@ none.</li>
 </pre>
 
 <p>Gets the value of a parameter in this media type, such as &quot;charset&quot; or
- &quot;format&quot;.</p>
+  &quot;format&quot;.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -359,7 +357,7 @@ doesn&#39;t exist.</li>
 </pre>
 
 <p>Gets the top level type and subtype of this media type, separated by a
- slash; for example, &quot;text/plain&quot;. The resulting string will be in
+  slash; for example, &quot;text/plain&quot;. The resulting string will be in
  lowercase letters.</p>
 
 <p><strong>Returns:</strong></p>
@@ -374,21 +372,19 @@ slash; for example, &quot;text/plain&quot;.</li>
 <pre>public static MediaType Parse​(java.lang.String mediaTypeValue)
 </pre>
 
-<p>Parses a media type string and returns a media type object. For further
- information, see the overload taking a MediaType parameter.</p>
+<p>Not documented yet.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>mediaTypeValue</code> - A text string representing a media type. This media
-type can include parameters.</li>
+<li><code>mediaTypeValue</code> - The parameter <code>mediaTypeValue</code> is not documented
+yet.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A media type object, or MediaType.TextPlainAscii if <code>
-mediaTypeValue</code> is empty or syntactically invalid.</li>
+<li>A MediaType object.</li>
 </ul>
 
 <h3>Parse</h3>
@@ -401,20 +397,21 @@ mediaTypeValue</code> is empty or syntactically invalid.</li>
  validity of the string, but not whether it has all parameters it&#39;s
  required to have or whether the parameters themselves are set to
  valid values for the parameter. <p>This method assumes the given
- media type string was directly extracted from the Content-Type header
- field (as defined for email messages) and follows the syntax given in
- RFC 2045. Accordingly, among other things, the media type string can
- contain comments (delimited by parentheses). </p> <p>RFC 2231
- extensions allow each media type parameter to be associated with a
- character encoding and/or language, and support parameter values that
- span two or more key-value pairs. Parameters making use of RFC 2231
- extensions have names with an asterisk (&quot;<em>&quot;). Such a parameter
- will be ignored if it is ill-formed because of RFC 2231&#39;s rules
- (except for illegal percent-decoding or undecodable sequences for the
- given character encoding). Examples of RFC 2231 extensions follow
- (both examples encode the same &quot;filename&quot; parameter): </p>
- <p><b>text/example; filename</em>=utf-8&#39;en&#39;filename.txt</b> </p>
- <p><b>text/example; filename<em>0</em>=utf-8&#39;en&#39;file;
+ media type string was directly extracted from the Content-Type
+ header field (as defined for email messages) and follows the syntax
+ given in RFC 2045. Accordingly, among other things, the media type
+ string can contain comments (delimited by parentheses). </p> <p>RFC
+ 2231 extensions allow each media type parameter to be associated
+ with a character encoding and/or language, and support parameter
+ values that span two or more key-value pairs. Parameters making use
+  of RFC 2231 extensions have names with an asterisk (&quot;<em>&quot;). Such
+ a parameter will be ignored if it is ill-formed because of RFC
+ 2231&#39;s rules (except for illegal percent-decoding or undecodable
+ sequences for the given character encoding). Examples of RFC 2231
+  extensions follow (both examples encode the same &quot;filename&quot;
+ parameter): </p> <p><b>text/example;
+ filename</em>=utf-8&#39;en&#39;filename.txt</b> </p> <p><b>text/example;
+ filename<em>0</em>=utf-8&#39;en&#39;file;
  filename<em>1</em>=name%2Etxt</b> </p> <p>This implementation
  ignores keys (in parameter key-value pairs) that appear more than
  once in the media type. Nothing in RFCs 2045, 2183, 2231, 6266, or

@@ -49,7 +49,7 @@ Parses a date string in one of the three formats allowed by HTTP/1.1.</li>
 
 <ul>
 <li><code>dateTime</code> - The date and time in the form of an 8-element array. See
-<see cref='M:PeterO.Mail.MailDateTime.ParseDateString(System.String,System.Boolean)'/>
+<see cref='M:PeterO.Mail.MailDateTime.ParseDateString(&#10;       System.String,System.Boolean)'/>
 for information on the format of this parameter.</li>
 </ul>
 
@@ -73,14 +73,14 @@ invalid, including if the year (<code>dateTime[0]</code>) is less than
 </pre>
 
 <p>Generates a date-time string following the Internet Message Format (RFC
- 5322) from an 8-element array, optionally using a &quot;GMT&quot; time zone
+  5322) from an 8-element array, optionally using a &quot;GMT&quot; time zone
  indicator.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
 <li><p><code>dateTime</code> - The date and time in the form of an 8-element array. See
-<see cref='M:PeterO.Mail.MailDateTime.ParseDateString(System.String,System.Boolean)'/>
+<see cref='M:PeterO.Mail.MailDateTime.ParseDateString(&#10;       System.String,System.Boolean)'/>
 for information on the format of this parameter.</p></li>
 <li><p><code>gmt</code> - If true, uses the string &quot;GMT&quot; as the time zone offset.</p></li>
 </ul>
@@ -118,11 +118,11 @@ and <code>gmt</code> is true.</p></li>
  minute, from 0 through 60 (this value can go up to 60 to accommodate
  leap seconds). (Leap seconds are additional seconds added to adjust
  international atomic time, or TAI, to an approximation of
- astronomical time known as coordinated universal time, or UTC.) </li>
- <li>6 - Milliseconds of the second, from 0 through 999. Will always
- be 0. </li> <li>7 - Number of minutes to subtract from this date and
- time to get global time. This number can be positive or negative.
- </li> </ul></p>
+ astronomical time known as coordinated universal time, or UTC.)
+ </li> <li>6 - Milliseconds of the second, from 0 through 999. Will
+ always be 0. </li> <li>7 - Number of minutes to subtract from this
+ date and time to get global time. This number can be positive or
+ negative. </li> </ul></p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -130,7 +130,8 @@ and <code>gmt</code> is true.</p></li>
 <li><p><code>str</code> - A date-time string.</p></li>
 <li><p><code>parseObsoleteZones</code> - If set to <code>true</code> , this method allows
 obsolete time zones (single-letter time zones, &quot;GMT&quot;, &quot;UT&quot;, and
-certain three-letter combinations) to appear in the date-time string.</p></li>
+certain three-letter combinations) to appear in the date-time
+string.</p></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -149,13 +150,15 @@ string&#39;s year would overflow the range of a 32-bit signed integer.</li>
 <p>Gets the date and time extracted from a date-time string following the
  Internet Message Format (RFC 5322). However, this method does not
  allow obsolete time zone strings to appear in the date-time string.
- See <see cref='M:PeterO.Mail.MailDateTime.ParseDateString(System.String,System.Boolean)'/>
+ See <see cref='M:PeterO.Mail.MailDateTime.ParseDateString(&#10;       System.String,System.Boolean)'/>
  for information on the format of this method&#39;s return value.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>str</code> - The parameter <code>str</code> is not documented yet.</li>
+<li><code>str</code> - The parameter
+  <code>str</code>
+   is not documented yet.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
