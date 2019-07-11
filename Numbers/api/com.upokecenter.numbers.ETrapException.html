@@ -10,8 +10,8 @@
 </pre>
 
 <p>Exception thrown for arithmetic trap errors. (The &quot;E&quot; stands for &quot;extended&quot;,
- and has this prefix to group it with the other classes common to this
- library, particularly EDecimal, EFloat, and ERational.).</p>
+ and has this prefix to group it with the other classes common to
+ this library, particularly EDecimal, EFloat, and ERational.).</p>
 
 <h2>Methods</h2>
 
@@ -19,7 +19,7 @@
 <li><code>ETrapException​(int flag,
           EContext ctx,
           java.lang.Object result) ETrapException</code><br>
-Initializes a new instance of the ETrapException class.</li>
+Initializes a new instance of the ETrapException.</li>
 <li><code>EContext getContext()</code><br>
 Gets the arithmetic context used during the operation that triggered the
 trap.</li>
@@ -35,7 +35,7 @@ Gets the defined result of the operation that caused the trap.</li>
 <li><code>ETrapException​(int flag,
           EContext ctx,
           java.lang.Object result) ETrapException</code><br>
-Initializes a new instance of the ETrapException class.</li>
+Initializes a new instance of the ETrapException.</li>
 </ul>
 
 <h2>Method Details</h2>
@@ -45,14 +45,14 @@ Initializes a new instance of the ETrapException class.</li>
 <pre>public ETrapException​(int flag, EContext ctx, java.lang.Object result)
 </pre>
 
-<p>Initializes a new instance of the <code>ETrapException</code> class.</p>
+<p>Initializes a new instance of the <code>ETrapException</code>.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>flag</code> - The parameter <code>flag</code> is a 32-bit signed integer.</p></li>
-<li><p><code>ctx</code> - The parameter <code>ctx</code> is an EContext object.</p></li>
-<li><p><code>result</code> - The parameter <code>result</code> is an arbitrary object.</p></li>
+<li><p><code>flag</code> - A 32-bit signed integer.</p></li>
+<li><p><code>ctx</code> - An EContext object.</p></li>
+<li><p><code>result</code> - An arbitrary object.</p></li>
 </ul>
 
 <h3>ETrapException</h3>
@@ -60,14 +60,14 @@ Initializes a new instance of the ETrapException class.</li>
 <pre>public ETrapException​(int flag, EContext ctx, java.lang.Object result)
 </pre>
 
-<p>Initializes a new instance of the <code>ETrapException</code> class.</p>
+<p>Initializes a new instance of the <code>ETrapException</code>.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>flag</code> - The parameter <code>flag</code> is a 32-bit signed integer.</p></li>
-<li><p><code>ctx</code> - The parameter <code>ctx</code> is an EContext object.</p></li>
-<li><p><code>result</code> - The parameter <code>result</code> is an arbitrary object.</p></li>
+<li><p><code>flag</code> - A 32-bit signed integer.</p></li>
+<li><p><code>ctx</code> - An EContext object.</p></li>
+<li><p><code>result</code> - An arbitrary object.</p></li>
 </ul>
 
 <h3>getContext</h3>
@@ -110,7 +110,8 @@ trap. May be null.</li>
 
 <ul>
 <li>The flag that specifies the kind of error (EContext.FlagXXX). This
-will only be one flag, such as. <code>FlagInexact</code> or FlagSubnormal.</li>
+will only be one flag, such as. <code>FlagInexact</code> or
+FlagSubnormal.</li>
 </ul>
 
 <p><a href="/Numbers/">Back to Numbers start page.</a></p>

@@ -14,9 +14,9 @@
 <ul>
 <li><code>RDFTriple​(RDFTerm subject,
      RDFTerm predicate,
-     RDFTerm objectRdf) RDFTriple</code><br>
+     RDFTerm objectRdf)</code><br>
 Initializes a new instance of the RDFTriple class.</li>
-<li><code>RDFTriple​(RDFTriple triple) RDFTriple</code><br>
+<li><code>RDFTriple​(RDFTriple triple)</code><br>
 Initializes a new instance of the RDFTriple class.</li>
 <li><code>boolean equals​(java.lang.Object obj)</code><br>
 Not documented yet.</li>
@@ -37,9 +37,9 @@ Not documented yet.</li>
 <ul>
 <li><code>RDFTriple​(RDFTerm subject,
      RDFTerm predicate,
-     RDFTerm objectRdf) RDFTriple</code><br>
+     RDFTerm objectRdf)</code><br>
 Initializes a new instance of the RDFTriple class.</li>
-<li><code>RDFTriple​(RDFTriple triple) RDFTriple</code><br>
+<li><code>RDFTriple​(RDFTriple triple)</code><br>
 Initializes a new instance of the RDFTriple class.</li>
 </ul>
 
@@ -50,24 +50,24 @@ Initializes a new instance of the RDFTriple class.</li>
 <pre>public RDFTriple​(RDFTerm subject, RDFTerm predicate, RDFTerm objectRdf)
 </pre>
 
-<p>Initializes a new instance of the <code>RDFTriple</code> class.</p>
+<p>Initializes a new instance of the RDFTriple class.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>subject</code> - The subject term.</p></li>
-<li><p><code>predicate</code> - The predicate term.</p></li>
-<li><p><code>objectRdf</code> - The object term.</p></li>
+<li><p><code>subject</code> - A RDFTerm object.</p></li>
+<li><p><code>predicate</code> - Another RDFTerm object.</p></li>
+<li><p><code>objectRdf</code> - A RDFTerm object. (3).</p></li>
 </ul>
 
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>objectRdf</code> or
-<code>predicate</code> or <code>subject</code> is null.</p></li>
-<li><p><code>java.lang.IllegalArgumentException</code> - Doesn&#39;t satisfy
-predicate.kind==RDFTerm.IRI; doesn&#39;t satisfy subject.kind ==
-RDFTerm.IRI || subject.kind == RDFTerm.BLANK.</p></li>
+<li><p><code>java.lang.NullPointerException</code> - The parameter <code>objectRdf</code> or <code>
+predicate</code> or <code>subject</code> is null.</p></li>
+<li><p><code>java.lang.IllegalArgumentException</code> - Doesn&#39;t satisfy predicate.kind==RDFTerm.IRI;
+doesn&#39;t satisfy subject.kind == RDFTerm.IRI || subject.kind ==
+RDFTerm.BLANK.</p></li>
 </ul>
 
 <h3>RDFTriple</h3>
@@ -75,18 +75,12 @@ RDFTerm.IRI || subject.kind == RDFTerm.BLANK.</p></li>
 <pre>public RDFTriple​(RDFTriple triple)
 </pre>
 
-<p>Initializes a new instance of the <code>RDFTriple</code> class.</p>
+<p>Initializes a new instance of the RDFTriple class.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>triple</code> - The parameter <code>triple</code> is a RDFTriple object.</li>
-</ul>
-
-<p><strong>Throws:</strong></p>
-
-<ul>
-<li><code>java.lang.NullPointerException</code> - The parameter <code>triple</code> is null.</li>
+<li><code>triple</code> - A RDFTriple object.</li>
 </ul>
 
 <h3>equals</h3>

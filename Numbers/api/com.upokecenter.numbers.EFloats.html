@@ -19,7 +19,7 @@
 EFloat ed2,
 EContext ec)</code><br>
 Performs a logical AND operation on two binary numbers in the form of
-logical operands  .</li>
+logical operands .</li>
 <li><code>static EFloat BooleanToEFloat​(boolean b,
            EContext ec)</code><br>
 Converts a boolean value (either true or false) to an arbitrary-precision
@@ -57,7 +57,7 @@ Creates a binary floating-point number from a 32-bit signed integer.</li>
 <li><code>static EFloat Invert​(EFloat ed1,
   EContext ec)</code><br>
 Performs a logical NOT operation on a binary number in the form of a
-logical operand  .</li>
+logical operand .</li>
 <li><code>static boolean IsCanonical​(EFloat ed)</code><br>
 Returns whether the given arbitrary-precision number object is in a
 canonical form.</li>
@@ -103,7 +103,7 @@ Converts a number class identifier (ranging from 1 to 9) to a text string.</li>
 EFloat ed2,
 EContext ec)</code><br>
 Performs a logical OR operation on two binary numbers in the form of
-logical operands  .</li>
+logical operands .</li>
 <li><code>static EFloat Radix​(EContext ec)</code><br>
 Returns the number 2, the binary radix.</li>
 <li><code>static EFloat Rescale​(EFloat ed,
@@ -139,7 +139,7 @@ with certain trailing zeros removed from its mantissa.</li>
 EFloat ed2,
 EContext ec)</code><br>
 Performs a logical exclusive-OR (XOR) operation on two binary numbers in the
-form of  logical operands  .</li>
+form of  logical operands .</li>
 </ul>
 
 <h2>Method Details</h2>
@@ -227,7 +227,8 @@ result will be rounded as specified by the given context, if any.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>Always <code>true</code> .</li>
+<li>Always
+  <code>true</code> .</li>
 </ul>
 
 <h3>IsFinite</h3>
@@ -248,8 +249,8 @@ result will be rounded as specified by the given context, if any.</li>
 
 <ul>
 <li>Either <code>true</code> if the given arbitrary-precision number object
-is neither null nor infinity nor not-a-number (NaN), or <code>false</code>
-otherwise.</li>
+is neither null nor infinity nor not-a-number (NaN), or <code>
+false</code> otherwise.</li>
 </ul>
 
 <h3>IsInfinite</h3>
@@ -290,7 +291,9 @@ is positive or negative infinity, or <code>false</code> otherwise.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>Either <code>true</code> or <code>false</code> .</li>
+<li>Either
+  <code>true</code> or
+  <code>false</code> .</li>
 </ul>
 
 <h3>IsNormal</h3>
@@ -313,13 +316,14 @@ is positive or negative infinity, or <code>false</code> otherwise.</li>
 numbers. Can be null. If AdjustExponent of the given context is
 <code>true</code> , a nonzero number is normal if the number&#39;s exponent
 (when that number is expressed in scientific notation with one
-nonzero digit before the radix point) is at least the given context&#39;s
-EMax property (e.g., if EMax is -100, 2.3456 * 10 <sup> -99 </sup> is
-normal, but 2.3456 * 10 <sup> -102 </sup> is not). If AdjustExponent
-of the given context is <code>false</code> , a nonzero number is subnormal
-if the number&#39;s Exponent property is at least given context&#39;s EMax
-property (e.g., if EMax is -100, 23456 * 10 <sup> -99 </sup> is
-normal, but 23456 * 10 <sup> -102 </sup> is not).</p></li>
+nonzero digit before the radix point) is at least the given
+context&#39;s EMax property (e.g., if EMax is -100, 2.3456 * 10 <sup>
+-99 </sup> is normal, but 2.3456 * 10 <sup> -102 </sup> is not). If
+AdjustExponent of the given context is <code>false</code> , a nonzero
+number is subnormal if the number&#39;s Exponent property is at least
+given context&#39;s EMax property (e.g., if EMax is -100, 23456 * 10
+<sup> -99 </sup> is normal, but 23456 * 10 <sup> -102 </sup> is
+not).</p></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -327,7 +331,7 @@ normal, but 23456 * 10 <sup> -102 </sup> is not).</p></li>
 <ul>
 <li>Either <code>true</code> if the given number is subnormal, or <code>
 false</code> otherwise. Returns <code>true</code> if the given context is null
-or HasExponentRange of the given context is <code>false</code> .</li>
+or HasExponentRange of the given context is <code>false</code>.</li>
 </ul>
 
 <h3>IsQuietNaN</h3>
@@ -347,7 +351,9 @@ or HasExponentRange of the given context is <code>false</code> .</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>Either <code>true</code> or <code>false</code> .</li>
+<li>Either
+  <code>true</code> or
+  <code>false</code> .</li>
 </ul>
 
 <h3>IsSigned</h3>
@@ -368,7 +374,9 @@ or HasExponentRange of the given context is <code>false</code> .</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>Either <code>true</code> or <code>false</code> .</li>
+<li>Either
+  <code>true</code> or
+  <code>false</code> .</li>
 </ul>
 
 <h3>IsSignalingNaN</h3>
@@ -388,7 +396,9 @@ or HasExponentRange of the given context is <code>false</code> .</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>Either <code>true</code> or <code>false</code> .</li>
+<li>Either
+  <code>true</code> or
+  <code>false</code> .</li>
 </ul>
 
 <h3>NumberClassString</h3>
@@ -419,7 +429,7 @@ or HasExponentRange of the given context is <code>false</code> .</li>
 
 <ul>
 <li><code>java.lang.IllegalArgumentException</code> - The parameter <code>nc</code> is less than 0 or
-greater than 9 .</li>
+greater than 9.</li>
 </ul>
 
 <h3>NumberClass</h3>
@@ -471,9 +481,9 @@ quiet not-a-number (NaN), 9 = signaling NaN.</li>
 <li><p><code>ed</code> - An arbitrary-precision number object.</p></li>
 <li><p><code>ec</code> - A context specifying the exponent range of arbitrary-precision
 numbers. Can be null. If AdjustExponent of the given context is
-<code>true</code> , a nonzero number is subnormal if the number&#39;s exponent
-(when that number is expressed in scientific notation with one
-nonzero digit before the radix point) is less than the given
+<code>true</code> , a nonzero number is subnormal if the number&#39;s
+exponent (when that number is expressed in scientific notation with
+one nonzero digit before the radix point) is less than the given
 context&#39;s EMax property (e.g., if EMax is -100, 2.3456 * 10 <sup>
 -102 </sup> is subnormal, but 2.3456 * 10 <sup> -99 </sup> is not).
 If AdjustExponent of the given context is <code>false</code> , a nonzero
@@ -488,7 +498,7 @@ not).</p></li>
 <ul>
 <li>Either <code>true</code> if the given number is subnormal, or <code>
 false</code> otherwise. Returns <code>false</code> if the given context is null
-or HasExponentRange of the given context is <code>false</code> .</li>
+or HasExponentRange of the given context is <code>false</code>.</li>
 </ul>
 
 <h3>IsZero</h3>
@@ -509,7 +519,7 @@ or HasExponentRange of the given context is <code>false</code> .</li>
 
 <ul>
 <li><code>true</code> if the given number has a value of zero (positive zero
-or negative zero); otherwise, <code>false</code> .</li>
+or negative zero); otherwise, <code>false</code>.</li>
 </ul>
 
 <h3>LogB</h3>
@@ -519,8 +529,8 @@ or negative zero); otherwise, <code>false</code> .</li>
 
 <p>Returns the base-2 exponent of an arbitrary-precision binary number (when
  that number is expressed in scientific notation with one nonzero
- digit before the radix point). For example, returns 3 for the numbers
- <code>1.11b * 2^3</code> and <code>111 * 2^1</code> .</p>
+ digit before the radix point). For example, returns 3 for the
+ numbers <code>1.11b * 2^3</code> and <code>111 * 2^1</code>.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -599,10 +609,10 @@ is null.</li>
 mantissa to shift.</p></li>
 <li><p><code>ed2</code> - An arbitrary-precision number indicating the number of bits to
 shift the first operand&#39;s mantissa. Must be an integer with an
-exponent of 0. If this parameter is positive, the mantissa is shifted
-to the left by the given number of bits. If this parameter is
-negative, the mantissa is shifted to the right by the given number of
-bits.</p></li>
+exponent of 0. If this parameter is positive, the mantissa is
+shifted to the left by the given number of bits. If this parameter
+is negative, the mantissa is shifted to the right by the given
+number of bits.</p></li>
 <li><p><code>ec</code> - An arithmetic context to control the precision of
 arbitrary-precision numbers. Can be null.</p></li>
 </ul>
@@ -612,10 +622,10 @@ arbitrary-precision numbers. Can be null.</p></li>
 <ul>
 <li>An arbitrary-precision decimal number whose mantissa is shifted the
 given number of bits. Signals an invalid operation and returns NaN
-(not-a-number) if <code>ed2</code> is a signaling NaN or if <code>ed2</code> is
-not an integer, is negative, has an exponent other than 0, or has an
-absolute value that exceeds the maximum precision specified in the
-context.</li>
+(not-a-number) if <code>ed2</code> is a signaling NaN or if <code>ed2</code>
+is not an integer, is negative, has an exponent other than 0, or has
+an absolute value that exceeds the maximum precision specified in
+the context.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -640,16 +650,17 @@ If this mantissa contains more bits than the precision, the
 most-significant bits are chopped off the mantissa.</p></li>
 <li><p><code>ed2</code> - An arbitrary-precision number indicating the number of bits to
 rotate the first operand&#39;s mantissa. Must be an integer with an
-exponent of 0. If this parameter is positive, the mantissa is shifted
-to the left by the given number of bits and the most-significant bits
-shifted out of the mantissa become the least-significant bits
-instead. If this parameter is negative, the number is shifted by the
-given number of bits and the least-significant bits shifted out of
-the mantissa become the most-significant bits instead.</p></li>
+exponent of 0. If this parameter is positive, the mantissa is
+shifted to the left by the given number of bits and the
+most-significant bits shifted out of the mantissa become the
+least-significant bits instead. If this parameter is negative, the
+number is shifted by the given number of bits and the
+least-significant bits shifted out of the mantissa become the
+most-significant bits instead.</p></li>
 <li><p><code>ec</code> - An arithmetic context to control the precision of
 arbitrary-precision numbers. If this parameter is null or specifies
 an unlimited precision, this method has the same behavior as <code>
-Shift</code> .</p></li>
+Shift</code>.</p></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -657,10 +668,10 @@ Shift</code> .</p></li>
 <ul>
 <li>An arbitrary-precision binary number whose mantissa is rotated the
 given number of bits. Signals an invalid operation and returns NaN
-(not-a-number) if <code>ed2</code> is a signaling NaN or if <code>ed2</code> is
-not an integer, is negative, has an exponent other than 0, or has an
-absolute value that exceeds the maximum precision specified in the
-context.</li>
+(not-a-number) if <code>ed2</code> is a signaling NaN or if <code>ed2</code>
+is not an integer, is negative, has an exponent other than 0, or has
+an absolute value that exceeds the maximum precision specified in
+the context.</li>
 </ul>
 
 <h3>CompareTotal</h3>
@@ -671,13 +682,13 @@ context.</li>
 <p>Compares the values of one arbitrary-precision number object and another
  object, imposing a total ordering on all possible values. In this
  method: <ul> <li>For objects with the same value, the one with the
- higher exponent has a greater &quot;absolute value&quot;. </li> <li>Negative
+  higher exponent has a greater &quot;absolute value&quot;. </li> <li>Negative
  zero is less than positive zero. </li> <li>Quiet NaN has a higher
- &quot;absolute value&quot; than signaling NaN. If both objects are quiet NaN or
- both are signaling NaN, the one with the higher diagnostic
- information has a greater &quot;absolute value&quot;. </li> <li>NaN has a
- higher &quot;absolute value&quot; than infinity. </li> <li>Infinity has a
- higher &quot;absolute value&quot; than any finite number. </li> <li>Negative
+  &quot;absolute value&quot; than signaling NaN. If both objects are quiet NaN
+ or both are signaling NaN, the one with the higher diagnostic
+  information has a greater &quot;absolute value&quot;. </li> <li>NaN has a
+  higher &quot;absolute value&quot; than infinity. </li> <li>Infinity has a
+  higher &quot;absolute value&quot; than any finite number. </li> <li>Negative
  numbers are less than positive numbers. </li> </ul></p>
 
 <p><strong>Parameters:</strong></p>
@@ -686,8 +697,8 @@ context.</li>
 <li><p><code>ed</code> - The first arbitrary-precision number to compare.</p></li>
 <li><p><code>other</code> - The second arbitrary-precision number to compare.</p></li>
 <li><p><code>ec</code> - An arithmetic context. Flags will be set in this context only if
-<code>HasFlags</code> and <code>IsSimplified</code> of the context are true and
-only if an operand needed to be rounded before carrying out the
+<code>HasFlags</code> and <code>IsSimplified</code> of the context are true
+and only if an operand needed to be rounded before carrying out the
 operation. Can be null.</p></li>
 </ul>
 
@@ -706,15 +717,15 @@ greater. Does not signal flags if either value is signaling NaN.</li>
 
 <p>Compares the absolute values of two arbitrary-precision number objects,
  imposing a total ordering on all possible values (ignoring their
- signs). In this method: <ul> <li>For objects with the same value, the
- one with the higher exponent has a greater &quot;absolute value&quot;. </li>
- <li>Negative zero and positive zero are considered equal. </li>
- <li>Quiet NaN has a higher &quot;absolute value&quot; than signaling NaN. If
- both objects are quiet NaN or both are signaling NaN, the one with
- the higher diagnostic information has a greater &quot;absolute value&quot;.
- </li> <li>NaN has a higher &quot;absolute value&quot; than infinity. </li>
- <li>Infinity has a higher &quot;absolute value&quot; than any finite number.
- </li> </ul></p>
+ signs). In this method: <ul> <li>For objects with the same value,
+  the one with the higher exponent has a greater &quot;absolute value&quot;.
+ </li> <li>Negative zero and positive zero are considered equal.
+  </li> <li>Quiet NaN has a higher &quot;absolute value&quot; than signaling
+ NaN. If both objects are quiet NaN or both are signaling NaN, the
+  one with the higher diagnostic information has a greater &quot;absolute
+  value&quot;. </li> <li>NaN has a higher &quot;absolute value&quot; than infinity.
+  </li> <li>Infinity has a higher &quot;absolute value&quot; than any finite
+ number. </li> </ul></p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -722,8 +733,8 @@ greater. Does not signal flags if either value is signaling NaN.</li>
 <li><p><code>ed</code> - The first arbitrary-precision number to compare.</p></li>
 <li><p><code>other</code> - The second arbitrary-precision number to compare.</p></li>
 <li><p><code>ec</code> - An arithmetic context. Flags will be set in this context only if
-<code>HasFlags</code> and <code>IsSimplified</code> of the context are true and
-only if an operand needed to be rounded before carrying out the
+<code>HasFlags</code> and <code>IsSimplified</code> of the context are true
+and only if an operand needed to be rounded before carrying out the
 operation. Can be null.</p></li>
 </ul>
 
@@ -732,8 +743,9 @@ operation. Can be null.</p></li>
 <ul>
 <li>The number 0 if both objects have the same value (ignoring their
 signs), or -1 if the first object is less than the other value
-(ignoring their signs), or 1 if the first object is greater (ignoring
-their signs). Does not signal flags if either value is signaling NaN.</li>
+(ignoring their signs), or 1 if the first object is greater
+(ignoring their signs). Does not signal flags if either value is
+signaling NaN.</li>
 </ul>
 
 <h3>Copy</h3>
@@ -772,7 +784,9 @@ their signs). Does not signal flags if either value is signaling NaN.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A copy of the parameter <code>ed</code> .</li>
+<li>A copy of the parameter
+  <code>ed</code>
+   .</li>
 </ul>
 
 <h3>CopyAbs</h3>
@@ -832,7 +846,9 @@ given number object.</li>
 <ul>
 <li><p><code>ed</code> - An arbitrary-precision number object with the value the result
 will have.</p></li>
-<li><p><code>other</code> - The parameter <code>other</code> is an EDecimal object.</p></li>
+<li><p><code>other</code> - The parameter
+  <code>other</code>
+   is an EDecimal object.</p></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -863,8 +879,8 @@ negative) as the second given number object.</li>
 
 <ul>
 <li>Either <code>true</code> if the given arbitrary-precision numbers have
-the same exponent, they both are not-a-number (NaN), or they both are
-infinity (positive and/or negative); otherwise, <code>false</code> .</li>
+the same exponent, they both are not-a-number (NaN), or they both
+are infinity (positive and/or negative); otherwise, <code>false</code>.</li>
 </ul>
 
 <h3>Trim</h3>
@@ -893,8 +909,8 @@ exponent range of the result. Can be null.</p></li>
 
 <ul>
 <li>An arbitrary-precision number with the same value as this one but
-with certain trailing zeros removed from its mantissa. If <code>ed1</code>
-is not-a-number (NaN) or infinity, it is generally returned
+with certain trailing zeros removed from its mantissa. If <code>
+ed1</code> is not-a-number (NaN) or infinity, it is generally returned
 unchanged.</li>
 </ul>
 
@@ -906,16 +922,16 @@ unchanged.</li>
 <p>Returns an arbitrary-precision binary number with the same value as this
  object but with the given exponent, expressed as an
  arbitrary-precision binary number. <p>Note that this is not always
- the same as rounding to a given number of binary places, since it can
- fail if the difference between this value&#39;s exponent and the desired
- exponent is too big, depending on the maximum precision. If rounding
- to a number of binary places is desired, it&#39;s better to use the
- RoundToExponent and RoundToIntegral methods instead. </p>
+ the same as rounding to a given number of binary places, since it
+ can fail if the difference between this value&#39;s exponent and the
+ desired exponent is too big, depending on the maximum precision. If
+ rounding to a number of binary places is desired, it&#39;s better to use
+ the RoundToExponent and RoundToIntegral methods instead. </p>
  <p><b>Remark:</b> This method can be used to implement fixed-point
  binary arithmetic, in which a fixed number of digits come after the
- binary point. A fixed-point binary arithmetic in which no digits come
- after the binary point (a desired exponent of 0) is considered an
- &quot;integer arithmetic&quot; . </p></p>
+ binary point. A fixed-point binary arithmetic in which no digits
+ come after the binary point (a desired exponent of 0) is considered
+  an &quot;integer arithmetic&quot; . </p></p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -940,10 +956,10 @@ rounding mode is HalfEven.</p></li>
 
 <ul>
 <li>An arbitrary-precision binary number with the same value as this
-object but with the exponent changed. Signals FlagInvalid and returns
-not-a-number (NaN) if the result can&#39;t fit the given precision
-without rounding, or if the arithmetic context defines an exponent
-range and the given exponent is outside that range.</li>
+object but with the exponent changed. Signals FlagInvalid and
+returns not-a-number (NaN) if the result can&#39;t fit the given
+precision without rounding, or if the arithmetic context defines an
+exponent range and the given exponent is outside that range.</li>
 </ul>
 
 <h3>And</h3>
@@ -952,12 +968,12 @@ range and the given exponent is outside that range.</li>
 </pre>
 
 <p>Performs a logical AND operation on two binary numbers in the form of <i>
- logical operands </i> . A <code>logical operand</code> is a non-negative
+ logical operands </i>. A <code>logical operand</code> is a non-negative
  base-2 number with an Exponent property of 0 (examples include the
  base-2 numbers <code>01001</code> and <code>111001</code>). The logical AND
  operation sets each bit of the result to 1 if the corresponding bits
  of each logical operand are both 1, and to 0 otherwise. For example,
- <code>01001 AND 111010 = 01000</code> .</p>
+ <code>01001 AND 111010 = 01000</code>.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -975,8 +991,8 @@ precision are discarded. This parameter can be null.</p></li>
 
 <ul>
 <li>The result of the logical AND operation as a logical operand.
-Signals an invalid operation and returns not-a-number (NaN) if <code>
-ed1</code> , <code>ed2</code> , or both are not logical operands.</li>
+Signals an invalid operation and returns not-a-number (NaN) if
+<code>ed1</code> , <code>ed2</code> , or both are not logical operands.</li>
 </ul>
 
 <h3>Invert</h3>
@@ -985,13 +1001,13 @@ ed1</code> , <code>ed2</code> , or both are not logical operands.</li>
 </pre>
 
 <p>Performs a logical NOT operation on a binary number in the form of a <i>
- logical operand </i> . A <code>logical operand</code> is a non-negative
+ logical operand </i>. A <code>logical operand</code> is a non-negative
  base-2 number with an Exponent property of 0 (examples include
- <code>01001</code> and <code>111001</code>). The logical NOT operation sets each
- bit of the result to 1 if the corresponding bit is 0, and to 0
+ <code>01001</code> and <code>111001</code>). The logical NOT operation sets
+ each bit of the result to 1 if the corresponding bit is 0, and to 0
  otherwise; it can set no more bits than the maximum precision,
- however. For example, if the maximum precision is 8 bits, then <code>NOT
- 111010 = 11000101</code> .</p>
+ however. For example, if the maximum precision is 8 bits, then
+ <code>NOT 111010 = 11000101</code>.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1010,8 +1026,8 @@ allowed).</p></li>
 
 <ul>
 <li>The result of the logical NOT operation as a logical operand.
-Signals an invalid operation and returns not-a-number (NaN) if <code>
-ed1</code> is not a logical operand.</li>
+Signals an invalid operation and returns not-a-number (NaN) if
+<code>ed1</code> is not a logical operand.</li>
 </ul>
 
 <h3>Xor</h3>
@@ -1020,13 +1036,13 @@ ed1</code> is not a logical operand.</li>
 </pre>
 
 <p>Performs a logical exclusive-OR (XOR) operation on two binary numbers in the
- form of <i> logical operands </i> . A <code>logical operand</code> is a
+ form of <i> logical operands </i>. A <code>logical operand</code> is a
  non-negative base-2 number with an Exponent property of 0 (examples
  include the base-2 numbers <code>01001</code> and <code>111001</code>). The
  logical exclusive-OR operation sets each digit of the result to 1 if
  either corresponding digit of the logical operands, but not both, is
  1, and to 0 otherwise. For example, <code>01001 XOR 111010 = 101010</code>
- .</p>
+.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1054,12 +1070,12 @@ if <code>ed1</code> , <code>ed2</code> , or both are not logical operands.</li>
 </pre>
 
 <p>Performs a logical OR operation on two binary numbers in the form of <i>
- logical operands </i> . A <code>logical operand</code> is a non-negative
+ logical operands </i>. A <code>logical operand</code> is a non-negative
  base-2 number with an Exponent property of 0 (examples include the
  base-2 numbers <code>01001</code> and <code>111001</code>). The logical OR
  operation sets each bit of the result to 1 if either or both of the
- corresponding bits of each logical operand are 1, and to 0 otherwise.
- For example, <code>01001 OR 111010 = 111011</code> .</p>
+ corresponding bits of each logical operand are 1, and to 0
+ otherwise. For example, <code>01001 OR 111010 = 111011</code>.</p>
 
 <p><strong>Parameters:</strong></p>
 

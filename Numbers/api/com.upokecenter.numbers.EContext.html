@@ -10,20 +10,21 @@
 </pre>
 
 <p>Contains parameters for controlling the precision, rounding, and exponent
- range of arbitrary-precision numbers. (The &quot;E&quot; stands for &quot;extended&quot;,
- and has this prefix to group it with the other classes common to this
- library, particularly EDecimal, EFloat, and ERational.). <p><b>Thread
- safety:</b> With one exception, instances of this class are immutable
- and are safe to use among multiple threads. The one exception
- involves the <code>Flags</code> property. If the context&#39;s <code>HasFlags</code>
- property (a read-only property) is <code>true</code> , the <code>Flags</code>
- property is mutable, thus making the context mutable. This class
- doesn&#39;t synchronize access to such mutable contexts, so applications
- should provide their own synchronization if a context with the
- <code>HasFlags</code> property set to <code>true</code> will be shared among
- multiple threads and at least one of those threads needs to write the
- <code>Flags</code> property (which can happen, for example, by passing the
- context to most methods of <code>EDecimal</code> such as <code>Add</code>). </p></p>
+  range of arbitrary-precision numbers. (The &quot;E&quot; stands for
+  &quot;extended&quot;, and has this prefix to group it with the other classes
+ common to this library, particularly EDecimal, EFloat, and
+ ERational.). <p><b>Thread safety:</b> With one exception, instances
+ of this class are immutable and are safe to use among multiple
+ threads. The one exception involves the <code>Flags</code> property. If
+ the context&#39;s <code>HasFlags</code> property (a read-only property) is
+ <code>true</code> , the <code>Flags</code> property is mutable, thus making the
+ context mutable. This class doesn&#39;t synchronize access to such
+ mutable contexts, so applications should provide their own
+ synchronization if a context with the <code>HasFlags</code> property set
+ to <code>true</code> will be shared among multiple threads and at least
+ one of those threads needs to write the <code>Flags</code> property (which
+ can happen, for example, by passing the context to most methods of
+ <code>EDecimal</code> such as <code>Add</code>). </p></p>
 
 <h2>Fields</h2>
 
@@ -46,7 +47,7 @@ precision.</li>
 An arithmetic context for the IEEE-754-2008 binary64 format, 53 bits
 precision.</li>
 <li><code>static EContext CliDecimal &quot;Forms of numbers&quot;</code><br>
-An arithmetic context for the .NET Framework decimal format (see &quot;Forms of numbers&quot;), 96 bits
+An arithmetic context for the.NET Framework decimal format (see &quot;Forms of numbers&quot;), 96 bits
 precision, and a valid exponent range of -28 to 0.</li>
 <li><code>static EContext Decimal128</code><br>
 An arithmetic context for the IEEE-754-2008 decimal128 format.</li>
@@ -93,15 +94,13 @@ No specific (theoretical) limit on precision.</li>
     int exponentMinSmall,
     int exponentMaxSmall,
     boolean clampNormalExponents) EContext</code><br>
-Initializes a new instance of the EContext class.</li>
+Initializes a new instance of the EContext.</li>
 <li><code>EContext​(EInteger bigintPrecision,
     ERounding rounding,
     EInteger exponentMin,
     EInteger exponentMax,
     boolean clampNormalExponents) EContext</code><br>
-Initializes a new instance of the EContext class, using
-arbitrary-precision integers to hold the precision and exponent
-range.</li>
+Initializes a new instance of the EContext class, .</li>
 </ul>
 
 <h2>Methods</h2>
@@ -328,10 +327,10 @@ Copies this EContext with an unlimited exponent range.</li>
 <pre>public static final EContext CliDecimal
 </pre>
 
-<p>An arithmetic context for the .NET Framework decimal format (see <code>&quot;Forms of numbers&quot;</code>), 96 bits
+<p>An arithmetic context for the.NET Framework decimal format (see <code>&quot;Forms of numbers&quot;</code>), 96 bits
  precision, and a valid exponent range of -28 to 0. The default
- rounding mode is HalfEven. (The <code>&quot;Cli&quot;</code> stands for &quot;Common
- Language Infrastructure&quot;, which defined this format as the .NET
+  rounding mode is HalfEven. (The <code>&quot;Cli&quot;</code> stands for &quot;Common
+  Language Infrastructure&quot;, which defined this format as the .NET
  Framework decimal format in version 1, but leaves it unspecified in
  later versions.).</p>
 
@@ -384,9 +383,9 @@ Copies this EContext with an unlimited exponent range.</li>
  number&#39;s Exponent property adjusted to the number&#39;s precision, or
  just the number&#39;s Exponent property. The default value is true,
  meaning that EMax and EMin refer to the adjusted exponent. Setting
- this value to false (using WithAdjustExponent) is useful for modeling
- floating point representations with an integer mantissa (significand)
- and an integer exponent, such as Java&#39;s BigDecimal.</p>
+ this value to false (using WithAdjustExponent) is useful for
+ modeling floating point representations with an integer mantissa
+ (significand) and an integer exponent, such as Java&#39;s BigDecimal.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -424,18 +423,18 @@ than EMax + 1 - Precision.</li>
  scientific notation with one nonzero digit before the radix point.
  For example, with a precision of 3 and an EMax of 100, the maximum
  value possible is 9.99E + 100. (This is not the same as the highest
- possible Exponent property.) If HasExponentRange is false, this value
- will be 0.</p>
+ possible Exponent property.) If HasExponentRange is false, this
+ value will be 0.</p>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
 <li>The highest exponent possible when a converted number is expressed
-in scientific notation with one nonzero digit before the radix point.
-For example, with a precision of 3 and an EMax of 100, the maximum
-value possible is 9.99E + 100. (This is not the same as the highest
-possible Exponent property.) If HasExponentRange is false, this value
-will be 0.</li>
+in scientific notation with one nonzero digit before the radix
+point. For example, with a precision of 3 and an EMax of 100, the
+maximum value possible is 9.99E + 100. (This is not the same as the
+highest possible Exponent property.) If HasExponentRange is false,
+this value will be 0.</li>
 </ul>
 
 <h3>getEMin</h3>
@@ -485,8 +484,8 @@ arithmetic context. If <code>HasFlags</code> is false, this value will be
 <ol>
 <li>This value is a combination of bit fields. To retrieve a
 particular flag, use the AND operation on the return value of this
-method. For example: <code>(this.getFlags() &amp; EContext.FlagInexact) != 0</code>
-returns <code>true</code> if the Inexact flag is set.</li>
+method. For example: <code>(this.getFlags() &amp; EContext.FlagInexact) !=
+0</code> returns <code>true</code> if the Inexact flag is set.</li>
 </ol></li>
 </ul>
 
@@ -508,10 +507,10 @@ returns <code>true</code> if the Inexact flag is set.</li>
 
 <ul>
 <li><code>true</code> if this context defines a minimum and maximum exponent;
-otherwise, <code>false</code> .. If false, converted exponents can have
-any exponent and operations can&#39;t cause overflow or underflow. <code>
-true</code> if this context defines a minimum and maximum exponent;
-otherwise, <code>false</code> .</li>
+otherwise, <code>false</code>.. If false, converted exponents can have
+any exponent and operations can&#39;t cause overflow or underflow.
+<code>true</code> if this context defines a minimum and maximum exponent;
+otherwise, <code>false</code>.</li>
 </ul>
 
 <h3>getHasFlags</h3>
@@ -525,7 +524,7 @@ otherwise, <code>false</code> .</li>
 
 <ul>
 <li><code>true</code> if this context has a mutable Flags field; otherwise,
-<code>false</code> .</li>
+<code>false</code>.</li>
 </ul>
 
 <h3>getHasMaxPrecision</h3>
@@ -539,7 +538,7 @@ otherwise, <code>false</code> .</li>
 
 <ul>
 <li><code>true</code> if this context defines a maximum precision; otherwise,
-<code>false</code> .</li>
+<code>false</code>.</li>
 </ul>
 
 <h3>isPrecisionInBits</h3>
@@ -554,9 +553,9 @@ otherwise, <code>false</code> .</li>
 
 <ul>
 <li><code>true</code> if this context&#39;s Precision property is in bits, rather
-than digits; otherwise, <code>false</code> .. The default is false. <code>
-true</code> if this context&#39;s Precision property is in bits, rather than
-digits; otherwise, <code>false</code> . The default is false.</li>
+than digits; otherwise, <code>false</code>.. The default is false.
+<code>true</code> if this context&#39;s Precision property is in bits, rather
+than digits; otherwise, <code>false</code>. The default is false.</li>
 </ul>
 
 <h3>isSimplified</h3>
@@ -590,18 +589,19 @@ same as positive zero. For further details, see . <code>true</code> if a
  number&#39;s mantissa (significand) can range from 0 to 999 (up to three
  digits long). If 0, converted numbers can have any precision.
  <p>Not-a-number (NaN) values can carry an optional number, its
- payload, that serves as its &quot;diagnostic information&quot;, In general, if
+  payload, that serves as its &quot;diagnostic information&quot;, In general, if
  an operation requires copying an NaN&#39;s payload, only up to as many
- digits of that payload as the precision given in this context, namely
- the least significant digits, are copied. </p></p>
+ digits of that payload as the precision given in this context,
+ namely the least significant digits, are copied. </p></p>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
 <li>The maximum length of a converted number in digits, ignoring the
-radix point and exponent. For example, if precision is 3, a converted
-number&#39;s mantissa (significand) can range from 0 to 999 (up to three
-digits long). If 0, converted numbers can have any precision.</li>
+radix point and exponent. For example, if precision is 3, a
+converted number&#39;s mantissa (significand) can range from 0 to 999
+(up to three digits long). If 0, converted numbers can have any
+precision.</li>
 </ul>
 
 <h3>getRounding</h3>
@@ -626,19 +626,19 @@ represented in the given precision and exponent range.</li>
 
 <p>Gets the traps that are set for each flag in the context. Whenever a flag is
  signaled, even if <code>HasFlags</code> is false, and the flag&#39;s trap is
- enabled, the operation will throw a TrapException. <p>For example, if
- Traps equals <code>FlagInexact</code> and FlagSubnormal, a TrapException
- will be thrown if an operation&#39;s return value is not the same as the
- exact result (FlagInexact) or if the return value&#39;s exponent is lower
- than the lowest allowed (FlagSubnormal). </p></p>
+ enabled, the operation will throw a TrapException. <p>For example,
+ if Traps equals <code>FlagInexact</code> and FlagSubnormal, a
+ TrapException will be thrown if an operation&#39;s return value is not
+ the same as the exact result (FlagInexact) or if the return value&#39;s
+ exponent is lower than the lowest allowed (FlagSubnormal). </p></p>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
 <li>The traps that are set for each flag in the context. Whenever a flag
 is signaled, even if <code>HasFlags</code> is false, and the flag&#39;s trap
-is enabled, the operation will throw a TrapException. For example, if
-Traps equals .</li>
+is enabled, the operation will throw a TrapException. For example,
+if Traps equals.</li>
 </ul>
 
 <h3>ForPrecision</h3>
@@ -734,7 +734,7 @@ exponent.</li>
 
 <ul>
 <li><code>true</code> if a number can have the given Exponent property under
-this arithmetic context; otherwise, <code>false</code> . If this context
+this arithmetic context; otherwise, <code>false</code>. If this context
 allows unlimited precision, returns true for the exponent EMax and
 any exponent less than EMax.</li>
 </ul>
@@ -777,7 +777,7 @@ any exponent less than EMax.</li>
 
 <ul>
 <li><code>true</code> if this context has a mutable Flags field, one or more
-trap enablers, or both; otherwise, <code>false</code> .</li>
+trap enablers, or both; otherwise, <code>false</code>.</li>
 </ul>
 
 <h3>WithAdjustExponent</h3>

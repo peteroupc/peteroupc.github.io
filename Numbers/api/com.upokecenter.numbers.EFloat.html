@@ -10,66 +10,67 @@
 </pre>
 
 <p>Represents an arbitrary-precision binary floating-point number. (The &quot;E&quot;
- stands for &quot;extended&quot;, meaning that instances of this class can be
- values other than numbers proper, such as infinity and not-a-number.)
- Each number consists of an integer mantissa (significand) and an
- integer exponent, both arbitrary-precision. The value of the number
- equals mantissa (significand) * 2^exponent. This class also supports
- values for negative zero, not-a-number (NaN) values, and infinity.
- <p>Passing a signaling NaN to any arithmetic operation shown here
- will signal the flag FlagInvalid and return a quiet NaN, even if
- another operand to that operation is a quiet NaN, unless noted
- otherwise. </p> <p>Passing a quiet NaN to any arithmetic operation
- shown here will return a quiet NaN, unless noted otherwise. </p>
- <p>Unless noted otherwise, passing a null arbitrary-precision binary
- float argument to any method here will throw an exception. </p>
- <p>When an arithmetic operation signals the flag FlagInvalid,
- FlagOverflow, or FlagDivideByZero, it will not throw an exception
- too, unless the operation&#39;s trap is enabled in the arithmetic context
- (see EContext&#39;s Traps property). </p> <p>An arbitrary-precision
- binary float value can be serialized in one of the following ways:
- </p> <ul> <li>By calling the toString() method. However, not all
- strings can be converted back to an arbitrary-precision binary float
- without loss, especially if the string has a fractional part. </li>
- <li>By calling the UnsignedMantissa, Exponent, and IsNegative
- properties, and calling the IsInfinity, IsQuietNaN, and
- IsSignalingNaN methods. The return values combined will uniquely
- identify a particular arbitrary-precision binary float value. </li>
- </ul> <p>If an operation requires creating an intermediate value that
- might be too big to fit in memory (or might require more than 2
- gigabytes of memory to store -- due to the current use of a 32-bit
- integer internally as a length), the operation may signal an
- invalid-operation flag and return not-a-number (NaN). In certain rare
- cases, the compareTo method may throw OutOfMemoryError (called
- OutOfMemoryError in Java) in the same circumstances. </p>
+  stands for &quot;extended&quot;, meaning that instances of this class can be
+ values other than numbers proper, such as infinity and
+ not-a-number.) Each number consists of an integer mantissa
+ (significand) and an integer exponent, both arbitrary-precision. The
+ value of the number equals mantissa (significand) * 2^exponent. This
+ class also supports values for negative zero, not-a-number (NaN)
+ values, and infinity. <p>Passing a signaling NaN to any arithmetic
+ operation shown here will signal the flag FlagInvalid and return a
+ quiet NaN, even if another operand to that operation is a quiet NaN,
+ unless noted otherwise. </p> <p>Passing a quiet NaN to any
+ arithmetic operation shown here will return a quiet NaN, unless
+ noted otherwise. </p> <p>Unless noted otherwise, passing a null
+ arbitrary-precision binary float argument to any method here will
+ throw an exception. </p> <p>When an arithmetic operation signals the
+ flag FlagInvalid, FlagOverflow, or FlagDivideByZero, it will not
+ throw an exception too, unless the operation&#39;s trap is enabled in
+ the arithmetic context (see EContext&#39;s Traps property). </p> <p>An
+ arbitrary-precision binary float value can be serialized in one of
+ the following ways: </p> <ul> <li>By calling the toString() method.
+ However, not all strings can be converted back to an
+ arbitrary-precision binary float without loss, especially if the
+ string has a fractional part. </li> <li>By calling the
+ UnsignedMantissa, Exponent, and IsNegative properties, and calling
+ the IsInfinity, IsQuietNaN, and IsSignalingNaN methods. The return
+ values combined will uniquely identify a particular
+ arbitrary-precision binary float value. </li> </ul> <p>If an
+ operation requires creating an intermediate value that might be too
+ big to fit in memory (or might require more than 2 gigabytes of
+ memory to store -- due to the current use of a 32-bit integer
+ internally as a length), the operation may signal an
+ invalid-operation flag and return not-a-number (NaN). In certain
+ rare cases, the compareTo method may throw OutOfMemoryError
+ (called OutOfMemoryError in Java) in the same circumstances. </p>
  <p><b>Thread safety</b> </p> <p>Instances of this class are
  immutable, so they are inherently safe for use by multiple threads.
  Multiple instances of this object with the same properties are
- interchangeable, so they should not be compared using the &quot;==&quot;
+  interchangeable, so they should not be compared using the &quot;==&quot;
  operator (which might only check if each side of the operator is the
- same instance). </p> <p><b>Comparison considerations</b> </p> <p>This
- class&#39;s natural ordering (under the compareTo method) is not
+ same instance). </p> <p><b>Comparison considerations</b> </p>
+ <p>This class&#39;s natural ordering (under the compareTo method) is not
  consistent with the Equals method. This means that two values that
  compare as equal under the compareTo method might not be equal under
  the Equals method. The compareTo method compares the mathematical
- values of the two instances passed to it (and considers two different
- NaN values as equal), while two instances with the same mathematical
- value, but different exponents, will be considered unequal under the
- Equals method. </p> <p><b>Security note</b> </p> <p>It is not
- recommended to implement security-sensitive algorithms using the
- methods in this class, for several reasons: </p> <ul>
+ values of the two instances passed to it (and considers two
+ different NaN values as equal), while two instances with the same
+ mathematical value, but different exponents, will be considered
+ unequal under the Equals method. </p> <p><b>Security note</b> </p>
+ <p>It is not recommended to implement security-sensitive algorithms
+ using the methods in this class, for several reasons: </p> <ul>
  <li><code>EFloat</code> objects are immutable, so they can&#39;t be modified,
  and the memory they occupy is not guaranteed to be cleared in a
  timely fashion due to garbage collection. This is relevant for
  applications that use many-bit-long numbers as secret parameters.
  </li> <li>The methods in this class (especially those that involve
- arithmetic) are not guaranteed to be &quot;constant-time&quot;
+  arithmetic) are not guaranteed to be &quot;constant-time&quot;
  (non-data-dependent) for all relevant inputs. Certain attacks that
  involve encrypted communications have exploited the timing and other
- aspects of such communications to derive keying material or cleartext
- indirectly. </li> </ul> <p>Applications should instead use dedicated
- security libraries to handle big numbers in security-sensitive
- algorithms. </p></p>
+ aspects of such communications to derive keying material or
+ cleartext indirectly. </li> </ul> <p>Applications should instead use
+ dedicated security libraries to handle big numbers in
+ security-sensitive algorithms. </p></p>
 
 <h2>Fields</h2>
 
@@ -196,8 +197,8 @@ exponent set to this value&#39;s exponent minus the divisor&#39;s exponent.</li>
 <li><code>EFloat DivideToIntegerNaturalScale​(EFloat divisor,
                        EContext ctx)</code><br>
 Divides this object by another object, and returns the integer part of the
-result (which is initially rounded down), with the preferred exponent
-set to this value&#39;s exponent minus the divisor&#39;s exponent.</li>
+result (which is initially rounded down), with the preferred
+exponent set to this value&#39;s exponent minus the divisor&#39;s exponent.</li>
 <li><code>EFloat DivideToIntegerZeroScale​(EFloat divisor,
                     EContext ctx)</code><br>
 Divides this object by another object, and returns the integer part of the
@@ -218,8 +219,8 @@ Determines whether this object&#39;s mantissa (significand), exponent, and
 properties are equal to those of another object.</li>
 <li><code>boolean equals​(java.lang.Object obj)</code><br>
 Determines whether this object&#39;s mantissa (significand), exponent, and
-properties are equal to those of another object and that other object
-is an arbitrary-precision binary floating-point number.</li>
+properties are equal to those of another object and that other
+object is an arbitrary-precision binary floating-point number.</li>
 <li><code>boolean EqualsInternal​(EFloat otherValue)</code><br>
 Determines whether this object&#39;s mantissa (significand) and exponent are
 equal to those of another object.</li>
@@ -294,8 +295,8 @@ value.</li>
 Gets a value indicating whether this object&#39;s value equals 0.</li>
 <li><code>EFloat Log​(EContext ctx)</code><br>
 Finds the natural logarithm of this object, that is, the power (exponent)
-that e (the base of natural logarithms) must be raised to in order to
-equal this object&#39;s value.</li>
+that e (the base of natural logarithms) must be raised to in order
+to equal this object&#39;s value.</li>
 <li><code>EFloat Log10​(EContext ctx)</code><br>
 Finds the base-10 logarithm of this object, that is, the power (exponent)
 that the number 10 must be raised to in order to equal this object&#39;s
@@ -432,7 +433,8 @@ Calculates the remainder of a number by the formula &quot;this&quot; - ((&quot;t
 <li><code>EFloat RemainderNear​(EFloat divisor,
          EContext ctx)</code><br>
 Finds the distance to the closest multiple of the given divisor, based on
-the result of dividing this object&#39;s value by another object&#39;s value.</li>
+the result of dividing this object&#39;s value by another object&#39;s
+value.</li>
 <li><code>EFloat RemainderNoRoundAfterDivide​(EFloat divisor,
                        EContext ctx)</code><br>
 Finds the remainder that results when dividing two arbitrary-precision
@@ -448,8 +450,8 @@ new exponent if necessary.</li>
 <li><code>EFloat RoundToExponentExact​(int exponentSmall,
                 EContext ctx)</code><br>
 Returns a binary float with the same value as this object but rounded to the
-given exponent represented as a 32-bit signed integer, and signals an
-inexact flag if the result would be inexact.</li>
+given exponent represented as a 32-bit signed integer, and signals
+an inexact flag if the result would be inexact.</li>
 <li><code>EFloat RoundToExponentExact​(EInteger exponent,
                 EContext ctx)</code><br>
 Returns a binary float with the same value as this object but rounded to the
@@ -509,11 +511,12 @@ Converts this number&#39;s value to a byte (from 0 to 255) if it can fit in a
 byte (from 0 to 255) after truncating to an integer.</li>
 <li><code>byte ToByteIfExact()</code><br>
 Converts this number&#39;s value to a byte (from 0 to 255) if it can fit in a
-byte (from 0 to 255) without rounding to a different numerical value.</li>
+byte (from 0 to 255) without rounding to a different numerical
+value.</li>
 <li><code>byte ToByteUnchecked()</code><br>
 Truncates this number&#39;s value to an integer and returns the
-least-significant bits of its two&#39;s-complement form as a byte (from 0
-to 255).</li>
+least-significant bits of its two&#39;s-complement form as a byte (from
+0 to 255).</li>
 <li><code>double ToDouble()</code><br>
 Converts this value to a 64-bit floating-point number.</li>
 <li><code>EDecimal ToEDecimal()</code><br>
@@ -669,7 +672,7 @@ the exponent is positive or zero.</li>
 
 <ul>
 <li><code>true</code> if this object is finite (not infinity or NaN);
-otherwise, <code>false</code> .</li>
+otherwise, <code>false</code>.</li>
 </ul>
 
 <h3>isNegative</h3>
@@ -684,7 +687,7 @@ otherwise, <code>false</code> .</li>
 
 <ul>
 <li><code>true</code> if this object is negative, including negative zero;
-otherwise, <code>false</code> .</li>
+otherwise, <code>false</code>.</li>
 </ul>
 
 <h3>isZero</h3>
@@ -698,8 +701,8 @@ otherwise, <code>false</code> .</li>
 
 <ul>
 <li><code>true</code> if this object&#39;s value equals 0; otherwise, <code>
-false</code> . <code>true</code> if this object&#39; s value equals 0; otherwise, .
-<code>false</code> .</li>
+false</code>. <code>true</code> if this object&#39; s value equals 0; otherwise,.
+<code>false</code>.</li>
 </ul>
 
 <h3>getMantissa</h3>
@@ -709,7 +712,7 @@ false</code> . <code>true</code> if this object&#39; s value equals 0; otherwise
 
 <p>Gets this object&#39;s unscaled value, or mantissa, and makes it negative if
  this obejct is negative. If this value is not-a-number (NaN), that
- value&#39;s absolute value is the NaN&#39;s &quot;payload&quot; (diagnostic
+  value&#39;s absolute value is the NaN&#39;s &quot;payload&quot; (diagnostic
  information).</p>
 
 <p><strong>Returns:</strong></p>
@@ -738,7 +741,7 @@ value is negative (including a negative NaN).</li>
 </pre>
 
 <p>Gets the absolute value of this object&#39;s unscaled value, or mantissa. If
- this value is not-a-number (NaN), that value is the NaN&#39;s &quot;payload&quot;
+  this value is not-a-number (NaN), that value is the NaN&#39;s &quot;payload&quot;
  (diagnostic information).</p>
 
 <p><strong>Returns:</strong></p>
@@ -946,31 +949,35 @@ number.</li>
 <p>Creates a binary float from a text string that represents a number. Note
  that if the string contains a negative exponent, the resulting value
  might not be exact, in which case the resulting binary float will be
- an approximation of this decimal number&#39;s value. <p>The format of the
- string generally consists of: </p> <ul> <li>An optional plus sign
- (&quot;+&quot; , U+002B) or minus sign (&quot;-&quot;, U+002D) (if &#39;-&#39; , the value is
- negative.) </li> <li>One or more digits, with a single optional
+ an approximation of this decimal number&#39;s value. <p>The format of
+ the string generally consists of: </p> <ul> <li>An optional plus
+  sign (&quot;+&quot; , U+002B) or minus sign (&quot;-&quot;, U+002D) (if &#39;-&#39; , the value
+ is negative.) </li> <li>One or more digits, with a single optional
  decimal point after the first digit and before the last digit. </li>
- <li>Optionally, &quot;E+&quot;/&quot;e+&quot; (positive exponent) or &quot;E-&quot;/&quot;e-&quot; (negative
+  <li>Optionally, &quot;E+&quot;/&quot;e+&quot; (positive exponent) or &quot;E-&quot;/&quot;e-&quot; (negative
  exponent) plus one or more digits specifying the exponent. </li>
- </ul> <p>The string can also be &quot;-INF&quot;, &quot;-Infinity&quot;, &quot;Infinity&quot;,
- &quot;INF&quot;, quiet NaN (&quot;NaN&quot;) followed by any number of digits, or
- signaling NaN (&quot;sNaN&quot;) followed by any number of digits, all in any
- combination of upper and lower case. </p> <p>All characters mentioned
- above are the corresponding characters in the Basic Latin range. In
- particular, the digits must be the basic digits 0 to 9 (U + 0030 to
- U + 0039). The string is not allowed to contain white space characters,
- including spaces. </p></p>
+  </ul> <p>The string can also be &quot;-INF&quot;, &quot;-Infinity&quot;, &quot;Infinity&quot;,
+  &quot;INF&quot;, quiet NaN (&quot;NaN&quot;) followed by any number of digits, or
+  signaling NaN (&quot;sNaN&quot;) followed by any number of digits, all in any
+ combination of upper and lower case. </p> <p>All characters
+ mentioned above are the corresponding characters in the Basic Latin
+ range. In particular, the digits must be the basic digits 0 to 9
+ (U + 0030 to U + 0039). The string is not allowed to contain white space
+ characters, including spaces. </p></p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>str</code> - The parameter <code>str</code> is a text string.</p></li>
+<li><p><code>str</code> - The parameter
+  <code>str</code>
+   is a text string.</p></li>
 <li><p><code>offset</code> - A zero-based index showing where the desired portion of <code>
 str</code> begins.</p></li>
 <li><p><code>length</code> - The length, in code units, of the desired portion of <code>
 str</code> (but not more than <code>str</code> &#39;s length).</p></li>
-<li><p><code>ctx</code> - The parameter <code>ctx</code> is an EContext object.</p></li>
+<li><p><code>ctx</code> - The parameter
+  <code>ctx</code>
+   is an EContext object.</p></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -985,8 +992,8 @@ floating-point number.</li>
 <ul>
 <li><p><code>java.lang.NullPointerException</code> - The parameter <code>str</code> is null.</p></li>
 <li><p><code>java.lang.IllegalArgumentException</code> - Either <code>offset</code> or <code>length</code> is
-less than 0 or greater than <code>str</code> &#39;s length, or <code>str</code> &#39; s
-length minus <code>offset</code> is less than <code>length</code> .</p></li>
+less than 0 or greater than <code>str</code> &#39;s length, or <code>str</code> &#39;
+s length minus <code>offset</code> is less than <code>length</code>.</p></li>
 </ul>
 
 <h3>FromString</h3>
@@ -1053,7 +1060,9 @@ floating-point number.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>str</code> - The parameter <code>str</code> is a text string.</p></li>
+<li><p><code>str</code> - The parameter
+  <code>str</code>
+   is a text string.</p></li>
 <li><p><code>offset</code> - A zero-based index showing where the desired portion of <code>
 str</code> begins.</p></li>
 <li><p><code>length</code> - The length, in code units, of the desired portion of <code>
@@ -1273,7 +1282,7 @@ which case the precision is unlimited and rounding isn&#39;t needed.</p></li>
 exponent range of the result. If <code>HasFlags</code> of the context is
 true, will also store the flags resulting from the operation (the
 flags are in addition to the pre-existing flags). <i> This parameter
-can&#39;t be null, as π can never be represented exactly. </i> .</li>
+can&#39;t be null, as π can never be represented exactly. </i>.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -1333,7 +1342,7 @@ quiet NaN if this value is signaling NaN.</li>
 </pre>
 
 <p>Adds this object and another object.<p/><pre>EInteger result =
- EInteger.FromString(&quot;5&quot;).Add(200);</pre> .</p>
+  EInteger.FromString(&quot;5&quot;).Add(200);</pre> .</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1374,7 +1383,7 @@ quiet NaN if this value is signaling NaN.</li>
 
 <p>Multiplies this instance by the value of an arbitrary-precision integer
  object.<p/><pre>EInteger result =
- EInteger.FromString(&quot;5&quot;).Multiply(200);</pre> .</p>
+  EInteger.FromString(&quot;5&quot;).Multiply(200);</pre> .</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1492,8 +1501,8 @@ which case the precision is unlimited and no rounding is needed.</p></li>
 
 <ul>
 <li>Less than 0 if this object&#39;s value is less than the other value, or
-greater than 0 if this object&#39;s value is greater than the other value
-or if &quot;other&quot; is null, or 0 if both values are equal.</li>
+greater than 0 if this object&#39;s value is greater than the other
+value or if &quot;other&quot; is null, or 0 if both values are equal.</li>
 </ul>
 
 <h3>CompareToSignal</h3>
@@ -1502,10 +1511,10 @@ or if &quot;other&quot; is null, or 0 if both values are equal.</li>
 </pre>
 
 <p>Compares the mathematical values of this object and another object, treating
- quiet NaN as signaling. <p>In this method, negative zero and positive
- zero are considered equal. </p> <p>If this object or the other object
- is a quiet NaN or signaling NaN, this method will return a quiet NaN
- and will signal a FlagInvalid flag. </p></p>
+ quiet NaN as signaling. <p>In this method, negative zero and
+ positive zero are considered equal. </p> <p>If this object or the
+ other object is a quiet NaN or signaling NaN, this method will
+ return a quiet NaN and will signal a FlagInvalid flag. </p></p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1531,24 +1540,24 @@ other value, or 1 if this object is greater.</li>
 </pre>
 
 <p>Compares the values of this object and another object, imposing a total
- ordering on all possible values. In this method: <ul> <li>For objects
- with the same value, the one with the higher exponent has a greater
- &quot;absolute value&quot;. </li> <li>Negative zero is less than positive zero.
- </li> <li>Quiet NaN has a higher &quot;absolute value&quot; than signaling NaN.
- If both objects are quiet NaN or both are signaling NaN, the one with
- the higher diagnostic information has a greater &quot;absolute value&quot;.
- </li> <li>NaN has a higher &quot;absolute value&quot; than infinity. </li>
- <li>Infinity has a higher &quot;absolute value&quot; than any finite number.
- </li> <li>Negative numbers are less than positive numbers. </li>
- </ul></p>
+ ordering on all possible values. In this method: <ul> <li>For
+ objects with the same value, the one with the higher exponent has a
+  greater &quot;absolute value&quot;. </li> <li>Negative zero is less than
+  positive zero. </li> <li>Quiet NaN has a higher &quot;absolute value&quot;
+ than signaling NaN. If both objects are quiet NaN or both are
+ signaling NaN, the one with the higher diagnostic information has a
+  greater &quot;absolute value&quot;. </li> <li>NaN has a higher &quot;absolute
+  value&quot; than infinity. </li> <li>Infinity has a higher &quot;absolute
+  value&quot; than any finite number. </li> <li>Negative numbers are less
+ than positive numbers. </li> </ul></p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
 <li><p><code>other</code> - An arbitrary-precision binary float to compare with this one.</p></li>
 <li><p><code>ctx</code> - An arithmetic context. Flags will be set in this context only if
-<code>HasFlags</code> and <code>IsSimplified</code> of the context are true and
-only if an operand needed to be rounded before carrying out the
+<code>HasFlags</code> and <code>IsSimplified</code> of the context are true
+and only if an operand needed to be rounded before carrying out the
 operation. Can be null.</p></li>
 </ul>
 
@@ -1568,13 +1577,13 @@ Does not signal flags if either value is signaling NaN.</li>
 <p>Compares the values of this object and another object, imposing a total
  ordering on all possible values (ignoring their signs). In this
  method: <ul> <li>For objects with the same value, the one with the
- higher exponent has a greater &quot;absolute value&quot;. </li> <li>Negative
+  higher exponent has a greater &quot;absolute value&quot;. </li> <li>Negative
  zero is less than positive zero. </li> <li>Quiet NaN has a higher
- &quot;absolute value&quot; than signaling NaN. If both objects are quiet NaN or
- both are signaling NaN, the one with the higher diagnostic
- information has a greater &quot;absolute value&quot;. </li> <li>NaN has a
- higher &quot;absolute value&quot; than infinity. </li> <li>Infinity has a
- higher &quot;absolute value&quot; than any finite number. </li> <li>Negative
+  &quot;absolute value&quot; than signaling NaN. If both objects are quiet NaN
+ or both are signaling NaN, the one with the higher diagnostic
+  information has a greater &quot;absolute value&quot;. </li> <li>NaN has a
+  higher &quot;absolute value&quot; than infinity. </li> <li>Infinity has a
+  higher &quot;absolute value&quot; than any finite number. </li> <li>Negative
  numbers are less than positive numbers. </li> </ul></p>
 
 <p><strong>Parameters:</strong></p>
@@ -1582,8 +1591,8 @@ Does not signal flags if either value is signaling NaN.</li>
 <ul>
 <li><p><code>other</code> - An arbitrary-precision binary float to compare with this one.</p></li>
 <li><p><code>ctx</code> - An arithmetic context. Flags will be set in this context only if
-<code>HasFlags</code> and <code>IsSimplified</code> of the context are true and
-only if an operand needed to be rounded before carrying out the
+<code>HasFlags</code> and <code>IsSimplified</code> of the context are true
+and only if an operand needed to be rounded before carrying out the
 operation. Can be null.</p></li>
 </ul>
 
@@ -1602,16 +1611,16 @@ Does not signal flags if either value is signaling NaN.</li>
 </pre>
 
 <p>Compares the values of this object and another object, imposing a total
- ordering on all possible values. In this method: <ul> <li>For objects
- with the same value, the one with the higher exponent has a greater
- &quot;absolute value&quot;. </li> <li>Negative zero is less than positive zero.
- </li> <li>Quiet NaN has a higher &quot;absolute value&quot; than signaling NaN.
- If both objects are quiet NaN or both are signaling NaN, the one with
- the higher diagnostic information has a greater &quot;absolute value&quot;.
- </li> <li>NaN has a higher &quot;absolute value&quot; than infinity. </li>
- <li>Infinity has a higher &quot;absolute value&quot; than any finite number.
- </li> <li>Negative numbers are less than positive numbers. </li>
- </ul></p>
+ ordering on all possible values. In this method: <ul> <li>For
+ objects with the same value, the one with the higher exponent has a
+  greater &quot;absolute value&quot;. </li> <li>Negative zero is less than
+  positive zero. </li> <li>Quiet NaN has a higher &quot;absolute value&quot;
+ than signaling NaN. If both objects are quiet NaN or both are
+ signaling NaN, the one with the higher diagnostic information has a
+  greater &quot;absolute value&quot;. </li> <li>NaN has a higher &quot;absolute
+  value&quot; than infinity. </li> <li>Infinity has a higher &quot;absolute
+  value&quot; than any finite number. </li> <li>Negative numbers are less
+ than positive numbers. </li> </ul></p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1632,15 +1641,16 @@ object is less than the other value, or 1 if this object is greater.</li>
 </pre>
 
 <p>Compares the absolute values of this object and another object, imposing a
- total ordering on all possible values (ignoring their signs). In this
- method: <ul> <li>For objects with the same value, the one with the
- higher exponent has a greater &quot;absolute value&quot;. </li> <li>Negative
- zero and positive zero are considered equal. </li> <li>Quiet NaN has
- a higher &quot;absolute value&quot; than signaling NaN. If both objects are
- quiet NaN or both are signaling NaN, the one with the higher
- diagnostic information has a greater &quot;absolute value&quot;. </li> <li>NaN
- has a higher &quot;absolute value&quot; than infinity. </li> <li>Infinity has a
- higher &quot;absolute value&quot; than any finite number. </li> </ul></p>
+ total ordering on all possible values (ignoring their signs). In
+ this method: <ul> <li>For objects with the same value, the one with
+  the higher exponent has a greater &quot;absolute value&quot;. </li>
+ <li>Negative zero and positive zero are considered equal. </li>
+  <li>Quiet NaN has a higher &quot;absolute value&quot; than signaling NaN. If
+ both objects are quiet NaN or both are signaling NaN, the one with
+  the higher diagnostic information has a greater &quot;absolute value&quot;.
+  </li> <li>NaN has a higher &quot;absolute value&quot; than infinity. </li>
+  <li>Infinity has a higher &quot;absolute value&quot; than any finite number.
+ </li> </ul></p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1691,7 +1701,7 @@ other value, or 1 if this object is greater.</li>
 
 <p>Returns a number with the same value as this one, but copying the sign
  (positive or negative) of another number. (This method is similar to
- the &quot;copy-sign&quot; operation in the General Decimal Arithmetic
+  the &quot;copy-sign&quot; operation in the General Decimal Arithmetic
  Specification, except this method does not necessarily return a copy
  of this object.).</p>
 
@@ -1761,11 +1771,11 @@ which case the precision is unlimited and no rounding is needed.</p></li>
 <ul>
 <li>The quotient of the two objects. Signals FlagDivideByZero and
 returns infinity if the divisor is 0 and the dividend is nonzero.
-Signals FlagInvalid and returns not-a-number (NaN) if the divisor and
-the dividend are 0; or, either <code>ctx</code> is null or <code>ctx</code> &#39;s
-precision is 0, and the result would have a nonterminating binary
-expansion; or, the rounding mode is ERounding.None and the result is
-not exact.</li>
+Signals FlagInvalid and returns not-a-number (NaN) if the divisor
+and the dividend are 0; or, either <code>ctx</code> is null or <code>
+ctx</code> &#39;s precision is 0, and the result would have a nonterminating
+binary expansion; or, the rounding mode is ERounding.None and the
+result is not exact.</li>
 </ul>
 
 <h3>DivideAndRemainderNaturalScale</h3>
@@ -1809,8 +1819,8 @@ this context. Flags will be set on the given context only if the
 context&#39;s <code>HasFlags</code> is true and the integer part of the
 division result doesn&#39;t fit the precision and exponent range without
 rounding. Can be null, in which the precision is unlimited and no
-additional rounding, other than the rounding down to an integer after
-division, is needed.</p></li>
+additional rounding, other than the rounding down to an integer
+after division, is needed.</p></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -1833,10 +1843,10 @@ order.</li>
 <ul>
 <li><p><code>divisor</code> - The number to divide by.</p></li>
 <li><p><code>desiredExponentSmall</code> - The desired exponent. A negative number places
-the cutoff point to the right of the usual radix point (so a negative
-number means the number of binary digit places to round to). A
-positive number places the cutoff point to the left of the usual
-radix point.</p></li>
+the cutoff point to the right of the usual radix point (so a
+negative number means the number of binary digit places to round
+to). A positive number places the cutoff point to the left of the
+usual radix point.</p></li>
 <li><p><code>ctx</code> - An arithmetic context object to control the rounding mode to use
 if the result must be scaled down to have the same exponent as this
 value. If the precision given in the context is other than 0, calls
@@ -1853,8 +1863,8 @@ which case the default rounding mode is HalfEven.</p></li>
 <ul>
 <li>The quotient of the two objects. Signals FlagDivideByZero and
 returns infinity if the divisor is 0 and the dividend is nonzero.
-Signals FlagInvalid and returns not-a-number (NaN) if the divisor and
-the dividend are 0. Signals FlagInvalid and returns not-a-number
+Signals FlagInvalid and returns not-a-number (NaN) if the divisor
+and the dividend are 0. Signals FlagInvalid and returns not-a-number
 (NaN) if the context defines an exponent range and the desired
 exponent is outside that range. Signals FlagInvalid and returns
 not-a-number (NaN) if the rounding mode is ERounding.None and the
@@ -1874,10 +1884,10 @@ result is not exact.</li>
 <ul>
 <li><p><code>divisor</code> - The number to divide by.</p></li>
 <li><p><code>desiredExponentSmall</code> - The desired exponent. A negative number places
-the cutoff point to the right of the usual radix point (so a negative
-number means the number of binary digit places to round to). A
-positive number places the cutoff point to the left of the usual
-radix point.</p></li>
+the cutoff point to the right of the usual radix point (so a
+negative number means the number of binary digit places to round
+to). A positive number places the cutoff point to the left of the
+usual radix point.</p></li>
 <li><p><code>rounding</code> - The rounding mode to use if the result must be scaled down
 to have the same exponent as this value.</p></li>
 </ul>
@@ -1887,8 +1897,8 @@ to have the same exponent as this value.</p></li>
 <ul>
 <li>The quotient of the two objects. Signals FlagDivideByZero and
 returns infinity if the divisor is 0 and the dividend is nonzero.
-Signals FlagInvalid and returns not-a-number (NaN) if the divisor and
-the dividend are 0. Signals FlagInvalid and returns not-a-number
+Signals FlagInvalid and returns not-a-number (NaN) if the divisor
+and the dividend are 0. Signals FlagInvalid and returns not-a-number
 (NaN) if the rounding mode is ERounding.None and the result is not
 exact.</li>
 </ul>
@@ -1925,8 +1935,8 @@ which case the default rounding mode is HalfEven.</p></li>
 <ul>
 <li>The quotient of the two objects. Signals FlagDivideByZero and
 returns infinity if the divisor is 0 and the dividend is nonzero.
-Signals FlagInvalid and returns not-a-number (NaN) if the divisor and
-the dividend are 0. Signals FlagInvalid and returns not-a-number
+Signals FlagInvalid and returns not-a-number (NaN) if the divisor
+and the dividend are 0. Signals FlagInvalid and returns not-a-number
 (NaN) if the context defines an exponent range and the desired
 exponent is outside that range. Signals FlagInvalid and returns
 not-a-number (NaN) if the rounding mode is ERounding.None and the
@@ -1994,14 +2004,16 @@ dividend is nonzero. Signals FlagInvalid and returns not-a-number
 </pre>
 
 <p>Divides this object by another object, and returns the integer part of the
- result (which is initially rounded down), with the preferred exponent
- set to this value&#39;s exponent minus the divisor&#39;s exponent.</p>
+ result (which is initially rounded down), with the preferred
+ exponent set to this value&#39;s exponent minus the divisor&#39;s exponent.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
 <li><p><code>divisor</code> - An arbitrary-precision binary floating-point number.</p></li>
-<li><p><code>ctx</code> - The parameter <code>ctx</code> is an EContext object.</p></li>
+<li><p><code>ctx</code> - The parameter
+  <code>ctx</code>
+   is an EContext object.</p></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -2012,8 +2024,8 @@ FlagInvalid and returns not-a-number (NaN) if the return value would
 overflow the exponent range. Signals FlagDivideByZero and returns
 infinity if the divisor is 0 and the dividend is nonzero. Signals
 FlagInvalid and returns not-a-number (NaN) if the divisor and the
-dividend are 0. Signals FlagInvalid and returns not-a-number (NaN) if
-the rounding mode is ERounding.None and the result is not exact.</li>
+dividend are 0. Signals FlagInvalid and returns not-a-number (NaN)
+if the rounding mode is ERounding.None and the result is not exact.</li>
 </ul>
 
 <h3>DivideToIntegerZeroScale</h3>
@@ -2041,9 +2053,9 @@ unlimited.</p></li>
 <ul>
 <li>The integer part of the quotient of the two objects. The exponent
 will be set to 0. Signals FlagDivideByZero and returns infinity if
-the divisor is 0 and the dividend is nonzero. Signals FlagInvalid and
-returns not-a-number (NaN) if the divisor and the dividend are 0, or
-if the result doesn&#39;t fit the given precision.</li>
+the divisor is 0 and the dividend is nonzero. Signals FlagInvalid
+and returns not-a-number (NaN) if the divisor and the dividend are
+0, or if the result doesn&#39;t fit the given precision.</li>
 </ul>
 
 <h3>DivideToSameExponent</h3>
@@ -2067,8 +2079,8 @@ to have the same exponent as this value.</p></li>
 <ul>
 <li>The quotient of the two numbers. Signals FlagDivideByZero and
 returns infinity if the divisor is 0 and the dividend is nonzero.
-Signals FlagInvalid and returns not-a-number (NaN) if the divisor and
-the dividend are 0. Signals FlagInvalid and returns not-a-number
+Signals FlagInvalid and returns not-a-number (NaN) if the divisor
+and the dividend are 0. Signals FlagInvalid and returns not-a-number
 (NaN) if the rounding mode is ERounding.None and the result is not
 exact.</li>
 </ul>
@@ -2114,8 +2126,8 @@ this context. Flags will be set on the given context only if the
 context&#39;s <code>HasFlags</code> is true and the integer part of the
 division result doesn&#39;t fit the precision and exponent range without
 rounding. Can be null, in which the precision is unlimited and no
-additional rounding, other than the rounding down to an integer after
-division, is needed.</p></li>
+additional rounding, other than the rounding down to an integer
+after division, is needed.</p></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -2144,7 +2156,7 @@ order.</li>
 
 <ul>
 <li><code>true</code> if this object&#39;s mantissa (significand) and exponent
-are equal to those of another object; otherwise, <code>false</code> .</li>
+are equal to those of another object; otherwise, <code>false</code>.</li>
 </ul>
 
 <h3>equals</h3>
@@ -2153,10 +2165,10 @@ are equal to those of another object; otherwise, <code>false</code> .</li>
 </pre>
 
 <p>Determines whether this object&#39;s mantissa (significand), exponent, and
- properties are equal to those of another object and that other object
- is an arbitrary-precision binary floating-point number. Not-a-number
- values are considered equal if the rest of their properties are
- equal.</p>
+ properties are equal to those of another object and that other
+ object is an arbitrary-precision binary floating-point number.
+ Not-a-number values are considered equal if the rest of their
+ properties are equal.</p>
 
 <p><strong>Overrides:</strong></p>
 
@@ -2167,13 +2179,15 @@ are equal to those of another object; otherwise, <code>false</code> .</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>obj</code> - The parameter <code>obj</code> is an arbitrary object.</li>
+<li><code>obj</code> - The parameter
+  <code>obj</code>
+   is an arbitrary object.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li><code>true</code> if the objects are equal; otherwise, <code>false</code> .</li>
+<li><code>true</code> if the objects are equal; otherwise, <code>false</code>.</li>
 </ul>
 
 <h3>EqualsInternal</h3>
@@ -2194,7 +2208,7 @@ are equal to those of another object; otherwise, <code>false</code> .</li>
 
 <ul>
 <li><code>true</code> if this object&#39;s mantissa (significand) and exponent
-are equal to those of another object; otherwise, <code>false</code> .</li>
+are equal to those of another object; otherwise, <code>false</code>.</li>
 </ul>
 
 <h3>Exp</h3>
@@ -2221,9 +2235,10 @@ Specification, any rounding mode is allowed.).</li>
 
 <ul>
 <li>Exponential of this object. If this object&#39;s value is 1, returns an
-approximation to &quot; e&quot; within the given precision. Signals FlagInvalid
-and returns not-a-number (NaN) if the parameter &quot;ctx&quot; is null or the
-precision is unlimited (the context&#39;s Precision property is 0).</li>
+approximation to &quot; e&quot; within the given precision. Signals
+FlagInvalid and returns not-a-number (NaN) if the parameter &quot;ctx&quot; is
+null or the precision is unlimited (the context&#39;s Precision property
+is 0).</li>
 </ul>
 
 <h3>hashCode</h3>
@@ -2258,7 +2273,7 @@ precision is unlimited (the context&#39;s Precision property is 0).</li>
 
 <ul>
 <li><code>true</code> if this object is positive or negative infinity;
-otherwise, <code>false</code> .</li>
+otherwise, <code>false</code>.</li>
 </ul>
 
 <h3>IsNaN</h3>
@@ -2272,7 +2287,7 @@ otherwise, <code>false</code> .</li>
 
 <ul>
 <li><code>true</code> if this object is not a number (NaN); otherwise, <code>
-false</code> .</li>
+false</code>.</li>
 </ul>
 
 <h3>IsNegativeInfinity</h3>
@@ -2286,7 +2301,7 @@ false</code> .</li>
 
 <ul>
 <li><code>true</code> if this object is negative infinity; otherwise, <code>
-false</code> .</li>
+false</code>.</li>
 </ul>
 
 <h3>IsPositiveInfinity</h3>
@@ -2300,7 +2315,7 @@ false</code> .</li>
 
 <ul>
 <li><code>true</code> if this object is positive infinity; otherwise, <code>
-false</code> .</li>
+false</code>.</li>
 </ul>
 
 <h3>IsQuietNaN</h3>
@@ -2314,7 +2329,7 @@ false</code> .</li>
 
 <ul>
 <li><code>true</code> if this object is a quiet not-a-number value;
-otherwise, <code>false</code> .</li>
+otherwise, <code>false</code>.</li>
 </ul>
 
 <h3>IsSignalingNaN</h3>
@@ -2329,7 +2344,7 @@ otherwise, <code>false</code> .</li>
 
 <ul>
 <li><code>true</code> if this object is a signaling not-a-number value;
-otherwise, <code>false</code> .</li>
+otherwise, <code>false</code>.</li>
 </ul>
 
 <h3>Log</h3>
@@ -2338,8 +2353,8 @@ otherwise, <code>false</code> .</li>
 </pre>
 
 <p>Finds the natural logarithm of this object, that is, the power (exponent)
- that e (the base of natural logarithms) must be raised to in order to
- equal this object&#39;s value.</p>
+ that e (the base of natural logarithms) must be raised to in order
+ to equal this object&#39;s value.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2357,8 +2372,8 @@ rounding mode is allowed.).</li>
 
 <ul>
 <li>Ln(this object). Signals the flag FlagInvalid and returns NaN if
-this object is less than 0 (the result would be a complex number with
-a real part equal to Ln of this object&#39;s absolute value and an
+this object is less than 0 (the result would be a complex number
+with a real part equal to Ln of this object&#39;s absolute value and an
 imaginary part equal to pi, but the return value is still NaN.).
 Signals FlagInvalid and returns not-a-number (NaN) if the parameter
 &quot;ctx&quot; is null or the precision is unlimited (the context&#39;s Precision
@@ -2391,9 +2406,10 @@ rounding mode is allowed.).</li>
 
 <ul>
 <li>Ln(this object)/Ln(10). Signals the flag FlagInvalid and returns
-not-a-number (NaN) if this object is less than 0. Signals FlagInvalid
-and returns not-a-number (NaN) if the parameter &quot;ctx&quot; is null or the
-precision is unlimited (the context&#39;s Precision property is 0).</li>
+not-a-number (NaN) if this object is less than 0. Signals
+FlagInvalid and returns not-a-number (NaN) if the parameter &quot;ctx&quot; is
+null or the precision is unlimited (the context&#39;s Precision property
+is 0).</li>
 </ul>
 
 <h3>MovePointLeft</h3>
@@ -2852,8 +2868,8 @@ the pre-existing flags).</p></li>
 <ul>
 <li>Returns the next value that is closer to the other object&#39; s value
 than this object&#39;s value. Signals FlagInvalid and returns NaN if the
-parameter <code>ctx</code> is null, the precision is 0, or <code>ctx</code> has
-an unlimited exponent range.</li>
+parameter <code>ctx</code> is null, the precision is 0, or <code>ctx</code>
+has an unlimited exponent range.</li>
 </ul>
 
 <h3>Plus</h3>
@@ -2869,8 +2885,8 @@ an unlimited exponent range.</li>
 
 <ul>
 <li><code>ctx</code> - A context for controlling the precision, rounding mode, and
-exponent range. Can be null, in which case the precision is unlimited
-and rounding isn&#39;t needed.</li>
+exponent range. Can be null, in which case the precision is
+unlimited and rounding isn&#39;t needed.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -2962,8 +2978,8 @@ exponent are both 0.</li>
 </pre>
 
 <p>Finds the number of digits in this number&#39;s mantissa (significand). Returns
- 1 if this value is 0, and 0 if this value is infinity or not-a-number
- (NaN).</p>
+ 1 if this value is 0, and 0 if this value is infinity or
+ not-a-number (NaN).</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -2980,20 +2996,20 @@ exponent are both 0.</li>
  this is not always the same as rounding to a given number of binary
  digit places, since it can fail if the difference between this
  value&#39;s exponent and the desired exponent is too big, depending on
- the maximum precision. If rounding to a number of binary digit places
- is desired, it&#39;s better to use the RoundToExponent and
+ the maximum precision. If rounding to a number of binary digit
+ places is desired, it&#39;s better to use the RoundToExponent and
  RoundToIntegral methods instead. </p> <p><b>Remark:</b> This method
- can be used to implement fixed-point binary arithmetic, in which each
- binary float has a fixed number of digits after the radix point. The
- following code example returns a fixed-point number with up to 20
- digits before and exactly 5 digits after the radix point: </p>
- <pre> // After performing arithmetic operations, adjust // the number
- to 5 // digits after the radix point number = number.Quantize(
- EInteger.FromInt32(-5), // five digits after the radix point
- EContext.ForPrecision(25) // 25-digit precision);</pre> <p>A
- fixed-point binary arithmetic in which no digits come after the radix
- point (a desired exponent of 0) is considered an &quot;integer
- arithmetic&quot;. </p></p>
+ can be used to implement fixed-point binary arithmetic, in which
+ each binary float has a fixed number of digits after the radix
+ point. The following code example returns a fixed-point number with
+ up to 20 digits before and exactly 5 digits after the radix point:
+ </p> <pre> // After performing arithmetic operations, adjust // the
+ number to 5 // digits after the radix point number =
+ number.Quantize(EInteger.FromInt32(-5), // five digits after the
+ radix point EContext.ForPrecision(25) // 25-digit precision);</pre>
+ <p>A fixed-point binary arithmetic in which no digits come after the
+  radix point (a desired exponent of 0) is considered an &quot;integer
+  arithmetic&quot;. </p></p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -3001,9 +3017,9 @@ exponent are both 0.</li>
 <li><p><code>desiredExponent</code> - The desired exponent for the result. The exponent is
 the number of fractional digits in the result, expressed as a
 negative number. Can also be positive, which eliminates lower-order
-places from the number. For example, -3 means round to the thousandth
-(10^-3, 0.0001), and 3 means round to the thousand (10^3, 1000). A
-value of 0 rounds the number to an integer.</p></li>
+places from the number. For example, -3 means round to the
+thousandth (10^-3, 0.0001), and 3 means round to the thousand (10^3,
+1000). A value of 0 rounds the number to an integer.</p></li>
 <li><p><code>ctx</code> - An arithmetic context to control precision and rounding of the
 result. If <code>HasFlags</code> of the context is true, will also store
 the flags resulting from the operation (the flags are in addition to
@@ -3016,9 +3032,9 @@ rounding mode is HalfEven.</p></li>
 <ul>
 <li>A binary float with the same value as this object but with the
 exponent changed. Signals FlagInvalid and returns not-a-number (NaN)
-if this object is infinity, if the rounded result can&#39;t fit the given
-precision, or if the context defines an exponent range and the given
-exponent is outside that range.</li>
+if this object is infinity, if the rounded result can&#39;t fit the
+given precision, or if the context defines an exponent range and the
+given exponent is outside that range.</li>
 </ul>
 
 <h3>Quantize</h3>
@@ -3030,18 +3046,20 @@ exponent is outside that range.</li>
  this is not always the same as rounding to a given number of binary
  digit places, since it can fail if the difference between this
  value&#39;s exponent and the desired exponent is too big, depending on
- the maximum precision. If rounding to a number of binary digit places
- is desired, it&#39;s better to use the RoundToExponent and
+ the maximum precision. If rounding to a number of binary digit
+ places is desired, it&#39;s better to use the RoundToExponent and
  RoundToIntegral methods instead. </p> <p><b>Remark:</b> This method
- can be used to implement fixed-point binary arithmetic, in which each
- binary float has a fixed number of digits after the radix point. The
- following code example returns a fixed-point number with up to 20
- digits before and exactly 5 digits after the radix point: </p>
- <pre> // After performing arithmetic operations, adjust // the number
- to 5 digits after the radix point number = number.Quantize(-5, //
- five digits after the radix point EContext.ForPrecision(25) // * 25-digit precision);</pre> <p>A fixed-point binary arithmetic in
- which no digits come after the radix point (a desired exponent of 0)
- is considered an &quot;integer arithmetic&quot;. </p></p>
+ can be used to implement fixed-point binary arithmetic, in which
+ each binary float has a fixed number of digits after the radix
+ point. The following code example returns a fixed-point number with
+ up to 20 digits before and exactly 5 digits after the radix point:
+ </p> <pre> // After performing arithmetic operations, adjust // the
+ number to 5 digits after the radix point number =
+ number.Quantize(-5, // five digits after the radix point
+ EContext.ForPrecision(25) // 25-digit precision);</pre> <p>A
+ fixed-point binary arithmetic in which no digits come after the
+  radix point (a desired exponent of 0) is considered an &quot;integer
+  arithmetic&quot;. </p></p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -3049,9 +3067,9 @@ exponent is outside that range.</li>
 <li><p><code>desiredExponentInt</code> - The desired exponent for the result. The exponent
 is the number of fractional digits in the result, expressed as a
 negative number. Can also be positive, which eliminates lower-order
-places from the number. For example, -3 means round to the thousandth
-(10^-3, 0.0001), and 3 means round to the thousand (10^3, 1000). A
-value of 0 rounds the number to an integer.</p></li>
+places from the number. For example, -3 means round to the
+thousandth (10^-3, 0.0001), and 3 means round to the thousand (10^3,
+1000). A value of 0 rounds the number to an integer.</p></li>
 <li><p><code>ctx</code> - An arithmetic context to control precision and rounding of the
 result. If <code>HasFlags</code> of the context is true, will also store
 the flags resulting from the operation (the flags are in addition to
@@ -3064,9 +3082,9 @@ rounding mode is HalfEven.</p></li>
 <ul>
 <li>A binary float with the same value as this object but with the
 exponent changed. Signals FlagInvalid and returns not-a-number (NaN)
-if this object is infinity, if the rounded result can&#39;t fit the given
-precision, or if the context defines an exponent range and the given
-exponent is outside that range.</li>
+if this object is infinity, if the rounded result can&#39;t fit the
+given precision, or if the context defines an exponent range and the
+given exponent is outside that range.</li>
 </ul>
 
 <h3>Quantize</h3>
@@ -3075,9 +3093,9 @@ exponent is outside that range.</li>
 </pre>
 
 <p>Returns a binary float with the same value as this object but with the same
- exponent as another binary float. <p>Note that this is not always the
- same as rounding to a given number of binary digit places, since it
- can fail if the difference between this value&#39;s exponent and the
+ exponent as another binary float. <p>Note that this is not always
+ the same as rounding to a given number of binary digit places, since
+ it can fail if the difference between this value&#39;s exponent and the
  desired exponent is too big, depending on the maximum precision. If
  rounding to a number of binary digit places is desired, it&#39;s better
  to use the RoundToExponent and RoundToIntegral methods instead. </p>
@@ -3085,7 +3103,7 @@ exponent is outside that range.</li>
  binary arithmetic, in which a fixed number of digits come after the
  radix point. A fixed-point binary arithmetic in which no digits come
  after the radix point (a desired exponent of 0) is considered an
- &quot;integer arithmetic&quot; . </p></p>
+  &quot;integer arithmetic&quot; . </p></p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -3139,7 +3157,8 @@ which case the precision is unlimited and rounding isn&#39;t needed.</li>
 <ul>
 <li>This value with trailing zeros removed. Note that if the result has
 a very high exponent and the context says to clamp high exponents,
-there may still be some trailing zeros in the mantissa (significand).</li>
+there may still be some trailing zeros in the mantissa
+(significand).</li>
 </ul>
 
 <h3>Remainder</h3>
@@ -3157,7 +3176,9 @@ there may still be some trailing zeros in the mantissa (significand).</li>
 
 <ul>
 <li><p><code>divisor</code> - An arbitrary-precision binary floating-point number.</p></li>
-<li><p><code>ctx</code> - The parameter <code>ctx</code> is an EContext object.</p></li>
+<li><p><code>ctx</code> - The parameter
+  <code>ctx</code>
+   is an EContext object.</p></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -3183,7 +3204,9 @@ the given precision.</li>
 
 <ul>
 <li><p><code>divisor</code> - An arbitrary-precision binary floating-point number.</p></li>
-<li><p><code>ctx</code> - The parameter <code>ctx</code> is an EContext object.</p></li>
+<li><p><code>ctx</code> - The parameter
+  <code>ctx</code>
+   is an EContext object.</p></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -3200,7 +3223,7 @@ the given precision.</li>
 </pre>
 
 <p>Calculates the remainder of a number by the formula <code>&quot;this&quot; - ((&quot;this&quot; /
- &quot;divisor&quot;) * &quot;divisor&quot;)</code> .</p>
+  &quot;divisor&quot;) * &quot;divisor&quot;)</code> .</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -3220,7 +3243,7 @@ the given precision.</li>
 </pre>
 
 <p>Calculates the remainder of a number by the formula &quot;this&quot; - ((&quot;this&quot; /
- &quot;divisor&quot;) * &quot;divisor&quot;).</p>
+  &quot;divisor&quot;) * &quot;divisor&quot;).</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -3234,8 +3257,8 @@ in this context. Flags will be set on the given context only if the
 context&#39;s <code>HasFlags</code> is true and the integer part of the
 division result doesn&#39;t fit the precision and exponent range without
 rounding. Can be null, in which the precision is unlimited and no
-additional rounding, other than the rounding down to an integer after
-division, is needed.</p></li>
+additional rounding, other than the rounding down to an integer
+after division, is needed.</p></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -3250,31 +3273,33 @@ division, is needed.</p></li>
 </pre>
 
 <p>Finds the distance to the closest multiple of the given divisor, based on
- the result of dividing this object&#39;s value by another object&#39;s value.
- <ul> <li>If this and the other object divide evenly, the result is 0.
- </li> <li>If the remainder&#39;s absolute value is less than half of the
- divisor&#39;s absolute value, the result has the same sign as this object
- and will be the distance to the closest multiple. </li> <li>If the
- remainder&#39;s absolute value is more than half of the divisor&#39; s
- absolute value, the result has the opposite sign of this object and
- will be the distance to the closest multiple. </li> <li>If the
- remainder&#39;s absolute value is exactly half of the divisor&#39;s absolute
- value, the result has the opposite sign of this object if the
- quotient, rounded down, is odd, and has the same sign as this object
- if the quotient, rounded down, is even, and the result&#39;s absolute
- value is half of the divisor&#39;s absolute value. </li> </ul> This
- function is also known as the &quot;IEEE Remainder&quot; function.</p>
+ the result of dividing this object&#39;s value by another object&#39;s
+ value. <ul> <li>If this and the other object divide evenly, the
+ result is 0. </li> <li>If the remainder&#39;s absolute value is less
+ than half of the divisor&#39;s absolute value, the result has the same
+ sign as this object and will be the distance to the closest
+ multiple. </li> <li>If the remainder&#39;s absolute value is more than
+ half of the divisor&#39; s absolute value, the result has the opposite
+ sign of this object and will be the distance to the closest
+ multiple. </li> <li>If the remainder&#39;s absolute value is exactly
+ half of the divisor&#39;s absolute value, the result has the opposite
+ sign of this object if the quotient, rounded down, is odd, and has
+ the same sign as this object if the quotient, rounded down, is even,
+ and the result&#39;s absolute value is half of the divisor&#39;s absolute
+  value. </li> </ul> This function is also known as the &quot;IEEE
+  Remainder&quot; function.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
 <li><p><code>divisor</code> - The number to divide by.</p></li>
 <li><p><code>ctx</code> - An arithmetic context object to control the precision. The
-rounding and exponent range settings of this context are ignored (the
-rounding mode is always treated as HalfEven). If <code>HasFlags</code> of
-the context is true, will also store the flags resulting from the
-operation (the flags are in addition to the pre-existing flags). Can
-be null, in which the precision is unlimited.</p></li>
+rounding and exponent range settings of this context are ignored
+(the rounding mode is always treated as HalfEven). If <code>
+HasFlags</code> of the context is true, will also store the flags
+resulting from the operation (the flags are in addition to the
+pre-existing flags). Can be null, in which the precision is
+unlimited.</p></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -3302,9 +3327,9 @@ given precision.</li>
 <li><p><code>exponent</code> - The minimum exponent the result can have. This is the
 maximum number of fractional digits in the result, expressed as a
 negative number. Can also be positive, which eliminates lower-order
-places from the number. For example, -3 means round to the thousandth
-(10^-3, 0.0001), and 3 means round to the thousand (10^3, 1000). A
-value of 0 rounds the number to an integer.</p></li>
+places from the number. For example, -3 means round to the
+thousandth (10^-3, 0.0001), and 3 means round to the thousand (10^3,
+1000). A value of 0 rounds the number to an integer.</p></li>
 <li><p><code>ctx</code> - An arithmetic context to control the precision, rounding, and
 exponent range of the result. If <code>HasFlags</code> of the context is
 true, will also store the flags resulting from the operation (the
@@ -3320,8 +3345,8 @@ given precision. If the result can&#39;t fit the precision, additional
 digits are discarded to make it fit. Signals FlagInvalid and returns
 not-a-number (NaN) if the arithmetic context defines an exponent
 range, the new exponent must be changed to the given exponent when
-rounding, and the given exponent is outside of the valid range of the
-arithmetic context.</li>
+rounding, and the given exponent is outside of the valid range of
+the arithmetic context.</li>
 </ul>
 
 <h3>RoundToExponent</h3>
@@ -3340,9 +3365,9 @@ arithmetic context.</li>
 <li><p><code>exponentSmall</code> - The minimum exponent the result can have. This is the
 maximum number of fractional digits in the result, expressed as a
 negative number. Can also be positive, which eliminates lower-order
-places from the number. For example, -3 means round to the thousandth
-(10^-3, 0.0001), and 3 means round to the thousand (10^3, 1000). A
-value of 0 rounds the number to an integer.</p></li>
+places from the number. For example, -3 means round to the
+thousandth (10^-3, 0.0001), and 3 means round to the thousand (10^3,
+1000). A value of 0 rounds the number to an integer.</p></li>
 <li><p><code>ctx</code> - An arithmetic context to control the precision, rounding, and
 exponent range of the result. If <code>HasFlags</code> of the context is
 true, will also store the flags resulting from the operation (the
@@ -3358,8 +3383,8 @@ given precision. If the result can&#39;t fit the precision, additional
 digits are discarded to make it fit. Signals FlagInvalid and returns
 not-a-number (NaN) if the arithmetic context defines an exponent
 range, the new exponent must be changed to the given exponent when
-rounding, and the given exponent is outside of the valid range of the
-arithmetic context.</li>
+rounding, and the given exponent is outside of the valid range of
+the arithmetic context.</li>
 </ul>
 
 <h3>RoundToExponentExact</h3>
@@ -3370,8 +3395,8 @@ arithmetic context.</li>
 <p>Returns a binary float with the same value as this object but rounded to the
  given exponent, and signals an inexact flag if the result would be
  inexact. The resulting number&#39;s Exponent property will not
- necessarily be the given exponent; use the Quantize method instead to
- give the result a particular exponent.</p>
+ necessarily be the given exponent; use the Quantize method instead
+ to give the result a particular exponent.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -3379,9 +3404,9 @@ arithmetic context.</li>
 <li><p><code>exponent</code> - The minimum exponent the result can have. This is the
 maximum number of fractional digits in the result, expressed as a
 negative number. Can also be positive, which eliminates lower-order
-places from the number. For example, -3 means round to the thousandth
-(10^-3, 0.0001), and 3 means round to the thousand (10^3, 1000). A
-value of 0 rounds the number to an integer.</p></li>
+places from the number. For example, -3 means round to the
+thousandth (10^-3, 0.0001), and 3 means round to the thousand (10^3,
+1000). A value of 0 rounds the number to an integer.</p></li>
 <li><p><code>ctx</code> - An arithmetic context to control the precision, rounding, and
 exponent range of the result. If <code>HasFlags</code> of the context is
 true, will also store the flags resulting from the operation (the
@@ -3394,11 +3419,11 @@ which case the default rounding mode is HalfEven.</p></li>
 <ul>
 <li>A binary float rounded to the closest value representable in the
 given precision. Signals FlagInvalid and returns not-a-number (NaN)
-if the result can&#39;t fit the given precision without rounding. Signals
-FlagInvalid and returns not-a-number (NaN) if the arithmetic context
-defines an exponent range, the new exponent must be changed to the
-given exponent when rounding, and the given exponent is outside of
-the valid range of the arithmetic context.</li>
+if the result can&#39;t fit the given precision without rounding.
+Signals FlagInvalid and returns not-a-number (NaN) if the arithmetic
+context defines an exponent range, the new exponent must be changed
+to the given exponent when rounding, and the given exponent is
+outside of the valid range of the arithmetic context.</li>
 </ul>
 
 <h3>RoundToExponentExact</h3>
@@ -3407,9 +3432,9 @@ the valid range of the arithmetic context.</li>
 </pre>
 
 <p>Returns a binary number with the same value as this object but rounded to
- the given exponent. The resulting number&#39;s Exponent property will not
- necessarily be the given exponent; use the Quantize method instead to
- give the result a particular exponent.</p>
+ the given exponent. The resulting number&#39;s Exponent property will
+ not necessarily be the given exponent; use the Quantize method
+ instead to give the result a particular exponent.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -3436,10 +3461,11 @@ given precision.</li>
 </pre>
 
 <p>Returns a binary float with the same value as this object but rounded to the
- given exponent represented as a 32-bit signed integer, and signals an
- inexact flag if the result would be inexact. The resulting number&#39;s
- Exponent property will not necessarily be the given exponent; use the
- Quantize method instead to give the result a particular exponent.</p>
+ given exponent represented as a 32-bit signed integer, and signals
+ an inexact flag if the result would be inexact. The resulting
+ number&#39;s Exponent property will not necessarily be the given
+ exponent; use the Quantize method instead to give the result a
+ particular exponent.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -3447,9 +3473,9 @@ given precision.</li>
 <li><p><code>exponentSmall</code> - The minimum exponent the result can have. This is the
 maximum number of fractional digits in the result, expressed as a
 negative number. Can also be positive, which eliminates lower-order
-places from the number. For example, -3 means round to the thousandth
-(10^-3, 0.0001), and 3 means round to the thousand (10^3, 1000). A
-value of 0 rounds the number to an integer.</p></li>
+places from the number. For example, -3 means round to the
+thousandth (10^-3, 0.0001), and 3 means round to the thousand (10^3,
+1000). A value of 0 rounds the number to an integer.</p></li>
 <li><p><code>ctx</code> - An arithmetic context to control the precision, rounding, and
 exponent range of the result. If <code>HasFlags</code> of the context is
 true, will also store the flags resulting from the operation (the
@@ -3462,11 +3488,11 @@ which case the default rounding mode is HalfEven.</p></li>
 <ul>
 <li>A binary float rounded to the closest value representable in the
 given precision. Signals FlagInvalid and returns not-a-number (NaN)
-if the result can&#39;t fit the given precision without rounding. Signals
-FlagInvalid and returns not-a-number (NaN) if the arithmetic context
-defines an exponent range, the new exponent must be changed to the
-given exponent when rounding, and the given exponent is outside of
-the valid range of the arithmetic context.</li>
+if the result can&#39;t fit the given precision without rounding.
+Signals FlagInvalid and returns not-a-number (NaN) if the arithmetic
+context defines an exponent range, the new exponent must be changed
+to the given exponent when rounding, and the given exponent is
+outside of the valid range of the arithmetic context.</li>
 </ul>
 
 <h3>RoundToIntegerExact</h3>
@@ -3494,11 +3520,11 @@ which case the default rounding mode is HalfEven.</li>
 <ul>
 <li>A binary float rounded to the closest integer representable in the
 given precision. Signals FlagInvalid and returns not-a-number (NaN)
-if the result can&#39;t fit the given precision without rounding. Signals
-FlagInvalid and returns not-a-number (NaN) if the arithmetic context
-defines an exponent range, the new exponent must be changed to 0 when
-rounding, and 0 is outside of the valid range of the arithmetic
-context.</li>
+if the result can&#39;t fit the given precision without rounding.
+Signals FlagInvalid and returns not-a-number (NaN) if the arithmetic
+context defines an exponent range, the new exponent must be changed
+to 0 when rounding, and 0 is outside of the valid range of the
+arithmetic context.</li>
 </ul>
 
 <h3>RoundToIntegerNoRoundedFlag</h3>
@@ -3518,8 +3544,8 @@ context.</li>
 <li><code>ctx</code> - An arithmetic context to control precision and rounding of the
 result. If <code>HasFlags</code> of the context is true, will also store
 the flags resulting from the operation (the flags are in addition to
-the pre-existing flags), except that this function will never add the
-<code>FlagRounded</code> and <code>FlagInexact</code> flags (the only
+the pre-existing flags), except that this function will never add
+the <code>FlagRounded</code> and <code>FlagInexact</code> flags (the only
 difference between this and RoundToExponentExact). Can be null, in
 which case the default rounding mode is HalfEven.</li>
 </ul>
@@ -3558,11 +3584,11 @@ which case the default rounding mode is HalfEven.</li>
 <ul>
 <li>A binary float rounded to the closest integer representable in the
 given precision. Signals FlagInvalid and returns not-a-number (NaN)
-if the result can&#39;t fit the given precision without rounding. Signals
-FlagInvalid and returns not-a-number (NaN) if the arithmetic context
-defines an exponent range, the new exponent must be changed to 0 when
-rounding, and 0 is outside of the valid range of the arithmetic
-context.</li>
+if the result can&#39;t fit the given precision without rounding.
+Signals FlagInvalid and returns not-a-number (NaN) if the arithmetic
+context defines an exponent range, the new exponent must be changed
+to 0 when rounding, and 0 is outside of the valid range of the
+arithmetic context.</li>
 </ul>
 
 <h3>RoundToIntegralNoRoundedFlag</h3>
@@ -3579,8 +3605,8 @@ Renamed to RoundToIntegerNoRoundedFlag.</p>
 <li><code>ctx</code> - An arithmetic context to control precision and rounding of the
 result. If <code>HasFlags</code> of the context is true, will also store
 the flags resulting from the operation (the flags are in addition to
-the pre-existing flags), except that this function will never add the
-<code>FlagRounded</code> and <code>FlagInexact</code> flags (the only
+the pre-existing flags), except that this function will never add
+the <code>FlagRounded</code> and <code>FlagInexact</code> flags (the only
 difference between this and RoundToExponentExact). Can be null, in
 which case the default rounding mode is HalfEven.</li>
 </ul>
@@ -3992,8 +4018,8 @@ after the decimal point, or if the number&#39;s exponent is greater than
  significand area for a quiet NaN, and clears it for a signaling NaN.
  Then the other bits of the significand area are set to the lowest
  bits of this object&#39;s unsigned mantissa (significand), and the
- next-highest bit of the significand area is set if those bits are all
- zeros and this is a signaling NaN. Unfortunately, in the .NET
+ next-highest bit of the significand area is set if those bits are
+ all zeros and this is a signaling NaN. Unfortunately, in the.getNET()
  implementation, the return value of this method may be a quiet NaN
  even if a signaling NaN would otherwise be generated. </p></p>
 
@@ -4023,9 +4049,9 @@ value exceeds the range of a 32-bit floating point number.</li>
 <ul>
 <li>A string representation of this object. The value is converted to
 decimal and the decimal form of this number&#39;s value is returned. The
-text string will be in exponential notation if the converted number&#39;s
-scale is positive or if the number&#39;s first nonzero decimal digit is
-more than five digits after the decimal point.</li>
+text string will be in exponential notation if the converted
+number&#39;s scale is positive or if the number&#39;s first nonzero decimal
+digit is more than five digits after the decimal point.</li>
 </ul>
 
 <h3>Ulp</h3>
@@ -4070,8 +4096,8 @@ the truncated integer is less than 0 or greater than 255.</li>
 </pre>
 
 <p>Truncates this number&#39;s value to an integer and returns the
- least-significant bits of its two&#39;s-complement form as a byte (from 0
- to 255).</p>
+ least-significant bits of its two&#39;s-complement form as a byte (from
+ 0 to 255).</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -4086,7 +4112,8 @@ value is infinity or not-a-number.</li>
 </pre>
 
 <p>Converts this number&#39;s value to a byte (from 0 to 255) if it can fit in a
- byte (from 0 to 255) without rounding to a different numerical value.</p>
+ byte (from 0 to 255) without rounding to a different numerical
+ value.</p>
 
 <p><strong>Returns:</strong></p>
 
