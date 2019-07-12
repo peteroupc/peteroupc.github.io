@@ -182,7 +182,7 @@ By using a seeded PRNG for repeatable "randomness", an application will be tied 
 2. the application either&mdash;
     - makes the seed (or a "code" or "password" based on the seed) accessible to the user, or
     - finds it impractical to store or distribute the "random" numbers or "random" content, rather than the seed, for later use (e.g., to store those numbers to "replay" later, to store that content in a "save file", or to distribute that content rather than a seed to networked users), and
-3. any feature that uses such a PRNG to generate that "random" result will be deterministic and consistent (see "Determinism and Consistency") for as long as that feature is still in use by that application.
+3. any feature that uses such a PRNG to generate that "random" result will be consistent (see "Determinism and Consistency") for as long as that feature is still in use by that application.
 
 <a id=Seeded_PRNG_Recommendations></a>
 ### Seeded PRNG Recommendations
@@ -192,10 +192,10 @@ If an application chooses to use a seeded PRNG for repeatable "randomness", the 
 - SHOULD choose a PRNG that meets or exceeds the requirements of a [**statistical RNG**](#Statistical_RNGs) (except the seed is application-defined instead),
 - SHOULD choose a PRNG implementation with consistent behavior that will not change in the future,
 - ought to document the chosen PRNG being used as well as all the parameters for that PRNG,
-- ought to generate seeds for the PRNG that are likely to vary wildly from previous seeds, and
+- ought to generate seeds for the PRNG that are likely to vary wildly from previous seeds (see "[**Wildly Varying Seeds**](#Wildly_Varying_Seeds)"), and
 - SHOULD NOT seed the PRNG with floating-point numbers or generate floating-point numbers with that PRNG.
 
-> **Example:** An application could implement a seeded PRNG using a third-party library that specifically says it implements an algorithm mentioned in the [**statistical RNG examples**](#Examples_and_Non_Examples), and could initialize that PRNG using a bit sequence from a cryptographic RNG (see "[**Wildly Varying Seeds**](#Wildly_Varying_Seeds)").  The developers could also mention the use of the specific PRNG chosen on any code that uses it, to alert other developers that the PRNG needs to remain unchanged.
+> **Example:** An application could implement a seeded PRNG using a third-party library that specifically says it implements an algorithm mentioned in the [**statistical RNG examples**](#Examples_and_Non_Examples), and could initialize that PRNG using a bit sequence from a cryptographic RNG.  The developers could also mention the use of the specific PRNG chosen on any code that uses it, to alert other developers that the PRNG needs to remain unchanged.
 
 <a id=Seeded_PRNG_Use_Cases></a>
 ### Seeded PRNG Use Cases
@@ -235,7 +235,7 @@ In general, the bigger that "random" content is, the greater the justification t
 <a id=Unit_Tests></a>
 #### Unit Tests
 
-A custom seed is appropriate when unit testing a method that uses a seeded PRNG in place of another kind of RNG for the purpose of the test (provided the test is deterministic and consistent).
+A custom seed is appropriate when unit testing a method that uses a seeded PRNG in place of another kind of RNG for the purpose of the test (provided the test delivers consistent output across computers).
 
 <a id=Nondeterministic_Sources_and_Seed_Generation></a>
 ## Nondeterministic Sources and Seed Generation
@@ -404,11 +404,9 @@ In general, GL Shading Language (GLSL) and other programming environments design
 <a id=Determinism_and_Consistency></a>
 ### Determinism and Consistency
 
-For an RNG algorithm to generate "random" numbers that are reproducible across computers, it needs to be both _deterministic_ and _consistent_.  (These factors are only important for seeded PRNGs, not necessarily for cryptographic or statistical RNGs.)
+For an RNG algorithm to generate "random" numbers that are reproducible across computers, it needs to be a _consistent_ algorithm.  (This factor is important only for seeded PRNGs, not necessarily for cryptographic or statistical RNGs.)
 
-An algorithm is _deterministic_ if it delivers the same output given the same input every time.  An algorithm that relies on behavior that may change outside its control (such as accessing the file system or the computer's clock) is not deterministic (e.g., because the time may be different on each run, or other programs may read and write to the same files the algorithm does).
-
-An algorithm is _consistent_ if the output it delivers, given the same input, is the same&mdash;
+A _consistent algorithm_ is an algorithm that delivers the same output for the same input every time (is _deterministic_) and does so&mdash;
 
 - across time,
 - across different executions of the algorithm,
@@ -416,13 +414,14 @@ An algorithm is _consistent_ if the output it delivers, given the same input, is
 - across supported hardware, and
 - across supported operating systems.
 
-In practice, however, it's not easy to ensure an algorithm (especially an RNG) is both deterministic and consistent.  The following are some reasons an algorithm might produce different results from run to run or from machine to machine:
+The following are some reasons an algorithm might produce different results from run to run or from machine to machine (making it an _inconsistent_ algorithm):
 
 - Differences in how **floating-point numbers** and floating-point math operations are implemented, in the order in which such operations are carried out (especially where multithreading is involved), or in how numbers are rounded after such operations.<sup>[**(30)**](#Note30)</sup>.
+- The algorithm relies on **behavior that may change outside its control**.  This includes accessing the system clock or the file system because, for example, the time may be different on each run, or other programs may read from and write to the same files the algorithm does.
 - An application relies on **behavior that is not guaranteed**.  This includes _undefined behavior_ in C and C++, as well as expecting a _hash table_ to list its contents in a predictable order when that property is not guaranteed<sup>[**(31)**](#Note31)</sup>.
 - An application that relies on **compiler-dependent features** might behave differently depending on how it was compiled.  For example, in C and C++, the sizes of `int` and `long`, and the data formats of `float` and `double`, are not necessarily the same in all compilers.
 
-[**`java.util.Random`**](https://docs.oracle.com/javase/8/docs/api/java/util/Random.html) is one example of a PRNG with deterministic and consistent behavior, but none of the following is such a PRNG:
+[**`java.util.Random`**](https://docs.oracle.com/javase/8/docs/api/java/util/Random.html) is one example of a PRNG with consistent behavior, but none of the following is such a PRNG:
 
 - The C [**`rand` method**](http://en.cppreference.com/w/cpp/numeric/random/rand), as well as C++'s random number distribution classes, such as [**`std::uniform_int_distribution`**](http://en.cppreference.com/w/cpp/numeric/random/uniform_int_distribution), use implementation-defined algorithms for random number generation.
 - .NET's [**`System.Random`**](https://docs.microsoft.com/dotnet/api/system.random) has random number generation behavior that could change in the future.

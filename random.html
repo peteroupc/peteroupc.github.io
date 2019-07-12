@@ -273,7 +273,7 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 <li>makes the seed (or a &quot;code&quot; or &quot;password&quot; based on the seed) accessible to the user, or</li>
 <li>finds it impractical to store or distribute the &quot;random&quot; numbers or &quot;random&quot; content, rather than the seed, for later use (e.g., to store those numbers to &quot;replay&quot; later, to store that content in a &quot;save file&quot;, or to distribute that content rather than a seed to networked users), and</li>
 </ul></li>
-<li>any feature that uses such a PRNG to generate that &quot;random&quot; result will be deterministic and consistent (see &quot;Determinism and Consistency&quot;) for as long as that feature is still in use by that application.</li>
+<li>any feature that uses such a PRNG to generate that &quot;random&quot; result will be consistent (see &quot;Determinism and Consistency&quot;) for as long as that feature is still in use by that application.</li>
 </ol>
 
 <p><a id=Seeded_PRNG_Recommendations></a></p>
@@ -286,12 +286,12 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 <li>SHOULD choose a PRNG that meets or exceeds the requirements of a <a href="#Statistical_RNGs"><strong>statistical RNG</strong></a> (except the seed is application-defined instead),</li>
 <li>SHOULD choose a PRNG implementation with consistent behavior that will not change in the future,</li>
 <li>ought to document the chosen PRNG being used as well as all the parameters for that PRNG,</li>
-<li>ought to generate seeds for the PRNG that are likely to vary wildly from previous seeds, and</li>
+<li>ought to generate seeds for the PRNG that are likely to vary wildly from previous seeds (see &quot;<a href="#Wildly_Varying_Seeds"><strong>Wildly Varying Seeds</strong></a>&quot;), and</li>
 <li>SHOULD NOT seed the PRNG with floating-point numbers or generate floating-point numbers with that PRNG.</li>
 </ul>
 
 <blockquote>
-<p><strong>Example:</strong> An application could implement a seeded PRNG using a third-party library that specifically says it implements an algorithm mentioned in the <a href="#Examples_and_Non_Examples"><strong>statistical RNG examples</strong></a>, and could initialize that PRNG using a bit sequence from a cryptographic RNG (see &quot;<a href="#Wildly_Varying_Seeds"><strong>Wildly Varying Seeds</strong></a>&quot;).  The developers could also mention the use of the specific PRNG chosen on any code that uses it, to alert other developers that the PRNG needs to remain unchanged.</p>
+<p><strong>Example:</strong> An application could implement a seeded PRNG using a third-party library that specifically says it implements an algorithm mentioned in the <a href="#Examples_and_Non_Examples"><strong>statistical RNG examples</strong></a>, and could initialize that PRNG using a bit sequence from a cryptographic RNG.  The developers could also mention the use of the specific PRNG chosen on any code that uses it, to alert other developers that the PRNG needs to remain unchanged.</p>
 </blockquote>
 
 <p><a id=Seeded_PRNG_Use_Cases></a></p>
@@ -346,7 +346,7 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 
 <h4>Unit Tests</h4>
 
-<p>A custom seed is appropriate when unit testing a method that uses a seeded PRNG in place of another kind of RNG for the purpose of the test (provided the test is deterministic and consistent).</p>
+<p>A custom seed is appropriate when unit testing a method that uses a seeded PRNG in place of another kind of RNG for the purpose of the test (provided the test delivers consistent output across computers).</p>
 
 <p><a id=Nondeterministic_Sources_and_Seed_Generation></a></p>
 
@@ -598,11 +598,9 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 
 <h3>Determinism and Consistency</h3>
 
-<p>For an RNG algorithm to generate &quot;random&quot; numbers that are reproducible across computers, it needs to be both <em>deterministic</em> and <em>consistent</em>.  (These factors are only important for seeded PRNGs, not necessarily for cryptographic or statistical RNGs.)</p>
+<p>For an RNG algorithm to generate &quot;random&quot; numbers that are reproducible across computers, it needs to be a <em>consistent</em> algorithm.  (This factor is important only for seeded PRNGs, not necessarily for cryptographic or statistical RNGs.)</p>
 
-<p>An algorithm is <em>deterministic</em> if it delivers the same output given the same input every time.  An algorithm that relies on behavior that may change outside its control (such as accessing the file system or the computer&#39;s clock) is not deterministic (e.g., because the time may be different on each run, or other programs may read and write to the same files the algorithm does).</p>
-
-<p>An algorithm is <em>consistent</em> if the output it delivers, given the same input, is the same&mdash;</p>
+<p>A <em>consistent algorithm</em> is an algorithm that delivers the same output for the same input every time (is <em>deterministic</em>) and does so&mdash;</p>
 
 <ul>
 <li>across time,</li>
@@ -612,10 +610,11 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 <li>across supported operating systems.</li>
 </ul>
 
-<p>In practice, however, it&#39;s not easy to ensure an algorithm (especially an RNG) is both deterministic and consistent.  The following are some reasons an algorithm might produce different results from run to run or from machine to machine:</p>
+<p>The following are some reasons an algorithm might produce different results from run to run or from machine to machine (making it an <em>inconsistent</em> algorithm):</p>
 
 <ul>
 <li>Differences in how <strong>floating-point numbers</strong> and floating-point math operations are implemented, in the order in which such operations are carried out (especially where multithreading is involved), or in how numbers are rounded after such operations.<sup><a href="#Note30"><strong>(30)</strong></a></sup>.</li>
+<li>The algorithm relies on <strong>behavior that may change outside its control</strong>.  This includes accessing the system clock or the file system because, for example, the time may be different on each run, or other programs may read from and write to the same files the algorithm does.</li>
 <li>An application relies on <strong>behavior that is not guaranteed</strong>.  This includes <em>undefined behavior</em> in C and C++, as well as expecting a <em>hash table</em> to list its contents in a predictable order when that property is not guaranteed<sup><a href="#Note31"><strong>(31)</strong></a></sup>.</li>
 <li>An application that relies on <strong>compiler-dependent features</strong> might behave differently depending on how it was compiled.  For example, in C and C++, the sizes of <code>int</code> and <code>long</code>, and the data formats of <code>float</code> and <code>double</code>, are not necessarily the same in all compilers.</li>
 </ul>
