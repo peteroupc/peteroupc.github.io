@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
-<p>Begun on Mar. 5, 2016; last updated on June 28, 2019.</p>
+<p>Begun on Mar. 5, 2016; last updated on July 13, 2019.</p>
 
 <p>Most apps that use random numbers care about either unpredictability, speed/high quality, or repeatability.  This article explains the three kinds of RNGs and gives recommendations on each kind.</p>
 
@@ -614,12 +614,12 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 
 <ul>
 <li>Differences in how <strong>floating-point numbers</strong> and floating-point math operations are implemented, in the order in which such operations are carried out (especially where multithreading is involved), or in how numbers are rounded after such operations.<sup><a href="#Note30"><strong>(30)</strong></a></sup>.</li>
-<li>The algorithm relies on <strong>behavior that may change outside its control</strong>.  This includes accessing the system clock or the file system because, for example, the time may be different on each run, or other programs may read from and write to the same files the algorithm does.</li>
+<li>The algorithm relies on <strong>behavior that may change outside its control</strong>.  This includes accessing the system clock or the file system because, for example, the time could be different on each run, or other programs could read from and write to the same files the algorithm does.</li>
 <li>An application relies on <strong>behavior that is not guaranteed</strong>.  This includes <em>undefined behavior</em> in C and C++, as well as expecting a <em>hash table</em> to list its contents in a predictable order when that property is not guaranteed<sup><a href="#Note31"><strong>(31)</strong></a></sup>.</li>
 <li>An application that relies on <strong>compiler-dependent features</strong> might behave differently depending on how it was compiled.  For example, in C and C++, the sizes of <code>int</code> and <code>long</code>, and the data formats of <code>float</code> and <code>double</code>, are not necessarily the same in all compilers.</li>
 </ul>
 
-<p><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Random.html"><strong><code>java.util.Random</code></strong></a> is one example of a PRNG with deterministic and consistent behavior, but none of the following is such a PRNG:</p>
+<p><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Random.html"><strong><code>java.util.Random</code></strong></a> is one example of a PRNG with consistent behavior, but none of the following is such a PRNG:</p>
 
 <ul>
 <li>The C <a href="http://en.cppreference.com/w/cpp/numeric/random/rand"><strong><code>rand</code> method</strong></a>, as well as C++&#39;s random number distribution classes, such as <a href="http://en.cppreference.com/w/cpp/numeric/random/uniform_int_distribution"><strong><code>std::uniform_int_distribution</code></strong></a>, use implementation-defined algorithms for random number generation.</li>

@@ -17,7 +17,7 @@
  threads. Multiple instances of this object with the same properties
   are interchangeable, so they should not be compared using the &quot;==&quot;
  operator (which might only check if each side of the operator is the
- same instance). </p></p>
+ same instance).</p></p>
 
 <h2>Fields</h2>
 
@@ -129,7 +129,8 @@ Creates a rational number from a text string that represents a number.</li>
 <li><code>static ERational FromString​(java.lang.String str,
       int offset,
       int length)</code><br>
-Creates a rational number from a text string that represents a number.</li>
+Creates a rational number from a text string that represents a
+number.</li>
 <li><code>EInteger getDenominator()</code><br>
 Gets this object&#39;s denominator.</li>
 <li><code>EInteger getNumerator()</code><br>
@@ -387,8 +388,8 @@ otherwise, <code>false</code>.</li>
 
 <ul>
 <li><code>true</code> if this object&#39;s value is negative (including negative
-zero); otherwise, <code>false</code>. <code>true</code> if this object&#39;s
-value is negative; otherwise, <code>false</code>.</li>
+zero); otherwise, <code>false</code>. <code>true</code> if this object&#39;s value
+is negative; otherwise, <code>false</code>.</li>
 </ul>
 
 <h3>isZero</h3>
@@ -724,7 +725,7 @@ number.</li>
 </pre>
 
 <p>Creates a rational number from a text string that represents a number. See
- <code>FromString(String, int, int)</code> for more information.</p>
+ <code>FromString(string, int, int)</code> for more information.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -751,21 +752,22 @@ formatted number string.</li>
 <pre>public static ERational FromString​(java.lang.String str, int offset, int length)
 </pre>
 
-<p>Creates a rational number from a text string that represents a number.
- </p> <p>The format of the string generally consists of: </p> <ul>
-  <li>An optional plus sign ("+" , U+002B) or minus sign ("-", U+002D)
- (if '-' , the value is negative.) </li> <li>The numerator in the
-  form of one or more digits. </li> <li>Optionally, "/" followed by
+<p>Creates a rational number from a text string that represents a
+ number.</p> <p>The format of the string generally consists of:</p>
+
+<p><ul> <li>An optional plus sign (&quot;+&quot; , U+002B) or minus sign (&quot;-&quot;,
+ U+002D) (if &#39;-&#39; , the value is negative.)</li> <li>The numerator in
+  the form of one or more digits.</li> <li>Optionally, &quot;/&quot; followed by
  the denominator in the form of one or more digits. If a denominator
- is not given, it's equal to 1. </li> </ul> <p>The string can also be
-  "-INF", "-Infinity", "Infinity", "INF", quiet NaN ("NaN" /"-NaN")
-  followed by any number of digits, or signaling NaN ("sNaN" /"-sNaN")
+ is not given, it&#39;s equal to 1.</li></ul> <p>The string can also be
+  &quot;-INF&quot;, &quot;-Infinity&quot;, &quot;Infinity&quot;, &quot;INF&quot;, quiet NaN (&quot;NaN&quot; /&quot;-NaN&quot;)
+  followed by any number of digits, or signaling NaN (&quot;sNaN&quot; /&quot;-sNaN&quot;)
  followed by any number of digits, all in any combination of upper
- and lower case. </p> <p>All characters mentioned above are the
+ and lower case.</p> <p>All characters mentioned above are the
  corresponding characters in the Basic Latin range. In particular,
  the digits must be the basic digits 0 to 9 (U + 0030 to U + 0039). The
  string is not allowed to contain white space characters, including
- spaces. </p>
+ spaces.</p></p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -789,6 +791,9 @@ str</code> (but not more than <code>str</code> &#39;s length).</p></li>
 <li><p><code>java.lang.NumberFormatException</code> - The parameter &quot;str&quot; is not a correctly
 formatted number string.</p></li>
 <li><p><code>java.lang.NullPointerException</code> - The parameter &quot;str&quot; is null.</p></li>
+<li><p><code>java.lang.IllegalArgumentException</code> - Either &quot;offset&quot; or &quot;length&quot; is less than 0 or
+greater than &quot;str&quot;&#39;s length, or &quot;str&quot;&#39;s length minus &quot;offset&quot; is
+less than &quot;length&quot;.</p></li>
 </ul>
 
 <h3>CompareToTotalMagnitude</h3>
@@ -799,14 +804,14 @@ formatted number string.</p></li>
 <p>Compares the absolute values of this object and another object, imposing a
  total ordering on all possible values (ignoring their signs). In
  this method: <ul> <li>For objects with the same value, the one with
-  the higher denominator has a greater &quot;absolute value&quot;. </li>
- <li>Negative zero and positive zero are considered equal. </li>
+  the higher denominator has a greater &quot;absolute value&quot;.</li>
+ <li>Negative zero and positive zero are considered equal.</li>
   <li>Quiet NaN has a higher &quot;absolute value&quot; than signaling NaN. If
  both objects are quiet NaN or both are signaling NaN, the one with
-  the higher diagnostic information has a greater &quot;absolute value&quot;.
-  </li> <li>NaN has a higher &quot;absolute value&quot; than infinity. </li>
-  <li>Infinity has a higher &quot;absolute value&quot; than any finite number.
- </li> </ul></p>
+  the higher diagnostic information has a greater &quot;absolute
+  value&quot;.</li> <li>NaN has a higher &quot;absolute value&quot; than
+  infinity.</li> <li>Infinity has a higher &quot;absolute value&quot; than any
+ finite number.</li></ul></p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -830,14 +835,14 @@ object is less than the other value, or 1 if this object is greater.</li>
 <p>Compares the values of this object and another object, imposing a total
  ordering on all possible values. In this method: <ul> <li>For
  objects with the same value, the one with the higher denominator has
-  a greater &quot;absolute value&quot;. </li> <li>Negative zero is less than
-  positive zero. </li> <li>Quiet NaN has a higher &quot;absolute value&quot;
- than signaling NaN. If both objects are quiet NaN or both are
- signaling NaN, the one with the higher diagnostic information has a
-  greater &quot;absolute value&quot;. </li> <li>NaN has a higher &quot;absolute
-  value&quot; than infinity. </li> <li>Infinity has a higher &quot;absolute
-  value&quot; than any finite number. </li> <li>Negative numbers are less
- than positive numbers. </li> </ul></p>
+  a greater &quot;absolute value&quot;.</li> <li>Negative zero is less than
+  positive zero.</li> <li>Quiet NaN has a higher &quot;absolute value&quot; than
+ signaling NaN. If both objects are quiet NaN or both are signaling
+ NaN, the one with the higher diagnostic information has a greater
+  &quot;absolute value&quot;.</li> <li>NaN has a higher &quot;absolute value&quot; than
+  infinity.</li> <li>Infinity has a higher &quot;absolute value&quot; than any
+ finite number.</li> <li>Negative numbers are less than positive
+ numbers.</li></ul></p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -922,8 +927,8 @@ less, or a positive number if this instance is greater.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>java.lang.IllegalArgumentException</code> - Doesn&#39;t satisfy this.isFinite(); doesn&#39;t
-satisfy other.isFinite().</li>
+<li><code>java.lang.IllegalArgumentException</code> - Doesn&#39;t satisfy this.isFinite(); doesn&#39;t satisfy
+other.isFinite().</li>
 </ul>
 
 <h3>CompareToBinary</h3>
@@ -949,8 +954,8 @@ less, or a positive number if this instance is greater.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>java.lang.IllegalArgumentException</code> - Doesn&#39;t satisfy this.isFinite(); doesn&#39;t
-satisfy other.isFinite().</li>
+<li><code>java.lang.IllegalArgumentException</code> - Doesn&#39;t satisfy this.isFinite(); doesn&#39;t satisfy
+other.isFinite().</li>
 </ul>
 
 <h3>CompareToDecimal</h3>
@@ -976,8 +981,8 @@ less, or a positive number if this instance is greater.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>java.lang.IllegalArgumentException</code> - Doesn&#39;t satisfy this.isFinite(); doesn&#39;t
-satisfy other.isFinite().</li>
+<li><code>java.lang.IllegalArgumentException</code> - Doesn&#39;t satisfy this.isFinite(); doesn&#39;t satisfy
+other.isFinite().</li>
 </ul>
 
 <h3>CopySign</h3>
@@ -1051,9 +1056,7 @@ satisfy other.isFinite().</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>obj</code> - The parameter
-  <code>obj</code>
-   is an arbitrary object.</li>
+<li><code>obj</code> - The parameter <code>obj</code> is an arbitrary object.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -1080,9 +1083,7 @@ satisfy other.isFinite().</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>Either
-  <code>true</code> or
-  <code>false</code> .</li>
+<li>Either <code>true</code> or <code>false</code>.</li>
 </ul>
 
 <h3>hashCode</h3>
@@ -1682,7 +1683,7 @@ value exceeds the range of a 32-bit floating point number.</li>
 <li>A string representation of this object. If this object&#39;s value is
 infinity or not-a-number, the result is the analogous return value
 of the <code>EDecimal.toString</code> method. Otherwise, the return value
-has the following form: <code>[-]numerator/denominator</code>.</li>
+has the following form: <code>[-]numerator.Divide(denominator)</code>.</li>
 </ul>
 
 <h3>ToByteChecked</h3>

@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on Mar. 5, 2016; last updated on June 28, 2019.
+Begun on Mar. 5, 2016; last updated on July 13, 2019.
 
 Most apps that use random numbers care about either unpredictability, speed/high quality, or repeatability.  This article explains the three kinds of RNGs and gives recommendations on each kind.
 
@@ -417,7 +417,7 @@ A _consistent algorithm_ is an algorithm that delivers the same output for the s
 The following are some reasons an algorithm might produce different results from run to run or from machine to machine (making it an _inconsistent_ algorithm):
 
 - Differences in how **floating-point numbers** and floating-point math operations are implemented, in the order in which such operations are carried out (especially where multithreading is involved), or in how numbers are rounded after such operations.<sup>[**(30)**](#Note30)</sup>.
-- The algorithm relies on **behavior that may change outside its control**.  This includes accessing the system clock or the file system because, for example, the time may be different on each run, or other programs may read from and write to the same files the algorithm does.
+- The algorithm relies on **behavior that may change outside its control**.  This includes accessing the system clock or the file system because, for example, the time could be different on each run, or other programs could read from and write to the same files the algorithm does.
 - An application relies on **behavior that is not guaranteed**.  This includes _undefined behavior_ in C and C++, as well as expecting a _hash table_ to list its contents in a predictable order when that property is not guaranteed<sup>[**(31)**](#Note31)</sup>.
 - An application that relies on **compiler-dependent features** might behave differently depending on how it was compiled.  For example, in C and C++, the sizes of `int` and `long`, and the data formats of `float` and `double`, are not necessarily the same in all compilers.
 
