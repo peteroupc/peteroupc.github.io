@@ -178,7 +178,8 @@ Use GetAddresses(\Cc) instead.</li>
 Gets this message&#39;s content disposition.</li>
 <li><code>MediaType getContentType()</code><br>
 Gets this message&#39;s media type.</li>
-<li><code>int[] GetDate()</code><br></li>
+<li><code>int[] GetDate()</code><br>
+Not documented yet.</li>
 <li><code>java.lang.String getFileName()</code><br>
 Gets a file name suggested by this message for saving the message&#39;s body
 to a file.</li>
@@ -463,8 +464,7 @@ Use GetAddresses(\Cc) instead.</p>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>java.lang.NullPointerException</code> - This value is being set and &quot;value&quot; is
-null.</li>
+<li><code>java.lang.NullPointerException</code> - This value is being set and &quot;value&quot; is null.</li>
 </ul>
 
 <h3>setContentType</h3>
@@ -520,8 +520,7 @@ message&#39;s header fields of the given name.</li>
 <li><p><code>java.lang.UnsupportedOperationException</code> - The parameter <code>headerName</code> is not
 supported for this method. Currently, the only header fields
 supported are To, Cc, Bcc, Reply-To, Sender, and From.</p></li>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>headerName</code> is
-null.</p></li>
+<li><p><code>java.lang.NullPointerException</code> - The parameter <code>headerName</code> is null.</p></li>
 <li><p><code>java.lang.IllegalArgumentException</code> - The parameter <code>headerName</code> is empty.</p></li>
 </ul>
 
@@ -629,11 +628,10 @@ value.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.NullPointerException</code> - The key or value of <code>header</code> is
-null.</p></li>
-<li><p><code>java.lang.IllegalArgumentException</code> - The header field name is too long or
-contains an invalid character, or the header field&#39;s value is
-syntactically invalid.</p></li>
+<li><p><code>java.lang.NullPointerException</code> - The key or value of <code>header</code> is null.</p></li>
+<li><p><code>java.lang.IllegalArgumentException</code> - The header field name is too long or contains an
+invalid character, or the header field&#39;s value is syntactically
+invalid.</p></li>
 </ul>
 
 <h3>AddHeader</h3>
@@ -661,11 +659,11 @@ syntactically invalid.</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>name</code> or <code>
-value</code> is null.</p></li>
-<li><p><code>java.lang.IllegalArgumentException</code> - The header field name is too long or
-contains an invalid character, or the header field&#39;s value is
-syntactically invalid.</p></li>
+<li><p><code>java.lang.NullPointerException</code> - The parameter <code>name</code> or <code>value</code> is
+null.</p></li>
+<li><p><code>java.lang.IllegalArgumentException</code> - The header field name is too long or contains an
+invalid character, or the header field&#39;s value is syntactically
+invalid.</p></li>
 </ul>
 
 <h3>Generate</h3>
@@ -742,6 +740,14 @@ generated.</li>
 
 <pre>public int[] GetDate()
 </pre>
+
+<p>Not documented yet.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An array of 32-bit unsigned integers.</li>
+</ul>
 
 <h3>SetDate</h3>
 
@@ -901,8 +907,8 @@ empty if no header field has that name.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>java.lang.IllegalArgumentException</code> - The parameter <code>index</code> is 0 or at
-least as high as the number of header fields.</li>
+<li><code>java.lang.IllegalArgumentException</code> - The parameter <code>index</code> is 0 or at least as
+high as the number of header fields.</li>
 </ul>
 
 <h3>RemoveHeader</h3>
@@ -989,12 +995,11 @@ value.</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.IllegalArgumentException</code> - The parameter <code>index</code> is 0 or at
-least as high as the number of header fields; or, the header field
-name is too long or contains an invalid character, or the header
-field&#39;s value is syntactically invalid.</p></li>
-<li><p><code>java.lang.NullPointerException</code> - The key or value of <code>header</code> is
-null.</p></li>
+<li><p><code>java.lang.IllegalArgumentException</code> - The parameter <code>index</code> is 0 or at least as
+high as the number of header fields; or, the header field name is
+too long or contains an invalid character, or the header field&#39;s
+value is syntactically invalid.</p></li>
+<li><p><code>java.lang.NullPointerException</code> - The key or value of <code>header</code> is null.</p></li>
 </ul>
 
 <h3>SetHeader</h3>
@@ -1023,12 +1028,12 @@ null.</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.IllegalArgumentException</code> - The parameter <code>index</code> is 0 or at
-least as high as the number of header fields; or, the header field
-name is too long or contains an invalid character, or the header
-field&#39;s value is syntactically invalid.</p></li>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>name</code> or <code>
-value</code> is null.</p></li>
+<li><p><code>java.lang.IllegalArgumentException</code> - The parameter <code>index</code> is 0 or at least as
+high as the number of header fields; or, the header field name is
+too long or contains an invalid character, or the header field&#39;s
+value is syntactically invalid.</p></li>
+<li><p><code>java.lang.NullPointerException</code> - The parameter <code>name</code> or <code>value</code> is
+null.</p></li>
 </ul>
 
 <h3>SetHeader</h3>
@@ -1056,10 +1061,10 @@ value</code> is null.</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.IllegalArgumentException</code> - The parameter <code>index</code> is 0 or at
-least as high as the number of header fields; or, the header field
-name is too long or contains an invalid character, or the header
-field&#39;s value is syntactically invalid.</p></li>
+<li><p><code>java.lang.IllegalArgumentException</code> - The parameter <code>index</code> is 0 or at least as
+high as the number of header fields; or, the header field name is
+too long or contains an invalid character, or the header field&#39;s
+value is syntactically invalid.</p></li>
 <li><p><code>java.lang.NullPointerException</code> - The parameter <code>value</code> is null.</p></li>
 </ul>
 
@@ -1123,11 +1128,11 @@ example, if the name parameter is &quot;From&quot;, this parameter could be
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.IllegalArgumentException</code> - The header field name is too long or
-contains an invalid character, or the header field&#39;s value is
-syntactically invalid.</p></li>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>name</code> or <code>
-value</code> is null.</p></li>
+<li><p><code>java.lang.IllegalArgumentException</code> - The header field name is too long or contains an
+invalid character, or the header field&#39;s value is syntactically
+invalid.</p></li>
+<li><p><code>java.lang.NullPointerException</code> - The parameter <code>name</code> or <code>value</code> is
+null.</p></li>
 </ul>
 
 <h3>SetHtmlBody</h3>
@@ -1187,8 +1192,8 @@ value</code> is null.</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>java.lang.NullPointerException</code> - The parameter <code>text</code> or <code>
-html</code> is null.</li>
+<li><code>java.lang.NullPointerException</code> - The parameter <code>text</code> or <code>html</code> is
+null.</li>
 </ul>
 
 <h3>SetTextAndMarkdown</h3>
@@ -1333,8 +1338,8 @@ HTML.</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>inputStream</code> or
-<code>mediaType</code> is null.</p></li>
+<li><p><code>java.lang.NullPointerException</code> - The parameter <code>inputStream</code> or <code>
+mediaType</code> is null.</p></li>
 <li><p><code>MessageDataException</code> - An I/O error occurred.</p></li>
 </ul>
 
@@ -1373,8 +1378,7 @@ on this file name&#39;s extension. If the file name has an extension
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>inputStream</code> is
-null.</p></li>
+<li><p><code>java.lang.NullPointerException</code> - The parameter <code>inputStream</code> is null.</p></li>
 <li><p><code>MessageDataException</code> - An I/O error occurred.</p></li>
 </ul>
 
@@ -1410,8 +1414,8 @@ exists, or the entire string otherwise.</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>inputStream</code> or
-<code>mediaType</code> is null.</p></li>
+<li><p><code>java.lang.NullPointerException</code> - The parameter <code>inputStream</code> or <code>
+mediaType</code> is null.</p></li>
 <li><p><code>MessageDataException</code> - An I/O error occurred.</p></li>
 </ul>
 
@@ -1448,8 +1452,8 @@ exists, or the entire string otherwise.</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>inputStream</code> or
-<code>mediaType</code> is null.</p></li>
+<li><p><code>java.lang.NullPointerException</code> - The parameter <code>inputStream</code> or <code>
+mediaType</code> is null.</p></li>
 <li><p><code>MessageDataException</code> - An I/O error occurred.</p></li>
 </ul>
 
@@ -1521,8 +1525,8 @@ on this file name&#39;s extension. If the file name has an extension
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>inputStream</code> or
-<code>mediaType</code> is null.</p></li>
+<li><p><code>java.lang.NullPointerException</code> - The parameter <code>inputStream</code> or <code>
+mediaType</code> is null.</p></li>
 <li><p><code>MessageDataException</code> - An I/O error occurred.</p></li>
 </ul>
 
@@ -1556,8 +1560,7 @@ given languages, returns the last body part if its language is
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>java.lang.NullPointerException</code> - The parameter <code>languages</code> is
-null.</li>
+<li><code>java.lang.NullPointerException</code> - The parameter <code>languages</code> is null.</li>
 </ul>
 
 <h3>SelectLanguageMessage</h3>
@@ -1594,8 +1597,7 @@ given languages, returns the last body part if its language is
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>java.lang.NullPointerException</code> - The parameter <code>languages</code> is
-null.</li>
+<li><code>java.lang.NullPointerException</code> - The parameter <code>languages</code> is null.</li>
 </ul>
 
 <h3>MakeMultilingualMessage</h3>
@@ -1632,8 +1634,8 @@ messages given in the <code>messages</code> parameter in the order given.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>messages</code> or
-<code>languages</code> is null.</p></li>
+<li><p><code>java.lang.NullPointerException</code> - The parameter <code>messages</code> or <code>
+languages</code> is null.</p></li>
 <li><p><code>java.lang.IllegalArgumentException</code> - The parameter <code>messages</code> or <code>
 languages</code> is empty, their lengths don&#39;t match, at least one message
 is &quot;null&quot;, each message doesn&#39;t contain the same email addresses in

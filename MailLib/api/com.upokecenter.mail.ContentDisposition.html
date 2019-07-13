@@ -54,18 +54,21 @@ The content disposition value &quot;inline&quot; .</li>
 <ul>
 <li><code>boolean equals​(java.lang.Object obj)</code><br>
 Determines whether this object and another object are equal.</li>
-<li><code>int[] GetCreationDate()</code><br></li>
+<li><code>int[] GetCreationDate()</code><br>
+Not documented yet.</li>
 <li><code>java.lang.String getDispositionType()</code><br>
 Gets a string containing this object&#39;s disposition type, such as &quot;inline&quot; or
 &quot;attachment&quot;.</li>
 <li><code>java.lang.String GetFilename()</code><br>
 Not documented yet.</li>
-<li><code>int[] GetModificationDate()</code><br></li>
+<li><code>int[] GetModificationDate()</code><br>
+Not documented yet.</li>
 <li><code>java.lang.String GetParameter​(java.lang.String name)</code><br>
 Gets a parameter from this disposition object.</li>
 <li><code>java.util.Map&lt;java.lang.String,​java.lang.String&gt; getParameters()</code><br>
 Gets a value not documented yet.</li>
-<li><code>int[] GetReadDate()</code><br></li>
+<li><code>int[] GetReadDate()</code><br>
+Not documented yet.</li>
 <li><code>int hashCode()</code><br></li>
 <li><code>boolean isAttachment()</code><br>
 Gets a value not documented yet.</li>
@@ -351,15 +354,39 @@ null or empty.</li>
 <pre>public int[] GetCreationDate()
 </pre>
 
+<p>Not documented yet.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An array of 32-bit unsigned integers.</li>
+</ul>
+
 <h3>GetModificationDate</h3>
 
 <pre>public int[] GetModificationDate()
 </pre>
 
+<p>Not documented yet.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An array of 32-bit unsigned integers.</li>
+</ul>
+
 <h3>GetReadDate</h3>
 
 <pre>public int[] GetReadDate()
 </pre>
+
+<p>Not documented yet.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An array of 32-bit unsigned integers.</li>
+</ul>
 
 <h3>GetParameter</h3>
 
@@ -418,8 +445,7 @@ Can&#39;t be null.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>java.lang.NullPointerException</code> - The parameter <code>dispoValue</code> is
-null.</li>
+<li><code>java.lang.NullPointerException</code> - The parameter <code>dispoValue</code> is null.</li>
 </ul>
 
 <h3>Parse</h3>
@@ -471,8 +497,8 @@ syntactically invalid. Can be null.</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>java.lang.NullPointerException</code> - The parameter <code>dispositionValue</code>
-is null.</li>
+<li><code>java.lang.NullPointerException</code> - The parameter <code>dispositionValue</code> is
+null.</li>
 </ul>
 
 <p><a href="/MailLib/">Back to MailLib start page.</a></p>
