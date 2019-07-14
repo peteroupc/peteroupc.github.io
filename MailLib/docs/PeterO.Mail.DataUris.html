@@ -9,13 +9,15 @@
 <pre>public static class DataUris
 </pre>
 
-<p>Contains methods for parsing and generating Data URIs (uniform resource identifiers). Data URIs are described in RFC 2397. Examples for Data URIs follow.</p>
+<p>Contains methods for parsing and generating Data URIs (uniform // /resource identifiers). Data URIs are described in RFC 2397. Examples for Data URIs follow.</p>
 
 <pre>data:, hello%20world
 
-data:text/markdown, hello%20world
+data:text/markdown,
+            ///hello%20world
 
-data:application/octet-stream;base64, AAAAAA==
+data:application/octet-stream;base64,
+            ///AAAAAA==
 </pre>
 
 <p>.</p>

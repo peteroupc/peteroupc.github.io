@@ -17,7 +17,7 @@
 
 <p>This type is immutable, meaning its values can&#39;t be changed once it&#39; s created. To create a changeable media type object, use the MediaTypeBuilder class.</p>
 
-<p><b>Note:</b> According to RFC 2049, unrecognized subtypes of the top-level type  <code>multipart</code>  must be treated as  <code>multipart/mixed</code>  and unrecognized media types as the media type  <code>application/octet-stream</code>  .</p>
+<p><b>Note:</b> According to RFC 2049, unrecognized subtypes of the top-level type  <code>multipart</code>  must be treated as  <code>multipart/mixed</code>  and unrecognized media types as the media type  <code>application/octet-stream</code> .</p>
 
 <h3>Member Summary</h3>
 
@@ -50,28 +50,28 @@
 <pre>public static readonly PeterO.Mail.MediaType ApplicationOctetStream;
 </pre>
 
-<p>Specifies the media type &quot;application/octet-stream&quot;, used for arbitrary binary data.  <a id="MessageRfc822"></a></p>
+<p>Specifies the media type &quot;application/octet-stream&quot;, used for arbitrary binary data. <a id="MessageRfc822"></a></p>
 
 <h3>MessageRfc822</h3>
 
 <pre>public static readonly PeterO.Mail.MediaType MessageRfc822;
 </pre>
 
-<p>Specifies the media type &quot;message/rfc822&quot;, used for Internet mail messages.  <a id="TextPlainAscii"></a></p>
+<p>Specifies the media type &quot;message/rfc822&quot;, used for Internet mail messages. <a id="TextPlainAscii"></a></p>
 
 <h3>TextPlainAscii</h3>
 
 <pre>public static readonly PeterO.Mail.MediaType TextPlainAscii;
 </pre>
 
-<p>Specifies the media type &quot;text/plain&quot; and the &quot;charset&quot; parameter &quot;US-ASCII&quot;, used for plain text data.  <a id="TextPlainUtf8"></a></p>
+<p>Specifies the media type &quot;text/plain&quot; and the &quot;charset&quot; parameter &quot;US-ASCII&quot;, used for plain text data. <a id="TextPlainUtf8"></a></p>
 
 <h3>TextPlainUtf8</h3>
 
 <pre>public static readonly PeterO.Mail.MediaType TextPlainUtf8;
 </pre>
 
-<p>Specifies the media type &quot;text/plain&quot; and the &quot;charset&quot; parameter &quot;utf-8&quot;, used for plain text data that may contain characters outside the basic Latin range (U + 0000 to U + 007F).  <a id="IsMultipart"></a></p>
+<p>Specifies the media type &quot;text/plain&quot; and the &quot;charset&quot; parameter &quot;utf-8&quot;, used for plain text data that may contain characters outside the basic Latin range (U + 0000 to U + 007F). <a id="IsMultipart"></a></p>
 
 <h3>IsMultipart</h3>
 
@@ -80,7 +80,7 @@
 
 <p>Gets a value indicating whether this is a multipart media type.  <b>Returns:</b></p>
 
-<p><code>true</code>  If this is a multipart media type; otherwise, .  <code>false</code>  .</p>
+<p><code>true</code>  If this is a multipart media type; otherwise,.  <code>false</code> .</p>
 
 <p><a id="IsText"></a></p>
 
@@ -91,7 +91,7 @@
 
 <p>Gets a value indicating whether this is a text media type (&quot;text/*&quot;).  <b>Returns:</b></p>
 
-<p><code>true</code>  If this is a text media type; otherwise, .  <code>false</code>  .</p>
+<p><code>true</code>  If this is a text media type; otherwise,.  <code>false</code> .</p>
 
 <p><a id="Parameters"></a></p>
 
@@ -156,7 +156,7 @@ is not documented yet.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>Either  <code>true</code>  or  <code>false</code>  .</p>
+<p>Either  <code>true</code>  or  <code>false</code> .</p>
 
 <p><a id="GetCharset"></a></p>
 
@@ -197,7 +197,7 @@ is not documented yet.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>name</i>: Name of the parameter to get. The name is compared using a basic case-insensitive comparison. (Two strings are equal in such a comparison, if they match after converting the basic upper-case letters A to Z (U+0041 to U+005A) in both strings to lower case.).</li>
+<li><i>name</i>: Name of the parameter to get. The name is compared using a basic case-insensitive comparison. (Two strings are equal in such a comparison, if they match after converting the basic upper-case letters A to Z (U + 0041 to U + 005A) in both strings to lower case.).</li>
 </ul>
 
 <p><b>Return Value:</b></p>

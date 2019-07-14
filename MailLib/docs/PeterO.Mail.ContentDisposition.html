@@ -35,12 +35,12 @@
 <li><code><a href="#Attachment">public static readonly PeterO.Mail.ContentDisposition Attachment;</a></code> - The content disposition value &quot;attachment&quot; .</li>
 <li><code><a href="#DispositionType">DispositionType</a></code> - Gets a string containing this object&#39;s disposition type, such as &quot;inline&quot; or &quot;attachment&quot;.</li>
 <li><code><a href="#Equals_object">Equals(object)</a></code> - Determines whether this object and another object are equal.</li>
-<li><code><a href="#GetCreationDate">GetCreationDate()</a></code> - Gets the date and time extracted from this content disposition&#39;s &quot;creation-date&quot; parameter, which specifies the date of creation of a file (RFC 2183 sec.</li>
+<li><code><a href="#GetCreationDate">GetCreationDate()</a></code> - Not documented yet.</li>
 <li><code><a href="#GetFilename">GetFilename()</a></code> - Not documented yet.</li>
 <li><code><a href="#GetHashCode">GetHashCode()</a></code> -</li>
-<li><code><a href="#GetModificationDate">GetModificationDate()</a></code> - Gets the date and time extracted from this content disposition&#39;s &quot;modification-date&quot; parameter, which specifies the date of last modification of a file (RFC 2183 sec.</li>
+<li><code><a href="#GetModificationDate">GetModificationDate()</a></code> - Not documented yet.</li>
 <li><code><a href="#GetParameter_string">GetParameter(string)</a></code> - Gets a parameter from this disposition object.</li>
-<li><code><a href="#GetReadDate">GetReadDate()</a></code> -</li>
+<li><code><a href="#GetReadDate">GetReadDate()</a></code> - Not documented yet.</li>
 <li><code><a href="#Inline">public static readonly PeterO.Mail.ContentDisposition Inline;</a></code> - The content disposition value &quot;inline&quot; .</li>
 <li><code><a href="#IsAttachment">IsAttachment</a></code> - Gets a value not documented yet.</li>
 <li><code><a href="#IsInline">IsInline</a></code> - Gets a value indicating whether the disposition type is inline.</li>
@@ -59,14 +59,14 @@
 <pre>public static readonly PeterO.Mail.ContentDisposition Attachment;
 </pre>
 
-<p>The content disposition value &quot;attachment&quot; .  <a id="Inline"></a></p>
+<p>The content disposition value &quot;attachment&quot; . <a id="Inline"></a></p>
 
 <h3>Inline</h3>
 
 <pre>public static readonly PeterO.Mail.ContentDisposition Inline;
 </pre>
 
-<p>The content disposition value &quot;inline&quot; .  <a id="DispositionType"></a></p>
+<p>The content disposition value &quot;inline&quot; . <a id="DispositionType"></a></p>
 
 <h3>DispositionType</h3>
 
@@ -97,7 +97,7 @@
 
 <p>Gets a value indicating whether the disposition type is inline.  <b>Returns:</b></p>
 
-<p><code>true</code>  If the disposition type is inline; otherwise, .  <code>false</code>  .</p>
+<p><code>true</code>  If the disposition type is inline; otherwise,.  <code>false</code> .</p>
 
 <p><a id="Parameters"></a></p>
 
@@ -129,7 +129,7 @@ is an arbitrary object.</li>
 
 <p><b>Return Value:</b></p>
 
-<p><code>true</code>  if the objects are equal; otherwise,  <code>false</code>  .</p>
+<p><code>true</code>  if the objects are equal; otherwise,  <code>false</code> .</p>
 
 <p><a id="GetCreationDate"></a></p>
 
@@ -138,11 +138,11 @@ is an arbitrary object.</li>
 <pre>public int[] GetCreationDate();
 </pre>
 
-<p>Gets the date and time extracted from this content disposition&#39;s &quot;creation-date&quot; parameter, which specifies the date of creation of a file (RFC 2183 sec. 2.4). See <strong>M:PeterO.Mail.MailDateTime.ParseDateString(System.String,System.Boolean)</strong> for information on the format of this method&#39;s return value.</p>
+<p>Not documented yet.</p>
 
 <p><b>Return Value:</b></p>
 
-<p>The extracted date and time as an 8-element array, or  <code>null</code>  if the &quot;creation-date&quot; parameter doesn&#39;t exist, is an empty string, or is syntactically invalid, or if the parameter&#39;s year would overflow a 32-bit signed integer.</p>
+<p>An array of 32-bit unsigned integers.</p>
 
 <p><a id="GetFilename"></a></p>
 
@@ -175,11 +175,11 @@ is an arbitrary object.</li>
 <pre>public int[] GetModificationDate();
 </pre>
 
-<p>Gets the date and time extracted from this content disposition&#39;s &quot;modification-date&quot; parameter, which specifies the date of last modification of a file (RFC 2183 sec. 2.5). See <strong>M:PeterO.Mail.MailDateTime.ParseDateString(System.String,System.Boolean)</strong> for information on the format of this method&#39;s return value.</p>
+<p>Not documented yet.</p>
 
 <p><b>Return Value:</b></p>
 
-<p>The extracted date and time as an 8-element array, or  <code>null</code>  if the &quot;modification-date&quot; parameter doesn&#39;t exist, is an empty string, or is syntactically invalid, or if the parameter&#39;s year would overflow a 32-bit signed integer.</p>
+<p>An array of 32-bit unsigned integers.</p>
 
 <p><a id="GetParameter_string"></a></p>
 
@@ -194,7 +194,7 @@ is an arbitrary object.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>name</i>: The name of the parameter to get. The name will be matched using a basic case-insensitive comparison. (Two strings are equal in such a comparison, if they match after converting the basic upper-case letters A to Z (U+0041 to U+005A) in both strings to lower case.). Can&#39;t be null.</li>
+<li><i>name</i>: The name of the parameter to get. The name will be matched using a basic case-insensitive comparison. (Two strings are equal in such a comparison, if they match after converting the basic upper-case letters A to Z (U + 0041 to U + 005A) in both strings to lower case.). Can&#39;t be null.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -218,6 +218,8 @@ is empty.</p></li>
 
 <pre>public int[] GetReadDate();
 </pre>
+
+<p>Not documented yet.</p>
 
 <p><b>Return Value:</b></p>
 
@@ -243,7 +245,8 @@ is empty.</p></li>
 
 <p><code>&quot;dir1/dir2/file&quot; -&gt; &quot;dir1_dir2_file&quot;</code>  (Directory separators).</p>
 
-<p><b>Remarks:</b></p>
+<pre>&lt;b&gt;Remarks:&lt;/b&gt;
+</pre>
 
 <ul>
 <li><p>The exact file name conversion used by this method is not guaranteed to remain the same between versions of this library, with the exception that the return value will be in normalization form C, will not contain base + slash code points, will not be null, and will be an empty string only if  <i>str</i>
@@ -253,12 +256,12 @@ is null or empty.</p></li>
 
 <p>Although RFC 2047 encoded words appearing in both parameters are written out by some implementations, this practice is often discouraged (especially since the RFC itself says that encoded words &quot;MUST NOT appear within a &#39;quoted-string&#39;&quot;). Nevertheless, the MakeFilename method has a basis in the RFCs to decode RFC 2047 encoded words (and RFC 2231 encoding) in file names passed to this method.</p>
 
-<p>RFC 2046 sec. 4.5.1 (  <code>application/octet-stream</code>  subtype in Content-Type header field) cites an earlier RFC 1341, which &quot;defined the use of a &#39;NAME&#39; parameter which gave a <i> suggested </i> file name to be used if the data were written to a file&quot;. Also, RFC 2183 sec. 2.3 (  <code>filename</code>  parameter in Content-Disposition) confirms that the &quot; <i> suggested </i> filename&quot; in the  <code>filename</code>  parameter &quot;should be <i> used as a basis </i> for the actual filename, where possible&quot;, and that that file name should &quot;not [be] blindly use[d]&quot;. See also RFC 6266, section 4.3, which discusses the use of that parameter in Hypertext Transfer Protocol (HTTP).</p>
+<p>RFC 2046 sec. 4.5.1 (  <code>application/octet-stream</code>  subtype in Content-Type header field) cites an earlier RFC 1341, which &quot;defined the use of a &#39;NAME&#39; parameter which gave a <i>suggested</i> file name to be used if the data were written to a file&quot;. Also, RFC 2183 sec. 2.3 (  <code>filename</code>  parameter in Content-Disposition) confirms that the &quot; <i>suggested</i> filename&quot; in the  <code>filename</code>  parameter &quot;should be <i>used as a basis</i> for the actual filename, where possible&quot;, and that that file name should &quot;not [be] blindly use[d]&quot;. See also RFC 6266, section 4.3, which discusses the use of that parameter in Hypertext Transfer Protocol (HTTP).</p>
 
-<p>To the extent that the &quot;name&quot; parameter is not allowed in message bodies other than those with the media type &quot;application/octet-stream&quot; or treated as that media-type, this is a deviation of RFC 2045 and 2046 (see also RFC 2045 sec. 5, which says that &quot;[t]here are NO globally meaningful parameters that apply to all media types&quot;). (Some email implementations may still write out the &quot;name&quot; parameter, even for media types other than  <code>application/octet-stream</code>  and even though RFC 2046 has deprecated that parameter.)</p>
-
-<p>.</p></li>
+<p>To the extent that the &quot;name&quot; parameter is not allowed in message bodies other than those with the media type &quot;application/octet-stream&quot; or treated as that media-type, this is a deviation of RFC 2045 and 2046 (see also RFC 2045 sec. 5, which says that &quot;[t]here are NO globally meaningful parameters that apply to all media types&quot;). (Some email implementations may still write out the &quot;name&quot; parameter, even for media types other than  <code>application/octet-stream</code>  and even though RFC 2046 has deprecated that parameter.)</p></li>
 </ul>
+
+<p>.</p>
 
 <p><b>Parameters:</b></p>
 
