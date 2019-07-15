@@ -36,7 +36,8 @@
 
 <p>Initializes a new instance of the <a href="PeterO.Mail.NamedAddress.html">PeterO.Mail.NamedAddress</a> class.</p>
 
-<p><b>Parameters:</b></p>
+<pre> &lt;b&gt;Parameters:&lt;/b&gt;
+</pre>
 
 <ul>
 <li><i>address</i>: The parameter  <i>address</i>
@@ -64,7 +65,8 @@ Address has an invalid syntax.; Address has an invalid syntax.</p></li>
 
 <p>Initializes a new instance of the <a href="PeterO.Mail.NamedAddress.html">PeterO.Mail.NamedAddress</a> class.</p>
 
-<p><b>Parameters:</b></p>
+<pre> &lt;b&gt;Parameters:&lt;/b&gt;
+</pre>
 
 <ul>
 <li><p><i>displayName</i>: The parameter  <i>displayName</i>
@@ -92,7 +94,8 @@ is null.</li>
 
 <p>Initializes a new instance of the <a href="PeterO.Mail.NamedAddress.html">PeterO.Mail.NamedAddress</a> class.</p>
 
-<p><b>Parameters:</b></p>
+<pre> &lt;b&gt;Parameters:&lt;/b&gt;
+</pre>
 
 <ul>
 <li><p><i>displayName</i>: The parameter  <i>displayName</i>
@@ -121,7 +124,8 @@ is null.</li>
 
 <p>Initializes a new instance of the <a href="PeterO.Mail.NamedAddress.html">PeterO.Mail.NamedAddress</a> class.</p>
 
-<p><b>Parameters:</b></p>
+<pre>  &lt;b&gt;Parameters:&lt;/b&gt;
+</pre>
 
 <ul>
 <li><p><i>displayName</i>: The parameter  <i>displayName</i>
@@ -152,7 +156,8 @@ is null.</li>
 
 <p>Initializes a new instance of the <a href="PeterO.Mail.NamedAddress.html">PeterO.Mail.NamedAddress</a> class.</p>
 
-<p><b>Parameters:</b></p>
+<pre>  &lt;b&gt;Parameters:&lt;/b&gt;
+</pre>
 
 <ul>
 <li><p><i>groupName</i>: The parameter  <i>groupName</i>
@@ -179,7 +184,9 @@ GroupName is empty.; A mailbox in the list is a group.</p></li>
 <pre>public PeterO.Mail.Address Address { get; }
 </pre>
 
-<p>Gets the email address associated with this object.  <b>Returns:</b></p>
+<p>Gets the email address associated with this object.</p>
+
+<p><b>Returns:</b></p>
 
 <p>The email address associated with this object. This value is null if this object represents a group of addresses instead.</p>
 
@@ -190,7 +197,9 @@ GroupName is empty.; A mailbox in the list is a group.</p></li>
 <pre>public string DisplayName { get; }
 </pre>
 
-<p>Gets the display name for this email address. Returns null if the display name is absent.  <b>Returns:</b></p>
+<p>Gets the display name for this email address. Returns null if the display name is absent.</p>
+
+<p><b>Returns:</b></p>
 
 <p>The display name for this email address.</p>
 
@@ -201,7 +210,9 @@ GroupName is empty.; A mailbox in the list is a group.</p></li>
 <pre>public System.Collections.Generic.IList GroupAddresses { get; }
 </pre>
 
-<p>Gets a read-only list of addresses that make up the group, if this object represents a group, or an empty list otherwise.  <b>Returns:</b></p>
+<p>Gets a read-only list of addresses that make up the group, if this object represents a group, or an empty list otherwise.</p>
+
+<p><b>Returns:</b></p>
 
 <p>A list of addresses that make up the group, if this object represents a group, or an empty list otherwise.</p>
 
@@ -212,9 +223,15 @@ GroupName is empty.; A mailbox in the list is a group.</p></li>
 <pre>public bool IsGroup { get; }
 </pre>
 
-<p>Gets a value indicating whether this represents a group of addresses rather than a single address.  <b>Returns:</b></p>
+<p>Gets a value indicating whether this represents a group of addresses rather than a single address.</p>
 
-<p><code>true</code>  If this represents a group of addresses; otherwise,.  <code>false</code> .</p>
+<p><b>Returns:</b></p>
+
+<p><code>
+         true
+</code>  If this represents a group of addresses; otherwise,  <code>
+         false
+</code>  .</p>
 
 <p><a id="Name"></a></p>
 
@@ -223,7 +240,9 @@ GroupName is empty.; A mailbox in the list is a group.</p></li>
 <pre>public string Name { get; }
 </pre>
 
-<p>Gets the display name for this email address, or the email address&#39;s value if the display name is null. Returns an empty string if the address and display name are null.  <b>Returns:</b></p>
+<p>Gets the display name for this email address, or the email address&#39;s value if the display name is null. Returns an empty string if the address and display name are null.</p>
+
+<p><b>Returns:</b></p>
 
 <p>The name for this email address.</p>
 
@@ -240,12 +259,16 @@ GroupName is empty.; A mailbox in the list is a group.</p></li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>na</i>: A named address object to compare with this one. Can be null.</li>
+<li><i>na</i>:  A named address object to compare with this one. Can be null.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p>Either  <code>true</code>  or  <code>false</code> .</p>
+<p>Either  <code>
+         true
+</code>  or  <code>
+         false
+</code>  .</p>
 
 <p><a id="Equals_object"></a></p>
 
@@ -260,13 +283,17 @@ GroupName is empty.; A mailbox in the list is a group.</p></li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>obj</i>: The parameter  <i>obj</i>
+<li><i>obj</i>:  The parameter  <i>obj</i>
 is an arbitrary object.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p><code>true</code>  if this object and another object are equal; otherwise,  <code>false</code> .</p>
+<p><code>
+         true
+</code>  if this object and another object are equal; otherwise,  <code>
+         false
+</code>  .</p>
 
 <p><a id="GetHashCode"></a></p>
 
@@ -294,7 +321,7 @@ is an arbitrary object.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>addressValue</i>: A comma-separate list of addresses in the form of a text string.</li>
+<li><i>addressValue</i>:  A comma-separate list of addresses in the form of a text string.</li>
 </ul>
 
 <p><b>Return Value:</b></p>

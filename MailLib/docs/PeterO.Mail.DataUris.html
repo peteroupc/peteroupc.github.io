@@ -9,15 +9,13 @@
 <pre>public static class DataUris
 </pre>
 
-<p>Contains methods for parsing and generating Data URIs (uniform // /resource identifiers). Data URIs are described in RFC 2397. Examples for Data URIs follow.</p>
+<p>Contains methods for parsing and generating Data URIs (uniform resource identifiers). Data URIs are described in RFC 2397. Examples for Data URIs follow.</p>
 
-<pre>data:, hello%20world
+<pre>         data:, hello%20world
 
-data:text/markdown,
-            ///hello%20world
+         data:text/markdown, hello%20world
 
-data:application/octet-stream;base64,
-            ///AAAAAA==
+         data:application/octet-stream;base64, AAAAAA==
 </pre>
 
 <p>.</p>
@@ -26,7 +24,9 @@ data:application/octet-stream;base64,
 
 <ul>
 <li><code><a href="#DataUriBytes_string">DataUriBytes(string)</a></code> - Extracts the data from a Data URI (uniform resource identifier) in the form of a byte array.</li>
+<li><code><a href="#DataUriBytes_System_Uri">DataUriBytes(System.Uri)</a></code> - Not documented yet.</li>
 <li><code><a href="#DataUriMediaType_string">DataUriMediaType(string)</a></code> - Extracts the media type from a Data URI (uniform resource identifier).</li>
+<li><code><a href="#DataUriMediaType_System_Uri">DataUriMediaType(System.Uri)</a></code> - Not documented yet.</li>
 <li><code><a href="#MakeDataUri_byte_PeterO_Mail_MediaType">MakeDataUri(byte[], PeterO.Mail.MediaType)</a></code> - Encodes data with the given media type in a Data URI (uniform resource identifier).</li>
 <li><code><a href="#MakeDataUri_string">MakeDataUri(string)</a></code> - Encodes text as a Data URI (uniform resource identifier).</li>
 </ul>
@@ -44,7 +44,7 @@ data:application/octet-stream;base64,
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>uri</i>: The parameter  <i>uri</i>
+<li><i>uri</i>:  The parameter  <i>uri</i>
 is a text string.</li>
 </ul>
 
@@ -52,6 +52,27 @@ is a text string.</li>
 
 <p>The data as a byte array. Returns null if  <i>uri</i>
  is null, is syntactically invalid, or is not a data URI.</p>
+
+<p><a id="DataUriBytes_System_Uri"></a></p>
+
+<h3>DataUriBytes</h3>
+
+<pre>public static byte[] DataUriBytes(
+    System.Uri uri);
+</pre>
+
+<p>Not documented yet.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>uri</i>:  The parameter  <i>uri</i>
+is not documented yet.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>A byte array.</p>
 
 <p><a id="DataUriMediaType_string"></a></p>
 
@@ -66,7 +87,7 @@ is a text string.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>uri</i>: The parameter  <i>uri</i>
+<li><i>uri</i>:  The parameter  <i>uri</i>
 is a text string.</li>
 </ul>
 
@@ -74,6 +95,27 @@ is a text string.</li>
 
 <p>The media type. Returns null if  <i>uri</i>
  is null, is syntactically invalid, or is not a Data URI.</p>
+
+<p><a id="DataUriMediaType_System_Uri"></a></p>
+
+<h3>DataUriMediaType</h3>
+
+<pre>public static PeterO.Mail.MediaType DataUriMediaType(
+    System.Uri uri);
+</pre>
+
+<p>Not documented yet.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>uri</i>:  The parameter  <i>uri</i>
+is not documented yet.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>A MediaType object.</p>
 
 <p><a id="MakeDataUri_byte_PeterO_Mail_MediaType"></a></p>
 
@@ -89,8 +131,8 @@ is a text string.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>bytes</i>: A byte array containing the data to encode in a Data URI.</p></li>
-<li><p><i>mediaType</i>: A media type to assign to the data.</p></li>
+<li><p><i>bytes</i>:  A byte array containing the data to encode in a Data URI.</p></li>
+<li><p><i>mediaType</i>:  A media type to assign to the data.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -119,7 +161,7 @@ is null.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>textString</i>: A text string to encode as a data URI.</li>
+<li><i>textString</i>:  A text string to encode as a data URI.</li>
 </ul>
 
 <p><b>Return Value:</b></p>

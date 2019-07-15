@@ -34,7 +34,8 @@
 
 <p>Initializes a new instance of the <a href="PeterO.Numbers.ETrapException.html">PeterO.Numbers.ETrapException</a>.</p>
 
-<p><b>Parameters:</b></p>
+<pre> &lt;b&gt;Parameters:&lt;/b&gt;
+</pre>
 
 <ul>
 <li><p><i>flag</i>: A 32-bit signed integer.</p></li>
@@ -49,7 +50,9 @@
 <pre>public PeterO.Numbers.EContext Context { get; }
 </pre>
 
-<p>Gets the arithmetic context used during the operation that triggered the trap. May be null.  <b>Returns:</b></p>
+<p>Gets the arithmetic context used during the operation that triggered the trap. May be null.</p>
+
+<p><b>Returns:</b></p>
 
 <p>The arithmetic context used during the operation that triggered the trap. May be null.</p>
 
@@ -60,7 +63,9 @@
 <pre>public int Error { get; }
 </pre>
 
-<p>Gets the flag that specifies the kind of error (EContext.FlagXXX). This will only be one flag, such as  <code>FlagInexact</code>  or FlagSubnormal.  <b>Returns:</b></p>
+<p>Gets the flag that specifies the kind of error (EContext.FlagXXX). This will only be one flag, such as  <code>FlagInexact</code>  or FlagSubnormal.</p>
+
+<p><b>Returns:</b></p>
 
 <p>The flag that specifies the kind of error (EContext.FlagXXX). This will only be one flag, such as.  <code>FlagInexact</code>  or FlagSubnormal.</p>
 
@@ -71,7 +76,9 @@
 <pre>public object Result { get; }
 </pre>
 
-<p>Gets the defined result of the operation that caused the trap.  <b>Returns:</b></p>
+<p>Gets the defined result of the operation that caused the trap.</p>
+
+<p><b>Returns:</b></p>
 
 <p>The defined result of the operation that caused the trap.</p>
 

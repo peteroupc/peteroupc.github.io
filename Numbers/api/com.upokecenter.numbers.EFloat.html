@@ -699,7 +699,7 @@ otherwise, <code>false</code>.</li>
 
 <ul>
 <li><code>true</code> if this object&#39;s value equals 0; otherwise, <code>
-false</code>. <code>true</code> if this object&#39; s value equals 0; otherwise,.
+false</code>. <code>true</code> if this object&#39; s value equals 0; otherwise,
 <code>false</code>.</li>
 </ul>
 
@@ -988,6 +988,10 @@ floating-point number.</li>
 <li><p><code>java.lang.IllegalArgumentException</code> - Either <code>offset</code> or <code>length</code> is less
 than 0 or greater than <code>str</code> &#39;s length, or <code>str</code> &#39; s
 length minus <code>offset</code> is less than <code>length</code>.</p></li>
+<li><p><code>java.lang.IllegalArgumentException</code> - Either &quot;offset&quot; or &quot;length&quot; is less than 0 or
+greater than &quot;str&quot;&#39;s length, or &quot;str&quot;&#39;s length minus &quot;offset&quot; is
+less than &quot;length&quot;.</p></li>
+<li><p><code>java.lang.NullPointerException</code> - The parameter <code>str</code> is null.</p></li>
 </ul>
 
 <h3>FromString</h3>
@@ -1074,6 +1078,10 @@ str</code> (but not more than <code>str</code> &#39;s length).</p></li>
 <li><p><code>java.lang.IllegalArgumentException</code> - Either &quot;offset&quot; or &quot;length&quot; is less than 0 or
 greater than &quot;str&quot;&#39;s length, or &quot;str&quot;&#39;s length minus &quot;offset&quot; is
 less than &quot;length&quot;.</p></li>
+<li><p><code>java.lang.IllegalArgumentException</code> - Either &quot;offset&quot; or &quot;length&quot; is less than 0 or
+greater than &quot;str&quot;&#39;s length, or &quot;str&quot;&#39;s length minus &quot;offset&quot; is
+less than &quot;length&quot;.</p></li>
+<li><p><code>java.lang.NullPointerException</code> - The parameter <code>str</code> is null.</p></li>
 </ul>
 
 <h3>Max</h3>
@@ -1336,13 +1344,13 @@ quiet NaN if this value is signaling NaN.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>intValue</code> - Not documented yet.</li>
+<li><code>intValue</code> - The parameter <code>intValue</code> is not documented yet.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>An EFloat object.</li>
+<li>An arbitrary-precision binary floating-point number.</li>
 </ul>
 
 <h3>Subtract</h3>
@@ -1371,7 +1379,7 @@ quiet NaN if this value is signaling NaN.</li>
 </pre>
 
 <p>Multiplies this instance by the value of an arbitrary-precision // /integer
- object.<p> </p><pre>EInteger result =
+ object.<p> </p><pre>EInteger result = // /
   EInteger.FromString(&quot;5&quot;).Multiply(200);</pre> .</p>
 
 <p><strong>Parameters:</strong></p>
@@ -2989,7 +2997,7 @@ exponent are both 0.</li>
  point. The following code example returns a fixed-point number with
  up to 20 digits before and exactly 5 digits after the radix
  point:</p> <pre> // After performing arithmetic operations, adjust
- // the number to 5 // digits after the radix point number =
+ // the number to 5 // / // digits after the radix point number =
  number.Quantize(EInteger.FromInt32(-5), // five digits after the
  radix point EContext.ForPrecision(25) // 25-digit precision);</pre>
  <p>A // /fixed-point binary arithmetic in which no digits come after
@@ -2999,15 +3007,15 @@ exponent are both 0.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>desiredExponent</code> - The desired exponent for the result. The exponent is
-the number of fractional digits in the result, expressed as a
+<li><p><code>desiredExponent</code> - The desired exponent for the // / result. The exponent
+is the number of fractional digits in the result, expressed as a
 negative number. Can also be positive, which eliminates lower-order
 places from the number. For example, -3 means round to the
 thousandth (10^-3, 0.0001), and 3 means round to the thousand (10^3,
 1000). A value of 0 rounds the number to an integer.</p></li>
-<li><p><code>ctx</code> - An arithmetic context to control precision and rounding of the
-result. If <code>HasFlags</code> of the context is true, will also store
-the flags resulting // /from the operation (the flags are in
+<li><p><code>ctx</code> - An arithmetic context to control precision and // / rounding of
+the result. If <code>HasFlags</code> of the context is true, will also
+store the flags resulting // /from the operation (the flags are in
 addition to the pre-existing flags). Can be null, in which case the
 default rounding mode is HalfEven.</p></li>
 </ul>
@@ -3015,7 +3023,7 @@ default rounding mode is HalfEven.</p></li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A binary float with the same value as this object but with the
+<li>A binary float with the same value as this object but with // / the
 exponent changed. Signals FlagInvalid and returns not-a-number (NaN)
 if this object is infinity, if the rounded result can&#39;t fit the
 given precision, or if the context defines an exponent range and the
@@ -3041,7 +3049,7 @@ given exponent is outside that range.</li>
  point:</p> <pre> // After performing arithmetic operations, adjust
  // the number to 5 digits after the radix point number =
  number.Quantize(-5, // five digits after the radix point
- EContext.ForPrecision(25) // 25-digit precision);</pre> <p>A
+ EContext.ForPrecision(25) // 25-digit // / precision);</pre> <p>A
  fixed-point binary arithmetic in which no digits // /come after the
   radix point (a desired exponent of 0) is considered an &quot;integer
   arithmetic&quot;.</p></p>
@@ -3049,15 +3057,15 @@ given exponent is outside that range.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>desiredExponentInt</code> - The desired exponent for the result. The exponent
-is the number of fractional digits in the result, expressed as a
-negative number. Can also be positive, which eliminates lower-order
-places from the number. For example, -3 means round to the
-thousandth (10^-3, 0.0001), and 3 means round to the thousand (10^3,
-1000). A value of 0 rounds the number to an integer.</p></li>
-<li><p><code>ctx</code> - An arithmetic context to control precision and rounding of the
-result. If <code>HasFlags</code> of the context is true, will also store
-the flags resulting // /from the operation (the flags are in
+<li><p><code>desiredExponentInt</code> - The desired exponent for // / the result. The
+exponent is the number of fractional digits in the result, expressed
+as a negative number. Can also be positive, which eliminates
+lower-order places from the number. For example, -3 means round to
+the thousandth (10^-3, 0.0001), and 3 means round to the thousand
+(10^3, 1000). A value of 0 rounds the number to an integer.</p></li>
+<li><p><code>ctx</code> - An arithmetic context to control precision and // / rounding of
+the result. If <code>HasFlags</code> of the context is true, will also
+store the flags resulting // /from the operation (the flags are in
 addition to the pre-existing flags). Can be null, in which case the
 default rounding mode is HalfEven.</p></li>
 </ul>
@@ -3065,7 +3073,7 @@ default rounding mode is HalfEven.</p></li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A binary float with the same value as this object but with the
+<li>A binary float with the same value as this object but with // / the
 exponent changed. Signals FlagInvalid and returns not-a-number (NaN)
 if this object is infinity, if the rounded result can&#39;t fit the
 given precision, or if the context defines an exponent range and the

@@ -47,12 +47,14 @@
     int index);
 </pre>
 
-<p>Gets the Unicode code point at the given index of the string. The following example shows how to iterate a text string code point by code point.</p>
+<p>Gets the Unicode code point at the given index of the string.</p>
 
-<pre>for(var i=0;i&lt;str.Length;i++) { int codePoint =
-        DataUtilities.CodePointAt(str,i);
-        Console.WriteLine(&quot;codePoint:&quot;+codePoint); if(codePoint &gt;= 0x10000) {
-        i++; /* Supplementary code point */ } }
+<p>The following example shows how to iterate a text string code point by code point.</p>
+
+<pre>for (var i = 0;i&lt;str.Length; ++i) { int codePoint =
+            DataUtilities.CodePointAt(str, i);
+            Console.WriteLine(&quot;codePoint:&quot;+codePoint); if (codePoint &gt;= 0x10000)
+            { i++; /* Supplementary code point */ } }
 </pre>
 
 <p>.</p>
@@ -88,12 +90,14 @@ is null.</li>
     int surrogateBehavior);
 </pre>
 
-<p>Gets the Unicode code point at the given index of the string. The following example shows how to iterate a text string code point by code point, terminating the loop when an unpaired surrogate is found.</p>
+<p>Gets the Unicode code point at the given index of the string.</p>
 
-<pre>for(var i=0;i&lt;str.Length;i++) { int codePoint =
-        DataUtilities.CodePointAt(str, i, 2); if(codePoint &lt; 0) { break; /*
-        Unpaired surrogate */ } Console.WriteLine(&quot;codePoint:&quot;+codePoint);
-        if(codePoint &gt;= 0x10000) { i++; /* Supplementary code point */ } }
+<p>The following example shows how to iterate a text string code point by code point, terminating the loop when an unpaired surrogate is found.</p>
+
+<pre>for (var i = 0;i&lt;str.Length; ++i) { int codePoint =
+            DataUtilities.CodePointAt(str, i, 2); if (codePoint &lt; 0) { break; /*
+            Unpaired surrogate */ } Console.WriteLine(&quot;codePoint:&quot;+codePoint); if
+            (codePoint &gt;= 0x10000) { i++; /* Supplementary code point */ } }
 </pre>
 
 <p>.</p>
@@ -250,7 +254,7 @@ is null.</li>
 
 <p>Encodes a string in UTF-8 as a byte array. This method does not insert a byte-order mark (U+FEFF) at the beginning of the encoded byte array.</p>
 
-<p>REMARK: It is not recommended to use  <code>Encoding.UTF8.GetBytes</code>  in .NET, or the  <code>getBytes()</code>  method in Java to do this. For instance,  <code>getBytes()</code>  encodes text strings in a default (so not fixed) character encoding, which can be undesirable.</p>
+<p>REMARK: It is not recommended to use  <code>Encoding.UTF8.GetBytes</code>  in.NET, or the  <code>getBytes()</code>  method in Java to do this. For instance,  <code>getBytes()</code>  encodes text strings in a default (so not fixed) character encoding, which can be undesirable.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -287,7 +291,7 @@ is false, or an internal error occurred.</p></li>
 
 <p>Encodes a string in UTF-8 as a byte array. This method does not insert a byte-order mark (U+FEFF) at the beginning of the encoded byte array.</p>
 
-<p>REMARK: It is not recommended to use  <code>Encoding.UTF8.GetBytes</code>  in .NET, or the  <code>getBytes()</code>  method in Java to do this. For instance,  <code>getBytes()</code>  encodes text strings in a default (so not fixed) character encoding, which can be undesirable.</p>
+<p>REMARK: It is not recommended to use  <code>Encoding.UTF8.GetBytes</code>  in.NET, or the  <code>getBytes()</code>  method in Java to do this. For instance,  <code>getBytes()</code>  encodes text strings in a default (so not fixed) character encoding, which can be undesirable.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -624,14 +628,15 @@ is a text string.</li>
 
 <p>Writes a portion of a string in UTF-8 encoding to a data stream.</p>
 
-<p><b>Parameters:</b></p>
+<pre>         &lt;b&gt;Parameters:&lt;/b&gt;
+</pre>
 
 <ul>
-<li><p><i>str</i>: A string to write.</p></li>
-<li><p><i>offset</i>: The zero-based index where the string portion to write begins.</p></li>
-<li><p><i>length</i>: The length of the string portion to write.</p></li>
-<li><p><i>stream</i>: A writable data stream.</p></li>
-<li><p><i>replace</i>: If true, replaces unpaired surrogate code points with the replacement character (U+FFFD). If false, stops processing when an unpaired surrogate code point is seen.</p></li>
+<li><p><i>str</i>:  A string to write.</p></li>
+<li><p><i>offset</i>:  The zero-based index where the string portion to write begins.</p></li>
+<li><p><i>length</i>:  The length of the string portion to write.</p></li>
+<li><p><i>stream</i>:  A writable data stream.</p></li>
+<li><p><i>replace</i>:  If true, replaces unpaired surrogate code points with the replacement character (U+FFFD). If false, stops processing when an unpaired surrogate code point is seen.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -654,6 +659,11 @@ plus  <i>length</i>
 is greater than the string&#39;s length.</p></li>
 <li><p>System.IO.IOException:
 An I/O error occurred.</p></li>
+<li><p>System.ArgumentException:
+Either &quot;offset&quot; or &quot;length&quot; is less than 0 or greater than &quot;str&quot;&#39;s length, or &quot;str&quot;&#39;s length minus &quot;offset&quot; is less than &quot;length&quot;.</p></li>
+<li><p>System.ArgumentNullException:
+The parameter  <i>str</i>
+is null.</p></li>
 </ul>
 
 <p><a id="WriteUtf8_string_int_int_System_IO_Stream_bool_bool"></a></p>
@@ -671,15 +681,16 @@ An I/O error occurred.</p></li>
 
 <p>Writes a portion of a string in UTF-8 encoding to a data stream.</p>
 
-<p><b>Parameters:</b></p>
+<pre>          &lt;b&gt;Parameters:&lt;/b&gt;
+</pre>
 
 <ul>
-<li><p><i>str</i>: A string to write.</p></li>
-<li><p><i>offset</i>: The zero-based index where the string portion to write begins.</p></li>
-<li><p><i>length</i>: The length of the string portion to write.</p></li>
-<li><p><i>stream</i>: A writable data stream.</p></li>
-<li><p><i>replace</i>: If true, replaces unpaired surrogate code points with the replacement character (U+FFFD). If false, stops processing when an unpaired surrogate code point is seen.</p></li>
-<li><p><i>lenientLineBreaks</i>: If true, replaces carriage return (CR) not followed by line feed (LF) and LF not preceded by CR with CR-LF pairs.</p></li>
+<li><p><i>str</i>:  A string to write.</p></li>
+<li><p><i>offset</i>:  The zero-based index where the string portion to write begins.</p></li>
+<li><p><i>length</i>:  The length of the string portion to write.</p></li>
+<li><p><i>stream</i>:  A writable data stream.</p></li>
+<li><p><i>replace</i>:  If true, replaces unpaired surrogate code points with the replacement character (U+FFFD). If false, stops processing when an unpaired surrogate code point is seen.</p></li>
+<li><p><i>lenientLineBreaks</i>:  If true, replaces carriage return (CR) not followed by line feed (LF) and LF not preceded by CR with CR-LF pairs.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -702,6 +713,11 @@ plus  <i>length</i>
 is greater than the string&#39;s length.</p></li>
 <li><p>System.IO.IOException:
 An I/O error occurred.</p></li>
+<li><p>System.ArgumentException:
+Either &quot;offset&quot; or &quot;length&quot; is less than 0 or greater than &quot;str&quot;&#39;s length, or &quot;str&quot;&#39;s length minus &quot;offset&quot; is less than &quot;length&quot;.</p></li>
+<li><p>System.ArgumentNullException:
+The parameter  <i>str</i>
+is null.</p></li>
 </ul>
 
 <p><a id="WriteUtf8_string_System_IO_Stream_bool"></a></p>

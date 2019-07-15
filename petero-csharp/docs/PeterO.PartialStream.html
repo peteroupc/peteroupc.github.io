@@ -40,7 +40,8 @@
 
 <p>Initializes a new instance of the <a href="PeterO.PartialStream.html">PeterO.PartialStream</a> class.</p>
 
-<p><b>Parameters:</b></p>
+<pre> &lt;b&gt;Parameters:&lt;/b&gt;
+</pre>
 
 <ul>
 <li><p><i>stream</i>: The parameter  <i>stream</i>
@@ -64,7 +65,8 @@ is not documented yet.</p></li>
 
 <p>Initializes a new instance of the <a href="PeterO.PartialStream.html">PeterO.PartialStream</a> class.</p>
 
-<p><b>Parameters:</b></p>
+<pre>    &lt;b&gt;Parameters:&lt;/b&gt;
+</pre>
 
 <ul>
 <li><p><i>stream</i>: The parameter  <i>stream</i>
@@ -96,9 +98,15 @@ is null.</p></li>
 <pre>public override bool CanRead { get; }
 </pre>
 
-<p>Gets a value indicating whether the underlying stream supports reading.  <b>Returns:</b></p>
+<p>Gets a value indicating whether the underlying stream supports reading.</p>
 
-<p><code>true</code>  If the underlying stream supports reading; otherwise, .  <code>false</code>  .</p>
+<p><b>Returns:</b></p>
+
+<p><code>
+        true
+</code>  If the underlying stream supports reading; otherwise,  <code>
+        false
+</code>  .</p>
 
 <p><a id="CanSeek"></a></p>
 
@@ -107,9 +115,15 @@ is null.</p></li>
 <pre>public override bool CanSeek { get; }
 </pre>
 
-<p>Gets a value indicating whether the underlying stream supports seeking.  <b>Returns:</b></p>
+<p>Gets a value indicating whether the underlying stream supports seeking.</p>
 
-<p><code>true</code>  If the underlying stream supports seeking; otherwise, .  <code>false</code>  .</p>
+<p><b>Returns:</b></p>
+
+<p><code>
+        true
+</code>  If the underlying stream supports seeking; otherwise,  <code>
+        false
+</code>  .</p>
 
 <p><a id="CanWrite"></a></p>
 
@@ -118,9 +132,15 @@ is null.</p></li>
 <pre>public override bool CanWrite { get; }
 </pre>
 
-<p>Gets a value indicating whether the underlying stream supports writing.  <b>Returns:</b></p>
+<p>Gets a value indicating whether the underlying stream supports writing.</p>
 
-<p><code>true</code>  If the underlying stream supports writing; otherwise, .  <code>false</code>  .</p>
+<p><b>Returns:</b></p>
+
+<p><code>
+        true
+</code>  If the underlying stream supports writing; otherwise,  <code>
+        false
+</code>  .</p>
 
 <p><a id="Length"></a></p>
 
@@ -129,7 +149,9 @@ is null.</p></li>
 <pre>public override long Length { get; }
 </pre>
 
-<p>Gets the partial stream&#39;s length in bytes.  <b>Returns:</b></p>
+<p>Gets the partial stream&#39;s length in bytes.</p>
+
+<p><b>Returns:</b></p>
 
 <p>The partial stream&#39;s length in bytes.</p>
 
@@ -140,7 +162,9 @@ is null.</p></li>
 <pre>public override long Position { get; set; }
 </pre>
 
-<p>Gets the partial stream&#39;s current byte position.  <b>Returns:</b></p>
+<p>Gets the partial stream&#39;s current byte position.</p>
+
+<p><b>Returns:</b></p>
 
 <p>The partial stream&#39;s current byte position.</p>
 
@@ -168,11 +192,11 @@ is null.</p></li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>buffer</i>: The parameter  <i>buffer</i>
+<li><p><i>buffer</i>:  The parameter  <i>buffer</i>
 is not documented yet.</p></li>
-<li><p><i>offset</i>: A zero-based index showing where the desired portion of  <i>buffer</i>
+<li><p><i>offset</i>:  A zero-based index showing where the desired portion of  <i>buffer</i>
 begins.</p></li>
-<li><p><i>count</i>: The number of elements in the desired portion of  <i>buffer</i>
+<li><p><i>count</i>:  The number of elements in the desired portion of  <i>buffer</i>
 (but not more than  <i>buffer</i>
 &#39;s length).</p></li>
 </ul>
@@ -213,9 +237,9 @@ Either &quot;offset&quot; or &quot;count&quot; is less than 0 or greater than &q
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>offset</i>: The parameter  <i>offset</i>
+<li><p><i>offset</i>:  The parameter  <i>offset</i>
 is not documented yet.</p></li>
-<li><p><i>origin</i>: The parameter  <i>origin</i>
+<li><p><i>origin</i>:  The parameter  <i>origin</i>
 is not documented yet.</p></li>
 </ul>
 
@@ -236,7 +260,7 @@ is not documented yet.</p></li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>value</i>: The parameter  <i>value</i>
+<li><i>value</i>:  The parameter  <i>value</i>
 is not documented yet.</li>
 </ul>
 
@@ -255,11 +279,11 @@ is not documented yet.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>buffer</i>: The parameter  <i>buffer</i>
+<li><p><i>buffer</i>:  The parameter  <i>buffer</i>
 is not documented yet.</p></li>
-<li><p><i>offset</i>: A zero-based index showing where the desired portion of  <i>buffer</i>
+<li><p><i>offset</i>:  A zero-based index showing where the desired portion of  <i>buffer</i>
 begins.</p></li>
-<li><p><i>count</i>: The number of elements in the desired portion of  <i>buffer</i>
+<li><p><i>count</i>:  The number of elements in the desired portion of  <i>buffer</i>
 (but not more than  <i>buffer</i>
 &#39;s length).</p></li>
 </ul>

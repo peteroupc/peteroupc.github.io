@@ -46,7 +46,8 @@
 
 <p>Initializes a new instance of the <a href="PeterO.Cbor.JSONOptions.html">PeterO.Cbor.JSONOptions</a> class with the given values for the options.</p>
 
-<p><b>Parameters:</b></p>
+<pre>&lt;b&gt;Parameters:&lt;/b&gt;
+</pre>
 
 <ul>
 <li><p><i>base64Padding</i>: Whether padding is included when writing data in base64url or traditional base64 format to JSON.</p></li>
@@ -69,7 +70,9 @@
 <pre>public static readonly PeterO.Cbor.JSONOptions Default;
 </pre>
 
-<p>The default options for converting CBOR objects to JSON.  <a id="Base64Padding"></a></p>
+<p>The default options for converting CBOR objects to JSON.</p>
+
+<p><a id="Base64Padding"></a></p>
 
 <h3>Base64Padding</h3>
 
@@ -78,7 +81,9 @@
 
 <p><b>Deprecated.</b> This option now has no effect. This library now includes necessary padding when writing traditional base64 to JSON and includes no padding when writing base64url to JSON, in accordance with the revision of the CBOR specification.</p>
 
-<p>Gets a value indicating whether the Base64Padding property is true. This property has no effect; in previous versions, this property meant that padding was written out when writing base64url or traditional base64 to JSON.  <b>Returns:</b></p>
+<p>Gets a value indicating whether the Base64Padding property is true. This property has no effect; in previous versions, this property meant that padding was written out when writing base64url or traditional base64 to JSON.</p>
+
+<p><b>Returns:</b></p>
 
 <p>A value indicating whether the Base64Padding property is true.</p>
 
@@ -89,7 +94,9 @@
 <pre>public bool ReplaceSurrogates { get; }
 </pre>
 
-<p>Gets a value indicating whether surrogate code points not part of a surrogate pair (which consists of two consecutive  <code>char</code>  s forming one Unicode code point) are each replaced with a replacement character (U+FFFD). The default is false; an exception is thrown when such code points are encountered.  <b>Returns:</b></p>
+<p>Gets a value indicating whether surrogate code points not part of a surrogate pair (which consists of two consecutive  <code>char</code>  s forming one Unicode code point) are each replaced with a replacement character (U+FFFD). The default is false; an exception is thrown when such code points are encountered.</p>
+
+<p><b>Returns:</b></p>
 
 <p>True, if surrogate code points not part of a surrogate pair are each replaced with a replacement character, or false if an exception is thrown when such code points are encountered.</p>
 
