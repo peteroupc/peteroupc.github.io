@@ -11,9 +11,9 @@
 
 <p>Contains methods for parsing and generating Data URIs (uniform // /resource
  identifiers). Data URIs are described in RFC 2397. Examples for Data
- URIs follow. <pre>data:, hello%20world</pre>
- <pre>data:text/markdown, hello%20world</pre>
- <pre>data:application/octet-stream;base64, AAAAAA==</pre> .</p>
+ URIs follow. <pre> data:, hello%20world </pre> <pre>
+ data:text/markdown, hello%20world </pre> <pre>
+ data:application/octet-stream;base64, AAAAAA== </pre> .</p>
 
 <h2>Methods</h2>
 
@@ -21,8 +21,12 @@
 <li><code>static byte[] DataUriBytes​(java.lang.String uri)</code><br>
 Extracts the data from a Data URI (uniform resource identifier) in the form
 of a byte array.</li>
+<li><code>static byte[] DataUriBytes​(java.net.URI uri)</code><br>
+Not documented yet.</li>
 <li><code>static MediaType DataUriMediaType​(java.lang.String uri)</code><br>
 Extracts the media type from a Data URI (uniform resource identifier).</li>
+<li><code>static MediaType DataUriMediaType​(java.net.URI uri)</code><br>
+Not documented yet.</li>
 <li><code>static java.lang.String MakeDataUri​(byte[] bytes,
        MediaType mediaType)</code><br>
 Encodes data with the given media type in a Data URI (uniform resource
@@ -51,6 +55,44 @@ Encodes text as a Data URI (uniform resource identifier).</li>
 <ul>
 <li>The media type. Returns null if <code>uri</code> is null, is
 syntactically invalid, or is not a Data URI.</li>
+</ul>
+
+<h3>DataUriMediaType</h3>
+
+<pre>public static MediaType DataUriMediaType​(java.net.URI uri)
+</pre>
+
+<p>Not documented yet.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>uri</code> - The parameter <code>uri</code> is not documented yet.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A MediaType object.</li>
+</ul>
+
+<h3>DataUriBytes</h3>
+
+<pre>public static byte[] DataUriBytes​(java.net.URI uri)
+</pre>
+
+<p>Not documented yet.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>uri</code> - The parameter <code>uri</code> is not documented yet.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A byte array.</li>
 </ul>
 
 <h3>DataUriBytes</h3>

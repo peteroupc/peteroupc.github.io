@@ -19,7 +19,8 @@
 Not documented yet.</li>
 <li><code>static java.lang.String GenerateDateString​(int[] dateTime,
               boolean gmt)</code><br>
-Not documented yet.</li>
+Generates a date-time string following the Internet Message Format (RFC
+5322) from an 8-element array.</li>
 <li><code>static int[] ParseDateString​(java.lang.String str)</code><br>
 Not documented yet.</li>
 <li><code>static int[] ParseDateString​(java.lang.String str,
@@ -57,26 +58,29 @@ Parses a date string in one of the three formats allowed by HTTP/1.1.</li>
 <pre>public static java.lang.String GenerateDateString​(int[] dateTime, boolean gmt)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Generates a date-time string following the Internet Message Format (RFC
+ 5322) from an 8-element array.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>dateTime</code> - Not documented yet.</p></li>
-<li><p><code>gmt</code> - Not documented yet.</p></li>
+<li><p><code>dateTime</code> - The date and time in the form of an 8-element array. See
+<see cref='PeterO.Mail.MailDateTime.ParseDateString(&#10; System.String,System.Boolean)'/> for information on the format of
+this parameter.</p></li>
+<li><p><code>gmt</code> - The parameter <code>gmt</code> is not documented yet.</p></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A string object.</li>
+<li>A date-time string.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>java.lang.IllegalArgumentException</code> - Invalid date and time; Invalid date and time;
-Invalid year.</li>
+<li><code>java.lang.IllegalArgumentException</code> - The parameter <code>dateTime</code> is null or invalid,
+including if the year (<code>dateTime[0]</code>) is less than 0.</li>
 </ul>
 
 <h3>ParseDateString</h3>
@@ -130,7 +134,7 @@ string&#39;s year would overflow the range of a 32-bit signed integer.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>str</code> - Not documented yet.</li>
+<li><code>str</code> - The parameter <code>str</code> is not documented yet.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>

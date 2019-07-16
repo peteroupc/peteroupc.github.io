@@ -148,6 +148,8 @@ Decodes RFC 2047 encoded words from the given header field value and returns
 a string with those words decoded.</li>
 <li><code>static Message FromMailtoUri​(java.lang.String uri)</code><br>
 Creates a message object from a MailTo URI (uniform resource identifier).</li>
+<li><code>static Message FromMailtoUri​(java.net.URI uri)</code><br>
+Not documented yet.</li>
 <li><code>static Message FromMailtoUrl​(java.lang.String url)</code><br>
 Deprecated.
 Renamed to FromMailtoUri.
@@ -184,13 +186,14 @@ Not documented yet.</li>
 Gets a file name suggested by this message for saving the message&#39;s body
 to a file.</li>
 <li><code>java.lang.String GetFormattedBodyString()</code><br>
-Not documented yet.</li>
+Gets a Hypertext Markup Language (HTML) rendering of this message&#39;s text
+body.</li>
 <li><code>java.util.List&lt;NamedAddress&gt; getFromAddresses()</code><br>
 Deprecated.
 Use GetAddresses(\From) instead.
 Use GetAddresses(\From) instead.</li>
 <li><code>java.util.Map.Entry&lt;java.lang.String,​java.lang.String&gt; GetHeader​(int index)</code><br>
-Not documented yet.</li>
+Gets the name and value of a header field by index.</li>
 <li><code>java.lang.String GetHeader​(java.lang.String name)</code><br>
 Gets the first instance of the header field with the specified name, using a
 basic case-insensitive comparison.</li>
@@ -228,14 +231,14 @@ Selects a body part for a multiple-language message (
 multipart/multilingual) according to the given language
 priority list and original-language preference.</li>
 <li><code>Message SetBody​(byte[] bytes)</code><br>
-Not documented yet.</li>
+Sets the body of this message to the given byte array.</li>
 <li><code>void setContentDisposition​(ContentDisposition value)</code><br></li>
 <li><code>void setContentType​(MediaType value)</code><br></li>
 <li><code>Message SetCurrentDate()</code><br>
 Sets this message&#39;s Date header field to the current time as its value, with
 an unspecified time zone offset.</li>
 <li><code>Message SetDate​(int[] dateTime)</code><br>
-Not documented yet.</li>
+Sets this message&#39;s Date header field to the given date and time.</li>
 <li><code>Message SetHeader​(int index,
      java.lang.String value)</code><br>
 Sets the value of a header field by index without changing its name.</li>
@@ -415,68 +418,63 @@ Use GetAddresses(\Cc) instead.</p>
 <pre>public java.lang.String GetFormattedBodyString()
 </pre>
 
-<p>Not documented yet.</p>
+<p>Gets a Hypertext Markup Language (HTML) rendering of this message's text
+ body. This method currently supports text/plain, text/plain with
+ format = flowed, text/enriched, and text/markdown (original
+ Markdown).</p><p> </p><p>REMARK: The Markdown implementation currently
+ supports all features of original Markdown, except that the
+ implementation--</p> <ul> <li>does not strictly check the placement
+  of "block-level HTML elements",</li> <li>does not prevent Markdown
+ content from being interpreted as such merely because it's contained
+  in a "block-level HTML element", and</li> <li>does not deliberately
+ use HTML escapes to obfuscate email addresses wrapped in
+ angle-brackets.</li></ul>
 
-<p><strong>Returns:</strong></p>
+**Returns:**
 
-<ul>
-<li>A text string.</li>
-</ul>
+* An HTML rendering of this message's text.
 
-<h3>getContentDisposition</h3>
+**Throws:**
 
-<pre>public final ContentDisposition getContentDisposition()
-</pre>
+* <code>java.lang.UnsupportedOperationException</code> - Either this message is a multipart
+ message, so it doesn't have its own body text, or this message has
+ no character encoding declared or assumed for it (which is usually
+ the case for non-text messages), or the character encoding is not
+ supported.
 
-<p>Gets this message&#39;s content disposition. The content disposition specifies
+### getContentDisposition
+    public final ContentDisposition getContentDisposition()
+Gets this message's content disposition. The content disposition specifies
  how a user agent should display or otherwise handle this message.
  Can be set to null. If set to a disposition or to null, updates the
- Content-Disposition header field as appropriate.</p>
+ Content-Disposition header field as appropriate.
 
-<p><strong>Returns:</strong></p>
+**Returns:**
 
-<ul>
-<li>This message&#39;s content disposition, or null if none is specified.</li>
-</ul>
+* This message's content disposition, or null if none is specified.
 
-<h3>setContentDisposition</h3>
-
-<pre>public final void setContentDisposition​(ContentDisposition value)
-</pre>
-
-<h3>getContentType</h3>
-
-<pre>public final MediaType getContentType()
-</pre>
-
-<p>Gets this message&#39;s media type. When getting, the media type may differ in
+### setContentDisposition
+    public final void setContentDisposition​(ContentDisposition value)
+### getContentType
+    public final MediaType getContentType()
+Gets this message's media type. When getting, the media type may differ in
  certain cases from the value of the Content-Type header field, if
  any, and may have a value even if the Content-Type header field is
  absent from this message. If set to a media type, updates the
- Content-Type header field as appropriate. Cannot be set to null.</p>
+ Content-Type header field as appropriate. Cannot be set to null.
 
-<p><strong>Returns:</strong></p>
+**Returns:**
 
-<ul>
-<li>This message&#39;s media type.</li>
-</ul>
+* This message's media type.
 
-<p><strong>Throws:</strong></p>
+**Throws:**
 
-<ul>
-<li><code>java.lang.NullPointerException</code> - This value is being set and &quot;value&quot; is null.</li>
-</ul>
+* <code>java.lang.NullPointerException</code> - This value is being set and "value" is null.
 
-<h3>setContentType</h3>
-
-<pre>public final void setContentType​(MediaType value)
-</pre>
-
-<h3>getFileName</h3>
-
-<pre>public final java.lang.String getFileName()
-</pre>
-
+### setContentType
+    public final void setContentType​(MediaType value)
+### getFileName
+    public final java.lang.String getFileName()
 <p>Gets a file name suggested by this message for saving the message's body
  to a file. For more information on the algorithm, see
  ContentDisposition.MakeFilename.</p> <p>This method generates a file
@@ -754,25 +752,41 @@ generated.</li>
 <pre>public Message SetDate​(int[] dateTime)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Sets this message&#39;s Date header field to the given date and time.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>dateTime</code> - The parameter <code>dateTime</code> is not documented yet.</li>
+<li><code>dateTime</code> - An array containing eight elements. Each element of the
+array (starting from 0) is as follows: <ul> <li>0 - The year. For
+example, the value 2000 means 2000 C.E.</li> <li>1 - Month of the
+year, from 1 (January) through 12 (December).</li> <li>2 - Day of
+the month, from 1 through 31.</li> <li>3 - Hour of the day, from 0
+through 23.</li> <li>4 - Minute of the hour, from 0 through 59.</li>
+<li>5 - Second of the minute, from 0 through 60 (this value can go
+up to 60 to accommodate leap seconds). (Leap seconds are additional
+seconds added to adjust international atomic time, or TAI, to an
+approximation of astronomical time known as coordinated universal
+time, or UTC.)</li> <li>6 - Milliseconds of the second, from 0
+through 999. This value is not used to generate the date string, but
+must still be valid.</li> <li>7 - Number of minutes to subtract from
+this date and time to get global time. This number can be positive
+or negative.</li></ul>.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A Message object.</li>
+<li>This object.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
 
 <ul>
+<li><p><code>java.lang.IllegalArgumentException</code> - The parameter <code>dateTime</code> contains fewer than
+eight elements, contains invalid values, or contains a year less
+than 0.</p></li>
 <li><p><code>java.lang.NullPointerException</code> - The parameter <code>dateTime</code> is null.</p></li>
-<li><p><code>java.lang.IllegalArgumentException</code> - Invalid date and time.</p></li>
 </ul>
 
 <h3>GetBodyMessage</h3>
@@ -794,18 +808,26 @@ generated.</li>
 <pre>public java.util.Map.Entry&lt;java.lang.String,​java.lang.String&gt; GetHeader​(int index)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Gets the name and value of a header field by index.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>index</code> - The parameter <code>index</code> is not documented yet.</li>
+<li><code>index</code> - Zero-based index of the header field to get.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A Map.Entry(string, string) object.</li>
+<li>A key/value pair. The key is the name of the header field, such as
+&quot;From&quot; or &quot;Content-ID&quot;. The value is the header field&#39;s value.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>java.lang.IllegalArgumentException</code> - The parameter <code>index</code> is 0 or at least as
+high as the number of header fields.</li>
 </ul>
 
 <h3>GetHeader</h3>
@@ -948,18 +970,19 @@ high as the number of header fields.</li>
 <pre>public Message SetBody​(byte[] bytes)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Sets the body of this message to the given byte array. This method doesn&#39;t
+ make a copy of that byte array.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>bytes</code> - The parameter <code>bytes</code> is not documented yet.</li>
+<li><code>bytes</code> - A byte array.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A Message object.</li>
+<li>This object.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -1316,11 +1339,11 @@ HTML.</p></li>
   message, it becomes a &quot;multipart/mixed&quot; message with the current
  body converted to an inline body part.<p> The following example
  (written in C# for the.NET version) is an extension method that adds
- an attachment from a byte array to a message. </p><pre>public static
+ an attachment from a byte array to a message. </p><pre> public static
  Message AddAttachmentFromBytes(this Message msg, byte[] bytes,
  MediaType mediaType) { using(MemoryStream fs = new
- MemoryStream(bytes)) { return msg.AddAttachment(fs, mediaType); }
- }</pre> .</p>
+ MemoryStream(bytes)) { return msg.AddAttachment(fs, mediaType); } }
+ </pre> .</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1430,11 +1453,11 @@ mediaType</code> is null.</p></li>
   message, it becomes a &quot;multipart/mixed&quot; message with the current
  body converted to an inline body part.<p> The following example
  (written in C# for the.NET version) is an extension method that adds
- an inline body part from a byte array to a message. </p><pre>public
+ an inline body part from a byte array to a message. </p><pre> public
  static Message AddInlineFromBytes(this Message msg, byte[] bytes,
  MediaType mediaType) { using(MemoryStream fs = new
- MemoryStream(bytes)) { return msg.AddInline(fs, mediaType); }
- }</pre> .</p>
+ MemoryStream(bytes)) { return msg.AddInline(fs, mediaType); } }
+ </pre> .</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1709,6 +1732,31 @@ Renamed to ToMailtoUri.</p>
 <li>A Message object created from the given MailTo URI. Returs null if
 <code>uri</code> is null, is syntactically invalid, or is not a MailTo
 URI.</li>
+</ul>
+
+<h3>FromMailtoUri</h3>
+
+<pre>public static Message FromMailtoUri​(java.net.URI uri)
+</pre>
+
+<p>Not documented yet.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>uri</code> - The parameter <code>uri</code> is not documented yet.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A Message object.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>java.lang.NullPointerException</code> - The parameter <code>uri</code> is null.</li>
 </ul>
 
 <h3>ToMailtoUri</h3>

@@ -17,14 +17,14 @@
  of this class are immutable and are safe to use among multiple
  threads. The one exception involves the <code>Flags</code> property. If
  the context&#39;s <code>HasFlags</code> property (a read-only property) is
- <code>true</code>, the <code>Flags</code> property is mutable, thus making the
+ <code>true</code> , the <code>Flags</code> property is mutable, thus making the
  context mutable. This class doesn&#39;t synchronize access to such
  mutable contexts, so applications should provide their own
  synchronization if a context with the <code>HasFlags</code> property set
  to <code>true</code> will be shared among multiple threads and at least
  one of those threads needs to write the <code>Flags</code> property (which
  can happen, for example, by passing the context to most methods of
- <code>EDecimal</code> such as <code>Add</code>).</p></p>
+ <code>EDecimal</code> such as <code>Add</code>). </p></p>
 
 <h2>Fields</h2>
 
@@ -46,7 +46,7 @@ precision.</li>
 <li><code>static EContext Binary64</code><br>
 An arithmetic context for the IEEE-754-2008 binary64 format, 53 bits
 precision.</li>
-<li><code>static EContext CliDecimal</code><br>
+<li><code>static EContext CliDecimal &quot;Forms of numbers&quot;</code><br>
 An arithmetic context for the.NET Framework decimal format (see &quot;Forms of numbers&quot;), 96 bits
 precision, and a valid exponent range of -28 to 0.</li>
 <li><code>static EContext Decimal128</code><br>
@@ -327,7 +327,7 @@ Copies this EContext with an unlimited exponent range.</li>
 <pre>public static final EContext CliDecimal
 </pre>
 
-<p>An arithmetic context for the.NET Framework decimal format (see <see cref='PeterO.Numbers.EDecimal'>&quot;Forms of numbers&quot;</see>), 96 bits
+<p>An arithmetic context for the.NET Framework decimal format (see <code>&quot;Forms of numbers&quot;</code>), 96 bits
  precision, and a valid exponent range of -28 to 0. The default
   rounding mode is HalfEven. (The <code>&quot;Cli&quot;</code> stands for &quot;Common
   Language Infrastructure&quot;, which defined this format as the .NET
@@ -471,8 +471,8 @@ instead.) If HasExponentRange is false, this value will be 0.</li>
 <ol>
 <li>This value is a combination of bit fields. To retrieve a
 particular flag, use the AND operation on the return value of this
-method. For example: <code>(this.getFlags() &amp; EContext.FlagInexact)
-!= 0</code> returns <code>true</code> if the Inexact flag is set.</li>
+method. For example: <code>(this.getFlags() &amp; EContext.FlagInexact) !=
+0</code> returns <code>true</code> if the Inexact flag is set.</li>
 </ol>
 
 <p><strong>Returns:</strong></p>
@@ -484,8 +484,8 @@ arithmetic context. If <code>HasFlags</code> is false, this value will be
 <ol>
 <li>This value is a combination of bit fields. To retrieve a
 particular flag, use the AND operation on the return value of this
-method. For example: <code>(this.getFlags() &amp; EContext.FlagInexact)
-!= 0</code> returns <code>true</code> if the Inexact flag is set.</li>
+method. For example: <code>(this.getFlags() &amp; EContext.FlagInexact) !=
+0</code> returns <code>true</code> if the Inexact flag is set.</li>
 </ol></li>
 </ul>
 
@@ -553,9 +553,9 @@ otherwise, <code>false</code>.</li>
 
 <ul>
 <li><code>true</code> if this context&#39;s Precision property is in bits, rather
-than digits; otherwise, <code>false</code>.. The default is false. <code>
-true</code> if this context&#39;s Precision property is in bits, rather than
-digits; otherwise, <code>false</code>. The default is false.</li>
+than digits; otherwise, <code>false</code>.. The default is false.
+<code>true</code> if this context&#39;s Precision property is in bits, rather
+than digits; otherwise, <code>false</code>. The default is false.</li>
 </ul>
 
 <h3>isSimplified</h3>
@@ -566,8 +566,18 @@ digits; otherwise, <code>false</code>. The default is false.</li>
 <p>Gets a value indicating whether to use a &quot;simplified&quot; arithmetic. In the
  simplified arithmetic, infinity, not-a-number, and subnormal numbers
  are not allowed, and negative zero is treated the same as positive
- zero. For further details, see <code><a href="http://speleotrove.com/decimal/dax3274.html">http://speleotrove.com/decimal/dax3274.html</a></code>
-.</p>
+ zero. For further details, see
+ <code><a href="http://speleotrove.com/decimal/dax3274.html">http://speleotrove.com/decimal/dax3274.html</a></code>  .</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li><code>true</code> if to use a &quot;simplified&quot; arithmetic; otherwise, <code>
+false</code> In the simplified arithmetic, infinity, not-a-number, and
+subnormal numbers are not allowed, and negative zero is treated the
+same as positive zero. For further details, see . <code>true</code> if a
+&quot;simplified&quot; arithmetic will be used; otherwise, <code>false</code> .</li>
+</ul>
 
 <h3>getPrecision</h3>
 
@@ -582,7 +592,7 @@ digits; otherwise, <code>false</code>. The default is false.</li>
   payload, that serves as its &quot;diagnostic information&quot;, In general, if
  an operation requires copying an NaN&#39;s payload, only up to as many
  digits of that payload as the precision given in this context,
- namely the least significant digits, are copied.</p></p>
+ namely the least significant digits, are copied. </p></p>
 
 <p><strong>Returns:</strong></p>
 
@@ -620,7 +630,7 @@ represented in the given precision and exponent range.</li>
  if Traps equals <code>FlagInexact</code> and FlagSubnormal, a
  TrapException will be thrown if an operation&#39;s return value is not
  the same as the exact result (FlagInexact) or if the return value&#39;s
- exponent is lower than the lowest allowed (FlagSubnormal).</p></p>
+ exponent is lower than the lowest allowed (FlagSubnormal). </p></p>
 
 <p><strong>Returns:</strong></p>
 
@@ -1012,7 +1022,7 @@ the copy.</li>
 </pre>
 
 <p>Copies this EContext with Traps set to the given value. (Also sets HasFlags
- on the copy to <code>True</code>, but this may change in version 2.0 of
+ on the copy to <code>True</code> , but this may change in version 2.0 of
  this library.).</p>
 
 <p><strong>Parameters:</strong></p>

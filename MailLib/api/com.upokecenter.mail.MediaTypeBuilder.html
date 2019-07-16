@@ -24,9 +24,9 @@ Initializes a new instance of the MediaTypeBuilder class.</li>
 <li><code>java.lang.String getSubType()</code><br>
 Gets this value&#39;s subtype.</li>
 <li><code>java.lang.String getTopLevelType()</code><br>
-Gets a value not documented yet.</li>
+Gets this value&#39;s top-level type.</li>
 <li><code>boolean isMultipart()</code><br>
-Gets a value not documented yet.</li>
+Gets a value indicating whether this is a multipart media type.</li>
 <li><code>boolean isText()</code><br>
 Gets a value indicating whether this is a text media type.</li>
 <li><code>MediaTypeBuilder RemoveParameter​(java.lang.String name)</code><br>
@@ -40,7 +40,8 @@ Sets this media type&#39;s subtype, such as &quot;plain&quot; or &quot;xml&quot;
 <li><code>void setTopLevelType​(java.lang.String value)</code><br></li>
 <li><code>MediaTypeBuilder SetTopLevelType​(java.lang.String str)</code><br>
 Sets this media type&#39;s top-level type.</li>
-<li><code>MediaType ToMediaType()</code><br></li>
+<li><code>MediaType ToMediaType()</code><br>
+Converts this builder to an immutable media type object.</li>
 <li><code>java.lang.String toString() MediaType.toString</code><br>
 Converts this object to a text string of the media type it represents, in
 the same form as MediaType.toString.</li>
@@ -105,12 +106,12 @@ Initializes a new instance of the MediaTypeBuilder class.</li>
 <pre>public final java.lang.String getTopLevelType()
 </pre>
 
-<p>Gets a value not documented yet.</p>
+<p>Gets this value&#39;s top-level type.</p>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A value not documented yet.</li>
+<li>This value&#39;s top-level type.</li>
 </ul>
 
 <h3>setTopLevelType</h3>
@@ -146,8 +147,7 @@ Initializes a new instance of the MediaTypeBuilder class.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li><code>true</code> If this is a text media type; otherwise, . <code>
-false</code>.</li>
+<li><code>true</code> If this is a text media type; otherwise, <code>false</code>.</li>
 </ul>
 
 <h3>isMultipart</h3>
@@ -155,18 +155,21 @@ false</code>.</li>
 <pre>public final boolean isMultipart()
 </pre>
 
-<p>Gets a value not documented yet.</p>
+<p>Gets a value indicating whether this is a multipart media type.</p>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A value not documented yet.</li>
+<li><code>true</code> If this is a multipart media type; otherwise, <code>
+false</code>.</li>
 </ul>
 
 <h3>ToMediaType</h3>
 
 <pre>public MediaType ToMediaType()
 </pre>
+
+<p>Converts this builder to an immutable media type object.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -198,8 +201,8 @@ false</code>.</li>
 
 <ul>
 <li><p><code>java.lang.NullPointerException</code> - The parameter <code>str</code> is null.</p></li>
-<li><p><code>java.lang.IllegalArgumentException</code> - The parameter <code>str</code> is syntactically invalid
-for a top-level type.</p></li>
+<li><p><code>java.lang.IllegalArgumentException</code> - The parameter <code>str</code> is syntactically
+invalid for a top-level type.</p></li>
 </ul>
 
 <h3>RemoveParameter</h3>
@@ -258,8 +261,8 @@ lower case.).</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>value</code> or <code>name</code> is
-null.</p></li>
+<li><p><code>java.lang.NullPointerException</code> - The parameter <code>value</code> or <code>
+name</code> is null.</p></li>
 <li><p><code>java.lang.IllegalArgumentException</code> - The parameter <code>name</code> is empty or
 syntactically invalid.</p></li>
 </ul>

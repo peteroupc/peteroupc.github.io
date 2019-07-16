@@ -433,9 +433,9 @@ unpaired surrogate code point. If the return value is 65536
 <p>Gets the Unicode code point at the given index of the string.<p/><p>The
  following example shows how to iterate a text string code point by
  code point, terminating the loop when an unpaired surrogate is
- found. </p> <pre>for (var i = 0;i&lt;str.length(); ++i) { int codePoint =
- DataUtilities.CodePointAt(str, i, 2); if (codePoint &lt; 0) { break;
- /* Unpaired surrogate <em>/ }
+ found. </p> <pre>for (var i = 0;i&lt;str.length(); ++i) { int
+ codePoint = DataUtilities.CodePointAt(str, i, 2); if (codePoint &lt;
+ 0) { break; /* Unpaired surrogate <em>/ }
   Console.WriteLine(&quot;codePoint:&quot;+codePoint); if (codePoint &gt;=
  0x10000) { i++; /</em> Supplementary code point */ } }</pre> .</p>
 
@@ -579,6 +579,10 @@ replace</code> is false.</li>
 0, <code>length</code> is less than 0, or <code>offset</code> plus <code>
 length</code> is greater than the string&#39;s length.</p></li>
 <li><p><code>java.io.IOException</code> - An I/O error occurred.</p></li>
+<li><p><code>java.lang.IllegalArgumentException</code> - Either &quot;offset&quot; or &quot;length&quot; is less than 0
+or greater than &quot;str&quot;&#39;s length, or &quot;str&quot;&#39;s length minus &quot;offset&quot; is
+less than &quot;length&quot;.</p></li>
+<li><p><code>java.lang.NullPointerException</code> - The parameter <code>str</code> is null.</p></li>
 </ul>
 
 <h3>WriteUtf8</h3>
@@ -619,6 +623,10 @@ replace</code> is false.</li>
 0, <code>length</code> is less than 0, or <code>offset</code> plus <code>
 length</code> is greater than the string&#39;s length.</p></li>
 <li><p><code>java.io.IOException</code> - An I/O error occurred.</p></li>
+<li><p><code>java.lang.IllegalArgumentException</code> - Either &quot;offset&quot; or &quot;length&quot; is less than 0
+or greater than &quot;str&quot;&#39;s length, or &quot;str&quot;&#39;s length minus &quot;offset&quot; is
+less than &quot;length&quot;.</p></li>
+<li><p><code>java.lang.NullPointerException</code> - The parameter <code>str</code> is null.</p></li>
 </ul>
 
 <h3>WriteUtf8</h3>
