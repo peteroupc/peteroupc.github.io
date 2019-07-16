@@ -39,23 +39,17 @@
     string str);
 </pre>
 
-<p>Determines whether the given string belongs in RFC 8264&#39;s FreeformClass. In general, the FreeformClass contains most letters, digits, spaces, punctuation, and symbols in the Unicode standard, as well as all basic printable characters (U+0021 to U+007E), but excludes control characters and separators.</p>
+<p>Determines whether the given string belongs in RFC 8264&#39;s FreeformClass. In general, the FreeformClass contains most letters, digits, spaces, punctuation, and symbols in the Unicode standard, as well as all basic printable characters (U+0021 to U+007E), but excludes control characters (including the horizontal tab character, U+0009) and separators.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>str</i>:  A string to check.</li>
+<li><i>str</i>: A string to check.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p><code>
-         true
-</code>  if the given string is empty or contains only characters allowed in RFC 8264&#39;s FreeformClass (in the contexts required); otherwise,  <code>
-         false
-</code>  . Returns  <code>
-         false
-</code>  if  <i>str</i>
+<p><code>true</code>  if the given string is empty or contains only characters allowed in RFC 8264&#39;s FreeformClass (in the contexts required); otherwise,  <code>false</code>  . Returns  <code>false</code>  if  <i>str</i>
  is null.</p>
 
 <p><a id="IsInIdentifierClass_string"></a></p>
@@ -71,18 +65,12 @@
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>str</i>:  A string to check.</li>
+<li><i>str</i>: A string to check.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p><code>
-         true
-</code>  if the given string is empty or contains only characters allowed in RFC 8264&#39;s IdentifierClass (in the contexts required); otherwise,  <code>
-         false
-</code>  . Returns  <code>
-         false
-</code>  if  <i>str</i>
+<p><code>true</code>  if the given string is empty or contains only characters allowed in RFC 8264&#39;s IdentifierClass (in the contexts required); otherwise,  <code>false</code>  . Returns  <code>false</code>  if  <i>str</i>
  is null.</p>
 
 <p><a id="NicknameEnforce_string"></a></p>
@@ -98,7 +86,7 @@
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>str</i>:  A string serving as a nickname for something.</li>
+<li><i>str</i>: A string serving as a nickname for something.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -119,7 +107,7 @@
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>str</i>:  A string serving as a nickname for something.</li>
+<li><i>str</i>: A string serving as a nickname for something.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -140,7 +128,7 @@
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>str</i>:  A string to prepare that represents an arbitrary single-line sequence of characters entered by a user.</li>
+<li><i>str</i>: A string to prepare that represents an arbitrary single-line sequence of characters entered by a user.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -161,7 +149,7 @@
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>str</i>:  A string to prepare that represents a user or account identifier.</li>
+<li><i>str</i>: A string to prepare that represents a user or account identifier.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -183,8 +171,8 @@
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>str</i>:  A string to prepare that represents a user or account identifier.</p></li>
-<li><p><i>preserveCase</i>:  If true, use the UsernameCasePreserved profile to prepare each part of the string. If false, use the UsernameCaseMapped profile.</p></li>
+<li><p><i>str</i>: A string to prepare that represents a user or account identifier.</p></li>
+<li><p><i>preserveCase</i>: If true, use the UsernameCasePreserved profile to prepare each part of the string. If false, use the UsernameCaseMapped profile.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -206,7 +194,7 @@
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>str</i>:  A string to prepare that represents a user or account identifier.</li>
+<li><i>str</i>: A string to prepare that represents a user or account identifier.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -229,8 +217,8 @@
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>str</i>:  A string to prepare that represents a user or account identifier.</p></li>
-<li><p><i>preserveCase</i>:  If true, use the UsernameCasePreserved profile to prepare the string. If false, use the UsernameCaseMapped profile.</p></li>
+<li><p><i>str</i>: A string to prepare that represents a user or account identifier.</p></li>
+<li><p><i>preserveCase</i>: If true, use the UsernameCasePreserved profile to prepare the string. If false, use the UsernameCaseMapped profile.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>

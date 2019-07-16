@@ -949,34 +949,30 @@ number.</li>
  that if the string contains a negative exponent, the resulting value
  might not be exact, in which case the resulting binary float will be
  an approximation of this decimal number&#39;s value. <p>The format of
- the string generally consists of: </p> <ul> <li>An optional plus
-  sign (&quot;+&quot; , U+002B) or minus sign (&quot;-&quot;, U+002D) (if &#39;-&#39; , the value
- is negative.) </li> <li>One or more digits, with a single optional
- decimal point after the first digit and before the last digit. </li>
+ the string generally consists of:</p> <ul> <li>An optional plus sign
+  (&quot;+&quot; , U+002B) or minus sign (&quot;-&quot;, U+002D) (if &#39;-&#39; , the value is
+ negative.)</li> <li>One or more digits, with a single optional
+ decimal point after the first digit and before the last digit.</li>
   <li>Optionally, &quot;E+&quot;/&quot;e+&quot; (positive exponent) or &quot;E-&quot;/&quot;e-&quot; (negative
- exponent) plus one or more digits specifying the exponent. </li>
-  </ul> <p>The string can also be &quot;-INF&quot;, &quot;-Infinity&quot;, &quot;Infinity&quot;,
-  &quot;INF&quot;, quiet NaN (&quot;NaN&quot;) followed by any number of digits, or
-  signaling NaN (&quot;sNaN&quot;) followed by any number of digits, all in any
- combination of upper and lower case. </p> <p>All characters
- mentioned above are the corresponding characters in the Basic Latin
- range. In particular, the digits must be the basic digits 0 to 9
- (U + 0030 to U + 0039). The string is not allowed to contain white space
- characters, including spaces. </p></p>
+ exponent) plus one or more digits specifying the exponent.</li></ul>
+  <p>The string can also be &quot;-INF&quot;, &quot;-Infinity&quot;, &quot;Infinity&quot;, &quot;INF&quot;,
+  quiet NaN (&quot;NaN&quot;) followed by any number of digits, or signaling NaN
+  (&quot;sNaN&quot;) followed by any number of digits, all in any combination of
+ upper and lower case.</p> <p>All characters mentioned above are the
+ corresponding characters in the Basic Latin range. In particular,
+ the digits must be the basic digits 0 to 9 (U + 0030 to U + 0039). The
+ string is not allowed to contain white space characters, including
+ spaces.</p></p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>str</code> - The parameter
-  <code>str</code>
-   is a text string.</p></li>
+<li><p><code>str</code> - The parameter <code>str</code> is a text string.</p></li>
 <li><p><code>offset</code> - A zero-based index showing where the desired portion of <code>
 str</code> begins.</p></li>
 <li><p><code>length</code> - The length, in code units, of the desired portion of <code>
 str</code> (but not more than <code>str</code> &#39;s length).</p></li>
-<li><p><code>ctx</code> - The parameter
-  <code>ctx</code>
-   is an EContext object.</p></li>
+<li><p><code>ctx</code> - The parameter <code>ctx</code> is an EContext object.</p></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -990,12 +986,16 @@ floating-point number.</li>
 
 <ul>
 <li><p><code>java.lang.NullPointerException</code> - The parameter <code>str</code> is null.</p></li>
-<li><p><code>java.lang.IllegalArgumentException</code> - Either <code>offset</code> or <code>length</code> is
-less than 0 or greater than <code>str</code> &#39;s length, or <code>str</code> &#39;
-s length minus <code>offset</code> is less than <code>length</code>.</p></li>
-<li><p><code>java.lang.IllegalArgumentException</code> - Either &quot;offset&quot; or &quot;length&quot; is less than 0
-or greater than &quot;str&quot;&#39;s length, or &quot;str&quot;&#39;s length minus &quot;offset&quot; is
+<li><p><code>java.lang.IllegalArgumentException</code> - Either <code>offset</code> or <code>length</code> is less
+than 0 or greater than <code>str</code> &#39;s length, or <code>str</code> &#39; s
+length minus <code>offset</code> is less than <code>length</code>.</p></li>
+<li><p><code>java.lang.IllegalArgumentException</code> - Either &quot;offset&quot; or &quot;length&quot; is less than 0 or
+greater than &quot;str&quot;&#39;s length, or &quot;str&quot;&#39;s length minus &quot;offset&quot; is
 less than &quot;length&quot;.</p></li>
+<li><p><code>java.lang.IllegalArgumentException</code> - Either &quot;offset&quot; or &quot;length&quot; is less than 0 or
+greater than &quot;str&quot;&#39;s length, or &quot;str&quot;&#39;s length minus &quot;offset&quot; is
+less than &quot;length&quot;.</p></li>
+<li><p><code>java.lang.NullPointerException</code> - The parameter <code>str</code> is null.</p></li>
 </ul>
 
 <h3>FromString</h3>
@@ -1056,15 +1056,13 @@ floating-point number.</li>
 </pre>
 
 <p>Creates a binary float from a text string that represents a number. For more
- information, see the <code>FromString(String, int, int, EContext)</code>
+ information, see the <code>FromString(string, int, int, EContext)</code>
  method.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>str</code> - The parameter
-  <code>str</code>
-   is a text string.</p></li>
+<li><p><code>str</code> - The parameter <code>str</code> is a text string.</p></li>
 <li><p><code>offset</code> - A zero-based index showing where the desired portion of <code>
 str</code> begins.</p></li>
 <li><p><code>length</code> - The length, in code units, of the desired portion of <code>
@@ -1081,9 +1079,13 @@ str</code> (but not more than <code>str</code> &#39;s length).</p></li>
 
 <ul>
 <li><p><code>java.lang.NullPointerException</code> - The parameter <code>str</code> is null.</p></li>
-<li><p><code>java.lang.IllegalArgumentException</code> - Either &quot;offset&quot; or &quot;length&quot; is less than 0
-or greater than &quot;str&quot;&#39;s length, or &quot;str&quot;&#39;s length minus &quot;offset&quot; is
+<li><p><code>java.lang.IllegalArgumentException</code> - Either &quot;offset&quot; or &quot;length&quot; is less than 0 or
+greater than &quot;str&quot;&#39;s length, or &quot;str&quot;&#39;s length minus &quot;offset&quot; is
 less than &quot;length&quot;.</p></li>
+<li><p><code>java.lang.IllegalArgumentException</code> - Either &quot;offset&quot; or &quot;length&quot; is less than 0 or
+greater than &quot;str&quot;&#39;s length, or &quot;str&quot;&#39;s length minus &quot;offset&quot; is
+less than &quot;length&quot;.</p></li>
+<li><p><code>java.lang.NullPointerException</code> - The parameter <code>str</code> is null.</p></li>
 </ul>
 
 <h3>Max</h3>

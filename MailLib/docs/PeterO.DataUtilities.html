@@ -9,13 +9,9 @@
 <pre>public static class DataUtilities
 </pre>
 
-<p>Contains methods useful for reading and writing strings. It is designed to have no dependencies other than the basic runtime class library.  Many of these methods work with text encoded in UTF-8, an encoding form of the Unicode Standard which uses one byte to encode the most basic characters and two to four bytes to encode other characters. For example, the  <code>
-           GetUtf8
-</code>  method converts a text string to an array of bytes in UTF-8.</p>
+<p>Contains methods useful for reading and writing strings. It is designed to have no dependencies other than the basic runtime class library. Many of these methods work with text encoded in UTF-8, an encoding form of the Unicode Standard which uses one byte to encode the most basic characters and two to four bytes to encode other characters. For example, the  <code>GetUtf8</code>  method converts a text string to an array of bytes in UTF-8.</p>
 
-<p>In C# and Java, text strings are represented as sequences of 16-bit values called  <code>
-           char
-</code>  s. These sequences are well-formed under UTF-16, a 16-bit encoding form of Unicode, except if they contain unpaired surrogate code points. (A surrogate code point is used to encode supplementary characters, those with code points U+10000 or higher, in UTF-16. A surrogate pair is a high surrogate [U+D800 to U+DBFF] followed by a low surrogate [U+DC00 to U+DFFF]. An unpaired surrogate code point is a surrogate not appearing in a surrogate pair.) Many of the methods in this class allow setting the behavior to follow when unpaired surrogate code points are found in text strings, such as throwing an error or treating the unpaired surrogate as a replacement character (U+FFFD).</p>
+<p>In C# and Java, text strings are represented as sequences of 16-bit values called  <code>char</code>  s. These sequences are well-formed under UTF-16, a 16-bit encoding form of Unicode, except if they contain unpaired surrogate code points. (A surrogate code point is used to encode supplementary characters, those with code points U+10000 or higher, in UTF-16. A surrogate pair is a high surrogate [U+D800 to U+DBFF] followed by a low surrogate [U+DC00 to U+DFFF]. An unpaired surrogate code point is a surrogate not appearing in a surrogate pair.) Many of the methods in this class allow setting the behavior to follow when unpaired surrogate code points are found in text strings, such as throwing an error or treating the unpaired surrogate as a replacement character (U+FFFD).</p>
 
 <h3>Member Summary</h3>
 
@@ -53,12 +49,12 @@
 
 <p>Gets the Unicode code point at the given index of the string.</p>
 
-<p>The following example shows how to iterate a text string code point by code point.</p>
+<pre>   The following example shows how to iterate a text string code point by code point.
 
-<pre>         for (var i = 0;i&lt;str.Length; ++i) { int codePoint =
-        DataUtilities.CodePointAt(str, i);
-        Console.WriteLine(&quot;codePoint:&quot;+codePoint); if (codePoint &gt;= 0x10000)
-        { i++; /* Supplementary code point */ } }
+            for (var i = 0;i&lt;str.Length; ++i) { int codePoint =
+            DataUtilities.CodePointAt(str, i);
+            Console.WriteLine(&quot;codePoint:&quot;+codePoint); if (codePoint &gt;= 0x10000)
+            { i++; /* Supplementary code point */ } }
 </pre>
 
 <p>.</p>
@@ -96,12 +92,12 @@ is null.</li>
 
 <p>Gets the Unicode code point at the given index of the string.</p>
 
-<p>The following example shows how to iterate a text string code point by code point, terminating the loop when an unpaired surrogate is found.</p>
+<pre>    The following example shows how to iterate a text string code point by code point, terminating the loop when an unpaired surrogate is found.
 
-<pre>         for (var i = 0;i&lt;str.Length; ++i) { int codePoint =
-        DataUtilities.CodePointAt(str, i, 2); if (codePoint &lt; 0) { break; /*
-        Unpaired surrogate */ } Console.WriteLine(&quot;codePoint:&quot;+codePoint); if
-        (codePoint &gt;= 0x10000) { i++; /* Supplementary code point */ } }
+            for (var i = 0;i&lt;str.Length; ++i) { int codePoint =
+            DataUtilities.CodePointAt(str, i, 2); if (codePoint &lt; 0) { break; /*
+            Unpaired surrogate */ } Console.WriteLine(&quot;codePoint:&quot;+codePoint); if
+            (codePoint &gt;= 0x10000) { i++; /* Supplementary code point */ } }
 </pre>
 
 <p>.</p>
@@ -140,7 +136,8 @@ is null.</li>
 
 <p>Gets the Unicode code point just before the given index of the string.</p>
 
-<p><b>Parameters:</b></p>
+<pre>  &lt;b&gt;Parameters:&lt;/b&gt;
+</pre>
 
 <ul>
 <li><p><i>str</i>:  The parameter  <i>str</i>
@@ -173,7 +170,8 @@ is null.</li>
 
 <p>Gets the Unicode code point just before the given index of the string.</p>
 
-<p><b>Parameters:</b></p>
+<pre>   &lt;b&gt;Parameters:&lt;/b&gt;
+</pre>
 
 <ul>
 <li><p><i>str</i>:  The parameter  <i>str</i>
@@ -210,8 +208,8 @@ is null.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>strA</i>:  The first string. Can be null.</p></li>
-<li><p><i>strB</i>:  The second string. Can be null.</p></li>
+<li><p><i>strA</i>: The first string. Can be null.</p></li>
+<li><p><i>strB</i>: The second string. Can be null.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -228,7 +226,8 @@ is null.</li>
 
 <p>Finds the number of Unicode code points in the given text string. Unpaired surrogate code points increase this number by 1. This is not necessarily the length of the string in &quot;char&quot; s.</p>
 
-<p><b>Parameters:</b></p>
+<pre> &lt;b&gt;Parameters:&lt;/b&gt;
+</pre>
 
 <ul>
 <li><i>str</i>:  The parameter  <i>str</i>
@@ -259,14 +258,15 @@ is null.</li>
 <p>Encodes a string in UTF-8 as a byte array. This method does not insert a byte-order mark (U+FEFF) at the beginning of the encoded byte array.</p>
 
 <p>REMARK: It is not recommended to use  <code>
-           Encoding.UTF8.GetBytes
+            Encoding.UTF8.GetBytes
 </code>  in.NET, or the  <code>
-           getBytes()
+            getBytes()
 </code>  method in Java to do this. For instance,  <code>
-           getBytes()
+            getBytes()
 </code>  encodes text strings in a default (so not fixed) character encoding, which can be undesirable.</p>
 
-<p><b>Parameters:</b></p>
+<pre>   &lt;b&gt;Parameters:&lt;/b&gt;
+</pre>
 
 <ul>
 <li><p><i>str</i>:  The parameter  <i>str</i>
@@ -302,14 +302,15 @@ is false, or an internal error occurred.</p></li>
 <p>Encodes a string in UTF-8 as a byte array. This method does not insert a byte-order mark (U+FEFF) at the beginning of the encoded byte array.</p>
 
 <p>REMARK: It is not recommended to use  <code>
-           Encoding.UTF8.GetBytes
+            Encoding.UTF8.GetBytes
 </code>  in.NET, or the  <code>
-           getBytes()
+            getBytes()
 </code>  method in Java to do this. For instance,  <code>
-           getBytes()
+            getBytes()
 </code>  encodes text strings in a default (so not fixed) character encoding, which can be undesirable.</p>
 
-<p><b>Parameters:</b></p>
+<pre>    &lt;b&gt;Parameters:&lt;/b&gt;
+</pre>
 
 <ul>
 <li><p><i>str</i>:  The parameter  <i>str</i>
@@ -344,7 +345,8 @@ is false, or an internal error occurred.</p></li>
 
 <p>Calculates the number of bytes needed to encode a string in UTF-8.</p>
 
-<p><b>Parameters:</b></p>
+<pre>  &lt;b&gt;Parameters:&lt;/b&gt;
+</pre>
 
 <ul>
 <li><p><i>str</i>:  The parameter  <i>str</i>
@@ -376,7 +378,8 @@ is null.</li>
 
 <p>Generates a text string from a UTF-8 byte array.</p>
 
-<p><b>Parameters:</b></p>
+<pre>   &lt;b&gt;Parameters:&lt;/b&gt;
+</pre>
 
 <ul>
 <li><p><i>bytes</i>:  A byte array containing text encoded in UTF-8.</p></li>
@@ -411,7 +414,8 @@ is false.</p></li>
 
 <p>Generates a text string from a portion of a UTF-8 byte array.</p>
 
-<p><b>Parameters:</b></p>
+<pre>      &lt;b&gt;Parameters:&lt;/b&gt;
+</pre>
 
 <ul>
 <li><p><i>bytes</i>:  A byte array containing text encoded in UTF-8.</p></li>
@@ -452,7 +456,8 @@ is less than 0, or offset plus bytesCount is greater than the length of &quot;da
 
 <p>Reads a string in UTF-8 encoding from a data stream.</p>
 
-<p><b>Parameters:</b></p>
+<pre>     &lt;b&gt;Parameters:&lt;/b&gt;
+</pre>
 
 <ul>
 <li><p><i>stream</i>:  A readable data stream.</p></li>
@@ -492,7 +497,8 @@ is null.</p></li>
 
 <p>Reads a string in UTF-8 encoding from a byte array.</p>
 
-<p><b>Parameters:</b></p>
+<pre>      &lt;b&gt;Parameters:&lt;/b&gt;
+</pre>
 
 <ul>
 <li><p><i>data</i>:  A byte array containing a UTF-8 text string.</p></li>
@@ -531,7 +537,8 @@ is less than 0, or offset plus bytesCount is greater than the length of  <i>data
 
 <p>Reads a string in UTF-8 encoding from a data stream in full and returns that string. Replaces invalid encoding with the replacement character (U+FFFD).</p>
 
-<p><b>Parameters:</b></p>
+<pre>  &lt;b&gt;Parameters:&lt;/b&gt;
+</pre>
 
 <ul>
 <li><i>stream</i>:  A readable data stream.</li>
@@ -563,7 +570,8 @@ is null.</p></li>
 
 <p>Reads a string in UTF-8 encoding from a data stream and returns that string.</p>
 
-<p><b>Parameters:</b></p>
+<pre>    &lt;b&gt;Parameters:&lt;/b&gt;
+</pre>
 
 <ul>
 <li><p><i>stream</i>:  A readable data stream.</p></li>
@@ -599,7 +607,7 @@ is null.</p></li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>str</i>:  The parameter  <i>str</i>
+<li><i>str</i>: The parameter  <i>str</i>
 is a text string.</li>
 </ul>
 
@@ -621,7 +629,7 @@ is a text string.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>str</i>:  The parameter  <i>str</i>
+<li><i>str</i>: The parameter  <i>str</i>
 is a text string.</li>
 </ul>
 
@@ -644,7 +652,8 @@ is a text string.</li>
 
 <p>Writes a portion of a string in UTF-8 encoding to a data stream.</p>
 
-<p><b>Parameters:</b></p>
+<pre>         &lt;b&gt;Parameters:&lt;/b&gt;
+</pre>
 
 <ul>
 <li><p><i>str</i>:  A string to write.</p></li>
@@ -696,7 +705,8 @@ is null.</p></li>
 
 <p>Writes a portion of a string in UTF-8 encoding to a data stream.</p>
 
-<p><b>Parameters:</b></p>
+<pre>          &lt;b&gt;Parameters:&lt;/b&gt;
+</pre>
 
 <ul>
 <li><p><i>str</i>:  A string to write.</p></li>
@@ -746,7 +756,8 @@ is null.</p></li>
 
 <p>Writes a string in UTF-8 encoding to a data stream.</p>
 
-<p><b>Parameters:</b></p>
+<pre>    &lt;b&gt;Parameters:&lt;/b&gt;
+</pre>
 
 <ul>
 <li><p><i>str</i>:  A string to write.</p></li>

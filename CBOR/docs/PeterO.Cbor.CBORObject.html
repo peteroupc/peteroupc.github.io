@@ -146,6 +146,7 @@
 <li><code><a href="#IsNegative">IsNegative</a></code> - Gets a value indicating whether this object is a negative number.</li>
 <li><code><a href="#IsNegativeInfinity">IsNegativeInfinity()</a></code> - Gets a value indicating whether this CBOR object represents negative infinity.</li>
 <li><code><a href="#IsNull">IsNull</a></code> - Gets a value indicating whether this value is a CBOR null value.</li>
+<li><code><a href="#IsNumber">IsNumber</a></code> -</li>
 <li><code><a href="#IsPositiveInfinity">IsPositiveInfinity()</a></code> - Gets a value indicating whether this CBOR object represents positive infinity.</li>
 <li><code><a href="#IsTagged">IsTagged</a></code> - Gets a value indicating whether this data item has at least one tag.</li>
 <li><code><a href="#IsTrue">IsTrue</a></code> - Gets a value indicating whether this value is a CBOR true value.</li>
@@ -432,11 +433,7 @@
 
 <p><b>Returns:</b></p>
 
-<p><code>
-            true
-</code>  If this object&#39;s value equals 0; otherwise,  <code>
-            false
-</code>  .</p>
+<p><code>true</code>  If this object&#39;s value equals 0; otherwise,  <code>false</code>  .</p>
 
 <p><a id="this_string"></a></p>
 
@@ -521,8 +518,7 @@ This object is not a map.</li>
 
 <p>Gets this value&#39;s sign: -1 if negative; 1 if positive; 0 if zero.</p>
 
-<pre>&lt;b&gt;Returns:&lt;/b&gt;
-</pre>
+<p><b>Returns:</b></p>
 
 <p>This value&#39;s sign: -1 if negative; 1 if positive; 0 if zero.</p>
 
@@ -652,7 +648,7 @@ has an unsupported type.</p></li>
 <p>The following example creates a CBOR array and adds several CBOR objects, one of which has a custom CBOR tag, to that array. Note the chaining behavior made possible by this method.</p>
 
 <pre>CBORObject obj = CBORObject.NewArray() .Add(CBORObject.False) .Add(5)
-            .Add(&quot;text string&quot;) .Add(CBORObject.FromObjectAndTag(9999, 1));
+        .Add(&quot;text string&quot;) .Add(CBORObject.FromObjectAndTag(9999, 1));
 </pre>
 
 <p>.</p>
@@ -692,8 +688,8 @@ is not supported.</p></li>
 <p>The following example creates a CBOR array and adds several CBOR objects, one of which has a custom CBOR tag, to that array. Note the chaining behavior made possible by this method.</p>
 
 <pre>CBORObject obj = CBORObject.NewArray() .Add(CBORObject.False)
-            .Add(CBORObject.FromObject(5)) .Add(CBORObject.FromObject(&quot;text
-            string&quot;)) .Add(CBORObject.FromObjectAndTag(9999, 1));
+        .Add(CBORObject.FromObject(5)) .Add(CBORObject.FromObject(&quot;text
+        string&quot;)) .Add(CBORObject.FromObjectAndTag(9999, 1));
 </pre>
 
 <p>.</p>
@@ -841,7 +837,7 @@ This object&#39;s type is not a number type.</li>
 
 <ul>
 <li>System.InvalidOperationException:
-This object&#39;s type is not a number type, including if this object is CBORObject.Null. To check the CBOR object for null before conversion, use the following idiom (originally written in C# for the.NET version):  <code>(cbor == null || cbor.IsNull) ? null : cbor.AsEDecimal()</code>  .</li>
+This object&#39;s type is not a number type, including if this object is CBORObject.Null. To check the CBOR object for null before conversion, use the following idiom (originally written in C# for the .NET version):  <code>(cbor == null || cbor.IsNull) ? null : cbor.AsEDecimal()</code>  .</li>
 </ul>
 
 <p><a id="AsEFloat"></a></p>
@@ -861,7 +857,7 @@ This object&#39;s type is not a number type, including if this object is CBORObj
 
 <ul>
 <li>System.InvalidOperationException:
-This object&#39;s type is not a number type, including if this object is CBORObject.Null. To check the CBOR object for null before conversion, use the following idiom (originally written in C# for the.NET version):  <code>(cbor == null || cbor.IsNull) ? null : cbor.AsEFloat()</code>  .</li>
+This object&#39;s type is not a number type, including if this object is CBORObject.Null. To check the CBOR object for null before conversion, use the following idiom (originally written in C# for the .NET version):  <code>(cbor == null || cbor.IsNull) ? null : cbor.AsEFloat()</code>  .</li>
 </ul>
 
 <p><a id="AsEInteger"></a></p>
@@ -881,7 +877,7 @@ This object&#39;s type is not a number type, including if this object is CBORObj
 
 <ul>
 <li><p>System.InvalidOperationException:
-This object&#39;s type is not a number type, including if this object is CBORObject.Null. To check the CBOR object for null before conversion, use the following idiom (originally written in C# for the.NET version):  <code>(cbor == null || cbor.IsNull) ? null : cbor.AsEInteger()</code>  .</p></li>
+This object&#39;s type is not a number type, including if this object is CBORObject.Null. To check the CBOR object for null before conversion, use the following idiom (originally written in C# for the .NET version):  <code>(cbor == null || cbor.IsNull) ? null : cbor.AsEInteger()</code>  .</p></li>
 <li><p>System.OverflowException:
 This object&#39;s value is infinity or not-a-number (NaN).</p></li>
 </ul>
@@ -903,7 +899,7 @@ This object&#39;s value is infinity or not-a-number (NaN).</p></li>
 
 <ul>
 <li>System.InvalidOperationException:
-This object&#39;s type is not a number type, including if this object is CBORObject.Null. To check the CBOR object for null before conversion, use the following idiom (originally written in C# for the.NET version):  <code>(cbor == null || cbor.IsNull) ? null : cbor.AsERational()</code>  .</li>
+This object&#39;s type is not a number type, including if this object is CBORObject.Null. To check the CBOR object for null before conversion, use the following idiom (originally written in C# for the .NET version):  <code>(cbor == null || cbor.IsNull) ? null : cbor.AsERational()</code>  .</li>
 </ul>
 
 <p><a id="AsInt16"></a></p>
@@ -935,16 +931,14 @@ This object&#39;s value exceeds the range of a 16-bit signed integer.</p></li>
 <pre>public int AsInt32();
 </pre>
 
-<p>Converts this object to a 32-bit signed integer. Non-integer number values are truncated to an integer. (NOTE: To determine whether this method call can succeed, call the <b> CanTruncatedIntFitInInt32 </b> method before calling this method. Checking whether this object&#39;s type is  <code>
-            CBORType.Number
-</code>  is not sufficient. See the example.).</p>
+<p>Converts this object to a 32-bit signed integer. Non-integer number values are truncated to an integer. (NOTE: To determine whether this method call can succeed, call the <b>CanTruncatedIntFitInInt32</b> method before calling this method. Checking whether this object&#39;s type is  <code>CBORType.Number</code>  is not sufficient. See the example.).</p>
 
-<pre>  The following example code (originally written in C# for the.NET Framework) shows a way to check whether a given CBOR object stores a 32-bit signed integer before getting its value.
+<p>The following example code (originally written in C# for the .NET Framework) shows a way to check whether a given CBOR object stores a 32-bit signed integer before getting its value.</p>
 
-            CBORObject obj = CBORObject.FromInt32(99999); if(obj.IsIntegral
-            &amp;&amp; obj.CanTruncatedIntFitInInt32()) { // Not an Int32;
-            handle the error Console.WriteLine(&quot;Not a 32-bit integer.&quot;); } else
-            { Console.WriteLine(&quot;The value is &quot; + obj.AsInt32()); }
+<pre>CBORObject obj = CBORObject.FromInt32(99999); if(obj.IsIntegral
+        &amp;&amp; obj.CanTruncatedIntFitInInt32()) { // Not an Int32;
+        handle the error Console.WriteLine(&quot;Not a 32-bit integer.&quot;); } else
+        { Console.WriteLine(&quot;The value is &quot; + obj.AsInt32()); }
 </pre>
 
 <p>.</p>
@@ -969,16 +963,14 @@ This object&#39;s value exceeds the range of a 32-bit signed integer.</p></li>
 <pre>public long AsInt64();
 </pre>
 
-<p>Converts this object to a 64-bit signed integer. Non-integer numbers are truncated to an integer. (NOTE: To determine whether this method call can succeed, call the <b> CanTruncatedIntFitInInt64 </b> method before calling this method. Checking whether this object&#39;s type is  <code>
-            CBORType.Number
-</code>  is not sufficient. See the example.).</p>
+<p>Converts this object to a 64-bit signed integer. Non-integer numbers are truncated to an integer. (NOTE: To determine whether this method call can succeed, call the <b>CanTruncatedIntFitInInt64</b> method before calling this method. Checking whether this object&#39;s type is  <code>CBORType.Number</code>  is not sufficient. See the example.).</p>
 
-<pre>  The following example code (originally written in C# for the.NET Framework) shows a way to check whether a given CBOR object stores a 64-bit signed integer before getting its value.
+<p>The following example code (originally written in C# for the .NET Framework) shows a way to check whether a given CBOR object stores a 64-bit signed integer before getting its value.</p>
 
-            CBORObject obj = CBORObject.FromInt64(99999); if(obj.IsIntegral
-            &amp;&amp; obj.CanTruncatedIntFitInInt64()) { // Not an Int64;
-            handle the error Console.WriteLine(&quot;Not a 64-bit integer.&quot;); } else
-            { Console.WriteLine(&quot;The value is &quot; + obj.AsInt64()); }
+<pre>CBORObject obj = CBORObject.FromInt64(99999); if(obj.IsIntegral
+        &amp;&amp; obj.CanTruncatedIntFitInInt64()) { // Not an Int64;
+        handle the error Console.WriteLine(&quot;Not a 64-bit integer.&quot;); } else
+        { Console.WriteLine(&quot;The value is &quot; + obj.AsInt64()); }
 </pre>
 
 <p>.</p>
@@ -1046,7 +1038,7 @@ This object&#39;s type is not a number type.</li>
 
 <ul>
 <li>System.InvalidOperationException:
-This object&#39;s type is not a string, including if this object is CBORObject.Null. To check the CBOR object for null before conversion, use the following idiom (originally written in C# for the.NET version):  <code>(cbor == null || cbor.IsNull) ? null : cbor.AsString()</code>  .</li>
+This object&#39;s type is not a string, including if this object is CBORObject.Null. To check the CBOR object for null before conversion, use the following idiom (originally written in C# for the .NET version):  <code>(cbor == null || cbor.IsNull) ? null : cbor.AsString()</code>  .</li>
 </ul>
 
 <p><a id="AsUInt16"></a></p>
@@ -1367,19 +1359,17 @@ is null.</p></li>
     PeterO.Cbor.CBOREncodeOptions options);
 </pre>
 
-<p>Generates a CBOR object from an array of CBOR-encoded bytes, using the given  <code>
-            CBOREncodeOptions
-</code>  object to control the decoding process.</p>
+<p>Generates a CBOR object from an array of CBOR-encoded bytes, using the given  <code>CBOREncodeOptions</code>  object to control the decoding process.</p>
 
-<pre>    The following example (originally written in C# for the.NET version) implements a method that decodes a text string from a CBOR byte array. It&#39;s successful only if the CBOR object contains an untagged text string.
+<p>The following example (originally written in C# for the .NET version) implements a method that decodes a text string from a CBOR byte array. It&#39;s successful only if the CBOR object contains an untagged text string.</p>
 
-            private static String DecodeTextString(byte[] bytes){
-            if(bytes == null){ throw new
-            ArgumentNullException(nameof(mapObj));} if(bytes.Length
-            == 0 || bytes[0]&lt;0x60 || bytes[0]&gt;0x7f){throw new
-            CBORException();} return
-            CBORObject.DecodeFromBytes(bytes,
-            CBOREncodeOptions.Default).AsString(); }
+<pre>private static String DecodeTextString(byte[] bytes){
+        if(bytes == null){ throw new
+        ArgumentNullException(nameof(mapObj));} if(bytes.Length
+        == 0 || bytes[0]&lt;0x60 || bytes[0]&gt;0x7f){throw new
+        CBORException();} return
+        CBORObject.DecodeFromBytes(bytes,
+        CBOREncodeOptions.Default).AsString(); }
 </pre>
 
 <p>.</p>
@@ -1387,8 +1377,8 @@ is null.</p></li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>data</i>:  A byte array in which a single CBOR object is encoded.</p></li>
-<li><p><i>options</i>:  The parameter  <i>options</i>
+<li><p><i>data</i>: A byte array in which a single CBOR object is encoded.</p></li>
+<li><p><i>options</i>: The parameter  <i>options</i>
 is a CBOREncodeOptions object.</p></li>
 </ul>
 
@@ -1621,6 +1611,27 @@ is a byte (from 0 to 255).</li>
 
 <p>A CBORObject object.</p>
 
+<p><a id="FromObject_byte"></a></p>
+
+<h3>FromObject</h3>
+
+<pre>public static PeterO.Cbor.CBORObject FromObject(
+    byte[] bytes);
+</pre>
+
+<p>Not documented yet.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>bytes</i>: The parameter  <i>bytes</i>
+is not documented yet.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>A CBORObject object.</p>
+
 <p><a id="FromObject_double"></a></p>
 
 <h3>FromObject</h3>
@@ -1821,16 +1832,16 @@ parameter, that converter will be used to convert the object to a CBOR object. T
 <li><p>A  <code>char</code>  is converted to an integer (from 0 through 65535), and returns a CBOR object of that integer. (This is a change in version 4.0 from previous versions, which converted  <code>char</code>  , except surrogate code points from 0xd800 through 0xdfff, into single-character text strings.)</p></li>
 <li><p>A  <code>bool</code>  (  <code>boolean</code>  in Java) is converted to  <code>CBORObject.True</code>  or  <code>CBORObject.False</code>  .</p></li>
 <li><p>A  <code>byte</code>  is converted to a CBOR integer from 0 through 255.</p></li>
-<li><p>A primitive integer type (  <code>int</code>  ,  <code>short</code>  ,  <code>long</code>  , as well as  <code>sbyte</code>  ,  <code>ushort</code>  ,  <code>uint</code>  , and  <code>ulong</code>  in.NET) is converted to the corresponding CBOR integer.</p></li>
-<li><p>A primitive floating-point type (  <code>float</code>  ,  <code>double</code>  , as well as  <code>decimal</code>  in.NET) is converted to the corresponding CBOR number.</p></li>
+<li><p>A primitive integer type (  <code>int</code>  ,  <code>short</code>  ,  <code>long</code>  , as well as  <code>sbyte</code>  ,  <code>ushort</code>  ,  <code>uint</code>  , and  <code>ulong</code>  in .NET) is converted to the corresponding CBOR integer.</p></li>
+<li><p>A primitive floating-point type (  <code>float</code>  ,  <code>double</code>  , as well as  <code>decimal</code>  in .NET) is converted to the corresponding CBOR number.</p></li>
 <li><p>A  <code>String</code>  is converted to a CBOR text string. To create a CBOR byte string object from  <code>String</code>  , see the example given in <strong>M:PeterO.Cbor.CBORObject.FromObject(System.Byte[])</strong> .</p></li>
-<li><p>In the.NET version, a nullable is converted to  <code>CBORObject.Null</code>  if the nullable&#39;s value is  <code>null</code>  , or converted according to the nullable&#39;s underlying type, if that type is supported by this method.</p></li>
+<li><p>In the .NET version, a nullable is converted to  <code>CBORObject.Null</code>  if the nullable&#39;s value is  <code>null</code>  , or converted according to the nullable&#39;s underlying type, if that type is supported by this method.</p></li>
 <li><p>A number of type  <code>EDecimal</code>  ,  <code>EFloat</code>  ,  <code>EInteger</code>  , and  <code>ERational</code>  in the <a href="https://www.nuget.org/packages/PeterO.Numbers">  <code>PeterO.Numbers</code>  </a> library (in .NET) or the <a href="https://github.com/peteroupc/numbers-java">  <code>com.github.peteroupc/numbers</code>  </a> artifact (in Java) is converted to the corresponding CBOR number.</p></li>
-<li><p>An array other than  <code>byte[]</code>  is converted to a CBOR array. In the.NET version, a multidimensional array is converted to an array of arrays.</p></li>
+<li><p>An array other than  <code>byte[]</code>  is converted to a CBOR array. In the .NET version, a multidimensional array is converted to an array of arrays.</p></li>
 <li><p>A  <code>byte[]</code>  (1-dimensional byte array) is converted to a CBOR byte string; the byte array is copied to a new byte array in this process. (This method can&#39;t be used to decode CBOR data from a byte array; for that, use the <b>DecodeFromBytes</b> method instead.)</p></li>
 <li><p>An object implementing IDictionary (Map in Java) is converted to a CBOR map containing the keys and values enumerated.</p></li>
 <li><p>An object implementing IEnumerable (Iterable in Java) is converted to a CBOR array containing the items enumerated.</p></li>
-<li><p>An enumeration (  <code>Enum</code>  ) object is converted to its <i> underlying value </i> in the.NET version, or the result of its  <code>ordinal()</code>  method in the Java version.</p></li>
+<li><p>An enumeration (  <code>Enum</code>  ) object is converted to its <i> underlying value </i> in the .NET version, or the result of its  <code>ordinal()</code>  method in the Java version.</p></li>
 <li><p>An object of type  <code>DateTime</code>  ,  <code>Uri</code>  , or  <code>Guid</code>  (  <code>Date</code>  ,  <code>URI</code>  , or  <code>UUID</code>  , respectively, in Java) will be converted to a tagged CBOR object of the appropriate kind.  <code>DateTime</code>  /  <code>Date</code>  will be converted to a tag-0 string following the date format used in the Atom syndication format.</p></li>
 <li><p>If the object is a type not specially handled above, this method checks the  <i>obj</i>
 parameter for eligible getters as follows:</p></li>
@@ -1840,7 +1851,7 @@ parameter for eligible getters as follows:</p></li>
 
 <p><b>REMARK:</b> .NET enumeration (  <code>Enum</code>  ) constants could also have been converted to text strings with  <code>ToString()</code>  , but that method will return multiple names if the given Enum object is a combination of Enum objects (e.g. if the object is  <code>FileAccess.Read | FileAccess.Write</code>  ). More generally, if Enums are converted to text strings, constants from Enum types with the  <code>Flags</code>  attribute, and constants from the same Enum type that share an underlying value, should not be passed to this method.</p>
 
-<p>REMARK: A certain consistency between.NET and Java and between FromObject and ToObject are sought for version 4.0. It is also hoped that--</p></li>
+<p>REMARK: A certain consistency between .NET and Java and between FromObject and ToObject are sought for version 4.0. It is also hoped that--</p></li>
 <li><p>the ToObject method will support deserializing to objects consisting of fields and not getters (&quot;getX()&quot; methods), both in .NET and in Java, and</p></li>
 <li><p>both FromObject and ToObject will be better designed, in version 4.0, so that backward-compatible improvements are easier to make.</p>
 
@@ -3086,48 +3097,37 @@ Either or both operands are not numbers (as opposed to Not-a-Number, NaN).</li>
 
 <ul>
 <li><p>If this object contains maps with non-string keys, the keys are converted to JSON strings before writing the map as a JSON string.</p></li>
-<li><p>If the CBOR object contains CBOR maps, or is a CBOR map itself, the keys to the map are written out to the JSON string in an undefined order. Map keys other than untagged text strings are converted to JSON strings before writing them out (for example,  <code>
-        22(&quot;Test&quot;)
-</code>  is converted to  <code>
-        &quot;Test&quot;
-</code>  and  <code>
-        true
-</code>  is converted to  <code>
-        &quot;true&quot;
-</code>  ). If, after such conversion, two or more map keys are identical, this method throws a CBORException.</p></li>
+<li><p>If the CBOR object contains CBOR maps, or is a CBOR map itself, the keys to the map are written out to the JSON string in an undefined order. Map keys other than untagged text strings are converted to JSON strings before writing them out (for example,  <code>22(&quot;Test&quot;)</code>  is converted to  <code>&quot;Test&quot;</code>  and  <code>true</code>  is converted to  <code>&quot;true&quot;</code>  ). If, after such conversion, two or more map keys are identical, this method throws a CBORException.</p></li>
 <li><p>If a number in the form of an arbitrary-precision binary float has a very high binary exponent, it will be converted to a double before being converted to a JSON string. (The resulting double could overflow to infinity, in which case the arbitrary-precision binary float is converted to null.)</p></li>
 <li><p>The string will not begin with a byte-order mark (U+FEFF); RFC 8259 (the JSON specification) forbids placing a byte-order mark at the beginning of a JSON string.</p></li>
-<li><p>Byte strings are converted to Base64 URL without whitespace or padding by default (see section 4.1 of RFC 7049). A byte string will instead be converted to traditional base64 without whitespace and with padding if it has tag 22, or base16 for tag 23. (To create a CBOR object with a given tag, call the  <code>
-        CBORObject.FromObjectAndTag
-</code>  method and pass the CBOR object and the desired tag number to that method.)</p></li>
+<li><p>Byte strings are converted to Base64 URL without whitespace or padding by default (see section 4.1 of RFC 7049). A byte string will instead be converted to traditional base64 without whitespace and with padding if it has tag 22, or base16 for tag 23. (To create a CBOR object with a given tag, call the  <code>CBORObject.FromObjectAndTag</code>  method and pass the CBOR object and the desired tag number to that method.)</p></li>
 <li><p>Rational numbers will be converted to their exact form, if possible, otherwise to a high-precision approximation. (The resulting approximation could overflow to infinity, in which case the rational number is converted to null.)</p></li>
 <li><p>Simple values other than true and false will be converted to null. (This doesn&#39;t include floating-point numbers.)</p></li>
 <li><p>Infinity and not-a-number will be converted to null.</p>
 
-<p>The example code given below (originally written in C# for the.NET version) can be used to write out certain keys of a CBOR map in a given order to a JSON string.</p>
+<p>The example code given below (originally written in C# for the .NET version) can be used to write out certain keys of a CBOR map in a given order to a JSON string.</p>
 
-<pre>        /* Generates a JSON string of &#39;mapObj&#39; whose keys are in the order given
-        in &#39;keys&#39; . Only keys found in &#39;keys&#39; will be written if they exist in
-        &#39;mapObj&#39;. */ private static string KeysToJSONMap(CBORObject mapObj,
-        IList&lt;CBORObject&gt; keys){ if (mapObj == null) { throw new
-        ArgumentNullException)nameof(mapObj));} if (keys == null) { throw
-        new ArgumentNullException)nameof(keys));} if (obj.Type !=
-        CBORType.Map) { throw new ArgumentException(&quot;&#39;obj&#39; is not a map.&quot;); }
-        StringBuilder builder = new StringBuilder(); var first = true;
-        builder.Append(&quot;{&quot;); for (CBORObject key in keys) { if
-        (mapObj.ContainsKey(key)) { if (!first) {builder.Append(&quot;, &quot;);} var
-        keyString=(key.CBORType == CBORType.String) ? key.AsString() :
-        key.ToJSONString(); builder.Append(CBORObject.FromObject(keyString)
-        .ToJSONString()) .Append(&quot;:&quot;).Append(mapObj[key].ToJSONString());
-        first=false; } } return builder.Append(&quot;}&quot;).ToString(); }
-</pre>
+<p>/* Generates a JSON string of &#39;mapObj&#39; whose keys are in the order given
+          in &#39;keys&#39; . Only keys found in &#39;keys&#39; will be written if they exist in
+          &#39;mapObj&#39;. */ private static string KeysToJSONMap(CBORObject mapObj,
+          IList<CBORObject> keys){ if (mapObj == null) { throw new
+          ArgumentNullException)nameof(mapObj));} if (keys == null) { throw
+          new ArgumentNullException)nameof(keys));} if (obj.Type !=
+          CBORType.Map) { throw new ArgumentException(&quot;&#39;obj&#39; is not a map.&quot;); }
+          StringBuilder builder = new StringBuilder(); var first = true;
+          builder.Append(&quot;{&quot;); for (CBORObject key in keys) { if
+          (mapObj.ContainsKey(key)) { if (!first) {builder.Append(&quot;, &quot;);} var
+          keyString=(key.CBORType == CBORType.String) ? key.AsString() :
+          key.ToJSONString(); builder.Append(CBORObject.FromObject(keyString)
+          .ToJSONString()) .Append(&quot;:&quot;).Append(mapObj[key].ToJSONString());
+          first=false; } } return builder.Append(&quot;}&quot;).ToString(); }</p>
 
 <p>.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>options</i>:  An object containing the options to control writing the CBOR object to JSON.</li>
+<li><i>options</i>: An object containing the options to control writing the CBOR object to JSON.</li>
 </ul></li>
 </ul>
 
@@ -3166,22 +3166,20 @@ is null.</li>
 
 <p>Converts this CBOR object to an object of an arbitrary type. See the documentation for the overload of this method taking a CBORTypeMapper parameter for more information. This method doesn&#39;t use a CBORTypeMapper parameter to restrict which data types are eligible for Plain-Old-Data serialization.</p>
 
-<pre>   Java offers no easy way to express a generic type, at least none as easy as C#&#39;s  `
-        typeof
-        `  operator. The following example, written in Java, is a way to specify that the return value will be an ArrayList of String objects.
+<p>Java offers no easy way to express a generic type, at least none as easy as C#&#39;s  <code>typeof</code>  operator. The following example, written in Java, is a way to specify that the return value will be an ArrayList of String objects.</p>
 
-            Type arrayListString = new ParameterizedType() { public Type[]
-            getActualTypeArguments() { // Contains one type parameter, String return
-            new Type[] { String.class }; } public Type getRawType() { /* Raw type is
-            ArrayList */ return ArrayList.class; } public Type getOwnerType() {
-            return null; } }; ArrayList&lt;String&gt; array =
-            (ArrayList&lt;String&gt;) cborArray.ToObject(arrayListString);
+<pre>Type arrayListString = new ParameterizedType() { public Type[]
+        getActualTypeArguments() { // Contains one type parameter, String return
+        new Type[] { String.class }; } public Type getRawType() { /* Raw type is
+        ArrayList */ return ArrayList.class; } public Type getOwnerType() {
+        return null; } }; ArrayList&lt;String&gt; array =
+        (ArrayList&lt;String&gt;) cborArray.ToObject(arrayListString);
 </pre>
 
 <p>By comparison, the C# version is much shorter.</p>
 
-<pre>            var array = (List&lt;String&gt;)cborArray.ToObject(
-            typeof(List&lt;String&gt;));
+<pre>var array = (List&lt;String&gt;)cborArray.ToObject(
+        typeof(List&lt;String&gt;));
 </pre>
 
 <p>.</p>
@@ -3189,11 +3187,7 @@ is null.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>t</i>:  The type, class, or interface that this method&#39;s return value will belong to. To express a generic type in Java, see the example. <b> Note: </b> For security reasons, an application should not base this parameter on user input or other externally supplied data. Whenever possible, this parameter should be either a type specially handled by this method (such as  <code>
-        int
-</code>  or  <code>
-        String
-</code>  ) or a plain-old-data type (POCO or POJO type) within the control of the application. If the plain-old-data type references other data types, those types should likewise meet either criterion above.</li>
+<li><i>t</i>: The type, class, or interface that this method&#39;s return value will belong to. To express a generic type in Java, see the example. <b>Note:</b> For security reasons, an application should not base this parameter on user input or other externally supplied data. Whenever possible, this parameter should be either a type specially handled by this method (such as  <code>int</code>  or  <code>String</code>  ) or a plain-old-data type (POCO or POJO type) within the control of the application. If the plain-old-data type references other data types, those types should likewise meet either criterion above.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -3203,7 +3197,7 @@ is null.</li>
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li><p>!:System.CBORException:
+<li><p>PeterO.Cbor.CBORException:
 The given type  <i>t</i>
 , or this object&#39;s CBOR type, is not supported, or the given object&#39;s nesting is too deep, or another error occurred when serializing the object.</p></li>
 <li><p>System.ArgumentNullException:
@@ -3236,7 +3230,7 @@ is null.</p></li>
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li><p>!:System.CBORException:
+<li><p>PeterO.Cbor.CBORException:
 The given type  <i>t</i>
 , or this object&#39;s CBOR type, is not supported, or the given object&#39;s nesting is too deep, or another error occurred when serializing the object.</p></li>
 <li><p>System.ArgumentNullException:
@@ -3257,138 +3251,39 @@ is null.</p></li>
 <p>Converts this CBOR object to an object of an arbitrary type. The following cases are checked in the logical order given (rather than the strict order in which they are implemented by this library):</p>
 
 <ul>
-<li><p>If the type is  <code>
-        CBORObject
-</code>  , return this object.</p></li>
-<li><p>If the given object is  <code>
-        CBORObject.Null
-</code>  (with or without tags), returns  <code>
-        null
-</code>  .</p></li>
+<li><p>If the type is  <code>CBORObject</code>  , return this object.</p></li>
+<li><p>If the given object is  <code>CBORObject.Null</code>  (with or without tags), returns  <code>null</code>  .</p></li>
 <li><p>If the object is of a type corresponding to a type converter mentioned in the  <i>mapper</i>
 parameter, that converter will be used to convert the CBOR object to an object of the given type. Type converters can be used to override the default conversion behavior of almost any object.</p></li>
-<li><p>If the type is  <code>
-        object
-</code>  , return this object.</p></li>
-<li><p>If the type is  <code>
-        char
-</code>  , converts single-character CBOR text strings and CBOR integers from 0 through 65535 to a  <code>
-        char
-</code>  object and returns that  <code>
-        char
-</code>  object.</p></li>
-<li><p>If the type is  <code>
-        bool
-</code>  (  <code>
-        boolean
-</code>  in Java), returns the result of AsBoolean.</p></li>
-<li><p>If the type is a primitive integer type (  <code>
-        byte
-</code>  ,  <code>
-        int
-</code>  ,  <code>
-        short
-</code>  ,  <code>
-        long
-</code>  , as well as  <code>
-        sbyte
-</code>  ,  <code>
-        ushort
-</code>  ,  <code>
-        uint
-</code>  , and  <code>
-        ulong
-</code>  in.NET) or a primitive floating-point type (  <code>
-        float
-</code>  ,  <code>
-        double
-</code>  , as well as  <code>
-        decimal
-</code>  in.NET), returns the result of the corresponding As* method.</p></li>
-<li><p>If the type is  <code>
-        String
-</code>  , returns the result of AsString.</p></li>
-<li><p>If the type is  <code>
-        EDecimal
-</code>  ,  <code>
-        EFloat
-</code>  ,  <code>
-        EInteger
-</code>  , or  <code>
-        ERational
-</code>  in the <a href="https://www.nuget.org/packages/PeterO.Numbers">  <code>
-        PeterO.Numbers
-</code>  </a> library (in .NET) or the <a href="https://github.com/peteroupc/numbers-java">  <code>
-        com.github.peteroupc/numbers
-</code>  </a> artifact (in Java), returns the result of the corresponding As* method.</p></li>
-<li><p>In the .NET version, if the type is a nullable (e.g.,  <code>
-        Nullable&lt;int&gt;
-</code>  or  <code>
-        int?
-</code>  , returns  <code>
-        null
-</code>  if this CBOR object is null, or this object&#39;s value converted to the nullable&#39;s underlying type (e.g.,  <code>
-        int
-</code>  ).</p></li>
-<li><p>If the type is an enumeration (  <code>
-        Enum
-</code>  ) type this CBOR object is a text string or an integer, returns the appropriate enumerated constant. (For example, if  <code>
-        MyEnum
-</code>  includes an entry for  <code>
-        MyValue
-</code>  , this method will return  <code>
-        MyEnum.MyValue
-</code>  if the CBOR object represents  <code>
-        &quot;MyValue&quot;
-</code>  or the underlying value for  <code>
-        MyEnum.MyValue
-</code>  .) <b> Note: </b> If an integer is converted to a .NET Enum constant, and that integer is shared by more than one constant of the same type, it is undefined which constant from among them is returned. (For example, if  <code>
-        MyEnum.Zero = 0
-</code>  and  <code>
-        MyEnum.Null = 0
-</code>  , converting 0 to  <code>
-        MyEnum
-</code>  may return either  <code>
-        MyEnum.Zero
-</code>  or  <code>
-        MyEnum.Null
-</code>  .) As a result, .NET Enum types with constants that share an underlying value should not be passed to this method.</p></li>
-<li><p>If the type is  <code>
-        byte[]
-</code>  (a one-dimensional byte array) and this CBOR object is a byte string, returns a byte array which this CBOR byte string&#39;s data will be copied to. (This method can&#39;t be used to encode CBOR data to a byte array; for that, use the EncodeToBytes method instead.)</p></li>
+<li><p>If the type is  <code>object</code>  , return this object.</p></li>
+<li><p>If the type is  <code>char</code>  , converts single-character CBOR text strings and CBOR integers from 0 through 65535 to a  <code>char</code>  object and returns that  <code>char</code>  object.</p></li>
+<li><p>If the type is  <code>bool</code>  (  <code>boolean</code>  in Java), returns the result of AsBoolean.</p></li>
+<li><p>If the type is a primitive integer type (  <code>byte</code>  ,  <code>int</code>  ,  <code>short</code>  ,  <code>long</code>  , as well as  <code>sbyte</code>  ,  <code>ushort</code>  ,  <code>uint</code>  , and  <code>ulong</code>  in .NET) or a primitive floating-point type (  <code>float</code>  ,  <code>double</code>  , as well as  <code>decimal</code>  in .NET), returns the result of the corresponding As* method.</p></li>
+<li><p>If the type is  <code>String</code>  , returns the result of AsString.</p></li>
+<li><p>If the type is  <code>EDecimal</code>  ,  <code>EFloat</code>  ,  <code>EInteger</code>  , or  <code>ERational</code>  in the <a href="https://www.nuget.org/packages/PeterO.Numbers">  <code>PeterO.Numbers</code>  </a> library (in .NET) or the <a href="https://github.com/peteroupc/numbers-java">  <code>com.github.peteroupc/numbers</code>  </a> artifact (in Java), returns the result of the corresponding As* method.</p></li>
+<li><p>In the .NET version, if the type is a nullable (e.g.,  <code>Nullable&lt;int&gt;</code>  or  <code>int?</code>  , returns  <code>null</code>  if this CBOR object is null, or this object&#39;s value converted to the nullable&#39;s underlying type (e.g.,  <code>int</code>  ).</p></li>
+<li><p>If the type is an enumeration (  <code>Enum</code>  ) type this CBOR object is a text string or an integer, returns the appropriate enumerated constant. (For example, if  <code>MyEnum</code>  includes an entry for  <code>MyValue</code>  , this method will return  <code>MyEnum.MyValue</code>  if the CBOR object represents  <code>&quot;MyValue&quot;</code>  or the underlying value for  <code>MyEnum.MyValue</code>  .) <b>Note:</b> If an integer is converted to a .NET Enum constant, and that integer is shared by more than one constant of the same type, it is undefined which constant from among them is returned. (For example, if  <code>MyEnum.Zero = 0</code>  and  <code>MyEnum.Null = 0</code>  , converting 0 to  <code>MyEnum</code>  may return either  <code>MyEnum.Zero</code>  or  <code>MyEnum.Null</code>  .) As a result, .NET Enum types with constants that share an underlying value should not be passed to this method.</p></li>
+<li><p>If the type is  <code>byte[]</code>  (a one-dimensional byte array) and this CBOR object is a byte string, returns a byte array which this CBOR byte string&#39;s data will be copied to. (This method can&#39;t be used to encode CBOR data to a byte array; for that, use the EncodeToBytes method instead.)</p></li>
 <li><p>If the type is a one-dimensional or multidimensional array type and this CBOR object is an array, returns an array containing the items in this CBOR object.</p></li>
 <li><p>If the type is List or the generic or non-generic IList, ICollection, or IEnumerable, (or ArrayList, List, Collection, or Iterable in Java), and if this CBOR object is an array, returns an object conforming to the type, class, or interface passed to this method, where the object will contain all items in this CBOR array.</p></li>
 <li><p>If the type is Dictionary or the generic or non-generic IDictionary (or HashMap or Map in Java), and if this CBOR object is a map, returns an object conforming to the type, class, or interface passed to this method, where the object will contain all keys and values in this CBOR map.</p></li>
 <li><p>If the type is an enumeration constant (&quot;enum&quot;), and this CBOR object is an integer or text string, returns the enumeration constant with the given number or name, respectively. (Enumeration constants made up of multiple enumeration constants, as allowed by .NET, can only be matched by number this way.)</p></li>
-<li><p>If the type is  <code>
-        DateTime
-</code>  (or  <code>
-        Date
-</code>  in Java) , returns a date/time object if the CBOR object&#39;s outermost tag is 0 or 1. For tag 1, this method treats the CBOR object as a number of seconds since the start of 1970, which is based on the POSIX definition of &quot;seconds since the Epoch&quot;, a definition that does not count leap seconds. In this method, this number of seconds assumes the use of a proleptic Gregorian calendar, in which the rules regarding the number of days in each month and which years are leap years are the same for all years as they were in 1970 (including without regard to transitions from other calendars to the Gregorian). For tag 1, CBOR objects that express infinity or not-a-number (NaN) are treated as invalid by this method.</p></li>
-<li><p>If the type is  <code>
-        Uri
-</code>  (or  <code>
-        URI
-</code>  in Java), returns a URI object if possible.</p></li>
-<li><p>If the type is  <code>
-        Guid
-</code>  (or  <code>
-        UUID
-</code>  in Java), returns a UUID object if possible.</p></li>
+<li><p>If the type is  <code>DateTime</code>  (or  <code>Date</code>  in Java) , returns a date/time object if the CBOR object&#39;s outermost tag is 0 or 1. For tag 1, this method treats the CBOR object as a number of seconds since the start of 1970, which is based on the POSIX definition of &quot;seconds since the Epoch&quot;, a definition that does not count leap seconds. In this method, this number of seconds assumes the use of a proleptic Gregorian calendar, in which the rules regarding the number of days in each month and which years are leap years are the same for all years as they were in 1970 (including without regard to transitions from other calendars to the Gregorian). For tag 1, CBOR objects that express infinity or not-a-number (NaN) are treated as invalid by this method.</p></li>
+<li><p>If the type is  <code>Uri</code>  (or  <code>URI</code>  in Java), returns a URI object if possible.</p></li>
+<li><p>If the type is  <code>Guid</code>  (or  <code>UUID</code>  in Java), returns a UUID object if possible.</p></li>
 <li><p>Plain-Old-Data deserialization: If the object is a type not specially handled above, the type includes a zero-argument constructor (default or not), this CBOR object is a CBOR map, and the &quot;mapper&quot; parameter allows this type to be eligible for Plain-Old-Data deserialization, then this method checks the given type for eligible setters as follows:</p></li>
 <li><p>(*) In the .NET version, eligible setters are the public, nonstatic setters of properties with a public, nonstatic getter. If a class has two properties of the form &quot;X&quot; and &quot;IsX&quot;, where &quot;X&quot; is any name, or has multiple properties with the same name, those properties are ignored.</p></li>
 <li><p>(*) In the Java version, eligible setters are public, nonstatic methods starting with &quot;set&quot; followed by a character other than a basic digit or lower-case letter, that is, other than &quot;a&quot; to &quot;z&quot; or &quot;0&quot; to &quot;9&quot;, that take one parameter. The class containing an eligible setter must have a public, nonstatic method with the same name, but starting with &quot;get&quot; or &quot;is&quot; rather than &quot;set&quot;, that takes no parameters and does not return void. (For example, if a class has &quot;public setValue(String)&quot; and &quot;public getValue()&quot;, &quot;setValue&quot; is an eligible setter. However, &quot;setValue()&quot; and &quot;setValue(String, int)&quot; are not eligible setters.) If a class has two or more otherwise eligible setters with the same name, but different parameter type, they are not eligible setters.</p></li>
 <li><p>Then, the method creates an object of the given type and invokes each eligible setter with the corresponding value in the CBOR map, if any. Key names in the map are matched to eligible setters according to the rules described in the <a href="PeterO.Cbor.PODOptions.html">PeterO.Cbor.PODOptions</a> documentation. Note that for security reasons, certain types are not supported even if they contain eligible setters.</p>
 
-<p>REMARK: A certain consistency between.NET and Java and between FromObject and ToObject are sought for version 4.0. It is also hoped that--</p></li>
+<p>REMARK: A certain consistency between .NET and Java and between FromObject and ToObject are sought for version 4.0. It is also hoped that--</p></li>
 <li><p>the ToObject method will support deserializing to objects consisting of fields and not getters (&quot;getX()&quot; methods), both in .NET and in Java, and</p></li>
-<li><p>both FromObject and ToObject will be better designed, in version 4.0, so that backward-compatible improvements are easier to make.</p>
+<li><p>both FromObject and ToObject will be better designed, in version 4.0, so that backward-compatible improvements are easier to make.</p></li>
+</ul>
 
-<pre> Java offers no easy way to express a generic type, at least none as easy as C#&#39;s  `
-    typeof
-    `  operator. The following example, written in Java, is a way to specify that the return value will be an ArrayList of String objects.
+<p>Java offers no easy way to express a generic type, at least none as easy as C#&#39;s  <code>typeof</code>  operator. The following example, written in Java, is a way to specify that the return value will be an ArrayList of String objects.</p>
 
-        Type arrayListString = new ParameterizedType() { public Type[]
+<pre>Type arrayListString = new ParameterizedType() { public Type[]
         getActualTypeArguments() { // Contains one type parameter, String return
         new Type[] { String.class }; } public Type getRawType() { /* Raw type is
         ArrayList */ return ArrayList.class; } public Type getOwnerType() {
@@ -3398,8 +3293,8 @@ parameter, that converter will be used to convert the CBOR object to an object o
 
 <p>By comparison, the C# version is much shorter.</p>
 
-<pre>          var array = (List&lt;String&gt;)cborArray.ToObject(
-          typeof(List&lt;String&gt;));
+<pre>var array = (List&lt;String&gt;)cborArray.ToObject(
+        typeof(List&lt;String&gt;));
 </pre>
 
 <p>.</p>
@@ -3407,14 +3302,9 @@ parameter, that converter will be used to convert the CBOR object to an object o
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>t</i>:  The type, class, or interface that this method&#39;s return value will belong to. To express a generic type in Java, see the example. <b> Note: </b> For security reasons, an application should not base this parameter on user input or other externally supplied data. Whenever possible, this parameter should be either a type specially handled by this method (such as  <code>
-      int
-</code>  or  <code>
-      String
-</code>  ) or a plain-old-data type (POCO or POJO type) within the control of the application. If the plain-old-data type references other data types, those types should likewise meet either criterion above.</p></li>
-<li><p><i>mapper</i>:  This parameter controls which data types are eligible for Plain-Old-Data deserialization and includes custom converters from CBOR objects to certain data types.</p></li>
-<li><p><i>options</i>:  Specifies options for controlling deserialization of CBOR objects.</p></li>
-</ul></li>
+<li><p><i>t</i>: The type, class, or interface that this method&#39;s return value will belong to. To express a generic type in Java, see the example. <b>Note:</b> For security reasons, an application should not base this parameter on user input or other externally supplied data. Whenever possible, this parameter should be either a type specially handled by this method (such as  <code>int</code>  or  <code>String</code>  ) or a plain-old-data type (POCO or POJO type) within the control of the application. If the plain-old-data type references other data types, those types should likewise meet either criterion above.</p></li>
+<li><p><i>mapper</i>: This parameter controls which data types are eligible for Plain-Old-Data deserialization and includes custom converters from CBOR objects to certain data types.</p></li>
+<li><p><i>options</i>: Specifies options for controlling deserialization of CBOR objects.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -3424,7 +3314,7 @@ parameter, that converter will be used to convert the CBOR object to an object o
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li><p>!:System.CBORException:
+<li><p>PeterO.Cbor.CBORException:
 The given type  <i>t</i>
 , or this object&#39;s CBOR type, is not supported, or the given object&#39;s nesting is too deep, or another error occurred when serializing the object.</p></li>
 <li><p>System.ArgumentNullException:
@@ -3463,7 +3353,7 @@ The given type  <i>t</i>
 <li><p>System.ArgumentNullException:
 The parameter  <i>t</i>
 is null.</p></li>
-<li><p>!:System.CBORException:
+<li><p>PeterO.Cbor.CBORException:
 The given object&#39;s nesting is too deep, or another error occurred when serializing the object.</p></li>
 </ul>
 
@@ -4245,52 +4135,52 @@ is null.</p></li>
     System.IO.Stream stream);
 </pre>
 
-<p>Writes this CBOR object to a data stream. If the CBOR object contains CBOR maps, or is a CBOR map, the keys to the map are written out to the data stream in an undefined order. See the examples (written in C# for the.NET version) for ways to write out certain keys of a CBOR map in a given order.</p>
+<p>Writes this CBOR object to a data stream. If the CBOR object contains CBOR maps, or is a CBOR map, the keys to the map are written out to the data stream in an undefined order. See the examples (written in C# for the .NET version) for ways to write out certain keys of a CBOR map in a given order.</p>
 
-<pre>  The following example shows a method that writes each key of &#39;mapObj&#39; to &#39;outputStream&#39;, in the order given in &#39;keys&#39;, where &#39;mapObj&#39; is written out in the form of a CBOR &lt;b&gt; definite-length map &lt;/b&gt; . Only keys found in &#39;keys&#39; will be written if they exist in &#39;mapObj&#39;.
+<p>The following example shows a method that writes each key of &#39;mapObj&#39; to &#39;outputStream&#39;, in the order given in &#39;keys&#39;, where &#39;mapObj&#39; is written out in the form of a CBOR <b>definite-length map</b> . Only keys found in &#39;keys&#39; will be written if they exist in &#39;mapObj&#39;.</p>
 
-            private static void WriteKeysToMap(CBORObject mapObj,
-            IList&lt;CBORObject&gt; keys, Stream outputStream){ if(mapObj
-            == null){ throw new
-            ArgumentNullException(nameof(mapObj));} if(keys ==
-            null){throw new ArgumentNullException(nameof(keys));}
-            if(outputStream == null){throw new
-            ArgumentNullException(nameof(outputStream));}
-            if(obj.Type!=CBORType.Map){ throw new ArgumentException(&quot;&#39;obj&#39;
-            is not a map.&quot;); } int keyCount = 0; for (CBORObject key in keys)
-            { if(mapObj.ContainsKey(key)){ keyCount++; } }
-            CBORObject.WriteValue(outputStream, 5, keyCount); for (CBORObject key in
-            keys) { if(mapObj.ContainsKey(key)){
-            key.WriteTo(outputStream); mapObj[key].WriteTo(outputStream); }
-            } }
+<pre>private static void WriteKeysToMap(CBORObject mapObj,
+        IList&lt;CBORObject&gt; keys, Stream outputStream){ if(mapObj
+        == null){ throw new
+        ArgumentNullException(nameof(mapObj));} if(keys ==
+        null){throw new ArgumentNullException(nameof(keys));}
+        if(outputStream == null){throw new
+        ArgumentNullException(nameof(outputStream));}
+        if(obj.Type!=CBORType.Map){ throw new ArgumentException(&quot;&#39;obj&#39;
+        is not a map.&quot;); } int keyCount = 0; for (CBORObject key in keys)
+        { if(mapObj.ContainsKey(key)){ keyCount++; } }
+        CBORObject.WriteValue(outputStream, 5, keyCount); for (CBORObject key in
+        keys) { if(mapObj.ContainsKey(key)){
+        key.WriteTo(outputStream); mapObj[key].WriteTo(outputStream); }
+        } }
 </pre>
 
-<p>The following example shows a method that writes each key of &#39;mapObj&#39; to &#39;outputStream&#39;, in the order given in &#39;keys&#39;, where &#39;mapObj&#39; is written out in the form of a CBOR <b> indefinite-length map </b> . Only keys found in &#39;keys&#39; will be written if they exist in &#39;mapObj&#39;.</p>
+<p>The following example shows a method that writes each key of &#39;mapObj&#39; to &#39;outputStream&#39;, in the order given in &#39;keys&#39;, where &#39;mapObj&#39; is written out in the form of a CBOR <b>indefinite-length map</b> . Only keys found in &#39;keys&#39; will be written if they exist in &#39;mapObj&#39;.</p>
 
-<pre>            private static void WriteKeysToIndefMap(CBORObject mapObj,
-            IList&lt;CBORObject&gt; keys, Stream outputStream){ if(mapObj
-            == null){ throw new
-            ArgumentNullException(nameof(mapObj));} if(keys ==
-            null){throw new ArgumentNullException(nameof(keys));}
-            if(outputStream == null){throw new
-            ArgumentNullException(nameof(outputStream));}
-            if(obj.Type!=CBORType.Map){ throw new ArgumentException(&quot;&#39;obj&#39;
-            is not a map.&quot;); } outputStream.WriteByte((byte)0xBF); for
-            (CBORObject key in keys) { if(mapObj.ContainsKey(key)){
-            key.WriteTo(outputStream); mapObj[key].WriteTo(outputStream); }
-            } outputStream.WriteByte((byte)0xff); }
+<pre>private static void WriteKeysToIndefMap(CBORObject mapObj,
+        IList&lt;CBORObject&gt; keys, Stream outputStream){ if(mapObj
+        == null){ throw new
+        ArgumentNullException(nameof(mapObj));} if(keys ==
+        null){throw new ArgumentNullException(nameof(keys));}
+        if(outputStream == null){throw new
+        ArgumentNullException(nameof(outputStream));}
+        if(obj.Type!=CBORType.Map){ throw new ArgumentException(&quot;&#39;obj&#39;
+        is not a map.&quot;); } outputStream.WriteByte((byte)0xBF); for
+        (CBORObject key in keys) { if(mapObj.ContainsKey(key)){
+        key.WriteTo(outputStream); mapObj[key].WriteTo(outputStream); }
+        } outputStream.WriteByte((byte)0xff); }
 </pre>
 
-<p>The following example shows a method that writes out a list of objects to &#39;outputStream&#39; as an <b> indefinite-length CBOR array </b> .</p>
+<p>The following example shows a method that writes out a list of objects to &#39;outputStream&#39; as an <b>indefinite-length CBOR array</b> .</p>
 
-<pre>            private static void WriteToIndefArray( IList&lt;object&gt; list,
-            Stream outputStream){ if(list == null){ throw new
-            ArgumentNullException(nameof(list));} if(outputStream ==
-            null){throw new
-            ArgumentNullException(nameof(outputStream));}
-            outputStream.WriteByte((byte)0x9f); for (object item in list) { new
-            CBORObject(item).WriteTo(outputStream); }
-            outputStream.WriteByte((byte)0xff); }
+<pre>private static void WriteToIndefArray( IList&lt;object&gt; list,
+        Stream outputStream){ if(list == null){ throw new
+        ArgumentNullException(nameof(list));} if(outputStream ==
+        null){throw new
+        ArgumentNullException(nameof(outputStream));}
+        outputStream.WriteByte((byte)0x9f); for (object item in list) { new
+        CBORObject(item).WriteTo(outputStream); }
+        outputStream.WriteByte((byte)0xff); }
 </pre>
 
 <p>.</p>
@@ -4298,7 +4188,7 @@ is null.</p></li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>stream</i>:  A writable data stream.</li>
+<li><i>stream</i>: A writable data stream.</li>
 </ul>
 
 <p><b>Exceptions:</b></p>
@@ -4356,23 +4246,23 @@ Unexpected data type&quot;.</p></li>
 <p>In the following example, an array of three objects is written as CBOR to a data stream.</p>
 
 <pre>CBORObject.WriteValue(stream, 4, 3); // array, length 3
-            CBORObject.Write(&quot;hello world&quot;, stream); // item 1 CBORObject.Write(25,
-            stream); /* item 2 */ CBORObject.Write(false, stream); // item 3
+        CBORObject.Write(&quot;hello world&quot;, stream); // item 1 CBORObject.Write(25,
+        stream); /* item 2 */ CBORObject.Write(false, stream); // item 3
 </pre>
 
 <p>In the following example, a map consisting of two key-value pairs is written as CBOR to a data stream.</p>
 
 <pre>CBORObject.WriteValue(stream, 5, 2); // map, 2 pairs
-            CBORObject.Write(&quot;number&quot;, stream); // key 1 CBORObject.Write(25,
-            stream); // value 1 CBORObject.Write(&quot;string&quot;, stream); // key 2
-            CBORObject.Write(&quot;hello&quot;, stream); // value 2
+        CBORObject.Write(&quot;number&quot;, stream); // key 1 CBORObject.Write(25,
+        stream); // value 1 CBORObject.Write(&quot;string&quot;, stream); // key 2
+        CBORObject.Write(&quot;hello&quot;, stream); // value 2
 </pre>
 
 <p>In the following example (originally written in C# for the .NET Framework version), a text string is written as CBOR to a data stream.</p>
 
 <pre>string str = &quot;hello world&quot;; byte[] bytes =
-            DataUtilities.GetUtf8Bytes(str, true); CBORObject.WriteValue(stream, 4,
-            bytes.Length); stream.Write(bytes, 0, bytes.Length);
+        DataUtilities.GetUtf8Bytes(str, true); CBORObject.WriteValue(stream, 4,
+        bytes.Length); stream.Write(bytes, 0, bytes.Length);
 </pre>
 
 <p>.</p>

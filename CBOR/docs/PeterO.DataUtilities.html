@@ -52,9 +52,9 @@
 <p>The following example shows how to iterate a text string code point by code point.</p>
 
 <pre>for (var i = 0;i&lt;str.Length; ++i) { int codePoint =
-            DataUtilities.CodePointAt(str, i);
-            Console.WriteLine(&quot;codePoint:&quot;+codePoint); if (codePoint &gt;= 0x10000)
-            { i++; /* Supplementary code point */ } }
+        DataUtilities.CodePointAt(str, i);
+        Console.WriteLine(&quot;codePoint:&quot;+codePoint); if (codePoint &gt;= 0x10000)
+        { i++; /* Supplementary code point */ } }
 </pre>
 
 <p>.</p>
@@ -95,9 +95,9 @@ is null.</li>
 <p>The following example shows how to iterate a text string code point by code point, terminating the loop when an unpaired surrogate is found.</p>
 
 <pre>for (var i = 0;i&lt;str.Length; ++i) { int codePoint =
-            DataUtilities.CodePointAt(str, i, 2); if (codePoint &lt; 0) { break; /*
-            Unpaired surrogate */ } Console.WriteLine(&quot;codePoint:&quot;+codePoint); if
-            (codePoint &gt;= 0x10000) { i++; /* Supplementary code point */ } }
+        DataUtilities.CodePointAt(str, i, 2); if (codePoint &lt; 0) { break; /*
+        Unpaired surrogate */ } Console.WriteLine(&quot;codePoint:&quot;+codePoint); if
+        (codePoint &gt;= 0x10000) { i++; /* Supplementary code point */ } }
 </pre>
 
 <p>.</p>
@@ -628,15 +628,14 @@ is a text string.</li>
 
 <p>Writes a portion of a string in UTF-8 encoding to a data stream.</p>
 
-<pre>         &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>str</i>:  A string to write.</p></li>
-<li><p><i>offset</i>:  The zero-based index where the string portion to write begins.</p></li>
-<li><p><i>length</i>:  The length of the string portion to write.</p></li>
-<li><p><i>stream</i>:  A writable data stream.</p></li>
-<li><p><i>replace</i>:  If true, replaces unpaired surrogate code points with the replacement character (U+FFFD). If false, stops processing when an unpaired surrogate code point is seen.</p></li>
+<li><p><i>str</i>: A string to write.</p></li>
+<li><p><i>offset</i>: The zero-based index where the string portion to write begins.</p></li>
+<li><p><i>length</i>: The length of the string portion to write.</p></li>
+<li><p><i>stream</i>: A writable data stream.</p></li>
+<li><p><i>replace</i>: If true, replaces unpaired surrogate code points with the replacement character (U+FFFD). If false, stops processing when an unpaired surrogate code point is seen.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -681,16 +680,15 @@ is null.</p></li>
 
 <p>Writes a portion of a string in UTF-8 encoding to a data stream.</p>
 
-<pre>          &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>str</i>:  A string to write.</p></li>
-<li><p><i>offset</i>:  The zero-based index where the string portion to write begins.</p></li>
-<li><p><i>length</i>:  The length of the string portion to write.</p></li>
-<li><p><i>stream</i>:  A writable data stream.</p></li>
-<li><p><i>replace</i>:  If true, replaces unpaired surrogate code points with the replacement character (U+FFFD). If false, stops processing when an unpaired surrogate code point is seen.</p></li>
-<li><p><i>lenientLineBreaks</i>:  If true, replaces carriage return (CR) not followed by line feed (LF) and LF not preceded by CR with CR-LF pairs.</p></li>
+<li><p><i>str</i>: A string to write.</p></li>
+<li><p><i>offset</i>: The zero-based index where the string portion to write begins.</p></li>
+<li><p><i>length</i>: The length of the string portion to write.</p></li>
+<li><p><i>stream</i>: A writable data stream.</p></li>
+<li><p><i>replace</i>: If true, replaces unpaired surrogate code points with the replacement character (U+FFFD). If false, stops processing when an unpaired surrogate code point is seen.</p></li>
+<li><p><i>lenientLineBreaks</i>: If true, replaces carriage return (CR) not followed by line feed (LF) and LF not preceded by CR with CR-LF pairs.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>

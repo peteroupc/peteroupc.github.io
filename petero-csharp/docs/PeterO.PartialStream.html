@@ -102,11 +102,7 @@ is null.</p></li>
 
 <p><b>Returns:</b></p>
 
-<p><code>
-        true
-</code>  If the underlying stream supports reading; otherwise,  <code>
-        false
-</code>  .</p>
+<p><code>true</code>  If the underlying stream supports reading; otherwise,  <code>false</code> .</p>
 
 <p><a id="CanSeek"></a></p>
 
@@ -119,11 +115,7 @@ is null.</p></li>
 
 <p><b>Returns:</b></p>
 
-<p><code>
-        true
-</code>  If the underlying stream supports seeking; otherwise,  <code>
-        false
-</code>  .</p>
+<p><code>true</code>  If the underlying stream supports seeking; otherwise,  <code>false</code> .</p>
 
 <p><a id="CanWrite"></a></p>
 
@@ -136,11 +128,7 @@ is null.</p></li>
 
 <p><b>Returns:</b></p>
 
-<p><code>
-        true
-</code>  If the underlying stream supports writing; otherwise,  <code>
-        false
-</code>  .</p>
+<p><code>true</code>  If the underlying stream supports writing; otherwise,  <code>false</code> .</p>
 
 <p><a id="Length"></a></p>
 
@@ -189,14 +177,15 @@ is null.</p></li>
 
 <p>Not documented yet.</p>
 
-<p><b>Parameters:</b></p>
+<pre>       &lt;b&gt;Parameters:&lt;/b&gt;
+</pre>
 
 <ul>
-<li><p><i>buffer</i>:  The parameter  <i>buffer</i>
+<li><p><i>buffer</i>: The parameter  <i>buffer</i>
 is not documented yet.</p></li>
-<li><p><i>offset</i>:  A zero-based index showing where the desired portion of  <i>buffer</i>
+<li><p><i>offset</i>: A zero-based index showing where the desired portion of  <i>buffer</i>
 begins.</p></li>
-<li><p><i>count</i>:  The number of elements in the desired portion of  <i>buffer</i>
+<li><p><i>count</i>: The number of elements in the desired portion of  <i>buffer</i>
 (but not more than  <i>buffer</i>
 &#39;s length).</p></li>
 </ul>
@@ -221,6 +210,11 @@ The parameter  <i>buffer</i>
 is null.</p></li>
 <li><p>System.ArgumentException:
 Either &quot;offset&quot; or &quot;count&quot; is less than 0 or greater than &quot;buffer&quot;&#39;s length, or &quot;buffer&quot;&#39;s length minus &quot;offset&quot; is less than &quot;count&quot;.</p></li>
+<li><p>System.ArgumentException:
+Either &quot;offset&quot; or &quot;count&quot; is less than 0 or greater than &quot;buffer&quot;&#39;s length, or &quot;buffer&quot;&#39;s length minus &quot;offset&quot; is less than &quot;count&quot;.</p></li>
+<li><p>System.ArgumentNullException:
+The parameter  <i>buffer</i>
+is null.</p></li>
 </ul>
 
 <p><a id="Seek_long_System_IO_SeekOrigin"></a></p>
@@ -234,12 +228,13 @@ Either &quot;offset&quot; or &quot;count&quot; is less than 0 or greater than &q
 
 <p>Not documented yet.</p>
 
-<p><b>Parameters:</b></p>
+<pre> &lt;b&gt;Parameters:&lt;/b&gt;
+</pre>
 
 <ul>
-<li><p><i>offset</i>:  The parameter  <i>offset</i>
+<li><p><i>offset</i>: The parameter  <i>offset</i>
 is not documented yet.</p></li>
-<li><p><i>origin</i>:  The parameter  <i>origin</i>
+<li><p><i>origin</i>: The parameter  <i>origin</i>
 is not documented yet.</p></li>
 </ul>
 
@@ -260,7 +255,7 @@ is not documented yet.</p></li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>value</i>:  The parameter  <i>value</i>
+<li><i>value</i>: The parameter  <i>value</i>
 is not documented yet.</li>
 </ul>
 
@@ -276,14 +271,15 @@ is not documented yet.</li>
 
 <p>Not documented yet.</p>
 
-<p><b>Parameters:</b></p>
+<pre>     &lt;b&gt;Parameters:&lt;/b&gt;
+</pre>
 
 <ul>
-<li><p><i>buffer</i>:  The parameter  <i>buffer</i>
+<li><p><i>buffer</i>: The parameter  <i>buffer</i>
 is not documented yet.</p></li>
-<li><p><i>offset</i>:  A zero-based index showing where the desired portion of  <i>buffer</i>
+<li><p><i>offset</i>: A zero-based index showing where the desired portion of  <i>buffer</i>
 begins.</p></li>
-<li><p><i>count</i>:  The number of elements in the desired portion of  <i>buffer</i>
+<li><p><i>count</i>: The number of elements in the desired portion of  <i>buffer</i>
 (but not more than  <i>buffer</i>
 &#39;s length).</p></li>
 </ul>
@@ -299,6 +295,11 @@ is less than 0 or greater than  <i>buffer</i>
 &#39; s length minus  <i>offset</i>
 is less than  <i>count</i>
 .</p></li>
+<li><p>System.ArgumentNullException:
+The parameter  <i>buffer</i>
+is null.</p></li>
+<li><p>System.ArgumentException:
+Either &quot;offset&quot; or &quot;count&quot; is less than 0 or greater than &quot;buffer&quot;&#39;s length, or &quot;buffer&quot;&#39;s length minus &quot;offset&quot; is less than &quot;count&quot;.</p></li>
 <li><p>System.ArgumentNullException:
 The parameter  <i>buffer</i>
 is null.</p></li>

@@ -11,7 +11,7 @@
 
 <p>Represents an email message, and contains methods and properties for accessing and modifying email message data. This class implements the Internet Message Format (RFC 5322) and Multipurpose Internet Mail Extensions (MIME; RFC 2045-2047, RFC 2049).</p>
 
-<p><b> Thread safety: </b> This class is mutable; its properties can be changed. None of its instance methods are designed to be thread safe. Therefore, access to objects from this class must be synchronized if multiple threads can access them at the same time.</p>
+<p><b>Thread safety:</b> This class is mutable; its properties can be changed. None of its instance methods are designed to be thread safe. Therefore, access to objects from this class must be synchronized if multiple threads can access them at the same time.</p>
 
 <p>The following lists known deviations from the mail specifications (Internet Message Format and MIME):</p>
 
@@ -26,27 +26,11 @@
 <li><p>If the transfer encoding is absent and the content type is &quot;message/rfc822&quot;, bytes with values greater than 127 (called &quot;8-bit bytes&quot; in the rest of this summary) are still allowed, despite the default value of &quot;7bit&quot; for &quot;Content-Transfer-Encoding&quot;.</p></li>
 <li><p>In the following cases, if the transfer encoding is absent, declared as 7bit, or treated as 7bit, 8-bit bytes are still allowed:</p></li>
 <li><p>(a) The preamble and epilogue of multipart messages, which will be ignored.</p></li>
-<li><p>(b) If the charset is declared to be  <code>
-         utf-8
-</code>  .</p></li>
-<li><p>(c) If the content type is &quot;text/html&quot; and the charset is declared to be  <code>
-         us-ascii
-</code>  , &quot;windows-1252&quot;, &quot;windows-1251&quot;, or &quot;iso-8859-*&quot; (all single byte encodings).</p></li>
+<li><p>(b) If the charset is declared to be  <code>utf-8</code>  .</p></li>
+<li><p>(c) If the content type is &quot;text/html&quot; and the charset is declared to be  <code>us-ascii</code>  , &quot;windows-1252&quot;, &quot;windows-1251&quot;, or &quot;iso-8859-*&quot; (all single byte encodings).</p></li>
 <li><p>(d) In non-MIME message bodies and in text/plain message bodies. Any 8-bit bytes are replaced with the substitute character byte (0x1a).</p></li>
 <li><p>If the message starts with the word &quot;From&quot; (and no other case variations of that word) followed by one or more space (U+0020) not followed by colon, that text and the rest of the text is skipped up to and including a line feed (U+000A). (See also RFC 4155, which describes the so-called &quot;mbox&quot; convention with &quot;From&quot; lines of this kind.)</p></li>
-<li><p>The name  <code>
-         ascii
-</code>  is treated as a synonym for  <code>
-         us-ascii
-</code>  , despite being a reserved name under RFC 2046. The name  <code>
-         cp1252
-</code>  and  <code>
-         utf8
-</code>  are treated as synonyms for  <code>
-         windows-1252
-</code>  and  <code>
-         utf-8
-</code>  , respectively, even though they are not IANA registered aliases.</p></li>
+<li><p>The name  <code>ascii</code>  is treated as a synonym for  <code>us-ascii</code>  , despite being a reserved name under RFC 2046. The name  <code>cp1252</code>  and  <code>utf8</code>  are treated as synonyms for  <code>windows-1252</code>  and  <code>utf-8</code>  , respectively, even though they are not IANA registered aliases.</p></li>
 <li><p>The following deviations involve encoded words under RFC 2047:</p></li>
 <li><p>(a) If a sequence of encoded words decodes to a string with a CTL character (U+007F, or a character less than U+0020 and not TAB) after being converted to Unicode, the encoded words are left un-decoded.</p></li>
 <li><p>(b) This implementation can decode encoded words regardless of the character length of the line in which they appear. This implementation can generate a header field line with one or more encoded words even if that line is more than 76 characters long. (This implementation follows the recommendation in RFC 5322 to limit header field lines to no more than 78 characters, where possible.)</p>
@@ -272,11 +256,7 @@ This value is being set and &quot;value&quot; is null.</li>
 
 <p>Gets a file name suggested by this message for saving the message&#39;s body to a file. For more information on the algorithm, see ContentDisposition.MakeFilename.</p>
 
-<p>This method generates a file name based on the  <code>
-           filename
-</code>  parameter of the Content-Disposition header field, if it exists, or on the  <code>
-           name
-</code>  parameter of the Content-Type header field, otherwise.</p>
+<p>This method generates a file name based on the  <code>filename</code>  parameter of the Content-Disposition header field, if it exists, or on the  <code>name</code>  parameter of the Content-Type header field, otherwise.</p>
 
 <p><b>Returns:</b></p>
 
@@ -364,7 +344,7 @@ This value is being set and &quot;value&quot; is null.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>mediaType</i>:  A media type to assign to the attachment.</li>
+<li><i>mediaType</i>: A media type to assign to the attachment.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -384,7 +364,7 @@ This value is being set and &quot;value&quot; is null.</li>
 
 <p>The following example (written in C# for the.NET version) is an extension method that adds an attachment from a byte array to a message.</p>
 
-<pre>         public static Message AddAttachmentFromBytes(this Message msg, byte[]
+<pre>public static Message AddAttachmentFromBytes(this Message msg, byte[]
         bytes, MediaType mediaType) { using(var fs = new MemoryStream(bytes)) {
         return msg.AddAttachment(fs, mediaType); } }
 </pre>
@@ -394,8 +374,8 @@ This value is being set and &quot;value&quot; is null.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>inputStream</i>:  A readable data stream.</p></li>
-<li><p><i>mediaType</i>:  A media type to assign to the attachment.</p></li>
+<li><p><i>inputStream</i>: A readable data stream.</p></li>
+<li><p><i>mediaType</i>: A media type to assign to the attachment.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -428,9 +408,9 @@ An I/O error occurred.</p></li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>inputStream</i>:  A readable data stream.</p></li>
-<li><p><i>mediaType</i>:  A media type to assign to the attachment.</p></li>
-<li><p><i>filename</i>:  A file name to assign to the attachment. Can be null or empty, in which case no file name is assigned. Only the file name portion of this parameter is used, which in this case means the portion of the string after the last &quot;/&quot; or &quot;\&quot;, if either character exists, or the entire string otherwise.</p></li>
+<li><p><i>inputStream</i>: A readable data stream.</p></li>
+<li><p><i>mediaType</i>: A media type to assign to the attachment.</p></li>
+<li><p><i>filename</i>: A file name to assign to the attachment. Can be null or empty, in which case no file name is assigned. Only the file name portion of this parameter is used, which in this case means the portion of the string after the last &quot;/&quot; or &quot;\&quot;, if either character exists, or the entire string otherwise.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -462,8 +442,8 @@ An I/O error occurred.</p></li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>inputStream</i>:  A readable data stream.</p></li>
-<li><p><i>filename</i>:  A file name to assign to the attachment. Can be null or empty, in which case no file name is assigned. Only the file name portion of this parameter is used, which in this case means the portion of the string after the last &quot;/&quot; or &quot;\&quot;, if either character exists, or the entire string otherwise An appropriate media type (or &quot;application/octet-stream&quot;) will be assigned to the attachment based on this file name&#39;s extension. If the file name has an extension .txt, .text, .htm, .html, .shtml, .asc, .brf, .pot, .rst, .md, .markdown, or .srt, the media type will have a &quot;charset&quot; of &quot;utf-8&quot;.</p></li>
+<li><p><i>inputStream</i>: A readable data stream.</p></li>
+<li><p><i>filename</i>: A file name to assign to the attachment. Can be null or empty, in which case no file name is assigned. Only the file name portion of this parameter is used, which in this case means the portion of the string after the last &quot;/&quot; or &quot;\&quot;, if either character exists, or the entire string otherwise An appropriate media type (or &quot;application/octet-stream&quot;) will be assigned to the attachment based on this file name&#39;s extension. If the file name has an extension .txt, .text, .htm, .html, .shtml, .asc, .brf, .pot, .rst, .md, .markdown, or .srt, the media type will have a &quot;charset&quot; of &quot;utf-8&quot;.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -489,13 +469,13 @@ An I/O error occurred.</p></li>
     string value);
 </pre>
 
-<p>Adds a header field to the end of the message&#39;s header.  Updates the ContentType and ContentDisposition properties if those header fields have been modified by this method.</p>
+<p>Adds a header field to the end of the message&#39;s header. Updates the ContentType and ContentDisposition properties if those header fields have been modified by this method.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>name</i>:  Name of a header field, such as &quot;From&quot; or &quot;Content-ID&quot; .</p></li>
-<li><p><i>value</i>:  Value of the header field.</p></li>
+<li><p><i>name</i>: Name of a header field, such as &quot;From&quot; or &quot;Content-ID&quot; .</p></li>
+<li><p><i>value</i>: Value of the header field.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -521,12 +501,12 @@ The header field name is too long or contains an invalid character, or the heade
     System.Collections.Generic.KeyValuePair header);
 </pre>
 
-<p>Adds a header field to the end of the message&#39;s header.  Updates the ContentType and ContentDisposition properties if those header fields have been modified by this method.</p>
+<p>Adds a header field to the end of the message&#39;s header. Updates the ContentType and ContentDisposition properties if those header fields have been modified by this method.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>header</i>:  A key/value pair. The key is the name of the header field, such as &quot;From&quot; or &quot;Content-ID&quot;. The value is the header field&#39;s value.</li>
+<li><i>header</i>: A key/value pair. The key is the name of the header field, such as &quot;From&quot; or &quot;Content-ID&quot;. The value is the header field&#39;s value.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -556,7 +536,7 @@ The header field name is too long or contains an invalid character, or the heade
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>mediaType</i>:  A media type to assign to the body part.</li>
+<li><i>mediaType</i>: A media type to assign to the body part.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -576,9 +556,9 @@ The header field name is too long or contains an invalid character, or the heade
 
 <p>The following example (written in C# for the.NET version) is an extension method that adds an inline body part from a byte array to a message.</p>
 
-<pre>         public static Message AddInlineFromBytes(this Message msg, byte[]
-        bytes, MediaType mediaType) { using(MemoryStream fs = new
-        MemoryStream(bytes)) { return msg.AddInline(fs, mediaType); } }
+<pre>public static Message AddInlineFromBytes(this Message msg, byte[] bytes,
+        MediaType mediaType) { using(MemoryStream fs = new MemoryStream(bytes))
+        { return msg.AddInline(fs, mediaType); } }
 </pre>
 
 <p>.</p>
@@ -586,8 +566,8 @@ The header field name is too long or contains an invalid character, or the heade
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>inputStream</i>:  A readable data stream.</p></li>
-<li><p><i>mediaType</i>:  A media type to assign to the body part.</p></li>
+<li><p><i>inputStream</i>: A readable data stream.</p></li>
+<li><p><i>mediaType</i>: A media type to assign to the body part.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -620,9 +600,9 @@ An I/O error occurred.</p></li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>inputStream</i>:  A readable data stream.</p></li>
-<li><p><i>mediaType</i>:  A media type to assign to the body part.</p></li>
-<li><p><i>filename</i>:  A file name to assign to the body part.</p></li>
+<li><p><i>inputStream</i>: A readable data stream.</p></li>
+<li><p><i>mediaType</i>: A media type to assign to the body part.</p></li>
+<li><p><i>filename</i>: A file name to assign to the body part.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -654,8 +634,8 @@ An I/O error occurred.</p></li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>inputStream</i>:  A readable data stream.</p></li>
-<li><p><i>filename</i>:  A file name to assign to the inline body part. Can be null or empty, in which case no file name is assigned. Only the file name portion of this parameter is used, which in this case means the portion of the string after the last &quot;/&quot; or &quot;\&quot;, if either character exists, or the entire string otherwise An appropriate media type (or &quot;application/octet-stream&quot;) will be assigned to the body part based on this file name&#39;s extension. If the file name has an extension .txt, .text, .htm, .html, .shtml, .asc, .brf, .pot, .rst, .md, .markdown, or .srt, the media type will have a &quot;charset&quot; of &quot;utf-8&quot;.</p></li>
+<li><p><i>inputStream</i>: A readable data stream.</p></li>
+<li><p><i>filename</i>: A file name to assign to the inline body part. Can be null or empty, in which case no file name is assigned. Only the file name portion of this parameter is used, which in this case means the portion of the string after the last &quot;/&quot; or &quot;\&quot;, if either character exists, or the entire string otherwise An appropriate media type (or &quot;application/octet-stream&quot;) will be assigned to the body part based on this file name&#39;s extension. If the file name has an extension .txt, .text, .htm, .html, .shtml, .asc, .brf, .pot, .rst, .md, .markdown, or .srt, the media type will have a &quot;charset&quot; of &quot;utf-8&quot;.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -699,8 +679,8 @@ An I/O error occurred.</p></li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>name</i>:  Name of the header field. This determines the syntax of the &quot;value&quot; parameter and is necessary to help this method interpret encoded words properly.</p></li>
-<li><p><i>value</i>:  A header field value that could contain encoded words. For example, if the name parameter is &quot;From&quot;, this parameter could be &quot;=?utf-8?q?me?= <a href="mailto:me@example.com">me@example.com</a>&quot;.</p></li>
+<li><p><i>name</i>: Name of the header field. This determines the syntax of the &quot;value&quot; parameter and is necessary to help this method interpret encoded words properly.</p></li>
+<li><p><i>value</i>: A header field value that could contain encoded words. For example, if the name parameter is &quot;From&quot;, this parameter could be &quot;=?utf-8?q?me?= <a href="mailto:me@example.com">me@example.com</a>&quot;.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -728,7 +708,7 @@ is null.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>uri</i>:  The parameter  <i>uri</i>
+<li><i>uri</i>: The parameter  <i>uri</i>
 is a text string.</li>
 </ul>
 
@@ -750,7 +730,7 @@ is a text string.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>uri</i>:  The parameter  <i>uri</i>
+<li><i>uri</i>: The parameter  <i>uri</i>
 is not documented yet.</li>
 </ul>
 
@@ -781,7 +761,7 @@ is null.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>url</i>:  A MailTo URI.</li>
+<li><i>url</i>: A MailTo URI.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -796,13 +776,9 @@ is null.</li>
 <pre>public string Generate();
 </pre>
 
-<p>Generates this message&#39;s data in text form.  The generated message will have only Basic Latin code points (U+0000 to U+007F), and the transfer encoding will always be 7bit, quoted-printable, or base64 (the declared transfer encoding for this message will be ignored).</p>
+<p>Generates this message&#39;s data in text form. The generated message will have only Basic Latin code points (U+0000 to U+007F), and the transfer encoding will always be 7bit, quoted-printable, or base64 (the declared transfer encoding for this message will be ignored).</p>
 
-<p>The following applies to the following header fields: From, To, Cc, Bcc, Reply-To, Sender, Resent-To, Resent-From, Resent-Cc, Resent-Bcc, and Resent-Sender. If the header field exists, but has an invalid syntax, has no addresses, or appears more than once, this method will generate a synthetic header field with the display-name set to the contents of all of the header fields with the same name, and the address set to  <code>
-           me@[header-name]-address.invalid
-</code>  as the address (a  <code>
-           .invalid
-</code>  address is a reserved address that can never belong to anyone). (An exception is that the Resent-* header fields may appear more than once.) The generated message should always have a From header field.</p>
+<p>The following applies to the following header fields: From, To, Cc, Bcc, Reply-To, Sender, Resent-To, Resent-From, Resent-Cc, Resent-Bcc, and Resent-Sender. If the header field exists, but has an invalid syntax, has no addresses, or appears more than once, this method will generate a synthetic header field with the display-name set to the contents of all of the header fields with the same name, and the address set to  <code>me@[header-name]-address.invalid</code>  as the address (a  <code>.invalid</code>  address is a reserved address that can never belong to anyone). (An exception is that the Resent-* header fields may appear more than once.) The generated message should always have a From header field.</p>
 
 <p>If a Date and/or Message-ID header field doesn&#39;t exist, a field with that name will be generated (using the current local time for the Date field).</p>
 
@@ -845,7 +821,7 @@ The message can&#39;t be generated.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>headerName</i>:  The name of the header fields to retrieve.</li>
+<li><i>headerName</i>: The name of the header fields to retrieve.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -921,10 +897,10 @@ is empty.</p></li>
 <li><p>does not prevent Markdown content from being interpreted as such merely because it&#39;s contained in a &quot;block-level HTML element&quot;, and</p></li>
 <li><p>does not deliberately use HTML escapes to obfuscate email addresses wrapped in angle-brackets.</p>
 
-<p><b>Return Value:</b></p>
-
-<p>An HTML rendering of this message&#39;s text.</p></li>
+<p><b>Return Value:</b></p></li>
 </ul>
+
+<p>An HTML rendering of this message&#39;s text.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -946,7 +922,7 @@ Either this message is a multipart message, so it doesn&#39;t have its own body 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>name</i>:  The name of a header field.</li>
+<li><i>name</i>: The name of a header field.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -973,7 +949,7 @@ Name is null.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>index</i>:  Zero-based index of the header field to get.</li>
+<li><i>index</i>: Zero-based index of the header field to get.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -1001,7 +977,7 @@ is 0 or at least as high as the number of header fields.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>name</i>:  The name of a header field.</li>
+<li><i>name</i>: The name of a header field.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -1029,8 +1005,8 @@ Name is null.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>messages</i>:  A list of messages forming the parts of the multilingual message object. Each message should have the same content, but be in a different language. Each message must have a From header field and use the same email address in that field as the other messages. The messages should be ordered in descending preference of language.</p></li>
-<li><p><i>languages</i>:  A list of language strings corresponding to the messages given in the &quot;messages&quot; parameter. A language string at a given index corresponds to the message at the same index. Each language string must follow the syntax of the Content-Language header field (see LanguageTags.GetLanguageList).</p></li>
+<li><p><i>messages</i>: A list of messages forming the parts of the multilingual message object. Each message should have the same content, but be in a different language. Each message must have a From header field and use the same email address in that field as the other messages. The messages should be ordered in descending preference of language.</p></li>
+<li><p><i>languages</i>: A list of language strings corresponding to the messages given in the &quot;messages&quot; parameter. A language string at a given index corresponds to the message at the same index. Each language string must follow the syntax of the Content-Language header field (see LanguageTags.GetLanguageList).</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -1074,12 +1050,12 @@ contains the language tag &quot;zzx&quot; not appearing alone or at the end of t
     int index);
 </pre>
 
-<p>Removes a header field by index.  Updates the ContentType and ContentDisposition properties if those header fields have been modified by this method.</p>
+<p>Removes a header field by index. Updates the ContentType and ContentDisposition properties if those header fields have been modified by this method.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>index</i>:  Zero-based index of the header field to set.</li>
+<li><i>index</i>: Zero-based index of the header field to set.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -1102,12 +1078,12 @@ is 0 or at least as high as the number of header fields.</li>
     string name);
 </pre>
 
-<p>Removes all instances of the given header field from this message. If this is a multipart message, the header field is not removed from its body part headers. A basic case-insensitive comparison is used. (Two strings are equal in such a comparison, if they match after converting the basic upper-case letters A to Z (U+0041 to U+005A) in both strings to lower case.).  Updates the ContentType and ContentDisposition properties if those header fields have been modified by this method.</p>
+<p>Removes all instances of the given header field from this message. If this is a multipart message, the header field is not removed from its body part headers. A basic case-insensitive comparison is used. (Two strings are equal in such a comparison, if they match after converting the basic upper-case letters A to Z (U+0041 to U+005A) in both strings to lower case.). Updates the ContentType and ContentDisposition properties if those header fields have been modified by this method.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>name</i>:  The name of the header field to remove.</li>
+<li><i>name</i>: The name of the header field to remove.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -1130,14 +1106,12 @@ is null.</li>
     System.Collections.Generic.IList languages);
 </pre>
 
-<p>Selects a body part for a multiple-language message (  <code>
-         multipart/multilingual
-</code>  ) according to the given language priority list.</p>
+<p>Selects a body part for a multiple-language message (  <code>multipart/multilingual</code>  ) according to the given language priority list.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>languages</i>:  A list of basic language ranges, sorted in descending order of priority (see the LanguageTags.LanguageTagFilter method).</li>
+<li><i>languages</i>: A list of basic language ranges, sorted in descending order of priority (see the LanguageTags.LanguageTagFilter method).</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -1161,15 +1135,13 @@ is null.</li>
     bool preferOriginals);
 </pre>
 
-<p>Selects a body part for a multiple-language message (  <code>
-         multipart/multilingual
-</code>  ) according to the given language priority list and original-language preference.</p>
+<p>Selects a body part for a multiple-language message (  <code>multipart/multilingual</code>  ) according to the given language priority list and original-language preference.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>languages</i>:  A list of basic language ranges, sorted in descending order of priority (see the LanguageTags.LanguageTagFilter method).</p></li>
-<li><p><i>preferOriginals</i>:  If true, a body part marked as the original language version is chosen if it matches one of the given language ranges, even if the original language has a lower priority than another language with a matching body part.</p></li>
+<li><p><i>languages</i>: A list of basic language ranges, sorted in descending order of priority (see the LanguageTags.LanguageTagFilter method).</p></li>
+<li><p><i>preferOriginals</i>: If true, a body part marked as the original language version is chosen if it matches one of the given language ranges, even if the original language has a lower priority than another language with a matching body part.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -1197,7 +1169,7 @@ is null.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>bytes</i>:  A byte array.</li>
+<li><i>bytes</i>: A byte array.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -1219,7 +1191,7 @@ is null.</li>
 <pre>public PeterO.Mail.Message SetCurrentDate();
 </pre>
 
-<p>Sets this message&#39;s Date header field to the current time as its value, with an unspecified time zone offset.  This method can be used when the message is considered complete and ready to be generated, for example, using the &quot;Generate()&quot; method.</p>
+<p>Sets this message&#39;s Date header field to the current time as its value, with an unspecified time zone offset. This method can be used when the message is considered complete and ready to be generated, for example, using the &quot;Generate()&quot; method.</p>
 
 <p><b>Return Value:</b></p>
 
@@ -1238,7 +1210,7 @@ is null.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>dateTime</i>:  An array containing eight elements. Each element of the array (starting from 0) is as follows:</p>
+<li><p><i>dateTime</i>: An array containing eight elements. Each element of the array (starting from 0) is as follows:</p>
 
 <ul>
 <li><p>0 - The year. For example, the value 2000 means 2000 C.E.</p></li>
@@ -1279,14 +1251,14 @@ is null.</p></li>
     string value);
 </pre>
 
-<p>Sets the name and value of a header field by index.  Updates the ContentType and ContentDisposition properties if those header fields have been modified by this method.</p>
+<p>Sets the name and value of a header field by index. Updates the ContentType and ContentDisposition properties if those header fields have been modified by this method.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>index</i>:  Zero-based index of the header field to set.</p></li>
-<li><p><i>name</i>:  Name of a header field, such as &quot;From&quot; or &quot;Content-ID&quot; .</p></li>
-<li><p><i>value</i>:  Value of the header field.</p></li>
+<li><p><i>index</i>: Zero-based index of the header field to set.</p></li>
+<li><p><i>name</i>: Name of a header field, such as &quot;From&quot; or &quot;Content-ID&quot; .</p></li>
+<li><p><i>value</i>: Value of the header field.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -1314,13 +1286,13 @@ is null.</p></li>
     string value);
 </pre>
 
-<p>Sets the value of a header field by index without changing its name.  Updates the ContentType and ContentDisposition properties if those header fields have been modified by this method.</p>
+<p>Sets the value of a header field by index without changing its name. Updates the ContentType and ContentDisposition properties if those header fields have been modified by this method.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>index</i>:  Zero-based index of the header field to set.</p></li>
-<li><p><i>value</i>:  Value of the header field.</p></li>
+<li><p><i>index</i>: Zero-based index of the header field to set.</p></li>
+<li><p><i>value</i>: Value of the header field.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -1347,13 +1319,13 @@ is null.</p></li>
     System.Collections.Generic.KeyValuePair header);
 </pre>
 
-<p>Sets the name and value of a header field by index.  Updates the ContentType and ContentDisposition properties if those header fields have been modified by this method.</p>
+<p>Sets the name and value of a header field by index. Updates the ContentType and ContentDisposition properties if those header fields have been modified by this method.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>index</i>:  Zero-based index of the header field to set.</p></li>
-<li><p><i>header</i>:  A key/value pair. The key is the name of the header field, such as &quot;From&quot; or &quot;Content-ID&quot;. The value is the header field&#39;s value.</p></li>
+<li><p><i>index</i>: Zero-based index of the header field to set.</p></li>
+<li><p><i>header</i>: A key/value pair. The key is the name of the header field, such as &quot;From&quot; or &quot;Content-ID&quot;. The value is the header field&#39;s value.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -1380,13 +1352,13 @@ is null.</p></li>
     string value);
 </pre>
 
-<p>Sets the value of this message&#39;s header field. If a header field with the same name exists, its value is replaced. If the header field&#39;s name occurs more than once, only the first instance of the header field is replaced.  Updates the ContentType and ContentDisposition properties if those header fields have been modified by this method.</p>
+<p>Sets the value of this message&#39;s header field. If a header field with the same name exists, its value is replaced. If the header field&#39;s name occurs more than once, only the first instance of the header field is replaced. Updates the ContentType and ContentDisposition properties if those header fields have been modified by this method.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>name</i>:  The name of a header field, such as &quot;from&quot; or &quot;subject&quot; .</p></li>
-<li><p><i>value</i>:  The header field&#39;s value.</p></li>
+<li><p><i>name</i>: The name of a header field, such as &quot;from&quot; or &quot;subject&quot; .</p></li>
+<li><p><i>value</i>: The header field&#39;s value.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -1417,7 +1389,7 @@ is null.</p></li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>str</i>:  A string consisting of the message in HTML format.</li>
+<li><i>str</i>: A string consisting of the message in HTML format.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -1446,8 +1418,8 @@ is null.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>text</i>:  A string consisting of the plain text version of the message.</p></li>
-<li><p><i>html</i>:  A string consisting of the HTML version of the message.</p></li>
+<li><p><i>text</i>: A string consisting of the plain text version of the message.</p></li>
+<li><p><i>html</i>: A string consisting of the HTML version of the message.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -1477,8 +1449,8 @@ is null.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>text</i>:  A string consisting of the plain text version of the message. Can be null, in which case the value of the &quot;markdown&quot; parameter is used as the plain text version.</p></li>
-<li><p><i>markdown</i>:  A string consisting of the Markdown version of the message. For interoperability, this Markdown version will be converted to HTML.</p></li>
+<li><p><i>text</i>: A string consisting of the plain text version of the message. Can be null, in which case the value of the &quot;markdown&quot; parameter is used as the plain text version.</p></li>
+<li><p><i>markdown</i>: A string consisting of the Markdown version of the message. For interoperability, this Markdown version will be converted to HTML.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -1506,7 +1478,7 @@ is null.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>str</i>:  A string consisting of the message in plain text format.</li>
+<li><i>str</i>: A string consisting of the message in plain text format.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
