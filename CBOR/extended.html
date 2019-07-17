@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Extended Numbers</title>
+</head>
+<body>
+<h1>Extended Numbers</h1>
+<p>
+This document registers tags for serializing extended numbers in Concise Binary Object Representation (CBOR), which is specified in RFC 7049 at the time of this writing.
+</p>
+<ul>
+<li>Tag: 268
+<li>Data item: array
+<li>Semantics: Extended decimal fraction
+</ul>
+<ul>
+<li>Tag: 269
+<li>Data item: array
+<li>Semantics: Extended bigfloat
+</ul>
+<ul>
+<li>Tag: 270
+<li>Data item: array
+<li>Semantics: Extended rational number
+</ul>
+
+<h2>Introduction</h2>
+<p>This document introduces new CBOR tags that extend the expressiveness of decimal fractions, bigfloats, and rational numbers by allowing them to express negative zero, infinities, and NaN values of various kinds.  For example, decimal fractions given here are as expressive as numbers specified in the <a href="http://speleotrove.com/decimal/decarith.html">General Decimal Arithmetic Specification version 1.70</a>.</p>
+
+<h2>Detailed Semantics</h2>
+
+<p>An item with tag 268 is an array of three items in the following order: exponent, mantissa, and options.  The exponent and mantissa have the same semantics given in section 2.4.3 of RFC 7049 (or a successor to that section) for decimal fractions, except the exponent can also be a bignum (major type 6, tag 2 or 3) and the mantissa may not be negative.</p>
+
+<p>An item with tag 269 is an array of three items in the following order: exponent, mantissa, and options.  The exponent and mantissa have the same semantics given in section 2.4.3 of RFC 7049 (or a successor to that section) for bigfloats, except the exponent can also be a bignum (major type 6, tag 2 or 3) and the mantissa may not be negative.</p>
+
+<p>An item with tag 270 is an array of three items in the following order: numerator, denominator, and options.  The numerator and denominator have the same semantics given in the <a href="http://peteroupc.github.io/CBOR/rational.html">CBOR tag 30 specification</a> for rational numbers, except the numerator may not be negative.</p>
+
+<p>For all three tags, the third item (options) is an integer (major type 0) with one of the following values: 0 = finite nonnegative; 1 = finite negative; 2 = positive infinity; 3 = negative infinity; 4 = quiet NaN nonnegative; 5 = quiet NaN negative; 6 = signaling NaN nonnegative; 7 = signaling NaN negative.</p>
+
+<p>For tags 268 and 269: If the third item indicates infinity, the first item (exponent) and the second item (mantissa) have to be 0.  If the third item indicates NaN, the first item (exponent) has to be 0 and the second item expresses diagnostic information rather than a mantissa.</p>
+
+<p>For tag 270: If the third item indicates infinity, the first item (numerator) has to be 0 and the second item (denominator) has to be 1.  If the third item indicates NaN, the second item (denominator) has to be 1 and the first item expresses diagnostic information rather than a numerator.</p>
+
+<p>A CBOR decoder can treat data items with tags 268, 269, or 270 that don't meet the criteria above as an error, but this specification doesn't define how a CBOR implementation ought to behave in this case. Section 3.4 of RFC 7049 details this kind of error-handling behavior. The semantics of positive and negative zero, infinity, and quiet and signaling NaN are not further specified here.</p>
+
+<h2>
+Author
+</h2>
+<p>
+Peter Occil (poccil14 at gmail dot com)
+</p>
+<p>
+My <a href='http://peteroupc.github.io/CBOR/'>CBOR home page</a>.
+</p>
+<p>
+Any copyright to this specification is released to the Public Domain. <a href='http://creativecommons.org/publicdomain/zero/1.0/'>http://creativecommons.org/publicdomain/zero/1.0/</a>
+</p>
