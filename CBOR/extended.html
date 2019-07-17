@@ -37,9 +37,9 @@ This document registers tags for serializing extended numbers in Concise Binary 
 
 <p>For all three tags, the third item (options) is an integer (major type 0) with one of the following values: 0 = finite nonnegative; 1 = finite negative; 2 = positive infinity; 3 = negative infinity; 4 = quiet NaN nonnegative; 5 = quiet NaN negative; 6 = signaling NaN nonnegative; 7 = signaling NaN negative.</p>
 
-<p>For tags 268 and 269: If the third item indicates infinity, the first item (exponent) and the second item (mantissa) have to be 0.  If the third item indicates NaN, the first item (exponent) has to be 0 and the second item expresses diagnostic information rather than a mantissa.</p>
+<p>For tags 268 and 269: If the third item indicates infinity, the first item (exponent) and the second item (mantissa) have to be 0.  If the third item indicates NaN, the first item (exponent) has to be 0 and the second item expresses diagnostic information rather than a mantissa (but is still limited to the same data types as the mantissa).</p>
 
-<p>For tag 270: If the third item indicates infinity, the first item (numerator) has to be 0 and the second item (denominator) has to be 1.  If the third item indicates NaN, the second item (denominator) has to be 1 and the first item expresses diagnostic information rather than a numerator.</p>
+<p>For tag 270: If the third item indicates infinity, the first item (numerator) has to be 0 and the second item (denominator) has to be 1.  If the third item indicates NaN, the second item (denominator) has to be 1 and the first item expresses diagnostic information rather than a numerator (but is still limited to the same data types as the mantissa).</p>
 
 <p>A CBOR decoder can treat data items with tags 268, 269, or 270 that don't meet the criteria above as an error, but this specification doesn't define how a CBOR implementation ought to behave in this case. Section 3.4 of RFC 7049 details this kind of error-handling behavior. The semantics of positive and negative zero, infinity, and quiet and signaling NaN are not further specified here.</p>
 
