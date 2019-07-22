@@ -15,21 +15,21 @@
  <p>Instances of this class are immutable, so they are inherently
  safe for use by multiple threads. Multiple instances of this object
  with the same value are interchangeable, but they should be compared
-  using the &quot;Equals&quot; method rather than the &quot;==&quot; operator. </p>
- <p><b>Security note</b> </p> <p>It is not recommended to implement
+  using the &quot;Equals&quot; method rather than the &quot;==&quot; operator.</p>
+ <p><b>Security note</b></p> <p>It is not recommended to implement
  security-sensitive algorithms using the methods in this class, for
- several reasons: </p> <ul> <li><code>EInteger</code> objects are
- immutable, so they can&#39;t be modified, and the memory they occupy is
- not guaranteed to be cleared in a timely fashion due to garbage
+ several reasons:</p> <ul> <li><code>EInteger</code> objects are immutable,
+ so they can&#39;t be modified, and the memory they occupy is not
+ guaranteed to be cleared in a timely fashion due to garbage
  collection. This is relevant for applications that use many-bit-long
- numbers as secret parameters. </li> <li>The methods in this class
+ numbers as secret parameters.</li> <li>The methods in this class
  (especially those that involve arithmetic) are not guaranteed to be
   &quot;constant-time&quot; (non-data-dependent) for all relevant inputs.
  Certain attacks that involve encrypted communications have exploited
  the timing and other aspects of such communications to derive keying
- material or cleartext indirectly. </li> </ul> <p>Applications should
+ material or cleartext indirectly.</li></ul> <p>Applications should
  instead use dedicated security libraries to handle big numbers in
- security-sensitive algorithms. </p></p>
+ security-sensitive algorithms.</p></p>
 
 <h2>Methods</h2>
 
@@ -122,10 +122,10 @@ arbitrary-precision integer.</li>
 <li><code>static EInteger getOne()</code><br>
 Gets the number 1 as an arbitrary-precision integer.</li>
 <li><code>boolean GetSignedBit​(int index) &quot;Forms of numbers&quot;</code><br>
-Returns whether a bit is set in the two&#39;s-complement form (see &quot;Forms of numbers&quot; ) of this
+Returns whether a bit is set in the two&#39;s-complement form (see &quot;Forms of numbers&quot;) of this
 object&#39; s value.</li>
 <li><code>boolean GetSignedBit​(EInteger bigIndex) &quot;Forms of numbers&quot;</code><br>
-Returns whether a bit is set in the two&#39;s-complement form (see &quot;Forms of numbers&quot; ) of this
+Returns whether a bit is set in the two&#39;s-complement form (see &quot;Forms of numbers&quot;) of this
 object&#39; s value.</li>
 <li><code>int GetSignedBitLength()</code><br>
 Deprecated.
@@ -179,7 +179,8 @@ Gets the value of this object with the sign reversed.</li>
 <li><code>EInteger Not()</code><br>
 Returns an arbitrary-precision integer with every bit flipped from this one.</li>
 <li><code>EInteger Or​(EInteger second)</code><br>
-Does an OR operation between two arbitrary-precision integer instances.</li>
+Does an OR operation between two arbitrary-precision integer
+instances.</li>
 <li><code>EInteger Pow​(int powerSmall)</code><br>
 Raises an arbitrary-precision integer to a power.</li>
 <li><code>EInteger Pow​(EInteger bigPower)</code><br>
@@ -299,8 +300,7 @@ Finds the exclusive &quot;or&quot; of two arbitrary-precision integer objects.</
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li><code>true</code> if this value is even; otherwise,
-  <code>false</code> .</li>
+<li><code>true</code> if this value is even; otherwise, <code>false</code>.</li>
 </ul>
 
 <h3>isPowerOfTwo</h3>
@@ -328,8 +328,7 @@ than 0; otherwise, <code>false</code>.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li><code>true</code> if this value is 0; otherwise,
-  <code>false</code> .</li>
+<li><code>true</code> if this value is 0; otherwise, <code>false</code>.</li>
 </ul>
 
 <h3>signum</h3>
@@ -356,25 +355,25 @@ than 0; otherwise, <code>false</code>.</li>
 
 <ul>
 <li><p><code>bytes</code> - A byte array consisting of the two&#39;s-complement form (see
-<code>&quot;Forms of numbers&quot; </code>) of
-the arbitrary-precision integer to create. The byte array is encoded
+<code>&quot;Forms of numbers&quot;</code>) of the
+arbitrary-precision integer to create. The byte array is encoded
 using the following rules: <ul> <li>Positive numbers have the first
-byte&#39;s highest bit cleared, and negative numbers have the bit set.
-</li> <li>The last byte contains the lowest 8-bits, the next-to-last
-contains the next lowest 8 bits, and so on. For example, the number
-300 can be encoded as <code>0x01, 0x2c</code> and 200 as <code>0x00,
-0xc8</code> . (Note that the second example contains a set high bit in
-<code>0xc8</code> , so an additional 0 is added at the start to ensure
-it&#39;s interpreted as positive.) </li> <li>To encode negative numbers,
-take the absolute value of the number, subtract by 1, encode the
-number into bytes, and toggle each bit of each byte. Any further
-bits that appear beyond the most significant bit of the number will
-be all ones. For example, the number -450 can be encoded as <code>
-0xfe, 0x70</code> and -52869 as <code>0xff, 0x31, 0x7b</code> . (Note that the
-second example contains a cleared high bit in <code>0x31, 0x7b</code> ,
-so an additional 0xff is added at the start to ensure it&#39;s
-interpreted as negative.) </li> </ul> <p>For little-endian, the byte
-order is reversed from the byte order just discussed. </p> .</p></li>
+byte&#39;s highest bit cleared, and negative numbers have the bit
+set.</li> <li>The last byte contains the lowest 8-bits, the
+next-to-last contains the next lowest 8 bits, and so on. For
+example, the number 300 can be encoded as <code>0x01, 0x2c</code> and 200
+as <code>0x00, 0xc8</code>. (Note that the second example contains a set
+high bit in <code>0xc8</code>, so an additional 0 is added at the start
+to ensure it&#39;s interpreted as positive.)</li> <li>To encode negative
+numbers, take the absolute value of the number, subtract by 1,
+encode the number into bytes, and toggle each bit of each byte. Any
+further bits that appear beyond the most significant bit of the
+number will be all ones. For example, the number -450 can be encoded
+as <code>0xfe, 0x70</code> and -52869 as <code>0xff, 0x31, 0x7b</code>. (Note
+that the second example contains a cleared high bit in <code>0x31,
+0x7B</code>, so an additional 0xff is added at the start to ensure it&#39;s
+interpreted as negative.)</li></ul> <p>For little-endian, the byte
+order is reversed from the byte order just discussed.</p>.</p></li>
 <li><p><code>littleEndian</code> - If true, the byte order is little-endian, or
 least-significant-byte first. If false, the byte order is
 big-endian, or most-significant-byte first.</p></li>
@@ -521,8 +520,7 @@ string portion.</li>
 <li><p><code>java.lang.NullPointerException</code> - The parameter <code>str</code> is null.</p></li>
 <li><p><code>java.lang.NumberFormatException</code> - The string portion is empty or in an invalid
 format.</p></li>
-<li><p><code>java.lang.IllegalArgumentException</code> - Doesn&#39;t satisfy (endIndex - index) % 4 ==
-0&quot;.</p></li>
+<li><p><code>java.lang.IllegalArgumentException</code> - Doesn&#39;t satisfy (endIndex - index) % 4 == 0&quot;.</p></li>
 </ul>
 
 <h3>FromString</h3>
@@ -586,9 +584,9 @@ string portion.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.IllegalArgumentException</code> - The parameter <code>index</code> is less than 0,
-<code>endIndex</code> is less than 0, or either is greater than the
-string&#39;s length, or <code>endIndex</code> is less than <code>index</code>.</p></li>
+<li><p><code>java.lang.IllegalArgumentException</code> - The parameter <code>index</code> is less than 0, <code>
+endIndex</code> is less than 0, or either is greater than the string&#39;s
+length, or <code>endIndex</code> is less than <code>index</code>.</p></li>
 <li><p><code>java.lang.NullPointerException</code> - The parameter <code>str</code> is null.</p></li>
 </ul>
 
@@ -627,8 +625,7 @@ string&#39;s length, or <code>endIndex</code> is less than <code>index</code>.</
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>java.lang.NullPointerException</code> - The parameter <code>bigintAugend</code> is
-null.</li>
+<li><code>java.lang.NullPointerException</code> - The parameter <code>bigintAugend</code> is null.</li>
 </ul>
 
 <h3>AsInt32Checked</h3>
@@ -784,7 +781,7 @@ less, or a positive number if this instance is greater.</li>
 </pre>
 
 <p>Multiplies this instance by the value of an arbitrary-precision integer
- object.<p/><pre>EInteger result =
+ object.<p> </p><pre>EInteger result =
   EInteger.FromString(&quot;5&quot;).Multiply(200);</pre> .</p>
 
 <p><strong>Parameters:</strong></p>
@@ -904,8 +901,7 @@ less, or a positive number if this instance is greater.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>bigintDivisor</code> is
-null.</p></li>
+<li><p><code>java.lang.NullPointerException</code> - The parameter <code>bigintDivisor</code> is null.</p></li>
 <li><p><code>java.lang.ArithmeticException</code> - Attempted to divide by zero.</p></li>
 </ul>
 
@@ -954,9 +950,7 @@ quotient, and the second is the remainder.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>obj</code> - The parameter
-  <code>obj</code>
-   is an arbitrary object.</li>
+<li><code>obj</code> - The parameter <code>obj</code> is an arbitrary object.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -990,8 +984,7 @@ quotient, and the second is the remainder.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>java.lang.NullPointerException</code> - The parameter <code>bigintSecond</code> is
-null.</li>
+<li><code>java.lang.NullPointerException</code> - The parameter <code>bigintSecond</code> is null.</li>
 </ul>
 
 <h3>GetDigitCountAsEInteger</h3>
@@ -1073,7 +1066,7 @@ value is 0.</li>
 
 <p>Gets the lowest set bit in this number&#39;s absolute value, in the form of an
  arbitrary-precision integer. (This will also be the lowest set bit
- in the number&#39;s two&#39;s-complement form (see <code>&quot;Forms of numbers&quot; </code>).).</p>
+ in the number&#39;s two&#39;s-complement form (see <code>&quot;Forms of numbers&quot;</code>).).</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -1087,7 +1080,7 @@ value is 0 or odd.</li>
 <pre>public boolean GetSignedBit​(EInteger bigIndex)
 </pre>
 
-<p>Returns whether a bit is set in the two&#39;s-complement form (see <code>&quot;Forms of numbers&quot; </code>) of this
+<p>Returns whether a bit is set in the two&#39;s-complement form (see <code>&quot;Forms of numbers&quot;</code>) of this
  object&#39; s value.</p>
 
 <p><strong>Parameters:</strong></p>
@@ -1115,7 +1108,7 @@ otherwise, <code>false</code>.</li>
 <pre>public boolean GetSignedBit​(int index)
 </pre>
 
-<p>Returns whether a bit is set in the two&#39;s-complement form (see <code>&quot;Forms of numbers&quot; </code>) of this
+<p>Returns whether a bit is set in the two&#39;s-complement form (see <code>&quot;Forms of numbers&quot;</code>) of this
  object&#39; s value.</p>
 
 <p><strong>Parameters:</strong></p>
@@ -1279,8 +1272,7 @@ a 32-bit signed integer.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.IllegalArgumentException</code> - The parameter <code>divisor</code> is less than
-0.</p></li>
+<li><p><code>java.lang.IllegalArgumentException</code> - The parameter <code>divisor</code> is less than 0.</p></li>
 <li><p><code>java.lang.NullPointerException</code> - The parameter <code>divisor</code> is null.</p></li>
 </ul>
 
@@ -1309,8 +1301,7 @@ a 32-bit signed integer.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>java.lang.IllegalArgumentException</code> - The parameter <code>smallDivisor</code> is less
-than 0.</li>
+<li><code>java.lang.IllegalArgumentException</code> - The parameter <code>smallDivisor</code> is less than 0.</li>
 </ul>
 
 <h3>ModPow</h3>
@@ -1337,8 +1328,8 @@ than 0.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>java.lang.NullPointerException</code> - The parameter <code>pow</code> or <code>
-mod</code> is null.</li>
+<li><code>java.lang.NullPointerException</code> - The parameter <code>pow</code> or <code>mod</code> is
+null.</li>
 </ul>
 
 <h3>Multiply</h3>
@@ -1364,8 +1355,7 @@ mod</code> is null.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>java.lang.NullPointerException</code> - The parameter <code>bigintMult</code> is
-null.</li>
+<li><code>java.lang.NullPointerException</code> - The parameter <code>bigintMult</code> is null.</li>
 </ul>
 
 <h3>Negate</h3>
@@ -1397,9 +1387,7 @@ null.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>The result. Returns 1 if
-  <code>bigPower</code>
-   is 0.</li>
+<li>The result. Returns 1 if <code>bigPower</code> is 0.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -1492,7 +1480,7 @@ null.</li>
 
 <p>Returns an arbitrary-precision integer with the bits shifted to the right.
  For this operation, the arbitrary-precision integer is treated as a
- two&#39;s-complement form (see <code>&quot;Forms of numbers&quot; </code>). Thus, for negative values, the
+ two&#39;s-complement form (see <code>&quot;Forms of numbers&quot;</code>). Thus, for negative values, the
  arbitrary-precision integer is sign-extended.</p>
 
 <p><strong>Parameters:</strong></p>
@@ -1587,10 +1575,10 @@ parameter.</li>
 <pre>public EInteger And​(EInteger other)
 </pre>
 
-<p>Does an AND operation between two arbitrary-precision integer values.<p>
- Each arbitrary-precision integer is treated as a two&#39;s-complement
-  form (see <code>&quot;Forms of numbers&quot;
- </code>) for the purposes of this operator. </p></p>
+<p>Does an AND operation between two arbitrary-precision integer values.<p>Each
+ arbitrary-precision integer is treated as a two&#39;s-complement form
+  (see <code>&quot;Forms of numbers&quot;</code>)
+ for the purposes of this operator.</p></p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1617,10 +1605,9 @@ set.</li>
 <pre>public EInteger Or​(EInteger second)
 </pre>
 
-<p>Does an OR operation between two arbitrary-precision integer instances.<p>
- Each arbitrary-precision integer is treated as a two&#39;s-complement
-  form (see <code>&quot;Forms of numbers&quot;
- </code>) for the purposes of this operator. </p></p>
+<p>Does an OR operation between two arbitrary-precision integer
+ instances.<p>Each arbitrary-precision integer is treated as a
+ two&#39;s-complement form (see <code>&quot;Forms of numbers&quot;</code>) for the purposes of this operator.</p></p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1638,8 +1625,8 @@ set.</li>
 
 <ul>
 <li><p><code>java.lang.NullPointerException</code> - The parameter <code>second</code> is null.</p></li>
-<li><p><code>java.lang.IllegalArgumentException</code> - Doesn&#39;t satisfy biggerCount&gt;0; doesn&#39;t
-satisfy biggerCount == CountWords(result).</p></li>
+<li><p><code>java.lang.IllegalArgumentException</code> - Doesn&#39;t satisfy biggerCount&gt;0; doesn&#39;t satisfy
+biggerCount == CountWords(result).</p></li>
 </ul>
 
 <h3>Xor</h3>
@@ -1649,8 +1636,8 @@ satisfy biggerCount == CountWords(result).</p></li>
 
 <p>Finds the exclusive &quot;or&quot; of two arbitrary-precision integer objects. <p>Each
  arbitrary-precision integer is treated as a two&#39;s-complement form
-  (see <code>&quot;Forms of numbers&quot; </code>)
- for the purposes of this operator. </p></p>
+  (see <code>&quot;Forms of numbers&quot;</code>)
+ for the purposes of this operator.</p></p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1680,7 +1667,7 @@ CountWords(result).</p></li>
 
 <p>Returns an arbitrary-precision integer with the bits shifted to the right.
  For this operation, the arbitrary-precision integer is treated as a
- two&#39;s-complement form (see <code>&quot;Forms of numbers&quot; </code>). Thus, for negative values, the
+ two&#39;s-complement form (see <code>&quot;Forms of numbers&quot;</code>). Thus, for negative values, the
  arbitrary-precision integer is sign-extended.</p>
 
 <p><strong>Parameters:</strong></p>
@@ -1750,8 +1737,7 @@ is 0 or less, or one and zero if this value equals 1.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>java.lang.NullPointerException</code> - The parameter <code>subtrahend</code> is
-null.</li>
+<li><code>java.lang.NullPointerException</code> - The parameter <code>subtrahend</code> is null.</li>
 </ul>
 
 <h3>ToBytes</h3>
@@ -1760,7 +1746,7 @@ null.</li>
 </pre>
 
 <p>Returns a byte array of this integer&#39;s value. The byte array will take the
- number&#39;s two&#39; s-complement form (see <code>&quot;Forms of numbers&quot; </code>), using the
+ number&#39;s two&#39; s-complement form (see <code>&quot;Forms of numbers&quot;</code>), using the
  fewest bytes necessary to store its value unambiguously. If this
  value is negative, the bits that appear beyond the most significant
  bit of the number will be all ones. The resulting byte array can be
@@ -1770,9 +1756,7 @@ null.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>littleEndian</code> - Either
-  <code>true</code> or
-  <code>false</code> .</li>
+<li><code>littleEndian</code> - Either <code>true</code> or <code>false</code>.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -1803,7 +1787,7 @@ single element 0.</li>
 
 <p>Converts this object&#39;s value to a 32-bit signed integer. If the value can&#39;t
  fit in a 32-bit integer, returns the lower 32 bits of this object&#39;s
- two&#39; s-complement form (see <code>&quot;Forms of numbers&quot; </code>) (in which case the return value might have a
+ two&#39; s-complement form (see <code>&quot;Forms of numbers&quot;</code>) (in which case the return value might have a
  different sign than this object&#39;s value).</p>
 
 <p><strong>Returns:</strong></p>
@@ -1833,7 +1817,7 @@ single element 0.</li>
 
 <p>Converts this object&#39;s value to a 64-bit signed integer. If the value can&#39;t
  fit in a 64-bit integer, returns the lower 64 bits of this object&#39;s
- two&#39; s-complement form (see <code>&quot;Forms of numbers&quot; </code>) (in which case the return value might have a
+ two&#39; s-complement form (see <code>&quot;Forms of numbers&quot;</code>) (in which case the return value might have a
  different sign than this object&#39;s value).</p>
 
 <p><strong>Returns:</strong></p>

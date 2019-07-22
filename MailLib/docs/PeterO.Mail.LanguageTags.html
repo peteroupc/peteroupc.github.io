@@ -82,15 +82,20 @@
 
 <p>Returns whether the given string is a basic language range under RFC 4647. Examples include &quot;*&quot;, &quot;en-us&quot;, and &quot;fr&quot;.</p>
 
-<p><b>Parameters:</b></p>
+<pre>&lt;b&gt;Parameters:&lt;/b&gt;
+</pre>
 
 <ul>
-<li><i>str</i>: The string to check. Can be null.</li>
+<li><i>str</i>:  The string to check. Can be null.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p><code>true</code>  if the given string is a basic language range; otherwise,  <code>false</code>  .</p>
+<p><code>
+            true
+</code>  if the given string is a basic language range; otherwise,  <code>
+            false
+</code>  .</p>
 
 <p><a id="IsLanguageRange_string_bool"></a></p>
 
@@ -103,17 +108,22 @@
 
 <p>Returns whether the given string is a basic or extended language range under RFC 4647. Examples of basic (and extended) language ranges include &quot;<em>&quot;, &quot;en-us&quot;, and &quot;fr&quot;. Examples of extended language ranges include &quot;</em>-de&quot; and &quot;it-*&quot;.</p>
 
-<p><b>Parameters:</b></p>
+<pre> &lt;b&gt;Parameters:&lt;/b&gt;
+</pre>
 
 <ul>
-<li><p><i>str</i>: The string to check. Can be null.</p></li>
-<li><p><i>extended</i>: Check whether the string is a basic language range if &quot;false&quot;, or an extended language range if &quot;true&quot;.</p></li>
+<li><p><i>str</i>:  The string to check. Can be null.</p></li>
+<li><p><i>extended</i>:  Check whether the string is a basic language range if &quot;false&quot;, or an extended language range if &quot;true&quot;.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p><code>true</code>  if the given string is a basic language range (depending on the  <i>extended</i>
- parameter); otherwise,  <code>false</code>  .</p>
+<p><code>
+            true
+</code>  if the given string is a basic language range (depending on the  <i>extended</i>
+ parameter); otherwise,  <code>
+            false
+</code>  .</p>
 
 <p><a id="IsPotentiallyValidLanguageTag_string"></a></p>
 
@@ -204,13 +214,14 @@ contains a value that is not a potentially valid language tag.</p></li>
 
 <p>Finds the language tags that match a priority list of language ranges.</p>
 
-<p><b>Parameters:</b></p>
+<pre>     &lt;b&gt;Parameters:&lt;/b&gt;
+</pre>
 
 <ul>
-<li><p><i>ranges</i>: A list of language ranges (see documentation for the &quot;IsLanguageRange&quot; method), which should be given in order of descending preference.</p></li>
-<li><p><i>languages</i>: A list of language tags, which should be given in order of descending preference.</p></li>
-<li><p><i>extended</i>: If true, the ranges in &quot;ranges&quot; are extended language ranges; otherwise, they are basic language ranges.</p></li>
-<li><p><i>matchStarAtEnd</i>: If true, treats any range equaling &quot;*&quot; as appearing at the end of the language priority list, no matter where it appears on that list.</p></li>
+<li><p><i>ranges</i>:  A list of language ranges (see documentation for the &quot;IsLanguageRange&quot; method), which should be given in order of descending preference.</p></li>
+<li><p><i>languages</i>:  A list of language tags, which should be given in order of descending preference.</p></li>
+<li><p><i>extended</i>:  If true, the ranges in &quot;ranges&quot; are extended language ranges; otherwise, they are basic language ranges.</p></li>
+<li><p><i>matchStarAtEnd</i>:  If true, treats any range equaling &quot;*&quot; as appearing at the end of the language priority list, no matter where it appears on that list.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>

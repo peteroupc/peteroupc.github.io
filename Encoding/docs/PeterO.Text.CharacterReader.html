@@ -19,7 +19,7 @@
 <li><code><a href="#ReadChar">ReadChar()</a></code> - Reads the next character from a Unicode stream or a string.</li>
 </ul>
 
-<p><a id="Void_ctor_String"></a></p>
+<p><a id="Void_ctor_System_String"></a></p>
 
 <h3>CharacterReader Constructor</h3>
 
@@ -35,7 +35,7 @@
 <li><i>str</i>: A string object.</li>
 </ul>
 
-<p><a id="Void_ctor_String_Boolean"></a></p>
+<p><a id="Void_ctor_System_String_Boolean"></a></p>
 
 <h3>CharacterReader Constructor</h3>
 
@@ -54,7 +54,7 @@
 <li><p><i>skipByteOrderMark</i>: A Boolean object.</p></li>
 </ul>
 
-<p><a id="Void_ctor_String_Boolean_Boolean"></a></p>
+<p><a id="Void_ctor_System_String_Boolean_Boolean"></a></p>
 
 <h3>CharacterReader Constructor</h3>
 
@@ -83,7 +83,7 @@ The parameter  <i>str</i>
 is null.</li>
 </ul>
 
-<p><a id="Void_ctor_String_Int32_Int32"></a></p>
+<p><a id="Void_ctor_System_String_Int32_Int32"></a></p>
 
 <h3>CharacterReader Constructor</h3>
 
@@ -104,7 +104,7 @@ is null.</li>
 <li><p><i>length</i>: Another 32-bit signed integer.</p></li>
 </ul>
 
-<p><a id="Void_ctor_String_Int32_Int32_Boolean_Boolean"></a></p>
+<p><a id="Void_ctor_System_String_Int32_Int32_Boolean_Boolean"></a></p>
 
 <h3>CharacterReader Constructor</h3>
 
@@ -137,7 +137,7 @@ The parameter  <i>str</i>
 is null.</li>
 </ul>
 
-<p><a id="Void_ctor_Stream"></a></p>
+<p><a id="Void_ctor_System_IO_Stream"></a></p>
 
 <h3>CharacterReader Constructor</h3>
 
@@ -153,7 +153,7 @@ is null.</li>
 <li><i>stream</i>: A readable data stream.</li>
 </ul>
 
-<p><a id="Void_ctor_Stream_Int32"></a></p>
+<p><a id="Void_ctor_System_IO_Stream_Int32"></a></p>
 
 <h3>CharacterReader Constructor</h3>
 
@@ -172,7 +172,7 @@ is null.</li>
 <li><p><i>mode</i>: A 32-bit signed integer.</p></li>
 </ul>
 
-<p><a id="Void_ctor_Stream_Int32_Boolean"></a></p>
+<p><a id="Void_ctor_System_IO_Stream_Int32_Boolean"></a></p>
 
 <h3>CharacterReader Constructor</h3>
 
@@ -193,7 +193,7 @@ is null.</li>
 <li><p><i>errorThrow</i>: A Boolean object.</p></li>
 </ul>
 
-<p><a id="Void_ctor_Stream_Int32_Boolean_Boolean"></a></p>
+<p><a id="Void_ctor_System_IO_Stream_Int32_Boolean_Boolean"></a></p>
 
 <h3>CharacterReader Constructor</h3>
 
@@ -236,7 +236,8 @@ is null.</li>
 
 <p>Reads a series of code points from a Unicode stream or a string.</p>
 
-<p><b>Parameters:</b></p>
+<pre>      &lt;b&gt;Parameters:&lt;/b&gt;
+</pre>
 
 <ul>
 <li><p><i>chars</i>: An array where the code points that were read will be stored.</p></li>
@@ -266,6 +267,11 @@ is less than 0 or greater than  <i>chars</i>
 &#39;s length minus  <i>index</i>
 is less than  <i>length</i>
 .</p></li>
+<li><p>System.ArgumentException:
+Either &quot;index&quot; or &quot;length&quot; is less than 0 or greater than &quot;chars&quot;&#39;s length, or &quot;chars&quot;&#39;s length minus &quot;index&quot; is less than &quot;length&quot;.</p></li>
+<li><p>System.ArgumentNullException:
+The parameter  <i>chars</i>
+is null.</p></li>
 </ul>
 
 <p><a id="ReadChar"></a></p>

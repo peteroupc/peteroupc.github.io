@@ -12,88 +12,87 @@
 <p>Represents an email message, and contains methods and properties for
  accessing and modifying email message data. This class implements
  the Internet Message Format (RFC 5322) and Multipurpose Internet
- Mail Extensions (MIME; RFC 2045-2047, RFC 2049). </p> <p><b>Thread
+ Mail Extensions (MIME; RFC 2045-2047, RFC 2049).</p> <p><b>Thread
  safety:</b> This class is mutable; its properties can be changed.
  None of its instance methods are designed to be thread safe.
  Therefore, access to objects from this class must be synchronized if
- multiple threads can access them at the same time. </p> <p>The
+ multiple threads can access them at the same time.</p> <p>The
  following lists known deviations from the mail specifications
- (Internet Message Format and MIME): </p> <ul> <li>The
+ (Internet Message Format and MIME):</p> <ul> <li>The
   content-transfer-encodings "quoted-printable" and "base64" are
  treated as 7bit instead if they occur in a message or body part with
   content type "multipart/*" or "message/*" (other than
   "message/global", "message/global-headers",
   "message/global-disposition-notification", or
-  "message/global-delivery-status"). </li> <li>If a message has two or
+  "message/global-delivery-status").</li> <li>If a message has two or
  more Content-Type header fields, it is treated as having a content
   type of "application/octet-stream", unless one or more of the header
- fields is syntactically invalid. </li> <li>Illegal UTF-8 byte
+ fields is syntactically invalid.</li> <li>Illegal UTF-8 byte
  sequences appearing in header field values are replaced with
  replacement characters. Moreover, UTF-8 is parsed everywhere in
  header field values, even in those parts of some structured header
  fields where this appears not to be allowed. (UTF-8 is a character
- encoding for the Unicode character set.) </li> <li>This
+ encoding for the Unicode character set.)</li> <li>This
  implementation can parse a message even if that message is without a
- From header field, without a Date header field, or without both.
- </li> <li>The To and Cc header fields are allowed to contain only
-  comments and whitespace, but these "empty" header fields will be
- omitted when generating. </li> <li>There is no line length limit
- imposed when parsing header fields, except header field names. </li>
+ From header field, without a Date header field, or without
+ both.</li> <li>The To and Cc header fields are allowed to contain
+  only comments and whitespace, but these "empty" header fields will
+ be omitted when generating.</li> <li>There is no line length limit
+ imposed when parsing header fields, except header field names.</li>
  <li>There is no line length limit imposed when parsing
- quoted-printable or base64 encoded bodies. </li> <li>If the transfer
+ quoted-printable or base64 encoded bodies.</li> <li>If the transfer
   encoding is absent and the content type is "message/rfc822", bytes
   with values greater than 127 (called "8-bit bytes" in the rest of
   this summary) are still allowed, despite the default value of "7bit"
-  for "Content-Transfer-Encoding". </li> <li>In the following cases,
- if the transfer encoding is absent, declared as 7bit, or treated as
- 7bit, 8-bit bytes are still allowed: </li> <li>(a) The preamble and
- epilogue of multipart messages, which will be ignored. </li> <li>(b)
- If the charset is declared to be <code>utf-8</code> . </li> <li>(c) If the
+  for "Content-Transfer-Encoding".</li> <li>In the following cases, if
+ the transfer encoding is absent, declared as 7bit, or treated as
+ 7bit, 8-bit bytes are still allowed:</li> <li>(a) The preamble and
+ epilogue of multipart messages, which will be ignored.</li> <li>(b)
+ If the charset is declared to be <code>utf-8</code>.</li> <li>(c) If the
   content type is "text/html" and the charset is declared to be
-  <code>us-ascii</code> , "windows-1252", "windows-1251", or
-  "iso-8859-*" (all single byte encodings). </li> <li>(d) In
+  <code>us-ascii</code>, "windows-1252", "windows-1251", or
+  "iso-8859-*" (all single byte encodings).</li> <li>(d) In
  non-MIME message bodies and in text/plain message bodies. Any 8-bit
- bytes are replaced with the substitute character byte (0x1a). </li>
+ bytes are replaced with the substitute character byte (0x1a).</li>
   <li>If the message starts with the word "From" (and no other case
  variations of that word) followed by one or more space (U + 0020) not
  followed by colon, that text and the rest of the text is skipped up
  to and including a line feed (U + 000A). (See also RFC 4155, which
   describes the so-called "mbox" convention with "From" lines of this
- kind.) </li> <li>The name <code>ascii</code> is treated as a synonym for
- <code>us-ascii</code> , despite being a reserved name under RFC 2046. The
+ kind.)</li> <li>The name <code>ascii</code> is treated as a synonym for
+ <code>us-ascii</code>, despite being a reserved name under RFC 2046. The
  name <code>cp1252</code> and <code>utf8</code> are treated as synonyms for
- <code>windows-1252</code> and <code>utf-8</code> , respectively, even though
- they are not IANA registered aliases. </li> <li>The following
- deviations involve encoded words under RFC 2047: </li> <li>(a) If a
- sequence of encoded words decodes to a string with a CTL character
- (U + 007F, or a character less than U + 0020 and not TAB) after being
- converted to Unicode, the encoded words are left un-decoded. </li>
- <li>(b) This implementation can decode encoded words regardless of
- the character length of the line in which they appear. This
- implementation can generate a header field line with one or more
- encoded words even if that line is more than 76 characters long.
- (This implementation follows the recommendation in RFC 5322 to limit
- header field lines to no more than 78 characters, where possible.)
- </li> </ul> <p>It would be appreciated if users of this library
- contact the author if they find other ways in which this
- implementation deviates from the mail specifications or other
- applicable specifications. </p> <p>Note that this class currently
-  doesn't support the "padding" parameter for message bodies with the
-  media type "application/octet-stream" or treated as that media type
- (see RFC 2046 sec. 4.5.1). </p> <p>Note that this implementation can
- decode an RFC 2047 encoded word that uses ISO-2022-JP or
- ISO-2022-JP-2 (encodings that uses code switching) even if the
-  encoded word's payload ends in a different mode from "ASCII mode".
-  (Each encoded word still starts in "ASCII mode", though.) This,
- however, is not a deviation to RFC 2047 because the relevant rule
-  only concerns bringing the output device back to "ASCII mode" after
- the decoded text is displayed (see last paragraph of sec. 6.2) --
- since the decoded text is converted to Unicode rather than kept as
- ISO-2022-JP or ISO-2022-JP-2, this is not applicable since there is
-  no such thing as "ASCII mode" in the Unicode Standard. </p> <p>Note
- that this library (the MailLib library) has no facilities for
- sending and receiving email messages, since that's outside this
- library's scope. </p>
+ <code>windows-1252</code> and <code>utf-8</code>, respectively, even though they
+ are not IANA registered aliases.</li> <li>The following deviations
+ involve encoded words under RFC 2047:</li> <li>(a) If a sequence of
+ encoded words decodes to a string with a CTL character (U + 007F, or a
+ character less than U + 0020 and not TAB) after being converted to
+ Unicode, the encoded words are left un-decoded.</li> <li>(b) This
+ implementation can decode encoded words regardless of the character
+ length of the line in which they appear. This implementation can
+ generate a header field line with one or more encoded words even if
+ that line is more than 76 characters long. (This implementation
+ follows the recommendation in RFC 5322 to limit header field lines
+ to no more than 78 characters, where possible.)</li></ul> <p>It
+ would be appreciated if users of this library contact the author if
+ they find other ways in which this implementation deviates from the
+ mail specifications or other applicable specifications.</p> <p>Note
+  that this class currently doesn't support the "padding" parameter
+  for message bodies with the media type "application/octet-stream" or
+ treated as that media type (see RFC 2046 sec. 4.5.1).</p> <p>Note
+ that this implementation can decode an RFC 2047 encoded word that
+ uses ISO-2022-JP or ISO-2022-JP-2 (encodings that uses code
+ switching) even if the encoded word's payload ends in a different
+  mode from "ASCII mode". (Each encoded word still starts in "ASCII
+  mode", though.) This, however, is not a deviation to RFC 2047
+ because the relevant rule only concerns bringing the output device
+  back to "ASCII mode" after the decoded text is displayed (see last
+ paragraph of sec. 6.2) -- since the decoded text is converted to
+ Unicode rather than kept as ISO-2022-JP or ISO-2022-JP-2, this is
+  not applicable since there is no such thing as "ASCII mode" in the
+ Unicode Standard.</p> <p>Note that this library (the MailLib
+ library) has no facilities for sending and receiving email messages,
+ since that's outside this library's scope.</p>
 
 <h2>Methods</h2>
 
@@ -364,7 +363,7 @@ class.</li>
 <p>Sets this message&#39;s Date header field to the current time as its value, with
  an unspecified time zone offset. <p>This method can be used when the
  message is considered complete and ready to be generated, for
-  example, using the &quot;Generate()&quot; method. </p></p>
+  example, using the &quot;Generate()&quot; method.</p></p>
 
 <p><strong>Returns:</strong></p>
 
@@ -431,14 +430,14 @@ Use GetAddresses(\Cc) instead.</p>
 <p>Gets a Hypertext Markup Language (HTML) rendering of this message's text
  body. This method currently supports text/plain, text/plain with
  format = flowed, text/enriched, and text/markdown (original
- Markdown). </p><p> </p><p>REMARK: The Markdown implementation currently
+ Markdown).</p><p> </p><p>REMARK: The Markdown implementation currently
  supports all features of original Markdown, except that the
- implementation-- </p> <ul> <li>does not strictly check the placement
-  of "block-level HTML elements", </li> <li>does not prevent Markdown
+ implementation--</p> <ul> <li>does not strictly check the placement
+  of "block-level HTML elements",</li> <li>does not prevent Markdown
  content from being interpreted as such merely because it's contained
-  in a "block-level HTML element", and </li> <li>does not deliberately
+  in a "block-level HTML element", and</li> <li>does not deliberately
  use HTML escapes to obfuscate email addresses wrapped in
- angle-brackets. </li> </ul>
+ angle-brackets.</li></ul>
 
 **Returns:**
 
@@ -479,8 +478,7 @@ Gets this message's media type. When getting, the media type may differ in
 
 **Throws:**
 
-* <code>java.lang.NullPointerException</code> - This value is being set and "value" is
- null.
+* <code>java.lang.NullPointerException</code> - This value is being set and "value" is null.
 
 ### setContentType
     public final void setContentType​(MediaType value)
@@ -488,11 +486,11 @@ Gets this message's media type. When getting, the media type may differ in
     public final java.lang.String getFileName()
 <p>Gets a file name suggested by this message for saving the message's body
  to a file. For more information on the algorithm, see
- ContentDisposition.MakeFilename. </p> <p>This method generates a
- file name based on the <code>filename</code> parameter of the
+ ContentDisposition.MakeFilename.</p> <p>This method generates a file
+ name based on the <code>filename</code> parameter of the
  Content-Disposition header field, if it exists, or on the
- <code>name</code> parameter of the Content-Type header field, otherwise.
- </p>
+ <code>name</code> parameter of the Content-Type header field,
+ otherwise.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -529,8 +527,7 @@ message&#39;s header fields of the given name.</li>
 <li><p><code>java.lang.UnsupportedOperationException</code> - The parameter <code>headerName</code> is not
 supported for this method. Currently, the only header fields
 supported are To, Cc, Bcc, Reply-To, Sender, and From.</p></li>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>headerName</code> is
-null.</p></li>
+<li><p><code>java.lang.NullPointerException</code> - The parameter <code>headerName</code> is null.</p></li>
 <li><p><code>java.lang.IllegalArgumentException</code> - The parameter <code>headerName</code> is empty.</p></li>
 </ul>
 
@@ -555,9 +552,9 @@ Use GetAddresses(\From) instead.</p>
 
 <p>Gets a snapshot of the header fields of this message, in the order in which
  they appear in the message. For each item in the list, the key is
- the header field&#39;s name (where any basic upper-case letters [U+0041
- to U + 005A] are converted to lower case) and the value is the header
- field&#39;s value.</p>
+ the header field&#39;s name (where any basic upper-case
+ letters.get(U + 0041 to U + 005A) are converted to lower case) and the
+ value is the header field&#39;s value.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -619,7 +616,7 @@ Use GetAddresses(\To) instead.</p>
 
 <p>Adds a header field to the end of the message&#39;s header. <p>Updates the
  ContentType and ContentDisposition properties if those header fields
- have been modified by this method. </p></p>
+ have been modified by this method.</p></p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -638,11 +635,10 @@ value.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.NullPointerException</code> - The key or value of <code>header</code> is
-null.</p></li>
-<li><p><code>java.lang.IllegalArgumentException</code> - The header field name is too long or
-contains an invalid character, or the header field&#39;s value is
-syntactically invalid.</p></li>
+<li><p><code>java.lang.NullPointerException</code> - The key or value of <code>header</code> is null.</p></li>
+<li><p><code>java.lang.IllegalArgumentException</code> - The header field name is too long or contains an
+invalid character, or the header field&#39;s value is syntactically
+invalid.</p></li>
 </ul>
 
 <h3>AddHeader</h3>
@@ -652,7 +648,7 @@ syntactically invalid.</p></li>
 
 <p>Adds a header field to the end of the message&#39;s header. <p>Updates the
  ContentType and ContentDisposition properties if those header fields
- have been modified by this method. </p></p>
+ have been modified by this method.</p></p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -670,11 +666,11 @@ syntactically invalid.</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>name</code> or <code>
-value</code> is null.</p></li>
-<li><p><code>java.lang.IllegalArgumentException</code> - The header field name is too long or
-contains an invalid character, or the header field&#39;s value is
-syntactically invalid.</p></li>
+<li><p><code>java.lang.NullPointerException</code> - The parameter <code>name</code> or <code>value</code> is
+null.</p></li>
+<li><p><code>java.lang.IllegalArgumentException</code> - The header field name is too long or contains an
+invalid character, or the header field&#39;s value is syntactically
+invalid.</p></li>
 </ul>
 
 <h3>Generate</h3>
@@ -685,25 +681,26 @@ syntactically invalid.</p></li>
 <p>Generates this message&#39;s data in text form. <p>The generated message will
  have only Basic Latin code points (U + 0000 to U + 007F), and the
  transfer encoding will always be 7bit, quoted-printable, or base64
- (the declared transfer encoding for this message will be ignored).
- </p> <p>The following applies to the following header fields: From,
- To, Cc, Bcc, Reply-To, Sender, Resent-To, Resent-From, Resent-Cc,
- Resent-Bcc, and Resent-Sender. If the header field exists, but has
- an invalid syntax, has no addresses, or appears more than once, this
- method will generate a synthetic header field with the display-name
- set to the contents of all of the header fields with the same name,
- and the address set to <code>me@[header-name]-address.invalid</code> as
- the address (a <code>.invalid</code> address is a reserved address that
- can never belong to anyone). (An exception is that the Resent-*
- header fields may appear more than once.) The generated message
- should always have a From header field. </p> <p>If a Date and/or
- Message-ID header field doesn&#39;t exist, a field with that name will
- be generated (using the current local time for the Date field). </p>
- <p>When encoding the message&#39;s body, if the message has a text
-  content type (&quot;text/*&quot;), the line breaks are a CR byte
- (carriage return, 0x0d) followed by an LF byte (line feed, 0x0a), CR
- alone, or LF alone. If the message has any other content type, only
- CR followed by LF is considered a line break. </p></p>
+ (the declared transfer encoding for this message will be
+ ignored).</p> <p>The following applies to the following header
+ fields: From, To, Cc, Bcc, Reply-To, Sender, Resent-To, Resent-From,
+ Resent-Cc, Resent-Bcc, and Resent-Sender. If the header field
+ exists, but has an invalid syntax, has no addresses, or appears more
+ than once, this method will generate a synthetic header field with
+ the display-name set to the contents of all of the header fields
+ with the same name, and the address set to
+ <code>me@[header-name]-address.invalid</code> as the address (a
+ <code>.invalid</code> address is a reserved address that can never belong
+ to anyone). (An exception is that the Resent-* header fields
+ may appear more than once.) The generated message should always have
+ a From header field.</p> <p>If a Date and/or Message-ID header field
+ doesn&#39;t exist, a field with that name will be generated (using the
+ current local time for the Date field).</p> <p>When encoding the
+ message&#39;s body, if the message has a text content type
+  (&quot;text/*&quot;), the line breaks are a CR byte (carriage return,
+ 0x0d) followed by an LF byte (line feed, 0x0a), CR alone, or LF
+ alone. If the message has any other content type, only CR followed
+ by LF is considered a line break.</p></p>
 
 <p><strong>Returns:</strong></p>
 
@@ -771,19 +768,19 @@ generated.</li>
 <ul>
 <li><code>dateTime</code> - An array containing eight elements. Each element of the
 array (starting from 0) is as follows: <ul> <li>0 - The year. For
-example, the value 2000 means 2000 C.E. </li> <li>1 - Month of the
-year, from 1 (January) through 12 (December). </li> <li>2 - Day of
-the month, from 1 through 31. </li> <li>3 - Hour of the day, from 0
-through 23. </li> <li>4 - Minute of the hour, from 0 through 59.
-</li> <li>5 - Second of the minute, from 0 through 60 (this value
-can go up to 60 to accommodate leap seconds). (Leap seconds are
-additional seconds added to adjust international atomic time, or
-TAI, to an approximation of astronomical time known as coordinated
-universal time, or UTC.) </li> <li>6 - Milliseconds of the second,
-from 0 through 999. This value is not used to generate the date
-string, but must still be valid. </li> <li>7 - Number of minutes to
-subtract from this date and time to get global time. This number can
-be positive or negative. </li> </ul>.</li>
+example, the value 2000 means 2000 C.E.</li> <li>1 - Month of the
+year, from 1 (January) through 12 (December).</li> <li>2 - Day of
+the month, from 1 through 31.</li> <li>3 - Hour of the day, from 0
+through 23.</li> <li>4 - Minute of the hour, from 0 through 59.</li>
+<li>5 - Second of the minute, from 0 through 60 (this value can go
+up to 60 to accommodate leap seconds). (Leap seconds are additional
+seconds added to adjust international atomic time, or TAI, to an
+approximation of astronomical time known as coordinated universal
+time, or UTC.)</li> <li>6 - Milliseconds of the second, from 0
+through 999. This value is not used to generate the date string, but
+must still be valid.</li> <li>7 - Number of minutes to subtract from
+this date and time to get global time. This number can be positive
+or negative.</li></ul>.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -795,9 +792,9 @@ be positive or negative. </li> </ul>.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.IllegalArgumentException</code> - The parameter <code>dateTime</code> contains
-fewer than eight elements, contains invalid values, or contains a
-year less than 0.</p></li>
+<li><p><code>java.lang.IllegalArgumentException</code> - The parameter <code>dateTime</code> contains fewer than
+eight elements, contains invalid values, or contains a year less
+than 0.</p></li>
 <li><p><code>java.lang.NullPointerException</code> - The parameter <code>dateTime</code> is null.</p></li>
 </ul>
 
@@ -838,8 +835,8 @@ year less than 0.</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>java.lang.IllegalArgumentException</code> - The parameter <code>index</code> is 0 or at
-least as high as the number of header fields.</li>
+<li><code>java.lang.IllegalArgumentException</code> - The parameter <code>index</code> is 0 or at least as
+high as the number of header fields.</li>
 </ul>
 
 <h3>GetHeader</h3>
@@ -924,7 +921,7 @@ empty if no header field has that name.</li>
 
 <p>Removes a header field by index. <p>Updates the ContentType and
  ContentDisposition properties if those header fields have been
- modified by this method. </p></p>
+ modified by this method.</p></p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -941,8 +938,8 @@ empty if no header field has that name.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>java.lang.IllegalArgumentException</code> - The parameter <code>index</code> is 0 or at
-least as high as the number of header fields.</li>
+<li><code>java.lang.IllegalArgumentException</code> - The parameter <code>index</code> is 0 or at least as
+high as the number of header fields.</li>
 </ul>
 
 <h3>RemoveHeader</h3>
@@ -957,7 +954,7 @@ least as high as the number of header fields.</li>
  converting the basic upper-case letters A to Z (U + 0041 to U + 005A) in
  both strings to lower case.). <p>Updates the ContentType and
  ContentDisposition properties if those header fields have been
- modified by this method. </p></p>
+ modified by this method.</p></p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1010,7 +1007,7 @@ least as high as the number of header fields.</li>
 
 <p>Sets the name and value of a header field by index. <p>Updates the
  ContentType and ContentDisposition properties if those header fields
- have been modified by this method. </p></p>
+ have been modified by this method.</p></p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1030,12 +1027,11 @@ value.</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.IllegalArgumentException</code> - The parameter <code>index</code> is 0 or at
-least as high as the number of header fields; or, the header field
-name is too long or contains an invalid character, or the header
-field&#39;s value is syntactically invalid.</p></li>
-<li><p><code>java.lang.NullPointerException</code> - The key or value of <code>header</code> is
-null.</p></li>
+<li><p><code>java.lang.IllegalArgumentException</code> - The parameter <code>index</code> is 0 or at least as
+high as the number of header fields; or, the header field name is
+too long or contains an invalid character, or the header field&#39;s
+value is syntactically invalid.</p></li>
+<li><p><code>java.lang.NullPointerException</code> - The key or value of <code>header</code> is null.</p></li>
 </ul>
 
 <h3>SetHeader</h3>
@@ -1045,7 +1041,7 @@ null.</p></li>
 
 <p>Sets the name and value of a header field by index. <p>Updates the
  ContentType and ContentDisposition properties if those header fields
- have been modified by this method. </p></p>
+ have been modified by this method.</p></p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1064,12 +1060,12 @@ null.</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.IllegalArgumentException</code> - The parameter <code>index</code> is 0 or at
-least as high as the number of header fields; or, the header field
-name is too long or contains an invalid character, or the header
-field&#39;s value is syntactically invalid.</p></li>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>name</code> or <code>
-value</code> is null.</p></li>
+<li><p><code>java.lang.IllegalArgumentException</code> - The parameter <code>index</code> is 0 or at least as
+high as the number of header fields; or, the header field name is
+too long or contains an invalid character, or the header field&#39;s
+value is syntactically invalid.</p></li>
+<li><p><code>java.lang.NullPointerException</code> - The parameter <code>name</code> or <code>value</code> is
+null.</p></li>
 </ul>
 
 <h3>SetHeader</h3>
@@ -1079,7 +1075,7 @@ value</code> is null.</p></li>
 
 <p>Sets the value of a header field by index without changing its name.
  <p>Updates the ContentType and ContentDisposition properties if
- those header fields have been modified by this method. </p></p>
+ those header fields have been modified by this method.</p></p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1097,10 +1093,10 @@ value</code> is null.</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.IllegalArgumentException</code> - The parameter <code>index</code> is 0 or at
-least as high as the number of header fields; or, the header field
-name is too long or contains an invalid character, or the header
-field&#39;s value is syntactically invalid.</p></li>
+<li><p><code>java.lang.IllegalArgumentException</code> - The parameter <code>index</code> is 0 or at least as
+high as the number of header fields; or, the header field name is
+too long or contains an invalid character, or the header field&#39;s
+value is syntactically invalid.</p></li>
 <li><p><code>java.lang.NullPointerException</code> - The parameter <code>value</code> is null.</p></li>
 </ul>
 
@@ -1145,8 +1141,8 @@ example, if the name parameter is &quot;From&quot;, this parameter could be
  same name exists, its value is replaced. If the header field&#39;s name
  occurs more than once, only the first instance of the header field
  is replaced. <p>Updates the ContentType and ContentDisposition
- properties if those header fields have been modified by this method.
- </p></p>
+ properties if those header fields have been modified by this
+ method.</p></p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1164,11 +1160,11 @@ example, if the name parameter is &quot;From&quot;, this parameter could be
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.IllegalArgumentException</code> - The header field name is too long or
-contains an invalid character, or the header field&#39;s value is
-syntactically invalid.</p></li>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>name</code> or <code>
-value</code> is null.</p></li>
+<li><p><code>java.lang.IllegalArgumentException</code> - The header field name is too long or contains an
+invalid character, or the header field&#39;s value is syntactically
+invalid.</p></li>
+<li><p><code>java.lang.NullPointerException</code> - The parameter <code>name</code> or <code>value</code> is
+null.</p></li>
 </ul>
 
 <h3>SetHtmlBody</h3>
@@ -1228,8 +1224,8 @@ value</code> is null.</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>java.lang.NullPointerException</code> - The parameter <code>text</code> or <code>
-html</code> is null.</li>
+<li><code>java.lang.NullPointerException</code> - The parameter <code>text</code> or <code>html</code> is
+null.</li>
 </ul>
 
 <h3>SetTextAndMarkdown</h3>
@@ -1350,23 +1346,13 @@ HTML.</p></li>
  readable stream, and with the given media type. Before the new
  attachment is added, if this message isn&#39;t already a multipart
   message, it becomes a &quot;multipart/mixed&quot; message with the current
- body converted to an inline body part.<p>The following example
+ body converted to an inline body part.<p> The following example
  (written in C# for the.NET version) is an extension method that adds
  an attachment from a byte array to a message. </p><pre>public static
  Message AddAttachmentFromBytes(this Message msg, byte[] bytes,
- MediaType mediaType) { {
-java.io.ByteArrayInputStream fs = null;
-try {
-fs = new java.io.ByteArrayInputStream(bytes);</p>
-
-<p>return msg.AddAttachment(fs, mediaType);
-}
-finally {
-try { if (fs != null) {
- fs.close();
- } } catch (java.io.IOException ex) {}
-}
-} }</pre> .</p>
+ MediaType mediaType) { using(MemoryStream fs = new
+ MemoryStream(bytes)) { return msg.AddAttachment(fs, mediaType); }
+ }</pre> .</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1384,8 +1370,8 @@ try { if (fs != null) {
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>inputStream</code> or
-<code>mediaType</code> is null.</p></li>
+<li><p><code>java.lang.NullPointerException</code> - The parameter <code>inputStream</code> or <code>
+mediaType</code> is null.</p></li>
 <li><p><code>MessageDataException</code> - An I/O error occurred.</p></li>
 </ul>
 
@@ -1424,8 +1410,7 @@ on this file name&#39;s extension. If the file name has an extension
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>inputStream</code> is
-null.</p></li>
+<li><p><code>java.lang.NullPointerException</code> - The parameter <code>inputStream</code> is null.</p></li>
 <li><p><code>MessageDataException</code> - An I/O error occurred.</p></li>
 </ul>
 
@@ -1461,8 +1446,8 @@ exists, or the entire string otherwise.</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>inputStream</code> or
-<code>mediaType</code> is null.</p></li>
+<li><p><code>java.lang.NullPointerException</code> - The parameter <code>inputStream</code> or <code>
+mediaType</code> is null.</p></li>
 <li><p><code>MessageDataException</code> - An I/O error occurred.</p></li>
 </ul>
 
@@ -1475,7 +1460,7 @@ exists, or the entire string otherwise.</p></li>
  readable stream, and with the given media type. Before the new body
  part is added, if this message isn&#39;t already a multipart message, it
   becomes a &quot;multipart/mixed&quot; message with the current body converted
- to an inline body part.<p>The following example (written in C# for
+ to an inline body part.<p> The following example (written in C# for
  the.NET version) is an extension method that adds an inline body
  part from a byte array to a message. </p><pre>public static Message
  AddInlineFromBytes(this Message msg, byte[] bytes, MediaType
@@ -1509,8 +1494,8 @@ try { if (fs != null) {
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>inputStream</code> or
-<code>mediaType</code> is null.</p></li>
+<li><p><code>java.lang.NullPointerException</code> - The parameter <code>inputStream</code> or <code>
+mediaType</code> is null.</p></li>
 <li><p><code>MessageDataException</code> - An I/O error occurred.</p></li>
 </ul>
 
@@ -1582,8 +1567,8 @@ on this file name&#39;s extension. If the file name has an extension
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>inputStream</code> or
-<code>mediaType</code> is null.</p></li>
+<li><p><code>java.lang.NullPointerException</code> - The parameter <code>inputStream</code> or <code>
+mediaType</code> is null.</p></li>
 <li><p><code>MessageDataException</code> - An I/O error occurred.</p></li>
 </ul>
 
@@ -1617,8 +1602,7 @@ given languages, returns the last body part if its language is
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>java.lang.NullPointerException</code> - The parameter <code>languages</code> is
-null.</li>
+<li><code>java.lang.NullPointerException</code> - The parameter <code>languages</code> is null.</li>
 </ul>
 
 <h3>SelectLanguageMessage</h3>
@@ -1655,8 +1639,7 @@ given languages, returns the last body part if its language is
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>java.lang.NullPointerException</code> - The parameter <code>languages</code> is
-null.</li>
+<li><code>java.lang.NullPointerException</code> - The parameter <code>languages</code> is null.</li>
 </ul>
 
 <h3>MakeMultilingualMessage</h3>
@@ -1693,8 +1676,8 @@ messages given in the <code>messages</code> parameter in the order given.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>messages</code> or
-<code>languages</code> is null.</p></li>
+<li><p><code>java.lang.NullPointerException</code> - The parameter <code>messages</code> or <code>
+languages</code> is null.</p></li>
 <li><p><code>java.lang.IllegalArgumentException</code> - The parameter <code>messages</code> or <code>
 languages</code> is empty, their lengths don&#39;t match, at least one message
 is &quot;null&quot;, each message doesn&#39;t contain the same email addresses in
@@ -1759,9 +1742,7 @@ Renamed to ToMailtoUri.</p>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>uri</code> - The parameter
-  <code>uri</code>
-   is a text string.</li>
+<li><code>uri</code> - The parameter <code>uri</code> is a text string.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -1782,9 +1763,7 @@ URI.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>uri</code> - The parameter
-  <code>uri</code>
-   is not documented yet.</li>
+<li><code>uri</code> - The parameter <code>uri</code> is not documented yet.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
