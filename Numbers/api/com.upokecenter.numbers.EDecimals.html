@@ -491,6 +491,12 @@ false</code> otherwise. Returns <code>false</code> if the given context is null
 or HasExponentRange of the given context is <code>false</code>.</li>
 </ul>
 
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>java.lang.NullPointerException</code> - The parameter <code>ed</code> is null.</li>
+</ul>
+
 <h3>IsZero</h3>
 
 <pre>public static boolean IsZero​(EDecimal ed)
@@ -663,6 +669,13 @@ an absolute value that exceeds the maximum precision specified in
 the context.</li>
 </ul>
 
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>java.lang.NullPointerException</code> - The parameter <code>ed2</code> or <code>ed</code> is
+null.</li>
+</ul>
+
 <h3>CompareTotal</h3>
 
 <pre>public static int CompareTotal​(EDecimal ed, EDecimal other, EContext ec)
@@ -697,6 +710,12 @@ operation. Can be null.</p></li>
 <li>The number 0 if both objects have the same value, or -1 if the first
 object is less than the other value, or 1 if the first object is
 greater. Does not signal flags if either value is signaling NaN.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>java.lang.NullPointerException</code> - The parameter <code>ed</code> is null.</li>
 </ul>
 
 <h3>CompareTotalMagnitude</h3>
@@ -737,6 +756,12 @@ signs), or -1 if the first object is less than the other value
 signaling NaN.</li>
 </ul>
 
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>java.lang.NullPointerException</code> - The parameter <code>ed</code> is null.</li>
+</ul>
+
 <h3>Copy</h3>
 
 <pre>public static EDecimal Copy​(EDecimal ed)
@@ -754,6 +779,12 @@ signaling NaN.</li>
 
 <ul>
 <li>A copy of the given arbitrary-precision number object.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>java.lang.NullPointerException</code> - The parameter <code>ed</code> is null.</li>
 </ul>
 
 <h3>Canonical</h3>
@@ -798,6 +829,12 @@ signaling NaN.</li>
 given number object but with a nonnegative sign.</li>
 </ul>
 
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>java.lang.NullPointerException</code> - The parameter <code>ed</code> is null.</li>
+</ul>
+
 <h3>CopyNegate</h3>
 
 <pre>public static EDecimal CopyNegate​(EDecimal ed)
@@ -817,6 +854,12 @@ given number object but with a nonnegative sign.</li>
 <ul>
 <li>An arbitrary-precision number object with the sign reversed from the
 given number object.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>java.lang.NullPointerException</code> - The parameter <code>ed</code> is null.</li>
 </ul>
 
 <h3>CopySign</h3>
@@ -842,6 +885,13 @@ will have.</p></li>
 <li>An arbitrary-precision number object with the same value as the
 first given number object but with a the same sign (positive or
 negative) as the second given number object.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>java.lang.NullPointerException</code> - The parameter <code>ed</code> or <code>other</code> is
+null.</li>
 </ul>
 
 <h3>SameQuantum</h3>

@@ -39,7 +39,8 @@
 
 <p>Parses a language list from a Content-Language header field.</p>
 
-<p><b>Parameters:</b></p>
+<pre>&lt;b&gt;Parameters:&lt;/b&gt;
+</pre>
 
 <ul>
 <li><i>str</i>: A string following the syntax of a Content-Language header field (see RFC 3282). This is a comma-separated list of language tags. RFC 5322 comments (in parentheses) can appear. This parameter can be null.</li>
@@ -61,7 +62,8 @@
 
 <p>Parses a language range list from an Accept-Language header field.</p>
 
-<p><b>Parameters:</b></p>
+<pre>&lt;b&gt;Parameters:&lt;/b&gt;
+</pre>
 
 <ul>
 <li><i>str</i>: A string following the syntax of an Accept-Language header field (see RFC 3282). This is a comma-separated list of language ranges, with an optional &quot;quality&quot; after the language tag (examples include &quot;en; q=0.5&quot; or &quot;de-DE&quot;). RFC 5322 comments (in parentheses) can appear. This parameter can be null.</li>
@@ -86,16 +88,12 @@
 </pre>
 
 <ul>
-<li><i>str</i>:  The string to check. Can be null.</li>
+<li><i>str</i>: The string to check. Can be null.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p><code>
-            true
-</code>  if the given string is a basic language range; otherwise,  <code>
-            false
-</code>  .</p>
+<p><code>true</code>  if the given string is a basic language range; otherwise,  <code>false</code> .</p>
 
 <p><a id="IsLanguageRange_string_bool"></a></p>
 
@@ -112,18 +110,14 @@
 </pre>
 
 <ul>
-<li><p><i>str</i>:  The string to check. Can be null.</p></li>
-<li><p><i>extended</i>:  Check whether the string is a basic language range if &quot;false&quot;, or an extended language range if &quot;true&quot;.</p></li>
+<li><p><i>str</i>: The string to check. Can be null.</p></li>
+<li><p><i>extended</i>: Check whether the string is a basic language range if &quot;false&quot;, or an extended language range if &quot;true&quot;.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p><code>
-            true
-</code>  if the given string is a basic language range (depending on the  <i>extended</i>
- parameter); otherwise,  <code>
-            false
-</code>  .</p>
+<p><code>true</code>  if the given string is a basic language range (depending on the  <i>extended</i>
+ parameter); otherwise,  <code>false</code> .</p>
 
 <p><a id="IsPotentiallyValidLanguageTag_string"></a></p>
 
@@ -135,7 +129,8 @@
 
 <p>Returns true if (1) the given string is a well-formed language tag under RFC 5646 (that is, the string follows the syntax given in section 2.1 of that RFC), and (2) the language tag contains at most one extended language subtag, no variant subtags with the same value, and no extension singleton subtags with the same value.</p>
 
-<p><b>Parameters:</b></p>
+<pre>&lt;b&gt;Parameters:&lt;/b&gt;
+</pre>
 
 <ul>
 <li><i>str</i>: The string to check.</li>
@@ -143,7 +138,7 @@
 
 <p><b>Return Value:</b></p>
 
-<p><code>true</code>  , if the string meets the conditions given in the summary,  <code>false</code>  otherwise.</p>
+<p><code>true</code> , if the string meets the conditions given in the summary,  <code>false</code>  otherwise.</p>
 
 <p><a id="LanguageTagCase_string"></a></p>
 
@@ -155,7 +150,8 @@
 
 <p>Sets the given language tag to the case combination recommended by RFC 5646. For example, &quot;en-us&quot; becomes &quot;en-US&quot;, and &quot;zh-hant&quot; becomes &quot;zh-Hant&quot;.</p>
 
-<p><b>Parameters:</b></p>
+<pre>&lt;b&gt;Parameters:&lt;/b&gt;
+</pre>
 
 <ul>
 <li><i>str</i>: A string of a language tag. Can be null.</li>
@@ -177,7 +173,8 @@
 
 <p>Finds the language tags that match a priority list of basic language ranges.</p>
 
-<p><b>Parameters:</b></p>
+<pre>   &lt;b&gt;Parameters:&lt;/b&gt;
+</pre>
 
 <ul>
 <li><p><i>ranges</i>: A list of basic language ranges (see documentation for the &quot;IsLanguageRange&quot; method), which should be given in order of descending preference.</p></li>
@@ -218,10 +215,10 @@ contains a value that is not a potentially valid language tag.</p></li>
 </pre>
 
 <ul>
-<li><p><i>ranges</i>:  A list of language ranges (see documentation for the &quot;IsLanguageRange&quot; method), which should be given in order of descending preference.</p></li>
-<li><p><i>languages</i>:  A list of language tags, which should be given in order of descending preference.</p></li>
-<li><p><i>extended</i>:  If true, the ranges in &quot;ranges&quot; are extended language ranges; otherwise, they are basic language ranges.</p></li>
-<li><p><i>matchStarAtEnd</i>:  If true, treats any range equaling &quot;*&quot; as appearing at the end of the language priority list, no matter where it appears on that list.</p></li>
+<li><p><i>ranges</i>: A list of language ranges (see documentation for the &quot;IsLanguageRange&quot; method), which should be given in order of descending preference.</p></li>
+<li><p><i>languages</i>: A list of language tags, which should be given in order of descending preference.</p></li>
+<li><p><i>extended</i>: If true, the ranges in &quot;ranges&quot; are extended language ranges; otherwise, they are basic language ranges.</p></li>
+<li><p><i>matchStarAtEnd</i>: If true, treats any range equaling &quot;*&quot; as appearing at the end of the language priority list, no matter where it appears on that list.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -253,7 +250,8 @@ contains a value that is not a potentially valid language tag.</p></li>
 
 <p>Does a language tag lookup (under RFC 4647) for a matching language tag.</p>
 
-<p><b>Parameters:</b></p>
+<pre>    &lt;b&gt;Parameters:&lt;/b&gt;
+</pre>
 
 <ul>
 <li><p><i>range</i>: A basic language range (see the documentation for &quot;IsLanguageRange&quot;).</p></li>
@@ -291,7 +289,8 @@ contains a value that is not a potentially valid language tag.</p></li>
 
 <p>Does a language tag lookup (under RFC 4647) for a matching language tag.</p>
 
-<p><b>Parameters:</b></p>
+<pre>     &lt;b&gt;Parameters:&lt;/b&gt;
+</pre>
 
 <ul>
 <li><p><i>range</i>: A language range (see the documentation for &quot;IsLanguageRange&quot;).</p></li>
@@ -329,7 +328,8 @@ contains a value that is not a potentially valid language tag.</p></li>
 
 <p>Does a language tag lookup (under RFC 4647) for a matching language tag.</p>
 
-<p><b>Parameters:</b></p>
+<pre>    &lt;b&gt;Parameters:&lt;/b&gt;
+</pre>
 
 <ul>
 <li><p><i>ranges</i>: A list of basic language ranges (see documentation for the &quot;IsLanguageRange&quot; method), which should be given in order of descending preference.</p></li>
@@ -368,7 +368,8 @@ contains a value that is not a potentially valid language tag.</p></li>
 
 <p>Does a language tag lookup (under RFC 4647) for a matching language tag.</p>
 
-<p><b>Parameters:</b></p>
+<pre>     &lt;b&gt;Parameters:&lt;/b&gt;
+</pre>
 
 <ul>
 <li><p><i>ranges</i>: A list of language ranges (see documentation for the &quot;IsLanguageRange&quot; method), which should be given in order of descending preference.</p></li>
@@ -406,7 +407,8 @@ contains a value that is not a potentially valid language tag.</p></li>
 
 <p>Determines whether the given language tag matches the given language range.</p>
 
-<p><b>Parameters:</b></p>
+<pre>  &lt;b&gt;Parameters:&lt;/b&gt;
+</pre>
 
 <ul>
 <li><p><i>range</i>: A basic language range (see the documentation for &quot;IsLanguageRange&quot;).</p></li>
@@ -415,7 +417,7 @@ contains a value that is not a potentially valid language tag.</p></li>
 
 <p><b>Return Value:</b></p>
 
-<p><code>true</code>  if the language tag matches the language range by the filtering method under RFC 4647; otherwise,  <code>false</code>  .</p>
+<p><code>true</code>  if the language tag matches the language range by the filtering method under RFC 4647; otherwise,  <code>false</code> .</p>
 
 <p><b>Exceptions:</b></p>
 

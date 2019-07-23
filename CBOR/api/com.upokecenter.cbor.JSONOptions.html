@@ -22,15 +22,18 @@ The default options for converting CBOR objects to JSON.</li>
 
 <ul>
 <li><code>JSONOptions() JSONOptions</code><br>
-Initializes a new instance of the JSONOptions class with default
-options.</li>
+Initializes a new instance of the JSONOptions
+class with default options.</li>
 <li><code>JSONOptions​(boolean base64Padding) JSONOptions</code><br>
-Initializes a new instance of the JSONOptions class with the given
-value for the Base64Padding option.</li>
+Initializes a new instance of the JSONOptions
+class with the given value for the Base64Padding option.</li>
 <li><code>JSONOptions​(boolean base64Padding,
        boolean replaceSurrogates) JSONOptions</code><br>
-Initializes a new instance of the JSONOptions class with the given
-values for the options.</li>
+Initializes a new instance of the JSONOptions
+class with the given values for the options.</li>
+<li><code>JSONOptions​(java.lang.String paramString) JSONOptions</code><br>
+Initializes a new instance of the JSONOptions
+class.</li>
 </ul>
 
 <h2>Methods</h2>
@@ -45,6 +48,8 @@ Gets a value indicating whether surrogate code points not part of a
 surrogate pair (which consists of two consecutive char s
 forming one Unicode code point) are each replaced with a replacement
 character (U + FFFD).</li>
+<li><code>java.lang.String toString()</code><br>
+Not documented yet.</li>
 </ul>
 
 <h2>Field Details</h2>
@@ -57,6 +62,25 @@ character (U + FFFD).</li>
 <p>The default options for converting CBOR objects to JSON.</p>
 
 <h2>Method Details</h2>
+
+<h3>toString</h3>
+
+<pre>public java.lang.String toString()
+</pre>
+
+<p>Not documented yet.</p>
+
+<p><strong>Overrides:</strong></p>
+
+<ul>
+<li><code>toString</code> in class <code>java.lang.Object</code></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A text string.</li>
+</ul>
 
 <h3>getBase64Padding</h3>
 
