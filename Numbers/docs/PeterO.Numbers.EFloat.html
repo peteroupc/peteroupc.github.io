@@ -2316,7 +2316,7 @@ is a 32-bit signed integer.</li>
 
 <p>Multiplies two binary floating-point numbers. The resulting exponent will be the sum of the exponents of the two binary floating-point numbers.</p>
 
-<pre>&lt;b&gt;Parameters:&lt;/b&gt;
+<pre> &lt;b&gt;Parameters:&lt;/b&gt;
 </pre>
 
 <ul>
@@ -2326,6 +2326,14 @@ is a 32-bit signed integer.</li>
 <p><b>Return Value:</b></p>
 
 <p>The product of the two binary floating-point numbers.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter  <i>otherValue</i>
+is null.</li>
+</ul>
 
 <p><a id="MultiplyAndAdd_PeterO_Numbers_EFloat_PeterO_Numbers_EFloat"></a></p>
 
@@ -2613,7 +2621,7 @@ is null.</li>
 
 <p>Converts an arbitrary-precision binary float to a byte (from 0 to 255) if it can fit in a byte (from 0 to 255) after truncating to an integer.</p>
 
-<pre> &lt;b&gt;Parameters:&lt;/b&gt;
+<pre>  &lt;b&gt;Parameters:&lt;/b&gt;
 </pre>
 
 <ul>
@@ -2628,9 +2636,12 @@ is null.</li>
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li>System.OverflowException:
+<li><p>System.OverflowException:
 The parameter  <i>input</i>
-is infinity or not-a-number, or the truncated integer is less than 0 or greater than 255.</li>
+is infinity or not-a-number, or the truncated integer is less than 0 or greater than 255.</p></li>
+<li><p>System.ArgumentNullException:
+The parameter  <i>input</i>
+is null.</p></li>
 </ul>
 
 <p><a id="op_Explicit"></a></p>
@@ -2643,7 +2654,7 @@ is infinity or not-a-number, or the truncated integer is less than 0 or greater 
 
 <p>Converts this value to its closest equivalent as a 64-bit floating-point number. The half-even rounding mode is used. If this value is a NaN, sets the high bit of the 64-bit floating point number&#39;s significand area for a quiet NaN, and clears it for a signaling NaN. Then the other bits of the significand area are set to the lowest bits of this object&#39;s unsigned mantissa (significand), and the next-highest bit of the significand area is set if those bits are all zeros and this is a signaling NaN. Unfortunately, in the.NET implementation, the return value of this method may be a quiet NaN even if a signaling NaN would otherwise be generated.</p>
 
-<pre>&lt;b&gt;Parameters:&lt;/b&gt;
+<pre> &lt;b&gt;Parameters:&lt;/b&gt;
 </pre>
 
 <ul>
@@ -2653,6 +2664,14 @@ is infinity or not-a-number, or the truncated integer is less than 0 or greater 
 <p><b>Return Value:</b></p>
 
 <p>The closest 64-bit floating-point number to this value. The return value can be positive infinity or negative infinity if this value exceeds the range of a 64-bit floating point number.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter  <i>bigValue</i>
+is null.</li>
+</ul>
 
 <p><a id="op_Explicit"></a></p>
 
@@ -2664,7 +2683,7 @@ is infinity or not-a-number, or the truncated integer is less than 0 or greater 
 
 <p>Converts an arbitrary-precision binary float to its closest equivalent as a 32-bit floating-point number. The half-even rounding mode is used. If this value is a NaN, sets the high bit of the 32-bit floating point number&#39;s significand area for a quiet NaN, and clears it for a signaling NaN. Then the other bits of the significand area are set to the lowest bits of this object&#39;s unsigned mantissa (significand), and the next-highest bit of the significand area is set if those bits are all zeros and this is a signaling NaN. Unfortunately, in the.NET implementation, the return value of this method may be a quiet NaN even if a signaling NaN would otherwise be generated.</p>
 
-<pre>&lt;b&gt;Parameters:&lt;/b&gt;
+<pre> &lt;b&gt;Parameters:&lt;/b&gt;
 </pre>
 
 <ul>
@@ -2674,6 +2693,14 @@ is infinity or not-a-number, or the truncated integer is less than 0 or greater 
 <p><b>Return Value:</b></p>
 
 <p>The closest 32-bit binary floating-point number to this value. The return value can be positive infinity or negative infinity if this value exceeds the range of a 32-bit floating point number.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter  <i>bigValue</i>
+is null.</li>
+</ul>
 
 <p><a id="op_Explicit"></a></p>
 
@@ -2685,7 +2712,7 @@ is infinity or not-a-number, or the truncated integer is less than 0 or greater 
 
 <p>Converts an arbitrary-precision binary float to a 32-bit signed integer if it can fit in a 32-bit signed integer after truncating to an integer.</p>
 
-<pre> &lt;b&gt;Parameters:&lt;/b&gt;
+<pre>  &lt;b&gt;Parameters:&lt;/b&gt;
 </pre>
 
 <ul>
@@ -2700,9 +2727,12 @@ is infinity or not-a-number, or the truncated integer is less than 0 or greater 
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li>System.OverflowException:
+<li><p>System.OverflowException:
 The parameter  <i>input</i>
-is infinity or not-a-number, or the truncated integer is less than -2147483648 or greater than 2147483647.</li>
+is infinity or not-a-number, or the truncated integer is less than -2147483648 or greater than 2147483647.</p></li>
+<li><p>System.ArgumentNullException:
+The parameter  <i>input</i>
+is null.</p></li>
 </ul>
 
 <p><a id="op_Explicit"></a></p>
@@ -2715,7 +2745,7 @@ is infinity or not-a-number, or the truncated integer is less than -2147483648 o
 
 <p>Converts an arbitrary-precision binary float to a 64-bit signed integer if it can fit in a 64-bit signed integer after truncating to an integer.</p>
 
-<pre> &lt;b&gt;Parameters:&lt;/b&gt;
+<pre>  &lt;b&gt;Parameters:&lt;/b&gt;
 </pre>
 
 <ul>
@@ -2730,9 +2760,12 @@ is infinity or not-a-number, or the truncated integer is less than -2147483648 o
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li>System.OverflowException:
+<li><p>System.OverflowException:
 The parameter  <i>input</i>
-is infinity or not-a-number, or the truncated integer is less than -9223372036854775808 or greater than 9223372036854775807.</li>
+is infinity or not-a-number, or the truncated integer is less than -9223372036854775808 or greater than 9223372036854775807.</p></li>
+<li><p>System.ArgumentNullException:
+The parameter  <i>input</i>
+is null.</p></li>
 </ul>
 
 <p><a id="op_Explicit"></a></p>
@@ -2767,7 +2800,7 @@ is infinity or not-a-number, or the truncated integer is less than -922337203685
 
 <p>Converts an arbitrary-precision binary float to a value to an arbitrary-precision integer. Any fractional part in this value will be discarded when converting to an arbitrary-precision integer.</p>
 
-<pre> &lt;b&gt;Parameters:&lt;/b&gt;
+<pre>  &lt;b&gt;Parameters:&lt;/b&gt;
 </pre>
 
 <ul>
@@ -2781,8 +2814,11 @@ is infinity or not-a-number, or the truncated integer is less than -922337203685
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li>System.OverflowException:
-This object&#39;s value is infinity or not-a-number (NaN).</li>
+<li><p>System.OverflowException:
+This object&#39;s value is infinity or not-a-number (NaN).</p></li>
+<li><p>System.ArgumentNullException:
+The parameter  <i>bigValue</i>
+is null.</p></li>
 </ul>
 
 <p><a id="op_Explicit"></a></p>
@@ -2795,7 +2831,7 @@ This object&#39;s value is infinity or not-a-number (NaN).</li>
 
 <p>Converts an arbitrary-precision binary float to an 8-bit signed integer if it can fit in an 8-bit signed integer after truncating to an integer.</p>
 
-<pre> &lt;b&gt;Parameters:&lt;/b&gt;
+<pre>  &lt;b&gt;Parameters:&lt;/b&gt;
 </pre>
 
 <ul>
@@ -2810,9 +2846,12 @@ This object&#39;s value is infinity or not-a-number (NaN).</li>
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li>System.OverflowException:
+<li><p>System.OverflowException:
 The parameter  <i>input</i>
-is infinity or not-a-number, or the truncated integer is less than -128 or greater than 127.</li>
+is infinity or not-a-number, or the truncated integer is less than -128 or greater than 127.</p></li>
+<li><p>System.ArgumentNullException:
+The parameter  <i>input</i>
+is null.</p></li>
 </ul>
 
 <p><a id="op_Explicit"></a></p>
@@ -2825,7 +2864,7 @@ is infinity or not-a-number, or the truncated integer is less than -128 or great
 
 <p>Converts an arbitrary-precision binary float to a 16-bit signed integer if it can fit in a 16-bit signed integer after truncating to an integer.</p>
 
-<pre> &lt;b&gt;Parameters:&lt;/b&gt;
+<pre>  &lt;b&gt;Parameters:&lt;/b&gt;
 </pre>
 
 <ul>
@@ -2840,9 +2879,12 @@ is infinity or not-a-number, or the truncated integer is less than -128 or great
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li>System.OverflowException:
+<li><p>System.OverflowException:
 The parameter  <i>input</i>
-is infinity or not-a-number, or the truncated integer is less than -32768 or greater than 32767.</li>
+is infinity or not-a-number, or the truncated integer is less than -32768 or greater than 32767.</p></li>
+<li><p>System.ArgumentNullException:
+The parameter  <i>input</i>
+is null.</p></li>
 </ul>
 
 <p><a id="op_Explicit"></a></p>
@@ -2855,7 +2897,7 @@ is infinity or not-a-number, or the truncated integer is less than -32768 or gre
 
 <p>Converts an arbitrary-precision binary float to a 32-bit signed integer if it can fit in a 32-bit signed integer after truncating to an integer.</p>
 
-<pre> &lt;b&gt;Parameters:&lt;/b&gt;
+<pre>  &lt;b&gt;Parameters:&lt;/b&gt;
 </pre>
 
 <ul>
@@ -2870,9 +2912,12 @@ is infinity or not-a-number, or the truncated integer is less than -32768 or gre
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li>System.OverflowException:
+<li><p>System.OverflowException:
 The parameter  <i>input</i>
-is infinity or not-a-number, or the truncated integer is less than 0 or greater than 4294967295.</li>
+is infinity or not-a-number, or the truncated integer is less than 0 or greater than 4294967295.</p></li>
+<li><p>System.ArgumentNullException:
+The parameter  <i>input</i>
+is null.</p></li>
 </ul>
 
 <p><a id="op_Explicit"></a></p>
@@ -2885,7 +2930,7 @@ is infinity or not-a-number, or the truncated integer is less than 0 or greater 
 
 <p>Converts an arbitrary-precision binary float to a 64-bit unsigned integer if it can fit in a 64-bit unsigned integer after truncating to an integer.</p>
 
-<pre> &lt;b&gt;Parameters:&lt;/b&gt;
+<pre>  &lt;b&gt;Parameters:&lt;/b&gt;
 </pre>
 
 <ul>
@@ -2900,9 +2945,12 @@ is infinity or not-a-number, or the truncated integer is less than 0 or greater 
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li>System.OverflowException:
+<li><p>System.OverflowException:
 The parameter  <i>input</i>
-is infinity or not-a-number, or the truncated integer is less than 0 or greater than 18446744073709551615.</li>
+is infinity or not-a-number, or the truncated integer is less than 0 or greater than 18446744073709551615.</p></li>
+<li><p>System.ArgumentNullException:
+The parameter  <i>input</i>
+is null.</p></li>
 </ul>
 
 <p><a id="op_Explicit"></a></p>
@@ -2915,7 +2963,7 @@ is infinity or not-a-number, or the truncated integer is less than 0 or greater 
 
 <p>Converts an arbitrary-precision binary float to a 16-bit unsigned integer if it can fit in a 16-bit unsigned integer after truncating to an integer.</p>
 
-<pre> &lt;b&gt;Parameters:&lt;/b&gt;
+<pre>  &lt;b&gt;Parameters:&lt;/b&gt;
 </pre>
 
 <ul>
@@ -2930,9 +2978,12 @@ is infinity or not-a-number, or the truncated integer is less than 0 or greater 
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li>System.OverflowException:
+<li><p>System.OverflowException:
 The parameter  <i>input</i>
-is infinity or not-a-number, or the truncated integer is less than 0 or greater than 65535.</li>
+is infinity or not-a-number, or the truncated integer is less than 0 or greater than 65535.</p></li>
+<li><p>System.ArgumentNullException:
+The parameter  <i>input</i>
+is null.</p></li>
 </ul>
 
 <p><a id="op_Implicit"></a></p>
@@ -3991,7 +4042,7 @@ is a 32-bit signed integer.</p></li>
 
 <p>Returns a number similar to this number but with its scale adjusted.</p>
 
-<pre> &lt;b&gt;Parameters:&lt;/b&gt;
+<pre>  &lt;b&gt;Parameters:&lt;/b&gt;
 </pre>
 
 <ul>
@@ -4002,6 +4053,14 @@ is a 32-bit signed integer.</p></li>
 <p><b>Return Value:</b></p>
 
 <p>An arbitrary-precision binary floating-point number.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter  <i>bigPlaces</i>
+is null.</li>
+</ul>
 
 <p><a id="Sqrt_PeterO_Numbers_EContext"></a></p>
 
