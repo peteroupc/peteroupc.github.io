@@ -26,7 +26,7 @@
 <li><code><a href="#ToString">ToString()</a></code> - Converts this object to a text string.</li>
 </ul>
 
-<p><a id="Void_ctor_System_String"></a></p>
+<p><a id="Void_ctor_String"></a></p>
 
 <h3>NamedAddress Constructor</h3>
 
@@ -54,7 +54,7 @@ is null.</p></li>
 Address has an invalid syntax.; Address has an invalid syntax.</p></li>
 </ul>
 
-<p><a id="Void_ctor_System_String_PeterO_Mail_Address"></a></p>
+<p><a id="Void_ctor_String_Address"></a></p>
 
 <h3>NamedAddress Constructor</h3>
 
@@ -83,7 +83,7 @@ The parameter  <i>address</i>
 is null.</li>
 </ul>
 
-<p><a id="Void_ctor_System_String_System_String"></a></p>
+<p><a id="Void_ctor_String_String"></a></p>
 
 <h3>NamedAddress Constructor</h3>
 
@@ -112,7 +112,7 @@ The parameter  <i>address</i>
 is null.</li>
 </ul>
 
-<p><a id="Void_ctor_System_String_System_String_System_String"></a></p>
+<p><a id="Void_ctor_String_String_String"></a></p>
 
 <h3>NamedAddress Constructor</h3>
 
@@ -145,7 +145,7 @@ or  <i>domain</i>
 is null.</li>
 </ul>
 
-<p><a id="Void_ctor_System_String_System_Collections_Generic_IList_1_PeterO_Mail_NamedAddress"></a></p>
+<p><a id="Void_ctor_String_IList_1"></a></p>
 
 <h3>NamedAddress Constructor</h3>
 
@@ -227,7 +227,11 @@ GroupName is empty.; A mailbox in the list is a group.</p></li>
 
 <p><b>Returns:</b></p>
 
-<p><code>true</code>  If this represents a group of addresses; otherwise,  <code>false</code> .</p>
+<p><code>
+         true
+</code>  If this represents a group of addresses; otherwise,  <code>
+         false
+</code>  .</p>
 
 <p><a id="Name"></a></p>
 
@@ -252,16 +256,19 @@ GroupName is empty.; A mailbox in the list is a group.</p></li>
 
 <p>Not documented yet.</p>
 
-<pre>&lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
-<li><i>na</i>: A named address object to compare with this one. Can be null.</li>
+<li><i>na</i>:  A named address object to compare with this one. Can be null.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p>Either  <code>true</code>  or  <code>false</code> .</p>
+<p>Either  <code>
+         true
+</code>  or  <code>
+         false
+</code>  .</p>
 
 <p><a id="Equals_object"></a></p>
 
@@ -273,17 +280,20 @@ GroupName is empty.; A mailbox in the list is a group.</p></li>
 
 <p>Determines whether this object and another object are equal.</p>
 
-<pre>&lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
-<li><i>obj</i>: The parameter  <i>obj</i>
+<li><i>obj</i>:  The parameter  <i>obj</i>
 is an arbitrary object.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p><code>true</code>  if this object and another object are equal; otherwise,  <code>false</code> .</p>
+<p><code>
+         true
+</code>  if this object and another object are equal; otherwise,  <code>
+         false
+</code>  .</p>
 
 <p><a id="GetHashCode"></a></p>
 
@@ -292,7 +302,7 @@ is an arbitrary object.</li>
 <pre>public override int GetHashCode();
 </pre>
 
-<p>Calculates the hash code of this object. The hash code for a given instance of this class is not guaranteed to be the same across versions of this class, and no application or process IDs are used in the hash code calculation.</p>
+<p>Calculates the hash code of this object. No application or process IDs are used in the hash code calculation.</p>
 
 <p><b>Return Value:</b></p>
 
@@ -308,11 +318,10 @@ is an arbitrary object.</li>
 
 <p>Generates a list of NamedAddress objects from a comma-separated list of addresses. Each address must follow the syntax accepted by the one-argument constructor of NamedAddress.</p>
 
-<pre>&lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
-<li><i>addressValue</i>: A comma-separate list of addresses in the form of a text string.</li>
+<li><i>addressValue</i>:  A comma-separate list of addresses in the form of a text string.</li>
 </ul>
 
 <p><b>Return Value:</b></p>

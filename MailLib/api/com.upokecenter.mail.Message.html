@@ -98,20 +98,17 @@
 
 <ul>
 <li><code>Message() Message</code><br>
-Initializes a new instance of the Message
-class.</li>
+Initializes a new instance of the Message class.</li>
 <li><code>Message​(byte[] bytes) Message</code><br>
-Initializes a new instance of the Message
-class.</li>
+Initializes a new instance of the Message class.</li>
 <li><code>Message​(java.io.InputStream stream) Message</code><br>
-Initializes a new instance of the Message
-class.</li>
+Initializes a new instance of the Message class.</li>
 <li><code>Message AddAttachment​(MediaType mediaType)</code><br>
 Adds an attachment with an empty body and with the given media type to this
 message.</li>
 <li><code>Message AddAttachment​(java.io.InputStream inputStream,
          MediaType mediaType)</code><br>
-Adds an attachment to this message in the form of data from the given
+Adds an attachment to this message in the form of data from the // /given
 readable stream, and with the given media type.</li>
 <li><code>Message AddAttachment​(java.io.InputStream inputStream,
          MediaType mediaType,
@@ -132,8 +129,8 @@ Adds an inline body part with an empty body and with the given media type to
 this message.</li>
 <li><code>Message AddInline​(java.io.InputStream inputStream,
      MediaType mediaType)</code><br>
-Adds an inline body part to this message in the form of data from the given
-readable stream, and with the given media type.</li>
+Adds an inline body part to this message in the form of data from // /the
+given readable stream, and with the given media type.</li>
 <li><code>Message AddInline​(java.io.InputStream inputStream,
      MediaType mediaType,
      java.lang.String filename)</code><br>
@@ -282,14 +279,11 @@ Renamed to ToMailtoUri.</li>
 
 <ul>
 <li><code>Message() Message</code><br>
-Initializes a new instance of the Message
-class.</li>
+Initializes a new instance of the Message class.</li>
 <li><code>Message​(byte[] bytes) Message</code><br>
-Initializes a new instance of the Message
-class.</li>
+Initializes a new instance of the Message class.</li>
 <li><code>Message​(java.io.InputStream stream) Message</code><br>
-Initializes a new instance of the Message
-class.</li>
+Initializes a new instance of the Message class.</li>
 </ul>
 
 <h2>Method Details</h2>
@@ -299,8 +293,7 @@ class.</li>
 <pre>public Message​(java.io.InputStream stream)
 </pre>
 
-<p>Initializes a new instance of the <code>Message</code>
- class.</p>
+<p>Initializes a new instance of the <code>Message</code> class.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -319,8 +312,7 @@ class.</li>
 <pre>public Message​(byte[] bytes)
 </pre>
 
-<p>Initializes a new instance of the <code>Message</code>
- class.</p>
+<p>Initializes a new instance of the <code>Message</code> class.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -339,8 +331,7 @@ class.</li>
 <pre>public Message()
 </pre>
 
-<p>Initializes a new instance of the <code>Message</code>
- class.</p>
+<p>Initializes a new instance of the <code>Message</code> class.</p>
 
 <h3>NewBodyPart</h3>
 
@@ -1342,17 +1333,17 @@ HTML.</p></li>
 <pre>public Message AddAttachment​(java.io.InputStream inputStream, MediaType mediaType)
 </pre>
 
-<p>Adds an attachment to this message in the form of data from the given
+<p>Adds an attachment to this message in the form of data from the // /given
  readable stream, and with the given media type. Before the new
  attachment is added, if this message isn&#39;t already a multipart
   message, it becomes a &quot;multipart/mixed&quot; message with the current
  body converted to an inline body part.<p> The following example
  (written in C# for the.NET version) is an extension method that adds
- an attachment from a byte array to a message. </p><pre>public static
+ an attachment from a byte array to a message. </p><pre> public static
  Message AddAttachmentFromBytes(this Message msg, byte[] bytes,
  MediaType mediaType) { using(MemoryStream fs = new
- MemoryStream(bytes)) { return msg.AddAttachment(fs, mediaType); }
- }</pre> .</p>
+ MemoryStream(bytes)) { return msg.AddAttachment(fs, mediaType); } }
+ </pre> .</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1456,27 +1447,17 @@ mediaType</code> is null.</p></li>
 <pre>public Message AddInline​(java.io.InputStream inputStream, MediaType mediaType)
 </pre>
 
-<p>Adds an inline body part to this message in the form of data from the given
- readable stream, and with the given media type. Before the new body
- part is added, if this message isn&#39;t already a multipart message, it
-  becomes a &quot;multipart/mixed&quot; message with the current body converted
- to an inline body part.<p> The following example (written in C# for
- the.NET version) is an extension method that adds an inline body
- part from a byte array to a message. </p><pre>public static Message
- AddInlineFromBytes(this Message msg, byte[] bytes, MediaType
- mediaType) { {
-java.io.ByteArrayInputStream fs = null;
-try {
-fs = new java.io.ByteArrayInputStream(bytes);</p>
-
-<p>return msg.AddInline(fs, mediaType);
-}
-finally {
-try { if (fs != null) {
- fs.close();
- } } catch (java.io.IOException ex) {}
-}
-} }</pre> .</p>
+<p>Adds an inline body part to this message in the form of data from // /the
+ given readable stream, and with the given media type. Before the new
+ body part is added, if this message isn&#39;t already a multipart
+  message, it becomes a &quot;multipart/mixed&quot; message with the current
+ body converted to an inline body part.<p> The following example
+ (written in C# for the.NET version) is an extension method that adds
+ an inline body part from a byte array to a message. </p><pre> public
+ static Message AddInlineFromBytes(this Message msg, byte[] bytes,
+ MediaType mediaType) { using(MemoryStream fs = new
+ MemoryStream(bytes)) { return msg.AddInline(fs, mediaType); } }
+ </pre> .</p>
 
 <p><strong>Parameters:</strong></p>
 

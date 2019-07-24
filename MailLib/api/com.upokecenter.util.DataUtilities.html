@@ -15,19 +15,19 @@
  encoding form of the Unicode Standard which uses one byte to encode
  the most basic characters and two to four bytes to encode other
  characters. For example, the <code>GetUtf8</code> method converts a text
- string to an array of bytes in UTF-8.</p> <p>In C# and Java, text
+ string to an array of bytes in UTF-8. </p> <p>In C# and Java, text
  strings are represented as sequences of 16-bit values called
  <code>char</code> s. These sequences are well-formed under UTF-16, a
  16-bit encoding form of Unicode, except if they contain unpaired
  surrogate code points. (A surrogate code point is used to encode
  supplementary characters, those with code points U + 10000 or higher,
- in UTF-16. A surrogate pair is a high surrogate.get(U + D800 to
- U + DBFF) followed by a low surrogate.get(U + DC00 to U + DFFF). An
- unpaired surrogate code point is a surrogate not appearing in a
- surrogate pair.) Many of the methods in this class allow setting the
- behavior to follow when unpaired surrogate code points are found in
- text strings, such as throwing an error or treating the unpaired
- surrogate as a replacement character (U + FFFD).</p></p>
+ in UTF-16. A surrogate pair is a high surrogate [U + D800 to U + DBFF]
+ followed by a low surrogate [U + DC00 to U + DFFF]. An unpaired
+ surrogate code point is a surrogate not appearing in a surrogate
+ pair.) Many of the methods in this class allow setting the behavior
+ to follow when unpaired surrogate code points are found in text
+ strings, such as throwing an error or treating the unpaired
+ surrogate as a replacement character (U + FFFD). </p></p>
 
 <h2>Methods</h2>
 
@@ -156,7 +156,9 @@ replace</code> is false.</p></li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>str</code> - The parameter <code>str</code> is a text string.</li>
+<li><code>str</code> - The parameter
+  <code>str</code>
+   is a text string.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -212,17 +214,19 @@ greater than the length of &quot;data&quot; .</p></li>
 </pre>
 
 <p>Encodes a string in UTF-8 as a byte array. This method does not insert a
- byte-order mark (U + FEFF) at the beginning of the encoded byte
- array.</p> <p>REMARK: It is not recommended to use
+ byte-order mark (U + FEFF) at the beginning of the encoded byte array.
+ </p> <p>REMARK: It is not recommended to use
  <code>Encoding.UTF8.GetBytes</code> in.getNET(), or the <code>getBytes()</code>
  method in Java to do this. For instance, <code>getBytes()</code> encodes
  text strings in a default (so not fixed) character encoding, which
- can be undesirable.</p>
+ can be undesirable. </p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>str</code> - The parameter <code>str</code> is a text string.</p></li>
+<li><p><code>str</code> - The parameter
+  <code>str</code>
+   is a text string.</p></li>
 <li><p><code>replace</code> - If true, replaces unpaired surrogate code points with the
 replacement character (U + FFFD). If false, stops processing when an
 unpaired surrogate code point is seen.</p></li>
@@ -249,17 +253,19 @@ occurred.</p></li>
 </pre>
 
 <p>Encodes a string in UTF-8 as a byte array. This method does not insert a
- byte-order mark (U + FEFF) at the beginning of the encoded byte
- array.</p> <p>REMARK: It is not recommended to use
+ byte-order mark (U + FEFF) at the beginning of the encoded byte array.
+ </p> <p>REMARK: It is not recommended to use
  <code>Encoding.UTF8.GetBytes</code> in.getNET(), or the <code>getBytes()</code>
  method in Java to do this. For instance, <code>getBytes()</code> encodes
  text strings in a default (so not fixed) character encoding, which
- can be undesirable.</p>
+ can be undesirable. </p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>str</code> - The parameter <code>str</code> is a text string.</p></li>
+<li><p><code>str</code> - The parameter
+  <code>str</code>
+   is a text string.</p></li>
 <li><p><code>replace</code> - If true, replaces unpaired surrogate code points with the
 replacement character (U + FFFD). If false, stops processing when an
 unpaired surrogate code point is seen.</p></li>
@@ -292,7 +298,9 @@ occurred.</p></li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>str</code> - The parameter <code>str</code> is a text string.</p></li>
+<li><p><code>str</code> - The parameter
+  <code>str</code>
+   is a text string.</p></li>
 <li><p><code>replace</code> - If true, treats unpaired surrogate code points as having 3
 UTF-8 bytes (the UTF-8 length of the replacement character U + FFFD).</p></li>
 </ul>
@@ -321,7 +329,9 @@ UTF-8 bytes (the UTF-8 length of the replacement character U + FFFD).</p></li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>str</code> - The parameter <code>str</code> is a text string.</p></li>
+<li><p><code>str</code> - The parameter
+  <code>str</code>
+   is a text string.</p></li>
 <li><p><code>index</code> - Index of the current position into the string.</p></li>
 </ul>
 
@@ -351,7 +361,9 @@ is an unpaired surrogate code point. If the return value is 65536
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>str</code> - The parameter <code>str</code> is a text string.</p></li>
+<li><p><code>str</code> - The parameter
+  <code>str</code>
+   is a text string.</p></li>
 <li><p><code>index</code> - Index of the current position into the string.</p></li>
 <li><p><code>surrogateBehavior</code> - Specifies what kind of value to return if the
 previous character is an unpaired surrogate code point: if 0, return
@@ -381,17 +393,19 @@ two UTF-16 code units.</li>
 <pre>public static int CodePointAt​(java.lang.String str, int index)
 </pre>
 
-<p>Gets the Unicode code point at the given index of the string.<p> </p><p>The
+<p>Gets the Unicode code point at the given index of the string.<p/><p>The
  following example shows how to iterate a text string code point by
- code point.</p> <pre> for (int i = 0;i&lt;str.length(); ++i) { int
+ code point. </p> <pre>for (var i = 0;i&lt;str.length(); ++i) { int
  codePoint = DataUtilities.CodePointAt(str, i);
-  System.out.println(&quot;codePoint:&quot;+codePoint); if (codePoint &gt;=
- 0x10000) { i++; /* Supplementary code point */ } } </pre> .</p>
+  Console.WriteLine(&quot;codePoint:&quot;+codePoint); if (codePoint &gt;=
+ 0x10000) { i++; /* Supplementary code point */ } }</pre> .</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>str</code> - The parameter <code>str</code> is a text string.</p></li>
+<li><p><code>str</code> - The parameter
+  <code>str</code>
+   is a text string.</p></li>
 <li><p><code>index</code> - Index of the current position into the string.</p></li>
 </ul>
 
@@ -416,19 +430,21 @@ unpaired surrogate code point. If the return value is 65536
 <pre>public static int CodePointAt​(java.lang.String str, int index, int surrogateBehavior)
 </pre>
 
-<p>Gets the Unicode code point at the given index of the string.<p> </p><p>The
+<p>Gets the Unicode code point at the given index of the string.<p/><p>The
  following example shows how to iterate a text string code point by
  code point, terminating the loop when an unpaired surrogate is
- found.</p> <pre> for (int i = 0;i&lt;str.length(); ++i) { int
+ found. </p> <pre>for (var i = 0;i&lt;str.length(); ++i) { int
  codePoint = DataUtilities.CodePointAt(str, i, 2); if (codePoint &lt;
  0) { break; /* Unpaired surrogate <em>/ }
-  System.out.println(&quot;codePoint:&quot;+codePoint); if (codePoint &gt;=
- 0x10000) { i++; /</em> Supplementary code point */ } } </pre> .</p>
+  Console.WriteLine(&quot;codePoint:&quot;+codePoint); if (codePoint &gt;=
+ 0x10000) { i++; /</em> Supplementary code point */ } }</pre> .</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>str</code> - The parameter <code>str</code> is a text string.</p></li>
+<li><p><code>str</code> - The parameter
+  <code>str</code>
+   is a text string.</p></li>
 <li><p><code>index</code> - Index of the current position into the string.</p></li>
 <li><p><code>surrogateBehavior</code> - Specifies what kind of value to return if the
 previous character is an unpaired surrogate code point: if 0, return
@@ -464,13 +480,17 @@ code units.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>str</code> - The parameter <code>str</code> is a text string.</li>
+<li><code>str</code> - The parameter
+  <code>str</code>
+   is a text string.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>The converted string, or null if <code>str</code> is null.</li>
+<li>The converted string, or null if
+  <code>str</code>
+   is null.</li>
 </ul>
 
 <h3>ToUpperCaseAscii</h3>
@@ -484,13 +504,17 @@ code units.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>str</code> - The parameter <code>str</code> is a text string.</li>
+<li><code>str</code> - The parameter
+  <code>str</code>
+   is a text string.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>The converted string, or null if <code>str</code> is null.</li>
+<li>The converted string, or null if
+  <code>str</code>
+   is null.</li>
 </ul>
 
 <h3>CodePointCompare</h3>
@@ -559,10 +583,6 @@ length</code> is greater than the string&#39;s length.</p></li>
 or greater than &quot;str&quot;&#39;s length, or &quot;str&quot;&#39;s length minus &quot;offset&quot; is
 less than &quot;length&quot;.</p></li>
 <li><p><code>java.lang.NullPointerException</code> - The parameter <code>str</code> is null.</p></li>
-<li><p><code>java.lang.IllegalArgumentException</code> - Either &quot;offset&quot; or &quot;length&quot; is less than 0 or
-greater than &quot;str&quot;&#39;s length, or &quot;str&quot;&#39;s length minus &quot;offset&quot; is
-less than &quot;length&quot;.</p></li>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>str</code> is null.</p></li>
 </ul>
 
 <h3>WriteUtf8</h3>
@@ -605,10 +625,6 @@ length</code> is greater than the string&#39;s length.</p></li>
 <li><p><code>java.io.IOException</code> - An I/O error occurred.</p></li>
 <li><p><code>java.lang.IllegalArgumentException</code> - Either &quot;offset&quot; or &quot;length&quot; is less than 0
 or greater than &quot;str&quot;&#39;s length, or &quot;str&quot;&#39;s length minus &quot;offset&quot; is
-less than &quot;length&quot;.</p></li>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>str</code> is null.</p></li>
-<li><p><code>java.lang.IllegalArgumentException</code> - Either &quot;offset&quot; or &quot;length&quot; is less than 0 or
-greater than &quot;str&quot;&#39;s length, or &quot;str&quot;&#39;s length minus &quot;offset&quot; is
 less than &quot;length&quot;.</p></li>
 <li><p><code>java.lang.NullPointerException</code> - The parameter <code>str</code> is null.</p></li>
 </ul>

@@ -533,6 +533,22 @@ Writes a string in CBOR format to a data stream.</li>
  CBOREncodeOptions options)</code><br>
 Writes a string in CBOR format to a data stream, using the given options to
 control the encoding process.</li>
+<li><code>static int WriteFloatingPointBits​(java.io.OutputStream outputStream,
+                  long floatingBits,
+                  int byteCount)</code><br>
+Writes the bits of a floating-point number in CBOR format to a data stream.</li>
+<li><code>static int WriteFloatingPointValue​(java.io.OutputStream outputStream,
+                   double doubleVal,
+                   int byteCount)</code><br>
+Writes a 64-bit binary floating-point number in CBOR format to a data
+stream, either in its 64-bit form, or its rounded 32-bit or 16-bit
+equivalent.</li>
+<li><code>static int WriteFloatingPointValue​(java.io.OutputStream outputStream,
+                   float singleVal,
+                   int byteCount)</code><br>
+Writes a 32-bit binary floating-point number in CBOR format to a data
+stream, either in its 64- or 32-bit form, or its rounded 16-bit
+equivalent.</li>
 <li><code>static void WriteJSON​(java.lang.Object obj,
      java.io.OutputStream outputStream)</code><br>
 Converts an arbitrary object to a string in JavaScript Object Notation
@@ -1495,8 +1511,8 @@ deep, or another error occurred when serializing the object.</p></li>
  an integer is converted to a .NET Enum constant, and that
  integer is shared by more than one constant of the same type, it is
  undefined which constant from among them is returned. (For example,
- if <code>MyEnum.Zero = 0</code> and <code>MyEnum.Null = 0</code> , converting 0
- to <code>MyEnum</code> may return either <code>MyEnum.Zero</code> or
+ if <code>MyEnum.Zero = 0</code> and <code>MyEnum.Null = 0</code> , converting 0 to
+ <code>MyEnum</code> may return either <code>MyEnum.Zero</code> or
  <code>MyEnum.Null</code> .) As a result, .NET Enum types with
  constants that share an underlying value should not be passed to
  this method.</li> <li>If the type is <code>byte[]</code> (a
@@ -2828,7 +2844,9 @@ null.</p></li>
 
 <p>Writes a 32-bit floating-point number in CBOR format to a data stream. The
  number is written using the shortest floating-point encoding
- possible; this is a change from previous versions.</p>
+ possible; this is a change from previous versions. To write the
+ floating-point number using a given size (16, 32, or 64 bits), use
+ the WriteFloatingPointValue method instead.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2851,7 +2869,9 @@ null.</p></li>
 
 <p>Writes a 64-bit floating-point number in CBOR format to a data stream. The
  number is written using the shortest floating-point encoding
- possible; this is a change from previous versions.</p>
+ possible; this is a change from previous versions. To write the
+ floating-point number using a given size (16, 32, or 64 bits), use
+ the WriteFloatingPointValue method instead.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -4591,6 +4611,110 @@ object to JSON.</p></li>
 <ul>
 <li><p><code>java.io.IOException</code> - An I/O error occurred.</p></li>
 <li><p><code>java.lang.NullPointerException</code> - The parameter <code>outputStream</code> is null.</p></li>
+</ul>
+
+<h3>WriteFloatingPointBits</h3>
+
+<pre>public static int WriteFloatingPointBits​(java.io.OutputStream outputStream, long floatingBits, int byteCount) throws java.io.IOException
+</pre>
+
+<p>Writes the bits of a floating-point number in CBOR format to a data stream.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>outputStream</code> - A writable data stream.</p></li>
+<li><p><code>floatingBits</code> - The bits of a floating-point number number to write.</p></li>
+<li><p><code>byteCount</code> - The number of bytes of the stored floating-point number;
+this also specifies the format of the &quot;floatingBits&quot; parameter. This
+value can be 2 if &quot;floatingBits&quot;&#39;s lower 16 bits identify the
+floating-point number in IEEE 754r binary16 format; or 4 if
+&quot;floatingBits&quot;&#39;s lower 32 bits identify the floating-point number in
+IEEE 754r binary32 format; or 8 if &quot;floatingBits&quot; identifies the
+floating point number in IEEE 754r binary64 format. Any other values
+for this parameter are invalid.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The number of 8-bit bytes ordered to be written to the data stream.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>java.lang.NullPointerException</code> - The parameter <code>outputStream</code> is null.</p></li>
+<li><p><code>java.io.IOException</code></p></li>
+</ul>
+
+<h3>WriteFloatingPointValue</h3>
+
+<pre>public static int WriteFloatingPointValue​(java.io.OutputStream outputStream, double doubleVal, int byteCount) throws java.io.IOException
+</pre>
+
+<p>Writes a 64-bit binary floating-point number in CBOR format to a data
+ stream, either in its 64-bit form, or its rounded 32-bit or 16-bit
+ equivalent.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>outputStream</code> - A writable data stream.</p></li>
+<li><p><code>doubleVal</code> - The double-precision floating-point number to write.</p></li>
+<li><p><code>byteCount</code> - The number of 8-bit bytes of the stored number. This value
+can be 2 to store the number in IEEE 754r binary16, rounded to
+nearest, ties to even; or 4 to store the number in IEEE 754r
+binary32, rounded to nearest, ties to even; or 8 to store the number
+in IEEE 754r binary64. Any other values for this parameter are
+invalid.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The number of 8-bit bytes ordered to be written to the data stream.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>java.lang.NullPointerException</code> - The parameter <code>outputStream</code> is null.</p></li>
+<li><p><code>java.io.IOException</code></p></li>
+</ul>
+
+<h3>WriteFloatingPointValue</h3>
+
+<pre>public static int WriteFloatingPointValue​(java.io.OutputStream outputStream, float singleVal, int byteCount) throws java.io.IOException
+</pre>
+
+<p>Writes a 32-bit binary floating-point number in CBOR format to a data
+ stream, either in its 64- or 32-bit form, or its rounded 16-bit
+ equivalent.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>outputStream</code> - A writable data stream.</p></li>
+<li><p><code>singleVal</code> - The single-precision floating-point number to write.</p></li>
+<li><p><code>byteCount</code> - The number of 8-bit bytes of the stored number. This value
+can be 2 to store the number in IEEE 754r binary16, rounded to
+nearest, ties to even; or 4 to store the number in IEEE 754r
+binary32; or 8 to store the number in IEEE 754r binary64. Any other
+values for this parameter are invalid.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The number of 8-bit bytes ordered to be written to the data stream.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>java.lang.NullPointerException</code> - The parameter <code>outputStream</code> is null.</p></li>
+<li><p><code>java.io.IOException</code></p></li>
 </ul>
 
 <h3>WriteValue</h3>
