@@ -11,21 +11,13 @@
 
 <p>Specifies what kind of data a message body is.</p>
 
-<p>A media type consists of a top-level type (the general category of the data), a subtype (the specific type), and an optional list of parameters. For example, the media type  <code>
-           text/plain; charset = utf-8
-</code>  is a text media type (&quot;text&quot;), namely, a plain text type (&quot;plain&quot;), and the parameters say that the data uses UTF-8, a Unicode character encoding (&quot;charset = utf-8&quot;). Other top-level types include &quot;audio&quot;, &quot;video&quot;, and &quot;application&quot;.</p>
+<p>A media type consists of a top-level type (the general category of the data), a subtype (the specific type), and an optional list of parameters. For example, the media type  <code>text/plain; charset = utf-8</code>  is a text media type (&quot;text&quot;), namely, a plain text type (&quot;plain&quot;), and the parameters say that the data uses UTF-8, a Unicode character encoding (&quot;charset = utf-8&quot;). Other top-level types include &quot;audio&quot;, &quot;video&quot;, and &quot;application&quot;.</p>
 
 <p>A media type is sometimes known as a &quot;MIME type&quot;, for Multipurpose Internet Mail Extensions, the standard that introduced media types.</p>
 
 <p>This type is immutable, meaning its values can&#39;t be changed once it&#39; s created. To create a changeable media type object, use the MediaTypeBuilder class.</p>
 
-<p><b> Note: </b> According to RFC 2049, unrecognized subtypes of the top-level type  <code>
-           multipart
-</code>  must be treated as  <code>
-           multipart/mixed
-</code>  and unrecognized media types as the media type  <code>
-           application/octet-stream
-</code>  .</p>
+<p><b>Note:</b> According to RFC 2049, unrecognized subtypes of the top-level type  <code>multipart</code>  must be treated as  <code>multipart/mixed</code>  and unrecognized media types as the media type  <code>application/octet-stream</code> .</p>
 
 <h3>Member Summary</h3>
 
@@ -98,11 +90,7 @@
 
 <p><b>Returns:</b></p>
 
-<p><code>
-         true
-</code>  If this is a multipart media type; otherwise,  <code>
-         false
-</code>  .</p>
+<p><code>true</code>  If this is a multipart media type; otherwise,  <code>false</code> .</p>
 
 <p><a id="IsText"></a></p>
 
@@ -115,11 +103,7 @@
 
 <p><b>Returns:</b></p>
 
-<p><code>
-         true
-</code>  If this is a text media type; otherwise,  <code>
-         false
-</code>  .</p>
+<p><code>true</code>  If this is a text media type; otherwise,  <code>false</code> .</p>
 
 <p><a id="Parameters"></a></p>
 
@@ -183,20 +167,17 @@
 
 <p>Determines whether this object and another object are equal.</p>
 
-<p><b>Parameters:</b></p>
+<pre>&lt;b&gt;Parameters:&lt;/b&gt;
+</pre>
 
 <ul>
-<li><i>obj</i>:  The parameter  <i>obj</i>
+<li><i>obj</i>: The parameter  <i>obj</i>
 is an arbitrary object.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p><code>
-         true
-</code>  if this object and another object are equal; otherwise,  <code>
-         false
-</code>  .</p>
+<p><code>true</code>  if this object and another object are equal; otherwise,  <code>false</code> .</p>
 
 <p><a id="GetCharset"></a></p>
 
@@ -234,10 +215,11 @@ is an arbitrary object.</li>
 
 <p>Gets the value of a parameter in this media type, such as &quot;charset&quot; or &quot;format&quot;.</p>
 
-<p><b>Parameters:</b></p>
+<pre>  &lt;b&gt;Parameters:&lt;/b&gt;
+</pre>
 
 <ul>
-<li><i>name</i>:  Name of the parameter to get. The name is compared using a basic case-insensitive comparison. (Two strings are equal in such a comparison, if they match after converting the basic upper-case letters A to Z (U+0041 to U+005A) in both strings to lower case.).</li>
+<li><i>name</i>: Name of the parameter to get. The name is compared using a basic case-insensitive comparison. (Two strings are equal in such a comparison, if they match after converting the basic upper-case letters A to Z (U + 0041 to U + 005A) in both strings to lower case.).</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -264,10 +246,11 @@ Name is empty.</p></li>
 
 <p>Parses a media type string and returns a media type object. For further information, see the overload taking a MediaType parameter.</p>
 
-<p><b>Parameters:</b></p>
+<pre>&lt;b&gt;Parameters:&lt;/b&gt;
+</pre>
 
 <ul>
-<li><i>mediaTypeValue</i>:  A text string representing a media type. This media type can include parameters.</li>
+<li><i>mediaTypeValue</i>: A text string representing a media type. This media type can include parameters.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -284,21 +267,22 @@ Name is empty.</p></li>
     PeterO.Mail.MediaType defaultValue);
 </pre>
 
-<p>Parses a media type string and returns a media type object, or the default value if the string is invalid. This method checks the syntactic validity of the string, but not whether it has all parameters it&#39;s required to have or whether the parameters themselves are set to valid values for the parameter.  This method assumes the given media type string was directly extracted from the Content-Type header field (as defined for email messages) and follows the syntax given in RFC 2045. Accordingly, among other things, the media type string can contain comments (delimited by parentheses).</p>
+<p>Parses a media type string and returns a media type object, or the default value if the string is invalid. This method checks the syntactic validity of the string, but not whether it has all parameters it&#39;s required to have or whether the parameters themselves are set to valid values for the parameter. This method assumes the given media type string was directly extracted from the Content-Type header field (as defined for email messages) and follows the syntax given in RFC 2045. Accordingly, among other things, the media type string can contain comments (delimited by parentheses).</p>
 
 <p>RFC 2231 extensions allow each media type parameter to be associated with a character encoding and/or language, and support parameter values that span two or more key-value pairs. Parameters making use of RFC 2231 extensions have names with an asterisk (&quot;*&quot;). Such a parameter will be ignored if it is ill-formed because of RFC 2231&#39;s rules (except for illegal percent-decoding or undecodable sequences for the given character encoding). Examples of RFC 2231 extensions follow (both examples encode the same &quot;filename&quot; parameter):</p>
 
-<p><b> text/example; filename*=utf-8&#39;en&#39;filename.txt </b></p>
+<p><b>text/example; filename*=utf-8&#39;en&#39;filename.txt</b></p>
 
-<p><b> text/example; filename<em>0</em>=utf-8&#39;en&#39;file; filename<em>1</em>=name%2Etxt </b></p>
+<p><b>text/example; filename<em>0</em>=utf-8&#39;en&#39;file; filename<em>1</em>=name%2Etxt</b></p>
 
 <p>This implementation ignores keys (in parameter key-value pairs) that appear more than once in the media type. Nothing in RFCs 2045, 2183, 2231, 6266, or 7231 explicitly disallows such keys, or otherwise specifies error-handling behavior for such keys.</p>
 
-<p><b>Parameters:</b></p>
+<pre>  &lt;b&gt;Parameters:&lt;/b&gt;
+</pre>
 
 <ul>
-<li><p><i>str</i>:  A text string representing a media type. This media type can include parameters.</p></li>
-<li><p><i>defaultValue</i>:  The media type to return if the string is syntactically invalid. Can be null.</p></li>
+<li><p><i>str</i>: A text string representing a media type. This media type can include parameters.</p></li>
+<li><p><i>defaultValue</i>: The media type to return if the string is syntactically invalid. Can be null.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>

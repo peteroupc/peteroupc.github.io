@@ -89,11 +89,15 @@
 </pre>
 
 <ul>
-<li><p><i>precision</i>: A 32-bit signed integer.</p></li>
-<li><p><i>rounding</i>: An ERounding object.</p></li>
-<li><p><i>exponentMinSmall</i>: Another 32-bit signed integer.</p></li>
-<li><p><i>exponentMaxSmall</i>: A 32-bit signed integer. (3).</p></li>
-<li><p><i>clampNormalExponents</i>: A Boolean object.</p></li>
+<li><p><i>precision</i>: The parameter  <i>precision</i>
+is a 32-bit signed integer.</p></li>
+<li><p><i>rounding</i>: The parameter  <i>rounding</i>
+is an ERounding object.</p></li>
+<li><p><i>exponentMinSmall</i>: The parameter  <i>exponentMinSmall</i>
+is a 32-bit signed integer.</p></li>
+<li><p><i>exponentMaxSmall</i>: The parameter  <i>exponentMaxSmall</i>
+is a 32-bit signed integer.</p></li>
+<li><p><i>clampNormalExponents</i>: Either  <code>true</code>  or  <code>false</code> .</p></li>
 </ul>
 
 <p><a id="Void_ctor_PeterO_Numbers_EInteger_PeterO_Numbers_ERounding_PeterO_Numbers_EInteger_PeterO_Numbers_EInteger_Boolean"></a></p>
@@ -114,11 +118,12 @@
 </pre>
 
 <ul>
-<li><p><i>bigintPrecision</i>: An EInteger object.</p></li>
-<li><p><i>rounding</i>: An ERounding object.</p></li>
-<li><p><i>exponentMin</i>: An EInteger object.</p></li>
-<li><p><i>exponentMax</i>: An EInteger object. (3).</p></li>
-<li><p><i>clampNormalExponents</i>: A Boolean object.</p></li>
+<li><p><i>bigintPrecision</i>: An arbitrary-precision integer.</p></li>
+<li><p><i>rounding</i>: The parameter  <i>rounding</i>
+is an ERounding object.</p></li>
+<li><p><i>exponentMin</i>: An arbitrary-precision integer.</p></li>
+<li><p><i>exponentMax</i>: An arbitrary-precision integer. (3).</p></li>
+<li><p><i>clampNormalExponents</i>: Either  <code>true</code>  or  <code>false</code> .</p></li>
 </ul>
 
 <p><a id="Basic"></a></p>
@@ -374,8 +379,8 @@
 
 <p><b>Returns:</b></p>
 
-<p>The flags that are set from converting numbers according to this arithmetic context. If  <code>HasFlags</code>  is false, this value will be 0. This value is a combination of bit fields. To retrieve a particular flag, use the AND operation on the return value of this method. For example:  <code>(this.Flags &amp;EContext.FlagInexact) !=
-            0</code>  returns  <code>true</code>  if the Inexact flag is set.</p>
+<p>The flags that are set from converting numbers according to this arithmetic context. If  <code>HasFlags</code>  is false, this value will be 0. This value is a combination of bit fields. To retrieve a particular flag, use the AND operation on the return value of this method. For example:  <code>(this.Flags &amp;EContext.FlagInexact)
+            !=0</code>  returns  <code>true</code>  if the Inexact flag is set.</p>
 
 <p><a id="HasExponentRange"></a></p>
 

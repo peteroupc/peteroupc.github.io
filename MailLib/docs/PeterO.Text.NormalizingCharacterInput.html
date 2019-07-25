@@ -15,15 +15,13 @@
 <p>A character input class that implements the Unicode normalization algorithm and contains methods and functionality to test and convert text strings for normalization. This is similar to the deprecated Normalizer class, except it implements the ICharacterInput interface.</p>
 
 <ul>
-<li><p><b> NFD </b> (Normalization Form D) decomposes combined forms to their constituent characters (E plus acute, for example), then reorders combining marks to a standardized order. This is called canonical decomposition.</p></li>
-<li><p><b> NFC </b> does canonical decomposition, then combines certain constituent characters to their composites (E-acute, for example). This is called canonical composition.</p></li>
-<li><p>Two normalization forms, <b> NFKC </b> and <b> NFKD </b> , are similar to NFC and NFD, except they also &quot;decompose&quot; certain characters, such as ligatures, font or positional variants, and subscripts, whose visual distinction can matter in some contexts. This is called compatibility decomposition.</p>
+<li><p><b>NFD</b> (Normalization Form D) decomposes combined forms to their constituent characters (E plus acute, for example), then reorders combining marks to a standardized order. This is called canonical decomposition.</p></li>
+<li><p><b>NFC</b> does canonical decomposition, then combines certain constituent characters to their composites (E-acute, for example). This is called canonical composition.</p></li>
+<li><p>Two normalization forms, <b>NFKC</b> and <b>NFKD</b>, are similar to NFC and NFD, except they also &quot;decompose&quot; certain characters, such as ligatures, font or positional variants, and subscripts, whose visual distinction can matter in some contexts. This is called compatibility decomposition.</p>
 
-<p>For more information, see Standard Annex 15 at  <code>
-       http://www.unicode.org/reports/tr15/
-</code>  .</p>
+<p>For more information, see Standard Annex 15 at  <code>http://www.unicode.org/reports/tr15/</code> .</p>
 
-<p><b> Thread safety: </b> This class is mutable; its properties can be changed. None of its instance methods are designed to be thread safe. Therefore, access to objects from this class must be synchronized if multiple threads can access them at the same time.</p>
+<p><b>Thread safety:</b> This class is mutable; its properties can be changed. None of its instance methods are designed to be thread safe. Therefore, access to objects from this class must be synchronized if multiple threads can access them at the same time.</p>
 
 <p>NOTICE: While this class&#39;s source code is in the public domain, the class uses an internal class, called NormalizationData, that includes data derived from the Unicode Character Database. In case doing so is required, the permission notice for the Unicode Character Database is given here:</p>
 
@@ -52,7 +50,7 @@
 <li><code><a href="#ReadChar">ReadChar()</a></code> - Reads a Unicode character from a data source.</li>
 </ul>
 
-<p><a id="Void_ctor_ICharacterInput"></a></p>
+<p><a id="Void_ctor_PeterO_Text_ICharacterInput"></a></p>
 
 <h3>NormalizingCharacterInput Constructor</h3>
 
@@ -69,7 +67,7 @@
 is an ICharacterInput object.</li>
 </ul>
 
-<p><a id="Void_ctor_ICharacterInput_Normalization"></a></p>
+<p><a id="Void_ctor_PeterO_Text_ICharacterInput_PeterO_Text_Normalization"></a></p>
 
 <h3>NormalizingCharacterInput Constructor</h3>
 
@@ -90,7 +88,7 @@ is an ICharacterInput object.</p></li>
 is a Normalization object.</p></li>
 </ul>
 
-<p><a id="Void_ctor_String"></a></p>
+<p><a id="Void_ctor_System_String"></a></p>
 
 <h3>NormalizingCharacterInput Constructor</h3>
 
@@ -107,7 +105,7 @@ is a Normalization object.</p></li>
 is a text string.</li>
 </ul>
 
-<p><a id="Void_ctor_String_Int32_Int32_Normalization"></a></p>
+<p><a id="Void_ctor_System_String_Int32_Int32_PeterO_Text_Normalization"></a></p>
 
 <h3>NormalizingCharacterInput Constructor</h3>
 
@@ -134,7 +132,7 @@ is a 32-bit signed integer.</p></li>
 is a Normalization object.</p></li>
 </ul>
 
-<p><a id="Void_ctor_String_Normalization"></a></p>
+<p><a id="Void_ctor_System_String_PeterO_Text_Normalization"></a></p>
 
 <h3>NormalizingCharacterInput Constructor</h3>
 
@@ -163,7 +161,7 @@ The parameter  <i>str</i>
 is null.</li>
 </ul>
 
-<p><a id="Void_ctor_IList_1"></a></p>
+<p><a id="Void_ctor_System_Collections_Generic_IList_1_System_Int32"></a></p>
 
 <h3>NormalizingCharacterInput Constructor</h3>
 
@@ -180,7 +178,7 @@ is null.</li>
 is an IList object.</li>
 </ul>
 
-<p><a id="Void_ctor_IList_1_Normalization"></a></p>
+<p><a id="Void_ctor_System_Collections_Generic_IList_1_System_Int32_PeterO_Text_Normalization"></a></p>
 
 <h3>NormalizingCharacterInput Constructor</h3>
 
@@ -214,11 +212,12 @@ is a Normalization object.</p></li>
 
 <p>Gets a list of normalized code points after reading from a character stream.</p>
 
-<p><b>Parameters:</b></p>
+<pre>  &lt;b&gt;Parameters:&lt;/b&gt;
+</pre>
 
 <ul>
-<li><p><i>chars</i>:  An object that implements a stream of Unicode characters.</p></li>
-<li><p><i>form</i>:  Specifies the normalization form to use when normalizing the text.</p></li>
+<li><p><i>chars</i>: An object that implements a stream of Unicode characters.</p></li>
+<li><p><i>form</i>: Specifies the normalization form to use when normalizing the text.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -246,12 +245,13 @@ is null.</li>
 
 <p>Gets a list of normalized code points after reading from a string.</p>
 
-<p><b>Parameters:</b></p>
+<pre>  &lt;b&gt;Parameters:&lt;/b&gt;
+</pre>
 
 <ul>
-<li><p><i>str</i>:  The parameter  <i>str</i>
+<li><p><i>str</i>: The parameter  <i>str</i>
 is a text string.</p></li>
-<li><p><i>form</i>:  Specifies the normalization form to use when normalizing the text.</p></li>
+<li><p><i>form</i>: Specifies the normalization form to use when normalizing the text.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -279,20 +279,17 @@ is null.</li>
 
 <p>Determines whether the given array of characters is in the given Unicode normalization form.</p>
 
-<p><b>Parameters:</b></p>
+<pre>  &lt;b&gt;Parameters:&lt;/b&gt;
+</pre>
 
 <ul>
-<li><p><i>charArray</i>:  An array of Unicode code points.</p></li>
-<li><p><i>form</i>:  Specifies the normalization form to use when normalizing the text.</p></li>
+<li><p><i>charArray</i>: An array of Unicode code points.</p></li>
+<li><p><i>form</i>: Specifies the normalization form to use when normalizing the text.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p><code>
-         true
-</code>  if the given list of characters is in the given Unicode normalization form; otherwise,  <code>
-         false
-</code>  .</p>
+<p><code>true</code>  if the given list of characters is in the given Unicode normalization form; otherwise,  <code>false</code> .</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -312,20 +309,17 @@ The parameter &quot;charList&quot; is null.</li>
 
 <p>Determines whether the text provided by a character input is normalized.</p>
 
-<p><b>Parameters:</b></p>
+<pre>  &lt;b&gt;Parameters:&lt;/b&gt;
+</pre>
 
 <ul>
-<li><p><i>chars</i>:  A object that implements a streamable character input.</p></li>
-<li><p><i>form</i>:  Specifies the normalization form to check.</p></li>
+<li><p><i>chars</i>: A object that implements a streamable character input.</p></li>
+<li><p><i>form</i>: Specifies the normalization form to check.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p><code>
-         true
-</code>  if the text is normalized; otherwise,  <code>
-         false
-</code>  .</p>
+<p><code>true</code>  if the text is normalized; otherwise,  <code>false</code> .</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -346,22 +340,17 @@ is null.</li>
 
 <p>Determines whether the given string is in the given Unicode normalization form.</p>
 
-<p><b>Parameters:</b></p>
+<pre>  &lt;b&gt;Parameters:&lt;/b&gt;
+</pre>
 
 <ul>
-<li><p><i>str</i>:  An arbitrary string.</p></li>
-<li><p><i>form</i>:  Specifies the normalization form to use when normalizing the text.</p></li>
+<li><p><i>str</i>: An arbitrary string.</p></li>
+<li><p><i>form</i>: Specifies the normalization form to use when normalizing the text.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p><code>
-         true
-</code>  if the given string is in the given Unicode normalization form; otherwise,  <code>
-         false
-</code>  . Returns  <code>
-         false
-</code>  if the string contains an unpaired surrogate code point.</p>
+<p><code>true</code>  if the given string is in the given Unicode normalization form; otherwise,  <code>false</code> . Returns  <code>false</code>  if the string contains an unpaired surrogate code point.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -384,20 +373,17 @@ is null.</li>
 
 <p>Determines whether the given list of characters is in the given Unicode normalization form.</p>
 
-<p><b>Parameters:</b></p>
+<pre>  &lt;b&gt;Parameters:&lt;/b&gt;
+</pre>
 
 <ul>
-<li><p><i>charList</i>:  A list of Unicode code points.</p></li>
-<li><p><i>form</i>:  Specifies the normalization form to use when normalizing the text.</p></li>
+<li><p><i>charList</i>: A list of Unicode code points.</p></li>
+<li><p><i>form</i>: Specifies the normalization form to use when normalizing the text.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p><code>
-         true
-</code>  if the given list of characters is in the given Unicode normalization form; otherwise,  <code>
-         false
-</code>  .</p>
+<p><code>true</code>  if the given list of characters is in the given Unicode normalization form; otherwise,  <code>false</code> .</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -418,11 +404,12 @@ is null.</li>
 
 <p>Converts a string to the given Unicode normalization form.</p>
 
-<p><b>Parameters:</b></p>
+<pre>   &lt;b&gt;Parameters:&lt;/b&gt;
+</pre>
 
 <ul>
-<li><p><i>str</i>:  An arbitrary string.</p></li>
-<li><p><i>form</i>:  The Unicode normalization form to convert to.</p></li>
+<li><p><i>str</i>: An arbitrary string.</p></li>
+<li><p><i>form</i>: The Unicode normalization form to convert to.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -453,13 +440,14 @@ is null.</p></li>
 
 <p>Reads a sequence of Unicode code points from a data source.</p>
 
-<p><b>Parameters:</b></p>
+<pre>       &lt;b&gt;Parameters:&lt;/b&gt;
+</pre>
 
 <ul>
-<li><p><i>chars</i>:  Output buffer.</p></li>
-<li><p><i>index</i>:  A zero-based index showing where the desired portion of  <i>chars</i>
+<li><p><i>chars</i>: Output buffer.</p></li>
+<li><p><i>index</i>: A zero-based index showing where the desired portion of  <i>chars</i>
 begins.</p></li>
-<li><p><i>length</i>:  The number of elements in the desired portion of  <i>chars</i>
+<li><p><i>length</i>: The number of elements in the desired portion of  <i>chars</i>
 (but not more than  <i>chars</i>
 &#39;s length).</p></li>
 </ul>
@@ -484,6 +472,11 @@ is less than  <i>length</i>
 .</p></li>
 <li><p>System.ArgumentException:
 Either &quot;index&quot; or &quot;length&quot; is less than 0 or greater than &quot;chars&quot;&#39;s length, or &quot;chars&quot;&#39;s length minus &quot;index&quot; is less than &quot;length&quot;.</p></li>
+<li><p>System.ArgumentException:
+Either &quot;index&quot; or &quot;length&quot; is less than 0 or greater than &quot;chars&quot;&#39;s length, or &quot;chars&quot;&#39;s length minus &quot;index&quot; is less than &quot;length&quot;.</p></li>
+<li><p>System.ArgumentNullException:
+The parameter  <i>chars</i>
+is null.</p></li>
 </ul>
 
 <p><a id="ReadChar"></a></p>
