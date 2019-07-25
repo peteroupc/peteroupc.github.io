@@ -206,9 +206,7 @@ Determines whether a value of the given key exists in this object.</li>
 <li><code>static CBORObject DecodeFromBytes​(byte[] data)</code><br>
 Generates a CBOR object from an array of CBOR-encoded bytes.</li>
 <li><code>static CBORObject DecodeFromBytes​(byte[] data,
-           CBOREncodeOptions options) CBOREncodeOptions</code><br>
-Generates a CBOR object from an array of CBOR-encoded bytes, using the given
-CBOREncodeOptions object to control the decoding process.</li>
+           CBOREncodeOptions options)</code><br></li>
 <li><code>static CBORObject Divide​(CBORObject first,
   CBORObject second)</code><br>
 Divides a CBORObject object by the value of a CBORObject object.</li>
@@ -564,8 +562,7 @@ Converts this object to a string in JavaScript Object Notation (JSON)
 format, as in the ToJSONString method, and writes that string to a
 data stream in UTF-8, using the given JSON options to control the
 encoding process.</li>
-<li><code>void WriteTo​(java.io.OutputStream stream)</code><br>
-Writes this CBOR object to a data stream.</li>
+<li><code>void WriteTo​(java.io.OutputStream stream)</code><br></li>
 <li><code>void WriteTo​(java.io.OutputStream stream,
    CBOREncodeOptions options)</code><br>
 Writes this CBOR object to a data stream, using the specified options for
@@ -1191,41 +1188,24 @@ parameter <code>data</code> is empty.</p></li>
 <pre>public static CBORObject DecodeFromBytes​(byte[] data, CBOREncodeOptions options)
 </pre>
 
-<p>Generates a CBOR object from an array of CBOR-encoded bytes, using the given
- <code>CBOREncodeOptions</code> object to control the decoding process.<p>
- </p><p>The following example (originally written in C# for the .NET
- version) implements a method that decodes a text string from a CBOR
- byte array. It&#39;s successful only if the CBOR object contains an
- untagged text string.</p> <pre>private static string
- DecodeTextString(byte[] bytes){ if(bytes ==
- null){ throw new
- NullPointerException(nameof(mapObj));}
- if(bytes.length == 0 || bytes[0]&lt;0x60 ||
- bytes[0]&gt;0x7f){throw new CBORException();} return
- CBORObject.DecodeFromBytes(bytes,
- CBOREncodeOptions.Default).getAsString()(); }</pre>.</p>
-
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>data</code> - A byte array in which a single CBOR object is encoded.</p></li>
-<li><p><code>options</code> - The parameter <code>options</code> is a CBOREncodeOptions object.</p></li>
+<li><p><code>data</code> - Not documented yet.</p></li>
+<li><p><code>options</code> - Not documented yet.</p></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A CBOR object decoded from the given byte array.</li>
+<li>A CBORObject object.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>CBORException</code> - There was an error in reading or
-parsing the data. This includes cases where not all of the byte
-array represents a CBOR object. This exception is also thrown if the
-parameter <code>data</code> is empty.</p></li>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>data</code> is null.</p></li>
+<li><code>java.lang.NullPointerException</code> - The parameter <code>data</code> or <code>options</code>
+is null.</li>
 </ul>
 
 <h3>Divide</h3>
@@ -2844,9 +2824,7 @@ null.</p></li>
 
 <p>Writes a 32-bit floating-point number in CBOR format to a data stream. The
  number is written using the shortest floating-point encoding
- possible; this is a change from previous versions. To write the
- floating-point number using a given size (16, 32, or 64 bits), use
- the WriteFloatingPointValue method instead.</p>
+ possible; this is a change from previous versions.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2869,9 +2847,7 @@ null.</p></li>
 
 <p>Writes a 64-bit floating-point number in CBOR format to a data stream. The
  number is written using the shortest floating-point encoding
- possible; this is a change from previous versions. To write the
- floating-point number using a given size (16, 32, or 64 bits), use
- the WriteFloatingPointValue method instead.</p>
+ possible; this is a change from previous versions.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -3973,8 +3949,7 @@ given number; otherwise, <code>false</code>.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>bigTagValue</code> is null.</p></li>
-<li><p><code>java.lang.IllegalArgumentException</code> - The parameter <code>bigTagValue</code> is less than 0.</p></li>
+<li><code>java.lang.IllegalArgumentException</code> - The parameter <code>tagValue</code> is less than 0.</li>
 </ul>
 
 <h3>getTagCount</h3>
@@ -4869,73 +4844,16 @@ bigintValue</code> is null.</p></li>
 <pre>public void WriteTo​(java.io.OutputStream stream) throws java.io.IOException
 </pre>
 
-<p><p>Writes this CBOR object to a data stream. If the CBOR object contains
- CBOR maps, or is a CBOR map, the keys to the map are written out to
- the data stream in an undefined order. See the examples (written in
- C# for the .NET version) for ways to write out certain keys of
- a CBOR map in a given order. In the case of CBOR objects of type
- FloatingPoint, the number is written using the shortest
- floating-point encoding possible; this is a change from previous
- versions.</p><p> </p><p>The following example shows a method that writes
- each key of &#39;mapObj&#39; to &#39;outputStream&#39;, in the order given in
- &#39;keys&#39;, where &#39;mapObj&#39; is written out in the form of a CBOR
- <b>definite-length map</b> . Only keys found in &#39;keys&#39; will be
- written if they exist in &#39;mapObj&#39;.</p> <pre>private static void
- WriteKeysToMap(CBORObject mapObj, List&lt;CBORObject&gt; keys,
- OutputStream outputStream){ if(mapObj == null){ throw
- new NullPointerException(nameof(mapObj));} if(keys
- == null){throw new
- NullPointerException(nameof(keys));} if(outputStream
- == null){throw new
- NullPointerException(nameof(outputStream));}
- if(obj.getType() != CBORType.Map){ throw new
-  IllegalArgumentException(&quot;&#39;obj&#39; is not a map.&quot;); } int keyCount = 0;
- for (CBORObject key in keys) {
- if(mapObj.ContainsKey(key)){ keyCount++; } }
- CBORObject.WriteValue(outputStream, 5, keyCount); for (CBORObject
- key in keys) { if(mapObj.ContainsKey(key)){
- key.WriteTo(outputStream); mapObj.get(key).WriteTo(outputStream);
- } } }</pre> <p>The following example shows a method
- that writes each key of &#39;mapObj&#39; to &#39;outputStream&#39;, in the order
- given in &#39;keys&#39;, where &#39;mapObj&#39; is written out in the form of a CBOR
- <b>indefinite-length map</b> . Only keys found in &#39;keys&#39; will be
- written if they exist in &#39;mapObj&#39;.</p> <pre>private static void
- WriteKeysToIndefMap(CBORObject mapObj, List&lt;CBORObject&gt;
- keys, OutputStream outputStream){ if(mapObj == null){
- throw new NullPointerException(nameof(mapObj));}
- if(keys == null){throw new
- NullPointerException(nameof(keys));} if(outputStream
- == null){throw new
- NullPointerException(nameof(outputStream));}
- if(obj.getType() != CBORType.Map){ throw new
-  IllegalArgumentException(&quot;&#39;obj&#39; is not a map.&quot;); }
- outputStream.write((byte)0xbf); for (CBORObject key in keys)
- { if(mapObj.ContainsKey(key)){
- key.WriteTo(outputStream); mapObj.get(key).WriteTo(outputStream);
- } } outputStream.write((byte)0xff); }</pre>
- <p>The following example shows a method that writes out a list of
- objects to &#39;outputStream&#39; as an <b>indefinite-length CBOR array</b>
-.</p> <pre>private static void WriteToIndefArray(
- List&lt;object&gt; list, OutputStream outputStream){
- if(list == null){ throw new
- NullPointerException(nameof(list));} if(outputStream
- == null){throw new
- NullPointerException(nameof(outputStream));}
- outputStream.write((byte)0x9f); for (object item in list) {
- new CBORObject(item).WriteTo(outputStream); }
- outputStream.write((byte)0xff); }</pre> .</p>
-
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>stream</code> - A writable data stream.</li>
+<li><code>stream</code> - Not documented yet.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>stream</code> is null.</p></li>
-<li><p><code>java.io.IOException</code> - An I/O error occurred.</p></li>
+<li><code>java.io.IOException</code></li>
 </ul>
 
 <h3>WriteTo</h3>
