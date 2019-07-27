@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on June 4, 2017; last updated on Jul. 26, 2019.
+Begun on June 4, 2017; last updated on Jul. 27, 2019.
 
 Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.
 
@@ -36,6 +36,7 @@ All the random number methods presented on this page are ultimately based on an 
 - **Suggestions to add probability distributions to this document.**
 - **Ways to implement any of the randomization methods given in "Randomization with Real Numbers" using only random integers.**
 - **Suggestions to trim the size of this document, such as by limiting it to the most common and most useful methods for generating random numbers.**
+- **Is there any non-trivial use of random real numbers ("floating-point" numbers) in cryptography or other security applications &mdash; except perhaps in machine learning models?**
 
 <a id=Contents></a>
 ## Contents
@@ -604,7 +605,7 @@ Example criteria include checking&mdash;
 
 (KD-trees, hash tables, red-black trees, prime-number testing algorithms, and regular expressions are outside the scope of this document.)
 
-> **Note:** All rejection sampling techniques have a chance to reject data, so they all have a variable running time; thus, they are not appropriate in any cases when differences in running time could be exploited in a security attack.  (Certain attacks involving encrypted communications have exploited the timing and other aspects of such communications to derive plaintext or encryption keys indirectly.)
+> **Note:** All rejection sampling techniques have a chance to reject data, so they all have a variable running time; thus, they are not appropriate in any cases when differences in running time could be exploited in a security attack.  (Certain attacks involving encrypted communications have exploited the timing and other aspects of such communications to derive cleartext or encryption keys indirectly.)
 
 <a id=Random_Walks></a>
 ### Random Walks
@@ -1860,6 +1861,8 @@ Other kinds of copulas describe different kinds of dependence between random num
 **Many distributions here require random real numbers.**
 
 Most commonly used:
+
+<small>
 - **Beta distribution**: See [**Beta Distribution**](#Beta_Distribution).
 - **Binomial distribution**: See [**Binomial Distribution: Optimization for Many Trials**](#Binomial_Distribution_Optimization_for_Many_Trials).
 - **Binormal distribution**: See [**Multivariate Normal (Multinormal) Distribution**](#Multivariate_Normal_Multinormal_Distribution).
@@ -1888,9 +1891,11 @@ Most commonly used:
 - **Student's _t_-distribution**: `Normal(cent, 1) / sqrt(GammaDist(df * 0.5, 2 / df))`, where `df` is the number of degrees of freedom, and _cent_ is the mean of the normally-distributed random number.  A `cent` other than 0 indicates a _noncentral_ distribution.
 - **Triangular distribution**: `ContinuousWeightedChoice([startpt, midpt, endpt], [0, 1, 0])`. The distribution starts at `startpt`, peaks at `midpt`, and ends at `endpt`.
 - **Weibull distribution**: `b * pow(-ln(RNDU01ZeroExc()),1.0 / a) + loc`, where `a` is the shape, `b` is the scale `loc` is the location, and `a` and `b` are greater than 0.
+</small>
 
 Miscellaneous:
 
+<small>
 - **3-parameter gamma distribution**: See [**Gamma Distribution**](#Gamma_Distribution).
 - **4-parameter gamma distribution**: See [**Gamma Distribution**](#Gamma_Distribution).
 - **4-parameter stable distribution**: See [**Stable Distribution**](#Stable_Distribution).
@@ -1971,6 +1976,7 @@ Miscellaneous:
 - **Wigner (semicircle) distribution**: `a + radius * (BetaDist(1.5, 1.5)*2-1)`, where `radius` is the semicircular radius and `a` is the location.
 - **Zeta distribution**: Generate `n = floor(pow(RNDU01ZeroOneExc(), -1.0 / r))`, and if `d / pow(2, r) < (d - 1) * RNDU01OneExc() * n / (pow(2, r) - 1.0)`, where `d = pow((1.0 / n) + 1, r)`, repeat this process. The parameter `r` is greater than 0. Based on method described in Devroye 1986. A zeta distribution [**truncated**](#Censoring_and_Truncation) by rejecting random values greater than some positive integer is called a _Zipf distribution_ or _Estoup distribution_. (Note that Devroye uses "Zipf distribution" to refer to the untruncated zeta distribution.)
 - **Zipf distribution**: See zeta distribution.
+</small>
 
 <a id=Geometric_Sampling></a>
 ### Geometric Sampling

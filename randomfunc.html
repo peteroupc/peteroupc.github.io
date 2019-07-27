@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
-<p>Begun on June 4, 2017; last updated on Jul. 26, 2019.</p>
+<p>Begun on June 4, 2017; last updated on Jul. 27, 2019.</p>
 
 <p>Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.</p>
 
@@ -48,6 +48,7 @@
 <li><strong>Suggestions to add probability distributions to this document.</strong></li>
 <li><strong>Ways to implement any of the randomization methods given in &quot;Randomization with Real Numbers&quot; using only random integers.</strong></li>
 <li><strong>Suggestions to trim the size of this document, such as by limiting it to the most common and most useful methods for generating random numbers.</strong></li>
+<li><strong>Is there any non-trivial use of random real numbers (&quot;floating-point&quot; numbers) in cryptography or other security applications &mdash; except perhaps in machine learning models?</strong></li>
 </ul>
 
 <p><a id=Contents></a></p>
@@ -767,7 +768,7 @@ list by <code>RandomKItemsInOrder(list, n - k)</code>.</li>
 <p>(KD-trees, hash tables, red-black trees, prime-number testing algorithms, and regular expressions are outside the scope of this document.)</p>
 
 <blockquote>
-<p><strong>Note:</strong> All rejection sampling techniques have a chance to reject data, so they all have a variable running time; thus, they are not appropriate in any cases when differences in running time could be exploited in a security attack.  (Certain attacks involving encrypted communications have exploited the timing and other aspects of such communications to derive plaintext or encryption keys indirectly.)</p>
+<p><strong>Note:</strong> All rejection sampling techniques have a chance to reject data, so they all have a variable running time; thus, they are not appropriate in any cases when differences in running time could be exploited in a security attack.  (Certain attacks involving encrypted communications have exploited the timing and other aspects of such communications to derive cleartext or encryption keys indirectly.)</p>
 </blockquote>
 
 <p><a id=Random_Walks></a></p>
@@ -2247,6 +2248,8 @@ END METHOD
 
 <p>Most commonly used:</p>
 
+<p><small></p>
+
 <ul>
 <li><strong>Beta distribution</strong>: See <a href="#Beta_Distribution"><strong>Beta Distribution</strong></a>.</li>
 <li><strong>Binomial distribution</strong>: See <a href="#Binomial_Distribution_Optimization_for_Many_Trials"><strong>Binomial Distribution: Optimization for Many Trials</strong></a>.</li>
@@ -2275,10 +2278,13 @@ have the same meaning as in the normal distribution.</li>
 <li><strong>Standard normal distribution</strong>: <code>Normal(0, 1)</code>.  See also <a href="#Normal_Gaussian_Distribution"><strong>Normal (Gaussian) Distribution</strong></a>.</li>
 <li><strong>Student&#39;s <em>t</em>-distribution</strong>: <code>Normal(cent, 1) / sqrt(GammaDist(df * 0.5, 2 / df))</code>, where <code>df</code> is the number of degrees of freedom, and <em>cent</em> is the mean of the normally-distributed random number.  A <code>cent</code> other than 0 indicates a <em>noncentral</em> distribution.</li>
 <li><strong>Triangular distribution</strong>: <code>ContinuousWeightedChoice([startpt, midpt, endpt], [0, 1, 0])</code>. The distribution starts at <code>startpt</code>, peaks at <code>midpt</code>, and ends at <code>endpt</code>.</li>
-<li><strong>Weibull distribution</strong>: <code>b * pow(-ln(RNDU01ZeroExc()),1.0 / a) + loc</code>, where <code>a</code> is the shape, <code>b</code> is the scale <code>loc</code> is the location, and <code>a</code> and <code>b</code> are greater than 0.</li>
+<li><strong>Weibull distribution</strong>: <code>b * pow(-ln(RNDU01ZeroExc()),1.0 / a) + loc</code>, where <code>a</code> is the shape, <code>b</code> is the scale <code>loc</code> is the location, and <code>a</code> and <code>b</code> are greater than 0.
+</small></li>
 </ul>
 
 <p>Miscellaneous:</p>
+
+<p><small></p>
 
 <ul>
 <li><strong>3-parameter gamma distribution</strong>: See <a href="#Gamma_Distribution"><strong>Gamma Distribution</strong></a>.</li>
@@ -2363,7 +2369,8 @@ the two parameters of the beta distribution, and <code>trials</code> is a parame
 <li><strong>Waring&ndash;Yule distribution</strong>: See beta negative binomial distribution.</li>
 <li><strong>Wigner (semicircle) distribution</strong>: <code>a + radius * (BetaDist(1.5, 1.5)*2-1)</code>, where <code>radius</code> is the semicircular radius and <code>a</code> is the location.</li>
 <li><strong>Zeta distribution</strong>: Generate <code>n = floor(pow(RNDU01ZeroOneExc(), -1.0 / r))</code>, and if <code>d / pow(2, r) &lt; (d - 1) * RNDU01OneExc() * n / (pow(2, r) - 1.0)</code>, where <code>d = pow((1.0 / n) + 1, r)</code>, repeat this process. The parameter <code>r</code> is greater than 0. Based on method described in Devroye 1986. A zeta distribution <a href="#Censoring_and_Truncation"><strong>truncated</strong></a> by rejecting random values greater than some positive integer is called a <em>Zipf distribution</em> or <em>Estoup distribution</em>. (Note that Devroye uses &quot;Zipf distribution&quot; to refer to the untruncated zeta distribution.)</li>
-<li><strong>Zipf distribution</strong>: See zeta distribution.</li>
+<li><strong>Zipf distribution</strong>: See zeta distribution.
+</small></li>
 </ul>
 
 <p><a id=Geometric_Sampling></a></p>
@@ -2580,6 +2587,7 @@ END METHOD
 <li>In the <em>Box&ndash;Muller transformation</em>, <code>mu + radius * cos(angle)</code> and <code>mu + radius * sin(angle)</code>, where <code>angle = RNDRANGEMaxExc(0, 2 * pi)</code> and <code>radius = sqrt(-2 * ln(RNDU01ZeroExc())) * sigma</code>, are two independent normally-distributed random numbers.</li>
 <li>Computing the sum of twelve <code>RNDU01OneExc()</code> numbers (see Note 17) and subtracting the sum by 6 (see also <a href="https://en.wikipedia.org/wiki/Irwin%E2%80%93Hall_distribution"><strong>&quot;Irwin&ndash;Hall distribution&quot; on Wikipedia</strong></a>) results in approximate standard normal (<code>mu</code>=0, <code>sigma</code>=1) random numbers, whose values are not less than -6 or greater than 6; on the other hand, in a standard normal distribution, results less than -6 or greater than 6 will occur only with a generally negligible probability.</li>
 <li>Generating <code>RNDU01ZeroOneExc()</code>, then running the standard normal distribution&#39;s inverse cumulative distribution function on that number, results in a random number from that distribution.  An approximation is found in M. Wichura, <em>Applied Statistics</em> 37(3), 1988.  See also <a href="https://www.johndcook.com/blog/normal_cdf_inverse/"><strong>&quot;A literate program to compute the inverse of the normal CDF&quot;</strong></a>.</li>
+<li>Methods implementing a variant of the normal distribution, the <em>discrete Gaussian distribution</em>, generate <em>integers</em> that approximately follow the normal distribution.  Two recent algorithms, one by A. Karmakar et al. (&quot;Constant-Time Gaussian Random Sampling&quot;), and another by Micciancio and Walter (2017, &quot;Gaussian Sampling over the Integers: Efficient, Generic, Constant-Time&quot;), are designed to reduce timing differences that a security attack could exploit.</li>
 </ol>
 
 <p>In 2007, Thomas, D., et al. gave a survey of normal random number methods in &quot;Gaussian Random Number Generators&quot;, <em>ACM Computing Surveys</em> 39(4), 2007, article 11.</small></p>

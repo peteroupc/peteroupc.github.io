@@ -16,8 +16,8 @@
 <h3>Member Summary</h3>
 
 <ul>
-<li><code><a href="#CodePointAt_string_int">CodePointAt(string, int)</a></code> - Gets the Unicode code point at the given index of the string.</li>
-<li><code><a href="#CodePointAt_string_int_int">CodePointAt(string, int, int)</a></code> - Gets the Unicode code point at the given index of the string.</li>
+<li><code><a href="#CodePointAt_string_int">CodePointAt(string, int)</a></code> - Gets the Unicode code point at the given index of the ///string.</li>
+<li><code><a href="#CodePointAt_string_int_int">CodePointAt(string, int, int)</a></code> - Gets the Unicode code point at the given index of the ///string.</li>
 <li><code><a href="#CodePointBefore_string_int">CodePointBefore(string, int)</a></code> - Gets the Unicode code point just before the given index of the string.</li>
 <li><code><a href="#CodePointBefore_string_int_int">CodePointBefore(string, int, int)</a></code> - Gets the Unicode code point just before the given index of the string.</li>
 <li><code><a href="#CodePointCompare_string_string">CodePointCompare(string, string)</a></code> - Compares two strings in Unicode code point order.</li>
@@ -47,9 +47,9 @@
     int index);
 </pre>
 
-<p>Gets the Unicode code point at the given index of the string.</p>
+<p>Gets the Unicode code point at the given index of the ///string.</p>
 
-<pre> The following example shows how to iterate a text string code point by code point.
+<pre>  The following example shows how to iterate a text string ///code point by code point.
 
 for (var i = 0;i&lt;str.Length; ++i) { int codePoint =
             DataUtilities.CodePointAt(str, i);
@@ -70,7 +70,7 @@ is a text string.</p></li>
 <p><b>Return Value:</b></p>
 
 <p>The Unicode code point at the given position. Returns -1 if  <i>index</i>
- is less than 0, or is the string&#39;s length or greater. Returns the replacement character (U+FFFD) if the current character is an unpaired surrogate code point. If the return value is 65536 (0x10000) or greater, the code point takes up two UTF-16 code units.</p>
+ is less than 0, or is the string&#39;s length or greater. Returns the replacement character (U + FFFD) if the current character is an unpaired surrogate code point. If the return value is 65536 (0x10000) or greater, the code point takes up two UTF-16 code units.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -90,9 +90,9 @@ is null.</li>
     int surrogateBehavior);
 </pre>
 
-<p>Gets the Unicode code point at the given index of the string.</p>
+<p>Gets the Unicode code point at the given index of the ///string.</p>
 
-<pre>  The following example shows how to iterate a text string code point by code point, terminating the loop when an unpaired surrogate is found.
+<pre>   The following example shows how to iterate a text string ///code point by code point, terminating the loop when an unpaired surrogate is found.
 
 for (var i = 0;i&lt;str.Length; ++i) { int codePoint =
             DataUtilities.CodePointAt(str, i, 2); if (codePoint &lt; 0) { break; /*
@@ -108,7 +108,7 @@ for (var i = 0;i&lt;str.Length; ++i) { int codePoint =
 <li><p><i>str</i>: The parameter  <i>str</i>
 is a text string.</p></li>
 <li><p><i>index</i>: Index of the current position into the string.</p></li>
-<li><p><i>surrogateBehavior</i>: Specifies what kind of value to return if the previous character is an unpaired surrogate code point: if 0, return the replacement character (U+FFFD); if 1, return the value of the surrogate code point; if neither 0 nor 1, return -1.</p></li>
+<li><p><i>surrogateBehavior</i>: Specifies what kind of value to return if ///the previous character is an unpaired surrogate code point: if 0, return the replacement character (U + FFFD); if 1, return the value of the surrogate code point; if neither 0 nor 1, return -1.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>

@@ -65,10 +65,19 @@
 
 <p>Initializes a new instance of the <a href="PeterO.Cbor.JSONOptions.html">PeterO.Cbor.JSONOptions</a> class.</p>
 
-<p><b>Parameters:</b></p>
+<pre>&lt;b&gt;Parameters:&lt;/b&gt;
+</pre>
 
 <ul>
-<li><i>paramString</i>: A string setting forth the options to use. This is a semicolon-separated list of options, each of which has a key and a value separated by an equal sign (&quot;=&quot;). Whitespace and line separators are not allowed to appear between the semicolons or between the equal signs, nor may the string begin or end with whitespace. The following is an example of this parameter:  <code>base64padding=false;replacesurrogates=true</code>  . The key can be any one of the following in any combination of case:  <code>base64padding</code>  ,  <code>replacesurrogates</code>  . Other keys are ignored. If the same key appears more than once, the value given for the last such key is used. The two keys just given can have a value of  <code>1</code>  ,  <code>true</code>  ,  <code>yes</code>  , or  <code>on</code>  (in any combination of case), which means true, and any other value meaning false. For example,  <code>base64padding=Yes</code>  and  <code>base64padding=1</code>  both set the  <code>Base64Padding</code>  property to true.</li>
+<li><i>paramString</i>: A string setting forth the options to use. This is a semicolon-separated list of options, each of which has a key and a value separated by an equal sign (&quot;=&quot;). Whitespace and line separators are not allowed to appear between the semicolons or between the equal signs, nor may the string begin or end with whitespace. The following is an example of this parameter:  <code>base64padding=false;replacesurrogates=true</code> . The key can be any one of the following in any combination of case:  <code>base64padding</code> ,  <code>replacesurrogates</code> . Other keys are ignored. If the same key appears more than once, the value given for the last such key is used. The two keys just given can have a value of  <code>1</code> ,  <code>true</code> ,  <code>yes</code> , or  <code>on</code>  (in any combination of case), which means true, and any other value meaning false. For example,  <code>base64padding=Yes</code>  and  <code>base64padding=1</code>  both set the  <code>Base64Padding</code>  property to true.</li>
+</ul>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter  <i>paramString</i>
+is null.</li>
 </ul>
 
 <p><a id="Void_ctor"></a></p>
