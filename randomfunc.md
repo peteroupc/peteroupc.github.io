@@ -36,7 +36,7 @@ All the random number methods presented on this page are ultimately based on an 
 - **Suggestions to add probability distributions to this document.**
 - **Ways to implement any of the randomization methods given in "Randomization with Real Numbers" using only random integers.**
 - **Suggestions to trim the size of this document, such as by limiting it to the most common and most useful methods for generating random numbers.**
-- **Is there any non-trivial use of random real numbers ("floating-point" numbers) in cryptography or other security applications &mdash; except perhaps in machine learning models?**
+- **Is there any non-trivial use of random real numbers ("floating-point" numbers) in cryptography or other security-sensitive applications &mdash; except perhaps in machine learning models?**
 
 <a id=Contents></a>
 ## Contents

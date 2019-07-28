@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on Mar. 5, 2016; last updated on July 13, 2019.
+Begun on Mar. 5, 2016; last updated on July 27, 2019.
 
 Most apps that use random numbers care about either unpredictability, speed/high quality, or repeatability.  This article explains the three kinds of RNGs and gives recommendations on each kind.
 
@@ -312,7 +312,7 @@ As much as possible, **applications SHOULD use existing libraries and techniques
 
 <small>(C) A cryptographic RNG implementation can&mdash;
    - read from the `/dev/urandom` device in Linux-based systems (using the `open` and `read` system calls where available)<sup>[**(18)**](#Note18)</sup>,
-   - call the `arc4random` or `arc4random_buf` method on FreeBSD or macOS, or
+   - call the `arc4random` or `arc4random_buf` method on FreeBSD or macOS,
    - call the `getentropy` method on OpenBSD, or
    - call the `BCryptGenRandom` API in Windows 7 and later,</small>
 
@@ -482,7 +482,7 @@ If a cryptographic RNG implementation uses a PRNG, the following requirements ap
     - MUST consist of data that ultimately derives from the output of one or more [**nondeterministic sources**](#Nondeterministic_Sources_and_Seed_Generation), where the output is at least as hard to predict as ideal random data with as many bits as the _security strength_, and
     - MAY be mixed with arbitrary data other than the seed as long as the result is no easier to predict<sup>[**(37)**](#Note37)</sup>.
 
-3. The RNG SHOULD reseed itself from time to time, using a newly generated seed as described earlier.  If the RNG reseeds if it would generate more than a threshold number of bits without reseeding, that threshold SHOULD be 2<sup>67</sup> or less.
+3. The RNG MAY reseed itself from time to time, using a newly generated seed as described earlier.  If the RNG reseeds if it would generate more than a threshold number of bits without reseeding, that threshold SHOULD be 2<sup>67</sup> or less.
 
 <a id=Statistical_RNGs_Requirements></a>
 ### Statistical RNGs: Requirements

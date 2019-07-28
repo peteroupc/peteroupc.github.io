@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
-<p>Begun on Mar. 5, 2016; last updated on July 13, 2019.</p>
+<p>Begun on Mar. 5, 2016; last updated on July 27, 2019.</p>
 
 <p>Most apps that use random numbers care about either unpredictability, speed/high quality, or repeatability.  This article explains the three kinds of RNGs and gives recommendations on each kind.</p>
 
@@ -481,7 +481,7 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 
 <ul>
 <li>read from the <code>/dev/urandom</code> device in Linux-based systems (using the <code>open</code> and <code>read</code> system calls where available)<sup><a href="#Note18"><strong>(18)</strong></a></sup>,</li>
-<li>call the <code>arc4random</code> or <code>arc4random_buf</code> method on FreeBSD or macOS, or</li>
+<li>call the <code>arc4random</code> or <code>arc4random_buf</code> method on FreeBSD or macOS,</li>
 <li>call the <code>getentropy</code> method on OpenBSD, or</li>
 <li>call the <code>BCryptGenRandom</code> API in Windows 7 and later,</small></li>
 </ul>
@@ -698,7 +698,7 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 <li>MUST consist of data that ultimately derives from the output of one or more <a href="#Nondeterministic_Sources_and_Seed_Generation"><strong>nondeterministic sources</strong></a>, where the output is at least as hard to predict as ideal random data with as many bits as the <em>security strength</em>, and</li>
 <li>MAY be mixed with arbitrary data other than the seed as long as the result is no easier to predict<sup><a href="#Note37"><strong>(37)</strong></a></sup>.</li>
 </ul></li>
-<li><p>The RNG SHOULD reseed itself from time to time, using a newly generated seed as described earlier.  If the RNG reseeds if it would generate more than a threshold number of bits without reseeding, that threshold SHOULD be 2<sup>67</sup> or less.</p></li>
+<li><p>The RNG MAY reseed itself from time to time, using a newly generated seed as described earlier.  If the RNG reseeds if it would generate more than a threshold number of bits without reseeding, that threshold SHOULD be 2<sup>67</sup> or less.</p></li>
 </ol>
 
 <p><a id=Statistical_RNGs_Requirements></a></p>
