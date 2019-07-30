@@ -9,11 +9,11 @@
 <pre>public final class DataUris extends java.lang.Object
 </pre>
 
-<p>Contains methods for parsing and generating Data URIs (uniform // /resource
+<p>Contains methods for parsing and generating Data URIs (uniform resource
  identifiers). Data URIs are described in RFC 2397. Examples for Data
- URIs follow. <pre> data:, hello%20world </pre> <pre>
- data:text/markdown, hello%20world </pre> <pre>
- data:application/octet-stream;base64, AAAAAA== </pre> .</p>
+ URIs follow. <pre>data:, hello%20world</pre>
+ <pre>data:text/markdown, hello%20world</pre>
+ <pre>data:application/octet-stream;base64, AAAAAA==</pre>.</p>
 
 <h2>Methods</h2>
 
@@ -55,6 +55,12 @@ Encodes text as a Data URI (uniform resource identifier).</li>
 <ul>
 <li>The media type. Returns null if <code>uri</code> is null, is
 syntactically invalid, or is not a Data URI.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>java.lang.NullPointerException</code> - The parameter <code>uri</code> is null.</li>
 </ul>
 
 <h3>DataUriMediaType</h3>
@@ -114,6 +120,12 @@ syntactically invalid, or is not a Data URI.</li>
 <ul>
 <li>The data as a byte array. Returns null if <code>uri</code> is null, is
 syntactically invalid, or is not a data URI.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>java.lang.NullPointerException</code> - The parameter <code>uri</code> is null.</li>
 </ul>
 
 <h3>MakeDataUri</h3>

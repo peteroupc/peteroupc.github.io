@@ -14,7 +14,7 @@
 <h3>Member Summary</h3>
 
 <ul>
-<li><code><a href="#GenerateDateString_int">GenerateDateString(int[])</a></code> - Not documented yet.</li>
+<li><code><a href="#GenerateDateString_int">GenerateDateString(int[])</a></code> - Generates a date-time string following the Internet Message Format (RFC 5322) from an 8-element array.</li>
 <li><code><a href="#GenerateDateString_int_bool">GenerateDateString(int[], bool)</a></code> - Generates a date-time string following the Internet Message Format (RFC 5322) from an 8-element array.</li>
 <li><code><a href="#ParseDateString_string">ParseDateString(string)</a></code> - Not documented yet.</li>
 <li><code><a href="#ParseDateString_string_bool">ParseDateString(string, bool)</a></code> - Gets the date and time extracted from a date-time string following the Internet Message Format (RFC 5322), with an option to allow obsolete time zone strings to appear in the date-time string.</li>
@@ -29,18 +29,26 @@
     int[] dateTime);
 </pre>
 
-<p>Not documented yet.</p>
+<p>Generates a date-time string following the Internet Message Format (RFC 5322) from an 8-element array.</p>
 
-<pre>&lt;b&gt;Parameters:&lt;/b&gt;
+<pre> &lt;b&gt;Parameters:&lt;/b&gt;
 </pre>
 
 <ul>
-<li><i>dateTime</i>: Not documented yet.</li>
+<li><i>dateTime</i>: The date and time in the form of an 8-element array. See <strong>M:PeterO.Mail.MailDateTime.ParseDateString(System.String,System.Boolean)</strong> for information on the format of this parameter.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p>A string object.</p>
+<p>A date-time string.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentException:
+The parameter  <i>dateTime</i>
+is null or invalid, including if the year (  <code>dateTime[0]</code>  ) is less than 0.</li>
+</ul>
 
 <p><a id="GenerateDateString_int_bool"></a></p>
 
@@ -53,7 +61,7 @@
 
 <p>Generates a date-time string following the Internet Message Format (RFC 5322) from an 8-element array.</p>
 
-<pre>  &lt;b&gt;Parameters:&lt;/b&gt;
+<pre>   &lt;b&gt;Parameters:&lt;/b&gt;
 </pre>
 
 <ul>
@@ -69,9 +77,12 @@ is not documented yet.</p></li>
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li>System.ArgumentException:
+<li><p>System.ArgumentException:
 The parameter  <i>dateTime</i>
-is null or invalid, including if the year (  <code>dateTime[0]</code>  ) is less than 0.</li>
+is null or invalid, including if the year (  <code>dateTime[0]</code>  ) is less than 0.</p></li>
+<li><p>System.ArgumentNullException:
+The parameter  <i>dateTime</i>
+is null.</p></li>
 </ul>
 
 <p><a id="ParseDateString_string"></a></p>
@@ -129,6 +140,14 @@ is not documented yet.</li>
 
 <p>An 8-element array containing the date and time, or  <code>null</code>  if  <i>str</i>
  is null, empty, or syntactically invalid, or if the string&#39;s year would overflow the range of a 32-bit signed integer.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter  <i>str</i>
+is null.</li>
+</ul>
 
 <p><a id="ParseDateStringHttp_string"></a></p>
 

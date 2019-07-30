@@ -3576,7 +3576,7 @@ is null.</li>
 <p><b>Remark:</b> This method can be used to implement fixed-point binary arithmetic, in which each binary float has a fixed number of digits after the radix point. The following code example returns a fixed-point number with up to 20 digits before and exactly 5 digits after the radix point:</p>
 
 <pre> // After performing arithmetic operations, adjust // the number to 5
-            /////
+            /// //
             digits after the radix point number = number.Quantize(
             EInteger.FromInt32(-5), // five digits after the radix point
             EContext.ForPrecision(25) // 25-digit precision);

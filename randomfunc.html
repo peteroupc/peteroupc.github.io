@@ -113,6 +113,7 @@
 <ul>
 <li><a href="#Dice"><strong>Dice</strong></a></li>
 <li><a href="#Hypergeometric_Distribution"><strong>Hypergeometric Distribution</strong></a></li>
+<li><a href="#Negative_Binomial_Distribution"><strong>Negative Binomial Distribution</strong></a></li>
 <li><a href="#Random_Integers_with_a_Given_Positive_Sum"><strong>Random Integers with a Given Positive Sum</strong></a></li>
 <li><a href="#Multinomial_Distribution"><strong>Multinomial Distribution</strong></a></li>
 </ul></li>
@@ -146,7 +147,7 @@
 <li><a href="#Poisson_Distribution"><strong>Poisson Distribution</strong></a></li>
 <li><a href="#Gamma_Distribution"><strong>Gamma Distribution</strong></a></li>
 <li><a href="#Beta_Distribution"><strong>Beta Distribution</strong></a></li>
-<li><a href="#Negative_Binomial_Distribution"><strong>Negative Binomial Distribution</strong></a></li>
+<li><a href="#Negative_Binomial_Distribution_Extensions_for_Non_Integer_Successes"><strong>Negative Binomial Distribution: Extensions for Non-Integer Successes</strong></a></li>
 <li><a href="#von_Mises_Distribution"><strong>von Mises Distribution</strong></a></li>
 <li><a href="#Stable_Distribution"><strong>Stable Distribution</strong></a></li>
 <li><a href="#Multivariate_Normal_Multinormal_Distribution"><strong>Multivariate Normal (Multinormal) Distribution</strong></a></li>
@@ -1104,6 +1105,26 @@ END METHOD
 12, and <code>count</code> is 52.</p>
 </blockquote>
 
+<p><a id=Negative_Binomial_Distribution></a></p>
+
+<h3>Negative Binomial Distribution</h3>
+
+<p>The <em>negative binomial distribution</em> models the number of failing trials that happen before a fixed number of successful trials (<code>successes</code>). Each trial is independent and has a success probability of <code>px/py</code> (where 0 means never and 1 means always).</p>
+
+<pre>METHOD NegativeBinomialInt(successes, px, py)
+    // Needs to be 0 or greater; px must be 0
+    if successes &lt; 0 or px == 0: return error
+    if successes == 0 or px &gt;= py: return 0
+    total = 0
+    count = 0
+    while total &lt; successes
+        if RNDU01OneExc() &lt; p: total = total + 1
+        else: count = count + 1
+    end
+    return count
+END METHOD
+</pre>
+
 <p><a id=Random_Integers_with_a_Given_Positive_Sum></a></p>
 
 <h3>Random Integers with a Given Positive Sum</h3>
@@ -1930,13 +1951,13 @@ end
 END METHOD
 </pre>
 
-<p><a id=Negative_Binomial_Distribution></a></p>
+<p><a id=Negative_Binomial_Distribution_Extensions_for_Non_Integer_Successes></a></p>
 
-<h3>Negative Binomial Distribution</h3>
+<h3>Negative Binomial Distribution: Extensions for Non-Integer Successes</h3>
 
 <p><strong>Requires random real numbers.</strong></p>
 
-<p>A <em>negative binomial distribution</em> models the number of failing trials that happen before a fixed number of successful trials (<code>successes</code>).  Each trial is independent and has a success probability of <code>p</code> (where <code>p &lt;= 0</code> means never, <code>p &gt;= 1</code> means always, and <code>p = 0.5</code> means an equal chance of success or failure).</p>
+<p>The following pseudocode shows an extension of  the <a href="#Negative_Binomial_Distribution"><strong><em>negative binomial distribution</em></strong></a> for a <code>successes</code> value other than an integer.</p>
 
 <pre>METHOD NegativeBinomial(successes, p)
     // Needs to be 0 or greater
@@ -1957,23 +1978,16 @@ END METHOD
     if successes == 1
         if p == 0.5
           while RNDINT(1) == 0: count = count + 1
-           return count
+          return count
         end
         // Geometric distribution special case (see Saucier 2000)
         return floor(ln(RNDU01ZeroExc()) / ln(1.0 - p))
     end
-    while true
-        if RNDU01OneExc() &lt; p
-            // Success
-            total = total + 1
-            if total &gt;= successes
-                    return count
-            end
-        else
-            // Failure
-            count = count + 1
-        end
+    while total &lt; successes
+        if RNDU01OneExc() &lt; p: total = total + 1
+        else: count = count + 1
     end
+    return count
 END METHOD
 </pre>
 

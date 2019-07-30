@@ -401,6 +401,8 @@ In general, GL Shading Language (GLSL) and other programming environments design
 
 (L'Ecuyer et al. 2015)<sup>[**(29)**](#Note29)</sup> discusses parallel generation of random numbers using PRNGs, especially on GPUs.
 
+Similar considerations could also apply to other specialized computing hardware, such as tensor processing units (TPUs).
+
 <a id=Determinism_and_Consistency></a>
 ### Determinism and Consistency
 
@@ -600,7 +602,7 @@ I acknowledge&mdash;
 - about 1.4 million billion billion random 160-bit integers, or
 - about 93 billion billion billion random 192-bit integers.</small>
 
-<small><sup id=Note27>(27)</sup> The only binary floating-point numbers supported by some GPUs are 16-bit (with 10 significant bits of precision), notably not 32- or 64-bit as is otherwise common. An application ought to choose stateless functions that deliver acceptable "random" numbers regardless of the size of floating-point numbers supported by the GPU.</small>
+<small><sup id=Note27>(27)</sup> The only binary floating-point numbers supported by some GPUs are 16-bit, notably not 32- or 64-bit as is otherwise common.  Generally, such 16-bit numbers have 11 bits of precision and can represent any integer between 0 and 2048 and any multiple of 1/2048 between 0 and 1.  An application ought to choose stateless functions that deliver acceptable "random" numbers regardless of the size of floating-point numbers supported by the GPU.</small>
 
 <small><sup id=Note28>(28)</sup> C. Peters, "[**Free blue noise textures**](http://momentsingraphics.de/?p=127)", _Moments in Graphics_, Dec. 22, 2016.  That article discusses the sampling of _blue noise_, not independent uniformly-distributed random numbers, but a similar approach applies to textures of noise however generated.</small>
 

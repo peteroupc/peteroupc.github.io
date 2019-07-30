@@ -112,8 +112,7 @@ str</code> is null.</li>
  general, the FreeformClass contains most letters, digits, spaces,
  punctuation, and symbols in the Unicode standard, as well as all
  basic printable characters (U + 0021 to U + 007E), but excludes control
- characters (including the horizontal tab character, U + 0009) and
- separators.</p>
+ characters and separators.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -221,6 +220,12 @@ or empty). For comparison purposes, return values of this method
 code point by code point (see RFC 8265, secs. 3.3.4 and 3.4.4).</li>
 </ul>
 
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>java.lang.NullPointerException</code> - The parameter <code>str</code> is null.</li>
+</ul>
+
 <h3>UsernameEnforce</h3>
 
 <pre>public static java.lang.String UsernameEnforce​(java.lang.String str, boolean preserveCase)
@@ -290,6 +295,12 @@ values of this method should be compared code point by code point
 (see RFC 8265, sec. 4.2.3).</li>
 </ul>
 
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>java.lang.NullPointerException</code> - The parameter <code>str</code> is null.</li>
+</ul>
+
 <h3>NicknameEnforce</h3>
 
 <pre>public static java.lang.String NicknameEnforce​(java.lang.String str)
@@ -316,6 +327,12 @@ RFC 8266. Returns null if that string is invalid under that profile
 method should not be used for comparison purposes (see RFC 8266,
 sec. 2.3); for such purposes, use the NicknameForComparison method
 instead.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>java.lang.NullPointerException</code> - The parameter <code>str</code> is null.</li>
 </ul>
 
 <h3>NicknameForComparison</h3>
@@ -346,6 +363,12 @@ instead.</li>
 purposes, return values of this method should be compared code point
 by code point (see RFC 8266, sec. 2.4).</li>
 </ol></li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>java.lang.NullPointerException</code> - The parameter <code>str</code> is null.</li>
 </ul>
 
 <p><a href="/MailLib/">Back to MailLib start page.</a></p>

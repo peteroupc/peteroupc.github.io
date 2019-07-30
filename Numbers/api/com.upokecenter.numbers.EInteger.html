@@ -1086,15 +1086,17 @@ value is 0 or odd.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>bigIndex</code> - An arbitrary-precision integer.</li>
+<li><code>bigIndex</code> - The index, starting at zero, of the bit to test, where 0 is
+the least significant bit, 1 is the next least significant bit, and
+so on.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li><code>true</code> if a bit is set in the two&#39; s-complement form (see
-<code>EDecimal</code>) of this object&#39; s value;
-otherwise, <code>false</code>.</li>
+<li><code>true</code> if the given bit is set in the two&#39; s-complement form
+(see <code>EDecimal</code>) of this object&#39; s
+value; otherwise, <code>false</code>.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -1114,15 +1116,17 @@ otherwise, <code>false</code>.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>index</code> - The parameter <code>index</code> is a 32-bit signed integer.</li>
+<li><code>index</code> - The index, starting at 0, of the bit to test, where 0 is the
+least significant bit, 1 is the next least significant bit, and so
+on.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li><code>true</code> if a bit is set in the two&#39; s-complement form (see
-<code>EDecimal</code>) of this object&#39; s value;
-otherwise, <code>false</code>.</li>
+<li><code>true</code> if the given bit is set in the two&#39; s-complement form
+(see <code>EDecimal</code>) of this object&#39; s
+value; otherwise, <code>false</code>.</li>
 </ul>
 
 <h3>GetSignedBitLengthAsEInteger</h3>
@@ -1133,7 +1137,11 @@ otherwise, <code>false</code>.</li>
 <p>Finds the minimum number of bits needed to represent this object&#39;s value,
  except for its sign, in the form of an arbitrary-precision integer.
  If the value is negative, finds the number of bits in the value
- equal to this object&#39;s absolute value minus 1.</p>
+ equal to this object&#39;s absolute value minus 1. For example, all
+ integers in the interval [-(2^63), (2^63) - 1], which is the same as
+ the range of integers in Java&#39;s and.getNET()&#39;s <code>long</code> type, have a
+ signed bit length of 63 or less, and all other integers have a
+ signed bit length of greater than 63.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -1174,13 +1182,16 @@ a 32-bit signed integer.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>bigIndex</code> - An arbitrary-precision integer.</li>
+<li><code>bigIndex</code> - The index, starting at zero, of the bit to test, where 0 is
+the least significant bit, 1 is the next least significant bit, and
+so on.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li><code>true</code> if a bit is set in this number&#39;s absolute value.</li>
+<li><code>true</code> if the given bit is set in this number&#39;s absolute
+value.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -1199,14 +1210,16 @@ a 32-bit signed integer.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>index</code> - Zero based index of the bit to test. 0 means the least
-significant bit.</li>
+<li><code>index</code> - The index, starting at 0, of the bit to test, where 0 is the
+least significant bit, 1 is the next least significant bit, and so
+on.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li><code>true</code> if a bit is set in this number&#39;s absolute value.</li>
+<li><code>true</code> if the given bit is set in this number&#39;s absolute
+value.</li>
 </ul>
 
 <h3>GetUnsignedBitLengthAsEInteger</h3>
@@ -1215,7 +1228,11 @@ significant bit.</li>
 </pre>
 
 <p>Finds the minimum number of bits needed to represent this number&#39;s absolute
- value.</p>
+ value. For example, all integers in the interval [-((2^63) - 1),
+ (2^63) - 1] have an unsigned bit length of 63 or less, and all other
+ integers have an unsigned bit length of greater than 63. This
+ interval is not the same as the range of integers in Java&#39;s
+ and.getNET()&#39;s <code>long</code> type.</p>
 
 <p><strong>Returns:</strong></p>
 

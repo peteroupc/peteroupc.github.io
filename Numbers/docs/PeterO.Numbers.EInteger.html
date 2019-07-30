@@ -1202,13 +1202,12 @@ The return value would exceed the range of a 32-bit signed integer.</li>
 </pre>
 
 <ul>
-<li><i>index</i>: The parameter  <i>index</i>
-is a 32-bit signed integer.</li>
+<li><i>index</i>: The index, starting at 0, of the bit to test, where 0 is the least significant bit, 1 is the next least significant bit, and so on.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p><code>true</code>  if a bit is set in the two&#39; s-complement form (see <a href="PeterO.Numbers.EDecimal.html">&#x22;Forms of numbers&#x22;</a>&quot;Forms of numbers&quot; ) of this object&#39; s value; otherwise,  <code>false</code> .</p>
+<p><code>true</code>  if the given bit is set in the two&#39; s-complement form (see <a href="PeterO.Numbers.EDecimal.html">&#x22;Forms of numbers&#x22;</a>&quot;Forms of numbers&quot; ) of this object&#39; s value; otherwise,  <code>false</code> .</p>
 
 <p><a id="GetSignedBit_PeterO_Numbers_EInteger"></a></p>
 
@@ -1224,12 +1223,12 @@ is a 32-bit signed integer.</li>
 </pre>
 
 <ul>
-<li><i>bigIndex</i>: An arbitrary-precision integer.</li>
+<li><i>bigIndex</i>: The index, starting at zero, of the bit to test, where 0 is the least significant bit, 1 is the next least significant bit, and so on.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p><code>true</code>  if a bit is set in the two&#39; s-complement form (see <a href="PeterO.Numbers.EDecimal.html">&#x22;Forms of numbers&#x22;</a>&quot;Forms of numbers&quot; ) of this object&#39; s value; otherwise,  <code>false</code> .</p>
+<p><code>true</code>  if the given bit is set in the two&#39; s-complement form (see <a href="PeterO.Numbers.EDecimal.html">&#x22;Forms of numbers&#x22;</a>&quot;Forms of numbers&quot; ) of this object&#39; s value; otherwise,  <code>false</code> .</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -1248,7 +1247,7 @@ is null.</li>
 
 <p><b>Deprecated.</b> This method may overflow. Use GetSignedBitLengthAsEInteger instead.</p>
 
-<p>Finds the minimum number of bits needed to represent this object&#39;s value, except for its sign. If the value is negative, finds the number of bits in the value equal to this object&#39;s absolute value minus 1.</p>
+<p>Finds the minimum number of bits needed to represent this object&#39;s value, except for its sign. If the value is negative, finds the number of bits in the value equal to this object&#39;s absolute value minus 1. For example, all integers in the interval [-(2^63), (2^63) - 1], which is the same as the range of integers in Java&#39;s and.NET&#39;s  <code>long</code>  type, have a signed bit length of 63 or less, and all other integers have a signed bit length of greater than 63.</p>
 
 <pre>&lt;b&gt;Return Value:&lt;/b&gt;
 </pre>
@@ -1269,7 +1268,7 @@ The return value would exceed the range of a 32-bit signed integer.</li>
 <pre>public PeterO.Numbers.EInteger GetSignedBitLengthAsEInteger();
 </pre>
 
-<p>Finds the minimum number of bits needed to represent this object&#39;s value, except for its sign, in the form of an arbitrary-precision integer. If the value is negative, finds the number of bits in the value equal to this object&#39;s absolute value minus 1.</p>
+<p>Finds the minimum number of bits needed to represent this object&#39;s value, except for its sign, in the form of an arbitrary-precision integer. If the value is negative, finds the number of bits in the value equal to this object&#39;s absolute value minus 1. For example, all integers in the interval [-(2^63), (2^63) - 1], which is the same as the range of integers in Java&#39;s and.NET&#39;s  <code>long</code>  type, have a signed bit length of 63 or less, and all other integers have a signed bit length of greater than 63.</p>
 
 <p><b>Return Value:</b></p>
 
@@ -1289,12 +1288,12 @@ The return value would exceed the range of a 32-bit signed integer.</li>
 </pre>
 
 <ul>
-<li><i>index</i>: Zero based index of the bit to test. 0 means the least significant bit.</li>
+<li><i>index</i>: The index, starting at 0, of the bit to test, where 0 is the least significant bit, 1 is the next least significant bit, and so on.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p><code>true</code>  if a bit is set in this number&#39;s absolute value.</p>
+<p><code>true</code>  if the given bit is set in this number&#39;s absolute value.</p>
 
 <p><a id="GetUnsignedBit_PeterO_Numbers_EInteger"></a></p>
 
@@ -1310,12 +1309,12 @@ The return value would exceed the range of a 32-bit signed integer.</li>
 </pre>
 
 <ul>
-<li><i>bigIndex</i>: An arbitrary-precision integer.</li>
+<li><i>bigIndex</i>: The index, starting at zero, of the bit to test, where 0 is the least significant bit, 1 is the next least significant bit, and so on.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p><code>true</code>  if a bit is set in this number&#39;s absolute value.</p>
+<p><code>true</code>  if the given bit is set in this number&#39;s absolute value.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -1334,7 +1333,7 @@ is null.</li>
 
 <p><b>Deprecated.</b> This method may overflow. Use GetUnsignedBitLengthAsEInteger instead.</p>
 
-<p>Finds the minimum number of bits needed to represent this number&#39;s absolute value.</p>
+<p>Finds the minimum number of bits needed to represent this number&#39;s absolute value. For example, all integers in the interval [-((2^63) - 1), (2^63) - 1] have an unsigned bit length of 63 or less, and all other integers have an unsigned bit length of greater than 63. This interval is not the same as the range of integers in Java&#39;s and.NET&#39;s  <code>long</code>  type.</p>
 
 <pre>&lt;b&gt;Return Value:&lt;/b&gt;
 </pre>
@@ -1355,7 +1354,7 @@ The return value would exceed the range of a 32-bit signed integer.</li>
 <pre>public PeterO.Numbers.EInteger GetUnsignedBitLengthAsEInteger();
 </pre>
 
-<p>Finds the minimum number of bits needed to represent this number&#39;s absolute value.</p>
+<p>Finds the minimum number of bits needed to represent this number&#39;s absolute value. For example, all integers in the interval [-((2^63) - 1), (2^63) - 1] have an unsigned bit length of 63 or less, and all other integers have an unsigned bit length of greater than 63. This interval is not the same as the range of integers in Java&#39;s and.NET&#39;s  <code>long</code>  type.</p>
 
 <p><b>Return Value:</b></p>
 

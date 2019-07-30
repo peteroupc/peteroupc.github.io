@@ -75,6 +75,7 @@ All the random number methods presented on this page are ultimately based on an 
 - [**Specific Non-Uniform Distributions**](#Specific_Non_Uniform_Distributions)
     - [**Dice**](#Dice)
     - [**Hypergeometric Distribution**](#Hypergeometric_Distribution)
+    - [**Negative Binomial Distribution**](#Negative_Binomial_Distribution)
     - [**Random Integers with a Given Positive Sum**](#Random_Integers_with_a_Given_Positive_Sum)
     - [**Multinomial Distribution**](#Multinomial_Distribution)
 - [**Randomization with Real Numbers**](#Randomization_with_Real_Numbers)
@@ -99,7 +100,7 @@ All the random number methods presented on this page are ultimately based on an 
     - [**Poisson Distribution**](#Poisson_Distribution)
     - [**Gamma Distribution**](#Gamma_Distribution)
     - [**Beta Distribution**](#Beta_Distribution)
-    - [**Negative Binomial Distribution**](#Negative_Binomial_Distribution)
+    - [**Negative Binomial Distribution: Extensions for Non-Integer Successes**](#Negative_Binomial_Distribution_Extensions_for_Non_Integer_Successes)
     - [**von Mises Distribution**](#von_Mises_Distribution)
     - [**Stable Distribution**](#Stable_Distribution)
     - [**Multivariate Normal (Multinormal) Distribution**](#Multivariate_Normal_Multinormal_Distribution)
@@ -884,6 +885,24 @@ The following method generates a random integer that follows a _hypergeometric d
 > **Example:** In a 52-card deck of Anglo-American playing cards, 12 of the cards are face cards (jacks, queens, or kings).  After the deck is shuffled and seven cards are drawn, the number of face cards drawn this way follows a hypergeometric distribution where `trials` is 7, `ones` is
 12, and `count` is 52.
 
+<a id=Negative_Binomial_Distribution></a>
+### Negative Binomial Distribution
+
+The _negative binomial distribution_ models the number of failing trials that happen before a fixed number of successful trials (`successes`). Each trial is independent and has a success probability of `px/py` (where 0 means never and 1 means always).
+
+    METHOD NegativeBinomialInt(successes, px, py)
+        // Needs to be 0 or greater; px must be 0
+        if successes < 0 or px == 0: return error
+        if successes == 0 or px >= py: return 0
+        total = 0
+        count = 0
+        while total < successes
+            if RNDU01OneExc() < p: total = total + 1
+            else: count = count + 1
+        end
+        return count
+    END METHOD
+
 <a id=Random_Integers_with_a_Given_Positive_Sum></a>
 ### Random Integers with a Given Positive Sum
 
@@ -1583,12 +1602,12 @@ In the following method, which generates a random number that follows a _beta di
       return x/(x+GammaDist(b,1))
     END METHOD
 
-<a id=Negative_Binomial_Distribution></a>
-### Negative Binomial Distribution
+<a id=Negative_Binomial_Distribution_Extensions_for_Non_Integer_Successes></a>
+### Negative Binomial Distribution: Extensions for Non-Integer Successes
 
 **Requires random real numbers.**
 
-A _negative binomial distribution_ models the number of failing trials that happen before a fixed number of successful trials (`successes`).  Each trial is independent and has a success probability of `p` (where `p <= 0` means never, `p >= 1` means always, and `p = 0.5` means an equal chance of success or failure).
+The following pseudocode shows an extension of  the [**_negative binomial distribution_**](#Negative_Binomial_Distribution) for a `successes` value other than an integer.
 
     METHOD NegativeBinomial(successes, p)
         // Needs to be 0 or greater
@@ -1609,23 +1628,16 @@ A _negative binomial distribution_ models the number of failing trials that happ
         if successes == 1
             if p == 0.5
               while RNDINT(1) == 0: count = count + 1
-               return count
+              return count
             end
             // Geometric distribution special case (see Saucier 2000)
             return floor(ln(RNDU01ZeroExc()) / ln(1.0 - p))
         end
-        while true
-            if RNDU01OneExc() < p
-                // Success
-                total = total + 1
-                if total >= successes
-                        return count
-                end
-            else
-                // Failure
-                count = count + 1
-            end
+        while total < successes
+            if RNDU01OneExc() < p: total = total + 1
+            else: count = count + 1
         end
+        return count
     END METHOD
 
 > **Note:** A **geometric distribution** can be sampled by generating `NegativeBinomial(1, p)`, where `p` has the same meaning as in the negative binomial distribution.  Here, the sampled number is the number of failures that have happened before a success happens. (Saucier 2000, p. 44, also mentions an alternative definition that includes the success.)  For example, if `p` is 0.5, the geometric distribution models the task "Flip a coin until you get tails, then count the number of heads."

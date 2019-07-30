@@ -48,13 +48,13 @@
 
 <ul>
 <li><code><a href="#AddAttachment_PeterO_Mail_MediaType">AddAttachment(PeterO.Mail.MediaType)</a></code> - Adds an attachment with an empty body and with the given media type to this message.</li>
-<li><code><a href="#AddAttachment_System_IO_Stream_PeterO_Mail_MediaType">AddAttachment(System.IO.Stream, PeterO.Mail.MediaType)</a></code> - Adds an attachment to this message in the form of data from the // /given readable stream, and with the given media type.</li>
+<li><code><a href="#AddAttachment_System_IO_Stream_PeterO_Mail_MediaType">AddAttachment(System.IO.Stream, PeterO.Mail.MediaType)</a></code> - Adds an attachment to this message in the form /// /// of data from the given readable stream, and with the given media type.</li>
 <li><code><a href="#AddAttachment_System_IO_Stream_PeterO_Mail_MediaType_string">AddAttachment(System.IO.Stream, PeterO.Mail.MediaType, string)</a></code> - Adds an attachment to this message in the form of data from the given readable stream, and with the given media type and file name.</li>
 <li><code><a href="#AddAttachment_System_IO_Stream_string">AddAttachment(System.IO.Stream, string)</a></code> - Adds an attachment to this message in the form of data from the given readable stream, and with the given file name.</li>
 <li><code><a href="#AddHeader_string_string">AddHeader(string, string)</a></code> - Adds a header field to the end of the message&#39;s header.</li>
 <li><code><a href="#AddHeader_System_Collections_Generic_KeyValuePair">AddHeader(System.Collections.Generic.KeyValuePair)</a></code> - Adds a header field to the end of the message&#39;s header.</li>
 <li><code><a href="#AddInline_PeterO_Mail_MediaType">AddInline(PeterO.Mail.MediaType)</a></code> - Adds an inline body part with an empty body and with the given media type to this message.</li>
-<li><code><a href="#AddInline_System_IO_Stream_PeterO_Mail_MediaType">AddInline(System.IO.Stream, PeterO.Mail.MediaType)</a></code> - Adds an inline body part to this message in the form of data from // /the given readable stream, and with the given media type.</li>
+<li><code><a href="#AddInline_System_IO_Stream_PeterO_Mail_MediaType">AddInline(System.IO.Stream, PeterO.Mail.MediaType)</a></code> - Adds an inline body part to this message in /// /// the form of data from the given readable stream, and with the given media type.</li>
 <li><code><a href="#AddInline_System_IO_Stream_PeterO_Mail_MediaType_string">AddInline(System.IO.Stream, PeterO.Mail.MediaType, string)</a></code> - Adds an inline body part to this message in the form of data from the given readable stream, and with the given media type and file name.</li>
 <li><code><a href="#AddInline_System_IO_Stream_string">AddInline(System.IO.Stream, string)</a></code> - Adds an inline body part to this message in the form of data from the given readable stream, and with the given file name.</li>
 <li><code><a href="#BccAddresses">BccAddresses</a></code> - Gets a list of addresses found in the BCC header field or fields.</li>
@@ -363,12 +363,12 @@ This value is being set and &quot;value&quot; is null.</li>
     PeterO.Mail.MediaType mediaType);
 </pre>
 
-<p>Adds an attachment to this message in the form of data from the // /given readable stream, and with the given media type. Before the new attachment is added, if this message isn&#39;t already a multipart message, it becomes a &quot;multipart/mixed&quot; message with the current body converted to an inline body part.</p>
+<p>Adds an attachment to this message in the form /// /// of data from the given readable stream, and with the given media type. Before the new attachment is added, if this message isn&#39;t already a multipart message, it becomes a &quot;multipart/mixed&quot; message with the current body converted to an inline body part.</p>
 
 <pre>   The following example (written in C# for the.NET version) is an extension method that adds an attachment from a byte array to a message.
 
-            public static Message AddAttachmentFromBytes(this Message msg, byte[]
-            bytes, MediaType mediaType) { using(var fs = new MemoryStream(bytes)) {
+public static Message AddAttachmentFromBytes(this Message msg, byte[]
+            bytes, MediaType mediaType) { using (var fs = new MemoryStream(bytes)) {
             return msg.AddAttachment(fs, mediaType); } }
 </pre>
 
@@ -560,13 +560,14 @@ The header field name is too long or contains an invalid character, or the heade
     PeterO.Mail.MediaType mediaType);
 </pre>
 
-<p>Adds an inline body part to this message in the form of data from // /the given readable stream, and with the given media type. Before the new body part is added, if this message isn&#39;t already a multipart message, it becomes a &quot;multipart/mixed&quot; message with the current body converted to an inline body part.</p>
+<p>Adds an inline body part to this message in /// /// the form of data from the given readable stream, and with the given media type. Before the new body part is added, if this message isn&#39;t already a multipart message, it becomes a &quot;multipart/mixed&quot; message with the current body converted to an inline body part.</p>
 
 <pre>   The following example (written in C# for the.NET version) is an extension method that adds an inline body part from a byte array to a message.
 
-            public static Message AddInlineFromBytes(this Message msg, byte[]
-            bytes, MediaType mediaType) { using(MemoryStream fs = new
-            MemoryStream(bytes)) { return msg.AddInline(fs, mediaType); } }
+public static Message AddInlineFromBytes(this Message msg, byte[]
+            bytes,
+            MediaType mediaType) { using (MemoryStream fs = new MemoryStream(bytes))
+            { return msg.AddInline(fs, mediaType); } }
 </pre>
 
 <p>.</p>

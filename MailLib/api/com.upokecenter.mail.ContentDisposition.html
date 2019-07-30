@@ -55,7 +55,9 @@ The content disposition value &quot;inline&quot; .</li>
 <li><code>boolean equals​(java.lang.Object obj)</code><br>
 Determines whether this object and another object are equal.</li>
 <li><code>int[] GetCreationDate()</code><br>
-Not documented yet.</li>
+Gets the date and time extracted from this content disposition&#39;s
+&quot;creation-date&quot; parameter, which specifies the date of creation of a
+file (RFC 2183 sec.</li>
 <li><code>java.lang.String getDispositionType()</code><br>
 Gets a string containing this object&#39;s disposition type, such as &quot;inline&quot; or
 &quot;attachment&quot;.</li>
@@ -63,13 +65,17 @@ Gets a string containing this object&#39;s disposition type, such as &quot;inlin
 Gets an adapted version of the &quot;filename&quot; parameter in this content
 disposition object by using the &quot;MakeFilename&quot; method.</li>
 <li><code>int[] GetModificationDate()</code><br>
-Not documented yet.</li>
+Gets the date and time extracted from this content disposition&#39;s
+&quot;modification-date&quot; parameter, which specifies the date of last
+modification of a file (RFC 2183 sec.</li>
 <li><code>java.lang.String GetParameter​(java.lang.String name)</code><br>
 Gets a parameter from this disposition object.</li>
 <li><code>java.util.Map&lt;java.lang.String,​java.lang.String&gt; getParameters()</code><br>
 Gets a list of parameter names associated with this object and their values.</li>
 <li><code>int[] GetReadDate()</code><br>
-Not documented yet.</li>
+Gets the date and time extracted from this content disposition&#39;s &quot;read-date&quot;
+parameter, which specifies the date at which a file was last read
+(RFC 2183 sec.</li>
 <li><code>int hashCode()</code><br>
 Calculates the hash code of this object.</li>
 <li><code>boolean isAttachment()</code><br>
@@ -270,13 +276,13 @@ case in version 0.10.0.</li>
 <p>Converts a file name from the Content-Disposition header to a suitable name
  for saving data to a file. This method is idempotent; that is,
  calling the method again on the result doesn&#39;t change that result.
-  <p>Examples:</p> <p><code>&quot;=?utf-8?q?hello=2Etxt?=&quot; -&gt;
-  &quot;hello.txt&quot;</code> (RFC 2047 encoding).</p>
-  <p><code>&quot;=?utf-8?q?long_filename?=&quot; -&gt; &quot;long filename&quot;</code> (RFC
-  2047 encoding).</p> <p><code>&quot;utf-8&#39;en&#39;hello%2Etxt&quot; -&gt;
-  &quot;hello.txt&quot;</code> (RFC 2231 encoding).</p> <p><code>&quot;nul.txt&quot; -&gt;
-  &quot;_nul.txt&quot;</code> (Reserved name).</p> <p><code>&quot;dir1/dir2/file&quot; -&gt;
-  &quot;dir1_dir2_file&quot;</code> (Directory separators).</p><p>
+  <p>Examples:</p> <p><code>&quot;=?utf-8?q?hello=2Etxt?=&quot;
+  -&gt;&quot;hello.txt&quot;</code> (RFC 2047 encoding).</p>
+  <p><code>&quot;=?utf-8?q?long_filename?=&quot; -&gt;&quot;long filename&quot;</code> (RFC 2047
+  encoding).</p> <p><code>&quot;utf-8&#39;en&#39;hello%2Etxt&quot; -&gt;&quot;hello.txt&quot;</code>
+  (RFC 2231 encoding).</p> <p><code>&quot;nul.txt&quot; -&gt;&quot;_nul.txt&quot;</code>
+  (Reserved name).</p> <p><code>&quot;dir1/dir2/file&quot;
+  -&gt;&quot;dir1_dir2_file&quot;</code> (Directory separators).</p><p>
  </p><p><b>Remarks:</b></p> <ul> <li>The exact file name conversion used
  by this method is not guaranteed to remain the same between versions
  of this library, with the exception that the return value will be in
@@ -370,12 +376,18 @@ empty.</li>
 <pre>public int[] GetCreationDate()
 </pre>
 
-<p>Not documented yet.</p>
+<p>Gets the date and time extracted from this content disposition&#39;s
+  &quot;creation-date&quot; parameter, which specifies the date of creation of a
+ file (RFC 2183 sec. 2.4). See <see cref='PeterO.Mail.MailDateTime.ParseDateString(&#10; System.String,System.Boolean)'/> for information on the format of
+ this method&#39;s return value.</p>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>An array of 32-bit unsigned integers.</li>
+<li>The extracted date and time as an 8-element array, or <code>null</code>
+if the &quot;creation-date&quot; parameter doesn&#39;t exist, is an empty string,
+or is syntactically invalid, or if the parameter&#39;s year would
+overflow a 32-bit signed integer.</li>
 </ul>
 
 <h3>GetModificationDate</h3>
@@ -383,12 +395,18 @@ empty.</li>
 <pre>public int[] GetModificationDate()
 </pre>
 
-<p>Not documented yet.</p>
+<p>Gets the date and time extracted from this content disposition&#39;s
+  &quot;modification-date&quot; parameter, which specifies the date of last
+ modification of a file (RFC 2183 sec. 2.5). See <see cref='PeterO.Mail.MailDateTime.ParseDateString(&#10; System.String,System.Boolean)'/> for information on the format of
+ this method&#39;s return value.</p>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>An array of 32-bit unsigned integers.</li>
+<li>The extracted date and time as an 8-element array, or <code>null</code>
+if the &quot;modification-date&quot; parameter doesn&#39;t exist, is an empty
+string, or is syntactically invalid, or if the parameter&#39;s year
+would overflow a 32-bit signed integer.</li>
 </ul>
 
 <h3>GetReadDate</h3>
@@ -396,12 +414,18 @@ empty.</li>
 <pre>public int[] GetReadDate()
 </pre>
 
-<p>Not documented yet.</p>
+<p>Gets the date and time extracted from this content disposition&#39;s &quot;read-date&quot;
+ parameter, which specifies the date at which a file was last read
+ (RFC 2183 sec. 2.6). See <see cref='PeterO.Mail.MailDateTime.ParseDateString(&#10; System.String,System.Boolean)'/> for information on the format of
+ this method&#39;s return value.</p>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>An array of 32-bit unsigned integers.</li>
+<li>The extracted date and time as an 8-element array, or <code>null</code>
+if the &quot;read-date&quot; parameter doesn&#39;t exist, is an empty string, or
+is syntactically invalid, or if the parameter&#39;s year would overflow
+a 32-bit signed integer.</li>
 </ul>
 
 <h3>GetParameter</h3>
