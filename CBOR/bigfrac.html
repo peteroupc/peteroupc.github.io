@@ -48,6 +48,19 @@ A CBOR decoder can treat data items with tag 264 or 265 that don't meet the crit
 but this specification doesn't define how a CBOR implementation ought to behave in this case.
 Section 3.4 of RFC 7049 (ref. 1) details this kind of error-handling behavior.
 </p>
+<h2>Security Considerations</h2>
+
+<p>Decimal fractions and bigfloats allow encoding numbers with exponents that are extremely large (tens of thousands or more) or extremely small (negative tens of thousands or less), so large to be unreasonable for most applications.</p>
+
+<p>There are several security concerns with such numbers:</p>
+<ul>
+<li>A decimal fraction or bigfloat with an extremely large exponent resolves to an arbitrary-precision integer with at least as many decimal digits or bits, respectively, and thus often requires as much memory to store.  If such a number is converted to an arbitrary-precision integer (such as `BigInteger` in Java, or CBOR's bignum tags), the decoder or application might need to allocate much more memory than usual.  Generally, for extremely large exponents, a decimal fraction with a positive exponent requires at least about 3/10 the value of the exponent in bytes of memory to store, so that, for example, the decimal fraction 75e+9000000 requires about 3 megabytes of storage to an arbitrary-precision integer.  Applications or protocols that support decimal fractions and/or bigfloats might wish to&mdash;<ul>
+   <li>limit the supported range of exponents,
+   <li>treat numbers with extremely large exponents as infinity or raise an overflow error on such numbers,
+   <li>treat numbers with extremely small exponents as zero or raise an underflow error on such numbers, and/or
+   <li>raise a subnormal warning on numbers with exponents close to the minimum supported exponent.</ul>
+<li>Operations on decimal fractions and/or bigfloats (such as addition and division) can cause unreasonable memory allocation when a number with a small exponent and a number with an extremely large or extremely small exponent are involved.  For example, adding the two numbers 75e+9000000 and 125 results in the exact value of 750000...000125, a number with a mantissa of 750000...000125 and an exponent of 0, thus requiring at least 3 megabytes of storage.  To mitigate this problem, applications or protocols that support decimal fractions and/or bigfloats might wish to limit the range of precisions (number of decimal digits or bits) the mantissa can have, and round numbers, if necessary, to fit the precision limits.
+</ul>
 <h2>
 References
 </h2>
