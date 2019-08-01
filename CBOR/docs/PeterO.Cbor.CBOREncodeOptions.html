@@ -15,6 +15,7 @@
 
 <ul>
 <li><code><a href="#AllowDuplicateKeys">AllowDuplicateKeys</a></code> - Gets a value indicating whether to allow duplicate keys when reading CBOR objects from a data stream.</li>
+<li><code><a href="#AllowEmpty">AllowEmpty</a></code> - Gets a value indicating whether decoding a CBOR object will return null instead of a CBOR object if the stream has no content or the end of the stream is reached before decoding begins.</li>
 <li><code><a href="#Ctap2Canonical">Ctap2Canonical</a></code> - Gets a value indicating whether CBOR objects are written out using the CTAP2 canonical CBOR encoding form, which is useful for implementing Web Authentication.</li>
 <li><code><a href="#Default">public static readonly PeterO.Cbor.CBOREncodeOptions Default;</a></code> - Default options for CBOR objects.</li>
 <li><code><a href="#DefaultCtap2Canonical">public static readonly PeterO.Cbor.CBOREncodeOptions DefaultCtap2Canonical;</a></code> - Default options for CBOR objects serialized using the CTAP2 canonicalization (used in Web Authentication, among other specifications).</li>
@@ -77,7 +78,7 @@
 </pre>
 
 <ul>
-<li><i>paramString</i>: A string setting forth the options to use. This is a semicolon-separated list of options, each of which has a key and a value separated by an equal sign (&quot;=&quot;). Whitespace and line separators are not allowed to appear between the semicolons or between the equal signs, nor may the string begin or end with whitespace. The following is an example of this parameter:  <code>allowduplicatekeys=true;ctap2Canonical=true</code> . The key can be any one of the following in any combination of case:  <code>allowduplicatekeys</code> ,  <code>ctap2canonical</code> ,  <code>resolvereferences</code> ,  <code>useindeflengthstrings</code> . Keys other than these are ignored. If the same key appears more than once, the value given for the last such key is used. The four keys just given can have a value of  <code>1</code> ,  <code>true</code> ,  <code>yes</code>  , or  <code>on</code>  (in any combination of case), which means true, and any other value meaning false. For example,  <code>allowduplicatekeys=Yes</code>  and  <code>allowduplicatekeys=1</code>  both set the  <code>AllowDuplicateKeys</code>  property to true.</li>
+<li><i>paramString</i>: A string setting forth the options to use. This is a semicolon-separated list of options, each of which has a key and a value separated by an equal sign (&quot;=&quot;). Whitespace and line separators are not allowed to appear between the semicolons or between the equal signs, nor may the string begin or end with whitespace. The string can be empty, but cannot be null. The following is an example of this parameter:  <code>allowduplicatekeys=true;ctap2Canonical=true</code> . The key can be any one of the following in any combination of case:  <code>allowduplicatekeys</code> ,  <code>ctap2canonical</code> ,  <code>resolvereferences</code> ,  <code>useindeflengthstrings</code> ,  <code>allowempty</code> . Keys other than these are ignored. If the same key appears more than once, the value given for the last such key is used. The four keys just given can have a value of  <code>1</code> ,  <code>true</code> ,  <code>yes</code>  , or  <code>on</code>  (in any combination of case), which means true, and any other value meaning false. For example,  <code>allowduplicatekeys=Yes</code>  and  <code>allowduplicatekeys=1</code>  both set the  <code>AllowDuplicateKeys</code>  property to true.</li>
 </ul>
 
 <p><b>Exceptions:</b></p>
@@ -127,6 +128,19 @@ is null.</li>
 <p><b>Returns:</b></p>
 
 <p>A value indicating whether to allow duplicate keys when reading CBOR objects from a data stream. The default is false.</p>
+
+<p><a id="AllowEmpty"></a></p>
+
+<h3>AllowEmpty</h3>
+
+<pre>public bool AllowEmpty { get; }
+</pre>
+
+<p>Gets a value indicating whether decoding a CBOR object will return  <code>null</code>  instead of a CBOR object if the stream has no content or the end of the stream is reached before decoding begins. Used only when decoding CBOR objects.</p>
+
+<p><b>Returns:</b></p>
+
+<p>A value indicating whether decoding a CBOR object will return  <code>null</code>  instead of a CBOR object if the stream has no content or the end of the stream is reached before decoding begins. The default is false.</p>
 
 <p><a id="Ctap2Canonical"></a></p>
 

@@ -1885,13 +1885,13 @@ is null.</p></li>
 <p>The format of the string generally consists of:</p>
 
 <ul>
-<li><p>An optional plus sign (&quot;+&quot; , U+002B) or minus sign (&quot;-&quot;, U + 002D) (if the minus sign, the value is negative.)</p></li>
+<li><p>An optional plus sign (&quot;+&quot; , U+002B) or minus sign (&quot;-&quot;, U+002D) (if the minus sign, the value is negative.)</p></li>
 <li><p>One or more digits, with a single optional decimal point after the first digit and before the last digit.</p></li>
 <li><p>Optionally, &quot;E&quot;/&quot;e&quot; followed by an optional (positive exponent) or &quot;-&quot; (negative exponent) and followed by one or more digits specifying the exponent.</p>
 
 <p>The string can also be &quot;-INF&quot;, &quot;-Infinity&quot;, &quot;Infinity&quot;, &quot;INF&quot;, quiet NaN (&quot;NaN&quot; /&quot;-NaN&quot;) followed by any number of digits, or signaling NaN (&quot;sNaN&quot; /&quot;-sNaN&quot;) followed by any number of digits, all in any combination of upper and lower case.</p>
 
-<p>All characters mentioned above are the corresponding characters in the Basic Latin range. In particular, the digits must be the basic digits 0 to 9 (U + 0030 to U + 0039). The string is not allowed to contain white space characters, including spaces.</p>
+<p>All characters mentioned above are the corresponding characters in the Basic Latin range. In particular, the digits must be the basic digits 0 to 9 (U+0030 to U+0039). The string is not allowed to contain white space characters, including spaces.</p>
 
 <pre>     &lt;b&gt;Parameters:&lt;/b&gt;
 </pre>
@@ -3888,8 +3888,7 @@ is null.</li>
 
 <p><b>Remark:</b> This method can be used to implement fixed-point decimal arithmetic, in which each decimal number has a fixed number of digits after the decimal point. The following code example returns a fixed-point number with up to 20 digits before and exactly 5 digits after the decimal point:</p>
 
-<pre> // After performing arithmetic operations, adjust // the number to 5
-            /// //
+<pre> // After performing arithmetic operations, adjust // the number to 5 //
             digits after the decimal point number = number.Quantize(
             EInteger.FromInt32(-5), // five digits after the decimal point
             EContext.ForPrecision(25) // 25-digit precision);

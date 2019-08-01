@@ -9,31 +9,39 @@
 <pre>public final class CBORNumber extends java.lang.Object implements java.lang.Comparable&lt;CBORNumber&gt;
 </pre>
 
-<p>Not documented yet.</p>
+<p>An instance of a number that CBOR or certain CBOR tags can represent. For
+ this purpose, infinities and not-a-number or NaN values are
+ considered numbers. Currently, this class can store one of the
+ following kinds of numbers: 64-bit integers or binary floating-point
+ numbers; or arbitrary-precision integers, decimal numbers, binary
+ numbers, or rational numbers.</p>
 
 <h2>Methods</h2>
 
 <ul>
 <li><code>CBORNumber Add​(CBORNumber b)</code><br>
-Not documented yet.</li>
+Returns the sum of this number and another number.</li>
 <li><code>int compareTo​(CBORNumber other)</code><br>
 Compares two CBOR numbers.</li>
 <li><code>CBORNumber Divide​(CBORNumber b)</code><br>
-Not documented yet.</li>
+Returns the quotient of this number and another number.</li>
 <li><code>static CBORNumber FromCBORObject​(CBORObject o)</code><br>
-Not documented yet.</li>
+Creates a CBOR number object from a CBOR object representing a number (that
+is, one for which the IsNumber property in.NET or the isNumber()
+method in Java returns true).</li>
 <li><code>CBORNumber Multiply​(CBORNumber b)</code><br>
 Not documented yet.</li>
 <li><code>CBORNumber Negate()</code><br>
-Not documented yet.</li>
+Returns a CBOR number with the same value as this one but with the sign
+reversed.</li>
 <li><code>CBORNumber Remainder​(CBORNumber b)</code><br>
-Not documented yet.</li>
+Returns the remainder when this number is divided by another number.</li>
 <li><code>CBORNumber Subtract​(CBORNumber b)</code><br>
 Not documented yet.</li>
 <li><code>CBORObject ToCBORObject()</code><br>
-Not documented yet.</li>
+Converts this object&#39;s value to a CBOR object.</li>
 <li><code>java.lang.String toString()</code><br>
-Not documented yet.</li>
+Returns the value of this object in text form.</li>
 </ul>
 
 <h2>Method Details</h2>
@@ -43,12 +51,12 @@ Not documented yet.</li>
 <pre>public CBORObject ToCBORObject()
 </pre>
 
-<p>Not documented yet.</p>
+<p>Converts this object&#39;s value to a CBOR object.</p>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A CBORObject object.</li>
+<li>A CBOR object that stores this object&#39;s value.</li>
 </ul>
 
 <h3>FromCBORObject</h3>
@@ -56,24 +64,21 @@ Not documented yet.</li>
 <pre>public static CBORNumber FromCBORObject​(CBORObject o)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Creates a CBOR number object from a CBOR object representing a number (that
+ is, one for which the IsNumber property in.NET or the isNumber()
+ method in Java returns true).</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>o</code> - Not documented yet.</li>
+<li><code>o</code> - The parameter is a CBOR object representing a number.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A CBORNumber object.</li>
-</ul>
-
-<p><strong>Throws:</strong></p>
-
-<ul>
-<li><code>java.lang.NullPointerException</code> - The parameter <code>o</code> is null.</li>
+<li>A CBOR number object, or null if the given CBOR object is null or
+does not represent a number.</li>
 </ul>
 
 <h3>toString</h3>
@@ -81,7 +86,7 @@ Not documented yet.</li>
 <pre>public java.lang.String toString()
 </pre>
 
-<p>Not documented yet.</p>
+<p>Returns the value of this object in text form.</p>
 
 <p><strong>Overrides:</strong></p>
 
@@ -92,7 +97,7 @@ Not documented yet.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A text string.</li>
+<li>A text string representing the value of this object.</li>
 </ul>
 
 <h3>Negate</h3>
@@ -100,12 +105,14 @@ Not documented yet.</li>
 <pre>public CBORNumber Negate()
 </pre>
 
-<p>Not documented yet.</p>
+<p>Returns a CBOR number with the same value as this one but with the sign
+ reversed.</p>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A CBORNumber object.</li>
+<li>A CBOR number with the same value as this one but with the sign
+reversed.</li>
 </ul>
 
 <h3>Add</h3>
@@ -113,18 +120,18 @@ Not documented yet.</li>
 <pre>public CBORNumber Add​(CBORNumber b)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Returns the sum of this number and another number.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>b</code> - Not documented yet.</li>
+<li><code>b</code> - The number to add with this one.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A CBORNumber object.</li>
+<li>The sum of this number and another number.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -188,18 +195,18 @@ Not documented yet.</li>
 <pre>public CBORNumber Divide​(CBORNumber b)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Returns the quotient of this number and another number.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>b</code> - Not documented yet.</li>
+<li><code>b</code> - The right-hand side (divisor) to the division operation.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A CBORNumber object.</li>
+<li>The quotient of this number and another one.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -213,18 +220,18 @@ Not documented yet.</li>
 <pre>public CBORNumber Remainder​(CBORNumber b)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Returns the remainder when this number is divided by another number.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>b</code> - Not documented yet.</li>
+<li><code>b</code> - The right-hand side (dividend) of the remainder operation.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A CBORNumber object.</li>
+<li>The remainder when this number is divided by the other number.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>

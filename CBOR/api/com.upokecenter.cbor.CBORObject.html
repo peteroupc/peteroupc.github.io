@@ -43,27 +43,15 @@
   the &quot;==&quot; operator; it&#39;s possible to create two CBOR objects with the
   same value but not the same reference. (The &quot;==&quot; operator might only
  check if each side of the operator is the same instance.)</p>
- <p>This class&#39;s natural ordering (under the compareTo method) is not
- consistent with the Equals method. This means that two values that
- compare as equal under the compareTo method might not be equal under
- the Equals method. This is important to consider especially if an
- application wants to compare numbers. (Several CBOR tags support
- numbers of different formats, such as arbitrary-precision integers,
- rational numbers, and arbitrary-precision decimal numbers.)</p>
- <p>Another consideration is that two values that are otherwise equal
- may have different tags. To strip the tags from a CBOR object before
- comparing, use the <code>Untag</code> method.</p> <p>To compare two
- numbers, the CompareToIgnoreTags or compareTo method should be used.
- Which method to use depends on whether two equal values should still
- be considered equal if they have different tags.</p> <p>Although
- this class is inconsistent with the Equals method, it is safe to use
- CBORObject instances as hash keys as long as all of the keys are
- untagged text strings (which means GetTags returns an empty array
-  and the Type property, or &quot;getType()&quot; in Java, returns TextString).
- This is because the natural ordering of these instances is
- consistent with the Equals method.</p> <p><b>Thread Safety:</b></p>
- <p>Certain CBOR objects are immutable (their values can&#39;t be
- changed), so they are inherently safe for use by multiple
+ <p>This class&#39;s natural ordering (under the compareTo method) is
+ consistent with the Equals method, meaning that two values that
+ compare as equal under the compareTo method are also equal under the
+ Equals method; this is a change in version 4.0. Two otherwise equal
+ objects with different tags are not treated as equal by both
+ compareTo and Equals. To strip the tags from a CBOR object before
+ comparing, use the <code>Untag</code> method.</p> <p><b>Thread
+ Safety:</b></p> <p>Certain CBOR objects are immutable (their values
+ can&#39;t be changed), so they are inherently safe for use by multiple
  threads.</p> <p>CBOR objects that are arrays, maps, and byte strings
  (including tagged objects that represent numbers) are mutable, but
  this class doesn&#39;t attempt to synchronize reads and writes to those
@@ -71,23 +59,24 @@
  without such synchronization.</p> <p>One kind of CBOR object is
  called a map, or a list of key-value pairs. Keys can be any kind of
  CBOR object, including numbers, strings, arrays, and maps. However,
- text strings are the most suitable to use as keys; other kinds of
- CBOR object are much better used as map values instead, keeping in
- mind that some of them are not thread safe without synchronizing
- reads and writes to them.</p> <p>To find the type of a CBOR object,
-  call its Type property (or &quot;getType()&quot; in Java). The return value
- can be Integer, FloatingPoint, Boolean, SimpleValue, or TextString
- for immutable CBOR objects, and Array, Map, or ByteString for
- mutable CBOR objects.</p> <p><b>Nesting Depth:</b></p> <p>The
- DecodeFromBytes and Read methods can only read objects with a
- limited maximum depth of arrays and maps nested within other arrays
- and maps. The code sets this maximum depth to 500 (allowing more
- than enough nesting for most purposes), but it&#39;s possible that stack
- overflows in some runtimes might lower the effective maximum nesting
- depth. When the nesting depth goes above 500, the DecodeFromBytes
- and Read methods throw a CBORException.</p> <p>The ReadJSON and
- FromJSONString methods currently have nesting depths of
- 1000.</p></p>
+ untagged text strings (which means GetTags returns an empty array
+  and the Type property, or &quot;getType()&quot; in Java, returns TextString)
+ are the most suitable to use as keys; other kinds of CBOR object are
+ much better used as map values instead, keeping in mind that some of
+ them are not thread safe without synchronizing reads and writes to
+ them.</p> <p>To find the type of a CBOR object, call its Type
+  property (or &quot;getType()&quot; in Java). The return value can be Integer,
+ FloatingPoint, Boolean, SimpleValue, or TextString for immutable
+ CBOR objects, and Array, Map, or ByteString for mutable CBOR
+ objects.</p> <p><b>Nesting Depth:</b></p> <p>The DecodeFromBytes and
+ Read methods can only read objects with a limited maximum depth of
+ arrays and maps nested within other arrays and maps. The code sets
+ this maximum depth to 500 (allowing more than enough nesting for
+ most purposes), but it&#39;s possible that stack overflows in some
+ runtimes might lower the effective maximum nesting depth. When the
+ nesting depth goes above 500, the DecodeFromBytes and Read methods
+ throw a CBORException.</p> <p>The ReadJSON and FromJSONString
+ methods currently have nesting depths of 1000.</p></p>
 
 <h2>Fields</h2>
 
@@ -378,7 +367,8 @@ infinity.</li>
 <li><code>boolean isNull()</code><br>
 Gets a value indicating whether this value is a CBOR null value.</li>
 <li><code>boolean isNumber()</code><br>
-Gets a value indicating whether this CBOR object stores a number.</li>
+Gets a value indicating whether this CBOR object stores a number (including
+infinity or a not-a-number or NaN value).</li>
 <li><code>boolean IsPositiveInfinity()</code><br>
 Gets a value indicating whether this CBOR object represents positive
 infinity.</li>
@@ -882,10 +872,11 @@ simple value (including if the value is a floating-point number).</li>
 <pre>public final boolean isNumber()
 </pre>
 
-<p>Gets a value indicating whether this CBOR object stores a number. Currently,
- this is true if this item is untagged and has a CBORType of Integer
- or FloatingPoint, or if this item has only one tag and that tag is
- 2, 3, 4, 5, 30, 264, 265, 268, 269, or 270 with the right data type.</p>
+<p>Gets a value indicating whether this CBOR object stores a number (including
+ infinity or a not-a-number or NaN value). Currently, this is true if
+ this item is untagged and has a CBORType of Integer or
+ FloatingPoint, or if this item has only one tag and that tag is 2,
+ 3, 4, 5, 30, 264, 265, 268, 269, or 270 with the right data type.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -3017,7 +3008,9 @@ likewise meet either criterion above.</p>.</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>java.lang.IllegalStateException</code> - This object does not represent a number.</li>
+<li><code>java.lang.IllegalStateException</code> - This object does not represent a number (for
+this purpose, infinities and not-a-number or NaN values, but not
+CBORObject.Null, are considered numbers).</li>
 </ul>
 
 <h3>Add</h3>
@@ -3158,7 +3151,9 @@ Converts this object to a byte (0 to 255). Floating point values are
 
 **Throws:**
 
-* <code>java.lang.IllegalStateException</code> - This object does not represent a number.
+* <code>java.lang.IllegalStateException</code> - This object does not represent a number (for
+ this purpose, infinities and not-a-number or NaN values, but not
+ CBORObject.Null, are considered numbers).
 
 * <code>java.lang.ArithmeticException</code> - This object's value exceeds the range of a
  byte (would be less than 0 or greater than 255 when truncated to an
@@ -3176,7 +3171,9 @@ Converts this object to a 64-bit floating point number.
 
 **Throws:**
 
-* <code>java.lang.IllegalStateException</code> - This object does not represent a number.
+* <code>java.lang.IllegalStateException</code> - This object does not represent a number (for
+ this purpose, infinities and not-a-number or NaN values, but not
+ CBORObject.Null, are considered numbers).
 
 ### AsEDecimal
     public com.upokecenter.numbers.EDecimal AsEDecimal()
@@ -3244,7 +3241,9 @@ Converts this object to a 16-bit signed integer. Floating point values are
 
 **Throws:**
 
-* <code>java.lang.IllegalStateException</code> - This object does not represent a number.
+* <code>java.lang.IllegalStateException</code> - This object does not represent a number (for
+ this purpose, infinities and not-a-number or NaN values, but not
+ CBORObject.Null, are considered numbers).
 
 * <code>java.lang.ArithmeticException</code> - This object's value exceeds the range of a
  16-bit signed integer.
@@ -3408,7 +3407,9 @@ CBORType.FloatingPoint</code>.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>java.lang.IllegalStateException</code> - This object does not represent a number.</li>
+<li><code>java.lang.IllegalStateException</code> - This object does not represent a number (for
+this purpose, infinities and not-a-number or NaN values, but not
+CBORObject.Null, are considered numbers).</li>
 </ul>
 
 <h3>AsInt32</h3>
@@ -3437,7 +3438,9 @@ CBORType.FloatingPoint</code>.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.IllegalStateException</code> - This object does not represent a number.</p></li>
+<li><p><code>java.lang.IllegalStateException</code> - This object does not represent a number (for
+this purpose, infinities and not-a-number or NaN values, but not
+CBORObject.Null, are considered numbers).</p></li>
 <li><p><code>java.lang.ArithmeticException</code> - This object&#39;s value exceeds the range of a
 32-bit signed integer.</p></li>
 </ul>
@@ -3468,7 +3471,9 @@ CBORType.FloatingPoint</code>.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.IllegalStateException</code> - This object does not represent a number.</p></li>
+<li><p><code>java.lang.IllegalStateException</code> - This object does not represent a number (for
+this purpose, infinities and not-a-number or NaN values, but not
+CBORObject.Null, are considered numbers).</p></li>
 <li><p><code>java.lang.ArithmeticException</code> - This object&#39;s value exceeds the range of a
 64-bit signed integer.</p></li>
 </ul>
@@ -3491,7 +3496,9 @@ value exceeds the range of a 32-bit floating point number.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>java.lang.IllegalStateException</code> - This object does not represent a number.</li>
+<li><code>java.lang.IllegalStateException</code> - This object does not represent a number (for
+this purpose, infinities and not-a-number or NaN values, but not
+CBORObject.Null, are considered numbers).</li>
 </ul>
 
 <h3>AsString</h3>
@@ -3620,36 +3627,31 @@ be -(2^63) or greater, and less than 2^63; otherwise, <code>false</code>.</li>
 <pre>public int compareTo​(CBORObject other)
 </pre>
 
-<p>Compares two CBOR objects. <p>In this implementation:</p> <ul> <li>The null
- pointer (null reference) is considered less than any other
- object.</li> <li>If both objects are integers (CBORType.Integer)
- their CBOR encodings (as though EncodeToBytes were called on each
- integer) are compared as though by a byte-by-byte comparison.</li>
- <li>If both objects are floating-point numbers
- (CBORType.FloatingPoint), their CBOR encodings (as though
- EncodeToBytes were called on each number) are compared as though by
- a byte-by-byte comparison.</li> <li>If both objects are simple
- values (including true, false, CBORObject.Null, and the undefined
- value), the objects are compared according to their ordinal
- numbers.</li> <li>If both objects are arrays, each element is
- compared. If one array has fewer elements than the other, it is
- sorted earlier.</li> <li>If both objects are byte strings, each one
- is compared byte by byte. If one byte string has fewer bytes than
- the other, it is sorted earlier.</li> <li>If both objects are text
- strings, their CBOR encodings (as though EncodeToBytes were called
- on each number) are compared as though by a byte-by-byte
- comparison.</li> <li>If both objects are maps, compares each map as
- though each were an array with the sorted keys of that map as the
- array&#39;s elements, and with each such key followed immediately by the
- value mapped to that key. If one map has fewer keys than the other,
- it is sorted earlier.</li> <li>If both objects each have a tag
- (tagged objects have a separate type for the purposes of this
- method), their tags are compared before comparing the objects
- associated with the tags.</li></ul> <li>If each object is a
- different type, then the objects are sorted by their type in the
- following order: integer, byte string, text string, array, map,
- tagged item, simple value, floating point.</li> <p>This method is
- not consistent with the Equals method.</p></p>
+<p>Compares two CBOR objects. This implementation was changed in version 4.0.
+ <p>In this implementation:</p> <ul> <li>The null pointer (null
+ reference) is considered less than any other object.</li> <li>If the
+ two objects are both integers (CBORType.Integer) both floating-point
+ values, both byte strings, both simple values (including True and
+ False), or both text strings, their CBOR encodings (as though
+ EncodeToBytes were called on each integer) are compared as though by
+ a byte-by-byte comparison. (This means, for example, that positive
+ integers sort before negative integers).</li> <li>If both objects
+ have a tag, they are compared first by the tag&#39;s value then by the
+ associated item (which itself can have a tag).</li> <li>If both
+ objects are arrays, they are compared item by item. In this case, if
+ the arrays have different numbers of items, the array with more
+ items is treated as greater than the other array.</li> <li>If both
+ objects are maps, their key-value pairs, sorted by key in accordance
+ with this method, are compared, where each pair is compared first by
+ key and then by value. In this case, if the maps have different
+ numbers of key-value pairs, the map with more pairs is treated as
+ greater than the other map.</li> <li>If the two objects have
+ different types, the object whose type comes first in the order of
+ untagged integers, untagged byte strings, untagged text strings,
+ untagged arrays, untagged maps, tagged objects, untagged simple
+ values (including True and False) and untagged floating point values
+ sorts before the other object.</li></ul> <p>This method is
+ consistent with the Equals method.</p></p>
 
 <p><strong>Specified by:</strong></p>
 
@@ -4267,7 +4269,9 @@ otherwise, <code>false</code>.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>java.lang.IllegalStateException</code> - This object does not represent a number.</li>
+<li><code>java.lang.IllegalStateException</code> - This object does not represent a number (for
+this purpose, infinities and not-a-number or NaN values, but not
+CBORObject.Null, are considered numbers).</li>
 </ul>
 
 <h3>Clear</h3>

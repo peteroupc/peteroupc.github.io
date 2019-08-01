@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
-<p>Begun on Mar. 5, 2016; last updated on July 27, 2019.</p>
+<p>Begun on Mar. 5, 2016; last updated on Aug. 2, 2019.</p>
 
 <p>Most apps that use random numbers care about either unpredictability, speed/high quality, or repeatability.  This article explains the three kinds of RNGs and gives recommendations on each kind.</p>
 
@@ -847,7 +847,7 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 <li>about 93 billion billion billion random 192-bit integers.</small></li>
 </ul>
 
-<p><small><sup id=Note27>(27)</sup> The only binary floating-point numbers supported by some GPUs are 16-bit, notably not 32- or 64-bit as is otherwise common.  Generally, such 16-bit numbers have 11 bits of precision and can represent any integer between 0 and 2048 and any multiple of 1/2048 between 0 and 1.  An application ought to choose stateless functions that deliver acceptable &quot;random&quot; numbers regardless of the size of floating-point numbers supported by the GPU.</small></p>
+<p><small><sup id=Note27>(27)</sup> Some environments, such as GLSL 1.0, support floating-point math but not integer math, and may support only 16-bit or smaller floating-point numbers (not the otherwise common 32- or 64-bit sizes), making it difficult in such environments to write stateless functions for random number generation.  (Generally, such 16-bit numbers have 11 bits of precision and can represent any integer between 0 and 2048 and any multiple of 1/2048 between 0 and 1.)  An application ought to choose stateless functions that deliver acceptable &quot;random&quot; numbers regardless of the size of floating-point numbers supported.</small></p>
 
 <p><small><sup id=Note28>(28)</sup> C. Peters, &quot;<a href="http://momentsingraphics.de/?p=127"><strong>Free blue noise textures</strong></a>&quot;, <em>Moments in Graphics</em>, Dec. 22, 2016.  That article discusses the sampling of <em>blue noise</em>, not independent uniformly-distributed random numbers, but a similar approach applies to textures of noise however generated.</small></p>
 

@@ -10,21 +10,21 @@
     System.IComparable
 </pre>
 
-<p>Not documented yet.</p>
+<p>An instance of a number that CBOR or certain CBOR tags can represent. For this purpose, infinities and not-a-number or NaN values are considered numbers. Currently, this class can store one of the following kinds of numbers: 64-bit signed integers or binary floating-point numbers; or arbitrary-precision integers, decimal numbers, binary numbers, or rational numbers.</p>
 
 <h3>Member Summary</h3>
 
 <ul>
-<li><code><a href="#Add_PeterO_Cbor_CBORNumber">Add(PeterO.Cbor.CBORNumber)</a></code> - Not documented yet.</li>
+<li><code><a href="#Add_PeterO_Cbor_CBORNumber">Add(PeterO.Cbor.CBORNumber)</a></code> - Returns the sum of this number and another number.</li>
 <li><code><a href="#CompareTo_PeterO_Cbor_CBORNumber">CompareTo(PeterO.Cbor.CBORNumber)</a></code> - Compares two CBOR numbers.</li>
-<li><code><a href="#Divide_PeterO_Cbor_CBORNumber">Divide(PeterO.Cbor.CBORNumber)</a></code> - Not documented yet.</li>
-<li><code><a href="#FromCBORObject_PeterO_Cbor_CBORObject">FromCBORObject(PeterO.Cbor.CBORObject)</a></code> - Not documented yet.</li>
+<li><code><a href="#Divide_PeterO_Cbor_CBORNumber">Divide(PeterO.Cbor.CBORNumber)</a></code> - Returns the quotient of this number and another number.</li>
+<li><code><a href="#FromCBORObject_PeterO_Cbor_CBORObject">FromCBORObject(PeterO.Cbor.CBORObject)</a></code> - Creates a CBOR number object from a CBOR object representing a number (that is, one for which the IsNumber property in.</li>
 <li><code><a href="#Multiply_PeterO_Cbor_CBORNumber">Multiply(PeterO.Cbor.CBORNumber)</a></code> - Not documented yet.</li>
-<li><code><a href="#Negate">Negate()</a></code> - Not documented yet.</li>
-<li><code><a href="#Remainder_PeterO_Cbor_CBORNumber">Remainder(PeterO.Cbor.CBORNumber)</a></code> - Not documented yet.</li>
+<li><code><a href="#Negate">Negate()</a></code> - Returns a CBOR number with the same value as this one but with the sign reversed.</li>
+<li><code><a href="#Remainder_PeterO_Cbor_CBORNumber">Remainder(PeterO.Cbor.CBORNumber)</a></code> - Returns the remainder when this number is divided by another number.</li>
 <li><code><a href="#Subtract_PeterO_Cbor_CBORNumber">Subtract(PeterO.Cbor.CBORNumber)</a></code> - Not documented yet.</li>
-<li><code><a href="#ToCBORObject">ToCBORObject()</a></code> - Not documented yet.</li>
-<li><code><a href="#ToString">ToString()</a></code> - Not documented yet.</li>
+<li><code><a href="#ToCBORObject">ToCBORObject()</a></code> - Converts this object&#39;s value to a CBOR object.</li>
+<li><code><a href="#ToString">ToString()</a></code> - Returns the value of this object in text form.</li>
 </ul>
 
 <p><a id="Add_PeterO_Cbor_CBORNumber"></a></p>
@@ -35,18 +35,18 @@
     PeterO.Cbor.CBORNumber b);
 </pre>
 
-<p>Not documented yet.</p>
+<p>Returns the sum of this number and another number.</p>
 
 <pre> &lt;b&gt;Parameters:&lt;/b&gt;
 </pre>
 
 <ul>
-<li><i>b</i>: Not documented yet.</li>
+<li><i>b</i>: The number to add with this one.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p>A CBORNumber object.</p>
+<p>The sum of this number and another number.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -92,18 +92,18 @@ An internal error occurred.</li>
     PeterO.Cbor.CBORNumber b);
 </pre>
 
-<p>Not documented yet.</p>
+<p>Returns the quotient of this number and another number.</p>
 
 <pre> &lt;b&gt;Parameters:&lt;/b&gt;
 </pre>
 
 <ul>
-<li><i>b</i>: Not documented yet.</li>
+<li><i>b</i>: The right-hand side (divisor) to the division operation.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p>A CBORNumber object.</p>
+<p>The quotient of this number and another one.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -121,26 +121,18 @@ is null.</li>
     PeterO.Cbor.CBORObject o);
 </pre>
 
-<p>Not documented yet.</p>
+<p>Creates a CBOR number object from a CBOR object representing a number (that is, one for which the IsNumber property in.NET or the isNumber() method in Java returns true).</p>
 
-<pre> &lt;b&gt;Parameters:&lt;/b&gt;
+<pre>&lt;b&gt;Parameters:&lt;/b&gt;
 </pre>
 
 <ul>
-<li><i>o</i>: Not documented yet.</li>
+<li><i>o</i>: The parameter is a CBOR object representing a number.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p>A CBORNumber object.</p>
-
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li>System.ArgumentNullException:
-The parameter  <i>o</i>
-is null.</li>
-</ul>
+<p>A CBOR number object, or null if the given CBOR object is null or does not represent a number.</p>
 
 <p><a id="Multiply_PeterO_Cbor_CBORNumber"></a></p>
 
@@ -178,11 +170,11 @@ is null.</li>
 <pre>public PeterO.Cbor.CBORNumber Negate();
 </pre>
 
-<p>Not documented yet.</p>
+<p>Returns a CBOR number with the same value as this one but with the sign reversed.</p>
 
 <p><b>Return Value:</b></p>
 
-<p>A CBORNumber object.</p>
+<p>A CBOR number with the same value as this one but with the sign reversed.</p>
 
 <p><a id="Remainder_PeterO_Cbor_CBORNumber"></a></p>
 
@@ -192,18 +184,18 @@ is null.</li>
     PeterO.Cbor.CBORNumber b);
 </pre>
 
-<p>Not documented yet.</p>
+<p>Returns the remainder when this number is divided by another number.</p>
 
 <pre> &lt;b&gt;Parameters:&lt;/b&gt;
 </pre>
 
 <ul>
-<li><i>b</i>: Not documented yet.</li>
+<li><i>b</i>: The right-hand side (dividend) of the remainder operation.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p>A CBORNumber object.</p>
+<p>The remainder when this number is divided by the other number.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -249,11 +241,11 @@ is null.</li>
 <pre>public PeterO.Cbor.CBORObject ToCBORObject();
 </pre>
 
-<p>Not documented yet.</p>
+<p>Converts this object&#39;s value to a CBOR object.</p>
 
 <p><b>Return Value:</b></p>
 
-<p>A CBORObject object.</p>
+<p>A CBOR object that stores this object&#39;s value.</p>
 
 <p><a id="ToString"></a></p>
 
@@ -262,11 +254,11 @@ is null.</li>
 <pre>public override string ToString();
 </pre>
 
-<p>Not documented yet.</p>
+<p>Returns the value of this object in text form.</p>
 
 <p><b>Return Value:</b></p>
 
-<p>A text string.</p>
+<p>A text string representing the value of this object.</p>
 
 <p><a href="/CBOR/">Back to CBOR start page.</a></p>
 </div><nav id="navigation"><ul>

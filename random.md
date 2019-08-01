@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on Mar. 5, 2016; last updated on July 27, 2019.
+Begun on Mar. 5, 2016; last updated on Aug. 2, 2019.
 
 Most apps that use random numbers care about either unpredictability, speed/high quality, or repeatability.  This article explains the three kinds of RNGs and gives recommendations on each kind.
 
@@ -396,7 +396,7 @@ An application that generates unique random identifiers SHOULD do so by combinin
 
 In general, GL Shading Language (GLSL) and other programming environments designed for execution on a graphics processing unit (GPU) are stateless (they read from and write to data without storing any state themselves).  Approaches that have been used for random number generation in GPU environments include&mdash;
 
-- stateless functions (see "[**Designs for PRNGs**](#Designs_for_PRNGs)")<sup>[**(27)**](#Note27)</sup>, and
+- stateless functions, especially [hash functions](#Hash_Functions) (see "[**Designs for PRNGs**](#Designs_for_PRNGs)")<sup>[**(27)**](#Note27)</sup>, and
 - sampling "noise textures" with random data in each pixel (Peters 2016)<sup>[**(28)**](#Note28)</sup>.
 
 (L'Ecuyer et al. 2015)<sup>[**(29)**](#Note29)</sup> discusses parallel generation of random numbers using PRNGs, especially on GPUs.
@@ -602,7 +602,7 @@ I acknowledge&mdash;
 - about 1.4 million billion billion random 160-bit integers, or
 - about 93 billion billion billion random 192-bit integers.</small>
 
-<small><sup id=Note27>(27)</sup> The only binary floating-point numbers supported by some GPUs are 16-bit, notably not 32- or 64-bit as is otherwise common.  Generally, such 16-bit numbers have 11 bits of precision and can represent any integer between 0 and 2048 and any multiple of 1/2048 between 0 and 1.  An application ought to choose stateless functions that deliver acceptable "random" numbers regardless of the size of floating-point numbers supported by the GPU.</small>
+<small><sup id=Note27>(27)</sup> Some environments, such as GLSL 1.0, support floating-point math but not integer math, and may support only 16-bit or smaller floating-point numbers (not the otherwise common 32- or 64-bit sizes), making it difficult in such environments to write stateless functions for random number generation.  (Generally, such 16-bit numbers have 11 bits of precision and can represent any integer between 0 and 2048 and any multiple of 1/2048 between 0 and 1.)  An application ought to choose stateless functions that deliver acceptable "random" numbers regardless of the size of floating-point numbers supported.</small>
 
 <small><sup id=Note28>(28)</sup> C. Peters, "[**Free blue noise textures**](http://momentsingraphics.de/?p=127)", _Moments in Graphics_, Dec. 22, 2016.  That article discusses the sampling of _blue noise_, not independent uniformly-distributed random numbers, but a similar approach applies to textures of noise however generated.</small>
 
