@@ -28,8 +28,7 @@
 
 <p>Converts a Unicode code point to bytes and writes the bytes to an output stream. If this method returns -2, indicating an error, the caller of this method can take one of a variety of actions to handle the error. For example, it can write an escape sequence using the code point (such as the HTML error mode in the Encoding Standard), it can replace the code point with a &quot;best fit&quot; to that code point (which can consist of one or more bytes) and write the &quot;best fit&quot; instead, it can replace the code point with an arbitrary byte or sequence of bytes, or it can throw an exception. In some cases, where the error won&#39;t cause data loss or a security problem, the caller can also ignore the encoding error.</p>
 
-<pre> &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>c</i>: Either a Unicode code point (from 0-0xd7ff or from 0xe000 to 0x10ffff), or the value -1 indicating the end of the stream.</p></li>

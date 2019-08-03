@@ -17,7 +17,7 @@
 
 <p>This type is immutable, meaning its values can&#39;t be changed once it&#39; s created. To create a changeable media type object, use the MediaTypeBuilder class.</p>
 
-<p><b>Note:</b> According to RFC 2049, unrecognized subtypes of the top-level type  <code>multipart</code>  must be treated as  <code>multipart/mixed</code>  and unrecognized media types as the media type  <code>application/octet-stream</code> .</p>
+<p><b>Note:</b> According to RFC 2049, unrecognized subtypes of the top-level type  <code>multipart</code>  must be treated as  <code>multipart/mixed</code>  and unrecognized media types as the media type  <code>application/octet-stream</code>  .</p>
 
 <h3>Member Summary</h3>
 
@@ -90,7 +90,7 @@
 
 <p><b>Returns:</b></p>
 
-<p><code>true</code>  If this is a multipart media type; otherwise,  <code>false</code> .</p>
+<p><code>true</code>  If this is a multipart media type; otherwise,  <code>false</code>  .</p>
 
 <p><a id="IsText"></a></p>
 
@@ -103,7 +103,7 @@
 
 <p><b>Returns:</b></p>
 
-<p><code>true</code>  If this is a text media type; otherwise,  <code>false</code> .</p>
+<p><code>true</code>  If this is a text media type; otherwise,  <code>false</code>  .</p>
 
 <p><a id="Parameters"></a></p>
 
@@ -167,8 +167,7 @@
 
 <p>Determines whether this object and another object are equal.</p>
 
-<pre>&lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>obj</i>: The parameter  <i>obj</i>
@@ -177,7 +176,7 @@ is an arbitrary object.</li>
 
 <p><b>Return Value:</b></p>
 
-<p><code>true</code>  if this object and another object are equal; otherwise,  <code>false</code> .</p>
+<p><code>true</code>  if this object and another object are equal; otherwise,  <code>false</code>  .</p>
 
 <p><a id="GetCharset"></a></p>
 
@@ -215,11 +214,10 @@ is an arbitrary object.</li>
 
 <p>Gets the value of a parameter in this media type, such as &quot;charset&quot; or &quot;format&quot;.</p>
 
-<pre>  &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
-<li><i>name</i>: Name of the parameter to get. The name is compared using a basic case-insensitive comparison. (Two strings are equal in such a comparison, if they match after converting the basic upper-case letters A to Z (U + 0041 to U + 005A) in both strings to lower case.).</li>
+<li><i>name</i>: Name of the parameter to get. The name is compared using a basic case-insensitive comparison. (Two strings are equal in such a comparison, if they match after converting the basic upper-case letters A to Z (U+0041 to U+005A) in both strings to lower case.).</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -246,8 +244,7 @@ Name is empty.</p></li>
 
 <p>Parses a media type string and returns a media type object. For further information, see the overload taking a MediaType parameter.</p>
 
-<pre>&lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>mediaTypeValue</i>: A text string representing a media type. This media type can include parameters.</li>
@@ -277,8 +274,7 @@ Name is empty.</p></li>
 
 <p>This implementation ignores keys (in parameter key-value pairs) that appear more than once in the media type. Nothing in RFCs 2045, 2183, 2231, 6266, or 7231 explicitly disallows such keys, or otherwise specifies error-handling behavior for such keys.</p>
 
-<pre>  &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>str</i>: A text string representing a media type. This media type can include parameters.</p></li>

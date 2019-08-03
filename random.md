@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on Mar. 5, 2016; last updated on Aug. 2, 2019.
+Begun on Mar. 5, 2016; last updated on Aug. 3, 2019.
 
 Most apps that use random numbers care about either unpredictability, speed/high quality, or repeatability.  This article explains the three kinds of RNGs and gives recommendations on each kind.
 
@@ -273,17 +273,13 @@ Once data with enough entropy is gathered, it might need to be condensed into a 
 <a id=Wildly_Varying_Seeds></a>
 ### Wildly Varying Seeds
 
-For noncryptographic and seeded PRNGs, an application ought to generate seeds likely to vary wildly from previously generated seeds, to reduce the risk of correlated "random" numbers or sequences.  In this sense, the following kinds of seeds are preferred, from most to least:
+For noncryptographic and seeded PRNGs, an application ought to generate seeds likely to vary "wildly" from previously generated seeds, to reduce the risk of correlated "random" numbers or sequences.  One way the application can ensure this is to do the following for each PRNG instance it creates:
 
-1. A bit sequence from a cryptographic RNG.
-2. A seed extracted from hard-to-predict sources (see "Seed Generation" above).
-3. A hash generated using several timestamps and additional data chosen by the application.  Here, timestamps with finer than millisecond granularity (including CPU cycle counters) are preferred.
-4. A hash generated using a sequential counter and additional data chosen by the application.
-5. A hash of one or more timestamps.
-6. A hash of a sequential counter.
-7. A timestamp with finer than millisecond granularity.
+1. Build a bit string consisting of the following: A seed unique to the set of PRNG instances as a whole, a fixed identifier unique to that set, and a unique number for each PRNG instance. Example: "myseed-mysimulation-1".
+2. The seed in step 1 ought to be a fixed number, be the output of a cryptographic RNG, or be derived from hard-to-predict sources (see "Seed Generation").
+3. Use a [**hash function**](#Hash_Functions) to generate a hash code of the bit string in step 1, and use that code as the seed for the PRNG.  Here, hash functions with 128-bit or longer outputs are preferred.
 
-It is NOT RECOMMENDED to seed a PRNG (especially several at once) with sequential counters, linearly related numbers, or timestamps with millisecond or coarser granularity, since these kinds of seeds can cause undesirable correlations in some PRNGs or introduce the risk of generating the same "random" sequence accidentally<sup>[**(17)**](#Note17)</sup>.
+It is NOT RECOMMENDED to seed a PRNG (especially several at once) with sequential counters, linearly related numbers, or timestamps, since these kinds of seeds can cause undesirable correlations in some PRNGs.  Moreover, seeding a PRNG with coarse timestamps can introduce the risk of generating the same "random" sequence accidentally.<sup>[**(17)**](#Note17)</sup>
 
 <a id=Existing_RNG_APIs_in_Programming_Languages></a>
 ## Existing RNG APIs in Programming Languages

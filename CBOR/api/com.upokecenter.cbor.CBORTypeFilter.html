@@ -6,12 +6,11 @@
 
 <h1>com.upokecenter.cbor.CBORTypeFilter</h1>
 
-<pre>@Deprecated public final class CBORTypeFilter extends Object
+<pre>@Deprecated public final class CBORTypeFilter extends java.lang.Object
 </pre>
 
-<p>Deprecated.</p>
-
-<div class='deprecationComment'>May be removed without replacement.</div>
+<p>Deprecated.
+May be removed without replacement.</p>
 
 <h2>Fields</h2>
 
@@ -155,7 +154,7 @@ Deprecated. Copies this filter and includes unsigned integers in the new filter.
 <ul>
 <li><code>true</code> if this type filter allows CBOR arrays and the given
 array index is allowed under this type filter; otherwise, <code>
-false</code> .</li>
+false</code>.</li>
 </ul>
 
 <h3>ArrayLengthMatches</h3>
@@ -175,7 +174,7 @@ false</code> .</li>
 
 <ul>
 <li><code>true</code> if this filter allows CBOR arrays and an array&#39;s length
-is allowed under this filter; otherwise, <code>false</code> .</li>
+is allowed under this filter; otherwise, <code>false</code>.</li>
 </ul>
 
 <h3>ArrayLengthMatches</h3>
@@ -195,7 +194,7 @@ is allowed under this filter; otherwise, <code>false</code> .</li>
 
 <ul>
 <li><code>true</code> if this filter allows CBOR arrays and an array&#39;s length
-is allowed under a filter; otherwise, <code>false</code> .</li>
+is allowed under a filter; otherwise, <code>false</code>.</li>
 </ul>
 
 <h3>ArrayLengthMatches</h3>
@@ -215,13 +214,13 @@ is allowed under a filter; otherwise, <code>false</code> .</li>
 
 <ul>
 <li><code>true</code> if this filter allows CBOR arrays and an array&#39;s length
-is allowed under a filter; otherwise, <code>false</code> .</li>
+is allowed under a filter; otherwise, <code>false</code>.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>NullPointerException</code> - The parameter <code>bigLength</code> is
+<li><code>java.lang.NullPointerException</code> - The parameter <code>bigLength</code> is
 null.</li>
 </ul>
 
@@ -242,8 +241,8 @@ null.</li>
 
 <ul>
 <li>Returns None if the index is out of range, or Any if this filter
-doesn&#39;t filter an array. Returns the appropriate filter for the array
-index otherwise.</li>
+doesn&#39;t filter an array. Returns the appropriate filter for the
+array index otherwise.</li>
 </ul>
 
 <h3>GetSubFilter</h3>
@@ -263,8 +262,8 @@ index otherwise.</li>
 
 <ul>
 <li>Returns None if the index is out of range, or Any if this filter
-doesn&#39;t filter an array. Returns the appropriate filter for the array
-index otherwise.</li>
+doesn&#39;t filter an array. Returns the appropriate filter for the
+array index otherwise.</li>
 </ul>
 
 <h3>MajorTypeMatches</h3>
@@ -284,7 +283,7 @@ index otherwise.</li>
 
 <ul>
 <li><code>true</code> if the given CBOR major type matches a major type
-allowed by this filter; otherwise, <code>false</code> .</li>
+allowed by this filter; otherwise, <code>false</code>.</li>
 </ul>
 
 <h3>NonFPSimpleValueAllowed</h3>
@@ -298,7 +297,7 @@ allowed by this filter; otherwise, <code>false</code> .</li>
 
 <ul>
 <li><code>true</code> if this filter allows simple values that are not
-floating-point numbers; otherwise, <code>false</code> .</li>
+floating-point numbers; otherwise, <code>false</code>.</li>
 </ul>
 
 <h3>TagAllowed</h3>
@@ -318,7 +317,7 @@ floating-point numbers; otherwise, <code>false</code> .</li>
 
 <ul>
 <li><code>true</code> if CBOR objects can have the given tag number;
-otherwise, <code>false</code> .</li>
+otherwise, <code>false</code>.</li>
 </ul>
 
 <h3>TagAllowed</h3>
@@ -338,7 +337,7 @@ otherwise, <code>false</code> .</li>
 
 <ul>
 <li><code>true</code> if CBOR objects can have the given tag number;
-otherwise, <code>false</code> .</li>
+otherwise, <code>false</code>.</li>
 </ul>
 
 <h3>TagAllowed</h3>
@@ -358,13 +357,13 @@ otherwise, <code>false</code> .</li>
 
 <ul>
 <li><code>true</code> if CBOR objects can have the given tag number;
-otherwise, <code>false</code> .</li>
+otherwise, <code>false</code>.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>NullPointerException</code> - The parameter <code>bigTag</code> is null.</li>
+<li><code>java.lang.NullPointerException</code> - The parameter <code>bigTag</code> is null.</li>
 </ul>
 
 <h3>WithArrayAnyLength</h3>
@@ -405,9 +404,9 @@ the arrayLength parameter.</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>IllegalArgumentException</code> - The parameter arrayLength is less than 0.</p></li>
-<li><p><code>NullPointerException</code> - The parameter elements is null.</p></li>
-<li><p><code>IllegalArgumentException</code> - The parameter elements has fewer elements
+<li><p><code>java.lang.IllegalArgumentException</code> - The parameter arrayLength is less than 0.</p></li>
+<li><p><code>java.lang.NullPointerException</code> - The parameter elements is null.</p></li>
+<li><p><code>java.lang.IllegalArgumentException</code> - The parameter elements has fewer elements
 than specified in arrayLength.</p></li>
 </ul>
 
@@ -436,9 +435,9 @@ the arrayLength parameter.</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>IllegalArgumentException</code> - The parameter arrayLength is less than 0.</p></li>
-<li><p><code>NullPointerException</code> - The parameter elements is null.</p></li>
-<li><p><code>IllegalArgumentException</code> - The parameter elements has fewer elements
+<li><p><code>java.lang.IllegalArgumentException</code> - The parameter arrayLength is less than 0.</p></li>
+<li><p><code>java.lang.NullPointerException</code> - The parameter elements is null.</p></li>
+<li><p><code>java.lang.IllegalArgumentException</code> - The parameter elements has fewer elements
 than specified in arrayLength.</p></li>
 </ul>
 
@@ -511,6 +510,13 @@ than specified in arrayLength.</p></li>
 
 <ul>
 <li>A CBORTypeFilter object.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>java.lang.NullPointerException</code> - The parameter <code>tags</code> or <code>
+tags</code> is null.</li>
 </ul>
 
 <h3>WithTextString</h3>

@@ -6,13 +6,12 @@
 
 <h1>com.upokecenter.util.BigInteger</h1>
 
-<pre>@Deprecated public final class BigInteger extends Object implements Comparable&lt;BigInteger&gt;
+<pre>@Deprecated public final class BigInteger extends java.lang.Object implements java.lang.Comparable&lt;BigInteger&gt;
 </pre>
 
-<p>Deprecated.</p>
-
-<div class='deprecationComment'>Use EInteger from PeterO.Numbers/com.upokecenter.numbers and the output of
-this class's toString method.</div>
+<p>Deprecated.
+Use EInteger from PeterO.Numbers/com.upokecenter.numbers and the
+ output of this class&#39;s toString method.</p>
 
 <h2>Fields</h2>
 
@@ -31,24 +30,24 @@ Deprecated. Finds the minimum number of bits needed to represent this object&#39
 except for its sign.</li>
 <li><code>int compareTo​(BigInteger other)</code><br>
 Deprecated. Compares this value to another.</li>
-<li><code>boolean equals​(Object obj)</code><br>
+<li><code>boolean equals​(java.lang.Object obj)</code><br>
 Deprecated. Determines whether this object and another object are equal.</li>
 <li><code>static BigInteger fromBytes​(byte[] bytes,
      boolean littleEndian)</code><br>
 Deprecated. Initializes an arbitrary-precision integer from an array of bytes.</li>
-<li><code>static BigInteger fromRadixString​(String str,
+<li><code>static BigInteger fromRadixString​(java.lang.String str,
            int radix)</code><br>
 Deprecated. Converts a string to an arbitrary-precision integer.</li>
-<li><code>static BigInteger fromString​(String str)</code><br>
+<li><code>static BigInteger fromString​(java.lang.String str)</code><br>
 Deprecated. Converts a string to an arbitrary-precision integer.</li>
 <li><code>int hashCode()</code><br>
 Deprecated. Returns the hash code for this instance.</li>
 <li><code>byte[] toBytes​(boolean littleEndian)</code><br>
 Deprecated. Returns a byte array of this object&#39;s value.</li>
-<li><code>String toRadixString​(int radix)</code><br>
+<li><code>java.lang.String toRadixString​(int radix)</code><br>
 Deprecated. Generates a string representing the value of this object, in the given
 radix.</li>
-<li><code>String toString()</code><br>
+<li><code>java.lang.String toString()</code><br>
 Deprecated. Converts this object to a text string in base 10.</li>
 <li><code>static BigInteger valueOf​(long longerValue)</code><br>
 Deprecated. Converts a 64-bit signed integer to a big integer.</li>
@@ -61,9 +60,8 @@ Deprecated. Converts a 64-bit signed integer to a big integer.</li>
 <pre>@Deprecated public static final BigInteger ONE
 </pre>
 
-<p>Deprecated.</p>
-
-<div class='deprecationComment'>Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</div>
+<p>Deprecated.
+Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</p>
 
 <h2>Method Details</h2>
 
@@ -86,8 +84,8 @@ and if the most-significant bit of the first byte isn&#39;t set, add an
 additional byte at the start with the value 255. For little-endian,
 the byte order is reversed from the byte order just discussed.</p></li>
 <li><p><code>littleEndian</code> - If true, the byte order is little-endian, or
-least-significant-byte first. If false, the byte order is big-endian,
-or most-significant-byte first.</p></li>
+least-significant-byte first. If false, the byte order is
+big-endian, or most-significant-byte first.</p></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -100,12 +98,12 @@ is 0.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>NullPointerException</code> - The parameter <code>bytes</code> is null.</li>
+<li><code>java.lang.NullPointerException</code> - The parameter <code>bytes</code> is null.</li>
 </ul>
 
 <h3>fromRadixString</h3>
 
-<pre>public static BigInteger fromRadixString​(String str, int radix)
+<pre>public static BigInteger fromRadixString​(java.lang.String str, int radix)
 </pre>
 
 <p>Deprecated.</p>
@@ -118,9 +116,9 @@ the given radix, except that it may start with a minus sign (&quot;-&quot;,
 U + 002D) to indicate a negative number. The string is not allowed to
 contain white space characters, including spaces.</p></li>
 <li><p><code>radix</code> - A base from 2 to 36. Depending on the radix, the string can use
-the basic digits 0 to 9 (U + 0030 to U + 0039) and then the basic letters
-A to Z (U + 0041 to U + 005A). For example, 0-9 in radix 10, and 0-9,
-then A-F in radix 16.</p></li>
+the basic digits 0 to 9 (U + 0030 to U + 0039) and then the basic
+letters A to Z (U + 0041 to U + 005A). For example, 0-9 in radix 10, and
+0-9, then A-F in radix 16.</p></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -133,15 +131,15 @@ string.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>NullPointerException</code> - The parameter <code>str</code> is null.</p></li>
-<li><p><code>IllegalArgumentException</code> - The parameter <code>radix</code> is less than 2
+<li><p><code>java.lang.NullPointerException</code> - The parameter <code>str</code> is null.</p></li>
+<li><p><code>java.lang.IllegalArgumentException</code> - The parameter <code>radix</code> is less than 2
 or greater than 36.</p></li>
-<li><p><code>NumberFormatException</code> - The string is empty or in an invalid format.</p></li>
+<li><p><code>java.lang.NumberFormatException</code> - The string is empty or in an invalid format.</p></li>
 </ul>
 
 <h3>fromString</h3>
 
-<pre>public static BigInteger fromString​(String str)
+<pre>public static BigInteger fromString​(java.lang.String str)
 </pre>
 
 <p>Deprecated.</p>
@@ -165,8 +163,8 @@ string.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>NullPointerException</code> - The parameter <code>str</code> is null.</p></li>
-<li><p><code>NumberFormatException</code> - The parameter <code>str</code> is in an invalid
+<li><p><code>java.lang.NullPointerException</code> - The parameter <code>str</code> is null.</p></li>
+<li><p><code>java.lang.NumberFormatException</code> - The parameter <code>str</code> is in an invalid
 format.</p></li>
 </ul>
 
@@ -207,7 +205,7 @@ object&#39;s value is 0 or negative 1.</li>
 
 <h3>equals</h3>
 
-<pre>public boolean equals​(Object obj)
+<pre>public boolean equals​(java.lang.Object obj)
 </pre>
 
 <p>Deprecated.</p>
@@ -215,20 +213,22 @@ object&#39;s value is 0 or negative 1.</li>
 <p><strong>Overrides:</strong></p>
 
 <ul>
-<li><code>equals</code> in class <code>Object</code></li>
+<li><code>equals</code> in class <code>java.lang.Object</code></li>
 </ul>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>obj</code> - The parameter <code>obj</code> is an arbitrary object.</li>
+<li><code>obj</code> - The parameter
+  <code>obj</code>
+   is an arbitrary object.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
 <li><code>true</code> if this object and another object are equal; otherwise,
-<code>false</code> .</li>
+<code>false</code>.</li>
 </ul>
 
 <h3>hashCode</h3>
@@ -241,7 +241,7 @@ object&#39;s value is 0 or negative 1.</li>
 <p><strong>Overrides:</strong></p>
 
 <ul>
-<li><code>hashCode</code> in class <code>Object</code></li>
+<li><code>hashCode</code> in class <code>java.lang.Object</code></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -272,7 +272,7 @@ single element 0.</li>
 
 <h3>toRadixString</h3>
 
-<pre>public String toRadixString​(int radix)
+<pre>public java.lang.String toRadixString​(int radix)
 </pre>
 
 <p>Deprecated.</p>
@@ -290,15 +290,16 @@ hexadecimal (base-16) string, specify 16. To generate a decimal
 <ul>
 <li>A string representing the value of this object. If this value is 0,
 returns &quot;0&quot;. If negative, the string will begin with a hyphen/minus
-(&quot;-&quot;). Depending on the radix, the string will use the basic digits 0
-to 9 (U + 0030 to U + 0039) and then the basic letters A to Z (U + 0041 to
-U + 005A). For example, 0-9 in radix 10, and 0-9, then A-F in radix 16.</li>
+(&quot;-&quot;). Depending on the radix, the string will use the basic digits
+0 to 9 (U + 0030 to U + 0039) and then the basic letters A to Z (U + 0041
+to U + 005A). For example, 0-9 in radix 10, and 0-9, then A-F in radix
+16.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>IllegalArgumentException</code> - The parameter &quot;index&quot; is less than 0,
+<li><code>java.lang.IllegalArgumentException</code> - The parameter &quot;index&quot; is less than 0,
 &quot;endIndex&quot; is less than 0, or either is greater than the string&#39;s
 length, or &quot;endIndex&quot; is less than &quot;index&quot; ; or radix is less than 2
 or greater than 36.</li>
@@ -306,7 +307,7 @@ or greater than 36.</li>
 
 <h3>toString</h3>
 
-<pre>public String toString()
+<pre>public java.lang.String toString()
 </pre>
 
 <p>Deprecated.</p>
@@ -314,7 +315,7 @@ or greater than 36.</li>
 <p><strong>Overrides:</strong></p>
 
 <ul>
-<li><code>toString</code> in class <code>Object</code></li>
+<li><code>toString</code> in class <code>java.lang.Object</code></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -335,7 +336,7 @@ digits 0 to 9 (U + 0030 to U + 0039).</li>
 <p><strong>Specified by:</strong></p>
 
 <ul>
-<li><code>compareTo</code> in interface <code>Comparable&lt;BigInteger&gt;</code></li>
+<li><code>compareTo</code> in interface <code>java.lang.Comparable&lt;BigInteger&gt;</code></li>
 </ul>
 
 <p><strong>Parameters:</strong></p>

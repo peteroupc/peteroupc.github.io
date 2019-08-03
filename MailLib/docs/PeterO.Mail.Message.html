@@ -26,11 +26,11 @@
 <li><p>If the transfer encoding is absent and the content type is &quot;message/rfc822&quot;, bytes with values greater than 127 (called &quot;8-bit bytes&quot; in the rest of this summary) are still allowed, despite the default value of &quot;7bit&quot; for &quot;Content-Transfer-Encoding&quot;.</p></li>
 <li><p>In the following cases, if the transfer encoding is absent, declared as 7bit, or treated as 7bit, 8-bit bytes are still allowed:</p></li>
 <li><p>(a) The preamble and epilogue of multipart messages, which will be ignored.</p></li>
-<li><p>(b) If the charset is declared to be  <code>utf-8</code> .</p></li>
-<li><p>(c) If the content type is &quot;text/html&quot; and the charset is declared to be  <code>us-ascii</code> , &quot;windows-1252&quot;, &quot;windows-1251&quot;, or &quot;iso-8859-*&quot; (all single byte encodings).</p></li>
+<li><p>(b) If the charset is declared to be  <code>utf-8</code>  .</p></li>
+<li><p>(c) If the content type is &quot;text/html&quot; and the charset is declared to be  <code>us-ascii</code>  , &quot;windows-1252&quot;, &quot;windows-1251&quot;, or &quot;iso-8859-*&quot; (all single byte encodings).</p></li>
 <li><p>(d) In non-MIME message bodies and in text/plain message bodies. Any 8-bit bytes are replaced with the substitute character byte (0x1a).</p></li>
 <li><p>If the message starts with the word &quot;From&quot; (and no other case variations of that word) followed by one or more space (U+0020) not followed by colon, that text and the rest of the text is skipped up to and including a line feed (U+000A). (See also RFC 4155, which describes the so-called &quot;mbox&quot; convention with &quot;From&quot; lines of this kind.)</p></li>
-<li><p>The name  <code>ascii</code>  is treated as a synonym for  <code>us-ascii</code> , despite being a reserved name under RFC 2046. The name  <code>cp1252</code>  and  <code>utf8</code>  are treated as synonyms for  <code>windows-1252</code>  and  <code>utf-8</code> , respectively, even though they are not IANA registered aliases.</p></li>
+<li><p>The name  <code>ascii</code>  is treated as a synonym for  <code>us-ascii</code>  , despite being a reserved name under RFC 2046. The name  <code>cp1252</code>  and  <code>utf8</code>  are treated as synonyms for  <code>windows-1252</code>  and  <code>utf-8</code>  , respectively, even though they are not IANA registered aliases.</p></li>
 <li><p>The following deviations involve encoded words under RFC 2047:</p></li>
 <li><p>(a) If a sequence of encoded words decodes to a string with a CTL character (U+007F, or a character less than U+0020 and not TAB) after being converted to Unicode, the encoded words are left un-decoded.</p></li>
 <li><p>(b) This implementation can decode encoded words regardless of the character length of the line in which they appear. This implementation can generate a header field line with one or more encoded words even if that line is more than 76 characters long. (This implementation follows the recommendation in RFC 5322 to limit header field lines to no more than 78 characters, where possible.)</p>
@@ -48,13 +48,13 @@
 
 <ul>
 <li><code><a href="#AddAttachment_PeterO_Mail_MediaType">AddAttachment(PeterO.Mail.MediaType)</a></code> - Adds an attachment with an empty body and with the given media type to this message.</li>
-<li><code><a href="#AddAttachment_System_IO_Stream_PeterO_Mail_MediaType">AddAttachment(System.IO.Stream, PeterO.Mail.MediaType)</a></code> - Adds an attachment to this message in the form // / of data from the given readable stream, and with the given media type.</li>
+<li><code><a href="#AddAttachment_System_IO_Stream_PeterO_Mail_MediaType">AddAttachment(System.IO.Stream, PeterO.Mail.MediaType)</a></code> - Adds an attachment to this message in the form of data from the given readable stream, and with the given media type.</li>
 <li><code><a href="#AddAttachment_System_IO_Stream_PeterO_Mail_MediaType_string">AddAttachment(System.IO.Stream, PeterO.Mail.MediaType, string)</a></code> - Adds an attachment to this message in the form of data from the given readable stream, and with the given media type and file name.</li>
 <li><code><a href="#AddAttachment_System_IO_Stream_string">AddAttachment(System.IO.Stream, string)</a></code> - Adds an attachment to this message in the form of data from the given readable stream, and with the given file name.</li>
 <li><code><a href="#AddHeader_string_string">AddHeader(string, string)</a></code> - Adds a header field to the end of the message&#39;s header.</li>
 <li><code><a href="#AddHeader_System_Collections_Generic_KeyValuePair">AddHeader(System.Collections.Generic.KeyValuePair)</a></code> - Adds a header field to the end of the message&#39;s header.</li>
 <li><code><a href="#AddInline_PeterO_Mail_MediaType">AddInline(PeterO.Mail.MediaType)</a></code> - Adds an inline body part with an empty body and with the given media type to this message.</li>
-<li><code><a href="#AddInline_System_IO_Stream_PeterO_Mail_MediaType">AddInline(System.IO.Stream, PeterO.Mail.MediaType)</a></code> - Adds an inline body part to this message in // / the form of data from the given readable stream, and with the given media type.</li>
+<li><code><a href="#AddInline_System_IO_Stream_PeterO_Mail_MediaType">AddInline(System.IO.Stream, PeterO.Mail.MediaType)</a></code> - Adds an inline body part to this message in the form of data from the given readable stream, and with the given media type.</li>
 <li><code><a href="#AddInline_System_IO_Stream_PeterO_Mail_MediaType_string">AddInline(System.IO.Stream, PeterO.Mail.MediaType, string)</a></code> - Adds an inline body part to this message in the form of data from the given readable stream, and with the given media type and file name.</li>
 <li><code><a href="#AddInline_System_IO_Stream_string">AddInline(System.IO.Stream, string)</a></code> - Adds an inline body part to this message in the form of data from the given readable stream, and with the given file name.</li>
 <li><code><a href="#BccAddresses">BccAddresses</a></code> - Gets a list of addresses found in the BCC header field or fields.</li>
@@ -188,8 +188,7 @@ is null.</li>
 
 <p>Gets the body of this message as a text string.</p>
 
-<pre>&lt;b&gt;Returns:&lt;/b&gt;
-</pre>
+<p><b>Returns:</b></p>
 
 <p>The body of this message as a text string.</p>
 
@@ -237,8 +236,7 @@ Either this message is a multipart message, so it doesn&#39;t have its own body 
 
 <p>Gets or sets this message&#39;s media type. When getting, the media type may differ in certain cases from the value of the Content-Type header field, if any, and may have a value even if the Content-Type header field is absent from this message. If set to a media type, updates the Content-Type header field as appropriate. Cannot be set to null.</p>
 
-<pre>&lt;b&gt;Returns:&lt;/b&gt;
-</pre>
+<p><b>Returns:</b></p>
 
 <p>This message&#39;s media type.</p>
 
@@ -343,8 +341,7 @@ This value is being set and &quot;value&quot; is null.</li>
 
 <p>Adds an attachment with an empty body and with the given media type to this message. Before the new attachment is added, if this message isn&#39;t already a multipart message, it becomes a &quot;multipart/mixed&quot; message with the current body converted to an inline body part.</p>
 
-<pre>&lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>mediaType</i>: A media type to assign to the attachment.</li>
@@ -363,13 +360,13 @@ This value is being set and &quot;value&quot; is null.</li>
     PeterO.Mail.MediaType mediaType);
 </pre>
 
-<p>Adds an attachment to this message in the form // / of data from the given readable stream, and with the given media type. Before the new attachment is added, if this message isn&#39;t already a multipart message, it becomes a &quot;multipart/mixed&quot; message with the current body converted to an inline body part.</p>
+<p>Adds an attachment to this message in the form of data from the given readable stream, and with the given media type. Before the new attachment is added, if this message isn&#39;t already a multipart message, it becomes a &quot;multipart/mixed&quot; message with the current body converted to an inline body part.</p>
 
-<pre>   The following example (written in C# for the.NET version) is an extension method that adds an attachment from a byte array to a message.
+<p>The following example (written in C# for the.NET version) is an extension method that adds an attachment from a byte array to a message.</p>
 
-public static Message AddAttachmentFromBytes(this Message msg, byte[]
-            bytes, MediaType mediaType) { using (var fs = new MemoryStream(bytes)) {
-            return msg.AddAttachment(fs, mediaType); } }
+<pre>public static Message AddAttachmentFromBytes(this Message msg, byte[]
+        bytes, MediaType mediaType) { using (var fs = new MemoryStream(bytes)) {
+        return msg.AddAttachment(fs, mediaType); } }
 </pre>
 
 <p>.</p>
@@ -408,8 +405,7 @@ An I/O error occurred.</p></li>
 
 <p>Adds an attachment to this message in the form of data from the given readable stream, and with the given media type and file name. Before the new attachment is added, if this message isn&#39;t already a multipart message, it becomes a &quot;multipart/mixed&quot; message with the current body converted to an inline body part.</p>
 
-<pre>    &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>inputStream</i>: A readable data stream.</p></li>
@@ -443,8 +439,7 @@ An I/O error occurred.</p></li>
 
 <p>Adds an attachment to this message in the form of data from the given readable stream, and with the given file name. Before the new attachment is added, if this message isn&#39;t already a multipart message, it becomes a &quot;multipart/mixed&quot; message with the current body converted to an inline body part.</p>
 
-<pre>   &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>inputStream</i>: A readable data stream.</p></li>
@@ -476,8 +471,7 @@ An I/O error occurred.</p></li>
 
 <p>Adds a header field to the end of the message&#39;s header. Updates the ContentType and ContentDisposition properties if those header fields have been modified by this method.</p>
 
-<pre>   &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>name</i>: Name of a header field, such as &quot;From&quot; or &quot;Content-ID&quot; .</p></li>
@@ -509,8 +503,7 @@ The header field name is too long or contains an invalid character, or the heade
 
 <p>Adds a header field to the end of the message&#39;s header. Updates the ContentType and ContentDisposition properties if those header fields have been modified by this method.</p>
 
-<pre>  &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>header</i>: A key/value pair. The key is the name of the header field, such as &quot;From&quot; or &quot;Content-ID&quot;. The value is the header field&#39;s value.</li>
@@ -540,8 +533,7 @@ The header field name is too long or contains an invalid character, or the heade
 
 <p>Adds an inline body part with an empty body and with the given media type to this message. Before the new body part is added, if this message isn&#39;t already a multipart message, it becomes a &quot;multipart/mixed&quot; message with the current body converted to an inline body part.</p>
 
-<pre>&lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>mediaType</i>: A media type to assign to the body part.</li>
@@ -560,14 +552,13 @@ The header field name is too long or contains an invalid character, or the heade
     PeterO.Mail.MediaType mediaType);
 </pre>
 
-<p>Adds an inline body part to this message in // / the form of data from the given readable stream, and with the given media type. Before the new body part is added, if this message isn&#39;t already a multipart message, it becomes a &quot;multipart/mixed&quot; message with the current body converted to an inline body part.</p>
+<p>Adds an inline body part to this message in the form of data from the given readable stream, and with the given media type. Before the new body part is added, if this message isn&#39;t already a multipart message, it becomes a &quot;multipart/mixed&quot; message with the current body converted to an inline body part.</p>
 
-<pre>   The following example (written in C# for the.NET version) is an extension method that adds an inline body part from a byte array to a message.
+<p>The following example (written in C# for the.NET version) is an extension method that adds an inline body part from a byte array to a message.</p>
 
-public static Message AddInlineFromBytes(this Message msg, byte[]
-            bytes,
-            MediaType mediaType) { using (MemoryStream fs = new MemoryStream(bytes))
-            { return msg.AddInline(fs, mediaType); } }
+<pre>public static Message AddInlineFromBytes(this Message msg, byte[] bytes,
+        MediaType mediaType) { using (MemoryStream fs = new MemoryStream(bytes))
+        { return msg.AddInline(fs, mediaType); } }
 </pre>
 
 <p>.</p>
@@ -606,8 +597,7 @@ An I/O error occurred.</p></li>
 
 <p>Adds an inline body part to this message in the form of data from the given readable stream, and with the given media type and file name. Before the new body part is added, if this message isn&#39;t already a multipart message, it becomes a &quot;multipart/mixed&quot; message with the current body converted to an inline body part.</p>
 
-<pre>    &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>inputStream</i>: A readable data stream.</p></li>
@@ -641,8 +631,7 @@ An I/O error occurred.</p></li>
 
 <p>Adds an inline body part to this message in the form of data from the given readable stream, and with the given file name. Before the new body part is added, if this message isn&#39;t already a multipart message, it becomes a &quot;multipart/mixed&quot; message with the current body converted to an inline body part.</p>
 
-<pre>   &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>inputStream</i>: A readable data stream.</p></li>
@@ -687,8 +676,7 @@ An I/O error occurred.</p></li>
 
 <p>Decodes RFC 2047 encoded words from the given header field value and returns a string with those words decoded. For an example of encoded words, see the constructor for PeterO.Mail.NamedAddress.</p>
 
-<pre>  &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>name</i>: Name of the header field. This determines the syntax of the &quot;value&quot; parameter and is necessary to help this method interpret encoded words properly.</p></li>
@@ -717,8 +705,7 @@ is null.</li>
 
 <p>Creates a message object from a MailTo URI (uniform resource identifier). The MailTo URI can contain key-value pairs that follow a question-mark, as in the following example: &quot;mailto:<a href="mailto:me@example.com">me@example.com</a>?subject=A%20Subject&quot;. In this example, &quot;subject&quot; is the subject of the email address. Only certain keys are supported, namely, &quot;to&quot;, &quot;cc&quot;, &quot;bcc&quot;, &quot;subject&quot;, &quot;in-reply-to&quot;, &quot;comments&quot;, &quot;keywords&quot;, and &quot;body&quot;. The first seven are header field names that will be used to set the returned message&#39;s corresponding header fields. The last, &quot;body&quot;, sets the body of the message to the given text. Keys other than these eight will be ignored.</p>
 
-<pre>&lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>uri</i>: The parameter  <i>uri</i>
@@ -740,8 +727,7 @@ is a text string.</li>
 
 <p>Not documented yet.</p>
 
-<pre> &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>uri</i>: The parameter  <i>uri</i>
@@ -772,8 +758,7 @@ is null.</li>
 
 <p>Creates a message object from a MailTo URI (uniform resource identifier). The MailTo URI can contain key-value pairs that follow a question-mark, as in the following example: &quot;mailto:<a href="mailto:me@example.com">me@example.com</a>?subject=A%20Subject&quot;. In this example, &quot;subject&quot; is the subject of the email address. Only certain keys are supported, namely, &quot;to&quot;, &quot;cc&quot;, &quot;bcc&quot;, &quot;subject&quot;, &quot;in-reply-to&quot;, &quot;comments&quot;, &quot;keywords&quot;, and &quot;body&quot;. The first seven are header field names that will be used to set the returned message&#39;s corresponding header fields. The last, &quot;body&quot;, sets the body of the message to the given text. Keys other than these eight will be ignored.</p>
 
-<pre>&lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>url</i>: A MailTo URI.</li>
@@ -799,8 +784,7 @@ is null.</li>
 
 <p>When encoding the message&#39;s body, if the message has a text content type (&quot;text/*&quot;), the line breaks are a CR byte (carriage return, 0x0d) followed by an LF byte (line feed, 0x0a), CR alone, or LF alone. If the message has any other content type, only CR followed by LF is considered a line break.</p>
 
-<pre>&lt;b&gt;Return Value:&lt;/b&gt;
-</pre>
+<p><b>Return Value:</b></p>
 
 <p>The generated message.</p>
 
@@ -834,8 +818,7 @@ The message can&#39;t be generated.</li>
 
 <p>Gets a list of addresses contained in the header fields with the given name in this message.</p>
 
-<pre>   &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>headerName</i>: The name of the header fields to retrieve.</li>
@@ -907,8 +890,7 @@ is empty.</p></li>
 
 <p>Gets a Hypertext Markup Language (HTML) rendering of this message&#39;s text body. This method currently supports text/plain, text/plain with format = flowed, text/enriched, and text/markdown (original Markdown).</p>
 
-<pre>REMARK: The Markdown implementation currently supports all features of original Markdown, except that the implementation--
-</pre>
+<p>REMARK: The Markdown implementation currently supports all features of original Markdown, except that the implementation--</p>
 
 <ul>
 <li><p>does not strictly check the placement of &quot;block-level HTML elements&quot;,</p></li>
@@ -937,8 +919,7 @@ Either this message is a multipart message, so it doesn&#39;t have its own body 
 
 <p>Gets the first instance of the header field with the specified name, using a basic case-insensitive comparison. (Two strings are equal in such a comparison, if they match after converting the basic upper-case letters A to Z (U+0041 to U+005A) in both strings to lower case.).</p>
 
-<pre> &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>name</i>: The name of a header field.</li>
@@ -965,8 +946,7 @@ Name is null.</li>
 
 <p>Gets the name and value of a header field by index.</p>
 
-<pre> &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>index</i>: Zero-based index of the header field to get.</li>
@@ -994,8 +974,7 @@ is 0 or at least as high as the number of header fields.</li>
 
 <p>Gets an array with the values of all header fields with the specified name, using a basic case-insensitive comparison. (Two strings are equal in such a comparison, if they match after converting the basic upper-case letters A to Z (U+0041 to U+005A) in both strings to lower case.).</p>
 
-<pre> &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>name</i>: The name of a header field.</li>
@@ -1023,8 +1002,7 @@ Name is null.</li>
 
 <p>Generates a multilingual message (see RFC 8255) from a list of messages and a list of language strings.</p>
 
-<pre>   &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>messages</i>: A list of messages forming the parts of the multilingual message object. Each message should have the same content, but be in a different language. Each message must have a From header field and use the same email address in that field as the other messages. The messages should be ordered in descending preference of language.</p></li>
@@ -1074,8 +1052,7 @@ contains the language tag &quot;zzx&quot; not appearing alone or at the end of t
 
 <p>Removes a header field by index. Updates the ContentType and ContentDisposition properties if those header fields have been modified by this method.</p>
 
-<pre> &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>index</i>: Zero-based index of the header field to set.</li>
@@ -1103,8 +1080,7 @@ is 0 or at least as high as the number of header fields.</li>
 
 <p>Removes all instances of the given header field from this message. If this is a multipart message, the header field is not removed from its body part headers. A basic case-insensitive comparison is used. (Two strings are equal in such a comparison, if they match after converting the basic upper-case letters A to Z (U+0041 to U+005A) in both strings to lower case.). Updates the ContentType and ContentDisposition properties if those header fields have been modified by this method.</p>
 
-<pre> &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>name</i>: The name of the header field to remove.</li>
@@ -1132,8 +1108,7 @@ is null.</li>
 
 <p>Selects a body part for a multiple-language message (  <code>multipart/multilingual</code>  ) according to the given language priority list.</p>
 
-<pre> &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>languages</i>: A list of basic language ranges, sorted in descending order of priority (see the LanguageTags.LanguageTagFilter method).</li>
@@ -1162,8 +1137,7 @@ is null.</li>
 
 <p>Selects a body part for a multiple-language message (  <code>multipart/multilingual</code>  ) according to the given language priority list and original-language preference.</p>
 
-<pre>  &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>languages</i>: A list of basic language ranges, sorted in descending order of priority (see the LanguageTags.LanguageTagFilter method).</p></li>
@@ -1192,8 +1166,7 @@ is null.</li>
 
 <p>Sets the body of this message to the given byte array. This method doesn&#39;t make a copy of that byte array.</p>
 
-<pre> &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>bytes</i>: A byte array.</li>
@@ -1234,8 +1207,7 @@ is null.</li>
 
 <p>Sets this message&#39;s Date header field to the given date and time.</p>
 
-<pre>  &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>dateTime</i>: An array containing eight elements. Each element of the array (starting from 0) is as follows:</p>
@@ -1249,10 +1221,10 @@ is null.</li>
 <li><p>5 - Second of the minute, from 0 through 60 (this value can go up to 60 to accommodate leap seconds). (Leap seconds are additional seconds added to adjust international atomic time, or TAI, to an approximation of astronomical time known as coordinated universal time, or UTC.)</p></li>
 <li><p>6 - Milliseconds of the second, from 0 through 999. This value is not used to generate the date string, but must still be valid.</p></li>
 <li><p>7 - Number of minutes to subtract from this date and time to get global time. This number can be positive or negative.</p></li>
-</ul></li>
 </ul>
 
-<p>.</p>
+<p>.</p></li>
+</ul>
 
 <p><b>Return Value:</b></p>
 
@@ -1281,8 +1253,7 @@ is null.</p></li>
 
 <p>Sets the name and value of a header field by index. Updates the ContentType and ContentDisposition properties if those header fields have been modified by this method.</p>
 
-<pre>    &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>index</i>: Zero-based index of the header field to set.</p></li>
@@ -1317,8 +1288,7 @@ is null.</p></li>
 
 <p>Sets the value of a header field by index without changing its name. Updates the ContentType and ContentDisposition properties if those header fields have been modified by this method.</p>
 
-<pre>   &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>index</i>: Zero-based index of the header field to set.</p></li>
@@ -1351,8 +1321,7 @@ is null.</p></li>
 
 <p>Sets the name and value of a header field by index. Updates the ContentType and ContentDisposition properties if those header fields have been modified by this method.</p>
 
-<pre>   &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>index</i>: Zero-based index of the header field to set.</p></li>
@@ -1385,8 +1354,7 @@ is null.</p></li>
 
 <p>Sets the value of this message&#39;s header field. If a header field with the same name exists, its value is replaced. If the header field&#39;s name occurs more than once, only the first instance of the header field is replaced. Updates the ContentType and ContentDisposition properties if those header fields have been modified by this method.</p>
 
-<pre>   &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>name</i>: The name of a header field, such as &quot;from&quot; or &quot;subject&quot; .</p></li>
@@ -1418,8 +1386,7 @@ is null.</p></li>
 
 <p>Sets the body of this message to the specified string in Hypertext Markup Language (HTML) format. The character sequences CR (carriage return, &quot;\r&quot;, U+000D), LF (line feed, &quot;\n&quot;, U+000A), and CR/LF will be converted to CR/LF line breaks. Unpaired surrogate code points will be replaced with replacement characters.</p>
 
-<pre> &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>str</i>: A string consisting of the message in HTML format.</li>
@@ -1448,8 +1415,7 @@ is null.</li>
 
 <p>Sets the body of this message to a multipart body with plain text and Hypertext Markup Language (HTML) versions of the same message. The character sequences CR (carriage return, &quot;\r&quot;, U+000D), LF (line feed, &quot;\n&quot;, U+000A), and CR/LF will be converted to CR/LF line breaks. Unpaired surrogate code points will be replaced with replacement characters.</p>
 
-<pre>  &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>text</i>: A string consisting of the plain text version of the message.</p></li>
@@ -1480,8 +1446,7 @@ is null.</li>
 
 <p>Sets the body of this message to a multipart body with plain text, Markdown, and Hypertext Markup Language (HTML) versions of the same message. The character sequences CR (carriage return, &quot;\r&quot;, U+000D), LF (line feed, &quot;\n&quot;, U+000A), and CR/LF will be converted to CR/LF line breaks. Unpaired surrogate code points will be replaced with replacement characters.</p>
 
-<pre>  &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>text</i>: A string consisting of the plain text version of the message. Can be null, in which case the value of the &quot;markdown&quot; parameter is used as the plain text version.</p></li>
@@ -1510,8 +1475,7 @@ is null.</li>
 
 <p>Sets the body of this message to the specified plain text string. The character sequences CR (carriage return, &quot;\r&quot;, U+000D), LF (line feed, &quot;\n&quot;, U+000A), and CR/LF will be converted to CR/LF line breaks. Unpaired surrogate code points will be replaced with replacement characters. This method changes this message&#39;s media type to plain text.</p>
 
-<pre> &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>str</i>: A string consisting of the message in plain text format.</li>

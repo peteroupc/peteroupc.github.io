@@ -19,10 +19,10 @@
 <li><code><a href="#CompareTo_PeterO_Cbor_CBORNumber">CompareTo(PeterO.Cbor.CBORNumber)</a></code> - Compares two CBOR numbers.</li>
 <li><code><a href="#Divide_PeterO_Cbor_CBORNumber">Divide(PeterO.Cbor.CBORNumber)</a></code> - Returns the quotient of this number and another number.</li>
 <li><code><a href="#FromCBORObject_PeterO_Cbor_CBORObject">FromCBORObject(PeterO.Cbor.CBORObject)</a></code> - Creates a CBOR number object from a CBOR object representing a number (that is, one for which the IsNumber property in.</li>
-<li><code><a href="#Multiply_PeterO_Cbor_CBORNumber">Multiply(PeterO.Cbor.CBORNumber)</a></code> - Not documented yet.</li>
+<li><code><a href="#Multiply_PeterO_Cbor_CBORNumber">Multiply(PeterO.Cbor.CBORNumber)</a></code> - Returns a CBOR number expressing the product of this number and the given number.</li>
 <li><code><a href="#Negate">Negate()</a></code> - Returns a CBOR number with the same value as this one but with the sign reversed.</li>
 <li><code><a href="#Remainder_PeterO_Cbor_CBORNumber">Remainder(PeterO.Cbor.CBORNumber)</a></code> - Returns the remainder when this number is divided by another number.</li>
-<li><code><a href="#Subtract_PeterO_Cbor_CBORNumber">Subtract(PeterO.Cbor.CBORNumber)</a></code> - Not documented yet.</li>
+<li><code><a href="#Subtract_PeterO_Cbor_CBORNumber">Subtract(PeterO.Cbor.CBORNumber)</a></code> - Returns a number that expresses this number minus another.</li>
 <li><code><a href="#ToCBORObject">ToCBORObject()</a></code> - Converts this object&#39;s value to a CBOR object.</li>
 <li><code><a href="#ToString">ToString()</a></code> - Returns the value of this object in text form.</li>
 </ul>
@@ -142,18 +142,18 @@ is null.</li>
     PeterO.Cbor.CBORNumber b);
 </pre>
 
-<p>Not documented yet.</p>
+<p>Returns a CBOR number expressing the product of this number and the given number.</p>
 
 <pre> &lt;b&gt;Parameters:&lt;/b&gt;
 </pre>
 
 <ul>
-<li><i>b</i>: Not documented yet.</li>
+<li><i>b</i>: The second operand to the multiplication operation.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p>A CBORNumber object.</p>
+<p>A number expressing the product of this number and the given number.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -213,18 +213,18 @@ is null.</li>
     PeterO.Cbor.CBORNumber b);
 </pre>
 
-<p>Not documented yet.</p>
+<p>Returns a number that expresses this number minus another.</p>
 
 <pre> &lt;b&gt;Parameters:&lt;/b&gt;
 </pre>
 
 <ul>
-<li><i>b</i>: Not documented yet.</li>
+<li><i>b</i>: The second operand to the subtraction.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p>A CBORNumber object.</p>
+<p>A CBOR number that expresses this number minus the given number.</p>
 
 <p><b>Exceptions:</b></p>
 

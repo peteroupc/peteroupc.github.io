@@ -6,13 +6,12 @@
 
 <h1>com.upokecenter.util.ExtendedRational</h1>
 
-<pre>@Deprecated public final class ExtendedRational extends Object implements Comparable&lt;ExtendedRational&gt;
+<pre>@Deprecated public final class ExtendedRational extends java.lang.Object implements java.lang.Comparable&lt;ExtendedRational&gt;
 </pre>
 
-<p>Deprecated.</p>
-
-<div class='deprecationComment'>Use ERational from PeterO.Numbers/com.upokecenter.numbers and the output of
-this class's toString method.</div>
+<p>Deprecated.
+Use ERational from PeterO.Numbers/com.upokecenter.numbers and the
+ output of this class&#39;s toString method.</p>
 
 <h2>Fields</h2>
 
@@ -43,8 +42,9 @@ Deprecated. A rational number for zero.</li>
 
 <ul>
 <li><code>ExtendedRational​(BigInteger numerator,
-            BigInteger denominator) ExtendedRational</code><br>
-Deprecated. Initializes a new instance of the ExtendedRational class.</li>
+            BigInteger denominator) com.upokecenter.ExtendedRational</code><br>
+Deprecated. Initializes a new instance of the com.upokecenter.ExtendedRational
+class.</li>
 </ul>
 
 <h2>Methods</h2>
@@ -60,7 +60,7 @@ Deprecated. Creates a rational number with the given numerator and denominator.<
 Deprecated. Creates a rational number with the given numerator and denominator.</li>
 <li><code>boolean equals​(ExtendedRational other)</code><br>
 Deprecated. Checks whether this and another value are equal.</li>
-<li><code>boolean equals​(Object obj)</code><br>
+<li><code>boolean equals​(java.lang.Object obj)</code><br>
 Deprecated. Checks whether this and another value are equal.</li>
 <li><code>BigInteger getDenominator()</code><br>
 Deprecated. Gets this object&#39;s denominator.</li>
@@ -85,7 +85,7 @@ Use ERational from PeterO.Numbers/com.upokecenter.numbers.</li>
 Deprecated.
 Use ERational from PeterO.Numbers/com.upokecenter.numbers.
 Use ERational from PeterO.Numbers/com.upokecenter.numbers.</li>
-<li><code>String toString()</code><br>
+<li><code>java.lang.String toString()</code><br>
 Deprecated. Converts this object to a text string.</li>
 </ul>
 
@@ -96,9 +96,8 @@ Deprecated. Converts this object to a text string.</li>
 <pre>@Deprecated public static final ExtendedRational NaN
 </pre>
 
-<p>Deprecated.</p>
-
-<div class='deprecationComment'>Use ERational from PeterO.Numbers/com.upokecenter.numbers.</div>
+<p>Deprecated.
+Use ERational from PeterO.Numbers/com.upokecenter.numbers.</p>
 
 <h3>NegativeInfinity</h3>
 
@@ -133,9 +132,8 @@ Deprecated. Converts this object to a text string.</li>
 <pre>@Deprecated public static final ExtendedRational SignalingNaN
 </pre>
 
-<p>Deprecated.</p>
-
-<div class='deprecationComment'>Use ERational from PeterO.Numbers/com.upokecenter.numbers.</div>
+<p>Deprecated.
+Use ERational from PeterO.Numbers/com.upokecenter.numbers.</p>
 
 <h3>Ten</h3>
 
@@ -171,9 +169,8 @@ Deprecated. Converts this object to a text string.</li>
 <pre>@Deprecated public final boolean isFinite()
 </pre>
 
-<p>Deprecated.</p>
-
-<div class='deprecationComment'>Use ERational from PeterO.Numbers/com.upokecenter.numbers.</div>
+<p>Deprecated.
+Use ERational from PeterO.Numbers/com.upokecenter.numbers.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -192,7 +189,7 @@ otherwise, . <code>false</code>.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li><code>true</code> If this object&#39;s value is negative; otherwise, . <code>
+<li><code>true</code> If this object&#39;s value is negative; otherwise,. <code>
 false</code>.</li>
 </ul>
 
@@ -201,9 +198,15 @@ false</code>.</li>
 <pre>@Deprecated public final boolean isZero()
 </pre>
 
-<p>Deprecated.</p>
+<p>Deprecated.
+Use ERational from PeterO.Numbers/com.upokecenter.numbers.</p>
 
-<div class='deprecationComment'>Use ERational from PeterO.Numbers/com.upokecenter.numbers.</div>
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li><code>true</code> If this object&#39;s value equals 0; otherwise,. <code>
+false</code>.</li>
+</ul>
 
 <h3>getNumerator</h3>
 
@@ -225,9 +228,8 @@ object is negative).</li>
 <pre>@Deprecated public final int signum()
 </pre>
 
-<p>Deprecated.</p>
-
-<div class='deprecationComment'>Use ERational from PeterO.Numbers/com.upokecenter.numbers.</div>
+<p>Deprecated.
+Use ERational from PeterO.Numbers/com.upokecenter.numbers.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -295,13 +297,13 @@ signed integer.</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>NullPointerException</code> - The parameter <code>numerator</code> or
+<li><code>java.lang.NullPointerException</code> - The parameter <code>numerator</code> or
 <code>denominator</code> is null.</li>
 </ul>
 
 <h3>toString</h3>
 
-<pre>public String toString()
+<pre>public java.lang.String toString()
 </pre>
 
 <p>Deprecated.</p>
@@ -309,7 +311,7 @@ signed integer.</p></li>
 <p><strong>Overrides:</strong></p>
 
 <ul>
-<li><code>toString</code> in class <code>Object</code></li>
+<li><code>toString</code> in class <code>java.lang.Object</code></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -330,7 +332,7 @@ number of the following form: [-]numerator/denominator.</li>
 <p><strong>Specified by:</strong></p>
 
 <ul>
-<li><code>compareTo</code> in interface <code>Comparable&lt;ExtendedRational&gt;</code></li>
+<li><code>compareTo</code> in interface <code>java.lang.Comparable&lt;ExtendedRational&gt;</code></li>
 </ul>
 
 <p><strong>Parameters:</strong></p>
@@ -362,12 +364,14 @@ than 0 if greater than the other value.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>Either <code>true</code> or <code>false</code> .</li>
+<li>Either
+  <code>true</code> or
+  <code>false</code> .</li>
 </ul>
 
 <h3>equals</h3>
 
-<pre>public boolean equals​(Object obj)
+<pre>public boolean equals​(java.lang.Object obj)
 </pre>
 
 <p>Deprecated.</p>
@@ -375,19 +379,23 @@ than 0 if greater than the other value.</li>
 <p><strong>Overrides:</strong></p>
 
 <ul>
-<li><code>equals</code> in class <code>Object</code></li>
+<li><code>equals</code> in class <code>java.lang.Object</code></li>
 </ul>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>obj</code> - The parameter <code>obj</code> is an arbitrary object.</li>
+<li><code>obj</code> - The parameter
+  <code>obj</code>
+   is an arbitrary object.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>Either <code>true</code> or <code>false</code> .</li>
+<li>Either
+  <code>true</code> or
+  <code>false</code> .</li>
 </ul>
 
 <h3>hashCode</h3>
@@ -400,7 +408,7 @@ than 0 if greater than the other value.</li>
 <p><strong>Overrides:</strong></p>
 
 <ul>
-<li><code>hashCode</code> in class <code>Object</code></li>
+<li><code>hashCode</code> in class <code>java.lang.Object</code></li>
 </ul>
 
 <p><strong>Returns:</strong></p>

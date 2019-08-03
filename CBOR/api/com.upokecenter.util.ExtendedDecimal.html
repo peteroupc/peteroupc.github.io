@@ -6,13 +6,12 @@
 
 <h1>com.upokecenter.util.ExtendedDecimal</h1>
 
-<pre>@Deprecated public final class ExtendedDecimal extends Object implements Comparable&lt;ExtendedDecimal&gt;
+<pre>@Deprecated public final class ExtendedDecimal extends java.lang.Object implements java.lang.Comparable&lt;ExtendedDecimal&gt;
 </pre>
 
-<p>Deprecated.</p>
-
-<div class='deprecationComment'>Use EDecimal from PeterO.Numbers/com.upokecenter.numbers and the output of
-this class's toString method.</div>
+<p>Deprecated.
+Use EDecimal from PeterO.Numbers/com.upokecenter.numbers and the
+ output of this class&#39;s toString method.</p>
 
 <h2>Fields</h2>
 
@@ -53,11 +52,11 @@ Deprecated. Creates a number with the value exponent*10^mantissa.</li>
 Deprecated.
 Use EDecimal from PeterO.Numbers/com.upokecenter.numbers.
 Use EDecimal from PeterO.Numbers/com.upokecenter.numbers.</li>
-<li><code>boolean equals​(Object obj)</code><br>
+<li><code>boolean equals​(java.lang.Object obj)</code><br>
 Deprecated. Determines whether this object&#39;s mantissa and exponent are equal to those of
 another object and that other object is an arbitrary-precision
 decimal number.</li>
-<li><code>static ExtendedDecimal FromString​(String str)</code><br>
+<li><code>static ExtendedDecimal FromString​(java.lang.String str)</code><br>
 Deprecated. Creates a decimal number from a text string that represents a number.</li>
 <li><code>BigInteger getExponent()</code><br>
 Deprecated. Gets this object&#39;s exponent.</li>
@@ -88,7 +87,7 @@ Use EDecimal from PeterO.Numbers/com.upokecenter.numbers.</li>
 Deprecated. Converts this value to a 64-bit floating-point number.</li>
 <li><code>float ToSingle()</code><br>
 Deprecated. Converts this value to a 32-bit floating-point number.</li>
-<li><code>String toString()</code><br>
+<li><code>java.lang.String toString()</code><br>
 Deprecated. Converts this value to a string.</li>
 </ul>
 
@@ -99,18 +98,16 @@ Deprecated. Converts this value to a string.</li>
 <pre>@Deprecated public static final ExtendedDecimal One
 </pre>
 
-<p>Deprecated.</p>
-
-<div class='deprecationComment'>Use EDecimal from PeterO.Numbers/com.upokecenter.numbers.</div>
+<p>Deprecated.
+Use EDecimal from PeterO.Numbers/com.upokecenter.numbers.</p>
 
 <h3>Zero</h3>
 
 <pre>@Deprecated public static final ExtendedDecimal Zero
 </pre>
 
-<p>Deprecated.</p>
-
-<div class='deprecationComment'>Use EDecimal from PeterO.Numbers/com.upokecenter.numbers.</div>
+<p>Deprecated.
+Use EDecimal from PeterO.Numbers/com.upokecenter.numbers.</p>
 
 <h3>NegativeZero</h3>
 
@@ -202,9 +199,8 @@ value is negative (including a negative NaN).</li>
 <pre>@Deprecated public boolean equals​(ExtendedDecimal other)
 </pre>
 
-<p>Deprecated.</p>
-
-<div class='deprecationComment'>Use EDecimal from PeterO.Numbers/com.upokecenter.numbers.</div>
+<p>Deprecated.
+Use EDecimal from PeterO.Numbers/com.upokecenter.numbers.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -216,12 +212,12 @@ value is negative (including a negative NaN).</li>
 
 <ul>
 <li><code>true</code> if this object&#39;s mantissa and exponent are equal to
-those of another object; otherwise, <code>false</code> .</li>
+those of another object; otherwise, <code>false</code>.</li>
 </ul>
 
 <h3>equals</h3>
 
-<pre>public boolean equals​(Object obj)
+<pre>public boolean equals​(java.lang.Object obj)
 </pre>
 
 <p>Deprecated.</p>
@@ -229,19 +225,21 @@ those of another object; otherwise, <code>false</code> .</li>
 <p><strong>Overrides:</strong></p>
 
 <ul>
-<li><code>equals</code> in class <code>Object</code></li>
+<li><code>equals</code> in class <code>java.lang.Object</code></li>
 </ul>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>obj</code> - The parameter <code>obj</code> is an arbitrary object.</li>
+<li><code>obj</code> - The parameter
+  <code>obj</code>
+   is an arbitrary object.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li><code>true</code> if the objects are equal; otherwise, <code>false</code> .</li>
+<li><code>true</code> if the objects are equal; otherwise, <code>false</code>.</li>
 </ul>
 
 <h3>hashCode</h3>
@@ -254,7 +252,7 @@ those of another object; otherwise, <code>false</code> .</li>
 <p><strong>Overrides:</strong></p>
 
 <ul>
-<li><code>hashCode</code> in class <code>Object</code></li>
+<li><code>hashCode</code> in class <code>java.lang.Object</code></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -286,13 +284,13 @@ those of another object; otherwise, <code>false</code> .</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>NullPointerException</code> - The parameter <code>mantissa</code> or
+<li><code>java.lang.NullPointerException</code> - The parameter <code>mantissa</code> or
 <code>exponent</code> is null.</li>
 </ul>
 
 <h3>FromString</h3>
 
-<pre>public static ExtendedDecimal FromString​(String str)
+<pre>public static ExtendedDecimal FromString​(java.lang.String str)
 </pre>
 
 <p>Deprecated.</p>
@@ -313,8 +311,8 @@ given string.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>NullPointerException</code> - The parameter <code>str</code> is null.</p></li>
-<li><p><code>NumberFormatException</code> - The parameter <code>str</code> is not a correctly
+<li><p><code>java.lang.NullPointerException</code> - The parameter <code>str</code> is null.</p></li>
+<li><p><code>java.lang.NumberFormatException</code> - The parameter <code>str</code> is not a correctly
 formatted number string.</p></li>
 </ul>
 
@@ -350,7 +348,7 @@ exceeds the range of a 64-bit floating point number.</li>
 
 <h3>toString</h3>
 
-<pre>public String toString()
+<pre>public java.lang.String toString()
 </pre>
 
 <p>Deprecated.</p>
@@ -358,7 +356,7 @@ exceeds the range of a 64-bit floating point number.</li>
 <p><strong>Overrides:</strong></p>
 
 <ul>
-<li><code>toString</code> in class <code>Object</code></li>
+<li><code>toString</code> in class <code>java.lang.Object</code></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -378,7 +376,7 @@ exceeds the range of a 64-bit floating point number.</li>
 
 <ul>
 <li><code>true</code> if this object is not a number (NaN); otherwise, <code>
-false</code> .</li>
+false</code>.</li>
 </ul>
 
 <h3>IsInfinity</h3>
@@ -392,7 +390,7 @@ false</code> .</li>
 
 <ul>
 <li><code>true</code> if this object is positive or negative infinity;
-otherwise, <code>false</code> .</li>
+otherwise, <code>false</code>.</li>
 </ul>
 
 <h3>isNegative</h3>
@@ -400,9 +398,8 @@ otherwise, <code>false</code> .</li>
 <pre>@Deprecated public final boolean isNegative()
 </pre>
 
-<p>Deprecated.</p>
-
-<div class='deprecationComment'>Use EDecimal from PeterO.Numbers/com.upokecenter.numbers.</div>
+<p>Deprecated.
+Use EDecimal from PeterO.Numbers/com.upokecenter.numbers.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -416,15 +413,14 @@ otherwise, . <code>false</code>.</li>
 <pre>@Deprecated public boolean IsQuietNaN()
 </pre>
 
-<p>Deprecated.</p>
-
-<div class='deprecationComment'>Use EDecimal from PeterO.Numbers/com.upokecenter.numbers.</div>
+<p>Deprecated.
+Use EDecimal from PeterO.Numbers/com.upokecenter.numbers.</p>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
 <li><code>true</code> if this object is a quiet not-a-number value;
-otherwise, <code>false</code> .</li>
+otherwise, <code>false</code>.</li>
 </ul>
 
 <h3>compareTo</h3>
@@ -437,7 +433,7 @@ otherwise, <code>false</code> .</li>
 <p><strong>Specified by:</strong></p>
 
 <ul>
-<li><code>compareTo</code> in interface <code>Comparable&lt;ExtendedDecimal&gt;</code></li>
+<li><code>compareTo</code> in interface <code>java.lang.Comparable&lt;ExtendedDecimal&gt;</code></li>
 </ul>
 
 <p><strong>Parameters:</strong></p>
@@ -458,9 +454,8 @@ than 0 if greater than the other extended decimal.</li>
 <pre>@Deprecated public final int signum()
 </pre>
 
-<p>Deprecated.</p>
-
-<div class='deprecationComment'>Use EDecimal from PeterO.Numbers/com.upokecenter.numbers.</div>
+<p>Deprecated.
+Use EDecimal from PeterO.Numbers/com.upokecenter.numbers.</p>
 
 <p><strong>Returns:</strong></p>
 

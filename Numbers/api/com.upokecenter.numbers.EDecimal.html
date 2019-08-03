@@ -967,8 +967,8 @@ value is negative (including a negative NaN).</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>java.lang.NullPointerException</code> - The parameter &quot;mantissa&quot; or &quot;exponent&quot; is
-null.</li>
+<li><code>java.lang.NullPointerException</code> - The parameter <code>mantissa</code> or <code>
+exponent</code> is null.</li>
 </ul>
 
 <h3>CreateNaN</h3>
@@ -1027,8 +1027,8 @@ is required to do so.</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>java.lang.NullPointerException</code> - The parameter &quot;diag&quot; is null or is less than
-0.</li>
+<li><code>java.lang.NullPointerException</code> - The parameter <code>diag</code> is null or is less
+than 0.</li>
 </ul>
 
 <h3>FromDouble</h3>
@@ -1060,7 +1060,8 @@ is required to do so.</p></li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>An arbitrary-precision decimal number with the same value as &quot;dbl&quot;.</li>
+<li>An arbitrary-precision decimal number with the same value as <code>
+dbl</code>.</li>
 </ul>
 
 <h3>FromEInteger</h3>
@@ -1125,7 +1126,7 @@ Renamed to FromEFloat.</p>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>java.lang.NullPointerException</code> - The parameter &quot;bigfloat&quot; is null.</li>
+<li><code>java.lang.NullPointerException</code> - The parameter <code>bigfloat</code> is null.</li>
 </ul>
 
 <h3>FromBoolean</h3>
@@ -1218,7 +1219,8 @@ number.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>An arbitrary-precision decimal number with the same value as &quot;flt&quot;.</li>
+<li>An arbitrary-precision decimal number with the same value as <code>
+flt</code>.</li>
 </ul>
 
 <h3>FromString</h3>
@@ -1246,7 +1248,7 @@ given string.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>java.lang.NumberFormatException</code> - The parameter &quot;str&quot; is not a correctly
+<li><code>java.lang.NumberFormatException</code> - The parameter <code>str</code> is not a correctly
 formatted number string.</li>
 </ul>
 
@@ -1280,7 +1282,7 @@ given string.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>java.lang.NullPointerException</code> - The parameter &quot;str&quot; is null.</li>
+<li><code>java.lang.NullPointerException</code> - The parameter <code>str</code> is null.</li>
 </ul>
 
 <h3>FromString</h3>
@@ -1312,12 +1314,12 @@ given string.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.NumberFormatException</code> - The parameter &quot;str&quot; is not a correctly
+<li><p><code>java.lang.NumberFormatException</code> - The parameter <code>str</code> is not a correctly
 formatted number string.</p></li>
-<li><p><code>java.lang.NullPointerException</code> - The parameter &quot;str&quot; is null.</p></li>
-<li><p><code>java.lang.IllegalArgumentException</code> - Either &quot;offset&quot; or &quot;length&quot; is less than 0 or
-greater than &quot;str&quot;&#39;s length, or &quot;str&quot;&#39;s length minus &quot;offset&quot; is
-less than &quot;length&quot;.</p></li>
+<li><p><code>java.lang.NullPointerException</code> - The parameter <code>str</code> is null.</p></li>
+<li><p><code>java.lang.IllegalArgumentException</code> - Either <code>offset</code> or <code>length</code> is less
+than 0 or greater than <code>str</code> &#39;s length, or <code>str</code> &#39;s
+length minus <code>offset</code> is less than <code>length</code>.</p></li>
 <li><p><code>java.lang.NullPointerException</code> - The parameter <code>str</code> is null.</p></li>
 </ul>
 
@@ -1368,13 +1370,13 @@ given string.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.NullPointerException</code> - The parameter &quot;str&quot; is null.</p></li>
-<li><p><code>java.lang.IllegalArgumentException</code> - Either &quot;offset&quot; or &quot;length&quot; is less than 0 or
-greater than &quot;str&quot; &#39;s length, or &quot;str&quot; &#39;s length minus &quot;offset&quot; is
-less than &quot;length&quot;.</p></li>
-<li><p><code>java.lang.IllegalArgumentException</code> - Either &quot;offset&quot; or &quot;length&quot; is less than 0 or
-greater than &quot;str&quot;&#39;s length, or &quot;str&quot;&#39;s length minus &quot;offset&quot; is
-less than &quot;length&quot;.</p></li>
+<li><p><code>java.lang.NullPointerException</code> - The parameter <code>str</code> is null.</p></li>
+<li><p><code>java.lang.IllegalArgumentException</code> - Either <code>offset</code> or <code>length</code> is less
+than 0 or greater than <code>str</code> &#39;s length, or <code>str</code> &#39;s
+length minus <code>offset</code> is less than <code>length</code>.</p></li>
+<li><p><code>java.lang.IllegalArgumentException</code> - Either <code>offset</code> or <code>length</code> is less
+than 0 or greater than <code>str</code> &#39;s length, or <code>str</code> &#39;s
+length minus <code>offset</code> is less than <code>length</code>.</p></li>
 <li><p><code>java.lang.NullPointerException</code> - The parameter <code>str</code> is null.</p></li>
 </ul>
 
@@ -1583,8 +1585,9 @@ can&#39;t be null, as π can never be represented exactly.</i>.</li>
 
 <ul>
 <li>The constant π rounded to the given precision. Signals FlagInvalid
-and returns not-a-number (NaN) if the parameter &quot;ctx&quot; is null or the
-precision is unlimited (the context&#39;s Precision property is 0).</li>
+and returns not-a-number (NaN) if the parameter <code>ctx</code> is null
+or the precision is unlimited (the context&#39;s Precision property is
+0).</li>
 </ul>
 
 <h3>Abs</h3>
@@ -1631,7 +1634,7 @@ of this object.).</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>java.lang.NullPointerException</code> - The parameter &quot;other&quot; is null.</li>
+<li><code>java.lang.NullPointerException</code> - The parameter <code>other</code> is null.</li>
 </ul>
 
 <h3>Abs</h3>
@@ -1735,7 +1738,7 @@ which case the precision is unlimited and no rounding is needed.</p></li>
 <ul>
 <li>Less than 0 if this object&#39;s value is less than the other value, or
 greater than 0 if this object&#39;s value is greater than the other
-value or if &quot;other&quot; is null, or 0 if both values are equal.</li>
+value or if <code>other</code> is null, or 0 if both values are equal.</li>
 </ul>
 
 <h3>CompareToBinary</h3>
@@ -2605,9 +2608,9 @@ Specification, any rounding mode is allowed.).</li>
 <ul>
 <li>Exponential of this object. If this object&#39;s value is 1, returns an
 approximation to &quot; e&quot; within the given precision. Signals
-FlagInvalid and returns not-a-number (NaN) if the parameter &quot;ctx&quot; is
-null or the precision is unlimited (the context&#39;s Precision property
-is 0).</li>
+FlagInvalid and returns not-a-number (NaN) if the parameter <code>
+ctx</code> is null or the precision is unlimited (the context&#39;s Precision
+property is 0).</li>
 </ul>
 
 <h3>hashCode</h3>
@@ -2745,9 +2748,9 @@ this object is less than 0 (the result would be a complex number
 with a real part equal to Ln of this object&#39;s absolute value and an
 imaginary part equal to pi, but the return value is still NaN.).
 Signals FlagInvalid and returns not-a-number (NaN) if the parameter
-&quot;ctx&quot; is null or the precision is unlimited (the context&#39;s Precision
-property is 0). Signals no flags and returns negative infinity if
-this object&#39;s value is 0.</li>
+<code>ctx</code> is null or the precision is unlimited (the context&#39;s
+Precision property is 0). Signals no flags and returns negative
+infinity if this object&#39;s value is 0.</li>
 </ul>
 
 <h3>Log10</h3>
@@ -2776,9 +2779,9 @@ any rounding mode is allowed.).</li>
 <ul>
 <li>Ln(this object)/Ln(10). Signals the flag FlagInvalid and returns
 not-a-number (NaN) if this object is less than 0. Signals
-FlagInvalid and returns not-a-number (NaN) if the parameter &quot;ctx&quot; is
-null or the precision is unlimited (the context&#39;s Precision property
-is 0).</li>
+FlagInvalid and returns not-a-number (NaN) if the parameter <code>
+ctx</code> is null or the precision is unlimited (the context&#39;s Precision
+property is 0).</li>
 </ul>
 
 <h3>MovePointLeft</h3>
@@ -2800,8 +2803,8 @@ the right by this number&#39;s absolute value.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A number whose exponent is decreased by &quot;places&quot;, but not to more
-than 0.</li>
+<li>A number whose exponent is decreased by <code>places</code>, but not to
+more than 0.</li>
 </ul>
 
 <h3>MovePointLeft</h3>
@@ -2851,8 +2854,8 @@ point to the right by this number&#39;s absolute value.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A number whose exponent is decreased by &quot;bigPlaces&quot;, but not to more
-than 0.</li>
+<li>A number whose exponent is decreased by <code>bigPlaces</code>, but not
+to more than 0.</li>
 </ul>
 
 <h3>MovePointLeft</h3>
@@ -2902,8 +2905,8 @@ to the left by this number&#39;s absolute value.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A number whose exponent is increased by &quot;places&quot;, but not to more
-than 0.</li>
+<li>A number whose exponent is increased by <code>places</code>, but not to
+more than 0.</li>
 </ul>
 
 <h3>MovePointRight</h3>
@@ -2953,8 +2956,8 @@ point to the left by this number&#39;s absolute value.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A number whose exponent is increased by &quot;bigPlaces&quot;, but not to more
-than 0.</li>
+<li>A number whose exponent is increased by <code>bigPlaces</code>, but not
+to more than 0.</li>
 </ul>
 
 <h3>MovePointRight</h3>
@@ -3199,7 +3202,8 @@ after multiplying and subtracting.</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>java.lang.NullPointerException</code> - The parameter &quot;op&quot; or &quot;subtrahend&quot; is null.</li>
+<li><code>java.lang.NullPointerException</code> - The parameter <code>op</code> or <code>subtrahend</code>
+is null.</li>
 </ul>
 
 <h3>Negate</h3>
@@ -3268,8 +3272,9 @@ the pre-existing flags).</li>
 <ul>
 <li>Returns the largest value that&#39;s less than the given value. Returns
 negative infinity if the result is negative infinity. Signals
-FlagInvalid and returns not-a-number (NaN) if the parameter &quot;ctx&quot; is
-null, the precision is 0, or &quot;ctx&quot; has an unlimited exponent range.</li>
+FlagInvalid and returns not-a-number (NaN) if the parameter <code>
+ctx</code> is null, the precision is 0, or <code>ctx</code> has an unlimited
+exponent range.</li>
 </ul>
 
 <h3>NextPlus</h3>
@@ -3294,8 +3299,8 @@ the pre-existing flags).</li>
 <ul>
 <li>Returns the smallest value that&#39;s greater than the given
 value.Signals FlagInvalid and returns not-a-number (NaN) if the
-parameter &quot;ctx&quot; is null, the precision is 0, or &quot;ctx&quot; has an
-unlimited exponent range.</li>
+parameter <code>ctx</code> is null, the precision is 0, or <code>ctx</code>
+has an unlimited exponent range.</li>
 </ul>
 
 <h3>NextToward</h3>
@@ -3349,8 +3354,8 @@ unlimited and rounding isn&#39;t needed.</li>
 
 <ul>
 <li>The closest value to this object&#39;s value, rounded to the specified
-precision. Returns the same value as this object if &quot;ctx&quot; is null or
-the precision and exponent range are unlimited.</li>
+precision. Returns the same value as this object if <code>ctx</code> is
+null or the precision and exponent range are unlimited.</li>
 </ul>
 
 <h3>Pow</h3>
@@ -4274,8 +4279,8 @@ which case the precision is unlimited and no rounding is needed.</li>
 
 <ul>
 <li>The closest value to this object&#39;s value, rounded to the specified
-precision. Returns the same value as this object if &quot;ctx&quot; is null or
-the precision and exponent range are unlimited.</li>
+precision. Returns the same value as this object if <code>ctx</code> is
+null or the precision and exponent range are unlimited.</li>
 </ul>
 
 <h3>ScaleByPowerOfTen</h3>
@@ -4395,8 +4400,8 @@ Arithmetic Specification, any rounding mode is allowed.).</li>
 <li>The square root. Signals the flag FlagInvalid and returns NaN if
 this object is less than 0 (the square root would be a complex
 number, but the return value is still NaN). Signals FlagInvalid and
-returns not-a-number (NaN) if the parameter &quot;ctx&quot; is null or the
-precision is unlimited (the context&#39;s Precision property is 0).</li>
+returns not-a-number (NaN) if the parameter <code>ctx</code> is null or
+the precision is unlimited (the context&#39;s Precision property is 0).</li>
 </ul>
 
 <h3>SquareRoot</h3>
@@ -4425,8 +4430,8 @@ Arithmetic Specification, any rounding mode is allowed.).</li>
 <li>The square root. Signals the flag FlagInvalid and returns NaN if
 this object is less than 0 (the square root would be a complex
 number, but the return value is still NaN). Signals FlagInvalid and
-returns not-a-number (NaN) if the parameter &quot;ctx&quot; is null or the
-precision is unlimited (the context&#39;s Precision property is 0).</li>
+returns not-a-number (NaN) if the parameter <code>ctx</code> is null or
+the precision is unlimited (the context&#39;s Precision property is 0).</li>
 </ul>
 
 <h3>Subtract</h3>
@@ -4476,7 +4481,7 @@ which case the precision is unlimited and no rounding is needed.</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>java.lang.NullPointerException</code> - The parameter &quot;otherValue&quot; is null.</li>
+<li><code>java.lang.NullPointerException</code> - The parameter <code>otherValue</code> is null.</li>
 </ul>
 
 <h3>ToDouble</h3>
