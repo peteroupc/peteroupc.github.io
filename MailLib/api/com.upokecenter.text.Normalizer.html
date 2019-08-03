@@ -116,8 +116,8 @@ class.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li><code>true</code> if this string is normalized; otherwise, <code>false</code>.
-Returns <code>false</code> if the string contains an unpaired surrogate
+<li><code>true</code> if this string is normalized; otherwise, <code>false</code>
+. Returns <code>false</code> if the string contains an unpaired surrogate
 code point.</li>
 </ul>
 
@@ -167,6 +167,10 @@ length minus <code>index</code> is less than <code>length</code>.</p></li>
 <li><p><code>java.lang.IllegalArgumentException</code> - Either &quot;index&quot; or &quot;length&quot; is less than 0 or
 greater than &quot;chars&quot;&#39;s length, or &quot;chars&quot;&#39;s length minus &quot;index&quot; is
 less than &quot;length&quot;.</p></li>
+<li><p><code>java.lang.IllegalArgumentException</code> - Either &quot;index&quot; or &quot;length&quot; is less than 0 or
+greater than &quot;chars&quot;&#39;s length, or &quot;chars&quot;&#39;s length minus &quot;index&quot; is
+less than &quot;length&quot;.</p></li>
+<li><p><code>java.lang.NullPointerException</code> - The parameter <code>chars</code> is null.</p></li>
 </ul>
 
 <p><a href="/MailLib/">Back to MailLib start page.</a></p>

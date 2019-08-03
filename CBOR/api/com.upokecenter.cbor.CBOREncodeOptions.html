@@ -43,6 +43,10 @@ Initializes a new instance of the CBOREncodeOptions class.</li>
 <li><code>boolean getAllowDuplicateKeys()</code><br>
 Gets a value indicating whether to allow duplicate keys when reading CBOR
 objects from a data stream.</li>
+<li><code>boolean getAllowEmpty() null</code><br>
+Gets a value indicating whether decoding a CBOR object will return
+null instead of a CBOR object if the stream has no content or
+the end of the stream is reached before decoding begins.</li>
 <li><code>boolean getCtap2Canonical()</code><br>
 Gets a value indicating whether CBOR objects are written out using the CTAP2
 canonical CBOR encoding form, which is useful for implementing Web
@@ -144,6 +148,25 @@ and sharable strings. The default is false.</li>
 <li>A value indicating whether to encode strings with an
 indefinite-length encoding under certain circumstances. The default
 is false.</li>
+</ul>
+
+<h3>getAllowEmpty</h3>
+
+<pre>public final boolean getAllowEmpty()
+</pre>
+
+<p>Gets a value indicating whether decoding a CBOR object will return
+ <code>null</code> instead of a CBOR object if the stream has no content or
+ the end of the stream is reached before decoding begins. Used only
+ when decoding CBOR objects.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A value indicating whether decoding a CBOR object will return <code>
+null</code> instead of a CBOR object if the stream has no content or the
+end of the stream is reached before decoding begins. The default is
+false.</li>
 </ul>
 
 <h3>getAllowDuplicateKeys</h3>

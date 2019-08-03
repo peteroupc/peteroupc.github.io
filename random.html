@@ -588,7 +588,7 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 <p>In general, GL Shading Language (GLSL) and other programming environments designed for execution on a graphics processing unit (GPU) are stateless (they read from and write to data without storing any state themselves).  Approaches that have been used for random number generation in GPU environments include&mdash;</p>
 
 <ul>
-<li>stateless functions (see &quot;<a href="#Designs_for_PRNGs"><strong>Designs for PRNGs</strong></a>&quot;)<sup><a href="#Note27"><strong>(27)</strong></a></sup>, and</li>
+<li>stateless functions, especially <a href="#Hash_Functions"><strong>hash functions</strong></a> (see &quot;<a href="#Designs_for_PRNGs"><strong>Designs for PRNGs</strong></a>&quot;)<sup><a href="#Note27"><strong>(27)</strong></a></sup>, and</li>
 <li>sampling &quot;noise textures&quot; with random data in each pixel (Peters 2016)<sup><a href="#Note28"><strong>(28)</strong></a></sup>.</li>
 </ul>
 

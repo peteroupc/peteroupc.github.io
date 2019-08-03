@@ -200,6 +200,13 @@ Generates a CBOR object from an array of CBOR-encoded bytes.</li>
            CBOREncodeOptions options) CBOREncodeOptions</code><br>
 Generates a CBOR object from an array of CBOR-encoded bytes, using the given
 CBOREncodeOptions object to control the decoding process.</li>
+<li><code>static CBORObject[] DecodeSequenceFromBytes​(byte[] data)</code><br>
+Generates a sequence of CBOR objects from an array of CBOR-encoded
+bytes.</li>
+<li><code>static CBORObject[] DecodeSequenceFromBytes​(byte[] data,
+                   CBOREncodeOptions options)</code><br>
+Generates a sequence of CBOR objects from an array of CBOR-encoded
+bytes.</li>
 <li><code>static CBORObject Divide​(CBORObject first,
   CBORObject second)</code><br>
 Divides a CBORObject object by the value of a CBORObject object.</li>
@@ -403,6 +410,11 @@ Generates a CBOR object from a data stream in JavaScript Object Notation
 Generates a CBOR object from a data stream in JavaScript Object Notation
 (JSON) format, using the specified options to control the decoding
 process.</li>
+<li><code>static CBORObject[] ReadSequence​(java.io.InputStream stream)</code><br>
+Reads a sequence of objects in CBOR format from a data stream.</li>
+<li><code>static CBORObject[] ReadSequence​(java.io.InputStream stream,
+        CBOREncodeOptions options)</code><br>
+Reads a sequence of objects in CBOR format from a data stream.</li>
 <li><code>static CBORObject Remainder​(CBORObject first,
      CBORObject second)</code><br>
 Finds the remainder that results when a CBORObject object is divided by the
@@ -1177,6 +1189,75 @@ parameter <code>data</code> is empty.</p></li>
 <li><p><code>java.lang.NullPointerException</code> - The parameter <code>data</code> is null.</p></li>
 </ul>
 
+<h3>DecodeSequenceFromBytes</h3>
+
+<pre>public static CBORObject[] DecodeSequenceFromBytes​(byte[] data)
+</pre>
+
+<p>Generates a sequence of CBOR objects from an array of CBOR-encoded
+ bytes.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>data</code> - A byte array in which any number of CBOR objects (including
+zero) are encoded, one after the other. Can be empty, but cannot be
+null.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An array of CBOR objects decoded from the given byte array. Returns
+an empty array if <code>data</code> is empty.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>CBORException</code> - There was an error in reading or
+parsing the data. This includes cases where the last CBOR object in
+the data was read only partly.</p></li>
+<li><p><code>java.lang.NullPointerException</code> - The parameter <code>data</code> is null.</p></li>
+</ul>
+
+<h3>DecodeSequenceFromBytes</h3>
+
+<pre>public static CBORObject[] DecodeSequenceFromBytes​(byte[] data, CBOREncodeOptions options)
+</pre>
+
+<p>Generates a sequence of CBOR objects from an array of CBOR-encoded
+ bytes.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>data</code> - A byte array in which any number of CBOR objects (including
+zero) are encoded, one after the other. Can be empty, but cannot be
+null.</p></li>
+<li><p><code>options</code> - Specifies options to control how the CBOR object is decoded.
+See <code>CBOREncodeOptions</code> for more
+information. In this method, the AllowEmpty property is treated as
+always set regardless of that value as specified in this parameter.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An array of CBOR objects decoded from the given byte array. Returns
+an empty array if <code>data</code> is empty.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>CBORException</code> - There was an error in reading or
+parsing the data. This includes cases where the last CBOR object in
+the data was read only partly.</p></li>
+<li><p><code>java.lang.NullPointerException</code> - The parameter <code>data</code> is null, or the
+parameter <code>options</code> is null.</p></li>
+</ul>
+
 <h3>DecodeFromBytes</h3>
 
 <pre>public static CBORObject DecodeFromBytes​(byte[] data, CBOREncodeOptions options)
@@ -1200,13 +1281,17 @@ parameter <code>data</code> is empty.</p></li>
 
 <ul>
 <li><p><code>data</code> - A byte array in which a single CBOR object is encoded.</p></li>
-<li><p><code>options</code> - The parameter <code>options</code> is a CBOREncodeOptions object.</p></li>
+<li><p><code>options</code> - Specifies options to control how the CBOR object is decoded.
+See <code>CBOREncodeOptions</code> for more
+information.</p></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A CBOR object decoded from the given byte array.</li>
+<li>A CBOR object decoded from the given byte array. Returns null (as
+opposed to CBORObject.Null) if <code>data</code> is empty and the
+AllowEmpty property is set on the given options object.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -1215,8 +1300,10 @@ parameter <code>data</code> is empty.</p></li>
 <li><p><code>CBORException</code> - There was an error in reading or
 parsing the data. This includes cases where not all of the byte
 array represents a CBOR object. This exception is also thrown if the
-parameter <code>data</code> is empty.</p></li>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>data</code> is null.</p></li>
+parameter <code>data</code> is empty unless the AllowEmpty property is
+set on the given options object.</p></li>
+<li><p><code>java.lang.NullPointerException</code> - The parameter <code>data</code> is null, or the
+parameter <code>options</code> is null.</p></li>
 </ul>
 
 <h3>Divide</h3>
@@ -2384,6 +2471,78 @@ is null.</p></li>
 
 <ul>
 <li>A new CBOR map.</li>
+</ul>
+
+<h3>ReadSequence</h3>
+
+<pre>public static CBORObject[] ReadSequence​(java.io.InputStream stream) throws java.io.IOException
+</pre>
+
+<p>Reads a sequence of objects in CBOR format from a data stream. This
+ method will read CBOR objects from the stream until the end of the
+ stream is reached or an error occurs, whichever happens first.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>stream</code> - A readable data stream.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An array containing the CBOR objects that were read from the data
+stream. Returns an empty array if there is no unread data in the
+stream.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>java.lang.NullPointerException</code> - The parameter <code>stream</code> is null, or the
+parameter &quot;options&quot; is null.</p></li>
+<li><p><code>CBORException</code> - There was an error in reading or
+parsing the data, including if the last CBOR object was read only
+partially.</p></li>
+<li><p><code>java.io.IOException</code></p></li>
+</ul>
+
+<h3>ReadSequence</h3>
+
+<pre>public static CBORObject[] ReadSequence​(java.io.InputStream stream, CBOREncodeOptions options) throws java.io.IOException
+</pre>
+
+<p>Reads a sequence of objects in CBOR format from a data stream. This
+ method will read CBOR objects from the stream until the end of the
+ stream is reached or an error occurs, whichever happens first.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>stream</code> - A readable data stream.</p></li>
+<li><p><code>options</code> - Specifies the options to use when decoding the CBOR data
+stream. See CBOREncodeOptions for more information. In this method,
+the AllowEmpty property is treated as set regardless of the value of
+that property specified in this parameter.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An array containing the CBOR objects that were read from the data
+stream. Returns an empty array if there is no unread data in the
+stream.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>java.lang.NullPointerException</code> - The parameter <code>stream</code> is null, or the
+parameter <code>options</code> is null.</p></li>
+<li><p><code>CBORException</code> - There was an error in reading or
+parsing the data, including if the last CBOR object was read only
+partially.</p></li>
+<li><p><code>java.io.IOException</code></p></li>
 </ul>
 
 <h3>Read</h3>

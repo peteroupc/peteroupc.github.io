@@ -12,9 +12,9 @@
 <p>An instance of a number that CBOR or certain CBOR tags can represent. For
  this purpose, infinities and not-a-number or NaN values are
  considered numbers. Currently, this class can store one of the
- following kinds of numbers: 64-bit integers or binary floating-point
- numbers; or arbitrary-precision integers, decimal numbers, binary
- numbers, or rational numbers.</p>
+ following kinds of numbers: 64-bit signed integers or binary
+ floating-point numbers; or arbitrary-precision integers, decimal
+ numbers, binary numbers, or rational numbers.</p>
 
 <h2>Methods</h2>
 
@@ -30,14 +30,15 @@ Creates a CBOR number object from a CBOR object representing a number (that
 is, one for which the IsNumber property in.NET or the isNumber()
 method in Java returns true).</li>
 <li><code>CBORNumber Multiply​(CBORNumber b)</code><br>
-Not documented yet.</li>
+Returns a CBOR number expressing the product of this number and the given
+number.</li>
 <li><code>CBORNumber Negate()</code><br>
 Returns a CBOR number with the same value as this one but with the sign
 reversed.</li>
 <li><code>CBORNumber Remainder​(CBORNumber b)</code><br>
 Returns the remainder when this number is divided by another number.</li>
 <li><code>CBORNumber Subtract​(CBORNumber b)</code><br>
-Not documented yet.</li>
+Returns a number that expresses this number minus another.</li>
 <li><code>CBORObject ToCBORObject()</code><br>
 Converts this object&#39;s value to a CBOR object.</li>
 <li><code>java.lang.String toString()</code><br>
@@ -145,18 +146,18 @@ reversed.</li>
 <pre>public CBORNumber Subtract​(CBORNumber b)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Returns a number that expresses this number minus another.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>b</code> - Not documented yet.</li>
+<li><code>b</code> - The second operand to the subtraction.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A CBORNumber object.</li>
+<li>A CBOR number that expresses this number minus the given number.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -170,18 +171,19 @@ reversed.</li>
 <pre>public CBORNumber Multiply​(CBORNumber b)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Returns a CBOR number expressing the product of this number and the given
+ number.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>b</code> - Not documented yet.</li>
+<li><code>b</code> - The second operand to the multiplication operation.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A CBORNumber object.</li>
+<li>A number expressing the product of this number and the given number.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>

@@ -396,7 +396,7 @@ An application that generates unique random identifiers SHOULD do so by combinin
 
 In general, GL Shading Language (GLSL) and other programming environments designed for execution on a graphics processing unit (GPU) are stateless (they read from and write to data without storing any state themselves).  Approaches that have been used for random number generation in GPU environments include&mdash;
 
-- stateless functions, especially [hash functions](#Hash_Functions) (see "[**Designs for PRNGs**](#Designs_for_PRNGs)")<sup>[**(27)**](#Note27)</sup>, and
+- stateless functions, especially [**hash functions**](#Hash_Functions) (see "[**Designs for PRNGs**](#Designs_for_PRNGs)")<sup>[**(27)**](#Note27)</sup>, and
 - sampling "noise textures" with random data in each pixel (Peters 2016)<sup>[**(28)**](#Note28)</sup>.
 
 (L'Ecuyer et al. 2015)<sup>[**(29)**](#Note29)</sup> discusses parallel generation of random numbers using PRNGs, especially on GPUs.
