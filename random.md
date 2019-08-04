@@ -92,6 +92,7 @@ so that as a result, many applications use RNGs, especially built-in RNGs, that 
 - [**Notes**](#Notes)
 - [**Appendix**](#Appendix)
     - [**Suggested Entropy Size**](#Suggested_Entropy_Size)
+    - [**Bays&ndash;Durham Shuffle**](#Bays_ndash_Durham_Shuffle)
 - [**License**](#License)
 
 <a id=Definitions></a>
@@ -149,20 +150,22 @@ See "[**Statistical RNGs: Requirements**](#Statistical_RNGs_Requirements)" for r
 <a id=Examples_and_Non_Examples></a>
 ### Examples and Non-Examples
 
-Examples of statistical RNGs include the following:
+The following are examples of statistical RNGs:
 - [**xoshiro256&#x2a;&#x2a;**](http://xoshiro.di.unimi.it/xoshiro256starstar.c) (state length 256 bits; nonzero seed).
 - [**xoroshiro128&#x2a;&#x2a;**](http://xoshiro.di.unimi.it/xoroshiro128starstar.c) (state length 128 bits; nonzero seed).
 - `Lehmer64` and `Lehmer128` (for each: state length 128 bits; odd seed, so effectively 127 bits state length).
 - XorShift\* 128/64 (state length 128 bits; nonzero seed).
 - XorShift\* 64/32 (state length 64 bits; nonzero seed).
 - `JKISS`, `JKISS32`, `JLKISS`, `JLKISS64`, described in (Jones 2007/2010)<sup>[**(9)**](#Note9)</sup>.
-- C++'s [**`std::ranlux48` engine**](http://www.cplusplus.com/reference/random/ranlux48/) (state length 577 bits; nonzero seed).
 - PCG (`pcg32`, `pcg64`, and `pcg64_fast` classes), by Melissa O'Neill. See also a [**critique by S. Vigna**](http://pcg.di.unimi.it/pcg.php).
 - Other examples include B. Jenkins's "A small noncryptographic PRNG" (sometimes called `jsf`), C. Doty-Humphrey's `sfc`, `msws` (Widynski 2017)<sup>[**(10)**](#Note10)</sup>, and D. Blackman's `gjrand`.
 
 The following also count as statistical RNGs, but are not preferred:
 - Mersenne Twister shows a [**systematic failure**](http://xoroshiro.di.unimi.it/#quality) in `BigCrush`'s LinearComp test. (See also (Vigna 2016)<sup>[**(11)**](#Note11)</sup>.)
+- C++'s [**`std::ranlux48` engine**](http://www.cplusplus.com/reference/random/ranlux48/) (state length 577 bits; nonzero seed) can be slower than alternatives because it discards many "random" numbers before outputting another.
 - [**`xoroshiro128+`**](http://xoshiro.di.unimi.it/xoroshiro128plus.c), `xoshiro256+`, and `xorshift128+`.  As described by (Blackman and Vigna 2018)<sup>[**(12)**](#Note12)</sup>, these linear PRNGs use weak scramblers, so that each output's lowest bits have low linear complexity even though the output as a whole has excellent statistical randomness.  See also [**"Testing lowest bits in isolation"**](http://xoshiro.di.unimi.it/lowcomp.php).
+
+Generally, implementing a size-N [**Bays&ndash;Durham shuffle**](#Bays_ndash_Durham_Shuffle) on top of a PRNG will extend that PRNG's period (maximum size of a "random" number cycle) to about the number of ways to arrange an N-item list.
 
 Non-examples include the following:
 - Any [**linear congruential generator**](https://en.wikipedia.org/wiki/Linear_congruential_generator) with modulus 2<sup>63</sup> or less (such as `java.util.Random` and C++'s `std::minstd_rand` and `std::minstd_rand0` engines) has a _state length_ of less than 64 bits.
@@ -353,7 +356,7 @@ An application can **shuffle a list**&mdash;
 - by generating a random integer at least 0 and less than the number of permutations, and converting that integer to a permutation, or
 - by doing a [**Fisher&ndash;Yates shuffle**](https://en.wikipedia.org/wiki/Fisher-Yates_shuffle) (which is unfortunately easy to mess up &mdash; see (Atwood 2007)<sup>[**(23)**](#Note23)</sup> &mdash; and is implemented correctly in [**another document of mine**](https://peteroupc.github.io/randomfunc.html)).
 
-Either way, however, if a PRNG's period is less than the number of permutations, then there are **some permutations that that PRNG can't choose** when it shuffles that list. (This is not the same as _generating_ all permutations of a list, which, for a list big enough, can't be done by any computer in a reasonable time.  A PRNG's _period_ is the maximum size of a "random" number sequence it can generate before that sequence repeats; this size is no greater than 2<sup>L</sup> where L is the PRNG's state length.)
+Either way, however, if a PRNG's period (maximum size of a "random" number cycle) is less than the number of permutations, then there are **some permutations that that PRNG can't choose** when it shuffles that list. (This is not the same as _generating_ all permutations of a list, which, for a list big enough, can't be done by any computer in a reasonable time.)
 
 On the other hand, for a list big enough, it's generally **more important to have shuffles act random** than to choose from among all permutations.
 
@@ -668,6 +671,14 @@ The following Python code suggests how many bits of entropy are needed for shuff
         multiple decks of cards in one. """
       return ceillog2(fac(numDecks*numCards)/ \
           (fac(numDecks)**numCards))
+
+<a id=Bays_ndash_Durham_Shuffle></a>
+### Bays&ndash;Durham Shuffle
+
+The Bays&ndash;Durham shuffle extends a PRNG's period (maximum size of a "random" number cycle) by giving it a bigger state.  The following describes the Bays&ndash;Durham shuffle with a size of `tablesize`.  For PRNGs that output 32- or 64-bit integers 0 or greater, a `tablesize` of 256, 512, or 1024 is suggested.
+
+- For the first "random" number, fill a list with as many numbers from the PRNG as `tablesize`, then set `k` to another number from the PRNG, then output `k`.
+- For each additional "random" number, take the entry at position (`k` % `tablesize`) in the list, where '%' is the remainder operator and positions start at 0, then set `k` to that entry, then replace the entry at that position with a new number from the PRNG, then output `k`.
 
 <a id=License></a>
 ## License

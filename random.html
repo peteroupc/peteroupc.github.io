@@ -153,6 +153,7 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 
 <ul>
 <li><a href="#Suggested_Entropy_Size"><strong>Suggested Entropy Size</strong></a></li>
+<li><a href="#Bays_ndash_Durham_Shuffle"><strong>Bays&ndash;Durham Shuffle</strong></a></li>
 </ul></li>
 <li><a href="#License"><strong>License</strong></a></li>
 </ul>
@@ -225,7 +226,7 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 
 <h3>Examples and Non-Examples</h3>
 
-<p>Examples of statistical RNGs include the following:</p>
+<p>The following are examples of statistical RNGs:</p>
 
 <ul>
 <li><a href="http://xoshiro.di.unimi.it/xoshiro256starstar.c"><strong>xoshiro256&#x2a;&#x2a;</strong></a> (state length 256 bits; nonzero seed).</li>
@@ -234,7 +235,6 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 <li>XorShift* 128/64 (state length 128 bits; nonzero seed).</li>
 <li>XorShift* 64/32 (state length 64 bits; nonzero seed).</li>
 <li><code>JKISS</code>, <code>JKISS32</code>, <code>JLKISS</code>, <code>JLKISS64</code>, described in (Jones 2007/2010)<sup><a href="#Note9"><strong>(9)</strong></a></sup>.</li>
-<li>C++&#39;s <a href="http://www.cplusplus.com/reference/random/ranlux48/"><strong><code>std::ranlux48</code> engine</strong></a> (state length 577 bits; nonzero seed).</li>
 <li>PCG (<code>pcg32</code>, <code>pcg64</code>, and <code>pcg64_fast</code> classes), by Melissa O&#39;Neill. See also a <a href="http://pcg.di.unimi.it/pcg.php"><strong>critique by S. Vigna</strong></a>.</li>
 <li>Other examples include B. Jenkins&#39;s &quot;A small noncryptographic PRNG&quot; (sometimes called <code>jsf</code>), C. Doty-Humphrey&#39;s <code>sfc</code>, <code>msws</code> (Widynski 2017)<sup><a href="#Note10"><strong>(10)</strong></a></sup>, and D. Blackman&#39;s <code>gjrand</code>.</li>
 </ul>
@@ -243,8 +243,11 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 
 <ul>
 <li>Mersenne Twister shows a <a href="http://xoroshiro.di.unimi.it/#quality"><strong>systematic failure</strong></a> in <code>BigCrush</code>&#39;s LinearComp test. (See also (Vigna 2016)<sup><a href="#Note11"><strong>(11)</strong></a></sup>.)</li>
+<li>C++&#39;s <a href="http://www.cplusplus.com/reference/random/ranlux48/"><strong><code>std::ranlux48</code> engine</strong></a> (state length 577 bits; nonzero seed) can be slower than alternatives because it discards many &quot;random&quot; numbers before outputting another.</li>
 <li><a href="http://xoshiro.di.unimi.it/xoroshiro128plus.c"><strong><code>xoroshiro128+</code></strong></a>, <code>xoshiro256+</code>, and <code>xorshift128+</code>.  As described by (Blackman and Vigna 2018)<sup><a href="#Note12"><strong>(12)</strong></a></sup>, these linear PRNGs use weak scramblers, so that each output&#39;s lowest bits have low linear complexity even though the output as a whole has excellent statistical randomness.  See also <a href="http://xoshiro.di.unimi.it/lowcomp.php"><strong>&quot;Testing lowest bits in isolation&quot;</strong></a>.</li>
 </ul>
+
+<p>Generally, implementing a size-N <a href="#Bays_ndash_Durham_Shuffle"><strong>Bays&ndash;Durham shuffle</strong></a> on top of a PRNG will extend that PRNG&#39;s period (maximum size of a &quot;random&quot; number cycle) to about the number of ways to arrange an N-item list.</p>
 
 <p>Non-examples include the following:</p>
 
@@ -531,7 +534,7 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 <li>by doing a <a href="https://en.wikipedia.org/wiki/Fisher-Yates_shuffle"><strong>Fisher&ndash;Yates shuffle</strong></a> (which is unfortunately easy to mess up &mdash; see (Atwood 2007)<sup><a href="#Note23"><strong>(23)</strong></a></sup> &mdash; and is implemented correctly in <a href="https://peteroupc.github.io/randomfunc.html"><strong>another document of mine</strong></a>).</li>
 </ul>
 
-<p>Either way, however, if a PRNG&#39;s period is less than the number of permutations, then there are <strong>some permutations that that PRNG can&#39;t choose</strong> when it shuffles that list. (This is not the same as <em>generating</em> all permutations of a list, which, for a list big enough, can&#39;t be done by any computer in a reasonable time.  A PRNG&#39;s <em>period</em> is the maximum size of a &quot;random&quot; number sequence it can generate before that sequence repeats; this size is no greater than 2<sup>L</sup> where L is the PRNG&#39;s state length.)</p>
+<p>Either way, however, if a PRNG&#39;s period (maximum size of a &quot;random&quot; number cycle) is less than the number of permutations, then there are <strong>some permutations that that PRNG can&#39;t choose</strong> when it shuffles that list. (This is not the same as <em>generating</em> all permutations of a list, which, for a list big enough, can&#39;t be done by any computer in a reasonable time.)</p>
 
 <p>On the other hand, for a list big enough, it&#39;s generally <strong>more important to have shuffles act random</strong> than to choose from among all permutations.</p>
 
@@ -919,6 +922,17 @@ def stateLengthDecks(numDecks, numCards):
   return ceillog2(fac(numDecks*numCards)/ \
       (fac(numDecks)**numCards))
 </pre>
+
+<p><a id=Bays_ndash_Durham_Shuffle></a></p>
+
+<h3>Bays&ndash;Durham Shuffle</h3>
+
+<p>The Bays&ndash;Durham shuffle extends a PRNG&#39;s period (maximum size of a &quot;random&quot; number cycle) by giving it a bigger state.  The following describes the Bays&ndash;Durham shuffle with a size of <code>tablesize</code>.  For PRNGs that output 32- or 64-bit integers 0 or greater, a <code>tablesize</code> of 256, 512, or 1024 is suggested.</p>
+
+<ul>
+<li>For the first &quot;random&quot; number, fill a list with as many numbers from the PRNG as <code>tablesize</code>, then set <code>k</code> to another number from the PRNG, then output <code>k</code>.</li>
+<li>For each additional &quot;random&quot; number, take the entry at position (<code>k</code> % <code>tablesize</code>) in the list, where &#39;%&#39; is the remainder operator and positions start at 0, then set <code>k</code> to that entry, then replace the entry at that position with a new number from the PRNG, then output <code>k</code>.</li>
+</ul>
 
 <p><a id=License></a></p>
 
