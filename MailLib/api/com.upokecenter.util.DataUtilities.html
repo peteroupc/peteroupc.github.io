@@ -15,19 +15,19 @@
  encoding form of the Unicode Standard which uses one byte to encode
  the most basic characters and two to four bytes to encode other
  characters. For example, the <code>GetUtf8</code> method converts a text
- string to an array of bytes in UTF-8.</p> <p>In C# and Java, text
+ string to an array of bytes in UTF-8. </p> <p>In C# and Java, text
  strings are represented as sequences of 16-bit values called
  <code>char</code> s. These sequences are well-formed under UTF-16, a
  16-bit encoding form of Unicode, except if they contain unpaired
  surrogate code points. (A surrogate code point is used to encode
  supplementary characters, those with code points U + 10000 or higher,
- in UTF-16. A surrogate pair is a high surrogate.get(U + D800 to
- U + DBFF) followed by a low surrogate.get(U + DC00 to U + DFFF). An
- unpaired surrogate code point is a surrogate not appearing in a
- surrogate pair.) Many of the methods in this class allow setting the
- behavior to follow when unpaired surrogate code points are found in
- text strings, such as throwing an error or treating the unpaired
- surrogate as a replacement character (U + FFFD).</p></p>
+ in UTF-16. A surrogate pair is a high surrogate [U + D800 to U + DBFF]
+ followed by a low surrogate [U + DC00 to U + DFFF]. An unpaired
+ surrogate code point is a surrogate not appearing in a surrogate
+ pair.) Many of the methods in this class allow setting the behavior
+ to follow when unpaired surrogate code points are found in text
+ strings, such as throwing an error or treating the unpaired
+ surrogate as a replacement character (U + FFFD). </p></p>
 
 <h2>Methods</h2>
 
@@ -140,8 +140,8 @@ seen.</p></li>
 
 <ul>
 <li><p><code>java.lang.NullPointerException</code> - The parameter <code>bytes</code> is null.</p></li>
-<li><p><code>java.lang.IllegalArgumentException</code> - The string is not valid UTF-8 and <code>replace</code>
-is false.</p></li>
+<li><p><code>java.lang.IllegalArgumentException</code> - The string is not valid UTF-8 and <code>
+replace</code> is false.</p></li>
 </ul>
 
 <h3>CodePointLength</h3>
@@ -156,7 +156,9 @@ is false.</p></li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>str</code> - The parameter <code>str</code> is a text string.</li>
+<li><code>str</code> - The parameter
+  <code>str</code>
+   is a text string.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -199,10 +201,10 @@ seen.</p></li>
 
 <ul>
 <li><p><code>java.lang.NullPointerException</code> - The parameter <code>bytes</code> is null.</p></li>
-<li><p><code>java.lang.IllegalArgumentException</code> - The portion of the byte array is not valid UTF-8
-and <code>replace</code> is false.</p></li>
-<li><p><code>java.lang.IllegalArgumentException</code> - The parameter <code>offset</code> is less than 0,
-<code>bytesCount</code> is less than 0, or offset plus bytesCount is
+<li><p><code>java.lang.IllegalArgumentException</code> - The portion of the byte array is not valid
+UTF-8 and <code>replace</code> is false.</p></li>
+<li><p><code>java.lang.IllegalArgumentException</code> - The parameter <code>offset</code> is less than
+0, <code>bytesCount</code> is less than 0, or offset plus bytesCount is
 greater than the length of &quot;data&quot; .</p></li>
 </ul>
 
@@ -212,17 +214,19 @@ greater than the length of &quot;data&quot; .</p></li>
 </pre>
 
 <p>Encodes a string in UTF-8 as a byte array. This method does not insert a
- byte-order mark (U + FEFF) at the beginning of the encoded byte
- array.</p> <p>REMARK: It is not recommended to use
+ byte-order mark (U + FEFF) at the beginning of the encoded byte array.
+ </p> <p>REMARK: It is not recommended to use
  <code>Encoding.UTF8.GetBytes</code> in.getNET(), or the <code>getBytes()</code>
  method in Java to do this. For instance, <code>getBytes()</code> encodes
- text strings in a default (so not fixed) character encoding, which
- can be undesirable.</p>
+ text strings in an unspecified character encoding. Both behaviors
+ can be undesirable. </p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>str</code> - The parameter <code>str</code> is a text string.</p></li>
+<li><p><code>str</code> - The parameter
+  <code>str</code>
+   is a text string.</p></li>
 <li><p><code>replace</code> - If true, replaces unpaired surrogate code points with the
 replacement character (U + FFFD). If false, stops processing when an
 unpaired surrogate code point is seen.</p></li>
@@ -238,8 +242,9 @@ unpaired surrogate code point is seen.</p></li>
 
 <ul>
 <li><p><code>java.lang.NullPointerException</code> - The parameter <code>str</code> is null.</p></li>
-<li><p><code>java.lang.IllegalArgumentException</code> - The string contains an unpaired surrogate code
-point and <code>replace</code> is false, or an internal error occurred.</p></li>
+<li><p><code>java.lang.IllegalArgumentException</code> - The string contains an unpaired surrogate
+code point and <code>replace</code> is false, or an internal error
+occurred.</p></li>
 </ul>
 
 <h3>GetUtf8Bytes</h3>
@@ -248,17 +253,19 @@ point and <code>replace</code> is false, or an internal error occurred.</p></li>
 </pre>
 
 <p>Encodes a string in UTF-8 as a byte array. This method does not insert a
- byte-order mark (U + FEFF) at the beginning of the encoded byte
- array.</p> <p>REMARK: It is not recommended to use
+ byte-order mark (U + FEFF) at the beginning of the encoded byte array.
+ </p> <p>REMARK: It is not recommended to use
  <code>Encoding.UTF8.GetBytes</code> in.getNET(), or the <code>getBytes()</code>
  method in Java to do this. For instance, <code>getBytes()</code> encodes
- text strings in a default (so not fixed) character encoding, which
- can be undesirable.</p>
+ text strings in an unspecified character encoding. Both behaviors
+ can be undesirable. </p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>str</code> - The parameter <code>str</code> is a text string.</p></li>
+<li><p><code>str</code> - The parameter
+  <code>str</code>
+   is a text string.</p></li>
 <li><p><code>replace</code> - If true, replaces unpaired surrogate code points with the
 replacement character (U + FFFD). If false, stops processing when an
 unpaired surrogate code point is seen.</p></li>
@@ -276,8 +283,9 @@ by line feed (LF) and LF not preceded by CR with CR-LF pairs.</p></li>
 
 <ul>
 <li><p><code>java.lang.NullPointerException</code> - The parameter <code>str</code> is null.</p></li>
-<li><p><code>java.lang.IllegalArgumentException</code> - The string contains an unpaired surrogate code
-point and <code>replace</code> is false, or an internal error occurred.</p></li>
+<li><p><code>java.lang.IllegalArgumentException</code> - The string contains an unpaired surrogate
+code point and <code>replace</code> is false, or an internal error
+occurred.</p></li>
 </ul>
 
 <h3>GetUtf8Length</h3>
@@ -290,7 +298,9 @@ point and <code>replace</code> is false, or an internal error occurred.</p></li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>str</code> - The parameter <code>str</code> is a text string.</p></li>
+<li><p><code>str</code> - The parameter
+  <code>str</code>
+   is a text string.</p></li>
 <li><p><code>replace</code> - If true, treats unpaired surrogate code points as having 3
 UTF-8 bytes (the UTF-8 length of the replacement character U + FFFD).</p></li>
 </ul>
@@ -319,7 +329,9 @@ UTF-8 bytes (the UTF-8 length of the replacement character U + FFFD).</p></li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>str</code> - The parameter <code>str</code> is a text string.</p></li>
+<li><p><code>str</code> - The parameter
+  <code>str</code>
+   is a text string.</p></li>
 <li><p><code>index</code> - Index of the current position into the string.</p></li>
 </ul>
 
@@ -328,10 +340,8 @@ UTF-8 bytes (the UTF-8 length of the replacement character U + FFFD).</p></li>
 <ul>
 <li>The Unicode code point at the previous position. Returns -1 if
 <code>index</code> is 0 or less, or is greater than the string&#39;s length.
-Returns the replacement character (U + FFFD) if the code point at the
-previous position is an unpaired surrogate code point. If the return
-value is 65536 (0x10000) or greater, the code point takes up two
-UTF-16 code units.</li>
+Returns the replacement character (U + FFFD) if the previous character
+is an unpaired surrogate code point.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -350,12 +360,14 @@ UTF-16 code units.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>str</code> - The parameter <code>str</code> is a text string.</p></li>
+<li><p><code>str</code> - The parameter
+  <code>str</code>
+   is a text string.</p></li>
 <li><p><code>index</code> - Index of the current position into the string.</p></li>
 <li><p><code>surrogateBehavior</code> - Specifies what kind of value to return if the
-previous code point is an unpaired surrogate code point: if 0,
-return the replacement character (U + FFFD); if 1, return the value of
-the surrogate code point; if neither 0 nor 1, return -1.</p></li>
+previous character is an unpaired surrogate code point: if 0, return
+the replacement character (U + FFFD); if 1, return the value of the
+surrogate code point; if neither 0 nor 1, return -1.</p></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -364,9 +376,7 @@ the surrogate code point; if neither 0 nor 1, return -1.</p></li>
 <li>The Unicode code point at the previous position. Returns -1 if
 <code>index</code> is 0 or less, or is greater than the string&#39;s length.
 Returns a value as specified under <code>surrogateBehavior</code> if the
-code point at the previous position is an unpaired surrogate code
-point. If the return value is 65536 (0x10000) or greater, the code
-point takes up two UTF-16 code units.</li>
+previous character is an unpaired surrogate code point.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -385,7 +395,9 @@ point takes up two UTF-16 code units.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>str</code> - The parameter <code>str</code> is a text string.</p></li>
+<li><p><code>str</code> - The parameter
+  <code>str</code>
+   is a text string.</p></li>
 <li><p><code>index</code> - Index of the current position into the string.</p></li>
 </ul>
 
@@ -393,11 +405,9 @@ point takes up two UTF-16 code units.</li>
 
 <ul>
 <li>The Unicode code point at the given position. Returns -1 if <code>
-index</code> is 0 or less, or is greater than the string&#39;s length. Returns
-the replacement character (U + FFFD) if the code point at that
-position is an unpaired surrogate code point. If the return value is
-65536 (0x10000) or greater, the code point takes up two UTF-16 code
-units.</li>
+index</code> is less than 0, or is the string&#39;s length or greater. Returns
+the replacement character (U + FFFD) if the current character is an
+unpaired surrogate code point.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -411,35 +421,28 @@ units.</li>
 <pre>public static int CodePointAt​(java.lang.String str, int index, int surrogateBehavior)
 </pre>
 
-<p>Gets the Unicode code point at the given index of the string.<p> </p><p>The
- following example shows how to iterate a text string code point by
- code point, terminating the loop when an unpaired surrogate is
- found.</p> <pre>for (int i = 0;i&lt;str.length(); ++i) { int
- codePoint = DataUtilities.CodePointAt(str, i, 2); if (codePoint &lt;
- 0) { break; /* Unpaired surrogate <em>/ }
-  System.out.println(&quot;codePoint:&quot;+codePoint); if (codePoint &gt;=
- 0x10000) { i++; /</em> Supplementary code point */ } }</pre> .</p>
+<p>Gets the Unicode code point at the given index of the string.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>str</code> - The parameter <code>str</code> is a text string.</p></li>
+<li><p><code>str</code> - The parameter
+  <code>str</code>
+   is a text string.</p></li>
 <li><p><code>index</code> - Index of the current position into the string.</p></li>
-<li><p><code>surrogateBehavior</code> - Specifies what kind of value to return if the code
-point at the given index is an unpaired surrogate code point: if 0,
-return the replacement character (U + FFFD); if 1, return the value of
-the surrogate code point; if neither 0 nor 1, return -1.</p></li>
+<li><p><code>surrogateBehavior</code> - Specifies what kind of value to return if the
+previous character is an unpaired surrogate code point: if 0, return
+the replacement character (U + FFFD); if 1, return the value of the
+surrogate code point; if neither 0 nor 1, return -1.</p></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>The Unicode code point at the given position. Returns -1 if <code>
-index</code> is 0 or less, or is greater than the string&#39;s length. Returns
-a value as specified under <code>surrogateBehavior</code> if the code
-point at that position is an unpaired surrogate code point. If the
-return value is 65536 (0x10000) or greater, the code point takes up
-two UTF-16 code units.</li>
+<li>The Unicode code point at the current position. Returns -1 if <code>
+index</code> is less than 0, or is the string&#39;s length or greater. Returns
+a value as specified under <code>surrogateBehavior</code> if the previous
+character is an unpaired surrogate code point.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -459,13 +462,17 @@ two UTF-16 code units.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>str</code> - The parameter <code>str</code> is a text string.</li>
+<li><code>str</code> - The parameter
+  <code>str</code>
+   is a text string.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>The converted string, or null if <code>str</code> is null.</li>
+<li>The converted string, or null if
+  <code>str</code>
+   is null.</li>
 </ul>
 
 <h3>ToUpperCaseAscii</h3>
@@ -479,13 +486,17 @@ two UTF-16 code units.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>str</code> - The parameter <code>str</code> is a text string.</li>
+<li><code>str</code> - The parameter
+  <code>str</code>
+   is a text string.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>The converted string, or null if <code>str</code> is null.</li>
+<li>The converted string, or null if
+  <code>str</code>
+   is null.</li>
 </ul>
 
 <h3>CodePointCompare</h3>
@@ -525,8 +536,7 @@ in B; or a starts with b and is longer than b.</li>
 
 <ul>
 <li><p><code>str</code> - A string to write.</p></li>
-<li><p><code>offset</code> - The Index starting at 0 where the string portion to write
-begins.</p></li>
+<li><p><code>offset</code> - The zero-based index where the string portion to write begins.</p></li>
 <li><p><code>length</code> - The length of the string portion to write.</p></li>
 <li><p><code>stream</code> - A writable data stream.</p></li>
 <li><p><code>replace</code> - If true, replaces unpaired surrogate code points with the
@@ -568,8 +578,7 @@ less than &quot;length&quot;.</p></li>
 
 <ul>
 <li><p><code>str</code> - A string to write.</p></li>
-<li><p><code>offset</code> - The Index starting at 0 where the string portion to write
-begins.</p></li>
+<li><p><code>offset</code> - The zero-based index where the string portion to write begins.</p></li>
 <li><p><code>length</code> - The length of the string portion to write.</p></li>
 <li><p><code>stream</code> - A writable data stream.</p></li>
 <li><p><code>replace</code> - If true, replaces unpaired surrogate code points with the
@@ -629,8 +638,8 @@ unpaired surrogate code point and <code>replace</code> is false.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>str</code> is null or <code>
-stream</code> is null.</p></li>
+<li><p><code>java.lang.NullPointerException</code> - The parameter <code>str</code> is null or
+<code>stream</code> is null.</p></li>
 <li><p><code>java.io.IOException</code> - An I/O error occurred.</p></li>
 </ul>
 
@@ -664,10 +673,10 @@ is not valid UTF-8 and <code>replace</code> is false.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>data</code> is null or <code>
-builder</code> is null.</p></li>
-<li><p><code>java.lang.IllegalArgumentException</code> - The parameter <code>offset</code> is less than 0,
-<code>bytesCount</code> is less than 0, or offset plus bytesCount is
+<li><p><code>java.lang.NullPointerException</code> - The parameter <code>data</code> is null or
+<code>builder</code> is null.</p></li>
+<li><p><code>java.lang.IllegalArgumentException</code> - The parameter <code>offset</code> is less than
+0, <code>bytesCount</code> is less than 0, or offset plus bytesCount is
 greater than the length of <code>data</code>.</p></li>
 </ul>
 
@@ -764,8 +773,8 @@ the stream was reached before the last character was read completely
 
 <ul>
 <li><p><code>java.io.IOException</code> - An I/O error occurred.</p></li>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>stream</code> is null or <code>
-builder</code> is null.</p></li>
+<li><p><code>java.lang.NullPointerException</code> - The parameter <code>stream</code> is null or
+<code>builder</code> is null.</p></li>
 </ul>
 
 <p><a href="/MailLib/">Back to MailLib start page.</a></p>

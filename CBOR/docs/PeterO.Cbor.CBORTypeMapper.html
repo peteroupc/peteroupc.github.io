@@ -15,9 +15,9 @@
 
 <ul>
 <li><code><a href="#AddConverter_T_System_Type_PeterO_Cbor_ICBORConverter_T">AddConverter&lt;T&gt;(System.Type, PeterO.Cbor.ICBORConverter&lt;T&gt;)</a></code> - Registers an object that converts objects of a given type to CBOR objects (called a CBOR converter).</li>
-<li><code><a href="#AddTypeName_string">AddTypeName(string)</a></code> - Adds the fully qualified name of a Java or.</li>
-<li><code><a href="#AddTypePrefix_string">AddTypePrefix(string)</a></code> - Adds a prefix of a Java or.</li>
-<li><code><a href="#FilterTypeName_string">FilterTypeName(string)</a></code> - Returns whether the given Java or.</li>
+<li><code><a href="#AddTypeName_string">AddTypeName(string)</a></code> - Adds the fully qualified name of a Java or .</li>
+<li><code><a href="#AddTypePrefix_string">AddTypePrefix(string)</a></code> - Adds a prefix of a Java or .</li>
+<li><code><a href="#FilterTypeName_string">FilterTypeName(string)</a></code> - Returns whether the given Java or .</li>
 </ul>
 
 <p><a id="Void_ctor"></a></p>
@@ -40,14 +40,13 @@
 
 <p>Registers an object that converts objects of a given type to CBOR objects (called a CBOR converter).</p>
 
-<pre>    &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>type</i>: A Type object specifying the type that the converter converts to CBOR objects.</p></li>
 <li><p><i>converter</i>: The parameter  <i>converter</i>
 is an ICBORConverter object.</p></li>
-<li><p>&lt;T&gt;: Must be the same as the &quot;type&quot; parameter.</p></li>
+<li><p>&lt;T&gt;:  Must be the same as the &quot;type&quot; parameter.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -73,13 +72,14 @@ Converter doesn&#39;t contain a proper ToCBORObject method&quot;.</p></li>
     string name);
 </pre>
 
-<p>Adds the fully qualified name of a Java or.NET type for use in type matching.</p>
+<p>Adds the fully qualified name of a Java or .NET type for use in type matching.</p>
 
-<pre>  &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
-<li><i>name</i>: The fully qualified name of a Java or.NET class (e.g.,  <code>java.math.BigInteger</code>  or  <code>System.Globalization.CultureInfo</code>  ).</li>
+<li><i>name</i>: The fully qualified name of a Java or .NET class (e.g.,  <code>java.math.BigInteger
+</code>  or  <code>System.Globalization.CultureInfo
+</code>  ).</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -105,13 +105,12 @@ is empty.</p></li>
     string prefix);
 </pre>
 
-<p>Adds a prefix of a Java or.NET type for use in type matching. A type matches a prefix if its fully qualified name is or begins with that prefix, using codepoint-by-codepoint (case-sensitive) matching.</p>
+<p>Adds a prefix of a Java or .NET type for use in type matching. A type matches a prefix if its fully qualified name is or begins with that prefix, using codepoint-by-codepoint (case-sensitive) matching.</p>
 
-<pre>  &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
-<li><i>prefix</i>: The prefix of a Java or.NET type (e.g., <code>java.math.</code> or <code>System.Globalization</code>).</li>
+<li><i>prefix</i>: The prefix of a Java or .NET type (e.g., <code>java.math.</code> or <code>System.Globalization</code>).</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -137,18 +136,21 @@ is empty.</p></li>
     string typeName);
 </pre>
 
-<p>Returns whether the given Java or.NET type name fits the filters given in this mapper.</p>
+<p>Returns whether the given Java or .NET type name fits the filters given in this mapper.</p>
 
-<pre>&lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
-<li><i>typeName</i>: The fully qualified name of a Java or.NET class (e.g.,  <code>java.math.BigInteger</code>  or  <code>System.Globalization.CultureInfo</code>  ).</li>
+<li><i>typeName</i>: The fully qualified name of a Java or .NET class (e.g.,  <code>java.math.BigInteger
+</code>  or  <code>System.Globalization.CultureInfo
+</code>  ).</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p>Either  <code>true</code>  if the given Java or.NET type name fits the filters given in this mapper, or  <code>false</code>  otherwise.</p>
+<p>Either  <code>true
+</code>  if the given Java or .NET type name fits the filters given in this mapper, or  <code>false
+</code>  otherwise.</p>
 
 <p><a href="/CBOR/">Back to CBOR start page.</a></p>
 </div><nav id="navigation"><ul>

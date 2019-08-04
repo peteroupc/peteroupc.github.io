@@ -7,13 +7,18 @@
 <h2>PeterO.ExtendedFloat</h2>
 
 <pre>public sealed class ExtendedFloat :
-    System.IComparable,
-    System.IEquatable
+    System.IEquatable,
+    System.IComparable
 </pre>
 
 <p><b>Deprecated.</b> Use EFloat from PeterO.Numbers/com.upokecenter.numbers and the output of this class&#39;s ToString method.</p>
 
-<p><b>This class is largely obsolete. It will be replaced by a new version of this class in a different namespace/package and library, called <code>PeterO.Numbers.EFloat</code> in the<a href="https://www.nuget.org/packages/PeterO.Numbers"> <code>PeterO.Numbers</code> </a>library (in .NET), or <code>com.upokecenter.numbers.EFloat</code> in the<a href="https://github.com/peteroupc/numbers-java"> <code>com.github.peteroupc/numbers</code> </a>artifact (in Java). This new class can be used in the <code>CBORObject.FromObject(object)</code> method (by including the new library in your code, among other hings).</b></p>
+<p><b>This class is largely obsolete. It will be replaced by a new version of this class in a different namespace/package and library, called  <code>PeterO.Numbers.EFloat
+</code>  in the <a href="https://www.nuget.org/packages/PeterO.Numbers">  <code>PeterO.Numbers
+</code>  </a> library (in .NET), or  <code>com.upokecenter.numbers.EFloat
+</code>  in the <a href="https://github.com/peteroupc/numbers-java">  <code>com.github.peteroupc/numbers
+</code>  </a> artifact (in Java). This new class can be used in the  <code>CBORObject.FromObject(object)
+</code>  method (by including the new library in your code, among other things). </b></p>
 
 <p>Represents an arbitrary-precision binary floating-point number. Consists of an integer mantissa and an integer exponent, both arbitrary-precision. The value of the number equals mantissa * 2^exponent. This class also supports values for negative zero, not-a-number (NaN) values, and infinity.</p>
 
@@ -29,22 +34,22 @@
 
 <ul>
 <li><p>By calling the toString() method. However, not all strings can be converted back to an arbitrary-precision binary float without loss, especially if the string has a fractional part.</p></li>
-<li><p>By calling the UnsignedMantissa, Exponent, and IsNegative properties, and calling the IsInfinity, IsQuietNaN, and IsSignalingNaN methods. The return values combined will uniquely identify a particular arbitrary-precision binary float value.</p></li>
-</ul>
+<li><p>By calling the UnsignedMantissa, Exponent, and IsNegative properties, and calling the IsInfinity, IsQuietNaN, and IsSignalingNaN methods. The return values combined will uniquely identify a particular arbitrary-precision binary float value.</p>
 
 <p>If an operation requires creating an intermediate value that might be too big to fit in memory (or might require more than 2 gigabytes of memory to store -- due to the current use of a 32-bit integer internally as a length), the operation may signal an invalid-operation flag and return not-a-number (NaN). In certain rare cases, the CompareTo method may throw OutOfMemoryException (called OutOfMemoryError in Java) in the same circumstances.</p>
 
-<p><b>Thread safety:</b>Instances of this class are immutable, so they are inherently safe for se by multiple threads. Multiple instances of this object with the same roperties are interchangeable, so they should not be compared using the ==&quot; operator (which might only check if each side of the operator is he same instance).</p>
+<p><b>Thread safety: </b> Instances of this class are immutable, so they are inherently safe for use by multiple threads. Multiple instances of this object with the same properties are interchangeable, so they should not be compared using the &quot;==&quot; operator (which might only check if each side of the operator is the same instance).</p></li>
+</ul>
 
 <h3>Member Summary</h3>
 
 <ul>
 <li><code><a href="#CompareTo_PeterO_ExtendedFloat">CompareTo(PeterO.ExtendedFloat)</a></code> - Compares this extended float to another.</li>
-<li><code><a href="#Create_PeterO_BigInteger_PeterO_BigInteger">Create(PeterO.BigInteger, PeterO.BigInteger)</a></code> - Creates a number with the value exponent*2^mantissa.</li>
 <li><code><a href="#Create_int_int">Create(int, int)</a></code> - Creates a number with the value exponent*2^mantissa.</li>
-<li><code><a href="#EqualsInternal_PeterO_ExtendedFloat">EqualsInternal(PeterO.ExtendedFloat)</a></code> - Determines whether this object&#39;s mantissa and exponent are equal to those of another object.</li>
-<li><code><a href="#Equals_PeterO_ExtendedFloat">Equals(PeterO.ExtendedFloat)</a></code> - Determines whether this object&#39;s mantissa and exponent are equal to those of another object.</li>
+<li><code><a href="#Create_PeterO_BigInteger_PeterO_BigInteger">Create(PeterO.BigInteger, PeterO.BigInteger)</a></code> - Creates a number with the value exponent*2^mantissa.</li>
 <li><code><a href="#Equals_object">Equals(object)</a></code> - Determines whether this object&#39;s mantissa and exponent are equal to those of another object and that other object is an arbitrary-precision decimal number.</li>
+<li><code><a href="#Equals_PeterO_ExtendedFloat">Equals(PeterO.ExtendedFloat)</a></code> - Determines whether this object&#39;s mantissa and exponent are equal to those of another object.</li>
+<li><code><a href="#EqualsInternal_PeterO_ExtendedFloat">EqualsInternal(PeterO.ExtendedFloat)</a></code> - Determines whether this object&#39;s mantissa and exponent are equal to those of another object.</li>
 <li><code><a href="#Exponent">Exponent</a></code> - Gets this object&#39;s exponent.</li>
 <li><code><a href="#FromString_string">FromString(string)</a></code> - Creates a binary float from a text string that represents a number.</li>
 <li><code><a href="#FromString_string_int_int_PeterO_PrecisionContext">FromString(string, int, int, PeterO.PrecisionContext)</a></code> - Creates a binary float from a text string that represents a number.</li>
@@ -168,7 +173,9 @@
 
 <p><b>Returns:</b></p>
 
-<p><code>true</code>  If this object is negative, including negative zero; otherwise, .  <code>false</code> .</p>
+<p><code>true
+</code>  If this object is negative, including negative zero; otherwise, .  <code>false
+</code>  .</p>
 
 <p><a id="Mantissa"></a></p>
 
@@ -279,7 +286,7 @@
 
 <ul>
 <li>System.ArgumentNullException:
-The parameter <i>mantissa</i>
+The parameter  <i>mantissa</i>
 or  <i>exponent</i>
 is null.</li>
 </ul>
@@ -297,13 +304,15 @@ is null.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>obj</i>: The parameter <i>obj</i>
+<li><i>obj</i>: The parameter  <i>obj</i>
 is an arbitrary object.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p><code>true</code> if the objects are equal; otherwise,  <code>false</code> .</p>
+<p><code>true
+</code>  if the objects are equal; otherwise,  <code>false
+</code>  .</p>
 
 <p><a id="Equals_PeterO_ExtendedFloat"></a></p>
 
@@ -325,13 +334,15 @@ is an arbitrary object.</li>
 
 <p><b>Return Value:</b></p>
 
-<p><code>true</code>  if this object&#39;s mantissa and exponent are equal to those of another object; otherwise,  <code>false</code> .</p>
+<p><code>true
+</code>  if this object&#39;s mantissa and exponent are equal to those of another object; otherwise,  <code>false
+</code>  .</p>
 
 <p><b>Exceptions:</b></p>
 
 <ul>
 <li>System.ArgumentNullException:
-The parameter <i>other</i>
+The parameter  <i>other</i>
 is null.</li>
 </ul>
 
@@ -355,13 +366,15 @@ is null.</li>
 
 <p><b>Return Value:</b></p>
 
-<p><code>true</code>  if this object&#39;s mantissa and exponent are equal to those of another object; otherwise,  <code>false</code> .</p>
+<p><code>true
+</code>  if this object&#39;s mantissa and exponent are equal to those of another object; otherwise,  <code>false
+</code>  .</p>
 
 <p><b>Exceptions:</b></p>
 
 <ul>
 <li>System.ArgumentNullException:
-The parameter <i>otherValue</i>
+The parameter  <i>otherValue</i>
 is null.</li>
 </ul>
 
@@ -398,13 +411,14 @@ is null.</li>
 
 <p><b>Deprecated.</b> Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</p>
 
-<p>Creates a binary float from a text string that represents a number. Note that if the string contains a negative exponent, the resulting value might not be exact, in which case the resulting binary float will be an approximation of this decimal number&#39;s value. (NOTE: This documentation previously said the binary float will contain enough precision to accurately convert it to a 32-bit or 64-bit floating point number. Due to double rounding, this will generally not be the case for certain numbers converted from decimal to ExtendedFloat via this method and in turn converted to <code>double</code>  or  <code>float</code> .)The format of the string generally consists of:</p>
+<p>Creates a binary float from a text string that represents a number. Note that if the string contains a negative exponent, the resulting value might not be exact, in which case the resulting binary float will be an approximation of this decimal number&#39;s value. (NOTE: This documentation previously said the binary float will contain enough precision to accurately convert it to a 32-bit or 64-bit floating point number. Due to double rounding, this will generally not be the case for certain numbers converted from decimal to ExtendedFloat via this method and in turn converted to  <code>double
+</code>  or  <code>float
+</code>  .) The format of the string generally consists of:</p>
 
 <ul>
 <li><p>An optional plus sign (&quot;+&quot; , U+002B) or minus sign (&quot;-&quot;, U+002D) (if &#39;-&#39; , the value is negative.)</p></li>
 <li><p>One or more digits, with a single optional decimal point after the first digit and before the last digit.</p></li>
-<li><p>Optionally, &quot;E+&quot;/&quot;e+&quot; (positive exponent) or &quot;E-&quot;/&quot;e-&quot; (negative exponent) plus one or more digits specifying the exponent.</p></li>
-</ul>
+<li><p>Optionally, &quot;E+&quot;/&quot;e+&quot; (positive exponent) or &quot;E-&quot;/&quot;e-&quot; (negative exponent) plus one or more digits specifying the exponent.</p>
 
 <p>The string can also be &quot;-INF&quot;, &quot;-Infinity&quot;, &quot;Infinity&quot;, &quot;INF&quot;, quiet NaN (&quot;NaN&quot;) followed by any number of digits, or signaling NaN (&quot;sNaN&quot;) followed by any number of digits, all in any combination of upper and lower case.</p>
 
@@ -421,6 +435,7 @@ begins.</p></li>
 (but not more than  <i>str</i>
 &#39;s length).</p></li>
 <li><p><i>ctx</i>: A PrecisionContext object specifying the precision, rounding, and exponent range to apply to the parsed number. Can be null.</p></li>
+</ul></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -431,7 +446,7 @@ begins.</p></li>
 
 <ul>
 <li><p>System.ArgumentNullException:
-The parameter <i>str</i>
+The parameter  <i>str</i>
 is null.</p></li>
 <li><p>System.ArgumentException:
 Either  <i>offset</i>
@@ -467,7 +482,9 @@ is less than  <i>length</i>
 
 <p><b>Return Value:</b></p>
 
-<p><code>true</code> if this object is positive or negative infinity; otherwise,  <code>false</code> .</p>
+<p><code>true
+</code>  if this object is positive or negative infinity; otherwise,  <code>false
+</code>  .</p>
 
 <p><a id="IsNaN"></a></p>
 
@@ -480,7 +497,9 @@ is less than  <i>length</i>
 
 <p><b>Return Value:</b></p>
 
-<p><code>true</code> if this object is a not-a-number value; otherwise,  <code>false</code> .</p>
+<p><code>true
+</code>  if this object is a not-a-number value; otherwise,  <code>false
+</code>  .</p>
 
 <p><a id="IsNegativeInfinity"></a></p>
 
@@ -495,7 +514,9 @@ is less than  <i>length</i>
 
 <p><b>Return Value:</b></p>
 
-<p><code>true</code> if this object is negative infinity; otherwise,  <code>false</code> .</p>
+<p><code>true
+</code>  if this object is negative infinity; otherwise,  <code>false
+</code>  .</p>
 
 <p><a id="IsPositiveInfinity"></a></p>
 
@@ -510,7 +531,9 @@ is less than  <i>length</i>
 
 <p><b>Return Value:</b></p>
 
-<p><code>true</code> if this object is positive infinity; otherwise,  <code>false</code> .</p>
+<p><code>true
+</code>  if this object is positive infinity; otherwise,  <code>false
+</code>  .</p>
 
 <p><a id="IsQuietNaN"></a></p>
 
@@ -525,7 +548,9 @@ is less than  <i>length</i>
 
 <p><b>Return Value:</b></p>
 
-<p><code>true</code> if this object is a quiet not-a-number value; otherwise,  <code>false</code> .</p>
+<p><code>true
+</code>  if this object is a quiet not-a-number value; otherwise,  <code>false
+</code>  .</p>
 
 <p><a id="IsSignalingNaN"></a></p>
 
@@ -540,7 +565,9 @@ is less than  <i>length</i>
 
 <p><b>Return Value:</b></p>
 
-<p><code>true</code> if this object is a signaling not-a-number value; otherwise,  <code>false</code> .</p>
+<p><code>true
+</code>  if this object is a signaling not-a-number value; otherwise,  <code>false
+</code>  .</p>
 
 <p><a id="ToString"></a></p>
 

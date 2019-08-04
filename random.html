@@ -401,7 +401,7 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 <li>Use a <a href="#Hash_Functions"><strong>hash function</strong></a> to generate a hash code of the bit string in step 1, and use that code as the seed for the PRNG.  Here, hash functions with 128-bit or longer outputs are preferred.</li>
 </ol>
 
-<p>It is NOT RECOMMENDED to seed a PRNG (especially several at once) with sequential counters, linearly related numbers, or timestamps, since these kinds of seeds can cause undesirable correlations in some PRNGs.  Moreover, seeding a PRNG with coarse timestamps can introduce the risk of generating the same &quot;random&quot; sequence accidentally.<sup><a href="#Note17"><strong>(17)</strong></a></sup></p>
+<p>It is NOT RECOMMENDED to seed a PRNG (especially several at once) with sequential counters, linearly related numbers, or timestamps, since these kinds of seeds can cause undesirable correlations in some PRNGs.  Moreover, seeding multiple PRNGs with coarse timestamps can introduce the risk of generating the same &quot;random&quot; sequence accidentally.<sup><a href="#Note17"><strong>(17)</strong></a></sup></p>
 
 <p><a id=Existing_RNG_APIs_in_Programming_Languages></a></p>
 
