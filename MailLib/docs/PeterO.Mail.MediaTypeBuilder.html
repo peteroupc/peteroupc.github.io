@@ -93,7 +93,7 @@ is a text string.</p></li>
 
 <p><b>Returns:</b></p>
 
-<p><code>true</code>  If this is a multipart media type; otherwise,  <code>false</code>  .</p>
+<p><code>true</code>  If this is a multipart media type; otherwise,  <code>false</code> .</p>
 
 <p><a id="IsText"></a></p>
 
@@ -106,7 +106,7 @@ is a text string.</p></li>
 
 <p><b>Returns:</b></p>
 
-<p><code>true</code>  If this is a text media type; otherwise,  <code>false</code>  .</p>
+<p><code>true</code>  If this is a text media type; otherwise,  <code>false</code> .</p>
 
 <p><a id="SubType"></a></p>
 
@@ -144,10 +144,11 @@ is a text string.</p></li>
 
 <p>Removes a parameter from this builder object. Does nothing if the parameter&#39;s name doesn&#39;t exist.</p>
 
-<p><b>Parameters:</b></p>
+<pre> &lt;b&gt;Parameters:&lt;/b&gt;
+</pre>
 
 <ul>
-<li><i>name</i>: Name of the parameter to remove. The name is compared using a basic case-insensitive comparison. (Two strings are equal in such a comparison, if they match after converting the basic upper-case letters A to Z (U+0041 to U+005A) in both strings to lower case.).</li>
+<li><i>name</i>: Name of the parameter to remove. The name is compared using a basic case-insensitive comparison. (Two strings are equal in such a comparison, if they match after converting the basic upper-case letters A to Z (U + 0041 to U + 005A) in both strings to lower case.).</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -173,10 +174,11 @@ is null.</li>
 
 <p>Sets a parameter&#39;s name and value for this media type.</p>
 
-<p><b>Parameters:</b></p>
+<pre>   &lt;b&gt;Parameters:&lt;/b&gt;
+</pre>
 
 <ul>
-<li><p><i>name</i>: Name of the parameter to set, such as &quot;charset&quot; . The name is compared using a basic case-insensitive comparison. (Two strings are equal in such a comparison, if they match after converting the basic upper-case letters A to Z (U+0041 to U+005A) in both strings to lower case.).</p></li>
+<li><p><i>name</i>: Name of the parameter to set, such as &quot;charset&quot; . The name is compared using a basic case-insensitive comparison. (Two strings are equal in such a comparison, if they match after converting the basic upper-case letters A to Z (U + 0041 to U + 005A) in both strings to lower case.).</p></li>
 <li><p><i>value</i>: A text string giving the parameter&#39;s value.</p></li>
 </ul>
 
@@ -206,7 +208,8 @@ is empty or syntactically invalid.</p></li>
 
 <p>Sets this media type&#39;s subtype, such as &quot;plain&quot; or &quot;xml&quot; .</p>
 
-<p><b>Parameters:</b></p>
+<pre>  &lt;b&gt;Parameters:&lt;/b&gt;
+</pre>
 
 <ul>
 <li><i>str</i>: A text string naming a media subtype.</li>
@@ -237,7 +240,8 @@ is empty or syntactically invalid.</p></li>
 
 <p>Sets this media type&#39;s top-level type.</p>
 
-<p><b>Parameters:</b></p>
+<pre>  &lt;b&gt;Parameters:&lt;/b&gt;
+</pre>
 
 <ul>
 <li><i>str</i>: A text string naming a top-level type, such as &quot;text&quot; or &quot;audio&quot; .</li>
@@ -278,7 +282,7 @@ is syntactically invalid for a top-level type.</p></li>
 <pre>public override string ToString();
 </pre>
 
-<p>Converts this object to a text string of the media type it represents, in the same form as  <code>MediaType.ToString</code>  .</p>
+<p>Converts this object to a text string of the media type it represents, in the same form as  <code>MediaType.ToString</code> .</p>
 
 <p><b>Return Value:</b></p>
 

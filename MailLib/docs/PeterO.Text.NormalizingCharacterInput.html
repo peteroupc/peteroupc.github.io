@@ -17,9 +17,9 @@
 <ul>
 <li><p><b>NFD</b> (Normalization Form D) decomposes combined forms to their constituent characters (E plus acute, for example), then reorders combining marks to a standardized order. This is called canonical decomposition.</p></li>
 <li><p><b>NFC</b> does canonical decomposition, then combines certain constituent characters to their composites (E-acute, for example). This is called canonical composition.</p></li>
-<li><p>Two normalization forms, <b>NFKC</b> and <b>NFKD</b> , are similar to NFC and NFD, except they also &quot;decompose&quot; certain characters, such as ligatures, font or positional variants, and subscripts, whose visual distinction can matter in some contexts. This is called compatibility decomposition.</p>
+<li><p>Two normalization forms, <b>NFKC</b> and <b>NFKD</b>, are similar to NFC and NFD, except they also &quot;decompose&quot; certain characters, such as ligatures, font or positional variants, and subscripts, whose visual distinction can matter in some contexts. This is called compatibility decomposition.</p>
 
-<p>For more information, see Standard Annex 15 at  <code>http://www.unicode.org/reports/tr15/</code>  .</p>
+<p>For more information, see Standard Annex 15 at  <code>http://www.unicode.org/reports/tr15/</code> .</p>
 
 <p><b>Thread safety:</b> This class is mutable; its properties can be changed. None of its instance methods are designed to be thread safe. Therefore, access to objects from this class must be synchronized if multiple threads can access them at the same time.</p>
 
@@ -212,7 +212,8 @@ is a Normalization object.</p></li>
 
 <p>Gets a list of normalized code points after reading from a character stream.</p>
 
-<p><b>Parameters:</b></p>
+<pre>  &lt;b&gt;Parameters:&lt;/b&gt;
+</pre>
 
 <ul>
 <li><p><i>chars</i>: An object that implements a stream of Unicode characters.</p></li>
@@ -244,7 +245,8 @@ is null.</li>
 
 <p>Gets a list of normalized code points after reading from a string.</p>
 
-<p><b>Parameters:</b></p>
+<pre>  &lt;b&gt;Parameters:&lt;/b&gt;
+</pre>
 
 <ul>
 <li><p><i>str</i>: The parameter  <i>str</i>
@@ -277,7 +279,8 @@ is null.</li>
 
 <p>Determines whether the given array of characters is in the given Unicode normalization form.</p>
 
-<p><b>Parameters:</b></p>
+<pre>  &lt;b&gt;Parameters:&lt;/b&gt;
+</pre>
 
 <ul>
 <li><p><i>charArray</i>: An array of Unicode code points.</p></li>
@@ -286,7 +289,7 @@ is null.</li>
 
 <p><b>Return Value:</b></p>
 
-<p><code>true</code>  if the given list of characters is in the given Unicode normalization form; otherwise,  <code>false</code>  .</p>
+<p><code>true</code>  if the given list of characters is in the given Unicode normalization form; otherwise,  <code>false</code> .</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -306,7 +309,8 @@ The parameter &quot;charList&quot; is null.</li>
 
 <p>Determines whether the text provided by a character input is normalized.</p>
 
-<p><b>Parameters:</b></p>
+<pre>  &lt;b&gt;Parameters:&lt;/b&gt;
+</pre>
 
 <ul>
 <li><p><i>chars</i>: A object that implements a streamable character input.</p></li>
@@ -315,7 +319,7 @@ The parameter &quot;charList&quot; is null.</li>
 
 <p><b>Return Value:</b></p>
 
-<p><code>true</code>  if the text is normalized; otherwise,  <code>false</code>  .</p>
+<p><code>true</code>  if the text is normalized; otherwise,  <code>false</code> .</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -336,7 +340,8 @@ is null.</li>
 
 <p>Determines whether the given string is in the given Unicode normalization form.</p>
 
-<p><b>Parameters:</b></p>
+<pre>  &lt;b&gt;Parameters:&lt;/b&gt;
+</pre>
 
 <ul>
 <li><p><i>str</i>: An arbitrary string.</p></li>
@@ -345,7 +350,7 @@ is null.</li>
 
 <p><b>Return Value:</b></p>
 
-<p><code>true</code>  if the given string is in the given Unicode normalization form; otherwise,  <code>false</code>  . Returns  <code>false</code>  if the string contains an unpaired surrogate code point.</p>
+<p><code>true</code>  if the given string is in the given Unicode normalization form; otherwise,  <code>false</code> . Returns  <code>false</code>  if the string contains an unpaired surrogate code point.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -368,7 +373,8 @@ is null.</li>
 
 <p>Determines whether the given list of characters is in the given Unicode normalization form.</p>
 
-<p><b>Parameters:</b></p>
+<pre>  &lt;b&gt;Parameters:&lt;/b&gt;
+</pre>
 
 <ul>
 <li><p><i>charList</i>: A list of Unicode code points.</p></li>
@@ -377,7 +383,7 @@ is null.</li>
 
 <p><b>Return Value:</b></p>
 
-<p><code>true</code>  if the given list of characters is in the given Unicode normalization form; otherwise,  <code>false</code>  .</p>
+<p><code>true</code>  if the given list of characters is in the given Unicode normalization form; otherwise,  <code>false</code> .</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -398,7 +404,8 @@ is null.</li>
 
 <p>Converts a string to the given Unicode normalization form.</p>
 
-<p><b>Parameters:</b></p>
+<pre>   &lt;b&gt;Parameters:&lt;/b&gt;
+</pre>
 
 <ul>
 <li><p><i>str</i>: An arbitrary string.</p></li>
@@ -433,7 +440,8 @@ is null.</p></li>
 
 <p>Reads a sequence of Unicode code points from a data source.</p>
 
-<p><b>Parameters:</b></p>
+<pre>     &lt;b&gt;Parameters:&lt;/b&gt;
+</pre>
 
 <ul>
 <li><p><i>chars</i>: Output buffer.</p></li>
@@ -463,7 +471,13 @@ is less than 0 or greater than  <i>chars</i>
 is less than  <i>length</i>
 .</p></li>
 <li><p>System.ArgumentException:
-Either &quot;index&quot; or &quot;length&quot; is less than 0 or greater than &quot;chars&quot;&#39;s length, or &quot;chars&quot;&#39;s length minus &quot;index&quot; is less than &quot;length&quot;.</p></li>
+Either  <i>index</i>
+or  <i>length</i>
+is less than 0 or greater than  <i>chars</i>
+&#39;s length, or  <i>chars</i>
+&#39;s length minus  <i>index</i>
+is less than  <i>length</i>
+.</p></li>
 </ul>
 
 <p><a id="ReadChar"></a></p>

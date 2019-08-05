@@ -101,7 +101,7 @@ Gets the values of this options object&#39;s properties in text form.</li>
 <ul>
 <li>A text string containing the values of this options object&#39;s
 properties. The format of the string is the same as the one
-described in the string constructor for this class.</li>
+described in the String constructor for this class.</li>
 </ul>
 
 <h3>getResolveReferences</h3>
@@ -118,14 +118,14 @@ described in the string constructor for this class.</li>
  appear within an enclosing object marked with tag 256, and
  references to them are marked with tag 25; in general, a string is
  sharable only if storing its reference rather than the string would
- save space.</p> <p>Note that unlike most other tags, these tags
+ save space. </p> <p>Note that unlike most other tags, these tags
  generally care about the relative order in which objects appear in a
  CBOR stream; thus they are not interoperable with CBOR
  implementations that follow the generic CBOR data model (since they
  may list map keys in an unspecified order). Interoperability
  problems with these tags can be reduced by not using them to mark
  keys or values of a map or to mark objects within those keys or
- values.</p></p>
+ values. </p></p>
 
 <p><strong>Returns:</strong></p>
 
