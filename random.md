@@ -280,7 +280,7 @@ For noncryptographic and seeded PRNGs, an application ought to generate seeds li
 
 1. Build a bit string consisting of the following: A seed unique to the set of PRNG instances as a whole, a fixed identifier unique to that set, and a unique number for each PRNG instance. Example: "myseed-mysimulation-1".
 2. The seed in step 1 ought to be a fixed number, be the output of a cryptographic RNG, or be derived from hard-to-predict sources (see "Seed Generation").
-3. Use a [**hash function**](#Hash_Functions) to generate a hash code of the bit string in step 1, and use that code as the seed for the PRNG.  Here, hash functions with 128-bit or longer outputs are preferred.
+3. Use a [**hash function**](#Hash_Functions) to generate a hash code of the bit string in step 1, and use that code as the seed for the PRNG.  Here, hash functions with 128-bit or longer hash codes are preferred.
 
 It is NOT RECOMMENDED to seed a PRNG (especially several at once) with sequential counters, linearly related numbers, or timestamps, since these kinds of seeds can cause undesirable correlations in some PRNGs.  Moreover, seeding multiple PRNGs with coarse timestamps can introduce the risk of generating the same "random" sequence accidentally.<sup>[**(17)**](#Note17)</sup>
 

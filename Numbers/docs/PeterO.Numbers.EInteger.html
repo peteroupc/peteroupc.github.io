@@ -512,7 +512,7 @@ is a 32-bit signed integer.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>Zero if the values are equal; a negative number if this instance is less, or a positive number if this instance is greater.</p>
+<p>Zero if the values are equal; a negative number if this instance is less, or a positive number if this instance is greater.This implementation returns a positive number if &quot;other&quot; is null, to conform to the .NET definition of CompareTo. This is the case even in the Java version of this library, for consistency&#39;s sake, even though implementations of  <code>Comparable.compareTo()</code>  in Java ought to throw an exception if they receive a null argument rather than treating null as less or greater than any object.</p>
 
 <p><a id="Divide_int"></a></p>
 

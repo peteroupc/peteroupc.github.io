@@ -154,15 +154,7 @@
 
 <p><b>Return Value:</b></p>
 
-<p>The number 0 if both objects have the same value, or -1 if the first object is less than the other value, or 1 if the first object is greater. Does not signal flags if either value is signaling NaN.</p>
-
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li>System.ArgumentNullException:
-The parameter  <i>ed</i>
-is null.</li>
-</ul>
+<p>The number 0 if both objects are null or equal, or -1 if the first object is null or less than the other object, or 1 if the first object is greater or the other object is null. Does not signal flags if either value is signaling NaN.</p>
 
 <p><a id="CompareTotalMagnitude_PeterO_Numbers_EDecimal_PeterO_Numbers_EDecimal_PeterO_Numbers_EContext"></a></p>
 
@@ -194,15 +186,7 @@ is null.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>The number 0 if both objects have the same value (ignoring their signs), or -1 if the first object is less than the other value (ignoring their signs), or 1 if the first object is greater (ignoring their signs). Does not signal flags if either value is signaling NaN.</p>
-
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li>System.ArgumentNullException:
-The parameter  <i>ed</i>
-is null.</li>
-</ul>
+<p>The number 0 if both objects are null or equal (ignoring their signs), or -1 if the first object is null or less than the other value (ignoring their signs), or 1 if the first object is greater (ignoring their signs) or the other object is null. Does not signal flags if either value is signaling NaN.</p>
 
 <p><a id="Copy_PeterO_Numbers_EDecimal"></a></p>
 

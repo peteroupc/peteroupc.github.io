@@ -49,8 +49,7 @@
 
 <p>Gets the Unicode code point at the given index of the string.</p>
 
-<pre>  &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>str</i>: The parameter  <i>str</i>
@@ -61,7 +60,7 @@ is a text string.</p></li>
 <p><b>Return Value:</b></p>
 
 <p>The Unicode code point at the given position. Returns -1 if  <i>index</i>
- is 0 or less, or is greater than the string&#39;s length. Returns the replacement character (U + FFFD) if the code point at that position is an unpaired surrogate code point. If the return value is 65536 (0x10000) or greater, the code point takes up two UTF-16 code units.</p>
+ is 0 or less, or is greater than the string&#39;s length. Returns the replacement character (U+FFFD) if the code point at that position is an unpaired surrogate code point. If the return value is 65536 (0x10000) or greater, the code point takes up two UTF-16 code units.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -83,9 +82,9 @@ is null.</li>
 
 <p>Gets the Unicode code point at the given index of the string.</p>
 
-<pre>   The following example shows how to iterate a text string code point by code point, terminating the loop when an unpaired surrogate is found.
+<p>The following example shows how to iterate a text string code point by code point, terminating the loop when an unpaired surrogate is found.</p>
 
-for (var i = 0;i&lt;str.Length; ++i) { int codePoint =
+<pre>for (var i = 0;i&lt;str.Length; ++i) { int codePoint =
             DataUtilities.CodePointAt(str, i, 2); if (codePoint &lt; 0) { break; /*
             Unpaired surrogate */ } Console.WriteLine(&quot;codePoint:&quot;+codePoint); if
             (codePoint &gt;= 0x10000) { i++; /* Supplementary code point */ } }
@@ -99,7 +98,7 @@ for (var i = 0;i&lt;str.Length; ++i) { int codePoint =
 <li><p><i>str</i>: The parameter  <i>str</i>
 is a text string.</p></li>
 <li><p><i>index</i>: Index of the current position into the string.</p></li>
-<li><p><i>surrogateBehavior</i>: Specifies what kind of value to return if the code point at the given index is an unpaired surrogate code point: if 0, return the replacement character (U + FFFD); if 1, return the value of the surrogate code point; if neither 0 nor 1, return -1.</p></li>
+<li><p><i>surrogateBehavior</i>: Specifies what kind of value to return if the code point at the given index is an unpaired surrogate code point: if 0, return the replacement character (U+FFFD); if 1, return the value of the surrogate code point; if neither 0 nor 1, return -1.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -127,8 +126,7 @@ is null.</li>
 
 <p>Gets the Unicode code point just before the given index of the string.</p>
 
-<pre>  &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>str</i>: The parameter  <i>str</i>
@@ -139,7 +137,7 @@ is a text string.</p></li>
 <p><b>Return Value:</b></p>
 
 <p>The Unicode code point at the previous position. Returns -1 if  <i>index</i>
- is 0 or less, or is greater than the string&#39;s length. Returns the replacement character (U + FFFD) if the code point at the previous position is an unpaired surrogate code point. If the return value is 65536 (0x10000) or greater, the code point takes up two UTF-16 code units.</p>
+ is 0 or less, or is greater than the string&#39;s length. Returns the replacement character (U+FFFD) if the code point at the previous position is an unpaired surrogate code point. If the return value is 65536 (0x10000) or greater, the code point takes up two UTF-16 code units.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -161,14 +159,13 @@ is null.</li>
 
 <p>Gets the Unicode code point just before the given index of the string.</p>
 
-<pre>   &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>str</i>: The parameter  <i>str</i>
 is a text string.</p></li>
 <li><p><i>index</i>: Index of the current position into the string.</p></li>
-<li><p><i>surrogateBehavior</i>: Specifies what kind of value to return if the previous code point is an unpaired surrogate code point: if 0, return the replacement character (U + FFFD); if 1, return the value of the surrogate code point; if neither 0 nor 1, return -1.</p></li>
+<li><p><i>surrogateBehavior</i>: Specifies what kind of value to return if the previous code point is an unpaired surrogate code point: if 0, return the replacement character (U+FFFD); if 1, return the value of the surrogate code point; if neither 0 nor 1, return -1.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -196,8 +193,7 @@ is null.</li>
 
 <p>Compares two strings in Unicode code point order. Unpaired surrogate code points are treated as individual code points.</p>
 
-<pre> &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>strA</i>: The first string. Can be null.</p></li>
@@ -218,8 +214,7 @@ is null.</li>
 
 <p>Finds the number of Unicode code points in the given text string. Unpaired surrogate code points increase this number by 1. This is not necessarily the length of the string in &quot;char&quot; s.</p>
 
-<pre> &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>str</i>: The parameter  <i>str</i>
@@ -251,13 +246,12 @@ is null.</li>
 
 <p>REMARK: It is not recommended to use  <code>Encoding.UTF8.GetBytes</code>  in.NET, or the  <code>getBytes()</code>  method in Java to do this. For instance,  <code>getBytes()</code>  encodes text strings in a default (so not fixed) character encoding, which can be undesirable.</p>
 
-<pre>   &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>str</i>: The parameter  <i>str</i>
 is a text string.</p></li>
-<li><p><i>replace</i>: If true, replaces unpaired surrogate code points with the replacement character (U + FFFD). If false, stops processing when an unpaired surrogate code point is seen.</p></li>
+<li><p><i>replace</i>: If true, replaces unpaired surrogate code points with the replacement character (U+FFFD). If false, stops processing when an unpaired surrogate code point is seen.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -289,13 +283,12 @@ is false, or an internal error occurred.</p></li>
 
 <p>REMARK: It is not recommended to use  <code>Encoding.UTF8.GetBytes</code>  in.NET, or the  <code>getBytes()</code>  method in Java to do this. For instance,  <code>getBytes()</code>  encodes text strings in a default (so not fixed) character encoding, which can be undesirable.</p>
 
-<pre>    &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>str</i>: The parameter  <i>str</i>
 is a text string.</p></li>
-<li><p><i>replace</i>: If true, replaces unpaired surrogate code points with the replacement character (U + FFFD). If false, stops processing when an unpaired surrogate code point is seen.</p></li>
+<li><p><i>replace</i>: If true, replaces unpaired surrogate code points with the replacement character (U+FFFD). If false, stops processing when an unpaired surrogate code point is seen.</p></li>
 <li><p><i>lenientLineBreaks</i>: If true, replaces carriage return (CR) not followed by line feed (LF) and LF not preceded by CR with CR-LF pairs.</p></li>
 </ul>
 
@@ -325,13 +318,12 @@ is false, or an internal error occurred.</p></li>
 
 <p>Calculates the number of bytes needed to encode a string in UTF-8.</p>
 
-<pre>  &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>str</i>: The parameter  <i>str</i>
 is a text string.</p></li>
-<li><p><i>replace</i>: If true, treats unpaired surrogate code points as having 3 UTF-8 bytes (the UTF-8 length of the replacement character U + FFFD).</p></li>
+<li><p><i>replace</i>: If true, treats unpaired surrogate code points as having 3 UTF-8 bytes (the UTF-8 length of the replacement character U+FFFD).</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -358,12 +350,11 @@ is null.</li>
 
 <p>Generates a text string from a UTF-8 byte array.</p>
 
-<pre>   &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>bytes</i>: A byte array containing text encoded in UTF-8.</p></li>
-<li><p><i>replace</i>: If true, replaces invalid encoding with the replacement character (U + FFFD). If false, stops processing when invalid UTF-8 is seen.</p></li>
+<li><p><i>replace</i>: If true, replaces invalid encoding with the replacement character (U+FFFD). If false, stops processing when invalid UTF-8 is seen.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -394,14 +385,13 @@ is false.</p></li>
 
 <p>Generates a text string from a portion of a UTF-8 byte array.</p>
 
-<pre>      &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>bytes</i>: A byte array containing text encoded in UTF-8.</p></li>
 <li><p><i>offset</i>: Offset into the byte array to start reading.</p></li>
 <li><p><i>bytesCount</i>: Length, in bytes, of the UTF-8 text string.</p></li>
-<li><p><i>replace</i>: If true, replaces invalid encoding with the replacement character (U + FFFD). If false, stops processing when invalid UTF-8 is seen.</p></li>
+<li><p><i>replace</i>: If true, replaces invalid encoding with the replacement character (U+FFFD). If false, stops processing when invalid UTF-8 is seen.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -436,14 +426,13 @@ is less than 0, or offset plus bytesCount is greater than the length of &quot;da
 
 <p>Reads a string in UTF-8 encoding from a data stream.</p>
 
-<pre>     &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>stream</i>: A readable data stream.</p></li>
 <li><p><i>bytesCount</i>: The length, in bytes, of the string. If this is less than 0, this function will read until the end of the stream.</p></li>
 <li><p><i>builder</i>: A string builder object where the resulting string will be stored.</p></li>
-<li><p><i>replace</i>: If true, replaces invalid encoding with the replacement character (U + FFFD). If false, stops processing when an unpaired surrogate code point is seen.</p></li>
+<li><p><i>replace</i>: If true, replaces invalid encoding with the replacement character (U+FFFD). If false, stops processing when an unpaired surrogate code point is seen.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -477,15 +466,14 @@ is null.</p></li>
 
 <p>Reads a string in UTF-8 encoding from a byte array.</p>
 
-<pre>      &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>data</i>: A byte array containing a UTF-8 text string.</p></li>
 <li><p><i>offset</i>: Offset into the byte array to start reading.</p></li>
 <li><p><i>bytesCount</i>: Length, in bytes, of the UTF-8 text string.</p></li>
 <li><p><i>builder</i>: A string builder object where the resulting string will be stored.</p></li>
-<li><p><i>replace</i>: If true, replaces invalid encoding with the replacement character (U + FFFD). If false, stops processing when invalid UTF-8 is seen.</p></li>
+<li><p><i>replace</i>: If true, replaces invalid encoding with the replacement character (U+FFFD). If false, stops processing when invalid UTF-8 is seen.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -517,8 +505,7 @@ is less than 0, or offset plus bytesCount is greater than the length of  <i>data
 
 <p>Reads a string in UTF-8 encoding from a data stream in full and returns that string. Replaces invalid encoding with the replacement character (U+FFFD).</p>
 
-<pre>  &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>stream</i>: A readable data stream.</li>
@@ -550,13 +537,12 @@ is null.</p></li>
 
 <p>Reads a string in UTF-8 encoding from a data stream and returns that string.</p>
 
-<pre>    &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>stream</i>: A readable data stream.</p></li>
 <li><p><i>bytesCount</i>: The length, in bytes, of the string. If this is less than 0, this function will read until the end of the stream.</p></li>
-<li><p><i>replace</i>: If true, replaces invalid encoding with the replacement character (U + FFFD). If false, throws an error if an unpaired surrogate code point is seen.</p></li>
+<li><p><i>replace</i>: If true, replaces invalid encoding with the replacement character (U+FFFD). If false, throws an error if an unpaired surrogate code point is seen.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -584,8 +570,7 @@ is null.</p></li>
 
 <p>Returns a string with the basic upper-case letters A to Z (U+0041 to U+005A) converted to lower-case. Other characters remain unchanged.</p>
 
-<pre>&lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>str</i>: The parameter  <i>str</i>
@@ -607,8 +592,7 @@ is a text string.</li>
 
 <p>Returns a string with the basic lower-case letters A to Z (U+0061 to U+007A) converted to upper-case. Other characters remain unchanged.</p>
 
-<pre>&lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>str</i>: The parameter  <i>str</i>
@@ -634,7 +618,7 @@ is a text string.</li>
 
 <p>Writes a portion of a string in UTF-8 encoding to a data stream.</p>
 
-<pre>         &lt;b&gt;Parameters:&lt;/b&gt;
+<pre>           &lt;b&gt;Parameters:&lt;/b&gt;
 </pre>
 
 <ul>
@@ -642,7 +626,7 @@ is a text string.</li>
 <li><p><i>offset</i>: The Index starting at 0 where the string portion to write begins.</p></li>
 <li><p><i>length</i>: The length of the string portion to write.</p></li>
 <li><p><i>stream</i>: A writable data stream.</p></li>
-<li><p><i>replace</i>: If true, replaces unpaired surrogate code points with the replacement character (U + FFFD). If false, stops processing when an unpaired surrogate code point is seen.</p></li>
+<li><p><i>replace</i>: If true, replaces unpaired surrogate code points with the replacement character (U+FFFD). If false, stops processing when an unpaired surrogate code point is seen.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -666,6 +650,17 @@ is greater than the string&#39;s length.</p></li>
 <li><p>System.IO.IOException:
 An I/O error occurred.</p></li>
 <li><p>System.ArgumentException:
+Either  <i>offset</i>
+or  <i>length</i>
+is less than 0 or greater than  <i>str</i>
+&#39;s length, or  <i>str</i>
+&#39;s length minus  <i>offset</i>
+is less than  <i>length</i>
+.</p></li>
+<li><p>System.ArgumentNullException:
+The parameter  <i>str</i>
+is null.</p></li>
+<li><p>System.ArgumentException:
 Either &quot;offset&quot; or &quot;length&quot; is less than 0 or greater than &quot;str&quot;&#39;s length, or &quot;str&quot;&#39;s length minus &quot;offset&quot; is less than &quot;length&quot;.</p></li>
 <li><p>System.ArgumentNullException:
 The parameter  <i>str</i>
@@ -687,7 +682,7 @@ is null.</p></li>
 
 <p>Writes a portion of a string in UTF-8 encoding to a data stream.</p>
 
-<pre>          &lt;b&gt;Parameters:&lt;/b&gt;
+<pre>            &lt;b&gt;Parameters:&lt;/b&gt;
 </pre>
 
 <ul>
@@ -695,7 +690,7 @@ is null.</p></li>
 <li><p><i>offset</i>: The Index starting at 0 where the string portion to write begins.</p></li>
 <li><p><i>length</i>: The length of the string portion to write.</p></li>
 <li><p><i>stream</i>: A writable data stream.</p></li>
-<li><p><i>replace</i>: If true, replaces unpaired surrogate code points with the replacement character (U + FFFD). If false, stops processing when an unpaired surrogate code point is seen.</p></li>
+<li><p><i>replace</i>: If true, replaces unpaired surrogate code points with the replacement character (U+FFFD). If false, stops processing when an unpaired surrogate code point is seen.</p></li>
 <li><p><i>lenientLineBreaks</i>: If true, replaces carriage return (CR) not followed by line feed (LF) and LF not preceded by CR with CR-LF pairs.</p></li>
 </ul>
 
@@ -720,6 +715,17 @@ is greater than the string&#39;s length.</p></li>
 <li><p>System.IO.IOException:
 An I/O error occurred.</p></li>
 <li><p>System.ArgumentException:
+Either  <i>offset</i>
+or  <i>length</i>
+is less than 0 or greater than  <i>str</i>
+&#39;s length, or  <i>str</i>
+&#39;s length minus  <i>offset</i>
+is less than  <i>length</i>
+.</p></li>
+<li><p>System.ArgumentNullException:
+The parameter  <i>str</i>
+is null.</p></li>
+<li><p>System.ArgumentException:
 Either &quot;offset&quot; or &quot;length&quot; is less than 0 or greater than &quot;str&quot;&#39;s length, or &quot;str&quot;&#39;s length minus &quot;offset&quot; is less than &quot;length&quot;.</p></li>
 <li><p>System.ArgumentNullException:
 The parameter  <i>str</i>
@@ -738,13 +744,12 @@ is null.</p></li>
 
 <p>Writes a string in UTF-8 encoding to a data stream.</p>
 
-<pre>    &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>str</i>: A string to write.</p></li>
 <li><p><i>stream</i>: A writable data stream.</p></li>
-<li><p><i>replace</i>: If true, replaces unpaired surrogate code points with the replacement character (U + FFFD). If false, stops processing when an unpaired surrogate code point is seen.</p></li>
+<li><p><i>replace</i>: If true, replaces unpaired surrogate code points with the replacement character (U+FFFD). If false, stops processing when an unpaired surrogate code point is seen.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>

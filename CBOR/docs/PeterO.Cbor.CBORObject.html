@@ -693,7 +693,7 @@ has an unsupported type.</p></li>
 <p>The following example creates a CBOR array and adds several CBOR objects, one of which has a custom CBOR tag, to that array. Note the chaining behavior made possible by this method.</p>
 
 <pre>CBORObject obj = CBORObject.NewArray() .Add(CBORObject.False) .Add(5)
-        .Add(&quot;text string&quot;) .Add(CBORObject.FromObjectAndTag(9999, 1));
+            .Add(&quot;text string&quot;) .Add(CBORObject.FromObjectAndTag(9999, 1));
 </pre>
 
 <p>.</p>
@@ -733,8 +733,8 @@ is not supported.</p></li>
 <p>The following example creates a CBOR array and adds several CBOR objects, one of which has a custom CBOR tag, to that array. Note the chaining behavior made possible by this method.</p>
 
 <pre>CBORObject obj = CBORObject.NewArray() .Add(CBORObject.False)
-        .Add(CBORObject.FromObject(5)) .Add(CBORObject.FromObject(&quot;text
-        string&quot;)) .Add(CBORObject.FromObjectAndTag(9999, 1));
+            .Add(CBORObject.FromObject(5)) .Add(CBORObject.FromObject(&quot;text
+            string&quot;)) .Add(CBORObject.FromObjectAndTag(9999, 1));
 </pre>
 
 <p>.</p>
@@ -1045,9 +1045,9 @@ This object&#39;s value exceeds the range of a 16-bit signed integer.</p></li>
 <p>The following example code (originally written in C# for the .NET Framework) shows a way to check whether a given CBOR object stores a 32-bit signed integer before getting its value.</p>
 
 <pre>CBORObject obj = CBORObject.FromInt32(99999); if(obj.IsIntegral
-        &amp;&amp; obj.CanTruncatedIntFitInInt32()) { // Not an Int32;
-        handle the error Console.WriteLine(&quot;Not a 32-bit integer.&quot;); } else
-        { Console.WriteLine(&quot;The value is &quot; + obj.AsInt32()); }
+            &amp;&amp; obj.CanTruncatedIntFitInInt32()) { // Not an Int32; handle
+            the error Console.WriteLine(&quot;Not a 32-bit integer.&quot;); } else {
+            Console.WriteLine(&quot;The value is &quot; + obj.AsInt32()); }
 </pre>
 
 <p>.</p>
@@ -1077,10 +1077,9 @@ This object&#39;s value exceeds the range of a 32-bit signed integer.</p></li>
 <p>The following example code (originally written in C# for the .NET Framework) shows a way to check whether a given CBOR object stores a 32-bit signed integer before getting its value.</p>
 
 <pre>CBORObject obj = CBORObject.FromInt32(99999); if(obj.Type ==
-        CBORType.Integer &amp;&amp; obj.CanValueFitInInt32()) { /* Not
-        an Int32; handle the error */ Console.WriteLine(&quot;Not a 32-bit
-        integer.&quot;); } else { Console.WriteLine(&quot;The value is &quot; +
-        obj.AsInt32Value()); }
+            CBORType.Integer &amp;&amp; obj.CanValueFitInInt32()) { /* Not an Int32;
+            handle the error */ Console.WriteLine(&quot;Not a 32-bit integer.&quot;); } else {
+            Console.WriteLine(&quot;The value is &quot; + obj.AsInt32Value()); }
 </pre>
 
 <p>.</p>
@@ -1110,9 +1109,9 @@ This object&#39;s value exceeds the range of a 32-bit signed integer.</p></li>
 <p>The following example code (originally written in C# for the .NET Framework) shows a way to check whether a given CBOR object stores a 64-bit signed integer before getting its value.</p>
 
 <pre>CBORObject obj = CBORObject.FromInt64(99999); if(obj.IsIntegral
-        &amp;&amp; obj.CanTruncatedIntFitInInt64()) { // Not an Int64;
-        handle the error Console.WriteLine(&quot;Not a 64-bit integer.&quot;); } else
-        { Console.WriteLine(&quot;The value is &quot; + obj.AsInt64()); }
+            &amp;&amp; obj.CanTruncatedIntFitInInt64()) { // Not an Int64; handle
+            the error Console.WriteLine(&quot;Not a 64-bit integer.&quot;); } else {
+            Console.WriteLine(&quot;The value is &quot; + obj.AsInt64()); }
 </pre>
 
 <p>.</p>
@@ -1142,10 +1141,9 @@ This object&#39;s value exceeds the range of a 64-bit signed integer.</p></li>
 <p>The following example code (originally written in C# for the .NET Framework) shows a way to check whether a given CBOR object stores a 64-bit signed integer before getting its value.</p>
 
 <pre>CBORObject obj = CBORObject.FromInt64(99999); if(obj.Type ==
-        CBORType.Integer &amp;&amp; obj.CanValueFitInInt64()) { /* Not
-        an Int64; handle the error */ Console.WriteLine(&quot;Not a 64-bit
-        integer.&quot;); } else { Console.WriteLine(&quot;The value is &quot; +
-        obj.AsInt64Value()); }
+            CBORType.Integer &amp;&amp; obj.CanValueFitInInt64()) { /* Not an Int64;
+            handle the error */ Console.WriteLine(&quot;Not a 64-bit integer.&quot;); } else {
+            Console.WriteLine(&quot;The value is &quot; + obj.AsInt64Value()); }
 </pre>
 
 <p>.</p>
@@ -1449,14 +1447,7 @@ This object is not a CBOR array or CBOR map.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>Less than 0, if this value is less than the other object; or 0, if both values are equal; or greater than 0, if this value is less than the other object or if the other object is null.</p>
-
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li>System.ArgumentException:
-Unexpected data type.</li>
-</ul>
+<p>A negative number, if this value is less than the other object; or 0, if both values are equal; or a positive number, if this value is less than the other object or if the other object is null.This implementation returns a positive number if &quot;other&quot; is null, to conform to the .NET definition of CompareTo. This is the case even in the Java version of this library, for consistency&#39;s sake, even though implementations of  <code>Comparable.compareTo()</code>  in Java ought to throw an exception if they receive a null argument rather than treating null as less or greater than any object.</p>
 
 <p><a id="CompareToIgnoreTags_PeterO_Cbor_CBORObject"></a></p>
 
@@ -1583,13 +1574,11 @@ is null.</p></li>
 
 <p>The following example (originally written in C# for the .NET version) implements a method that decodes a text string from a CBOR byte array. It&#39;s successful only if the CBOR object contains an untagged text string.</p>
 
-<pre>private static String DecodeTextString(byte[] bytes){
-        if(bytes == null){ throw new
-        ArgumentNullException(nameof(mapObj));} if(bytes.Length
-        == 0 || bytes[0]&lt;0x60 || bytes[0]&gt;0x7f){throw new
-        CBORException();} return
-        CBORObject.DecodeFromBytes(bytes,
-        CBOREncodeOptions.Default).AsString(); }
+<pre>private static String DecodeTextString(byte[] bytes){ if(bytes == null){
+            throw new ArgumentNullException(nameof(mapObj));} if(bytes.Length == 0
+            || bytes[0]&lt;0x60 || bytes[0]&gt;0x7f){throw new CBORException();}
+            return CBORObject.DecodeFromBytes(bytes,
+            CBOREncodeOptions.Default).AsString(); }
 </pre>
 
 <p>.</p>
@@ -3762,19 +3751,19 @@ is null.</p></li>
 <p>The example code given below (originally written in C# for the .NET version) can be used to write out certain keys of a CBOR map in a given order to a JSON string.</p>
 
 <p>/* Generates a JSON string of &#39;mapObj&#39; whose keys are in the order given
-          in &#39;keys&#39; . Only keys found in &#39;keys&#39; will be written if they exist in
-          &#39;mapObj&#39;. */ private static string KeysToJSONMap(CBORObject mapObj,
-          IList<CBORObject> keys){ if (mapObj == null) { throw new
-          ArgumentNullException)nameof(mapObj));} if (keys == null) { throw
-          new ArgumentNullException)nameof(keys));} if (obj.Type !=
-          CBORType.Map) { throw new ArgumentException(&quot;&#39;obj&#39; is not a map.&quot;); }
-          StringBuilder builder = new StringBuilder(); var first = true;
-          builder.Append(&quot;{&quot;); for (CBORObject key in keys) { if
-          (mapObj.ContainsKey(key)) { if (!first) {builder.Append(&quot;, &quot;);} var
-          keyString=(key.CBORType == CBORType.String) ? key.AsString() :
-          key.ToJSONString(); builder.Append(CBORObject.FromObject(keyString)
-          .ToJSONString()) .Append(&quot;:&quot;).Append(mapObj[key].ToJSONString());
-          first=false; } } return builder.Append(&quot;}&quot;).ToString(); }</p>
+              in &#39;keys&#39; . Only keys found in &#39;keys&#39; will be written if they exist in
+              &#39;mapObj&#39;. */ private static string KeysToJSONMap(CBORObject mapObj,
+              IList<CBORObject> keys){ if (mapObj == null) { throw new
+              ArgumentNullException)nameof(mapObj));} if (keys == null) { throw new
+              ArgumentNullException)nameof(keys));} if (obj.Type != CBORType.Map) {
+              throw new ArgumentException(&quot;&#39;obj&#39; is not a map.&quot;); } StringBuilder
+              builder = new StringBuilder(); var first = true; builder.Append(&quot;{&quot;);
+              for (CBORObject key in keys) { if (mapObj.ContainsKey(key)) { if
+              (!first) {builder.Append(&quot;, &quot;);} var keyString=(key.CBORType ==
+              CBORType.String) ? key.AsString() : key.ToJSONString();
+              builder.Append(CBORObject.FromObject(keyString) .ToJSONString())
+              .Append(&quot;:&quot;).Append(mapObj[key].ToJSONString()); first=false; } } return
+              builder.Append(&quot;}&quot;).ToString(); }</p>
 
 <p>.</p>
 
@@ -3823,17 +3812,17 @@ is null.</li>
 <p>Java offers no easy way to express a generic type, at least none as easy as C#&#39;s  <code>typeof</code>  operator. The following example, written in Java, is a way to specify that the return value will be an ArrayList of String objects.</p>
 
 <pre>Type arrayListString = new ParameterizedType() { public Type[]
-        getActualTypeArguments() { // Contains one type parameter, String return
-        new Type[] { String.class }; } public Type getRawType() { /* Raw
-        type is ArrayList */ return ArrayList.class; } public Type
-        getOwnerType() { return null; } }; ArrayList&lt;String&gt; array =
-        (ArrayList&lt;String&gt;) cborArray.ToObject(arrayListString);
+            getActualTypeArguments() { // Contains one type parameter, String return
+            new Type[] { String.class }; } public Type getRawType() { /* Raw type is
+            ArrayList */ return ArrayList.class; } public Type getOwnerType() {
+            return null; } }; ArrayList&lt;String&gt; array =
+            (ArrayList&lt;String&gt;) cborArray.ToObject(arrayListString);
 </pre>
 
 <p>By comparison, the C# version is much shorter.</p>
 
 <pre>var array = (List&lt;String&gt;)cborArray.ToObject(
-        typeof(List&lt;String&gt;));
+            typeof(List&lt;String&gt;));
 </pre>
 
 <p>.</p>
@@ -3936,17 +3925,17 @@ parameter, that converter will be used to convert the CBOR object to an object o
 <p>Java offers no easy way to express a generic type, at least none as easy as C#&#39;s  <code>typeof</code>  operator. The following example, written in Java, is a way to specify that the return value will be an ArrayList of String objects.</p>
 
 <pre>Type arrayListString = new ParameterizedType() { public Type[]
-        getActualTypeArguments() { // Contains one type parameter, String return
-        new Type[] { String.class }; } public Type getRawType() { /* Raw type is
-        ArrayList */ return ArrayList.class; } public Type getOwnerType() {
-        return null; } }; ArrayList&lt;String&gt; array =
-        (ArrayList&lt;String&gt;) cborArray.ToObject(arrayListString);
+            getActualTypeArguments() { // Contains one type parameter, String return
+            new Type[] { String.class }; } public Type getRawType() { /* Raw type is
+            ArrayList */ return ArrayList.class; } public Type getOwnerType() {
+            return null; } }; ArrayList&lt;String&gt; array =
+            (ArrayList&lt;String&gt;) cborArray.ToObject(arrayListString);
 </pre>
 
 <p>By comparison, the C# version is much shorter.</p>
 
 <pre>var array = (List&lt;String&gt;)cborArray.ToObject(
-        typeof(List&lt;String&gt;));
+            typeof(List&lt;String&gt;));
 </pre>
 
 <p>.</p>
@@ -4888,47 +4877,41 @@ is null.</p></li>
 <p>The following example shows a method that writes each key of &#39;mapObj&#39; to &#39;outputStream&#39;, in the order given in &#39;keys&#39;, where &#39;mapObj&#39; is written out in the form of a CBOR <b>definite-length map</b> . Only keys found in &#39;keys&#39; will be written if they exist in &#39;mapObj&#39;.</p>
 
 <pre>private static void WriteKeysToMap(CBORObject mapObj,
-        IList&lt;CBORObject&gt; keys, Stream outputStream){ if(mapObj
-        == null){ throw new
-        ArgumentNullException(nameof(mapObj));} if(keys ==
-        null){throw new ArgumentNullException(nameof(keys));}
-        if(outputStream == null){throw new
-        ArgumentNullException(nameof(outputStream));}
-        if(obj.Type!=CBORType.Map){ throw new ArgumentException(&quot;&#39;obj&#39;
-        is not a map.&quot;); } int keyCount = 0; for (CBORObject key in keys)
-        { if(mapObj.ContainsKey(key)){ keyCount++; } }
-        CBORObject.WriteValue(outputStream, 5, keyCount); for (CBORObject key in
-        keys) { if(mapObj.ContainsKey(key)){
-        key.WriteTo(outputStream); mapObj[key].WriteTo(outputStream); }
-        } }
+            IList&lt;CBORObject&gt; keys, Stream outputStream){ if(mapObj == null){
+            throw new ArgumentNullException(nameof(mapObj));} if(keys == null){throw
+            new ArgumentNullException(nameof(keys));} if(outputStream == null){throw
+            new ArgumentNullException(nameof(outputStream));}
+            if(obj.Type!=CBORType.Map){ throw new ArgumentException(&quot;&#39;obj&#39; is not a
+            map.&quot;); } int keyCount = 0; for (CBORObject key in keys) {
+            if(mapObj.ContainsKey(key)){ keyCount++; } }
+            CBORObject.WriteValue(outputStream, 5, keyCount); for (CBORObject key in
+            keys) { if(mapObj.ContainsKey(key)){ key.WriteTo(outputStream);
+            mapObj[key].WriteTo(outputStream); } } }
 </pre>
 
 <p>The following example shows a method that writes each key of &#39;mapObj&#39; to &#39;outputStream&#39;, in the order given in &#39;keys&#39;, where &#39;mapObj&#39; is written out in the form of a CBOR <b>indefinite-length map</b> . Only keys found in &#39;keys&#39; will be written if they exist in &#39;mapObj&#39;.</p>
 
 <pre>private static void WriteKeysToIndefMap(CBORObject mapObj,
-        IList&lt;CBORObject&gt; keys, Stream outputStream){ if(mapObj
-        == null){ throw new
-        ArgumentNullException(nameof(mapObj));} if(keys ==
-        null){throw new ArgumentNullException(nameof(keys));}
-        if(outputStream == null){throw new
-        ArgumentNullException(nameof(outputStream));}
-        if(obj.Type!=CBORType.Map){ throw new ArgumentException(&quot;&#39;obj&#39;
-        is not a map.&quot;); } outputStream.WriteByte((byte)0xBF); for
-        (CBORObject key in keys) { if(mapObj.ContainsKey(key)){
-        key.WriteTo(outputStream); mapObj[key].WriteTo(outputStream); }
-        } outputStream.WriteByte((byte)0xff); }
+            IList&lt;CBORObject&gt; keys, Stream outputStream){ if(mapObj == null){
+            throw new ArgumentNullException(nameof(mapObj));} if(keys == null){throw
+            new ArgumentNullException(nameof(keys));} if(outputStream == null){throw
+            new ArgumentNullException(nameof(outputStream));}
+            if(obj.Type!=CBORType.Map){ throw new ArgumentException(&quot;&#39;obj&#39; is not a
+            map.&quot;); } outputStream.WriteByte((byte)0xBF); for (CBORObject key in
+            keys) { if(mapObj.ContainsKey(key)){ key.WriteTo(outputStream);
+            mapObj[key].WriteTo(outputStream); } }
+            outputStream.WriteByte((byte)0xff); }
 </pre>
 
 <p>The following example shows a method that writes out a list of objects to &#39;outputStream&#39; as an <b>indefinite-length CBOR array</b> .</p>
 
-<pre>private static void WriteToIndefArray( IList&lt;object&gt; list,
-        Stream outputStream){ if(list == null){ throw new
-        ArgumentNullException(nameof(list));} if(outputStream ==
-        null){throw new
-        ArgumentNullException(nameof(outputStream));}
-        outputStream.WriteByte((byte)0x9f); for (object item in list) { new
-        CBORObject(item).WriteTo(outputStream); }
-        outputStream.WriteByte((byte)0xff); }
+<pre>private static void WriteToIndefArray( IList&lt;object&gt; list, Stream
+            outputStream){ if(list == null){ throw new
+            ArgumentNullException(nameof(list));} if(outputStream == null){throw new
+            ArgumentNullException(nameof(outputStream));}
+            outputStream.WriteByte((byte)0x9f); for (object item in list) { new
+            CBORObject(item).WriteTo(outputStream); }
+            outputStream.WriteByte((byte)0xff); }
 </pre>
 
 <p>.</p>
@@ -4994,23 +4977,23 @@ Unexpected data type&quot;.</p></li>
 <p>In the following example, an array of three objects is written as CBOR to a data stream.</p>
 
 <pre>CBORObject.WriteValue(stream, 4, 3); // array, length 3
-        CBORObject.Write(&quot;hello world&quot;, stream); // item 1 CBORObject.Write(25,
-        stream); /* item 2 */ CBORObject.Write(false, stream); // item 3
+            CBORObject.Write(&quot;hello world&quot;, stream); // item 1 CBORObject.Write(25,
+            stream); /* item 2 */ CBORObject.Write(false, stream); // item 3
 </pre>
 
 <p>In the following example, a map consisting of two key-value pairs is written as CBOR to a data stream.</p>
 
 <pre>CBORObject.WriteValue(stream, 5, 2); // map, 2 pairs
-        CBORObject.Write(&quot;number&quot;, stream); // key 1 CBORObject.Write(25,
-        stream); // value 1 CBORObject.Write(&quot;string&quot;, stream); // key 2
-        CBORObject.Write(&quot;hello&quot;, stream); // value 2
+            CBORObject.Write(&quot;number&quot;, stream); // key 1 CBORObject.Write(25,
+            stream); // value 1 CBORObject.Write(&quot;string&quot;, stream); // key 2
+            CBORObject.Write(&quot;hello&quot;, stream); // value 2
 </pre>
 
 <p>In the following example (originally written in C# for the .NET Framework version), a text string is written as CBOR to a data stream.</p>
 
 <pre>string str = &quot;hello world&quot;; byte[] bytes =
-        DataUtilities.GetUtf8Bytes(str, true); CBORObject.WriteValue(stream, 4,
-        bytes.Length); stream.Write(bytes, 0, bytes.Length);
+            DataUtilities.GetUtf8Bytes(str, true); CBORObject.WriteValue(stream, 4,
+            bytes.Length); stream.Write(bytes, 0, bytes.Length);
 </pre>
 
 <p>.</p>

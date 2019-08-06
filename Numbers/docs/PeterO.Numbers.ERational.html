@@ -379,7 +379,7 @@ is null.</li>
 
 <p>Compares an arbitrary-precision rational number with this instance.</p>
 
-<pre> &lt;b&gt;Parameters:&lt;/b&gt;
+<pre>&lt;b&gt;Parameters:&lt;/b&gt;
 </pre>
 
 <ul>
@@ -388,14 +388,7 @@ is null.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>Zero if the values are equal; a negative number if this instance is less, or a positive number if this instance is greater.</p>
-
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li>System.ArgumentException:
-Doesn&#39;t satisfy this.IsFinite; doesn&#39;t satisfy other.IsFinite.</li>
-</ul>
+<p>Zero if the values are equal; a negative number if this instance is less, or a positive number if this instance is greater.This implementation returns a positive number if &quot;other&quot; is null, to conform to the .NET definition of CompareTo. This is the case even in the Java version of this library, for consistency&#39;s sake, even though implementations of  <code>Comparable.compareTo()</code>  in Java ought to throw an exception if they receive a null argument rather than treating null as less or greater than any object.</p>
 
 <p><a id="CompareToBinary_PeterO_Numbers_EFloat"></a></p>
 
@@ -407,7 +400,7 @@ Doesn&#39;t satisfy this.IsFinite; doesn&#39;t satisfy other.IsFinite.</li>
 
 <p>Compares an arbitrary-precision binary float with this instance.</p>
 
-<pre> &lt;b&gt;Parameters:&lt;/b&gt;
+<pre>&lt;b&gt;Parameters:&lt;/b&gt;
 </pre>
 
 <ul>
@@ -416,14 +409,7 @@ Doesn&#39;t satisfy this.IsFinite; doesn&#39;t satisfy other.IsFinite.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>Zero if the values are equal; a negative number if this instance is less, or a positive number if this instance is greater.</p>
-
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li>System.ArgumentException:
-Doesn&#39;t satisfy this.IsFinite; doesn&#39;t satisfy other.IsFinite.</li>
-</ul>
+<p>Zero if the values are equal; a negative number if this instance is less, or a positive number if this instance is greater.This implementation returns a positive number if &quot;other&quot; is null, to conform to the .NET definition of CompareTo. This is the case even in the Java version of this library, for consistency&#39;s sake, even though implementations of  <code>Comparable.compareTo()</code>  in Java ought to throw an exception if they receive a null argument rather than treating null as less or greater than any object.</p>
 
 <p><a id="CompareToDecimal_PeterO_Numbers_EDecimal"></a></p>
 
@@ -435,7 +421,7 @@ Doesn&#39;t satisfy this.IsFinite; doesn&#39;t satisfy other.IsFinite.</li>
 
 <p>Compares an arbitrary-precision decimal number with this instance.</p>
 
-<pre> &lt;b&gt;Parameters:&lt;/b&gt;
+<pre>&lt;b&gt;Parameters:&lt;/b&gt;
 </pre>
 
 <ul>
@@ -444,14 +430,7 @@ Doesn&#39;t satisfy this.IsFinite; doesn&#39;t satisfy other.IsFinite.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>Zero if the values are equal; a negative number if this instance is less, or a positive number if this instance is greater.</p>
-
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li>System.ArgumentException:
-Doesn&#39;t satisfy this.IsFinite; doesn&#39;t satisfy other.IsFinite.</li>
-</ul>
+<p>Zero if the values are equal; a negative number if this instance is less, or a positive number if this instance is greater.This implementation returns a positive number if &quot;other&quot; is null, to conform to the .NET definition of CompareTo. This is the case even in the Java version of this library, for consistency&#39;s sake, even though implementations of  <code>Comparable.compareTo()</code>  in Java ought to throw an exception if they receive a null argument rather than treating null as less or greater than any object.</p>
 
 <p><a id="CompareToTotal_PeterO_Numbers_ERational"></a></p>
 
@@ -480,7 +459,7 @@ Doesn&#39;t satisfy this.IsFinite; doesn&#39;t satisfy other.IsFinite.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>The number 0 if both objects have the same value, or -1 if this object is less than the other value, or 1 if this object is greater.</p>
+<p>The number 0 if both objects have the same value, or -1 if this object is less than the other value, or 1 if this object is greater.This implementation returns a positive number if &quot;other&quot; is null, to conform to the .NET definition of CompareTo. This is the case even in the Java version of this library, for consistency&#39;s sake, even though implementations of  <code>Comparable.compareTo()</code>  in Java ought to throw an exception if they receive a null argument rather than treating null as less or greater than any object.</p>
 
 <p><a id="CompareToTotalMagnitude_PeterO_Numbers_ERational"></a></p>
 
@@ -508,7 +487,7 @@ Doesn&#39;t satisfy this.IsFinite; doesn&#39;t satisfy other.IsFinite.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>The number 0 if both objects have the same value, or -1 if this object is less than the other value, or 1 if this object is greater.</p>
+<p>The number 0 if both objects have the same value, or -1 if this object is less than the other value, or 1 if this object is greater.This implementation returns a positive number if &quot;other&quot; is null, to conform to the .NET definition of CompareTo. This is the case even in the Java version of this library, for consistency&#39;s sake, even though implementations of  <code>Comparable.compareTo()</code>  in Java ought to throw an exception if they receive a null argument rather than treating null as less or greater than any object.</p>
 
 <p><a id="Copy"></a></p>
 

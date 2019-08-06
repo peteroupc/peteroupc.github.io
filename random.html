@@ -401,7 +401,7 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 <ol>
 <li>Build a bit string consisting of the following: A seed unique to the set of PRNG instances as a whole, a fixed identifier unique to that set, and a unique number for each PRNG instance. Example: &quot;myseed-mysimulation-1&quot;.</li>
 <li>The seed in step 1 ought to be a fixed number, be the output of a cryptographic RNG, or be derived from hard-to-predict sources (see &quot;Seed Generation&quot;).</li>
-<li>Use a <a href="#Hash_Functions"><strong>hash function</strong></a> to generate a hash code of the bit string in step 1, and use that code as the seed for the PRNG.  Here, hash functions with 128-bit or longer outputs are preferred.</li>
+<li>Use a <a href="#Hash_Functions"><strong>hash function</strong></a> to generate a hash code of the bit string in step 1, and use that code as the seed for the PRNG.  Here, hash functions with 128-bit or longer hash codes are preferred.</li>
 </ol>
 
 <p>It is NOT RECOMMENDED to seed a PRNG (especially several at once) with sequential counters, linearly related numbers, or timestamps, since these kinds of seeds can cause undesirable correlations in some PRNGs.  Moreover, seeding multiple PRNGs with coarse timestamps can introduce the risk of generating the same &quot;random&quot; sequence accidentally.<sup><a href="#Note17"><strong>(17)</strong></a></sup></p>

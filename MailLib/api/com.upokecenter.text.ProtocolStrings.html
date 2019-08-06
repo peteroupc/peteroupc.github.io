@@ -220,12 +220,6 @@ or empty). For comparison purposes, return values of this method
 code point by code point (see RFC 8265, secs. 3.3.4 and 3.4.4).</li>
 </ul>
 
-<p><strong>Throws:</strong></p>
-
-<ul>
-<li><code>java.lang.NullPointerException</code> - The parameter <code>str</code> is null.</li>
-</ul>
-
 <h3>UsernameEnforce</h3>
 
 <pre>public static java.lang.String UsernameEnforce​(java.lang.String str, boolean preserveCase)
@@ -295,12 +289,6 @@ values of this method should be compared code point by code point
 (see RFC 8265, sec. 4.2.3).</li>
 </ul>
 
-<p><strong>Throws:</strong></p>
-
-<ul>
-<li><code>java.lang.NullPointerException</code> - The parameter <code>str</code> is null.</li>
-</ul>
-
 <h3>NicknameEnforce</h3>
 
 <pre>public static java.lang.String NicknameEnforce​(java.lang.String str)
@@ -310,7 +298,8 @@ values of this method should be compared code point by code point
   name&quot; for something (see RFC 8266), as opposed to that thing&#39;s
  identity for authentication or authorization purposes (see sec. 6.1
  of that RFC). This checking is done using the Nickname profile in
- RFC 8266.</p>
+ RFC 8266. Such names are not intended to serve as URIs or file paths
+ (see sec. 6.1 of that RFC).</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -329,12 +318,6 @@ sec. 2.3); for such purposes, use the NicknameForComparison method
 instead.</li>
 </ul>
 
-<p><strong>Throws:</strong></p>
-
-<ul>
-<li><code>java.lang.NullPointerException</code> - The parameter <code>str</code> is null.</li>
-</ul>
-
 <h3>NicknameForComparison</h3>
 
 <pre>public static java.lang.String NicknameForComparison​(java.lang.String str)
@@ -344,7 +327,8 @@ instead.</li>
   name&quot; for something (see RFC 8266), as opposed to that thing&#39;s
  identity for authentication or authorization purposes (see sec. 6.1
  of that RFC). This operation is done using the Nickname profile in
- RFC 8266.</p>
+ RFC 8266. Such names are not intended to serve as URIs or file paths
+ (see sec. 6.1 of that RFC).</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -363,12 +347,6 @@ instead.</li>
 purposes, return values of this method should be compared code point
 by code point (see RFC 8266, sec. 2.4).</li>
 </ol></li>
-</ul>
-
-<p><strong>Throws:</strong></p>
-
-<ul>
-<li><code>java.lang.NullPointerException</code> - The parameter <code>str</code> is null.</li>
 </ul>
 
 <p><a href="/MailLib/">Back to MailLib start page.</a></p>

@@ -1738,7 +1738,8 @@ which case the precision is unlimited and no rounding is needed.</p></li>
 <ul>
 <li>Less than 0 if this object&#39;s value is less than the other value, or
 greater than 0 if this object&#39;s value is greater than the other
-value or if <code>other</code> is null, or 0 if both values are equal.</li>
+value or if <code>other</code> is null, or 0 if both values are equal.
+This implementation returns a positive number if.</li>
 </ul>
 
 <h3>CompareToBinary</h3>
@@ -1758,17 +1759,10 @@ value or if <code>other</code> is null, or 0 if both values are equal.</li>
 
 <ul>
 <li>Zero if the values are equal; a negative number if this instance is
-less, or a positive number if this instance is greater. Returns 0 if
+less; or a positive number if this instance is greater. Returns 0 if
 both values are NaN (even signaling NaN) and 1 if this value is NaN
 (even signaling NaN) and the other isn&#39;t, or if the other value is
-null.</li>
-</ul>
-
-<p><strong>Throws:</strong></p>
-
-<ul>
-<li><code>java.lang.IllegalArgumentException</code> - Doesn&#39;t satisfy this.isFinite(); doesn&#39;t satisfy
-other.isFinite().</li>
+null. This implementation returns a positive number if.</li>
 </ul>
 
 <h3>CompareToSignal</h3>
@@ -1797,7 +1791,8 @@ addition to the pre-existing flags). Can be null.</p></li>
 <ul>
 <li>Quiet NaN if this object or the other object is NaN, or 0 if both
 objects have the same value, or -1 if this object is less than the
-other value, or 1 if this object is greater.</li>
+other value, or a 1 if this object is greater. This implementation
+returns a positive number if.</li>
 </ul>
 
 <h3>CompareToTotalMagnitude</h3>
@@ -1828,7 +1823,8 @@ other value, or 1 if this object is greater.</li>
 <ul>
 <li>The number 0 if both objects have the same value (ignoring their
 signs), or -1 if this object is less than the other value (ignoring
-their signs), or 1 if this object is greater (ignoring their signs).</li>
+their signs), or 1 if this object is greater (ignoring their signs).
+This implementation returns a positive number if.</li>
 </ul>
 
 <h3>CompareToTotal</h3>
@@ -1863,7 +1859,8 @@ operation. Can be null.</p></li>
 <ul>
 <li>The number 0 if both objects have the same value, or -1 if this
 object is less than the other value, or 1 if this object is greater.
-Does not signal flags if either value is signaling NaN.</li>
+Does not signal flags if either value is signaling NaN. This
+implementation returns a positive number if.</li>
 </ul>
 
 <h3>CompareToTotalMagnitude</h3>
@@ -1899,7 +1896,8 @@ operation. Can be null.</p></li>
 <li>The number 0 if both objects have the same value (ignoring their
 signs), or -1 if this object is less than the other value (ignoring
 their signs), or 1 if this object is greater (ignoring their signs).
-Does not signal flags if either value is signaling NaN.</li>
+Does not signal flags if either value is signaling NaN. This
+implementation returns a positive number if.</li>
 </ul>
 
 <h3>CompareToTotal</h3>
@@ -1929,7 +1927,8 @@ Does not signal flags if either value is signaling NaN.</li>
 
 <ul>
 <li>The number 0 if both objects have the same value, or -1 if this
-object is less than the other value, or 1 if this object is greater.</li>
+object is less than the other value, or 1 if this object is greater.
+This implementation returns a positive number if.</li>
 </ul>
 
 <h3>CompareToWithContext</h3>
@@ -1958,7 +1957,8 @@ addition to the pre-existing flags). Can be null.</p></li>
 <ul>
 <li>Quiet NaN if this object or the other object is NaN, or 0 if both
 objects have the same value, or -1 if this object is less than the
-other value, or 1 if this object is greater.</li>
+other value, or 1 if this object is greater. This implementation
+returns a positive number if.</li>
 </ul>
 
 <h3>Divide</h3>

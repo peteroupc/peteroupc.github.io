@@ -628,7 +628,7 @@
 <p><b>Return Value:</b></p>
 
 <p>Less than 0 if this object&#39;s value is less than the other value, or greater than 0 if this object&#39;s value is greater than the other value or if  <i>other</i>
- is null, or 0 if both values are equal.</p>
+ is null, or 0 if both values are equal.This implementation returns a positive number if &quot;other&quot; is null, to conform to the .NET definition of CompareTo. This is the case even in the Java version of this library, for consistency&#39;s sake, even though implementations of  <code>Comparable.compareTo()</code>  in Java ought to throw an exception if they receive a null argument rather than treating null as less or greater than any object.</p>
 
 <p><a id="CompareToBinary_PeterO_Numbers_EFloat"></a></p>
 
@@ -640,7 +640,7 @@
 
 <p>Compares an arbitrary-precision binary float with this instance.</p>
 
-<pre> &lt;b&gt;Parameters:&lt;/b&gt;
+<pre>&lt;b&gt;Parameters:&lt;/b&gt;
 </pre>
 
 <ul>
@@ -649,14 +649,7 @@
 
 <p><b>Return Value:</b></p>
 
-<p>Zero if the values are equal; a negative number if this instance is less, or a positive number if this instance is greater. Returns 0 if both values are NaN (even signaling NaN) and 1 if this value is NaN (even signaling NaN) and the other isn&#39;t, or if the other value is null.</p>
-
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li>System.ArgumentException:
-Doesn&#39;t satisfy this.IsFinite; doesn&#39;t satisfy other.IsFinite.</li>
-</ul>
+<p>Zero if the values are equal; a negative number if this instance is less; or a positive number if this instance is greater. Returns 0 if both values are NaN (even signaling NaN) and 1 if this value is NaN (even signaling NaN) and the other isn&#39;t, or if the other value is null.This implementation returns a positive number if &quot;other&quot; is null, to conform to the .NET definition of CompareTo. This is the case even in the Java version of this library, for consistency&#39;s sake, even though implementations of  <code>Comparable.compareTo()</code>  in Java ought to throw an exception if they receive a null argument rather than treating null as less or greater than any object.</p>
 
 <p><a id="CompareToSignal_PeterO_Numbers_EDecimal_PeterO_Numbers_EContext"></a></p>
 
@@ -681,7 +674,7 @@ Doesn&#39;t satisfy this.IsFinite; doesn&#39;t satisfy other.IsFinite.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>Quiet NaN if this object or the other object is NaN, or 0 if both objects have the same value, or -1 if this object is less than the other value, or 1 if this object is greater.</p>
+<p>Quiet NaN if this object or the other object is NaN, or 0 if both objects have the same value, or -1 if this object is less than the other value, or a 1 if this object is greater.This implementation returns a positive number if &quot;other&quot; is null, to conform to the .NET definition of CompareTo. This is the case even in the Java version of this library, for consistency&#39;s sake, even though implementations of  <code>Comparable.compareTo()</code>  in Java ought to throw an exception if they receive a null argument rather than treating null as less or greater than any object.</p>
 
 <p><a id="CompareToTotal_PeterO_Numbers_EDecimal"></a></p>
 
@@ -710,7 +703,7 @@ Doesn&#39;t satisfy this.IsFinite; doesn&#39;t satisfy other.IsFinite.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>The number 0 if both objects have the same value, or -1 if this object is less than the other value, or 1 if this object is greater.</p>
+<p>The number 0 if both objects have the same value, or -1 if this object is less than the other value, or 1 if this object is greater.This implementation returns a positive number if &quot;other&quot; is null, to conform to the .NET definition of CompareTo. This is the case even in the Java version of this library, for consistency&#39;s sake, even though implementations of  <code>Comparable.compareTo()</code>  in Java ought to throw an exception if they receive a null argument rather than treating null as less or greater than any object.</p>
 
 <p><a id="CompareToTotal_PeterO_Numbers_EDecimal_PeterO_Numbers_EContext"></a></p>
 
@@ -741,7 +734,7 @@ Doesn&#39;t satisfy this.IsFinite; doesn&#39;t satisfy other.IsFinite.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>The number 0 if both objects have the same value, or -1 if this object is less than the other value, or 1 if this object is greater. Does not signal flags if either value is signaling NaN.</p>
+<p>The number 0 if both objects have the same value, or -1 if this object is less than the other value, or 1 if this object is greater. Does not signal flags if either value is signaling NaN.This implementation returns a positive number if &quot;other&quot; is null, to conform to the .NET definition of CompareTo. This is the case even in the Java version of this library, for consistency&#39;s sake, even though implementations of  <code>Comparable.compareTo()</code>  in Java ought to throw an exception if they receive a null argument rather than treating null as less or greater than any object.</p>
 
 <p><a id="CompareToTotalMagnitude_PeterO_Numbers_EDecimal"></a></p>
 
@@ -769,7 +762,7 @@ Doesn&#39;t satisfy this.IsFinite; doesn&#39;t satisfy other.IsFinite.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>The number 0 if both objects have the same value (ignoring their signs), or -1 if this object is less than the other value (ignoring their signs), or 1 if this object is greater (ignoring their signs).</p>
+<p>The number 0 if both objects have the same value (ignoring their signs), or -1 if this object is less than the other value (ignoring their signs), or 1 if this object is greater (ignoring their signs).This implementation returns a positive number if &quot;other&quot; is null, to conform to the .NET definition of CompareTo. This is the case even in the Java version of this library, for consistency&#39;s sake, even though implementations of  <code>Comparable.compareTo()</code>  in Java ought to throw an exception if they receive a null argument rather than treating null as less or greater than any object.</p>
 
 <p><a id="CompareToTotalMagnitude_PeterO_Numbers_EDecimal_PeterO_Numbers_EContext"></a></p>
 
@@ -800,7 +793,7 @@ Doesn&#39;t satisfy this.IsFinite; doesn&#39;t satisfy other.IsFinite.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>The number 0 if both objects have the same value (ignoring their signs), or -1 if this object is less than the other value (ignoring their signs), or 1 if this object is greater (ignoring their signs). Does not signal flags if either value is signaling NaN.</p>
+<p>The number 0 if both objects have the same value (ignoring their signs), or -1 if this object is less than the other value (ignoring their signs), or 1 if this object is greater (ignoring their signs). Does not signal flags if either value is signaling NaN.This implementation returns a positive number if &quot;other&quot; is null, to conform to the .NET definition of CompareTo. This is the case even in the Java version of this library, for consistency&#39;s sake, even though implementations of  <code>Comparable.compareTo()</code>  in Java ought to throw an exception if they receive a null argument rather than treating null as less or greater than any object.</p>
 
 <p><a id="CompareToWithContext_PeterO_Numbers_EDecimal_PeterO_Numbers_EContext"></a></p>
 
@@ -825,7 +818,7 @@ Doesn&#39;t satisfy this.IsFinite; doesn&#39;t satisfy other.IsFinite.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>Quiet NaN if this object or the other object is NaN, or 0 if both objects have the same value, or -1 if this object is less than the other value, or 1 if this object is greater.</p>
+<p>Quiet NaN if this object or the other object is NaN, or 0 if both objects have the same value, or -1 if this object is less than the other value, or 1 if this object is greater.This implementation returns a positive number if &quot;other&quot; is null, to conform to the .NET definition of CompareTo. This is the case even in the Java version of this library, for consistency&#39;s sake, even though implementations of  <code>Comparable.compareTo()</code>  in Java ought to throw an exception if they receive a null argument rather than treating null as less or greater than any object.</p>
 
 <p><a id="Copy"></a></p>
 
@@ -1600,7 +1593,7 @@ is an arbitrary object.</li>
     double dbl);
 </pre>
 
-<p>Creates an arbitrary-precision decimal number from a 64-bit binary floating-point number. This method computes the exact value of the floating point number, not an approximation, as is often the case by converting the floating point number to a string first. Remember, though, that the exact value of a 64-bit binary floating-point number is not always the value that results when passing a literal decimal number (for example, calling  <code>ExtendedDecimal.FromDouble(0.1f)</code>  ), since not all decimal numbers can be converted to exact binary numbers (in the example given, the resulting arbitrary-precision decimal will be the value of the closest &quot;double&quot; to 0.1, not 0.1 exactly). To create an arbitrary-precision decimal number from an arbitrary-precision decimal number, use FromString instead in most cases (for example:  <code>ExtendedDecimal.FromString(&quot;0.1&quot;)</code>  ).</p>
+<p>Creates an arbitrary-precision decimal number from a 64-bit binary floating-point number. This method computes the exact value of the floating point number, not an approximation, as is often the case by converting the floating point number to a string first. Remember, though, that the exact value of a 64-bit binary floating-point number is not always the value that results when passing a literal decimal number (for example, calling  <code>ExtendedDecimal.FromDouble(0.1f)</code> ), since not all decimal numbers can be converted to exact binary numbers (in the example given, the resulting arbitrary-precision decimal will be the value of the closest &quot;double&quot; to 0.1, not 0.1 exactly). To create an arbitrary-precision decimal number from an arbitrary-precision decimal number, use FromString instead in most cases (for example:  <code>ExtendedDecimal.FromString(&quot;0.1&quot;)</code> ).</p>
 
 <pre>&lt;b&gt;Parameters:&lt;/b&gt;
 </pre>
@@ -1782,7 +1775,7 @@ is a 64-bit signed integer.</li>
     float flt);
 </pre>
 
-<p>Creates an arbitrary-precision decimal number from a 32-bit binary floating-point number. This method computes the exact value of the floating point number, not an approximation, as is often the case by converting the floating point number to a string first. Remember, though, that the exact value of a 32-bit binary floating-point number is not always the value that results when passing a literal decimal number (for example, calling  <code>ExtendedDecimal.FromSingle(0.1f)</code>  ), since not all decimal numbers can be converted to exact binary numbers (in the example given, the resulting arbitrary-precision decimal will be the the value of the closest &quot;float&quot; to 0.1, not 0.1 exactly). To create an arbitrary-precision decimal number from an arbitrary-precision decimal number, use FromString instead in most cases (for example:  <code>ExtendedDecimal.FromString(&quot;0.1&quot;)</code>  ).</p>
+<p>Creates an arbitrary-precision decimal number from a 32-bit binary floating-point number. This method computes the exact value of the floating point number, not an approximation, as is often the case by converting the floating point number to a string first. Remember, though, that the exact value of a 32-bit binary floating-point number is not always the value that results when passing a literal decimal number (for example, calling  <code>ExtendedDecimal.FromSingle(0.1f)</code> ), since not all decimal numbers can be converted to exact binary numbers (in the example given, the resulting arbitrary-precision decimal will be the the value of the closest &quot;float&quot; to 0.1, not 0.1 exactly). To create an arbitrary-precision decimal number from an arbitrary-precision decimal number, use FromString instead in most cases (for example:  <code>ExtendedDecimal.FromString(&quot;0.1&quot;)</code> ).</p>
 
 <pre>&lt;b&gt;Parameters:&lt;/b&gt;
 </pre>
@@ -3832,7 +3825,8 @@ is null.</li>
 
 <p><b>Remark:</b> This method can be used to implement fixed-point decimal arithmetic, in which each decimal number has a fixed number of digits after the decimal point. The following code example returns a fixed-point number with up to 20 digits before and exactly 5 digits after the decimal point:</p>
 
-<pre>/* After performing arithmetic operations, adjust the number to 5 digits
+<pre>/* After performing arithmetic operations, adjust the number to 5
+            digits
             after the decimal point */ number = number.Quantize(-5, /* five digits
             after the decimal point */EContext.ForPrecision(25) /* 25-digit
             precision*/);
@@ -3913,7 +3907,8 @@ is null.</li>
 
 <p><b>Remark:</b> This method can be used to implement fixed-point decimal arithmetic, in which each decimal number has a fixed number of digits after the decimal point. The following code example returns a fixed-point number with up to 20 digits before and exactly 5 digits after the decimal point:</p>
 
-<pre> // After performing arithmetic operations, adjust // the number to 5 //
+<pre> // After performing arithmetic operations, adjust // the number to 5
+            //
             digits after the decimal point number = number.Quantize(
             EInteger.FromInt32(-5), // five digits after the decimal point
             EContext.ForPrecision(25) // 25-digit precision);
