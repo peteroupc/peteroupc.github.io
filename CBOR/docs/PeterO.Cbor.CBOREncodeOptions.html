@@ -14,14 +14,19 @@
 <h3>Member Summary</h3>
 
 <ul>
-<li><code><a href="#AllowDuplicateKeys">AllowDuplicateKeys</a></code> - Gets a value indicating whether to allow duplicate keys when reading CBOR objects from a data stream.</li>
+<li><code><a href="#AllowDuplicateKeys">AllowDuplicateKeys</a></code> - Gets a value indicating whether to disallow duplicate keys when reading CBOR objects from a data stream.</li>
 <li><code><a href="#AllowEmpty">AllowEmpty</a></code> - Gets a value indicating whether decoding a CBOR object will return null instead of a CBOR object if the stream has no content or the end of the stream is reached before decoding begins.</li>
-<li><code><a href="#Ctap2Canonical">Ctap2Canonical</a></code> - Gets a value indicating whether CBOR objects are written out using the CTAP2 canonical CBOR encoding form, which is useful for implementing Web Authentication.</li>
+<li><code><a href="#And_PeterO_Cbor_CBOREncodeOptions">And(PeterO.Cbor.CBOREncodeOptions)</a></code> - Returns an options object containing the flags shared by this and another options object.</li>
+<li><code><a href="#Ctap2Canonical">Ctap2Canonical</a></code> - Gets a value indicating whether CBOR objects are written out using the CTAP2 canonical CBOR encoding form.</li>
 <li><code><a href="#Default">public static readonly PeterO.Cbor.CBOREncodeOptions Default;</a></code> - Default options for CBOR objects.</li>
-<li><code><a href="#DefaultCtap2Canonical">public static readonly PeterO.Cbor.CBOREncodeOptions DefaultCtap2Canonical;</a></code> - Default options for CBOR objects serialized using the CTAP2 canonicalization (used in Web Authentication, among other specifications).</li>
+<li><code><a href="#NoDuplicateKeys">public static readonly PeterO.Cbor.CBOREncodeOptions NoDuplicateKeys;</a></code> - Disallow duplicate keys when reading CBOR objects from a data stream.</li>
+<li><code><a href="#NoIndefLengthStrings">public static readonly PeterO.Cbor.CBOREncodeOptions NoIndefLengthStrings;</a></code> - Always encode strings with a definite-length encoding.</li>
+<li><code><a href="#None">public static readonly PeterO.Cbor.CBOREncodeOptions None;</a></code> - No special options for encoding/decoding.</li>
+<li><code><a href="#Or_PeterO_Cbor_CBOREncodeOptions">Or(PeterO.Cbor.CBOREncodeOptions)</a></code> - Returns an options object containing the combined flags of this and another options object.</li>
 <li><code><a href="#ResolveReferences">ResolveReferences</a></code> - Gets a value indicating whether to resolve references to sharable objects and sharable strings in the process of decoding a CBOR object.</li>
 <li><code><a href="#ToString">ToString()</a></code> - Gets the values of this options object&#39;s properties in text form.</li>
-<li><code><a href="#UseIndefLengthStrings">UseIndefLengthStrings</a></code> - Gets a value indicating whether to encode strings with an indefinite-length encoding under certain circumstances.</li>
+<li><code><a href="#UseIndefLengthStrings">UseIndefLengthStrings</a></code> - Gets a value indicating whether to always encode strings with a definite-length encoding.</li>
+<li><code><a href="#Value">Value</a></code> - Gets this options object&#39;s value.</li>
 </ul>
 
 <p><a id="Void_ctor_Boolean_Boolean"></a></p>
@@ -59,9 +64,9 @@
 </pre>
 
 <ul>
-<li><p><i>useIndefLengthStrings</i>: A value indicating whether to encode strings with a definite-length encoding in certain cases.</p></li>
-<li><p><i>allowDuplicateKeys</i>: A value indicating whether to allow duplicate keys when reading CBOR objects from a data stream.</p></li>
-<li><p><i>ctap2Canonical</i>: A value indicating whether CBOR objects are written out using the CTAP2 canonical CBOR encoding form, which is useful for implementing Web Authentication.</p></li>
+<li><p><i>useIndefLengthStrings</i>: A value indicating whether to always encode strings with a definite-length encoding.</p></li>
+<li><p><i>allowDuplicateKeys</i>: A value indicating whether to disallow duplicate keys when reading CBOR objects from a data stream.</p></li>
+<li><p><i>ctap2Canonical</i>: A value indicating whether to encode CBOR objects in the CTAP2 canonical encoding form.</p></li>
 </ul>
 
 <p><a id="Void_ctor_System_String"></a></p>
@@ -105,16 +110,34 @@ is null.</li>
 <pre>public static readonly PeterO.Cbor.CBOREncodeOptions Default;
 </pre>
 
-<p>Default options for CBOR objects. Disallow duplicate keys, and always encode strings using definite-length encoding.</p>
+<p>Default options for CBOR objects. Disallow duplicate keys, and always encode strings using definite-length encoding. These are recommended settings for the options that may be adopted by certain CBORObject methods in the next major version.</p>
 
-<p><a id="DefaultCtap2Canonical"></a></p>
+<p><a id="NoDuplicateKeys"></a></p>
 
-<h3>DefaultCtap2Canonical</h3>
+<h3>NoDuplicateKeys</h3>
 
-<pre>public static readonly PeterO.Cbor.CBOREncodeOptions DefaultCtap2Canonical;
+<pre>public static readonly PeterO.Cbor.CBOREncodeOptions NoDuplicateKeys;
 </pre>
 
-<p>Default options for CBOR objects serialized using the CTAP2 canonicalization (used in Web Authentication, among other specifications). Disallow duplicate keys, and always encode strings using definite-length encoding.</p>
+<p>Disallow duplicate keys when reading CBOR objects from a data stream. Used only when decoding CBOR objects. Value: 2.</p>
+
+<p><a id="NoIndefLengthStrings"></a></p>
+
+<h3>NoIndefLengthStrings</h3>
+
+<pre>public static readonly PeterO.Cbor.CBOREncodeOptions NoIndefLengthStrings;
+</pre>
+
+<p>Always encode strings with a definite-length encoding. Used only when encoding CBOR objects. Value: 1.</p>
+
+<p><a id="None"></a></p>
+
+<h3>None</h3>
+
+<pre>public static readonly PeterO.Cbor.CBOREncodeOptions None;
+</pre>
+
+<p>No special options for encoding/decoding. Value: 0.</p>
 
 <p><a id="AllowDuplicateKeys"></a></p>
 
@@ -123,11 +146,11 @@ is null.</li>
 <pre>public bool AllowDuplicateKeys { get; }
 </pre>
 
-<p>Gets a value indicating whether to allow duplicate keys when reading CBOR objects from a data stream. Used only when decoding CBOR objects.</p>
+<p>Gets a value indicating whether to disallow duplicate keys when reading CBOR objects from a data stream. Used only when decoding CBOR objects.</p>
 
 <p><b>Returns:</b></p>
 
-<p>A value indicating whether to allow duplicate keys when reading CBOR objects from a data stream. The default is false.</p>
+<p>A value indicating whether to disallow duplicate keys when reading CBOR objects from a data stream.</p>
 
 <p><a id="AllowEmpty"></a></p>
 
@@ -149,11 +172,11 @@ is null.</li>
 <pre>public bool Ctap2Canonical { get; }
 </pre>
 
-<p>Gets a value indicating whether CBOR objects are written out using the CTAP2 canonical CBOR encoding form, which is useful for implementing Web Authentication. In this form, CBOR tags are not used, map keys are written out in a canonical order, and non-integer numbers and integers 2^63 or greater are written as 64-bit binary floating-point numbers.</p>
+<p>Gets a value indicating whether CBOR objects are written out using the CTAP2 canonical CBOR encoding form. In this form, CBOR tags are not used, map keys are written out in a canonical order, and non-integer numbers and integers 2^63 or greater are written as 64-bit binary floating-point numbers.</p>
 
 <p><b>Returns:</b></p>
 
-<p><code>true</code>  if CBOR objects are written out using the CTAP2 canonical CBOR encoding form; otherwise,  <code>false</code>  .</p>
+<p><code>true</code>  if CBOR objects are written out using the CTAP2 canonical CBOR encoding form; otherwise,  <code>false</code>  .. In this form, CBOR tags are not used, map keys are written out in a canonical order, and non-integer numbers and integers 2^63 or greater are written as 64-bit binary floating-point numbers.</p>
 
 <p><a id="ResolveReferences"></a></p>
 
@@ -179,11 +202,94 @@ is null.</li>
 <pre>public bool UseIndefLengthStrings { get; }
 </pre>
 
-<p>Gets a value indicating whether to encode strings with an indefinite-length encoding under certain circumstances.</p>
+<p>Gets a value indicating whether to always encode strings with a definite-length encoding.</p>
 
 <p><b>Returns:</b></p>
 
-<p>A value indicating whether to encode strings with an indefinite-length encoding under certain circumstances. The default is false.</p>
+<p>A value indicating whether to always encode strings with a definite-length encoding.</p>
+
+<p><a id="Value"></a></p>
+
+<h3>Value</h3>
+
+<pre>public int Value { get; }
+</pre>
+
+<p><b>Deprecated.</b> Use the ToString() method to get the values of all this object&#39;s properties.</p>
+
+<p>Gets this options object&#39;s value.</p>
+
+<p>The return value is 1 if UseIndefLengthStrings is false or 0 if true, plus 2 if AllowDuplicateKeys is false or 0 if true.</p>
+
+<p><b>Returns:</b></p>
+
+<p>This options object&#39;s value.</p>
+
+<p><a id="And_PeterO_Cbor_CBOREncodeOptions"></a></p>
+
+<h3>And</h3>
+
+<pre>public PeterO.Cbor.CBOREncodeOptions And(
+    PeterO.Cbor.CBOREncodeOptions o);
+</pre>
+
+<p><b>Deprecated.</b> May be removed in a later version. Option classes in this library will follow a different form in a later version -- the approach used in this class is too complicated.</p>
+
+<p>Returns an options object containing the flags shared by this and another options object.</p>
+
+<p>For compatibility reasons, for the object returned by this method, the UseIndefLengthStrings property will be set to true if that property is true in <i> either or both </i> objects, or false otherwise; the AllowDuplicateKeys property will be set to true if that property is true in <i> either or both </i> objects, or false otherwise; and other properties will have their default values. (This class formerly used the inverse of both properties and And works off of that.)</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>o</i>: The parameter  <i>o</i>
+is a CBOREncodeOptions object.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>A CBOREncodeOptions object.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter  <i>o</i>
+is null.</li>
+</ul>
+
+<p><a id="Or_PeterO_Cbor_CBOREncodeOptions"></a></p>
+
+<h3>Or</h3>
+
+<pre>public PeterO.Cbor.CBOREncodeOptions Or(
+    PeterO.Cbor.CBOREncodeOptions o);
+</pre>
+
+<p><b>Deprecated.</b> May be removed in a later version. Option classes in this library will follow a different form in a later version -- the approach used in this class is too complicated.</p>
+
+<p>Returns an options object containing the combined flags of this and another options object.</p>
+
+<p>For compatibility reasons, for the object returned by this method, the UseIndefLengthStrings property will be set to true if that property is true in <i> both </i> objects, or false otherwise; the AllowDuplicateKeys property will be set to true if that property is true in <i> both </i> objects, or false otherwise; and other properties will have their default values. (This class formerly used the inverse of both properties and Or works off of that.)</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>o</i>: The parameter  <i>o</i>
+is a CBOREncodeOptions object.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>A new CBOREncodeOptions object.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter  <i>o</i>
+is null.</li>
+</ul>
 
 <p><a id="ToString"></a></p>
 

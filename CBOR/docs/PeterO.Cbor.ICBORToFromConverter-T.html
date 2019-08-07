@@ -10,18 +10,18 @@
     PeterO.Cbor.ICBORConverter&lt;T&gt;
 </pre>
 
-<p>Classes that implement this interface can support conversions from CBOR objects to a custom type and back.</p>
+<p>Interface implemented by classes that convert objects of arbitrary types to and from CBOR objects.</p>
 
 <h3>Member Summary</h3>
 
 <ul>
-<li><code><a href="#FromCBORObject_PeterO_Cbor_CBORObject">FromCBORObject(PeterO.Cbor.CBORObject)</a></code> - Converts a CBOR object to a custom type.</li>
+<li><code><a href="#FromCBORObject_PeterO_Cbor_CBORObject">FromCBORObject(PeterO.Cbor.CBORObject)</a></code> - Converts a CBOR object to an object of a type supported by the implementing class.</li>
 </ul>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li>&lt;T&gt;: Type of objects to convert to and from CBOR objects.</li>
+<li>&lt;T&gt;: Type of objects that a class implementing this method can convert to and from CBOR objects.</li>
 </ul>
 
 <p><a id="FromCBORObject_PeterO_Cbor_CBORObject"></a></p>
@@ -29,20 +29,27 @@
 <h3>FromCBORObject</h3>
 
 <pre>T FromCBORObject(
-    PeterO.Cbor.CBORObject obj);
+    PeterO.Cbor.CBORObject cbor);
 </pre>
 
-<p>Converts a CBOR object to a custom type.</p>
+<p>Converts a CBOR object to an object of a type supported by the implementing class.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>obj</i>: A CBOR object to convert to the custom type.</li>
+<li><i>cbor</i>: A CBOR object to convert.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p>An object of the custom type after conversion.</p>
+<p>The converted object.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>PeterO.Cbor.CBORException:
+An error occurred in the conversion; for example, the conversion doesn&#39;t support the given CBOR object.</li>
+</ul>
 
 <p><a href="/CBOR/">Back to CBOR start page.</a></p>
 </div><nav id="navigation"><ul>

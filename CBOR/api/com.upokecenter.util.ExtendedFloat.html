@@ -400,8 +400,11 @@ exponent range to apply to the parsed number. Can be null.</p></li>
 
 <ul>
 <li><p><code>java.lang.NullPointerException</code> - The parameter <code>str</code> is null.</p></li>
-<li><p><code>java.lang.IllegalArgumentException</code> - Either <code>offset</code> or <code>length</code> is less
-than 0 or greater than <code>str</code> &#39;s length, or <code>str</code> &#39; s
+<li><p><code>java.lang.IllegalArgumentException</code> - Either <code>offset</code> or <code>length</code> is
+less than 0 or greater than <code>str</code> &#39;s length, or <code>str</code> &#39;
+s length minus <code>offset</code> is less than <code>length</code>.</p></li>
+<li><p><code>java.lang.IllegalArgumentException</code> - Either <code>offset</code> or <code>length</code> is
+less than 0 or greater than <code>str</code> &#39;s length, or <code>str</code> &#39;s
 length minus <code>offset</code> is less than <code>length</code>.</p></li>
 <li><p><code>java.lang.IllegalArgumentException</code> - Either &quot;offset&quot; or &quot;length&quot; is less than 0 or
 greater than &quot;str&quot;&#39;s length, or &quot;str&quot;&#39;s length minus &quot;offset&quot; is

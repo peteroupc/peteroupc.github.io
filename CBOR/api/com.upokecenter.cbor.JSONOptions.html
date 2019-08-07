@@ -26,10 +26,6 @@ Initializes a new instance of the JSONOptions
 class with default options.</li>
 <li><code>JSONOptions​(boolean base64Padding) JSONOptions</code><br>
 Initializes a new instance of the JSONOptions
-class with the given value for the Base64Padding option.</li>
-<li><code>JSONOptions​(boolean base64Padding,
-       boolean replaceSurrogates) JSONOptions</code><br>
-Initializes a new instance of the JSONOptions
 class with the given values for the options.</li>
 <li><code>JSONOptions​(java.lang.String paramString) JSONOptions</code><br>
 Initializes a new instance of the JSONOptions
@@ -41,13 +37,8 @@ class.</li>
 <ul>
 <li><code>boolean getBase64Padding()</code><br>
 Deprecated.
-This option now has no effect.
-This option now has no effect.</li>
-<li><code>boolean getReplaceSurrogates() char</code><br>
-Gets a value indicating whether surrogate code points not part of a
-surrogate pair (which consists of two consecutive char s
-forming one Unicode code point) are each replaced with a replacement
-character (U + FFFD).</li>
+This option may have no effect in the future.
+This option may have no effect in the future.</li>
 <li><code>java.lang.String toString()</code><br>
 Gets the values of this options object&#39;s properties in text form.</li>
 </ul>
@@ -90,34 +81,15 @@ described in the String constructor for this class.</li>
 </pre>
 
 <p>Deprecated.
-This option now has no effect. This library now includes necessary padding
- when writing traditional base64 to JSON and includes no padding when
- writing base64url to JSON, in accordance with the revision of the CBOR
- specification.</p>
+This option may have no effect in the future. A future version may, by
+ default, include necessary padding when writing traditional base64 to
+ JSON and include no padding when writing base64url to JSON, in accordance
+ with the revision of the CBOR specification.</p>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A value indicating whether the Base64Padding property is true.</li>
-</ul>
-
-<h3>getReplaceSurrogates</h3>
-
-<pre>public final boolean getReplaceSurrogates()
-</pre>
-
-<p>Gets a value indicating whether surrogate code points not part of a
- surrogate pair (which consists of two consecutive <code>char</code> s
- forming one Unicode code point) are each replaced with a replacement
- character (U + FFFD). The default is false; an exception is thrown
- when such code points are encountered.</p>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>True, if surrogate code points not part of a surrogate pair are each
-replaced with a replacement character, or false if an exception is
-thrown when such code points are encountered.</li>
+<li>The default is false, no padding.</li>
 </ul>
 
 <p><a href="/CBOR/">Back to CBOR start page.</a></p>
