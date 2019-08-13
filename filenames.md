@@ -4,7 +4,7 @@ Peter Occil
 
 The issue of supporting file names is tricky, because different file systems&mdash;
 
-- support different character encodings, 
+- support different character encodings,
 - use different rules in the storage of file names,
 - use different rules for case comparisons and normalization comparisons, and
 - have different limits on the number of code units a file name can have.
@@ -48,7 +48,7 @@ Different file systems have different limits in the names of files.  To maximize
 - 255 Unicode code points, if the names are limited to the basic characters given in the previous section, or
 - 63 Unicode code points, otherwise.
 
-(MS-DOS supported only file names with up to 8 bytes, followed optionally by "." and up to three more bytes, and with no more than one ".".  Such a file length limit almost never occurs in practice today.)
+(MS-DOS supported only file names with up to 8 bytes, followed optionally by "." and up to three more bytes, and with no more than one ".".  Such a limit almost never occurs in practice today.)
 
 ### Normalization and HFS Plus
 
