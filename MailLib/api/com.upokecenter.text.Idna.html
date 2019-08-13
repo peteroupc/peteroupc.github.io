@@ -19,16 +19,17 @@
  <p>A domain name is divided into one or more strings separated by
   dots (&quot;.&quot;), called <b>labels</b>. For IDNA2008&#39;s purposes, a valid
  label can be an <b>NR-LDH label</b>, an <b>A-label</b>, or a
- <b>U-label</b>.</p> <p>An LDH label contains only basic letters,
-  basic digits, and/or &quot;-&quot;, and neither begins nor ends with &quot;-&quot;. For
-  example, &quot;exa-mple&quot; and &quot;1example&quot; are LDH labels, but not
-  &quot;-example&quot;.</p> <p>An NR-LDH label is an LDH label whose third and
-  fourth characters are not both &quot;-&quot;. For example, &quot;ex--ample&quot; is not
- an NR-LDH label.</p> <p>A U-label contains one or more characters
- outside the Basic Latin range (U + 0000 to U + 007F) and meets IDNA2008
- requirements for labels with such characters. An example is
-  &quot;eá&quot;.</p> <p>An A-label is an LDH label beginning with &quot;xn--&quot; in any
- combination of case, and is convertible to a U-label. An example is
+ <b>U-label</b>.</p> <p>An LDH label contains only basic uppercase
+  letters, basic lowercase letters, basic digits, and/or &quot;-&quot;, and
+  neither begins nor ends with &quot;-&quot;. For example, &quot;exa-mple&quot;,
+  &quot;EXAMPLE&quot;, and &quot;1example&quot; are LDH labels, but not &quot;-example&quot;.</p>
+ <p>An NR-LDH label is an LDH label whose third and fourth characters
+  are not both &quot;-&quot;. For example, &quot;ex--ample&quot; is not an NR-LDH
+ label.</p> <p>A U-label contains one or more characters outside the
+ Basic Latin range (U + 0000 to U + 007F) and meets IDNA2008 requirements
+  for labels with such characters. An example is &quot;eá&quot;.</p> <p>An
+  A-label is an LDH label beginning with &quot;xn--&quot; in any combination of
+ case, and is convertible to a U-label. An example is
   &quot;xn--e-ufa&quot;.</p> <p>An XN-label is an LDH label beginning with
   &quot;xn--&quot; in any combination of case.</p> <p>NOTICE: While this class&#39;s
  source code is in the public domain, the class uses two internal
