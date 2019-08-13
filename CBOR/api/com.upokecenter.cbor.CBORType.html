@@ -23,11 +23,8 @@ An array of bytes.</li>
 <li><code>Map</code><br>
 A map of CBOR objects.</li>
 <li><code>Number</code><br>
-Deprecated.
-Use the IsNumber property of CBORObject to determine whether a CBOR Object
-represents a number; however, IsNumber is narrower than CBORType.Number.
-Use the IsNumber property of CBORObject to determine whether a CBOR Object
-represents a number; however, IsNumber is narrower than CBORType.Number.</li>
+A number of any kind, including integers, big integers, floating point
+numbers, and decimal numbers.</li>
 <li><code>SimpleValue</code><br>
 A &quot;simple value&quot; other than floating point values, true, and false.</li>
 <li><code>TextString</code><br>
@@ -48,7 +45,7 @@ the order they are declared.</li>
 
 <h3>Number</h3>
 
-<pre>@Deprecated public static final CBORType Number
+<pre>public static final CBORType Number
 </pre>
 
 <h3>Boolean</h3>
@@ -95,12 +92,12 @@ the order they are declared.</li>
 
 <h3>Number</h3>
 
-<pre>@Deprecated public static final CBORType Number
+<pre>public static final CBORType Number
 </pre>
 
-<p>Deprecated.
-Use the IsNumber property of CBORObject to determine whether a CBOR Object
- represents a number; however, IsNumber is narrower than CBORType.Number.</p>
+<p>A number of any kind, including integers, big integers, floating point
+ numbers, and decimal numbers. The floating-point value Not-a-Number
+ is also included in the Number type.</p>
 
 <h3>Boolean</h3>
 

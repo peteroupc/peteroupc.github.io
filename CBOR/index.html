@@ -50,7 +50,7 @@ text to CBOR objects and back.</p>
 
 <h2>Examples</h2>
 
-<p>The following shows certain use examples of this library.  Additional examples can be found in the API documentation.</p>
+<p>The following shows certain use examples of this library.  Additional examples can be found in the <a href="https://peteroupc.github.io/CBOR/docs/">API documentation</a>.</p>
 
 <p>Creating a map and converting that map to CBOR bytes
 and a JSON string:</p>
@@ -64,10 +64,27 @@ var cbor = CBORObject.NewMap()
    .Add(&quot;array&quot;, CBORObject.NewArray().Add(999f).Add(&quot;xyz&quot;))
    .Add(&quot;bytes&quot;, new byte[] { 0, 1, 2 });
 // The following converts the map to CBOR
-byte[] bytes = cbor.EncodeToBytes(CBOREncodeOptions.Default);
+byte[] bytes = cbor.EncodeToBytes();
 // The following converts the map to JSON
 string json = cbor.ToJSONString();
 Console.WriteLine(json);
+</pre>
+
+<p>Creating a map and converting that map to canonical CBOR
+bytes (for WebAuthn and other purposes) and a .NET
+dictionary:</p>
+
+<pre lang="c#"><code>// The following creates a CBOR map and adds
+// several kinds of objects to it
+var cbor = CBORObject.NewMap()
+   .Add(&quot;item&quot;, &quot;any string&quot;)
+   .Add(&quot;foo&quot;, &quot;another string&quot;)
+   .Add(&quot;quux&quot;, &quot;a third string&quot;);
+// The following converts the map to canonical CBOR
+byte[] bytes = cbor.EncodeToBytes(CBOREncodeOptions.DefaultCtap2Canonical);
+// The following converts the map to a dictionary
+var dict = cbor.ToObject&lt;IDictionary&lt;string,string&gt;&gt;();
+Console.WriteLine(dict.Count);
 </pre>
 
 <p>Reading data from a file (C#).  Note that all the examples for
@@ -197,7 +214,7 @@ CBOR library in the form of a calculator.</p>
 
 <h2>About</h2>
 
-<p>Written in 2013-2017 by Peter O.</p>
+<p>Written in 2013-2019 by Peter O.</p>
 
 <p>Any copyright is dedicated to the Public Domain.
 <a href="http://creativecommons.org/publicdomain/zero/1.0/">http://creativecommons.org/publicdomain/zero/1.0/</a></p>
@@ -214,20 +231,45 @@ at: <a href="http://peteroupc.github.io/CBOR/">http://peteroupc.github.io/CBOR/<
 string has a length of 0.  This implementation treats a positive
 bignum with length 0 as having a value of 0 and a negative
 bignum with length 0 as having a value of -1.</li>
-<li>Section 2.4.1 specifies the number of seconds since the start of 1970.  It is
-based on the POSIX definition of &quot;seconds since the Epoch&quot;, which
-the RFC cites as a normative reference.  This definition does not
-count leap seconds.</li>
 </ul>
 
 <h2>Release Notes</h2>
 
-<h3>Version 3.6.0</h3>
+<h3>Version 4.0.0-beta1:</h3>
 
 <ul>
-<li>Add new string constructors to CBOREncodeOptions, JSONOptions, and PODOptions</li>
-<li>Implement options to disable resolving shared references and allow empty streams when decoding CBOR objects</li>
-<li>Add IsNumber property to CBORObject to check whether a CBOR object stores a number; CBORType.Number is deprecated</li>
+<li>Support nullable types in CBORObject.ToObject.</li>
+<li>Update Numbers library to newer version</li>
+<li>JSONOptions.Base64Padding now has no effect.  The library will now write padding as necessary when
+writing traditional base64 to JSON and write no padding when writing base64url to JSON.</li>
+<li>JSONOptions.ReplaceSurrogates property added.</li>
+<li>Restrict valid shared reference indices to integers 0 or greater.</li>
+<li>Reject writing JSON where CBOR maps have two keys with the same string equivalent.</li>
+<li>Improve performance of CBOR object comparisons involving big floats.</li>
+</ul>
+
+<h3>Version 4.0.0-alpha2:</h3>
+
+<ul>
+<li>Support CBOR tags for IRIs and IRI references.</li>
+<li>Add CBOREncodeOptions.DefaultCtap2Canonical field.</li>
+</ul>
+
+<h3>Version 4.0.0-alpha1:</h3>
+
+<ul>
+<li>Remove all APIs obsoleted since version 3.4.  This
+includes the BigInteger, ExtendedDecimal, and ExtendedFloat APIs,
+which were renamed and moved to a different library, as well as the
+ICBORTag and CBORTypeFilter APIs.</li>
+<li>Changed implementation of FromObject, including imposing a nesting depth
+limit and supporting a CBORTypeMapper parameter.</li>
+<li>Property name conversion rules (in PODOptions) were changed
+in this version with respect to FromObject.  In this sense,
+PODOptions.RemoveIsPrefix was removed.</li>
+<li>Certain other changes in CBOR object reading and validation were
+made; they are largely compatible with previous versions but may be
+backwards-incompatible in certain rare cases</li>
 </ul>
 
 <h3>Version 3.5.2</h3>
@@ -281,52 +323,6 @@ count leap seconds.</li>
 <li>Added CodePointLength and ToUpperCaseAscii methods to DataUtilities class.</li>
 <li>Added WriteValue family of methods to CBORObject class.  This can be used for lower-level encoding of CBOR objects.  Examples on its use were included in the documentation.</li>
 <li>Bug fixes.</li>
-</ul>
-
-<h3>Version 3.2.1</h3>
-
-<ul>
-<li>Add .NET Framework 4.0 targeted assembly to avoid compiler warnings that can appear when this package is added to a project that targets .NET Framework 4.0 or later.</li>
-</ul>
-
-<h3>Version 3.2</h3>
-
-<ul>
-<li>Added build targeting the .NET Framework 2.0</li>
-<li>Obsoleted much of the existing API in CBOREncodeOptions and added new APIs to replace it.</li>
-<li>Documentation for some CBORObject methods now points to the use of CBOREncodeOptions.Default</li>
-<li>Documentation edited in other places</li>
-</ul>
-
-<h3>Version 3.1</h3>
-
-<ul>
-<li>Add options to control property name generation in CBORObject.FromObject.</li>
-<li>Add option to control base64 padding write-out in CBORObject.ToJSONString and CBORObject.WriteJSONTo.</li>
-</ul>
-
-<h3>Version 3.0.3</h3>
-
-<ul>
-<li>Fix issue &quot;Encode options not honored for some nested objects&quot;.</li>
-</ul>
-
-<h3>Version 3.0.2</h3>
-
-<ul>
-<li>Really strong-name sign the assembly, which (probably) was inadvertently delay-signed in version 3.0.</li>
-</ul>
-
-<h3>Version 3.0.0</h3>
-
-<ul>
-<li>Moved from .NET Portable to .NET Standard 1.0.</li>
-<li>Deprecated arbitrary-precision classes in PeterO namespace; use the classes from the &quot;PeterO.Numbers&quot; library and namespace instead.  In particular, methods that used the former classes were deprecated and often replaced with versions that use the newer classes.</li>
-<li>Change JSON output behavior slightly, including preserving negative zero</li>
-<li>Hash code calculation was changed in this version</li>
-<li>Deprecated OutermostTag in favor of MostOuterTag in CBORObject</li>
-<li>Deprecated InnermostTag in favor of MostInnerTag in CBORObject</li>
-<li>Bug fixes</li>
 </ul>
 
 <p>See <a href="https://github.com/peteroupc/CBOR/tree/master/History.md">History.md</a>
