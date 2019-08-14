@@ -15,9 +15,11 @@
 
 <ul>
 <li><code>MediaTypeBuilder() MediaTypeBuilder</code><br>
-Initializes a new instance of the MediaTypeBuilder class.</li>
+Initializes a new instance of the MediaTypeBuilder class, using the type
+&quot;application/octet-stream&quot; .</li>
 <li><code>MediaTypeBuilder​(MediaType mt) MediaTypeBuilder</code><br>
-Initializes a new instance of the MediaTypeBuilder class.</li>
+Initializes a new instance of the MediaTypeBuilder class using the data from
+another media type.</li>
 <li><code>MediaTypeBuilder​(java.lang.String type,
             java.lang.String subtype) MediaTypeBuilder</code><br>
 Initializes a new instance of the MediaTypeBuilder class.</li>
@@ -51,9 +53,11 @@ the same form as MediaType.toString.</li>
 
 <ul>
 <li><code>MediaTypeBuilder() MediaTypeBuilder</code><br>
-Initializes a new instance of the MediaTypeBuilder class.</li>
+Initializes a new instance of the MediaTypeBuilder class, using the type
+&quot;application/octet-stream&quot; .</li>
 <li><code>MediaTypeBuilder​(MediaType mt) MediaTypeBuilder</code><br>
-Initializes a new instance of the MediaTypeBuilder class.</li>
+Initializes a new instance of the MediaTypeBuilder class using the data from
+another media type.</li>
 <li><code>MediaTypeBuilder​(java.lang.String type,
             java.lang.String subtype) MediaTypeBuilder</code><br>
 Initializes a new instance of the MediaTypeBuilder class.</li>
@@ -66,14 +70,16 @@ Initializes a new instance of the MediaTypeBuilder class.</li>
 <pre>public MediaTypeBuilder()
 </pre>
 
-<p>Initializes a new instance of the <code>MediaTypeBuilder</code> class.</p>
+<p>Initializes a new instance of the <code>MediaTypeBuilder</code> class, using the type
+  &quot;application/octet-stream&quot; .</p>
 
 <h3>MediaTypeBuilder</h3>
 
 <pre>public MediaTypeBuilder​(MediaType mt)
 </pre>
 
-<p>Initializes a new instance of the <code>MediaTypeBuilder</code> class.</p>
+<p>Initializes a new instance of the <code>MediaTypeBuilder</code> class using the data from
+ another media type.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -97,8 +103,8 @@ Initializes a new instance of the MediaTypeBuilder class.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>type</code> - The parameter <code>type</code> is a text string.</p></li>
-<li><p><code>subtype</code> - The parameter <code>subtype</code> is a text string.</p></li>
+<li><p><code>type</code> - The media type&#39;s top-level type.</p></li>
+<li><p><code>subtype</code> - The media type&#39;s subtype.</p></li>
 </ul>
 
 <h3>getTopLevelType</h3>

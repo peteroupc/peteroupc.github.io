@@ -300,12 +300,12 @@ class.</li>
 </pre>
 
 <p>Initializes a new instance of the <code>Message</code>
- class.</p>
+ class. Reads from the given InputStream object to initialize the message.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>stream</code> - The parameter <code>stream</code> is a InputStream object.</li>
+<li><code>stream</code> - A readable data stream.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -320,12 +320,12 @@ class.</li>
 </pre>
 
 <p>Initializes a new instance of the <code>Message</code>
- class.</p>
+ class. Reads from the given byte array to initialize the message.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>bytes</code> - A byte array.</li>
+<li><code>bytes</code> - A readable data stream.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -340,7 +340,8 @@ class.</li>
 </pre>
 
 <p>Initializes a new instance of the <code>Message</code>
- class.</p>
+ class. The message will be plain text and have an artificial From
+ address.</p>
 
 <h3>NewBodyPart</h3>
 
@@ -401,11 +402,10 @@ Use GetAddresses(\Bcc) instead.</p>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>java.lang.UnsupportedOperationException</code> - Either this message is a multipart
-message, so it doesn&#39;t have its own body text, or this message has
-no character encoding declared or assumed for it (which is usually
-the case for non-text messages), or the character encoding is not
-supported.</li>
+<li><code>java.lang.UnsupportedOperationException</code> - Either this message is a multipart message, so
+it doesn&#39;t have its own body text, or this message has no character
+encoding declared or assumed for it (which is usually the case for
+non-text messages), or the character encoding is not supported.</li>
 </ul>
 
 <h3>getCCAddresses</h3>
@@ -445,11 +445,10 @@ Use GetAddresses(\Cc) instead.</p>
 
 **Throws:**
 
-* <code>java.lang.UnsupportedOperationException</code> - Either this message is a multipart
- message, so it doesn't have its own body text, or this message has
- no character encoding declared or assumed for it (which is usually
- the case for non-text messages), or the character encoding is not
- supported.
+* <code>java.lang.UnsupportedOperationException</code> - Either this message is a multipart message, so
+ it doesn't have its own body text, or this message has no character
+ encoding declared or assumed for it (which is usually the case for
+ non-text messages), or the character encoding is not supported.
 
 ### getContentDisposition
     public final ContentDisposition getContentDisposition()

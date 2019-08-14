@@ -10,13 +10,13 @@
 </pre>
 
 <p>Holds converters to customize the serialization and deserialization behavior
- of <code>CBORObject.FromObject</code> and <code>CBORObject#ToObject</code> , as
+ of <code>CBORObject.FromObject</code> and <code>CBORObject#ToObject</code>, as
  well as type filters for <code>ToObject</code>.</p>
 
 <h2>Methods</h2>
 
 <ul>
-<li><code>CBORTypeMapper()</code><br>
+<li><code>CBORTypeMapper() CBORTypeMapper</code><br>
 Initializes a new instance of the CBORTypeMapper class.</li>
 <li><code>&lt;T&gt; CBORTypeMapper AddConverter​(java.lang.reflect.Type type,
         ICBORConverter&lt;T&gt; converter)</code><br>
@@ -35,7 +35,7 @@ this mapper.</li>
 <h2>Constructors</h2>
 
 <ul>
-<li><code>CBORTypeMapper()</code><br>
+<li><code>CBORTypeMapper() CBORTypeMapper</code><br>
 Initializes a new instance of the CBORTypeMapper class.</li>
 </ul>
 
@@ -46,14 +46,14 @@ Initializes a new instance of the CBORTypeMapper class.</li>
 <pre>public CBORTypeMapper()
 </pre>
 
-<p>Initializes a new instance of the CBORTypeMapper class.</p>
+<p>Initializes a new instance of the <code>CBORTypeMapper</code> class.</p>
 
 <h3>CBORTypeMapper</h3>
 
 <pre>public CBORTypeMapper()
 </pre>
 
-<p>Initializes a new instance of the CBORTypeMapper class.</p>
+<p>Initializes a new instance of the <code>CBORTypeMapper</code> class.</p>
 
 <h3>AddConverter</h3>
 
@@ -89,8 +89,8 @@ object.</p></li>
 <ul>
 <li><p><code>java.lang.NullPointerException</code> - The parameter <code>type</code> or <code>
 converter</code> is null.</p></li>
-<li><p><code>java.lang.IllegalArgumentException</code> - Converter doesn&#39;t contain a proper
-ToCBORObject method&quot;.</p></li>
+<li><p><code>java.lang.IllegalArgumentException</code> - Converter doesn&#39;t contain a proper ToCBORObject
+method&quot;.</p></li>
 </ul>
 
 <h3>FilterTypeName</h3>
@@ -121,9 +121,9 @@ filters given in this mapper, or <code>false</code> otherwise.</li>
 <pre>public CBORTypeMapper AddTypePrefix​(java.lang.String prefix)
 </pre>
 
-<p>Adds a prefix of a Java or.NET type for use in type matching. A type
- matches a prefix if its fully qualified name is or begins with that
- prefix, using codepoint-by-codepoint (case-sensitive) matching.</p>
+<p>Adds a prefix of a Java or.NET type for use in type matching. A type matches
+ a prefix if its fully qualified name is or begins with that prefix,
+ using codepoint-by-codepoint (case-sensitive) matching.</p>
 
 <p><strong>Parameters:</strong></p>
 

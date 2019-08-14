@@ -20,11 +20,19 @@ An array of CBOR objects.</li>
 The simple values true and false.</li>
 <li><code>ByteString</code><br>
 An array of bytes.</li>
+<li><code>FloatingPoint</code><br>
+A 16-, 32-, or 64-bit binary floating-point number.</li>
+<li><code>Integer</code><br>
+An integer in the interval [-(2^64), 2^64 - 1], or an integer of major type
+0 and 1.</li>
 <li><code>Map</code><br>
 A map of CBOR objects.</li>
 <li><code>Number</code><br>
-A number of any kind, including integers, big integers, floating point
-numbers, and decimal numbers.</li>
+Deprecated.
+Use the IsNumber property of CBORObject to determine whether a CBOR Object
+represents a number, or use the two new CBORType values instead.
+Use the IsNumber property of CBORObject to determine whether a CBOR Object
+represents a number, or use the two new CBORType values instead.</li>
 <li><code>SimpleValue</code><br>
 A &quot;simple value&quot; other than floating point values, true, and false.</li>
 <li><code>TextString</code><br>
@@ -45,7 +53,7 @@ the order they are declared.</li>
 
 <h3>Number</h3>
 
-<pre>public static final CBORType Number
+<pre>@Deprecated public static final CBORType Number
 </pre>
 
 <h3>Boolean</h3>
@@ -78,6 +86,16 @@ the order they are declared.</li>
 <pre>public static final CBORType Map
 </pre>
 
+<h3>Integer</h3>
+
+<pre>public static final CBORType Integer
+</pre>
+
+<h3>FloatingPoint</h3>
+
+<pre>public static final CBORType FloatingPoint
+</pre>
+
 <h3>values</h3>
 
 <pre>public static CBORType[] values()
@@ -92,12 +110,15 @@ the order they are declared.</li>
 
 <h3>Number</h3>
 
-<pre>public static final CBORType Number
+<pre>@Deprecated public static final CBORType Number
 </pre>
 
-<p>A number of any kind, including integers, big integers, floating point
- numbers, and decimal numbers. The floating-point value Not-a-Number
- is also included in the Number type.</p>
+<p>Deprecated.
+Use the IsNumber property of CBORObject to determine whether a CBOR Object
+ represents a number, or use the two new CBORType values instead.
+ CBORType.Integer covers CBOR objects representing integers of major type
+ 0 and 1. CBORType.FloatingPoint covers CBOR objects representing 16-,
+ 32-, and 64-bit floating-point numbers.</p>
 
 <h3>Boolean</h3>
 
@@ -140,6 +161,21 @@ the order they are declared.</li>
 </pre>
 
 <p>A map of CBOR objects.</p>
+
+<h3>Integer</h3>
+
+<pre>public static final CBORType Integer
+</pre>
+
+<p>An integer in the interval [-(2^64), 2^64 - 1], or an integer of major type
+ 0 and 1.</p>
+
+<h3>FloatingPoint</h3>
+
+<pre>public static final CBORType FloatingPoint
+</pre>
+
+<p>A 16-, 32-, or 64-bit binary floating-point number.</p>
 
 <p><a href="/CBOR/">Back to CBOR start page.</a></p>
 </div><nav id="navigation"><ul>

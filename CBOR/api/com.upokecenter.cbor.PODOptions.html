@@ -23,10 +23,15 @@ The default settings for &quot;plain old data&quot; options.</li>
 
 <ul>
 <li><code>PODOptions() PODOptions</code><br>
-Initializes a new instance of the PODOptions class.</li>
+Initializes a new instance of the PODOptions
+class.</li>
 <li><code>PODOptions​(boolean removeIsPrefix,
       boolean useCamelCase) PODOptions</code><br>
-Initializes a new instance of the PODOptions class.</li>
+Initializes a new instance of the PODOptions
+class.</li>
+<li><code>PODOptions​(java.lang.String paramString) PODOptions</code><br>
+Initializes a new instance of the PODOptions
+class.</li>
 </ul>
 
 <h2>Methods</h2>
@@ -35,6 +40,8 @@ Initializes a new instance of the PODOptions class.</li>
 <li><code>boolean getUseCamelCase()</code><br>
 Gets a value indicating whether property names are converted to camel
 case before they are used as keys.</li>
+<li><code>java.lang.String toString()</code><br>
+Gets the values of this options object&#39;s properties in text form.</li>
 </ul>
 
 <h2>Field Details</h2>
@@ -48,6 +55,27 @@ case before they are used as keys.</li>
 
 <h2>Method Details</h2>
 
+<h3>toString</h3>
+
+<pre>public java.lang.String toString()
+</pre>
+
+<p>Gets the values of this options object&#39;s properties in text form.</p>
+
+<p><strong>Overrides:</strong></p>
+
+<ul>
+<li><code>toString</code> in class <code>java.lang.Object</code></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A text string containing the values of this options object&#39;s
+properties. The format of the string is the same as the one
+described in the string constructor for this class.</li>
+</ul>
+
 <h3>getUseCamelCase</h3>
 
 <pre>public final boolean getUseCamelCase()
@@ -56,28 +84,27 @@ case before they are used as keys.</li>
 <p>Gets a value indicating whether property names are converted to camel
  case before they are used as keys. This option changes the behavior
   of key name serialization as follows. If "useCamelCase" is
- <code>false</code> : </p> <ul> <li>In the .NET version, all key names are
+ <code>false</code> :</p> <ul> <li>In the .NET version, all key names are
  capitalized, meaning the first letter in the name is converted to
   upper case if it's a basic lower-case letter ("a" to "z"). (For
-  example, "Name" and "IsName" both remain unchanged.) </li> <li>In
-  the Java version, for each eligible method name, the word "get" or
-  "set" is removed from the name if the name starts with that word,
-  then the name is capitalized. (For example, "getName" and "setName"
-  both become "Name", and "isName" becomes "IsName".) </li> </ul>
-  <p>If "useCamelCase" is <code>true</code> : </p> <ul> <li>In the .NET
-  version, for each eligible property name, the word "Is" is removed
- from the name if the name starts with that word, then the name is
- converted to camel case, meaning the first letter in the name is
-  converted to lower case if it's a basic upper-case letter ("A" to
-  "Z"). (For example, "Name" and "IsName" both become "name".) </li>
- <li>In the Java version, for each eligible method name, the word
-  "get", "set", or "is" is removed from the name if the name starts
- with that word, then the name is converted to camel case. (For
-  example, "getName", "setName", and "isName" all become "name".)
-  </li> </ul> <p>In the description above, a name "starts with" a word
- if that word begins the name and is followed by a character other
-  than a basic digit or lower-case letter, that is, other than "a" to
-  "z" or "0" to "9". </p>
+  example, "Name" and "IsName" both remain unchanged.)</li> <li>In the
+  Java version, for each eligible method name, the word "get" or "set"
+ is removed from the name if the name starts with that word, then the
+  name is capitalized. (For example, "getName" and "setName" both
+  become "Name", and "isName" becomes "IsName".)</li></ul> <p>If
+  "useCamelCase" is <code>true</code> :</p> <ul> <li>In the .NET version,
+  for each eligible property name, the word "Is" is removed from the
+ name if the name starts with that word, then the name is converted
+ to camel case, meaning the first letter in the name is converted to
+  lower case if it's a basic upper-case letter ("A" to "Z"). (For
+  example, "Name" and "IsName" both become "name".)</li> <li>In the
+  Java version, for each eligible method name, the word "get", "set",
+  or "is" is removed from the name if the name starts with that word,
+  then the name is converted to camel case. (For example, "getName",
+  "setName", and "isName" all become "name".)</li></ul> <p>In the
+  description above, a name "starts with" a word if that word begins
+ the name and is followed by a character other than a basic digit or
+  lower-case letter, that is, other than "a" to "z" or "0" to "9".</p>
 
 <p><strong>Returns:</strong></p>
 

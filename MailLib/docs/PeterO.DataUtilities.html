@@ -85,9 +85,9 @@ is null.</li>
 <p>The following example shows how to iterate a text string code point by code point, terminating the loop when an unpaired surrogate is found.</p>
 
 <pre>for (var i = 0;i&lt;str.Length; ++i) { int codePoint =
-        DataUtilities.CodePointAt(str, i, 2); if (codePoint &lt; 0) { break; /*
-        Unpaired surrogate */ } Console.WriteLine(&quot;codePoint:&quot;+codePoint); if
-        (codePoint &gt;= 0x10000) { i++; /* Supplementary code point */ } }
+            DataUtilities.CodePointAt(str, i, 2); if (codePoint &lt; 0) { break; /*
+            Unpaired surrogate */ } Console.WriteLine(&quot;codePoint:&quot;+codePoint); if
+            (codePoint &gt;= 0x10000) { i++; /* Supplementary code point */ } }
 </pre>
 
 <p>.</p>
@@ -618,8 +618,7 @@ is a text string.</li>
 
 <p>Writes a portion of a string in UTF-8 encoding to a data stream.</p>
 
-<pre>          &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>str</i>: A string to write.</p></li>
@@ -679,8 +678,7 @@ Either &quot;offset&quot; or &quot;length&quot; is less than 0 or greater than &
 
 <p>Writes a portion of a string in UTF-8 encoding to a data stream.</p>
 
-<pre>           &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>str</i>: A string to write.</p></li>
