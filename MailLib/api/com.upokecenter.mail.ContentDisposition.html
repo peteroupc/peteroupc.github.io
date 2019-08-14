@@ -278,25 +278,24 @@ case in version 0.10.0.</li>
  representing a title and an optional file extension) to a suitable
  name for saving data to a file. This method is idempotent; that is,
  calling the method again on the result doesn&#39;t change that result.
- <p>Examples of how this method works follows:</p>
-  <p><code>&quot;=?utf-8?q?hello=2Etxt?=&quot; -&gt;&quot;hello.txt&quot;</code> (RFC 2047
-  encoding).</p> <p><code>&quot;=?utf-8?q?long_filename?=&quot; -&gt;&quot;long
-  filename&quot;</code> (RFC 2047 encoding).</p> <p><code>&quot;utf-8&#39;en&#39;hello%2Etxt&quot;
-  -&gt;&quot;hello.txt&quot;</code> (RFC 2231 encoding).</p> <p><code>&quot;nul.txt&quot;
-  -&gt;&quot;_nul.txt&quot;</code> (Reserved name).</p> <p><code>&quot;dir1/dir2/file&quot;
+ The method avoids characters and combinations of characters that are
+ problematic to use in certain file systems, and leaves the vast
+ majority of file names seen in practice untouched. <p>Examples of
+  how this method works follows:</p> <p><code>&quot;=?utf-8?q?hello=2Etxt?=&quot;
+  -&gt;&quot;hello.txt&quot;</code> (RFC 2047 encoding).</p>
+  <p><code>&quot;=?utf-8?q?long_filename?=&quot; -&gt;&quot;long filename&quot;</code> (RFC 2047
+  encoding).</p> <p><code>&quot;utf-8&#39;en&#39;hello%2Etxt&quot; -&gt;&quot;hello.txt&quot;</code>
+  (RFC 2231 encoding).</p> <p><code>&quot;nul.txt&quot; -&gt;&quot;_nul.txt&quot;</code>
+  (Reserved name).</p> <p><code>&quot;dir1/dir2/file&quot;
   -&gt;&quot;dir1_dir2_file&quot;</code> (Directory separators).</p><p>
  </p><p><b>Remarks:</b></p> <ul> <li>This method should be used only to
  prepare a file name for the purpose of suggesting a name by which to
  save data. It should not be used to prepare file names of existing
  files for the purpose of reading them, since this method may replace
  certain characters with other characters in some cases, such that
- two different inputs may map to the same output.</li> <li>This
- method is intended to prepare strings so that they can be used as is
- as file names in most file systems; it avoids characters and
- combinations of characters that are problematic to use in certain
- file systems, and leaves the vast majority of file names seen in
- practice untouched.</li> <li><b>File Name Support.</b> For
-  recommendations on file name support, see &quot;<a href="https://peteroupc.github.io/filenames.html">File Name Support in
+ two different inputs may map to the same output.</li> <li><b>File
+ Name Support.</b> For recommendations on file name support, see
+  &quot;<a href="https://peteroupc.github.io/filenames.html">File Name Support in
   Applications</a>&quot;.</li>
  <li><b>Guarantees.</b> The exact file name conversion used by this
  method is not guaranteed to remain the same between versions of this
