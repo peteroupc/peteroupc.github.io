@@ -9,7 +9,11 @@ The issue of supporting file names is tricky, because different file systems&mda
 - use different rules for case comparisons and normalization comparisons, and
 - have different limits on the number of code units a file name can have.
 
-For example, NTFS does case-sensitive comparisons of file names, but preserves the case of file names it stores.  On the other hand, ext2 does a case-insensitive comparison of file names, and HFS Plus uses a particular normalization form in file name storage.
+For example, by default&mdash;
+
+- NTFS does case-sensitive comparisons of file names, but preserves the case of file names it stores;
+- ext2 does a case-insensitive comparison of file names, and
+- HFS Plus uses a particular normalization form in file name storage.
 
 Most but not all modern file systems support file names with _non-basic code points_ (names with code points beyond the Basic Latin range of the Unicode Standard).  Such file names are called _internationalized file names_ here.
 
@@ -39,11 +43,11 @@ In addition, such file names should not begin or end with "-" or "." or have two
 
 Applications should avoid giving internal files an internationalized file name without a compelling reason to do so.  This is especially because there are ways to encode such file names in this restricted character set, one of which is to&mdash;
 - put the internationalized string [in UTF-8](https://peteroupc.github.io/MailLib/docs/PeterO.DataUtilities.html#GetUtf8Bytes_string_bool) (an 8-bit encoding form of the Unicode Standard), then
-- encode the UTF-8 bytes using lowercase base16 or lowercase base32 (RFC 4648).
+- encode the UTF-8 bytes using lowercase base16 or lowercase base32 without padding (RFC 4648).
 
 ### File Name Length Limits
 
-Different file systems have different limits in the names of files.  To maximize compatibility with different file system limits, applications should avoid using file names longer than&mdash;
+Different file systems have different limits in the sizes of file names.  To maximize compatibility with different file system limits, applications should avoid using file names longer than&mdash;
 
 - 255 Unicode code points, if the names are limited to the basic characters given in the previous section, or
 - 63 Unicode code points, otherwise.

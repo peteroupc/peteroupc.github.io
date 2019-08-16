@@ -184,7 +184,8 @@ Gets this message&#39;s content disposition.</li>
 <li><code>MediaType getContentType()</code><br>
 Gets this message&#39;s media type.</li>
 <li><code>int[] GetDate()</code><br>
-Not documented yet.</li>
+Gets the date and time extracted from this message&#39;s Date header field (the
+value of which is found as though GetHeader(&quot;date&quot;) were called).</li>
 <li><code>java.lang.String getFileName()</code><br>
 Gets a file name suggested by this message for saving the message&#39;s body
 to a file.</li>
@@ -747,7 +748,10 @@ generated.</li>
 <pre>public int[] GetDate()
 </pre>
 
-<p>Not documented yet.</p>
+<p>Gets the date and time extracted from this message&#39;s Date header field (the
+  value of which is found as though GetHeader(&quot;date&quot;) were called).
+ See <see cref='PeterO.Mail.MailDateTime.ParseDateString(&#10; System.String,System.Boolean)'/> for more information on the format
+ of the date-time array returned by this method.</p>
 
 <p><strong>Returns:</strong></p>
 
