@@ -15,7 +15,7 @@
 
 <ul>
 <li><code><a href="#Address">Address</a></code> - Gets the email address associated with this object.</li>
-<li><code><a href="#AddressesEqual_PeterO_Mail_NamedAddress">AddressesEqual(PeterO.Mail.NamedAddress)</a></code> - Not documented yet.</li>
+<li><code><a href="#AddressesEqual_PeterO_Mail_NamedAddress">AddressesEqual(PeterO.Mail.NamedAddress)</a></code> - Determines whether the email addresses stored this object are the same between this object and the given object, regardless of the display names they store.</li>
 <li><code><a href="#DisplayName">DisplayName</a></code> - Gets the display name for this email address.</li>
 <li><code><a href="#Equals_object">Equals(object)</a></code> - Determines whether this object and another object are equal.</li>
 <li><code><a href="#GetHashCode">GetHashCode()</a></code> - Calculates the hash code of this object.</li>
@@ -197,11 +197,11 @@ GroupName is empty.; A mailbox in the list is a group.</p></li>
 <pre>public string DisplayName { get; }
 </pre>
 
-<p>Gets the display name for this email address. Returns null if the display name is absent.</p>
+<p>Gets the display name for this email address.</p>
 
 <p><b>Returns:</b></p>
 
-<p>The display name for this email address.</p>
+<p>The display name for this email address. Returns null if the display name is absent.</p>
 
 <p><a id="GroupAddresses"></a></p>
 
@@ -250,7 +250,7 @@ GroupName is empty.; A mailbox in the list is a group.</p></li>
     PeterO.Mail.NamedAddress na);
 </pre>
 
-<p>Not documented yet.</p>
+<p>Determines whether the email addresses stored this object are the same between this object and the given object, regardless of the display names they store. For groups, the email addresses must be equal and in the same order in both objects.</p>
 
 <pre>&lt;b&gt;Parameters:&lt;/b&gt;
 </pre>
@@ -271,19 +271,18 @@ GroupName is empty.; A mailbox in the list is a group.</p></li>
     object obj);
 </pre>
 
-<p>Determines whether this object and another object are equal.</p>
+<p>Determines whether this object and another object are equal. For groups, the named addresses (display name/email address pairs) must be equal and in the same order in both objects.</p>
 
 <pre>&lt;b&gt;Parameters:&lt;/b&gt;
 </pre>
 
 <ul>
-<li><i>obj</i>: The parameter  <i>obj</i>
-is an arbitrary object.</li>
+<li><i>obj</i>: An arbitrary object to compare with this one.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p><code>true</code>  if this object and another object are equal; otherwise,  <code>false</code> .</p>
+<p><code>true</code>  if this object and another object are equal and have the same type; otherwise,  <code>false</code> .</p>
 
 <p><a id="GetHashCode"></a></p>
 
@@ -292,7 +291,7 @@ is an arbitrary object.</li>
 <pre>public override int GetHashCode();
 </pre>
 
-<p>Calculates the hash code of this object. No application or process IDs are used in the hash code calculation.</p>
+<p>Calculates the hash code of this object. The exact algorithm used by this method is not guaranteed to be the same between versions of this library, and no application or process IDs are used in the hash code calculation.</p>
 
 <p><b>Return Value:</b></p>
 

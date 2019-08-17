@@ -22,11 +22,14 @@
 Extracts the data from a Data URI (uniform resource identifier) in the form
 of a byte array.</li>
 <li><code>static byte[] DataUriBytes​(java.net.URI uri)</code><br>
-Not documented yet.</li>
+Extracts the data from a Data URI (uniform resource identifier) in the form
+of a byte array, where the Data URI is given as a URI object.</li>
 <li><code>static MediaType DataUriMediaType​(java.lang.String uri)</code><br>
-Extracts the media type from a Data URI (uniform resource identifier).</li>
+Extracts the media type from a Data URI (uniform resource identifier) in the
+form of a text string.</li>
 <li><code>static MediaType DataUriMediaType​(java.net.URI uri)</code><br>
-Not documented yet.</li>
+Extracts the media type from a Data URI (uniform resource identifier) in the
+form of a URI object.</li>
 <li><code>static java.lang.String MakeDataUri​(byte[] bytes,
        MediaType mediaType)</code><br>
 Encodes data with the given media type in a Data URI (uniform resource
@@ -42,12 +45,13 @@ Encodes text as a Data URI (uniform resource identifier).</li>
 <pre>public static MediaType DataUriMediaType​(java.lang.String uri)
 </pre>
 
-<p>Extracts the media type from a Data URI (uniform resource identifier).</p>
+<p>Extracts the media type from a Data URI (uniform resource identifier) in the
+ form of a text string.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>uri</code> - The parameter <code>uri</code> is a text string.</li>
+<li><code>uri</code> - A data URI in the form of a text string.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -68,18 +72,26 @@ syntactically invalid, or is not a Data URI.</li>
 <pre>public static MediaType DataUriMediaType​(java.net.URI uri)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Extracts the media type from a Data URI (uniform resource identifier) in the
+ form of a URI object.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>uri</code> - The parameter <code>uri</code> is not documented yet.</li>
+<li><code>uri</code> - A data URI in the form of a URI object.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A MediaType object.</li>
+<li>The media type. Returns null if <code>uri</code> is null, is
+syntactically invalid, or is not a Data URI.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>java.lang.NullPointerException</code> - The parameter <code>uri</code> is null.</li>
 </ul>
 
 <h3>DataUriBytes</h3>
@@ -87,18 +99,26 @@ syntactically invalid, or is not a Data URI.</li>
 <pre>public static byte[] DataUriBytes​(java.net.URI uri)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Extracts the data from a Data URI (uniform resource identifier) in the form
+ of a byte array, where the Data URI is given as a URI object.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>uri</code> - The parameter <code>uri</code> is not documented yet.</li>
+<li><code>uri</code> - The Data URI in the form of a URI object.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A byte array.</li>
+<li>The data as a byte array. Returns null if <code>uri</code> is null, is
+syntactically invalid, or is not a data URI.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>java.lang.NullPointerException</code> - The parameter <code>uri</code> is null.</li>
 </ul>
 
 <h3>DataUriBytes</h3>

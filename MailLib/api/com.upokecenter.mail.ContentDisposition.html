@@ -294,43 +294,45 @@ case in version 0.10.0.</li>
  files for the purpose of reading them, since this method may replace
  certain characters with other characters in some cases, such that
  two different inputs may map to the same output.</li> <li><b>File
- Name Support.</b> For recommendations on file name support, see
-  &quot;<a href="https://peteroupc.github.io/filenames.html">File Name Support in
-  Applications</a>&quot;.</li>
- <li><b>Guarantees.</b> The exact file name conversion used by this
- method is not guaranteed to remain the same between versions of this
- library, with the exception that the return value will be in
- normalization form C, will not contain base + slash code points,
- will not be null, and will be an empty string only if <paramref name='str'/> is null or empty.</li> <li> <p><b>&#39;Name&#39; and &#39;Filename&#39;
- Parameters.</b> Email and HTTP headers may specify suggested
- filenames using the Content-Disposition header field&#39;s
- <code>filename</code> parameter or, in practice, the Content-Type header
- field&#39;s <code>name</code> parameter.</p> <p>Although RFC 2047 encoded
- words appearing in both parameters are written out by some
- implementations, this practice is often discouraged (especially
-  since the RFC itself says that encoded words &quot;MUST NOT appear within
-  a &#39;quoted-string&#39;&quot;). Nevertheless, the MakeFilename method has a
- basis in the RFCs to decode RFC 2047 encoded words (and RFC 2231
- encoding) in file names passed to this method.</p> <p>RFC 2046 sec.
- 4.5.1 (<code>application/octet-stream</code> subtype in Content-Type
-  header field) cites an earlier RFC 1341, which &quot;defined the use of a
- &#39;NAME&#39; parameter which gave a <i>suggested</i> file name to be used
-  if the data were written to a file&quot;. Also, RFC 2183 sec. 2.3 (
- <code>filename</code> parameter in Content-Disposition) confirms that the
-  &quot; <i>suggested</i> filename&quot; in the <code>filename</code> parameter
-  &quot;should be <i>used as a basis</i> for the actual filename, where
-  possible&quot;, and that that file name should &quot;not.get(be) blindly
-  use.get(d)&quot;. See also RFC 6266, section 4.3, which discusses the use
- of that parameter in Hypertext Transfer Protocol (HTTP).</p> <p>To
-  the extent that the &quot;name&quot; parameter is not allowed in message
- bodies other than those with the media type
-  &quot;application/octet-stream&quot; or treated as that media-type, this is a
- deviation of RFC 2045 and 2046 (see also RFC 2045 sec. 5, which says
-  that &quot;[t]here are NO globally meaningful parameters that apply to
-  all media types&quot;). (Some email implementations may still write out
-  the &quot;name&quot; parameter, even for media types other than
- <code>application/octet-stream</code> and even though RFC 2046 has
- deprecated that parameter.)</p></li></ul>.</p>
+  Name Support.</b> For recommendations on file name support, see &quot; File Name Support
+  in Applications &quot;.</li> <li><b>Guarantees.</b> The exact file
+ name conversion used by this method is not guaranteed to remain the
+ same between versions of this library, with the exception that the
+ return value will be in normalization form C, will not contain base</p>
+
+<ul>
+<li>slash code points, will not be null, and will be an empty string
+only if <paramref name='str'/> is null or empty.</li> <li>
+<p><b>&#39;Name&#39; and &#39;Filename&#39; Parameters.</b> Email and HTTP headers
+may specify suggested filenames using the Content-Disposition header
+field&#39;s <code>filename</code> parameter or, in practice, the Content-Type
+header field&#39;s <code>name</code> parameter.</p> <p>Although RFC 2047
+encoded words appearing in both parameters are written out by some
+implementations, this practice is often discouraged (especially
+since the RFC itself says that encoded words &quot;MUST NOT appear within
+a &#39;quoted-string&#39;&quot;). Nevertheless, the MakeFilename method has a
+basis in the RFCs to decode RFC 2047 encoded words (and RFC 2231
+encoding) in file names passed to this method.</p> <p>RFC 2046 sec.
+4.5.1 (<code>application/octet-stream</code> subtype in Content-Type
+header field) cites an earlier RFC 1341, which &quot;defined the use of a
+&#39;NAME&#39; parameter which gave a <i>suggested</i> file name to be used
+if the data were written to a file&quot;. Also, RFC 2183 sec. 2.3 (
+<code>filename</code> parameter in Content-Disposition) confirms that the
+&quot; <i>suggested</i> filename&quot; in the <code>filename</code> parameter
+&quot;should be <i>used as a basis</i> for the actual filename, where
+possible&quot;, and that that file name should &quot;not.get(be) blindly
+use.get(d)&quot;. See also RFC 6266, section 4.3, which discusses the use
+of that parameter in Hypertext Transfer Protocol (HTTP).</p> <p>To
+the extent that the &quot;name&quot; parameter is not allowed in message
+bodies other than those with the media type
+&quot;application/octet-stream&quot; or treated as that media-type, this is a
+deviation of RFC 2045 and 2046 (see also RFC 2045 sec. 5, which says
+that &quot;[t]here are NO globally meaningful parameters that apply to
+all media types&quot;). (Some email implementations may still write out
+the &quot;name&quot; parameter, even for media types other than
+<code>application/octet-stream</code> and even though RFC 2046 has
+deprecated that parameter.)</p></li></ul>.</li>
+</ul>
 
 <p><strong>Parameters:</strong></p>
 
@@ -379,8 +381,10 @@ empty.</li>
 
 <p>Gets the date and time extracted from this content disposition&#39;s
   &quot;creation-date&quot; parameter, which specifies the date of creation of a
- file (RFC 2183 sec. 2.4). See <see cref='PeterO.Mail.MailDateTime.ParseDateString(&#10; System.String,System.Boolean)'/> for information on the format of
- this method&#39;s return value.</p>
+ file (RFC 2183 sec. 2.4). The parameter is parsed as though by
+ <code>MailDateTime.ParseDateString</code> with obsolete time zones
+  (including &quot;GMT&quot;) allowed. See that method&#39;s documentation for
+ information on the format of this method&#39;s return value.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -398,8 +402,10 @@ overflow a 32-bit signed integer.</li>
 
 <p>Gets the date and time extracted from this content disposition&#39;s
   &quot;modification-date&quot; parameter, which specifies the date of last
- modification of a file (RFC 2183 sec. 2.5). See <see cref='PeterO.Mail.MailDateTime.ParseDateString(&#10; System.String,System.Boolean)'/> for information on the format of
- this method&#39;s return value.</p>
+ modification of a file (RFC 2183 sec. 2.5). The parameter is parsed
+ as though by <code>MailDateTime.ParseDateString</code> with obsolete time
+  zones (including &quot;GMT&quot;) allowed. See that method&#39;s documentation for
+ information on the format of this method&#39;s return value.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -417,8 +423,10 @@ would overflow a 32-bit signed integer.</li>
 
 <p>Gets the date and time extracted from this content disposition&#39;s &quot;read-date&quot;
  parameter, which specifies the date at which a file was last read
- (RFC 2183 sec. 2.6). See <see cref='PeterO.Mail.MailDateTime.ParseDateString(&#10; System.String,System.Boolean)'/> for information on the format of
- this method&#39;s return value.</p>
+ (RFC 2183 sec. 2.6). The parameter is parsed as though by
+ <code>MailDateTime.ParseDateString</code> with obsolete time zones
+  (including &quot;GMT&quot;) allowed. See that method&#39;s documentation for
+ information on the format of this method&#39;s return value.</p>
 
 <p><strong>Returns:</strong></p>
 

@@ -23,7 +23,7 @@
 <li><p>The To and Cc header fields are allowed to contain only comments and whitespace, but these &quot;empty&quot; header fields will be omitted when generating.</p></li>
 <li><p>There is no line length limit imposed when parsing header fields, except header field names.</p></li>
 <li><p>There is no line length limit imposed when parsing quoted-printable or base64 encoded bodies.</p></li>
-<li><p>If the transfer encoding is absent and the content type is &quot;message/rfc822&quot;, bytes with values greater than 127 (called &quot;8-bit bytes&quot; in the rest of this summary) are still allowed, despite the default value of &quot;7bit&quot; for &quot;Content-Transfer-Encoding&quot;.</p></li>
+<li><p>If the transfer encoding is absent and the content type is &quot;message/rfc822&quot;, bytes with values greater than 127 (called &quot;8-bit bytes&quot; in the rest of these remarks) are still allowed, despite the default value of &quot;7bit&quot; for &quot;Content-Transfer-Encoding&quot;.</p></li>
 <li><p>In the following cases, if the transfer encoding is absent, declared as 7bit, or treated as 7bit, 8-bit bytes are still allowed:</p></li>
 <li><p>(a) The preamble and epilogue of multipart messages, which will be ignored.</p></li>
 <li><p>(b) If the charset is declared to be  <code>utf-8</code> .</p></li>
@@ -39,7 +39,7 @@
 
 <p>Note that this class currently doesn&#39;t support the &quot;padding&quot; parameter for message bodies with the media type &quot;application/octet-stream&quot; or treated as that media type (see RFC 2046 sec. 4.5.1).</p>
 
-<p>Note that this implementation can decode an RFC 2047 encoded word that uses ISO-2022-JP or ISO-2022-JP-2 (encodings that uses code switching) even if the encoded word&#39;s payload ends in a different mode from &quot;ASCII mode&quot;. (Each encoded word still starts in &quot;ASCII mode&quot;, though.) This, however, is not a deviation to RFC 2047 because the relevant rule only concerns bringing the output device back to &quot;ASCII mode&quot; after the decoded text is displayed (see last paragraph of sec. 6.2) -- since the decoded text is converted to Unicode rather than kept as ISO-2022-JP or ISO-2022-JP-2, this is not applicable since there is no such thing as &quot;ASCII mode&quot; in the Unicode Standard.</p>
+<p>Note that this implementation can decode an RFC 2047 encoded word that uses ISO-2022-JP or ISO-2022-JP-2 (encodings that use code switching) even if the encoded word&#39;s payload ends in a different mode from &quot;ASCII mode&quot;. (Each encoded word still starts in &quot;ASCII mode&quot;, though.) This, however, is not a deviation to RFC 2047 because the relevant rule only concerns bringing the output device back to &quot;ASCII mode&quot; after the decoded text is displayed (see last paragraph of sec. 6.2) -- since the decoded text is converted to Unicode rather than kept as ISO-2022-JP or ISO-2022-JP-2, this is not applicable since there is no such thing as &quot;ASCII mode&quot; in the Unicode Standard.</p>
 
 <p>Note that this library (the MailLib library) has no facilities for sending and receiving email messages, since that&#39;s outside this library&#39;s scope.</p></li>
 </ul>
@@ -64,10 +64,11 @@
 <li><code><a href="#ContentDisposition">ContentDisposition</a></code> - Gets or sets this message&#39;s content disposition.</li>
 <li><code><a href="#ContentType">ContentType</a></code> - Gets or sets this message&#39;s media type.</li>
 <li><code><a href="#DecodeHeaderValue_string_string">DecodeHeaderValue(string, string)</a></code> - Decodes RFC 2047 encoded words from the given header field value and returns a string with those words decoded.</li>
+<li><code><a href="#ExtractField_byte_string">ExtractField(byte[], string)</a></code> - Extracts the value of a header field from a byte array representing an email message.</li>
 <li><code><a href="#FileName">FileName</a></code> - Gets a file name suggested by this message for saving the message&#39;s body to a file.</li>
 <li><code><a href="#FromAddresses">FromAddresses</a></code> - Gets a list of addresses found in the From header field or fields.</li>
 <li><code><a href="#FromMailtoUri_string">FromMailtoUri(string)</a></code> - Creates a message object from a MailTo URI (uniform resource identifier).</li>
-<li><code><a href="#FromMailtoUri_System_Uri">FromMailtoUri(System.Uri)</a></code> - Not documented yet.</li>
+<li><code><a href="#FromMailtoUri_System_Uri">FromMailtoUri(System.Uri)</a></code> - Creates a message object from a MailTo URI (uniform resource identifier) in the form of a URI object.</li>
 <li><code><a href="#FromMailtoUrl_string">FromMailtoUrl(string)</a></code> - Creates a message object from a MailTo URI (uniform resource identifier).</li>
 <li><code><a href="#Generate">Generate()</a></code> - Generates this message&#39;s data in text form.</li>
 <li><code><a href="#GenerateBytes">GenerateBytes()</a></code> - Generates this message&#39;s data as a byte array, using the same algorithm as the Generate method.</li>
@@ -112,10 +113,12 @@
     byte[] bytes);
 </pre>
 
-<p>Initializes a new instance of the <a href="PeterO.Mail.Message.html">PeterO.Mail.Message</a> class. Reads from the given byte array to initialize the message.</p>
+<p>Initializes a new instance of the <a href="PeterO.Mail.Message.html">PeterO.Mail.Message</a> class. Reads from the given byte array to initialize the email message.</p>
 
-<pre>&lt;b&gt;Parameters:&lt;/b&gt;
+<pre>&lt;b&gt;Remarks:&lt;/b&gt; This constructor parses an email message, and extracts its header fields and body, and throws a MessageDataException if the message is malformed. However, even if a MessageDataException is thrown, it can still be possible to display the message, especially because most email malformations seen in practice are benign in nature (such as the use of very long lines in the message). One way an application can handle the exception is to display the message, or part of it, as raw text (using  `DataUtilities.GetUtf8String(bytes, true)` ), and to optionally extract important header fields, such as From, To, Date, and Subject, from the message&#39;s text using the  `ExtractHeaderField`  method. Even so, though, any message for which this constructor throws a MessageDataException ought to be treated with suspicion.
 </pre>
+
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>bytes</i>: A readable data stream.</li>
@@ -124,9 +127,11 @@
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li>System.ArgumentNullException:
+<li><p>System.ArgumentNullException:
 The parameter  <i>bytes</i>
-is null.</li>
+is null.</p></li>
+<li><p>PeterO.Mail.MessageDataException:
+The message is malformed. See the remarks.</p></li>
 </ul>
 
 <p><a id="Void_ctor_System_IO_Stream"></a></p>
@@ -137,10 +142,12 @@ is null.</li>
     System.IO.Stream stream);
 </pre>
 
-<p>Initializes a new instance of the <a href="PeterO.Mail.Message.html">PeterO.Mail.Message</a> class. Reads from the given Stream object to initialize the message.</p>
+<p>Initializes a new instance of the <a href="PeterO.Mail.Message.html">PeterO.Mail.Message</a> class. Reads from the given Stream object to initialize the email message.</p>
 
-<pre>&lt;b&gt;Parameters:&lt;/b&gt;
+<pre>&lt;b&gt;Remarks:&lt;/b&gt; This constructor parses an email message, and extracts its header fields and body, and throws a MessageDataException if the message is malformed. However, even if a MessageDataException is thrown, it can still be possible to display the message, especially because most email malformations seen in practice are benign in nature (such as the use of very long lines in the message). One way an application can handle the exception is to read all the bytes from the stream, to display the message, or part of it, as raw text (using  `DataUtilities.GetUtf8String(bytes, true)` ), and to optionally extract important header fields, such as From, To, Date, and Subject, from the message&#39;s text using the  `ExtractHeaderField`  method. Even so, though, any message for which this constructor throws a MessageDataException ought to be treated with suspicion.
 </pre>
+
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>stream</i>: A readable data stream.</li>
@@ -149,9 +156,11 @@ is null.</li>
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li>System.ArgumentNullException:
+<li><p>System.ArgumentNullException:
 The parameter  <i>stream</i>
-is null.</li>
+is null.</p></li>
+<li><p>PeterO.Mail.MessageDataException:
+The message is malformed. See the remarks.</p></li>
 </ul>
 
 <p><a id="Void_ctor"></a></p>
@@ -705,6 +714,29 @@ The parameter  <i>name</i>
 is null.</li>
 </ul>
 
+<p><a id="ExtractField_byte_string"></a></p>
+
+<h3>ExtractField</h3>
+
+<pre>public static string ExtractField(
+    byte[] bytes,
+    string headerFieldName);
+</pre>
+
+<p>Extracts the value of a header field from a byte array representing an email message. The return value is intended for display purposes, not for further processing, and this method is intended to be used as an error handling tool for email messages that are slightly malformed. (Note that malformed email messages ought to be treated with greater suspicion than well-formed email messages.)</p>
+
+<pre> &lt;b&gt;Parameters:&lt;/b&gt;
+</pre>
+
+<ul>
+<li><p><i>bytes</i>: A byte array representing an email message.</p></li>
+<li><p><i>headerField</i>: The name of a header field, such as &quot;From&quot;, &quot;To&quot;, or &quot;Subject&quot;.</p></li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>The value of the first instance of the header field with the given name. Returns null if &quot;bytes&quot; is null, if &quot;headerFieldName&quot; is null, is more than 997 characters long, or has a character less than U+0021 or greater than U+007E in the Unicode Standard, if a header field with that name does not exist, or if a body (even an empty one) does not follow the header fields.</p>
+
 <p><a id="FromMailtoUri_string"></a></p>
 
 <h3>FromMailtoUri</h3>
@@ -736,27 +768,19 @@ is a text string.</li>
     System.Uri uri);
 </pre>
 
-<p>Not documented yet.</p>
+<p>Creates a message object from a MailTo URI (uniform resource identifier) in the form of a URI object. The MailTo URI can contain key-value pairs that follow a question-mark, as in the following example: &quot;mailto:<a href="mailto:me@example.com">me@example.com</a>?subject=A%20Subject&quot;. In this example, &quot;subject&quot; is the subject of the email address. Only certain keys are supported, namely, &quot;to&quot;, &quot;cc&quot;, &quot;bcc&quot;, &quot;subject&quot;, &quot;in-reply-to&quot;, &quot;comments&quot;, &quot;keywords&quot;, and &quot;body&quot;. The first seven are header field names that will be used to set the returned message&#39;s corresponding header fields. The last, &quot;body&quot;, sets the body of the message to the given text. Keys other than these eight will be ignored.</p>
 
-<pre> &lt;b&gt;Parameters:&lt;/b&gt;
+<pre>&lt;b&gt;Parameters:&lt;/b&gt;
 </pre>
 
 <ul>
-<li><i>uri</i>: The parameter  <i>uri</i>
-is not documented yet.</li>
+<li><i>uri</i>: The MailTo URI in the form of a URI object.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p>A Message object.</p>
-
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li>System.ArgumentNullException:
-The parameter  <i>uri</i>
-is null.</li>
-</ul>
+<p>A Message object created from the given MailTo URI. Returs null if  <i>uri</i>
+ is null, is syntactically invalid, or is not a MailTo URI.</p>
 
 <p><a id="FromMailtoUrl_string"></a></p>
 
@@ -905,7 +929,7 @@ is empty.</p></li>
 
 <p>Gets a Hypertext Markup Language (HTML) rendering of this message&#39;s text body. This method currently supports text/plain, text/plain with format = flowed, text/enriched, and text/markdown (original Markdown).</p>
 
-<pre>REMARK: The Markdown implementation currently supports all features of original Markdown, except that the implementation--
+<pre>REMARK: The Markdown implementation currently supports all features of original Markdown, except that the implementation:
 </pre>
 
 <ul>
@@ -1239,14 +1263,14 @@ is null.</li>
 <li><p><i>dateTime</i>: An array containing eight elements. Each element of the array (starting from 0) is as follows:</p>
 
 <ul>
-<li><p>0 - The year. For example, the value 2000 means 2000 C.E.</p></li>
+<li><p>0 - The year. For example, the value 2000 means 2000 C.E. Cannot be less than 0.</p></li>
 <li><p>1 - Month of the year, from 1 (January) through 12 (December).</p></li>
 <li><p>2 - Day of the month, from 1 through 31.</p></li>
 <li><p>3 - Hour of the day, from 0 through 23.</p></li>
 <li><p>4 - Minute of the hour, from 0 through 59.</p></li>
 <li><p>5 - Second of the minute, from 0 through 60 (this value can go up to 60 to accommodate leap seconds). (Leap seconds are additional seconds added to adjust international atomic time, or TAI, to an approximation of astronomical time known as coordinated universal time, or UTC.)</p></li>
-<li><p>6 - Milliseconds of the second, from 0 through 999. This value is not used to generate the date string, but must still be valid.</p></li>
-<li><p>7 - Number of minutes to subtract from this date and time to get global time. This number can be positive or negative.</p></li>
+<li><p>6 - Milliseconds of the second, from 0 through 999. This value is not used to generate the date string, but cannot be less than 0.</p></li>
+<li><p>7 - Number of minutes to subtract from this date and time to get global time. This number can be positive or negative, but cannot be less than -1439 or greater than 1439.</p></li>
 </ul></li>
 </ul>
 
@@ -1478,12 +1502,20 @@ is null.</li>
 
 <p>Sets the body of this message to a multipart body with plain text, Markdown, and Hypertext Markup Language (HTML) versions of the same message. The character sequences CR (carriage return, &quot;\r&quot;, U+000D), LF (line feed, &quot;\n&quot;, U+000A), and CR/LF will be converted to CR/LF line breaks. Unpaired surrogate code points will be replaced with replacement characters.</p>
 
-<pre>  &lt;b&gt;Parameters:&lt;/b&gt;
+<pre>  REMARK: The Markdown-to-HTML implementation currently supports all features of original Markdown, except that the implementation:
 </pre>
 
 <ul>
+<li><p>does not strictly check the placement of &quot;block-level HTML elements&quot;,</p></li>
+<li><p>does not prevent Markdown content from being interpreted as such merely because it&#39;s contained in a &quot;block-level HTML element&quot;, and</p></li>
+<li><p>does not deliberately use HTML escapes to obfuscate email addresses wrapped in angle-brackets.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
 <li><p><i>text</i>: A string consisting of the plain text version of the message. Can be null, in which case the value of the &quot;markdown&quot; parameter is used as the plain text version.</p></li>
-<li><p><i>markdown</i>: A string consisting of the Markdown version of the message. For interoperability, this Markdown version will be converted to HTML.</p></li>
+<li><p><i>markdown</i>: A string consisting of the Markdown version of the message. For interoperability, this Markdown version will be converted to HTML, where the Markdown text is assumed to be in the original Markdown flavor.</p></li>
+</ul></li>
 </ul>
 
 <p><b>Return Value:</b></p>

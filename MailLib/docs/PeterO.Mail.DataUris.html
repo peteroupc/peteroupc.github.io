@@ -24,9 +24,9 @@ data:application/octet-stream;base64, AAAAAA==
 
 <ul>
 <li><code><a href="#DataUriBytes_string">DataUriBytes(string)</a></code> - Extracts the data from a Data URI (uniform resource identifier) in the form of a byte array.</li>
-<li><code><a href="#DataUriBytes_System_Uri">DataUriBytes(System.Uri)</a></code> - Not documented yet.</li>
-<li><code><a href="#DataUriMediaType_string">DataUriMediaType(string)</a></code> - Extracts the media type from a Data URI (uniform resource identifier).</li>
-<li><code><a href="#DataUriMediaType_System_Uri">DataUriMediaType(System.Uri)</a></code> - Not documented yet.</li>
+<li><code><a href="#DataUriBytes_System_Uri">DataUriBytes(System.Uri)</a></code> - Extracts the data from a Data URI (uniform resource identifier) in the form of a byte array, where the Data URI is given as a URI object.</li>
+<li><code><a href="#DataUriMediaType_string">DataUriMediaType(string)</a></code> - Extracts the media type from a Data URI (uniform resource identifier) in the form of a text string.</li>
+<li><code><a href="#DataUriMediaType_System_Uri">DataUriMediaType(System.Uri)</a></code> - Extracts the media type from a Data URI (uniform resource identifier) in the form of a URI object.</li>
 <li><code><a href="#MakeDataUri_byte_PeterO_Mail_MediaType">MakeDataUri(byte[], PeterO.Mail.MediaType)</a></code> - Encodes data with the given media type in a Data URI (uniform resource identifier).</li>
 <li><code><a href="#MakeDataUri_string">MakeDataUri(string)</a></code> - Encodes text as a Data URI (uniform resource identifier).</li>
 </ul>
@@ -70,19 +70,27 @@ is null.</li>
     System.Uri uri);
 </pre>
 
-<p>Not documented yet.</p>
+<p>Extracts the data from a Data URI (uniform resource identifier) in the form of a byte array, where the Data URI is given as a URI object.</p>
 
-<pre>&lt;b&gt;Parameters:&lt;/b&gt;
+<pre> &lt;b&gt;Parameters:&lt;/b&gt;
 </pre>
 
 <ul>
-<li><i>uri</i>: The parameter  <i>uri</i>
-is not documented yet.</li>
+<li><i>uri</i>: The Data URI in the form of a URI object.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p>A byte array.</p>
+<p>The data as a byte array. Returns null if  <i>uri</i>
+ is null, is syntactically invalid, or is not a data URI.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter  <i>uri</i>
+is null.</li>
+</ul>
 
 <p><a id="DataUriMediaType_string"></a></p>
 
@@ -92,14 +100,13 @@ is not documented yet.</li>
     string uri);
 </pre>
 
-<p>Extracts the media type from a Data URI (uniform resource identifier).</p>
+<p>Extracts the media type from a Data URI (uniform resource identifier) in the form of a text string.</p>
 
 <pre> &lt;b&gt;Parameters:&lt;/b&gt;
 </pre>
 
 <ul>
-<li><i>uri</i>: The parameter  <i>uri</i>
-is a text string.</li>
+<li><i>uri</i>: A data URI in the form of a text string.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -123,19 +130,27 @@ is null.</li>
     System.Uri uri);
 </pre>
 
-<p>Not documented yet.</p>
+<p>Extracts the media type from a Data URI (uniform resource identifier) in the form of a URI object.</p>
 
-<pre>&lt;b&gt;Parameters:&lt;/b&gt;
+<pre> &lt;b&gt;Parameters:&lt;/b&gt;
 </pre>
 
 <ul>
-<li><i>uri</i>: The parameter  <i>uri</i>
-is not documented yet.</li>
+<li><i>uri</i>: A data URI in the form of a URI object.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p>A MediaType object.</p>
+<p>The media type. Returns null if  <i>uri</i>
+ is null, is syntactically invalid, or is not a Data URI.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter  <i>uri</i>
+is null.</li>
+</ul>
 
 <p><a id="MakeDataUri_byte_PeterO_Mail_MediaType"></a></p>
 

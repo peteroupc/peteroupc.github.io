@@ -37,7 +37,9 @@ part and domain.</li>
 Initializes a new instance of the NamedAddress
 class.</li>
 <li><code>boolean AddressesEqual​(NamedAddress na)</code><br>
-Not documented yet.</li>
+Determines whether the email addresses stored this object are the same
+between this object and the given object, regardless of the display
+names they store.</li>
 <li><code>boolean equals​(java.lang.Object obj)</code><br>
 Determines whether this object and another object are equal.</li>
 <li><code>Address getAddress()</code><br>
@@ -260,8 +262,10 @@ parameter.</li>
 <pre>public int hashCode()
 </pre>
 
-<p>Calculates the hash code of this object. No application or process IDs are
- used in the hash code calculation.</p>
+<p>Calculates the hash code of this object. The exact algorithm used by this
+ method is not guaranteed to be the same between versions of this
+ library, and no application or process IDs are used in the hash code
+ calculation.</p>
 
 <p><strong>Overrides:</strong></p>
 
@@ -280,7 +284,9 @@ parameter.</li>
 <pre>public boolean equals​(java.lang.Object obj)
 </pre>
 
-<p>Determines whether this object and another object are equal.</p>
+<p>Determines whether this object and another object are equal. For groups, the
+ named addresses (display name/email address pairs) must be equal and
+ in the same order in both objects.</p>
 
 <p><strong>Overrides:</strong></p>
 
@@ -291,14 +297,14 @@ parameter.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>obj</code> - The parameter <code>obj</code> is an arbitrary object.</li>
+<li><code>obj</code> - An arbitrary object to compare with this one.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li><code>true</code> if this object and another object are equal; otherwise,
-<code>false</code>.</li>
+<li><code>true</code> if this object and another object are equal and have
+the same type; otherwise, <code>false</code>.</li>
 </ul>
 
 <h3>AddressesEqual</h3>
@@ -306,7 +312,10 @@ parameter.</li>
 <pre>public boolean AddressesEqual​(NamedAddress na)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Determines whether the email addresses stored this object are the same
+ between this object and the given object, regardless of the display
+ names they store. For groups, the email addresses must be equal and
+ in the same order in both objects.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -340,13 +349,13 @@ parameter.</li>
 <pre>public final java.lang.String getDisplayName()
 </pre>
 
-<p>Gets the display name for this email address. Returns null if the display
- name is absent.</p>
+<p>Gets the display name for this email address.</p>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>The display name for this email address.</li>
+<li>The display name for this email address. Returns null if the display
+name is absent.</li>
 </ul>
 
 <h3>getAddress</h3>
