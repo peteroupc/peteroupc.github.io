@@ -47,7 +47,7 @@
 <ul>
 <li>System.ArgumentException:
 The parameter  <i>dateTime</i>
-is null or invalid, including if the year (  <code>dateTime[0]</code>  ) is less than 0.</li>
+is null or invalid (see  <code>ParseDateString(bool)</code> ).</li>
 </ul>
 
 <p><a id="GenerateDateString_int_bool"></a></p>
@@ -78,7 +78,7 @@ is null or invalid, including if the year (  <code>dateTime[0]</code>  ) is less
 <ul>
 <li><p>System.ArgumentException:
 The parameter  <i>dateTime</i>
-is null or invalid, including if the year (  <code>dateTime[0]</code>  ) or fractional seconds ( <code>dateTime[6]</code> ) are less than 0.</p></li>
+is null or invalid (see  <code>ParseDateString(bool)</code> ).</p></li>
 <li><p>System.ArgumentNullException:
 The parameter  <i>dateTime</i>
 is null.</p></li>
@@ -118,21 +118,24 @@ is null.</p></li>
 <p>Gets the date and time extracted from a date-time string following the Internet Message Format (RFC 5322), with an option to allow obsolete time zone strings to appear in the date-time string. If an array is returned, the elements of that array (starting from 0) are as follows:</p>
 
 <ul>
-<li><p>0 - The year. For example, the value 2000 means 2000 C.E. This value cannot be less than 0.</p></li>
+<li><p>0 - The year. For example, the value 2000 means 2000 C.E. This value cannot be less than 1900 (a restriction specified by RFC 5322).</p></li>
 <li><p>1 - Month of the year, from 1 (January) through 12 (December).</p></li>
 <li><p>2 - Day of the month, from 1 through 31.</p></li>
 <li><p>3 - Hour of the day, from 0 through 23.</p></li>
 <li><p>4 - Minute of the hour, from 0 through 59.</p></li>
 <li><p>5 - Second of the minute, from 0 through 60 (this value can go up to 60 to accommodate leap seconds). (Leap seconds are additional seconds added to adjust international atomic time, or TAI, to an approximation of astronomical time known as coordinated universal time, or UTC.)</p></li>
-<li><p>6 - Fractional seconds. The return value will always have this value set to 0, since fractional seconds cannot be expressed in the date-time format. This value cannot be less than 0.</p></li>
-<li><p>7 - Number of minutes to subtract from this date and time to get global time. This number can be positive or negative, but cannot be less than -1439 or greater than 1439.</p>
+<li><p>6 - Fractional seconds. The return value will always have this value set to 0, since fractional seconds cannot be expressed in the date-time format specified by RFC 5322. This value cannot be less than 0.</p></li>
+<li><p>7 - Number of minutes to subtract from this date and time to get global time. This number can be positive or negative, but cannot be less than -1439 or greater than 1439.</p></li>
+</ul>
 
-<p><b>Parameters:</b></p>
+<p>If a method or property uses an array of this format and refers to this method&#39;s documentation, that array may have any number of elements 8 or greater.</p>
+
+<pre> &lt;b&gt;Parameters:&lt;/b&gt;
+</pre>
 
 <ul>
 <li><p><i>str</i>: A date-time string.</p></li>
 <li><p><i>parseObsoleteZones</i>: If set to  <code>true</code> , this method allows obsolete time zones (single-letter time zones, &quot;GMT&quot;, &quot;UT&quot;, and certain three-letter combinations) to appear in the date-time string.</p></li>
-</ul></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -148,7 +151,7 @@ is null.</p></li>
     string v);
 </pre>
 
-<p>Parses a date string in one of the three formats allowed by HTTP/1.1.</p>
+<p>Parses a date string in one of the three formats allowed by HTTP/1.1 (RFC 7231).</p>
 
 <pre>&lt;b&gt;Parameters:&lt;/b&gt;
 </pre>
@@ -159,7 +162,7 @@ is null.</p></li>
 
 <p><b>Return Value:</b></p>
 
-<p>A 64-bit signed integer.</p>
+<p>An array of 8 elements as specified in the  <code>ParseDateString(bool)</code>  method.</p>
 
 <p><a href="/MailLib/">Back to MailLib start page.</a></p>
 </div><nav id="navigation"><ul>

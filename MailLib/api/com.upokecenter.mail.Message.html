@@ -153,8 +153,8 @@ Deletes all header fields in this message.</li>
              java.lang.String value)</code><br>
 Decodes RFC 2047 encoded words from the given header field value and returns
 a string with those words decoded.</li>
-<li><code>static java.lang.String ExtractField​(byte[] bytes,
-        java.lang.String headerFieldName)</code><br>
+<li><code>static java.lang.String ExtractHeader​(byte[] bytes,
+         java.lang.String headerFieldName)</code><br>
 Extracts the value of a header field from a byte array representing an email
 message.</li>
 <li><code>static Message FromMailtoUri​(java.lang.String uri)</code><br>
@@ -322,9 +322,9 @@ class.</li>
  of it, as raw text (using <code>DataUtilities.GetUtf8String(bytes,
  true)</code>), and to optionally extract important header fields, such
  as From, To, Date, and Subject, from the message&#39;s text using the
- <code>ExtractHeaderField</code> method. Even so, though, any message for
- which this constructor throws a MessageDataException ought to be
- treated with suspicion.</p></p>
+ <code>ExtractHeader</code> method. Even so, though, any message for which
+ this constructor throws a MessageDataException ought to be treated
+ with suspicion.</p></p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -357,7 +357,7 @@ See the remarks.</p></li>
  display the message, or part of it, as raw text (using
  <code>DataUtilities.GetUtf8String(bytes, true)</code>), and to optionally
  extract important header fields, such as From, To, Date, and
- Subject, from the message&#39;s text using the <code>ExtractHeaderField</code>
+ Subject, from the message&#39;s text using the <code>ExtractHeader</code>
  method. Even so, though, any message for which this constructor
  throws a MessageDataException ought to be treated with
  suspicion.</p></p>
@@ -385,9 +385,9 @@ See the remarks.</p></li>
  class. The message will be plain text and have an artificial From
  address.</p>
 
-<h3>ExtractField</h3>
+<h3>ExtractHeader</h3>
 
-<pre>public static java.lang.String ExtractField​(byte[] bytes, java.lang.String headerFieldName)
+<pre>public static java.lang.String ExtractHeader​(byte[] bytes, java.lang.String headerFieldName)
 </pre>
 
 <p>Extracts the value of a header field from a byte array representing an email
@@ -408,11 +408,16 @@ See the remarks.</p></li>
 
 <ul>
 <li>The value of the first instance of the header field with the given
-name. Returns null if <code>bytes</code> is null, if <code>
-headerFieldName</code> is null, is more than 997 characters long, or has a
-character less than U + 0021 or greater than U + 007E in the Unicode
-Standard, if a header field with that name does not exist, or if a
-body (even an empty one) does not follow the header fields.</li>
+name. Leading space and/or tab bytes (0x20 and/or 0x09) and CR/LF
+(0x0d/0x0a) pairs will be removed from the header field value, and
+the value is treated as encoded in UTF-8 (an 8-bit encoding form of
+the Unicode Standard) where illegally encoded UTF-8 is replaced as
+appropriate with replacement characters (U + FFFD). Returns null if
+<code>bytes</code> is null, if <code>headerFieldName</code> is null, is more
+than 997 characters long, or has a character less than U + 0021 or
+greater than U + 007E in the Unicode Standard, if a header field with
+that name does not exist, or if a body (even an empty one) does not
+follow the header fields.</li>
 </ul>
 
 <h3>NewBodyPart</h3>
@@ -821,8 +826,9 @@ generated.</li>
 
 <p>Gets the date and time extracted from this message&#39;s Date header field (the
   value of which is found as though GetHeader(&quot;date&quot;) were called).
- See <see cref='PeterO.Mail.MailDateTime.ParseDateString(&#10; System.String,System.Boolean)'/> for more information on the format
- of the date-time array returned by this method.</p>
+ See <b>MailDateTime.ParseDateString(boolean)</b> for more
+ information on the format of the date-time array returned by this
+ method.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -840,22 +846,9 @@ generated.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>dateTime</code> - An array containing eight elements. Each element of the
-array (starting from 0) is as follows: <ul> <li>0 - The year. For
-example, the value 2000 means 2000 C.E. Cannot be less than 0.</li>
-<li>1 - Month of the year, from 1 (January) through 12
-(December).</li> <li>2 - Day of the month, from 1 through 31.</li>
-<li>3 - Hour of the day, from 0 through 23.</li> <li>4 - Minute of
-the hour, from 0 through 59.</li> <li>5 - Second of the minute, from
-0 through 60 (this value can go up to 60 to accommodate leap
-seconds). (Leap seconds are additional seconds added to adjust
-international atomic time, or TAI, to an approximation of
-astronomical time known as coordinated universal time, or UTC.)</li>
-<li>6 - Milliseconds of the second, from 0 through 999. This value
-is not used to generate the date string, but cannot be less than
-0.</li> <li>7 - Number of minutes to subtract from this date and
-time to get global time. This number can be positive or negative,
-but cannot be less than -1439 or greater than 1439.</li></ul>.</li>
+<li><code>dateTime</code> - An array containing at least eight elements expressing a
+date and time. See <b>MailDateTime.ParseDateString(boolean)</b> for
+more information on this parameter.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -868,8 +861,8 @@ but cannot be less than -1439 or greater than 1439.</li></ul>.</li>
 
 <ul>
 <li><p><code>java.lang.IllegalArgumentException</code> - The parameter <code>dateTime</code> contains fewer than
-eight elements, contains invalid values, or contains a year less
-than 0.</p></li>
+eight elements or contains invalid values (see
+MailDateTime.ParseString(boolean)).</p></li>
 <li><p><code>java.lang.NullPointerException</code> - The parameter <code>dateTime</code> is null.</p></li>
 </ul>
 

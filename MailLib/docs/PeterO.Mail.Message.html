@@ -29,10 +29,10 @@
 <li><p>(b) If the charset is declared to be  <code>utf-8</code> .</p></li>
 <li><p>(c) If the content type is &quot;text/html&quot; and the charset is declared to be  <code>us-ascii</code> , &quot;windows-1252&quot;, &quot;windows-1251&quot;, or &quot;iso-8859-*&quot; (all single byte encodings).</p></li>
 <li><p>(d) In non-MIME message bodies and in text/plain message bodies. Any 8-bit bytes are replaced with the substitute character byte (0x1a).</p></li>
-<li><p>If the message starts with the word &quot;From&quot; (and no other case variations of that word) followed by one or more space (U+0020) not followed by colon, that text and the rest of the text is skipped up to and including a line feed (U+000A). (See also RFC 4155, which describes the so-called &quot;mbox&quot; convention with &quot;From&quot; lines of this kind.)</p></li>
+<li><p>If the message starts with the word &quot;From&quot; (and no other case variations of that word) followed by one or more space (U + 0020) not followed by colon, that text and the rest of the text is skipped up to and including a line feed (U + 000A). (See also RFC 4155, which describes the so-called &quot;mbox&quot; convention with &quot;From&quot; lines of this kind.)</p></li>
 <li><p>The name  <code>ascii</code>  is treated as a synonym for  <code>us-ascii</code> , despite being a reserved name under RFC 2046. The name  <code>cp1252</code>  and  <code>utf8</code>  are treated as synonyms for  <code>windows-1252</code>  and  <code>utf-8</code> , respectively, even though they are not IANA registered aliases.</p></li>
 <li><p>The following deviations involve encoded words under RFC 2047:</p></li>
-<li><p>(a) If a sequence of encoded words decodes to a string with a CTL character (U+007F, or a character less than U+0020 and not TAB) after being converted to Unicode, the encoded words are left un-decoded.</p></li>
+<li><p>(a) If a sequence of encoded words decodes to a string with a CTL character (U + 007F, or a character less than U + 0020 and not TAB) after being converted to Unicode, the encoded words are left un-decoded.</p></li>
 <li><p>(b) This implementation can decode encoded words regardless of the character length of the line in which they appear. This implementation can generate a header field line with one or more encoded words even if that line is more than 76 characters long. (This implementation follows the recommendation in RFC 5322 to limit header field lines to no more than 78 characters, where possible.)</p>
 
 <p>It would be appreciated if users of this library contact the author if they find other ways in which this implementation deviates from the mail specifications or other applicable specifications.</p>
@@ -64,7 +64,7 @@
 <li><code><a href="#ContentDisposition">ContentDisposition</a></code> - Gets or sets this message&#39;s content disposition.</li>
 <li><code><a href="#ContentType">ContentType</a></code> - Gets or sets this message&#39;s media type.</li>
 <li><code><a href="#DecodeHeaderValue_string_string">DecodeHeaderValue(string, string)</a></code> - Decodes RFC 2047 encoded words from the given header field value and returns a string with those words decoded.</li>
-<li><code><a href="#ExtractField_byte_string">ExtractField(byte[], string)</a></code> - Extracts the value of a header field from a byte array representing an email message.</li>
+<li><code><a href="#ExtractHeader_byte_string">ExtractHeader(byte[], string)</a></code> - Extracts the value of a header field from a byte array representing an email message.</li>
 <li><code><a href="#FileName">FileName</a></code> - Gets a file name suggested by this message for saving the message&#39;s body to a file.</li>
 <li><code><a href="#FromAddresses">FromAddresses</a></code> - Gets a list of addresses found in the From header field or fields.</li>
 <li><code><a href="#FromMailtoUri_string">FromMailtoUri(string)</a></code> - Creates a message object from a MailTo URI (uniform resource identifier).</li>
@@ -115,7 +115,7 @@
 
 <p>Initializes a new instance of the <a href="PeterO.Mail.Message.html">PeterO.Mail.Message</a> class. Reads from the given byte array to initialize the email message.</p>
 
-<pre>&lt;b&gt;Remarks:&lt;/b&gt; This constructor parses an email message, and extracts its header fields and body, and throws a MessageDataException if the message is malformed. However, even if a MessageDataException is thrown, it can still be possible to display the message, especially because most email malformations seen in practice are benign in nature (such as the use of very long lines in the message). One way an application can handle the exception is to display the message, or part of it, as raw text (using  `DataUtilities.GetUtf8String(bytes, true)` ), and to optionally extract important header fields, such as From, To, Date, and Subject, from the message&#39;s text using the  `ExtractHeaderField`  method. Even so, though, any message for which this constructor throws a MessageDataException ought to be treated with suspicion.
+<pre>&lt;b&gt;Remarks:&lt;/b&gt; This constructor parses an email message, and extracts its header fields and body, and throws a MessageDataException if the message is malformed. However, even if a MessageDataException is thrown, it can still be possible to display the message, especially because most email malformations seen in practice are benign in nature (such as the use of very long lines in the message). One way an application can handle the exception is to display the message, or part of it, as raw text (using  `DataUtilities.GetUtf8String(bytes, true)`  ), and to optionally extract important header fields, such as From, To, Date, and Subject, from the message&#39;s text using the  `ExtractHeader`  method. Even so, though, any message for which this constructor throws a MessageDataException ought to be treated with suspicion.
 </pre>
 
 <p><b>Parameters:</b></p>
@@ -144,7 +144,7 @@ The message is malformed. See the remarks.</p></li>
 
 <p>Initializes a new instance of the <a href="PeterO.Mail.Message.html">PeterO.Mail.Message</a> class. Reads from the given Stream object to initialize the email message.</p>
 
-<pre>&lt;b&gt;Remarks:&lt;/b&gt; This constructor parses an email message, and extracts its header fields and body, and throws a MessageDataException if the message is malformed. However, even if a MessageDataException is thrown, it can still be possible to display the message, especially because most email malformations seen in practice are benign in nature (such as the use of very long lines in the message). One way an application can handle the exception is to read all the bytes from the stream, to display the message, or part of it, as raw text (using  `DataUtilities.GetUtf8String(bytes, true)` ), and to optionally extract important header fields, such as From, To, Date, and Subject, from the message&#39;s text using the  `ExtractHeaderField`  method. Even so, though, any message for which this constructor throws a MessageDataException ought to be treated with suspicion.
+<pre>&lt;b&gt;Remarks:&lt;/b&gt; This constructor parses an email message, and extracts its header fields and body, and throws a MessageDataException if the message is malformed. However, even if a MessageDataException is thrown, it can still be possible to display the message, especially because most email malformations seen in practice are benign in nature (such as the use of very long lines in the message). One way an application can handle the exception is to read all the bytes from the stream, to display the message, or part of it, as raw text (using  `DataUtilities.GetUtf8String(bytes, true)`  ), and to optionally extract important header fields, such as From, To, Date, and Subject, from the message&#39;s text using the  `ExtractHeader`  method. Even so, though, any message for which this constructor throws a MessageDataException ought to be treated with suspicion.
 </pre>
 
 <p><b>Parameters:</b></p>
@@ -294,7 +294,7 @@ This value is being set and &quot;value&quot; is null.</li>
 <pre>public System.Collections.Generic.IList HeaderFields { get; }
 </pre>
 
-<p>Gets a snapshot of the header fields of this message, in the order in which they appear in the message. For each item in the list, the key is the header field&#39;s name (where any basic upper-case letters [U+0041 to U+005A] are converted to lower case) and the value is the header field&#39;s value.</p>
+<p>Gets a snapshot of the header fields of this message, in the order in which they appear in the message. For each item in the list, the key is the header field&#39;s name (where any basic upper-case letters [U + 0041 to U + 005A] are converted to lower case) and the value is the header field&#39;s value.</p>
 
 <p><b>Returns:</b></p>
 
@@ -714,28 +714,30 @@ The parameter  <i>name</i>
 is null.</li>
 </ul>
 
-<p><a id="ExtractField_byte_string"></a></p>
+<p><a id="ExtractHeader_byte_string"></a></p>
 
-<h3>ExtractField</h3>
+<h3>ExtractHeader</h3>
 
-<pre>public static string ExtractField(
+<pre>public static string ExtractHeader(
     byte[] bytes,
     string headerFieldName);
 </pre>
 
-<p>Extracts the value of a header field from a byte array representing an email message. The return value is intended for display purposes, not for further processing, and this method is intended to be used as an error handling tool for email messages that are slightly malformed. (Note that malformed email messages ought to be treated with greater suspicion than well-formed email messages.)</p>
+<p>Extracts the value of a header field from a byte array representing an email message. The return value is intended for display purposes, not for further processing, and this method is intended to be used as an error handling tool for email messages that are slightly malformed. (Note that malformed email messages ought to be treated with greater suspicion than well-formed email messages.).</p>
 
 <pre> &lt;b&gt;Parameters:&lt;/b&gt;
 </pre>
 
 <ul>
 <li><p><i>bytes</i>: A byte array representing an email message.</p></li>
-<li><p><i>headerField</i>: The name of a header field, such as &quot;From&quot;, &quot;To&quot;, or &quot;Subject&quot;.</p></li>
+<li><p><i>headerFieldName</i>: A string object.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p>The value of the first instance of the header field with the given name. Returns null if &quot;bytes&quot; is null, if &quot;headerFieldName&quot; is null, is more than 997 characters long, or has a character less than U+0021 or greater than U+007E in the Unicode Standard, if a header field with that name does not exist, or if a body (even an empty one) does not follow the header fields.</p>
+<p>The value of the first instance of the header field with the given name. Returns null if  <i>bytes</i>
+ is null, if  <i>headerFieldName</i>
+ is null, is more than 997 characters long, or has a character less than U + 0021 or greater than U + 007E in the Unicode Standard, if a header field with that name does not exist, or if a body (even an empty one) does not follow the header fields.</p>
 
 <p><a id="FromMailtoUri_string"></a></p>
 
@@ -770,7 +772,7 @@ is a text string.</li>
 
 <p>Creates a message object from a MailTo URI (uniform resource identifier) in the form of a URI object. The MailTo URI can contain key-value pairs that follow a question-mark, as in the following example: &quot;mailto:<a href="mailto:me@example.com">me@example.com</a>?subject=A%20Subject&quot;. In this example, &quot;subject&quot; is the subject of the email address. Only certain keys are supported, namely, &quot;to&quot;, &quot;cc&quot;, &quot;bcc&quot;, &quot;subject&quot;, &quot;in-reply-to&quot;, &quot;comments&quot;, &quot;keywords&quot;, and &quot;body&quot;. The first seven are header field names that will be used to set the returned message&#39;s corresponding header fields. The last, &quot;body&quot;, sets the body of the message to the given text. Keys other than these eight will be ignored.</p>
 
-<pre>&lt;b&gt;Parameters:&lt;/b&gt;
+<pre> &lt;b&gt;Parameters:&lt;/b&gt;
 </pre>
 
 <ul>
@@ -781,6 +783,14 @@ is a text string.</li>
 
 <p>A Message object created from the given MailTo URI. Returs null if  <i>uri</i>
  is null, is syntactically invalid, or is not a MailTo URI.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter  <i>uri</i>
+is null.</li>
+</ul>
 
 <p><a id="FromMailtoUrl_string"></a></p>
 
@@ -813,7 +823,7 @@ is a text string.</li>
 <pre>public string Generate();
 </pre>
 
-<p>Generates this message&#39;s data in text form. The generated message will have only Basic Latin code points (U+0000 to U+007F), and the transfer encoding will always be 7bit, quoted-printable, or base64 (the declared transfer encoding for this message will be ignored).</p>
+<p>Generates this message&#39;s data in text form. The generated message will have only Basic Latin code points (U + 0000 to U + 007F), and the transfer encoding will always be 7bit, quoted-printable, or base64 (the declared transfer encoding for this message will be ignored).</p>
 
 <p>The following applies to the following header fields: From, To, Cc, Bcc, Reply-To, Sender, Resent-To, Resent-From, Resent-Cc, Resent-Bcc, and Resent-Sender. If the header field exists, but has an invalid syntax, has no addresses, or appears more than once, this method will generate a synthetic header field with the display-name set to the contents of all of the header fields with the same name, and the address set to  <code>me@[header-name]-address.invalid</code>  as the address (a  <code>.invalid</code>  address is a reserved address that can never belong to anyone). (An exception is that the Resent-* header fields may appear more than once.) The generated message should always have a From header field.</p>
 
@@ -914,7 +924,7 @@ is empty.</p></li>
 <pre>public int[] GetDate();
 </pre>
 
-<p>Gets the date and time extracted from this message&#39;s Date header field (the value of which is found as though GetHeader(&quot;date&quot;) were called). See <strong>M:PeterO.Mail.MailDateTime.ParseDateString(System.String,System.Boolean)</strong> for more information on the format of the date-time array returned by this method.</p>
+<p>Gets the date and time extracted from this message&#39;s Date header field (the value of which is found as though GetHeader(&quot;date&quot;) were called). See <b>MailDateTime.ParseDateString(bool)</b> for more information on the format of the date-time array returned by this method.</p>
 
 <p><b>Return Value:</b></p>
 
@@ -957,7 +967,7 @@ Either this message is a multipart message, so it doesn&#39;t have its own body 
     string name);
 </pre>
 
-<p>Gets the first instance of the header field with the specified name, using a basic case-insensitive comparison. (Two strings are equal in such a comparison, if they match after converting the basic upper-case letters A to Z (U+0041 to U+005A) in both strings to lower case.).</p>
+<p>Gets the first instance of the header field with the specified name, using a basic case-insensitive comparison. (Two strings are equal in such a comparison, if they match after converting the basic upper-case letters A to Z (U + 0041 to U + 005A) in both strings to lower case.).</p>
 
 <pre> &lt;b&gt;Parameters:&lt;/b&gt;
 </pre>
@@ -1014,7 +1024,7 @@ is 0 or at least as high as the number of header fields.</li>
     string name);
 </pre>
 
-<p>Gets an array with the values of all header fields with the specified name, using a basic case-insensitive comparison. (Two strings are equal in such a comparison, if they match after converting the basic upper-case letters A to Z (U+0041 to U+005A) in both strings to lower case.).</p>
+<p>Gets an array with the values of all header fields with the specified name, using a basic case-insensitive comparison. (Two strings are equal in such a comparison, if they match after converting the basic upper-case letters A to Z (U + 0041 to U + 005A) in both strings to lower case.).</p>
 
 <pre> &lt;b&gt;Parameters:&lt;/b&gt;
 </pre>
@@ -1123,7 +1133,7 @@ is 0 or at least as high as the number of header fields.</li>
     string name);
 </pre>
 
-<p>Removes all instances of the given header field from this message. If this is a multipart message, the header field is not removed from its body part headers. A basic case-insensitive comparison is used. (Two strings are equal in such a comparison, if they match after converting the basic upper-case letters A to Z (U+0041 to U+005A) in both strings to lower case.). Updates the ContentType and ContentDisposition properties if those header fields have been modified by this method.</p>
+<p>Removes all instances of the given header field from this message. If this is a multipart message, the header field is not removed from its body part headers. A basic case-insensitive comparison is used. (Two strings are equal in such a comparison, if they match after converting the basic upper-case letters A to Z (U + 0041 to U + 005A) in both strings to lower case.). Updates the ContentType and ContentDisposition properties if those header fields have been modified by this method.</p>
 
 <pre> &lt;b&gt;Parameters:&lt;/b&gt;
 </pre>
@@ -1260,21 +1270,8 @@ is null.</li>
 </pre>
 
 <ul>
-<li><p><i>dateTime</i>: An array containing eight elements. Each element of the array (starting from 0) is as follows:</p>
-
-<ul>
-<li><p>0 - The year. For example, the value 2000 means 2000 C.E. Cannot be less than 0.</p></li>
-<li><p>1 - Month of the year, from 1 (January) through 12 (December).</p></li>
-<li><p>2 - Day of the month, from 1 through 31.</p></li>
-<li><p>3 - Hour of the day, from 0 through 23.</p></li>
-<li><p>4 - Minute of the hour, from 0 through 59.</p></li>
-<li><p>5 - Second of the minute, from 0 through 60 (this value can go up to 60 to accommodate leap seconds). (Leap seconds are additional seconds added to adjust international atomic time, or TAI, to an approximation of astronomical time known as coordinated universal time, or UTC.)</p></li>
-<li><p>6 - Milliseconds of the second, from 0 through 999. This value is not used to generate the date string, but cannot be less than 0.</p></li>
-<li><p>7 - Number of minutes to subtract from this date and time to get global time. This number can be positive or negative, but cannot be less than -1439 or greater than 1439.</p></li>
-</ul></li>
+<li><i>dateTime</i>: An array containing at least eight elements expressing a date and time. See <b>MailDateTime.ParseDateString(bool)</b> for more information on this parameter.</li>
 </ul>
-
-<p>.</p>
 
 <p><b>Return Value:</b></p>
 
@@ -1285,7 +1282,7 @@ is null.</li>
 <ul>
 <li><p>System.ArgumentException:
 The parameter  <i>dateTime</i>
-contains fewer than eight elements, contains invalid values, or contains a year less than 0.</p></li>
+contains fewer than eight elements or contains invalid values (see <b>MailDateTime.ParseString(bool)</b>).</p></li>
 <li><p>System.ArgumentNullException:
 The parameter  <i>dateTime</i>
 is null.</p></li>
