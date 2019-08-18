@@ -401,7 +401,12 @@ See the remarks.</p></li>
 
 <ul>
 <li><p><code>bytes</code> - A byte array representing an email message.</p></li>
-<li><p><code>headerFieldName</code> - A string object.</p></li>
+<li><p><code>headerFieldName</code> - The name of the header field to extract. This name
+will be compared with the names of header fields in the given
+message using a basic case-insensitive comparison. (Two strings are
+equal in such a comparison, if they match after converting the basic
+upper-case letters A to Z (U + 0041 to U + 005A) in both strings to
+basic lower-case letters.).</p></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -1815,7 +1820,17 @@ Renamed to ToMailtoUri.</p>
   &quot;comments&quot;, &quot;keywords&quot;, and &quot;body&quot;. The first seven are header field
  names that will be used to set the returned message&#39;s corresponding
   header fields. The last, &quot;body&quot;, sets the body of the message to the
- given text. Keys other than these eight will be ignored.</p>
+ given text. Keys other than these eight will be ignored. (Keys are
+ compared using a basic case-sensitive comparison, in which two
+ strings are equal if they match after converting the basic
+ upper-case letters A to Z (U + 0041 to U + 005A) in both strings to
+ basic lower-case letters.) The same key (matched using a basic
+ case-insensitive comparison) can appear more than once; for
+  &quot;subject&quot;, &quot;cc&quot;, &quot;bcc&quot;, and &quot;in-reply-to&quot;, the last value with the
+  given key is used; for &quot;to&quot;, all header field values as well as the
+  path are combined to a single To header field; for &quot;keywords&quot; and
+  &quot;comments&quot;, each value adds another header field of the given key;
+  and for &quot;body&quot;, the last value with that key is used as the body..</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1837,15 +1852,8 @@ URI.</li>
 </pre>
 
 <p>Creates a message object from a MailTo URI (uniform resource identifier) in
- the form of a URI object. The MailTo URI can contain key-value pairs
- that follow a question-mark, as in the following example:
-  &quot;mailto:<a href="mailto:me@example.com">me@example.com</a>?subject=A%20Subject&quot;. In this example,
-  &quot;subject&quot; is the subject of the email address. Only certain keys are
-  supported, namely, &quot;to&quot;, &quot;cc&quot;, &quot;bcc&quot;, &quot;subject&quot;, &quot;in-reply-to&quot;,
-  &quot;comments&quot;, &quot;keywords&quot;, and &quot;body&quot;. The first seven are header field
- names that will be used to set the returned message&#39;s corresponding
-  header fields. The last, &quot;body&quot;, sets the body of the message to the
- given text. Keys other than these eight will be ignored.</p>
+ the form of a URI object. For more information, see
+ <b>FromMailtoUri(string)</b>.</p>
 
 <p><strong>Parameters:</strong></p>
 

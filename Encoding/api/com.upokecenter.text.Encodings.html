@@ -1103,46 +1103,47 @@ U+0010) is removed before resolving the encoding&#39;s name, and
 encoding names are matched using a basic case-insensitive
 comparison. (Two strings are equal in such a comparison, if they
 match after converting the basic upper-case letters A to Z (U + 0041
-to U + 005A) in both strings to lower case.) The Encoding Standard
-supports only the following encodings (and defines aliases for most
-of them). <ul> <li> <code>UTF-8</code> - UTF-8 (8-bit encoding of the
-universal coded character set, the encoding recommended by the
-Encoding Standard for new data formats)</li> <li> <code>UTF-16LE</code> -
-UTF-16 little-endian (16-bit UCS)</li> <li> <code>UTF-16BE</code> - UTF-16
-big-endian (16-bit UCS)</li> <li>The special-purpose encoding <code>
-x-user-defined</code></li> <li>The special-purpose encoding <code>
-replacement</code>.</li> <li>28 legacy single-byte encodings: <ul>
-<li> <code>windows-1252</code> : Western Europe (Note: The Encoding
-Standard aliases the names <code>US-ASCII</code> and <code>ISO-8859-1</code>
-to <code>windows-1252</code>, which uses a different coded character set
-from either; it differs from <code>ISO-8859-1</code> by assigning
-different characters to some bytes from 0x80 to 0x9F. The Encoding
-Standard does this for compatibility with existing Web pages.)</li>
-<li> <code>ISO-8859-2</code>, <code>windows-1250</code> : Central Europe</li>
-<li> <code>ISO-8859-10</code> : Northern Europe</li> <li> <code>
-ISO-8859-4</code>, <code>windows-1257</code> : Baltic</li> <li> <code>
-ISO-8859-13</code> : Estonian</li> <li> <code>ISO-8859-14</code> : Celtic</li>
-<li> <code>ISO-8859-16</code> : Romanian</li> <li> <code>ISO-8859-5</code>,
-<code>IBM-866</code>, <code>KOI8-R</code>, <code>windows-1251</code>, <code>
-x-mac-cyrillic</code> : Cyrillic</li> <li> <code>KOI8-U</code> : Ukrainian</li>
-<li> <code>ISO-8859-7</code>, <code>windows-1253</code> : Greek</li> <li> <code>
-ISO-8859-6</code>, <code>windows-1256</code> : Arabic</li> <li> <code>
-ISO-8859-8</code>, <code>ISO-8859-8-I</code>, <code>windows-1255</code> :
-Hebrew</li> <li> <code>ISO-8859-3</code> : Latin 3</li> <li> <code>
-ISO-8859-15</code>, <code>windows-1254</code> : Turkish</li> <li> <code>
-windows-874</code> : Thai</li> <li> <code>windows-1258</code> : Vietnamese</li>
-<li> <code>macintosh</code> : Mac Roman</li></ul></li> <li>Three legacy
-Japanese encodings: <code>Shift_JIS</code>, <code>EUC-JP</code>, <code>
-ISO-2022-JP</code></li> <li>Two legacy simplified Chinese encodings:
-<code>GBK</code> and <code>gb18030</code></li> <li> <code>Big5</code> : legacy
-traditional Chinese encoding</li> <li> <code>EUC-KR</code> : legacy Korean
-encoding</li></ul> <p>The <code>UTF-8</code>, <code>UTF-16LE</code>, and
-<code>UTF-16BE</code> encodings don&#39;t encode a byte-order mark at the
-start of the text (doing so is not recommended for <code>UTF-8</code>,
-while in <code>UTF-16LE</code> and <code>UTF-16BE</code>, the byte-order mark
-character U + FEFF is treated as an ordinary character, unlike in the
-UTF-16 encoding form). The Encoding Standard aliases <code>UTF-16</code>
-to <code>UTF-16LE</code> &quot;to deal with deployed content&quot;.</p>.</li>
+to U + 005A) in both strings to basic lower-case letters.) The
+Encoding Standard supports only the following encodings (and defines
+aliases for most of them). <ul> <li> <code>UTF-8</code> - UTF-8 (8-bit
+encoding of the universal coded character set, the encoding
+recommended by the Encoding Standard for new data formats)</li>
+<li> <code>UTF-16LE</code> - UTF-16 little-endian (16-bit UCS)</li>
+<li> <code>UTF-16BE</code> - UTF-16 big-endian (16-bit UCS)</li> <li>The
+special-purpose encoding <code>x-user-defined</code></li> <li>The
+special-purpose encoding <code>replacement</code>.</li> <li>28 legacy
+single-byte encodings: <ul> <li> <code>windows-1252</code> : Western
+Europe (Note: The Encoding Standard aliases the names <code>
+US-ASCII</code> and <code>ISO-8859-1</code> to <code>windows-1252</code>, which uses
+a different coded character set from either; it differs from <code>
+ISO-8859-1</code> by assigning different characters to some bytes from
+0x80 to 0x9F. The Encoding Standard does this for compatibility with
+existing Web pages.)</li> <li> <code>ISO-8859-2</code>, <code>
+windows-1250</code> : Central Europe</li> <li> <code>ISO-8859-10</code> :
+Northern Europe</li> <li> <code>ISO-8859-4</code>, <code>windows-1257</code> :
+Baltic</li> <li> <code>ISO-8859-13</code> : Estonian</li> <li> <code>
+ISO-8859-14</code> : Celtic</li> <li> <code>ISO-8859-16</code> : Romanian</li>
+<li> <code>ISO-8859-5</code>, <code>IBM-866</code>, <code>KOI8-R</code>, <code>
+windows-1251</code>, <code>x-mac-cyrillic</code> : Cyrillic</li> <li> <code>
+KOI8-U</code> : Ukrainian</li> <li> <code>ISO-8859-7</code>, <code>
+windows-1253</code> : Greek</li> <li> <code>ISO-8859-6</code>, <code>
+windows-1256</code> : Arabic</li> <li> <code>ISO-8859-8</code>, <code>
+ISO-8859-8-I</code>, <code>windows-1255</code> : Hebrew</li> <li> <code>
+ISO-8859-3</code> : Latin 3</li> <li> <code>ISO-8859-15</code>, <code>
+windows-1254</code> : Turkish</li> <li> <code>windows-874</code> : Thai</li>
+<li> <code>windows-1258</code> : Vietnamese</li> <li> <code>macintosh</code> :
+Mac Roman</li></ul></li> <li>Three legacy Japanese encodings: <code>
+Shift_JIS</code>, <code>EUC-JP</code>, <code>ISO-2022-JP</code></li> <li>Two legacy
+simplified Chinese encodings: <code>GBK</code> and <code>gb18030</code></li>
+<li> <code>Big5</code> : legacy traditional Chinese encoding</li>
+<li> <code>EUC-KR</code> : legacy Korean encoding</li></ul> <p>The <code>
+UTF-8</code>, <code>UTF-16LE</code>, and <code>UTF-16BE</code> encodings don&#39;t
+encode a byte-order mark at the start of the text (doing so is not
+recommended for <code>UTF-8</code>, while in <code>UTF-16LE</code> and <code>
+UTF-16BE</code>, the byte-order mark character U + FEFF is treated as an
+ordinary character, unlike in the UTF-16 encoding form). The
+Encoding Standard aliases <code>UTF-16</code> to <code>UTF-16LE</code> &quot;to
+deal with deployed content&quot;.</p>.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -1170,42 +1171,42 @@ removed before resolving the encoding&#39;s name, and encoding names are
 matched using a basic case-insensitive comparison. (Two strings are
 equal in such a comparison, if they match after converting the basic
 upper-case letters A to Z (U + 0041 to U + 005A) in both strings to
-lower case.) Uses a modified version of the rules in the Encoding
-Standard to better conform, in some cases, to email standards like
-MIME. Encoding names and aliases not registered with the Internet
-Assigned Numbers Authority (IANA) are not supported, with the
-exception of <code>ascii</code>, <code>utf8</code>, <code>cp1252</code>, and names
-10 characters or longer starting with <code>iso-8859-</code>. Also, the
-following additional encodings are supported. Note that the case
-combination <code>GB18030</code>, the combination registered with IANA,
-rather than <code>gb18030</code> can be retured by this method. <ul>
-<li> <code>US-ASCII</code> - ASCII single-byte encoding, rather than an
-alias to <code>windows-1252</code> as specified in the Encoding Standard.
-The coded character set&#39;s code points match those in the Unicode
-Standard&#39;s Basic Latin block (0-127 or U+0000 to U+007F). This
-method name <code>ascii</code> is treated as an alias to <code>US-ASCII</code>
-even though it is not registered with IANA as a charset name and RFC
-2046 (part of MIME) reserves the name &quot;ASCII&quot;. A future version of
-this method may stop supporting the alias <code>ascii</code>.</li>
-<li> <code>ISO-8859-1</code> - Latin-1 single-byte encoding, rather than
-an alias to <code>windows-1252</code> as specified in the Encoding
-Standard. The coded character set&#39;s code points match those in the
-Unicode Standard&#39;s Basic Latin and Latin-1 Supplement blocks (0-255
-or U + 0000 to U + 00FF).</li> <li> <code>UTF-16</code> - UTF-16 without a
-fixed byte order, rather than an alias to <code>UTF-16LE</code> as
-specified in the Encoding Standard. The byte order is little endian
-if the byte stream starts with 0xff 0xfe; otherwise, big endian. A
-leading 0xff 0xfe or 0xfe 0xff in the byte stream is skipped.</li>
-<li> <code>UTF-7</code> - UTF-7 (7-bit universal coded character set). The
-name <code>unicode-1-1-utf-7</code> is not supported and is not treated
-as an alias to <code>UTF-7</code>, even though it uses the same character
-encoding scheme as UTF-7, because RFC 1642, which defined the former
-UTF-7, is linked to a different Unicode version with an incompatible
-character repertoire (notably, the Hangul syllables have different
-code point assignments in Unicode 1.1 and earlier than in Unicode
-2.0 and later).</li> <li> <code>ISO-2022-JP-2</code> - similar to
-&quot;ISO-2022-JP&quot;, except that the decoder supports additional character
-sets.</li></ul> .</li>
+basic lower-case letters.) Uses a modified version of the rules in
+the Encoding Standard to better conform, in some cases, to email
+standards like MIME. Encoding names and aliases not registered with
+the Internet Assigned Numbers Authority (IANA) are not supported,
+with the exception of <code>ascii</code>, <code>utf8</code>, <code>cp1252</code>,
+and names 10 characters or longer starting with <code>iso-8859-</code>.
+Also, the following additional encodings are supported. Note that
+the case combination <code>GB18030</code>, the combination registered
+with IANA, rather than <code>gb18030</code> can be retured by this
+method. <ul> <li> <code>US-ASCII</code> - ASCII single-byte encoding,
+rather than an alias to <code>windows-1252</code> as specified in the
+Encoding Standard. The coded character set&#39;s code points match those
+in the Unicode Standard&#39;s Basic Latin block (0-127 or U+0000 to
+U + 007F). This method name <code>ascii</code> is treated as an alias to
+<code>US-ASCII</code> even though it is not registered with IANA as a
+charset name and RFC 2046 (part of MIME) reserves the name &quot;ASCII&quot;.
+A future version of this method may stop supporting the alias <code>
+ascii</code>.</li> <li> <code>ISO-8859-1</code> - Latin-1 single-byte encoding,
+rather than an alias to <code>windows-1252</code> as specified in the
+Encoding Standard. The coded character set&#39;s code points match those
+in the Unicode Standard&#39;s Basic Latin and Latin-1 Supplement blocks
+(0-255 or U + 0000 to U + 00FF).</li> <li> <code>UTF-16</code> - UTF-16
+without a fixed byte order, rather than an alias to <code>UTF-16LE</code>
+as specified in the Encoding Standard. The byte order is little
+endian if the byte stream starts with 0xff 0xfe; otherwise, big
+endian. A leading 0xff 0xfe or 0xfe 0xff in the byte stream is
+skipped.</li> <li> <code>UTF-7</code> - UTF-7 (7-bit universal coded
+character set). The name <code>unicode-1-1-utf-7</code> is not supported
+and is not treated as an alias to <code>UTF-7</code>, even though it uses
+the same character encoding scheme as UTF-7, because RFC 1642, which
+defined the former UTF-7, is linked to a different Unicode version
+with an incompatible character repertoire (notably, the Hangul
+syllables have different code point assignments in Unicode 1.1 and
+earlier than in Unicode 2.0 and later).</li> <li> <code>
+ISO-2022-JP-2</code> - similar to &quot;ISO-2022-JP&quot;, except that the decoder
+supports additional character sets.</li></ul> .</li>
 </ul>
 
 <p><strong>Returns:</strong></p>

@@ -482,7 +482,7 @@ An I/O error occurred.</p></li>
     string value);
 </pre>
 
-<p>Adds a header field to the end of the message&#39;s header. Updates the ContentType and ContentDisposition properties if those header fields have been modified by this method.</p>
+<p>Adds a header field to the end of the message&#39;s header. This method updates the ContentType and ContentDisposition properties if those header fields have been modified by this method.</p>
 
 <pre>   &lt;b&gt;Parameters:&lt;/b&gt;
 </pre>
@@ -515,7 +515,7 @@ The header field name is too long or contains an invalid character, or the heade
     System.Collections.Generic.KeyValuePair header);
 </pre>
 
-<p>Adds a header field to the end of the message&#39;s header. Updates the ContentType and ContentDisposition properties if those header fields have been modified by this method.</p>
+<p>Adds a header field to the end of the message&#39;s header. This method updates the ContentType and ContentDisposition properties if those header fields have been modified by this method.</p>
 
 <pre>  &lt;b&gt;Parameters:&lt;/b&gt;
 </pre>
@@ -730,12 +730,12 @@ is null.</li>
 
 <ul>
 <li><p><i>bytes</i>: A byte array representing an email message.</p></li>
-<li><p><i>headerFieldName</i>: A string object.</p></li>
+<li><p><i>headerFieldName</i>: The name of the header field to extract. This name will be compared with the names of header fields in the given message using a basic case-insensitive comparison. (Two strings are equal in such a comparison, if they match after converting the basic upper-case letters A to Z (U + 0041 to U + 005A) in both strings to lower case.)</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p>The value of the first instance of the header field with the given name. Returns null if  <i>bytes</i>
+<p>The value of the first instance of the header field with the given name. Leading space and/or tab bytes (0x20 and/or 0x09) and CR/LF (0x0d/0x0a) pairs will be removed from the header field value, and the value is treated as encoded in UTF-8 (an 8-bit encoding form of the Unicode Standard) where illegally encoded UTF-8 is replaced as appropriate with replacement characters (U+FFFD). Returns null if  <i>bytes</i>
  is null, if  <i>headerFieldName</i>
  is null, is more than 997 characters long, or has a character less than U + 0021 or greater than U + 007E in the Unicode Standard, if a header field with that name does not exist, or if a body (even an empty one) does not follow the header fields.</p>
 
@@ -825,7 +825,7 @@ is null.</li>
 
 <p>Generates this message&#39;s data in text form. The generated message will have only Basic Latin code points (U + 0000 to U + 007F), and the transfer encoding will always be 7bit, quoted-printable, or base64 (the declared transfer encoding for this message will be ignored).</p>
 
-<p>The following applies to the following header fields: From, To, Cc, Bcc, Reply-To, Sender, Resent-To, Resent-From, Resent-Cc, Resent-Bcc, and Resent-Sender. If the header field exists, but has an invalid syntax, has no addresses, or appears more than once, this method will generate a synthetic header field with the display-name set to the contents of all of the header fields with the same name, and the address set to  <code>me@[header-name]-address.invalid</code>  as the address (a  <code>.invalid</code>  address is a reserved address that can never belong to anyone). (An exception is that the Resent-* header fields may appear more than once.) The generated message should always have a From header field.</p>
+<p>The following applies to the following header fields: From, To, Cc, Bcc, Reply-To, Sender, Resent-To, Resent-From, Resent-Cc, Resent-Bcc, and Resent-Sender. If the header field exists, but has an invalid syntax, has no addresses, or appears more than once, this method will combine the addresses into one header field if possible (in the case of all fields given other than From and Sender), and otherwise generate a synthetic header field with the display-name set to the contents of all of the header fields with the same name, and the address set to  <code>me@[header-name]-address.invalid</code>  as the address (a  <code>.invalid</code>  address is a reserved address that can never belong to anyone). (An exception is that the Resent-* header fields may appear more than once.) The generated message should always have a From header field.</p>
 
 <p>If a Date and/or Message-ID header field doesn&#39;t exist, a field with that name will be generated (using the current local time for the Date field).</p>
 
@@ -1104,7 +1104,7 @@ contains the language tag &quot;zzx&quot; not appearing alone or at the end of t
     int index);
 </pre>
 
-<p>Removes a header field by index. Updates the ContentType and ContentDisposition properties if those header fields have been modified by this method.</p>
+<p>Removes a header field by index. This method updates the ContentType and ContentDisposition properties if those header fields have been modified by this method.</p>
 
 <pre> &lt;b&gt;Parameters:&lt;/b&gt;
 </pre>
@@ -1133,7 +1133,7 @@ is 0 or at least as high as the number of header fields.</li>
     string name);
 </pre>
 
-<p>Removes all instances of the given header field from this message. If this is a multipart message, the header field is not removed from its body part headers. A basic case-insensitive comparison is used. (Two strings are equal in such a comparison, if they match after converting the basic upper-case letters A to Z (U + 0041 to U + 005A) in both strings to lower case.). Updates the ContentType and ContentDisposition properties if those header fields have been modified by this method.</p>
+<p>Removes all instances of the given header field from this message. If this is a multipart message, the header field is not removed from its body part headers. A basic case-insensitive comparison is used. (Two strings are equal in such a comparison, if they match after converting the basic upper-case letters A to Z (U + 0041 to U + 005A) in both strings to lower case.). This method updates the ContentType and ContentDisposition properties if those header fields have been modified by this method.</p>
 
 <pre> &lt;b&gt;Parameters:&lt;/b&gt;
 </pre>
@@ -1282,7 +1282,7 @@ is null.</li>
 <ul>
 <li><p>System.ArgumentException:
 The parameter  <i>dateTime</i>
-contains fewer than eight elements or contains invalid values (see <b>MailDateTime.ParseString(bool)</b>).</p></li>
+contains fewer than eight elements or contains invalid values (see <b>MailDateTime.ParseString(bool)</b> ).</p></li>
 <li><p>System.ArgumentNullException:
 The parameter  <i>dateTime</i>
 is null.</p></li>
@@ -1298,7 +1298,7 @@ is null.</p></li>
     string value);
 </pre>
 
-<p>Sets the name and value of a header field by index. Updates the ContentType and ContentDisposition properties if those header fields have been modified by this method.</p>
+<p>Sets the name and value of a header field by index. This method updates the ContentType and ContentDisposition properties if those header fields have been modified by this method.</p>
 
 <pre>    &lt;b&gt;Parameters:&lt;/b&gt;
 </pre>
@@ -1334,7 +1334,7 @@ is null.</p></li>
     string value);
 </pre>
 
-<p>Sets the value of a header field by index without changing its name. Updates the ContentType and ContentDisposition properties if those header fields have been modified by this method.</p>
+<p>Sets the value of a header field by index without changing its name. This method updates the ContentType and ContentDisposition properties if those header fields have been modified by this method.</p>
 
 <pre>   &lt;b&gt;Parameters:&lt;/b&gt;
 </pre>
@@ -1368,7 +1368,7 @@ is null.</p></li>
     System.Collections.Generic.KeyValuePair header);
 </pre>
 
-<p>Sets the name and value of a header field by index. Updates the ContentType and ContentDisposition properties if those header fields have been modified by this method.</p>
+<p>Sets the name and value of a header field by index. This method updates the ContentType and ContentDisposition properties if those header fields have been modified by this method.</p>
 
 <pre>   &lt;b&gt;Parameters:&lt;/b&gt;
 </pre>
@@ -1402,7 +1402,7 @@ is null.</p></li>
     string value);
 </pre>
 
-<p>Sets the value of this message&#39;s header field. If a header field with the same name exists, its value is replaced. If the header field&#39;s name occurs more than once, only the first instance of the header field is replaced. Updates the ContentType and ContentDisposition properties if those header fields have been modified by this method.</p>
+<p>Sets the value of this message&#39;s header field. If a header field with the same name exists, its value is replaced. If the header field&#39;s name occurs more than once, only the first instance of the header field is replaced. This method updates the ContentType and ContentDisposition properties if those header fields have been modified by this method.</p>
 
 <pre>   &lt;b&gt;Parameters:&lt;/b&gt;
 </pre>

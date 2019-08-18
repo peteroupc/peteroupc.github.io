@@ -47,7 +47,7 @@
 <ul>
 <li>System.ArgumentException:
 The parameter  <i>dateTime</i>
-is null or invalid (see  <code>ParseDateString(bool)</code> ).</li>
+is null or invalid (see  <code>ParseDateString(bool)</code>  ).</li>
 </ul>
 
 <p><a id="GenerateDateString_int_bool"></a></p>
@@ -78,7 +78,7 @@ is null or invalid (see  <code>ParseDateString(bool)</code> ).</li>
 <ul>
 <li><p>System.ArgumentException:
 The parameter  <i>dateTime</i>
-is null or invalid (see  <code>ParseDateString(bool)</code> ).</p></li>
+is null or invalid (see  <code>ParseDateString(bool)</code>  ).</p></li>
 <li><p>System.ArgumentNullException:
 The parameter  <i>dateTime</i>
 is null.</p></li>
@@ -125,17 +125,16 @@ is null.</p></li>
 <li><p>4 - Minute of the hour, from 0 through 59.</p></li>
 <li><p>5 - Second of the minute, from 0 through 60 (this value can go up to 60 to accommodate leap seconds). (Leap seconds are additional seconds added to adjust international atomic time, or TAI, to an approximation of astronomical time known as coordinated universal time, or UTC.)</p></li>
 <li><p>6 - Fractional seconds. The return value will always have this value set to 0, since fractional seconds cannot be expressed in the date-time format specified by RFC 5322. This value cannot be less than 0.</p></li>
-<li><p>7 - Number of minutes to subtract from this date and time to get global time. This number can be positive or negative, but cannot be less than -1439 or greater than 1439.</p></li>
-</ul>
+<li><p>7 - Number of minutes to subtract from this date and time to get global time. This number can be positive or negative, but cannot be less than -1439 or greater than 1439.</p>
 
 <p>If a method or property uses an array of this format and refers to this method&#39;s documentation, that array may have any number of elements 8 or greater.</p>
 
-<pre> &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>str</i>: A date-time string.</p></li>
 <li><p><i>parseObsoleteZones</i>: If set to  <code>true</code> , this method allows obsolete time zones (single-letter time zones, &quot;GMT&quot;, &quot;UT&quot;, and certain three-letter combinations) to appear in the date-time string.</p></li>
+</ul></li>
 </ul>
 
 <p><b>Return Value:</b></p>
