@@ -132,8 +132,7 @@
 
 <p>Determines whether this object and another object are equal.</p>
 
-<pre>&lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>obj</i>: The parameter  <i>obj</i>
@@ -206,11 +205,11 @@ is an arbitrary object.</li>
 
 <p>Gets a parameter from this disposition object. For the &quot;filename&quot; parameter, the value of that parameter is not adapted with the ContentDisposition.MakeFilename method; see the documentation for the ContentDisposition class.</p>
 
-<pre>  &lt;b&gt;Parameters:&lt;/b&gt;
+<pre> &lt;b&gt;Parameters:&lt;/b&gt;
 </pre>
 
 <ul>
-<li><i>name</i>: The name of the parameter to get. The name will be matched using a basic case-insensitive comparison. (Two strings are equal in such a comparison, if they match after converting the basic upper-case letters A to Z (U + 0041 to U + 005A) in both strings to lower case.). Can&#39;t be null.</li>
+<li><i>name</i>: The name of the parameter to get. The name will be matched using a basic case-insensitive comparison. (Two strings are equal in such a comparison, if they match after converting the basic upper-case letters A to Z (U + 0041 to U + 005A) in both strings to basic lower-case letters.). Can&#39;t be null.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -310,7 +309,7 @@ is null or empty.</p></li>
 
 <p>This implementation ignores keys (in parameter key-value pairs) that appear more than once in the content disposition. Nothing in RFCs 2045, 2183, 2231, 6266, or 7231 explicitly disallows such keys, or otherwise specifies error-handling behavior for such keys.</p>
 
-<pre>  &lt;b&gt;Parameters:&lt;/b&gt;
+<pre> &lt;b&gt;Parameters:&lt;/b&gt;
 </pre>
 
 <ul>
@@ -340,7 +339,7 @@ is null.</li>
 
 <p>Creates a new content disposition object from the value of a Content-Disposition header field.</p>
 
-<pre> &lt;b&gt;Parameters:&lt;/b&gt;
+<pre>&lt;b&gt;Parameters:&lt;/b&gt;
 </pre>
 
 <ul>

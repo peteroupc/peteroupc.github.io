@@ -196,8 +196,7 @@ The message is malformed. See the remarks.</p></li>
 
 <p>Gets the body of this message as a text string.</p>
 
-<pre>&lt;b&gt;Returns:&lt;/b&gt;
-</pre>
+<p><b>Returns:</b></p>
 
 <p>The body of this message as a text string.</p>
 
@@ -245,8 +244,7 @@ Either this message is a multipart message, so it doesn&#39;t have its own body 
 
 <p>Gets or sets this message&#39;s media type. When getting, the media type may differ in certain cases from the value of the Content-Type header field, if any, and may have a value even if the Content-Type header field is absent from this message. If set to a media type, updates the Content-Type header field as appropriate. Cannot be set to null.</p>
 
-<pre>&lt;b&gt;Returns:&lt;/b&gt;
-</pre>
+<p><b>Returns:</b></p>
 
 <p>This message&#39;s media type.</p>
 
@@ -351,8 +349,7 @@ This value is being set and &quot;value&quot; is null.</li>
 
 <p>Adds an attachment with an empty body and with the given media type to this message. Before the new attachment is added, if this message isn&#39;t already a multipart message, it becomes a &quot;multipart/mixed&quot; message with the current body converted to an inline body part.</p>
 
-<pre>&lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>mediaType</i>: A media type to assign to the attachment.</li>
@@ -416,7 +413,7 @@ An I/O error occurred.</p></li>
 
 <p>Adds an attachment to this message in the form of data from the given readable stream, and with the given media type and file name. Before the new attachment is added, if this message isn&#39;t already a multipart message, it becomes a &quot;multipart/mixed&quot; message with the current body converted to an inline body part.</p>
 
-<pre>    &lt;b&gt;Parameters:&lt;/b&gt;
+<pre>   &lt;b&gt;Parameters:&lt;/b&gt;
 </pre>
 
 <ul>
@@ -451,7 +448,7 @@ An I/O error occurred.</p></li>
 
 <p>Adds an attachment to this message in the form of data from the given readable stream, and with the given file name. Before the new attachment is added, if this message isn&#39;t already a multipart message, it becomes a &quot;multipart/mixed&quot; message with the current body converted to an inline body part.</p>
 
-<pre>   &lt;b&gt;Parameters:&lt;/b&gt;
+<pre>  &lt;b&gt;Parameters:&lt;/b&gt;
 </pre>
 
 <ul>
@@ -484,7 +481,7 @@ An I/O error occurred.</p></li>
 
 <p>Adds a header field to the end of the message&#39;s header. This method updates the ContentType and ContentDisposition properties if those header fields have been modified by this method.</p>
 
-<pre>   &lt;b&gt;Parameters:&lt;/b&gt;
+<pre>  &lt;b&gt;Parameters:&lt;/b&gt;
 </pre>
 
 <ul>
@@ -517,7 +514,7 @@ The header field name is too long or contains an invalid character, or the heade
 
 <p>Adds a header field to the end of the message&#39;s header. This method updates the ContentType and ContentDisposition properties if those header fields have been modified by this method.</p>
 
-<pre>  &lt;b&gt;Parameters:&lt;/b&gt;
+<pre> &lt;b&gt;Parameters:&lt;/b&gt;
 </pre>
 
 <ul>
@@ -548,8 +545,7 @@ The header field name is too long or contains an invalid character, or the heade
 
 <p>Adds an inline body part with an empty body and with the given media type to this message. Before the new body part is added, if this message isn&#39;t already a multipart message, it becomes a &quot;multipart/mixed&quot; message with the current body converted to an inline body part.</p>
 
-<pre>&lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>mediaType</i>: A media type to assign to the body part.</li>
@@ -613,7 +609,7 @@ An I/O error occurred.</p></li>
 
 <p>Adds an inline body part to this message in the form of data from the given readable stream, and with the given media type and file name. Before the new body part is added, if this message isn&#39;t already a multipart message, it becomes a &quot;multipart/mixed&quot; message with the current body converted to an inline body part.</p>
 
-<pre>    &lt;b&gt;Parameters:&lt;/b&gt;
+<pre>   &lt;b&gt;Parameters:&lt;/b&gt;
 </pre>
 
 <ul>
@@ -648,7 +644,7 @@ An I/O error occurred.</p></li>
 
 <p>Adds an inline body part to this message in the form of data from the given readable stream, and with the given file name. Before the new body part is added, if this message isn&#39;t already a multipart message, it becomes a &quot;multipart/mixed&quot; message with the current body converted to an inline body part.</p>
 
-<pre>   &lt;b&gt;Parameters:&lt;/b&gt;
+<pre>  &lt;b&gt;Parameters:&lt;/b&gt;
 </pre>
 
 <ul>
@@ -694,7 +690,7 @@ An I/O error occurred.</p></li>
 
 <p>Decodes RFC 2047 encoded words from the given header field value and returns a string with those words decoded. For an example of encoded words, see the constructor for PeterO.Mail.NamedAddress.</p>
 
-<pre>  &lt;b&gt;Parameters:&lt;/b&gt;
+<pre> &lt;b&gt;Parameters:&lt;/b&gt;
 </pre>
 
 <ul>
@@ -725,12 +721,12 @@ is null.</li>
 
 <p>Extracts the value of a header field from a byte array representing an email message. The return value is intended for display purposes, not for further processing, and this method is intended to be used as an error handling tool for email messages that are slightly malformed. (Note that malformed email messages ought to be treated with greater suspicion than well-formed email messages.).</p>
 
-<pre> &lt;b&gt;Parameters:&lt;/b&gt;
+<pre>&lt;b&gt;Parameters:&lt;/b&gt;
 </pre>
 
 <ul>
 <li><p><i>bytes</i>: A byte array representing an email message.</p></li>
-<li><p><i>headerFieldName</i>: The name of the header field to extract. This name will be compared with the names of header fields in the given message using a basic case-insensitive comparison. (Two strings are equal in such a comparison, if they match after converting the basic upper-case letters A to Z (U + 0041 to U + 005A) in both strings to lower case.)</p></li>
+<li><p><i>headerFieldName</i>: The name of the header field to extract. This name will be compared with the names of header fields in the given message using a basic case-insensitive comparison. (Two strings are equal in such a comparison, if they match after converting the basic upper-case letters A to Z (U + 0041 to U + 005A) in both strings to basic lower-case letters.).</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -747,10 +743,9 @@ is null.</li>
     string uri);
 </pre>
 
-<p>Creates a message object from a MailTo URI (uniform resource identifier). The MailTo URI can contain key-value pairs that follow a question-mark, as in the following example: &quot;mailto:<a href="mailto:me@example.com">me@example.com</a>?subject=A%20Subject&quot;. In this example, &quot;subject&quot; is the subject of the email address. Only certain keys are supported, namely, &quot;to&quot;, &quot;cc&quot;, &quot;bcc&quot;, &quot;subject&quot;, &quot;in-reply-to&quot;, &quot;comments&quot;, &quot;keywords&quot;, and &quot;body&quot;. The first seven are header field names that will be used to set the returned message&#39;s corresponding header fields. The last, &quot;body&quot;, sets the body of the message to the given text. Keys other than these eight will be ignored.</p>
+<p>Creates a message object from a MailTo URI (uniform resource identifier). The MailTo URI can contain key-value pairs that follow a question-mark, as in the following example: &quot;mailto:<a href="mailto:me@example.com">me@example.com</a>?subject=A%20Subject&quot;. In this example, &quot;subject&quot; is the subject of the email address. Only certain keys are supported, namely, &quot;to&quot;, &quot;cc&quot;, &quot;bcc&quot;, &quot;subject&quot;, &quot;in-reply-to&quot;, &quot;comments&quot;, &quot;keywords&quot;, and &quot;body&quot;. The first seven are header field names that will be used to set the returned message&#39;s corresponding header fields. The last, &quot;body&quot;, sets the body of the message to the given text. Keys other than these eight will be ignored. (Keys are compared using a basic case-sensitive comparison, in which two strings are equal if they match after converting the basic upper-case letters A to Z (U + 0041 to U + 005A) in both strings to basic lower-case letters.) The same key (matched using a basic case-insensitive comparison) can appear more than once; for &quot;subject&quot;, &quot;cc&quot;, &quot;bcc&quot;, and &quot;in-reply-to&quot;, the last value with the given key is used; for &quot;to&quot;, all header field values as well as the path are combined to a single To header field; for &quot;keywords&quot; and &quot;comments&quot;, each value adds another header field of the given key; and for &quot;body&quot;, the last value with that key is used as the body.</p>
 
-<pre>&lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>uri</i>: The parameter  <i>uri</i>
@@ -770,9 +765,9 @@ is a text string.</li>
     System.Uri uri);
 </pre>
 
-<p>Creates a message object from a MailTo URI (uniform resource identifier) in the form of a URI object. The MailTo URI can contain key-value pairs that follow a question-mark, as in the following example: &quot;mailto:<a href="mailto:me@example.com">me@example.com</a>?subject=A%20Subject&quot;. In this example, &quot;subject&quot; is the subject of the email address. Only certain keys are supported, namely, &quot;to&quot;, &quot;cc&quot;, &quot;bcc&quot;, &quot;subject&quot;, &quot;in-reply-to&quot;, &quot;comments&quot;, &quot;keywords&quot;, and &quot;body&quot;. The first seven are header field names that will be used to set the returned message&#39;s corresponding header fields. The last, &quot;body&quot;, sets the body of the message to the given text. Keys other than these eight will be ignored.</p>
+<p>Creates a message object from a MailTo URI (uniform resource identifier) in the form of a URI object. For more information, see <b>FromMailtoUri(string)</b>.</p>
 
-<pre> &lt;b&gt;Parameters:&lt;/b&gt;
+<pre>&lt;b&gt;Parameters:&lt;/b&gt;
 </pre>
 
 <ul>
@@ -802,10 +797,9 @@ is null.</li>
 
 <p><b>Deprecated.</b> Renamed to FromMailtoUri.</p>
 
-<p>Creates a message object from a MailTo URI (uniform resource identifier). The MailTo URI can contain key-value pairs that follow a question-mark, as in the following example: &quot;mailto:<a href="mailto:me@example.com">me@example.com</a>?subject=A%20Subject&quot;. In this example, &quot;subject&quot; is the subject of the email address. Only certain keys are supported, namely, &quot;to&quot;, &quot;cc&quot;, &quot;bcc&quot;, &quot;subject&quot;, &quot;in-reply-to&quot;, &quot;comments&quot;, &quot;keywords&quot;, and &quot;body&quot;. The first seven are header field names that will be used to set the returned message&#39;s corresponding header fields. The last, &quot;body&quot;, sets the body of the message to the given text. Keys other than these eight will be ignored.</p>
+<p>Creates a message object from a MailTo URI (uniform resource identifier). For more information, see <b>FromMailtoUri(string)</b>.</p>
 
-<pre>&lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>url</i>: A MailTo URI.</li>
@@ -831,8 +825,7 @@ is null.</li>
 
 <p>When encoding the message&#39;s body, if the message has a text content type (&quot;text/*&quot;), the line breaks are a CR byte (carriage return, 0x0d) followed by an LF byte (line feed, 0x0a), CR alone, or LF alone. If the message has any other content type, only CR followed by LF is considered a line break.</p>
 
-<pre>&lt;b&gt;Return Value:&lt;/b&gt;
-</pre>
+<p><b>Return Value:</b></p>
 
 <p>The generated message.</p>
 
@@ -866,7 +859,7 @@ The message can&#39;t be generated.</li>
 
 <p>Gets a list of addresses contained in the header fields with the given name in this message.</p>
 
-<pre>   &lt;b&gt;Parameters:&lt;/b&gt;
+<pre>  &lt;b&gt;Parameters:&lt;/b&gt;
 </pre>
 
 <ul>
@@ -969,7 +962,7 @@ Either this message is a multipart message, so it doesn&#39;t have its own body 
 
 <p>Gets the first instance of the header field with the specified name, using a basic case-insensitive comparison. (Two strings are equal in such a comparison, if they match after converting the basic upper-case letters A to Z (U + 0041 to U + 005A) in both strings to lower case.).</p>
 
-<pre> &lt;b&gt;Parameters:&lt;/b&gt;
+<pre>&lt;b&gt;Parameters:&lt;/b&gt;
 </pre>
 
 <ul>
@@ -997,7 +990,7 @@ Name is null.</li>
 
 <p>Gets the name and value of a header field by index.</p>
 
-<pre> &lt;b&gt;Parameters:&lt;/b&gt;
+<pre>&lt;b&gt;Parameters:&lt;/b&gt;
 </pre>
 
 <ul>
@@ -1026,7 +1019,7 @@ is 0 or at least as high as the number of header fields.</li>
 
 <p>Gets an array with the values of all header fields with the specified name, using a basic case-insensitive comparison. (Two strings are equal in such a comparison, if they match after converting the basic upper-case letters A to Z (U + 0041 to U + 005A) in both strings to lower case.).</p>
 
-<pre> &lt;b&gt;Parameters:&lt;/b&gt;
+<pre>&lt;b&gt;Parameters:&lt;/b&gt;
 </pre>
 
 <ul>
@@ -1055,7 +1048,7 @@ Name is null.</li>
 
 <p>Generates a multilingual message (see RFC 8255) from a list of messages and a list of language strings.</p>
 
-<pre>   &lt;b&gt;Parameters:&lt;/b&gt;
+<pre>  &lt;b&gt;Parameters:&lt;/b&gt;
 </pre>
 
 <ul>
@@ -1106,7 +1099,7 @@ contains the language tag &quot;zzx&quot; not appearing alone or at the end of t
 
 <p>Removes a header field by index. This method updates the ContentType and ContentDisposition properties if those header fields have been modified by this method.</p>
 
-<pre> &lt;b&gt;Parameters:&lt;/b&gt;
+<pre>&lt;b&gt;Parameters:&lt;/b&gt;
 </pre>
 
 <ul>
@@ -1135,7 +1128,7 @@ is 0 or at least as high as the number of header fields.</li>
 
 <p>Removes all instances of the given header field from this message. If this is a multipart message, the header field is not removed from its body part headers. A basic case-insensitive comparison is used. (Two strings are equal in such a comparison, if they match after converting the basic upper-case letters A to Z (U + 0041 to U + 005A) in both strings to lower case.). This method updates the ContentType and ContentDisposition properties if those header fields have been modified by this method.</p>
 
-<pre> &lt;b&gt;Parameters:&lt;/b&gt;
+<pre>&lt;b&gt;Parameters:&lt;/b&gt;
 </pre>
 
 <ul>
@@ -1164,7 +1157,7 @@ is null.</li>
 
 <p>Selects a body part for a multiple-language message (  <code>multipart/multilingual</code>  ) according to the given language priority list.</p>
 
-<pre> &lt;b&gt;Parameters:&lt;/b&gt;
+<pre>&lt;b&gt;Parameters:&lt;/b&gt;
 </pre>
 
 <ul>
@@ -1194,7 +1187,7 @@ is null.</li>
 
 <p>Selects a body part for a multiple-language message (  <code>multipart/multilingual</code>  ) according to the given language priority list and original-language preference.</p>
 
-<pre>  &lt;b&gt;Parameters:&lt;/b&gt;
+<pre> &lt;b&gt;Parameters:&lt;/b&gt;
 </pre>
 
 <ul>
@@ -1224,7 +1217,7 @@ is null.</li>
 
 <p>Sets the body of this message to the given byte array. This method doesn&#39;t make a copy of that byte array.</p>
 
-<pre> &lt;b&gt;Parameters:&lt;/b&gt;
+<pre>&lt;b&gt;Parameters:&lt;/b&gt;
 </pre>
 
 <ul>
@@ -1266,7 +1259,7 @@ is null.</li>
 
 <p>Sets this message&#39;s Date header field to the given date and time.</p>
 
-<pre>  &lt;b&gt;Parameters:&lt;/b&gt;
+<pre> &lt;b&gt;Parameters:&lt;/b&gt;
 </pre>
 
 <ul>
@@ -1300,7 +1293,7 @@ is null.</p></li>
 
 <p>Sets the name and value of a header field by index. This method updates the ContentType and ContentDisposition properties if those header fields have been modified by this method.</p>
 
-<pre>    &lt;b&gt;Parameters:&lt;/b&gt;
+<pre>   &lt;b&gt;Parameters:&lt;/b&gt;
 </pre>
 
 <ul>
@@ -1336,7 +1329,7 @@ is null.</p></li>
 
 <p>Sets the value of a header field by index without changing its name. This method updates the ContentType and ContentDisposition properties if those header fields have been modified by this method.</p>
 
-<pre>   &lt;b&gt;Parameters:&lt;/b&gt;
+<pre>  &lt;b&gt;Parameters:&lt;/b&gt;
 </pre>
 
 <ul>
@@ -1370,7 +1363,7 @@ is null.</p></li>
 
 <p>Sets the name and value of a header field by index. This method updates the ContentType and ContentDisposition properties if those header fields have been modified by this method.</p>
 
-<pre>   &lt;b&gt;Parameters:&lt;/b&gt;
+<pre>  &lt;b&gt;Parameters:&lt;/b&gt;
 </pre>
 
 <ul>
@@ -1404,7 +1397,7 @@ is null.</p></li>
 
 <p>Sets the value of this message&#39;s header field. If a header field with the same name exists, its value is replaced. If the header field&#39;s name occurs more than once, only the first instance of the header field is replaced. This method updates the ContentType and ContentDisposition properties if those header fields have been modified by this method.</p>
 
-<pre>   &lt;b&gt;Parameters:&lt;/b&gt;
+<pre>  &lt;b&gt;Parameters:&lt;/b&gt;
 </pre>
 
 <ul>
@@ -1437,7 +1430,7 @@ is null.</p></li>
 
 <p>Sets the body of this message to the specified string in Hypertext Markup Language (HTML) format. The character sequences CR (carriage return, &quot;\r&quot;, U+000D), LF (line feed, &quot;\n&quot;, U+000A), and CR/LF will be converted to CR/LF line breaks. Unpaired surrogate code points will be replaced with replacement characters.</p>
 
-<pre> &lt;b&gt;Parameters:&lt;/b&gt;
+<pre>&lt;b&gt;Parameters:&lt;/b&gt;
 </pre>
 
 <ul>
@@ -1467,7 +1460,7 @@ is null.</li>
 
 <p>Sets the body of this message to a multipart body with plain text and Hypertext Markup Language (HTML) versions of the same message. The character sequences CR (carriage return, &quot;\r&quot;, U+000D), LF (line feed, &quot;\n&quot;, U+000A), and CR/LF will be converted to CR/LF line breaks. Unpaired surrogate code points will be replaced with replacement characters.</p>
 
-<pre>  &lt;b&gt;Parameters:&lt;/b&gt;
+<pre> &lt;b&gt;Parameters:&lt;/b&gt;
 </pre>
 
 <ul>
@@ -1537,7 +1530,7 @@ is null.</li>
 
 <p>Sets the body of this message to the specified plain text string. The character sequences CR (carriage return, &quot;\r&quot;, U+000D), LF (line feed, &quot;\n&quot;, U+000A), and CR/LF will be converted to CR/LF line breaks. Unpaired surrogate code points will be replaced with replacement characters. This method changes this message&#39;s media type to plain text.</p>
 
-<pre> &lt;b&gt;Parameters:&lt;/b&gt;
+<pre>&lt;b&gt;Parameters:&lt;/b&gt;
 </pre>
 
 <ul>

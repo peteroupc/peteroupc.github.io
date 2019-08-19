@@ -10,93 +10,87 @@
 </pre>
 
 <p>Represents an email message, and contains methods and properties for
- accessing and modifying email message data. This class implements
- the Internet Message Format (RFC 5322) and Multipurpose Internet
- Mail Extensions (MIME; RFC 2045-2047, RFC 2049).<p> </p><p><b>Thread
- safety:</b> This class is mutable; its properties can be changed.
- None of its instance methods are designed to be thread safe.
- Therefore, access to objects from this class must be synchronized if
- multiple threads can access them at the same time.</p> <p>The
- following lists known deviations from the mail specifications
- (Internet Message Format and MIME):</p> <ul> <li>The
-  content-transfer-encodings &quot;quoted-printable&quot; and &quot;base64&quot; are
- treated as 7bit instead if they occur in a message or body part with
-  content type &quot;multipart/<em>&quot; or &quot;message/</em>&quot; (other than
-  &quot;message/global&quot;, &quot;message/global-headers&quot;,
+ accessing and modifying email message data. This class implements the
+ Internet Message Format (RFC 5322) and Multipurpose Internet Mail
+ Extensions (MIME; RFC 2045-2047, RFC 2049).<p> </p><p><b>Thread
+ safety:</b> This class is mutable; its properties can be changed. None
+ of its instance methods are designed to be thread safe. Therefore,
+ access to objects from this class must be synchronized if multiple
+ threads can access them at the same time.</p> <p>The following lists
+ known deviations from the mail specifications (Internet Message Format
+ and MIME):</p> <ul> <li>The content-transfer-encodings
+  &quot;quoted-printable&quot; and &quot;base64&quot; are treated as 7bit instead if they
+  occur in a message or body part with content type &quot;multipart/<em>&quot; or
+  &quot;message/</em>&quot; (other than &quot;message/global&quot;, &quot;message/global-headers&quot;,
   &quot;message/global-disposition-notification&quot;, or
   &quot;message/global-delivery-status&quot;).</li> <li>If a message has two or
  more Content-Type header fields, it is treated as having a content
   type of &quot;application/octet-stream&quot;, unless one or more of the header
- fields is syntactically invalid.</li> <li>Illegal UTF-8 byte
- sequences appearing in header field values are replaced with
- replacement characters. Moreover, UTF-8 is parsed everywhere in
- header field values, even in those parts of some structured header
- fields where this appears not to be allowed. (UTF-8 is a character
- encoding for the Unicode character set.)</li> <li>This
- implementation can parse a message even if that message is without a
- From header field, without a Date header field, or without
- both.</li> <li>The To and Cc header fields are allowed to contain
-  only comments and whitespace, but these &quot;empty&quot; header fields will
- be omitted when generating.</li> <li>There is no line length limit
- imposed when parsing header fields, except header field names.</li>
- <li>There is no line length limit imposed when parsing
- quoted-printable or base64 encoded bodies.</li> <li>If the transfer
-  encoding is absent and the content type is &quot;message/rfc822&quot;, bytes
-  with values greater than 127 (called &quot;8-bit bytes&quot; in the rest of
- these remarks) are still allowed, despite the default value of
-  &quot;7bit&quot; for &quot;Content-Transfer-Encoding&quot;.</li> <li>In the following
- cases, if the transfer encoding is absent, declared as 7bit, or
- treated as 7bit, 8-bit bytes are still allowed:</li> <li>(a) The
- preamble and epilogue of multipart messages, which will be
+ fields is syntactically invalid.</li> <li>Illegal UTF-8 byte sequences
+ appearing in header field values are replaced with replacement
+ characters. Moreover, UTF-8 is parsed everywhere in header field
+ values, even in those parts of some structured header fields where
+ this appears not to be allowed. (UTF-8 is a character encoding for the
+ Unicode character set.)</li> <li>This implementation can parse a
+ message even if that message is without a From header field, without a
+ Date header field, or without both.</li> <li>The To and Cc header
+ fields are allowed to contain only comments and whitespace, but these
+  &quot;empty&quot; header fields will be omitted when generating.</li> <li>There
+ is no line length limit imposed when parsing header fields, except
+ header field names.</li> <li>There is no line length limit imposed
+ when parsing quoted-printable or base64 encoded bodies.</li> <li>If
+ the transfer encoding is absent and the content type is
+  &quot;message/rfc822&quot;, bytes with values greater than 127 (called &quot;8-bit
+  bytes&quot; in the rest of these remarks) are still allowed, despite the
+  default value of &quot;7bit&quot; for &quot;Content-Transfer-Encoding&quot;.</li> <li>In
+ the following cases, if the transfer encoding is absent, declared as
+ 7bit, or treated as 7bit, 8-bit bytes are still allowed:</li> <li>(a)
+ The preamble and epilogue of multipart messages, which will be
  ignored.</li> <li>(b) If the charset is declared to be
-  <code>utf-8</code>.</li> <li>(c) If the content type is &quot;text/html&quot; and
-  the charset is declared to be <code>us-ascii</code>, &quot;windows-1252&quot;,
+  <code>utf-8</code>.</li> <li>(c) If the content type is &quot;text/html&quot; and the
+  charset is declared to be <code>us-ascii</code>, &quot;windows-1252&quot;,
   &quot;windows-1251&quot;, or &quot;iso-8859-*&quot; (all single byte encodings).</li>
  <li>(d) In non-MIME message bodies and in text/plain message bodies.
  Any 8-bit bytes are replaced with the substitute character byte
   (0x1a).</li> <li>If the message starts with the word &quot;From&quot; (and no
  other case variations of that word) followed by one or more space
- (U + 0020) not followed by colon, that text and the rest of the text
- is skipped up to and including a line feed (U + 000A). (See also RFC
-  4155, which describes the so-called &quot;mbox&quot; convention with &quot;From&quot;
- lines of this kind.)</li> <li>The name <code>ascii</code> is treated as a
- synonym for <code>us-ascii</code>, despite being a reserved name under RFC</p>
-
-<ol>
-<li>The name <code>cp1252</code> and <code>utf8</code> are treated as synonyms
-for <code>windows-1252</code> and <code>utf-8</code>, respectively, even though
-they are not IANA registered aliases.</li> <li>The following
-deviations involve encoded words under RFC 2047:</li> <li>(a) If a
-sequence of encoded words decodes to a string with a CTL character
-(U + 007F, or a character less than U + 0020 and not TAB) after being
-converted to Unicode, the encoded words are left un-decoded.</li>
-<li>(b) This implementation can decode encoded words regardless of
-the character length of the line in which they appear. This
-implementation can generate a header field line with one or more
-encoded words even if that line is more than 76 characters long.
-(This implementation follows the recommendation in RFC 5322 to limit
-header field lines to no more than 78 characters, where
-possible.)</li></ul> <p>It would be appreciated if users of this
-library contact the author if they find other ways in which this
-implementation deviates from the mail specifications or other
-applicable specifications.</p> <p>Note that this class currently
-doesn&#39;t support the &quot;padding&quot; parameter for message bodies with the
-media type &quot;application/octet-stream&quot; or treated as that media type
-(see RFC 2046 sec. 4.5.1).</p> <p>Note that this implementation can
-decode an RFC 2047 encoded word that uses ISO-2022-JP or
-ISO-2022-JP-2 (encodings that use code switching) even if the
-encoded word&#39;s payload ends in a different mode from &quot;ASCII mode&quot;.
-(Each encoded word still starts in &quot;ASCII mode&quot;, though.) This,
-however, is not a deviation to RFC 2047 because the relevant rule
-only concerns bringing the output device back to &quot;ASCII mode&quot; after
-the decoded text is displayed (see last paragraph of sec. 6.2) --
-since the decoded text is converted to Unicode rather than kept as
-ISO-2022-JP or ISO-2022-JP-2, this is not applicable since there is
-no such thing as &quot;ASCII mode&quot; in the Unicode Standard.</p> <p>Note
-that this library (the MailLib library) has no facilities for
-sending and receiving email messages, since that&#39;s outside this
-library&#39;s scope.</p></li>
-</ol>
+ (U + 0020) not followed by colon, that text and the rest of the text is
+ skipped up to and including a line feed (U + 000A). (See also RFC 4155,
+  which describes the so-called &quot;mbox&quot; convention with &quot;From&quot; lines of
+ this kind.)</li> <li>The name <code>ascii</code> is treated as a synonym for
+ <code>us-ascii</code>, despite being a reserved name under RFC 2046. The
+ name <code>cp1252</code> and <code>utf8</code> are treated as synonyms for
+ <code>windows-1252</code> and <code>utf-8</code>, respectively, even though they
+ are not IANA registered aliases.</li> <li>The following deviations
+ involve encoded words under RFC 2047:</li> <li>(a) If a sequence of
+ encoded words decodes to a string with a CTL character (U + 007F, or a
+ character less than U + 0020 and not TAB) after being converted to
+ Unicode, the encoded words are left un-decoded.</li> <li>(b) This
+ implementation can decode encoded words regardless of the character
+ length of the line in which they appear. This implementation can
+ generate a header field line with one or more encoded words even if
+ that line is more than 76 characters long. (This implementation
+ follows the recommendation in RFC 5322 to limit header field lines to
+ no more than 78 characters, where possible.)</li></ul> <p>It would be
+ appreciated if users of this library contact the author if they find
+ other ways in which this implementation deviates from the mail
+ specifications or other applicable specifications.</p> <p>Note that
+  this class currently doesn&#39;t support the &quot;padding&quot; parameter for
+  message bodies with the media type &quot;application/octet-stream&quot; or
+ treated as that media type (see RFC 2046 sec. 4.5.1).</p> <p>Note that
+ this implementation can decode an RFC 2047 encoded word that uses
+ ISO-2022-JP or ISO-2022-JP-2 (encodings that use code switching) even
+  if the encoded word&#39;s payload ends in a different mode from &quot;ASCII
+  mode&quot;. (Each encoded word still starts in &quot;ASCII mode&quot;, though.) This,
+ however, is not a deviation to RFC 2047 because the relevant rule only
+  concerns bringing the output device back to &quot;ASCII mode&quot; after the
+ decoded text is displayed (see last paragraph of sec. 6.2) -- since
+ the decoded text is converted to Unicode rather than kept as
+ ISO-2022-JP or ISO-2022-JP-2, this is not applicable since there is no
+  such thing as &quot;ASCII mode&quot; in the Unicode Standard.</p> <p>Note that
+ this library (the MailLib library) has no facilities for sending and
+ receiving email messages, since that&#39;s outside this library&#39;s
+ scope.</p></p>
 
 <h2>Methods</h2>
 
@@ -1830,7 +1824,7 @@ Renamed to ToMailtoUri.</p>
   given key is used; for &quot;to&quot;, all header field values as well as the
   path are combined to a single To header field; for &quot;keywords&quot; and
   &quot;comments&quot;, each value adds another header field of the given key;
-  and for &quot;body&quot;, the last value with that key is used as the body..</p>
+  and for &quot;body&quot;, the last value with that key is used as the body.</p>
 
 <p><strong>Parameters:</strong></p>
 

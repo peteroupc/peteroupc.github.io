@@ -125,6 +125,15 @@ disposition type.</li>
 <li>This value&#39;s disposition type, such as &quot;inline&quot; or &quot;attachment&quot; .</li>
 </ul>
 
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>java.lang.NullPointerException</code> - The property is being set and the value is
+null.</p></li>
+<li><p><code>java.lang.IllegalArgumentException</code> - The property is being set and the value is an
+empty string.</p></li>
+</ul>
+
 <h3>setDispositionType</h3>
 
 <pre>public final void setDispositionType​(java.lang.String value)
@@ -177,7 +186,10 @@ false</code>.</li>
 <pre>public DispositionBuilder SetDispositionType​(java.lang.String str)
 </pre>
 
-<p>Sets the disposition type, such as &quot;inline&quot;.</p>
+<p>Sets the disposition type, such as &quot;inline&quot;. This method enables the pattern
+ of method chaining (e.g., <code>new ...().getSet()...().getSet()...()</code>)
+ unlike with the DispositionType property in .NET or the
+ setDispositionType method (with small s) in Java.</p>
 
 <p><strong>Parameters:</strong></p>
 

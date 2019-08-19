@@ -49,7 +49,7 @@
 
 <p>Gets the Unicode code point at the given index of the string.</p>
 
-<pre>  &lt;b&gt;Parameters:&lt;/b&gt;
+<pre> &lt;b&gt;Parameters:&lt;/b&gt;
 </pre>
 
 <ul>
@@ -127,7 +127,7 @@ is null.</li>
 
 <p>Gets the Unicode code point just before the given index of the string.</p>
 
-<pre>  &lt;b&gt;Parameters:&lt;/b&gt;
+<pre> &lt;b&gt;Parameters:&lt;/b&gt;
 </pre>
 
 <ul>
@@ -161,7 +161,7 @@ is null.</li>
 
 <p>Gets the Unicode code point just before the given index of the string.</p>
 
-<pre>   &lt;b&gt;Parameters:&lt;/b&gt;
+<pre>  &lt;b&gt;Parameters:&lt;/b&gt;
 </pre>
 
 <ul>
@@ -196,7 +196,7 @@ is null.</li>
 
 <p>Compares two strings in Unicode code point order. Unpaired surrogate code points are treated as individual code points.</p>
 
-<pre> &lt;b&gt;Parameters:&lt;/b&gt;
+<pre>&lt;b&gt;Parameters:&lt;/b&gt;
 </pre>
 
 <ul>
@@ -218,7 +218,7 @@ is null.</li>
 
 <p>Finds the number of Unicode code points in the given text string. Unpaired surrogate code points increase this number by 1. This is not necessarily the length of the string in &quot;char&quot; s.</p>
 
-<pre> &lt;b&gt;Parameters:&lt;/b&gt;
+<pre>&lt;b&gt;Parameters:&lt;/b&gt;
 </pre>
 
 <ul>
@@ -251,7 +251,7 @@ is null.</li>
 
 <p>REMARK: It is not recommended to use  <code>Encoding.UTF8.GetBytes</code>  in.NET, or the  <code>getBytes()</code>  method in Java to do this. For instance,  <code>getBytes()</code>  encodes text strings in a default (so not fixed) character encoding, which can be undesirable.</p>
 
-<pre>   &lt;b&gt;Parameters:&lt;/b&gt;
+<pre>  &lt;b&gt;Parameters:&lt;/b&gt;
 </pre>
 
 <ul>
@@ -289,7 +289,7 @@ is false, or an internal error occurred.</p></li>
 
 <p>REMARK: It is not recommended to use  <code>Encoding.UTF8.GetBytes</code>  in.NET, or the  <code>getBytes()</code>  method in Java to do this. For instance,  <code>getBytes()</code>  encodes text strings in a default (so not fixed) character encoding, which can be undesirable.</p>
 
-<pre>    &lt;b&gt;Parameters:&lt;/b&gt;
+<pre>   &lt;b&gt;Parameters:&lt;/b&gt;
 </pre>
 
 <ul>
@@ -325,7 +325,7 @@ is false, or an internal error occurred.</p></li>
 
 <p>Calculates the number of bytes needed to encode a string in UTF-8.</p>
 
-<pre>  &lt;b&gt;Parameters:&lt;/b&gt;
+<pre> &lt;b&gt;Parameters:&lt;/b&gt;
 </pre>
 
 <ul>
@@ -358,7 +358,7 @@ is null.</li>
 
 <p>Generates a text string from a UTF-8 byte array.</p>
 
-<pre>   &lt;b&gt;Parameters:&lt;/b&gt;
+<pre>  &lt;b&gt;Parameters:&lt;/b&gt;
 </pre>
 
 <ul>
@@ -394,7 +394,7 @@ is false.</p></li>
 
 <p>Generates a text string from a portion of a UTF-8 byte array.</p>
 
-<pre>      &lt;b&gt;Parameters:&lt;/b&gt;
+<pre>     &lt;b&gt;Parameters:&lt;/b&gt;
 </pre>
 
 <ul>
@@ -436,7 +436,7 @@ is less than 0, or offset plus bytesCount is greater than the length of &quot;da
 
 <p>Reads a string in UTF-8 encoding from a data stream.</p>
 
-<pre>     &lt;b&gt;Parameters:&lt;/b&gt;
+<pre>    &lt;b&gt;Parameters:&lt;/b&gt;
 </pre>
 
 <ul>
@@ -477,7 +477,7 @@ is null.</p></li>
 
 <p>Reads a string in UTF-8 encoding from a byte array.</p>
 
-<pre>      &lt;b&gt;Parameters:&lt;/b&gt;
+<pre>     &lt;b&gt;Parameters:&lt;/b&gt;
 </pre>
 
 <ul>
@@ -517,7 +517,7 @@ is less than 0, or offset plus bytesCount is greater than the length of  <i>data
 
 <p>Reads a string in UTF-8 encoding from a data stream in full and returns that string. Replaces invalid encoding with the replacement character (U + FFFD).</p>
 
-<pre>  &lt;b&gt;Parameters:&lt;/b&gt;
+<pre> &lt;b&gt;Parameters:&lt;/b&gt;
 </pre>
 
 <ul>
@@ -550,7 +550,7 @@ is null.</p></li>
 
 <p>Reads a string in UTF-8 encoding from a data stream and returns that string.</p>
 
-<pre>    &lt;b&gt;Parameters:&lt;/b&gt;
+<pre>   &lt;b&gt;Parameters:&lt;/b&gt;
 </pre>
 
 <ul>
@@ -584,8 +584,7 @@ is null.</p></li>
 
 <p>Returns a string with the basic upper-case letters A to Z (U + 0041 to U + 005A) converted to lower-case. Other characters remain unchanged.</p>
 
-<pre>&lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>str</i>: The parameter  <i>str</i>
@@ -607,8 +606,7 @@ is a text string.</li>
 
 <p>Returns a string with the basic lower-case letters A to Z (U + 0061 to U + 007A) converted to upper-case. Other characters remain unchanged.</p>
 
-<pre>&lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>str</i>: The parameter  <i>str</i>
@@ -634,7 +632,7 @@ is a text string.</li>
 
 <p>Writes a portion of a string in UTF-8 encoding to a data stream.</p>
 
-<pre>       &lt;b&gt;Parameters:&lt;/b&gt;
+<pre>      &lt;b&gt;Parameters:&lt;/b&gt;
 </pre>
 
 <ul>
@@ -684,7 +682,7 @@ is less than  <i>length</i>
 
 <p>Writes a portion of a string in UTF-8 encoding to a data stream.</p>
 
-<pre>        &lt;b&gt;Parameters:&lt;/b&gt;
+<pre>       &lt;b&gt;Parameters:&lt;/b&gt;
 </pre>
 
 <ul>
@@ -730,7 +728,7 @@ An I/O error occurred.</p></li>
 
 <p>Writes a string in UTF-8 encoding to a data stream.</p>
 
-<pre>    &lt;b&gt;Parameters:&lt;/b&gt;
+<pre>   &lt;b&gt;Parameters:&lt;/b&gt;
 </pre>
 
 <ul>

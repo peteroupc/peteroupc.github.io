@@ -28,9 +28,17 @@ Gets this value&#39;s subtype.</li>
 <li><code>java.lang.String getTopLevelType()</code><br>
 Gets this value&#39;s top-level type.</li>
 <li><code>boolean isMultipart()</code><br>
-Gets a value indicating whether this is a multipart media type.</li>
+Deprecated.
+Instead of using this property, use the TopLevelType property and compare
+the result with the exact String &#39;multipart&#39;.
+Instead of using this property, use the TopLevelType property and compare
+the result with the exact String &#39;multipart&#39;.</li>
 <li><code>boolean isText()</code><br>
-Gets a value indicating whether this is a text media type.</li>
+Deprecated.
+Instead of using this property, use the TopLevelType property and compare
+the result with the exact String &#39;text&#39;.
+Instead of using this property, use the TopLevelType property and compare
+the result with the exact String &#39;text&#39;.</li>
 <li><code>MediaTypeBuilder RemoveParameter​(java.lang.String name)</code><br>
 Removes a parameter from this builder object.</li>
 <li><code>MediaTypeBuilder SetParameter​(java.lang.String name,
@@ -117,7 +125,17 @@ Initializes a new instance of the MediaTypeBuilder class.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>This value&#39;s top-level type.</li>
+<li>A text string naming this object&#39;s top-level type, such as &quot;text&quot; or
+&quot;audio&quot; .</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>java.lang.NullPointerException</code> - The property is being set and the value is
+null.</p></li>
+<li><p><code>java.lang.IllegalArgumentException</code> - The property is being set and the value is
+syntactically invalid for a top-level type.</p></li>
 </ul>
 
 <h3>setTopLevelType</h3>
@@ -135,7 +153,17 @@ Initializes a new instance of the MediaTypeBuilder class.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>This value&#39;s subtype.</li>
+<li>A text string naming this object&#39;s subtype, such as &quot;plain&quot; or
+&quot;xml&quot;.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>java.lang.NullPointerException</code> - The property is being set and the value is
+null.</p></li>
+<li><p><code>java.lang.IllegalArgumentException</code> - The property is being set and the value is
+syntactically invalid for a subtype.</p></li>
 </ul>
 
 <h3>setSubType</h3>
@@ -145,10 +173,12 @@ Initializes a new instance of the MediaTypeBuilder class.</li>
 
 <h3>isText</h3>
 
-<pre>public final boolean isText()
+<pre>@Deprecated public final boolean isText()
 </pre>
 
-<p>Gets a value indicating whether this is a text media type.</p>
+<p>Deprecated.
+Instead of using this property, use the TopLevelType property and compare
+ the result with the exact String &#39;text&#39;.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -158,10 +188,12 @@ Initializes a new instance of the MediaTypeBuilder class.</li>
 
 <h3>isMultipart</h3>
 
-<pre>public final boolean isMultipart()
+<pre>@Deprecated public final boolean isMultipart()
 </pre>
 
-<p>Gets a value indicating whether this is a multipart media type.</p>
+<p>Deprecated.
+Instead of using this property, use the TopLevelType property and compare
+ the result with the exact String &#39;multipart&#39;.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -188,7 +220,10 @@ false</code>.</li>
 <pre>public MediaTypeBuilder SetTopLevelType​(java.lang.String str)
 </pre>
 
-<p>Sets this media type&#39;s top-level type.</p>
+<p>Sets this media type&#39;s top-level type. This method enables the pattern of
+ method chaining (e.g., <code>new...().getSet()...().getSet()...()</code>) unlike
+ with the TopLevelType property in.NET or the setTopLevelType method
+ (with small s) in Java.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -279,7 +314,10 @@ syntactically invalid.</p></li>
 <pre>public MediaTypeBuilder SetSubType​(java.lang.String str)
 </pre>
 
-<p>Sets this media type&#39;s subtype, such as &quot;plain&quot; or &quot;xml&quot; .</p>
+<p>Sets this media type&#39;s subtype, such as &quot;plain&quot; or &quot;xml&quot; . This method
+ enables the pattern of method chaining (e.g.,
+ <code>new...().getSet()...().getSet()...()</code>) unlike with the SubType property
+ in.NET or the setSubType method (with small s) in Java.</p>
 
 <p><strong>Parameters:</strong></p>
 
