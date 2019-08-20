@@ -292,7 +292,7 @@ This value is being set and &quot;value&quot; is null.</li>
 <pre>public System.Collections.Generic.IList HeaderFields { get; }
 </pre>
 
-<p>Gets a snapshot of the header fields of this message, in the order in which they appear in the message. For each item in the list, the key is the header field&#39;s name (where any basic upper-case letters [U + 0041 to U + 005A] are converted to lower case) and the value is the header field&#39;s value.</p>
+<p>Gets a snapshot of the header fields of this message, in the order in which they appear in the message. For each item in the list, the key is the header field&#39;s name (where any basic upper-case letters [U+0041 to U+005A] are converted to lower case) and the value is the header field&#39;s value.</p>
 
 <p><b>Returns:</b></p>
 
@@ -743,7 +743,7 @@ is null.</li>
     string uri);
 </pre>
 
-<p>Creates a message object from a MailTo URI (uniform resource identifier). The MailTo URI can contain key-value pairs that follow a question-mark, as in the following example: &quot;mailto:<a href="mailto:me@example.com">me@example.com</a>?subject=A%20Subject&quot;. In this example, &quot;subject&quot; is the subject of the email address. Only certain keys are supported, namely, &quot;to&quot;, &quot;cc&quot;, &quot;bcc&quot;, &quot;subject&quot;, &quot;in-reply-to&quot;, &quot;comments&quot;, &quot;keywords&quot;, and &quot;body&quot;. The first seven are header field names that will be used to set the returned message&#39;s corresponding header fields. The last, &quot;body&quot;, sets the body of the message to the given text. Keys other than these eight will be ignored. (Keys are compared using a basic case-sensitive comparison, in which two strings are equal if they match after converting the basic upper-case letters A to Z (U + 0041 to U + 005A) in both strings to basic lower-case letters.) The same key (matched using a basic case-insensitive comparison) can appear more than once; for &quot;subject&quot;, &quot;cc&quot;, &quot;bcc&quot;, and &quot;in-reply-to&quot;, the last value with the given key is used; for &quot;to&quot;, all header field values as well as the path are combined to a single To header field; for &quot;keywords&quot; and &quot;comments&quot;, each value adds another header field of the given key; and for &quot;body&quot;, the last value with that key is used as the body.</p>
+<p>Creates a message object from a MailTo URI (uniform resource identifier). The MailTo URI can contain key-value pairs that follow a question-mark, as in the following example: &quot;mailto:<a href="mailto:me@example.com">me@example.com</a>?subject=A%20Subject&quot;. In this example, &quot;subject&quot; is the subject of the email address. Only certain keys are supported, namely, &quot;to&quot;, &quot;cc&quot;, &quot;bcc&quot;, &quot;subject&quot;, &quot;in-reply-to&quot;, &quot;comments&quot;, &quot;keywords&quot;, and &quot;body&quot;. The first seven are header field names that will be used to set the returned message&#39;s corresponding header fields. The last, &quot;body&quot;, sets the body of the message to the given text. Keys other than these eight will be ignored. (Keys are compared using a basic case-sensitive comparison, in which two strings are equal if they match after converting the basic upper-case letters A to Z (U+0041 to U+005A) in both strings to basic lower-case letters.) The same key (matched using a basic case-insensitive comparison) can appear more than once; for &quot;subject&quot;, &quot;cc&quot;, &quot;bcc&quot;, and &quot;in-reply-to&quot;, the last value with the given key is used; for &quot;to&quot;, all header field values as well as the path are combined to a single To header field; for &quot;keywords&quot; and &quot;comments&quot;, each value adds another header field of the given key; and for &quot;body&quot;, the last value with that key is used as the body.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -817,7 +817,7 @@ is null.</li>
 <pre>public string Generate();
 </pre>
 
-<p>Generates this message&#39;s data in text form. The generated message will have only Basic Latin code points (U + 0000 to U + 007F), and the transfer encoding will always be 7bit, quoted-printable, or base64 (the declared transfer encoding for this message will be ignored).</p>
+<p>Generates this message&#39;s data in text form. The generated message will have only Basic Latin code points (U+0000 to U+007F), and the transfer encoding will always be 7bit, quoted-printable, or base64 (the declared transfer encoding for this message will be ignored).</p>
 
 <p>The following applies to the following header fields: From, To, Cc, Bcc, Reply-To, Sender, Resent-To, Resent-From, Resent-Cc, Resent-Bcc, and Resent-Sender. If the header field exists, but has an invalid syntax, has no addresses, or appears more than once, this method will combine the addresses into one header field if possible (in the case of all fields given other than From and Sender), and otherwise generate a synthetic header field with the display-name set to the contents of all of the header fields with the same name, and the address set to  <code>me@[header-name]-address.invalid</code>  as the address (a  <code>.invalid</code>  address is a reserved address that can never belong to anyone). (An exception is that the Resent-* header fields may appear more than once.) The generated message should always have a From header field.</p>
 
@@ -960,7 +960,7 @@ Either this message is a multipart message, so it doesn&#39;t have its own body 
     string name);
 </pre>
 
-<p>Gets the first instance of the header field with the specified name, using a basic case-insensitive comparison. (Two strings are equal in such a comparison, if they match after converting the basic upper-case letters A to Z (U + 0041 to U + 005A) in both strings to lower case.).</p>
+<p>Gets the first instance of the header field with the specified name, using a basic case-insensitive comparison. (Two strings are equal in such a comparison, if they match after converting the basic upper-case letters A to Z (U+0041 to U+005A) in both strings to lower case.).</p>
 
 <pre>&lt;b&gt;Parameters:&lt;/b&gt;
 </pre>
@@ -1017,7 +1017,7 @@ is 0 or at least as high as the number of header fields.</li>
     string name);
 </pre>
 
-<p>Gets an array with the values of all header fields with the specified name, using a basic case-insensitive comparison. (Two strings are equal in such a comparison, if they match after converting the basic upper-case letters A to Z (U + 0041 to U + 005A) in both strings to lower case.).</p>
+<p>Gets an array with the values of all header fields with the specified name, using a basic case-insensitive comparison. (Two strings are equal in such a comparison, if they match after converting the basic upper-case letters A to Z (U+0041 to U+005A) in both strings to lower case.).</p>
 
 <pre>&lt;b&gt;Parameters:&lt;/b&gt;
 </pre>
@@ -1126,7 +1126,7 @@ is 0 or at least as high as the number of header fields.</li>
     string name);
 </pre>
 
-<p>Removes all instances of the given header field from this message. If this is a multipart message, the header field is not removed from its body part headers. A basic case-insensitive comparison is used. (Two strings are equal in such a comparison, if they match after converting the basic upper-case letters A to Z (U + 0041 to U + 005A) in both strings to lower case.). This method updates the ContentType and ContentDisposition properties if those header fields have been modified by this method.</p>
+<p>Removes all instances of the given header field from this message. If this is a multipart message, the header field is not removed from its body part headers. A basic case-insensitive comparison is used. (Two strings are equal in such a comparison, if they match after converting the basic upper-case letters A to Z (U+0041 to U+005A) in both strings to lower case.). This method updates the ContentType and ContentDisposition properties if those header fields have been modified by this method.</p>
 
 <pre>&lt;b&gt;Parameters:&lt;/b&gt;
 </pre>

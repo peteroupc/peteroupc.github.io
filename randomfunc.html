@@ -206,13 +206,13 @@
 <p>In this document, <strong><code>RNDINT(maxInclusive)</code></strong> is the core method for using an underlying RNG to generate independent uniform random integers <strong>in the interval [0, <code>maxInclusive</code>]</strong>.<sup><a href="#Note2"><strong>(2)</strong></a></sup>.  There are two ways to implement <code>RNDINT</code>:</p>
 
 <ol>
-<li><a href="#Rejection_Sampling"><strong><em>Rejection sampling</em></strong></a>: sample in a bigger range until a sampled number fits the smaller range.  This method is <em>unbiased</em> but has a <em>variable running time</em> which could be exploited in a security attack.</li>
+<li><a href="#Rejection_Sampling"><strong><em>Rejection sampling</em></strong></a>, which roughly means: sample in a bigger range until a sampled number fits the smaller range.  This method is <em>unbiased</em> but has a <em>variable running time</em> which could be exploited in a security attack.</li>
 <li>The remainder method.  Generate <code>bignumber</code>, a &quot;big&quot; random number with many more bits than <code>maxInclusive + 1</code> has, then find <code>rem(bignumber, maxInclusive + 1)</code>.  This method can be &quot;<em>constant-time</em>&quot; (non-data-dependent and branchless) if implemented correctly, but can introduce a so-called <em>modulo bias</em> (some numbers are slightly more likely to be chosen than others), which, however, gets smaller the more bits <code>bignumber</code> has.</li>
 </ol>
 
 <p>Any <code>RNDINT</code> implementation can be &quot;constant-time&quot; <em>or</em> unbiased, but not both, in general.</p>
 
-<p>The pseudocode below implements <code>RNDINT</code> and uses rejection sampling for most inputs and the remainder method for a small number of powers of 2.  In the pseudocode:</p>
+<p>The pseudocode below implements <code>RNDINT</code> and uses rejection sampling for most inputs and the remainder method for certain special cases.  In the pseudocode:</p>
 
 <table><thead>
 <tr>
