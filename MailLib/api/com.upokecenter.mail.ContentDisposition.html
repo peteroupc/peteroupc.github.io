@@ -83,9 +83,9 @@ Gets a value indicating whether the disposition type is attachment.</li>
 <li><code>boolean isInline()</code><br>
 Gets a value indicating whether the disposition type is inline.</li>
 <li><code>static java.lang.String MakeFilename​(java.lang.String str)</code><br>
-Converts a file name from the Content-Disposition header (or another string
-representing a title and an optional file extension) to a suitable
-name for saving data to a file.</li>
+Converts a file name from the Content-disposition header field (or another
+string representing a title and an optional file extension) to a
+suitable name for saving data to a file.</li>
 <li><code>static ContentDisposition Parse​(java.lang.String dispoValue)</code><br>
 Creates a new content disposition object from the value of a
 Content-Disposition header field.</li>
@@ -166,8 +166,9 @@ or &quot;attachment&quot;.</li>
 <pre>public int hashCode()
 </pre>
 
-<p>Calculates the hash code of this object. No application or process IDs are
- used in the hash code calculation.</p>
+<p>Calculates the hash code of this object. The exact algorithm used by this
+ method may change between versions of this library, and no
+ application or process IDs are used in the hash code calculation.</p>
 
 <p><strong>Overrides:</strong></p>
 
@@ -274,19 +275,19 @@ case in version 0.10.0.</li>
 <pre>public static java.lang.String MakeFilename​(java.lang.String str)
 </pre>
 
-<p>Converts a file name from the Content-Disposition header (or another string
- representing a title and an optional file extension) to a suitable
- name for saving data to a file. This method is idempotent; that is,
- calling the method again on the result doesn&#39;t change that result.
- The method avoids characters and combinations of characters that are
- problematic to use in certain file systems, and leaves the vast
- majority of file names seen in practice untouched. <p>Examples of
-  how this method works follows:</p> <p><code>&quot;=?utf-8?q?hello=2Etxt?=&quot;
-  -&gt;&quot;hello.txt&quot;</code> (RFC 2047 encoding).</p>
-  <p><code>&quot;=?utf-8?q?long_filename?=&quot; -&gt;&quot;long filename&quot;</code> (RFC 2047
-  encoding).</p> <p><code>&quot;utf-8&#39;en&#39;hello%2Etxt&quot; -&gt;&quot;hello.txt&quot;</code>
-  (RFC 2231 encoding).</p> <p><code>&quot;nul.txt&quot; -&gt;&quot;_nul.txt&quot;</code>
-  (Reserved name).</p> <p><code>&quot;dir1/dir2/file&quot;
+<p>Converts a file name from the Content-disposition header field (or another
+ string representing a title and an optional file extension) to a
+ suitable name for saving data to a file. This method is idempotent;
+ that is, calling the method again on the result doesn&#39;t change that
+ result. The method avoids characters and combinations of characters
+ that are problematic to use in certain file systems, and leaves the
+ vast majority of file names seen in practice untouched. <p>Examples
+ of how this method works follows:</p>
+  <p><code>&quot;=?utf-8?q?hello=2Etxt?=&quot; -&gt;&quot;hello.txt&quot;</code> (RFC 2047
+  encoding).</p> <p><code>&quot;=?utf-8?q?long_filename?=&quot; -&gt;&quot;long
+  filename&quot;</code> (RFC 2047 encoding).</p> <p><code>&quot;utf-8&#39;en&#39;hello%2Etxt&quot;
+  -&gt;&quot;hello.txt&quot;</code> (RFC 2231 encoding).</p> <p><code>&quot;nul.txt&quot;
+  -&gt;&quot;_nul.txt&quot;</code> (Reserved name).</p> <p><code>&quot;dir1/dir2/file&quot;
   -&gt;&quot;dir1_dir2_file&quot;</code> (Directory separators).</p><p>
  </p><p><b>Remarks:</b></p> <ul> <li>This method should be used only to
  prepare a file name for the purpose of suggesting a name by which to

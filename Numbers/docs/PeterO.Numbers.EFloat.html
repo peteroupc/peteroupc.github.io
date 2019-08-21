@@ -23,7 +23,8 @@
 
 <ul>
 <li><p>By calling the toString() method. However, not all strings can be converted back to an arbitrary-precision binary float without loss, especially if the string has a fractional part.</p></li>
-<li><p>By calling the UnsignedMantissa, Exponent, and IsNegative properties, and calling the IsInfinity, IsQuietNaN, and IsSignalingNaN methods. The return values combined will uniquely identify a particular arbitrary-precision binary float value.</p>
+<li><p>By calling the UnsignedMantissa, Exponent, and IsNegative properties, and calling the IsInfinity, IsQuietNaN, and IsSignalingNaN methods. The return values combined will uniquely identify a particular arbitrary-precision binary float value.</p></li>
+</ul>
 
 <p>If an operation requires creating an intermediate value that might be too big to fit in memory (or might require more than 2 gigabytes of memory to store -- due to the current use of a 32-bit integer internally as a length), the operation may signal an invalid-operation flag and return not-a-number (NaN). In certain rare cases, the CompareTo method may throw OutOfMemoryException (called OutOfMemoryError in Java) in the same circumstances.</p>
 
@@ -37,12 +38,14 @@
 
 <p><b>Security note</b></p>
 
-<p>It is not recommended to implement security-sensitive algorithms using the methods in this class, for several reasons:</p></li>
-<li><p><code>EFloat</code>  objects are immutable, so they can&#39;t be modified, and the memory they occupy is not guaranteed to be cleared in a timely fashion due to garbage collection. This is relevant for applications that use many-bit-long numbers as secret parameters.</p></li>
-<li><p>The methods in this class (especially those that involve arithmetic) are not guaranteed to be &quot;constant-time&quot; (non-data-dependent) for all relevant inputs. Certain attacks that involve encrypted communications have exploited the timing and other aspects of such communications to derive keying material or cleartext indirectly.</p>
+<p>It is not recommended to implement security-sensitive algorithms using the methods in this class, for several reasons:</p>
 
-<p>Applications should instead use dedicated security libraries to handle big numbers in security-sensitive algorithms.</p></li>
+<ul>
+<li><p><code>EFloat</code>  objects are immutable, so they can&#39;t be modified, and the memory they occupy is not guaranteed to be cleared in a timely fashion due to garbage collection. This is relevant for applications that use many-bit-long numbers as secret parameters.</p></li>
+<li><p>The methods in this class (especially those that involve arithmetic) are not guaranteed to be &quot;constant-time&quot; (non-data-dependent) for all relevant inputs. Certain attacks that involve encrypted communications have exploited the timing and other aspects of such communications to derive keying material or cleartext indirectly.</p></li>
 </ul>
+
+<p>Applications should instead use dedicated security libraries to handle big numbers in security-sensitive algorithms.</p>
 
 <h3>Member Summary</h3>
 
@@ -408,8 +411,7 @@
 
 <p>Finds the absolute value of this object (if it&#39;s negative, it becomes positive).</p>
 
-<pre>&lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>context</i>: An arithmetic context to control the precision, rounding, and exponent range of the result. If  <code>HasFlags</code>  of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null, in which case the precision is unlimited and no rounding is needed.</li>
@@ -442,8 +444,7 @@
 
 <p>Not documented yet.</p>
 
-<pre>&lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>intValue</i>: The parameter  <i>intValue</i>
@@ -464,8 +465,7 @@ is not documented yet.</li>
 
 <p>Adds this object and another binary float and returns the result.</p>
 
-<pre>&lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>otherValue</i>: An arbitrary-precision binary floating-point number.</li>
@@ -486,8 +486,7 @@ is not documented yet.</li>
 
 <p>Finds the sum of this object and another object. The result&#39;s exponent is set to the lower of the exponents of the two operands.</p>
 
-<pre> &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>otherValue</i>: The number to add to.</p></li>
@@ -512,8 +511,7 @@ is not documented yet.</li>
 
 <p>If this object or the other object is a quiet NaN or signaling NaN, this method will not trigger an error. Instead, NaN will compare greater than any other number, including infinity. Two different NaN values will be considered equal.</p>
 
-<pre>&lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>other</i>: An arbitrary-precision binary floating-point number.</li>
@@ -537,8 +535,7 @@ is not documented yet.</li>
 
 <p>If this object or the other object is a quiet NaN or signaling NaN, this method will return a quiet NaN and will signal a FlagInvalid flag.</p>
 
-<pre> &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>other</i>: An arbitrary-precision binary floating-point number.</p></li>
@@ -568,13 +565,13 @@ is not documented yet.</li>
 <li><p>Quiet NaN has a higher &quot;absolute value&quot; than signaling NaN. If both objects are quiet NaN or both are signaling NaN, the one with the higher diagnostic information has a greater &quot;absolute value&quot;.</p></li>
 <li><p>NaN has a higher &quot;absolute value&quot; than infinity.</p></li>
 <li><p>Infinity has a higher &quot;absolute value&quot; than any finite number.</p></li>
-<li><p>Negative numbers are less than positive numbers.</p>
+<li><p>Negative numbers are less than positive numbers.</p></li>
+</ul>
 
 <p><b>Parameters:</b></p>
 
 <ul>
 <li><i>other</i>: An arbitrary-precision binary float to compare with this one.</li>
-</ul></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -601,14 +598,14 @@ is not documented yet.</li>
 <li><p>Quiet NaN has a higher &quot;absolute value&quot; than signaling NaN. If both objects are quiet NaN or both are signaling NaN, the one with the higher diagnostic information has a greater &quot;absolute value&quot;.</p></li>
 <li><p>NaN has a higher &quot;absolute value&quot; than infinity.</p></li>
 <li><p>Infinity has a higher &quot;absolute value&quot; than any finite number.</p></li>
-<li><p>Negative numbers are less than positive numbers.</p>
+<li><p>Negative numbers are less than positive numbers.</p></li>
+</ul>
 
 <p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>other</i>: An arbitrary-precision binary float to compare with this one.</p></li>
 <li><p><i>ctx</i>: An arithmetic context. Flags will be set in this context only if  <code>HasFlags</code>  and  <code>IsSimplified</code>  of the context are true and only if an operand needed to be rounded before carrying out the operation. Can be null.</p></li>
-</ul></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -633,13 +630,13 @@ is not documented yet.</li>
 <li><p>Negative zero and positive zero are considered equal.</p></li>
 <li><p>Quiet NaN has a higher &quot;absolute value&quot; than signaling NaN. If both objects are quiet NaN or both are signaling NaN, the one with the higher diagnostic information has a greater &quot;absolute value&quot;.</p></li>
 <li><p>NaN has a higher &quot;absolute value&quot; than infinity.</p></li>
-<li><p>Infinity has a higher &quot;absolute value&quot; than any finite number.</p>
+<li><p>Infinity has a higher &quot;absolute value&quot; than any finite number.</p></li>
+</ul>
 
 <p><b>Parameters:</b></p>
 
 <ul>
 <li><i>other</i>: An arbitrary-precision binary float to compare with this one.</li>
-</ul></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -666,14 +663,14 @@ is not documented yet.</li>
 <li><p>Quiet NaN has a higher &quot;absolute value&quot; than signaling NaN. If both objects are quiet NaN or both are signaling NaN, the one with the higher diagnostic information has a greater &quot;absolute value&quot;.</p></li>
 <li><p>NaN has a higher &quot;absolute value&quot; than infinity.</p></li>
 <li><p>Infinity has a higher &quot;absolute value&quot; than any finite number.</p></li>
-<li><p>Negative numbers are less than positive numbers.</p>
+<li><p>Negative numbers are less than positive numbers.</p></li>
+</ul>
 
 <p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>other</i>: An arbitrary-precision binary float to compare with this one.</p></li>
 <li><p><i>ctx</i>: An arithmetic context. Flags will be set in this context only if  <code>HasFlags</code>  and  <code>IsSimplified</code>  of the context are true and only if an operand needed to be rounded before carrying out the operation. Can be null.</p></li>
-</ul></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -696,8 +693,7 @@ is not documented yet.</li>
 
 <p>If this object or the other object is a quiet NaN or signaling NaN, this method returns a quiet NaN, and will signal a FlagInvalid flag if either is a signaling NaN.</p>
 
-<pre> &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>other</i>: An arbitrary-precision binary floating-point number.</p></li>
@@ -734,8 +730,7 @@ is not documented yet.</li>
 
 <p>Returns a number with the same value as this one, but copying the sign (positive or negative) of another number. (This method is similar to the &quot;copy-sign&quot; operation in the General Decimal Arithmetic Specification, except this method does not necessarily return a copy of this object.).</p>
 
-<pre> &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>other</i>: A number whose sign will be copied.</li>
@@ -764,8 +759,7 @@ is null.</li>
 
 <p>Creates a number with the value exponent*2^mantissa (significand).</p>
 
-<pre> &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>mantissaSmall</i>: Desired value for the mantissa.</p></li>
@@ -787,8 +781,7 @@ is null.</li>
 
 <p>Creates a number with the value exponent*2^mantissa (significand).</p>
 
-<pre>  &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>mantissa</i>: Desired value for the mantissa.</p></li>
@@ -817,8 +810,7 @@ is null.</li>
 
 <p>Creates a not-a-number arbitrary-precision binary floating-point number.</p>
 
-<pre> &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>diag</i>: An integer, 0 or greater, to use as diagnostic information associated with this object. If none is needed, should be zero. To get the diagnostic information from another arbitrary-precision binary floating-point number, use that object&#39;s  <code>UnsignedMantissa</code>  property.</li>
@@ -849,8 +841,7 @@ is less than 0.</li>
 
 <p>Creates a not-a-number arbitrary-precision binary floating-point number.</p>
 
-<pre>    &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>diag</i>: An integer, 0 or greater, to use as diagnostic information associated with this object. If none is needed, should be zero. To get the diagnostic information from another arbitrary-precision binary floating-point number, use that object&#39;s  <code>UnsignedMantissa</code>  property.</p></li>
@@ -894,8 +885,7 @@ is null.</li>
 
 <p>Divides this instance by the value of an arbitrary-precision integer. The result is rounded down (the fractional part is discarded). Except if the result is 0, it will be negative if this object is positive and the other is negative, or vice versa, and will be positive if both are positive or both are negative.</p>
 
-<pre> &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>intValue</i>: The divisor.</li>
@@ -922,8 +912,7 @@ Attempted to divide by zero.</li>
 
 <p>Divides this object by another binary float and returns the result. When possible, the result will be exact.</p>
 
-<pre>&lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>divisor</i>: The number to divide by.</li>
@@ -944,8 +933,7 @@ Attempted to divide by zero.</li>
 
 <p>Divides this arbitrary-precision binary float by another arbitrary-precision binary floating-point number. The preferred exponent for the result is this object&#39;s exponent minus the divisor&#39;s exponent.</p>
 
-<pre> &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>divisor</i>: The number to divide by.</p></li>
@@ -970,8 +958,7 @@ Attempted to divide by zero.</li>
 
 <p>Calculates the quotient and remainder using the DivideToIntegerNaturalScale and the formula in RemainderNaturalScale.</p>
 
-<pre>&lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>divisor</i>: The number to divide by.</li>
@@ -994,8 +981,7 @@ Attempted to divide by zero.</li>
 
 <p>Calculates the quotient and remainder using the DivideToIntegerNaturalScale and the formula in RemainderNaturalScale.</p>
 
-<pre> &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>divisor</i>: The number to divide by.</p></li>
@@ -1018,8 +1004,7 @@ Attempted to divide by zero.</li>
 
 <p>Divides two arbitrary-precision binary floating-point numbers, and gives a particular exponent to the result.</p>
 
-<pre>  &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>divisor</i>: The number to divide by.</p></li>
@@ -1043,8 +1028,7 @@ Attempted to divide by zero.</li>
 
 <p>Divides two arbitrary-precision binary floating-point numbers, and gives a particular exponent to the result.</p>
 
-<pre>  &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>divisor</i>: The number to divide by.</p></li>
@@ -1068,8 +1052,7 @@ Attempted to divide by zero.</li>
 
 <p>Divides two arbitrary-precision binary floating-point numbers, and gives a particular exponent to the result.</p>
 
-<pre>  &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>divisor</i>: The number to divide by.</p></li>
@@ -1093,8 +1076,7 @@ Attempted to divide by zero.</li>
 
 <p>Divides two arbitrary-precision binary floating-point numbers, and gives a particular exponent to the result.</p>
 
-<pre>  &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>divisor</i>: The number to divide by.</p></li>
@@ -1116,8 +1098,7 @@ Attempted to divide by zero.</li>
 
 <p>Divides two arbitrary-precision binary floating-point numbers, and returns the integer part of the result, rounded down, with the preferred exponent set to this value&#39;s exponent minus the divisor&#39;s exponent.</p>
 
-<pre>&lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>divisor</i>: The number to divide by.</li>
@@ -1138,8 +1119,7 @@ Attempted to divide by zero.</li>
 
 <p>Divides this object by another object, and returns the integer part of the result (which is initially rounded down), with the preferred exponent set to this value&#39;s exponent minus the divisor&#39;s exponent.</p>
 
-<pre> &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>divisor</i>: An arbitrary-precision binary floating-point number.</p></li>
@@ -1162,8 +1142,7 @@ is an EContext object.</p></li>
 
 <p>Divides this object by another object, and returns the integer part of the result, with the exponent set to 0.</p>
 
-<pre> &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>divisor</i>: The number to divide by.</p></li>
@@ -1185,8 +1164,7 @@ is an EContext object.</p></li>
 
 <p>Divides this object by another binary float and returns a result with the same exponent as this object (the dividend).</p>
 
-<pre> &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>divisor</i>: The number to divide by.</p></li>
@@ -1207,8 +1185,7 @@ is an EContext object.</p></li>
 
 <p>Calculates the quotient and remainder using the DivideToIntegerNaturalScale and the formula in RemainderNaturalScale.</p>
 
-<pre>&lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>divisor</i>: The number to divide by.</li>
@@ -1229,8 +1206,7 @@ is an EContext object.</p></li>
 
 <p>Calculates the quotient and remainder using the DivideToIntegerNaturalScale and the formula in RemainderNaturalScale.</p>
 
-<pre> &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>divisor</i>: The number to divide by.</p></li>
@@ -1251,8 +1227,7 @@ is an EContext object.</p></li>
 
 <p>Determines whether this object&#39;s mantissa (significand), exponent, and properties are equal to those of another object and that other object is an arbitrary-precision binary floating-point number. Not-a-number values are considered equal if the rest of their properties are equal.</p>
 
-<pre>&lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>obj</i>: The parameter  <i>obj</i>
@@ -1273,8 +1248,7 @@ is an arbitrary object.</li>
 
 <p>Determines whether this object&#39;s mantissa (significand), exponent, and properties are equal to those of another object. Not-a-number values are considered equal if the rest of their properties are equal.</p>
 
-<pre>&lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>other</i>: An arbitrary-precision binary floating-point number.</li>
@@ -1294,8 +1268,7 @@ is an arbitrary object.</li>
 
 <p>Determines whether this object&#39;s mantissa (significand) and exponent are equal to those of another object.</p>
 
-<pre>&lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>otherValue</i>: An arbitrary-precision binary floating-point number.</li>
@@ -1315,8 +1288,7 @@ is an arbitrary object.</li>
 
 <p>Finds e (the base of natural logarithms) raised to the power of this object&#39;s value.</p>
 
-<pre>&lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>ctx</i>: An arithmetic context to control the precision, rounding, and exponent range of the result. If  <code>HasFlags</code>  of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). <i>This parameter can&#39;t be null, as the exponential function&#39;s results are generally not exact.</i> (Unlike in the General Binary Arithmetic Specification, any rounding mode is allowed.).</li>
@@ -1337,8 +1309,7 @@ is an arbitrary object.</li>
 
 <p>Converts a boolean value (either true or false) to an arbitrary-precision binary float.</p>
 
-<pre>&lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>boolValue</i>: Either true or false.</li>
@@ -1359,8 +1330,7 @@ is an arbitrary object.</li>
 
 <p>Converts a byte (from 0 to 255) to an arbitrary-precision binary floating-point number.</p>
 
-<pre>&lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>inputByte</i>: The number to convert as a byte (from 0 to 255).</li>
@@ -1380,8 +1350,7 @@ is an arbitrary object.</li>
 
 <p>Creates a binary float from a 64-bit floating-point number. This method computes the exact value of the floating point number, not an approximation, as is often the case by converting the floating point number to a string first.</p>
 
-<pre>&lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>dbl</i>: The parameter  <i>dbl</i>
@@ -1403,8 +1372,7 @@ is a 64-bit floating-point number.</li>
 
 <p>Converts an arbitrary-precision integer to the same value as a binary float.</p>
 
-<pre>&lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>bigint</i>: An arbitrary-precision integer.</li>
@@ -1424,8 +1392,7 @@ is a 64-bit floating-point number.</li>
 
 <p>Converts a 16-bit signed integer to an arbitrary-precision binary floating-point number.</p>
 
-<pre>&lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>inputInt16</i>: The number to convert as a 16-bit signed integer.</li>
@@ -1445,8 +1412,7 @@ is a 64-bit floating-point number.</li>
 
 <p>Converts a 32-bit signed integer to an arbitrary-precision binary floating-point number.</p>
 
-<pre>&lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>inputInt32</i>: The number to convert as a 32-bit signed integer.</li>
@@ -1466,8 +1432,7 @@ is a 64-bit floating-point number.</li>
 
 <p>Converts a 64-bit signed integer to an arbitrary-precision binary floating-point number.</p>
 
-<pre>&lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>inputInt64</i>: The number to convert as a 64-bit signed integer.</li>
@@ -1487,8 +1452,7 @@ is a 64-bit floating-point number.</li>
 
 <p>Converts an 8-bit signed integer to an arbitrary-precision binary floating-point number.</p>
 
-<pre>&lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>inputSByte</i>: The number to convert as an 8-bit signed integer.</li>
@@ -1508,8 +1472,7 @@ is a 64-bit floating-point number.</li>
 
 <p>Creates a binary float from a 32-bit floating-point number. This method computes the exact value of the floating point number, not an approximation, as is often the case by converting the floating point number to a string first.</p>
 
-<pre>&lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>flt</i>: The parameter  <i>flt</i>
@@ -1531,8 +1494,7 @@ is a 32-bit binary floating-point number.</li>
 
 <p>Creates a binary float from a text string that represents a number, using an unlimited precision context. For more information, see the  <code>FromString(String, int, int, EContext)</code>  method.</p>
 
-<pre>&lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>str</i>: A text string to convert to a binary float.</li>
@@ -1555,8 +1517,7 @@ is a 32-bit binary floating-point number.</li>
 <p>Creates a binary float from a text string that represents a number. For more information, see the  <code>FromString(String, int,
             int, EContext)</code>  method.</p>
 
-<pre>     &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>str</i>: The parameter  <i>str</i>
@@ -1612,14 +1573,14 @@ is less than  <i>length</i>
 <ul>
 <li><p>An optional plus sign (&quot;+&quot; , U+002B) or minus sign (&quot;-&quot;, U+002D) (if &#39;-&#39; , the value is negative.)</p></li>
 <li><p>One or more digits, with a single optional decimal point after the first digit and before the last digit.</p></li>
-<li><p>Optionally, &quot;E+&quot;/&quot;e+&quot; (positive exponent) or &quot;E-&quot;/&quot;e-&quot; (negative exponent) plus one or more digits specifying the exponent.</p>
+<li><p>Optionally, &quot;E+&quot;/&quot;e+&quot; (positive exponent) or &quot;E-&quot;/&quot;e-&quot; (negative exponent) plus one or more digits specifying the exponent.</p></li>
+</ul>
 
 <p>The string can also be &quot;-INF&quot;, &quot;-Infinity&quot;, &quot;Infinity&quot;, &quot;INF&quot;, quiet NaN (&quot;NaN&quot;) followed by any number of digits, or signaling NaN (&quot;sNaN&quot;) followed by any number of digits, all in any combination of upper and lower case.</p>
 
 <p>All characters mentioned above are the corresponding characters in the Basic Latin range. In particular, the digits must be the basic digits 0 to 9 (U + 0030 to U + 0039). The string is not allowed to contain white space characters, including spaces.</p>
 
-<pre>   &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>str</i>: The parameter  <i>str</i>
@@ -1631,7 +1592,6 @@ begins.</p></li>
 &#39;s length).</p></li>
 <li><p><i>ctx</i>: The parameter  <i>ctx</i>
 is an EContext object.</p></li>
-</ul></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -1666,8 +1626,7 @@ is less than  <i>length</i>
 <p>Creates a binary float from a text string that represents a number. For more information, see the  <code>FromString(String, int,
             int, EContext)</code>  method.</p>
 
-<pre>  &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>str</i>: A text string to convert to a binary float.</p></li>
@@ -1696,8 +1655,7 @@ is null.</li>
 
 <p>Converts a 16-bit unsigned integer to an arbitrary-precision binary floating-point number.</p>
 
-<pre>&lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>inputUInt16</i>: The number to convert as a 16-bit unsigned integer.</li>
@@ -1717,8 +1675,7 @@ is null.</li>
 
 <p>Converts a 32-bit signed integer to an arbitrary-precision binary floating-point number.</p>
 
-<pre>&lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>inputUInt32</i>: The number to convert as a 32-bit signed integer.</li>
@@ -1738,8 +1695,7 @@ is null.</li>
 
 <p>Converts a 64-bit unsigned integer to an arbitrary-precision binary floating-point number.</p>
 
-<pre>&lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>inputUInt64</i>: The number to convert as a 64-bit unsigned integer.</li>
@@ -1863,8 +1819,7 @@ is null.</li>
 
 <p>Finds the natural logarithm of this object, that is, the power (exponent) that e (the base of natural logarithms) must be raised to in order to equal this object&#39;s value.</p>
 
-<pre>&lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>ctx</i>: An arithmetic context to control the precision, rounding, and exponent range of the result. If  <code>HasFlags</code>  of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). <i>This parameter can&#39;t be null, as the ln function&#39;s results are generally not exact.</i> (Unlike in the General Binary Arithmetic Specification, any rounding mode is allowed.).</li>
@@ -1885,8 +1840,7 @@ is null.</li>
 
 <p>Finds the base-10 logarithm of this object, that is, the power (exponent) that the number 10 must be raised to in order to equal this object&#39;s value.</p>
 
-<pre>&lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>ctx</i>: An arithmetic context to control the precision, rounding, and exponent range of the result. If  <code>HasFlags</code>  of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). <i>This parameter can&#39;t be null, as the ln function&#39;s results are generally not exact.</i> (Unlike in the General Binary Arithmetic Specification, any rounding mode is allowed.).</li>
@@ -1908,8 +1862,7 @@ is null.</li>
 
 <p>Gets the greater value between two binary floating-point numbers.</p>
 
-<pre> &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>first</i>: An arbitrary-precision binary floating-point number.</p></li>
@@ -1932,8 +1885,7 @@ is null.</li>
 
 <p>Gets the greater value between two binary floating-point numbers.</p>
 
-<pre>  &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>first</i>: The first value to compare.</p></li>
@@ -1956,8 +1908,7 @@ is null.</li>
 
 <p>Gets the greater value between two values, ignoring their signs. If the absolute values are equal, has the same effect as Max.</p>
 
-<pre> &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>first</i>: The first value to compare.</p></li>
@@ -1980,8 +1931,7 @@ is null.</li>
 
 <p>Gets the greater value between two values, ignoring their signs. If the absolute values are equal, has the same effect as Max.</p>
 
-<pre>  &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>first</i>: The first value to compare.</p></li>
@@ -2004,8 +1954,7 @@ is null.</li>
 
 <p>Gets the lesser value between two binary floating-point numbers.</p>
 
-<pre> &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>first</i>: The first value to compare.</p></li>
@@ -2028,8 +1977,7 @@ is null.</li>
 
 <p>Gets the lesser value between two binary floating-point numbers.</p>
 
-<pre>  &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>first</i>: The first value to compare.</p></li>
@@ -2052,8 +2000,7 @@ is null.</li>
 
 <p>Gets the lesser value between two values, ignoring their signs. If the absolute values are equal, has the same effect as Min.</p>
 
-<pre> &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>first</i>: The first value to compare.</p></li>
@@ -2076,8 +2023,7 @@ is null.</li>
 
 <p>Gets the lesser value between two values, ignoring their signs. If the absolute values are equal, has the same effect as Min.</p>
 
-<pre>  &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>first</i>: The first value to compare.</p></li>
@@ -2099,8 +2045,7 @@ is null.</li>
 
 <p>Returns a number similar to this number but with the radix point moved to the left.</p>
 
-<pre>&lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>places</i>: The number of binary digit places to move the radix point to the left. If this number is negative, instead moves the radix point to the right by this number&#39;s absolute value.</li>
@@ -2122,8 +2067,7 @@ is null.</li>
 
 <p>Returns a number similar to this number but with the radix point moved to the left.</p>
 
-<pre> &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>places</i>: The number of binary digit places to move the radix point to the left. If this number is negative, instead moves the radix point to the right by this number&#39;s absolute value.</p></li>
@@ -2145,8 +2089,7 @@ is null.</li>
 
 <p>Returns a number similar to this number but with the radix point moved to the left.</p>
 
-<pre>&lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>bigPlaces</i>: The number of binary digit places to move the radix point to the left. If this number is negative, instead moves the radix point to the right by this number&#39;s absolute value.</li>
@@ -2168,8 +2111,7 @@ is null.</li>
 
 <p>Returns a number similar to this number but with the radix point moved to the left.</p>
 
-<pre> &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>bigPlaces</i>: The number of binary digit places to move the radix point to the left. If this number is negative, instead moves the radix point to the right by this number&#39;s absolute value.</p></li>
@@ -2191,8 +2133,7 @@ is null.</li>
 
 <p>Returns a number similar to this number but with the radix point moved to the right.</p>
 
-<pre>&lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>places</i>: The number of binary digit places to move the radix point to the right. If this number is negative, instead moves the radix point to the left by this number&#39;s absolute value.</li>
@@ -2214,8 +2155,7 @@ is null.</li>
 
 <p>Returns a number similar to this number but with the radix point moved to the right.</p>
 
-<pre> &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>places</i>: The number of binary digit places to move the radix point to the right. If this number is negative, instead moves the radix point to the left by this number&#39;s absolute value.</p></li>
@@ -2237,8 +2177,7 @@ is null.</li>
 
 <p>Returns a number similar to this number but with the radix point moved to the right.</p>
 
-<pre>&lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>bigPlaces</i>: The number of binary digit places to move the radix point to the right. If this number is negative, instead moves the radix point to the left by this number&#39;s absolute value.</li>
@@ -2260,8 +2199,7 @@ is null.</li>
 
 <p>Returns a number similar to this number but with the radix point moved to the right.</p>
 
-<pre> &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>bigPlaces</i>: The number of binary digit places to move the radix point to the right. If this number is negative, instead moves the radix point to the left by this number&#39;s absolute value.</p></li>
@@ -2310,8 +2248,7 @@ is a 32-bit signed integer.</li>
 
 <p>Multiplies two binary floating-point numbers. The resulting scale will be the sum of the scales of the two binary floating-point numbers. The result&#39;s sign is positive if both operands have the same sign, and negative if they have different signs.</p>
 
-<pre> &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>op</i>: Another binary float.</p></li>
@@ -2332,8 +2269,7 @@ is a 32-bit signed integer.</li>
 
 <p>Multiplies two binary floating-point numbers. The resulting exponent will be the sum of the exponents of the two binary floating-point numbers.</p>
 
-<pre> &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>otherValue</i>: Another binary float.</li>
@@ -2362,8 +2298,7 @@ is null.</li>
 
 <p>Multiplies by one binary float, and then adds another binary float.</p>
 
-<pre> &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>multiplicand</i>: The value to multiply.</p></li>
@@ -2386,8 +2321,7 @@ is null.</li>
 
 <p>Multiplies by one value, and then adds another value.</p>
 
-<pre>  &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>op</i>: The value to multiply.</p></li>
@@ -2411,8 +2345,7 @@ is null.</li>
 
 <p>Multiplies by one value, and then subtracts another value.</p>
 
-<pre>   &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>op</i>: The value to multiply.</p></li>
@@ -2443,8 +2376,7 @@ is null.</li>
 
 <p>Returns a binary float with the same value as this object but with the sign reversed.</p>
 
-<pre>&lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>context</i>: An arithmetic context to control the precision, rounding, and exponent range of the result. If  <code>HasFlags</code>  of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null, in which case the precision is unlimited and rounding isn&#39;t needed.</li>
@@ -2477,8 +2409,7 @@ is null.</li>
 
 <p>Finds the largest value that&#39;s smaller than the given value.</p>
 
-<pre>&lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>ctx</i>: An arithmetic context object to control the precision and exponent range of the result. The rounding mode from this context is ignored. If  <code>HasFlags</code>  of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags).</li>
@@ -2500,8 +2431,7 @@ is null.</li>
 
 <p>Finds the smallest value that&#39;s greater than the given value.</p>
 
-<pre>&lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>ctx</i>: An arithmetic context object to control the precision and exponent range of the result. The rounding mode from this context is ignored. If  <code>HasFlags</code>  of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags).</li>
@@ -2524,8 +2454,7 @@ is null.</li>
 
 <p>Finds the next value that is closer to the other object&#39;s value than this object&#39;s value. Returns a copy of this value with the same sign as the other value if both values are equal.</p>
 
-<pre> &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>otherValue</i>: An arbitrary-precision binary float that the return value will approach.</p></li>
@@ -2549,8 +2478,7 @@ is null.</li>
 
 <p>Adds two arbitrary-precision binary floating-point numbers and returns the result.</p>
 
-<pre>  &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>bthis</i>: The first arbitrary-precision binary floating-point number.</p></li>
@@ -2580,8 +2508,7 @@ is null.</li>
 
 <p>Subtracts one from an arbitrary-precision binary floating-point number.</p>
 
-<pre> &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>bthis</i>: An arbitrary-precision binary floating-point number.</li>
@@ -2610,8 +2537,7 @@ is null.</li>
 
 <p>Divides one binary float by another and returns the result. When possible, the result will be exact.</p>
 
-<pre>  &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>dividend</i>: The number that will be divided by the divisor.</p></li>
@@ -2640,8 +2566,7 @@ is null.</li>
 
 <p>Converts an arbitrary-precision binary float to a byte (from 0 to 255) if it can fit in a byte (from 0 to 255) after truncating to an integer.</p>
 
-<pre>  &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>input</i>: The number to convert as an arbitrary-precision binary floating-point number.</li>
@@ -2673,8 +2598,7 @@ is null.</p></li>
 
 <p>Converts this value to its closest equivalent as a 64-bit floating-point number. The half-even rounding mode is used. If this value is a NaN, sets the high bit of the 64-bit floating point number&#39;s significand area for a quiet NaN, and clears it for a signaling NaN. Then the other bits of the significand area are set to the lowest bits of this object&#39;s unsigned mantissa (significand), and the next-highest bit of the significand area is set if those bits are all zeros and this is a signaling NaN. Unfortunately, in the.NET implementation, the return value of this method may be a quiet NaN even if a signaling NaN would otherwise be generated.</p>
 
-<pre> &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>bigValue</i>: The value to convert to a 64-bit floating-point number.</li>
@@ -2702,8 +2626,7 @@ is null.</li>
 
 <p>Converts an arbitrary-precision binary float to its closest equivalent as a 32-bit floating-point number. The half-even rounding mode is used. If this value is a NaN, sets the high bit of the 32-bit floating point number&#39;s significand area for a quiet NaN, and clears it for a signaling NaN. Then the other bits of the significand area are set to the lowest bits of this object&#39;s unsigned mantissa (significand), and the next-highest bit of the significand area is set if those bits are all zeros and this is a signaling NaN. Unfortunately, in the.NET implementation, the return value of this method may be a quiet NaN even if a signaling NaN would otherwise be generated.</p>
 
-<pre> &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>bigValue</i>: The number to convert as an arbitrary-precision binary floating-point number.</li>
@@ -2731,8 +2654,7 @@ is null.</li>
 
 <p>Converts an arbitrary-precision binary float to a 32-bit signed integer if it can fit in a 32-bit signed integer after truncating to an integer.</p>
 
-<pre>  &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>input</i>: The number to convert as an arbitrary-precision binary floating-point number.</li>
@@ -2764,8 +2686,7 @@ is null.</p></li>
 
 <p>Converts an arbitrary-precision binary float to a 64-bit signed integer if it can fit in a 64-bit signed integer after truncating to an integer.</p>
 
-<pre>  &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>input</i>: The number to convert as an arbitrary-precision binary floating-point number.</li>
@@ -2797,8 +2718,7 @@ is null.</p></li>
 
 <p>Converts a boolean value (true or false) to an arbitrary-precision binary floating-point number.</p>
 
-<pre>&lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>boolValue</i>: Either true or false.</li>
@@ -2819,8 +2739,7 @@ is null.</p></li>
 
 <p>Converts an arbitrary-precision binary float to a value to an arbitrary-precision integer. Any fractional part in this value will be discarded when converting to an arbitrary-precision integer.</p>
 
-<pre>  &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>bigValue</i>: The number to convert as an arbitrary-precision binary floating-point number.</li>
@@ -2850,8 +2769,7 @@ is null.</p></li>
 
 <p>Converts an arbitrary-precision binary float to an 8-bit signed integer if it can fit in an 8-bit signed integer after truncating to an integer.</p>
 
-<pre>  &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>input</i>: The number to convert as an arbitrary-precision binary floating-point number.</li>
@@ -2883,8 +2801,7 @@ is null.</p></li>
 
 <p>Converts an arbitrary-precision binary float to a 16-bit signed integer if it can fit in a 16-bit signed integer after truncating to an integer.</p>
 
-<pre>  &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>input</i>: The number to convert as an arbitrary-precision binary floating-point number.</li>
@@ -2916,8 +2833,7 @@ is null.</p></li>
 
 <p>Converts an arbitrary-precision binary float to a 32-bit signed integer if it can fit in a 32-bit signed integer after truncating to an integer.</p>
 
-<pre>  &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>input</i>: The number to convert as an arbitrary-precision binary floating-point number.</li>
@@ -2949,8 +2865,7 @@ is null.</p></li>
 
 <p>Converts an arbitrary-precision binary float to a 64-bit unsigned integer if it can fit in a 64-bit unsigned integer after truncating to an integer.</p>
 
-<pre>  &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>input</i>: The number to convert as an arbitrary-precision binary floating-point number.</li>
@@ -2982,8 +2897,7 @@ is null.</p></li>
 
 <p>Converts an arbitrary-precision binary float to a 16-bit unsigned integer if it can fit in a 16-bit unsigned integer after truncating to an integer.</p>
 
-<pre>  &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>input</i>: The number to convert as an arbitrary-precision binary floating-point number.</li>
@@ -3015,8 +2929,7 @@ is null.</p></li>
 
 <p>Converts a byte (from 0 to 255) to an arbitrary-precision binary floating-point number.</p>
 
-<pre>&lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>inputByte</i>: The number to convert as a byte (from 0 to 255).</li>
@@ -3037,8 +2950,7 @@ is null.</p></li>
 
 <p>Creates a binary float from a 64-bit floating-point number. This method computes the exact value of the floating point number, not an approximation, as is often the case by converting the floating point number to a string first.</p>
 
-<pre>&lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>dbl</i>: The parameter  <i>dbl</i>
@@ -3060,8 +2972,7 @@ is a 64-bit floating-point number.</li>
 
 <p>Creates a binary float from a 32-bit floating-point number. This method computes the exact value of the floating point number, not an approximation, as is often the case by converting the floating point number to a string first.</p>
 
-<pre>&lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>flt</i>: The parameter  <i>flt</i>
@@ -3083,8 +2994,7 @@ is a 32-bit binary floating-point number.</li>
 
 <p>Converts a 32-bit signed integer to an arbitrary-precision binary floating-point number.</p>
 
-<pre>&lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>inputInt32</i>: The number to convert as a 32-bit signed integer.</li>
@@ -3105,8 +3015,7 @@ is a 32-bit binary floating-point number.</li>
 
 <p>Converts a 64-bit signed integer to an arbitrary-precision binary floating-point number.</p>
 
-<pre>&lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>inputInt64</i>: The number to convert as a 64-bit signed integer.</li>
@@ -3127,8 +3036,7 @@ is a 32-bit binary floating-point number.</li>
 
 <p>Converts an arbitrary-precision integer to an arbitrary precision binary.</p>
 
-<pre>&lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>eint</i>: An arbitrary-precision integer.</li>
@@ -3148,8 +3056,7 @@ is a 32-bit binary floating-point number.</li>
 
 <p>Converts an 8-bit signed integer to an arbitrary-precision binary floating-point number.</p>
 
-<pre>&lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>inputSByte</i>: The number to convert as an 8-bit signed integer.</li>
@@ -3170,8 +3077,7 @@ is a 32-bit binary floating-point number.</li>
 
 <p>Converts a 16-bit signed integer to an arbitrary-precision binary floating-point number.</p>
 
-<pre>&lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>inputInt16</i>: The number to convert as a 16-bit signed integer.</li>
@@ -3192,8 +3098,7 @@ is a 32-bit binary floating-point number.</li>
 
 <p>Converts a 32-bit signed integer to an arbitrary-precision binary floating-point number.</p>
 
-<pre>&lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>inputUInt32</i>: The number to convert as a 32-bit signed integer.</li>
@@ -3214,8 +3119,7 @@ is a 32-bit binary floating-point number.</li>
 
 <p>Converts a 64-bit unsigned integer to an arbitrary-precision binary floating-point number.</p>
 
-<pre>&lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>inputUInt64</i>: The number to convert as a 64-bit unsigned integer.</li>
@@ -3236,8 +3140,7 @@ is a 32-bit binary floating-point number.</li>
 
 <p>Converts a 16-bit unsigned integer to an arbitrary-precision binary floating-point number.</p>
 
-<pre>&lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>inputUInt16</i>: The number to convert as a 16-bit unsigned integer.</li>
@@ -3258,8 +3161,7 @@ is a 32-bit binary floating-point number.</li>
 
 <p>Adds one to an arbitrary-precision binary floating-point number.</p>
 
-<pre> &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>bthis</i>: An arbitrary-precision binary floating-point number.</li>
@@ -3288,8 +3190,7 @@ is null.</li>
 
 <p>Finds the remainder when dividing one arbitrary-precision binary float by another.</p>
 
-<pre>  &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>dividend</i>: The number that will be divided by the divisor.</p></li>
@@ -3319,8 +3220,7 @@ is null.</li>
 
 <p>Multiplies two binary floating-point numbers. The resulting exponent will be the sum of the exponents of the two binary floating-point numbers.</p>
 
-<pre>  &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>operand1</i>: The first operand.</p></li>
@@ -3350,8 +3250,7 @@ is null.</li>
 
 <p>Subtracts one arbitrary-precision binary float from another.</p>
 
-<pre>  &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>bthis</i>: The first operand.</p></li>
@@ -3380,8 +3279,7 @@ is null.</li>
 
 <p>Gets an object with the same value as this one, but with the sign reversed.</p>
 
-<pre> &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>bigValue</i>: An arbitrary-precision binary floating-point number.</li>
@@ -3409,8 +3307,7 @@ is null.</li>
 
 <p>Finds the constant π, the circumference of a circle divided by its diameter.</p>
 
-<pre>&lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>ctx</i>: An arithmetic context to control the precision, rounding, and exponent range of the result. If  <code>HasFlags</code>  of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). <i>This parameter can&#39;t be null, as π can never be represented exactly.</i>.</li>
@@ -3431,8 +3328,7 @@ is null.</li>
 
 <p>Rounds this object&#39;s value to a given precision, using the given rounding mode and range of exponent, and also converts negative zero to positive zero.</p>
 
-<pre>&lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>ctx</i>: A context for controlling the precision, rounding mode, and exponent range. Can be null, in which case the precision is unlimited and rounding isn&#39;t needed.</li>
@@ -3453,8 +3349,7 @@ is null.</li>
 
 <p>Raises this object&#39;s value to the given exponent.</p>
 
-<pre>&lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>exponentSmall</i>: The exponent to raise this object&#39;s value to.</li>
@@ -3475,8 +3370,7 @@ is null.</li>
 
 <p>Raises this object&#39;s value to the given exponent.</p>
 
-<pre> &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>exponentSmall</i>: The exponent to raise this object&#39;s value to.</p></li>
@@ -3498,8 +3392,7 @@ is null.</li>
 
 <p>Raises this object&#39;s value to the given exponent.</p>
 
-<pre> &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>exponent</i>: An arbitrary-precision binary float expressing the exponent to raise this object&#39;s value to.</p></li>
@@ -3544,8 +3437,7 @@ is null.</li>
 
 <p>A fixed-point binary arithmetic in which no digits come after the radix point (a desired exponent of 0) is considered an &quot;integer arithmetic&quot;.</p>
 
-<pre> &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>desiredExponentInt</i>: The desired exponent for the result. The exponent is the number of fractional digits in the result, expressed as a negative number. Can also be positive, which eliminates lower-order places from the number. For example, -3 means round to the thousandth (10^-3, 0.0001), and 3 means round to the thousand (10^3, 1000). A value of 0 rounds the number to an integer.</p></li>
@@ -3569,8 +3461,7 @@ is null.</li>
 
 <p><b>Remark:</b> This method can be used to implement fixed-point binary arithmetic, in which a fixed number of digits come after the radix point. A fixed-point binary arithmetic in which no digits come after the radix point (a desired exponent of 0) is considered an &quot;integer arithmetic&quot; .</p>
 
-<pre> &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>otherValue</i>: A binary float containing the desired exponent of the result. The mantissa (significand) is ignored. The exponent is the number of fractional digits in the result, expressed as a negative number. Can also be positive, which eliminates lower-order places from the number. For example, -3 means round to the sixteenth (10b^-3, 0.0001b), and 3 means round to the sixteen-place (10b^3, 1000b). A value of 0 rounds the number to an integer.</p></li>
@@ -3602,8 +3493,7 @@ is null.</li>
 
 <p>A fixed-point binary arithmetic in which no digits come after the radix point (a desired exponent of 0) is considered an &quot;integer arithmetic&quot;.</p>
 
-<pre> &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>desiredExponent</i>: The desired exponent for the result. The exponent is the number of fractional digits in the result, expressed as a negative number. Can also be positive, which eliminates lower-order places from the number. For example, -3 means round to the thousandth (10^-3, 0.0001), and 3 means round to the thousand (10^3, 1000). A value of 0 rounds the number to an integer.</p></li>
@@ -3624,8 +3514,7 @@ is null.</li>
 
 <p>Returns an object with the same numerical value as this one but with trailing zeros removed from its mantissa (significand). For example, 1.00 becomes 1. If this object&#39;s value is 0, changes the exponent to 0.</p>
 
-<pre>&lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>ctx</i>: An arithmetic context to control the precision, rounding, and exponent range of the result. If  <code>HasFlags</code>  of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null, in which case the precision is unlimited and rounding isn&#39;t needed.</li>
@@ -3646,8 +3535,7 @@ is null.</li>
 
 <p>Finds the remainder that results when dividing two arbitrary-precision binary floating-point numbers. The remainder is the value that remains when the absolute value of this object is divided by the absolute value of the other object; the remainder has the same sign (positive or negative) as this object&#39;s value.</p>
 
-<pre> &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>divisor</i>: An arbitrary-precision binary floating-point number.</p></li>
@@ -3669,8 +3557,7 @@ is an EContext object.</p></li>
 
 <p>Calculates the remainder of a number by the formula  <code>&quot;this&quot; - ((&quot;this&quot; / &quot;divisor&quot;) * &quot;divisor&quot;)</code> .</p>
 
-<pre>&lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>divisor</i>: The number to divide by.</li>
@@ -3691,8 +3578,7 @@ is an EContext object.</p></li>
 
 <p>Calculates the remainder of a number by the formula &quot;this&quot; - ((&quot;this&quot; / &quot;divisor&quot;) * &quot;divisor&quot;).</p>
 
-<pre> &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>divisor</i>: The number to divide by.</p></li>
@@ -3720,14 +3606,14 @@ is an EContext object.</p></li>
 <li><p>If the remainder&#39;s absolute value is more than half of the divisor&#39; s absolute value, the result has the opposite sign of this object and will be the distance to the closest multiple.</p></li>
 <li><p>If the remainder&#39;s absolute value is exactly half of the divisor&#39;s absolute value, the result has the opposite sign of this object if the quotient, rounded down, is odd, and has the same sign as this object if the quotient, rounded down, is even, and the result&#39;s absolute value is half of the divisor&#39;s absolute value.</p>
 
-<p>This function is also known as the &quot;IEEE Remainder&quot; function.</p>
+<p>This function is also known as the &quot;IEEE Remainder&quot; function.</p></li>
+</ul>
 
 <p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>divisor</i>: The number to divide by.</p></li>
 <li><p><i>ctx</i>: An arithmetic context object to control the precision. The rounding and exponent range settings of this context are ignored (the rounding mode is always treated as HalfEven). If  <code>HasFlags</code>  of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null, in which the precision is unlimited.</p></li>
-</ul></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -3745,8 +3631,7 @@ is an EContext object.</p></li>
 
 <p>Finds the remainder that results when dividing two arbitrary-precision binary floating-point numbers. The remainder is the value that remains when the absolute value of this object is divided by the absolute value of the other object; the remainder has the same sign (positive or negative) as this object&#39;s value.</p>
 
-<pre> &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>divisor</i>: An arbitrary-precision binary floating-point number.</p></li>
@@ -3769,8 +3654,7 @@ is an EContext object.</p></li>
 
 <p>Returns a binary float with the same value as this object but rounded to a new exponent if necessary. The resulting number&#39;s Exponent property will not necessarily be the given exponent; use the Quantize method instead to give the result a particular exponent.</p>
 
-<pre> &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>exponentSmall</i>: The minimum exponent the result can have. This is the maximum number of fractional digits in the result, expressed as a negative number. Can also be positive, which eliminates lower-order places from the number. For example, -3 means round to the thousandth (10^-3, 0.0001), and 3 means round to the thousand (10^3, 1000). A value of 0 rounds the number to an integer.</p></li>
@@ -3792,8 +3676,7 @@ is an EContext object.</p></li>
 
 <p>Returns a binary float with the same value as this object but rounded to a new exponent if necessary. The resulting number&#39;s Exponent property will not necessarily be the given exponent; use the Quantize method instead to give the result a particular exponent.</p>
 
-<pre> &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>exponent</i>: The minimum exponent the result can have. This is the maximum number of fractional digits in the result, expressed as a negative number. Can also be positive, which eliminates lower-order places from the number. For example, -3 means round to the thousandth (10^-3, 0.0001), and 3 means round to the thousand (10^3, 1000). A value of 0 rounds the number to an integer.</p></li>
@@ -3815,8 +3698,7 @@ is an EContext object.</p></li>
 
 <p>Returns a binary float with the same value as this object but rounded to the given exponent represented as a 32-bit signed integer, and signals an inexact flag if the result would be inexact. The resulting number&#39;s Exponent property will not necessarily be the given exponent; use the Quantize method instead to give the result a particular exponent.</p>
 
-<pre> &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>exponentSmall</i>: The minimum exponent the result can have. This is the maximum number of fractional digits in the result, expressed as a negative number. Can also be positive, which eliminates lower-order places from the number. For example, -3 means round to the thousandth (10^-3, 0.0001), and 3 means round to the thousand (10^3, 1000). A value of 0 rounds the number to an integer.</p></li>
@@ -3838,8 +3720,7 @@ is an EContext object.</p></li>
 
 <p>Returns a binary float with the same value as this object but rounded to the given exponent, and signals an inexact flag if the result would be inexact. The resulting number&#39;s Exponent property will not necessarily be the given exponent; use the Quantize method instead to give the result a particular exponent.</p>
 
-<pre> &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>exponent</i>: The minimum exponent the result can have. This is the maximum number of fractional digits in the result, expressed as a negative number. Can also be positive, which eliminates lower-order places from the number. For example, -3 means round to the thousandth (10^-3, 0.0001), and 3 means round to the thousand (10^3, 1000). A value of 0 rounds the number to an integer.</p></li>
@@ -3861,8 +3742,7 @@ is an EContext object.</p></li>
 
 <p>Returns a binary number with the same value as this object but rounded to the given exponent. The resulting number&#39;s Exponent property will not necessarily be the given exponent; use the Quantize method instead to give the result a particular exponent.</p>
 
-<pre> &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>exponent</i>: The minimum exponent the result can have. This is the maximum number of fractional digits in the result, expressed as a negative number. Can also be positive, which eliminates lower-order places from the number. For example, -3 means round to the eighth (10^-1, 1/8), and 3 means round to the eight (2^3, 8). A value of 0 rounds the number to an integer.</p></li>
@@ -3883,8 +3763,7 @@ is an EContext object.</p></li>
 
 <p>Returns a binary float with the same value as this object but rounded to an integer, and signals an inexact flag if the result would be inexact. The resulting number&#39;s Exponent property will not necessarily be 0; use the Quantize method instead to give the result an exponent of 0.</p>
 
-<pre>&lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>ctx</i>: An arithmetic context to control the precision, rounding, and exponent range of the result. If  <code>HasFlags</code>  of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null, in which case the default rounding mode is HalfEven.</li>
@@ -3904,8 +3783,7 @@ is an EContext object.</p></li>
 
 <p>Returns a binary float with the same value as this object but rounded to an integer, without adding the  <code>FlagInexact</code>  or  <code>FlagRounded</code>  flags. The resulting number&#39;s Exponent property will not necessarily be 0; use the Quantize method instead to give the result an exponent of 0.</p>
 
-<pre>&lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>ctx</i>: An arithmetic context to control precision and rounding of the result. If  <code>HasFlags</code>  of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags), except that this function will never add the  <code>FlagRounded</code>  and  <code>FlagInexact</code>  flags (the only difference between this and RoundToExponentExact). Can be null, in which case the default rounding mode is HalfEven.</li>
@@ -3927,8 +3805,7 @@ is an EContext object.</p></li>
 
 <p>Returns a binary float with the same value as this object but rounded to an integer, and signals an inexact flag if the result would be inexact.</p>
 
-<pre>&lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>ctx</i>: An arithmetic context to control the precision, rounding, and exponent range of the result. If  <code>HasFlags</code>  of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null, in which case the default rounding mode is HalfEven.</li>
@@ -3950,8 +3827,7 @@ is an EContext object.</p></li>
 
 <p>Returns a binary float with the same value as this object but rounded to an integer, without adding the  <code>FlagInexact</code>  or  <code>FlagRounded</code>  flags.</p>
 
-<pre>&lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>ctx</i>: An arithmetic context to control precision and rounding of the result. If  <code>HasFlags</code>  of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags), except that this function will never add the  <code>FlagRounded</code>  and  <code>FlagInexact</code>  flags (the only difference between this and RoundToExponentExact). Can be null, in which case the default rounding mode is HalfEven.</li>
@@ -3971,8 +3847,7 @@ is an EContext object.</p></li>
 
 <p>Rounds this object&#39;s value to a given precision, using the given rounding mode and range of exponent.</p>
 
-<pre>&lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>ctx</i>: An arithmetic context to control the precision, rounding, and exponent range of the result. If  <code>HasFlags</code>  of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null, in which case the precision is unlimited and no rounding is needed.</li>
@@ -3993,8 +3868,7 @@ is an EContext object.</p></li>
 
 <p>Returns a number similar to this number but with the scale adjusted.</p>
 
-<pre>&lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>places</i>: The parameter  <i>places</i>
@@ -4016,8 +3890,7 @@ is a 32-bit signed integer.</li>
 
 <p>Returns a number similar to this number but with the scale adjusted.</p>
 
-<pre> &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>places</i>: The parameter  <i>places</i>
@@ -4039,8 +3912,7 @@ is a 32-bit signed integer.</p></li>
 
 <p>Returns a number similar to this number but with the scale adjusted.</p>
 
-<pre>&lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>bigPlaces</i>: An arbitrary-precision integer.</li>
@@ -4062,8 +3934,7 @@ is a 32-bit signed integer.</p></li>
 
 <p>Returns a number similar to this number but with its scale adjusted.</p>
 
-<pre>  &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>bigPlaces</i>: An arbitrary-precision integer.</p></li>
@@ -4092,8 +3963,7 @@ is null.</li>
 
 <p>Finds the square root of this object&#39;s value.</p>
 
-<pre>&lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>ctx</i>: An arithmetic context to control the precision, rounding, and exponent range of the result. If  <code>HasFlags</code>  of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). <i>This parameter can&#39;t be null, as the square root function&#39;s results are generally not exact for many inputs.</i> (Unlike in the General Binary Arithmetic Specification, any rounding mode is allowed.).</li>
@@ -4116,8 +3986,7 @@ is null.</li>
 
 <p>Finds the square root of this object&#39;s value.</p>
 
-<pre>&lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>ctx</i>: An arithmetic context to control the precision, rounding, and exponent range of the result. If  <code>HasFlags</code>  of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). <i>This parameter can&#39;t be null, as the square root function&#39;s results are generally not exact for many inputs.</i> (Unlike in the General Binary Arithmetic Specification, any rounding mode is allowed.).</li>
@@ -4138,8 +4007,7 @@ is null.</li>
 
 <p>Subtracts an arbitrary-precision integer from this arbitrary-precision integer.</p>
 
-<pre>&lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>intValue</i>: The parameter  <i>intValue</i>
@@ -4160,8 +4028,7 @@ is a 32-bit signed integer.</li>
 
 <p>Subtracts an arbitrary-precision binary float from this instance and returns the result.</p>
 
-<pre>&lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>otherValue</i>: The number to subtract from this instance&#39;s value.</li>
@@ -4182,8 +4049,7 @@ is a 32-bit signed integer.</li>
 
 <p>Subtracts an arbitrary-precision binary float from this instance.</p>
 
-<pre>  &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>otherValue</i>: The number to subtract from this instance&#39;s value.</p></li>
@@ -4211,8 +4077,7 @@ is null.</li>
 
 <p>Converts this number&#39;s value to a byte (from 0 to 255) if it can fit in a byte (from 0 to 255) after truncating to an integer.</p>
 
-<pre>&lt;b&gt;Return Value:&lt;/b&gt;
-</pre>
+<p><b>Return Value:</b></p>
 
 <p>This number&#39;s value, truncated to a byte (from 0 to 255).</p>
 
@@ -4232,8 +4097,7 @@ This value is infinity or not-a-number, or the truncated integer is less than 0 
 
 <p>Converts this number&#39;s value to a byte (from 0 to 255) if it can fit in a byte (from 0 to 255) without rounding to a different numerical value.</p>
 
-<pre>&lt;b&gt;Return Value:&lt;/b&gt;
-</pre>
+<p><b>Return Value:</b></p>
 
 <p>This number&#39;s value as a byte (from 0 to 255).</p>
 
@@ -4292,8 +4156,7 @@ This value is infinity or not-a-number, is not an exact integer, or is less than
 
 <p>Converts this value to an arbitrary-precision integer. Any fractional part of this value will be discarded when converting to an arbitrary-precision integer.</p>
 
-<pre>&lt;b&gt;Return Value:&lt;/b&gt;
-</pre>
+<p><b>Return Value:</b></p>
 
 <p>An arbitrary-precision integer.</p>
 
@@ -4315,8 +4178,7 @@ This object&#39;s value is infinity or not-a-number (NaN).</li>
 
 <p>Converts this value to an arbitrary-precision integer, checking whether the value contains a fractional part.</p>
 
-<pre>&lt;b&gt;Return Value:&lt;/b&gt;
-</pre>
+<p><b>Return Value:</b></p>
 
 <p>An arbitrary-precision integer.</p>
 
@@ -4336,8 +4198,7 @@ This object&#39;s value is infinity or not-a-number (NaN).</li>
 
 <p>Converts this value to an arbitrary-precision integer, checking whether the value contains a fractional part.</p>
 
-<pre>&lt;b&gt;Return Value:&lt;/b&gt;
-</pre>
+<p><b>Return Value:</b></p>
 
 <p>An arbitrary-precision integer.</p>
 
@@ -4385,8 +4246,7 @@ This object&#39;s value is infinity or not-a-number (NaN).</li>
 
 <p>Converts this number&#39;s value to a 16-bit signed integer if it can fit in a 16-bit signed integer after truncating to an integer.</p>
 
-<pre>&lt;b&gt;Return Value:&lt;/b&gt;
-</pre>
+<p><b>Return Value:</b></p>
 
 <p>This number&#39;s value, truncated to a 16-bit signed integer.</p>
 
@@ -4406,8 +4266,7 @@ This value is infinity or not-a-number, or the truncated integer is less than -3
 
 <p>Converts this number&#39;s value to a 16-bit signed integer if it can fit in a 16-bit signed integer without rounding to a different numerical value.</p>
 
-<pre>&lt;b&gt;Return Value:&lt;/b&gt;
-</pre>
+<p><b>Return Value:</b></p>
 
 <p>This number&#39;s value as a 16-bit signed integer.</p>
 
@@ -4440,8 +4299,7 @@ This value is infinity or not-a-number, is not an exact integer, or is less than
 
 <p>Converts this number&#39;s value to a 32-bit signed integer if it can fit in a 32-bit signed integer after truncating to an integer.</p>
 
-<pre>&lt;b&gt;Return Value:&lt;/b&gt;
-</pre>
+<p><b>Return Value:</b></p>
 
 <p>This number&#39;s value, truncated to a 32-bit signed integer.</p>
 
@@ -4461,8 +4319,7 @@ This value is infinity or not-a-number, or the truncated integer is less than -2
 
 <p>Converts this number&#39;s value to a 32-bit signed integer if it can fit in a 32-bit signed integer without rounding to a different numerical value.</p>
 
-<pre>&lt;b&gt;Return Value:&lt;/b&gt;
-</pre>
+<p><b>Return Value:</b></p>
 
 <p>This number&#39;s value as a 32-bit signed integer.</p>
 
@@ -4495,8 +4352,7 @@ This value is infinity or not-a-number, is not an exact integer, or is less than
 
 <p>Converts this number&#39;s value to a 64-bit signed integer if it can fit in a 64-bit signed integer after truncating to an integer.</p>
 
-<pre>&lt;b&gt;Return Value:&lt;/b&gt;
-</pre>
+<p><b>Return Value:</b></p>
 
 <p>This number&#39;s value, truncated to a 64-bit signed integer.</p>
 
@@ -4516,8 +4372,7 @@ This value is infinity or not-a-number, or the truncated integer is less than -9
 
 <p>Converts this number&#39;s value to a 64-bit signed integer if it can fit in a 64-bit signed integer without rounding to a different numerical value.</p>
 
-<pre>&lt;b&gt;Return Value:&lt;/b&gt;
-</pre>
+<p><b>Return Value:</b></p>
 
 <p>This number&#39;s value as a 64-bit signed integer.</p>
 
@@ -4563,8 +4418,7 @@ This value is infinity or not-a-number, is not an exact integer, or is less than
 
 <p>Converts this number&#39;s value to an 8-bit signed integer if it can fit in an 8-bit signed integer after truncating to an integer.</p>
 
-<pre>&lt;b&gt;Return Value:&lt;/b&gt;
-</pre>
+<p><b>Return Value:</b></p>
 
 <p>This number&#39;s value, truncated to an 8-bit signed integer.</p>
 
@@ -4584,8 +4438,7 @@ This value is infinity or not-a-number, or the truncated integer is less than -1
 
 <p>Converts this number&#39;s value to an 8-bit signed integer if it can fit in an 8-bit signed integer without rounding to a different numerical value.</p>
 
-<pre>&lt;b&gt;Return Value:&lt;/b&gt;
-</pre>
+<p><b>Return Value:</b></p>
 
 <p>This number&#39;s value as an 8-bit signed integer.</p>
 
@@ -4619,8 +4472,7 @@ This value is infinity or not-a-number, is not an exact integer, or is less than
 
 <p>Returns a string representation of this number&#39;s value after rounding to the given precision (using the given arithmetic context). If the number after rounding is neither infinity nor not-a-number (NaN), returns the shortest decimal form (in terms of nonzero decimal digits) of this number&#39;s value that results in the rounded number after the decimal form is converted to binary floating-point format (using the given arithmetic context).</p>
 
-<pre>&lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>ctx</i>: An arithmetic context to control precision (in bits), rounding, and exponent range of the rounded number. If  <code>HasFlags</code>  of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null. If this parameter is null or defines no maximum precision, returns the same value as the ToString() method.</li>
@@ -4665,8 +4517,7 @@ This value is infinity or not-a-number, is not an exact integer, or is less than
 
 <p>Converts this number&#39;s value to a 16-bit unsigned integer if it can fit in a 16-bit unsigned integer after truncating to an integer.</p>
 
-<pre>&lt;b&gt;Return Value:&lt;/b&gt;
-</pre>
+<p><b>Return Value:</b></p>
 
 <p>This number&#39;s value, truncated to a 16-bit unsigned integer.</p>
 
@@ -4686,8 +4537,7 @@ This value is infinity or not-a-number, or the truncated integer is less than 0 
 
 <p>Converts this number&#39;s value to a 16-bit unsigned integer if it can fit in a 16-bit unsigned integer without rounding to a different numerical value.</p>
 
-<pre>&lt;b&gt;Return Value:&lt;/b&gt;
-</pre>
+<p><b>Return Value:</b></p>
 
 <p>This number&#39;s value as a 16-bit unsigned integer.</p>
 
@@ -4720,8 +4570,7 @@ This value is infinity or not-a-number, is not an exact integer, or is less than
 
 <p>Converts this number&#39;s value to a 32-bit signed integer if it can fit in a 32-bit signed integer after truncating to an integer.</p>
 
-<pre>&lt;b&gt;Return Value:&lt;/b&gt;
-</pre>
+<p><b>Return Value:</b></p>
 
 <p>This number&#39;s value, truncated to a 32-bit signed integer.</p>
 
@@ -4741,8 +4590,7 @@ This value is infinity or not-a-number, or the truncated integer is less than 0 
 
 <p>Converts this number&#39;s value to a 32-bit signed integer if it can fit in a 32-bit signed integer without rounding to a different numerical value.</p>
 
-<pre>&lt;b&gt;Return Value:&lt;/b&gt;
-</pre>
+<p><b>Return Value:</b></p>
 
 <p>This number&#39;s value as a 32-bit signed integer.</p>
 
@@ -4775,8 +4623,7 @@ This value is infinity or not-a-number, is not an exact integer, or is less than
 
 <p>Converts this number&#39;s value to a 64-bit unsigned integer if it can fit in a 64-bit unsigned integer after truncating to an integer.</p>
 
-<pre>&lt;b&gt;Return Value:&lt;/b&gt;
-</pre>
+<p><b>Return Value:</b></p>
 
 <p>This number&#39;s value, truncated to a 64-bit unsigned integer.</p>
 
@@ -4796,8 +4643,7 @@ This value is infinity or not-a-number, or the truncated integer is less than 0 
 
 <p>Converts this number&#39;s value to a 64-bit unsigned integer if it can fit in a 64-bit unsigned integer without rounding to a different numerical value.</p>
 
-<pre>&lt;b&gt;Return Value:&lt;/b&gt;
-</pre>
+<p><b>Return Value:</b></p>
 
 <p>This number&#39;s value as a 64-bit unsigned integer.</p>
 

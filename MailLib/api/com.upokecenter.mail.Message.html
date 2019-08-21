@@ -71,26 +71,26 @@
  generate a header field line with one or more encoded words even if
  that line is more than 76 characters long. (This implementation
  follows the recommendation in RFC 5322 to limit header field lines to
- no more than 78 characters, where possible.)</li></ul> <p>It would be
- appreciated if users of this library contact the author if they find
- other ways in which this implementation deviates from the mail
- specifications or other applicable specifications.</p> <p>Note that
-  this class currently doesn&#39;t support the &quot;padding&quot; parameter for
-  message bodies with the media type &quot;application/octet-stream&quot; or
- treated as that media type (see RFC 2046 sec. 4.5.1).</p> <p>Note that
- this implementation can decode an RFC 2047 encoded word that uses
- ISO-2022-JP or ISO-2022-JP-2 (encodings that use code switching) even
-  if the encoded word&#39;s payload ends in a different mode from &quot;ASCII
-  mode&quot;. (Each encoded word still starts in &quot;ASCII mode&quot;, though.) This,
- however, is not a deviation to RFC 2047 because the relevant rule only
-  concerns bringing the output device back to &quot;ASCII mode&quot; after the
- decoded text is displayed (see last paragraph of sec. 6.2) -- since
- the decoded text is converted to Unicode rather than kept as
- ISO-2022-JP or ISO-2022-JP-2, this is not applicable since there is no
-  such thing as &quot;ASCII mode&quot; in the Unicode Standard.</p> <p>Note that
- this library (the MailLib library) has no facilities for sending and
- receiving email messages, since that&#39;s outside this library&#39;s
- scope.</p></p>
+ no more than 78 characters, where possible; see also RFC
+ 6532.)</li></ul> <p>It would be appreciated if users of this library
+ contact the author if they find other ways in which this
+ implementation deviates from the mail specifications or other
+ applicable specifications.</p> <p>Note that this class currently
+  doesn&#39;t support the &quot;padding&quot; parameter for message bodies with the
+  media type &quot;application/octet-stream&quot; or treated as that media type
+ (see RFC 2046 sec. 4.5.1).</p> <p>Note that this implementation can
+ decode an RFC 2047 encoded word that uses ISO-2022-JP or ISO-2022-JP-2
+ (encodings that use code switching) even if the encoded word&#39;s payload
+  ends in a different mode from &quot;ASCII mode&quot;. (Each encoded word still
+  starts in &quot;ASCII mode&quot;, though.) This, however, is not a deviation to
+ RFC 2047 because the relevant rule only concerns bringing the output
+  device back to &quot;ASCII mode&quot; after the decoded text is displayed (see
+ last paragraph of sec. 6.2) -- since the decoded text is converted to
+ Unicode rather than kept as ISO-2022-JP or ISO-2022-JP-2, this is not
+  applicable since there is no such thing as &quot;ASCII mode&quot; in the Unicode
+ Standard.</p> <p>Note that this library (the MailLib library) has no
+ facilities for sending and receiving email messages, since that&#39;s
+ outside this library&#39;s scope.</p></p>
 
 <h2>Methods</h2>
 

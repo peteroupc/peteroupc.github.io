@@ -9,7 +9,7 @@
 <pre>public static class ProtocolStrings
 </pre>
 
-<p>Contains methods for preparing user-facing protocol strings (such as user identifiers) for equality comparison and validity checking. Such strings can be <em>internationalized</em>, that is, contain characters beyond the Basic Latin block (U+0000 to U+007F) of the Unicode Standard. See RFC 8264. Currently there are four profiles for internationalized strings: two for strings serving as user identifiers, one for arbitrary single-line strings (such as passwords), and one for display names.</p>
+<p>Contains methods for preparing user-facing protocol strings (such as user identifiers) for equality comparison and validity checking. Such strings can be <em>internationalized</em>, that is, contain characters beyond the Basic Latin block (U + 0000 to U + 007F) of the Unicode Standard. See RFC 8264. Currently there are four profiles for internationalized strings: two for strings serving as user identifiers, one for arbitrary single-line strings (such as passwords), and one for display names.</p>
 
 <ul>
 <li><p>Other user-facing internationalized strings not expressly handled by this class include the following. Their preparation and comparison are outside the scope of this class.  -- File and directory names.  -- Domain names.  -- Text strings with multiple language versions (such as a checkbox&#39;s label or a dialog box&#39;s title).  -- Profile data voluntarily entered by users.  -- The text of article, post, and message bodies.</p></li>
@@ -39,7 +39,7 @@
     string str);
 </pre>
 
-<p>Determines whether the given string belongs in RFC 8264&#39;s FreeformClass. In general, the FreeformClass contains most letters, digits, spaces, punctuation, and symbols in the Unicode standard, as well as all basic printable characters (U+0021 to U+007E), but excludes control characters and separators. Horizontal tab, U+0009, and other code points in the range U+0000 to U+001F, are among the excluded characters.</p>
+<p>Determines whether the given string belongs in RFC 8264&#39;s FreeformClass. In general, the FreeformClass contains most letters, digits, spaces, punctuation, and symbols in the Unicode standard, as well as all basic printable characters (U + 0021 to U + 007E), but excludes control characters and separators. Horizontal tab, U + 0009, and other code points in the range U + 0000 to U + 001F, are among the excluded characters.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -60,7 +60,7 @@
     string str);
 </pre>
 
-<p>Determines whether the given string belongs in RFC 8264&#39;s IdentifierClass. In general, the IdentifierClass contains all code points in the FreeformClass, except certain uncommon letters and digits, spaces, as well as punctuation and symbols outside the Basic Latin range (U+0000 to U+007F).</p>
+<p>Determines whether the given string belongs in RFC 8264&#39;s IdentifierClass. In general, the IdentifierClass contains all code points in the FreeformClass, except certain uncommon letters and digits, spaces, as well as punctuation and symbols outside the Basic Latin range (U + 0000 to U + 007F).</p>
 
 <p><b>Parameters:</b></p>
 
@@ -168,8 +168,7 @@
 
 <p>Checks the validity of a string that can serve to identify a user or account (a &quot;username&quot;), where the string is made of one or more parts called &quot;userparts&quot; separated by spaces (U+0020) and where the case of letters in the string is either mapped to lowercase or preserved. This checking is done using the UsernameCaseMapped or UsernameCasePreserved profile in RFC 8265.</p>
 
-<pre>&lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>str</i>: A string to prepare that represents a user or account identifier.</p></li>
@@ -215,8 +214,7 @@
 
 <p>Checks the validity of a string without spaces that can serve to identify a user or account (a &quot;userpart&quot;), where the case of letters in the string is either mapped to lowercase or preserved. This checking is done using the UsernameCaseMapped or UsernameCasePreserved profile in RFC 8265.</p>
 
-<pre>&lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>str</i>: A string to prepare that represents a user or account identifier.</p></li>

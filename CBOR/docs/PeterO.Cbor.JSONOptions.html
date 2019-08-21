@@ -16,7 +16,7 @@
 <ul>
 <li><code><a href="#Base64Padding">Base64Padding</a></code> - Gets a value indicating whether the Base64Padding property is true.</li>
 <li><code><a href="#Default">public static readonly PeterO.Cbor.JSONOptions Default;</a></code> - The default options for converting CBOR objects to JSON.</li>
-<li><code><a href="#ReplaceSurrogates">ReplaceSurrogates</a></code> - Gets a value indicating whether surrogate code points not part of a surrogate pair (which consists of two consecutive char s forming one Unicode code point) are each replaced with a replacement character (U+FFFD).</li>
+<li><code><a href="#ReplaceSurrogates">ReplaceSurrogates</a></code> - Gets a value indicating whether surrogate code points not part of a surrogate pair (which consists of two consecutive char s forming one Unicode code point) are each replaced with a replacement character (U + FFFD).</li>
 <li><code><a href="#ToString">ToString()</a></code> - Gets the values of this options object&#39;s properties in text form.</li>
 </ul>
 
@@ -47,8 +47,7 @@
 
 <p>Initializes a new instance of the <a href="PeterO.Cbor.JSONOptions.html">PeterO.Cbor.JSONOptions</a> class with the given values for the options.</p>
 
-<pre>&lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>base64Padding</i>: Whether padding is included when writing data in base64url or traditional base64 format to JSON.</p></li>
@@ -65,8 +64,7 @@
 
 <p>Initializes a new instance of the <a href="PeterO.Cbor.JSONOptions.html">PeterO.Cbor.JSONOptions</a> class.</p>
 
-<pre>&lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>paramString</i>: A string setting forth the options to use. This is a semicolon-separated list of options, each of which has a key and a value separated by an equal sign (&quot;=&quot;). Whitespace and line separators are not allowed to appear between the semicolons or between the equal signs, nor may the string begin or end with whitespace. The string can be empty, but cannot be null. The following is an example of this parameter:  <code>base64padding=false;replacesurrogates=true</code> . The key can be any one of the following in any combination of case:  <code>base64padding</code> ,  <code>replacesurrogates</code> . Other keys are ignored. (Keys are compared using a basic case-insensitive comparison, in which two strings are equal if they match after converting the basic upper-case letters A to Z (U + 0041 to U + 005A) in both strings to basic lower-case letters.) If two or more key/value pairs have equal keys (in a basic case-insensitive comparison), the value given for the last such key is used. The two keys just given can have a value of  <code>1</code> ,  <code>true</code> ,  <code>yes</code> , or  <code>on</code>  (in any combination of case), which means true, and any other value meaning false. For example,  <code>base64padding=Yes</code>  and  <code>base64padding=1</code>  both set the  <code>Base64Padding</code>  property to true.</li>
@@ -120,7 +118,7 @@ is null.</li>
 <pre>public bool ReplaceSurrogates { get; }
 </pre>
 
-<p>Gets a value indicating whether surrogate code points not part of a surrogate pair (which consists of two consecutive  <code>char</code>  s forming one Unicode code point) are each replaced with a replacement character (U+FFFD). The default is false; an exception is thrown when such code points are encountered.</p>
+<p>Gets a value indicating whether surrogate code points not part of a surrogate pair (which consists of two consecutive  <code>char</code>  s forming one Unicode code point) are each replaced with a replacement character (U + FFFD). The default is false; an exception is thrown when such code points are encountered.</p>
 
 <p><b>Returns:</b></p>
 

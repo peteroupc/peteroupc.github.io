@@ -33,7 +33,8 @@
 <li><p>The name  <code>ascii</code>  is treated as a synonym for  <code>us-ascii</code> , despite being a reserved name under RFC 2046. The name  <code>cp1252</code>  and  <code>utf8</code>  are treated as synonyms for  <code>windows-1252</code>  and  <code>utf-8</code> , respectively, even though they are not IANA registered aliases.</p></li>
 <li><p>The following deviations involve encoded words under RFC 2047:</p></li>
 <li><p>(a) If a sequence of encoded words decodes to a string with a CTL character (U + 007F, or a character less than U + 0020 and not TAB) after being converted to Unicode, the encoded words are left un-decoded.</p></li>
-<li><p>(b) This implementation can decode encoded words regardless of the character length of the line in which they appear. This implementation can generate a header field line with one or more encoded words even if that line is more than 76 characters long. (This implementation follows the recommendation in RFC 5322 to limit header field lines to no more than 78 characters, where possible.)</p>
+<li><p>(b) This implementation can decode encoded words regardless of the character length of the line in which they appear. This implementation can generate a header field line with one or more encoded words even if that line is more than 76 characters long. (This implementation follows the recommendation in RFC 5322 to limit header field lines to no more than 78 characters, where possible.)</p></li>
+</ul>
 
 <p>It would be appreciated if users of this library contact the author if they find other ways in which this implementation deviates from the mail specifications or other applicable specifications.</p>
 
@@ -41,8 +42,7 @@
 
 <p>Note that this implementation can decode an RFC 2047 encoded word that uses ISO-2022-JP or ISO-2022-JP-2 (encodings that use code switching) even if the encoded word&#39;s payload ends in a different mode from &quot;ASCII mode&quot;. (Each encoded word still starts in &quot;ASCII mode&quot;, though.) This, however, is not a deviation to RFC 2047 because the relevant rule only concerns bringing the output device back to &quot;ASCII mode&quot; after the decoded text is displayed (see last paragraph of sec. 6.2) -- since the decoded text is converted to Unicode rather than kept as ISO-2022-JP or ISO-2022-JP-2, this is not applicable since there is no such thing as &quot;ASCII mode&quot; in the Unicode Standard.</p>
 
-<p>Note that this library (the MailLib library) has no facilities for sending and receiving email messages, since that&#39;s outside this library&#39;s scope.</p></li>
-</ul>
+<p>Note that this library (the MailLib library) has no facilities for sending and receiving email messages, since that&#39;s outside this library&#39;s scope.</p>
 
 <h3>Member Summary</h3>
 
@@ -115,8 +115,7 @@
 
 <p>Initializes a new instance of the <a href="PeterO.Mail.Message.html">PeterO.Mail.Message</a> class. Reads from the given byte array to initialize the email message.</p>
 
-<pre>&lt;b&gt;Remarks:&lt;/b&gt; This constructor parses an email message, and extracts its header fields and body, and throws a MessageDataException if the message is malformed. However, even if a MessageDataException is thrown, it can still be possible to display the message, especially because most email malformations seen in practice are benign in nature (such as the use of very long lines in the message). One way an application can handle the exception is to display the message, or part of it, as raw text (using  `DataUtilities.GetUtf8String(bytes, true)`  ), and to optionally extract important header fields, such as From, To, Date, and Subject, from the message&#39;s text using the  `ExtractHeader`  method. Even so, though, any message for which this constructor throws a MessageDataException ought to be treated with suspicion.
-</pre>
+<p><b>Remarks:</b>This constructor parses an email message, and extracts its header fields and body, and throws a MessageDataException if the message is malformed. However, even if a MessageDataException is thrown, it can still be possible to display the message, especially because most email malformations seen in practice are benign in nature (such as the use of very long lines in the message). One way an application can handle the exception is to display the message, or part of it, as raw text (using  <code>DataUtilities.GetUtf8String(bytes, true)</code>  ), and to optionally extract important header fields, such as From, To, Date, and Subject, from the message&#39;s text using the  <code>ExtractHeader</code>  method. Even so, though, any message for which this constructor throws a MessageDataException ought to be treated with suspicion.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -144,8 +143,7 @@ The message is malformed. See the remarks.</p></li>
 
 <p>Initializes a new instance of the <a href="PeterO.Mail.Message.html">PeterO.Mail.Message</a> class. Reads from the given Stream object to initialize the email message.</p>
 
-<pre>&lt;b&gt;Remarks:&lt;/b&gt; This constructor parses an email message, and extracts its header fields and body, and throws a MessageDataException if the message is malformed. However, even if a MessageDataException is thrown, it can still be possible to display the message, especially because most email malformations seen in practice are benign in nature (such as the use of very long lines in the message). One way an application can handle the exception is to read all the bytes from the stream, to display the message, or part of it, as raw text (using  `DataUtilities.GetUtf8String(bytes, true)`  ), and to optionally extract important header fields, such as From, To, Date, and Subject, from the message&#39;s text using the  `ExtractHeader`  method. Even so, though, any message for which this constructor throws a MessageDataException ought to be treated with suspicion.
-</pre>
+<p><b>Remarks:</b>This constructor parses an email message, and extracts its header fields and body, and throws a MessageDataException if the message is malformed. However, even if a MessageDataException is thrown, it can still be possible to display the message, especially because most email malformations seen in practice are benign in nature (such as the use of very long lines in the message). One way an application can handle the exception is to read all the bytes from the stream, to display the message, or part of it, as raw text (using  <code>DataUtilities.GetUtf8String(bytes, true)</code>  ), and to optionally extract important header fields, such as From, To, Date, and Subject, from the message&#39;s text using the  <code>ExtractHeader</code>  method. Even so, though, any message for which this constructor throws a MessageDataException ought to be treated with suspicion.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -292,7 +290,7 @@ This value is being set and &quot;value&quot; is null.</li>
 <pre>public System.Collections.Generic.IList HeaderFields { get; }
 </pre>
 
-<p>Gets a snapshot of the header fields of this message, in the order in which they appear in the message. For each item in the list, the key is the header field&#39;s name (where any basic upper-case letters [U+0041 to U+005A] are converted to lower case) and the value is the header field&#39;s value.</p>
+<p>Gets a snapshot of the header fields of this message, in the order in which they appear in the message. For each item in the list, the key is the header field&#39;s name (where any basic upper-case letters [U + 0041 to U + 005A] are converted to lower case) and the value is the header field&#39;s value.</p>
 
 <p><b>Returns:</b></p>
 
@@ -370,9 +368,9 @@ This value is being set and &quot;value&quot; is null.</li>
 
 <p>Adds an attachment to this message in the form of data from the given readable stream, and with the given media type. Before the new attachment is added, if this message isn&#39;t already a multipart message, it becomes a &quot;multipart/mixed&quot; message with the current body converted to an inline body part.</p>
 
-<pre>   The following example (written in C# for the.NET version) is an extension method that adds an attachment from a byte array to a message.
+<p>The following example (written in C# for the.NET version) is an extension method that adds an attachment from a byte array to a message.</p>
 
-public static Message AddAttachmentFromBytes(this Message msg, byte[]
+<pre>public static Message AddAttachmentFromBytes(this Message msg, byte[]
             bytes, MediaType mediaType) { using (var fs = new MemoryStream(bytes)) {
             return msg.AddAttachment(fs, mediaType); } }
 </pre>
@@ -413,8 +411,7 @@ An I/O error occurred.</p></li>
 
 <p>Adds an attachment to this message in the form of data from the given readable stream, and with the given media type and file name. Before the new attachment is added, if this message isn&#39;t already a multipart message, it becomes a &quot;multipart/mixed&quot; message with the current body converted to an inline body part.</p>
 
-<pre>   &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>inputStream</i>: A readable data stream.</p></li>
@@ -448,8 +445,7 @@ An I/O error occurred.</p></li>
 
 <p>Adds an attachment to this message in the form of data from the given readable stream, and with the given file name. Before the new attachment is added, if this message isn&#39;t already a multipart message, it becomes a &quot;multipart/mixed&quot; message with the current body converted to an inline body part.</p>
 
-<pre>  &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>inputStream</i>: A readable data stream.</p></li>
@@ -481,8 +477,7 @@ An I/O error occurred.</p></li>
 
 <p>Adds a header field to the end of the message&#39;s header. This method updates the ContentType and ContentDisposition properties if those header fields have been modified by this method.</p>
 
-<pre>  &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>name</i>: Name of a header field, such as &quot;From&quot; or &quot;Content-ID&quot; .</p></li>
@@ -514,8 +509,7 @@ The header field name is too long or contains an invalid character, or the heade
 
 <p>Adds a header field to the end of the message&#39;s header. This method updates the ContentType and ContentDisposition properties if those header fields have been modified by this method.</p>
 
-<pre> &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>header</i>: A key/value pair. The key is the name of the header field, such as &quot;From&quot; or &quot;Content-ID&quot;. The value is the header field&#39;s value.</li>
@@ -566,9 +560,9 @@ The header field name is too long or contains an invalid character, or the heade
 
 <p>Adds an inline body part to this message in the form of data from the given readable stream, and with the given media type. Before the new body part is added, if this message isn&#39;t already a multipart message, it becomes a &quot;multipart/mixed&quot; message with the current body converted to an inline body part.</p>
 
-<pre>   The following example (written in C# for the.NET version) is an extension method that adds an inline body part from a byte array to a message.
+<p>The following example (written in C# for the.NET version) is an extension method that adds an inline body part from a byte array to a message.</p>
 
-public static Message AddInlineFromBytes(this Message msg, byte[] bytes,
+<pre>public static Message AddInlineFromBytes(this Message msg, byte[] bytes,
             MediaType mediaType) { using (MemoryStream fs = new MemoryStream(bytes))
             { return msg.AddInline(fs, mediaType); } }
 </pre>
@@ -609,8 +603,7 @@ An I/O error occurred.</p></li>
 
 <p>Adds an inline body part to this message in the form of data from the given readable stream, and with the given media type and file name. Before the new body part is added, if this message isn&#39;t already a multipart message, it becomes a &quot;multipart/mixed&quot; message with the current body converted to an inline body part.</p>
 
-<pre>   &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>inputStream</i>: A readable data stream.</p></li>
@@ -644,8 +637,7 @@ An I/O error occurred.</p></li>
 
 <p>Adds an inline body part to this message in the form of data from the given readable stream, and with the given file name. Before the new body part is added, if this message isn&#39;t already a multipart message, it becomes a &quot;multipart/mixed&quot; message with the current body converted to an inline body part.</p>
 
-<pre>  &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>inputStream</i>: A readable data stream.</p></li>
@@ -690,8 +682,7 @@ An I/O error occurred.</p></li>
 
 <p>Decodes RFC 2047 encoded words from the given header field value and returns a string with those words decoded. For an example of encoded words, see the constructor for PeterO.Mail.NamedAddress.</p>
 
-<pre> &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>name</i>: Name of the header field. This determines the syntax of the &quot;value&quot; parameter and is necessary to help this method interpret encoded words properly.</p></li>
@@ -721,8 +712,7 @@ is null.</li>
 
 <p>Extracts the value of a header field from a byte array representing an email message. The return value is intended for display purposes, not for further processing, and this method is intended to be used as an error handling tool for email messages that are slightly malformed. (Note that malformed email messages ought to be treated with greater suspicion than well-formed email messages.).</p>
 
-<pre>&lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>bytes</i>: A byte array representing an email message.</p></li>
@@ -743,7 +733,7 @@ is null.</li>
     string uri);
 </pre>
 
-<p>Creates a message object from a MailTo URI (uniform resource identifier). The MailTo URI can contain key-value pairs that follow a question-mark, as in the following example: &quot;mailto:<a href="mailto:me@example.com">me@example.com</a>?subject=A%20Subject&quot;. In this example, &quot;subject&quot; is the subject of the email address. Only certain keys are supported, namely, &quot;to&quot;, &quot;cc&quot;, &quot;bcc&quot;, &quot;subject&quot;, &quot;in-reply-to&quot;, &quot;comments&quot;, &quot;keywords&quot;, and &quot;body&quot;. The first seven are header field names that will be used to set the returned message&#39;s corresponding header fields. The last, &quot;body&quot;, sets the body of the message to the given text. Keys other than these eight will be ignored. (Keys are compared using a basic case-sensitive comparison, in which two strings are equal if they match after converting the basic upper-case letters A to Z (U+0041 to U+005A) in both strings to basic lower-case letters.) The same key (matched using a basic case-insensitive comparison) can appear more than once; for &quot;subject&quot;, &quot;cc&quot;, &quot;bcc&quot;, and &quot;in-reply-to&quot;, the last value with the given key is used; for &quot;to&quot;, all header field values as well as the path are combined to a single To header field; for &quot;keywords&quot; and &quot;comments&quot;, each value adds another header field of the given key; and for &quot;body&quot;, the last value with that key is used as the body.</p>
+<p>Creates a message object from a MailTo URI (uniform resource identifier). The MailTo URI can contain key-value pairs that follow a question-mark, as in the following example: &quot;mailto:<a href="mailto:me@example.com">me@example.com</a>?subject=A%20Subject&quot;. In this example, &quot;subject&quot; is the subject of the email address. Only certain keys are supported, namely, &quot;to&quot;, &quot;cc&quot;, &quot;bcc&quot;, &quot;subject&quot;, &quot;in-reply-to&quot;, &quot;comments&quot;, &quot;keywords&quot;, and &quot;body&quot;. The first seven are header field names that will be used to set the returned message&#39;s corresponding header fields. The last, &quot;body&quot;, sets the body of the message to the given text. Keys other than these eight will be ignored. (Keys are compared using a basic case-sensitive comparison, in which two strings are equal if they match after converting the basic upper-case letters A to Z (U + 0041 to U + 005A) in both strings to basic lower-case letters.) The same key (matched using a basic case-insensitive comparison) can appear more than once; for &quot;subject&quot;, &quot;cc&quot;, &quot;bcc&quot;, and &quot;in-reply-to&quot;, the last value with the given key is used; for &quot;to&quot;, all header field values as well as the path are combined to a single To header field; for &quot;keywords&quot; and &quot;comments&quot;, each value adds another header field of the given key; and for &quot;body&quot;, the last value with that key is used as the body.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -767,8 +757,7 @@ is a text string.</li>
 
 <p>Creates a message object from a MailTo URI (uniform resource identifier) in the form of a URI object. For more information, see <b>FromMailtoUri(string)</b>.</p>
 
-<pre>&lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>uri</i>: The MailTo URI in the form of a URI object.</li>
@@ -817,7 +806,7 @@ is null.</li>
 <pre>public string Generate();
 </pre>
 
-<p>Generates this message&#39;s data in text form. The generated message will have only Basic Latin code points (U+0000 to U+007F), and the transfer encoding will always be 7bit, quoted-printable, or base64 (the declared transfer encoding for this message will be ignored).</p>
+<p>Generates this message&#39;s data in text form. The generated message will have only Basic Latin code points (U + 0000 to U + 007F), and the transfer encoding will always be 7bit, quoted-printable, or base64 (the declared transfer encoding for this message will be ignored).</p>
 
 <p>The following applies to the following header fields: From, To, Cc, Bcc, Reply-To, Sender, Resent-To, Resent-From, Resent-Cc, Resent-Bcc, and Resent-Sender. If the header field exists, but has an invalid syntax, has no addresses, or appears more than once, this method will combine the addresses into one header field if possible (in the case of all fields given other than From and Sender), and otherwise generate a synthetic header field with the display-name set to the contents of all of the header fields with the same name, and the address set to  <code>me@[header-name]-address.invalid</code>  as the address (a  <code>.invalid</code>  address is a reserved address that can never belong to anyone). (An exception is that the Resent-* header fields may appear more than once.) The generated message should always have a From header field.</p>
 
@@ -859,8 +848,7 @@ The message can&#39;t be generated.</li>
 
 <p>Gets a list of addresses contained in the header fields with the given name in this message.</p>
 
-<pre>  &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>headerName</i>: The name of the header fields to retrieve.</li>
@@ -932,16 +920,15 @@ is empty.</p></li>
 
 <p>Gets a Hypertext Markup Language (HTML) rendering of this message&#39;s text body. This method currently supports text/plain, text/plain with format = flowed, text/enriched, and text/markdown (original Markdown).</p>
 
-<pre>REMARK: The Markdown implementation currently supports all features of original Markdown, except that the implementation:
-</pre>
+<p>REMARK: The Markdown implementation currently supports all features of original Markdown, except that the implementation:</p>
 
 <ul>
 <li><p>does not strictly check the placement of &quot;block-level HTML elements&quot;,</p></li>
 <li><p>does not prevent Markdown content from being interpreted as such merely because it&#39;s contained in a &quot;block-level HTML element&quot;, and</p></li>
-<li><p>does not deliberately use HTML escapes to obfuscate email addresses wrapped in angle-brackets.</p>
-
-<p><b>Return Value:</b></p></li>
+<li><p>does not deliberately use HTML escapes to obfuscate email addresses wrapped in angle-brackets.</p></li>
 </ul>
+
+<p><b>Return Value:</b></p>
 
 <p>An HTML rendering of this message&#39;s text.</p>
 
@@ -960,10 +947,9 @@ Either this message is a multipart message, so it doesn&#39;t have its own body 
     string name);
 </pre>
 
-<p>Gets the first instance of the header field with the specified name, using a basic case-insensitive comparison. (Two strings are equal in such a comparison, if they match after converting the basic upper-case letters A to Z (U+0041 to U+005A) in both strings to lower case.).</p>
+<p>Gets the first instance of the header field with the specified name, using a basic case-insensitive comparison. (Two strings are equal in such a comparison, if they match after converting the basic upper-case letters A to Z (U + 0041 to U + 005A) in both strings to lower case.).</p>
 
-<pre>&lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>name</i>: The name of a header field.</li>
@@ -990,8 +976,7 @@ Name is null.</li>
 
 <p>Gets the name and value of a header field by index.</p>
 
-<pre>&lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>index</i>: Zero-based index of the header field to get.</li>
@@ -1017,10 +1002,9 @@ is 0 or at least as high as the number of header fields.</li>
     string name);
 </pre>
 
-<p>Gets an array with the values of all header fields with the specified name, using a basic case-insensitive comparison. (Two strings are equal in such a comparison, if they match after converting the basic upper-case letters A to Z (U+0041 to U+005A) in both strings to lower case.).</p>
+<p>Gets an array with the values of all header fields with the specified name, using a basic case-insensitive comparison. (Two strings are equal in such a comparison, if they match after converting the basic upper-case letters A to Z (U + 0041 to U + 005A) in both strings to lower case.).</p>
 
-<pre>&lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>name</i>: The name of a header field.</li>
@@ -1048,8 +1032,7 @@ Name is null.</li>
 
 <p>Generates a multilingual message (see RFC 8255) from a list of messages and a list of language strings.</p>
 
-<pre>  &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>messages</i>: A list of messages forming the parts of the multilingual message object. Each message should have the same content, but be in a different language. Each message must have a From header field and use the same email address in that field as the other messages. The messages should be ordered in descending preference of language.</p></li>
@@ -1099,8 +1082,7 @@ contains the language tag &quot;zzx&quot; not appearing alone or at the end of t
 
 <p>Removes a header field by index. This method updates the ContentType and ContentDisposition properties if those header fields have been modified by this method.</p>
 
-<pre>&lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>index</i>: Zero-based index of the header field to set.</li>
@@ -1126,10 +1108,9 @@ is 0 or at least as high as the number of header fields.</li>
     string name);
 </pre>
 
-<p>Removes all instances of the given header field from this message. If this is a multipart message, the header field is not removed from its body part headers. A basic case-insensitive comparison is used. (Two strings are equal in such a comparison, if they match after converting the basic upper-case letters A to Z (U+0041 to U+005A) in both strings to lower case.). This method updates the ContentType and ContentDisposition properties if those header fields have been modified by this method.</p>
+<p>Removes all instances of the given header field from this message. If this is a multipart message, the header field is not removed from its body part headers. A basic case-insensitive comparison is used. (Two strings are equal in such a comparison, if they match after converting the basic upper-case letters A to Z (U + 0041 to U + 005A) in both strings to lower case.). This method updates the ContentType and ContentDisposition properties if those header fields have been modified by this method.</p>
 
-<pre>&lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>name</i>: The name of the header field to remove.</li>
@@ -1157,8 +1138,7 @@ is null.</li>
 
 <p>Selects a body part for a multiple-language message (  <code>multipart/multilingual</code>  ) according to the given language priority list.</p>
 
-<pre>&lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>languages</i>: A list of basic language ranges, sorted in descending order of priority (see the LanguageTags.LanguageTagFilter method).</li>
@@ -1187,8 +1167,7 @@ is null.</li>
 
 <p>Selects a body part for a multiple-language message (  <code>multipart/multilingual</code>  ) according to the given language priority list and original-language preference.</p>
 
-<pre> &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>languages</i>: A list of basic language ranges, sorted in descending order of priority (see the LanguageTags.LanguageTagFilter method).</p></li>
@@ -1217,8 +1196,7 @@ is null.</li>
 
 <p>Sets the body of this message to the given byte array. This method doesn&#39;t make a copy of that byte array.</p>
 
-<pre>&lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>bytes</i>: A byte array.</li>
@@ -1259,8 +1237,7 @@ is null.</li>
 
 <p>Sets this message&#39;s Date header field to the given date and time.</p>
 
-<pre> &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>dateTime</i>: An array containing at least eight elements expressing a date and time. See <b>MailDateTime.ParseDateString(bool)</b> for more information on this parameter.</li>
@@ -1293,8 +1270,7 @@ is null.</p></li>
 
 <p>Sets the name and value of a header field by index. This method updates the ContentType and ContentDisposition properties if those header fields have been modified by this method.</p>
 
-<pre>   &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>index</i>: Zero-based index of the header field to set.</p></li>
@@ -1329,8 +1305,7 @@ is null.</p></li>
 
 <p>Sets the value of a header field by index without changing its name. This method updates the ContentType and ContentDisposition properties if those header fields have been modified by this method.</p>
 
-<pre>  &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>index</i>: Zero-based index of the header field to set.</p></li>
@@ -1363,8 +1338,7 @@ is null.</p></li>
 
 <p>Sets the name and value of a header field by index. This method updates the ContentType and ContentDisposition properties if those header fields have been modified by this method.</p>
 
-<pre>  &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>index</i>: Zero-based index of the header field to set.</p></li>
@@ -1397,8 +1371,7 @@ is null.</p></li>
 
 <p>Sets the value of this message&#39;s header field. If a header field with the same name exists, its value is replaced. If the header field&#39;s name occurs more than once, only the first instance of the header field is replaced. This method updates the ContentType and ContentDisposition properties if those header fields have been modified by this method.</p>
 
-<pre>  &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>name</i>: The name of a header field, such as &quot;from&quot; or &quot;subject&quot; .</p></li>
@@ -1430,8 +1403,7 @@ is null.</p></li>
 
 <p>Sets the body of this message to the specified string in Hypertext Markup Language (HTML) format. The character sequences CR (carriage return, &quot;\r&quot;, U+000D), LF (line feed, &quot;\n&quot;, U+000A), and CR/LF will be converted to CR/LF line breaks. Unpaired surrogate code points will be replaced with replacement characters.</p>
 
-<pre>&lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>str</i>: A string consisting of the message in HTML format.</li>
@@ -1460,8 +1432,7 @@ is null.</li>
 
 <p>Sets the body of this message to a multipart body with plain text and Hypertext Markup Language (HTML) versions of the same message. The character sequences CR (carriage return, &quot;\r&quot;, U+000D), LF (line feed, &quot;\n&quot;, U+000A), and CR/LF will be converted to CR/LF line breaks. Unpaired surrogate code points will be replaced with replacement characters.</p>
 
-<pre> &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>text</i>: A string consisting of the plain text version of the message.</p></li>
@@ -1492,20 +1463,19 @@ is null.</li>
 
 <p>Sets the body of this message to a multipart body with plain text, Markdown, and Hypertext Markup Language (HTML) versions of the same message. The character sequences CR (carriage return, &quot;\r&quot;, U+000D), LF (line feed, &quot;\n&quot;, U+000A), and CR/LF will be converted to CR/LF line breaks. Unpaired surrogate code points will be replaced with replacement characters.</p>
 
-<pre>  REMARK: The Markdown-to-HTML implementation currently supports all features of original Markdown, except that the implementation:
-</pre>
+<p>REMARK: The Markdown-to-HTML implementation currently supports all features of original Markdown, except that the implementation:</p>
 
 <ul>
 <li><p>does not strictly check the placement of &quot;block-level HTML elements&quot;,</p></li>
 <li><p>does not prevent Markdown content from being interpreted as such merely because it&#39;s contained in a &quot;block-level HTML element&quot;, and</p></li>
-<li><p>does not deliberately use HTML escapes to obfuscate email addresses wrapped in angle-brackets.</p>
+<li><p>does not deliberately use HTML escapes to obfuscate email addresses wrapped in angle-brackets.</p></li>
+</ul>
 
 <p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>text</i>: A string consisting of the plain text version of the message. Can be null, in which case the value of the &quot;markdown&quot; parameter is used as the plain text version.</p></li>
 <li><p><i>markdown</i>: A string consisting of the Markdown version of the message. For interoperability, this Markdown version will be converted to HTML, where the Markdown text is assumed to be in the original Markdown flavor.</p></li>
-</ul></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -1530,8 +1500,7 @@ is null.</li>
 
 <p>Sets the body of this message to the specified plain text string. The character sequences CR (carriage return, &quot;\r&quot;, U+000D), LF (line feed, &quot;\n&quot;, U+000A), and CR/LF will be converted to CR/LF line breaks. Unpaired surrogate code points will be replaced with replacement characters. This method changes this message&#39;s media type to plain text.</p>
 
-<pre>&lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>str</i>: A string consisting of the message in plain text format.</li>
