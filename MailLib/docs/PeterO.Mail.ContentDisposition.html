@@ -44,7 +44,7 @@
 <li><code><a href="#Inline">public static readonly PeterO.Mail.ContentDisposition Inline;</a></code> - The content disposition value &quot;inline&quot; .</li>
 <li><code><a href="#IsAttachment">IsAttachment</a></code> - Gets a value indicating whether the disposition type is attachment.</li>
 <li><code><a href="#IsInline">IsInline</a></code> - Gets a value indicating whether the disposition type is inline.</li>
-<li><code><a href="#MakeFilename_string">MakeFilename(string)</a></code> - Converts a file name from the Content-Disposition header (or another string representing a title and an optional file extension) to a suitable name for saving data to a file.</li>
+<li><code><a href="#MakeFilename_string">MakeFilename(string)</a></code> - Converts a file name from the Content-disposition header field (or another string representing a title and an optional file extension) to a suitable name for saving data to a file.</li>
 <li><code><a href="#Parameters">Parameters</a></code> - Gets a list of parameter names associated with this object and their values.</li>
 <li><code><a href="#Parse_string">Parse(string)</a></code> - Creates a new content disposition object from the value of a Content-Disposition header field.</li>
 <li><code><a href="#Parse_string_PeterO_Mail_ContentDisposition">Parse(string, PeterO.Mail.ContentDisposition)</a></code> - Parses a content disposition string and returns a content disposition object, or the default value if the string is invalid.</li>
@@ -176,7 +176,7 @@ is an arbitrary object.</li>
 <pre>public override int GetHashCode();
 </pre>
 
-<p>Calculates the hash code of this object. No application or process IDs are used in the hash code calculation.</p>
+<p>Calculates the hash code of this object. The exact algorithm used by this method may change between versions of this library, and no application or process IDs are used in the hash code calculation.</p>
 
 <p><b>Return Value:</b></p>
 
@@ -247,7 +247,7 @@ is empty.</p></li>
     string str);
 </pre>
 
-<p>Converts a file name from the Content-Disposition header (or another string representing a title and an optional file extension) to a suitable name for saving data to a file. This method is idempotent; that is, calling the method again on the result doesn&#39;t change that result. The method avoids characters and combinations of characters that are problematic to use in certain file systems, and leaves the vast majority of file names seen in practice untouched. Examples of how this method works follows:</p>
+<p>Converts a file name from the Content-disposition header field (or another string representing a title and an optional file extension) to a suitable name for saving data to a file. This method is idempotent; that is, calling the method again on the result doesn&#39;t change that result. The method avoids characters and combinations of characters that are problematic to use in certain file systems, and leaves the vast majority of file names seen in practice untouched. Examples of how this method works follows:</p>
 
 <p><code>&quot;=?utf-8?q?hello=2Etxt?=&quot; -&gt;&quot;hello.txt&quot;</code>  (RFC 2047 encoding).</p>
 

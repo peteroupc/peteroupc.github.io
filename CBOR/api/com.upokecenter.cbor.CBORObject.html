@@ -225,6 +225,10 @@ Compares the equality of two CBOR objects.</li>
 <li><code>boolean equals​(java.lang.Object obj)</code><br>
 Determines whether this object and another object are equal and have the
 same type.</li>
+<li><code>static CBORObject FromFloatingPointBits​(long floatingBits,
+                 int byteCount)</code><br>
+Generates a CBOR object from a floating-point number represented by its
+bits.</li>
 <li><code>static CBORObject FromJSONString​(java.lang.String str)</code><br>
 Generates a CBOR object from a text string in JavaScript Object Notation
 (JSON) format.</li>
@@ -4807,6 +4811,42 @@ object to JSON.</p></li>
 <li><p><code>java.lang.NullPointerException</code> - The parameter <code>outputStream</code> is null.</p></li>
 </ul>
 
+<h3>FromFloatingPointBits</h3>
+
+<pre>public static CBORObject FromFloatingPointBits​(long floatingBits, int byteCount)
+</pre>
+
+<p>Generates a CBOR object from a floating-point number represented by its
+ bits.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>floatingBits</code> - The bits of a floating-point number number to write.</p></li>
+<li><p><code>byteCount</code> - The number of bytes of the stored floating-point number;
+this also specifies the format of the &quot;floatingBits&quot; parameter. This
+value can be 2 if &quot;floatingBits&quot;&#39;s lower 16 bits identify the
+floating-point number in IEEE 754r binary16 format; or 4 if
+&quot;floatingBits&quot;&#39;s lower 32 bits identify the floating-point number in
+IEEE 754r binary32 format; or 8 if &quot;floatingBits&quot; identifies the
+floating point number in IEEE 754r binary64 format. Any other values
+for this parameter are invalid.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A CBOR object storing the given floating-point number.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>java.lang.NullPointerException</code> - The parameter <code>outputStream</code> is null.</p></li>
+<li><p><code>java.lang.IllegalArgumentException</code> - The parameter <code>byteCount</code> is other than 2,
+4, or 8.</p></li>
+</ul>
+
 <h3>WriteFloatingPointBits</h3>
 
 <pre>public static int WriteFloatingPointBits​(java.io.OutputStream outputStream, long floatingBits, int byteCount) throws java.io.IOException
@@ -4838,6 +4878,8 @@ for this parameter are invalid.</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
+<li><p><code>java.lang.IllegalArgumentException</code> - The parameter <code>byteCount</code> is other than 2,
+4, or 8.</p></li>
 <li><p><code>java.lang.NullPointerException</code> - The parameter <code>outputStream</code> is null.</p></li>
 <li><p><code>java.io.IOException</code></p></li>
 </ul>
@@ -4873,6 +4915,8 @@ invalid.</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
+<li><p><code>java.lang.IllegalArgumentException</code> - The parameter <code>byteCount</code> is other than 2,
+4, or 8.</p></li>
 <li><p><code>java.lang.NullPointerException</code> - The parameter <code>outputStream</code> is null.</p></li>
 <li><p><code>java.io.IOException</code></p></li>
 </ul>
@@ -4907,6 +4951,8 @@ values for this parameter are invalid.</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
+<li><p><code>java.lang.IllegalArgumentException</code> - The parameter <code>byteCount</code> is other than 2,
+4, or 8.</p></li>
 <li><p><code>java.lang.NullPointerException</code> - The parameter <code>outputStream</code> is null.</p></li>
 <li><p><code>java.io.IOException</code></p></li>
 </ul>

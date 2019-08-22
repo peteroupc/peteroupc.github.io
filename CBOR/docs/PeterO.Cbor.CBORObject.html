@@ -105,6 +105,7 @@
 <li><code><a href="#Equals_object">Equals(object)</a></code> - Determines whether this object and another object are equal and have the same type.</li>
 <li><code><a href="#Equals_PeterO_Cbor_CBORObject">Equals(PeterO.Cbor.CBORObject)</a></code> - Compares the equality of two CBOR objects.</li>
 <li><code><a href="#False">public static readonly PeterO.Cbor.CBORObject False;</a></code> - Represents the value false.</li>
+<li><code><a href="#FromFloatingPointBits_long_int">FromFloatingPointBits(long, int)</a></code> - Generates a CBOR object from a floating-point number represented by its bits.</li>
 <li><code><a href="#FromJSONString_string">FromJSONString(string)</a></code> - Generates a CBOR object from a text string in JavaScript Object Notation (JSON) format.</li>
 <li><code><a href="#FromJSONString_string_PeterO_Cbor_CBOREncodeOptions">FromJSONString(string, PeterO.Cbor.CBOREncodeOptions)</a></code> - Generates a CBOR object from a text string in JavaScript Object Notation (JSON) format, using the specified options to control the decoding process.</li>
 <li><code><a href="#FromObject_bool">FromObject(bool)</a></code> - Returns the CBOR true value or false value, depending on &quot;value&quot;.</li>
@@ -1793,6 +1794,39 @@ is an arbitrary object.</li>
 <p><b>Return Value:</b></p>
 
 <p><code>true</code>  if the objects are equal; otherwise,  <code>false</code> .</p>
+
+<p><a id="FromFloatingPointBits_long_int"></a></p>
+
+<h3>FromFloatingPointBits</h3>
+
+<pre>public static PeterO.Cbor.CBORObject FromFloatingPointBits(
+    long floatingBits,
+    int byteCount);
+</pre>
+
+<p>Generates a CBOR object from a floating-point number represented by its bits.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>floatingBits</i>: The bits of a floating-point number number to write.</p></li>
+<li><p><i>byteCount</i>: The number of bytes of the stored floating-point number; this also specifies the format of the &quot;floatingBits&quot; parameter. This value can be 2 if &quot;floatingBits&quot;&#39;s lower 16 bits identify the floating-point number in IEEE 754r binary16 format; or 4 if &quot;floatingBits&quot;&#39;s lower 32 bits identify the floating-point number in IEEE 754r binary32 format; or 8 if &quot;floatingBits&quot; identifies the floating point number in IEEE 754r binary64 format. Any other values for this parameter are invalid.</p></li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>A CBOR object storing the given floating-point number.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li><p>System.ArgumentNullException:
+The parameter  <i>outputStream</i>
+is null.</p></li>
+<li><p>System.ArgumentException:
+The parameter  <i>byteCount</i>
+is other than 2, 4, or 8.</p></li>
+</ul>
 
 <p><a id="FromJSONString_string"></a></p>
 
@@ -4737,9 +4771,12 @@ is null.</li>
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li>System.ArgumentNullException:
+<li><p>System.ArgumentException:
+The parameter  <i>byteCount</i>
+is other than 2, 4, or 8.</p></li>
+<li><p>System.ArgumentNullException:
 The parameter  <i>outputStream</i>
-is null.</li>
+is null.</p></li>
 </ul>
 
 <p><a id="WriteFloatingPointValue_System_IO_Stream_double_int"></a></p>
@@ -4769,9 +4806,12 @@ is null.</li>
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li>System.ArgumentNullException:
+<li><p>System.ArgumentException:
+The parameter  <i>byteCount</i>
+is other than 2, 4, or 8.</p></li>
+<li><p>System.ArgumentNullException:
 The parameter  <i>outputStream</i>
-is null.</li>
+is null.</p></li>
 </ul>
 
 <p><a id="WriteFloatingPointValue_System_IO_Stream_float_int"></a></p>
@@ -4801,9 +4841,12 @@ is null.</li>
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li>System.ArgumentNullException:
+<li><p>System.ArgumentException:
+The parameter  <i>byteCount</i>
+is other than 2, 4, or 8.</p></li>
+<li><p>System.ArgumentNullException:
 The parameter  <i>outputStream</i>
-is null.</li>
+is null.</p></li>
 </ul>
 
 <p><a id="WriteJSON_object_System_IO_Stream"></a></p>
