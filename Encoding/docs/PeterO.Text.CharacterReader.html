@@ -47,8 +47,7 @@ is a text string.</li>
 
 <p>Initializes a new instance of the <a href="PeterO.Text.CharacterReader.html">PeterO.Text.CharacterReader</a> class.</p>
 
-<pre> &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>str</i>: The parameter  <i>str</i>
@@ -76,8 +75,7 @@ is null.</li>
 
 <p>Initializes a new instance of the <a href="PeterO.Text.CharacterReader.html">PeterO.Text.CharacterReader</a> class.</p>
 
-<pre>  &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>str</i>: The parameter  <i>str</i>
@@ -106,8 +104,7 @@ is null.</li>
 
 <p>Initializes a new instance of the <a href="PeterO.Text.CharacterReader.html">PeterO.Text.CharacterReader</a> class.</p>
 
-<pre> &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>str</i>: The parameter  <i>str</i>
@@ -132,8 +129,7 @@ is a 32-bit signed integer.</p></li>
 
 <p>Initializes a new instance of the <a href="PeterO.Text.CharacterReader.html">PeterO.Text.CharacterReader</a> class.</p>
 
-<pre>    &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>str</i>: The parameter  <i>str</i>
@@ -164,8 +160,7 @@ is null.</li>
 
 <p>Initializes a new instance of the <a href="PeterO.Text.CharacterReader.html">PeterO.Text.CharacterReader</a> class; will read the stream as UTF-8, skip the byte-order mark (U + FEFF) if it appears first in the stream, and replace invalid byte sequences with replacement characters (U + FFFD).</p>
 
-<pre>&lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><i>stream</i>: A readable data stream.</li>
@@ -190,20 +185,16 @@ is null.</li>
 
 <p>Initializes a new instance of the <a href="PeterO.Text.CharacterReader.html">PeterO.Text.CharacterReader</a> class; will skip the byte-order mark (U + FEFF) if it appears first in the stream and replace invalid byte sequences with replacement characters (U + FFFD).</p>
 
-<pre> &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>stream</i>: A readable byte stream.</p></li>
-<li><p><i>mode</i>: The method to use when detecting encodings other than UTF-8 in the byte stream. This usually involves checking whether the stream begins with a byte-order mark (BOM, U + FEFF) or a non-zero basic code point (U + 0001 to U + 007F) before reading the rest of the stream. This value can be one of the following:</p>
-
-<ul>
+<li><p><i>mode</i>: The method to use when detecting encodings other than UTF-8 in the byte stream. This usually involves checking whether the stream begins with a byte-order mark (BOM, U + FEFF) or a non-zero basic code point (U + 0001 to U + 007F) before reading the rest of the stream. This value can be one of the following:</p></li>
 <li><p>0: UTF-8 only.</p></li>
 <li><p>1: Detect UTF-16 using BOM or non-zero basic code point, otherwise UTF-8.</p></li>
 <li><p>2: Detect UTF-16/UTF-32 using BOM or non-zero basic code point, otherwise UTF-8. (Tries to detect UTF-32 first.)</p></li>
 <li><p>3: Detect UTF-16 using BOM, otherwise UTF-8.</p></li>
 <li><p>4: Detect UTF-16/UTF-32 using BOM, otherwise UTF-8. (Tries to detect UTF-32 first.)</p></li>
-</ul></li>
 </ul>
 
 <p>.</p>
@@ -228,20 +219,16 @@ is null.</li>
 
 <p>Initializes a new instance of the <a href="PeterO.Text.CharacterReader.html">PeterO.Text.CharacterReader</a> class; will skip the byte-order mark (U + FEFF) if it appears first in the stream and a UTF-8 stream is detected.</p>
 
-<pre> &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>stream</i>: A readable data stream.</p></li>
-<li><p><i>mode</i>: The method to use when detecting encodings other than UTF-8 in the byte stream. This usually involves checking whether the stream begins with a byte-order mark (BOM, U + FEFF) or a non-zero basic code point (U + 0001 to U + 007F) before reading the rest of the stream. This value can be one of the following:</p>
-
-<ul>
+<li><p><i>mode</i>: The method to use when detecting encodings other than UTF-8 in the byte stream. This usually involves checking whether the stream begins with a byte-order mark (BOM, U + FEFF) or a non-zero basic code point (U + 0001 to U + 007F) before reading the rest of the stream. This value can be one of the following:</p></li>
 <li><p>0: UTF-8 only.</p></li>
 <li><p>1: Detect UTF-16 using BOM or non-zero basic code point, otherwise UTF-8.</p></li>
 <li><p>2: Detect UTF-16/UTF-32 using BOM or non-zero basic code point, otherwise UTF-8. (Tries to detect UTF-32 first.)</p></li>
 <li><p>3: Detect UTF-16 using BOM, otherwise UTF-8.</p></li>
 <li><p>4: Detect UTF-16/UTF-32 using BOM, otherwise UTF-8. (Tries to detect UTF-32 first.)</p></li>
-</ul></li>
 </ul>
 
 <p>.</p>
@@ -263,20 +250,16 @@ is null.</li>
 
 <p>Initializes a new instance of the <a href="PeterO.Text.CharacterReader.html">PeterO.Text.CharacterReader</a> class.</p>
 
-<pre>   &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>stream</i>: A readable byte stream.</p></li>
-<li><p><i>mode</i>: The method to use when detecting encodings other than UTF-8 in the byte stream. This usually involves checking whether the stream begins with a byte-order mark (BOM, U + FEFF) or a non-zero basic code point (U + 0001 to U + 007F) before reading the rest of the stream. This value can be one of the following:</p>
-
-<ul>
+<li><p><i>mode</i>: The method to use when detecting encodings other than UTF-8 in the byte stream. This usually involves checking whether the stream begins with a byte-order mark (BOM, U + FEFF) or a non-zero basic code point (U + 0001 to U + 007F) before reading the rest of the stream. This value can be one of the following:</p></li>
 <li><p>0: UTF-8 only.</p></li>
 <li><p>1: Detect UTF-16 using BOM or non-zero basic code point, otherwise UTF-8.</p></li>
 <li><p>2: Detect UTF-16/UTF-32 using BOM or non-zero basic code point, otherwise UTF-8. (Tries to detect UTF-32 first.)</p></li>
 <li><p>3: Detect UTF-16 using BOM, otherwise UTF-8.</p></li>
 <li><p>4: Detect UTF-16/UTF-32 using BOM, otherwise UTF-8. (Tries to detect UTF-32 first.)</p></li>
-</ul></li>
 </ul>
 
 <p>.</p>
@@ -306,8 +289,7 @@ is null.</li>
 
 <p>Reads a series of code points from a Unicode stream or a string.</p>
 
-<pre>    &lt;b&gt;Parameters:&lt;/b&gt;
-</pre>
+<p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>chars</i>: An array where the code points that were read will be stored.</p></li>
