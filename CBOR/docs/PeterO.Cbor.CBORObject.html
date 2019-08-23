@@ -1820,12 +1820,9 @@ is an arbitrary object.</li>
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li><p>System.ArgumentNullException:
-The parameter  <i>outputStream</i>
-is null.</p></li>
-<li><p>System.ArgumentException:
+<li>System.ArgumentException:
 The parameter  <i>byteCount</i>
-is other than 2, 4, or 8.</p></li>
+is other than 2, 4, or 8.</li>
 </ul>
 
 <p><a id="FromJSONString_string"></a></p>
@@ -2347,7 +2344,14 @@ is a CBOR object.</li>
     PeterO.Numbers.EInteger bigintValue);
 </pre>
 
-<p>Generates a CBOR object from an arbitrary-precision integer.</p>
+<p>Generates a CBOR object from an arbitrary-precision integer.The CBOR object is generated as follows:</p>
+
+<ul>
+<li><p>If the number is null, returns CBORObject.Null.</p></li>
+<li><p>Otherwise, if the number expresses infinity, not-a-number, or negative zero, the CBOR object will have tag 269 and the appropriate format.</p></li>
+<li><p>Otherwise, if the number is less than -(2^64) and greater than or equal to 2^64, the CBOR object will have the object type Integer and the appropriate value.</p></li>
+<li><p>Otherwise, the CBOR object will have tag 2 (zero or positive) or 3 (negative) and the appropriate value.</p></li>
+</ul>
 
 <p><b>Parameters:</b></p>
 

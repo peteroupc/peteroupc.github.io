@@ -268,7 +268,15 @@ Generates a CBOR object from a decimal number.</li>
 Generates a CBOR object from an arbitrary-precision binary floating-point
 number.</li>
 <li><code>static CBORObject FromObject​(com.upokecenter.numbers.EInteger bigintValue)</code><br>
-Generates a CBOR object from an arbitrary-precision integer.</li>
+Generates a CBOR object from an arbitrary-precision integer.The CBOR object
+is generated as follows:  If the number is null, returns
+CBORObject.Null. Otherwise, if the number expresses
+infinity, not-a-number, or negative zero, the CBOR object will have
+tag 269 and the appropriate format. Otherwise, if the
+number is less than -(2^64) and greater than or equal to 2^64, the
+CBOR object will have the object type Integer and the appropriate
+value. Otherwise, the CBOR object will have tag 2 (zero or
+positive) or 3 (negative) and the appropriate value.</li>
 <li><code>static CBORObject FromObject​(com.upokecenter.numbers.ERational bigValue)</code><br>
 Generates a CBOR object from an arbitrary-precision rational number.</li>
 <li><code>static CBORObject FromObject​(java.lang.Object obj)</code><br>
@@ -1759,7 +1767,15 @@ object.</p></li>
 <pre>public static CBORObject FromObject​(com.upokecenter.numbers.EInteger bigintValue)
 </pre>
 
-<p>Generates a CBOR object from an arbitrary-precision integer.</p>
+<p>Generates a CBOR object from an arbitrary-precision integer.The CBOR object
+ is generated as follows: <ul> <li>If the number is null, returns
+ CBORObject.Null.</li> <li>Otherwise, if the number expresses
+ infinity, not-a-number, or negative zero, the CBOR object will have
+ tag 269 and the appropriate format.</li> <li>Otherwise, if the
+ number is less than -(2^64) and greater than or equal to 2^64, the
+ CBOR object will have the object type Integer and the appropriate
+ value.</li> <li>Otherwise, the CBOR object will have tag 2 (zero or
+ positive) or 3 (negative) and the appropriate value.</li></ul></p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -4842,9 +4858,8 @@ for this parameter are invalid.</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>outputStream</code> is null.</p></li>
-<li><p><code>java.lang.IllegalArgumentException</code> - The parameter <code>byteCount</code> is other than 2,
-4, or 8.</p></li>
+<li><code>java.lang.IllegalArgumentException</code> - The parameter <code>byteCount</code> is other than 2,
+4, or 8.</li>
 </ul>
 
 <h3>WriteFloatingPointBits</h3>
