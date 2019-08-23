@@ -112,19 +112,20 @@ this parameter.</p></li>
  (January) through 12 (December).</li> <li>2 - Day of the month, from
  1 through 31.</li> <li>3 - Hour of the day, from 0 through 23.</li>
  <li>4 - Minute of the hour, from 0 through 59.</li> <li>5 - Second
- of the minute, from 0 through 60 (this value can go up to 60 to
- accommodate leap seconds). (Leap seconds are additional seconds
- added to adjust international atomic time, or TAI, to an
- approximation of astronomical time known as coordinated universal
- time, or UTC.)</li> <li>6 - Fractional seconds. The return value
- will always have this value set to 0, since fractional seconds
- cannot be expressed in the date-time format specified by RFC 5322.
- This value cannot be less than 0.</li> <li>7 - Number of minutes to
- subtract from this date and time to get global time. This number can
- be positive or negative, but cannot be less than -1439 or greater
- than 1439.</li></ul> <p>If a method or property uses an array of
- this format and refers to this method&#39;s documentation, that array
- may have any number of elements 8 or greater.</p></p>
+ of the minute, from 0 through 59, except this value can be 60 if the
+ hour of the day is 23 and the minute of the hour is 59, to
+ accommodate leap seconds. (Leap seconds are additional seconds added
+ to adjust international atomic time, or TAI, to an approximation of
+ astronomical time known as coordinated universal time, or UTC.)</li>
+ <li>6 - Fractional seconds. The return value will always have this
+ value set to 0, since fractional seconds cannot be expressed in the
+ date-time format specified by RFC 5322. This value cannot be less
+ than 0.</li> <li>7 - Number of minutes to subtract from this date
+ and time to get global time. This number can be positive or
+ negative, but cannot be less than -1439 or greater than
+ 1439.</li></ul> <p>If a method or property uses an array of this
+ format and refers to this method&#39;s documentation, that array may
+ have any number of elements 8 or greater.</p></p>
 
 <p><strong>Parameters:</strong></p>
 
