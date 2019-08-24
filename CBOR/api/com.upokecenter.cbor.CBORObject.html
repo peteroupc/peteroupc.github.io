@@ -30,7 +30,7 @@
  object of a given type; for example, a CBOR array to a native
  <code>ArrayList</code> (or <code>ArrayList</code> in Java), or a CBOR integer to
  an <code>int</code> or <code>long</code>.</p> <p><b>To and from JSON:</b> This
- class also doubles as a reader and writer of JavaScript Object
+ class also doubles as a reader and writer of JavaScript object
  Notation (JSON). The CBORObject.FromJSONString method converts JSON
  to a CBOR object, and the ToJSONString method converts a CBOR object
  to a JSON string.</p> <p>In addition, the CBORObject.WriteJSON
@@ -230,11 +230,11 @@ same type.</li>
 Generates a CBOR object from a floating-point number represented by its
 bits.</li>
 <li><code>static CBORObject FromJSONString​(java.lang.String str)</code><br>
-Generates a CBOR object from a text string in JavaScript Object Notation
+Generates a CBOR object from a text string in JavaScript object Notation
 (JSON) format.</li>
 <li><code>static CBORObject FromJSONString​(java.lang.String str,
           CBOREncodeOptions options)</code><br>
-Generates a CBOR object from a text string in JavaScript Object Notation
+Generates a CBOR object from a text string in JavaScript object Notation
 (JSON) format, using the specified options to control the decoding
 process.</li>
 <li><code>static CBORObject FromObject​(boolean value)</code><br>
@@ -268,15 +268,7 @@ Generates a CBOR object from a decimal number.</li>
 Generates a CBOR object from an arbitrary-precision binary floating-point
 number.</li>
 <li><code>static CBORObject FromObject​(com.upokecenter.numbers.EInteger bigintValue)</code><br>
-Generates a CBOR object from an arbitrary-precision integer.The CBOR object
-is generated as follows:  If the number is null, returns
-CBORObject.Null. Otherwise, if the number expresses
-infinity, not-a-number, or negative zero, the CBOR object will have
-tag 269 and the appropriate format. Otherwise, if the
-number is less than -(2^64) and greater than or equal to 2^64, the
-CBOR object will have the object type Integer and the appropriate
-value. Otherwise, the CBOR object will have tag 2 (zero or
-positive) or 3 (negative) and the appropriate value.</li>
+Generates a CBOR object from an arbitrary-precision integer.</li>
 <li><code>static CBORObject FromObject​(com.upokecenter.numbers.ERational bigValue)</code><br>
 Generates a CBOR object from an arbitrary-precision rational number.</li>
 <li><code>static CBORObject FromObject​(java.lang.Object obj)</code><br>
@@ -418,11 +410,11 @@ CBOREncodeOptions options)</code><br>
 Reads an object in CBOR format from a data stream, using the specified
 options to control the decoding process.</li>
 <li><code>static CBORObject ReadJSON​(java.io.InputStream stream)</code><br>
-Generates a CBOR object from a data stream in JavaScript Object Notation
+Generates a CBOR object from a data stream in JavaScript object Notation
 (JSON) format.</li>
 <li><code>static CBORObject ReadJSON​(java.io.InputStream stream,
     CBOREncodeOptions options)</code><br>
-Generates a CBOR object from a data stream in JavaScript Object Notation
+Generates a CBOR object from a data stream in JavaScript object Notation
 (JSON) format, using the specified options to control the decoding
 process.</li>
 <li><code>static CBORObject[] ReadSequence​(java.io.InputStream stream)</code><br>
@@ -466,10 +458,10 @@ or 0 if this item is neither an array nor a map.</li>
     CBORObject second)</code><br>
 Finds the difference between two CBOR number objects.</li>
 <li><code>java.lang.String ToJSONString()</code><br>
-Converts this object to a string in JavaScript Object Notation (JSON)
+Converts this object to a string in JavaScript object Notation (JSON)
 format.</li>
 <li><code>java.lang.String ToJSONString​(JSONOptions options)</code><br>
-Converts this object to a string in JavaScript Object Notation (JSON)
+Converts this object to a string in JavaScript object Notation (JSON)
 format, using the specified options to control the encoding process.</li>
 <li><code>&lt;T&gt; T ToObject​(java.lang.reflect.Type t)</code><br>
 Converts this CBOR object to an object of an arbitrary type.</li>
@@ -568,16 +560,16 @@ stream, either in its 64- or 32-bit form, or its rounded 16-bit
 equivalent.</li>
 <li><code>static void WriteJSON​(java.lang.Object obj,
      java.io.OutputStream outputStream)</code><br>
-Converts an arbitrary object to a string in JavaScript Object Notation
+Converts an arbitrary object to a string in JavaScript object Notation
 (JSON) format, as in the ToJSONString method, and writes that string
 to a data stream in UTF-8.</li>
 <li><code>void WriteJSONTo​(java.io.OutputStream outputStream)</code><br>
-Converts this object to a string in JavaScript Object Notation (JSON)
+Converts this object to a string in JavaScript object Notation (JSON)
 format, as in the ToJSONString method, and writes that string to a
 data stream in UTF-8.</li>
 <li><code>void WriteJSONTo​(java.io.OutputStream outputStream,
        JSONOptions options)</code><br>
-Converts this object to a string in JavaScript Object Notation (JSON)
+Converts this object to a string in JavaScript object Notation (JSON)
 format, as in the ToJSONString method, and writes that string to a
 data stream in UTF-8, using the given JSON options to control the
 encoding process.</li>
@@ -1351,7 +1343,7 @@ is null.</li>
 <pre>public static CBORObject FromJSONString​(java.lang.String str)
 </pre>
 
-<p>Generates a CBOR object from a text string in JavaScript Object Notation
+<p>Generates a CBOR object from a text string in JavaScript object Notation
  (JSON) format.</p> <p>If a JSON object has duplicate keys, a
  CBORException is thrown. This is a change in version 4.0.</p>
 
@@ -1366,7 +1358,7 @@ is null.</li>
 <ul>
 <li><code>str</code> - A string in JSON format. The entire string must contain a single
 JSON object and not multiple objects. The string may not begin with
-a byte-order mark (U + FEFF).</li>
+a byte-order mark (U+FEFF).</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -1387,7 +1379,7 @@ a byte-order mark (U + FEFF).</li>
 <pre>public static CBORObject FromJSONString​(java.lang.String str, CBOREncodeOptions options)
 </pre>
 
-<p>Generates a CBOR object from a text string in JavaScript Object Notation
+<p>Generates a CBOR object from a text string in JavaScript object Notation
  (JSON) format, using the specified options to control the decoding
  process. <p>Note that if a CBOR object is converted to JSON with
  <code>ToJSONString</code>, then the JSON is converted back to CBOR with
@@ -1400,7 +1392,7 @@ a byte-order mark (U + FEFF).</li>
 <ul>
 <li><p><code>str</code> - A string in JSON format. The entire string must contain a single
 JSON object and not multiple objects. The string may not begin with
-a byte-order mark (U + FEFF).</p></li>
+a byte-order mark (U+FEFF).</p></li>
 <li><p><code>options</code> - Specifies options to control the decoding process.</p></li>
 </ul>
 
@@ -1767,15 +1759,13 @@ object.</p></li>
 <pre>public static CBORObject FromObject​(com.upokecenter.numbers.EInteger bigintValue)
 </pre>
 
-<p>Generates a CBOR object from an arbitrary-precision integer.The CBOR object
+<p>Generates a CBOR object from an arbitrary-precision integer. The CBOR object
  is generated as follows: <ul> <li>If the number is null, returns
- CBORObject.Null.</li> <li>Otherwise, if the number expresses
- infinity, not-a-number, or negative zero, the CBOR object will have
- tag 269 and the appropriate format.</li> <li>Otherwise, if the
- number is less than -(2^64) and greater than or equal to 2^64, the
- CBOR object will have the object type Integer and the appropriate
- value.</li> <li>Otherwise, the CBOR object will have tag 2 (zero or
- positive) or 3 (negative) and the appropriate value.</li></ul></p>
+ CBORObject.Null.</li> <li>Otherwise, if the number is greater than
+ or equal to -(2^64) and less than 2^64, the CBOR object will have
+ the object type Integer and the appropriate value.</li>
+ <li>Otherwise, the CBOR object will have tag 2 (zero or positive) or
+ 3 (negative) and the appropriate value.</li></ul></p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2632,12 +2622,12 @@ parsing the data.</p></li>
 <pre>public static CBORObject ReadJSON​(java.io.InputStream stream) throws java.io.IOException
 </pre>
 
-<p>Generates a CBOR object from a data stream in JavaScript Object Notation
+<p>Generates a CBOR object from a data stream in JavaScript object Notation
  (JSON) format. The JSON stream may begin with a byte-order mark
- (U + FEFF). Since version 2.0, the JSON stream can be in UTF-8,
+ (U+FEFF). Since version 2.0, the JSON stream can be in UTF-8,
  UTF-16, or UTF-32 encoding; the encoding is detected by assuming
  that the first character read must be a byte-order mark or a nonzero
- basic character (U + 0001 to U + 007F). (In previous versions, only
+ basic character (U+0001 to U+007F). (In previous versions, only
  UTF-8 was allowed.) <p>If a JSON object has the same key, only the
  last given value will be used for each duplicated key.</p></p>
 
@@ -2669,13 +2659,13 @@ encoding or is not in JSON format.</p></li>
 <pre>public static CBORObject ReadJSON​(java.io.InputStream stream, CBOREncodeOptions options) throws java.io.IOException
 </pre>
 
-<p>Generates a CBOR object from a data stream in JavaScript Object Notation
+<p>Generates a CBOR object from a data stream in JavaScript object Notation
  (JSON) format, using the specified options to control the decoding
- process. The JSON stream may begin with a byte-order mark (U + FEFF).
+ process. The JSON stream may begin with a byte-order mark (U+FEFF).
  Since version 2.0, the JSON stream can be in UTF-8, UTF-16, or
  UTF-32 encoding; the encoding is detected by assuming that the first
  character read must be a byte-order mark or a nonzero basic
- character (U + 0001 to U + 007F). (In previous versions, only UTF-8 was
+ character (U+0001 to U+007F). (In previous versions, only UTF-8 was
  allowed.) <p>By default, if a JSON object has the same key, only the
  last given value will be used for each duplicated key.</p></p>
 
@@ -3142,7 +3132,7 @@ output</code> is null.</p></li>
 <pre>public static void WriteJSON​(java.lang.Object obj, java.io.OutputStream outputStream) throws java.io.IOException
 </pre>
 
-<p>Converts an arbitrary object to a string in JavaScript Object Notation
+<p>Converts an arbitrary object to a string in JavaScript object Notation
  (JSON) format, as in the ToJSONString method, and writes that string
  to a data stream in UTF-8. If the object is convertible to a CBOR
  map, or to a CBOR object that contains CBOR maps, the keys to those
@@ -4622,7 +4612,7 @@ a 32-bit signed integer (<code>int</code>).</p></li>
 <pre>public java.lang.String ToJSONString()
 </pre>
 
-<p>Converts this object to a string in JavaScript Object Notation (JSON)
+<p>Converts this object to a string in JavaScript object Notation (JSON)
  format. See the overload to JSONString taking a JSONOptions argument
  for further information. <p>If the CBOR object contains CBOR maps,
  or is a CBOR map itself, the keys to the map are written out to the
@@ -4645,7 +4635,7 @@ a 32-bit signed integer (<code>int</code>).</p></li>
 <pre>public java.lang.String ToJSONString​(JSONOptions options)
 </pre>
 
-<p>Converts this object to a string in JavaScript Object Notation (JSON)
+<p>Converts this object to a string in JavaScript object Notation (JSON)
  format, using the specified options to control the encoding process.
  This function works not only with arrays and maps, but also
  integers, strings, byte arrays, and other JSON data types. Notes:
@@ -4666,7 +4656,7 @@ a 32-bit signed integer (<code>int</code>).</p></li>
  converted to a JSON string. (The resulting double could overflow to
  infinity, in which case the arbitrary-precision binary
  floating-point number is converted to null.)</li> <li>The string
- will not begin with a byte-order mark (U + FEFF); RFC 8259 (the JSON
+ will not begin with a byte-order mark (U+FEFF); RFC 8259 (the JSON
  specification) forbids placing a byte-order mark at the beginning of
  a JSON string.</li> <li>Byte strings are converted to Base64 URL
  without whitespace or padding by default (see section 4.1 of RFC
@@ -4727,7 +4717,7 @@ object to JSON.</li>
 <p>Returns this CBOR object in string form. The format is intended to be
  human-readable, not machine-readable, the format is not intended to
  be parsed, and the format may change at any time. The returned
- string is not necessarily in JavaScript Object Notation (JSON); to
+ string is not necessarily in JavaScript object Notation (JSON); to
  convert CBOR objects to JSON strings, use the <see cref='PeterO.Cbor.CBORObject.ToJSONString(&#10; PeterO.Cbor.JSONOptions)'/> method instead.</p>
 
 <p><strong>Overrides:</strong></p>
@@ -4779,7 +4769,7 @@ object to JSON.</li>
 <pre>public void WriteJSONTo​(java.io.OutputStream outputStream) throws java.io.IOException
 </pre>
 
-<p>Converts this object to a string in JavaScript Object Notation (JSON)
+<p>Converts this object to a string in JavaScript object Notation (JSON)
  format, as in the ToJSONString method, and writes that string to a
  data stream in UTF-8. If the CBOR object contains CBOR maps, or is a
  CBOR map, the keys to the map are written out to the JSON string in
@@ -4804,7 +4794,7 @@ object to JSON.</li>
 <pre>public void WriteJSONTo​(java.io.OutputStream outputStream, JSONOptions options) throws java.io.IOException
 </pre>
 
-<p>Converts this object to a string in JavaScript Object Notation (JSON)
+<p>Converts this object to a string in JavaScript object Notation (JSON)
  format, as in the ToJSONString method, and writes that string to a
  data stream in UTF-8, using the given JSON options to control the
  encoding process. If the CBOR object contains CBOR maps, or is a

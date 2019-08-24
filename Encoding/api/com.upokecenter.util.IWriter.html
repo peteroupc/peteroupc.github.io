@@ -33,8 +33,8 @@ Writes a portion of a byte array to the data source.</li>
 
 <ul>
 <li><p><code>bytes</code> - A byte array containing the data to write.</p></li>
-<li><p><code>offset</code> - A zero-based index showing where the desired portion of <code>
-bytes</code> begins.</p></li>
+<li><p><code>offset</code> - An index starting at 0 showing where the desired portion of
+<code>bytes</code> begins.</p></li>
 <li><p><code>length</code> - The number of elements in the desired portion of <code>bytes</code>
 (but not more than <code>bytes</code> &#39;s length).</p></li>
 </ul>
@@ -42,11 +42,12 @@ bytes</code> begins.</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.NullPointerException</code> - Should be thrown if the parameter &quot;bytes&quot; is
-null.</p></li>
-<li><p><code>java.lang.IllegalArgumentException</code> - Should be thrown if either &quot;offset&quot; or &quot;length&quot; is
-less than 0 or greater than &quot;bytes&quot; &#39;s length, or &quot;bytes&quot; &#39;s length
-minus &quot;offset&quot; is less than &quot;length&quot;.</p></li>
+<li><p><code>java.lang.NullPointerException</code> - Should be thrown if the parameter <code>
+bytes</code> is null.</p></li>
+<li><p><code>java.lang.IllegalArgumentException</code> - Should be thrown if either <code>offset</code> or
+<code>length</code> is less than 0 or greater than <code>bytes</code> &#39;s
+length, or <code>bytes</code> &#39;s length minus <code>offset</code> is less than
+<code>length</code>.</p></li>
 </ul>
 
 <h3>write</h3>
@@ -60,8 +61,8 @@ minus &quot;offset&quot; is less than &quot;length&quot;.</p></li>
 
 <ul>
 <li><p><code>bytes</code> - A byte array containing the data to write.</p></li>
-<li><p><code>offset</code> - A zero-based index showing where the desired portion of <code>
-bytes</code> begins.</p></li>
+<li><p><code>offset</code> - An index starting at 0 showing where the desired portion of
+<code>bytes</code> begins.</p></li>
 <li><p><code>length</code> - The number of elements in the desired portion of <code>bytes</code>
 (but not more than <code>bytes</code> &#39;s length).</p></li>
 </ul>
@@ -69,11 +70,12 @@ bytes</code> begins.</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.NullPointerException</code> - Should be thrown if the parameter &quot;bytes&quot; is
-null.</p></li>
-<li><p><code>java.lang.IllegalArgumentException</code> - Should be thrown if either &quot;offset&quot; or &quot;length&quot; is
-less than 0 or greater than &quot;bytes&quot; &#39;s length, or &quot;bytes&quot; &#39;s length
-minus &quot;offset&quot; is less than &quot;length&quot;.</p></li>
+<li><p><code>java.lang.NullPointerException</code> - Should be thrown if the parameter <code>
+bytes</code> is null.</p></li>
+<li><p><code>java.lang.IllegalArgumentException</code> - Should be thrown if either <code>offset</code> or
+<code>length</code> is less than 0 or greater than <code>bytes</code> &#39;s
+length, or <code>bytes</code> &#39;s length minus <code>offset</code> is less than
+<code>length</code>.</p></li>
 </ul>
 
 <p><a href="/Encoding/">Back to Encoding start page.</a></p>

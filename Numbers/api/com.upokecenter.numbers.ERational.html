@@ -346,7 +346,7 @@ Converts this object to a text string.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>An arbitrary-precision binary rational number.</li>
+<li>An arbitrary-precision rational number.</li>
 </ul>
 
 <h3>getDenominator</h3>
@@ -466,7 +466,7 @@ returns the diagnostic information.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>An arbitrary-precision binary rational number.</li>
+<li>An arbitrary-precision rational number.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -492,7 +492,7 @@ returns the diagnostic information.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>An arbitrary-precision binary rational number.</li>
+<li>An arbitrary-precision rational number.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -514,7 +514,7 @@ returns the diagnostic information.</li>
 <li><code>diag</code> - An integer, 0 or greater, to use as diagnostic information
 associated with this object. If none is needed, should be zero. To
 get the diagnostic information from another arbitrary-precision
-binary rational number, use that object&#39;s <code>UnsignedNumerator</code>
+rational number, use that object&#39;s <code>UnsignedNumerator</code>
 property.</li>
 </ul>
 
@@ -543,7 +543,7 @@ property.</li>
 <li><p><code>diag</code> - An integer, 0 or greater, to use as diagnostic information
 associated with this object. If none is needed, should be zero. To
 get the diagnostic information from another arbitrary-precision
-binary rational number, use that object&#39;s <code>UnsignedNumerator</code>
+rational number, use that object&#39;s <code>UnsignedNumerator</code>
 property.</p></li>
 <li><p><code>signaling</code> - Whether the return value will be signaling (true) or quiet
 (false).</p></li>
@@ -765,7 +765,7 @@ formatted number string.</li>
  followed by any number of digits, all in any combination of upper
  and lower case.</p> <p>All characters mentioned above are the
  corresponding characters in the Basic Latin range. In particular,
- the digits must be the basic digits 0 to 9 (U + 0030 to U + 0039). The
+ the digits must be the basic digits 0 to 9 (U+0030 to U+0039). The
  string is not allowed to contain white space characters, including
  spaces.</p></p>
 
@@ -773,8 +773,8 @@ formatted number string.</li>
 
 <ul>
 <li><p><code>str</code> - A text string, a portion of which represents a number.</p></li>
-<li><p><code>offset</code> - A zero-based index showing where the desired portion of <code>
-str</code> begins.</p></li>
+<li><p><code>offset</code> - An index starting at 0 showing where the desired portion of
+<code>str</code> begins.</p></li>
 <li><p><code>length</code> - The length, in code units, of the desired portion of <code>
 str</code> (but not more than <code>str</code> &#39;s length).</p></li>
 </ul>
@@ -871,7 +871,7 @@ This implementation returns a positive number if.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>An arbitrary-precision binary rational number.</li>
+<li>An arbitrary-precision rational number.</li>
 </ul>
 
 <h3>Add</h3>
@@ -1214,7 +1214,7 @@ in this class); otherwise, <code>false</code>.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>An arbitrary-precision binary rational number.</li>
+<li>An arbitrary-precision rational number.</li>
 </ul>
 
 <h3>Remainder</h3>

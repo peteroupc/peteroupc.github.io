@@ -120,7 +120,7 @@ is null.</p></li>
 <li><p>2 - Day of the month, from 1 through 31.</p></li>
 <li><p>3 - Hour of the day, from 0 through 23.</p></li>
 <li><p>4 - Minute of the hour, from 0 through 59.</p></li>
-<li><p>5 - Second of the minute, from 0 through 60 (this value can go up to 60 to accommodate leap seconds). (Leap seconds are additional seconds added to adjust international atomic time, or TAI, to an approximation of astronomical time known as coordinated universal time, or UTC.)</p></li>
+<li><p>5 - Second of the minute, from 0 through 59, except this value can be 60 if the hour of the day is 23 and the minute of the hour is 59, to accommodate leap seconds. (Leap seconds are additional seconds added to adjust international atomic time, or TAI, to an approximation of astronomical time known as coordinated universal time, or UTC.)</p></li>
 <li><p>6 - Fractional seconds. The return value will always have this value set to 0, since fractional seconds cannot be expressed in the date-time format specified by RFC 5322. This value cannot be less than 0.</p></li>
 <li><p>7 - Number of minutes to subtract from this date and time to get global time. This number can be positive or negative, but cannot be less than -1439 or greater than 1439.</p></li>
 </ul>

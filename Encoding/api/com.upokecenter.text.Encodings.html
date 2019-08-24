@@ -34,7 +34,7 @@
  is a 128-code-point coded character set that includes the English
  letters and digits, common punctuation and symbols, and control
  characters. As used here, its code points match the code points within
- the Basic Latin block (0-127 or U + 0000 to U + 007F) of the Unicode
+ the Basic Latin block (0-127 or U+0000 to U+007F) of the Unicode
  Standard.</li></ul> <p>There are several kinds of character
  encodings:</p> <ul> <li><b>Single-byte encodings</b> define a coded
  character set that assigns one code point to one byte. Thus, they can
@@ -66,7 +66,7 @@
  Kanji, and an ASCII encoding (with ASCII as the default).</li> <li>(b)
  UTF-7 (not included in the Encoding Standard) is an encoding that uses
  the Unicode Standard&#39;s coded character set, which is encoded using a
- limited subset of ASCII. The plus symbol (U + 002B) is used to shift
+ limited subset of ASCII. The plus symbol (U+002B) is used to shift
  into a UTF-16BE multi-byte encoding (converted to a modified version
  of base-64) to encode other Unicode code points.</li> <li>The Encoding
  Standard also defines a <b>replacement encoding</b>, which causes a
@@ -266,7 +266,7 @@ Converts a portion of a text string to a character input.</li>
 <ul>
 <li><p><code>encoding</code> - An object that implements a given character encoding. Any
 bytes that can&#39;t be decoded are converted to the replacement
-character (U + FFFD).</p></li>
+character (U+FFFD).</p></li>
 <li><p><code>input</code> - An object that implements a byte stream.</p></li>
 </ul>
 
@@ -329,7 +329,7 @@ null.</li>
 
 <p>Reads a byte array from a data source and converts the bytes from a given
  encoding to a text string. Errors in decoding are handled by
- replacing erroneous bytes with the replacement character (U + FFFD).
+ replacing erroneous bytes with the replacement character (U+FFFD).
  <p>In the.NET implementation, this method is implemented as an
  extension method to any object implementing ICharacterEncoding and
  can be called as follows: <code>enc.DecodeToString(bytes)</code>. If the
@@ -371,7 +371,7 @@ null.</li>
 <p>Reads a portion of a byte array from a data source and converts the bytes
  from a given encoding to a text string. Errors in decoding are
  handled by replacing erroneous bytes with the replacement character
- (U + FFFD). <p>In the.NET implementation, this method is implemented
+ (U+FFFD). <p>In the.NET implementation, this method is implemented
  as an extension method to any object implementing ICharacterEncoding
  and can be called as follows: <code>enc.DecodeToString(bytes, offset,
  length)</code>. If the object&#39;s class already has a DecodeToString
@@ -390,8 +390,8 @@ null.</li>
 <li><p><code>enc</code> - An object implementing a character encoding (gives access to an
 encoder and a decoder).</p></li>
 <li><p><code>bytes</code> - A byte array containing the desired portion to read.</p></li>
-<li><p><code>offset</code> - A zero-based index showing where the desired portion of <code>
-bytes</code> begins.</p></li>
+<li><p><code>offset</code> - An index starting at 0 showing where the desired portion of
+<code>bytes</code> begins.</p></li>
 <li><p><code>length</code> - The length, in bytes, of the desired portion of <code>bytes</code>
 (but not more than <code>bytes</code> &#39;s length).</p></li>
 </ul>
@@ -534,7 +534,7 @@ is null.</li>
 <p>Reads Unicode characters from a text string and writes them to a byte array
  encoded in a given character encoding. When reading the string, any
  unpaired surrogate characters are replaced with the replacement
- character (U + FFFD), and when writing to the byte array, any
+ character (U+FFFD), and when writing to the byte array, any
  characters that can&#39;t be encoded are replaced with the byte 0x3f
  (the question mark character). <p>In the.NET implementation, this
  method is implemented as an extension method to any string object
@@ -577,7 +577,7 @@ null.</li>
 <p>Reads Unicode characters from a text string and writes them to a byte array
  encoded in a given character encoding and using the given encoder
  fallback strategy. When reading the string, any unpaired surrogate
- characters are replaced with the replacement character (U + FFFD).
+ characters are replaced with the replacement character (U+FFFD).
  <p>In the.NET implementation, this method is implemented as an
  extension method to any object implementing string and can be called
  as follows: <code>str.EncodeToBytes(enc, htmlFallback)</code>. If the
@@ -688,7 +688,7 @@ is null.</li>
 
 <p>Converts a text string to bytes and writes the bytes to an output byte
  writer. When reading the string, any unpaired surrogate characters
- are replaced with the replacement character (U + FFFD), and when
+ are replaced with the replacement character (U+FFFD), and when
  writing to the byte stream, any characters that can&#39;t be encoded are
  replaced with the byte 0x3f (the question mark character). <p>In
  the.NET implementation, this method is implemented as an extension
@@ -798,7 +798,7 @@ is null.</p></li>
 
 <p>Converts a text string to bytes and writes the bytes to an output data
  stream. When reading the string, any unpaired surrogate characters
- are replaced with the replacement character (U + FFFD), and when
+ are replaced with the replacement character (U+FFFD), and when
  writing to the byte stream, any characters that can&#39;t be encoded are
  replaced with the byte 0x3f (the question mark character). <p>In
  the.NET implementation, this method is implemented as an extension
@@ -1098,12 +1098,12 @@ string.</li>
 
 <ul>
 <li><code>name</code> - A string that names a given character encoding. Can be null. Any
-leading and trailing whitespace (U + 0009, U + 000c, U + 000D, U + 000A,
+leading and trailing whitespace (U+0009, U+000c, U+000D, U+000A,
 U+0010) is removed before resolving the encoding&#39;s name, and
 encoding names are matched using a basic case-insensitive
 comparison. (Two strings are equal in such a comparison, if they
-match after converting the basic upper-case letters A to Z (U + 0041
-to U + 005A) in both strings to basic lower-case letters.) The
+match after converting the basic upper-case letters A to Z (U+0041
+to U+005A) in both strings to basic lower-case letters.) The
 Encoding Standard supports only the following encodings (and defines
 aliases for most of them). <ul> <li> <code>UTF-8</code> - UTF-8 (8-bit
 encoding of the universal coded character set, the encoding
@@ -1140,7 +1140,7 @@ simplified Chinese encodings: <code>GBK</code> and <code>gb18030</code></li>
 UTF-8</code>, <code>UTF-16LE</code>, and <code>UTF-16BE</code> encodings don&#39;t
 encode a byte-order mark at the start of the text (doing so is not
 recommended for <code>UTF-8</code>, while in <code>UTF-16LE</code> and <code>
-UTF-16BE</code>, the byte-order mark character U + FEFF is treated as an
+UTF-16BE</code>, the byte-order mark character U+FEFF is treated as an
 ordinary character, unlike in the UTF-16 encoding form). The
 Encoding Standard aliases <code>UTF-16</code> to <code>UTF-16LE</code> &quot;to
 deal with deployed content&quot;.</p>.</li>
@@ -1166,11 +1166,11 @@ unsupported.</li>
 
 <ul>
 <li><code>name</code> - A string naming a character encoding. Can be null. Any leading
-and trailing whitespace (U + 0009, U + 000c, U + 000D, U + 000A, U + 0010) is
+and trailing whitespace (U+0009, U+000c, U+000D, U+000A, U+0010) is
 removed before resolving the encoding&#39;s name, and encoding names are
 matched using a basic case-insensitive comparison. (Two strings are
 equal in such a comparison, if they match after converting the basic
-upper-case letters A to Z (U + 0041 to U + 005A) in both strings to
+upper-case letters A to Z (U+0041 to U+005A) in both strings to
 basic lower-case letters.) Uses a modified version of the rules in
 the Encoding Standard to better conform, in some cases, to email
 standards like MIME. Encoding names and aliases not registered with
@@ -1184,7 +1184,7 @@ method. <ul> <li> <code>US-ASCII</code> - ASCII single-byte encoding,
 rather than an alias to <code>windows-1252</code> as specified in the
 Encoding Standard. The coded character set&#39;s code points match those
 in the Unicode Standard&#39;s Basic Latin block (0-127 or U+0000 to
-U + 007F). This method name <code>ascii</code> is treated as an alias to
+U+007F). This method name <code>ascii</code> is treated as an alias to
 <code>US-ASCII</code> even though it is not registered with IANA as a
 charset name and RFC 2046 (part of MIME) reserves the name &quot;ASCII&quot;.
 A future version of this method may stop supporting the alias <code>
@@ -1192,7 +1192,7 @@ ascii</code>.</li> <li> <code>ISO-8859-1</code> - Latin-1 single-byte encoding,
 rather than an alias to <code>windows-1252</code> as specified in the
 Encoding Standard. The coded character set&#39;s code points match those
 in the Unicode Standard&#39;s Basic Latin and Latin-1 Supplement blocks
-(0-255 or U + 0000 to U + 00FF).</li> <li> <code>UTF-16</code> - UTF-16
+(0-255 or U+0000 to U+00FF).</li> <li> <code>UTF-16</code> - UTF-16
 without a fixed byte order, rather than an alias to <code>UTF-16LE</code>
 as specified in the Encoding Standard. The byte order is little
 endian if the byte stream starts with 0xff 0xfe; otherwise, big
@@ -1224,7 +1224,7 @@ unsupported.</li>
 
 <p>Converts a text string to a byte array encoded in a given character
  encoding. When reading the string, any unpaired surrogate characters
- are replaced with the replacement character (U + FFFD), and when
+ are replaced with the replacement character (U+FFFD), and when
  writing to the byte array, any characters that can&#39;t be encoded are
  replaced with the byte 0x3f (the question mark character). <p>In
  the.NET implementation, this method is implemented as an extension
@@ -1261,7 +1261,7 @@ encoding.</li>
 
 <p>Converts a text string to a byte array using the given character encoder.
  When reading the string, any unpaired surrogate characters are
- replaced with the replacement character (U + FFFD), and when writing
+ replaced with the replacement character (U+FFFD), and when writing
  to the byte array, any characters that can&#39;t be encoded are replaced
  with the byte 0x3f (the question mark character). <p>In the.getNET()
  implementation, this method is implemented as an extension method to
@@ -1305,7 +1305,7 @@ is null.</li>
  used to encode the text to bytes, or to read the string code point
  by code point, among other things. When reading the string, any
  unpaired surrogate characters are replaced with the replacement
- character (U + FFFD). <p>In the.NET implementation, this method is
+ character (U+FFFD). <p>In the.NET implementation, this method is
  implemented as an extension method to any string object and can be
  called as follows: <code>str.StringToInput(offset, length)</code>. If the
  object&#39;s class already has a StringToInput method with the same
@@ -1343,7 +1343,7 @@ is null.</li>
  input can then be used to encode the text to bytes, or to read the
  string code point by code point, among other things. When reading
  the string, any unpaired surrogate characters are replaced with the
- replacement character (U + FFFD). <p>In the.NET implementation, this
+ replacement character (U+FFFD). <p>In the.NET implementation, this
  method is implemented as an extension method to any string object
  and can be called as follows: <code>str.StringToInput(offset,
  length)</code>. If the object&#39;s class already has a StringToInput
@@ -1359,8 +1359,8 @@ is null.</li>
 
 <ul>
 <li><p><code>str</code> - The parameter <code>str</code> is a text string.</p></li>
-<li><p><code>offset</code> - A zero-based index showing where the desired portion of <code>
-str</code> begins.</p></li>
+<li><p><code>offset</code> - An index starting at 0 showing where the desired portion of
+<code>str</code> begins.</p></li>
 <li><p><code>length</code> - The length, in code units, of the desired portion of <code>
 str</code> (but not more than <code>str</code> &#39;s length).</p></li>
 </ul>

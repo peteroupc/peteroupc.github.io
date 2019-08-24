@@ -19,19 +19,19 @@
 <ul>
 <li><code>CharacterReader​(java.io.InputStream stream) CharacterReader</code><br>
 Initializes a new instance of the CharacterReader class; will read the stream as
-UTF-8, skip the byte-order mark (U + FEFF) if it appears first in the
+UTF-8, skip the byte-order mark (U+FEFF) if it appears first in the
 stream, and replace invalid byte sequences with replacement
-characters (U + FFFD).</li>
+characters (U+FFFD).</li>
 <li><code>CharacterReader​(java.io.InputStream stream,
            int mode) CharacterReader</code><br>
 Initializes a new instance of the CharacterReader class; will skip the
-byte-order mark (U + FEFF) if it appears first in the stream and
-replace invalid byte sequences with replacement characters (U + FFFD).</li>
+byte-order mark (U+FEFF) if it appears first in the stream and
+replace invalid byte sequences with replacement characters (U+FFFD).</li>
 <li><code>CharacterReader​(java.io.InputStream stream,
            int mode,
            boolean errorThrow) CharacterReader</code><br>
 Initializes a new instance of the CharacterReader class; will skip the
-byte-order mark (U + FEFF) if it appears first in the stream and a
+byte-order mark (U+FEFF) if it appears first in the stream and a
 UTF-8 stream is detected.</li>
 <li><code>CharacterReader​(java.io.InputStream stream,
            int mode,
@@ -70,19 +70,19 @@ Reads the next character from a Unicode stream or a string.</li>
 <ul>
 <li><code>CharacterReader​(java.io.InputStream stream) CharacterReader</code><br>
 Initializes a new instance of the CharacterReader class; will read the stream as
-UTF-8, skip the byte-order mark (U + FEFF) if it appears first in the
+UTF-8, skip the byte-order mark (U+FEFF) if it appears first in the
 stream, and replace invalid byte sequences with replacement
-characters (U + FFFD).</li>
+characters (U+FFFD).</li>
 <li><code>CharacterReader​(java.io.InputStream stream,
            int mode) CharacterReader</code><br>
 Initializes a new instance of the CharacterReader class; will skip the
-byte-order mark (U + FEFF) if it appears first in the stream and
-replace invalid byte sequences with replacement characters (U + FFFD).</li>
+byte-order mark (U+FEFF) if it appears first in the stream and
+replace invalid byte sequences with replacement characters (U+FFFD).</li>
 <li><code>CharacterReader​(java.io.InputStream stream,
            int mode,
            boolean errorThrow) CharacterReader</code><br>
 Initializes a new instance of the CharacterReader class; will skip the
-byte-order mark (U + FEFF) if it appears first in the stream and a
+byte-order mark (U+FEFF) if it appears first in the stream and a
 UTF-8 stream is detected.</li>
 <li><code>CharacterReader​(java.io.InputStream stream,
            int mode,
@@ -137,7 +137,7 @@ Initializes a new instance of the CharacterReader class.</li>
 <ul>
 <li><p><code>str</code> - The parameter <code>str</code> is a text string.</p></li>
 <li><p><code>skipByteOrderMark</code> - If true and the first character in the string is
-U + FEFF, skip that character.</p></li>
+U+FEFF, skip that character.</p></li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -158,9 +158,9 @@ U + FEFF, skip that character.</p></li>
 <ul>
 <li><p><code>str</code> - The parameter <code>str</code> is a text string.</p></li>
 <li><p><code>skipByteOrderMark</code> - If true and the first character in the string is
-U + FEFF, skip that character.</p></li>
+U+FEFF, skip that character.</p></li>
 <li><p><code>errorThrow</code> - When encountering invalid encoding, throw an exception if
-this parameter is true, or replace it with U + FFFD (replacement
+this parameter is true, or replace it with U+FFFD (replacement
 character) if this parameter is false.</p></li>
 </ul>
 
@@ -181,8 +181,19 @@ character) if this parameter is false.</p></li>
 
 <ul>
 <li><p><code>str</code> - The parameter <code>str</code> is a text string.</p></li>
-<li><p><code>offset</code> - The parameter <code>offset</code> is a 32-bit signed integer.</p></li>
-<li><p><code>length</code> - The parameter <code>length</code> is a 32-bit signed integer.</p></li>
+<li><p><code>offset</code> - An index, starting at 0, showing where the desired portion of
+<code>str</code> begins.</p></li>
+<li><p><code>length</code> - The length, in code units, of the desired portion of <code>
+str</code> (but not more than <code>str</code> &#39;s length).</p></li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>java.lang.IllegalArgumentException</code> - Either &quot;offset&quot; or &quot;length&quot; is less than 0 or
+greater than &quot;str&quot;&#39;s length, or &quot;str&quot;&#39;s length minus &quot;offset&quot; is
+less than &quot;length&quot;.</p></li>
+<li><p><code>java.lang.NullPointerException</code> - The parameter <code>str</code> is null.</p></li>
 </ul>
 
 <h3>CharacterReader</h3>
@@ -199,9 +210,9 @@ character) if this parameter is false.</p></li>
 <li><p><code>offset</code> - The parameter <code>offset</code> is a 32-bit signed integer.</p></li>
 <li><p><code>length</code> - The parameter <code>length</code> is a 32-bit signed integer.</p></li>
 <li><p><code>skipByteOrderMark</code> - If true and the first character in the string
-portion is U + FEFF, skip that character.</p></li>
+portion is U+FEFF, skip that character.</p></li>
 <li><p><code>errorThrow</code> - When encountering invalid encoding, throw an exception if
-this parameter is true, or replace it with U + FFFD (replacement
+this parameter is true, or replace it with U+FFFD (replacement
 character) if this parameter is false.</p></li>
 </ul>
 
@@ -217,9 +228,9 @@ character) if this parameter is false.</p></li>
 </pre>
 
 <p>Initializes a new instance of the <code>CharacterReader</code> class; will read the stream as
- UTF-8, skip the byte-order mark (U + FEFF) if it appears first in the
+ UTF-8, skip the byte-order mark (U+FEFF) if it appears first in the
  stream, and replace invalid byte sequences with replacement
- characters (U + FFFD).</p>
+ characters (U+FFFD).</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -239,7 +250,7 @@ character) if this parameter is false.</p></li>
 </pre>
 
 <p>Initializes a new instance of the <code>CharacterReader</code> class; will skip the
- byte-order mark (U + FEFF) if it appears first in the stream and a
+ byte-order mark (U+FEFF) if it appears first in the stream and a
  UTF-8 stream is detected.</p>
 
 <p><strong>Parameters:</strong></p>
@@ -248,8 +259,8 @@ character) if this parameter is false.</p></li>
 <li><p><code>stream</code> - A readable data stream.</p></li>
 <li><p><code>mode</code> - The method to use when detecting encodings other than UTF-8 in
 the byte stream. This usually involves checking whether the stream
-begins with a byte-order mark (BOM, U + FEFF) or a non-zero basic code
-point (U + 0001 to U + 007F) before reading the rest of the stream. This
+begins with a byte-order mark (BOM, U+FEFF) or a non-zero basic code
+point (U+0001 to U+007F) before reading the rest of the stream. This
 value can be one of the following: <ul> <li>0: UTF-8 only.</li>
 <li>1: Detect UTF-16 using BOM or non-zero basic code point,
 otherwise UTF-8.</li> <li>2: Detect UTF-16/UTF-32 using BOM or
@@ -258,7 +269,7 @@ first.)</li> <li>3: Detect UTF-16 using BOM, otherwise UTF-8.</li>
 <li>4: Detect UTF-16/UTF-32 using BOM, otherwise UTF-8. (Tries to
 detect UTF-32 first.)</li></ul>.</p></li>
 <li><p><code>errorThrow</code> - When encountering invalid encoding, throw an exception if
-this parameter is true, or replace it with U + FFFD (replacement
+this parameter is true, or replace it with U+FFFD (replacement
 character) if this parameter is false.</p></li>
 </ul>
 
@@ -268,8 +279,8 @@ character) if this parameter is false.</p></li>
 </pre>
 
 <p>Initializes a new instance of the <code>CharacterReader</code> class; will skip the
- byte-order mark (U + FEFF) if it appears first in the stream and
- replace invalid byte sequences with replacement characters (U + FFFD).</p>
+ byte-order mark (U+FEFF) if it appears first in the stream and
+ replace invalid byte sequences with replacement characters (U+FFFD).</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -277,8 +288,8 @@ character) if this parameter is false.</p></li>
 <li><p><code>stream</code> - A readable byte stream.</p></li>
 <li><p><code>mode</code> - The method to use when detecting encodings other than UTF-8 in
 the byte stream. This usually involves checking whether the stream
-begins with a byte-order mark (BOM, U + FEFF) or a non-zero basic code
-point (U + 0001 to U + 007F) before reading the rest of the stream. This
+begins with a byte-order mark (BOM, U+FEFF) or a non-zero basic code
+point (U+0001 to U+007F) before reading the rest of the stream. This
 value can be one of the following: <ul> <li>0: UTF-8 only.</li>
 <li>1: Detect UTF-16 using BOM or non-zero basic code point,
 otherwise UTF-8.</li> <li>2: Detect UTF-16/UTF-32 using BOM or
@@ -307,8 +318,8 @@ detect UTF-32 first.)</li></ul>.</p></li>
 <li><p><code>stream</code> - A readable byte stream.</p></li>
 <li><p><code>mode</code> - The method to use when detecting encodings other than UTF-8 in
 the byte stream. This usually involves checking whether the stream
-begins with a byte-order mark (BOM, U + FEFF) or a non-zero basic code
-point (U + 0001 to U + 007F) before reading the rest of the stream. This
+begins with a byte-order mark (BOM, U+FEFF) or a non-zero basic code
+point (U+0001 to U+007F) before reading the rest of the stream. This
 value can be one of the following: <ul> <li>0: UTF-8 only.</li>
 <li>1: Detect UTF-16 using BOM or non-zero basic code point,
 otherwise UTF-8.</li> <li>2: Detect UTF-16/UTF-32 using BOM or
@@ -318,7 +329,7 @@ first.)</li> <li>3: Detect UTF-16 using BOM, otherwise UTF-8.</li>
 detect UTF-32 first.)</li></ul>.</p></li>
 <li><p><code>errorThrow</code> - If true, will throw an exception if invalid byte sequences
 (in the detected encoding) are found in the byte stream. If false,
-replaces those byte sequences with replacement characters (U + FFFD)
+replaces those byte sequences with replacement characters (U+FFFD)
 as the stream is read.</p></li>
 <li><p><code>dontSkipUtf8Bom</code> - If the stream is detected as UTF-8 and this parameter
 is <code>true</code>, won&#39;t skip the BOM character if it occurs at the
@@ -348,8 +359,8 @@ start of the stream.</p></li>
 
 <ul>
 <li><p><code>chars</code> - An array where the code points that were read will be stored.</p></li>
-<li><p><code>index</code> - A zero-based index showing where the desired portion of <code>
-chars</code> begins.</p></li>
+<li><p><code>index</code> - An index starting at 0 showing where the desired portion of
+<code>chars</code> begins.</p></li>
 <li><p><code>length</code> - The number of elements in the desired portion of <code>chars</code>
 (but not more than <code>chars</code> &#39;s length).</p></li>
 </ul>

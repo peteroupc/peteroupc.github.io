@@ -235,6 +235,22 @@ bignum with length 0 as having a value of -1.</li>
 
 <h2>Release Notes</h2>
 
+<h3>Version 4.0.0-beta2:</h3>
+
+<p>The features in this version include:</p>
+
+<ul>
+<li>The CBOR library no longer stores numbers in a special form beyond the CBOR data model, which represents all &quot;65-bit&quot; signed integers and all &quot;double&quot; values.  This means the CBOR library no longer stores certain numbers as EDecimal, EInteger, EFloat, etc., rather than as tagged CBOR objects.</li>
+<li>CBORObject.CompareTo now compares objects using the default deterministic encoding comparison in the draft revision of the CBOR specification, and no longer treats numbers (objects with the former type CBORType.Number) as a special class.</li>
+<li>CBORType.Number is deprecated; CBORObjects no longer have this type.  In its place, certain numbers now have new CBORTypes Integer or FloatingPoint.</li>
+<li>CBORObject now stores floating-point numbers internally as the bits that make them up, rather than as <code>double</code>s, to avoid data loss in conversions.</li>
+<li>Methods were added to CBORObject to read and write floating-point numbers in terms of their bit patterns rather than as <code>double</code>s or <code>float</code>s.</li>
+<li>Ctap2Canonical was made more strict and now works when decoding CBOR objects.</li>
+<li>Added ReadSequence and DecodeSequence to CBORObject for reading CBOR sequences.</li>
+<li>New CBORNumber class for storing numbers representable in CBOR.  The new CBORObject.IsNumber property checks whether a CBOR object represents a number.</li>
+<li>Bug fixes</li>
+</ul>
+
 <h3>Version 4.0.0-beta1:</h3>
 
 <ul>

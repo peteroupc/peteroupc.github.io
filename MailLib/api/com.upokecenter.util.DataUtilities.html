@@ -20,14 +20,14 @@
  <code>char</code> s. These sequences are well-formed under UTF-16, a
  16-bit encoding form of Unicode, except if they contain unpaired
  surrogate code points. (A surrogate code point is used to encode
- supplementary characters, those with code points U + 10000 or higher,
- in UTF-16. A surrogate pair is a high surrogate, U + D800 to U + DBFF,
- followed by a low surrogate, U + DC00 to U + DFFF. An unpaired surrogate
+ supplementary characters, those with code points U+10000 or higher,
+ in UTF-16. A surrogate pair is a high surrogate, U+D800 to U+DBFF,
+ followed by a low surrogate, U+DC00 to U+DFFF. An unpaired surrogate
  code point is a surrogate not appearing in a surrogate pair.) Many
  of the methods in this class allow setting the behavior to follow
  when unpaired surrogate code points are found in text strings, such
  as throwing an error or treating the unpaired surrogate as a
- replacement character (U + FFFD).</p></p>
+ replacement character (U+FFFD).</p></p>
 
 <h2>Methods</h2>
 
@@ -88,10 +88,10 @@ string.</li>
             boolean replace)</code><br>
 Reads a string in UTF-8 encoding from a data stream and returns that string.</li>
 <li><code>static java.lang.String ToLowerCaseAscii​(java.lang.String str)</code><br>
-Returns a string with the basic upper-case letters A to Z (U + 0041 to U + 005A)
+Returns a string with the basic upper-case letters A to Z (U+0041 to U+005A)
 converted to lower-case.</li>
 <li><code>static java.lang.String ToUpperCaseAscii​(java.lang.String str)</code><br>
-Returns a string with the basic lower-case letters A to Z (U + 0061 to U + 007A)
+Returns a string with the basic lower-case letters A to Z (U+0061 to U+007A)
 converted to upper-case.</li>
 <li><code>static int WriteUtf8​(java.lang.String str,
      int offset,
@@ -126,7 +126,7 @@ Writes a string in UTF-8 encoding to a data stream.</li>
 <ul>
 <li><p><code>bytes</code> - A byte array containing text encoded in UTF-8.</p></li>
 <li><p><code>replace</code> - If true, replaces invalid encoding with the replacement
-character (U + FFFD). If false, stops processing when invalid UTF-8 is
+character (U+FFFD). If false, stops processing when invalid UTF-8 is
 seen.</p></li>
 </ul>
 
@@ -185,7 +185,7 @@ is false.</p></li>
 <li><p><code>offset</code> - Offset into the byte array to start reading.</p></li>
 <li><p><code>bytesCount</code> - Length, in bytes, of the UTF-8 text string.</p></li>
 <li><p><code>replace</code> - If true, replaces invalid encoding with the replacement
-character (U + FFFD). If false, stops processing when invalid UTF-8 is
+character (U+FFFD). If false, stops processing when invalid UTF-8 is
 seen.</p></li>
 </ul>
 
@@ -212,7 +212,7 @@ greater than the length of &quot;data&quot; .</p></li>
 </pre>
 
 <p>Encodes a string in UTF-8 as a byte array. This method does not insert a
- byte-order mark (U + FEFF) at the beginning of the encoded byte
+ byte-order mark (U+FEFF) at the beginning of the encoded byte
  array.</p> <p>REMARK: It is not recommended to use
  <code>Encoding.UTF8.GetBytes</code> in.getNET(), or the <code>getBytes()</code>
  method in Java to do this. For instance, <code>getBytes()</code> encodes
@@ -224,7 +224,7 @@ greater than the length of &quot;data&quot; .</p></li>
 <ul>
 <li><p><code>str</code> - The parameter <code>str</code> is a text string.</p></li>
 <li><p><code>replace</code> - If true, replaces unpaired surrogate code points with the
-replacement character (U + FFFD). If false, stops processing when an
+replacement character (U+FFFD). If false, stops processing when an
 unpaired surrogate code point is seen.</p></li>
 </ul>
 
@@ -248,7 +248,7 @@ point and <code>replace</code> is false, or an internal error occurred.</p></li>
 </pre>
 
 <p>Encodes a string in UTF-8 as a byte array. This method does not insert a
- byte-order mark (U + FEFF) at the beginning of the encoded byte
+ byte-order mark (U+FEFF) at the beginning of the encoded byte
  array.</p> <p>REMARK: It is not recommended to use
  <code>Encoding.UTF8.GetBytes</code> in.getNET(), or the <code>getBytes()</code>
  method in Java to do this. For instance, <code>getBytes()</code> encodes
@@ -260,7 +260,7 @@ point and <code>replace</code> is false, or an internal error occurred.</p></li>
 <ul>
 <li><p><code>str</code> - The parameter <code>str</code> is a text string.</p></li>
 <li><p><code>replace</code> - If true, replaces unpaired surrogate code points with the
-replacement character (U + FFFD). If false, stops processing when an
+replacement character (U+FFFD). If false, stops processing when an
 unpaired surrogate code point is seen.</p></li>
 <li><p><code>lenientLineBreaks</code> - If true, replaces carriage return (CR) not followed
 by line feed (LF) and LF not preceded by CR with CR-LF pairs.</p></li>
@@ -292,7 +292,7 @@ point and <code>replace</code> is false, or an internal error occurred.</p></li>
 <ul>
 <li><p><code>str</code> - The parameter <code>str</code> is a text string.</p></li>
 <li><p><code>replace</code> - If true, treats unpaired surrogate code points as having 3
-UTF-8 bytes (the UTF-8 length of the replacement character U + FFFD).</p></li>
+UTF-8 bytes (the UTF-8 length of the replacement character U+FFFD).</p></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -328,7 +328,7 @@ UTF-8 bytes (the UTF-8 length of the replacement character U + FFFD).</p></li>
 <ul>
 <li>The Unicode code point at the previous position. Returns -1 if
 <code>index</code> is 0 or less, or is greater than the string&#39;s length.
-Returns the replacement character (U + FFFD) if the code point at the
+Returns the replacement character (U+FFFD) if the code point at the
 previous position is an unpaired surrogate code point. If the return
 value is 65536 (0x10000) or greater, the code point takes up two
 UTF-16 code units.</li>
@@ -354,7 +354,7 @@ UTF-16 code units.</li>
 <li><p><code>index</code> - Index of the current position into the string.</p></li>
 <li><p><code>surrogateBehavior</code> - Specifies what kind of value to return if the
 previous code point is an unpaired surrogate code point: if 0,
-return the replacement character (U + FFFD); if 1, return the value of
+return the replacement character (U+FFFD); if 1, return the value of
 the surrogate code point; if neither 0 nor 1, return -1.</p></li>
 </ul>
 
@@ -394,7 +394,7 @@ point takes up two UTF-16 code units.</li>
 <ul>
 <li>The Unicode code point at the given position. Returns -1 if <code>
 index</code> is 0 or less, or is greater than the string&#39;s length. Returns
-the replacement character (U + FFFD) if the code point at that
+the replacement character (U+FFFD) if the code point at that
 position is an unpaired surrogate code point. If the return value is
 65536 (0x10000) or greater, the code point takes up two UTF-16 code
 units.</li>
@@ -427,7 +427,7 @@ units.</li>
 <li><p><code>index</code> - Index of the current position into the string.</p></li>
 <li><p><code>surrogateBehavior</code> - Specifies what kind of value to return if the code
 point at the given index is an unpaired surrogate code point: if 0,
-return the replacement character (U + FFFD); if 1, return the value of
+return the replacement character (U+FFFD); if 1, return the value of
 the surrogate code point; if neither 0 nor 1, return -1.</p></li>
 </ul>
 
@@ -453,7 +453,7 @@ two UTF-16 code units.</li>
 <pre>public static java.lang.String ToLowerCaseAscii​(java.lang.String str)
 </pre>
 
-<p>Returns a string with the basic upper-case letters A to Z (U + 0041 to U + 005A)
+<p>Returns a string with the basic upper-case letters A to Z (U+0041 to U+005A)
  converted to lower-case. Other characters remain unchanged.</p>
 
 <p><strong>Parameters:</strong></p>
@@ -473,7 +473,7 @@ two UTF-16 code units.</li>
 <pre>public static java.lang.String ToUpperCaseAscii​(java.lang.String str)
 </pre>
 
-<p>Returns a string with the basic lower-case letters A to Z (U + 0061 to U + 007A)
+<p>Returns a string with the basic lower-case letters A to Z (U+0061 to U+007A)
  converted to upper-case. Other characters remain unchanged.</p>
 
 <p><strong>Parameters:</strong></p>
@@ -530,7 +530,7 @@ begins.</p></li>
 <li><p><code>length</code> - The length of the string portion to write.</p></li>
 <li><p><code>stream</code> - A writable data stream.</p></li>
 <li><p><code>replace</code> - If true, replaces unpaired surrogate code points with the
-replacement character (U + FFFD). If false, stops processing when an
+replacement character (U+FFFD). If false, stops processing when an
 unpaired surrogate code point is seen.</p></li>
 </ul>
 
@@ -569,7 +569,7 @@ begins.</p></li>
 <li><p><code>length</code> - The length of the string portion to write.</p></li>
 <li><p><code>stream</code> - A writable data stream.</p></li>
 <li><p><code>replace</code> - If true, replaces unpaired surrogate code points with the
-replacement character (U + FFFD). If false, stops processing when an
+replacement character (U+FFFD). If false, stops processing when an
 unpaired surrogate code point is seen.</p></li>
 <li><p><code>lenientLineBreaks</code> - If true, replaces carriage return (CR) not followed
 by line feed (LF) and LF not preceded by CR with CR-LF pairs.</p></li>
@@ -607,7 +607,7 @@ is greater than the string&#39;s length.</p></li>
 <li><p><code>str</code> - A string to write.</p></li>
 <li><p><code>stream</code> - A writable data stream.</p></li>
 <li><p><code>replace</code> - If true, replaces unpaired surrogate code points with the
-replacement character (U + FFFD). If false, stops processing when an
+replacement character (U+FFFD). If false, stops processing when an
 unpaired surrogate code point is seen.</p></li>
 </ul>
 
@@ -642,7 +642,7 @@ stream</code> is null.</p></li>
 <li><p><code>builder</code> - A string builder object where the resulting string will be
 stored.</p></li>
 <li><p><code>replace</code> - If true, replaces invalid encoding with the replacement
-character (U + FFFD). If false, stops processing when invalid UTF-8 is
+character (U+FFFD). If false, stops processing when invalid UTF-8 is
 seen.</p></li>
 </ul>
 
@@ -670,7 +670,7 @@ greater than the length of <code>data</code>.</p></li>
 
 <p>Reads a string in UTF-8 encoding from a data stream in full and returns that
  string. Replaces invalid encoding with the replacement character
- (U + FFFD).</p>
+ (U+FFFD).</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -705,7 +705,7 @@ greater than the length of <code>data</code>.</p></li>
 <li><p><code>bytesCount</code> - The length, in bytes, of the string. If this is less than
 0, this function will read until the end of the stream.</p></li>
 <li><p><code>replace</code> - If true, replaces invalid encoding with the replacement
-character (U + FFFD). If false, throws an error if an unpaired
+character (U+FFFD). If false, throws an error if an unpaired
 surrogate code point is seen.</p></li>
 </ul>
 
@@ -739,7 +739,7 @@ valid UTF-8 and <code>replace</code> is false.</p></li>
 <li><p><code>builder</code> - A string builder object where the resulting string will be
 stored.</p></li>
 <li><p><code>replace</code> - If true, replaces invalid encoding with the replacement
-character (U + FFFD). If false, stops processing when an unpaired
+character (U+FFFD). If false, stops processing when an unpaired
 surrogate code point is seen.</p></li>
 </ul>
 

@@ -817,7 +817,7 @@ Returns the unit in the last place.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>An EDecimal object.</li>
+<li>An arbitrary-precision decimal floating-point number.</li>
 </ul>
 
 <h3>getExponent</h3>
@@ -983,8 +983,9 @@ exponent</code> is null.</li>
 <ul>
 <li><code>diag</code> - An integer, 0 or greater, to use as diagnostic information
 associated with this object. If none is needed, should be zero. To
-get the diagnostic information from another EDecimal object, use
-that object&#39;s <code>UnsignedMantissa</code> property.</li>
+get the diagnostic information from another arbitrary-precision
+decimal floating-point number, use that object&#39;s <code>
+UnsignedMantissa</code> property.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -1005,8 +1006,9 @@ that object&#39;s <code>UnsignedMantissa</code> property.</li>
 <ul>
 <li><p><code>diag</code> - An integer, 0 or greater, to use as diagnostic information
 associated with this object. If none is needed, should be zero. To
-get the diagnostic information from another EDecimal object, use
-that object&#39;s <code>UnsignedMantissa</code> property.</p></li>
+get the diagnostic information from another arbitrary-precision
+decimal floating-point number, use that object&#39;s <code>
+UnsignedMantissa</code> property.</p></li>
 <li><p><code>signaling</code> - Whether the return value will be signaling (true) or quiet
 (false).</p></li>
 <li><p><code>negative</code> - Whether the return value is negative.</p></li>
@@ -1298,8 +1300,8 @@ given string.</li>
 
 <ul>
 <li><p><code>str</code> - A string that represents a number.</p></li>
-<li><p><code>offset</code> - A zero-based index showing where the desired portion of <code>
-str</code> begins.</p></li>
+<li><p><code>offset</code> - An index starting at 0 showing where the desired portion of
+<code>str</code> begins.</p></li>
 <li><p><code>length</code> - The length, in code units, of the desired portion of <code>
 str</code> (but not more than <code>str</code> &#39;s length).</p></li>
 </ul>
@@ -1341,15 +1343,15 @@ length minus <code>offset</code> is less than <code>length</code>.</p></li>
  by any number of digits, all in any combination of upper and lower
  case.</p> <p>All characters mentioned above are the corresponding
  characters in the Basic Latin range. In particular, the digits must
- be the basic digits 0 to 9 (U + 0030 to U + 0039). The string is not
+ be the basic digits 0 to 9 (U+0030 to U+0039). The string is not
  allowed to contain white space characters, including spaces.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
 <li><p><code>str</code> - A text string, a portion of which represents a number.</p></li>
-<li><p><code>offset</code> - A zero-based index showing where the desired portion of <code>
-str</code> begins.</p></li>
+<li><p><code>offset</code> - An index starting at 0 showing where the desired portion of
+<code>str</code> begins.</p></li>
 <li><p><code>length</code> - The length, in code units, of the desired portion of <code>
 str</code> (but not more than <code>str</code> &#39;s length).</p></li>
 <li><p><code>ctx</code> - An arithmetic context to control the precision, rounding, and
@@ -2455,7 +2457,8 @@ dividend is nonzero. Signals FlagInvalid and returns not-a-number
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>divisor</code> - The parameter <code>divisor</code> is an EDecimal object.</p></li>
+<li><p><code>divisor</code> - The parameter <code>divisor</code> is an arbitrary-precision
+decimal floating-point number.</p></li>
 <li><p><code>ctx</code> - The parameter <code>ctx</code> is an EContext object.</p></li>
 </ul>
 
@@ -3135,7 +3138,7 @@ exact because it would have a nonterminating decimal expansion.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>An EDecimal object.</li>
+<li>An arbitrary-precision decimal floating-point number.</li>
 </ul>
 
 <h3>MultiplyAndAdd</h3>
