@@ -21,7 +21,7 @@ Applications that wish to support internationalized file names can follow the su
 
 ### Suggestions for User-Facing Files
 
-User-facing files are files created by end users or introduced into the application by end users.  End users may want to name files in their language, making it necessary for many applications to support internationalized file names.
+_User-facing files_ are files created by end users or introduced into the application by end users.  End users may want to name files in their language, making it necessary for many applications to support internationalized file names.
 
 The MailLib library includes a [`MakeFilename`](https://peteroupc.github.io/MailLib/docs/PeterO.Mail.ContentDisposition.html#MakeFilename_string) method that converts a title or file name to a suitable name for saving data to a file.  `MakeFilename` does a number of things to maximize the chance that the name can be used as is in most file systems.
 
@@ -31,13 +31,14 @@ In one possible use of `MakeFilename`, a word-processing application could creat
 
 ### Suggestions for Non-User-Facing Files
 
-Internal files are files used by the application only and not exposed to end users.
+_Internal files_ are files used by the application only and not exposed directly to end users.
 
 To maximize compatibility with file system conventions, applications should limit the names of internal files to names that have the following characters and are left unchanged by the [`MakeFilename`](https://peteroupc.github.io/MailLib/docs/PeterO.Mail.ContentDisposition.html#MakeFilename_string) method:
 
 - Basic lower-case letters (U+0061 to U+007A).
 - Basic digits (U+0030 to U+0039).
-- Hyphen, underscore, full stop ("-", "_", ".").
+- Hyphen, full stop ("-", ".").
+- Underscore ("_") if portability is not a concern (see RFC 2049 sec. 3).
 
 In addition, such file names should not begin or end with "-" or "." or have two or more consecutive full stops ("."). (Basic upper-case letters, U+0041 to U+005a, are not suggested here because different file systems have different rules for case comparisons.)
 
@@ -59,3 +60,7 @@ Different file systems have different limits in the sizes of file names.  To max
 The issue of normalization can come into play if an application supports internationalized file names.
 
 The string returned by `MakeFilename` is normalized using Unicode normalization form C (NFC) (see the [PeterO.Text.NormalizerInput](https://peteroupc.github.io/MailLib/docs/PeterO.Text.NormalizerInput.html) class for details). Although most file systems preserve the normalization of file names, there is one notable exception: The HFS Plus file system (on macOS before High Sierra) stores file names using a modified version of normalization form D (NFD) in which certain code points are not decomposed, including all base + slash code points, which are the only composed code points in Unicode that are decomposed in NFD but not in HFS Plus's version of NFD. If the filename will be used to save a file to an HFS Plus storage device, it is enough to normalize the return value with NFD for this purpose (because all base + slash code points were converted beforehand by MakeFilename to an alternate form). See also Apple's Technical Q&A "Text Encodings in VFS" and Technical Note TN1150, "HFS Plus Volume Format".
+
+### Directory Names
+
+The suggestions given here apply to names of directories as they do to file names.
