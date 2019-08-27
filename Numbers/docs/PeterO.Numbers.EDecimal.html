@@ -842,7 +842,7 @@
 
 <p><b>Return Value:</b></p>
 
-<p>An EDecimal object.</p>
+<p>An arbitrary-precision decimal floating-point number.</p>
 
 <p><a id="CopySign_PeterO_Numbers_EDecimal"></a></p>
 
@@ -938,7 +938,7 @@ is null.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>diag</i>: An integer, 0 or greater, to use as diagnostic information associated with this object. If none is needed, should be zero. To get the diagnostic information from another EDecimal object, use that object&#39;s  <code>UnsignedMantissa</code>  property.</li>
+<li><i>diag</i>: An integer, 0 or greater, to use as diagnostic information associated with this object. If none is needed, should be zero. To get the diagnostic information from another arbitrary-precision decimal floating-point number, use that object&#39;s  <code>UnsignedMantissa</code>  property.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -961,7 +961,7 @@ is null.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>diag</i>: An integer, 0 or greater, to use as diagnostic information associated with this object. If none is needed, should be zero. To get the diagnostic information from another EDecimal object, use that object&#39;s  <code>UnsignedMantissa</code>  property.</p></li>
+<li><p><i>diag</i>: An integer, 0 or greater, to use as diagnostic information associated with this object. If none is needed, should be zero. To get the diagnostic information from another arbitrary-precision decimal floating-point number, use that object&#39;s  <code>UnsignedMantissa</code>  property.</p></li>
 <li><p><i>signaling</i>: Whether the return value will be signaling (true) or quiet (false).</p></li>
 <li><p><i>negative</i>: Whether the return value is negative.</p></li>
 <li><p><i>ctx</i>: An arithmetic context to control the precision (in decimal digits) of the diagnostic information. The rounding and exponent range of this context will be ignored. Can be null. The only flag that can be signaled in this context is FlagInvalid, which happens if diagnostic information needs to be truncated and too much memory is required to do so.</p></li>
@@ -1347,7 +1347,7 @@ is null or is less than 0.</li>
 
 <ul>
 <li><p><i>divisor</i>: The parameter  <i>divisor</i>
-is an EDecimal object.</p></li>
+is an arbitrary-precision decimal floating-point number.</p></li>
 <li><p><i>ctx</i>: The parameter  <i>ctx</i>
 is an EContext object.</p></li>
 </ul>
@@ -1807,7 +1807,7 @@ is not a correctly formatted number string.</li>
 
 <ul>
 <li><p><i>str</i>: A string that represents a number.</p></li>
-<li><p><i>offset</i>: A zero-based index showing where the desired portion of  <i>str</i>
+<li><p><i>offset</i>: An index starting at 0 showing where the desired portion of  <i>str</i>
 begins.</p></li>
 <li><p><i>length</i>: The length, in code units, of the desired portion of  <i>str</i>
 (but not more than  <i>str</i>
@@ -1853,20 +1853,20 @@ is less than  <i>length</i>
 <p>The format of the string generally consists of:</p>
 
 <ul>
-<li><p>An optional plus sign (&quot;+&quot; , U+002B) or minus sign (&quot;-&quot;, U + 002D) (if the minus sign, the value is negative.)</p></li>
+<li><p>An optional plus sign (&quot;+&quot; , U+002B) or minus sign (&quot;-&quot;, U+002D) (if the minus sign, the value is negative.)</p></li>
 <li><p>One or more digits, with a single optional decimal point after the first digit and before the last digit.</p></li>
 <li><p>Optionally, &quot;E&quot;/&quot;e&quot; followed by an optional (positive exponent) or &quot;-&quot; (negative exponent) and followed by one or more digits specifying the exponent.</p></li>
 </ul>
 
 <p>The string can also be &quot;-INF&quot;, &quot;-Infinity&quot;, &quot;Infinity&quot;, &quot;INF&quot;, quiet NaN (&quot;NaN&quot; /&quot;-NaN&quot;) followed by any number of digits, or signaling NaN (&quot;sNaN&quot; /&quot;-sNaN&quot;) followed by any number of digits, all in any combination of upper and lower case.</p>
 
-<p>All characters mentioned above are the corresponding characters in the Basic Latin range. In particular, the digits must be the basic digits 0 to 9 (U + 0030 to U + 0039). The string is not allowed to contain white space characters, including spaces.</p>
+<p>All characters mentioned above are the corresponding characters in the Basic Latin range. In particular, the digits must be the basic digits 0 to 9 (U+0030 to U+0039). The string is not allowed to contain white space characters, including spaces.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>str</i>: A text string, a portion of which represents a number.</p></li>
-<li><p><i>offset</i>: A zero-based index showing where the desired portion of  <i>str</i>
+<li><p><i>offset</i>: An index starting at 0 showing where the desired portion of  <i>str</i>
 begins.</p></li>
 <li><p><i>length</i>: The length, in code units, of the desired portion of  <i>str</i>
 (but not more than  <i>str</i>
@@ -2581,7 +2581,7 @@ is null.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>An EDecimal object.</p>
+<p>An arbitrary-precision decimal floating-point number.</p>
 
 <p><a id="MultiplyAndAdd_PeterO_Numbers_EDecimal_PeterO_Numbers_EDecimal_PeterO_Numbers_EContext"></a></p>
 

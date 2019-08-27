@@ -66,6 +66,7 @@ Gets the top level type and subtype of this media type, separated by a
 slash; for example, &quot;text/plain&quot;.</li>
 <li><code>int hashCode()</code><br>
 Calculates the hash code of this object.</li>
+<li><code>boolean HasStructuredSuffix​(java.lang.String suffix)</code><br></li>
 <li><code>boolean isMultipart()</code><br>
 Gets a value indicating whether this is a multipart media type.</li>
 <li><code>boolean isText()</code><br>
@@ -138,6 +139,11 @@ Converts this media type to a text string form suitable for data URIs.</li>
 &quot;audio&quot; .</li>
 </ul>
 
+<h3>HasStructuredSuffix</h3>
+
+<pre>public boolean HasStructuredSuffix​(java.lang.String suffix)
+</pre>
+
 <h3>equals</h3>
 
 <pre>public boolean equals​(java.lang.Object obj)
@@ -160,8 +166,8 @@ Converts this media type to a text string form suitable for data URIs.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li><code>true</code> if this object and another object are equal; otherwise,
-<code>false</code>.</li>
+<li><code>true</code> if this object and the other object are equal;
+otherwise, <code>false</code>.</li>
 </ul>
 
 <h3>hashCode</h3>
@@ -316,10 +322,10 @@ order; this is at least the case in version 0.10.0.</li>
 result of the Encodings.ResolveAliasForEmail method for that
 parameter, except that the result&#39;s basic upper-case letters A to Z
 (U+0041 to U+005A) are converted to lower case. If the &quot;charset&quot;
-parameter is absent or empty, returns the default value, if any, for
-that parameter given the media type (e.g., &quot;us-ascii&quot; if the media
-type is &quot;text/plain&quot;; see RFC2046), or the empty string if there is
-none.</li>
+parameter is empty, returns the empty string. If the &quot;charset&quot;
+parameter is absent, returns the default value, if any, for that
+parameter given the media type (e.g., &quot;us-ascii&quot; if the media type
+is &quot;text/plain&quot;; see RFC2046), or the empty string if there is none.</li>
 </ul>
 
 <h3>GetParameter</h3>

@@ -34,7 +34,7 @@
 
 <ul>
 <li><p><i>bytes</i>: A byte array containing the data to write.</p></li>
-<li><p><i>offset</i>: A zero-based index showing where the desired portion of  <i>bytes</i>
+<li><p><i>offset</i>: An index starting at 0 showing where the desired portion of  <i>bytes</i>
 begins.</p></li>
 <li><p><i>length</i>: The number of elements in the desired portion of  <i>bytes</i>
 (but not more than  <i>bytes</i>
@@ -45,9 +45,16 @@ begins.</p></li>
 
 <ul>
 <li><p>System.ArgumentNullException:
-Should be thrown if the parameter &quot;bytes&quot; is null.</p></li>
+Should be thrown if the parameter  <i>bytes</i>
+is null.</p></li>
 <li><p>System.ArgumentException:
-Should be thrown if either &quot;offset&quot; or &quot;length&quot; is less than 0 or greater than &quot;bytes&quot; &#39;s length, or &quot;bytes&quot; &#39;s length minus &quot;offset&quot; is less than &quot;length&quot;.</p></li>
+Should be thrown if either  <i>offset</i>
+or  <i>length</i>
+is less than 0 or greater than  <i>bytes</i>
+&#39;s length, or  <i>bytes</i>
+&#39;s length minus  <i>offset</i>
+is less than  <i>length</i>
+.</p></li>
 </ul>
 
 <p><a href="/Encoding/">Back to Encoding start page.</a></p>
