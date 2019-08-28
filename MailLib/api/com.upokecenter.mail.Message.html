@@ -153,7 +153,6 @@ Deletes all header fields in this message.</li>
              java.lang.String value)</code><br>
 Decodes RFC 2047 encoded words from the given header field value and returns
 a string with those words decoded.</li>
-<li><code>static boolean DefinesCharsetParameter​(MediaType mt)</code><br></li>
 <li><code>static java.lang.String ExtractHeader​(byte[] bytes,
          java.lang.String headerFieldName)</code><br>
 Extracts the value of a header field from a byte array representing an email
@@ -175,6 +174,9 @@ the Generate method.</li>
 <li><code>java.util.List&lt;NamedAddress&gt; GetAddresses​(java.lang.String headerName)</code><br>
 Gets a list of addresses contained in the header fields with the given name
 in this message.</li>
+<li><code>java.util.List&lt;Message&gt; GetAttachments()</code><br>
+Gets a list of descendant body parts of this message that are considered
+attachments.</li>
 <li><code>java.util.List&lt;NamedAddress&gt; getBccAddresses()</code><br>
 Deprecated.
 Use GetAddresses(\Bcc) instead.
@@ -229,7 +231,6 @@ Gets this message&#39;s subject.</li>
 Deprecated.
 Use GetAddresses(\To) instead.
 Use GetAddresses(\To) instead.</li>
-<li><code>static java.lang.String GuessHtmlEncoding​(byte[] data)</code><br></li>
 <li><code>static Message MakeMultilingualMessage​(java.util.List&lt;Message&gt; messages,
                    java.util.List&lt;java.lang.String&gt; languages)</code><br>
 Generates a multilingual message (see RFC 8255) from a list of messages and
@@ -494,10 +495,16 @@ Use GetBodyString() instead.</p>
 <li><code>java.lang.UnsupportedOperationException</code> - See the <code>GetBodyString()</code> method.</li>
 </ul>
 
-<h3>DefinesCharsetParameter</h3>
+<h3>GetAttachments</h3>
 
-<pre>public static boolean DefinesCharsetParameter​(MediaType mt)
+<pre>public java.util.List&lt;Message&gt; GetAttachments()
 </pre>
+
+<p>Gets a list of descendant body parts of this message that are considered
+ attachments. An <i>attachment</i> is a body part or descendant body
+ part that has a content disposition with a type other than inline.
+ This message itself is not included in the list even if it&#39;s an
+ attachment as just defined.</p>
 
 <h3>GetBodyString</h3>
 
@@ -520,11 +527,12 @@ Use GetBodyString() instead.</p>
 
 <ul>
 <li><code>java.lang.UnsupportedOperationException</code> - This message is a multipart message without a
-supported body part; or this message&#39;s media type is a non-multipart
-type and does not specify the use of a &quot;charset&quot; parameter, has no
-character encoding declared or assumed for it (which is usually the
-case for non-text messages), or has an unsupported character
-encoding.</li>
+supported body part; or this message has a content disposition with
+a type other than &quot;inline&quot;; or this message&#39;s media type is a
+non-multipart type and does not specify the use of a &quot;charset&quot;
+parameter, has no character encoding declared or assumed for it
+(which is usually the case for non-text messages), or has an
+unsupported character encoding.</li>
 </ul>
 
 <h3>getCCAddresses</h3>
@@ -540,11 +548,6 @@ Use GetAddresses(\Cc) instead.</p>
 <ul>
 <li>A list of addresses found in the CC header field or fields.</li>
 </ul>
-
-<h3>GuessHtmlEncoding</h3>
-
-<pre>public static java.lang.String GuessHtmlEncoding​(byte[] data)
-</pre>
 
 <h3>GetFormattedBodyString</h3>
 
@@ -582,7 +585,7 @@ Gets this message's content disposition. The content disposition specifies
  Content-Disposition header field as appropriate. (There is no
  default content disposition if this value is null, and disposition
  types unrecognized by the application should be treated as
-  "attachment"; see RFC 2183 sec. 2.8.)
+  "attachment"; see RFC 2183 sec. 2.8.).
 
 **Returns:**
 
