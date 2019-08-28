@@ -128,7 +128,9 @@ inserting in email headers.</li>
   &quot;attachment&quot;. Note that under RFC 6266 sec. 4.2 and RFC 2183 sec.
  2.8, unrecognized disposition types should be treated as
   &quot;attachment&quot;. (There is no default content disposition in a message
- has no Content-Disposition header field.).</p>
+ has no Content-Disposition header field.). The resulting string will
+  be in lower case; that is, with its basic upper-case letters (&quot;A&quot; to
+  &quot;Z&quot;) converted to basic lower-case letters (&quot;a&quot; to &quot;z&quot;).</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -217,9 +219,12 @@ false</code>.</li>
 </pre>
 
 <p>Gets a list of parameter names associated with this object and their values.
-  <p>For the &quot;filename&quot; parameter, the value of that parameter is not
- adapted with the ContentDisposition.MakeFilename method; see the
- documentation for the ContentDisposition class.</p></p>
+ Each parameter name will be in lower case; that is, with its basic
+  upper-case letters (&quot;A&quot; to &quot;Z&quot;) converted to basic lower-case
+  letters (&quot;a&quot; to &quot;z&quot;). <p>For the &quot;filename&quot; parameter, the value of
+ that parameter is not adapted with the
+ ContentDisposition.MakeFilename method; see the documentation for
+ the ContentDisposition class.</p></p>
 
 <p><strong>Returns:</strong></p>
 

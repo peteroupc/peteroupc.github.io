@@ -55,7 +55,8 @@ to represent text in the data that uses this media type.</li>
 Gets the value of a parameter in this media type, such as &quot;charset&quot; or
 &quot;format&quot;.</li>
 <li><code>java.util.Map&lt;java.lang.String,​java.lang.String&gt; getParameters()</code><br>
-Gets a list of the parameters contained in this media type object.</li>
+Gets a list of the parameter names contained in this media type object and
+their values.</li>
 <li><code>java.lang.String getSubType()</code><br>
 Gets this media type&#39;s subtype (for example, &quot;plain&quot; in &quot;text/plain&quot;).</li>
 <li><code>java.lang.String getTopLevelType()</code><br>
@@ -131,7 +132,8 @@ Converts this media type to a text string form suitable for data URIs.</li>
 
 <p>Gets the name of this media type&#39;s top-level type (such as &quot;text&quot; in
   &quot;text/plain&quot;, or &quot;audio&quot; in &quot;audio/basic&quot;). The resulting string
- will be in lowercase letters.</p>
+ will be in lower case; that is, with its basic upper-case letters
+  (&quot;A&quot; to &quot;Z&quot;) converted to basic lower-case letters (&quot;a&quot; to &quot;z&quot;).</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -206,7 +208,9 @@ otherwise, <code>false</code>.</li>
 </pre>
 
 <p>Gets this media type&#39;s subtype (for example, &quot;plain&quot; in &quot;text/plain&quot;). The
- resulting string will be in lowercase letters.</p>
+ resulting string will be in lower case; that is, with its basic
+  upper-case letters (&quot;A&quot; to &quot;Z&quot;) converted to basic lower-case
+  letters (&quot;a&quot; to &quot;z&quot;).</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -246,7 +250,10 @@ false</code>.</li>
 <pre>public final java.util.Map&lt;java.lang.String,​java.lang.String&gt; getParameters()
 </pre>
 
-<p>Gets a list of the parameters contained in this media type object.</p>
+<p>Gets a list of the parameter names contained in this media type object and
+ their values. Each parameter name will be in lower case; that is,
+  with its basic upper-case letters (&quot;A&quot; to &quot;Z&quot;) converted to basic
+  lower-case letters (&quot;a&quot; to &quot;z&quot;).</p>
 
 <p><strong>Returns:</strong></p>
 
