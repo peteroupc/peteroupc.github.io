@@ -38,8 +38,8 @@ class.</li>
 
 <ul>
 <li><code>boolean getUseCamelCase()</code><br>
-Gets a value indicating whether property names are converted to camel
-case before they are used as keys.</li>
+Gets a value indicating whether property, field, and method names are
+converted to camel case before they are used as keys.</li>
 <li><code>java.lang.String toString()</code><br>
 Gets the values of this options object&#39;s properties in text form.</li>
 </ul>
@@ -81,31 +81,35 @@ described in the string constructor for this class.</li>
 <pre>public final boolean getUseCamelCase()
 </pre>
 
-<p>Gets a value indicating whether property names are converted to camel
- case before they are used as keys. This option changes the behavior
-  of key name serialization as follows. If "useCamelCase" is
- <code>false</code> :</p> <ul> <li>In the .NET version, all key names are
- capitalized, meaning the first letter in the name is converted to a
-  basic upper-case letter if it's a basic lower-case letter ("a" to
-  "z"). (For example, "Name" and "IsName" both remain unchanged.)</li>
- <li>In the Java version, for each eligible method name, the word
-  "get" or "set" is removed from the name if the name starts with that
-  word, then the name is capitalized. (For example, "getName" and
-  "setName" both become "Name", and "isName" becomes
-  "IsName".)</li></ul> <p>If "useCamelCase" is <code>true</code> :</p> <ul>
- <li>In the .NET version, for each eligible property name, the word
-  "Is" is removed from the name if the name starts with that word,
- then the name is converted to camel case, meaning the first letter
- in the name is converted to a basic lower-case letter if it's a
-  basic upper-case letter ("A" to "Z"). (For example, "Name" and
-  "IsName" both become "name".)</li> <li>In the Java version, for each
-  eligible method name, the word "get", "set", or "is" is removed from
+<p>Gets a value indicating whether property, field, and method names are
+ converted to camel case before they are used as keys. This option
+ changes the behavior of key name serialization as follows. If
+  "useCamelCase" is <code>false</code> :</p> <ul> <li>In the .NET version,
+ all key names are capitalized, meaning the first letter in the name
+ is converted to a basic upper-case letter if it's a basic lower-case
+  letter ("a" to "z"). (For example, "Name" and "IsName" both remain
+ unchanged.)</li> <li>In the Java version, all field names are
+  capitalized, and for each eligible method name, the word "get" or
+  "set" is removed from the name if the name starts with that word,
+  then the name is capitalized. (For example, "getName" and "setName"
+  both become "Name", and "isName" becomes "IsName".)</li></ul> <p>If
+  "useCamelCase" is <code>true</code> :</p> <ul> <li>In the .NET version,
+  for each eligible property or field name, the word "Is" is removed
+ from the name if the name starts with that word, then the name is
+ converted to camel case, meaning the first letter in the name is
+ converted to a basic lower-case letter if it's a basic upper-case
+  letter ("A" to "Z"). (For example, "Name" and "IsName" both become
+  "name".)</li> <li>In the Java version: For each eligible method
+  name, the word "get", "set", or "is" is removed from the name if the
+ name starts with that word, then the name is converted to camel
+  case. (For example, "getName", "setName", and "isName" all become
+  "name".) For each eligible field name, the word "is" is removed from
  the name if the name starts with that word, then the name is
-  converted to camel case. (For example, "getName", "setName", and
-  "isName" all become "name".)</li></ul> <p>In the description above,
-  a name "starts with" a word if that word begins the name and is
- followed by a character other than a basic digit or basic lower-case
-  letter, that is, other than "a" to "z" or "0" to "9".</p>
+  converted to camel case. (For example, "name" and "isName" both
+  become "name".)</li></ul> <p>In the description above, a name
+  "starts with" a word if that word begins the name and is followed by
+ a character other than a basic digit or basic lower-case letter,
+  that is, other than "a" to "z" or "0" to "9".</p>
 
 <p><strong>Returns:</strong></p>
 
