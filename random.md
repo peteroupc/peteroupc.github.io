@@ -2,9 +2,9 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on Mar. 5, 2016; last updated on Aug. 20, 2019.
+Begun on Mar. 5, 2016; last updated on Aug. 30, 2019.
 
-Most apps that use random numbers care about either unpredictability, speed/high quality, or repeatability.  This article explains the three kinds of RNGs and gives recommendations on each kind.
+Most apps that use random numbers care about either unpredictability, high quality, or repeatability.  This article explains the three kinds of RNGs and gives recommendations on each kind.
 
 <a id=Introduction_and_Summary></a>
 ## Introduction and Summary
@@ -22,7 +22,7 @@ so that as a result, many applications use RNGs, especially built-in RNGs, that 
 
 **This document covers:**
 
-- Statistical and cryptographic RNGs<sup>[**(1)**](#Note1)</sup> and seeded PRNGs (pseudorandom number generators), as well as recommendations on their use and properties.
+- Cryptographic RNGs<sup>[**(1)**](#Note1)</sup>, noncryptographic RNGs, and manually-seeded RNGs, as well as recommendations on their use and properties.
 - A discussion on when an application that needs numbers that "seem" random ought to specify its own "seed" (the initial state that the numbers are based on).
 - Nondeterministic sources, entropy, and seed generation.
 - Existing implementations of RNGs.
@@ -42,8 +42,8 @@ so that as a result, many applications use RNGs, especially built-in RNGs, that 
 | Kind of RNG   | When to Use This RNG  | Examples |
  --------|--------|------|
 | A [**cryptographic RNG**](#Cryptographic_RNGs) seeks to generate numbers that are cost-prohibitive to predict. | In information security cases, or when speed is not a concern.  | `/dev/urandom`, `BCryptGenRandom` |
-| A [**statistical RNG**](#Statistical_RNGs) seeks to generate numbers that are uniformly random for most practical purposes.   | When information security is not a concern, but speed is. | `pcg64`, `xoshiro256**` |
-| A [**seeded PRNG**](#Seeded_PRNGs) generates numbers that "seem" random given an initial "seed".   | When generating reproducible "randomness" in a way not practical otherwise.   | High-quality PRNG with custom seed |
+| A [**noncryptographic PRNG**](#Noncryptographic_PRNGs) seeks to generate numbers that are uniformly random for most practical purposes.   | When information security is not a concern, but speed is. | `pcg64`, `xoshiro256**` |
+| A [**manually-seeded PRNG**](#Manually_Seeded_PRNGs) generates numbers that "seem" random given an initial "seed".   | When generating reproducible "randomness" in a way not practical otherwise.   | High-quality PRNG with custom seed |
 
 <a id=About_This_Document></a>
 ### About This Document
@@ -60,12 +60,12 @@ so that as a result, many applications use RNGs, especially built-in RNGs, that 
 - [**Cryptographic RNGs**](#Cryptographic_RNGs)
     - [**Examples**](#Examples)
     - [**A Note on Resource-Constrained Devices**](#A_Note_on_Resource_Constrained_Devices)
-- [**Statistical RNGs**](#Statistical_RNGs)
-    - [**Examples and Non-Examples**](#Examples_and_Non_Examples)
-- [**Seeded PRNGs**](#Seeded_PRNGs)
-    - [**When to Use a Seeded PRNG**](#When_to_Use_a_Seeded_PRNG)
-    - [**Seeded PRNG Recommendations**](#Seeded_PRNG_Recommendations)
-    - [**Seeded PRNG Use Cases**](#Seeded_PRNG_Use_Cases)
+- [**Noncryptographic PRNGs**](#Noncryptographic_PRNGs)
+    - [**High-Quality PRNG Examples**](#High_Quality_PRNG_Examples)
+- [**Manually-Seeded PRNGs**](#Manually_Seeded_PRNGs)
+    - [**When to Use a Manually-Seeded PRNG**](#When_to_Use_a_Manually_Seeded_PRNG)
+    - [**Manually-Seeded PRNG Recommendations**](#Manually_Seeded_PRNG_Recommendations)
+    - [**Manually-Seeded PRNG Use Cases**](#Manually_Seeded_PRNG_Use_Cases)
         - [**Games**](#Games)
         - [**Unit Tests**](#Unit_Tests)
 - [**Nondeterministic Sources and Seed Generation**](#Nondeterministic_Sources_and_Seed_Generation)
@@ -85,7 +85,7 @@ so that as a result, many applications use RNGs, especially built-in RNGs, that 
 - [**Verifiable Random Numbers**](#Verifiable_Random_Numbers)
 - [**Guidelines for New RNG APIs**](#Guidelines_for_New_RNG_APIs)
     - [**Cryptographic RNGs: Requirements**](#Cryptographic_RNGs_Requirements)
-    - [**Statistical RNGs: Requirements**](#Statistical_RNGs_Requirements)
+    - [**High-Quality RNGs: Requirements**](#High_Quality_RNGs_Requirements)
     - [**Designs for PRNGs**](#Designs_for_PRNGs)
     - [**Implementing New RNG APIs**](#Implementing_New_RNG_APIs)
 - [**Acknowledgments**](#Acknowledgments)
@@ -136,21 +136,21 @@ Examples of cryptographic RNG implementations are:
 
 Compared to general-purpose computing devices such as desktop computers and smartphones, resource-constrained devices ("embedded" devices) are much less likely to have a cryptographic RNG available (Wetzels 2017)<sup>[**(7)**](#Note7)</sup>, although methods exist for implementing a cryptographic RNG on the Arduino (Peng 2017)<sup>[**(8)**](#Note8)</sup>.
 
-<a id=Statistical_RNGs></a>
-## Statistical RNGs
+<a id=Noncryptographic_PRNGs></a>
+## Noncryptographic PRNGs
 
-Statistical RNGs are RNGs with a high quality of statistical randomness, but are not necessarily appropriate for information security.  Even here, though, the numbers delivered by a statistical RNG not only "look random".
+Noncryptographic PRNGs vary widely in the quality of randomness of the numbers they generate.  For this reason, a noncryptographic PRNG SHOULD NOT be used&mdash;
 
-An application SHOULD NOT use RNGs with weaker quality than that of statistical RNGs.
+- for information security purposes (e.g., to generate random passwords, encryption keys, or other secrets),
+- if cryptographic RNGs are fast enough for the application, or
+- if the PRNG is not _high quality_ (see "[**High-Quality RNGs: Requirements**](#Noncryptographic_PRNGs_Requirements)").
 
-An application SHOULD NOT use statistical RNGs in information security contexts, and it SHOULD NOT use them unless it generates random numbers so frequently that it would slow down undesirably if a cryptographic RNG were used instead.
+If a noncryptographic PRNG is used, it SHOULD be automatically seeded in a way that seeds are almost certain to vary each time; this can be done either with a cryptographic RNG or using otherwise hard-to-predict data (see [**Seed Generation**](#Seed_Generation)).
 
-See "[**Statistical RNGs: Requirements**](#Statistical_RNGs_Requirements)" for requirements.
+<a id=High_Quality_PRNG_Examples></a>
+### High-Quality PRNG Examples
 
-<a id=Examples_and_Non_Examples></a>
-### Examples and Non-Examples
-
-The following are examples of statistical RNGs:
+Besides cryptographic RNGs, the following are examples of [**high-quality PRNGs**](#High_Quality_PRNGs_Requirements):
 - [**xoshiro256&#x2a;&#x2a;**](http://xoshiro.di.unimi.it/xoshiro256starstar.c) (state length 256 bits; nonzero seed).
 - [**xoroshiro128&#x2a;&#x2a;**](http://xoshiro.di.unimi.it/xoroshiro128starstar.c) (state length 128 bits; nonzero seed).
 - `Lehmer64` and `Lehmer128` (for each: state length 128 bits; odd seed, so effectively 127 bits state length).
@@ -160,26 +160,26 @@ The following are examples of statistical RNGs:
 - PCG (`pcg32`, `pcg64`, and `pcg64_fast` classes), by Melissa O'Neill. See also a [**critique by S. Vigna**](http://pcg.di.unimi.it/pcg.php).
 - Other examples include B. Jenkins's "A small noncryptographic PRNG" (sometimes called `jsf`), C. Doty-Humphrey's `sfc`, `msws` (Widynski 2017)<sup>[**(10)**](#Note10)</sup>, and D. Blackman's `gjrand`.
 
-The following also count as statistical RNGs, but are not preferred:
+The following also count as high-quality PRNGs, but are not preferred:
 - Mersenne Twister shows a [**systematic failure**](http://xoroshiro.di.unimi.it/#quality) in `BigCrush`'s LinearComp test. (See also (Vigna 2016)<sup>[**(11)**](#Note11)</sup>.)
 - C++'s [**`std::ranlux48` engine**](http://www.cplusplus.com/reference/random/ranlux48/) (state length 577 bits; nonzero seed) can be slower than alternatives because it discards many "random" numbers before outputting another.
 - [**`xoroshiro128+`**](http://xoshiro.di.unimi.it/xoroshiro128plus.c), `xoshiro256+`, and `xorshift128+`.  As described by (Blackman and Vigna 2018)<sup>[**(12)**](#Note12)</sup>, these linear PRNGs use weak scramblers, so that each output's lowest bits have low linear complexity even though the output as a whole has excellent statistical randomness.  See also [**"Testing lowest bits in isolation"**](http://xoshiro.di.unimi.it/lowcomp.php).
 
 Generally, implementing a size-N [**Bays&ndash;Durham shuffle**](#Bays_ndash_Durham_Shuffle) on top of a PRNG will extend that PRNG's period (maximum size of a "random" number cycle) to about the number of ways to arrange an N-item list.
 
-Non-examples include the following:
+The following are not considered high-quality PRNGs:
 - Any [**linear congruential generator**](https://en.wikipedia.org/wiki/Linear_congruential_generator) with modulus 2<sup>63</sup> or less (such as `java.util.Random` and C++'s `std::minstd_rand` and `std::minstd_rand0` engines) has a _state length_ of less than 64 bits.
 - `System.Random`, as implemented in the .NET Framework 4.7, can take a seed of at most 32 bits, so has a state length of at most 32 bits.
 
-<a id=Seeded_PRNGs></a>
-## Seeded PRNGs
+<a id=Manually_Seeded_PRNGs></a>
+## Manually-Seeded PRNGs
 
-Some applications use pseudorandom number generators (PRNGs) to generate apparently "random" numbers starting from a known initial state, or "seed". Such applications usually care about repeatable "randomness". (Note that in the definitions for [**cryptographic**](#Cryptographic_RNGs_Requirements) and [**statistical**](#Statistical_RNGs_Requirements) RNGs given later, the PRNGs involved are automatically seeded before use.)
+Some applications use pseudorandom number generators (PRNGs) to generate apparently "random" numbers starting from a known initial state, or "seed". Such applications usually care about repeatable "randomness".
 
-<a id=When_to_Use_a_Seeded_PRNG></a>
-### When to Use a Seeded PRNG
+<a id=When_to_Use_a_Manually_Seeded_PRNG></a>
+### When to Use a Manually-Seeded PRNG
 
-By using a seeded PRNG for repeatable "randomness", an application will be tied to that PRNG or its implementation. For this reason, an application SHOULD NOT use a seeded PRNG (rather than an automatically-initialized PRNG or another kind of RNG) unless&mdash;
+By seeding a PRNG manually for repeatable "randomness", an application will be tied to that PRNG or its implementation. For this reason, an application SHOULD NOT use a manually-seeded PRNG (rather than an automatically initialized RNG) unless&mdash;
 
 1. the application might need to generate the same "random" result multiple times,
 2. the application either&mdash;
@@ -187,23 +187,23 @@ By using a seeded PRNG for repeatable "randomness", an application will be tied 
     - finds it impractical to store or distribute the "random" numbers or "random" content, rather than the seed, for later use (e.g., to store those numbers to "replay" later, to store that content in a "save file", or to distribute that content rather than a seed to networked users), and
 3. any feature that uses such a PRNG to generate that "random" result will be consistent (see "Determinism and Consistency") for as long as that feature is still in use by that application.
 
-<a id=Seeded_PRNG_Recommendations></a>
-### Seeded PRNG Recommendations
+<a id=Manually_Seeded_PRNG_Recommendations></a>
+### Manually-Seeded PRNG Recommendations
 
-If an application chooses to use a seeded PRNG for repeatable "randomness", the application&mdash;
+If an application chooses to use a manually-seeded PRNG for repeatable "randomness", the application&mdash;
 
-- SHOULD choose a PRNG that meets or exceeds the requirements of a [**statistical RNG**](#Statistical_RNGs) (except the seed is application-defined instead),
+- SHOULD choose a [**high-quality PRNG**](#High_Quality_PRNG_Examples),
 - SHOULD choose a PRNG implementation with consistent behavior that will not change in the future,
 - ought to document the chosen PRNG being used as well as all the parameters for that PRNG,
 - ought to generate seeds for the PRNG that are likely to vary wildly from previous seeds (see "[**Wildly Varying Seeds**](#Wildly_Varying_Seeds)"), and
 - SHOULD NOT seed the PRNG with floating-point numbers or generate floating-point numbers with that PRNG.
 
-> **Example:** An application could implement a seeded PRNG using a third-party library that specifically says it implements an algorithm mentioned in the [**statistical RNG examples**](#Examples_and_Non_Examples), and could initialize that PRNG using a bit sequence from a cryptographic RNG.  The developers could also mention the use of the specific PRNG chosen on any code that uses it, to alert other developers that the PRNG needs to remain unchanged.
+> **Example:** An application could implement a manually-seeded PRNG using a third-party library that specifically says it implements a [**high-quality PRNG algorithm**](#High_Quality_PRNG_Examples), and could initialize that PRNG using a bit sequence from a cryptographic RNG.  The developers could also mention the use of the specific PRNG chosen on any code that uses it, to alert other developers that the PRNG needs to remain unchanged.
 
-<a id=Seeded_PRNG_Use_Cases></a>
-### Seeded PRNG Use Cases
+<a id=Manually_Seeded_PRNG_Use_Cases></a>
+### Manually-Seeded PRNG Use Cases
 
-Use cases for seeded PRNGs include&mdash;
+Use cases for manually-seeded PRNGs include&mdash;
 
 - simulations and machine learning (to reproduce published research data),
 - Monte Carlo methods (to make them random-behaving but deterministic),
@@ -220,7 +220,7 @@ Many kinds of game software generate seemingly "random" game content that might 
 - [**shuffling**](#Shuffling) a digital deck of cards for a solitaire game, or
 - a game board or puzzle board that normally varies every session.
 
-In general, the bigger that "random" content is, the greater the justification to use a seeded PRNG and a custom seed to generate that content.  However, using seeded PRNGs is NOT RECOMMENDED in the following cases:
+In general, the bigger that "random" content is, the greater the justification to use a manually-seeded PRNG and a custom seed to generate that content.  However, using manually-seeded PRNGs is NOT RECOMMENDED in the following cases:
 
 - If repeatable "randomness" is needed only at the start of the game session (e.g., to create a "random" game board or a "random" order of digital cards) and the repeatable "random" content is small (say, no more than a hundred numbers).
 - In a networked game where multiple computers (e.g., multiple players, or a client and server) have a shared view of the game state and random numbers are used to update that game state.  This is because randomness increases the risk of a player gaining an unfair advantage, a risk already present, in general, when maintaining a game state shared by multiple computers.
@@ -238,7 +238,7 @@ In general, the bigger that "random" content is, the greater the justification t
 <a id=Unit_Tests></a>
 #### Unit Tests
 
-A custom seed is appropriate when unit testing a method that uses a seeded PRNG in place of another kind of RNG for the purpose of the test (provided the test delivers consistent output across computers).
+A custom seed is appropriate when unit testing a method that uses a manually-seeded PRNG in place of another kind of RNG for the purpose of the test (provided the test delivers consistent output across computers).
 
 <a id=Nondeterministic_Sources_and_Seed_Generation></a>
 ## Nondeterministic Sources and Seed Generation
@@ -276,7 +276,7 @@ Once data with enough entropy is gathered, it might need to be condensed into a 
 <a id=Wildly_Varying_Seeds></a>
 ### Wildly Varying Seeds
 
-For noncryptographic and seeded PRNGs, an application ought to generate seeds likely to vary "wildly" from previously generated seeds, to reduce the risk of correlated "random" numbers or sequences.  One way the application can ensure this is to do the following for each PRNG instance it creates:
+For noncryptographic and manually-seeded PRNGs, an application ought to generate seeds likely to vary "wildly" from previously generated seeds, to reduce the risk of correlated "random" numbers or sequences.  One way the application can ensure this is to do the following for each PRNG instance it creates:
 
 1. Build a bit string consisting of the following: A seed unique to the set of PRNG instances as a whole, a fixed identifier unique to that set, and a unique number for each PRNG instance. Example: "myseed-mysimulation-1".
 2. The seed in step 1 ought to be a fixed number, be the output of a cryptographic RNG, or be derived from hard-to-predict sources (see "Seed Generation").
@@ -287,13 +287,13 @@ It is NOT RECOMMENDED to seed a PRNG (especially several at once) with sequentia
 <a id=Existing_RNG_APIs_in_Programming_Languages></a>
 ## Existing RNG APIs in Programming Languages
 
-As much as possible, **applications SHOULD use existing libraries and techniques** that already meet the requirements for cryptographic and statistical RNGs. The following table lists application programming interfaces (APIs) for such RNGs for popular programming languages.
+As much as possible, **applications SHOULD use existing libraries and techniques** that already meet the requirements for cryptographic and high-quality RNGs. The following table lists application programming interfaces (APIs) for such RNGs for popular programming languages.
 
-- Methods and libraries mentioned in the "Statistical" column need to be initialized with a seed before use (for example, a seed generated using an implementation in the "Cryptographic" column).
+- Methods and libraries mentioned in the "High-Quality" column need to be initialized with a seed before use (for example, a seed generated using an implementation in the "Cryptographic" column).
 - The mention of a third-party library in this section does not imply sponsorship or endorsement of that library, or imply a preference of that library over others. The list is not comprehensive.
 - See also [**Paragon's blog post**](https://paragonie.com/blog/2016/05/how-generate-secure-random-numbers-in-various-programming-languages) on existing cryptographic RNGs.
 
-| Language   | Cryptographic   | Statistical |
+| Language   | Cryptographic   | High-Quality |
  --------|-----------------------------------------------|------|
 | .NET (incl. C# and VB.NET) (H) | `RNGCryptoServiceProvider` in `System.Security.Cryptography` namespace | [**airbreather/AirBreather.Common library**](https://github.com/airbreather/Airbreather.Common) (XorShift1024Star, XorShift128Plus, XoroShiro128Plus) |
 | C/C++ (G)  | (C) | [**`xoroshiro128plus.c`**](http://xoroshiro.di.unimi.it/xoroshiro128plus.c) (128-bit nonzero seed); [**`xorshift128plus.c`**](http://xoroshiro.di.unimi.it/xorshift128plus.c) (128-bit nonzero seed); [**frostburn/jkiss**](https://github.com/frostburn/jkiss) library |
@@ -306,7 +306,7 @@ As much as possible, **applications SHOULD use existing libraries and techniques
 | Perl | `Crypt::URandom` module |  |
 | Other Languages | (C) |  |
 
-<small>(A) The general RNGs of recent versions of Python and Ruby implement [**Mersenne Twister**](https://en.wikipedia.org/wiki/Mersenne_Twister), which is not preferred for a statistical RNG.  PHP's `mt_rand()` implements or implemented a flawed version of Mersenne Twister. `prngine`, a Java library, also has `MT19937_32Random` and `MT19937_64Random` classes that implement Mersenne Twister.</small>
+<small>(A) The general RNGs of recent versions of Python and Ruby implement [**Mersenne Twister**](https://en.wikipedia.org/wiki/Mersenne_Twister), which is not preferred for a high-quality RNG.  PHP's `mt_rand()` implements or implemented a flawed version of Mersenne Twister. `prngine`, a Java library, also has `MT19937_32Random` and `MT19937_64Random` classes that implement Mersenne Twister.</small>
 
 <small>(B) JavaScript's `Math.random()` (which ranges 0 or greater and less than 1) is implemented using `xorshift128+` (or a variant) in the V8 engine, Firefox, and certain other modern browsers as of late 2017; `Math.random()` uses an "implementation-dependent algorithm or strategy", though (see ECMAScript sec. 20.2.2.27).</small>
 
@@ -318,7 +318,7 @@ As much as possible, **applications SHOULD use existing libraries and techniques
 
 <small>and only use other techniques if the existing ones are inadequate for the application.</small>
 
-<small>(D) Java's `java.util.Random` class uses a 48-bit seed, so doesn't meet the statistical RNG requirements.  However, a subclass of `java.util.Random` might be implemented to meet those requirements.</small>
+<small>(D) Java's `java.util.Random` class uses a 48-bit seed, so is not considered a high-quality RNG.  However, a subclass of `java.util.Random` might be implemented as a high-quality RNG.</small>
 
 <small>(E) Ruby's `Random#rand` and `SecureRandom.rand` methods present a beautiful and simple API for random number generation, in my opinion.  Namely, `rand()` returns a number 0 or greater and less than 1, and `rand(N)` returns an integer 0 or greater and less than N.</small>
 
@@ -326,7 +326,7 @@ As much as possible, **applications SHOULD use existing libraries and techniques
 
 <small>(G) [**`std::random_device`**](http://en.cppreference.com/w/cpp/numeric/random/random_device), introduced in C++11, is NOT RECOMMENDED because its specification leaves considerably much to be desired.  For example,  `std::random_device` can fall back to a pseudorandom number generator of unspecified quality without much warning.  At best, `std::random_device` SHOULD NOT be used except to supplement other techniques for random number generation.</small>
 
-<small>(H) The .NET Framework's `System.Random` class uses a seed of at most 32 bits, so doesn't meet the statistical RNG requirements.  However, a subclass of `System.Random` might be implemented to meet those requirements.</small>
+<small>(H) The .NET Framework's `System.Random` class uses a seed of at most 32 bits, so is not considered a high-quality RNG.  However, a subclass of `System.Random` might be implemented as a high-quality RNG.</small>
 
 <a id=RNG_Topics></a>
 ## RNG Topics
@@ -336,11 +336,9 @@ This section discusses several important points on the use and selection of RNGs
 <a id=How_to_Initialize_RNGs></a>
 ### How to Initialize RNGs
 
-For **cryptographic RNGs**, an application SHOULD use only one thread-safe instance of the RNG for the entire application to use.
+For **cryptographic RNGs** and **automatically-seeded PRNGs**, an application SHOULD use only one thread-safe instance of the RNG for the entire application to use.
 
-For **statistical RNGs**, an application SHOULD use only one thread-safe instance of the RNG for the entire application to use.  (If doing so is a performance bottleneck for the application and a PRNG is used, the application MAY instead create one or more RNG instances as described below for seeded PRNGs.)
-
-For **seeded PRNGs**, to **reduce the chance of correlated random numbers or identical random number sequences**, an application is encouraged to create one or more instances of a PRNG, where each instance&mdash;
+For **manually-seeded PRNGs**, to **reduce the chance of correlated random numbers or identical random number sequences**, an application is encouraged to create one or more instances of a PRNG, where each instance&mdash;
 - is accessible to only one thread, task, or subtask of the application (such as with thread-local storage),
 - is initialized with a seed that is unrelated to the other seeds (see "[**Wildly Varying Seeds**](#Wildly_Varying_Seeds)"), and
 - MAY use a different conforming RNG scheme from the others.
@@ -364,9 +362,9 @@ On the other hand, for a list big enough, it's generally **more important to hav
 An application that shuffles a list can do the shuffling&mdash;
 
 1. using a cryptographic RNG, preferably one with a security strength of `B` bits or greater, or
-2. if a noncryptographic RNG is otherwise appropriate, using a PRNG that&mdash;
+2. if a noncryptographic RNG is otherwise appropriate, using a _high-quality PRNG_ that&mdash;
     - has a state length of `B` bits or greater, and
-    - qualifies as a statistical RNG except it's initialized with a seed derived from data with at least **`B` bits of** [**_entropy_**](#Nondeterministic_Sources_and_Seed_Generation), or "randomness".
+    - is initialized with a seed derived from data with at least **`B` bits of** [**_entropy_**](#Nondeterministic_Sources_and_Seed_Generation), or "randomness".
 
 For shuffling purposes, `B` can usually be calculated for different lists using the Python code in the [**appendix**](#Suggested_Entropy_Size); see also (van Staveren 2000, "Lack of randomness")<sup>[**(24)**](#Note24)</sup>.  For example, `B` is 226 (bits) for a 52-item list.  For shuffling purposes, an application MAY limit `B` to 256 or greater, in cases when variety of permutations is not important.
 
@@ -406,7 +404,7 @@ Similar considerations could also apply to other specialized computing hardware,
 <a id=Determinism_and_Consistency></a>
 ### Determinism and Consistency
 
-For an RNG algorithm to generate "random" numbers that are reproducible across computers, it needs to be a _consistent_ algorithm.  (This factor is important only for seeded PRNGs, not necessarily for cryptographic or statistical RNGs.)
+For an RNG algorithm to generate "random" numbers that are reproducible across computers, it needs to be a _consistent_ algorithm.  (This factor is important only for manually-seeded PRNGs, not necessarily for other RNGs.)
 
 A _consistent algorithm_ is an algorithm that delivers the same output for the same input every time (is _deterministic_) and does so&mdash;
 
@@ -468,7 +466,7 @@ _Verifiable random numbers_ are random numbers (such as seeds for PRNGs) that ar
 
 This section contains guidelines for those seeking to implement RNGs designed for wide reuse (such as in a programming language's standard library).  _As mentioned earlier, an application SHOULD use existing RNG implementations whenever possible._
 
-This section contains suggested requirements on cryptographic and statistical RNGs that a new programming language can choose to adopt.
+This section contains suggested requirements on cryptographic and high-quality RNGs that a new programming language can choose to adopt.
 
 <a id=Cryptographic_RNGs_Requirements></a>
 ### Cryptographic RNGs: Requirements
@@ -486,21 +484,17 @@ If a cryptographic RNG implementation uses a PRNG, the following requirements ap
 
 3. The RNG MAY reseed itself from time to time, using a newly generated seed as described earlier.  If the RNG reseeds if it would generate more than a threshold number of bits without reseeding, that threshold SHOULD be 2<sup>67</sup> or less.
 
-<a id=Statistical_RNGs_Requirements></a>
-### Statistical RNGs: Requirements
+<a id=High_Quality_RNGs_Requirements></a>
+### High-Quality RNGs: Requirements
 
-A statistical RNG generates random bits, each of which is uniformly distributed independently of the other bits, at least for nearly all practical purposes outside of information security.  If the implementation uses a PRNG, that PRNG algorithm MUST either satisfy the _collision resistance_ property or be significantly more likely than not to pass all tests (other than MatrixRank and LinearComp) of `BigCrush`, part of L'Ecuyer and Simard's "TestU01". The RNG need not be perfectly equidistributed.
+A PRNG is a high-quality RNG if&mdash;
+- it generates random bits that behave like independent uniformly-distributed random bits (at least for nearly all practical purposes outside of information security),
+- its state length is at least 64 bits, and
+- it either satisfies the _collision resistance_ property or is significantly more likely than not to pass all tests (other than MatrixRank and LinearComp) of `BigCrush`, part of L'Ecuyer and Simard's "TestU01".
 
-If a statistical RNG implementation uses a PRNG, the following requirements apply.
+The PRNG's state length SHOULD be at least 128 bits, and the PRNG need not be equidistributed.
 
-1. The PRNG's _state length_ MUST be at least 64 bits, SHOULD be at least 128 bits, and is encouraged to be as high as the implementation can go to remain reasonably fast for most applications.
-
-2. Before an instance of the RNG generates a random number, it MUST have been initialized ("seeded") with a seed described as follows. The seed&mdash;
-    - MUST have as many bits as the PRNG's _state length_,
-    - MUST consist of data that ultimately derives from the output of one or more [**nondeterministic sources**](#Nondeterministic_Sources_and_Seed_Generation) and/or cryptographic RNGs, where the output is encouraged to cover a state space of at least as many bits as the PRNG's _state length_, and
-    - MAY be mixed with arbitrary data other than the seed.
-
-3. The RNG MAY reseed itself from time to time, using a newly generated seed as described earlier.  If the RNG reseeds if it would generate more than a threshold number of values without reseeding, that threshold SHOULD be 2<sup>L</sup> or less, where _L_ is the PRNG's state length.
+Every cryptographic RNG is also a high-quality RNG.
 
 <a id=Designs_for_PRNGs></a>
 ### Designs for PRNGs
@@ -547,7 +541,7 @@ I acknowledge&mdash;
 <a id=Notes></a>
 ## Notes
 
-<small><sup id=Note1>(1)</sup> A distinction between _statistical_ and _cryptographic_ RNGs seems natural, because many programming languages offer a general-purpose RNG (such as C's `rand` or Java's `java.util.Random`) and sometimes an RNG intended for information security purposes (such as Ruby's `SecureRandom`).</small>
+<small><sup id=Note1>(1)</sup> A distinction between _cryptographic_ and _noncryptographic_ RNGs seems natural, because many programming languages offer a general-purpose RNG (such as C's `rand` or Java's `java.util.Random`) and sometimes an RNG intended for information security purposes (such as Ruby's `SecureRandom`).</small>
 
 <small><sup id=Note2>(2)</sup> F. Dörre and V. Klebanov, "Practical Detection of Entropy Loss in Pseudo-Random Number Generators", 2016.</small>
 
