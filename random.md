@@ -174,7 +174,7 @@ The following are not considered high-quality PRNGs:
 <a id=Manually_Seeded_PRNGs></a>
 ## Manually-Seeded PRNGs
 
-Some applications use pseudorandom number generators (PRNGs) to generate apparently "random" numbers starting from a known initial state, or "seed". Such applications usually care about repeatable "randomness".
+A given pseudorandom number generator (PRNG) generates the same sequence of "random" numbers for the same "seed".  Some applications care about repeatable "randomness" and thus could set a PRNG's seed manually for repeatable "random" numbers.
 
 <a id=When_to_Use_a_Manually_Seeded_PRNG></a>
 ### When to Use a Manually-Seeded PRNG
