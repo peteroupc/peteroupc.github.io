@@ -867,8 +867,8 @@ untagged.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>java.lang.IllegalStateException</code> - This object does not represent a number,
-including the special not-a-number value (NaN).</li>
+<li><code>java.lang.IllegalStateException</code> - This object does not represent a number, or
+this object is a not-a-number (NaN) value.</li>
 </ul>
 
 <h3>getSimpleValue</h3>
@@ -1636,11 +1636,11 @@ deep, or another error occurred when serializing the object.</p></li>
  <code>java.util.UUID</code> (or <code>UUID</code> in Java), returns a UUID object if
  possible.</li> <li>Plain-Old-Data deserialization: If the object is
  a type not specially handled above, the type includes a
- zero-argument constructor (default or not), this CBOR object is a
-  CBOR map, and the &quot;mapper&quot; parameter allows this type to be eligible
- for Plain-Old-Data deserialization, then this method checks the
- given type for eligible setters as follows:</li> <li>(<em>) In the .NET
- version, eligible setters are the public, nonstatic setters of
+ zero-parameter constructor (default or not), this CBOR object is a
+  CBOR map, and the &quot;mapper&quot; parameter (if any) allows this type to be
+ eligible for Plain-Old-Data deserialization, then this method checks
+ the given type for eligible setters as follows:</li> <li>(<em>) In the
+.NET version, eligible setters are the public, nonstatic setters of
  properties with a public, nonstatic getter. Eligible setters also
  include public, nonstatic, non- <code>readonly</code> fields. If a class
   has two properties and/or fields of the form &quot;X&quot; and &quot;IsX&quot;, where
@@ -1664,15 +1664,16 @@ deep, or another error occurred when serializing the object.</p></li>
  in the CBOR map, if any. Key names in the map are matched to
  eligible setters according to the rules described in the <code>PODOptions</code> documentation. Note that for
  security reasons, certain types are not supported even if they
- contain eligible setters.</li> </ul><p> </p><p>Java offers no easy way
- to express a generic type, at least none as easy as C#&#39;s
- <code>typeof</code> operator. The following example, written in Java, is a
- way to specify that the return value will be an ArrayList of string
- objects.</p> <pre>Type arrayListString = new ParameterizedType() {
- public Type[] getActualTypeArguments() { // Contains one type
- parameter, string return new Type[] { string.class }; } public Type
- getRawType() { /* Raw type is ArrayList */ return ArrayList.class; }
- public Type getOwnerType() { return null; } };
+ contain eligible setters. For the Java version, the object creation
+ may fail in the case of a nested nonstatic class.</li> </ul><p>
+ </p><p>Java offers no easy way to express a generic type, at least none
+ as easy as C#&#39;s <code>typeof</code> operator. The following example,
+ written in Java, is a way to specify that the return value will be
+ an ArrayList of string objects.</p> <pre>Type arrayListString = new
+ ParameterizedType() { public Type[] getActualTypeArguments() { //
+ Contains one type parameter, string return new Type[] { string.class
+ }; } public Type getRawType() { /* Raw type is ArrayList */ return
+ ArrayList.class; } public Type getOwnerType() { return null; } };
  ArrayList&lt;string&gt; array = (ArrayList&lt;string&gt;)
  cborArray.ToObject(arrayListString);</pre> <p>By comparison, the C#
  version is much shorter.</p> <pre>List&lt;string&gt; array =
@@ -1693,7 +1694,7 @@ application. If the plain-old-data type references other data types,
 those types should likewise meet either criterion above.</p></li>
 <li><p><code>mapper</code> - This parameter controls which data types are eligible for
 Plain-Old-Data deserialization and includes custom converters from
-CBOR objects to certain data types.</p></li>
+CBOR objects to certain data types. Can be null.</p></li>
 <li><p><code>options</code> - Specifies options for controlling deserialization of CBOR
 objects.</p></li>
 </ul>
@@ -1711,7 +1712,8 @@ objects.</p></li>
 this object&#39;s CBOR type, is not supported, or the given object&#39;s
 nesting is too deep, or another error occurred when serializing the
 object.</p></li>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>t</code> is null.</p></li>
+<li><p><code>java.lang.NullPointerException</code> - The parameter <code>t</code> or <code>options</code> is
+null.</p></li>
 </ul>
 
 <h3>FromObject</h3>
@@ -2295,7 +2297,7 @@ the control of the application. If the plain-old-data type
 references other data types, those types should likewise meet either
 criterion above.</p>.</p></li>
 <li><p><code>mapper</code> - An object containing optional converters to convert objects of
-certain types to CBOR objects.</p></li>
+certain types to CBOR objects. Can be null.</p></li>
 <li><p><code>options</code> - An object containing options to control how certain objects
 are converted to CBOR objects.</p></li>
 </ul>
@@ -2310,7 +2312,9 @@ CBORObject.Null if the object is null.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>java.lang.NullPointerException</code> - The parameter <code>options</code> is null.</li>
+<li><p><code>java.lang.NullPointerException</code> - The parameter <code>options</code> is null.</p></li>
+<li><p><code>CBORException</code> - An error occurred while
+converting the given object to a CBOR object.</p></li>
 </ul>
 
 <h3>FromObjectAndTag</h3>

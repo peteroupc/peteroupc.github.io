@@ -77,7 +77,7 @@
 <pre>public string DispositionType { get; }
 </pre>
 
-<p>Gets a string containing this object&#39;s disposition type, such as &quot;inline&quot; or &quot;attachment&quot;. Note that under RFC 6266 sec. 4.2 and RFC 2183 sec. 2.8, unrecognized disposition types should be treated as &quot;attachment&quot;.</p>
+<p>Gets a string containing this object&#39;s disposition type, such as &quot;inline&quot; or &quot;attachment&quot;. Note that under RFC 6266 sec. 4.2 and RFC 2183 sec. 2.8, unrecognized disposition types should be treated as &quot;attachment&quot;. (There is no default content disposition in a message has no Content-Disposition header field.). The resulting string will be in lower case; that is, with its basic upper-case letters (&quot;A&quot; to &quot;Z&quot;) converted to basic lower-case letters (&quot;a&quot; to &quot;z&quot;).</p>
 
 <p><b>Returns:</b></p>
 
@@ -116,7 +116,7 @@
 <pre>public System.Collections.Generic.IDictionary Parameters { get; }
 </pre>
 
-<p>Gets a list of parameter names associated with this object and their values. For the &quot;filename&quot; parameter, the value of that parameter is not adapted with the ContentDisposition.MakeFilename method; see the documentation for the ContentDisposition class.</p>
+<p>Gets a list of parameter names associated with this object and their values. Each parameter name will be in lower case; that is, with its basic upper-case letters (&quot;A&quot; to &quot;Z&quot;) converted to basic lower-case letters (&quot;a&quot; to &quot;z&quot;). For the &quot;filename&quot; parameter, the value of that parameter is not adapted with the ContentDisposition.MakeFilename method; see the documentation for the ContentDisposition class.</p>
 
 <p><b>Returns:</b></p>
 

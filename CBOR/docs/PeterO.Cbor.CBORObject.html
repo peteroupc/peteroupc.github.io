@@ -559,7 +559,7 @@ This object is not a map.</li>
 
 <ul>
 <li>System.InvalidOperationException:
-This object does not represent a number, including the special not-a-number value (NaN).</li>
+This object does not represent a number, or this object is a not-a-number (NaN) value.</li>
 </ul>
 
 <p><a id="SimpleValue"></a></p>
@@ -1232,7 +1232,7 @@ This object does not represent a number (for this purpose, infinities and not-a-
 
 <ul>
 <li>System.InvalidOperationException:
-This object&#39;s type is not a string, including if this object is CBORObject.Null. To check the CBOR object for null before conversion, use the following idiom (originally written in C# for the.NET version):  <code>(cbor == null ||
+This object&#39;s type is not a string, including if this object is CBORObject.Null. To check the CBOR object for null before conversion, use the following idiom (originally written in C# for the.NET version):  <code>(cbor==null ||
         cbor.IsNull) ? null : cbor.AsString()</code> .</li>
 </ul>
 
@@ -1719,8 +1719,8 @@ is null.</li>
     PeterO.Cbor.CBOREncodeOptions options);
 </pre>
 
-<p>Writes the binary representation of this CBOR object and returns a byte array of that representation, using the specified options for encoding the object to CBOR format. For the CTAP2 canonical ordering, which is useful for implementing Web Authentication, call this method as follows:  <code>EncodeToBytes(new
-            CBOREncodeOptions(false, false, true))</code> .</p>
+<p>Writes the binary representation of this CBOR object and returns a byte array of that representation, using the specified options for encoding the object to CBOR format. For the CTAP2 (FIDO Client-to-Authenticator Protocol 2) canonical ordering, which is useful for implementing Web Authentication, call this method as follows:  <code>EncodeToBytes(new
+            CBOREncodeOptions(&quot;ctap2canonical=true&quot;))</code> .</p>
 
 <p><b>Parameters:</b></p>
 
@@ -1747,8 +1747,7 @@ is null.</li>
 <pre>public byte[] EncodeToBytes();
 </pre>
 
-<p>Writes the binary representation of this CBOR object and returns a byte array of that representation. If the CBOR object contains CBOR maps, or is a CBOR map itself, the keys to the map are written out to the byte array in an undefined order. The example code given in <strong>M:PeterO.Cbor.CBORObject.WriteTo(System.IO.Stream)</strong> can be used to write out certain keys of a CBOR map in a given order. For the CTAP2 canonical ordering, which is useful for implementing Web Authentication, call  <code>EncodeToBytes(new
-            CBOREncodeOptions(false, false, true))</code>  rather than this method.</p>
+<p>Writes the binary representation of this CBOR object and returns a byte array of that representation. If the CBOR object contains CBOR maps, or is a CBOR map itself, the keys to the map are written out to the byte array in an undefined order. The example code given in <strong>M:PeterO.Cbor.CBORObject.WriteTo(System.IO.Stream)</strong> can be used to write out certain keys of a CBOR map in a given order. For the CTAP2 (FIDO Client-to-Authenticator Protocol 2) canonical ordering, which is useful for implementing Web Authentication, call  <code>EncodeToBytes(new CBOREncodeOptions(&quot;ctap2canonical=true&quot;))</code>  rather than this method.</p>
 
 <p><b>Return Value:</b></p>
 
@@ -2169,14 +2168,12 @@ parameter, that converter will be used to convert the object to a CBOR object. T
 <li><p>An object of type  <code>DateTime</code> ,  <code>Uri</code> , or  <code>Guid</code>  (  <code>Date</code> ,  <code>URI</code> , or  <code>UUID</code> , respectively, in Java) will be converted to a tagged CBOR object of the appropriate kind.  <code>DateTime</code>  /  <code>Date</code>  will be converted to a tag-0 string following the date format used in the Atom syndication format.</p></li>
 <li><p>If the object is a type not specially handled above, this method checks the  <i>obj</i>
 parameter for eligible getters as follows:</p></li>
-<li><p>(*) In the .NET version, eligible getters are the public, nonstatic getters of read/write properties (and also those of read-only properties in the case of a compiler-generated type). If a class has two properties of the form &quot;X&quot; and &quot;IsX&quot;, where &quot;X&quot; is any name, or has multiple properties with the same name, those properties are ignored.</p></li>
-<li><p>(*) In the Java version, eligible getters are public, nonstatic methods starting with &quot;get&quot; or &quot;is&quot; (either word followed by a character other than a basic digit or lower-case letter, that is, other than &quot;a&quot; to &quot;z&quot; or &quot;0&quot; to &quot;9&quot;), that take no parameters and do not return void, except that methods named &quot;getClass&quot; are not eligible getters. If a class has two otherwise eligible getters of the form &quot;isX&quot; and &quot;getX&quot;, where &quot;X&quot; is the same in both, or two such getters with the same name but different return type, they are not eligible getters.</p></li>
+<li><p>(*) In the .NET version, eligible getters are the public, nonstatic getters of read/write properties (and also those of read-only properties in the case of a compiler-generated type). Eligible getters also include public, nonstatic, non-  <code>readonly</code>  fields. If a class has two properties and/or fields of the form &quot;X&quot; and &quot;IsX&quot;, where &quot;X&quot; is any name, or has multiple properties and/or fields with the same name, those properties and fields are ignored.</p></li>
+<li><p>(*) In the Java version, eligible getters are public, nonstatic methods starting with &quot;get&quot; or &quot;is&quot; (either word followed by a character other than a basic digit or lower-case letter, that is, other than &quot;a&quot; to &quot;z&quot; or &quot;0&quot; to &quot;9&quot;), that take no parameters and do not return void, except that methods named &quot;getClass&quot; are not eligible getters. In addition, public, nonstatic, nonfinal fields are also eligible getters. If a class has two otherwise eligible getters (methods and/or fields) of the form &quot;isX&quot; and &quot;getX&quot;, where &quot;X&quot; is the same in both, or two such getters with the same name but different return type, they are not eligible getters.</p></li>
 <li><p>Then, the method returns a CBOR map with each eligible getter&#39;s name or property name as each key, and with the corresponding value returned by that getter as that key&#39;s value. Before adding a key-value pair to the map, the key&#39;s name is adjusted according to the rules described in the <a href="PeterO.Cbor.PODOptions.html">PeterO.Cbor.PODOptions</a> documentation. Note that for security reasons, certain types are not supported even if they contain eligible getters.</p></li>
 </ul>
 
 <p><b>REMARK:</b>.NET enumeration (  <code>Enum</code>  ) constants could also have been converted to text strings with  <code>ToString()</code> , but that method will return multiple names if the given Enum object is a combination of Enum objects (e.g. if the object is  <code>FileAccess.Read | FileAccess.Write</code>  ). More generally, if Enums are converted to text strings, constants from Enum types with the  <code>Flags</code>  attribute, and constants from the same Enum type that share an underlying value, should not be passed to this method.</p>
-
-<p>REMARK: A certain consistency between .NET and Java and between FromObject and ToObject are sought for version 4.0. It is also hoped that the ToObject method will support deserializing to objects consisting of fields and not getters (&quot;getX()&quot; methods), both in .NET and in Java.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -2187,7 +2184,7 @@ parameter for eligible getters as follows:</p></li>
 <p>.</p>
 
 <ul>
-<li><p><i>mapper</i>: An object containing optional converters to convert objects of certain types to CBOR objects.</p></li>
+<li><p><i>mapper</i>: An object containing optional converters to convert objects of certain types to CBOR objects. Can be null.</p></li>
 <li><p><i>options</i>: An object containing options to control how certain objects are converted to CBOR objects.</p></li>
 </ul>
 
@@ -2198,9 +2195,11 @@ parameter for eligible getters as follows:</p></li>
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li>System.ArgumentNullException:
+<li><p>System.ArgumentNullException:
 The parameter  <i>options</i>
-is null.</li>
+is null.</p></li>
+<li><p>PeterO.Cbor.CBORException:
+An error occurred while converting the given object to a CBOR object.</p></li>
 </ul>
 
 <p><a id="FromObject_object_PeterO_Cbor_PODOptions"></a></p>
@@ -3976,13 +3975,11 @@ parameter, that converter will be used to convert the CBOR object to an object o
 <li><p>If the type is  <code>DateTime</code>  (or  <code>Date</code>  in Java) , returns a date/time object if the CBOR object&#39;s outermost tag is 0 or 1. For tag 1, this method treats the CBOR object as a number of seconds since the start of 1970, which is based on the POSIX definition of &quot;seconds since the Epoch&quot;, a definition that does not count leap seconds. In this method, this number of seconds assumes the use of a proleptic Gregorian calendar, in which the rules regarding the number of days in each month and which years are leap years are the same for all years as they were in 1970 (including without regard to transitions from other calendars to the Gregorian). For tag 1, CBOR objects that express infinity or not-a-number (NaN) are treated as invalid by this method.</p></li>
 <li><p>If the type is  <code>Uri</code>  (or  <code>URI</code>  in Java), returns a URI object if possible.</p></li>
 <li><p>If the type is  <code>Guid</code>  (or  <code>UUID</code>  in Java), returns a UUID object if possible.</p></li>
-<li><p>Plain-Old-Data deserialization: If the object is a type not specially handled above, the type includes a zero-argument constructor (default or not), this CBOR object is a CBOR map, and the &quot;mapper&quot; parameter allows this type to be eligible for Plain-Old-Data deserialization, then this method checks the given type for eligible setters as follows:</p></li>
-<li><p>(*) In the .NET version, eligible setters are the public, nonstatic setters of properties with a public, nonstatic getter. If a class has two properties of the form &quot;X&quot; and &quot;IsX&quot;, where &quot;X&quot; is any name, or has multiple properties with the same name, those properties are ignored.</p></li>
-<li><p>(*) In the Java version, eligible setters are public, nonstatic methods starting with &quot;set&quot; followed by a character other than a basic digit or lower-case letter, that is, other than &quot;a&quot; to &quot;z&quot; or &quot;0&quot; to &quot;9&quot;, that take one parameter. The class containing an eligible setter must have a public, nonstatic method with the same name, but starting with &quot;get&quot; or &quot;is&quot; rather than &quot;set&quot;, that takes no parameters and does not return void. (For example, if a class has &quot;public setValue(String)&quot; and &quot;public getValue()&quot;, &quot;setValue&quot; is an eligible setter. However, &quot;setValue()&quot; and &quot;setValue(String, int)&quot; are not eligible setters.) If a class has two or more otherwise eligible setters with the same name, but different parameter type, they are not eligible setters.</p></li>
-<li><p>Then, the method creates an object of the given type and invokes each eligible setter with the corresponding value in the CBOR map, if any. Key names in the map are matched to eligible setters according to the rules described in the <a href="PeterO.Cbor.PODOptions.html">PeterO.Cbor.PODOptions</a> documentation. Note that for security reasons, certain types are not supported even if they contain eligible setters.</p></li>
+<li><p>Plain-Old-Data deserialization: If the object is a type not specially handled above, the type includes a zero-parameter constructor (default or not), this CBOR object is a CBOR map, and the &quot;mapper&quot; parameter (if any) allows this type to be eligible for Plain-Old-Data deserialization, then this method checks the given type for eligible setters as follows:</p></li>
+<li><p>(*) In the .NET version, eligible setters are the public, nonstatic setters of properties with a public, nonstatic getter. Eligible setters also include public, nonstatic, non-  <code>readonly</code>  fields. If a class has two properties and/or fields of the form &quot;X&quot; and &quot;IsX&quot;, where &quot;X&quot; is any name, or has multiple properties and/or fields with the same name, those properties and fields are ignored.</p></li>
+<li><p>(*) In the Java version, eligible setters are public, nonstatic methods starting with &quot;set&quot; followed by a character other than a basic digit or lower-case letter, that is, other than &quot;a&quot; to &quot;z&quot; or &quot;0&quot; to &quot;9&quot;, that take one parameter. The class containing an eligible setter must have a public, nonstatic method with the same name, but starting with &quot;get&quot; or &quot;is&quot; rather than &quot;set&quot;, that takes no parameters and does not return void. (For example, if a class has &quot;public setValue(String)&quot; and &quot;public getValue()&quot;, &quot;setValue&quot; is an eligible setter. However, &quot;setValue()&quot; and &quot;setValue(String, int)&quot; are not eligible setters.) In addition, public, nonstatic, nonfinal fields are also eligible setters. If a class has two or more otherwise eligible setters (methods and/or fields) with the same name, but different parameter type, they are not eligible setters.</p></li>
+<li><p>Then, the method creates an object of the given type and invokes each eligible setter with the corresponding value in the CBOR map, if any. Key names in the map are matched to eligible setters according to the rules described in the <a href="PeterO.Cbor.PODOptions.html">PeterO.Cbor.PODOptions</a> documentation. Note that for security reasons, certain types are not supported even if they contain eligible setters. For the Java version, the object creation may fail in the case of a nested nonstatic class.</p></li>
 </ul>
-
-<p>REMARK: A certain consistency between .NET and Java and between FromObject and ToObject are sought for version 4.0. It is also hoped that the ToObject method will support deserializing to objects consisting of fields and not getters (&quot;getX()&quot; methods), both in .NET and in Java.</p>
 
 <p>Java offers no easy way to express a generic type, at least none as easy as C#&#39;s  <code>typeof</code>  operator. The following example, written in Java, is a way to specify that the return value will be an ArrayList of String objects.</p>
 
@@ -4006,7 +4003,7 @@ parameter, that converter will be used to convert the CBOR object to an object o
 
 <ul>
 <li><p><i>t</i>: The type, class, or interface that this method&#39;s return value will belong to. To express a generic type in Java, see the example. <b>Note:</b> For security reasons, an application should not base this parameter on user input or other externally supplied data. Whenever possible, this parameter should be either a type specially handled by this method, such as  <code>int</code>  or  <code>String</code>  , or a plain-old-data type (POCO or POJO type) within the control of the application. If the plain-old-data type references other data types, those types should likewise meet either criterion above.</p></li>
-<li><p><i>mapper</i>: This parameter controls which data types are eligible for Plain-Old-Data deserialization and includes custom converters from CBOR objects to certain data types.</p></li>
+<li><p><i>mapper</i>: This parameter controls which data types are eligible for Plain-Old-Data deserialization and includes custom converters from CBOR objects to certain data types. Can be null.</p></li>
 <li><p><i>options</i>: Specifies options for controlling deserialization of CBOR objects.</p></li>
 </ul>
 
@@ -4022,6 +4019,7 @@ The given type  <i>t</i>
 , or this object&#39;s CBOR type, is not supported, or the given object&#39;s nesting is too deep, or another error occurred when serializing the object.</p></li>
 <li><p>System.ArgumentNullException:
 The parameter  <i>t</i>
+or  <i>options</i>
 is null.</p></li>
 </ul>
 

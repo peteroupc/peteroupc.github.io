@@ -27,10 +27,11 @@
 <li><code><a href="#GetCharset">GetCharset()</a></code> - Gets this media type&#39;s &quot;charset&quot; parameter, naming a character encoding used to represent text in the data that uses this media type.</li>
 <li><code><a href="#GetHashCode">GetHashCode()</a></code> - Calculates the hash code of this object.</li>
 <li><code><a href="#GetParameter_string">GetParameter(string)</a></code> - Gets the value of a parameter in this media type, such as &quot;charset&quot; or &quot;format&quot;.</li>
+<li><code><a href="#HasStructuredSuffix_string">HasStructuredSuffix(string)</a></code> - Not documented yet.</li>
 <li><code><a href="#IsMultipart">IsMultipart</a></code> - Gets a value indicating whether this is a multipart media type.</li>
 <li><code><a href="#IsText">IsText</a></code> - Gets a value indicating whether this is a text media type (&quot;text/*&quot;).</li>
 <li><code><a href="#MessageRfc822">public static readonly PeterO.Mail.MediaType MessageRfc822;</a></code> - Specifies the media type &quot;message/rfc822&quot;, used for Internet mail messages.</li>
-<li><code><a href="#Parameters">Parameters</a></code> - Gets a list of the parameters contained in this media type object.</li>
+<li><code><a href="#Parameters">Parameters</a></code> - Gets a list of the parameter names contained in this media type object and their values.</li>
 <li><code><a href="#Parse_string">Parse(string)</a></code> - Parses a media type string and returns a media type object.</li>
 <li><code><a href="#Parse_string_PeterO_Mail_MediaType">Parse(string, PeterO.Mail.MediaType)</a></code> - Parses a media type string and returns a media type object, or the default value if the string is invalid.</li>
 <li><code><a href="#SubType">SubType</a></code> - Gets this media type&#39;s subtype (for example, &quot;plain&quot; in &quot;text/plain&quot;).</li>
@@ -112,7 +113,7 @@
 <pre>public System.Collections.Generic.IDictionary Parameters { get; }
 </pre>
 
-<p>Gets a list of the parameters contained in this media type object.</p>
+<p>Gets a list of the parameter names contained in this media type object and their values. Each parameter name will be in lower case; that is, with its basic upper-case letters (&quot;A&quot; to &quot;Z&quot;) converted to basic lower-case letters (&quot;a&quot; to &quot;z&quot;).</p>
 
 <p><b>Returns:</b></p>
 
@@ -125,7 +126,7 @@
 <pre>public string SubType { get; }
 </pre>
 
-<p>Gets this media type&#39;s subtype (for example, &quot;plain&quot; in &quot;text/plain&quot;). The resulting string will be in lowercase letters.</p>
+<p>Gets this media type&#39;s subtype (for example, &quot;plain&quot; in &quot;text/plain&quot;). The resulting string will be in lower case; that is, with its basic upper-case letters (&quot;A&quot; to &quot;Z&quot;) converted to basic lower-case letters (&quot;a&quot; to &quot;z&quot;).</p>
 
 <p><b>Returns:</b></p>
 
@@ -138,7 +139,7 @@
 <pre>public string TopLevelType { get; }
 </pre>
 
-<p>Gets the name of this media type&#39;s top-level type (such as &quot;text&quot; in &quot;text/plain&quot;, or &quot;audio&quot; in &quot;audio/basic&quot;). The resulting string will be in lowercase letters.</p>
+<p>Gets the name of this media type&#39;s top-level type (such as &quot;text&quot; in &quot;text/plain&quot;, or &quot;audio&quot; in &quot;audio/basic&quot;). The resulting string will be in lower case; that is, with its basic upper-case letters (&quot;A&quot; to &quot;Z&quot;) converted to basic lower-case letters (&quot;a&quot; to &quot;z&quot;).</p>
 
 <p><b>Returns:</b></p>
 
@@ -176,7 +177,7 @@ is an arbitrary object.</li>
 
 <p><b>Return Value:</b></p>
 
-<p><code>true</code>  if this object and another object are equal; otherwise,  <code>false</code> .</p>
+<p><code>true</code>  if this object and the other object are equal; otherwise,  <code>false</code> .</p>
 
 <p><a id="GetCharset"></a></p>
 
@@ -189,7 +190,7 @@ is an arbitrary object.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>If the &quot;charset&quot; parameter is present and non-empty, returns the result of the Encodings.ResolveAliasForEmail method for that parameter, except that the result&#39;s basic upper-case letters A to Z (U+0041 to U+005A) are converted to lower case. If the &quot;charset&quot; parameter is absent or empty, returns the default value, if any, for that parameter given the media type (e.g., &quot;us-ascii&quot; if the media type is &quot;text/plain&quot;; see RFC2046), or the empty string if there is none.</p>
+<p>If the &quot;charset&quot; parameter is present and non-empty, returns the result of the Encodings.ResolveAliasForEmail method for that parameter, except that the result&#39;s basic upper-case letters A to Z (U+0041 to U+005A) are converted to lower case. If the &quot;charset&quot; parameter is empty, returns the empty string. If the &quot;charset&quot; parameter is absent, returns the default value, if any, for that parameter given the media type (e.g., &quot;us-ascii&quot; if the media type is &quot;text/plain&quot;; see RFC2046), or the empty string if there is none.</p>
 
 <p><a id="GetHashCode"></a></p>
 
@@ -233,6 +234,26 @@ is null.</p></li>
 <li><p>System.ArgumentException:
 Name is empty.</p></li>
 </ul>
+
+<p><a id="HasStructuredSuffix_string"></a></p>
+
+<h3>HasStructuredSuffix</h3>
+
+<pre>public bool HasStructuredSuffix(
+    string suffix);
+</pre>
+
+<p>Not documented yet.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>suffix</i>: Not documented yet.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>The return value is not documented yet.</p>
 
 <p><a id="Parse_string"></a></p>
 
