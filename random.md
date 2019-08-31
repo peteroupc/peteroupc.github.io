@@ -276,16 +276,15 @@ Once data with enough entropy is gathered, it might need to be condensed into a 
 <a id=Seed_Generation_for_Noncryptographic_RNGs></a>
 ### Seed Generation for Noncryptographic RNGs
 
-For noncryptographic PRNGs, an application ought to generate seeds likely to vary "wildly" from previously generated seeds, to reduce the risk of correlated "random" numbers or sequences.  One way the application can ensure this is to do the following for each PRNG instance it creates:
+For noncryptographic PRNGs, an application ought to generate seeds likely to vary "wildly" from previously generated seeds, to reduce the risk of correlated "random" numbers or sequences.  In most cases, this can be achieved by seeding with the output of a cryptographic RNG or using the advice in the previous section.  However, for [manually-seeded PRNGs](#Manually_Seeded_PRNGs) used in a multithread or multiprocess application, the application can generate one seed and distribute it to multiple PRNG instances as follows.  For each PRNG instance:
 
 1. Build a string consisting of three parts: `SEED`, `IDENT`, and `UNIQUE`. Example: "myseed-mysimulation-1".
 
-    - If the application requires repeatable "randomness", `SEED` is a predetermined number that's the same for all PRNG instances in the set.
-    - Otherwise, `SEED` is separate for each PRNG instance and ought to be the output of a cryptographic RNG or be derived from hard-to-predict sources (see "Seed Generation").
-    - `IDENT` is a fixed identifier that's the same for all PRNG instances in the set.
-    - `UNIQUE` is a unique number for each PRNG instance.
+    - `SEED` is the seed distributed to each PRNG instance in the set.
+    - `IDENT` is a fixed identifier that's the same for all those instances.
+    - `UNIQUE` is a unique number for each of those instances.
 
-2. Use a [**hash function**](#Hash_Functions) or an _extendable-output function_ (such as SHAKE-128) to generate a hash code of the string in step 1, and use that code as the seed for the PRNG.  Here, hash functions with 128-bit or longer hash codes are preferred.
+2. Use a [**hash function**](#Hash_Functions) or an _extendable-output function_ (such as SHAKE-128) to generate a hash code of the string in step 1, and use that code as the seed for that PRNG instance.  Here, hash functions with 128-bit or longer hash codes are preferred.
 
 It is NOT RECOMMENDED to seed a PRNG (especially several at once) with sequential counters, linearly related numbers, or timestamps, since these kinds of seeds can cause undesirable correlations in some PRNGs.  Moreover, seeding multiple PRNGs with coarse timestamps can introduce the risk of generating the same "random" sequence accidentally.<sup>[**(17)**](#Note17)</sup>
 
@@ -497,7 +496,7 @@ A PRNG is a high-quality RNG if&mdash;
 - its state length is at least 64 bits, and
 - it either satisfies the _collision resistance_ property or is significantly more likely than not to pass all tests (other than MatrixRank and LinearComp) of `BigCrush`, part of L'Ecuyer and Simard's "TestU01".
 
-The PRNG's state length SHOULD be at least 128 bits, and the PRNG need not be equidistributed.
+The PRNG's state length SHOULD be at least 128 bits, and the PRNG need not be perfectly equidistributed.
 
 Every cryptographic RNG is also a high-quality RNG.
 
