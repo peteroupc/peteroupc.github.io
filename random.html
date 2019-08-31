@@ -222,7 +222,7 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 <li>if the PRNG is not <em>high quality</em> (see &quot;<a href="#Noncryptographic_PRNGs_Requirements"><strong>High-Quality RNGs: Requirements</strong></a>&quot;).</li>
 </ul>
 
-<p>If a noncryptographic PRNG is used, it SHOULD be automatically seeded in a way that seeds are almost certain to vary each time; this can be done either with a cryptographic RNG or using otherwise hard-to-predict data (see <a href="#Seed_Generation"><strong>Seed Generation</strong></a>).</p>
+<p>If a noncryptographic PRNG is used, it SHOULD be automatically seeded in a way that seeds are almost certain to vary each time; this can be done, for example, with a cryptographic RNG or using the method described in &quot;<a href="#Wildly_Varying_Seeds"><strong>Wildly Varying Seeds</strong></a>&quot;.</p>
 
 <p><a id=High_Quality_PRNG_Examples></a></p>
 
@@ -398,12 +398,18 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 
 <h3>Wildly Varying Seeds</h3>
 
-<p>For noncryptographic and manually-seeded PRNGs, an application ought to generate seeds likely to vary &quot;wildly&quot; from previously generated seeds, to reduce the risk of correlated &quot;random&quot; numbers or sequences.  One way the application can ensure this is to do the following for each PRNG instance it creates:</p>
+<p>For noncryptographic PRNGs, an application ought to generate seeds likely to vary &quot;wildly&quot; from previously generated seeds, to reduce the risk of correlated &quot;random&quot; numbers or sequences.  One way the application can ensure this is to do the following for each PRNG instance it creates:</p>
 
 <ol>
-<li>Build a bit string consisting of the following: A seed unique to the set of PRNG instances as a whole, a fixed identifier unique to that set, and a unique number for each PRNG instance. Example: &quot;myseed-mysimulation-1&quot;.</li>
-<li>The seed in step 1 ought to be a fixed number, be the output of a cryptographic RNG, or be derived from hard-to-predict sources (see &quot;Seed Generation&quot;).</li>
-<li>Use a <a href="#Hash_Functions"><strong>hash function</strong></a> or an <em>extendable-output function</em> to generate a hash code of the bit string in step 1, and use that code as the seed for the PRNG.  Here, hash functions with 128-bit or longer hash codes are preferred.</li>
+<li><p>Build a string consisting of three parts: <code>SEED</code>, <code>IDENT</code>, and <code>UNIQUE</code>. Example: &quot;myseed-mysimulation-1&quot;.</p>
+
+<ul>
+<li>If the application requires repeatable &quot;randomness&quot;, <code>SEED</code> is a predetermined number that&#39;s the same for all PRNG instances in the set.</li>
+<li>Otherwise, <code>SEED</code> is separate for each PRNG instance and ought to be the output of a cryptographic RNG or be derived from hard-to-predict sources (see &quot;Seed Generation&quot;).</li>
+<li><code>IDENT</code> is a fixed identifier that&#39;s the same for all PRNG instances in the set.</li>
+<li><code>UNIQUE</code> is a unique number for each PRNG instance.</li>
+</ul></li>
+<li><p>Use a <a href="#Hash_Functions"><strong>hash function</strong></a> or an <em>extendable-output function</em> to generate a hash code of the string in step 1, and use that code as the seed for the PRNG.  Here, hash functions with 128-bit or longer hash codes are preferred.</p></li>
 </ol>
 
 <p>It is NOT RECOMMENDED to seed a PRNG (especially several at once) with sequential counters, linearly related numbers, or timestamps, since these kinds of seeds can cause undesirable correlations in some PRNGs.  Moreover, seeding multiple PRNGs with coarse timestamps can introduce the risk of generating the same &quot;random&quot; sequence accidentally.<sup><a href="#Note17"><strong>(17)</strong></a></sup></p>

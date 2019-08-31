@@ -72,7 +72,7 @@ so that as a result, many applications use RNGs, especially built-in RNGs, that 
     - [**Examples of Nondeterministic Sources**](#Examples_of_Nondeterministic_Sources)
     - [**Entropy**](#Entropy)
     - [**Seed Generation**](#Seed_Generation)
-    - [**Wildly Varying Seeds**](#Wildly_Varying_Seeds)
+    - [**Seed Generation for Noncryptographic RNGs**](#Seed_Generation_for_Noncryptographic_RNGs)
 - [**Existing RNG APIs in Programming Languages**](#Existing_RNG_APIs_in_Programming_Languages)
 - [**RNG Topics**](#RNG_Topics)
     - [**How to Initialize RNGs**](#How_to_Initialize_RNGs)
@@ -145,7 +145,7 @@ Noncryptographic PRNGs vary widely in the quality of randomness of the numbers t
 - if cryptographic RNGs are fast enough for the application, or
 - if the PRNG is not _high quality_ (see "[**High-Quality RNGs: Requirements**](#Noncryptographic_PRNGs_Requirements)").
 
-If a noncryptographic PRNG is used, it SHOULD be automatically seeded in a way that seeds are almost certain to vary each time; this can be done either with a cryptographic RNG or using otherwise hard-to-predict data (see [**Seed Generation**](#Seed_Generation)).
+If a noncryptographic PRNG is used, it SHOULD be automatically seeded in a way that seeds are almost certain to vary each time; this can be done, for example, with a cryptographic RNG or using the method described in "[**Seed Generation for Noncryptographic RNGs**](#Seed_Generation_for_Noncryptographic_RNGs)".
 
 <a id=High_Quality_PRNG_Examples></a>
 ### High-Quality PRNG Examples
@@ -195,7 +195,7 @@ If an application chooses to use a manually-seeded PRNG for repeatable "randomne
 - SHOULD choose a [**high-quality PRNG**](#High_Quality_PRNG_Examples),
 - SHOULD choose a PRNG implementation with consistent behavior that will not change in the future,
 - ought to document the chosen PRNG being used as well as all the parameters for that PRNG,
-- ought to generate seeds for the PRNG that are likely to vary wildly from previous seeds (see "[**Wildly Varying Seeds**](#Wildly_Varying_Seeds)"), and
+- ought to generate seeds for the PRNG that are likely to vary wildly from previous seeds (see "[**Seed Generation for Noncryptographic RNGs**](#Seed_Generation_for_Noncryptographic_RNGs)"), and
 - SHOULD NOT seed the PRNG with floating-point numbers or generate floating-point numbers with that PRNG.
 
 > **Example:** An application could implement a manually-seeded PRNG using a third-party library that specifically says it implements a [**high-quality PRNG algorithm**](#High_Quality_PRNG_Examples), and could initialize that PRNG using a bit sequence from a cryptographic RNG.  The developers could also mention the use of the specific PRNG chosen on any code that uses it, to alert other developers that the PRNG needs to remain unchanged.
@@ -273,14 +273,19 @@ In general, especially for cryptographic RNGs, **to generate an N-bit seed, enou
 
 Once data with enough entropy is gathered, it might need to be condensed into a seed to initialize a PRNG with. Following (Cliff et al., 2009)<sup>[**(16)**](#Note16)</sup>, it is suggested to generate an N-bit seed using an HMAC (hash-based message authentication code) at least N times 3 bits long; in that sense, take data with at least as many bits of entropy as the HMAC size in bits, generate the HMAC with that data, then take the HMAC's first N bits.  See also NIST SP 800-90B sec. 3.1.5.1 and RFC 4086 sec. 4.2 and 5.2.
 
-<a id=Wildly_Varying_Seeds></a>
-### Wildly Varying Seeds
+<a id=Seed_Generation_for_Noncryptographic_RNGs></a>
+### Seed Generation for Noncryptographic RNGs
 
-For noncryptographic and manually-seeded PRNGs, an application ought to generate seeds likely to vary "wildly" from previously generated seeds, to reduce the risk of correlated "random" numbers or sequences.  One way the application can ensure this is to do the following for each PRNG instance it creates:
+For noncryptographic PRNGs, an application ought to generate seeds likely to vary "wildly" from previously generated seeds, to reduce the risk of correlated "random" numbers or sequences.  One way the application can ensure this is to do the following for each PRNG instance it creates:
 
-1. Build a bit string consisting of the following: A seed unique to the set of PRNG instances as a whole, a fixed identifier unique to that set, and a unique number for each PRNG instance. Example: "myseed-mysimulation-1".
-2. The seed in step 1 ought to be a fixed number, be the output of a cryptographic RNG, or be derived from hard-to-predict sources (see "Seed Generation").
-3. Use a [**hash function**](#Hash_Functions) or an _extendable-output function_ to generate a hash code of the bit string in step 1, and use that code as the seed for the PRNG.  Here, hash functions with 128-bit or longer hash codes are preferred.
+1. Build a string consisting of three parts: `SEED`, `IDENT`, and `UNIQUE`. Example: "myseed-mysimulation-1".
+
+    - If the application requires repeatable "randomness", `SEED` is a predetermined number that's the same for all PRNG instances in the set.
+    - Otherwise, `SEED` is separate for each PRNG instance and ought to be the output of a cryptographic RNG or be derived from hard-to-predict sources (see "Seed Generation").
+    - `IDENT` is a fixed identifier that's the same for all PRNG instances in the set.
+    - `UNIQUE` is a unique number for each PRNG instance.
+
+2. Use a [**hash function**](#Hash_Functions) or an _extendable-output function_ (such as SHAKE-128) to generate a hash code of the string in step 1, and use that code as the seed for the PRNG.  Here, hash functions with 128-bit or longer hash codes are preferred.
 
 It is NOT RECOMMENDED to seed a PRNG (especially several at once) with sequential counters, linearly related numbers, or timestamps, since these kinds of seeds can cause undesirable correlations in some PRNGs.  Moreover, seeding multiple PRNGs with coarse timestamps can introduce the risk of generating the same "random" sequence accidentally.<sup>[**(17)**](#Note17)</sup>
 
@@ -340,7 +345,7 @@ For **cryptographic RNGs** and **automatically-seeded PRNGs**, an application SH
 
 For **manually-seeded PRNGs**, to **reduce the chance of correlated random numbers or identical random number sequences**, an application is encouraged to create one or more instances of a PRNG, where each instance&mdash;
 - is accessible to only one thread, task, or subtask of the application (such as with thread-local storage),
-- is initialized with a seed that is unrelated to the other seeds (see "[**Wildly Varying Seeds**](#Wildly_Varying_Seeds)"), and
+- is initialized with a seed that is unrelated to the other seeds (see "[**Seed Generation for Noncryptographic RNGs**](#Seed_Generation_for_Noncryptographic_RNGs)"), and
 - MAY use a different conforming RNG scheme from the others.
 
 (L'Ecuyer et al. 2015)<sup>[**(21)**](#Note21)</sup>, section 4, goes in greater detail on ways to initialize PRNGs for generating random numbers in parallel, including how to ensure repeatable "randomness" this way if that is desired.
@@ -446,7 +451,7 @@ Hash functions not used for information security SHOULD have the avalanche prope
 
 _Noise_ is a randomized variation in images, sound, and other data.<sup>[**(33)**](#Note33)</sup>
 
-A _noise function_ is similar to a hash function; it takes an _n_-dimensional point and, optionally, additional data, and outputs a seemingly random number.<sup>[**(34)**](#Note34)</sup>  Noise functions generate **_procedural noise_** such as [**cellular noise**](https://en.wikipedia.org/wiki/Cellular_noise), [**value noise**](https://en.wikipedia.org/wiki/Value_noise), and [**gradient noise**](https://en.wikipedia.org/wiki/Gradient_noise) (such as [**Perlin noise**](https://en.wikipedia.org/wiki/Perlin_noise)).  If the noise function takes additional data, that data&mdash;
+A _noise function_ is similar to a hash function; it takes an _n_-dimensional point and, optionally, additional data, and outputs a seemingly random number.<sup>[**(34)**](#Note34)</sup>  Noise functions generate **_procedural noise_** such as [**cellular noise**](https://en.wikipedia.org/wiki/Cellular_noise), [**value noise**](https://en.wikipedia.org/wiki/Value_noise), and [**gradient noise**](https://en.wikipedia.org/wiki/Gradient_noise) (including [**Perlin noise**](https://en.wikipedia.org/wiki/Perlin_noise)).  If the noise function takes additional data, that data&mdash;
 - SHOULD include random numbers (from any RNG), and
 - SHOULD NOT vary from one run to the next while the noise function is used for a given purpose (e.g., to generate terrain for a given map).
 
