@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on Mar. 5, 2016; last updated on Aug. 30, 2019.
+Begun on Mar. 5, 2016; last updated on Sep. 1, 2019.
 
 Most apps that use random numbers care about either unpredictability, high quality, or repeatability.  This article explains the three kinds of RNGs and gives recommendations on each kind.
 
@@ -145,7 +145,7 @@ Noncryptographic PRNGs vary widely in the quality of randomness of the numbers t
 - if cryptographic RNGs are fast enough for the application, or
 - if the PRNG is not _high quality_ (see "[**High-Quality RNGs: Requirements**](#Noncryptographic_PRNGs_Requirements)").
 
-If a noncryptographic PRNG is used, it SHOULD be automatically seeded in a way that seeds are almost certain to vary each time; this can be done, for example, with a cryptographic RNG or using the method described in "[**Seed Generation**](#Seed_Generation)".
+Noncryptographic PRNGs can be _automatically seeded_ (a new seed is generated upon PRNG creation) or _manually seeded_ (the PRNG uses a predetermined seed).  See "[**When to Use a Manually-Seeded PRNG**](#When_to_Use_a_Manually_Seeded_PRNG)" to learn which kind of seeding to use, and see  "[**Seed Generation for Noncryptographic PRNGs**](#Seed_Generation_for_Noncryptographic_PRNGs)" for advice on how to seed.
 
 <a id=High_Quality_PRNG_Examples></a>
 ### High-Quality PRNG Examples
@@ -276,9 +276,9 @@ Once data with enough entropy is gathered, it might need to be condensed into a 
 <a id=Seed_Generation_for_Noncryptographic_RNGs></a>
 ### Seed Generation for Noncryptographic RNGs
 
-For noncryptographic PRNGs, an application ought to generate seeds likely to vary "wildly" from previously generated seeds, to reduce the risk of correlated "random" numbers or sequences.  In most cases, this can be done by seeding with the output of a cryptographic RNG or using the advice in the [previous section](#Seed_Generation).
+For noncryptographic PRNGs, an application ought to generate seeds likely to vary "wildly" from previously generated seeds, to reduce the risk of correlated "random" numbers or sequences.  In most cases, this can be done by seeding with the output of a cryptographic RNG or using the advice in the [**previous section**](#Seed_Generation).
 
-For [**manually-seeded PRNGs**](#Manually_Seeded_PRNGs), however, if multiple processes (including threads, tasks, or subtasks) need to use repeatable "random" numbers for the same purpose, an application can generate one seed and distribute it to those processes as follows.  For each such process:
+For [**manually-seeded PRNGs**](#Manually_Seeded_PRNGs), however, if multiple processes (including threads, tasks, or subtasks) need to use repeatable "random" numbers for the same purpose, an application can generate one seed (or use a pregenerated seed) and distribute that seed to those processes as follows.  For each such process:
 
 1. Create a PRNG instance for that process.
 2. Build a string consisting of three parts: `IDENT`, `UNIQUE`, and `SEED`. Example: "mysimulation-1-myseed".<sup>[**(17)**](#Note17)</sup>

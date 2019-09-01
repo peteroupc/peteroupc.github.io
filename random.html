@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
-<p>Begun on Mar. 5, 2016; last updated on Aug. 30, 2019.</p>
+<p>Begun on Mar. 5, 2016; last updated on Sep. 1, 2019.</p>
 
 <p>Most apps that use random numbers care about either unpredictability, high quality, or repeatability.  This article explains the three kinds of RNGs and gives recommendations on each kind.</p>
 
@@ -222,7 +222,7 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 <li>if the PRNG is not <em>high quality</em> (see &quot;<a href="#Noncryptographic_PRNGs_Requirements"><strong>High-Quality RNGs: Requirements</strong></a>&quot;).</li>
 </ul>
 
-<p>If a noncryptographic PRNG is used, it SHOULD be automatically seeded in a way that seeds are almost certain to vary each time; this can be done, for example, with a cryptographic RNG or using the method described in &quot;<a href="#Seed_Generation"><strong>Seed Generation</strong></a>&quot;.</p>
+<p>Noncryptographic PRNGs can be <em>automatically seeded</em> (a new seed is generated upon PRNG creation) or <em>manually seeded</em> (the PRNG uses a predetermined seed).  See &quot;<a href="#When_to_Use_a_Manually_Seeded_PRNG"><strong>When to Use a Manually-Seeded PRNG</strong></a>&quot; to learn which kind of seeding to use, and see  &quot;<a href="#Seed_Generation_for_Noncryptographic_PRNGs"><strong>Seed Generation for Noncryptographic PRNGs</strong></a>&quot; for advice on how to seed.</p>
 
 <p><a id=High_Quality_PRNG_Examples></a></p>
 
@@ -398,9 +398,9 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 
 <h3>Seed Generation for Noncryptographic RNGs</h3>
 
-<p>For noncryptographic PRNGs, an application ought to generate seeds likely to vary &quot;wildly&quot; from previously generated seeds, to reduce the risk of correlated &quot;random&quot; numbers or sequences.  In most cases, this can be achieved by seeding with the output of a cryptographic RNG or using the advice in the <a href="#Seed_Generation">previous section</a>.</p>
+<p>For noncryptographic PRNGs, an application ought to generate seeds likely to vary &quot;wildly&quot; from previously generated seeds, to reduce the risk of correlated &quot;random&quot; numbers or sequences.  In most cases, this can be done by seeding with the output of a cryptographic RNG or using the advice in the <a href="#Seed_Generation"><strong>previous section</strong></a>.</p>
 
-<p>For <a href="#Manually_Seeded_PRNGs"><strong>manually-seeded PRNGs</strong></a>, however, if multiple processes (including threads, tasks, or subtasks) need to use repeatable &quot;random&quot; numbers for the same purpose, an application can generate one seed and distribute it to those processes as follows.  For each such process:</p>
+<p>For <a href="#Manually_Seeded_PRNGs"><strong>manually-seeded PRNGs</strong></a>, however, if multiple processes (including threads, tasks, or subtasks) need to use repeatable &quot;random&quot; numbers for the same purpose, an application can generate one seed (or use a pregenerated seed) and distribute that seed to those processes as follows.  For each such process:</p>
 
 <ol>
 <li>Create a PRNG instance for that process.</li>
@@ -424,7 +424,7 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 
 <ul>
 <li>Methods and libraries mentioned in the &quot;High-Quality&quot; column need to be initialized with a seed before use (for example, a seed generated using an implementation in the &quot;Cryptographic&quot; column).</li>
-<li>The mention of a third-party library in this section does not imply sponsorship or endorsement of that library, or imply a preference of that library over others. The list is not comprehensive.</li>
+<li>The mention of a third-party library in this section does not imply that the library is the best one available for any particular purpose. The list is not comprehensive.</li>
 <li>See also <a href="https://paragonie.com/blog/2016/05/how-generate-secure-random-numbers-in-various-programming-languages"><strong>Paragon&#39;s blog post</strong></a> on existing cryptographic RNGs.</li>
 </ul>
 
