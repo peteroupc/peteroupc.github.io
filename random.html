@@ -398,17 +398,19 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 
 <h3>Seed Generation for Noncryptographic RNGs</h3>
 
-<p>For noncryptographic PRNGs, an application ought to generate seeds likely to vary &quot;wildly&quot; from previously generated seeds, to reduce the risk of correlated &quot;random&quot; numbers or sequences.  In most cases, this can be achieved by seeding with the output of a cryptographic RNG or using the advice in the previous section.  However, for <a href="#Manually_Seeded_PRNGs">manually-seeded PRNGs</a> used in a multithread or multiprocess application, the application can generate one seed and distribute it to multiple PRNG instances as follows.  For each PRNG instance:</p>
+<p>For noncryptographic PRNGs, an application ought to generate seeds likely to vary &quot;wildly&quot; from previously generated seeds, to reduce the risk of correlated &quot;random&quot; numbers or sequences.  In most cases, this can be achieved by seeding with the output of a cryptographic RNG or using the advice in the previous section.
+For <a href="#Manually_Seeded_PRNGs"><strong>manually-seeded PRNGs</strong></a>, however, if multiple processes (including threads, tasks, or subtasks) need to use repeatable &quot;random&quot; numbers for the same purpose, an application can generate one seed and distribute it to those processes as follows.  For each such process:</p>
 
 <ol>
-<li><p>Build a string consisting of three parts: <code>SEED</code>, <code>IDENT</code>, and <code>UNIQUE</code>. Example: &quot;myseed-mysimulation-1&quot;.</p>
+<li>Create a PRNG instance for that process.</li>
+<li><p>Build a string consisting of three parts: <code>IDENT</code>, <code>UNIQUE</code>, and <code>SEED</code>. Example: &quot;mysimulation-1-myseed&quot;.<sup><a href="#Note39"><strong>(39)</strong></a></sup></p>
 
 <ul>
-<li><code>SEED</code> is the seed distributed to each PRNG instance in the set.</li>
-<li><code>IDENT</code> is a fixed identifier that&#39;s the same for all those instances.</li>
-<li><code>UNIQUE</code> is a unique number for each of those instances.</li>
+<li><code>IDENT</code> is a fixed identifier that&#39;s the same for all processes in the set.</li>
+<li><code>UNIQUE</code> is a unique number for the PRNG instance.</li>
+<li><code>SEED</code> is the seed distributed to each process in the set.</li>
 </ul></li>
-<li><p>Use a <a href="#Hash_Functions"><strong>hash function</strong></a> or an <em>extendable-output function</em> (such as SHAKE-128) to generate a hash code of the string in step 1, and use that code as the seed for that PRNG instance.  Here, hash functions with 128-bit or longer hash codes are preferred.</p></li>
+<li><p>Use a <a href="#Hash_Functions"><strong>hash function</strong></a> or an <em>extendable-output function</em> (such as SHAKE-128) to generate a hash code of the string in step 2, and use that code as the seed for that PRNG instance.  Here, hash functions with 128-bit or longer hash codes are preferred.</p></li>
 </ol>
 
 <p>It is NOT RECOMMENDED to seed a PRNG (especially several at once) with sequential counters, linearly related numbers, or timestamps, since these kinds of seeds can cause undesirable correlations in some PRNGs.  Moreover, seeding multiple PRNGs with coarse timestamps can introduce the risk of generating the same &quot;random&quot; sequence accidentally.<sup><a href="#Note17"><strong>(17)</strong></a></sup></p>
@@ -875,6 +877,8 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 <p><small><sup id=Note37>(37)</sup> Such arbitrary data can include process identifiers, time stamps, environment variables, random numbers, virtual machine guest identifiers, and/or other data specific to the session or to the instance of the RNG.  See also NIST SP800-90A and the references below.<br/>Everspaugh, A., Zhai, Y., et al.  &quot;Not-So-Random Numbers in Virtualized Linux and the Whirlwind RNG&quot;, 2014.<br>Ristenpart, T., Yilek, S. &quot;When Good Randomness Goes Bad: Virtual Machine Reset Vulnerabilities and Hedging Deployed Cryptography&quot;, 2010.</small></p>
 
 <p><small><sup id=Note38>(38)</sup> Allowing applications to do so would hamper forward compatibility &mdash; the API would then be less free to change how the RNG is implemented in the future (e.g., to use a cryptographic or otherwise &quot;better&quot; RNG), or to make improvements or bug fixes in methods that use that RNG (such as shuffling and Gaussian number generation).  (As a notable example, the V8 JavaScript engine recently changed its <code>Math.random()</code> implementation to use a variant of <code>xorshift128+</code>, which is backward compatible because nothing in JavaScript allows  <code>Math.random()</code> to be seeded.)  Nevertheless, APIs can still allow applications to provide additional input (&quot;entropy&quot;) to the RNG in order to increase its randomness rather than to ensure repeatability.</small></p>
+
+<p><small><sup id=Note39>(39)</sup> Here, <code>IDENT</code> and <code>UNIQUE</code> form a <em>domain separation tag</em>; e.g., see the work-in-progress document <code>draft-irtf-cfrg-hash-to-curve</code>, &quot;Hashing to Elliptic Curves&quot;.</small></p>
 
 <p><a id=Appendix></a></p>
 
