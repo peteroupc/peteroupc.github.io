@@ -222,7 +222,7 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 <li>if the PRNG is not <em>high quality</em> (see &quot;<a href="#Noncryptographic_PRNGs_Requirements"><strong>High-Quality RNGs: Requirements</strong></a>&quot;).</li>
 </ul>
 
-<p>If a noncryptographic PRNG is used, it SHOULD be automatically seeded in a way that seeds are almost certain to vary each time; this can be done, for example, with a cryptographic RNG or using the method described in &quot;<a href="#Seed_Generation_for_Noncryptographic_RNGs"><strong>Seed Generation for Noncryptographic RNGs</strong></a>&quot;.</p>
+<p>If a noncryptographic PRNG is used, it SHOULD be automatically seeded in a way that seeds are almost certain to vary each time; this can be done, for example, with a cryptographic RNG or using the method described in &quot;<a href="#Seed_Generation"><strong>Seed Generation</strong></a>&quot;.</p>
 
 <p><a id=High_Quality_PRNG_Examples></a></p>
 
@@ -291,7 +291,7 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 <li>SHOULD choose a <a href="#High_Quality_PRNG_Examples"><strong>high-quality PRNG</strong></a>,</li>
 <li>SHOULD choose a PRNG implementation with consistent behavior that will not change in the future,</li>
 <li>ought to document the chosen PRNG being used as well as all the parameters for that PRNG,</li>
-<li>ought to generate seeds for the PRNG that are likely to vary wildly from previous seeds (see &quot;<a href="#Seed_Generation_for_Noncryptographic_RNGs"><strong>Seed Generation for Noncryptographic RNGs</strong></a>&quot;), and</li>
+<li>ought to generate seeds for the PRNG that are likely to vary &quot;wildly&quot; from previous seeds (see &quot;<a href="#Seed_Generation_for_Noncryptographic_RNGs"><strong>Seed Generation for Noncryptographic RNGs</strong></a>&quot;), and</li>
 <li>SHOULD NOT seed the PRNG with floating-point numbers or generate floating-point numbers with that PRNG.</li>
 </ul>
 
@@ -398,8 +398,9 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 
 <h3>Seed Generation for Noncryptographic RNGs</h3>
 
-<p>For noncryptographic PRNGs, an application ought to generate seeds likely to vary &quot;wildly&quot; from previously generated seeds, to reduce the risk of correlated &quot;random&quot; numbers or sequences.  In most cases, this can be achieved by seeding with the output of a cryptographic RNG or using the advice in the previous section.
-For <a href="#Manually_Seeded_PRNGs"><strong>manually-seeded PRNGs</strong></a>, however, if multiple processes (including threads, tasks, or subtasks) need to use repeatable &quot;random&quot; numbers for the same purpose, an application can generate one seed and distribute it to those processes as follows.  For each such process:</p>
+<p>For noncryptographic PRNGs, an application ought to generate seeds likely to vary &quot;wildly&quot; from previously generated seeds, to reduce the risk of correlated &quot;random&quot; numbers or sequences.  In most cases, this can be achieved by seeding with the output of a cryptographic RNG or using the advice in the <a href="#Seed_Generation">previous section</a>.</p>
+
+<p>For <a href="#Manually_Seeded_PRNGs"><strong>manually-seeded PRNGs</strong></a>, however, if multiple processes (including threads, tasks, or subtasks) need to use repeatable &quot;random&quot; numbers for the same purpose, an application can generate one seed and distribute it to those processes as follows.  For each such process:</p>
 
 <ol>
 <li>Create a PRNG instance for that process.</li>

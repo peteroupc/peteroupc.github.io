@@ -145,7 +145,7 @@ Noncryptographic PRNGs vary widely in the quality of randomness of the numbers t
 - if cryptographic RNGs are fast enough for the application, or
 - if the PRNG is not _high quality_ (see "[**High-Quality RNGs: Requirements**](#Noncryptographic_PRNGs_Requirements)").
 
-If a noncryptographic PRNG is used, it SHOULD be automatically seeded in a way that seeds are almost certain to vary each time; this can be done, for example, with a cryptographic RNG or using the method described in "[**Seed Generation for Noncryptographic RNGs**](#Seed_Generation_for_Noncryptographic_RNGs)".
+If a noncryptographic PRNG is used, it SHOULD be automatically seeded in a way that seeds are almost certain to vary each time; this can be done, for example, with a cryptographic RNG or using the method described in "[**Seed Generation**](#Seed_Generation)".
 
 <a id=High_Quality_PRNG_Examples></a>
 ### High-Quality PRNG Examples
@@ -195,7 +195,7 @@ If an application chooses to use a manually-seeded PRNG for repeatable "randomne
 - SHOULD choose a [**high-quality PRNG**](#High_Quality_PRNG_Examples),
 - SHOULD choose a PRNG implementation with consistent behavior that will not change in the future,
 - ought to document the chosen PRNG being used as well as all the parameters for that PRNG,
-- ought to generate seeds for the PRNG that are likely to vary wildly from previous seeds (see "[**Seed Generation for Noncryptographic RNGs**](#Seed_Generation_for_Noncryptographic_RNGs)"), and
+- ought to generate seeds for the PRNG that are likely to vary "wildly" from previous seeds (see "[**Seed Generation for Noncryptographic RNGs**](#Seed_Generation_for_Noncryptographic_RNGs)"), and
 - SHOULD NOT seed the PRNG with floating-point numbers or generate floating-point numbers with that PRNG.
 
 > **Example:** An application could implement a manually-seeded PRNG using a third-party library that specifically says it implements a [**high-quality PRNG algorithm**](#High_Quality_PRNG_Examples), and could initialize that PRNG using a bit sequence from a cryptographic RNG.  The developers could also mention the use of the specific PRNG chosen on any code that uses it, to alert other developers that the PRNG needs to remain unchanged.
@@ -276,7 +276,8 @@ Once data with enough entropy is gathered, it might need to be condensed into a 
 <a id=Seed_Generation_for_Noncryptographic_RNGs></a>
 ### Seed Generation for Noncryptographic RNGs
 
-For noncryptographic PRNGs, an application ought to generate seeds likely to vary "wildly" from previously generated seeds, to reduce the risk of correlated "random" numbers or sequences.  In most cases, this can be achieved by seeding with the output of a cryptographic RNG or using the advice in the previous section.
+For noncryptographic PRNGs, an application ought to generate seeds likely to vary "wildly" from previously generated seeds, to reduce the risk of correlated "random" numbers or sequences.  In most cases, this can be done by seeding with the output of a cryptographic RNG or using the advice in the [previous section](#Seed_Generation).
+
 For [**manually-seeded PRNGs**](#Manually_Seeded_PRNGs), however, if multiple processes (including threads, tasks, or subtasks) need to use repeatable "random" numbers for the same purpose, an application can generate one seed and distribute it to those processes as follows.  For each such process:
 
 1. Create a PRNG instance for that process.
@@ -296,7 +297,7 @@ It is NOT RECOMMENDED to seed a PRNG (especially several at once) with sequentia
 As much as possible, **applications SHOULD use existing libraries and techniques** that already meet the requirements for cryptographic and high-quality RNGs. The following table lists application programming interfaces (APIs) for such RNGs for popular programming languages.
 
 - Methods and libraries mentioned in the "High-Quality" column need to be initialized with a seed before use (for example, a seed generated using an implementation in the "Cryptographic" column).
-- The mention of a third-party library in this section does not imply sponsorship or endorsement of that library, or imply a preference of that library over others. The list is not comprehensive.
+- The mention of a third-party library in this section does not imply that the library is the best one available for any particular purpose. The list is not comprehensive.
 - See also [**Paragon's blog post**](https://paragonie.com/blog/2016/05/how-generate-secure-random-numbers-in-various-programming-languages) on existing cryptographic RNGs.
 
 | Language   | Cryptographic   | High-Quality |
