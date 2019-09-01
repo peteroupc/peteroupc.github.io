@@ -148,7 +148,7 @@
 <li><code><a href="#HasTag_int">HasTag(int)</a></code> - Returns whether this object has a tag of the given number.</li>
 <li><code><a href="#HasTag_PeterO_Numbers_EInteger">HasTag(PeterO.Numbers.EInteger)</a></code> - Returns whether this object has a tag of the given number.</li>
 <li><code><a href="#Insert_int_object">Insert(int, object)</a></code> - Inserts an object at the specified position in this CBOR array.</li>
-<li><code><a href="#IsFalse">IsFalse</a></code> - Gets a value indicating whether this value is a CBOR false value.</li>
+<li><code><a href="#IsFalse">IsFalse</a></code> - Gets a value indicating whether this value is a CBOR false value, whether tagged or not.</li>
 <li><code><a href="#IsFinite">IsFinite</a></code> - Gets a value indicating whether this CBOR object represents a finite number.</li>
 <li><code><a href="#IsInfinity">IsInfinity()</a></code> - Gets a value indicating whether this CBOR object represents infinity.</li>
 <li><code><a href="#IsIntegral">IsIntegral</a></code> - Gets a value indicating whether this object represents an integer number, that is, a number without a fractional part.</li>
@@ -159,7 +159,7 @@
 <li><code><a href="#IsNumber">IsNumber</a></code> - Gets a value indicating whether this CBOR object stores a number (including infinity or a not-a-number or NaN value).</li>
 <li><code><a href="#IsPositiveInfinity">IsPositiveInfinity()</a></code> - Gets a value indicating whether this CBOR object represents positive infinity.</li>
 <li><code><a href="#IsTagged">IsTagged</a></code> - Gets a value indicating whether this data item has at least one tag.</li>
-<li><code><a href="#IsTrue">IsTrue</a></code> - Gets a value indicating whether this value is a CBOR true value.</li>
+<li><code><a href="#IsTrue">IsTrue</a></code> - Gets a value indicating whether this value is a CBOR true value, whether tagged or not.</li>
 <li><code><a href="#IsUndefined">IsUndefined</a></code> - Gets a value indicating whether this value is a CBOR undefined value.</li>
 <li><code><a href="#IsZero">IsZero</a></code> - Gets a value indicating whether this object&#39;s value equals 0.</li>
 <li><code><a href="#Keys">Keys</a></code> - Gets a collection of the keys of this CBOR object in an undefined order.</li>
@@ -345,11 +345,11 @@
 <pre>public bool IsFalse { get; }
 </pre>
 
-<p>Gets a value indicating whether this value is a CBOR false value.</p>
+<p>Gets a value indicating whether this value is a CBOR false value, whether tagged or not.</p>
 
 <p><b>Returns:</b></p>
 
-<p><code>true</code>  If this value is a CBOR false value; otherwise,  <code>false</code> .</p>
+<p><code>true</code>  if this value is a CBOR false value; otherwise,  <code>false</code> .</p>
 
 <p><a id="IsFinite"></a></p>
 
@@ -362,7 +362,7 @@
 
 <p><b>Returns:</b></p>
 
-<p><code>true</code>  If this CBOR object represents a finite number; otherwise,  <code>false</code> .</p>
+<p><code>true</code>  if this CBOR object represents a finite number; otherwise,  <code>false</code> .</p>
 
 <p><a id="IsIntegral"></a></p>
 
@@ -375,7 +375,7 @@
 
 <p><b>Returns:</b></p>
 
-<p><code>true</code>  If this object represents an integer number, that is, a number without a fractional part; otherwise,  <code>false</code> .</p>
+<p><code>true</code>  if this object represents an integer number, that is, a number without a fractional part; otherwise,  <code>false</code> .</p>
 
 <p><a id="IsNegative"></a></p>
 
@@ -388,7 +388,7 @@
 
 <p><b>Returns:</b></p>
 
-<p><code>true</code>  If this object is a negative number; otherwise,  <code>false</code> .</p>
+<p><code>true</code>  if this object is a negative number; otherwise,  <code>false</code> .</p>
 
 <p><a id="IsNull"></a></p>
 
@@ -401,7 +401,7 @@
 
 <p><b>Returns:</b></p>
 
-<p><code>true</code>  If this value is a CBOR null value; otherwise,  <code>false</code> .</p>
+<p><code>true</code>  if this value is a CBOR null value; otherwise,  <code>false</code> .</p>
 
 <p><a id="IsNumber"></a></p>
 
@@ -427,7 +427,7 @@
 
 <p><b>Returns:</b></p>
 
-<p><code>true</code>  If this data item has at least one tag; otherwise,  <code>false</code> .</p>
+<p><code>true</code>  if this data item has at least one tag; otherwise,  <code>false</code> .</p>
 
 <p><a id="IsTrue"></a></p>
 
@@ -436,11 +436,11 @@
 <pre>public bool IsTrue { get; }
 </pre>
 
-<p>Gets a value indicating whether this value is a CBOR true value.</p>
+<p>Gets a value indicating whether this value is a CBOR true value, whether tagged or not.</p>
 
 <p><b>Returns:</b></p>
 
-<p><code>true</code>  If this value is a CBOR true value; otherwise,  <code>false</code> .</p>
+<p><code>true</code>  if this value is a CBOR true value; otherwise,  <code>false</code> .</p>
 
 <p><a id="IsUndefined"></a></p>
 
@@ -453,7 +453,7 @@
 
 <p><b>Returns:</b></p>
 
-<p><code>true</code>  If this value is a CBOR undefined value; otherwise,  <code>false</code> .</p>
+<p><code>true</code>  if this value is a CBOR undefined value; otherwise,  <code>false</code> .</p>
 
 <p><a id="IsZero"></a></p>
 
@@ -466,7 +466,7 @@
 
 <p><b>Returns:</b></p>
 
-<p><code>true</code>  If this object&#39;s value equals 0; otherwise,  <code>false</code> .</p>
+<p><code>true</code>  if this object&#39;s value equals 0; otherwise,  <code>false</code> .</p>
 
 <p><a id="this_string"></a></p>
 
@@ -2168,7 +2168,7 @@ parameter, that converter will be used to convert the object to a CBOR object. T
 <li><p>An object of type  <code>DateTime</code> ,  <code>Uri</code> , or  <code>Guid</code>  (  <code>Date</code> ,  <code>URI</code> , or  <code>UUID</code> , respectively, in Java) will be converted to a tagged CBOR object of the appropriate kind.  <code>DateTime</code>  /  <code>Date</code>  will be converted to a tag-0 string following the date format used in the Atom syndication format.</p></li>
 <li><p>If the object is a type not specially handled above, this method checks the  <i>obj</i>
 parameter for eligible getters as follows:</p></li>
-<li><p>(*) In the .NET version, eligible getters are the public, nonstatic getters of read/write properties (and also those of read-only properties in the case of a compiler-generated type). Eligible getters also include public, nonstatic, non- <code>const</code> , non-  <code>readonly</code>  fields. If a class has two properties and/or fields of the form &quot;X&quot; and &quot;IsX&quot;, where &quot;X&quot; is any name, or has multiple properties and/or fields with the same name, those properties and fields are ignored.</p></li>
+<li><p>(*) In the .NET version, eligible getters are the public, nonstatic getters of read/write properties (and also those of read-only properties in the case of a compiler-generated type). Eligible getters also include public, nonstatic, non-  <code>const</code>  , non-  <code>readonly</code>  fields. If a class has two properties and/or fields of the form &quot;X&quot; and &quot;IsX&quot;, where &quot;X&quot; is any name, or has multiple properties and/or fields with the same name, those properties and fields are ignored.</p></li>
 <li><p>(*) In the Java version, eligible getters are public, nonstatic methods starting with &quot;get&quot; or &quot;is&quot; (either word followed by a character other than a basic digit or lower-case letter, that is, other than &quot;a&quot; to &quot;z&quot; or &quot;0&quot; to &quot;9&quot;), that take no parameters and do not return void, except that methods named &quot;getClass&quot; are not eligible getters. In addition, public, nonstatic, nonfinal fields are also eligible getters. If a class has two otherwise eligible getters (methods and/or fields) of the form &quot;isX&quot; and &quot;getX&quot;, where &quot;X&quot; is the same in both, or two such getters with the same name but different return type, they are not eligible getters.</p></li>
 <li><p>Then, the method returns a CBOR map with each eligible getter&#39;s name or property name as each key, and with the corresponding value returned by that getter as that key&#39;s value. Before adding a key-value pair to the map, the key&#39;s name is adjusted according to the rules described in the <a href="PeterO.Cbor.PODOptions.html">PeterO.Cbor.PODOptions</a> documentation. Note that for security reasons, certain types are not supported even if they contain eligible getters.</p></li>
 </ul>
@@ -3976,7 +3976,7 @@ parameter, that converter will be used to convert the CBOR object to an object o
 <li><p>If the type is  <code>Uri</code>  (or  <code>URI</code>  in Java), returns a URI object if possible.</p></li>
 <li><p>If the type is  <code>Guid</code>  (or  <code>UUID</code>  in Java), returns a UUID object if possible.</p></li>
 <li><p>Plain-Old-Data deserialization: If the object is a type not specially handled above, the type includes a zero-parameter constructor (default or not), this CBOR object is a CBOR map, and the &quot;mapper&quot; parameter (if any) allows this type to be eligible for Plain-Old-Data deserialization, then this method checks the given type for eligible setters as follows:</p></li>
-<li><p>(*) In the .NET version, eligible setters are the public, nonstatic setters of properties with a public, nonstatic getter. Eligible setters also include public, nonstatic, non- <code>const</code> , non-  <code>readonly</code>  fields. If a class has two properties and/or fields of the form &quot;X&quot; and &quot;IsX&quot;, where &quot;X&quot; is any name, or has multiple properties and/or fields with the same name, those properties and fields are ignored.</p></li>
+<li><p>(*) In the .NET version, eligible setters are the public, nonstatic setters of properties with a public, nonstatic getter. Eligible setters also include public, nonstatic, non-  <code>const</code>  , non-  <code>readonly</code>  fields. If a class has two properties and/or fields of the form &quot;X&quot; and &quot;IsX&quot;, where &quot;X&quot; is any name, or has multiple properties and/or fields with the same name, those properties and fields are ignored.</p></li>
 <li><p>(*) In the Java version, eligible setters are public, nonstatic methods starting with &quot;set&quot; followed by a character other than a basic digit or lower-case letter, that is, other than &quot;a&quot; to &quot;z&quot; or &quot;0&quot; to &quot;9&quot;, that take one parameter. The class containing an eligible setter must have a public, nonstatic method with the same name, but starting with &quot;get&quot; or &quot;is&quot; rather than &quot;set&quot;, that takes no parameters and does not return void. (For example, if a class has &quot;public setValue(String)&quot; and &quot;public getValue()&quot;, &quot;setValue&quot; is an eligible setter. However, &quot;setValue()&quot; and &quot;setValue(String, int)&quot; are not eligible setters.) In addition, public, nonstatic, nonfinal fields are also eligible setters. If a class has two or more otherwise eligible setters (methods and/or fields) with the same name, but different parameter type, they are not eligible setters.</p></li>
 <li><p>Then, the method creates an object of the given type and invokes each eligible setter with the corresponding value in the CBOR map, if any. Key names in the map are matched to eligible setters according to the rules described in the <a href="PeterO.Cbor.PODOptions.html">PeterO.Cbor.PODOptions</a> documentation. Note that for security reasons, certain types are not supported even if they contain eligible setters. For the Java version, the object creation may fail in the case of a nested nonstatic class.</p></li>
 </ul>
