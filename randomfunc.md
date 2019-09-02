@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on June 4, 2017; last updated on Aug. 19, 2019.
+Begun on June 4, 2017; last updated on Sep. 1, 2019.
 
 Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.
 
@@ -1732,7 +1732,7 @@ Extended versions of the stable distribution:
 
 The following pseudocode calculates a random point in space that follows a [**_multivariate normal (multinormal) distribution_**](https://en.wikipedia.org/wiki/Multivariate_normal_distribution).  The method `MultivariateNormal` takes the following parameters:
 
-- A list, `mu` (&mu;), which indicates the means to add to each component of the random point. `mu` can be `nothing`, in which case each component will have a mean of zero.
+- A list, `mu` (&mu;), which indicates the means to add to the random point's components. `mu` can be `nothing`, in which case each component will have a mean of zero.
 - A list of lists `cov`, that specifies a _covariance matrix_ (&Sigma;, a symmetric positive definite NxN matrix, where N is the number of components of the random point).
 
 &nbsp;
