@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on Mar. 5, 2016; last updated on Sep. 1, 2019.
+Begun on Mar. 5, 2016; last updated on Sep. 3, 2019.
 
 Most apps that use random numbers care about either unpredictability, high quality, or repeatability.  This article explains the three kinds of RNGs and gives recommendations on each kind.
 
@@ -23,7 +23,6 @@ so that as a result, many applications use RNGs, especially built-in RNGs, that 
 **This document covers:**
 
 - Cryptographic RNGs<sup>[**(1)**](#Note1)</sup>, noncryptographic RNGs, and manually-seeded RNGs, as well as recommendations on their use and properties.
-- A discussion on when an application that needs numbers that "seem" random ought to specify its own "seed" (the initial state that the numbers are based on).
 - Nondeterministic sources, entropy, and seed generation.
 - Existing implementations of RNGs.
 - Guidance for implementations of RNGs designed for reuse by applications.
@@ -37,13 +36,18 @@ so that as a result, many applications use RNGs, especially built-in RNGs, that 
 - Low-discrepancy sequences (quasirandom sequences), such as Sobol sequences.  Their structure differs in an essential way from independent uniform random numbers.
 - Applications for which the selection of RNGs is limited by regulatory requirements.
 
-**The following table summarizes the kinds of RNGs covered in this document:**
+**The following outline summarizes the general recommendations in this document:**
 
-| Kind of RNG   | When to Use This RNG  | Examples |
- --------|--------|------|
-| A [**cryptographic RNG**](#Cryptographic_RNGs) seeks to generate numbers that are cost-prohibitive to predict. | In information security cases, or when speed is not a concern.  | `/dev/urandom`, `BCryptGenRandom` |
-| A [**noncryptographic PRNG**](#Noncryptographic_PRNGs) seeks to generate numbers that are uniformly random for most practical purposes.   | When information security is not a concern, but speed is. | `pcg64`, `xoshiro256**` |
-| A [**manually-seeded PRNG**](#Manually_Seeded_PRNGs) generates numbers that "seem" random given an initial "seed".   | When generating reproducible "randomness" in a way not practical otherwise.   | High-quality PRNG with custom seed |
+- Does the application use random numbers for **information security** purposes (e.g., as passwords or other secrets)?
+    - Yes: Use a [**cryptographic RNG**](#Cryptographic_RNGs).
+- No: Does the application require [**repeatable "random" numbers**](#When_to_Use_a_Manually_Seeded_PRNG)?
+    - Yes: Use a manually-seeded high-quality PRNG.  If a seed is known, use it.  Otherwise, generate a fresh seed using a cryptographic RNG.
+    - Does the application run **multiple independent processes** that use random numbers?
+        - No: Seed one PRNG with the seed determined above.
+        - Yes: Pass the seed determined above to each process as described in "[**Seed Generation for Noncryptographic PRNGs**](#Seed_Generation_for_Noncryptographic_PRNGs)".
+- No: Is a cryptographic RNG **too slow** for the application?
+    - Yes: Use a [**high-quality PRNG**](#High_Quality_PRNG_Examples) with a seed generated using a cryptographic RNG.
+    - No: Use a cryptographic RNG.
 
 <a id=About_This_Document></a>
 ### About This Document
@@ -72,7 +76,7 @@ so that as a result, many applications use RNGs, especially built-in RNGs, that 
     - [**Examples of Nondeterministic Sources**](#Examples_of_Nondeterministic_Sources)
     - [**Entropy**](#Entropy)
     - [**Seed Generation**](#Seed_Generation)
-    - [**Seed Generation for Noncryptographic RNGs**](#Seed_Generation_for_Noncryptographic_RNGs)
+    - [**Seed Generation for Noncryptographic PRNGs**](#Seed_Generation_for_Noncryptographic_PRNGs)
 - [**Existing RNG APIs in Programming Languages**](#Existing_RNG_APIs_in_Programming_Languages)
 - [**RNG Topics**](#RNG_Topics)
     - [**How to Initialize RNGs**](#How_to_Initialize_RNGs)
@@ -273,8 +277,8 @@ In general, especially for cryptographic RNGs, **to generate an N-bit seed, enou
 
 Once data with enough entropy is gathered, it might need to be condensed into a seed to initialize a PRNG with. Following (Cliff et al., 2009)<sup>[**(16)**](#Note16)</sup>, it is suggested to generate an N-bit seed using an HMAC (hash-based message authentication code) at least N times 3 bits long; in that sense, take data with at least as many bits of entropy as the HMAC size in bits, generate the HMAC with that data, then take the HMAC's first N bits.  See also NIST SP 800-90B sec. 3.1.5.1 and RFC 4086 sec. 4.2 and 5.2.
 
-<a id=Seed_Generation_for_Noncryptographic_RNGs></a>
-### Seed Generation for Noncryptographic RNGs
+<a id=Seed_Generation_for_Noncryptographic_PRNGs></a>
+### Seed Generation for Noncryptographic PRNGs
 
 For noncryptographic PRNGs, an application ought to generate seeds likely to vary "wildly" from previously generated seeds, to reduce the risk of correlated "random" numbers or sequences.  In most cases, this can be done by seeding with the output of a cryptographic RNG or using the advice in the [**previous section**](#Seed_Generation).
 

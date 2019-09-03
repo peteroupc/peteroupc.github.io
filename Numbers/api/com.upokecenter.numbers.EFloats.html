@@ -98,7 +98,8 @@ digit before the radix point).</li>
        EContext ec)</code><br>
 Finds the number class for an arbitrary-precision decimal number object.</li>
 <li><code>static java.lang.String NumberClassString​(int nc)</code><br>
-Converts a number class identifier (ranging from 1 to 9) to a text string.</li>
+Converts a number class identifier (ranging from 0 through 9) to a text
+string.</li>
 <li><code>static EFloat Or​(EFloat ed1,
 EFloat ed2,
 EContext ec)</code><br>
@@ -396,9 +397,9 @@ or HasExponentRange of the given context is <code>false</code>.</li>
 <pre>public static java.lang.String NumberClassString​(int nc)
 </pre>
 
-<p>Converts a number class identifier (ranging from 1 to 9) to a text string.
- An arbitrary-precision number object can belong in one of ten number
- classes.</p>
+<p>Converts a number class identifier (ranging from 0 through 9) to a text
+ string. An arbitrary-precision number object can belong in one of
+ ten number classes.</p>
 
 <p><strong>Parameters:</strong></p>
 

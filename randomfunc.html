@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
-<p>Begun on June 4, 2017; last updated on Sep. 1, 2019.</p>
+<p>Begun on June 4, 2017; last updated on Sep. 2, 2019.</p>
 
 <p>Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.</p>
 
@@ -113,7 +113,7 @@
 <ul>
 <li><a href="#Dice"><strong>Dice</strong></a></li>
 <li><a href="#Hypergeometric_Distribution"><strong>Hypergeometric Distribution</strong></a></li>
-<li><a href="#Negative_Binomial_Distribution"><strong>Negative Binomial Distribution</strong></a></li>
+<li><a href="#Negative_Binomial_and_Geometric_Distributions"><strong>Negative Binomial and Geometric Distributions</strong></a></li>
 <li><a href="#Random_Integers_with_a_Given_Positive_Sum"><strong>Random Integers with a Given Positive Sum</strong></a></li>
 <li><a href="#Multinomial_Distribution"><strong>Multinomial Distribution</strong></a></li>
 </ul></li>
@@ -203,16 +203,17 @@
 
 <h3><code>RNDINT</code>: Random Integers in [0, N]</h3>
 
-<p>In this document, <strong><code>RNDINT(maxInclusive)</code></strong> is the core method for using an underlying RNG to generate independent uniform random integers <strong>in the interval [0, <code>maxInclusive</code>]</strong>.<sup><a href="#Note2"><strong>(2)</strong></a></sup>.  There are two ways to implement <code>RNDINT</code>:</p>
+<p>In this document, <strong><code>RNDINT(maxInclusive)</code></strong> is the core method for using an underlying RNG to generate independent uniform random integers <strong>in the interval [0, <code>maxInclusive</code>]</strong>.<sup><a href="#Note2"><strong>(2)</strong></a></sup>.  There are three ways to implement <code>RNDINT</code>:</p>
 
 <ol>
 <li><a href="#Rejection_Sampling"><strong><em>Rejection sampling</em></strong></a>, which roughly means: sample in a bigger range until a sampled number fits the smaller range.  This method is <em>unbiased</em> but has a <em>variable running time</em> which could be exploited in a security attack.</li>
-<li>The remainder method.  Generate <code>bignumber</code>, a &quot;big&quot; random number with many more bits than <code>maxInclusive + 1</code> has, then find <code>rem(bignumber, maxInclusive + 1)</code>.  This method can be &quot;<em>constant-time</em>&quot; (non-data-dependent and branchless) if implemented correctly, but can introduce a so-called <em>modulo bias</em> (some numbers are slightly more likely to be chosen than others), which, however, gets smaller the more bits <code>bignumber</code> has.</li>
+<li>Modulo reduction.  Generate <code>bignumber</code>, a &quot;big&quot; random number with many more bits than <code>maxInclusive + 1</code> has, then find <code>rem(bignumber, maxInclusive + 1)</code>.  This method can be &quot;<em>constant-time</em>&quot; (non-data-dependent and branchless) if implemented correctly, but can introduce a so-called <em>modulo bias</em> (some numbers are slightly more likely to be chosen than others), which, however, gets smaller the more bits <code>bignumber</code> has.</li>
+<li>Multiplicative reduction (Lemire 2016)<sup><a href="#Note35"><strong>(35)</strong></a></sup>.  Generate <code>bignumber</code>, an N-bit random number with many more bits than <code>maxInclusive + 1</code> has, then find <code>(bignumber * (maxInclusive + 1)) &gt;&gt; N</code>.  This method can likewise be &quot;<em>constant-time</em>&quot; and introduce modulo bias.</li>
 </ol>
 
 <p>Any <code>RNDINT</code> implementation can be &quot;constant-time&quot; <em>or</em> unbiased, but not both, in general.</p>
 
-<p>The pseudocode below implements <code>RNDINT</code> and uses rejection sampling for most inputs and the remainder method for certain special cases.  In the pseudocode:</p>
+<p>The pseudocode below implements <code>RNDINT</code> and uses rejection sampling for most inputs and modulo reduction for certain special cases.  In the pseudocode:</p>
 
 <table><thead>
 <tr>
@@ -1113,9 +1114,9 @@ END METHOD
 12, and <code>count</code> is 52.</p>
 </blockquote>
 
-<p><a id=Negative_Binomial_Distribution></a></p>
+<p><a id=Negative_Binomial_and_Geometric_Distributions></a></p>
 
-<h3>Negative Binomial Distribution</h3>
+<h3>Negative Binomial and Geometric Distributions</h3>
 
 <p>The <em>negative binomial distribution</em> models the number of failing trials that happen before a fixed number of successful trials (<code>successes</code>). Each trial is independent and has a success probability of <code>px/py</code> (where 0 means never and 1 means always).</p>
 
@@ -1126,12 +1127,14 @@ END METHOD
     total = 0
     count = 0
     while total &lt; successes
-        if RNDU01OneExc() &lt; p: total = total + 1
+        if RNDINTEXC(py) &lt; px: total = total + 1
         else: count = count + 1
     end
     return count
 END METHOD
 </pre>
+
+<p>The <em>geometric distribution</em> is a negative binomial distribution with <code>successes = 1</code>; if <code>px</code>/<code>py</code> is 1/2, it models the task &quot;Flip a coin until you get tails, then count the number of heads.&quot;  As a unique property of the geometric distribution, the number of trials that have already failed in a row says nothing about the number of new trials that will fail in a row.</p>
 
 <p><a id=Random_Integers_with_a_Given_Positive_Sum></a></p>
 
@@ -2624,6 +2627,8 @@ END METHOD
 <p><small><sup id=Note33>(33)</sup> See also a <a href="http://mathworld.wolfram.com/BallPointPicking.html"><strong>MathWorld article</strong></a>, which was the inspiration for these two methods, and the <em>Stack Overflow</em> question &quot;How to generate uniform random points in (arbitrary) N-dimension ball?&quot;, <code>questions/54544971</code>.</small></p>
 
 <p><small><sup id=Note34>(34)</sup> See the <em>Mathematics Stack Exchange</em> question titled &quot;Random multivariate in hyperannulus&quot;, <code>questions/1885630</code>.</small></p>
+
+<p><small><sup id=Note35>(35)</sup> D. Lemire, &quot;A fast alternative to the modulo reduction&quot;, Daniel Lemire&#39;s blog, 2016.</small></p>
 
 <p><a id=Appendix></a></p>
 

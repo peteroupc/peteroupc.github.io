@@ -251,6 +251,29 @@ bignum with length 0 as having a value of -1.</li>
 <li>Bug fixes</li>
 </ul>
 
+<h3>Version 4.0.0:</h3>
+
+<ul>
+<li>Fix issues with CTAP2 Canonical CBOR form</li>
+<li>Support field serialization and deserialization in ToObject and FromObject</li>
+</ul>
+
+<h3>Version 4.0.0-beta2:</h3>
+
+<p>The features in this version include:</p>
+
+<ul>
+<li>The CBOR library no longer stores numbers in a special form beyond the CBOR data model, which represents all &quot;65-bit&quot; signed integers and all &quot;double&quot; values.  This means the CBOR library no longer stores certain numbers as EDecimal, EInteger, EFloat, etc., rather than as tagged CBOR objects.</li>
+<li>CBORObject.CompareTo now compares objects using the default deterministic encoding comparison in the draft revision of the CBOR specification, and no longer treats numbers (objects with the former type CBORType.Number) as a special class.</li>
+<li>CBORType.Number is deprecated; CBORObjects no longer have this type.  In its place, certain numbers now have new CBORTypes Integer or FloatingPoint.</li>
+<li>CBORObject now stores floating-point numbers internally as the bits that make them up, rather than as <code>double</code>s, to avoid data loss in conversions.</li>
+<li>Methods were added to CBORObject to read and write floating-point numbers in terms of their bit patterns rather than as <code>double</code>s or <code>float</code>s.</li>
+<li>Ctap2Canonical was made more strict and now works when decoding CBOR objects.</li>
+<li>Added ReadSequence and DecodeSequence to CBORObject for reading CBOR sequences.</li>
+<li>New CBORNumber class for storing numbers representable in CBOR.  The new CBORObject.IsNumber property checks whether a CBOR object represents a number.</li>
+<li>Bug fixes</li>
+</ul>
+
 <h3>Version 4.0.0-beta1:</h3>
 
 <ul>
@@ -286,67 +309,6 @@ PODOptions.RemoveIsPrefix was removed.</li>
 <li>Certain other changes in CBOR object reading and validation were
 made; they are largely compatible with previous versions but may be
 backwards-incompatible in certain rare cases</li>
-</ul>
-
-<h3>Version 3.6.0</h3>
-
-<ul>
-<li>Add new string constructors to CBOREncodeOptions, JSONOptions, and PODOptions</li>
-<li>Implement options to disable resolving shared references and allow empty streams when decoding CBOR objects</li>
-<li>Add IsNumber property to CBORObject to check whether a CBOR object stores a number; CBORType.Number is deprecated</li>
-</ul>
-
-<h3>Version 3.5.2</h3>
-
-<ul>
-<li>Update Numbers library used by this library to a version that doesn&#39;t depend on StyleCop.Analyzers in the package.</li>
-</ul>
-
-<h3>Version 3.5.1</h3>
-
-<ul>
-<li>Update Numbers library used by this library.</li>
-</ul>
-
-<h3>Version 3.5.0</h3>
-
-<ul>
-<li>Update Numbers library used by this library.</li>
-<li>Deprecate Base64Padding property of JSONOptions.</li>
-</ul>
-
-<h3>Version 3.4.0</h3>
-
-<p>No significant changes from beta1.</p>
-
-<h3>Version 3.4.0-beta1</h3>
-
-<ul>
-<li>Improved implementation of new ToObject method.</li>
-<li>Bugs in multidimensional array serialization by FromObject were fixed.</li>
-<li>URI parsing restored to 3.0 version for backward compatibility.</li>
-<li>Remove method disallows null for backward compatibility.</li>
-<li>ICBORObjectConverter renamed to ICBORToFromConverter.</li>
-<li>Several APIs were obsoleted.</li>
-</ul>
-
-<h3>Version 3.4.0-alpha1</h3>
-
-<ul>
-<li>Add ToObject method for deserializing CBOR objects.</li>
-<li>Add ICBORObjectConverter interface.</li>
-<li>Add HasMostOuterTag method to CBORObject class.</li>
-<li>Add CTAP2 canonicalization support to CBOR object encoding.</li>
-<li>Added examples in several places in documentation.</li>
-</ul>
-
-<h3>Version 3.3</h3>
-
-<ul>
-<li>Added Clear, RemoveAt and Remove(object) methods to CBORObject class.  Formerly, it was very hard with existing methods to remove items from CBOR maps and arrays.</li>
-<li>Added CodePointLength and ToUpperCaseAscii methods to DataUtilities class.</li>
-<li>Added WriteValue family of methods to CBORObject class.  This can be used for lower-level encoding of CBOR objects.  Examples on its use were included in the documentation.</li>
-<li>Bug fixes.</li>
 </ul>
 
 <p>See <a href="https://github.com/peteroupc/CBOR/tree/master/History.md">History.md</a>

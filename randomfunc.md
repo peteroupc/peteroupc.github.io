@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on June 4, 2017; last updated on Sep. 1, 2019.
+Begun on June 4, 2017; last updated on Sep. 2, 2019.
 
 Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.
 
@@ -75,7 +75,7 @@ All the random number methods presented on this page are ultimately based on an 
 - [**Specific Non-Uniform Distributions**](#Specific_Non_Uniform_Distributions)
     - [**Dice**](#Dice)
     - [**Hypergeometric Distribution**](#Hypergeometric_Distribution)
-    - [**Negative Binomial Distribution**](#Negative_Binomial_Distribution)
+    - [**Negative Binomial and Geometric Distributions**](#Negative_Binomial_and_Geometric_Distributions)
     - [**Random Integers with a Given Positive Sum**](#Random_Integers_with_a_Given_Positive_Sum)
     - [**Multinomial Distribution**](#Multinomial_Distribution)
 - [**Randomization with Real Numbers**](#Randomization_with_Real_Numbers)
@@ -140,14 +140,15 @@ This section describes how an underlying RNG can be used to generate independent
 <a id=RNDINT_Random_Integers_in_0_N></a>
 ### `RNDINT`: Random Integers in [0, N]
 
-In this document, **`RNDINT(maxInclusive)`** is the core method for using an underlying RNG to generate independent uniform random integers **in the interval [0, `maxInclusive`]**.<sup>[**(2)**](#Note2)</sup>.  There are two ways to implement `RNDINT`:
+In this document, **`RNDINT(maxInclusive)`** is the core method for using an underlying RNG to generate independent uniform random integers **in the interval [0, `maxInclusive`]**.<sup>[**(2)**](#Note2)</sup>.  There are three ways to implement `RNDINT`:
 
 1. [**_Rejection sampling_**](#Rejection_Sampling), which roughly means: sample in a bigger range until a sampled number fits the smaller range.  This method is _unbiased_ but has a _variable running time_ which could be exploited in a security attack.
-2. The remainder method.  Generate `bignumber`, a "big" random number with many more bits than `maxInclusive + 1` has, then find `rem(bignumber, maxInclusive + 1)`.  This method can be "_constant-time_" (non-data-dependent and branchless) if implemented correctly, but can introduce a so-called _modulo bias_ (some numbers are slightly more likely to be chosen than others), which, however, gets smaller the more bits `bignumber` has.
+2. Modulo reduction.  Generate `bignumber`, a "big" random number with many more bits than `maxInclusive + 1` has, then find `rem(bignumber, maxInclusive + 1)`.  This method can be "_constant-time_" (non-data-dependent and branchless) if implemented correctly, but can introduce a so-called _modulo bias_ (some numbers are slightly more likely to be chosen than others), which, however, gets smaller the more bits `bignumber` has.
+3. Multiplicative reduction (Lemire 2016)<sup>[**(35)**](#Note35)</sup>.  Generate `bignumber`, an N-bit random number with many more bits than `maxInclusive + 1` has, then find `(bignumber * (maxInclusive + 1)) >> N`.  This method can likewise be "_constant-time_" and introduce modulo bias.
 
 Any `RNDINT` implementation can be "constant-time" _or_ unbiased, but not both, in general.
 
-The pseudocode below implements `RNDINT` and uses rejection sampling for most inputs and the remainder method for certain special cases.  In the pseudocode:
+The pseudocode below implements `RNDINT` and uses rejection sampling for most inputs and modulo reduction for certain special cases.  In the pseudocode:
 
 | If the underlying RNG produces: | Then `RNG()` is: | And `MODULUS` is: |
  --------- | ------ | ------ |
@@ -890,8 +891,8 @@ The following method generates a random integer that follows a _hypergeometric d
 > **Example:** In a 52-card deck of Anglo-American playing cards, 12 of the cards are face cards (jacks, queens, or kings).  After the deck is shuffled and seven cards are drawn, the number of face cards drawn this way follows a hypergeometric distribution where `trials` is 7, `ones` is
 12, and `count` is 52.
 
-<a id=Negative_Binomial_Distribution></a>
-### Negative Binomial Distribution
+<a id=Negative_Binomial_and_Geometric_Distributions></a>
+### Negative Binomial and Geometric Distributions
 
 The _negative binomial distribution_ models the number of failing trials that happen before a fixed number of successful trials (`successes`). Each trial is independent and has a success probability of `px/py` (where 0 means never and 1 means always).
 
@@ -902,11 +903,13 @@ The _negative binomial distribution_ models the number of failing trials that ha
         total = 0
         count = 0
         while total < successes
-            if RNDU01OneExc() < p: total = total + 1
+            if RNDINTEXC(py) < px: total = total + 1
             else: count = count + 1
         end
         return count
     END METHOD
+
+The _geometric distribution_ is a negative binomial distribution with `successes = 1`; if `px`/`py` is 1/2, it models the task "Flip a coin until you get tails, then count the number of heads."  As a unique property of the geometric distribution, the number of trials that have already failed in a row says nothing about the number of new trials that will fail in a row.
 
 <a id=Random_Integers_with_a_Given_Positive_Sum></a>
 ### Random Integers with a Given Positive Sum
@@ -2190,6 +2193,8 @@ In 2007, Thomas, D., et al. gave a survey of normal random number methods in "Ga
 <small><sup id=Note33>(33)</sup> See also a [**MathWorld article**](http://mathworld.wolfram.com/BallPointPicking.html), which was the inspiration for these two methods, and the _Stack Overflow_ question "How to generate uniform random points in (arbitrary) N-dimension ball?", `questions/54544971`.</small>
 
 <small><sup id=Note34>(34)</sup> See the _Mathematics Stack Exchange_ question titled "Random multivariate in hyperannulus", `questions/1885630`.</small>
+
+<small><sup id=Note35>(35)</sup> D. Lemire, "A fast alternative to the modulo reduction", Daniel Lemire's blog, 2016.</small>
 
 <a id=Appendix></a>
 ## Appendix
