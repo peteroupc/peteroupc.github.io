@@ -12,7 +12,7 @@
 
 <p><a id=Introduction_and_Summary></a></p>
 
-<h2>Introduction and Summary</h2>
+<h2>Introduction</h2>
 
 <p>Many applications rely on random number generators (RNGs);
 however, it&#39;s not enough for random numbers to merely &quot;look random&quot;.  But unfortunately, most popular programming languages today&mdash;</p>
@@ -22,7 +22,7 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 <li>specify a relatively weak general-purpose RNG (such as Java&#39;s <code>java.math.Random</code>),</li>
 <li>implement RNGs by default that leave something to be desired (such as Mersenne Twister),</li>
 <li>initialize RNGs with a timestamp by default (such as the <a href="https://docs.microsoft.com/dotnet/api/system.random"><strong>.NET Framework implementation of <code>System.Random</code></strong></a>), and/or</li>
-<li>use RNGs that are initialized with a fixed value by default (as is the case in <a href="https://www.mathworks.com/help/matlab/examples/controlling-random-number-generation.html"><strong>MATLAB</strong></a> and C; see also the question titled &quot;Matlab rand and c++ rand()&quot; on <em>Stack Overflow</em>),</li>
+<li>use RNGs that are initialized with a fixed value by default (as is the case in <a href="https://www.mathworks.com/help/matlab/examples/controlling-random-number-generation.html"><strong>MATLAB</strong></a> and C&lt;&lt;|See also the question titled &quot;Matlab rand and c++ rand()&quot; on <em>Stack Overflow</em>.&gt;&gt;),</li>
 </ul>
 
 <p>so that as a result, many applications use RNGs, especially built-in RNGs, that have little assurance of high quality or security.   That is why this document discusses high-quality RNGs and suggests <a href="#Existing_RNG_APIs_in_Programming_Languages"><strong>existing implementations</strong></a> of them.</p>
@@ -45,33 +45,6 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 <li>Generation of random numbers that follow a nonuniform distribution; I discuss this topic in <a href="https://peteroupc.github.io/randomfunc.html"><strong>another document</strong></a>.</li>
 <li>Low-discrepancy sequences (quasirandom sequences), such as Sobol sequences.  Their structure differs in an essential way from independent uniform random numbers.</li>
 <li>Applications for which the selection of RNGs is limited by regulatory requirements.</li>
-</ul>
-
-<p><strong>The following outline summarizes the general recommendations in this document:</strong></p>
-
-<ul>
-<li>Does the application use random numbers for <strong>information security</strong> purposes (e.g., as passwords or other secrets)?
-
-<ul>
-<li>Yes: Use a <a href="#Cryptographic_RNGs"><strong>cryptographic RNG</strong></a>.</li>
-</ul></li>
-<li>No: Does the application require <a href="#When_to_Use_a_Manually_Seeded_PRNG"><strong>repeatable &quot;random&quot; numbers</strong></a>?
-
-<ul>
-<li>Yes: Use a manually-seeded high-quality PRNG.  If a seed is known, use it.  Otherwise, generate a fresh seed using a cryptographic RNG.</li>
-<li>Does the application run <strong>multiple independent processes</strong> that use random numbers?
-
-<ul>
-<li>No: Seed one PRNG with the seed determined above.</li>
-<li>Yes: Pass the seed determined above to each process as described in &quot;<a href="#Seed_Generation_for_Noncryptographic_PRNGs"><strong>Seed Generation for Noncryptographic PRNGs</strong></a>&quot;.</li>
-</ul></li>
-</ul></li>
-<li>No: Is a cryptographic RNG <strong>too slow</strong> for the application?
-
-<ul>
-<li>Yes: Use a <a href="#High_Quality_PRNG_Examples"><strong>high-quality PRNG</strong></a> with a seed generated using a cryptographic RNG.</li>
-<li>No: Use a cryptographic RNG.</li>
-</ul></li>
 </ul>
 
 <p><a id=About_This_Document></a></p>
@@ -121,7 +94,7 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 <li><a href="#Examples_of_Nondeterministic_Sources"><strong>Examples of Nondeterministic Sources</strong></a></li>
 <li><a href="#Entropy"><strong>Entropy</strong></a></li>
 <li><a href="#Seed_Generation"><strong>Seed Generation</strong></a></li>
-<li><a href="#Seed_Generation_for_Noncryptographic_PRNGs"><strong>Seed Generation for Noncryptographic PRNGs</strong></a></li>
+<li><a href="#Seed_Generation_for_Noncryptographic_RNGs"><strong>Seed Generation for Noncryptographic RNGs</strong></a></li>
 </ul></li>
 <li><a href="#Existing_RNG_APIs_in_Programming_Languages"><strong>Existing RNG APIs in Programming Languages</strong></a></li>
 <li><a href="#RNG_Topics"><strong>RNG Topics</strong></a>
@@ -171,6 +144,36 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 <li><strong>State length.</strong>  The maximum size of the seed a PRNG can take to initialize its state without shortening or compressing that seed.</li>
 <li><strong>Information security.</strong> Keeping information safe from attacks that could access, use, delay, or manipulate that information.<sup><a href="#Note4"><strong>(4)</strong></a></sup></li>
 <li><strong>MUST, SHOULD, SHOULD NOT, MAY, RECOMMENDED, NOT RECOMMENDED.</strong>  These terms have the meanings given in RFC 2119 and RFC 8174.</li>
+</ul>
+
+<h2>Summary</h2>
+
+<ul>
+<li>Does the application use random numbers for <strong>information security</strong> purposes (e.g., as passwords or other secrets)?
+
+<ul>
+<li>Yes: Use a <a href="#Cryptographic_RNGs"><strong>cryptographic RNG</strong></a>.</li>
+</ul></li>
+<li>No: Does the application require <a href="#When_to_Use_a_Manually_Seeded_PRNG"><strong>repeatable &quot;random&quot; numbers</strong></a>?
+
+<ul>
+<li>Yes: Use a manually-seeded high-quality PRNG.  If a seed is known, use it.  Otherwise, generate a fresh seed using a cryptographic RNG.
+
+<ul>
+<li>Does the application run <strong>multiple independent processes</strong> that use random numbers?
+
+<ul>
+<li>No: Seed one PRNG with the seed determined above.</li>
+<li>Yes: Pass the seed determined above to each process as described in &quot;<a href="#Seed_Generation_for_Noncryptographic_PRNGs">Seed Generation for Noncryptographic PRNGs</a>&quot;.</li>
+</ul></li>
+</ul></li>
+</ul></li>
+<li>No: Is a cryptographic RNG <strong>too slow</strong> for the application?
+
+<ul>
+<li>Yes: Use a <a href="#High_Quality_PRNG_Examples">high-quality PRNG</a> with a seed generated using a cryptographic RNG.</li>
+<li>No: Use a cryptographic RNG.</li>
+</ul></li>
 </ul>
 
 <p><a id=Cryptographic_RNGs></a></p>
@@ -343,7 +346,7 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 <li>SHOULD use, in connection with the new algorithm, &quot;codes&quot; that can&#39;t be confused with &quot;codes&quot; it used for previous algorithms, and</li>
 <li>SHOULD continue to generate the same random map using an old &quot;code&quot; when the player enters it, even after the change to a new algorithm.</li>
 </ul></li>
-<li><p>Suppose a game implements a chapter that involves navigating a randomly generated dungeon with randomly scattered monsters and items.  If the layout of the dungeon, monsters, and items has to be the same for a given week and for all players, the game can seed a PRNG with a hash generated from the current week, the current month, the current year, and, optionally, a constant sequence of bits.</p></li>
+<li><p>Suppose a game implements a chapter that involves navigating a randomly generated dungeon with randomly scattered monsters and items.  If the layout of the dungeon, monsters, and items has to be the same for a given week and for all players, the game can seed a PRNG with a hash code generated from the current week, the current month, the current year, and, optionally, a constant sequence of bits.</p></li>
 </ol>
 </blockquote>
 
@@ -352,6 +355,15 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 <h4>Unit Tests</h4>
 
 <p>A custom seed is appropriate when unit testing a method that uses a manually-seeded PRNG in place of another kind of RNG for the purpose of the test (provided the test delivers consistent output across computers).</p>
+
+<h3>Single Random Value</h3>
+
+<p>If an application requires only one random value, with a fixed number of bits, then the application can pass the seed to a hash function rather than a PRNG.  Examples of this include the following:</p>
+
+<ul>
+<li>Generating a random color by passing the seed to the MD5 hash function (which outputs a 128-bit hash code), and taking the first 24 bits of the hash code as the random color.</li>
+<li>Generating a random number in a GLSL (OpenGL Shading Language) fragment shader by passing the fragment coordinates (which vary for each fragment, or &quot;pixel&quot;) as well as a seed to the Wang hash, which outputs a 32-bit random number.<sup><a href="#Note28"><strong>(28)</strong></a></sup></li>
+</ul>
 
 <p><a id=Nondeterministic_Sources_and_Seed_Generation></a></p>
 
@@ -592,21 +604,6 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 </ul>
 
 <p>(In general, generating only the random integer this way can&#39;t ensure uniqueness by itself, but might be acceptable for applications that can tolerate the risk of generating duplicate random integers this way, or for applications that check that random integer for uniqueness.<sup><a href="#Note27"><strong>(27)</strong></a></sup>)</p>
-
-<p><a id=GPU_Programming_Environments></a></p>
-
-<h3>GPU Programming Environments</h3>
-
-<p>In general, GL Shading Language (GLSL) and other programming environments designed for execution on a graphics processing unit (GPU) are stateless (they read from and write to data without storing any state themselves).  Approaches that have been used for random number generation in GPU environments include&mdash;</p>
-
-<ul>
-<li>stateless functions, especially <a href="#Hash_Functions"><strong>hash functions</strong></a> (see &quot;<a href="#Designs_for_PRNGs"><strong>Designs for PRNGs</strong></a>&quot;)<sup><a href="#Note28"><strong>(28)</strong></a></sup>, and</li>
-<li>sampling &quot;noise textures&quot; with random data in each pixel (Peters 2016)<sup><a href="#Note29"><strong>(29)</strong></a></sup>.</li>
-</ul>
-
-<p>(L&#39;Ecuyer et al. 2015)<sup><a href="#Note30"><strong>(30)</strong></a></sup> discusses parallel generation of random numbers using PRNGs, especially on GPUs.</p>
-
-<p>Similar considerations could also apply to other specialized computing hardware, such as tensor processing units (TPUs).</p>
 
 <p><a id=Determinism_and_Consistency></a></p>
 
@@ -857,9 +854,11 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 <li>about 93 billion billion billion random 192-bit integers.</small></li>
 </ul>
 
-<p><small><sup id=Note28>(28)</sup> Some environments, such as GLSL 1.0, support floating-point math but not integer math, and may support only 16-bit or smaller floating-point numbers (not the otherwise common 32- or 64-bit sizes), making it difficult in such environments to write stateless functions for random number generation.  (Generally, such 16-bit numbers have 11 bits of precision and can represent any integer between 0 and 2048 and any multiple of 1/2048 between 0 and 1.)  An application ought to choose stateless functions that deliver acceptable &quot;random&quot; numbers regardless of the size of floating-point numbers supported.</small></p>
+<p><small><sup id=Note28>(28)</sup> However, at least for version 1.0, the only numbers GLSL might support are 16-bit or smaller floating-point numbers (not the otherwise common 32- or 64-bit sizes), making it difficult to write hash functions for random number generation.  (Generally, such 16-bit numbers have 11 bits of precision and can represent any integer between 0 and 2048 and any multiple of 1/2048 between 0 and 1.)  An application ought to choose hash functions that deliver acceptable &quot;random&quot; numbers regardless of the kinds of numbers supported.</p>
 
-<p><small><sup id=Note29>(29)</sup> C. Peters, &quot;<a href="http://momentsingraphics.de/?p=127"><strong>Free blue noise textures</strong></a>&quot;, <em>Moments in Graphics</em>, Dec. 22, 2016.  That article discusses the sampling of <em>blue noise</em>, not independent uniformly-distributed random numbers, but a similar approach applies to textures of noise however generated.</small></p>
+<p>An alternative for GLSL and other fragment or pixel shaders to support randomness is to have the shader sample a &quot;noise texture&quot; with random data in each pixel; for example, C. Peters, &quot;<a href="http://momentsingraphics.de/?p=127"><strong>Free blue noise textures</strong></a>&quot;, <em>Moments in Graphics</em>, Dec. 22, 2016, discusses how so-called &quot;blue noise&quot; can be sampled this way.</p>
+
+<p>See also N. Reed, &quot;Quick And Easy GPU Random Numbers In D3D11&quot;, Nathan Reed&#39;s coding blog, Jan. 12, 2013.</small></p>
 
 <p><small><sup id=Note30>(30)</sup> P. L&#39;Ecuyer, D. Munger, et al.  &quot;Random Numbers for Parallel Computers: Requirements and Methods, With Emphasis on GPUs&quot;. April 17, 2015.</small></p>
 

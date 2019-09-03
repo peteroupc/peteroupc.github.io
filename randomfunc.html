@@ -208,7 +208,7 @@
 <ol>
 <li><a href="#Rejection_Sampling"><strong><em>Rejection sampling</em></strong></a>, which roughly means: sample in a bigger range until a sampled number fits the smaller range.  This method is <em>unbiased</em> but has a <em>variable running time</em> which could be exploited in a security attack.</li>
 <li>Modulo reduction.  Generate <code>bignumber</code>, a &quot;big&quot; random number with many more bits than <code>maxInclusive + 1</code> has, then find <code>rem(bignumber, maxInclusive + 1)</code>.  This method can be &quot;<em>constant-time</em>&quot; (non-data-dependent and branchless) if implemented correctly, but can introduce a so-called <em>modulo bias</em> (some numbers are slightly more likely to be chosen than others), which, however, gets smaller the more bits <code>bignumber</code> has.</li>
-<li>Multiplicative reduction (Lemire 2016)<sup><a href="#Note35"><strong>(35)</strong></a></sup>.  Generate <code>bignumber</code>, an N-bit random number with many more bits than <code>maxInclusive + 1</code> has, then find <code>(bignumber * (maxInclusive + 1)) &gt;&gt; N</code>.  This method can likewise be &quot;<em>constant-time</em>&quot; and introduce modulo bias.</li>
+<li>Multiplicative reduction (Lemire 2016)<sup><a href="#Note3"><strong>(3)</strong></a></sup>.  Generate <code>bignumber</code>, an N-bit random number with many more bits than <code>maxInclusive + 1</code> has, then find <code>(bignumber * (maxInclusive + 1)) &gt;&gt; N</code>.  This method can likewise be &quot;<em>constant-time</em>&quot; and introduce modulo bias.</li>
 </ol>
 
 <p>Any <code>RNDINT</code> implementation can be &quot;constant-time&quot; <em>or</em> unbiased, but not both, in general.</p>
@@ -432,7 +432,7 @@ result = NUMBER_TO_DATETIME(num)
 
 <h3><code>RNDINTEXC</code>: Random Integers in [0, N)</h3>
 
-<p><code>RNDINTEXC(maxExclusive)</code>, which generates a <strong>random integer in the interval</strong> <strong>[0, <code>maxExclusive</code>)</strong>, can be implemented as follows<sup><a href="#Note3"><strong>(3)</strong></a></sup>:</p>
+<p><code>RNDINTEXC(maxExclusive)</code>, which generates a <strong>random integer in the interval</strong> <strong>[0, <code>maxExclusive</code>)</strong>, can be implemented as follows<sup><a href="#Note4"><strong>(4)</strong></a></sup>:</p>
 
 <pre> METHOD RNDINTEXC(maxExclusive)
     if maxExclusive &lt;= 0: return error
@@ -480,7 +480,7 @@ END METHOD
 
 <ul>
 <li>Shell scripts and Microsoft Windows batch files are designed for running other programs, rather than general-purpose programming.  However, batch files and <code>bash</code> (a shell script interpreter) might support a variable which returns a random integer in the interval [0, 32767] (called <code>%RANDOM%</code> or <code>$RANDOM</code>, respectively); neither variable is designed for information security.</li>
-<li>Query languages such as SQL have no procedural elements such as loops and branches.  Moreover, standard SQL does not include an RNG in its suite of functionality, but popular SQL dialects often do &mdash; with idiosyncratic behavior.<sup><a href="#Note4"><strong>(4)</strong></a></sup></li>
+<li>Query languages such as SQL have no procedural elements such as loops and branches.  Moreover, standard SQL does not include an RNG in its suite of functionality, but popular SQL dialects often do &mdash; with idiosyncratic behavior.<sup><a href="#Note5"><strong>(5)</strong></a></sup></li>
 </ul>
 
 <p>Whenever possible, the methods in this document should be implemented in a more general-purpose programming language than query languages, shell scripts, and batch files, especially if information security is a goal.</p>
@@ -581,7 +581,7 @@ END METHOD
 
 <h4>Shuffling</h4>
 
-<p>The <a href="https://en.wikipedia.org/wiki/Fisher-Yates_shuffle"><strong>Fisher&ndash;Yates shuffle method</strong></a> shuffles a list (puts its items in a random order) such that all permutations (arrangements) of that list are equally likely to occur, assuming the RNG it uses can choose any one of those permutations.  However, that method is also easy to write incorrectly &mdash; see also (Atwood 2007)<sup><a href="#Note5"><strong>(5)</strong></a></sup>.  The following pseudocode is designed to shuffle a list&#39;s contents.</p>
+<p>The <a href="https://en.wikipedia.org/wiki/Fisher-Yates_shuffle"><strong>Fisher&ndash;Yates shuffle method</strong></a> shuffles a list (puts its items in a random order) such that all permutations (arrangements) of that list are equally likely to occur, assuming the RNG it uses can choose any one of those permutations.  However, that method is also easy to write incorrectly &mdash; see also (Atwood 2007)<sup><a href="#Note6"><strong>(6)</strong></a></sup>.  The following pseudocode is designed to shuffle a list&#39;s contents.</p>
 
 <pre>METHOD Shuffle(list)
    // NOTE: Check size of the list early to prevent
@@ -658,7 +658,7 @@ END METHOD
 
 <ol>
 <li>If the list of characters is fixed, the list can be created in advance at runtime or compile time, or (if every character takes up the same number of code units) a string type as provided in the programming language can be used to store the list as a string.</li>
-<li><strong>Unique random strings:</strong> Often applications need to generate a string of characters that&#39;s not only random, but also unique.  This can be done by storing a list (such as a hash table) of strings already generated and checking newly generated strings against that list.<sup><a href="#Note6"><strong>(6)</strong></a></sup></li>
+<li><strong>Unique random strings:</strong> Often applications need to generate a string of characters that&#39;s not only random, but also unique.  This can be done by storing a list (such as a hash table) of strings already generated and checking newly generated strings against that list.<sup><a href="#Note7"><strong>(7)</strong></a></sup></li>
 <li><strong>Word generation:</strong> This technique could also be used to generate &quot;pronounceable&quot; words, but this is less flexible than other approaches; see also &quot;<a href="#Weighted_Choice_With_Replacement"><strong>Weighted Choice With Replacement</strong></a>&quot;.</li>
 </ol>
 </blockquote>
@@ -746,7 +746,7 @@ END METHOD
 <li>Assume a file (<code>file</code>) has the lines <code>&quot;f&quot;</code>, <code>&quot;o&quot;</code>, <code>&quot;o&quot;</code>, <code>&quot;d&quot;</code>, in that order.  If we modify <code>RandomKItemsFromFile</code> as given in notes 2 and 3 there, and treat <code>MEETS_CRITERIA(item)</code> above as <code>item == &quot;o&quot;</code> (in note 1 of that method), then we can choose a random line number of an &quot;o&quot; line by <code>RandomKItemsFromFile(file, 1)</code>.</li>
 <li>Removing <code>k</code> random items from a list of <code>n</code> items (<code>list</code>) is equivalent to generating a new
 list by <code>RandomKItemsInOrder(list, n - k)</code>.</li>
-<li><strong>Filtering:</strong> If an application needs to sample the same list (with or without replacement) repeatedly, but only from among a selection of that list&#39;s items, it can create a list of items it wants to sample from (or a list of indices to those items), and sample from the new list instead.<sup><a href="#Note7"><strong>(7)</strong></a></sup>  This won&#39;t work well, though, for lists of indefinite or very large size.</li>
+<li><strong>Filtering:</strong> If an application needs to sample the same list (with or without replacement) repeatedly, but only from among a selection of that list&#39;s items, it can create a list of items it wants to sample from (or a list of indices to those items), and sample from the new list instead.<sup><a href="#Note8"><strong>(8)</strong></a></sup>  This won&#39;t work well, though, for lists of indefinite or very large size.</li>
 </ol>
 </blockquote>
 
@@ -816,7 +816,7 @@ END METHOD
 
 <ul>
 <li><a href="#Shuffling"><strong>Shuffling</strong></a> is used when each item in a data set belongs to one of several mutually exclusive groups.  Here, one or more <strong>simulated data sets</strong> are generated by shuffling the original data set and regrouping each item in the shuffled data set in order, such that the number of items in each group for the simulated data set is the same as for the original data set.</li>
-<li><a href="https://en.wikipedia.org/wiki/Bootstrapping_%28statistics%29"><strong><em>Bootstrapping</em></strong></a> is a method of creating one or more random samples (simulated data sets) of an existing data set, where the items in each sample are chosen <a href="#Sampling_With_Replacement_Choosing_a_Random_Item_from_a_List"><strong>at random with replacement</strong></a>.  (Each random sample can contain duplicates this way.)  See also (Brownlee 2018)<sup><a href="#Note8"><strong>(8)</strong></a></sup>.</li>
+<li><a href="https://en.wikipedia.org/wiki/Bootstrapping_%28statistics%29"><strong><em>Bootstrapping</em></strong></a> is a method of creating one or more random samples (simulated data sets) of an existing data set, where the items in each sample are chosen <a href="#Sampling_With_Replacement_Choosing_a_Random_Item_from_a_List"><strong>at random with replacement</strong></a>.  (Each random sample can contain duplicates this way.)  See also (Brownlee 2018)<sup><a href="#Note9"><strong>(9)</strong></a></sup>.</li>
 </ul>
 
 <p>After creating the simulated data sets, one or more statistics, such as the mean, are calculated for each simulated data set as well as the original data set, then the statistics for the simulated data sets are compared with those of the original (such comparisons are outside the scope of this document).</p>
@@ -825,7 +825,7 @@ END METHOD
 
 <h3>A Note on Sorting Random Numbers</h3>
 
-<p>In general, sorting random numbers is no different from sorting any other data. (Sorting algorithms are outside this document&#39;s scope.) <sup><a href="#Note9"><strong>(9)</strong></a></sup></p>
+<p>In general, sorting random numbers is no different from sorting any other data. (Sorting algorithms are outside this document&#39;s scope.) <sup><a href="#Note10"><strong>(10)</strong></a></sup></p>
 
 <p><a id=General_Non_Uniform_Distributions></a></p>
 
@@ -992,7 +992,7 @@ if index==0: number = RNDINTRANGE(1,6)
 else: number = RNDINTRANGE(1,6) +
    RNDINTRANGE(1,6) + RNDINTRANGE(1,6)
 </pre></li>
-<li><p>Choosing, independently and uniformly, a random point from a complex shape (in any number of dimensions) is equivalent to doing such sampling from a mixture of simpler shapes that make up the complex shape (here, the <code>weights</code> list holds the n-dimensional &quot;volume&quot; of each simpler shape).  For example, a simple closed 2D polygon can be <a href="https://en.wikipedia.org/wiki/Polygon_triangulation"><strong><em>triangulated</em></strong></a>, or decomposed into <a href="#Random_Points_Inside_a_Simplex"><strong>triangles</strong></a>, and a mixture of those triangles can be sampled.<sup><a href="#Note10"><strong>(10)</strong></a></sup></p></li>
+<li><p>Choosing, independently and uniformly, a random point from a complex shape (in any number of dimensions) is equivalent to doing such sampling from a mixture of simpler shapes that make up the complex shape (here, the <code>weights</code> list holds the n-dimensional &quot;volume&quot; of each simpler shape).  For example, a simple closed 2D polygon can be <a href="https://en.wikipedia.org/wiki/Polygon_triangulation"><strong><em>triangulated</em></strong></a>, or decomposed into <a href="#Random_Points_Inside_a_Simplex"><strong>triangles</strong></a>, and a mixture of those triangles can be sampled.<sup><a href="#Note11"><strong>(11)</strong></a></sup></p></li>
 <li>Take a set of nonoverlapping integer ranges.  To choose a random integer from those ranges independently and uniformly:
 
 <ul>
@@ -1008,9 +1008,9 @@ else: number = RNDINTRANGE(1,6) +
 
 <p>Random numbers can be generated by combining and/or transforming one or more random numbers and/or discarding some of them.</p>
 
-<p>As an example, <a href="http://www.redblobgames.com/articles/probability/damage-rolls.html"><strong>&quot;Probability and Games: Damage Rolls&quot;</strong></a> by Red Blob Games includes interactive graphics showing score distributions for lowest-of, highest-of, drop-the-lowest, and reroll game mechanics.<sup><a href="#Note11"><strong>(11)</strong></a></sup>  These and similar distributions can be generalized as follows.</p>
+<p>As an example, <a href="http://www.redblobgames.com/articles/probability/damage-rolls.html"><strong>&quot;Probability and Games: Damage Rolls&quot;</strong></a> by Red Blob Games includes interactive graphics showing score distributions for lowest-of, highest-of, drop-the-lowest, and reroll game mechanics.<sup><a href="#Note12"><strong>(12)</strong></a></sup>  These and similar distributions can be generalized as follows.</p>
 
-<p>Generate one or more random numbers, each with a separate probability distribution, then<sup><a href="#Note12"><strong>(12)</strong></a></sup>:</p>
+<p>Generate one or more random numbers, each with a separate probability distribution, then<sup><a href="#Note13"><strong>(13)</strong></a></sup>:</p>
 
 <ol>
 <li><strong>Highest-of:</strong>  Choose the highest generated number.</li>
@@ -1021,7 +1021,7 @@ else: number = RNDINTRANGE(1,6) +
 <li><strong>Reroll-the-highest:</strong>  Add all generated numbers except the highest, then add a number generated randomly by a separate probability distribution.</li>
 <li><strong>Sum:</strong> Add all generated numbers.</li>
 <li><strong>Mean:</strong> Find the mean of all generated numbers.</li>
-<li><strong>Geometric transformation:</strong> Treat the numbers as an <em>n</em>-dimensional point, then apply a geometric transformation, such as a rotation or other <em>affine transformation</em><sup><a href="#Note13"><strong>(13)</strong></a></sup>, to that point.</li>
+<li><strong>Geometric transformation:</strong> Treat the numbers as an <em>n</em>-dimensional point, then apply a geometric transformation, such as a rotation or other <em>affine transformation</em><sup><a href="#Note14"><strong>(14)</strong></a></sup>, to that point.</li>
 </ol>
 
 <p>If the probability distributions are the same, then strategies 1 to 3 make higher numbers more likely, and strategies 4 to 6, lower numbers.</p>
@@ -1034,7 +1034,7 @@ else: number = RNDINTRANGE(1,6) +
 <ol>
 <li>The idiom <code>min(RNDINTRANGE(1, 6), RNDINTRANGE(1, 6))</code> takes the lowest of two six-sided die results (strategy 4).  Due to this approach, 1 is more likely to occur than 6.</li>
 <li>The idiom <code>RNDINTRANGE(1, 6) + RNDINTRANGE(1, 6)</code> takes the result of two six-sided dice (see also &quot;<a href="#Dice"><strong>Dice</strong></a>&quot;) (strategy 7).</li>
-<li>A <a href="#Binomial_Distribution_Optimization_for_Many_Trials"><strong>binomial distribution</strong></a> models the sum of <code>n</code> random numbers each generated by <code>ZeroOrOne(px,py)</code> (strategy 7), that is, the number of successes in <code>n</code> independent trials, each with a success probability of <code>px</code>/<code>py</code>.<sup><a href="#Note14"><strong>(14)</strong></a></sup></li>
+<li>A <a href="#Binomial_Distribution_Optimization_for_Many_Trials"><strong>binomial distribution</strong></a> models the sum of <code>n</code> random numbers each generated by <code>ZeroOrOne(px,py)</code> (strategy 7), that is, the number of successes in <code>n</code> independent trials, each with a success probability of <code>px</code>/<code>py</code>.<sup><a href="#Note15"><strong>(15)</strong></a></sup></li>
 </ol>
 </blockquote>
 
@@ -1140,7 +1140,7 @@ END METHOD
 
 <h3>Random Integers with a Given Positive Sum</h3>
 
-<p>The following pseudocode shows how to generate integers with a given positive sum, where the combination is chosen uniformly at random from among all possible combinations. (The algorithm for this was presented in (Smith and Tromble 2004)<sup><a href="#Note15"><strong>(15)</strong></a></sup>.)  In the pseudocode below&mdash;</p>
+<p>The following pseudocode shows how to generate integers with a given positive sum, where the combination is chosen uniformly at random from among all possible combinations. (The algorithm for this was presented in (Smith and Tromble 2004)<sup><a href="#Note16"><strong>(16)</strong></a></sup>.)  In the pseudocode below&mdash;</p>
 
 <ul>
 <li>the method <code>PositiveIntegersWithSum</code> returns <code>n</code> integers greater than 0 that sum to <code>total</code>,</li>
@@ -1299,7 +1299,7 @@ END METHOD
 
 <h4>Alternative Implementation for <code>RNDU01</code></h4>
 
-<p>For Java&#39;s <code>double</code> and <code>float</code> (or generally, any fixed-precision binary floating-point format with fixed exponent range), the following pseudocode for <code>RNDU01()</code> can be used instead. See also (Downey 2007)<sup><a href="#Note16"><strong>(16)</strong></a></sup>.  In the pseudocode below, <code>SIGBITS</code> is the binary floating-point format&#39;s precision (the number of binary digits the format can represent without loss; e.g., 53 for Java&#39;s <code>double</code>).</p>
+<p>For Java&#39;s <code>double</code> and <code>float</code> (or generally, any fixed-precision binary floating-point format with fixed exponent range), the following pseudocode for <code>RNDU01()</code> can be used instead. See also (Downey 2007)<sup><a href="#Note17"><strong>(17)</strong></a></sup>.  In the pseudocode below, <code>SIGBITS</code> is the binary floating-point format&#39;s precision (the number of binary digits the format can represent without loss; e.g., 53 for Java&#39;s <code>double</code>).</p>
 
 <pre>METHOD RNDU01()
     e=-SIGBITS
@@ -1365,7 +1365,7 @@ END METHOD
 END METHOD
 </pre>
 
-<p><strong>REMARK:</strong> Multiplying by <code>RNDU01()</code> in both cases above is not ideal, since doing so merely stretches that number to fit the range if the range is greater than 1.  There may be more sophisticated ways to fill the gaps that result this way in <code>RNDRANGE</code>.<sup><a href="#Note17"><strong>(17)</strong></a></sup></p>
+<p><strong>REMARK:</strong> Multiplying by <code>RNDU01()</code> in both cases above is not ideal, since doing so merely stretches that number to fit the range if the range is greater than 1.  There may be more sophisticated ways to fill the gaps that result this way in <code>RNDRANGE</code>.<sup><a href="#Note18"><strong>(18)</strong></a></sup></p>
 
 <p>Three related methods can be derived from <code>RNDRANGE</code> as follows:</p>
 
@@ -1421,7 +1421,7 @@ END METHOD
 
 <p><a href="https://en.wikipedia.org/wiki/Monte_Carlo_integration"><strong>Monte Carlo integration</strong></a> is a way to estimate a multidimensional integral; randomly sampled numbers are put into a list (<code>nums</code>) and the estimated integral and its standard error are then calculated with <code>Expectation(nums)</code> with <code>EFUNC(x) = x</code>, and multiplied by the volume of the sampling domain.</p>
 
-<p>A third application of Monte Carlo sampling is <a href="http://mathworld.wolfram.com/StochasticOptimization.html"><strong>stochastic optimization</strong></a> for finding the minimum or maximum value of a function with one or more variables; examples include <a href="https://en.wikipedia.org/wiki/Simulated_annealing"><strong><em>simulated annealing</em></strong></a> and <a href="https://en.wikipedia.org/wiki/Simultaneous_perturbation_stochastic_approximation"><strong><em>simultaneous perturbation stochastic approximation</em></strong></a> (see also (Spall 1998)<sup><a href="#Note18"><strong>(18)</strong></a></sup>).</p>
+<p>A third application of Monte Carlo sampling is <a href="http://mathworld.wolfram.com/StochasticOptimization.html"><strong>stochastic optimization</strong></a> for finding the minimum or maximum value of a function with one or more variables; examples include <a href="https://en.wikipedia.org/wiki/Simulated_annealing"><strong><em>simulated annealing</em></strong></a> and <a href="https://en.wikipedia.org/wiki/Simultaneous_perturbation_stochastic_approximation"><strong><em>simultaneous perturbation stochastic approximation</em></strong></a> (see also (Spall 1998)<sup><a href="#Note19"><strong>(19)</strong></a></sup>).</p>
 
 <p><a id=Random_Walks_Additional_Examples></a></p>
 
@@ -1450,7 +1450,7 @@ END METHOD
 
 <ul>
 <li>Sobol and Halton sequences are too complicated to show here.</li>
-<li>Linear congruential generators with modulus <code>m</code>, a full period, and &quot;good lattice structure&quot;; a sequence of <code>n</code>-dimensional points is then <code>[MLCG(i), MLCG(i+1), ..., MLCG(i+n-1)]</code> for each integer <code>i</code> in the interval [1, <code>m</code>] (L&#39;Ecuyer 1999)<sup><a href="#Note19"><strong>(19)</strong></a></sup> (see example pseudocode below).</li>
+<li>Linear congruential generators with modulus <code>m</code>, a full period, and &quot;good lattice structure&quot;; a sequence of <code>n</code>-dimensional points is then <code>[MLCG(i), MLCG(i+1), ..., MLCG(i+n-1)]</code> for each integer <code>i</code> in the interval [1, <code>m</code>] (L&#39;Ecuyer 1999)<sup><a href="#Note20"><strong>(20)</strong></a></sup> (see example pseudocode below).</li>
 </ul>
 
 <p>&nbsp;</p>
@@ -1477,7 +1477,7 @@ END METHOD
 
 <p><strong>Requires random real numbers.</strong></p>
 
-<p>If the number of items in a list is not known in advance, then the following pseudocode implements a <code>RandomKItemsFromFileWeighted</code> that selects up to <code>k</code> random items from a file (<code>file</code>) of indefinite size (similarly to <a href="#Pseudocode_for_Random_Sampling"><strong><code>RandomKItemsFromFile</code></strong></a>).  See (Efraimidis and Spirakis 2005)<sup><a href="#Note20"><strong>(20)</strong></a></sup>, and see also (Efraimidis 2015)<sup><a href="#Note21"><strong>(21)</strong></a></sup>.  In the pseudocode below, <code>WEIGHT_OF_ITEM(item, thisIndex)</code> is a placeholder for arbitrary code that calculates the weight of an individual item based on its value and its index (starting at 0); the item is ignored if its weight is 0 or less.</p>
+<p>If the number of items in a list is not known in advance, then the following pseudocode implements a <code>RandomKItemsFromFileWeighted</code> that selects up to <code>k</code> random items from a file (<code>file</code>) of indefinite size (similarly to <a href="#Pseudocode_for_Random_Sampling"><strong><code>RandomKItemsFromFile</code></strong></a>).  See (Efraimidis and Spirakis 2005)<sup><a href="#Note21"><strong>(21)</strong></a></sup>, and see also (Efraimidis 2015)<sup><a href="#Note22"><strong>(22)</strong></a></sup>.  In the pseudocode below, <code>WEIGHT_OF_ITEM(item, thisIndex)</code> is a placeholder for arbitrary code that calculates the weight of an individual item based on its value and its index (starting at 0); the item is ignored if its weight is 0 or less.</p>
 
 <pre>METHOD RandomKItemsFromFileWeighted(file, k)
   list = NewList()
@@ -1532,7 +1532,7 @@ end
 </pre>
 
 <blockquote>
-<p><strong>Note:</strong> Weighted choice <em>with replacement</em> can be implemented by doing one or more concurrent runs of <code>RandomKItemsFromFileWeighted(file, 1)</code> (making sure each run traverses <code>file</code> the same way for multiple runs as for a single run) (Efraimidis 2015)<sup><a href="#Note21"><strong>(21)</strong></a></sup>.</p>
+<p><strong>Note:</strong> Weighted choice <em>with replacement</em> can be implemented by doing one or more concurrent runs of <code>RandomKItemsFromFileWeighted(file, 1)</code> (making sure each run traverses <code>file</code> the same way for multiple runs as for a single run) (Efraimidis 2015)<sup><a href="#Note22"><strong>(22)</strong></a></sup>.</p>
 </blockquote>
 
 <p><a id=Continuous_Weighted_Choice></a></p>
@@ -1646,12 +1646,12 @@ above for returning more than one random number in one call.</p>
 
 <ol>
 <li>Sampling a <strong>Bates distribution</strong> involves sampling <em>n</em> random numbers by <code>RNDRANGE(minimum, maximum)</code>, then finding the mean of those numbers (strategy 8, mean).</li>
-<li>A <strong>compound Poisson distribution</strong> models the sum<sup><a href="#Note12"><strong>(12)</strong></a></sup>
+<li>A <strong>compound Poisson distribution</strong> models the sum<sup><a href="#Note13"><strong>(13)</strong></a></sup>
 of <em>n</em> random numbers each generated the same way, where <em>n</em> follows a <a href="#Poisson_Distribution"><strong>Poisson distribution</strong></a> (e.g., <code>n = Poisson(10)</code> for an average of 10 numbers) (strategy 7, sum).</li>
 <li>A <strong>P&oacute;lya&ndash;Aeppli distribution</strong> is a compound Poisson distribution in which the random numbers are generated by <code>NegativeBinomial(1, 1-p)+1</code> for a fixed <code>p</code>.</li>
-<li>A <strong>hypoexponential distribution</strong> models the sum<sup><a href="#Note12"><strong>(12)</strong></a></sup>
+<li>A <strong>hypoexponential distribution</strong> models the sum<sup><a href="#Note13"><strong>(13)</strong></a></sup>
 of <em>n</em> random numbers that follow an exponential distribution and each have a separate <code>lamda</code> parameter (see &quot;<a href="#Gamma_Distribution"><strong>Gamma Distribution</strong></a>&quot;).</li>
-<li>A random point (<code>x</code>, <code>y</code>) can be transformed (strategy 9, geometric transformation) to derive a point with <strong>correlated random</strong> coordinates (old <code>x</code>, new <code>x</code>) as follows (see (Saucier 2000)<sup><a href="#Note22"><strong>(22)</strong></a></sup>, sec. 3.8): <code>[x, y*sqrt(1 - rho * rho) + rho * x]</code>, where <code>x</code> and <code>y</code> are independent random numbers generated the same way, and <code>rho</code> is a <em>correlation coefficient</em> in the interval [-1, 1] (if <code>rho</code> is 0, the variables are uncorrelated).</li>
+<li>A random point (<code>x</code>, <code>y</code>) can be transformed (strategy 9, geometric transformation) to derive a point with <strong>correlated random</strong> coordinates (old <code>x</code>, new <code>x</code>) as follows (see (Saucier 2000)<sup><a href="#Note23"><strong>(23)</strong></a></sup>, sec. 3.8): <code>[x, y*sqrt(1 - rho * rho) + rho * x]</code>, where <code>x</code> and <code>y</code> are independent random numbers generated the same way, and <code>rho</code> is a <em>correlation coefficient</em> in the interval [-1, 1] (if <code>rho</code> is 0, the variables are uncorrelated).</li>
 </ol>
 
 <p><a id=Random_Numbers_from_a_Distribution_of_Data_Points></a></p>
@@ -1669,9 +1669,9 @@ of <em>n</em> random numbers that follow an exponential distribution and each ha
 
 <ol>
 <li>Choose one of the numbers or points in the list at random <a href="#Sampling_With_Replacement_Choosing_a_Random_Item_from_a_List"><strong>with replacement</strong></a>.</li>
-<li>Add a randomized &quot;jitter&quot; to the chosen number or point; for example, add a separately generated <code>Normal(0, sigma)</code> to the chosen number or each component of the chosen point, where <code>sigma</code> is the <em>bandwidth</em><sup><a href="#Note23"><strong>(23)</strong></a></sup>.</li>
+<li>Add a randomized &quot;jitter&quot; to the chosen number or point; for example, add a separately generated <code>Normal(0, sigma)</code> to the chosen number or each component of the chosen point, where <code>sigma</code> is the <em>bandwidth</em><sup><a href="#Note24"><strong>(24)</strong></a></sup>.</li>
 </ol></li>
-<li><strong>Stochastic interpolation</strong> is described in (Saucier 2000)<sup><a href="#Note22"><strong>(22)</strong></a></sup>, sec. 5.3.4.  It involves choosing a data point at random, taking the mean of that point and its <em>k</em> nearest neighbors, and shifting that mean by a random weighted sum<sup><a href="#Note12"><strong>(12)</strong></a></sup>
+<li><strong>Stochastic interpolation</strong> is described in (Saucier 2000)<sup><a href="#Note23"><strong>(23)</strong></a></sup>, sec. 5.3.4.  It involves choosing a data point at random, taking the mean of that point and its <em>k</em> nearest neighbors, and shifting that mean by a random weighted sum<sup><a href="#Note13"><strong>(13)</strong></a></sup>
 of the differences between each of those points and that mean (here, the weight is <code>RNDRANGE((1-sqrt(k*3))/(k+1.0), (1+sqrt(k*3))/(k+1.0))</code> for each point). This approach assumes that the lowest and highest values of each dimension are 0 and 1, respectively, so that arbitrary data points have to be shifted and scaled accordingly.</li>
 <li><strong>Fitting a known distribution</strong> (such as the normal distribution), with unknown parameters, to data can be done by <a href="https://en.wikipedia.org/wiki/Maximum_likelihood_estimation"><strong>maximum likelihood estimation</strong></a> or the <a href="https://en.wikipedia.org/wiki/Method_of_moments"><strong>method of moments</strong></a>, among other ways.  If several kinds of distributions are possible fitting choices, then the kind showing the best <em>goodness of fit</em> for the data (e.g., chi-squared goodness of fit) is chosen.</li>
 </ol>
@@ -1681,7 +1681,7 @@ of the differences between each of those points and that mean (here, the weight 
 <p><strong>Generative models.</strong> These are machine-learning models that take random numbers as input and generate outputs (such as images or sounds) that are similar to examples they have already seen.  <a href="https://en.wikipedia.org/wiki/Generative_adversarial_network"><strong><em>Generative adversarial networks</em></strong></a> are one kind of generative model.</p>
 
 <blockquote>
-<p><strong>Note:</strong> A comprehensive survey of density estimation, regression, or generative models, or how to fit such models to data, are outside the scope of this document.<sup><a href="#Note24"><strong>(24)</strong></a></sup></p>
+<p><strong>Note:</strong> A comprehensive survey of density estimation, regression, or generative models, or how to fit such models to data, are outside the scope of this document.<sup><a href="#Note25"><strong>(25)</strong></a></sup></p>
 </blockquote>
 
 <p><a id=Random_Numbers_from_an_Arbitrary_Distribution></a></p>
@@ -1694,7 +1694,7 @@ of the differences between each of those points and that mean (here, the weight 
 
 <ul>
 <li>The <a href="https://en.wikipedia.org/wiki/Cumulative_distribution_function"><strong><em>cumulative distribution function</em></strong></a>, or <em>CDF</em>, returns, for each number, the probability for a randomly generated variable to be equal to or less than that number; the probability is in the interval [0, 1].</li>
-<li>The <a href="https://en.wikipedia.org/wiki/Probability_density_function"><strong><em>probability density function</em></strong></a>, or <em>PDF</em>, is, roughly and intuitively, a curve of weights 0 or greater, where for each number, the greater its weight, the more likely a number close to that number is randomly chosen.<sup><a href="#Note25"><strong>(25)</strong></a></sup></li>
+<li>The <a href="https://en.wikipedia.org/wiki/Probability_density_function"><strong><em>probability density function</em></strong></a>, or <em>PDF</em>, is, roughly and intuitively, a curve of weights 0 or greater, where for each number, the greater its weight, the more likely a number close to that number is randomly chosen.<sup><a href="#Note26"><strong>(26)</strong></a></sup></li>
 <li>The <em>inverse cumulative distribution function</em> (<em>inverse CDF</em>) is the inverse of the CDF and maps numbers in the interval [0, 1) to numbers in the distribution, from low to high.</li>
 </ul>
 
@@ -1711,9 +1711,9 @@ of the differences between each of those points and that mean (here, the weight 
 <li><p>To sample a random number in the interval [<code>low</code>, <code>high</code>) from a PDF with a positive maximum value no greater than <code>peak</code> at that interval, generate <code>x = RNDRANGEMaxExc(low, high)</code> and <code>y = RNDRANGEMaxExc(0, peak)</code> until <code>y &lt; PDF(x)</code>, then take the last <code>x</code> generated this way. (See also Saucier 2000, pp. 6-7.)</p></li>
 <li><p>A custom distribution&#39;s PDF, <code>PDF</code>, is <code>exp(-abs(x*x*x))</code>, and the exponential distribution&#39;s PDF, <code>PDF2</code>, is <code>exp(-x)</code>.  The exponential PDF &quot;dominates&quot; the other PDF (at every <code>x</code> 0 or greater) if we multiply it by 1.5, so that <code>PDF2</code> is now <code>1.5 * exp(-x)</code>.  Now we can generate numbers from our custom distribution by sampling exponential points until a point falls within <code>PDF</code>.  This is done by generating <code>n = -ln(RNDU01ZeroOneExc())</code> until <code>PDF(n) &gt;= RNDRANGEMaxExc(0, PDF2(n))</code>.</p></li>
 </ol></li>
-<li><p><a href="https://en.wikipedia.org/wiki/Markov_chain_Monte_Carlo"><strong>Markov-chain Monte Carlo</strong></a> <strong>(MCMC).</strong> If many random numbers from the given PDF need to be generated, then an MCMC algorithm can be used, with the disadvantage that the resulting random numbers will not be chosen independently of each other.  MCMC algorithms include Metropolis&ndash;Hastings and slice sampling (Neal 2003)<sup><a href="#Note26"><strong>(26)</strong></a></sup>. Generally, as more numbers are generated, the MCMC algorithm converges to the given distribution; this is why usually, random numbers from the first few (e.g., first 1000) iterations are ignored (&quot;burn in&quot;).  MCMC can also be used to find a suitable sampling range for the Piecewise interpolation method, above.  The <a href="https://peteroupc.github.io/randomgen.zip"><strong>Python sample code</strong></a> includes methods called <code>mcmc</code> and <code>mcmc2</code> that implement Metropolis&ndash;Hastings for PDFs that take single numbers or two-dimensional points, respectively, and a method called <code>slicesample</code> that implements slice sampling.</p></li>
+<li><p><a href="https://en.wikipedia.org/wiki/Markov_chain_Monte_Carlo"><strong>Markov-chain Monte Carlo</strong></a> <strong>(MCMC).</strong> If many random numbers from the given PDF need to be generated, then an MCMC algorithm can be used, with the disadvantage that the resulting random numbers will not be chosen independently of each other.  MCMC algorithms include Metropolis&ndash;Hastings and slice sampling (Neal 2003)<sup><a href="#Note27"><strong>(27)</strong></a></sup>. Generally, as more numbers are generated, the MCMC algorithm converges to the given distribution; this is why usually, random numbers from the first few (e.g., first 1000) iterations are ignored (&quot;burn in&quot;).  MCMC can also be used to find a suitable sampling range for the Piecewise interpolation method, above.  The <a href="https://peteroupc.github.io/randomgen.zip"><strong>Python sample code</strong></a> includes methods called <code>mcmc</code> and <code>mcmc2</code> that implement Metropolis&ndash;Hastings for PDFs that take single numbers or two-dimensional points, respectively, and a method called <code>slicesample</code> that implements slice sampling.</p></li>
 </ul></li>
-<li><p><strong>PDF and a uniform random variable in the interval [0, 1) (<code>randomVariable</code>)</strong> are known: Create <code>list</code> and <code>weights</code> as given in the Piecewise interpolation method, above, then divide each item in <code>weights</code> by the sum<sup><a href="#Note12"><strong>(12)</strong></a></sup>
+<li><p><strong>PDF and a uniform random variable in the interval [0, 1) (<code>randomVariable</code>)</strong> are known: Create <code>list</code> and <code>weights</code> as given in the Piecewise interpolation method, above, then divide each item in <code>weights</code> by the sum<sup><a href="#Note13"><strong>(13)</strong></a></sup>
 of <code>weights</code>&#39;s items, then generate <a href="#Continuous_Weighted_Choice"><strong><code>ContinuousWeightedChoice(list, weights)</code></strong></a> (except that method is modified to use <code>value = randomVariable</code> rather than <code>value = RNDRANGEMaxExc(0, sum)</code>).</p></li>
 <li><p><strong>Inverse CDF is known:</strong> Generate <code>ICDF(RNDU01ZeroOneExc())</code>, where <code>ICDF(X)</code> is the inverse CDF (<a href="https://en.wikipedia.org/wiki/Inverse_transform_sampling"><strong><em>inverse transform sampling</em></strong></a>).</p></li>
 <li><p><strong>Inverse CDF and a uniform random variable in the interval [0, 1) (<code>randomVariable</code>)</strong> are known: Generate <code>ICDF(randomVariable)</code>, where <code>ICDF(X)</code> is the inverse CDF.</p></li>
@@ -1730,7 +1730,7 @@ of <code>weights</code>&#39;s items, then generate <a href="#Continuous_Weighted
 
 <p><strong>Usually requires random real numbers.</strong></p>
 
-<p>Gibbs sampling<sup><a href="#Note27"><strong>(27)</strong></a></sup> is a Markov-chain Monte Carlo algorithm.  It involves repeatedly generating random numbers from two or more distributions, each of which uses a random number from the previous distribution (<em>conditional distributions</em>); however, the resulting random numbers will not be chosen independently of each other.</p>
+<p>Gibbs sampling<sup><a href="#Note28"><strong>(28)</strong></a></sup> is a Markov-chain Monte Carlo algorithm.  It involves repeatedly generating random numbers from two or more distributions, each of which uses a random number from the previous distribution (<em>conditional distributions</em>); however, the resulting random numbers will not be chosen independently of each other.</p>
 
 <blockquote>
 <p><strong>Example:</strong> In one Gibbs sampler, an initial value for <code>y</code> is chosen, then multiple <code>x</code>, <code>y</code> pairs of random numbers are generated, where <code>x = BetaDist(y, 5)</code> then <code>y = Poisson(x * 10)</code>.</p>
@@ -1742,7 +1742,7 @@ of <code>weights</code>&#39;s items, then generate <a href="#Continuous_Weighted
 
 <p><strong>Requires random real numbers.</strong></p>
 
-<p>If there are many dice to roll, the following pseudocode implements a faster approximation, which uses the fact that the dice-roll distribution approaches a &quot;discrete&quot; normal distribution as the number of dice increases.<sup><a href="#Note28"><strong>(28)</strong></a></sup></p>
+<p>If there are many dice to roll, the following pseudocode implements a faster approximation, which uses the fact that the dice-roll distribution approaches a &quot;discrete&quot; normal distribution as the number of dice increases.<sup><a href="#Note29"><strong>(29)</strong></a></sup></p>
 
 <pre>METHOD DiceRoll2(dice, sides, bonus)
   if dice &lt; 50: return DiceRoll(dice,sides,bonus)
@@ -1770,7 +1770,7 @@ END METHOD
 probability that a normally-distributed random number will be within one standard deviation from the mean is about 68.3%; within two standard deviations (2 times <code>sigma</code>), about 95.4%; and within three standard deviations, about 99.7%.  (Some publications give &sigma;<sup>2</sup>, or variance, rather than standard deviation, as the second parameter.  In this case, the standard deviation is the variance&#39;s square root.)</li>
 </ul>
 
-<p>There are a number of methods for normal random number generation.<sup><a href="#Note29"><strong>(29)</strong></a></sup> The pseudocode below uses the polar method to generate two normal random numbers. (Ways to adapt the pseudocode to output only one random number at a time, rather than two, are outside the scope of this document.  In this document, the name <code>Normal</code> means a method that returns only one normally-distributed random number rather than two.)</p>
+<p>There are a number of methods for normal random number generation.<sup><a href="#Note30"><strong>(30)</strong></a></sup> The pseudocode below uses the polar method to generate two normal random numbers. (Ways to adapt the pseudocode to output only one random number at a time, rather than two, are outside the scope of this document.  In this document, the name <code>Normal</code> means a method that returns only one normally-distributed random number rather than two.)</p>
 
 <pre>METHOD Normal2(mu, sigma)
   while true
@@ -2197,7 +2197,7 @@ method for generating multiple random points in one call.</p>
 
 <p><strong>Requires random real numbers.</strong></p>
 
-<p>Generating <em>n</em> <code>GammaDist(total, 1)</code> numbers and dividing them by their sum<sup><a href="#Note12"><strong>(12)</strong></a></sup>
+<p>Generating <em>n</em> <code>GammaDist(total, 1)</code> numbers and dividing them by their sum<sup><a href="#Note13"><strong>(13)</strong></a></sup>
  will result in <em>n</em> numbers that (approximately) sum to <code>total</code>, where the combination of numbers is chosen uniformly at random (see a <a href="https://en.wikipedia.org/wiki/Dirichlet_distribution#Gamma_distribution"><strong>Wikipedia article</strong></a>).  For example, if <code>total</code> is 1, the numbers will (approximately) sum to 1.  Note that in the exceptional case that all numbers are 0, the process should repeat.</p>
 
 <blockquote>
@@ -2205,7 +2205,7 @@ method for generating multiple random points in one call.</p>
 
 <ol>
 <li>Notes 1 and 2 in the section &quot;Random Integers with a Given Positive Sum&quot; apply here.</li>
-<li>The <strong>Dirichlet distribution</strong>, as defined in some places (e.g., <em>Mathematica</em>; Devroye 1986, p. 594), models a uniformly randomly chosen combination of <em>n</em> random numbers that sum to 1, and can be sampled by generating <em>n</em>+1 random <a href="#Gamma_Distribution"><strong>gamma-distributed</strong></a> numbers, each with separate parameters, taking their sum<sup><a href="#Note12"><strong>(12)</strong></a></sup>, and dividing the first <em>n</em> numbers by that sum.</li>
+<li>The <strong>Dirichlet distribution</strong>, as defined in some places (e.g., <em>Mathematica</em>; Devroye 1986, p. 594), models a uniformly randomly chosen combination of <em>n</em> random numbers that sum to 1, and can be sampled by generating <em>n</em>+1 random <a href="#Gamma_Distribution"><strong>gamma-distributed</strong></a> numbers, each with separate parameters, taking their sum<sup><a href="#Note13"><strong>(13)</strong></a></sup>, and dividing the first <em>n</em> numbers by that sum.</li>
 </ol>
 </blockquote>
 
@@ -2263,7 +2263,7 @@ END METHOD
 <li>the <strong>Fr&eacute;chet&ndash;Hoeffding upper bound copula</strong> <em>[x, x, ..., x]</em> (e.g., <code>[x, x]</code>), where <code>x = RNDU01()</code>,</li>
 <li>the <strong>Fr&eacute;chet&ndash;Hoeffding lower bound copula</strong> <code>[x, 1.0 - x]</code> where <code>x = RNDU01()</code>,</li>
 <li>the <strong>product copula</strong>, where each number is a separately generated <code>RNDU01()</code> (indicating no dependence between the numbers), and</li>
-<li>the <strong>Archimedean copulas</strong>, described by M. Hofert and M. M&auml;chler (2011)<sup><a href="#Note30"><strong>(30)</strong></a></sup>.</li>
+<li>the <strong>Archimedean copulas</strong>, described by M. Hofert and M. M&auml;chler (2011)<sup><a href="#Note31"><strong>(31)</strong></a></sup>.</li>
 </ul>
 
 <p><a id=Index_of_Non_Uniform_Distributions></a></p>
@@ -2457,7 +2457,7 @@ END METHOD
 
 <h4>Random Points on the Surface of a Hypersphere</h4>
 
-<p>The following pseudocode shows how to generate a random N-dimensional point on the surface of an N-dimensional hypersphere, centered at the origin, of radius <code>radius</code> (if <code>radius</code> is 1, the result can also serve as a unit vector in N-dimensional space).  Here, <code>Norm</code> is given in the appendix.  See also (Weisstein)<sup><a href="#Note31"><strong>(31)</strong></a></sup>.</p>
+<p>The following pseudocode shows how to generate a random N-dimensional point on the surface of an N-dimensional hypersphere, centered at the origin, of radius <code>radius</code> (if <code>radius</code> is 1, the result can also serve as a unit vector in N-dimensional space).  Here, <code>Norm</code> is given in the appendix.  See also (Weisstein)<sup><a href="#Note32"><strong>(32)</strong></a></sup>.</p>
 
 <pre>METHOD RandomPointInHypersphere(dims, radius)
   x=0
@@ -2482,14 +2482,14 @@ END METHOD
 
 <h4>Random Points Inside a Ball or Shell</h4>
 
-<p>To generate a random N-dimensional point on or inside an N-dimensional ball, centered at the origin, of radius R, follow the pseudocode in <code>RandomPointInHypersphere</code>, except replace <code>Norm(ret)</code> with <code>sqrt( S - ln(RNDU01ZeroExc()))</code>, where <code>S</code> is the sum of squares of the numbers in <code>ret</code><sup><a href="#Note12"><strong>(12)</strong></a></sup>
-.  For discs and spheres (2- or 3-dimensional balls), an alternative is to generate a vector (list) of N <code>RNDRANGE(-R, R)</code> random numbers<sup><a href="#Note32"><strong>(32)</strong></a></sup> until its <em>norm</em> is R or less (see the <a href="#Appendix"><strong>appendix</strong></a>).<sup><a href="#Note33"><strong>(33)</strong></a></sup></p>
+<p>To generate a random N-dimensional point on or inside an N-dimensional ball, centered at the origin, of radius R, follow the pseudocode in <code>RandomPointInHypersphere</code>, except replace <code>Norm(ret)</code> with <code>sqrt( S - ln(RNDU01ZeroExc()))</code>, where <code>S</code> is the sum of squares of the numbers in <code>ret</code><sup><a href="#Note13"><strong>(13)</strong></a></sup>
+.  For discs and spheres (2- or 3-dimensional balls), an alternative is to generate a vector (list) of N <code>RNDRANGE(-R, R)</code> random numbers<sup><a href="#Note33"><strong>(33)</strong></a></sup> until its <em>norm</em> is R or less (see the <a href="#Appendix"><strong>appendix</strong></a>).<sup><a href="#Note34"><strong>(34)</strong></a></sup></p>
 
 <p>To generate a random point on or inside an N-dimensional spherical shell (a hollow ball), centered at the origin, with inner radius A and outer radius B (where A is less than B), either&mdash;</p>
 
 <ul>
 <li>generate a random point for a ball of radius B until the norm of that point is A or greater (see the <a href="#Appendix"><strong>appendix</strong></a>), or</li>
-<li>generate a random point on the surface of an N-dimensional hypersphere with radius equal to <code>pow(RNDRANGE(pow(A, N), pow(B, N)), 1.0 / N)</code><sup><a href="#Note34"><strong>(34)</strong></a></sup>.</li>
+<li>generate a random point on the surface of an N-dimensional hypersphere with radius equal to <code>pow(RNDRANGE(pow(A, N), pow(B, N)), 1.0 / N)</code><sup><a href="#Note35"><strong>(35)</strong></a></sup>.</li>
 </ul>
 
 <blockquote>
@@ -2535,7 +2535,9 @@ END METHOD
 
 <p><small><sup id=Note2>(2)</sup> For an exercise solved by the <code>RNDINT</code> pseudocode, see A. Koenig and B. E. Moo, <em>Accelerated C++</em>, 2000; see also a <a href="http://mathalope.co.uk/2014/10/26/accelerated-c-solution-to-exercise-7-9/"><strong>blog post by Johnny Chan</strong></a>.  In addition, M. O&#39;Neill discusses various methods, both biased and unbiased, for generating random integers in a range with an RNG in a <a href="http://www.pcg-random.org/posts/bounded-rands.html"><strong>blog post from July 2018</strong></a>.</small></p>
 
-<p><small><sup id=Note3>(3)</sup> A na&iuml;ve <code>RNDINTEXC</code> implementation often seen in certain languages like JavaScript is the idiom <code>floor(Math.random()*maxExclusive)</code>, where <code>Math.random()</code> is any method that outputs an independent uniform random number in the interval [0, 1).  However:</p>
+<p><small><sup id=Note3>(3)</sup> D. Lemire, &quot;A fast alternative to the modulo reduction&quot;, Daniel Lemire&#39;s blog, 2016.</small></p>
+
+<p><small><sup id=Note4>(4)</sup> A na&iuml;ve <code>RNDINTEXC</code> implementation often seen in certain languages like JavaScript is the idiom <code>floor(Math.random()*maxExclusive)</code>, where <code>Math.random()</code> is any method that outputs an independent uniform random number in the interval [0, 1).  However:</p>
 
 <ol>
 <li>Depending on how <code>Math.random()</code> is implemented, this idiom can&#39;t choose from among all integers in its range or may bias some integers over others; this bias may or may not be negligible in a given application.  For example, if <code>Math.random()</code> is implemented as <code>RNDINT(255)/256</code>, not all numbers can &quot;randomly&quot; occur by this idiom with <code>maxExclusive</code> greater than 256.</li>
@@ -2544,49 +2546,49 @@ END METHOD
 
 <p>If an application is concerned about these issues, it should treat the <code>Math.random()</code> implementation as the underlying RNG for <code>RNDINT</code> and implement <code>RNDINTEXC</code> through <code>RNDINT</code> instead.</small></p>
 
-<p><small><sup id=Note4>(4)</sup> Describing differences between SQL dialects is outside the scope of this document, but <a href="http://flourishlib.com/docs/FlourishSQL"><strong>Flourish SQL</strong></a> describes many such differences, including those concerning RNGs.</small></p>
+<p><small><sup id=Note5>(5)</sup> Describing differences between SQL dialects is outside the scope of this document, but <a href="http://flourishlib.com/docs/FlourishSQL"><strong>Flourish SQL</strong></a> describes many such differences, including those concerning RNGs.</small></p>
 
-<p><small><sup id=Note5>(5)</sup> Jeff Atwood, &quot;<a href="https://blog.codinghorror.com/the-danger-of-naivete/"><strong>The danger of na&iuml;vet&eacute;</strong></a>&quot;, Dec. 7, 2007.</small></p>
+<p><small><sup id=Note6>(6)</sup> Jeff Atwood, &quot;<a href="https://blog.codinghorror.com/the-danger-of-naivete/"><strong>The danger of na&iuml;vet&eacute;</strong></a>&quot;, Dec. 7, 2007.</small></p>
 
-<p><small><sup id=Note6>(6)</sup> If the strings identify database records, file system paths, or other shared resources, special considerations apply, including the need to synchronize access to those resources.  For uniquely identifying database records, alternatives to random strings include auto-incrementing or sequentially assigned row numbers. The choice of underlying RNG is important when it comes to unique random strings; see my <a href="https://peteroupc.github.io/random.html#Unique_Random_Identifiers"><strong>RNG recommendation document</strong></a>.</small></p>
+<p><small><sup id=Note7>(7)</sup> If the strings identify database records, file system paths, or other shared resources, special considerations apply, including the need to synchronize access to those resources.  For uniquely identifying database records, alternatives to random strings include auto-incrementing or sequentially assigned row numbers. The choice of underlying RNG is important when it comes to unique random strings; see my <a href="https://peteroupc.github.io/random.html#Unique_Random_Identifiers"><strong>RNG recommendation document</strong></a>.</small></p>
 
-<p><small><sup id=Note7>(7)</sup> See also the <em>Stack Overflow</em> question &quot;Random index of a non zero value in a numpy array&quot;.</small></p>
+<p><small><sup id=Note8>(8)</sup> See also the <em>Stack Overflow</em> question &quot;Random index of a non zero value in a numpy array&quot;.</small></p>
 
-<p><small><sup id=Note8>(8)</sup> Brownlee, J. &quot;<a href="https://machinelearningmastery.com/a-gentle-introduction-to-the-bootstrap-method/"><strong>A Gentle Introduction to the Bootstrap Method</strong></a>&quot;, <em>Machine Learning Mastery</em>, May 25, 2018.</small></p>
+<p><small><sup id=Note9>(9)</sup> Brownlee, J. &quot;<a href="https://machinelearningmastery.com/a-gentle-introduction-to-the-bootstrap-method/"><strong>A Gentle Introduction to the Bootstrap Method</strong></a>&quot;, <em>Machine Learning Mastery</em>, May 25, 2018.</small></p>
 
-<p><small><sup id=Note9>(9)</sup> Jon Louis Bentley and James B. Saxe, &quot;Generating Sorted Lists of Random Numbers&quot;, <em>ACM Trans. Math. Softw.</em> 6 (1980), pp. 359-364, describes a way to generate random numbers in sorted order, but it&#39;s not given here because it relies on generating real numbers in the interval [0, 1], which is inherently imperfect because computers can&#39;t choose among all random numbers between 0 and 1, and there are infinitely many of them.</small></p>
+<p><small><sup id=Note10>(10)</sup> Jon Louis Bentley and James B. Saxe, &quot;Generating Sorted Lists of Random Numbers&quot;, <em>ACM Trans. Math. Softw.</em> 6 (1980), pp. 359-364, describes a way to generate random numbers in sorted order, but it&#39;s not given here because it relies on generating real numbers in the interval [0, 1], which is inherently imperfect because computers can&#39;t choose among all random numbers between 0 and 1, and there are infinitely many of them.</small></p>
 
-<p><small><sup id=Note10>(10)</sup> The <a href="https://peteroupc.github.io/randomgen.zip"><strong>Python sample code</strong></a> includes a <code>ConvexPolygonSampler</code> class that implements this kind of sampling for convex polygons; unlike other polygons, convex polygons are trivial to decompose into triangles.</small></p>
+<p><small><sup id=Note11>(11)</sup> The <a href="https://peteroupc.github.io/randomgen.zip"><strong>Python sample code</strong></a> includes a <code>ConvexPolygonSampler</code> class that implements this kind of sampling for convex polygons; unlike other polygons, convex polygons are trivial to decompose into triangles.</small></p>
 
-<p><small><sup id=Note11>(11)</sup> That article also mentions a critical-hit distribution, which is actually a <a href="#Mixtures_of_Distributions"><strong>mixture</strong></a> of two distributions: one roll of dice and the sum of two rolls of dice.</small></p>
+<p><small><sup id=Note12>(12)</sup> That article also mentions a critical-hit distribution, which is actually a <a href="#Mixtures_of_Distributions"><strong>mixture</strong></a> of two distributions: one roll of dice and the sum of two rolls of dice.</small></p>
 
-<p><small><sup id=Note12>(12)</sup> <a href="https://en.wikipedia.org/wiki/Kahan_summation_algorithm"><strong>Kahan summation</strong></a> can be a more robust way than the na&iuml;ve approach to compute the sum of three or more numbers.</small></p>
+<p><small><sup id=Note13>(13)</sup> <a href="https://en.wikipedia.org/wiki/Kahan_summation_algorithm"><strong>Kahan summation</strong></a> can be a more robust way than the na&iuml;ve approach to compute the sum of three or more numbers.</small></p>
 
-<p><small><sup id=Note13>(13)</sup> An <em>affine transformation</em> is one that keeps straight lines straight and parallel lines parallel.</small></p>
+<p><small><sup id=Note14>(14)</sup> An <em>affine transformation</em> is one that keeps straight lines straight and parallel lines parallel.</small></p>
 
-<p><small><sup id=Note14>(14)</sup> If <code>px</code>/<code>py</code> is <code>1</code>/<code>2</code>, the binomial distribution models the task &quot;Flip N coins, then count the number of heads&quot;, and the random sum is known as <a href="https://en.wikipedia.org/wiki/Hamming_distance"><strong><em>Hamming distance</em></strong></a> (treating each trial as a &quot;bit&quot; that&#39;s set to 1 for a success and 0 for a failure).  If <code>px</code> is <code>1</code>, then this distribution models the task &quot;Roll <code>n</code> <code>py</code>-sided dice, then count the number of dice that show the number 1.&quot;</small></p>
+<p><small><sup id=Note15>(15)</sup> If <code>px</code>/<code>py</code> is <code>1</code>/<code>2</code>, the binomial distribution models the task &quot;Flip N coins, then count the number of heads&quot;, and the random sum is known as <a href="https://en.wikipedia.org/wiki/Hamming_distance"><strong><em>Hamming distance</em></strong></a> (treating each trial as a &quot;bit&quot; that&#39;s set to 1 for a success and 0 for a failure).  If <code>px</code> is <code>1</code>, then this distribution models the task &quot;Roll <code>n</code> <code>py</code>-sided dice, then count the number of dice that show the number 1.&quot;</small></p>
 
-<p><small><sup id=Note15>(15)</sup> Smith and Tromble, &quot;<a href="http://www.cs.cmu.edu/%7Enasmith/papers/smith+tromble.tr04.pdf"><strong>Sampling Uniformly from the Unit Simplex</strong></a>&quot;, 2004.</small></p>
+<p><small><sup id=Note16>(16)</sup> Smith and Tromble, &quot;<a href="http://www.cs.cmu.edu/%7Enasmith/papers/smith+tromble.tr04.pdf"><strong>Sampling Uniformly from the Unit Simplex</strong></a>&quot;, 2004.</small></p>
 
-<p><small><sup id=Note16>(16)</sup> Downey, A. B. &quot;<a href="http://allendowney.com/research/rand/"><strong>Generating Pseudo-random Floating Point Values</strong></a>&quot;, 2007.</small></p>
+<p><small><sup id=Note17>(17)</sup> Downey, A. B. &quot;<a href="http://allendowney.com/research/rand/"><strong>Generating Pseudo-random Floating Point Values</strong></a>&quot;, 2007.</small></p>
 
-<p><small><sup id=Note17>(17)</sup> See, for example, the <em>Stack Overflow</em> question &quot;How to generate a number in arbitrary range using random()={0..1} preserving uniformness and density?&quot;, <code>questions/8019589</code>.</small></p>
+<p><small><sup id=Note18>(18)</sup> See, for example, the <em>Stack Overflow</em> question &quot;How to generate a number in arbitrary range using random()={0..1} preserving uniformness and density?&quot;, <code>questions/8019589</code>.</small></p>
 
-<p><small><sup id=Note18>(18)</sup> Spall, J.C., &quot;An Overview of the Simultaneous Perturbation Method for Efficient Optimization&quot;, <em>Johns Hopkins APL Technical Digest</em> 19(4), 1998, pp. 482-492.</small></p>
+<p><small><sup id=Note19>(19)</sup> Spall, J.C., &quot;An Overview of the Simultaneous Perturbation Method for Efficient Optimization&quot;, <em>Johns Hopkins APL Technical Digest</em> 19(4), 1998, pp. 482-492.</small></p>
 
-<p><small><sup id=Note19>(19)</sup> P. L&#39;Ecuyer, &quot;Tables of Linear Congruential Generators of Different Sizes and Good Lattice Structure&quot;, <em>Mathematics of Computation</em> 68(225), January 1999.</small></p>
+<p><small><sup id=Note20>(20)</sup> P. L&#39;Ecuyer, &quot;Tables of Linear Congruential Generators of Different Sizes and Good Lattice Structure&quot;, <em>Mathematics of Computation</em> 68(225), January 1999.</small></p>
 
-<p><small><sup id=Note20>(20)</sup> Efraimidis, P. and Spirakis, P. &quot;<a href="http://utopia.duth.gr/%7Epefraimi/research/data/2007EncOfAlg.pdf"><strong>Weighted Random Sampling (2005; Efraimidis, Spirakis)</strong></a>&quot;, 2005.</small></p>
+<p><small><sup id=Note21>(21)</sup> Efraimidis, P. and Spirakis, P. &quot;<a href="http://utopia.duth.gr/%7Epefraimi/research/data/2007EncOfAlg.pdf"><strong>Weighted Random Sampling (2005; Efraimidis, Spirakis)</strong></a>&quot;, 2005.</small></p>
 
-<p><small><sup id=Note21>(21)</sup> Efraimidis, P. &quot;Weighted Random Sampling over Data Streams&quot;. arXiv:1012.0256v2 [cs.DS], 2015.</small></p>
+<p><small><sup id=Note22>(22)</sup> Efraimidis, P. &quot;Weighted Random Sampling over Data Streams&quot;. arXiv:1012.0256v2 [cs.DS], 2015.</small></p>
 
-<p><small><sup id=Note22>(22)</sup> Saucier, R. &quot;Computer Generation of Statistical Distributions&quot;, March 2000.</small></p>
+<p><small><sup id=Note23>(23)</sup> Saucier, R. &quot;Computer Generation of Statistical Distributions&quot;, March 2000.</small></p>
 
-<p><small><sup id=Note23>(23)</sup> &quot;Jitter&quot;, as used in this step, follows a distribution formally called a <em>kernel</em>, of which the normal distribution is one example.  <em>Bandwidth</em> should be as low or as high as allows the estimated distribution to fit the data and remain smooth.  A more complex kind of &quot;jitter&quot; (for multi-component data points) consists of a point generated from a <a href="https://en.wikipedia.org/wiki/Multivariate_normal_distribution"><strong>multinormal distribution</strong></a> with all the means equal to 0 and a <em>covariance matrix</em> that, in this context, serves as a <em>bandwidth matrix</em>.  &quot;Jitter&quot; and bandwidth are not further discussed in this document.</small></p>
+<p><small><sup id=Note24>(24)</sup> &quot;Jitter&quot;, as used in this step, follows a distribution formally called a <em>kernel</em>, of which the normal distribution is one example.  <em>Bandwidth</em> should be as low or as high as allows the estimated distribution to fit the data and remain smooth.  A more complex kind of &quot;jitter&quot; (for multi-component data points) consists of a point generated from a <a href="https://en.wikipedia.org/wiki/Multivariate_normal_distribution"><strong>multinormal distribution</strong></a> with all the means equal to 0 and a <em>covariance matrix</em> that, in this context, serves as a <em>bandwidth matrix</em>.  &quot;Jitter&quot; and bandwidth are not further discussed in this document.</small></p>
 
-<p><small><sup id=Note24>(24)</sup> Other references on density estimation include <a href="https://en.wikipedia.org/wiki/Multivariate_kernel_density_estimation"><strong>a Wikipedia article on multiple-variable kernel density estimation</strong></a>, and a <a href="http://mark-kay.net/2013/12/24/kernel-density-estimation/"><strong>blog post by M. Kay</strong></a>.</small></p>
+<p><small><sup id=Note25>(25)</sup> Other references on density estimation include <a href="https://en.wikipedia.org/wiki/Multivariate_kernel_density_estimation"><strong>a Wikipedia article on multiple-variable kernel density estimation</strong></a>, and a <a href="http://mark-kay.net/2013/12/24/kernel-density-estimation/"><strong>blog post by M. Kay</strong></a>.</small></p>
 
-<p><small><sup id=Note25>(25)</sup> More formally&mdash;</p>
+<p><small><sup id=Note26>(26)</sup> More formally&mdash;</p>
 
 <ul>
 <li>the PDF is the <em>derivative</em> (instantaneous rate of change) of the distribution&#39;s CDF (that is, PDF(x) = CDF&prime;(x)), and</li>
@@ -2595,11 +2597,11 @@ END METHOD
 
 <p>provided the PDF&#39;s values are all 0 or greater and the area under the PDF&#39;s curve is 1.</small></p>
 
-<p><small><sup id=Note26>(26)</sup> Neal, R. M., <a href="https://projecteuclid.org/euclid.aos/1056562461"><strong>&quot;Slice sampling&quot;</strong></a>, <em>Annals of Statistics</em> 31(3), pp. 705-767 (2003).</small></p>
+<p><small><sup id=Note27>(27)</sup> Neal, R. M., <a href="https://projecteuclid.org/euclid.aos/1056562461"><strong>&quot;Slice sampling&quot;</strong></a>, <em>Annals of Statistics</em> 31(3), pp. 705-767 (2003).</small></p>
 
-<p><small><sup id=Note27>(27)</sup> <em>See also</em> Casella, G., and George, E.I., &quot;Explaining the Gibbs Sampler&quot;, The American Statistician 46:3 (1992).</small></p>
+<p><small><sup id=Note28>(28)</sup> <em>See also</em> Casella, G., and George, E.I., &quot;Explaining the Gibbs Sampler&quot;, The American Statistician 46:3 (1992).</small></p>
 
-<p><small><sup id=Note28>(28)</sup> The &quot;Dice&quot; and &quot;Dice: Optimization for Many Dice&quot; sections used the following sources:</p>
+<p><small><sup id=Note29>(29)</sup> The &quot;Dice&quot; and &quot;Dice: Optimization for Many Dice&quot; sections used the following sources:</p>
 
 <ul>
 <li>Red Blob Games, <a href="http://www.redblobgames.com/articles/probability/damage-rolls.html"><strong>&quot;Probability and Games: Damage Rolls&quot;</strong></a> was the main source for the dice-roll distribution.  The method <code>random(N)</code> in that document corresponds to <code>RNDINTEXC(N)</code> in this document.</li>
@@ -2607,7 +2609,7 @@ END METHOD
 <li>S. Eger, &quot;Stirling&#39;s approximation for central extended binomial coefficients&quot;, 2014, helped suggest the variance of the dice roll distribution.</small></li>
 </ul>
 
-<p><small><sup id=Note29>(29)</sup> For example, besides the methods given in this section&#39;s main text:</p>
+<p><small><sup id=Note30>(30)</sup> For example, besides the methods given in this section&#39;s main text:</p>
 
 <ol>
 <li>In the <em>Box&ndash;Muller transformation</em>, <code>mu + radius * cos(angle)</code> and <code>mu + radius * sin(angle)</code>, where <code>angle = RNDRANGEMaxExc(0, 2 * pi)</code> and <code>radius = sqrt(-2 * ln(RNDU01ZeroExc())) * sigma</code>, are two independent normally-distributed random numbers.</li>
@@ -2618,17 +2620,15 @@ END METHOD
 
 <p>In 2007, Thomas, D., et al. gave a survey of normal random number methods in &quot;Gaussian Random Number Generators&quot;, <em>ACM Computing Surveys</em> 39(4), 2007, article 11.</small></p>
 
-<p><small><sup id=Note30>(30)</sup> Hofert, M., and Maechler, M.  &quot;Nested Archimedean Copulas Meet R: The nacopula Package&quot;.  Journal of Statistical Software 39(9), 2011, pp. 1-20.</small></p>
+<p><small><sup id=Note31>(31)</sup> Hofert, M., and Maechler, M.  &quot;Nested Archimedean Copulas Meet R: The nacopula Package&quot;.  Journal of Statistical Software 39(9), 2011, pp. 1-20.</small></p>
 
-<p><small><sup id=Note31>(31)</sup> Weisstein, Eric W.  &quot;<a href="http://mathworld.wolfram.com/HyperspherePointPicking.html"><strong>Hypersphere Point Picking</strong></a>&quot;.  From MathWorld&mdash;A Wolfram Web Resource.</small></p>
+<p><small><sup id=Note32>(32)</sup> Weisstein, Eric W.  &quot;<a href="http://mathworld.wolfram.com/HyperspherePointPicking.html"><strong>Hypersphere Point Picking</strong></a>&quot;.  From MathWorld&mdash;A Wolfram Web Resource.</small></p>
 
-<p><small><sup id=Note32>(32)</sup> The N numbers generated this way will form a point inside an N-dimensional <em>hypercube</em> with length <code>2 * R</code> in each dimension and centered at the origin of space.</small></p>
+<p><small><sup id=Note33>(33)</sup> The N numbers generated this way will form a point inside an N-dimensional <em>hypercube</em> with length <code>2 * R</code> in each dimension and centered at the origin of space.</small></p>
 
-<p><small><sup id=Note33>(33)</sup> See also a <a href="http://mathworld.wolfram.com/BallPointPicking.html"><strong>MathWorld article</strong></a>, which was the inspiration for these two methods, and the <em>Stack Overflow</em> question &quot;How to generate uniform random points in (arbitrary) N-dimension ball?&quot;, <code>questions/54544971</code>.</small></p>
+<p><small><sup id=Note34>(34)</sup> See also a <a href="http://mathworld.wolfram.com/BallPointPicking.html"><strong>MathWorld article</strong></a>, which was the inspiration for these two methods, and the <em>Stack Overflow</em> question &quot;How to generate uniform random points in (arbitrary) N-dimension ball?&quot;, <code>questions/54544971</code>.</small></p>
 
-<p><small><sup id=Note34>(34)</sup> See the <em>Mathematics Stack Exchange</em> question titled &quot;Random multivariate in hyperannulus&quot;, <code>questions/1885630</code>.</small></p>
-
-<p><small><sup id=Note35>(35)</sup> D. Lemire, &quot;A fast alternative to the modulo reduction&quot;, Daniel Lemire&#39;s blog, 2016.</small></p>
+<p><small><sup id=Note35>(35)</sup> See the <em>Mathematics Stack Exchange</em> question titled &quot;Random multivariate in hyperannulus&quot;, <code>questions/1885630</code>.</small></p>
 
 <p><a id=Appendix></a></p>
 

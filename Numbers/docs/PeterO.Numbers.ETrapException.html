@@ -37,12 +37,9 @@
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>flag</i>: The parameter  <i>flag</i>
-is a 32-bit signed integer.</p></li>
-<li><p><i>ctx</i>: The parameter  <i>ctx</i>
-is an EContext object.</p></li>
-<li><p><i>result</i>: The parameter  <i>result</i>
-is an arbitrary object.</p></li>
+<li><p><i>flag</i>: The flag that specifies the kind of error (EContext.FlagXXX). This will only be one flag, such as  <code>FlagInexact</code>  or FlagSubnormal.</p></li>
+<li><p><i>ctx</i>: The arithmetic context used during the operation that triggered the trap. Can be null.</p></li>
+<li><p><i>result</i>: The defined result of the operation that caused the trap.</p></li>
 </ul>
 
 <p><a id="Context"></a></p>
