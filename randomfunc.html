@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
-<p>Begun on June 4, 2017; last updated on Sep. 2, 2019.</p>
+<p>Begun on June 4, 2017; last updated on Sep. 5, 2019.</p>
 
 <p>Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.</p>
 
@@ -203,12 +203,18 @@
 
 <h3><code>RNDINT</code>: Random Integers in [0, N]</h3>
 
-<p>In this document, <strong><code>RNDINT(maxInclusive)</code></strong> is the core method for using an underlying RNG to generate independent uniform random integers <strong>in the interval [0, <code>maxInclusive</code>]</strong>.<sup><a href="#Note2"><strong>(2)</strong></a></sup>.  There are three ways to implement <code>RNDINT</code>:</p>
+<p>In this document, <strong><code>RNDINT(maxInclusive)</code></strong> is the core method for using an underlying RNG to generate independent uniform random integers <strong>in the interval [0, <code>maxInclusive</code>]</strong>.<sup><a href="#Note2"><strong>(2)</strong></a></sup>.  The following are some ways to implement <code>RNDINT</code>:</p>
 
 <ol>
 <li><a href="#Rejection_Sampling"><strong><em>Rejection sampling</em></strong></a>, which roughly means: sample in a bigger range until a sampled number fits the smaller range.  This method is <em>unbiased</em> but has a <em>variable running time</em> which could be exploited in a security attack.</li>
-<li>Modulo reduction.  Generate <code>bignumber</code>, a &quot;big&quot; random number with many more bits than <code>maxInclusive + 1</code> has, then find <code>rem(bignumber, maxInclusive + 1)</code>.  This method can be &quot;<em>constant-time</em>&quot; (non-data-dependent and branchless) if implemented correctly, but can introduce a so-called <em>modulo bias</em> (some numbers are slightly more likely to be chosen than others), which, however, gets smaller the more bits <code>bignumber</code> has.</li>
-<li>Multiplicative reduction (Lemire 2016)<sup><a href="#Note3"><strong>(3)</strong></a></sup>.  Generate <code>bignumber</code>, an N-bit random number with many more bits than <code>maxInclusive + 1</code> has, then find <code>(bignumber * (maxInclusive + 1)) &gt;&gt; N</code>.  This method can likewise be &quot;<em>constant-time</em>&quot; and introduce modulo bias.</li>
+<li><p>Reduction method.  Generate <code>bignumber</code>, an N-bit random number with many more bits than <code>maxInclusive + 1</code> has, then find&mdash;</p>
+
+<ul>
+<li><code>rem(bignumber, maxInclusive + 1)</code> (modulo reduction), or</li>
+<li><code>(bignumber * (maxInclusive + 1)) &gt;&gt; N</code> (see (Lemire 2016)<sup><a href="#Note3"><strong>(3)</strong></a></sup>).</li>
+</ul>
+
+<p>Either method can be &quot;<em>constant-time</em>&quot; (non-data-dependent and branchless) if implemented correctly, but can introduce a so-called <em>modulo bias</em> (some numbers are slightly more likely to be chosen than others), which, however, gets smaller the more bits <code>bignumber</code> has.</p></li>
 </ol>
 
 <p>Any <code>RNDINT</code> implementation can be &quot;constant-time&quot; <em>or</em> unbiased, but not both, in general.</p>
