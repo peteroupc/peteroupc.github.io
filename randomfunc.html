@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
-<p>Begun on June 4, 2017; last updated on Sep. 5, 2019.</p>
+<p>Begun on June 4, 2017; last updated on Sep. 6, 2019.</p>
 
 <p>Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.</p>
 
@@ -899,6 +899,7 @@ method for generating multiple random points in one call.</p>
 <li>Assume the weights from example 1 are used and the list contains ranges of numbers instead of strings: <code>[[0, 5], [5, 10], [10, 11], [11, 13]]</code>.  After a random range is chosen, an independent uniform number is chosen randomly within the chosen range (including the lower bound but not the upper bound).  For example, code like the following chooses a random integer this way: <code>number = RNDINTEXCRANGE(item[0], item[1])</code>. (See also &quot;<a href="#Mixtures_of_Distributions"><strong>Mixtures of Distributions</strong></a>&quot;.)</li>
 <li><strong>Piecewise constant distribution.</strong> Assume the weights from example 1 are used and the list contains the following: <code>[0, 5, 10, 11, 13]</code> (one more item than the weights).  This expresses four ranges, the same as in example 2.  After a random index is chosen with <code>index = WeightedChoice(weights)</code>, an independent uniform number is chosen randomly within the corresponding range (including the lower bound but not the upper bound).  For example, code like the following chooses a random integer this way: <code>number = RNDINTEXCRANGE(list[index], list[index + 1])</code>.</li>
 <li>A <a href="https://en.wikipedia.org/wiki/Markov_chain"><strong>Markov chain</strong></a> models one or more <em>states</em> (for example, individual letters or syllables), and stores the probabilities to transition from one state to another (e.g., &quot;b&quot; to &quot;e&quot; with a chance of 20 percent, or &quot;b&quot; to &quot;b&quot; with a chance of 1 percent).  Thus, each state can be seen as having its own list of <em>weights</em> for each relevant state transition.  For example, a Markov chain for generating <strong>&quot;pronounceable&quot; words</strong>, or words similar to natural-language words, can include &quot;start&quot; and &quot;stop&quot; states for the start and end of the word, respectively.</li>
+<li>The following weights approximate a <a href="#Poisson_Distribution"><strong>Poisson distribution</strong></a> with a mean of 0.1: <code>[90483742, 9048374, 452419, 15081, 377, 8]</code>.  The weights for other discrete (integer-only) distributions can be found by calculating the probability that each plausible result is randomly chosen for the distribution, and multiplying each probability by a suitably big number (such as 100,000,000 in this case), rounding to the nearest integer.</li>
 </ol>
 </blockquote>
 
@@ -1226,9 +1227,13 @@ END METHOD
 <p>However, whenever possible, <strong>applications should work with random integers</strong>, rather than other random real numbers.  This is because:</p>
 
 <ul>
-<li>Computers can represent integers more naturally than other real numbers, making random integer generation algorithms more portable and more numerically stable than random real number generation algorithms.</li>
+<li>Computers can represent integers more naturally than other real numbers, making random integer generation algorithms more portable and more numerically stable than random real number generation algorithms.<sup><a href="#Note36"><strong>(36)</strong></a></sup></li>
 <li>No computer can choose from among all real numbers between two others, since there are infinitely many of them.</li>
 </ul>
+
+<p>Even when used with a secure random number generator, none of the methods given in this section are designed to generate random numbers for information security purposes (e.g., random encryption keys or other secrets), unless noted otherwise.  In fact, random non-integer numbers are rarely if ever seen in serious information security applications.</p>
+
+<p>Other applications, especially unit tests, simulations, and machine learning, may care about repeatable &quot;random&quot; numbers.  It is hard for a method to generate repeatable results from run to run or across computers if it uses non-integer numbers.<sup><a href="#Note37"><strong>(37)</strong></a></sup></p>
 
 <p><a id=Uniform_Random_Real_Numbers></a></p>
 
@@ -2293,7 +2298,7 @@ END METHOD
 <li><strong>Extreme value distribution</strong>: <code>a - ln(-ln(RNDU01ZeroOneExc())) * b</code>, where <code>b</code> is the scale and <code>a</code> is the location of the distribution&#39;s curve peak (mode).  This expresses a distribution of maximum values.</li>
 <li><strong>Gamma distribution</strong>: See <a href="#Gamma_Distribution"><strong>Gamma Distribution</strong></a>.</li>
 <li><strong>Gaussian distribution</strong>: See <a href="#Normal_Gaussian_Distribution"><strong>Normal (Gaussian) Distribution</strong></a>.</li>
-<li><strong>Geometric distribution</strong>: See <a href="#Negative_Binomial_Distribution"><strong>Negative Binomial Distribution</strong></a>.</li>
+<li><strong>Geometric distribution</strong>: See <a href="#Negative_Binomial_and_Geometric_Distributions"><strong>Negative Binomial and Geometric Distributions</strong></a>.</li>
 <li><strong>Gumbel distribution</strong>: <code>a + ln(-ln(RNDU01ZeroOneExc())) * b</code>, where <code>b</code> is the scale and <code>a</code> is the location of the distribution&#39;s curve peak (mode). This expresses a distribution of minimum values.</li>
 <li><strong>Inverse gamma distribution</strong>: <code>b / GammaDist(a, 1)</code>, where <code>a</code> and <code>b</code> have the
 same meaning as in the gamma distribution.  Alternatively, <code>1.0 / (pow(GammaDist(a, 1), 1.0 / c) / b + d)</code>, where <code>c</code> and <code>d</code> are shape and location parameters, respectively.</li>
@@ -2635,6 +2640,10 @@ END METHOD
 <p><small><sup id=Note34>(34)</sup> See also a <a href="http://mathworld.wolfram.com/BallPointPicking.html"><strong>MathWorld article</strong></a>, which was the inspiration for these two methods, and the <em>Stack Overflow</em> question &quot;How to generate uniform random points in (arbitrary) N-dimension ball?&quot;, <code>questions/54544971</code>.</small></p>
 
 <p><small><sup id=Note35>(35)</sup> See the <em>Mathematics Stack Exchange</em> question titled &quot;Random multivariate in hyperannulus&quot;, <code>questions/1885630</code>.</small></p>
+
+<p><small><sup id=Note36>(36)</sup> The NVIDIA white paper &quot;<a href="https://docs.nvidia.com/cuda/floating-point/"><strong>Floating Point and IEEE 754 Compliance for NVIDIA GPUs</strong></a>&quot; discusses issues with non-integer numbers in much more detail.</small></p>
+
+<p><small><sup id=Note37>(37)</sup> There are generally two ways to improve the repeatability of the methods given in this section.  One is to represent real numbers using data types and operations that are accurate within rounding error, such as the arithmetic operations of .NET&#39;s <code>System.Decimal</code>, a fixed-precision <code>BigDecimal</code> in Java or <code>Decimal</code> in Python, or a software emulation of IEEE 754 <code>binary64</code> or <code>binary32</code>. Using these data types, though, can reduce performance.  (Note that C&#39;s and C++&#39;s <code>float</code> and <code>double</code> are not necessarily IEEE 754 numbers.)  The second way is to avoid doing operations on three or more numbers without grouping (e.g., avoid code like <code>num1 + num2 + num3</code> in favor of <code>(num1 + num2) + num3</code>), to avoid subtle repeatability problems when the code is run in parallel.</small></p>
 
 <p><a id=Appendix></a></p>
 
