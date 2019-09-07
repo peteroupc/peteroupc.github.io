@@ -82,7 +82,7 @@ All the random number methods presented on this page are ultimately based on an 
     - [**Uniform Random Real Numbers**](#Uniform_Random_Real_Numbers)
         - [**For Fixed-Point Number Formats**](#For_Fixed_Point_Number_Formats)
         - [**`RNDU01` Family: Random Numbers Bounded by 0 and 1**](#RNDU01_Family_Random_Numbers_Bounded_by_0_and_1)
-        - [**Alternative Implementation for `RNDU01`**](#Alternative_Implementation_for_RNDU01)
+        - [**`RNDU01`: Alternative Implementation**](#RNDU01_Alternative_Implementation)
         - [**`RNDRANGE` Family: Random Numbers in an Arbitrary Interval**](#RNDRANGE_Family_Random_Numbers_in_an_Arbitrary_Interval)
     - [**Monte Carlo Sampling: Expected Values, Integration, and Optimization**](#Monte_Carlo_Sampling_Expected_Values_Integration_and_Optimization)
     - [**Random Walks: Additional Examples**](#Random_Walks_Additional_Examples)
@@ -998,7 +998,7 @@ Even when used with a secure random number generator, none of the methods given 
 
 This section defines the following methods that generate uniform random real numbers:
 
-* `RNDU01`: Interval [0, 1].
+* `RNDU01`: Interval [0, 1].<sup>[**(38)**](#Note38)</sup>
 * `RNDU01OneExc`: Interval [0, 1).
 * `RNDU01ZeroExc`: Interval (0, 1].
 * `RNDU01ZeroOneExc`: Interval (0, 1).
@@ -1019,7 +1019,7 @@ For fixed-point number formats representing multiples of 1/`n`, these eight meth
 * `RNDU01OneExc()`: `RNDINTEXC(n)` or `RNDINT(n - 1)`.
 * `RNDU01ZeroOneExc()`: `(RNDINT(n - 2) + 1)` or `(RNDINTEXC(n - 1) + 1)`.
 
-`RNDRANGE` family.  In each method below, `fpa` and `fpb` are the bounds of the random number generated and are integers that represent fixed-point numbers.  For example, if `n` is 100, to generate a number in [6.35, 9.96], generate `RNDRANGE(6.35, 9.96)` or `RNDINTRANGE(635, 996)`.
+`RNDRANGE` family.  In each method below, `fpa` and `fpb` are the bounds of the random number generated and are integers that represent fixed-point numbers (such that `fpa = a * n` and `fpb = b * n`).  For example, if `n` is 100, to generate a number in [6.35, 9.96], generate `RNDRANGE(6.35, 9.96)` or `RNDINTRANGE(635, 996)`.
 
 * `RNDRANGE(a, b)`: `RNDINTRANGE(fpa, fpb)`.
 * `RNDRANGEMinExc(a, b)`: `RNDINTRANGE(fpa + 1, fpb)`, or an error if `fpa >= fpb`.
@@ -1041,8 +1041,6 @@ For the `RNDU01` family, the list below shows different ways to implement each m
     - `RNDINTEXC(X) * INVX`.
     - `RNDINT(X - 1) / X`, if the number format can represent `X`.
     - `RNDINTEXC(X) / X`, if the number format can represent `X`.
-
-    Note that `RNDU01OneExc()` corresponds to `Math.random()` in Java and JavaScript.  See also "Generating uniform doubles in the unit interval" in the [**`xoroshiro+` remarks page**](http://xoroshiro.di.unimi.it/#remarks).
 - **`RNDU01ZeroExc()`, interval (0, 1]**:
     - Generate `RNDU01()` in a loop until a number other than 0.0 is generated this way.
     - `(RNDINT(X - 1) + 1) * INVX`.
@@ -1066,8 +1064,8 @@ In the idioms above:
     - for the .NET Framework decimal format (`System.Decimal`), `X` is 10<sup>28</sup>.
 - `INVX` is the constant 1 divided by `X`.
 
-<a id=Alternative_Implementation_for_RNDU01></a>
-#### Alternative Implementation for `RNDU01`
+<a id=RNDU01_Alternative_Implementation></a>
+#### `RNDU01`: Alternative Implementation
 
 For Java's `double` and `float` (or generally, any fixed-precision binary floating-point format with fixed exponent range), the following pseudocode for `RNDU01()` can be used instead. See also (Downey 2007)<sup>[**(19)**](#Note19)</sup>.  In the pseudocode below, `SIGBITS` is the binary floating-point format's precision (the number of binary digits the format can represent without loss; e.g., 53 for Java's `double`).
 
@@ -2167,10 +2165,7 @@ If an application is concerned about these issues, it should treat the `Math.ran
 <small><sup id=Note17>(17)</sup> The NVIDIA white paper "[**Floating Point and IEEE 754 Compliance for NVIDIA GPUs**](https://docs.nvidia.com/cuda/floating-point/)",
 and "[**Floating-Point Determinism**](https://randomascii.wordpress.com/2013/07/16/floating-point-determinism/)" by Bruce Dawson, discuss issues with non-integer numbers in much more detail.</small>
 
-<small><sup id=Note18>(18)</sup> The following can improve reproducibility for methods that use non-integer numbers, such as the methods in this section:
-
-- The method can represent numbers in _fixed point_: as integers that store multiples of 1/_n_ (e.g. 1/10000, 1/256, or 1/65536).  Fixed-point numbers have fewer reproducibility issues than floating-point numbers.  For instance, fixed-point numbers don't have the problems of non-associativity and varying resolution that floating-point numbers have, and their arithmetic is closer to integer arithmetic. (See, for example, "[**The Butterfly Effect - Deterministic Physics in The Incredible Machine and Contraption Maker**](https://www.moddb.com/members/kevryan/blogs/the-butterfly-effect-deterministic-physics-in-the-incredible-machine-and-contraption-maker)".)
-- If floating-point numbers are still appropriate, the method can use software implementations of such numbers that always deliver the same answer for the same input (preferably the correctly-rounded answer) and have predictable rounding behavior. (Using such implementations, though, can reduce performance.)  Examples include fixed-precision versions of Java's `BigDecimal` or Python's `Decimal`, .NET's `System.Decimal`, or software emulation of IEEE 754 binary64 or binary32 numbers.  The method can also put individual floating-point operations in separate statements to avoid adding and/or multiplying three numbers in one statement (e.g., avoid `r = num1 + num2 + num3` in favor of `t = num1 + num2` and `r = t + num3`), since adding or multiplying those numbers in a different order can lead to different results.</small>
+<small><sup id=Note18>(18)</sup> One way to improve reproducibility for methods that use non-integer numbers (such as the methods in this section) is to represent numbers in _fixed point_: as integers that store multiples of 1/_n_ (e.g. 1/10000, 1/256, or 1/65536).  Fixed-point numbers have fewer reproducibility issues than floating-point numbers and other non-integer numbers.  For instance, fixed-point numbers don't have the problems of non-associativity and varying resolution that floating-point numbers have, and their arithmetic is closer to integer arithmetic. (See, for example, "[**The Butterfly Effect - Deterministic Physics in The Incredible Machine and Contraption Maker**](https://www.moddb.com/members/kevryan/blogs/the-butterfly-effect-deterministic-physics-in-the-incredible-machine-and-contraption-maker)".)</small>
 
 <small><sup id=Note19>(19)</sup> Downey, A. B. "[**Generating Pseudo-random Floating Point Values**](http://allendowney.com/research/rand/)", 2007.</small>
 
@@ -2224,6 +2219,8 @@ In 2007, Thomas, D., et al. gave a survey of normal random number methods in "Ga
 <small><sup id=Note36>(36)</sup> See also a [**MathWorld article**](http://mathworld.wolfram.com/BallPointPicking.html), which was the inspiration for these two methods, and the _Stack Overflow_ question "How to generate uniform random points in (arbitrary) N-dimension ball?", `questions/54544971`.</small>
 
 <small><sup id=Note37>(37)</sup> See the _Mathematics Stack Exchange_ question titled "Random multivariate in hyperannulus", `questions/1885630`.</small>
+
+<small><sup id=Note38>(38)</sup> Note that `RNDU01OneExc()` corresponds to `Math.random()` in Java and JavaScript.  See also "Generating uniform doubles in the unit interval" in the [**`xoroshiro+` remarks page**](http://xoroshiro.di.unimi.it/#remarks).</small>
 
 <a id=Appendix></a>
 ## Appendix
