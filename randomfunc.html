@@ -1229,11 +1229,10 @@ END METHOD
 <ul>
 <li>Computers can represent integers more naturally than other real numbers, making random integer generation algorithms more portable and more numerically stable than random real number generation algorithms.<sup><a href="#Note36"><strong>(36)</strong></a></sup></li>
 <li>No computer can choose from among all real numbers between two others, since there are infinitely many of them.</li>
+<li>For applications that may care about reproducible &quot;random&quot; numbers (unit tests, simulations, machine learning, and so on), using non-integer numbers can complicate the task of making a method repeatable from run to run or across computers.<sup><a href="#Note37"><strong>(37)</strong></a></sup></li>
 </ul>
 
 <p>Even when used with a secure random number generator, none of the methods given in this section are designed to generate random numbers for information security purposes (e.g., random encryption keys or other secrets), unless noted otherwise.  In fact, random non-integer numbers are rarely if ever seen in serious information security applications.</p>
-
-<p>Other applications, especially unit tests, simulations, and machine learning, may care about repeatable &quot;random&quot; numbers.  It is hard for a method to generate repeatable results from run to run or across computers if it uses non-integer numbers.<sup><a href="#Note37"><strong>(37)</strong></a></sup></p>
 
 <p><a id=Uniform_Random_Real_Numbers></a></p>
 
@@ -2643,7 +2642,7 @@ END METHOD
 
 <p><small><sup id=Note36>(36)</sup> The NVIDIA white paper &quot;<a href="https://docs.nvidia.com/cuda/floating-point/"><strong>Floating Point and IEEE 754 Compliance for NVIDIA GPUs</strong></a>&quot; discusses issues with non-integer numbers in much more detail.</small></p>
 
-<p><small><sup id=Note37>(37)</sup> There are generally two ways to improve the repeatability of the methods given in this section.  One is to represent real numbers using data types and operations that are accurate within rounding error, such as the arithmetic operations of .NET&#39;s <code>System.Decimal</code>, a fixed-precision <code>BigDecimal</code> in Java or <code>Decimal</code> in Python, or a software emulation of IEEE 754 <code>binary64</code> or <code>binary32</code>. Using these data types, though, can reduce performance.  (Note that C&#39;s and C++&#39;s <code>float</code> and <code>double</code> are not necessarily IEEE 754 numbers.)  The second way is to avoid doing operations on three or more numbers without grouping (e.g., avoid code like <code>num1 + num2 + num3</code> in favor of <code>(num1 + num2) + num3</code>), to avoid subtle repeatability problems when the code is run in parallel.</small></p>
+<p><small><sup id=Note37>(37)</sup> However, there are generally two ways to improve the repeatability of the methods given in this section.  One is to represent real numbers using data types and operations that are accurate within rounding error, such as the arithmetic operations of .NET&#39;s <code>System.Decimal</code>, a fixed-precision <code>BigDecimal</code> in Java or <code>Decimal</code> in Python, or a software emulation of IEEE 754 <code>binary64</code> or <code>binary32</code>. Using these data types, though, can reduce performance.  (Note that C&#39;s and C++&#39;s <code>float</code> and <code>double</code> are not necessarily IEEE 754 numbers.)  The second way is to avoid doing operations on three or more numbers without grouping them in a predictable way (e.g., avoid code like <code>num1 + num2 + num3</code> in favor of <code>(num1 + num2) + num3</code>), to avoid subtle repeatability problems when the code is run in parallel.</small></p>
 
 <p><a id=Appendix></a></p>
 
