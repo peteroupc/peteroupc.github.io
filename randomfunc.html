@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
-<p>Begun on June 4, 2017; last updated on Sep. 6, 2019.</p>
+<p>Begun on June 4, 2017; last updated on Sep. 7, 2019.</p>
 
 <p>Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.</p>
 
@@ -123,6 +123,7 @@
 <li><a href="#Uniform_Random_Real_Numbers"><strong>Uniform Random Real Numbers</strong></a>
 
 <ul>
+<li><a href="#For_Fixed_Point_Number_Formats"><strong>For Fixed-Point Number Formats</strong></a></li>
 <li><a href="#RNDU01_Family_Random_Numbers_Bounded_by_0_and_1"><strong><code>RNDU01</code> Family: Random Numbers Bounded by 0 and 1</strong></a></li>
 <li><a href="#Alternative_Implementation_for_RNDU01"><strong>Alternative Implementation for <code>RNDU01</code></strong></a></li>
 <li><a href="#RNDRANGE_Family_Random_Numbers_in_an_Arbitrary_Interval"><strong><code>RNDRANGE</code> Family: Random Numbers in an Arbitrary Interval</strong></a></li>
@@ -1241,15 +1242,45 @@ END METHOD
 <p>This section defines the following methods that generate uniform random real numbers:</p>
 
 <ul>
-<li>Random Numbers in 0-1 Bounded Interval: <code>RNDU01</code>, <code>RNDU01ZeroExc</code>, <code>RNDU01OneExc</code>, <code>RNDU01ZeroOneExc</code>.</li>
-<li>Random Numbers in Arbitrary Interval: <code>RNDRANGE</code>, <code>RNDRANGEMinExc</code>, <code>RNDRANGEMaxExc</code>, <code>RNDRANGEMinMaxExc</code>.</li>
+<li><code>RNDU01</code>: Interval [0, 1].</li>
+<li><code>RNDU01OneExc</code>: Interval [0, 1).</li>
+<li><code>RNDU01ZeroExc</code>: Interval (0, 1].</li>
+<li><code>RNDU01ZeroOneExc</code>: Interval (0, 1).</li>
+<li><code>RNDRANGE</code>: Interval [a, b].</li>
+<li><code>RNDRANGEMaxExc</code>: Interval [a, b).</li>
+<li><code>RNDRANGEMinExc</code>: Interval (a, b].</li>
+<li><code>RNDRANGEMinMaxExc</code>: Interval (a, b).</li>
+</ul>
+
+<p><a id=For_Fixed_Point_Number_Formats></a></p>
+
+<h4>For Fixed-Point Number Formats</h4>
+
+<p>For fixed-point number formats representing multiples of 1/<code>n</code>, these eight methods are trivial.  The following implementations return integers that represent fixed-point numbers.</p>
+
+<p><code>RNDU01</code> family:</p>
+
+<ul>
+<li><code>RNDU01()</code>: <code>RNDINT(n)</code>.</li>
+<li><code>RNDU01ZeroExc()</code>: <code>(RNDINT(n - 1) + 1)</code> or <code>(RNDINTEXC(n) + 1)</code>.</li>
+<li><code>RNDU01OneExc()</code>: <code>RNDINTEXC(n)</code> or <code>RNDINT(n - 1)</code>.</li>
+<li><code>RNDU01ZeroOneExc()</code>: <code>(RNDINT(n - 2) + 1)</code> or <code>(RNDINTEXC(n - 1) + 1)</code>.</li>
+</ul>
+
+<p><code>RNDRANGE</code> family.  In each method below, <code>fpa</code> and <code>fpb</code> are the bounds of the random number generated and are integers that represent fixed-point numbers.  For example, if <code>n</code> is 100, to generate a number in [6.35, 9.96], generate <code>RNDRANGE(6.35, 9.96)</code> or <code>RNDINTRANGE(635, 996)</code>.</p>
+
+<ul>
+<li><code>RNDRANGE(a, b)</code>: <code>RNDINTRANGE(fpa, fpb)</code>.</li>
+<li><code>RNDRANGEMinExc(a, b)</code>: <code>RNDINTRANGE(fpa + 1, fpb)</code>, or an error if <code>fpa &gt;= fpb</code>.</li>
+<li><code>RNDRANGEMaxExc(a, b)</code>: <code>RNDINTEXCRANGE(fpa, fpb)</code>.</li>
+<li><code>RNDRANGEMinMaxExc(a, b)</code>: <code>RNDINTRANGE(fpa + 1, fpb - 1)</code>, or an error if <code>fpa &gt;= fpb or a == fpb - 1</code>.</li>
 </ul>
 
 <p><a id=RNDU01_Family_Random_Numbers_Bounded_by_0_and_1></a></p>
 
 <h4><code>RNDU01</code> Family: Random Numbers Bounded by 0 and 1</h4>
 
-<p>This section defines four methods that generate a <strong>random number bounded by 0 and 1</strong>.  There are several ways to implement each of those four methods; for each method, the ways are ordered from most preferred to least preferred, and <code>X</code> and <code>INVX</code> are defined later.</p>
+<p>For the <code>RNDU01</code> family, the list below shows different ways to implement each method, ordered from most preferred to least preferred. <code>X</code> and <code>INVX</code> are defined later.</p>
 
 <ul>
 <li><strong><code>RNDU01()</code>, interval [0, 1]</strong>:
@@ -1356,20 +1387,13 @@ END METHOD
    while true
      ret = rng * RNDU01()
      if usual: return minInclusive + ret
+     negative = RNDINT(1) == 0
+     if negative: ret = 0 - ret
      // NOTE: If the number format has positive and negative
      // zero, as is the case for Java `float` and
      // `double` and .NET&#39;s implementation of `System.Decimal`,
-     // for example, use the following:
-     negative = RNDINT(1) == 0
-     if negative: ret = 0 - ret
+     // for example, use the following line:
      if negative and ret == 0: continue
-     // NOTE: For fixed-precision fixed-point numbers implemented
-     // using number formats that range from [-1-max, max] (such as Java&#39;s
-     // `short`, `int`, and `long`), use the following line
-     // instead of the preceding three lines, where `QUANTUM` is the
-     // smallest representable number greater than 0
-     // in the fixed-point format:
-     // if RNDINT(1) == 0: ret = (0 - QUANTUM) - ret
      if ret &gt;= minInclusive and ret &lt;= maxInclusive: return ret
    end
 END METHOD
@@ -1393,7 +1417,7 @@ END METHOD
 <li><strong><code>RNDRANGEMinMaxExc</code>, interval (<code>mn</code>, <code>mx</code>)</strong>:
 
 <ul>
-<li>Generate <code>RNDRANGE(mn, mx)</code> in a loop until a number other than <code>mn</code> or <code>mx</code> is generated this way.  Return an error if <code>mn &gt;= mx</code>.</li>
+<li>Generate <code>RNDRANGE(mn, mx)</code> in a loop until a number other than <code>mn</code> or <code>mx</code> is generated this way.  Return an error if <code>mn &gt;= mx or mn == mx - 1</code>.</li>
 </ul></li>
 </ul>
 
@@ -1848,14 +1872,9 @@ END METHOD
     if p == 0.5
       for i in 0...trials: count=count+RNDINT(1)
     else
-        i = 0
-        while i &lt; trials
-            if RNDU01OneExc() &lt; p
-                // Success
-                count = count + 1
-            end
-            i = i + 1
-        end
+      for i in 0...trials
+        if RNDU01OneExc() &lt; p: count = count + 1
+      end
     end
     return count
 END METHOD

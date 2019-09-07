@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on June 4, 2017; last updated on Sep. 6, 2019.
+Begun on June 4, 2017; last updated on Sep. 7, 2019.
 
 Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.
 
@@ -80,6 +80,7 @@ All the random number methods presented on this page are ultimately based on an 
     - [**Multinomial Distribution**](#Multinomial_Distribution)
 - [**Randomization with Real Numbers**](#Randomization_with_Real_Numbers)
     - [**Uniform Random Real Numbers**](#Uniform_Random_Real_Numbers)
+        - [**For Fixed-Point Number Formats**](#For_Fixed_Point_Number_Formats)
         - [**`RNDU01` Family: Random Numbers Bounded by 0 and 1**](#RNDU01_Family_Random_Numbers_Bounded_by_0_and_1)
         - [**Alternative Implementation for `RNDU01`**](#Alternative_Implementation_for_RNDU01)
         - [**`RNDRANGE` Family: Random Numbers in an Arbitrary Interval**](#RNDRANGE_Family_Random_Numbers_in_an_Arbitrary_Interval)
@@ -997,13 +998,38 @@ Even when used with a secure random number generator, none of the methods given 
 
 This section defines the following methods that generate uniform random real numbers:
 
-* Random Numbers in 0-1 Bounded Interval: `RNDU01`, `RNDU01ZeroExc`, `RNDU01OneExc`, `RNDU01ZeroOneExc`.
-* Random Numbers in Arbitrary Interval: `RNDRANGE`, `RNDRANGEMinExc`, `RNDRANGEMaxExc`, `RNDRANGEMinMaxExc`.
+* `RNDU01`: Interval [0, 1].
+* `RNDU01OneExc`: Interval [0, 1).
+* `RNDU01ZeroExc`: Interval (0, 1].
+* `RNDU01ZeroOneExc`: Interval (0, 1).
+* `RNDRANGE`: Interval [a, b].
+* `RNDRANGEMaxExc`: Interval [a, b).
+* `RNDRANGEMinExc`: Interval (a, b].
+* `RNDRANGEMinMaxExc`: Interval (a, b).
+
+<a id=For_Fixed_Point_Number_Formats></a>
+#### For Fixed-Point Number Formats
+
+For fixed-point number formats representing multiples of 1/`n`, these eight methods are trivial.  The following implementations return integers that represent fixed-point numbers.
+
+`RNDU01` family:
+
+* `RNDU01()`: `RNDINT(n)`.
+* `RNDU01ZeroExc()`: `(RNDINT(n - 1) + 1)` or `(RNDINTEXC(n) + 1)`.
+* `RNDU01OneExc()`: `RNDINTEXC(n)` or `RNDINT(n - 1)`.
+* `RNDU01ZeroOneExc()`: `(RNDINT(n - 2) + 1)` or `(RNDINTEXC(n - 1) + 1)`.
+
+`RNDRANGE` family.  In each method below, `fpa` and `fpb` are the bounds of the random number generated and are integers that represent fixed-point numbers.  For example, if `n` is 100, to generate a number in [6.35, 9.96], generate `RNDRANGE(6.35, 9.96)` or `RNDINTRANGE(635, 996)`.
+
+* `RNDRANGE(a, b)`: `RNDINTRANGE(fpa, fpb)`.
+* `RNDRANGEMinExc(a, b)`: `RNDINTRANGE(fpa + 1, fpb)`, or an error if `fpa >= fpb`.
+* `RNDRANGEMaxExc(a, b)`: `RNDINTEXCRANGE(fpa, fpb)`.
+* `RNDRANGEMinMaxExc(a, b)`: `RNDINTRANGE(fpa + 1, fpb - 1)`, or an error if `fpa >= fpb or a == fpb - 1`.
 
 <a id=RNDU01_Family_Random_Numbers_Bounded_by_0_and_1></a>
 #### `RNDU01` Family: Random Numbers Bounded by 0 and 1
 
-This section defines four methods that generate a **random number bounded by 0 and 1**.  There are several ways to implement each of those four methods; for each method, the ways are ordered from most preferred to least preferred, and `X` and `INVX` are defined later.
+For the `RNDU01` family, the list below shows different ways to implement each method, ordered from most preferred to least preferred. `X` and `INVX` are defined later.
 
 - **`RNDU01()`, interval [0, 1]**:
     - For Java `float` or `double`, use the alternative implementation given later.
@@ -1087,20 +1113,13 @@ For other number formats (including Java's `double` and `float`), the pseudocode
        while true
          ret = rng * RNDU01()
          if usual: return minInclusive + ret
+         negative = RNDINT(1) == 0
+         if negative: ret = 0 - ret
          // NOTE: If the number format has positive and negative
          // zero, as is the case for Java `float` and
          // `double` and .NET's implementation of `System.Decimal`,
-         // for example, use the following:
-         negative = RNDINT(1) == 0
-         if negative: ret = 0 - ret
+         // for example, use the following line:
          if negative and ret == 0: continue
-         // NOTE: For fixed-precision fixed-point numbers implemented
-         // using number formats that range from [-1-max, max] (such as Java's
-         // `short`, `int`, and `long`), use the following line
-         // instead of the preceding three lines, where `QUANTUM` is the
-         // smallest representable number greater than 0
-         // in the fixed-point format:
-         // if RNDINT(1) == 0: ret = (0 - QUANTUM) - ret
          if ret >= minInclusive and ret <= maxInclusive: return ret
        end
     END METHOD
@@ -1114,7 +1133,7 @@ Three related methods can be derived from `RNDRANGE` as follows:
 - **`RNDRANGEMinExc`, interval \[`mn`, `mx`\)**:
     - Generate `RNDRANGE(mn, mx)` in a loop until a number other than `mn` is generated this way.  Return an error if `mn >= mx`.
 - **`RNDRANGEMinMaxExc`, interval \(`mn`, `mx`\)**:
-    - Generate `RNDRANGE(mn, mx)` in a loop until a number other than `mn` or `mx` is generated this way.  Return an error if `mn >= mx`.
+    - Generate `RNDRANGE(mn, mx)` in a loop until a number other than `mn` or `mx` is generated this way.  Return an error if `mn >= mx or mn == mx - 1`.
 
 <a id=Monte_Carlo_Sampling_Expected_Values_Integration_and_Optimization></a>
 ### Monte Carlo Sampling: Expected Values, Integration, and Optimization
@@ -1506,14 +1525,9 @@ The _binomial distribution_ models the number of successful trials among a fixed
         if p == 0.5
           for i in 0...trials: count=count+RNDINT(1)
         else
-            i = 0
-            while i < trials
-                if RNDU01OneExc() < p
-                    // Success
-                    count = count + 1
-                end
-                i = i + 1
-            end
+          for i in 0...trials
+            if RNDU01OneExc() < p: count = count + 1
+          end
         end
         return count
     END METHOD
