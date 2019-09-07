@@ -203,13 +203,13 @@ If an application chooses to use a manually-seeded PRNG for repeatable "randomne
 <a id=Manually_Seeded_PRNG_Use_Cases></a>
 ### Manually-Seeded PRNG Use Cases
 
-Use cases for manually-seeded PRNGs include&mdash;
+Use cases for manually-seeded PRNGs include the following.
 
-- simulations and machine learning (to reproduce published research data),
-- Monte Carlo methods (to make them random-behaving but deterministic),
-- procedural noise generation,
-- unit tests in which "randomness" ought not to determine whether they pass or fail, and
-- games that generate "random" content that is impractical to store.
+- Simulations and machine learning.  This includes physics simulations and artificial intelligence in games, as well as simulations to reproduce published research data.
+- Monte Carlo methods (to make them random-behaving but deterministic).
+- Procedural noise generation.
+- Unit tests in which "randomness" ought not to determine whether they pass or fail.
+- Games that generate "random" content that is impractical to store.
 
 <a id=Games></a>
 #### Games
@@ -607,7 +607,7 @@ See also N. Reed, "Quick And Easy GPU Random Numbers In D3D11", Nathan Reed's co
 
 <small><sup id=Note30>(30)</sup> The following are some reasons an algorithm might produce different results from run to run or from machine to machine (making it an _inconsistent_ algorithm):
 
-- Differences in how floating-point numbers and floating-point math operations are implemented, including rounding behavior and order of operations.  For example, programming environments may or may not deliver as-accurate-as-possible results for floating-point math functions &mdash; see, for instance, the x87 `FSIN` instruction and the difference between `Math` and `StrictMath` in Java. As another example, floating-point addition and multiplication can be nonassociative due to rounding errors, so that, for instance, the closest IEEE 754 binary64 representations of `1.053`, `6.549`, and `7.525` can have different rounded sums depending on the order in which they are added. This problem is often seen in multithreaded and other computations done in parallel, where numbers could be added or multiplied in a different order from run to run. See also [**Keras documentation**](https://keras.io/getting-started/faq/#how-can-i-obtain-reproducible-results-using-keras-during-development) and the white paper "[**Floating Point and IEEE 754 Compliance for NVIDIA GPUs**](https://docs.nvidia.com/cuda/floating-point/)".
+- Differences in how floating-point numbers and floating-point math operations are implemented, including rounding behavior and order of operations.  For example, programming environments may or may not deliver as-accurate-as-possible results for floating-point math functions &mdash; see, for instance, the x87 `FSIN` instruction and the difference between `Math` and `StrictMath` in Java. As another example, floating-point addition and multiplication can be nonassociative due to rounding errors, so that, for instance, the closest IEEE 754 binary64 representations of `1.053`, `6.549`, and `7.525` can have different rounded sums depending on the order in which they are added. See also [**Keras documentation**](https://keras.io/getting-started/faq/#how-can-i-obtain-reproducible-results-using-keras-during-development), "[**Floating-Point Determinism**](https://randomascii.wordpress.com/2013/07/16/floating-point-determinism/)" by Bruce Dawson, and the white paper "[**Floating Point and IEEE 754 Compliance for NVIDIA GPUs**](https://docs.nvidia.com/cuda/floating-point/)".
 - The algorithm uses features that are not deterministic (output can vary even if input and state are the same), such as accessing the file system or the system clock.
 - The algorithm relies on undocumented, undefined, or implementation-dependent behavior or features (such as  _undefined behavior_ in C and C++, a particular hash table traversal order, or a particular size for C/C++'s `int` or `long`).</small>
 
