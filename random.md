@@ -410,7 +410,7 @@ An application that generates unique random identifiers SHOULD do so by combinin
 
 For an RNG algorithm to generate "random" numbers that are reproducible across computers, it needs to be a _consistent_ algorithm.  (This factor is important only for manually-seeded PRNGs, not necessarily for other RNGs.)
 
-A _consistent algorithm_ is an algorithm that delivers the same output for the same input every time (is _deterministic_) and does so&mdash;
+A _consistent algorithm_ is an algorithm that delivers the same output if given the same input twice (is _deterministic_) and that does so&mdash;
 
 - across time,
 - across different executions of the algorithm,

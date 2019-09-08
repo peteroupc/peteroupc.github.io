@@ -66,8 +66,8 @@ A _list_ can be expressed by wrapping items in brackets; for example, `[0, 1, 2]
     - the inverse tangent of `y/x`, in radians, if `x > 0`,
     - &pi; plus the inverse tangent of `y/x`, in radians, if `y >= 0 and x < 0`,
     - -&pi; plus the inverse tangent of `y/x`, in radians, if `y < 0 and x < 0`,
-    - `-pi / 2` if `y < 0 and x == 0`,
-    - `pi / 2` if `y > 0 and x == 0`, and
+    - -&pi; divided by 2 if `y < 0 and x == 0`,
+    - &pi; divided by 2 if `y > 0 and x == 0`, and
     - 0 if `y == 0 and x == 0`.
 * `pow(a, b)` is the number `a` raised to the power `b`.
 * `abs(a)` is the absolute value of `a`.
