@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
-<p>Begun on June 4, 2017; last updated on Sep. 7, 2019.</p>
+<p>Begun on June 4, 2017; last updated on Sep. 8, 2019.</p>
 
 <p>Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.</p>
 
@@ -2648,7 +2648,8 @@ and &quot;<a href="https://randomascii.wordpress.com/2013/07/16/floating-point-d
 
 <ol>
 <li>In the <em>Box&ndash;Muller transformation</em>, <code>mu + radius * cos(angle)</code> and <code>mu + radius * sin(angle)</code>, where <code>angle = RNDRANGEMaxExc(0, 2 * pi)</code> and <code>radius = sqrt(-2 * ln(RNDU01ZeroExc())) * sigma</code>, are two independent normally-distributed random numbers.</li>
-<li>Computing the sum of twelve <code>RNDU01OneExc()</code> numbers (see Note 17) and subtracting the sum by 6 (see also <a href="https://en.wikipedia.org/wiki/Irwin%E2%80%93Hall_distribution"><strong>&quot;Irwin&ndash;Hall distribution&quot; on Wikipedia</strong></a>) results in approximate standard normal (<code>mu</code>=0, <code>sigma</code>=1) random numbers, whose values are not less than -6 or greater than 6; on the other hand, in a standard normal distribution, results less than -6 or greater than 6 will occur only with a generally negligible probability.</li>
+<li>Computing the sum of twelve <code>RNDU01OneExc()</code> numbers (see Note 13) and subtracting the sum by 6 (see also <a href="https://en.wikipedia.org/wiki/Irwin%E2%80%93Hall_distribution"><strong>&quot;Irwin&ndash;Hall distribution&quot; on Wikipedia</strong></a>) results in approximate standard normal (<code>mu</code>=0, <code>sigma</code>=1) random numbers, whose values are not less than -6 or greater than 6; on the other hand, in a standard normal distribution, results less than -6 or greater than 6 will occur only with a generally negligible probability.</li>
+<li>Computing the sum of twelve <code>RNDRANGEMaxExc(0, sigma)</code> numbers (see Note 13) and subtracting the sum by 6 * <code>sigma</code> results in approximate normal random numbers with <code>mu</code>=0 and the given <code>sigma</code>, whose values are not less than -6 * <code>sigma</code> or greater than 6 * <code>sigma</code>.</li>
 <li>Generating <code>RNDU01ZeroOneExc()</code>, then running the standard normal distribution&#39;s inverse cumulative distribution function on that number, results in a random number from that distribution.  An approximation is found in M. Wichura, <em>Applied Statistics</em> 37(3), 1988.  See also <a href="https://www.johndcook.com/blog/normal_cdf_inverse/"><strong>&quot;A literate program to compute the inverse of the normal CDF&quot;</strong></a>.</li>
 <li>Methods implementing a variant of the normal distribution, the <em>discrete Gaussian distribution</em>, generate <em>integers</em> that approximately follow the normal distribution.  Two recent algorithms, one by A. Karmakar et al. (&quot;Constant-Time Gaussian Random Sampling&quot;), and another by Micciancio and Walter (2017, &quot;Gaussian Sampling over the Integers: Efficient, Generic, Constant-Time&quot;), are designed to reduce timing differences that a security attack could exploit.</li>
 </ol>

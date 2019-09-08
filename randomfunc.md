@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on June 4, 2017; last updated on Sep. 7, 2019.
+Begun on June 4, 2017; last updated on Sep. 8, 2019.
 
 Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.
 
@@ -2207,9 +2207,10 @@ provided the PDF's values are all 0 or greater and the area under the PDF's curv
 <small><sup id=Note33>(33)</sup> For example, besides the methods given in this section's main text:
 
 1. In the _Box&ndash;Muller transformation_, `mu + radius * cos(angle)` and `mu + radius * sin(angle)`, where `angle = RNDRANGEMaxExc(0, 2 * pi)` and `radius = sqrt(-2 * ln(RNDU01ZeroExc())) * sigma`, are two independent normally-distributed random numbers.
-2. Computing the sum of twelve `RNDU01OneExc()` numbers (see Note 17) and subtracting the sum by 6 (see also [**"Irwin&ndash;Hall distribution" on Wikipedia**](https://en.wikipedia.org/wiki/Irwin%E2%80%93Hall_distribution)) results in approximate standard normal (`mu`=0, `sigma`=1) random numbers, whose values are not less than -6 or greater than 6; on the other hand, in a standard normal distribution, results less than -6 or greater than 6 will occur only with a generally negligible probability.
-3. Generating `RNDU01ZeroOneExc()`, then running the standard normal distribution's inverse cumulative distribution function on that number, results in a random number from that distribution.  An approximation is found in M. Wichura, _Applied Statistics_ 37(3), 1988.  See also [**"A literate program to compute the inverse of the normal CDF"**](https://www.johndcook.com/blog/normal_cdf_inverse/).
-4. Methods implementing a variant of the normal distribution, the _discrete Gaussian distribution_, generate _integers_ that approximately follow the normal distribution.  Two recent algorithms, one by A. Karmakar et al. ("Constant-Time Gaussian Random Sampling"), and another by Micciancio and Walter (2017, "Gaussian Sampling over the Integers: Efficient, Generic, Constant-Time"), are designed to reduce timing differences that a security attack could exploit.
+2. Computing the sum of twelve `RNDU01OneExc()` numbers (see Note 13) and subtracting the sum by 6 (see also [**"Irwin&ndash;Hall distribution" on Wikipedia**](https://en.wikipedia.org/wiki/Irwin%E2%80%93Hall_distribution)) results in approximate standard normal (`mu`=0, `sigma`=1) random numbers, whose values are not less than -6 or greater than 6; on the other hand, in a standard normal distribution, results less than -6 or greater than 6 will occur only with a generally negligible probability.
+3. Computing the sum of twelve `RNDRANGEMaxExc(0, sigma)` numbers (see Note 13) and subtracting the sum by 6 * `sigma` results in approximate normal random numbers with `mu`=0 and the given `sigma`, whose values are not less than -6 * `sigma` or greater than 6 * `sigma`.
+4. Generating `RNDU01ZeroOneExc()`, then running the standard normal distribution's inverse cumulative distribution function on that number, results in a random number from that distribution.  An approximation is found in M. Wichura, _Applied Statistics_ 37(3), 1988.  See also [**"A literate program to compute the inverse of the normal CDF"**](https://www.johndcook.com/blog/normal_cdf_inverse/).
+5. Methods implementing a variant of the normal distribution, the _discrete Gaussian distribution_, generate _integers_ that approximately follow the normal distribution.  Two recent algorithms, one by A. Karmakar et al. ("Constant-Time Gaussian Random Sampling"), and another by Micciancio and Walter (2017, "Gaussian Sampling over the Integers: Efficient, Generic, Constant-Time"), are designed to reduce timing differences that a security attack could exploit.
 
 In 2007, Thomas, D., et al. gave a survey of normal random number methods in "Gaussian Random Number Generators", _ACM Computing Surveys_ 39(4), 2007, article 11.</small>
 
