@@ -1,4 +1,4 @@
-from decimal import Decimal
+import decimal as dec
 import math
 
 class Fixed:
@@ -8,9 +8,10 @@ class Fixed:
    do they necessarily have the same precision or resolution of floating-point
    numbers.  The main benefit of fixed-point numbers is that they improve
    determinism for applications that rely on non-integer real numbers (notably
-   simulations and machine learning applications), whereas floating-point
-   numbers have a host of problems that make repeatable results across
-   computers difficult, including differences in implementation, rounding
+   simulations and machine learning applications), in the sense that the operations
+   given here deliver the same answer for the same input across computers,
+   whereas floating-point numbers have a host of problems that make repeatable
+   results difficult, including differences in implementation, rounding
    behavior, and order of operations, as well as nonassociativity of
    floating-point numbers.
 
@@ -21,23 +22,43 @@ class Fixed:
    BITS = 20
    MASK = (1<<BITS)-1
    HALF = (1<<(BITS-1))
+   ArcTanTable = [421657428, 248918914, 131521918, 66762579, 33510843,
+       16771757, 8387925, 4194218, 2097141, 1048574, 524287, 262143, 131071,
+       65535, 32767, 16384, 8192, 4096, 2048, 1024, 512, 256, 128, 64, 32, 16, 8, 4, 2, 1]
+   ArcTanFrac = 29
+   ArcTanBitDiff = ArcTanFrac - BITS
+   PiArcTanBits = 1686629713 # Pi, expressed in ArcTanFrac fractional bits
+   SinCosK = 326016435 # Expressed in ArcTanFrac fractional bits
+   HalfPi = 1647099 # Half of pi, expressed in 20 fractional bits
+   Pi = 3294199 # Pi, expressed in 20 fractional bits
 
    def __init__(self, i):
      self.value=i
 
+   @staticmethod
    def v(i):
+     """
+     Converts a string, integer, Decimal, or other number type into
+     a fixed-point number.  If the parameter is a Fixed, returns itself.
+     If the given number is a non-integer, returns the closest value to
+     a Fixed after rounding using the round-to-nearest-ties-to-even
+     rounding mode.  The parameter is recommended to be a string
+     or integer, and is not recommended to be a `float`.
+     """
      if i.__class__==Fixed:
         return i
      b = 0
      neg = False
-     if i.__class__==str:
-        d=Decimal(str)
-        neg=(d<0)
-        b = int(abs(Decimal(i)) * (1 << Fixed.BITS))
-     else:
+     if i.__class__==int:
         neg=(i<0)
-        b = int(abs(i) * (1 << Fixed.BITS))
-     return Fixed(-b) if neg else Fixed(b)
+        b = abs(i) * (1 << Fixed.BITS)
+        return Fixed(-b) if neg else Fixed(b)
+     else:
+        d=dec.Decimal(i)
+        neg=(d<0)
+        b = abs(dec.Decimal(i)) * (1 << Fixed.BITS)
+        b = int(b.quantize(dec.Decimal(1), rounding=dec.ROUND_HALF_EVEN))
+        return Fixed(-b) if neg else Fixed(b)
 
    def __add__(a, b):
      av=Fixed.v(a).value
@@ -67,6 +88,19 @@ class Fixed:
         ret=-ret
      return Fixed(ret)
 
+   @staticmethod
+   def _roundedshift(a, shift):
+     aa=abs(a)
+     ret=aa>>shift
+     frac=aa&((1<<shift)-1)
+     # Divisor's least significant bit is even
+     if (frac>(1<<(shift-1)) or (frac==(1<<(shift-1)) and (ret&1)==1)):
+        ret+=1
+     if a<0:
+        ret=-ret
+     return Fixed(ret)
+
+   @staticmethod
    def _div(a, b):
      av=Fixed.v(a).value
      bv=Fixed.v(b).value
@@ -148,6 +182,19 @@ class Fixed:
    def acos(a):
      return atan2(sqrt(Fixed.v(1)-a*a), a)
 
+   def __int__(a):
+     av=Fixed.v(a).value
+     ava=abs(av)
+     ret=ava
+     frac = ret&Fixed.MASK
+     ret = (ret>>Fixed.BITS)
+     if av<0:
+        ret=-ret
+     return Fixed.v(ret)
+
+   def __float__(a):
+     return float(dec.Decimal(a.value)/dec.Decimal((1<<Fixed.BITS)))
+
    def round(a):
      av=Fixed.v(a).value
      ava=abs(av)
@@ -161,19 +208,74 @@ class Fixed:
         ret=-ret
      return Fixed.v(ret)
 
+   def _sincos(a):
+     ra=Fixed.v(a).value
+     if ra==0: return [0, 1]
+     negra=ra<0
+     if ra>=0:
+        if ra>=Fixed.Pi: ra=ra%Fixed.Pi
+        if ra>=Fixed.HalfPi: ra=Fixed.Pi-ra
+     else:
+        ra=abs(ra)
+        if ra>=Fixed.Pi: ra=ra%Fixed.Pi
+     ry=0
+     rx=Fixed.SinCosK
+     rz=ra << Fixed.ArcTanBitDiff
+     for i in range(len(Fixed.ArcTanTable)):
+        x=rx>>i
+        y=ry>>i
+        if rz>=0:
+          rx-=y; ry+=x; rz-=Fixed.ArcTanTable[i]
+        else:
+          rx+=y; ry-=x; rz+=Fixed.ArcTanTable[i]
+     if negra:
+        ry=-ry
+     else:
+        if ra>Fixed.HalfPi:
+           rx=-rx
+     return [
+        Fixed._roundedshift(ry, Fixed.ArcTanBitDiff),
+        Fixed._roundedshift(rx, Fixed.ArcTanBitDiff)]
+
    def sin(a):
-     raise NotImplementedError
+     return Fixed.v(a)._sincos()[0]
 
    def cos(a):
-     raise NotImplementedError
+     return Fixed.v(a)._sincos()[1]
 
    def tan(a):
-     raise NotImplementedError
+     sc=Fixed.v(a)._sincos()
+     return sc[0]/sc[1]
 
    def atan2(y, x):
-     x=Fixed.v(x)
-     if y==0: return 0
-     raise NotImplementedError
+     rx=Fixed.v(x).value
+     ry=Fixed.v(y).value
+     if ry==0: return 0
+     if rx==0:
+       if ry>=0:
+         return Fixed(Fixed.HalfPi)
+       else:
+         return Fixed(-Fixed.HalfPi)
+     rz=0
+     xneg=rx<0
+     yneg=ry<0
+     rx=abs(rx) << Fixed.ArcTanBitDiff
+     ry=abs(ry) << Fixed.ArcTanBitDiff
+     for i in range(len(Fixed.ArcTanTable)):
+        x=rx>>i
+        y=ry>>i
+        if ry<=0:
+          rx-=y; ry+=x; rz-=Fixed.ArcTanTable[i]
+        else:
+          rx+=y; ry-=x; rz+=Fixed.ArcTanTable[i]
+     if yneg != xneg:
+       rz=-rz
+     if xneg:
+       if yneg:
+         rz-=Fixed.PiArcTanBits
+       else:
+         rz+=Fixed.PiArcTanBits
+     return Fixed._roundedshift(rz, Fixed.ArcTanBitDiff)
 
    def pow(a, b):
      raise NotImplementedError
@@ -190,10 +292,10 @@ class Fixed:
      raise NotImplementedError
 
    def __str__(self):
-     return str(Decimal(self.value)/Decimal((1<<Fixed.BITS)))
+     return str(dec.Decimal(self.value)/dec.Decimal((1<<Fixed.BITS)))
 
    def __repr__(self):
-     return str(Decimal(self.value)/Decimal((1<<Fixed.BITS)))
+     return str(dec.Decimal(self.value)/dec.Decimal((1<<Fixed.BITS)))
 
 if __name__ == "__main__":
    def asserteq(a,b):
@@ -208,3 +310,8 @@ if __name__ == "__main__":
    asserteq(Fixed.v(1), Fixed.v(0.9).round())
    asserteq(Fixed.v(-1), Fixed.v(-0.5).floor())
    asserteq(Fixed.v(-1), Fixed.v(-1).floor())
+   halfpi=float(Fixed(Fixed.HalfPi))
+   for v in [halfpi, -halfpi, 0.5, 1, 1.5, 2, 2.5, -0.5, -1, -1.5, -2, -2.5]:
+     print(["sin",v,Fixed.v(v).sin(),math.sin(v)])
+   for v in [halfpi, -halfpi, 0.5, 1, 1.5, 2, 2.5, -0.5, -1, -1.5, -2, -2.5]:
+     print(["cos",v,Fixed.v(v).cos(),math.cos(v)])
