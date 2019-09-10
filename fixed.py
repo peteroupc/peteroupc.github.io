@@ -25,10 +25,14 @@ class Fixed:
    ArcTanTable = [421657428, 248918914, 131521918, 66762579, 33510843,
        16771757, 8387925, 4194218, 2097141, 1048574, 524287, 262143, 131071,
        65535, 32767, 16384, 8192, 4096, 2048, 1024, 512, 256, 128, 64, 32, 16, 8, 4, 2, 1]
+   ArcTanHTable = [0, 294906490, 137123709, 67461703, 33598225, 16782680,
+       8389290, 4194389, 2097162, 1048577, 524288, 262144, 131072, 65536, 32768,
+       16384, 8192, 4096, 2048, 1024, 512, 256, 128, 64, 32, 16, 8, 4, 2, 1]
    ArcTanFrac = 29
    ArcTanBitDiff = ArcTanFrac - BITS
    PiArcTanBits = 1686629713 # Pi, expressed in ArcTanFrac fractional bits
    SinCosK = 326016435 # Expressed in ArcTanFrac fractional bits
+   ExpK = 648270061 # Expressed in ArcTanFrac fractional bits
    HalfPi = 1647099 # Half of pi, expressed in 20 fractional bits
    Pi = 3294199 # Pi, expressed in 20 fractional bits
 
@@ -190,7 +194,7 @@ class Fixed:
      ret = (ret>>Fixed.BITS)
      if av<0:
         ret=-ret
-     return Fixed.v(ret)
+     return ret
 
    def __float__(a):
      return float(dec.Decimal(a.value)/dec.Decimal((1<<Fixed.BITS)))
@@ -278,6 +282,19 @@ class Fixed:
      return Fixed._roundedshift(rz, Fixed.ArcTanBitDiff)
 
    def pow(a, b):
+     av=Fixed.v(a)
+     bv=Fixed.v(b)
+     if a==0: return a
+     if a==1: return a
+     if bv>0 and bv.floor()==bv:
+       r=Fixed.v(1)
+       eiv=a
+       p=int(bv)
+       while p>0:
+         if (p&1)!=0: r*=eiv
+         p>>=1
+         if p!=0: eiv*=eiv
+       return r
      raise NotImplementedError
 
    def sqrt(a):
@@ -289,7 +306,29 @@ class Fixed:
      raise NotImplementedError
 
    def exp(a):
-     raise NotImplementedError
+     av=Fixed.v(a).value
+     if av==0: return Fixed.v(1)
+     if av<0:
+        return Fixed.v(1)/(-a).exp()
+     if a>Fixed.v(3):
+        expc=(a/3).exp()
+        return expc*expc*expc
+     if a>Fixed.v(1):
+        exphalf=(a/2).exp()
+        return exphalf*exphalf
+     ava=abs(av)
+     rx=Fixed.ExpK
+     ry=Fixed.ExpK
+     rz=ava << Fixed.ArcTanBitDiff
+     for i in range(1, len(Fixed.ArcTanHTable)):
+       for m in range(2 if i==4 or i==13 else 1):
+         x=rx>>i
+         y=ry>>i
+         if rz>=0:
+           rx+=y; ry+=x; rz-=Fixed.ArcTanHTable[i]
+         else:
+           rx-=y; ry-=x; rz+=Fixed.ArcTanHTable[i]
+     return Fixed._roundedshift(rx, Fixed.ArcTanBitDiff)
 
    def __str__(self):
      return str(dec.Decimal(self.value)/dec.Decimal((1<<Fixed.BITS)))
@@ -310,7 +349,12 @@ if __name__ == "__main__":
    asserteq(Fixed.v(1), Fixed.v(0.9).round())
    asserteq(Fixed.v(-1), Fixed.v(-0.5).floor())
    asserteq(Fixed.v(-1), Fixed.v(-1).floor())
+   asserteq(Fixed.v(9), Fixed.v(3).pow(2))
+   asserteq(Fixed.v(27), Fixed.v(3).pow(3))
+   asserteq(Fixed.v(81), Fixed.v(3).pow(4))
    halfpi=float(Fixed(Fixed.HalfPi))
+   for v in [halfpi, -halfpi, 0.5, 1, 1.5, 2, 2.5, -0.5, -1, -1.5, -2, -2.5]:
+     print(["exp",v,Fixed.v(v).exp(),math.exp(v)])
    for v in [halfpi, -halfpi, 0.5, 1, 1.5, 2, 2.5, -0.5, -1, -1.5, -2, -2.5]:
      print(["sin",v,Fixed.v(v).sin(),math.sin(v)])
    for v in [halfpi, -halfpi, 0.5, 1, 1.5, 2, 2.5, -0.5, -1, -1.5, -2, -2.5]:
