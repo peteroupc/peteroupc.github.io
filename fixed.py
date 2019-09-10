@@ -33,8 +33,9 @@ class Fixed:
    PiArcTanBits = 1686629713 # Pi, expressed in ArcTanFrac fractional bits
    SinCosK = 326016435 # Expressed in ArcTanFrac fractional bits
    ExpK = 648270061 # Expressed in ArcTanFrac fractional bits
-   HalfPi = 1647099 # Half of pi, expressed in 20 fractional bits
-   Pi = 3294199 # Pi, expressed in 20 fractional bits
+   HalfPiBits = 1647099 # Half of pi, expressed in 20 fractional bits
+   PiBits = 3294199 # Pi, expressed in 20 fractional bits
+   TwoTimesPiBits = 6588397 # Pi*2, expressed in 20 fractional bits
 
    def __init__(self, i):
      self.value=i
@@ -197,7 +198,8 @@ class Fixed:
      return ret
 
    def __float__(a):
-     return float(dec.Decimal(a.value)/dec.Decimal((1<<Fixed.BITS)))
+     fbits=float(1<<Fixed.BITS)
+     return float(a.value/fbits)
 
    def round(a):
      av=Fixed.v(a).value
@@ -216,12 +218,15 @@ class Fixed:
      ra=Fixed.v(a).value
      if ra==0: return [0, 1]
      negra=ra<0
-     if ra>=0:
-        if ra>=Fixed.Pi: ra=ra%Fixed.Pi
-        if ra>=Fixed.HalfPi: ra=Fixed.Pi-ra
-     else:
-        ra=abs(ra)
-        if ra>=Fixed.Pi: ra=ra%Fixed.Pi
+     ra=abs(ra)
+     if ra>=Fixed.TwoTimesPiBits: ra=ra%Fixed.TwoTimesPiBits
+     pi15=Fixed.PiBits+Fixed.HalfPiBits
+     negateSin=negra
+     if ra>=Fixed.HalfPiBits and ra<pi15:
+       ra=Fixed.PiBits-ra
+     if ra>=pi15:
+       negateSin=(not negra)
+       ra=Fixed.TwoTimesPiBits-ra
      ry=0
      rx=Fixed.SinCosK
      rz=ra << Fixed.ArcTanBitDiff
@@ -232,11 +237,9 @@ class Fixed:
           rx-=y; ry+=x; rz-=Fixed.ArcTanTable[i]
         else:
           rx+=y; ry-=x; rz+=Fixed.ArcTanTable[i]
-     if negra:
+     if negateSin:
         ry=-ry
-     else:
-        if ra>Fixed.HalfPi:
-           rx=-rx
+     # TODO: Fix sign of cos
      return [
         Fixed._roundedshift(ry, Fixed.ArcTanBitDiff),
         Fixed._roundedshift(rx, Fixed.ArcTanBitDiff)]
@@ -257,9 +260,9 @@ class Fixed:
      if ry==0: return 0
      if rx==0:
        if ry>=0:
-         return Fixed(Fixed.HalfPi)
+         return Fixed(Fixed.HalfPiBits)
        else:
-         return Fixed(-Fixed.HalfPi)
+         return Fixed(-Fixed.HalfPiBits)
      rz=0
      xneg=rx<0
      yneg=ry<0
@@ -276,9 +279,9 @@ class Fixed:
        rz=-rz
      if xneg:
        if yneg:
-         rz-=Fixed.PiArcTanBits
+         rz-=Fixed.PiBitsArcTanBits
        else:
-         rz+=Fixed.PiArcTanBits
+         rz+=Fixed.PiBitsArcTanBits
      return Fixed._roundedshift(rz, Fixed.ArcTanBitDiff)
 
    def pow(a, b):
@@ -352,10 +355,27 @@ if __name__ == "__main__":
    asserteq(Fixed.v(9), Fixed.v(3).pow(2))
    asserteq(Fixed.v(27), Fixed.v(3).pow(3))
    asserteq(Fixed.v(81), Fixed.v(3).pow(4))
-   halfpi=float(Fixed(Fixed.HalfPi))
+   maxerror=0
+   minvalue=0 # -Fixed.PiBits*2
+   for v in range(-Fixed.PiBits*2, Fixed.PiBits*2+1):
+     if v%493!=0: continue
+     fx=Fixed(v)
+     fxs=float(fx.sin())
+     fps=math.sin(float(fx))
+     if abs(fxs-fps)>0.1:
+      print([v,fx,fxs,fps])
+     maxerror=max(abs(fxs-fps), maxerror)
+   print("sin maxerror=%f" % maxerror)
+   maxerror=0
+   for v in range(minvalue, Fixed.PiBits*2+1):
+     if v%493!=0: continue
+     fx=Fixed(v)
+     fxs=float(fx.cos())
+     fps=math.cos(float(fx))
+     if abs(fxs-fps)>0.1:
+      print([v,fx,fxs,fps])
+     maxerror=max(abs(fxs-fps), maxerror)
+   print("cos maxerror=%f" % maxerror)
+   halfpi=float(Fixed(Fixed.HalfPiBits))
    for v in [halfpi, -halfpi, 0.5, 1, 1.5, 2, 2.5, -0.5, -1, -1.5, -2, -2.5]:
      print(["exp",v,Fixed.v(v).exp(),math.exp(v)])
-   for v in [halfpi, -halfpi, 0.5, 1, 1.5, 2, 2.5, -0.5, -1, -1.5, -2, -2.5]:
-     print(["sin",v,Fixed.v(v).sin(),math.sin(v)])
-   for v in [halfpi, -halfpi, 0.5, 1, 1.5, 2, 2.5, -0.5, -1, -1.5, -2, -2.5]:
-     print(["cos",v,Fixed.v(v).cos(),math.cos(v)])
