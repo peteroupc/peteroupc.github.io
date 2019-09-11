@@ -27,7 +27,7 @@
 <li><code><a href="#GetCharset">GetCharset()</a></code> - Gets this media type&#39;s &quot;charset&quot; parameter, naming a character encoding used to represent text in the data that uses this media type.</li>
 <li><code><a href="#GetHashCode">GetHashCode()</a></code> - Calculates the hash code of this object.</li>
 <li><code><a href="#GetParameter_string">GetParameter(string)</a></code> - Gets the value of a parameter in this media type, such as &quot;charset&quot; or &quot;format&quot;.</li>
-<li><code><a href="#HasStructuredSuffix_string">HasStructuredSuffix(string)</a></code> - Not documented yet.</li>
+<li><code><a href="#HasStructuredSuffix_string">HasStructuredSuffix(string)</a></code> - Returns whether this media type&#39;s subtype has the given structured syntax suffix.</li>
 <li><code><a href="#IsMultipart">IsMultipart</a></code> - Gets a value indicating whether this is a multipart media type.</li>
 <li><code><a href="#IsText">IsText</a></code> - Gets a value indicating whether this is a text media type (&quot;text/*&quot;).</li>
 <li><code><a href="#MessageRfc822">public static readonly PeterO.Mail.MediaType MessageRfc822;</a></code> - Specifies the media type &quot;message/rfc822&quot;, used for Internet mail messages.</li>
@@ -243,18 +243,21 @@ Name is empty.</p></li>
     string suffix);
 </pre>
 
-<p>Not documented yet.</p>
+<p>Returns whether this media type&#39;s subtype has the given structured syntax suffix.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>suffix</i>: The parameter  <i>suffix</i>
-is a text string.</li>
+<li><i>suffix</i>: A text string identifying a structured syntax suffix without the starting &quot;+&quot;. Examples include &quot;xml&quot; and &quot;json&quot;. The suffix is compared to the end of the media type&#39;s subtype using a basic case-insensitive comparison. (Two strings are equal in such a comparison, if they match after converting the basic upper-case letters A to Z (U+0041 to U+005A) in both strings to basic lower-case letters.).</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p>The return value is not documented yet.</p>
+<p>True if the media type&#39;s subtype ends with, but does not consist of, &quot;+&quot; followed by the  <i>suffix</i>
+ parameter (using a basic case-insensitive comparison); otherwise,  <code>false</code> . For example, returns false if  <i>suffix</i>
+ is &quot;xml&quot; and the subtype is &quot;+xml&quot;, but returns true if  <i>suffix</i>
+ is &quot;xml&quot; and the subtype is &quot;example+xml&quot;. Returns false if  <i>suffix</i>
+ is null or an empty string.</p>
 
 <p><a id="Parse_string"></a></p>
 

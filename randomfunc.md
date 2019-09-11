@@ -2155,7 +2155,7 @@ If an application is concerned about these issues, it should treat the `Math.ran
 
 <small><sup id=Note12>(12)</sup> That article also mentions a critical-hit distribution, which is actually a [**mixture**](#Mixtures_of_Distributions) of two distributions: one roll of dice and the sum of two rolls of dice.</small>
 
-<small><sup id=Note13>(13)</sup> [**Kahan summation**](https://en.wikipedia.org/wiki/Kahan_summation_algorithm) can be a more robust way than the na&iuml;ve approach to compute the sum of three or more numbers.</small>
+<small><sup id=Note13>(13)</sup> [**Kahan summation**](https://en.wikipedia.org/wiki/Kahan_summation_algorithm) can be a more robust way than the na&iuml;ve approach to compute the sum of three or more numbers.  This algorithm is not needed for fixed-point numbers.</small>
 
 <small><sup id=Note14>(14)</sup> An _affine transformation_ is one that keeps straight lines straight and parallel lines parallel.</small>
 
