@@ -11,7 +11,7 @@ class Fixed:
    simulations and machine learning applications), in the sense that the operations
    given here deliver the same answer for the same input across computers,
    whereas floating-point numbers have a host of problems that make repeatable
-   results difficult, including differences in implementation, rounding
+   results difficult, including differences in their implementation, rounding
    behavior, and order of operations, as well as nonassociativity of
    floating-point numbers.
 
@@ -106,12 +106,10 @@ class Fixed:
      return Fixed(ret)
 
    @staticmethod
-   def _div(a, b):
-     av=Fixed.v(a).value
-     bv=Fixed.v(b).value
+   def _divbits(av, bv, bits):
      ava=abs(av)
      bva=abs(bv)
-     ret=ava<<Fixed.BITS
+     ret=ava<<bits
      frac = ret % bva
      ret = (ret // bva)
      # Rounding to nearest, ties to even
@@ -124,6 +122,13 @@ class Fixed:
          ret+=1
      if (av>=0) != (bv>=0):
         ret=-ret
+     return ret
+
+   @staticmethod
+   def _div(a, b):
+     av=Fixed.v(a).value
+     bv=Fixed.v(b).value
+     ret=Fixed._divbits(av, bv, Fixed.BITS)
      return Fixed(ret)
 
    def __rtruediv__(a, b):
@@ -182,10 +187,12 @@ class Fixed:
        return av
 
    def asin(a):
-     return atan2(a, sqrt(Fixed.v(1)-a*a))
+     av=Fixed.v(a)
+     return av.atan2((Fixed.v(1)-av*av).sqrt())
 
    def acos(a):
-     return atan2(sqrt(Fixed.v(1)-a*a), a)
+     av=Fixed.v(a)
+     return (Fixed.v(1)-av*av).sqrt().atan2(av)
 
    def __int__(a):
      av=Fixed.v(a).value
@@ -216,13 +223,15 @@ class Fixed:
 
    def _sincos(a):
      ra=Fixed.v(a).value
-     if ra==0: return [0, 1]
+     if ra==0: return [0, 1<<Fixed.ArcTanFrac]
      negra=ra<0
      ra=abs(ra)
      if ra>=Fixed.TwoTimesPiBits: ra=ra%Fixed.TwoTimesPiBits
      pi15=Fixed.PiBits+Fixed.HalfPiBits
      negateSin=negra
+     negateCos=False
      if ra>=Fixed.HalfPiBits and ra<pi15:
+       negateCos=True
        ra=Fixed.PiBits-ra
      if ra>=pi15:
        negateSin=(not negra)
@@ -239,25 +248,29 @@ class Fixed:
           rx+=y; ry-=x; rz+=Fixed.ArcTanTable[i]
      if negateSin:
         ry=-ry
-     # TODO: Fix sign of cos
-     return [
-        Fixed._roundedshift(ry, Fixed.ArcTanBitDiff),
-        Fixed._roundedshift(rx, Fixed.ArcTanBitDiff)]
+     if negateCos:
+        rx=-rx
+     return [ry, rx]
 
    def sin(a):
-     return Fixed.v(a)._sincos()[0]
+     ret=Fixed.v(a)._sincos()[0]
+     return Fixed._roundedshift(ret, Fixed.ArcTanBitDiff)
 
    def cos(a):
-     return Fixed.v(a)._sincos()[1]
+     ret=Fixed.v(a)._sincos()[1]
+     return Fixed._roundedshift(ret, Fixed.ArcTanBitDiff)
 
    def tan(a):
      sc=Fixed.v(a)._sincos()
-     return sc[0]/sc[1]
+     return Fixed(Fixed._divbits(sc[0],sc[1],Fixed.BITS))
 
    def atan2(y, x):
      rx=Fixed.v(x).value
      ry=Fixed.v(y).value
-     if ry==0: return 0
+     if ry==0 and rx==0:
+       return 0
+     if ry==0 and rx<0:
+       return Fixed(Fixed.PiBits)
      if rx==0:
        if ry>=0:
          return Fixed(Fixed.HalfPiBits)
@@ -279,9 +292,9 @@ class Fixed:
        rz=-rz
      if xneg:
        if yneg:
-         rz-=Fixed.PiBitsArcTanBits
+         rz-=Fixed.PiArcTanBits
        else:
-         rz+=Fixed.PiBitsArcTanBits
+         rz+=Fixed.PiArcTanBits
      return Fixed._roundedshift(rz, Fixed.ArcTanBitDiff)
 
    def pow(a, b):
@@ -356,7 +369,16 @@ if __name__ == "__main__":
    asserteq(Fixed.v(27), Fixed.v(3).pow(3))
    asserteq(Fixed.v(81), Fixed.v(3).pow(4))
    maxerror=0
-   minvalue=0 # -Fixed.PiBits*2
+   for v in range(-Fixed.PiBits*2, Fixed.PiBits*2+1):
+     if v%493!=0: continue
+     fx=Fixed(v)
+     fxs=float(fx.tan())
+     fps=math.tan(float(fx))
+     if abs(fxs-fps)>0.1:
+        print([fx,fxs,fps])
+     maxerror=max(abs(fxs-fps), maxerror)
+   print("tan maxerror=%0.12f" % maxerror)
+   maxerror=0
    for v in range(-Fixed.PiBits*2, Fixed.PiBits*2+1):
      if v%493!=0: continue
      fx=Fixed(v)
@@ -365,9 +387,9 @@ if __name__ == "__main__":
      if abs(fxs-fps)>0.1:
       print([v,fx,fxs,fps])
      maxerror=max(abs(fxs-fps), maxerror)
-   print("sin maxerror=%f" % maxerror)
+   print("sin maxerror=%0.12f" % maxerror)
    maxerror=0
-   for v in range(minvalue, Fixed.PiBits*2+1):
+   for v in range(-Fixed.PiBits*2, Fixed.PiBits*2+1):
      if v%493!=0: continue
      fx=Fixed(v)
      fxs=float(fx.cos())
@@ -375,7 +397,25 @@ if __name__ == "__main__":
      if abs(fxs-fps)>0.1:
       print([v,fx,fxs,fps])
      maxerror=max(abs(fxs-fps), maxerror)
-   print("cos maxerror=%f" % maxerror)
-   halfpi=float(Fixed(Fixed.HalfPiBits))
-   for v in [halfpi, -halfpi, 0.5, 1, 1.5, 2, 2.5, -0.5, -1, -1.5, -2, -2.5]:
-     print(["exp",v,Fixed.v(v).exp(),math.exp(v)])
+   print("cos maxerror=%0.12f" % maxerror)
+   maxerror=0
+   for v in range(-Fixed.PiBits*2, Fixed.PiBits*2+1):
+     if v%493!=0: continue
+     fx=Fixed(v)
+     fxs=float(fx.exp())
+     fps=math.exp(float(fx))
+     if abs(fxs-fps)>0.1:
+      print([v,fx,fxs,fps])
+     maxerror=max(abs(fxs-fps), maxerror)
+   print("exp maxerror=%0.12f" % maxerror)
+   maxerror=0
+   for y in range(-50, 60):
+     for x in range(-50, 60):
+       fx=Fixed.v(y*1.0)
+       fx2=Fixed.v(x*1.0)
+       fxs=float(fx.atan2(fx2))
+       fps=math.atan2(float(fx),float(fx2))
+       if abs(fxs-fps)>0.1:
+        print([fx,fx2,fxs,fps])
+       maxerror=max(abs(fxs-fps), maxerror)
+   print("atan2 maxerror=%0.12f" % maxerror)
