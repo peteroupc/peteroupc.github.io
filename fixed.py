@@ -300,44 +300,77 @@ class Fixed:
    def pow(a, b):
      av=Fixed.v(a)
      bv=Fixed.v(b)
-     if a==0: return a
-     if a==1: return a
-     if bv>0 and bv.floor()==bv:
+     if bv==0: return Fixed.v(1)
+     if av==0:
+        if bv<0: raise ValueError
+        return a
+     if av==1: return av
+     if bv.floor()==bv:
+       bva=abs(bv)
        r=Fixed.v(1)
        eiv=a
-       p=int(bv)
+       p=int(bva)
        while p>0:
          if (p&1)!=0: r*=eiv
          p>>=1
          if p!=0: eiv*=eiv
+       if bv<0:
+         rv=r.value
+         rv=Fixed._divbits(1<<Fixed.BITS, rv, Fixed.BITS)
+         r=Fixed(rv)
        return r
-     raise NotImplementedError
+     if av<0: raise ValueError
+     return (bv*av.log()).exp()
 
    def sqrt(a):
      if a<0: raise ValueError
      if a==0: return Fixed(0)
-     raise NotImplementedError
+     return Fixed.v(a).pow(Fixed(1<<(Fixed.BITS-1)))
+
+   LogMin = (1<<BITS)*15/100 # In BITS fractional bits
+   Log2Bits = 726817 # log(2), in BITS fractional bits
 
    def log(a):
-     raise NotImplementedError
+     fa=Fixed.v(a)
+     av=fa.value
+     if av<=0: raise ValueError
+     avx = av << Fixed.ArcTanBitDiff
+     neglogrec = av < Fixed.LogMin
+     if av >= 1<<(Fixed.BITS-1):
+       return (fa/2).log()+Fixed(Fixed.Log2Bits)
+     if av < Fixed.LogMin:
+       return (fa*2).log()-Fixed(Fixed.Log2Bits)
+     rx=avx + (1<<Fixed.ArcTanFrac)
+     ry=avx - (1<<Fixed.ArcTanFrac)
+     rz=0
+     for i in range(1, len(Fixed.ArcTanHTable)):
+       iters=2 if i==4 or i==13 else 1
+       for m in range(iters):
+         x=rx>>i
+         y=ry>>i
+         if ry<=0:
+           rx+=y; ry+=x; rz-=Fixed.ArcTanHTable[i]
+         else:
+           rx-=y; ry-=x; rz+=Fixed.ArcTanHTable[i]
+     return Fixed._roundedshift(rz, Fixed.ArcTanBitDiff - 1)
 
    def exp(a):
-     av=Fixed.v(a).value
+     fa=Fixed.v(a)
+     av=fa.value
      if av==0: return Fixed.v(1)
      if av<0:
         return Fixed.v(1)/(-a).exp()
-     if a>Fixed.v(3):
-        expc=(a/3).exp()
-        return expc*expc*expc
-     if a>Fixed.v(1):
-        exphalf=(a/2).exp()
-        return exphalf*exphalf
+     if fa>Fixed.v(3):
+        return (fa/3).exp().pow(3)
+     if fa>Fixed.v(1):
+        return (fa/2).exp().pow(2)
      ava=abs(av)
      rx=Fixed.ExpK
      ry=Fixed.ExpK
      rz=ava << Fixed.ArcTanBitDiff
      for i in range(1, len(Fixed.ArcTanHTable)):
-       for m in range(2 if i==4 or i==13 else 1):
+       iters=2 if i==4 or i==13 else 1
+       for m in range(iters):
          x=rx>>i
          y=ry>>i
          if rz>=0:
@@ -369,6 +402,16 @@ if __name__ == "__main__":
    asserteq(Fixed.v(27), Fixed.v(3).pow(3))
    asserteq(Fixed.v(81), Fixed.v(3).pow(4))
    maxerror=0
+   for v in range(1, Fixed.PiBits*4+1):
+     if v%493!=0: continue
+     fx=Fixed(v)
+     fxs=float(fx.log())
+     fps=math.log(float(fx))
+     if abs(fxs-fps)>0.1:
+      print([v,fx,fxs,fps])
+     maxerror=max(abs(fxs-fps), maxerror)
+   print("log maxerror=%0.12f" % maxerror)
+   maxerror=0
    for v in range(-Fixed.PiBits*2, Fixed.PiBits*2+1):
      if v%493!=0: continue
      fx=Fixed(v)
@@ -399,6 +442,16 @@ if __name__ == "__main__":
      maxerror=max(abs(fxs-fps), maxerror)
    print("cos maxerror=%0.12f" % maxerror)
    maxerror=0
+   for v in range(0, Fixed.PiBits*4+1):
+     if v%493!=0: continue
+     fx=Fixed(v)
+     fxs=float(fx.sqrt())
+     fps=math.sqrt(float(fx))
+     if abs(fxs-fps)>0.1:
+      print([v,fx,fxs,fps])
+     maxerror=max(abs(fxs-fps), maxerror)
+   print("sqrt maxerror=%0.12f" % maxerror)
+   maxerror=0
    for v in range(-Fixed.PiBits*2, Fixed.PiBits*2+1):
      if v%493!=0: continue
      fx=Fixed(v)
@@ -419,3 +472,17 @@ if __name__ == "__main__":
         print([fx,fx2,fxs,fps])
        maxerror=max(abs(fxs-fps), maxerror)
    print("atan2 maxerror=%0.12f" % maxerror)
+   for y in range(-50, 60):
+     for x in range(-50, 60):
+       fx=Fixed.v(y*1.34)
+       fx2=Fixed.v(x*1.37)
+       if fx==0 and fx2<0:
+         continue
+       if fx<0 and fx2.floor()!=fx2:
+         fx2=fx2.floor()
+       fxs=float(fx.pow(fx2))
+       fps=math.pow(float(fx),float(fx2))
+       #if abs(fxs-fps)>0.1:
+       # print([fx,fx2,fxs,fps])
+       maxerror=max(abs(fxs-fps), maxerror)
+   print("pow maxerror=%0.12f" % maxerror)
