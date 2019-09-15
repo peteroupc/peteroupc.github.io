@@ -205,8 +205,11 @@ class Fixed:
      return ret
 
    def __float__(a):
-     fbits=float(1<<Fixed.BITS)
-     return float(a.value/fbits)
+     fbits=1<<Fixed.BITS
+     try:
+       return float(a.value/fbits)
+     except:
+       return float("-inf") if a<0 else float("inf")
 
    def round(a):
      av=Fixed.v(a).value
@@ -307,17 +310,26 @@ class Fixed:
      if av==1: return av
      if bv.floor()==bv:
        bva=abs(bv)
-       r=Fixed.v(1)
-       eiv=a
+       r=1<<Fixed.BITS
+       eiv=abs(av.value)
+       eivprec=Fixed.BITS
+       rprec=0
        p=int(bva)
        while p>0:
-         if (p&1)!=0: r*=eiv
+         if (p&1)!=0:
+            r*=eiv
+            rprec+=eivprec
          p>>=1
-         if p!=0: eiv*=eiv
+         if p!=0:
+            eiv*=eiv
+            eivprec+=eivprec
        if bv<0:
-         rv=r.value
-         rv=Fixed._divbits(1<<Fixed.BITS, rv, Fixed.BITS)
+         rv=Fixed._divbits(1<<(Fixed.BITS+rprec), r, Fixed.BITS)
          r=Fixed(rv)
+       else:
+         r=Fixed._roundedshift(r,rprec)
+       if av<0 and (int(bva)&1)==1:
+         r=-r
        return r
      if av<0: raise ValueError
      return (bv*av.log()).exp()
@@ -402,6 +414,21 @@ if __name__ == "__main__":
    asserteq(Fixed.v(27), Fixed.v(3).pow(3))
    asserteq(Fixed.v(81), Fixed.v(3).pow(4))
    maxerror=0
+   for y in range(-50, 60):
+     for x in range(-50, 60):
+       fx=Fixed.v(y*1.34)
+       fx2=Fixed.v(x*1.37)
+       if fx==0 and fx2<0:
+         continue
+       if fx<0 and fx2.floor()!=fx2:
+         fx2=fx2.floor()
+       fxs=float(fx.pow(fx2))
+       fps=math.pow(float(fx),float(fx2))
+       #if abs(fxs-fps)>0.1:
+       # print([fx,fx2,fxs,fps])
+       maxerror=max(abs(fxs-fps), maxerror)
+   print("pow maxerror=%0.12f" % maxerror)
+   maxerror=0
    for v in range(1, Fixed.PiBits*4+1):
      if v%493!=0: continue
      fx=Fixed(v)
@@ -472,17 +499,3 @@ if __name__ == "__main__":
         print([fx,fx2,fxs,fps])
        maxerror=max(abs(fxs-fps), maxerror)
    print("atan2 maxerror=%0.12f" % maxerror)
-   for y in range(-50, 60):
-     for x in range(-50, 60):
-       fx=Fixed.v(y*1.34)
-       fx2=Fixed.v(x*1.37)
-       if fx==0 and fx2<0:
-         continue
-       if fx<0 and fx2.floor()!=fx2:
-         fx2=fx2.floor()
-       fxs=float(fx.pow(fx2))
-       fps=math.pow(float(fx),float(fx2))
-       #if abs(fxs-fps)>0.1:
-       # print([fx,fx2,fxs,fps])
-       maxerror=max(abs(fxs-fps), maxerror)
-   print("pow maxerror=%0.12f" % maxerror)

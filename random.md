@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on Mar. 5, 2016; last updated on Sep. 12, 2019.
+Begun on Mar. 5, 2016; last updated on Sep. 15, 2019.
 
 Most apps that use random numbers care about either unpredictability, high quality, or repeatability.  This article explains the three kinds of RNGs and gives recommendations on each kind.
 
@@ -562,7 +562,7 @@ I acknowledge&mdash;
 
 <small><sup id=Note11>(11)</sup> Blackman, D., Vigna, S. "Scrambled Linear Pseudorandom Number Generators", 2018.</small>
 
-<small><sup id=Note12>(12)</sup> However, at least for version 1.0, the only numbers GLSL might support are 16-bit or smaller floating-point numbers (not the otherwise common 32- or 64-bit sizes), making it difficult to write hash functions for random number generation.  (Generally, such 16-bit numbers have 11 bits of precision and can represent any integer between 0 and 2048 and any multiple of 1/2048 between 0 and 1.)  An application ought to choose hash functions that deliver acceptable "random" numbers regardless of the kinds of numbers supported.
+<small><sup id=Note12>(12)</sup> However, some versions of GLSL (notably GLSL ES 1.0, as used by WebGL 1.0) may support integers with a restricted range (as low as -1024 to 1024), rather than the otherwise common -2<sup>31</sup> to 2<sup>31</sup> or -2<sup>63</sup> to 2<sup>63</sup> ranges, making it difficult to write hash functions for random number generation.  An application ought to choose hash functions that deliver acceptable "random" numbers regardless of the kinds of numbers supported.
 
 An alternative for GLSL and other fragment or pixel shaders to support randomness is to have the shader sample a "noise texture" with random data in each pixel; for example, C. Peters, "[**Free blue noise textures**](http://momentsingraphics.de/?p=127)", _Moments in Graphics_, Dec. 22, 2016, discusses how so-called "blue noise" can be sampled this way.
 
