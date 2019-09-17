@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on June 4, 2017; last updated on Sep. 8, 2019.
+Begun on June 4, 2017; last updated on Sep. 16, 2019.
 
 Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.
 
@@ -903,7 +903,7 @@ The following method generates a random integer that follows a _hypergeometric d
 The _negative binomial distribution_ models the number of failing trials that happen before a fixed number of successful trials (`successes`). Each trial is independent and has a success probability of `px/py` (where 0 means never and 1 means always).
 
     METHOD NegativeBinomialInt(successes, px, py)
-        // Needs to be 0 or greater; px must be 0
+        // Needs to be 0 or greater; px must not be 0
         if successes < 0 or px == 0: return error
         if successes == 0 or px >= py: return 0
         total = 0

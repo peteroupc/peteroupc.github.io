@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on Mar. 5, 2016; last updated on Sep. 15, 2019.
+Begun on Mar. 5, 2016; last updated on Sep. 16, 2019.
 
 Most apps that use random numbers care about either unpredictability, high quality, or repeatability.  This article explains the three kinds of RNGs and gives recommendations on each kind.
 
@@ -165,8 +165,6 @@ The following also count as high-quality PRNGs, but are not preferred:
 - C++'s [**`std::ranlux48` engine**](http://www.cplusplus.com/reference/random/ranlux48/) (state length 577 bits; nonzero seed) can be slower than alternatives because it discards many "random" numbers before outputting another.
 - [**`xoroshiro128+`**](http://xoshiro.di.unimi.it/xoroshiro128plus.c), `xoshiro256+`, and `xorshift128+`.  As described by (Blackman and Vigna 2018)<sup>[**(11)**](#Note11)</sup>, these linear PRNGs use weak scramblers, so that each output's lowest bits have low linear complexity even though the output as a whole has excellent statistical randomness.  See also [**"Testing lowest bits in isolation"**](http://xoshiro.di.unimi.it/lowcomp.php).
 
-Generally, implementing a size-N [**Bays&ndash;Durham shuffle**](#Bays_ndash_Durham_Shuffle) on top of a PRNG will extend that PRNG's period (maximum size of a "random" number cycle) to about the number of ways to arrange an N-item list.
-
 The following are not considered high-quality PRNGs:
 - Any [**linear congruential generator**](https://en.wikipedia.org/wiki/Linear_congruential_generator) with modulus 2<sup>63</sup> or less (such as `java.util.Random` and C++'s `std::minstd_rand` and `std::minstd_rand0` engines) has a _state length_ of less than 64 bits.
 - `System.Random`, as implemented in the .NET Framework 4.7, can take a seed of at most 32 bits, so has a state length of at most 32 bits.
@@ -195,7 +193,7 @@ If an application chooses to use a manually-seeded PRNG for repeatable "randomne
 - SHOULD choose a [**high-quality PRNG**](#High_Quality_PRNG_Examples),
 - SHOULD choose a PRNG implementation with consistent behavior that will not change in the future,
 - ought to document the chosen PRNG being used as well as all the parameters for that PRNG,
-- ought to generate seeds for the PRNG that are likely to vary "wildly" from previous seeds (see "[**Seed Generation for Noncryptographic RNGs**](#Seed_Generation_for_Noncryptographic_RNGs)"), and
+- ought to generate seeds for the PRNG that are likely to vary "wildly" from previous seeds (see "[**Seed Generation for Noncryptographic PRNGs**](#Seed_Generation_for_Noncryptographic_PRNGs)"), and
 - SHOULD NOT seed the PRNG with floating-point numbers or generate floating-point numbers with that PRNG.
 
 > **Example:** An application could implement a manually-seeded PRNG using a third-party library that specifically says it implements a [**high-quality PRNG algorithm**](#High_Quality_PRNG_Examples), and could initialize that PRNG using a bit sequence from a cryptographic RNG.  The developers could also mention the use of the specific PRNG chosen on any code that uses it, to alert other developers that the PRNG needs to remain unchanged.
@@ -430,7 +428,7 @@ An application can generally achieve consistency by not changing the algorithm b
 
 A seemingly random number can be generated from arbitrary data using a _hash function_.
 
-A _hash function_ is a function that takes an arbitrary input of any size (such as an array of 8-bit bytes or a sequence of characters) and returns an output with a fixed number of bits. That output is also known as a _hash code_. (By definition, hash functions are deterministic<sup>[**(32)**](#Note32)</sup>.)  The individual bits of a hash code can serve as random numbers, or the hash code can serve as the seed for a PRNG that, in turn, [**generates random numbers**](https://peteroupc.github.io/randomfunc.html) in the desired way.
+A _hash function_ is a function that takes an arbitrary input of any size (such as an array of 8-bit bytes or a sequence of characters) and returns an output with a fixed number of bits. That output is also known as a _hash code_.<sup>[**(32)**](#Note32)</sup>.  The individual bits of a hash code can serve as random numbers, or the hash code can serve as the seed for a PRNG that, in turn, [**generates random numbers**](https://peteroupc.github.io/randomfunc.html) in the desired way.
 
 Useful properties of some hash functions include&mdash;
 
@@ -677,10 +675,12 @@ The following Python code suggests how many bits of entropy are needed for shuff
 <a id=Bays_ndash_Durham_Shuffle></a>
 ### Bays&ndash;Durham Shuffle
 
-The Bays&ndash;Durham shuffle extends a PRNG's period (maximum size of a "random" number cycle) by giving it a bigger state.  The following describes the Bays&ndash;Durham shuffle with a size of `tablesize`.  For PRNGs that output 32- or 64-bit integers 0 or greater, a `tablesize` of 256, 512, or 1024 is suggested.
+The Bays&ndash;Durham shuffle extends a PRNG's period (maximum size of a "random" number cycle) by giving it a bigger state. Generally, for a size of `tablesize`, the period is extended to about the number of ways to arrange a list of size `tablesize`.  The following describes the Bays&ndash;Durham shuffle with a size of `tablesize`.  For PRNGs that output 32- or 64-bit integers 0 or greater, a `tablesize` of 256, 512, or 1024 is suggested.
 
 - For the first "random" number, fill a list with as many numbers from the PRNG as `tablesize`, then set `k` to another number from the PRNG, then output `k`.
 - For each additional "random" number, take the entry at position (`k` % `tablesize`) in the list, where '%' is the remainder operator and positions start at 0, then set `k` to that entry, then replace the entry at that position with a new number from the PRNG, then output `k`.
+
+The Bays&ndash;Durham shuffle is NOT RECOMMENDED for information security purposes.
 
 <a id=License></a>
 ## License

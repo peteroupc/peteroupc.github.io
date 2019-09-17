@@ -15,6 +15,9 @@ class Fixed:
    behavior, and order of operations, as well as nonassociativity of
    floating-point numbers.
 
+   The operations given here are not guaranteed to be "constant-time"
+   (non-data-dependent and branchless) for all relevant inputs.
+
    Any copyright to this file is dedicated to the Public Domain, under
    Creative Commons Zero version 1.0.
    """
@@ -187,11 +190,19 @@ class Fixed:
        return av
 
    def asin(a):
+     """
+     Calculates an approximation of the inverse sine of the given number.
+     """
      av=Fixed.v(a)
+     if av<-1 or av>1: raise ValueError
      return av.atan2((Fixed.v(1)-av*av).sqrt())
 
    def acos(a):
+     """
+     Calculates an approximation of the inverse sine of the given number.
+     """
      av=Fixed.v(a)
+     if av<-1 or av>1: raise ValueError
      return (Fixed.v(1)-av*av).sqrt().atan2(av)
 
    def __int__(a):
@@ -256,18 +267,40 @@ class Fixed:
      return [ry, rx]
 
    def sin(a):
+     """
+     Calculates the approximate sine of the given angle; the angle is in radians.
+     For the fraction size used by this class, this method is accurate to within
+     1 unit in the last place of the correctly rounded result for all inputs in the range [-pi*2, pi*2].
+     This method's accuracy decreases beyond that range.
+     """
      ret=Fixed.v(a)._sincos()[0]
      return Fixed._roundedshift(ret, Fixed.ArcTanBitDiff)
 
    def cos(a):
+     """
+     Calculates the approximate cosine of the given angle; the angle is in radians.
+     For the fraction size used by this class, this method is accurate to within
+     1 unit in the last place of the correctly rounded result for all inputs in the range [-pi*2, pi*2].
+     This method's accuracy decreases beyond that range.
+     """
      ret=Fixed.v(a)._sincos()[1]
      return Fixed._roundedshift(ret, Fixed.ArcTanBitDiff)
 
    def tan(a):
+     """
+     Calculates the approximate tangent of the given angle; the angle is in radians.  This method
+     is not very accurate if the tangent is very large (which happens
+     if the angle is close to pi/2 or pi*3/2 radians), and the method's
+     accuracy decreases beyond pi*2 or -pi*2 radians.
+     """
      sc=Fixed.v(a)._sincos()
      return Fixed(Fixed._divbits(sc[0],sc[1],Fixed.BITS))
 
    def atan2(y, x):
+     """
+     Calculates the approximate measure of the angle formed by the origin, the given
+     coordinates of a 2D point, and the X axis.  This is also known as the inverse tangent.
+     """
      rx=Fixed.v(x).value
      ry=Fixed.v(y).value
      if ry==0 and rx==0:
@@ -301,6 +334,9 @@ class Fixed:
      return Fixed._roundedshift(rz, Fixed.ArcTanBitDiff)
 
    def pow(a, b):
+     """
+     Calculates an approximation of one number raised to the power of another.
+     """
      av=Fixed.v(a)
      bv=Fixed.v(b)
      if bv==0: return Fixed.v(1)
@@ -335,6 +371,9 @@ class Fixed:
      return (bv*av.log()).exp()
 
    def sqrt(a):
+     """
+     Calculates an approximation of the square root of a number.
+     """
      if a<0: raise ValueError
      if a==0: return Fixed(0)
      return Fixed.v(a).pow(Fixed(1<<(Fixed.BITS-1)))
@@ -343,6 +382,9 @@ class Fixed:
    Log2Bits = 726817 # log(2), in BITS fractional bits
 
    def log(a):
+     """
+     Calculates an approximation of the natural logarithm of a number.
+     """
      fa=Fixed.v(a)
      av=fa.value
      if av<=0: raise ValueError
@@ -367,13 +409,15 @@ class Fixed:
      return Fixed._roundedshift(rz, Fixed.ArcTanBitDiff - 1)
 
    def exp(a):
+     """
+     Calculates an approximation of e (base of natural logarithms) raised
+     to the power of this number.
+     """
      fa=Fixed.v(a)
      av=fa.value
      if av==0: return Fixed.v(1)
      if av<0:
         return Fixed.v(1)/(-a).exp()
-     if fa>Fixed.v(3):
-        return (fa/3).exp().pow(3)
      if fa>Fixed.v(1):
         return (fa/2).exp().pow(2)
      ava=abs(av)
@@ -413,6 +457,7 @@ if __name__ == "__main__":
    asserteq(Fixed.v(9), Fixed.v(3).pow(2))
    asserteq(Fixed.v(27), Fixed.v(3).pow(3))
    asserteq(Fixed.v(81), Fixed.v(3).pow(4))
+   print("ulp=%0.12f" % Fixed(1))
    maxerror=0
    for y in range(-50, 60):
      for x in range(-50, 60):
@@ -449,26 +494,6 @@ if __name__ == "__main__":
      maxerror=max(abs(fxs-fps), maxerror)
    print("tan maxerror=%0.12f" % maxerror)
    maxerror=0
-   for v in range(-Fixed.PiBits*2, Fixed.PiBits*2+1):
-     if v%493!=0: continue
-     fx=Fixed(v)
-     fxs=float(fx.sin())
-     fps=math.sin(float(fx))
-     if abs(fxs-fps)>0.1:
-      print([v,fx,fxs,fps])
-     maxerror=max(abs(fxs-fps), maxerror)
-   print("sin maxerror=%0.12f" % maxerror)
-   maxerror=0
-   for v in range(-Fixed.PiBits*2, Fixed.PiBits*2+1):
-     if v%493!=0: continue
-     fx=Fixed(v)
-     fxs=float(fx.cos())
-     fps=math.cos(float(fx))
-     if abs(fxs-fps)>0.1:
-      print([v,fx,fxs,fps])
-     maxerror=max(abs(fxs-fps), maxerror)
-   print("cos maxerror=%0.12f" % maxerror)
-   maxerror=0
    for v in range(0, Fixed.PiBits*4+1):
      if v%493!=0: continue
      fx=Fixed(v)
@@ -499,3 +524,45 @@ if __name__ == "__main__":
         print([fx,fx2,fxs,fps])
        maxerror=max(abs(fxs-fps), maxerror)
    print("atan2 maxerror=%0.12f" % maxerror)
+   maxerror=0
+   for v in range(-(1<<Fixed.BITS), (1<<Fixed.BITS)+1):
+     fx=Fixed(v)
+     fxsv=fx.asin()
+     fxs=float(fxsv)
+     fps=math.asin(float(fx))
+     if abs(fxs-fps)>0.1:
+      print([v,fx,fxs,fps])
+     maxerror=max(abs(fxs-fps), maxerror)
+   print("asin maxerror=%0.12f" % maxerror)
+   maxerror=0
+   for v in range(-(1<<Fixed.BITS), (1<<Fixed.BITS)+1):
+     fx=Fixed(v)
+     fxsv=fx.acos()
+     fxs=float(fxsv)
+     fps=math.acos(float(fx))
+     if abs(fxs-fps)>0.1:
+      print([v,fx,fxs,fps])
+     maxerror=max(abs(fxs-fps), maxerror)
+   print("acos maxerror=%0.12f" % maxerror)
+   maxerror=0
+   for v in range(-Fixed.PiBits*2, Fixed.PiBits*2+1):
+     fx=Fixed(v)
+     fxsv=fx.sin()
+     if fxsv<-1 or fxsv>1: raise ValueError
+     fxs=float(fxsv)
+     fps=math.sin(float(fx))
+     if abs(fxs-fps)>0.1:
+      print([v,fx,fxs,fps])
+     maxerror=max(abs(fxs-fps), maxerror)
+   print("sin maxerror=%0.12f" % maxerror)
+   maxerror=0
+   for v in range(-Fixed.PiBits*2, Fixed.PiBits*2+1):
+     fx=Fixed(v)
+     fxsv=fx.cos()
+     if fxsv<-1 or fxsv>1: raise ValueError
+     fxs=float(fxsv)
+     fps=math.cos(float(fx))
+     if abs(fxs-fps)>0.1:
+      print([v,fx,fxs,fps])
+     maxerror=max(abs(fxs-fps), maxerror)
+   print("cos maxerror=%0.12f" % maxerror)

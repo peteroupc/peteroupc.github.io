@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
-<p>Begun on Mar. 5, 2016; last updated on Sep. 15, 2019.</p>
+<p>Begun on Mar. 5, 2016; last updated on Sep. 16, 2019.</p>
 
 <p>Most apps that use random numbers care about either unpredictability, high quality, or repeatability.  This article explains the three kinds of RNGs and gives recommendations on each kind.</p>
 
@@ -248,8 +248,6 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 <li><a href="http://xoshiro.di.unimi.it/xoroshiro128plus.c"><strong><code>xoroshiro128+</code></strong></a>, <code>xoshiro256+</code>, and <code>xorshift128+</code>.  As described by (Blackman and Vigna 2018)<sup><a href="#Note11"><strong>(11)</strong></a></sup>, these linear PRNGs use weak scramblers, so that each output&#39;s lowest bits have low linear complexity even though the output as a whole has excellent statistical randomness.  See also <a href="http://xoshiro.di.unimi.it/lowcomp.php"><strong>&quot;Testing lowest bits in isolation&quot;</strong></a>.</li>
 </ul>
 
-<p>Generally, implementing a size-N <a href="#Bays_ndash_Durham_Shuffle"><strong>Bays&ndash;Durham shuffle</strong></a> on top of a PRNG will extend that PRNG&#39;s period (maximum size of a &quot;random&quot; number cycle) to about the number of ways to arrange an N-item list.</p>
-
 <p>The following are not considered high-quality PRNGs:</p>
 
 <ul>
@@ -290,7 +288,7 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 <li>SHOULD choose a <a href="#High_Quality_PRNG_Examples"><strong>high-quality PRNG</strong></a>,</li>
 <li>SHOULD choose a PRNG implementation with consistent behavior that will not change in the future,</li>
 <li>ought to document the chosen PRNG being used as well as all the parameters for that PRNG,</li>
-<li>ought to generate seeds for the PRNG that are likely to vary &quot;wildly&quot; from previous seeds (see &quot;<a href="#Seed_Generation_for_Noncryptographic_RNGs"><strong>Seed Generation for Noncryptographic RNGs</strong></a>&quot;), and</li>
+<li>ought to generate seeds for the PRNG that are likely to vary &quot;wildly&quot; from previous seeds (see &quot;<a href="#Seed_Generation_for_Noncryptographic_PRNGs"><strong>Seed Generation for Noncryptographic PRNGs</strong></a>&quot;), and</li>
 <li>SHOULD NOT seed the PRNG with floating-point numbers or generate floating-point numbers with that PRNG.</li>
 </ul>
 
@@ -635,7 +633,7 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 
 <p>A seemingly random number can be generated from arbitrary data using a <em>hash function</em>.</p>
 
-<p>A <em>hash function</em> is a function that takes an arbitrary input of any size (such as an array of 8-bit bytes or a sequence of characters) and returns an output with a fixed number of bits. That output is also known as a <em>hash code</em>. (By definition, hash functions are deterministic<sup><a href="#Note32"><strong>(32)</strong></a></sup>.)  The individual bits of a hash code can serve as random numbers, or the hash code can serve as the seed for a PRNG that, in turn, <a href="https://peteroupc.github.io/randomfunc.html"><strong>generates random numbers</strong></a> in the desired way.</p>
+<p>A <em>hash function</em> is a function that takes an arbitrary input of any size (such as an array of 8-bit bytes or a sequence of characters) and returns an output with a fixed number of bits. That output is also known as a <em>hash code</em>.<sup><a href="#Note32"><strong>(32)</strong></a></sup>.  The individual bits of a hash code can serve as random numbers, or the hash code can serve as the seed for a PRNG that, in turn, <a href="https://peteroupc.github.io/randomfunc.html"><strong>generates random numbers</strong></a> in the desired way.</p>
 
 <p>Useful properties of some hash functions include&mdash;</p>
 
@@ -935,12 +933,14 @@ def stateLengthDecks(numDecks, numCards):
 
 <h3>Bays&ndash;Durham Shuffle</h3>
 
-<p>The Bays&ndash;Durham shuffle extends a PRNG&#39;s period (maximum size of a &quot;random&quot; number cycle) by giving it a bigger state.  The following describes the Bays&ndash;Durham shuffle with a size of <code>tablesize</code>.  For PRNGs that output 32- or 64-bit integers 0 or greater, a <code>tablesize</code> of 256, 512, or 1024 is suggested.</p>
+<p>The Bays&ndash;Durham shuffle extends a PRNG&#39;s period (maximum size of a &quot;random&quot; number cycle) by giving it a bigger state. Generally, for a size of <code>tablesize</code>, the period is extended to about the number of ways to arrange a list of size <code>tablesize</code>.  The following describes the Bays&ndash;Durham shuffle with a size of <code>tablesize</code>.  For PRNGs that output 32- or 64-bit integers 0 or greater, a <code>tablesize</code> of 256, 512, or 1024 is suggested.</p>
 
 <ul>
 <li>For the first &quot;random&quot; number, fill a list with as many numbers from the PRNG as <code>tablesize</code>, then set <code>k</code> to another number from the PRNG, then output <code>k</code>.</li>
 <li>For each additional &quot;random&quot; number, take the entry at position (<code>k</code> % <code>tablesize</code>) in the list, where &#39;%&#39; is the remainder operator and positions start at 0, then set <code>k</code> to that entry, then replace the entry at that position with a new number from the PRNG, then output <code>k</code>.</li>
 </ul>
+
+<p>The Bays&ndash;Durham shuffle is NOT RECOMMENDED for information security purposes.</p>
 
 <p><a id=License></a></p>
 
