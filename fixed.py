@@ -34,6 +34,8 @@ class Fixed:
    ArcTanFrac = 29
    ArcTanBitDiff = ArcTanFrac - BITS
    PiArcTanBits = 1686629713 # Pi, expressed in ArcTanFrac fractional bits
+   TwoTimesPiArcTanBits = 3373259426 # Pi*2, expressed in ArcTanFrac fractional bits
+   HalfPiArcTanBits = 843314856 # Pi/2, expressed in ArcTanFrac fractional bits
    SinCosK = 326016435 # Expressed in ArcTanFrac fractional bits
    ExpK = 648270061 # Expressed in ArcTanFrac fractional bits
    HalfPiBits = 1647099 # Half of pi, expressed in 20 fractional bits
@@ -115,6 +117,12 @@ class Fixed:
 
    @staticmethod
    def _divbits(av, bv, outputFracBits):
+     """
+     Divides two fixed point numbers and rounds the result
+     using round-to-nearest, ties to even.
+     av, bv - Fixed-point numbers with the same number of fractional bits
+     outputFracBits - Number of fractional bits in the result
+     """
      ava=abs(av)
      bva=abs(bv)
      ret=ava<<outputFracBits
@@ -240,24 +248,24 @@ class Fixed:
         ret=-ret
      return Fixed.v(ret)
 
-   def _sincos(a):
-     ra=Fixed.v(a).value
+   @staticmethod
+   def _sincos(ra):
      if ra==0: return [0, 1<<Fixed.ArcTanFrac]
      negra=ra<0
      ra=abs(ra)
-     if ra>=Fixed.TwoTimesPiBits: ra=ra%Fixed.TwoTimesPiBits
-     pi15=Fixed.PiBits+Fixed.HalfPiBits
+     if ra>=Fixed.TwoTimesPiArcTanBits: ra=ra%Fixed.TwoTimesPiArcTanBits
+     pi15=Fixed.PiArcTanBits+Fixed.HalfPiArcTanBits
      negateSin=negra
      negateCos=False
-     if ra>=Fixed.HalfPiBits and ra<pi15:
+     if ra>=Fixed.HalfPiArcTanBits and ra<pi15:
        negateCos=True
-       ra=Fixed.PiBits-ra
+       ra=Fixed.PiArcTanBits-ra
      if ra>=pi15:
        negateSin=(not negra)
-       ra=Fixed.TwoTimesPiBits-ra
+       ra=Fixed.TwoTimesPiArcTanBits-ra
      ry=0
      rx=Fixed.SinCosK
-     rz=ra << Fixed.ArcTanBitDiff
+     rz=ra
      for i in range(len(Fixed.ArcTanTable)):
         x=rx>>i
         y=ry>>i
@@ -271,6 +279,13 @@ class Fixed:
         rx=-rx
      return [ry, rx]
 
+   @staticmethod
+   def _signedshift(x, shift):
+     if x<0:
+       return -((-x)<<shift)
+     else:
+       return x<<shift
+
    def sin(a):
      """
      Calculates the approximate sine of the given angle; the angle is in radians.
@@ -278,7 +293,9 @@ class Fixed:
      1 unit in the last place of the correctly rounded result for all inputs in the range [-pi*2, pi*2].
      This method's accuracy decreases beyond that range.
      """
-     ret=Fixed.v(a)._sincos()[0]
+     ra=Fixed.v(a).value
+     if ra==0: return Fixed.v(0)
+     ret=Fixed._sincos(Fixed._signedshift(ra, Fixed.ArcTanBitDiff))[1]
      return Fixed._roundedshift(ret, Fixed.ArcTanBitDiff)
 
    def cos(a):
@@ -288,7 +305,9 @@ class Fixed:
      1 unit in the last place of the correctly rounded result for all inputs in the range [-pi*2, pi*2].
      This method's accuracy decreases beyond that range.
      """
-     ret=Fixed.v(a)._sincos()[1]
+     ra=Fixed.v(a).value
+     if ra==0: return Fixed.v(1)
+     ret=Fixed._sincos(Fixed._signedshift(ra, Fixed.ArcTanBitDiff))[1]
      return Fixed._roundedshift(ret, Fixed.ArcTanBitDiff)
 
    def tan(a):
@@ -298,8 +317,33 @@ class Fixed:
      if the angle is close to pi/2 or pi*3/2 radians), and the method's
      accuracy decreases beyond pi*2 or -pi*2 radians.
      """
-     sc=Fixed.v(a)._sincos()
-     return Fixed(Fixed._divbits(sc[0],sc[1],Fixed.BITS))
+     ra=Fixed.v(a).value
+     if ra==0: return Fixed.v(0)
+     sc=Fixed._sincos(Fixed._signedshift(ra, Fixed.ArcTanBitDiff))
+     ret=Fixed(Fixed._divbits(sc[0],sc[1],Fixed.BITS))
+     if abs(ret)>50:
+       # May be inaccurate, try for more accuracy
+       rashft=Fixed._signedshift(ra, Fixed.ArcTanBitDiff)
+       sc1=0
+       rnum=0
+       rden=0
+       if ra<0:
+         sc1=Fixed._sincos(rashft + (1<<Fixed.ArcTanFrac))
+       else:
+         sc1=Fixed._sincos(rashft - (1<<Fixed.ArcTanFrac))
+       sc2=Fixed._sincos(1<<Fixed.ArcTanFrac)
+       workbits=Fixed.ArcTanFrac*2
+       tan1=Fixed._divbits(sc1[0],sc1[1],workbits)
+       tan2=Fixed._divbits(sc2[0],sc2[1],workbits)
+       if ra<0:
+         rnum=Fixed._signedshift(tan1-tan2, workbits)
+         rden=(1<<(workbits*2))+(tan1*tan2)
+       else:
+         rnum=Fixed._signedshift(tan1+tan2, workbits)
+         rden=(1<<(workbits*2))-(tan1*tan2)
+       ret=Fixed._divbits(rnum,rden,Fixed.BITS)
+       return Fixed(ret)
+     return ret
 
    def atan2(y, x):
      """
@@ -502,7 +546,18 @@ if __name__ == "__main__":
    asserteq(Fixed.v(9), Fixed.v(3).pow(2))
    asserteq(Fixed.v(27), Fixed.v(3).pow(3))
    asserteq(Fixed.v(81), Fixed.v(3).pow(4))
-   print("ulp=%0.12f" % Fixed(1))
+   f1=Fixed(1)
+   print(f"ulp={f1:0.12f}")
+   maxerror=0
+   for v in range(-Fixed.PiBits*2, Fixed.PiBits*2+1):
+     if v%493!=0: continue
+     fx=Fixed(v)
+     fxs=float(fx.tan())
+     fps=math.tan(float(fx))
+     if abs(fxs-fps)>0.1:
+        print([fx,fxs,fps])
+     maxerror=max(abs(fxs-fps), maxerror)
+   print(f"tan maxerror={maxerror:0.12f}")
    maxerror=0
    for v in range(-Fixed.PiBits*2, Fixed.PiBits*2+1):
      if v%493!=0: continue
@@ -512,7 +567,7 @@ if __name__ == "__main__":
      if abs(fxs-fps)>0.1:
       print([v,fx,fxs,fps])
      maxerror=max(abs(fxs-fps), maxerror)
-   print("exp maxerror=%0.12f" % maxerror)
+   print(f"exp maxerror={maxerror:0.12f}")
    maxerror=0
    for v in range(0, Fixed.PiBits*4+1):
      if v%493!=0: continue
@@ -522,7 +577,7 @@ if __name__ == "__main__":
      if abs(fxs-fps)>0.1:
       print([v,fx,fxs,fps])
      maxerror=max(abs(fxs-fps), maxerror)
-   print("sqrt maxerror=%0.12f" % maxerror)
+   print(f"sqrt maxerror={maxerror:0.12f}")
    maxerror=0
    for y in range(-50, 60):
      for x in range(-50, 60):
@@ -537,7 +592,7 @@ if __name__ == "__main__":
        #if abs(fxs-fps)>0.1:
        # print([fx,fx2,fxs,fps])
        maxerror=max(abs(fxs-fps), maxerror)
-   print("pow maxerror=%0.12f" % maxerror)
+   print(f"pow maxerror={maxerror:0.12f}")
    maxerror=0
    for v in range(1, Fixed.PiBits*4+1):
      if v%493!=0: continue
@@ -547,18 +602,7 @@ if __name__ == "__main__":
      if abs(fxs-fps)>0.1:
       print([v,fx,fxs,fps])
      maxerror=max(abs(fxs-fps), maxerror)
-   print("log maxerror=%0.12f" % maxerror)
-   maxerror=0
-   for v in range(-Fixed.PiBits*2, Fixed.PiBits*2+1):
-     if v%493!=0: continue
-     fx=Fixed(v)
-     fxs=float(fx.tan())
-     fps=math.tan(float(fx))
-     if abs(fxs-fps)>0.1:
-        print([fx,fxs,fps])
-     maxerror=max(abs(fxs-fps), maxerror)
-   print("tan maxerror=%0.12f" % maxerror)
-
+   print(f"log maxerror={maxerror:0.12f}"r)
    maxerror=0
    for y in range(-50, 60):
      for x in range(-50, 60):
@@ -569,7 +613,7 @@ if __name__ == "__main__":
        if abs(fxs-fps)>0.1:
         print([fx,fx2,fxs,fps])
        maxerror=max(abs(fxs-fps), maxerror)
-   print("atan2 maxerror=%0.12f" % maxerror)
+   print(f"atan2 maxerror={maxerror:0.12f}")
    maxerror=0
    for v in range(-(1<<Fixed.BITS), (1<<Fixed.BITS)+1):
      fx=Fixed(v)
@@ -579,7 +623,7 @@ if __name__ == "__main__":
      if abs(fxs-fps)>0.1:
       print([v,fx,fxs,fps])
      maxerror=max(abs(fxs-fps), maxerror)
-   print("asin maxerror=%0.12f" % maxerror)
+   print(f"asin maxerror={maxerror:0.12f}")
    maxerror=0
    for v in range(-(1<<Fixed.BITS), (1<<Fixed.BITS)+1):
      fx=Fixed(v)
@@ -589,7 +633,7 @@ if __name__ == "__main__":
      if abs(fxs-fps)>0.1:
       print([v,fx,fxs,fps])
      maxerror=max(abs(fxs-fps), maxerror)
-   print("acos maxerror=%0.12f" % maxerror)
+   print(f"acos maxerror={maxerror:0.12f}")
    maxerror=0
    for v in range(-Fixed.PiBits*2, Fixed.PiBits*2+1):
      fx=Fixed(v)
@@ -600,7 +644,7 @@ if __name__ == "__main__":
      if abs(fxs-fps)>0.1:
       print([v,fx,fxs,fps])
      maxerror=max(abs(fxs-fps), maxerror)
-   print("sin maxerror=%0.12f" % maxerror)
+   print(f"sin maxerror={maxerror:0.12f}")
    maxerror=0
    for v in range(-Fixed.PiBits*2, Fixed.PiBits*2+1):
      fx=Fixed(v)
@@ -611,4 +655,4 @@ if __name__ == "__main__":
      if abs(fxs-fps)>0.1:
       print([v,fx,fxs,fps])
      maxerror=max(abs(fxs-fps), maxerror)
-   print("cos maxerror=%0.12f" % maxerror)
+   print(f"cos maxerror={maxerror:0.12f}")
