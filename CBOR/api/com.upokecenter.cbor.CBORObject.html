@@ -33,17 +33,20 @@
  class also doubles as a reader and writer of JavaScript object
  Notation (JSON). The CBORObject.FromJSONString method converts JSON
  to a CBOR object, and the ToJSONString method converts a CBOR object
- to a JSON string.</p> <p>In addition, the CBORObject.WriteJSON
- method writes many kinds of objects as JSON to a data stream,
- including numbers, CBOR objects, strings, and arrays of numbers and
- strings. The CBORObject.Read method reads a CBOR object from a JSON
- data stream.</p> <p><b>Comparison Considerations:</b></p>
-
-<p><p>Instances of CBORObject should not be compared for equality using
-  the &quot;==&quot; operator; it&#39;s possible to create two CBOR objects with the
-  same value but not the same reference. (The &quot;==&quot; operator might only
+ to a JSON string. (Note that the conversion from CBOR to JSON is not
+ always without loss and may not always recover the original object
+ when converting the JSON back to CBOR. See the ToJSONString
+ documentation.)</p> <p>In addition, the CBORObject.WriteJSON method
+ writes many kinds of objects as JSON to a data stream, including
+ numbers, CBOR objects, strings, and arrays of numbers and strings.
+ The CBORObject.Read method reads a CBOR object from a JSON data
+ stream.</p> <p><b>Comparison Considerations:</b></p> <p>Instances of
+  CBORObject should not be compared for equality using the "=="
+ operator; it's possible to create two CBOR objects with the same
+  value but not the same reference. (The "==" operator might only
  check if each side of the operator is the same instance.)</p>
- <p>This class&#39;s natural ordering (under the compareTo method) is
+
+<p><p>This class&#39;s natural ordering (under the compareTo method) is
  consistent with the Equals method, meaning that two values that
  compare as equal under the compareTo method are also equal under the
  Equals method; this is a change in version 4.0. Two otherwise equal
@@ -4683,24 +4686,32 @@ a 32-bit signed integer (<code>int</code>).</p></li>
  number is converted to null.)</li> <li>Simple values other than true
  and false will be converted to null. (This doesn&#39;t include
  floating-point numbers.)</li> <li>Infinity and not-a-number will be
- converted to null.</li> </ul> <p>The example code given below
- (originally written in C# for the.NET version) can be used to write
- out certain keys of a CBOR map in a given order to a JSON
- string.</p> <pre>/* Generates a JSON string of &#39;mapObj&#39; whose keys
- are in the order given in &#39;keys&#39; . Only keys found in &#39;keys&#39; will be
- written if they exist in &#39;mapObj&#39;. */ private static string
- KeysToJSONMap(CBORObject mapObj, List&lt;CBORObject&gt; keys) { if
-  (mapObj == null) { throw new NullPointerException)&quot;mapObj&quot;);}
-  if (keys == null) { throw new NullPointerException)&quot;keys&quot;);}
-  if (obj.getType() != CBORType.Map) { throw new IllegalArgumentException(&quot;&#39;obj&#39;
-  is not a map.&quot;); } StringBuilder builder = new StringBuilder();
-  boolean first = true; builder.append(&quot;{&quot;); for (CBORObject key in
- keys) { if (mapObj.ContainsKey(key)) { if (!first)
-  {builder.append(&quot;, &quot;);} var keyString=(key.getCBORType() ==
- CBORType.string) ? key.AsString() : key.ToJSONString();
- builder.append(CBORObject.FromObject(keyString) .ToJSONString())
-  .append(&quot;:&quot;).append(mapObj.get(key).ToJSONString()); first=false; }
-  } return builder.append(&quot;}&quot;).toString(); }</pre> .</p>
+ converted to null.</li> </ul> <p><b>Warning:</b> In general, if this
+ CBOR object contains integer map keys or uses other features not
+ supported in JSON, and the application converts this CBOR object to
+ JSON and back to CBOR, the application <i>should not</i> expect the
+ new CBOR object to be exactly the same as the original. This is
+ because the conversion in many cases may have to convert unsupported
+ features in JSON to supported features which correspond to a
+ different feature in CBOR (such as converting integer map keys,
+ which are supported in CBOR but not JSON to text strings, which are
+ supported in both).</p> <p>The example code given below (originally
+ written in C# for the.NET version) can be used to write out certain
+ keys of a CBOR map in a given order to a JSON string.</p> <pre>/*
+ Generates a JSON string of &#39;mapObj&#39; whose keys are in the order
+ given in &#39;keys&#39; . Only keys found in &#39;keys&#39; will be written if they
+ exist in &#39;mapObj&#39;. */ private static string KeysToJSONMap(CBORObject
+ mapObj, List&lt;CBORObject&gt; keys) { if (mapObj == null) { throw
+  new NullPointerException)&quot;mapObj&quot;);} if (keys == null) {
+  throw new NullPointerException)&quot;keys&quot;);} if (obj.getType() !=
+  CBORType.Map) { throw new IllegalArgumentException(&quot;&#39;obj&#39; is not a map.&quot;);
+ } StringBuilder builder = new StringBuilder(); boolean first = true;
+  builder.append(&quot;{&quot;); for (CBORObject key in keys) { if
+  (mapObj.ContainsKey(key)) { if (!first) {builder.append(&quot;, &quot;);} var
+ keyString=(key.getCBORType() == CBORType.string) ? key.AsString() :
+ key.ToJSONString(); builder.append(CBORObject.FromObject(keyString)
+.ToJSONString()) .append(&quot;:&quot;).append(mapObj.get(key).ToJSONString());
+  first=false; } } return builder.append(&quot;}&quot;).toString(); }</pre> .</p>
 
 <p><strong>Parameters:</strong></p>
 

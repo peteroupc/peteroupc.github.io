@@ -39,6 +39,7 @@ class Fixed:
    HalfPiBits = 1647099 # Half of pi, expressed in 20 fractional bits
    PiBits = 3294199 # Pi, expressed in 20 fractional bits
    TwoTimesPiBits = 6588397 # Pi*2, expressed in 20 fractional bits
+   Ln2ArcTanBits = 372130559  # Ln(2), expressed in ArcTanFrac fractional bits
 
    def __init__(self, i):
      self.value=i
@@ -97,7 +98,7 @@ class Fixed:
      return Fixed(ret)
 
    @staticmethod
-   def _roundedshift(a, shift):
+   def _roundedshiftraw(a, shift):
      aa=abs(a)
      ret=aa>>shift
      frac=aa&((1<<shift)-1)
@@ -106,13 +107,17 @@ class Fixed:
         ret+=1
      if a<0:
         ret=-ret
-     return Fixed(ret)
+     return ret
 
    @staticmethod
-   def _divbits(av, bv, bits):
+   def _roundedshift(a, shift):
+     return Fixed(Fixed._roundedshiftraw(a, shift))
+
+   @staticmethod
+   def _divbits(av, bv, outputFracBits):
      ava=abs(av)
      bva=abs(bv)
-     ret=ava<<bits
+     ret=ava<<outputFracBits
      frac = ret % bva
      ret = (ret // bva)
      # Rounding to nearest, ties to even
@@ -360,6 +365,7 @@ class Fixed:
             eiv*=eiv
             eivprec+=eivprec
        if bv<0:
+         # Reciprocal
          rv=Fixed._divbits(1<<(Fixed.BITS+rprec), r, Fixed.BITS)
          r=Fixed(rv)
        else:
@@ -376,24 +382,44 @@ class Fixed:
      """
      if a<0: raise ValueError
      if a==0: return Fixed(0)
-     return Fixed.v(a).pow(Fixed(1<<(Fixed.BITS-1)))
+     return Fixed.v(a)._halflog().exp()
 
    LogMin = (1<<BITS)*15/100 # In BITS fractional bits
    Log2Bits = 726817 # log(2), in BITS fractional bits
 
+   def _halflog(a):
+     fa=Fixed.v(a)
+     av=fa.value
+     if av<=0: raise ValueError
+     if av >= 1<<(Fixed.BITS-1) or av < Fixed.LogMin:
+       return fa.log()/2
+     avx = av << Fixed.ArcTanBitDiff
+     rx=avx + (1<<Fixed.ArcTanFrac)
+     ry=avx - (1<<Fixed.ArcTanFrac)
+     rz=0
+     for i in range(1, len(Fixed.ArcTanHTable)):
+       iters=2 if i==4 or i==13 else 1
+       for m in range(iters):
+         x=rx>>i
+         y=ry>>i
+         if ry<=0:
+           rx+=y; ry+=x; rz-=Fixed.ArcTanHTable[i]
+         else:
+           rx-=y; ry-=x; rz+=Fixed.ArcTanHTable[i]
+     return Fixed._roundedshift(rz, Fixed.ArcTanBitDiff)
+
    def log(a):
      """
-     Calculates an approximation of the natural logarithm of a number.
+     Calculates an approximation of the natural logarithm of this number.
      """
      fa=Fixed.v(a)
      av=fa.value
      if av<=0: raise ValueError
-     avx = av << Fixed.ArcTanBitDiff
-     neglogrec = av < Fixed.LogMin
      if av >= 1<<(Fixed.BITS-1):
        return (fa/2).log()+Fixed(Fixed.Log2Bits)
      if av < Fixed.LogMin:
        return (fa*2).log()-Fixed(Fixed.Log2Bits)
+     avx = av << Fixed.ArcTanBitDiff
      rx=avx + (1<<Fixed.ArcTanFrac)
      ry=avx - (1<<Fixed.ArcTanFrac)
      rz=0
@@ -408,22 +434,11 @@ class Fixed:
            rx-=y; ry-=x; rz+=Fixed.ArcTanHTable[i]
      return Fixed._roundedshift(rz, Fixed.ArcTanBitDiff - 1)
 
-   def exp(a):
-     """
-     Calculates an approximation of e (base of natural logarithms) raised
-     to the power of this number.
-     """
-     fa=Fixed.v(a)
-     av=fa.value
-     if av==0: return Fixed.v(1)
-     if av<0:
-        return Fixed.v(1)/(-a).exp()
-     if fa>Fixed.v(1):
-        return (fa/2).exp().pow(2)
-     ava=abs(av)
+   @staticmethod
+   def _expinternal(avArcTanBits, recip, shift):
      rx=Fixed.ExpK
      ry=Fixed.ExpK
-     rz=ava << Fixed.ArcTanBitDiff
+     rz=avArcTanBits
      for i in range(1, len(Fixed.ArcTanHTable)):
        iters=2 if i==4 or i==13 else 1
        for m in range(iters):
@@ -433,7 +448,37 @@ class Fixed:
            rx+=y; ry+=x; rz-=Fixed.ArcTanHTable[i]
          else:
            rx-=y; ry-=x; rz+=Fixed.ArcTanHTable[i]
-     return Fixed._roundedshift(rx, Fixed.ArcTanBitDiff)
+     rx <<= shift
+     if recip:
+        # Reciprocal
+        rx=Fixed._divbits(1<<(Fixed.ArcTanFrac), rx, Fixed.ArcTanFrac)
+     return Fixed._roundedshiftraw(rx, Fixed.ArcTanBitDiff)
+
+   def exp(a):
+     """
+     Calculates an approximation of e (base of natural logarithms) raised
+     to the power of this number.  May raise an error if this number
+     is extremely high.
+     """
+     fa=Fixed.v(a)
+     av=fa.value
+     if av==0: return Fixed.v(1)
+     if Fixed.BITS<6 and fa < -6: return Fixed(0)
+     # With BITS 6 or greater, e^-BITS will round to 0
+     # in the round-to-nearest mode
+     if Fixed.BITS>=6 and fa < -Fixed.BITS: return Fixed(0)
+     avneg=av<0
+     ava=abs(av) << Fixed.ArcTanBitDiff
+     if abs(fa)>Fixed.v(1):
+        fint=ava//Fixed.Ln2ArcTanBits
+        frac=ava-fint*Fixed.Ln2ArcTanBits
+        if fint>(1<<32):
+           # Result too big to handle sanely
+           raise ValueError
+        avr=Fixed._expinternal(frac, avneg, fint)
+        return Fixed(avr)
+     avr=Fixed._expinternal(ava, avneg, 0)
+     return Fixed(avr)
 
    def __str__(self):
      return str(dec.Decimal(self.value)/dec.Decimal((1<<Fixed.BITS)))
@@ -458,6 +503,26 @@ if __name__ == "__main__":
    asserteq(Fixed.v(27), Fixed.v(3).pow(3))
    asserteq(Fixed.v(81), Fixed.v(3).pow(4))
    print("ulp=%0.12f" % Fixed(1))
+   maxerror=0
+   for v in range(-Fixed.PiBits*2, Fixed.PiBits*2+1):
+     if v%493!=0: continue
+     fx=Fixed(v)
+     fxs=float(fx.exp())
+     fps=math.exp(float(fx))
+     if abs(fxs-fps)>0.1:
+      print([v,fx,fxs,fps])
+     maxerror=max(abs(fxs-fps), maxerror)
+   print("exp maxerror=%0.12f" % maxerror)
+   maxerror=0
+   for v in range(0, Fixed.PiBits*4+1):
+     if v%493!=0: continue
+     fx=Fixed(v)
+     fxs=float(fx.sqrt())
+     fps=math.sqrt(float(fx))
+     if abs(fxs-fps)>0.1:
+      print([v,fx,fxs,fps])
+     maxerror=max(abs(fxs-fps), maxerror)
+   print("sqrt maxerror=%0.12f" % maxerror)
    maxerror=0
    for y in range(-50, 60):
      for x in range(-50, 60):
@@ -493,26 +558,7 @@ if __name__ == "__main__":
         print([fx,fxs,fps])
      maxerror=max(abs(fxs-fps), maxerror)
    print("tan maxerror=%0.12f" % maxerror)
-   maxerror=0
-   for v in range(0, Fixed.PiBits*4+1):
-     if v%493!=0: continue
-     fx=Fixed(v)
-     fxs=float(fx.sqrt())
-     fps=math.sqrt(float(fx))
-     if abs(fxs-fps)>0.1:
-      print([v,fx,fxs,fps])
-     maxerror=max(abs(fxs-fps), maxerror)
-   print("sqrt maxerror=%0.12f" % maxerror)
-   maxerror=0
-   for v in range(-Fixed.PiBits*2, Fixed.PiBits*2+1):
-     if v%493!=0: continue
-     fx=Fixed(v)
-     fxs=float(fx.exp())
-     fps=math.exp(float(fx))
-     if abs(fxs-fps)>0.1:
-      print([v,fx,fxs,fps])
-     maxerror=max(abs(fxs-fps), maxerror)
-   print("exp maxerror=%0.12f" % maxerror)
+
    maxerror=0
    for y in range(-50, 60):
      for x in range(-50, 60):
