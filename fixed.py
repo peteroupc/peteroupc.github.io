@@ -39,6 +39,7 @@ class Fixed:
    SinCosK = 326016435 # Expressed in ArcTanFrac fractional bits
    ExpK = 648270061 # Expressed in ArcTanFrac fractional bits
    HalfPiBits = 1647099 # Half of pi, expressed in 20 fractional bits
+   QuarterPiArcTanBits = 421657428 # Pi/4, expressed in ArcTanFrac fractional bits
    PiBits = 3294199 # Pi, expressed in 20 fractional bits
    TwoTimesPiBits = 6588397 # Pi*2, expressed in 20 fractional bits
    Ln2ArcTanBits = 372130559  # Ln(2), expressed in ArcTanFrac fractional bits
@@ -248,12 +249,95 @@ class Fixed:
         ret=-ret
      return Fixed.v(ret)
 
+   # High-resolution approximation of pi/2
+   HalfPiHighRes=0x1921fb54442d18469898cc51701b83
+   # High-resolution approximation of pi*2
+   TwoTimesPiHighRes=0x6487ed5110b4611a62633145c06e0e
+   # Pi*3/2
+   PiAndHalfHighRes=0x4b65f1fccc8748d3c9ca64f450528a
+   # Pi
+   PiHighRes=0x3243f6a8885a308d313198a2e03707
+   # Number of fractional bits in halfPiHighRes
+   HighResFrac=116
+
+   @staticmethod
+   def _highResSine(angle):
+     # For angles close to pi/2 or pi*3/2.
+     negra=angle<0
+     negOutput=negra
+     angle=abs(angle)
+     if angle>=Fixed.TwoTimesPiHighRes:
+       angle=angle%Fixed.TwoTimesPiHighRes
+     if angle>=Fixed.PiHighRes:
+       negOutput=(not negra)
+     if angle>=Fixed.HalfPiHighRes and angle<Fixed.PiAndHalfHighRes:
+       angle=abs(Fixed.PiHighRes-angle)
+     if angle>=Fixed.PiAndHalfHighRes:
+       angle=Fixed.TwoTimesPiHighRes-angle
+     zpidiff=angle-Fixed.HalfPiHighRes
+     zpidiffsq=zpidiff*zpidiff
+     zpidiff=zpidiffsq
+     zpdfrac=Fixed.HighResFrac*2
+     outputbits=Fixed.ArcTanFrac*3
+     ret=(1<<outputbits)
+     ret-=Fixed._divbits(zpidiff,2<<zpdfrac,outputbits)
+     denom=24
+     facinput=4
+     pos=True
+     while True:
+       zpidiff*=zpidiffsq
+       zpdfrac+=Fixed.HighResFrac*2
+       term=Fixed._divbits(zpidiff,denom<<zpdfrac,outputbits)
+       if term==0: break
+       if pos: ret+=term
+       else: ret-=term
+       pos=(not pos)
+       denom*=facinput*(facinput+1)
+       facinput+=2
+     if negOutput: ret=-ret
+     return ret
+
+   @staticmethod
+   def _highResCosine(angle):
+     # For angles close to pi/2 or pi*3/2.
+     ra=abs(angle)
+     negOutput=False
+     if angle>=Fixed.TwoTimesPiHighRes:
+       angle=angle%Fixed.TwoTimesPiHighRes
+     if angle>=Fixed.HalfPiHighRes and angle<Fixed.PiAndHalfHighRes:
+       negOutput=True
+     if angle>=Fixed.HalfPiHighRes and angle<Fixed.PiAndHalfHighRes:
+       angle=abs(Fixed.PiHighRes-angle)
+     if angle>=Fixed.PiAndHalfHighRes:
+       angle=Fixed.TwoTimesPiHighRes-angle
+     zpidiff=angle-Fixed.HalfPiHighRes
+     zpidiffsq=zpidiff*zpidiff
+     zpdfrac=Fixed.HighResFrac
+     outputbits=Fixed.ArcTanFrac*3
+     ret=-Fixed._divbits(zpidiff,1<<zpdfrac,outputbits)
+     denom=6
+     facinput=4
+     pos=True
+     while True:
+       zpidiff*=zpidiffsq
+       zpdfrac+=Fixed.HighResFrac*2
+       term=Fixed._divbits(zpidiff,denom<<zpdfrac,outputbits)
+       if term==0: break
+       if pos: ret+=term
+       else: ret-=term
+       pos=(not pos)
+       denom*=facinput*(facinput+1)
+       facinput+=2
+     if negOutput: ret=-ret
+     return ret
+
    @staticmethod
    def _sincos(ra):
      if ra==0: return [0, 1<<Fixed.ArcTanFrac]
      negra=ra<0
      ra=abs(ra)
-     if ra>=Fixed.TwoTimesPiArcTanBits: ra=ra%Fixed.TwoTimesPiArcTanBits
+     if ra>=Fixed.TwoTimesPiArcTanBits:
+       ra=ra%Fixed.TwoTimesPiArcTanBits
      pi15=Fixed.PiArcTanBits+Fixed.HalfPiArcTanBits
      negateSin=negra
      negateCos=False
@@ -290,19 +374,21 @@ class Fixed:
      """
      Calculates the approximate sine of the given angle; the angle is in radians.
      For the fraction size used by this class, this method is accurate to within
-     1 unit in the last place of the correctly rounded result for all inputs in the range [-pi*2, pi*2].
+     1 unit in the last place of the correctly rounded result for all inputs
+     in the range [-pi*2, pi*2].
      This method's accuracy decreases beyond that range.
      """
      ra=Fixed.v(a).value
      if ra==0: return Fixed.v(0)
-     ret=Fixed._sincos(Fixed._signedshift(ra, Fixed.ArcTanBitDiff))[1]
+     ret=Fixed._sincos(Fixed._signedshift(ra, Fixed.ArcTanBitDiff))[0]
      return Fixed._roundedshift(ret, Fixed.ArcTanBitDiff)
 
    def cos(a):
      """
      Calculates the approximate cosine of the given angle; the angle is in radians.
      For the fraction size used by this class, this method is accurate to within
-     1 unit in the last place of the correctly rounded result for all inputs in the range [-pi*2, pi*2].
+     1 unit in the last place of the correctly rounded result for all inputs
+     in the range [-pi*2, pi*2].
      This method's accuracy decreases beyond that range.
      """
      ra=Fixed.v(a).value
@@ -310,45 +396,38 @@ class Fixed:
      ret=Fixed._sincos(Fixed._signedshift(ra, Fixed.ArcTanBitDiff))[1]
      return Fixed._roundedshift(ret, Fixed.ArcTanBitDiff)
 
+   @staticmethod
+   def _tan(ra, outputbits):
+      if ra==0: return 0
+      sc=Fixed._sincos(ra)
+      ret=Fixed._divbits(sc[0],sc[1],outputbits)
+      if (abs(ret)>>outputbits)>5:
+         # Try for more accuracy in case of high tan value
+         shift=Fixed.HighResFrac-Fixed.ArcTanFrac
+         rs=Fixed._signedshift(ra,shift)
+         hsin=Fixed._highResSine(rs)
+         hcos=Fixed._highResCosine(rs)
+         ret=Fixed._divbits(hsin,hcos,outputbits)
+      return ret
+
    def tan(a):
      """
-     Calculates the approximate tangent of the given angle; the angle is in radians.  This method
-     is not very accurate if the tangent is very large (which happens
-     if the angle is close to pi/2 or pi*3/2 radians), and the method's
-     accuracy decreases beyond pi*2 or -pi*2 radians.
+     Calculates the approximate tangent of the given angle; the angle is in radians.
+     For the fraction size used by this class, this method is accurate to within
+     2 units in the last place of the correctly rounded result for all inputs
+     in the range [-pi*2, pi*2].
+     This method's accuracy decreases beyond that range.
      """
      ra=Fixed.v(a).value
      if ra==0: return Fixed.v(0)
-     sc=Fixed._sincos(Fixed._signedshift(ra, Fixed.ArcTanBitDiff))
-     ret=Fixed(Fixed._divbits(sc[0],sc[1],Fixed.BITS))
-     if abs(ret)>50:
-       # May be inaccurate, try for more accuracy
-       rashft=Fixed._signedshift(ra, Fixed.ArcTanBitDiff)
-       sc1=0
-       rnum=0
-       rden=0
-       if ra<0:
-         sc1=Fixed._sincos(rashft + (1<<Fixed.ArcTanFrac))
-       else:
-         sc1=Fixed._sincos(rashft - (1<<Fixed.ArcTanFrac))
-       sc2=Fixed._sincos(1<<Fixed.ArcTanFrac)
-       workbits=Fixed.ArcTanFrac*2
-       tan1=Fixed._divbits(sc1[0],sc1[1],workbits)
-       tan2=Fixed._divbits(sc2[0],sc2[1],workbits)
-       if ra<0:
-         rnum=Fixed._signedshift(tan1-tan2, workbits)
-         rden=(1<<(workbits*2))+(tan1*tan2)
-       else:
-         rnum=Fixed._signedshift(tan1+tan2, workbits)
-         rden=(1<<(workbits*2))-(tan1*tan2)
-       ret=Fixed._divbits(rnum,rden,Fixed.BITS)
-       return Fixed(ret)
-     return ret
+     rashft=Fixed._signedshift(ra, Fixed.ArcTanBitDiff)
+     return Fixed(Fixed._tan(rashft, Fixed.BITS))
 
    def atan2(y, x):
      """
-     Calculates the approximate measure of the angle formed by the origin, the given
-     coordinates of a 2D point, and the X axis.  This is also known as the inverse tangent.
+     Calculates the approximate measure, in radians, of the angle formed by the X axis and
+     a line determined by the origin and the given coordinates of a 2D point.
+     This is also known as the inverse tangent.
      """
      rx=Fixed.v(x).value
      ry=Fixed.v(y).value
@@ -546,16 +625,29 @@ if __name__ == "__main__":
    asserteq(Fixed.v(9), Fixed.v(3).pow(2))
    asserteq(Fixed.v(27), Fixed.v(3).pow(3))
    asserteq(Fixed.v(81), Fixed.v(3).pow(4))
-   f1=Fixed(1)
+   f1=float(Fixed(1))
    print(f"ulp={f1:0.12f}")
+   import random
+   maxerror=0
+   for i in range(1000000):
+     y=random.randint(-(10<<Fixed.BITS), (10<<Fixed.BITS)+1)
+     x=random.randint(-(10<<Fixed.BITS), (10<<Fixed.BITS)+1)
+     fx=Fixed(y)
+     fx2=Fixed(x)
+     fxs=float(fx.atan2(fx2))
+     fps=math.atan2(float(fx),float(fx2))
+     if abs(fxs-fps)>0.1:
+      print([fx,fx2,fxs,fps])
+     maxerror=max(abs(fxs-fps), maxerror)
+   print(f"atan2 maxerror={maxerror:0.12f}")
    maxerror=0
    for v in range(-Fixed.PiBits*2, Fixed.PiBits*2+1):
-     if v%493!=0: continue
      fx=Fixed(v)
-     fxs=float(fx.tan())
+     fxsv=fx.tan()
+     fxs=float(fxsv)
      fps=math.tan(float(fx))
      if abs(fxs-fps)>0.1:
-        print([fx,fxs,fps])
+      print([v,fx,fxs,fps])
      maxerror=max(abs(fxs-fps), maxerror)
    print(f"tan maxerror={maxerror:0.12f}")
    maxerror=0
@@ -602,18 +694,7 @@ if __name__ == "__main__":
      if abs(fxs-fps)>0.1:
       print([v,fx,fxs,fps])
      maxerror=max(abs(fxs-fps), maxerror)
-   print(f"log maxerror={maxerror:0.12f}"r)
-   maxerror=0
-   for y in range(-50, 60):
-     for x in range(-50, 60):
-       fx=Fixed.v(y*1.0)
-       fx2=Fixed.v(x*1.0)
-       fxs=float(fx.atan2(fx2))
-       fps=math.atan2(float(fx),float(fx2))
-       if abs(fxs-fps)>0.1:
-        print([fx,fx2,fxs,fps])
-       maxerror=max(abs(fxs-fps), maxerror)
-   print(f"atan2 maxerror={maxerror:0.12f}")
+   print(f"log maxerror={maxerror:0.12f}")
    maxerror=0
    for v in range(-(1<<Fixed.BITS), (1<<Fixed.BITS)+1):
      fx=Fixed(v)

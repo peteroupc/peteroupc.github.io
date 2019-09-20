@@ -19,7 +19,7 @@ Most but not all modern file systems support file names with _non-basic code poi
 
 Applications that wish to support internationalized file names can follow the suggestions below.
 
-### Suggestions for User-Facing Files
+### Guidance for User-Facing Files
 
 _User-facing files_ are files created by end users or introduced into the application by end users.  End users may want to name files in their language, making it necessary for many applications to support internationalized file names.
 
@@ -27,9 +27,9 @@ The MailLib library includes a [`MakeFilename`](https://peteroupc.github.io/Mail
 
 In one possible use of `MakeFilename`, a word-processing application could create a file name for a document by taking the document's title or the first few words of its body and adding a file extension like ".document" to those words (e.g., "My Report.document"), then pass that name to the `MakeFilename` method to get a suggested file name to show a user seeking to save that document.
 
-`MakeFilename` should not be used to prepare file names of existing files for the purpose of reading them or overwriting them.
+If an application receives the name of an existing file from the file system, it should use that file name without change for the purposes of accessing or overwriting that file; this means that for such purposes, the application should treat that file name as uninterpreted data without converting its contents in any way, including by the `MakeFilename` method, a transcoder, or a case converter.  This doesn't forbid applications from making changes to that file name for other purposes, including for the purpose of displaying that name to end users.
 
-### Suggestions for Non-User-Facing Files
+### Guidance for Non-User-Facing Files
 
 _Internal files_ are files used by the application only and not exposed directly to end users.
 
@@ -63,4 +63,4 @@ The string returned by `MakeFilename` is normalized using Unicode normalization 
 
 ### Directory Names
 
-The suggestions given here apply to names of directories as they do to file names.
+The guidance given here applies to names of directories as they do to file names.
