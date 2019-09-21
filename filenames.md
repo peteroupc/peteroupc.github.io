@@ -23,11 +23,11 @@ Applications that wish to support internationalized file names can follow the su
 
 _User-facing files_ are files created by end users or introduced into the application by end users.  End users may want to name files in their language, making it necessary for many applications to support internationalized file names.
 
-The MailLib library includes a [`MakeFilename`](https://peteroupc.github.io/MailLib/docs/PeterO.Mail.ContentDisposition.html#MakeFilename_string) method that converts a title or file name to a suitable name for saving data to a file.  `MakeFilename` does a number of things to maximize the chance that the name can be used as is in most file systems.
+**When creating new files:** The MailLib library includes a [`MakeFilename`](https://peteroupc.github.io/MailLib/docs/PeterO.Mail.ContentDisposition.html#MakeFilename_string) method that converts a title or file name to a suitable name for saving data to a file.  `MakeFilename` does a number of things to maximize the chance that the name can be used as is in most file systems.
 
 In one possible use of `MakeFilename`, a word-processing application could create a file name for a document by taking the document's title or the first few words of its body and adding a file extension like ".document" to those words (e.g., "My Report.document"), then pass that name to the `MakeFilename` method to get a suggested file name to show a user seeking to save that document.
 
-If an application receives the name of an existing file from the file system, it should use that file name without change for the purposes of accessing or overwriting that file; this means that for such purposes, the application should treat that file name as uninterpreted data without converting its contents in any way, including by the `MakeFilename` method, a transcoder, or a case converter.  This doesn't forbid applications from making changes to that file name for other purposes, including for the purpose of displaying that name to end users.
+**When accessing existing files:** If an application receives the name of an existing file (as opposed to its directory path) from the file system, it should use that file name without change for the purposes of accessing or overwriting that file; this means that for such purposes, the application should treat that file name as uninterpreted data without converting its contents in any way, including by the `MakeFilename` method, a transcoder, or a case converter.  This doesn't forbid applications from making changes to that file name for other purposes, including for the purpose of displaying that name to end users.
 
 ### Guidance for Non-User-Facing Files
 
@@ -48,10 +48,7 @@ Applications should avoid giving internal files an internationalized file name w
 
 ### File Name Length Limits
 
-Different file systems have different limits in the sizes of file names.  To maximize compatibility with different file system limits, applications should avoid using file names longer than&mdash;
-
-- 255 Unicode code points, if the names are limited to the basic characters given in the previous section, or
-- 63 Unicode code points, otherwise.
+Different file systems have different limits in the sizes of file names.  To maximize compatibility with different file system limits, applications should avoid using file names longer than 63 Unicode code points.
 
 (MS-DOS supported only file names with up to 8 bytes, followed optionally by "." and up to three more bytes, and with no more than one ".".  Such a limit almost never occurs in practice today.)
 
@@ -59,7 +56,7 @@ Different file systems have different limits in the sizes of file names.  To max
 
 The issue of normalization can come into play if an application supports internationalized file names.
 
-The string returned by `MakeFilename` is normalized using Unicode normalization form C (NFC) (see the [PeterO.Text.NormalizerInput](https://peteroupc.github.io/MailLib/docs/PeterO.Text.NormalizerInput.html) class for details). Although most file systems preserve the normalization of file names, there is one notable exception: The HFS Plus file system (on macOS before High Sierra) stores file names using a modified version of normalization form D (NFD) in which certain code points are not decomposed, including all base + slash code points, which are the only composed code points in Unicode that are decomposed in NFD but not in HFS Plus's version of NFD. If the filename will be used to save a file to an HFS Plus storage device, it is enough to normalize the return value with NFD for this purpose (because all base + slash code points were converted beforehand by MakeFilename to an alternate form). See also Apple's Technical Q&A "Text Encodings in VFS" and Technical Note TN1150, "HFS Plus Volume Format".
+The string returned by `MakeFilename` is normalized using Unicode normalization form C (NFC) (see the [PeterO.Text.NormalizerInput](https://peteroupc.github.io/MailLib/docs/PeterO.Text.NormalizerInput.html) class for details). Although most file systems preserve the normalization of file names, there is one notable exception: The HFS Plus file system (on macOS before High Sierra and on at least the iOS versions released in 2016 or earlier) stores file names using a modified version of normalization form D (NFD) in which certain code points are not decomposed, including all base + slash code points, which are the only composed code points in Unicode that are decomposed in NFD but not in HFS Plus's version of NFD. If the file name will be used to save a file to an HFS Plus storage device, it is enough to normalize the return value with NFD for this purpose (because all base + slash code points were converted beforehand by MakeFilename to an alternate form). See also Apple's Technical Q&A "Text Encodings in VFS" and Technical Note TN1150, "HFS Plus Volume Format".
 
 ### Directory Names
 
