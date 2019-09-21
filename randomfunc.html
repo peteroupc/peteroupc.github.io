@@ -209,7 +209,7 @@
 
 <ol>
 <li><a href="#Rejection_Sampling"><strong><em>Rejection sampling</em></strong></a>, which roughly means: sample in a bigger range until a sampled number fits the smaller range.  This method is <em>unbiased</em> but has a <em>variable running time</em> which could be exploited in a security attack.</li>
-<li><p>Reduction method.  Generate <code>bignumber</code>, an N-bit random number with many more bits than <code>maxInclusive + 1</code> has, then find&mdash;</p>
+<li><p>Reduction method.  Generate <code>bignumber</code>, an N-bit random integer with many more bits than <code>maxInclusive + 1</code> has, then find&mdash;</p>
 
 <ul>
 <li><code>rem(bignumber, maxInclusive + 1)</code> (modulo reduction), or</li>

@@ -4638,7 +4638,16 @@ a 32-bit signed integer (<code>int</code>).</p></li>
  CBORException. The example code given in
  <b>PeterO.Cbor.CBORObject.ToJSONString(PeterO.Cbor.JSONOptions)</b>
  can be used to write out certain keys of a CBOR map in a given order
- to a JSON string.</p></p>
+ to a JSON string.</p> <p><b>Warning:</b> In general, if this CBOR
+ object contains integer map keys or uses other features not
+ supported in JSON, and the application converts this CBOR object to
+ JSON and back to CBOR, the application <i>should not</i> expect the
+ new CBOR object to be exactly the same as the original. This is
+ because the conversion in many cases may have to convert unsupported
+ features in JSON to supported features which correspond to a
+ different feature in CBOR (such as converting integer map keys,
+ which are supported in CBOR but not JSON, to text strings, which are
+ supported in both).</p></p>
 
 <p><strong>Returns:</strong></p>
 
@@ -4861,12 +4870,13 @@ object to JSON.</p></li>
 <li><p><code>floatingBits</code> - The bits of a floating-point number number to write.</p></li>
 <li><p><code>byteCount</code> - The number of bytes of the stored floating-point number;
 this also specifies the format of the &quot;floatingBits&quot; parameter. This
-value can be 2 if &quot;floatingBits&quot;&#39;s lower 16 bits identify the
-floating-point number in IEEE 754r binary16 format; or 4 if
-&quot;floatingBits&quot;&#39;s lower 32 bits identify the floating-point number in
-IEEE 754r binary32 format; or 8 if &quot;floatingBits&quot; identifies the
-floating point number in IEEE 754r binary64 format. Any other values
-for this parameter are invalid.</p></li>
+value can be 2 if &quot;floatingBits&quot;&#39;s lowest (least significant) 16
+bits identify the floating-point number in IEEE 754r binary16
+format; or 4 if &quot;floatingBits&quot;&#39;s lowest (least significant) 32 bits
+identify the floating-point number in IEEE 754r binary32 format; or
+8 if &quot;floatingBits&quot; identifies the floating point number in IEEE
+754r binary64 format. Any other values for this parameter are
+invalid.</p></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -4896,12 +4906,13 @@ for this parameter are invalid.</p></li>
 <li><p><code>floatingBits</code> - The bits of a floating-point number number to write.</p></li>
 <li><p><code>byteCount</code> - The number of bytes of the stored floating-point number;
 this also specifies the format of the &quot;floatingBits&quot; parameter. This
-value can be 2 if &quot;floatingBits&quot;&#39;s lower 16 bits identify the
-floating-point number in IEEE 754r binary16 format; or 4 if
-&quot;floatingBits&quot;&#39;s lower 32 bits identify the floating-point number in
-IEEE 754r binary32 format; or 8 if &quot;floatingBits&quot; identifies the
-floating point number in IEEE 754r binary64 format. Any other values
-for this parameter are invalid.</p></li>
+value can be 2 if &quot;floatingBits&quot;&#39;s lowest (least significant) 16
+bits identify the floating-point number in IEEE 754r binary16
+format; or 4 if &quot;floatingBits&quot;&#39;s lowest (least significant) 32 bits
+identify the floating-point number in IEEE 754r binary32 format; or
+8 if &quot;floatingBits&quot; identifies the floating point number in IEEE
+754r binary64 format. Any other values for this parameter are
+invalid.</p></li>
 </ul>
 
 <p><strong>Returns:</strong></p>

@@ -145,7 +145,7 @@ This section describes how an underlying RNG can be used to generate independent
 In this document, **`RNDINT(maxInclusive)`** is the core method for using an underlying RNG to generate independent uniform random integers **in the interval [0, `maxInclusive`]**.<sup>[**(2)**](#Note2)</sup>.  The following are some ways to implement `RNDINT`:
 
 1. [**_Rejection sampling_**](#Rejection_Sampling), which roughly means: sample in a bigger range until a sampled number fits the smaller range.  This method is _unbiased_ but has a _variable running time_ which could be exploited in a security attack.
-2. Reduction method.  Generate `bignumber`, an N-bit random number with many more bits than `maxInclusive + 1` has, then find&mdash;
+2. Reduction method.  Generate `bignumber`, an N-bit random integer with many more bits than `maxInclusive + 1` has, then find&mdash;
     - `rem(bignumber, maxInclusive + 1)` (modulo reduction), or
     - `(bignumber * (maxInclusive + 1)) >> N` (see (Lemire 2016)<sup>[**(3)**](#Note3)</sup>).
 

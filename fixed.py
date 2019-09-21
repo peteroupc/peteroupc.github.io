@@ -127,6 +127,9 @@ class Fixed:
      ava=abs(av)
      bva=abs(bv)
      ret=ava<<outputFracBits
+     # Note: ret and bva are nonnegative, avoiding
+     # differences in rounding between languages
+     # when one but not both is negative
      frac = ret % bva
      ret = (ret // bva)
      # Rounding to nearest, ties to even
@@ -167,6 +170,9 @@ class Fixed:
      bva=abs(bv)<<Fixed.BITS
      ret=ava<<Fixed.BITS
      oldret=ret
+     # Note: ret and bva are nonnegative, avoiding
+     # differences in rounding between languages
+     # when one but not both is negative
      ret = (ret // bva)
      if (av>=0) != (bv>=0):
         frac = oldret % bva
@@ -176,6 +182,13 @@ class Fixed:
      return Fixed.v(ret)
 
    def __mod__(a, b):
+     # Note: In Python, the "//" integer division operator
+     # does a floor rounding of the quotient.  Other programming
+     # languages, such as Java, truncate the quotient's fractional part
+     # in integer division and define remainder, in general,
+     # as "a-(a/b)*b" where "/" is their integer division operator.
+     # Here, we use Python's definition of the "%" operator
+     # (and by extension "__mod__").
      return a - (a // b) * b
 
    def __neg__(self): return Fixed(-self.value)
@@ -593,6 +606,9 @@ class Fixed:
      avneg=av<0
      ava=abs(av) << Fixed.ArcTanBitDiff
      if abs(fa)>Fixed.v(1):
+        # Note: ava is nonnegative, avoiding
+        # differences in rounding between languages
+        # when one but not both is negative
         fint=ava//Fixed.Ln2ArcTanBits
         frac=ava-fint*Fixed.Ln2ArcTanBits
         if fint>(1<<32):
