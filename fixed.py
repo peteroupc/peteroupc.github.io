@@ -4,7 +4,7 @@ import math
 class Fixed:
    """
    Fixed-point numbers, represented using integers that store multiples
-   of 2^BITS.  They are not necessarily faster than floating-point numbers, nor
+   of 2^-BITS.  They are not necessarily faster than floating-point numbers, nor
    do they necessarily have the same precision or resolution of floating-point
    numbers.  The main benefit of fixed-point numbers is that they improve
    determinism for applications that rely on non-integer real numbers (notably
@@ -21,7 +21,7 @@ class Fixed:
    Any copyright to this file is dedicated to the Public Domain, under
    Creative Commons Zero version 1.0.
    """
-   # Bits in the fraction of a fixed-point number
+   """ Number of bits in the fractional part of a fixed-point number. """
    BITS = 20
    MASK = (1<<BITS)-1
    HALF = (1<<(BITS-1))
@@ -231,6 +231,12 @@ class Fixed:
      av=Fixed.v(a)
      if av<-1 or av>1: raise ValueError
      return (Fixed.v(1)-av*av).sqrt().atan2(av)
+
+   def sqrt(a):
+     """
+     Calculates an approximation of the square root of a the given number.
+     """
+     return Fixed.v(a).pow(Fixed(Fixed.HALF))
 
    def __int__(a):
      av=Fixed.v(a).value
@@ -476,22 +482,45 @@ class Fixed:
 
    def pow(a, b):
      """
-     Calculates an approximation of one number raised to the power of another.
+     Calculates an approximation of this number raised to the power of another number.
      """
      av=Fixed.v(a)
      bv=Fixed.v(b)
      if bv==0: return Fixed.v(1)
      if av==0:
         if bv<0: raise ValueError
-        return a
+        return av
      if av==1: return av
-     if bv.floor()==bv:
-       bva=abs(bv)
+     if bv.value==Fixed.HALF:
+        # Square root special case
+        ava=av.value*(1<<Fixed.BITS)
+        sx=ava
+        powerBits=0
+        while sx>0:
+           sx>>=1; powerBits+=1
+        powerBits=(powerBits+1)//2
+        sx=ava
+        sy=1 << powerBits;
+        while True:
+          sx = sy
+          sy = ava//sx
+          sy += sx
+          sy >>= 1
+          if sy>=sx: break
+        return Fixed(sx)
+     bvint=(bv.floor()==bv)
+     if av<0 and not bvint: raise ValueError
+     bva=abs(bv)
+     intpart=bva.floor()
+     fracpart=bva-intpart
+     # Power is an integer or greater than 1
+     if bvint or bv>1:
        r=1<<Fixed.BITS
        eiv=abs(av.value)
        eivprec=Fixed.BITS
        rprec=0
-       p=int(bva)
+       # Find the power of the integer part
+       p=int(intpart)
        while p>0:
          if (p&1)!=0:
             r*=eiv
@@ -502,23 +531,26 @@ class Fixed:
             eivprec+=eivprec
        if bv<0:
          # Reciprocal
-         rv=Fixed._divbits(1<<(Fixed.BITS+rprec), r, Fixed.BITS)
+         rv=Fixed._divbits(1<<(rprec+Fixed.BITS), r, Fixed.BITS)
          r=Fixed(rv)
        else:
-         r=Fixed._roundedshift(r,rprec)
+         if bv>1:
+            # We've found the power of the integer part,
+            # now find the power of the fractional part and
+            # multiply
+            # 'fracr' has 'rprec+BITS' fractional bits
+            fracr=av.pow(fracpart).value<<rprec
+            # 'r' has 'rprec+BITS' fractional bits
+            r*=fracr
+            r=Fixed._roundedshift(r,rprec*2+Fixed.BITS)
+         else:
+            # 'r' has 'rprec+BITS' fractional bits; after the
+            # shift, it has BITS fractional bits
+            r=Fixed._roundedshift(r,rprec)
        if av<0 and (int(bva)&1)==1:
          r=-r
        return r
-     if av<0: raise ValueError
      return (bv*av.log()).exp()
-
-   def sqrt(a):
-     """
-     Calculates an approximation of the square root of a number.
-     """
-     if a<0: raise ValueError
-     if a==0: return Fixed(0)
-     return Fixed.v(a)._halflog().exp()
 
    LogMin = (1<<BITS)*15/100 # In BITS fractional bits
    Log2Bits = 726817 # log(2), in BITS fractional bits
@@ -644,10 +676,30 @@ if __name__ == "__main__":
    f1=float(Fixed(1))
    print(f"ulp={f1:0.12f}")
    import random
+   rnd=random.Random()
+   maxerror=0
+   for i in range(100000):
+       y=rnd.randint(-(500<<Fixed.BITS), (500<<Fixed.BITS)+1)
+       x=rnd.randint(-(100<<Fixed.BITS), (100<<Fixed.BITS)+1)
+       fx=Fixed(y)
+       fx2=Fixed(x)
+       if fx==0 and fx2<0:
+         continue
+       if fx<0 and fx2.floor()!=fx2:
+         fx2=fx2.floor()
+       fxsv=fx.pow(fx2)
+       if fxsv.value>(1<<64):
+         continue
+       fxs=float(fxsv)
+       fps=math.pow(float(fx),float(fx2))
+       if abs(fxs-fps)>0.1:
+        print([fx,fx2,fxs,fps])
+       maxerror=max(abs(fxs-fps), maxerror)
+   print(f"pow (max=2^64) maxerror={maxerror:0.12f}")
    maxerror=0
    for i in range(1000000):
-     y=random.randint(-(10<<Fixed.BITS), (10<<Fixed.BITS)+1)
-     x=random.randint(-(10<<Fixed.BITS), (10<<Fixed.BITS)+1)
+     y=rnd.randint(-(10<<Fixed.BITS), (10<<Fixed.BITS)+1)
+     x=rnd.randint(-(10<<Fixed.BITS), (10<<Fixed.BITS)+1)
      fx=Fixed(y)
      fx2=Fixed(x)
      fxs=float(fx.atan2(fx2))
@@ -686,21 +738,6 @@ if __name__ == "__main__":
       print([v,fx,fxs,fps])
      maxerror=max(abs(fxs-fps), maxerror)
    print(f"sqrt maxerror={maxerror:0.12f}")
-   maxerror=0
-   for y in range(-50, 60):
-     for x in range(-50, 60):
-       fx=Fixed.v(y*1.34)
-       fx2=Fixed.v(x*1.37)
-       if fx==0 and fx2<0:
-         continue
-       if fx<0 and fx2.floor()!=fx2:
-         fx2=fx2.floor()
-       fxs=float(fx.pow(fx2))
-       fps=math.pow(float(fx),float(fx2))
-       #if abs(fxs-fps)>0.1:
-       # print([fx,fx2,fxs,fps])
-       maxerror=max(abs(fxs-fps), maxerror)
-   print(f"pow maxerror={maxerror:0.12f}")
    maxerror=0
    for v in range(1, Fixed.PiBits*4+1):
      if v%493!=0: continue

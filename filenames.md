@@ -33,7 +33,7 @@ In one possible use of `MakeFilename`, a word-processing application could creat
 
 _Internal files_ are files used by the application only and not exposed directly to end users.
 
-To maximize compatibility with file system conventions, applications should limit the names of internal files to names that have the following characters and are left unchanged by the [`MakeFilename`](https://peteroupc.github.io/MailLib/docs/PeterO.Mail.ContentDisposition.html#MakeFilename_string) method:
+To maximize compatibility with file system conventions, applications should limit the names of internal files to names that have the following characters only and are left unchanged by the [`MakeFilename`](https://peteroupc.github.io/MailLib/docs/PeterO.Mail.ContentDisposition.html#MakeFilename_string) method:
 
 - Basic lower-case letters (U+0061 to U+007A).
 - Basic digits (U+0030 to U+0039).
