@@ -444,9 +444,9 @@ class Fixed:
 
    def atan2(y, x):
      """
-     Calculates the approximate measure, in radians, of the angle formed by the X axis and
-     a line determined by the origin and the given coordinates of a 2D point.
-     This is also known as the inverse tangent.
+     Calculates the approximate measure, in radians, of the angle formed by the
+     X axis and a line determined by the origin and the given coordinates of a 2D
+     point.  This is also known as the inverse tangent.
      """
      rx=Fixed.v(x).value
      ry=Fixed.v(y).value
@@ -501,11 +501,12 @@ class Fixed:
         powerBits=(powerBits+1)//2
         sx=ava
         sy=1 << powerBits;
+        guardBits = Fixed.BITS//2
         while True:
           sx = sy
-          sy = ava//sx
-          sy += sx
-          sy >>= 1
+          sy = Fixed._divbits(ava, sx, guardBits)
+          sy += (sx << guardBits)
+          sy = Fixed._roundedshiftraw(sy, guardBits + 1)
           if sy>=sx: break
         return Fixed(sx)
      bvint=(bv.floor()==bv)
@@ -554,27 +555,6 @@ class Fixed:
 
    LogMin = (1<<BITS)*15/100 # In BITS fractional bits
    Log2Bits = 726817 # log(2), in BITS fractional bits
-
-   def _halflog(a):
-     fa=Fixed.v(a)
-     av=fa.value
-     if av<=0: raise ValueError
-     if av >= 1<<(Fixed.BITS-1) or av < Fixed.LogMin:
-       return fa.log()/2
-     avx = av << Fixed.ArcTanBitDiff
-     rx=avx + (1<<Fixed.ArcTanFrac)
-     ry=avx - (1<<Fixed.ArcTanFrac)
-     rz=0
-     for i in range(1, len(Fixed.ArcTanHTable)):
-       iters=2 if i==4 or i==13 else 1
-       for m in range(iters):
-         x=rx>>i
-         y=ry>>i
-         if ry<=0:
-           rx+=y; ry+=x; rz-=Fixed.ArcTanHTable[i]
-         else:
-           rx-=y; ry-=x; rz+=Fixed.ArcTanHTable[i]
-     return Fixed._roundedshift(rz, Fixed.ArcTanBitDiff)
 
    def log(a):
      """
@@ -678,6 +658,16 @@ if __name__ == "__main__":
    import random
    rnd=random.Random()
    maxerror=0
+   for v in range(0, Fixed.PiBits*4+1):
+     if v%493!=0: continue
+     fx=Fixed(v)
+     fxs=float(fx.sqrt())
+     fps=math.sqrt(float(fx))
+     if abs(fxs-fps)>0.1:
+      print([v,fx,fxs,fps])
+     maxerror=max(abs(fxs-fps), maxerror)
+   print(f"sqrt maxerror={maxerror:0.12f}")
+   maxerror=0
    for i in range(100000):
        y=rnd.randint(-(500<<Fixed.BITS), (500<<Fixed.BITS)+1)
        x=rnd.randint(-(100<<Fixed.BITS), (100<<Fixed.BITS)+1)
@@ -728,16 +718,6 @@ if __name__ == "__main__":
       print([v,fx,fxs,fps])
      maxerror=max(abs(fxs-fps), maxerror)
    print(f"exp maxerror={maxerror:0.12f}")
-   maxerror=0
-   for v in range(0, Fixed.PiBits*4+1):
-     if v%493!=0: continue
-     fx=Fixed(v)
-     fxs=float(fx.sqrt())
-     fps=math.sqrt(float(fx))
-     if abs(fxs-fps)>0.1:
-      print([v,fx,fxs,fps])
-     maxerror=max(abs(fxs-fps), maxerror)
-   print(f"sqrt maxerror={maxerror:0.12f}")
    maxerror=0
    for v in range(1, Fixed.PiBits*4+1):
      if v%493!=0: continue

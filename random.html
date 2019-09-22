@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
-<p>Begun on Mar. 5, 2016; last updated on Sep. 16, 2019.</p>
+<p>Begun on Mar. 5, 2016; last updated on Sep. 22, 2019.</p>
 
 <p>Most apps that use random numbers care about either unpredictability, high quality, or repeatability.  This article explains the three kinds of RNGs and gives recommendations on each kind.</p>
 
@@ -608,7 +608,7 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 
 <p>For an RNG algorithm to generate &quot;random&quot; numbers that are reproducible across computers, it needs to be a <em>consistent</em> algorithm.  (This factor is important only for manually-seeded PRNGs, not necessarily for other RNGs.)</p>
 
-<p>A <em>consistent algorithm</em> is an algorithm that delivers the same output if given the same input twice (is <em>deterministic</em>) and that does so&mdash;</p>
+<p>A <em>consistent algorithm</em> is an algorithm that delivers the same output each time if given the same input twice (is <em>deterministic</em>) and that does so&mdash;</p>
 
 <ul>
 <li>across time,</li>
@@ -662,7 +662,7 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 
 <h2>Verifiable Random Numbers</h2>
 
-<p><em>Verifiable random numbers</em> are random numbers (such as seeds for PRNGs) that are disclosed along with all the information necessary to verify their generation.  Usually, such information includes random numbers and/or uncertain data to be determined and publicly disclosed in the future.  Techniques to generate verifiable random numbers (as opposed to cryptographic RNGs alone) are used whenever one party alone can&#39;t be trusted to produce a number at random.</p>
+<p><em>Verifiable random numbers</em> are random numbers (such as seeds for PRNGs) that are disclosed along with all the information necessary to verify their generation.  Usually, such information includes random numbers and/or uncertain data to be determined and publicly disclosed in the future.  Techniques to generate verifiable random numbers (as opposed to cryptographic RNGs alone) are used whenever one party alone can&#39;t be trusted to produce a number at random.  Verifiable random numbers that are disclosed <em>publicly</em> SHOULD NOT be used as encryption keys or other secret parameters.</p>
 
 <blockquote>
 <p><strong>Examples:</strong></p>

@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on Mar. 5, 2016; last updated on Sep. 16, 2019.
+Begun on Mar. 5, 2016; last updated on Sep. 22, 2019.
 
 Most apps that use random numbers care about either unpredictability, high quality, or repeatability.  This article explains the three kinds of RNGs and gives recommendations on each kind.
 
@@ -408,7 +408,7 @@ to generate the unique identifier.<sup>[**(29)**](#Note29)</sup> (In general, ge
 
 For an RNG algorithm to generate "random" numbers that are reproducible across computers, it needs to be a _consistent_ algorithm.  (This factor is important only for manually-seeded PRNGs, not necessarily for other RNGs.)
 
-A _consistent algorithm_ is an algorithm that delivers the same output if given the same input twice (is _deterministic_) and that does so&mdash;
+A _consistent algorithm_ is an algorithm that delivers the same output each time if given the same input twice (is _deterministic_) and that does so&mdash;
 
 - across time,
 - across different executions of the algorithm,
@@ -450,7 +450,7 @@ A _noise function_ is similar to a hash function; it takes an _n_-dimensional po
 <a id=Verifiable_Random_Numbers></a>
 ## Verifiable Random Numbers
 
-_Verifiable random numbers_ are random numbers (such as seeds for PRNGs) that are disclosed along with all the information necessary to verify their generation.  Usually, such information includes random numbers and/or uncertain data to be determined and publicly disclosed in the future.  Techniques to generate verifiable random numbers (as opposed to cryptographic RNGs alone) are used whenever one party alone can't be trusted to produce a number at random.
+_Verifiable random numbers_ are random numbers (such as seeds for PRNGs) that are disclosed along with all the information necessary to verify their generation.  Usually, such information includes random numbers and/or uncertain data to be determined and publicly disclosed in the future.  Techniques to generate verifiable random numbers (as opposed to cryptographic RNGs alone) are used whenever one party alone can't be trusted to produce a number at random.  Verifiable random numbers that are disclosed _publicly_ SHOULD NOT be used as encryption keys or other secret parameters.
 
 > **Examples:**
 >
