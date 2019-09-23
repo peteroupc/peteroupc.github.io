@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
-<p>Begun on Mar. 5, 2016; last updated on Sep. 22, 2019.</p>
+<p>Begun on Mar. 5, 2016; last updated on Sep. 23, 2019.</p>
 
 <p>Most apps that use random numbers care about either unpredictability, high quality, or repeatability.  This article explains the three kinds of RNGs and gives recommendations on each kind.</p>
 
@@ -597,7 +597,7 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 
 <ul>
 <li>a <em>unique</em> <code>B</code>-bit integer, generated in a way mentioned above, with</li>
-<li>a <em>random</em> <code>C</code>-bit integer generated using a cryptographic RNG with a security strength of at least <code>C</code> bits, where <code>C</code> SHOULD be 128 or greater,</li>
+<li>a <em>random</em> <code>C</code>-bit integer generated using a cryptographic RNG (<code>C</code> SHOULD be at least 32 if the identifier alone does not grant access to the resource it identifies, or at least 128 otherwise),</li>
 </ul>
 
 <p>to generate the unique identifier.<sup><a href="#Note29"><strong>(29)</strong></a></sup> (In general, generating only the random integer this way can&#39;t ensure uniqueness by itself, but might be acceptable for applications that can tolerate the risk of generating duplicate random integers this way, or for applications that check that random integer for uniqueness.<sup><a href="#Note30"><strong>(30)</strong></a></sup>)</p>
@@ -714,7 +714,7 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 <li>it either satisfies the <em>collision resistance</em> property or is significantly more likely than not to pass all tests (other than MatrixRank and LinearComp) of <code>BigCrush</code>, part of L&#39;Ecuyer and Simard&#39;s &quot;TestU01&quot;.</li>
 </ul>
 
-<p>The PRNG&#39;s state length SHOULD be at least 128 bits, and the PRNG need not be perfectly equidistributed.</p>
+<p>The high-quality PRNG&#39;s state length SHOULD be at least 127 bits, and the PRNG need not be perfectly equidistributed.</p>
 
 <p>Every cryptographic RNG is also a high-quality RNG.</p>
 
@@ -844,7 +844,7 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 
 <p><small><sup id=Note28>(28)</sup> For suggested linear congruential generators for generating unique &quot;random-looking&quot; numbers, see P. L&#39;Ecuyer, &quot;Tables of Linear Congruential Generators of Different Sizes and Good Lattice Structure&quot;, <em>Mathematics of Computation</em> 68(225), January 1999.  Another choice for <em>n</em>-bit unique integers is an <em>n</em>-bit <a href="https://en.wikipedia.org/wiki/Linear-feedback_shift_register"><strong>linear-feedback shift register</strong></a> generator with the right parameters, which cycles &quot;randomly&quot; through all but one <em>n</em>-bit integers; see P. Alfke, &quot;Efficient Shift Registers, LFSR Counters, and Long Pseudo-Random Sequence Generators&quot;, Xilinx Application Note XAPP 052, July 7, 1996.</small></p>
 
-<p><small><sup id=Note29>(29)</sup> If an application expects end users to type in a unique identifier, it could find that unique identifiers this long (at least 32 base-16 characters) are unsuitable for the application.  There are ways to deal with these and other long identifiers, including (1) dividing the identifier into chunks, (2) converting the identifier to a sequence of memorable words (as in Bitcoin&#39;s BIP39), or (3) adding a so-called &quot;checksum digit&quot; at the end of the identifier to guard against typing mistakes.  The application ought to consider trying (1) or (2) before deciding to use shorter identifiers than what this document recommends.</small></p>
+<p><small><sup id=Note29>(29)</sup> If an application expects end users to type in a unique identifier, it could find that unique identifiers this long (at least 32 base-16 characters) are unsuitable for the application.  There are ways to deal with these and other long identifiers, including (1) dividing the identifier into memorable chunks (e.g., &quot;ABCDEF&quot; becomes &quot;ABC-DEF&quot;), (2) converting the identifier to a sequence of memorable words (as in Bitcoin&#39;s BIP39), or (3) adding a so-called &quot;checksum digit&quot; at the end of the identifier to guard against typing mistakes.  The application ought to consider trying (1) or (2) before deciding to use shorter identifiers than what this document recommends.</small></p>
 
 <p><small><sup id=Note30>(30)</sup> In theory, generating two or more random integers of fixed size runs the risk of producing a duplicate number this way.  However, this risk decreases as that fixed size increases (see &quot;<a href="https://en.wikipedia.org/wiki/Birthday_problem"><strong>Birthday problem</strong></a>&quot;).  For example, in theory, an application has a 50% chance for duplicate numbers after generating&mdash;</p>
 
