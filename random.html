@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
-<p>Begun on Mar. 5, 2016; last updated on Sep. 23, 2019.</p>
+<p>Begun on Mar. 5, 2016; last updated on Sep. 26, 2019.</p>
 
 <p>Most apps that use random numbers care about either unpredictability, high quality, or repeatability.  This article explains the three kinds of RNGs and gives recommendations on each kind.</p>
 
@@ -66,11 +66,7 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 <li><a href="#Contents"><strong>Contents</strong></a></li>
 <li><a href="#Definitions"><strong>Definitions</strong></a></li>
 <li><a href="#Summary"><strong>Summary</strong></a></li>
-<li><a href="#Cryptographic_RNGs"><strong>Cryptographic RNGs</strong></a>
-
-<ul>
-<li><a href="#Examples"><strong>Examples</strong></a></li>
-</ul></li>
+<li><a href="#Cryptographic_RNGs"><strong>Cryptographic RNGs</strong></a></li>
 <li><a href="#Noncryptographic_PRNGs"><strong>Noncryptographic PRNGs</strong></a>
 
 <ul>
@@ -196,11 +192,8 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 
 <p>See &quot;<a href="#Cryptographic_RNGs_Requirements"><strong>Cryptographic RNGs: Requirements</strong></a>&quot; for requirements, and see &quot;<a href="#Existing_RNG_APIs_in_Programming_Languages"><strong>Existing RNG APIs in Programming Languages</strong></a>&quot; for existing APIs.</p>
 
-<p><a id=Examples></a></p>
-
-<h3>Examples</h3>
-
-<p>Examples of cryptographic RNG implementations are:</p>
+<blockquote>
+<p><strong>Examples:</strong> The following are examples of cryptographic RNG implementations:</p>
 
 <ul>
 <li>Randomness extractors or cryptographic <a href="#Hash_Functions"><strong>hash functions</strong></a> that take very hard-to-predict signals from two or more <a href="#Nondeterministic_Sources_and_Seed_Generation"><strong>nondeterministic sources</strong></a> as input.</li>
@@ -208,6 +201,7 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 <li>An RNG implementation complying with NIST SP 800-90A.  The SP 800-90 series goes into further detail on how RNGs appropriate for information security can be constructed, and inspired much of the &quot;Cryptographic RNGs&quot; section.</li>
 <li>An RNG made up of two or more independently initialized cryptographic RNGs of different designs.<sup><a href="#Note7"><strong>(7)</strong></a></sup></li>
 </ul>
+</blockquote>
 
 <p><a id=Noncryptographic_PRNGs></a></p>
 
@@ -358,7 +352,7 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 
 <ul>
 <li>Generating a random color by passing the seed to the MD5 hash function, which outputs a 128-bit hash code, and taking the first 24 bits of the hash code as the random color.</li>
-<li>Generating a random number in a GLSL (OpenGL Shading Language) fragment shader by passing the fragment coordinates (which vary for each fragment, or &quot;pixel&quot;) as well as a seed (which is the same for all fragments) to the Wang hash, which outputs a 32-bit random number.<sup><a href="#Note12"><strong>(12)</strong></a></sup></li>
+<li>Generating a random number in a GLSL (OpenGL Shading Language) fragment shader by passing the fragment coordinates (which vary for each fragment, or &quot;pixel&quot;) as well as a seed (which is the same for all fragments) to the Wang hash, which outputs a 32-bit integer.<sup><a href="#Note12"><strong>(12)</strong></a></sup></li>
 </ul>
 
 <p><a id=Nondeterministic_Sources_and_Seed_Generation></a></p>
@@ -844,9 +838,9 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 
 <p><small><sup id=Note28>(28)</sup> For suggested linear congruential generators for generating unique &quot;random-looking&quot; numbers, see P. L&#39;Ecuyer, &quot;Tables of Linear Congruential Generators of Different Sizes and Good Lattice Structure&quot;, <em>Mathematics of Computation</em> 68(225), January 1999.  Another choice for <em>n</em>-bit unique integers is an <em>n</em>-bit <a href="https://en.wikipedia.org/wiki/Linear-feedback_shift_register"><strong>linear-feedback shift register</strong></a> generator with the right parameters, which cycles &quot;randomly&quot; through all but one <em>n</em>-bit integers; see P. Alfke, &quot;Efficient Shift Registers, LFSR Counters, and Long Pseudo-Random Sequence Generators&quot;, Xilinx Application Note XAPP 052, July 7, 1996.</small></p>
 
-<p><small><sup id=Note29>(29)</sup> If an application expects end users to type in a unique identifier, it could find that unique identifiers this long are unsuitable for it (e.g. 128-bit numbers take up 32 base-16 characters).  There are ways to deal with these and other long identifiers, including (1) separating memorable chunks of the ID with a hyphen or another character (e.g., &quot;ABCDEF&quot; becomes &quot;ABC-DEF&quot;), (2) converting the identifier to a sequence of memorable words (as in Bitcoin&#39;s BIP39), or (3) adding a so-called &quot;checksum digit&quot; at the end of the identifier to guard against typing mistakes.  The application ought to consider trying (1) or (2) before deciding to use shorter identifiers than what this document recommends.</small></p>
+<p><small><sup id=Note29>(29)</sup> If an application expects end users to type in a unique identifier, it could find that unique identifiers this long are unsuitable for it (e.g. 128-bit numbers take up 32 base-16 characters).  There are ways to deal with these and other long identifiers, including (1) separating memorable chunks of the identifier with a hyphen or another character (e.g., &quot;ABCDEF&quot; becomes &quot;ABC-DEF&quot;), (2) converting the identifier to a sequence of memorable words (as in Bitcoin&#39;s BIP39), or (3) adding a so-called &quot;checksum digit&quot; at the end of the identifier to guard against typing mistakes.  The application ought to consider trying (1) or (2) before deciding to use shorter identifiers than what this document recommends.</small></p>
 
-<p><small><sup id=Note30>(30)</sup> In theory, generating two or more random integers of fixed size runs the risk of producing a duplicate number this way.  However, this risk decreases as that fixed size increases (see &quot;<a href="https://en.wikipedia.org/wiki/Birthday_problem"><strong>Birthday problem</strong></a>&quot;).  For example, in theory, an application has a 50% chance for duplicate numbers after generating&mdash;</p>
+<p><small><sup id=Note30>(30)</sup> In theory, generating two or more random integers of the same size runs the risk of producing a duplicate number this way.  However, this risk decreases as that size increases (see &quot;<a href="https://en.wikipedia.org/wiki/Birthday_problem"><strong>Birthday problem</strong></a>&quot;).  For example, in theory, an application has a 50% chance for duplicate numbers after generating&mdash;</p>
 
 <ul>
 <li>about 2.7 billion billion random 122-bit integers (including those found in version-4 UUIDs, or universally unique identifiers),</li>
