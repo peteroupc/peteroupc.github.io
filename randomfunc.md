@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on June 4, 2017; last updated on Sep. 16, 2019.
+Begun on June 4, 2017; last updated on Sep. 27, 2019.
 
 Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.
 
@@ -46,7 +46,7 @@ All the random number methods presented on this page are ultimately based on an 
     - [**About This Document**](#About_This_Document)
 - [**Contents**](#Contents)
 - [**Notation and Definitions**](#Notation_and_Definitions)
-- [**Uniform Random Numbers**](#Uniform_Random_Numbers)
+- [**Uniform Random Integers**](#Uniform_Random_Integers)
     - [`RNDINT`: Random Integers in \[0, N\]](#RNDINT_Random_Integers_in_0_N)
     - [`RNDINTRANGE`: Random Integers in \[N, M\]](#RNDINTRANGE_Random_Integers_in_N_M)
     - [**`RNDINTEXC`: Random Integers in \[0, N)**](#RNDINTEXC_Random_Integers_in_0_N)
@@ -134,8 +134,8 @@ All the random number methods presented on this page are ultimately based on an 
     - [`a`, `b`] means "`a` or greater and `b` or less".
 - **Random number generator (RNG).** Software and/or hardware that seeks to generate independent numbers that seem to occur by chance and that are approximately uniformly distributed<sup>[**(1)**](#Note1)</sup>.
 
-<a id=Uniform_Random_Numbers></a>
-## Uniform Random Numbers
+<a id=Uniform_Random_Integers></a>
+## Uniform Random Integers
 
 This section describes how an underlying RNG can be used to generate independent uniformly-distributed random integers.  This section describes four methods: `RNDINT`, `RNDINTEXC`, `RNDINTRANGE`, `RNDINTEXCRANGE`.  Of these, `RNDINT`, described next, can serve as the basis for the remaining methods.
 
@@ -999,8 +999,8 @@ Even when used with a secure random number generator, none of the methods given 
 
 This section defines the following methods that generate independent uniform random real numbers:
 
-* `RNDU01`: Interval [0, 1].<sup>[**(19)**](#Note19)</sup>
-* `RNDU01OneExc`: Interval [0, 1).
+* `RNDU01`: Interval [0, 1].
+* `RNDU01OneExc`: Interval [**0, 1).<sup>[(19)**](#Note19)</sup>
 * `RNDU01ZeroExc`: Interval (0, 1].
 * `RNDU01ZeroOneExc`: Interval (0, 1).
 * `RNDRANGE`: Interval [a, b].

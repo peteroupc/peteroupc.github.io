@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
-<p>Begun on June 4, 2017; last updated on Sep. 16, 2019.</p>
+<p>Begun on June 4, 2017; last updated on Sep. 27, 2019.</p>
 
 <p>Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.</p>
 
@@ -64,7 +64,7 @@
 </ul></li>
 <li><a href="#Contents"><strong>Contents</strong></a></li>
 <li><a href="#Notation_and_Definitions"><strong>Notation and Definitions</strong></a></li>
-<li><a href="#Uniform_Random_Numbers"><strong>Uniform Random Numbers</strong></a>
+<li><a href="#Uniform_Random_Integers"><strong>Uniform Random Integers</strong></a>
 
 <ul>
 <li><a href="#RNDINT_Random_Integers_in_0_N"><code>RNDINT</code>: Random Integers in [0, N]</a></li>
@@ -195,9 +195,9 @@
 <li><strong>Random number generator (RNG).</strong> Software and/or hardware that seeks to generate independent numbers that seem to occur by chance and that are approximately uniformly distributed<sup><a href="#Note1"><strong>(1)</strong></a></sup>.</li>
 </ul>
 
-<p><a id=Uniform_Random_Numbers></a></p>
+<p><a id=Uniform_Random_Integers></a></p>
 
-<h2>Uniform Random Numbers</h2>
+<h2>Uniform Random Integers</h2>
 
 <p>This section describes how an underlying RNG can be used to generate independent uniformly-distributed random integers.  This section describes four methods: <code>RNDINT</code>, <code>RNDINTEXC</code>, <code>RNDINTRANGE</code>, <code>RNDINTEXCRANGE</code>.  Of these, <code>RNDINT</code>, described next, can serve as the basis for the remaining methods.</p>
 
@@ -1243,8 +1243,8 @@ END METHOD
 <p>This section defines the following methods that generate independent uniform random real numbers:</p>
 
 <ul>
-<li><code>RNDU01</code>: Interval [0, 1].<sup><a href="#Note19"><strong>(19)</strong></a></sup></li>
-<li><code>RNDU01OneExc</code>: Interval [0, 1).</li>
+<li><code>RNDU01</code>: Interval [0, 1].</li>
+<li><code>RNDU01OneExc</code>: Interval [**0, 1).<sup><a href="#Note19">(19)**</a></sup></li>
 <li><code>RNDU01ZeroExc</code>: Interval (0, 1].</li>
 <li><code>RNDU01ZeroOneExc</code>: Interval (0, 1).</li>
 <li><code>RNDRANGE</code>: Interval [a, b].</li>
