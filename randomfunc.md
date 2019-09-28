@@ -1000,7 +1000,7 @@ Even when used with a secure random number generator, none of the methods given 
 This section defines the following methods that generate independent uniform random real numbers:
 
 * `RNDU01`: Interval [0, 1].
-* `RNDU01OneExc`: Interval [**0, 1).<sup>[(19)**](#Note19)</sup>
+* `RNDU01OneExc`: Interval [**0, 1).<sup>[**(19)**](#Note19)</sup>
 * `RNDU01ZeroExc`: Interval (0, 1].
 * `RNDU01ZeroOneExc`: Interval (0, 1).
 * `RNDRANGE`: Interval [a, b].
