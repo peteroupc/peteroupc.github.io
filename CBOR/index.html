@@ -235,84 +235,8 @@ bignum with length 0 as having a value of -1.</li>
 
 <h2>Release Notes</h2>
 
-<h3>Version 4.0.0-beta2:</h3>
-
-<p>The features in this version include:</p>
-
-<ul>
-<li>The CBOR library no longer stores numbers in a special form beyond the CBOR data model, which represents all &quot;65-bit&quot; signed integers and all &quot;double&quot; values.  This means the CBOR library no longer stores certain numbers as EDecimal, EInteger, EFloat, etc., rather than as tagged CBOR objects.</li>
-<li>CBORObject.CompareTo now compares objects using the default deterministic encoding comparison in the draft revision of the CBOR specification, and no longer treats numbers (objects with the former type CBORType.Number) as a special class.</li>
-<li>CBORType.Number is deprecated; CBORObjects no longer have this type.  In its place, certain numbers now have new CBORTypes Integer or FloatingPoint.</li>
-<li>CBORObject now stores floating-point numbers internally as the bits that make them up, rather than as <code>double</code>s, to avoid data loss in conversions.</li>
-<li>Methods were added to CBORObject to read and write floating-point numbers in terms of their bit patterns rather than as <code>double</code>s or <code>float</code>s.</li>
-<li>Ctap2Canonical was made more strict and now works when decoding CBOR objects.</li>
-<li>Added ReadSequence and DecodeSequence to CBORObject for reading CBOR sequences.</li>
-<li>New CBORNumber class for storing numbers representable in CBOR.  The new CBORObject.IsNumber property checks whether a CBOR object represents a number.</li>
-<li>Bug fixes</li>
-</ul>
-
-<h3>Version 4.0.0:</h3>
-
-<ul>
-<li>Fix issues with CTAP2 Canonical CBOR form</li>
-<li>Support field serialization and deserialization in ToObject and FromObject</li>
-</ul>
-
-<h3>Version 4.0.0-beta2:</h3>
-
-<p>The features in this version include:</p>
-
-<ul>
-<li>The CBOR library no longer stores numbers in a special form beyond the CBOR data model, which represents all &quot;65-bit&quot; signed integers and all &quot;double&quot; values.  This means the CBOR library no longer stores certain numbers as EDecimal, EInteger, EFloat, etc., rather than as tagged CBOR objects.</li>
-<li>CBORObject.CompareTo now compares objects using the default deterministic encoding comparison in the draft revision of the CBOR specification, and no longer treats numbers (objects with the former type CBORType.Number) as a special class.</li>
-<li>CBORType.Number is deprecated; CBORObjects no longer have this type.  In its place, certain numbers now have new CBORTypes Integer or FloatingPoint.</li>
-<li>CBORObject now stores floating-point numbers internally as the bits that make them up, rather than as <code>double</code>s, to avoid data loss in conversions.</li>
-<li>Methods were added to CBORObject to read and write floating-point numbers in terms of their bit patterns rather than as <code>double</code>s or <code>float</code>s.</li>
-<li>Ctap2Canonical was made more strict and now works when decoding CBOR objects.</li>
-<li>Added ReadSequence and DecodeSequence to CBORObject for reading CBOR sequences.</li>
-<li>New CBORNumber class for storing numbers representable in CBOR.  The new CBORObject.IsNumber property checks whether a CBOR object represents a number.</li>
-<li>Bug fixes</li>
-</ul>
-
-<h3>Version 4.0.0-beta1:</h3>
-
-<ul>
-<li>Support nullable types in CBORObject.ToObject.</li>
-<li>Update Numbers library to newer version</li>
-<li>JSONOptions.Base64Padding now has no effect.  The library will now write padding as necessary when
-writing traditional base64 to JSON and write no padding when writing base64url to JSON.</li>
-<li>JSONOptions.ReplaceSurrogates property added.</li>
-<li>Restrict valid shared reference indices to integers 0 or greater.</li>
-<li>Reject writing JSON where CBOR maps have two keys with the same string equivalent.</li>
-<li>Improve performance of CBOR object comparisons involving big floats.</li>
-</ul>
-
-<h3>Version 4.0.0-alpha2:</h3>
-
-<ul>
-<li>Support CBOR tags for IRIs and IRI references.</li>
-<li>Add CBOREncodeOptions.DefaultCtap2Canonical field.</li>
-</ul>
-
-<h3>Version 4.0.0-alpha1:</h3>
-
-<ul>
-<li>Remove all APIs obsoleted since version 3.4.  This
-includes the BigInteger, ExtendedDecimal, and ExtendedFloat APIs,
-which were renamed and moved to a different library, as well as the
-ICBORTag and CBORTypeFilter APIs.</li>
-<li>Changed implementation of FromObject, including imposing a nesting depth
-limit and supporting a CBORTypeMapper parameter.</li>
-<li>Property name conversion rules (in PODOptions) were changed
-in this version with respect to FromObject.  In this sense,
-PODOptions.RemoveIsPrefix was removed.</li>
-<li>Certain other changes in CBOR object reading and validation were
-made; they are largely compatible with previous versions but may be
-backwards-incompatible in certain rare cases</li>
-</ul>
-
 <p>See <a href="https://github.com/peteroupc/CBOR/tree/master/History.md">History.md</a>
-for release notes for older versions.</p>
+for release notes.</p>
 
 <h2>Specifications</h2>
 
