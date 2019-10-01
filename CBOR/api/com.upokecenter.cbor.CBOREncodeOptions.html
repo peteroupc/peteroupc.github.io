@@ -119,19 +119,19 @@ described in the string constructor for this class.</li>
 <p>Gets a value indicating whether to resolve references to sharable objects
  and sharable strings in the process of decoding a CBOR object.
  Enabling this property, however, can cause a security risk if a
- decoded CBOR object is then re-encoded.<p> </p><p>About sharable objects
- and references</p> <p>Sharable objects are marked with tag 28, and
- references to those objects are marked with tag 29 (where a
- reference of 0 means the first sharable object in the CBOR stream, a
- reference of 1 means the second, and so on). Sharable strings (byte
- strings and text strings) appear within an enclosing object marked
- with tag 256, and references to them are marked with tag 25; in
- general, a string is sharable only if storing its reference rather
- than the string would save space.</p> <p>Note that unlike most other
- tags, these tags generally care about the relative order in which
- objects appear in a CBOR stream; thus they are not interoperable
- with CBOR implementations that follow the generic CBOR data model
- (since they may list map keys in an unspecified order).
+ decoded CBOR object is then re-encoded.<p> </p><p><b>About sharable
+ objects and references</b></p> <p>Sharable objects are marked with
+ tag 28, and references to those objects are marked with tag 29
+ (where a reference of 0 means the first sharable object in the CBOR
+ stream, a reference of 1 means the second, and so on). Sharable
+ strings (byte strings and text strings) appear within an enclosing
+ object marked with tag 256, and references to them are marked with
+ tag 25; in general, a string is sharable only if storing its
+ reference rather than the string would save space.</p> <p>Note that
+ unlike most other tags, these tags generally care about the relative
+ order in which objects appear in a CBOR stream; thus they are not
+ interoperable with CBOR implementations that follow the generic CBOR
+ data model (since they may list map keys in an unspecified order).
  Interoperability problems with these tags can be reduced by not
  using them to mark keys or values of a map or to mark objects within
  those keys or values.</p> <p><b>Security Note</b></p> <p>When this
