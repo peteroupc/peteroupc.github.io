@@ -1045,9 +1045,10 @@ This object&#39;s value exceeds the range of a 16-bit signed integer.</p></li>
 
 <p>The following example code (originally written in C# for the.NET Framework) shows a way to check whether a given CBOR object stores a 32-bit signed integer before getting its value.</p>
 
-<pre>CBORObject obj = CBORObject.FromInt32(99999); if (obj.IsIntegral
-            &amp;&amp; obj.CanTruncatedIntFitInInt32()) { /* Not an Int32; handle*/
-            the error Console.WriteLine(&quot;Not a 32-bit integer.&quot;); } else {
+<pre>CBORObject obj = CBORObject.FromInt32(99999);
+            if (obj.IsIntegral &amp;&amp; obj.CanTruncatedIntFitInInt32()) {
+            /* Not an Int32; handle the error */
+            Console.WriteLine(&quot;Not a 32-bit integer.&quot;); } else {
             Console.WriteLine(&quot;The value is &quot; + obj.AsInt32()); }
 </pre>
 
@@ -1141,9 +1142,11 @@ This object&#39;s value exceeds the range of a 64-bit signed integer.</p></li>
 
 <p>The following example code (originally written in C# for the.NET Framework) shows a way to check whether a given CBOR object stores a 64-bit signed integer before getting its value.</p>
 
-<pre>CBORObject obj = CBORObject.FromInt64(99999); if (obj.Type ==
-            CBORType.Integer &amp;&amp; obj.CanValueFitInInt64()) { /* Not an Int64;
-            handle the error */ Console.WriteLine(&quot;Not a 64-bit integer.&quot;); } else {
+<pre>CBORObject obj = CBORObject.FromInt64(99999);
+            if (obj.Type ==
+            CBORType.Integer &amp;&amp; obj.CanValueFitInInt64()) {
+            /* Not an Int64; handle the error*/
+            Console.WriteLine(&quot;Not a 64-bit integer.&quot;); } else {
             Console.WriteLine(&quot;The value is &quot; + obj.AsInt64Value()); }
 </pre>
 
@@ -4896,7 +4899,7 @@ is null.</li>
 
 <p>Converts this object to a string in JavaScript Object Notation (JSON) format, as in the ToJSONString method, and writes that string to a data stream in UTF-8. If the CBOR object contains CBOR maps, or is a CBOR map, the keys to the map are written out to the JSON string in an undefined order. The example code given in <b>PeterO.Cbor.CBORObject.ToJSONString(PeterO.Cbor.JSONOptions)</b> can be used to write out certain keys of a CBOR map in a given order to a JSON string.</p>
 
-<p>The following example (written in C# for the.NET version) shows how to use the  <code>LimitedMemoryStream</code>  class (implemented in <i>LimitedMemoryStream.cs</i> in the peteroupc/CBOR open-source repository) to limit the size of supported JSON serializations of CBOR objects.</p>
+<p>The following example (originally written in C# for the.NET version) shows how to use the  <code>LimitedMemoryStream</code>  class (implemented in <i>LimitedMemoryStream.cs</i> in the peteroupc/CBOR open-source repository) to limit the size of supported JSON serializations of CBOR objects.</p>
 
 <pre>            /* maximum supported JSON size in bytes*/
             var maxSize = 20000;
@@ -4930,7 +4933,7 @@ is null.</li>
             byte[] bytes = ba.toByteArray();
 </pre>
 
-<p>The following example (written in C# for the.NET version) shows how to use a.NET MemoryStream to limit the size of supported JSON serializations of CBOR objects. The disadvantage is that the extra memory needed to do so can be wasteful, especially if the average serialized object is much smaller than the maximum size given (for example, if the maximum size is 20000 bytes, but the average serialized object has a size of 50 bytes).</p>
+<p>The following example (originally written in C# for the.NET version) shows how to use a.NET MemoryStream to limit the size of supported JSON serializations of CBOR objects. The disadvantage is that the extra memory needed to do so can be wasteful, especially if the average serialized object is much smaller than the maximum size given (for example, if the maximum size is 20000 bytes, but the average serialized object has a size of 50 bytes).</p>
 
 <pre>            var backing = new byte[20000]; /* maximum supported JSON size in bytes*/
             byte[] bytes1, bytes2;
@@ -5001,7 +5004,7 @@ is null.</p></li>
     System.IO.Stream stream);
 </pre>
 
-<p>Writes this CBOR object to a data stream. If the CBOR object contains CBOR maps, or is a CBOR map, the keys to the map are written out to the data stream in an undefined order. See the examples (written in C# for the.NET version) for ways to write out certain keys of a CBOR map in a given order. In the case of CBOR objects of type FloatingPoint, the number is written using the shortest floating-point encoding possible; this is a change from previous versions.</p>
+<p>Writes this CBOR object to a data stream. If the CBOR object contains CBOR maps, or is a CBOR map, the keys to the map are written out to the data stream in an undefined order. See the examples (originally written in C# for the.NET version) for ways to write out certain keys of a CBOR map in a given order. In the case of CBOR objects of type FloatingPoint, the number is written using the shortest floating-point encoding possible; this is a change from previous versions.</p>
 
 <p>The following example shows a method that writes each key of &#39;mapObj&#39; to &#39;outputStream&#39;, in the order given in &#39;keys&#39;, where &#39;mapObj&#39; is written out in the form of a CBOR <b>definite-length map</b> . Only keys found in &#39;keys&#39; will be written if they exist in &#39;mapObj&#39;.</p>
 
@@ -5050,7 +5053,7 @@ is null.</p></li>
             outputStream.WriteByte((byte)0xff); }
 </pre>
 
-<p>The following example (written in C# for the.NET version) shows how to use the  <code>LimitedMemoryStream</code>  class (implemented in <i>LimitedMemoryStream.cs</i> in the peteroupc/CBOR open-source repository) to limit the size of supported CBOR serializations.</p>
+<p>The following example (originally written in C# for the.NET version) shows how to use the  <code>LimitedMemoryStream</code>  class (implemented in <i>LimitedMemoryStream.cs</i> in the peteroupc/CBOR open-source repository) to limit the size of supported CBOR serializations.</p>
 
 <pre>            /* maximum supported CBOR size in bytes*/
             var maxSize = 20000;
@@ -5084,7 +5087,7 @@ is null.</p></li>
             byte[] bytes = ba.toByteArray();
 </pre>
 
-<p>The following example (written in C# for the.NET version) shows how to use a.NET MemoryStream to limit the size of supported CBOR serializations. The disadvantage is that the extra memory needed to do so can be wasteful, especially if the average serialized object is much smaller than the maximum size given (for example, if the maximum size is 20000 bytes, but the average serialized object has a size of 50 bytes).</p>
+<p>The following example (originally written in C# for the.NET version) shows how to use a.NET MemoryStream to limit the size of supported CBOR serializations. The disadvantage is that the extra memory needed to do so can be wasteful, especially if the average serialized object is much smaller than the maximum size given (for example, if the maximum size is 20000 bytes, but the average serialized object has a size of 50 bytes).</p>
 
 <pre>            var backing = new byte[20000]; /* maximum supported CBOR size in bytes*/
             byte[] bytes1, bytes2;
@@ -5163,16 +5166,20 @@ Unexpected data type&quot;.</p></li>
 
 <p>In the following example, an array of three objects is written as CBOR to a data stream.</p>
 
-<pre>CBORObject.WriteValue(stream, 4, 3); /* array, length 3*/
-            CBORObject.Write(&quot;hello world&quot;, stream); /* item 1 CBORObject.Write(25,*/
-            stream); /* item 2 */ CBORObject.Write(false, stream); /* item 3*/
+<pre>/* array, length 3*/
+            CBORObject.WriteValue(stream, 4, 3);
+            /* item 1 */
+            CBORObject.Write(&quot;hello world&quot;, stream);
+            CBORObject.Write(25, stream); /* item 2*/
+            CBORObject.Write(false, stream); /* item 3*/
 </pre>
 
 <p>In the following example, a map consisting of two key-value pairs is written as CBOR to a data stream.</p>
 
 <pre>CBORObject.WriteValue(stream, 5, 2); /* map, 2 pairs*/
-            CBORObject.Write(&quot;number&quot;, stream); /* key 1 CBORObject.Write(25,*/
-            stream); /* value 1 CBORObject.Write(&quot;string&quot;, stream); // key 2*/
+            CBORObject.Write(&quot;number&quot;, stream); /* key 1 */
+            CBORObject.Write(25, stream); /* value 1 */
+            CBORObject.Write(&quot;string&quot;, stream); /* key 2*/
             CBORObject.Write(&quot;hello&quot;, stream); /* value 2*/
 </pre>
 
