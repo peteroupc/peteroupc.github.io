@@ -384,7 +384,8 @@ Gets a value indicating whether this object is a negative number.</li>
 Gets a value indicating whether this CBOR object represents negative
 infinity.</li>
 <li><code>boolean isNull()</code><br>
-Gets a value indicating whether this value is a CBOR null value.</li>
+Gets a value indicating whether this CBOR object is a CBOR null value,
+whether tagged or not.</li>
 <li><code>boolean isNumber()</code><br>
 Gets a value indicating whether this CBOR object stores a number (including
 infinity or a not-a-number or NaN value).</li>
@@ -745,7 +746,8 @@ number without a fractional part; otherwise, <code>false</code>.</li>
 <pre>public final boolean isNull()
 </pre>
 
-<p>Gets a value indicating whether this value is a CBOR null value.</p>
+<p>Gets a value indicating whether this CBOR object is a CBOR null value,
+ whether tagged or not.</p>
 
 <p><strong>Returns:</strong></p>
 
