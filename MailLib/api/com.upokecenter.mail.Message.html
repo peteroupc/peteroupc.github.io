@@ -1487,11 +1487,16 @@ Markdown flavor.</p></li>
   message, it becomes a &quot;multipart/mixed&quot; message with the current
  body converted to an inline body part.<p> The following example
  (written in C# for the.NET version) is an extension method that adds
- an attachment from a byte array to a message. </p><pre>public static
- Message AddAttachmentFromBytes(this Message msg, byte[] bytes,
- MediaType mediaType) { using (MemoryStream fs = new
- MemoryStream(bytes)) { return msg.AddAttachment(fs, mediaType); }
- }</pre> .</p>
+ an attachment from a byte array to a message. </p><pre>public static Message AddAttachmentFromBytes(Message msg, byte[] bytes, MediaType mediaType) { {
+java.io.ByteArrayInputStream fs = null;
+try {
+fs = new java.io.ByteArrayInputStream(bytes);
+ return msg.AddAttachment(fs, mediaType);
+}
+finally {
+try { if (fs != null) { fs.close(); } } catch (java.io.IOException ex) {}
+}
+} }</pre> .</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1601,19 +1606,14 @@ mediaType</code> is null.</p></li>
   becomes a &quot;multipart/mixed&quot; message with the current body converted
  to an inline body part.<p> The following example (written in C# for
  the.NET version) is an extension method that adds an inline body
- part from a byte array to a message. </p><pre>public static Message
- AddInlineFromBytes(this Message msg, byte[] bytes, MediaType
- mediaType) { {
+ part from a byte array to a message. </p><pre>public static Message AddInlineFromBytes(Message msg, byte[] bytes, MediaType mediaType) { {
 java.io.ByteArrayInputStream fs = null;
 try {
-fs = new java.io.ByteArrayInputStream(bytes);</p>
-
-<p>return msg.AddInline(fs, mediaType);
+fs = new java.io.ByteArrayInputStream(bytes);
+ return msg.AddInline(fs, mediaType);
 }
 finally {
-try { if (fs != null) {
- fs.close();
- } } catch (java.io.IOException ex) {}
+try { if (fs != null) { fs.close(); } } catch (java.io.IOException ex) {}
 }
 } }</pre> .</p>
 
