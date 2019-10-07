@@ -55,32 +55,31 @@
  method.</p> <p><b>Thread Safety:</b></p> <p>Certain CBOR objects are
  immutable (their values can't be changed), so they are inherently
  safe for use by multiple threads.</p> <p>CBOR objects that are
- arrays, maps, and byte strings (including tagged objects that
- represent numbers) are mutable, but this class doesn't attempt to
- synchronize reads and writes to those objects by multiple threads,
- so those objects are not thread safe without such
- synchronization.</p> <p>One kind of CBOR object is called a map, or
- a list of key-value pairs. Keys can be any kind of CBOR object,
- including numbers, strings, arrays, and maps. However, untagged text
- strings (which means GetTags returns an empty array and the Type
-  property, or "getType()" in Java, returns TextString) are the most
- suitable to use as keys; other kinds of CBOR object are much better
- used as map values instead, keeping in mind that some of them are
- not thread safe without synchronizing reads and writes to them.</p>
-
-<p><p>To find the type of a CBOR object, call its Type property (or
-  &quot;getType()&quot; in Java). The return value can be Integer,
- FloatingPoint, Boolean, SimpleValue, or TextString for immutable
- CBOR objects, and Array, Map, or ByteString for mutable CBOR
- objects.</p> <p><b>Nesting Depth:</b></p> <p>The DecodeFromBytes and
- Read methods can only read objects with a limited maximum depth of
- arrays and maps nested within other arrays and maps. The code sets
- this maximum depth to 500 (allowing more than enough nesting for
- most purposes), but it&#39;s possible that stack overflows in some
- runtimes might lower the effective maximum nesting depth. When the
- nesting depth goes above 500, the DecodeFromBytes and Read methods
- throw a CBORException.</p> <p>The ReadJSON and FromJSONString
- methods currently have nesting depths of 1000.</p></p>
+ arrays, maps, and byte strings (whether or not they are tagged) are
+ mutable, but this class doesn't attempt to synchronize reads and
+ writes to those objects by multiple threads, so those objects are
+ not thread safe without such synchronization.</p> <p>One kind of
+ CBOR object is called a map, or a list of key-value pairs. Keys can
+ be any kind of CBOR object, including numbers, strings, arrays, and
+ maps. However, untagged text strings (which means GetTags returns an
+  empty array and the Type property, or "getType()" in Java, returns
+ TextString) are the most suitable to use as keys; other kinds of
+ CBOR object are much better used as map values instead, keeping in
+ mind that some of them are not thread safe without synchronizing
+ reads and writes to them.</p> <p>To find the type of a CBOR object,
+  call its Type property (or "getType()" in Java). The return value
+ can be Integer, FloatingPoint, Boolean, SimpleValue, or TextString
+ for immutable CBOR objects, and Array, Map, or ByteString for
+ mutable CBOR objects.</p> <p><b>Nesting Depth:</b></p> <p>The
+ DecodeFromBytes and Read methods can only read objects with a
+ limited maximum depth of arrays and maps nested within other arrays
+ and maps. The code sets this maximum depth to 500 (allowing more
+ than enough nesting for most purposes), but it's possible that stack
+ overflows in some runtimes might lower the effective maximum nesting
+ depth. When the nesting depth goes above 500, the DecodeFromBytes
+ and Read methods throw a CBORException.</p> <p>The ReadJSON and
+ FromJSONString methods currently have nesting depths of
+ 1000.</p>
 
 <h2>Fields</h2>
 
@@ -121,7 +120,8 @@ key doesn&#39;t exist.</li>
     CBORObject second)</code><br>
 Finds the sum of two CBOR numbers.</li>
 <li><code>boolean AsBoolean()</code><br>
-Returns false if this object is False, Null, or Undefined; otherwise, true.</li>
+Returns false if this object is False, Null, or Undefined (whether or not
+the object has tags); otherwise, true.</li>
 <li><code>byte AsByte()</code><br>
 Converts this object to a byte (0 to 255).</li>
 <li><code>double AsDouble()</code><br>
@@ -327,8 +327,8 @@ Gets the value of a CBOR object by integer index in this array or by CBOR
 object key in this map, or a default value if that value is not
 found.</li>
 <li><code>int getSimpleValue()</code><br>
-Gets the simple value ID of this object, or -1 if this object is not a
-simple value (including if the value is a floating-point number).</li>
+Gets the simple value ID of this CBOR object, or -1 if the object is not a
+simple value.</li>
 <li><code>int getTagCount()</code><br>
 Gets the number of tags this object has.</li>
 <li><code>CBORType getType()</code><br>
@@ -886,14 +886,15 @@ this object is a not-a-number (NaN) value.</li>
 <pre>public final int getSimpleValue()
 </pre>
 
-<p>Gets the simple value ID of this object, or -1 if this object is not a
- simple value (including if the value is a floating-point number).</p>
+<p>Gets the simple value ID of this CBOR object, or -1 if the object is not a
+ simple value. In this method, objects with a CBOR type of Boolean or
+ SimpleValue are simple values, whether they are tagged or not.</p>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>The simple value ID of this object, or -1 if this object is not a
-simple value (including if the value is a floating-point number).</li>
+<li>The simple value ID of this object if it&#39;s a simple value, or -1 if
+this object is not a simple value.</li>
 </ul>
 
 <h3>isNumber</h3>
@@ -971,8 +972,8 @@ integer, even a negative one.).</li>
 
 <ul>
 <li>The CBOR object referred to by index or key in this array or map. If
-this is a CBOR map, returns null if an item with the given key
-doesn&#39;t exist.</li>
+this is a CBOR map, returns <code>null</code> (not <code>
+CBORObject.Null</code>) if an item with the given key doesn&#39;t exist.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -1037,8 +1038,8 @@ integer 0 or greater and less than the size of the array.</p></li>
 
 <ul>
 <li>The CBOR object referred to by index or key in this array or map. If
-this is a CBOR map, returns null if an item with the given key
-doesn&#39;t exist.</li>
+this is a CBOR map, returns <code>null</code> (not <code>
+CBORObject.Null</code>) if an item with the given key doesn&#39;t exist.</li>
 </ul>
 
 <h3>get</h3>
@@ -1061,8 +1062,8 @@ greater and less than the size of the array.</li>
 
 <ul>
 <li>The CBOR object referred to by index or key in this array or map. If
-this is a CBOR map, returns null if an item with the given key
-doesn&#39;t exist.</li>
+this is a CBOR map, returns <code>null</code> (not <code>
+CBORObject.Null</code>) if an item with the given key doesn&#39;t exist.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -3291,7 +3292,8 @@ Converts this object to an arbitrary-precision integer. Fractional values
 
 ### AsBoolean
     public boolean AsBoolean()
-Returns false if this object is False, Null, or Undefined; otherwise, true.
+Returns false if this object is False, Null, or Undefined (whether or not
+ the object has tags); otherwise, true.
 
 **Returns:**
 

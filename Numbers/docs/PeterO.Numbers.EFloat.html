@@ -68,7 +68,7 @@
 <li><code><a href="#Create_PeterO_Numbers_EInteger_PeterO_Numbers_EInteger">Create(PeterO.Numbers.EInteger, PeterO.Numbers.EInteger)</a></code> - Creates a number with the value exponent*2^mantissa (significand).</li>
 <li><code><a href="#CreateNaN_PeterO_Numbers_EInteger">CreateNaN(PeterO.Numbers.EInteger)</a></code> - Creates a not-a-number arbitrary-precision binary floating-point number.</li>
 <li><code><a href="#CreateNaN_PeterO_Numbers_EInteger_bool_bool_PeterO_Numbers_EContext">CreateNaN(PeterO.Numbers.EInteger, bool, bool, PeterO.Numbers.EContext)</a></code> - Creates a not-a-number arbitrary-precision binary floating-point number.</li>
-<li><code><a href="#Decrement">Decrement()</a></code> - Subtracts one from an arbitrary-precision binary floating-point number.</li>
+<li><code><a href="#Decrement">Decrement()</a></code> - Returns one subtracted from this arbitrary-precision binary floating-point number.</li>
 <li><code><a href="#Divide_int">Divide(int)</a></code> - Divides this instance by the value of an arbitrary-precision integer.</li>
 <li><code><a href="#Divide_PeterO_Numbers_EFloat">Divide(PeterO.Numbers.EFloat)</a></code> - Divides this object by another binary float and returns the result.</li>
 <li><code><a href="#Divide_PeterO_Numbers_EFloat_PeterO_Numbers_EContext">Divide(PeterO.Numbers.EFloat, PeterO.Numbers.EContext)</a></code> - Divides this arbitrary-precision binary float by another arbitrary-precision binary floating-point number.</li>
@@ -106,7 +106,7 @@
 <li><code><a href="#FromUInt32_uint">FromUInt32(uint)</a></code> - Converts a 32-bit signed integer to an arbitrary-precision binary floating-point number.</li>
 <li><code><a href="#FromUInt64_ulong">FromUInt64(ulong)</a></code> - Converts a 64-bit unsigned integer to an arbitrary-precision binary floating-point number.</li>
 <li><code><a href="#GetHashCode">GetHashCode()</a></code> - Calculates this object&#39;s hash code.</li>
-<li><code><a href="#Increment">Increment()</a></code> - Adds one to an arbitrary-precision binary floating-point number.</li>
+<li><code><a href="#Increment">Increment()</a></code> - Returns one added to this arbitrary-precision binary floating-point number.</li>
 <li><code><a href="#IsFinite">IsFinite</a></code> - Gets a value indicating whether this object is finite (not infinity or NaN).</li>
 <li><code><a href="#IsInfinity">IsInfinity()</a></code> - Gets a value indicating whether this object is positive or negative infinity.</li>
 <li><code><a href="#IsNaN">IsNaN()</a></code> - Gets a value indicating whether this object is not a number (NaN).</li>
@@ -869,7 +869,7 @@ is null.</li>
 <pre>public PeterO.Numbers.EFloat Decrement();
 </pre>
 
-<p>Subtracts one from an arbitrary-precision binary floating-point number.</p>
+<p>Returns one subtracted from this arbitrary-precision binary floating-point number.</p>
 
 <p><b>Return Value:</b></p>
 
@@ -1725,7 +1725,7 @@ is null.</li>
 <pre>public PeterO.Numbers.EFloat Increment();
 </pre>
 
-<p>Adds one to an arbitrary-precision binary floating-point number.</p>
+<p>Returns one added to this arbitrary-precision binary floating-point number.</p>
 
 <p><b>Return Value:</b></p>
 
@@ -2516,7 +2516,7 @@ is null.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>An arbitrary-precision binary floating-point number.</p>
+<p>The number given in &quot;bthis&quot; minus one.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -3169,7 +3169,7 @@ is a 32-bit binary floating-point number.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>An arbitrary-precision binary floating-point number.</p>
+<p>The number given in &quot;bthis&quot; plus one.</p>
 
 <p><b>Exceptions:</b></p>
 

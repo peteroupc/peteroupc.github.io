@@ -414,11 +414,7 @@ units.</li>
 <p>Gets the Unicode code point at the given index of the string.<p> </p><p>The
  following example shows how to iterate a text string code point by
  code point, terminating the loop when an unpaired surrogate is
- found.</p> <pre>for (int i = 0;i&lt;str.length(); ++i) { int
- codePoint = DataUtilities.CodePointAt(str, i, 2); if (codePoint &lt;
- 0) { break; /* Unpaired surrogate <em>/ }
-  System.out.println(&quot;codePoint:&quot;+codePoint); if (codePoint &gt;=
- 0x10000) { i++; /</em> Supplementary code point */ } }</pre> .</p>
+  found.</p> <pre>for (int i = 0;i&lt;str.length(); ++i) { int codePoint = DataUtilities.CodePointAt(str, i, 2); if (codePoint &lt; 0) { break; /* Unpaired surrogate <em>/ } System.out.println(&quot;codePoint:&quot;+codePoint); if (codePoint &gt;= 0x10000) { i++; /</em> Supplementary code point */ } }</pre> .</p>
 
 <p><strong>Parameters:</strong></p>
 

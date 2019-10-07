@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on Mar. 5, 2016; last updated on Sep. 27, 2019.
+Begun on Mar. 5, 2016; last updated on Oct. 6, 2019.
 
 Most apps that use random numbers care about either unpredictability, high quality, or repeatability.  This article explains the three kinds of RNGs and gives recommendations on each kind.
 
@@ -102,7 +102,7 @@ The following definitions are helpful in better understanding this document.
 
 - Does the application use random numbers for **information security** purposes (e.g., as passwords or other secrets)?
     - Yes: Use a [**cryptographic RNG**](#Cryptographic_RNGs).
-- No: Does the application require [**repeatable "random" numbers**](#When_to_Use_a_Manually_Seeded_PRNG)?
+- No: Does the application require [**reproducible "random" numbers**](#When_to_Use_a_Manually_Seeded_PRNG)?
     - Yes: Use a manually-seeded high-quality PRNG.  If a seed is known, use it.  Otherwise, generate a fresh seed using a cryptographic RNG.
         - Does the application run **multiple independent processes** that use random numbers?
             - No: Seed one PRNG with the seed determined above.
@@ -124,7 +124,8 @@ Cryptographic RNGs (also known as "cryptographically strong" or "cryptographical
 
 as well as for applications that generate random numbers so infrequently that the RNG's speed is not a concern.
 
-See "[**Cryptographic RNGs: Requirements**](#Cryptographic_RNGs_Requirements)" for requirements, and see "[**Existing RNG APIs in Programming Languages**](#Existing_RNG_APIs_in_Programming_Languages)" for existing APIs.
+- See "[**Cryptographic RNGs: Requirements**](#Cryptographic_RNGs_Requirements)" for requirements.
+- See "[**Existing RNG APIs in Programming Languages**](#Existing_RNG_APIs_in_Programming_Languages)" for existing APIs.
 
 <a id=Noncryptographic_PRNGs></a>
 ## Noncryptographic PRNGs
@@ -135,7 +136,11 @@ Noncryptographic PRNGs vary widely in the quality of randomness of the numbers t
 - if cryptographic RNGs are fast enough for the application, or
 - if the PRNG is not _high quality_ (see "[**High-Quality RNGs: Requirements**](#High_Quality_PRNGs_Requirements)").
 
-Noncryptographic PRNGs can be _automatically seeded_ (a new seed is generated upon PRNG creation) or _manually seeded_ (the PRNG uses a predetermined seed).  See "[**When to Use a Manually-Seeded PRNG**](#When_to_Use_a_Manually_Seeded_PRNG)" to learn which kind of seeding to use, and see  "[**Seed Generation for Noncryptographic PRNGs**](#Seed_Generation_for_Noncryptographic_PRNGs)" for advice on how to seed.
+Noncryptographic PRNGs can be _automatically seeded_ (a new seed is generated upon PRNG creation) or _manually seeded_ (the PRNG uses a predetermined seed).
+
+- See "[**When to Use a Manually-Seeded PRNG**](#When_to_Use_a_Manually_Seeded_PRNG)" to learn which kind of seeding to use.
+- See "[**Seed Generation for Noncryptographic PRNGs**](#Seed_Generation_for_Noncryptographic_PRNGs)" for advice on how to seed.
+- See "[**Existing RNG APIs in Programming Languages**](#Existing_RNG_APIs_in_Programming_Languages)" for existing APIs.
 
 <a id=High_Quality_PRNG_Examples></a>
 ### High-Quality PRNG Examples
@@ -162,12 +167,12 @@ The following are not considered high-quality PRNGs:
 <a id=Manually_Seeded_PRNGs></a>
 ## Manually-Seeded PRNGs
 
-A given pseudorandom number generator (PRNG) generates the same sequence of "random" numbers for the same "seed".  Some applications care about repeatable "randomness" and thus could set a PRNG's seed manually for repeatable "random" numbers.
+A given pseudorandom number generator (PRNG) generates the same sequence of "random" numbers for the same "seed".  Some applications care about reproducible "randomness" and thus could set a PRNG's seed manually for reproducible "random" numbers.
 
 <a id=When_to_Use_a_Manually_Seeded_PRNG></a>
 ### When to Use a Manually-Seeded PRNG
 
-By seeding a PRNG manually for repeatable "randomness", an application will be tied to that PRNG or its implementation. For this reason, an application SHOULD NOT use a manually-seeded PRNG (rather than a cryptographic or automatically-seeded RNG) unless&mdash;
+By seeding a PRNG manually for reproducible "randomness", an application will be tied to that PRNG or its implementation. For this reason, an application SHOULD NOT use a manually-seeded PRNG (rather than a cryptographic or automatically-seeded RNG) unless&mdash;
 
 1. the application might need to generate the same "random" result multiple times,
 2. the application either&mdash;
@@ -178,7 +183,7 @@ By seeding a PRNG manually for repeatable "randomness", an application will be t
 <a id=Manually_Seeded_PRNG_Recommendations></a>
 ### Manually-Seeded PRNG Recommendations
 
-If an application chooses to use a manually-seeded PRNG for repeatable "randomness", the application&mdash;
+If an application chooses to use a manually-seeded PRNG for reproducible "randomness", the application&mdash;
 
 - SHOULD choose a [**high-quality PRNG**](#High_Quality_PRNG_Examples),
 - SHOULD choose a PRNG implementation with consistent behavior that will not change in the future,
@@ -210,7 +215,7 @@ Many kinds of game software generate seemingly "random" game content that might 
 
 In general, the bigger that "random" content is, the greater the justification to use a manually-seeded PRNG and a custom seed to generate that content.  However, using manually-seeded PRNGs is NOT RECOMMENDED in the following cases:
 
-- If repeatable "randomness" is needed only at the start of the game session (e.g., to create a "random" game board or a "random" order of digital cards) and the repeatable "random" content is small (say, no more than a hundred numbers).
+- If reproducible "randomness" is needed only at the start of the game session (e.g., to create a "random" game board or a "random" order of digital cards) and the reproducible "random" content is small (say, no more than a hundred numbers).
 - In a networked game where multiple computers (e.g., multiple players, or a client and server) have a shared view of the game state and random numbers are used to update that game state.  This is because randomness increases the risk of a player gaining an unfair advantage, a risk already present, in general, when maintaining a game state shared by multiple computers.
 
 > **Examples:**
@@ -274,7 +279,7 @@ Once data with enough entropy is gathered, it might need to be condensed into a 
 
 For noncryptographic PRNGs, an application ought to generate seeds likely to vary "wildly" from previously generated seeds, to reduce the risk of correlated "random" numbers or sequences.  In most cases, this can be done by seeding with the output of a cryptographic RNG or using the advice in the [**previous section**](#Seed_Generation).
 
-For [**manually-seeded PRNGs**](#Manually_Seeded_PRNGs), however, if multiple processes (including threads, tasks, or subtasks) need to use repeatable "random" numbers for the same purpose, an application can generate one seed (or use a pregenerated seed) and distribute that seed to those processes as follows; namely, for each such process:
+For [**manually-seeded PRNGs**](#Manually_Seeded_PRNGs), however, if multiple processes (including threads, tasks, or subtasks) need to use reproducible "random" numbers for the same purpose, an application can generate one seed (or use a pregenerated seed) and distribute that seed to those processes by doing the following for each such process:
 
 1. Create a PRNG instance for that process.
 2. Build a string consisting of three parts: `IDENT`, `UNIQUE`, and `SEED`. Example: "mysimulation-1-myseed".<sup>[**(15)**](#Note15)</sup>
@@ -347,7 +352,7 @@ For **manually-seeded PRNGs**, to **reduce the chance of correlated random numbe
 - is initialized with a seed that is unrelated to the other seeds (see "[**Seed Generation for Noncryptographic RNGs**](#Seed_Generation_for_Noncryptographic_RNGs)"), and
 - MAY use a different conforming RNG scheme from the others.
 
-(L'Ecuyer et al. 2015)<sup>[**(22)**](#Note22)</sup>, section 4, goes in greater detail on ways to initialize PRNGs for generating random numbers in parallel, including how to ensure repeatable "randomness" this way if that is desired.
+(L'Ecuyer et al. 2015)<sup>[**(22)**](#Note22)</sup>, section 4, goes in greater detail on ways to initialize PRNGs for generating random numbers in parallel, including how to ensure reproducible "randomness" this way if that is desired.
 
 <a id=Shuffling></a>
 ### Shuffling
@@ -510,8 +515,8 @@ Of the designs just given, the first is _stateful_ and the last three are _state
 A **programming language API** designed for reuse by applications could implement RNGs using the following guidelines:
 
 1.  The RNG API can include a method that fills one or more memory units (such as 8-bit bytes) completely with random bits.  See example 1.
-2.  If the API implements an automatically-seeded RNG, it SHOULD NOT allow applications to initialize that same RNG with a seed for repeatable "randomness"<sup>[**(38)**](#Note38)</sup> (it MAY provide a separate PRNG to accept such a seed). See example 2.
-3.  If the API provides a PRNG that an application can seed for repeatable "randomness", it SHOULD document that PRNG and any methods the API provides that use that PRNG (such as shuffling and Gaussian number generation), and SHOULD NOT change that PRNG or those methods in a way that would change the "random" numbers they deliver for a given seed. See example 2.
+2.  If the API implements an automatically-seeded RNG, it SHOULD NOT allow applications to initialize that same RNG with a seed for reproducible "randomness"<sup>[**(38)**](#Note38)</sup> (it MAY provide a separate PRNG to accept such a seed). See example 2.
+3.  If the API provides a PRNG that an application can seed for reproducible "randomness", it SHOULD document that PRNG and any methods the API provides that use that PRNG (such as shuffling and Gaussian number generation), and SHOULD NOT change that PRNG or those methods in a way that would change the "random" numbers they deliver for a given seed. See example 2.
 4.  A new programming language's **standard library** ought to include the following methods for generating independent uniform random numbers (see my document on [**random number generation methods**](https://peteroupc.github.io/randomfunc.html) for details).
     - Four methods for random integers: 0 to `n` including `n`, 0 to `n` excluding `n`, `a` to `b` including `b`, and `a` to `b` excluding `b`.
     - Four methods for random numbers bounded by 0 and 1, with and without the endpoints.
@@ -522,7 +527,7 @@ A **programming language API** designed for reuse by applications could implemen
 > **Examples:**
 >
 > 1. A C language RNG method for filling memory could look like the following: `int random(uint8_t[] bytes, size_t size);`, where `bytes` is a pointer to an array of 8-bit bytes, and `size` is the number of random 8-bit bytes to generate, and where 0 is returned if the method succeeds and nonzero otherwise.
-> 2. A Java API that follows these guidelines can contain two classes: a `RandomGen` class that implements an unspecified but general-purpose RNG, and a `RandomStable` class that implements a PCG PRNG that is documented and will not change in the future. `RandomStable` includes a constructor that takes a seed for repeatable "randomness", while `RandomGen` does not.  Both classes include methods to generate uniform random numbers, but `RandomStable` specifies the exact algorithms to those methods and `RandomGen` does not.  At any time in the future, `RandomGen` can change its implementation to use a different RNG while remaining backward compatible, while `RandomStable` has to use the same algorithms for all time to remain backward compatible, especially because it takes a seed for repeatable "randomness".
+> 2. A Java API that follows these guidelines can contain two classes: a `RandomGen` class that implements an unspecified but general-purpose RNG, and a `RandomStable` class that implements a PCG PRNG that is documented and will not change in the future. `RandomStable` includes a constructor that takes a seed for reproducible "randomness", while `RandomGen` does not.  Both classes include methods to generate uniform random numbers, but `RandomStable` specifies the exact algorithms to those methods and `RandomGen` does not.  At any time in the future, `RandomGen` can change its implementation to use a different RNG while remaining backward compatible, while `RandomStable` has to use the same algorithms for all time to remain backward compatible, especially because it takes a seed for reproducible "randomness".
 
 <a id=Acknowledgments></a>
 ## Acknowledgments
@@ -553,7 +558,7 @@ I acknowledge&mdash;
 
 <small><sup id=Note9>(9)</sup> Blackman, D., Vigna, S. "Scrambled Linear Pseudorandom Number Generators", 2018.</small>
 
-<small><sup id=Note10>(10)</sup> However, some versions of GLSL (notably GLSL ES 1.0, as used by WebGL 1.0) may support integers with a restricted range (as low as -1024 to 1024), rather than the otherwise common -2<sup>31</sup> to 2<sup>31</sup> or -2<sup>63</sup> to 2<sup>63</sup> ranges, making it difficult to write hash functions for random number generation.  An application ought to choose hash functions that deliver acceptable "random" numbers regardless of the kinds of numbers supported.
+<small><sup id=Note10>(10)</sup> However, some versions of GLSL (notably GLSL ES 1.0, as used by WebGL 1.0) may support integers with a restricted range (as low as -1024 to 1024), rather than 32- or 64-bit integers as are otherwise common, making it difficult to write hash functions for random number generation.  An application ought to choose hash functions that deliver acceptable "random" numbers regardless of the kinds of numbers supported.
 
 An alternative for GLSL and other fragment or pixel shaders to support randomness is to have the shader sample a "noise texture" with random data in each pixel; for example, C. Peters, "[**Free blue noise textures**](http://momentsingraphics.de/?p=127)", _Moments in Graphics_, Dec. 22, 2016, discusses how so-called "blue noise" can be sampled this way.
 
@@ -569,7 +574,7 @@ See also N. Reed, "Quick And Easy GPU Random Numbers In D3D11", Nathan Reed's co
 
 <small><sup id=Note15>(15)</sup> Here, `IDENT` and `UNIQUE` form a _domain separation tag_; e.g., see the work-in-progress document `draft-irtf-cfrg-hash-to-curve`, "Hashing to Elliptic Curves".</small>
 
-<small><sup id=Note16>(16)</sup> For example, many questions on _Stack Overflow_ highlight the pitfalls of creating a new instance of .NET's `System.Random` each time a random number is needed, rather than only once in the application.  See also Johansen, R. S., "[**A Primer on Repeatable Random Numbers**](https://blogs.unity3d.com/2015/01/07/a-primer-on-repeatable-random-numbers/)", Unity Blog, Jan. 7, 2015, and the section "How to Initialize RNGs".</small>
+<small><sup id=Note16>(16)</sup> For example, many questions on _Stack Overflow_ highlight the pitfalls of creating a new instance of .NET's `System.Random` each time a random number is needed, rather than only once in the application.  See also Johansen, R. S., "[**A Primer on reproducible Random Numbers**](https://blogs.unity3d.com/2015/01/07/a-primer-on-reproducible-random-numbers/)", Unity Blog, Jan. 7, 2015, and the section "How to Initialize RNGs".</small>
 
 <small><sup id=Note17>(17)</sup> Using the similar `/dev/random` is NOT RECOMMENDED, since in some implementations it can block for seconds at a time, especially if not enough randomness is available.  See also [**"Myths about /dev/urandom"**](https://www.2uo.de/myths-about-urandom).</small>
 

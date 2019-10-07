@@ -66,6 +66,8 @@ Returns whether this object&#39;s value can fit in a 64-bit signed integer.</li>
 Compares an arbitrary-precision integer with this instance.</li>
 <li><code>int compareTo​(EInteger other)</code><br>
 Compares an arbitrary-precision integer with this instance.</li>
+<li><code>EInteger Decrement()</code><br>
+Returns one subtracted from this arbitrary-precision integer.</li>
 <li><code>EInteger Divide​(int intValue)</code><br>
 Divides this instance by the value of an arbitrary-precision integer.</li>
 <li><code>EInteger Divide​(EInteger bigintDivisor)</code><br>
@@ -124,10 +126,10 @@ arbitrary-precision integer.</li>
 Gets the number 1 as an arbitrary-precision integer.</li>
 <li><code>boolean GetSignedBit​(int index) &quot;Forms of numbers&quot;</code><br>
 Returns whether a bit is set in the two&#39;s-complement form (see &quot;Forms of numbers&quot;) of this
-object&#39; s value.</li>
+object&#39;s value.</li>
 <li><code>boolean GetSignedBit​(EInteger bigIndex) &quot;Forms of numbers&quot;</code><br>
 Returns whether a bit is set in the two&#39;s-complement form (see &quot;Forms of numbers&quot;) of this
-object&#39; s value.</li>
+object&#39;s value.</li>
 <li><code>int GetSignedBitLength()</code><br>
 Deprecated.
 This method may overflow.
@@ -152,6 +154,8 @@ value.</li>
 Gets the number zero as an arbitrary-precision integer.</li>
 <li><code>int hashCode()</code><br>
 Returns the hash code for this instance.</li>
+<li><code>EInteger Increment()</code><br>
+Returns one added to this arbitrary-precision integer.</li>
 <li><code>boolean isEven()</code><br>
 Gets a value indicating whether this value is even.</li>
 <li><code>boolean isPowerOfTwo()</code><br>
@@ -315,7 +319,7 @@ Finds the exclusive &quot;or&quot; of two arbitrary-precision integer objects.</
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li><code>true</code> if this object&#39; s value is a power of two, and greater
+<li><code>true</code> if this object&#39;s value is a power of two, and greater
 than 0; otherwise, <code>false</code>.</li>
 </ul>
 
@@ -342,7 +346,7 @@ than 0; otherwise, <code>false</code>.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>The sign of this object&#39; s value.</li>
+<li>The sign of this object&#39;s value.</li>
 </ul>
 
 <h3>FromBytes</h3>
@@ -1082,7 +1086,7 @@ value is 0 or odd.</li>
 </pre>
 
 <p>Returns whether a bit is set in the two&#39;s-complement form (see <code>&quot;Forms of numbers&quot;</code>) of this
- object&#39; s value.</p>
+ object&#39;s value.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1096,7 +1100,7 @@ so on.</li>
 
 <ul>
 <li><code>true</code> if the given bit is set in the two&#39; s-complement form
-(see <code>EDecimal</code>) of this object&#39; s
+(see <code>EDecimal</code>) of this object&#39;s
 value; otherwise, <code>false</code>.</li>
 </ul>
 
@@ -1112,7 +1116,7 @@ value; otherwise, <code>false</code>.</li>
 </pre>
 
 <p>Returns whether a bit is set in the two&#39;s-complement form (see <code>&quot;Forms of numbers&quot;</code>) of this
- object&#39; s value.</p>
+ object&#39;s value.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1126,7 +1130,7 @@ on.</li>
 
 <ul>
 <li><code>true</code> if the given bit is set in the two&#39; s-complement form
-(see <code>EDecimal</code>) of this object&#39; s
+(see <code>EDecimal</code>) of this object&#39;s
 value; otherwise, <code>false</code>.</li>
 </ul>
 
@@ -1764,7 +1768,7 @@ is 0 or less, or one and zero if this value equals 1.</li>
 </pre>
 
 <p>Returns a byte array of this integer&#39;s value. The byte array will take the
- number&#39;s two&#39; s-complement form (see <code>&quot;Forms of numbers&quot;</code>), using the
+ number&#39;s two&#39;s-complement form (see <code>&quot;Forms of numbers&quot;</code>), using the
  fewest bytes necessary to store its value unambiguously. If this
  value is negative, the bits that appear beyond the most significant
  bit of the number will be all ones. The resulting byte array can be
@@ -1805,7 +1809,7 @@ single element 0.</li>
 
 <p>Converts this object&#39;s value to a 32-bit signed integer. If the value can&#39;t
  fit in a 32-bit integer, returns the lower 32 bits of this object&#39;s
- two&#39; s-complement form (see <code>&quot;Forms of numbers&quot;</code>) (in which case the return value might have a
+ two&#39;s-complement form (see <code>&quot;Forms of numbers&quot;</code>) (in which case the return value might have a
  different sign than this object&#39;s value).</p>
 
 <p><strong>Returns:</strong></p>
@@ -1835,7 +1839,7 @@ single element 0.</li>
 
 <p>Converts this object&#39;s value to a 64-bit signed integer. If the value can&#39;t
  fit in a 64-bit integer, returns the lower 64 bits of this object&#39;s
- two&#39; s-complement form (see <code>&quot;Forms of numbers&quot;</code>) (in which case the return value might have a
+ two&#39;s-complement form (see <code>&quot;Forms of numbers&quot;</code>) (in which case the return value might have a
  different sign than this object&#39;s value).</p>
 
 <p><strong>Returns:</strong></p>
@@ -1890,6 +1894,32 @@ in radix 16.</li>
 <li>A string representation of this object. If negative, the string will
 begin with a minus sign (&quot;-&quot;, U+002D). The string will use the basic
 digits 0 to 9 (U+0030 to U+0039).</li>
+</ul>
+
+<h3>Increment</h3>
+
+<pre>public EInteger Increment()
+</pre>
+
+<p>Returns one added to this arbitrary-precision integer.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The given arbitrary-precision integer plus one.</li>
+</ul>
+
+<h3>Decrement</h3>
+
+<pre>public EInteger Decrement()
+</pre>
+
+<p>Returns one subtracted from this arbitrary-precision integer.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The given arbitrary-precision integer minus one.</li>
 </ul>
 
 <h3>ToByteChecked</h3>

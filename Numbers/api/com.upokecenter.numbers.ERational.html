@@ -85,6 +85,8 @@ Creates a not-a-number arbitrary-precision rational number.</li>
      boolean signaling,
      boolean negative)</code><br>
 Creates a not-a-number arbitrary-precision rational number.</li>
+<li><code>ERational Decrement()</code><br>
+Subtracts one from an arbitrary-precision rational number.</li>
 <li><code>ERational Divide​(ERational otherValue)</code><br>
 Divides this instance by the value of an arbitrary-precision rational number
 object.</li>
@@ -139,6 +141,8 @@ Gets this object&#39;s numerator.</li>
 Gets this object&#39;s numerator with the sign removed.</li>
 <li><code>int hashCode()</code><br>
 Returns the hash code for this instance.</li>
+<li><code>ERational Increment()</code><br>
+Adds one to an arbitrary-precision rational number.</li>
 <li><code>boolean isFinite()</code><br>
 Gets a value indicating whether this object is finite (not infinity or NaN).</li>
 <li><code>boolean IsInfinity()</code><br>
@@ -359,7 +363,7 @@ Converts this object to a text string.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>This object&#39; s denominator.</li>
+<li>This object&#39;s denominator.</li>
 </ul>
 
 <h3>isFinite</h3>
@@ -403,7 +407,7 @@ is negative; otherwise, <code>false</code>.</li>
 
 <ul>
 <li><code>true</code> if this object&#39;s value equals 0; otherwise, <code>
-false</code>. <code>true</code> if this object&#39; s value equals 0; otherwise,
+false</code>. <code>true</code> if this object&#39;s value equals 0; otherwise,
 <code>false</code>.</li>
 </ul>
 
@@ -417,7 +421,7 @@ false</code>. <code>true</code> if this object&#39; s value equals 0; otherwise,
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>This object&#39; s numerator. If this object is a not-a-number value,
+<li>This object&#39;s numerator. If this object is a not-a-number value,
 returns the diagnostic information (which will be negative if this
 object is negative).</li>
 </ul>
@@ -1668,6 +1672,32 @@ value exceeds the range of a 32-bit floating point number.</li>
 infinity or not-a-number, the result is the analogous return value
 of the <code>EDecimal.toString</code> method. Otherwise, the return value
 has the following form: <code>[-]numerator.Divide(denominator)</code>.</li>
+</ul>
+
+<h3>Increment</h3>
+
+<pre>public ERational Increment()
+</pre>
+
+<p>Adds one to an arbitrary-precision rational number.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The given arbitrary-precision rational number plus one.</li>
+</ul>
+
+<h3>Decrement</h3>
+
+<pre>public ERational Decrement()
+</pre>
+
+<p>Subtracts one from an arbitrary-precision rational number.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The given arbitrary-precision rational number minus one.</li>
 </ul>
 
 <h3>ToByteChecked</h3>
