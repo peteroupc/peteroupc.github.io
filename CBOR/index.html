@@ -144,12 +144,13 @@ using (var stream = new FileStream(&quot;object.cbor&quot;, FileMode.Create)) {
 }
 </pre>
 
-<p>Writing multiple objects to a file, including arbitrary objects:</p>
+<p>Writing multiple objects to a file, including arbitrary objects (the resulting
+file is also called a <em>CBOR sequence</em>):</p>
 
 <pre lang="c#"><code>// C#
-// This example writes different kinds of objects in CBOR
+// This example writes a sequence of objects in CBOR
 // format to the same file.
-using (var stream = new FileStream(&quot;object.cbor&quot;, FileMode.Create)) {
+using (var stream = new FileStream(&quot;object.cborseq&quot;, FileMode.Create)) {
    CBORObject.Write(true, stream);
    CBORObject.Write(422.5, stream);
    CBORObject.Write(&quot;some string&quot;, stream);
@@ -204,6 +205,33 @@ using (var stream = new FileStream(&quot;object6.json&quot;, FileMode.Create)) {
 }
 </pre>
 
+<p>There are several ways to check whether a CBOR object is a 32-bit integer.  Which
+one to use depends on the application&#39;s needs.  Some of them follow (written in C#).</p>
+
+<pre>/* Accept any untagged CBOR integer
+  that can fit the Int32 range */
+if(!cbor.IsTagged &amp;&amp; cbor.Type==CBORType.Integer &amp;&amp;
+   cbor.CanValueFitInInt32()) {
+  return cbor.AsInt32();
+}
+/* Accept any CBOR integer, tagged or not, that
+ can fit the Int32 range */
+if(cbor.Type==CBORType.Integer &amp;&amp; cbor.CanValueFitInInt32()) {
+  return cbor.AsInt32();
+}
+/* Accept any CBOR integer or floating-point number,
+ tagged or not, that is an integer within the Int32 range */
+if((cbor.Type==CBORType.Integer || cborType==CBORType.FloatingPoint) ||
+   cbor.Untag().AsNumber().CanValueFitInInt32()) {
+  return cbor.AsInt32();
+}
+/* Accept any CBOR object representing an integer number
+   that can fit the Int32 range */
+if(cbor.IsNumber &amp;&amp; cbor.AsNumber().CanValueFitInInt32()) {
+  return cbor.AsInt32();
+}
+</pre>
+
 <p>NOTE: All code samples in this section are released to the Public Domain,
 as explained in <a href="http://creativecommons.org/publicdomain/zero/1.0/">http://creativecommons.org/publicdomain/zero/1.0/</a>.</p>
 
@@ -222,17 +250,6 @@ CBOR library in the form of a calculator.</p>
 <p>If you like this, you should donate to Peter O.
 at: <a href="http://peteroupc.github.io/CBOR/">http://peteroupc.github.io/CBOR/</a></p>
 
-<h2>Clarifications</h2>
-
-<p>The following are some clarifications to RFC 7049.</p>
-
-<ul>
-<li>Section 2.4.2 doesn&#39;t specify what happens if a bignum&#39;s byte
-string has a length of 0.  This implementation treats a positive
-bignum with length 0 as having a value of 0 and a negative
-bignum with length 0 as having a value of -1.</li>
-</ul>
-
 <h2>Release Notes</h2>
 
 <p>See <a href="https://github.com/peteroupc/CBOR/tree/master/History.md">History.md</a>
@@ -240,8 +257,7 @@ for release notes.</p>
 
 <h2>Specifications</h2>
 
-<p>Here are specifications by this implementation&#39;s author on proposed
-CBOR tags:</p>
+<p>Here are specifications by this implementation&#39;s author on certain CBOR tags:</p>
 
 <ul>
 <li>Tag 30: <a href="http://peteroupc.github.io/CBOR/rational.html">Rational numbers</a></li>

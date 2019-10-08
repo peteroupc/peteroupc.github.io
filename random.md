@@ -199,7 +199,7 @@ If an application chooses to use a manually-seeded PRNG for reproducible "random
 
 Use cases for manually-seeded PRNGs include the following.
 
-- Simulations and machine learning.  This includes physics simulations and artificial intelligence in games, as well as simulations to reproduce published research data.
+- Simulations and machine learning.  This includes physics simulations and artificial intelligence (AI) in games, as well as simulations to reproduce published research data.
 - Monte Carlo methods (to make them random-behaving but deterministic).
 - Procedural noise generation.
 - Unit tests in which "randomness" ought not to determine whether they pass or fail.
@@ -216,10 +216,10 @@ Many kinds of game software generate seemingly "random" game content that might 
 
 In general, the bigger that "random" content is, the greater the justification to use a manually-seeded PRNG and a custom seed to generate that content.  The following are special cases:
 
-- If the game needs reproducible "random" content only at the start of the game session (e.g., a "random" game board or a "random" order of virtual cards) and that content is small (say, no more than a hundred numbers):
+1. If the game needs reproducible "random" content only at the start of the game session (e.g., a "random" game board or a "random" order of virtual cards) and that content is small (say, no more than a hundred numbers):
     - The game SHOULD NOT use a manually-seeded PRNG unless the seed is based on a "code" or "password" entered by the user.  This is a good sign that the game ought to store the "random" content instead of a seed.
-- In a networked game where multiple computers (e.g., multiple players, or a client and server) have a shared view of the game state and random numbers are used to update that game state:
-    - The game SHOULD NOT use a manually-seeded PRNG where predicting a random outcome could give a player a significant and unfair advantage (e.g., the random number is the result of a die roll, or the top card of the draw pile, for a board or card game).  The game MAY use such a PRNG in other cases to ensure the game state is consistent among computers, including in physics simulations and in artificial intelligence.
+2. In a networked game where multiple computers (e.g., multiple players, or a client and server) have a shared view of the game state and random numbers are used to update that game state:
+    - The game SHOULD NOT use a manually-seeded PRNG where predicting a random outcome could give a player a significant and unfair advantage (e.g., the random number is the result of a die roll, or the top card of the draw pile, for a board or card game).  The game MAY use such a PRNG in other cases to ensure the game state is consistent among computers, including in physics simulations and AI.
 
 > **Examples:**
 >

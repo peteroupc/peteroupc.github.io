@@ -296,7 +296,7 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 <p>Use cases for manually-seeded PRNGs include the following.</p>
 
 <ul>
-<li>Simulations and machine learning.  This includes physics simulations and artificial intelligence in games, as well as simulations to reproduce published research data.</li>
+<li>Simulations and machine learning.  This includes physics simulations and artificial intelligence (AI) in games, as well as simulations to reproduce published research data.</li>
 <li>Monte Carlo methods (to make them random-behaving but deterministic).</li>
 <li>Procedural noise generation.</li>
 <li>Unit tests in which &quot;randomness&quot; ought not to determine whether they pass or fail.</li>
@@ -317,7 +317,7 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 
 <p>In general, the bigger that &quot;random&quot; content is, the greater the justification to use a manually-seeded PRNG and a custom seed to generate that content.  The following are special cases:</p>
 
-<ul>
+<ol>
 <li>If the game needs reproducible &quot;random&quot; content only at the start of the game session (e.g., a &quot;random&quot; game board or a &quot;random&quot; order of virtual cards) and that content is small (say, no more than a hundred numbers):
 
 <ul>
@@ -326,9 +326,9 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 <li>In a networked game where multiple computers (e.g., multiple players, or a client and server) have a shared view of the game state and random numbers are used to update that game state:
 
 <ul>
-<li>The game SHOULD NOT use a manually-seeded PRNG where predicting a random outcome could give a player a significant and unfair advantage (e.g., the random number is the result of a die roll, or the top card of the draw pile, for a board or card game).  The game MAY use such a PRNG in other cases to ensure the game state is consistent among computers, including in physics simulations and in artificial intelligence.</li>
+<li>The game SHOULD NOT use a manually-seeded PRNG where predicting a random outcome could give a player a significant and unfair advantage (e.g., the random number is the result of a die roll, or the top card of the draw pile, for a board or card game).  The game MAY use such a PRNG in other cases to ensure the game state is consistent among computers, including in physics simulations and AI.</li>
 </ul></li>
-</ul>
+</ol>
 
 <blockquote>
 <p><strong>Examples:</strong></p>
