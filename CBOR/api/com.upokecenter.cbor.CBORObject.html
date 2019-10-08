@@ -313,6 +313,9 @@ Gets a list of all tags, from outermost to innermost.</li>
 <li><code>byte[] GetByteString()</code><br>
 Gets the backing byte array used in this CBOR object, if this object is a
 byte string, without copying the data to a new byte array.</li>
+<li><code>java.util.Collection&lt;java.util.Map.Entry&lt;CBORObject,​CBORObject&gt;&gt; getEntries()</code><br>
+Gets a collection of the key/value pairs stored in this CBOR object, if it&#39;s
+a map.</li>
 <li><code>java.util.Collection&lt;CBORObject&gt; getKeys()</code><br>
 Gets a collection of the keys of this CBOR object in an undefined order.</li>
 <li><code>com.upokecenter.numbers.EInteger getMostInnerTag()</code><br>
@@ -823,7 +826,9 @@ false</code>.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A collection of the keys of this CBOR object.</li>
+<li>A collection of the keys of this CBOR object. To avoid potential
+problems, the calling code should not modify the CBOR map while
+iterating over the returned collection.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -928,6 +933,29 @@ this object is not a simple value.</li>
 <li>The general data type of this CBOR object.</li>
 </ul>
 
+<h3>getEntries</h3>
+
+<pre>public final java.util.Collection&lt;java.util.Map.Entry&lt;CBORObject,​CBORObject&gt;&gt; getEntries()
+</pre>
+
+<p>Gets a collection of the key/value pairs stored in this CBOR object, if it&#39;s
+ a map. Returns one entry for each key/value pair in the map in an
+ undefined order.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A collection of the key/value pairs stored in this CBOR map. To
+avoid potential problems, the calling code should not modify the
+CBOR map while iterating over the returned collection.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>java.lang.IllegalStateException</code> - This object is not a map.</li>
+</ul>
+
 <h3>getValues</h3>
 
 <pre>public final java.util.Collection&lt;CBORObject&gt; getValues()
@@ -943,7 +971,9 @@ this object is not a simple value.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A collection of the values of this CBOR map or array.</li>
+<li>A collection of the values of this CBOR map or array. To avoid
+potential problems, the calling code should not modify the CBOR map
+or array while iterating over the returned collection.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
