@@ -13,7 +13,6 @@ import random
 _SIGBITS = 53
 _FLOAT_MAX = 1.7976931348623157e308
 
-
 def _mean(list):
     if len(list) <= 1:
         return 0
@@ -25,7 +24,6 @@ def _mean(list):
         cxm = c - xm
         xm += cxm * 1.0 / i
     return xm
-
 
 def _variance(list):
     if len(list) <= 1:
@@ -40,7 +38,6 @@ def _variance(list):
         xm += cxm * 1.0 / i
         xs += cxm * (c - xm)
     return xs * 1.0 / (len(list) - 1)
-
 
 def _tableInterpSearch(table, x, censor=False):
     # Effective length is the length of table minus 1
@@ -66,11 +63,9 @@ def _tableInterpSearch(table, x, censor=False):
             return table[tablelen][1]
     return None
 
-
 def numericalTable(func, x, y, n=100):
     ret = [x + (y - x) * (i * 1.0 / n) for i in range(n + 1)]
     return [[func(b), b] for b in ret]
-
 
 class RandomGen:
     """ A class that implements many methods for
@@ -317,7 +312,9 @@ Returns 'list'. """
         areas = [0 for i in range(len(values) - 1)]
         i = 0
         while i < len(values) - 1:
-            weightArea = (weights[i] + weights[i + 1]) * 0.5 * (values[i + 1] - values[i])
+            weightArea = (
+                (weights[i] + weights[i + 1]) * 0.5 * (values[i + 1] - values[i])
+            )
             if weightArea < 0:
                 weightArea = -weightArea
             areas[i] = weightArea
@@ -896,7 +893,9 @@ of failures of each kind of failure.
                     ret[j][i] = (matrix[j][i] - msum) * 1.0 / ret[j][j]
         return ret
 
-    def spsa_minimize(self, func, guess, iterations=200, constrain=None, a=None, c=None, acap=None):
+    def spsa_minimize(
+        self, func, guess, iterations=200, constrain=None, a=None, c=None, acap=None
+    ):
         """Tries to find a choice of parameters that minimizes the value
 of a scoring function, also called the objective function or loss
 function, starting from an initial guess.  This method uses an
@@ -1074,7 +1073,9 @@ acap - Optional.  A setting used in the optimization process; an
         for i in range(len(cov)):
             # Apply the normal distribution's CDF
             # to get uniform variables
-            mvn[i] = (math.erf(mvn[i] / (math.sqrt(2) * math.sqrt(cov[i][i]))) + 1) * 0.5
+            mvn[i] = (
+                math.erf(mvn[i] / (math.sqrt(2) * math.sqrt(cov[i][i]))) + 1
+            ) * 0.5
         return mvn
 
     def multivariate_t(self, mu, cov, df):
@@ -1082,7 +1083,9 @@ acap - Optional.  A setting used in the optimization process; an
            cov is the covariance matrix, and df is the degrees of freedom. """
         mn = self.multinormal(None, cov)
         cd = self.gamma(df * 0.5, 2.0 / df)
-        return [(0 if mu == None else mu[i]) + mn[i] / math.sqrt(cd) for i in range(len(mn))]
+        return [
+            (0 if mu == None else mu[i]) + mn[i] / math.sqrt(cd) for i in range(len(mn))
+        ]
 
     def _pochhammer(self, a, b):
         return math.gamma(a + b) / math.gamma(a)
@@ -1110,7 +1113,10 @@ acap - Optional.  A setting used in the optimization process; an
             )
         if a > 0 and a < 50 and math.floor(a) == a:
             return 1.0 - ((1.0 - x) ** b) * sum(
-                [self._pochhammer(b, i) * (x ** i) * 1.0 / math.gamma(i + 1) for i in range(int(a))]
+                [
+                    self._pochhammer(b, i) * (x ** i) * 1.0 / math.gamma(i + 1)
+                    for i in range(int(a))
+                ]
             )
         ret = pow(10, -100)
         d = 0
@@ -1276,7 +1282,9 @@ acap - Optional.  A setting used in the optimization process; an
             #   divided by
             # - the maximum possible value of that norm for
             #   the whole ellipsoid
-            g = semiminv * math.sqrt(pz * pz + semimp4 * (pt[0] * pt[0] + pt[1] * pt[1]))
+            g = semiminv * math.sqrt(
+                pz * pz + semimp4 * (pt[0] * pt[0] + pt[1] * pt[1])
+            )
             if self.rndu01() <= g:
                 # Accept the equivalent point
                 # on the geoellipsoid
@@ -1431,10 +1439,11 @@ acap - Optional.  A setting used in the optimization process; an
             lasttime = i
             ret.append([i, lastv])
             i += step
-        lastv = lastv + self.normal(mu * (en - lasttime), sigma * math.sqrt(en - lasttime))
+        lastv = lastv + self.normal(
+            mu * (en - lasttime), sigma * math.sqrt(en - lasttime)
+        )
         ret.append([i, lastv])
         return ret
-
 
 class ConvexPolygonSampler:
     """ A class for uniform random sampling of
@@ -1475,7 +1484,6 @@ class ConvexPolygonSampler:
         tri = self.triangles[index]
         return self.randgen.simplex_point(tri)
 
-
 class AlmostRandom:
     def __init__(self, randgen, list):
         if len(list) == 0:
@@ -1491,7 +1499,6 @@ class AlmostRandom:
         item = self.list[self.index]
         self.index += 1
         return item
-
 
 # Examples of use
 if __name__ == "__main__":

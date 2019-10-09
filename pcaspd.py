@@ -704,7 +704,6 @@ _leaves[7] = [
     [[0.287956117643289], [0.3558381900199877], [0.09809903558056805]],
 ]
 
-
 def sRGBToSPDOtsu(srgb):
     """ Implements Otsu and others, "Reproducing Spectral Reflectances
       from Tristimulus Colors", 2018. """
@@ -712,9 +711,21 @@ def sRGBToSPDOtsu(srgb):
     xyz = xyzFromsRGB(srgb)
     xyy = xyzToxyY(xyz)
     node = 0
-    node = _kdtree[node + 2] if xyy[_kdtree[node + 1]] < _kdtree[node] else _kdtree[node + 3]
-    node = _kdtree[node + 2] if xyy[_kdtree[node + 1]] < _kdtree[node] else _kdtree[node + 3]
-    node = _kdtree[node + 2] if xyy[_kdtree[node + 1]] < _kdtree[node] else _kdtree[node + 3]
+    node = (
+        _kdtree[node + 2]
+        if xyy[_kdtree[node + 1]] < _kdtree[node]
+        else _kdtree[node + 3]
+    )
+    node = (
+        _kdtree[node + 2]
+        if xyy[_kdtree[node + 1]] < _kdtree[node]
+        else _kdtree[node + 3]
+    )
+    node = (
+        _kdtree[node + 2]
+        if xyy[_kdtree[node + 1]] < _kdtree[node]
+        else _kdtree[node + 3]
+    )
     leaf = _leaves[node]
     cdiff = matSub(matT(matFromVec(xyz)), leaf[3])
     weights = matMul(leaf[1], cdiff)
@@ -729,19 +740,16 @@ def sRGBToSPDOtsu(srgb):
     spd = SPD(refl, 10, 380)
     return spd
 
-
 def _fileread(x):
     f = file(x, "r")
     ret = f.read()
     f.close()
     return ret
 
-
 def _cmfd65(x):
     c = cie1931cmf(x)
     d = d65Illum(x) / 100.0
     return [cv * d for cv in c]
-
 
 def _meanarr(arrs):
     arrlen = len(arrs[0])
@@ -751,7 +759,6 @@ def _meanarr(arrs):
         for j in range(arrlen):
             ret[j] += arrs[i][j]
     return [v * 1.0 / numarrs for v in ret]
-
 
 def _pca(spdxyy, st, en):
     global cmf
@@ -765,7 +772,6 @@ def _pca(spdxyy, st, en):
     mean = matT(matFromVec(_meanarr(arr)))
     cmean = matMul(cmf, mean)
     return [mat, minv, mean, cmean]
-
 
 def _deltae(spdxyy, st, en):
     pcas = None
@@ -783,7 +789,6 @@ def _deltae(spdxyy, st, en):
         normsq = vecDot(sdiff, sdiff)
         ret += normsq
     return ret
-
 
 def _splitAxis(spdxyy):
     spx = [x for x in spdxyy]
@@ -811,7 +816,6 @@ def _splitAxis(spdxyy):
     if axis == 0:
         return [spx[:best], spx[best:], spx[best][1][0], axis]
     return [spy[:best], spy[best:], spx[best][1][0], axis]
-
 
 # Generates algorithm data from JSON array of reflectance curves
 # (stored in a file named "specs.json").

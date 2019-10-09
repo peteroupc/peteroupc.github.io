@@ -200,7 +200,7 @@ If an application chooses to use a manually-seeded PRNG for reproducible "random
 Use cases for manually-seeded PRNGs include the following.
 
 - Simulations and machine learning.  This includes physics simulations and artificial intelligence (AI) in games, as well as simulations to reproduce published research data.
-- Monte Carlo methods (to make them random-behaving but deterministic).
+- Monte Carlo estimations (to make them random-behaving but deterministic).
 - Procedural noise generation.
 - Unit tests in which "randomness" ought not to determine whether they pass or fail.
 - Games that generate "random" content that is impractical to store.

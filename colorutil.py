@@ -19,16 +19,13 @@ using methods natively supported or commonly used in
 the programming language in question.
 """
 
-
 def matNew(mat):
     """ Creates a matrix from a 2-dimensional array. """
     return matCopy(mat)
 
-
 def matFromVec(vec):
     """ Creates a one-row matrix from a 1-dimensional vector. """
     return matCopy([vec])
-
 
 def matDiag(vec):
     """ Creates a diagonal matrix from a 1-dimensional vector. """
@@ -37,7 +34,6 @@ def matDiag(vec):
         matSet(ret, i, i, vec[i])
     return ret
 
-
 def matEye(n):
     """ Creates an NxN matrix with ones in its diagonal. """
     ret = matZeros((n, n))
@@ -45,54 +41,53 @@ def matEye(n):
         matSet(ret, i, i, 1)
     return ret
 
-
 def matT(mat):
     """ Creates a transposed version of a matrix. """
     shape = matShape(mat)
     return [[matGet(mat, y, x) for y in range(shape[0])] for x in range(shape[1])]
-
 
 def matCopy(mat):
     """ Creates a copy of a matrix. """
     shape = matShape(mat)
     return [[matGet(mat, x, y) for y in range(shape[1])] for x in range(shape[0])]
 
-
 def matScale(mat, scale):
     """ Creates a copy of a matrix with each element multiplied
            by 'scale'. """
     shape = matShape(mat)
-    return [[matGet(mat, x, y) * scale for y in range(shape[1])] for x in range(shape[0])]
-
+    return [
+        [matGet(mat, x, y) * scale for y in range(shape[1])] for x in range(shape[0])
+    ]
 
 def matShape(mat):
     """ Gets the height and width, in that order, of the matrix. """
     return (len(mat), len(mat[0]))
-
 
 def matZeros(shape):
     """ Creates a 0-filled matrix of the given height and width,
            in that order. """
     return [[0 for y in range(shape[1])] for x in range(shape[0])]
 
-
 def matOnes(shape):
     """ Creates a 1-filled matrix of the given height and width,
            in that order. """
     return [[1 for y in range(shape[1])] for x in range(shape[0])]
 
-
 def matAdd(a, b):
     """ Creates a matrix consisting of 'a' plus 'b'. """
     shape = matShape(a)
-    return [[matGet(a, x, y) + matGet(b, x, y) for y in range(shape[1])] for x in range(shape[0])]
-
+    return [
+        [matGet(a, x, y) + matGet(b, x, y) for y in range(shape[1])]
+        for x in range(shape[0])
+    ]
 
 def matSub(a, b):
     """ Creates a matrix consisting of 'a' minus 'b'. """
     shape = matShape(a)
-    return [[matGet(a, x, y) - matGet(b, x, y) for y in range(shape[1])] for x in range(shape[0])]
-
+    return [
+        [matGet(a, x, y) - matGet(b, x, y) for y in range(shape[1])]
+        for x in range(shape[0])
+    ]
 
 def matMul(a, b):
     """ Creates a matrix consisting of 'a' multiplied by 'b', in that order. """
@@ -108,7 +103,6 @@ def matMul(a, b):
                 val += matGet(a, i, k) * matGet(b, k, j)
             matSet(ret, i, j, val)
     return ret
-
 
 def matI(a):
     """ Creates a matrix consisting of the inverse of 'a'. """
@@ -143,7 +137,9 @@ def matI(a):
             f = idi * matGet(ret, rint, row)
             if f != 0:
                 for co in range(row, n * 2):
-                    matSet(ret, rint, co, matGet(ret, rint, co) - f * matGet(ret, row, co))
+                    matSet(
+                        ret, rint, co, matGet(ret, rint, co) - f * matGet(ret, row, co)
+                    )
     row = n - 1
     while row >= 0:
         ic = 1.0 / matGet(ret, row, row)
@@ -151,29 +147,30 @@ def matI(a):
             icx = ic * matGet(ret, rint, row)
             if icx != 0:
                 for co in range(row, n * 2):
-                    matSet(ret, rint, co, matGet(ret, rint, co) - icx * matGet(ret, row, co))
+                    matSet(
+                        ret,
+                        rint,
+                        co,
+                        matGet(ret, rint, co) - icx * matGet(ret, row, co),
+                    )
         matSet(ret, row, row, ic * matGet(ret, row, row))
         for co in range(n, n * 2):
             matSet(ret, row, co, ic * matGet(ret, row, co))
         row -= 1
     return matPart(ret, 0, n, n, n * 2)
 
-
 def matSet(mat, r, c, v):
     """ Sets the (v)alue of the given (r)ow and (c)olumn of the (mat)rix. """
     mat[r][c] = v
-
 
 def matGet(mat, r, c):
     """ Gets the value of the given (r)ow and (c)olumn of the (mat)rix. """
     return mat[r][c]
 
-
 def matPart(mat, rs, re, cs, ce):
     """ Gets part of a matrix with rows indexed rs inclusive to re exclusive
          and columns indexed cs inclusive to ce exclusive. """
     return [[matGet(mat, x, y) for y in range(cs, ce)] for x in range(rs, re)]
-
 
 def matBlock(a, b, c, d):
     """ Concatenates the topleft, topright, bottomleft, and bottomright
@@ -187,12 +184,15 @@ def matBlock(a, b, c, d):
         for j in range(shape2):
             val = 0
             if i < arows:
-                val = matGet((a if j < acols else b), i, (j if j < acols else j - acols))
+                val = matGet(
+                    (a if j < acols else b), i, (j if j < acols else j - acols)
+                )
             else:
-                val = matGet((c if j < acols else d), i - arows, (j if j < acols else j - acols))
+                val = matGet(
+                    (c if j < acols else d), i - arows, (j if j < acols else j - acols)
+                )
             matSet(ret, i, j, val)
     return ret
-
 
 def vecDot(a, b):
     """ Finds the dot product of two number lists of equal size. """
@@ -200,7 +200,6 @@ def vecDot(a, b):
     for i in range(len(a)):
         ret += a[i] * b[i]
     return ret
-
 
 #######################
 
@@ -1032,7 +1031,6 @@ _DSERIES = [
 
 _LSSDATA = None
 
-
 def _generateLSSData():
     """ Generates data needed for sRGB-to-reflectance curve function. """
     d65data = matFromVec([d65Illum(x) for x in brange(10, 380, 730)])
@@ -1065,7 +1063,6 @@ def _generateLSSData():
     b11 = matPart(bm, 0, width, 0, width)
     b12 = matPart(bm, 0, matShape(vt)[0], width, matShape(bm)[1])
     return [b11, b12]
-
 
 class SPD:
     """ Spectral power distribution class.
@@ -1106,11 +1103,9 @@ class SPD:
         e = self._calcd((wavelength - mm) + self.interval)
         return s + (e - s) * m
 
-
 #
 #  Illuminants and observers
 #
-
 
 def planckian(temp, wavelength):
     """ Spectral distribution for blackbody (Planckian) radiation.
@@ -1121,14 +1116,17 @@ def planckian(temp, wavelength):
         temp = 60  # For simplicity, in very low temperature
     num = wavelength ** (-5)
     try:
-        v = num / (math.exp(0.0143877687750393 / (wavelength * (10 ** (-9)) * temp)) - 1)
+        v = num / (
+            math.exp(0.0143877687750393 / (wavelength * (10 ** (-9)) * temp)) - 1
+        )
     except:
         print(temp)
         print(wavelength)
         raise ValueError
-    v2 = (560.0 ** (-5)) / (math.exp(0.0143877687750393 / (560.0 * (10 ** (-9)) * temp)) - 1)
+    v2 = (560.0 ** (-5)) / (
+        math.exp(0.0143877687750393 / (560.0 * (10 ** (-9)) * temp)) - 1
+    )
     return v * 100.0 / v2
-
 
 def cie1931cmf(wavelength):
     """ CIE 1931 (2-degree) standard observer.
@@ -1138,7 +1136,6 @@ def cie1931cmf(wavelength):
     index = int(round((wavelength - 380) / 5.0)) * 3
     return [_CIE1931[index + i] for i in range(3)]
 
-
 def cie1964cmf(wavelength):
     """ CIE 1964 (10-degree) standard observer.
           `wavelength` is in nanometers. """
@@ -1146,7 +1143,6 @@ def cie1964cmf(wavelength):
         return [0, 0, 0]
     index = int(round((wavelength - 380) / 5.0)) * 3
     return [_CIE1964[index + i] for i in range(3)]
-
 
 def _dseriesd(temp, wavelength):
     if wavelength < 300 or wavelength > 830:
@@ -1160,7 +1156,10 @@ def _dseriesd(temp, wavelength):
     if temp < 7000:
         ex = 0.244063 + (9911 * h + (2967800.0 - 4607000000.0 * invt) * invt) * invt
     else:
-        ex = 2963 / 12500.0 + (6187 / 25.0 + (1901800.0 - 2006400000.0 * invt) * invt) * invt
+        ex = (
+            2963 / 12500.0
+            + (6187 / 25.0 + (1901800.0 - 2006400000.0 * invt) * invt) * invt
+        )
     # 'd' holds the xy chromaticity of the D-series illuminant
     d = [ex, ex * (-3 * ex + 287 * h) - 11.0 / 40.0]
     t = 10000.0 / (2562 * d[0] - 7341 * d[1] + 241)
@@ -1171,7 +1170,6 @@ def _dseriesd(temp, wavelength):
     t2 = round(t2 * 1000) / 1000.0
     t2 = t2 * _DSERIES[index + 2]
     return t1 + t2 + _DSERIES[index]
-
 
 def dseries(temp, wavelength):
     """
@@ -1191,7 +1189,6 @@ def dseries(temp, wavelength):
     e = _dseriesd(temp, (wavelength - mm) + 10)
     return s + (e - s) * m
 
-
 def referenceIllum(temp, wavelength):
     """
   Reference illuminant for a given color temperature.
@@ -1208,11 +1205,9 @@ def referenceIllum(temp, wavelength):
         return p + (d - p) * (ct - 4000) / 1500.0
     return dseries(ct, wavelength)
 
-
 def perfectrefl(wavelength):
     """ Perfect reflecting diffuser. `wavelength` is in nanometers. """
     return 1.0
-
 
 def brange(interval, mn, mx):
     ret = [0 for i in range(int((mx - mn) / interval))]
@@ -1227,25 +1222,20 @@ def brange(interval, mn, mx):
         i += 1
     return ret
 
-
 def aIllum(wavelength):
     """ CIE A Standard Illuminant. `wavelength` is in nanometers."""
     return planckian(2856, wavelength)
 
-
 _d50Illum = SPD([dseries(5000, _) for _ in brange(5, 300, 830)], 5, 300)
 _d65Illum = SPD([dseries(6500, _) for _ in brange(5, 300, 830)], 5, 300)
-
 
 def d50Illum(wavelength):
     """ CIE D50 Illuminant. `wavelength` is in nanometers."""
     return _d50Illum.calc(wavelength)
 
-
 def d65Illum(wavelength):
     """ CIE D65 Standard Illuminant. `wavelength` is in nanometers."""
     return _d65Illum.calc(wavelength)
-
 
 def spectrumToTristim(refl, light=d65Illum, cmf=cie1931cmf):
     i = 360
@@ -1267,7 +1257,6 @@ def spectrumToTristim(refl, light=d65Illum, cmf=cie1931cmf):
     xyz[2] = xyz[2] / weight
     return xyz
 
-
 def bandpasscorrect(data):
     """
    Rectifies bandpass differences in a list
@@ -1283,7 +1272,6 @@ def bandpasscorrect(data):
     for k in range(1, n - 1):
         ret[k] = 1.166 * ret[k] - 0.083 * ret[k - 1] - 0.083 * ret[k + 1]
     return ret
-
 
 def sRGBToSPD(rgb):
     """ Generates a representative reflectance curve from an encoded
@@ -1340,9 +1328,7 @@ def sRGBToSPD(rgb):
                 matSet(ret, i, 0, rm)
     return SPD(spdarray, 10, 380, 730)
 
-
 ##################################################
-
 
 def linearFromsRGB(c):
     """Convert a color component from encoded to linear RGB."""
@@ -1350,20 +1336,16 @@ def linearFromsRGB(c):
         return c / 12.92
     return math.pow((0.055 + c) / 1.055, 2.4)
 
-
 def _clamp(a, mn, mx):
     if a < mn:
         return mn
     return mx if a > mx else a
 
-
 def clamp3(v, mn, mx):
     return [_clamp(v[i], mn[i], mx[i]) for i in range(3)]
 
-
 def lerp3(c1, c2, factor):
     return [c1[i] + (c2[i] - c1[i]) * factor for i in range(3)]
-
 
 def linearTosRGB(c):
     """
@@ -1373,16 +1355,13 @@ Converts a color component from linear to encoded sRGB.
         return 12.92 * c
     return math.pow(c, 1.0 / 2.4) * 1.055 - 0.055
 
-
 def linearFromsRGB3(c):
     """ Convert a color from encoded to linear RGB.  """
     return [linearFromsRGB(c[0]), linearFromsRGB(c[1]), linearFromsRGB(c[2])]
 
-
 def linearTosRGB3(c):
     """ Convert a color from linear to encoded sRGB. """
     return [linearTosRGB(c[0]), linearTosRGB(c[1]), linearTosRGB(c[2])]
-
 
 def rgbToHsv(rgb):
     mx = max(max(rgb[0], rgb[1]), rgb[2])
@@ -1402,7 +1381,6 @@ def rgbToHsv(rgb):
     if h >= 6:
         h = h % 6
     return [h * (math.pi / 3), s, mx]
-
 
 def hsvToRgb(hsv):
     hue = hsv[0]
@@ -1429,7 +1407,6 @@ def hsvToRgb(hsv):
     if hi == 4:
         return [e, c, val]
     return [val, c, a]
-
 
 def rgbToHsl(rgb):
     vmax = max(max(rgb[0], rgb[1]), rgb[2])
@@ -1462,7 +1439,6 @@ def rgbToHsl(rgb):
     if h >= math.pi * 2:
         h = (h) % (math.pi * 2)
     return [h, s, lt]
-
 
 def hslToRgb(hsl):
     if hsl[1] == 0:
@@ -1502,11 +1478,9 @@ def hslToRgb(hsl):
         i = i + 1
     return rgb
 
-
 def hsvHue(rgb):
     """  Deprecated. Use `rgbToHsv(rgb)[0]` instead.  """
     return rgbToHsv(rgb)[0]
-
 
 def rgbToHwb(color):
     return [
@@ -1515,12 +1489,10 @@ def rgbToHwb(color):
         1 - max(max(color[0], color[1]), color[2]),
     ]
 
-
 def hwbToRgb(hwb):
     if hwb[2] >= 1:
         return [hwb[0], 0, 0]
     return hsvToRgb([hwb[0], 1 - hwb[1] / (1 - hwb[2]), 1 - hwb[2]])
-
 
 # applies a 3x3 matrix transformation
 def _apply3x3Matrix(xyz, xyzmatrix):
@@ -1528,7 +1500,6 @@ def _apply3x3Matrix(xyz, xyzmatrix):
     g = xyz[0] * xyzmatrix[3] + xyz[1] * xyzmatrix[4] + xyz[2] * xyzmatrix[5]
     b = xyz[0] * xyzmatrix[6] + xyz[1] * xyzmatrix[7] + xyz[2] * xyzmatrix[8]
     return [r, g, b]
-
 
 def xyzFromsRGBD50(rgb):
     lin = linearFromsRGB3(rgb)
@@ -1547,7 +1518,6 @@ def xyzFromsRGBD50(rgb):
         ],
     )
 
-
 def xyzTosRGBD50(xyz):
     rgb = _apply3x3Matrix(
         xyz,
@@ -1564,7 +1534,6 @@ def xyzTosRGBD50(xyz):
         ],
     )
     return linearTosRGB3(rgb)
-
 
 def xyzFromsRGB(rgb):
     lin = linearFromsRGB3(rgb)
@@ -1584,7 +1553,6 @@ def xyzFromsRGB(rgb):
         ],
     )
 
-
 def xyzTosRGB(xyz):
     rgb = _apply3x3Matrix(
         xyz,
@@ -1602,12 +1570,10 @@ def xyzTosRGB(xyz):
     )
     return linearTosRGB3(rgb)
 
-
 def wavelengthTosRGB(wavelength):
     srgb = xyzTosRGB(d65Illum(wavelength))
     # Clamp sRGB value
     return [(0 if x < 0 else (1 if x > 1 else x)) for x in srgb]
-
 
 def xyzToLab(xyzval, wpoint):
     xyz = [xyzval[0] / wpoint[0], xyzval[1] / wpoint[1], xyzval[2] / wpoint[2]]
@@ -1620,7 +1586,6 @@ def xyzToLab(xyzval, wpoint):
             xyz[i] = (16.0 + kappa * xyz[i]) / 116
         i = i + 1
     return [116.0 * xyz[1] - 16, 500 * (xyz[0] - xyz[1]), 200 * (xyz[1] - xyz[2])]
-
 
 def labToXYZ(lab, wpoint):
     fy = (lab[0] + 16) / 116.0
@@ -1643,17 +1608,14 @@ def labToXYZ(lab, wpoint):
     xyz[2] = xyz[2] * wpoint[2]
     return xyz
 
-
 def labToChroma(lab):
     return math.sqrt(lab[1] * lab[1] + lab[2] * lab[2])
-
 
 def labToHue(lab):
     h = math.atan2(lab[2], lab[1])
     if h < 0:
         h = h + math.pi * 2
     return h
-
 
 def labHueDifference(lab1, lab2):
     cmul = labToChroma(lab1) * labToChroma(lab2)
@@ -1667,17 +1629,14 @@ def labHueDifference(lab1, lab2):
             hdiff = hdiff - math.pi * 2
     return math.sqrt(cmul) * math.sin(hdiff * 0.5) * 2
 
-
 def lchToLab(lch):
     # NOTE: Assumes hue is in radians, not degrees
     return [lch[0], lch[1] * math.cos(lch[2]), lch[1] * math.sin(lch[2])]
-
 
 def lchDegreesToLab(lch):
     # NOTE: Assumes hue is in degrees, not radians
     h = lch[2] * math.pi / 180
     return [lch[0], lch[1] * math.cos(h), lch[1] * math.sin(h)]
-
 
 def euclideanDist(color1, color2):
     d1 = color2[0] - color1[0]
@@ -1686,18 +1645,15 @@ def euclideanDist(color1, color2):
     sqdist = d1 * d1 + d2 * d2 + d3 * d3
     return math.sqrt(sqdist)
 
-
 def xyzToxyY(xyz):
     sum = xyz[0] + xyz[1] + xyz[2]
     if sum == 0:
         return [0, 0, 0]
     return [xyz[0] / sum, xyz[1] / sum, xyz[1]]
 
-
 def xyzFromxyY(xyy):
     # NOTE: Results undefined if xyy[1]==0
     return [xyy[0] * xyy[2] / xyy[1], xyy[2], xyy[2] * (1 - xyy[0] - xyy[1]) / xyy[1]]
-
 
 def xyzTouvY(xyz):
     su = xyz[0] + xyz[1] * 15.0 + xyz[2] * 3.0
@@ -1705,14 +1661,12 @@ def xyzTouvY(xyz):
         return [0, 0, 0]
     return [4.0 * xyz[0] / su, 9.0 * xyz[1] / su, xyz[1]]
 
-
 def xyzFromuvY(uvy):
     # NOTE: Results undefined if uvy[1]==0
     su = uvy[2] / (uvy[1] / 9.0)
     x = uvy[0] * su / 4.0
     z = (su / 3.0) - (x / 3.0) - 5.0 * uvy[2]
     return [x, uvy[2], z]
-
 
 def xyzToCCT(xyz):
     sum = xyz[0] + xyz[1] + xyz[2]
@@ -1724,7 +1678,6 @@ def xyzToCCT(xyz):
     c = (x - 0.332) / (0.1858 - y)
     return ((449 * c + 3525) * c + 6823.3) * c + 5520.33
 
-
 def blackbodyUV(temp):
     """ Calculates the uv coordinates of the Planckian
           locus at the given color temperature.
@@ -1733,7 +1686,6 @@ def blackbodyUV(temp):
     xyz = spectrumToTristim(perfectrefl, lam)
     uvy = xyzTouvY(xyz)
     return [uvy[0], uvy[1] * 2.0 / 3]
-
 
 def xyzToDuv(xyz):
     uvy = xyzTouvY(xyz)
@@ -1760,7 +1712,6 @@ def xyzToDuv(xyz):
             if cross < 0:
                 duv = -duv
     return duv
-
 
 def ciede2000(lab1, lab2):
     """ CIEDE2000 color difference formula. """
@@ -1808,7 +1759,6 @@ def ciede2000(lab1, lab2):
     r = -2 * trc * math.sin(2 * dt * math.pi / 180)
     return math.sqrt(fl * fl + fc * fc + fh * fh + r * fc * fh)
 
-
 def sRGBLuminance(x):
     """
   Finds the relative color of an encoded sRGB color, where
@@ -1818,7 +1768,6 @@ def sRGBLuminance(x):
     lin = linearFromsRGB3(x)
     return lin[0] * 0.2126 + lin[1] * 0.7152 + lin[2] * 0.0722
 
-
 def sRGBGrayscale(x):
     """
   Finds the grayscale version of an encoded sRGB color, where
@@ -1827,7 +1776,6 @@ def sRGBGrayscale(x):
   """
     rellum = sRGBLuminance(x)
     return [rellum, rellum, rellum]
-
 
 def sRGBContrastRatio(color1, color2):
     """
@@ -1840,54 +1788,44 @@ def sRGBContrastRatio(color1, color2):
     l2 = srgbLuminance(color2)
     return (max(l1, l2) + 0.05) / (min(l1, l2) + 0.05)
 
-
 def d50_2xyz():
     return [0.9642, 1, 0.8251]
 
-
 def d65_2xyz():
     return [0.9504559270516716, 1, 1.0890577507598784]
-
 
 def sRGBToLab(rgb):
     """ Converts an encoded sRGB color to CIELAB,
            with white being the D65/2 white point.  """
     return xyzToLab(xyzFromsRGB(rgb), d65_2xyz())
 
-
 def sRGBFromLab(lab):
     """ Converts a CIELAB color to encoded sRGB,
            with white being the D65/2 white point.  """
     return xyzTosRGB(labToXYZ(lab, d65_2xyz()))
-
 
 def sRGBToLabD50(rgb):
     """ Converts an encoded sRGB color to CIELAB,
            with white being the D50/2 white point.  """
     return xyzToLab(xyzFromsRGBD50(rgb), d50_2xyz())
 
-
 def sRGBFromLabD50(lab):
     """ Converts a CIELAB color to encoded sRGB,
            with white being the D50/2 white point.  """
     return xyzTosRGBD50(labToXYZ(lab, d50_2xyz()))
 
-
 ###############
 
 """ Kubelka-Munk color mixture functions. """
-
 
 def kubelkaMunkReflectanceToKS(reflList):
     """  Calculates K/S ratios from a list of reflectances (0-1). """
     # NOTE: Here, divisions by 0 are avoided
     return [((1.0 - refl) ** 2) / (2.0 * max(0.00001, refl)) for refl in reflList]
 
-
 def kubelkaMunkKSToReflectance(ksList):
     """  Calculates reflectances from a list of K/S ratios (0-1). """
     return [ks + 1.0 - math.sqrt(ks * (ks + 2.0)) for ks in ksList]
-
 
 def kubelkaMunkMix(colorantsKS):
     """
@@ -1907,4 +1845,7 @@ def kubelkaMunkMix(colorantsKS):
     ...  ])
   """
     size = len(colorantsKS[0]["ks"])
-    return [sum([cks["strength"] * cks["ks"][i] for cks in colorantsKS]) for i in range(size)]
+    return [
+        sum([cks["strength"] * cks["ks"][i] for cks in colorantsKS])
+        for i in range(size)
+    ]
