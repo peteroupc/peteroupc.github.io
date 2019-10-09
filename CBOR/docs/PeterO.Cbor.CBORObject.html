@@ -84,8 +84,8 @@
 <li><code><a href="#CanFitInInt32">CanFitInInt32()</a></code> - Returns whether this object&#39;s numerical value is an integer, is -(2^31) or greater, and is less than 2^31.</li>
 <li><code><a href="#CanFitInInt64">CanFitInInt64()</a></code> - Returns whether this object&#39;s numerical value is an integer, is -(2^63) or greater, and is less than 2^63.</li>
 <li><code><a href="#CanFitInSingle">CanFitInSingle()</a></code> - Returns whether this object&#39;s value can be converted to a 32-bit floating point number without its value being rounded to another numerical value.</li>
-<li><code><a href="#CanTruncatedIntFitInInt32">CanTruncatedIntFitInInt32()</a></code> - Returns whether this object&#39;s value, truncated to an integer, would be -(2^31) or greater, and less than 2^31.</li>
-<li><code><a href="#CanTruncatedIntFitInInt64">CanTruncatedIntFitInInt64()</a></code> - Returns whether this object&#39;s value, truncated to an integer, would be -(2^63) or greater, and less than 2^63.</li>
+<li><code><a href="#CanTruncatedIntFitInInt32">CanTruncatedIntFitInInt32()</a></code> - Returns whether this object&#39;s value, converted to an integer by discarding its fractional part, would be -(2^31) or greater, and less than 2^31.</li>
+<li><code><a href="#CanTruncatedIntFitInInt64">CanTruncatedIntFitInInt64()</a></code> - Returns whether this object&#39;s value, converted to an integer by discarding its fractional part, would be -(2^63) or greater, and less than 2^63.</li>
 <li><code><a href="#CanValueFitInInt32">CanValueFitInInt32()</a></code> - Returns whether this CBOR object stores an integer (CBORType.</li>
 <li><code><a href="#CanValueFitInInt64">CanValueFitInInt64()</a></code> - Returns whether this CBOR object stores an integer (CBORType.</li>
 <li><code><a href="#Clear">Clear()</a></code> - Removes all items from this CBOR array or all keys and values from this CBOR map.</li>
@@ -102,6 +102,7 @@
 <li><code><a href="#Divide_PeterO_Cbor_CBORObject_PeterO_Cbor_CBORObject">Divide(PeterO.Cbor.CBORObject, PeterO.Cbor.CBORObject)</a></code> - Divides a CBORObject object by the value of a CBORObject object.</li>
 <li><code><a href="#EncodeToBytes">EncodeToBytes()</a></code> - Writes the binary representation of this CBOR object and returns a byte array of that representation.</li>
 <li><code><a href="#EncodeToBytes_PeterO_Cbor_CBOREncodeOptions">EncodeToBytes(PeterO.Cbor.CBOREncodeOptions)</a></code> - Writes the binary representation of this CBOR object and returns a byte array of that representation, using the specified options for encoding the object to CBOR format.</li>
+<li><code><a href="#Entries">Entries</a></code> - Gets a collection of the key/value pairs stored in this CBOR object, if it&#39;s a map.</li>
 <li><code><a href="#Equals_object">Equals(object)</a></code> - Determines whether this object and another object are equal and have the same type.</li>
 <li><code><a href="#Equals_PeterO_Cbor_CBORObject">Equals(PeterO.Cbor.CBORObject)</a></code> - Compares the equality of two CBOR objects.</li>
 <li><code><a href="#False">public static readonly PeterO.Cbor.CBORObject False;</a></code> - Represents the value false.</li>
@@ -338,6 +339,26 @@
 
 <p>The number of keys in this map, or the number of items in this array, or 0 if this item is neither an array nor a map.</p>
 
+<p><a id="Entries"></a></p>
+
+<h3>Entries</h3>
+
+<pre>public System.Collections.Generic.ICollection Entries { get; }
+</pre>
+
+<p>Gets a collection of the key/value pairs stored in this CBOR object, if it&#39;s a map. Returns one entry for each key/value pair in the map in an undefined order.</p>
+
+<p><b>Returns:</b></p>
+
+<p>A collection of the key/value pairs stored in this CBOR map. To avoid potential problems, the calling code should not modify the CBOR map while iterating over the returned collection.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.InvalidOperationException:
+This object is not a map.</li>
+</ul>
+
 <p><a id="IsFalse"></a></p>
 
 <h3>IsFalse</h3>
@@ -507,7 +528,7 @@ This object is not a map.</p></li>
 
 <p><b>Returns:</b></p>
 
-<p>A collection of the keys of this CBOR object.</p>
+<p>A collection of the keys of this CBOR object. To avoid potential problems, the calling code should not modify the CBOR map while iterating over the returned collection.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -612,7 +633,7 @@ This object does not represent a number, or this object is a not-a-number (NaN) 
 
 <p><b>Returns:</b></p>
 
-<p>A collection of the values of this CBOR map or array.</p>
+<p>A collection of the values of this CBOR map or array. To avoid potential problems, the calling code should not modify the CBOR map or array while iterating over the returned collection.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -813,7 +834,7 @@ is null.</p></li>
 <pre>public byte AsByte();
 </pre>
 
-<p>Converts this object to a byte (0 to 255). Floating point values are truncated to an integer.</p>
+<p>Converts this object to a byte (0 to 255). Floating point values are converted to an integer by discarding their fractional parts.</p>
 
 <p><b>Return Value:</b></p>
 
@@ -927,7 +948,8 @@ This object&#39;s type is not  <code>CBORType.FloatingPoint</code> .</li>
 
 <ul>
 <li>System.InvalidOperationException:
-This object does not represent a number, including if this object is CBORObject.Null. To check the CBOR object for null before conversion, use the following idiom (originally written in C# for the.NET version):  <code>(cbor==null || cbor.IsNull) ? null : cbor.AsEDecimal()</code> .</li>
+This object does not represent a number (for the purposes of this method, infinity and not-a-number values, but not  <code>CBORObject.Null</code> , are considered numbers). To check the CBOR object for null before conversion, use the following idiom (originally written in C# for the.NET version):  <code>(cbor == null || cbor.IsNull) ? null :
+        cbor.AsEDecimal()</code> .</li>
 </ul>
 
 <p><a id="AsEFloat"></a></p>
@@ -947,7 +969,8 @@ This object does not represent a number, including if this object is CBORObject.
 
 <ul>
 <li>System.InvalidOperationException:
-This object does not represent a number, including if this object is CBORObject.Null. To check the CBOR object for null before conversion, use the following idiom (originally written in C# for the.NET version):  <code>(cbor==null || cbor.IsNull) ? null : cbor.AsEFloat()</code> .</li>
+This object does not represent a number (for the purposes of this method, infinity and not-a-number values, but not  <code>CBORObject.Null</code> , are considered numbers). To check the CBOR object for null before conversion, use the following idiom (originally written in C# for the.NET version):  <code>(cbor == null || cbor.IsNull) ? null :
+        cbor.AsEFloat()</code> .</li>
 </ul>
 
 <p><a id="AsEInteger"></a></p>
@@ -957,7 +980,7 @@ This object does not represent a number, including if this object is CBORObject.
 <pre>public PeterO.Numbers.EInteger AsEInteger();
 </pre>
 
-<p>Converts this object to an arbitrary-precision integer. Fractional values are truncated to an integer.</p>
+<p>Converts this object to an arbitrary-precision integer. Fractional values are converted to an integer by discarding their fractional parts.</p>
 
 <p><b>Return Value:</b></p>
 
@@ -967,7 +990,8 @@ This object does not represent a number, including if this object is CBORObject.
 
 <ul>
 <li><p>System.InvalidOperationException:
-This object does not represent a number, including if this object is CBORObject.Null. To check the CBOR object for null before conversion, use the following idiom (originally written in C# for the.NET version):  <code>(cbor==null || cbor.IsNull) ? null : cbor.AsEInteger()</code> .</p></li>
+This object does not represent a number (for the purposes of this method, infinity and not-a-number values, but not  <code>CBORObject.Null</code> , are considered numbers). To check the CBOR object for null before conversion, use the following idiom (originally written in C# for the.NET version):  <code>(cbor == null || cbor.IsNull) ? null :
+        cbor.AsEInteger()</code> .</p></li>
 <li><p>System.OverflowException:
 This object&#39;s value is infinity or not-a-number (NaN).</p></li>
 </ul>
@@ -1009,7 +1033,8 @@ This object&#39;s type is not  <code>CBORType.Integer</code> .</li>
 
 <ul>
 <li>System.InvalidOperationException:
-This object does not represent a number, including if this object is CBORObject.Null. To check the CBOR object for null before conversion, use the following idiom (originally written in C# for the.NET version):  <code>(cbor==null || cbor.IsNull) ? null : cbor.AsERational()</code> .</li>
+This object does not represent a number (for the purposes of this method, infinity and not-a-number values, but not  <code>CBORObject.Null</code> , are considered numbers). To check the CBOR object for null before conversion, use the following idiom (originally written in C# for the.NET version):  <code>(cbor == null || cbor.IsNull) ? null :
+        cbor.AsERational()</code> .</li>
 </ul>
 
 <p><a id="AsInt16"></a></p>
@@ -1019,7 +1044,7 @@ This object does not represent a number, including if this object is CBORObject.
 <pre>public short AsInt16();
 </pre>
 
-<p>Converts this object to a 16-bit signed integer. Floating point values are truncated to an integer.</p>
+<p>Converts this object to a 16-bit signed integer. Floating point values are converted to an integer by discarding their fractional parts.</p>
 
 <p><b>Return Value:</b></p>
 
@@ -1041,12 +1066,12 @@ This object&#39;s value exceeds the range of a 16-bit signed integer.</p></li>
 <pre>public int AsInt32();
 </pre>
 
-<p>Converts this object to a 32-bit signed integer. Non-integer number values are truncated to an integer. (NOTE: To determine whether this method call can succeed, call the <b>CanTruncatedIntFitInInt32</b> method before calling this method. See the example.).</p>
+<p>Converts this object to a 32-bit signed integer. Non-integer number values are converted to an integer by discarding their fractional parts. (NOTE: To determine whether this method call can succeed, call the <b>CanTruncatedIntFitInInt32</b> method before calling this method. See the example.).</p>
 
 <p>The following example code (originally written in C# for the.NET Framework) shows a way to check whether a given CBOR object stores a 32-bit signed integer before getting its value.</p>
 
 <pre>CBORObject obj = CBORObject.FromInt32(99999);
-            if (obj.IsIntegral &amp;&amp; obj.CanTruncatedIntFitInInt32()) {
+            if (obj.IsIntegral &amp;&amp; obj.AsNumber().CanFitInInt32()) {
             /* Not an Int32; handle the error */
             Console.WriteLine(&quot;Not a 32-bit integer.&quot;); } else {
             Console.WriteLine(&quot;The value is &quot; + obj.AsInt32()); }
@@ -1078,8 +1103,9 @@ This object&#39;s value exceeds the range of a 32-bit signed integer.</p></li>
 
 <p>The following example code (originally written in C# for the.NET Framework) shows a way to check whether a given CBOR object stores a 32-bit signed integer before getting its value.</p>
 
-<pre>CBORObject obj = CBORObject.FromInt32(99999); if (obj.Type ==
-            CBORType.Integer &amp;&amp; obj.CanValueFitInInt32()) { /* Not an Int32;
+<pre>CBORObject obj = CBORObject.FromInt32(99999);
+            if (obj.Type == CBORType.Integer &amp;&amp;
+            obj.CanValueFitInInt32()) { /* Not an Int32;
             handle the error */ Console.WriteLine(&quot;Not a 32-bit integer.&quot;); } else {
             Console.WriteLine(&quot;The value is &quot; + obj.AsInt32Value()); }
 </pre>
@@ -1106,13 +1132,14 @@ This object&#39;s value exceeds the range of a 32-bit signed integer.</p></li>
 <pre>public long AsInt64();
 </pre>
 
-<p>Converts this object to a 64-bit signed integer. Non-integer numbers are truncated to an integer. (NOTE: To determine whether this method call can succeed, call the <b>CanTruncatedIntFitInInt64</b> method before calling this method. See the example.).</p>
+<p>Converts this object to a 64-bit signed integer. Non-integer numbers are converted to an integer by discarding their fractional parts. (NOTE: To determine whether this method call can succeed, call the <b>CanTruncatedIntFitInInt64</b> method before calling this method. See the example.).</p>
 
 <p>The following example code (originally written in C# for the.NET Framework) shows a way to check whether a given CBOR object stores a 64-bit signed integer before getting its value.</p>
 
-<pre>CBORObject obj = CBORObject.FromInt64(99999); if (obj.IsIntegral
-            &amp;&amp; obj.CanTruncatedIntFitInInt64()) { /* Not an Int64; handle*/
-            the error Console.WriteLine(&quot;Not a 64-bit integer.&quot;); } else {
+<pre>CBORObject obj = CBORObject.FromInt64(99999);
+            if (obj.IsIntegral &amp;&amp; obj.AsNumber().CanFitInInt64()) {
+            /* Not an Int64; handle the error */
+            Console.WriteLine(&quot;Not a 64-bit integer.&quot;); } else {
             Console.WriteLine(&quot;The value is &quot; + obj.AsInt64()); }
 </pre>
 
@@ -1235,8 +1262,8 @@ This object does not represent a number (for this purpose, infinities and not-a-
 
 <ul>
 <li>System.InvalidOperationException:
-This object&#39;s type is not a string, including if this object is CBORObject.Null. To check the CBOR object for null before conversion, use the following idiom (originally written in C# for the.NET version):  <code>(cbor == null ||
-        cbor.IsNull) ? null : cbor.AsString()</code> .</li>
+This object&#39;s type is not a string (for the purposes of this method, infinity and not-a-number values, but not  <code>CBORObject.Null</code> , are considered numbers). To check the CBOR object for null before conversion, use the following idiom (originally written in C# for the.NET version):  <code>(cbor == null || cbor.IsNull) ? null :
+        cbor.AsString()</code> .</li>
 </ul>
 
 <p><a id="AsUInt16"></a></p>
@@ -1314,7 +1341,7 @@ This object&#39;s value, if truncated to an integer, is outside the range of a 6
 
 <p><b>Return Value:</b></p>
 
-<p>Whether this object&#39;s value can be converted to a 64-bit floating point number without its value being rounded to another numerical value. Returns true if this is a not-a-number value, even if the value&#39;s diagnostic information can&#39; t fit in a 64-bit floating point number.</p>
+<p><code>true</code>  if this object&#39;s value can be converted to a 64-bit floating point number without its value being rounded to another numerical value, or if this is a not-a-number value, even if the value&#39;s diagnostic information can&#39;t fit in a 64-bit floating point number; otherwise,  <code>false</code> .</p>
 
 <p><a id="CanFitInInt32"></a></p>
 
@@ -1322,6 +1349,8 @@ This object&#39;s value, if truncated to an integer, is outside the range of a 6
 
 <pre>public bool CanFitInInt32();
 </pre>
+
+<p><b>Deprecated.</b> Instead, use CanValueFitInInt32(), if the application allows only CBOR integers, or (cbor.IsNumber &amp;&amp;cbor.AsNumber().CanFitInInt32()),  if the application allows any CBOR object convertible to an integer.</p>
 
 <p>Returns whether this object&#39;s numerical value is an integer, is -(2^31) or greater, and is less than 2^31.</p>
 
@@ -1335,6 +1364,8 @@ This object&#39;s value, if truncated to an integer, is outside the range of a 6
 
 <pre>public bool CanFitInInt64();
 </pre>
+
+<p><b>Deprecated.</b> Instead, use CanValueFitInInt64(), if the application allows only CBOR integers, or (cbor.IsNumber &amp;&amp;cbor.AsNumber().CanFitInInt64()),  if the application allows any CBOR object convertible to an integer.</p>
 
 <p>Returns whether this object&#39;s numerical value is an integer, is -(2^63) or greater, and is less than 2^63.</p>
 
@@ -1353,7 +1384,7 @@ This object&#39;s value, if truncated to an integer, is outside the range of a 6
 
 <p><b>Return Value:</b></p>
 
-<p>Whether this object&#39;s value can be converted to a 32-bit floating point number without its value being rounded to another numerical value. Returns true if this is a not-a-number value, even if the value&#39;s diagnostic information can&#39; t fit in a 32-bit floating point number.</p>
+<p><code>true</code>  if this object&#39;s value can be converted to a 32-bit floating point number without its value being rounded to another numerical value, or if this is a not-a-number value, even if the value&#39;s diagnostic information can&#39; t fit in a 32-bit floating point number; otherwise,  <code>false</code> .</p>
 
 <p><a id="CanTruncatedIntFitInInt32"></a></p>
 
@@ -1362,11 +1393,11 @@ This object&#39;s value, if truncated to an integer, is outside the range of a 6
 <pre>public bool CanTruncatedIntFitInInt32();
 </pre>
 
-<p>Returns whether this object&#39;s value, truncated to an integer, would be -(2^31) or greater, and less than 2^31.</p>
+<p>Returns whether this object&#39;s value, converted to an integer by discarding its fractional part, would be -(2^31) or greater, and less than 2^31.</p>
 
 <p><b>Return Value:</b></p>
 
-<p><code>true</code>  if this object&#39;s value, truncated to an integer, would be -(2^31) or greater, and less than 2^31; otherwise,  <code>false</code> .</p>
+<p><code>true</code>  if this object&#39;s value, converted to an integer by discarding its fractional part, would be -(2^31) or greater, and less than 2^31; otherwise,  <code>false</code> .</p>
 
 <p><a id="CanTruncatedIntFitInInt64"></a></p>
 
@@ -1375,11 +1406,11 @@ This object&#39;s value, if truncated to an integer, is outside the range of a 6
 <pre>public bool CanTruncatedIntFitInInt64();
 </pre>
 
-<p>Returns whether this object&#39;s value, truncated to an integer, would be -(2^63) or greater, and less than 2^63.</p>
+<p>Returns whether this object&#39;s value, converted to an integer by discarding its fractional part, would be -(2^63) or greater, and less than 2^63.</p>
 
 <p><b>Return Value:</b></p>
 
-<p><code>true</code>  if this object&#39;s value, truncated to an integer, would be -(2^63) or greater, and less than 2^63; otherwise,  <code>false</code> .</p>
+<p><code>true</code>  if this object&#39;s value, converted to an integer by discarding its fractional part, would be -(2^63) or greater, and less than 2^63; otherwise,  <code>false</code> .</p>
 
 <p><a id="CanValueFitInInt32"></a></p>
 
@@ -1907,7 +1938,7 @@ The string is not in JSON format.</p></li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>value</i>: Either True or False.</li>
+<li><i>value</i>: Either  <code>true</code>  or  <code>false</code> .</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -1933,7 +1964,7 @@ is a byte (from 0 to 255).</li>
 
 <p><b>Return Value:</b></p>
 
-<p>A CBORObject object.</p>
+<p>A CBOR object generated from the given integer.</p>
 
 <p><a id="FromObject_byte"></a></p>
 
@@ -1974,7 +2005,7 @@ is a 64-bit floating-point number.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>A CBORObject object.</p>
+<p>A CBOR object generated from the given number.</p>
 
 <p><a id="FromObject_float"></a></p>
 
@@ -1995,7 +2026,7 @@ is a 32-bit floating-point number.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>A CBORObject object.</p>
+<p>A CBOR object generated from the given number.</p>
 
 <p><a id="FromObject_int"></a></p>
 
@@ -2432,7 +2463,7 @@ is a 16-bit signed integer.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>A CBORObject object.</p>
+<p>A CBOR object generated from the given integer.</p>
 
 <p><a id="FromObject_string"></a></p>
 
@@ -3041,6 +3072,8 @@ is not a valid index into this array.</p></li>
 <pre>public bool IsInfinity();
 </pre>
 
+<p><b>Deprecated.</b> Use the following instead: (cbor.IsNumber &amp;&amp; cbor.AsNumber().IsInfinity()).</p>
+
 <p>Gets a value indicating whether this CBOR object represents infinity.</p>
 
 <p><b>Return Value:</b></p>
@@ -3054,11 +3087,13 @@ is not a valid index into this array.</p></li>
 <pre>public bool IsNaN();
 </pre>
 
+<p><b>Deprecated.</b> Use the following instead: (cbor.IsNumber &amp;&amp; cbor.AsNumber().IsNaN()).</p>
+
 <p>Gets a value indicating whether this CBOR object represents a not-a-number value (as opposed to whether this object does not express a number).</p>
 
 <p><b>Return Value:</b></p>
 
-<p><code>true</code>  if this CBOR object represents a not-a-number value (as opposed to whether this object&#39;s type is not a number type); otherwise,  <code>false</code> .</p>
+<p><code>true</code>  if this CBOR object represents a not-a-number value (as opposed to whether this object does not represent a number as defined by the IsNumber property or  <code>isNumber()</code>  method in Java); otherwise,  <code>false</code> .</p>
 
 <p><a id="IsNegativeInfinity"></a></p>
 
@@ -3880,11 +3915,14 @@ is null.</li>
 <p>Java offers no easy way to express a generic type, at least none as easy as C#&#39;s  <code>typeof</code>  operator. The following example, written in Java, is a way to specify that the return value will be an ArrayList of String objects.</p>
 
 <pre>Type arrayListString = new ParameterizedType() { public Type[]
-            getActualTypeArguments() { /* Contains one type parameter, String */ return
-            new Type[] { String.class }; } public Type getRawType() { /* Raw type is
-            ArrayList */ return ArrayList.class; } public Type getOwnerType() {
-            return null; } }; ArrayList&lt;String&gt; array =
-            (ArrayList&lt;String&gt;) cborArray.ToObject(arrayListString);
+            getActualTypeArguments() { // Contains one type parameter, String
+            return new Type[] { String.class }; }
+            public Type getRawType() { /* Raw type is
+            ArrayList */ return ArrayList.class; }
+            public Type getOwnerType() {
+            return null; } };
+            ArrayList&lt;String&gt; array = (ArrayList&lt;String&gt;)
+            cborArray.ToObject(arrayListString);
 </pre>
 
 <p>By comparison, the C# version is much shorter.</p>
