@@ -35,6 +35,10 @@ Returns the quotient of this number and another number.</li>
 Creates a CBOR number object from a CBOR object representing a number (that
 is, one for which the IsNumber property in.NET or the isNumber()
 method in Java returns true).</li>
+<li><code>boolean IsInfinity()</code><br>
+Gets a value indicating whether this object represents infinity.</li>
+<li><code>boolean IsNaN()</code><br>
+Gets a value indicating whether this object represents a not-a-number value.</li>
 <li><code>CBORNumber Multiply​(CBORNumber b)</code><br>
 Returns a CBOR number expressing the product of this number and the given
 number.</li>
@@ -135,6 +139,34 @@ does not represent a number.</li>
 <ul>
 <li><code>true</code> if this object&#39;s numerical value is an integer, is
 -(2^63) or greater, and is less than 2^63; otherwise, <code>false</code>.</li>
+</ul>
+
+<h3>IsInfinity</h3>
+
+<pre>public boolean IsInfinity()
+</pre>
+
+<p>Gets a value indicating whether this object represents infinity.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li><code>true</code> if this object represents infinity; otherwise, <code>
+false</code>.</li>
+</ul>
+
+<h3>IsNaN</h3>
+
+<pre>public boolean IsNaN()
+</pre>
+
+<p>Gets a value indicating whether this object represents a not-a-number value.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li><code>true</code> if this object represents a not-a-number value;
+otherwise, <code>false</code>.</li>
 </ul>
 
 <h3>Negate</h3>
