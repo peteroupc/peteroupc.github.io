@@ -21,6 +21,12 @@
 <ul>
 <li><code>CBORNumber Add​(CBORNumber b)</code><br>
 Returns the sum of this number and another number.</li>
+<li><code>boolean CanFitInInt32()</code><br>
+Returns whether this object&#39;s numerical value is an integer, is -(2^31) or
+greater, and is less than 2^31.</li>
+<li><code>boolean CanFitInInt64()</code><br>
+Returns whether this object&#39;s numerical value is an integer, is -(2^63) or
+greater, and is less than 2^63.</li>
 <li><code>int compareTo​(CBORNumber other)</code><br>
 Compares two CBOR numbers.</li>
 <li><code>CBORNumber Divide​(CBORNumber b)</code><br>
@@ -99,6 +105,36 @@ does not represent a number.</li>
 
 <ul>
 <li>A text string representing the value of this object.</li>
+</ul>
+
+<h3>CanFitInInt32</h3>
+
+<pre>public boolean CanFitInInt32()
+</pre>
+
+<p>Returns whether this object&#39;s numerical value is an integer, is -(2^31) or
+ greater, and is less than 2^31.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li><code>true</code> if this object&#39;s numerical value is an integer, is
+-(2^31) or greater, and is less than 2^31; otherwise, <code>false</code>.</li>
+</ul>
+
+<h3>CanFitInInt64</h3>
+
+<pre>public boolean CanFitInInt64()
+</pre>
+
+<p>Returns whether this object&#39;s numerical value is an integer, is -(2^63) or
+ greater, and is less than 2^63.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li><code>true</code> if this object&#39;s numerical value is an integer, is
+-(2^63) or greater, and is less than 2^63; otherwise, <code>false</code>.</li>
 </ul>
 
 <h3>Negate</h3>
