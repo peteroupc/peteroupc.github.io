@@ -135,14 +135,22 @@ type is FloatingPoint.</li>
 <li><code>com.upokecenter.numbers.EDecimal AsEDecimal()</code><br>
 Converts this object to a decimal number.</li>
 <li><code>com.upokecenter.numbers.EFloat AsEFloat()</code><br>
-Converts this object to an arbitrary-precision binary floating point number.</li>
+Deprecated.
+Instead, use.getToObject()() in C#
+or .getToObject()(com.upokecenter.numbers.EFloat.class) in Java.
+Instead, use.getToObject()() in C#
+or .getToObject()(com.upokecenter.numbers.EFloat.class) in Java.</li>
 <li><code>com.upokecenter.numbers.EInteger AsEInteger()</code><br>
 Converts this object to an arbitrary-precision integer.</li>
 <li><code>com.upokecenter.numbers.EInteger AsEIntegerValue()</code><br>
 Converts this object to an arbitrary-precision integer if this CBOR object&#39;s
 type is Integer.</li>
 <li><code>com.upokecenter.numbers.ERational AsERational()</code><br>
-Converts this object to a rational number.</li>
+Deprecated.
+Instead, use.getToObject()() in C# or
+.ToObject(com.upokecenter.numbers.ERational.class) in Java.
+Instead, use.getToObject()() in C# or
+.ToObject(com.upokecenter.numbers.ERational.class) in Java.</li>
 <li><code>short AsInt16()</code><br>
 Converts this object to a 16-bit signed integer.</li>
 <li><code>int AsInt32()</code><br>
@@ -1628,42 +1636,53 @@ deep, or another error occurred when serializing the object.</p></li>
  <code>float</code> , <code>double</code> , as well as <code>decimal</code> in.getNET()),
  returns the result of the corresponding As* method.</li> <li>If the
  type is <code>string</code> , returns the result of AsString.</li> <li>If
- the type is <code>EDecimal</code> , <code>EFloat</code> , <code>EInteger</code> , or
- <code>ERational</code> in the <code>PeterO.Numbers</code>
+ the type is <code>EDecimal</code> or <code>EInteger</code> in the <code>PeterO.Numbers</code>
   library (in .NET) or the <code>com.github.peteroupc/numbers</code>
   artifact (in Java), returns the result of the corresponding As*
- method.</li> <li>In the.NET version, if the type is a nullable
- (e.g., <code>Nullable&lt;int&gt;</code> or <code>int?</code> , returns
- <code>null</code> if this CBOR object is null, or this object&#39;s value
- converted to the nullable&#39;s underlying type, e.g., <code>int</code> .</li>
- <li>If the type is an enumeration (<code>Enum</code>) type and this CBOR
- object is a text string or an integer, returns the appropriate
- enumerated constant. (For example, if <code>MyEnum</code> includes an
- entry for <code>MyValue</code> , this method will return
-  <code>MyEnum.MyValue</code> if the CBOR object represents <code>&quot;MyValue&quot;</code>
- or the underlying value for <code>MyEnum.MyValue</code> .) <b>Note:</b> If
- an integer is converted to a.NET Enum constant, and that integer is
- shared by more than one constant of the same type, it is undefined
- which constant from among them is returned. (For example, if
- <code>MyEnum.Zero = 0</code> and <code>MyEnum.Null = 0</code> , converting 0 to
- <code>MyEnum</code> may return either <code>MyEnum.Zero</code> or
- <code>MyEnum.Null</code> .) As a result, .NET Enum types with constants
- that share an underlying value should not be passed to this
- method.</li> <li>If the type is <code>byte[]</code> (a one-dimensional
- byte array) and this CBOR object is a byte string, returns a byte
- array which this CBOR byte string&#39;s data will be copied to. (This
- method can&#39;t be used to encode CBOR data to a byte array; for that,
- use the EncodeToBytes method instead.)</li> <li>If the type is a
- one-dimensional or multidimensional array type and this CBOR object
- is an array, returns an array containing the items in this CBOR
- object.</li> <li>If the type is List or the generic or non-generic
- List, ICollection, or Iterable, (or ArrayList, List, Collection, or
- Iterable in Java), and if this CBOR object is an array, returns an
- object conforming to the type, class, or interface passed to this
- method, where the object will contain all items in this CBOR
- array.</li> <li>If the type is Dictionary or the generic or
- non-generic Map (or HashMap or Map in Java), and if this CBOR object
- is a map, returns an object conforming to the type, class, or
+ method.</li> <li>If the type is <code>EFloat</code> or <code>ERational</code> in
+ the PeterO.Numbers or numbers library, converts the given object to
+ a number of the corresponding type and throws an exception if the
+ object does not represent a number (for this purpose, infinity and
+ not-a-number values, but not <code>CBORObject.Null</code> , are considered
+ numbers). Currently, this is equivalent to the result of
+ <code>AsEFloat()</code> or <code>AsERational()</code> , respectively, but may
+ change slightly in the next major version. Note that in the case of
+ <code>EFloat</code> , if this object represents a decimal number with a
+ fractional part, the conversion may lose information depending on
+ the number, and if the object is a rational number with a
+ nonterminating binary expansion, the number returned is a binary
+ floating-point number rounded to a high but limited precision.</li>
+ <li>In the.NET version, if the type is a nullable (e.g.,
+ <code>Nullable&lt;int&gt;</code> or <code>int?</code> , returns <code>null</code> if
+ this CBOR object is null, or this object&#39;s value converted to the
+ nullable&#39;s underlying type, e.g., <code>int</code> .</li> <li>If the type
+ is an enumeration (<code>Enum</code>) type and this CBOR object is a
+ text string or an integer, returns the appropriate enumerated
+ constant. (For example, if <code>MyEnum</code> includes an entry for
+ <code>MyValue</code> , this method will return <code>MyEnum.MyValue</code> if
+  the CBOR object represents <code>&quot;MyValue&quot;</code> or the underlying value
+ for <code>MyEnum.MyValue</code> .) <b>Note:</b> If an integer is converted
+ to a.NET Enum constant, and that integer is shared by more than one
+ constant of the same type, it is undefined which constant from among
+ them is returned. (For example, if <code>MyEnum.Zero = 0</code> and
+ <code>MyEnum.Null = 0</code> , converting 0 to <code>MyEnum</code> may return
+ either <code>MyEnum.Zero</code> or <code>MyEnum.Null</code> .) As a result, .NET
+ Enum types with constants that share an underlying value should not
+ be passed to this method.</li> <li>If the type is <code>byte[]</code> (a
+ one-dimensional byte array) and this CBOR object is a byte string,
+ returns a byte array which this CBOR byte string&#39;s data will be
+ copied to. (This method can&#39;t be used to encode CBOR data to a byte
+ array; for that, use the EncodeToBytes method instead.)</li> <li>If
+ the type is a one-dimensional or multidimensional array type and
+ this CBOR object is an array, returns an array containing the items
+ in this CBOR object.</li> <li>If the type is List or the generic or
+ non-generic List, ICollection, or Iterable, (or ArrayList, List,
+ Collection, or Iterable in Java), and if this CBOR object is an
+ array, returns an object conforming to the type, class, or interface
+ passed to this method, where the object will contain all items in
+ this CBOR array.</li> <li>If the type is Dictionary or the generic
+ or non-generic Map (or HashMap or Map in Java), and if this CBOR
+ object is a map, returns an object conforming to the type, class, or
  interface passed to this method, where the object will contain all
  keys and values in this CBOR map.</li> <li>If the type is an
   enumeration constant (&quot;enum&quot;), and this CBOR object is an integer or
@@ -3408,8 +3427,10 @@ Converts this object to a decimal number.
  || cbor.isNull()) ? null : cbor.AsEDecimal()</code>.
 
 ### AsEFloat
-    public com.upokecenter.numbers.EFloat AsEFloat()
-Converts this object to an arbitrary-precision binary floating point number.
+    @Deprecated public com.upokecenter.numbers.EFloat AsEFloat()
+Deprecated.
+Instead, use.getToObject()<petero.numbers.efloat>() in C#
+ or .getToObject()(com.upokecenter.numbers.EFloat.class) in Java.</petero.numbers.efloat>
 
 **Returns:**
 
@@ -3430,8 +3451,10 @@ Converts this object to an arbitrary-precision binary floating point number.
  || cbor.isNull()) ? null : cbor.AsEFloat()</code>.
 
 ### AsERational
-    public com.upokecenter.numbers.ERational AsERational()
-Converts this object to a rational number.
+    @Deprecated public com.upokecenter.numbers.ERational AsERational()
+Deprecated.
+Instead, use.getToObject()<petero.numbers.erational>() in C# or
+.ToObject(com.upokecenter.numbers.ERational.class) in Java.</petero.numbers.erational>
 
 **Returns:**
 
