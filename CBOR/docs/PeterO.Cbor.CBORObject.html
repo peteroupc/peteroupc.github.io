@@ -959,6 +959,8 @@ This object does not represent a number (for the purposes of this method, infini
 <pre>public PeterO.Numbers.EFloat AsEFloat();
 </pre>
 
+<p><b>Deprecated.</b> Instead, use .ToObject<PeterO.Numbers.EFloat>() in .NET or  .ToObject(com.upokecenter.numbers.EFloat.class) in Java.</p>
+
 <p>Converts this object to an arbitrary-precision binary floating point number.</p>
 
 <p><b>Return Value:</b></p>
@@ -1022,6 +1024,8 @@ This object&#39;s type is not  <code>CBORType.Integer</code> .</li>
 
 <pre>public PeterO.Numbers.ERational AsERational();
 </pre>
+
+<p><b>Deprecated.</b> Instead, use .ToObject<PeterO.Numbers.ERational>() in .NET or .ToObject(com.upokecenter.numbers.ERational.class) in Java.</p>
 
 <p>Converts this object to a rational number.</p>
 
@@ -3915,7 +3919,7 @@ is null.</li>
 <p>Java offers no easy way to express a generic type, at least none as easy as C#&#39;s  <code>typeof</code>  operator. The following example, written in Java, is a way to specify that the return value will be an ArrayList of String objects.</p>
 
 <pre>Type arrayListString = new ParameterizedType() { public Type[]
-            getActualTypeArguments() { // Contains one type parameter, String
+            getActualTypeArguments() { /* Contains one type parameter, String*/
             return new Type[] { String.class }; }
             public Type getRawType() { /* Raw type is
             ArrayList */ return ArrayList.class; }
@@ -4009,7 +4013,8 @@ parameter, that converter will be used to convert the CBOR object to an object o
 <li><p>If the type is  <code>bool</code>  (  <code>boolean</code>  in Java), returns the result of AsBoolean.</p></li>
 <li><p>If the type is a primitive integer type (  <code>byte</code>  ,  <code>int</code>  ,  <code>short</code>  ,  <code>long</code>  , as well as  <code>sbyte</code>  ,  <code>ushort</code>  ,  <code>uint</code>  , and  <code>ulong</code>  in.NET) or a primitive floating-point type (  <code>float</code>  ,  <code>double</code>  , as well as  <code>decimal</code>  in.NET), returns the result of the corresponding As* method.</p></li>
 <li><p>If the type is  <code>String</code>  , returns the result of AsString.</p></li>
-<li><p>If the type is  <code>EDecimal</code>  ,  <code>EFloat</code>  ,  <code>EInteger</code>  , or  <code>ERational</code>  in the <a href="https://www.nuget.org/packages/PeterO.Numbers"> <code>PeterO.Numbers</code> </a> library (in .NET) or the <a href="https://github.com/peteroupc/numbers-java"> <code>com.github.peteroupc/numbers</code> </a> artifact (in Java), returns the result of the corresponding As* method.</p></li>
+<li><p>If the type is  <code>EDecimal</code>  or  <code>EInteger</code>  in the <a href="https://www.nuget.org/packages/PeterO.Numbers"> <code>PeterO.Numbers</code> </a> library (in .NET) or the <a href="https://github.com/peteroupc/numbers-java"> <code>com.github.peteroupc/numbers</code> </a> artifact (in Java), returns the result of the corresponding As* method.</p></li>
+<li><p>If the type is  <code>EFloat</code>  or  <code>ERational</code>  in the PeterO.Numbers or numbers library, converts the given object to a number of the corresponding type and throws an exception if the object does not represent a number (for this purpose, infinity and not-a-number values, but not  <code>CBORObject.Null</code>  , are considered numbers). Currently, this is equivalent to the result of  <code>AsEFloat()</code>  or  <code>AsERational()</code>  , respectively, but may change slightly in the next major version. Note that in the case of  <code>EFloat</code>  , if this object represents a decimal number with a fractional part, the conversion may lose information depending on the number, and if the object is a rational number with a nonterminating binary expansion, the number returned is a binary floating-point number rounded to a high but limited precision.</p></li>
 <li><p>In the.NET version, if the type is a nullable (e.g.,  <code>Nullable&lt;int&gt;</code>  or  <code>int?</code>  , returns  <code>null</code>  if this CBOR object is null, or this object&#39;s value converted to the nullable&#39;s underlying type, e.g.,  <code>int</code>  .</p></li>
 <li><p>If the type is an enumeration (  <code>Enum</code>  ) type and this CBOR object is a text string or an integer, returns the appropriate enumerated constant. (For example, if  <code>MyEnum</code>  includes an entry for  <code>MyValue</code>  , this method will return  <code>MyEnum.MyValue</code>  if the CBOR object represents  <code>&quot;MyValue&quot;</code>  or the underlying value for  <code>MyEnum.MyValue</code>  .) <b>Note:</b> If an integer is converted to a.NET Enum constant, and that integer is shared by more than one constant of the same type, it is undefined which constant from among them is returned. (For example, if  <code>MyEnum.Zero=0</code>  and  <code>MyEnum.Null=0</code>  , converting 0 to  <code>MyEnum</code>  may return either  <code>MyEnum.Zero</code>  or  <code>MyEnum.Null</code>  .) As a result, .NET Enum types with constants that share an underlying value should not be passed to this method.</p></li>
 <li><p>If the type is  <code>byte[]</code>  (a one-dimensional byte array) and this CBOR object is a byte string, returns a byte array which this CBOR byte string&#39;s data will be copied to. (This method can&#39;t be used to encode CBOR data to a byte array; for that, use the EncodeToBytes method instead.)</p></li>

@@ -136,10 +136,10 @@ type is FloatingPoint.</li>
 Converts this object to a decimal number.</li>
 <li><code>com.upokecenter.numbers.EFloat AsEFloat()</code><br>
 Deprecated.
-Instead, use.getToObject()() in C#
-or .getToObject()(com.upokecenter.numbers.EFloat.class) in Java.
-Instead, use.getToObject()() in C#
-or .getToObject()(com.upokecenter.numbers.EFloat.class) in Java.</li>
+Instead, use.getToObject()() in.NET or
+.getToObject()(com.upokecenter.numbers.EFloat.class) in Java.
+Instead, use.getToObject()() in.NET or
+.getToObject()(com.upokecenter.numbers.EFloat.class) in Java.</li>
 <li><code>com.upokecenter.numbers.EInteger AsEInteger()</code><br>
 Converts this object to an arbitrary-precision integer.</li>
 <li><code>com.upokecenter.numbers.EInteger AsEIntegerValue()</code><br>
@@ -147,9 +147,9 @@ Converts this object to an arbitrary-precision integer if this CBOR object&#39;s
 type is Integer.</li>
 <li><code>com.upokecenter.numbers.ERational AsERational()</code><br>
 Deprecated.
-Instead, use.getToObject()() in C# or
+Instead, use.getToObject()() in.getNET() or
 .ToObject(com.upokecenter.numbers.ERational.class) in Java.
-Instead, use.getToObject()() in C# or
+Instead, use.getToObject()() in.getNET() or
 .ToObject(com.upokecenter.numbers.ERational.class) in Java.</li>
 <li><code>short AsInt16()</code><br>
 Converts this object to a 16-bit signed integer.</li>
@@ -1490,8 +1490,8 @@ is null.</p></li>
  way to express a generic type, at least none as easy as C#&#39;s
  <code>typeof</code> operator. The following example, written in Java, is a
  way to specify that the return value will be an ArrayList of string
- objects.</p> <pre>Type arrayListString = new ParameterizedType() { public Type[] getActualTypeArguments() { // Contains one type parameter, string return new Type[] { string.class }; } public Type getRawType() { /* Raw type is ArrayList */ return ArrayList.class; } public Type getOwnerType() { return null; } }; ArrayList&lt;string&gt; array = (ArrayList&lt;string&gt;) cborArray.ToObject(arrayListString);</pre> <p>By comparison, the C#
- version is much shorter.</p> <pre>List&lt;string&gt; array = (List&lt;string&gt;)cborArray.ToObject(typeof(List&lt;string&gt;));</pre> .</p>
+ objects.</p> <pre>Type arrayListString = new ParameterizedType() { public Type[] getActualTypeArguments() { /* Contains one type parameter, string<em>/ return new Type[] { string.class }; } public Type getRawType() { /</em> Raw type is ArrayList */ return ArrayList.class; } public Type getOwnerType() { return null; } }; ArrayList&lt;string&gt; array = (ArrayList&lt;string&gt;) cborArray.ToObject(arrayListString);</pre> <p>By comparison, the C#
+ version is much shorter.</p> <pre>List&lt;string&gt; array = (List&lt;string&gt;)cborArray.ToObject(typeof(List&lt;string&gt;));</pre>.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -3345,7 +3345,7 @@ an unsupported type.</p></li>
 ### AsEInteger
     public com.upokecenter.numbers.EInteger AsEInteger()
 Converts this object to an arbitrary-precision integer. Fractional values
- are converted to an integer by discarding their fractional parts.
+ are converted to integers by discarding their fractional parts.
 
 **Returns:**
 
@@ -3375,7 +3375,7 @@ Returns false if this object is False, Null, or Undefined (whether or not
 ### AsByte
     public byte AsByte()
 Converts this object to a byte (0 to 255). Floating point values are
- converted to an integer by discarding their fractional parts.
+ converted to integers by discarding their fractional parts.
 
 **Returns:**
 
@@ -3388,8 +3388,8 @@ Converts this object to a byte (0 to 255). Floating point values are
  CBORObject.Null, are considered numbers).
 
 * <code>java.lang.ArithmeticException</code> - This object's value exceeds the range of a byte
- (would be less than 0 or greater than 255 when truncated to an
- integer).
+ (would be less than 0 or greater than 255 when converted to an
+ integer by discarding its fractional part).
 
 ### AsDouble
     public double AsDouble()
@@ -3429,8 +3429,8 @@ Converts this object to a decimal number.
 ### AsEFloat
     @Deprecated public com.upokecenter.numbers.EFloat AsEFloat()
 Deprecated.
-Instead, use.getToObject()<petero.numbers.efloat>() in C#
- or .getToObject()(com.upokecenter.numbers.EFloat.class) in Java.</petero.numbers.efloat>
+Instead, use.getToObject()<petero.numbers.efloat>() in.NET or
+  .getToObject()(com.upokecenter.numbers.EFloat.class) in Java.</petero.numbers.efloat>
 
 **Returns:**
 
@@ -3453,7 +3453,7 @@ Instead, use.getToObject()<petero.numbers.efloat>() in C#
 ### AsERational
     @Deprecated public com.upokecenter.numbers.ERational AsERational()
 Deprecated.
-Instead, use.getToObject()<petero.numbers.erational>() in C# or
+Instead, use.getToObject()<petero.numbers.erational>() in.getNET() or
 .ToObject(com.upokecenter.numbers.ERational.class) in Java.</petero.numbers.erational>
 
 **Returns:**
@@ -3472,7 +3472,7 @@ Instead, use.getToObject()<petero.numbers.erational>() in C# or
 ### AsInt16
     public short AsInt16()
 Converts this object to a 16-bit signed integer. Floating point values are
- converted to an integer by discarding their fractional parts.
+ converted to integers by discarding their fractional parts.
 
 **Returns:**
 
@@ -3676,7 +3676,7 @@ CBORObject.Null, are considered numbers).</li>
 </pre>
 
 <p>Converts this object to a 32-bit signed integer. Non-integer number values
- are converted to an integer by discarding their fractional parts.
+ are converted to integers by discarding their fractional parts.
  (NOTE: To determine whether this method call can succeed, call the
  <b>CanTruncatedIntFitInInt32</b> method before calling this method.
  See the example.).<p> </p><p>The following example code (originally
@@ -3706,7 +3706,7 @@ signed integer.</p></li>
 </pre>
 
 <p>Converts this object to a 64-bit signed integer. Non-integer numbers are
- converted to an integer by discarding their fractional parts. (NOTE:
+ converted to integers by discarding their fractional parts. (NOTE:
  To determine whether this method call can succeed, call the
  <b>CanTruncatedIntFitInInt64</b> method before calling this method.
  See the example.).<p> </p><p>The following example code (originally
