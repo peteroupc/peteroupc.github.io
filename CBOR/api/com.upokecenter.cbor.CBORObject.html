@@ -133,7 +133,11 @@ CBOR object&#39;s type is FloatingPoint.</li>
 Converts this object to a 64-bit floating-point number if this CBOR object&#39;s
 type is FloatingPoint.</li>
 <li><code>com.upokecenter.numbers.EDecimal AsEDecimal()</code><br>
-Converts this object to a decimal number.</li>
+Deprecated.
+Instead, use.getToObject()() in.NET or
+.getToObject()(com.upokecenter.numbers.EDecimal.class) in Java.
+Instead, use.getToObject()() in.NET or
+.getToObject()(com.upokecenter.numbers.EDecimal.class) in Java.</li>
 <li><code>com.upokecenter.numbers.EFloat AsEFloat()</code><br>
 Deprecated.
 Instead, use.getToObject()() in.NET or
@@ -141,7 +145,11 @@ Instead, use.getToObject()() in.NET or
 Instead, use.getToObject()() in.NET or
 .getToObject()(com.upokecenter.numbers.EFloat.class) in Java.</li>
 <li><code>com.upokecenter.numbers.EInteger AsEInteger()</code><br>
-Converts this object to an arbitrary-precision integer.</li>
+Deprecated.
+Instead, use.getToObject()() in.NET or
+.getToObject()(com.upokecenter.numbers.EInteger.class) in Java.
+Instead, use.getToObject()() in.NET or
+.getToObject()(com.upokecenter.numbers.EInteger.class) in Java.</li>
 <li><code>com.upokecenter.numbers.EInteger AsEIntegerValue()</code><br>
 Converts this object to an arbitrary-precision integer if this CBOR object&#39;s
 type is Integer.</li>
@@ -3343,9 +3351,10 @@ an unsupported type.</p></li>
 * <code>java.lang.IllegalArgumentException</code> - The type of <code>obj</code> is not supported.
 
 ### AsEInteger
-    public com.upokecenter.numbers.EInteger AsEInteger()
-Converts this object to an arbitrary-precision integer. Fractional values
- are converted to integers by discarding their fractional parts.
+    @Deprecated public com.upokecenter.numbers.EInteger AsEInteger()
+Deprecated.
+Instead, use.getToObject()<petero.numbers.einteger>() in.NET or
+  .getToObject()(com.upokecenter.numbers.EInteger.class) in Java.</petero.numbers.einteger>
 
 **Returns:**
 
@@ -3408,8 +3417,10 @@ Converts this object to a 64-bit floating point number.
  CBORObject.Null, are considered numbers).
 
 ### AsEDecimal
-    public com.upokecenter.numbers.EDecimal AsEDecimal()
-Converts this object to a decimal number.
+    @Deprecated public com.upokecenter.numbers.EDecimal AsEDecimal()
+Deprecated.
+Instead, use.getToObject()<petero.numbers.edecimal>() in.NET or
+  .getToObject()(com.upokecenter.numbers.EDecimal.class) in Java.</petero.numbers.edecimal>
 
 **Returns:**
 
