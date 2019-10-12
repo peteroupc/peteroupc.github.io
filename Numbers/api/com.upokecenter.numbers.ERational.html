@@ -209,7 +209,9 @@ Converts this rational number to a binary float, but if the result would
 have a nonterminating binary expansion, rounds that result to the
 given precision.</li>
 <li><code>EInteger ToEInteger()</code><br>
-Converts this value to an arbitrary-precision integer.</li>
+Converts this value to an arbitrary-precision integer by dividing the
+numerator by the denominator and discarding the fractional part of
+the result.</li>
 <li><code>EInteger ToEIntegerExact()</code><br>
 Deprecated.
 Renamed to ToEIntegerIfExact.
@@ -1293,9 +1295,9 @@ exceeds the range of a 64-bit floating point number.</li>
 <pre>public EInteger ToEInteger()
 </pre>
 
-<p>Converts this value to an arbitrary-precision integer. Any fractional part
- in this value will be discarded when converting to an
- arbitrary-precision integer.</p>
+<p>Converts this value to an arbitrary-precision integer by dividing the
+ numerator by the denominator and discarding the fractional part of
+ the result.</p>
 
 <p><strong>Returns:</strong></p>
 

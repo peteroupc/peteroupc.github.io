@@ -98,7 +98,7 @@
 <li><code><a href="#ToEFloat">ToEFloat()</a></code> - Converts this rational number to a binary float.</li>
 <li><code><a href="#ToEFloat_PeterO_Numbers_EContext">ToEFloat(PeterO.Numbers.EContext)</a></code> - Converts this rational number to a binary float and rounds that result to the given precision.</li>
 <li><code><a href="#ToEFloatExactIfPossible_PeterO_Numbers_EContext">ToEFloatExactIfPossible(PeterO.Numbers.EContext)</a></code> - Converts this rational number to a binary float, but if the result would have a nonterminating binary expansion, rounds that result to the given precision.</li>
-<li><code><a href="#ToEInteger">ToEInteger()</a></code> - Converts this value to an arbitrary-precision integer.</li>
+<li><code><a href="#ToEInteger">ToEInteger()</a></code> - Converts this value to an arbitrary-precision integer by dividing the numerator by the denominator and discarding the fractional part of the result.</li>
 <li><code><a href="#ToEIntegerExact">ToEIntegerExact()</a></code> - Converts this value to an arbitrary-precision integer, checking whether the value is an exact integer.</li>
 <li><code><a href="#ToEIntegerIfExact">ToEIntegerIfExact()</a></code> - Converts this value to an arbitrary-precision integer, checking whether the value is an exact integer.</li>
 <li><code><a href="#ToExtendedDecimal">ToExtendedDecimal()</a></code> - Converts this rational number to an arbitrary-precision decimal number.</li>
@@ -2501,7 +2501,7 @@ This value is infinity or not-a-number, is not an exact integer, or is less than
 <pre>public PeterO.Numbers.EInteger ToEInteger();
 </pre>
 
-<p>Converts this value to an arbitrary-precision integer. Any fractional part in this value will be discarded when converting to an arbitrary-precision integer.</p>
+<p>Converts this value to an arbitrary-precision integer by dividing the numerator by the denominator and discarding the fractional part of the result.</p>
 
 <p><b>Return Value:</b></p>
 

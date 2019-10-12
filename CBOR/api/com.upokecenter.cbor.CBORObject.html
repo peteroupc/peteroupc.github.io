@@ -1644,53 +1644,64 @@ deep, or another error occurred when serializing the object.</p></li>
  <code>float</code> , <code>double</code> , as well as <code>decimal</code> in.getNET()),
  returns the result of the corresponding As* method.</li> <li>If the
  type is <code>string</code> , returns the result of AsString.</li> <li>If
- the type is <code>EDecimal</code> or <code>EInteger</code> in the <code>PeterO.Numbers</code>
+ the type is <code>EFloat</code> , <code>EDecimal</code> , <code>EInteger</code> , or
+ <code>ERational</code> in the <code>PeterO.Numbers</code>
   library (in .NET) or the <code>com.github.peteroupc/numbers</code>
-  artifact (in Java), returns the result of the corresponding As*
- method.</li> <li>If the type is <code>EFloat</code> or <code>ERational</code> in
- the PeterO.Numbers or numbers library, converts the given object to
- a number of the corresponding type and throws an exception if the
- object does not represent a number (for this purpose, infinity and
- not-a-number values, but not <code>CBORObject.Null</code> , are considered
- numbers). Currently, this is equivalent to the result of
- <code>AsEFloat()</code> or <code>AsERational()</code> , respectively, but may
- change slightly in the next major version. Note that in the case of
- <code>EFloat</code> , if this object represents a decimal number with a
+  artifact (in Java), converts the given object to a number of
+ the corresponding type and throws an exception (currently
+ IllegalStateException) if the object does not represent a number
+ (for this purpose, infinity and not-a-number values, but not
+ <code>CBORObject.Null</code> , are considered numbers). Currently, this is
+ equivalent to the result of <code>AsEFloat()</code> , <code>AsEDecimal()</code>
+ , <code>AsEInteger</code> , or <code>AsERational()</code> , respectively, but
+ may change slightly in the next major version. Note that in the case
+ of <code>EFloat</code> , if this object represents a decimal number with a
  fractional part, the conversion may lose information depending on
  the number, and if the object is a rational number with a
  nonterminating binary expansion, the number returned is a binary
- floating-point number rounded to a high but limited precision.</li>
- <li>In the.NET version, if the type is a nullable (e.g.,
- <code>Nullable&lt;int&gt;</code> or <code>int?</code> , returns <code>null</code> if
- this CBOR object is null, or this object&#39;s value converted to the
- nullable&#39;s underlying type, e.g., <code>int</code> .</li> <li>If the type
- is an enumeration (<code>Enum</code>) type and this CBOR object is a
- text string or an integer, returns the appropriate enumerated
- constant. (For example, if <code>MyEnum</code> includes an entry for
- <code>MyValue</code> , this method will return <code>MyEnum.MyValue</code> if
-  the CBOR object represents <code>&quot;MyValue&quot;</code> or the underlying value
- for <code>MyEnum.MyValue</code> .) <b>Note:</b> If an integer is converted
- to a.NET Enum constant, and that integer is shared by more than one
- constant of the same type, it is undefined which constant from among
- them is returned. (For example, if <code>MyEnum.Zero = 0</code> and
- <code>MyEnum.Null = 0</code> , converting 0 to <code>MyEnum</code> may return
- either <code>MyEnum.Zero</code> or <code>MyEnum.Null</code> .) As a result, .NET
- Enum types with constants that share an underlying value should not
- be passed to this method.</li> <li>If the type is <code>byte[]</code> (a
- one-dimensional byte array) and this CBOR object is a byte string,
- returns a byte array which this CBOR byte string&#39;s data will be
- copied to. (This method can&#39;t be used to encode CBOR data to a byte
- array; for that, use the EncodeToBytes method instead.)</li> <li>If
- the type is a one-dimensional or multidimensional array type and
- this CBOR object is an array, returns an array containing the items
- in this CBOR object.</li> <li>If the type is List or the generic or
- non-generic List, ICollection, or Iterable, (or ArrayList, List,
- Collection, or Iterable in Java), and if this CBOR object is an
- array, returns an object conforming to the type, class, or interface
- passed to this method, where the object will contain all items in
- this CBOR array.</li> <li>If the type is Dictionary or the generic
- or non-generic Map (or HashMap or Map in Java), and if this CBOR
- object is a map, returns an object conforming to the type, class, or
+ floating-point number rounded to a high but limited precision. In
+ the case of <code>EDecimal</code> , if this object expresses a rational
+ number with a nonterminating decimal expansion, returns a decimal
+ number rounded to 34 digits of precision. In the case of
+ <code>EInteger</code> , if this CBOR object expresses a floating-point
+ number, it is converted to an integer by discarding its fractional
+ part, and if this CBOR object expresses a rational number, it is
+ converted to an integer by dividing the numerator by the denominator
+ and discarding the fractional part of the result, and this method
+ throws an exception (currently ArithmeticException, but may change in
+ the next major version) if this object expresses infinity or a
+ not-a-number value.</li> <li>In the.NET version, if the type is a
+ nullable (e.g., <code>Nullable&lt;int&gt;</code> or <code>int?</code> , returns
+ <code>null</code> if this CBOR object is null, or this object&#39;s value
+ converted to the nullable&#39;s underlying type, e.g., <code>int</code> .</li>
+ <li>If the type is an enumeration (<code>Enum</code>) type and this CBOR
+ object is a text string or an integer, returns the appropriate
+ enumerated constant. (For example, if <code>MyEnum</code> includes an
+ entry for <code>MyValue</code> , this method will return
+  <code>MyEnum.MyValue</code> if the CBOR object represents <code>&quot;MyValue&quot;</code>
+ or the underlying value for <code>MyEnum.MyValue</code> .) <b>Note:</b> If
+ an integer is converted to a.NET Enum constant, and that integer is
+ shared by more than one constant of the same type, it is undefined
+ which constant from among them is returned. (For example, if
+ <code>MyEnum.Zero = 0</code> and <code>MyEnum.Null = 0</code> , converting 0 to
+ <code>MyEnum</code> may return either <code>MyEnum.Zero</code> or
+ <code>MyEnum.Null</code> .) As a result, .NET Enum types with constants
+ that share an underlying value should not be passed to this
+ method.</li> <li>If the type is <code>byte[]</code> (a one-dimensional
+ byte array) and this CBOR object is a byte string, returns a byte
+ array which this CBOR byte string&#39;s data will be copied to. (This
+ method can&#39;t be used to encode CBOR data to a byte array; for that,
+ use the EncodeToBytes method instead.)</li> <li>If the type is a
+ one-dimensional or multidimensional array type and this CBOR object
+ is an array, returns an array containing the items in this CBOR
+ object.</li> <li>If the type is List or the generic or non-generic
+ List, ICollection, or Iterable, (or ArrayList, List, Collection, or
+ Iterable in Java), and if this CBOR object is an array, returns an
+ object conforming to the type, class, or interface passed to this
+ method, where the object will contain all items in this CBOR
+ array.</li> <li>If the type is Dictionary or the generic or
+ non-generic Map (or HashMap or Map in Java), and if this CBOR object
+ is a map, returns an object conforming to the type, class, or
  interface passed to this method, where the object will contain all
  keys and values in this CBOR map.</li> <li>If the type is an
   enumeration constant (&quot;enum&quot;), and this CBOR object is an integer or
@@ -1748,7 +1759,7 @@ deep, or another error occurred when serializing the object.</p></li>
  </p><p>Java offers no easy way to express a generic type, at least none
  as easy as C#&#39;s <code>typeof</code> operator. The following example,
  written in Java, is a way to specify that the return value will be
- an ArrayList of string objects.</p> <pre>Type arrayListString = new ParameterizedType() { public Type[] getActualTypeArguments() { /* Contains one type parameter, string <em>/ return new Type[] { string.class }; } public Type getRawType() { /</em> Raw type is ArrayList */ return ArrayList.class; } public Type getOwnerType() { return null; } }; ArrayList&lt;string&gt; array = (ArrayList&lt;string&gt;) cborArray.ToObject(arrayListString);</pre>
+ an ArrayList of string objects.</p> <pre>Type arrayListString = new ParameterizedType() { public Type[] getActualTypeArguments() { /* Contains one type parameter, string<em>/ return new Type[] { string.class }; } public Type getRawType() { /</em> Raw type is ArrayList */ return ArrayList.class; } public Type getOwnerType() { return null; } }; ArrayList&lt;string&gt; array = (ArrayList&lt;string&gt;) cborArray.ToObject(arrayListString);</pre>
  <p>By comparison, the C# version is much shorter.</p>
  <pre>List&lt;string&gt; array = (List&lt;string&gt;)cborArray.ToObject(typeof(List&lt;string&gt;));</pre> .</p>
 
@@ -3364,10 +3375,7 @@ Instead, use.getToObject()<petero.numbers.einteger>() in.NET or
 
 * <code>java.lang.IllegalStateException</code> - This object does not represent a number (for
  the purposes of this method, infinity and not-a-number values, but
- not <code>CBORObject.Null</code>, are considered numbers). To check the
- CBOR object for null before conversion, use the following idiom
- (originally written in C# for the.NET version): <code>(cbor == null
- || cbor.isNull()) ? null : cbor.AsEInteger()</code>.
+ not <code>CBORObject.Null</code>, are considered numbers).
 
 * <code>java.lang.ArithmeticException</code> - This object's value is infinity or not-a-number
  (NaN).
@@ -3424,18 +3432,13 @@ Instead, use.getToObject()<petero.numbers.edecimal>() in.NET or
 
 **Returns:**
 
-* A decimal number for this object's value. If this object is a
- rational number with a nonterminating decimal expansion, returns a
- decimal number rounded to 34 digits.
+* A decimal number for this object's value.
 
 **Throws:**
 
 * <code>java.lang.IllegalStateException</code> - This object does not represent a number (for
  the purposes of this method, infinity and not-a-number values, but
- not <code>CBORObject.Null</code>, are considered numbers). To check the
- CBOR object for null before conversion, use the following idiom
- (originally written in C# for the.NET version): <code>(cbor == null
- || cbor.isNull()) ? null : cbor.AsEDecimal()</code>.
+ not <code>CBORObject.Null</code>, are considered numbers).
 
 ### AsEFloat
     @Deprecated public com.upokecenter.numbers.EFloat AsEFloat()
@@ -3445,21 +3448,14 @@ Instead, use.getToObject()<petero.numbers.efloat>() in.NET or
 
 **Returns:**
 
-* An arbitrary-precision binary floating-point numbering point number
- for this object's value. Note that if this object is a decimal
- number with a fractional part, the conversion may lose information
- depending on the number. If this object is a rational number with a
- nonterminating binary expansion, returns a binary floating-point
- number rounded to a high but limited precision.
+* An arbitrary-precision binary floating-point number for this
+ object's value.
 
 **Throws:**
 
 * <code>java.lang.IllegalStateException</code> - This object does not represent a number (for
  the purposes of this method, infinity and not-a-number values, but
- not <code>CBORObject.Null</code>, are considered numbers). To check the
- CBOR object for null before conversion, use the following idiom
- (originally written in C# for the.NET version): <code>(cbor == null
- || cbor.isNull()) ? null : cbor.AsEFloat()</code>.
+ not <code>CBORObject.Null</code>, are considered numbers).
 
 ### AsERational
     @Deprecated public com.upokecenter.numbers.ERational AsERational()
@@ -3475,10 +3471,7 @@ Instead, use.getToObject()<petero.numbers.erational>() in.getNET() or
 
 * <code>java.lang.IllegalStateException</code> - This object does not represent a number (for
  the purposes of this method, infinity and not-a-number values, but
- not <code>CBORObject.Null</code>, are considered numbers). To check the
- CBOR object for null before conversion, use the following idiom
- (originally written in C# for the.NET version): <code>(cbor == null
- || cbor.isNull()) ? null : cbor.AsERational()</code>.
+ not <code>CBORObject.Null</code>, are considered numbers).
 
 ### AsInt16
     public short AsInt16()
