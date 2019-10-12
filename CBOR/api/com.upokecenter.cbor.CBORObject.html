@@ -106,7 +106,11 @@ Gets a CBOR object for the number zero.</li>
 
 <ul>
 <li><code>CBORObject Abs()</code><br>
-Gets this object&#39;s absolute value.</li>
+Deprecated.
+Instead, convert this CBOR Object to a number (with .AsNumber()), and
+use that number&#39;s.Abs() method.
+Instead, convert this CBOR Object to a number (with .AsNumber()), and
+use that number&#39;s.Abs() method.</li>
 <li><code>CBORObject Add​(CBORObject obj)</code><br>
 Adds a new object to the end of this array.</li>
 <li><code>CBORObject Add​(java.lang.Object obj)</code><br>
@@ -447,7 +451,11 @@ Gets a value indicating whether this object&#39;s value equals 0.</li>
     CBORObject second)</code><br>
 Multiplies two CBOR numbers.</li>
 <li><code>CBORObject Negate()</code><br>
-Gets this object&#39;s value with the sign reversed.</li>
+Deprecated.
+Instead, convert this CBOR Object to a number (with .AsNumber()), and
+use that number&#39;s.Negate() method.
+Instead, convert this CBOR Object to a number (with .AsNumber()), and
+use that number&#39;s.Negate() method.</li>
 <li><code>static CBORObject NewArray()</code><br>
 Creates a new empty CBOR array.</li>
 <li><code>static CBORObject NewMap()</code><br>
@@ -866,8 +874,8 @@ false</code>.</li>
 
 <ul>
 <li>A collection of the keys of this CBOR object. To avoid potential
-problems, the calling code should not modify the CBOR map while
-iterating over the returned collection.</li>
+problems, the calling code should not modify the CBOR map or the
+returned collection while iterating over the returned collection.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -986,7 +994,8 @@ this object is not a simple value.</li>
 <ul>
 <li>A collection of the key/value pairs stored in this CBOR map. To
 avoid potential problems, the calling code should not modify the
-CBOR map while iterating over the returned collection.</li>
+CBOR map or the returned collection while iterating over the
+returned collection.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -1012,7 +1021,8 @@ CBOR map while iterating over the returned collection.</li>
 <ul>
 <li>A collection of the values of this CBOR map or array. To avoid
 potential problems, the calling code should not modify the CBOR map
-or array while iterating over the returned collection.</li>
+or array or the returned collection while iterating over the
+returned collection.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -3249,10 +3259,12 @@ likewise meet either criterion above.</p>.</p></li>
 
 <h3>Abs</h3>
 
-<pre>public CBORObject Abs()
+<pre>@Deprecated public CBORObject Abs()
 </pre>
 
-<p>Gets this object&#39;s absolute value.</p>
+<p>Deprecated.
+Instead, convert this CBOR Object to a number (with .AsNumber()), and
+ use that number&#39;s.Abs() method.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -4524,10 +4536,12 @@ otherwise, <code>false</code>.</li>
 
 <h3>Negate</h3>
 
-<pre>public CBORObject Negate()
+<pre>@Deprecated public CBORObject Negate()
 </pre>
 
-<p>Gets this object&#39;s value with the sign reversed.</p>
+<p>Deprecated.
+Instead, convert this CBOR Object to a number (with .AsNumber()), and
+ use that number&#39;s.Negate() method.</p>
 
 <p><strong>Returns:</strong></p>
 

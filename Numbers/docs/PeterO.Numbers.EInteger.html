@@ -32,10 +32,10 @@
 <li><code><a href="#Add_PeterO_Numbers_EInteger">Add(PeterO.Numbers.EInteger)</a></code> - Adds this object and another object.</li>
 <li><code><a href="#And_PeterO_Numbers_EInteger">And(PeterO.Numbers.EInteger)</a></code> - Does an AND operation between two arbitrary-precision integer values.</li>
 <li><code><a href="#And_PeterO_Numbers_EInteger_PeterO_Numbers_EInteger">And(PeterO.Numbers.EInteger, PeterO.Numbers.EInteger)</a></code> - Does an AND operation between two arbitrary-precision integer values.</li>
-<li><code><a href="#AsInt32Checked">AsInt32Checked()</a></code> - Converts this object&#39;s value to a 32-bit signed integer, throwing an exception if it can&#39;t fit.</li>
-<li><code><a href="#AsInt32Unchecked">AsInt32Unchecked()</a></code> - Converts this object&#39;s value to a 32-bit signed integer.</li>
-<li><code><a href="#AsInt64Checked">AsInt64Checked()</a></code> - Converts this object&#39;s value to a 64-bit signed integer, throwing an exception if it can&#39;t fit.</li>
-<li><code><a href="#AsInt64Unchecked">AsInt64Unchecked()</a></code> - Converts this object&#39;s value to a 64-bit signed integer.</li>
+<li><code><a href="#AsInt32Checked">AsInt32Checked()</a></code> - <b>Deprecated:</b> Renamed to ToInt32Checked.</li>
+<li><code><a href="#AsInt32Unchecked">AsInt32Unchecked()</a></code> - <b>Deprecated:</b> Renamed to ToInt32Unchecked.</li>
+<li><code><a href="#AsInt64Checked">AsInt64Checked()</a></code> - <b>Deprecated:</b> Renamed to ToInt64Checked.</li>
+<li><code><a href="#AsInt64Unchecked">AsInt64Unchecked()</a></code> - <b>Deprecated:</b> Renamed to ToInt64Unchecked.</li>
 <li><code><a href="#CanFitInInt32">CanFitInInt32()</a></code> - Returns whether this object&#39;s value can fit in a 32-bit signed integer.</li>
 <li><code><a href="#CanFitInInt64">CanFitInInt64()</a></code> - Returns whether this object&#39;s value can fit in a 64-bit signed integer.</li>
 <li><code><a href="#CompareTo_int">CompareTo(int)</a></code> - Compares an arbitrary-precision integer with this instance.</li>
@@ -44,7 +44,7 @@
 <li><code><a href="#Divide_int">Divide(int)</a></code> - Divides this instance by the value of an arbitrary-precision integer.</li>
 <li><code><a href="#Divide_PeterO_Numbers_EInteger">Divide(PeterO.Numbers.EInteger)</a></code> - Divides this instance by the value of an arbitrary-precision integer.</li>
 <li><code><a href="#DivRem_PeterO_Numbers_EInteger">DivRem(PeterO.Numbers.EInteger)</a></code> - Divides this object by another arbitrary-precision integer and returns the quotient and remainder.</li>
-<li><code><a href="#DivRem_PeterO_Numbers_EInteger_PeterO_Numbers_EInteger_PeterO_Numbers_EInteger">DivRem(PeterO.Numbers.EInteger, PeterO.Numbers.EInteger, PeterO.Numbers.EInteger&amp;)</a></code> - Divides one arbitrary-precision integer by another, and returns the quotient and sets an output parameter to the remainder.</li>
+<li><code><a href="#DivRem_PeterO_Numbers_EInteger_PeterO_Numbers_EInteger_PeterO_Numbers_EInteger">DivRem(PeterO.Numbers.EInteger, PeterO.Numbers.EInteger, PeterO.Numbers.EInteger&amp;)</a></code> - <b>Deprecated:</b> Use the DivRem instance method instead.</li>
 <li><code><a href="#Equals_object">Equals(object)</a></code> - Determines whether this object and another object are equal and have the same type.</li>
 <li><code><a href="#Equals_PeterO_Numbers_EInteger">Equals(PeterO.Numbers.EInteger)</a></code> - Determines whether this object and another object are equal.</li>
 <li><code><a href="#FromBoolean_bool">FromBoolean(bool)</a></code> - Converts a boolean value (true or false) to an arbitrary-precision integer.</li>
@@ -63,18 +63,18 @@
 <li><code><a href="#FromUInt64_ulong">FromUInt64(ulong)</a></code> - Converts a 64-bit unsigned integer to an arbitrary-precision integer.</li>
 <li><code><a href="#Gcd_PeterO_Numbers_EInteger">Gcd(PeterO.Numbers.EInteger)</a></code> - Returns the greatest common divisor of this integer and the given integer.</li>
 <li><code><a href="#GetBits_int_int">GetBits(int, int)</a></code> - Retrieves bits from this integer&#39;s two&#39; s-complement form.</li>
-<li><code><a href="#GetDigitCount">GetDigitCount()</a></code> - Returns the number of decimal digits used by this integer.</li>
+<li><code><a href="#GetDigitCount">GetDigitCount()</a></code> - <b>Deprecated:</b> This method may overflow. Use GetDigitCountAsEInteger instead.</li>
 <li><code><a href="#GetDigitCountAsEInteger">GetDigitCountAsEInteger()</a></code> - Returns the number of decimal digits used by this integer, in the form of an arbitrary-precision integer.</li>
 <li><code><a href="#GetHashCode">GetHashCode()</a></code> - Returns the hash code for this instance.</li>
-<li><code><a href="#GetLowBit">GetLowBit()</a></code> - Gets the lowest set bit in this number&#39;s absolute value.</li>
+<li><code><a href="#GetLowBit">GetLowBit()</a></code> - <b>Deprecated:</b> This method may overflow. Use GetLowBitAsEInteger instead.</li>
 <li><code><a href="#GetLowBitAsEInteger">GetLowBitAsEInteger()</a></code> - Gets the lowest set bit in this number&#39;s absolute value, in the form of an arbitrary-precision integer.</li>
 <li><code><a href="#GetSignedBit_int">GetSignedBit(int)</a></code> - Returns whether a bit is set in the two&#39;s-complement form (see T:PeterO.</li>
 <li><code><a href="#GetSignedBit_PeterO_Numbers_EInteger">GetSignedBit(PeterO.Numbers.EInteger)</a></code> - Returns whether a bit is set in the two&#39;s-complement form (see T:PeterO.</li>
-<li><code><a href="#GetSignedBitLength">GetSignedBitLength()</a></code> - Finds the minimum number of bits needed to represent this object&#39;s value, except for its sign.</li>
+<li><code><a href="#GetSignedBitLength">GetSignedBitLength()</a></code> - <b>Deprecated:</b> This method may overflow. Use GetSignedBitLengthAsEInteger instead.</li>
 <li><code><a href="#GetSignedBitLengthAsEInteger">GetSignedBitLengthAsEInteger()</a></code> - Finds the minimum number of bits needed to represent this object&#39;s value, except for its sign, in the form of an arbitrary-precision integer.</li>
 <li><code><a href="#GetUnsignedBit_int">GetUnsignedBit(int)</a></code> - Returns whether a bit is set in this number&#39;s absolute value.</li>
 <li><code><a href="#GetUnsignedBit_PeterO_Numbers_EInteger">GetUnsignedBit(PeterO.Numbers.EInteger)</a></code> - Returns whether a bit is set in this number&#39;s absolute value.</li>
-<li><code><a href="#GetUnsignedBitLength">GetUnsignedBitLength()</a></code> - Finds the minimum number of bits needed to represent this number&#39;s absolute value.</li>
+<li><code><a href="#GetUnsignedBitLength">GetUnsignedBitLength()</a></code> - <b>Deprecated:</b> This method may overflow. Use GetUnsignedBitLengthAsEInteger instead.</li>
 <li><code><a href="#GetUnsignedBitLengthAsEInteger">GetUnsignedBitLengthAsEInteger()</a></code> - Finds the minimum number of bits needed to represent this number&#39;s absolute value.</li>
 <li><code><a href="#Increment">Increment()</a></code> - Returns one added to this arbitrary-precision integer.</li>
 <li><code><a href="#IsEven">IsEven</a></code> - Gets a value indicating whether this value is even.</li>
@@ -96,16 +96,16 @@
 <li><code><a href="#op_Decrement">PeterO.Numbers.EInteger operator --(PeterO.Numbers.EInteger)</a></code> - Subtracts one from an arbitrary-precision integer.</li>
 <li><code><a href="#op_Division">PeterO.Numbers.EInteger operator /(PeterO.Numbers.EInteger, PeterO.Numbers.EInteger)</a></code> - Divides an arbitrary-precision integer by the value of an arbitrary-precision integer object.</li>
 <li><code><a href="#op_ExclusiveOr">PeterO.Numbers.EInteger operator ^(PeterO.Numbers.EInteger, PeterO.Numbers.EInteger)</a></code> - Finds the exclusive &quot;or&quot; of two arbitrary-precision integer objects.</li>
-<li><code><a href="#op_Explicit">explicit operator ulong(PeterO.Numbers.EInteger)</a></code> - Converts an arbitrary-precision integer to a byte (from 0 to 255) if it can fit in a byte (from 0 to 255).</li>
+<li><code><a href="#op_Explicit">explicit operator ulong(PeterO.Numbers.EInteger)</a></code> - Converts an arbitrary-precision integer to a byte (from 0 to 255) if it can fit in a byte (from 0 to 255). Converts a byte (from 0 to 255) to an arbitrary-precision integer. Converts an arbitrary-precision integer to an 8-bit signed integer if it can fit in an 8-bit signed integer. Converts an arbitrary-precision integer to a 16-bit signed integer if it can fit in a 16-bit signed integer. Converts an arbitrary-precision integer to a 16-bit unsigned integer if it can fit in a 16-bit unsigned integer. Converts an arbitrary-precision integer to a 32-bit signed integer if it can fit in a 32-bit signed integer. Converts an arbitrary-precision integer to a 32-bit signed integer if it can fit in a 32-bit signed integer. Converts an arbitrary-precision integer to a 64-bit signed integer if it can fit in a 64-bit signed integer. Converts an arbitrary-precision integer to a 64-bit unsigned integer if it can fit in a 64-bit unsigned integer.</li>
 <li><code><a href="#op_GreaterThan">bool operator &gt;(PeterO.Numbers.EInteger, PeterO.Numbers.EInteger)</a></code> - Determines whether an arbitrary-precision integer is greater than another arbitrary-precision integer.</li>
 <li><code><a href="#op_GreaterThanOrEqual">bool operator &gt;=(PeterO.Numbers.EInteger, PeterO.Numbers.EInteger)</a></code> - Determines whether an arbitrary-precision integer value is greater than another arbitrary-precision integer.</li>
-<li><code><a href="#op_Implicit">implicit operator PeterO.Numbers.EInteger(ulong)</a></code> - Converts a byte (from 0 to 255) to an arbitrary-precision integer.</li>
+<li><code><a href="#op_Implicit">implicit operator PeterO.Numbers.EInteger(ulong)</a></code> - Converts a byte (from 0 to 255) to an arbitrary-precision integer. Converts an 8-bit signed integer to an arbitrary-precision integer. Converts a 16-bit signed integer to an arbitrary-precision integer. Converts a 16-bit unsigned integer to an arbitrary-precision integer. Converts a 32-bit signed integer to an arbitrary-precision integer. Converts a 32-bit signed integer to an arbitrary-precision integer. Converts a 64-bit signed integer to an arbitrary-precision integer. Converts a 64-bit unsigned integer to an arbitrary-precision integer.</li>
 <li><code><a href="#op_Increment">PeterO.Numbers.EInteger operator ++(PeterO.Numbers.EInteger)</a></code> - Adds one to an arbitrary-precision integer.</li>
 <li><code><a href="#op_LeftShift">PeterO.Numbers.EInteger operator &lt;&lt;(PeterO.Numbers.EInteger, int)</a></code> - Returns an arbitrary-precision integer with the bits shifted to the left by a number of bits.</li>
 <li><code><a href="#op_LessThan">bool operator &lt;(PeterO.Numbers.EInteger, PeterO.Numbers.EInteger)</a></code> - Determines whether an arbitrary-precision integer is less than another arbitrary-precision integer.</li>
 <li><code><a href="#op_LessThanOrEqual">bool operator &lt;=(PeterO.Numbers.EInteger, PeterO.Numbers.EInteger)</a></code> - Determines whether an arbitrary-precision integer is up to another arbitrary-precision integer.</li>
 <li><code><a href="#op_Modulus">PeterO.Numbers.EInteger operator %(PeterO.Numbers.EInteger, PeterO.Numbers.EInteger)</a></code> - Finds the remainder that results when an arbitrary-precision integer is divided by the value of another arbitrary-precision integer.</li>
-<li><code><a href="#op_Multiply">PeterO.Numbers.EInteger operator *(PeterO.Numbers.EInteger, PeterO.Numbers.EInteger)</a></code> - Multiplies an arbitrary-precision integer by the value of an arbitrary-precision integer.</li>
+<li><code><a href="#op_Multiply">PeterO.Numbers.EInteger operator &#x2a;(PeterO.Numbers.EInteger, PeterO.Numbers.EInteger)</a></code> - Multiplies an arbitrary-precision integer by the value of an arbitrary-precision integer.</li>
 <li><code><a href="#op_OnesComplement">PeterO.Numbers.EInteger operator ~(PeterO.Numbers.EInteger)</a></code> - Returns an arbitrary-precision integer with every bit flipped.</li>
 <li><code><a href="#op_RightShift">PeterO.Numbers.EInteger operator &gt;&gt;(PeterO.Numbers.EInteger, int)</a></code> - Shifts the bits of an arbitrary-precision integer to the right.</li>
 <li><code><a href="#op_Subtraction">PeterO.Numbers.EInteger operator -(PeterO.Numbers.EInteger, PeterO.Numbers.EInteger)</a></code> - Subtracts two arbitrary-precision integer values.</li>
