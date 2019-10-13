@@ -14,6 +14,13 @@
 <h2>Methods</h2>
 
 <ul>
+<li><code>static double ParseJSONDouble​(java.lang.String str)</code><br>
+Parses a number whose format follows the JSON specification (RFC 8259), in
+the form of a 64-bit binary floating-point number.</li>
+<li><code>static double ParseJSONDouble​(java.lang.String str,
+           boolean preserveNegativeZero)</code><br>
+Parses a number whose format follows the JSON specification (RFC 8259), in
+the form of a 64-bit binary floating-point number.</li>
 <li><code>static CBORObject ParseJSONNumber​(java.lang.String str)</code><br>
 Parses a number whose format follows the JSON specification.</li>
 <li><code>static CBORObject ParseJSONNumber​(java.lang.String str,
@@ -72,9 +79,9 @@ string is null or empty.</li>
 <li><p><code>str</code> - A string to parse. The string is not allowed to contain white
 space characters, including spaces.</p></li>
 <li><p><code>integersOnly</code> - If true, no decimal points or exponents are allowed in
-the string.</p></li>
+the string. The default is false.</p></li>
 <li><p><code>positiveOnly</code> - If true, only positive numbers are allowed (the leading
-minus is disallowed).</p></li>
+minus is disallowed). The default is false.</p></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -84,6 +91,63 @@ minus is disallowed).</p></li>
 zero if the number is a zero that starts with a minus sign (such as
 &quot;-0&quot; or &quot;-0.0&quot;). Returns null if the parsing fails, including if the
 string is null or empty.</li>
+</ul>
+
+<h3>ParseJSONDouble</h3>
+
+<pre>public static double ParseJSONDouble​(java.lang.String str)
+</pre>
+
+<p>Parses a number whose format follows the JSON specification (RFC 8259), in
+ the form of a 64-bit binary floating-point number. See
+ #ParseJSONDouble(string, preserveNegativeZero) for more information.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>str</code> - A string to parse. The string is not allowed to contain white
+space characters, including spaces.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A 64-bit binary floating-point number parsed from the given string.
+Returns NaN if the parsing fails, including if the string is null or
+empty. (To check for NaN, use <code>Double.isNaN()</code> in.NET or
+<code>Double.isNaN()</code> in Java.)</li>
+</ul>
+
+<h3>ParseJSONDouble</h3>
+
+<pre>public static double ParseJSONDouble​(java.lang.String str, boolean preserveNegativeZero)
+</pre>
+
+<p>Parses a number whose format follows the JSON specification (RFC 8259), in
+ the form of a 64-bit binary floating-point number. Roughly speaking,
+ a valid number consists of an optional minus sign, one or more basic
+ digits (starting with 1 to 9 unless the only digit is 0), an
+  optional decimal point (&quot;.&quot;, full stop) with one or more basic
+ digits, and an optional letter E or e with an optional plus or minus
+ sign and one or more basic digits (the exponent).</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>str</code> - A string to parse. The string is not allowed to contain white
+space characters, including spaces.</p></li>
+<li><p><code>preserveNegativeZero</code> - If true, returns positive zero if the number is
+a zero that starts with a minus sign (such as &quot;-0&quot; or &quot;-0.0&quot;).
+Otherwise, returns negative zero in this case. The default is false.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A 64-bit binary floating-point number parsed from the given string.
+Returns NaN if the parsing fails, including if the string is null or
+empty. (To check for NaN, use <code>Double.isNaN()</code> in.NET or
+<code>Double.isNaN()</code> in Java.)</li>
 </ul>
 
 <h3>ParseJSONNumber</h3>
@@ -104,12 +168,12 @@ string is null or empty.</li>
 <li><p><code>str</code> - A string to parse. The string is not allowed to contain white
 space characters, including spaces.</p></li>
 <li><p><code>integersOnly</code> - If true, no decimal points or exponents are allowed in
-the string.</p></li>
+the string. The default is false.</p></li>
 <li><p><code>positiveOnly</code> - If true, only positive numbers are allowed (the leading
-minus is disallowed).</p></li>
+minus is disallowed). The default is false.</p></li>
 <li><p><code>preserveNegativeZero</code> - If true, returns positive zero if the number is
 a zero that starts with a minus sign (such as &quot;-0&quot; or &quot;-0.0&quot;).
-Otherwise, returns negative zero in this case.</p></li>
+Otherwise, returns negative zero in this case. The default is false.</p></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
