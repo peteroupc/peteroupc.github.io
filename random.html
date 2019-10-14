@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
-<p>Begun on Mar. 5, 2016; last updated on Oct. 8, 2019.</p>
+<p>Begun on Mar. 5, 2016; last updated on Oct. 14, 2019.</p>
 
 <p>Most apps that use random numbers care about either unpredictability, high quality, or repeatability.  This article explains the three kinds of RNGs and gives recommendations on each kind.</p>
 
@@ -655,7 +655,7 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 <ol>
 <li>Generating verifiable randomness has been described in <a href="https://www.rfc-editor.org/rfc/rfc3797.txt"><strong>RFC 3797</strong></a>, which describes the selection process for the Nominations Committee (NomCom) of the Internet Engineering Task Force.</li>
 <li><em>Verifiable delay functions</em> are functions whose output deliberately takes time to compute (e.g., to generate a seemingly random number from public data), but is easy to verify. The concept was introduced in (Boneh et al., 2018)<sup><a href="#Note33"><strong>(33)</strong></a></sup>, but such functions appeared earlier in (Lenstra et al., 2015)<sup><a href="#Note34"><strong>(34)</strong></a></sup>.</li>
-<li>In a so-called <a href="https://en.wikipedia.org/wiki/Commitment_scheme"><strong><em>commitment scheme</em></strong></a>, one computer generates a random number, then reveals its hash code or digital signature (<em>commitment</em>), and only later reveals that random number (along with other information needed, if any, to verify that the random number wasn&#39;t changed in between).  Commitment schemes, also known as <em>coin-flipping protocols</em>, generally involve two computers hashing together random numbers produced by each of them in a secure way.</li>
+<li>In a so-called <a href="https://en.wikipedia.org/wiki/Commitment_scheme"><strong><em>commitment scheme</em></strong></a>, one computer generates data to be committed (e.g. a random number or a chess move), then reveals its hash code or digital signature (<em>commitment</em>), and only later reveals the committed data (along with other information needed, if any, to verify that the data wasn&#39;t changed in between).  Commitment schemes are often found in <em>authenticated key exchange</em> protocols, in which two computers negotiate a shared secret random number.</li>
 </ol>
 </blockquote>
 
