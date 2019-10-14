@@ -39,10 +39,15 @@ class.</li>
 <h2>Methods</h2>
 
 <ul>
+<li><code>boolean getAllowDuplicateKeys()</code><br>
+Gets a value indicating whether to allow duplicate keys when reading JSON.</li>
 <li><code>boolean getBase64Padding()</code><br>
 Deprecated.
-This option now has no effect.
-This option now has no effect.</li>
+This property now has no effect.
+This property now has no effect.</li>
+<li><code>boolean getNumbersToDoubles()</code><br>
+Gets a value indicating whether JSON numbers are decoded as their closest
+64-bit binary floating-point numbers when decoding JSON.</li>
 <li><code>boolean getReplaceSurrogates() char</code><br>
 Gets a value indicating whether surrogate code points not part of a
 surrogate pair (which consists of two consecutive char s
@@ -90,15 +95,47 @@ described in the string constructor for this class.</li>
 </pre>
 
 <p>Deprecated.
-This option now has no effect. This library now includes necessary padding
- when writing traditional base64 to JSON and includes no padding when
- writing base64url to JSON, in accordance with the revision of the CBOR
- specification.</p>
+This property now has no effect. This library now includes  necessary
+ padding when writing traditional base64 to JSON and includes no
+ padding when writing base64url to JSON, in  accordance with the
+ revision of the CBOR specification.</p>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
 <li>A value indicating whether the Base64Padding property is true.</li>
+</ul>
+
+<h3>getNumbersToDoubles</h3>
+
+<pre>public final boolean getNumbersToDoubles()
+</pre>
+
+<p>Gets a value indicating whether JSON numbers are decoded as their closest
+ 64-bit binary floating-point numbers when decoding JSON.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>True, if JSON numbers are decoded as their closest 64-bit binary
+floating-point numbers, or false if such numbers are decoded as
+arbitrary-precision integers or decimal numbers, as appropriate. The
+default is false.</li>
+</ul>
+
+<h3>getAllowDuplicateKeys</h3>
+
+<pre>public final boolean getAllowDuplicateKeys()
+</pre>
+
+<p>Gets a value indicating whether to allow duplicate keys when reading JSON.
+ Used only when decoding JSON.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A value indicating whether to allow duplicate keys when reading
+JSON. The default is false.</li>
 </ul>
 
 <h3>getReplaceSurrogates</h3>
@@ -109,15 +146,15 @@ This option now has no effect. This library now includes necessary padding
 <p>Gets a value indicating whether surrogate code points not part of a
  surrogate pair (which consists of two consecutive <code>char</code> s
  forming one Unicode code point) are each replaced with a replacement
- character (U+FFFD). The default is false; an exception is thrown
- when such code points are encountered.</p>
+ character (U+FFFD). If false, an exception is thrown when such code
+ points are encountered.</p>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
 <li>True, if surrogate code points not part of a surrogate pair are each
 replaced with a replacement character, or false if an exception is
-thrown when such code points are encountered.</li>
+thrown when such code points are encountered. The default is false.</li>
 </ul>
 
 <p><a href="/CBOR/">Back to CBOR start page.</a></p>

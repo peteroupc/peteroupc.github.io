@@ -90,7 +90,7 @@ A _list_ can be expressed by wrapping items in brackets; for example, `[0, 1, 2]
 
 In the pseudocode:
 
-* Divisions do not round to an integer.  (In some programming languages, division of two integers results in an integer, which may be rounded differently depending on the language.  For instance, Python's and Ruby's integer division does a floor rounding on the quotient, while Java's truncates the quotient's fractional part.)
+* Divisions do not round to an integer.  (In some programming languages, division of two integers results in an integer, which may be rounded differently depending on the language.  For instance, Python's and Ruby's integer division does a floor rounding on the quotient, while Java's discards the fractional part of the result of division.)
 * The pseudocode shown is not guaranteed to cover all error handling that may be necessary in a particular implementation.   Such errors may include overflow, out-of-bounds memory access, division by zero, and unexpected infinity values.
 * The pseudocode shown is not guaranteed to yield high performance in a particular implementation, either in time or memory.  Implementations are free to deviate from the pseudocode as long as they produce the same results as the pseudocode, except that&mdash;
     - arithmetic operations, `rem`, `sqrt`, `ln`, `exp`, `pow`, `sin`, `cos`, `tan`, and `atan2` must be at least substantially close to accurate, and

@@ -10,11 +10,11 @@
 </pre>
 
 <p>An instance of a number that CBOR or certain CBOR tags can represent. For
- this purpose, infinities and not-a-number or NaN values are
- considered numbers. Currently, this class can store one of the
- following kinds of numbers: 64-bit signed integers or binary
- floating-point numbers; or arbitrary-precision integers, decimal
- numbers, binary numbers, or rational numbers.</p>
+ this purpose, infinities and not-a-number or NaN values are considered
+ numbers. Currently, this class can store one of the following kinds of
+ numbers: 64-bit signed integers or binary floating-point numbers; or
+ arbitrary-precision integers, decimal numbers, binary numbers, or
+ rational numbers.</p>
 
 <h2>Methods</h2>
 
@@ -49,6 +49,10 @@ method in Java returns true).</li>
 Gets a value indicating whether this object represents infinity.</li>
 <li><code>boolean IsNaN()</code><br>
 Gets a value indicating whether this object represents a not-a-number value.</li>
+<li><code>boolean IsNegativeInfinity()</code><br>
+Gets a value indicating whether this object represents negative infinity.</li>
+<li><code>boolean IsPositiveInfinity()</code><br>
+Gets a value indicating whether this object represents positive infinity.</li>
 <li><code>CBORNumber Multiply​(CBORNumber b)</code><br>
 Returns a CBOR number expressing the product of this number and the given
 number.</li>
@@ -163,6 +167,34 @@ does not represent a number.</li>
 <ul>
 <li><code>true</code> if this object represents infinity; otherwise, <code>
 false</code>.</li>
+</ul>
+
+<h3>IsPositiveInfinity</h3>
+
+<pre>public boolean IsPositiveInfinity()
+</pre>
+
+<p>Gets a value indicating whether this object represents positive infinity.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li><code>true</code> if this object represents positive infinity; otherwise,
+<code>false</code>.</li>
+</ul>
+
+<h3>IsNegativeInfinity</h3>
+
+<pre>public boolean IsNegativeInfinity()
+</pre>
+
+<p>Gets a value indicating whether this object represents negative infinity.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li><code>true</code> if this object represents negative infinity; otherwise,
+<code>false</code>.</li>
 </ul>
 
 <h3>IsNaN</h3>

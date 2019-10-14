@@ -243,7 +243,7 @@ class Fixed:
     def __mod__(a, b):
         # Note: In Python, the "//" integer division operator
         # does a floor rounding of the quotient.  Other programming
-        # languages, such as Java, truncate the quotient's fractional part
+        # languages, such as Java, truncate the fractional part of the result of division
         # in integer division and define remainder, in general,
         # as "a-(a/b)*b" where "/" is their integer division operator.
         # Here, we use Python's definition of the "%" operator

@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
-<p>Begun on June 4, 2017; last updated on Sep. 27, 2019.</p>
+<p>Begun on June 4, 2017; last updated on Oct. 13, 2019.</p>
 
 <p>Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.</p>
 
@@ -271,8 +271,8 @@ METHOD RndIntHelperPowerOfTwo(maxInclusive)
   tempnumber = maxInclusive
   while tempnumber &gt; 0
     // NOTE: If the programming language implements
-    // division with two integers by truncating to an
-    // integer, the division can be used as is without
+    // division with two integers by discarding the quotient&#39;s
+    // fractional part, the division can be used as is without
     // using a &quot;floor&quot; function.
     tempnumber = floor(tempnumber / 2)
     bitCount = bitCount + 1

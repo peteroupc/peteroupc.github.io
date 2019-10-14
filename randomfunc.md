@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on June 4, 2017; last updated on Sep. 27, 2019.
+Begun on June 4, 2017; last updated on Oct. 13, 2019.
 
 Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.
 
@@ -185,8 +185,8 @@ The pseudocode below implements `RNDINT` and uses rejection sampling for most in
       tempnumber = maxInclusive
       while tempnumber > 0
         // NOTE: If the programming language implements
-        // division with two integers by truncating to an
-        // integer, the division can be used as is without
+        // division with two integers by discarding the quotient's
+        // fractional part, the division can be used as is without
         // using a "floor" function.
         tempnumber = floor(tempnumber / 2)
         bitCount = bitCount + 1

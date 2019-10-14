@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on Mar. 5, 2016; last updated on Oct. 8, 2019.
+Begun on Mar. 5, 2016; last updated on Oct. 14, 2019.
 
 Most apps that use random numbers care about either unpredictability, high quality, or repeatability.  This article explains the three kinds of RNGs and gives recommendations on each kind.
 
@@ -442,7 +442,7 @@ _Verifiable random numbers_ are random numbers (such as seeds for PRNGs) that ar
 >
 > 1. Generating verifiable randomness has been described in [**RFC 3797**](https://www.rfc-editor.org/rfc/rfc3797.txt), which describes the selection process for the Nominations Committee (NomCom) of the Internet Engineering Task Force.
 > 2. _Verifiable delay functions_ are functions whose output deliberately takes time to compute (e.g., to generate a seemingly random number from public data), but is easy to verify. The concept was introduced in (Boneh et al., 2018)<sup>[**(33)**](#Note33)</sup>, but such functions appeared earlier in (Lenstra et al., 2015)<sup>[**(34)**](#Note34)</sup>.
-> 3. In a so-called [**_commitment scheme_**](https://en.wikipedia.org/wiki/Commitment_scheme), one computer generates a random number, then reveals its hash code or digital signature (_commitment_), and only later reveals that random number (along with other information needed, if any, to verify that the random number wasn't changed in between).  In a related scheme, two computers each generate a random number, send their commitments, then reveal those numbers (and other information to verify them), and once those numbers are verified successfully, they are hashed together to produce a final random number.
+> 3. In a so-called [**_commitment scheme_**](https://en.wikipedia.org/wiki/Commitment_scheme), one computer generates data to be committed (e.g. a random number or a chess move), then reveals its hash code or digital signature (_commitment_), and only later reveals the committed data (along with other information needed, if any, to verify that the data wasn't changed in between).  Commitment schemes are often found in _authenticated key exchange_ protocols, in which two computers negotiate a shared secret random number.
 
 <a id=Guidelines_for_New_RNG_APIs></a>
 ## Guidelines for New RNG APIs
