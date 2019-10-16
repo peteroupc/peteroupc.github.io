@@ -52,11 +52,11 @@
 <h3>Member Summary</h3>
 
 <ul>
-<li><code><a href="#Abs">Abs()</a></code> - <b>Deprecated:</b> Instead, convert this CBOR object to a number (with .AsNumber()), and use that number&#39;s .Abs() method.</li>
+<li><code><a href="#Abs">Abs()</a></code> - <b>Deprecated:</b> Instead, convert this object to a number (with .AsNumber()), and use that number&#39;s .Abs() method.</li>
 <li><code><a href="#Add_object">Add(object)</a></code> - Converts an object to a CBOR object and adds it to the end of this array.</li>
 <li><code><a href="#Add_object_object">Add(object, object)</a></code> - Adds a new key and its value to this CBOR map, or adds the value if the key doesn&#39;t exist.</li>
 <li><code><a href="#Add_PeterO_Cbor_CBORObject">Add(PeterO.Cbor.CBORObject)</a></code> - Adds a new object to the end of this array.</li>
-<li><code><a href="#Addition_PeterO_Cbor_CBORObject_PeterO_Cbor_CBORObject">Addition(PeterO.Cbor.CBORObject, PeterO.Cbor.CBORObject)</a></code> - Finds the sum of two CBOR numbers.</li>
+<li><code><a href="#Addition_PeterO_Cbor_CBORObject_PeterO_Cbor_CBORObject">Addition(PeterO.Cbor.CBORObject, PeterO.Cbor.CBORObject)</a></code> - <b>Deprecated:</b> Instead, convert both CBOR objects to numbers (with .AsNumber()), and use the first number&#39;s .Add() method.</li>
 <li><code><a href="#AsBoolean">AsBoolean()</a></code> - Returns false if this object is False, Null, or Undefined (whether or not the object has tags); otherwise, true.</li>
 <li><code><a href="#AsByte">AsByte()</a></code> - Converts this object to a byte (0 to 255).</li>
 <li><code><a href="#AsDecimal">AsDecimal()</a></code> - Converts this object to a.</li>
@@ -81,7 +81,7 @@
 <li><code><a href="#AsUInt32">AsUInt32()</a></code> - Converts this object to a 32-bit unsigned integer.</li>
 <li><code><a href="#AsUInt64">AsUInt64()</a></code> - Not documented yet.</li>
 <li><code><a href="#CanFitInDouble">CanFitInDouble()</a></code> - Returns whether this object&#39;s value can be converted to a 64-bit floating point number without its value being rounded to another numerical value.</li>
-<li><code><a href="#CanFitInInt32">CanFitInInt32()</a></code> - <b>Deprecated:</b> Instead, use CanValueFitInInt32(), if the application allows only CBOR integers, or (cbor.IsNumber &amp;&amp;cbor.AsNumber().CanFitInInt32()), if the application allows any CBOR object convertible to an integer.</li>
+<li><code><a href="#CanFitInInt32">CanFitInInt32()</a></code> - <b>Deprecated:</b> Instead, use .CanValueFitInInt32(), if the application allows only CBOR integers, or (cbor.IsNumber &amp;&amp;cbor.AsNumber().CanFitInInt32()), if the application allows any CBOR object convertible to an integer.</li>
 <li><code><a href="#CanFitInInt64">CanFitInInt64()</a></code> - <b>Deprecated:</b> Instead, use CanValueFitInInt64(), if the application allows only CBOR integers, or (cbor.IsNumber &amp;&amp;cbor.AsNumber().CanFitInInt64()), if the application allows any CBOR object convertible to an integer.</li>
 <li><code><a href="#CanFitInSingle">CanFitInSingle()</a></code> - Returns whether this object&#39;s value can be converted to a 32-bit floating point number without its value being rounded to another numerical value.</li>
 <li><code><a href="#CanTruncatedIntFitInInt32">CanTruncatedIntFitInInt32()</a></code> - Returns whether this object&#39;s value, converted to an integer by discarding its fractional part, would be -(2^31) or greater, and less than 2^31.</li>
@@ -99,7 +99,7 @@
 <li><code><a href="#DecodeFromBytes_byte_PeterO_Cbor_CBOREncodeOptions">DecodeFromBytes(byte[], PeterO.Cbor.CBOREncodeOptions)</a></code> - Generates a CBOR object from an array of CBOR-encoded bytes, using the given CBOREncodeOptions object to control the decoding process.</li>
 <li><code><a href="#DecodeSequenceFromBytes_byte">DecodeSequenceFromBytes(byte[])</a></code> - Generates a sequence of CBOR objects from an array of CBOR-encoded bytes.</li>
 <li><code><a href="#DecodeSequenceFromBytes_byte_PeterO_Cbor_CBOREncodeOptions">DecodeSequenceFromBytes(byte[], PeterO.Cbor.CBOREncodeOptions)</a></code> - Generates a sequence of CBOR objects from an array of CBOR-encoded bytes.</li>
-<li><code><a href="#Divide_PeterO_Cbor_CBORObject_PeterO_Cbor_CBORObject">Divide(PeterO.Cbor.CBORObject, PeterO.Cbor.CBORObject)</a></code> - Divides a CBORObject object by the value of a CBORObject object.</li>
+<li><code><a href="#Divide_PeterO_Cbor_CBORObject_PeterO_Cbor_CBORObject">Divide(PeterO.Cbor.CBORObject, PeterO.Cbor.CBORObject)</a></code> - <b>Deprecated:</b> Instead, convert both CBOR objects to numbers (with .AsNumber()), and use the first number&#39;s .Divide() method.</li>
 <li><code><a href="#EncodeToBytes">EncodeToBytes()</a></code> - Writes the binary representation of this CBOR object and returns a byte array of that representation.</li>
 <li><code><a href="#EncodeToBytes_PeterO_Cbor_CBOREncodeOptions">EncodeToBytes(PeterO.Cbor.CBOREncodeOptions)</a></code> - Writes the binary representation of this CBOR object and returns a byte array of that representation, using the specified options for encoding the object to CBOR format.</li>
 <li><code><a href="#Entries">Entries</a></code> - Gets a collection of the key/value pairs stored in this CBOR object, if it&#39;s a map.</li>
@@ -108,7 +108,8 @@
 <li><code><a href="#False">public static readonly PeterO.Cbor.CBORObject False;</a></code> - Represents the value false.</li>
 <li><code><a href="#FromFloatingPointBits_long_int">FromFloatingPointBits(long, int)</a></code> - Generates a CBOR object from a floating-point number represented by its bits.</li>
 <li><code><a href="#FromJSONString_string">FromJSONString(string)</a></code> - Generates a CBOR object from a text string in JavaScript Object Notation (JSON) format.</li>
-<li><code><a href="#FromJSONString_string_PeterO_Cbor_CBOREncodeOptions">FromJSONString(string, PeterO.Cbor.CBOREncodeOptions)</a></code> - Generates a CBOR object from a text string in JavaScript Object Notation (JSON) format, using the specified options to control the decoding process.</li>
+<li><code><a href="#FromJSONString_string_PeterO_Cbor_CBOREncodeOptions">FromJSONString(string, PeterO.Cbor.CBOREncodeOptions)</a></code> - <b>Deprecated:</b> Instead, use .FromJSONString(str, new JSONOptions(&#x22;allowduplicatekeys=true&#x22;)) or .FromJSONString(str, new JSONOptions(&#x22;allowduplicatekeys=false&#x22;)), as appropriate.</li>
+<li><code><a href="#FromJSONString_string_PeterO_Cbor_JSONOptions">FromJSONString(string, PeterO.Cbor.JSONOptions)</a></code> - Generates a CBOR object from a text string in JavaScript Object Notation (JSON) format, using the specified options to control the decoding process.</li>
 <li><code><a href="#FromObject_bool">FromObject(bool)</a></code> - Returns the CBOR true value or false value, depending on &quot;value&quot;.</li>
 <li><code><a href="#FromObject_byte">FromObject(byte[])</a></code> - Generates a CBOR object from a byte (0 to 255). Generates a CBOR object from an array of 8-bit bytes; the byte array is copied to a new byte array in this process.</li>
 <li><code><a href="#FromObject_double">FromObject(double)</a></code> - Generates a CBOR object from a 64-bit floating-point number.</li>
@@ -151,14 +152,14 @@
 <li><code><a href="#Insert_int_object">Insert(int, object)</a></code> - Inserts an object at the specified position in this CBOR array.</li>
 <li><code><a href="#IsFalse">IsFalse</a></code> - Gets a value indicating whether this value is a CBOR false value, whether tagged or not.</li>
 <li><code><a href="#IsFinite">IsFinite</a></code> - Gets a value indicating whether this CBOR object represents a finite number.</li>
-<li><code><a href="#IsInfinity">IsInfinity()</a></code> - <b>Deprecated:</b> Use the following instead: (cbor.IsNumber &amp;&amp; cbor.AsNumber().IsInfinity()).</li>
+<li><code><a href="#IsInfinity">IsInfinity()</a></code> - <b>Deprecated:</b> Instead, use the following: (cbor.IsNumber &amp;&amp; cbor.AsNumber().IsInfinity()).</li>
 <li><code><a href="#IsIntegral">IsIntegral</a></code> - Gets a value indicating whether this object represents an integer number, that is, a number without a fractional part.</li>
-<li><code><a href="#IsNaN">IsNaN()</a></code> - <b>Deprecated:</b> Use the following instead: (cbor.IsNumber &amp;&amp; cbor.AsNumber().IsNaN()).</li>
+<li><code><a href="#IsNaN">IsNaN()</a></code> - <b>Deprecated:</b> Instead, use the following: (cbor.IsNumber &amp;&amp; cbor.AsNumber().IsNaN()).</li>
 <li><code><a href="#IsNegative">IsNegative</a></code> - Gets a value indicating whether this object is a negative number.</li>
-<li><code><a href="#IsNegativeInfinity">IsNegativeInfinity()</a></code> - Gets a value indicating whether this CBOR object represents negative infinity.</li>
+<li><code><a href="#IsNegativeInfinity">IsNegativeInfinity()</a></code> - <b>Deprecated:</b> Instead, use the following: (cbor.IsNumber &amp;&amp; cbor.AsNumber().IsNegativeInfinity()).</li>
 <li><code><a href="#IsNull">IsNull</a></code> - Gets a value indicating whether this CBOR object is a CBOR null value, whether tagged or not.</li>
 <li><code><a href="#IsNumber">IsNumber</a></code> - Gets a value indicating whether this CBOR object stores a number (including infinity or a not-a-number or NaN value).</li>
-<li><code><a href="#IsPositiveInfinity">IsPositiveInfinity()</a></code> - Gets a value indicating whether this CBOR object represents positive infinity.</li>
+<li><code><a href="#IsPositiveInfinity">IsPositiveInfinity()</a></code> - <b>Deprecated:</b> Instead, use the following: (cbor.IsNumber &amp;&amp; cbor.AsNumber().IsPositiveInfinity()).</li>
 <li><code><a href="#IsTagged">IsTagged</a></code> - Gets a value indicating whether this data item has at least one tag.</li>
 <li><code><a href="#IsTrue">IsTrue</a></code> - Gets a value indicating whether this value is a CBOR true value, whether tagged or not.</li>
 <li><code><a href="#IsUndefined">IsUndefined</a></code> - Gets a value indicating whether this value is a CBOR undefined value.</li>
@@ -166,9 +167,9 @@
 <li><code><a href="#Keys">Keys</a></code> - Gets a collection of the keys of this CBOR object in an undefined order.</li>
 <li><code><a href="#MostInnerTag">MostInnerTag</a></code> - Gets the last defined tag for this CBOR data item, or -1 if the item is untagged.</li>
 <li><code><a href="#MostOuterTag">MostOuterTag</a></code> - Gets the outermost tag for this CBOR data item, or -1 if the item is untagged.</li>
-<li><code><a href="#Multiply_PeterO_Cbor_CBORObject_PeterO_Cbor_CBORObject">Multiply(PeterO.Cbor.CBORObject, PeterO.Cbor.CBORObject)</a></code> - Multiplies two CBOR numbers.</li>
+<li><code><a href="#Multiply_PeterO_Cbor_CBORObject_PeterO_Cbor_CBORObject">Multiply(PeterO.Cbor.CBORObject, PeterO.Cbor.CBORObject)</a></code> - <b>Deprecated:</b> Instead, convert both CBOR objects to numbers (with .AsNumber()), and use the first number&#39;s .Multiply() method.</li>
 <li><code><a href="#NaN">public static readonly PeterO.Cbor.CBORObject NaN;</a></code> - A not-a-number value.</li>
-<li><code><a href="#Negate">Negate()</a></code> - <b>Deprecated:</b> Instead, convert this CBOR object to a number (with .AsNumber()), and use that number&#39;s .Negate() method.</li>
+<li><code><a href="#Negate">Negate()</a></code> - <b>Deprecated:</b> Instead, convert this object to a number (with .AsNumber()), and use that number&#39;s .Negate() method.</li>
 <li><code><a href="#NegativeInfinity">public static readonly PeterO.Cbor.CBORObject NegativeInfinity;</a></code> - The value negative infinity.</li>
 <li><code><a href="#NewArray">NewArray()</a></code> - Creates a new empty CBOR array.</li>
 <li><code><a href="#NewMap">NewMap()</a></code> - Creates a new empty CBOR map.</li>
@@ -186,17 +187,18 @@
 <li><code><a href="#Read_System_IO_Stream">Read(System.IO.Stream)</a></code> - Reads an object in CBOR format from a data stream.</li>
 <li><code><a href="#Read_System_IO_Stream_PeterO_Cbor_CBOREncodeOptions">Read(System.IO.Stream, PeterO.Cbor.CBOREncodeOptions)</a></code> - Reads an object in CBOR format from a data stream, using the specified options to control the decoding process.</li>
 <li><code><a href="#ReadJSON_System_IO_Stream">ReadJSON(System.IO.Stream)</a></code> - Generates a CBOR object from a data stream in JavaScript Object Notation (JSON) format.</li>
-<li><code><a href="#ReadJSON_System_IO_Stream_PeterO_Cbor_CBOREncodeOptions">ReadJSON(System.IO.Stream, PeterO.Cbor.CBOREncodeOptions)</a></code> - Generates a CBOR object from a data stream in JavaScript Object Notation (JSON) format, using the specified options to control the decoding process.</li>
+<li><code><a href="#ReadJSON_System_IO_Stream_PeterO_Cbor_CBOREncodeOptions">ReadJSON(System.IO.Stream, PeterO.Cbor.CBOREncodeOptions)</a></code> - <b>Deprecated:</b> Instead, use .ReadJSON(stream, new JSONOptions(&#x22;allowduplicatekeys=true&#x22;)) or .ReadJSON(stream, new JSONOptions(&#x22;allowduplicatekeys=false&#x22;)), as appropriate.</li>
+<li><code><a href="#ReadJSON_System_IO_Stream_PeterO_Cbor_JSONOptions">ReadJSON(System.IO.Stream, PeterO.Cbor.JSONOptions)</a></code> - Generates a CBOR object from a data stream in JavaScript Object Notation (JSON) format, using the specified options to control the decoding process.</li>
 <li><code><a href="#ReadSequence_System_IO_Stream">ReadSequence(System.IO.Stream)</a></code> - Reads a sequence of objects in CBOR format from a data stream.</li>
 <li><code><a href="#ReadSequence_System_IO_Stream_PeterO_Cbor_CBOREncodeOptions">ReadSequence(System.IO.Stream, PeterO.Cbor.CBOREncodeOptions)</a></code> - Reads a sequence of objects in CBOR format from a data stream.</li>
-<li><code><a href="#Remainder_PeterO_Cbor_CBORObject_PeterO_Cbor_CBORObject">Remainder(PeterO.Cbor.CBORObject, PeterO.Cbor.CBORObject)</a></code> - Finds the remainder that results when a CBORObject object is divided by the value of a CBORObject object.</li>
+<li><code><a href="#Remainder_PeterO_Cbor_CBORObject_PeterO_Cbor_CBORObject">Remainder(PeterO.Cbor.CBORObject, PeterO.Cbor.CBORObject)</a></code> - <b>Deprecated:</b> Instead, convert both CBOR objects to numbers (with .AsNumber()), and use the first number&#39;s .Remainder() method.</li>
 <li><code><a href="#Remove_object">Remove(object)</a></code> - If this object is an array, removes the first instance of the specified item (once converted to a CBOR object) from the array.</li>
 <li><code><a href="#Remove_PeterO_Cbor_CBORObject">Remove(PeterO.Cbor.CBORObject)</a></code> - If this object is an array, removes the first instance of the specified item from the array.</li>
 <li><code><a href="#RemoveAt_int">RemoveAt(int)</a></code> - Removes the item at the given index of this CBOR array.</li>
 <li><code><a href="#Set_object_object">Set(object, object)</a></code> - Maps an object to a key in this CBOR map, or adds the value if the key doesn&#39;t exist.</li>
 <li><code><a href="#Sign">Sign</a></code> - Gets this value&#39;s sign: -1 if negative; 1 if positive; 0 if zero.</li>
 <li><code><a href="#SimpleValue">SimpleValue</a></code> - Gets the simple value ID of this CBOR object, or -1 if the object is not a simple value.</li>
-<li><code><a href="#Subtract_PeterO_Cbor_CBORObject_PeterO_Cbor_CBORObject">Subtract(PeterO.Cbor.CBORObject, PeterO.Cbor.CBORObject)</a></code> - Finds the difference between two CBOR number objects.</li>
+<li><code><a href="#Subtract_PeterO_Cbor_CBORObject_PeterO_Cbor_CBORObject">Subtract(PeterO.Cbor.CBORObject, PeterO.Cbor.CBORObject)</a></code> - <b>Deprecated:</b> Instead, convert both CBOR objects to numbers (with .AsNumber()), and use the first number&#39;s .Subtract() method.</li>
 <li><code><a href="#TagCount">TagCount</a></code> - Gets the number of tags this object has.</li>
 <li><code><a href="#this_int">this[int]</a></code> - Gets the value of a CBOR object by integer index in this array or by integer key in this map.</li>
 <li><code><a href="#this_PeterO_Cbor_CBORObject">this[PeterO.Cbor.CBORObject]</a></code> - Gets the value of a CBOR object by integer index in this array or by CBOR object key in this map.</li>
@@ -649,7 +651,7 @@ This object is not a map or an array.</li>
 <pre>public PeterO.Cbor.CBORObject Abs();
 </pre>
 
-<p><b>Deprecated.</b> Instead, convert this CBOR object to a number (with .AsNumber()), and use that number&#39;s .Abs() method.</p>
+<p><b>Deprecated.</b> Instead, convert this object to a number (with .AsNumber()), and use that number&#39;s .Abs() method.</p>
 
 <p>Gets this object&#39;s absolute value.</p>
 
@@ -789,6 +791,8 @@ This object is not an array.</li>
     PeterO.Cbor.CBORObject first,
     PeterO.Cbor.CBORObject second);
 </pre>
+
+<p><b>Deprecated.</b> Instead, convert both CBOR objects to numbers (with .AsNumber()), and use the first number&#39;s .Add() method.</p>
 
 <p>Finds the sum of two CBOR numbers.</p>
 
@@ -1356,7 +1360,7 @@ This object&#39;s value, if converted to an integer by discarding its fractional
 <pre>public bool CanFitInInt32();
 </pre>
 
-<p><b>Deprecated.</b> Instead, use CanValueFitInInt32(), if the application allows only CBOR integers, or (cbor.IsNumber &amp;&amp;cbor.AsNumber().CanFitInInt32()),  if the application allows any CBOR object convertible to an integer.</p>
+<p><b>Deprecated.</b> Instead, use .CanValueFitInInt32(), if the application allows only CBOR integers, or (cbor.IsNumber &amp;&amp;cbor.AsNumber().CanFitInInt32()),  if the application allows any CBOR object convertible to an integer.</p>
 
 <p>Returns whether this object&#39;s numerical value is an integer, is -(2^31) or greater, and is less than 2^31.</p>
 
@@ -1727,6 +1731,8 @@ is null.</p></li>
     PeterO.Cbor.CBORObject second);
 </pre>
 
+<p><b>Deprecated.</b> Instead, convert both CBOR objects to numbers (with .AsNumber()), and use the first number&#39;s .Divide() method.</p>
+
 <p>Divides a CBORObject object by the value of a CBORObject object.</p>
 
 <p><b>Parameters:</b></p>
@@ -1907,18 +1913,20 @@ The string is not in JSON format.</p></li>
     PeterO.Cbor.CBOREncodeOptions options);
 </pre>
 
+<p><b>Deprecated.</b> Instead, use .FromJSONString(str, new JSONOptions(&#x22;allowduplicatekeys=true&#x22;)) or .FromJSONString(str,  new JSONOptions(&#x22;allowduplicatekeys=false&#x22;)), as appropriate.</p>
+
 <p>Generates a CBOR object from a text string in JavaScript Object Notation (JSON) format, using the specified options to control the decoding process. Note that if a CBOR object is converted to JSON with  <code>ToJSONString</code> , then the JSON is converted back to CBOR with this method, the new CBOR object will not necessarily be the same as the old CBOR object, especially if the old CBOR object uses data types not supported in JSON, such as integers in map keys.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>str</i>: A string in JSON format. The entire string must contain a single JSON object and not multiple objects. The string may not begin with a byte-order mark (U+FEFF).</p></li>
-<li><p><i>options</i>: Specifies options to control the decoding process.</p></li>
+<li><p><i>options</i>: Specifies options to control the decoding process. This method uses only the AllowDuplicateKeys property of this object.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p>A CBORObject object.</p>
+<p>A CBOR object containing the JSON data decoded.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -1926,6 +1934,39 @@ The string is not in JSON format.</p></li>
 <li><p>System.ArgumentNullException:
 The parameter  <i>str</i>
 or  <i>options</i>
+is null.</p></li>
+<li><p>PeterO.Cbor.CBORException:
+The string is not in JSON format.</p></li>
+</ul>
+
+<p><a id="FromJSONString_string_PeterO_Cbor_JSONOptions"></a></p>
+
+<h3>FromJSONString</h3>
+
+<pre>public static PeterO.Cbor.CBORObject FromJSONString(
+    string str,
+    PeterO.Cbor.JSONOptions jsonoptions);
+</pre>
+
+<p>Generates a CBOR object from a text string in JavaScript Object Notation (JSON) format, using the specified options to control the decoding process. Note that if a CBOR object is converted to JSON with  <code>ToJSONString</code> , then the JSON is converted back to CBOR with this method, the new CBOR object will not necessarily be the same as the old CBOR object, especially if the old CBOR object uses data types not supported in JSON, such as integers in map keys.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>str</i>: A string in JSON format. The entire string must contain a single JSON object and not multiple objects. The string may not begin with a byte-order mark (U+FEFF).</p></li>
+<li><p><i>jsonoptions</i>: Specifies options to control the JSON decoding process.</p></li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>A CBOR object containing the JSON data decoded.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li><p>System.ArgumentNullException:
+The parameter  <i>str</i>
+or  <i>jsonoptions</i>
 is null.</p></li>
 <li><p>PeterO.Cbor.CBORException:
 The string is not in JSON format.</p></li>
@@ -3078,7 +3119,7 @@ is not a valid index into this array.</p></li>
 <pre>public bool IsInfinity();
 </pre>
 
-<p><b>Deprecated.</b> Use the following instead: (cbor.IsNumber &amp;&amp; cbor.AsNumber().IsInfinity()).</p>
+<p><b>Deprecated.</b> Instead, use the following: (cbor.IsNumber &amp;&amp; cbor.AsNumber().IsInfinity()).</p>
 
 <p>Gets a value indicating whether this CBOR object represents infinity.</p>
 
@@ -3093,7 +3134,7 @@ is not a valid index into this array.</p></li>
 <pre>public bool IsNaN();
 </pre>
 
-<p><b>Deprecated.</b> Use the following instead: (cbor.IsNumber &amp;&amp; cbor.AsNumber().IsNaN()).</p>
+<p><b>Deprecated.</b> Instead, use the following: (cbor.IsNumber &amp;&amp; cbor.AsNumber().IsNaN()).</p>
 
 <p>Gets a value indicating whether this CBOR object represents a not-a-number value (as opposed to whether this object does not express a number).</p>
 
@@ -3108,6 +3149,8 @@ is not a valid index into this array.</p></li>
 <pre>public bool IsNegativeInfinity();
 </pre>
 
+<p><b>Deprecated.</b> Instead, use the following: (cbor.IsNumber &amp;&amp; cbor.AsNumber().IsNegativeInfinity()).</p>
+
 <p>Gets a value indicating whether this CBOR object represents negative infinity.</p>
 
 <p><b>Return Value:</b></p>
@@ -3120,6 +3163,8 @@ is not a valid index into this array.</p></li>
 
 <pre>public bool IsPositiveInfinity();
 </pre>
+
+<p><b>Deprecated.</b> Instead, use the following: (cbor.IsNumber &amp;&amp; cbor.AsNumber().IsPositiveInfinity()).</p>
 
 <p>Gets a value indicating whether this CBOR object represents positive infinity.</p>
 
@@ -3135,6 +3180,8 @@ is not a valid index into this array.</p></li>
     PeterO.Cbor.CBORObject first,
     PeterO.Cbor.CBORObject second);
 </pre>
+
+<p><b>Deprecated.</b> Instead, convert both CBOR objects to numbers (with .AsNumber()), and use the first number&#39;s .Multiply() method.</p>
 
 <p>Multiplies two CBOR numbers.</p>
 
@@ -3169,7 +3216,7 @@ is null.</p></li>
 <pre>public PeterO.Cbor.CBORObject Negate();
 </pre>
 
-<p><b>Deprecated.</b> Instead, convert this CBOR object to a number (with .AsNumber()), and use that number&#39;s .Negate() method.</p>
+<p><b>Deprecated.</b> Instead, convert this object to a number (with .AsNumber()), and use that number&#39;s .Negate() method.</p>
 
 <p>Gets this object&#39;s value with the sign reversed.</p>
 
@@ -3553,19 +3600,54 @@ The data stream contains invalid encoding or is not in JSON format.</p></li>
     PeterO.Cbor.CBOREncodeOptions options);
 </pre>
 
+<p><b>Deprecated.</b> Instead, use .ReadJSON(stream, new JSONOptions(&#x22;allowduplicatekeys=true&#x22;)) or .ReadJSON(stream, new JSONOptions(&#x22;allowduplicatekeys=false&#x22;)), as appropriate.</p>
+
 <p>Generates a CBOR object from a data stream in JavaScript Object Notation (JSON) format, using the specified options to control the decoding process. The JSON stream may begin with a byte-order mark (U+FEFF). Since version 2.0, the JSON stream can be in UTF-8, UTF-16, or UTF-32 encoding; the encoding is detected by assuming that the first character read must be a byte-order mark or a nonzero basic character (U+0001 to U+007F). (In previous versions, only UTF-8 was allowed.) By default, if a JSON object has the same key, only the last given value will be used for each duplicated key.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>stream</i>: A readable data stream. The sequence of bytes read from the data stream must contain a single JSON object and not multiple objects.</p></li>
-<li><p><i>options</i>: The parameter  <i>options</i>
-is a CBOREncodeOptions object.</p></li>
+<li><p><i>options</i>: Contains options to control the JSON decoding process. This method uses only the AllowDuplicateKeys property of this object.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p>A CBORObject object.</p>
+<p>A CBOR object containing the JSON data decoded.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li><p>System.ArgumentNullException:
+The parameter  <i>stream</i>
+is null.</p></li>
+<li><p>System.IO.IOException:
+An I/O error occurred.</p></li>
+<li><p>PeterO.Cbor.CBORException:
+The data stream contains invalid encoding or is not in JSON format.</p></li>
+</ul>
+
+<p><a id="ReadJSON_System_IO_Stream_PeterO_Cbor_JSONOptions"></a></p>
+
+<h3>ReadJSON</h3>
+
+<pre>public static PeterO.Cbor.CBORObject ReadJSON(
+    System.IO.Stream stream,
+    PeterO.Cbor.JSONOptions jsonoptions);
+</pre>
+
+<p>Generates a CBOR object from a data stream in JavaScript Object Notation (JSON) format, using the specified options to control the decoding process. The JSON stream may begin with a byte-order mark (U+FEFF). Since version 2.0, the JSON stream can be in UTF-8, UTF-16, or UTF-32 encoding; the encoding is detected by assuming that the first character read must be a byte-order mark or a nonzero basic character (U+0001 to U+007F). (In previous versions, only UTF-8 was allowed.) By default, if a JSON object has the same key, only the last given value will be used for each duplicated key.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>stream</i>: A readable data stream. The sequence of bytes read from the data stream must contain a single JSON object and not multiple objects.</p></li>
+<li><p><i>jsonoptions</i>:</p></li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>A CBOR object containing the JSON data decoded.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -3650,6 +3732,8 @@ There was an error in reading or parsing the data, including if the last CBOR ob
     PeterO.Cbor.CBORObject first,
     PeterO.Cbor.CBORObject second);
 </pre>
+
+<p><b>Deprecated.</b> Instead, convert both CBOR objects to numbers (with .AsNumber()), and use the first number&#39;s .Remainder() method.</p>
 
 <p>Finds the remainder that results when a CBORObject object is divided by the value of a CBORObject object.</p>
 
@@ -3804,6 +3888,8 @@ is less than 0, is the size of this array or greater, or is not a 32-bit signed 
     PeterO.Cbor.CBORObject first,
     PeterO.Cbor.CBORObject second);
 </pre>
+
+<p><b>Deprecated.</b> Instead, convert both CBOR objects to numbers (with .AsNumber()), and use the first number&#39;s .Subtract() method.</p>
 
 <p>Finds the difference between two CBOR number objects.</p>
 

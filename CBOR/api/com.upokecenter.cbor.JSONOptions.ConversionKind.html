@@ -1,0 +1,150 @@
+<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>com.upokecenter.cbor.JSONOptions.ConversionKind</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a> -
+<a href="http://peteroupc.github.io/">Donate to Me</a></p></div>
+<div class="mainarea" id="top">
+<h1>com.upokecenter.cbor.JSONOptions.ConversionKind</h1>
+
+<h1>com.upokecenter.cbor.JSONOptions.ConversionKind</h1>
+
+<pre>public static enum JSONOptions.ConversionKind extends java.lang.Enum&lt;JSONOptions.ConversionKind&gt;
+</pre>
+
+<p>Specifies how JSON numbers are converted to CBOR when decoding JSON.</p>
+
+<h2>Enum Constants</h2>
+
+<ul>
+<li><code>Double</code><br>
+JSON numbers are decoded to CBOR as their closest-rounded approximation as
+64-bit binary floating-point numbers.</li>
+<li><code>Full</code><br>
+JSON numbers are decoded to CBOR using the full precision given in the JSON
+text.</li>
+<li><code>IntOrFloat</code><br>
+JSON numbers are decoded to CBOR either as CBOR integers (major type 0 or 1)
+or as their closest-rounded approximation as 64-bit binary
+floating-point numbers, where a JSON number is treated as an
+integer or non-integer based on the full precision given in the
+JSON text.</li>
+<li><code>IntOrFloatFromDouble</code><br>
+JSON numbers are decoded to CBOR either as CBOR integers (major type 0 or 1)
+or as their closest-rounded approximation as 64-bit binary
+floating-point numbers, where a JSON number is treated as an
+integer or non-integer based on its approximated floating-point
+number.</li>
+</ul>
+
+<h2>Methods</h2>
+
+<ul>
+<li><code>static JSONOptions.ConversionKind valueOf​(java.lang.String name)</code><br>
+Returns the enum constant of this type with the specified name.</li>
+<li><code>static JSONOptions.ConversionKind[] values()</code><br>
+Returns an array containing the constants of this enum type, in
+the order they are declared.</li>
+</ul>
+
+<h2>Method Details</h2>
+
+<h3>Full</h3>
+
+<pre>public static final JSONOptions.ConversionKind Full
+</pre>
+
+<h3>Double</h3>
+
+<pre>public static final JSONOptions.ConversionKind Double
+</pre>
+
+<h3>IntOrFloat</h3>
+
+<pre>public static final JSONOptions.ConversionKind IntOrFloat
+</pre>
+
+<h3>IntOrFloatFromDouble</h3>
+
+<pre>public static final JSONOptions.ConversionKind IntOrFloatFromDouble
+</pre>
+
+<h3>values</h3>
+
+<pre>public static JSONOptions.ConversionKind[] values()
+</pre>
+
+<h3>valueOf</h3>
+
+<pre>public static JSONOptions.ConversionKind valueOf​(java.lang.String name)
+</pre>
+
+<h2>Enum Constant Details</h2>
+
+<h3>Full</h3>
+
+<pre>public static final JSONOptions.ConversionKind Full
+</pre>
+
+<p>JSON numbers are decoded to CBOR using the full precision given in the JSON
+ text. This may involve numbers being converted to
+ arbitrary-precision integers or decimal numbers, where
+ appropriate. The distinction between positive and negative zero
+ is preserved.</p>
+
+<h3>Double</h3>
+
+<pre>public static final JSONOptions.ConversionKind Double
+</pre>
+
+<p>JSON numbers are decoded to CBOR as their closest-rounded approximation as
+ 64-bit binary floating-point numbers. The distinction between
+ positive and negative zero is preserved.</p>
+
+<h3>IntOrFloat</h3>
+
+<pre>public static final JSONOptions.ConversionKind IntOrFloat
+</pre>
+
+<p>JSON numbers are decoded to CBOR either as CBOR integers (major type 0 or 1)
+ or as their closest-rounded approximation as 64-bit binary
+ floating-point numbers, where a JSON number is treated as an
+ integer or non-integer based on the full precision given in the
+ JSON text.</p>
+
+<h3>IntOrFloatFromDouble</h3>
+
+<pre>public static final JSONOptions.ConversionKind IntOrFloatFromDouble
+</pre>
+
+<p>JSON numbers are decoded to CBOR either as CBOR integers (major type 0 or 1)
+ or as their closest-rounded approximation as 64-bit binary
+ floating-point numbers, where a JSON number is treated as an
+ integer or non-integer based on its approximated floating-point
+ number.</p>
+
+<p><a href="/CBOR/">Back to CBOR start page.</a></p>
+</div><nav id="navigation"><ul>
+<li><a href="/">Back to start site.</a>
+<li><a href="https://github.com/peteroupc/peteroupc.github.io">This site's repository (source code)</a>
+<li><a href="https://github.com/peteroupc/peteroupc.github.io/issues">Post an issue or comment</a></ul>
+<p>
+If you like this software, you should consider donating to me, Peter O., at the link below:</p>
+<p class="printonly"><b>peteroupc.github.io</b></p>
+<div class="noprint">
+<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=56E5T4FH7KD2S">
+<img src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif"
+name="submit" border="2" alt="PayPal - The safer, easier way to pay online!"></a>
+<p>
+<a href="//twitter.com/share">Share via Twitter</a>, <a href="//www.facebook.com/sharer/sharer.php" id="sharer">Share via Facebook</a>
+</p>
+</div>
+</nav><script>
+if("share" in navigator){
+ document.getElementById("sharer").href="javascript:void(null)";
+ document.getElementById("sharer").innerHTML="Share This Page";
+ navigator.share({title:document.title,url:document.location.href}).then(
+   function(){});
+} else {
+ document.getElementById("sharer").href="//www.facebook.com/sharer/sharer.php?u="+
+    encodeURIComponent(document.location.href)
+}
+</script>
+</body></html>

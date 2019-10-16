@@ -28,6 +28,8 @@
 <li><code><a href="#FromCBORObject_PeterO_Cbor_CBORObject">FromCBORObject(PeterO.Cbor.CBORObject)</a></code> - Creates a CBOR number object from a CBOR object representing a number (that is, one for which the IsNumber property in.</li>
 <li><code><a href="#IsInfinity">IsInfinity()</a></code> - Gets a value indicating whether this object represents infinity.</li>
 <li><code><a href="#IsNaN">IsNaN()</a></code> - Gets a value indicating whether this object represents a not-a-number value.</li>
+<li><code><a href="#IsNegativeInfinity">IsNegativeInfinity()</a></code> - Gets a value indicating whether this object represents negative infinity.</li>
+<li><code><a href="#IsPositiveInfinity">IsPositiveInfinity()</a></code> - Gets a value indicating whether this object represents positive infinity.</li>
 <li><code><a href="#Multiply_PeterO_Cbor_CBORNumber">Multiply(PeterO.Cbor.CBORNumber)</a></code> - Returns a CBOR number expressing the product of this number and the given number.</li>
 <li><code><a href="#Negate">Negate()</a></code> - Returns a CBOR number with the same value as this one but with the sign reversed.</li>
 <li><code><a href="#op_GreaterThan">bool operator &gt;(PeterO.Cbor.CBORNumber, PeterO.Cbor.CBORNumber)</a></code> - Returns whether one object&#39;s value is greater than another&#39;s.</li>
@@ -90,8 +92,6 @@ is null.</li>
 
 <p>Not documented yet.</p>
 
-<p>Not documented yet.</p>
-
 <p><b>Return Value:</b></p>
 
 <p>The return value is not documented yet.</p>
@@ -102,8 +102,6 @@ is null.</li>
 
 <pre>public PeterO.Numbers.EFloat AsEFloat();
 </pre>
-
-<p>Not documented yet.</p>
 
 <p>Not documented yet.</p>
 
@@ -120,8 +118,6 @@ is null.</li>
 
 <p>Not documented yet.</p>
 
-<p>Not documented yet.</p>
-
 <p><b>Return Value:</b></p>
 
 <p>The return value is not documented yet.</p>
@@ -132,8 +128,6 @@ is null.</li>
 
 <pre>public PeterO.Numbers.ERational AsERational();
 </pre>
-
-<p>Not documented yet.</p>
 
 <p>Not documented yet.</p>
 
@@ -263,6 +257,32 @@ is null.</li>
 <p><b>Return Value:</b></p>
 
 <p><code>true</code>  if this object represents a not-a-number value; otherwise,  <code>false</code> .</p>
+
+<p><a id="IsNegativeInfinity"></a></p>
+
+<h3>IsNegativeInfinity</h3>
+
+<pre>public bool IsNegativeInfinity();
+</pre>
+
+<p>Gets a value indicating whether this object represents negative infinity.</p>
+
+<p><b>Return Value:</b></p>
+
+<p><code>true</code>  if this object represents negative infinity; otherwise,  <code>false</code> .</p>
+
+<p><a id="IsPositiveInfinity"></a></p>
+
+<h3>IsPositiveInfinity</h3>
+
+<pre>public bool IsPositiveInfinity();
+</pre>
+
+<p>Gets a value indicating whether this object represents positive infinity.</p>
+
+<p><b>Return Value:</b></p>
+
+<p><code>true</code>  if this object represents positive infinity; otherwise,  <code>false</code> .</p>
 
 <p><a id="Multiply_PeterO_Cbor_CBORNumber"></a></p>
 

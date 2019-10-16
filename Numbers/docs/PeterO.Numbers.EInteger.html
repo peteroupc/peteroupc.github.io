@@ -62,7 +62,7 @@
 <li><code><a href="#FromUInt32_uint">FromUInt32(uint)</a></code> - Converts a 32-bit signed integer to an arbitrary-precision integer.</li>
 <li><code><a href="#FromUInt64_ulong">FromUInt64(ulong)</a></code> - Converts a 64-bit unsigned integer to an arbitrary-precision integer.</li>
 <li><code><a href="#Gcd_PeterO_Numbers_EInteger">Gcd(PeterO.Numbers.EInteger)</a></code> - Returns the greatest common divisor of this integer and the given integer.</li>
-<li><code><a href="#GetBits_int_int">GetBits(int, int)</a></code> - Retrieves bits from this integer&#39;s two&#39; s-complement form.</li>
+<li><code><a href="#GetBits_int_int">GetBits(int, int)</a></code> - Retrieves bits from this integer&#39;s two&#39;s-complement form.</li>
 <li><code><a href="#GetDigitCount">GetDigitCount()</a></code> - <b>Deprecated:</b> This method may overflow. Use GetDigitCountAsEInteger instead.</li>
 <li><code><a href="#GetDigitCountAsEInteger">GetDigitCountAsEInteger()</a></code> - Returns the number of decimal digits used by this integer, in the form of an arbitrary-precision integer.</li>
 <li><code><a href="#GetHashCode">GetHashCode()</a></code> - Returns the hash code for this instance.</li>
@@ -145,7 +145,7 @@
 <li><code><a href="#ToUInt32Checked">ToUInt32Checked()</a></code> - Converts this number&#39;s value to a 32-bit signed integer if it can fit in a 32-bit signed integer.</li>
 <li><code><a href="#ToUInt32Unchecked">ToUInt32Unchecked()</a></code> - Converts this number to a 32-bit signed integer, returning the least-significant bits of this number&#39;s two&#39;s-complement form.</li>
 <li><code><a href="#ToUInt64Checked">ToUInt64Checked()</a></code> - Converts this number&#39;s value to a 64-bit signed integer if it can fit in a 64-bit signed integer.</li>
-<li><code><a href="#ToUInt64Unchecked">ToUInt64Unchecked()</a></code> - Converts this number to a 64-bit signed integer, returning the least-significant bits of this number&#39;s two&#39; s-complement form.</li>
+<li><code><a href="#ToUInt64Unchecked">ToUInt64Unchecked()</a></code> - Converts this number to a 64-bit signed integer, returning the least-significant bits of this number&#39;s two&#39;s-complement form.</li>
 <li><code><a href="#Xor_PeterO_Numbers_EInteger">Xor(PeterO.Numbers.EInteger)</a></code> - Finds the exclusive &quot;or&quot; of two arbitrary-precision integer objects.</li>
 <li><code><a href="#Xor_PeterO_Numbers_EInteger_PeterO_Numbers_EInteger">Xor(PeterO.Numbers.EInteger, PeterO.Numbers.EInteger)</a></code> - Finds the exclusive &quot;or&quot; of two arbitrary-precision integer objects.</li>
 <li><code><a href="#Zero">Zero</a></code> - Gets the number zero as an arbitrary-precision integer.</li>
@@ -1086,7 +1086,7 @@ is null.</li>
     int numberBits);
 </pre>
 
-<p>Retrieves bits from this integer&#39;s two&#39; s-complement form.</p>
+<p>Retrieves bits from this integer&#39;s two&#39;s-complement form.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -1097,7 +1097,7 @@ is null.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>A 64-bit signed integer containing the bits from this integer&#39;s two&#39; s-complement form. The least significant bit is the first bit, and any unused bits are set to 0.</p>
+<p>A 64-bit signed integer containing the bits from this integer&#39;s two&#39;s-complement form. The least significant bit is the first bit, and any unused bits are set to 0.</p>
 
 <p><a id="GetDigitCount"></a></p>
 
@@ -3238,7 +3238,7 @@ This value is outside the range of a 64-bit signed integer.</li>
 <pre>public ulong ToUInt64Unchecked();
 </pre>
 
-<p>Converts this number to a 64-bit signed integer, returning the least-significant bits of this number&#39;s two&#39; s-complement form.</p>
+<p>Converts this number to a 64-bit signed integer, returning the least-significant bits of this number&#39;s two&#39;s-complement form.</p>
 
 <p><b>Return Value:</b></p>
 
