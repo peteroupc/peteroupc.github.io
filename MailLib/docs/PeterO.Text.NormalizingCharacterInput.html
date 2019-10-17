@@ -122,12 +122,29 @@ is a text string.</li>
 <ul>
 <li><p><i>str</i>: The parameter  <i>str</i>
 is a text string.</p></li>
-<li><p><i>index</i>: The parameter  <i>index</i>
-is a 32-bit signed integer.</p></li>
-<li><p><i>length</i>: The parameter  <i>length</i>
-is a 32-bit signed integer.</p></li>
+<li><p><i>index</i>: An index, starting at 0, showing where the desired portion of  <i>str</i>
+begins.</p></li>
+<li><p><i>length</i>: The length, in code units, of the desired portion of  <i>str</i>
+(but not more than  <i>str</i>
+&#39;s length).</p></li>
 <li><p><i>form</i>: The parameter  <i>form</i>
 is a Normalization object.</p></li>
+</ul>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li><p>System.ArgumentException:
+Either  <i>index</i>
+or  <i>length</i>
+is less than 0 or greater than  <i>str</i>
+&#39;s length, or  <i>str</i>
+&#39;s length minus  <i>index</i>
+is less than  <i>length</i>
+.</p></li>
+<li><p>System.ArgumentNullException:
+The parameter  <i>str</i>
+is null.</p></li>
 </ul>
 
 <p><a id="Void_ctor_System_String_PeterO_Text_Normalization"></a></p>

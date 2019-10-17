@@ -33,13 +33,13 @@ Specifies how JSON numbers are converted to CBOR when decoding JSON.</li>
 <li><code>JSONOptions() JSONOptions</code><br>
 Initializes a new instance of the JSONOptions
 class with default options.</li>
-<li><code>JSONOptions​(boolean base64Padding) JSONOptions</code><br>
-Initializes a new instance of the JSONOptions
-class with the given value for the Base64Padding option.</li>
+<li><code>JSONOptions​(boolean base64Padding)</code><br>
+Deprecated.
+Use the String constructor instead.
+Use the String constructor instead.</li>
 <li><code>JSONOptions​(boolean base64Padding,
-       boolean replaceSurrogates) JSONOptions</code><br>
-Initializes a new instance of the JSONOptions
-class with the given values for the options.</li>
+       boolean replaceSurrogates)</code><br>
+Deprecated.</li>
 <li><code>JSONOptions​(java.lang.String paramString) JSONOptions</code><br>
 Initializes a new instance of the JSONOptions
 class.</li>
@@ -56,6 +56,10 @@ This property now has no effect.
 This property now has no effect.</li>
 <li><code>JSONOptions.ConversionKind getNumberConversion()</code><br>
 Gets a value indicating how JSON numbers are decoded to CBOR integers.</li>
+<li><code>boolean getPreserveNegativeZero()</code><br>
+Gets a value indicating whether the JSON decoder should preserve the
+distinction between positive zero and negative zero in
+floating-point number formats when the decoder decodes JSON to CBOR.</li>
 <li><code>boolean getReplaceSurrogates() char</code><br>
 Gets a value indicating whether surrogate code points not part of a
 surrogate pair (which consists of two consecutive char s
@@ -114,6 +118,28 @@ This property now has no effect. This library now includes  necessary
 <li>A value indicating whether the Base64Padding property is true.</li>
 </ul>
 
+<h3>getPreserveNegativeZero</h3>
+
+<pre>public final boolean getPreserveNegativeZero()
+</pre>
+
+<p>Gets a value indicating whether the JSON decoder should preserve the
+ distinction between positive zero and negative zero in
+ floating-point number formats when the decoder decodes JSON to CBOR.
+  For example the JSON number &quot;-0.0&quot; (which expresses negative zero)
+ is decoded to negative zero if this property is <code>true</code>, and to
+ positive zero if this property is <code>false</code>. This property has no
+ effect for number conversion kinds in which zeros are always decoded
+ as CBOR integers (such as the <code>IntOrFloat</code> and
+ <code>IntOrFloatFromDouble</code> conversion kinds).</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A value indicating whether to preserve the distinction between
+positive zero and negative zero. The default is true.</li>
+</ul>
+
 <h3>getNumberConversion</h3>
 
 <pre>public final JSONOptions.ConversionKind getNumberConversion()
@@ -124,7 +150,8 @@ This property now has no effect. This library now includes  necessary
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A value indicating how JSON numbers are decoded to CBOR integers.</li>
+<li>A value indicating how JSON numbers are decoded to CBOR integers.
+The default is <code>ConversionKind.Full</code>.</li>
 </ul>
 
 <h3>getAllowDuplicateKeys</h3>

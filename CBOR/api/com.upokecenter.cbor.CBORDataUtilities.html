@@ -14,13 +14,6 @@
 <h2>Methods</h2>
 
 <ul>
-<li><code>static double ParseJSONDouble​(java.lang.String str)</code><br>
-Parses a number whose format follows the JSON specification (RFC 8259), in
-the form of a 64-bit binary floating-point number.</li>
-<li><code>static double ParseJSONDouble​(java.lang.String str,
-           boolean preserveNegativeZero)</code><br>
-Parses a number whose format follows the JSON specification (RFC 8259), in
-the form of a 64-bit binary floating-point number.</li>
 <li><code>static CBORObject ParseJSONNumber​(java.lang.String str)</code><br>
 Parses a number whose format follows the JSON specification.</li>
 <li><code>static CBORObject ParseJSONNumber​(java.lang.String str,
@@ -39,17 +32,9 @@ Parses a number whose format follows the JSON specification (RFC
            int offset,
            int count,
            boolean integersOnly,
-           boolean preserveNegativeZero)</code><br>
-Parses a number whose format follows the JSON specification (RFC
-8259).</li>
-<li><code>static CBORObject ParseJSONNumberAsIntegerOrFloatingPoint​(java.lang.String str,
-                                   boolean integersOnly,
-                                   boolean positiveOnly,
-                                   boolean doubleApprox)</code><br>
-Parses a number whose format follows the JSON specification (RFC 8259), in
-the form of a CBOR integer if the number represents an integer at
-least -(2^53) and less than or equal to 2^53, or in the form of a
-CBOR (64-bit) floating-point number otherwise.</li>
+           JSONOptions options)</code><br>
+Parses a number whose format follows the JSON specification (RFC 8259) and
+converts that number to a CBOR object.</li>
 </ul>
 
 <h2>Method Details</h2>
@@ -109,109 +94,6 @@ zero if the number is a zero that starts with a minus sign (such as
 string is null or empty.</li>
 </ul>
 
-<h3>ParseJSONDouble</h3>
-
-<pre>public static double ParseJSONDouble​(java.lang.String str)
-</pre>
-
-<p>Parses a number whose format follows the JSON specification (RFC 8259), in
- the form of a 64-bit binary floating-point number. See
- #ParseJSONDouble(string, preserveNegativeZero) for more information.</p>
-
-<p><strong>Parameters:</strong></p>
-
-<ul>
-<li><code>str</code> - A string to parse as a JSON number.</li>
-</ul>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>A 64-bit binary floating-point number parsed from the given string.
-Returns NaN if the parsing fails, including if the string is null or
-empty. (To check for NaN, use <code>Double.isNaN()</code> in.NET or
-<code>Double.isNaN()</code> in Java.).</li>
-</ul>
-
-<h3>ParseJSONDouble</h3>
-
-<pre>public static double ParseJSONDouble​(java.lang.String str, boolean preserveNegativeZero)
-</pre>
-
-<p>Parses a number whose format follows the JSON specification (RFC 8259), in
- the form of a 64-bit binary floating-point number.<p>Roughly
- speaking, a valid JSON number consists of an optional minus sign,
- one or more basic digits (starting with 1 to 9 unless there is only
-  one digit and that digit is 0), an optional decimal point (&quot;.&quot;, full
- stop) with one or more basic digits, and an optional letter E or e
- with an optional plus or minus sign and one or more basic digits
- (the exponent). A string representing a valid JSON number is not
- allowed to contain white space characters, including spaces.</p></p>
-
-<p><strong>Parameters:</strong></p>
-
-<ul>
-<li><p><code>str</code> - A string to parse as a JSON number.</p></li>
-<li><p><code>preserveNegativeZero</code> - If true, returns positive zero if the number is
-a zero that starts with a minus sign (such as &quot;-0&quot; or &quot;-0.0&quot;).
-Otherwise, returns negative zero in this case. The default is false.</p></li>
-</ul>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>A 64-bit binary floating-point number parsed from the given string.
-Returns NaN if the parsing fails, including if the string is null or
-empty. (To check for NaN, use <code>Double.isNaN()</code> in.NET or
-<code>Double.isNaN()</code> in Java.).</li>
-</ul>
-
-<h3>ParseJSONNumberAsIntegerOrFloatingPoint</h3>
-
-<pre>public static CBORObject ParseJSONNumberAsIntegerOrFloatingPoint​(java.lang.String str, boolean integersOnly, boolean positiveOnly, boolean doubleApprox)
-</pre>
-
-<p>Parses a number whose format follows the JSON specification (RFC 8259), in
- the form of a CBOR integer if the number represents an integer at
- least -(2^53) and less than or equal to 2^53, or in the form of a
- CBOR (64-bit) floating-point number otherwise.<p>Roughly speaking, a
- valid JSON number consists of an optional minus sign, one or more
- basic digits (starting with 1 to 9 unless there is only one digit
-  and that digit is 0), an optional decimal point (&quot;.&quot;, full stop)
- with one or more basic digits, and an optional letter E or e with an
- optional plus or minus sign and one or more basic digits (the
- exponent). A string representing a valid JSON number is not allowed
- to contain white space characters, including spaces.</p></p>
-
-<p><strong>Parameters:</strong></p>
-
-<ul>
-<li><p><code>str</code> - A string to parse as a JSON number.</p></li>
-<li><p><code>integersOnly</code> - If true, no decimal points or exponents are allowed in
-the string. The default is false.</p></li>
-<li><p><code>positiveOnly</code> - If true, the leading minus is disallowed in the string.
-The default is false.</p></li>
-<li><p><code>doubleApprox</code> - If true, treats a JSON number as an integer or
-noninteger based on its closest approximation as a CBOR (64-bit)
-floating-point number. If false, this treatment is based on the full
-precision of the given JSON number string. For example, given the
-string &quot;0.99999999999999999999999999999999999&quot;, the nearest
-representable CBOR floating-point number is 1.0, and if this
-parameter is <code>true</code>, this string is treated as 1.0, an
-integer, so that the result is the CBOR integer 1, and if this
-parameter is <code>false</code>, this string is not treated as an integer
-so that the result is the closest CBOR floating-point approximation,
-1.0.</p></li>
-</ul>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>A CBOR object that represents the parsed number or its closest
-approximation to it. Returns null if the parsing fails, including if
-the string is null or empty.</li>
-</ul>
-
 <h3>ParseJSONNumber</h3>
 
 <pre>public static CBORObject ParseJSONNumber​(java.lang.String str, boolean integersOnly, boolean positiveOnly, boolean preserveNegativeZero)
@@ -249,29 +131,31 @@ parsing fails, including if the string is null or empty.</li>
 
 <h3>ParseJSONNumber</h3>
 
-<pre>public static CBORObject ParseJSONNumber​(java.lang.String str, int offset, int count, boolean integersOnly, boolean preserveNegativeZero)
+<pre>public static CBORObject ParseJSONNumber​(java.lang.String str, int offset, int count, boolean integersOnly, JSONOptions options)
 </pre>
 
-<p>Parses a number whose format follows the JSON specification (RFC
- 8259).<p>Roughly speaking, a valid JSON number consists of an
- optional minus sign, one or more basic digits (starting with 1 to 9
- unless there is only one digit and that digit is 0), an optional
-  decimal point (&quot;.&quot;, full stop) with one or more basic digits, and an
- optional letter E or e with an optional plus or minus sign and one
- or more basic digits (the exponent). A string representing a valid
- JSON number is not allowed to contain white space characters,
- including spaces.</p></p>
+<p>Parses a number whose format follows the JSON specification (RFC 8259) and
+ converts that number to a CBOR object.<p>Roughly speaking, a valid
+ JSON number consists of an optional minus sign, one or more basic
+ digits (starting with 1 to 9 unless there is only one digit and that
+  digit is 0), an optional decimal point (&quot;.&quot;, full stop) with one or
+ more basic digits, and an optional letter E or e with an optional
+ plus or minus sign and one or more basic digits (the exponent). A
+ string representing a valid JSON number is not allowed to contain
+ white space characters, including spaces.</p></p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
 <li><p><code>str</code> - The parameter <code>str</code> is a text string.</p></li>
-<li><p><code>offset</code> - The parameter <code>offset</code> is a 32-bit signed integer.</p></li>
-<li><p><code>count</code> - The parameter <code>count</code> is a 32-bit signed integer.</p></li>
+<li><p><code>offset</code> - An index, starting at 0, showing where the desired portion of
+<code>str</code> begins.</p></li>
+<li><p><code>count</code> - The length, in code units, of the desired portion of <code>
+str</code> (but not more than <code>str</code> &#39;s length).</p></li>
 <li><p><code>integersOnly</code> - The parameter <code>integersOnly</code> is either <code>
 true</code> or <code>false</code>.</p></li>
-<li><p><code>preserveNegativeZero</code> - The parameter <code>preserveNegativeZero</code> is
-either <code>true</code> or <code>false</code>.</p></li>
+<li><p><code>options</code> - An object containing options to control how JSON numbers are
+decoded to CBOR objects. Can be null.</p></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -285,7 +169,10 @@ count</code> is 0 or less.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>java.lang.NullPointerException</code> - The parameter <code>str</code> is null.</li>
+<li><p><code>java.lang.NullPointerException</code> - The parameter <code>str</code> is null.</p></li>
+<li><p><code>java.lang.IllegalArgumentException</code> - Either <code>offset</code> or <code>count</code> is less
+than 0 or greater than <code>str</code> &#39;s length, or <code>str</code> &#39;s
+length minus <code>offset</code> is less than <code>count</code>.</p></li>
 </ul>
 
 <p><a href="/CBOR/">Back to CBOR start page.</a></p>

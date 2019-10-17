@@ -18,6 +18,7 @@
 <li><code><a href="#Base64Padding">Base64Padding</a></code> - <b>Deprecated:</b> This property now has no effect. This library now includes necessary padding when writing traditional base64 to JSON and includes no padding when writing base64url to JSON, in accordance with the revision of the CBOR specification.</li>
 <li><code><a href="#Default">public static readonly PeterO.Cbor.JSONOptions Default;</a></code> - The default options for converting CBOR objects to JSON.</li>
 <li><code><a href="#NumberConversion">NumberConversion</a></code> - Gets a value indicating how JSON numbers are decoded to CBOR integers.</li>
+<li><code><a href="#PreserveNegativeZero">PreserveNegativeZero</a></code> - Gets a value indicating whether the JSON decoder should preserve the distinction between positive zero and negative zero in floating-point number formats when the decoder decodes JSON to CBOR.</li>
 <li><code><a href="#ReplaceSurrogates">ReplaceSurrogates</a></code> - Gets a value indicating whether surrogate code points not part of a surrogate pair (which consists of two consecutive char s forming one Unicode code point) are each replaced with a replacement character (U+FFFD).</li>
 <li><code><a href="#ToString">ToString()</a></code> - Gets the values of this options object&#39;s properties in text form.</li>
 </ul>
@@ -29,6 +30,8 @@
 <pre>public JSONOptions(
     bool base64Padding);
 </pre>
+
+<p><b>Deprecated.</b> Use the string constructor instead.</p>
 
 <p>Initializes a new instance of the <a href="PeterO.Cbor.JSONOptions.html">PeterO.Cbor.JSONOptions</a> class with the given value for the Base64Padding option.</p>
 
@@ -46,6 +49,8 @@
     bool base64Padding,
     bool replaceSurrogates);
 </pre>
+
+<p><b>Deprecated.</b> Use the string constructor instead.</p>
 
 <p>Initializes a new instance of the <a href="PeterO.Cbor.JSONOptions.html">PeterO.Cbor.JSONOptions</a> class with the given values for the options.</p>
 
@@ -69,7 +74,7 @@
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>paramString</i>: A string setting forth the options to use. This is a semicolon-separated list of options, each of which has a key and a value separated by an equal sign (&quot;=&quot;). Whitespace and line separators are not allowed to appear between the semicolons or between the equal signs, nor may the string begin or end with whitespace. The string can be empty, but cannot be null. The following is an example of this parameter:  <code>base64padding=false;replacesurrogates=true</code> . The key can be any one of the following in any combination of case:  <code>base64padding</code> ,  <code>replacesurrogates</code> ,  <code>allowduplicatekeys</code> ,  <code>numberconversion</code> . Other keys are ignored. (Keys are compared using a basic case-insensitive comparison, in which two strings are equal if they match after converting the basic upper-case letters A to Z (U+0041 to U+005A) in both strings to basic lower-case letters.) If two or more key/value pairs have equal keys (in a basic case-insensitive comparison), the value given for the last such key is used. The first three keys just given can have a value of  <code>1</code> ,  <code>true</code> ,  <code>yes</code> , or  <code>on</code>  (in any combination of case), which means true, and any other value meaning false. The fourth key,  <code>numberconversion</code> , can have a value of any name given in the  <code>JSONOptions.ConversionKind</code>  enumeration (in any combination of case), or any other value, which is treated the same as  <code>full</code> . For example,  <code>base64padding=Yes</code>  and  <code>base64padding=1</code>  both set the  <code>Base64Padding</code>  property to true, and  <code>numberconversion=double</code>  sets the  <code>NumberConversion</code>  property to  <code>ConversionKind.Double</code>  .</li>
+<li><i>paramString</i>: A string setting forth the options to use. This is a semicolon-separated list of options, each of which has a key and a value separated by an equal sign (&quot;=&quot;). Whitespace and line separators are not allowed to appear between the semicolons or between the equal signs, nor may the string begin or end with whitespace. The string can be empty, but cannot be null. The following is an example of this parameter:  <code>base64padding=false;replacesurrogates=true</code> . The key can be any one of the following where the letters can be any combination of basic upper-case and/or basic lower-case letters:  <code>base64padding</code> ,  <code>replacesurrogates</code> ,  <code>allowduplicatekeys</code> ,  <code>preservenegativezero</code> ,  <code>numberconversion</code> . Other keys are ignored. (Keys are compared using a basic case-insensitive comparison, in which two strings are equal if they match after converting the basic upper-case letters A to Z (U+0041 to U+005A) in both strings to basic lower-case letters.) If two or more key/value pairs have equal keys (in a basic case-insensitive comparison), the value given for the last such key is used. The first four keys just given can have a value of  <code>1</code> ,  <code>true</code> ,  <code>yes</code> , or  <code>on</code>  (where the letters can be any combination of basic upper-case and/or basic lower-case letters), which means true, and any other value meaning false. The last key,  <code>numberconversion</code> , can have a value of any name given in the  <code>JSONOptions.ConversionKind</code>  enumeration (where the letters can be any combination of basic upper-case and/or basic lower-case letters), or any other value, which is treated the same as  <code>full</code> . For example,  <code>base64padding=Yes</code>  and  <code>base64padding=1</code>  both set the  <code>Base64Padding</code>  property to true, and  <code>numberconversion=double</code>  sets the  <code>NumberConversion</code>  property to  <code>ConversionKind.Double</code>  .</li>
 </ul>
 
 <p><b>Exceptions:</b></p>
@@ -137,7 +142,20 @@ is null. In the future, this class may allow other keys to store other kinds of 
 
 <p><b>Returns:</b></p>
 
-<p>A value indicating how JSON numbers are decoded to CBOR integers.</p>
+<p>A value indicating how JSON numbers are decoded to CBOR integers. The default is  <code>ConversionKind.Full</code> .</p>
+
+<p><a id="PreserveNegativeZero"></a></p>
+
+<h3>PreserveNegativeZero</h3>
+
+<pre>public bool PreserveNegativeZero { get; }
+</pre>
+
+<p>Gets a value indicating whether the JSON decoder should preserve the distinction between positive zero and negative zero in floating-point number formats when the decoder decodes JSON to CBOR. For example the JSON number &quot;-0.0&quot; (which expresses negative zero) is decoded to negative zero if this property is  <code>true</code> , and to positive zero if this property is  <code>false</code> . This property has no effect for number conversion kinds in which zeros are always decoded as CBOR integers (such as the  <code>IntOrFloat</code>  and  <code>IntOrFloatFromDouble</code>  conversion kinds).</p>
+
+<p><b>Returns:</b></p>
+
+<p>A value indicating whether to preserve the distinction between positive zero and negative zero. The default is true.</p>
 
 <p><a id="ReplaceSurrogates"></a></p>
 

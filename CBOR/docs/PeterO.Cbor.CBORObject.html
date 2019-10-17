@@ -79,7 +79,7 @@
 <li><code><a href="#AsString">AsString()</a></code> - Gets the value of this object as a text string.</li>
 <li><code><a href="#AsUInt16">AsUInt16()</a></code> - Converts this object to a 16-bit unsigned integer.</li>
 <li><code><a href="#AsUInt32">AsUInt32()</a></code> - Converts this object to a 32-bit unsigned integer.</li>
-<li><code><a href="#AsUInt64">AsUInt64()</a></code> - Not documented yet.</li>
+<li><code><a href="#AsUInt64">AsUInt64()</a></code> - Converts this object to a 64-bit unsigned integer after discarding any fractional part, if any, from its value.</li>
 <li><code><a href="#CanFitInDouble">CanFitInDouble()</a></code> - Returns whether this object&#39;s value can be converted to a 64-bit floating point number without its value being rounded to another numerical value.</li>
 <li><code><a href="#CanFitInInt32">CanFitInInt32()</a></code> - <b>Deprecated:</b> Instead, use .CanValueFitInInt32(), if the application allows only CBOR integers, or (cbor.IsNumber &amp;&amp;cbor.AsNumber().CanFitInInt32()), if the application allows any CBOR object convertible to an integer.</li>
 <li><code><a href="#CanFitInInt64">CanFitInInt64()</a></code> - <b>Deprecated:</b> Instead, use CanValueFitInInt64(), if the application allows only CBOR integers, or (cbor.IsNumber &amp;&amp;cbor.AsNumber().CanFitInInt64()), if the application allows any CBOR object convertible to an integer.</li>
@@ -1322,8 +1322,6 @@ This object&#39;s value is outside the range of a 32-bit unsigned integer.</li>
 
 <pre>public ulong AsUInt64();
 </pre>
-
-<p>Not documented yet.</p>
 
 <p>Converts this object to a 64-bit unsigned integer after discarding any fractional part, if any, from its value.</p>
 
@@ -3642,7 +3640,8 @@ The data stream contains invalid encoding or is not in JSON format.</p></li>
 
 <ul>
 <li><p><i>stream</i>: A readable data stream. The sequence of bytes read from the data stream must contain a single JSON object and not multiple objects.</p></li>
-<li><p><i>jsonoptions</i>:</p></li>
+<li><p><i>jsonoptions</i>: The parameter  <i>jsonoptions</i>
+is a Cbor.JSONOptions object.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
