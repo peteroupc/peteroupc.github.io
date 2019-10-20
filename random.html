@@ -563,29 +563,35 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 
 <h3>Unique Random Identifiers</h3>
 
-<p>Some applications require generating unique identifiers, especially to identify database records or other shared resources.  Such identifiers include auto-incremented numbers, sequentially assigned numbers, random numbers, and combinations of these.  Whenever practical, an application SHOULD NOT treat an identifier as uniquely identifying a resource unless&mdash;</p>
+<p>Some applications require generating unique identifiers, especially to identify database records or other shared resources.  Such identifiers include auto-incremented numbers, sequentially assigned numbers, random numbers, and combinations of these.  The following are some questions to consider when generating unique identifiers, especially random ones:</p>
+
+<ol>
+<li>Can the application easily check identifiers for uniqueness within the desired scope and range (e.g., check whether a file or database record with that identifier already exists)?</li>
+<li>Can the application tolerate the risk of generating the same identifier for different resources<sup><a href="#Note26"><strong>(26)</strong></a></sup>?</li>
+<li>Do identifiers have to be hard to guess, be simply &quot;random-looking&quot;, or be neither?</li>
+<li>Do identifiers have to be typed in or otherwise relayed by end users<sup><a href="#Note27"><strong>(27)</strong></a></sup>?</li>
+<li>Is the identifier the only thing that grants access to the resource it identifiers?</li>
+<li>Do identifiers have to be memorable?</li>
+</ol>
+
+<p>Examples of unique integers include sequentially-assigned integers as well as the primary key of a database table.  If the application requires a unique integer to &quot;look random&quot;, it can apply a reversible operation to that integer (such as a permutation), or take that integer as the seed of a so-called &quot;full-period&quot; PRNG (which can be a <a href="https://en.wikipedia.org/wiki/Linear_congruential_generator"><strong>linear congruential generator</strong></a>) that has a state length of <code>B</code> bits and outputs <code>B</code>-bit integers<sup><a href="#Note28"><strong>(28)</strong></a></sup>.</p>
+
+<p>An application that generates unique identifiers SHOULD do so as follows:</p>
 
 <ul>
-<li>it checks that identifier for uniqueness within the desired scope and range, or</li>
-<li>it generates that identifier in a way that ensures uniqueness of identifiers within that scope and range.</li>
-</ul>
-
-<p>An application can generate unique (not necessarily random) <code>B</code>-bit integers&mdash;</p>
+<li>If the application can answer yes to 1 or 2 above:
 
 <ul>
-<li>using a <code>B</code>-bit counter (sequentially assigned number),</li>
-<li>using a <code>B</code>-bit counter with one or more reversible operations applied to it, or</li>
-<li>using a so-called &quot;full-period&quot; PRNG (which can be a <a href="https://en.wikipedia.org/wiki/Linear_congruential_generator"><strong>linear congruential generator</strong></a>) that has a state length of <code>B</code> bits and outputs <code>B</code>-bit integers<sup><a href="#Note26"><strong>(26)</strong></a></sup>.</li>
-</ul>
-
-<p>An application that generates unique random identifiers SHOULD combine&mdash;</p>
+<li>And yes to 5: Generate a 128-bit-long or longer random number using a cryptographic RNG.</li>
+<li>And no to 5: Generate a 32-bit-long or longer random number using a cryptographic RNG.</li>
+</ul></li>
+<li>Otherwise:
 
 <ul>
-<li>a <em>unique</em> <code>B</code>-bit integer, generated in a way mentioned above, with</li>
-<li>a <em>random</em> <code>C</code>-bit integer generated using a cryptographic RNG (<code>C</code> SHOULD be at least 32 if the identifier alone does not grant access to the resource it identifies, or at least 128 otherwise),</li>
+<li>If identifiers have to be hard to guess: Combine a unique integer with a random integer generated as described above, as a unique identifier.</li>
+<li>Otherwise: Use a unique integer. (Note that generally, random numbers alone can&#39;t ensure uniqueness.)</li>
+</ul></li>
 </ul>
-
-<p>to generate the unique identifier.<sup><a href="#Note27"><strong>(27)</strong></a></sup> (In general, generating only the random integer this way can&#39;t ensure uniqueness by itself, but might be acceptable for applications that can tolerate the risk of generating duplicate random integers this way, or for applications that check that random integer for uniqueness.<sup><a href="#Note28"><strong>(28)</strong></a></sup>)</p>
 
 <p><a id=Determinism_and_Consistency></a></p>
 
@@ -834,17 +840,17 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 
 <p><small><sup id=Note25>(25)</sup> van Staveren, Hans. <a href="https://sater.home.xs4all.nl/doc.html"><strong>&quot;Big Deal: A new program for dealing bridge hands&quot;</strong></a>, Sep. 8, 2000</small></p>
 
-<p><small><sup id=Note26>(26)</sup> For suggested linear congruential generators for generating unique &quot;random-looking&quot; numbers, see P. L&#39;Ecuyer, &quot;Tables of Linear Congruential Generators of Different Sizes and Good Lattice Structure&quot;, <em>Mathematics of Computation</em> 68(225), January 1999.  Another choice for <em>n</em>-bit unique integers is an <em>n</em>-bit <a href="https://en.wikipedia.org/wiki/Linear-feedback_shift_register"><strong>linear-feedback shift register</strong></a> generator with the right parameters, which cycles &quot;randomly&quot; through all but one <em>n</em>-bit integers; see P. Alfke, &quot;Efficient Shift Registers, LFSR Counters, and Long Pseudo-Random Sequence Generators&quot;, Xilinx Application Note XAPP 052, July 7, 1996.</small></p>
-
-<p><small><sup id=Note27>(27)</sup> If an application expects end users to type in a unique identifier, it could find that unique identifiers this long are unsuitable for it (e.g. 128-bit numbers take up 32 base-16 characters).  There are ways to deal with these and other long identifiers, including (1) separating memorable chunks of the identifier with a hyphen or another character (e.g., &quot;ABCDEF&quot; becomes &quot;ABC-DEF&quot;), (2) converting the identifier to a sequence of memorable words (as in Bitcoin&#39;s BIP39), or (3) adding a so-called &quot;checksum digit&quot; at the end of the identifier to guard against typing mistakes.  The application ought to consider trying (1) or (2) before deciding to use shorter identifiers than what this document recommends.</small></p>
-
-<p><small><sup id=Note28>(28)</sup> In theory, generating two or more random integers of the same size runs the risk of producing a duplicate number this way.  However, this risk decreases as that size increases (see &quot;<a href="https://en.wikipedia.org/wiki/Birthday_problem"><strong>Birthday problem</strong></a>&quot;).  For example, in theory, an application has a 50% chance for duplicate numbers after generating&mdash;</p>
+<p><small><sup id=Note26>(26)</sup> In theory, generating two or more random integers of the same size runs the risk of producing a duplicate number this way.  However, this risk decreases as that size increases (see &quot;<a href="https://en.wikipedia.org/wiki/Birthday_problem"><strong>Birthday problem</strong></a>&quot;).  For example, in theory, an application has a 50% chance for duplicate numbers after generating&mdash;</p>
 
 <ul>
 <li>about 2.7 billion billion random 122-bit integers (including those found in version-4 UUIDs, or universally unique identifiers),</li>
 <li>about 1.4 million billion billion random 160-bit integers, or</li>
 <li>about 93 billion billion billion random 192-bit integers.</small></li>
 </ul>
+
+<p><small><sup id=Note27>(27)</sup> If an application expects end users to type in a unique identifier, it could find that very long unique identifiers are unsuitable for it (e.g. 128-bit numbers take up 32 base-16 characters).  There are ways to deal with these and other long identifiers, including (1) separating memorable chunks of the identifier with a hyphen or another character (e.g., &quot;ABCDEF&quot; becomes &quot;ABC-DEF&quot;), (2) converting the identifier to a sequence of memorable words (as in Bitcoin&#39;s BIP39), or (3) adding a so-called &quot;checksum digit&quot; at the end of the identifier to guard against typing mistakes.  The application ought to consider trying (1) or (2) before deciding to use shorter identifiers than what this document recommends.</small></p>
+
+<p><small><sup id=Note28>(28)</sup> For suggested linear congruential generators for generating unique &quot;random-looking&quot; numbers, see P. L&#39;Ecuyer, &quot;Tables of Linear Congruential Generators of Different Sizes and Good Lattice Structure&quot;, <em>Mathematics of Computation</em> 68(225), January 1999.  Another choice for <em>n</em>-bit unique integers is an <em>n</em>-bit <a href="https://en.wikipedia.org/wiki/Linear-feedback_shift_register"><strong>linear-feedback shift register</strong></a> generator with the right parameters, which cycles &quot;randomly&quot; through all but one <em>n</em>-bit integers; see P. Alfke, &quot;Efficient Shift Registers, LFSR Counters, and Long Pseudo-Random Sequence Generators&quot;, Xilinx Application Note XAPP 052, July 7, 1996.</small></p>
 
 <p><small><sup id=Note29>(29)</sup> The following are some reasons an algorithm might produce different results from run to run or from machine to machine (making it an <em>inconsistent</em> algorithm):</p>
 
