@@ -19,11 +19,11 @@
 
 <p><b>About EDecimal instances</b></p>
 
-<p>Each instance of this class consists of an integer mantissa (significand) and an integer exponent, both arbitrary-precision. The value of the number equals mantissa (significand) * 10^exponent.</p>
+<p>Each instance of this class consists of an integer significand and an integer exponent, both arbitrary-precision. The value of the number equals significand * 10^exponent.</p>
 
-<p>The mantissa (significand) is the value of the digits that make up a number, ignoring the decimal point and exponent. For example, in the number 2356.78, the mantissa (significand) is 235678. The exponent is where the &quot;floating&quot; decimal point of the number is located. A positive exponent means &quot;move it to the right&quot;, and a negative exponent means &quot;move it to the left.&quot; In the example 2, 356.78, the exponent is -2, since it has 2 decimal places and the decimal point is &quot;moved to the left by 2.&quot; Therefore, in the arbitrary-precision decimal representation, this number would be stored as 235678 * 10^-2.</p>
+<p>The significand is the value of the digits that make up a number, ignoring the decimal point and exponent. For example, in the number 2356.78, the significand is 235678. The exponent is where the &quot;floating&quot; decimal point of the number is located. A positive exponent means &quot;move it to the right&quot;, and a negative exponent means &quot;move it to the left.&quot; In the example 2, 356.78, the exponent is -2, since it has 2 decimal places and the decimal point is &quot;moved to the left by 2.&quot; Therefore, in the arbitrary-precision decimal representation, this number would be stored as 235678 * 10^-2.</p>
 
-<p>The mantissa (significand) and exponent format preserves trailing zeros in the number&#39;s value. This may give rise to multiple ways to store the same value. For example, 1.00 and 1 would be stored differently, even though they have the same value. In the first case, 100 * 10^-2 (100 with decimal point moved left by 2), and in the second case, 1 * 10^0 (1 with decimal point moved 0).</p>
+<p>The significand and exponent format preserves trailing zeros in the number&#39;s value. This may give rise to multiple ways to store the same value. For example, 1.00 and 1 would be stored differently, even though they have the same value. In the first case, 100 * 10^-2 (100 with decimal point moved left by 2), and in the second case, 1 * 10^0 (1 with decimal point moved 0).</p>
 
 <p>This class also supports values for negative zero, not-a-number (NaN) values, and infinity. <b>Negative zero</b> is generally used when a negative number is rounded to 0; it has the same mathematical value as positive zero. <b>Infinity</b> is generally used when a non-zero number is divided by zero, or when a very high or very low number can&#39;t be represented in a given exponent range. <b>Not-a-number</b> is generally used to signal errors.</p>
 
@@ -150,8 +150,8 @@
 <li><code><a href="#CompareToWithContext_PeterO_Numbers_EDecimal_PeterO_Numbers_EContext">CompareToWithContext(PeterO.Numbers.EDecimal, PeterO.Numbers.EContext)</a></code> - Compares the mathematical values of this object and another object.</li>
 <li><code><a href="#Copy">Copy()</a></code> - Creates a copy of this arbitrary-precision binary number.</li>
 <li><code><a href="#CopySign_PeterO_Numbers_EDecimal">CopySign(PeterO.Numbers.EDecimal)</a></code> - Returns a number with the same value as this one, but copying the sign (positive or negative) of another number.</li>
-<li><code><a href="#Create_int_int">Create(int, int)</a></code> - Creates a number with the value exponent*10^mantissa.</li>
-<li><code><a href="#Create_PeterO_Numbers_EInteger_PeterO_Numbers_EInteger">Create(PeterO.Numbers.EInteger, PeterO.Numbers.EInteger)</a></code> - Creates a number with the value exponent*10^mantissa.</li>
+<li><code><a href="#Create_int_int">Create(int, int)</a></code> - Creates a number with the value exponent*10^significand.</li>
+<li><code><a href="#Create_PeterO_Numbers_EInteger_PeterO_Numbers_EInteger">Create(PeterO.Numbers.EInteger, PeterO.Numbers.EInteger)</a></code> - Creates a number with the value exponent*10^significand.</li>
 <li><code><a href="#CreateNaN_PeterO_Numbers_EInteger">CreateNaN(PeterO.Numbers.EInteger)</a></code> - Creates a not-a-number arbitrary-precision decimal number.</li>
 <li><code><a href="#CreateNaN_PeterO_Numbers_EInteger_bool_bool_PeterO_Numbers_EContext">CreateNaN(PeterO.Numbers.EInteger, bool, bool, PeterO.Numbers.EContext)</a></code> - Creates a not-a-number arbitrary-precision decimal number.</li>
 <li><code><a href="#Decrement">Decrement()</a></code> - Returns one subtracted from this arbitrary-precision decimal number.</li>
@@ -175,8 +175,8 @@
 <li><code><a href="#DivideToSameExponent_PeterO_Numbers_EDecimal_PeterO_Numbers_ERounding">DivideToSameExponent(PeterO.Numbers.EDecimal, PeterO.Numbers.ERounding)</a></code> - Divides this object by another decimal number and returns a result with the same exponent as this object (the dividend).</li>
 <li><code><a href="#DivRemNaturalScale_PeterO_Numbers_EDecimal">DivRemNaturalScale(PeterO.Numbers.EDecimal)</a></code> - Calculates the quotient and remainder using the DivideToIntegerNaturalScale and the formula in RemainderNaturalScale.</li>
 <li><code><a href="#DivRemNaturalScale_PeterO_Numbers_EDecimal_PeterO_Numbers_EContext">DivRemNaturalScale(PeterO.Numbers.EDecimal, PeterO.Numbers.EContext)</a></code> - Calculates the quotient and remainder using the DivideToIntegerNaturalScale and the formula in RemainderNaturalScale.</li>
-<li><code><a href="#Equals_object">Equals(object)</a></code> - Determines whether this object&#39;s mantissa (significand), exponent, and properties are equal to those of another object and that other object is an arbitrary-precision decimal number.</li>
-<li><code><a href="#Equals_PeterO_Numbers_EDecimal">Equals(PeterO.Numbers.EDecimal)</a></code> - Determines whether this object&#39;s mantissa (significand), exponent, and properties are equal to those of another object.</li>
+<li><code><a href="#Equals_object">Equals(object)</a></code> - Determines whether this object&#39;s significand, exponent, and properties are equal to those of another object and that other object is an arbitrary-precision decimal number.</li>
+<li><code><a href="#Equals_PeterO_Numbers_EDecimal">Equals(PeterO.Numbers.EDecimal)</a></code> - Determines whether this object&#39;s significand, exponent, and properties are equal to those of another object.</li>
 <li><code><a href="#Exp_PeterO_Numbers_EContext">Exp(PeterO.Numbers.EContext)</a></code> - Finds e (the base of natural logarithms) raised to the power of this object&#39;s value.</li>
 <li><code><a href="#Exponent">Exponent</a></code> - Gets this object&#39;s exponent.</li>
 <li><code><a href="#FromBoolean_bool">FromBoolean(bool)</a></code> - Converts a boolean value (true or false) to an arbitrary-precision decimal number.</li>
@@ -211,7 +211,7 @@
 <li><code><a href="#IsZero">IsZero</a></code> - Gets a value indicating whether this object&#39;s value equals 0.</li>
 <li><code><a href="#Log_PeterO_Numbers_EContext">Log(PeterO.Numbers.EContext)</a></code> - Finds the natural logarithm of this object, that is, the power (exponent) that e (the base of natural logarithms) must be raised to in order to equal this object&#39;s value.</li>
 <li><code><a href="#Log10_PeterO_Numbers_EContext">Log10(PeterO.Numbers.EContext)</a></code> - Finds the base-10 logarithm of this object, that is, the power (exponent) that the number 10 must be raised to in order to equal this object&#39;s value.</li>
-<li><code><a href="#Mantissa">Mantissa</a></code> - Gets this object&#39;s unscaled value, or mantissa, and makes it negative if this object is negative.</li>
+<li><code><a href="#Mantissa">Mantissa</a></code> - Gets this object&#39;s unscaled value, or significand, and makes it negative if this object is negative.</li>
 <li><code><a href="#Max_PeterO_Numbers_EDecimal_PeterO_Numbers_EDecimal">Max(PeterO.Numbers.EDecimal, PeterO.Numbers.EDecimal)</a></code> - Gets the greater value between two decimal numbers.</li>
 <li><code><a href="#Max_PeterO_Numbers_EDecimal_PeterO_Numbers_EDecimal_PeterO_Numbers_EContext">Max(PeterO.Numbers.EDecimal, PeterO.Numbers.EDecimal, PeterO.Numbers.EContext)</a></code> - Gets the greater value between two decimal numbers.</li>
 <li><code><a href="#MaxMagnitude_PeterO_Numbers_EDecimal_PeterO_Numbers_EDecimal">MaxMagnitude(PeterO.Numbers.EDecimal, PeterO.Numbers.EDecimal)</a></code> - Gets the greater value between two values, ignoring their signs.</li>
@@ -259,12 +259,12 @@
 <li><code><a href="#Pow_int">Pow(int)</a></code> - Raises this object&#39;s value to the given exponent.</li>
 <li><code><a href="#Pow_int_PeterO_Numbers_EContext">Pow(int, PeterO.Numbers.EContext)</a></code> - Raises this object&#39;s value to the given exponent.</li>
 <li><code><a href="#Pow_PeterO_Numbers_EDecimal_PeterO_Numbers_EContext">Pow(PeterO.Numbers.EDecimal, PeterO.Numbers.EContext)</a></code> - Raises this object&#39;s value to the given exponent.</li>
-<li><code><a href="#Precision">Precision()</a></code> - Finds the number of digits in this number&#39;s mantissa (significand).</li>
+<li><code><a href="#Precision">Precision()</a></code> - Finds the number of digits in this number&#39;s significand.</li>
 <li><code><a href="#Quantize_int_PeterO_Numbers_EContext">Quantize(int, PeterO.Numbers.EContext)</a></code> - Returns an arbitrary-precision decimal number with the same value but a new exponent.</li>
 <li><code><a href="#Quantize_int_PeterO_Numbers_ERounding">Quantize(int, PeterO.Numbers.ERounding)</a></code> - Returns an arbitrary-precision decimal number with the same value as this one but a new exponent.</li>
 <li><code><a href="#Quantize_PeterO_Numbers_EDecimal_PeterO_Numbers_EContext">Quantize(PeterO.Numbers.EDecimal, PeterO.Numbers.EContext)</a></code> - Returns an arbitrary-precision decimal number with the same value as this object but with the same exponent as another decimal number.</li>
 <li><code><a href="#Quantize_PeterO_Numbers_EInteger_PeterO_Numbers_EContext">Quantize(PeterO.Numbers.EInteger, PeterO.Numbers.EContext)</a></code> - Returns an arbitrary-precision decimal number with the same value but a new exponent.</li>
-<li><code><a href="#Reduce_PeterO_Numbers_EContext">Reduce(PeterO.Numbers.EContext)</a></code> - Returns an object with the same numerical value as this one but with trailing zeros removed from its mantissa (significand).</li>
+<li><code><a href="#Reduce_PeterO_Numbers_EContext">Reduce(PeterO.Numbers.EContext)</a></code> - Returns an object with the same numerical value as this one but with trailing zeros removed from its significand.</li>
 <li><code><a href="#Remainder_PeterO_Numbers_EDecimal_PeterO_Numbers_EContext">Remainder(PeterO.Numbers.EDecimal, PeterO.Numbers.EContext)</a></code> - Finds the remainder that results when dividing two arbitrary-precision decimal numbers.</li>
 <li><code><a href="#RemainderNaturalScale_PeterO_Numbers_EDecimal">RemainderNaturalScale(PeterO.Numbers.EDecimal)</a></code> - Calculates the remainder of a number by the formula &quot;this&quot; - ((&quot;this&quot; / &quot;divisor&quot;) * &quot;divisor&quot;).</li>
 <li><code><a href="#RemainderNaturalScale_PeterO_Numbers_EDecimal_PeterO_Numbers_EContext">RemainderNaturalScale(PeterO.Numbers.EDecimal, PeterO.Numbers.EContext)</a></code> - Calculates the remainder of a number by the formula &quot;this&quot; - ((&quot;this&quot; / &quot;divisor&quot;) * &quot;divisor&quot;).</li>
@@ -333,7 +333,7 @@
 <li><code><a href="#ToUInt64IfExact">ToUInt64IfExact()</a></code> - Converts this number&#39;s value to a 64-bit unsigned integer if it can fit in a 64-bit unsigned integer without rounding to a different numerical value.</li>
 <li><code><a href="#ToUInt64Unchecked">ToUInt64Unchecked()</a></code> - Truncates this number&#39;s value to an integer and returns the least-significant bits of its two&#39;s-complement form as a 64-bit unsigned integer.</li>
 <li><code><a href="#Ulp">Ulp()</a></code> - Returns the unit in the last place.</li>
-<li><code><a href="#UnsignedMantissa">UnsignedMantissa</a></code> - Gets the absolute value of this object&#39;s unscaled value, or mantissa.</li>
+<li><code><a href="#UnsignedMantissa">UnsignedMantissa</a></code> - Gets the absolute value of this object&#39;s unscaled value, or significand.</li>
 <li><code><a href="#Zero">public static readonly PeterO.Numbers.EDecimal Zero;</a></code> - Represents the number 0.</li>
 </ul>
 
@@ -468,7 +468,7 @@
 <pre>public PeterO.Numbers.EInteger Mantissa { get; }
 </pre>
 
-<p>Gets this object&#39;s unscaled value, or mantissa, and makes it negative if this object is negative. If this value is not-a-number (NaN), that value&#39;s absolute value is the NaN&#39;s &quot;payload&quot; (diagnostic information).</p>
+<p>Gets this object&#39;s unscaled value, or significand, and makes it negative if this object is negative. If this value is not-a-number (NaN), that value&#39;s absolute value is the NaN&#39;s &quot;payload&quot; (diagnostic information).</p>
 
 <p><b>Returns:</b></p>
 
@@ -494,7 +494,7 @@
 <pre>public PeterO.Numbers.EInteger UnsignedMantissa { get; }
 </pre>
 
-<p>Gets the absolute value of this object&#39;s unscaled value, or mantissa. If this value is not-a-number (NaN), that value is the NaN&#39;s &quot;payload&quot; (diagnostic information).</p>
+<p>Gets the absolute value of this object&#39;s unscaled value, or significand. If this value is not-a-number (NaN), that value is the NaN&#39;s &quot;payload&quot; (diagnostic information).</p>
 
 <p><b>Returns:</b></p>
 
@@ -881,13 +881,13 @@ is null.</li>
     int exponentSmall);
 </pre>
 
-<p>Creates a number with the value  <code>exponent*10^mantissa</code> .</p>
+<p>Creates a number with the value  <code>exponent*10^significand</code> .</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>mantissaSmall</i>: Desired value for the mantissa.</p></li>
-<li><p><i>exponentSmall</i>: Desired value for the exponent.</p></li>
+<li><p><i>mantissaSmall</i>: Not documented yet.</p></li>
+<li><p><i>exponentSmall</i>: Not documented yet.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -903,13 +903,13 @@ is null.</li>
     PeterO.Numbers.EInteger exponent);
 </pre>
 
-<p>Creates a number with the value  <code>exponent*10^mantissa</code> .</p>
+<p>Creates a number with the value  <code>exponent*10^significand</code> .</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>mantissa</i>: Desired value for the mantissa.</p></li>
-<li><p><i>exponent</i>: Desired value for the exponent.</p></li>
+<li><p><i>mantissa</i>: Not documented yet.</p></li>
+<li><p><i>exponent</i>: Not documented yet.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -920,7 +920,7 @@ is null.</li>
 
 <ul>
 <li>System.ArgumentNullException:
-The parameter  <i>mantissa</i>
+The parameter  <i>significand</i>
 or  <i>exponent</i>
 is null.</li>
 </ul>
@@ -1450,7 +1450,7 @@ is an EContext object.</p></li>
     object obj);
 </pre>
 
-<p>Determines whether this object&#39;s mantissa (significand), exponent, and properties are equal to those of another object and that other object is an arbitrary-precision decimal number. Not-a-number values are considered equal if the rest of their properties are equal.</p>
+<p>Determines whether this object&#39;s significand, exponent, and properties are equal to those of another object and that other object is an arbitrary-precision decimal number. Not-a-number values are considered equal if the rest of their properties are equal.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -1471,7 +1471,7 @@ is an arbitrary object.</li>
     PeterO.Numbers.EDecimal other);
 </pre>
 
-<p>Determines whether this object&#39;s mantissa (significand), exponent, and properties are equal to those of another object. Not-a-number values are considered equal if the rest of their properties are equal.</p>
+<p>Determines whether this object&#39;s significand, exponent, and properties are equal to those of another object. Not-a-number values are considered equal if the rest of their properties are equal.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -1481,7 +1481,7 @@ is an arbitrary object.</li>
 
 <p><b>Return Value:</b></p>
 
-<p><code>true</code>  if this object&#39;s mantissa (significand) and exponent are equal to those of another object; otherwise,  <code>false</code> .</p>
+<p><code>true</code>  if this object&#39;s significand and exponent are equal to those of another object; otherwise,  <code>false</code> .</p>
 
 <p><a id="Exp_PeterO_Numbers_EContext"></a></p>
 
@@ -1573,7 +1573,7 @@ is an arbitrary object.</li>
     double dbl);
 </pre>
 
-<p>Creates an arbitrary-precision decimal number from a 64-bit binary floating-point number. This method computes the exact value of the floating point number, not an approximation, as is often the case by converting the floating point number to a string first. Remember, though, that the exact value of a 64-bit binary floating-point number is not always the value that results when passing a literal decimal number (for example, calling  <code>ExtendedDecimal.FromDouble(0.1f)</code>  ), since not all decimal numbers can be converted to exact binary numbers (in the example given, the resulting arbitrary-precision decimal will be the value of the closest &quot;double&quot; to 0.1, not 0.1 exactly). To create an arbitrary-precision decimal number from an arbitrary-precision decimal number, use FromString instead in most cases (for example:  <code>ExtendedDecimal.FromString(&quot;0.1&quot;)</code>  ).</p>
+<p>Creates an arbitrary-precision decimal number from a 64-bit binary floating-point number. This method computes the exact value of the floating point number, not an approximation, as is often the case by converting the floating point number to a string first. Remember, though, that the exact value of a 64-bit binary floating-point number is not always the value that results when passing a literal decimal number (for example, calling  <code>ExtendedDecimal.FromDouble(0.1f)</code> ), since not all decimal numbers can be converted to exact binary numbers (in the example given, the resulting arbitrary-precision decimal will be the value of the closest &quot;double&quot; to 0.1, not 0.1 exactly). To create an arbitrary-precision decimal number from an arbitrary-precision decimal number, use FromString instead in most cases (for example:  <code>ExtendedDecimal.FromString(&quot;0.1&quot;)</code> ).</p>
 
 <p><b>Parameters:</b></p>
 
@@ -1747,7 +1747,7 @@ is a 64-bit signed integer.</li>
     float flt);
 </pre>
 
-<p>Creates an arbitrary-precision decimal number from a 32-bit binary floating-point number. This method computes the exact value of the floating point number, not an approximation, as is often the case by converting the floating point number to a string first. Remember, though, that the exact value of a 32-bit binary floating-point number is not always the value that results when passing a literal decimal number (for example, calling  <code>ExtendedDecimal.FromSingle(0.1f)</code>  ), since not all decimal numbers can be converted to exact binary numbers (in the example given, the resulting arbitrary-precision decimal will be the the value of the closest &quot;float&quot; to 0.1, not 0.1 exactly). To create an arbitrary-precision decimal number from an arbitrary-precision decimal number, use FromString instead in most cases (for example:  <code>ExtendedDecimal.FromString(&quot;0.1&quot;)</code>  ).</p>
+<p>Creates an arbitrary-precision decimal number from a 32-bit binary floating-point number. This method computes the exact value of the floating point number, not an approximation, as is often the case by converting the floating point number to a string first. Remember, though, that the exact value of a 32-bit binary floating-point number is not always the value that results when passing a literal decimal number (for example, calling  <code>ExtendedDecimal.FromSingle(0.1f)</code> ), since not all decimal numbers can be converted to exact binary numbers (in the example given, the resulting arbitrary-precision decimal will be the the value of the closest &quot;float&quot; to 0.1, not 0.1 exactly). To create an arbitrary-precision decimal number from an arbitrary-precision decimal number, use FromString instead in most cases (for example:  <code>ExtendedDecimal.FromString(&quot;0.1&quot;)</code> ).</p>
 
 <p><b>Parameters:</b></p>
 
@@ -2870,7 +2870,7 @@ is null.</p></li>
     PeterO.Numbers.EDecimal bigValue);
 </pre>
 
-<p>Converts this value to its closest equivalent as a 64-bit floating-point number. The half-even rounding mode is used. If this value is a NaN, sets the high bit of the 64-bit floating point number&#39;s significand area for a quiet NaN, and clears it for a signaling NaN. Then the other bits of the significand area are set to the lowest bits of this object&#39;s unsigned mantissa (significand), and the next-highest bit of the significand area is set if those bits are all zeros and this is a signaling NaN. Unfortunately, in the.NET implementation, the return value of this method may be a quiet NaN even if a signaling NaN would otherwise be generated.</p>
+<p>Converts this value to its closest equivalent as a 64-bit floating-point number. The half-even rounding mode is used. If this value is a NaN, sets the high bit of the 64-bit floating point number&#39;s significand area for a quiet NaN, and clears it for a signaling NaN. Then the other bits of the significand area are set to the lowest bits of this object&#39;s unsigned significand, and the next-highest bit of the significand area is set if those bits are all zeros and this is a signaling NaN. Unfortunately, in the.NET implementation, the return value of this method may be a quiet NaN even if a signaling NaN would otherwise be generated.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -2898,7 +2898,7 @@ is null.</li>
     PeterO.Numbers.EDecimal bigValue);
 </pre>
 
-<p>Converts this value to its closest equivalent as a 32-bit floating-point number. The half-even rounding mode is used. If this value is a NaN, sets the high bit of the 32-bit floating point number&#39;s significand area for a quiet NaN, and clears it for a signaling NaN. Then the other bits of the significand area are set to the lowest bits of this object&#39;s unsigned mantissa (significand), and the next-highest bit of the significand area is set if those bits are all zeros and this is a signaling NaN. Unfortunately, in the.NET implementation, the return value of this method may be a quiet NaN even if a signaling NaN would otherwise be generated.</p>
+<p>Converts this value to its closest equivalent as a 32-bit floating-point number. The half-even rounding mode is used. If this value is a NaN, sets the high bit of the 32-bit floating point number&#39;s significand area for a quiet NaN, and clears it for a signaling NaN. Then the other bits of the significand area are set to the lowest bits of this object&#39;s unsigned significand, and the next-highest bit of the significand area is set if those bits are all zeros and this is a signaling NaN. Unfortunately, in the.NET implementation, the return value of this method may be a quiet NaN even if a signaling NaN would otherwise be generated.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -3692,7 +3692,7 @@ is null.</li>
 <pre>public PeterO.Numbers.EInteger Precision();
 </pre>
 
-<p>Finds the number of digits in this number&#39;s mantissa (significand). Returns 1 if this value is 0, and 0 if this value is infinity or not-a-number (NaN).</p>
+<p>Finds the number of digits in this number&#39;s significand. Returns 1 if this value is 0, and 0 if this value is infinity or not-a-number (NaN).</p>
 
 <p><b>Return Value:</b></p>
 
@@ -3769,7 +3769,7 @@ is null.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>otherValue</i>: An arbitrary-precision decimal number containing the desired exponent of the result. The mantissa (significand) is ignored. The exponent is the number of fractional digits in the result, expressed as a negative number. Can also be positive, which eliminates lower-order places from the number. For example, -3 means round to the thousandth (10^-3, 0.0001), and 3 means round to the thousands-place (10^3, 1000). A value of 0 rounds the number to an integer. The following examples for this parameter express a desired exponent of 3:  <code>10e3</code> ,  <code>8888e3</code> ,  <code>4.56e5</code> .</p></li>
+<li><p><i>otherValue</i>: An arbitrary-precision decimal number containing the desired exponent of the result. The significand is ignored. The exponent is the number of fractional digits in the result, expressed as a negative number. Can also be positive, which eliminates lower-order places from the number. For example, -3 means round to the thousandth (10^-3, 0.0001), and 3 means round to the thousands-place (10^3, 1000). A value of 0 rounds the number to an integer. The following examples for this parameter express a desired exponent of 3:  <code>10e3</code> ,  <code>8888e3</code> ,  <code>4.56e5</code> .</p></li>
 <li><p><i>ctx</i>: An arithmetic context to control precision and rounding of the result. If  <code>HasFlags</code>  of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null, in which case the default rounding mode is HalfEven.</p></li>
 </ul>
 
@@ -3790,11 +3790,14 @@ is null.</li>
 
 <p><b>Remark:</b> This method can be used to implement fixed-point decimal arithmetic, in which each decimal number has a fixed number of digits after the decimal point. The following code example returns a fixed-point number with up to 20 digits before and exactly 5 digits after the decimal point:</p>
 
-<pre> /* After performing arithmetic operations, adjust /* the number to 5*/*/
-            /**/
-            digits after the decimal point number = number.Quantize(
-            EInteger.FromInt32(-5), /* five digits after the decimal point*/
-            EContext.ForPrecision(25) /* 25-digit precision);*/
+<pre> /* After performing arithmetic operations, adjust
+            /* the number to 5*/*/
+             /**/
+             digits after the decimal point number = number.Quantize(
+             EInteger.FromInt32(-5), /* five digits after the decimal
+            point*/
+             EContext.ForPrecision(25) /* 25-digit
+            precision);*/
 </pre>
 
 <p>A fixed-point decimal arithmetic in which no digits come after the decimal point (a desired exponent of 0) is considered an &quot;integer arithmetic&quot;.</p>
@@ -3818,7 +3821,7 @@ is null.</li>
     PeterO.Numbers.EContext ctx);
 </pre>
 
-<p>Returns an object with the same numerical value as this one but with trailing zeros removed from its mantissa (significand). For example, 1.00 becomes 1. If this object&#39;s value is 0, changes the exponent to 0.</p>
+<p>Returns an object with the same numerical value as this one but with trailing zeros removed from its significand. For example, 1.00 becomes 1. If this object&#39;s value is 0, changes the exponent to 0.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -3828,7 +3831,7 @@ is null.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>This value with trailing zeros removed. Note that if the result has a very high exponent and the context says to clamp high exponents, there may still be some trailing zeros in the mantissa (significand).</p>
+<p>This value with trailing zeros removed. Note that if the result has a very high exponent and the context says to clamp high exponents, there may still be some trailing zeros in the significand.</p>
 
 <p><a id="Remainder_PeterO_Numbers_EDecimal_PeterO_Numbers_EContext"></a></p>
 
@@ -4526,7 +4529,7 @@ This value is infinity or not-a-number, is not an exact integer, or is less than
 <pre>public double ToDouble();
 </pre>
 
-<p>Converts this value to its closest equivalent as a 64-bit floating-point number. The half-even rounding mode is used. If this value is a NaN, sets the high bit of the 64-bit floating point number&#39;s significand area for a quiet NaN, and clears it for a signaling NaN. Then the other bits of the significand area are set to the lowest bits of this object&#39;s unsigned mantissa (significand), and the next-highest bit of the significand area is set if those bits are all zeros and this is a signaling NaN. Unfortunately, in the.NET implementation, the return value of this method may be a quiet NaN even if a signaling NaN would otherwise be generated.</p>
+<p>Converts this value to its closest equivalent as a 64-bit floating-point number. The half-even rounding mode is used. If this value is a NaN, sets the high bit of the 64-bit floating point number&#39;s significand area for a quiet NaN, and clears it for a signaling NaN. Then the other bits of the significand area are set to the lowest bits of this object&#39;s unsigned significand, and the next-highest bit of the significand area is set if those bits are all zeros and this is a signaling NaN. Unfortunately, in the.NET implementation, the return value of this method may be a quiet NaN even if a signaling NaN would otherwise be generated.</p>
 
 <p><b>Return Value:</b></p>
 
@@ -4896,7 +4899,7 @@ This value is infinity or not-a-number, is not an exact integer, or is less than
 <pre>public float ToSingle();
 </pre>
 
-<p>Converts this value to its closest equivalent as a 32-bit floating-point number. The half-even rounding mode is used. If this value is a NaN, sets the high bit of the 32-bit floating point number&#39;s significand area for a quiet NaN, and clears it for a signaling NaN. Then the other bits of the significand area are set to the lowest bits of this object&#39;s unsigned mantissa (significand), and the next-highest bit of the significand area is set if those bits are all zeros and this is a signaling NaN. Unfortunately, in the.NET implementation, the return value of this method may be a quiet NaN even if a signaling NaN would otherwise be generated.</p>
+<p>Converts this value to its closest equivalent as a 32-bit floating-point number. The half-even rounding mode is used. If this value is a NaN, sets the high bit of the 32-bit floating point number&#39;s significand area for a quiet NaN, and clears it for a signaling NaN. Then the other bits of the significand area are set to the lowest bits of this object&#39;s unsigned significand, and the next-highest bit of the significand area is set if those bits are all zeros and this is a signaling NaN. Unfortunately, in the.NET implementation, the return value of this method may be a quiet NaN even if a signaling NaN would otherwise be generated.</p>
 
 <p><b>Return Value:</b></p>
 
@@ -5081,7 +5084,7 @@ This value is infinity or not-a-number, is not an exact integer, or is less than
 <pre>public PeterO.Numbers.EDecimal Ulp();
 </pre>
 
-<p>Returns the unit in the last place. The mantissa (significand) will be 1 and the exponent will be this number&#39;s exponent. Returns 1 with an exponent of 0 if this number is infinity or not-a-number (NaN).</p>
+<p>Returns the unit in the last place. The significand will be 1 and the exponent will be this number&#39;s exponent. Returns 1 with an exponent of 0 if this number is infinity or not-a-number (NaN).</p>
 
 <p><b>Return Value:</b></p>
 

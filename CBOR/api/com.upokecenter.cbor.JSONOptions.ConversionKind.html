@@ -88,8 +88,7 @@ the order they are declared.</li>
 <p>JSON numbers are decoded to CBOR using the full precision given in the JSON
  text. This may involve numbers being converted to
  arbitrary-precision integers or decimal numbers, where
- appropriate. The distinction between positive and negative zero
- is preserved.</p>
+ appropriate.</p>
 
 <h3>Double</h3>
 
@@ -97,8 +96,10 @@ the order they are declared.</li>
 </pre>
 
 <p>JSON numbers are decoded to CBOR as their closest-rounded approximation as
- 64-bit binary floating-point numbers. The distinction between
- positive and negative zero is preserved.</p>
+ 64-bit binary floating-point numbers. (In some cases, numbers
+ extremely close to zero may underflow to positive or negative
+ zero, and numbers of extremely large magnitude may overflow to
+ infinity.).</p>
 
 <h3>IntOrFloat</h3>
 
@@ -113,7 +114,9 @@ the order they are declared.</li>
  on the full precision given in the JSON text. For example, the
  JSON number 0.99999999999999999999999999999999999 is not an
  integer, so it&#39;s converted to its closest floating-point
- approximation, namely 1.0.</p>
+ approximation, namely 1.0. (In some cases, numbers extremely
+ close to zero may underflow to positive or negative zero, and
+ numbers of extremely large magnitude may overflow to infinity.).</p>
 
 <h3>IntOrFloatFromDouble</h3>
 
@@ -129,7 +132,9 @@ the order they are declared.</li>
  example, the JSON number 0.99999999999999999999999999999999999 is
  the integer 1 when rounded to its closest floating-point
  approximation (1.0), so it&#39;s converted to the CBOR integer 1
- (major type 0).</p>
+ (major type 0). (In some cases, numbers extremely close to zero
+ may underflow to zero, and numbers of extremely large magnitude
+ may overflow to infinity.).</p>
 
 <p><a href="/CBOR/">Back to CBOR start page.</a></p>
 </div><nav id="navigation"><ul>

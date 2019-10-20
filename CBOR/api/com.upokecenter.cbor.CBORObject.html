@@ -187,6 +187,8 @@ Converts this object to a CBOR number.</li>
 Converts this object to a 32-bit floating point number.</li>
 <li><code>java.lang.String AsString()</code><br>
 Gets the value of this object as a text string.</li>
+<li><code>long CalcByteLength()</code><br>
+Not documented yet.</li>
 <li><code>boolean CanFitInDouble()</code><br>
 Returns whether this object&#39;s value can be converted to a 64-bit floating
 point number without its value being rounded to another numerical
@@ -1935,6 +1937,19 @@ null.</p></li>
 
 <ul>
 <li>Same as.</li>
+</ul>
+
+<h3>CalcByteLength</h3>
+
+<pre>public long CalcByteLength()
+</pre>
+
+<p>Not documented yet.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The return value is not documented yet.</li>
 </ul>
 
 <h3>FromObject</h3>
@@ -3762,10 +3777,10 @@ CBORType.Integer</code>.</li>
 <li>The bits of a 64-bit floating-point number stored by this object.
 The most significant bit is the sign (set means negative, clear
 means nonnegative); the next most significant 11 bits are the
-exponent area; and the remaining bits are the mantissa area. If all
-the bits of the exponent area are set and the mantissa area is 0,
-this indicates infinity. If all the bits of the exponent area are
-set and the mantissa area is other than 0, this indicates
+exponent area; and the remaining bits are the significand area. If
+all the bits of the exponent area are set and the significand area
+is 0, this indicates infinity. If all the bits of the exponent area
+are set and the significand area is other than 0, this indicates
 not-a-number (NaN).</li>
 </ul>
 

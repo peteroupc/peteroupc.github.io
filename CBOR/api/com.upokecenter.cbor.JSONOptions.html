@@ -58,8 +58,9 @@ This property now has no effect.</li>
 Gets a value indicating how JSON numbers are decoded to CBOR integers.</li>
 <li><code>boolean getPreserveNegativeZero()</code><br>
 Gets a value indicating whether the JSON decoder should preserve the
-distinction between positive zero and negative zero in
-floating-point number formats when the decoder decodes JSON to CBOR.</li>
+distinction between positive zero and negative zero in when the
+decoder decodes JSON to a floating-point number format that makes
+this distinction.</li>
 <li><code>boolean getReplaceSurrogates() char</code><br>
 Gets a value indicating whether surrogate code points not part of a
 surrogate pair (which consists of two consecutive char s
@@ -124,20 +125,20 @@ This property now has no effect. This library now includes  necessary
 </pre>
 
 <p>Gets a value indicating whether the JSON decoder should preserve the
- distinction between positive zero and negative zero in
- floating-point number formats when the decoder decodes JSON to CBOR.
-  For example the JSON number &quot;-0.0&quot; (which expresses negative zero)
- is decoded to negative zero if this property is <code>true</code>, and to
- positive zero if this property is <code>false</code>. This property has no
- effect for number conversion kinds in which zeros are always decoded
- as CBOR integers (such as the <code>IntOrFloat</code> and
- <code>IntOrFloatFromDouble</code> conversion kinds).</p>
+ distinction between positive zero and negative zero in when the
+ decoder decodes JSON to a floating-point number format that makes
+ this distinction. For a value of <code>false</code>, if the result of
+ parsing a JSON string would be a floating-point negative zero, that
+ result is a positive zero instead. (Note that this property has no
+ effect for conversion kind <code>IntOrFloatFromDouble</code>, where
+ floating-point zeros are not possible.).</p>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
 <li>A value indicating whether to preserve the distinction between
-positive zero and negative zero. The default is true.</li>
+positive zero and negative zero when decoding JSON. The default is
+true.</li>
 </ul>
 
 <h3>getNumberConversion</h3>

@@ -117,7 +117,7 @@ arbitrary-precision decimal number.</li>
 <li><code>static EDecimal Rotate​(EDecimal ed,
   EDecimal ed2,
   EContext ec)</code><br>
-Rotates the digits of an arbitrary-precision decimal number&#39;s mantissa.</li>
+Rotates the digits of an arbitrary-precision decimal number&#39;s significand.</li>
 <li><code>static boolean SameQuantum​(EDecimal ed1,
        EDecimal ed2)</code><br>
 Returns whether two arbitrary-precision numbers have the same exponent, they
@@ -131,11 +131,11 @@ given number of places.</li>
 <li><code>static EDecimal Shift​(EDecimal ed,
  EDecimal ed2,
  EContext ec)</code><br>
-Shifts the digits of an arbitrary-precision decimal number&#39;s mantissa.</li>
+Shifts the digits of an arbitrary-precision decimal number&#39;s significand.</li>
 <li><code>static EDecimal Trim​(EDecimal ed1,
 EContext ec)</code><br>
 Returns an arbitrary-precision number with the same value as this one but
-with certain trailing zeros removed from its mantissa.</li>
+with certain trailing zeros removed from its significand.</li>
 <li><code>static EDecimal Xor​(EDecimal ed1,
 EDecimal ed2,
 EContext ec)</code><br>
@@ -596,17 +596,17 @@ null.</li>
 <pre>public static EDecimal Shift​(EDecimal ed, EDecimal ed2, EContext ec)
 </pre>
 
-<p>Shifts the digits of an arbitrary-precision decimal number&#39;s mantissa.</p>
+<p>Shifts the digits of an arbitrary-precision decimal number&#39;s significand.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>ed</code> - An arbitrary-precision number containing the mantissa to shift.</p></li>
+<li><p><code>ed</code> - An arbitrary-precision number containing the significand to shift.</p></li>
 <li><p><code>ed2</code> - An arbitrary-precision number indicating the number of digits to
-shift the first operand&#39;s mantissa. Must be an integer with an
-exponent of 0. If this parameter is positive, the mantissa is
+shift the first operand&#39;s significand. Must be an integer with an
+exponent of 0. If this parameter is positive, the significand is
 shifted to the left by the given number of digits. If this parameter
-is negative, the mantissa is shifted to the right by the given
+is negative, the significand is shifted to the right by the given
 number of digits.</p></li>
 <li><p><code>ec</code> - An arithmetic context to control the precision of
 arbitrary-precision numbers. Can be null.</p></li>
@@ -615,12 +615,12 @@ arbitrary-precision numbers. Can be null.</p></li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>An arbitrary-precision decimal number whose mantissa is shifted the
-given number of digits. Signals an invalid operation and returns NaN
-(not-a-number) if <code>ed2</code> is a signaling NaN or if <code>ed2</code>
-is not an integer, is negative, has an exponent other than 0, or has
-an absolute value that exceeds the maximum precision specified in
-the context.</li>
+<li>An arbitrary-precision decimal number whose significand is shifted
+the given number of digits. Signals an invalid operation and returns
+NaN (not-a-number) if <code>ed2</code> is a signaling NaN or if <code>
+ed2</code> is not an integer, is negative, has an exponent other than 0,
+or has an absolute value that exceeds the maximum precision
+specified in the context.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -635,24 +635,24 @@ null.</li>
 <pre>public static EDecimal Rotate​(EDecimal ed, EDecimal ed2, EContext ec)
 </pre>
 
-<p>Rotates the digits of an arbitrary-precision decimal number&#39;s mantissa.</p>
+<p>Rotates the digits of an arbitrary-precision decimal number&#39;s significand.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>ed</code> - An arbitrary-precision number containing the mantissa to rotate.
-If this mantissa contains more digits than the precision, the
-most-significant digits are chopped off the mantissa before the
-rotation begins.</p></li>
+<li><p><code>ed</code> - An arbitrary-precision number containing the significand to
+rotate. If this significand contains more digits than the precision,
+the most-significant digits are chopped off the significand before
+the rotation begins.</p></li>
 <li><p><code>ed2</code> - An arbitrary-precision number indicating the number of digits to
-rotate the first operand&#39;s mantissa. Must be an integer with an
-exponent of 0. If this parameter is positive, the mantissa is
+rotate the first operand&#39;s significand. Must be an integer with an
+exponent of 0. If this parameter is positive, the significand is
 shifted to the left by the given number of digits and the
-most-significant digits shifted out of the mantissa become the
+most-significant digits shifted out of the significand become the
 least-significant digits instead. If this parameter is negative, the
-mantissa is shifted to the right by the given number of digits and
-the least-significant digits shifted out of the mantissa become the
-most-significant digits instead.</p></li>
+significand is shifted to the right by the given number of digits
+and the least-significant digits shifted out of the significand
+become the most-significant digits instead.</p></li>
 <li><p><code>ec</code> - An arithmetic context to control the precision of
 arbitrary-precision numbers. If this parameter is null or specifies
 an unlimited precision, this method has the same behavior as <code>
@@ -662,12 +662,12 @@ Shift</code>.</p></li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>An arbitrary-precision decimal number whose mantissa is rotated the
-given number of digits. Signals an invalid operation and returns NaN
-(not-a-number) if <code>ed2</code> is a signaling NaN or if <code>ed2</code>
-is not an integer, is negative, has an exponent other than 0, or has
-an absolute value that exceeds the maximum precision specified in
-the context.</li>
+<li>An arbitrary-precision decimal number whose significand is rotated
+the given number of digits. Signals an invalid operation and returns
+NaN (not-a-number) if <code>ed2</code> is a signaling NaN or if <code>
+ed2</code> is not an integer, is negative, has an exponent other than 0,
+or has an absolute value that exceeds the maximum precision
+specified in the context.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -915,12 +915,12 @@ are infinity (positive and/or negative); otherwise, <code>false</code>.</li>
 </pre>
 
 <p>Returns an arbitrary-precision number with the same value as this one but
- with certain trailing zeros removed from its mantissa. If the
+ with certain trailing zeros removed from its significand. If the
  number&#39;s exponent is 0, it is returned unchanged (but may be rounded
  depending on the arithmetic context); if that exponent is greater 0,
- its trailing zeros are removed from the mantissa (then rounded if
+ its trailing zeros are removed from the significand (then rounded if
  necessary); if that exponent is less than 0, its trailing zeros are
- removed from the mantissa until the exponent reaches 0 (then the
+ removed from the significand until the exponent reaches 0 (then the
  number is rounded if necessary).</p>
 
 <p><strong>Parameters:</strong></p>
@@ -935,7 +935,7 @@ exponent range of the result. Can be null.</p></li>
 
 <ul>
 <li>An arbitrary-precision number with the same value as this one but
-with certain trailing zeros removed from its mantissa. If <code>
+with certain trailing zeros removed from its significand. If <code>
 ed1</code> is not-a-number (NaN) or infinity, it is generally returned
 unchanged.</li>
 </ul>

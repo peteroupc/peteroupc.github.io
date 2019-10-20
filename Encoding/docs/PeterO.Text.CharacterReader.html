@@ -145,10 +145,11 @@ is null.</p></li>
 <ul>
 <li><p><i>str</i>: The parameter  <i>str</i>
 is a text string.</p></li>
-<li><p><i>offset</i>: The parameter  <i>offset</i>
-is a 32-bit signed integer.</p></li>
-<li><p><i>length</i>: The parameter  <i>length</i>
-is a 32-bit signed integer.</p></li>
+<li><p><i>offset</i>: An index, starting at 0, showing where the desired portion of  <i>str</i>
+begins.</p></li>
+<li><p><i>length</i>: The length, in code units, of the desired portion of  <i>str</i>
+(but not more than  <i>str</i>
+&#39;s length).</p></li>
 <li><p><i>skipByteOrderMark</i>: If true and the first character in the string portion is U+FEFF, skip that character.</p></li>
 <li><p><i>errorThrow</i>: When encountering invalid encoding, throw an exception if this parameter is true, or replace it with U+FFFD (replacement character) if this parameter is false.</p></li>
 </ul>
@@ -156,9 +157,17 @@ is a 32-bit signed integer.</p></li>
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li>System.ArgumentNullException:
+<li><p>System.ArgumentNullException:
 The parameter  <i>str</i>
-is null.</li>
+is null.</p></li>
+<li><p>System.ArgumentException:
+Either  <i>offset</i>
+or  <i>length</i>
+is less than 0 or greater than  <i>str</i>
+&#39;s length, or  <i>str</i>
+&#39;s length minus  <i>offset</i>
+is less than  <i>length</i>
+.</p></li>
 </ul>
 
 <p><a id="Void_ctor_System_IO_Stream"></a></p>

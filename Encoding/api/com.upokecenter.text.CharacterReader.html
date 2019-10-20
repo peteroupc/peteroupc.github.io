@@ -207,8 +207,10 @@ less than &quot;length&quot;.</p></li>
 
 <ul>
 <li><p><code>str</code> - The parameter <code>str</code> is a text string.</p></li>
-<li><p><code>offset</code> - The parameter <code>offset</code> is a 32-bit signed integer.</p></li>
-<li><p><code>length</code> - The parameter <code>length</code> is a 32-bit signed integer.</p></li>
+<li><p><code>offset</code> - An index, starting at 0, showing where the desired portion of
+<code>str</code> begins.</p></li>
+<li><p><code>length</code> - The length, in code units, of the desired portion of <code>
+str</code> (but not more than <code>str</code> &#39;s length).</p></li>
 <li><p><code>skipByteOrderMark</code> - If true and the first character in the string
 portion is U+FEFF, skip that character.</p></li>
 <li><p><code>errorThrow</code> - When encountering invalid encoding, throw an exception if
@@ -219,7 +221,10 @@ character) if this parameter is false.</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>java.lang.NullPointerException</code> - The parameter <code>str</code> is null.</li>
+<li><p><code>java.lang.NullPointerException</code> - The parameter <code>str</code> is null.</p></li>
+<li><p><code>java.lang.IllegalArgumentException</code> - Either <code>offset</code> or <code>length</code> is less
+than 0 or greater than <code>str</code> &#39;s length, or <code>str</code> &#39;s
+length minus <code>offset</code> is less than <code>length</code>.</p></li>
 </ul>
 
 <h3>CharacterReader</h3>

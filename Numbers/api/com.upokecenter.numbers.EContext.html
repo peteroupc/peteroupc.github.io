@@ -384,8 +384,8 @@ Copies this EContext with an unlimited exponent range.</li>
  just the number&#39;s Exponent property. The default value is true,
  meaning that EMax and EMin refer to the adjusted exponent. Setting
  this value to false (using WithAdjustExponent) is useful for
- modeling floating point representations with an integer mantissa
- (significand) and an integer exponent, such as Java&#39;s BigDecimal.</p>
+ modeling floating point representations with an integer significand
+ and an integer exponent, such as Java&#39;s BigDecimal.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -404,7 +404,7 @@ they refer to just the number&#39;s Exponent property.</li>
  not be higher than EMax + 1 - Precision. If a number&#39;s exponent is
  higher than that value, but not high enough to cause overflow, the
  exponent is clamped to that value and enough zeros are added to the
- number&#39;s mantissa (significand) to account for the adjustment. If
+ number&#39;s significand to account for the adjustment. If
  HasExponentRange is false, this value is always false.</p>
 
 <p><strong>Returns:</strong></p>
@@ -576,8 +576,8 @@ digits; otherwise, <code>false</code>. The default is false.</li>
 
 <p>Gets the maximum length of a converted number in digits, ignoring the radix
  point and exponent. For example, if precision is 3, a converted
- number&#39;s mantissa (significand) can range from 0 to 999 (up to three
- digits long). If 0, converted numbers can have any precision.
+ number&#39;s significand can range from 0 to 999 (up to three digits
+ long). If 0, converted numbers can have any precision.
  <p>Not-a-number (NaN) values can carry an optional number, its
   payload, that serves as its &quot;diagnostic information&quot;, In general, if
  an operation requires copying an NaN&#39;s payload, only up to as many
@@ -589,9 +589,8 @@ digits; otherwise, <code>false</code>. The default is false.</li>
 <ul>
 <li>The maximum length of a converted number in digits, ignoring the
 radix point and exponent. For example, if precision is 3, a
-converted number&#39;s mantissa (significand) can range from 0 to 999
-(up to three digits long). If 0, converted numbers can have any
-precision.</li>
+converted number&#39;s significand can range from 0 to 999 (up to three
+digits long). If 0, converted numbers can have any precision.</li>
 </ul>
 
 <h3>getRounding</h3>
