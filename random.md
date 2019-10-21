@@ -377,10 +377,10 @@ Some applications require generating unique identifiers, especially to identify 
 2. Can the application tolerate the risk of generating the same identifier for different resources<sup>[**(26)**](#Note26)</sup>?
 3. Do identifiers have to be hard to guess, be simply "random-looking", or be neither?
 4. Do identifiers have to be typed in or otherwise relayed by end users<sup>[**(27)**](#Note27)</sup>?
-5. Is the identifier the only thing that grants access to the resource it identifiers?
+5. Is the resource an identifier identifies available to anyone who knows that identifier (even without being logged in or authorized in some way)?
 6. Do identifiers have to be memorable?
 
-Examples of unique integers include sequentially-assigned integers as well as the primary key of a database table.  If the application requires a unique integer to "look random", it can apply a reversible operation to that integer (such as a permutation), or take that integer as the seed of a so-called "full-period" PRNG (which can be a [**linear congruential generator**](https://en.wikipedia.org/wiki/Linear_congruential_generator)) that has a state length of `B` bits and outputs `B`-bit integers<sup>[**(28)**](#Note28)</sup>.
+Examples of unique integers include sequentially-assigned integers as well as the primary key of a database table.  If the application requires a unique integer to "look random", it can apply a reversible operation to that integer (such as a permutation), or take that integer as the seed of a so-called "full-period" PRNG that has a state length of `B` bits and outputs `B`-bit integers<sup>[**(28)**](#Note28)</sup>.
 
 An application that generates unique identifiers SHOULD do so as follows:
 
@@ -594,7 +594,7 @@ See also N. Reed, "Quick And Easy GPU Random Numbers In D3D11", Nathan Reed's co
 
 <small><sup id=Note27>(27)</sup> If an application expects end users to type in a unique identifier, it could find that very long unique identifiers are unsuitable for it (e.g. 128-bit numbers take up 32 base-16 characters).  There are ways to deal with these and other long identifiers, including (1) separating memorable chunks of the identifier with a hyphen or another character (e.g., "ABCDEF" becomes "ABC-DEF"), (2) converting the identifier to a sequence of memorable words (as in Bitcoin's BIP39), or (3) adding a so-called "checksum digit" at the end of the identifier to guard against typing mistakes.  The application ought to consider trying (1) or (2) before deciding to use shorter identifiers than what this document recommends.</small>
 
-<small><sup id=Note28>(28)</sup> For suggested linear congruential generators for generating unique "random-looking" numbers, see P. L'Ecuyer, "Tables of Linear Congruential Generators of Different Sizes and Good Lattice Structure", _Mathematics of Computation_ 68(225), January 1999.  Another choice for _n_-bit unique integers is an _n_-bit [**linear-feedback shift register**](https://en.wikipedia.org/wiki/Linear-feedback_shift_register) generator with the right parameters, which cycles "randomly" through all but one _n_-bit integers; see P. Alfke, "Efficient Shift Registers, LFSR Counters, and Long Pseudo-Random Sequence Generators", Xilinx Application Note XAPP 052, July 7, 1996.</small>
+<small><sup id=Note28>(28)</sup> Full-period PRNGs include some [**linear congruential generators**] (https://en.wikipedia.org/wiki/Linear_congruential_generator) and some [**linear-feedback shift register**](https://en.wikipedia.org/wiki/Linear-feedback_shift_register) (LFSR) generators.  For suggested linear congruential generators, see P. L'Ecuyer, "Tables of Linear Congruential Generators of Different Sizes and Good Lattice Structure", _Mathematics of Computation_ 68(225), January 1999.  For LFSR generators, see P. Alfke, "Efficient Shift Registers, LFSR Counters, and Long Pseudo-Random Sequence Generators", Xilinx Application Note XAPP 052, July 7, 1996, which gives parameters for LFSR generators that cycle "randomly" through all but one _n_-bit integers.</small>
 
 <small><sup id=Note29>(29)</sup> The following are some reasons an algorithm might produce different results from run to run or from machine to machine (making it an _inconsistent_ algorithm):
 
