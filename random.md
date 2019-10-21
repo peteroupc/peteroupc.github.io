@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on Mar. 5, 2016; last updated on Oct. 20, 2019.
+Begun on Mar. 5, 2016; last updated on Oct. 21, 2019.
 
 Most apps that use random numbers care about either unpredictability, high quality, or repeatability.  This article explains the three kinds of RNGs and gives recommendations on each kind.
 
@@ -443,7 +443,7 @@ _Verifiable random numbers_ are random numbers (such as seeds for PRNGs) that ar
 > **Examples:**
 >
 > 1. Generating verifiable randomness has been described in [**RFC 3797**](https://www.rfc-editor.org/rfc/rfc3797.txt), which describes the selection process for the Nominations Committee (NomCom) of the Internet Engineering Task Force.
-> 2. _Verifiable delay functions_ are functions whose output deliberately takes time to compute (e.g., to generate a seemingly random number from public data), but is easy to verify. The concept was introduced in (Boneh et al., 2018)<sup>[**(33)**](#Note33)</sup>, but such functions appeared earlier in (Lenstra et al., 2015)<sup>[**(34)**](#Note34)</sup>.  Generally, in any protocol using this kind of function, the time allowed to contribute randomness is shorter than the time required to calculate the verifiable delay function's output from that randomness.
+> 2. _Verifiable delay functions_ are functions whose output deliberately takes time to compute (e.g., to generate a seemingly random number from public data), but is easy to verify. The concept was first formally defined in (Boneh et al., 2018)<sup>[**(33)**](#Note33)</sup>, but such functions appeared earlier in (Lenstra et al., 2015)<sup>[**(34)**](#Note34)</sup>.  Generally, in any protocol using this kind of function, the time allowed to contribute randomness is shorter than the time required to calculate the verifiable delay function's output from that randomness.
 > 3. In a so-called [**_commitment scheme_**](https://en.wikipedia.org/wiki/Commitment_scheme), one computer generates data to be committed (e.g. a random number or a chess move), then reveals its hash code or digital signature (_commitment_), and only later reveals the committed data (along with other information needed, if any, to verify that the data wasn't changed in between).  Examples of commitment schemes are _hash-based commitments_ and _Pedersen commitments_.  In commitment protocols involving two computers, those computers first send their commitments, then reveal and verify the committed data; if the committed data is random numbers, they are hashed to produce a final random number.  Commitment protocols with three or more computers are not secure, however.
 
 <a id=Guidelines_for_New_RNG_APIs></a>
@@ -456,7 +456,16 @@ This section contains suggested requirements on cryptographic and high-quality R
 <a id=Cryptographic_RNGs_Requirements></a>
 ### Cryptographic RNGs: Requirements
 
-A cryptographic RNG generates uniformly distributed random bits such that it would be cost-prohibitive for an outside party to correctly guess, with more than a 50% chance per bit, prior or future unseen outputs of that RNG after knowing how the RNG works and/or extremely many outputs of the RNG, or prior unseen outputs of that RNG after knowing the RNG's internal state at the given point in time.
+A cryptographic RNG generates uniformly distributed random bits such that it would be cost-prohibitive for an outside party to correctly guess, with more than a 50% chance per bit, prior or future unseen outputs of that RNG after knowing how the RNG works and/or extremely many outputs of the RNG, or prior unseen outputs of that RNG after knowing the RNG's internal state at the given point in time.<<|Implementing a cryptographic RNG involves many security considerations, including these:
+
+1. If an application runs code from untrusted sources in the same process in which a cryptographic RNG's state is stored, it's possible for malicious code to read out that state via side-channel attacks. A cryptographic RNG SHOULD NOT be implemented in such a process. See (A) and see also (B).
+2. A cryptographic RNG's state could be reused due to process forking or virtual machine snapshot resets.  See (C) and (D), for example.
+3. If a cryptographic RNG is not "constant-time" (the RNG is data-dependent), its timing differences could be exploited in a security attack.
+
+(A) "Post-Spectre Threat Model Re-Think" in the Chromium source code repository (May 29, 2018).
+(B) Bernstein, D.J. "Entropy Attacks!", Feb. 5, 2014.
+(C) Everspaugh, A., Zhai, Y., et al. "Not-So-Random Numbers in Virtualized Linux and the Whirlwind RNG", 2014.<br/>
+(D) Ristenpart, T., Yilek, S. "When Good Randomness Goes Bad: Virtual Machine Reset Vulnerabilities and Hedging Deployed Cryptography", 2010.>>
 
 If a cryptographic RNG implementation uses a PRNG, the following requirements apply.
 
@@ -612,7 +621,7 @@ See also N. Reed, "Quick And Easy GPU Random Numbers In D3D11", Nathan Reed's co
 
 <small><sup id=Note34>(34)</sup> Lenstra, A.K., Wesolowski, B. "A random zoo: sloth, unicorn, and trx", 2015.</small>
 
-<small><sup id=Note35>(35)</sup> Such arbitrary data can include process identifiers, time stamps, environment variables, random numbers, virtual machine guest identifiers, and/or other data specific to the session or to the instance of the RNG.  See also NIST SP800-90A and the references below.<br/>Everspaugh, A., Zhai, Y., et al.  "Not-So-Random Numbers in Virtualized Linux and the Whirlwind RNG", 2014.<br>Ristenpart, T., Yilek, S. "When Good Randomness Goes Bad: Virtual Machine Reset Vulnerabilities and Hedging Deployed Cryptography", 2010.</small>
+<small><sup id=Note35>(35)</sup> Such arbitrary data can include process identifiers, time stamps, environment variables, random numbers, virtual machine guest identifiers, and/or other data specific to the session or to the instance of the RNG.  See also NIST SP800-90A and the previous note.</small>
 
 <small><sup id=Note36>(36)</sup> Bernstein, D.J.  "Fast-key-erasure random number generators", Jun. 23, 2017.</small>
 
