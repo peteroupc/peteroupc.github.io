@@ -70,7 +70,7 @@ so that as a result, many applications use RNGs, especially built-in RNGs, that 
     - [**Determinism and Consistency**](#Determinism_and_Consistency)
 - [**Hash Functions**](#Hash_Functions)
     - [**Procedural Noise Functions**](#Procedural_Noise_Functions)
-- [**Key Derivation Functions**](#Key_Derivation_Functions)
+    - [**Pseudorandom Functions**](#Pseudorandom_Functions)
 - [**Verifiable Random Numbers**](#Verifiable_Random_Numbers)
 - [**Guidelines for New RNG APIs**](#Guidelines_for_New_RNG_APIs)
     - [**Cryptographic RNGs: Requirements**](#Cryptographic_RNGs_Requirements)
@@ -414,8 +414,6 @@ An application can generally achieve consistency by not changing the algorithm b
 <a id=Hash_Functions></a>
 ## Hash Functions
 
-A seemingly random number can be generated from arbitrary data using a _hash function_.
-
 A _hash function_ is a function that takes an arbitrary input of any size (such as an array of 8-bit bytes or a sequence of characters) and returns an output with a fixed number of bits. That output is also known as a _hash code_.<sup>[**(30)**](#Note30)</sup>.  The individual bits of a hash code can serve as random numbers, or the hash code can serve as the seed for a PRNG that, in turn, [**generates random numbers**](https://peteroupc.github.io/randomfunc.html) in the desired way.
 
 Useful properties of some hash functions include&mdash;
@@ -435,15 +433,15 @@ A _noise function_ is similar to a hash function; it takes an _n_-dimensional po
 - SHOULD include random numbers (from any RNG), and
 - SHOULD NOT vary from one run to the next while the noise function is used for a given purpose (e.g., to generate terrain for a given map).
 
-<a id=Key_Derivation_Functions></a>
-## Key Derivation Functions
+<a id=Pseudorandom_Functions></a>
+### Pseudorandom Functions
 
-A _key derivation function_ is a kind of hash function whose output deliberately takes time to compute and can't be verified much faster than running the function.  In general, key derivation functions take as input&mdash;
+A _pseudorandom function_ is a kind of hash function that takes&mdash;
 
 - a _secret_ (such as a password or a long-term key), and
-- a _salt_ (which is unique to mitigate precomputation attacks),
+- additional data such as a _salt_ (which is unique in order to mitigate precomputation attacks) or a _nonce_,
 
-and outputs a seemingly random number.  Examples include PBKDF2 (RFC 2898), `scrypt`, and Ethash.  Key derivation functions are generally used to avoid storing secrets directly, as well as in proofs of work such as the one described in RFC 8019 sec. 4.4.
+and outputs a seemingly random number.  (If the output is keying material, the function is also called a _key derivation function_; see NIST SP 800-108.)  Some pseudorandom functions deliberately take time to compute their output; these are designed above all for cases in which the secret is a password or otherwise has low entropy &mdash; examples of such functions include PBKDF2 (RFC 2898), `scrypt` (RFC 7914), and Ethash.  Pseudorandom functions are also used in proofs of work such as the one described in RFC 8019 sec. 4.4.
 
 <a id=Verifiable_Random_Numbers></a>
 ## Verifiable Random Numbers
@@ -453,7 +451,7 @@ _Verifiable random numbers_ are random numbers (such as seeds for PRNGs) that ar
 > **Examples:**
 >
 > 1. Generating verifiable randomness has been described in [**RFC 3797**](https://www.rfc-editor.org/rfc/rfc3797.txt), which describes the selection process for the Nominations Committee (NomCom) of the Internet Engineering Task Force.
-> 2. _Verifiable delay functions_ calculate an output as well as a proof that the output was correctly calculated; these functions deliberately take much more time to calculate the output (e.g., to generate a seemingly random number from public data) than to verify its correctness.<sup>[**(38)**](#Note38)</sup> Generally, in any protocol using this kind of function, the time allowed to contribute randomness is shorter than the time required to calculate the verifiable delay function's output from that randomness.
+> 2. _Verifiable delay functions_ calculate an output as well as a proof that the output was correctly calculated; these functions deliberately take much more time to calculate the output (e.g., to generate a seemingly random number from public data) than to verify its correctness.<sup>[**(33)**](#Note33)</sup> Generally, in any protocol using this kind of function, the time allowed to contribute randomness is shorter than the time required to calculate the verifiable delay function's output from that randomness.
 > 3. In a so-called [**_commitment scheme_**](https://en.wikipedia.org/wiki/Commitment_scheme), one computer generates data to be committed (e.g. a random number or a chess move), then reveals its hash code or digital signature (_commitment_), and only later reveals the committed data (along with other information needed, if any, to verify that the data wasn't changed in between).  Examples of commitment schemes are _hash-based commitments_ and _Pedersen commitments_.  In commitment protocols involving two computers, those computers first send their commitments, then reveal and verify the committed data; if the committed data is random numbers, they are hashed to produce a final random number.  Commitment protocols with three or more computers are not secure, however.
 
 <a id=Guidelines_for_New_RNG_APIs></a>
@@ -466,7 +464,7 @@ This section contains suggested requirements on cryptographic and high-quality R
 <a id=Cryptographic_RNGs_Requirements></a>
 ### Cryptographic RNGs: Requirements
 
-A cryptographic RNG generates uniformly distributed random bits such that it would be cost-prohibitive for an outside party to correctly guess, with more than a 50% chance per bit, prior or future unseen outputs of that RNG after knowing how the RNG works and/or extremely many outputs of the RNG, or prior unseen outputs of that RNG after knowing the RNG's internal state at the given point in time.<sup>[**(33)**](#Note33)</sup>
+A cryptographic RNG generates uniformly distributed random bits such that it would be cost-prohibitive for an outside party to correctly guess, with more than a 50% chance per bit, prior or future unseen outputs of that RNG after knowing how the RNG works and/or extremely many outputs of the RNG, or prior unseen outputs of that RNG after knowing the RNG's internal state at the given point in time.<sup>[**(34)**](#Note34)</sup>
 
 If a cryptographic RNG implementation uses a PRNG, the following requirements apply.
 
@@ -477,16 +475,16 @@ If a cryptographic RNG implementation uses a PRNG, the following requirements ap
 3. While or after the PRNG is created, and before it generates a random number, it is initialized ("seeded") with a seed described as follows. The seed&mdash;
     - has as many bits as the PRNG's _state length_,
     - consists of data that ultimately derives from the output of one or more [**nondeterministic sources**](#Nondeterministic_Sources_and_Seed_Generation), where the output is at least as hard to predict as ideal random data with as many bits as the _security strength_, and
-    - MAY be mixed with arbitrary data other than the seed as long as the result is no easier to predict<sup>[**(34)**](#Note34)</sup>.
+    - MAY be mixed with arbitrary data other than the seed as long as the result is no easier to predict<sup>[**(35)**](#Note35)</sup>.
 
 4. The RNG MAY reseed itself from time to time, using a newly generated seed as described earlier.  If the RNG reseeds if it would generate more than a threshold number of bits without reseeding, that threshold SHOULD be 2<sup>67</sup> or less.
 
 > **Examples:** The following are examples of cryptographic RNGs:
 >
 > - Randomness extractors or cryptographic [**hash functions**](#Hash_Functions) that take very hard-to-predict signals from two or more [**nondeterministic sources**](#Nondeterministic_Sources_and_Seed_Generation) as input.
-> - A "fast-key-erasure" random number generator described by D.J. Bernstein in his blog (Bernstein 2017)<sup>[**(35)**](#Note35)</sup>.
+> - A "fast-key-erasure" random number generator described by D.J. Bernstein in his blog (Bernstein 2017)<sup>[**(36)**](#Note36)</sup>.
 > - An RNG implementation complying with NIST SP 800-90A.  The SP 800-90 series goes into further detail on how RNGs appropriate for information security can be constructed, and inspired much of this section.
-> - An RNG made up of two or more independently initialized cryptographic RNGs of different designs.<sup>[**(36)**](#Note36)</sup>
+> - An RNG made up of two or more independently initialized cryptographic RNGs of different designs.<sup>[**(37)**](#Note37)</sup>
 
 <a id=High_Quality_RNGs_Requirements></a>
 ### High-Quality RNGs: Requirements
@@ -520,7 +518,7 @@ Of the designs just given, the first is _stateful_ and the last three are _state
 A **programming language API** designed for reuse by applications could implement RNGs using the following guidelines:
 
 1.  The RNG API can include a method that fills one or more memory units (such as 8-bit bytes) completely with random bits.  See example 1.
-2.  If the API implements an automatically-seeded RNG, it SHOULD NOT allow applications to initialize that same RNG with a seed for reproducible "randomness"<sup>[**(37)**](#Note37)</sup> (it MAY provide a separate PRNG to accept such a seed). See example 2.
+2.  If the API implements an automatically-seeded RNG, it SHOULD NOT allow applications to initialize that same RNG with a seed for reproducible "randomness"<sup>[**(38)**](#Note38)</sup> (it MAY provide a separate PRNG to accept such a seed). See example 2.
 3.  If the API provides a PRNG that an application can seed for reproducible "randomness", it SHOULD document that PRNG and any methods the API provides that use that PRNG (such as shuffling and Gaussian number generation), and SHOULD NOT change that PRNG or those methods in a way that would change the "random" numbers they deliver for a given seed. See example 2.
 4.  A new programming language's **standard library** ought to include the following methods for generating independent uniform random numbers (see my document on [**random number generation methods**](https://peteroupc.github.io/randomfunc.html) for details).
     - Four methods for random integers: 0 to `n` including `n`, 0 to `n` excluding `n`, `a` to `b` including `b`, and `a` to `b` excluding `b`.
@@ -620,7 +618,9 @@ See also N. Reed, "Quick And Easy GPU Random Numbers In D3D11", Nathan Reed's co
 
 <small><sup id=Note32>(32)</sup> Noise functions include functions that combine several outputs of a noise function, including by [**fractional Brownian motion**](https://en.wikipedia.org/wiki/Fractional_Brownian_motion).  By definition, noise functions are deterministic.</small>
 
-<small><sup id=Note33>(33)</sup> Implementing a cryptographic RNG involves many security considerations, including these:
+<small><sup id=Note33>(33)</sup> Verifiable delay functions are different from proofs of work, in which there can be multiple correct answers. These functions were first formally defined in Boneh, D., Bonneau, J., et al., "Verifiable Delay Functions", 2018, but such functions appeared earlier in Lenstra, A.K., Wesolowski, B., "A random zoo: sloth, unicorn, and trx", 2015.</small>
+
+<small><sup id=Note34>(34)</sup> Implementing a cryptographic RNG involves many security considerations, including these:
 
 1. If an application runs code from untrusted sources in the same process in which a cryptographic RNG's state is stored, it's possible for malicious code to read out that state via side-channel attacks. A cryptographic RNG SHOULD NOT be implemented in such a process. See (A) and see also (B).
 2. A cryptographic RNG's state could be reused due to process forking or virtual machine snapshot resets.  See (C) and (D), for example.
@@ -628,15 +628,13 @@ See also N. Reed, "Quick And Easy GPU Random Numbers In D3D11", Nathan Reed's co
 
 (A) "Post-Spectre Threat Model Re-Think" in the Chromium source code repository (May 29, 2018).<br/>(B) Bernstein, D.J. "Entropy Attacks!", Feb. 5, 2014.<br/>(C) Everspaugh, A., Zhai, Y., et al. "Not-So-Random Numbers in Virtualized Linux and the Whirlwind RNG", 2014.<br/>(D) Ristenpart, T., Yilek, S. "When Good Randomness Goes Bad: Virtual Machine Reset Vulnerabilities and Hedging Deployed Cryptography", 2010.</small>
 
-<small><sup id=Note34>(34)</sup> Such arbitrary data can include process identifiers, time stamps, environment variables, random numbers, virtual machine guest identifiers, and/or other data specific to the session or to the instance of the RNG.  See also NIST SP800-90A and the previous note.</small>
+<small><sup id=Note35>(35)</sup> Such arbitrary data can include process identifiers, time stamps, environment variables, random numbers, virtual machine guest identifiers, and/or other data specific to the session or to the instance of the RNG.  See also NIST SP800-90A and the previous note.</small>
 
-<small><sup id=Note35>(35)</sup> Bernstein, D.J.  "Fast-key-erasure random number generators", Jun. 23, 2017.</small>
+<small><sup id=Note36>(36)</sup> Bernstein, D.J.  "Fast-key-erasure random number generators", Jun. 23, 2017.</small>
 
-<small><sup id=Note36>(36)</sup> For example, a new RNG can be constructed from two independent RNGs using the so-called "shrinking generator" technique: generate one bit from the first RNG and one bit from the second, and take the second bit if the first bit is 1, or repeat this process otherwise.  See J. D. Cook, "Using one RNG to sample another", June 4, 2019, for more on this technique, including its advantages and drawbacks.</small>
+<small><sup id=Note37>(37)</sup> For example, a new RNG can be constructed from two independent RNGs using the so-called "shrinking generator" technique: generate one bit from the first RNG and one bit from the second, and take the second bit if the first bit is 1, or repeat this process otherwise.  See J. D. Cook, "Using one RNG to sample another", June 4, 2019, for more on this technique, including its advantages and drawbacks.</small>
 
-<small><sup id=Note37>(37)</sup> Allowing applications to do so would hamper forward compatibility &mdash; the API would then be less free to change how the RNG is implemented in the future (e.g., to use a cryptographic or otherwise "better" RNG), or to make improvements or bug fixes in methods that use that RNG (such as shuffling and Gaussian number generation).  (As a notable example, the V8 JavaScript engine recently changed its `Math.random()` implementation to use a variant of `xorshift128+`, which is backward compatible because nothing in JavaScript allows  `Math.random()` to be seeded.)  Nevertheless, APIs can still allow applications to provide additional input ("entropy") to the RNG in order to increase its randomness rather than to ensure repeatability.</small>
-
-<small><sup id=Note38>(38)</sup> Verifiable delay functions are different from proofs of work, in which there can be multiple correct answers. These functions were first formally defined in Boneh, D., Bonneau, J., et al., "Verifiable Delay Functions", 2018, but such functions appeared earlier in Lenstra, A.K., Wesolowski, B., "A random zoo: sloth, unicorn, and trx", 2015.</small>
+<small><sup id=Note38>(38)</sup> Allowing applications to do so would hamper forward compatibility &mdash; the API would then be less free to change how the RNG is implemented in the future (e.g., to use a cryptographic or otherwise "better" RNG), or to make improvements or bug fixes in methods that use that RNG (such as shuffling and Gaussian number generation).  (As a notable example, the V8 JavaScript engine recently changed its `Math.random()` implementation to use a variant of `xorshift128+`, which is backward compatible because nothing in JavaScript allows  `Math.random()` to be seeded.)  Nevertheless, APIs can still allow applications to provide additional input ("entropy") to the RNG in order to increase its randomness rather than to ensure repeatability.</small>
 
 <a id=Appendix></a>
 ## Appendix
