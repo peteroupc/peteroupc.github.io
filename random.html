@@ -229,14 +229,14 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 <li>Other examples include B. Jenkins&#39;s &quot;A small noncryptographic PRNG&quot; (sometimes called <code>jsf</code>), C. Doty-Humphrey&#39;s <code>sfc</code>, <code>msws</code> (Widynski 2017)<sup><a href="#Note7"><strong>(7)</strong></a></sup>, and D. Blackman&#39;s <code>gjrand</code>.</li>
 </ul>
 
-<p>The following also count as high-quality PRNGs, but they have weak seeds, complicating the task of seeding them:</p>
+<p>The following also count as high-quality PRNGs, but they require nonzero seeds, complicating the task of seeding them:</p>
 
 <ul>
-<li><a href="http://xoshiro.di.unimi.it/xoshiro256starstar.c"><strong>xoshiro256&#x2a;&#x2a;</strong></a> (state length 256 bits; nonzero seed).</li>
-<li><a href="http://xoshiro.di.unimi.it/xoroshiro128starstar.c"><strong>xoroshiro128&#x2a;&#x2a;</strong></a> (state length 128 bits; nonzero seed).</li>
-<li>XorShift* 128/64 (state length 128 bits; nonzero seed).</li>
-<li>XorShift* 64/32 (state length 64 bits; nonzero seed).</li>
-<li>A multiplicative LCG with modulus 2<sup>64</sup> or higher described in Table 5 of (L&#39;Ecuyer 1999)<sup><a href="#Note40"><strong>(40)</strong></a></sup>, where each output&#39;s highest 32 bits are used.  These generators require an odd seed.</li>
+<li><a href="http://xoshiro.di.unimi.it/xoshiro256starstar.c"><strong>xoshiro256&#x2a;&#x2a;</strong></a> (state length 256 bits).</li>
+<li><a href="http://xoshiro.di.unimi.it/xoroshiro128starstar.c"><strong>xoroshiro128&#x2a;&#x2a;</strong></a> (state length 128 bits.</li>
+<li>XorShift* 128/64 (state length 128 bits).</li>
+<li>XorShift* 64/32 (state length 64 bits).</li>
+<li>A multiplicative LCG with modulus 2<sup>64</sup> or higher described in Table 5 of (L&#39;Ecuyer 1999)<sup><a href="#Note40"><strong>(40)</strong></a></sup>, where each output&#39;s highest 32 bits are used.</li>
 </ul>
 
 <p>The following also count as high-quality PRNGs, but are not preferred:</p>
@@ -426,7 +426,7 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 <li><code>UNIQUE</code> is a unique number for the PRNG instance.</li>
 <li><code>SEED</code> is the seed distributed to each process in the set.</li>
 </ul></li>
-<li><p>Use a N- or higher-bit <a href="#Hash_Functions"><strong>hash function</strong></a> to generate a hash code of the string in step 2, and use the first N bits of that code as the seed for that PRNG instance, where N is that PRNG&#39;s state length.<sup><a href="#Note41"><strong>(41)</strong></a></sup></p></li>
+<li><p>Use a <a href="#Hash_Functions"><strong>hash function</strong></a> of N or more bits to generate a hash code of the string in step 2, and use the first N bits of that code as the seed for that PRNG instance, where N is that PRNG&#39;s state length.<sup><a href="#Note41"><strong>(41)</strong></a></sup></p></li>
 </ol>
 
 <p>It is NOT RECOMMENDED to seed a PRNG (especially several at once) with sequential counters, linearly related numbers, or timestamps, since these kinds of seeds can cause undesirable correlations in some PRNGs.  Moreover, seeding multiple PRNGs with coarse timestamps can introduce the risk of generating the same &quot;random&quot; sequence accidentally.<sup><a href="#Note17"><strong>(17)</strong></a></sup></p>
@@ -909,7 +909,7 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 
 <p><small><sup id=Note40>(40)</sup> Same as previous L&#39;Ecuyer reference.</small></p>
 
-<p><small><sup id=Note41>(41)</sup> For most purposes, SHA-256 is a good choice for the hash function if the PRNG&#39;s state length is 256 bits or less.  Some PRNGs (such as the XorShift, <code>xoroshiro</code>, and <code>xoshiro</code> families) require nonzero seeds; in that case, if the seed is all zeros, add &quot;-0&quot; to the string and retry step 3 until the seed is not all zeros.  Other PRNGs (such as multiplicative linear congruential generators) require odd seeds; in that case, set the lowest bit of the seed to 1 before use.</small></p>
+<p><small><sup id=Note41>(41)</sup> For most purposes, SHA-256 is a good choice for the hash function if the PRNG&#39;s state length is 256 bits or less.  Some PRNGs require nonzero seeds; in that case, if the seed is all zeros, add &quot;-0&quot; to the string and retry step 3 until the seed is not all zeros.</small></p>
 
 <p><a id=Appendix></a></p>
 

@@ -153,13 +153,13 @@ Besides cryptographic RNGs, the following are examples of [**high-quality PRNGs*
 - PCG (`pcg32`, `pcg64`, and `pcg64_fast` classes), by Melissa O'Neill. See also a [**critique by S. Vigna**](http://pcg.di.unimi.it/pcg.php).
 - Other examples include B. Jenkins's "A small noncryptographic PRNG" (sometimes called `jsf`), C. Doty-Humphrey's `sfc`, `msws` (Widynski 2017)<sup>[**(7)**](#Note7)</sup>, and D. Blackman's `gjrand`.
 
-The following also count as high-quality PRNGs, but they have weak seeds, complicating the task of seeding them:
+The following also count as high-quality PRNGs, but they require nonzero seeds, complicating the task of seeding them:
 
-- [**xoshiro256&#x2a;&#x2a;**](http://xoshiro.di.unimi.it/xoshiro256starstar.c) (state length 256 bits; nonzero seed).
-- [**xoroshiro128&#x2a;&#x2a;**](http://xoshiro.di.unimi.it/xoroshiro128starstar.c) (state length 128 bits; nonzero seed).
-- XorShift\* 128/64 (state length 128 bits; nonzero seed).
-- XorShift\* 64/32 (state length 64 bits; nonzero seed).
-- A multiplicative LCG with modulus 2<sup>64</sup> or higher described in Table 5 of (L'Ecuyer 1999)<sup>[**(40)**](#Note40)</sup>, where each output's highest 32 bits are used.  These generators require an odd seed.
+- [**xoshiro256&#x2a;&#x2a;**](http://xoshiro.di.unimi.it/xoshiro256starstar.c) (state length 256 bits).
+- [**xoroshiro128&#x2a;&#x2a;**](http://xoshiro.di.unimi.it/xoroshiro128starstar.c) (state length 128 bits.
+- XorShift\* 128/64 (state length 128 bits).
+- XorShift\* 64/32 (state length 64 bits).
+- A multiplicative LCG with modulus 2<sup>64</sup> or higher described in Table 5 of (L'Ecuyer 1999)<sup>[**(40)**](#Note40)</sup>, where each output's highest 32 bits are used.
 
 The following also count as high-quality PRNGs, but are not preferred:
 
@@ -297,7 +297,7 @@ For [**manually-seeded PRNGs**](#Manually_Seeded_PRNGs), however, if multiple pr
     - `UNIQUE` is a unique number for the PRNG instance.
     - `SEED` is the seed distributed to each process in the set.
 
-3. Use a N- or higher-bit [**hash function**](#Hash_Functions) to generate a hash code of the string in step 2, and use the first N bits of that code as the seed for that PRNG instance, where N is that PRNG's state length.<sup>[**(41)**](#Note41)</sup>
+3. Use a [**hash function**](#Hash_Functions) of N or more bits to generate a hash code of the string in step 2, and use the first N bits of that code as the seed for that PRNG instance, where N is that PRNG's state length.<sup>[**(41)**](#Note41)</sup>
 
 It is NOT RECOMMENDED to seed a PRNG (especially several at once) with sequential counters, linearly related numbers, or timestamps, since these kinds of seeds can cause undesirable correlations in some PRNGs.  Moreover, seeding multiple PRNGs with coarse timestamps can introduce the risk of generating the same "random" sequence accidentally.<sup>[**(17)**](#Note17)</sup>
 
@@ -646,7 +646,7 @@ See also N. Reed, "Quick And Easy GPU Random Numbers In D3D11", Nathan Reed's co
 
 <small><sup id=Note40>(40)</sup> Same as previous L'Ecuyer reference.</small>
 
-<small><sup id=Note41>(41)</sup> For most purposes, SHA-256 is a good choice for the hash function if the PRNG's state length is 256 bits or less.  Some PRNGs (such as the XorShift, `xoroshiro`, and `xoshiro` families) require nonzero seeds; in that case, if the seed is all zeros, add "-0" to the string and retry step 3 until the seed is not all zeros.  Other PRNGs (such as multiplicative linear congruential generators) require odd seeds; in that case, set the lowest bit of the seed to 1 before use.</small>
+<small><sup id=Note41>(41)</sup> For most purposes, SHA-256 is a good choice for the hash function if the PRNG's state length is 256 bits or less.  Some PRNGs require nonzero seeds; in that case, if the seed is all zeros, add "-0" to the string and retry step 3 until the seed is not all zeros.</small>
 
 <a id=Appendix></a>
 ## Appendix
