@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on June 4, 2017; last updated on Oct. 13, 2019.
+Begun on June 4, 2017; last updated on Oct. 24, 2019.
 
 Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.
 
@@ -22,6 +22,7 @@ All the random number methods presented on this page are ultimately based on an 
 
 - How to choose an underlying RNG for a particular application, including in terms of security, performance, and quality.  I have written more on RNG recommendations in [**another document**](https://peteroupc.github.io/random.html).
 - Randomness extraction (also known as _unbiasing_, _deskewing_, or _whitening_), such as [**hash functions**](https://peteroupc.github.io/random.html#Hash_Functions) and von Neumann unbiasing.
+- How to generate random security parameters such as encryption keys.
 
 <a id=About_This_Document></a>
 ### About This Document
@@ -65,6 +66,7 @@ All the random number methods presented on this page are ultimately based on an 
     - [**Random Walks**](#Random_Walks)
     - [**Randomization in Statistical Testing**](#Randomization_in_Statistical_Testing)
     - [**A Note on Sorting Random Numbers**](#A_Note_on_Sorting_Random_Numbers)
+    - [**A Note on Random Security Parameters**](#A_Note_on_Random_Security_Parameters)
 - [**General Non-Uniform Distributions**](#General_Non_Uniform_Distributions)
     - [**Weighted Choice**](#Weighted_Choice)
         - [**Weighted Choice With Replacement**](#Weighted_Choice_With_Replacement)
@@ -654,6 +656,11 @@ After creating the simulated data sets, one or more statistics, such as the mean
 ### A Note on Sorting Random Numbers
 
 In general, sorting random numbers is no different from sorting any other data. (Sorting algorithms are outside this document's scope.) <sup>[**(10)**](#Note10)</sup>
+
+<a id=A_Note_on_Random_Security_Parameters></a>
+### A Note on Random Security Parameters
+
+This document does not detail how to generate random parameters for information security algorithms, such as encryption keys, public/private key pairs, elliptic curves, or points on an elliptic curve.  In general, this is equivalent to passing a randomly generated secret (128 bits or more, generated securely at random), as well as additional data, to a special algorithm designed for this purpose.
 
 <a id=General_Non_Uniform_Distributions></a>
 ## General Non-Uniform Distributions

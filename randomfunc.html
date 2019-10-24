@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
-<p>Begun on June 4, 2017; last updated on Oct. 13, 2019.</p>
+<p>Begun on June 4, 2017; last updated on Oct. 24, 2019.</p>
 
 <p>Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.</p>
 
@@ -31,6 +31,7 @@
 <ul>
 <li>How to choose an underlying RNG for a particular application, including in terms of security, performance, and quality.  I have written more on RNG recommendations in <a href="https://peteroupc.github.io/random.html"><strong>another document</strong></a>.</li>
 <li>Randomness extraction (also known as <em>unbiasing</em>, <em>deskewing</em>, or <em>whitening</em>), such as <a href="https://peteroupc.github.io/random.html#Hash_Functions"><strong>hash functions</strong></a> and von Neumann unbiasing.</li>
+<li>How to generate random security parameters such as encryption keys.</li>
 </ul>
 
 <p><a id=About_This_Document></a></p>
@@ -91,6 +92,7 @@
 <li><a href="#Random_Walks"><strong>Random Walks</strong></a></li>
 <li><a href="#Randomization_in_Statistical_Testing"><strong>Randomization in Statistical Testing</strong></a></li>
 <li><a href="#A_Note_on_Sorting_Random_Numbers"><strong>A Note on Sorting Random Numbers</strong></a></li>
+<li><a href="#A_Note_on_Random_Security_Parameters"><strong>A Note on Random Security Parameters</strong></a></li>
 </ul></li>
 <li><a href="#General_Non_Uniform_Distributions"><strong>General Non-Uniform Distributions</strong></a>
 
@@ -834,6 +836,12 @@ END METHOD
 <h3>A Note on Sorting Random Numbers</h3>
 
 <p>In general, sorting random numbers is no different from sorting any other data. (Sorting algorithms are outside this document&#39;s scope.) <sup><a href="#Note10"><strong>(10)</strong></a></sup></p>
+
+<p><a id=A_Note_on_Random_Security_Parameters></a></p>
+
+<h3>A Note on Random Security Parameters</h3>
+
+<p>This document does not detail how to generate random parameters for information security algorithms, such as encryption keys, public/private key pairs, elliptic curves, or points on an elliptic curve.  In general, this is equivalent to passing a randomly generated secret (128 bits or more, generated securely at random), as well as additional data, to a special algorithm designed for this purpose.</p>
 
 <p><a id=General_Non_Uniform_Distributions></a></p>
 
