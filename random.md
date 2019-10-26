@@ -394,7 +394,7 @@ An application that generates unique identifiers SHOULD do so as follows:
    - And yes to 5: Generate a 128-bit-long or longer random integer using a cryptographic RNG.
    - And no to 5: Generate a 32-bit-long or longer random integer using a cryptographic RNG.
 - Otherwise:
-   - If identifiers have to be hard to guess: Use a unique integer followed by a random integer using a cryptographic RNG (the random integer's length depends on the answer to 5, as above).
+   - If identifiers have to be hard to guess: Use a unique integer which is followed by a random integer generated using a cryptographic RNG (the random integer's length depends on the answer to 5, as above).
    - Otherwise: Use a unique integer. (Note that generally, random numbers alone can't ensure uniqueness.)
 
 <a id=Determinism_and_Consistency></a>
