@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on Mar. 5, 2016; last updated on Oct. 23, 2019.
+Begun on Mar. 5, 2016; last updated on Oct. 27, 2019.
 
 Most apps that use random numbers care about either unpredictability, high quality, or repeatability.  This article explains the three kinds of RNGs and gives recommendations on each kind.
 
@@ -113,7 +113,7 @@ The following definitions are helpful in better understanding this document.
 <a id=Cryptographic_RNGs></a>
 ## Cryptographic RNGs
 
-Cryptographic RNGs (also known as "cryptographically strong" or "cryptographically secure" RNGs) seek to generate random numbers that not only "look random", but are cost-prohibitive to predict.  Cryptographic RNGs are RECOMMENDED for applications that use random numbers for information security, such as&mdash;
+Cryptographic RNGs (also known as "cryptographically strong" or "cryptographically secure" RNGs) seek to generate random numbers that not only "look random", but are cost-prohibitive to guess.  Cryptographic RNGs are RECOMMENDED for applications that use random numbers for information security, such as&mdash;
 
 -  generating keying material, such as encryption keys,
 -  generating random passwords, nonces, or session identifiers,
@@ -253,7 +253,7 @@ If an application requires only one random value, with a fixed number of bits, t
 <a id=Nondeterministic_Sources_and_Seed_Generation></a>
 ## Nondeterministic Sources and Seed Generation
 
-To generate random numbers, RNGs ultimately rely on _nondeterministic sources_, that is, sources that don't return the same output for the same input every time.  Such sources are used to help generate a _seed_ for a PRNG, for example.  The best nondeterministic sources for this purpose are those whose output is very hard to predict.
+To generate random numbers, RNGs ultimately rely on _nondeterministic sources_, that is, sources that don't return the same output for the same input every time.  Such sources are used to help generate a _seed_ for a PRNG, for example.  The best nondeterministic sources for this purpose are those whose output is very hard to guess.
 
 <a id=Examples_of_Nondeterministic_Sources></a>
 ### Examples of Nondeterministic Sources
@@ -274,7 +274,7 @@ RFC 4086, "Randomness Requirements for Security", section 3, contains a survey o
 <a id=Entropy></a>
 ### Entropy
 
-_Entropy_ is a value that describes how hard it is to predict a nondeterministic source's output, compared to ideal random data; this is generally the size in bits of the ideal random data.  (For example, a 64-bit output with 32 bits of entropy is as hard to predict as an ideal random 32-bit data block.)  NIST SP 800-90B recommends _min-entropy_ as the entropy measure.  Characterizing a nondeterministic source's entropy is nontrivial and beyond the scope of this document.  See also RFC 4086 section 2.
+_Entropy_ is a value that describes how hard it is to guess a nondeterministic source's output, compared to ideal random data; this is generally the size in bits of the ideal random data.  (For example, a 64-bit output with 32 bits of entropy is as hard to guess as an ideal random 32-bit data block.)  NIST SP 800-90B recommends _min-entropy_ as the entropy measure.  Characterizing a nondeterministic source's entropy is nontrivial and beyond the scope of this document.  See also RFC 4086 section 2.
 
 <a id=Seed_Generation></a>
 ### Seed Generation
@@ -458,7 +458,7 @@ _Verifiable random numbers_ are random numbers (such as seeds for PRNGs) that ar
 >
 > 1. Generating verifiable randomness has been described in [**RFC 3797**](https://www.rfc-editor.org/rfc/rfc3797.txt), which describes the selection process for the Nominations Committee (NomCom) of the Internet Engineering Task Force.
 > 2. _Verifiable delay functions_ calculate an output as well as a proof that the output was correctly calculated; these functions deliberately take much more time to calculate the output (e.g., to generate a seemingly random number from public data) than to verify its correctness.<sup>[**(36)**](#Note36)</sup> Generally, in any protocol using this kind of function, the time allowed to contribute randomness is shorter than the time required to calculate the verifiable delay function's output from that randomness.
-> 3. In a so-called [**_commitment scheme_**](https://en.wikipedia.org/wiki/Commitment_scheme), one computer generates data to be committed (e.g. a random number or a chess move), then reveals its hash code or digital signature (_commitment_), and only later reveals the committed data (along with other information needed, if any, to verify that the data wasn't changed in between).  Examples of commitment schemes are _hash-based commitments_ and _Pedersen commitments_.  In commitment protocols involving two computers, those computers first send their commitments, then reveal and verify the committed data; if the committed data is random numbers, they are hashed to produce a final random number.  Commitment protocols with three or more computers are not secure, however.
+> 3. In a so-called [**_commitment scheme_**](https://en.wikipedia.org/wiki/Commitment_scheme), one computer generates data to be committed (e.g. a random number or a chess move), then reveals its hash code or digital signature (_commitment_), and only later reveals the committed data (along with other information needed, if any, to verify that the data wasn't changed in between).  Examples of commitment schemes are _hash-based commitments_. (Commitment schemes end with a random number known to all participants.  In networked games where a deck of cards is shuffled and dealt to players, so that the identity of some cards is known to some but not all players, so-called _mental card game_ protocols can be used.)
 
 <a id=Guidelines_for_New_RNG_APIs></a>
 ## Guidelines for New RNG APIs
@@ -480,8 +480,8 @@ If a cryptographic RNG implementation uses a PRNG, the following requirements ap
 
 3. While or after the PRNG is created, and before it generates a random number, it is initialized ("seeded") with a seed that&mdash;
     - has as many bits as the PRNG's _state length_,
-    - consists of data that ultimately derives from the output of one or more [**nondeterministic sources**](#Nondeterministic_Sources_and_Seed_Generation), where the output is at least as hard to predict as ideal random data with as many bits as the _security strength_, and
-    - MAY be mixed with arbitrary data other than the seed as long as the result is no easier to predict<sup>[**(38)**](#Note38)</sup>.
+    - consists of data that ultimately derives from the output of one or more [**nondeterministic sources**](#Nondeterministic_Sources_and_Seed_Generation), where the output is at least as hard to guess as ideal random data with as many bits as the _security strength_, and
+    - MAY be mixed with arbitrary data other than the seed as long as the result is no easier to guess<sup>[**(38)**](#Note38)</sup>.
 
 A cryptographic RNG is not required to reseed itself.
 

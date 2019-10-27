@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
-<p>Begun on Mar. 5, 2016; last updated on Oct. 23, 2019.</p>
+<p>Begun on Mar. 5, 2016; last updated on Oct. 27, 2019.</p>
 
 <p>Most apps that use random numbers care about either unpredictability, high quality, or repeatability.  This article explains the three kinds of RNGs and gives recommendations on each kind.</p>
 
@@ -678,7 +678,7 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 <ol>
 <li>Generating verifiable randomness has been described in <a href="https://www.rfc-editor.org/rfc/rfc3797.txt"><strong>RFC 3797</strong></a>, which describes the selection process for the Nominations Committee (NomCom) of the Internet Engineering Task Force.</li>
 <li><em>Verifiable delay functions</em> calculate an output as well as a proof that the output was correctly calculated; these functions deliberately take much more time to calculate the output (e.g., to generate a seemingly random number from public data) than to verify its correctness.<sup><a href="#Note36"><strong>(36)</strong></a></sup> Generally, in any protocol using this kind of function, the time allowed to contribute randomness is shorter than the time required to calculate the verifiable delay function&#39;s output from that randomness.</li>
-<li>In a so-called <a href="https://en.wikipedia.org/wiki/Commitment_scheme"><strong><em>commitment scheme</em></strong></a>, one computer generates data to be committed (e.g. a random number or a chess move), then reveals its hash code or digital signature (<em>commitment</em>), and only later reveals the committed data (along with other information needed, if any, to verify that the data wasn&#39;t changed in between).  Examples of commitment schemes are <em>hash-based commitments</em> and <em>Pedersen commitments</em>.  In commitment protocols involving two computers, those computers first send their commitments, then reveal and verify the committed data; if the committed data is random numbers, they are hashed to produce a final random number.  Commitment protocols with three or more computers are not secure, however.</li>
+<li>In a so-called <a href="https://en.wikipedia.org/wiki/Commitment_scheme"><strong><em>commitment scheme</em></strong></a>, one computer generates data to be committed (e.g. a random number or a chess move), then reveals its hash code or digital signature (<em>commitment</em>), and only later reveals the committed data (along with other information needed, if any, to verify that the data wasn&#39;t changed in between).  Examples of commitment schemes are <em>hash-based commitments</em>. (Commitment schemes end with a random number known to all participants.  In networked games where a deck of cards is shuffled and dealt to players, so that the identity of some cards is known to some but not all players, so-called <em>mental card game</em> protocols can be used.)</li>
 </ol>
 </blockquote>
 

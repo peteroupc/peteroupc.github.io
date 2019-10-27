@@ -187,8 +187,9 @@ Converts this object to a CBOR number.</li>
 Converts this object to a 32-bit floating point number.</li>
 <li><code>java.lang.String AsString()</code><br>
 Gets the value of this object as a text string.</li>
-<li><code>long CalcByteLength()</code><br>
-Not documented yet.</li>
+<li><code>long CalcEncodedSize() EncodeToBytes()</code><br>
+Calculates the number of bytes this CBOR object takes when serialized as a
+byte array using the EncodeToBytes() method.</li>
 <li><code>boolean CanFitInDouble()</code><br>
 Returns whether this object&#39;s value can be converted to a 64-bit floating
 point number without its value being rounded to another numerical
@@ -1939,12 +1940,17 @@ null.</p></li>
 <li>Same as.</li>
 </ul>
 
-<h3>CalcByteLength</h3>
+<h3>CalcEncodedSize</h3>
 
-<pre>public long CalcByteLength()
+<pre>public long CalcEncodedSize()
 </pre>
 
-<p>Not documented yet.</p>
+<p>Calculates the number of bytes this CBOR object takes when serialized as a
+ byte array using the <code>EncodeToBytes()</code> method. This calculation
+ assumes that integers, lengths of maps and arrays, lengths of text and
+ byte strings, and tag numbers are encoded in their shortest form; that
+ floating-point numbers are encoded in their shortest value-preserving
+ form; and that no indefinite-length encodings are used.</p>
 
 <p><strong>Returns:</strong></p>
 
