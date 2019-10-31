@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
-<p>Begun on June 4, 2017; last updated on Oct. 24, 2019.</p>
+<p>Begun on June 4, 2017; last updated on Oct. 31, 2019.</p>
 
 <p>Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.</p>
 
@@ -108,7 +108,7 @@
 <li><a href="#Transformations_of_Random_Numbers"><strong>Transformations of Random Numbers</strong></a>
 
 <ul>
-<li><a href="#Censored_and_Truncated_Random_Numbers"><strong>Censored and Truncated Random Numbers</strong></a></li>
+<li><a href="#Censored_Random_Numbers"><strong>Censored Random Numbers</strong></a></li>
 </ul></li>
 </ul></li>
 <li><a href="#Specific_Non_Uniform_Distributions"><strong>Specific Non-Uniform Distributions</strong></a>
@@ -387,8 +387,8 @@ END METHOD
 <p>The na&iuml;ve approach won&#39;t work as well, though, if the integer format can express negative and nonnegative integers and the difference between <code>maxInclusive</code> and <code>minInclusive</code> exceeds the highest possible integer for the format.  For integer formats that can express&mdash;</p>
 
 <ol>
-<li>any integer in the interval [-1 - <code>MAXINT</code>, <code>MAXINT</code>] (e.g., Java <code>int</code>, <code>short</code>, or <code>long</code>), or</li>
-<li>any integer in the interval [-<code>MAXINT</code>, <code>MAXINT</code>] (e.g., Java <code>float</code> and <code>double</code> and .NET&#39;s implementation of <code>System.Decimal</code>),</li>
+<li>every integer in the interval [-1 - <code>MAXINT</code>, <code>MAXINT</code>] (e.g., Java <code>int</code>, <code>short</code>, or <code>long</code>), or</li>
+<li>every integer in the interval [-<code>MAXINT</code>, <code>MAXINT</code>] (e.g., Java <code>float</code> and <code>double</code> and .NET&#39;s implementation of <code>System.Decimal</code>),</li>
 </ol>
 
 <p>where <code>MAXINT</code> is an integer greater than 0, the following pseudocode for <code>RNDINTRANGE</code> can be used.</p>
@@ -480,7 +480,7 @@ END METHOD
 
 <p>The idiom <code>RNDINT((1 &lt;&lt; b) - 1)</code> is a na&iuml;ve way of generating a <strong>uniform random <code>b</code>-bit integer</strong> (with maximum 2<sup><code>b</code></sup> - 1).</p>
 
-<p>In practice, memory is usually divided into <em>bytes</em>, or 8-bit nonnegative integers in the interval [0, 255].  In this case, a block of memory can be filled with random bits by setting each byte in the block to <code>RNDINT(255)</code>. (There may be faster, RNG-specific ways to fill memory with random bytes, such as with RNGs that generate random numbers in parallel.  These ways are not detailed in this document.)</p>
+<p>In practice, memory is usually divided into <em>bytes</em>, or 8-bit integers in the interval [0, 255].  In this case, a block of memory can be filled with random bits by setting each byte in the block to <code>RNDINT(255)</code>. (There may be faster, RNG-specific ways to fill memory with random bytes, such as with RNGs that generate random numbers in parallel.  These ways are not detailed in this document.)</p>
 
 <p><a id=Certain_Programming_Environments></a></p>
 
@@ -774,6 +774,8 @@ list by <code>RandomKItemsInOrder(list, n - k)</code>.</li>
 <p>Example criteria include checking&mdash;</p>
 
 <ul>
+<li>whether a random number is not less than a minimum threshold (<em>left-truncation</em>),</li>
+<li>whether a random number is not greater than a minimum threshold (<em>right-truncation</em>),</li>
 <li>whether a random number is prime,</li>
 <li>whether a random number is divisible or not by certain numbers,</li>
 <li>whether a random number is not among recently chosen random numbers,</li>
@@ -1055,9 +1057,9 @@ else: number = RNDINTRANGE(1,6) +
 </ol>
 </blockquote>
 
-<p><a id=Censored_and_Truncated_Random_Numbers></a></p>
+<p><a id=Censored_Random_Numbers></a></p>
 
-<h4>Censored and Truncated Random Numbers</h4>
+<h4>Censored Random Numbers</h4>
 
 <p>To generate a <em>censored</em> random number, generate a random number as usual, then&mdash;</p>
 
@@ -1065,8 +1067,6 @@ else: number = RNDINTRANGE(1,6) +
 <li>if that number is less than a minimum threshold, use the minimum threshold instead, and/or</li>
 <li>if that number is greater than a maximum threshold, use the maximum threshold instead.</li>
 </ul>
-
-<p>To generate a <em>truncated</em> random number, generate random numbers as usual until a number generated this way is not less than a minimum threshold, not greater than a maximum threshold, or both.</p>
 
 <p><a id=Specific_Non_Uniform_Distributions></a></p>
 
@@ -2430,7 +2430,7 @@ the two parameters of the beta distribution, and <code>trials</code> is a parame
 <li><strong>von Mises distribution</strong>: See <a href="#von_Mises_Distribution"><strong>von Mises Distribution</strong></a>.</li>
 <li><strong>Waring&ndash;Yule distribution</strong>: See beta negative binomial distribution.</li>
 <li><strong>Wigner (semicircle) distribution</strong>: <code>a + radius * (BetaDist(1.5, 1.5)*2-1)</code>, where <code>radius</code> is the semicircular radius and <code>a</code> is the location.</li>
-<li><strong>Zeta distribution</strong>: Generate <code>n = floor(pow(RNDU01ZeroOneExc(), -1.0 / r))</code>, and if <code>d / pow(2, r) &lt; (d - 1) * RNDU01OneExc() * n / (pow(2, r) - 1.0)</code>, where <code>d = pow((1.0 / n) + 1, r)</code>, repeat this process. The parameter <code>r</code> is greater than 0. Based on method described in Devroye 1986. A zeta distribution <a href="#Censoring_and_Truncation"><strong>truncated</strong></a> by rejecting random values greater than some positive integer is called a <em>Zipf distribution</em> or <em>Estoup distribution</em>. (Note that Devroye uses &quot;Zipf distribution&quot; to refer to the untruncated zeta distribution.)</li>
+<li><strong>Zeta distribution</strong>: Generate <code>n = floor(pow(RNDU01ZeroOneExc(), -1.0 / r))</code>, and if <code>d / pow(2, r) &lt; (d - 1) * RNDU01OneExc() * n / (pow(2, r) - 1.0)</code>, where <code>d = pow((1.0 / n) + 1, r)</code>, repeat this process. The parameter <code>r</code> is greater than 0. Based on method described in Devroye 1986. A zeta distribution <a href="#Rejection_Sampling"><strong>truncated</strong></a> by rejecting random values greater than some positive integer is called a <em>Zipf distribution</em> or <em>Estoup distribution</em>. (Note that Devroye uses &quot;Zipf distribution&quot; to refer to the untruncated zeta distribution.)</li>
 <li><strong>Zipf distribution</strong>: See zeta distribution.
 </small></li>
 </ul>
