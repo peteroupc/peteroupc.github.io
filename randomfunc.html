@@ -105,11 +105,7 @@
 <li><a href="#Weighted_Choice_Without_Replacement_Single_Copies"><strong>Weighted Choice Without Replacement (Single Copies)</strong></a></li>
 </ul></li>
 <li><a href="#Mixtures_of_Distributions"><strong>Mixtures of Distributions</strong></a></li>
-<li><a href="#Transformations_of_Random_Numbers"><strong>Transformations of Random Numbers</strong></a>
-
-<ul>
-<li><a href="#Censored_Random_Numbers"><strong>Censored Random Numbers</strong></a></li>
-</ul></li>
+<li><a href="#Transformations_of_Random_Numbers"><strong>Transformations of Random Numbers</strong></a></li>
 </ul></li>
 <li><a href="#Specific_Non_Uniform_Distributions"><strong>Specific Non-Uniform Distributions</strong></a>
 
@@ -636,7 +632,7 @@ END METHOD
 
 <ol>
 <li>Generate a list of the letters, digits, and/or other characters the string can have.  Examples are given later in this section.</li>
-<li>Build a new string whose characters are chosen from that character list.  The pseudocode below demonstrates this by creating a list, rather than a string, where the random characters will be held.  It also takes the number of characters as a parameter named <code>stringSize</code>.  (How to convert this list to a text string depends on the programming language and is outside the scope of this page.)</li>
+<li>Build a new string whose characters are chosen at random from that character list.  The method, shown in the pseudocode below, demonstrates this. The method samples characters at random with replacement, and returns a list of the sampled characters. (How to convert this list to a text string depends on the programming language and is outside the scope of this page.) The method takes two parameters: <code>characterList</code> is the list from step 1, and <code>stringSize</code> is the number of random characters.</li>
 </ol>
 
 <p>&nbsp;</p>
@@ -775,7 +771,7 @@ list by <code>RandomKItemsInOrder(list, n - k)</code>.</li>
 
 <ul>
 <li>whether a random number is not less than a minimum threshold (<em>left-truncation</em>),</li>
-<li>whether a random number is not greater than a minimum threshold (<em>right-truncation</em>),</li>
+<li>whether a random number is not greater than a maximum threshold (<em>right-truncation</em>),</li>
 <li>whether a random number is prime,</li>
 <li>whether a random number is divisible or not by certain numbers,</li>
 <li>whether a random number is not among recently chosen random numbers,</li>
@@ -790,7 +786,7 @@ list by <code>RandomKItemsInOrder(list, n - k)</code>.</li>
 <p>(KD-trees, hash tables, red-black trees, prime-number testing algorithms, and regular expressions are outside the scope of this document.)</p>
 
 <blockquote>
-<p><strong>Note:</strong> All rejection sampling techniques have a chance to reject data, so they all have a variable running time; thus, they are not appropriate in any cases when differences in running time could be exploited in a security attack.  (Certain attacks involving encrypted communications have exploited the timing and other aspects of such communications to derive cleartext or encryption keys indirectly.)</p>
+<p><strong>Note:</strong> All rejection sampling strategies have a chance to reject data, so they all have a variable running time; thus, they are not appropriate in any cases when differences in running time could be exploited in a security attack.  (Certain attacks involving encrypted communications have exploited the timing and other aspects of such communications to derive cleartext or encryption keys indirectly.)</p>
 </blockquote>
 
 <p><a id=Random_Walks></a></p>
@@ -849,7 +845,7 @@ END METHOD
 
 <h2>General Non-Uniform Distributions</h2>
 
-<p>Some applications need to choose random items or numbers such that some of them are more likely to be chosen than others (a <em>non-uniform</em> distribution). Most of the techniques in this section show how to use the <a href="#Uniform_Random_Numbers"><strong>uniform random number methods</strong></a> to generate such random items or numbers.</p>
+<p>Some applications need to choose random items or numbers such that some of them are more likely to be chosen than others (a <em>non-uniform</em> distribution). Most of the techniques in this section show how to use the <a href="#Uniform_Random_Integers"><strong>uniform random number methods</strong></a> to generate such random items or numbers.</p>
 
 <p><a id=Weighted_Choice></a></p>
 
@@ -1054,19 +1050,16 @@ else: number = RNDINTRANGE(1,6) +
 <li>The idiom <code>min(RNDINTRANGE(1, 6), RNDINTRANGE(1, 6))</code> takes the lowest of two six-sided die results (strategy 4).  Due to this approach, 1 is more likely to occur than 6.</li>
 <li>The idiom <code>RNDINTRANGE(1, 6) + RNDINTRANGE(1, 6)</code> takes the result of two six-sided dice (see also &quot;<a href="#Dice"><strong>Dice</strong></a>&quot;) (strategy 7).</li>
 <li>A <a href="#Binomial_Distribution_Optimization_for_Many_Trials"><strong>binomial distribution</strong></a> models the sum of <code>n</code> random numbers each generated by <code>ZeroOrOne(px,py)</code> (strategy 7), that is, the number of successes in <code>n</code> independent trials, each with a success probability of <code>px</code>/<code>py</code>.<sup><a href="#Note15"><strong>(15)</strong></a></sup></li>
-</ol>
-</blockquote>
-
-<p><a id=Censored_Random_Numbers></a></p>
-
-<h4>Censored Random Numbers</h4>
-
-<p>To generate a <em>censored</em> random number, generate a random number as usual, then&mdash;</p>
+<li><p><strong>Clamped random numbers.</strong>  These are one example of transformed random numbers.  To generate a clamped random number, generate a random number as usual, then&mdash;</p>
 
 <ul>
-<li>if that number is less than a minimum threshold, use the minimum threshold instead, and/or</li>
-<li>if that number is greater than a maximum threshold, use the maximum threshold instead.</li>
+<li>if that number is less than a minimum threshold, use the minimum threshold instead (<em>left-censoring</em>), and/or</li>
+<li>if that number is greater than a maximum threshold, use the maximum threshold instead (_right-censoring).</li>
 </ul>
+
+<p>An example of a clamped random number is <code>min(200, RNDINTRANGE(1, 255))</code>.</p></li>
+</ol>
+</blockquote>
 
 <p><a id=Specific_Non_Uniform_Distributions></a></p>
 
