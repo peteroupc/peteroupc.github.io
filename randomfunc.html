@@ -786,7 +786,9 @@ list by <code>RandomKItemsInOrder(list, n - k)</code>.</li>
 <p>(KD-trees, hash tables, red-black trees, prime-number testing algorithms, and regular expressions are outside the scope of this document.)</p>
 
 <blockquote>
-<p><strong>Note:</strong> All rejection sampling strategies have a chance to reject data, so they all have a variable running time; thus, they are not appropriate in any cases when differences in running time could be exploited in a security attack.  (Certain attacks involving encrypted communications have exploited the timing and other aspects of such communications to derive cleartext or encryption keys indirectly.)</p>
+<p><strong>Note:</strong> All rejection sampling strategies have a chance to reject data, so they all have a variable running time (in fact, they could run indefinitely).  There are two points that follow from this:
+1. Rejection samplers are not appropriate in any cases when differences in running time could be exploited in a security attack (for example, an attack that leaks cleartext, encryption keys, or other sensitive data).
+2. Graphics processing units (GPUs) and other devices that run multiple tasks at once work better if all the tasks finish their work at the same time.  This is not possible if they all generate a random number via rejection sampling because of its variable running time.  If each iteration of the rejection sampler has a low rejection rate, one solution is to have each task run one iteration of the sampler, then take the first random number that hasn&#39;t been rejected by any of them (which can fail at a very low rate).<sup><a href="#Note39"><strong>(39)</strong></a></sup></p>
 </blockquote>
 
 <p><a id=Random_Walks></a></p>
@@ -2664,6 +2666,8 @@ and &quot;<a href="https://randomascii.wordpress.com/2013/07/16/floating-point-d
 <p><small><sup id=Note37>(37)</sup> See also a <a href="http://mathworld.wolfram.com/BallPointPicking.html"><strong>MathWorld article</strong></a>, which was the inspiration for these two methods, and the <em>Stack Overflow</em> question &quot;How to generate uniform random points in (arbitrary) N-dimension ball?&quot;, <code>questions/54544971</code>.</small></p>
 
 <p><small><sup id=Note38>(38)</sup> See the <em>Mathematics Stack Exchange</em> question titled &quot;Random multivariate in hyperannulus&quot;, <code>questions/1885630</code>.</small></p>
+
+<p><small><sup id=Note39>(39)</sup> S. Linderman, &quot;A Parallel Gamma Sampling Implementation&quot;, Laboratory for Independent Probabilistic Systems Blog, Feb. 21, 2003, illustrates one example, a GPU-implemented sampler of gamma-distributed random numbers.</small></p>
 
 <p><a id=Appendix></a></p>
 

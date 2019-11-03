@@ -1955,7 +1955,15 @@ null.</p></li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>The return value is not documented yet.</li>
+<li>The number of bytes this CBOR object takes when serialized as a byte
+array using the <code>EncodeToBytes()</code> method.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>The</code> - CBOR object has an extremely deep level of nesting, including if
+the CBOR object is or has an array or map that includes itself.</li>
 </ul>
 
 <h3>FromObject</h3>
