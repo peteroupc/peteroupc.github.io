@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on June 4, 2017; last updated on Oct. 31, 2019.
+Begun on June 4, 2017; last updated on Nov. 2, 2019.
 
 Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.
 
@@ -621,8 +621,10 @@ Example criteria include checking&mdash;
 (KD-trees, hash tables, red-black trees, prime-number testing algorithms, and regular expressions are outside the scope of this document.)
 
 > **Note:** All rejection sampling strategies have a chance to reject data, so they all have a variable running time (in fact, they could run indefinitely).  There are two points that follow from this:
-> 1. Rejection samplers are not appropriate in any cases when differences in running time could be exploited in a security attack (for example, an attack that leaks cleartext, encryption keys, or other sensitive data).
-> 2. Graphics processing units (GPUs) and other devices that run multiple tasks at once work better if all the tasks finish their work at the same time.  This is not possible if they all generate a random number via rejection sampling because of its variable running time.  If each iteration of the rejection sampler has a low rejection rate, one solution is to have each task run one iteration of the sampler, then take the first random number that hasn't been rejected by any of them (which can fail at a very low rate).<sup>[**(39)**](#Note39)</sup>
+>
+> 1. Rejection samplers are not appropriate in any cases when differences in running time could be exploited in a security attack (such as an attack that leaks cleartext, encryption keys, or other sensitive data).
+>
+> 2. Graphics processing units (GPUs) and other devices that run multiple tasks at once work better if all the tasks finish their work at the same time.  This is not possible if they all generate a random number via rejection sampling because of its variable running time.  If each iteration of the rejection sampler has a low rejection rate, one solution is to have each task run one iteration of the sampler, then to take the first random number that hasn't been rejected this way by a task (which can fail at a very low rate).<sup>[**(39)**](#Note39)</sup>
 
 <a id=Random_Walks></a>
 ### Random Walks

@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
-<p>Begun on June 4, 2017; last updated on Oct. 31, 2019.</p>
+<p>Begun on June 4, 2017; last updated on Nov. 2, 2019.</p>
 
 <p>Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.</p>
 
@@ -786,9 +786,12 @@ list by <code>RandomKItemsInOrder(list, n - k)</code>.</li>
 <p>(KD-trees, hash tables, red-black trees, prime-number testing algorithms, and regular expressions are outside the scope of this document.)</p>
 
 <blockquote>
-<p><strong>Note:</strong> All rejection sampling strategies have a chance to reject data, so they all have a variable running time (in fact, they could run indefinitely).  There are two points that follow from this:
-1. Rejection samplers are not appropriate in any cases when differences in running time could be exploited in a security attack (for example, an attack that leaks cleartext, encryption keys, or other sensitive data).
-2. Graphics processing units (GPUs) and other devices that run multiple tasks at once work better if all the tasks finish their work at the same time.  This is not possible if they all generate a random number via rejection sampling because of its variable running time.  If each iteration of the rejection sampler has a low rejection rate, one solution is to have each task run one iteration of the sampler, then take the first random number that hasn&#39;t been rejected by any of them (which can fail at a very low rate).<sup><a href="#Note39"><strong>(39)</strong></a></sup></p>
+<p><strong>Note:</strong> All rejection sampling strategies have a chance to reject data, so they all have a variable running time (in fact, they could run indefinitely).  There are two points that follow from this:</p>
+
+<ol>
+<li><p>Rejection samplers are not appropriate in any cases when differences in running time could be exploited in a security attack (such as an attack that leaks cleartext, encryption keys, or other sensitive data).</p></li>
+<li><p>Graphics processing units (GPUs) and other devices that run multiple tasks at once work better if all the tasks finish their work at the same time.  This is not possible if they all generate a random number via rejection sampling because of its variable running time.  If each iteration of the rejection sampler has a low rejection rate, one solution is to have each task run one iteration of the sampler, then to take the first random number that hasn&#39;t been rejected this way by a task (which can fail at a very low rate).<sup><a href="#Note39"><strong>(39)</strong></a></sup></p></li>
+</ol>
 </blockquote>
 
 <p><a id=Random_Walks></a></p>
