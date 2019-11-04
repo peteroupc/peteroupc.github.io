@@ -8,7 +8,8 @@
 
 <pre>public sealed class PartialStream :
     System.IO.Stream,
-    System.IDisposable
+    System.IDisposable,
+    System.IAsyncDisposable
 </pre>
 
 <p>Represents a portion of another data stream. For this to work, the underlying stream must be seekable and have a known length.</p>
