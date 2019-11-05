@@ -624,7 +624,7 @@ Example criteria include checking&mdash;
 >
 > 1. Rejection samplers are not appropriate in any cases when differences in running time could be exploited in a security attack (such as an attack that leaks cleartext, encryption keys, or other sensitive data).
 >
-> 2. Graphics processing units (GPUs) and other devices that run multiple tasks at once work better if all the tasks finish their work at the same time.  This is not possible if they all generate a random number via rejection sampling because of its variable running time.  If each iteration of the rejection sampler has a low rejection rate, one solution is to have each task run one iteration of the sampler, then to take the first random number that hasn't been rejected this way by a task (which can fail at a very low rate).<sup>[**(9)**](#Note9)</sup>
+> 2. Graphics processing units (GPUs) and other devices that run multiple tasks at once work better if all the tasks finish their work at the same time.  This is not possible if they all generate a random number via rejection sampling because of its variable running time.  If each iteration of the rejection sampler has a low rejection rate, one solution is to have each task run one iteration of the sampler, with its own RNG, then to take the first random number that hasn't been rejected this way by a task (which can fail at a very low rate).<sup>[**(9)**](#Note9)</sup>
 
 <a id=Random_Walks></a>
 ### Random Walks
@@ -814,7 +814,7 @@ A _mixture_ consists of two or more probability distributions with separate prob
 >         else: number = RNDINTRANGE(1,6) +
 >            RNDINTRANGE(1,6) + RNDINTRANGE(1,6)
 >
-> 2. Choosing, independently and uniformly, a random point from a complex shape (in any number of dimensions) is equivalent to doing such sampling from a mixture of simpler shapes that make up the complex shape (here, the `weights` list holds the n-dimensional "volume" of each simpler shape).  For example, a simple closed 2D polygon can be [**_triangulated_**](https://en.wikipedia.org/wiki/Polygon_triangulation), or decomposed into [**triangles**](#Random_Points_Inside_a_Simplex), and a mixture of those triangles can be sampled.<sup>[**(12)**](#Note12)</sup>
+> 2. Choosing a random point, independently and uniformly, from a complex shape (in any number of dimensions) is equivalent to doing such sampling from a mixture of simpler shapes that make up the complex shape (here, the `weights` list holds the n-dimensional "volume" of each simpler shape).  For example, a simple closed 2D polygon can be [**_triangulated_**](https://en.wikipedia.org/wiki/Polygon_triangulation), or decomposed into [**triangles**](#Random_Points_Inside_a_Simplex), and a mixture of those triangles can be sampled.<sup>[**(12)**](#Note12)</sup>
 > 3. Take a set of nonoverlapping integer ranges.  To choose a random integer from those ranges independently and uniformly:
 >     - Create a list (`weights`) of weights for each range.  Each range is given a weight of `(mx - mn) + 1`, where `mn` is that range's minimum and `mx` is its maximum.
 >     - Choose an index using `WeightedChoice(weights)`, then generate `RNDINTRANGE(mn, mx)`, where `mn` is the corresponding range's minimum and `mx` is its maximum.
