@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on Mar. 5, 2016; last updated on Nov. 1, 2019.
+Begun on Mar. 5, 2016; last updated on Nov. 5, 2019.
 
 Most apps that use random numbers care about either unpredictability, high quality, or repeatability.  This article explains the three kinds of RNGs and gives recommendations on each kind.
 
@@ -379,7 +379,7 @@ For shuffling purposes, `B` can usually be calculated for different lists using 
 
 Some applications require generating unique identifiers, especially to identify database records or other shared resources.  Such identifiers include auto-incremented numbers, sequentially assigned numbers, random numbers, and combinations of these.  The following are some questions to consider when generating unique identifiers, especially random ones:
 
-1. Can the application easily check identifiers for uniqueness within the desired scope and range (e.g., check whether a file or database record with that identifier already exists)?
+1. Can the application easily check identifiers for uniqueness within the desired scope and range (e.g., check whether a file or database record with that identifier already exists)<sup>[**(42)**](#Note42)</sup>?
 2. Can the application tolerate the risk of generating the same identifier for different resources<sup>[**(28)**](#Note28)</sup>?
 3. Do identifiers have to be hard to guess, be simply "random-looking", or be neither?
 4. Do identifiers have to be typed in or otherwise relayed by end users<sup>[**(29)**](#Note29)</sup>?
@@ -648,6 +648,8 @@ See also N. Reed, "Quick And Easy GPU Random Numbers In D3D11", Nathan Reed's co
 <small><sup id=Note40>(40)</sup> For example, a new RNG can be constructed from two independent RNGs using the so-called "shrinking generator" technique: generate one bit from the first RNG and one bit from the second, and take the second bit if the first bit is 1, or repeat this process otherwise.  See J. D. Cook, "Using one RNG to sample another", June 4, 2019, for more on this technique, including its advantages and drawbacks.</small>
 
 <small><sup id=Note41>(41)</sup> Allowing applications to do so would hamper forward compatibility &mdash; the API would then be less free to change how the RNG is implemented in the future (e.g., to use a cryptographic or otherwise "better" RNG), or to make improvements or bug fixes in methods that use that RNG (such as shuffling and Gaussian number generation).  (As a notable example, the V8 JavaScript engine recently changed its `Math.random()` implementation to use a variant of `xorshift128+`, which is backward compatible because nothing in JavaScript allows  `Math.random()` to be seeded.)  Nevertheless, APIs can still allow applications to provide additional input ("entropy") to the RNG in order to increase its randomness rather than to ensure repeatability.</small>
+
+<small><sup id=Note42>(42)</sup> For applications distributed across multiple computers, this check is made easier if each computer is assigned a unique number from a central database, because then the computer can use that unique number as part of unique identifiers it generates.</small>
 
 <a id=Appendix></a>
 ## Appendix

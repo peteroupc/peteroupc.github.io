@@ -861,7 +861,7 @@ This section contains information on some of the most common non-uniform probabi
 <a id=Dice></a>
 ### Dice
 
-The following method generates a random result of rolling virtual dice. It takes three parameters: the number of dice (`dice`), the number of sides in each die (`sides`), and a number to add to the result (`bonus`) (which can be negative, but the result of the subtraction is 0 if that result is greater).
+The following method generates a random result of rolling virtual dice. It takes three parameters: the number of dice (`dice`), the number of sides in each die (`sides`), and a number to add to the result (`bonus`) (which can be negative, but the result of the method is 0 if that result is greater).
 
     METHOD DiceRoll(dice, sides, bonus)
         if dice < 0 or sides < 1: return error

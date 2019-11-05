@@ -572,7 +572,7 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 <p>Some applications require generating unique identifiers, especially to identify database records or other shared resources.  Such identifiers include auto-incremented numbers, sequentially assigned numbers, random numbers, and combinations of these.  The following are some questions to consider when generating unique identifiers, especially random ones:</p>
 
 <ol>
-<li>Can the application easily check identifiers for uniqueness within the desired scope and range (e.g., check whether a file or database record with that identifier already exists)?</li>
+<li>Can the application easily check identifiers for uniqueness within the desired scope and range (e.g., check whether a file or database record with that identifier already exists)<sup><a href="#Note42"><strong>(42)</strong></a></sup>?</li>
 <li>Can the application tolerate the risk of generating the same identifier for different resources<sup><a href="#Note28"><strong>(28)</strong></a></sup>?</li>
 <li>Do identifiers have to be hard to guess, be simply &quot;random-looking&quot;, or be neither?</li>
 <li>Do identifiers have to be typed in or otherwise relayed by end users<sup><a href="#Note29"><strong>(29)</strong></a></sup>?</li>
@@ -911,6 +911,8 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 <p><small><sup id=Note40>(40)</sup> For example, a new RNG can be constructed from two independent RNGs using the so-called &quot;shrinking generator&quot; technique: generate one bit from the first RNG and one bit from the second, and take the second bit if the first bit is 1, or repeat this process otherwise.  See J. D. Cook, &quot;Using one RNG to sample another&quot;, June 4, 2019, for more on this technique, including its advantages and drawbacks.</small></p>
 
 <p><small><sup id=Note41>(41)</sup> Allowing applications to do so would hamper forward compatibility &mdash; the API would then be less free to change how the RNG is implemented in the future (e.g., to use a cryptographic or otherwise &quot;better&quot; RNG), or to make improvements or bug fixes in methods that use that RNG (such as shuffling and Gaussian number generation).  (As a notable example, the V8 JavaScript engine recently changed its <code>Math.random()</code> implementation to use a variant of <code>xorshift128+</code>, which is backward compatible because nothing in JavaScript allows  <code>Math.random()</code> to be seeded.)  Nevertheless, APIs can still allow applications to provide additional input (&quot;entropy&quot;) to the RNG in order to increase its randomness rather than to ensure repeatability.</small></p>
+
+<p><small><sup id=Note42>(42)</sup> For applications distributed across multiple computers, this check is made easier if each computer is assigned a unique number from a central database, because then the computer can use that unique number as part of unique identifiers it generates.</small></p>
 
 <p><a id=Appendix></a></p>
 

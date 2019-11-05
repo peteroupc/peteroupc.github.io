@@ -1076,7 +1076,7 @@ else: number = RNDINTRANGE(1,6) +
 
 <h3>Dice</h3>
 
-<p>The following method generates a random result of rolling virtual dice. It takes three parameters: the number of dice (<code>dice</code>), the number of sides in each die (<code>sides</code>), and a number to add to the result (<code>bonus</code>) (which can be negative, but the result of the subtraction is 0 if that result is greater).</p>
+<p>The following method generates a random result of rolling virtual dice. It takes three parameters: the number of dice (<code>dice</code>), the number of sides in each die (<code>sides</code>), and a number to add to the result (<code>bonus</code>) (which can be negative, but the result of the method is 0 if that result is greater).</p>
 
 <pre>METHOD DiceRoll(dice, sides, bonus)
     if dice &lt; 0 or sides &lt; 1: return error
