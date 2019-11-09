@@ -7,11 +7,11 @@
 <h2>PeterO.DisposableList<T></h2>
 
 <pre>public sealed class DisposableList&lt;T&gt; :
-    System.Collections.Generic.IList&lt;T&gt;,
     System.Collections.Generic.ICollection&lt;T&gt;,
-    System.IDisposable,
     System.Collections.Generic.IEnumerable&lt;T&gt;,
-    System.Collections.IEnumerable
+    System.Collections.Generic.IList&lt;T&gt;,
+    System.Collections.IEnumerable,
+    System.IDisposable
     where T : System.IDisposableT
 </pre>
 

@@ -474,7 +474,8 @@ Gets a value indicating whether this data item has at least one tag.</li>
 Gets a value indicating whether this value is a CBOR true value, whether
 tagged or not.</li>
 <li><code>boolean isUndefined()</code><br>
-Gets a value indicating whether this value is a CBOR undefined value.</li>
+Gets a value indicating whether this value is a CBOR undefined value,
+whether tagged or not.</li>
 <li><code>boolean isZero()</code><br>
 Gets a value indicating whether this object&#39;s value equals 0.</li>
 <li><code>static CBORObject Multiply​(CBORObject first,
@@ -894,7 +895,8 @@ false</code>.</li>
 <pre>public final boolean isUndefined()
 </pre>
 
-<p>Gets a value indicating whether this value is a CBOR undefined value.</p>
+<p>Gets a value indicating whether this value is a CBOR undefined value,
+ whether tagged or not.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -1962,8 +1964,9 @@ array using the <code>EncodeToBytes()</code> method.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>The</code> - CBOR object has an extremely deep level of nesting, including if
-the CBOR object is or has an array or map that includes itself.</li>
+<li><code>CBORException</code> - The CBOR object has an extremely deep level of
+nesting, including if the CBOR object is or has an array or map that
+includes itself.</li>
 </ul>
 
 <h3>FromObject</h3>

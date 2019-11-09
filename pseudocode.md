@@ -95,7 +95,7 @@ In the pseudocode:
 * The pseudocode shown is not guaranteed to yield high performance in a particular implementation, either in time or memory.  Implementations are free to deviate from the pseudocode as long as they produce the same results as the pseudocode, except that&mdash;
     - arithmetic operations, `rem`, `sqrt`, `ln`, `exp`, `pow`, `sin`, `cos`, `tan`, and `atan2` must return a result that is at least substantially close to the correctly rounded result, and
     - arithmetic operations, `abs`, `sqrt`, `floor`, `round`, and `rem`, if implemented in fixed-precision number formats, must return the correctly rounded result.
-* If the pseudocode works with non-integer numbers, an implementation can represent such numbers in any non-integer number format it wishes (including a floating-point, fixed-point, decimal, and/or binary number format), unless noted otherwise.
+* Unless noted otherwise, the pseudocode does not care how a particular implementation stores integers and non-integers (e.g., as floating-point, fixed-point, decimal, binary, two's-complement, ones'-complement, Chinese remainder theorem, or otherwise).
 
 <a id=License></a>
 ## License

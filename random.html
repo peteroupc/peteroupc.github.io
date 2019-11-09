@@ -971,11 +971,11 @@ def stateLengthDecks(numDecks, numCards):
 
 <h3>Bays&ndash;Durham Shuffle</h3>
 
-<p>The Bays&ndash;Durham shuffle extends a PRNG&#39;s period (maximum size of a &quot;random&quot; number cycle) by giving it a bigger state. Generally, for a size of <code>tablesize</code>, the period is extended to about the number of ways to arrange a list of size <code>tablesize</code>.  The following describes the Bays&ndash;Durham shuffle with a size of <code>tablesize</code>.  For PRNGs that output 32- or 64-bit integers 0 or greater, a <code>tablesize</code> of 256, 512, or 1024 is suggested.</p>
+<p>The Bays&ndash;Durham shuffle extends a PRNG&#39;s period (maximum size of a &quot;random&quot; number cycle) by giving it a bigger state. Generally, for a size of <code>tablesize</code>, the period is extended to about the number of ways to arrange a list of size <code>tablesize</code>.  The following describes the Bays&ndash;Durham shuffle with a size of <code>tablesize</code>. (C++&#39;s <code>shuffle_order_engine</code> implements something similar to the shuffle described below.) For PRNGs that output 32- or 64-bit integers 0 or greater, a <code>tablesize</code> of 256, 512, or 1024 is suggested.</p>
 
 <ul>
-<li>For the first &quot;random&quot; number, fill a list with as many numbers from the PRNG as <code>tablesize</code>, then set <code>k</code> to another number from the PRNG, then output <code>k</code>.</li>
-<li>For each additional &quot;random&quot; number, take the entry at position (<code>k</code> % <code>tablesize</code>) in the list, where &#39;%&#39; is the remainder operator and positions start at 0, then set <code>k</code> to that entry, then replace the entry at that position with a new number from the PRNG, then output <code>k</code>.</li>
+<li>To initialize, fill a list with as many numbers from the PRNG as <code>tablesize</code>, then set <code>k</code> to another number from the PRNG.</li>
+<li>For each &quot;random&quot; number, take the entry at position (<code>k</code> % <code>tablesize</code>) in the list, where &#39;%&#39; is the remainder operator and positions start at 0, then set <code>k</code> to that entry, then replace the entry at that position with a new number from the PRNG, then output <code>k</code>.</li>
 </ul>
 
 <p>The Bays&ndash;Durham shuffle is NOT RECOMMENDED for information security purposes.</p>
