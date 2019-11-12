@@ -101,6 +101,8 @@
 <pre>public static PeterO.Numbers.ERounding Odd = 8;
 </pre>
 
+<p><b>Deprecated.</b> Consider using ERounding.OddOrZeroFiveUp instead.</p>
+
 <p>If there is a fractional part and the whole number part is even, the number is rounded to the closest representable odd number away from zero.</p>
 
 <p><a id="OddOrZeroFiveUp"></a></p>
@@ -127,6 +129,8 @@
 
 <pre>public static PeterO.Numbers.ERounding ZeroFiveUp = 9;
 </pre>
+
+<p><b>Deprecated.</b> Use ERounding.OddOrZeroFiveUp instead.</p>
 
 <p>If there is a fractional part and if the last digit before rounding is 0 or half the radix, the number is rounded to the closest representable number away from zero; otherwise the fractional part is discarded. In overflow, the fractional part is always discarded.</p>
 

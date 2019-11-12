@@ -17,8 +17,8 @@
 <li><code><a href="#AllowDuplicateKeys">AllowDuplicateKeys</a></code> - Gets a value indicating whether to allow duplicate keys when reading JSON.</li>
 <li><code><a href="#Base64Padding">Base64Padding</a></code> - <b>Deprecated:</b> This property now has no effect. This library now includes necessary padding when writing traditional base64 to JSON and includes no padding when writing base64url to JSON, in accordance with the revision of the CBOR specification.</li>
 <li><code><a href="#Default">public static readonly PeterO.Cbor.JSONOptions Default;</a></code> - The default options for converting CBOR objects to JSON.</li>
-<li><code><a href="#NumberConversion">NumberConversion</a></code> - Gets a value indicating how JSON numbers are decoded to CBOR integers.</li>
-<li><code><a href="#PreserveNegativeZero">PreserveNegativeZero</a></code> - Gets a value indicating whether the JSON decoder should preserve the distinction between positive zero and negative zero in when the decoder decodes JSON to a floating-point number format that makes this distinction.</li>
+<li><code><a href="#NumberConversion">NumberConversion</a></code> - Gets a value indicating how JSON numbers are decoded to CBOR.</li>
+<li><code><a href="#PreserveNegativeZero">PreserveNegativeZero</a></code> - Gets a value indicating whether the JSON decoder should preserve the distinction between positive zero and negative zero when the decoder decodes JSON to a floating-point number format that makes this distinction.</li>
 <li><code><a href="#ReplaceSurrogates">ReplaceSurrogates</a></code> - Gets a value indicating whether surrogate code points not part of a surrogate pair (which consists of two consecutive char s forming one Unicode code point) are each replaced with a replacement character (U+FFFD).</li>
 <li><code><a href="#ToString">ToString()</a></code> - Gets the values of this options object&#39;s properties in text form.</li>
 </ul>
@@ -138,11 +138,11 @@ is null. In the future, this class may allow other keys to store other kinds of 
 <pre>public PeterO.Cbor.ConversionKind NumberConversion { get; }
 </pre>
 
-<p>Gets a value indicating how JSON numbers are decoded to CBOR integers.</p>
+<p>Gets a value indicating how JSON numbers are decoded to CBOR.</p>
 
 <p><b>Returns:</b></p>
 
-<p>A value indicating how JSON numbers are decoded to CBOR integers. The default is  <code>ConversionKind.Full</code> .</p>
+<p>A value indicating how JSON numbers are decoded to CBOR. The default is  <code>ConversionKind.Full</code> .</p>
 
 <p><a id="PreserveNegativeZero"></a></p>
 
@@ -151,7 +151,7 @@ is null. In the future, this class may allow other keys to store other kinds of 
 <pre>public bool PreserveNegativeZero { get; }
 </pre>
 
-<p>Gets a value indicating whether the JSON decoder should preserve the distinction between positive zero and negative zero in when the decoder decodes JSON to a floating-point number format that makes this distinction. For a value of  <code>false</code> , if the result of parsing a JSON string would be a floating-point negative zero, that result is a positive zero instead. (Note that this property has no effect for conversion kind  <code>IntOrFloatFromDouble</code> , where floating-point zeros are not possible.).</p>
+<p>Gets a value indicating whether the JSON decoder should preserve the distinction between positive zero and negative zero when the decoder decodes JSON to a floating-point number format that makes this distinction. For a value of  <code>false</code> , if the result of parsing a JSON string would be a floating-point negative zero, that result is a positive zero instead. (Note that this property has no effect for conversion kind  <code>IntOrFloatFromDouble</code> , where floating-point zeros are not possible.).</p>
 
 <p><b>Returns:</b></p>
 

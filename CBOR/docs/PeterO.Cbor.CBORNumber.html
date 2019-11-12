@@ -21,15 +21,25 @@
 <li><code><a href="#AsEFloat">AsEFloat()</a></code> - Not documented yet.</li>
 <li><code><a href="#AsEInteger">AsEInteger()</a></code> - Not documented yet.</li>
 <li><code><a href="#AsERational">AsERational()</a></code> - Not documented yet.</li>
+<li><code><a href="#CanFitInDouble">CanFitInDouble()</a></code> - Not documented yet.</li>
 <li><code><a href="#CanFitInInt32">CanFitInInt32()</a></code> - Returns whether this object&#39;s numerical value is an integer, is -(2^31) or greater, and is less than 2^31.</li>
 <li><code><a href="#CanFitInInt64">CanFitInInt64()</a></code> - Returns whether this object&#39;s numerical value is an integer, is -(2^63) or greater, and is less than 2^63.</li>
+<li><code><a href="#CanFitInSingle">CanFitInSingle()</a></code> - Not documented yet.</li>
+<li><code><a href="#CanTruncatedIntFitInInt32">CanTruncatedIntFitInInt32()</a></code> - Not documented yet.</li>
+<li><code><a href="#CanTruncatedIntFitInInt64">CanTruncatedIntFitInInt64()</a></code> - Not documented yet.</li>
 <li><code><a href="#CompareTo_PeterO_Cbor_CBORNumber">CompareTo(PeterO.Cbor.CBORNumber)</a></code> - Compares two CBOR numbers.</li>
 <li><code><a href="#Divide_PeterO_Cbor_CBORNumber">Divide(PeterO.Cbor.CBORNumber)</a></code> - Returns the quotient of this number and another number.</li>
+<li><code><a href="#FromByte_byte">FromByte(byte)</a></code> - Converts a byte (from 0 to 255) to an arbitrary-precision decimal number.</li>
 <li><code><a href="#FromCBORObject_PeterO_Cbor_CBORObject">FromCBORObject(PeterO.Cbor.CBORObject)</a></code> - Creates a CBOR number object from a CBOR object representing a number (that is, one for which the IsNumber property in.</li>
+<li><code><a href="#FromInt16_short">FromInt16(short)</a></code> - Converts a 16-bit signed integer to an arbitrary-precision decimal number.</li>
+<li><code><a href="#IsFinite">IsFinite()</a></code> - Not documented yet.</li>
 <li><code><a href="#IsInfinity">IsInfinity()</a></code> - Gets a value indicating whether this object represents infinity.</li>
+<li><code><a href="#IsInteger">IsInteger()</a></code> - Not documented yet.</li>
 <li><code><a href="#IsNaN">IsNaN()</a></code> - Gets a value indicating whether this object represents a not-a-number value.</li>
+<li><code><a href="#IsNegative">IsNegative()</a></code> - Not documented yet.</li>
 <li><code><a href="#IsNegativeInfinity">IsNegativeInfinity()</a></code> - Gets a value indicating whether this object represents negative infinity.</li>
 <li><code><a href="#IsPositiveInfinity">IsPositiveInfinity()</a></code> - Gets a value indicating whether this object represents positive infinity.</li>
+<li><code><a href="#IsZero">IsZero()</a></code> - Not documented yet.</li>
 <li><code><a href="#Multiply_PeterO_Cbor_CBORNumber">Multiply(PeterO.Cbor.CBORNumber)</a></code> - Returns a CBOR number expressing the product of this number and the given number.</li>
 <li><code><a href="#Negate">Negate()</a></code> - Returns a CBOR number with the same value as this one but with the sign reversed.</li>
 <li><code><a href="#op_GreaterThan">bool operator &gt;(PeterO.Cbor.CBORNumber, PeterO.Cbor.CBORNumber)</a></code> - Returns whether one object&#39;s value is greater than another&#39;s.</li>
@@ -38,7 +48,21 @@
 <li><code><a href="#op_LessThanOrEqual">bool operator &lt;=(PeterO.Cbor.CBORNumber, PeterO.Cbor.CBORNumber)</a></code> - Returns whether one object&#39;s value is up to another&#39;s.</li>
 <li><code><a href="#Remainder_PeterO_Cbor_CBORNumber">Remainder(PeterO.Cbor.CBORNumber)</a></code> - Returns the remainder when this number is divided by another number.</li>
 <li><code><a href="#Subtract_PeterO_Cbor_CBORNumber">Subtract(PeterO.Cbor.CBORNumber)</a></code> - Returns a number that expresses this number minus another.</li>
+<li><code><a href="#ToByteChecked">ToByteChecked()</a></code> - Converts this number&#39;s value to a byte (from 0 to 255) if it can fit in a byte (from 0 to 255) after truncating to an integer.</li>
+<li><code><a href="#ToByteIfExact">ToByteIfExact()</a></code> - Converts this number&#39;s value to a byte (from 0 to 255) if it can fit in a byte (from 0 to 255) without rounding to a different numerical value.</li>
+<li><code><a href="#ToByteUnchecked">ToByteUnchecked()</a></code> - Truncates this number&#39;s value to an integer and returns the least-significant bits of its two&#39;s-complement form as a byte (from 0 to 255).</li>
 <li><code><a href="#ToCBORObject">ToCBORObject()</a></code> - Converts this object&#39;s value to a CBOR object.</li>
+<li><code><a href="#ToEInteger">ToEInteger()</a></code> - Not documented yet.</li>
+<li><code><a href="#ToEIntegerIfExact">ToEIntegerIfExact()</a></code> - Not documented yet.</li>
+<li><code><a href="#ToInt16Checked">ToInt16Checked()</a></code> - Converts this number&#39;s value to a 16-bit signed integer if it can fit in a 16-bit signed integer after truncating to an integer.</li>
+<li><code><a href="#ToInt16IfExact">ToInt16IfExact()</a></code> - Converts this number&#39;s value to a 16-bit signed integer if it can fit in a 16-bit signed integer without rounding to a different numerical value.</li>
+<li><code><a href="#ToInt16Unchecked">ToInt16Unchecked()</a></code> - Truncates this number&#39;s value to an integer and returns the least-significant bits of its two&#39;s-complement form as a 16-bit signed integer.</li>
+<li><code><a href="#ToInt32Checked">ToInt32Checked()</a></code> - Converts this number&#39;s value to a 32-bit signed integer if it can fit in a 32-bit signed integer after truncating to an integer.</li>
+<li><code><a href="#ToInt32IfExact">ToInt32IfExact()</a></code> - Converts this number&#39;s value to a 32-bit signed integer if it can fit in a 32-bit signed integer without rounding to a different numerical value.</li>
+<li><code><a href="#ToInt32Unchecked">ToInt32Unchecked()</a></code> - Truncates this number&#39;s value to an integer and returns the least-significant bits of its two&#39;s-complement form as a 32-bit signed integer.</li>
+<li><code><a href="#ToInt64Checked">ToInt64Checked()</a></code> - Converts this number&#39;s value to a 64-bit signed integer if it can fit in a 64-bit signed integer after truncating to an integer.</li>
+<li><code><a href="#ToInt64IfExact">ToInt64IfExact()</a></code> - Converts this number&#39;s value to a 64-bit signed integer if it can fit in a 64-bit signed integer without rounding to a different numerical value.</li>
+<li><code><a href="#ToInt64Unchecked">ToInt64Unchecked()</a></code> - Truncates this number&#39;s value to an integer and returns the least-significant bits of its two&#39;s-complement form as a 64-bit signed integer.</li>
 <li><code><a href="#ToString">ToString()</a></code> - Returns the value of this object in text form.</li>
 </ul>
 
@@ -135,6 +159,19 @@ is null.</li>
 
 <p>The return value is not documented yet.</p>
 
+<p><a id="CanFitInDouble"></a></p>
+
+<h3>CanFitInDouble</h3>
+
+<pre>public bool CanFitInDouble();
+</pre>
+
+<p>Not documented yet.</p>
+
+<p><b>Return Value:</b></p>
+
+<p>The return value is not documented yet.</p>
+
 <p><a id="CanFitInInt32"></a></p>
 
 <h3>CanFitInInt32</h3>
@@ -160,6 +197,45 @@ is null.</li>
 <p><b>Return Value:</b></p>
 
 <p><code>true</code>  if this object&#39;s numerical value is an integer, is -(2^63) or greater, and is less than 2^63; otherwise,  <code>false</code> .</p>
+
+<p><a id="CanFitInSingle"></a></p>
+
+<h3>CanFitInSingle</h3>
+
+<pre>public bool CanFitInSingle();
+</pre>
+
+<p>Not documented yet.</p>
+
+<p><b>Return Value:</b></p>
+
+<p>The return value is not documented yet.</p>
+
+<p><a id="CanTruncatedIntFitInInt32"></a></p>
+
+<h3>CanTruncatedIntFitInInt32</h3>
+
+<pre>public bool CanTruncatedIntFitInInt32();
+</pre>
+
+<p>Not documented yet.</p>
+
+<p><b>Return Value:</b></p>
+
+<p>The return value is not documented yet.</p>
+
+<p><a id="CanTruncatedIntFitInInt64"></a></p>
+
+<h3>CanTruncatedIntFitInInt64</h3>
+
+<pre>public bool CanTruncatedIntFitInInt64();
+</pre>
+
+<p>Not documented yet.</p>
+
+<p><b>Return Value:</b></p>
+
+<p>The return value is not documented yet.</p>
 
 <p><a id="CompareTo_PeterO_Cbor_CBORNumber"></a></p>
 
@@ -212,6 +288,26 @@ The parameter  <i>b</i>
 is null.</li>
 </ul>
 
+<p><a id="FromByte_byte"></a></p>
+
+<h3>FromByte</h3>
+
+<pre>public static PeterO.Cbor.CBORNumber FromByte(
+    byte inputByte);
+</pre>
+
+<p>Converts a byte (from 0 to 255) to an arbitrary-precision decimal number.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>inputByte</i>: The number to convert as a byte (from 0 to 255).</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>This number&#39;s value as an arbitrary-precision decimal number.</p>
+
 <p><a id="FromCBORObject_PeterO_Cbor_CBORObject"></a></p>
 
 <h3>FromCBORObject</h3>
@@ -232,6 +328,39 @@ is null.</li>
 
 <p>A CBOR number object, or null if the given CBOR object is null or does not represent a number.</p>
 
+<p><a id="FromInt16_short"></a></p>
+
+<h3>FromInt16</h3>
+
+<pre>public static PeterO.Cbor.CBORNumber FromInt16(
+    short inputInt16);
+</pre>
+
+<p>Converts a 16-bit signed integer to an arbitrary-precision decimal number.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>inputInt16</i>: The number to convert as a 16-bit signed integer.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>This number&#39;s value as an arbitrary-precision decimal number.</p>
+
+<p><a id="IsFinite"></a></p>
+
+<h3>IsFinite</h3>
+
+<pre>public bool IsFinite();
+</pre>
+
+<p>Not documented yet.</p>
+
+<p><b>Return Value:</b></p>
+
+<p>The return value is not documented yet.</p>
+
 <p><a id="IsInfinity"></a></p>
 
 <h3>IsInfinity</h3>
@@ -245,6 +374,19 @@ is null.</li>
 
 <p><code>true</code>  if this object represents infinity; otherwise,  <code>false</code> .</p>
 
+<p><a id="IsInteger"></a></p>
+
+<h3>IsInteger</h3>
+
+<pre>public bool IsInteger();
+</pre>
+
+<p>Not documented yet.</p>
+
+<p><b>Return Value:</b></p>
+
+<p>The return value is not documented yet.</p>
+
 <p><a id="IsNaN"></a></p>
 
 <h3>IsNaN</h3>
@@ -257,6 +399,19 @@ is null.</li>
 <p><b>Return Value:</b></p>
 
 <p><code>true</code>  if this object represents a not-a-number value; otherwise,  <code>false</code> .</p>
+
+<p><a id="IsNegative"></a></p>
+
+<h3>IsNegative</h3>
+
+<pre>public bool IsNegative();
+</pre>
+
+<p>Not documented yet.</p>
+
+<p><b>Return Value:</b></p>
+
+<p>The return value is not documented yet.</p>
 
 <p><a id="IsNegativeInfinity"></a></p>
 
@@ -283,6 +438,19 @@ is null.</li>
 <p><b>Return Value:</b></p>
 
 <p><code>true</code>  if this object represents positive infinity; otherwise,  <code>false</code> .</p>
+
+<p><a id="IsZero"></a></p>
+
+<h3>IsZero</h3>
+
+<pre>public bool IsZero();
+</pre>
+
+<p>Not documented yet.</p>
+
+<p><b>Return Value:</b></p>
+
+<p>The return value is not documented yet.</p>
 
 <p><a id="Multiply_PeterO_Cbor_CBORNumber"></a></p>
 
@@ -501,6 +669,59 @@ The parameter  <i>b</i>
 is null.</li>
 </ul>
 
+<p><a id="ToByteChecked"></a></p>
+
+<h3>ToByteChecked</h3>
+
+<pre>public byte ToByteChecked();
+</pre>
+
+<p>Converts this number&#39;s value to a byte (from 0 to 255) if it can fit in a byte (from 0 to 255) after truncating to an integer.</p>
+
+<p><b>Return Value:</b></p>
+
+<p>This number&#39;s value, truncated to a byte (from 0 to 255).</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.OverflowException:
+This value is infinity or not-a-number, or the truncated integer is less than 0 or greater than 255.</li>
+</ul>
+
+<p><a id="ToByteIfExact"></a></p>
+
+<h3>ToByteIfExact</h3>
+
+<pre>public byte ToByteIfExact();
+</pre>
+
+<p>Converts this number&#39;s value to a byte (from 0 to 255) if it can fit in a byte (from 0 to 255) without rounding to a different numerical value.</p>
+
+<p><b>Return Value:</b></p>
+
+<p>This number&#39;s value as a byte (from 0 to 255).</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArithmeticException:
+This value is infinity or not-a-number, is not an exact integer, or is less than 0 or greater than 255.</li>
+</ul>
+
+<p><a id="ToByteUnchecked"></a></p>
+
+<h3>ToByteUnchecked</h3>
+
+<pre>public byte ToByteUnchecked();
+</pre>
+
+<p>Truncates this number&#39;s value to an integer and returns the least-significant bits of its two&#39;s-complement form as a byte (from 0 to 255).</p>
+
+<p><b>Return Value:</b></p>
+
+<p>This number, converted to a byte (from 0 to 255). Returns 0 if this value is infinity or not-a-number.</p>
+
 <p><a id="ToCBORObject"></a></p>
 
 <h3>ToCBORObject</h3>
@@ -513,6 +734,197 @@ is null.</li>
 <p><b>Return Value:</b></p>
 
 <p>A CBOR object that stores this object&#39;s value.</p>
+
+<p><a id="ToEInteger"></a></p>
+
+<h3>ToEInteger</h3>
+
+<pre>public PeterO.Numbers.EInteger ToEInteger();
+</pre>
+
+<p>Not documented yet.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArithmeticException:
+This value is infinity or not-a-number.</li>
+</ul>
+
+<p><a id="ToEIntegerIfExact"></a></p>
+
+<h3>ToEIntegerIfExact</h3>
+
+<pre>public PeterO.Numbers.EInteger ToEIntegerIfExact();
+</pre>
+
+<p>Not documented yet.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArithmeticException:
+This value is infinity or not-a-number or is not an exact integer.</li>
+</ul>
+
+<p><a id="ToInt16Checked"></a></p>
+
+<h3>ToInt16Checked</h3>
+
+<pre>public short ToInt16Checked();
+</pre>
+
+<p>Converts this number&#39;s value to a 16-bit signed integer if it can fit in a 16-bit signed integer after truncating to an integer.</p>
+
+<p><b>Return Value:</b></p>
+
+<p>This number&#39;s value, truncated to a 16-bit signed integer.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.OverflowException:
+This value is infinity or not-a-number, or the truncated integer is less than -32768 or greater than 32767.</li>
+</ul>
+
+<p><a id="ToInt16IfExact"></a></p>
+
+<h3>ToInt16IfExact</h3>
+
+<pre>public short ToInt16IfExact();
+</pre>
+
+<p>Converts this number&#39;s value to a 16-bit signed integer if it can fit in a 16-bit signed integer without rounding to a different numerical value.</p>
+
+<p><b>Return Value:</b></p>
+
+<p>This number&#39;s value as a 16-bit signed integer.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArithmeticException:
+This value is infinity or not-a-number, is not an exact integer, or is less than -32768 or greater than 32767.</li>
+</ul>
+
+<p><a id="ToInt16Unchecked"></a></p>
+
+<h3>ToInt16Unchecked</h3>
+
+<pre>public short ToInt16Unchecked();
+</pre>
+
+<p>Truncates this number&#39;s value to an integer and returns the least-significant bits of its two&#39;s-complement form as a 16-bit signed integer.</p>
+
+<p><b>Return Value:</b></p>
+
+<p>This number, converted to a 16-bit signed integer. Returns 0 if this value is infinity or not-a-number.</p>
+
+<p><a id="ToInt32Checked"></a></p>
+
+<h3>ToInt32Checked</h3>
+
+<pre>public int ToInt32Checked();
+</pre>
+
+<p>Converts this number&#39;s value to a 32-bit signed integer if it can fit in a 32-bit signed integer after truncating to an integer.</p>
+
+<p><b>Return Value:</b></p>
+
+<p>This number&#39;s value, truncated to a 32-bit signed integer.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.OverflowException:
+This value is infinity or not-a-number, or the truncated integer is less than -2147483648 or greater than 2147483647.</li>
+</ul>
+
+<p><a id="ToInt32IfExact"></a></p>
+
+<h3>ToInt32IfExact</h3>
+
+<pre>public int ToInt32IfExact();
+</pre>
+
+<p>Converts this number&#39;s value to a 32-bit signed integer if it can fit in a 32-bit signed integer without rounding to a different numerical value.</p>
+
+<p><b>Return Value:</b></p>
+
+<p>This number&#39;s value as a 32-bit signed integer.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArithmeticException:
+This value is infinity or not-a-number, is not an exact integer, or is less than -2147483648 or greater than 2147483647.</li>
+</ul>
+
+<p><a id="ToInt32Unchecked"></a></p>
+
+<h3>ToInt32Unchecked</h3>
+
+<pre>public int ToInt32Unchecked();
+</pre>
+
+<p>Truncates this number&#39;s value to an integer and returns the least-significant bits of its two&#39;s-complement form as a 32-bit signed integer.</p>
+
+<p><b>Return Value:</b></p>
+
+<p>This number, converted to a 32-bit signed integer. Returns 0 if this value is infinity or not-a-number.</p>
+
+<p><a id="ToInt64Checked"></a></p>
+
+<h3>ToInt64Checked</h3>
+
+<pre>public long ToInt64Checked();
+</pre>
+
+<p>Converts this number&#39;s value to a 64-bit signed integer if it can fit in a 64-bit signed integer after truncating to an integer.</p>
+
+<p><b>Return Value:</b></p>
+
+<p>This number&#39;s value, truncated to a 64-bit signed integer.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.OverflowException:
+This value is infinity or not-a-number, or the truncated integer is less than -9223372036854775808 or greater than 9223372036854775807.</li>
+</ul>
+
+<p><a id="ToInt64IfExact"></a></p>
+
+<h3>ToInt64IfExact</h3>
+
+<pre>public long ToInt64IfExact();
+</pre>
+
+<p>Converts this number&#39;s value to a 64-bit signed integer if it can fit in a 64-bit signed integer without rounding to a different numerical value.</p>
+
+<p><b>Return Value:</b></p>
+
+<p>This number&#39;s value as a 64-bit signed integer.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArithmeticException:
+This value is infinity or not-a-number, is not an exact integer, or is less than -9223372036854775808 or greater than 9223372036854775807.</li>
+</ul>
+
+<p><a id="ToInt64Unchecked"></a></p>
+
+<h3>ToInt64Unchecked</h3>
+
+<pre>public long ToInt64Unchecked();
+</pre>
+
+<p>Truncates this number&#39;s value to an integer and returns the least-significant bits of its two&#39;s-complement form as a 64-bit signed integer.</p>
+
+<p><b>Return Value:</b></p>
+
+<p>This number, converted to a 64-bit signed integer. Returns 0 if this value is infinity or not-a-number.</p>
 
 <p><a id="ToString"></a></p>
 
