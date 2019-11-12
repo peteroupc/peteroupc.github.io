@@ -181,7 +181,7 @@
 <li><code><a href="#Exponent">Exponent</a></code> - Gets this object&#39;s exponent.</li>
 <li><code><a href="#FromBoolean_bool">FromBoolean(bool)</a></code> - Converts a boolean value (true or false) to an arbitrary-precision decimal number.</li>
 <li><code><a href="#FromByte_byte">FromByte(byte)</a></code> - Converts a byte (from 0 to 255) to an arbitrary-precision decimal number.</li>
-<li><code><a href="#FromDecimal_System_Decimal">FromDecimal(System.Decimal)</a></code> - Converts a decimal under the Common Language Infrastructure (see T:PeterO.</li>
+<li><code><a href="#FromDecimal_decimal">FromDecimal(decimal)</a></code> - Converts a decimal under the Common Language Infrastructure (see T:PeterO.</li>
 <li><code><a href="#FromDouble_double">FromDouble(double)</a></code> - Creates an arbitrary-precision decimal number from a 64-bit binary floating-point number.</li>
 <li><code><a href="#FromEFloat_PeterO_Numbers_EFloat">FromEFloat(PeterO.Numbers.EFloat)</a></code> - Creates an arbitrary-precision decimal number from an arbitrary-precision binary floating-point number.</li>
 <li><code><a href="#FromEInteger_PeterO_Numbers_EInteger">FromEInteger(PeterO.Numbers.EInteger)</a></code> - Converts an arbitrary-precision integer to an arbitrary precision decimal.</li>
@@ -246,7 +246,7 @@
 <li><code><a href="#op_Addition">PeterO.Numbers.EDecimal operator +(PeterO.Numbers.EDecimal, PeterO.Numbers.EDecimal)</a></code> - Adds two arbitrary-precision decimal floating-point numbers and returns the result.</li>
 <li><code><a href="#op_Decrement">PeterO.Numbers.EDecimal operator --(PeterO.Numbers.EDecimal)</a></code> - Subtracts one from an arbitrary-precision decimal number.</li>
 <li><code><a href="#op_Division">PeterO.Numbers.EDecimal operator /(PeterO.Numbers.EDecimal, PeterO.Numbers.EDecimal)</a></code> - Divides this object by another decimal number and returns the result.</li>
-<li><code><a href="#op_Explicit">explicit operator ulong(PeterO.Numbers.EDecimal)</a></code> - Converts a boolean value (true or false) to an arbitrary precision decimal. Converts an arbitrary-precision decimal&#39;s value to a decimal under the Common Language Infrastructure (see T:PeterO. Converts an arbitrary-precision decimal floating-point number to an arbitrary-precision integer. Converts this value to its closest equivalent as a 64-bit floating-point number. Converts this value to its closest equivalent as a 32-bit floating-point number. Converts an arbitrary-precision decimal number to a byte (from 0 to 255) if it can fit in a byte (from 0 to 255) after truncating to an integer. Converts an arbitrary-precision decimal number to an 8-bit signed integer if it can fit in an 8-bit signed integer after truncating to an integer. Converts an arbitrary-precision decimal number to a 16-bit signed integer if it can fit in a 16-bit signed integer after truncating to an integer. Converts an arbitrary-precision decimal number to a 16-bit unsigned integer if it can fit in a 16-bit unsigned integer after truncating to an integer. Converts an arbitrary-precision decimal number to a 32-bit signed integer if it can fit in a 32-bit signed integer after truncating to an integer. Converts an arbitrary-precision decimal number to a 32-bit signed integer if it can fit in a 32-bit signed integer after truncating to an integer. Converts an arbitrary-precision decimal number to a 64-bit signed integer if it can fit in a 64-bit signed integer after truncating to an integer. Converts an arbitrary-precision decimal number to a 64-bit unsigned integer if it can fit in a 64-bit unsigned integer after truncating to an integer.</li>
+<li><code><a href="#op_Explicit">explicit operator ulong(PeterO.Numbers.EDecimal)</a></code> - Converts a boolean value (true or false) to an arbitrary precision decimal. Converts an arbitrary-precision decimal&#39;s value to a decimal under the Common Language Infrastructure (see T:PeterO. Converts an arbitrary-precision decimal floating-point number to an arbitrary-precision integer. Converts this value to its closest equivalent as a 64-bit floating-point number. Converts this value to its closest equivalent as a 32-bit floating-point number. Converts an arbitrary-precision decimal number to a byte (from 0 to 255) if it can fit in a byte (from 0 to 255) after converting it to an integer by discarding its fractional part. Converts an arbitrary-precision decimal number to an 8-bit signed integer if it can fit in an 8-bit signed integer after converting it to an integer by discarding its fractional part. Converts an arbitrary-precision decimal number to a 16-bit signed integer if it can fit in a 16-bit signed integer after converting it to an integer by discarding its fractional part. Converts an arbitrary-precision decimal number to a 16-bit unsigned integer if it can fit in a 16-bit unsigned integer after converting it to an integer by discarding its fractional part. Converts an arbitrary-precision decimal number to a 32-bit signed integer if it can fit in a 32-bit signed integer after converting it to an integer by discarding its fractional part. Converts an arbitrary-precision decimal number to a 32-bit signed integer if it can fit in a 32-bit signed integer after converting it to an integer by discarding its fractional part. Converts an arbitrary-precision decimal number to a 64-bit signed integer if it can fit in a 64-bit signed integer after converting it to an integer by discarding its fractional part. Converts an arbitrary-precision decimal number to a 64-bit unsigned integer if it can fit in a 64-bit unsigned integer after converting it to an integer by discarding its fractional part.</li>
 <li><code><a href="#op_Implicit">implicit operator PeterO.Numbers.EDecimal(ulong)</a></code> - Converts an arbitrary-precision decimal number to a decimal under the Common Language Infrastructure (see T:PeterO. Converts an arbitrary-precision integer to an arbitrary precision decimal. Converts a byte (from 0 to 255) to an arbitrary-precision decimal number. Converts an 8-bit signed integer to an arbitrary-precision decimal number. Converts a 16-bit signed integer to an arbitrary-precision decimal number. Converts a 16-bit unsigned integer to an arbitrary-precision decimal number. Converts a 32-bit signed integer to an arbitrary-precision decimal number. Converts a 32-bit signed integer to an arbitrary-precision decimal number. Converts a 64-bit signed integer to an arbitrary-precision decimal number. Converts a 64-bit unsigned integer to an arbitrary-precision decimal number.</li>
 <li><code><a href="#op_Increment">PeterO.Numbers.EDecimal operator ++(PeterO.Numbers.EDecimal)</a></code> - Adds one to an arbitrary-precision decimal number.</li>
 <li><code><a href="#op_Modulus">PeterO.Numbers.EDecimal operator %(PeterO.Numbers.EDecimal, PeterO.Numbers.EDecimal)</a></code> - Finds the remainder when dividing one arbitrary-precision decimal number by another.</li>
@@ -296,9 +296,9 @@
 <li><code><a href="#Subtract_PeterO_Numbers_EDecimal">Subtract(PeterO.Numbers.EDecimal)</a></code> - Subtracts an arbitrary-precision decimal number from this instance and returns the result.</li>
 <li><code><a href="#Subtract_PeterO_Numbers_EDecimal_PeterO_Numbers_EContext">Subtract(PeterO.Numbers.EDecimal, PeterO.Numbers.EContext)</a></code> - Subtracts an arbitrary-precision decimal number from this instance.</li>
 <li><code><a href="#Ten">public static readonly PeterO.Numbers.EDecimal Ten;</a></code> - Represents the number 10.</li>
-<li><code><a href="#ToByteChecked">ToByteChecked()</a></code> - Converts this number&#39;s value to a byte (from 0 to 255) if it can fit in a byte (from 0 to 255) after truncating to an integer.</li>
+<li><code><a href="#ToByteChecked">ToByteChecked()</a></code> - Converts this number&#39;s value to a byte (from 0 to 255) if it can fit in a byte (from 0 to 255) after converting it to an integer by discarding its fractional part.</li>
 <li><code><a href="#ToByteIfExact">ToByteIfExact()</a></code> - Converts this number&#39;s value to a byte (from 0 to 255) if it can fit in a byte (from 0 to 255) without rounding to a different numerical value.</li>
-<li><code><a href="#ToByteUnchecked">ToByteUnchecked()</a></code> - Truncates this number&#39;s value to an integer and returns the least-significant bits of its two&#39;s-complement form as a byte (from 0 to 255).</li>
+<li><code><a href="#ToByteUnchecked">ToByteUnchecked()</a></code> - Converts this number&#39;s value to an integer by discarding its fractional part, and returns the least-significant bits of its two&#39;s-complement form as a byte (from 0 to 255).</li>
 <li><code><a href="#ToDecimal">ToDecimal()</a></code> - Converts this value to a decimal under the Common Language Infrastructure (see T:PeterO.</li>
 <li><code><a href="#ToDouble">ToDouble()</a></code> - Converts this value to its closest equivalent as a 64-bit floating-point number.</li>
 <li><code><a href="#ToEFloat">ToEFloat()</a></code> - Creates a binary floating-point number from this object&#39;s value.</li>
@@ -308,30 +308,30 @@
 <li><code><a href="#ToEIntegerIfExact">ToEIntegerIfExact()</a></code> - Converts this value to an arbitrary-precision integer, checking whether the fractional part of the value would be lost.</li>
 <li><code><a href="#ToEngineeringString">ToEngineeringString()</a></code> - Same as ToString(), except that when an exponent is used it will be a multiple of 3.</li>
 <li><code><a href="#ToExtendedFloat">ToExtendedFloat()</a></code> - <b>Deprecated:</b> Renamed to ToEFloat.</li>
-<li><code><a href="#ToInt16Checked">ToInt16Checked()</a></code> - Converts this number&#39;s value to a 16-bit signed integer if it can fit in a 16-bit signed integer after truncating to an integer.</li>
+<li><code><a href="#ToInt16Checked">ToInt16Checked()</a></code> - Converts this number&#39;s value to a 16-bit signed integer if it can fit in a 16-bit signed integer after converting it to an integer by discarding its fractional part.</li>
 <li><code><a href="#ToInt16IfExact">ToInt16IfExact()</a></code> - Converts this number&#39;s value to a 16-bit signed integer if it can fit in a 16-bit signed integer without rounding to a different numerical value.</li>
-<li><code><a href="#ToInt16Unchecked">ToInt16Unchecked()</a></code> - Truncates this number&#39;s value to an integer and returns the least-significant bits of its two&#39;s-complement form as a 16-bit signed integer.</li>
-<li><code><a href="#ToInt32Checked">ToInt32Checked()</a></code> - Converts this number&#39;s value to a 32-bit signed integer if it can fit in a 32-bit signed integer after truncating to an integer.</li>
+<li><code><a href="#ToInt16Unchecked">ToInt16Unchecked()</a></code> - Converts this number&#39;s value to an integer by discarding its fractional part, and returns the least-significant bits of its two&#39;s-complement form as a 16-bit signed integer.</li>
+<li><code><a href="#ToInt32Checked">ToInt32Checked()</a></code> - Converts this number&#39;s value to a 32-bit signed integer if it can fit in a 32-bit signed integer after converting it to an integer by discarding its fractional part.</li>
 <li><code><a href="#ToInt32IfExact">ToInt32IfExact()</a></code> - Converts this number&#39;s value to a 32-bit signed integer if it can fit in a 32-bit signed integer without rounding to a different numerical value.</li>
-<li><code><a href="#ToInt32Unchecked">ToInt32Unchecked()</a></code> - Truncates this number&#39;s value to an integer and returns the least-significant bits of its two&#39;s-complement form as a 32-bit signed integer.</li>
-<li><code><a href="#ToInt64Checked">ToInt64Checked()</a></code> - Converts this number&#39;s value to a 64-bit signed integer if it can fit in a 64-bit signed integer after truncating to an integer.</li>
+<li><code><a href="#ToInt32Unchecked">ToInt32Unchecked()</a></code> - Converts this number&#39;s value to an integer by discarding its fractional part, and returns the least-significant bits of its two&#39;s-complement form as a 32-bit signed integer.</li>
+<li><code><a href="#ToInt64Checked">ToInt64Checked()</a></code> - Converts this number&#39;s value to a 64-bit signed integer if it can fit in a 64-bit signed integer after converting it to an integer by discarding its fractional part.</li>
 <li><code><a href="#ToInt64IfExact">ToInt64IfExact()</a></code> - Converts this number&#39;s value to a 64-bit signed integer if it can fit in a 64-bit signed integer without rounding to a different numerical value.</li>
-<li><code><a href="#ToInt64Unchecked">ToInt64Unchecked()</a></code> - Truncates this number&#39;s value to an integer and returns the least-significant bits of its two&#39;s-complement form as a 64-bit signed integer.</li>
+<li><code><a href="#ToInt64Unchecked">ToInt64Unchecked()</a></code> - Converts this number&#39;s value to an integer by discarding its fractional part, and returns the least-significant bits of its two&#39;s-complement form as a 64-bit signed integer.</li>
 <li><code><a href="#ToPlainString">ToPlainString()</a></code> - Converts this value to a string, but without using exponential notation.</li>
-<li><code><a href="#ToSByteChecked">ToSByteChecked()</a></code> - Converts this number&#39;s value to an 8-bit signed integer if it can fit in an 8-bit signed integer after truncating to an integer.</li>
+<li><code><a href="#ToSByteChecked">ToSByteChecked()</a></code> - Converts this number&#39;s value to an 8-bit signed integer if it can fit in an 8-bit signed integer after converting it to an integer by discarding its fractional part.</li>
 <li><code><a href="#ToSByteIfExact">ToSByteIfExact()</a></code> - Converts this number&#39;s value to an 8-bit signed integer if it can fit in an 8-bit signed integer without rounding to a different numerical value.</li>
-<li><code><a href="#ToSByteUnchecked">ToSByteUnchecked()</a></code> - Truncates this number&#39;s value to an integer and returns the least-significant bits of its two&#39;s-complement form as an 8-bit signed integer.</li>
+<li><code><a href="#ToSByteUnchecked">ToSByteUnchecked()</a></code> - Converts this number&#39;s value to an integer by discarding its fractional part, and returns the least-significant bits of its two&#39;s-complement form as an 8-bit signed integer.</li>
 <li><code><a href="#ToSingle">ToSingle()</a></code> - Converts this value to its closest equivalent as a 32-bit floating-point number.</li>
 <li><code><a href="#ToString">ToString()</a></code> - Converts this value to a string.</li>
-<li><code><a href="#ToUInt16Checked">ToUInt16Checked()</a></code> - Converts this number&#39;s value to a 16-bit unsigned integer if it can fit in a 16-bit unsigned integer after truncating to an integer.</li>
+<li><code><a href="#ToUInt16Checked">ToUInt16Checked()</a></code> - Converts this number&#39;s value to a 16-bit unsigned integer if it can fit in a 16-bit unsigned integer after converting it to an integer by discarding its fractional part.</li>
 <li><code><a href="#ToUInt16IfExact">ToUInt16IfExact()</a></code> - Converts this number&#39;s value to a 16-bit unsigned integer if it can fit in a 16-bit unsigned integer without rounding to a different numerical value.</li>
-<li><code><a href="#ToUInt16Unchecked">ToUInt16Unchecked()</a></code> - Truncates this number&#39;s value to an integer and returns the least-significant bits of its two&#39;s-complement form as a 16-bit unsigned integer.</li>
-<li><code><a href="#ToUInt32Checked">ToUInt32Checked()</a></code> - Converts this number&#39;s value to a 32-bit signed integer if it can fit in a 32-bit signed integer after truncating to an integer.</li>
+<li><code><a href="#ToUInt16Unchecked">ToUInt16Unchecked()</a></code> - Converts this number&#39;s value to an integer by discarding its fractional part, and returns the least-significant bits of its two&#39;s-complement form as a 16-bit unsigned integer.</li>
+<li><code><a href="#ToUInt32Checked">ToUInt32Checked()</a></code> - Converts this number&#39;s value to a 32-bit signed integer if it can fit in a 32-bit signed integer after converting it to an integer by discarding its fractional part.</li>
 <li><code><a href="#ToUInt32IfExact">ToUInt32IfExact()</a></code> - Converts this number&#39;s value to a 32-bit signed integer if it can fit in a 32-bit signed integer without rounding to a different numerical value.</li>
-<li><code><a href="#ToUInt32Unchecked">ToUInt32Unchecked()</a></code> - Truncates this number&#39;s value to an integer and returns the least-significant bits of its two&#39;s-complement form as a 32-bit signed integer.</li>
-<li><code><a href="#ToUInt64Checked">ToUInt64Checked()</a></code> - Converts this number&#39;s value to a 64-bit unsigned integer if it can fit in a 64-bit unsigned integer after truncating to an integer.</li>
+<li><code><a href="#ToUInt32Unchecked">ToUInt32Unchecked()</a></code> - Converts this number&#39;s value to an integer by discarding its fractional part, and returns the least-significant bits of its two&#39;s-complement form as a 32-bit signed integer.</li>
+<li><code><a href="#ToUInt64Checked">ToUInt64Checked()</a></code> - Converts this number&#39;s value to a 64-bit unsigned integer if it can fit in a 64-bit unsigned integer after converting it to an integer by discarding its fractional part.</li>
 <li><code><a href="#ToUInt64IfExact">ToUInt64IfExact()</a></code> - Converts this number&#39;s value to a 64-bit unsigned integer if it can fit in a 64-bit unsigned integer without rounding to a different numerical value.</li>
-<li><code><a href="#ToUInt64Unchecked">ToUInt64Unchecked()</a></code> - Truncates this number&#39;s value to an integer and returns the least-significant bits of its two&#39;s-complement form as a 64-bit unsigned integer.</li>
+<li><code><a href="#ToUInt64Unchecked">ToUInt64Unchecked()</a></code> - Converts this number&#39;s value to an integer by discarding its fractional part, and returns the least-significant bits of its two&#39;s-complement form as a 64-bit unsigned integer.</li>
 <li><code><a href="#Ulp">Ulp()</a></code> - Returns the unit in the last place.</li>
 <li><code><a href="#UnsignedMantissa">UnsignedMantissa</a></code> - Gets the absolute value of this object&#39;s unscaled value, or significand.</li>
 <li><code><a href="#Zero">public static readonly PeterO.Numbers.EDecimal Zero;</a></code> - Represents the number 0.</li>
@@ -909,8 +909,8 @@ is a 32-bit signed integer.</p></li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>mantissa</i>: Not documented yet.</p></li>
-<li><p><i>exponent</i>: Not documented yet.</p></li>
+<li><p><i>significand</i>: Desired value for the significand.</p></li>
+<li><p><i>exponent</i>: Desired value for the exponent.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -1546,12 +1546,12 @@ is an arbitrary object.</li>
 
 <p>This number&#39;s value as an arbitrary-precision decimal number.</p>
 
-<p><a id="FromDecimal_System_Decimal"></a></p>
+<p><a id="FromDecimal_decimal"></a></p>
 
 <h3>FromDecimal</h3>
 
 <pre>public static PeterO.Numbers.EDecimal FromDecimal(
-    System.Decimal dec);
+    decimal dec);
 </pre>
 
 <p>Converts a  <code>decimal</code>  under the Common Language Infrastructure (see <a href="PeterO.Numbers.EDecimal.html">&#x22;Forms of numbers&#x22;</a>&quot;Forms of numbers&quot; ) to an arbitrary-precision decimal.</p>
@@ -2839,7 +2839,7 @@ is null.</li>
     PeterO.Numbers.EDecimal input);
 </pre>
 
-<p>Converts an arbitrary-precision decimal number to a byte (from 0 to 255) if it can fit in a byte (from 0 to 255) after truncating to an integer.</p>
+<p>Converts an arbitrary-precision decimal number to a byte (from 0 to 255) if it can fit in a byte (from 0 to 255) after converting it to an integer by discarding its fractional part.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -2857,10 +2857,39 @@ is null.</li>
 <ul>
 <li><p>System.OverflowException:
 The parameter  <i>input</i>
-is infinity or not-a-number, or the truncated integer is less than 0 or greater than 255.</p></li>
+is infinity or not-a-number, or the number, once converted to an integer by discarding its fractional part, is less than 0 or greater than 255.</p></li>
 <li><p>System.ArgumentNullException:
 The parameter  <i>input</i>
 is null.</p></li>
+</ul>
+
+<p><a id="op_Explicit"></a></p>
+
+<h3>Explicit Operator</h3>
+
+<pre>public static explicit operator decimal(
+    PeterO.Numbers.EDecimal bigValue);
+</pre>
+
+<p>Converts an arbitrary-precision decimal&#39;s value to a  <code>decimal</code>  under the Common Language Infrastructure (see <a href="PeterO.Numbers.EDecimal.html">&#x22;Forms of numbers&#x22;</a>&quot;Forms of numbers&quot; ), using the half-even rounding mode.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>bigValue</i>: The parameter  <i>bigValue</i>
+is an arbitrary-precision decimal floating-point number.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>A  <code>decimal</code>  under the Common Language Infrastructure (usually a.NET Framework decimal).</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter  <i>bigValue</i>
+is null.</li>
 </ul>
 
 <p><a id="op_Explicit"></a></p>
@@ -2927,7 +2956,7 @@ is null.</li>
     PeterO.Numbers.EDecimal input);
 </pre>
 
-<p>Converts an arbitrary-precision decimal number to a 32-bit signed integer if it can fit in a 32-bit signed integer after truncating to an integer.</p>
+<p>Converts an arbitrary-precision decimal number to a 32-bit signed integer if it can fit in a 32-bit signed integer after converting it to an integer by discarding its fractional part.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -2945,7 +2974,7 @@ is null.</li>
 <ul>
 <li><p>System.OverflowException:
 The parameter  <i>input</i>
-is infinity or not-a-number, or the truncated integer is less than -2147483648 or greater than 2147483647.</p></li>
+is infinity or not-a-number, or the number, once converted to an integer by discarding its fractional part, is less than -2147483648 or greater than 2147483647.</p></li>
 <li><p>System.ArgumentNullException:
 The parameter  <i>input</i>
 is null.</p></li>
@@ -2959,7 +2988,7 @@ is null.</p></li>
     PeterO.Numbers.EDecimal input);
 </pre>
 
-<p>Converts an arbitrary-precision decimal number to a 64-bit signed integer if it can fit in a 64-bit signed integer after truncating to an integer.</p>
+<p>Converts an arbitrary-precision decimal number to a 64-bit signed integer if it can fit in a 64-bit signed integer after converting it to an integer by discarding its fractional part.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -2977,7 +3006,7 @@ is null.</p></li>
 <ul>
 <li><p>System.OverflowException:
 The parameter  <i>input</i>
-is infinity or not-a-number, or the truncated integer is less than -9223372036854775808 or greater than 9223372036854775807.</p></li>
+is infinity or not-a-number, or the number, once converted to an integer by discarding its fractional part, is less than -9223372036854775808 or greater than 9223372036854775807.</p></li>
 <li><p>System.ArgumentNullException:
 The parameter  <i>input</i>
 is null.</p></li>
@@ -3042,7 +3071,7 @@ is null.</p></li>
     PeterO.Numbers.EDecimal input);
 </pre>
 
-<p>Converts an arbitrary-precision decimal number to an 8-bit signed integer if it can fit in an 8-bit signed integer after truncating to an integer.</p>
+<p>Converts an arbitrary-precision decimal number to an 8-bit signed integer if it can fit in an 8-bit signed integer after converting it to an integer by discarding its fractional part.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -3060,7 +3089,7 @@ is null.</p></li>
 <ul>
 <li><p>System.OverflowException:
 The parameter  <i>input</i>
-is infinity or not-a-number, or the truncated integer is less than -128 or greater than 127.</p></li>
+is infinity or not-a-number, or the number, once converted to an integer by discarding its fractional part, is less than -128 or greater than 127.</p></li>
 <li><p>System.ArgumentNullException:
 The parameter  <i>input</i>
 is null.</p></li>
@@ -3074,7 +3103,7 @@ is null.</p></li>
     PeterO.Numbers.EDecimal input);
 </pre>
 
-<p>Converts an arbitrary-precision decimal number to a 16-bit signed integer if it can fit in a 16-bit signed integer after truncating to an integer.</p>
+<p>Converts an arbitrary-precision decimal number to a 16-bit signed integer if it can fit in a 16-bit signed integer after converting it to an integer by discarding its fractional part.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -3092,39 +3121,10 @@ is null.</p></li>
 <ul>
 <li><p>System.OverflowException:
 The parameter  <i>input</i>
-is infinity or not-a-number, or the truncated integer is less than -32768 or greater than 32767.</p></li>
+is infinity or not-a-number, or the number, once converted to an integer by discarding its fractional part, is less than -32768 or greater than 32767.</p></li>
 <li><p>System.ArgumentNullException:
 The parameter  <i>input</i>
 is null.</p></li>
-</ul>
-
-<p><a id="op_Explicit"></a></p>
-
-<h3>Explicit Operator</h3>
-
-<pre>public static explicit operator System.Decimal(
-    PeterO.Numbers.EDecimal bigValue);
-</pre>
-
-<p>Converts an arbitrary-precision decimal&#39;s value to a  <code>decimal</code>  under the Common Language Infrastructure (see <a href="PeterO.Numbers.EDecimal.html">&#x22;Forms of numbers&#x22;</a>&quot;Forms of numbers&quot; ), using the half-even rounding mode.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><i>bigValue</i>: The parameter  <i>bigValue</i>
-is an arbitrary-precision decimal floating-point number.</li>
-</ul>
-
-<p><b>Return Value:</b></p>
-
-<p>A  <code>decimal</code>  under the Common Language Infrastructure (usually a.NET Framework decimal).</p>
-
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li>System.ArgumentNullException:
-The parameter  <i>bigValue</i>
-is null.</li>
 </ul>
 
 <p><a id="op_Explicit"></a></p>
@@ -3135,7 +3135,7 @@ is null.</li>
     PeterO.Numbers.EDecimal input);
 </pre>
 
-<p>Converts an arbitrary-precision decimal number to a 32-bit signed integer if it can fit in a 32-bit signed integer after truncating to an integer.</p>
+<p>Converts an arbitrary-precision decimal number to a 32-bit signed integer if it can fit in a 32-bit signed integer after converting it to an integer by discarding its fractional part.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -3153,7 +3153,7 @@ is null.</li>
 <ul>
 <li><p>System.OverflowException:
 The parameter  <i>input</i>
-is infinity or not-a-number, or the truncated integer is less than 0 or greater than 4294967295.</p></li>
+is infinity or not-a-number, or the number, once converted to an integer by discarding its fractional part, is less than 0 or greater than 4294967295.</p></li>
 <li><p>System.ArgumentNullException:
 The parameter  <i>input</i>
 is null.</p></li>
@@ -3167,7 +3167,7 @@ is null.</p></li>
     PeterO.Numbers.EDecimal input);
 </pre>
 
-<p>Converts an arbitrary-precision decimal number to a 64-bit unsigned integer if it can fit in a 64-bit unsigned integer after truncating to an integer.</p>
+<p>Converts an arbitrary-precision decimal number to a 64-bit unsigned integer if it can fit in a 64-bit unsigned integer after converting it to an integer by discarding its fractional part.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -3185,7 +3185,7 @@ is null.</p></li>
 <ul>
 <li><p>System.OverflowException:
 The parameter  <i>input</i>
-is infinity or not-a-number, or the truncated integer is less than 0 or greater than 18446744073709551615.</p></li>
+is infinity or not-a-number, or the number, once converted to an integer by discarding its fractional part, is less than 0 or greater than 18446744073709551615.</p></li>
 <li><p>System.ArgumentNullException:
 The parameter  <i>input</i>
 is null.</p></li>
@@ -3199,7 +3199,7 @@ is null.</p></li>
     PeterO.Numbers.EDecimal input);
 </pre>
 
-<p>Converts an arbitrary-precision decimal number to a 16-bit unsigned integer if it can fit in a 16-bit unsigned integer after truncating to an integer.</p>
+<p>Converts an arbitrary-precision decimal number to a 16-bit unsigned integer if it can fit in a 16-bit unsigned integer after converting it to an integer by discarding its fractional part.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -3217,7 +3217,7 @@ is null.</p></li>
 <ul>
 <li><p>System.OverflowException:
 The parameter  <i>input</i>
-is infinity or not-a-number, or the truncated integer is less than 0 or greater than 65535.</p></li>
+is infinity or not-a-number, or the number, once converted to an integer by discarding its fractional part, is less than 0 or greater than 65535.</p></li>
 <li><p>System.ArgumentNullException:
 The parameter  <i>input</i>
 is null.</p></li>
@@ -3243,6 +3243,26 @@ is null.</p></li>
 
 <p>The value of  <i>inputByte</i>
  as an arbitrary-precision decimal number.</p>
+
+<p><a id="op_Implicit"></a></p>
+
+<h3>Implicit Operator</h3>
+
+<pre>public static implicit operator PeterO.Numbers.EDecimal(
+    decimal dec);
+</pre>
+
+<p>Converts an arbitrary-precision decimal number to a  <code>decimal</code>  under the Common Language Infrastructure (see <a href="PeterO.Numbers.EDecimal.html">&#x22;Forms of numbers&#x22;</a>&quot;Forms of numbers&quot; ), using the half-even rounding mode.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>dec</i>: The number to convert as an arbitrary-precision decimal floating-point number.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>A  <code>decimal</code>  under the Common Language Infrastructure (usually a.NET Framework decimal).</p>
 
 <p><a id="op_Implicit"></a></p>
 
@@ -3347,26 +3367,6 @@ is null.</p></li>
 
 <p>The value of  <i>inputInt16</i>
  as an arbitrary-precision decimal number.</p>
-
-<p><a id="op_Implicit"></a></p>
-
-<h3>Implicit Operator</h3>
-
-<pre>public static implicit operator PeterO.Numbers.EDecimal(
-    System.Decimal dec);
-</pre>
-
-<p>Converts an arbitrary-precision decimal number to a  <code>decimal</code>  under the Common Language Infrastructure (see <a href="PeterO.Numbers.EDecimal.html">&#x22;Forms of numbers&#x22;</a>&quot;Forms of numbers&quot; ), using the half-even rounding mode.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><i>dec</i>: The number to convert as an arbitrary-precision decimal floating-point number.</li>
-</ul>
-
-<p><b>Return Value:</b></p>
-
-<p>A  <code>decimal</code>  under the Common Language Infrastructure (usually a.NET Framework decimal).</p>
 
 <p><a id="op_Implicit"></a></p>
 
@@ -4464,7 +4464,7 @@ is null.</li>
 <pre>public byte ToByteChecked();
 </pre>
 
-<p>Converts this number&#39;s value to a byte (from 0 to 255) if it can fit in a byte (from 0 to 255) after truncating to an integer.</p>
+<p>Converts this number&#39;s value to a byte (from 0 to 255) if it can fit in a byte (from 0 to 255) after converting it to an integer by discarding its fractional part.</p>
 
 <p><b>Return Value:</b></p>
 
@@ -4474,7 +4474,7 @@ is null.</li>
 
 <ul>
 <li>System.OverflowException:
-This value is infinity or not-a-number, or the truncated integer is less than 0 or greater than 255.</li>
+This value is infinity or not-a-number, or the number, once converted to an integer by discarding its fractional part, is less than 0 or greater than 255.</li>
 </ul>
 
 <p><a id="ToByteIfExact"></a></p>
@@ -4504,7 +4504,7 @@ This value is infinity or not-a-number, is not an exact integer, or is less than
 <pre>public byte ToByteUnchecked();
 </pre>
 
-<p>Truncates this number&#39;s value to an integer and returns the least-significant bits of its two&#39;s-complement form as a byte (from 0 to 255).</p>
+<p>Converts this number&#39;s value to an integer by discarding its fractional part, and returns the least-significant bits of its two&#39;s-complement form as a byte (from 0 to 255).</p>
 
 <p><b>Return Value:</b></p>
 
@@ -4514,7 +4514,7 @@ This value is infinity or not-a-number, is not an exact integer, or is less than
 
 <h3>ToDecimal</h3>
 
-<pre>public System.Decimal ToDecimal();
+<pre>public decimal ToDecimal();
 </pre>
 
 <p>Converts this value to a  <code>decimal</code>  under the Common Language Infrastructure (see <a href="PeterO.Numbers.EDecimal.html">&#x22;Forms of numbers&#x22;</a>&quot;Forms of numbers&quot; ), using the half-even rounding mode.</p>
@@ -4675,7 +4675,7 @@ This object&#39;s value is infinity or not-a-number (NaN).</li>
 <pre>public short ToInt16Checked();
 </pre>
 
-<p>Converts this number&#39;s value to a 16-bit signed integer if it can fit in a 16-bit signed integer after truncating to an integer.</p>
+<p>Converts this number&#39;s value to a 16-bit signed integer if it can fit in a 16-bit signed integer after converting it to an integer by discarding its fractional part.</p>
 
 <p><b>Return Value:</b></p>
 
@@ -4685,7 +4685,7 @@ This object&#39;s value is infinity or not-a-number (NaN).</li>
 
 <ul>
 <li>System.OverflowException:
-This value is infinity or not-a-number, or the truncated integer is less than -32768 or greater than 32767.</li>
+This value is infinity or not-a-number, or the number, once converted to an integer by discarding its fractional part, is less than -32768 or greater than 32767.</li>
 </ul>
 
 <p><a id="ToInt16IfExact"></a></p>
@@ -4715,7 +4715,7 @@ This value is infinity or not-a-number, is not an exact integer, or is less than
 <pre>public short ToInt16Unchecked();
 </pre>
 
-<p>Truncates this number&#39;s value to an integer and returns the least-significant bits of its two&#39;s-complement form as a 16-bit signed integer.</p>
+<p>Converts this number&#39;s value to an integer by discarding its fractional part, and returns the least-significant bits of its two&#39;s-complement form as a 16-bit signed integer.</p>
 
 <p><b>Return Value:</b></p>
 
@@ -4728,7 +4728,7 @@ This value is infinity or not-a-number, is not an exact integer, or is less than
 <pre>public int ToInt32Checked();
 </pre>
 
-<p>Converts this number&#39;s value to a 32-bit signed integer if it can fit in a 32-bit signed integer after truncating to an integer.</p>
+<p>Converts this number&#39;s value to a 32-bit signed integer if it can fit in a 32-bit signed integer after converting it to an integer by discarding its fractional part.</p>
 
 <p><b>Return Value:</b></p>
 
@@ -4738,7 +4738,7 @@ This value is infinity or not-a-number, is not an exact integer, or is less than
 
 <ul>
 <li>System.OverflowException:
-This value is infinity or not-a-number, or the truncated integer is less than -2147483648 or greater than 2147483647.</li>
+This value is infinity or not-a-number, or the number, once converted to an integer by discarding its fractional part, is less than -2147483648 or greater than 2147483647.</li>
 </ul>
 
 <p><a id="ToInt32IfExact"></a></p>
@@ -4768,7 +4768,7 @@ This value is infinity or not-a-number, is not an exact integer, or is less than
 <pre>public int ToInt32Unchecked();
 </pre>
 
-<p>Truncates this number&#39;s value to an integer and returns the least-significant bits of its two&#39;s-complement form as a 32-bit signed integer.</p>
+<p>Converts this number&#39;s value to an integer by discarding its fractional part, and returns the least-significant bits of its two&#39;s-complement form as a 32-bit signed integer.</p>
 
 <p><b>Return Value:</b></p>
 
@@ -4781,7 +4781,7 @@ This value is infinity or not-a-number, is not an exact integer, or is less than
 <pre>public long ToInt64Checked();
 </pre>
 
-<p>Converts this number&#39;s value to a 64-bit signed integer if it can fit in a 64-bit signed integer after truncating to an integer.</p>
+<p>Converts this number&#39;s value to a 64-bit signed integer if it can fit in a 64-bit signed integer after converting it to an integer by discarding its fractional part.</p>
 
 <p><b>Return Value:</b></p>
 
@@ -4791,7 +4791,7 @@ This value is infinity or not-a-number, is not an exact integer, or is less than
 
 <ul>
 <li>System.OverflowException:
-This value is infinity or not-a-number, or the truncated integer is less than -9223372036854775808 or greater than 9223372036854775807.</li>
+This value is infinity or not-a-number, or the number, once converted to an integer by discarding its fractional part, is less than -9223372036854775808 or greater than 9223372036854775807.</li>
 </ul>
 
 <p><a id="ToInt64IfExact"></a></p>
@@ -4821,7 +4821,7 @@ This value is infinity or not-a-number, is not an exact integer, or is less than
 <pre>public long ToInt64Unchecked();
 </pre>
 
-<p>Truncates this number&#39;s value to an integer and returns the least-significant bits of its two&#39;s-complement form as a 64-bit signed integer.</p>
+<p>Converts this number&#39;s value to an integer by discarding its fractional part, and returns the least-significant bits of its two&#39;s-complement form as a 64-bit signed integer.</p>
 
 <p><b>Return Value:</b></p>
 
@@ -4847,7 +4847,7 @@ This value is infinity or not-a-number, is not an exact integer, or is less than
 <pre>public sbyte ToSByteChecked();
 </pre>
 
-<p>Converts this number&#39;s value to an 8-bit signed integer if it can fit in an 8-bit signed integer after truncating to an integer.</p>
+<p>Converts this number&#39;s value to an 8-bit signed integer if it can fit in an 8-bit signed integer after converting it to an integer by discarding its fractional part.</p>
 
 <p><b>Return Value:</b></p>
 
@@ -4857,7 +4857,7 @@ This value is infinity or not-a-number, is not an exact integer, or is less than
 
 <ul>
 <li>System.OverflowException:
-This value is infinity or not-a-number, or the truncated integer is less than -128 or greater than 127.</li>
+This value is infinity or not-a-number, or the number, once converted to an integer by discarding its fractional part, is less than -128 or greater than 127.</li>
 </ul>
 
 <p><a id="ToSByteIfExact"></a></p>
@@ -4887,7 +4887,7 @@ This value is infinity or not-a-number, is not an exact integer, or is less than
 <pre>public sbyte ToSByteUnchecked();
 </pre>
 
-<p>Truncates this number&#39;s value to an integer and returns the least-significant bits of its two&#39;s-complement form as an 8-bit signed integer.</p>
+<p>Converts this number&#39;s value to an integer by discarding its fractional part, and returns the least-significant bits of its two&#39;s-complement form as an 8-bit signed integer.</p>
 
 <p><b>Return Value:</b></p>
 
@@ -4926,7 +4926,7 @@ This value is infinity or not-a-number, is not an exact integer, or is less than
 <pre>public ushort ToUInt16Checked();
 </pre>
 
-<p>Converts this number&#39;s value to a 16-bit unsigned integer if it can fit in a 16-bit unsigned integer after truncating to an integer.</p>
+<p>Converts this number&#39;s value to a 16-bit unsigned integer if it can fit in a 16-bit unsigned integer after converting it to an integer by discarding its fractional part.</p>
 
 <p><b>Return Value:</b></p>
 
@@ -4936,7 +4936,7 @@ This value is infinity or not-a-number, is not an exact integer, or is less than
 
 <ul>
 <li>System.OverflowException:
-This value is infinity or not-a-number, or the truncated integer is less than 0 or greater than 65535.</li>
+This value is infinity or not-a-number, or the number, once converted to an integer by discarding its fractional part, is less than 0 or greater than 65535.</li>
 </ul>
 
 <p><a id="ToUInt16IfExact"></a></p>
@@ -4966,7 +4966,7 @@ This value is infinity or not-a-number, is not an exact integer, or is less than
 <pre>public ushort ToUInt16Unchecked();
 </pre>
 
-<p>Truncates this number&#39;s value to an integer and returns the least-significant bits of its two&#39;s-complement form as a 16-bit unsigned integer.</p>
+<p>Converts this number&#39;s value to an integer by discarding its fractional part, and returns the least-significant bits of its two&#39;s-complement form as a 16-bit unsigned integer.</p>
 
 <p><b>Return Value:</b></p>
 
@@ -4979,7 +4979,7 @@ This value is infinity or not-a-number, is not an exact integer, or is less than
 <pre>public uint ToUInt32Checked();
 </pre>
 
-<p>Converts this number&#39;s value to a 32-bit signed integer if it can fit in a 32-bit signed integer after truncating to an integer.</p>
+<p>Converts this number&#39;s value to a 32-bit signed integer if it can fit in a 32-bit signed integer after converting it to an integer by discarding its fractional part.</p>
 
 <p><b>Return Value:</b></p>
 
@@ -4989,7 +4989,7 @@ This value is infinity or not-a-number, is not an exact integer, or is less than
 
 <ul>
 <li>System.OverflowException:
-This value is infinity or not-a-number, or the truncated integer is less than 0 or greater than 4294967295.</li>
+This value is infinity or not-a-number, or the number, once converted to an integer by discarding its fractional part, is less than 0 or greater than 4294967295.</li>
 </ul>
 
 <p><a id="ToUInt32IfExact"></a></p>
@@ -5019,7 +5019,7 @@ This value is infinity or not-a-number, is not an exact integer, or is less than
 <pre>public uint ToUInt32Unchecked();
 </pre>
 
-<p>Truncates this number&#39;s value to an integer and returns the least-significant bits of its two&#39;s-complement form as a 32-bit signed integer.</p>
+<p>Converts this number&#39;s value to an integer by discarding its fractional part, and returns the least-significant bits of its two&#39;s-complement form as a 32-bit signed integer.</p>
 
 <p><b>Return Value:</b></p>
 
@@ -5032,7 +5032,7 @@ This value is infinity or not-a-number, is not an exact integer, or is less than
 <pre>public ulong ToUInt64Checked();
 </pre>
 
-<p>Converts this number&#39;s value to a 64-bit unsigned integer if it can fit in a 64-bit unsigned integer after truncating to an integer.</p>
+<p>Converts this number&#39;s value to a 64-bit unsigned integer if it can fit in a 64-bit unsigned integer after converting it to an integer by discarding its fractional part.</p>
 
 <p><b>Return Value:</b></p>
 
@@ -5042,7 +5042,7 @@ This value is infinity or not-a-number, is not an exact integer, or is less than
 
 <ul>
 <li>System.OverflowException:
-This value is infinity or not-a-number, or the truncated integer is less than 0 or greater than 18446744073709551615.</li>
+This value is infinity or not-a-number, or the number, once converted to an integer by discarding its fractional part, is less than 0 or greater than 18446744073709551615.</li>
 </ul>
 
 <p><a id="ToUInt64IfExact"></a></p>
@@ -5072,7 +5072,7 @@ This value is infinity or not-a-number, is not an exact integer, or is less than
 <pre>public ulong ToUInt64Unchecked();
 </pre>
 
-<p>Truncates this number&#39;s value to an integer and returns the least-significant bits of its two&#39;s-complement form as a 64-bit unsigned integer.</p>
+<p>Converts this number&#39;s value to an integer by discarding its fractional part, and returns the least-significant bits of its two&#39;s-complement form as a 64-bit unsigned integer.</p>
 
 <p><b>Return Value:</b></p>
 

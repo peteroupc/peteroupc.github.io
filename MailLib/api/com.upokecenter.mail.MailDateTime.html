@@ -49,8 +49,8 @@ Parses a date string in one of the three formats allowed by HTTP/1.1 (RFC
 
 <ul>
 <li><code>dateTime</code> - The date and time in the form of an 8-element array. See
-<code>ParseDateString(boolean)</code> for information on the format of
-this parameter.</li>
+<code>ParseDateString(string, boolean)</code> for information on the
+format of this parameter.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -63,7 +63,7 @@ this parameter.</li>
 
 <ul>
 <li><code>java.lang.IllegalArgumentException</code> - The parameter <code>dateTime</code> is null or invalid
-(see <code>ParseDateString(boolean)</code>).</li>
+(see <code>ParseDateString(string, boolean)</code>).</li>
 </ul>
 
 <h3>GenerateDateString</h3>
@@ -78,8 +78,8 @@ this parameter.</li>
 
 <ul>
 <li><p><code>dateTime</code> - The date and time in the form of an 8-element array. See
-<code>ParseDateString(boolean)</code> for information on the format of
-this parameter.</p></li>
+<code>ParseDateString(string, boolean)</code> for information on the
+format of this parameter.</p></li>
 <li><p><code>gmt</code> - If true, uses the string &quot;GMT&quot; as the time zone offset.</p></li>
 </ul>
 
@@ -93,7 +93,7 @@ this parameter.</p></li>
 
 <ul>
 <li><p><code>java.lang.IllegalArgumentException</code> - The parameter <code>dateTime</code> is null or invalid
-(see <code>ParseDateString(boolean)</code>).</p></li>
+(see <code>ParseDateString(string, boolean)</code>).</p></li>
 <li><p><code>java.lang.NullPointerException</code> - The parameter <code>dateTime</code> is null.</p></li>
 </ul>
 
@@ -153,8 +153,8 @@ string&#39;s year would overflow the range of a 32-bit signed integer.</li>
 <p>Gets the date and time extracted from a date-time string following the
  Internet Message Format (RFC 5322). Obsolete time zone strings are
  not allowed to appear in the date-time string. See
- <code>ParseDateString(boolean)</code> for information on this method&#39;s
- return value.</p>
+ <code>ParseDateString(string, boolean)</code> for information on this
+ method&#39;s return value.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -188,7 +188,7 @@ string&#39;s year would overflow the range of a 32-bit signed integer.</li>
 
 <ul>
 <li>An array of 8 elements as specified in the <code>
-ParseDateString(boolean)</code> method.</li>
+ParseDateString(string, boolean)</code> method.</li>
 </ul>
 
 <p><a href="/MailLib/">Back to MailLib start page.</a></p>

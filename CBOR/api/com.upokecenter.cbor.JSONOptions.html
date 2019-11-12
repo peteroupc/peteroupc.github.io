@@ -55,12 +55,12 @@ Deprecated.
 This property now has no effect.
 This property now has no effect.</li>
 <li><code>JSONOptions.ConversionKind getNumberConversion()</code><br>
-Gets a value indicating how JSON numbers are decoded to CBOR integers.</li>
+Gets a value indicating how JSON numbers are decoded to CBOR.</li>
 <li><code>boolean getPreserveNegativeZero()</code><br>
 Gets a value indicating whether the JSON decoder should preserve the
-distinction between positive zero and negative zero in when the
-decoder decodes JSON to a floating-point number format that makes
-this distinction.</li>
+distinction between positive zero and negative zero when the decoder
+decodes JSON to a floating-point number format that makes this
+distinction.</li>
 <li><code>boolean getReplaceSurrogates() char</code><br>
 Gets a value indicating whether surrogate code points not part of a
 surrogate pair (which consists of two consecutive char s
@@ -125,13 +125,13 @@ This property now has no effect. This library now includes  necessary
 </pre>
 
 <p>Gets a value indicating whether the JSON decoder should preserve the
- distinction between positive zero and negative zero in when the
- decoder decodes JSON to a floating-point number format that makes
- this distinction. For a value of <code>false</code>, if the result of
- parsing a JSON string would be a floating-point negative zero, that
- result is a positive zero instead. (Note that this property has no
- effect for conversion kind <code>IntOrFloatFromDouble</code>, where
- floating-point zeros are not possible.).</p>
+ distinction between positive zero and negative zero when the decoder
+ decodes JSON to a floating-point number format that makes this
+ distinction. For a value of <code>false</code>, if the result of parsing a
+ JSON string would be a floating-point negative zero, that result is
+ a positive zero instead. (Note that this property has no effect for
+ conversion kind <code>IntOrFloatFromDouble</code>, where floating-point
+ zeros are not possible.).</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -146,13 +146,13 @@ true.</li>
 <pre>public final JSONOptions.ConversionKind getNumberConversion()
 </pre>
 
-<p>Gets a value indicating how JSON numbers are decoded to CBOR integers.</p>
+<p>Gets a value indicating how JSON numbers are decoded to CBOR.</p>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A value indicating how JSON numbers are decoded to CBOR integers.
-The default is <code>ConversionKind.Full</code>.</li>
+<li>A value indicating how JSON numbers are decoded to CBOR. The default
+is <code>ConversionKind.Full</code>.</li>
 </ul>
 
 <h3>getAllowDuplicateKeys</h3>

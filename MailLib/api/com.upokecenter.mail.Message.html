@@ -888,7 +888,7 @@ generated.</li>
 
 <p>Gets the date and time extracted from this message&#39;s Date header field (the
   value of which is found as though GetHeader(&quot;date&quot;) were called).
- See <b>MailDateTime.ParseDateString(boolean)</b> for more
+ See <b>MailDateTime.ParseDateString(string, boolean)</b> for more
  information on the format of the date-time array returned by this
  method.</p>
 
@@ -909,8 +909,8 @@ generated.</li>
 
 <ul>
 <li><code>dateTime</code> - An array containing at least eight elements expressing a
-date and time. See <b>MailDateTime.ParseDateString(boolean)</b> for
-more information on this parameter.</li>
+date and time. See <b>MailDateTime.ParseDateString(string,
+boolean)</b> for more information on this parameter.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -924,7 +924,7 @@ more information on this parameter.</li>
 <ul>
 <li><p><code>java.lang.IllegalArgumentException</code> - The parameter <code>dateTime</code> contains fewer than
 eight elements or contains invalid values (see
-MailDateTime.ParseString(boolean)).</p></li>
+MailDateTime.ParseDateString(string, boolean)).</p></li>
 <li><p><code>java.lang.NullPointerException</code> - The parameter <code>dateTime</code> is null.</p></li>
 </ul>
 

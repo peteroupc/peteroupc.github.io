@@ -510,15 +510,16 @@ the result.</li>
 Subtracts an arbitrary-precision binary float from this instance.</li>
 <li><code>byte ToByteChecked()</code><br>
 Converts this number&#39;s value to a byte (from 0 to 255) if it can fit in a
-byte (from 0 to 255) after truncating to an integer.</li>
+byte (from 0 to 255) after converting it to an integer by discarding
+its fractional part.</li>
 <li><code>byte ToByteIfExact()</code><br>
 Converts this number&#39;s value to a byte (from 0 to 255) if it can fit in a
 byte (from 0 to 255) without rounding to a different numerical
 value.</li>
 <li><code>byte ToByteUnchecked()</code><br>
-Truncates this number&#39;s value to an integer and returns the
-least-significant bits of its two&#39;s-complement form as a byte (from
-0 to 255).</li>
+Converts this number&#39;s value to an integer by discarding its fractional
+part, and returns the least-significant bits of its two&#39;s-complement
+form as a byte (from 0 to 255).</li>
 <li><code>double ToDouble()</code><br>
 Converts this value to a 64-bit floating-point number.</li>
 <li><code>EDecimal ToEDecimal()</code><br>
@@ -541,37 +542,40 @@ Renamed to ToEDecimal.
 Renamed to ToEDecimal.</li>
 <li><code>short ToInt16Checked()</code><br>
 Converts this number&#39;s value to a 16-bit signed integer if it can fit in a
-16-bit signed integer after truncating to an integer.</li>
+16-bit signed integer after converting it to an integer by
+discarding its fractional part.</li>
 <li><code>short ToInt16IfExact()</code><br>
 Converts this number&#39;s value to a 16-bit signed integer if it can fit in a
 16-bit signed integer without rounding to a different numerical
 value.</li>
 <li><code>short ToInt16Unchecked()</code><br>
-Truncates this number&#39;s value to an integer and returns the
-least-significant bits of its two&#39;s-complement form as a 16-bit
-signed integer.</li>
+Converts this number&#39;s value to an integer by discarding its fractional
+part, and returns the least-significant bits of its two&#39;s-complement
+form as a 16-bit signed integer.</li>
 <li><code>int ToInt32Checked()</code><br>
 Converts this number&#39;s value to a 32-bit signed integer if it can fit in a
-32-bit signed integer after truncating to an integer.</li>
+32-bit signed integer after converting it to an integer by
+discarding its fractional part.</li>
 <li><code>int ToInt32IfExact()</code><br>
 Converts this number&#39;s value to a 32-bit signed integer if it can fit in a
 32-bit signed integer without rounding to a different numerical
 value.</li>
 <li><code>int ToInt32Unchecked()</code><br>
-Truncates this number&#39;s value to an integer and returns the
-least-significant bits of its two&#39;s-complement form as a 32-bit
-signed integer.</li>
+Converts this number&#39;s value to an integer by discarding its fractional
+part, and returns the least-significant bits of its two&#39;s-complement
+form as a 32-bit signed integer.</li>
 <li><code>long ToInt64Checked()</code><br>
 Converts this number&#39;s value to a 64-bit signed integer if it can fit in a
-64-bit signed integer after truncating to an integer.</li>
+64-bit signed integer after converting it to an integer by
+discarding its fractional part.</li>
 <li><code>long ToInt64IfExact()</code><br>
 Converts this number&#39;s value to a 64-bit signed integer if it can fit in a
 64-bit signed integer without rounding to a different numerical
 value.</li>
 <li><code>long ToInt64Unchecked()</code><br>
-Truncates this number&#39;s value to an integer and returns the
-least-significant bits of its two&#39;s-complement form as a 64-bit
-signed integer.</li>
+Converts this number&#39;s value to an integer by discarding its fractional
+part, and returns the least-significant bits of its two&#39;s-complement
+form as a 64-bit signed integer.</li>
 <li><code>java.lang.String ToPlainString()</code><br>
 Converts this value to a string, but without exponential notation.</li>
 <li><code>java.lang.String ToShortestString​(EContext ctx)</code><br>
@@ -4099,7 +4103,8 @@ one.</li>
 </pre>
 
 <p>Converts this number&#39;s value to a byte (from 0 to 255) if it can fit in a
- byte (from 0 to 255) after truncating to an integer.</p>
+ byte (from 0 to 255) after converting it to an integer by discarding
+ its fractional part.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -4111,7 +4116,8 @@ one.</li>
 
 <ul>
 <li><code>java.lang.ArithmeticException</code> - This value is infinity or not-a-number, or the
-truncated integer is less than 0 or greater than 255.</li>
+number, once converted to an integer by discarding its fractional
+part, is less than 0 or greater than 255.</li>
 </ul>
 
 <h3>ToByteUnchecked</h3>
@@ -4119,9 +4125,9 @@ truncated integer is less than 0 or greater than 255.</li>
 <pre>public byte ToByteUnchecked()
 </pre>
 
-<p>Truncates this number&#39;s value to an integer and returns the
- least-significant bits of its two&#39;s-complement form as a byte (from
- 0 to 255).</p>
+<p>Converts this number&#39;s value to an integer by discarding its fractional
+ part, and returns the least-significant bits of its two&#39;s-complement
+ form as a byte (from 0 to 255).</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -4179,7 +4185,8 @@ number.</li>
 </pre>
 
 <p>Converts this number&#39;s value to a 16-bit signed integer if it can fit in a
- 16-bit signed integer after truncating to an integer.</p>
+ 16-bit signed integer after converting it to an integer by
+ discarding its fractional part.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -4191,7 +4198,8 @@ number.</li>
 
 <ul>
 <li><code>java.lang.ArithmeticException</code> - This value is infinity or not-a-number, or the
-truncated integer is less than -32768 or greater than 32767.</li>
+number, once converted to an integer by discarding its fractional
+part, is less than -32768 or greater than 32767.</li>
 </ul>
 
 <h3>ToInt16Unchecked</h3>
@@ -4199,9 +4207,9 @@ truncated integer is less than -32768 or greater than 32767.</li>
 <pre>public short ToInt16Unchecked()
 </pre>
 
-<p>Truncates this number&#39;s value to an integer and returns the
- least-significant bits of its two&#39;s-complement form as a 16-bit
- signed integer.</p>
+<p>Converts this number&#39;s value to an integer by discarding its fractional
+ part, and returns the least-significant bits of its two&#39;s-complement
+ form as a 16-bit signed integer.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -4259,7 +4267,8 @@ number.</li>
 </pre>
 
 <p>Converts this number&#39;s value to a 32-bit signed integer if it can fit in a
- 32-bit signed integer after truncating to an integer.</p>
+ 32-bit signed integer after converting it to an integer by
+ discarding its fractional part.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -4271,8 +4280,8 @@ number.</li>
 
 <ul>
 <li><code>java.lang.ArithmeticException</code> - This value is infinity or not-a-number, or the
-truncated integer is less than -2147483648 or greater than
-2147483647.</li>
+number, once converted to an integer by discarding its fractional
+part, is less than -2147483648 or greater than 2147483647.</li>
 </ul>
 
 <h3>ToInt32Unchecked</h3>
@@ -4280,9 +4289,9 @@ truncated integer is less than -2147483648 or greater than
 <pre>public int ToInt32Unchecked()
 </pre>
 
-<p>Truncates this number&#39;s value to an integer and returns the
- least-significant bits of its two&#39;s-complement form as a 32-bit
- signed integer.</p>
+<p>Converts this number&#39;s value to an integer by discarding its fractional
+ part, and returns the least-significant bits of its two&#39;s-complement
+ form as a 32-bit signed integer.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -4361,7 +4370,8 @@ number.</li>
 </pre>
 
 <p>Converts this number&#39;s value to a 64-bit signed integer if it can fit in a
- 64-bit signed integer after truncating to an integer.</p>
+ 64-bit signed integer after converting it to an integer by
+ discarding its fractional part.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -4373,7 +4383,8 @@ number.</li>
 
 <ul>
 <li><code>java.lang.ArithmeticException</code> - This value is infinity or not-a-number, or the
-truncated integer is less than -9223372036854775808 or greater than
+number, once converted to an integer by discarding its fractional
+part, is less than -9223372036854775808 or greater than
 9223372036854775807.</li>
 </ul>
 
@@ -4382,9 +4393,9 @@ truncated integer is less than -9223372036854775808 or greater than
 <pre>public long ToInt64Unchecked()
 </pre>
 
-<p>Truncates this number&#39;s value to an integer and returns the
- least-significant bits of its two&#39;s-complement form as a 64-bit
- signed integer.</p>
+<p>Converts this number&#39;s value to an integer by discarding its fractional
+ part, and returns the least-significant bits of its two&#39;s-complement
+ form as a 64-bit signed integer.</p>
 
 <p><strong>Returns:</strong></p>
 
