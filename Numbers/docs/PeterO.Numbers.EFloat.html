@@ -165,6 +165,7 @@
 <li><code><a href="#PositiveInfinity">public static readonly PeterO.Numbers.EFloat PositiveInfinity;</a></code> - Positive infinity, greater than any other number.</li>
 <li><code><a href="#Pow_int">Pow(int)</a></code> - Raises this object&#39;s value to the given exponent.</li>
 <li><code><a href="#Pow_int_PeterO_Numbers_EContext">Pow(int, PeterO.Numbers.EContext)</a></code> - Raises this object&#39;s value to the given exponent.</li>
+<li><code><a href="#Pow_PeterO_Numbers_EFloat">Pow(PeterO.Numbers.EFloat)</a></code> - Raises this object&#39;s value to the given exponent, using unlimited precision.</li>
 <li><code><a href="#Pow_PeterO_Numbers_EFloat_PeterO_Numbers_EContext">Pow(PeterO.Numbers.EFloat, PeterO.Numbers.EContext)</a></code> - Raises this object&#39;s value to the given exponent.</li>
 <li><code><a href="#Precision">Precision()</a></code> - Finds the number of digits in this number&#39;s significand.</li>
 <li><code><a href="#Quantize_int_PeterO_Numbers_EContext">Quantize(int, PeterO.Numbers.EContext)</a></code> - Returns a binary float with the same value but a new exponent.</li>
@@ -785,8 +786,8 @@ is a 32-bit signed integer.</p></li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>significand</i>: Desired value for the significand.</p></li>
-<li><p><i>exponent</i>: Desired value for the exponent.</p></li>
+<li><p><i>mantissa</i>: Not documented yet.</p></li>
+<li><p><i>exponent</i>: Not documented yet.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -3384,6 +3385,26 @@ is null.</li>
 <p><b>Return Value:</b></p>
 
 <p>This^exponent. Signals the flag FlagInvalid and returns NaN if this object and exponent are both 0.</p>
+
+<p><a id="Pow_PeterO_Numbers_EFloat"></a></p>
+
+<h3>Pow</h3>
+
+<pre>public PeterO.Numbers.EFloat Pow(
+    PeterO.Numbers.EFloat exponent);
+</pre>
+
+<p>Raises this object&#39;s value to the given exponent, using unlimited precision.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>exponent</i>: An arbitrary-precision binary float expressing the exponent to raise this object&#39;s value to.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>This^exponent. Returns not-a-number (NaN) if the exponent has a fractional part.</p>
 
 <p><a id="Pow_PeterO_Numbers_EFloat_PeterO_Numbers_EContext"></a></p>
 

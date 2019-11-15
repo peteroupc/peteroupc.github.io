@@ -21,31 +21,32 @@
  operation is a quiet NaN, unless noted otherwise.</p> <p>Passing a
  quiet NaN to any arithmetic operation shown here will return a quiet
  NaN, unless noted otherwise.</p> <p>Unless noted otherwise, passing a
- null arbitrary-precision binary float argument to any method here will
- throw an exception.</p> <p>When an arithmetic operation signals the
- flag FlagInvalid, FlagOverflow, or FlagDivideByZero, it will not throw
- an exception too, unless the operation&#39;s trap is enabled in the
- arithmetic context (see EContext&#39;s Traps property).</p> <p>An
- arbitrary-precision binary float value can be serialized in one of the
- following ways:</p> <ul> <li>By calling the toString() method.
- However, not all strings can be converted back to an
- arbitrary-precision binary float without loss, especially if the
- string has a fractional part.</li> <li>By calling the
- UnsignedMantissa, Exponent, and IsNegative properties, and calling the
- IsInfinity, IsQuietNaN, and IsSignalingNaN methods. The return values
- combined will uniquely identify a particular arbitrary-precision
- binary float value.</li></ul> <p>If an operation requires creating an
- intermediate value that might be too big to fit in memory (or might
- require more than 2 gigabytes of memory to store -- due to the current
- use of a 32-bit integer internally as a length), the operation may
- signal an invalid-operation flag and return not-a-number (NaN). In
- certain rare cases, the compareTo method may throw OutOfMemoryError
- (called OutOfMemoryError in Java) in the same circumstances.</p>
- <p><b>Thread safety</b></p> <p>Instances of this class are immutable,
- so they are inherently safe for use by multiple threads. Multiple
- instances of this object with the same properties are interchangeable,
-  so they should not be compared using the &quot;==&quot; operator (which might
- only check if each side of the operator is the same instance).</p>
+ null arbitrary-precision binary floating-point number argument to any
+ method here will throw an exception.</p> <p>When an arithmetic
+ operation signals the flag FlagInvalid, FlagOverflow, or
+ FlagDivideByZero, it will not throw an exception too, unless the
+ operation&#39;s trap is enabled in the arithmetic context (see EContext&#39;s
+ Traps property).</p> <p>An arbitrary-precision binary floating-point
+ number value can be serialized in one of the following ways:</p> <ul>
+ <li>By calling the toString() method. However, not all strings can be
+ converted back to an arbitrary-precision binary floating-point number
+ without loss, especially if the string has a fractional part.</li>
+ <li>By calling the UnsignedMantissa, Exponent, and IsNegative
+ properties, and calling the IsInfinity, IsQuietNaN, and IsSignalingNaN
+ methods. The return values combined will uniquely identify a
+ particular arbitrary-precision binary floating-point number
+ value.</li></ul> <p>If an operation requires creating an intermediate
+ value that might be too big to fit in memory (or might require more
+ than 2 gigabytes of memory to store -- due to the current use of a
+ 32-bit integer internally as a length), the operation may signal an
+ invalid-operation flag and return not-a-number (NaN). In certain rare
+ cases, the compareTo method may throw OutOfMemoryError (called
+ OutOfMemoryError in Java) in the same circumstances.</p> <p><b>Thread
+ safety</b></p> <p>Instances of this class are immutable, so they are
+ inherently safe for use by multiple threads. Multiple instances of
+ this object with the same properties are interchangeable, so they
+  should not be compared using the &quot;==&quot; operator (which might only check
+ if each side of the operator is the same instance).</p>
  <p><b>Comparison considerations</b></p> <p>This class&#39;s natural
  ordering (under the compareTo method) is not consistent with the
  Equals method. This means that two values that compare as equal under
@@ -85,7 +86,7 @@ Positive infinity, greater than any other number.</li>
 <li><code>static EFloat SignalingNaN</code><br>
 A not-a-number value that signals an invalid operation flag when it&#39;s passed
 as an argument to any arithmetic operation in arbitrary-precision
-binary float.</li>
+binary floating-point number.</li>
 <li><code>static EFloat Ten</code><br>
 Represents the number 10.</li>
 <li><code>static EFloat Zero</code><br>
@@ -104,7 +105,8 @@ positive).</li>
 <li><code>EFloat Add​(int intValue)</code><br>
 Not documented yet.</li>
 <li><code>EFloat Add​(EFloat otherValue)</code><br>
-Adds this object and another binary float and returns the result.</li>
+Adds this object and another binary floating-point number and returns the
+result.</li>
 <li><code>EFloat Add​(EFloat otherValue,
 EContext ctx)</code><br>
 Finds the sum of this object and another object.</li>
@@ -156,11 +158,12 @@ number.</li>
 <li><code>EFloat Divide​(int intValue)</code><br>
 Divides this instance by the value of an arbitrary-precision integer.</li>
 <li><code>EFloat Divide​(EFloat divisor)</code><br>
-Divides this object by another binary float and returns the result.</li>
+Divides this object by another binary floating-point number and returns the
+result.</li>
 <li><code>EFloat Divide​(EFloat divisor,
   EContext ctx)</code><br>
-Divides this arbitrary-precision binary float by another arbitrary-precision
-binary floating-point number.</li>
+Divides this arbitrary-precision binary floating-point number by another
+arbitrary-precision binary floating-point number.</li>
 <li><code>EFloat[] DivideAndRemainderNaturalScale​(EFloat divisor)</code><br>
 Deprecated.
 Renamed to DivRemNaturalScale.
@@ -205,8 +208,8 @@ Divides this object by another object, and returns the integer part of the
 result, with the exponent set to 0.</li>
 <li><code>EFloat DivideToSameExponent​(EFloat divisor,
                 ERounding rounding)</code><br>
-Divides this object by another binary float and returns a result with the
-same exponent as this object (the dividend).</li>
+Divides this object by another binary floating-point number and returns a
+result with the same exponent as this object (the dividend).</li>
 <li><code>EFloat[] DivRemNaturalScale​(EFloat divisor)</code><br>
 Calculates the quotient and remainder using the DivideToIntegerNaturalScale
 and the formula in RemainderNaturalScale.</li>
@@ -229,14 +232,15 @@ Finds e (the base of natural logarithms) raised to the power of this
 object&#39;s value.</li>
 <li><code>static EFloat FromBoolean​(boolean boolValue)</code><br>
 Converts a boolean value (either true or false) to an arbitrary-precision
-binary float.</li>
+binary floating-point number.</li>
 <li><code>static EFloat FromByte​(byte inputByte)</code><br>
 Converts a byte (from 0 to 255) to an arbitrary-precision binary
 floating-point number.</li>
 <li><code>static EFloat FromDouble​(double dbl)</code><br>
-Creates a binary float from a 64-bit floating-point number.</li>
+Creates a binary floating-point number from a 64-bit floating-point number.</li>
 <li><code>static EFloat FromEInteger​(EInteger bigint)</code><br>
-Converts an arbitrary-precision integer to the same value as a binary float.</li>
+Converts an arbitrary-precision integer to the same value as a binary
+floating-point number.</li>
 <li><code>static EFloat FromInt16​(short inputInt16)</code><br>
 Converts a 16-bit signed integer to an arbitrary-precision binary
 floating-point number.</li>
@@ -247,22 +251,25 @@ floating-point number.</li>
 Converts a 64-bit signed integer to an arbitrary-precision binary
 floating-point number.</li>
 <li><code>static EFloat FromSingle​(float flt)</code><br>
-Creates a binary float from a 32-bit floating-point number.</li>
+Creates a binary floating-point number from a 32-bit floating-point number.</li>
 <li><code>static EFloat FromString​(java.lang.String str)</code><br>
-Creates a binary float from a text string that represents a number, using an
-unlimited precision context.</li>
+Creates a binary floating-point number from a text string that represents a
+number, using an unlimited precision context.</li>
 <li><code>static EFloat FromString​(java.lang.String str,
       int offset,
       int length)</code><br>
-Creates a binary float from a text string that represents a number.</li>
+Creates a binary floating-point number from a text string that represents a
+number.</li>
 <li><code>static EFloat FromString​(java.lang.String str,
       int offset,
       int length,
       EContext ctx)</code><br>
-Creates a binary float from a text string that represents a number.</li>
+Creates a binary floating-point number from a text string that represents a
+number.</li>
 <li><code>static EFloat FromString​(java.lang.String str,
       EContext ctx)</code><br>
-Creates a binary float from a text string that represents a number.</li>
+Creates a binary floating-point number from a text string that represents a
+number.</li>
 <li><code>EInteger getExponent()</code><br>
 Gets this object&#39;s exponent.</li>
 <li><code>EInteger getMantissa()</code><br>
@@ -369,7 +376,8 @@ Multiplies two binary floating-point numbers.</li>
 Multiplies two binary floating-point numbers.</li>
 <li><code>EFloat MultiplyAndAdd​(EFloat multiplicand,
           EFloat augend)</code><br>
-Multiplies by one binary float, and then adds another binary float.</li>
+Multiplies by one binary floating-point number, and then adds another binary
+floating-point number.</li>
 <li><code>EFloat MultiplyAndAdd​(EFloat op,
           EFloat augend,
           EContext ctx)</code><br>
@@ -381,8 +389,8 @@ Multiplies by one value, and then subtracts another value.</li>
 <li><code>EFloat Negate()</code><br>
 Gets an object with the same value as this one, but with the sign reversed.</li>
 <li><code>EFloat Negate​(EContext context)</code><br>
-Returns a binary float with the same value as this object but with the sign
-reversed.</li>
+Returns a binary floating-point number with the same value as this object
+but with the sign reversed.</li>
 <li><code>EFloat NextMinus​(EContext ctx)</code><br>
 Finds the largest value that&#39;s smaller than the given value.</li>
 <li><code>EFloat NextPlus​(EContext ctx)</code><br>
@@ -402,6 +410,8 @@ Raises this object&#39;s value to the given exponent.</li>
 <li><code>EFloat Pow​(int exponentSmall,
 EContext ctx)</code><br>
 Raises this object&#39;s value to the given exponent.</li>
+<li><code>EFloat Pow​(EFloat exponent)</code><br>
+Raises this object&#39;s value to the given exponent, using unlimited precision.</li>
 <li><code>EFloat Pow​(EFloat exponent,
 EContext ctx)</code><br>
 Raises this object&#39;s value to the given exponent.</li>
@@ -409,14 +419,16 @@ Raises this object&#39;s value to the given exponent.</li>
 Finds the number of digits in this number&#39;s significand.</li>
 <li><code>EFloat Quantize​(int desiredExponentInt,
     EContext ctx)</code><br>
-Returns a binary float with the same value but a new exponent.</li>
+Returns a binary floating-point number with the same value but a new
+exponent.</li>
 <li><code>EFloat Quantize​(EFloat otherValue,
     EContext ctx)</code><br>
-Returns a binary float with the same value as this object but with the same
-exponent as another binary float.</li>
+Returns a binary floating-point number with the same value as this object
+but with the same exponent as another binary floating-point number.</li>
 <li><code>EFloat Quantize​(EInteger desiredExponent,
     EContext ctx)</code><br>
-Returns a binary float with the same value but a new exponent.</li>
+Returns a binary floating-point number with the same value but a new
+exponent.</li>
 <li><code>EFloat Reduce​(EContext ctx)</code><br>
 Returns an object with the same numerical value as this one but with
 trailing zeros removed from its significand.</li>
@@ -443,33 +455,34 @@ Finds the remainder that results when dividing two arbitrary-precision
 binary floating-point numbers.</li>
 <li><code>EFloat RoundToExponent​(int exponentSmall,
            EContext ctx)</code><br>
-Returns a binary float with the same value as this object but rounded to a
-new exponent if necessary.</li>
+Returns a binary floating-point number with the same value as this object
+but rounded to a new exponent if necessary.</li>
 <li><code>EFloat RoundToExponent​(EInteger exponent,
            EContext ctx)</code><br>
-Returns a binary float with the same value as this object but rounded to a
-new exponent if necessary.</li>
+Returns a binary floating-point number with the same value as this object
+but rounded to a new exponent if necessary.</li>
 <li><code>EFloat RoundToExponentExact​(int exponentSmall,
                 EContext ctx)</code><br>
-Returns a binary float with the same value as this object but rounded to the
-given exponent represented as a 32-bit signed integer, and signals
-an inexact flag if the result would be inexact.</li>
+Returns a binary floating-point number with the same value as this object
+but rounded to the given exponent represented as a 32-bit signed
+integer, and signals an inexact flag if the result would be inexact.</li>
 <li><code>EFloat RoundToExponentExact​(EInteger exponent,
                 EContext ctx)</code><br>
-Returns a binary float with the same value as this object but rounded to the
-given exponent, and signals an inexact flag if the result would be
-inexact.</li>
+Returns a binary floating-point number with the same value as this object
+but rounded to the given exponent, and signals an inexact flag if
+the result would be inexact.</li>
 <li><code>EFloat RoundToExponentExact​(EInteger exponent,
                 ERounding rounding)</code><br>
 Returns a binary number with the same value as this object but rounded to
 the given exponent.</li>
 <li><code>EFloat RoundToIntegerExact​(EContext ctx)</code><br>
-Returns a binary float with the same value as this object but rounded to an
-integer, and signals an inexact flag if the result would be inexact.</li>
+Returns a binary floating-point number with the same value as this object
+but rounded to an integer, and signals an inexact flag if the result
+would be inexact.</li>
 <li><code>EFloat RoundToIntegerNoRoundedFlag​(EContext ctx) FlagInexact FlagRounded</code><br>
-Returns a binary float with the same value as this object but rounded to an
-integer, without adding the FlagInexact or FlagRounded
-flags.</li>
+Returns a binary floating-point number with the same value as this object
+but rounded to an integer, without adding the FlagInexact or
+FlagRounded flags.</li>
 <li><code>EFloat RoundToIntegralExact​(EContext ctx)</code><br>
 Deprecated.
 Renamed to RoundToIntegerExact.
@@ -503,11 +516,12 @@ Renamed to Sqrt.</li>
 Subtracts an arbitrary-precision integer from this arbitrary-precision
 integer.</li>
 <li><code>EFloat Subtract​(EFloat otherValue)</code><br>
-Subtracts an arbitrary-precision binary float from this instance and returns
-the result.</li>
+Subtracts an arbitrary-precision binary floating-point number from this
+instance and returns the result.</li>
 <li><code>EFloat Subtract​(EFloat otherValue,
     EContext ctx)</code><br>
-Subtracts an arbitrary-precision binary float from this instance.</li>
+Subtracts an arbitrary-precision binary floating-point number from this
+instance.</li>
 <li><code>byte ToByteChecked()</code><br>
 Converts this number&#39;s value to a byte (from 0 to 255) if it can fit in a
 byte (from 0 to 255) after converting it to an integer by discarding
@@ -634,7 +648,7 @@ Returns the unit in the last place.</li>
 
 <p>A not-a-number value that signals an invalid operation flag when it&#39;s passed
  as an argument to any arithmetic operation in arbitrary-precision
- binary float.</p>
+ binary floating-point number.</p>
 
 <h3>Ten</h3>
 
@@ -889,10 +903,10 @@ do so.</p></li>
 <pre>public static EFloat FromDouble​(double dbl)
 </pre>
 
-<p>Creates a binary float from a 64-bit floating-point number. This method
- computes the exact value of the floating point number, not an
- approximation, as is often the case by converting the floating point
- number to a string first.</p>
+<p>Creates a binary floating-point number from a 64-bit floating-point number.
+ This method computes the exact value of the floating point number,
+ not an approximation, as is often the case by converting the
+ floating point number to a string first.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -903,7 +917,7 @@ do so.</p></li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A binary float with the same value as <code>dbl</code>.</li>
+<li>A binary floating-point number with the same value as <code>dbl</code>.</li>
 </ul>
 
 <h3>FromEInteger</h3>
@@ -911,7 +925,8 @@ do so.</p></li>
 <pre>public static EFloat FromEInteger​(EInteger bigint)
 </pre>
 
-<p>Converts an arbitrary-precision integer to the same value as a binary float.</p>
+<p>Converts an arbitrary-precision integer to the same value as a binary
+ floating-point number.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -930,10 +945,10 @@ do so.</p></li>
 <pre>public static EFloat FromSingle​(float flt)
 </pre>
 
-<p>Creates a binary float from a 32-bit floating-point number. This method
- computes the exact value of the floating point number, not an
- approximation, as is often the case by converting the floating point
- number to a string first.</p>
+<p>Creates a binary floating-point number from a 32-bit floating-point number.
+ This method computes the exact value of the floating point number,
+ not an approximation, as is often the case by converting the
+ floating point number to a string first.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -945,7 +960,7 @@ number.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A binary float with the same value as <code>flt</code>.</li>
+<li>A binary floating-point number with the same value as <code>flt</code>.</li>
 </ul>
 
 <h3>FromString</h3>
@@ -953,20 +968,21 @@ number.</li>
 <pre>public static EFloat FromString​(java.lang.String str, int offset, int length, EContext ctx)
 </pre>
 
-<p>Creates a binary float from a text string that represents a number. Note
- that if the string contains a negative exponent, the resulting value
- might not be exact, in which case the resulting binary float will be
- an approximation of this decimal number&#39;s value. <p>The format of
- the string generally consists of:</p> <ul> <li>An optional plus sign
-  (&quot;+&quot; , U+002B) or minus sign (&quot;-&quot;, U+002D) (if &#39;-&#39; , the value is
- negative.)</li> <li>One or more digits, with a single optional
- decimal point after the first digit and before the last digit.</li>
-  <li>Optionally, &quot;E+&quot;/&quot;e+&quot; (positive exponent) or &quot;E-&quot;/&quot;e-&quot; (negative
- exponent) plus one or more digits specifying the exponent.</li></ul>
-  <p>The string can also be &quot;-INF&quot;, &quot;-Infinity&quot;, &quot;Infinity&quot;, &quot;INF&quot;,
-  quiet NaN (&quot;NaN&quot;) followed by any number of digits, or signaling NaN
-  (&quot;sNaN&quot;) followed by any number of digits, all in any combination of
- upper and lower case.</p> <p>All characters mentioned above are the
+<p>Creates a binary floating-point number from a text string that represents a
+ number. Note that if the string contains a negative exponent, the
+ resulting value might not be exact, in which case the resulting
+ binary floating-point number will be an approximation of this
+ decimal number&#39;s value. <p>The format of the string generally
+  consists of:</p> <ul> <li>An optional plus sign (&quot;+&quot; , U+002B) or
+  minus sign (&quot;-&quot;, U+002D) (if &#39;-&#39; , the value is negative.)</li>
+ <li>One or more digits, with a single optional decimal point after
+ the first digit and before the last digit.</li> <li>Optionally,
+  &quot;E+&quot;/&quot;e+&quot; (positive exponent) or &quot;E-&quot;/&quot;e-&quot; (negative exponent) plus
+ one or more digits specifying the exponent.</li></ul> <p>The string
+  can also be &quot;-INF&quot;, &quot;-Infinity&quot;, &quot;Infinity&quot;, &quot;INF&quot;, quiet NaN
+  (&quot;NaN&quot;) followed by any number of digits, or signaling NaN (&quot;sNaN&quot;)
+ followed by any number of digits, all in any combination of upper
+ and lower case.</p> <p>All characters mentioned above are the
  corresponding characters in the Basic Latin range. In particular,
  the digits must be the basic digits 0 to 9 (U+0030 to U+0039). The
  string is not allowed to contain white space characters, including
@@ -1004,14 +1020,14 @@ length minus <code>offset</code> is less than <code>length</code>.</p></li>
 <pre>public static EFloat FromString​(java.lang.String str)
 </pre>
 
-<p>Creates a binary float from a text string that represents a number, using an
- unlimited precision context. For more information, see the
- <code>FromString(string, int, int, EContext)</code> method.</p>
+<p>Creates a binary floating-point number from a text string that represents a
+ number, using an unlimited precision context. For more information,
+ see the <code>FromString(string, int, int, EContext)</code> method.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>str</code> - A text string to convert to a binary float.</li>
+<li><code>str</code> - A text string to convert to a binary floating-point number.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -1026,14 +1042,14 @@ floating-point number.</li>
 <pre>public static EFloat FromString​(java.lang.String str, EContext ctx)
 </pre>
 
-<p>Creates a binary float from a text string that represents a number. For more
- information, see the <code>FromString(string, int, int, EContext)</code>
- method.</p>
+<p>Creates a binary floating-point number from a text string that represents a
+ number. For more information, see the <code>FromString(string, int,
+ int, EContext)</code> method.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>str</code> - A text string to convert to a binary float.</p></li>
+<li><p><code>str</code> - A text string to convert to a binary floating-point number.</p></li>
 <li><p><code>ctx</code> - An arithmetic context specifying the precision, rounding, and
 exponent range to apply to the parsed number. Can be null.</p></li>
 </ul>
@@ -1056,9 +1072,9 @@ floating-point number.</li>
 <pre>public static EFloat FromString​(java.lang.String str, int offset, int length)
 </pre>
 
-<p>Creates a binary float from a text string that represents a number. For more
- information, see the <code>FromString(string, int, int, EContext)</code>
- method.</p>
+<p>Creates a binary floating-point number from a text string that represents a
+ number. For more information, see the <code>FromString(string, int,
+ int, EContext)</code> method.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1431,7 +1447,8 @@ quiet NaN if this value is signaling NaN.</li>
 <pre>public EFloat Add​(EFloat otherValue)
 </pre>
 
-<p>Adds this object and another binary float and returns the result.</p>
+<p>Adds this object and another binary floating-point number and returns the
+ result.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1555,7 +1572,8 @@ returns a positive number if.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>other</code> - An arbitrary-precision binary float to compare with this one.</p></li>
+<li><p><code>other</code> - An arbitrary-precision binary floating-point number to compare
+with this one.</p></li>
 <li><p><code>ctx</code> - An arithmetic context. Flags will be set in this context only if
 <code>HasFlags</code> and <code>IsSimplified</code> of the context are true
 and only if an operand needed to be rounded before carrying out the
@@ -1591,7 +1609,8 @@ implementation returns a positive number if.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>other</code> - An arbitrary-precision binary float to compare with this one.</p></li>
+<li><p><code>other</code> - An arbitrary-precision binary floating-point number to compare
+with this one.</p></li>
 <li><p><code>ctx</code> - An arithmetic context. Flags will be set in this context only if
 <code>HasFlags</code> and <code>IsSimplified</code> of the context are true
 and only if an operand needed to be rounded before carrying out the
@@ -1628,7 +1647,8 @@ implementation returns a positive number if.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>other</code> - An arbitrary-precision binary float to compare with this one.</li>
+<li><code>other</code> - An arbitrary-precision binary floating-point number to compare
+with this one.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -1659,7 +1679,8 @@ This implementation returns a positive number if.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>other</code> - An arbitrary-precision binary float to compare with this one.</li>
+<li><code>other</code> - An arbitrary-precision binary floating-point number to compare
+with this one.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -1734,8 +1755,8 @@ returns a positive number if.</li>
 <pre>public EFloat Divide​(EFloat divisor)
 </pre>
 
-<p>Divides this object by another binary float and returns the result. When
- possible, the result will be exact.</p>
+<p>Divides this object by another binary floating-point number and returns the
+ result. When possible, the result will be exact.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1757,9 +1778,10 @@ exact because it would have a nonterminating binary expansion.</li>
 <pre>public EFloat Divide​(EFloat divisor, EContext ctx)
 </pre>
 
-<p>Divides this arbitrary-precision binary float by another arbitrary-precision
- binary floating-point number. The preferred exponent for the result
- is this object&#39;s exponent minus the divisor&#39;s exponent.</p>
+<p>Divides this arbitrary-precision binary floating-point number by another
+ arbitrary-precision binary floating-point number. The preferred
+ exponent for the result is this object&#39;s exponent minus the
+ divisor&#39;s exponent.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2067,8 +2089,8 @@ and returns not-a-number (NaN) if the divisor and the dividend are
 <pre>public EFloat DivideToSameExponent​(EFloat divisor, ERounding rounding)
 </pre>
 
-<p>Divides this object by another binary float and returns a result with the
- same exponent as this object (the dividend).</p>
+<p>Divides this object by another binary floating-point number and returns a
+ result with the same exponent as this object (the dividend).</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2629,7 +2651,7 @@ to more than 0.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>otherValue</code> - Another binary float.</li>
+<li><code>otherValue</code> - Another binary floating-point number.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -2657,7 +2679,7 @@ to more than 0.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>op</code> - Another binary float.</p></li>
+<li><p><code>op</code> - Another binary floating-point number.</p></li>
 <li><p><code>ctx</code> - An arithmetic context to control the precision, rounding, and
 exponent range of the result. If <code>HasFlags</code> of the context is
 true, will also store the flags resulting from the operation (the
@@ -2676,7 +2698,8 @@ which case the precision is unlimited and rounding isn&#39;t needed.</p></li>
 <pre>public EFloat MultiplyAndAdd​(EFloat multiplicand, EFloat augend)
 </pre>
 
-<p>Multiplies by one binary float, and then adds another binary float.</p>
+<p>Multiplies by one binary floating-point number, and then adds another binary
+ floating-point number.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2777,8 +2800,8 @@ of this object.).</li>
 <pre>public EFloat Negate​(EContext context)
 </pre>
 
-<p>Returns a binary float with the same value as this object but with the sign
- reversed.</p>
+<p>Returns a binary floating-point number with the same value as this object
+ but with the sign reversed.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2863,8 +2886,8 @@ has an unlimited exponent range.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>otherValue</code> - An arbitrary-precision binary float that the return value
-will approach.</p></li>
+<li><p><code>otherValue</code> - An arbitrary-precision binary floating-point number that
+the return value will approach.</p></li>
 <li><p><code>ctx</code> - An arithmetic context object to control the precision and
 exponent range of the result. The rounding mode from this context is
 ignored. If <code>HasFlags</code> of the context is true, will also store
@@ -2908,6 +2931,27 @@ null or the precision and exponent range are unlimited.</li>
 
 <h3>Pow</h3>
 
+<pre>public EFloat Pow​(EFloat exponent)
+</pre>
+
+<p>Raises this object&#39;s value to the given exponent, using unlimited precision.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>exponent</code> - An arbitrary-precision binary floating-point number
+expressing the exponent to raise this object&#39;s value to.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>This^exponent. Returns not-a-number (NaN) if the exponent has a
+fractional part.</li>
+</ul>
+
+<h3>Pow</h3>
+
 <pre>public EFloat Pow​(EFloat exponent, EContext ctx)
 </pre>
 
@@ -2916,8 +2960,8 @@ null or the precision and exponent range are unlimited.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>exponent</code> - An arbitrary-precision binary float expressing the exponent
-to raise this object&#39;s value to.</p></li>
+<li><p><code>exponent</code> - An arbitrary-precision binary floating-point number
+expressing the exponent to raise this object&#39;s value to.</p></li>
 <li><p><code>ctx</code> - An arithmetic context to control the precision, rounding, and
 exponent range of the result. If <code>HasFlags</code> of the context is
 true, will also store the flags resulting from the operation (the
@@ -3000,20 +3044,20 @@ exponent are both 0.</li>
 <pre>public EFloat Quantize​(EInteger desiredExponent, EContext ctx)
 </pre>
 
-<p>Returns a binary float with the same value but a new exponent. <p>Note that
- this is not always the same as rounding to a given number of binary
- digit places, since it can fail if the difference between this
- value&#39;s exponent and the desired exponent is too big, depending on
- the maximum precision. If rounding to a number of binary digit
- places is desired, it&#39;s better to use the RoundToExponent and
- RoundToIntegral methods instead.</p> <p><b>Remark:</b> This method
- can be used to implement fixed-point binary arithmetic, in which
- each binary float has a fixed number of digits after the radix
- point. The following code example returns a fixed-point number with
- up to 20 digits before and exactly 5 digits after the radix
- point:</p> <pre> /* After performing arithmetic operations, adjust /* the number to 5 /* <em>/</em>/<em>/ digits after the radix point number = number.Quantize(EInteger.FromInt32(-5), /</em> five digits after the radix point<em>/ EContext.ForPrecision(25) /</em> 25-digit precision);*/</pre> <p>A fixed-point
- binary arithmetic in which no digits come after the radix point (a
-  desired exponent of 0) is considered an &quot;integer arithmetic&quot;.</p></p>
+<p>Returns a binary floating-point number with the same value but a new
+ exponent. <p>Note that this is not always the same as rounding to a
+ given number of binary digit places, since it can fail if the
+ difference between this value&#39;s exponent and the desired exponent is
+ too big, depending on the maximum precision. If rounding to a number
+ of binary digit places is desired, it&#39;s better to use the
+ RoundToExponent and RoundToIntegral methods instead.</p>
+ <p><b>Remark:</b> This method can be used to implement fixed-point
+ binary arithmetic, in which each binary floating-point number has a
+ fixed number of digits after the radix point. The following code
+ example returns a fixed-point number with up to 20 digits before and
+ exactly 5 digits after the radix point:</p> <pre> /* After performing arithmetic operations, adjust /* the number to 5 /* <em>/</em>/<em>/ digits after the radix point number = number.Quantize(EInteger.FromInt32(-5), /</em> five digits after the radix point<em>/ EContext.ForPrecision(25) /</em> 25-digit precision);*/</pre> <p>A fixed-point binary arithmetic in
+ which no digits come after the radix point (a desired exponent of 0)
+  is considered an &quot;integer arithmetic&quot;.</p></p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -3034,11 +3078,11 @@ rounding mode is HalfEven.</p></li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A binary float with the same value as this object but with the
-exponent changed. Signals FlagInvalid and returns not-a-number (NaN)
-if this object is infinity, if the rounded result can&#39;t fit the
-given precision, or if the context defines an exponent range and the
-given exponent is outside that range.</li>
+<li>A binary floating-point number with the same value as this object
+but with the exponent changed. Signals FlagInvalid and returns
+not-a-number (NaN) if this object is infinity, if the rounded result
+can&#39;t fit the given precision, or if the context defines an exponent
+range and the given exponent is outside that range.</li>
 </ul>
 
 <h3>Quantize</h3>
@@ -3046,18 +3090,18 @@ given exponent is outside that range.</li>
 <pre>public EFloat Quantize​(int desiredExponentInt, EContext ctx)
 </pre>
 
-<p>Returns a binary float with the same value but a new exponent. <p>Note that
- this is not always the same as rounding to a given number of binary
- digit places, since it can fail if the difference between this
- value&#39;s exponent and the desired exponent is too big, depending on
- the maximum precision. If rounding to a number of binary digit
- places is desired, it&#39;s better to use the RoundToExponent and
- RoundToIntegral methods instead.</p> <p><b>Remark:</b> This method
- can be used to implement fixed-point binary arithmetic, in which
- each binary float has a fixed number of digits after the radix
- point. The following code example returns a fixed-point number with
- up to 20 digits before and exactly 5 digits after the radix
- point:</p> <pre> /* After performing arithmetic operations, adjust /* the number to 5<em>/</em>/ digits after the radix point number = number.Quantize(-5, /* five digits<em>/ after the radix point EContext.ForPrecision(25) /</em> 25-digit precision);*/</pre> <p>A fixed-point binary arithmetic in
+<p>Returns a binary floating-point number with the same value but a new
+ exponent. <p>Note that this is not always the same as rounding to a
+ given number of binary digit places, since it can fail if the
+ difference between this value&#39;s exponent and the desired exponent is
+ too big, depending on the maximum precision. If rounding to a number
+ of binary digit places is desired, it&#39;s better to use the
+ RoundToExponent and RoundToIntegral methods instead.</p>
+ <p><b>Remark:</b> This method can be used to implement fixed-point
+ binary arithmetic, in which each binary floating-point number has a
+ fixed number of digits after the radix point. The following code
+ example returns a fixed-point number with up to 20 digits before and
+ exactly 5 digits after the radix point:</p> <pre> /* After performing arithmetic operations, adjust /* the number to 5<em>/</em>/ digits after the radix point number = number.Quantize(-5, /* five digits<em>/ after the radix point EContext.ForPrecision(25) /</em> 25-digit precision);*/</pre> <p>A fixed-point binary arithmetic in
  which no digits come after the radix point (a desired exponent of 0)
   is considered an &quot;integer arithmetic&quot;.</p></p>
 
@@ -3080,11 +3124,11 @@ rounding mode is HalfEven.</p></li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A binary float with the same value as this object but with the
-exponent changed. Signals FlagInvalid and returns not-a-number (NaN)
-if this object is infinity, if the rounded result can&#39;t fit the
-given precision, or if the context defines an exponent range and the
-given exponent is outside that range.</li>
+<li>A binary floating-point number with the same value as this object
+but with the exponent changed. Signals FlagInvalid and returns
+not-a-number (NaN) if this object is infinity, if the rounded result
+can&#39;t fit the given precision, or if the context defines an exponent
+range and the given exponent is outside that range.</li>
 </ul>
 
 <h3>Quantize</h3>
@@ -3092,13 +3136,14 @@ given exponent is outside that range.</li>
 <pre>public EFloat Quantize​(EFloat otherValue, EContext ctx)
 </pre>
 
-<p>Returns a binary float with the same value as this object but with the same
- exponent as another binary float. <p>Note that this is not always
- the same as rounding to a given number of binary digit places, since
- it can fail if the difference between this value&#39;s exponent and the
- desired exponent is too big, depending on the maximum precision. If
- rounding to a number of binary digit places is desired, it&#39;s better
- to use the RoundToExponent and RoundToIntegral methods instead.</p>
+<p>Returns a binary floating-point number with the same value as this object
+ but with the same exponent as another binary floating-point number.
+ <p>Note that this is not always the same as rounding to a given
+ number of binary digit places, since it can fail if the difference
+ between this value&#39;s exponent and the desired exponent is too big,
+ depending on the maximum precision. If rounding to a number of
+ binary digit places is desired, it&#39;s better to use the
+ RoundToExponent and RoundToIntegral methods instead.</p>
  <p><b>Remark:</b> This method can be used to implement fixed-point
  binary arithmetic, in which a fixed number of digits come after the
  radix point. A fixed-point binary arithmetic in which no digits come
@@ -3108,13 +3153,13 @@ given exponent is outside that range.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>otherValue</code> - A binary float containing the desired exponent of the
-result. The significand is ignored. The exponent is the number of
-fractional digits in the result, expressed as a negative number. Can
-also be positive, which eliminates lower-order places from the
-number. For example, -3 means round to the sixteenth (10b^-3,
-0.0001b), and 3 means round to the sixteen-place (10b^3, 1000b). A
-value of 0 rounds the number to an integer.</p></li>
+<li><p><code>otherValue</code> - A binary floating-point number containing the desired
+exponent of the result. The significand is ignored. The exponent is
+the number of fractional digits in the result, expressed as a
+negative number. Can also be positive, which eliminates lower-order
+places from the number. For example, -3 means round to the sixteenth
+(10b^-3, 0.0001b), and 3 means round to the sixteen-place (10b^3,
+1000b). A value of 0 rounds the number to an integer.</p></li>
 <li><p><code>ctx</code> - An arithmetic context to control precision and rounding of the
 result. If <code>HasFlags</code> of the context is true, will also store
 the flags resulting from the operation (the flags are in addition to
@@ -3125,11 +3170,11 @@ rounding mode is HalfEven.</p></li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A binary float with the same value as this object but with the
-exponent changed. Signals FlagInvalid and returns not-a-number (NaN)
-if the result can&#39;t fit the given precision without rounding, or if
-the arithmetic context defines an exponent range and the given
-exponent is outside that range.</li>
+<li>A binary floating-point number with the same value as this object
+but with the exponent changed. Signals FlagInvalid and returns
+not-a-number (NaN) if the result can&#39;t fit the given precision
+without rounding, or if the arithmetic context defines an exponent
+range and the given exponent is outside that range.</li>
 </ul>
 
 <h3>Reduce</h3>
@@ -3311,10 +3356,11 @@ given precision.</li>
 <pre>public EFloat RoundToExponent​(EInteger exponent, EContext ctx)
 </pre>
 
-<p>Returns a binary float with the same value as this object but rounded to a
- new exponent if necessary. The resulting number&#39;s Exponent property
- will not necessarily be the given exponent; use the Quantize method
- instead to give the result a particular exponent.</p>
+<p>Returns a binary floating-point number with the same value as this object
+ but rounded to a new exponent if necessary. The resulting number&#39;s
+ Exponent property will not necessarily be the given exponent; use
+ the Quantize method instead to give the result a particular
+ exponent.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -3335,13 +3381,13 @@ which case the default rounding mode is HalfEven.</p></li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A binary float rounded to the closest value representable in the
-given precision. If the result can&#39;t fit the precision, additional
-digits are discarded to make it fit. Signals FlagInvalid and returns
-not-a-number (NaN) if the arithmetic context defines an exponent
-range, the new exponent must be changed to the given exponent when
-rounding, and the given exponent is outside of the valid range of
-the arithmetic context.</li>
+<li>A binary floating-point number rounded to the closest value
+representable in the given precision. If the result can&#39;t fit the
+precision, additional digits are discarded to make it fit. Signals
+FlagInvalid and returns not-a-number (NaN) if the arithmetic context
+defines an exponent range, the new exponent must be changed to the
+given exponent when rounding, and the given exponent is outside of
+the valid range of the arithmetic context.</li>
 </ul>
 
 <h3>RoundToExponent</h3>
@@ -3349,10 +3395,11 @@ the arithmetic context.</li>
 <pre>public EFloat RoundToExponent​(int exponentSmall, EContext ctx)
 </pre>
 
-<p>Returns a binary float with the same value as this object but rounded to a
- new exponent if necessary. The resulting number&#39;s Exponent property
- will not necessarily be the given exponent; use the Quantize method
- instead to give the result a particular exponent.</p>
+<p>Returns a binary floating-point number with the same value as this object
+ but rounded to a new exponent if necessary. The resulting number&#39;s
+ Exponent property will not necessarily be the given exponent; use
+ the Quantize method instead to give the result a particular
+ exponent.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -3373,13 +3420,13 @@ which case the default rounding mode is HalfEven.</p></li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A binary float rounded to the closest value representable in the
-given precision. If the result can&#39;t fit the precision, additional
-digits are discarded to make it fit. Signals FlagInvalid and returns
-not-a-number (NaN) if the arithmetic context defines an exponent
-range, the new exponent must be changed to the given exponent when
-rounding, and the given exponent is outside of the valid range of
-the arithmetic context.</li>
+<li>A binary floating-point number rounded to the closest value
+representable in the given precision. If the result can&#39;t fit the
+precision, additional digits are discarded to make it fit. Signals
+FlagInvalid and returns not-a-number (NaN) if the arithmetic context
+defines an exponent range, the new exponent must be changed to the
+given exponent when rounding, and the given exponent is outside of
+the valid range of the arithmetic context.</li>
 </ul>
 
 <h3>RoundToExponentExact</h3>
@@ -3387,11 +3434,11 @@ the arithmetic context.</li>
 <pre>public EFloat RoundToExponentExact​(EInteger exponent, EContext ctx)
 </pre>
 
-<p>Returns a binary float with the same value as this object but rounded to the
- given exponent, and signals an inexact flag if the result would be
- inexact. The resulting number&#39;s Exponent property will not
- necessarily be the given exponent; use the Quantize method instead
- to give the result a particular exponent.</p>
+<p>Returns a binary floating-point number with the same value as this object
+ but rounded to the given exponent, and signals an inexact flag if
+ the result would be inexact. The resulting number&#39;s Exponent
+ property will not necessarily be the given exponent; use the
+ Quantize method instead to give the result a particular exponent.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -3412,13 +3459,14 @@ which case the default rounding mode is HalfEven.</p></li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A binary float rounded to the closest value representable in the
-given precision. Signals FlagInvalid and returns not-a-number (NaN)
-if the result can&#39;t fit the given precision without rounding.
-Signals FlagInvalid and returns not-a-number (NaN) if the arithmetic
-context defines an exponent range, the new exponent must be changed
-to the given exponent when rounding, and the given exponent is
-outside of the valid range of the arithmetic context.</li>
+<li>A binary floating-point number rounded to the closest value
+representable in the given precision. Signals FlagInvalid and
+returns not-a-number (NaN) if the result can&#39;t fit the given
+precision without rounding. Signals FlagInvalid and returns
+not-a-number (NaN) if the arithmetic context defines an exponent
+range, the new exponent must be changed to the given exponent when
+rounding, and the given exponent is outside of the valid range of
+the arithmetic context.</li>
 </ul>
 
 <h3>RoundToExponentExact</h3>
@@ -3455,11 +3503,11 @@ given precision.</li>
 <pre>public EFloat RoundToExponentExact​(int exponentSmall, EContext ctx)
 </pre>
 
-<p>Returns a binary float with the same value as this object but rounded to the
- given exponent represented as a 32-bit signed integer, and signals
- an inexact flag if the result would be inexact. The resulting
- number&#39;s Exponent property will not necessarily be the given
- exponent; use the Quantize method instead to give the result a
+<p>Returns a binary floating-point number with the same value as this object
+ but rounded to the given exponent represented as a 32-bit signed
+ integer, and signals an inexact flag if the result would be inexact.
+ The resulting number&#39;s Exponent property will not necessarily be the
+ given exponent; use the Quantize method instead to give the result a
  particular exponent.</p>
 
 <p><strong>Parameters:</strong></p>
@@ -3481,13 +3529,14 @@ which case the default rounding mode is HalfEven.</p></li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A binary float rounded to the closest value representable in the
-given precision. Signals FlagInvalid and returns not-a-number (NaN)
-if the result can&#39;t fit the given precision without rounding.
-Signals FlagInvalid and returns not-a-number (NaN) if the arithmetic
-context defines an exponent range, the new exponent must be changed
-to the given exponent when rounding, and the given exponent is
-outside of the valid range of the arithmetic context.</li>
+<li>A binary floating-point number rounded to the closest value
+representable in the given precision. Signals FlagInvalid and
+returns not-a-number (NaN) if the result can&#39;t fit the given
+precision without rounding. Signals FlagInvalid and returns
+not-a-number (NaN) if the arithmetic context defines an exponent
+range, the new exponent must be changed to the given exponent when
+rounding, and the given exponent is outside of the valid range of
+the arithmetic context.</li>
 </ul>
 
 <h3>RoundToIntegerExact</h3>
@@ -3495,10 +3544,11 @@ outside of the valid range of the arithmetic context.</li>
 <pre>public EFloat RoundToIntegerExact​(EContext ctx)
 </pre>
 
-<p>Returns a binary float with the same value as this object but rounded to an
- integer, and signals an inexact flag if the result would be inexact.
- The resulting number&#39;s Exponent property will not necessarily be 0;
- use the Quantize method instead to give the result an exponent of 0.</p>
+<p>Returns a binary floating-point number with the same value as this object
+ but rounded to an integer, and signals an inexact flag if the result
+ would be inexact. The resulting number&#39;s Exponent property will not
+ necessarily be 0; use the Quantize method instead to give the result
+ an exponent of 0.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -3513,13 +3563,13 @@ which case the default rounding mode is HalfEven.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A binary float rounded to the closest integer representable in the
-given precision. Signals FlagInvalid and returns not-a-number (NaN)
-if the result can&#39;t fit the given precision without rounding.
-Signals FlagInvalid and returns not-a-number (NaN) if the arithmetic
-context defines an exponent range, the new exponent must be changed
-to 0 when rounding, and 0 is outside of the valid range of the
-arithmetic context.</li>
+<li>A binary floating-point number rounded to the closest integer
+representable in the given precision. Signals FlagInvalid and
+returns not-a-number (NaN) if the result can&#39;t fit the given
+precision without rounding. Signals FlagInvalid and returns
+not-a-number (NaN) if the arithmetic context defines an exponent
+range, the new exponent must be changed to 0 when rounding, and 0 is
+outside of the valid range of the arithmetic context.</li>
 </ul>
 
 <h3>RoundToIntegerNoRoundedFlag</h3>
@@ -3527,11 +3577,11 @@ arithmetic context.</li>
 <pre>public EFloat RoundToIntegerNoRoundedFlag​(EContext ctx)
 </pre>
 
-<p>Returns a binary float with the same value as this object but rounded to an
- integer, without adding the <code>FlagInexact</code> or <code>FlagRounded</code>
- flags. The resulting number&#39;s Exponent property will not necessarily
- be 0; use the Quantize method instead to give the result an exponent
- of 0.</p>
+<p>Returns a binary floating-point number with the same value as this object
+ but rounded to an integer, without adding the <code>FlagInexact</code> or
+ <code>FlagRounded</code> flags. The resulting number&#39;s Exponent property
+ will not necessarily be 0; use the Quantize method instead to give
+ the result an exponent of 0.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -3548,12 +3598,13 @@ which case the default rounding mode is HalfEven.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A binary float rounded to the closest integer representable in the
-given precision. If the result can&#39;t fit the precision, additional
-digits are discarded to make it fit. Signals FlagInvalid and returns
-not-a-number (NaN) if the arithmetic context defines an exponent
-range, the new exponent must be changed to 0 when rounding, and 0 is
-outside of the valid range of the arithmetic context.</li>
+<li>A binary floating-point number rounded to the closest integer
+representable in the given precision. If the result can&#39;t fit the
+precision, additional digits are discarded to make it fit. Signals
+FlagInvalid and returns not-a-number (NaN) if the arithmetic context
+defines an exponent range, the new exponent must be changed to 0
+when rounding, and 0 is outside of the valid range of the arithmetic
+context.</li>
 </ul>
 
 <h3>RoundToIntegralExact</h3>
@@ -3577,13 +3628,13 @@ which case the default rounding mode is HalfEven.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A binary float rounded to the closest integer representable in the
-given precision. Signals FlagInvalid and returns not-a-number (NaN)
-if the result can&#39;t fit the given precision without rounding.
-Signals FlagInvalid and returns not-a-number (NaN) if the arithmetic
-context defines an exponent range, the new exponent must be changed
-to 0 when rounding, and 0 is outside of the valid range of the
-arithmetic context.</li>
+<li>A binary floating-point number rounded to the closest integer
+representable in the given precision. Signals FlagInvalid and
+returns not-a-number (NaN) if the result can&#39;t fit the given
+precision without rounding. Signals FlagInvalid and returns
+not-a-number (NaN) if the arithmetic context defines an exponent
+range, the new exponent must be changed to 0 when rounding, and 0 is
+outside of the valid range of the arithmetic context.</li>
 </ul>
 
 <h3>RoundToIntegralNoRoundedFlag</h3>
@@ -3609,12 +3660,13 @@ which case the default rounding mode is HalfEven.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A binary float rounded to the closest integer representable in the
-given precision. If the result can&#39;t fit the precision, additional
-digits are discarded to make it fit. Signals FlagInvalid and returns
-not-a-number (NaN) if the arithmetic context defines an exponent
-range, the new exponent must be changed to 0 when rounding, and 0 is
-outside of the valid range of the arithmetic context.</li>
+<li>A binary floating-point number rounded to the closest integer
+representable in the given precision. If the result can&#39;t fit the
+precision, additional digits are discarded to make it fit. Signals
+FlagInvalid and returns not-a-number (NaN) if the arithmetic context
+defines an exponent range, the new exponent must be changed to 0
+when rounding, and 0 is outside of the valid range of the arithmetic
+context.</li>
 </ul>
 
 <h3>RoundToPrecision</h3>
@@ -3797,8 +3849,8 @@ the precision is unlimited (the context&#39;s Precision property is 0).</li>
 <pre>public EFloat Subtract​(EFloat otherValue)
 </pre>
 
-<p>Subtracts an arbitrary-precision binary float from this instance and returns
- the result.</p>
+<p>Subtracts an arbitrary-precision binary floating-point number from this
+ instance and returns the result.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -3817,7 +3869,8 @@ the precision is unlimited (the context&#39;s Precision property is 0).</li>
 <pre>public EFloat Subtract​(EFloat otherValue, EContext ctx)
 </pre>
 
-<p>Subtracts an arbitrary-precision binary float from this instance.</p>
+<p>Subtracts an arbitrary-precision binary floating-point number from this
+ instance.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -4329,7 +4382,7 @@ an exact integer, or is less than -2147483648 or greater than
 </pre>
 
 <p>Converts a boolean value (either true or false) to an arbitrary-precision
- binary float.</p>
+ binary floating-point number.</p>
 
 <p><strong>Parameters:</strong></p>
 

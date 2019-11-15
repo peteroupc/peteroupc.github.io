@@ -59,7 +59,8 @@ Adds two rational numbers.</li>
 <li><code>int compareTo​(ERational other)</code><br>
 Compares an arbitrary-precision rational number with this instance.</li>
 <li><code>int CompareToBinary​(EFloat other)</code><br>
-Compares an arbitrary-precision binary float with this instance.</li>
+Compares an arbitrary-precision binary floating-point number with this
+instance.</li>
 <li><code>int CompareToDecimal​(EDecimal other)</code><br>
 Compares an arbitrary-precision decimal number with this instance.</li>
 <li><code>int CompareToTotal​(ERational other)</code><br>
@@ -107,7 +108,8 @@ Converts a 64-bit floating-point number to a rational number.</li>
 <li><code>static ERational FromEDecimal​(EDecimal ef)</code><br>
 Converts an arbitrary-precision decimal number to a rational number.</li>
 <li><code>static ERational FromEFloat​(EFloat ef)</code><br>
-Converts an arbitrary-precision binary float to a rational number.</li>
+Converts an arbitrary-precision binary floating-point number to a rational
+number.</li>
 <li><code>static ERational FromEInteger​(EInteger bigint)</code><br>
 Converts an arbitrary-precision integer to a rational number.</li>
 <li><code>static ERational FromExtendedDecimal​(EDecimal ef)</code><br>
@@ -201,14 +203,14 @@ Converts this rational number to an arbitrary-precision decimal number, but
 if the result would have a nonterminating decimal expansion, rounds
 that result to the given precision.</li>
 <li><code>EFloat ToEFloat()</code><br>
-Converts this rational number to a binary float.</li>
+Converts this rational number to a binary floating-point number.</li>
 <li><code>EFloat ToEFloat​(EContext ctx)</code><br>
-Converts this rational number to a binary float and rounds that result to
-the given precision.</li>
+Converts this rational number to a binary floating-point number and rounds
+that result to the given precision.</li>
 <li><code>EFloat ToEFloatExactIfPossible​(EContext ctx)</code><br>
-Converts this rational number to a binary float, but if the result would
-have a nonterminating binary expansion, rounds that result to the
-given precision.</li>
+Converts this rational number to a binary floating-point number, but if the
+result would have a nonterminating binary expansion, rounds that
+result to the given precision.</li>
 <li><code>EInteger ToEInteger()</code><br>
 Converts this value to an arbitrary-precision integer by dividing the
 numerator by the denominator and discarding the fractional part of
@@ -666,7 +668,8 @@ floating-point number.</li>
 <pre>public static ERational FromEFloat​(EFloat ef)
 </pre>
 
-<p>Converts an arbitrary-precision binary float to a rational number.</p>
+<p>Converts an arbitrary-precision binary floating-point number to a rational
+ number.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -942,7 +945,8 @@ implementation returns a positive number if.</li>
 <pre>public int CompareToBinary​(EFloat other)
 </pre>
 
-<p>Compares an arbitrary-precision binary float with this instance.</p>
+<p>Compares an arbitrary-precision binary floating-point number with this
+ instance.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1505,7 +1509,7 @@ exact because it has a nonterminating decimal expansion.</li>
 <pre>public EFloat ToEFloat()
 </pre>
 
-<p>Converts this rational number to a binary float.</p>
+<p>Converts this rational number to a binary floating-point number.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -1520,8 +1524,8 @@ expansion.</li>
 <pre>public EFloat ToEFloat​(EContext ctx)
 </pre>
 
-<p>Converts this rational number to a binary float and rounds that result to
- the given precision.</p>
+<p>Converts this rational number to a binary floating-point number and rounds
+ that result to the given precision.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1546,9 +1550,9 @@ can&#39;t be exact because it has a nonterminating binary expansion.</li>
 <pre>public EFloat ToEFloatExactIfPossible​(EContext ctx)
 </pre>
 
-<p>Converts this rational number to a binary float, but if the result would
- have a nonterminating binary expansion, rounds that result to the
- given precision.</p>
+<p>Converts this rational number to a binary floating-point number, but if the
+ result would have a nonterminating binary expansion, rounds that
+ result to the given precision.</p>
 
 <p><strong>Parameters:</strong></p>
 

@@ -34,7 +34,7 @@
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>dateTime</i>: The date and time in the form of an 8-element array. See  <code>ParseDateString(bool)</code>  for information on the format of this parameter.</li>
+<li><i>dateTime</i>: The date and time in the form of an 8-element array. See  <code>ParseDateString(string, bool)</code>  for information on the format of this parameter.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -46,7 +46,7 @@
 <ul>
 <li>System.ArgumentException:
 The parameter  <i>dateTime</i>
-is null or invalid (see  <code>ParseDateString(bool)</code>  ).</li>
+is null or invalid (see  <code>ParseDateString(string, bool)</code>  ).</li>
 </ul>
 
 <p><a id="GenerateDateString_int_bool"></a></p>
@@ -63,7 +63,7 @@ is null or invalid (see  <code>ParseDateString(bool)</code>  ).</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>dateTime</i>: The date and time in the form of an 8-element array. See  <code>ParseDateString(bool)</code>  for information on the format of this parameter.</p></li>
+<li><p><i>dateTime</i>: The date and time in the form of an 8-element array. See  <code>ParseDateString(string, bool)</code>  for information on the format of this parameter.</p></li>
 <li><p><i>gmt</i>: If true, uses the string &quot;GMT&quot; as the time zone offset.</p></li>
 </ul>
 
@@ -76,7 +76,7 @@ is null or invalid (see  <code>ParseDateString(bool)</code>  ).</li>
 <ul>
 <li><p>System.ArgumentException:
 The parameter  <i>dateTime</i>
-is null or invalid (see  <code>ParseDateString(bool)</code>  ).</p></li>
+is null or invalid (see  <code>ParseDateString(string, bool)</code>  ).</p></li>
 <li><p>System.ArgumentNullException:
 The parameter  <i>dateTime</i>
 is null.</p></li>
@@ -90,7 +90,7 @@ is null.</p></li>
     string str);
 </pre>
 
-<p>Gets the date and time extracted from a date-time string following the Internet Message Format (RFC 5322). Obsolete time zone strings are not allowed to appear in the date-time string. See  <code>ParseDateString(bool)</code>  for information on this method&#39;s return value.</p>
+<p>Gets the date and time extracted from a date-time string following the Internet Message Format (RFC 5322). Obsolete time zone strings are not allowed to appear in the date-time string. See  <code>ParseDateString(string, bool)</code>  for information on this method&#39;s return value.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -157,7 +157,7 @@ is null.</p></li>
 
 <p><b>Return Value:</b></p>
 
-<p>An array of 8 elements as specified in the  <code>ParseDateString(bool)</code>  method.</p>
+<p>An array of 8 elements as specified in the  <code>ParseDateString(string, bool)</code>  method.</p>
 
 <p><a href="/MailLib/">Back to MailLib start page.</a></p>
 </div><nav id="navigation"><ul>

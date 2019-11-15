@@ -211,7 +211,8 @@ Finds the sum of this object and another object.</li>
 Compares the mathematical values of this object and another object,
 accepting NaN values.</li>
 <li><code>int CompareToBinary​(EFloat other)</code><br>
-Compares an arbitrary-precision binary float with this instance.</li>
+Compares an arbitrary-precision binary floating-point number with this
+instance.</li>
 <li><code>EDecimal CompareToSignal​(EDecimal other,
            EContext ctx)</code><br>
 Compares the mathematical values of this object and another object, treating
@@ -532,6 +533,8 @@ Raises this object&#39;s value to the given exponent.</li>
 <li><code>EDecimal Pow​(int exponentSmall,
 EContext ctx)</code><br>
 Raises this object&#39;s value to the given exponent.</li>
+<li><code>EDecimal Pow​(EDecimal exponent)</code><br>
+Raises this object&#39;s value to the given exponent, using unlimited precision.</li>
 <li><code>EDecimal Pow​(EDecimal exponent,
 EContext ctx)</code><br>
 Raises this object&#39;s value to the given exponent.</li>
@@ -1748,7 +1751,8 @@ This implementation returns a positive number if.</li>
 <pre>public int CompareToBinary​(EFloat other)
 </pre>
 
-<p>Compares an arbitrary-precision binary float with this instance.</p>
+<p>Compares an arbitrary-precision binary floating-point number with this
+ instance.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -3392,6 +3396,27 @@ property is 0), and the exponent has a fractional part.</li>
 
 <h3>Pow</h3>
 
+<pre>public EDecimal Pow​(EDecimal exponent)
+</pre>
+
+<p>Raises this object&#39;s value to the given exponent, using unlimited precision.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>exponent</code> - An arbitrary-precision decimal number expressing the
+exponent to raise this object&#39;s value to.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>This^exponent. Returns not-a-number (NaN) if the exponent has a
+fractional part.</li>
+</ul>
+
+<h3>Pow</h3>
+
 <pre>public EDecimal Pow​(int exponentSmall, EContext ctx)
 </pre>
 
@@ -4601,8 +4626,8 @@ Renamed to ToEFloat.</p>
 <p>Creates a binary floating-point number from this object&#39;s value. Note that
  if the binary floating-point number contains a negative exponent,
  the resulting value might not be exact, in which case the resulting
- binary float will be an approximation of this decimal number&#39;s
- value.</p>
+ binary floating-point number will be an approximation of this
+ decimal number&#39;s value.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -4693,8 +4718,8 @@ decimal point.</li>
 <p>Creates a binary floating-point number from this object&#39;s value. Note that
  if the binary floating-point number contains a negative exponent,
  the resulting value might not be exact, in which case the resulting
- binary float will be an approximation of this decimal number&#39;s
- value.</p>
+ binary floating-point number will be an approximation of this
+ decimal number&#39;s value.</p>
 
 <p><strong>Parameters:</strong></p>
 
