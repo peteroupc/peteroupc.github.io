@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on June 4, 2017; last updated on Nov. 4, 2019.
+Begun on June 4, 2017; last updated on Nov. 16, 2019.
 
 Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.
 
@@ -38,7 +38,7 @@ All the random number methods presented on this page are ultimately based on an 
 - **Ways to implement any of the randomization methods given in "Randomization with Real Numbers" using only random integers.**
 - **Suggestions to trim the size of this document, such as by limiting it to the most common and most useful methods for generating random numbers.**
 - **Is there any non-trivial use of random real numbers ("floating-point" numbers) in cryptography or other security-sensitive applications &mdash; except perhaps in machine learning models?**
-- **Is there any non-trivial use of random fixed-point numbers in any applications, other than uniformly distributed numbers?**
+- **Is there any non-trivial use of random fixed-point numbers in any applications, other than uniform random numbers?**
 
 <a id=Contents></a>
 ## Contents
@@ -133,12 +133,12 @@ All the random number methods presented on this page are ultimately based on an 
     - (`a`, `b`) means "greater than `a`, but less than `b`".
     - (`a`, `b`] means "greater than `a` and less than or equal to `b`".
     - [`a`, `b`] means "`a` or greater and `b` or less".
-- **Random number generator (RNG).** Software and/or hardware that seeks to generate independent numbers that seem to occur by chance and that are approximately uniformly distributed<sup>[**(1)**](#Note1)</sup>.
+- **Random number generator (RNG).** Software and/or hardware that seeks to generate numbers with the property that each possible outcome is as likely as any other without influence by anything else<sup>[**(1)**](#Note1)</sup>.
 
 <a id=Uniform_Random_Integers></a>
 ## Uniform Random Integers
 
-This section describes how an underlying RNG can be used to generate independent uniformly-distributed random integers.  This section describes four methods: `RNDINT`, `RNDINTEXC`, `RNDINTRANGE`, `RNDINTEXCRANGE`.  Of these, `RNDINT`, described next, can serve as the basis for the remaining methods.
+This section describes how an underlying RNG can be used to generate independent uniform random integers.  This section describes four methods: `RNDINT`, `RNDINTEXC`, `RNDINTRANGE`, `RNDINTEXCRANGE`.  Of these, `RNDINT`, described next, can serve as the basis for the remaining methods.
 
 <a id=RNDINT_Random_Integers_in_0_N></a>
 ### `RNDINT`: Random Integers in [0, N]
@@ -639,7 +639,7 @@ A _random walk_ is a process with random behavior over time.  A simple form of r
       return list
     END METHOD
 
-> **Note:** A **white noise process** is simulated by creating a list of random numbers generated independently and in the same way.  Such a process generally models behavior over time that does not depend on the time or the current state.  One example is `ZeroOrOne(px,py)` (for modeling a _Bernoulli process_, where each number is 0 or 1 depending on the probability `px`/`py`).
+> **Note:** A **white noise process** is simulated by creating a list of independent random numbers generated in the same way.  Such a process generally models behavior over time that does not depend on the time or the current state.  One example is `ZeroOrOne(px,py)` (for modeling a _Bernoulli process_, where each number is 0 or 1 depending on the probability `px`/`py`).
 
 > **Examples:**
 >
@@ -724,8 +724,8 @@ The following pseudocode implements a method `WeightedChoice` that takes a singl
 > **Examples:**
 >
 > 1. Assume we have the following list: `["apples", "oranges", "bananas", "grapes"]`, and `weights` is the following: `[3, 15, 1, 2]`.  The weight for "apples" is 3, and the weight for "oranges" is 15.  Since "oranges" has a higher weight than "apples", the index for "oranges" (1) is more likely to be chosen than the index for "apples" (0) with the `WeightedChoice` method.  The following idiom implements how to get a randomly chosen item from the list with that method: `item = list[WeightedChoice(weights)]`.
-> 2. Assume the weights from example 1 are used and the list contains ranges of numbers instead of strings: `[[0, 5], [5, 10], [10, 11], [11, 13]]`.  After a random range is chosen, an independent uniform number is chosen randomly within the chosen range (including the lower bound but not the upper bound).  For example, code like the following chooses a random integer this way: `number = RNDINTEXCRANGE(item[0], item[1])`. (See also "[**Mixtures of Distributions**](#Mixtures_of_Distributions)".)
-> 3. **Piecewise constant distribution.** Assume the weights from example 1 are used and the list contains the following: `[0, 5, 10, 11, 13]` (one more item than the weights).  This expresses four ranges, the same as in example 2.  After a random index is chosen with `index = WeightedChoice(weights)`, an independent uniform number is chosen randomly within the corresponding range (including the lower bound but not the upper bound).  For example, code like the following chooses a random integer this way: `number = RNDINTEXCRANGE(list[index], list[index + 1])`.
+> 2. Assume the weights from example 1 are used and the list contains ranges of numbers instead of strings: `[[0, 5], [5, 10], [10, 11], [11, 13]]`.  After a random range is chosen, an independent uniform random number within the chosen range (including the lower bound but not the upper bound) is chosen.  For example, code like the following chooses a random integer this way: `number = RNDINTEXCRANGE(item[0], item[1])`. (See also "[**Mixtures of Distributions**](#Mixtures_of_Distributions)".)
+> 3. **Piecewise constant distribution.** Assume the weights from example 1 are used and the list contains the following: `[0, 5, 10, 11, 13]` (one more item than the weights).  This expresses four ranges, the same as in example 2.  After a random index is chosen with `index = WeightedChoice(weights)`, an independent uniform random number within the chosen range (including the lower bound but not the upper bound) is chosen.  For example, code like the following chooses a random integer this way: `number = RNDINTEXCRANGE(list[index], list[index + 1])`.
 > 4. A [**Markov chain**](https://en.wikipedia.org/wiki/Markov_chain) models one or more _states_ (for example, individual letters or syllables), and stores the probabilities to transition from one state to another (e.g., "b" to "e" with a chance of 20 percent, or "b" to "b" with a chance of 1 percent).  Thus, each state can be seen as having its own list of _weights_ for each relevant state transition.  For example, a Markov chain for generating **"pronounceable" words**, or words similar to natural-language words, can include "start" and "stop" states for the start and end of the word, respectively.
 > 5. The following weights approximate a [**Poisson distribution**](#Poisson_Distribution) with a mean of 0.1: `[90483742, 9048374, 452419, 15081, 377, 8]`.  The weights for other discrete (integer-only) distributions can be found by calculating the probability that each plausible result is randomly chosen for the distribution, and multiplying each probability by a suitably big number (such as 100,000,000 in this case), rounding to the nearest integer.
 
@@ -814,8 +814,8 @@ A _mixture_ consists of two or more probability distributions with separate prob
 >         else: number = RNDINTRANGE(1,6) +
 >            RNDINTRANGE(1,6) + RNDINTRANGE(1,6)
 >
-> 2. Choosing a random point, independently and uniformly, from a complex shape (in any number of dimensions) is equivalent to doing such sampling from a mixture of simpler shapes that make up the complex shape (here, the `weights` list holds the n-dimensional "volume" of each simpler shape).  For example, a simple closed 2D polygon can be [**_triangulated_**](https://en.wikipedia.org/wiki/Polygon_triangulation), or decomposed into [**triangles**](#Random_Points_Inside_a_Simplex), and a mixture of those triangles can be sampled.<sup>[**(12)**](#Note12)</sup>
-> 3. Take a set of nonoverlapping integer ranges.  To choose a random integer from those ranges independently and uniformly:
+> 2. Choosing an independent uniform random point, from a complex shape (in any number of dimensions) is equivalent to doing such sampling from a mixture of simpler shapes that make up the complex shape (here, the `weights` list holds the n-dimensional "volume" of each simpler shape).  For example, a simple closed 2D polygon can be [**_triangulated_**](https://en.wikipedia.org/wiki/Polygon_triangulation), or decomposed into [**triangles**](#Random_Points_Inside_a_Simplex), and a mixture of those triangles can be sampled.<sup>[**(12)**](#Note12)</sup>
+> 3. Take a set of nonoverlapping integer ranges.  To choose an independent uniform random integer from those ranges:
 >     - Create a list (`weights`) of weights for each range.  Each range is given a weight of `(mx - mn) + 1`, where `mn` is that range's minimum and `mx` is its maximum.
 >     - Choose an index using `WeightedChoice(weights)`, then generate `RNDINTRANGE(mn, mx)`, where `mn` is the corresponding range's minimum and `mx` is its maximum.
 
@@ -927,7 +927,7 @@ The _geometric distribution_ is a negative binomial distribution with `successes
 <a id=Random_Integers_with_a_Given_Positive_Sum></a>
 ### Random Integers with a Given Positive Sum
 
-The following pseudocode shows how to generate integers with a given positive sum, where the combination is chosen uniformly at random from among all possible combinations. (The algorithm for this was presented in (Smith and Tromble 2004)<sup>[**(17)**](#Note17)</sup>.)  In the pseudocode below&mdash;
+The following pseudocode shows how to generate a uniform random combination of integers with a given positive sum. (The algorithm for this was presented in (Smith and Tromble 2004)<sup>[**(17)**](#Note17)</sup>.)  In the pseudocode below&mdash;
 
 - the method `PositiveIntegersWithSum` returns `n` integers greater than 0 that sum to `total`,
 - the method `IntegersWithSum` returns `n` integers 0 or greater that sum to `total`, and
@@ -967,8 +967,8 @@ The following pseudocode shows how to generate integers with a given positive su
 
 > **Notes:**
 >
-> 1. To generate a uniformly randomly chosen combination of `N` numbers with a given positive average `avg`, generate a uniformly randomly chosen combination of `N` numbers with the sum `N * avg`.
-> 2. To generate a uniformly randomly chosen combination of `N` numbers `min` or greater and with a given positive sum `sum`, generate a uniformly randomly chosen combination of `N` numbers with the sum `sum - n * min`, then add `min` to each number generated this way.
+> 1. To generate a uniform random combination of `N` numbers with a given positive average `avg`, generate a uniform random combination of `N` numbers with the sum `N * avg`.
+> 2. To generate a uniform random combination of `N` numbers `min` or greater and with a given positive sum `sum`, generate a uniform random combination of `N` numbers with the sum `sum - n * min`, then add `min` to each number generated this way.
 
 <a id=Multinomial_Distribution></a>
 ### Multinomial Distribution
@@ -997,7 +997,7 @@ This section describes randomization methods that use random real numbers, not j
 However, whenever possible, **applications should work with random integers**, rather than other random real numbers.  This is because:
 - Computers can represent integers more naturally than other real numbers, making random integer generation algorithms more portable and more numerically stable than random real number generation algorithms.<sup>[**(18)**](#Note18)</sup>
 - No computer can choose from among all real numbers between two others, since there are infinitely many of them.
-- For applications that may care about reproducible "random" numbers (unit tests, simulations, machine learning, and so on), using non-integer numbers can complicate the task of making a method repeatable from run to run or across computers.<sup>[**(19)**](#Note19)</sup>
+- For applications that may care about reproducible "random" numbers (unit tests, simulations, machine learning, and so on), using non-integer numbers can complicate the task of making a method reproducible from run to run or across computers.<sup>[**(19)**](#Note19)</sup>
 
 Even when used with a secure random number generator, none of the methods given in this section are designed to generate random numbers for information security purposes (e.g., random encryption keys or other secrets), unless noted otherwise.  In fact, random non-integer numbers are rarely if ever seen in serious information security applications.
 
@@ -1189,7 +1189,7 @@ A third application of Monte Carlo sampling is [**stochastic optimization**](htt
 
 **Requires random real numbers.**
 
-A [**_low-discrepancy sequence_**](https://en.wikipedia.org/wiki/Low-discrepancy_sequence) (or _quasirandom sequence_) is a sequence of numbers that follow a uniform distribution, but are less likely to form "clumps" than independent uniform random numbers are.  The following are examples:
+A [**_low-discrepancy sequence_**](https://en.wikipedia.org/wiki/Low-discrepancy_sequence) (or _quasirandom sequence_) is a sequence of numbers that behave like uniform random numbers but are _dependent_ on each other.  The numbers are less likely to form "clumps" than if they were independent.  The following are examples:
 - Sobol and Halton sequences are too complicated to show here.
 - Linear congruential generators with modulus `m`, a full period, and "good lattice structure"; a sequence of `n`-dimensional points is then `[MLCG(i), MLCG(i+1), ..., MLCG(i+n-1)]` for each integer `i` in the interval \[1, `m`\] (L'Ecuyer 1999)<sup>[**(24)**](#Note24)</sup> (see example pseudocode below).
 
@@ -1416,7 +1416,7 @@ Depending on what information is known about the distribution, random numbers th
 
         2. A custom distribution's PDF, `PDF`, is `exp(-abs(x*x*x))`, and the exponential distribution's PDF, `PDF2`, is `exp(-x)`.  The exponential PDF "dominates" the other PDF (at every `x` 0 or greater) if we multiply it by 1.5, so that `PDF2` is now `1.5 * exp(-x)`.  Now we can generate numbers from our custom distribution by sampling exponential points until a point falls within `PDF`.  This is done by generating `n = -ln(RNDU01ZeroOneExc())` until `PDF(n) >= RNDRANGEMaxExc(0, PDF2(n))`.
 
-    - [**Markov-chain Monte Carlo**](https://en.wikipedia.org/wiki/Markov_chain_Monte_Carlo) **(MCMC).** If many random numbers from the given PDF need to be generated, then an MCMC algorithm can be used, with the disadvantage that the resulting random numbers will not be chosen independently of each other.  MCMC algorithms include Metropolis&ndash;Hastings and slice sampling (Neal 2003)<sup>[**(31)**](#Note31)</sup>. Generally, as more numbers are generated, the MCMC algorithm converges to the given distribution; this is why usually, random numbers from the first few (e.g., first 1000) iterations are ignored ("burn in").  MCMC can also be used to find a suitable sampling range for the Piecewise interpolation method, above.  The [**Python sample code**](https://peteroupc.github.io/randomgen.zip) includes methods called `mcmc` and `mcmc2` that implement Metropolis&ndash;Hastings for PDFs that take single numbers or two-dimensional points, respectively, and a method called `slicesample` that implements slice sampling.
+    - [**Markov-chain Monte Carlo**](https://en.wikipedia.org/wiki/Markov_chain_Monte_Carlo) **(MCMC).** If many random numbers from the given PDF need to be generated, then an MCMC algorithm can be used, with the disadvantage that the resulting random numbers are _dependent_ on each other.  MCMC algorithms include Metropolis&ndash;Hastings and slice sampling (Neal 2003)<sup>[**(31)**](#Note31)</sup>. Generally, as more numbers are generated, the MCMC algorithm converges to the given distribution; this is why usually, random numbers from the first few (e.g., first 1000) iterations are ignored ("burn in").  MCMC can also be used to find a suitable sampling range for the Piecewise interpolation method, above.  The [**Python sample code**](https://peteroupc.github.io/randomgen.zip) includes methods called `mcmc` and `mcmc2` that implement Metropolis&ndash;Hastings for PDFs that take single numbers or two-dimensional points, respectively, and a method called `slicesample` that implements slice sampling.
 
 - **PDF and a uniform random variable in the interval \[0, 1\) (`randomVariable`)** are known: Create `list` and `weights` as given in the Piecewise interpolation method, above, then divide each item in `weights` by the sum<sup>[**(14)**](#Note14)</sup>
  of `weights`'s items, then generate [**`ContinuousWeightedChoice(list, weights)`**](#Continuous_Weighted_Choice) (except that method is modified to use `value = randomVariable` rather than `value = RNDRANGEMaxExc(0, sum)`).
@@ -1434,7 +1434,7 @@ Depending on what information is known about the distribution, random numbers th
 
 **Usually requires random real numbers.**
 
-Gibbs sampling<sup>[**(32)**](#Note32)</sup> is a Markov-chain Monte Carlo algorithm.  It involves repeatedly generating random numbers from two or more distributions, each of which uses a random number from the previous distribution (_conditional distributions_); however, the resulting random numbers will not be chosen independently of each other.
+Gibbs sampling<sup>[**(32)**](#Note32)</sup> is a Markov-chain Monte Carlo algorithm.  It involves repeatedly generating random numbers from two or more distributions, each of which uses a random number from the previous distribution (_conditional distributions_); however, the resulting random numbers are _dependent_ on each other.
 
 > **Example:** In one Gibbs sampler, an initial value for `y` is chosen, then multiple `x`, `y` pairs of random numbers are generated, where `x = BetaDist(y, 5)` then `y = Poisson(x * 10)`.
 
@@ -1498,10 +1498,10 @@ The following method implements a ratio-of-uniforms technique and can be used in
 <a id=Binomial_Distribution_Optimization_for_Many_Trials></a>
 ### Binomial Distribution: Optimization for Many Trials
 
-The _binomial distribution_ models the number of successful trials among a fixed number of independently performed trials with a fixed probability of success.
+The _binomial distribution_ models the number of successes in a fixed number of independent trials, each with the same probability of success.
 
 **Requires random real numbers:** The pseudocode below implements an optimization for many trials.  In the pseudocode&mdash;
-- `trials` is the number of independent trials, and
+- `trials` is the number of trials, and
 - `p` is the probability of success in each trial (where `p <= 0` means never, `p >= 1` means always, and `p = 0.5` means an equal chance of success or failure).
 
 &nbsp;
@@ -1718,7 +1718,7 @@ The algorithm below is based on the Best&ndash;Fisher algorithm from 1979 (as de
 
 **Requires random real numbers.**
 
-As more and more independent random numbers from the same distribution are added together, their distribution tends to a [**_stable distribution_**](https://en.wikipedia.org/wiki/Stable_distribution), which resembles a curve with a single peak, but with generally "fatter" tails than the normal distribution.  The pseudocode below uses the Chambers&ndash;Mallows&ndash;Stuck algorithm.  The `Stable` method, implemented below, takes two parameters:
+As more and more independent random numbers, generated the same way, are added together, their distribution tends to a [**_stable distribution_**](https://en.wikipedia.org/wiki/Stable_distribution), which resembles a curve with a single peak, but with generally "fatter" tails than the normal distribution.  The pseudocode below uses the Chambers&ndash;Mallows&ndash;Stuck algorithm.  The `Stable` method, implemented below, takes two parameters:
 
 - `alpha` is a stability index in the interval (0, 2].
 - `beta` is a skewness in the interval [-1, 1]; if `beta` is 0, the curve is symmetric.
@@ -1847,12 +1847,12 @@ The following pseudocode calculates a random point in space that follows a [**_m
 **Requires random real numbers.**
 
 Generating _n_ `GammaDist(total, 1)` numbers and dividing them by their sum<sup>[**(14)**](#Note14)</sup>
- will result in _n_ numbers that (approximately) sum to `total`, where the combination of numbers is chosen uniformly at random (see a [**Wikipedia article**](https://en.wikipedia.org/wiki/Dirichlet_distribution#Gamma_distribution)).  For example, if `total` is 1, the numbers will (approximately) sum to 1.  Note that in the exceptional case that all numbers are 0, the process should repeat.
+ will result in a uniform random combination of _n_ numbers that (approximately) sum to `total` (see a [**Wikipedia article**](https://en.wikipedia.org/wiki/Dirichlet_distribution#Gamma_distribution)).  For example, if `total` is 1, the numbers will (approximately) sum to 1.  Note that in the exceptional case that all numbers are 0, the process should repeat.
 
 > **Notes:**
 >
 > 1. Notes 1 and 2 in the section "Random Integers with a Given Positive Sum" apply here.
-> 2. The **Dirichlet distribution**, as defined in some places (e.g., _Mathematica_; Devroye 1986, p. 594), models a uniformly randomly chosen combination of _n_ random numbers that sum to 1, and can be sampled by generating _n_+1 random [**gamma-distributed**](#Gamma_Distribution) numbers, each with separate parameters, taking their sum<sup>[**(14)**](#Note14)</sup>, and dividing the first _n_ numbers by that sum.
+> 2. The **Dirichlet distribution**, as defined in some places (e.g., _Mathematica_; Devroye 1986, p. 594), models a uniform random combination of _n_ random numbers that sum to 1, and can be sampled by generating _n_+1 random [**gamma-distributed**](#Gamma_Distribution) numbers, each with separate parameters, taking their sum<sup>[**(14)**](#Note14)</sup>, and dividing the first _n_ numbers by that sum.
 
 <a id=Gaussian_and_Other_Copulas></a>
 ### Gaussian and Other Copulas
@@ -1861,7 +1861,7 @@ Generating _n_ `GammaDist(total, 1)` numbers and dividing them by their sum<sup>
 
 A _copula_ is a distribution describing the dependence between random numbers.
 
-One example is a _Gaussian copula_; this copula is sampled by sampling from a [**multinormal distribution**](#Multivariate_Normal_Multinormal_Distribution), then converting the resulting numbers to uniformly-distributed, but dependent, numbers. In the following pseudocode, which implements a Gaussian copula:
+One example is a _Gaussian copula_; this copula is sampled by sampling from a [**multinormal distribution**](#Multivariate_Normal_Multinormal_Distribution), then converting the resulting numbers to _dependent_ uniform random numbers. In the following pseudocode, which implements a Gaussian copula:
 
 - The parameter `covar` is the covariance matrix for the multinormal distribution.
 - `erf(v)` is the [**error function**](https://en.wikipedia.org/wiki/Error_function) of the variable `v` (see the appendix).
@@ -1878,7 +1878,7 @@ One example is a _Gaussian copula_; this copula is sampled by sampling from a [*
        return mvn
     END METHOD
 
-Each of the resulting uniform numbers will be in the interval [0, 1], and each one can be further transformed to any other probability distribution (which is called a _marginal distribution_ here) by one of the methods given in "[**Random Numbers from an Arbitrary Distribution**](#Random_Numbers_from_an_Arbitrary_Distribution)". (See also Cario and Nelson 1997.)
+Each of the resulting uniform random numbers will be in the interval [0, 1], and each one can be further transformed to any other probability distribution (which is called a _marginal distribution_ here) by one of the methods given in "[**Random Numbers from an Arbitrary Distribution**](#Random_Numbers_from_an_Arbitrary_Distribution)". (See also Cario and Nelson 1997.)
 
 > **Examples:**
 >
@@ -2028,7 +2028,7 @@ Miscellaneous:
 
 **Requires random real numbers.**
 
-This section contains ways to do independent and uniform random sampling of points in or on geometric shapes.
+This section contains ways to choose independent uniform random points in or on geometric shapes.
 
 <a id=Random_Points_Inside_a_Box></a>
 #### Random Points Inside a Box
@@ -2128,9 +2128,9 @@ I acknowledge the commenters to the CodeProject version of this page, including 
 - how well the item passes statistical randomness tests,
 - whether the item is initialized automatically or not,
 - whether the item uses only its input and its state to produce numbers, or
-- whether the item extracts uniformly distributed bits from one or more noise sources.
+- whether the item extracts random bits from one or more noise sources.
 
-If an item uses a nonuniform distribution, but otherwise meets this definition, it can be converted to use a uniform distribution, at least in theory, using _randomness extraction_ techniques that are outside the scope of this document.</small>
+If the generator produces numbers with unequal probabilities, but is otherwise an RNG as defined here, then  _randomness extraction_ (which is outside the scope of this document) can make it produce numbers with closer to equal probabilities.</small>
 
 <small><sup id=Note2>(2)</sup> For an exercise solved by the `RNDINT` pseudocode, see A. Koenig and B. E. Moo, _Accelerated C++_, 2000; see also a [**blog post by Johnny Chan**](http://mathalope.co.uk/2014/10/26/accelerated-c-solution-to-exercise-7-9/).  In addition, M. O'Neill discusses various methods, both biased and unbiased, for generating random integers in a range with an RNG in a [**blog post from July 2018**](http://www.pcg-random.org/posts/bounded-rands.html).</small>
 
