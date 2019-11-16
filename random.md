@@ -253,12 +253,12 @@ If an application requires only one random value, with a fixed number of bits, t
 <a id=Nondeterministic_Sources_and_Seed_Generation></a>
 ## Nondeterministic Sources and Seed Generation
 
-RNGs ultimately rely on so-called _nondeterministic sources_; without those sources, no computer can produce random numbers.
+RNGs ultimately rely on so-called _nondeterministic sources_; without such sources, no computer can produce random numbers.
 
 <a id=What_Is_a_Nondeterministic_Source></a>
 ### What Is a Nondeterministic Source?
 
-A _nondeterministic source_, is a source that doesn't give the same output for the same input each time (for example, a clock that doesn't always give the same time).  There are many kinds of them, but sources useful for random number generation have hard-to-guess output (that is, they have high _entropy_; see the next section).  They include&mdash;
+A _nondeterministic source_ is a source that doesn't give the same output for the same input each time (for example, a clock that doesn't always give the same time).  There are many kinds of them, but sources useful for random number generation have hard-to-guess output (that is, they have high _entropy_; see the next section).  They include&mdash;
 
 - disk access timings,
 - timings of keystrokes and/or other input device interactions,
@@ -279,9 +279,16 @@ _Entropy_ is a value that describes how hard it is to guess a nondeterministic s
 <a id=Seed_Generation></a>
 ### Seed Generation
 
-In general, especially for cryptographic RNGs, **to generate an N-bit seed, enough data needs to be gathered from nondeterministic sources to reach N bits of entropy or more**.
+To generate an N-bit seed for a PRNG, the following is generally done.
 
-Once data with enough entropy is gathered, it might need to be condensed into a seed to initialize a PRNG with. Following (Cliff et al., 2009)<sup>[**(15)**](#Note15)</sup>, it is suggested to generate an N-bit seed using an HMAC (hash-based message authentication code) at least N times 3 bits long; in that sense, take data with at least as many bits of entropy as the HMAC size in bits, generate the HMAC with that data, then take the HMAC's first N bits.  See also NIST SP 800-90B sec. 3.1.5.1 and RFC 4086 sec. 4.2 and 5.2.
+1. Gather enough data from _nondeterministic sources_ to reach N bits of _entropy_ or more.
+2. Then, condense the data into an N-bit seed, a process called _randomness extraction_.<sup>[**(43)**](#Note43)</sup>
+
+Randomness extraction is discussed in NIST SP 800-90B sec. 3.1.5.1, RFC 4086 sec. 4.2 and 5.2, and (Cliff et al., 2009)<sup>[**(15)**](#Note15)</sup>. The latter reference reviewed the use of HMAC (hash-based message authentication code) algorithms, and implies that one way to generate a seed is as follows:
+
+1. Take data with at least 512 bits of entropy.
+2. Run HMAC-SHA-512 with that data to generate a 512-bit HMAC.
+3. Take the first 170 (or fewer) bits as the seed (512 divided by 3, rounded down).
 
 <a id=Seed_Generation_for_Noncryptographic_PRNGs></a>
 ### Seed Generation for Noncryptographic PRNGs
@@ -556,7 +563,7 @@ I acknowledge&mdash;
 
 <small><sup id=Note3>(3)</sup> F. Dörre and V. Klebanov, "Practical Detection of Entropy Loss in Pseudo-Random Number Generators", 2016.</small>
 
-<small><sup id=Note4>(4)</sup> If the generator produces numbers with unequal probabilities (a _nonuniform distribution_), but is otherwise an RNG as defined here, it can be converted to use a more uniform distribution, at least in theory, using _unbiasing_, _deskewing_, or _randomness extraction_ (see RFC 4086 sec. 4 or Cliff et al. 2009 for further discussion).</small>
+<small><sup id=Note4>(4)</sup> If the generator produces numbers with unequal probabilities (a _nonuniform distribution_), but is otherwise an RNG as defined here, it can be converted to use a more uniform distribution, at least in theory, using _randomness extraction_ (see "[**Seed Generation**](#Seed_Generation)").</small>
 
 <small><sup id=Note5>(5)</sup> See also the FIPS 200 definition ("The protection of information and information systems from unauthorized access, use, disclosure, disruption, modification, or destruction in order to provide confidentiality, integrity, and availability") and ISO/IEC 27000.</small>
 
@@ -650,6 +657,8 @@ See also N. Reed, "Quick And Easy GPU Random Numbers In D3D11", Nathan Reed's co
 <small><sup id=Note41>(41)</sup> For example, a new RNG can be constructed from two independent RNGs using the so-called "shrinking generator" technique: generate one bit from the first RNG and one bit from the second, and take the second bit if the first bit is 1, or repeat this process otherwise.  See J. D. Cook, "Using one RNG to sample another", June 4, 2019, for more on this technique, including its advantages and drawbacks.</small>
 
 <small><sup id=Note42>(42)</sup> Allowing applications to do so would hamper forward compatibility &mdash; the API would then be less free to change how the RNG is implemented in the future (e.g., to use a cryptographic or otherwise "better" RNG), or to make improvements or bug fixes in methods that use that RNG (such as shuffling and Gaussian number generation).  (As a notable example, the V8 JavaScript engine recently changed its `Math.random()` implementation to use a variant of `xorshift128+`, which is backward compatible because nothing in JavaScript allows  `Math.random()` to be seeded.)  Nevertheless, APIs can still allow applications to provide additional input ("entropy") to the RNG in order to increase its randomness rather than to ensure repeatability.</small>
+
+<small><sup id=Note43>(43)</sup> Also known as _entropy extraction_, _deskewing_, _whitening_, or _unbiasing_.</small>
 
 <a id=Appendix></a>
 ## Appendix

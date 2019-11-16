@@ -372,13 +372,13 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 
 <h2>Nondeterministic Sources and Seed Generation</h2>
 
-<p>RNGs ultimately rely on so-called <em>nondeterministic sources</em>; without those sources, no computer can produce random numbers.</p>
+<p>RNGs ultimately rely on so-called <em>nondeterministic sources</em>; without such sources, no computer can produce random numbers.</p>
 
 <p><a id=What_Is_a_Nondeterministic_Source></a></p>
 
 <h3>What Is a Nondeterministic Source?</h3>
 
-<p>A <em>nondeterministic source</em>, is a source that doesn&#39;t give the same output for the same input each time (for example, a clock that doesn&#39;t always give the same time).  There are many kinds of them, but sources useful for random number generation have hard-to-guess output (that is, they have high <em>entropy</em>; see the next section).  They include&mdash;</p>
+<p>A <em>nondeterministic source</em> is a source that doesn&#39;t give the same output for the same input each time (for example, a clock that doesn&#39;t always give the same time).  There are many kinds of them, but sources useful for random number generation have hard-to-guess output (that is, they have high <em>entropy</em>; see the next section).  They include&mdash;</p>
 
 <ul>
 <li>disk access timings,</li>
@@ -405,9 +405,20 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 
 <h3>Seed Generation</h3>
 
-<p>In general, especially for cryptographic RNGs, <strong>to generate an N-bit seed, enough data needs to be gathered from nondeterministic sources to reach N bits of entropy or more</strong>.</p>
+<p>To generate an N-bit seed for a PRNG, the following is generally done.</p>
 
-<p>Once data with enough entropy is gathered, it might need to be condensed into a seed to initialize a PRNG with. Following (Cliff et al., 2009)<sup><a href="#Note15"><strong>(15)</strong></a></sup>, it is suggested to generate an N-bit seed using an HMAC (hash-based message authentication code) at least N times 3 bits long; in that sense, take data with at least as many bits of entropy as the HMAC size in bits, generate the HMAC with that data, then take the HMAC&#39;s first N bits.  See also NIST SP 800-90B sec. 3.1.5.1 and RFC 4086 sec. 4.2 and 5.2.</p>
+<ol>
+<li>Gather enough data from <em>nondeterministic sources</em> to reach N bits of <em>entropy</em> or more.</li>
+<li>Then, condense the data into an N-bit seed, a process called <em>randomness extraction</em>.<sup><a href="#Note43"><strong>(43)</strong></a></sup></li>
+</ol>
+
+<p>Randomness extraction is discussed in NIST SP 800-90B sec. 3.1.5.1, RFC 4086 sec. 4.2 and 5.2, and (Cliff et al., 2009)<sup><a href="#Note15"><strong>(15)</strong></a></sup>. The latter reference reviewed the use of HMAC (hash-based message authentication code) algorithms, and implies that one way to generate a seed is as follows:</p>
+
+<ol>
+<li>Take data with at least 512 bits of entropy.</li>
+<li>Run HMAC-SHA-512 with that data to generate a 512-bit HMAC.</li>
+<li>Take the first 170 (or fewer) bits as the seed (512 divided by 3, rounded down).</li>
+</ol>
 
 <p><a id=Seed_Generation_for_Noncryptographic_PRNGs></a></p>
 
@@ -812,7 +823,7 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 
 <p><small><sup id=Note3>(3)</sup> F. Dörre and V. Klebanov, &quot;Practical Detection of Entropy Loss in Pseudo-Random Number Generators&quot;, 2016.</small></p>
 
-<p><small><sup id=Note4>(4)</sup> If the generator produces numbers with unequal probabilities (a <em>nonuniform distribution</em>), but is otherwise an RNG as defined here, it can be converted to use a more uniform distribution, at least in theory, using <em>unbiasing</em>, <em>deskewing</em>, or <em>randomness extraction</em> (see RFC 4086 sec. 4 or Cliff et al. 2009 for further discussion).</small></p>
+<p><small><sup id=Note4>(4)</sup> If the generator produces numbers with unequal probabilities (a <em>nonuniform distribution</em>), but is otherwise an RNG as defined here, it can be converted to use a more uniform distribution, at least in theory, using <em>randomness extraction</em> (see &quot;<a href="#Seed_Generation"><strong>Seed Generation</strong></a>&quot;).</small></p>
 
 <p><small><sup id=Note5>(5)</sup> See also the FIPS 200 definition (&quot;The protection of information and information systems from unauthorized access, use, disclosure, disruption, modification, or destruction in order to provide confidentiality, integrity, and availability&quot;) and ISO/IEC 27000.</small></p>
 
@@ -913,6 +924,8 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 <p><small><sup id=Note41>(41)</sup> For example, a new RNG can be constructed from two independent RNGs using the so-called &quot;shrinking generator&quot; technique: generate one bit from the first RNG and one bit from the second, and take the second bit if the first bit is 1, or repeat this process otherwise.  See J. D. Cook, &quot;Using one RNG to sample another&quot;, June 4, 2019, for more on this technique, including its advantages and drawbacks.</small></p>
 
 <p><small><sup id=Note42>(42)</sup> Allowing applications to do so would hamper forward compatibility &mdash; the API would then be less free to change how the RNG is implemented in the future (e.g., to use a cryptographic or otherwise &quot;better&quot; RNG), or to make improvements or bug fixes in methods that use that RNG (such as shuffling and Gaussian number generation).  (As a notable example, the V8 JavaScript engine recently changed its <code>Math.random()</code> implementation to use a variant of <code>xorshift128+</code>, which is backward compatible because nothing in JavaScript allows  <code>Math.random()</code> to be seeded.)  Nevertheless, APIs can still allow applications to provide additional input (&quot;entropy&quot;) to the RNG in order to increase its randomness rather than to ensure repeatability.</small></p>
+
+<p><small><sup id=Note43>(43)</sup> Also known as <em>entropy extraction</em>, <em>deskewing</em>, <em>whitening</em>, or <em>unbiasing</em>.</small></p>
 
 <p><a id=Appendix></a></p>
 

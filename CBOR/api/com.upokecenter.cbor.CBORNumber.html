@@ -23,14 +23,6 @@
 Returns the absolute value of this CBOR number.</li>
 <li><code>CBORNumber Add​(CBORNumber b)</code><br>
 Returns the sum of this number and another number.</li>
-<li><code>com.upokecenter.numbers.EDecimal AsEDecimal()</code><br>
-Not documented yet.</li>
-<li><code>com.upokecenter.numbers.EFloat AsEFloat()</code><br>
-Not documented yet.</li>
-<li><code>com.upokecenter.numbers.EInteger AsEInteger()</code><br>
-Not documented yet.</li>
-<li><code>com.upokecenter.numbers.ERational AsERational()</code><br>
-Not documented yet.</li>
 <li><code>boolean CanFitInDouble()</code><br>
 Not documented yet.</li>
 <li><code>boolean CanFitInInt32()</code><br>
@@ -97,9 +89,15 @@ part, and returns the least-significant bits of its two&#39;s-complement
 form as a byte (from 0 to 255).</li>
 <li><code>CBORObject ToCBORObject()</code><br>
 Converts this object&#39;s value to a CBOR object.</li>
+<li><code>com.upokecenter.numbers.EDecimal ToEDecimal()</code><br>
+Not documented yet.</li>
+<li><code>com.upokecenter.numbers.EFloat ToEFloat()</code><br>
+Not documented yet.</li>
 <li><code>com.upokecenter.numbers.EInteger ToEInteger()</code><br>
 Not documented yet.</li>
 <li><code>com.upokecenter.numbers.EInteger ToEIntegerIfExact()</code><br>
+Not documented yet.</li>
+<li><code>com.upokecenter.numbers.ERational ToERational()</code><br>
 Not documented yet.</li>
 <li><code>short ToInt16Checked()</code><br>
 Converts this number&#39;s value to a 16-bit signed integer if it can fit in a
@@ -711,9 +709,9 @@ false</code>.</li>
 otherwise, <code>false</code>.</li>
 </ul>
 
-<h3>AsEInteger</h3>
+<h3>ToEDecimal</h3>
 
-<pre>public com.upokecenter.numbers.EInteger AsEInteger()
+<pre>public com.upokecenter.numbers.EDecimal ToEDecimal()
 </pre>
 
 <p>Not documented yet.</p>
@@ -724,9 +722,9 @@ otherwise, <code>false</code>.</li>
 <li>The return value is not documented yet.</li>
 </ul>
 
-<h3>AsEDecimal</h3>
+<h3>ToEFloat</h3>
 
-<pre>public com.upokecenter.numbers.EDecimal AsEDecimal()
+<pre>public com.upokecenter.numbers.EFloat ToEFloat()
 </pre>
 
 <p>Not documented yet.</p>
@@ -737,22 +735,9 @@ otherwise, <code>false</code>.</li>
 <li>The return value is not documented yet.</li>
 </ul>
 
-<h3>AsEFloat</h3>
+<h3>ToERational</h3>
 
-<pre>public com.upokecenter.numbers.EFloat AsEFloat()
-</pre>
-
-<p>Not documented yet.</p>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>The return value is not documented yet.</li>
-</ul>
-
-<h3>AsERational</h3>
-
-<pre>public com.upokecenter.numbers.ERational AsERational()
+<pre>public com.upokecenter.numbers.ERational ToERational()
 </pre>
 
 <p>Not documented yet.</p>
