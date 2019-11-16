@@ -551,14 +551,9 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 
 <p>In a list with <code>N</code> different items, there are <code>N</code> factorial (that is, <code>1 * 2 * ... * N</code>, or <code>N!</code>) ways to arrange the items in that list.  These ways are called <em>permutations</em><sup><a href="#Note26"><strong>(26)</strong></a></sup>.</p>
 
-<p>An application can <strong>shuffle a list</strong>&mdash;</p>
+<p>In practice, an application can <strong>shuffle a list</strong> by doing a <a href="https://en.wikipedia.org/wiki/Fisher-Yates_shuffle"><strong>Fisher&ndash;Yates shuffle</strong></a>, which is unfortunately easy to mess up &mdash; see (Atwood 2007)<sup><a href="#Note27"><strong>(27)</strong></a></sup> &mdash; and is implemented correctly in <a href="https://peteroupc.github.io/randomfunc.html"><strong>another document of mine</strong></a>.</p>
 
-<ul>
-<li>by generating a random integer at least 0 and less than the number of permutations, and converting that integer to a permutation, or</li>
-<li>by doing a <a href="https://en.wikipedia.org/wiki/Fisher-Yates_shuffle"><strong>Fisher&ndash;Yates shuffle</strong></a> (which is unfortunately easy to mess up &mdash; see (Atwood 2007)<sup><a href="#Note27"><strong>(27)</strong></a></sup> &mdash; and is implemented correctly in <a href="https://peteroupc.github.io/randomfunc.html"><strong>another document of mine</strong></a>).</li>
-</ul>
-
-<p>Either way, however, if a PRNG&#39;s period (maximum size of a &quot;random&quot; number cycle) is less than the number of permutations, then there are <strong>some permutations that that PRNG can&#39;t choose</strong> when it shuffles that list. (This is not the same as <em>generating</em> all permutations of a list, which, for a list big enough, can&#39;t be done by any computer in a reasonable time.)</p>
+<p>However, if a PRNG&#39;s period (maximum size of a &quot;random&quot; number cycle) is less than the number of permutations, then there are <strong>some permutations that that PRNG can&#39;t choose</strong> when it shuffles that list. (This is not the same as <em>generating</em> all permutations of a list, which, for a list big enough, can&#39;t be done by any computer in a reasonable time.)</p>
 
 <p>On the other hand, for a list big enough, it&#39;s generally <strong>more important to have shuffles act random</strong> than to choose from among all permutations.</p>
 
