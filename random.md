@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on Mar. 5, 2016; last updated on Nov. 5, 2019.
+Begun on Mar. 5, 2016; last updated on Nov. 16, 2019.
 
 Most apps that use random numbers care about either unpredictability, high quality, or repeatability.  This article explains the three kinds of RNGs and gives recommendations on each kind.
 
@@ -31,8 +31,8 @@ so that as a result, many applications use RNGs, especially built-in RNGs, that 
 **This document does not cover:**
 
 - Testing an RNG implementation for correctness or adequate random number generation (e.g., Dörre and Klebanov 2016<sup>[**(3)**](#Note3)</sup>).
-- Generation of random numbers that follow a nonuniform distribution; I discuss this topic in [**another document**](https://peteroupc.github.io/randomfunc.html).
-- Low-discrepancy sequences (quasirandom sequences), such as Sobol sequences.  Their structure differs in an essential way from independent uniform random numbers.
+- Generation of random numbers with unequal probabilities (_nonuniform_ random numbers); I discuss this topic in [**another document**](https://peteroupc.github.io/randomfunc.html).
+- Generators of low-discrepancy sequences (quasirandom sequences), such as Sobol sequences.  They are not RNGs since the numbers they produce depend on prior results.
 - Applications for which the selection of RNGs is limited by regulatory requirements.
 
 <a id=About_This_Document></a>
@@ -59,8 +59,8 @@ so that as a result, many applications use RNGs, especially built-in RNGs, that 
         - [**Unit Tests**](#Unit_Tests)
     - [**Single Random Value**](#Single_Random_Value)
 - [**Nondeterministic Sources and Seed Generation**](#Nondeterministic_Sources_and_Seed_Generation)
-    - [**Examples of Nondeterministic Sources**](#Examples_of_Nondeterministic_Sources)
-    - [**Entropy**](#Entropy)
+    - [**What Is a Nondeterministic Source?**](#What_Is_a_Nondeterministic_Source)
+    - [**What Is Entropy?**](#What_Is_Entropy)
     - [**Seed Generation**](#Seed_Generation)
     - [**Seed Generation for Noncryptographic PRNGs**](#Seed_Generation_for_Noncryptographic_PRNGs)
 - [**Existing RNG APIs in Programming Languages**](#Existing_RNG_APIs_in_Programming_Languages)
@@ -89,8 +89,8 @@ so that as a result, many applications use RNGs, especially built-in RNGs, that 
 
 The following definitions are helpful in better understanding this document.
 
-- **Random number generator (RNG).** Software and/or hardware that seeks to generate independent numbers that seem to occur by chance and that are approximately uniformly distributed<sup>[**(4)**](#Note4)</sup>.
-- **Pseudorandom number generator (PRNG).** A random number generator that outputs seemingly random numbers using a deterministic algorithm (that is, an algorithm that returns the same output for the same input and state every time), and in which its state can be initialized and possibly reinitialized with arbitrary data.
+- **Random number generator (RNG).** Software and/or hardware that seeks to generate independent numbers with the property that each possible outcome is as likely as any other<sup>[**(4)**](#Note4)</sup>.
+- **Pseudorandom number generator (PRNG).** A random number generator that outputs seemingly random numbers using a deterministic algorithm (that is, an algorithm that gives the same output for the same input and state every time), and in which its state can be initialized and possibly reinitialized with arbitrary data.
 - **Seed.**  Arbitrary data for initializing the state of a PRNG.
 - **State length.**  The maximum size of the seed a PRNG can take to initialize its state without shortening or compressing that seed.
 - **Information security.** Keeping information safe from attacks that could access, use, delay, or manipulate that information.<sup>[**(5)**](#Note5)</sup>
@@ -253,12 +253,12 @@ If an application requires only one random value, with a fixed number of bits, t
 <a id=Nondeterministic_Sources_and_Seed_Generation></a>
 ## Nondeterministic Sources and Seed Generation
 
-To generate random numbers, RNGs ultimately rely on _nondeterministic sources_, that is, sources that don't return the same output for the same input every time.  Such sources are used to help generate a _seed_ for a PRNG, for example.  The best nondeterministic sources for this purpose are those whose output is very hard to guess.
+RNGs ultimately rely on so-called _nondeterministic sources_; without those sources, no computer can produce random numbers.
 
-<a id=Examples_of_Nondeterministic_Sources></a>
-### Examples of Nondeterministic Sources
+<a id=What_Is_a_Nondeterministic_Source></a>
+### What Is a Nondeterministic Source?
 
-Examples of nondeterministic sources are&mdash;
+A _nondeterministic source_, is a source that doesn't give the same output for the same input each time (for example, a clock that doesn't always give the same time).  There are many kinds of them, but sources useful for random number generation have hard-to-guess output (that is, they have high _entropy_; see the next section).  They include&mdash;
 
 - disk access timings,
 - timings of keystrokes and/or other input device interactions,
@@ -269,10 +269,10 @@ Examples of nondeterministic sources are&mdash;
 
 RFC 4086, "Randomness Requirements for Security", section 3, contains a survey of nondeterministic sources.
 
-> **Note:** Online services that make random numbers available to applications, as well as outputs of audio and video devices (see RFC 4086 sec. 3.2.1, (Liebow-Feeser 2017a)<sup>[**(13)**](#Note13)</sup>, and  (Liebow-Feeser 2017b)<sup>[**(14)**](#Note14)</sup>), are additional nondeterministic sources.  However, online services require Internet or other network access, and some of them require access credentials.  Also, many mobile operating systems require applications to declare network, camera, and microphone access to users upon installation.  For these reasons, these kinds of sources are NOT RECOMMENDED if other approaches are adequate.
+> **Note:** Online services that make random numbers available to applications, as well as the noise registered by microphone and camera recordings (see RFC 4086 sec. 3.2.1, (Liebow-Feeser 2017a)<sup>[**(13)**](#Note13)</sup>, and  (Liebow-Feeser 2017b)<sup>[**(14)**](#Note14)</sup>), are additional nondeterministic sources.  However, online services require Internet or other network access, and some of them require access credentials.  Also, many mobile operating systems require applications to declare network, camera, and microphone access to users upon installation.  For these reasons, these kinds of sources are NOT RECOMMENDED if other approaches are adequate.
 
-<a id=Entropy></a>
-### Entropy
+<a id=What_Is_Entropy></a>
+### What Is Entropy?
 
 _Entropy_ is a value that describes how hard it is to guess a nondeterministic source's output, compared to ideal random data; this is generally the size in bits of the ideal random data.  (For example, a 64-bit output with 32 bits of entropy is as hard to guess as an ideal random 32-bit data block.)  NIST SP 800-90B recommends _min-entropy_ as the entropy measure.  Characterizing a nondeterministic source's entropy is nontrivial and beyond the scope of this document.  See also RFC 4086 section 2.
 
@@ -386,7 +386,7 @@ Some applications require generating unique identifiers, especially to identify 
 5. Is the resource an identifier identifies available to anyone who knows that identifier (even without being logged in or authorized in some way)?
 6. Do identifiers have to be memorable?
 
-Examples of unique integers include sequentially-assigned integers as well as the primary key of a database table.  If the application requires a unique integer to "look random", it can apply a reversible operation to that integer (such as a permutation), or take that integer as the seed of a so-called "full-period" PRNG that has a state length of `B` bits and outputs `B`-bit integers<sup>[**(31)**](#Note31)</sup>.
+Examples of unique integers include sequentially-assigned integers as well as the primary key of a database table.  If the application requires a unique integer to "look random", it can apply a reversible operation to that integer (such as a permutation), or take that integer as the seed of a so-called "full-period" PRNG that outputs integers with as many bits as its state length<sup>[**(31)**](#Note31)</sup>.
 
 An application that generates unique identifiers SHOULD do so as follows:
 
@@ -556,7 +556,7 @@ I acknowledge&mdash;
 
 <small><sup id=Note3>(3)</sup> F. Dörre and V. Klebanov, "Practical Detection of Entropy Loss in Pseudo-Random Number Generators", 2016.</small>
 
-<small><sup id=Note4>(4)</sup> If the software and/or hardware uses a nonuniform distribution, but otherwise meets this definition, it can be converted to use a uniform distribution, at least in theory, using _unbiasing_, _deskewing_, or _randomness extraction_ (see RFC 4086 sec. 4 or Cliff et al. 2009 for further discussion).</small>
+<small><sup id=Note4>(4)</sup> If the generator produces numbers with unequal probabilities (a _nonuniform distribution_), but is otherwise an RNG as defined here, it can be converted to use a more uniform distribution, at least in theory, using _unbiasing_, _deskewing_, or _randomness extraction_ (see RFC 4086 sec. 4 or Cliff et al. 2009 for further discussion).</small>
 
 <small><sup id=Note5>(5)</sup> See also the FIPS 200 definition ("The protection of information and information systems from unauthorized access, use, disclosure, disruption, modification, or destruction in order to provide confidentiality, integrity, and availability") and ISO/IEC 27000.</small>
 
