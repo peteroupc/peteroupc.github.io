@@ -203,7 +203,7 @@ If an application chooses to use a manually-seeded PRNG for reproducible "random
 <a id=Manually_Seeded_PRNG_Use_Cases></a>
 ### Manually-Seeded PRNG Use Cases
 
-Use cases for manually-seeded PRNGs include the following.
+Use cases for manually-seeded PRNGs include the following:
 
 - Simulations and machine learning.  This includes physics simulations and artificial intelligence (AI) in games, as well as simulations to reproduce published research data.
 - Monte Carlo estimations (to make them random-behaving but deterministic).
@@ -279,10 +279,10 @@ _Entropy_ is a value that describes how hard it is to guess a nondeterministic s
 <a id=Seed_Generation></a>
 ### Seed Generation
 
-To generate an N-bit seed for a PRNG, there are generally two steps:
+In general, there are two steps to generate an `N`-bit seed for a PRNG<sup>[**(44)**](#Note44)</sup>:
 
-1. Gather enough data from _nondeterministic sources_ to reach N bits of _entropy_ or more.
-2. Then, condense the data into an N-bit seed, a process called _randomness extraction_.<sup>[**(15)**](#Note15)</sup>
+1. Gather enough data from _nondeterministic sources_ to reach `N` bits of _entropy_ or more.
+2. Then, condense the data into an `N`-bit number, a process called _randomness extraction_.<sup>[**(15)**](#Note15)</sup>
 
 Randomness extraction is discussed in NIST SP 800-90B sec. 3.1.5.1, RFC 4086 sec. 4.2 and 5.2, and (Cliff et al., 2009)<sup>[**(16)**](#Note16)</sup>.
 
@@ -517,7 +517,7 @@ Every cryptographic RNG is also a high-quality RNG.
 There are several possible ways to implement a PRNG:
 
 1. As an object that uses an internal state and the following methods:
-    - An initializer method that takes a seed and converts it to an internal state.  This method is called while generating the PRNG object.
+    - An initializer method that takes a seed and converts it to an internal state.  This method is called while the PRNG object is being created.
     - A method that takes no parameters.  It uses only the internal state to output one or more "random" numbers and update the internal state.  This method is available after the initializer is called.
 2. As a function that takes a seed and outputs one or more "random" numbers.  An example is a [**hash function**](#Hash_Functions).
 3. As a function that takes an internal state and outputs one or more "random" numbers.  This can be used if the application has its own logic for converting a seed to an internal state appropriate for the PRNG.
@@ -598,7 +598,7 @@ See also N. Reed, "Quick And Easy GPU Random Numbers In D3D11", Nathan Reed's co
 
 <small><sup id=Note19>(19)</sup> For most purposes, SHA-256 is a good choice for the hash function if the PRNG's state length is 256 bits or less.  Some PRNGs require nonzero seeds; in that case, if the seed is all zeros, add "-0" to the string and retry step 3 until the seed is not all zeros.</small>
 
-<small><sup id=Note20>(20)</sup> For example, many questions on _Stack Overflow_ highlight the pitfalls of creating a new instance of .NET's `System.Random` each time a random number is needed, rather than only once in the application.  See also Johansen, R. S., "[**A Primer on Repeatable Random Numbers**](https://blogs.unity3d.com/2015/01/07/a-primer-on-repeatable-random-numbers/)", Unity Blog, Jan. 7, 2015, and the section "How to Initialize RNGs".</small>
+<small><sup id=Note20>(20)</sup> For example, many questions on _Stack Overflow_ highlight the pitfalls of creating a new instance of .NET's `System.Random` each time a random number is needed, rather than only once in the application.  See also Johansen, R. S., "[**A Primer on Repeatable Random Numbers**](https://blogs.unity3d.com/2015/01/07/a-primer-on-repeatable-random-numbers/)", Unity Blog, Jan. 7, 2015.</small>
 
 <small><sup id=Note21>(21)</sup> Using the similar `/dev/random` is NOT RECOMMENDED, since in some implementations it can block for seconds at a time, especially if not enough randomness is available.  See also [**"Myths about /dev/urandom"**](https://www.2uo.de/myths-about-urandom).</small>
 
@@ -658,6 +658,8 @@ See also N. Reed, "Quick And Easy GPU Random Numbers In D3D11", Nathan Reed's co
 <small><sup id=Note42>(42)</sup> For example, a new RNG can be constructed from two independent RNGs using the so-called "shrinking generator" technique: generate one bit from the first RNG and one bit from the second, and take the second bit if the first bit is 1, or repeat this process otherwise.  See J. D. Cook, "Using one RNG to sample another", June 4, 2019, for more on this technique, including its advantages and drawbacks.</small>
 
 <small><sup id=Note43>(43)</sup> Allowing applications to do so would hamper forward compatibility &mdash; the API would then be less free to change how the RNG is implemented in the future (e.g., to use a cryptographic or otherwise "better" RNG), or to make improvements or bug fixes in methods that use that RNG (such as shuffling and Gaussian number generation).  (As a notable example, the V8 JavaScript engine recently changed its `Math.random()` implementation to use a variant of `xorshift128+`, which is backward compatible because nothing in JavaScript allows  `Math.random()` to be seeded.)  Nevertheless, APIs can still allow applications to provide additional input ("entropy") to the RNG in order to increase its randomness rather than to ensure repeatability.</small>
+
+<small><sup id=Note44>(44)</sup> These steps could also generate random numbers, rather than a seed, but this is generally slower than using PRNGs to do so.</small>
 
 <a id=Appendix></a>
 ## Appendix

@@ -405,11 +405,11 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 
 <h3>Seed Generation</h3>
 
-<p>To generate an N-bit seed for a PRNG, there are generally two steps:</p>
+<p>In general, there are two steps to generate an <code>N</code>-bit seed for a PRNG<sup><a href="#Note44"><strong>(44)</strong></a></sup>:</p>
 
 <ol>
-<li>Gather enough data from <em>nondeterministic sources</em> to reach N bits of <em>entropy</em> or more.</li>
-<li>Then, condense the data into an N-bit seed, a process called <em>randomness extraction</em>.<sup><a href="#Note15"><strong>(15)</strong></a></sup></li>
+<li>Gather enough data from <em>nondeterministic sources</em> to reach <code>N</code> bits of <em>entropy</em> or more.</li>
+<li>Then, condense the data into an <code>N</code>-bit number, a process called <em>randomness extraction</em>.<sup><a href="#Note15"><strong>(15)</strong></a></sup></li>
 </ol>
 
 <p>Randomness extraction is discussed in NIST SP 800-90B sec. 3.1.5.1, RFC 4086 sec. 4.2 and 5.2, and (Cliff et al., 2009)<sup><a href="#Note16"><strong>(16)</strong></a></sup>.</p>
@@ -760,7 +760,7 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 <li>As an object that uses an internal state and the following methods:
 
 <ul>
-<li>An initializer method that takes a seed and converts it to an internal state.  This method is called while generating the PRNG object.</li>
+<li>An initializer method that takes a seed and converts it to an internal state.  This method is called while the PRNG object is being created.</li>
 <li>A method that takes no parameters.  It uses only the internal state to output one or more &quot;random&quot; numbers and update the internal state.  This method is available after the initializer is called.</li>
 </ul></li>
 <li>As a function that takes a seed and outputs one or more &quot;random&quot; numbers.  An example is a <a href="#Hash_Functions"><strong>hash function</strong></a>.</li>
@@ -925,6 +925,8 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 <p><small><sup id=Note42>(42)</sup> For example, a new RNG can be constructed from two independent RNGs using the so-called &quot;shrinking generator&quot; technique: generate one bit from the first RNG and one bit from the second, and take the second bit if the first bit is 1, or repeat this process otherwise.  See J. D. Cook, &quot;Using one RNG to sample another&quot;, June 4, 2019, for more on this technique, including its advantages and drawbacks.</small></p>
 
 <p><small><sup id=Note43>(43)</sup> Allowing applications to do so would hamper forward compatibility &mdash; the API would then be less free to change how the RNG is implemented in the future (e.g., to use a cryptographic or otherwise &quot;better&quot; RNG), or to make improvements or bug fixes in methods that use that RNG (such as shuffling and Gaussian number generation).  (As a notable example, the V8 JavaScript engine recently changed its <code>Math.random()</code> implementation to use a variant of <code>xorshift128+</code>, which is backward compatible because nothing in JavaScript allows  <code>Math.random()</code> to be seeded.)  Nevertheless, APIs can still allow applications to provide additional input (&quot;entropy&quot;) to the RNG in order to increase its randomness rather than to ensure repeatability.</small></p>
+
+<p><small><sup id=Note44>(44)</sup> These steps could also generate random numbers, rather than a seed, but this is generally slower than using PRNGs to do so.</small></p>
 
 <p><a id=Appendix></a></p>
 

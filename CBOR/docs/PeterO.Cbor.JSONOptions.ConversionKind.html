@@ -20,8 +20,8 @@
 <ul>
 <li><code><a href="#Double">public static PeterO.Cbor.JSONOptions.ConversionKind Double = 1;</a></code> - JSON numbers are decoded to CBOR as their closest-rounded approximation as 64-bit binary floating-point numbers.</li>
 <li><code><a href="#Full">public static PeterO.Cbor.JSONOptions.ConversionKind Full = 0;</a></code> - JSON numbers are decoded to CBOR using the full precision given in the JSON text.</li>
-<li><code><a href="#IntOrFloat">public static PeterO.Cbor.JSONOptions.ConversionKind IntOrFloat = 2;</a></code> - A JSON number is decoded to CBOR either as a CBOR integer (major type 0 or 1) if the JSON number represents an integer at least -(2^53)+1 and less than 2^53, or as their closest-rounded approximation as 64-bit binary floating-point numbers otherwise, where a JSON number is treated as an integer or non-integer based on the full precision given in the JSON text.</li>
-<li><code><a href="#IntOrFloatFromDouble">public static PeterO.Cbor.JSONOptions.ConversionKind IntOrFloatFromDouble = 3;</a></code> - A JSON number is decoded to CBOR either as a CBOR integer (major type 0 or 1) if the number&#39;s closest-rounded approximation as a 64-bit binary floating-point number represents an integer at least -(2^53)+1 and less than 2^53, or as that approximation otherwise, where a JSON number is treated as an integer or non-integer based on its approximated floating-point number.</li>
+<li><code><a href="#IntOrFloat">public static PeterO.Cbor.JSONOptions.ConversionKind IntOrFloat = 2;</a></code> - A JSON number is decoded to CBOR either as a CBOR integer (major type 0 or 1) if the JSON number represents an integer at least -(2^53)+1 and less than 2^53, or as their closest-rounded approximation as 64-bit binary floating-point numbers otherwise.</li>
+<li><code><a href="#IntOrFloatFromDouble">public static PeterO.Cbor.JSONOptions.ConversionKind IntOrFloatFromDouble = 3;</a></code> - A JSON number is decoded to CBOR either as a CBOR integer (major type 0 or 1) if the number&#39;s closest-rounded approximation as a 64-bit binary floating-point number represents an integer at least -(2^53)+1 and less than 2^53, or as that approximation otherwise.</li>
 </ul>
 
 <p><a id="Double"></a></p>
@@ -49,7 +49,7 @@
 <pre>public static PeterO.Cbor.JSONOptions.ConversionKind IntOrFloat = 2;
 </pre>
 
-<p>A JSON number is decoded to CBOR either as a CBOR integer (major type 0 or 1) if the JSON number represents an integer at least -(2^53)+1 and less than 2^53, or as their closest-rounded approximation as 64-bit binary floating-point numbers otherwise, where a JSON number is treated as an integer or non-integer based on the full precision given in the JSON text. For example, the JSON number 0.99999999999999999999999999999999999 is not an integer, so it&#39;s converted to its closest floating-point approximation, namely 1.0. (In some cases, numbers extremely close to zero may underflow to positive or negative zero, and numbers of extremely large magnitude may overflow to infinity.).</p>
+<p>A JSON number is decoded to CBOR either as a CBOR integer (major type 0 or 1) if the JSON number represents an integer at least -(2^53)+1 and less than 2^53, or as their closest-rounded approximation as 64-bit binary floating-point numbers otherwise. For example, the JSON number 0.99999999999999999999999999999999999 is not an integer, so it&#39;s converted to its closest floating-point approximation, namely 1.0. (In some cases, numbers extremely close to zero may underflow to positive or negative zero, and numbers of extremely large magnitude may overflow to infinity.).</p>
 
 <p><a id="IntOrFloatFromDouble"></a></p>
 
@@ -58,7 +58,7 @@
 <pre>public static PeterO.Cbor.JSONOptions.ConversionKind IntOrFloatFromDouble = 3;
 </pre>
 
-<p>A JSON number is decoded to CBOR either as a CBOR integer (major type 0 or 1) if the number&#39;s closest-rounded approximation as a 64-bit binary floating-point number represents an integer at least -(2^53)+1 and less than 2^53, or as that approximation otherwise, where a JSON number is treated as an integer or non-integer based on its approximated floating-point number. For example, the JSON number 0.99999999999999999999999999999999999 is the integer 1 when rounded to its closest floating-point approximation (1.0), so it&#39;s converted to the CBOR integer 1 (major type 0). (In some cases, numbers extremely close to zero may underflow to zero, and numbers of extremely large magnitude may overflow to infinity.).</p>
+<p>A JSON number is decoded to CBOR either as a CBOR integer (major type 0 or 1) if the number&#39;s closest-rounded approximation as a 64-bit binary floating-point number represents an integer at least -(2^53)+1 and less than 2^53, or as that approximation otherwise. For example, the JSON number 0.99999999999999999999999999999999999 is the integer 1 when rounded to its closest floating-point approximation (1.0), so it&#39;s converted to the CBOR integer 1 (major type 0). (In some cases, numbers extremely close to zero may underflow to zero, and numbers of extremely large magnitude may overflow to infinity.).</p>
 
 <p><a href="/CBOR/">Back to CBOR start page.</a></p>
 </div><nav id="navigation"><ul>

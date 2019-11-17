@@ -141,7 +141,7 @@
 <li><code><a href="#Add_PeterO_Numbers_EDecimal">Add(PeterO.Numbers.EDecimal)</a></code> - Adds this object and another decimal number and returns the result.</li>
 <li><code><a href="#Add_PeterO_Numbers_EDecimal_PeterO_Numbers_EContext">Add(PeterO.Numbers.EDecimal, PeterO.Numbers.EContext)</a></code> - Finds the sum of this object and another object.</li>
 <li><code><a href="#CompareTo_PeterO_Numbers_EDecimal">CompareTo(PeterO.Numbers.EDecimal)</a></code> - Compares the mathematical values of this object and another object, accepting NaN values.</li>
-<li><code><a href="#CompareToBinary_PeterO_Numbers_EFloat">CompareToBinary(PeterO.Numbers.EFloat)</a></code> - Compares an arbitrary-precision binary float with this instance.</li>
+<li><code><a href="#CompareToBinary_PeterO_Numbers_EFloat">CompareToBinary(PeterO.Numbers.EFloat)</a></code> - Compares an arbitrary-precision binary floating-point number with this instance.</li>
 <li><code><a href="#CompareToSignal_PeterO_Numbers_EDecimal_PeterO_Numbers_EContext">CompareToSignal(PeterO.Numbers.EDecimal, PeterO.Numbers.EContext)</a></code> - Compares the mathematical values of this object and another object, treating quiet NaN as signaling.</li>
 <li><code><a href="#CompareToTotal_PeterO_Numbers_EDecimal">CompareToTotal(PeterO.Numbers.EDecimal)</a></code> - Compares the values of this object and another object, imposing a total ordering on all possible values.</li>
 <li><code><a href="#CompareToTotal_PeterO_Numbers_EDecimal_PeterO_Numbers_EContext">CompareToTotal(PeterO.Numbers.EDecimal, PeterO.Numbers.EContext)</a></code> - Compares the values of this object and another object, imposing a total ordering on all possible values.</li>
@@ -632,7 +632,7 @@
     PeterO.Numbers.EFloat other);
 </pre>
 
-<p>Compares an arbitrary-precision binary float with this instance.</p>
+<p>Compares an arbitrary-precision binary floating-point number with this instance.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -910,8 +910,9 @@ is a 32-bit signed integer.</p></li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>mantissa</i>: Not documented yet.</p></li>
-<li><p><i>exponent</i>: Not documented yet.</p></li>
+<li><p><i>significand</i>: The parameter  <i>significand</i>
+is a Numbers.EInteger object.</p></li>
+<li><p><i>exponent</i>: Desired value for the exponent.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -4589,7 +4590,7 @@ This value is infinity or not-a-number, is not an exact integer, or is less than
     PeterO.Numbers.EContext ec);
 </pre>
 
-<p>Creates a binary floating-point number from this object&#39;s value. Note that if the binary floating-point number contains a negative exponent, the resulting value might not be exact, in which case the resulting binary float will be an approximation of this decimal number&#39;s value.</p>
+<p>Creates a binary floating-point number from this object&#39;s value. Note that if the binary floating-point number contains a negative exponent, the resulting value might not be exact, in which case the resulting binary floating-point number will be an approximation of this decimal number&#39;s value.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -4617,7 +4618,7 @@ is null.</li>
 <pre>public PeterO.Numbers.EFloat ToEFloat();
 </pre>
 
-<p>Creates a binary floating-point number from this object&#39;s value. Note that if the binary floating-point number contains a negative exponent, the resulting value might not be exact, in which case the resulting binary float will be an approximation of this decimal number&#39;s value.</p>
+<p>Creates a binary floating-point number from this object&#39;s value. Note that if the binary floating-point number contains a negative exponent, the resulting value might not be exact, in which case the resulting binary floating-point number will be an approximation of this decimal number&#39;s value.</p>
 
 <p><b>Return Value:</b></p>
 
@@ -4707,7 +4708,7 @@ This object&#39;s value is infinity or not-a-number (NaN).</li>
 
 <p><b>Deprecated.</b> Renamed to ToEFloat.</p>
 
-<p>Creates a binary floating-point number from this object&#39;s value. Note that if the binary floating-point number contains a negative exponent, the resulting value might not be exact, in which case the resulting binary float will be an approximation of this decimal number&#39;s value.</p>
+<p>Creates a binary floating-point number from this object&#39;s value. Note that if the binary floating-point number contains a negative exponent, the resulting value might not be exact, in which case the resulting binary floating-point number will be an approximation of this decimal number&#39;s value.</p>
 
 <p><b>Return Value:</b></p>
 
