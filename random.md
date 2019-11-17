@@ -284,11 +284,13 @@ To generate an N-bit seed for a PRNG, there are generally two steps:
 1. Gather enough data from _nondeterministic sources_ to reach N bits of _entropy_ or more.
 2. Then, condense the data into an N-bit seed, a process called _randomness extraction_.<sup>[**(15)**](#Note15)</sup>
 
-Randomness extraction is discussed in NIST SP 800-90B sec. 3.1.5.1, RFC 4086 sec. 4.2 and 5.2, and (Cliff et al., 2009)<sup>[**(16)**](#Note16)</sup>. The latter reference reviewed the use of HMAC (hash-based message authentication code) algorithms, and implies that one way to generate a seed is as follows:
+Randomness extraction is discussed in NIST SP 800-90B sec. 3.1.5.1, RFC 4086 sec. 4.2 and 5.2, and (Cliff et al., 2009)<sup>[**(16)**](#Note16)</sup>.
 
-1. Gather data with at least 512 bits of entropy.
-2. Run HMAC-SHA-512 with that data to generate a 512-bit HMAC.
-3. Take the first 170 (or fewer) bits as the seed (512 divided by 3, rounded down).
+> **Example:** The Cliff reference reviewed the use of HMAC (hash-based message authentication code) algorithms, and implies that one way to generate a seed is as follows:
+>
+> 1. Gather data with at least 512 bits of entropy.
+> 2. Run HMAC-SHA-512 with that data to generate a 512-bit HMAC.
+> 3. Take the first 170 (or fewer) bits as the seed (512 divided by 3, rounded down).
 
 <a id=Seed_Generation_for_Noncryptographic_PRNGs></a>
 ### Seed Generation for Noncryptographic PRNGs
@@ -623,7 +625,7 @@ See also N. Reed, "Quick And Easy GPU Random Numbers In D3D11", Nathan Reed's co
 
 <small><sup id=Note31>(31)</sup> If an application expects end users to type in a unique identifier, it could find that very long unique identifiers are unsuitable for it (e.g. 128-bit numbers take up 32 base-16 characters).  There are ways to deal with these and other long identifiers, including (1) separating memorable chunks of the identifier with a hyphen, space, or another character (e.g., "ABCDEF" becomes "ABC-DEF"); (2) generating the identifier from a sequence of memorable words (as in Electrum or in Bitcoin's BIP39); or (3) adding a so-called "checksum digit" at the end of the identifier to guard against typing mistakes.  The application ought to consider trying (1) or (2) before deciding to use shorter identifiers than what this document recommends.</small>
 
-<small><sup id=Note32>(32)</sup> Full-period PRNGs include some [**LCGs**] (https://en.wikipedia.org/wiki/Linear_congruential_generator) and some [**linear-feedback shift register**](https://en.wikipedia.org/wiki/Linear-feedback_shift_register) (LFSR) generators.  For suggested LCGs, see P. L'Ecuyer, "Tables of Linear Congruential Generators of Different Sizes and Good Lattice Structure", _Mathematics of Computation_ 68(225), January 1999.  For LFSR generators, see P. Alfke, "Efficient Shift Registers, LFSR Counters, and Long Pseudo-Random Sequence Generators", Xilinx Application Note XAPP 052, July 7, 1996, which gives parameters for LFSR generators that cycle "randomly" through all but one _n_-bit integers.</small>
+<small><sup id=Note32>(32)</sup> Full-period PRNGs include some [**LCGs**](https://en.wikipedia.org/wiki/Linear_congruential_generator) and some [**linear-feedback shift register**](https://en.wikipedia.org/wiki/Linear-feedback_shift_register) (LFSR) generators.  For suggested LCGs, see P. L'Ecuyer, "Tables of Linear Congruential Generators of Different Sizes and Good Lattice Structure", _Mathematics of Computation_ 68(225), January 1999.  For LFSR generators, see P. Alfke, "Efficient Shift Registers, LFSR Counters, and Long Pseudo-Random Sequence Generators", Xilinx Application Note XAPP 052, July 7, 1996, which gives parameters for LFSR generators that cycle "randomly" through all but one _n_-bit integers.</small>
 
 <small><sup id=Note33>(33)</sup> The following are some reasons an algorithm might produce different results from run to run or from machine to machine (making it an _inconsistent_ algorithm):
 

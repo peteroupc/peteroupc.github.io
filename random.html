@@ -412,13 +412,17 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 <li>Then, condense the data into an N-bit seed, a process called <em>randomness extraction</em>.<sup><a href="#Note15"><strong>(15)</strong></a></sup></li>
 </ol>
 
-<p>Randomness extraction is discussed in NIST SP 800-90B sec. 3.1.5.1, RFC 4086 sec. 4.2 and 5.2, and (Cliff et al., 2009)<sup><a href="#Note16"><strong>(16)</strong></a></sup>. The latter reference reviewed the use of HMAC (hash-based message authentication code) algorithms, and implies that one way to generate a seed is as follows:</p>
+<p>Randomness extraction is discussed in NIST SP 800-90B sec. 3.1.5.1, RFC 4086 sec. 4.2 and 5.2, and (Cliff et al., 2009)<sup><a href="#Note16"><strong>(16)</strong></a></sup>.</p>
+
+<blockquote>
+<p><strong>Example:</strong> The Cliff reference reviewed the use of HMAC (hash-based message authentication code) algorithms, and implies that one way to generate a seed is as follows:</p>
 
 <ol>
 <li>Gather data with at least 512 bits of entropy.</li>
 <li>Run HMAC-SHA-512 with that data to generate a 512-bit HMAC.</li>
 <li>Take the first 170 (or fewer) bits as the seed (512 divided by 3, rounded down).</li>
 </ol>
+</blockquote>
 
 <p><a id=Seed_Generation_for_Noncryptographic_PRNGs></a></p>
 
