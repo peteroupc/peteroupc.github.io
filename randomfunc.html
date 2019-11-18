@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
-<p>Begun on June 4, 2017; last updated on Nov. 16, 2019.</p>
+<p>Begun on June 4, 2017; last updated on Nov. 17, 2019.</p>
 
 <p>Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.</p>
 
@@ -1432,7 +1432,10 @@ END METHOD
 
 <p><strong>Requires random real numbers.</strong></p>
 
-<p>Randomization is the core of <strong>Monte Carlo sampling</strong>; it can be used to estimate the <strong>expected value</strong> of a function given a random process or sampling distribution.  The following pseudocode estimates the expected value from a list of random numbers generated the same way.  Here, <code>EFUNC</code> is the function, and <code>MeanAndVariance</code> is given in the <a href="#Mean_and_Variance_Calculation"><strong>appendix</strong></a>.  <code>Expectation</code> returns a list of two numbers &mdash; the estimated expected value and its standard error.</p>
+<p>Randomization is the core of <strong>Monte Carlo sampling</strong>.  There are three main uses of Monte Carlo sampling: estimation, integration, and optimization.</p>
+
+<ol>
+<li><p><strong>Estimating expected values.</strong> Monte Carlo sampling can help estimate the <strong>expected value</strong> of a function given a random process or sampling distribution.  The following pseudocode estimates the expected value from a list of random numbers generated the same way.  Here, <code>EFUNC</code> is the function, and <code>MeanAndVariance</code> is given in the <a href="#Mean_and_Variance_Calculation"><strong>appendix</strong></a>.  <code>Expectation</code> returns a list of two numbers &mdash; the estimated expected value and its standard error.</p>
 
 <pre>METHOD Expectation(numbers)
   ret=[]
@@ -1456,11 +1459,10 @@ END METHOD
 <li>The <strong>probability</strong>, if <code>EFUNC(x)</code> is <code>1</code> if some condition is met or <code>0</code> otherwise.</li>
 </ul>
 
-<p>If the sampling domain is also limited to random numbers meeting a given condition (such as <code>x &lt; 2</code> or <code>x != 10</code>), then the estimated expected value is also called the estimated <em>conditional expectation</em>.</p>
-
-<p><a href="https://en.wikipedia.org/wiki/Monte_Carlo_integration"><strong>Monte Carlo integration</strong></a> is a way to estimate a multidimensional integral; randomly sampled numbers are put into a list (<code>nums</code>) and the estimated integral and its standard error are then calculated with <code>Expectation(nums)</code> with <code>EFUNC(x) = x</code>, and multiplied by the volume of the sampling domain.</p>
-
-<p>A third application of Monte Carlo sampling is <a href="http://mathworld.wolfram.com/StochasticOptimization.html"><strong>stochastic optimization</strong></a> for finding the minimum or maximum value of a function with one or more variables; examples include <a href="https://en.wikipedia.org/wiki/Simulated_annealing"><strong><em>simulated annealing</em></strong></a> and <a href="https://en.wikipedia.org/wiki/Simultaneous_perturbation_stochastic_approximation"><strong><em>simultaneous perturbation stochastic approximation</em></strong></a> (see also (Spall 1998)<sup><a href="#Note23"><strong>(23)</strong></a></sup>).</p>
+<p>If the sampling domain is also limited to random numbers meeting a given condition (such as <code>x &lt; 2</code> or <code>x != 10</code>), then the estimated expected value is also called the estimated <em>conditional expectation</em>.</p></li>
+<li><p><a href="https://en.wikipedia.org/wiki/Monte_Carlo_integration"><strong>Monte Carlo integration</strong></a>.  This is a way to estimate a multidimensional integral; randomly sampled numbers are put into a list (<code>nums</code>) and the estimated integral and its standard error are then calculated with <code>Expectation(nums)</code> with <code>EFUNC(x) = x</code>, and multiplied by the volume of the sampling domain.</p></li>
+<li><p><a href="http://mathworld.wolfram.com/StochasticOptimization.html"><strong>Stochastic optimization</strong></a>. This uses randomness to help find the minimum or maximum value of a function with one or more variables; examples include <a href="https://en.wikipedia.org/wiki/Simulated_annealing"><strong><em>simulated annealing</em></strong></a> and <a href="https://en.wikipedia.org/wiki/Simultaneous_perturbation_stochastic_approximation"><strong><em>simultaneous perturbation stochastic approximation</em></strong></a> (see also (Spall 1998)<sup><a href="#Note23"><strong>(23)</strong></a></sup>).</p></li>
+</ol>
 
 <p><a id=Random_Walks_Additional_Examples></a></p>
 
@@ -1475,7 +1477,7 @@ END METHOD
 
 <ul>
 <li>A <em>Wiener process</em> has random states and jumps that are normally distributed (a process of this kind is also known as <em>Brownian motion</em>). For a random walk that follows a Wiener process, <code>STATEJUMP()</code> is <code>Normal(mu * timediff, sigma * sqrt(timediff))</code>, where  <code>mu</code> is the average value per time unit, <code>sigma</code> is the volatility, and <code>timediff</code> is the time difference between samples.</li>
-<li>In a <em>Poisson process</em>, the time between each event is a random exponential variable, namely, <code>-ln(RNDU01ZeroOneExc()) / rate</code>, where <code>rate</code> is the average number of events per time unit. An <em>inhomogeneous Poisson process</em> results if <code>rate</code> can vary with the &quot;timestamp&quot; before each event jump.</li>
+<li>In a <em>Poisson process</em>, the time between each event is its own random exponential variable, namely, <code>-ln(RNDU01ZeroOneExc()) / rate</code>, where <code>rate</code> is the average number of events per time unit. An <em>inhomogeneous Poisson process</em> results if <code>rate</code> can vary with the &quot;timestamp&quot; before each event jump.</li>
 </ul></li>
 </ul>
 
@@ -1485,7 +1487,7 @@ END METHOD
 
 <p><strong>Requires random real numbers.</strong></p>
 
-<p>A <a href="https://en.wikipedia.org/wiki/Low-discrepancy_sequence"><strong><em>low-discrepancy sequence</em></strong></a> (or <em>quasirandom sequence</em>) is a sequence of numbers that behave like uniform random numbers but are <em>dependent</em> on each other.  The numbers are less likely to form &quot;clumps&quot; than if they were independent.  The following are examples:</p>
+<p>A <a href="https://en.wikipedia.org/wiki/Low-discrepancy_sequence"><strong><em>low-discrepancy sequence</em></strong></a> (or <em>quasirandom sequence</em>) is a sequence of numbers that behave like uniform random numbers but are <em>dependent</em> on each other, in that they are less likely to form &quot;clumps&quot; than if they were independent.  The following are examples:</p>
 
 <ul>
 <li>Sobol and Halton sequences are too complicated to show here.</li>

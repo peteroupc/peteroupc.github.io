@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on June 4, 2017; last updated on Nov. 16, 2019.
+Begun on June 4, 2017; last updated on Nov. 17, 2019.
 
 Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.
 
@@ -1146,32 +1146,34 @@ Three related methods can be derived from `RNDRANGE` as follows:
 
 **Requires random real numbers.**
 
-Randomization is the core of **Monte Carlo sampling**; it can be used to estimate the **expected value** of a function given a random process or sampling distribution.  The following pseudocode estimates the expected value from a list of random numbers generated the same way.  Here, `EFUNC` is the function, and `MeanAndVariance` is given in the [**appendix**](#Mean_and_Variance_Calculation).  `Expectation` returns a list of two numbers &mdash; the estimated expected value and its standard error.
+Randomization is the core of **Monte Carlo sampling**.  There are three main uses of Monte Carlo sampling: estimation, integration, and optimization.
 
-    METHOD Expectation(numbers)
-      ret=[]
-      for i in 0...size(numbers)
-         AddItem(ret,EFUNC(numbers[i]))
-      end
-      merr=MeanAndVariance(ret)
-      merr[1]=merr[1]*(size(ret)-1.0)/size(ret)
-      merr[1]=sqrt(merr[1]/size(ret))
-      return merr
-    END METHOD
+1. **Estimating expected values.** Monte Carlo sampling can help estimate the **expected value** of a function given a random process or sampling distribution.  The following pseudocode estimates the expected value from a list of random numbers generated the same way.  Here, `EFUNC` is the function, and `MeanAndVariance` is given in the [**appendix**](#Mean_and_Variance_Calculation).  `Expectation` returns a list of two numbers &mdash; the estimated expected value and its standard error.
 
-Examples of expected values include the following:
+        METHOD Expectation(numbers)
+          ret=[]
+          for i in 0...size(numbers)
+             AddItem(ret,EFUNC(numbers[i]))
+          end
+          merr=MeanAndVariance(ret)
+          merr[1]=merr[1]*(size(ret)-1.0)/size(ret)
+          merr[1]=sqrt(merr[1]/size(ret))
+          return merr
+        END METHOD
 
-- The **`n`th raw moment** (mean of `n`th powers) if `EFUNC(x)` is `pow(x, n)`.
-- The **mean**, if `EFUNC(x)` is `x`.
-- The **`n`th sample central moment**, if `EFUNC(x)` is `pow(x-m, n)`, where `m` is the mean of the sampled numbers.
-- The (biased) **sample variance**, the second sample central moment.
-- The **probability**, if `EFUNC(x)` is `1` if some condition is met or `0` otherwise.
+    Examples of expected values include the following:
 
-If the sampling domain is also limited to random numbers meeting a given condition (such as `x < 2` or `x != 10`), then the estimated expected value is also called the estimated _conditional expectation_.
+    - The **`n`th raw moment** (mean of `n`th powers) if `EFUNC(x)` is `pow(x, n)`.
+    - The **mean**, if `EFUNC(x)` is `x`.
+    - The **`n`th sample central moment**, if `EFUNC(x)` is `pow(x-m, n)`, where `m` is the mean of the sampled numbers.
+    - The (biased) **sample variance**, the second sample central moment.
+    - The **probability**, if `EFUNC(x)` is `1` if some condition is met or `0` otherwise.
 
-[**Monte Carlo integration**](https://en.wikipedia.org/wiki/Monte_Carlo_integration) is a way to estimate a multidimensional integral; randomly sampled numbers are put into a list (`nums`) and the estimated integral and its standard error are then calculated with `Expectation(nums)` with `EFUNC(x) = x`, and multiplied by the volume of the sampling domain.
+    If the sampling domain is also limited to random numbers meeting a given condition (such as `x < 2` or `x != 10`), then the estimated expected value is also called the estimated _conditional expectation_.
 
-A third application of Monte Carlo sampling is [**stochastic optimization**](http://mathworld.wolfram.com/StochasticOptimization.html) for finding the minimum or maximum value of a function with one or more variables; examples include [**_simulated annealing_**](https://en.wikipedia.org/wiki/Simulated_annealing) and [**_simultaneous perturbation stochastic approximation_**](https://en.wikipedia.org/wiki/Simultaneous_perturbation_stochastic_approximation) (see also (Spall 1998)<sup>[**(23)**](#Note23)</sup>).
+2. [**Monte Carlo integration**](https://en.wikipedia.org/wiki/Monte_Carlo_integration).  This is a way to estimate a multidimensional integral; randomly sampled numbers are put into a list (`nums`) and the estimated integral and its standard error are then calculated with `Expectation(nums)` with `EFUNC(x) = x`, and multiplied by the volume of the sampling domain.
+
+3. [**Stochastic optimization**](http://mathworld.wolfram.com/StochasticOptimization.html). This uses randomness to help find the minimum or maximum value of a function with one or more variables; examples include [**_simulated annealing_**](https://en.wikipedia.org/wiki/Simulated_annealing) and [**_simultaneous perturbation stochastic approximation_**](https://en.wikipedia.org/wiki/Simultaneous_perturbation_stochastic_approximation) (see also (Spall 1998)<sup>[**(23)**](#Note23)</sup>).
 
 <a id=Random_Walks_Additional_Examples></a>
 ### Random Walks: Additional Examples
@@ -1182,14 +1184,14 @@ A third application of Monte Carlo sampling is [**stochastic optimization**](htt
 - If `STATEJUMP()` is `RNDRANGE(-1, 1)`, the random state is advanced by a random real number in the interval [-1, 1].
 - A **continuous-time process** models random behavior at every moment, not just at discrete times.  There are two popular examples:
     - A _Wiener process_ has random states and jumps that are normally distributed (a process of this kind is also known as _Brownian motion_). For a random walk that follows a Wiener process, `STATEJUMP()` is `Normal(mu * timediff, sigma * sqrt(timediff))`, where  `mu` is the average value per time unit, `sigma` is the volatility, and `timediff` is the time difference between samples.
-    - In a _Poisson process_, the time between each event is a random exponential variable, namely, `-ln(RNDU01ZeroOneExc()) / rate`, where `rate` is the average number of events per time unit. An _inhomogeneous Poisson process_ results if `rate` can vary with the "timestamp" before each event jump.
+    - In a _Poisson process_, the time between each event is its own random exponential variable, namely, `-ln(RNDU01ZeroOneExc()) / rate`, where `rate` is the average number of events per time unit. An _inhomogeneous Poisson process_ results if `rate` can vary with the "timestamp" before each event jump.
 
 <a id=Low_Discrepancy_Sequences></a>
 ### Low-Discrepancy Sequences
 
 **Requires random real numbers.**
 
-A [**_low-discrepancy sequence_**](https://en.wikipedia.org/wiki/Low-discrepancy_sequence) (or _quasirandom sequence_) is a sequence of numbers that behave like uniform random numbers but are _dependent_ on each other.  The numbers are less likely to form "clumps" than if they were independent.  The following are examples:
+A [**_low-discrepancy sequence_**](https://en.wikipedia.org/wiki/Low-discrepancy_sequence) (or _quasirandom sequence_) is a sequence of numbers that behave like uniform random numbers but are _dependent_ on each other, in that they are less likely to form "clumps" than if they were independent.  The following are examples:
 - Sobol and Halton sequences are too complicated to show here.
 - Linear congruential generators with modulus `m`, a full period, and "good lattice structure"; a sequence of `n`-dimensional points is then `[MLCG(i), MLCG(i+1), ..., MLCG(i+n-1)]` for each integer `i` in the interval \[1, `m`\] (L'Ecuyer 1999)<sup>[**(24)**](#Note24)</sup> (see example pseudocode below).
 
