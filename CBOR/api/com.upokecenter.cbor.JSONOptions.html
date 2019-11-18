@@ -14,7 +14,7 @@
 <h2>Fields</h2>
 
 <ul>
-<li><code>static class  JSONOptions.ConversionKind</code><br>
+<li><code>static class  JSONOptions.ConversionMode</code><br>
 Specifies how JSON numbers are converted to CBOR when decoding JSON.</li>
 <li><code>static JSONOptions Default</code><br>
 The default options for converting CBOR objects to JSON.</li>
@@ -23,7 +23,7 @@ The default options for converting CBOR objects to JSON.</li>
 <h2>Nested Classes</h2>
 
 <ul>
-<li><code>static class  JSONOptions.ConversionKind</code><br>
+<li><code>static class  JSONOptions.ConversionMode</code><br>
 Specifies how JSON numbers are converted to CBOR when decoding JSON.</li>
 </ul>
 
@@ -54,7 +54,7 @@ Gets a value indicating whether to allow duplicate keys when reading JSON.</li>
 Deprecated.
 This property now has no effect.
 This property now has no effect.</li>
-<li><code>JSONOptions.ConversionKind getNumberConversion()</code><br>
+<li><code>JSONOptions.ConversionMode getNumberConversion()</code><br>
 Gets a value indicating how JSON numbers are decoded to CBOR.</li>
 <li><code>boolean getPreserveNegativeZero()</code><br>
 Gets a value indicating whether the JSON decoder should preserve the
@@ -143,7 +143,7 @@ true.</li>
 
 <h3>getNumberConversion</h3>
 
-<pre>public final JSONOptions.ConversionKind getNumberConversion()
+<pre>public final JSONOptions.ConversionMode getNumberConversion()
 </pre>
 
 <p>Gets a value indicating how JSON numbers are decoded to CBOR.</p>
@@ -152,7 +152,7 @@ true.</li>
 
 <ul>
 <li>A value indicating how JSON numbers are decoded to CBOR. The default
-is <code>ConversionKind.Full</code>.</li>
+is <code>ConversionMode.Full</code>.</li>
 </ul>
 
 <h3>getAllowDuplicateKeys</h3>
