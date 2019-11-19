@@ -100,6 +100,18 @@ Converts a string to an arbitrary-precision integer in a given radix.</li>
               int endIndex)</code><br>
 Converts a portion of a string to an arbitrary-precision integer in a given
 radix.</li>
+<li><code>static EInteger FromRadixSubstringGeneral​(java.lang.String str,
+                     int radix,
+                     int index,
+                     int endIndex,
+                     boolean negative)</code><br>
+Not documented yet.</li>
+<li><code>static EInteger FromRadixSubstringInner​(java.lang.String str,
+                   int radix,
+                   int index,
+                   int endIndex,
+                   boolean negative)</code><br>
+Not documented yet.</li>
 <li><code>static EInteger FromString​(java.lang.String str)</code><br>
 Converts a string to an arbitrary-precision integer.</li>
 <li><code>static EInteger FromSubstring​(java.lang.String str,
@@ -525,6 +537,46 @@ string portion.</li>
 <li><p><code>java.lang.NullPointerException</code> - The parameter <code>str</code> is null.</p></li>
 <li><p><code>java.lang.NumberFormatException</code> - The string portion is empty or in an invalid format.</p></li>
 <li><p><code>java.lang.IllegalArgumentException</code> - Doesn&#39;t satisfy (endIndex - index) % 4 == 0&quot;.</p></li>
+</ul>
+
+<h3>FromRadixSubstringGeneral</h3>
+
+<pre>public static EInteger FromRadixSubstringGeneral​(java.lang.String str, int radix, int index, int endIndex, boolean negative)
+</pre>
+
+<p>Not documented yet.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>str</code> - Not documented yet.</p></li>
+<li><p><code>radix</code> - Not documented yet.</p></li>
+<li><p><code>index</code> - Not documented yet.</p></li>
+<li><p><code>endIndex</code> - Not documented yet.</p></li>
+<li><p><code>negative</code> - Not documented yet.</p></li>
+</ul>
+
+<h3>FromRadixSubstringInner</h3>
+
+<pre>public static EInteger FromRadixSubstringInner​(java.lang.String str, int radix, int index, int endIndex, boolean negative)
+</pre>
+
+<p>Not documented yet.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>str</code> - Not documented yet.</p></li>
+<li><p><code>radix</code> - Not documented yet.</p></li>
+<li><p><code>index</code> - Not documented yet.</p></li>
+<li><p><code>endIndex</code> - Not documented yet.</p></li>
+<li><p><code>negative</code> - Not documented yet.</p></li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>java.lang.NullPointerException</code> - The parameter <code>str</code> is null.</li>
 </ul>
 
 <h3>FromString</h3>
