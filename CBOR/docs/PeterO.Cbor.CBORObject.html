@@ -21,7 +21,7 @@
 
 <p><b>To and from data streams:</b> The CBORObject.Write methods write many kinds of objects to a data stream, including numbers, CBOR objects, strings, and arrays of numbers and strings. The CBORObject.Read method reads a CBOR object from a data stream.</p>
 
-<p><b>To and from other objects:</b> The  <code>CBORObject.FromObject</code>  method converts many kinds of objects to a CBOR object, including numbers, strings, and arrays and maps of numbers and strings. Methods like AsDouble, AsByte, and AsString convert a CBOR object to different types of object. The  <code>CBORObject.ToObject</code>  method converts a CBOR object to an object of a given type; for example, a CBOR array to a native  <code>List</code>  (or  <code>ArrayList</code>  in Java), or a CBOR integer to an  <code>int</code>  or  <code>long</code> .</p>
+<p><b>To and from other objects:</b> The  <code>CBORObject.FromObject</code>  method converts many kinds of objects to a CBOR object, including numbers, strings, and arrays and maps of numbers and strings. Methods like AsNumber and AsString convert a CBOR object to different types of object. The  <code>CBORObject.ToObject</code>  method converts a CBOR object to an object of a given type; for example, a CBOR array to a native  <code>List</code>  (or  <code>ArrayList</code>  in Java), or a CBOR integer to an  <code>int</code>  or  <code>long</code> .</p>
 
 <p><b>To and from JSON:</b> This class also doubles as a reader and writer of JavaScript Object Notation (JSON). The CBORObject.FromJSONString method converts JSON to a CBOR object, and the ToJSONString method converts a CBOR object to a JSON string. (Note that the conversion from CBOR to JSON is not always without loss and may make it impossible to recover the original object when converting the JSON back to CBOR. See the ToJSONString documentation.)</p>
 
@@ -57,8 +57,8 @@
 <li><code><a href="#Add_object_object">Add(object, object)</a></code> - Adds a new key and its value to this CBOR map, or adds the value if the key doesn&#39;t exist.</li>
 <li><code><a href="#Add_PeterO_Cbor_CBORObject">Add(PeterO.Cbor.CBORObject)</a></code> - Adds a new object to the end of this array.</li>
 <li><code><a href="#Addition_PeterO_Cbor_CBORObject_PeterO_Cbor_CBORObject">Addition(PeterO.Cbor.CBORObject, PeterO.Cbor.CBORObject)</a></code> - <b>Deprecated:</b> Instead, convert both CBOR objects to numbers (with .AsNumber()), and use the first number&#39;s .Add() method.</li>
-<li><code><a href="#AsBoolean">AsBoolean()</a></code> - Returns false if this object is False, Null, or Undefined (whether or not the object has tags); otherwise, true.</li>
-<li><code><a href="#AsByte">AsByte()</a></code> - Converts this object to a byte (0 to 255).</li>
+<li><code><a href="#AsBoolean">AsBoolean()</a></code> - Returns false if this object is a CBOR false, null, or undefined value (whether or not the object has tags); otherwise, true.</li>
+<li><code><a href="#AsByte">AsByte()</a></code> - <b>Deprecated:</b> Instead, use .ToObject&lt;byte&gt;() in .NET or .ToObject(Byte.class) in Java.</li>
 <li><code><a href="#AsDecimal">AsDecimal()</a></code> - Converts this object to a.</li>
 <li><code><a href="#AsDouble">AsDouble()</a></code> - Converts this object to a 64-bit floating point number.</li>
 <li><code><a href="#AsDoubleBits">AsDoubleBits()</a></code> - Converts this object to the bits of a 64-bit floating-point number if this CBOR object&#39;s type is FloatingPoint.</li>
@@ -197,7 +197,7 @@
 <li><code><a href="#Remove_PeterO_Cbor_CBORObject">Remove(PeterO.Cbor.CBORObject)</a></code> - If this object is an array, removes the first instance of the specified item from the array.</li>
 <li><code><a href="#RemoveAt_int">RemoveAt(int)</a></code> - Removes the item at the given index of this CBOR array.</li>
 <li><code><a href="#Set_object_object">Set(object, object)</a></code> - Maps an object to a key in this CBOR map, or adds the value if the key doesn&#39;t exist.</li>
-<li><code><a href="#Sign">Sign</a></code> - Gets this value&#39;s sign: -1 if negative; 1 if positive; 0 if zero.</li>
+<li><code><a href="#Sign">Sign</a></code> - <b>Deprecated:</b> Instead, convert this object to a number with .AsNumber(), and use the Sign property in .NET or the signum method in Java.</li>
 <li><code><a href="#SimpleValue">SimpleValue</a></code> - Gets the simple value ID of this CBOR object, or -1 if the object is not a simple value.</li>
 <li><code><a href="#Subtract_PeterO_Cbor_CBORObject_PeterO_Cbor_CBORObject">Subtract(PeterO.Cbor.CBORObject, PeterO.Cbor.CBORObject)</a></code> - <b>Deprecated:</b> Instead, convert both CBOR objects to numbers (with .AsNumber()), and use the first number&#39;s .Subtract() method.</li>
 <li><code><a href="#TagCount">TagCount</a></code> - Gets the number of tags this object has.</li>
@@ -581,6 +581,8 @@ This object is not a map.</li>
 <pre>public int Sign { get; }
 </pre>
 
+<p><b>Deprecated.</b> Instead, convert this object to a number with .AsNumber(),  and use the Sign property in .NET or the signum method in Java.</p>
+
 <p>Gets this value&#39;s sign: -1 if negative; 1 if positive; 0 if zero.</p>
 
 <p><b>Returns:</b></p>
@@ -836,11 +838,11 @@ is null.</p></li>
 <pre>public bool AsBoolean();
 </pre>
 
-<p>Returns false if this object is False, Null, or Undefined (whether or not the object has tags); otherwise, true.</p>
+<p>Returns false if this object is a CBOR false, null, or undefined value (whether or not the object has tags); otherwise, true.</p>
 
 <p><b>Return Value:</b></p>
 
-<p>False if this object is False, Null, or Undefined; otherwise, true.</p>
+<p>False if this object is a CBOR false, null, or undefined value; otherwise, true.</p>
 
 <p><a id="AsByte"></a></p>
 
@@ -848,6 +850,8 @@ is null.</p></li>
 
 <pre>public byte AsByte();
 </pre>
+
+<p><b>Deprecated.</b> Instead, use .ToObject&lt;byte&gt;() in .NET or  .ToObject(Byte.class) in Java.</p>
 
 <p>Converts this object to a byte (0 to 255). Floating point values are converted to integers by discarding their fractional parts.</p>
 
