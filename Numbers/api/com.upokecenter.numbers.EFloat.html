@@ -110,6 +110,8 @@ result.</li>
 <li><code>EFloat Add​(EFloat otherValue,
 EContext ctx)</code><br>
 Finds the sum of this object and another object.</li>
+<li><code>int compareTo​(int intOther)</code><br>
+Not documented yet.</li>
 <li><code>int compareTo​(EFloat other)</code><br>
 Compares the mathematical values of this object and another object,
 accepting NaN values.</li>
@@ -131,6 +133,11 @@ total ordering on all possible values (ignoring their signs).</li>
                    EContext ctx)</code><br>
 Compares the values of this object and another object, imposing a total
 ordering on all possible values (ignoring their signs).</li>
+<li><code>int CompareToValue​(int intOther)</code><br>
+Not documented yet.</li>
+<li><code>int CompareToValue​(EFloat other)</code><br>
+Compares the mathematical values of this object and another object,
+accepting NaN values.</li>
 <li><code>EFloat CompareToWithContext​(EFloat other,
                 EContext ctx)</code><br>
 Compares the mathematical values of this object and another object.</li>
@@ -827,7 +834,7 @@ integer.</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>java.lang.NullPointerException</code> - The parameter <code>significand</code> or <code>
+<li><code>java.lang.NullPointerException</code> - The parameter <code>mantissa</code> or <code>
 exponent</code> is null.</li>
 </ul>
 
@@ -1496,14 +1503,10 @@ which case the precision is unlimited and no rounding is needed.</p></li>
 </pre>
 
 <p>Compares the mathematical values of this object and another object,
- accepting NaN values. <p>This method is not consistent with the
- Equals method because two different numbers with the same
- mathematical value, but different exponents, will compare as
- equal.</p> <p>In this method, negative zero and positive zero are
- considered equal.</p> <p>If this object or the other object is a
- quiet NaN or signaling NaN, this method will not trigger an error.
- Instead, NaN will compare greater than any other number, including
- infinity. Two different NaN values will be considered equal.</p></p>
+ accepting NaN values. This method currently uses the rules given in
+ the CompareToValue method, so that it it is not consistent with the
+ Equals method, but it may change in a future version to use the
+ rules for the CompareToTotal method instead.</p>
 
 <p><strong>Specified by:</strong></p>
 
@@ -1523,6 +1526,61 @@ which case the precision is unlimited and no rounding is needed.</p></li>
 <li>Less than 0 if this object&#39;s value is less than the other value, or
 greater than 0 if this object&#39;s value is greater than the other
 value or if <code>other</code> is null, or 0 if both values are equal.</li>
+</ul>
+
+<h3>CompareToValue</h3>
+
+<pre>public int CompareToValue​(EFloat other)
+</pre>
+
+<p>Compares the mathematical values of this object and another object,
+ accepting NaN values. <p>This method is not consistent with the
+ Equals method because two different numbers with the same
+ mathematical value, but different exponents, will compare as
+ equal.</p> <p>In this method, negative zero and positive zero are
+ considered equal.</p> <p>If this object or the other object is a
+ quiet NaN or signaling NaN, this method will not trigger an error.
+ Instead, NaN will compare greater than any other number, including
+ infinity. Two different NaN values will be considered equal.</p></p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>other</code> - An arbitrary-precision binary floating-point number.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>Less than 0 if this object&#39;s value is less than the other value, or
+greater than 0 if this object&#39;s value is greater than the other
+value or if <code>other</code> is null, or 0 if both values are equal.</li>
+</ul>
+
+<h3>compareTo</h3>
+
+<pre>public int compareTo​(int intOther)
+</pre>
+
+<p>Not documented yet.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>intOther</code> - Not documented yet.</li>
+</ul>
+
+<h3>CompareToValue</h3>
+
+<pre>public int CompareToValue​(int intOther)
+</pre>
+
+<p>Not documented yet.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>intOther</code> - Not documented yet.</li>
 </ul>
 
 <h3>CompareToSignal</h3>
