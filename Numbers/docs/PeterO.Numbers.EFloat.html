@@ -786,9 +786,8 @@ is a 32-bit signed integer.</p></li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>significand</i>: The parameter  <i>significand</i>
-is a Numbers.EInteger object.</p></li>
-<li><p><i>exponent</i>: Desired value for the exponent.</p></li>
+<li><p><i>mantissa</i>: Not documented yet.</p></li>
+<li><p><i>exponent</i>: Not documented yet.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -1578,11 +1577,11 @@ is less than  <i>length</i>
 
 <ul>
 <li><p>An optional plus sign (&quot;+&quot; , U+002B) or minus sign (&quot;-&quot;, U+002D) (if &#39;-&#39; , the value is negative.)</p></li>
-<li><p>One or more digits, with a single optional decimal point after the first digit and before the last digit.</p></li>
-<li><p>Optionally, &quot;E+&quot;/&quot;e+&quot; (positive exponent) or &quot;E-&quot;/&quot;e-&quot; (negative exponent) plus one or more digits specifying the exponent.</p></li>
+<li><p>One or more digits, with a single optional decimal point after the first digit and before the last digit. These digits may begin with any number of zeros.</p></li>
+<li><p>Optionally, &quot;E+&quot;/&quot;e+&quot; (positive exponent) or &quot;E-&quot;/&quot;e-&quot; (negative exponent) plus one or more digits specifying the exponent (these digits may begin with any number of zeros).</p></li>
 </ul>
 
-<p>The string can also be &quot;-INF&quot;, &quot;-Infinity&quot;, &quot;Infinity&quot;, &quot;INF&quot;, quiet NaN (&quot;NaN&quot;) followed by any number of digits, or signaling NaN (&quot;sNaN&quot;) followed by any number of digits, all in any combination of upper and lower case.</p>
+<p>The string can also be &quot;-INF&quot;, &quot;-Infinity&quot;, &quot;Infinity&quot;, &quot;INF&quot;, quiet NaN (&quot;NaN&quot;) followed by any number of digits (these digits may begin with any number of zeros), or signaling NaN (&quot;sNaN&quot;) followed by any number of digits (these digits may begin with any number of zeros), all in any combination of case.</p>
 
 <p>All characters mentioned above are the corresponding characters in the Basic Latin range. In particular, the digits must be the basic digits 0 to 9 (U+0030 to U+0039). The string is not allowed to contain white space characters, including spaces.</p>
 
