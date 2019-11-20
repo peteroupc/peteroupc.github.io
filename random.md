@@ -295,7 +295,7 @@ Randomness extraction is discussed in NIST SP 800-90B sec. 3.1.5.1, RFC 4086 sec
 <a id=Seed_Generation_for_Noncryptographic_PRNGs></a>
 ### Seed Generation for Noncryptographic PRNGs
 
-For noncryptographic PRNGs, an application ought to generate seeds likely to vary "wildly" from previously generated seeds, to reduce the risk of correlated "random" numbers or sequences.  In most cases, this can be done by seeding with the output of a cryptographic RNG or using the advice in the [**previous section**](#Seed_Generation).
+For noncryptographic PRNGs, an application ought to generate seeds likely to vary "wildly" from previously generated seeds, to reduce the risk of correlated "random" numbers or sequences.  In most cases, this can be done by seeding the PRNG's full state with the output of a cryptographic RNG or using the advice in the [**previous section**](#Seed_Generation).
 
 For [**manually-seeded PRNGs**](#Manually_Seeded_PRNGs), however, if multiple processes (including threads, tasks, or subtasks) need to use reproducible "random" numbers for the same purpose, an application can generate one seed (or use a pregenerated seed) and distribute that seed to those processes by doing the following for each such process<sup>[**(18)**](#Note18)</sup>:
 
