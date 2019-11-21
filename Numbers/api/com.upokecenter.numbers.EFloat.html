@@ -982,21 +982,22 @@ number.</li>
  decimal number&#39;s value. <p>The format of the string generally
   consists of:</p> <ul> <li>An optional plus sign (&quot;+&quot; , U+002B) or
   minus sign (&quot;-&quot;, U+002D) (if &#39;-&#39; , the value is negative.)</li>
- <li>One or more digits, with a single optional decimal point after
- the first digit and before the last digit. These digits may begin
-  with any number of zeros.</li> <li>Optionally, &quot;E+&quot;/&quot;e+&quot; (positive
-  exponent) or &quot;E-&quot;/&quot;e-&quot; (negative exponent) plus one or more digits
- specifying the exponent (these digits may begin with any number of
-  zeros).</li></ul> <p>The string can also be &quot;-INF&quot;, &quot;-Infinity&quot;,
-  &quot;Infinity&quot;, &quot;INF&quot;, quiet NaN (&quot;NaN&quot;) followed by any number of
- digits (these digits may begin with any number of zeros), or
-  signaling NaN (&quot;sNaN&quot;) followed by any number of digits (these
- digits may begin with any number of zeros), all where the letters
- can be any combination of basic upper-case and/or basic lower-case
- letters.</p> <p>All characters mentioned above are the corresponding
- characters in the Basic Latin range. In particular, the digits must
- be the basic digits 0 to 9 (U+0030 to U+0039). The string is not
- allowed to contain white space characters, including spaces.</p></p>
+  <li>One or more digits, with a single optional decimal point (&quot;.&quot;,
+ U+002E) before or after those digits or between two of them. These
+ digits may begin with any number of zeros.</li> <li>Optionally,
+  &quot;E+&quot;/&quot;e+&quot; (positive exponent) or &quot;E-&quot;/&quot;e-&quot; (negative exponent) plus
+ one or more digits specifying the exponent (these digits may begin
+ with any number of zeros).</li></ul> <p>The string can also be
+  &quot;-INF&quot;, &quot;-Infinity&quot;, &quot;Infinity&quot;, &quot;INF&quot;, quiet NaN (&quot;NaN&quot;) followed
+ by any number of digits (these digits may begin with any number of
+  zeros), or signaling NaN (&quot;sNaN&quot;) followed by any number of digits
+ (these digits may begin with any number of zeros), all where the
+ letters can be any combination of basic upper-case and/or basic
+ lower-case letters.</p> <p>All characters mentioned above are the
+ corresponding characters in the Basic Latin range. In particular,
+ the digits must be the basic digits 0 to 9 (U+0030 to U+0039). The
+ string is not allowed to contain white space characters, including
+ spaces.</p></p>
 
 <p><strong>Parameters:</strong></p>
 

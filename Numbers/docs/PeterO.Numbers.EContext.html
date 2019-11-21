@@ -90,13 +90,10 @@
 <ul>
 <li><p><i>precision</i>: The parameter  <i>precision</i>
 is a 32-bit signed integer.</p></li>
-<li><p><i>rounding</i>: The parameter  <i>rounding</i>
-is an ERounding object.</p></li>
-<li><p><i>exponentMinSmall</i>: The parameter  <i>exponentMinSmall</i>
-is a 32-bit signed integer.</p></li>
-<li><p><i>exponentMaxSmall</i>: The parameter  <i>exponentMaxSmall</i>
-is a 32-bit signed integer.</p></li>
-<li><p><i>clampNormalExponents</i>: Either  <code>true</code>  or  <code>false</code> .</p></li>
+<li><p><i>rounding</i>: The value of the Rounding property.</p></li>
+<li><p><i>exponentMinSmall</i>: The value of the EMin property.</p></li>
+<li><p><i>exponentMaxSmall</i>: The value of the EMax property.</p></li>
+<li><p><i>clampNormalExponents</i>: The value of the ClampNormalExponents property.</p></li>
 </ul>
 
 <p><a id="Void_ctor_PeterO_Numbers_EInteger_PeterO_Numbers_ERounding_PeterO_Numbers_EInteger_PeterO_Numbers_EInteger_Boolean"></a></p>
@@ -426,7 +423,7 @@ is an ERounding object.</p></li>
 <pre>public bool HasMaxPrecision { get; }
 </pre>
 
-<p>Gets a value indicating whether this context defines a maximum precision.</p>
+<p>Gets a value indicating whether this context defines a maximum precision. This is the same as whether this context&#39;s Precision property is zero.</p>
 
 <p><b>Returns:</b></p>
 

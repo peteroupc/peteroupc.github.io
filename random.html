@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
-<p>Begun on Mar. 5, 2016; last updated on Nov. 16, 2019.</p>
+<p>Begun on Mar. 5, 2016; last updated on Nov. 21, 2019.</p>
 
 <p>Most apps that use random numbers care about either unpredictability, high quality, or repeatability.  This article explains the three kinds of RNGs and gives recommendations on each kind.</p>
 
@@ -428,7 +428,7 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 
 <h3>Seed Generation for Noncryptographic PRNGs</h3>
 
-<p>For noncryptographic PRNGs, an application ought to generate seeds likely to vary &quot;wildly&quot; from previously generated seeds, to reduce the risk of correlated &quot;random&quot; numbers or sequences.  In most cases, this can be done by seeding with the output of a cryptographic RNG or using the advice in the <a href="#Seed_Generation"><strong>previous section</strong></a>.</p>
+<p>For noncryptographic PRNGs, an application ought to generate seeds likely to vary &quot;wildly&quot; from previously generated seeds, to reduce the risk of correlated &quot;random&quot; numbers or sequences.  In most cases, this can be done by seeding the PRNG&#39;s full state with the output of a cryptographic RNG or using the advice in the <a href="#Seed_Generation"><strong>previous section</strong></a>.</p>
 
 <p>For <a href="#Manually_Seeded_PRNGs"><strong>manually-seeded PRNGs</strong></a>, however, if multiple processes (including threads, tasks, or subtasks) need to use reproducible &quot;random&quot; numbers for the same purpose, an application can generate one seed (or use a pregenerated seed) and distribute that seed to those processes by doing the following for each such process<sup><a href="#Note18"><strong>(18)</strong></a></sup>:</p>
 
@@ -854,7 +854,9 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 
 <p><small><sup id=Note17>(17)</sup> Cliff, Y., Boyd, C., Gonzalez Nieto, J.  &quot;How to Extract and Expand Randomness: A Summary and Explanation of Existing Results&quot;, 2009.</small></p>
 
-<p><small><sup id=Note18>(18)</sup> P. L&#39;Ecuyer, D. Munger, et al.  &quot;Random Numbers for Parallel Computers: Requirements and Methods, With Emphasis on GPUs&quot;. April 17, 2015, section 4, goes in greater detail on ways to initialize PRNGs for generating random numbers in parallel, including how to ensure reproducible &quot;randomness&quot; this way if that is desired.</small></p>
+<p><small><sup id=Note18>(18)</sup> Some PRNGs, such as PCG64 and <code>sfc</code>, have multiple sequences (or <em>streams</em>) of numbers that behave like independent random number sequences, and they have efficient ways to assign a different stream to each process this way.  These ways are an alternative to the hashing described here, but how they work is PRNG-specific and beyond the scope of this document.</p>
+
+<p>P. L&#39;Ecuyer, D. Munger, et al.  &quot;Random Numbers for Parallel Computers: Requirements and Methods, With Emphasis on GPUs&quot;. April 17, 2015, section 4, goes in greater detail on ways to initialize PRNGs for generating random numbers in parallel, including how to ensure reproducible &quot;randomness&quot; this way if that is desired.</small></p>
 
 <p><small><sup id=Note19>(19)</sup> Here, <code>IDENT</code> and <code>UNIQUE</code> form a <em>domain separation tag</em>; e.g., see the work-in-progress document <code>draft-irtf-cfrg-hash-to-curve</code>, &quot;Hashing to Elliptic Curves&quot;.</small></p>
 
