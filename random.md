@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on Mar. 5, 2016; last updated on Nov. 21, 2019.
+Begun on Mar. 5, 2016; last updated on Nov. 23, 2019.
 
 Most apps that use random numbers care about either unpredictability, high quality, or repeatability.  This article explains the three kinds of RNGs and gives recommendations on each kind.
 
@@ -295,7 +295,7 @@ Randomness extraction is discussed in NIST SP 800-90B sec. 3.1.5.1, RFC 4086 sec
 <a id=Seed_Generation_for_Noncryptographic_PRNGs></a>
 ### Seed Generation for Noncryptographic PRNGs
 
-For noncryptographic PRNGs, an application ought to generate seeds likely to vary "wildly" from previously generated seeds, to reduce the risk of correlated "random" numbers or sequences.  In most cases, this can be done by seeding the PRNG's full state with the output of a cryptographic RNG or using the advice in the [**previous section**](#Seed_Generation).
+For noncryptographic PRNGs, an application ought to generate seeds likely to vary "wildly" from previously generated seeds, to reduce the risk of correlated "random" numbers or sequences.  In most cases, this can be done by seeding the PRNG's full state with the output of a cryptographic RNG or a seed generated using the advice in the [**previous section**](#Seed_Generation).
 
 For [**manually-seeded PRNGs**](#Manually_Seeded_PRNGs), however, if multiple processes (including threads, tasks, or subtasks) need to use reproducible "random" numbers for the same purpose, an application can generate one seed (or use a pregenerated seed) and distribute that seed to those processes by doing the following for each such process<sup>[**(18)**](#Note18)</sup>:
 
@@ -594,7 +594,7 @@ See also N. Reed, "Quick And Easy GPU Random Numbers In D3D11", Nathan Reed's co
 
 <small><sup id=Note17>(17)</sup> Cliff, Y., Boyd, C., Gonzalez Nieto, J.  "How to Extract and Expand Randomness: A Summary and Explanation of Existing Results", 2009.</small>
 
-<small><sup id=Note18>(18)</sup> Some PRNGs, such as PCG64 and `sfc`, have multiple sequences (or _streams_) of numbers that behave like independent random number sequences, and they have efficient ways to assign a different stream to each process this way.  These ways are an alternative to the hashing described here, but how they work is PRNG-specific and beyond the scope of this document.
+<small><sup id=Note18>(18)</sup> Note that with the procedure given here, there is a risk that two processes will end up with the same PRNG seed, but this risk is often negligible, especially for PRNGs whose state length is 128 or more bits (see "[**Birthday problem**](https://en.wikipedia.org/wiki/Birthday_problem)").  As an alternative, some PRNGs, such as PCG64 and `sfc`, have multiple sequences (or _streams_) of numbers that behave like independent random number sequences, and they have efficient methods to assign a different stream to each process this way.  How these methods work is PRNG-specific and beyond the scope of this document.
 
 P. L'Ecuyer, D. Munger, et al.  "Random Numbers for Parallel Computers: Requirements and Methods, With Emphasis on GPUs". April 17, 2015, section 4, goes in greater detail on ways to initialize PRNGs for generating random numbers in parallel, including how to ensure reproducible "randomness" this way if that is desired.</small>
 
