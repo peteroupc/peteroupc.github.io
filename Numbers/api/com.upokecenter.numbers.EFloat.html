@@ -1021,6 +1021,8 @@ floating-point number.</li>
 
 <ul>
 <li><p><code>java.lang.NullPointerException</code> - The parameter <code>str</code> is null.</p></li>
+<li><p><code>java.lang.NumberFormatException</code> - The portion given of <code>str</code> is not a correctly
+formatted number string.</p></li>
 <li><p><code>java.lang.IllegalArgumentException</code> - Either <code>offset</code> or <code>length</code> is less
 than 0 or greater than <code>str</code> &#39;s length, or <code>str</code> &#39;s
 length minus <code>offset</code> is less than <code>length</code>.</p></li>
@@ -1046,6 +1048,14 @@ length minus <code>offset</code> is less than <code>length</code>.</p></li>
 <ul>
 <li>The parsed number, converted to arbitrary-precision binary
 floating-point number.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>java.lang.NullPointerException</code> - The parameter <code>str</code> is null.</p></li>
+<li><p><code>java.lang.NumberFormatException</code> - The portion given of <code>str</code> is not a correctly
+formatted number string.</p></li>
 </ul>
 
 <h3>FromString</h3>
@@ -1568,7 +1578,7 @@ value or if <code>other</code> is null, or 0 if both values are equal.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>intOther</code> - Not documented yet.</li>
+<li><code>intOther</code> - The parameter <code>intOther</code> is a 32-bit signed integer.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -1587,7 +1597,7 @@ value or if <code>other</code> is null, or 0 if both values are equal.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>intOther</code> - Not documented yet.</li>
+<li><code>intOther</code> - The parameter <code>intOther</code> is a 32-bit signed integer.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>

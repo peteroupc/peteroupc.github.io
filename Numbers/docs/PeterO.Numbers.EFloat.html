@@ -854,8 +854,8 @@ is a 32-bit signed integer.</p></li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>mantissa</i>: Not documented yet.</p></li>
-<li><p><i>exponent</i>: Not documented yet.</p></li>
+<li><p><i>mantissa</i>: The value of the significand.</p></li>
+<li><p><i>exponent</i>: The value of the exponent.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -1578,6 +1578,17 @@ is a 32-bit binary floating-point number.</li>
 
 <p>The parsed number, converted to arbitrary-precision binary floating-point number.</p>
 
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li><p>System.ArgumentNullException:
+The parameter  <i>str</i>
+is null.</p></li>
+<li><p>System.FormatException:
+The portion given of  <i>str</i>
+is not a correctly formatted number string.</p></li>
+</ul>
+
 <p><a id="FromString_string_int_int"></a></p>
 
 <h3>FromString</h3>
@@ -1677,6 +1688,9 @@ is an EContext object.</p></li>
 <li><p>System.ArgumentNullException:
 The parameter  <i>str</i>
 is null.</p></li>
+<li><p>System.FormatException:
+The portion given of  <i>str</i>
+is not a correctly formatted number string.</p></li>
 <li><p>System.ArgumentException:
 Either  <i>offset</i>
 or  <i>length</i>
