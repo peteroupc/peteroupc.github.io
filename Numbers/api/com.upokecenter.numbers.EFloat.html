@@ -1007,7 +1007,8 @@ number.</li>
 <code>str</code> begins.</p></li>
 <li><p><code>length</code> - The length, in code units, of the desired portion of <code>
 str</code> (but not more than <code>str</code> &#39;s length).</p></li>
-<li><p><code>ctx</code> - The parameter <code>ctx</code> is an EContext object.</p></li>
+<li><p><code>ctx</code> - An arithmetic context to control the precision, rounding, and
+exponent range of the result. Can be null.</p></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -1022,10 +1023,9 @@ floating-point number.</li>
 <ul>
 <li><p><code>java.lang.NullPointerException</code> - The parameter <code>str</code> is null.</p></li>
 <li><p><code>java.lang.NumberFormatException</code> - The portion given of <code>str</code> is not a correctly
-formatted number string.</p></li>
-<li><p><code>java.lang.IllegalArgumentException</code> - Either <code>offset</code> or <code>length</code> is less
-than 0 or greater than <code>str</code> &#39;s length, or <code>str</code> &#39;s
-length minus <code>offset</code> is less than <code>length</code>.</p></li>
+formatted number string; or either <code>offset</code> or <code>length</code>
+is less than 0 or greater than <code>str</code> &#39;s length, or <code>str</code>
+&#39;s length minus <code>offset</code> is less than <code>length</code>.</p></li>
 </ul>
 
 <h3>FromString</h3>
