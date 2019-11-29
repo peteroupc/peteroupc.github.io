@@ -1008,7 +1008,13 @@ number.</li>
 <li><p><code>length</code> - The length, in code units, of the desired portion of <code>
 str</code> (but not more than <code>str</code> &#39;s length).</p></li>
 <li><p><code>ctx</code> - An arithmetic context to control the precision, rounding, and
-exponent range of the result. Can be null.</p></li>
+exponent range of the result. If HasFlags of the context is true,
+will also store the flags resulting from the operation (the flags
+are in addition to the pre-existing flags). Can be null, in which
+case the precision is unlimited. Note that providing a context is
+often much faster than creating an EDecimal without a context then
+calling ToEFloat on that EDecimal, especially if the context
+specifies a precision limit and exponent range.</p></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -1071,8 +1077,14 @@ formatted number string.</p></li>
 
 <ul>
 <li><p><code>str</code> - A text string to convert to a binary floating-point number.</p></li>
-<li><p><code>ctx</code> - An arithmetic context specifying the precision, rounding, and
-exponent range to apply to the parsed number. Can be null.</p></li>
+<li><p><code>ctx</code> - An arithmetic context to control the precision, rounding, and
+exponent range of the result. If HasFlags of the context is true,
+will also store the flags resulting from the operation (the flags
+are in addition to the pre-existing flags). Can be null, in which
+case the precision is unlimited. Note that providing a context is
+often much faster than creating an EDecimal without a context then
+calling ToEFloat on that EDecimal, especially if the context
+specifies a precision limit and exponent range.</p></li>
 </ul>
 
 <p><strong>Returns:</strong></p>

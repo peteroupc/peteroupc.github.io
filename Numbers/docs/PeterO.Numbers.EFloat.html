@@ -511,12 +511,11 @@ is a 32-bit signed integer.</li>
 
 <p>Not documented yet.</p>
 
-<p>Not documented yet.</p>
-
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>intOther</i>: Not documented yet.</li>
+<li><i>intOther</i>: The parameter  <i>intOther</i>
+is a 32-bit signed integer.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -712,12 +711,11 @@ is a 32-bit signed integer.</li>
 
 <p>Not documented yet.</p>
 
-<p>Not documented yet.</p>
-
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>intOther</i>: Not documented yet.</li>
+<li><i>intOther</i>: The parameter  <i>intOther</i>
+is a 32-bit signed integer.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -854,7 +852,8 @@ is a 32-bit signed integer.</p></li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>mantissa</i>: The value of the significand.</p></li>
+<li><p><i>significand</i>: The parameter  <i>significand</i>
+is a Numbers.EInteger object.</p></li>
 <li><p><i>exponent</i>: The value of the exponent.</p></li>
 </ul>
 
@@ -1674,8 +1673,7 @@ begins.</p></li>
 <li><p><i>length</i>: The length, in code units, of the desired portion of  <i>str</i>
 (but not more than  <i>str</i>
 &#39;s length).</p></li>
-<li><p><i>ctx</i>: The parameter  <i>ctx</i>
-is an EContext object.</p></li>
+<li><p><i>ctx</i>: An arithmetic context to control the precision, rounding, and exponent range of the result. If HasFlags of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null, in which case the precision is unlimited. Note that providing a context is often much faster than creating an EDecimal without a context then calling ToEFloat on that EDecimal, especially if the context specifies a precision limit and exponent range.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -1690,12 +1688,10 @@ The parameter  <i>str</i>
 is null.</p></li>
 <li><p>System.FormatException:
 The portion given of  <i>str</i>
-is not a correctly formatted number string.</p></li>
-<li><p>System.ArgumentException:
-Either  <i>offset</i>
+is not a correctly formatted number string; or either  <i>offset</i>
 or  <i>length</i>
 is less than 0 or greater than  <i>str</i>
-&#39;s length, or  <i>             str</i>
+&#39;s length, or  <i>str</i>
 &#39;s length minus  <i>offset</i>
 is less than  <i>length</i>
 .</p></li>
@@ -1716,7 +1712,7 @@ is less than  <i>length</i>
 
 <ul>
 <li><p><i>str</i>: A text string to convert to a binary floating-point number.</p></li>
-<li><p><i>ctx</i>: An arithmetic context specifying the precision, rounding, and exponent range to apply to the parsed number. Can be null.</p></li>
+<li><p><i>ctx</i>: An arithmetic context to control the precision, rounding, and exponent range of the result. If HasFlags of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null, in which case the precision is unlimited. Note that providing a context is often much faster than creating an EDecimal without a context then calling ToEFloat on that EDecimal, especially if the context specifies a precision limit and exponent range.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -4606,7 +4602,7 @@ This value is infinity or not-a-number, is not an exact integer, or is less than
     PeterO.Numbers.EContext ctx);
 </pre>
 
-<p>Returns a string representation of this number&#39;s value after rounding to the given precision (using the given arithmetic context). If the number after rounding is neither infinity nor not-a-number (NaN), returns the shortest decimal form (in terms of nonzero decimal digits) of this number&#39;s value that results in the rounded number after the decimal form is converted to binary floating-point format (using the given arithmetic context).</p>
+<p>Returns a string representation of this number&#39;s value after rounding to the given precision (using the given arithmetic context). If the number after rounding is neither infinity nor not-a-number (NaN), returns the shortest decimal form of this number&#39;s value (in terms of decimal digits starting with the first nonzero digit and ending with the last nonzero digit) that results in the rounded number after the decimal form is converted to binary floating-point format (using the given arithmetic context).</p>
 
 <p><b>Parameters:</b></p>
 
@@ -4616,7 +4612,7 @@ This value is infinity or not-a-number, is not an exact integer, or is less than
 
 <p><b>Return Value:</b></p>
 
-<p>Shortest decimal form of this number&#39;s value for the given arithmetic context. The text string will be in exponential notation if the number&#39;s first nonzero decimal digit is more than five digits after the decimal point, or if the number&#39;s exponent is greater than 0 and its value is 10, 000, 000 or greater.</p>
+<p>Shortest decimal form of this number&#39;s value for the given arithmetic context. The text string will be in exponential notation (expressed as a number 1 or greater, but less than 10, times a power of 10) if the number&#39;s first nonzero decimal digit is more than five digits after the decimal point, or if the number&#39;s exponent is greater than 0 and its value is 10, 000, 000 or greater.</p>
 
 <p><a id="ToSingle"></a></p>
 
@@ -4642,7 +4638,7 @@ This value is infinity or not-a-number, is not an exact integer, or is less than
 
 <p><b>Return Value:</b></p>
 
-<p>A string representation of this object. The value is converted to decimal and the decimal form of this number&#39;s value is returned. The text string will be in exponential notation if the converted number&#39;s scale is positive or if the number&#39;s first nonzero decimal digit is more than five digits after the decimal point.</p>
+<p>A string representation of this object. The value is converted to decimal and the decimal form of this number&#39;s value is returned. The text string will be in exponential notation (expressed as a number 1 or greater, but less than 10, times a power of 10) if the converted number&#39;s scale is positive or if the number&#39;s first nonzero decimal digit is more than five digits after the decimal point.</p>
 
 <p><a id="ToUInt16Checked"></a></p>
 
