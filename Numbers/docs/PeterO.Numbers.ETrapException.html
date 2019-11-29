@@ -18,7 +18,9 @@
 
 <ul>
 <li><code><a href="#Context">Context</a></code> - Gets the arithmetic context used during the operation that triggered the trap.</li>
-<li><code><a href="#Error">Error</a></code> - Gets the flag that specifies the kind of error (EContext.</li>
+<li><code><a href="#Error">Error</a></code> - Gets the flag that specifies the primary kind of error in one or more operations (EContext.</li>
+<li><code><a href="#Errors">Errors</a></code> - Specifies the flags that were signaled as the result of one or more operations.</li>
+<li><code><a href="#HasError_int">HasError(int)</a></code> -</li>
 <li><code><a href="#Result">Result</a></code> - Gets the defined result of the operation that caused the trap.</li>
 </ul>
 
@@ -37,9 +39,40 @@
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>flag</i>: The flag that specifies the kind of error (EContext.FlagXXX). This will only be one flag, such as  <code>FlagInexact</code>  or FlagSubnormal.</p></li>
+<li><p><i>flag</i>: The flag that specifies the kind of error from one or more operations (EContext.FlagXXX). This will only be one flag, such as  <code>FlagInexact</code>  or FlagSubnormal.</p></li>
 <li><p><i>ctx</i>: The arithmetic context used during the operation that triggered the trap. Can be null.</p></li>
 <li><p><i>result</i>: The defined result of the operation that caused the trap.</p></li>
+</ul>
+
+<p><a id="Void_ctor_Int32_Int32_PeterO_Numbers_EContext_System_Object"></a></p>
+
+<h3>ETrapException Constructor</h3>
+
+<pre>public ETrapException(
+    int flags,
+    int flag,
+    PeterO.Numbers.EContext ctx,
+    object result);
+</pre>
+
+<p>Initializes a new instance of the <a href="PeterO.Numbers.ETrapException.html">PeterO.Numbers.ETrapException</a>.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>flags</i>: Specifies the flags that were signaled as the result of one or more operations. This includes the flag specified in the &quot;flag&quot; parameter, but can include other flags. For instance, if &quot;flag&quot; is  <code>EContext.FlagInexact</code> , this parameter might be  <code>EContext.FlagInexact | EContext.FlagRounded</code> .</p></li>
+<li><p><i>flag</i>: Specifies the flag that specifies the primary kind of error from one or more operations (EContext.FlagXXX). This will only be one flag, such as  <code>FlagInexact</code>  or FlagSubnormal.</p></li>
+<li><p><i>ctx</i>: The arithmetic context used during the operation that triggered the trap. Can be null.</p></li>
+<li><p><i>result</i>: The defined result of the operation that caused the trap.</p></li>
+</ul>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentException:
+The parameter  <i>flags</i>
+doesn&#39;t include all the flags in the  <i>flag</i>
+parameter.</li>
 </ul>
 
 <p><a id="Void_ctor_System_String"></a></p>
@@ -108,11 +141,24 @@ is an Exception object.</p></li>
 <pre>public int Error { get; }
 </pre>
 
-<p>Gets the flag that specifies the kind of error (EContext.FlagXXX). This will only be one flag, such as  <code>FlagInexact</code>  or FlagSubnormal.</p>
+<p>Gets the flag that specifies the primary kind of error in one or more operations (EContext.FlagXXX). This will only be one flag, such as  <code>FlagInexact</code>  or FlagSubnormal.</p>
 
 <p><b>Returns:</b></p>
 
-<p>The flag that specifies the kind of error (EContext.FlagXXX). This will only be one flag, such as.  <code>FlagInexact</code>  or FlagSubnormal.</p>
+<p>The flag that specifies the primary kind of error in one or more operations.</p>
+
+<p><a id="Errors"></a></p>
+
+<h3>Errors</h3>
+
+<pre>public int Errors { get; }
+</pre>
+
+<p>Specifies the flags that were signaled as the result of one or more operations. This includes the flag specified in the &quot;flag&quot; parameter, but can include other flags. For instance, if &quot;flag&quot; is  <code>EContext.FlagInexact</code> , this parameter might be  <code>EContext.FlagInexact | EContext.FlagRounded</code> .</p>
+
+<p><b>Returns:</b></p>
+
+<p>The flags that specifies the errors in one or more operations.</p>
 
 <p><a id="Result"></a></p>
 
@@ -126,6 +172,25 @@ is an Exception object.</p></li>
 <p><b>Returns:</b></p>
 
 <p>The defined result of the operation that caused the trap.</p>
+
+<p><a id="HasError_int"></a></p>
+
+<h3>HasError</h3>
+
+<pre>public bool HasError(
+    int flag);
+</pre>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>flag</i>: The parameter  <i>flag</i>
+is a 32-bit signed integer.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>The return value is not documented yet.</p>
 
 <p><a href="/Numbers/">Back to Numbers start page.</a></p>
 </div><nav id="navigation"><ul>

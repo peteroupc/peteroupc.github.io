@@ -52,10 +52,10 @@
 <ul>
 <li><code><a href="#Abs">Abs()</a></code> - Finds the absolute value of this object (if it&#39;s negative, it becomes positive).</li>
 <li><code><a href="#Abs_PeterO_Numbers_EContext">Abs(PeterO.Numbers.EContext)</a></code> - Finds the absolute value of this object (if it&#39;s negative, it becomes positive).</li>
-<li><code><a href="#Add_int">Add(int)</a></code> - Not documented yet.</li>
+<li><code><a href="#Add_int">Add(int)</a></code> - Adds this object and another number and returns the result.</li>
 <li><code><a href="#Add_PeterO_Numbers_EFloat">Add(PeterO.Numbers.EFloat)</a></code> - Adds this object and another binary floating-point number and returns the result.</li>
 <li><code><a href="#Add_PeterO_Numbers_EFloat_PeterO_Numbers_EContext">Add(PeterO.Numbers.EFloat, PeterO.Numbers.EContext)</a></code> - Finds the sum of this object and another object.</li>
-<li><code><a href="#CompareTo_int">CompareTo(int)</a></code> - Not documented yet.</li>
+<li><code><a href="#CompareTo_int">CompareTo(int)</a></code> - Compares the mathematical values of this object and another object, accepting NaN values.</li>
 <li><code><a href="#CompareTo_PeterO_Numbers_EFloat">CompareTo(PeterO.Numbers.EFloat)</a></code> - Compares the mathematical values of this object and another object, accepting NaN values.</li>
 <li><code><a href="#CompareToSignal_PeterO_Numbers_EFloat_PeterO_Numbers_EContext">CompareToSignal(PeterO.Numbers.EFloat, PeterO.Numbers.EContext)</a></code> - Compares the mathematical values of this object and another object, treating quiet NaN as signaling.</li>
 <li><code><a href="#CompareToTotal_PeterO_Numbers_EFloat">CompareToTotal(PeterO.Numbers.EFloat)</a></code> - Compares the values of this object and another object, imposing a total ordering on all possible values.</li>
@@ -91,6 +91,18 @@
 <li><code><a href="#Equals_PeterO_Numbers_EFloat">Equals(PeterO.Numbers.EFloat)</a></code> - Determines whether this object&#39;s significand, exponent, and properties are equal to those of another object.</li>
 <li><code><a href="#EqualsInternal_PeterO_Numbers_EFloat">EqualsInternal(PeterO.Numbers.EFloat)</a></code> - Determines whether this object&#39;s significand and exponent are equal to those of another object.</li>
 <li><code><a href="#Exp_PeterO_Numbers_EContext">Exp(PeterO.Numbers.EContext)</a></code> - Finds e (the base of natural logarithms) raised to the power of this object&#39;s value.</li>
+<li><code><a href="#explicit_operator_byte_PeterO_Numbers_EFloat">explicit operator byte(PeterO.Numbers.EFloat)</a></code> - Converts an arbitrary-precision binary floating-point number to a byte (from 0 to 255) if it can fit in a byte (from 0 to 255) after converting it to an integer by discarding its fractional part.</li>
+<li><code><a href="#explicit_operator_double_PeterO_Numbers_EFloat">explicit operator double(PeterO.Numbers.EFloat)</a></code> - Converts this value to its closest equivalent as a 64-bit floating-point number.</li>
+<li><code><a href="#explicit_operator_float_PeterO_Numbers_EFloat">explicit operator float(PeterO.Numbers.EFloat)</a></code> - Converts an arbitrary-precision binary floating-point number to its closest equivalent as a 32-bit floating-point number.</li>
+<li><code><a href="#explicit_operator_int_PeterO_Numbers_EFloat">explicit operator int(PeterO.Numbers.EFloat)</a></code> - Converts an arbitrary-precision binary floating-point number to a 32-bit signed integer if it can fit in a 32-bit signed integer after converting it to an integer by discarding its fractional part.</li>
+<li><code><a href="#explicit_operator_long_PeterO_Numbers_EFloat">explicit operator long(PeterO.Numbers.EFloat)</a></code> - Converts an arbitrary-precision binary floating-point number to a 64-bit signed integer if it can fit in a 64-bit signed integer after converting it to an integer by discarding its fractional part.</li>
+<li><code><a href="#explicit_operator_PeterO_Numbers_EFloat_bool">explicit operator PeterO.Numbers.EFloat(bool)</a></code> - Converts a boolean value (true or false) to an arbitrary-precision binary floating-point number.</li>
+<li><code><a href="#explicit_operator_PeterO_Numbers_EInteger_PeterO_Numbers_EFloat">explicit operator PeterO.Numbers.EInteger(PeterO.Numbers.EFloat)</a></code> - Converts an arbitrary-precision binary floating-point number to a value to an arbitrary-precision integer.</li>
+<li><code><a href="#explicit_operator_sbyte_PeterO_Numbers_EFloat">explicit operator sbyte(PeterO.Numbers.EFloat)</a></code> - Converts an arbitrary-precision binary floating-point number to an 8-bit signed integer if it can fit in an 8-bit signed integer after converting it to an integer by discarding its fractional part.</li>
+<li><code><a href="#explicit_operator_short_PeterO_Numbers_EFloat">explicit operator short(PeterO.Numbers.EFloat)</a></code> - Converts an arbitrary-precision binary floating-point number to a 16-bit signed integer if it can fit in a 16-bit signed integer after converting it to an integer by discarding its fractional part.</li>
+<li><code><a href="#explicit_operator_uint_PeterO_Numbers_EFloat">explicit operator uint(PeterO.Numbers.EFloat)</a></code> - Converts an arbitrary-precision binary floating-point number to a 32-bit signed integer if it can fit in a 32-bit signed integer after converting it to an integer by discarding its fractional part.</li>
+<li><code><a href="#explicit_operator_ulong_PeterO_Numbers_EFloat">explicit operator ulong(PeterO.Numbers.EFloat)</a></code> - Converts an arbitrary-precision binary floating-point number to a 64-bit unsigned integer if it can fit in a 64-bit unsigned integer after converting it to an integer by discarding its fractional part.</li>
+<li><code><a href="#explicit_operator_ushort_PeterO_Numbers_EFloat">explicit operator ushort(PeterO.Numbers.EFloat)</a></code> - Converts an arbitrary-precision binary floating-point number to a 16-bit unsigned integer if it can fit in a 16-bit unsigned integer after converting it to an integer by discarding its fractional part.</li>
 <li><code><a href="#Exponent">Exponent</a></code> - Gets this object&#39;s exponent.</li>
 <li><code><a href="#FromBoolean_bool">FromBoolean(bool)</a></code> - Converts a boolean value (either true or false) to an arbitrary-precision binary floating-point number.</li>
 <li><code><a href="#FromByte_byte">FromByte(byte)</a></code> - Converts a byte (from 0 to 255) to an arbitrary-precision binary floating-point number.</li>
@@ -109,6 +121,17 @@
 <li><code><a href="#FromUInt32_uint">FromUInt32(uint)</a></code> - Converts a 32-bit signed integer to an arbitrary-precision binary floating-point number.</li>
 <li><code><a href="#FromUInt64_ulong">FromUInt64(ulong)</a></code> - Converts a 64-bit unsigned integer to an arbitrary-precision binary floating-point number.</li>
 <li><code><a href="#GetHashCode">GetHashCode()</a></code> - Calculates this object&#39;s hash code.</li>
+<li><code><a href="#implicit_operator_PeterO_Numbers_EFloat_byte">implicit operator PeterO.Numbers.EFloat(byte)</a></code> - Converts a byte (from 0 to 255) to an arbitrary-precision binary floating-point number.</li>
+<li><code><a href="#implicit_operator_PeterO_Numbers_EFloat_double">implicit operator PeterO.Numbers.EFloat(double)</a></code> - Creates a binary floating-point number from a 64-bit floating-point number.</li>
+<li><code><a href="#implicit_operator_PeterO_Numbers_EFloat_float">implicit operator PeterO.Numbers.EFloat(float)</a></code> - Creates a binary floating-point number from a 32-bit floating-point number.</li>
+<li><code><a href="#implicit_operator_PeterO_Numbers_EFloat_int">implicit operator PeterO.Numbers.EFloat(int)</a></code> - Converts a 32-bit signed integer to an arbitrary-precision binary floating-point number.</li>
+<li><code><a href="#implicit_operator_PeterO_Numbers_EFloat_long">implicit operator PeterO.Numbers.EFloat(long)</a></code> - Converts a 64-bit signed integer to an arbitrary-precision binary floating-point number.</li>
+<li><code><a href="#implicit_operator_PeterO_Numbers_EFloat_PeterO_Numbers_EInteger">implicit operator PeterO.Numbers.EFloat(PeterO.Numbers.EInteger)</a></code> - Converts an arbitrary-precision integer to an arbitrary precision binary.</li>
+<li><code><a href="#implicit_operator_PeterO_Numbers_EFloat_sbyte">implicit operator PeterO.Numbers.EFloat(sbyte)</a></code> - Converts an 8-bit signed integer to an arbitrary-precision binary floating-point number.</li>
+<li><code><a href="#implicit_operator_PeterO_Numbers_EFloat_short">implicit operator PeterO.Numbers.EFloat(short)</a></code> - Converts a 16-bit signed integer to an arbitrary-precision binary floating-point number.</li>
+<li><code><a href="#implicit_operator_PeterO_Numbers_EFloat_uint">implicit operator PeterO.Numbers.EFloat(uint)</a></code> - Converts a 32-bit signed integer to an arbitrary-precision binary floating-point number.</li>
+<li><code><a href="#implicit_operator_PeterO_Numbers_EFloat_ulong">implicit operator PeterO.Numbers.EFloat(ulong)</a></code> - Converts a 64-bit unsigned integer to an arbitrary-precision binary floating-point number.</li>
+<li><code><a href="#implicit_operator_PeterO_Numbers_EFloat_ushort">implicit operator PeterO.Numbers.EFloat(ushort)</a></code> - Converts a 16-bit unsigned integer to an arbitrary-precision binary floating-point number.</li>
 <li><code><a href="#Increment">Increment()</a></code> - Returns one added to this arbitrary-precision binary floating-point number.</li>
 <li><code><a href="#IsFinite">IsFinite</a></code> - Gets a value indicating whether this object is finite (not infinity or NaN).</li>
 <li><code><a href="#IsInfinity">IsInfinity()</a></code> - Gets a value indicating whether this object is positive or negative infinity.</li>
@@ -156,8 +179,6 @@
 <li><code><a href="#op_Addition">PeterO.Numbers.EFloat operator +(PeterO.Numbers.EFloat, PeterO.Numbers.EFloat)</a></code> - Adds two arbitrary-precision binary floating-point numbers and returns the result.</li>
 <li><code><a href="#op_Decrement">PeterO.Numbers.EFloat operator --(PeterO.Numbers.EFloat)</a></code> - Subtracts one from an arbitrary-precision binary floating-point number.</li>
 <li><code><a href="#op_Division">PeterO.Numbers.EFloat operator /(PeterO.Numbers.EFloat, PeterO.Numbers.EFloat)</a></code> - Divides one binary floating-point number by another and returns the result.</li>
-<li><code><a href="#op_Explicit">explicit operator ulong(PeterO.Numbers.EFloat)</a></code> - Converts a boolean value (true or false) to an arbitrary-precision binary floating-point number. Converts an arbitrary-precision binary floating-point number to a value to an arbitrary-precision integer. Converts this value to its closest equivalent as a 64-bit floating-point number. Converts an arbitrary-precision binary floating-point number to its closest equivalent as a 32-bit floating-point number. Converts an arbitrary-precision binary floating-point number to a byte (from 0 to 255) if it can fit in a byte (from 0 to 255) after converting it to an integer by discarding its fractional part. Converts an arbitrary-precision binary floating-point number to an 8-bit signed integer if it can fit in an 8-bit signed integer after converting it to an integer by discarding its fractional part. Converts an arbitrary-precision binary floating-point number to a 16-bit signed integer if it can fit in a 16-bit signed integer after converting it to an integer by discarding its fractional part. Converts an arbitrary-precision binary floating-point number to a 16-bit unsigned integer if it can fit in a 16-bit unsigned integer after converting it to an integer by discarding its fractional part. Converts an arbitrary-precision binary floating-point number to a 32-bit signed integer if it can fit in a 32-bit signed integer after converting it to an integer by discarding its fractional part. Converts an arbitrary-precision binary floating-point number to a 32-bit signed integer if it can fit in a 32-bit signed integer after converting it to an integer by discarding its fractional part. Converts an arbitrary-precision binary floating-point number to a 64-bit signed integer if it can fit in a 64-bit signed integer after converting it to an integer by discarding its fractional part. Converts an arbitrary-precision binary floating-point number to a 64-bit unsigned integer if it can fit in a 64-bit unsigned integer after converting it to an integer by discarding its fractional part.</li>
-<li><code><a href="#op_Implicit">implicit operator PeterO.Numbers.EFloat(ulong)</a></code> - Creates a binary floating-point number from a 32-bit floating-point number. Creates a binary floating-point number from a 64-bit floating-point number. Converts an arbitrary-precision integer to an arbitrary precision binary. Converts a byte (from 0 to 255) to an arbitrary-precision binary floating-point number. Converts an 8-bit signed integer to an arbitrary-precision binary floating-point number. Converts a 16-bit signed integer to an arbitrary-precision binary floating-point number. Converts a 16-bit unsigned integer to an arbitrary-precision binary floating-point number. Converts a 32-bit signed integer to an arbitrary-precision binary floating-point number. Converts a 32-bit signed integer to an arbitrary-precision binary floating-point number. Converts a 64-bit signed integer to an arbitrary-precision binary floating-point number. Converts a 64-bit unsigned integer to an arbitrary-precision binary floating-point number.</li>
 <li><code><a href="#op_Increment">PeterO.Numbers.EFloat operator ++(PeterO.Numbers.EFloat)</a></code> - Adds one to an arbitrary-precision binary floating-point number.</li>
 <li><code><a href="#op_Modulus">PeterO.Numbers.EFloat operator %(PeterO.Numbers.EFloat, PeterO.Numbers.EFloat)</a></code> - Finds the remainder when dividing one arbitrary-precision binary floating-point number by another.</li>
 <li><code><a href="#op_Multiply">PeterO.Numbers.EFloat operator &#x2a;(PeterO.Numbers.EFloat, PeterO.Numbers.EFloat)</a></code> - Multiplies two binary floating-point numbers.</li>
@@ -446,18 +467,17 @@
     int intValue);
 </pre>
 
-<p>Not documented yet.</p>
+<p>Adds this object and another number and returns the result.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>intValue</i>: The parameter  <i>intValue</i>
-is a 32-bit signed integer.</li>
+<li><i>otherValue</i>: The number to add.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p>An arbitrary-precision binary floating-point number.</p>
+<p>The sum of the two objects.</p>
 
 <p><a id="Add_PeterO_Numbers_EFloat"></a></p>
 
@@ -509,18 +529,18 @@ is a 32-bit signed integer.</li>
     int intOther);
 </pre>
 
-<p>Not documented yet.</p>
+<p>Compares the mathematical values of this object and another object, accepting NaN values. This method currently uses the rules given in the CompareToValue method, so that it it is not consistent with the Equals method, but it may change in a future version to use the rules for the CompareToTotal method instead.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>intOther</i>: The parameter  <i>intOther</i>
-is a 32-bit signed integer.</li>
+<li><i>other</i>: An arbitrary-precision binary floating-point number.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p>The return value is not documented yet.</p>
+<p>Less than 0 if this object&#39;s value is less than the other value, or greater than 0 if this object&#39;s value is greater than the other value or if  <i>other</i>
+ is null, or 0 if both values are equal.</p>
 
 <p><a id="CompareTo_PeterO_Numbers_EFloat"></a></p>
 
@@ -852,7 +872,7 @@ is a 32-bit signed integer.</p></li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>significand</i>: The parameter  <i>significand</i>
+<li><p><i>mantissa</i>: The parameter  <i>mantissa</i>
 is a Numbers.EInteger object.</p></li>
 <li><p><i>exponent</i>: The value of the exponent.</p></li>
 </ul>
@@ -1306,7 +1326,7 @@ is an arbitrary object.</li>
 
 <p><b>Return Value:</b></p>
 
-<p><code>true</code>  if the objects are equal; otherwise,  <code>false</code> .</p>
+<p><code>true</code>  if the objects are equal; otherwise,  <code>false</code> . In this method, two objects are not equal if they don&#39;t have the same type or if one is null and the other isn&#39;t.</p>
 
 <p><a id="Equals_PeterO_Numbers_EFloat"></a></p>
 
@@ -2645,7 +2665,7 @@ The parameter  <i>dividend</i>
 is null.</li>
 </ul>
 
-<p><a id="op_Explicit"></a></p>
+<p><a id="explicit_operator_byte_PeterO_Numbers_EFloat"></a></p>
 
 <h3>Explicit Operator</h3>
 
@@ -2677,7 +2697,7 @@ The parameter  <i>input</i>
 is null.</p></li>
 </ul>
 
-<p><a id="op_Explicit"></a></p>
+<p><a id="explicit_operator_double_PeterO_Numbers_EFloat"></a></p>
 
 <h3>Explicit Operator</h3>
 
@@ -2705,7 +2725,7 @@ The parameter  <i>bigValue</i>
 is null.</li>
 </ul>
 
-<p><a id="op_Explicit"></a></p>
+<p><a id="explicit_operator_float_PeterO_Numbers_EFloat"></a></p>
 
 <h3>Explicit Operator</h3>
 
@@ -2733,7 +2753,7 @@ The parameter  <i>bigValue</i>
 is null.</li>
 </ul>
 
-<p><a id="op_Explicit"></a></p>
+<p><a id="explicit_operator_int_PeterO_Numbers_EFloat"></a></p>
 
 <h3>Explicit Operator</h3>
 
@@ -2765,7 +2785,7 @@ The parameter  <i>input</i>
 is null.</p></li>
 </ul>
 
-<p><a id="op_Explicit"></a></p>
+<p><a id="explicit_operator_long_PeterO_Numbers_EFloat"></a></p>
 
 <h3>Explicit Operator</h3>
 
@@ -2797,7 +2817,7 @@ The parameter  <i>input</i>
 is null.</p></li>
 </ul>
 
-<p><a id="op_Explicit"></a></p>
+<p><a id="explicit_operator_PeterO_Numbers_EFloat_bool"></a></p>
 
 <h3>Explicit Operator</h3>
 
@@ -2818,7 +2838,7 @@ is null.</p></li>
 <p>The number 1 if  <i>boolValue</i>
  is true; otherwise, 0.</p>
 
-<p><a id="op_Explicit"></a></p>
+<p><a id="explicit_operator_PeterO_Numbers_EInteger_PeterO_Numbers_EFloat"></a></p>
 
 <h3>Explicit Operator</h3>
 
@@ -2848,7 +2868,7 @@ The parameter  <i>bigValue</i>
 is null.</p></li>
 </ul>
 
-<p><a id="op_Explicit"></a></p>
+<p><a id="explicit_operator_sbyte_PeterO_Numbers_EFloat"></a></p>
 
 <h3>Explicit Operator</h3>
 
@@ -2882,7 +2902,7 @@ The parameter  <i>input</i>
 is null.</p></li>
 </ul>
 
-<p><a id="op_Explicit"></a></p>
+<p><a id="explicit_operator_short_PeterO_Numbers_EFloat"></a></p>
 
 <h3>Explicit Operator</h3>
 
@@ -2914,7 +2934,7 @@ The parameter  <i>input</i>
 is null.</p></li>
 </ul>
 
-<p><a id="op_Explicit"></a></p>
+<p><a id="explicit_operator_uint_PeterO_Numbers_EFloat"></a></p>
 
 <h3>Explicit Operator</h3>
 
@@ -2948,7 +2968,7 @@ The parameter  <i>input</i>
 is null.</p></li>
 </ul>
 
-<p><a id="op_Explicit"></a></p>
+<p><a id="explicit_operator_ulong_PeterO_Numbers_EFloat"></a></p>
 
 <h3>Explicit Operator</h3>
 
@@ -2982,7 +3002,7 @@ The parameter  <i>input</i>
 is null.</p></li>
 </ul>
 
-<p><a id="op_Explicit"></a></p>
+<p><a id="explicit_operator_ushort_PeterO_Numbers_EFloat"></a></p>
 
 <h3>Explicit Operator</h3>
 
@@ -3016,7 +3036,7 @@ The parameter  <i>input</i>
 is null.</p></li>
 </ul>
 
-<p><a id="op_Implicit"></a></p>
+<p><a id="implicit_operator_PeterO_Numbers_EFloat_byte"></a></p>
 
 <h3>Implicit Operator</h3>
 
@@ -3037,7 +3057,7 @@ is null.</p></li>
 <p>The value of  <i>inputByte</i>
  as an arbitrary-precision binary floating-point number.</p>
 
-<p><a id="op_Implicit"></a></p>
+<p><a id="implicit_operator_PeterO_Numbers_EFloat_double"></a></p>
 
 <h3>Implicit Operator</h3>
 
@@ -3059,7 +3079,7 @@ is a 64-bit floating-point number.</li>
 <p>A binary floating-point number with the same value as  <i>dbl</i>
 .</p>
 
-<p><a id="op_Implicit"></a></p>
+<p><a id="implicit_operator_PeterO_Numbers_EFloat_float"></a></p>
 
 <h3>Implicit Operator</h3>
 
@@ -3081,7 +3101,7 @@ is a 32-bit binary floating-point number.</li>
 <p>A binary floating-point number with the same value as  <i>flt</i>
 .</p>
 
-<p><a id="op_Implicit"></a></p>
+<p><a id="implicit_operator_PeterO_Numbers_EFloat_int"></a></p>
 
 <h3>Implicit Operator</h3>
 
@@ -3102,7 +3122,7 @@ is a 32-bit binary floating-point number.</li>
 <p>The value of  <i>inputInt32</i>
  as an arbitrary-precision binary floating-point number.</p>
 
-<p><a id="op_Implicit"></a></p>
+<p><a id="implicit_operator_PeterO_Numbers_EFloat_long"></a></p>
 
 <h3>Implicit Operator</h3>
 
@@ -3123,7 +3143,7 @@ is a 32-bit binary floating-point number.</li>
 <p>The value of  <i>inputInt64</i>
  as an arbitrary-precision binary floating-point number.</p>
 
-<p><a id="op_Implicit"></a></p>
+<p><a id="implicit_operator_PeterO_Numbers_EFloat_PeterO_Numbers_EInteger"></a></p>
 
 <h3>Implicit Operator</h3>
 
@@ -3143,7 +3163,7 @@ is a 32-bit binary floating-point number.</li>
 
 <p>An arbitrary-precision binary floating-point number with the exponent set to 0.</p>
 
-<p><a id="op_Implicit"></a></p>
+<p><a id="implicit_operator_PeterO_Numbers_EFloat_sbyte"></a></p>
 
 <h3>Implicit Operator</h3>
 
@@ -3166,7 +3186,7 @@ is a 32-bit binary floating-point number.</li>
 <p>The value of  <i>inputSByte</i>
  as an arbitrary-precision binary floating-point number.</p>
 
-<p><a id="op_Implicit"></a></p>
+<p><a id="implicit_operator_PeterO_Numbers_EFloat_short"></a></p>
 
 <h3>Implicit Operator</h3>
 
@@ -3187,7 +3207,7 @@ is a 32-bit binary floating-point number.</li>
 <p>The value of  <i>inputInt16</i>
  as an arbitrary-precision binary floating-point number.</p>
 
-<p><a id="op_Implicit"></a></p>
+<p><a id="implicit_operator_PeterO_Numbers_EFloat_uint"></a></p>
 
 <h3>Implicit Operator</h3>
 
@@ -3210,7 +3230,7 @@ is a 32-bit binary floating-point number.</li>
 <p>The value of  <i>inputUInt32</i>
  as an arbitrary-precision binary floating-point number.</p>
 
-<p><a id="op_Implicit"></a></p>
+<p><a id="implicit_operator_PeterO_Numbers_EFloat_ulong"></a></p>
 
 <h3>Implicit Operator</h3>
 
@@ -3233,7 +3253,7 @@ is a 32-bit binary floating-point number.</li>
 <p>The value of  <i>inputUInt64</i>
  as an arbitrary-precision binary floating-point number.</p>
 
-<p><a id="op_Implicit"></a></p>
+<p><a id="implicit_operator_PeterO_Numbers_EFloat_ushort"></a></p>
 
 <h3>Implicit Operator</h3>
 
