@@ -44,6 +44,20 @@ at: <a href="http://peteroupc.github.io/Numbers/">http://peteroupc.github.io/Num
 
 <h2>Release notes</h2>
 
+<p>Version 1.5.0</p>
+
+<ul>
+<li>Major performance improvements in certain number parsing and generating methods, including the FromString methods of EInteger, EDecimal, EFloat, and ERational, and the ToEFloat method of EDecimal, especially where they take an arithmetic context (EContext) that specifies a limited precision and exponent range.</li>
+<li>There were also performance improvements in digit count calculation and in rounding many-digit-long numbers.</li>
+<li>Add int overloads to EDecimal.Pow and EFloat.Pow.</li>
+<li>Add int overloads to several ERational methods.</li>
+<li>Add CompareTo overloads and CompareToValue (which implements current CompareTo) in EDecimal, EFloat, and ERational.  In a future version, CompareTo&#39;s behavior might change to CompareToTotal in each of these classes.  Also certain CompareTo* methods now have consistent behavior when they receive a null argument.</li>
+<li>ETrapException now has an Errors property that holds all errors that occur at the same time as the primary error.</li>
+<li>Fixed edge cases when ToShortestString might return an incorrect result.</li>
+<li>Fixed bug when some ETrapExceptions aren&#39;t thrown as they should.</li>
+<li>Other bug fixes.</li>
+</ul>
+
 <p>Version 1.4.3</p>
 
 <ul>

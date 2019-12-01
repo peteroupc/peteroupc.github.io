@@ -19,7 +19,7 @@
 <ul>
 <li><code><a href="#Context">Context</a></code> - Gets the arithmetic context used during the operation that triggered the trap.</li>
 <li><code><a href="#Error">Error</a></code> - Gets the flag that specifies the primary kind of error in one or more operations (EContext.</li>
-<li><code><a href="#Errors">Errors</a></code> - Specifies the flags that were signaled as the result of one or more operations.</li>
+<li><code><a href="#Errors">Errors</a></code> - Gets the flags that were signaled as the result of one or more operations.</li>
 <li><code><a href="#HasError_int">HasError(int)</a></code> - Returns whether this trap exception specifies all the flags given.</li>
 <li><code><a href="#Result">Result</a></code> - Gets the defined result of the operation that caused the trap.</li>
 </ul>
@@ -154,11 +154,11 @@ is an Exception object.</p></li>
 <pre>public int Errors { get; }
 </pre>
 
-<p>Specifies the flags that were signaled as the result of one or more operations. This includes the flag specified in the &quot;flag&quot; parameter, but can include other flags. For instance, if &quot;flag&quot; is  <code>EContext.FlagInexact</code> , this parameter might be  <code>EContext.FlagInexact | EContext.FlagRounded</code> .</p>
+<p>Gets the flags that were signaled as the result of one or more operations. This includes the flag specified in the &quot;flag&quot; parameter, but can include other flags. For instance, if &quot;flag&quot; is  <code>EContext.FlagInexact</code> , this parameter might be  <code>EContext.FlagInexact | EContext.FlagRounded</code> .</p>
 
 <p><b>Returns:</b></p>
 
-<p>The flags that specifies the errors in one or more operations.</p>
+<p>The flags that specify the errors in one or more operations.</p>
 
 <p><a id="Result"></a></p>
 
@@ -192,7 +192,7 @@ is an Exception object.</p></li>
 <p><b>Return Value:</b></p>
 
 <p>True if this exception pertains to all of the flags given in  <i>flag</i>
-; otherwise, false.</p>
+ ; otherwise, false.</p>
 
 <p><a href="/Numbers/">Back to Numbers start page.</a></p>
 </div><nav id="navigation"><ul>

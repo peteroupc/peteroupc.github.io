@@ -39,8 +39,7 @@ trap.</li>
 Gets the flag that specifies the primary kind of error in one or more
 operations (EContext.FlagXXX).</li>
 <li><code>int getErrors()</code><br>
-Specifies the flags that were signaled as the result of one or more
-operations.</li>
+Gets the flags that were signaled as the result of one or more operations.</li>
 <li><code>java.lang.Object getResult()</code><br>
 Gets the defined result of the operation that caused the trap.</li>
 <li><code>boolean HasError​(int flag)</code><br>
@@ -202,16 +201,16 @@ operations.</li>
 <pre>public final int getErrors()
 </pre>
 
-<p>Specifies the flags that were signaled as the result of one or more
-  operations. This includes the flag specified in the &quot;flag&quot;
-  parameter, but can include other flags. For instance, if &quot;flag&quot; is
+<p>Gets the flags that were signaled as the result of one or more operations.
+  This includes the flag specified in the &quot;flag&quot; parameter, but can
+  include other flags. For instance, if &quot;flag&quot; is
  <code>EContext.FlagInexact</code>, this parameter might be
  <code>EContext.FlagInexact | EContext.FlagRounded</code>.</p>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>The flags that specifies the errors in one or more operations.</li>
+<li>The flags that specify the errors in one or more operations.</li>
 </ul>
 
 <h3>HasError</h3>
