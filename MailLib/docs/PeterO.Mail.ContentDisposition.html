@@ -13,7 +13,7 @@
 
 <p><b>About the &quot;filename&quot; parameter</b></p>
 
-<p>The &quot;filename&quot; parameter of a content disposition suggests a name to use when saving data to a file. For the &quot;filename&quot; parameter, the GetParameter method and Parameters property (  <code>getParameters</code>  ) method in Java) do not adapt that parameter&#39;s value using the ContentDisposition.MakeFilename method. Thus, for example, the &quot;filename&quot; parameter, if any, returned by this method could have an arbitrary length, be encoded using RFC 2047 encoded words (which some email and HTTP implementations still like to write out in headers, even though that RFC says encoded words &quot;MUST NOT appear within a &#39;quoted-string&#39;&quot;; see ContentDisposition.MakeFilename), or not be usable as is as a file name.</p>
+<p>The &quot;filename&quot; parameter of a content disposition suggests a name to use when saving data to a file. For the &quot;filename&quot; parameter, the GetParameter method and Parameters property(  <code>getParameters</code>  ) method in Java) do not adapt that parameter&#39;s value using the ContentDisposition.MakeFilename method. Thus, for example, the &quot;filename&quot; parameter, if any, returned by this method could have an arbitrary length, be encoded using RFC 2047 encoded words (which some email and HTTP implementations still like to write out in headers, even though that RFC says encoded words &quot;MUST NOT appear within a &#39;quoted-string&#39;&quot;; see ContentDisposition.MakeFilename), or not be usable as is as a file name.</p>
 
 <p><b>Example:</b> An example of RFC 2047 encoded words is:</p>
 
@@ -141,7 +141,7 @@ is an arbitrary object.</li>
 
 <p><b>Return Value:</b></p>
 
-<p><code>true</code>  if the objects are equal; otherwise,  <code>false</code> .</p>
+<p><code>true</code>  if the objects are equal; otherwise,  <code>false</code> . In this method, two objects are not equal if they don&#39;t have the same type or if one is null and the other isn&#39;t.</p>
 
 <p><a id="GetCreationDate"></a></p>
 

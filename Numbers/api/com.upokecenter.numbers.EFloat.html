@@ -103,7 +103,7 @@ positive).</li>
 Finds the absolute value of this object (if it&#39;s negative, it becomes
 positive).</li>
 <li><code>EFloat Add​(int intValue)</code><br>
-Not documented yet.</li>
+Adds this object and another number and returns the result.</li>
 <li><code>EFloat Add​(EFloat otherValue)</code><br>
 Adds this object and another binary floating-point number and returns the
 result.</li>
@@ -111,7 +111,8 @@ result.</li>
 EContext ctx)</code><br>
 Finds the sum of this object and another object.</li>
 <li><code>int compareTo​(int intOther)</code><br>
-Not documented yet.</li>
+Compares the mathematical values of this object and another object,
+accepting NaN values.</li>
 <li><code>int compareTo​(EFloat other)</code><br>
 Compares the mathematical values of this object and another object,
 accepting NaN values.</li>
@@ -134,7 +135,8 @@ total ordering on all possible values (ignoring their signs).</li>
 Compares the values of this object and another object, imposing a total
 ordering on all possible values (ignoring their signs).</li>
 <li><code>int CompareToValue​(int intOther)</code><br>
-Not documented yet.</li>
+Compares the mathematical values of this object and another object,
+accepting NaN values.</li>
 <li><code>int CompareToValue​(EFloat other)</code><br>
 Compares the mathematical values of this object and another object,
 accepting NaN values.</li>
@@ -821,8 +823,8 @@ integer.</p></li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>mantissa</code> - Not documented yet.</p></li>
-<li><p><code>exponent</code> - Not documented yet.</p></li>
+<li><p><code>mantissa</code> - The parameter <code>mantissa</code> is a Numbers.EInteger object.</p></li>
+<li><p><code>exponent</code> - The value of the exponent.</p></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -1392,7 +1394,7 @@ quiet NaN if this value is signaling NaN.</li>
 <pre>public EFloat Add​(int intValue)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Adds this object and another number and returns the result.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1403,7 +1405,7 @@ quiet NaN if this value is signaling NaN.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>An arbitrary-precision binary floating-point number.</li>
+<li>The sum of the two objects.</li>
 </ul>
 
 <h3>Subtract</h3>
@@ -1585,7 +1587,11 @@ value or if <code>other</code> is null, or 0 if both values are equal.</li>
 <pre>public int compareTo​(int intOther)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Compares the mathematical values of this object and another object,
+ accepting NaN values. This method currently uses the rules given in
+ the CompareToValue method, so that it it is not consistent with the
+ Equals method, but it may change in a future version to use the
+ rules for the CompareToTotal method instead.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1596,7 +1602,9 @@ value or if <code>other</code> is null, or 0 if both values are equal.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>The return value is not documented yet.</li>
+<li>Less than 0 if this object&#39;s value is less than the other value, or
+greater than 0 if this object&#39;s value is greater than the other
+value, or 0 if both values are equal.</li>
 </ul>
 
 <h3>CompareToValue</h3>
@@ -1604,7 +1612,14 @@ value or if <code>other</code> is null, or 0 if both values are equal.</li>
 <pre>public int CompareToValue​(int intOther)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Compares the mathematical values of this object and another object,
+ accepting NaN values. <p>This method is not consistent with the
+ Equals method because two different numbers with the same
+ mathematical value, but different exponents, will compare as
+ equal.</p> <p>In this method, negative zero and positive zero are
+ considered equal.</p> <p>If this object is a quiet NaN or signaling
+ NaN, this method will not trigger an error. Instead, NaN will
+ compare greater than any other number.</p></p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1615,7 +1630,9 @@ value or if <code>other</code> is null, or 0 if both values are equal.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>The return value is not documented yet.</li>
+<li>Less than 0 if this object&#39;s value is less than the other value, or
+greater than 0 if this object&#39;s value is greater than the other
+value, or 0 if both values are equal.</li>
 </ul>
 
 <h3>CompareToSignal</h3>
@@ -2307,7 +2324,9 @@ those of another object; otherwise, <code>false</code>.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li><code>true</code> if the objects are equal; otherwise, <code>false</code>.</li>
+<li><code>true</code> if the objects are equal; otherwise, <code>false</code>. In
+this method, two objects are not equal if they don&#39;t have the same
+type or if one is null and the other isn&#39;t.</li>
 </ul>
 
 <h3>EqualsInternal</h3>

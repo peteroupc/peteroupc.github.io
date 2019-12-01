@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on June 4, 2017; last updated on Nov. 17, 2019.
+Begun on June 4, 2017; last updated on Nov. 30, 2019.
 
 Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.
 
@@ -1204,7 +1204,7 @@ A [**_low-discrepancy sequence_**](https://en.wikipedia.org/wiki/Low-discrepancy
 
 In most cases, RNGs can be used to generate a "seed" to start the low-discrepancy sequence at.
 
-In Monte Carlo integration and other estimations (described earlier), low-discrepancy sequences are often used to achieve more efficient "random" sampling.
+In Monte Carlo sampling, low-discrepancy sequences are often used to achieve more efficient "random" sampling.
 
 <a id=Weighted_Choice_Involving_Real_Numbers></a>
 ### Weighted Choice Involving Real Numbers
@@ -2153,7 +2153,7 @@ If an application is concerned about these issues, it should treat the `Math.ran
 
 <small><sup id=Note8>(8)</sup> See also the _Stack Overflow_ question "Random index of a non zero value in a numpy array".</small>
 
-<small><sup id=Note9>(9)</sup> S. Linderman, "A Parallel Gamma Sampling Implementation", Laboratory for Independent Probabilistic Systems Blog, Feb. 21, 2003, illustrates one example, a GPU-implemented sampler of gamma-distributed random numbers.</small>
+<small><sup id=Note9>(9)</sup> S. Linderman, "A Parallel Gamma Sampling Implementation", Laboratory for Independent Probabilistic Systems Blog, Feb. 21, 2013, illustrates one example, a GPU-implemented sampler of gamma-distributed random numbers.</small>
 
 <small><sup id=Note10>(10)</sup> Brownlee, J. "[**A Gentle Introduction to the Bootstrap Method**](https://machinelearningmastery.com/a-gentle-introduction-to-the-bootstrap-method/)", _Machine Learning Mastery_, May 25, 2018.</small>
 

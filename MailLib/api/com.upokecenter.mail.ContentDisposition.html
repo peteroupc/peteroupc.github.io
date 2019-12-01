@@ -15,7 +15,7 @@
   DispositionBuilder class.</p> <p><b>About the "filename"
   parameter</b></p> <p>The "filename" parameter of a content disposition
   suggests a name to use when saving data to a file. For the "filename"
- parameter, the GetParameter method and Parameters property (
+ parameter, the GetParameter method and Parameters property(
  <code>getParameters</code>) method in Java) do not adapt that parameter's
  value using the ContentDisposition.MakeFilename method. Thus, for
   example, the "filename" parameter, if any, returned by this method
@@ -161,7 +161,9 @@ or &quot;attachment&quot;.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li><code>true</code> if the objects are equal; otherwise, <code>false</code>.</li>
+<li><code>true</code> if the objects are equal; otherwise, <code>false</code>. In
+this method, two objects are not equal if they don&#39;t have the same
+type or if one is null and the other isn&#39;t.</li>
 </ul>
 
 <h3>hashCode</h3>
@@ -323,7 +325,7 @@ encoding) in file names passed to this method.</p> <p>RFC 2046 sec.
 4.5.1 (<code>application/octet-stream</code> subtype in Content-Type
 header field) cites an earlier RFC 1341, which &quot;defined the use of a
 &#39;NAME&#39; parameter which gave a <i>suggested</i> file name to be used
-if the data were written to a file&quot;. Also, RFC 2183 sec. 2.3 (
+if the data were written to a file&quot;. Also, RFC 2183 sec. 2.3(
 <code>filename</code> parameter in Content-Disposition) confirms that the
 &quot; <i>suggested</i> filename&quot; in the <code>filename</code> parameter
 &quot;should be <i>used as a basis</i> for the actual filename, where

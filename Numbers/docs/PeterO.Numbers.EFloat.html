@@ -62,7 +62,7 @@
 <li><code><a href="#CompareToTotal_PeterO_Numbers_EFloat_PeterO_Numbers_EContext">CompareToTotal(PeterO.Numbers.EFloat, PeterO.Numbers.EContext)</a></code> - Compares the values of this object and another object, imposing a total ordering on all possible values.</li>
 <li><code><a href="#CompareToTotalMagnitude_PeterO_Numbers_EFloat">CompareToTotalMagnitude(PeterO.Numbers.EFloat)</a></code> - Compares the absolute values of this object and another object, imposing a total ordering on all possible values (ignoring their signs).</li>
 <li><code><a href="#CompareToTotalMagnitude_PeterO_Numbers_EFloat_PeterO_Numbers_EContext">CompareToTotalMagnitude(PeterO.Numbers.EFloat, PeterO.Numbers.EContext)</a></code> - Compares the values of this object and another object, imposing a total ordering on all possible values (ignoring their signs).</li>
-<li><code><a href="#CompareToValue_int">CompareToValue(int)</a></code> - Not documented yet.</li>
+<li><code><a href="#CompareToValue_int">CompareToValue(int)</a></code> - Compares the mathematical values of this object and another object, accepting NaN values.</li>
 <li><code><a href="#CompareToValue_PeterO_Numbers_EFloat">CompareToValue(PeterO.Numbers.EFloat)</a></code> - Compares the mathematical values of this object and another object, accepting NaN values.</li>
 <li><code><a href="#CompareToWithContext_PeterO_Numbers_EFloat_PeterO_Numbers_EContext">CompareToWithContext(PeterO.Numbers.EFloat, PeterO.Numbers.EContext)</a></code> - Compares the mathematical values of this object and another object.</li>
 <li><code><a href="#Copy">Copy()</a></code> - Creates a copy of this arbitrary-precision binary number.</li>
@@ -472,7 +472,8 @@
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>otherValue</i>: The number to add.</li>
+<li><i>intValue</i>: The parameter  <i>intValue</i>
+is a 32-bit signed integer.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -534,13 +535,13 @@
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>other</i>: An arbitrary-precision binary floating-point number.</li>
+<li><i>intOther</i>: The parameter  <i>intOther</i>
+is a 32-bit signed integer.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p>Less than 0 if this object&#39;s value is less than the other value, or greater than 0 if this object&#39;s value is greater than the other value or if  <i>other</i>
- is null, or 0 if both values are equal.</p>
+<p>Less than 0 if this object&#39;s value is less than the other value, or greater than 0 if this object&#39;s value is greater than the other value, or 0 if both values are equal.</p>
 
 <p><a id="CompareTo_PeterO_Numbers_EFloat"></a></p>
 
@@ -729,7 +730,11 @@
     int intOther);
 </pre>
 
-<p>Not documented yet.</p>
+<p>Compares the mathematical values of this object and another object, accepting NaN values. This method is not consistent with the Equals method because two different numbers with the same mathematical value, but different exponents, will compare as equal.</p>
+
+<p>In this method, negative zero and positive zero are considered equal.</p>
+
+<p>If this object is a quiet NaN or signaling NaN, this method will not trigger an error. Instead, NaN will compare greater than any other number.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -740,7 +745,7 @@ is a 32-bit signed integer.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>The return value is not documented yet.</p>
+<p>Less than 0 if this object&#39;s value is less than the other value, or greater than 0 if this object&#39;s value is greater than the other value, or 0 if both values are equal.</p>
 
 <p><a id="CompareToValue_PeterO_Numbers_EFloat"></a></p>
 

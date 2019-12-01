@@ -45,7 +45,8 @@ A rational number for zero.</li>
 <ul>
 <li><code>ERational​(EInteger numerator,
      EInteger denominator) ERational</code><br>
-Initializes a new instance of the ERational.</li>
+Initializes a new instance of the ERational
+class.</li>
 </ul>
 
 <h2>Methods</h2>
@@ -55,11 +56,12 @@ Initializes a new instance of the ERational.</li>
 Returns the absolute value of this rational number, that is, a number with
 the same value as this one but as a nonnegative number.</li>
 <li><code>ERational Add​(int v)</code><br>
-Not documented yet.</li>
+Returns the sum of a rational number and a 32-bit signed integer.</li>
 <li><code>ERational Add​(ERational otherValue)</code><br>
 Adds two rational numbers.</li>
 <li><code>int compareTo​(int intOther)</code><br>
-Not documented yet.</li>
+Compares the mathematical value of an arbitrary-precision rational number
+with that of this instance.</li>
 <li><code>int compareTo​(ERational other)</code><br>
 Compares the mathematical value of an arbitrary-precision rational number
 with that of this instance.</li>
@@ -75,7 +77,8 @@ ordering on all possible values.</li>
 Compares the absolute values of this object and another object, imposing a
 total ordering on all possible values (ignoring their signs).</li>
 <li><code>int CompareToValue​(int intOther)</code><br>
-Not documented yet.</li>
+Compares the mathematical value of an arbitrary-precision rational number
+with that of this instance.</li>
 <li><code>int CompareToValue​(ERational other)</code><br>
 Compares the mathematical value of an arbitrary-precision rational number
 with that of this instance.</li>
@@ -99,7 +102,8 @@ Creates a not-a-number arbitrary-precision rational number.</li>
 <li><code>ERational Decrement()</code><br>
 Subtracts one from an arbitrary-precision rational number.</li>
 <li><code>ERational Divide​(int v)</code><br>
-Not documented yet.</li>
+Divides this instance by the value of an arbitrary-precision rational number
+object.</li>
 <li><code>ERational Divide​(ERational otherValue)</code><br>
 Divides this instance by the value of an arbitrary-precision rational number
 object.</li>
@@ -179,7 +183,7 @@ class).</li>
 <li><code>boolean isZero()</code><br>
 Gets a value indicating whether this object&#39;s value equals 0.</li>
 <li><code>ERational Multiply​(int v)</code><br>
-Not documented yet.</li>
+Returns the value of this instance multiplied by a 32-bit signed integer.</li>
 <li><code>ERational Multiply​(ERational otherValue)</code><br>
 Multiplies this instance by the value of an arbitrary-precision rational
 number.</li>
@@ -187,14 +191,16 @@ number.</li>
 Returns a rational number with the same value as this one but with the sign
 reversed.</li>
 <li><code>ERational Remainder​(int v)</code><br>
-Not documented yet.</li>
+Finds the remainder that results when this instance is divided by the value
+of an arbitrary-precision rational number.</li>
 <li><code>ERational Remainder​(ERational otherValue)</code><br>
 Finds the remainder that results when this instance is divided by the value
 of an arbitrary-precision rational number.</li>
 <li><code>int signum()</code><br>
 Gets the sign of this rational number.</li>
 <li><code>ERational Subtract​(int v)</code><br>
-Not documented yet.</li>
+Returns the result of subtracting a 32-bit signed integer from this
+instance.</li>
 <li><code>ERational Subtract​(ERational otherValue)</code><br>
 Subtracts an arbitrary-precision rational number from this instance.</li>
 <li><code>byte ToByteChecked()</code><br>
@@ -993,7 +999,11 @@ implementation returns a positive number if.</li>
 <pre>public int compareTo​(int intOther)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Compares the mathematical value of an arbitrary-precision rational number
+ with that of this instance. This method currently uses the rules
+ given in the CompareToValue method, so that it it is not consistent
+ with the Equals method, but it may change in a future version to use
+ the rules for the CompareToTotal method instead.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1004,7 +1014,8 @@ implementation returns a positive number if.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>The return value is not documented yet.</li>
+<li>Zero if the values are equal; a negative number if this instance is
+less, or a positive number if this instance is greater.</li>
 </ul>
 
 <h3>CompareToValue</h3>
@@ -1012,7 +1023,11 @@ implementation returns a positive number if.</li>
 <pre>public int CompareToValue​(int intOther)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Compares the mathematical value of an arbitrary-precision rational number
+ with that of this instance. In this method, NaN values are greater
+ than any other ERational value, and two NaN values (even if their
+ payloads differ) are treated as equal by this method. This method is
+ not consistent with the Equals method.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1023,7 +1038,8 @@ implementation returns a positive number if.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>The return value is not documented yet.</li>
+<li>Zero if the values are equal; a negative number if this instance is
+less, or a positive number if this instance is greater.</li>
 </ul>
 
 <h3>CompareToBinary</h3>
@@ -1148,7 +1164,9 @@ implementation returns a positive number if.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li><code>true</code> if the objects are equal; otherwise, <code>false</code>.</li>
+<li><code>true</code> if the objects are equal; otherwise, <code>false</code>. In
+this method, two objects are not equal if they don&#39;t have the same
+type or if one is null and the other isn&#39;t.</li>
 </ul>
 
 <h3>equals</h3>
@@ -1803,18 +1821,19 @@ has the following form: <code>[-]numerator.Divide(denominator)</code>.</li>
 <pre>public ERational Add​(int v)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Returns the sum of a rational number and a 32-bit signed integer.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>v</code> - The parameter <code>v</code> is a 32-bit signed integer.</li>
+<li><code>v</code> - A 32-bit signed integer.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>The return value is not documented yet.</li>
+<li>The sum of the two numbers. Returns not-a-number (NaN) if this
+object is NaN.</li>
 </ul>
 
 <h3>Subtract</h3>
@@ -1822,7 +1841,8 @@ has the following form: <code>[-]numerator.Divide(denominator)</code>.</li>
 <pre>public ERational Subtract​(int v)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Returns the result of subtracting a 32-bit signed integer from this
+ instance.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1833,7 +1853,7 @@ has the following form: <code>[-]numerator.Divide(denominator)</code>.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>The return value is not documented yet.</li>
+<li>The difference of the two objects.</li>
 </ul>
 
 <h3>Multiply</h3>
@@ -1841,7 +1861,7 @@ has the following form: <code>[-]numerator.Divide(denominator)</code>.</li>
 <pre>public ERational Multiply​(int v)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Returns the value of this instance multiplied by a 32-bit signed integer.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1852,7 +1872,7 @@ has the following form: <code>[-]numerator.Divide(denominator)</code>.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>The return value is not documented yet.</li>
+<li>The product of the two numbers.</li>
 </ul>
 
 <h3>Divide</h3>
@@ -1860,7 +1880,8 @@ has the following form: <code>[-]numerator.Divide(denominator)</code>.</li>
 <pre>public ERational Divide​(int v)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Divides this instance by the value of an arbitrary-precision rational number
+ object.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1871,7 +1892,13 @@ has the following form: <code>[-]numerator.Divide(denominator)</code>.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>The return value is not documented yet.</li>
+<li>The quotient of the two objects.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>java.lang.ArithmeticException</code> - The parameter <code>v</code> is zero.</li>
 </ul>
 
 <h3>Remainder</h3>
@@ -1879,18 +1906,25 @@ has the following form: <code>[-]numerator.Divide(denominator)</code>.</li>
 <pre>public ERational Remainder​(int v)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Finds the remainder that results when this instance is divided by the value
+ of an arbitrary-precision rational number.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>v</code> - The parameter <code>v</code> is a 32-bit signed integer.</li>
+<li><code>v</code> - The divisor.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>The return value is not documented yet.</li>
+<li>The remainder of the two numbers.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>java.lang.IllegalArgumentException</code> - The parameter <code>v</code> is zero.</li>
 </ul>
 
 <h3>ToByteChecked</h3>

@@ -20,7 +20,7 @@
 <li><code><a href="#Context">Context</a></code> - Gets the arithmetic context used during the operation that triggered the trap.</li>
 <li><code><a href="#Error">Error</a></code> - Gets the flag that specifies the primary kind of error in one or more operations (EContext.</li>
 <li><code><a href="#Errors">Errors</a></code> - Specifies the flags that were signaled as the result of one or more operations.</li>
-<li><code><a href="#HasError_int">HasError(int)</a></code> -</li>
+<li><code><a href="#HasError_int">HasError(int)</a></code> - Returns whether this trap exception specifies all the flags given.</li>
 <li><code><a href="#Result">Result</a></code> - Gets the defined result of the operation that caused the trap.</li>
 </ul>
 
@@ -34,7 +34,7 @@
     object result);
 </pre>
 
-<p>Initializes a new instance of the <a href="PeterO.Numbers.ETrapException.html">PeterO.Numbers.ETrapException</a>.</p>
+<p>Initializes a new instance of the <a href="PeterO.Numbers.ETrapException.html">PeterO.Numbers.ETrapException</a> class.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -55,7 +55,7 @@
     object result);
 </pre>
 
-<p>Initializes a new instance of the <a href="PeterO.Numbers.ETrapException.html">PeterO.Numbers.ETrapException</a>.</p>
+<p>Initializes a new instance of the <a href="PeterO.Numbers.ETrapException.html">PeterO.Numbers.ETrapException</a> class.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -181,16 +181,18 @@ is an Exception object.</p></li>
     int flag);
 </pre>
 
+<p>Returns whether this trap exception specifies all the flags given. (Flags are signaled in a trap exception as the result of one or more operations involving arbitrary-precision numbers, such as multiplication of two EDecimals.).</p>
+
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>flag</i>: The parameter  <i>flag</i>
-is a 32-bit signed integer.</li>
+<li><i>flag</i>: A combination of one or more flags, such as  <code>EContext.FlagInexact | EContext.FlagRounded</code> .</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p>The return value is not documented yet.</p>
+<p>True if this exception pertains to all of the flags given in  <i>flag</i>
+; otherwise, false.</p>
 
 <p><a href="/Numbers/">Back to Numbers start page.</a></p>
 </div><nav id="navigation"><ul>

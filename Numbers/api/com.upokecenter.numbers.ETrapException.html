@@ -22,11 +22,11 @@ Initializes a new instance of the ETrapException class.</li>
           int flag,
           EContext ctx,
           java.lang.Object result) ETrapException</code><br>
-Initializes a new instance of the ETrapException.</li>
+Initializes a new instance of the ETrapException class.</li>
 <li><code>ETrapException​(int flag,
           EContext ctx,
           java.lang.Object result) ETrapException</code><br>
-Initializes a new instance of the ETrapException.</li>
+Initializes a new instance of the ETrapException class.</li>
 <li><code>ETrapException​(java.lang.String message) ETrapException</code><br>
 Initializes a new instance of the ETrapException class.</li>
 <li><code>ETrapException​(java.lang.String message,
@@ -44,7 +44,7 @@ operations.</li>
 <li><code>java.lang.Object getResult()</code><br>
 Gets the defined result of the operation that caused the trap.</li>
 <li><code>boolean HasError​(int flag)</code><br>
-Not documented yet.</li>
+Returns whether this trap exception specifies all the flags given.</li>
 </ul>
 
 <h2>Constructors</h2>
@@ -56,11 +56,11 @@ Initializes a new instance of the ETrapException class.</li>
           int flag,
           EContext ctx,
           java.lang.Object result) ETrapException</code><br>
-Initializes a new instance of the ETrapException.</li>
+Initializes a new instance of the ETrapException class.</li>
 <li><code>ETrapException​(int flag,
           EContext ctx,
           java.lang.Object result) ETrapException</code><br>
-Initializes a new instance of the ETrapException.</li>
+Initializes a new instance of the ETrapException class.</li>
 <li><code>ETrapException​(java.lang.String message) ETrapException</code><br>
 Initializes a new instance of the ETrapException class.</li>
 <li><code>ETrapException​(java.lang.String message,
@@ -110,7 +110,7 @@ object.</p></li>
 <pre>public ETrapException​(int flag, EContext ctx, java.lang.Object result)
 </pre>
 
-<p>Initializes a new instance of the <code>ETrapException</code>.</p>
+<p>Initializes a new instance of the <code>ETrapException</code> class.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -128,7 +128,7 @@ the trap. Can be null.</p></li>
 <pre>public ETrapException​(int flags, int flag, EContext ctx, java.lang.Object result)
 </pre>
 
-<p>Initializes a new instance of the <code>ETrapException</code>.</p>
+<p>Initializes a new instance of the <code>ETrapException</code> class.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -149,8 +149,8 @@ the trap. Can be null.</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>java.lang.IllegalArgumentException</code> - &quot;flags&quot; doesn&#39;t include all the flags in the
-&quot;flag&quot; parameter.</li>
+<li><code>java.lang.IllegalArgumentException</code> - The parameter <code>flags</code> doesn&#39;t include all
+the flags in the <code>flag</code> parameter.</li>
 </ul>
 
 <h3>getContext</h3>
@@ -219,12 +219,23 @@ operations.</li>
 <pre>public boolean HasError​(int flag)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Returns whether this trap exception specifies all the flags given. (Flags
+ are signaled in a trap exception as the result of one or more
+ operations involving arbitrary-precision numbers, such as
+ multiplication of two EDecimals.).</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>flag</code> - Not documented yet.</li>
+<li><code>flag</code> - A combination of one or more flags, such as <code>
+EContext.FlagInexact | EContext.FlagRounded</code>.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>True if this exception pertains to all of the flags given in <code>
+flag</code> ; otherwise, false.</li>
 </ul>
 
 <p><a href="/Numbers/">Back to Numbers start page.</a></p>

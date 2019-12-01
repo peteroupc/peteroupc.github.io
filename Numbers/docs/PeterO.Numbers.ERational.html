@@ -17,7 +17,7 @@
 
 <ul>
 <li><code><a href="#Abs">Abs()</a></code> - Returns the absolute value of this rational number, that is, a number with the same value as this one but as a nonnegative number.</li>
-<li><code><a href="#Add_int">Add(int)</a></code> - Not documented yet.</li>
+<li><code><a href="#Add_int">Add(int)</a></code> - Returns the sum of a rational number and a 32-bit signed integer.</li>
 <li><code><a href="#Add_PeterO_Numbers_ERational">Add(PeterO.Numbers.ERational)</a></code> - Adds two rational numbers.</li>
 <li><code><a href="#CompareTo_int">CompareTo(int)</a></code> - Compares the mathematical value of an arbitrary-precision rational number with that of this instance.</li>
 <li><code><a href="#CompareTo_PeterO_Numbers_ERational">CompareTo(PeterO.Numbers.ERational)</a></code> - Compares the mathematical value of an arbitrary-precision rational number with that of this instance.</li>
@@ -96,7 +96,7 @@
 <li><code><a href="#IsQuietNaN">IsQuietNaN()</a></code> - Returns whether this object is a quiet not-a-number value.</li>
 <li><code><a href="#IsSignalingNaN">IsSignalingNaN()</a></code> - Returns whether this object is a signaling not-a-number value (which causes an error if the value is passed to any arithmetic operation in this class).</li>
 <li><code><a href="#IsZero">IsZero</a></code> - Gets a value indicating whether this object&#39;s value equals 0.</li>
-<li><code><a href="#Multiply_int">Multiply(int)</a></code> - Not documented yet.</li>
+<li><code><a href="#Multiply_int">Multiply(int)</a></code> - Returns the value of this instance multiplied by a 32-bit signed integer.</li>
 <li><code><a href="#Multiply_PeterO_Numbers_ERational">Multiply(PeterO.Numbers.ERational)</a></code> - Multiplies this instance by the value of an arbitrary-precision rational number.</li>
 <li><code><a href="#NaN">public static readonly PeterO.Numbers.ERational NaN;</a></code> - A not-a-number value.</li>
 <li><code><a href="#Negate">Negate()</a></code> - Returns a rational number with the same value as this one but with the sign reversed.</li>
@@ -113,11 +113,11 @@
 <li><code><a href="#op_Subtraction">PeterO.Numbers.ERational operator -(PeterO.Numbers.ERational, PeterO.Numbers.ERational)</a></code> - Subtracts an arbitrary-precision rational number from this instance.</li>
 <li><code><a href="#op_UnaryNegation">PeterO.Numbers.ERational operator -(PeterO.Numbers.ERational)</a></code> - Returns an arbitrary-precision rational number with the same value as the given one but with its sign reversed.</li>
 <li><code><a href="#PositiveInfinity">public static readonly PeterO.Numbers.ERational PositiveInfinity;</a></code> - Positive infinity, greater than any other number.</li>
-<li><code><a href="#Remainder_int">Remainder(int)</a></code> - Not documented yet.</li>
+<li><code><a href="#Remainder_int">Remainder(int)</a></code> - Finds the remainder that results when this instance is divided by the value of an arbitrary-precision rational number.</li>
 <li><code><a href="#Remainder_PeterO_Numbers_ERational">Remainder(PeterO.Numbers.ERational)</a></code> - Finds the remainder that results when this instance is divided by the value of an arbitrary-precision rational number.</li>
 <li><code><a href="#Sign">Sign</a></code> - Gets the sign of this rational number.</li>
 <li><code><a href="#SignalingNaN">public static readonly PeterO.Numbers.ERational SignalingNaN;</a></code> - A signaling not-a-number value.</li>
-<li><code><a href="#Subtract_int">Subtract(int)</a></code> - Not documented yet.</li>
+<li><code><a href="#Subtract_int">Subtract(int)</a></code> - Returns the result of subtracting a 32-bit signed integer from this instance.</li>
 <li><code><a href="#Subtract_PeterO_Numbers_ERational">Subtract(PeterO.Numbers.ERational)</a></code> - Subtracts an arbitrary-precision rational number from this instance.</li>
 <li><code><a href="#Ten">public static readonly PeterO.Numbers.ERational Ten;</a></code> - The rational number ten.</li>
 <li><code><a href="#ToByteChecked">ToByteChecked()</a></code> - Converts this number&#39;s value to a byte (from 0 to 255) if it can fit in a byte (from 0 to 255) after converting it to an integer by discarding its fractional part.</li>
@@ -176,13 +176,13 @@
     PeterO.Numbers.EInteger denominator);
 </pre>
 
-<p>Initializes a new instance of the <a href="PeterO.Numbers.ERational.html">PeterO.Numbers.ERational</a>.</p>
+<p>Initializes a new instance of the <a href="PeterO.Numbers.ERational.html">PeterO.Numbers.ERational</a> class.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>numerator</i>: An arbitrary-precision integer.</p></li>
-<li><p><i>denominator</i>: An arbitrary-precision integer.</p></li>
+<li><p><i>numerator</i>: An arbitrary-precision integer serving as the numerator.</p></li>
+<li><p><i>denominator</i>: An arbitrary-precision integer serving as the denominator.</p></li>
 </ul>
 
 <p><b>Exceptions:</b></p>
@@ -380,18 +380,17 @@ Denominator is zero.</p></li>
     int v);
 </pre>
 
-<p>Not documented yet.</p>
+<p>Returns the sum of a rational number and a 32-bit signed integer.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>v</i>: The parameter  <i>v</i>
-is a 32-bit signed integer.</li>
+<li><i>v</i>: A 32-bit signed integer.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p>The return value is not documented yet.</p>
+<p>The sum of the two numbers. Returns not-a-number (NaN) if this object is NaN.</p>
 
 <p><a id="Add_PeterO_Numbers_ERational"></a></p>
 
@@ -434,15 +433,13 @@ is null.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>other</i>: An arbitrary-precision rational number.</li>
+<li><i>intOther</i>: The parameter  <i>intOther</i>
+is a 32-bit signed integer.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p>Zero if the values are equal; a negative number if this instance is less, or a positive number if this instance is greater. This implementation returns a positive number if  <i>other</i>
- is null, to conform to the.NET definition of CompareTo. This is the case even in the Java version of this library, for consistency&#39;s sake, even though implementations of  <code>Comparable.compareTo()</code>  in Java ought to throw an exception if they receive a null argument rather than treating null as less or greater than any object.</p>
-
-<p>.</p>
+<p>Zero if the values are equal; a negative number if this instance is less, or a positive number if this instance is greater.</p>
 
 <p><a id="CompareTo_PeterO_Numbers_ERational"></a></p>
 
@@ -589,15 +586,13 @@ is null.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>other</i>: An arbitrary-precision rational number.</li>
+<li><i>intOther</i>: The parameter  <i>intOther</i>
+is a 32-bit signed integer.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p>Zero if the values are equal; a negative number if this instance is less, or a positive number if this instance is greater. This implementation returns a positive number if  <i>other</i>
- is null, to conform to the.NET definition of CompareTo. This is the case even in the Java version of this library, for consistency&#39;s sake, even though implementations of  <code>Comparable.compareTo()</code>  in Java ought to throw an exception if they receive a null argument rather than treating null as less or greater than any object.</p>
-
-<p>.</p>
+<p>Zero if the values are equal; a negative number if this instance is less, or a positive number if this instance is greater.</p>
 
 <p><a id="CompareToValue_PeterO_Numbers_ERational"></a></p>
 
@@ -810,7 +805,8 @@ is null.</p></li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>otherValue</i>: The divisor.</li>
+<li><i>v</i>: The parameter  <i>v</i>
+is a 32-bit signed integer.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -820,9 +816,9 @@ is null.</p></li>
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li>System.ArgumentNullException:
-The parameter  <i>otherValue</i>
-is null.</li>
+<li>System.ArithmeticException:
+The parameter  <i>v</i>
+is zero.</li>
 </ul>
 
 <p><a id="Divide_PeterO_Numbers_ERational"></a></p>
@@ -1465,7 +1461,7 @@ is less than  <i>length</i>
     int v);
 </pre>
 
-<p>Not documented yet.</p>
+<p>Returns the value of this instance multiplied by a 32-bit signed integer.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -1476,7 +1472,7 @@ is a 32-bit signed integer.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>The return value is not documented yet.</p>
+<p>The product of the two numbers.</p>
 
 <p><a id="Multiply_PeterO_Numbers_ERational"></a></p>
 
@@ -2457,18 +2453,25 @@ is null.</li>
     int v);
 </pre>
 
-<p>Not documented yet.</p>
+<p>Finds the remainder that results when this instance is divided by the value of an arbitrary-precision rational number.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>v</i>: The parameter  <i>v</i>
-is a 32-bit signed integer.</li>
+<li><i>v</i>: The divisor.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p>The return value is not documented yet.</p>
+<p>The remainder of the two numbers.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentException:
+The parameter  <i>v</i>
+is zero.</li>
+</ul>
 
 <p><a id="Remainder_PeterO_Numbers_ERational"></a></p>
 
@@ -2506,7 +2509,7 @@ is null.</li>
     int v);
 </pre>
 
-<p>Not documented yet.</p>
+<p>Returns the result of subtracting a 32-bit signed integer from this instance.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -2517,7 +2520,7 @@ is a 32-bit signed integer.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>The return value is not documented yet.</p>
+<p>The difference of the two objects.</p>
 
 <p><a id="Subtract_PeterO_Numbers_ERational"></a></p>
 
