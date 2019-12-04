@@ -392,7 +392,7 @@ Some applications require generating unique identifiers, especially to identify 
 5. Is the resource an identifier identifies available to anyone who knows that identifier (even without being logged in or authorized in some way)?
 6. Do identifiers have to be memorable?
 
-Examples of unique integers include sequentially-assigned integers as well as the primary key of a database table.  If the application requires a unique integer to "look random", it can apply a one-to-one operation to that integer (such as a permutation), or take that integer as the seed of a so-called "full-period" PRNG that outputs integers with as many bits as its state length<sup>[**(33)**](#Note33)</sup>.
+Examples of unique integers include sequentially-assigned integers as well as the primary key of a database table.  If the application requires a unique integer to "look random", it can apply a one-to-one operation to that integer (such as a permutation)<sup>[**(45)**](#Note45)</sup>, or take that integer as the seed of a so-called "full-period" PRNG that outputs integers with as many bits as its state length<sup>[**(33)**](#Note33)</sup>.
 
 An application that generates unique identifiers SHOULD do so as follows:
 
@@ -599,8 +599,8 @@ See also N. Reed, "Quick And Easy GPU Random Numbers In D3D11", Nathan Reed's co
 <small><sup id=Note19>(19)</sup> Here, `IDENT` and `UNIQUE` form a _domain separation tag_; e.g., see the work-in-progress document `draft-irtf-cfrg-hash-to-curve`, "Hashing to Elliptic Curves".</small>
 
 <small><sup id=Note20>(20)</sup> For example, SHA-256 is appropriate for PRNGs with state length 256 bits or more.  Note the following:
-- Most hash functions are not one-to-one, so they carry the risk that two processes will end up with the same PRNG seed, but this risk decreases as PRNG state length increases (see "[**Birthday problem**](https://en.wikipedia.org/wiki/Birthday_problem)").
-- One-to-one hash functions don't have this risk, as long as the input length and the hash code's length match the PRNG's state length.  With these functions, the application can hash sequential seeds in each process without worrying about this risk.  An example of this kind of hash function is M. O'Neill's `seed_seq_fe` ("Developing a seed_seq Alternative", Apr. 30, 2015).
+- In general, hash functions carry the risk that two processes will end up with the same PRNG seed, but this risk decreases as PRNG state length increases (see "[**Birthday problem**](https://en.wikipedia.org/wiki/Birthday_problem)").
+- M. O'Neill (in "Developing a seed_seq Alternative", Apr. 30, 2015) developed hash functions (`seed_seq_fe`) that are designed to avoid the collision risk mentioned above (as long as their state's size is no bigger than the PRNG's state length). With these functions, the application can hash sequential seeds in each process without worrying about that risk.
 - As another alternative, some PRNGs, such as PCG64 and `sfc`, have multiple sequences (or _streams_) of numbers that behave like independent random number sequences, and they have efficient methods to assign a different stream to each process this way.  How these methods work is PRNG-specific and beyond the scope of this document.</small>
 
 <small><sup id=Note21>(21)</sup> For example, many questions on _Stack Overflow_ highlight the pitfalls of creating a new instance of .NET's `System.Random` each time a random number is needed, rather than only once in the application.  See also Johansen, R. S., "[**A Primer on Repeatable Random Numbers**](https://blogs.unity3d.com/2015/01/07/a-primer-on-repeatable-random-numbers/)", Unity Blog, Jan. 7, 2015.</small>
@@ -663,6 +663,8 @@ See also N. Reed, "Quick And Easy GPU Random Numbers In D3D11", Nathan Reed's co
 <small><sup id=Note43>(43)</sup> For example, a new RNG can be constructed from two independent RNGs using the so-called "shrinking generator" technique: generate one bit from the first RNG and one bit from the second, and take the second bit if the first bit is 1, or repeat this process otherwise.  See J. D. Cook, "Using one RNG to sample another", June 4, 2019, for more on this technique, including its advantages and drawbacks.</small>
 
 <small><sup id=Note44>(44)</sup> Allowing applications to do so would hamper forward compatibility &mdash; the API would then be less free to change how the RNG is implemented in the future (e.g., to use a cryptographic or otherwise "better" RNG), or to make improvements or bug fixes in methods that use that RNG (such as shuffling and Gaussian number generation).  (As a notable example, the V8 JavaScript engine recently changed its `Math.random()` implementation to use a variant of `xorshift128+`, which is backward compatible because nothing in JavaScript allows  `Math.random()` to be seeded.)  Nevertheless, APIs can still allow applications to provide additional input ("entropy") to the RNG in order to increase its randomness rather than to ensure repeatability.</small>
+
+<small><sup id=Note45>(45)</sup> One-to-one means that every input maps to an output and no two inputs map to the same output, but not all outputs need to be mapped.</small>
 
 <a id=Appendix></a>
 ## Appendix
