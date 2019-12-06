@@ -89,8 +89,8 @@
 <li><code><a href="#Parts">Parts</a></code> - Gets a list of all the parts of this message.</li>
 <li><code><a href="#RemoveHeader_int">RemoveHeader(int)</a></code> - Removes a header field by index.</li>
 <li><code><a href="#RemoveHeader_string">RemoveHeader(string)</a></code> - Removes all instances of the given header field from this message.</li>
-<li><code><a href="#SelectLanguageMessage_System_Collections_Generic_IList">SelectLanguageMessage(System.Collections.Generic.IList)</a></code> - Selects a body part for a multiple-language message( multipart/multilingual ) according to the given language priority list.</li>
-<li><code><a href="#SelectLanguageMessage_System_Collections_Generic_IList_bool">SelectLanguageMessage(System.Collections.Generic.IList, bool)</a></code> - Selects a body part for a multiple-language message( multipart/multilingual ) according to the given language priority list and original-language preference.</li>
+<li><code><a href="#SelectLanguageMessage_System_Collections_Generic_IList">SelectLanguageMessage(System.Collections.Generic.IList)</a></code> - Selects a body part for a multiple-language message( multipart/multilingual) according to the given language priority list.</li>
+<li><code><a href="#SelectLanguageMessage_System_Collections_Generic_IList_bool">SelectLanguageMessage(System.Collections.Generic.IList, bool)</a></code> - Selects a body part for a multiple-language message( multipart/multilingual) according to the given language priority list and original-language preference.</li>
 <li><code><a href="#SetBody_byte">SetBody(byte[])</a></code> - Sets the body of this message to the given byte array.</li>
 <li><code><a href="#SetCurrentDate">SetCurrentDate()</a></code> - Sets this message&#39;s Date header field to the current time as its value, with an unspecified time zone offset.</li>
 <li><code><a href="#SetDate_int">SetDate(int[])</a></code> - Sets this message&#39;s Date header field to the given date and time.</li>
@@ -118,7 +118,7 @@
 
 <p>Initializes a new instance of the <a href="PeterO.Mail.Message.html">PeterO.Mail.Message</a> class. Reads from the given byte array to initialize the email message.</p>
 
-<p><b>Remarks:</b>This constructor parses an email message, and extracts its header fields and body, and throws a MessageDataException if the message is malformed. However, even if a MessageDataException is thrown, it can still be possible to display the message, especially because most email malformations seen in practice are benign in nature (such as the use of very long lines in the message). One way an application can handle the exception is to display the message, or part of it, as raw text (using  <code>DataUtilities.GetUtf8String(bytes, true)</code>  ), and to optionally extract important header fields, such as From, To, Date, and Subject, from the message&#39;s text using the  <code>ExtractHeader</code>  method. Even so, though, any message for which this constructor throws a MessageDataException ought to be treated with suspicion.</p>
+<p><b>Remarks:</b>This constructor parses an email message, and extracts its header fields and body, and throws a MessageDataException if the message is malformed. However, even if a MessageDataException is thrown, it can still be possible to display the message, especially because most email malformations seen in practice are benign in nature (such as the use of very long lines in the message). One way an application can handle the exception is to display the message, or part of it, as raw text (using  <code>DataUtilities.GetUtf8String(bytes, true)</code> ), and to optionally extract important header fields, such as From, To, Date, and Subject, from the message&#39;s text using the  <code>ExtractHeader</code>  method. Even so, though, any message for which this constructor throws a MessageDataException ought to be treated with suspicion.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -146,7 +146,7 @@ The message is malformed. See the remarks.</p></li>
 
 <p>Initializes a new instance of the <a href="PeterO.Mail.Message.html">PeterO.Mail.Message</a> class. Reads from the given Stream object to initialize the email message.</p>
 
-<p><b>Remarks:</b>This constructor parses an email message, and extracts its header fields and body, and throws a MessageDataException if the message is malformed. However, even if a MessageDataException is thrown, it can still be possible to display the message, especially because most email malformations seen in practice are benign in nature (such as the use of very long lines in the message). One way an application can handle the exception is to read all the bytes from the stream, to display the message, or part of it, as raw text (using  <code>DataUtilities.GetUtf8String(bytes, true)</code>  ), and to optionally extract important header fields, such as From, To, Date, and Subject, from the message&#39;s text using the  <code>ExtractHeader</code>  method. Even so, though, any message for which this constructor throws a MessageDataException ought to be treated with suspicion.</p>
+<p><b>Remarks:</b>This constructor parses an email message, and extracts its header fields and body, and throws a MessageDataException if the message is malformed. However, even if a MessageDataException is thrown, it can still be possible to display the message, especially because most email malformations seen in practice are benign in nature (such as the use of very long lines in the message). One way an application can handle the exception is to read all the bytes from the stream, to display the message, or part of it, as raw text (using  <code>DataUtilities.GetUtf8String(bytes, true)</code> ), and to optionally extract important header fields, such as From, To, Date, and Subject, from the message&#39;s text using the  <code>ExtractHeader</code>  method. Even so, though, any message for which this constructor throws a MessageDataException ought to be treated with suspicion.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -567,9 +567,10 @@ The header field name is too long or contains an invalid character, or the heade
 
 <p>The following example (written in C# for the.NET version) is an extension method that adds an inline body part from a byte array to a message.</p>
 
-<pre>public static Message AddInlineFromBytes(this Message msg, byte[] bytes,
-            MediaType mediaType) { using (MemoryStream fs = new MemoryStream(bytes))
-            { return msg.AddInline(fs, mediaType); } }
+<pre>public static Message AddInlineFromBytes(this Message msg, byte[]
+            bytes,
+             MediaType mediaType) { using (MemoryStream fs = new MemoryStream(bytes))
+             { return msg.AddInline(fs, mediaType); } }
 </pre>
 
 <p>.</p>
@@ -1174,7 +1175,7 @@ is null.</li>
     System.Collections.Generic.IList languages);
 </pre>
 
-<p>Selects a body part for a multiple-language message(  <code>multipart/multilingual</code>  ) according to the given language priority list.</p>
+<p>Selects a body part for a multiple-language message(  <code>multipart/multilingual</code> ) according to the given language priority list.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -1203,7 +1204,7 @@ is null.</li>
     bool preferOriginals);
 </pre>
 
-<p>Selects a body part for a multiple-language message(  <code>multipart/multilingual</code>  ) according to the given language priority list and original-language preference.</p>
+<p>Selects a body part for a multiple-language message(  <code>multipart/multilingual</code> ) according to the given language priority list and original-language preference.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -1290,7 +1291,7 @@ is null.</li>
 <ul>
 <li><p>System.ArgumentException:
 The parameter  <i>dateTime</i>
-contains fewer than eight elements or contains invalid values (see <b>MailDateTime.ParseDateString(string, bool)</b> ).</p></li>
+contains fewer than eight elements or contains invalid values (see <b>MailDateTime.ParseDateString(string, bool)</b>).</p></li>
 <li><p>System.ArgumentNullException:
 The parameter  <i>dateTime</i>
 is null.</p></li>

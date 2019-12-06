@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on Mar. 5, 2016; last updated on Dec. 2, 2019.
+Begun on Mar. 5, 2016; last updated on Dec. 5, 2019.
 
 Most apps that use random numbers care about either unpredictability, high quality, or repeatability.  This article explains the three kinds of RNGs and gives recommendations on each kind.
 
@@ -599,8 +599,8 @@ See also N. Reed, "Quick And Easy GPU Random Numbers In D3D11", Nathan Reed's co
 <small><sup id=Note19>(19)</sup> Here, `IDENT` and `UNIQUE` form a _domain separation tag_; e.g., see the work-in-progress document `draft-irtf-cfrg-hash-to-curve`, "Hashing to Elliptic Curves".</small>
 
 <small><sup id=Note20>(20)</sup> For example, SHA-256 is appropriate for PRNGs with state length 256 bits or more.  Note the following:
-- In general, hash functions carry the risk that two processes will end up with the same PRNG seed, but this risk decreases as PRNG state length increases (see "[**Birthday problem**](https://en.wikipedia.org/wiki/Birthday_problem)").
-- M. O'Neill (in "Developing a seed_seq Alternative", Apr. 30, 2015) developed hash functions (`seed_seq_fe`) that are designed to avoid the collision risk mentioned above (as long as their state's size is no bigger than the PRNG's state length). With these functions, the application can hash sequential seeds in each process without worrying about that risk.
+- In general, hash functions carry the risk that two processes will end up with the same PRNG seed (a _collision risk_), but this risk decreases as PRNG state length increases (see "[**Birthday problem**](https://en.wikipedia.org/wiki/Birthday_problem)").
+- M. O'Neill (in "Developing a seed_seq Alternative", Apr. 30, 2015) developed hash functions (`seed_seq_fe`) that are designed to avoid collisions if possible, and otherwise to reduce collision bias.   For example, if the PRNG's state length is 128 bits, an application can use `seed_seq_fe128` to hash sequentially assigned 128-bit seeds in each process without worrying about collisions.
 - As another alternative, some PRNGs, such as PCG64 and `sfc`, have multiple sequences (or _streams_) of numbers that behave like independent random number sequences, and they have efficient methods to assign a different stream to each process this way.  How these methods work is PRNG-specific and beyond the scope of this document.</small>
 
 <small><sup id=Note21>(21)</sup> For example, many questions on _Stack Overflow_ highlight the pitfalls of creating a new instance of .NET's `System.Random` each time a random number is needed, rather than only once in the application.  See also Johansen, R. S., "[**A Primer on Repeatable Random Numbers**](https://blogs.unity3d.com/2015/01/07/a-primer-on-repeatable-random-numbers/)", Unity Blog, Jan. 7, 2015.</small>

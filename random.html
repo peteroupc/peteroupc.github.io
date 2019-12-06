@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
-<p>Begun on Mar. 5, 2016; last updated on Dec. 2, 2019.</p>
+<p>Begun on Mar. 5, 2016; last updated on Dec. 5, 2019.</p>
 
 <p>Most apps that use random numbers care about either unpredictability, high quality, or repeatability.  This article explains the three kinds of RNGs and gives recommendations on each kind.</p>
 
@@ -861,8 +861,8 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 <p><small><sup id=Note20>(20)</sup> For example, SHA-256 is appropriate for PRNGs with state length 256 bits or more.  Note the following:</p>
 
 <ul>
-<li>In general, hash functions carry the risk that two processes will end up with the same PRNG seed, but this risk decreases as PRNG state length increases (see &quot;<a href="https://en.wikipedia.org/wiki/Birthday_problem"><strong>Birthday problem</strong></a>&quot;).</li>
-<li>M. O&#39;Neill (in &quot;Developing a seed_seq Alternative&quot;, Apr. 30, 2015) developed hash functions (<code>seed_seq_fe</code>) that are designed to avoid the collision risk mentioned above (as long as their state&#39;s size is no bigger than the PRNG&#39;s state length). With these functions, the application can hash sequential seeds in each process without worrying about that risk.</li>
+<li>In general, hash functions carry the risk that two processes will end up with the same PRNG seed (a <em>collision risk</em>), but this risk decreases as PRNG state length increases (see &quot;<a href="https://en.wikipedia.org/wiki/Birthday_problem"><strong>Birthday problem</strong></a>&quot;).</li>
+<li>M. O&#39;Neill (in &quot;Developing a seed_seq Alternative&quot;, Apr. 30, 2015) developed hash functions (<code>seed_seq_fe</code>) that are designed to avoid collisions if possible, and otherwise to reduce collision bias.   For example, if the PRNG&#39;s state length is 128 bits, an application can use <code>seed_seq_fe128</code> to hash sequentially assigned 128-bit seeds in each process without worrying about collisions.</li>
 <li>As another alternative, some PRNGs, such as PCG64 and <code>sfc</code>, have multiple sequences (or <em>streams</em>) of numbers that behave like independent random number sequences, and they have efficient methods to assign a different stream to each process this way.  How these methods work is PRNG-specific and beyond the scope of this document.</small></li>
 </ul>
 
