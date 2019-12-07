@@ -30,11 +30,14 @@ A map of CBOR objects.</li>
 <li><code>Number</code><br>
 Deprecated.
 Since version 4.0, CBORObject.Type no longer returns this value for any
-CBOR Object - this is a breaking change from earlier
-versions.
+CBOR Object - this is a breaking change from earlier +
+
+<ul>
+<li>    versions.
 Since version 4.0, CBORObject.Type no longer returns this value for any
-CBOR Object - this is a breaking change from earlier
-versions.</li>
+CBOR Object - this is a breaking change from earlier +</li>
+<li>    versions.</li>
+</ul></li>
 <li><code>SimpleValue</code><br>
 A &quot;simple value&quot; other than floating point values, true, and false.</li>
 <li><code>TextString</code><br>
@@ -117,14 +120,19 @@ the order they are declared.</li>
 
 <p>Deprecated.
 Since version 4.0, CBORObject.Type no longer returns this value for any
- CBOR Object - this is a breaking change from earlier
- versions. Instead, use the IsNumber property of CBORObject to
- determine +   whether a CBOR Object represents a number, or use the
- two +   new CBORType values instead. CBORType.Integer covers CBOR
- objects representing integers of major type 0 and 1.
- CBORType.FloatingPoint covers CBOR objects representing 16-, 32-, and
- 64-bit floating-point numbers. CBORType.Number may be removed in
- version 5.0 or later.</p>
+ CBOR Object - this is a breaking change from earlier +</p>
+
+<ul>
+<li>    versions. Instead, use the IsNumber
+property of CBORObject to determine + +</li>
+<li>      whether a CBOR Object represents
+a number, or use the two +   new CBORType values instead.
+CBORType.Integer + + +       covers CBOR objects
+representing integers of major type 0 and 1. +
+CBORType.FloatingPoint covers CBOR objects representing +   16-,
+32-, and 64-bit floating-point numbers. CBORType.Number may
+be removed in version 5.0 or later.</li>
+</ul>
 
 <h3>Boolean</h3>
 
