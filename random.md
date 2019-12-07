@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on Mar. 5, 2016; last updated on Dec. 5, 2019.
+Begun on Mar. 5, 2016; last updated on Dec. 6, 2019.
 
 Most apps that use random numbers care about either unpredictability, high quality, or repeatability.  This article explains the three kinds of RNGs and gives recommendations on each kind.
 
@@ -151,7 +151,7 @@ Besides cryptographic RNGs, the following are examples of [**high-quality PRNGs*
 - `JKISS`, `JKISS32`, `JLKISS`, `JLKISS64`, described in (Jones 2007/2010)<sup>[**(6)**](#Note6)</sup>.
 - A [**linear congruential generator**](https://en.wikipedia.org/wiki/Linear_congruential_generator) (LCG) with modulus 2<sup>64</sup> or higher described in Table 4 of (L'Ecuyer 1999)<sup>[**(7)**](#Note7)</sup>, where each output's highest 32 bits are used.
 - PCG (`pcg32`, `pcg64`, and `pcg64_fast` classes), by Melissa O'Neill. See also a [**critique by S. Vigna**](http://pcg.di.unimi.it/pcg.php).
-- Other examples include B. Jenkins's "A small noncryptographic PRNG" (sometimes called `jsf`), C. Doty-Humphrey's `sfc`, `msws` (Widynski 2017)<sup>[**(8)**](#Note8)</sup>, and D. Blackman's `gjrand`.
+- Other examples include B. Jenkins's "A small noncryptographic PRNG" (sometimes called `jsf`), C. Doty-Humphrey's `sfc`, `msws` (Widynski 2017)<sup>[**(8)**](#Note8)</sup>, and D. Blackman's `gjrand`.  Also, Agner Fog in "[**Pseudo-Random Number Generators for Vector Processors and Multicore Processors**](http://digitalcommons.wayne.edu/jmasm/vol14/iss1/23)", _Journal of Modern Applied Statistical Methods_ 14(1), article 23 (2015), shows a PRNG combining two different designs of PRNG.
 
 The following also count as high-quality PRNGs, but they require nonzero seeds, complicating the task of seeding them:
 
@@ -299,7 +299,7 @@ For noncryptographic PRNGs, an application ought to generate seeds likely to var
 
 For [**manually-seeded PRNGs**](#Manually_Seeded_PRNGs), however, if multiple processes (including threads, tasks, or subtasks) need to use reproducible "random" numbers for the same purpose, an application can generate one seed (or use a pregenerated seed) and distribute that seed to those processes by doing the following for each such process<sup>[**(18)**](#Note18)</sup>:
 
-1. Create a PRNG instance for that process.  (The processes can use PRNGs of the same design or different designs; for example, they can all use PCG64, or some can use PCG64 and others `xoroshiro128**`.)
+1. Create a PRNG instance for that process.  (The processes can use PRNGs of the same design or different designs; for example, they can all use `jsf`, or some can use `jsf` and others `xoroshiro128**`.)
 2. Build a string consisting of three parts: `IDENT`, `UNIQUE`, and `SEED`. Example: "mysimulation-1-myseed".<sup>[**(19)**](#Note19)</sup>
 
     - `IDENT` is a fixed identifier that's the same for all processes in the set.
@@ -570,7 +570,7 @@ I acknowledge&mdash;
 
 <small><sup id=Note7>(7)</sup> P. L'Ecuyer, "Tables of Linear Congruential Generators of Different Sizes and Good Lattice Structure", _Mathematics of Computation_ 68(225), January 1999.</small>
 
-<small><sup id=Note8>(8)</sup> Widynski, B., "Middle Square Weyl Sequence RNG", arXiv:1704.00358v1 [cs.CR], 2017.</small>
+<small><sup id=Note8>(8)</sup> Widynski, B., "Middle Square Weyl Sequence RNG", arXiv:1704.00358 [cs.CR], 2017.</small>
 
 <small><sup id=Note9>(9)</sup> S. Vigna, "[**An experimental exploration of Marsaglia's `xorshift` generators, scrambled**](http://vigna.di.unimi.it/ftp/papers/xorshift.pdf)", 2016.</small>
 
@@ -601,7 +601,7 @@ See also N. Reed, "Quick And Easy GPU Random Numbers In D3D11", Nathan Reed's co
 <small><sup id=Note20>(20)</sup> For example, SHA-256 is appropriate for PRNGs with state length 256 bits or more.  Note the following:
 - In general, hash functions carry the risk that two processes will end up with the same PRNG seed (a _collision risk_), but this risk decreases as PRNG state length increases (see "[**Birthday problem**](https://en.wikipedia.org/wiki/Birthday_problem)").
 - M. O'Neill (in "Developing a seed_seq Alternative", Apr. 30, 2015) developed hash functions (`seed_seq_fe`) that are designed to avoid collisions if possible, and otherwise to reduce collision bias.   For example, if the PRNG's state length is 128 bits, an application can use `seed_seq_fe128` to hash sequentially assigned 128-bit seeds in each process without worrying about collisions.
-- As another alternative, some PRNGs, such as PCG64 and `sfc`, have multiple sequences (or _streams_) of numbers that behave like independent random number sequences, and they have efficient methods to assign a different stream to each process this way.  How these methods work is PRNG-specific and beyond the scope of this document.</small>
+- As another alternative, some PRNGs, such as `sfc`, have multiple sequences (or _streams_) of numbers that behave like independent random number sequences, and they have efficient methods to assign a different stream to each process this way.  How these methods work is PRNG-specific and beyond the scope of this document.</small>
 
 <small><sup id=Note21>(21)</sup> For example, many questions on _Stack Overflow_ highlight the pitfalls of creating a new instance of .NET's `System.Random` each time a random number is needed, rather than only once in the application.  See also Johansen, R. S., "[**A Primer on Repeatable Random Numbers**](https://blogs.unity3d.com/2015/01/07/a-primer-on-repeatable-random-numbers/)", Unity Blog, Jan. 7, 2015.</small>
 

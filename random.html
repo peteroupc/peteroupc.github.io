@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
-<p>Begun on Mar. 5, 2016; last updated on Dec. 5, 2019.</p>
+<p>Begun on Mar. 5, 2016; last updated on Dec. 6, 2019.</p>
 
 <p>Most apps that use random numbers care about either unpredictability, high quality, or repeatability.  This article explains the three kinds of RNGs and gives recommendations on each kind.</p>
 
@@ -226,7 +226,7 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 <li><code>JKISS</code>, <code>JKISS32</code>, <code>JLKISS</code>, <code>JLKISS64</code>, described in (Jones 2007/2010)<sup><a href="#Note6"><strong>(6)</strong></a></sup>.</li>
 <li>A <a href="https://en.wikipedia.org/wiki/Linear_congruential_generator"><strong>linear congruential generator</strong></a> (LCG) with modulus 2<sup>64</sup> or higher described in Table 4 of (L&#39;Ecuyer 1999)<sup><a href="#Note7"><strong>(7)</strong></a></sup>, where each output&#39;s highest 32 bits are used.</li>
 <li>PCG (<code>pcg32</code>, <code>pcg64</code>, and <code>pcg64_fast</code> classes), by Melissa O&#39;Neill. See also a <a href="http://pcg.di.unimi.it/pcg.php"><strong>critique by S. Vigna</strong></a>.</li>
-<li>Other examples include B. Jenkins&#39;s &quot;A small noncryptographic PRNG&quot; (sometimes called <code>jsf</code>), C. Doty-Humphrey&#39;s <code>sfc</code>, <code>msws</code> (Widynski 2017)<sup><a href="#Note8"><strong>(8)</strong></a></sup>, and D. Blackman&#39;s <code>gjrand</code>.</li>
+<li>Other examples include B. Jenkins&#39;s &quot;A small noncryptographic PRNG&quot; (sometimes called <code>jsf</code>), C. Doty-Humphrey&#39;s <code>sfc</code>, <code>msws</code> (Widynski 2017)<sup><a href="#Note8"><strong>(8)</strong></a></sup>, and D. Blackman&#39;s <code>gjrand</code>.  Also, Agner Fog in &quot;<a href="http://digitalcommons.wayne.edu/jmasm/vol14/iss1/23"><strong>Pseudo-Random Number Generators for Vector Processors and Multicore Processors</strong></a>&quot;, <em>Journal of Modern Applied Statistical Methods</em> 14(1), article 23 (2015), shows a PRNG combining two different designs of PRNG.</li>
 </ul>
 
 <p>The following also count as high-quality PRNGs, but they require nonzero seeds, complicating the task of seeding them:</p>
@@ -433,7 +433,7 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 <p>For <a href="#Manually_Seeded_PRNGs"><strong>manually-seeded PRNGs</strong></a>, however, if multiple processes (including threads, tasks, or subtasks) need to use reproducible &quot;random&quot; numbers for the same purpose, an application can generate one seed (or use a pregenerated seed) and distribute that seed to those processes by doing the following for each such process<sup><a href="#Note18"><strong>(18)</strong></a></sup>:</p>
 
 <ol>
-<li>Create a PRNG instance for that process.  (The processes can use PRNGs of the same design or different designs; for example, they can all use PCG64, or some can use PCG64 and others <code>xoroshiro128**</code>.)</li>
+<li>Create a PRNG instance for that process.  (The processes can use PRNGs of the same design or different designs; for example, they can all use <code>jsf</code>, or some can use <code>jsf</code> and others <code>xoroshiro128**</code>.)</li>
 <li><p>Build a string consisting of three parts: <code>IDENT</code>, <code>UNIQUE</code>, and <code>SEED</code>. Example: &quot;mysimulation-1-myseed&quot;.<sup><a href="#Note19"><strong>(19)</strong></a></sup></p>
 
 <ul>
@@ -830,7 +830,7 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 
 <p><small><sup id=Note7>(7)</sup> P. L&#39;Ecuyer, &quot;Tables of Linear Congruential Generators of Different Sizes and Good Lattice Structure&quot;, <em>Mathematics of Computation</em> 68(225), January 1999.</small></p>
 
-<p><small><sup id=Note8>(8)</sup> Widynski, B., &quot;Middle Square Weyl Sequence RNG&quot;, arXiv:1704.00358v1 [cs.CR], 2017.</small></p>
+<p><small><sup id=Note8>(8)</sup> Widynski, B., &quot;Middle Square Weyl Sequence RNG&quot;, arXiv:1704.00358 [cs.CR], 2017.</small></p>
 
 <p><small><sup id=Note9>(9)</sup> S. Vigna, &quot;<a href="http://vigna.di.unimi.it/ftp/papers/xorshift.pdf"><strong>An experimental exploration of Marsaglia&#39;s <code>xorshift</code> generators, scrambled</strong></a>&quot;, 2016.</small></p>
 
@@ -863,7 +863,7 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 <ul>
 <li>In general, hash functions carry the risk that two processes will end up with the same PRNG seed (a <em>collision risk</em>), but this risk decreases as PRNG state length increases (see &quot;<a href="https://en.wikipedia.org/wiki/Birthday_problem"><strong>Birthday problem</strong></a>&quot;).</li>
 <li>M. O&#39;Neill (in &quot;Developing a seed_seq Alternative&quot;, Apr. 30, 2015) developed hash functions (<code>seed_seq_fe</code>) that are designed to avoid collisions if possible, and otherwise to reduce collision bias.   For example, if the PRNG&#39;s state length is 128 bits, an application can use <code>seed_seq_fe128</code> to hash sequentially assigned 128-bit seeds in each process without worrying about collisions.</li>
-<li>As another alternative, some PRNGs, such as PCG64 and <code>sfc</code>, have multiple sequences (or <em>streams</em>) of numbers that behave like independent random number sequences, and they have efficient methods to assign a different stream to each process this way.  How these methods work is PRNG-specific and beyond the scope of this document.</small></li>
+<li>As another alternative, some PRNGs, such as <code>sfc</code>, have multiple sequences (or <em>streams</em>) of numbers that behave like independent random number sequences, and they have efficient methods to assign a different stream to each process this way.  How these methods work is PRNG-specific and beyond the scope of this document.</small></li>
 </ul>
 
 <p><small><sup id=Note21>(21)</sup> For example, many questions on <em>Stack Overflow</em> highlight the pitfalls of creating a new instance of .NET&#39;s <code>System.Random</code> each time a random number is needed, rather than only once in the application.  See also Johansen, R. S., &quot;<a href="https://blogs.unity3d.com/2015/01/07/a-primer-on-repeatable-random-numbers/"><strong>A Primer on Repeatable Random Numbers</strong></a>&quot;, Unity Blog, Jan. 7, 2015.</small></p>

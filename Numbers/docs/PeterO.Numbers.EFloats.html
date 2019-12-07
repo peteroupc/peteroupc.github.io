@@ -59,7 +59,7 @@
     PeterO.Numbers.EContext ec);
 </pre>
 
-<p>Performs a logical AND operation on two binary numbers in the form of <i>logical operands</i>. A  <code>logical operand</code>  is a non-negative base-2 number with an Exponent property of 0 (examples include the base-2 numbers  <code>01001</code>  and  <code>111001</code> ). The logical AND operation sets each bit of the result to 1 if the corresponding bits of each logical operand are both 1, and to 0 otherwise. For example,  <code>01001 AND 111010=01000</code> .</p>
+<p>Performs a logical AND operation on two binary numbers in the form of <i>logical operands</i>. A  <code>logical operand</code>  is a non-negative base-2 number with an Exponent property of 0 (examples include the base-2 numbers  <code>01001</code>  and  <code>111001</code>  ). The logical AND operation sets each bit of the result to 1 if the corresponding bits of each logical operand are both 1, and to 0 otherwise. For example,  <code>01001 AND 111010=01000</code> .</p>
 
 <p><b>Parameters:</b></p>
 
@@ -333,7 +333,7 @@ is a 32-bit signed integer.</p></li>
     PeterO.Numbers.EContext ec);
 </pre>
 
-<p>Performs a logical NOT operation on a binary number in the form of a <i>logical operand</i>. A  <code>logical operand</code>  is a non-negative base-2 number with an Exponent property of 0 (examples include  <code>01001</code>  and  <code>111001</code> ). The logical NOT operation sets each bit of the result to 1 if the corresponding bit is 0, and to 0 otherwise; it can set no more bits than the maximum precision, however. For example, if the maximum precision is 8 bits, then  <code>NOT 111010=11000101</code> .</p>
+<p>Performs a logical NOT operation on a binary number in the form of a <i>logical operand</i>. A  <code>logical operand</code>  is a non-negative base-2 number with an Exponent property of 0 (examples include  <code>01001</code>  and  <code>111001</code>  ). The logical NOT operation sets each bit of the result to 1 if the corresponding bit is 0, and to 0 otherwise; it can set no more bits than the maximum precision, however. For example, if the maximum precision is 8 bits, then  <code>NOT 111010=11000101</code> .</p>
 
 <p><b>Parameters:</b></p>
 
@@ -568,8 +568,7 @@ is null.</li>
     PeterO.Numbers.EContext ec);
 </pre>
 
-<p>Returns the base-2 exponent of an arbitrary-precision binary number (when that number is expressed in scientific notation with one nonzero digit before the radix point). For example, returns 3 for the numbers  <code>1.11b * 2^3</code>  and  <code>111 *
-            2^1</code> .</p>
+<p>Returns the base-2 exponent of an arbitrary-precision binary number (when that number is expressed in scientific notation with one nonzero digit before the radix point). For example, returns 3 for the numbers  <code>1.11b * 2^3</code>  and  <code>111 * 2^1</code> .</p>
 
 <p><b>Parameters:</b></p>
 
@@ -660,7 +659,7 @@ is less than 0 or greater than 9.</li>
     PeterO.Numbers.EContext ec);
 </pre>
 
-<p>Performs a logical OR operation on two binary numbers in the form of <i>logical operands</i>. A  <code>logical operand</code>  is a non-negative base-2 number with an Exponent property of 0 (examples include the base-2 numbers  <code>01001</code>  and  <code>111001</code> ). The logical OR operation sets each bit of the result to 1 if either or both of the corresponding bits of each logical operand are 1, and to 0 otherwise. For example,  <code>01001 OR 111010=111011</code> .</p>
+<p>Performs a logical OR operation on two binary numbers in the form of <i>logical operands</i>. A  <code>logical operand</code>  is a non-negative base-2 number with an Exponent property of 0 (examples include the base-2 numbers  <code>01001</code>  and  <code>111001</code>  ). The logical OR operation sets each bit of the result to 1 if either or both of the corresponding bits of each logical operand are 1, and to 0 otherwise. For example,  <code>01001 OR 111010=111011</code> .</p>
 
 <p><b>Parameters:</b></p>
 
@@ -883,7 +882,7 @@ is null.</li>
     PeterO.Numbers.EContext ec);
 </pre>
 
-<p>Performs a logical exclusive-OR (XOR) operation on two binary numbers in the form of <i>logical operands</i>. A  <code>logical operand</code>  is a non-negative base-2 number with an Exponent property of 0 (examples include the base-2 numbers  <code>01001</code>  and  <code>111001</code> ). The logical exclusive-OR operation sets each digit of the result to 1 if either corresponding digit of the logical operands, but not both, is 1, and to 0 otherwise. For example,  <code>01001 XOR 111010 =
+<p>Performs a logical exclusive-OR (XOR) operation on two binary numbers in the form of <i>logical operands</i>. A  <code>logical operand</code>  is a non-negative base-2 number with an Exponent property of 0 (examples include the base-2 numbers  <code>01001</code>  and  <code>111001</code>  ). The logical exclusive-OR operation sets each digit of the result to 1 if either corresponding digit of the logical operands, but not both, is 1, and to 0 otherwise. For example,  <code>01001 XOR 111010 =
             101010</code> .</p>
 
 <p><b>Parameters:</b></p>

@@ -314,6 +314,9 @@ same type.</li>
                  int byteCount)</code><br>
 Generates a CBOR object from a floating-point number represented by its
 bits.</li>
+<li><code>static CBORObject FromJSONBytes​(byte[] bytes,
+         JSONOptions jsonoptions)</code><br>
+Not documented yet.</li>
 <li><code>static CBORObject FromJSONString​(java.lang.String str)</code><br>
 Generates a CBOR object from a text string in JavaScript object Notation
 (JSON) format.</li>
@@ -639,7 +642,7 @@ Converts this CBOR object to an object of an arbitrary type.</li>
     PODOptions options)</code><br>
 Converts this CBOR object to an object of an arbitrary type.</li>
 <li><code>java.lang.String toString()</code><br>
-Returns this CBOR object in string form.</li>
+Returns this CBOR object in a text form intended to be read by humans.</li>
 <li><code>CBORObject Untag()</code><br>
 Gets an object with the same value as this one but without the tags it has,
 if any.</li>
@@ -1362,7 +1365,7 @@ Instead, convert both CBOR objects to numbers (with .AsNumber()), and
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A CBORObject object.</li>
+<li>A CBOR object.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -1996,7 +1999,7 @@ null.</p></li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A CBORObject object.</li>
+<li>A CBOR object.</li>
 </ul>
 
 <h3>FromObject</h3>
@@ -2198,7 +2201,7 @@ point.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A CBORObject object.</li>
+<li>A CBOR object.</li>
 </ul>
 
 <h3>FromObject</h3>
@@ -2710,7 +2713,7 @@ integer.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A CBORObject object.</li>
+<li>A CBOR object.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -2921,8 +2924,7 @@ parsing the data.</p></li>
  UTF-16, or UTF-32 encoding; the encoding is detected by assuming
  that the first character read must be a byte-order mark or a nonzero
  basic character (U+0001 to U+007F). (In previous versions, only
- UTF-8 was allowed.) <p>If a JSON object has the same key, only the
- last given value will be used for each duplicated key.</p></p>
+ UTF-8 was allowed.).</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2935,7 +2937,7 @@ objects.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A CBORObject object.</li>
+<li>A CBOR object.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -2996,8 +2998,7 @@ encoding or is not in JSON format.</p></li>
  UTF-32 encoding; the encoding is detected by assuming that the first
  character read must be a byte-order mark or a nonzero basic
  character (U+0001 to U+007F). (In previous versions, only UTF-8 was
- allowed.) <p>By default, if a JSON object has the same key, only the
- last given value will be used for each duplicated key.</p></p>
+ allowed.).</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -3022,6 +3023,27 @@ object.</p></li>
 <li><p><code>java.io.IOException</code> - An I/O error occurred.</p></li>
 <li><p><code>CBORException</code> - The data stream contains invalid
 encoding or is not in JSON format.</p></li>
+</ul>
+
+<h3>FromJSONBytes</h3>
+
+<pre>public static CBORObject FromJSONBytes​(byte[] bytes, JSONOptions jsonoptions)
+</pre>
+
+<p>Not documented yet.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>bytes</code> - Not documented yet.</p></li>
+<li><p><code>jsonoptions</code> - Not documented yet.</p></li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>java.lang.NullPointerException</code> - The parameter <code>bytes</code> or <code>
+jsonoptions</code> is null.</li>
 </ul>
 
 <h3>Remainder</h3>
@@ -5061,13 +5083,14 @@ object to JSON.</li>
 <pre>public java.lang.String toString()
 </pre>
 
-<p>Returns this CBOR object in string form. The format is intended to be
- human-readable, not machine-readable, the format is not intended to
- be parsed, and the format may change at any time. The returned
- string is not necessarily in JavaScript object Notation (JSON); to
- convert CBOR objects to JSON strings, use the
+<p>Returns this CBOR object in a text form intended to be read by humans. The
+ value returned by this method is not intended to be parsed by
+ computer programs, and the exact text of the value may change at any
+ time between versions of this library. <p>The returned string is not
+ necessarily in JavaScript object Notation (JSON); to convert CBOR
+ objects to JSON strings, use the
  <b>PeterO.Cbor.CBORObject.ToJSONString(PeterO.Cbor.JSONOptions)</b>
- method instead.</p>
+ method instead.</p></p>
 
 <p><strong>Overrides:</strong></p>
 
@@ -5094,7 +5117,7 @@ object to JSON.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A CBORObject object.</li>
+<li>A CBOR object.</li>
 </ul>
 
 <h3>UntagOne</h3>
@@ -5110,7 +5133,7 @@ object to JSON.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A CBORObject object.</li>
+<li>A CBOR object.</li>
 </ul>
 
 <h3>WriteJSONTo</h3>
