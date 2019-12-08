@@ -299,11 +299,11 @@ Randomness extraction is discussed in NIST SP 800-90B sec. 3.1.5.1, RFC 4086 sec
 
 In general, an application ought to seed a noncryptographic's PRNG's full state with either the output of a cryptographic RNG or a seed described in the [**previous section**](#Seed_Generation).
 
-Some applications require multiple processes (including threads, tasks, or subtasks) to use [**reproducible "random" numbers**](#Manually_Seeded_PRNGs) for the same purpose.  An example is multiple instances of a simulation with random starting conditions.  However, noncryptographic PRNGs tend to produce "random" number sequences that are correlated to each other, which is undesirable for simulations in particular.  This correlation risk can be reduced as follows:
+Some applications require multiple processes (including threads, tasks, or subtasks) to use [**reproducible "random" numbers**](#Manually_Seeded_PRNGs) for the same purpose.  An example is multiple instances of a simulation with random starting conditions.  However, noncryptographic PRNGs tend to produce "random" number sequences that are correlated to each other, which is undesirable for simulations in particular.  Here are ways to reduce this correlation risk:
 
-- By choosing seeds carefully.  The risk is lowest if the seeds are uncorrelated themselves. It is NOT RECOMMENDED to seed PRNGs with sequential counters, linearly related numbers, or timestamps; timestamps in particular can carry the risk of generating the same "random" number sequence accidentally.<sup>[**(18)**](#Note18)</sup>
-- By using two or more designs of PRNGs across the set of processes, to reduce correlation risks due to a particular PRNG's design.<sup>[**(19)**](#Note19)</sup>
-- By choosing PRNGs (e.g., `sfc`) that support "streams" of numbers that behave like independent random number sequences.  These PRNGs generally have efficient ways to assign a different stream to each process, but describing how they work is out of scope of this document.
+- Choose seeds carefully.  The risk is lowest if the seeds are uncorrelated themselves. It is NOT RECOMMENDED to seed PRNGs with sequential counters, linearly related numbers, or timestamps; timestamps in particular can carry the risk of generating the same "random" number sequence accidentally.<sup>[**(18)**](#Note18)</sup>
+- Use two or more designs of PRNGs across the set of processes, to reduce correlation risks due to a particular PRNG's design.<sup>[**(19)**](#Note19)</sup>
+- Choose PRNGs (e.g., `sfc`) that support "streams" of numbers that behave like independent random number sequences.  These PRNGs generally have efficient ways to assign a different stream to each process, but describing how they work is out of scope of this document.
 
 The following is a general way to seed multiple processes for random number generation.  Generate a seed (or use a predetermined seed) and distribute that seed to each process as follows<sup>[**(20)**](#Note20)</sup>:
 
