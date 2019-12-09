@@ -297,9 +297,9 @@ Randomness extraction is discussed in NIST SP 800-90B sec. 3.1.5.1, RFC 4086 sec
 <a id=Seed_Generation_for_Noncryptographic_PRNGs></a>
 ### Seed Generation for Noncryptographic PRNGs
 
-In general, an application ought to seed a noncryptographic's PRNG's full state with either the output of a cryptographic RNG or a seed described in the [**previous section**](#Seed_Generation).
+In general, an application ought to seed a noncryptographic PRNG's full state with either the output of a cryptographic RNG or a seed described in the [**previous section**](#Seed_Generation).
 
-Some applications require multiple processes (including threads, tasks, or subtasks) to use [**reproducible "random" numbers**](#Manually_Seeded_PRNGs) for the same purpose.  An example is multiple instances of a simulation with random starting conditions.  However, noncryptographic PRNGs tend to produce "random" number sequences that are correlated to each other, which is undesirable for simulations in particular.  Here are ways to reduce this correlation risk:
+Some applications require multiple processes (including threads, tasks, or subtasks) to use [**reproducible "random" numbers**](#Manually_Seeded_PRNGs) for the same purpose.  An example is multiple instances of a simulation with random starting conditions.  However, noncryptographic PRNGs tend to produce "random" number sequences that are correlated to each other, which is undesirable for simulations in particular.  To reduce this correlation risk, an application can:
 
 - Choose seeds carefully.  The risk is lowest if the seeds are uncorrelated themselves. It is NOT RECOMMENDED to seed PRNGs with sequential counters, linearly related numbers, or timestamps; timestamps in particular can carry the risk of generating the same "random" number sequence accidentally.<sup>[**(18)**](#Note18)</sup>
 - Use two or more designs of PRNGs across the set of processes, to reduce correlation risks due to a particular PRNG's design.<sup>[**(19)**](#Note19)</sup>

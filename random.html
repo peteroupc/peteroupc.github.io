@@ -430,9 +430,9 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 
 <h3>Seed Generation for Noncryptographic PRNGs</h3>
 
-<p>In general, an application ought to seed a noncryptographic&#39;s PRNG&#39;s full state with either the output of a cryptographic RNG or a seed described in the <a href="#Seed_Generation"><strong>previous section</strong></a>.</p>
+<p>In general, an application ought to seed a noncryptographic PRNG&#39;s full state with either the output of a cryptographic RNG or a seed described in the <a href="#Seed_Generation"><strong>previous section</strong></a>.</p>
 
-<p>Some applications require multiple processes (including threads, tasks, or subtasks) to use <a href="#Manually_Seeded_PRNGs"><strong>reproducible &quot;random&quot; numbers</strong></a> for the same purpose.  An example is multiple instances of a simulation with random starting conditions.  However, noncryptographic PRNGs tend to produce &quot;random&quot; number sequences that are correlated to each other, which is undesirable for simulations in particular.  Here are ways to reduce this correlation risk:</p>
+<p>Some applications require multiple processes (including threads, tasks, or subtasks) to use <a href="#Manually_Seeded_PRNGs"><strong>reproducible &quot;random&quot; numbers</strong></a> for the same purpose.  An example is multiple instances of a simulation with random starting conditions.  However, noncryptographic PRNGs tend to produce &quot;random&quot; number sequences that are correlated to each other, which is undesirable for simulations in particular.  To reduce this correlation risk, an application can:</p>
 
 <ul>
 <li>Choose seeds carefully.  The risk is lowest if the seeds are uncorrelated themselves. It is NOT RECOMMENDED to seed PRNGs with sequential counters, linearly related numbers, or timestamps; timestamps in particular can carry the risk of generating the same &quot;random&quot; number sequence accidentally.<sup><a href="#Note18"><strong>(18)</strong></a></sup></li>
