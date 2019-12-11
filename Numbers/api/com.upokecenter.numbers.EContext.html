@@ -163,7 +163,7 @@ bits, rather than digits.</li>
 Gets a value indicating whether to use a &quot;simplified&quot; arithmetic.</li>
 <li><code>void setFlags​(int value)</code><br></li>
 <li><code>java.lang.String toString()</code><br>
-Returns this object in a text form intended to be read by humans.</li>
+Gets a string representation of this object.</li>
 <li><code>EContext WithAdjustExponent​(boolean adjustExponent)</code><br>
 Copies this EContext and sets the copy&#39;s &quot;AdjustExponent&quot; property to the
 given value.</li>
@@ -742,10 +742,8 @@ any exponent less than EMax.</li>
 <pre>public java.lang.String toString()
 </pre>
 
-<p>Returns this object in a text form intended to be read by humans. The value
- returned by this method is not intended to be parsed by computer
- programs, and the exact text of the value may change at any time
- between versions of this library.</p>
+<p>Gets a string representation of this object. Note that the string&#39;s format
+ is not intended to be parsed and may change at any time.</p>
 
 <p><strong>Overrides:</strong></p>
 

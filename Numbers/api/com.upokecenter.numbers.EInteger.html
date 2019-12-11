@@ -1649,7 +1649,8 @@ set.</li>
 
 <ul>
 <li><p><code>java.lang.NullPointerException</code> - The parameter <code>second</code> is null.</p></li>
-<li><p><code>java.lang.IllegalArgumentException</code> - Doesn&#39;t satisfy biggerCount&gt;0.</p></li>
+<li><p><code>java.lang.IllegalArgumentException</code> - Doesn&#39;t satisfy biggerCount&gt;0; doesn&#39;t satisfy
+biggerCount == CountWords(result).</p></li>
 </ul>
 
 <h3>Xor</h3>
@@ -1678,7 +1679,9 @@ corresponding bit is set in one input integer but not in the other.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>java.lang.NullPointerException</code> - The parameter <code>other</code> is null.</li>
+<li><p><code>java.lang.NullPointerException</code> - The parameter <code>other</code> is null.</p></li>
+<li><p><code>java.lang.IllegalArgumentException</code> - Doesn&#39;t satisfy smallerCount ==
+CountWords(result).</p></li>
 </ul>
 
 <h3>ShiftRight</h3>

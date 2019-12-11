@@ -30,6 +30,12 @@ Parses a number whose format follows the JSON specification (RFC
 8259).</li>
 <li><code>static CBORObject ParseJSONNumber​(java.lang.String str,
            int offset,
+           int count)</code><br>
+Parses a number whose format follows the JSON specification (RFC 8259) from
+a portion of a text string, and converts that number to a CBOR
+object.</li>
+<li><code>static CBORObject ParseJSONNumber​(java.lang.String str,
+           int offset,
            int count,
            JSONOptions options)</code><br>
 Parses a number whose format follows the JSON specification (RFC 8259) and
@@ -165,6 +171,37 @@ parsing fails, including if the string is null or empty.</li>
 
 <h3>ParseJSONNumber</h3>
 
+<pre>public static CBORObject ParseJSONNumber​(java.lang.String str, int offset, int count)
+</pre>
+
+<p>Parses a number whose format follows the JSON specification (RFC 8259) from
+ a portion of a text string, and converts that number to a CBOR
+ object.<p>Roughly speaking, a valid JSON number consists of an
+ optional minus sign, one or more basic digits (starting with 1 to 9
+ unless there is only one digit and that digit is 0), an optional
+  decimal point (&quot;.&quot;, full stop) with one or more basic digits, and an
+ optional letter E or e with an optional plus or minus sign and one
+ or more basic digits (the exponent). A string representing a valid
+ JSON number is not allowed to contain white space characters,
+ including spaces.</p></p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>str</code> - A text string containing the portion to parse as a JSON number.</p></li>
+<li><p><code>offset</code> -</p></li>
+<li><p><code>count</code> -</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A CBOR object that represents the parsed number. Returns null if the
+parsing fails, including if the string is null or empty.</li>
+</ul>
+
+<h3>ParseJSONNumber</h3>
+
 <pre>public static CBORObject ParseJSONNumber​(java.lang.String str, int offset, int count, JSONOptions options)
 </pre>
 
@@ -202,10 +239,8 @@ count</code> is 0 or less.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.IllegalArgumentException</code> - Either <code>offset</code> or <code>count</code> is less
-than 0 or greater than <code>str</code> &#39;s length, or <code>str</code> &#39;s
-length minus <code>offset</code> is less than <code>count</code>.</p></li>
 <li><p><code>java.lang.NullPointerException</code> - The parameter <code>str</code> is null.</p></li>
+<li><p><code>java.lang.IllegalArgumentException</code> - Unsupported conversion kind.</p></li>
 </ul>
 
 <p><a href="/CBOR/">Back to CBOR start page.</a></p>
