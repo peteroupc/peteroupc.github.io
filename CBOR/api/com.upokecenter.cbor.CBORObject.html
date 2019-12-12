@@ -334,6 +334,14 @@ process.</li>
 Generates a CBOR object from a byte array in JavaScript object Notation
 (JSON) format, using the specified options to control the decoding
 process.</li>
+<li><code>static CBORObject[] FromJSONSequenceBytes​(byte[] bytes)</code><br>
+Generates a list of CBOR objects from an array of bytes in JavaScript object
+Notation (JSON) text sequence format (RFC 7464).</li>
+<li><code>static CBORObject[] FromJSONSequenceBytes​(byte[] data,
+                 JSONOptions options)</code><br>
+Generates a list of CBOR objects from an array of bytes in JavaScript object
+Notation (JSON) text sequence format (RFC 7464), using the specified
+options to control the decoding process.</li>
 <li><code>static CBORObject FromJSONString​(java.lang.String str)</code><br>
 Generates a CBOR object from a text string in JavaScript object Notation
 (JSON) format.</li>
@@ -603,6 +611,13 @@ as appropriate.</li>
 Generates a CBOR object from a data stream in JavaScript object Notation
 (JSON) format, using the specified options to control the decoding
 process.</li>
+<li><code>static CBORObject[] ReadJSONSequence​(java.io.InputStream stream)</code><br>
+Generates a list of CBOR objects from a data stream in JavaScript object
+Notation (JSON) text sequence format (RFC 7464).</li>
+<li><code>static CBORObject[] ReadJSONSequence​(java.io.InputStream stream,
+            JSONOptions jsonoptions)</code><br>
+Generates a list of CBOR objects from a data stream in JavaScript object
+Notation (JSON) text sequence format (RFC 7464).</li>
 <li><code>static CBORObject[] ReadSequence​(java.io.InputStream stream)</code><br>
 Reads a sequence of objects in CBOR format from a data stream.</li>
 <li><code>static CBORObject[] ReadSequence​(java.io.InputStream stream,
@@ -1512,6 +1527,80 @@ parsing the data. This includes cases where the last CBOR object in
 the data was read only partly.</p></li>
 <li><p><code>java.lang.NullPointerException</code> - The parameter <code>data</code> is null, or the
 parameter <code>options</code> is null.</p></li>
+</ul>
+
+<h3>FromJSONSequenceBytes</h3>
+
+<pre>public static CBORObject[] FromJSONSequenceBytes​(byte[] bytes)
+</pre>
+
+<p>Generates a list of CBOR objects from an array of bytes in JavaScript object
+ Notation (JSON) text sequence format (RFC 7464). The byte array must
+ be in UTF-8 encoding and may not begin with a byte-order mark
+ (U+FEFF).<p>Generally, each JSON text in a JSON text sequence is
+ written as follows: Write a record separator byte (0x1e), then write
+ the JSON text in UTF-8 (without a byte order mark, U+FEFF), then
+ write the line feed byte (0x0a). RFC 7464, however, uses a more
+ liberal syntax for parsing JSON text sequences.</p></p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>bytes</code> -</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A list of CBOR objects read from the JSON sequence. Objects that
+could not be parsed are replaced with <code>null</code> (as opposed to
+<code>CBORObject.Null</code>) in the given list.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>java.lang.NullPointerException</code> - The parameter <code>stream</code> is null.</p></li>
+<li><p><code>CBORException</code> - The byte array is not empty and
+does not begin with a record separator byte (0x1e), or an I/O error
+occurred.</p></li>
+</ul>
+
+<h3>FromJSONSequenceBytes</h3>
+
+<pre>public static CBORObject[] FromJSONSequenceBytes​(byte[] data, JSONOptions options)
+</pre>
+
+<p>Generates a list of CBOR objects from an array of bytes in JavaScript object
+ Notation (JSON) text sequence format (RFC 7464), using the specified
+ options to control the decoding process. The byte array must be in
+ UTF-8 encoding and may not begin with a byte-order mark
+ (U+FEFF).<p>Generally, each JSON text in a JSON text sequence is
+ written as follows: Write a record separator byte (0x1e), then write
+ the JSON text in UTF-8 (without a byte order mark, U+FEFF), then
+ write the line feed byte (0x0a). RFC 7464, however, uses a more
+ liberal syntax for parsing JSON text sequences.</p></p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>data</code> - Not documented yet.</p></li>
+<li><p><code>options</code> - Not documented yet.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The return value is not documented yet.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>java.lang.NullPointerException</code> - The parameter <code>stream</code> is null.</p></li>
+<li><p><code>CBORException</code> - The byte array is not empty and
+does not begin with a record separator byte (0x1e), or an I/O error
+occurred.</p></li>
 </ul>
 
 <h3>DecodeFromBytes</h3>
@@ -3157,6 +3246,45 @@ objects.</li>
 encoding or is not in JSON format.</p></li>
 </ul>
 
+<h3>ReadJSONSequence</h3>
+
+<pre>public static CBORObject[] ReadJSONSequence​(java.io.InputStream stream) throws java.io.IOException
+</pre>
+
+<p>Generates a list of CBOR objects from a data stream in JavaScript object
+ Notation (JSON) text sequence format (RFC 7464). The data stream
+ must be in UTF-8 encoding and may not begin with a byte-order mark
+ (U+FEFF).<p>Generally, each JSON text in a JSON text sequence is
+ written as follows: Write a record separator byte (0x1e), then write
+ the JSON text in UTF-8 (without a byte order mark, U+FEFF), then
+ write the line feed byte (0x0a). RFC 7464, however, uses a more
+ liberal syntax for parsing JSON text sequences.</p></p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>stream</code> - A readable data stream. The sequence of bytes read from the
+data stream must either be empty or begin with a record separator
+byte (0x1e).</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A list of CBOR objects read from the JSON sequence. Objects that
+could not be parsed are replaced with <code>null</code> (as opposed to
+<code>CBORObject.Null</code>) in the given list.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>java.lang.NullPointerException</code> - The parameter <code>stream</code> is null.</p></li>
+<li><p><code>java.io.IOException</code> - An I/O error occurred.</p></li>
+<li><p><code>CBORException</code> - The data stream is not empty and
+does not begin with a record separator byte (0x1e).</p></li>
+</ul>
+
 <h3>ReadJSON</h3>
 
 <pre>@Deprecated public static CBORObject ReadJSON​(java.io.InputStream stream, CBOREncodeOptions options) throws java.io.IOException
@@ -3192,6 +3320,47 @@ method uses only the AllowDuplicateKeys property of this object.</p></li>
 <li><p><code>java.io.IOException</code> - An I/O error occurred.</p></li>
 <li><p><code>CBORException</code> - The data stream contains invalid
 encoding or is not in JSON format.</p></li>
+</ul>
+
+<h3>ReadJSONSequence</h3>
+
+<pre>public static CBORObject[] ReadJSONSequence​(java.io.InputStream stream, JSONOptions jsonoptions) throws java.io.IOException
+</pre>
+
+<p>Generates a list of CBOR objects from a data stream in JavaScript object
+ Notation (JSON) text sequence format (RFC 7464). The data stream
+ must be in UTF-8 encoding and may not begin with a byte-order mark
+ (U+FEFF).<p>Generally, each JSON text in a JSON text sequence is
+ written as follows: Write a record separator byte (0x1e), then write
+ the JSON text in UTF-8 (without a byte order mark, U+FEFF), then
+ write the line feed byte (0x0a). RFC 7464, however, uses a more
+ liberal syntax for parsing JSON text sequences.</p></p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>stream</code> - A readable data stream. The sequence of bytes read from the
+data stream must either be empty or begin with a record separator
+byte (0x1e).</p></li>
+<li><p><code>jsonoptions</code> - Specifies options to control how JSON texts in the stream
+are decoded to CBOR. See the JSONOptions class.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A list of CBOR objects read from the JSON sequence. Objects that
+could not be parsed are replaced with <code>null</code> (as opposed to
+<code>CBORObject.Null</code>) in the given list.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>java.lang.NullPointerException</code> - The parameter <code>stream</code> is null.</p></li>
+<li><p><code>java.io.IOException</code> - An I/O error occurred.</p></li>
+<li><p><code>CBORException</code> - The data stream is not empty and
+does not begin with a record separator byte (0x1e).</p></li>
 </ul>
 
 <h3>ReadJSON</h3>
@@ -5351,7 +5520,8 @@ a 32-bit signed integer (<code>int</code>).</p></li>
  CBORException. The example code given in
  <b>PeterO.Cbor.CBORObject.ToJSONString(PeterO.Cbor.JSONOptions)</b>
  can be used to write out certain keys of a CBOR map in a given order
- to a JSON string.</p> <p><b>Warning:</b> In general, if this CBOR
+ to a JSON string, or to write out a CBOR object as part of a JSON
+ text sequence.</p> <p><b>Warning:</b> In general, if this CBOR
  object contains integer map keys or uses other features not
  supported in JSON, and the application converts this CBOR object to
  JSON and back to CBOR, the application <i>should not</i> expect the
@@ -5512,11 +5682,13 @@ object to JSON.</li>
  <b>PeterO.Cbor.CBORObject.ToJSONString(PeterO.Cbor.JSONOptions)</b>
  can be used to write out certain keys of a CBOR map in a given order
  to a JSON string.<p> </p><p>The following example (originally written in
- C# for the.NET version) shows how to use the
+ C# for the.NET version) writes out a CBOR object as part of a JSON
+ text sequence (RFC 7464).</p> <pre> stream.write(0x1e); /* RS <em>/ cborObject.WriteJSONTo(stream); /</em> JSON <em>/ stream.write(0x0a); /</em> LF <em>/ </pre> <p>The following example (originally written
+ in C# for the.NET version) shows how to use the
  <code>LimitedMemoryStream</code> class (implemented in
  <i>LimitedMemoryStream.cs</i> in the peteroupc/CBOR open-source
  repository) to limit the size of supported JSON serializations of
- CBOR objects.</p> <pre> /* maximum supported JSON size in bytes<em>/ int maxSize = 20000; {
+ CBOR objects.</p> <pre> /</em> maximum supported JSON size in bytes<em>/ int maxSize = 20000; {
 LimitedMemoryStream ms = null;
 try {
 ms = new LimitedMemoryStream(maxSize);

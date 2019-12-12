@@ -336,9 +336,9 @@ detect UTF-32 first.)</li></ul>.</p></li>
 (in the detected encoding) are found in the byte stream. If false,
 replaces those byte sequences with replacement characters (U+FFFD)
 as the stream is read.</p></li>
-<li><p><code>dontSkipUtf8Bom</code> - If the stream is detected as UTF-8 and this parameter
-is <code>true</code>, won&#39;t skip the BOM character if it occurs at the
-start of the stream.</p></li>
+<li><p><code>dontSkipUtf8Bom</code> - If the stream is detected as UTF-8 (including when
+&quot;mode&quot; is 0) and this parameter is <code>true</code>, won&#39;t skip the BOM
+character if it occurs at the start of the stream.</p></li>
 </ul>
 
 <p><strong>Throws:</strong></p>

@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on June 4, 2017; last updated on Dec. 11, 2019.
+Begun on June 4, 2017; last updated on Dec. 12, 2019.
 
 Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.
 
@@ -1626,7 +1626,9 @@ Distributions based on the gamma distribution:
 
 **Requires random real numbers.**
 
-In the following method, which generates a random number that follows a _beta distribution_, `a` and `b` are two parameters each greater than 0.  The range of the beta distribution is [0, 1).
+The beta distribution is a bounded distribution; its two parameters, `a` and `b`, are both greater than 0 and describe the distribution's shape.  Depending on `a` and `b`, the shape can be a smooth peak or a smooth valley.
+
+The following method generates a random number that follows a _beta distribution_, in the interval [0, 1).
 
     METHOD BetaDist(self, a, b)
       if b==1 and a==1: return RNDU01()
