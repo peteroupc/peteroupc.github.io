@@ -14,6 +14,11 @@
 <h2>Enum Constants</h2>
 
 <ul>
+<li><code>Decimal128 CBORObject.FromObject(EDecimal)</code><br>
+JSON numbers are decoded to CBOR as their closest-rounded approximation to
+an IEEE 854 decimal128 value, using the rules for the EDecimal
+form of that approximation as given in the
+CBORObject.FromObject(EDecimal) method.</li>
 <li><code>Double</code><br>
 JSON numbers are decoded to CBOR as their closest-rounded approximation as
 64-bit binary floating-point numbers.</li>
@@ -62,6 +67,11 @@ the order they are declared.</li>
 <h3>IntOrFloatFromDouble</h3>
 
 <pre>public static final JSONOptions.ConversionMode IntOrFloatFromDouble
+</pre>
+
+<h3>Decimal128</h3>
+
+<pre>public static final JSONOptions.ConversionMode Decimal128
 </pre>
 
 <h3>values</h3>
@@ -127,6 +137,16 @@ the order they are declared.</li>
  it&#39;s converted to the CBOR integer 1 (major type 0). (In some
  cases, numbers extremely close to zero may underflow to zero, and
  numbers of extremely large magnitude may overflow to infinity.).</p>
+
+<h3>Decimal128</h3>
+
+<pre>public static final JSONOptions.ConversionMode Decimal128
+</pre>
+
+<p>JSON numbers are decoded to CBOR as their closest-rounded approximation to
+ an IEEE 854 decimal128 value, using the rules for the EDecimal
+ form of that approximation as given in the
+ <code>CBORObject.FromObject(EDecimal)</code> method.</p>
 
 <p><a href="/CBOR/">Back to CBOR start page.</a></p>
 </div><nav id="navigation"><ul>

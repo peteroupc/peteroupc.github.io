@@ -17,6 +17,7 @@
 <li><code><a href="#ParseJSONNumber_string">ParseJSONNumber(string)</a></code> - Parses a number whose format follows the JSON specification.</li>
 <li><code><a href="#ParseJSONNumber_string_bool_bool">ParseJSONNumber(string, bool, bool)</a></code> - <b>Deprecated:</b> Call the one-argument version of this method instead. If this method call used positiveOnly = true, check that the string does not begin with &#39;-&#39; before calling that version. If this method call used integersOnly = true, check that the string does not contain &#39;.&#39;, &#39;E&#39;, or &#39;e&#39; before calling that version.</li>
 <li><code><a href="#ParseJSONNumber_string_bool_bool_bool">ParseJSONNumber(string, bool, bool, bool)</a></code> - Parses a number whose format follows the JSON specification (RFC 8259).</li>
+<li><code><a href="#ParseJSONNumber_string_int_int">ParseJSONNumber(string, int, int)</a></code> - Parses a number whose format follows the JSON specification (RFC 8259) from a portion of a text string, and converts that number to a CBOR object.</li>
 <li><code><a href="#ParseJSONNumber_string_int_int_PeterO_Cbor_JSONOptions">ParseJSONNumber(string, int, int, PeterO.Cbor.JSONOptions)</a></code> - Parses a number whose format follows the JSON specification (RFC 8259) and converts that number to a CBOR object.</li>
 <li><code><a href="#ParseJSONNumber_string_PeterO_Cbor_JSONOptions">ParseJSONNumber(string, PeterO.Cbor.JSONOptions)</a></code> - Parses a number whose format follows the JSON specification (RFC 8259) and converts that number to a CBOR object.</li>
 </ul>
@@ -97,6 +98,50 @@
 
 <p>A CBOR object that represents the parsed number. Returns null if the parsing fails, including if the string is null or empty.</p>
 
+<p><a id="ParseJSONNumber_string_int_int"></a></p>
+
+<h3>ParseJSONNumber</h3>
+
+<pre>public static PeterO.Cbor.CBORObject ParseJSONNumber(
+    string str,
+    int offset,
+    int count);
+</pre>
+
+<p>Parses a number whose format follows the JSON specification (RFC 8259) from a portion of a text string, and converts that number to a CBOR object.</p>
+
+<p>Roughly speaking, a valid JSON number consists of an optional minus sign, one or more basic digits (starting with 1 to 9 unless there is only one digit and that digit is 0), an optional decimal point (&quot;.&quot;, full stop) with one or more basic digits, and an optional letter E or e with an optional plus or minus sign and one or more basic digits (the exponent). A string representing a valid JSON number is not allowed to contain white space characters, including spaces.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>str</i>: A text string containing the portion to parse as a JSON number.</p></li>
+<li><p><i>offset</i>: The parameter  <i>offset</i>
+is a 32-bit signed integer.</p></li>
+<li><p><i>count</i>: The parameter  <i>count</i>
+is a 32-bit signed integer.</p></li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>A CBOR object that represents the parsed number. Returns null if the parsing fails, including if the string is null or empty.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li><p>System.ArgumentException:
+Either  <i>offset</i>
+or  <i>count</i>
+is less than 0 or greater than  <i>str</i>
+&#39;s length, or  <i>str</i>
+&#39;s length minus  <i>offset</i>
+is less than  <i>count</i>
+.</p></li>
+<li><p>System.ArgumentNullException:
+The parameter  <i>str</i>
+is null.</p></li>
+</ul>
+
 <p><a id="ParseJSONNumber_string_int_int_PeterO_Cbor_JSONOptions"></a></p>
 
 <h3>ParseJSONNumber</h3>
@@ -132,17 +177,11 @@ begins.</p></li>
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li><p>System.ArgumentException:
-Either  <i>offset</i>
-or  <i>count</i>
-is less than 0 or greater than  <i>str</i>
-&#39;s length, or  <i>str</i>
-&#39;s length minus  <i>offset</i>
-is less than  <i>count</i>
-.</p></li>
 <li><p>System.ArgumentNullException:
 The parameter  <i>str</i>
 is null.</p></li>
+<li><p>System.ArgumentException:
+Unsupported conversion kind.</p></li>
 </ul>
 
 <p><a id="ParseJSONNumber_string_PeterO_Cbor_JSONOptions"></a></p>

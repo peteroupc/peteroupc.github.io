@@ -139,8 +139,8 @@
 <li><code><a href="#FromObject_uint">FromObject(uint)</a></code> - Converts a 32-bit unsigned integer to a CBOR object.</li>
 <li><code><a href="#FromObject_ulong">FromObject(ulong)</a></code> - Converts a 64-bit unsigned integer to a CBOR object.</li>
 <li><code><a href="#FromObject_ushort">FromObject(ushort)</a></code> - Converts a 16-bit unsigned integer to a CBOR object.</li>
-<li><code><a href="#FromObjectAndTag_object_int">FromObjectAndTag(object, int)</a></code> - Generates a CBOR object from an arbitrary object and gives the resulting object a tag.</li>
-<li><code><a href="#FromObjectAndTag_object_PeterO_Numbers_EInteger">FromObjectAndTag(object, PeterO.Numbers.EInteger)</a></code> - Generates a CBOR object from an arbitrary object and gives the resulting object a tag.</li>
+<li><code><a href="#FromObjectAndTag_object_int">FromObjectAndTag(object, int)</a></code> - Generates a CBOR object from an arbitrary object and gives the resulting object a tag in addition to its existing tags (the new tag is made the outermost tag).</li>
+<li><code><a href="#FromObjectAndTag_object_PeterO_Numbers_EInteger">FromObjectAndTag(object, PeterO.Numbers.EInteger)</a></code> - Generates a CBOR object from an arbitrary object and gives the resulting object a tag in addition to its existing tags (the new tag is made the outermost tag).</li>
 <li><code><a href="#FromObjectAndTag_object_ulong">FromObjectAndTag(object, ulong)</a></code> - Generates a CBOR object from an arbitrary object and gives the resulting object a tag.</li>
 <li><code><a href="#FromSimpleValue_int">FromSimpleValue(int)</a></code> - Creates a CBOR object from a simple value number.</li>
 <li><code><a href="#GetAllTags">GetAllTags()</a></code> - Gets a list of all tags, from outermost to innermost.</li>
@@ -227,6 +227,9 @@
 <li><code><a href="#Untag">Untag()</a></code> - Gets an object with the same value as this one but without the tags it has, if any.</li>
 <li><code><a href="#UntagOne">UntagOne()</a></code> - Gets an object with the same value as this one but without this object&#39;s outermost tag, if any.</li>
 <li><code><a href="#Values">Values</a></code> - Gets a collection of the values of this CBOR object, if it&#39;s a map or an array.</li>
+<li><code><a href="#WithTag_int">WithTag(int)</a></code> - Generates a CBOR object from an arbitrary object and gives the resulting object a tag in addition to its existing tags (the new tag is made the outermost tag).</li>
+<li><code><a href="#WithTag_PeterO_Numbers_EInteger">WithTag(PeterO.Numbers.EInteger)</a></code> - Generates a CBOR object from this one, but gives the resulting object a tag in addition to its existing tags (the new tag is made the outermost tag).</li>
+<li><code><a href="#WithTag_ulong">WithTag(ulong)</a></code> - Generates a CBOR object from this one, but gives the resulting object a tag in addition to its existing tags (the new tag is made the outermost tag).</li>
 <li><code><a href="#Write_bool_System_IO_Stream">Write(bool, System.IO.Stream)</a></code> - Writes a Boolean value in CBOR format to a data stream.</li>
 <li><code><a href="#Write_byte_System_IO_Stream">Write(byte, System.IO.Stream)</a></code> - Writes a byte (0 to 255) in CBOR format to a data stream.</li>
 <li><code><a href="#Write_double_System_IO_Stream">Write(double, System.IO.Stream)</a></code> - Writes a 64-bit floating-point number in CBOR format to a data stream.</li>
@@ -1991,8 +1994,11 @@ The byte array contains invalid encoding or is not in JSON format.</p></li>
 
 <ul>
 <li><p><i>bytes</i>: A byte array, the specified portion of which is in JSON format. The specified portion of the byte array must contain a single JSON object and not multiple objects. The portion may begin with a byte-order mark (U+FEFF). The portion can be in UTF-8, UTF-16, or UTF-32 encoding; the encoding is detected by assuming that the first character read must be a byte-order mark or a nonzero basic character (U+0001 to U+007F).</p></li>
-<li><p><i>offset</i>:</p></li>
-<li><p><i>count</i>:</p></li>
+<li><p><i>offset</i>: An index, starting at 0, showing where the desired portion of  <i>bytes</i>
+begins.</p></li>
+<li><p><i>count</i>: The length, in bytes, of the desired portion of  <i>bytes</i>
+(but not more than  <i>bytes</i>
+&#39;s length).</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -2003,10 +2009,18 @@ The byte array contains invalid encoding or is not in JSON format.</p></li>
 
 <ul>
 <li><p>System.ArgumentNullException:
-The parameter  <i>str</i>
+The parameter  <i>bytes</i>
 is null.</p></li>
 <li><p>PeterO.Cbor.CBORException:
 The byte array contains invalid encoding or is not in JSON format.</p></li>
+<li><p>System.ArgumentException:
+Either  <i>offset</i>
+or  <i>count</i>
+is less than 0 or greater than  <i>bytes</i>
+&#39;s length, or  <i>bytes</i>
+&#39;s length minus  <i>offset</i>
+is less than  <i>count</i>
+.</p></li>
 </ul>
 
 <p><a id="FromJSONBytes_byte_int_int_PeterO_Cbor_JSONOptions"></a></p>
@@ -2026,8 +2040,11 @@ The byte array contains invalid encoding or is not in JSON format.</p></li>
 
 <ul>
 <li><p><i>bytes</i>: A byte array, the specified portion of which is in JSON format. The specified portion of the byte array must contain a single JSON object and not multiple objects. The portion may begin with a byte-order mark (U+FEFF). The portion can be in UTF-8, UTF-16, or UTF-32 encoding; the encoding is detected by assuming that the first character read must be a byte-order mark or a nonzero basic character (U+0001 to U+007F).</p></li>
-<li><p><i>offset</i>: Not documented yet.</p></li>
-<li><p><i>count</i>: Not documented yet.</p></li>
+<li><p><i>offset</i>: An index, starting at 0, showing where the desired portion of  <i>bytes</i>
+begins.</p></li>
+<li><p><i>count</i>: The length, in bytes, of the desired portion of  <i>bytes</i>
+(but not more than  <i>bytes</i>
+&#39;s length).</p></li>
 <li><p><i>jsonoptions</i>: Specifies options to control how the JSON data is decoded to CBOR. See the JSONOptions class.</p></li>
 </ul>
 
@@ -2044,6 +2061,14 @@ or  <i>jsonoptions</i>
 is null.</p></li>
 <li><p>PeterO.Cbor.CBORException:
 The byte array contains invalid encoding or is not in JSON format.</p></li>
+<li><p>System.ArgumentException:
+Either  <i>offset</i>
+or  <i>count</i>
+is less than 0 or greater than  <i>bytes</i>
+&#39;s length, or  <i>bytes</i>
+&#39;s length minus  <i>offset</i>
+is less than  <i>count</i>
+.</p></li>
 </ul>
 
 <p><a id="FromJSONBytes_byte_PeterO_Cbor_JSONOptions"></a></p>
@@ -2133,8 +2158,11 @@ The string is not in JSON format.</p></li>
 
 <ul>
 <li><p><i>str</i>: A text string in JSON format. The entire string must contain a single JSON object and not multiple objects. The string may not begin with a byte-order mark (U+FEFF).</p></li>
-<li><p><i>offset</i>:</p></li>
-<li><p><i>count</i>:</p></li>
+<li><p><i>offset</i>: An index, starting at 0, showing where the desired portion of  <i>str</i>
+begins.</p></li>
+<li><p><i>count</i>: The length, in code units, of the desired portion of  <i>str</i>
+(but not more than  <i>str</i>
+&#39;s length).</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -2149,6 +2177,14 @@ The parameter  <i>str</i>
 is null.</p></li>
 <li><p>PeterO.Cbor.CBORException:
 The string is not in JSON format.</p></li>
+<li><p>System.ArgumentException:
+Either  <i>offset</i>
+or  <i>count</i>
+is less than 0 or greater than  <i>str</i>
+&#39;s length, or  <i>str</i>
+&#39;s length minus  <i>offset</i>
+is less than  <i>count</i>
+.</p></li>
 </ul>
 
 <p><a id="FromJSONString_string_int_int_PeterO_Cbor_JSONOptions"></a></p>
@@ -2167,10 +2203,15 @@ The string is not in JSON format.</p></li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>str</i>: Not documented yet.</p></li>
-<li><p><i>offset</i>: Not documented yet.</p></li>
-<li><p><i>count</i>: Not documented yet.</p></li>
-<li><p><i>jsonoptions</i>: Not documented yet.</p></li>
+<li><p><i>str</i>: The parameter  <i>str</i>
+is a text string.</p></li>
+<li><p><i>offset</i>: An index, starting at 0, showing where the desired portion of  <i>str</i>
+begins.</p></li>
+<li><p><i>count</i>: The length, in code units, of the desired portion of  <i>str</i>
+(but not more than  <i>str</i>
+&#39;s length).</p></li>
+<li><p><i>jsonoptions</i>: The parameter  <i>jsonoptions</i>
+is a Cbor.JSONOptions object.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -2186,6 +2227,14 @@ or  <i>jsonoptions</i>
 is null.</p></li>
 <li><p>PeterO.Cbor.CBORException:
 The string is not in JSON format.</p></li>
+<li><p>System.ArgumentException:
+Either  <i>offset</i>
+or  <i>count</i>
+is less than 0 or greater than  <i>str</i>
+&#39;s length, or  <i>str</i>
+&#39;s length minus  <i>offset</i>
+is less than  <i>count</i>
+.</p></li>
 </ul>
 
 <p><a id="FromJSONString_string_PeterO_Cbor_CBOREncodeOptions"></a></p>
@@ -2554,7 +2603,7 @@ parameter, that converter will be used to convert the object to a CBOR object. T
 <li><p>An object of type  <code>DateTime</code> ,  <code>Uri</code> , or  <code>Guid</code>  (  <code>Date</code> ,  <code>URI</code> , or  <code>UUID</code> , respectively, in Java) will be converted to a tagged CBOR object of the appropriate kind.  <code>DateTime</code>  /  <code>Date</code>  will be converted to a tag-0 string following the date format used in the Atom syndication format.</p></li>
 <li><p>If the object is a type not specially handled above, this method checks the  <i>obj</i>
 parameter for eligible getters as follows:</p></li>
-<li><p>(*) In the .NET version, eligible getters are the public, nonstatic getters of read/write properties (and also those of read-only properties in the case of a compiler-generated type). Eligible getters also include public, nonstatic, non-  <code>const</code>  , non-  <code>readonly</code>  fields. If a class has two properties and/or fields of the form &quot;X&quot; and &quot;IsX&quot;, where &quot;X&quot; is any name, or has multiple properties and/or fields with the same name, those properties and fields are ignored.</p></li>
+<li><p>(*) In the .NET version, eligible getters are the public, nonstatic getters of read/write properties (and also those of read-only properties in the case of a compiler-generated type or an F# type). Eligible getters also include public, nonstatic, non-  <code>const</code> , non-  <code>readonly</code>  fields. If a class has two properties and/or fields of the form &quot;X&quot; and &quot;IsX&quot;, where &quot;X&quot; is any name, or has multiple properties and/or fields with the same name, those properties and fields are ignored.</p></li>
 <li><p>(*) In the Java version, eligible getters are public, nonstatic methods starting with &quot;get&quot; or &quot;is&quot; (either word followed by a character other than a basic digit or lower-case letter, that is, other than &quot;a&quot; to &quot;z&quot; or &quot;0&quot; to &quot;9&quot;), that take no parameters and do not return void, except that methods named &quot;getClass&quot; are not eligible getters. In addition, public, nonstatic, nonfinal fields are also eligible getters. If a class has two otherwise eligible getters (methods and/or fields) of the form &quot;isX&quot; and &quot;getX&quot;, where &quot;X&quot; is the same in both, or two such getters with the same name but different return type, they are not eligible getters.</p></li>
 <li><p>Then, the method returns a CBOR map with each eligible getter&#39;s name or property name as each key, and with the corresponding value returned by that getter as that key&#39;s value. Before adding a key-value pair to the map, the key&#39;s name is adjusted according to the rules described in the <a href="PeterO.Cbor.PODOptions.html">PeterO.Cbor.PODOptions</a> documentation. Note that for security reasons, certain types are not supported even if they contain eligible getters.</p></li>
 </ul>
@@ -2643,7 +2692,9 @@ is a CBOR object.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>Same as.</p>
+<p>Same as  <i>value</i>
+, or &quot;CBORObject.Null&quot; is  <i>value</i>
+ is null.</p>
 
 <p><a id="FromObject_PeterO_Cbor_CBORObject"></a></p>
 
@@ -2953,7 +3004,7 @@ is an arbitrary object, which can be null. <b>NOTE:</b> For security reasons, wh
     PeterO.Numbers.EInteger bigintTag);
 </pre>
 
-<p>Generates a CBOR object from an arbitrary object and gives the resulting object a tag.</p>
+<p>Generates a CBOR object from an arbitrary object and gives the resulting object a tag in addition to its existing tags (the new tag is made the outermost tag).</p>
 
 <p><b>Parameters:</b></p>
 
@@ -2995,7 +3046,7 @@ is null.</p></li>
     int smallTag);
 </pre>
 
-<p>Generates a CBOR object from an arbitrary object and gives the resulting object a tag.</p>
+<p>Generates a CBOR object from an arbitrary object and gives the resulting object a tag in addition to its existing tags (the new tag is made the outermost tag).</p>
 
 <p><b>Parameters:</b></p>
 
@@ -4663,6 +4714,90 @@ The given type &quot;T&quot;, or this object&#39;s CBOR type, is not supported.<
 <p><b>Return Value:</b></p>
 
 <p>A CBOR object.</p>
+
+<p><a id="WithTag_int"></a></p>
+
+<h3>WithTag</h3>
+
+<pre>public PeterO.Cbor.CBORObject WithTag(
+    int smallTag);
+</pre>
+
+<p>Generates a CBOR object from an arbitrary object and gives the resulting object a tag in addition to its existing tags (the new tag is made the outermost tag).</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>smallTag</i>: A 32-bit integer that specifies a tag number. The tag number 55799 can be used to mark a &quot;self-described CBOR&quot; object. This document does not attempt to list all CBOR tags and their meanings. An up-to-date list can be found at the CBOR Tags registry maintained by the Internet Assigned Numbers Authority ( <i>iana.org/assignments/cbor-tags</i> ).</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>A CBOR object with the same value as this one but given the tag  <i>smallTag</i>
+ in addition to its existing tags (the new tag is made the outermost tag).</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentException:
+The parameter  <i>smallTag</i>
+is less than 0.</li>
+</ul>
+
+<p><a id="WithTag_PeterO_Numbers_EInteger"></a></p>
+
+<h3>WithTag</h3>
+
+<pre>public PeterO.Cbor.CBORObject WithTag(
+    PeterO.Numbers.EInteger bigintTag);
+</pre>
+
+<p>Generates a CBOR object from this one, but gives the resulting object a tag in addition to its existing tags (the new tag is made the outermost tag).</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>bigintTag</i>: Tag number. The tag number 55799 can be used to mark a &quot;self-described CBOR&quot; object. This document does not attempt to list all CBOR tags and their meanings. An up-to-date list can be found at the CBOR Tags registry maintained by the Internet Assigned Numbers Authority( <i>iana.org/assignments/cbor-tags</i> ).</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>A CBOR object with the same value as this one but given the tag  <i>bigintTag</i>
+ in addition to its existing tags (the new tag is made the outermost tag).</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li><p>System.ArgumentException:
+The parameter  <i>bigintTag</i>
+is less than 0 or greater than 2^64-1.</p></li>
+<li><p>System.ArgumentNullException:
+The parameter  <i>bigintTag</i>
+is null.</p></li>
+</ul>
+
+<p><a id="WithTag_ulong"></a></p>
+
+<h3>WithTag</h3>
+
+<pre>public PeterO.Cbor.CBORObject WithTag(
+    ulong tag);
+</pre>
+
+<p><b>This API is not CLS-compliant.</b></p>
+
+<p>Generates a CBOR object from this one, but gives the resulting object a tag in addition to its existing tags (the new tag is made the outermost tag).</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>tag</i>: A 64-bit integer that specifies a tag number. The tag number 55799 can be used to mark a &quot;self-described CBOR&quot; object. This document does not attempt to list all CBOR tags and their meanings. An up-to-date list can be found at the CBOR Tags registry maintained by the Internet Assigned Numbers Authority ( <i>iana.org/assignments/cbor-tags</i> ).</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>A CBOR object with the same value as this one but given the tag  <i>tag</i>
+ in addition to its existing tags (the new tag is made the outermost tag).</p>
 
 <p><a id="Write_bool_System_IO_Stream"></a></p>
 
