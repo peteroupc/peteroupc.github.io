@@ -19,12 +19,16 @@
 <h2>Methods</h2>
 
 <ul>
+<li><code>static class  CBORNumber.NumberKind</code><br>
+Specifies the underlying form of this CBOR number object.</li>
 <li><code>CBORNumber Abs()</code><br>
 Returns the absolute value of this CBOR number.</li>
 <li><code>CBORNumber Add​(CBORNumber b)</code><br>
 Returns the sum of this number and another number.</li>
 <li><code>boolean CanFitInDouble()</code><br>
-Not documented yet.</li>
+Returns whether this object&#39;s value can be converted to a 64-bit floating
+point number without its value being rounded to another numerical
+value.</li>
 <li><code>boolean CanFitInInt32()</code><br>
 Returns whether this object&#39;s numerical value is an integer, is -(2^31) or
 greater, and is less than 2^31.</li>
@@ -32,11 +36,17 @@ greater, and is less than 2^31.</li>
 Returns whether this object&#39;s numerical value is an integer, is -(2^63) or
 greater, and is less than 2^63.</li>
 <li><code>boolean CanFitInSingle()</code><br>
-Not documented yet.</li>
+Returns whether this object&#39;s value can be converted to a 32-bit floating
+point number without its value being rounded to another numerical
+value.</li>
 <li><code>boolean CanTruncatedIntFitInInt32()</code><br>
-Not documented yet.</li>
+Returns whether this object&#39;s value, converted to an integer by discarding
+its fractional part, would be -(2^31) or greater, and less than
+2^31.</li>
 <li><code>boolean CanTruncatedIntFitInInt64()</code><br>
-Not documented yet.</li>
+Returns whether this object&#39;s value, converted to an integer by discarding
+its fractional part, would be -(2^63) or greater, and less than
+2^63.</li>
 <li><code>int compareTo​(CBORNumber other)</code><br>
 Compares two CBOR numbers.</li>
 <li><code>CBORNumber Divide​(CBORNumber b)</code><br>
@@ -49,8 +59,10 @@ is, one for which the IsNumber property in.NET or the isNumber()
 method in Java returns true).</li>
 <li><code>static CBORNumber FromInt16​(short inputInt16)</code><br>
 Converts a 16-bit signed integer to an arbitrary-precision decimal number.</li>
+<li><code>CBORNumber.NumberKind getKind()</code><br>
+Gets the underlying form of this CBOR number object.</li>
 <li><code>boolean IsFinite()</code><br>
-Not documented yet.</li>
+Gets a value indicating whether this CBOR object represents a finite number.</li>
 <li><code>boolean IsInfinity()</code><br>
 Gets a value indicating whether this object represents infinity.</li>
 <li><code>boolean IsInteger()</code><br>
@@ -58,13 +70,13 @@ Not documented yet.</li>
 <li><code>boolean IsNaN()</code><br>
 Gets a value indicating whether this object represents a not-a-number value.</li>
 <li><code>boolean IsNegative()</code><br>
-Not documented yet.</li>
+Gets a value indicating whether this object is a negative number.</li>
 <li><code>boolean IsNegativeInfinity()</code><br>
 Gets a value indicating whether this object represents negative infinity.</li>
 <li><code>boolean IsPositiveInfinity()</code><br>
 Gets a value indicating whether this object represents positive infinity.</li>
 <li><code>boolean IsZero()</code><br>
-Not documented yet.</li>
+Gets a value indicating whether this object&#39;s value equals 0.</li>
 <li><code>CBORNumber Multiply​(CBORNumber b)</code><br>
 Returns a CBOR number expressing the product of this number and the given
 number.</li>
@@ -74,7 +86,8 @@ reversed.</li>
 <li><code>CBORNumber Remainder​(CBORNumber b)</code><br>
 Returns the remainder when this number is divided by another number.</li>
 <li><code>int signum()</code><br>
-Gets a value not documented yet.</li>
+Gets this value&#39;s sign: -1 if nonzero and negative; 1 if nonzero and
+positive; 0 if zero.</li>
 <li><code>CBORNumber Subtract​(CBORNumber b)</code><br>
 Returns a number that expresses this number minus another.</li>
 <li><code>byte ToByteChecked()</code><br>
@@ -92,15 +105,16 @@ form as a byte (from 0 to 255).</li>
 <li><code>CBORObject ToCBORObject()</code><br>
 Converts this object&#39;s value to a CBOR object.</li>
 <li><code>com.upokecenter.numbers.EDecimal ToEDecimal()</code><br>
-Not documented yet.</li>
+Converts this object to a decimal number.</li>
 <li><code>com.upokecenter.numbers.EFloat ToEFloat()</code><br>
-Not documented yet.</li>
+Converts this object to an arbitrary-precision binary floating point number.</li>
 <li><code>com.upokecenter.numbers.EInteger ToEInteger()</code><br>
-Not documented yet.</li>
+Converts this object to an arbitrary-precision integer.</li>
 <li><code>com.upokecenter.numbers.EInteger ToEIntegerIfExact()</code><br>
-Not documented yet.</li>
+Converts this object to an arbitrary-precision integer if its value is an
+integer.</li>
 <li><code>com.upokecenter.numbers.ERational ToERational()</code><br>
-Not documented yet.</li>
+Converts this object to a rational number.</li>
 <li><code>short ToInt16Checked()</code><br>
 Converts this number&#39;s value to a 16-bit signed integer if it can fit in a
 16-bit signed integer after converting it to an integer by
@@ -141,6 +155,13 @@ form as a 64-bit signed integer.</li>
 Returns the value of this object in text form.</li>
 </ul>
 
+<h2>Nested Classes</h2>
+
+<ul>
+<li><code>static class  CBORNumber.NumberKind</code><br>
+Specifies the underlying form of this CBOR number object.</li>
+</ul>
+
 <h2>Method Details</h2>
 
 <h3>ToCBORObject</h3>
@@ -161,12 +182,14 @@ Returns the value of this object in text form.</li>
 <pre>public final int signum()
 </pre>
 
-<p>Gets a value not documented yet.</p>
+<p>Gets this value&#39;s sign: -1 if nonzero and negative; 1 if nonzero and
+ positive; 0 if zero. Not-a-number (NaN) values are positive or
+ negative depending on what sign is stored in their underlying forms.</p>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A value not documented yet.</li>
+<li>This value&#39;s sign.</li>
 </ul>
 
 <h3>FromCBORObject</h3>
@@ -191,17 +214,34 @@ Returns the value of this object in text form.</li>
 does not represent a number.</li>
 </ul>
 
+<h3>getKind</h3>
+
+<pre>public final CBORNumber.NumberKind getKind()
+</pre>
+
+<p>Gets the underlying form of this CBOR number object.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The underlying form of this CBOR number object.</li>
+</ul>
+
 <h3>CanTruncatedIntFitInInt32</h3>
 
 <pre>public boolean CanTruncatedIntFitInInt32()
 </pre>
 
-<p>Not documented yet.</p>
+<p>Returns whether this object&#39;s value, converted to an integer by discarding
+ its fractional part, would be -(2^31) or greater, and less than
+ 2^31.</p>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>The return value is not documented yet.</li>
+<li><code>true</code> if this object&#39;s value, converted to an integer by
+discarding its fractional part, would be -(2^31) or greater, and
+less than 2^31; otherwise, <code>false</code>.</li>
 </ul>
 
 <h3>CanTruncatedIntFitInInt64</h3>
@@ -209,12 +249,16 @@ does not represent a number.</li>
 <pre>public boolean CanTruncatedIntFitInInt64()
 </pre>
 
-<p>Not documented yet.</p>
+<p>Returns whether this object&#39;s value, converted to an integer by discarding
+ its fractional part, would be -(2^63) or greater, and less than
+ 2^63.</p>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>The return value is not documented yet.</li>
+<li><code>true</code> if this object&#39;s value, converted to an integer by
+discarding its fractional part, would be -(2^63) or greater, and
+less than 2^63; otherwise, <code>false</code>.</li>
 </ul>
 
 <h3>CanFitInSingle</h3>
@@ -222,12 +266,18 @@ does not represent a number.</li>
 <pre>public boolean CanFitInSingle()
 </pre>
 
-<p>Not documented yet.</p>
+<p>Returns whether this object&#39;s value can be converted to a 32-bit floating
+ point number without its value being rounded to another numerical
+ value.</p>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>The return value is not documented yet.</li>
+<li><code>true</code> if this object&#39;s value can be converted to a 32-bit
+floating point number without its value being rounded to another
+numerical value, or if this is a not-a-number value, even if the
+value&#39;s diagnostic information can&#39; t fit in a 32-bit floating point
+number; otherwise, <code>false</code>.</li>
 </ul>
 
 <h3>CanFitInDouble</h3>
@@ -235,12 +285,18 @@ does not represent a number.</li>
 <pre>public boolean CanFitInDouble()
 </pre>
 
-<p>Not documented yet.</p>
+<p>Returns whether this object&#39;s value can be converted to a 64-bit floating
+ point number without its value being rounded to another numerical
+ value.</p>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>The return value is not documented yet.</li>
+<li><code>true</code> if this object&#39;s value can be converted to a 64-bit
+floating point number without its value being rounded to another
+numerical value, or if this is a not-a-number value, even if the
+value&#39;s diagnostic information can&#39;t fit in a 64-bit floating point
+number; otherwise, <code>false</code>.</li>
 </ul>
 
 <h3>IsFinite</h3>
@@ -248,12 +304,13 @@ does not represent a number.</li>
 <pre>public boolean IsFinite()
 </pre>
 
-<p>Not documented yet.</p>
+<p>Gets a value indicating whether this CBOR object represents a finite number.</p>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>The return value is not documented yet.</li>
+<li><code>true</code> if this CBOR object represents a finite number;
+otherwise, <code>false</code>.</li>
 </ul>
 
 <h3>IsInteger</h3>
@@ -274,12 +331,13 @@ does not represent a number.</li>
 <pre>public boolean IsNegative()
 </pre>
 
-<p>Not documented yet.</p>
+<p>Gets a value indicating whether this object is a negative number.</p>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>The return value is not documented yet.</li>
+<li><code>true</code> if this object is a negative number; otherwise, <code>
+false</code>.</li>
 </ul>
 
 <h3>IsZero</h3>
@@ -287,12 +345,13 @@ does not represent a number.</li>
 <pre>public boolean IsZero()
 </pre>
 
-<p>Not documented yet.</p>
+<p>Gets a value indicating whether this object&#39;s value equals 0.</p>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>The return value is not documented yet.</li>
+<li><code>true</code> if this object&#39;s value equals 0; otherwise, <code>
+false</code>.</li>
 </ul>
 
 <h3>ToEInteger</h3>
@@ -300,12 +359,13 @@ does not represent a number.</li>
 <pre>public com.upokecenter.numbers.EInteger ToEInteger()
 </pre>
 
-<p>Not documented yet.</p>
+<p>Converts this object to an arbitrary-precision integer. See the ToObject
+ overload taking a type for more information.</p>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>The return value is not documented yet.</li>
+<li>The closest arbitrary-precision integer to this object.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -319,12 +379,13 @@ does not represent a number.</li>
 <pre>public com.upokecenter.numbers.EInteger ToEIntegerIfExact()
 </pre>
 
-<p>Not documented yet.</p>
+<p>Converts this object to an arbitrary-precision integer if its value is an
+ integer.</p>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>The return value is not documented yet.</li>
+<li>The arbitrary-precision integer given by object.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -729,12 +790,12 @@ otherwise, <code>false</code>.</li>
 <pre>public com.upokecenter.numbers.EDecimal ToEDecimal()
 </pre>
 
-<p>Not documented yet.</p>
+<p>Converts this object to a decimal number.</p>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>The return value is not documented yet.</li>
+<li>A decimal number for this object&#39;s value.</li>
 </ul>
 
 <h3>ToEFloat</h3>
@@ -742,12 +803,14 @@ otherwise, <code>false</code>.</li>
 <pre>public com.upokecenter.numbers.EFloat ToEFloat()
 </pre>
 
-<p>Not documented yet.</p>
+<p>Converts this object to an arbitrary-precision binary floating point number.
+ See the ToObject overload taking a type for more information.</p>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>The return value is not documented yet.</li>
+<li>An arbitrary-precision binary floating-point number for this
+object&#39;s value.</li>
 </ul>
 
 <h3>ToERational</h3>
@@ -755,12 +818,13 @@ otherwise, <code>false</code>.</li>
 <pre>public com.upokecenter.numbers.ERational ToERational()
 </pre>
 
-<p>Not documented yet.</p>
+<p>Converts this object to a rational number. See the ToObject overload taking
+ a type for more information.</p>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>The return value is not documented yet.</li>
+<li>A rational number for this object&#39;s value.</li>
 </ul>
 
 <h3>Abs</h3>

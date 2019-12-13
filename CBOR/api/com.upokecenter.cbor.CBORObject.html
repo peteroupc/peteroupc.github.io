@@ -669,6 +669,12 @@ Instead, convert both CBOR objects to numbers (with .AsNumber()), and
 use the first number&#39;s.Subtract() method.
 Instead, convert both CBOR objects to numbers (with .AsNumber()), and
 use the first number&#39;s.Subtract() method.</li>
+<li><code>byte[] ToJSONBytes()</code><br>
+Converts this object to a byte array in JavaScript object Notation (JSON)
+format.</li>
+<li><code>byte[] ToJSONBytes​(JSONOptions jsonoptions)</code><br>
+Converts this object to a byte array in JavaScript object Notation (JSON)
+format.</li>
 <li><code>java.lang.String ToJSONString()</code><br>
 Converts this object to a text string in JavaScript object Notation (JSON)
 format.</li>
@@ -1090,7 +1096,8 @@ untagged.</li>
 
 <p>Deprecated.
 Instead, convert this object to a number with.AsNumber(),   and use the
- Sign property in.NET or the signum method in Java.</p>
+ Sign property in.NET or the signum method in Java. Either will treat
+ not-a-number (NaN) values differently than here.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -1546,7 +1553,7 @@ parameter <code>options</code> is null.</p></li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>bytes</code> -</li>
+<li><code>bytes</code> - A byte array in which a JSON text sequence is encoded.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -1560,10 +1567,55 @@ could not be parsed are replaced with <code>null</code> (as opposed to
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>stream</code> is null.</p></li>
+<li><p><code>java.lang.NullPointerException</code> - The parameter <code>bytes</code> is null.</p></li>
 <li><p><code>CBORException</code> - The byte array is not empty and
 does not begin with a record separator byte (0x1e), or an I/O error
 occurred.</p></li>
+</ul>
+
+<h3>ToJSONBytes</h3>
+
+<pre>public byte[] ToJSONBytes()
+</pre>
+
+<p>Converts this object to a byte array in JavaScript object Notation (JSON)
+ format. The JSON text will be written out in UTF-8 encoding, without
+ a byte order mark, to the byte array. See the overload to
+ ToJSONString taking a JSONOptions argument for further information.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A byte array containing the converted in JSON format.</li>
+</ul>
+
+<h3>ToJSONBytes</h3>
+
+<pre>public byte[] ToJSONBytes​(JSONOptions jsonoptions)
+</pre>
+
+<p>Converts this object to a byte array in JavaScript object Notation (JSON)
+ format. The JSON text will be written out in UTF-8 encoding, without
+ a byte order mark, to the byte array. See the overload to
+ ToJSONString taking a JSONOptions argument for further information.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>jsonoptions</code> - Specifies options to control writing the CBOR object to
+JSON.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A byte array containing the converted object in JSON format.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>java.lang.NullPointerException</code> - The parameter <code>jsonoptions</code> is null.</li>
 </ul>
 
 <h3>FromJSONSequenceBytes</h3>
@@ -1584,8 +1636,9 @@ occurred.</p></li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>data</code> - Not documented yet.</p></li>
-<li><p><code>options</code> - Not documented yet.</p></li>
+<li><p><code>data</code> - A byte array in which a JSON text sequence is encoded.</p></li>
+<li><p><code>options</code> - Specifies options to control how the JSON texts in the
+sequence are decoded to CBOR. See <code>JSONOptions</code> for more information.</p></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -1597,7 +1650,8 @@ occurred.</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>stream</code> is null.</p></li>
+<li><p><code>java.lang.NullPointerException</code> - The parameter <code>data</code> or <code>options</code>
+is null.</p></li>
 <li><p><code>CBORException</code> - The byte array is not empty and
 does not begin with a record separator byte (0x1e), or an I/O error
 occurred.</p></li>
@@ -5509,15 +5563,15 @@ a 32-bit signed integer (<code>int</code>).</p></li>
 </pre>
 
 <p>Converts this object to a text string in JavaScript object Notation (JSON)
- format. See the overload to JSONString taking a JSONOptions argument
- for further information. <p>If the CBOR object contains CBOR maps,
- or is a CBOR map itself, the keys to the map are written out to the
- JSON string in an undefined order. Map keys other than untagged text
- strings are converted to JSON strings before writing them out (for
-  example, <code>22(&quot;Test&quot;)</code> is converted to <code>&quot;Test&quot;</code> and
-  <code>true</code> is converted to <code>&quot;true&quot;</code>). If, after such
- conversion, two or more map keys are identical, this method throws a
- CBORException. The example code given in
+ format. See the overload to ToJSONString taking a JSONOptions
+ argument for further information. <p>If the CBOR object contains
+ CBOR maps, or is a CBOR map itself, the keys to the map are written
+ out to the JSON string in an undefined order. Map keys other than
+ untagged text strings are converted to JSON strings before writing
+  them out (for example, <code>22(&quot;Test&quot;)</code> is converted to
+  <code>&quot;Test&quot;</code> and <code>true</code> is converted to <code>&quot;true&quot;</code>). If,
+ after such conversion, two or more map keys are identical, this
+ method throws a CBORException. The example code given in
  <b>PeterO.Cbor.CBORObject.ToJSONString(PeterO.Cbor.JSONOptions)</b>
  can be used to write out certain keys of a CBOR map in a given order
  to a JSON string, or to write out a CBOR object as part of a JSON
@@ -5535,7 +5589,7 @@ a 32-bit signed integer (<code>int</code>).</p></li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A text string.</li>
+<li>A text string containing the converted object in JSON format.</li>
 </ul>
 
 <h3>ToJSONString</h3>
@@ -5595,14 +5649,13 @@ a 32-bit signed integer (<code>int</code>).</p></li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>options</code> - An object containing the options to control writing the CBOR
-object to JSON.</li>
+<li><code>options</code> - Specifies options to control writing the CBOR object to JSON.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A text string containing the converted object.</li>
+<li>A text string containing the converted object in JSON format.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>

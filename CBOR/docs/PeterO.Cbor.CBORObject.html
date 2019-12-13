@@ -2123,18 +2123,18 @@ The byte array contains invalid encoding or is not in JSON format.</p></li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>stream</i>: A byte array in which a JSON text sequence is encoded. The byte array must either be empty or begin with a record separator byte (0x1e).</li>
+<li><i>bytes</i>: A byte array in which a JSON text sequence is encoded.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p>A list of CBOR objects read from the JSON sequence. Objects that could not be parsed are replaced with  <code>null</code>  (as opposed to  <code>CBORObject.Null</code> ) in the given list.</p>
+<p>A list of CBOR objects read from the JSON sequence. Objects that could not be parsed are replaced with  <code>null</code>  (as opposed to  <code>CBORObject.Null</code>  ) in the given list.</p>
 
 <p><b>Exceptions:</b></p>
 
 <ul>
 <li><p>System.ArgumentNullException:
-The parameter  <i>stream</i>
+The parameter  <i>bytes</i>
 is null.</p></li>
 <li><p>PeterO.Cbor.CBORException:
 The byte array is not empty and does not begin with a record separator byte (0x1e), or an I/O error occurred.</p></li>
@@ -4102,7 +4102,7 @@ The data stream contains invalid encoding or is not in JSON format.</p></li>
 
 <p><b>Return Value:</b></p>
 
-<p>A list of CBOR objects read from the JSON sequence. Objects that could not be parsed are replaced with  <code>null</code>  (as opposed to  <code>CBORObject.Null</code> ) in the given list.</p>
+<p>A list of CBOR objects read from the JSON sequence. Objects that could not be parsed are replaced with  <code>null</code>  (as opposed to  <code>CBORObject.Null</code>  ) in the given list.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -4138,7 +4138,7 @@ The data stream is not empty and does not begin with a record separator byte (0x
 
 <p><b>Return Value:</b></p>
 
-<p>A list of CBOR objects read from the JSON sequence. Objects that could not be parsed are replaced with  <code>null</code>  (as opposed to  <code>CBORObject.Null</code> ) in the given list.</p>
+<p>A list of CBOR objects read from the JSON sequence. Objects that could not be parsed are replaced with  <code>null</code>  (as opposed to  <code>CBORObject.Null</code>  ) in the given list.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -5626,7 +5626,7 @@ is null.</li>
 
 <p>Converts this object to a text string in JavaScript Object Notation (JSON) format, as in the ToJSONString method, and writes that string to a data stream in UTF-8. If the CBOR object contains CBOR maps, or is a CBOR map, the keys to the map are written out to the JSON string in an undefined order. The example code given in <b>PeterO.Cbor.CBORObject.ToJSONString(PeterO.Cbor.JSONOptions)</b> can be used to write out certain keys of a CBOR map in a given order to a JSON string.</p>
 
-<p>The following example (originally written in C# for the .NET version) writes out a CBOR object as part of a JSON text sequence (RFC 7464).</p>
+<p>The following example (originally written in C# for the.NET version) writes out a CBOR object as part of a JSON text sequence (RFC 7464).</p>
 
 <pre>            stream.WriteByte(0x1e); /* RS */
             cborObject.WriteJSONTo(stream); /* JSON */
