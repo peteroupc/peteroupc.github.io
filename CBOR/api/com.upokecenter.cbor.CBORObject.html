@@ -1171,9 +1171,9 @@ this object is not a simple value.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A collection of the key/value pairs stored in this CBOR map. To
-avoid potential problems, the calling code should not modify the
-CBOR map or the returned collection while iterating over the
+<li>A collection of the key/value pairs stored in this CBOR map, as a
+read-only view of those pairs. To avoid potential problems, the
+calling code should not modify the CBOR map while iterating over the
 returned collection.</li>
 </ul>
 
@@ -1637,21 +1637,21 @@ JSON.</li>
 
 <ul>
 <li><p><code>data</code> - A byte array in which a JSON text sequence is encoded.</p></li>
-<li><p><code>options</code> - Specifies options to control how the JSON texts in the
-sequence are decoded to CBOR. See <code>JSONOptions</code> for more information.</p></li>
+<li><p><code>options</code> - Specifies options to control the JSON decoding process.</p></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>The return value is not documented yet.</li>
+<li>A list of CBOR objects read from the JSON sequence. Objects that
+could not be parsed are replaced with <code>null</code> (as opposed to
+<code>CBORObject.Null</code>) in the given list.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>data</code> or <code>options</code>
-is null.</p></li>
+<li><p><code>java.lang.NullPointerException</code> - The parameter <code>data</code> is null.</p></li>
 <li><p><code>CBORException</code> - The byte array is not empty and
 does not begin with a record separator byte (0x1e), or an I/O error
 occurred.</p></li>

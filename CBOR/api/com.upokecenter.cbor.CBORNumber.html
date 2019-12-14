@@ -66,7 +66,8 @@ Gets a value indicating whether this CBOR object represents a finite number.</li
 <li><code>boolean IsInfinity()</code><br>
 Gets a value indicating whether this object represents infinity.</li>
 <li><code>boolean IsInteger()</code><br>
-Not documented yet.</li>
+Gets a value indicating whether this object represents an integer number,
+that is, a number without a fractional part.</li>
 <li><code>boolean IsNaN()</code><br>
 Gets a value indicating whether this object represents a not-a-number value.</li>
 <li><code>boolean IsNegative()</code><br>
@@ -318,12 +319,15 @@ otherwise, <code>false</code>.</li>
 <pre>public boolean IsInteger()
 </pre>
 
-<p>Not documented yet.</p>
+<p>Gets a value indicating whether this object represents an integer number,
+ that is, a number without a fractional part. Infinity and
+ not-a-number are not considered integers.</p>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>The return value is not documented yet.</li>
+<li><code>true</code> if this object represents an integer number, that is, a
+number without a fractional part; otherwise, <code>false</code>.</li>
 </ul>
 
 <h3>IsNegative</h3>

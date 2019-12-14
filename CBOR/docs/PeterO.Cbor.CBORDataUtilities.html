@@ -16,7 +16,7 @@
 <ul>
 <li><code><a href="#ParseJSONNumber_string">ParseJSONNumber(string)</a></code> - Parses a number whose format follows the JSON specification.</li>
 <li><code><a href="#ParseJSONNumber_string_bool_bool">ParseJSONNumber(string, bool, bool)</a></code> - <b>Deprecated:</b> Call the one-argument version of this method instead. If this method call used positiveOnly = true, check that the string does not begin with &#39;-&#39; before calling that version. If this method call used integersOnly = true, check that the string does not contain &#39;.&#39;, &#39;E&#39;, or &#39;e&#39; before calling that version.</li>
-<li><code><a href="#ParseJSONNumber_string_bool_bool_bool">ParseJSONNumber(string, bool, bool, bool)</a></code> - Parses a number whose format follows the JSON specification (RFC 8259).</li>
+<li><code><a href="#ParseJSONNumber_string_bool_bool_bool">ParseJSONNumber(string, bool, bool, bool)</a></code> - <b>Deprecated:</b> Instead, call ParseJSONNumber(str, jsonoptions) with a JSONOptions that sets preserveNegativeZero to the desired value, either true or false. If this method call used positiveOnly = true, check that the string does not begin with &#39;-&#39; before calling that version. If this method call used integersOnly = true, check that the string does not contain &#39;.&#39;, &#39;E&#39;, or &#39;e&#39; before calling that version.</li>
 <li><code><a href="#ParseJSONNumber_string_int_int">ParseJSONNumber(string, int, int)</a></code> - Parses a number whose format follows the JSON specification (RFC 8259) from a portion of a text string, and converts that number to a CBOR object.</li>
 <li><code><a href="#ParseJSONNumber_string_int_int_PeterO_Cbor_JSONOptions">ParseJSONNumber(string, int, int, PeterO.Cbor.JSONOptions)</a></code> - Parses a number whose format follows the JSON specification (RFC 8259) and converts that number to a CBOR object.</li>
 <li><code><a href="#ParseJSONNumber_string_PeterO_Cbor_JSONOptions">ParseJSONNumber(string, PeterO.Cbor.JSONOptions)</a></code> - Parses a number whose format follows the JSON specification (RFC 8259) and converts that number to a CBOR object.</li>
@@ -80,6 +80,8 @@
     bool positiveOnly,
     bool preserveNegativeZero);
 </pre>
+
+<p><b>Deprecated.</b> Instead, call ParseJSONNumber(str, jsonoptions) with a JSONOptions that sets preserveNegativeZero to the desired value, either true or false. If this method call used positiveOnly = true, check that the string does not begin with &#39;-&#39; before calling that version. If this method call used integersOnly = true, check that the string does not contain &#39;.&#39;, &#39;E&#39;, or &#39;e&#39; before calling that version.</p>
 
 <p>Parses a number whose format follows the JSON specification (RFC 8259).</p>
 

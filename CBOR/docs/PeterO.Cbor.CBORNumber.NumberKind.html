@@ -1,0 +1,110 @@
+<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>PeterO.Cbor.CBORNumber.NumberKind</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a> -
+<a href="http://peteroupc.github.io/">Donate to Me</a></p></div>
+<div class="mainarea" id="top">
+<h1>PeterO.Cbor.CBORNumber.NumberKind</h1>
+
+<h2>PeterO.Cbor.CBORNumber.NumberKind</h2>
+
+<pre>public sealed struct NumberKind :
+    System.Enum,
+    System.IComparable,
+    System.IConvertible,
+    System.IFormattable
+</pre>
+
+<p>Specifies the underlying form of this CBOR number object.</p>
+
+<h3>Member Summary</h3>
+
+<ul>
+<li><code><a href="#Double">public static PeterO.Cbor.CBORNumber.NumberKind Double = 1;</a></code> - A 64-bit binary floating-point number.</li>
+<li><code><a href="#EDecimal">public static PeterO.Cbor.CBORNumber.NumberKind EDecimal = 3;</a></code> - An arbitrary-precision decimal number.</li>
+<li><code><a href="#EFloat">public static PeterO.Cbor.CBORNumber.NumberKind EFloat = 4;</a></code> - An arbitrary-precision binary number.</li>
+<li><code><a href="#EInteger">public static PeterO.Cbor.CBORNumber.NumberKind EInteger = 2;</a></code> - An arbitrary-precision integer.</li>
+<li><code><a href="#ERational">public static PeterO.Cbor.CBORNumber.NumberKind ERational = 5;</a></code> - An arbitrary-precision rational number.</li>
+<li><code><a href="#Integer">public static PeterO.Cbor.CBORNumber.NumberKind Integer = 0;</a></code> - A 64-bit signed integer.</li>
+</ul>
+
+<p><a id="Double"></a></p>
+
+<h3>Double</h3>
+
+<pre>public static PeterO.Cbor.CBORNumber.NumberKind Double = 1;
+</pre>
+
+<p>A 64-bit binary floating-point number.</p>
+
+<p><a id="EDecimal"></a></p>
+
+<h3>EDecimal</h3>
+
+<pre>public static PeterO.Cbor.CBORNumber.NumberKind EDecimal = 3;
+</pre>
+
+<p>An arbitrary-precision decimal number.</p>
+
+<p><a id="EFloat"></a></p>
+
+<h3>EFloat</h3>
+
+<pre>public static PeterO.Cbor.CBORNumber.NumberKind EFloat = 4;
+</pre>
+
+<p>An arbitrary-precision binary number.</p>
+
+<p><a id="EInteger"></a></p>
+
+<h3>EInteger</h3>
+
+<pre>public static PeterO.Cbor.CBORNumber.NumberKind EInteger = 2;
+</pre>
+
+<p>An arbitrary-precision integer.</p>
+
+<p><a id="ERational"></a></p>
+
+<h3>ERational</h3>
+
+<pre>public static PeterO.Cbor.CBORNumber.NumberKind ERational = 5;
+</pre>
+
+<p>An arbitrary-precision rational number.</p>
+
+<p><a id="Integer"></a></p>
+
+<h3>Integer</h3>
+
+<pre>public static PeterO.Cbor.CBORNumber.NumberKind Integer = 0;
+</pre>
+
+<p>A 64-bit signed integer.</p>
+
+<p><a href="/CBOR/">Back to CBOR start page.</a></p>
+</div><nav id="navigation"><ul>
+<li><a href="/">Back to start site.</a>
+<li><a href="https://github.com/peteroupc/peteroupc.github.io">This site's repository (source code)</a>
+<li><a href="https://github.com/peteroupc/peteroupc.github.io/issues">Post an issue or comment</a></ul>
+<p>
+If you like this software, you should consider donating to me, Peter O., at the link below:</p>
+<p class="printonly"><b>peteroupc.github.io</b></p>
+<div class="noprint">
+<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=56E5T4FH7KD2S">
+<img src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif"
+name="submit" border="2" alt="PayPal - The safer, easier way to pay online!"></a>
+<p>
+<a href="//twitter.com/share">Share via Twitter</a>, <a href="//www.facebook.com/sharer/sharer.php" id="sharer">Share via Facebook</a>
+</p>
+</div>
+</nav><script>
+if("share" in navigator){
+ document.getElementById("sharer").href="javascript:void(null)";
+ document.getElementById("sharer").innerHTML="Share This Page";
+ navigator.share({title:document.title,url:document.location.href}).then(
+   function(){});
+} else {
+ document.getElementById("sharer").href="//www.facebook.com/sharer/sharer.php?u="+
+    encodeURIComponent(document.location.href)
+}
+</script>
+</body></html>
