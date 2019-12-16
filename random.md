@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on Mar. 5, 2016; last updated on Dec. 7, 2019.
+Begun on Mar. 5, 2016; last updated on Dec. 16, 2019.
 
 Most apps that use random numbers care about either unpredictability, high quality, or repeatability.  This article explains the three kinds of RNGs and gives recommendations on each kind.
 
@@ -526,10 +526,12 @@ There are several possible ways to implement a PRNG:
     - An initializer method that takes a seed and converts it to an internal state.  This method is called while the PRNG object is being created.
     - A method that takes no parameters.  It uses only the internal state to output one or more "random" numbers and update the internal state.  This method is available after the initializer is called.
 2. As a function that takes a seed and outputs one or more "random" numbers.  An example is a [**hash function**](#Hash_Functions).
-3. As a function that takes an internal state and outputs one or more "random" numbers.  This can be used if the application has its own logic for converting a seed to an internal state appropriate for the PRNG.
-4. As a function that takes an internal state and outputs a new internal state and one or more "random" numbers.  This is how PRNGs can be implemented as so-called "pure functions" in functional programming languages (as in the package `AC-Random` for the Haskell language).
+3. As a function that takes an internal state and outputs a new internal state and one or more "random" numbers.  This is how PRNGs can be implemented as so-called "pure functions" in functional programming languages (as in the package `AC-Random` for the Haskell language).
+4. As a so-called "splittable" PRNG (Claessen et al., 2013)<sup>[**(47)**](#Note47)</sup> with two functions:
+    - Split: A function that takes an internal state and outputs two internal states that behave like independent random numbers.
+    - Generate: A function that takes an internal state and outputs one or more "random" numbers.
 
-Of the designs just given, the first is _stateful_ and the last three are _stateless functions_.
+Of the designs just given, the first is _stateful_ and the last three are _stateless_.
 
 <a id=Implementing_New_RNG_APIs></a>
 ### Implementing New RNG APIs
@@ -672,6 +674,8 @@ See also N. Reed, "Quick And Easy GPU Random Numbers In D3D11", Nathan Reed's co
 <small><sup id=Note45>(45)</sup> For example, a new RNG can be constructed from two independent RNGs using the so-called "shrinking generator" technique: generate one bit from the first RNG and one bit from the second, and take the second bit if the first bit is 1, or repeat this process otherwise.  See J. D. Cook, "Using one RNG to sample another", June 4, 2019, for more on this technique, including its advantages and drawbacks.</small>
 
 <small><sup id=Note46>(46)</sup> Allowing applications to do so would hamper forward compatibility &mdash; the API would then be less free to change how the RNG is implemented in the future (e.g., to use a cryptographic or otherwise "better" RNG), or to make improvements or bug fixes in methods that use that RNG (such as shuffling and Gaussian number generation).  (As a notable example, the V8 JavaScript engine recently changed its `Math.random()` implementation to use a variant of `xorshift128+`, which is backward compatible because nothing in JavaScript allows  `Math.random()` to be seeded.)  Nevertheless, APIs can still allow applications to provide additional input ("entropy") to the RNG in order to increase its randomness rather than to ensure repeatability.</small>
+
+<small><sup id=Note47>(47)</sup> Claessen, K., Palma, M. "Splittable Pseudorandom Number Generators using Cryptographic Hashing", _Proceedings of Haskell Symposium 2013_, pp. 47-58.</small>
 
 <a id=Appendix></a>
 ## Appendix
