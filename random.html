@@ -134,9 +134,9 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 
 <ul>
 <li><strong>Random number generator (RNG).</strong> Software and/or hardware that seeks to generate numbers with the property that each possible outcome is as likely as any other without influence by anything else<sup><a href="#Note4"><strong>(4)</strong></a></sup>.</li>
-<li><strong>Pseudorandom number generator (PRNG).</strong> A random number generator that outputs seemingly random numbers using a deterministic algorithm (that is, an algorithm that gives the same output for the same input and state every time), and in which its state can be initialized and possibly reinitialized with arbitrary data.</li>
-<li><strong>Seed.</strong>  Arbitrary data for initializing the state of a PRNG.</li>
-<li><strong>State length.</strong>  The maximum size of the seed a PRNG can take to initialize its state without shortening or compressing that seed.</li>
+<li><strong>Pseudorandom number generator (PRNG).</strong> A random number generator in which the numbers it generates are completely determined by its input.</li>
+<li><strong>Seed.</strong>  Arbitrary data serving as a PRNG&#39;s input.</li>
+<li><strong>State length.</strong>  The maximum size of the seed a PRNG can take as its input without shortening or compressing that seed.</li>
 <li><strong>Information security.</strong> Keeping information safe from attacks that could access, use, delay, or manipulate that information.<sup><a href="#Note5"><strong>(5)</strong></a></sup></li>
 <li><strong>SHOULD, SHOULD NOT, MAY, RECOMMENDED, NOT RECOMMENDED.</strong>  These terms have the meanings given in RFC 2119 and RFC 8174.</li>
 </ul>
@@ -773,10 +773,10 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 </ul></li>
 <li>As a function that takes a seed and outputs one or more &quot;random&quot; numbers.  An example is a <a href="#Hash_Functions"><strong>hash function</strong></a>.</li>
 <li>As a function that takes an internal state and outputs a new internal state and one or more &quot;random&quot; numbers.  This is how PRNGs can be implemented as so-called &quot;pure functions&quot; in functional programming languages (as in the package <code>AC-Random</code> for the Haskell language).</li>
-<li>As a so-called &quot;splittable&quot; PRNG (Claessen et al., 2013)<sup><a href="#Note47"><strong>(47)</strong></a></sup> with two functions:
+<li>As a so-called &quot;splittable&quot; PRNG (Claessen et al., 2013)<sup><a href="#Note46"><strong>(46)</strong></a></sup> with two functions:
 
 <ul>
-<li>Split: A function that takes an internal state and outputs two internal states that behave like independent random numbers.</li>
+<li>Split: A function that takes an internal state and outputs two or more internal states that behave like independent random numbers.</li>
 <li>Generate: A function that takes an internal state and outputs one or more &quot;random&quot; numbers.</li>
 </ul></li>
 </ol>
@@ -791,7 +791,7 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 
 <ol>
 <li> The RNG API can include a method that fills one or more memory units (such as 8-bit bytes) completely with random bits.  See example 1.</li>
-<li> If the API implements an automatically-seeded RNG, it SHOULD NOT allow applications to initialize that same RNG with a seed for reproducible &quot;randomness&quot;<sup><a href="#Note46"><strong>(46)</strong></a></sup> (it MAY provide a separate PRNG to accept such a seed). See example 2.</li>
+<li> If the API implements an automatically-seeded RNG, it SHOULD NOT allow applications to initialize that same RNG with a seed for reproducible &quot;randomness&quot;<sup><a href="#Note47"><strong>(47)</strong></a></sup> (it MAY provide a separate PRNG to accept such a seed). See example 2.</li>
 <li> If the API provides a PRNG that an application can seed for reproducible &quot;randomness&quot;, it SHOULD document that PRNG and any methods the API provides that use that PRNG (such as shuffling and Gaussian number generation), and SHOULD NOT change that PRNG or those methods in a way that would change the &quot;random&quot; numbers they deliver for a given seed. See example 2.</li>
 <li> A new programming language&#39;s <strong>standard library</strong> ought to include the following methods for generating numbers that behave like independent uniform random numbers (see my document on <a href="https://peteroupc.github.io/randomfunc.html"><strong>random number generation methods</strong></a> for details).
 
@@ -948,9 +948,9 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 
 <p><small><sup id=Note45>(45)</sup> For example, a new RNG can be constructed from two independent RNGs using the so-called &quot;shrinking generator&quot; technique: generate one bit from the first RNG and one bit from the second, and take the second bit if the first bit is 1, or repeat this process otherwise.  See J. D. Cook, &quot;Using one RNG to sample another&quot;, June 4, 2019, for more on this technique, including its advantages and drawbacks.</small></p>
 
-<p><small><sup id=Note46>(46)</sup> Allowing applications to do so would hamper forward compatibility &mdash; the API would then be less free to change how the RNG is implemented in the future (e.g., to use a cryptographic or otherwise &quot;better&quot; RNG), or to make improvements or bug fixes in methods that use that RNG (such as shuffling and Gaussian number generation).  (As a notable example, the V8 JavaScript engine recently changed its <code>Math.random()</code> implementation to use a variant of <code>xorshift128+</code>, which is backward compatible because nothing in JavaScript allows  <code>Math.random()</code> to be seeded.)  Nevertheless, APIs can still allow applications to provide additional input (&quot;entropy&quot;) to the RNG in order to increase its randomness rather than to ensure repeatability.</small></p>
+<p><small><sup id=Note46>(46)</sup> Claessen, K., Palma, M. &quot;Splittable Pseudorandom Number Generators using Cryptographic Hashing&quot;, <em>Proceedings of Haskell Symposium 2013</em>, pp. 47-58.</small></p>
 
-<p><small><sup id=Note47>(47)</sup> Claessen, K., Palma, M. &quot;Splittable Pseudorandom Number Generators using Cryptographic Hashing&quot;, <em>Proceedings of Haskell Symposium 2013</em>, pp. 47-58.</small></p>
+<p><small><sup id=Note47>(47)</sup> Allowing applications to do so would hamper forward compatibility &mdash; the API would then be less free to change how the RNG is implemented in the future (e.g., to use a cryptographic or otherwise &quot;better&quot; RNG), or to make improvements or bug fixes in methods that use that RNG (such as shuffling and Gaussian number generation).  (As a notable example, the V8 JavaScript engine recently changed its <code>Math.random()</code> implementation to use a variant of <code>xorshift128+</code>, which is backward compatible because nothing in JavaScript allows  <code>Math.random()</code> to be seeded.)  Nevertheless, APIs can still allow applications to provide additional input (&quot;entropy&quot;) to the RNG in order to increase its randomness rather than to ensure repeatability.</small></p>
 
 <p><a id=Appendix></a></p>
 
