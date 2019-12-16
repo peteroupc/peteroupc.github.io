@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on June 4, 2017; last updated on Dec. 12, 2019.
+Begun on June 4, 2017; last updated on Dec. 15, 2019.
 
 Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.
 
@@ -96,6 +96,7 @@ All the random number methods presented on this page are ultimately based on an 
     - [**Transformations of Random Numbers: Additional Examples**](#Transformations_of_Random_Numbers_Additional_Examples)
     - [**Random Numbers from a Distribution of Data Points**](#Random_Numbers_from_a_Distribution_of_Data_Points)
     - [**Random Numbers from an Arbitrary Distribution**](#Random_Numbers_from_an_Arbitrary_Distribution)
+        - [**Pseudocode for Piecewise Interpolation**](#Pseudocode_for_Piecewise_Interpolation)
     - [**Gibbs Sampling**](#Gibbs_Sampling)
     - [**Dice: Optimization for Many Dice**](#Dice_Optimization_for_Many_Dice)
     - [**Normal (Gaussian) Distribution**](#Normal_Gaussian_Distribution)
@@ -718,16 +719,16 @@ The following pseudocode implements a method `WeightedChoice` that takes a singl
         return lastItem
     END METHOD
 
-> **Note:** The Python sample code contains a variant of this
-> method for generating multiple random points in one call.
+> **Notes:**
+>
+> - The Python sample code contains a variant of this method for generating multiple random points in one call.
+> - See also "[**Mixtures of Distributions**](#Mixtures_of_Distributions)" and "[**Pseudocode_for_Piecewise_Interpolation**](#Pseudocode_for_Piecewise_Interpolation)".
 >
 > **Examples:**
 >
 > 1. Assume we have the following list: `["apples", "oranges", "bananas", "grapes"]`, and `weights` is the following: `[3, 15, 1, 2]`.  The weight for "apples" is 3, and the weight for "oranges" is 15.  Since "oranges" has a higher weight than "apples", the index for "oranges" (1) is more likely to be chosen than the index for "apples" (0) with the `WeightedChoice` method.  The following idiom implements how to get a randomly chosen item from the list with that method: `item = list[WeightedChoice(weights)]`.
-> 2. Assume the weights from example 1 are used and the list contains ranges of numbers instead of strings: `[[0, 5], [5, 10], [10, 11], [11, 13]]`.  After a random range is chosen, an independent uniform random number within the chosen range (including the lower bound but not the upper bound) is chosen.  For example, code like the following chooses a random integer this way: `number = RNDINTEXCRANGE(item[0], item[1])`. (See also "[**Mixtures of Distributions**](#Mixtures_of_Distributions)".)
-> 3. **Piecewise constant distribution.** Assume the weights from example 1 are used and the list contains the following: `[0, 5, 10, 11, 13]` (one more item than the weights).  This expresses four ranges, the same as in example 2.  After a random index is chosen with `index = WeightedChoice(weights)`, an independent uniform random number within the chosen range (including the lower bound but not the upper bound) is chosen.  For example, code like the following chooses a random integer this way: `number = RNDINTEXCRANGE(list[index], list[index + 1])`.
-> 4. A [**Markov chain**](https://en.wikipedia.org/wiki/Markov_chain) models one or more _states_ (for example, individual letters or syllables), and stores the probabilities to transition from one state to another (e.g., "b" to "e" with a chance of 20 percent, or "b" to "b" with a chance of 1 percent).  Thus, each state can be seen as having its own list of _weights_ for each relevant state transition.  For example, a Markov chain for generating **"pronounceable" words**, or words similar to natural-language words, can include "start" and "stop" states for the start and end of the word, respectively.
-> 5. The following weights approximate a [**Poisson distribution**](#Poisson_Distribution) with a mean of 0.1: `[90483742, 9048374, 452419, 15081, 377, 8]`.  The weights for other discrete (integer-only) distributions can be found by calculating the probability that each plausible result is randomly chosen for the distribution, and multiplying each probability by a suitably big number (such as 100,000,000 in this case), rounding to the nearest integer.
+> 2. **Piecewise constant distribution.** Assume the weights from example 1 are used and the list contains the following: `[0, 5, 10, 11, 13]` (one more item than the weights).  This expresses four intervals: [0, 5), [5, 10), and so on.  After a random index is chosen with `index = WeightedChoice(weights)`, an independent uniform random number in the chosen interval is chosen.  For example, code like the following chooses a random integer this way: `number = RNDINTEXCRANGE(list[index], list[index + 1])`.
+> 3. A [**Markov chain**](https://en.wikipedia.org/wiki/Markov_chain) models one or more _states_ (for example, individual letters or syllables), and stores the probabilities to transition from one state to another (e.g., "b" to "e" with a chance of 20 percent, or "b" to "b" with a chance of 1 percent).  Thus, each state can be seen as having its own list of _weights_ for each relevant state transition.  For example, a Markov chain for generating **"pronounceable" words**, or words similar to natural-language words, can include "start" and "stop" states for the start and end of the word, respectively.
 
 <a id=Weighted_Choice_Without_Replacement_Multiple_Copies></a>
 #### Weighted Choice Without Replacement (Multiple Copies)
@@ -818,6 +819,7 @@ A _mixture_ consists of two or more probability distributions with separate prob
 > 3. Take a set of nonoverlapping integer ranges.  To choose an independent uniform random integer from those ranges:
 >     - Create a list (`weights`) of weights for each range.  Each range is given a weight of `(mx - mn) + 1`, where `mn` is that range's minimum and `mx` is its maximum.
 >     - Choose an index using `WeightedChoice(weights)`, then generate `RNDINTRANGE(mn, mx)`, where `mn` is the corresponding range's minimum and `mx` is its maximum.
+> 4. In the pseudocode `index = WeightedChoice([80, 20]); list = [[0, 5], [5, 10]]; number = RNDINTEXCRANGE(list[index][0], list[index][1])`, a random integer in [0, 5) is chosen at an 80% chance, and a random integer in [5, 10) at a 20% chance.
 
 <a id=Transformations_of_Random_Numbers></a>
 ### Transformations of Random Numbers
@@ -1411,14 +1413,14 @@ Depending on what information is known about the distribution, random numbers th
 
 -  **PDF is known**, even if the area under the PDF isn't 1:
 
-    - **Piecewise interpolation.** Use the PDF to calculate the weights for a number of sample points (usually regularly spaced). Create one list with the sampled points in ascending order (the `list`) and another list of the same size with the PDF's values at those points (the `weights`).  Finally, generate a random number bounded by the lowest and highest sampled point using a weighted choice method (e.g., [**`ContinuousWeightedChoice(list, weights)`**](#Continuous_Weighted_Choice)).  The [**Python sample code**](https://peteroupc.github.io/randomgen.zip) includes a `numbers_from_pdf` method (for continuous PDFs) and an `integers_from_pdf` method (for discrete PDFs) that implement this approach.
+    - **Piecewise interpolation.** Use the PDF to calculate the weights for a number of sample points (usually regularly spaced). Create one list with the sampled points in ascending order (the `list`) and another list of the same size with the PDF's values at those points (the `weights`).  Finally, generate a random number bounded by the lowest and highest sampled point using a weighted choice method. See also the next section.
     - [**Rejection sampling.**](#Rejection_Sampling)  If the PDF can be more easily sampled by another distribution with its own PDF (`PDF2`) that "dominates" `PDF` in the sense that `PDF2(x) >= PDF(x)` at every valid `x`, then generate random numbers with that distribution until a number (`n`) that satisfies `PDF(n) >= RNDRANGEMaxExc(0, PDF2(n))` is generated this way (that is, sample points in `PDF2` until a point falls within `PDF`). (See also Saucier 2000, pp. 6-7, 39; Devroye 1986, pp. 41-43; and "[**Generating Pseudorandom Numbers**](https://mathworks.com/help/stats/generating-random-data.html)".)  Examples:
 
         1. To sample a random number in the interval [`low`, `high`) from a PDF with a positive maximum value no greater than `peak` at that interval, generate `x = RNDRANGEMaxExc(low, high)` and `y = RNDRANGEMaxExc(0, peak)` until `y < PDF(x)`, then take the last `x` generated this way. (See also Saucier 2000, pp. 6-7.)
 
         2. A custom distribution's PDF, `PDF`, is `exp(-abs(x*x*x))`, and the exponential distribution's PDF, `PDF2`, is `exp(-x)`.  The exponential PDF "dominates" the other PDF (at every `x` 0 or greater) if we multiply it by 1.5, so that `PDF2` is now `1.5 * exp(-x)`.  Now we can generate numbers from our custom distribution by sampling exponential points until a point falls within `PDF`.  This is done by generating `n = -ln(RNDU01ZeroOneExc())` until `PDF(n) >= RNDRANGEMaxExc(0, PDF2(n))`.
 
-    - [**Markov-chain Monte Carlo**](https://en.wikipedia.org/wiki/Markov_chain_Monte_Carlo) **(MCMC).** If many random numbers from the given PDF need to be generated, then an MCMC algorithm can be used, with the disadvantage that the resulting random numbers are _dependent_ on each other.  MCMC algorithms include Metropolis&ndash;Hastings and slice sampling (Neal 2003)<sup>[**(31)**](#Note31)</sup>. Generally, as more numbers are generated, the MCMC algorithm converges to the given distribution; this is why usually, random numbers from the first few (e.g., first 1000) iterations are ignored ("burn in").  MCMC can also be used to find a suitable sampling range for the Piecewise interpolation method, above.  The [**Python sample code**](https://peteroupc.github.io/randomgen.zip) includes methods called `mcmc` and `mcmc2` that implement Metropolis&ndash;Hastings for PDFs that take single numbers or two-dimensional points, respectively, and a method called `slicesample` that implements slice sampling.
+    - [**Markov-chain Monte Carlo**](https://en.wikipedia.org/wiki/Markov_chain_Monte_Carlo) **(MCMC).** If many random numbers from the given PDF need to be generated, then an MCMC algorithm can be used, with the disadvantage that the resulting random numbers are _dependent_ on each other.  MCMC algorithms include Metropolis&ndash;Hastings and slice sampling (Neal 2003)<sup>[**(31)**](#Note31)</sup>. Generally, as more numbers are generated, the MCMC algorithm converges to the given distribution; this is why usually, random numbers from the first few (e.g., first 1000) iterations are ignored ("burn in").  MCMC can also be used to find a suitable sampling range for the _piecewise interpolation_ method, above.  The [**Python sample code**](https://peteroupc.github.io/randomgen.zip) includes methods called `mcmc` and `mcmc2` that implement Metropolis&ndash;Hastings for PDFs that take single numbers or two-dimensional points, respectively, and a method called `slicesample` that implements slice sampling.
 
 - **PDF and a uniform random variable in the interval \[0, 1\) (`randomVariable`)** are known: Create `list` and `weights` as given in the Piecewise interpolation method, above, then divide each item in `weights` by the sum<sup>[**(14)**](#Note14)</sup>
  of `weights`'s items, then generate [**`ContinuousWeightedChoice(list, weights)`**](#Continuous_Weighted_Choice) (except that method is modified to use `value = randomVariable` rather than `value = RNDRANGEMaxExc(0, sum)`).
@@ -1430,6 +1432,32 @@ Depending on what information is known about the distribution, random numbers th
 - **CDF is known**: In this case, the CDF is usually numerically inverted to generate a random number from that distribution.  For example, see the `from_interp` and `numbers_from_cdf` methods in the [**Python sample code**](https://peteroupc.github.io/randomgen.zip).
 
 > **Note:** Lists of PDFs, CDFs, or inverse CDFs are outside the scope of this page.
+
+<a id=Pseudocode_for_Piecewise_Interpolation></a>
+#### Pseudocode for Piecewise Interpolation
+
+Random numbers that closely follow a given distribution (described by its PDF, `PDF(x)`) can be generated using **piecewise interpolation**.  The following method calculates a list of weights for numbers in the interval [`mini`, `maxi`], with a step count of `step` and a weight scale of `mult`.  The weights can then be used in the [**`WeightedChoice`**](#Weighted_Choice_With_Replacement) or [**`ContinuousWeightedChoice`**](#Continuous_Weighted_Choice) method to generate the random numbers:
+
+- For discrete (integer-only) distributions, use `WeightedChoice`.
+- For continuous distributions, use `ContinuousWeightedChoice` or `WeightedChoice`; the latter can be less accurate, though.
+
+&nbsp;
+
+    METHOD WeightTable(mini, maxi, step, mult)
+       list = []
+       i = mini; while i <= maxi
+         AddItem(list, round(PDF(i) * mult))
+         i = i + step
+       end
+       return list
+    END METHOD
+
+Also, [**Python sample code**](https://peteroupc.github.io/randomgen.zip) includes a `numbers_from_pdf` method (continuous) and an `integers_from_pdf` method (discrete) that implement piecewise interpolation.
+
+> **Examples:**
+>
+> 1. The following weights approximate a discrete [**Poisson distribution**](#Poisson_Distribution) with a mean of 0.1: `[90483742, 9048374, 452419, 15081, 377, 8]`; this can be generated with `WeightTable(0, 5, 1, 100000000)` and the Poisson PDF.
+> 2. A 3-bit-integer-quantized number format can take on values 0, 1/8, 2/8, ..., 7/8.  For this format, the following weights approximate a continuous [**beta distribution**](#Beta_Distribution) with `a = 2` and `b = 2`: `[0, 656, 1125, 1406, 1500, 1406, 1125, 656]`; this can be generated with `WeightTable(0, 7/8, 1/8, 10000)` and the beta PDF.
 
 <a id=Gibbs_Sampling></a>
 ### Gibbs Sampling
