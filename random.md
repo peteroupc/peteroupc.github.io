@@ -208,7 +208,7 @@ For advice on generating seeds for the PRNG, see "[**Seed Generation for Noncryp
 Use cases for manually-seeded PRNGs include the following:
 
 - Simulations and machine learning.  This includes physics simulations and artificial intelligence (AI) in games, as well as simulations to reproduce published research data.
-- Monte Carlo estimations (to make them random-behaving but deterministic).
+- Monte Carlo estimations.
 - Procedural noise generation.
 - Unit tests in which "randomness" ought not to determine whether they pass or fail.
 - Games that generate "random" content that is impractical to store.
@@ -528,7 +528,7 @@ There are several possible ways to implement a PRNG:
 2. As a function that takes a seed and outputs one or more "random" numbers.  An example is a [**hash function**](#Hash_Functions).
 3. As a function that takes an internal state and outputs a new internal state and one or more "random" numbers.  This is how PRNGs can be implemented as so-called "pure functions" in functional programming languages (as in the package `AC-Random` for the Haskell language).
 4. As a so-called "splittable" PRNG (Claessen et al., 2013)<sup>[**(46)**](#Note46)</sup> with two functions:
-    - Split: A function that takes an internal state and outputs two or more internal states that behave like independent random numbers.
+    - Split: A function that takes an internal state and outputs two or more new internal states.
     - Generate: A function that takes an internal state and outputs one or more "random" numbers.
 
 Of the designs just given, the first is _stateful_ and the last three are _stateless_.
