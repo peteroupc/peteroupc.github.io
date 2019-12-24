@@ -160,7 +160,7 @@ The following also count as high-quality PRNGs, but they require nonzero seeds, 
 - [**xoroshiro128&#x2a;&#x2a;**](http://xoshiro.di.unimi.it/xoroshiro128starstar.c) (state length 128 bits).
 - XorShift\* 128/64 (state length 128 bits).
 - XorShift\* 64/32 (state length 64 bits).
-- `xorshift128+` and `xoshiro256+` (state length 128 and 256 bits, respectively), where each output's lowest 16 bits are discarded.  (As described by (Blackman and Vigna 2018)<sup>[**(8)**](#Note8)</sup>, these linear PRNGs use weak scramblers, so that each full output's lowest bits have low linear complexity even though the output as a whole has excellent statistical randomness.  See also [**"Testing lowest bits in isolation"**](http://xoshiro.di.unimi.it/lowcomp.php).)
+- `xorshift128+` and `xoshiro256+` (state length 128 and 256 bits, respectively), where each output's lowest 16 bits are discarded.  (As described by (Blackman and Vigna 2018)<sup>[**(8)**](#Note8)</sup>, these PRNGs use weak scramblers, so that each full output's lowest bits have low linear complexity even though the output as a whole has excellent statistical randomness.  See also [**"Testing lowest bits in isolation"**](http://xoshiro.di.unimi.it/lowcomp.php).)
 - A multiplicative LCG with modulus greater than 2<sup>63</sup> described in Table 2 of (L'Ecuyer 1999)<sup>[**(9)**](#Note9)</sup>.
 
 A high-quality PRNG that is any of the following is not preferred:
@@ -302,16 +302,13 @@ Randomness extraction is discussed in NIST SP 800-90B sec. 3.1.5.1, RFC 4086 sec
 
 In general, an application ought to seed a noncryptographic PRNG's full state with either the output of a cryptographic RNG or a seed described in the [**previous section**](#Seed_Generation).
 
-Some applications require multiple processes (including threads, tasks, or subtasks) to use [**reproducible "random" numbers**](#Manually_Seeded_PRNGs) for the same purpose.  An example is multiple instances of a simulation with random starting conditions.  However, noncryptographic PRNGs tend to produce "random" number sequences that are correlated to each other, which is undesirable for simulations in particular.  To reduce this correlation risk, an application can:
+Some applications require multiple processes (including threads, tasks, or subtasks) to use [**reproducible "random" numbers**](#Manually_Seeded_PRNGs) for the same purpose.  An example is multiple instances of a simulation with random starting conditions.  However, noncryptographic PRNGs tend to produce sequences that don't behave like independent random number sequences (that is, the sequences are _correlated_ to each other), which is undesirable for simulations in particular.  To reduce this correlation risk, an application can:
 
 - Choose seeds carefully.  The risk is lowest if the seeds are uncorrelated themselves. It is NOT RECOMMENDED to seed PRNGs with sequential counters, linearly related numbers, or timestamps; timestamps in particular can carry the risk of generating the same "random" number sequence accidentally.<sup>[**(18)**](#Note18)</sup>
-- Choose PRNGs carefully.
-    - Only [**high-quality PRNGs**](#High_Quality_RNGs_Requirements) ought to be chosen.
-    - Some PRNGs (such as `sfc`) support "streams" of numbers that behave like independent random number sequences, and have efficient ways to assign a different stream to each process.
-    - Other PRNGs (such as LCGs with non-prime modulus, or PRNGs based on them such as PCG) produce highly correlated sequences for similar seeds and ought to be avoided.
+- Choose PRNGs carefully.  The risk is reduced by choosing a [**high-quality PRNG**](#High_Quality_RNGs_Requirements) that supports "streams" of uncorrelated sequences (sequences that behave like independent random number sequences and don't overlap) and has an efficient way to assign a different stream to each process.  Examples of such PRNGs include `sfc` and so-called "counter-based" PRNGs(Salmon et al. 2011)<sup>[**(48)**](#Note48)</sup>.  Non-examples include LCGs with a non-prime modulus and PRNGs based on them, such as PCG.
 - Use two or more different designs of PRNGs across the set of processes, to reduce correlation risks due to a particular PRNG's design.<sup>[**(19)**](#Note19)</sup>
 
-The following is a general way to seed multiple processes for random number generation.  Generate a seed (or use a predetermined seed) and distribute that seed to each process as follows<sup>[**(20)**](#Note20)</sup>:
+The following is a general way to seed multiple processes for random number generation. (Note that this procedure has disadvantages, such as the risk of generating seeds that lead to overlapping, correlated, or even identical number sequences, especially if each process uses the same PRNG.)  Generate a seed (or use a predetermined seed) and distribute that seed to each process as follows<sup>[**(20)**](#Note20)</sup>:
 
 1. Create a PRNG instance for each process.  The instances need not all be of the same design of PRNG; for example, some can be `jsf` and others `xoroshiro128**`.
 2. In each process, build a string consisting of three parts: `IDENT`, `UNIQUE`, and `SEED`. Example: "mysimulation-1-myseed".<sup>[**(21)**](#Note21)</sup>
@@ -519,7 +516,7 @@ A PRNG is a high-quality RNG if&mdash;
 - its state length is at least 64 bits, and
 - it either satisfies the _collision resistance_ property or has a period (maximum size of a "random" number cycle) at or close to 2<sup>N</sup>, where N is its state length.
 
-The high-quality PRNG's state length SHOULD be at least 128 bits, and the PRNG need not be perfectly equidistributed.
+The high-quality PRNG's state length SHOULD be at least 128 bits.
 
 Every cryptographic RNG is also a high-quality RNG.
 
@@ -683,6 +680,8 @@ See also N. Reed, "Quick And Easy GPU Random Numbers In D3D11", Nathan Reed's co
 <small><sup id=Note46>(46)</sup> Claessen, K., Palma, M. "Splittable Pseudorandom Number Generators using Cryptographic Hashing", _Proceedings of Haskell Symposium 2013_, pp. 47-58.</small>
 
 <small><sup id=Note47>(47)</sup> Allowing applications to do so would hamper forward compatibility &mdash; the API would then be less free to change how the RNG is implemented in the future (e.g., to use a cryptographic or otherwise "better" RNG), or to make improvements or bug fixes in methods that use that RNG (such as shuffling and Gaussian number generation).  (As a notable example, the V8 JavaScript engine recently changed its `Math.random()` implementation to use a variant of `xorshift128+`, which is backward compatible because nothing in JavaScript allows  `Math.random()` to be seeded.)  Nevertheless, APIs can still allow applications to provide additional input ("entropy") to the RNG in order to increase its randomness rather than to ensure repeatability.</small>
+
+<small><sup id=Note48>(48)</sup> Salmon, J.K.; Moraes, M.A.; et al., "Parallel Random Numbers: As Easy as 1, 2, 3", 2011.</small>
 
 <a id=Appendix></a>
 ## Appendix
