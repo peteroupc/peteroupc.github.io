@@ -2,8 +2,6 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on Mar. 5, 2016; last updated on Dec. 23, 2019.
-
 Most apps that use random numbers care about either unpredictability, high quality, or repeatability.  This article explains the three kinds of RNGs and gives recommendations on each kind.
 
 <a id=Introduction></a>
@@ -92,7 +90,7 @@ The following definitions are helpful in better understanding this document.
 - **Random number generator (RNG).** Software and/or hardware that seeks to generate numbers with the property that each possible outcome is as likely as any other without influence by anything else<sup>[**(4)**](#Note4)</sup>.
 - **Pseudorandom number generator (PRNG).** A random number generator in which the numbers it generates are completely determined by its input.
 - **Seed.**  Arbitrary data serving as a PRNG's input.
-- **State length.**  The maximum size of the seed a PRNG can take as its input without shortening or compressing that seed.
+- **State length.**  The minimum size of the seed a PRNG can take as its input without shortening or compressing that seed.
 - **Information security.** Keeping information safe from attacks that could access, use, delay, or manipulate that information.<sup>[**(5)**](#Note5)</sup>
 - **SHOULD, SHOULD NOT, MAY, RECOMMENDED, NOT RECOMMENDED.**  These terms have the meanings given in RFC 2119 and RFC 8174.
 
@@ -302,30 +300,34 @@ Randomness extraction is discussed in NIST SP 800-90B sec. 3.1.5.1, RFC 4086 sec
 
 In general, an application ought to seed a noncryptographic PRNG's full state with either the output of a cryptographic RNG or a seed described in the [**previous section**](#Seed_Generation).
 
-Some applications require multiple processes (including threads, tasks, or subtasks) to use [**reproducible "random" numbers**](#Manually_Seeded_PRNGs) for the same purpose.  An example is multiple instances of a simulation with random starting conditions.
+It is NOT RECOMMENDED to seed PRNGs with timestamps, since they can carry the risk of generating the same "random" number sequence accidentally.<sup>[**(22)**](#Note22)</sup>
 
-However, noncryptographic PRNGs tend to produce number sequences that are correlated to each other, which is undesirable for simulations in particular.  To reduce this correlation risk, the application can choose a [**high-quality PRNG**](#High_Quality_RNGs_Requirements) that supports "streams" of uncorrelated sequences (sequences that behave like independent random number sequences and don't overlap) and has an efficient way to assign a different stream to each process.  Examples of such PRNGs include `sfc` and so-called "counter-based" PRNGs (Salmon et al. 2011)<sup>[**(18)**](#Note18)</sup>.  Non-examples include LCGs with a non-prime modulus and PRNGs based on them, such as PCG.
+#### Seeding Multiple Processes
+
+Some applications require multiple processes (including threads, tasks, or subtasks) to use [**reproducible "random" numbers**](#Manually_Seeded_PRNGs) for the same purpose.  An example is multiple instances of a simulation with random starting conditions.  However, noncryptographic PRNGs tend to produce number sequences that are correlated to each other, which is undesirable for simulations in particular.
+
+To reduce this correlation risk, the application can choose a [**high-quality PRNG**](#High_Quality_RNGs_Requirements) that supports "streams" of uncorrelated sequences (sequences that behave like independent random number sequences and don't overlap) and has an efficient way to assign a different stream to each process.  Examples of such PRNGs include `sfc` and so-called "counter-based" PRNGs (Salmon et al. 2011)<sup>[**(18)**](#Note18)</sup>.  Non-examples include LCGs with a non-prime modulus and PRNGs based on them, such as PCG.
 
 Depending on the PRNG, there are different ways to seed multiple processes for random number generation, described as follows.<sup>[**(19)**](#Note19)</sup>
 
 1. For counter-based PRNGs: Generate a seed (or use a predetermined seed), then:
 
     1. Create a PRNG instance for each process.
-    2. Build a string consisting of the seed and a fixed identifier (an example is "myseed-mysimulation"), generate a hash code of that string using a hash function of N or more bits, and take the first N bits of that code as the counter, where N is the counter's size in bits.
-    3. For each process, initialize its PRNG instance with the seed and the counter, then add 1 to the seed (in case of overflow, the seed is 0 instead).
+    2. Hash the seed and a fixed identifier to generate a C-bit counter (C is the counter's size in bits).  Hash the seed and another fixed identifier to generate a new N-bit seed (N is the PRNG's state length).
+    3. For each process, initialize its PRNG instance with the new seed and the counter, then add 1 to the new seed (in case of overflow, the new seed is 0 instead).
 
 2. For PRNGs that implement "streams" by providing an efficient way to discard a fixed but huge number of PRNG outputs (that is, to "jump the PRNG ahead"): Generate a seed (or use a predetermined seed), then:
 
-    1. Create one PRNG instance and initialize it with the seed.
-    2. For each process, give that process a copy of the PRNG's current internal state, then jump the original PRNG ahead.
+    1. Create one PRNG instance.
+    2. Hash the seed and a fixed identifier to generate a new N-bit seed (N is the PRNG's state length), and initialize the PRNG with that seed.
+    3. For each process, give that process a copy of the PRNG's current internal state, then jump the original PRNG ahead.
 
 3. For other PRNGs, or if each process uses a different PRNG design, the following is a way to seed multiple processes for random number generation, but it carries the risk of generating seeds that lead to overlapping, correlated, or even identical number sequences, especially if the processes use the same PRNG.<sup>[**(20)**](#Note20)</sup> Generate a seed (or use a predetermined seed), then:
 
     1. Create a PRNG instance for each process.  The instances need not all be of the same design of PRNG; for example, some can be `jsf` and others `xoroshiro128**`.
-    2. In each process, build a string consisting of the seed, a unique number for each process, and a fixed identifier (an example is "myseed-1-mysimulation").<sup>[**(21)**](#Note21)
-    3. In each process, use a [**hash function**](#Hash_Functions) of N or more bits to generate a hash code of the string in the previous step, and use the first N bits of that code as the seed for that PRNG instance, where N is that PRNG's state length.<sup>[**(21)**](#Note21)</sup>
+    2. In each process, hash the seed, a unique number for that process, and a fixed identifier to generate a new N-bit seed (N is the PRNG's state length), and initialize the process's PRNG with that seed.
 
-It is NOT RECOMMENDED to seed PRNGs with timestamps, since they can carry the risk of generating the same "random" number sequence accidentally.<sup>[**(22)**](#Note22)</sup>
+The steps above include hashing several things to generate an N-bit value.  This has to be done with either a [**hash function**](#Hash_Functions) of N or more bits, or a so-called "seed sequence generator" like C++'s `std::seed_seq`.<sup>[**(48)**](#Note48)</sup><sup>[**(21)**](#Note21)</sup>
 
 <a id=Existing_RNG_APIs_in_Programming_Languages></a>
 ## Existing RNG APIs in Programming Languages
@@ -384,7 +386,7 @@ In a list with `N` different items, there are `N` factorial (that is, `1 * 2 * .
 
 In practice, an application can **shuffle a list** by doing a [**Fisher&ndash;Yates shuffle**](https://en.wikipedia.org/wiki/Fisher-Yates_shuffle), which is unfortunately easy to mess up &mdash; see (Atwood 2007)<sup>[**(29)**](#Note29)</sup> &mdash; and is implemented correctly in [**another document of mine**](https://peteroupc.github.io/randomfunc.html).
 
-However, if a PRNG's period (maximum size of a "random" number cycle) is less than the number of permutations, then there are **some permutations that that PRNG can't choose** when it shuffles that list. (This is not the same as _generating_ all permutations of a list, which, for a list big enough, can't be done by any computer in a reasonable time.)
+However, if a PRNG's period (minimum size of a "random" number cycle) is less than the number of permutations, then there are **some permutations that that PRNG can't choose** when it shuffles that list. (This is not the same as _generating_ all permutations of a list, which, for a list big enough, can't be done by any computer in a reasonable time.)
 
 On the other hand, for a list big enough, it's generally **more important to have shuffles act random** than to choose from among all permutations.
 
@@ -522,7 +524,7 @@ A cryptographic RNG is not required to reseed itself.
 A PRNG is a high-quality RNG if&mdash;
 - it generates bits that behave like independent uniform random bits (at least for nearly all practical purposes outside of information security),
 - its state length is at least 64 bits, and
-- it either satisfies the _collision resistance_ property or has a period (maximum size of a "random" number cycle) at or close to 2<sup>N</sup>, where N is its state length.
+- it either satisfies the _collision resistance_ property or has a period (minimum size of a "random" number cycle) at or close to 2<sup>N</sup>, where N is its state length.
 
 The high-quality PRNG's state length SHOULD be at least 128 bits.
 
@@ -689,6 +691,8 @@ See also N. Reed, "Quick And Easy GPU Random Numbers In D3D11", Nathan Reed's co
 
 <small><sup id=Note47>(47)</sup> Allowing applications to do so would hamper forward compatibility &mdash; the API would then be less free to change how the RNG is implemented in the future (e.g., to use a cryptographic or otherwise "better" RNG), or to make improvements or bug fixes in methods that use that RNG (such as shuffling and Gaussian number generation).  (As a notable example, the V8 JavaScript engine recently changed its `Math.random()` implementation to use a variant of `xorshift128+`, which is backward compatible because nothing in JavaScript allows  `Math.random()` to be seeded.)  Nevertheless, APIs can still allow applications to provide additional input ("entropy") to the RNG in order to increase its randomness rather than to ensure repeatability.</small>
 
+<small><sup id=Note48>(48)</sup> Here, the unique number and fixed identifier together serve as a _domain separation tag_ (see, e.g., the work-in-progress document "draft-irtf-cfrg-hash-to-curve").</small>
+
 <a id=Appendix></a>
 ## Appendix
 
@@ -739,7 +743,7 @@ The following Python code suggests how many bits of entropy are needed for shuff
 <a id=Bays_ndash_Durham_Shuffle></a>
 ### Bays&ndash;Durham Shuffle
 
-The Bays&ndash;Durham shuffle extends a PRNG's period (maximum size of a "random" number cycle) by giving it a bigger state. Generally, for a size of `tablesize`, the period is extended to about the number of ways to arrange a list of size `tablesize`.  The following describes the Bays&ndash;Durham shuffle with a size of `tablesize`. (C++'s `shuffle_order_engine` implements something similar to the shuffle described below.) For PRNGs that output 32- or 64-bit integers 0 or greater, a `tablesize` of 256, 512, or 1024 is suggested.
+The Bays&ndash;Durham shuffle extends a PRNG's period (minimum size of a "random" number cycle) by giving it a bigger state. Generally, for a size of `tablesize`, the period is extended to about the number of ways to arrange a list of size `tablesize`.  The following describes the Bays&ndash;Durham shuffle with a size of `tablesize`. (C++'s `shuffle_order_engine` implements something similar to the shuffle described below.) For PRNGs that output 32- or 64-bit integers 0 or greater, a `tablesize` of 256, 512, or 1024 is suggested.
 
 - To initialize, fill a list with as many numbers from the PRNG as `tablesize`, then set `k` to another number from the PRNG.
 - For each "random" number, take the entry at position (`k` % `tablesize`) in the list, where '%' is the remainder operator and positions start at 0, then set `k` to that entry, then replace the entry at that position with a new number from the PRNG, then output `k`.

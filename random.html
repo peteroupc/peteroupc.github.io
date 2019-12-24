@@ -6,8 +6,6 @@
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
-<p>Begun on Mar. 5, 2016; last updated on Dec. 23, 2019.</p>
-
 <p>Most apps that use random numbers care about either unpredictability, high quality, or repeatability.  This article explains the three kinds of RNGs and gives recommendations on each kind.</p>
 
 <p><a id=Introduction></a></p>
@@ -136,7 +134,7 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 <li><strong>Random number generator (RNG).</strong> Software and/or hardware that seeks to generate numbers with the property that each possible outcome is as likely as any other without influence by anything else<sup><a href="#Note4"><strong>(4)</strong></a></sup>.</li>
 <li><strong>Pseudorandom number generator (PRNG).</strong> A random number generator in which the numbers it generates are completely determined by its input.</li>
 <li><strong>Seed.</strong>  Arbitrary data serving as a PRNG&#39;s input.</li>
-<li><strong>State length.</strong>  The maximum size of the seed a PRNG can take as its input without shortening or compressing that seed.</li>
+<li><strong>State length.</strong>  The minimum size of the seed a PRNG can take as its input without shortening or compressing that seed.</li>
 <li><strong>Information security.</strong> Keeping information safe from attacks that could access, use, delay, or manipulate that information.<sup><a href="#Note5"><strong>(5)</strong></a></sup></li>
 <li><strong>SHOULD, SHOULD NOT, MAY, RECOMMENDED, NOT RECOMMENDED.</strong>  These terms have the meanings given in RFC 2119 and RFC 8174.</li>
 </ul>
@@ -459,8 +457,8 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 
 <ol>
 <li>Create a PRNG instance for each process.  The instances need not all be of the same design of PRNG; for example, some can be <code>jsf</code> and others <code>xoroshiro128**</code>.</li>
-<li>In each process, build a string consisting of the seed, a unique number for each process, and a fixed identifier (an example is &quot;myseed-1-mysimulation&quot;).<sup><a href="#Note21"><strong>(21)</strong></a></li>
-<li>In each process, use a <a href="#Hash_Functions"><strong>hash function</strong></a> of N or more bits to generate a hash code of the string in the previous step, and use the first N bits of that code as the seed for that PRNG instance, where N is that PRNG&#39;s state length.<sup><a href="#Note21"><strong>(21)</strong></a></sup></li>
+<li>In each process, build a string consisting of the seed, a unique number for each process, and a fixed identifier (an example is &quot;myseed-1-mysimulation&quot;).<sup><a href="#Note48"><strong>(48)</strong></a></sup></li>
+<li>In each process, use a <a href="#Hash_Functions"><strong>hash function</strong></a> of N or more bits to generate a hash code of the string from the previous step, and use the first N bits of that code as the seed for that PRNG instance, where N is that PRNG&#39;s state length.<sup><a href="#Note21"><strong>(21)</strong></a></sup></li>
 </ol></li>
 </ol>
 
@@ -577,7 +575,7 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 
 <p>In practice, an application can <strong>shuffle a list</strong> by doing a <a href="https://en.wikipedia.org/wiki/Fisher-Yates_shuffle"><strong>Fisher&ndash;Yates shuffle</strong></a>, which is unfortunately easy to mess up &mdash; see (Atwood 2007)<sup><a href="#Note29"><strong>(29)</strong></a></sup> &mdash; and is implemented correctly in <a href="https://peteroupc.github.io/randomfunc.html"><strong>another document of mine</strong></a>.</p>
 
-<p>However, if a PRNG&#39;s period (maximum size of a &quot;random&quot; number cycle) is less than the number of permutations, then there are <strong>some permutations that that PRNG can&#39;t choose</strong> when it shuffles that list. (This is not the same as <em>generating</em> all permutations of a list, which, for a list big enough, can&#39;t be done by any computer in a reasonable time.)</p>
+<p>However, if a PRNG&#39;s period (minimum size of a &quot;random&quot; number cycle) is less than the number of permutations, then there are <strong>some permutations that that PRNG can&#39;t choose</strong> when it shuffles that list. (This is not the same as <em>generating</em> all permutations of a list, which, for a list big enough, can&#39;t be done by any computer in a reasonable time.)</p>
 
 <p>On the other hand, for a list big enough, it&#39;s generally <strong>more important to have shuffles act random</strong> than to choose from among all permutations.</p>
 
@@ -763,7 +761,7 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 <ul>
 <li>it generates bits that behave like independent uniform random bits (at least for nearly all practical purposes outside of information security),</li>
 <li>its state length is at least 64 bits, and</li>
-<li>it either satisfies the <em>collision resistance</em> property or has a period (maximum size of a &quot;random&quot; number cycle) at or close to 2<sup>N</sup>, where N is its state length.</li>
+<li>it either satisfies the <em>collision resistance</em> property or has a period (minimum size of a &quot;random&quot; number cycle) at or close to 2<sup>N</sup>, where N is its state length.</li>
 </ul>
 
 <p>The high-quality PRNG&#39;s state length SHOULD be at least 128 bits.</p>
@@ -965,6 +963,8 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 
 <p><small><sup id=Note47>(47)</sup> Allowing applications to do so would hamper forward compatibility &mdash; the API would then be less free to change how the RNG is implemented in the future (e.g., to use a cryptographic or otherwise &quot;better&quot; RNG), or to make improvements or bug fixes in methods that use that RNG (such as shuffling and Gaussian number generation).  (As a notable example, the V8 JavaScript engine recently changed its <code>Math.random()</code> implementation to use a variant of <code>xorshift128+</code>, which is backward compatible because nothing in JavaScript allows  <code>Math.random()</code> to be seeded.)  Nevertheless, APIs can still allow applications to provide additional input (&quot;entropy&quot;) to the RNG in order to increase its randomness rather than to ensure repeatability.</small></p>
 
+<p><small><sup id=Note48>(48)</sup> Here, the unique number and fixed identifier together serve as a <em>domain separation tag</em> (see, e.g., the work-in-progress document &quot;draft-irtf-cfrg-hash-to-curve&quot;).</small></p>
+
 <p><a id=Appendix></a></p>
 
 <h2>Appendix</h2>
@@ -1022,7 +1022,7 @@ def stateLengthDecks(numDecks, numCards):
 
 <h3>Bays&ndash;Durham Shuffle</h3>
 
-<p>The Bays&ndash;Durham shuffle extends a PRNG&#39;s period (maximum size of a &quot;random&quot; number cycle) by giving it a bigger state. Generally, for a size of <code>tablesize</code>, the period is extended to about the number of ways to arrange a list of size <code>tablesize</code>.  The following describes the Bays&ndash;Durham shuffle with a size of <code>tablesize</code>. (C++&#39;s <code>shuffle_order_engine</code> implements something similar to the shuffle described below.) For PRNGs that output 32- or 64-bit integers 0 or greater, a <code>tablesize</code> of 256, 512, or 1024 is suggested.</p>
+<p>The Bays&ndash;Durham shuffle extends a PRNG&#39;s period (minimum size of a &quot;random&quot; number cycle) by giving it a bigger state. Generally, for a size of <code>tablesize</code>, the period is extended to about the number of ways to arrange a list of size <code>tablesize</code>.  The following describes the Bays&ndash;Durham shuffle with a size of <code>tablesize</code>. (C++&#39;s <code>shuffle_order_engine</code> implements something similar to the shuffle described below.) For PRNGs that output 32- or 64-bit integers 0 or greater, a <code>tablesize</code> of 256, 512, or 1024 is suggested.</p>
 
 <ul>
 <li>To initialize, fill a list with as many numbers from the PRNG as <code>tablesize</code>, then set <code>k</code> to another number from the PRNG.</li>
