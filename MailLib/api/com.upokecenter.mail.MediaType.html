@@ -36,7 +36,8 @@ binary data.</li>
 Specifies the media type &quot;message/rfc822&quot;, used for Internet mail messages.</li>
 <li><code>static MediaType TextPlainAscii</code><br>
 Specifies the media type &quot;text/plain&quot; and the &quot;charset&quot; parameter
-&quot;US-ASCII&quot;, used for plain text data.</li>
+&quot;US-ASCII&quot;, used for plain text data that contains only characters
+within the basic Latin range (U+0000 to U+007F).</li>
 <li><code>static MediaType TextPlainUtf8</code><br>
 Specifies the media type &quot;text/plain&quot; and the &quot;charset&quot; parameter &quot;utf-8&quot;,
 used for plain text data that may contain characters outside the
@@ -98,7 +99,8 @@ Converts this media type to a text string form suitable for data URIs.</li>
 </pre>
 
 <p>Specifies the media type &quot;text/plain&quot; and the &quot;charset&quot; parameter
-  &quot;US-ASCII&quot;, used for plain text data.</p>
+  &quot;US-ASCII&quot;, used for plain text data that contains only characters
+ within the basic Latin range (U+0000 to U+007F).</p>
 
 <h3>TextPlainUtf8</h3>
 

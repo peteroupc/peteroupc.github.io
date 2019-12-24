@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on Mar. 5, 2016; last updated on Dec. 16, 2019.
+Begun on Mar. 5, 2016; last updated on Dec. 23, 2019.
 
 Most apps that use random numbers care about either unpredictability, high quality, or repeatability.  This article explains the three kinds of RNGs and gives recommendations on each kind.
 
@@ -149,9 +149,10 @@ Noncryptographic PRNGs can be _automatically seeded_ (a new seed is generated up
 Besides cryptographic RNGs, the following are examples of [**high-quality PRNGs**](#High_Quality_PRNGs_Requirements):
 
 - `JKISS`, `JKISS32`, `JLKISS`, `JLKISS64`, described in (Jones 2007/2010)<sup>[**(6)**](#Note6)</sup>.
-- A [**linear congruential generator**](https://en.wikipedia.org/wiki/Linear_congruential_generator) (LCG) with modulus 2<sup>64</sup> or higher described in Table 4 of (L'Ecuyer 1999)<sup>[**(7)**](#Note7)</sup>, where each output's highest 32 bits are used.
-- PCG (`pcg32`, `pcg64`, and `pcg64_fast` classes), by Melissa O'Neill. See also a [**critique by S. Vigna**](http://pcg.di.unimi.it/pcg.php).
-- Other examples include B. Jenkins's "A small noncryptographic PRNG" (sometimes called `jsf`), C. Doty-Humphrey's `sfc`, `msws` (Widynski 2017)<sup>[**(8)**](#Note8)</sup>, and D. Blackman's `gjrand`.
+- B. Jenkins's "A small noncryptographic PRNG" (sometimes called `jsf`).
+- C. Doty-Humphrey's `sfc`.
+- `msws` (Widynski 2017)<sup>[**(7)**](#Note7)</sup>.
+- D. Blackman's `gjrand`.
 
 The following also count as high-quality PRNGs, but they require nonzero seeds, complicating the task of seeding them:
 
@@ -159,18 +160,20 @@ The following also count as high-quality PRNGs, but they require nonzero seeds, 
 - [**xoroshiro128&#x2a;&#x2a;**](http://xoshiro.di.unimi.it/xoroshiro128starstar.c) (state length 128 bits).
 - XorShift\* 128/64 (state length 128 bits).
 - XorShift\* 64/32 (state length 64 bits).
-- A multiplicative LCG with modulus greater than 2<sup>63</sup> described in Table 2 of (L'Ecuyer 1999)<sup>[**(7)**](#Note7)</sup>.
-- A multiplicative LCG with modulus 2<sup>64</sup> or higher described in Table 5 of (L'Ecuyer 1999)<sup>[**(7)**](#Note7)</sup>, where each output's highest 32 bits are used.
+- `xorshift128+` and `xoshiro256+` (state length 128 and 256 bits, respectively), where each output's lowest 16 bits are discarded.  (As described by (Blackman and Vigna 2018)<sup>[**(8)**](#Note8)</sup>, these linear PRNGs use weak scramblers, so that each full output's lowest bits have low linear complexity even though the output as a whole has excellent statistical randomness.  See also [**"Testing lowest bits in isolation"**](http://xoshiro.di.unimi.it/lowcomp.php).)
+- A multiplicative LCG with modulus greater than 2<sup>63</sup> described in Table 2 of (L'Ecuyer 1999)<sup>[**(9)**](#Note9)</sup>.
 
-The following also count as high-quality PRNGs, but are not preferred:
+A high-quality PRNG that is any of the following is not preferred:
 
-- Mersenne Twister shows a [**systematic failure**](http://xoroshiro.di.unimi.it/#quality) in `BigCrush`'s LinearComp test (part of L'Ecuyer and Simard's "TestU01"). (See also (Vigna 2016)<sup>[**(9)**](#Note9)</sup>.)
+- Mersenne Twister shows a [**systematic failure**](http://xoroshiro.di.unimi.it/#quality) in `BigCrush`'s LinearComp test (part of L'Ecuyer and Simard's "TestU01"). (See also (Vigna 2016)<sup>[**(10)**](#Note10)</sup>.)
+- LCGs with a power-of-two modulus (as well as PRNGs based on them, such as Melissa O'Neill's PCG) produce highly correlated "random" number sequences from seeds that differ only in their high bits (see S. Vigna, "[**The wrap-up on PCG generators**](http://pcg.di.unimi.it/pcg.php)").
+- LCGs with a non-prime modulus and PRNGs based on them.
 - C++'s [**`std::ranlux48` engine**](http://www.cplusplus.com/reference/random/ranlux48/) (state length 577 bits; nonzero seed) can be slower than alternatives because it discards many "random" numbers before outputting another.
-- [**`xoroshiro128+`**](http://xoshiro.di.unimi.it/xoroshiro128plus.c), `xoshiro256+`, and `xorshift128+` (nonzero seed for each).  As described by (Blackman and Vigna 2018)<sup>[**(10)**](#Note10)</sup>, these linear PRNGs use weak scramblers, so that each output's lowest bits have low linear complexity even though the output as a whole has excellent statistical randomness.  See also [**"Testing lowest bits in isolation"**](http://xoshiro.di.unimi.it/lowcomp.php).
 
 The following are not considered high-quality PRNGs:
 - Any LCG with modulus 2<sup>63</sup> or less (such as `java.util.Random` and C++'s `std::minstd_rand` and `std::minstd_rand0` engines) has a _state length_ of less than 64 bits.
 - `System.Random`, as implemented in the .NET Framework 4.7, can take a seed of at most 32 bits, so has a state length of at most 32 bits.
+- Sequential counters.
 
 <a id=Manually_Seeded_PRNGs></a>
 ## Manually-Seeded PRNGs
@@ -302,8 +305,11 @@ In general, an application ought to seed a noncryptographic PRNG's full state wi
 Some applications require multiple processes (including threads, tasks, or subtasks) to use [**reproducible "random" numbers**](#Manually_Seeded_PRNGs) for the same purpose.  An example is multiple instances of a simulation with random starting conditions.  However, noncryptographic PRNGs tend to produce "random" number sequences that are correlated to each other, which is undesirable for simulations in particular.  To reduce this correlation risk, an application can:
 
 - Choose seeds carefully.  The risk is lowest if the seeds are uncorrelated themselves. It is NOT RECOMMENDED to seed PRNGs with sequential counters, linearly related numbers, or timestamps; timestamps in particular can carry the risk of generating the same "random" number sequence accidentally.<sup>[**(18)**](#Note18)</sup>
-- Use two or more designs of PRNGs across the set of processes, to reduce correlation risks due to a particular PRNG's design.<sup>[**(19)**](#Note19)</sup>
-- Choose PRNGs (e.g., `sfc`) that support "streams" of numbers that behave like independent random number sequences.  These PRNGs generally have efficient ways to assign a different stream to each process, but describing how they work is out of scope of this document.
+- Choose PRNGs carefully.
+    - Only [**high-quality PRNGs**](#High_Quality_RNGs_Requirements) ought to be chosen.
+    - Some PRNGs (such as `sfc`) support "streams" of numbers that behave like independent random number sequences, and have efficient ways to assign a different stream to each process.
+    - Other PRNGs (such as LCGs with non-prime modulus, or PRNGs based on them such as PCG) produce highly correlated sequences for similar seeds and ought to be avoided.
+- Use two or more different designs of PRNGs across the set of processes, to reduce correlation risks due to a particular PRNG's design.<sup>[**(19)**](#Note19)</sup>
 
 The following is a general way to seed multiple processes for random number generation.  Generate a seed (or use a predetermined seed) and distribute that seed to each process as follows<sup>[**(20)**](#Note20)</sup>:
 
@@ -457,7 +463,7 @@ A _noise function_ is similar to a hash function; it takes an _n_-dimensional po
 A _pseudorandom function_ is a kind of hash function that takes&mdash;
 
 - a _secret_ (such as a password or a long-term key), and
-- additional data such as a _salt_ (which is unique in order to mitigate precomputation attacks) or a _nonce_,
+- additional data such as a _salt_ (which is designed to mitigate precomputation attacks) or a _nonce_,
 
 and outputs a seemingly random number.  (If the output is keying material, the function is also called a _key derivation function_; see NIST SP 800-108.)  Some pseudorandom functions deliberately take time to compute their output; these are designed above all for cases in which the secret is a password or is otherwise easy to guess &mdash; examples of such functions include PBKDF2 (RFC 2898), `scrypt` (RFC 7914), and Ethash.  Pseudorandom functions are also used in proofs of work such as the one described in RFC 8019 sec. 4.4.
 
@@ -558,6 +564,7 @@ A **programming language API** designed for reuse by applications could implemen
 
 I acknowledge&mdash;
 - the commenters to the CodeProject version of this page (as well as a similar article of mine on CodeProject), including "Cryptonite" and member 3027120,
+- Sebastiano Vigna,
 - Severin Pappadeux, and
 - Lee Daniel Crocker, who reviewed this document and gave comments.
 
@@ -576,13 +583,13 @@ I acknowledge&mdash;
 
 <small><sup id=Note6>(6)</sup> Jones, D., "Good Practice in (Pseudo) Random Number Generation for Bioinformatics Applications", 2007/2010.</small>
 
-<small><sup id=Note7>(7)</sup> P. L'Ecuyer, "Tables of Linear Congruential Generators of Different Sizes and Good Lattice Structure", _Mathematics of Computation_ 68(225), January 1999.</small>
+<small><sup id=Note7>(7)</sup> Widynski, B., "Middle Square Weyl Sequence RNG", arXiv:1704.00358 [cs.CR], 2017.</small>
 
-<small><sup id=Note8>(8)</sup> Widynski, B., "Middle Square Weyl Sequence RNG", arXiv:1704.00358 [cs.CR], 2017.</small>
+<small><sup id=Note8>(8)</sup> Blackman, D., Vigna, S. "Scrambled Linear Pseudorandom Number Generators", 2018.</small>
 
-<small><sup id=Note9>(9)</sup> S. Vigna, "[**An experimental exploration of Marsaglia's `xorshift` generators, scrambled**](http://vigna.di.unimi.it/ftp/papers/xorshift.pdf)", 2016.</small>
+<small><sup id=Note9>(9)</sup> P. L'Ecuyer, "Tables of Linear Congruential Generators of Different Sizes and Good Lattice Structure", _Mathematics of Computation_ 68(225), January 1999.</small>
 
-<small><sup id=Note10>(10)</sup> Blackman, D., Vigna, S. "Scrambled Linear Pseudorandom Number Generators", 2018.</small>
+<small><sup id=Note10>(10)</sup> S. Vigna, "[**An experimental exploration of Marsaglia's `xorshift` generators, scrambled**](http://vigna.di.unimi.it/ftp/papers/xorshift.pdf)", 2016.</small>
 
 <small><sup id=Note11>(11)</sup> However, some versions of GLSL (notably GLSL ES 1.0, as used by WebGL 1.0) might support integers with a restricted range (as low as -1024 to 1024) rather than 32-bit or bigger integers as are otherwise common, making it difficult to write hash functions for random number generation.  An application ought to choose hash functions that deliver acceptable "random" numbers regardless of the kinds of numbers supported.
 
@@ -604,7 +611,7 @@ See also N. Reed, "Quick And Easy GPU Random Numbers In D3D11", Nathan Reed's co
 
 <small><sup id=Note18>(18)</sup> For example, many questions on _Stack Overflow_ highlight the pitfalls of creating a new instance of .NET's `System.Random` each time a random number is needed, rather than only once in the application.  See also Johansen, R. S., "[**A Primer on Repeatable Random Numbers**](https://blogs.unity3d.com/2015/01/07/a-primer-on-repeatable-random-numbers/)", Unity Blog, Jan. 7, 2015.</small>
 
-<small><sup id=Note19>(19)</sup> For further discussion and an example of a PRNG combining two different PRNG designs, see Agner Fog, "[**Pseudo-Random Number Generators for Vector Processors and Multicore Processors**](http://digitalcommons.wayne.edu/jmasm/vol14/iss1/23)", _Journal of Modern Applied Statistical Methods_ 14(1), article 23 (2015).  As one example of correlation risks, PCG and other LCGs with a power-of-two modulus produce highly correlated "random" number sequences from seeds that differ only in their high bits (see S. Vigna, "The wrap-up on PCG generators").</small>
+<small><sup id=Note19>(19)</sup> For further discussion and an example of a PRNG combining two different PRNG designs, see Agner Fog, "[**Pseudo-Random Number Generators for Vector Processors and Multicore Processors**](http://digitalcommons.wayne.edu/jmasm/vol14/iss1/23)", _Journal of Modern Applied Statistical Methods_ 14(1), article 23 (2015).</small>
 
 <small><sup id=Note20>(20)</sup> P. L'Ecuyer, D. Munger, et al. "Random Numbers for Parallel Computers: Requirements and Methods, With Emphasis on GPUs". April 17, 2015, section 4, goes in greater detail on ways to initialize PRNGs for generating random numbers in parallel, including how to ensure reproducible "randomness" this way if that is desired.</small>
 
