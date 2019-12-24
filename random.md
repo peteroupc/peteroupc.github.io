@@ -302,22 +302,30 @@ Randomness extraction is discussed in NIST SP 800-90B sec. 3.1.5.1, RFC 4086 sec
 
 In general, an application ought to seed a noncryptographic PRNG's full state with either the output of a cryptographic RNG or a seed described in the [**previous section**](#Seed_Generation).
 
-Some applications require multiple processes (including threads, tasks, or subtasks) to use [**reproducible "random" numbers**](#Manually_Seeded_PRNGs) for the same purpose.  An example is multiple instances of a simulation with random starting conditions.  However, noncryptographic PRNGs tend to produce sequences that don't behave like independent random number sequences (that is, the sequences are _correlated_ to each other), which is undesirable for simulations in particular.  To reduce this correlation risk, an application can:
+Some applications require multiple processes (including threads, tasks, or subtasks) to use [**reproducible "random" numbers**](#Manually_Seeded_PRNGs) for the same purpose.  An example is multiple instances of a simulation with random starting conditions.
 
-- Choose seeds carefully.  The risk is lowest if the seeds are uncorrelated themselves. It is NOT RECOMMENDED to seed PRNGs with sequential counters, linearly related numbers, or timestamps; timestamps in particular can carry the risk of generating the same "random" number sequence accidentally.<sup>[**(18)**](#Note18)</sup>
-- Choose PRNGs carefully.  The risk is reduced by choosing a [**high-quality PRNG**](#High_Quality_RNGs_Requirements) that supports "streams" of uncorrelated sequences (sequences that behave like independent random number sequences and don't overlap) and has an efficient way to assign a different stream to each process.  Examples of such PRNGs include `sfc` and so-called "counter-based" PRNGs(Salmon et al. 2011)<sup>[**(48)**](#Note48)</sup>.  Non-examples include LCGs with a non-prime modulus and PRNGs based on them, such as PCG.
-- Use two or more different designs of PRNGs across the set of processes, to reduce correlation risks due to a particular PRNG's design.<sup>[**(19)**](#Note19)</sup>
+However, noncryptographic PRNGs tend to produce number sequences that are correlated to each other, which is undesirable for simulations in particular.  To reduce this correlation risk, the application can choose a [**high-quality PRNG**](#High_Quality_RNGs_Requirements) that supports "streams" of uncorrelated sequences (sequences that behave like independent random number sequences and don't overlap) and has an efficient way to assign a different stream to each process.  Examples of such PRNGs include `sfc` and so-called "counter-based" PRNGs (Salmon et al. 2011)<sup>[**(18)**](#Note18)</sup>.  Non-examples include LCGs with a non-prime modulus and PRNGs based on them, such as PCG.
 
-The following is a general way to seed multiple processes for random number generation. (Note that this procedure has disadvantages, such as the risk of generating seeds that lead to overlapping, correlated, or even identical number sequences, especially if each process uses the same PRNG.)  Generate a seed (or use a predetermined seed) and distribute that seed to each process as follows<sup>[**(20)**](#Note20)</sup>:
+Depending on the PRNG, there are different ways to seed multiple processes for random number generation, described as follows.<sup>[**(19)**](#Note19)</sup>
 
-1. Create a PRNG instance for each process.  The instances need not all be of the same design of PRNG; for example, some can be `jsf` and others `xoroshiro128**`.
-2. In each process, build a string consisting of three parts: `IDENT`, `UNIQUE`, and `SEED`. Example: "mysimulation-1-myseed".<sup>[**(21)**](#Note21)</sup>
+1. For counter-based PRNGs: Generate a seed (or use a predetermined seed), then:
 
-    - `IDENT` is a fixed identifier that's the same for all processes in the set.
-    - `UNIQUE` is a unique number for the PRNG instance.
-    - `SEED` is the seed distributed to each process in the set.
+    1. Create a PRNG instance for each process.
+    2. Build a string consisting of the seed and a fixed identifier (an example is "myseed-mysimulation"), generate a hash code of that string using a hash function of N or more bits, and take the first N bits of that code as the counter, where N is the counter's size in bits.
+    3. For each process, initialize its PRNG instance with the seed and the counter, then add 1 to the seed (in case of overflow, the seed is 0 instead).
 
-3. In each process, use a [**hash function**](#Hash_Functions) of N or more bits to generate a hash code of the string in step 2, and use the first N bits of that code as the seed for that PRNG instance, where N is that PRNG's state length.<sup>[**(22)**](#Note22)</sup>
+2. For PRNGs that implement "streams" by providing an efficient way to discard a fixed but huge number of PRNG outputs (that is, to "jump the PRNG ahead"): Generate a seed (or use a predetermined seed), then:
+
+    1. Create one PRNG instance and initialize it with the seed.
+    2. For each process, give that process a copy of the PRNG's current internal state, then jump the original PRNG ahead.
+
+3. For other PRNGs, or if each process uses a different PRNG design, the following is a way to seed multiple processes for random number generation, but it carries the risk of generating seeds that lead to overlapping, correlated, or even identical number sequences, especially if the processes use the same PRNG.<sup>[**(20)**](#Note20)</sup> Generate a seed (or use a predetermined seed), then:
+
+    1. Create a PRNG instance for each process.  The instances need not all be of the same design of PRNG; for example, some can be `jsf` and others `xoroshiro128**`.
+    2. In each process, build a string consisting of the seed, a unique number for each process, and a fixed identifier (an example is "myseed-1-mysimulation").<sup>[**(21)**](#Note21)
+    3. In each process, use a [**hash function**](#Hash_Functions) of N or more bits to generate a hash code of the string in the previous step, and use the first N bits of that code as the seed for that PRNG instance, where N is that PRNG's state length.<sup>[**(21)**](#Note21)</sup>
+
+It is NOT RECOMMENDED to seed PRNGs with timestamps, since they can carry the risk of generating the same "random" number sequence accidentally.<sup>[**(22)**](#Note22)</sup>
 
 <a id=Existing_RNG_APIs_in_Programming_Languages></a>
 ## Existing RNG APIs in Programming Languages
@@ -554,7 +562,7 @@ A **programming language API** designed for reuse by applications could implemen
 > **Examples:**
 >
 > 1. A C language RNG method for filling memory could look like the following: `int random(uint8_t[] bytes, size_t size);`, where `bytes` is a pointer to an array of 8-bit bytes, and `size` is the number of random 8-bit bytes to generate, and where 0 is returned if the method succeeds and nonzero otherwise.
-> 2. A Java API that follows these guidelines can contain two classes: a `RandomGen` class that implements an unspecified but general-purpose RNG, and a `RandomStable` class that implements a PCG PRNG that is documented and will not change in the future. `RandomStable` includes a constructor that takes a seed for reproducible "randomness", while `RandomGen` does not.  Both classes include methods described in point 4, but `RandomStable` specifies the exact algorithms to those methods and `RandomGen` does not.  At any time in the future, `RandomGen` can change its implementation to use a different RNG while remaining backward compatible, while `RandomStable` has to use the same algorithms for all time to remain backward compatible, especially because it takes a seed for reproducible "randomness".
+> 2. A Java API that follows these guidelines can contain two classes: a `RandomGen` class that implements an unspecified but general-purpose RNG, and a `RandomStable` class that implements an SFC PRNG that is documented and will not change in the future. `RandomStable` includes a constructor that takes a seed for reproducible "randomness", while `RandomGen` does not.  Both classes include methods described in point 4, but `RandomStable` specifies the exact algorithms to those methods and `RandomGen` does not.  At any time in the future, `RandomGen` can change its implementation to use a different RNG while remaining backward compatible, while `RandomStable` has to use the same algorithms for all time to remain backward compatible, especially because it takes a seed for reproducible "randomness".
 
 <a id=Acknowledgments></a>
 ## Acknowledgments
@@ -606,17 +614,17 @@ See also N. Reed, "Quick And Easy GPU Random Numbers In D3D11", Nathan Reed's co
 
 <small><sup id=Note17>(17)</sup> Cliff, Y., Boyd, C., Gonzalez Nieto, J.  "How to Extract and Expand Randomness: A Summary and Explanation of Existing Results", 2009.</small>
 
-<small><sup id=Note18>(18)</sup> For example, many questions on _Stack Overflow_ highlight the pitfalls of creating a new instance of .NET's `System.Random` each time a random number is needed, rather than only once in the application.  See also Johansen, R. S., "[**A Primer on Repeatable Random Numbers**](https://blogs.unity3d.com/2015/01/07/a-primer-on-repeatable-random-numbers/)", Unity Blog, Jan. 7, 2015.</small>
+<small><sup id=Note18>(18)</sup> Salmon, J.K.; Moraes, M.A.; et al., "Parallel Random Numbers: As Easy as 1, 2, 3", 2011.</small>
 
-<small><sup id=Note19>(19)</sup> For further discussion and an example of a PRNG combining two different PRNG designs, see Agner Fog, "[**Pseudo-Random Number Generators for Vector Processors and Multicore Processors**](http://digitalcommons.wayne.edu/jmasm/vol14/iss1/23)", _Journal of Modern Applied Statistical Methods_ 14(1), article 23 (2015).</small>
+<small><sup id=Note19>(19)</sup> P. L'Ecuyer, D. Munger, et al. "Random Numbers for Parallel Computers: Requirements and Methods, With Emphasis on GPUs". April 17, 2015, section 4, goes in greater detail on ways to initialize PRNGs for generating random numbers in parallel, including how to ensure reproducible "randomness" this way if that is desired.</small>
 
-<small><sup id=Note20>(20)</sup> P. L'Ecuyer, D. Munger, et al. "Random Numbers for Parallel Computers: Requirements and Methods, With Emphasis on GPUs". April 17, 2015, section 4, goes in greater detail on ways to initialize PRNGs for generating random numbers in parallel, including how to ensure reproducible "randomness" this way if that is desired.</small>
+<small><sup id=Note20>(20)</sup> Using two or more PRNG designs can reduce correlation risks due to a particular PRNG's design.  For further discussion and an example of a PRNG combining two different PRNG designs, see Agner Fog, "[**Pseudo-Random Number Generators for Vector Processors and Multicore Processors**](http://digitalcommons.wayne.edu/jmasm/vol14/iss1/23)", _Journal of Modern Applied Statistical Methods_ 14(1), article 23 (2015).</small>
 
-<small><sup id=Note21>(21)</sup> Here, `IDENT` and `UNIQUE` form a _domain separation tag_; e.g., see the work-in-progress document `draft-irtf-cfrg-hash-to-curve`, "Hashing to Elliptic Curves".</small>
-
-<small><sup id=Note22>(22)</sup> For example, SHA-256 is appropriate for PRNGs with state length 256 bits or more.  Note the following:
+<small><sup id=Note21>(21)</sup> For example, SHA-256 is appropriate for PRNGs with state length 256 bits or more.  Note the following:
 - In general, hash functions carry the risk that two processes will end up with the same PRNG seed (a _collision risk_), but this risk decreases as PRNG state length increases (see "[**Birthday problem**](https://en.wikipedia.org/wiki/Birthday_problem)").
 - M. O'Neill (in "Developing a seed_seq Alternative", Apr. 30, 2015) developed hash functions (`seed_seq_fe`) that are designed to avoid collisions if possible, and otherwise to reduce collision bias.   For example, if the PRNG's state length is 128 bits, an application can use `seed_seq_fe128` to hash sequentially assigned 128-bit seeds in each process without worrying about collisions.</small>
+
+<small><sup id=Note22>(22)</sup> For example, many questions on _Stack Overflow_ highlight the pitfalls of creating a new instance of .NET's `System.Random` each time a random number is needed, rather than only once in the application.  See also Johansen, R. S., "[**A Primer on Repeatable Random Numbers**](https://blogs.unity3d.com/2015/01/07/a-primer-on-repeatable-random-numbers/)", Unity Blog, Jan. 7, 2015.</small>
 
 <small><sup id=Note23>(23)</sup> Using the similar `/dev/random` is NOT RECOMMENDED, since in some implementations it can block for seconds at a time, especially if not enough randomness is available.  See also [**"Myths about /dev/urandom"**](https://www.2uo.de/myths-about-urandom).</small>
 
@@ -680,8 +688,6 @@ See also N. Reed, "Quick And Easy GPU Random Numbers In D3D11", Nathan Reed's co
 <small><sup id=Note46>(46)</sup> Claessen, K., Palma, M. "Splittable Pseudorandom Number Generators using Cryptographic Hashing", _Proceedings of Haskell Symposium 2013_, pp. 47-58.</small>
 
 <small><sup id=Note47>(47)</sup> Allowing applications to do so would hamper forward compatibility &mdash; the API would then be less free to change how the RNG is implemented in the future (e.g., to use a cryptographic or otherwise "better" RNG), or to make improvements or bug fixes in methods that use that RNG (such as shuffling and Gaussian number generation).  (As a notable example, the V8 JavaScript engine recently changed its `Math.random()` implementation to use a variant of `xorshift128+`, which is backward compatible because nothing in JavaScript allows  `Math.random()` to be seeded.)  Nevertheless, APIs can still allow applications to provide additional input ("entropy") to the RNG in order to increase its randomness rather than to ensure repeatability.</small>
-
-<small><sup id=Note48>(48)</sup> Salmon, J.K.; Moraes, M.A.; et al., "Parallel Random Numbers: As Easy as 1, 2, 3", 2011.</small>
 
 <a id=Appendix></a>
 ## Appendix
