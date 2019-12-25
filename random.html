@@ -607,7 +607,7 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 <li>if a noncryptographic RNG is otherwise appropriate, using a <em>high-quality PRNG</em> that&mdash;
 
 <ul>
-<li>has a state length of <code>B</code> bits or greater, and</li>
+<li>admits <code>B</code>-bits seeds without shortening or compressing those seeds, and</li>
 <li>is initialized with a seed derived from data with at least <strong><code>B</code> bits of</strong> <a href="#Nondeterministic_Sources_and_Seed_Generation"><strong><em>entropy</em></strong></a>, or &quot;randomness&quot;.</li>
 </ul></li>
 </ol>
@@ -909,12 +909,7 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 
 <p><small><sup id=Note22>(22)</sup> Here, the unique number and fixed identifier together serve as a <em>domain separation tag</em> (see, e.g., the work-in-progress document &quot;draft-irtf-cfrg-hash-to-curve&quot;).</small></p>
 
-<p><small><sup id=Note23>(23)</sup> For example, SHA-256 is appropriate for PRNGs with state length 256 bits or more.  Note the following:</p>
-
-<ul>
-<li>In general, hash functions carry the risk that two processes will end up with the same PRNG seed (a <em>collision risk</em>), but this risk decreases as PRNG state length increases (see &quot;<a href="https://en.wikipedia.org/wiki/Birthday_problem"><strong>Birthday problem</strong></a>&quot;).</li>
-<li>M. O&#39;Neill (in &quot;Developing a seed_seq Alternative&quot;, Apr. 30, 2015) developed hash functions (<code>seed_seq_fe</code>) that are designed to avoid collisions if possible, and otherwise to reduce collision bias.   For example, if the PRNG&#39;s state length is 128 bits, an application can use <code>seed_seq_fe128</code> to hash sequentially assigned 128-bit seeds in each process without worrying about collisions.</small></li>
-</ul>
+<p><small><sup id=Note23>(23)</sup> Note that in general, hash functions carry the risk that two processes will end up with the same PRNG seed (a <em>collision risk</em>; see &quot;<a href="https://en.wikipedia.org/wiki/Birthday_problem"><strong>Birthday problem</strong></a>&quot;).  M. O&#39;Neill (in &quot;Developing a seed_seq Alternative&quot;, Apr. 30, 2015) developed hash functions (<code>seed_seq_fe</code>) that are designed to avoid collisions if possible, and otherwise to reduce collision bias.   For example, if the PRNG admits up to 128-bit seeds, an application can use <code>seed_seq_fe128</code> to hash sequentially assigned 128-bit seeds in each process without worrying about collisions.</small></p>
 
 <p><small><sup id=Note24>(24)</sup> Using the similar <code>/dev/random</code> is NOT RECOMMENDED, since in some implementations it can block for seconds at a time, especially if not enough randomness is available.  See also <a href="https://www.2uo.de/myths-about-urandom"><strong>&quot;Myths about /dev/urandom&quot;</strong></a>.</small></p>
 
@@ -1021,19 +1016,18 @@ def ceillog2(x):
     return ret
 
 def stateLengthN(n):
-  &quot;&quot;&quot; Suggested state length (or bits of entropy)
-     for PRNGs that shuffle
+  &quot;&quot;&quot; Suggested bits of entropy for PRNGs that shuffle
     a list of n items. &quot;&quot;&quot;
   return ceillog2(fac(n))
 
 def stateLengthNChooseK(n, k):
-  &quot;&quot;&quot; Suggested state length/entropy for PRNGs that choose k
+  &quot;&quot;&quot; Suggested bits of entropy for PRNGs that choose k
    different items randomly from a list of n items
    (see RFC 3797, sec. 3.3) &quot;&quot;&quot;
   return ceillog2(fac(n)/(fac(k)*fac(n-k)))
 
 def stateLengthDecks(numDecks, numCards):
-  &quot;&quot;&quot; Suggested state length/entropy for PRNGs that shuffle
+  &quot;&quot;&quot; Suggested bits of entropy for PRNGs that shuffle
     multiple decks of cards in one. &quot;&quot;&quot;
   return ceillog2(fac(numDecks*numCards)/ \
       (fac(numDecks)**numCards))
