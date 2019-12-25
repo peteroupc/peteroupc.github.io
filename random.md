@@ -91,7 +91,6 @@ The following definitions are helpful in better understanding this document.
 - **Random number generator (RNG).** Software and/or hardware that seeks to generate numbers with the property that each possible outcome is as likely as any other without influence by anything else<sup>[**(4)**](#Note4)</sup>.
 - **Pseudorandom number generator (PRNG).** A random number generator in which the numbers it generates are completely determined by its input.
 - **Seed.**  Arbitrary data serving as a PRNG's input.
-- **State length.**  The maximum size of the seed a PRNG can take as its input without shortening or compressing that seed.
 - **Information security.** Keeping information safe from attacks that could access, use, delay, or manipulate that information.<sup>[**(5)**](#Note5)</sup>
 - **SHOULD, SHOULD NOT, MAY, RECOMMENDED, NOT RECOMMENDED.**  These terms have the meanings given in RFC 2119 and RFC 8174.
 
@@ -149,16 +148,16 @@ Besides cryptographic RNGs, the following are examples of [**high-quality PRNGs*
 
 - `JKISS`, `JKISS32`, `JLKISS`, `JLKISS64`, described in (Jones 2007/2010)<sup>[**(6)**](#Note6)</sup>.
 - B. Jenkins's "A small noncryptographic PRNG" (sometimes called `jsf`).
-- C. Doty-Humphrey's SFC64 (state length 192 bits, 64-bit counter).
+- C. Doty-Humphrey's SFC64 (max. seed size 192 bits, 64-bit counter).
 - D. Blackman's `gjrand`.
 
 The following also count as high-quality PRNGs, but they require nonzero seeds, complicating the task of seeding them:
 
-- [**xoshiro256&#x2a;&#x2a;**](http://xoshiro.di.unimi.it/xoshiro256starstar.c) (state length 256 bits).
-- [**xoroshiro128&#x2a;&#x2a;**](http://xoshiro.di.unimi.it/xoroshiro128starstar.c) (state length 128 bits).
-- XorShift\* 128/64 (state length 128 bits).
-- XorShift\* 64/32 (state length 64 bits).
-- `xorshift128+` and `xoshiro256+` (state length 128 and 256 bits, respectively), where each output's lowest 16 bits are discarded.  (As described by (Blackman and Vigna 2018)<sup>[**(7)**](#Note7)</sup>, these PRNGs use weak scramblers, so that each full output's lowest bits have low linear complexity even though the output as a whole has excellent statistical randomness.  See also [**"Testing lowest bits in isolation"**](http://xoshiro.di.unimi.it/lowcomp.php).)
+- [**xoshiro256&#x2a;&#x2a;**](http://xoshiro.di.unimi.it/xoshiro256starstar.c) (max. seed size 256 bits).
+- [**xoroshiro128&#x2a;&#x2a;**](http://xoshiro.di.unimi.it/xoroshiro128starstar.c) (max. seed size 128 bits).
+- XorShift\* 128/64 (max. seed size 128 bits).
+- XorShift\* 64/32 (max. seed size 64 bits).
+- `xorshift128+` and `xoshiro256+` (max. seed size 128 and 256 bits, respectively), where each output's lowest 16 bits are discarded.  (As described by (Blackman and Vigna 2018)<sup>[**(7)**](#Note7)</sup>, these PRNGs use weak scramblers, so that each full output's lowest bits have low linear complexity even though the output as a whole has excellent statistical randomness.  See also [**"Testing lowest bits in isolation"**](http://xoshiro.di.unimi.it/lowcomp.php).)
 - A multiplicative [**linear congruential generator**](https://en.wikipedia.org/wiki/Linear_congruential_generator) with modulus greater than 2<sup>63</sup> described in Table 2 of (L'Ecuyer 1999)<sup>[**(8)**](#Note8)</sup>.
 
 A high-quality PRNG that is any of the following is not preferred:
@@ -166,12 +165,12 @@ A high-quality PRNG that is any of the following is not preferred:
 - Mersenne Twister shows a [**systematic failure**](http://xoroshiro.di.unimi.it/#quality) in `BigCrush`'s LinearComp test (part of L'Ecuyer and Simard's "TestU01"). (See also (Vigna 2016)<sup>[**(9)**](#Note9)</sup>.)
 - LCGs with a power-of-two modulus (as well as PRNGs based on them, such as Melissa O'Neill's PCG) produce highly correlated "random" number sequences from seeds that differ only in their high bits (see S. Vigna, "[**The wrap-up on PCG generators**](http://pcg.di.unimi.it/pcg.php)").
 - LCGs with a non-prime modulus and PRNGs based on them.
-- C++'s [**`std::ranlux48` engine**](http://www.cplusplus.com/reference/random/ranlux48/) (state length 577 bits; nonzero seed) can be slower than alternatives because it discards many "random" numbers before outputting another.
+- C++'s [**`std::ranlux48` engine**](http://www.cplusplus.com/reference/random/ranlux48/) (max. seed size 577 bits; nonzero seed) can be slower than alternatives because it discards many "random" numbers before outputting another.
 
 The following are not considered high-quality PRNGs:
-- Any LCG with modulus 2<sup>63</sup> or less (such as `java.util.Random` and C++'s `std::minstd_rand` and `std::minstd_rand0` engines) has a _state length_ of less than 64 bits.
-- `System.Random`, as implemented in the .NET Framework 4.7, can take a seed of at most 32 bits, so has a state length of at most 32 bits.
-- `msws` (Widynski 2017)<sup>[**(10)**](#Note10)</sup> allows only about 2<sup>54.1</sup> valid seeds, which means it has a state length of at most 55 bits.
+- Any LCG with modulus 2<sup>63</sup> or less (such as `java.util.Random` and C++'s `std::minstd_rand` and `std::minstd_rand0` engines) admits fewer than 2<sup>63</sup> seeds.
+- `System.Random`, as implemented in the .NET Framework 4.7, can take a seed of at most 32 bits, so it admits fewer than 2<sup>63</sup> seeds.
+- `msws` (Widynski 2017)<sup>[**(10)**](#Note10)</sup> allows only about 2<sup>54.1</sup> valid seeds.
 - Sequential counters.
 
 <a id=Manually_Seeded_PRNGs></a>
@@ -315,19 +314,19 @@ Depending on the PRNG, there are different ways to seed multiple processes for r
 1. For counter-based PRNGs: Generate a seed (or use a predetermined seed), then:
 
     1. Create a PRNG instance for each process.
-    2. Hash the seed and a fixed identifier to generate a C-bit counter (C is the counter's size in bits).  Hash the seed and another fixed identifier to generate a new N-bit seed (N is the PRNG's state length).
+    2. Hash the seed and a fixed identifier to generate a C-bit counter (C is the counter's size in bits).  Hash the seed and another fixed identifier to generate a new N-bit seed (N is the PRNG's maximum seed size).
     3. For each process, initialize its PRNG instance with the new seed and the counter, then add 1 to the new seed (in case of overflow, the new seed is 0 instead).
 
 2. For PRNGs that implement "streams" by providing an efficient way to discard a fixed but huge number of PRNG outputs (that is, to "jump the PRNG ahead"): Generate a seed (or use a predetermined seed), then:
 
     1. Create one PRNG instance.
-    2. Hash the seed and a fixed identifier to generate a new N-bit seed (N is the PRNG's state length), and initialize the PRNG with that seed.
+    2. Hash the seed and a fixed identifier to generate a new N-bit seed (N is the PRNG's maximum seed size), and initialize the PRNG with that seed.
     3. For each process, give that process a copy of the PRNG's current internal state, then jump the original PRNG ahead.
 
 3. For other PRNGs, or if each process uses a different PRNG design, the following is a way to seed multiple processes for random number generation, but it carries the risk of generating seeds that lead to overlapping, correlated, or even identical number sequences, especially if the processes use the same PRNG.<sup>[**(21)**](#Note21)</sup> Generate a seed (or use a predetermined seed), then:
 
     1. Create a PRNG instance for each process.  The instances need not all be of the same design of PRNG; for example, some can be `jsf` and others `xoroshiro128**`.
-    2. In each process, hash the seed, a unique number for that process, and a fixed identifier to generate a new N-bit seed (N is the PRNG's state length), and initialize the process's PRNG with that seed.
+    2. In each process, hash the seed, a unique number for that process, and a fixed identifier to generate a new N-bit seed (N is the PRNG's maximum seed size), and initialize the process's PRNG with that seed.
 
 The steps above include hashing several things to generate an N-bit value.  This has to be done with either a [**hash function**](#Hash_Functions) of N or more bits, or a so-called "seed sequence generator" like C++'s `std::seed_seq`.<sup>[**(22)**](#Note22)</sup><sup>[**(23)**](#Note23)</sup>
 
@@ -402,7 +401,7 @@ An application that shuffles a list can do the shuffling&mdash;
 
 1. using a cryptographic RNG, preferably one with a security strength of `B` bits or greater, or
 2. if a noncryptographic RNG is otherwise appropriate, using a _high-quality PRNG_ that&mdash;
-    - admits `B`-bits seeds without shortening or compressing those seeds, and
+    - admits `B`-bit seeds without shortening or compressing those seeds, and
     - is initialized with a seed derived from data with at least **`B` bits of** [**_entropy_**](#Nondeterministic_Sources_and_Seed_Generation), or "randomness".
 
 For shuffling purposes, `B` can usually be calculated for different lists using the Python code in the [**appendix**](#Suggested_Entropy_Size); see also (van Staveren 2000, "Lack of randomness")<sup>[**(31)**](#Note31)</sup>.  For example, `B` is 226 (bits) for a 52-item list.  For shuffling purposes, an application MAY limit `B` to 256 or greater, in cases when variety of permutations is not important.
@@ -419,7 +418,7 @@ Some applications require generating unique identifiers, especially to identify 
 5. Is the resource an identifier identifies available to anyone who knows that identifier (even without being logged in or authorized in some way)?
 6. Do identifiers have to be memorable?
 
-Examples of unique integers include sequentially-assigned integers as well as the primary key of a database table.  If the application requires a unique integer to "look random", it can apply a one-to-one operation to that integer (such as a permutation)<sup>[**(35)**](#Note35)</sup>, or take that integer as the seed of a so-called "full-period" PRNG that outputs integers with as many bits as its state length<sup>[**(36)**](#Note36)</sup>.
+Examples of unique integers include sequentially-assigned integers as well as the primary key of a database table.  If the application requires a unique integer to "look random", it can apply a one-to-one operation to that integer (such as a permutation)<sup>[**(35)**](#Note35)</sup>, or take that integer as the seed of a so-called "full-period" PRNG that outputs integers with as many bits as the size of seeds the PRNG admits<sup>[**(36)**](#Note36)</sup>.
 
 An application that generates unique identifiers SHOULD do so as follows:
 
@@ -508,12 +507,11 @@ A cryptographic RNG generates random bits that behave like independent uniform r
 
 If a cryptographic RNG implementation uses a PRNG, the following requirements apply.
 
-1. The PRNG's _state length_ is at least 128 bits and SHOULD be at least 256 bits.
+1. The PRNG admits any 128-bit or longer seed, and SHOULD admit any 256-bit or longer seed.
 
-2. The _security strength_ used by the RNG is at least 128 bits and is not more than the PRNG's _state length_.
+2. The _security strength_ used by the RNG is at least 128 bits and is not more than the maximum size of seeds the PRNG admits.
 
 3. While or after the PRNG is created, and before it generates a random number, it is initialized ("seeded") with a seed that&mdash;
-    - has as many bits as the PRNG's _state length_,
     - consists of data that ultimately derives from the output of one or more [**nondeterministic sources**](#Nondeterministic_Sources_and_Seed_Generation), where the output is at least as hard to guess as ideal random data with as many bits as the _security strength_, and
     - MAY be mixed with arbitrary data other than the seed as long as the result is no easier to guess<sup>[**(44)**](#Note44)</sup>.
 
@@ -531,10 +529,13 @@ A cryptographic RNG is not required to reseed itself.
 
 A PRNG is a high-quality RNG if&mdash;
 - it generates bits that behave like independent uniform random bits (at least for nearly all practical purposes outside of information security),
-- its state length is at least 64 bits, and
-- it either satisfies the _collision resistance_ property or has a period (maximum size of a "random" number cycle) at or close to 2<sup>N</sup>, where N is its state length.
+- it admits any of 2<sup>63</sup> or more different seeds without shortening or compressing those seeds, and
+- it either&mdash;
+    - satisfies the _collision resistance_ property,
+    - has a period (maximum size of a "random" number cycle) at or close to the number of different seeds the PRNG admits, or
+    - provides multiple sequences that are different for each seed, have at least 2<sup>64</sup> numbers each, do not overlap, and behave like independent random number sequences.
 
-The high-quality PRNG's state length SHOULD be at least 128 bits.
+The high-quality PRNG SHOULD admit any of 2<sup>127</sup> or more seeds.
 
 Every cryptographic RNG is also a high-quality RNG.
 
@@ -634,7 +635,7 @@ See also N. Reed, "Quick And Easy GPU Random Numbers In D3D11", Nathan Reed's co
 
 <small><sup id=Note22>(22)</sup> Here, the unique number and fixed identifier together serve as a _domain separation tag_ (see, e.g., the work-in-progress document "draft-irtf-cfrg-hash-to-curve").</small>
 
-<small><sup id=Note23>(23)</sup> Note that in general, hash functions carry the risk that two processes will end up with the same PRNG seed (a _collision risk_; see "[**Birthday problem**](https://en.wikipedia.org/wiki/Birthday_problem)").  M. O'Neill (in "Developing a seed_seq Alternative", Apr. 30, 2015) developed hash functions (`seed_seq_fe`) that are designed to avoid collisions if possible, and otherwise to reduce collision bias.   For example, if the PRNG admits up to 128-bit seeds, an application can use `seed_seq_fe128` to hash sequentially assigned 128-bit seeds in each process without worrying about collisions.</small>
+<small><sup id=Note23>(23)</sup> Note that in general, hash functions carry the risk that two processes will end up with the same PRNG seed, but this risk decreases the more seeds the PRNG admits (a _collision risk_; see "[**Birthday problem**](https://en.wikipedia.org/wiki/Birthday_problem)").  M. O'Neill (in "Developing a seed_seq Alternative", Apr. 30, 2015) developed hash functions (`seed_seq_fe`) that are designed to avoid collisions if possible, and otherwise to reduce collision bias.   For example, if the PRNG admits up to 128-bit seeds, an application can use `seed_seq_fe128` to hash sequentially assigned 128-bit seeds in each process without worrying about collisions.</small>
 
 <small><sup id=Note24>(24)</sup> Using the similar `/dev/random` is NOT RECOMMENDED, since in some implementations it can block for seconds at a time, especially if not enough randomness is available.  See also [**"Myths about /dev/urandom"**](https://www.2uo.de/myths-about-urandom).</small>
 
