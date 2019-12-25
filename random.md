@@ -146,10 +146,9 @@ Noncryptographic PRNGs can be _automatically seeded_ (a new seed is generated up
 
 Besides cryptographic RNGs, the following are examples of [**high-quality PRNGs**](#High_Quality_PRNGs_Requirements):
 
-- `JKISS`, `JKISS32`, `JLKISS`, `JLKISS64`, described in (Jones 2007/2010)<sup>[**(6)**](#Note6)</sup>.
-- B. Jenkins's "A small noncryptographic PRNG" (sometimes called `jsf`).
+- The 64-bit version of B. Jenkins's "A small noncryptographic PRNG" (sometimes called JSF64) (max. seed size 64 bits).
 - C. Doty-Humphrey's SFC64 (max. seed size 192 bits, 64-bit counter).
-- D. Blackman's `gjrand`.
+- D. Blackman's `gjrand` (max. seed size 128 bits).
 
 The following also count as high-quality PRNGs, but they require nonzero seeds, complicating the task of seeding them:
 
@@ -157,7 +156,8 @@ The following also count as high-quality PRNGs, but they require nonzero seeds, 
 - [**xoroshiro128&#x2a;&#x2a;**](http://xoshiro.di.unimi.it/xoroshiro128starstar.c) (max. seed size 128 bits).
 - XorShift\* 128/64 (max. seed size 128 bits).
 - XorShift\* 64/32 (max. seed size 64 bits).
-- `xorshift128+` and `xoshiro256+` (max. seed size 128 and 256 bits, respectively), where each output's lowest 16 bits are discarded.  (As described by (Blackman and Vigna 2018)<sup>[**(7)**](#Note7)</sup>, these PRNGs use weak scramblers, so that each full output's lowest bits have low linear complexity even though the output as a whole has excellent statistical randomness.  See also [**"Testing lowest bits in isolation"**](http://xoshiro.di.unimi.it/lowcomp.php).)
+- `xorshift128+` and `xoshiro256+` (max. seed size 128 and 256 bits, respectively), where each output's lowest 16 bits are discarded.  (As described by (Blackman and Vigna 2018)<sup>[**(6)**](#Note6)</sup>, these PRNGs use weak scramblers, so that each full output's lowest bits have low linear complexity even though the output as a whole has excellent statistical randomness.  See also [**"Testing lowest bits in isolation"**](http://xoshiro.di.unimi.it/lowcomp.php).)
+- `JLKISS64` (max. seed size 256 bits), described in (Jones 2007/2010)<sup>[**(7)**](#Note7)</sup>.  Each 32-bit chunk of the seed is nonzero.
 - A multiplicative [**linear congruential generator**](https://en.wikipedia.org/wiki/Linear_congruential_generator) with modulus greater than 2<sup>63</sup> described in Table 2 of (L'Ecuyer 1999)<sup>[**(8)**](#Note8)</sup>.
 
 A high-quality PRNG that is any of the following is not preferred:
@@ -325,7 +325,7 @@ Depending on the PRNG, there are different ways to seed multiple processes for r
 
 3. For other PRNGs, or if each process uses a different PRNG design, the following is a way to seed multiple processes for random number generation, but it carries the risk of generating seeds that lead to overlapping, correlated, or even identical number sequences, especially if the processes use the same PRNG.<sup>[**(21)**](#Note21)</sup> Generate a seed (or use a predetermined seed), then:
 
-    1. Create a PRNG instance for each process.  The instances need not all be of the same design of PRNG; for example, some can be `jsf` and others `xoroshiro128**`.
+    1. Create a PRNG instance for each process.  The instances need not all be of the same design of PRNG; for example, some can be JSF64 and others `xoroshiro128**`.
     2. In each process, hash the seed, a unique number for that process, and a fixed identifier to generate a new N-bit seed (N is the PRNG's maximum seed size), and initialize the process's PRNG with that seed.
 
 The steps above include hashing several things to generate an N-bit value.  This has to be done with either a [**hash function**](#Hash_Functions) of N or more bits, or a so-called "seed sequence generator" like C++'s `std::seed_seq`.<sup>[**(22)**](#Note22)</sup><sup>[**(23)**](#Note23)</sup>
@@ -507,7 +507,7 @@ A cryptographic RNG generates random bits that behave like independent uniform r
 
 If a cryptographic RNG implementation uses a PRNG, the following requirements apply.
 
-1. The PRNG admits any 128-bit or longer seed, and SHOULD admit any 256-bit or longer seed.
+1. The PRNG admits any 128-bit or longer seed. It SHOULD admit any 256-bit or longer seed.
 
 2. The _security strength_ used by the RNG is at least 128 bits and is not more than the maximum size of seeds the PRNG admits.
 
@@ -533,7 +533,7 @@ A PRNG is a high-quality RNG if&mdash;
 - it either&mdash;
     - satisfies the _collision resistance_ property,
     - has a period (maximum size of a "random" number cycle) at or close to the number of different seeds the PRNG admits, or
-    - provides multiple sequences that are different for each seed, have at least 2<sup>64</sup> numbers each, do not overlap, and behave like independent random number sequences.
+    - provides multiple sequences that are different for each seed, have at least 2<sup>64</sup> numbers each, do not overlap, and behave like independent random number sequences (at least for nearly all practical purposes outside of information security).
 
 The high-quality PRNG SHOULD admit any of 2<sup>127</sup> or more seeds.
 
@@ -597,9 +597,9 @@ I acknowledge&mdash;
 
 <small><sup id=Note5>(5)</sup> See also the FIPS 200 definition ("The protection of information and information systems from unauthorized access, use, disclosure, disruption, modification, or destruction in order to provide confidentiality, integrity, and availability") and ISO/IEC 27000.</small>
 
-<small><sup id=Note6>(6)</sup> Jones, D., "Good Practice in (Pseudo) Random Number Generation for Bioinformatics Applications", 2007/2010.</small>
+<small><sup id=Note6>(6)</sup> Blackman, D., Vigna, S. "Scrambled Linear Pseudorandom Number Generators", 2018.</small>
 
-<small><sup id=Note7>(7)</sup> Blackman, D., Vigna, S. "Scrambled Linear Pseudorandom Number Generators", 2018.</small>
+<small><sup id=Note7>(7)</sup> Jones, D., "Good Practice in (Pseudo) Random Number Generation for Bioinformatics Applications", 2007/2010.</small>
 
 <small><sup id=Note8>(8)</sup> P. L'Ecuyer, "Tables of Linear Congruential Generators of Different Sizes and Good Lattice Structure", _Mathematics of Computation_ 68(225), January 1999.</small>
 
