@@ -158,7 +158,7 @@ The following also count as high-quality PRNGs, but they require nonzero seeds, 
 - XorShift\* 64/32 (max. seed size 64 bits).
 - `xorshift128+` and `xoshiro256+` (max. seed size 128 and 256 bits, respectively), where each output's lowest 16 bits are discarded.  (As described by (Blackman and Vigna 2018)<sup>[**(6)**](#Note6)</sup>, these PRNGs use weak scramblers, so that each full output's lowest bits have low linear complexity even though the output as a whole has excellent statistical randomness.  See also [**"Testing lowest bits in isolation"**](http://xoshiro.di.unimi.it/lowcomp.php).)
 - `JLKISS64` (max. seed size 256 bits), described in (Jones 2007/2010)<sup>[**(7)**](#Note7)</sup>.  Each 32-bit chunk of the seed is nonzero.
-- A multiplicative [**linear congruential generator**](https://en.wikipedia.org/wiki/Linear_congruential_generator) with modulus greater than 2<sup>63</sup> described in Table 2 of (L'Ecuyer 1999)<sup>[**(8)**](#Note8)</sup>.
+- A multiplicative [**linear congruential generator**](https://en.wikipedia.org/wiki/Linear_congruential_generator) (LCG) with modulus greater than 2<sup>63</sup> described in Table 2 of (L'Ecuyer 1999)<sup>[**(8)**](#Note8)</sup>.
 
 A high-quality PRNG that is any of the following is not preferred:
 
@@ -168,8 +168,9 @@ A high-quality PRNG that is any of the following is not preferred:
 - C++'s [**`std::ranlux48` engine**](http://www.cplusplus.com/reference/random/ranlux48/) (max. seed size 577 bits; nonzero seed) can be slower than alternatives because it discards many "random" numbers before outputting another.
 
 The following are not considered high-quality PRNGs:
-- Any LCG with modulus 2<sup>63</sup> or less (such as `java.util.Random` and C++'s `std::minstd_rand` and `std::minstd_rand0` engines) admits fewer than 2<sup>63</sup> seeds.
+- Any LCG with modulus less than 2<sup>63</sup> (such as `java.util.Random` and C++'s `std::minstd_rand` and `std::minstd_rand0` engines) admits fewer than 2<sup>63</sup> seeds.
 - `System.Random`, as implemented in the .NET Framework 4.7, can take a seed of at most 32 bits, so it admits fewer than 2<sup>63</sup> seeds.
+- B. Jenkins's JSF32 allows only about 2<sup>32</sup> valid seeds.
 - `msws` (Widynski 2017)<sup>[**(10)**](#Note10)</sup> allows only about 2<sup>54.1</sup> valid seeds.
 - Sequential counters.
 
@@ -531,7 +532,6 @@ A PRNG is a high-quality RNG if&mdash;
 - it generates bits that behave like independent uniform random bits (at least for nearly all practical purposes outside of information security),
 - it admits any of 2<sup>63</sup> or more different seeds without shortening or compressing those seeds, and
 - it either&mdash;
-    - satisfies the _collision resistance_ property,
     - has a period (maximum size of a "random" number cycle) at or close to the number of different seeds the PRNG admits, or
     - provides multiple sequences that are different for each seed, have at least 2<sup>64</sup> numbers each, do not overlap, and behave like independent random number sequences (at least for nearly all practical purposes outside of information security).
 
