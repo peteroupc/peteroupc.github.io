@@ -91,7 +91,7 @@ The following definitions are helpful in better understanding this document.
 - **Random number generator (RNG).** Software and/or hardware that seeks to generate numbers with the property that each possible outcome is as likely as any other without influence by anything else<sup>[**(4)**](#Note4)</sup>.
 - **Pseudorandom number generator (PRNG).** A random number generator in which the numbers it generates are completely determined by its input.
 - **Seed.**  Arbitrary data serving as a PRNG's input.
-- **State length.**  The minimum size of the seed a PRNG can take as its input without shortening or compressing that seed.
+- **State length.**  The maximum size of the seed a PRNG can take as its input without shortening or compressing that seed.
 - **Information security.** Keeping information safe from attacks that could access, use, delay, or manipulate that information.<sup>[**(5)**](#Note5)</sup>
 - **SHOULD, SHOULD NOT, MAY, RECOMMENDED, NOT RECOMMENDED.**  These terms have the meanings given in RFC 2119 and RFC 8174.
 
@@ -149,8 +149,7 @@ Besides cryptographic RNGs, the following are examples of [**high-quality PRNGs*
 
 - `JKISS`, `JKISS32`, `JLKISS`, `JLKISS64`, described in (Jones 2007/2010)<sup>[**(6)**](#Note6)</sup>.
 - B. Jenkins's "A small noncryptographic PRNG" (sometimes called `jsf`).
-- C. Doty-Humphrey's `sfc`.
-- `msws` (Widynski 2017)<sup>[**(7)**](#Note7)</sup>.
+- C. Doty-Humphrey's SFC64 (state length 192 bits, 64-bit counter).
 - D. Blackman's `gjrand`.
 
 The following also count as high-quality PRNGs, but they require nonzero seeds, complicating the task of seeding them:
@@ -159,12 +158,12 @@ The following also count as high-quality PRNGs, but they require nonzero seeds, 
 - [**xoroshiro128&#x2a;&#x2a;**](http://xoshiro.di.unimi.it/xoroshiro128starstar.c) (state length 128 bits).
 - XorShift\* 128/64 (state length 128 bits).
 - XorShift\* 64/32 (state length 64 bits).
-- `xorshift128+` and `xoshiro256+` (state length 128 and 256 bits, respectively), where each output's lowest 16 bits are discarded.  (As described by (Blackman and Vigna 2018)<sup>[**(8)**](#Note8)</sup>, these PRNGs use weak scramblers, so that each full output's lowest bits have low linear complexity even though the output as a whole has excellent statistical randomness.  See also [**"Testing lowest bits in isolation"**](http://xoshiro.di.unimi.it/lowcomp.php).)
-- A multiplicative LCG with modulus greater than 2<sup>63</sup> described in Table 2 of (L'Ecuyer 1999)<sup>[**(9)**](#Note9)</sup>.
+- `xorshift128+` and `xoshiro256+` (state length 128 and 256 bits, respectively), where each output's lowest 16 bits are discarded.  (As described by (Blackman and Vigna 2018)<sup>[**(7)**](#Note7)</sup>, these PRNGs use weak scramblers, so that each full output's lowest bits have low linear complexity even though the output as a whole has excellent statistical randomness.  See also [**"Testing lowest bits in isolation"**](http://xoshiro.di.unimi.it/lowcomp.php).)
+- A multiplicative [**linear congruential generator**](https://en.wikipedia.org/wiki/Linear_congruential_generator) with modulus greater than 2<sup>63</sup> described in Table 2 of (L'Ecuyer 1999)<sup>[**(8)**](#Note8)</sup>.
 
 A high-quality PRNG that is any of the following is not preferred:
 
-- Mersenne Twister shows a [**systematic failure**](http://xoroshiro.di.unimi.it/#quality) in `BigCrush`'s LinearComp test (part of L'Ecuyer and Simard's "TestU01"). (See also (Vigna 2016)<sup>[**(10)**](#Note10)</sup>.)
+- Mersenne Twister shows a [**systematic failure**](http://xoroshiro.di.unimi.it/#quality) in `BigCrush`'s LinearComp test (part of L'Ecuyer and Simard's "TestU01"). (See also (Vigna 2016)<sup>[**(9)**](#Note9)</sup>.)
 - LCGs with a power-of-two modulus (as well as PRNGs based on them, such as Melissa O'Neill's PCG) produce highly correlated "random" number sequences from seeds that differ only in their high bits (see S. Vigna, "[**The wrap-up on PCG generators**](http://pcg.di.unimi.it/pcg.php)").
 - LCGs with a non-prime modulus and PRNGs based on them.
 - C++'s [**`std::ranlux48` engine**](http://www.cplusplus.com/reference/random/ranlux48/) (state length 577 bits; nonzero seed) can be slower than alternatives because it discards many "random" numbers before outputting another.
@@ -172,6 +171,7 @@ A high-quality PRNG that is any of the following is not preferred:
 The following are not considered high-quality PRNGs:
 - Any LCG with modulus 2<sup>63</sup> or less (such as `java.util.Random` and C++'s `std::minstd_rand` and `std::minstd_rand0` engines) has a _state length_ of less than 64 bits.
 - `System.Random`, as implemented in the .NET Framework 4.7, can take a seed of at most 32 bits, so has a state length of at most 32 bits.
+- `msws` (Widynski 2017)<sup>[**(10)**](#Note10)</sup> allows only about 2<sup>54.1</sup> valid seeds, which means it has a state length of at most 55 bits.
 - Sequential counters.
 
 <a id=Manually_Seeded_PRNGs></a>
@@ -308,7 +308,7 @@ It is NOT RECOMMENDED to seed PRNGs with timestamps, since they can carry the ri
 
 Some applications require multiple processes (including threads, tasks, or subtasks) to use [**reproducible "random" numbers**](#Manually_Seeded_PRNGs) for the same purpose.  An example is multiple instances of a simulation with random starting conditions.  However, noncryptographic PRNGs tend to produce number sequences that are correlated to each other, which is undesirable for simulations in particular.
 
-To reduce this correlation risk, the application can choose a [**high-quality PRNG**](#High_Quality_RNGs_Requirements) that supports "streams" of uncorrelated sequences (sequences that behave like independent random number sequences and don't overlap) and has an efficient way to assign a different stream to each process.  Examples of such PRNGs include `sfc` and so-called "counter-based" PRNGs (Salmon et al. 2011)<sup>[**(19)**](#Note19)</sup>.  Non-examples include LCGs with a non-prime modulus and PRNGs based on them, such as PCG.
+To reduce this correlation risk, the application can choose a [**high-quality PRNG**](#High_Quality_RNGs_Requirements) that supports "streams" of uncorrelated sequences (sequences that behave like independent random number sequences and don't overlap) and has an efficient way to assign a different stream to each process.  Examples of such PRNGs include so-called "counter-based" PRNGs (Salmon et al. 2011)<sup>[**(19)**](#Note19)</sup>.  Non-examples include LCGs with a non-prime modulus and PRNGs based on them, such as PCG.
 
 Depending on the PRNG, there are different ways to seed multiple processes for random number generation, described as follows.<sup>[**(20)**](#Note20)</sup>
 
@@ -331,6 +331,12 @@ Depending on the PRNG, there are different ways to seed multiple processes for r
 
 The steps above include hashing several things to generate an N-bit value.  This has to be done with either a [**hash function**](#Hash_Functions) of N or more bits, or a so-called "seed sequence generator" like C++'s `std::seed_seq`.<sup>[**(22)**](#Note22)</sup><sup>[**(23)**](#Note23)</sup>
 
+> **Example:** SFC64 is a counter-based PRNG. To seed two processes with the seed "seed" and this PRNG, an application can&mdash;
+> - take the first 192 bits of SHA256("seed-seedvalue") as a new seed,
+> - take the first 64 bits of SHA256("seed-countervalue") as a counter,
+> - initialize the first process's PRNG with the counter and the new seed, and
+> - initialize the second process's PRNG with the counter and 1 plus the new seed.
+
 <a id=Existing_RNG_APIs_in_Programming_Languages></a>
 ## Existing RNG APIs in Programming Languages
 
@@ -344,7 +350,7 @@ As much as possible, **applications SHOULD use existing libraries and techniques
  --------|-----------------------------------------------|------|
 | .NET (incl. C# and VB.NET) (H) | `RNGCryptoServiceProvider` in `System.Security.Cryptography` namespace | [**airbreather/AirBreather.Common library**](https://github.com/airbreather/Airbreather.Common) (XorShift1024Star, XorShift128Plus, XoroShiro128Plus) |
 | C/C++ (G)  | (C) | [**`xoroshiro128plus.c`**](http://xoroshiro.di.unimi.it/xoroshiro128plus.c) (128-bit nonzero seed); [**`xorshift128plus.c`**](http://xoroshiro.di.unimi.it/xorshift128plus.c) (128-bit nonzero seed); [**frostburn/jkiss**](https://github.com/frostburn/jkiss) library |
-| Python (A) | `secrets.SystemRandom` (since Python 3.6); `os.urandom()`| `pypcg` package; [**ihaque/xorshift**](https://github.com/ihaque/xorshift) library (128-bit nonzero seed; default seed uses `os.urandom()`); [**`numpy.random.Generator`**](https://docs.scipy.org/doc/numpy/reference/random/index.html) with `PCG64` or `SFC64` (since ver. 1.7) |
+| Python (A) | `secrets.SystemRandom` (since Python 3.6); `os.urandom()`| `pypcg` package; [**ihaque/xorshift**](https://github.com/ihaque/xorshift) library (128-bit nonzero seed; default seed uses `os.urandom()`); [**`numpy.random.Generator`**](https://docs.scipy.org/doc/numpy/reference/random/index.html) with `PCG64`, `Philox`, or `SFC64` (since ver. 1.7) |
 | Java (A) (D) | (C); `java.security.SecureRandom` (F) |  [**grunka/xorshift**](https://github.com/grunka/xorshift) (`XORShift1024Star` or `XORShift128Plus`); [**jenetics/prngine**](https://github.com/jenetics/prngine) (`KISS32Random`, `KISS64Random`) |
 | JavaScript (B) | `crypto.randomBytes(byteCount)` (node.js only); `random-number-csprng` package (node.js only); `crypto.getRandomValues()` (Web) | `pcg-random` or `xoroshiro128starstar` package |
 | Ruby (A) (E) | (C); `SecureRandom.rand()` (0 or greater and less than 1) (E); `SecureRandom.rand(N)` (integer) (E) (for both, `require 'securerandom'`); `sysrandom` gem |  |
@@ -388,7 +394,7 @@ In a list with `N` different items, there are `N` factorial (that is, `1 * 2 * .
 
 In practice, an application can **shuffle a list** by doing a [**Fisher&ndash;Yates shuffle**](https://en.wikipedia.org/wiki/Fisher-Yates_shuffle), which is unfortunately easy to mess up &mdash; see (Atwood 2007)<sup>[**(30)**](#Note30)</sup> &mdash; and is implemented correctly in [**another document of mine**](https://peteroupc.github.io/randomfunc.html).
 
-However, if a PRNG's period (minimum size of a "random" number cycle) is less than the number of permutations, then there are **some permutations that that PRNG can't choose** when it shuffles that list. (This is not the same as _generating_ all permutations of a list, which, for a list big enough, can't be done by any computer in a reasonable time.)
+However, if a PRNG's period (maximum size of a "random" number cycle) is less than the number of permutations, then there are **some permutations that that PRNG can't choose** when it shuffles that list. (This is not the same as _generating_ all permutations of a list, which, for a list big enough, can't be done by any computer in a reasonable time.)
 
 On the other hand, for a list big enough, it's generally **more important to have shuffles act random** than to choose from among all permutations.
 
@@ -526,7 +532,7 @@ A cryptographic RNG is not required to reseed itself.
 A PRNG is a high-quality RNG if&mdash;
 - it generates bits that behave like independent uniform random bits (at least for nearly all practical purposes outside of information security),
 - its state length is at least 64 bits, and
-- it either satisfies the _collision resistance_ property or has a period (minimum size of a "random" number cycle) at or close to 2<sup>N</sup>, where N is its state length.
+- it either satisfies the _collision resistance_ property or has a period (maximum size of a "random" number cycle) at or close to 2<sup>N</sup>, where N is its state length.
 
 The high-quality PRNG's state length SHOULD be at least 128 bits.
 
@@ -566,7 +572,7 @@ A **programming language API** designed for reuse by applications could implemen
 > **Examples:**
 >
 > 1. A C language RNG method for filling memory could look like the following: `int random(uint8_t[] bytes, size_t size);`, where `bytes` is a pointer to an array of 8-bit bytes, and `size` is the number of random 8-bit bytes to generate, and where 0 is returned if the method succeeds and nonzero otherwise.
-> 2. A Java API that follows these guidelines can contain two classes: a `RandomGen` class that implements an unspecified but general-purpose RNG, and a `RandomStable` class that implements an SFC PRNG that is documented and will not change in the future. `RandomStable` includes a constructor that takes a seed for reproducible "randomness", while `RandomGen` does not.  Both classes include methods described in point 4, but `RandomStable` specifies the exact algorithms to those methods and `RandomGen` does not.  At any time in the future, `RandomGen` can change its implementation to use a different RNG while remaining backward compatible, while `RandomStable` has to use the same algorithms for all time to remain backward compatible, especially because it takes a seed for reproducible "randomness".
+> 2. A Java API that follows these guidelines can contain two classes: a `RandomGen` class that implements an unspecified but general-purpose RNG, and a `RandomStable` class that implements an SFC64 PRNG that is documented and will not change in the future. `RandomStable` includes a constructor that takes a seed for reproducible "randomness", while `RandomGen` does not.  Both classes include methods described in point 4, but `RandomStable` specifies the exact algorithms to those methods and `RandomGen` does not.  At any time in the future, `RandomGen` can change its implementation to use a different RNG while remaining backward compatible, while `RandomStable` has to use the same algorithms for all time to remain backward compatible, especially because it takes a seed for reproducible "randomness".
 
 <a id=Acknowledgments></a>
 ## Acknowledgments
@@ -592,13 +598,13 @@ I acknowledge&mdash;
 
 <small><sup id=Note6>(6)</sup> Jones, D., "Good Practice in (Pseudo) Random Number Generation for Bioinformatics Applications", 2007/2010.</small>
 
-<small><sup id=Note7>(7)</sup> Widynski, B., "Middle Square Weyl Sequence RNG", arXiv:1704.00358 [cs.CR], 2017.</small>
+<small><sup id=Note7>(7)</sup> Blackman, D., Vigna, S. "Scrambled Linear Pseudorandom Number Generators", 2018.</small>
 
-<small><sup id=Note8>(8)</sup> Blackman, D., Vigna, S. "Scrambled Linear Pseudorandom Number Generators", 2018.</small>
+<small><sup id=Note8>(8)</sup> P. L'Ecuyer, "Tables of Linear Congruential Generators of Different Sizes and Good Lattice Structure", _Mathematics of Computation_ 68(225), January 1999.</small>
 
-<small><sup id=Note9>(9)</sup> P. L'Ecuyer, "Tables of Linear Congruential Generators of Different Sizes and Good Lattice Structure", _Mathematics of Computation_ 68(225), January 1999.</small>
+<small><sup id=Note9>(9)</sup> S. Vigna, "[**An experimental exploration of Marsaglia's `xorshift` generators, scrambled**](http://vigna.di.unimi.it/ftp/papers/xorshift.pdf)", 2016.</small>
 
-<small><sup id=Note10>(10)</sup> S. Vigna, "[**An experimental exploration of Marsaglia's `xorshift` generators, scrambled**](http://vigna.di.unimi.it/ftp/papers/xorshift.pdf)", 2016.</small>
+<small><sup id=Note10>(10)</sup> Widynski, B., "Middle Square Weyl Sequence RNG", arXiv:1704.00358 [cs.CR], 2017.</small>
 
 <small><sup id=Note11>(11)</sup> However, some versions of GLSL (notably GLSL ES 1.0, as used by WebGL 1.0) might support integers with a restricted range (as low as -1024 to 1024) rather than 32-bit or bigger integers as are otherwise common, making it difficult to write hash functions for random number generation.  An application ought to choose hash functions that deliver acceptable "random" numbers regardless of the kinds of numbers supported.
 
@@ -745,7 +751,7 @@ The following Python code suggests how many bits of entropy are needed for shuff
 <a id=Bays_ndash_Durham_Shuffle></a>
 ### Bays&ndash;Durham Shuffle
 
-The Bays&ndash;Durham shuffle extends a PRNG's period (minimum size of a "random" number cycle) by giving it a bigger state. Generally, for a size of `tablesize`, the period is extended to about the number of ways to arrange a list of size `tablesize`.  The following describes the Bays&ndash;Durham shuffle with a size of `tablesize`. (C++'s `shuffle_order_engine` implements something similar to the shuffle described below.) For PRNGs that output 32- or 64-bit integers 0 or greater, a `tablesize` of 256, 512, or 1024 is suggested.
+The Bays&ndash;Durham shuffle extends a PRNG's period (maximum size of a "random" number cycle) by giving it a bigger state. Generally, for a size of `tablesize`, the period is extended to about the number of ways to arrange a list of size `tablesize`.  The following describes the Bays&ndash;Durham shuffle with a size of `tablesize`. (C++'s `shuffle_order_engine` implements something similar to the shuffle described below.) For PRNGs that output 32- or 64-bit integers 0 or greater, a `tablesize` of 256, 512, or 1024 is suggested.
 
 - To initialize, fill a list with as many numbers from the PRNG as `tablesize`, then set `k` to another number from the PRNG.
 - For each "random" number, take the entry at position (`k` % `tablesize`) in the list, where '%' is the remainder operator and positions start at 0, then set `k` to that entry, then replace the entry at that position with a new number from the PRNG, then output `k`.
