@@ -750,7 +750,7 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 
 <ol>
 <li><p>The PRNG admits any 128-bit or longer seed. It SHOULD admit any 256-bit or longer seed.</p></li>
-<li><p>The <em>security strength</em> used by the RNG is at least 128 bits and is not more than the maximum size of seeds the PRNG admits.</p></li>
+<li><p>The <em>security strength</em> used by the RNG is at least 128 bits and is not more than the maximum size, in bits, of seeds the PRNG admits.</p></li>
 <li><p>While or after the PRNG is created, and before it generates a random number, it is initialized (&quot;seeded&quot;) with a seed that&mdash;</p>
 
 <ul>
@@ -784,7 +784,7 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 <li>it either&mdash;
 
 <ul>
-<li>has a period (maximum size of a &quot;random&quot; number cycle) at or close to the number of different seeds the PRNG admits, or</li>
+<li>has a period (maximum size of a &quot;random&quot; number cycle) at, close to, or higher than the number of different seeds the PRNG admits, or</li>
 <li>provides multiple sequences that are different for each seed, have at least 2<sup>64</sup> numbers each, do not overlap, and behave like independent random number sequences (at least for nearly all practical purposes outside of information security).</li>
 </ul></li>
 </ul>

@@ -329,7 +329,7 @@ Depending on the PRNG, there are different ways to seed multiple processes for r
     1. Create a PRNG instance for each process.  The instances need not all be of the same design of PRNG; for example, some can be JSF64 and others `xoroshiro128**`.
     2. In each process, hash the seed, a unique number for that process, and a fixed identifier to generate a new N-bit seed (N is the PRNG's maximum seed size), and initialize the process's PRNG with that seed.
 
-The steps above include hashing several things to generate an N-bit value.  This has to be done with either a [**hash function**](#Hash_Functions) of N or more bits, or a so-called "seed sequence generator" like C++'s `std::seed_seq`.<sup>[**(22)**](#Note22)</sup><sup>[**(23)**](#Note23)</sup>
+The steps above include hashing several things to generate an N-bit value.  This has to be done with either a [**hash function**](#Hash_Functions) of N or more bits, or a so-called "seed sequence generator" like C++'s `std::seed_seq`.<sup>[**(22)**](#Note22)</sup>
 
 > **Example:** SFC64 is a counter-based PRNG. To seed two processes with the seed "seed" and this PRNG, an application can&mdash;
 > - take the first 192 bits of SHA256("seed-seedvalue") as a new seed,
@@ -510,7 +510,7 @@ If a cryptographic RNG implementation uses a PRNG, the following requirements ap
 
 1. The PRNG admits any 128-bit or longer seed. It SHOULD admit any 256-bit or longer seed.
 
-2. The _security strength_ used by the RNG is at least 128 bits and is not more than the maximum size of seeds the PRNG admits.
+2. The _security strength_ used by the RNG is at least 128 bits and is not more than the maximum size, in bits, of seeds the PRNG admits.
 
 3. While or after the PRNG is created, and before it generates a random number, it is initialized ("seeded") with a seed that&mdash;
     - consists of data that ultimately derives from the output of one or more [**nondeterministic sources**](#Nondeterministic_Sources_and_Seed_Generation), where the output is at least as hard to guess as ideal random data with as many bits as the _security strength_, and
@@ -532,7 +532,7 @@ A PRNG is a high-quality RNG if&mdash;
 - it generates bits that behave like independent uniform random bits (at least for nearly all practical purposes outside of information security),
 - it admits any of 2<sup>63</sup> or more different seeds without shortening or compressing those seeds, and
 - it either&mdash;
-    - has a period (maximum size of a "random" number cycle) at or close to the number of different seeds the PRNG admits, or
+    - has a period (maximum size of a "random" number cycle) at, close to, or higher than the number of different seeds the PRNG admits, or
     - provides multiple sequences that are different for each seed, have at least 2<sup>64</sup> numbers each, do not overlap, and behave like independent random number sequences (at least for nearly all practical purposes outside of information security).
 
 The high-quality PRNG SHOULD admit any of 2<sup>127</sup> or more seeds.
@@ -633,9 +633,7 @@ See also N. Reed, "Quick And Easy GPU Random Numbers In D3D11", Nathan Reed's co
 
 <small><sup id=Note21>(21)</sup> Using two or more PRNG designs can reduce correlation risks due to a particular PRNG's design.  For further discussion and an example of a PRNG combining two different PRNG designs, see Agner Fog, "[**Pseudo-Random Number Generators for Vector Processors and Multicore Processors**](http://digitalcommons.wayne.edu/jmasm/vol14/iss1/23)", _Journal of Modern Applied Statistical Methods_ 14(1), article 23 (2015).</small>
 
-<small><sup id=Note22>(22)</sup> Here, the unique number and fixed identifier together serve as a _domain separation tag_ (see, e.g., the work-in-progress document "draft-irtf-cfrg-hash-to-curve").</small>
-
-<small><sup id=Note23>(23)</sup> Note that in general, hash functions carry the risk that two processes will end up with the same PRNG seed, but this risk decreases the more seeds the PRNG admits (a _collision risk_; see "[**Birthday problem**](https://en.wikipedia.org/wiki/Birthday_problem)").  M. O'Neill (in "Developing a seed_seq Alternative", Apr. 30, 2015) developed hash functions (`seed_seq_fe`) that are designed to avoid collisions if possible, and otherwise to reduce collision bias.   For example, if the PRNG admits up to 128-bit seeds, an application can use `seed_seq_fe128` to hash sequentially assigned 128-bit seeds in each process without worrying about collisions.</small>
+<small><sup id=Note22>(22)</sup> Besides the seed, other things are hashed that together serve as a _domain separation tag_ (see, e.g., the work-in-progress document "draft-irtf-cfrg-hash-to-curve").  Note that in general, hash functions carry the risk that two processes will end up with the same PRNG seed, but this risk decreases the more seeds the PRNG admits (a _collision risk_; see "[**Birthday problem**](https://en.wikipedia.org/wiki/Birthday_problem)").  M. O'Neill (in "Developing a seed_seq Alternative", Apr. 30, 2015) developed hash functions (`seed_seq_fe`) that are designed to avoid collisions if possible, and otherwise to reduce collision bias.   For example, if the PRNG admits up to 128-bit seeds, an application can use `seed_seq_fe128` to hash sequentially assigned 128-bit seeds in each process without worrying about collisions.  See also Matsumoto, M., et al., "Common defects in initialization of pseudorandom number generators", _Transactions on Modeling and Computer Simulation_ 17(4), Sep. 2007.</small>
 
 <small><sup id=Note24>(24)</sup> Using the similar `/dev/random` is NOT RECOMMENDED, since in some implementations it can block for seconds at a time, especially if not enough randomness is available.  See also [**"Myths about /dev/urandom"**](https://www.2uo.de/myths-about-urandom).</small>
 
