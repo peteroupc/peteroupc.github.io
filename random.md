@@ -154,15 +154,14 @@ The following also count as high-quality PRNGs, but they require nonzero seeds, 
 
 - [**xoshiro256&#x2a;&#x2a;**](http://xoshiro.di.unimi.it/xoshiro256starstar.c) (max. seed size 256 bits).
 - [**xoroshiro128&#x2a;&#x2a;**](http://xoshiro.di.unimi.it/xoroshiro128starstar.c) (max. seed size 128 bits).
-- XorShift\* 128/64 (max. seed size 128 bits).
-- XorShift\* 64/32 (max. seed size 64 bits).
+- XorShift\* 128/64 (max. seed size 128 bits) and XorShift\* 64/32 (max. seed size 64 bits).  Both of these are described by M. O'Neill in "You don't have to use PCG!", 2017.
 - `xorshift128+` and `xoshiro256+` (max. seed size 128 and 256 bits, respectively), where each output's lowest 16 bits are discarded.  (As described by (Blackman and Vigna 2018)<sup>[**(6)**](#Note6)</sup>, these PRNGs use weak scramblers, so that each full output's lowest bits have low linear complexity even though the output as a whole has excellent statistical randomness.  See also [**"Testing lowest bits in isolation"**](http://xoshiro.di.unimi.it/lowcomp.php).)
 - `JLKISS64` (max. seed size 256 bits), described in (Jones 2007/2010)<sup>[**(7)**](#Note7)</sup>.  Each 32-bit chunk of the seed is nonzero.
 - A multiplicative [**linear congruential generator**](https://en.wikipedia.org/wiki/Linear_congruential_generator) (LCG) with modulus greater than 2<sup>63</sup> described in Table 2 of (L'Ecuyer 1999)<sup>[**(8)**](#Note8)</sup>.
 
 A high-quality PRNG that is any of the following is not preferred:
 
-- Mersenne Twister shows a [**systematic failure**](http://xoroshiro.di.unimi.it/#quality) in `BigCrush`'s LinearComp test (part of L'Ecuyer and Simard's "TestU01"). (See also (Vigna 2016)<sup>[**(9)**](#Note9)</sup>.)
+- Mersenne Twister (MT19937, max. seed size 19,937 bits) shows a [**systematic failure**](http://xoroshiro.di.unimi.it/#quality) in `BigCrush`'s LinearComp test (part of L'Ecuyer and Simard's "TestU01"). (See also (Vigna 2016)<sup>[**(9)**](#Note9)</sup>.)
 - LCGs with a power-of-two modulus (as well as PRNGs based on them, such as Melissa O'Neill's PCG) produce highly correlated "random" number sequences from seeds that differ only in their high bits (see S. Vigna, "[**The wrap-up on PCG generators**](http://pcg.di.unimi.it/pcg.php)").
 - LCGs with a non-prime modulus and PRNGs based on them.
 - C++'s [**`std::ranlux48` engine**](http://www.cplusplus.com/reference/random/ranlux48/) (max. seed size 577 bits; nonzero seed) can be slower than alternatives because it discards many "random" numbers before outputting another.
@@ -322,7 +321,7 @@ Depending on the PRNG, there are different ways to seed multiple processes for r
 
     1. Create one PRNG instance.
     2. Hash the seed and a fixed identifier to generate a new N-bit seed (N is the PRNG's maximum seed size), and initialize the PRNG with that seed.
-    3. For each process, give that process a copy of the PRNG's current internal state, then jump the original PRNG ahead.
+    3. For each process, jump the original PRNG ahead (unless it's the first process), then give that process a copy of the PRNG's current internal state.
 
 3. For other PRNGs, or if each process uses a different PRNG design, the following is a way to seed multiple processes for random number generation, but it carries the risk of generating seeds that lead to overlapping, correlated, or even identical number sequences, especially if the processes use the same PRNG.<sup>[**(21)**](#Note21)</sup> Generate a seed (or use a predetermined seed), then:
 
@@ -348,14 +347,15 @@ As much as possible, **applications SHOULD use existing libraries and techniques
 
 | Language   | Cryptographic   | High-Quality |
  --------|-----------------------------------------------|------|
-| .NET (incl. C# and VB.NET) (H) | `RNGCryptoServiceProvider` in `System.Security.Cryptography` namespace | [**airbreather/AirBreather.Common library**](https://github.com/airbreather/Airbreather.Common) (XorShift1024Star, XorShift128Plus, XoroShiro128Plus) |
-| C/C++ (G)  | (C) | [**`xoroshiro128plus.c`**](http://xoroshiro.di.unimi.it/xoroshiro128plus.c) (128-bit nonzero seed); [**`xorshift128plus.c`**](http://xoroshiro.di.unimi.it/xorshift128plus.c) (128-bit nonzero seed); [**frostburn/jkiss**](https://github.com/frostburn/jkiss) library |
-| Python (A) | `secrets.SystemRandom` (since Python 3.6); `os.urandom()`| `pypcg` package; [**ihaque/xorshift**](https://github.com/ihaque/xorshift) library (128-bit nonzero seed; default seed uses `os.urandom()`); [**`numpy.random.Generator`**](https://docs.scipy.org/doc/numpy/reference/random/index.html) with `PCG64`, `Philox`, or `SFC64` (since ver. 1.7) |
-| Java (A) (D) | (C); `java.security.SecureRandom` (F) |  [**grunka/xorshift**](https://github.com/grunka/xorshift) (`XORShift1024Star` or `XORShift128Plus`); [**jenetics/prngine**](https://github.com/jenetics/prngine) (`KISS32Random`, `KISS64Random`) |
+| .NET (incl. C# and VB.NET) (H) | `RNGCryptoServiceProvider` in `System.Security.Cryptography` namespace; [**airbreather/AirBreather.Common library**](https://github.com/airbreather/Airbreather.Common) (CryptographicRandomGenerator) | [**airbreather/AirBreather.Common library**](https://github.com/airbreather/Airbreather.Common) (XorShift1024Star, XorShift128Plus, XoroShiro128Plus) |
+| C/C++ (G)  | (C) | [**`xoroshiro128plusplus.c`**](http://xoroshiro.di.unimi.it/xoroshiro128plusplus.c); [**`xoshiro256starstar.c`**](http://xoroshiro.di.unimi.it/xoshiro256starstar.c); [**frostburn/jkiss**](https://github.com/frostburn/jkiss) library |
+| Python (A) | `secrets.SystemRandom` (since Python 3.6); `os.urandom()`| `pypcg` package; [**ihaque/xorshift**](https://github.com/ihaque/xorshift) library (default seed uses `os.urandom()`); [**`numpy.random.Generator`**](https://docs.scipy.org/doc/numpy/reference/random/index.html) with `PCG64`, `Philox`, or `SFC64` (since ver. 1.7) |
+| Java (A) (D) | (C); `java.security.SecureRandom` (F) |  [**`it.unimi.dsi/dsiutils` artifact**](http://dsiutils.di.unimi.it/docs/it/unimi/dsi/util/package-summary.html) (XoRoShiRo128PlusPlusRandom, XoShiRo128PlusPlusRandom, XoShiRo256PlusRandom, XorShift1024StarPhiRandom); [**jenetics/prngine**](https://github.com/jenetics/prngine) (`KISS32Random`, `KISS64Random`) |
 | JavaScript (B) | `crypto.randomBytes(byteCount)` (node.js only); `random-number-csprng` package (node.js only); `crypto.getRandomValues()` (Web) | `pcg-random` or `xoroshiro128starstar` package |
 | Ruby (A) (E) | (C); `SecureRandom.rand()` (0 or greater and less than 1) (E); `SecureRandom.rand(N)` (integer) (E) (for both, `require 'securerandom'`); `sysrandom` gem |  |
 | PHP (A) | `random_int()`, `random_bytes()` (both since PHP 7) |  |
 | Go | `crypto/rand` package |  |
+| Rust | `rand` crate (StdRng) | `rand_xoshiro` crate (Xoroshiro128PlusPlus, Xoshiro256PlusPlus, Xoshiro256StarStar, Xoshiro512StarStar) |
 | Perl | `Crypt::URandom` module |  |
 | Other Languages | (C) |  |
 
@@ -374,7 +374,7 @@ As much as possible, **applications SHOULD use existing libraries and techniques
 
 <small>(D) Java's `java.util.Random` class uses a 48-bit seed, so is not considered a high-quality RNG.  However, a subclass of `java.util.Random` might be implemented as a high-quality RNG.</small>
 
-<small>(E) Ruby's `Random#rand` and `SecureRandom.rand` methods present a beautiful and simple API for random number generation, in my opinion.  Namely, `rand()` returns a number 0 or greater and less than 1, and `rand(N)` returns an integer 0 or greater and less than N.</small>
+<small>(E) Ruby's `SecureRandom.rand` method presents a beautiful and simple API for random number generation, in my opinion.  Namely, `rand()` returns a number 0 or greater and less than 1, and `rand(N)` returns an integer 0 or greater and less than N.</small>
 
 <small>(F) Calling the `setSeed` method of `SecureRandom` before use is RECOMMENDED. The data passed to the method SHOULD be data described in note (C). (Despite the name, `setSeed` _supplements_ the existing seed, according to the `SecureRandom` documentation.)  See also (Klyubin 2013)<sup>[**(26)**](#Note26)</sup>.  Using the `SecureRandom` implementation `"SHA1PRNG"` is NOT RECOMMENDED, because of weaknesses in seeding and RNG quality in implementations as of 2013 (Michaelis et al., 2013)<sup>[**(27)**](#Note27)</sup>.</small>
 
@@ -532,12 +532,14 @@ A PRNG is a high-quality RNG if&mdash;
 - it generates bits that behave like independent uniform random bits (at least for nearly all practical purposes outside of information security),
 - it admits any of 2<sup>63</sup> or more different seeds without shortening or compressing those seeds, and
 - it either&mdash;
-    - has a period (maximum size of a "random" number cycle) at, close to, or higher than the number of different seeds the PRNG admits, or
-    - provides multiple sequences that are different for each seed, have at least 2<sup>64</sup> numbers each, do not overlap, and behave like independent random number sequences (at least for nearly all practical purposes outside of information security).
+    - provides multiple sequences that are different for each seed, have at least 2<sup>64</sup> numbers each, do not overlap, and behave like independent random number sequences (at least for nearly all practical purposes outside of information security), or
+    - has a period (maximum size of a "random" number cycle) at or close to the number of different seeds the PRNG admits.
 
 The high-quality PRNG SHOULD admit any of 2<sup>127</sup> or more seeds.
 
 Every cryptographic RNG is also a high-quality RNG.
+
+A Bays&ndash;Durham shuffle (see the appendix) of a high-quality RNG is also a high-quality RNG.
 
 <a id=Designs_for_PRNGs></a>
 ### Designs for PRNGs
