@@ -6,8 +6,6 @@
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
-<p>Begun on June 4, 2017; last updated on Dec. 17, 2019.</p>
-
 <p>Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.</p>
 
 <p><a id=Introduction></a></p>
@@ -1497,7 +1495,9 @@ END METHOD
 <p>A <a href="https://en.wikipedia.org/wiki/Low-discrepancy_sequence"><strong><em>low-discrepancy sequence</em></strong></a> (or <em>quasirandom sequence</em>) is a sequence of numbers that behave like uniform random numbers but are <em>dependent</em> on each other, in that they are less likely to form &quot;clumps&quot; than if they were independent.  The following are examples:</p>
 
 <ul>
-<li>Sobol and Halton sequences are too complicated to show here.</li>
+<li>A base-N <em>van der Corput sequence</em> is generated as follows:  For each index in the sequence, take the index as a base-N number, then divide the least significant base-N digit by N, the next digit by N<sup>2</sup>, the next by N<sup>3</sup>, and so on, and add together these results of division.</li>
+<li>A <em>Halton sequence</em> is a set of two or more van der Corput sequences with different prime bases; a Halton point at a given index has coordinates equal to the points for that index in the van der Corput sequences.</li>
+<li>Sobol sequences are too complicated to describe here.</li>
 <li>Linear congruential generators with modulus <code>m</code>, a full period, and &quot;good lattice structure&quot;; a sequence of <code>n</code>-dimensional points is then <code>[MLCG(i), MLCG(i+1), ..., MLCG(i+n-1)]</code> for each integer <code>i</code> in the interval [1, <code>m</code>] (L&#39;Ecuyer 1999)<sup><a href="#Note24"><strong>(24)</strong></a></sup> (see example pseudocode below).</li>
 </ul>
 
