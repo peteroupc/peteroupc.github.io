@@ -402,7 +402,7 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 
 <p>Some applications require multiple processes (including threads, tasks, or subtasks) to use <a href="#Manually_Seeded_PRNGs"><strong>reproducible &quot;random&quot; numbers</strong></a> for the same purpose.  An example is multiple instances of a simulation with random starting conditions.  However, noncryptographic PRNGs tend to produce number sequences that are correlated to each other, which is undesirable for simulations in particular.</p>
 
-<p>To reduce this correlation risk, the application can choose a <a href="#High_Quality_RNGs_Requirements"><strong>high-quality PRNG</strong></a> that supports &quot;streams&quot; of uncorrelated sequences (sequences that behave like independent random number sequences and don&#39;t overlap) and has an efficient way to assign a different stream to each process.  Examples of such PRNGs include so-called &quot;counter-based&quot; PRNGs (Salmon et al. 2011)<sup><a href="#Note14"><strong>(14)</strong></a></sup>.  Non-examples include LCGs with a non-prime modulus and PRNGs based on them, such as PCG.</p>
+<p>To reduce this correlation risk, the application can choose a <a href="#High_Quality_RNGs_Requirements"><strong>high-quality PRNG</strong></a> that supports &quot;streams&quot; of uncorrelated sequences (sequences that behave like independent random number sequences and don&#39;t overlap) and has an efficient way to assign a different stream to each process.  Examples of such PRNGs include so-called &quot;counter-based&quot; PRNGs (Salmon et al. 2011)<sup><a href="#Note14"><strong>(14)</strong></a></sup>.</p>
 
 <p>Depending on the PRNG, there are different ways to seed multiple processes for random number generation, described as follows.<sup><a href="#Note15"><strong>(15)</strong></a></sup></p>
 
@@ -761,7 +761,7 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 
 <h4>High-Quality PRNG Examples</h4>
 
-<p>Besides cryptographic RNGs, the following are examples of <a href="#High_Quality_PRNGs_Requirements"><strong>high-quality PRNGs</strong></a>:</p>
+<p>Besides cryptographic RNGs, the following are examples of high-quality PRNGs:</p>
 
 <table><thead>
 <tr>
@@ -843,17 +843,31 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 <td></td>
 </tr>
 <tr>
+<td>Philox</td>
+<td>2^128</td>
+<td>At least 2^256 per seed</td>
+<td>256-bit counter</td>
+<td></td>
+</tr>
+<tr>
+<td><code>gjrand</code> by D. Blackman</td>
+<td>2^128</td>
+<td>At least 2^64 for each seed</td>
+<td>Separate stream for each seed</td>
+<td></td>
+</tr>
+<tr>
 <td>XorShift* 128/64</td>
 <td>2^128 - 1</td>
 <td>2^128 - 1</td>
-<td>None known</td>
+<td>No known implementation</td>
 <td>Nonzero seeds; described by M. O&#39;Neill in &quot;You don&#39;t have to use PCG!&quot;, 2017.</td>
 </tr>
 <tr>
 <td>XorShift* 64/32</td>
 <td>2^64 - 1</td>
 <td>2^64 - 1</td>
-<td>None known</td>
+<td>No known implementation</td>
 <td>Nonzero seeds; described by M. O&#39;Neill in &quot;You don&#39;t have to use PCG!&quot;, 2017.</td>
 </tr>
 <tr>
@@ -882,7 +896,7 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 <td>Depends on parameters</td>
 <td>Depends on parameters</td>
 <td>Logarithmic-time jumpahead. What PCG calls &quot;streams&quot; does not produce independent sequences.</td>
-<td>Nonzero seeds unless additive constant is odd.  These PRNGs are not preferred; in particular, if the modulus is a power of 2, they produce highly correlated &quot;random&quot; number sequences from seeds that differ only in their high bits (see S. Vigna, &quot;<a href="http://pcg.di.unimi.it/pcg.php"><strong>The wrap-up on PCG generators</strong></a>&quot;).</td>
+<td>These PRNGs are not preferred; in particular, if the modulus is a power of 2, they produce highly correlated &quot;random&quot; number sequences from seeds that differ only in their high bits (see S. Vigna, &quot;<a href="http://pcg.di.unimi.it/pcg.php"><strong>The wrap-up on PCG generators</strong></a>&quot;) and lowest bits have low linear complexity.</td>
 </tr>
 </tbody></table>
 
@@ -903,13 +917,6 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 <td>Not discussed (see notes)</td>
 <td>See notes</td>
 <td>At least in 32-bit version, the period is at least 2^126, and there are separate nonoverlapping streams of 2^20 values determined by the seed.</td>
-</tr>
-<tr>
-<td><code>gjrand</code> by D. Blackman</td>
-<td>2^128</td>
-<td>Not known</td>
-<td>None known</td>
-<td></td>
 </tr>
 <tr>
 <td>C++&#39;s <a href="http://www.cplusplus.com/reference/random/ranlux48/"><strong><code>std::ranlux</code> engine</strong></a></td>

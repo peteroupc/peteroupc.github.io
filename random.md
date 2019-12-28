@@ -512,7 +512,7 @@ A Bays&ndash;Durham shuffle (see the appendix) of a high-quality RNG is also a h
 <a id=High_Quality_PRNG_Examples></a>
 #### High-Quality PRNG Examples
 
-Besides cryptographic RNGs, the following are examples of [**high-quality PRNGs**](#High_Quality_PRNGs_Requirements):
+Besides cryptographic RNGs, the following are examples of high-quality PRNGs:
 
 | PRNG | Seeds Allowed | Period | Stream Support | Notes |
  ----------| --- | --- | --- | --- |
@@ -527,20 +527,20 @@ Besides cryptographic RNGs, the following are examples of [**high-quality PRNGs*
 | xoroshiro128\*\* | 2^128 - 1 | 2^128 - 1 | Jump-ahead by 2^64 and 2^96 values | Nonzero seeds |
 | SFC64 (C. Doty-Humphrey) | 2^192 | At least 2^64 per seed | 64-bit counter | |
 | Philox | 2^128 | At least 2^256 per seed | 256-bit counter | |
-| XorShift\* 128/64 | 2^128 - 1 | 2^128 - 1 | None known | Nonzero seeds; described by M. O'Neill in "You don't have to use PCG!", 2017. |
-| XorShift\* 64/32 | 2^64 - 1 | 2^64 - 1 | None known | Nonzero seeds; described by M. O'Neill in "You don't have to use PCG!", 2017.  |
+| `gjrand` by D. Blackman | 2^128 | At least 2^64 per seed | Separate stream per seed | |
+| XorShift\* 128/64 | 2^128 - 1 | 2^128 - 1 | No known implementation | Nonzero seeds; described by M. O'Neill in "You don't have to use PCG!", 2017. |
+| XorShift\* 64/32 | 2^64 - 1 | 2^64 - 1 | No known implementation | Nonzero seeds; described by M. O'Neill in "You don't have to use PCG!", 2017.  |
 | Mersenne Twister (MT19937) | 2^19937 - 1 | 2^19937 - 1 | [**Jump-ahead**](http://www.math.sci.hiroshima-u.ac.jp/~m-mat/MT/JUMP/index.html) by a predetermined number of values | Nonzero seeds.  This PRNG shows a [**systematic failure**](http://xoroshiro.di.unimi.it/#quality) in BigCrush's LinearComp test (part of L'Ecuyer and Simard's "TestU01"). (See also (Vigna 2016)<sup>[**(42)**](#Note42)</sup>).|
 | A multiplicative [**linear congruential generator**](https://en.wikipedia.org/wiki/Linear_congruential_generator) (LCG) with modulus greater than 2<sup>63</sup> described in Table 2 of (L'Ecuyer 1999)<sup>[**(43)**](#Note43)</sup> | Modulus - 1 | Modulus - 1 | Logarithmic-time jumpahead | Nonzero seeds |
-| `JLKISS64` (Jones 2007/2010)<sup>[**(44)**](#Note44)</sup> | 2^64 * (2^64 - 1)^3 | About 2^250 | None known | Has six seed variables, two 64-bit and two 32-bit pairs.  One of the 64-bit variables is nonzero, and the variables in each 32-bit pair cannot both be zero. |
-| A high quality PRNG that is an LCG with non-prime modulus (or a PRNG based on one, such as PCG) | Depends on parameters | Depends on parameters | Logarithmic-time jumpahead. What PCG calls "streams" does not produce independent sequences. | Nonzero seeds unless additive constant is odd.  These PRNGs are not preferred; in particular, if the modulus is a power of 2, they produce highly correlated "random" number sequences from seeds that differ only in their high bits (see S. Vigna, "[**The wrap-up on PCG generators**](http://pcg.di.unimi.it/pcg.php)"). |
+| `JLKISS64` (Jones 2007/2010)<sup>[**(44)**](#Note44)</sup> | 2^64 * (2^64 - 1)^3 | About 2^250 | None known | Has six seed variables, namely two 64-bit variables and two 32-bit pairs.  One of the 64-bit variables is nonzero, and the variables in each 32-bit pair cannot both be zero. |
+| A high quality PRNG that is an LCG with non-prime modulus (or a PRNG based on one, such as PCG) | Depends on parameters | Depends on parameters | Logarithmic-time jumpahead. What PCG calls "streams" does not produce independent sequences. | These PRNGs are not preferred; in particular, if the modulus is a power of 2, they produce highly correlated "random" number sequences from seeds that differ only in their high bits (see S. Vigna, "[**The wrap-up on PCG generators**](http://pcg.di.unimi.it/pcg.php)") and lowest bits have low linear complexity. |
 
 The following may or may not be high-quality RNGs.  In general, they ought to be avoided in case of doubt.
 
 | PRNG | Seeds Allowed | Period | Stream Support | Notes |
  ----------| --- | --- | --- | --- |
 | The 64-bit, three-rotate version of B. Jenkins's "A small noncryptographic PRNG" (sometimes called JSF64) | 2^64 | Not discussed (see notes) | See notes | At least in 32-bit version, the period is at least 2^126, and there are separate nonoverlapping streams of 2^20 values determined by the seed. |
-| `gjrand` by D. Blackman | 2^128 | Not known | None known | |
-| C++'s [**`std::ranlux` engine**](http://www.cplusplus.com/reference/random/ranlux48/) | To be determined | To be determined | None known | Nonzero seed; can be slower than alternatives because it discards many "random" numbers before outputting another. |
+| C++'s [**`std::ranlux48` engine**](http://www.cplusplus.com/reference/random/ranlux48/) | To be determined | To be determined | None known | Nonzero seed; can be slower than alternatives because it discards many "random" numbers before outputting another. |
 
 The following are not considered high-quality PRNGs:
 - Any LCG with modulus less than 2<sup>63</sup> (such as `java.util.Random` and C++'s `std::minstd_rand` and `std::minstd_rand0` engines) admits fewer than 2<sup>63</sup> seeds.
