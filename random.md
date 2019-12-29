@@ -282,27 +282,26 @@ Depending on the PRNG, there are different ways to seed multiple processes for r
 1. For counter-based PRNGs: Generate a seed (or use a predetermined seed), then:
 
     1. Create a PRNG instance for each process.
-    2. Hash the seed and a fixed identifier to generate a C-bit counter (C is the counter's size in bits).  Hash the seed and another fixed identifier to generate a new N-bit seed (N is the PRNG's maximum seed size).
+    2. Hash the seed and a fixed identifier to generate a new seed allowed by the PRNG.  The counter either is 0 or is generated similarly to the new seed.
     3. For each process, initialize its PRNG instance with the new seed and the counter, then add 1 to the new seed (in case of overflow, the new seed is 0 instead).
 
 2. For PRNGs that implement "streams" by providing an efficient way to discard a fixed but huge number of PRNG outputs (that is, to "jump the PRNG ahead"): Generate a seed (or use a predetermined seed), then:
 
     1. Create one PRNG instance.
-    2. Hash the seed and a fixed identifier to generate a new N-bit seed (N is the PRNG's maximum seed size), and initialize the PRNG with that seed.
+    2. Hash the seed and a fixed identifier to generate a new seed allowed by the PRNG, and initialize the PRNG with that seed.
     3. For each process, jump the original PRNG ahead (unless it's the first process), then give that process a copy of the PRNG's current internal state.
 
 3. For other PRNGs, or if each process uses a different PRNG design, the following is a way to seed multiple processes for random number generation, but it carries the risk of generating seeds that lead to overlapping, correlated, or even identical number sequences, especially if the processes use the same PRNG.<sup>[**(16)**](#Note16)</sup> Generate a seed (or use a predetermined seed), then:
 
     1. Create a PRNG instance for each process.  The instances need not all be of the same design of PRNG; for example, some can be JSF64 and others `xoroshiro128**`.
-    2. In each process, hash the seed, a unique number for that process, and a fixed identifier to generate a new N-bit seed (N is the PRNG's maximum seed size), and initialize the process's PRNG with that seed.
+    2. In each process, hash the seed, a unique number for that process, and a fixed identifier to generate a new seed allowed by the PRNG, and initialize the process's PRNG with that seed.
 
-The steps above include hashing several things to generate an N-bit value.  This has to be done with either a [**hash function**](#Hash_Functions) of N or more bits, or a so-called "seed sequence generator" like C++'s `std::seed_seq`.<sup>[**(17)**](#Note17)</sup>
+The steps above include hashing several things to generate a new seed.  This has to be done with either a [**hash function**](#Hash_Functions) of N or more bits (where N is the PRNG's maximum seed size), or a so-called "seed sequence generator" like C++'s `std::seed_seq`.<sup>[**(17)**](#Note17)</sup>
 
 > **Example:** SFC64 is a counter-based PRNG. To seed two processes with the seed "seed" and this PRNG, an application can&mdash;
 > - take the first 192 bits of SHA256("seed-seedvalue") as a new seed,
-> - take the first 64 bits of SHA256("seed-countervalue") as a counter,
-> - initialize the first process's PRNG with the counter and the new seed, and
-> - initialize the second process's PRNG with the counter and 1 plus the new seed.
+> - initialize the first process's PRNG with the new seed and a counter of 0, and
+> - initialize the second process's PRNG with 1 plus the new seed and a counter of 0.
 
 <a id=Existing_RNG_APIs_in_Programming_Languages></a>
 ## Existing RNG APIs in Programming Languages
