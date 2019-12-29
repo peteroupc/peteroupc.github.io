@@ -923,7 +923,7 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 <td>2^64</td>
 <td>Not discussed (see notes)</td>
 <td>See notes</td>
-<td>256-bit state.  At least in 32-bit version, the period is at least 2^126, and there are separate nonoverlapping streams of 2^20 values determined by the seed.</td>
+<td>256-bit state.  At least in the 32-bit version, the period is at least 2^126, and there are separate nonoverlapping streams of 2^20 values determined by the seed.</td>
 </tr>
 </tbody></table>
 
@@ -932,7 +932,7 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 <ul>
 <li>Any LCG with modulus less than 2<sup>63</sup> (such as <code>java.util.Random</code> and C++&#39;s <code>std::minstd_rand</code> and <code>std::minstd_rand0</code> engines) admits fewer than 2<sup>63</sup> seeds.</li>
 <li><code>System.Random</code>, as implemented in the .NET Framework 4.7, can take a seed of at most 32 bits, so it admits fewer than 2<sup>63</sup> seeds.</li>
-<li>B. Jenkins&#39;s JSF32 allows only about 2<sup>32</sup> valid seeds.</li>
+<li>B. Jenkins&#39;s JSF32 allows only 2<sup>32</sup> valid seeds.</li>
 <li><code>msws</code> (Widynski 2017)<sup><a href="#Note47"><strong>(47)</strong></a></sup> allows only about 2<sup>54.1</sup> valid seeds.</li>
 <li>Sequential counters.</li>
 </ul>
@@ -1045,7 +1045,14 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 
 <p><small><sup id=Note16>(16)</sup> Using two or more PRNG designs can reduce correlation risks due to a particular PRNG&#39;s design.  For further discussion and an example of a PRNG combining two different PRNG designs, see Agner Fog, &quot;<a href="http://digitalcommons.wayne.edu/jmasm/vol14/iss1/23"><strong>Pseudo-Random Number Generators for Vector Processors and Multicore Processors</strong></a>&quot;, <em>Journal of Modern Applied Statistical Methods</em> 14(1), article 23 (2015).</small></p>
 
-<p><small><sup id=Note17>(17)</sup> Besides the seed, other things are hashed that together serve as a <em>domain separation tag</em> (see, e.g., the work-in-progress document &quot;draft-irtf-cfrg-hash-to-curve&quot;).  Note that in general, hash functions carry the risk that two processes will end up with the same PRNG seed (a <em>collision risk</em>), but this risk decreases the more seeds the PRNG admits (see &quot;<a href="https://en.wikipedia.org/wiki/Birthday_problem"><strong>Birthday problem</strong></a>&quot;).  M. O&#39;Neill (in &quot;Developing a seed_seq Alternative&quot;, Apr. 30, 2015) developed hash functions (<code>seed_seq_fe</code>) that are designed to avoid collisions if possible, and otherwise to reduce collision bias.   For example, if the PRNG admits up to 128-bit seeds, an application can use <code>seed_seq_fe128</code> to hash sequentially assigned 128-bit seeds in each process without worrying about collisions.  See also Matsumoto, M., et al., &quot;Common defects in initialization of pseudorandom number generators&quot;, <em>Transactions on Modeling and Computer Simulation</em> 17(4), Sep. 2007.</small></p>
+<p><small><sup id=Note17>(17)</sup> Besides the seed, other things are hashed that together serve as a <em>domain separation tag</em> (see, e.g., the work-in-progress document &quot;draft-irtf-cfrg-hash-to-curve&quot;).  Note the following:</p>
+
+<ul>
+<li>In general, hash functions carry the risk that two processes will end up with the same PRNG seed (a <em>collision risk</em>) or that a seed not allowed by the PRNG is produced (a &quot;rejection risk&quot;), but this risk decreases the more seeds the PRNG admits (see &quot;<a href="https://en.wikipedia.org/wiki/Birthday_problem"><strong>Birthday problem</strong></a>&quot;).</li>
+<li>M. O&#39;Neill (in &quot;Developing a seed_seq Alternative&quot;, Apr. 30, 2015) developed hash functions (<code>seed_seq_fe</code>) that are designed to avoid collisions if possible, and otherwise to reduce collision bias.   For example, <code>seed_seq_fe128</code> hashes 128-bit seeds to 128-bit or longer unique values.</li>
+<li>An application can handle a rejected seed by hashing with a different value or by using a backup seed instead, depending on how tolerant the application is to bias.</li>
+<li>See also Matsumoto, M., et al., &quot;Common defects in initialization of pseudorandom number generators&quot;, <em>Transactions on Modeling and Computer Simulation</em> 17(4), Sep. 2007.</small></li>
+</ul>
 
 <p><small><sup id=Note18>(18)</sup> Using the similar <code>/dev/random</code> is NOT RECOMMENDED, since in some implementations it can block for seconds at a time, especially if not enough randomness is available.  See also <a href="https://www.2uo.de/myths-about-urandom"><strong>&quot;Myths about /dev/urandom&quot;</strong></a>.</small></p>
 
