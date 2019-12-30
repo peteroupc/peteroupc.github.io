@@ -299,7 +299,7 @@ Depending on the PRNG, there are different ways to seed multiple processes for r
 The steps above include hashing several things to generate a new seed.  This has to be done with either a [**hash function**](#Hash_Functions) of N or more bits (where N is the PRNG's maximum seed size), or a so-called "seed sequence generator" like C++'s `std::seed_seq`.<sup>[**(17)**](#Note17)</sup>
 
 > **Example:** SFC64 is a counter-based PRNG. To seed two processes with the seed "seed" and this PRNG, an application can&mdash;
-> - take the first 192 bits of SHA256("seed-seedvalue") as a new seed,
+> - take the first 192 bits of the SHA2-256 hash of "seed-mysimulation" as a new seed,
 > - initialize the first process's PRNG with the new seed and a counter of 0, and
 > - initialize the second process's PRNG with 1 plus the new seed and a counter of 0.
 
@@ -308,7 +308,7 @@ The steps above include hashing several things to generate a new seed.  This has
 
 As much as possible, **applications SHOULD use existing libraries and techniques** for cryptographic and high-quality RNGs. The following table lists application programming interfaces (APIs) for such RNGs for popular programming languages.
 
-- Methods and libraries mentioned in the "High-Quality" column need to be initialized with a seed before use (for example, a seed generated using an implementation in the "Cryptographic" column).
+- PRNGs mentioned in the "High-Quality" column need to be initialized with a seed before use (see "[**Seed Generation for Noncryptographic PRNGs**](#Seed_Generation_for_Noncryptographic_PRNGs)").
 - The mention of a third-party library in this section does not imply that the library is the best one available for any particular purpose. The list is not comprehensive.
 - See also [**Paragon's blog post**](https://paragonie.com/blog/2016/05/how-generate-secure-random-numbers-in-various-programming-languages) on existing cryptographic RNGs.
 
@@ -361,7 +361,7 @@ In a list with `N` different items, there are `N` factorial (that is, `1 * 2 * .
 
 In practice, an application can **shuffle a list** by doing a [**Fisher&ndash;Yates shuffle**](https://en.wikipedia.org/wiki/Fisher-Yates_shuffle), which is unfortunately easy to mess up &mdash; see (Atwood 2007)<sup>[**(24)**](#Note24)</sup> &mdash; and is implemented correctly in [**another document of mine**](https://peteroupc.github.io/randomfunc.html).
 
-However, if a PRNG's period (maximum size of a "random" number cycle) is less than the number of permutations, then there are **some permutations that that PRNG can't choose** when it shuffles that list. (This is not the same as _generating_ all permutations of a list, which, for a list big enough, can't be done by any computer in a reasonable time.)
+However, if a PRNG admits fewer seeds than the number of permutations, then there are **some permutations that that PRNG can't choose** when it shuffles that list. (This is not the same as _generating_ all permutations of a list, which, for a list big enough, can't be done by any computer in a reasonable time.)
 
 On the other hand, for a list big enough, it's generally **more important to have shuffles act random** than to choose from among all permutations.
 
@@ -526,10 +526,11 @@ Besides cryptographic RNGs, the following are examples of high-quality PRNGs:
 | xoroshiro128\*\* | 2^128 - 1 | 2^128 - 1 | Jump-ahead |  |
 | SFC64 (C. Doty-Humphrey) | 2^192 | At least 2^64 per seed | 64-bit counter | 256-bit state |
 | Philox | 2^128 | At least 2^256 per seed | 256-bit counter | 384-bit state |
-| `gjrand` by D. Blackman | 2^128 | At least 2^64 per seed | Separate stream per seed | 256-bit state |
+| Velox3b | 2^64 | At least 2^128 per seed | Separate stream per seed | 256-bit state |
+| `gjrand` by Geronimo Jones | 2^128 | At least 2^64 per seed | Separate stream per seed | 256-bit state |
 | XorShift\* 128/64 | 2^128 - 1 | 2^128 - 1 | No known implementation | Described by M. O'Neill in "You don't have to use PCG!", 2017. |
 | XorShift\* 64/32 | 2^64 - 1 | 2^64 - 1 | No known implementation | Described by M. O'Neill in "You don't have to use PCG!", 2017.  |
-| Mersenne Twister (MT19937) | 2^19937 - 1 | 2^19937 - 1 | [**Jump-ahead**](http://www.math.sci.hiroshima-u.ac.jp/~m-mat/MT/JUMP/index.html) | Usually takes about 2500 8-bit bytes of memory.  This PRNG shows a [**systematic failure**](http://xoroshiro.di.unimi.it/#quality) in BigCrush's LinearComp test (part of L'Ecuyer and Simard's "TestU01"). (See also (Vigna 2016)<sup>[**(43)**](#Note43)</sup>).|
+| Mersenne Twister (MT19937) | 2^19937 - 1 | 2^19937 - 1 | [**Jump-ahead**](http://www.math.sci.hiroshima-u.ac.jp/~m-mat/MT/JUMP/index.html) | Usually takes about 2500 8-bit bytes of memory.  This PRNG shows a [**systematic failure**](http://xoroshiro.di.unimi.it/#quality) in BigCrush's LinearComp test (part of L'Ecuyer and Simard's "TestU01"). (See also (Vigna 2016)<sup>[**(43)**](#Note43)</sup>.)
 | A multiplicative [**linear congruential generator**](https://en.wikipedia.org/wiki/Linear_congruential_generator) (LCG) with prime modulus greater than 2<sup>63</sup> described in Table 2 of (L'Ecuyer 1999)<sup>[**(44)**](#Note44)</sup> | Modulus - 1 | Modulus - 1 | Jump-ahead | Memory used depends on modulus size |
 | `JLKISS64` (Jones 2007/2010)<sup>[**(45)**](#Note45)</sup> | 2^64 * (2^64 - 1)^3 | About 2^250 | None known | Usually takes about 256 bits of memory.  Has six seed variables, namely two 64-bit variables and two 32-bit pairs.  One of the 64-bit variables is nonzero, and the variables in each 32-bit pair cannot both be zero. |
 | C++'s [**`std::ranlux48` engine**](http://www.cplusplus.com/reference/random/ranlux48/) | 2^577 - 2 | Not discussed (see notes) | No known implementation | Usually takes about 192 8-bit bytes of memory. Seed's bits cannot be all zeros or all ones (L&uuml;scher 1994)<sup>[**(46)**](#Note46)</sup>.  The period for `ranlux48`'s underlying generator is about 2^576.4.  |
