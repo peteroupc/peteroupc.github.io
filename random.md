@@ -179,11 +179,10 @@ Use cases for manually-seeded PRNGs include the following:
 - Simulations and machine learning.  This includes physics simulations and artificial intelligence (AI) in games, as well as simulations to reproduce published research data.
 - Monte Carlo estimations.
 - Procedural noise generation.
-- Unit tests in which "randomness" ought not to determine whether they pass or fail.
+- Unit tests in which "randomness" ought not to influence whether they pass or fail.  Here, a manually-seeded PRNG with a fixed seed is used in place of another kind of RNG for the purpose of the test, to help ensure consistent results across the computers under test.
 - Games that generate "random" content that is impractical to store.
 
-<a id=Games></a>
-#### Games
+### Manually-Seeded PRNGs in Games
 
 Many kinds of game software generate seemingly "random" game content that might need to be repeatedly regenerated, such as&mdash;
 
@@ -207,11 +206,6 @@ In general, the bigger that "random" content is, the greater the justification t
 >     - SHOULD continue to generate the same random map using an old "code" when the player enters it, even after the change to a new algorithm.
 >
 > 2. Suppose a game implements a chapter that involves navigating a randomly generated dungeon with randomly scattered monsters and items.  If the layout of the dungeon, monsters, and items has to be the same for a given week and for all players, the game can seed a PRNG with a hash code generated from the current week, the current month, the current year, and, optionally, a constant sequence of bits.
-
-<a id=Unit_Tests></a>
-#### Unit Tests
-
-A custom seed is appropriate when unit testing a method that uses a manually-seeded PRNG in place of another kind of RNG for the purpose of the test (provided the test delivers consistent output across the computers under test).
 
 <a id=Single_Random_Value></a>
 ### Single Random Value
@@ -527,7 +521,7 @@ Besides cryptographic RNGs, the following are examples of high-quality PRNGs:
 | SFC64 (C. Doty-Humphrey) | 2^192 | At least 2^64 per seed | 64-bit counter | 256-bit state |
 | Philox | 2^128 | At least 2^256 per seed | 256-bit counter | 384-bit state |
 | Velox3b | 2^64 | At least 2^128 per seed | Separate stream per seed | 256-bit state |
-| `gjrand` by Geronimo Jones | 2^128 | At least 2^64 per seed | Separate stream per seed | 256-bit state |
+| `gjrand` named after Geronimo Jones | 2^128 | At least 2^64 per seed | Separate stream per seed | 256-bit state |
 | XorShift\* 128/64 | 2^128 - 1 | 2^128 - 1 | No known implementation | Described by M. O'Neill in "You don't have to use PCG!", 2017. |
 | XorShift\* 64/32 | 2^64 - 1 | 2^64 - 1 | No known implementation | Described by M. O'Neill in "You don't have to use PCG!", 2017.  |
 | Mersenne Twister (MT19937) | 2^19937 - 1 | 2^19937 - 1 | [**Jump-ahead**](http://www.math.sci.hiroshima-u.ac.jp/~m-mat/MT/JUMP/index.html) | Usually takes about 2500 8-bit bytes of memory.  This PRNG shows a [**systematic failure**](http://xoroshiro.di.unimi.it/#quality) in BigCrush's LinearComp test (part of L'Ecuyer and Simard's "TestU01"). (See also (Vigna 2016)<sup>[**(43)**](#Note43)</sup>.)
@@ -670,7 +664,7 @@ See also N. Reed, "Quick And Easy GPU Random Numbers In D3D11", Nathan Reed's co
 
 <small><sup id=Note31>(31)</sup> The following are some reasons an algorithm might produce different results from run to run or from machine to machine (making it an _inconsistent_ algorithm):
 
-- Differences in how floating-point numbers and floating-point math operations are implemented, including rounding behavior and order of operations.  For example, programming environments could define math functions that don't always give the same answer for the same input, or might differ between implementations (e.g., Java's `Math` vs. `StrictMath`, or the x87 `FSIN` instruction vs. a software implementation of sine).  For more information, see "[**Floating-Point Determinism**](https://randomascii.wordpress.com/2013/07/16/floating-point-determinism/)" by Bruce Dawson, and the white paper "[**Floating Point and IEEE 754 Compliance for NVIDIA GPUs**](https://docs.nvidia.com/cuda/floating-point/)".
+- The algorithm relies on floating-point number operations.  Different implementations of the same floating-point operation might have subtle differences, including in terms of accuracy, rounding, and operation order, even if they're given the same input (e.g., Java's `Math` vs. `StrictMath`; the x87 `FSIN` instruction vs. a software implementation of sine; or a dot product method that decides which implementation to use at runtime). For more information, see "[**Floating-Point Determinism**](https://randomascii.wordpress.com/2013/07/16/floating-point-determinism/)" by Bruce Dawson, and the white paper "[**Floating Point and IEEE 754 Compliance for NVIDIA GPUs**](https://docs.nvidia.com/cuda/floating-point/)".
 - The algorithm uses features that are not deterministic (output can vary even if input and state are the same), such as accessing the file system or the system clock.
 - The algorithm relies on undocumented, undefined, or implementation-dependent behavior or features (such as  _undefined behavior_ in C and C++, a particular hash table traversal order, or a particular size for C/C++'s `int` or `long`).</small>
 

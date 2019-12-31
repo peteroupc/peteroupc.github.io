@@ -856,7 +856,7 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 <td>256-bit state</td>
 </tr>
 <tr>
-<td><code>gjrand</code> by Geronimo Jones</td>
+<td><code>gjrand</code> named after Geronimo Jones</td>
 <td>2^128</td>
 <td>At least 2^64 per seed</td>
 <td>Separate stream per seed</td>
@@ -1095,7 +1095,7 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 <p><small><sup id=Note31>(31)</sup> The following are some reasons an algorithm might produce different results from run to run or from machine to machine (making it an <em>inconsistent</em> algorithm):</p>
 
 <ul>
-<li>Differences in how floating-point numbers and floating-point math operations are implemented, including rounding behavior and order of operations.  For example, programming environments could define math functions that don&#39;t always give the same answer for the same input, or might differ between implementations (e.g., Java&#39;s <code>Math</code> vs. <code>StrictMath</code>, or the x87 <code>FSIN</code> instruction vs. a software implementation of sine).  For more information, see &quot;<a href="https://randomascii.wordpress.com/2013/07/16/floating-point-determinism/"><strong>Floating-Point Determinism</strong></a>&quot; by Bruce Dawson, and the white paper &quot;<a href="https://docs.nvidia.com/cuda/floating-point/"><strong>Floating Point and IEEE 754 Compliance for NVIDIA GPUs</strong></a>&quot;.</li>
+<li>The algorithm relies on floating-point number operations.  Different implementations of the same floating-point operation might have subtle differences, including in terms of accuracy, rounding, and operation order, even if they&#39;re given the same input (e.g., Java&#39;s <code>Math</code> vs. <code>StrictMath</code>; the x87 <code>FSIN</code> instruction vs. a software implementation of sine; or a dot product method that decides which implementation to use at runtime). For more information, see &quot;<a href="https://randomascii.wordpress.com/2013/07/16/floating-point-determinism/"><strong>Floating-Point Determinism</strong></a>&quot; by Bruce Dawson, and the white paper &quot;<a href="https://docs.nvidia.com/cuda/floating-point/"><strong>Floating Point and IEEE 754 Compliance for NVIDIA GPUs</strong></a>&quot;.</li>
 <li>The algorithm uses features that are not deterministic (output can vary even if input and state are the same), such as accessing the file system or the system clock.</li>
 <li>The algorithm relies on undocumented, undefined, or implementation-dependent behavior or features (such as  <em>undefined behavior</em> in C and C++, a particular hash table traversal order, or a particular size for C/C++&#39;s <code>int</code> or <code>long</code>).</small></li>
 </ul>
