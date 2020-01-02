@@ -181,21 +181,17 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 <li>generates random numbers so infrequently that the RNG&#39;s speed is not a concern.</li>
 </ul>
 
-<p>&nbsp;</p>
-
-<ul>
-<li>See &quot;<a href="#Cryptographic_RNGs_Requirements"><strong>Cryptographic RNGs: Requirements</strong></a>&quot; for requirements.</li>
-<li>See &quot;<a href="#Existing_RNG_APIs_in_Programming_Languages"><strong>Existing RNG APIs in Programming Languages</strong></a>&quot; for existing APIs.</li>
-<li>For cryptographic RNGs, an application SHOULD use only one thread-safe instance of the RNG for the entire application to use.</li>
-</ul>
+<p>See &quot;<a href="#Cryptographic_RNGs_Requirements"><strong>Cryptographic RNGs: Requirements</strong></a>&quot; for requirements.<br/>
+See &quot;<a href="#Existing_RNG_APIs_in_Programming_Languages"><strong>Existing RNG APIs in Programming Languages</strong></a>&quot; for existing APIs.<br/>
+For cryptographic RNGs, an application SHOULD use only one thread-safe instance of the RNG for the entire application to use.</p>
 
 <blockquote>
 <p><strong>Examples:</strong> A cryptographic RNG is RECOMMENDED&mdash;</p>
 
 <ul>
-<li> when generating security parameters (including encryption keys, nonces, session identifiers, &quot;salts&quot;, and secret parameters),</li>
-<li> for the purposes of sending or receiving messages or other data securely between computers, and</li>
-<li> in cases (such as in multiplayer networked games) when predicting future random numbers would give a player or user a significant and unfair advantage.</li>
+<li> when generating security parameters (including encryption keys, random passwords, nonces, session identifiers, &quot;salts&quot;, and secret values),</li>
+<li> for the purposes of sending or receiving messages or other data securely between computers, or</li>
+<li> whenever predicting future random numbers would give a player or user a significant and unfair advantage (such as in multiplayer networked games).</li>
 </ul>
 </blockquote>
 
@@ -534,9 +530,9 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 
 <p><small>(E) Ruby&#39;s <code>SecureRandom.rand</code> method presents a beautiful and simple API for random number generation, in my opinion.  Namely, <code>rand()</code> returns a number 0 or greater and less than 1, and <code>rand(N)</code> returns an integer 0 or greater and less than N.</small></p>
 
-<p><small>(F) Calling the <code>setSeed</code> method of <code>SecureRandom</code> before use is RECOMMENDED. The data passed to the method SHOULD be data described in note (C). (Despite the name, <code>setSeed</code> <em>supplements</em> the existing seed, according to the <code>SecureRandom</code> documentation.)  See also (Klyubin 2013)<sup><a href="#Note21"><strong>(21)</strong></a></sup>.  Using the <code>SecureRandom</code> implementation <code>&quot;SHA1PRNG&quot;</code> is NOT RECOMMENDED, because of weaknesses in seeding and RNG quality in implementations as of 2013 (Michaelis et al., 2013)<sup><a href="#Note22"><strong>(22)</strong></a></sup>.</small></p>
+<p><small>(F) In Java 8 and later, use <code>SecureRandom.getInstanceStrong()</code>.  In Java earlier than 8, call <code>SecureRandom.getInstance(&quot;NativePRNGNonBlocking&quot;)</code> or <code>SecureRandom.getInstance(&quot;NativePRNG&quot;)</code>.  For Android, especially versions 4.3 and earlier, see (Klyubin 2013)<sup><a href="#Note21"><strong>(21)</strong></a></sup>.  Using the <code>SecureRandom</code> implementation <code>&quot;SHA1PRNG&quot;</code> is NOT RECOMMENDED, because of weaknesses in seeding and RNG quality in implementations as of 2013 (Michaelis et al., 2013)<sup><a href="#Note22"><strong>(22)</strong></a></sup>.</small></p>
 
-<p><small>(G) <a href="http://en.cppreference.com/w/cpp/numeric/random/random_device"><strong><code>std::random_device</code></strong></a> was introduced in C++11, but its specification leaves considerably much to be desired.  For example,  <code>std::random_device</code> can fall back to a pseudorandom number generator of unspecified quality without much warning.  At best, <code>std::random_device</code> SHOULD NOT be used except to supplement other techniques for random number generation.</small></p>
+<p><small>(G) <a href="http://en.cppreference.com/w/cpp/numeric/random/random_device"><strong><code>std::random_device</code></strong></a> was introduced in C++11, but its specification leaves considerably much to be desired.  For example,  <code>std::random_device</code> can fall back to a PRNG of unspecified quality without much warning.  At best, <code>std::random_device</code> SHOULD NOT be used except to supplement other techniques for random number generation.</small></p>
 
 <p><small>(H) The .NET Framework&#39;s <code>System.Random</code> class uses a seed of at most 32 bits, so is not considered a high-quality RNG.  However, a subclass of <code>System.Random</code> might be implemented as a high-quality RNG.</small></p>
 

@@ -121,9 +121,9 @@ For cryptographic RNGs, an application SHOULD use only one thread-safe instance 
 
 > **Examples:** A cryptographic RNG is RECOMMENDED&mdash;
 >
-> -  when generating security parameters (including encryption keys, nonces, session identifiers, "salts", and secret parameters),
-> -  for the purposes of sending or receiving messages or other data securely between computers, and
-> -  in cases (such as in multiplayer networked games) when predicting future random numbers would give a player or user a significant and unfair advantage.
+> -  when generating security parameters (including encryption keys, random passwords, nonces, session identifiers, "salts", and secret values),
+> -  for the purposes of sending or receiving messages or other data securely between computers, or
+> -  whenever predicting future random numbers would give a player or user a significant and unfair advantage (such as in multiplayer networked games).
 
 <a id=Noncryptographic_PRNGs></a>
 ## Noncryptographic PRNGs
@@ -338,9 +338,9 @@ As much as possible, **applications SHOULD use existing libraries and techniques
 
 <small>(E) Ruby's `SecureRandom.rand` method presents a beautiful and simple API for random number generation, in my opinion.  Namely, `rand()` returns a number 0 or greater and less than 1, and `rand(N)` returns an integer 0 or greater and less than N.</small>
 
-<small>(F) Calling the `setSeed` method of `SecureRandom` before use is RECOMMENDED. The data passed to the method SHOULD be data described in note (C). (Despite the name, `setSeed` _supplements_ the existing seed, according to the `SecureRandom` documentation.)  See also (Klyubin 2013)<sup>[**(21)**](#Note21)</sup>.  Using the `SecureRandom` implementation `"SHA1PRNG"` is NOT RECOMMENDED, because of weaknesses in seeding and RNG quality in implementations as of 2013 (Michaelis et al., 2013)<sup>[**(22)**](#Note22)</sup>.</small>
+<small>(F) In Java 8 and later, use `SecureRandom.getInstanceStrong()`.  In Java earlier than 8, call `SecureRandom.getInstance("NativePRNGNonBlocking")` or `SecureRandom.getInstance("NativePRNG")`.  For Android, especially versions 4.3 and earlier, see (Klyubin 2013)<sup>[**(21)**](#Note21)</sup>.  Using the `SecureRandom` implementation `"SHA1PRNG"` is NOT RECOMMENDED, because of weaknesses in seeding and RNG quality in implementations as of 2013 (Michaelis et al., 2013)<sup>[**(22)**](#Note22)</sup>.</small>
 
-<small>(G) [**`std::random_device`**](http://en.cppreference.com/w/cpp/numeric/random/random_device) was introduced in C++11, but its specification leaves considerably much to be desired.  For example,  `std::random_device` can fall back to a pseudorandom number generator of unspecified quality without much warning.  At best, `std::random_device` SHOULD NOT be used except to supplement other techniques for random number generation.</small>
+<small>(G) [**`std::random_device`**](http://en.cppreference.com/w/cpp/numeric/random/random_device) was introduced in C++11, but its specification leaves considerably much to be desired.  For example,  `std::random_device` can fall back to a PRNG of unspecified quality without much warning.  At best, `std::random_device` SHOULD NOT be used except to supplement other techniques for random number generation.</small>
 
 <small>(H) The .NET Framework's `System.Random` class uses a seed of at most 32 bits, so is not considered a high-quality RNG.  However, a subclass of `System.Random` might be implemented as a high-quality RNG.</small>
 
