@@ -530,7 +530,7 @@ For cryptographic RNGs, an application SHOULD use only one thread-safe instance 
 
 <p><small>(E) Ruby&#39;s <code>SecureRandom.rand</code> method presents a beautiful and simple API for random number generation, in my opinion.  Namely, <code>rand()</code> returns a number 0 or greater and less than 1, and <code>rand(N)</code> returns an integer 0 or greater and less than N.</small></p>
 
-<p><small>(F) In Java 8 and later, use <code>SecureRandom.getInstanceStrong()</code>.  In Java earlier than 8, call <code>SecureRandom.getInstance(&quot;NativePRNGNonBlocking&quot;)</code> or <code>SecureRandom.getInstance(&quot;NativePRNG&quot;)</code>.  For Android, especially versions 4.3 and earlier, see (Klyubin 2013)<sup><a href="#Note21"><strong>(21)</strong></a></sup>.  Using the <code>SecureRandom</code> implementation <code>&quot;SHA1PRNG&quot;</code> is NOT RECOMMENDED, because of weaknesses in seeding and RNG quality in implementations as of 2013 (Michaelis et al., 2013)<sup><a href="#Note22"><strong>(22)</strong></a></sup>.</small></p>
+<p><small>(F) In Java 8 and later, use <code>SecureRandom.getInstanceStrong()</code>.  In Java earlier than 8, call <code>SecureRandom.getInstance(&quot;NativePRNGNonBlocking&quot;)</code> or, if that fails, <code>SecureRandom.getInstance(&quot;NativePRNG&quot;)</code>.  For Android, especially versions 4.3 and earlier, see (Klyubin 2013)<sup><a href="#Note21"><strong>(21)</strong></a></sup>.  Using the <code>SecureRandom</code> implementation <code>&quot;SHA1PRNG&quot;</code> is NOT RECOMMENDED, because of weaknesses in seeding and RNG quality in implementations as of 2013 (Michaelis et al., 2013)<sup><a href="#Note22"><strong>(22)</strong></a></sup>.</small></p>
 
 <p><small>(G) <a href="http://en.cppreference.com/w/cpp/numeric/random/random_device"><strong><code>std::random_device</code></strong></a> was introduced in C++11, but its specification leaves considerably much to be desired.  For example,  <code>std::random_device</code> can fall back to a PRNG of unspecified quality without much warning.  At best, <code>std::random_device</code> SHOULD NOT be used except to supplement other techniques for random number generation.</small></p>
 
@@ -739,7 +739,7 @@ For cryptographic RNGs, an application SHOULD use only one thread-safe instance 
 
 <ul>
 <li>provides multiple sequences that are different for each seed, have at least 2<sup>64</sup> numbers each, do not overlap, and behave like independent random number sequences (at least for nearly all practical purposes outside of information security), or</li>
-<li>has a period (maximum size of a &quot;random&quot; number cycle) at or close to the number of different seeds the PRNG admits.</li>
+<li>has a period (maximum size of a &quot;random&quot; number cycle) equal or close to the number of different seeds the PRNG admits.</li>
 </ul></li>
 </ul>
 
@@ -847,6 +847,20 @@ For cryptographic RNGs, an application SHOULD use only one thread-safe instance 
 <td>At least 2^128 per seed</td>
 <td>Separate stream per seed</td>
 <td>256-bit state</td>
+</tr>
+<tr>
+<td>A high-quality PRNG that uses a block cipher with an S-bit key to output C-bit encrypted counters (Salmon et al. 2011)<sup><a href="#Note14"><strong>(14)</strong></a></sup></td>
+<td>2^S</td>
+<td>At least 2^C per seed</td>
+<td>C-bit counter</td>
+<td>(C + S) bit state; C and S are each 64 or greater</td>
+</tr>
+<tr>
+<td>A high-quality PRNG that outputs hash codes of a C-bit counter and an S-bit seed (Salmon et al. 2011)<sup><a href="#Note14"><strong>(14)</strong></a></sup></td>
+<td>2^S</td>
+<td>At least 2^C per seed</td>
+<td>C-bit counter</td>
+<td>(C + S) bit state; C and S are each 64 or greater</td>
 </tr>
 <tr>
 <td><code>gjrand</code> named after Geronimo Jones</td>
