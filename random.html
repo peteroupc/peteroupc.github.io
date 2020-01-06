@@ -338,7 +338,7 @@ For cryptographic RNGs, an application SHOULD use only one thread-safe instance 
 <p>A <em>nondeterministic source</em> is a source that doesn&#39;t give the same output for the same input each time (for example, a clock that doesn&#39;t always give the same time).  There are many kinds of them, but sources useful for random number generation have hard-to-guess output (that is, they have high <em>entropy</em>; see the next section).  They include&mdash;</p>
 
 <ul>
-<li>disk access timings,</li>
+<li>timings of interrupts and disk accesses,</li>
 <li>timings of keystrokes and/or other input device interactions,</li>
 <li>thermal noise,</li>
 <li>the output of assembly instructions specially dedicated to random number generation, such as RdSeed,</li>
@@ -417,7 +417,7 @@ For cryptographic RNGs, an application SHOULD use only one thread-safe instance 
 <li><p>For other PRNGs, or if each process uses a different PRNG design, the following is a way to seed multiple processes for random number generation, but it carries the risk of generating seeds that lead to overlapping, correlated, or even identical number sequences, especially if the processes use the same PRNG.<sup><a href="#Note16"><strong>(16)</strong></a></sup> Generate a seed (or use a predetermined seed), then:</p>
 
 <ol>
-<li>Create a PRNG instance for each process.  The instances need not all be of the same design of PRNG; for example, some can be Philox and others <code>xoroshiro128**</code>.</li>
+<li>Create a PRNG instance for each process.  The instances need not all use the same PRNG design or the same parameters; for example, some can be Philox and others <code>xoroshiro128**</code>.</li>
 <li>For each process, hash the seed, a unique number for that process, and a fixed identifier to generate a new seed allowed by the process&#39;s PRNG, and initialize that PRNG with the new seed.</li>
 </ol></li>
 </ol>
@@ -425,7 +425,7 @@ For cryptographic RNGs, an application SHOULD use only one thread-safe instance 
 <p>The steps above include hashing several things to generate a new seed.  This has to be done with either a <a href="#Hash_Functions"><strong>hash function</strong></a> of N or more bits (where N is the PRNG&#39;s maximum seed size), or a so-called &quot;seed sequence generator&quot; like C++&#39;s <code>std::seed_seq</code>.<sup><a href="#Note17"><strong>(17)</strong></a></sup></p>
 
 <blockquote>
-<p><strong>Example:</strong> SFC64 is a counter-based PRNG. To seed two processes with the seed &quot;seed&quot; and this PRNG, an application can&mdash;</p>
+<p><strong>Example:</strong> SFC64 is a counter-based PRNG. To seed two processes based on the seed &quot;seed&quot; and this PRNG, an application can&mdash;</p>
 
 <ul>
 <li>take the first 192 bits of the SHA2-256 hash of &quot;seed-mysimulation&quot; as a new seed,</li>
@@ -877,7 +877,7 @@ For cryptographic RNGs, an application SHOULD use only one thread-safe instance 
 <td>192-bit state</td>
 </tr>
 <tr>
-<td>XorShift* 128/64</td>
+<td>XorShift* generator 128/64</td>
 <td>2^128 - 1</td>
 <td>2^128 - 1</td>
 <td>No known implementation</td>

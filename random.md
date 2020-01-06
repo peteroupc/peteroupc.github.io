@@ -226,7 +226,7 @@ RNGs ultimately rely on so-called _nondeterministic sources_; without such sourc
 
 A _nondeterministic source_ is a source that doesn't give the same output for the same input each time (for example, a clock that doesn't always give the same time).  There are many kinds of them, but sources useful for random number generation have hard-to-guess output (that is, they have high _entropy_; see the next section).  They include&mdash;
 
-- disk access timings,
+- timings of interrupts and disk accesses,
 - timings of keystrokes and/or other input device interactions,
 - thermal noise,
 - the output of assembly instructions specially dedicated to random number generation, such as RdSeed,
@@ -288,12 +288,12 @@ Depending on the PRNG, there are different ways to seed multiple processes for r
 
 3. For other PRNGs, or if each process uses a different PRNG design, the following is a way to seed multiple processes for random number generation, but it carries the risk of generating seeds that lead to overlapping, correlated, or even identical number sequences, especially if the processes use the same PRNG.<sup>[**(16)**](#Note16)</sup> Generate a seed (or use a predetermined seed), then:
 
-    1. Create a PRNG instance for each process.  The instances need not all be of the same design of PRNG; for example, some can be Philox and others `xoroshiro128**`.
+    1. Create a PRNG instance for each process.  The instances need not all use the same PRNG design or the same parameters; for example, some can be Philox and others `xoroshiro128**`.
     2. For each process, hash the seed, a unique number for that process, and a fixed identifier to generate a new seed allowed by the process's PRNG, and initialize that PRNG with the new seed.
 
 The steps above include hashing several things to generate a new seed.  This has to be done with either a [**hash function**](#Hash_Functions) of N or more bits (where N is the PRNG's maximum seed size), or a so-called "seed sequence generator" like C++'s `std::seed_seq`.<sup>[**(17)**](#Note17)</sup>
 
-> **Example:** SFC64 is a counter-based PRNG. To seed two processes with the seed "seed" and this PRNG, an application can&mdash;
+> **Example:** SFC64 is a counter-based PRNG. To seed two processes based on the seed "seed" and this PRNG, an application can&mdash;
 > - take the first 192 bits of the SHA2-256 hash of "seed-mysimulation" as a new seed,
 > - initialize the first process's PRNG with the new seed and a counter of 0, and
 > - initialize the second process's PRNG with 1 plus the new seed and a counter of 0.
@@ -470,7 +470,7 @@ A cryptographic RNG generates random bits that behave like independent uniform r
 
 If a cryptographic RNG implementation uses a PRNG, the following requirements apply.
 
-1. The PRNG admits any 128-bit or longer seed. It SHOULD admit any 256-bit or longer seed.
+1. The maximum size of seeds the PRNG admits is 128 bits or more and SHOULD be 256 bits or more.
 
 2. The _security strength_ used by the RNG is at least 128 bits and is not more than the maximum size, in bits, of seeds the PRNG admits.
 
@@ -492,7 +492,7 @@ A cryptographic RNG is not required to reseed itself.
 
 A PRNG is a high-quality RNG if&mdash;
 - it generates bits that behave like independent uniform random bits (at least for nearly all practical purposes outside of information security),
-- it admits any of 2<sup>63</sup> or more different seeds without shortening or compressing those seeds, and
+- the number of different seeds the PRNG admits without shortening or compressing those seeds is 2<sup>63</sup> or more, and
 - it either&mdash;
     - provides multiple sequences that are different for each seed, have at least 2<sup>64</sup> numbers each, do not overlap, and behave like independent random number sequences (at least for nearly all practical purposes outside of information security), or
     - has a period (maximum size of a "random" number cycle) equal or close to the number of different seeds the PRNG admits.
@@ -526,7 +526,7 @@ Besides cryptographic RNGs, the following are examples of high-quality PRNGs:
 | A high-quality PRNG that outputs hash codes of a C-bit counter and an S-bit seed (Salmon et al. 2011)<sup>[**(14)**](#Note14)</sup> | 2^S | At least 2^C per seed | C-bit counter | (C + S) bit state; C and S are each 64 or greater |
 | `gjrand` named after Geronimo Jones | 2^128 | At least 2^64 per seed | Separate stream per seed | 256-bit state |
 | XORWOW (Marsaglia 2003)<sup>[**(42)**](#Note42)</sup> | 2^32 * (2^32 - 1)^5 | 2^192 - 2^32 | No known implementation |  192-bit state |
-| XorShift\* 128/64 | 2^128 - 1 | 2^128 - 1 | No known implementation | Described by M. O'Neill in "You don't have to use PCG!", 2017. |
+| XorShift\* generator 128/64 | 2^128 - 1 | 2^128 - 1 | No known implementation | Described by M. O'Neill in "You don't have to use PCG!", 2017. |
 | XorShift\* 64/32 | 2^64 - 1 | 2^64 - 1 | No known implementation | Described by M. O'Neill in "You don't have to use PCG!", 2017.  |
 | Mersenne Twister (MT19937) | 2^19937 - 1 | 2^19937 - 1 | [**Jump-ahead**](http://www.math.sci.hiroshima-u.ac.jp/~m-mat/MT/JUMP/index.html) | Usually takes about 2500 8-bit bytes of memory.  This PRNG shows a [**systematic failure**](http://xoroshiro.di.unimi.it/#quality) in BigCrush's LinearComp test (part of L'Ecuyer and Simard's "TestU01"). (See also (Vigna 2016)<sup>[**(43)**](#Note43)</sup>.)
 | TinyMT64 (Tiny Mersenne Twister) | 2^127 - 1 | 2^127 - 1 | [**Jump-ahead**](http://www.math.sci.hiroshima-u.ac.jp/~m-mat/MT/TINYMT/JUMP/index.html) | Millions of possible parameter sets |

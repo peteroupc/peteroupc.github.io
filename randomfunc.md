@@ -29,14 +29,15 @@ All the random number methods presented on this page are ultimately based on an 
 
 **Comments on any aspect of this document are welcome, but especially comments on the following:**
 
-- **Corrections to any method given on this page.**
-- **Requests to provide an implementation of any method given here in other programming languages, in addition to Python.**
-- **If there is enough interest by readers, I may discuss approaches to generate random graphs or matrices.** <!-- Generating a random maze is equivalent to generating a random spanning tree of a mesh graph.  Generating a random path is equivalent to a simple random walk of a (weighted or unweighted) graph. -->
-- **Suggestions to add probability distributions to this document.**
-- **Ways to implement any of the randomization methods given in "Randomization with Real Numbers" using only random integers.**
-- **Suggestions to trim the size of this document, such as by limiting it to the most common and most useful methods for generating random numbers.**
-- **Is there any non-trivial use of random real numbers ("floating-point" numbers) in cryptography or other security-sensitive applications &mdash; except perhaps in machine learning models?**
-- **Is there any non-trivial use of random fixed-point numbers in any applications, other than uniform random numbers?**
+- Corrections to any method given on this page.
+- Should this page include implementations of these methods in other programming languages, in addition to Python?
+- Should this page include additional probability distributions?  If so, which ones?
+- Should this page discuss approaches to generate random graphs or matrices?  If so, how?
+- Ways to implement any of the randomization methods given in "[**Randomization with Real Numbers**](https://peteroupc.github.io/randomfunc.html#Randomization_with_Real_Numbers)" using only random integers.
+- Suggestions to trim the size of this document, such as by limiting it to the most common and most useful methods for generating random numbers.
+- Is there any non-trivial use of random real numbers ("floating-point" numbers) in cryptography or other security-sensitive applications &mdash; except perhaps in machine learning models?
+- Is there any non-trivial use of random fixed-point numbers in any applications, other than uniformly distributed numbers?
+- Integer-quantized numbers are seeing increased use today, especially in "deep-learning" neural networks.  What are ways to generate non-uniform integer-quantized numbers (especially 8-bit or smaller numbers)?
 
 <a id=Contents></a>
 ## Contents
