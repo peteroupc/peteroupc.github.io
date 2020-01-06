@@ -703,7 +703,7 @@ For cryptographic RNGs, an application SHOULD use only one thread-safe instance 
 <p>If a cryptographic RNG implementation uses a PRNG, the following requirements apply.</p>
 
 <ol>
-<li><p>The PRNG admits any 128-bit or longer seed. It SHOULD admit any 256-bit or longer seed.</p></li>
+<li><p>The maximum size of seeds the PRNG admits is 128 bits or more and SHOULD be 256 bits or more.</p></li>
 <li><p>The <em>security strength</em> used by the RNG is at least 128 bits and is not more than the maximum size, in bits, of seeds the PRNG admits.</p></li>
 <li><p>While or after the PRNG is created, and before it generates a random number, it is initialized (&quot;seeded&quot;) with a seed that&mdash;</p>
 
@@ -734,7 +734,7 @@ For cryptographic RNGs, an application SHOULD use only one thread-safe instance 
 
 <ul>
 <li>it generates bits that behave like independent uniform random bits (at least for nearly all practical purposes outside of information security),</li>
-<li>it admits any of 2<sup>63</sup> or more different seeds without shortening or compressing those seeds, and</li>
+<li>the number of different seeds the PRNG admits without shortening or compressing those seeds is 2<sup>63</sup> or more, and</li>
 <li>it either&mdash;
 
 <ul>
