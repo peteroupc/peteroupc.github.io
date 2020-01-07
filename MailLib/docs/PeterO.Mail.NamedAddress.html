@@ -331,18 +331,17 @@ is null.</li>
     System.Collections.Generic.IList addresses);
 </pre>
 
-<p>Generates a string containing the display names and email addresses of the given named-address objects, separated by commas. The generated string is intended to be displayed to end users, not parsed.</p>
+<p>Generates a string containing the display names and email addresses of the given named-address objects, separated by commas. The generated string is intended to be displayed to end users, and is not intended to be parsed by computer programs.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>addresses</i>: The parameter  <i>addresses</i>
-is a.Collections.Generic.IList{PeterO.Mail.NamedAddress} object.</li>
+<li><i>addresses</i>: A list of named address objects.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p>The return value is not documented yet.</p>
+<p>A string containing the display names and email addresses of the given named-address objects, separated by commas.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -359,11 +358,11 @@ is null.</li>
 <pre>public string ToDisplayString();
 </pre>
 
-<p>Converts this named-address object to a text string intended for display to end users. The returned string is not intended to be parsed.</p>
+<p>Converts this named-address object to a text string intended for display to end users. The returned string is not intended to be parsed by computer programs.</p>
 
 <p><b>Return Value:</b></p>
 
-<p>The return value is not documented yet.</p>
+<p>A text string of this named-address object, intended for display to end-users.</p>
 
 <p><a id="ToDisplayStringShort_System_Collections_Generic_IList"></a></p>
 
@@ -373,18 +372,17 @@ is null.</li>
     System.Collections.Generic.IList addresses);
 </pre>
 
-<p>Generates a string containing the display names of the given named-address objects, separated by commas. The generated string is intended to be displayed to end users, not parsed.</p>
+<p>Generates a string containing the display names of the given named-address objects, separated by commas. The generated string is intended to be displayed to end users, and is not intended to be parsed by computer programs. If a named address has no display name, its email address is used as the display name.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>addresses</i>: The parameter  <i>addresses</i>
-is a.Collections.Generic.IList{PeterO.Mail.NamedAddress} object.</li>
+<li><i>addresses</i>: A list of named address objects.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p>The return value is not documented yet.</p>
+<p>A string containing the display names of the given named-address objects, separated by commas.</p>
 
 <p><b>Exceptions:</b></p>
 
