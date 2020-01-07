@@ -246,7 +246,7 @@
 <li><code><a href="#ToSByteChecked">ToSByteChecked()</a></code> - Converts this number&#39;s value to an 8-bit signed integer if it can fit in an 8-bit signed integer after converting it to an integer by discarding its fractional part.</li>
 <li><code><a href="#ToSByteIfExact">ToSByteIfExact()</a></code> - Converts this number&#39;s value to an 8-bit signed integer if it can fit in an 8-bit signed integer without rounding to a different numerical value.</li>
 <li><code><a href="#ToSByteUnchecked">ToSByteUnchecked()</a></code> - Converts this number&#39;s value to an integer by discarding its fractional part, and returns the least-significant bits of its two&#39;s-complement form as an 8-bit signed integer.</li>
-<li><code><a href="#ToShortestString_PeterO_Numbers_EContext">ToShortestString(PeterO.Numbers.EContext)</a></code> - Returns a string representation of this number&#39;s value after rounding to the given precision (using the given arithmetic context).</li>
+<li><code><a href="#ToShortestString_PeterO_Numbers_EContext">ToShortestString(PeterO.Numbers.EContext)</a></code> - Returns a string representation of this number&#39;s value after rounding that value to the given precision (using the given arithmetic context, such as EContext.</li>
 <li><code><a href="#ToSingle">ToSingle()</a></code> - Converts this value to its closest equivalent as 32-bit floating-point number.</li>
 <li><code><a href="#ToString">ToString()</a></code> - Converts this number&#39;s value to a text string.</li>
 <li><code><a href="#ToUInt16Checked">ToUInt16Checked()</a></code> - Converts this number&#39;s value to a 16-bit unsigned integer if it can fit in a 16-bit unsigned integer after converting it to an integer by discarding its fractional part.</li>
@@ -4634,7 +4634,12 @@ This value is infinity or not-a-number, is not an exact integer, or is less than
     PeterO.Numbers.EContext ctx);
 </pre>
 
-<p>Returns a string representation of this number&#39;s value after rounding to the given precision (using the given arithmetic context). If the number after rounding is neither infinity nor not-a-number (NaN), returns the shortest decimal form of this number&#39;s value (in terms of decimal digits starting with the first nonzero digit and ending with the last nonzero digit) that results in the rounded number after the decimal form is converted to binary floating-point format (using the given arithmetic context).</p>
+<p>Returns a string representation of this number&#39;s value after rounding that value to the given precision (using the given arithmetic context, such as  <code>EContext.Binary64</code> ). If the number after rounding is neither infinity nor not-a-number (NaN), returns the shortest decimal form of this number&#39;s value (in terms of decimal digits starting with the first nonzero digit and ending with the last nonzero digit) that results in the rounded number after the decimal form is converted to binary floating-point format (using the given arithmetic context).</p>
+
+<p>The following example converts an EFloat number to its shortest round-tripping decimal form using the same precision as the  <code>double</code>  type in Java and .NET:</p>
+
+<pre> String str = efloat.ToShortestString(EContext.Binary64);
+</pre>
 
 <p><b>Parameters:</b></p>
 

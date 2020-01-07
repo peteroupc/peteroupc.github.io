@@ -601,9 +601,10 @@ part, and returns the least-significant bits of its two&#39;s-complement
 form as a 64-bit signed integer.</li>
 <li><code>java.lang.String ToPlainString()</code><br>
 Converts this value to a string, but without exponential notation.</li>
-<li><code>java.lang.String ToShortestString​(EContext ctx)</code><br>
-Returns a string representation of this number&#39;s value after rounding to the
-given precision (using the given arithmetic context).</li>
+<li><code>java.lang.String ToShortestString​(EContext ctx) EContext.Binary64</code><br>
+Returns a string representation of this number&#39;s value after rounding that
+value to the given precision (using the given arithmetic context,
+such as EContext.Binary64).</li>
 <li><code>float ToSingle()</code><br>
 Converts this value to its closest equivalent as 32-bit floating-point
 number.</li>
@@ -4146,14 +4147,17 @@ Renamed to ToEDecimal.</p>
 <pre>public java.lang.String ToShortestString​(EContext ctx)
 </pre>
 
-<p>Returns a string representation of this number&#39;s value after rounding to the
- given precision (using the given arithmetic context). If the number
- after rounding is neither infinity nor not-a-number (NaN), returns
- the shortest decimal form of this number&#39;s value (in terms of
- decimal digits starting with the first nonzero digit and ending with
- the last nonzero digit) that results in the rounded number after the
- decimal form is converted to binary floating-point format (using the
- given arithmetic context).</p>
+<p>Returns a string representation of this number&#39;s value after rounding that
+ value to the given precision (using the given arithmetic context,
+ such as <code>EContext.Binary64</code>). If the number after rounding is
+ neither infinity nor not-a-number (NaN), returns the shortest
+ decimal form of this number&#39;s value (in terms of decimal digits
+ starting with the first nonzero digit and ending with the last
+ nonzero digit) that results in the rounded number after the decimal
+ form is converted to binary floating-point format (using the given
+ arithmetic context).<p> </p><p>The following example converts an EFloat
+ number to its shortest round-tripping decimal form using the same
+ precision as the <code>double</code> type in Java and.getNET():</p> <pre> string str = efloat.ToShortestString(EContext.Binary64); </pre></p>
 
 <p><strong>Parameters:</strong></p>
 
