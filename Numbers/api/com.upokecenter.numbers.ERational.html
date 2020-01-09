@@ -90,6 +90,9 @@ Returns a number with the same value as this one, but copying the sign
 <li><code>static ERational Create​(int numeratorSmall,
   int denominatorSmall)</code><br>
 Creates a rational number with the given numerator and denominator.</li>
+<li><code>static ERational Create​(long numeratorLong,
+  long denominatorLong)</code><br>
+Creates a rational number with the given numerator and denominator.</li>
 <li><code>static ERational Create​(EInteger numerator,
   EInteger denominator)</code><br>
 Creates a rational number with the given numerator and denominator.</li>
@@ -497,6 +500,32 @@ returns the diagnostic information.</li>
 <ul>
 <li><p><code>numeratorSmall</code> - The numerator.</p></li>
 <li><p><code>denominatorSmall</code> - The denominator.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An arbitrary-precision rational number.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>java.lang.IllegalArgumentException</code> - The denominator is zero.</li>
+</ul>
+
+<h3>Create</h3>
+
+<pre>public static ERational Create​(long numeratorLong, long denominatorLong)
+</pre>
+
+<p>Creates a rational number with the given numerator and denominator.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>numeratorLong</code> - The numerator.</p></li>
+<li><p><code>denominatorLong</code> - The denominator.</p></li>
 </ul>
 
 <p><strong>Returns:</strong></p>

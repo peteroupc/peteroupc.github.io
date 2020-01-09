@@ -150,10 +150,13 @@ Returns a number with the same value as this one, but copying the sign
 (positive or negative) of another number.</li>
 <li><code>static EFloat Create​(int mantissaSmall,
   int exponentSmall)</code><br>
-Creates a number with the value exponent*2^significand.</li>
+Returns a number with the value exponent*2^significand.</li>
+<li><code>static EFloat Create​(long mantissaLong,
+  long exponentLong)</code><br>
+Returns a number with the value exponent*2^significand.</li>
 <li><code>static EFloat Create​(EInteger mantissa,
   EInteger exponent)</code><br>
-Creates a number with the value exponent*2^significand.</li>
+Returns a number with the value exponent*2^significand.</li>
 <li><code>static EFloat CreateNaN​(EInteger diag)</code><br>
 Creates a not-a-number arbitrary-precision binary floating-point number.</li>
 <li><code>static EFloat CreateNaN​(EInteger diag,
@@ -798,14 +801,33 @@ value is negative (including a negative NaN).</li>
 <pre>public static EFloat Create​(int mantissaSmall, int exponentSmall)
 </pre>
 
-<p>Creates a number with the value exponent*2^significand.</p>
+<p>Returns a number with the value exponent*2^significand.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>mantissaSmall</code> - The parameter <code>mantissaSmall</code> is a 32-bit signed
-integer.</p></li>
+<li><p><code>mantissaSmall</code> - Desired value for the significand.</p></li>
 <li><p><code>exponentSmall</code> - Desired value for the exponent.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An arbitrary-precision binary floating-point number.</li>
+</ul>
+
+<h3>Create</h3>
+
+<pre>public static EFloat Create​(long mantissaLong, long exponentLong)
+</pre>
+
+<p>Returns a number with the value exponent*2^significand.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>mantissaLong</code> - Desired value for the significand.</p></li>
+<li><p><code>exponentLong</code> - Desired value for the exponent.</p></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -819,13 +841,13 @@ integer.</p></li>
 <pre>public static EFloat Create​(EInteger mantissa, EInteger exponent)
 </pre>
 
-<p>Creates a number with the value exponent*2^significand.</p>
+<p>Returns a number with the value exponent*2^significand.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>mantissa</code> - The parameter <code>mantissa</code> is a Numbers.EInteger object.</p></li>
-<li><p><code>exponent</code> - The value of the exponent.</p></li>
+<li><p><code>mantissa</code> - Desired value for the significand.</p></li>
+<li><p><code>exponent</code> - Desired value for the exponent.</p></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
