@@ -67,8 +67,9 @@
 <li><code><a href="#CompareToWithContext_PeterO_Numbers_EFloat_PeterO_Numbers_EContext">CompareToWithContext(PeterO.Numbers.EFloat, PeterO.Numbers.EContext)</a></code> - Compares the mathematical values of this object and another object.</li>
 <li><code><a href="#Copy">Copy()</a></code> - Creates a copy of this arbitrary-precision binary number.</li>
 <li><code><a href="#CopySign_PeterO_Numbers_EFloat">CopySign(PeterO.Numbers.EFloat)</a></code> - Returns a number with the same value as this one, but copying the sign (positive or negative) of another number.</li>
-<li><code><a href="#Create_int_int">Create(int, int)</a></code> - Creates a number with the value exponent*2^significand.</li>
-<li><code><a href="#Create_PeterO_Numbers_EInteger_PeterO_Numbers_EInteger">Create(PeterO.Numbers.EInteger, PeterO.Numbers.EInteger)</a></code> - Creates a number with the value exponent*2^significand.</li>
+<li><code><a href="#Create_int_int">Create(int, int)</a></code> - Returns a number with the value exponent*2^significand.</li>
+<li><code><a href="#Create_long_long">Create(long, long)</a></code> - Returns a number with the value exponent*2^significand.</li>
+<li><code><a href="#Create_PeterO_Numbers_EInteger_PeterO_Numbers_EInteger">Create(PeterO.Numbers.EInteger, PeterO.Numbers.EInteger)</a></code> - Returns a number with the value exponent*2^significand.</li>
 <li><code><a href="#CreateNaN_PeterO_Numbers_EInteger">CreateNaN(PeterO.Numbers.EInteger)</a></code> - Creates a not-a-number arbitrary-precision binary floating-point number.</li>
 <li><code><a href="#CreateNaN_PeterO_Numbers_EInteger_bool_bool_PeterO_Numbers_EContext">CreateNaN(PeterO.Numbers.EInteger, bool, bool, PeterO.Numbers.EContext)</a></code> - Creates a not-a-number arbitrary-precision binary floating-point number.</li>
 <li><code><a href="#Decrement">Decrement()</a></code> - Returns one subtracted from this arbitrary-precision binary floating-point number.</li>
@@ -849,14 +850,35 @@ is null.</li>
     int exponentSmall);
 </pre>
 
-<p>Creates a number with the value exponent*2^significand.</p>
+<p>Returns a number with the value exponent*2^significand.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>mantissaSmall</i>: The parameter  <i>mantissaSmall</i>
-is a 32-bit signed integer.</p></li>
+<li><p><i>mantissaSmall</i>: Desired value for the significand.</p></li>
 <li><p><i>exponentSmall</i>: Desired value for the exponent.</p></li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>An arbitrary-precision binary floating-point number.</p>
+
+<p><a id="Create_long_long"></a></p>
+
+<h3>Create</h3>
+
+<pre>public static PeterO.Numbers.EFloat Create(
+    long mantissaLong,
+    long exponentLong);
+</pre>
+
+<p>Returns a number with the value exponent*2^significand.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>mantissaLong</i>: Desired value for the significand.</p></li>
+<li><p><i>exponentLong</i>: Desired value for the exponent.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -872,14 +894,13 @@ is a 32-bit signed integer.</p></li>
     PeterO.Numbers.EInteger exponent);
 </pre>
 
-<p>Creates a number with the value exponent*2^significand.</p>
+<p>Returns a number with the value exponent*2^significand.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>mantissa</i>: The parameter  <i>mantissa</i>
-is a Numbers.EInteger object.</p></li>
-<li><p><i>exponent</i>: The value of the exponent.</p></li>
+<li><p><i>mantissa</i>: Desired value for the significand.</p></li>
+<li><p><i>exponent</i>: Desired value for the exponent.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>

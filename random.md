@@ -525,20 +525,20 @@ Besides cryptographic RNGs, the following are examples of high-quality PRNGs:
 | A high-quality PRNG that uses a block cipher with an S-bit key to output C-bit encrypted counters (Salmon et al. 2011)<sup>[**(14)**](#Note14)</sup> | 2^S | At least 2^C per seed | C-bit counter | (C + S) bit state; C and S are each 64 or greater |
 | A high-quality PRNG that outputs hash codes of a C-bit counter and an S-bit seed (Salmon et al. 2011)<sup>[**(14)**](#Note14)</sup> | 2^S | At least 2^C per seed | C-bit counter | (C + S) bit state; C and S are each 64 or greater |
 | `gjrand` named after Geronimo Jones | 2^128 | At least 2^64 per seed | Separate stream per seed | 256-bit state |
-| XORWOW (Marsaglia 2003)<sup>[**(42)**](#Note42)</sup> | 2^32 * (2^32 - 1)^5 | 2^192 - 2^32 | No known implementation |  192-bit state |
-| XorShift\* generator 128/64 | 2^128 - 1 | 2^128 - 1 | No known implementation | Described by M. O'Neill in "You don't have to use PCG!", 2017. |
-| XorShift\* 64/32 | 2^64 - 1 | 2^64 - 1 | No known implementation | Described by M. O'Neill in "You don't have to use PCG!", 2017.  |
-| Mersenne Twister (MT19937) | 2^19937 - 1 | 2^19937 - 1 | [**Jump-ahead**](http://www.math.sci.hiroshima-u.ac.jp/~m-mat/MT/JUMP/index.html) | Usually takes about 2500 8-bit bytes of memory.  This PRNG shows a [**systematic failure**](http://xoroshiro.di.unimi.it/#quality) in BigCrush's LinearComp test (part of L'Ecuyer and Simard's "TestU01"). (See also (Vigna 2016)<sup>[**(43)**](#Note43)</sup>.)
+| XORWOW (Marsaglia 2003)<sup>[**(42)**](#Note42)</sup> | 2^32 * (2^32 - 1)^5 | 2^192 - 2^32 | No known implementation | 192-bit state |
 | TinyMT64 (Tiny Mersenne Twister) | 2^127 - 1 | 2^127 - 1 | [**Jump-ahead**](http://www.math.sci.hiroshima-u.ac.jp/~m-mat/MT/TINYMT/JUMP/index.html) | Millions of possible parameter sets |
-| A multiplicative [**linear congruential generator**](https://en.wikipedia.org/wiki/Linear_congruential_generator) (LCG) with prime modulus greater than 2<sup>63</sup> described in Table 2 of (L'Ecuyer 1999)<sup>[**(44)**](#Note44)</sup> | Modulus - 1 | Modulus - 1 | Jump-ahead | Memory used depends on modulus size |
-| `JLKISS64` (Jones 2007/2010)<sup>[**(45)**](#Note45)</sup> | 2^64 * (2^64 - 1)^3 | About 2^250 | None known | Usually takes about 256 bits of memory.  Has six seed variables, namely two 64-bit variables and two 32-bit pairs.  One of the 64-bit variables is nonzero, and the variables in each 32-bit pair cannot both be zero. |
-| C++'s [**`std::ranlux48` engine**](http://www.cplusplus.com/reference/random/ranlux48/) | 2^577 - 2 | Not discussed (see notes) | No known implementation | Usually takes about 192 8-bit bytes of memory. Seed's bits cannot be all zeros or all ones (L&uuml;scher 1994)<sup>[**(46)**](#Note46)</sup>.  The period for `ranlux48`'s underlying generator is about 2^576.4.  |
+| A multiplicative [**linear congruential generator**](https://en.wikipedia.org/wiki/Linear_congruential_generator) (LCG) with prime modulus greater than 2<sup>63</sup> described in Table 2 of (L'Ecuyer 1999)<sup>[**(43)**](#Note43)</sup> | Modulus - 1 | Modulus - 1 | Jump-ahead | Memory used depends on modulus size |
+| XorShift\* 128/64 | 2^128 - 1 | 2^128 - 1 | No known implementation | 128-bit state. Each iteration is LCG-then-xorshift. Described by M. O'Neill in "You don't have to use PCG!", 2017. |
+| XorShift\* 64/32 | 2^64 - 1 | 2^64 - 1 | No known implementation | 64-bit state. Described by M. O'Neill in "You don't have to use PCG!", 2017. |
+| C++'s [**`std::ranlux48` engine**](http://www.cplusplus.com/reference/random/ranlux48/) | 2^577 - 2 | Not discussed (see notes) | No known implementation | Usually takes about 192 8-bit bytes of memory. Seed's bits cannot be all zeros or all ones (L&uuml;scher 1994)<sup>[**(44)**](#Note44)</sup>.  The period for `ranlux48`'s underlying generator is about 2^576.4.  |
+| Mersenne Twister (MT19937) | 2^19937 - 1 | 2^19937 - 1 | [**Jump-ahead**](http://www.math.sci.hiroshima-u.ac.jp/~m-mat/MT/JUMP/index.html) | Usually takes about 2500 8-bit bytes of memory.  This PRNG is not preferred; it shows a [**systematic failure**](http://xoroshiro.di.unimi.it/#quality) in BigCrush's LinearComp test (part of L'Ecuyer and Simard's "TestU01"). (See also (Vigna 2016)<sup>[**(45)**](#Note45)</sup>.) |
 | A high-quality PRNG that is an LCG with non-prime modulus (or a PRNG based on one, such as PCG) | Depends on parameters | Depends on parameters | Jump-ahead. What PCG calls "streams" does not produce independent sequences. | These PRNGs are not preferred; in particular, if the modulus is a power of 2, they produce highly correlated "random" number sequences from seeds that differ only in their high bits (see S. Vigna, "[**The wrap-up on PCG generators**](http://pcg.di.unimi.it/pcg.php)") and lowest bits have short periods. |
 
 The following are not considered high-quality PRNGs:
 - Any LCG with modulus less than 2<sup>63</sup> (such as `java.util.Random` and C++'s `std::minstd_rand` and `std::minstd_rand0` engines) admits fewer than 2<sup>63</sup> seeds.
 - `System.Random`, as implemented in the .NET Framework 4.7, can take a seed of at most 32 bits, so it admits fewer than 2<sup>63</sup> seeds.
-- Tyche and Tyche-i, as given in (Neves and Araujo 2011)<sup>[**(47)**](#Note47)</sup>, allow 2<sup>64</sup> valid seeds, but have no guaranteed cycle length of at least 2<sup>64</sup> per seed.
+- Tyche and Tyche-i, as given in (Neves and Araujo 2011)<sup>[**(46)**](#Note46)</sup>, allow 2<sup>64</sup> valid seeds, but have no guaranteed cycle length of at least 2<sup>64</sup> per seed.
+- In general, any so-called "chaotic" PRNG whose period is not close to the number of admissible seeds.  This includes middle square, multiply-with-carry (MWC), and PRNGs based on MWC, such as JKISS, JLKISS, and JLKISS64 (Jones 2007/2010)<sup>[**(47)**](#Note47)</sup>.
 - B. Jenkins's "A small noncryptographic PRNG" (sometimes known as JSF or JSF64) has no guaranteed cycle length of at least 2<sup>64</sup> per seed.  Moreover, the 32-bit version (JSF32) allows only 2<sup>32</sup> valid seeds (however, Jenkins found JSF32 to produce nonoverlapping streams of at least 2^20 values per seed).
 - `msws` (Widynski 2017)<sup>[**(48)**](#Note48)</sup> allows only about 2<sup>54.1</sup> valid seeds.
 - Sequential counters.
@@ -696,15 +696,15 @@ See also N. Reed, "Quick And Easy GPU Random Numbers In D3D11", Nathan Reed's co
 
 <small><sup id=Note42>(42)</sup> G. Marsaglia, "Xorshift RNGs", _Journal of Statistical Software_ 8(14), 2003.</small>
 
-<small><sup id=Note43>(43)</sup> S. Vigna, "[**An experimental exploration of Marsaglia's `xorshift` generators, scrambled**](http://vigna.di.unimi.it/ftp/papers/xorshift.pdf)", 2016.</small>
+<small><sup id=Note43>(43)</sup> P. L'Ecuyer, "Tables of Linear Congruential Generators of Different Sizes and Good Lattice Structure", _Mathematics of Computation_ 68(225), January 1999.</small>
 
-<small><sup id=Note44>(44)</sup> P. L'Ecuyer, "Tables of Linear Congruential Generators of Different Sizes and Good Lattice Structure", _Mathematics of Computation_ 68(225), January 1999.</small>
+<small><sup id=Note44>(44)</sup> L&uuml;scher, M., "A Portable High-Quality Random Number Generator for Lattice Field Theory Simulations", arXiv:hep-lat/9309020 (1994).</small>
 
-<small><sup id=Note45>(45)</sup> Jones, D., "Good Practice in (Pseudo) Random Number Generation for Bioinformatics Applications", 2007/2010.</small>
+<small><sup id=Note45>(45)</sup> S. Vigna, "[**An experimental exploration of Marsaglia's `xorshift` generators, scrambled**](http://vigna.di.unimi.it/ftp/papers/xorshift.pdf)", 2016.</small>
 
-<small><sup id=Note46>(46)</sup> L&uuml;scher, M., "A Portable High-Quality Random Number Generator for Lattice Field Theory Simulations", arXiv:hep-lat/9309020 (1994).</small>
+<small><sup id=Note46>(46)</sup> Neves, S., and Araujo, F., "Fast and Small Nonlinear Pseudorandom Number Generators for Computer Simulation", 2011.</small>
 
-<small><sup id=Note47>(47)</sup> Neves, S., and Araujo, F., "Fast and Small Nonlinear Pseudorandom Number Generators for Computer Simulation", 2011.</small>
+<small><sup id=Note47>(47)</sup> Jones, D., "Good Practice in (Pseudo) Random Number Generation for Bioinformatics Applications", 2007/2010.</small>
 
 <small><sup id=Note48>(48)</sup> Widynski, B., "Middle Square Weyl Sequence RNG", arXiv:1704.00358 [cs.CR], 2017.</small>
 
