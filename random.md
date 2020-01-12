@@ -538,7 +538,7 @@ The following are not considered high-quality PRNGs:
 - Any LCG with modulus less than 2<sup>63</sup> (such as `java.util.Random` and C++'s `std::minstd_rand` and `std::minstd_rand0` engines) admits fewer than 2<sup>63</sup> seeds.
 - `System.Random`, as implemented in the .NET Framework 4.7, can take a seed of at most 32 bits, so it admits fewer than 2<sup>63</sup> seeds.
 - Tyche and Tyche-i, as given in (Neves and Araujo 2011)<sup>[**(47)**](#Note47)</sup>, allow 2<sup>64</sup> valid seeds, but have no guaranteed cycle length of at least 2<sup>64</sup> per seed.
-- In general, any so-called "chaotic" PRNG whose period is not close to the number of admissible seeds.  This includes middle square, multiply-with-carry (MWC), and PRNGs based on MWC, such as JKISS, JLKISS, and JLKISS64 (Jones 2007/2010)<sup>[**(48)**](#Note48)</sup>.
+- In general, any so-called "chaotic" PRNG whose period is not close to the number of admissible seeds.  This includes middle square, Rule-30 and other cellular-automaton PRNGs, multiply-with-carry (MWC), and PRNGs that use MWC, such as JKISS, JLKISS, and JLKISS64 (Jones 2007/2010)<sup>[**(48)**](#Note48)</sup>.
 - B. Jenkins's "A small noncryptographic PRNG" (sometimes known as JSF or JSF64) has no guaranteed cycle length of at least 2<sup>64</sup> per seed.  Moreover, the 32-bit version (JSF32) allows only 2<sup>32</sup> valid seeds (however, Jenkins found JSF32 to produce nonoverlapping streams of at least 2^20 values per seed).
 - `msws` (Widynski 2017)<sup>[**(49)**](#Note49)</sup> allows only about 2<sup>54.1</sup> valid seeds.
 - Sequential counters.
