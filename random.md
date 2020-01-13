@@ -310,12 +310,12 @@ As much as possible, **applications SHOULD use existing libraries and techniques
 | Language   | Cryptographic   | High-Quality |
  --------|-----------------------------------------------|------|
 | .NET (incl. C# and VB.NET) (H) | `RandomNumberGenerator.Create()` in `System.Security.Cryptography` namespace; [**airbreather/AirBreather.Common library**](https://github.com/airbreather/Airbreather.Common) (CryptographicRandomGenerator) | [**airbreather/AirBreather.Common library**](https://github.com/airbreather/Airbreather.Common) (XorShift1024Star, XorShift128Plus, XoroShiro128Plus) |
-| C/C++ (G)  | (C) | [**`xoroshiro128plusplus.c`**](http://xoroshiro.di.unimi.it/xoroshiro128plusplus.c); [**`xoshiro256starstar.c`**](http://xoroshiro.di.unimi.it/xoshiro256starstar.c); [**frostburn/jkiss**](https://github.com/frostburn/jkiss) library |
-| Python (A) | `secrets.SystemRandom` (since Python 3.6); `os.urandom()`| `pypcg` package; [**ihaque/xorshift**](https://github.com/ihaque/xorshift) library (default seed uses `os.urandom()`); [**`numpy.random.Generator`**](https://docs.scipy.org/doc/numpy/reference/random/index.html) with `PCG64`, `Philox`, or `SFC64` (since ver. 1.7) |
+| C/C++ (G)  | (C) | [**`xoroshiro128plusplus.c`**](http://xoroshiro.di.unimi.it/xoroshiro128plusplus.c); [**`xoshiro256starstar.c`**](http://xoroshiro.di.unimi.it/xoshiro256starstar.c) |
+| Python (A) | `secrets.SystemRandom` (since Python 3.6); `os.urandom()`| `pypcg` package; [**ihaque/xorshift**](https://github.com/ihaque/xorshift) library (default seed uses `os.urandom()`); [**`numpy.random.Generator`**](https://docs.scipy.org/doc/numpy/reference/random/index.html) with `PCG64`, `Philox`, or `SFC64` (since ver. 1.7); `hashlib.md5(b"%d_%d" % (seed, counter)).digest()`, `hashlib.sha1(b"%d_%d" % (seed, counter)).digest()` |
 | Java (A) (D) | (C); `java.security.SecureRandom` (F) |  [**`it.unimi.dsi/dsiutils` artifact**](http://dsiutils.di.unimi.it/docs/it/unimi/dsi/util/package-summary.html) (XoRoShiRo128PlusPlusRandom, XoShiRo128PlusPlusRandom, XoShiRo256PlusRandom, XorShift1024StarPhiRandom); [**jenetics/prngine**](https://github.com/jenetics/prngine) (`KISS32Random`, `KISS64Random`) |
 | JavaScript (B) | `crypto.randomBytes(byteCount)` (node.js only); `random-number-csprng` package (node.js only); `crypto.getRandomValues()` (Web) | `pcg-random` or `xoroshiro128starstar` package |
 | Ruby (A) (E) | (C); `SecureRandom.rand()` (0 or greater and less than 1) (E); `SecureRandom.rand(N)` (integer) (E) (for both, `require 'securerandom'`); `sysrandom` gem |  |
-| PHP (A) | `random_int()`, `random_bytes()` (both since PHP 7) |  |
+| PHP (A) | `random_int()`, `random_bytes()` (both since PHP 7) | `Digest::MD5.digest("#{seed}_#{counter}")`, `Digest::SHA1.digest("#{seed}_#{counter}")` (for both, `require 'digest'`) |
 | Go | `crypto/rand` package |  |
 | Rust | `rand` crate (StdRng) | `rand_xoshiro` crate (Xoroshiro128PlusPlus, Xoshiro256PlusPlus, Xoshiro256StarStar, Xoshiro512StarStar) |
 | Perl | `Crypt::URandom` module |  |

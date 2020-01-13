@@ -461,12 +461,12 @@ For cryptographic RNGs, an application SHOULD use only one thread-safe instance 
 <tr>
 <td>C/C++ (G)</td>
 <td>(C)</td>
-<td><a href="http://xoroshiro.di.unimi.it/xoroshiro128plusplus.c"><strong><code>xoroshiro128plusplus.c</code></strong></a>; <a href="http://xoroshiro.di.unimi.it/xoshiro256starstar.c"><strong><code>xoshiro256starstar.c</code></strong></a>; <a href="https://github.com/frostburn/jkiss"><strong>frostburn/jkiss</strong></a> library</td>
+<td><a href="http://xoroshiro.di.unimi.it/xoroshiro128plusplus.c"><strong><code>xoroshiro128plusplus.c</code></strong></a>; <a href="http://xoroshiro.di.unimi.it/xoshiro256starstar.c"><strong><code>xoshiro256starstar.c</code></strong></a></td>
 </tr>
 <tr>
 <td>Python (A)</td>
 <td><code>secrets.SystemRandom</code> (since Python 3.6); <code>os.urandom()</code></td>
-<td><code>pypcg</code> package; <a href="https://github.com/ihaque/xorshift"><strong>ihaque/xorshift</strong></a> library (default seed uses <code>os.urandom()</code>); <a href="https://docs.scipy.org/doc/numpy/reference/random/index.html"><strong><code>numpy.random.Generator</code></strong></a> with <code>PCG64</code>, <code>Philox</code>, or <code>SFC64</code> (since ver. 1.7)</td>
+<td><code>pypcg</code> package; <a href="https://github.com/ihaque/xorshift"><strong>ihaque/xorshift</strong></a> library (default seed uses <code>os.urandom()</code>); <a href="https://docs.scipy.org/doc/numpy/reference/random/index.html"><strong><code>numpy.random.Generator</code></strong></a> with <code>PCG64</code>, <code>Philox</code>, or <code>SFC64</code> (since ver. 1.7); <code>hashlib.md5(b&quot;%d_%d&quot; % (seed, counter)).digest()</code>, <code>hashlib.sha1(b&quot;%d_%d&quot; % (seed, counter)).digest()</code></td>
 </tr>
 <tr>
 <td>Java (A) (D)</td>
@@ -486,7 +486,7 @@ For cryptographic RNGs, an application SHOULD use only one thread-safe instance 
 <tr>
 <td>PHP (A)</td>
 <td><code>random_int()</code>, <code>random_bytes()</code> (both since PHP 7)</td>
-<td></td>
+<td><code>Digest::MD5.digest(&quot;#{seed}_#{counter}&quot;)</code>, <code>Digest::SHA1.digest(&quot;#{seed}_#{counter}&quot;)</code> (for both, <code>require &#39;digest&#39;</code>)</td>
 </tr>
 <tr>
 <td>Go</td>
