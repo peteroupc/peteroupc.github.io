@@ -303,7 +303,7 @@ The steps above include hashing several things to generate a new seed.  This has
 
 As much as possible, **applications SHOULD use existing libraries and techniques** for cryptographic and high-quality RNGs. The following table lists application programming interfaces (APIs) for such RNGs for popular programming languages.
 
-- PRNGs mentioned in the "High-Quality" column need to be initialized with a seed before use (see "[**Seed Generation for Noncryptographic PRNGs**](#Seed_Generation_for_Noncryptographic_PRNGs)").
+- PRNGs mentioned in the "High-Quality" column need to be initialized with a seed (see "[**Seed Generation for Noncryptographic PRNGs**](#Seed_Generation_for_Noncryptographic_PRNGs)").
 - The mention of a third-party library in this section does not imply that the library is the best one available for any particular purpose. The list is not comprehensive.
 - See also [**Paragon's blog post**](https://paragonie.com/blog/2016/05/how-generate-secure-random-numbers-in-various-programming-languages) on existing cryptographic RNGs.
 
@@ -312,16 +312,16 @@ As much as possible, **applications SHOULD use existing libraries and techniques
 | .NET (incl. C# and VB.NET) (H) | `RandomNumberGenerator.Create()` in `System.Security.Cryptography` namespace; [**airbreather/AirBreather.Common library**](https://github.com/airbreather/Airbreather.Common) (CryptographicRandomGenerator) | [**airbreather/AirBreather.Common library**](https://github.com/airbreather/Airbreather.Common) (XorShift1024Star, XorShift128Plus, XoroShiro128Plus) |
 | C/C++ (G)  | (C) | [**`xoroshiro128plusplus.c`**](http://xoroshiro.di.unimi.it/xoroshiro128plusplus.c); [**`xoshiro256starstar.c`**](http://xoroshiro.di.unimi.it/xoshiro256starstar.c) |
 | Python (A) | `secrets.SystemRandom` (since Python 3.6); `os.urandom()`| `pypcg` package; [**ihaque/xorshift**](https://github.com/ihaque/xorshift) library (default seed uses `os.urandom()`); [**`numpy.random.Generator`**](https://docs.scipy.org/doc/numpy/reference/random/index.html) with `PCG64`, `Philox`, or `SFC64` (since ver. 1.7); `hashlib.md5(b"%d_%d" % (seed, counter)).digest()`, `hashlib.sha1(b"%d_%d" % (seed, counter)).digest()` |
-| Java (A) (D) | (C); `java.security.SecureRandom` (F) |  [**`it.unimi.dsi/dsiutils` artifact**](http://dsiutils.di.unimi.it/docs/it/unimi/dsi/util/package-summary.html) (XoRoShiRo128PlusPlusRandom, XoShiRo128PlusPlusRandom, XoShiRo256PlusRandom, XorShift1024StarPhiRandom); [**jenetics/prngine**](https://github.com/jenetics/prngine) (`KISS32Random`, `KISS64Random`) |
-| JavaScript (B) | `crypto.randomBytes(byteCount)` (node.js only); `random-number-csprng` package (node.js only); `crypto.getRandomValues()` (Web) | `pcg-random` or `xoroshiro128starstar` package |
-| Ruby (A) (E) | (C); `SecureRandom.rand()` (0 or greater and less than 1) (E); `SecureRandom.rand(N)` (integer) (E) (for both, `require 'securerandom'`); `sysrandom` gem |  |
-| PHP (A) | `random_int()`, `random_bytes()` (both since PHP 7) | `Digest::MD5.digest("#{seed}_#{counter}")`, `Digest::SHA1.digest("#{seed}_#{counter}")` (for both, `require 'digest'`) |
+| Java (A) (D) | (C); `java.security.SecureRandom` (F) |  [**`it.unimi.dsi/dsiutils` artifact**](http://dsiutils.di.unimi.it/docs/it/unimi/dsi/util/package-summary.html) (XoRoShiRo128PlusPlusRandom, XoShiRo128PlusPlusRandom, XoShiRo256PlusRandom, XorShift1024StarPhiRandom) |
+| JavaScript (B) | `crypto.randomBytes(byteCount)` (node.js only); `random-number-csprng` package (node.js only); `crypto.getRandomValues()` (Web) | `xoroshiro128starstar` package; `md5` package (`md5(seed+"_"+counter, {asBytes: true})`); `crypto.createHash("sha1")` (node.js only) |
+| Ruby (A) (E) | (C); `SecureRandom.rand()` (0 or greater and less than 1) (E); `SecureRandom.rand(N)` (integer) (E) (for both, `require 'securerandom'`); `sysrandom` gem |  `Digest::MD5.digest("#{seed}_#{counter}")`, `Digest::SHA1.digest("#{seed}_#{counter}")` (for both, `require 'digest'`) |
+| PHP (A) | `random_int()`, `random_bytes()` (both since PHP 7) | |
 | Go | `crypto/rand` package |  |
 | Rust | `rand` crate (StdRng) | `rand_xoshiro` crate (Xoroshiro128PlusPlus, Xoshiro256PlusPlus, Xoshiro256StarStar, Xoshiro512StarStar) |
 | Perl | `Crypt::URandom` module |  |
 | Other Languages | (C) |  |
 
-<small>(A) The general RNGs of recent versions of Python and Ruby implement [**Mersenne Twister**](https://en.wikipedia.org/wiki/Mersenne_Twister), which is not preferred for a high-quality RNG.  PHP's `mt_rand()` implements or implemented a flawed version of Mersenne Twister. `prngine`, a Java library, also has `MT19937_32Random` and `MT19937_64Random` classes that implement Mersenne Twister.</small>
+<small>(A) The general RNGs of recent versions of Python and Ruby implement [**Mersenne Twister**](https://en.wikipedia.org/wiki/Mersenne_Twister), which is not preferred for a high-quality RNG.  PHP's `mt_rand()` implements or implemented a flawed version of Mersenne Twister. The [**`io.jenetics/prngine` artifact**](https://github.com/jenetics/prngine), a Java library, also has `MT19937_32Random` and `MT19937_64Random` classes that implement Mersenne Twister.</small>
 
 <small>(B) JavaScript's `Math.random()` (which ranges 0 or greater and less than 1) is implemented using `xorshift128+` (or a variant) in the V8 engine, Firefox, and certain other modern browsers as of late 2017; `Math.random()` uses an "implementation-dependent algorithm or strategy", though (see ECMAScript sec. 20.2.2.27).</small>
 

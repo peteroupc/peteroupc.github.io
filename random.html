@@ -441,7 +441,7 @@ For cryptographic RNGs, an application SHOULD use only one thread-safe instance 
 <p>As much as possible, <strong>applications SHOULD use existing libraries and techniques</strong> for cryptographic and high-quality RNGs. The following table lists application programming interfaces (APIs) for such RNGs for popular programming languages.</p>
 
 <ul>
-<li>PRNGs mentioned in the &quot;High-Quality&quot; column need to be initialized with a seed before use (see &quot;<a href="#Seed_Generation_for_Noncryptographic_PRNGs"><strong>Seed Generation for Noncryptographic PRNGs</strong></a>&quot;).</li>
+<li>PRNGs mentioned in the &quot;High-Quality&quot; column need to be initialized with a seed (see &quot;<a href="#Seed_Generation_for_Noncryptographic_PRNGs"><strong>Seed Generation for Noncryptographic PRNGs</strong></a>&quot;).</li>
 <li>The mention of a third-party library in this section does not imply that the library is the best one available for any particular purpose. The list is not comprehensive.</li>
 <li>See also <a href="https://paragonie.com/blog/2016/05/how-generate-secure-random-numbers-in-various-programming-languages"><strong>Paragon&#39;s blog post</strong></a> on existing cryptographic RNGs.</li>
 </ul>
@@ -471,22 +471,22 @@ For cryptographic RNGs, an application SHOULD use only one thread-safe instance 
 <tr>
 <td>Java (A) (D)</td>
 <td>(C); <code>java.security.SecureRandom</code> (F)</td>
-<td><a href="http://dsiutils.di.unimi.it/docs/it/unimi/dsi/util/package-summary.html"><strong><code>it.unimi.dsi/dsiutils</code> artifact</strong></a> (XoRoShiRo128PlusPlusRandom, XoShiRo128PlusPlusRandom, XoShiRo256PlusRandom, XorShift1024StarPhiRandom); <a href="https://github.com/jenetics/prngine"><strong>jenetics/prngine</strong></a> (<code>KISS32Random</code>, <code>KISS64Random</code>)</td>
+<td><a href="http://dsiutils.di.unimi.it/docs/it/unimi/dsi/util/package-summary.html"><strong><code>it.unimi.dsi/dsiutils</code> artifact</strong></a> (XoRoShiRo128PlusPlusRandom, XoShiRo128PlusPlusRandom, XoShiRo256PlusRandom, XorShift1024StarPhiRandom)</td>
 </tr>
 <tr>
 <td>JavaScript (B)</td>
 <td><code>crypto.randomBytes(byteCount)</code> (node.js only); <code>random-number-csprng</code> package (node.js only); <code>crypto.getRandomValues()</code> (Web)</td>
-<td><code>pcg-random</code> or <code>xoroshiro128starstar</code> package</td>
+<td><code>xoroshiro128starstar</code> package; <code>md5</code> package (<code>md5(seed+&quot;_&quot;+counter, {asBytes: true})</code>); <code>crypto.createHash(&quot;sha1&quot;)</code> (node.js only)</td>
 </tr>
 <tr>
 <td>Ruby (A) (E)</td>
 <td>(C); <code>SecureRandom.rand()</code> (0 or greater and less than 1) (E); <code>SecureRandom.rand(N)</code> (integer) (E) (for both, <code>require &#39;securerandom&#39;</code>); <code>sysrandom</code> gem</td>
-<td></td>
+<td><code>Digest::MD5.digest(&quot;#{seed}_#{counter}&quot;)</code>, <code>Digest::SHA1.digest(&quot;#{seed}_#{counter}&quot;)</code> (for both, <code>require &#39;digest&#39;</code>)</td>
 </tr>
 <tr>
 <td>PHP (A)</td>
 <td><code>random_int()</code>, <code>random_bytes()</code> (both since PHP 7)</td>
-<td><code>Digest::MD5.digest(&quot;#{seed}_#{counter}&quot;)</code>, <code>Digest::SHA1.digest(&quot;#{seed}_#{counter}&quot;)</code> (for both, <code>require &#39;digest&#39;</code>)</td>
+<td></td>
 </tr>
 <tr>
 <td>Go</td>
@@ -510,7 +510,7 @@ For cryptographic RNGs, an application SHOULD use only one thread-safe instance 
 </tr>
 </tbody></table>
 
-<p><small>(A) The general RNGs of recent versions of Python and Ruby implement <a href="https://en.wikipedia.org/wiki/Mersenne_Twister"><strong>Mersenne Twister</strong></a>, which is not preferred for a high-quality RNG.  PHP&#39;s <code>mt_rand()</code> implements or implemented a flawed version of Mersenne Twister. <code>prngine</code>, a Java library, also has <code>MT19937_32Random</code> and <code>MT19937_64Random</code> classes that implement Mersenne Twister.</small></p>
+<p><small>(A) The general RNGs of recent versions of Python and Ruby implement <a href="https://en.wikipedia.org/wiki/Mersenne_Twister"><strong>Mersenne Twister</strong></a>, which is not preferred for a high-quality RNG.  PHP&#39;s <code>mt_rand()</code> implements or implemented a flawed version of Mersenne Twister. The <a href="https://github.com/jenetics/prngine"><strong><code>io.jenetics/prngine</code> artifact</strong></a>, a Java library, also has <code>MT19937_32Random</code> and <code>MT19937_64Random</code> classes that implement Mersenne Twister.</small></p>
 
 <p><small>(B) JavaScript&#39;s <code>Math.random()</code> (which ranges 0 or greater and less than 1) is implemented using <code>xorshift128+</code> (or a variant) in the V8 engine, Firefox, and certain other modern browsers as of late 2017; <code>Math.random()</code> uses an &quot;implementation-dependent algorithm or strategy&quot;, though (see ECMAScript sec. 20.2.2.27).</small></p>
 
