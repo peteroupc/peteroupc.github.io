@@ -319,7 +319,7 @@ As much as possible, **applications SHOULD use existing libraries and techniques
 | Go | `crypto/rand` package |  |
 | Rust | `rand` crate (StdRng) | `rand_xoshiro` crate (Xoroshiro128PlusPlus, Xoshiro256PlusPlus, Xoshiro256StarStar, Xoshiro512StarStar) |
 | Perl | `Crypt::URandom` module | `Crypt::Digest::MD5` module (`md5($seed.'_'.$counter)`); `Digest::SHA` module (`sha1($seed.'_'.$counter)`); `Digest::MurmurHash3` module (`murmurhash3($seed.'_'.$counter)`) |
-| Other Languages | (C) |  |
+| Other Languages | (C) | Hash the string `seed + "_" + counter` with MurmurHash, xxHash, CityHash, MD5, or SHA-1 |
 
 <small>(A) The general RNGs of recent versions of Python and Ruby implement [**Mersenne Twister**](https://en.wikipedia.org/wiki/Mersenne_Twister), which is not preferred for a high-quality RNG.  PHP's `mt_rand()` implements or implemented a flawed version of Mersenne Twister. The [**`io.jenetics/prngine` artifact**](https://github.com/jenetics/prngine), a Java library, also has `MT19937_32Random` and `MT19937_64Random` classes that implement Mersenne Twister.</small>
 
