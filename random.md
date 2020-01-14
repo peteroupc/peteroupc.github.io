@@ -309,16 +309,16 @@ As much as possible, **applications SHOULD use existing libraries and techniques
 
 | Language   | Cryptographic   | High-Quality |
  --------|-----------------------------------------------|------|
-| .NET (incl. C# and VB.NET) (H) | `RandomNumberGenerator.Create()` in `System.Security.Cryptography` namespace; [**airbreather/AirBreather.Common library**](https://github.com/airbreather/Airbreather.Common) (CryptographicRandomGenerator) | [**airbreather/AirBreather.Common library**](https://github.com/airbreather/Airbreather.Common) (XorShift1024Star, XorShift128Plus, XoroShiro128Plus) |
+| .NET (incl. C# and VB.NET) (H) | `RandomNumberGenerator.Create()` in `System.Security.Cryptography` namespace; [**airbreather/AirBreather.Common library**](https://github.com/airbreather/Airbreather.Common) (CryptographicRandomGenerator) | [**airbreather/AirBreather.Common library**](https://github.com/airbreather/Airbreather.Common) (XorShift1024Star, XorShift128Plus, XoroShiro128Plus); `Data.HashFunction.xxHash`, `Data.HashFunction.MurmurHash`, or `Data.HashFunction.CityHash` package (hash the string `seed + "_" + counter`) |
 | C/C++ (G)  | (C) | [**`xoroshiro128plusplus.c`**](http://xoroshiro.di.unimi.it/xoroshiro128plusplus.c); [**`xoshiro256starstar.c`**](http://xoroshiro.di.unimi.it/xoshiro256starstar.c) |
 | Python (A) | `secrets.SystemRandom` (since Python 3.6); `os.urandom()`| `pypcg` package; [**ihaque/xorshift**](https://github.com/ihaque/xorshift) library (default seed uses `os.urandom()`); [**`numpy.random.Generator`**](https://docs.scipy.org/doc/numpy/reference/random/index.html) with `PCG64`, `Philox`, or `SFC64` (since ver. 1.7); `hashlib.md5(b"%d_%d" % (seed, counter)).digest()`, `hashlib.sha1(b"%d_%d" % (seed, counter)).digest()` |
 | Java (A) (D) | (C); `java.security.SecureRandom` (F) |  [**`it.unimi.dsi/dsiutils` artifact**](http://dsiutils.di.unimi.it/docs/it/unimi/dsi/util/package-summary.html) (XoRoShiRo128PlusPlusRandom, XoShiRo128PlusPlusRandom, XoShiRo256PlusRandom, XorShift1024StarPhiRandom) |
-| JavaScript (B) | `crypto.randomBytes(byteCount)` (node.js only); `random-number-csprng` package (node.js only); `crypto.getRandomValues()` (Web) | `xoroshiro128starstar` package; `md5` package (`md5(seed+"_"+counter, {asBytes: true})`); `crypto.createHash("sha1")` (node.js only) |
+| JavaScript (B) | `crypto.randomBytes(byteCount)` (node.js only); `random-number-csprng` package (node.js only); `crypto.getRandomValues()` (Web) | `xoroshiro128starstar` package; `md5` package (`md5(seed+"_"+counter, {asBytes: true})`); `murmurhash3js` package (`murmurhash3js.x86.hash32(seed+"_"+counter)`); `crypto.createHash("sha1")` (node.js only) |
 | Ruby (A) (E) | (C); `SecureRandom.rand()` (0 or greater and less than 1) (E); `SecureRandom.rand(N)` (integer) (E) (for both, `require 'securerandom'`); `sysrandom` gem |  `Digest::MD5.digest("#{seed}_#{counter}")`, `Digest::SHA1.digest("#{seed}_#{counter}")` (for both, `require 'digest'`) |
 | PHP (A) | `random_int()`, `random_bytes()` (both since PHP 7) | |
 | Go | `crypto/rand` package |  |
 | Rust | `rand` crate (StdRng) | `rand_xoshiro` crate (Xoroshiro128PlusPlus, Xoshiro256PlusPlus, Xoshiro256StarStar, Xoshiro512StarStar) |
-| Perl | `Crypt::URandom` module |  |
+| Perl | `Crypt::URandom` module | `Crypt::Digest::MD5` module (`md5($seed.'_'.$counter)`); `Digest::SHA` module (`sha1($seed.'_'.$counter)`); `Digest::MurmurHash3` module (`murmurhash3($seed.'_'.$counter)`) |
 | Other Languages | (C) |  |
 
 <small>(A) The general RNGs of recent versions of Python and Ruby implement [**Mersenne Twister**](https://en.wikipedia.org/wiki/Mersenne_Twister), which is not preferred for a high-quality RNG.  PHP's `mt_rand()` implements or implemented a flawed version of Mersenne Twister. The [**`io.jenetics/prngine` artifact**](https://github.com/jenetics/prngine), a Java library, also has `MT19937_32Random` and `MT19937_64Random` classes that implement Mersenne Twister.</small>
@@ -530,8 +530,8 @@ Besides cryptographic RNGs, the following are examples of high-quality PRNGs:
 | A multiplicative [**linear congruential generator**](https://en.wikipedia.org/wiki/Linear_congruential_generator) (LCG) with prime modulus greater than 2<sup>63</sup> described in Table 2 of (L'Ecuyer 1999)<sup>[**(43)**](#Note43)</sup> | Modulus - 1 | Modulus - 1 | Jump-ahead | Memory used depends on modulus size |
 | XorShift\* 128/64 | 2^128 - 1 | 2^128 - 1 | No known implementation | 128-bit state.  Described by M. O'Neill in "You don't have to use PCG!", 2017.<sup>[**(44)**](#Note44)</sup> |
 | XorShift\* 64/32 | 2^64 - 1 | 2^64 - 1 | No known implementation | 64-bit state. Described by M. O'Neill in "You don't have to use PCG!", 2017. |
-| C++'s [**`std::ranlux48` engine**](http://www.cplusplus.com/reference/random/ranlux48/) | 2^577 - 2 | Not discussed (see notes) | No known implementation | Usually takes about 192 8-bit bytes of memory. Seed's bits cannot be all zeros or all ones (L&uuml;scher 1994)<sup>[**(45)**](#Note45)</sup>.  The period for `ranlux48`'s underlying generator is about 2^576.4.  |
-| Mersenne Twister (MT19937) | 2^19937 - 1 | 2^19937 - 1 | [**Jump-ahead**](http://www.math.sci.hiroshima-u.ac.jp/~m-mat/MT/JUMP/index.html) | Usually takes about 2500 8-bit bytes of memory.  This PRNG is not preferred; it shows a [**systematic failure**](http://xoroshiro.di.unimi.it/#quality) in BigCrush's LinearComp test (part of L'Ecuyer and Simard's "TestU01"). (See also (Vigna 2016)<sup>[**(46)**](#Note46)</sup>.) |
+| C++'s [**`std::ranlux48` engine**](http://www.cplusplus.com/reference/random/ranlux48/) | 2^577 - 2 | Not discussed (see notes) | No known implementation | Usually takes about 192 8-bit bytes of memory. Seed's bits cannot be all zeros or all ones (L&uuml;scher 1994)<sup>[**(45)**](#Note45)</sup>.  The period for `ranlux48`'s underlying generator is very close to 2^576.  This PRNG is not preferred.  |
+| Mersenne Twister (MT19937) | 2^19937 - 1 | 2^19937 - 1 | [**Jump-ahead**](http://www.math.sci.hiroshima-u.ac.jp/~m-mat/MT/JUMP/index.html) | Usually takes about 2500 8-bit bytes of memory.  This PRNG is not preferred; it shows a [**systematic failure**](http://xoroshiro.di.unimi.it/#quality) in BigCrush's LinearComp test (part of L'Ecuyer and Simard's "TestU01"). (See also (Vigna 2019)<sup>[**(46)**](#Note46)</sup>.) |
 | A high-quality PRNG that is an LCG with non-prime modulus (or a PRNG based on one, such as PCG) | Depends on parameters | Depends on parameters | Jump-ahead. What PCG calls "streams" does not produce independent sequences. | These PRNGs are not preferred; in particular, if the modulus is a power of 2, they produce highly correlated "random" number sequences from seeds that differ only in their high bits (see S. Vigna, "[**The wrap-up on PCG generators**](http://pcg.di.unimi.it/pcg.php)") and lowest bits have short periods. |
 
 The following are not considered high-quality PRNGs:
@@ -692,7 +692,7 @@ See also N. Reed, "Quick And Easy GPU Random Numbers In D3D11", Nathan Reed's co
 
 <small><sup id=Note40>(40)</sup> Although any linear PRNG, such as LCGs and the Xorshift, xoroshiro, and xoshiro families, can support jump-ahead by any number of steps, one interesting choice of jump size is a size equal to the period divided by the golden ratio (see, e.g., the [**NumPy implementation**](https://docs.scipy.org/doc/numpy/reference/random/parallel.html#jumping-the-bitgenerator-state)).</small>
 
-<small><sup id=Note41>(41)</sup> Blackman, D., Vigna, S. "Scrambled Linear Pseudorandom Number Generators", 2018</small>
+<small><sup id=Note41>(41)</sup> Blackman, D., Vigna, S. "Scrambled Linear Pseudorandom Number Generators", 2018 (xoroshiro and xoshiro families); S. Vigna, "[**An experimental exploration of Marsaglia's `xorshift` generators, scrambled**](http://vigna.di.unimi.it/ftp/papers/xorshift.pdf)", 2016 (scrambled xorshift family).</small>
 
 <small><sup id=Note42>(42)</sup> G. Marsaglia, "Xorshift RNGs", _Journal of Statistical Software_ 8(14), 2003.</small>
 
@@ -702,7 +702,7 @@ See also N. Reed, "Quick And Easy GPU Random Numbers In D3D11", Nathan Reed's co
 
 <small><sup id=Note45>(45)</sup> L&uuml;scher, M., "A Portable High-Quality Random Number Generator for Lattice Field Theory Simulations", arXiv:hep-lat/9309020 (1994).</small>
 
-<small><sup id=Note46>(46)</sup> S. Vigna, "[**An experimental exploration of Marsaglia's `xorshift` generators, scrambled**](http://vigna.di.unimi.it/ftp/papers/xorshift.pdf)", 2016.</small>
+<small><sup id=Note46>(46)</sup> S. Vigna, "It Is High Time We Let Go of the Mersenne Twister", arXiv:1910.06437 [cs.DS], 2019.</small>
 
 <small><sup id=Note47>(47)</sup> Neves, S., and Araujo, F., "Fast and Small Nonlinear Pseudorandom Number Generators for Computer Simulation", 2011.</small>
 

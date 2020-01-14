@@ -456,7 +456,7 @@ For cryptographic RNGs, an application SHOULD use only one thread-safe instance 
 <tr>
 <td>.NET (incl. C# and VB.NET) (H)</td>
 <td><code>RandomNumberGenerator.Create()</code> in <code>System.Security.Cryptography</code> namespace; <a href="https://github.com/airbreather/Airbreather.Common"><strong>airbreather/AirBreather.Common library</strong></a> (CryptographicRandomGenerator)</td>
-<td><a href="https://github.com/airbreather/Airbreather.Common"><strong>airbreather/AirBreather.Common library</strong></a> (XorShift1024Star, XorShift128Plus, XoroShiro128Plus)</td>
+<td><a href="https://github.com/airbreather/Airbreather.Common"><strong>airbreather/AirBreather.Common library</strong></a> (XorShift1024Star, XorShift128Plus, XoroShiro128Plus); <code>Data.HashFunction.xxHash</code>, <code>Data.HashFunction.MurmurHash</code>, or <code>Data.HashFunction.CityHash</code> package (hash the string <code>seed + &quot;_&quot; + counter</code>)</td>
 </tr>
 <tr>
 <td>C/C++ (G)</td>
@@ -476,7 +476,7 @@ For cryptographic RNGs, an application SHOULD use only one thread-safe instance 
 <tr>
 <td>JavaScript (B)</td>
 <td><code>crypto.randomBytes(byteCount)</code> (node.js only); <code>random-number-csprng</code> package (node.js only); <code>crypto.getRandomValues()</code> (Web)</td>
-<td><code>xoroshiro128starstar</code> package; <code>md5</code> package (<code>md5(seed+&quot;_&quot;+counter, {asBytes: true})</code>); <code>crypto.createHash(&quot;sha1&quot;)</code> (node.js only)</td>
+<td><code>xoroshiro128starstar</code> package; <code>md5</code> package (<code>md5(seed+&quot;_&quot;+counter, {asBytes: true})</code>); <code>murmurhash3js</code> package (<code>murmurhash3js.x86.hash32(seed+&quot;_&quot;+counter)</code>); <code>crypto.createHash(&quot;sha1&quot;)</code> (node.js only)</td>
 </tr>
 <tr>
 <td>Ruby (A) (E)</td>
@@ -501,7 +501,7 @@ For cryptographic RNGs, an application SHOULD use only one thread-safe instance 
 <tr>
 <td>Perl</td>
 <td><code>Crypt::URandom</code> module</td>
-<td></td>
+<td><code>Crypt::Digest::MD5</code> module (<code>md5($seed.&#39;_&#39;.$counter)</code>); <code>Digest::SHA</code> module (<code>sha1($seed.&#39;_&#39;.$counter)</code>); <code>Digest::MurmurHash3</code> module (<code>murmurhash3($seed.&#39;_&#39;.$counter)</code>)</td>
 </tr>
 <tr>
 <td>Other Languages</td>
@@ -909,14 +909,14 @@ For cryptographic RNGs, an application SHOULD use only one thread-safe instance 
 <td>2^577 - 2</td>
 <td>Not discussed (see notes)</td>
 <td>No known implementation</td>
-<td>Usually takes about 192 8-bit bytes of memory. Seed&#39;s bits cannot be all zeros or all ones (L&uuml;scher 1994)<sup><a href="#Note45"><strong>(45)</strong></a></sup>.  The period for <code>ranlux48</code>&#39;s underlying generator is about 2^576.4.</td>
+<td>Usually takes about 192 8-bit bytes of memory. Seed&#39;s bits cannot be all zeros or all ones (L&uuml;scher 1994)<sup><a href="#Note45"><strong>(45)</strong></a></sup>.  The period for <code>ranlux48</code>&#39;s underlying generator is very close to 2^576.  This PRNG is not preferred.</td>
 </tr>
 <tr>
 <td>Mersenne Twister (MT19937)</td>
 <td>2^19937 - 1</td>
 <td>2^19937 - 1</td>
 <td><a href="http://www.math.sci.hiroshima-u.ac.jp/%7Em-mat/MT/JUMP/index.html"><strong>Jump-ahead</strong></a></td>
-<td>Usually takes about 2500 8-bit bytes of memory.  This PRNG is not preferred; it shows a <a href="http://xoroshiro.di.unimi.it/#quality"><strong>systematic failure</strong></a> in BigCrush&#39;s LinearComp test (part of L&#39;Ecuyer and Simard&#39;s &quot;TestU01&quot;). (See also (Vigna 2016)<sup><a href="#Note46"><strong>(46)</strong></a></sup>.)</td>
+<td>Usually takes about 2500 8-bit bytes of memory.  This PRNG is not preferred; it shows a <a href="http://xoroshiro.di.unimi.it/#quality"><strong>systematic failure</strong></a> in BigCrush&#39;s LinearComp test (part of L&#39;Ecuyer and Simard&#39;s &quot;TestU01&quot;). (See also (Vigna 2019)<sup><a href="#Note46"><strong>(46)</strong></a></sup>.)</td>
 </tr>
 <tr>
 <td>A high-quality PRNG that is an LCG with non-prime modulus (or a PRNG based on one, such as PCG)</td>
@@ -1122,7 +1122,7 @@ For cryptographic RNGs, an application SHOULD use only one thread-safe instance 
 
 <p><small><sup id=Note40>(40)</sup> Although any linear PRNG, such as LCGs and the Xorshift, xoroshiro, and xoshiro families, can support jump-ahead by any number of steps, one interesting choice of jump size is a size equal to the period divided by the golden ratio (see, e.g., the <a href="https://docs.scipy.org/doc/numpy/reference/random/parallel.html#jumping-the-bitgenerator-state"><strong>NumPy implementation</strong></a>).</small></p>
 
-<p><small><sup id=Note41>(41)</sup> Blackman, D., Vigna, S. &quot;Scrambled Linear Pseudorandom Number Generators&quot;, 2018</small></p>
+<p><small><sup id=Note41>(41)</sup> Blackman, D., Vigna, S. &quot;Scrambled Linear Pseudorandom Number Generators&quot;, 2018 (xoroshiro and xoshiro families); S. Vigna, &quot;<a href="http://vigna.di.unimi.it/ftp/papers/xorshift.pdf"><strong>An experimental exploration of Marsaglia&#39;s <code>xorshift</code> generators, scrambled</strong></a>&quot;, 2016 (scrambled xorshift family).</small></p>
 
 <p><small><sup id=Note42>(42)</sup> G. Marsaglia, &quot;Xorshift RNGs&quot;, <em>Journal of Statistical Software</em> 8(14), 2003.</small></p>
 
@@ -1132,7 +1132,7 @@ For cryptographic RNGs, an application SHOULD use only one thread-safe instance 
 
 <p><small><sup id=Note45>(45)</sup> L&uuml;scher, M., &quot;A Portable High-Quality Random Number Generator for Lattice Field Theory Simulations&quot;, arXiv:hep-lat/9309020 (1994).</small></p>
 
-<p><small><sup id=Note46>(46)</sup> S. Vigna, &quot;<a href="http://vigna.di.unimi.it/ftp/papers/xorshift.pdf"><strong>An experimental exploration of Marsaglia&#39;s <code>xorshift</code> generators, scrambled</strong></a>&quot;, 2016.</small></p>
+<p><small><sup id=Note46>(46)</sup> S. Vigna, &quot;It Is High Time We Let Go of the Mersenne Twister&quot;, arXiv:1910.06437 [cs.DS], 2019.</small></p>
 
 <p><small><sup id=Note47>(47)</sup> Neves, S., and Araujo, F., &quot;Fast and Small Nonlinear Pseudorandom Number Generators for Computer Simulation&quot;, 2011.</small></p>
 
