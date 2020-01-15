@@ -506,7 +506,7 @@ For cryptographic RNGs, an application SHOULD use only one thread-safe instance 
 <tr>
 <td>Other Languages</td>
 <td>(C)</td>
-<td></td>
+<td>Hash the string <code>seed + &quot;_&quot; + counter</code> with MurmurHash, xxHash, CityHash, MD5, or SHA-1</td>
 </tr>
 </tbody></table>
 
