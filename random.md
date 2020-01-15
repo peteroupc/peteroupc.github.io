@@ -315,8 +315,8 @@ As much as possible, **applications SHOULD use existing libraries and techniques
 | Java (A) (D) | (C); `java.security.SecureRandom` (F) |  [**`it.unimi.dsi/dsiutils` artifact**](http://dsiutils.di.unimi.it/docs/it/unimi/dsi/util/package-summary.html) (XoRoShiRo128PlusPlusRandom, XoShiRo128PlusPlusRandom, XoShiRo256PlusRandom, XorShift1024StarPhiRandom) |
 | JavaScript (B) | `crypto.randomBytes(byteCount)` (node.js only); `random-number-csprng` package (node.js only); `crypto.getRandomValues()` (Web) | `xoroshiro128starstar` package; `md5` package (`md5(seed+"_"+counter, {asBytes: true})`); `murmurhash3js` package (`murmurhash3js.x86.hash32(seed+"_"+counter)`); `crypto.createHash("sha1")` (node.js only) |
 | Ruby (A) (E) | (C); `SecureRandom.rand()` (0 or greater and less than 1) (E); `SecureRandom.rand(N)` (integer) (E) (for both, `require 'securerandom'`); `sysrandom` gem |  `Digest::MD5.digest("#{seed}_#{counter}")`, `Digest::SHA1.digest("#{seed}_#{counter}")` (for both, `require 'digest'`) |
-| PHP (A) | `random_int()`, `random_bytes()` (both since PHP 7) | |
-| Go | `crypto/rand` package |  |
+| PHP (A) | `random_int()`, `random_bytes()` (both since PHP 7) | `md5($seed.'_'.$counter, true)`; `sha1($seed.'_'.$counter, true)` |
+| Go | `crypto/rand` package | `md5.Sum` in `crypto/md5` package or `sha1.Sum` in `crypto/sha1` package (for both, hash the byte array `seed + "_" + counter`) |
 | Rust | `rand` crate (StdRng) | `rand_xoshiro` crate (Xoroshiro128PlusPlus, Xoshiro256PlusPlus, Xoshiro256StarStar, Xoshiro512StarStar) |
 | Perl | `Crypt::URandom` module | `Crypt::Digest::MD5` module (`md5($seed.'_'.$counter)`); `Digest::SHA` module (`sha1($seed.'_'.$counter)`); `Digest::MurmurHash3` module (`murmurhash3($seed.'_'.$counter)`) |
 | Other Languages | (C) | Hash the string `seed + "_" + counter` with MurmurHash, xxHash, CityHash, MD5, or SHA-1 |

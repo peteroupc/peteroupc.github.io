@@ -486,12 +486,12 @@ For cryptographic RNGs, an application SHOULD use only one thread-safe instance 
 <tr>
 <td>PHP (A)</td>
 <td><code>random_int()</code>, <code>random_bytes()</code> (both since PHP 7)</td>
-<td></td>
+<td><code>md5($seed.&#39;_&#39;.$counter, true)</code>; <code>sha1($seed.&#39;_&#39;.$counter, true)</code></td>
 </tr>
 <tr>
 <td>Go</td>
 <td><code>crypto/rand</code> package</td>
-<td></td>
+<td><code>md5.Sum</code> in <code>crypto/md5</code> package or <code>sha1.Sum</code> in <code>crypto/sha1</code> package (for both, hash the byte array <code>seed + &quot;_&quot; + counter</code>)</td>
 </tr>
 <tr>
 <td>Rust</td>

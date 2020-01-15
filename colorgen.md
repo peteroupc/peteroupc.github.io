@@ -1333,20 +1333,16 @@ In the pseudocode below, the method `NearestColorIndex` finds, for a given color
 
 There are several methods of finding the kind or kinds of colors that appear most prominently in an [**_image color list_**](#Notation_and_Definitions).  For best results, these techniques need to be carried out with [**_linear RGB_**](#RGB_Color_Spaces) rather than encoded RGB colors.
 
-1. **Averaging.**  To find the dominant color using this technique&mdash;
-    - add all the image color list's colors, or a sample or subset of them (for RGB or other multicomponent colors, adding two or more colors means adding each of their components individually), then
-    - divide the result by the number of colors added this way.
+1. [**Color quantization**](https://en.wikipedia.org/wiki/Color_quantization)**.** In this technique, the image color list's colors are reduced to a small set of colors (for example, ten to twenty).  Quantization algorithms include _k_-means clustering (see the previous section), recursive subdivision, and octrees.
 
-2. [**Color quantization**](https://en.wikipedia.org/wiki/Color_quantization)**.** In this technique, the image color list's colors are reduced to a small set of colors (for example, ten to twenty).  Quantization algorithms include _k_-means clustering (see the previous section), recursive subdivision, and octrees.
-
-3. **Histogram binning.** To find the dominant colors using this technique (which is independent of color model):
+2. **Histogram binning.** To find the dominant colors using this technique (which is independent of color model):
 
     - Generate or furnish a list of colors that cover the space of colors well.  This is the _color palette_. A good example is the list of [**"Web safe colors"**](#RGB_Colors_and_the_0_1_Format).
     - Create a list with as many zeros as the number of colors in the palette.  This is the _histogram_.
     - For each color in the image color list, find its [**nearest color**](#Nearest_Colors) in the color palette, and add 1 to the nearest color's corresponding value in the histogram.
     - Find the color or colors in the color palette with the highest histogram values, and return those colors as the dominant colors.
 
-4. **Posterization.** This involves rounding each component of a multicomponent color to the nearest multiple of 1/_n_, where _n_ is 1 plus the desired number of levels per channel.  The rounding can be up, down, or otherwise.
+3. **Posterization.** This involves rounding each component of a multicomponent color to the nearest multiple of 1/_n_, where _n_ is 1 plus the desired number of levels per channel.  The rounding can be up, down, or otherwise.
 
 > **Notes:**
 >
@@ -1355,12 +1351,9 @@ There are several methods of finding the kind or kinds of colors that appear mos
 >     - applying a "nearest neighbor" approach (replacing that image's colors with their [**nearest dominant colors**](#Nearest_Colors)), or
 >     - applying a [**"dithering"**](https://en.wikipedia.org/wiki/Dither) technique (especially to reduce undesirable color "banding" in certain cases), which is outside the scope of this document, however.<sup>[**(38)**](#Note38)</sup>
 > 3. **Unique colors**: Finding the number of unique colors in an image color list can be done by storing those colors as keys in a hash table, then counting the number of keys stored this way.<sup>[**(39)**](#Note39)</sup>
-> 4. **Disqualifying dominant colors**:  An application can disqualify certain kinds of colors from being dominant by&mdash;
->     - ignoring those colors while sampling the image color list, or
->     - deleting those colors from the dominant color list,
->
->     and using a substitute color as the dominant color if no dominant color remains.  For example, an application can ignore or delete gray or nearly gray colors this way.
-> 5. **Extracting a scene's "true colors"**: For applications where matching colors from the real world is important, colors need to be measured using a [**color measurement device**](https://peteroupc.github.io/suppcolor.html#Color_Measurement_Devices), or be calculated from [**_scene-referred_ image data**](http://eilv.cie.co.at/term/567)<sup>[**(40)**](#Note40)</sup>. PNG and many other image formats store image data commonly interpreted as [**sRGB**](#sRGB) by default; however, sRGB is an [**_output-referred_**](http://eilv.cie.co.at/term/565) color space, not a scene-referred one (it's based on the color output of cathode-ray-tube monitors), making sRGB images unsuitable for real-world color-matching without more.<br>Getting scene-referred image data from a digital camera, including a smartphone camera, is not trivial and is not discussed in detail in this document.  It requires knowing, among other things, whether the camera offers access to raw image data, the format of that raw data, and possibly whether the camera does color rendering (which happens before generating output-referred image data).  A raw image's colors can be estimated by the use of a raw image of a color calibration chart (test target) or by another technique.  The ISO 17321 series and IEC 61966-9 touch on this subject.
+> 4. **Disqualifying dominant colors**:  An application can disqualify certain kinds of colors from being dominant, and use a substitute color as the dominant color if no dominant color remains.  For example, the application can ignore colors in the background or near the image's edges, can ignore certain kinds of colors (e.g., gray or nearly gray colors) while sampling the image color list, or can delete certain colors from the dominant color list.
+> 5. Averaging the colors of an image, component-by-component, can lead to a meaningless result, especially if there is a wide color variety represented in the image (see `stackoverflow.com/questions/43111029`).
+> 6. **Extracting a scene's "true colors"**: For applications where matching colors from the real world is important, colors need to be measured using a [**color measurement device**](https://peteroupc.github.io/suppcolor.html#Color_Measurement_Devices), or be calculated from [**_scene-referred_ image data**](http://eilv.cie.co.at/term/567)<sup>[**(40)**](#Note40)</sup>. PNG and many other image formats store image data commonly interpreted as [**sRGB**](#sRGB) by default; however, sRGB is an [**_output-referred_**](http://eilv.cie.co.at/term/565) color space, not a scene-referred one (it's based on the color output of cathode-ray-tube monitors), making sRGB images unsuitable for real-world color-matching without more.<br>Getting scene-referred image data from a digital camera, including a smartphone camera, is not trivial and is not discussed in detail in this document.  It requires knowing, among other things, whether the camera offers access to raw image data, the format of that raw data, and possibly whether the camera does color rendering (which happens before generating output-referred image data).  A raw image's colors can be estimated by the use of a raw image of a color calibration chart (test target) or by another technique.  The ISO 17321 series and IEC 61966-9 touch on this subject.
 
 <a id=Color_Maps></a>
 ## Color Maps
