@@ -456,7 +456,7 @@ For cryptographic RNGs, an application SHOULD use only one thread-safe instance 
 <tr>
 <td>.NET (incl. C# and VB.NET) (H)</td>
 <td><code>RandomNumberGenerator.Create()</code> in <code>System.Security.Cryptography</code> namespace; <a href="https://github.com/airbreather/Airbreather.Common"><strong>airbreather/AirBreather.Common library</strong></a> (CryptographicRandomGenerator)</td>
-<td><a href="https://github.com/airbreather/Airbreather.Common"><strong>airbreather/AirBreather.Common library</strong></a> (XorShift1024Star, XorShift128Plus, XoroShiro128Plus); <code>Data.HashFunction.xxHash</code>, <code>Data.HashFunction.MurmurHash</code>, or <code>Data.HashFunction.CityHash</code> package (hash the string <code>seed + &quot;_&quot; + counter</code>)</td>
+<td><code>XoshiroPRNG.Net</code> package (XoRoShiRo128starstar, XoShiRo256plus, XoShiRo256starstar); <code>Data.HashFunction.xxHash</code>, <code>Data.HashFunction.MurmurHash</code>, or <code>Data.HashFunction.CityHash</code> package (hash the string <code>seed + &quot;_&quot; + counter</code>)</td>
 </tr>
 <tr>
 <td>C/C++ (G)</td>
@@ -466,7 +466,7 @@ For cryptographic RNGs, an application SHOULD use only one thread-safe instance 
 <tr>
 <td>Python (A)</td>
 <td><code>secrets.SystemRandom</code> (since Python 3.6); <code>os.urandom()</code></td>
-<td><code>pypcg</code> package; <a href="https://github.com/ihaque/xorshift"><strong>ihaque/xorshift</strong></a> library (default seed uses <code>os.urandom()</code>); <a href="https://docs.scipy.org/doc/numpy/reference/random/index.html"><strong><code>numpy.random.Generator</code></strong></a> with <code>PCG64</code>, <code>Philox</code>, or <code>SFC64</code> (since ver. 1.7); <code>hashlib.md5(b&quot;%d_%d&quot; % (seed, counter)).digest()</code>, <code>hashlib.sha1(b&quot;%d_%d&quot; % (seed, counter)).digest()</code></td>
+<td><a href="https://github.com/ihaque/xorshift"><strong>ihaque/xorshift</strong></a> library (default seed uses <code>os.urandom()</code>); <a href="https://docs.scipy.org/doc/numpy/reference/random/index.html"><strong><code>numpy.random.Generator</code></strong></a> with <code>Philox</code> or <code>SFC64</code> (since ver. 1.7); <code>hashlib.md5(b&quot;%d_%d&quot; % (seed, counter)).digest()</code>, <code>hashlib.sha1(b&quot;%d_%d&quot; % (seed, counter)).digest()</code></td>
 </tr>
 <tr>
 <td>Java (A) (D)</td>
@@ -776,7 +776,7 @@ For cryptographic RNGs, an application SHOULD use only one thread-safe instance 
 <td>2^256 - 1</td>
 <td>2^256 - 1</td>
 <td>Jump-ahead</td>
-<td>Lowest bits have low linear complexity (see (Blackman and Vigna 2018)<sup><a href="#Note41"><strong>(41)</strong></a></sup> and see also &quot;<a href="http://xoshiro.di.unimi.it/lowcomp.php"><strong>Testing low bits in isolation</strong></a>&quot;); if the application or library cares, it can discard those bits before using this PRNG&#39;s output.</td>
+<td>Lowest bits have low linear complexity (see (Blackman and Vigna 2019)<sup><a href="#Note41"><strong>(41)</strong></a></sup> and see also &quot;<a href="http://xoshiro.di.unimi.it/lowcomp.php"><strong>Testing low bits in isolation</strong></a>&quot;); if the application or library cares, it can discard those bits before using this PRNG&#39;s output.</td>
 </tr>
 <tr>
 <td>xoshiro256++</td>
@@ -1122,7 +1122,7 @@ For cryptographic RNGs, an application SHOULD use only one thread-safe instance 
 
 <p><small><sup id=Note40>(40)</sup> Although any linear PRNG, such as LCGs and the Xorshift, xoroshiro, and xoshiro families, can support jump-ahead by any number of steps, one interesting choice of jump size is a size equal to the period divided by the golden ratio (see, e.g., the <a href="https://docs.scipy.org/doc/numpy/reference/random/parallel.html#jumping-the-bitgenerator-state"><strong>NumPy implementation</strong></a>).</small></p>
 
-<p><small><sup id=Note41>(41)</sup> Blackman, D., Vigna, S. &quot;Scrambled Linear Pseudorandom Number Generators&quot;, 2018 (xoroshiro and xoshiro families); S. Vigna, &quot;<a href="http://vigna.di.unimi.it/ftp/papers/xorshift.pdf"><strong>An experimental exploration of Marsaglia&#39;s <code>xorshift</code> generators, scrambled</strong></a>&quot;, 2016 (scrambled xorshift family).</small></p>
+<p><small><sup id=Note41>(41)</sup> Blackman, D., Vigna, S. &quot;Scrambled Linear Pseudorandom Number Generators&quot;, 2019 (xoroshiro and xoshiro families); S. Vigna, &quot;<a href="http://vigna.di.unimi.it/ftp/papers/xorshift.pdf"><strong>An experimental exploration of Marsaglia&#39;s <code>xorshift</code> generators, scrambled</strong></a>&quot;, 2016 (scrambled xorshift family).</small></p>
 
 <p><small><sup id=Note42>(42)</sup> G. Marsaglia, &quot;Xorshift RNGs&quot;, <em>Journal of Statistical Software</em> 8(14), 2003.</small></p>
 
