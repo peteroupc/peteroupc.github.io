@@ -313,13 +313,13 @@ Returns 'list'. """
         i = 0
         negweights = False
         while i < len(weights):
-            negweights = negweights and weights[i] < 0
+            negweights = negweights or weights[i] < 0
             msum += weights[i]
             i += 1
         # Vose's alias method for large n and nonnegative
         # weights.  This method has a non-trivial setup,
-        # but an O(1) sampling step.
-        if n > 100:
+        # but a linear-time sampling step in n.
+        if n > 100 and not negweights:
             aliasinfo = self._aliassetup(weights)
             total = aliasinfo[0]
             prob = aliasinfo[1]
