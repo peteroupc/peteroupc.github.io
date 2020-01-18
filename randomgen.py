@@ -111,6 +111,11 @@ class RandomGen:
             return self._rndbit()
         return self.rng.randint(0, maxInclusive)
 
+    def rndintexc(self, maxExclusive):
+        if maxExclusive <= 0:
+            raise ValueError("maxExclusive 0 or less")
+        return self.rndint(maxExclusive - 1)
+
     def rndintrange(self, minInclusive, maxInclusive):
         # NOTE: Since Python integers are arbitrary-precision,
         # the naive approach will work well here
@@ -270,16 +275,60 @@ Returns 'list'. """
         return self._weighted_choice_n(weights, 1, 0)[0]
 
     def weighted_choice_n(self, weights, n=1):
-        return self._weighted_choice_n(weights, n, m)
+        return self._weighted_choice_n(weights, n, 0)
+
+    def _aliassetup(self, weights):
+        prob = [0 for _ in weights]
+        alias = [0 for _ in weights]
+        tmp = [p * len(weights) for p in weights]
+        mn = min(weights)
+        mx = max(weights)
+        ms = sum(weights)
+        small = [i for i in range(len(tmp)) if tmp[i] < ms]
+        large = [i for i in range(len(tmp)) if tmp[i] >= ms]
+        sc = len(small)
+        lc = len(large)
+        while sc > 0 and lc > 0:
+            lv = small[sc - 1]
+            g = large[lc - 1]
+            prob[lv] = tmp[lv]
+            alias[lv] = g
+            overhead = (tmp[g] + tmp[lv]) - ms
+            if overhead < ms:
+                small[sc - 1] = g
+                lc -= 1
+            else:
+                sc -= 1
+            tmp[g] = overhead
+        for i in range(sc):
+            prob[small[i]] = ms
+        for i in range(lc):
+            prob[large[i]] = ms
+        return [ms, prob, alias]
 
     def _weighted_choice_n(self, weights, n, addvalue):
         if len(weights) == 0:
             raise ValueError
         msum = 0
         i = 0
+        negweights = False
         while i < len(weights):
+            negweights = negweights and weights[i] < 0
             msum += weights[i]
             i += 1
+        # Vose's alias method for large n and nonnegative
+        # weights.  This method has a non-trivial setup,
+        # but an O(1) sampling step.
+        if n > 100:
+            aliasinfo = self._aliassetup(weights)
+            total = aliasinfo[0]
+            prob = aliasinfo[1]
+            alias = aliasinfo[2]
+            rx = [
+                [self.rndintexc(len(weights)), self.rndrangemaxexc(0, total)]
+                for k in range(n)
+            ]
+            return [x[0] if x[1] < prob[x[0]] else alias[x[0]] for x in rx]
         rv = [self.rndrangemaxexc(0, msum) for k in range(n)]
         ret = [0 for k in range(n)]
         k = 0
@@ -1528,6 +1577,7 @@ if __name__ == "__main__":
 
     print("Weighted choice results")
     print([rc() for i in range(25)])
+    print(randgen.weighted_choice_n(weights, 150))
     #
     #  Model times to failure
     #

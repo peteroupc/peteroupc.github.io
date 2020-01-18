@@ -720,7 +720,7 @@ The following pseudocode implements a method `WeightedChoice` that takes a singl
 
 > **Notes:**
 >
-> - The Python sample code contains a variant of this method for generating multiple random points in one call.
+> - The Python sample code contains a variant of this method for generating multiple random points in one call, and uses Vose's _alias method_ (described in "[**Darts, Dice, and Coins: Sampling from a Discrete Distribution**](https://www.keithschwarz.com/darts-dice-coins/)") in certain cases.
 > - See also "[**Mixtures of Distributions**](#Mixtures_of_Distributions)" and "[**Pseudocode for Piecewise Interpolation**](#Pseudocode_for_Piecewise_Interpolation)".
 >
 > **Examples:**
