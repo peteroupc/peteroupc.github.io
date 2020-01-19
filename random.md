@@ -317,7 +317,7 @@ As much as possible, **applications SHOULD use existing libraries and techniques
 | Ruby (A) (E) | (C); `SecureRandom.rand()` (0 or greater and less than 1) (E); `SecureRandom.rand(N)` (integer) (E) (for both, `require 'securerandom'`); `sysrandom` gem |  `Digest::MD5.digest("#{seed}_#{counter}")`, `Digest::SHA1.digest("#{seed}_#{counter}")` (for both, `require 'digest'`) |
 | PHP (A) | `random_int()`, `random_bytes()` (both since PHP 7) | `md5($seed.'_'.$counter, true)`; `sha1($seed.'_'.$counter, true)` |
 | Go | `crypto/rand` package | `md5.Sum` in `crypto/md5` package or `sha1.Sum` in `crypto/sha1` package (for both, hash the byte array `seed + "_" + counter`) |
-| Rust | `rand` crate (StdRng) | `rand_xoshiro` crate (Xoroshiro128PlusPlus, Xoshiro256PlusPlus, Xoshiro256StarStar, Xoshiro512StarStar) |
+| Rust | (C) | `rand_xoshiro` crate (Xoroshiro128PlusPlus, Xoshiro256PlusPlus, Xoshiro256StarStar, Xoshiro512StarStar) |
 | Perl | `Crypt::URandom` module | `Crypt::Digest::MD5` module (`md5($seed.'_'.$counter)`); `Digest::SHA` module (`sha1($seed.'_'.$counter)`); `Digest::MurmurHash3` module (`murmurhash3($seed.'_'.$counter)`) |
 | Other Languages | (C) | Hash the string `seed + "_" + counter` with MurmurHash, xxHash, CityHash, MD5, or SHA-1 |
 
