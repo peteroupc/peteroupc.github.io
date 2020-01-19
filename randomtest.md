@@ -1,3 +1,4 @@
+<a id=Testing_PRNGs_for_High_Quality_Randomness></a>
 ## Testing PRNGs for High-Quality Randomness
 
 According to my document on pseudorandom number generator (PRNG) recommendations, a high-quality PRNG&mdash;
@@ -13,7 +14,7 @@ To determine whether nearby sequences of the PRNG meet the independence requirem
 There are several kinds of nearby sequences to test for this purpose:
 
 - The original PRNG state, and the state produced by discarding a huge number of PRNG outputs in an efficient way.
-- A PRNG initialized with one seed, and the PRNG initialized with the same seed, except one of the seed's bits is flipped (see also "[The wrap-up on PCG generators](http://pcg.di.unimi.it/pcg.php#flaws)").
+- A PRNG initialized with one seed, and the PRNG initialized with the same seed, except one of the seed's bits is flipped (see also "[**The wrap-up on PCG generators**](http://pcg.di.unimi.it/pcg.php#flaws)").
 
 In general, counter-based PRNGs based on hash functions (such as MD5, SHA-1, MurmurHash, CityHash, xxHash) will meet the independence requirement if the following hash stream (for that hash function) passes the PractRand tests at 1 TiB or greater:
 
@@ -22,4 +23,3 @@ In general, counter-based PRNGs based on hash functions (such as MD5, SHA-1, Mur
 3. Add 1 to `counter` and repeat this process.
 
 In general, a hash function that passes is worthy of mention if it's noncryptographic and faster than hash functions designed for cryptography, such as MD5 and the SHA family.
-
