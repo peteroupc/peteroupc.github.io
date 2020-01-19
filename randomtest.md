@@ -1,13 +1,13 @@
 <a id=Testing_PRNGs_for_High_Quality_Randomness></a>
 ## Testing PRNGs for High-Quality Randomness
 
-According to my document on pseudorandom number generator (PRNG) recommendations, a high-quality PRNG&mdash;
+According to my document on [**pseudorandom number generator (PRNG) recommendations**](https://peteroupc.github.io/random.html), a high-quality PRNG, among other requirements&mdash;
 
 > generates bits that behave like independent uniform random bits (at least for nearly all practical purposes outside of information security)[,]
 
 a requirement called the "independence requirement" in this short document.
 
-To determine whether a PRNG meets the independence requirement, its output should be sent to the PractRand program by Chris Doty-Humphrey and pass the PractRand tests at 1 TiB (2^40 bytes) or greater.
+To determine whether a PRNG meets the independence requirement, its output should be sent to the PractRand program by Chris Doty-Humphrey (pracrand.sourceforge.net) and pass the PractRand tests at 1 TiB (2^40 bytes) or greater.
 
 To determine whether nearby sequences of the PRNG meet the independence requirement, the output passed to PractRand should consist of one output from the first sequence, one output from the second, another output from the first, another from the second, and so on.
 

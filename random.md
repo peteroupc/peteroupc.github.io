@@ -517,7 +517,6 @@ Besides cryptographic RNGs, the following are examples of high-quality PRNGs:
 | xoshiro512+ | 2^512 - 1 | 2^512 - 1 | Jump-ahead | Lowest bits have low linear complexity |
 | xoshiro512++ | 2^512 - 1 | 2^512 - 1 | Jump-ahead |  |
 | xoroshiro128++ | 2^128 - 1 | 2^128 - 1 | Jump-ahead |  |
-| xorshift128+ | 2^128 - 1 | 2^128 - 1 | Jump-ahead | Lowest bits have low linear complexity |
 | xoroshiro128\*\* | 2^128 - 1 | 2^128 - 1 | Jump-ahead |  |
 | SFC64 (C. Doty-Humphrey) | 2^192 | At least 2^64 per seed | 64-bit counter | 256-bit state |
 | Philox | 2^128 | At least 2^256 per seed | 256-bit counter | 384-bit state |
@@ -531,12 +530,12 @@ Besides cryptographic RNGs, the following are examples of high-quality PRNGs:
 | XorShift\* 128/64 | 2^128 - 1 | 2^128 - 1 | No known implementation | 128-bit state.  Described by M. O'Neill in "You don't have to use PCG!", 2017.<sup>[**(44)**](#Note44)</sup> |
 | XorShift\* 64/32 | 2^64 - 1 | 2^64 - 1 | No known implementation | 64-bit state. Described by M. O'Neill in "You don't have to use PCG!", 2017. |
 | C++'s [**`std::ranlux48` engine**](http://www.cplusplus.com/reference/random/ranlux48/) | 2^577 - 2 | Not discussed (see notes) | No known implementation | Usually takes about 192 8-bit bytes of memory. Seed's bits cannot be all zeros or all ones (L&uuml;scher 1994)<sup>[**(45)**](#Note45)</sup>.  The period for `ranlux48`'s underlying generator is very close to 2^576.  This PRNG is not preferred.  |
-| Mersenne Twister (MT19937) | 2^19937 - 1 | 2^19937 - 1 | [**Jump-ahead**](http://www.math.sci.hiroshima-u.ac.jp/~m-mat/MT/JUMP/index.html) | Usually takes about 2500 8-bit bytes of memory.  This PRNG is not preferred; it shows a [**systematic failure**](http://xoroshiro.di.unimi.it/#quality) in BigCrush's LinearComp test (part of L'Ecuyer and Simard's "TestU01"). (See also (Vigna 2019)<sup>[**(46)**](#Note46)</sup>.) |
 | A high-quality PRNG that is an LCG with non-prime modulus (or a PRNG based on one, such as PCG) | Depends on parameters | Depends on parameters | Jump-ahead. What PCG calls "streams" does not produce independent sequences. | These PRNGs are not preferred; in particular, if the modulus is a power of 2, they produce highly correlated "random" number sequences from seeds that differ only in their high bits (see S. Vigna, "[**The wrap-up on PCG generators**](http://pcg.di.unimi.it/pcg.php)") and lowest bits have short periods. |
 
 The following are not considered high-quality PRNGs:
 - Any LCG with modulus less than 2<sup>63</sup> (such as `java.util.Random` and C++'s `std::minstd_rand` and `std::minstd_rand0` engines) admits fewer than 2<sup>63</sup> seeds.
 - `System.Random`, as implemented in the .NET Framework 4.7, can take a seed of at most 32 bits, so it admits fewer than 2<sup>63</sup> seeds.
+- Mersenne Twister (MT19937) shows a [**systematic failure**](http://xoroshiro.di.unimi.it/#quality) in BigCrush's LinearComp test (part of L'Ecuyer and Simard's "TestU01"). (See also (Vigna 2019)<sup>[**(46)**](#Note46)</sup>.) Moreover, it usually takes about 2500 8-bit bytes of memory.
 - Tyche and Tyche-i, as given in (Neves and Araujo 2011)<sup>[**(47)**](#Note47)</sup>, allow 2<sup>64</sup> valid seeds, but have no guaranteed cycle length of at least 2<sup>64</sup> per seed.
 - In general, any so-called "chaotic" PRNG whose period is not close to the number of admissible seeds.  This includes middle square, Rule-30 and other cellular-automaton PRNGs, multiply-with-carry (MWC), and PRNGs that use MWC, such as JKISS, JLKISS, and JLKISS64 (Jones 2007/2010)<sup>[**(48)**](#Note48)</sup>.
 - B. Jenkins's "A small noncryptographic PRNG" (sometimes known as JSF or JSF64) has no guaranteed cycle length of at least 2<sup>64</sup> per seed.  Moreover, the 32-bit version (JSF32) allows only 2<sup>32</sup> valid seeds (however, Jenkins found JSF32 to produce nonoverlapping streams of at least 2^20 values per seed).

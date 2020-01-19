@@ -1237,7 +1237,19 @@ def d65Illum(wavelength):
     """ CIE D65 Standard Illuminant. `wavelength` is in nanometers."""
     return _d65Illum.calc(wavelength)
 
-def spectrumToTristim(refl, light=d65Illum, cmf=cie1931cmf):
+def spectrumToTristim(refl, light=None, cmf=None):
+    """ Generates tristimulus values based on a spectrum determined
+        by a reflectance curve function (refl),
+        light spectrum function (light), and color matching functions method (cmf).
+        Default `light` if unspecified is D65; default `cmf` if unspecified
+        is CIE 1931 color matching functions.  """
+    # NOTE: Use None, rather than functions, as default parameters
+    # of this method, to avoid nondeterministic renderings
+    # of this method by pydoc3
+    if light == None:
+        light = d65Illum
+    if cmf == None:
+        cmf = cie1931cmf
     i = 360
     xyz = [0, 0, 0]
     weight = 0
