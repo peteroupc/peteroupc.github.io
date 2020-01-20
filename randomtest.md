@@ -33,7 +33,7 @@ In general, a hash function that passes is worthy of mention if it's noncryptogr
     4. Go to the first step.
 - Sequence SL: Set `seed` and `g` to `split(seed)[0]` and `split(seed)[1]`, respectively, and write out `generate(g)`. Go to the first step.
 - Sequence SR: Set `seed` and `g` to `split(seed)[1]` and `split(seed)[0]`, respectively, and write out `generate(g)`. Go to the first step.
-- Sequence SA: Alternate the outputs of sequences SL and SR.
+- Sequence SA:
     1. Set `seed` and `g` to `split(seed)[0]` and `split(seed)[1]`, respectively, and write out `generate(g)`.
     2. Set `seed` and `g` to `split(seed)[1]` and `split(seed)[0]`, respectively, and write out `generate(g)`.
     4. Go to the first step.
