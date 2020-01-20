@@ -456,7 +456,7 @@ For cryptographic RNGs, an application SHOULD use only one thread-safe instance 
 <tr>
 <td>.NET (incl. C# and VB.NET) (H)</td>
 <td><code>RandomNumberGenerator.Create()</code> in <code>System.Security.Cryptography</code> namespace; <a href="https://github.com/airbreather/Airbreather.Common"><strong>airbreather/AirBreather.Common library</strong></a> (CryptographicRandomGenerator)</td>
-<td><code>XoshiroPRNG.Net</code> package (XoRoShiRo128starstar, XoShiRo256plus, XoShiRo256starstar); <code>Data.HashFunction.xxHash</code>, <code>Data.HashFunction.MurmurHash</code>, or <code>Data.HashFunction.CityHash</code> package (hash the string <code>seed + &quot;_&quot; + counter</code>)</td>
+<td><code>XoshiroPRNG.Net</code> package (XoRoShiRo128starstar, XoShiRo256plus, XoShiRo256starstar); <code>Data.HashFunction.MurmurHash</code> or <code>Data.HashFunction.CityHash</code> package (hash the string <code>seed + &quot;_&quot; + counter</code>)</td>
 </tr>
 <tr>
 <td>C/C++ (G)</td>
@@ -506,7 +506,7 @@ For cryptographic RNGs, an application SHOULD use only one thread-safe instance 
 <tr>
 <td>Other Languages</td>
 <td>(C)</td>
-<td>Hash the string <code>seed + &quot;_&quot; + counter</code> with MurmurHash, xxHash, CityHash, MD5, or SHA-1</td>
+<td>Hash the string <code>seed + &quot;_&quot; + counter</code> with MurmurHash3, xxHash64, CityHash, MD5, or SHA-1</td>
 </tr>
 </tbody></table>
 
