@@ -814,13 +814,6 @@ For cryptographic RNGs, an application SHOULD use only one thread-safe instance 
 <td></td>
 </tr>
 <tr>
-<td>xorshift128+</td>
-<td>2^128 - 1</td>
-<td>2^128 - 1</td>
-<td>Jump-ahead</td>
-<td>Lowest bits have low linear complexity</td>
-</tr>
-<tr>
 <td>xoroshiro128**</td>
 <td>2^128 - 1</td>
 <td>2^128 - 1</td>
@@ -912,13 +905,6 @@ For cryptographic RNGs, an application SHOULD use only one thread-safe instance 
 <td>Usually takes about 192 8-bit bytes of memory. Seed&#39;s bits cannot be all zeros or all ones (L&uuml;scher 1994)<sup><a href="#Note45"><strong>(45)</strong></a></sup>.  The period for <code>ranlux48</code>&#39;s underlying generator is very close to 2^576.  This PRNG is not preferred.</td>
 </tr>
 <tr>
-<td>Mersenne Twister (MT19937)</td>
-<td>2^19937 - 1</td>
-<td>2^19937 - 1</td>
-<td><a href="http://www.math.sci.hiroshima-u.ac.jp/%7Em-mat/MT/JUMP/index.html"><strong>Jump-ahead</strong></a></td>
-<td>Usually takes about 2500 8-bit bytes of memory.  This PRNG is not preferred; it shows a <a href="http://xoroshiro.di.unimi.it/#quality"><strong>systematic failure</strong></a> in BigCrush&#39;s LinearComp test (part of L&#39;Ecuyer and Simard&#39;s &quot;TestU01&quot;). (See also (Vigna 2019)<sup><a href="#Note46"><strong>(46)</strong></a></sup>.)</td>
-</tr>
-<tr>
 <td>A high-quality PRNG that is an LCG with non-prime modulus (or a PRNG based on one, such as PCG)</td>
 <td>Depends on parameters</td>
 <td>Depends on parameters</td>
@@ -932,6 +918,7 @@ For cryptographic RNGs, an application SHOULD use only one thread-safe instance 
 <ul>
 <li>Any LCG with modulus less than 2<sup>63</sup> (such as <code>java.util.Random</code> and C++&#39;s <code>std::minstd_rand</code> and <code>std::minstd_rand0</code> engines) admits fewer than 2<sup>63</sup> seeds.</li>
 <li><code>System.Random</code>, as implemented in the .NET Framework 4.7, can take a seed of at most 32 bits, so it admits fewer than 2<sup>63</sup> seeds.</li>
+<li>Mersenne Twister (MT19937) shows a <a href="http://xoroshiro.di.unimi.it/#quality"><strong>systematic failure</strong></a> in BigCrush&#39;s LinearComp test (part of L&#39;Ecuyer and Simard&#39;s &quot;TestU01&quot;). (See also (Vigna 2019)<sup><a href="#Note46"><strong>(46)</strong></a></sup>.) Moreover, it usually takes about 2500 8-bit bytes of memory.</li>
 <li>Tyche and Tyche-i, as given in (Neves and Araujo 2011)<sup><a href="#Note47"><strong>(47)</strong></a></sup>, allow 2<sup>64</sup> valid seeds, but have no guaranteed cycle length of at least 2<sup>64</sup> per seed.</li>
 <li>In general, any so-called &quot;chaotic&quot; PRNG whose period is not close to the number of admissible seeds.  This includes middle square, Rule-30 and other cellular-automaton PRNGs, multiply-with-carry (MWC), and PRNGs that use MWC, such as JKISS, JLKISS, and JLKISS64 (Jones 2007/2010)<sup><a href="#Note48"><strong>(48)</strong></a></sup>.</li>
 <li>B. Jenkins&#39;s &quot;A small noncryptographic PRNG&quot; (sometimes known as JSF or JSF64) has no guaranteed cycle length of at least 2<sup>64</sup> per seed.  Moreover, the 32-bit version (JSF32) allows only 2<sup>32</sup> valid seeds (however, Jenkins found JSF32 to produce nonoverlapping streams of at least 2^20 values per seed).</li>

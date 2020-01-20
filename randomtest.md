@@ -9,7 +9,7 @@ a requirement called the "independence requirement" in this short document.
 
 To determine whether a PRNG meets the independence requirement, its output should be sent to the PractRand program by Chris Doty-Humphrey (pracrand.sourceforge.net) and pass the PractRand tests at 1 TiB (2^40 bytes) or greater.
 
-To determine whether nearby sequences of the PRNG meet the independence requirement, the output passed to PractRand should consist of one output from the first sequence, one output from the second, another output from the first, another from the second, and so on.
+To determine whether nearby sequences of the PRNG meet the independence requirement, the output sent to PractRand should consist of one output from the first sequence, one output from the second, another output from the first, another from the second, and so on.
 
 There are several kinds of nearby sequences to test for this purpose:
 
