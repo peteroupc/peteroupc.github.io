@@ -27,7 +27,8 @@
 <li><p>(a) The preamble and epilogue of multipart messages, which will be ignored.</p></li>
 <li><p>(b) If the charset is declared to be  <code>utf-8</code> .</p></li>
 <li><p>(c) If the content type is &quot;text/html&quot; and the charset is declared to be  <code>us-ascii</code> , &quot;windows-1252&quot;, &quot;windows-1251&quot;, or &quot;iso-8859-*&quot; (all single byte encodings).</p></li>
-<li><p>(d) In non-MIME message bodies and in text/plain message bodies. Any bytes greater than 127 are replaced with the substitute character byte (0x1a).</p></li>
+<li><p>(d) In text/plain message bodies. Any bytes greater than 127 are replaced with the substitute character byte (0x1a).</p></li>
+<li><p>(e) In MIME message bodies (this is not a deviation from MIME, though). Any bytes greater than 127 are replaced with the substitute character byte (0x1a).</p></li>
 <li><p>If the message starts with the word &quot;From&quot; (and no other case variations of that word) followed by one or more space (U+0020) not followed by colon, that text and the rest of the text is skipped up to and including a line feed (U+000A). (See also RFC 4155, which describes the so-called &quot;mbox&quot; convention with &quot;From&quot; lines of this kind.)</p></li>
 <li><p>The name  <code>ascii</code>  is treated as a synonym for  <code>us-ascii</code> , despite being a reserved name under RFC 2046. The names  <code>cp1252</code>  and  <code>utf8</code>  are treated as synonyms for  <code>windows-1252</code>  and  <code>utf-8</code> , respectively, even though they are not IANA registered aliases.</p></li>
 <li><p>The following deviations involve encoded words under RFC 2047:</p></li>

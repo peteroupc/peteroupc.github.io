@@ -20,20 +20,20 @@ There are several kinds of nearby sequences to test for this purpose:
 
 1. Write out the hash code of `seed + "_" + counter`.
 2. Write out the hash code of `(seed+1) + "_" + counter`.
-3. Add 1 to `counter` and repeat this process.
+3. Add 1 to `counter` and go to the first step.
 
 In general, a hash function that passes is worthy of mention if it's noncryptographic and faster than hash functions designed for cryptography, such as MD5 and the SHA family.
 
 **Splittable PRNGs.** For so-called "splittable" PRNGs, Schaathun, H.G., "Evaluation of Splittable Pseudo-Random Generators", 2015, suggests four random number sequences for testing purposes.  They use the PRNG's `split` and `generate` operations.
 
-1. Sequence suggested in section 5.5:
+- Sequence suggested in section 5.5:
     1. Set `seed` and `g` to `split(seed)[0]` and `split(seed)[1]`, respectively.
     2. Set `t` to `split(split(g)[0])`, write out `generate(t[0])`, and write out `generate(t[1])`.
     3. Set `t` to `split(split(g)[1])`, write out `generate(t[0])`, and write out `generate(t[1])`.
-    4. Repeat this process.
-2. Sequence SL: Set `seed` and `g` to `split(seed)[0]` and `split(seed)[1]`, respectively, and write out `generate(g)`. Repeat this process.
-3. Sequence SR: Set `seed` and `g` to `split(seed)[1]` and `split(seed)[0]`, respectively, and write out `generate(g)`. Repeat this process.
-4. Sequence SA: Alternate the outputs of sequences SL and SR.
+    4. Go to the first step.
+- Sequence SL: Set `seed` and `g` to `split(seed)[0]` and `split(seed)[1]`, respectively, and write out `generate(g)`. Go to the first step.
+- Sequence SR: Set `seed` and `g` to `split(seed)[1]` and `split(seed)[0]`, respectively, and write out `generate(g)`. Go to the first step.
+- Sequence SA: Alternate the outputs of sequences SL and SR.
     1. Set `seed` and `g` to `split(seed)[0]` and `split(seed)[1]`, respectively, and write out `generate(g)`.
     2. Set `seed` and `g` to `split(seed)[1]` and `split(seed)[0]`, respectively, and write out `generate(g)`.
-    4. Repeat this process.
+    4. Go to the first step.
