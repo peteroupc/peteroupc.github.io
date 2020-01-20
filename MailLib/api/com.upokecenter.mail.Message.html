@@ -44,10 +44,12 @@
   <code>utf-8</code>.</li> <li>(c) If the content type is &quot;text/html&quot; and the
   charset is declared to be <code>us-ascii</code>, &quot;windows-1252&quot;,
   &quot;windows-1251&quot;, or &quot;iso-8859-<em>&quot; (all single byte encodings).</li>
- <li>(d) In non-MIME message bodies and in text/plain message bodies.
- Any bytes greater than 127 are replaced with the substitute character
-  byte (0x1a).</li> <li>If the message starts with the word &quot;From&quot; (and
- no other case variations of that word) followed by one or more space
+ <li>(d) In text/plain message bodies. Any bytes greater than 127 are
+ replaced with the substitute character byte (0x1a).</li> <li>(e) In
+ MIME message bodies (this is not a deviation from MIME, though). Any
+ bytes greater than 127 are replaced with the substitute character byte
+  (0x1a).</li> <li>If the message starts with the word &quot;From&quot; (and no
+ other case variations of that word) followed by one or more space
  (U+0020) not followed by colon, that text and the rest of the text is
  skipped up to and including a line feed (U+000A). (See also RFC 4155,
   which describes the so-called &quot;mbox&quot; convention with &quot;From&quot; lines of
