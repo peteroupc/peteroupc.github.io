@@ -1999,13 +1999,13 @@ is null.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>first</i>: An arbitrary-precision binary floating-point number.</p></li>
-<li><p><i>second</i>: Another arbitrary-precision binary floating-point number.</p></li>
+<li><p><i>first</i>: The first value to compare.</p></li>
+<li><p><i>second</i>: The second value to compare.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p>The greater of the two arbitrary-precision numbers.</p>
+<p>The larger value of the two numbers. If one is positive zero and the other is negative zero, returns the positive zero. If the two numbers are positive and have the same value, returns the one with the larger exponent. If the two numbers are negative and have the same value, returns the one with the smaller exponent.</p>
 
 <p><a id="Max_PeterO_Numbers_EFloat_PeterO_Numbers_EFloat_PeterO_Numbers_EContext"></a></p>
 
@@ -2029,7 +2029,7 @@ is null.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>The larger value of the two numbers.</p>
+<p>The larger value of the two numbers. If one is positive zero and the other is negative zero, returns the positive zero. If the two numbers are positive and have the same value, returns the one with the larger exponent. If the two numbers are negative and have the same value, returns the one with the smaller exponent.</p>
 
 <p><a id="MaxMagnitude_PeterO_Numbers_EFloat_PeterO_Numbers_EFloat"></a></p>
 
@@ -2051,7 +2051,7 @@ is null.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>An arbitrary-precision binary floating-point number.</p>
+<p>The larger value of the two numbers, ignoring their signs.</p>
 
 <p><a id="MaxMagnitude_PeterO_Numbers_EFloat_PeterO_Numbers_EFloat_PeterO_Numbers_EContext"></a></p>
 
@@ -2075,7 +2075,7 @@ is null.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>An arbitrary-precision binary floating-point number.</p>
+<p>The larger value of the two numbers, ignoring their signs.</p>
 
 <p><a id="Min_PeterO_Numbers_EFloat_PeterO_Numbers_EFloat"></a></p>
 
@@ -2097,7 +2097,7 @@ is null.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>An arbitrary-precision binary floating-point number.</p>
+<p>The smaller value of the two numbers. If one is positive zero and the other is negative zero, returns the negative zero. If the two numbers are positive and have the same value, returns the one with the smaller exponent. If the two numbers are negative and have the same value, returns the one with the larger exponent.</p>
 
 <p><a id="Min_PeterO_Numbers_EFloat_PeterO_Numbers_EFloat_PeterO_Numbers_EContext"></a></p>
 
@@ -2121,7 +2121,7 @@ is null.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>The smaller value of the two numbers.</p>
+<p>The smaller value of the two numbers. If one is positive zero and the other is negative zero, returns the negative zero. If the two numbers are positive and have the same value, returns the one with the smaller exponent. If the two numbers are negative and have the same value, returns the one with the larger exponent.</p>
 
 <p><a id="MinMagnitude_PeterO_Numbers_EFloat_PeterO_Numbers_EFloat"></a></p>
 
@@ -2143,7 +2143,7 @@ is null.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>An arbitrary-precision binary floating-point number.</p>
+<p>The smaller value of the two numbers, ignoring their signs.</p>
 
 <p><a id="MinMagnitude_PeterO_Numbers_EFloat_PeterO_Numbers_EFloat_PeterO_Numbers_EContext"></a></p>
 
@@ -2167,7 +2167,7 @@ is null.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>An arbitrary-precision binary floating-point number.</p>
+<p>The smaller value of the two numbers, ignoring their signs.</p>
 
 <p><a id="MovePointLeft_int"></a></p>
 

@@ -185,6 +185,18 @@ an error if the value is passed to any arithmetic operation in this
 class).</li>
 <li><code>boolean isZero()</code><br>
 Gets a value indicating whether this object&#39;s value equals 0.</li>
+<li><code>static ERational Max​(ERational first,
+ERational second)</code><br>
+Gets the greater value between two rational numbers.</li>
+<li><code>static ERational MaxMagnitude​(ERational first,
+        ERational second)</code><br>
+Gets the greater value between two values, ignoring their signs.</li>
+<li><code>static ERational Min​(ERational first,
+ERational second)</code><br>
+Gets the lesser value between two rational numbers.</li>
+<li><code>static ERational MinMagnitude​(ERational first,
+        ERational second)</code><br>
+Gets the lesser value between two values, ignoring their signs.</li>
 <li><code>ERational Multiply​(int v)</code><br>
 Returns the value of this instance multiplied by a 32-bit signed integer.</li>
 <li><code>ERational Multiply​(ERational otherValue)</code><br>
@@ -1021,6 +1033,124 @@ implementation returns a positive number if.</li>
 <li>Zero if the values are equal; a negative number if this instance is
 less, or a positive number if this instance is greater. This
 implementation returns a positive number if.</li>
+</ul>
+
+<h3>Max</h3>
+
+<pre>public static ERational Max​(ERational first, ERational second)
+</pre>
+
+<p>Gets the greater value between two rational numbers.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>first</code> - An arbitrary-precision rational number.</p></li>
+<li><p><code>second</code> - Another arbitrary-precision rational number.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The larger value of the two numbers. If one is positive zero and the
+other is negative zero, returns the positive zero. If the two
+numbers are positive and have the same value, returns the one with
+the larger denominator. If the two numbers are negative and have the
+same value, returns the one with the smaller denominator.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>java.lang.NullPointerException</code> - The parameter <code>first</code> or <code>second</code>
+is null.</li>
+</ul>
+
+<h3>MaxMagnitude</h3>
+
+<pre>public static ERational MaxMagnitude​(ERational first, ERational second)
+</pre>
+
+<p>Gets the greater value between two values, ignoring their signs. If the
+ absolute values are equal, has the same effect as Max.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>first</code> - The first value to compare.</p></li>
+<li><p><code>second</code> - The second value to compare.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The larger value of the two numbers, ignoring their signs.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>java.lang.NullPointerException</code> - The parameter <code>first</code> or <code>second</code>
+is null.</li>
+</ul>
+
+<h3>Min</h3>
+
+<pre>public static ERational Min​(ERational first, ERational second)
+</pre>
+
+<p>Gets the lesser value between two rational numbers.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>first</code> - The first value to compare.</p></li>
+<li><p><code>second</code> - The second value to compare.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The smaller value of the two numbers. If one is positive zero and
+the other is negative zero, returns the negative zero. If the two
+numbers are positive and have the same value, returns the one with
+the smaller denominator. If the two numbers are negative and have
+the same value, returns the one with the larger denominator.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>java.lang.NullPointerException</code> - The parameter <code>first</code> or <code>second</code>
+is null.</li>
+</ul>
+
+<h3>MinMagnitude</h3>
+
+<pre>public static ERational MinMagnitude​(ERational first, ERational second)
+</pre>
+
+<p>Gets the lesser value between two values, ignoring their signs. If the
+ absolute values are equal, has the same effect as Min.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>first</code> - The first value to compare.</p></li>
+<li><p><code>second</code> - The second value to compare.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The smaller value of the two numbers, ignoring their signs.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>java.lang.NullPointerException</code> - The parameter <code>first</code> or <code>second</code>
+is null.</li>
 </ul>
 
 <h3>compareTo</h3>

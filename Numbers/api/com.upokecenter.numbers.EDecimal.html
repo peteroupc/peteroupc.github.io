@@ -1465,7 +1465,18 @@ which case the precision is unlimited and rounding isn&#39;t needed.</p></li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>The larger value of the two numbers.</li>
+<li>The larger value of the two numbers. If one is positive zero and the
+other is negative zero, returns the positive zero. If the two
+numbers are positive and have the same value, returns the one with
+the larger exponent. If the two numbers are negative and have the
+same value, returns the one with the smaller exponent.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>java.lang.NullPointerException</code> - The parameter <code>first</code> or <code>second</code>
+is null.</li>
 </ul>
 
 <h3>Max</h3>
@@ -1485,7 +1496,18 @@ which case the precision is unlimited and rounding isn&#39;t needed.</p></li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>The larger value of the two numbers.</li>
+<li>The larger value of the two numbers. If one is positive zero and the
+other is negative zero, returns the positive zero. If the two
+numbers are positive and have the same value, returns the one with
+the larger exponent. If the two numbers are negative and have the
+same value, returns the one with the smaller exponent.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>java.lang.NullPointerException</code> - The parameter <code>first</code> or <code>second</code>
+is null.</li>
 </ul>
 
 <h3>MaxMagnitude</h3>
@@ -1511,7 +1533,14 @@ which case the precision is unlimited and rounding isn&#39;t needed.</p></li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>An arbitrary-precision decimal number.</li>
+<li>The larger value of the two numbers, ignoring their signs.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>java.lang.NullPointerException</code> - The parameter <code>first</code> or <code>second</code>
+is null.</li>
 </ul>
 
 <h3>MaxMagnitude</h3>
@@ -1532,7 +1561,14 @@ which case the precision is unlimited and rounding isn&#39;t needed.</p></li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>An arbitrary-precision decimal number.</li>
+<li>The larger value of the two numbers, ignoring their signs.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>java.lang.NullPointerException</code> - The parameter <code>first</code> or <code>second</code>
+is null.</li>
 </ul>
 
 <h3>Min</h3>
@@ -1557,7 +1593,18 @@ which case the precision is unlimited and rounding isn&#39;t needed.</p></li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>The smaller value of the two numbers.</li>
+<li>The smaller value of the two numbers. If one is positive zero and
+the other is negative zero, returns the negative zero. If the two
+numbers are positive and have the same value, returns the one with
+the smaller exponent. If the two numbers are negative and have the
+same value, returns the one with the larger exponent.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>java.lang.NullPointerException</code> - The parameter <code>first</code> or <code>second</code>
+is null.</li>
 </ul>
 
 <h3>Min</h3>
@@ -1577,7 +1624,18 @@ which case the precision is unlimited and rounding isn&#39;t needed.</p></li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>The smaller value of the two numbers.</li>
+<li>The smaller value of the two numbers. If one is positive zero and
+the other is negative zero, returns the negative zero. If the two
+numbers are positive and have the same value, returns the one with
+the smaller exponent. If the two numbers are negative and have the
+same value, returns the one with the larger exponent.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>java.lang.NullPointerException</code> - The parameter <code>first</code> or <code>second</code>
+is null.</li>
 </ul>
 
 <h3>MinMagnitude</h3>
@@ -1603,7 +1661,14 @@ which case the precision is unlimited and rounding isn&#39;t needed.</p></li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>An arbitrary-precision decimal number.</li>
+<li>The smaller value of the two numbers, ignoring their signs.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>java.lang.NullPointerException</code> - The parameter <code>first</code> or <code>second</code>
+is null.</li>
 </ul>
 
 <h3>MinMagnitude</h3>
@@ -1624,7 +1689,14 @@ which case the precision is unlimited and rounding isn&#39;t needed.</p></li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>An arbitrary-precision decimal number.</li>
+<li>The smaller value of the two numbers, ignoring their signs.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>java.lang.NullPointerException</code> - The parameter <code>first</code> or <code>second</code>
+is null.</li>
 </ul>
 
 <h3>PI</h3>
