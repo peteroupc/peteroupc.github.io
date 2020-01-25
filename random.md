@@ -417,13 +417,7 @@ An application can generally achieve consistency by not changing the algorithm b
 
 A _hash function_ is a function that takes an arbitrary input of any size (such as an array of 8-bit bytes or a sequence of characters) and returns an output with a fixed number of bits. That output is also known as a _hash code_.  The individual bits of a hash code can serve as random numbers, or the hash code can serve as the seed for a PRNG that, in turn, [**generates random numbers**](https://peteroupc.github.io/randomfunc.html) in the desired way.
 
-Useful properties of some hash functions include&mdash;
-
-- the _avalanche property_ (every bit of the input affects every bit of the output without a clear preference for 0 or 1),
-- _collision resistance_ (finding two different inputs that lead to a given output is cost-prohibitive), and
-- the _one-way property_ (finding an unknown input that leads to a given output is cost-prohibitive) (see NIST SP 800-108).
-
-Hash functions not used for information security SHOULD have the avalanche property (e.g, MurmurHash3, xxHash, CityHash).  (Linear PRNGs, such as LCGs and Xorshift, are poor choices as hash functions, though.) Hash functions used for information security SHOULD have the collision resistance, avalanche, and one-way properties (e.g., SHA2-256, BLAKE2).
+For random number generation purposes, good hash functions include cryptographic hash functions (e.g., SHA2-256, BLAKE2) and other hash functions that tend to produce wildly dispersed hash codes for nearby inputs, and poor hash functions include linear PRNGs such as LCGs and the Xorshift family.  Hash functions are used for other purposes, however (including data lookup and data integrity); some hash functions are better suited for these purposes than for random number generation.<<See, for example, Richter, Alvarez, Dittrich, "A Seven-Dimensional Analysis of Hashing Methods and its Implications on Query Processing", _Proceedings of the VLDB Endowment_ 9(3), 2015.>>
 
 <a id=Procedural_Noise_Functions></a>
 ### Procedural Noise Functions

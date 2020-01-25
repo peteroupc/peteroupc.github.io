@@ -69,6 +69,8 @@
 <li><code><a href="#CopySign_PeterO_Numbers_EFloat">CopySign(PeterO.Numbers.EFloat)</a></code> - Returns a number with the same value as this one, but copying the sign (positive or negative) of another number.</li>
 <li><code><a href="#Create_int_int">Create(int, int)</a></code> - Returns a number with the value exponent*2^significand.</li>
 <li><code><a href="#Create_long_long">Create(long, long)</a></code> - Returns a number with the value exponent*2^significand.</li>
+<li><code><a href="#Create_PeterO_Numbers_EInteger_int">Create(PeterO.Numbers.EInteger, int)</a></code> - Returns a number with the value exponent*2^significand.</li>
+<li><code><a href="#Create_PeterO_Numbers_EInteger_long">Create(PeterO.Numbers.EInteger, long)</a></code> - Returns a number with the value exponent*2^significand.</li>
 <li><code><a href="#Create_PeterO_Numbers_EInteger_PeterO_Numbers_EInteger">Create(PeterO.Numbers.EInteger, PeterO.Numbers.EInteger)</a></code> - Returns a number with the value exponent*2^significand.</li>
 <li><code><a href="#CreateNaN_PeterO_Numbers_EInteger">CreateNaN(PeterO.Numbers.EInteger)</a></code> - Creates a not-a-number arbitrary-precision binary floating-point number.</li>
 <li><code><a href="#CreateNaN_PeterO_Numbers_EInteger_bool_bool_PeterO_Numbers_EContext">CreateNaN(PeterO.Numbers.EInteger, bool, bool, PeterO.Numbers.EContext)</a></code> - Creates a not-a-number arbitrary-precision binary floating-point number.</li>
@@ -878,6 +880,50 @@ is null.</li>
 
 <ul>
 <li><p><i>mantissaLong</i>: Desired value for the significand.</p></li>
+<li><p><i>exponentLong</i>: Desired value for the exponent.</p></li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>An arbitrary-precision binary floating-point number.</p>
+
+<p><a id="Create_PeterO_Numbers_EInteger_int"></a></p>
+
+<h3>Create</h3>
+
+<pre>public static PeterO.Numbers.EFloat Create(
+    PeterO.Numbers.EInteger mantissa,
+    int exponentSmall);
+</pre>
+
+<p>Returns a number with the value exponent*2^significand.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>mantissa</i>: Desired value for the significand.</p></li>
+<li><p><i>exponentSmall</i>: Desired value for the exponent.</p></li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>An arbitrary-precision binary floating-point number.</p>
+
+<p><a id="Create_PeterO_Numbers_EInteger_long"></a></p>
+
+<h3>Create</h3>
+
+<pre>public static PeterO.Numbers.EFloat Create(
+    PeterO.Numbers.EInteger mantissa,
+    long exponentLong);
+</pre>
+
+<p>Returns a number with the value exponent*2^significand.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>mantissa</i>: Desired value for the significand.</p></li>
 <li><p><i>exponentLong</i>: Desired value for the exponent.</p></li>
 </ul>
 
@@ -2007,6 +2053,15 @@ is null.</li>
 
 <p>The larger value of the two numbers. If one is positive zero and the other is negative zero, returns the positive zero. If the two numbers are positive and have the same value, returns the one with the larger exponent. If the two numbers are negative and have the same value, returns the one with the smaller exponent.</p>
 
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter  <i>first</i>
+or  <i>second</i>
+is null.</li>
+</ul>
+
 <p><a id="Max_PeterO_Numbers_EFloat_PeterO_Numbers_EFloat_PeterO_Numbers_EContext"></a></p>
 
 <h3>Max</h3>
@@ -2031,6 +2086,15 @@ is null.</li>
 
 <p>The larger value of the two numbers. If one is positive zero and the other is negative zero, returns the positive zero. If the two numbers are positive and have the same value, returns the one with the larger exponent. If the two numbers are negative and have the same value, returns the one with the smaller exponent.</p>
 
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter  <i>first</i>
+or  <i>second</i>
+is null.</li>
+</ul>
+
 <p><a id="MaxMagnitude_PeterO_Numbers_EFloat_PeterO_Numbers_EFloat"></a></p>
 
 <h3>MaxMagnitude</h3>
@@ -2052,6 +2116,15 @@ is null.</li>
 <p><b>Return Value:</b></p>
 
 <p>The larger value of the two numbers, ignoring their signs.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter  <i>first</i>
+or  <i>second</i>
+is null.</li>
+</ul>
 
 <p><a id="MaxMagnitude_PeterO_Numbers_EFloat_PeterO_Numbers_EFloat_PeterO_Numbers_EContext"></a></p>
 
@@ -2077,6 +2150,15 @@ is null.</li>
 
 <p>The larger value of the two numbers, ignoring their signs.</p>
 
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter  <i>first</i>
+or  <i>second</i>
+is null.</li>
+</ul>
+
 <p><a id="Min_PeterO_Numbers_EFloat_PeterO_Numbers_EFloat"></a></p>
 
 <h3>Min</h3>
@@ -2098,6 +2180,15 @@ is null.</li>
 <p><b>Return Value:</b></p>
 
 <p>The smaller value of the two numbers. If one is positive zero and the other is negative zero, returns the negative zero. If the two numbers are positive and have the same value, returns the one with the smaller exponent. If the two numbers are negative and have the same value, returns the one with the larger exponent.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter  <i>first</i>
+or  <i>second</i>
+is null.</li>
+</ul>
 
 <p><a id="Min_PeterO_Numbers_EFloat_PeterO_Numbers_EFloat_PeterO_Numbers_EContext"></a></p>
 
@@ -2123,6 +2214,15 @@ is null.</li>
 
 <p>The smaller value of the two numbers. If one is positive zero and the other is negative zero, returns the negative zero. If the two numbers are positive and have the same value, returns the one with the smaller exponent. If the two numbers are negative and have the same value, returns the one with the larger exponent.</p>
 
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter  <i>first</i>
+or  <i>second</i>
+is null.</li>
+</ul>
+
 <p><a id="MinMagnitude_PeterO_Numbers_EFloat_PeterO_Numbers_EFloat"></a></p>
 
 <h3>MinMagnitude</h3>
@@ -2144,6 +2244,15 @@ is null.</li>
 <p><b>Return Value:</b></p>
 
 <p>The smaller value of the two numbers, ignoring their signs.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter  <i>first</i>
+or  <i>second</i>
+is null.</li>
+</ul>
 
 <p><a id="MinMagnitude_PeterO_Numbers_EFloat_PeterO_Numbers_EFloat_PeterO_Numbers_EContext"></a></p>
 
@@ -2168,6 +2277,15 @@ is null.</li>
 <p><b>Return Value:</b></p>
 
 <p>The smaller value of the two numbers, ignoring their signs.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter  <i>first</i>
+or  <i>second</i>
+is null.</li>
+</ul>
 
 <p><a id="MovePointLeft_int"></a></p>
 
