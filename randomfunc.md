@@ -339,7 +339,14 @@ where `MAXINT` is an integer greater than 0, the following pseudocode for `RNDIN
 
 > **Note:** `RNDINTEXC` is not given as the core random generation method because it's harder to fill integers in popular integer formats with random bits with this method.
 >
-> **Example:** Generating a random number in the interval [`mn`, `mx`) in increments equal to `step` is equivalent to generating `mn+step*RNDINTEXC(ceil((mx-mn)/(1.0*step)))`.
+> **Examples:**
+>
+> 1. To generate a random number in the interval [`mn`, `mx`) in increments equal to `step`: `mn+step*RNDINTEXC(ceil((mx-mn)/(1.0*step)))`.
+> 2. To generate a random integer in the interval [0, `X`):
+>     - And favor low numbers:  `floor((RNDINTEXC(X) + RNDINTEXC(X)) / 2)`.
+>     - And favor high numbers:  `X - 1 - floor((RNDINTEXC(X) + RNDINTEXC(X)) / 2)`.
+>     - And strongly favor low numbers:  `floor(RNDINTEXC(X) * RNDINTEXC(X) / X)`.
+>     - And strongly favor high numbers:  `X - 1 - floor(RNDINTEXC(X) * RNDINTEXC(X) / X)`.
 
 <a id=RNDINTEXCRANGE_Random_Integers_in_N_M></a>
 ### `RNDINTEXCRANGE`: Random Integers in [N, M)

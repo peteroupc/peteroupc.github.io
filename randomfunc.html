@@ -446,7 +446,19 @@ result = NUMBER_TO_DATETIME(num)
 <blockquote>
 <p><strong>Note:</strong> <code>RNDINTEXC</code> is not given as the core random generation method because it&#39;s harder to fill integers in popular integer formats with random bits with this method.</p>
 
-<p><strong>Example:</strong> Generating a random number in the interval [<code>mn</code>, <code>mx</code>) in increments equal to <code>step</code> is equivalent to generating <code>mn+step*RNDINTEXC(ceil((mx-mn)/(1.0*step)))</code>.</p>
+<p><strong>Examples:</strong></p>
+
+<ol>
+<li>To generate a random number in the interval [<code>mn</code>, <code>mx</code>) in increments equal to <code>step</code>: <code>mn+step*RNDINTEXC(ceil((mx-mn)/(1.0*step)))</code>.</li>
+<li>To generate a random integer in the interval [0, <code>X</code>):
+
+<ul>
+<li>And favor low numbers:  <code>floor((RNDINTEXC(X) + RNDINTEXC(X)) / 2)</code>.</li>
+<li>And favor high numbers:  <code>X - 1 - floor((RNDINTEXC(X) + RNDINTEXC(X)) / 2)</code>.</li>
+<li>And strongly favor low numbers:  <code>floor(RNDINTEXC(X) * RNDINTEXC(X) / X)</code>.</li>
+<li>And strongly favor high numbers:  <code>X - 1 - floor(RNDINTEXC(X) * RNDINTEXC(X) / X)</code>.</li>
+</ul></li>
+</ol>
 </blockquote>
 
 <p><a id=RNDINTEXCRANGE_Random_Integers_in_N_M></a></p>
