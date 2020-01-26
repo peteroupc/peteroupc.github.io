@@ -633,7 +633,7 @@ For cryptographic RNGs, an application SHOULD use only one thread-safe instance 
 
 <p>A <em>hash function</em> is a function that takes an arbitrary input of any size (such as an array of 8-bit bytes or a sequence of characters) and returns an output with a fixed number of bits. That output is also known as a <em>hash code</em>.  The individual bits of a hash code can serve as random numbers, or the hash code can serve as the seed for a PRNG that, in turn, <a href="https://peteroupc.github.io/randomfunc.html"><strong>generates random numbers</strong></a> in the desired way.</p>
 
-<p>For random number generation purposes, good hash functions include cryptographic hash functions (e.g., SHA2-256, BLAKE2) and other hash functions that tend to produce wildly dispersed hash codes for nearby inputs, and poor hash functions include linear PRNGs such as LCGs and the Xorshift family.  Hash functions are used for other purposes, however (including data lookup and data integrity); some hash functions are better suited for these purposes than for random number generation.&lt;<See, for example, Richter, Alvarez, Dittrich, "A Seven-Dimensional Analysis of Hashing Methods and its Implications on Query Processing", _Proceedings of the VLDB Endowment_ 9(3), 2015.>&gt;</p>
+<p>For random number generation purposes, good hash functions include cryptographic hash functions (e.g., SHA2-256, BLAKE2) and other hash functions that tend to produce wildly dispersed hash codes for nearby inputs, and poor hash functions include linear PRNGs such as LCGs and the Xorshift family.  Hash functions are also used for other purposes, however (including data lookup and data integrity); some hash functions are better suited for these purposes than for random number generation.<sup><a href="#Note51"><strong>(51)</strong></a></sup></p>
 
 <p><a id=Procedural_Noise_Functions></a></p>
 
@@ -1113,6 +1113,8 @@ For cryptographic RNGs, an application SHOULD use only one thread-safe instance 
 <p><small><sup id=Note49>(49)</sup> Claessen, K., Palma, M. &quot;Splittable Pseudorandom Number Generators using Cryptographic Hashing&quot;, <em>Proceedings of Haskell Symposium 2013</em>, pp. 47-58.</small></p>
 
 <p><small><sup id=Note50>(50)</sup> Allowing applications to do so would hamper forward compatibility &mdash; the API would then be less free to change how the RNG is implemented in the future (e.g., to use a cryptographic or otherwise &quot;better&quot; RNG), or to make improvements or bug fixes in methods that use that RNG (such as shuffling and Gaussian number generation).  (As a notable example, the V8 JavaScript engine recently changed its <code>Math.random()</code> implementation to use a variant of <code>xorshift128+</code>, which is backward compatible because nothing in JavaScript allows  <code>Math.random()</code> to be seeded.)  Nevertheless, APIs can still allow applications to provide additional input (&quot;entropy&quot;) to the RNG in order to increase its randomness rather than to ensure repeatability.</small></p>
+
+<p><small><sup id=Note51>(51)</sup> See, for example, Richter, Alvarez, Dittrich, &quot;A Seven-Dimensional Analysis of Hashing Methods and its Implications on Query Processing&quot;, <em>Proceedings of the VLDB Endowment</em> 9(3), 2015.</small></p>
 
 <p><a id=Appendix></a></p>
 
