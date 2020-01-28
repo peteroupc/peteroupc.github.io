@@ -165,16 +165,18 @@ greater than 0.</li>
 Gets a value indicating whether this value is 0.</li>
 <li><code>static EInteger Max​(EInteger first,
 EInteger second)</code><br>
-Not documented yet.</li>
+Returns the greater of two arbitrary-precision integers.</li>
 <li><code>static EInteger MaxMagnitude​(EInteger first,
         EInteger second)</code><br>
-Not documented yet.</li>
+Of two arbitrary-precision integers, returns the one with the greater
+absolute value.</li>
 <li><code>static EInteger Min​(EInteger first,
 EInteger second)</code><br>
-Not documented yet.</li>
+Returns the smaller of two arbitrary-precision integers.</li>
 <li><code>static EInteger MinMagnitude​(EInteger first,
         EInteger second)</code><br>
-Not documented yet.</li>
+Of two arbitrary-precision integers, returns the one with the smaller
+absolute value.</li>
 <li><code>EInteger Mod​(int smallDivisor)</code><br>
 Finds the modulus remainder that results when this instance is divided by
 the value of another integer.</li>
@@ -767,19 +769,19 @@ implementation returns a positive number if.</li>
 <pre>public static EInteger Max​(EInteger first, EInteger second)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Returns the greater of two arbitrary-precision integers.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>first</code> - The parameter <code>first</code> is a Numbers.EInteger object.</p></li>
-<li><p><code>second</code> - The parameter <code>second</code> is a Numbers.EInteger object.</p></li>
+<li><p><code>first</code> - The first integer to compare.</p></li>
+<li><p><code>second</code> - The second integer to compare.</p></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>The return value is not documented yet.</li>
+<li>The greater of the two integers.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -794,19 +796,19 @@ is null.</li>
 <pre>public static EInteger Min​(EInteger first, EInteger second)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Returns the smaller of two arbitrary-precision integers.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>first</code> - The parameter <code>first</code> is a Numbers.EInteger object.</p></li>
-<li><p><code>second</code> - The parameter <code>second</code> is a Numbers.EInteger object.</p></li>
+<li><p><code>first</code> - The first integer to compare.</p></li>
+<li><p><code>second</code> - The second integer to compare.</p></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>The return value is not documented yet.</li>
+<li>The smaller of the two integers.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -821,19 +823,21 @@ is null.</li>
 <pre>public static EInteger MaxMagnitude​(EInteger first, EInteger second)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Of two arbitrary-precision integers, returns the one with the greater
+ absolute value. If both integers have the same absolute value, this
+ method has the same effect as Max.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>first</code> - The parameter <code>first</code> is a Numbers.EInteger object.</p></li>
-<li><p><code>second</code> - The parameter <code>second</code> is a Numbers.EInteger object.</p></li>
+<li><p><code>first</code> - The first integer to compare.</p></li>
+<li><p><code>second</code> - The second integer to compare.</p></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>The return value is not documented yet.</li>
+<li>The integer with the greater absolute value.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -848,19 +852,21 @@ is null.</li>
 <pre>public static EInteger MinMagnitude​(EInteger first, EInteger second)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Of two arbitrary-precision integers, returns the one with the smaller
+ absolute value. If both integers have the same absolute value, this
+ method has the same effect as Min.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>first</code> - The parameter <code>first</code> is a Numbers.EInteger object.</p></li>
-<li><p><code>second</code> - The parameter <code>second</code> is a Numbers.EInteger object.</p></li>
+<li><p><code>first</code> - The first integer to compare.</p></li>
+<li><p><code>second</code> - The second integer to compare.</p></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>The return value is not documented yet.</li>
+<li>The integer with the smaller absolute value.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
