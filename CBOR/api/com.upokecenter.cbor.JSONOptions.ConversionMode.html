@@ -92,9 +92,9 @@ the order they are declared.</li>
 </pre>
 
 <p>JSON numbers are decoded to CBOR using the full precision given in the JSON
- text. The number will be converted to an arbitrary-precision
- integer or a decimal number using the rules given in the
- <code>CBORObject.FromObject(EDecimal)</code> method.</p>
+ text. This may involve numbers being converted to
+ arbitrary-precision integers or decimal numbers, where
+ appropriate.</p>
 
 <h3>Double</h3>
 
