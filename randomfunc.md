@@ -665,11 +665,11 @@ In general, sorting random numbers is no different from sorting any other data. 
 <a id=Security_Considerations></a>
 ### Security Considerations
 
-The following considerations exist if an application generates random numbers for information security purposes, such as to generate random passwords or encryption keys.
+If an application generates random numbers for information security purposes, such as to generate random passwords or encryption keys, the following applies:
 
-- Whenever information security is involved, an application has to use a cryptographic RNG.  Choosing a cryptographic RNG is outside the scope of this document.
-- Certain security attacks have exploited timing and other differences to recover cleartext, encryption keys, or other sensitive data.  To mitigate these attacks, an application may have to use "constant-time" implementations of random generation methods.
-- For information security purposes, an implementation is "constant-time" if it has no timing differences that reveal anything about any secret inputs (such as key material, passwords, or RNG seeds).  Generally, a "constant-time" implementation has no data-dependent control flows or memory access patterns.
+- The application has to use a cryptographic RNG.  Choosing a cryptographic RNG is outside the scope of this document.
+- Certain security attacks have exploited timing and other differences to recover cleartext, encryption keys, or other sensitive data.  To mitigate these attacks, the application may have to use "constant-time" implementations of random generation methods.
+- For information security purposes, an implementation is "constant-time" if it has no timing differences that reveal anything about any secret inputs (such as keys, passwords, or RNG "seeds").  Generally, a "constant-time" implementation has no data-dependent control flows or memory access patterns.
 - For example, a "constant-time" `RNDINT()` implementation can use reduction strategies (such as Montgomery reduction).
 - A [**rejection sampling**](#Rejection_Sampling) strategy inherently has variable running time, but may or may not have security-relevant timing differences.  Generally, these differences are relevant only if the strategy takes as input a secret (such as a private key) that is reused for other purposes.
 
