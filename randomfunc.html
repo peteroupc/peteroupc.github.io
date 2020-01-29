@@ -91,7 +91,7 @@
 <li><a href="#Random_Walks"><strong>Random Walks</strong></a></li>
 <li><a href="#Randomization_in_Statistical_Testing"><strong>Randomization in Statistical Testing</strong></a></li>
 <li><a href="#A_Note_on_Sorting_Random_Numbers"><strong>A Note on Sorting Random Numbers</strong></a></li>
-<li><a href="#A_Note_on_Random_Security_Parameters"><strong>A Note on Random Security Parameters</strong></a></li>
+<li><a href="#Security_Considerations"><strong>Security Considerations</strong></a></li>
 </ul></li>
 <li><a href="#General_Non_Uniform_Distributions"><strong>General Non-Uniform Distributions</strong></a>
 
@@ -210,7 +210,7 @@
 <p>In this document, <strong><code>RNDINT(maxInclusive)</code></strong> is the core method for using an underlying RNG to generate independent uniform random integers <strong>in the interval [0, <code>maxInclusive</code>]</strong>.<sup><a href="#Note2"><strong>(2)</strong></a></sup>.  The following are some ways to implement <code>RNDINT</code>:</p>
 
 <ol>
-<li><a href="#Rejection_Sampling"><strong><em>Rejection sampling</em></strong></a>, which roughly means: sample in a bigger range until a sampled number fits the smaller range.  This method is <em>unbiased</em> but has a <em>variable running time</em> which could be exploited in a security attack.</li>
+<li><a href="#Rejection_Sampling"><strong><em>Rejection sampling</em></strong></a>, which roughly means: sample in a bigger range until a sampled number fits the smaller range.  This method is <em>unbiased</em> but has a <em>variable running time</em>.</li>
 <li><p>Reduction method.  Generate <code>bignumber</code>, an N-bit random integer with many more bits than <code>maxInclusive + 1</code> has, then find&mdash;</p>
 
 <ul>
@@ -218,10 +218,8 @@
 <li><code>(bignumber * (maxInclusive + 1)) &gt;&gt; N</code> (see (Lemire 2016)<sup><a href="#Note3"><strong>(3)</strong></a></sup>).</li>
 </ul>
 
-<p>Either method can be &quot;<em>constant-time</em>&quot; (non-data-dependent and branchless) if implemented correctly, but can introduce a so-called <em>modulo bias</em> (some numbers are slightly more likely to be chosen than others), which, however, gets smaller the more bits <code>bignumber</code> has.</p></li>
+<p>Either method&#39;s running time is theoretically constant, but can introduce a so-called <em>modulo bias</em> (some numbers are slightly more likely to be chosen than others), which, however, gets smaller the more bits <code>bignumber</code> has.</p></li>
 </ol>
-
-<p>Any <code>RNDINT</code> implementation can be &quot;constant-time&quot; <em>or</em> unbiased, but not both, in general.</p>
 
 <p>The pseudocode below implements <code>RNDINT</code> and uses rejection sampling for most inputs and modulo reduction for certain special cases.  In the pseudocode:</p>
 
@@ -800,12 +798,7 @@ list by <code>RandomKItemsInOrder(list, n - k)</code>.</li>
 <p>(KD-trees, hash tables, red-black trees, prime-number testing algorithms, and regular expressions are outside the scope of this document.)</p>
 
 <blockquote>
-<p><strong>Note:</strong> All rejection sampling strategies have a chance to reject data, so they all have a variable running time (in fact, they could run indefinitely).  Note the following:</p>
-
-<ol>
-<li><p>Rejection samplers are not appropriate in any cases when differences in running time could be exploited in a security attack (such as an attack that leaks cleartext, encryption keys, or other sensitive data).</p></li>
-<li><p>Graphics processing units (GPUs) and other devices that run multiple tasks at once work better if all the tasks finish their work at the same time.  This is not possible if they all generate a random number via rejection sampling because of its variable running time.  If each iteration of the rejection sampler has a low rejection rate, one solution is to have each task run one iteration of the sampler, with its own RNG, then to take the first random number that hasn&#39;t been rejected this way by a task (which can fail at a very low rate).<sup><a href="#Note9"><strong>(9)</strong></a></sup></p></li>
-</ol>
+<p><strong>Note:</strong> All rejection sampling strategies have a chance to reject data, so they all have a <em>variable running time</em> (in fact, they could run indefinitely).  Note that graphics processing units (GPUs) and other devices that run multiple tasks at once work better if all the tasks finish their work at the same time.  This is not possible if they all generate a random number via rejection sampling because of its variable running time.  If each iteration of the rejection sampler has a low rejection rate, one solution is to have each task run one iteration of the sampler, with its own RNG, then to take the first random number that hasn&#39;t been rejected this way by a task (which can fail at a very low rate).<sup><a href="#Note9"><strong>(9)</strong></a></sup></p>
 </blockquote>
 
 <p><a id=Random_Walks></a></p>
@@ -854,9 +847,19 @@ END METHOD
 
 <p>In general, sorting random numbers is no different from sorting any other data. (Sorting algorithms are outside this document&#39;s scope.) <sup><a href="#Note11"><strong>(11)</strong></a></sup></p>
 
-<p><a id=A_Note_on_Random_Security_Parameters></a></p>
+<p><a id=Security_Considerations></a></p>
 
-<h3>A Note on Random Security Parameters</h3>
+<h3>Security Considerations</h3>
+
+<p>The following considerations exist if an application generates random numbers for information security purposes, such as to generate random passwords or encryption keys.</p>
+
+<ul>
+<li>Whenever information security is involved, an application has to use a cryptographic RNG.  Choosing a cryptographic RNG is outside the scope of this document.</li>
+<li>Certain security attacks have exploited timing and other differences to recover cleartext, encryption keys, or other sensitive data.  To mitigate these attacks, an application may have to use &quot;constant-time&quot; implementations of random generation methods.</li>
+<li>For information security purposes, an implementation is &quot;constant-time&quot; if it has no timing differences that reveal anything about any secret inputs (such as key material, passwords, or RNG seeds).  Generally, a &quot;constant-time&quot; implementation has no data-dependent control flows or memory access patterns.</li>
+<li>For example, a &quot;constant-time&quot; <code>RNDINT()</code> implementation can use reduction strategies (such as Montgomery reduction).</li>
+<li>A <a href="#Rejection_Sampling"><strong>rejection sampling</strong></a> strategy inherently has variable running time, but may or may not have security-relevant timing differences.  Generally, these differences are relevant only if the strategy takes as input a secret (such as a private key) that is reused for other purposes.</li>
+</ul>
 
 <p>This document does not detail how to generate random parameters for information security algorithms, such as encryption keys, public/private key pairs, elliptic curves, or points on an elliptic curve.  In general, this is equivalent to passing a randomly generated secret (128 bits or more, generated securely at random), as well as additional data, to a special algorithm designed for this purpose.</p>
 

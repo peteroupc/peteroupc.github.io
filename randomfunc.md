@@ -65,7 +65,7 @@ All the random number methods presented on this page are ultimately based on an 
     - [**Random Walks**](#Random_Walks)
     - [**Randomization in Statistical Testing**](#Randomization_in_Statistical_Testing)
     - [**A Note on Sorting Random Numbers**](#A_Note_on_Sorting_Random_Numbers)
-    - [**A Note on Random Security Parameters**](#A_Note_on_Random_Security_Parameters)
+    - [**Security Considerations**](#Security_Considerations)
 - [**General Non-Uniform Distributions**](#General_Non_Uniform_Distributions)
     - [**Weighted Choice**](#Weighted_Choice)
         - [**Weighted Choice With Replacement**](#Weighted_Choice_With_Replacement)
@@ -146,14 +146,12 @@ This section describes how an underlying RNG can be used to generate independent
 
 In this document, **`RNDINT(maxInclusive)`** is the core method for using an underlying RNG to generate independent uniform random integers **in the interval [0, `maxInclusive`]**.<sup>[**(2)**](#Note2)</sup>.  The following are some ways to implement `RNDINT`:
 
-1. [**_Rejection sampling_**](#Rejection_Sampling), which roughly means: sample in a bigger range until a sampled number fits the smaller range.  This method is _unbiased_ but has a _variable running time_ which could be exploited in a security attack.
+1. [**_Rejection sampling_**](#Rejection_Sampling), which roughly means: sample in a bigger range until a sampled number fits the smaller range.  This method is _unbiased_ but has a _variable running time_.
 2. Reduction method.  Generate `bignumber`, an N-bit random integer with many more bits than `maxInclusive + 1` has, then find&mdash;
     - `rem(bignumber, maxInclusive + 1)` (modulo reduction), or
     - `(bignumber * (maxInclusive + 1)) >> N` (see (Lemire 2016)<sup>[**(3)**](#Note3)</sup>).
 
-    Either method can be "_constant-time_" (non-data-dependent and branchless) if implemented correctly, but can introduce a so-called _modulo bias_ (some numbers are slightly more likely to be chosen than others), which, however, gets smaller the more bits `bignumber` has.
-
-Any `RNDINT` implementation can be "constant-time" _or_ unbiased, but not both, in general.
+    Either method's running time is theoretically constant, but can introduce a so-called _modulo bias_ (some numbers are slightly more likely to be chosen than others), which, however, gets smaller the more bits `bignumber` has.
 
 The pseudocode below implements `RNDINT` and uses rejection sampling for most inputs and modulo reduction for certain special cases.  In the pseudocode:
 
@@ -626,11 +624,7 @@ Example criteria include checking&mdash;
 
 (KD-trees, hash tables, red-black trees, prime-number testing algorithms, and regular expressions are outside the scope of this document.)
 
-> **Note:** All rejection sampling strategies have a chance to reject data, so they all have a variable running time (in fact, they could run indefinitely).  Note the following:
->
-> 1. Rejection samplers are not appropriate in any cases when differences in running time could be exploited in a security attack (such as an attack that leaks cleartext, encryption keys, or other sensitive data).
->
-> 2. Graphics processing units (GPUs) and other devices that run multiple tasks at once work better if all the tasks finish their work at the same time.  This is not possible if they all generate a random number via rejection sampling because of its variable running time.  If each iteration of the rejection sampler has a low rejection rate, one solution is to have each task run one iteration of the sampler, with its own RNG, then to take the first random number that hasn't been rejected this way by a task (which can fail at a very low rate).<sup>[**(9)**](#Note9)</sup>
+> **Note:** All rejection sampling strategies have a chance to reject data, so they all have a _variable running time_ (in fact, they could run indefinitely).  Note that graphics processing units (GPUs) and other devices that run multiple tasks at once work better if all the tasks finish their work at the same time.  This is not possible if they all generate a random number via rejection sampling because of its variable running time.  If each iteration of the rejection sampler has a low rejection rate, one solution is to have each task run one iteration of the sampler, with its own RNG, then to take the first random number that hasn't been rejected this way by a task (which can fail at a very low rate).<sup>[**(9)**](#Note9)</sup>
 
 <a id=Random_Walks></a>
 ### Random Walks
@@ -668,8 +662,16 @@ After creating the simulated data sets, one or more statistics, such as the mean
 
 In general, sorting random numbers is no different from sorting any other data. (Sorting algorithms are outside this document's scope.) <sup>[**(11)**](#Note11)</sup>
 
-<a id=A_Note_on_Random_Security_Parameters></a>
-### A Note on Random Security Parameters
+<a id=Security_Considerations></a>
+### Security Considerations
+
+The following considerations exist if an application generates random numbers for information security purposes, such as to generate random passwords or encryption keys.
+
+- Whenever information security is involved, an application has to use a cryptographic RNG.  Choosing a cryptographic RNG is outside the scope of this document.
+- Certain security attacks have exploited timing and other differences to recover cleartext, encryption keys, or other sensitive data.  To mitigate these attacks, an application may have to use "constant-time" implementations of random generation methods.
+- For information security purposes, an implementation is "constant-time" if it has no timing differences that reveal anything about any secret inputs (such as key material, passwords, or RNG seeds).  Generally, a "constant-time" implementation has no data-dependent control flows or memory access patterns.
+- For example, a "constant-time" `RNDINT()` implementation can use reduction strategies (such as Montgomery reduction).
+- A [**rejection sampling**](#Rejection_Sampling) strategy inherently has variable running time, but may or may not have security-relevant timing differences.  Generally, these differences are relevant only if the strategy takes as input a secret (such as a private key) that is reused for other purposes.
 
 This document does not detail how to generate random parameters for information security algorithms, such as encryption keys, public/private key pairs, elliptic curves, or points on an elliptic curve.  In general, this is equivalent to passing a randomly generated secret (128 bits or more, generated securely at random), as well as additional data, to a special algorithm designed for this purpose.
 
