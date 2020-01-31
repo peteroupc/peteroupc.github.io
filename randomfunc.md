@@ -446,7 +446,7 @@ _Sampling without replacement_  essentially means taking a random item _without_
     - a compressed bit set (e.g, "roaring bitmap", EWAH), and
     - a self-sorting data structure such as a [**red&ndash;black tree**](https://en.wikipedia.org/wiki/Red%E2%80%93black_tree), if the random items are to be retrieved in sorted order or in index order.
 
-    Many applications require generating unique random numbers to identify database records or other shared resources.  In this case, the choice of underlying RNG is important; see my [**RNG recommendation document**](https://peteroupc.github.io/random.html#Unique_Random_Identifiers).
+    Many applications require generating unique random numbers to identify database records or other shared resources, among other reasons.  For ways to generate such numbers, see my [**RNG recommendation document**](https://peteroupc.github.io/random.html#Unique_Random_Identifiers).
 
 <a id=Shuffling></a>
 #### Shuffling
