@@ -81,7 +81,6 @@ so that as a result, many applications use RNGs, especially built-in RNGs, that 
     - [**Suggested Entropy Size**](#Suggested_Entropy_Size)
     - [**Bays&ndash;Durham Shuffle**](#Bays_ndash_Durham_Shuffle)
 - [**License**](#License)
-- [**License**](#License_2)
 
 <a id=Definitions></a>
 ## Definitions
@@ -771,17 +770,6 @@ The Bays&ndash;Durham shuffle extends a PRNG's period (maximum size of a "random
 The Bays&ndash;Durham shuffle is NOT RECOMMENDED for information security purposes.
 
 <a id=License></a>
-## License
-
-This page is licensed under [**Creative Commons Zero**](https://creativecommons.org/publicdomain/zero/1.0/).
-to the shuffle described below.) For PRNGs that output 32- or 64-bit integers 0 or greater, a `tablesize` of 256, 512, or 1024 is suggested.
-
-- To initialize, fill a list with as many numbers from the PRNG as `tablesize`, then set `k` to another number from the PRNG.
-- For each "random" number, take the entry at position (`k` % `tablesize`) in the list, where '%' is the remainder operator and positions start at 0, then set `k` to that entry, then replace the entry at that position with a new number from the PRNG, then output `k`.
-
-The Bays&ndash;Durham shuffle is NOT RECOMMENDED for information security purposes.
-
-<a id=License_2></a>
 ## License
 
 This page is licensed under [**Creative Commons Zero**](https://creativecommons.org/publicdomain/zero/1.0/).

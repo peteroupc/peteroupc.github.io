@@ -122,7 +122,6 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 <li><a href="#Bays_ndash_Durham_Shuffle"><strong>Bays&ndash;Durham Shuffle</strong></a></li>
 </ul></li>
 <li><a href="#License"><strong>License</strong></a></li>
-<li><a href="#License_2"><strong>License</strong></a></li>
 </ul>
 
 <p><a id=Definitions></a></p>
@@ -1195,20 +1194,6 @@ def stateLengthDecks(numDecks, numCards):
 <p>The Bays&ndash;Durham shuffle is NOT RECOMMENDED for information security purposes.</p>
 
 <p><a id=License></a></p>
-
-<h2>License</h2>
-
-<p>This page is licensed under <a href="https://creativecommons.org/publicdomain/zero/1.0/"><strong>Creative Commons Zero</strong></a>.
-to the shuffle described below.) For PRNGs that output 32- or 64-bit integers 0 or greater, a <code>tablesize</code> of 256, 512, or 1024 is suggested.</p>
-
-<ul>
-<li>To initialize, fill a list with as many numbers from the PRNG as <code>tablesize</code>, then set <code>k</code> to another number from the PRNG.</li>
-<li>For each &quot;random&quot; number, take the entry at position (<code>k</code> % <code>tablesize</code>) in the list, where &#39;%&#39; is the remainder operator and positions start at 0, then set <code>k</code> to that entry, then replace the entry at that position with a new number from the PRNG, then output <code>k</code>.</li>
-</ul>
-
-<p>The Bays&ndash;Durham shuffle is NOT RECOMMENDED for information security purposes.</p>
-
-<p><a id=License_2></a></p>
 
 <h2>License</h2>
 
