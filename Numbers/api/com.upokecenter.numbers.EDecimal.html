@@ -912,6 +912,12 @@ false</code>. <code>true</code> if this object&#39;s value equals 0; otherwise,
 
 <p>Not documented yet.</p>
 
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The return value is not documented yet.</li>
+</ul>
+
 <h3>getMantissa</h3>
 
 <pre>public final EInteger getMantissa()
@@ -4831,9 +4837,8 @@ exceeds the range of a 64-bit floating point number.</li>
 <ul>
 <li><p><code>java.lang.ArithmeticException</code> - This object&#39;s value is infinity or not-a-number
 (NaN).</p></li>
-<li><p><code>java.lang.OutOfMemoryError</code> - There is not enough memory to store the value as an
-EInteger. In.NET, the derived exception OutOfMemoryError may be
-thrown if the method detects that the EInteger won&#39;t fit in memory.</p></li>
+<li><p><code>java.lang.UnsupportedOperationException</code> - There is not enough memory to store the value
+as an EInteger.</p></li>
 </ul>
 
 <h3>ToEIntegerExact</h3>

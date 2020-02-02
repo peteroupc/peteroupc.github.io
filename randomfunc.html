@@ -1496,7 +1496,7 @@ END METHOD
 <li>A <strong>continuous-time process</strong> models random behavior at every moment, not just at discrete times.  There are two popular examples:
 
 <ul>
-<li>A <em>Wiener process</em> has random states and jumps that are normally distributed (a process of this kind is also known as <em>Brownian motion</em>). For a random walk that follows a Wiener process, <code>STATEJUMP()</code> is <code>Normal(mu * timediff, sigma * sqrt(timediff))</code>, where  <code>mu</code> is the average value per time unit, <code>sigma</code> is the volatility, and <code>timediff</code> is the time difference between samples.</li>
+<li>A <em>Wiener process</em> has random states and jumps that are normally distributed (a process of this kind is also known as <em>Brownian motion</em>). For a random walk that follows a Wiener process, <code>STATEJUMP()</code> is <code>Normal(mu * timediff, sigma * sqrt(timediff))</code>, where  <code>mu</code> is the average value per time unit, <code>sigma</code> is the volatility, and <code>timediff</code> is the time difference between samples.  A <em>Brownian bridge</em> (Revuz and Yor 1999)<sup><a href="#Note39"><strong>(39)</strong></a></sup> modifies a Wiener process as follows: For each time X, calculate <code>W(X) - W(E) * (X - S) / (E - S)</code>, where <code>S</code> and <code>E</code> are the starting and ending times of the process, respectively, and <code>W(X)</code> and <code>W(E)</code> are the state at times X and E, respectively.</li>
 <li>In a <em>Poisson process</em>, the time between each event is its own random exponential variable, namely, <code>-ln(RNDU01ZeroOneExc()) / rate</code>, where <code>rate</code> is the average number of events per time unit. An <em>inhomogeneous Poisson process</em> results if <code>rate</code> can vary with the &quot;timestamp&quot; before each event jump.</li>
 </ul></li>
 </ul>
@@ -2742,6 +2742,8 @@ and &quot;<a href="https://randomascii.wordpress.com/2013/07/16/floating-point-d
 <p><small><sup id=Note37>(37)</sup> See also a <a href="http://mathworld.wolfram.com/BallPointPicking.html"><strong>MathWorld article</strong></a>, which was the inspiration for these two methods, and the <em>Stack Overflow</em> question &quot;How to generate uniform random points in (arbitrary) N-dimension ball?&quot;, <code>questions/54544971</code>.</small></p>
 
 <p><small><sup id=Note38>(38)</sup> See the <em>Mathematics Stack Exchange</em> question titled &quot;Random multivariate in hyperannulus&quot;, <code>questions/1885630</code>.</small></p>
+
+<p><small><sup id=Note39>(39)</sup> D. Revuz, M. Yor, &quot;Continuous Martingales and Brownian Motion&quot;, 1999.</small></p>
 
 <p><a id=Appendix></a></p>
 

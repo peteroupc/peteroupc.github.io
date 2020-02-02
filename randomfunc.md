@@ -1192,7 +1192,7 @@ Randomization is the core of **Monte Carlo sampling**.  There are three main use
 - One example of a white noise process is a list of `Normal(0, 1)` numbers (_Gaussian white noise_).
 - If `STATEJUMP()` is `RNDRANGE(-1, 1)`, the random state is advanced by a random real number in the interval [-1, 1].
 - A **continuous-time process** models random behavior at every moment, not just at discrete times.  There are two popular examples:
-    - A _Wiener process_ has random states and jumps that are normally distributed (a process of this kind is also known as _Brownian motion_). For a random walk that follows a Wiener process, `STATEJUMP()` is `Normal(mu * timediff, sigma * sqrt(timediff))`, where  `mu` is the average value per time unit, `sigma` is the volatility, and `timediff` is the time difference between samples.
+    - A _Wiener process_ has random states and jumps that are normally distributed (a process of this kind is also known as _Brownian motion_). For a random walk that follows a Wiener process, `STATEJUMP()` is `Normal(mu * timediff, sigma * sqrt(timediff))`, where  `mu` is the average value per time unit, `sigma` is the volatility, and `timediff` is the time difference between samples.  A _Brownian bridge_ (Revuz and Yor 1999)<sup>[**(39)**](#Note39)</sup> modifies a Wiener process as follows: For each time X, calculate `W(X) - W(E) * (X - S) / (E - S)`, where `S` and `E` are the starting and ending times of the process, respectively, and `W(X)` and `W(E)` are the state at times X and E, respectively.
     - In a _Poisson process_, the time between each event is its own random exponential variable, namely, `-ln(RNDU01ZeroOneExc()) / rate`, where `rate` is the average number of events per time unit. An _inhomogeneous Poisson process_ results if `rate` can vary with the "timestamp" before each event jump.
 
 <a id=Low_Discrepancy_Sequences></a>
@@ -2277,6 +2277,8 @@ In 2007, Thomas, D., et al. gave a survey of normal random number methods in "Ga
 <small><sup id=Note37>(37)</sup> See also a [**MathWorld article**](http://mathworld.wolfram.com/BallPointPicking.html), which was the inspiration for these two methods, and the _Stack Overflow_ question "How to generate uniform random points in (arbitrary) N-dimension ball?", `questions/54544971`.</small>
 
 <small><sup id=Note38>(38)</sup> See the _Mathematics Stack Exchange_ question titled "Random multivariate in hyperannulus", `questions/1885630`.</small>
+
+<small><sup id=Note39>(39)</sup> D. Revuz, M. Yor, "Continuous Martingales and Brownian Motion", 1999.</small>
 
 <a id=Appendix></a>
 ## Appendix
