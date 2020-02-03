@@ -1763,7 +1763,7 @@ is an arbitrary object.</li>
     double dbl);
 </pre>
 
-<p>Creates an arbitrary-precision decimal number from a 64-bit binary floating-point number. This method computes the exact value of the floating point number, not an approximation, as is often the case by converting the floating point number to a string first. Remember, though, that the exact value of a 64-bit binary floating-point number is not always the value that results when passing a literal decimal number (for example, calling  <code>ExtendedDecimal.FromDouble(0.1)</code>  ), since not all decimal numbers can be converted to exact binary numbers (in the example given, the resulting arbitrary-precision decimal will be the value of the closest &quot;double&quot; to 0.1, not 0.1 exactly). To create an arbitrary-precision decimal number from a decimal value, use FromString instead in most cases (for example:  <code>ExtendedDecimal.FromString(&quot;0.1&quot;)</code>  ).</p>
+<p>Creates an arbitrary-precision decimal number from a 64-bit binary floating-point number. This method computes the exact value of the floating point number, not an approximation, as is often the case by converting the floating point number to a string first. Remember, though, that the exact value of a 64-bit binary floating-point number is not always the value that results when passing a literal decimal number (for example, calling  <code>ExtendedDecimal.FromDouble(0.1)</code> ), since not all decimal numbers can be converted to exact binary numbers (in the example given, the resulting arbitrary-precision decimal will be the value of the closest &quot;double&quot; to 0.1, not 0.1 exactly). To create an arbitrary-precision decimal number from a decimal value, use FromString instead in most cases (for example:  <code>ExtendedDecimal.FromString(&quot;0.1&quot;)</code> ).</p>
 
 <p><b>Parameters:</b></p>
 
@@ -1939,7 +1939,7 @@ is a 64-bit signed integer.</li>
     float flt);
 </pre>
 
-<p>Creates an arbitrary-precision decimal number from a 32-bit binary floating-point number. This method computes the exact value of the floating point number, not an approximation, as is often the case by converting the floating point number to a string first. Remember, though, that the exact value of a 32-bit binary floating-point number is not always the value that results when passing a literal decimal number (for example, calling  <code>ExtendedDecimal.FromSingle(0.1f)</code>  ), since not all decimal numbers can be converted to exact binary numbers (in the example given, the resulting arbitrary-precision decimal will be the the value of the closest &quot;float&quot; to 0.1, not 0.1 exactly). To create an arbitrary-precision decimal number from a decimal value, use FromString instead in most cases (for example:  <code>ExtendedDecimal.FromString(&quot;0.1&quot;)</code>  ).</p>
+<p>Creates an arbitrary-precision decimal number from a 32-bit binary floating-point number. This method computes the exact value of the floating point number, not an approximation, as is often the case by converting the floating point number to a string first. Remember, though, that the exact value of a 32-bit binary floating-point number is not always the value that results when passing a literal decimal number (for example, calling  <code>ExtendedDecimal.FromSingle(0.1f)</code> ), since not all decimal numbers can be converted to exact binary numbers (in the example given, the resulting arbitrary-precision decimal will be the the value of the closest &quot;float&quot; to 0.1, not 0.1 exactly). To create an arbitrary-precision decimal number from a decimal value, use FromString instead in most cases (for example:  <code>ExtendedDecimal.FromString(&quot;0.1&quot;)</code> ).</p>
 
 <p><b>Parameters:</b></p>
 
@@ -2232,6 +2232,8 @@ is null.</li>
 <p>Not documented yet.</p>
 
 <p><b>Return Value:</b></p>
+
+<p>The return value is not documented yet.</p>
 
 <p><a id="IsNaN"></a></p>
 
@@ -4865,20 +4867,12 @@ This value is infinity or not-a-number, is not an exact integer, or is less than
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>ec</i>: An arithmetic context to control the precision, rounding, and exponent range of the result. Can be null.</li>
+<li><i>ec</i>: An arithmetic context to control the precision, rounding, and exponent range of the result. The precision is in bits, and an example of this parameter is  <code>EContext.Binary64</code> . Can be null.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
 <p>An arbitrary-precision float floating-point number.</p>
-
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li>System.ArgumentNullException:
-The parameter  <i>ec</i>
-is null.</li>
-</ul>
 
 <p><a id="ToEFloat"></a></p>
 

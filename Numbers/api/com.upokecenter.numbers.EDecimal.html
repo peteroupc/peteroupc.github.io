@@ -5018,19 +5018,14 @@ decimal point.</li>
 
 <ul>
 <li><code>ec</code> - An arithmetic context to control the precision, rounding, and
-exponent range of the result. Can be null.</li>
+exponent range of the result. The precision is in bits, and an
+example of this parameter is <code>EContext.Binary64</code>. Can be null.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
 <li>An arbitrary-precision float floating-point number.</li>
-</ul>
-
-<p><strong>Throws:</strong></p>
-
-<ul>
-<li><code>java.lang.NullPointerException</code> - The parameter <code>ec</code> is null.</li>
 </ul>
 
 <h3>Increment</h3>
