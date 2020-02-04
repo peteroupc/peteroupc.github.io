@@ -154,6 +154,7 @@ point and exponent.</li>
 <li><code>ERounding getRounding()</code><br>
 Gets the desired rounding mode when converting numbers that can&#39;t be
 represented in the given precision and exponent range.</li>
+<li><code>EContext GetTrappable()</code><br></li>
 <li><code>int getTraps()</code><br>
 Gets the traps that are set for each flag in the context.</li>
 <li><code>boolean isPrecisionInBits()</code><br>
@@ -164,6 +165,8 @@ Gets a value indicating whether to use a &quot;simplified&quot; arithmetic.</li>
 <li><code>void setFlags​(int value)</code><br></li>
 <li><code>java.lang.String toString()</code><br>
 Returns this object in a text form intended to be read by humans.</li>
+<li><code>&lt;T&gt; T TriggerTraps​(T result,
+        EContext trappableContext)</code><br></li>
 <li><code>EContext WithAdjustExponent​(boolean adjustExponent)</code><br>
 Copies this EContext and sets the copy&#39;s &quot;AdjustExponent&quot; property to the
 given value.</li>
@@ -1042,6 +1045,16 @@ the copy.</li>
 <ul>
 <li>A context object for arbitrary-precision arithmetic settings.</li>
 </ul>
+
+<h3>GetTrappable</h3>
+
+<pre>public EContext GetTrappable()
+</pre>
+
+<h3>TriggerTraps</h3>
+
+<pre>public &lt;T&gt; T TriggerTraps​(T result, EContext trappableContext)
+</pre>
 
 <p><a href="/Numbers/">Back to Numbers start page.</a></p>
 </div><nav id="navigation"><ul>

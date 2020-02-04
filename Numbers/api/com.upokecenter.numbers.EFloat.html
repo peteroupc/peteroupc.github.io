@@ -18,12 +18,15 @@
  zero, not-a-number (NaN) values, and infinity. <p>Passing a signaling
  NaN to any arithmetic operation shown here will signal the flag
  FlagInvalid and return a quiet NaN, even if another operand to that
- operation is a quiet NaN, unless noted otherwise.</p> <p>Passing a
- quiet NaN to any arithmetic operation shown here will return a quiet
- NaN, unless noted otherwise.</p> <p>Unless noted otherwise, passing a
- null arbitrary-precision binary floating-point number argument to any
- method here will throw an exception.</p> <p>When an arithmetic
- operation signals the flag FlagInvalid, FlagOverflow, or
+ operation is a quiet NaN, unless the operation&#39;s documentation
+ expressly states that another result happens when a signaling NaN is
+ passed to that operation.</p> <p>Passing a quiet NaN to any arithmetic
+ operation shown here will return a quiet NaN, unless the operation&#39;s
+ documentation expressly states that another result happens when a
+ quiet NaN is passed to that operation.</p> <p>Unless noted otherwise,
+ passing a null arbitrary-precision binary floating-point number
+ argument to any method here will throw an exception.</p> <p>When an
+ arithmetic operation signals the flag FlagInvalid, FlagOverflow, or
  FlagDivideByZero, it will not throw an exception too, unless the
  operation&#39;s trap is enabled in the arithmetic context (see EContext&#39;s
  Traps property).</p> <p>An arbitrary-precision binary floating-point
@@ -304,6 +307,8 @@ Gets a value indicating whether this object is finite (not infinity or NaN).</li
 <li><code>boolean IsInfinity()</code><br>
 Gets a value indicating whether this object is positive or negative
 infinity.</li>
+<li><code>boolean IsInteger()</code><br>
+Returns whether this object&#39;s value is an integer.</li>
 <li><code>boolean IsNaN()</code><br>
 Gets a value indicating whether this object is not a number (NaN).</li>
 <li><code>boolean isNegative()</code><br>
@@ -3167,7 +3172,9 @@ has an unlimited exponent range.</li>
 
 <p>Rounds this object&#39;s value to a given precision, using the given rounding
  mode and range of exponent, and also converts negative zero to
- positive zero.</p>
+ positive zero. The idiom <code>EDecimal.SignalingNaN.Plus(ctx)</code> is
+ useful for triggering an invalid operation and returning
+ not-a-number (NaN) for custom arithmetic operations.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -3181,8 +3188,9 @@ unlimited and rounding isn&#39;t needed.</li>
 
 <ul>
 <li>The closest value to this object&#39;s value, rounded to the specified
-precision. Returns the same value as this object if <code>ctx</code> is
-null or the precision and exponent range are unlimited.</li>
+precision. If <code>ctx</code> is null or the precision and exponent
+range are unlimited, returns the same value as this object (or a
+quiet NaN if this object is a signaling NaN).</li>
 </ul>
 
 <h3>Pow</h3>
@@ -3293,6 +3301,20 @@ exponent are both 0.</li>
 
 <ul>
 <li>An arbitrary-precision integer.</li>
+</ul>
+
+<h3>IsInteger</h3>
+
+<pre>public boolean IsInteger()
+</pre>
+
+<p>Returns whether this object&#39;s value is an integer.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li><code>true</code> if this object&#39;s value is an integer; otherwise, <code>
+false</code>.</li>
 </ul>
 
 <h3>Quantize</h3>
