@@ -7,7 +7,7 @@ According to my document on [**pseudorandom number generator (PRNG) recommendati
 
 a requirement called the "independence requirement" in this short document.
 
-To determine whether a PRNG meets the independence requirement, its output should be sent to the PractRand program by Chris Doty-Humphrey (pracrand.sourceforge.net) and pass the PractRand tests at 1 TiB (2^40 bytes) or greater.
+To determine whether a PRNG meets the independence requirement, its output should be sent to the PractRand program by Chris Doty-Humphrey and pass the PractRand tests at 1 TiB (2^40 bytes) or greater.  For more information, see "[**How to Test with PractRand**](https://github.com/peteroupc/peteroupc.github.io/blob/master/randomtest.md)" by M. E. O'Neill.
 
 To determine whether nearby sequences of the PRNG meet the independence requirement, the output sent to PractRand should consist of one output from the first sequence, one output from the second, another output from the first, another from the second, and so on.
 
