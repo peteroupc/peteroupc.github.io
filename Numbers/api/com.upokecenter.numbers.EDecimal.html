@@ -458,6 +458,11 @@ to equal this object&#39;s value.</li>
 Finds the base-10 logarithm of this object, that is, the power (exponent)
 that the number 10 must be raised to in order to equal this object&#39;s
 value.</li>
+<li><code>EDecimal LogN​(EDecimal baseValue,
+EContext ctx)</code><br>
+Finds the base-N logarithm of this object, that is, the power (exponent)
+that the number N must be raised to in order to equal this object&#39;s
+value.</li>
 <li><code>static EDecimal Max​(EDecimal first,
 EDecimal second)</code><br>
 Gets the greater value between two decimal numbers.</li>
@@ -563,6 +568,7 @@ EContext ctx)</code><br>
 Raises this object&#39;s value to the given exponent.</li>
 <li><code>EInteger Precision()</code><br>
 Finds the number of digits in this number&#39;s significand.</li>
+<li><code>EDecimal PreRound​(EContext ctx)</code><br></li>
 <li><code>EDecimal Quantize​(int desiredExponentInt,
     EContext ctx)</code><br>
 Returns an arbitrary-precision decimal number with the same value but a new
@@ -3083,6 +3089,31 @@ ctx</code> is null or the precision is unlimited (the context&#39;s Precision
 property is 0).</li>
 </ul>
 
+<h3>LogN</h3>
+
+<pre>public EDecimal LogN​(EDecimal baseValue, EContext ctx)
+</pre>
+
+<p>Finds the base-N logarithm of this object, that is, the power (exponent)
+ that the number N must be raised to in order to equal this object&#39;s
+ value.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>Ln(this object)/Ln(baseValue). Signals the flag FlagInvalid and
+returns not-a-number (NaN) if this object is less than 0. Signals
+FlagInvalid and returns not-a-number (NaN) if the parameter <code>
+ctx</code> is null or the precision is unlimited (the context&#39;s Precision
+property is 0).</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>java.lang.NullPointerException</code> - The parameter <code>baseValue</code> is null.</li>
+</ul>
+
 <h3>MovePointLeft</h3>
 
 <pre>public EDecimal MovePointLeft​(int places)
@@ -4598,6 +4629,11 @@ which case the precision is unlimited and no rounding is needed.</li>
 precision. Returns the same value as this object if <code>ctx</code> is
 null or the precision and exponent range are unlimited.</li>
 </ul>
+
+<h3>PreRound</h3>
+
+<pre>public EDecimal PreRound​(EContext ctx)
+</pre>
 
 <h3>ScaleByPowerOfTen</h3>
 
