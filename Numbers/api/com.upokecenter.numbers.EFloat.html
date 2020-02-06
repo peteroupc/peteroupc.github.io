@@ -155,6 +155,9 @@ Returns a number with the same value as this one, but copying the sign
   int exponentSmall)</code><br>
 Returns a number with the value exponent*2^significand.</li>
 <li><code>static EFloat Create​(long mantissaLong,
+  int exponentSmall)</code><br>
+Returns a number with the value exponent*2^significand.</li>
+<li><code>static EFloat Create​(long mantissaLong,
   long exponentLong)</code><br>
 Returns a number with the value exponent*2^significand.</li>
 <li><code>static EFloat Create​(EInteger mantissa,
@@ -845,6 +848,26 @@ value is negative (including a negative NaN).</li>
 <ul>
 <li><p><code>mantissaLong</code> - Desired value for the significand.</p></li>
 <li><p><code>exponentLong</code> - Desired value for the exponent.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An arbitrary-precision binary floating-point number.</li>
+</ul>
+
+<h3>Create</h3>
+
+<pre>public static EFloat Create​(long mantissaLong, int exponentSmall)
+</pre>
+
+<p>Returns a number with the value exponent*2^significand.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>mantissaLong</code> - Desired value for the significand.</p></li>
+<li><p><code>exponentSmall</code> - Desired value for the exponent.</p></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -2711,6 +2734,13 @@ property is 0).</li>
 <p>Finds the base-N logarithm of this object, that is, the power (exponent)
  that the number N must be raised to in order to equal this object&#39;s
  value.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>baseValue</code> - Not documented yet.</p></li>
+<li><p><code>ctx</code> - Not documented yet.</p></li>
+</ul>
 
 <p><strong>Returns:</strong></p>
 

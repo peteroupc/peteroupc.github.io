@@ -255,6 +255,9 @@ Returns a number with the same value as this one, but copying the sign
   int exponentSmall) exponent*10^significand</code><br>
 Returns a number with the value exponent*10^significand.</li>
 <li><code>static EDecimal Create​(long mantissaLong,
+  int exponentSmall) exponent*10^significand</code><br>
+Creates a number with the value exponent*10^significand.</li>
+<li><code>static EDecimal Create​(long mantissaLong,
   long exponentLong) exponent*10^significand</code><br>
 Creates a number with the value exponent*10^significand.</li>
 <li><code>static EDecimal Create​(EInteger mantissa,
@@ -1070,6 +1073,33 @@ value is negative (including a negative NaN).</li>
 <ul>
 <li><code>java.lang.NullPointerException</code> - The parameter <code>mantissa</code> or <code>
 exponent</code> is null.</li>
+</ul>
+
+<h3>Create</h3>
+
+<pre>public static EDecimal Create​(long mantissaLong, int exponentSmall)
+</pre>
+
+<p>Creates a number with the value <code>exponent*10^significand</code>.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>mantissaLong</code> - Desired value for the significand.</p></li>
+<li><p><code>exponentSmall</code> - Desired value for the exponent.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An arbitrary-precision decimal number.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>java.lang.NullPointerException</code> - The parameter <code>mantissaLong</code> or <code>
+exponentLong</code> is null.</li>
 </ul>
 
 <h3>Create</h3>
@@ -3097,6 +3127,13 @@ property is 0).</li>
 <p>Finds the base-N logarithm of this object, that is, the power (exponent)
  that the number N must be raised to in order to equal this object&#39;s
  value.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>baseValue</code> - Not documented yet.</p></li>
+<li><p><code>ctx</code> - Not documented yet.</p></li>
+</ul>
 
 <p><strong>Returns:</strong></p>
 
