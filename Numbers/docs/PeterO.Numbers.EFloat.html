@@ -11,9 +11,9 @@
     System.IEquatable
 </pre>
 
-<p>Represents an arbitrary-precision binary floating-point number. (The &quot;E&quot; stands for &quot;extended&quot;, meaning that instances of this class can be values other than numbers proper, such as infinity and not-a-number.) Each number consists of an integer significand and an integer exponent, both arbitrary-precision. The value of the number equals significand * 2^exponent. This class also supports values for negative zero, not-a-number (NaN) values, and infinity. Passing a signaling NaN to any arithmetic operation shown here will signal the flag FlagInvalid and return a quiet NaN, even if another operand to that operation is a quiet NaN, unless noted otherwise.</p>
+<p>Represents an arbitrary-precision binary floating-point number. (The &quot;E&quot; stands for &quot;extended&quot;, meaning that instances of this class can be values other than numbers proper, such as infinity and not-a-number.) Each number consists of an integer significand and an integer exponent, both arbitrary-precision. The value of the number equals significand * 2^exponent. This class also supports values for negative zero, not-a-number (NaN) values, and infinity. Passing a signaling NaN to any arithmetic operation shown here will signal the flag FlagInvalid and return a quiet NaN, even if another operand to that operation is a quiet NaN, unless the operation&#39;s documentation expressly states that another result happens when a signaling NaN is passed to that operation.</p>
 
-<p>Passing a quiet NaN to any arithmetic operation shown here will return a quiet NaN, unless noted otherwise.</p>
+<p>Passing a quiet NaN to any arithmetic operation shown here will return a quiet NaN, unless the operation&#39;s documentation expressly states that another result happens when a quiet NaN is passed to that operation.</p>
 
 <p>Unless noted otherwise, passing a null arbitrary-precision binary floating-point number argument to any method here will throw an exception.</p>
 
@@ -68,6 +68,7 @@
 <li><code><a href="#Copy">Copy()</a></code> - Creates a copy of this arbitrary-precision binary number.</li>
 <li><code><a href="#CopySign_PeterO_Numbers_EFloat">CopySign(PeterO.Numbers.EFloat)</a></code> - Returns a number with the same value as this one, but copying the sign (positive or negative) of another number.</li>
 <li><code><a href="#Create_int_int">Create(int, int)</a></code> - Returns a number with the value exponent*2^significand.</li>
+<li><code><a href="#Create_long_int">Create(long, int)</a></code> - Returns a number with the value exponent*2^significand.</li>
 <li><code><a href="#Create_long_long">Create(long, long)</a></code> - Returns a number with the value exponent*2^significand.</li>
 <li><code><a href="#Create_PeterO_Numbers_EInteger_int">Create(PeterO.Numbers.EInteger, int)</a></code> - Returns a number with the value exponent*2^significand.</li>
 <li><code><a href="#Create_PeterO_Numbers_EInteger_long">Create(PeterO.Numbers.EInteger, long)</a></code> - Returns a number with the value exponent*2^significand.</li>
@@ -138,6 +139,7 @@
 <li><code><a href="#Increment">Increment()</a></code> - Returns one added to this arbitrary-precision binary floating-point number.</li>
 <li><code><a href="#IsFinite">IsFinite</a></code> - Gets a value indicating whether this object is finite (not infinity or NaN).</li>
 <li><code><a href="#IsInfinity">IsInfinity()</a></code> - Gets a value indicating whether this object is positive or negative infinity.</li>
+<li><code><a href="#IsInteger">IsInteger()</a></code> - Returns whether this object&#39;s value is an integer.</li>
 <li><code><a href="#IsNaN">IsNaN()</a></code> - Gets a value indicating whether this object is not a number (NaN).</li>
 <li><code><a href="#IsNegative">IsNegative</a></code> - Gets a value indicating whether this object is negative, including negative zero.</li>
 <li><code><a href="#IsNegativeInfinity">IsNegativeInfinity()</a></code> - Returns whether this object is negative infinity.</li>
@@ -147,6 +149,7 @@
 <li><code><a href="#IsZero">IsZero</a></code> - Gets a value indicating whether this object&#39;s value equals 0.</li>
 <li><code><a href="#Log_PeterO_Numbers_EContext">Log(PeterO.Numbers.EContext)</a></code> - Finds the natural logarithm of this object, that is, the power (exponent) that e (the base of natural logarithms) must be raised to in order to equal this object&#39;s value.</li>
 <li><code><a href="#Log10_PeterO_Numbers_EContext">Log10(PeterO.Numbers.EContext)</a></code> - Finds the base-10 logarithm of this object, that is, the power (exponent) that the number 10 must be raised to in order to equal this object&#39;s value.</li>
+<li><code><a href="#LogN_PeterO_Numbers_EFloat_PeterO_Numbers_EContext">LogN(PeterO.Numbers.EFloat, PeterO.Numbers.EContext)</a></code> - Finds the base-N logarithm of this object, that is, the power (exponent) that the number N must be raised to in order to equal this object&#39;s value.</li>
 <li><code><a href="#Mantissa">Mantissa</a></code> - Gets this object&#39;s unscaled value, or significand, and makes it negative if this object is negative.</li>
 <li><code><a href="#Max_PeterO_Numbers_EFloat_PeterO_Numbers_EFloat">Max(PeterO.Numbers.EFloat, PeterO.Numbers.EFloat)</a></code> - Gets the greater value between two binary floating-point numbers.</li>
 <li><code><a href="#Max_PeterO_Numbers_EFloat_PeterO_Numbers_EFloat_PeterO_Numbers_EContext">Max(PeterO.Numbers.EFloat, PeterO.Numbers.EFloat, PeterO.Numbers.EContext)</a></code> - Gets the greater value between two binary floating-point numbers.</li>
@@ -195,6 +198,7 @@
 <li><code><a href="#Pow_PeterO_Numbers_EFloat">Pow(PeterO.Numbers.EFloat)</a></code> - Raises this object&#39;s value to the given exponent, using unlimited precision.</li>
 <li><code><a href="#Pow_PeterO_Numbers_EFloat_PeterO_Numbers_EContext">Pow(PeterO.Numbers.EFloat, PeterO.Numbers.EContext)</a></code> - Raises this object&#39;s value to the given exponent.</li>
 <li><code><a href="#Precision">Precision()</a></code> - Finds the number of digits in this number&#39;s significand.</li>
+<li><code><a href="#PreRound_PeterO_Numbers_EContext">PreRound(PeterO.Numbers.EContext)</a></code> -</li>
 <li><code><a href="#Quantize_int_PeterO_Numbers_EContext">Quantize(int, PeterO.Numbers.EContext)</a></code> - Returns a binary floating-point number with the same value but a new exponent.</li>
 <li><code><a href="#Quantize_PeterO_Numbers_EFloat_PeterO_Numbers_EContext">Quantize(PeterO.Numbers.EFloat, PeterO.Numbers.EContext)</a></code> - Returns a binary floating-point number with the same value as this object but with the same exponent as another binary floating-point number.</li>
 <li><code><a href="#Quantize_PeterO_Numbers_EInteger_PeterO_Numbers_EContext">Quantize(PeterO.Numbers.EInteger, PeterO.Numbers.EContext)</a></code> - Returns a binary floating-point number with the same value but a new exponent.</li>
@@ -858,6 +862,28 @@ is null.</li>
 
 <ul>
 <li><p><i>mantissaSmall</i>: Desired value for the significand.</p></li>
+<li><p><i>exponentSmall</i>: Desired value for the exponent.</p></li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>An arbitrary-precision binary floating-point number.</p>
+
+<p><a id="Create_long_int"></a></p>
+
+<h3>Create</h3>
+
+<pre>public static PeterO.Numbers.EFloat Create(
+    long mantissaLong,
+    int exponentSmall);
+</pre>
+
+<p>Returns a number with the value exponent*2^significand.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>mantissaLong</i>: Desired value for the significand.</p></li>
 <li><p><i>exponentSmall</i>: Desired value for the exponent.</p></li>
 </ul>
 
@@ -1924,6 +1950,19 @@ is null.</li>
 
 <p><code>true</code>  if this object is positive or negative infinity; otherwise,  <code>false</code> .</p>
 
+<p><a id="IsInteger"></a></p>
+
+<h3>IsInteger</h3>
+
+<pre>public bool IsInteger();
+</pre>
+
+<p>Returns whether this object&#39;s value is an integer.</p>
+
+<p><b>Return Value:</b></p>
+
+<p><code>true</code>  if this object&#39;s value is an integer; otherwise,  <code>false</code> .</p>
+
 <p><a id="IsNaN"></a></p>
 
 <h3>IsNaN</h3>
@@ -2030,6 +2069,37 @@ is null.</li>
 
 <p>Ln(this object)/Ln(10). Signals the flag FlagInvalid and returns not-a-number (NaN) if this object is less than 0. Signals FlagInvalid and returns not-a-number (NaN) if the parameter  <i>ctx</i>
  is null or the precision is unlimited (the context&#39;s Precision property is 0).</p>
+
+<p><a id="LogN_PeterO_Numbers_EFloat_PeterO_Numbers_EContext"></a></p>
+
+<h3>LogN</h3>
+
+<pre>public PeterO.Numbers.EFloat LogN(
+    PeterO.Numbers.EFloat baseValue,
+    PeterO.Numbers.EContext ctx);
+</pre>
+
+<p>Finds the base-N logarithm of this object, that is, the power (exponent) that the number N must be raised to in order to equal this object&#39;s value.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>baseValue</i>: Not documented yet.</p></li>
+<li><p><i>ctx</i>: Not documented yet.</p></li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>Ln(this object)/Ln(baseValue). Signals the flag FlagInvalid and returns not-a-number (NaN) if this object is less than 0. Signals FlagInvalid and returns not-a-number (NaN) if the parameter  <i>ctx</i>
+ is null or the precision is unlimited (the context&#39;s Precision property is 0).</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter  <i>baseValue</i>
+is null.</li>
+</ul>
 
 <p><a id="Max_PeterO_Numbers_EFloat_PeterO_Numbers_EFloat"></a></p>
 
@@ -3596,7 +3666,7 @@ is null.</li>
     PeterO.Numbers.EContext ctx);
 </pre>
 
-<p>Rounds this object&#39;s value to a given precision, using the given rounding mode and range of exponent, and also converts negative zero to positive zero.</p>
+<p>Rounds this object&#39;s value to a given precision, using the given rounding mode and range of exponent, and also converts negative zero to positive zero. The idiom  <code>EDecimal.SignalingNaN.Plus(ctx)</code>  is useful for triggering an invalid operation and returning not-a-number (NaN) for custom arithmetic operations.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -3606,8 +3676,8 @@ is null.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>The closest value to this object&#39;s value, rounded to the specified precision. Returns the same value as this object if  <i>ctx</i>
- is null or the precision and exponent range are unlimited.</p>
+<p>The closest value to this object&#39;s value, rounded to the specified precision. If  <i>ctx</i>
+ is null or the precision and exponent range are unlimited, returns the same value as this object (or a quiet NaN if this object is a signaling NaN).</p>
 
 <p><a id="Pow_int"></a></p>
 

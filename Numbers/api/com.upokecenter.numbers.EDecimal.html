@@ -571,7 +571,8 @@ EContext ctx)</code><br>
 Raises this object&#39;s value to the given exponent.</li>
 <li><code>EInteger Precision()</code><br>
 Finds the number of digits in this number&#39;s significand.</li>
-<li><code>EDecimal PreRound​(EContext ctx)</code><br></li>
+<li><code>EDecimal PreRound​(EContext ctx)</code><br>
+Not documented yet.</li>
 <li><code>EDecimal Quantize​(int desiredExponentInt,
     EContext ctx)</code><br>
 Returns an arbitrary-precision decimal number with the same value but a new
@@ -1095,13 +1096,6 @@ exponent</code> is null.</li>
 <li>An arbitrary-precision decimal number.</li>
 </ul>
 
-<p><strong>Throws:</strong></p>
-
-<ul>
-<li><code>java.lang.NullPointerException</code> - The parameter <code>mantissaLong</code> or <code>
-exponentLong</code> is null.</li>
-</ul>
-
 <h3>Create</h3>
 
 <pre>public static EDecimal Create​(long mantissaLong, long exponentLong)
@@ -1120,13 +1114,6 @@ exponentLong</code> is null.</li>
 
 <ul>
 <li>An arbitrary-precision decimal number.</li>
-</ul>
-
-<p><strong>Throws:</strong></p>
-
-<ul>
-<li><code>java.lang.NullPointerException</code> - The parameter <code>mantissaLong</code> or <code>
-exponentLong</code> is null.</li>
 </ul>
 
 <h3>CreateNaN</h3>
@@ -3131,8 +3118,9 @@ property is 0).</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>baseValue</code> - Not documented yet.</p></li>
-<li><p><code>ctx</code> - Not documented yet.</p></li>
+<li><p><code>baseValue</code> - The parameter <code>baseValue</code> is a Numbers.EDecimal
+object.</p></li>
+<li><p><code>ctx</code> - The parameter <code>ctx</code> is a Numbers.EContext object.</p></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -4671,6 +4659,14 @@ null or the precision and exponent range are unlimited.</li>
 
 <pre>public EDecimal PreRound​(EContext ctx)
 </pre>
+
+<p>Not documented yet.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>ctx</code> - Not documented yet.</li>
+</ul>
 
 <h3>ScaleByPowerOfTen</h3>
 
