@@ -229,9 +229,9 @@ Converts this number&#39;s value to a byte (from 0 to 255) if it can fit in a
 byte (from 0 to 255) without rounding to a different numerical
 value.</li>
 <li><code>byte ToByteUnchecked()</code><br>
-Converts this number&#39;s value to an integer by discarding its fractional
-part, and returns the least-significant bits of its two&#39;s-complement
-form as a byte (from 0 to 255).</li>
+Converts this number&#39;s value to an integer (using ToEInteger), and returns
+the least-significant bits of that integer&#39;s two&#39;s-complement form
+as a byte (from 0 to 255).</li>
 <li><code>double ToDouble()</code><br>
 Converts this value to a 64-bit floating-point number.</li>
 <li><code>EDecimal ToEDecimal()</code><br>
@@ -323,8 +323,14 @@ value.</li>
 Converts this number&#39;s value to an integer by discarding its fractional
 part, and returns the least-significant bits of its two&#39;s-complement
 form as a 64-bit signed integer.</li>
+<li><code>ERational ToLowestTerms()</code><br>
+Converts this value to its form in lowest terms.</li>
 <li><code>float ToSingle()</code><br>
 Converts this value to a 32-bit binary floating-point number.</li>
+<li><code>EInteger ToSizedEInteger​(int maxBitLength)</code><br>
+Not documented yet.</li>
+<li><code>EInteger ToSizedEIntegerIfExact​(int maxBitLength)</code><br>
+Not documented yet.</li>
 <li><code>java.lang.String toString()</code><br>
 Converts this object to a text string.</li>
 </ul>
@@ -1579,6 +1585,68 @@ value can be positive infinity or negative infinity if this value
 exceeds the range of a 64-bit floating point number.</li>
 </ul>
 
+<h3>ToLowestTerms</h3>
+
+<pre>public ERational ToLowestTerms()
+</pre>
+
+<p>Converts this value to its form in lowest terms. For example, (8/4) becomes
+ (4/1).</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An arbitrary-precision rational with the same value as this one but
+in lowest terms. Returns this object if it is infinity or NaN.
+Returns ERational.NegativeZero if this object is a negative zero.
+Returns ERational.Zero if this object is a positive zero.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>java.lang.ArithmeticException</code> - This object&#39;s value is infinity or not-a-number
+(NaN).</li>
+</ul>
+
+<h3>ToSizedEInteger</h3>
+
+<pre>public EInteger ToSizedEInteger​(int maxBitLength)
+</pre>
+
+<p>Not documented yet.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>maxBitLength</code> - Not documented yet.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The return value is not documented yet.</li>
+</ul>
+
+<h3>ToSizedEIntegerIfExact</h3>
+
+<pre>public EInteger ToSizedEIntegerIfExact​(int maxBitLength)
+</pre>
+
+<p>Not documented yet.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>maxBitLength</code> - Not documented yet.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The return value is not documented yet.</li>
+</ul>
+
 <h3>ToEInteger</h3>
 
 <pre>public EInteger ToEInteger()
@@ -2130,9 +2198,9 @@ part, is less than 0 or greater than 255.</li>
 <pre>public byte ToByteUnchecked()
 </pre>
 
-<p>Converts this number&#39;s value to an integer by discarding its fractional
- part, and returns the least-significant bits of its two&#39;s-complement
- form as a byte (from 0 to 255).</p>
+<p>Converts this number&#39;s value to an integer (using ToEInteger), and returns
+ the least-significant bits of that integer&#39;s two&#39;s-complement form
+ as a byte (from 0 to 255).</p>
 
 <p><strong>Returns:</strong></p>
 

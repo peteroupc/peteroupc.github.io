@@ -354,6 +354,8 @@
 <li><code><a href="#ToSByteIfExact">ToSByteIfExact()</a></code> - Converts this number&#39;s value to an 8-bit signed integer if it can fit in an 8-bit signed integer without rounding to a different numerical value.</li>
 <li><code><a href="#ToSByteUnchecked">ToSByteUnchecked()</a></code> - Converts this number&#39;s value to an integer by discarding its fractional part, and returns the least-significant bits of its two&#39;s-complement form as an 8-bit signed integer.</li>
 <li><code><a href="#ToSingle">ToSingle()</a></code> - Converts this value to its closest equivalent as a 32-bit floating-point number.</li>
+<li><code><a href="#ToSizedEInteger_int">ToSizedEInteger(int)</a></code> - Not documented yet.</li>
+<li><code><a href="#ToSizedEIntegerIfExact_int">ToSizedEIntegerIfExact(int)</a></code> - Not documented yet.</li>
 <li><code><a href="#ToString">ToString()</a></code> - Converts this value to a string.</li>
 <li><code><a href="#ToUInt16Checked">ToUInt16Checked()</a></code> - Converts this number&#39;s value to a 16-bit unsigned integer if it can fit in a 16-bit unsigned integer after converting it to an integer by discarding its fractional part.</li>
 <li><code><a href="#ToUInt16IfExact">ToUInt16IfExact()</a></code> - Converts this number&#39;s value to a 16-bit unsigned integer if it can fit in a 16-bit unsigned integer without rounding to a different numerical value.</li>
@@ -4086,6 +4088,8 @@ is null.</li>
 
 <p><b>Return Value:</b></p>
 
+<p>The return value is not documented yet.</p>
+
 <p><a id="Quantize_int_PeterO_Numbers_EContext"></a></p>
 
 <h3>Quantize</h3>
@@ -4963,7 +4967,7 @@ This value is infinity or not-a-number, is not an exact integer, or is less than
 <pre>public PeterO.Numbers.EInteger ToEInteger();
 </pre>
 
-<p>Converts this value to an arbitrary-precision integer. Any fractional part in this value will be discarded when converting to an arbitrary-precision integer.</p>
+<p>Converts this value to an arbitrary-precision integer. Any fractional part in this value will be discarded when converting to an arbitrary-precision integer. Note that depending on the value, especially the exponent, generating the arbitrary-precision integer may require a huge amount of memory. Use the ToSizedEInteger method to convert a number to an EInteger only if the integer fits in a bounded bit range; that method will throw an exception on overflow.</p>
 
 <p><b>Return Value:</b></p>
 
@@ -4987,7 +4991,7 @@ There is not enough memory to store the value as an EInteger.</p></li>
 
 <p><b>Deprecated.</b> Renamed to ToEIntegerIfExact.</p>
 
-<p>Converts this value to an arbitrary-precision integer, checking whether the fractional part of the value would be lost.</p>
+<p>Converts this value to an arbitrary-precision integer, checking whether the fractional part of the value would be lost. Note that depending on the value, especially the exponent, generating the arbitrary-precision integer may require a huge amount of memory. Use the ToSizedEIntegerIfExact method to convert a number to an EInteger only if the integer fits in a bounded bit range; that method will throw an exception on overflow.</p>
 
 <p><b>Return Value:</b></p>
 
@@ -4996,8 +5000,10 @@ There is not enough memory to store the value as an EInteger.</p></li>
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li>System.OverflowException:
-This object&#39;s value is infinity or not-a-number (NaN).</li>
+<li><p>System.OverflowException:
+This object&#39;s value is infinity or not-a-number (NaN).</p></li>
+<li><p>System.ArithmeticException:
+This object&#39;s value is not an exact integer.</p></li>
 </ul>
 
 <p><a id="ToEIntegerIfExact"></a></p>
@@ -5007,7 +5013,7 @@ This object&#39;s value is infinity or not-a-number (NaN).</li>
 <pre>public PeterO.Numbers.EInteger ToEIntegerIfExact();
 </pre>
 
-<p>Converts this value to an arbitrary-precision integer, checking whether the fractional part of the value would be lost.</p>
+<p>Converts this value to an arbitrary-precision integer, checking whether the fractional part of the value would be lost. Note that depending on the value, especially the exponent, generating the arbitrary-precision integer may require a huge amount of memory. Use the ToSizedEIntegerIfExact method to convert a number to an EInteger only if the integer fits in a bounded bit range; that method will throw an exception on overflow.</p>
 
 <p><b>Return Value:</b></p>
 
@@ -5016,8 +5022,10 @@ This object&#39;s value is infinity or not-a-number (NaN).</li>
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li>System.OverflowException:
-This object&#39;s value is infinity or not-a-number (NaN).</li>
+<li><p>System.OverflowException:
+This object&#39;s value is infinity or not-a-number (NaN).</p></li>
+<li><p>System.ArithmeticException:
+This object&#39;s value is not an exact integer.</p></li>
 </ul>
 
 <p><a id="ToEngineeringString"></a></p>
@@ -5291,6 +5299,50 @@ This value is infinity or not-a-number, is not an exact integer, or is less than
 <p><b>Return Value:</b></p>
 
 <p>The closest 32-bit binary floating-point number to this value. The return value can be positive infinity or negative infinity if this value exceeds the range of a 32-bit floating point number.</p>
+
+<p><a id="ToSizedEInteger_int"></a></p>
+
+<h3>ToSizedEInteger</h3>
+
+<pre>public PeterO.Numbers.EInteger ToSizedEInteger(
+    int maxBitLength);
+</pre>
+
+<p>Not documented yet.</p>
+
+<p>Not documented yet.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>maxBitLength</i>: Not documented yet.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>The return value is not documented yet.</p>
+
+<p><a id="ToSizedEIntegerIfExact_int"></a></p>
+
+<h3>ToSizedEIntegerIfExact</h3>
+
+<pre>public PeterO.Numbers.EInteger ToSizedEIntegerIfExact(
+    int maxBitLength);
+</pre>
+
+<p>Not documented yet.</p>
+
+<p>Not documented yet.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>maxBitLength</i>: Not documented yet.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>The return value is not documented yet.</p>
 
 <p><a id="ToString"></a></p>
 

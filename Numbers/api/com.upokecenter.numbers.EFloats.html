@@ -96,7 +96,7 @@ that number is expressed in scientific notation with one nonzero
 digit before the radix point).</li>
 <li><code>static int NumberClass​(EFloat ed,
        EContext ec)</code><br>
-Finds the number class for an arbitrary-precision decimal number object.</li>
+Finds the number class for an arbitrary-precision binary number object.</li>
 <li><code>static java.lang.String NumberClassString​(int nc)</code><br>
 Converts a number class identifier (ranging from 0 through 9) to a text
 string.</li>
@@ -216,7 +216,7 @@ result will be rounded as specified by the given context, if any.</li>
 </pre>
 
 <p>Returns whether the given arbitrary-precision number object is in a
- canonical form. For the current version of EDecimal, all EDecimal
+ canonical form. For the current version of EFloat, all EFloat
  objects are in a canonical form.</p>
 
 <p><strong>Parameters:</strong></p>
@@ -428,12 +428,12 @@ than 9.</li>
 <pre>public static int NumberClass​(EFloat ed, EContext ec)
 </pre>
 
-<p>Finds the number class for an arbitrary-precision decimal number object.</p>
+<p>Finds the number class for an arbitrary-precision binary number object.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>ed</code> - An arbitrary-precision decimal number object.</p></li>
+<li><p><code>ed</code> - An arbitrary-precision binary number object.</p></li>
 <li><p><code>ec</code> - A context object that specifies the precision and exponent range
 of arbitrary-precision numbers. This is used only to distinguish
 between normal and subnormal numbers. Can be null.</p></li>
@@ -617,7 +617,7 @@ arbitrary-precision numbers. Can be null.</p></li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>An arbitrary-precision decimal number whose significand is shifted
+<li>An arbitrary-precision binary number whose significand is shifted
 the given number of bits. Signals an invalid operation and returns
 NaN (not-a-number) if <code>ed2</code> is a signaling NaN or if <code>
 ed2</code> is not an integer, is negative, has an exponent other than 0,
@@ -867,7 +867,7 @@ given number object.</li>
 <ul>
 <li><p><code>ed</code> - An arbitrary-precision number object with the value the result
 will have.</p></li>
-<li><p><code>other</code> - The parameter <code>other</code> is an arbitrary-precision decimal
+<li><p><code>other</code> - The parameter <code>other</code> is an arbitrary-precision binary
 floating-point number.</p></li>
 </ul>
 

@@ -778,6 +778,10 @@ Converts this value to a string, but without using exponential notation.</li>
 <li><code>float ToSingle()</code><br>
 Converts this value to its closest equivalent as a 32-bit floating-point
 number.</li>
+<li><code>EInteger ToSizedEInteger​(int maxBitLength)</code><br>
+Not documented yet.</li>
+<li><code>EInteger ToSizedEIntegerIfExact​(int maxBitLength)</code><br>
+Not documented yet.</li>
 <li><code>java.lang.String toString()</code><br>
 Converts this value to a string.</li>
 <li><code>EDecimal Ulp()</code><br>
@@ -4668,6 +4672,12 @@ null or the precision and exponent range are unlimited.</li>
 <li><code>ctx</code> - Not documented yet.</li>
 </ul>
 
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The return value is not documented yet.</li>
+</ul>
+
 <h3>ScaleByPowerOfTen</h3>
 
 <pre>public EDecimal ScaleByPowerOfTen​(int places)
@@ -4900,7 +4910,11 @@ exceeds the range of a 64-bit floating point number.</li>
 
 <p>Converts this value to an arbitrary-precision integer. Any fractional part
  in this value will be discarded when converting to an
- arbitrary-precision integer.</p>
+ arbitrary-precision integer. Note that depending on the value,
+ especially the exponent, generating the arbitrary-precision integer
+ may require a huge amount of memory. Use the ToSizedEInteger method
+ to convert a number to an EInteger only if the integer fits in a
+ bounded bit range; that method will throw an exception on overflow.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -4934,8 +4948,9 @@ Renamed to ToEIntegerIfExact.</p>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>java.lang.ArithmeticException</code> - This object&#39;s value is infinity or not-a-number
-(NaN).</li>
+<li><p><code>java.lang.ArithmeticException</code> - This object&#39;s value is infinity or not-a-number
+(NaN).</p></li>
+<li><p><code>java.lang.ArithmeticException</code> - This object&#39;s value is not an exact integer.</p></li>
 </ul>
 
 <h3>ToEIntegerIfExact</h3>
@@ -4944,7 +4959,12 @@ Renamed to ToEIntegerIfExact.</p>
 </pre>
 
 <p>Converts this value to an arbitrary-precision integer, checking whether the
- fractional part of the value would be lost.</p>
+ fractional part of the value would be lost. Note that depending on
+ the value, especially the exponent, generating the
+ arbitrary-precision integer may require a huge amount of memory. Use
+ the ToSizedEIntegerIfExact method to convert a number to an EInteger
+ only if the integer fits in a bounded bit range; that method will
+ throw an exception on overflow.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -4955,8 +4975,9 @@ Renamed to ToEIntegerIfExact.</p>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>java.lang.ArithmeticException</code> - This object&#39;s value is infinity or not-a-number
-(NaN).</li>
+<li><p><code>java.lang.ArithmeticException</code> - This object&#39;s value is infinity or not-a-number
+(NaN).</p></li>
+<li><p><code>java.lang.ArithmeticException</code> - This object&#39;s value is not an exact integer.</p></li>
 </ul>
 
 <h3>ToEngineeringString</h3>
@@ -5077,6 +5098,44 @@ decimal point.</li>
 
 <ul>
 <li>An arbitrary-precision decimal number.</li>
+</ul>
+
+<h3>ToSizedEInteger</h3>
+
+<pre>public EInteger ToSizedEInteger​(int maxBitLength)
+</pre>
+
+<p>Not documented yet.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>maxBitLength</code> - Not documented yet.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The return value is not documented yet.</li>
+</ul>
+
+<h3>ToSizedEIntegerIfExact</h3>
+
+<pre>public EInteger ToSizedEIntegerIfExact​(int maxBitLength)
+</pre>
+
+<p>Not documented yet.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>maxBitLength</code> - Not documented yet.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The return value is not documented yet.</li>
 </ul>
 
 <h3>ToEFloat</h3>
