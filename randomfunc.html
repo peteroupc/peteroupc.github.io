@@ -1187,9 +1187,8 @@ END METHOD
 
 <pre>METHOD PositiveIntegersWithSum(n, total)
     if n &lt;= 0 or total &lt;=0: return error
-    ls = NewList()
+    ls = [0]
     ret = NewList()
-    AddItem(ls, 0)
     while size(ls) &lt; n
       c = RNDINTEXCRANGE(1, total)
       found = false
@@ -1204,7 +1203,7 @@ END METHOD
     Sort(ls)
     AddItem(ls, total)
     for i in 1...size(ls): AddItem(ret,
-        list[i] - list[i - 1])
+        ls[i] - ls[i - 1])
     return ret
 END METHOD
 
@@ -1221,7 +1220,7 @@ END METHOD
 
 <ol>
 <li>To generate a uniform random combination of <code>N</code> numbers with a given positive average <code>avg</code>, generate a uniform random combination of <code>N</code> numbers with the sum <code>N * avg</code>.</li>
-<li>To generate a uniform random combination of <code>N</code> numbers <code>min</code> or greater and with a given positive sum <code>sum</code>, generate a uniform random combination of <code>N</code> numbers with the sum <code>sum - n * min</code>, then add <code>min</code> to each number generated this way.</li>
+<li>To generate a uniform random combination of <code>N</code> numbers <code>min</code> or greater and with a given positive sum <code>sum</code>, generate a uniform random combination of <code>N</code> numbers with the sum <code>sum - N * min</code>, then add <code>min</code> to each number generated this way.</li>
 </ol>
 </blockquote>
 

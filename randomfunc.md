@@ -946,9 +946,8 @@ The following pseudocode shows how to generate a uniform random combination of i
 
     METHOD PositiveIntegersWithSum(n, total)
         if n <= 0 or total <=0: return error
-        ls = NewList()
+        ls = [0]
         ret = NewList()
-        AddItem(ls, 0)
         while size(ls) < n
           c = RNDINTEXCRANGE(1, total)
           found = false
@@ -963,7 +962,7 @@ The following pseudocode shows how to generate a uniform random combination of i
         Sort(ls)
         AddItem(ls, total)
         for i in 1...size(ls): AddItem(ret,
-            list[i] - list[i - 1])
+            ls[i] - ls[i - 1])
         return ret
     END METHOD
 
@@ -977,7 +976,7 @@ The following pseudocode shows how to generate a uniform random combination of i
 > **Notes:**
 >
 > 1. To generate a uniform random combination of `N` numbers with a given positive average `avg`, generate a uniform random combination of `N` numbers with the sum `N * avg`.
-> 2. To generate a uniform random combination of `N` numbers `min` or greater and with a given positive sum `sum`, generate a uniform random combination of `N` numbers with the sum `sum - n * min`, then add `min` to each number generated this way.
+> 2. To generate a uniform random combination of `N` numbers `min` or greater and with a given positive sum `sum`, generate a uniform random combination of `N` numbers with the sum `sum - N * min`, then add `min` to each number generated this way.
 
 <a id=Multinomial_Distribution></a>
 ### Multinomial Distribution

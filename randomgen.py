@@ -687,6 +687,11 @@ of failures of each kind of failure.
         return ret
 
     def nonzeroIntegersWithSum(self, n, total):
+        """"
+Returns a list of 'n' integers greater than 0 that sum to 'total'.
+The combination is chosen uniformly at random among all
+possible combinations.
+        """
         if n <= 0 or total <= 0:
             raise ValueError
         ls = []
@@ -708,6 +713,11 @@ of failures of each kind of failure.
         return [ls[i] - ls[i - 1] for i in range(1, len(ls))]
 
     def integersWithSum(self, n, total):
+        """"
+Returns a list of 'n' integers 0 or greater that sum to 'total'.
+The combination is chosen uniformly at random among all
+possible combinations.
+        """
         if n <= 0 or total <= 0:
             raise ValueError
         return [s - 1 for s in self.nonzeroIntegersWithSum(n, total + n)]
