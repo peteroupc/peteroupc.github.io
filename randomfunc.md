@@ -976,7 +976,7 @@ The following pseudocode shows how to generate a uniform random combination of i
 > **Notes:**
 >
 > 1. To generate a uniform random combination of `N` numbers with a given positive average `avg`, generate a uniform random combination of `N` numbers with the sum `N * avg`.
-> 2. To generate a uniform random combination of `N` numbers `min` or greater and with a given positive sum `sum`, generate a uniform random combination of `N` numbers with the sum `sum - N * min`, then add `min` to each number generated this way.
+> 2. To generate a uniform random combination of `N` numbers `min` or greater and with a given positive sum `sum`, generate `IntegersWithSum(N, sum - N * min)` (or its equivalent for real numbers), then add `min` to each number generated this way.
 
 <a id=Multinomial_Distribution></a>
 ### Multinomial Distribution
