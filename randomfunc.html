@@ -1220,7 +1220,7 @@ END METHOD
 
 <ol>
 <li>To generate a uniform random combination of <code>N</code> numbers with a given positive average <code>avg</code>, generate a uniform random combination of <code>N</code> numbers with the sum <code>N * avg</code>.</li>
-<li>To generate a uniform random combination of <code>N</code> numbers <code>min</code> or greater and with a given positive sum <code>sum</code>, generate a uniform random combination of <code>N</code> numbers with the sum <code>sum - N * min</code>, then add <code>min</code> to each number generated this way.</li>
+<li>To generate a uniform random combination of <code>N</code> numbers <code>min</code> or greater and with a given positive sum <code>sum</code>, generate <code>IntegersWithSum(N, sum - N * min)</code> (or its equivalent for real numbers), then add <code>min</code> to each number generated this way.</li>
 </ol>
 </blockquote>
 
