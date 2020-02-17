@@ -24,7 +24,7 @@ There are several kinds of nearby sequences to test for this purpose:
 
 In general, a hash function that passes is worthy of mention if it's noncryptographic and faster than hash functions designed for cryptography, such as MD5 and the SHA family.
 
-**Splittable PRNGs.** For so-called "splittable" PRNGs, Schaathun, H.G., "Evaluation of Splittable Pseudo-Random Generators", 2015, suggests four random number sequences for testing purposes.  They use the PRNG's `split` and `generate` operations.
+**Splittable PRNGs.** For so-called "splittable" PRNGs, Schaathun, H.G. (in "Evaluation of Splittable Pseudo-Random Generators", 2015) suggests four random number sequences for testing purposes.  They use the PRNG's `split` and `generate` operations.
 
 - Sequence suggested in section 5.5:
     1. Set `seed` and `g` to `split(seed)[0]` and `split(seed)[1]`, respectively.
