@@ -1620,7 +1620,7 @@ The following method generates a random integer that follows a _Poisson distribu
 
 **Requires random real numbers.**
 
-The following method generates a random number that follows a _gamma distribution_ and is based on Marsaglia and Tsang's method from 2000.  Usually, the number expresses either&mdash;
+The following method generates a random number that follows a _gamma distribution_ and is based on Marsaglia and Tsang's method from 2000<<|"A simple method for generating gamma variables",_ACM Transactions on Mathematical Software_ 26(3), 2000.>>.  Usually, the number expresses either&mdash;
 
 - the lifetime (in days, hours, or other fixed units) of a random component with an average lifetime of `meanLifetime`, or
 - a random amount of time (in days, hours, or other fixed units) that passes until as many events as `meanLifetime` happen.
@@ -1633,6 +1633,8 @@ Here, `meanLifetime` must be an integer or noninteger greater than 0, and `scale
         // Exponential distribution special case if
         // `meanLifetime` is 1 (see also Devroye 1986, p. 405)
         if meanLifetime == 1: return -ln(RNDU01ZeroOneExc()) * scale
+        // Alternative of previous line:
+        // if meanLifetime == 1: return -ln(1 - RNDU01OneExc()) * scale
         d = meanLifetime
         v = 0
         if meanLifetime < 1: d = d + 1
@@ -1656,13 +1658,13 @@ Here, `meanLifetime` must be an integer or noninteger greater than 0, and `scale
            ret = ret * exp(ln(RNDU01ZeroExc()) / meanLifetime)
         end
         return ret * scale
-    end
+    END METHOD
 
 Distributions based on the gamma distribution:
 
 - **3-parameter gamma distribution**: `pow(GammaDist(a, 1), 1.0 / c) * b`, where `c` is another shape parameter.
 - **4-parameter gamma distribution**: `pow(GammaDist(a, 1), 1.0 / c) * b + d`, where `d` is the minimum value.
-- **Exponential distribution**: `GammaDist(1, 1.0 / lamda)` or `-ln(RNDU01ZeroOneExc()) / lamda`, where `lamda` is the inverse scale. Usually, `lamda` is the probability that an independent event of a given kind will occur in a given span of time (such as in a given day or year), and the random result is the number of spans of time until that event happens.  (This distribution is thus useful for modeling a _Poisson process_.) `1.0 / lamda` is the scale (mean), which is usually the average waiting time between two independent events of the same kind.
+- **Exponential distribution** (`Expo(lamda)` in this document): `GammaDist(1, 1.0 / lamda)` or `-ln(RNDU01ZeroOneExc()) / lamda` or  `-ln(1 - RNDU01OneExc()) / lamda`, where `lamda` is the inverse scale. Usually, `lamda` is the probability that an independent event of a given kind will occur in a given span of time (such as in a given day or year), and the random result is the number of spans of time until that event happens.  (This distribution is thus useful for modeling a _Poisson process_.) `1.0 / lamda` is the scale (mean), which is usually the average waiting time between two independent events of the same kind.
 - **Erlang distribution**: `GammaDist(n, 1.0 / lamda)`.  Expresses a sum of `n` exponential random variables with the given `lamda` parameter.
 - **Max-of-uniform distribution** (Devroye 1986, p. 675):  `1.0 - x/(x+GammaDist(n,1))`, where `n` is the number of uniform random variables, and `x` is `GammaDist(1,1)`.  Using `x/(x+GammaDist(n,1))` instead results in a **min-of-uniform distribution** (Devroye 1986, p. 210).
 
@@ -1954,37 +1956,38 @@ Other kinds of copulas describe different kinds of dependence between random num
 
 **Many distributions here require random real numbers.**
 
+A &dagger; symbol next to a distribution means the random number can be shifted by a location parameter (`mu`) then scaled by a scale parameter greater than 0 (`sigma`).
+
 Most commonly used:
 
 <small>
 - **Beta distribution**: See [**Beta Distribution**](#Beta_Distribution).
 - **Binomial distribution**: See [**Binomial Distribution: Optimization for Many Trials**](#Binomial_Distribution_Optimization_for_Many_Trials).
 - **Binormal distribution**: See [**Multivariate Normal (Multinormal) Distribution**](#Multivariate_Normal_Multinormal_Distribution).
-- **Cauchy (Lorentz) distribution**: `scale * tan(RNDRANGEMinMaxExc(-pi*0.5, pi*0.5)) + mu`, where `scale` is the scale and `mu` is the location of the distribution's curve peak (mode).  This distribution is similar to the normal distribution, but with "fatter" tails.
+- **Cauchy (Lorentz) distribution**&dagger;: `tan(RNDRANGEMinMaxExc(-pi*0.5, pi*0.5))`.  This distribution is similar to the normal distribution, but with "fatter" tails.
 - **Chi-squared distribution**: `GammaDist(df * 0.5 + Poisson(sms * 0.5), 2)`, where `df` is the number of degrees of freedom and `sms` is the sum of mean squares (where `sms` other than 0 indicates a _noncentral_ distribution).
 - **Dice**: See [**Dice**](#Dice).
 - **Exponential distribution**: See [**Gamma Distribution**](#Gamma_Distribution).
-- **Extreme value distribution**: `a - ln(-ln(RNDU01ZeroOneExc())) * b`, where `b` is the scale and `a` is the location of the distribution's curve peak (mode).  This expresses a distribution of maximum values.
+- **Extreme value distribution**: See generalized extreme value distribution.
 - **Gamma distribution**: See [**Gamma Distribution**](#Gamma_Distribution).
 - **Gaussian distribution**: See [**Normal (Gaussian) Distribution**](#Normal_Gaussian_Distribution).
 - **Geometric distribution**: See [**Negative Binomial and Geometric Distributions**](#Negative_Binomial_and_Geometric_Distributions).
-- **Gumbel distribution**: `a + ln(-ln(RNDU01ZeroOneExc())) * b`, where `b` is the scale and `a` is the location of the distribution's curve peak (mode). This expresses a distribution of minimum values.
+- **Gumbel distribution**: See generalized extreme value distribution.
 - **Inverse gamma distribution**: `b / GammaDist(a, 1)`, where `a` and `b` have the
  same meaning as in the gamma distribution.  Alternatively, `1.0 / (pow(GammaDist(a, 1), 1.0 / c) / b + d)`, where `c` and `d` are shape and location parameters, respectively.
-- **Laplace (double exponential) distribution**: `(ln(RNDU01ZeroExc()) - ln(RNDU01ZeroExc())) * beta + mu`, where `beta` is the scale and `mu` is the mean.
+- **Laplace (double exponential) distribution**&dagger;: `(Expo(1) - Expo(1))`.
 - **Logarithmic distribution**: `min + (max - min) * RNDU01OneExc() * RNDU01OneExc()`, where `min` is the minimum value and `max` is the maximum value (Saucier 2000, p. 26).  In this distribution, numbers closer to `min` are exponentially more likely than numbers closer to `max`.
-- **Logarithmic normal distribution**: `exp(Normal(mu, sigma))`, where `mu` and `sigma`
- have the same meaning as in the normal distribution.
+- **Logarithmic normal distribution**: `exp(Normal(mu, sigma))`, where `mu` and `sigma` are the underlying normal distribution's parameters.
 - **Multinormal distribution**: See multivariate normal distribution.
 - **Multivariate normal distribution**: See [**Multivariate Normal (Multinormal) Distribution**](#Multivariate_Normal_Multinormal_Distribution).
 - **Normal distribution**: See [**Normal (Gaussian) Distribution**](#Normal_Gaussian_Distribution).
 - **Poisson distribution**: See [**Poisson Distribution**](#Poisson_Distribution).
 - **Pareto distribution**: `pow(RNDU01ZeroOneExc(), -1.0 / alpha) * minimum`, where `alpha`  is the shape and `minimum` is the minimum.
-- **Rayleigh distribution**: `a * sqrt(-2 * ln(RNDU01ZeroExc()))`, where `a` is the scale and is greater than 0.  If `a` follows a logarithmic normal distribution, the result is a _Suzuki distribution_.
-- **Standard normal distribution**: `Normal(0, 1)`.  See also [**Normal (Gaussian) Distribution**](#Normal_Gaussian_Distribution).
+- **Rayleigh distribution**&dagger;: `sqrt(Expo(0.5))`.  If the scale parameter (`sigma`) follows a logarithmic normal distribution, the result is a _Suzuki distribution_.
+- **Standard normal distribution**&dagger;: `Normal(0, 1)`.  See also [**Normal (Gaussian) Distribution**](#Normal_Gaussian_Distribution).
 - **Student's _t_-distribution**: `Normal(cent, 1) / sqrt(GammaDist(df * 0.5, 2 / df))`, where `df` is the number of degrees of freedom, and _cent_ is the mean of the normally-distributed random number.  A `cent` other than 0 indicates a _noncentral_ distribution.
 - **Triangular distribution**: `ContinuousWeightedChoice([startpt, midpt, endpt], [0, 1, 0])`. The distribution starts at `startpt`, peaks at `midpt`, and ends at `endpt`.
-- **Weibull distribution**: `b * pow(-ln(RNDU01ZeroExc()),1.0 / a) + loc`, where `a` is the shape, `b` is the scale `loc` is the location, and `a` and `b` are greater than 0.
+- **Weibull distribution**: See generalized extreme value distribution.
 </small>
 
 Miscellaneous:
@@ -2001,7 +2004,7 @@ Miscellaneous:
  the two parameters of the beta distribution, and `trials` is a parameter of the binomial distribution.
 - **Beta negative binomial distribution**: `NegativeBinomial(successes, BetaDist(a, b))`, where `a` and `b` are the two parameters of the beta distribution, and `successes` is a parameter of the negative binomial distribution. If _successes_ is 1, the result is a _Waring&ndash;Yule distribution_.
 - **Beta-PERT distribution**: `startpt + size * BetaDist(1.0 + (midpt - startpt) * shape / size, 1.0 + (endpt - midpt) * shape / size)`. The distribution starts  at `startpt`, peaks at `midpt`, and ends at `endpt`, `size` is `endpt - startpt`, and `shape` is a shape parameter that's 0 or greater, but usually 4.  If the mean (`mean`) is known rather than the peak, `midpt = 3 * mean / 2 - (startpt + endpt) / 4`.
-- **Beta prime distribution**: `pow(GammaDist(a, 1), 1.0 / alpha) * scale / pow(GammaDist(b, 1), 1.0 / alpha)`, where `a`, `b`, and `alpha` are shape parameters and `scale` is the scale. If _a_ is 1, the result is a _Singh&ndash;Maddala distribution_; if _b_ is 1, a _Dagum distribution_; if _a_ and _b_ are both 1, a _logarithmic logistic distribution_.
+- **Beta prime distribution**&dagger;: `pow(GammaDist(a, 1), 1.0 / alpha) / pow(GammaDist(b, 1), 1.0 / alpha)`, where `a`, `b`, and `alpha` are shape parameters. If _a_ is 1, the result is a _Singh&ndash;Maddala distribution_; if _b_ is 1, a _Dagum distribution_; if _a_ and _b_ are both 1, a _logarithmic logistic distribution_.
 - **Birnbaum&ndash;Saunders distribution**: `pow(sqrt(4+x*x)+x,2)/(4.0*lamda)`, where `x = Normal(0,gamma)`, `gamma` is a shape parameter, and `lamda` is a scale parameter.
 - **Chi distribution**: `sqrt(GammaDist(df * 0.5, 2))`, where `df` is the number of degrees of freedom.
 - **Compound Poisson distribution**: See [**Transformations of Random Numbers: Additional Examples**](#Transformations_of_Random_Numbers_Additional_Examples).
@@ -2011,11 +2014,15 @@ Miscellaneous:
 - **Double logarithmic distribution**: `min + (max - min) * (0.5 + (RNDINT(1) * 2 - 1) * 0.5 * RNDU01OneExc() * RNDU01OneExc())`, where `min` is the minimum value and `max` is the maximum value (see also Saucier 2000, p. 15, which shows the wrong X axes).
 - **Erlang distribution**: See [**Gamma Distribution**](#Gamma_Distribution).
 - **Estoup distribution**: See zeta distribution.
-- **Fr&eacute;chet distribution**: `b*pow(-ln(RNDU01ZeroExc()),-1.0/a) + loc`, where `a` is the shape, `b` is the scale, and `loc` is the location of the distribution's curve peak (mode). This expresses a distribution of maximum values.
+- **Fr&eacute;chet distribution**: See generalized extreme value distribution.
 - **Fr&eacute;chet&ndash;Hoeffding lower bound copula**: See [**Gaussian and Other Copulas**](#Gaussian_and_Other_Copulas).
 - **Fr&eacute;chet&ndash;Hoeffding upper bound copula**: See [**Gaussian and Other Copulas**](#Gaussian_and_Other_Copulas).
 - **Gaussian copula**: See [**Gaussian and Other Copulas**](#Gaussian_and_Other_Copulas).
-- **Generalized extreme value (Fisher&ndash;Tippet) distribution**: `a - (pow(-ln(RNDU01ZeroOneExc()), -c) - 1) * b / c` if `c != 0`, or `a - ln(-ln(RNDU01ZeroOneExc())) * b` otherwise, where `b` is the scale, `a` is the location of the distribution's curve peak (mode), and `c` is a shape parameter. This expresses a distribution of maximum values.
+- **Generalized extreme value (Fisher&ndash;Tippett or generalized maximum value) distribution (`GEV(c)`)**&dagger;: `(pow(Expo(1), -c) - 1) / c` if `c != 0`, or `-ln(Expo(1))` otherwise, where `c` is a shape parameter. Special cases:
+    - The negative of the result expresses a generalized minimum value.  In this case, a parameter of `c = 0` results in a _Gumbel distribution_.
+    - A parameter of `c = 0` results in an _extreme value distribution_.
+    - **Weibull distribution**: `1 - 1.0/a * GEV(-1.0/a)` (or `pow(Expo(1), 1.0/a)`), where `a` is a shape parameter.
+    - **Fr&eacute;chet distribution**: `1 + 1.0/a * GEV(1.0/a)` (or `pow(Expo(1), -1.0/a)`), where `a` is a shape parameter.
 - **Generalized Tukey lambda distribution**: `(s1 * (pow(x, lamda1)-1.0)/lamda1 - s2 * (pow(1.0-x, lamda2)-1.0)/lamda2) + loc`, where `x` is `RNDU01()`, `lamda1` and `lamda2` are shape parameters, `s1` and `s2` are scale parameters, and `loc` is a location parameter.
 - **Half-normal distribution**. Parameterizations include:
     - _Mathematica_: `abs(Normal(0, sqrt(pi * 0.5) / invscale)))`, where `invscale` is a parameter of the half-normal distribution.
@@ -2023,17 +2030,17 @@ Miscellaneous:
 - **Hyperexponential distribution**: See [**Mixtures: Additional Examples**](#Mixtures_Additional_Examples).
 - **Hypergeometric distribution**: See [**Hypergeometric Distribution**](#Hypergeometric_Distribution).
 - **Hypoexponential distribution**: See [**Transformations of Random Numbers: Additional Examples**](#Transformations_of_Random_Numbers_Additional_Examples).
-- **Inverse chi-squared distribution**: `df * scale / (GammaDist(df * 0.5, 2))`, where `df` is the number of degrees of freedom and `scale` is the scale, usually `1.0 / df`.
+- **Inverse chi-squared distribution**&dagger;: `df / (GammaDist(df * 0.5, 2))`, where `df` is the number of degrees of freedom.  The scale parameter (`sigma`) is usually `1.0 / df`.
 - **Inverse Gaussian distribution (Wald distribution)**: Generate `n = mu + (mu*mu*y/(2*lamda)) - mu * sqrt(4 * mu * lamda * y + mu * mu * y * y) / (2 * lamda)`, where `y = pow(Normal(0, 1), 2)`, then return `n` if `RNDU01OneExc() <= mu / (mu + n)`, or `mu * mu / n` otherwise. `mu` is the mean and `lamda` is the scale; both parameters are greater than 0. Based on method published in [**Devroye 1986**](http://luc.devroye.org/rnbookindex.html).
 - **Kumaraswamy distribution**: `min + (max - min) * pow(1-pow(RNDU01ZeroExc(),1.0/b),1.0/a)`, where `a` and `b` are shape parameters, `min` is the minimum value, and `max` is the maximum value.
 - **Landau distribution**: See [**Stable Distribution**](#Stable_Distribution).
-- **L&eacute;vy distribution**: `sigma * 0.5 / GammaDist(0.5, 1) + mu`, where `mu` is the location and `sigma` is the dispersion.
+- **L&eacute;vy distribution**&dagger;: `0.5 / GammaDist(0.5, 1)`.  The scale parameter (`sigma`) is also called dispersion.
 - **Logarithmic logistic distribution**: See beta prime distribution.
 - **Logarithmic series distribution**: `floor(1.0 + ln(RNDU01ZeroExc()) / ln(1.0 - pow(1.0 - param, RNDU01ZeroOneExc())))`, where `param` is a number greater than 0 and less than 1. Based on method described in Devroye 1986.
-- **Logistic distribution**: `(ln(x)-ln(1.0 - x)) * scale + mean`, where `x` is `RNDU01ZeroOneExc()` and `mean` and `scale` are the mean and the scale, respectively.
+- **Logistic distribution**&dagger;: `(ln(x)-ln(1.0 - x))`, where `x` is `RNDU01ZeroOneExc()`.
 - **Log-multinormal distribution**: See [**Multivariate Normal (Multinormal) Distribution**](#Multivariate_Normal_Multinormal_Distribution).
 - **Max-of-uniform distribution**: See [**Gamma Distribution**](#Gamma_Distribution).
-- **Maxwell distribution**: `scale * sqrt(GammaDist(1.5, 2))`, where `scale` is the scale.
+- **Maxwell distribution**&dagger;: `sqrt(GammaDist(1.5, 2))`.
 - **Min-of-uniform distribution**: See [**Gamma Distribution**](#Gamma_Distribution).
 - **Moyal distribution**: See the [**Python sample code**](https://peteroupc.github.io/randomgen.zip).
 - **Multinomial distribution**: See [**Multinomial Distribution**](#Multinomial_Distribution).
@@ -2067,7 +2074,7 @@ Miscellaneous:
 - **"Type 0" stable distribution**: See [**Stable Distribution**](#Stable_Distribution).
 - **von Mises distribution**: See [**von Mises Distribution**](#von_Mises_Distribution).
 - **Waring&ndash;Yule distribution**: See beta negative binomial distribution.
-- **Wigner (semicircle) distribution**: `a + radius * (BetaDist(1.5, 1.5)*2-1)`, where `radius` is the semicircular radius and `a` is the location.
+- **Wigner (semicircle) distribution**&dagger;: `(BetaDist(1.5, 1.5)*2-1)`.  The scale parameter (`sigma`) is the semicircular radius.
 - **Zeta distribution**: Generate `n = floor(pow(RNDU01ZeroOneExc(), -1.0 / r))`, and if `d / pow(2, r) < (d - 1) * RNDU01OneExc() * n / (pow(2, r) - 1.0)`, where `d = pow((1.0 / n) + 1, r)`, repeat this process. The parameter `r` is greater than 0. Based on method described in Devroye 1986. A zeta distribution [**truncated**](#Rejection_Sampling) by rejecting random values greater than some positive integer is called a _Zipf distribution_ or _Estoup distribution_. (Note that Devroye uses "Zipf distribution" to refer to the untruncated zeta distribution.)
 - **Zipf distribution**: See zeta distribution.
 </small>
@@ -2262,7 +2269,7 @@ provided the PDF's values are all 0 or greater and the area under the PDF's curv
 <small><sup id=Note34>(34)</sup> For example, besides the methods given in this section's main text:
 
 1. In the _Box&ndash;Muller transformation_, `mu + radius * cos(angle)` and `mu + radius * sin(angle)`, where `angle = RNDRANGEMaxExc(0, 2 * pi)` and `radius = sqrt(-2 * ln(RNDU01ZeroExc())) * sigma`, are two independent normally-distributed random numbers.
-2. Computing the sum of twelve `RNDU01OneExc()` numbers (see Note 13) and subtracting the sum by 6 (see also [**"Irwin&ndash;Hall distribution" on Wikipedia**](https://en.wikipedia.org/wiki/Irwin%E2%80%93Hall_distribution)) results in approximate standard normal (`mu`=0, `sigma`=1) random numbers, whose values are not less than -6 or greater than 6; on the other hand, in a standard normal distribution, results less than -6 or greater than 6 will occur only with a generally negligible probability.
+2. Computing the sum of twelve `RNDU01OneExc()` numbers (see Note 13) and subtracting the sum by 6 (see also [**"Irwin&ndash;Hall distribution" on Wikipedia**](https://en.wikipedia.org/wiki/Irwin%E2%80%93Hall_distribution)) results in approximate standard normal (`mu`=0, `sigma`=1) random numbers, whose values are not less than -6 or greater than 6; on the other hand, in a standard normal distribution, results less than -6 or greater than 6 will occur only with a generally negligible probability.  (The twelve can be a different number, even a fraction.  For example, the sum of 3.5 random numbers means the sum of three random numbers and half of another.)
 3. Computing the sum of twelve `RNDRANGEMaxExc(0, sigma)` numbers (see Note 13) and subtracting the sum by 6 * `sigma` results in approximate normal random numbers with `mu`=0 and the given `sigma`, whose values are not less than -6 * `sigma` or greater than 6 * `sigma`.
 4. Generating `RNDU01ZeroOneExc()`, then running the standard normal distribution's inverse cumulative distribution function on that number, results in a random number from that distribution.  An approximation is found in M. Wichura, _Applied Statistics_ 37(3), 1988.  See also [**"A literate program to compute the inverse of the normal CDF"**](https://www.johndcook.com/blog/normal_cdf_inverse/).
 5. Methods implementing a variant of the normal distribution, the _discrete Gaussian distribution_, generate _integers_ that approximately follow the normal distribution.  Two recent algorithms, one by A. Karmakar et al. ("Constant-Time Gaussian Random Sampling"), and another by Micciancio and Walter (2017, "Gaussian Sampling over the Integers: Efficient, Generic, Constant-Time"), are designed to reduce timing differences that a security attack could exploit.

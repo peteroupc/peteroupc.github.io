@@ -198,7 +198,7 @@
 <li><code><a href="#Pow_PeterO_Numbers_EFloat">Pow(PeterO.Numbers.EFloat)</a></code> - Raises this object&#39;s value to the given exponent, using unlimited precision.</li>
 <li><code><a href="#Pow_PeterO_Numbers_EFloat_PeterO_Numbers_EContext">Pow(PeterO.Numbers.EFloat, PeterO.Numbers.EContext)</a></code> - Raises this object&#39;s value to the given exponent.</li>
 <li><code><a href="#Precision">Precision()</a></code> - Finds the number of digits in this number&#39;s significand.</li>
-<li><code><a href="#PreRound_PeterO_Numbers_EContext">PreRound(PeterO.Numbers.EContext)</a></code> -</li>
+<li><code><a href="#PreRound_PeterO_Numbers_EContext">PreRound(PeterO.Numbers.EContext)</a></code> - Returns a number in which the value of this object is rounded to fit the maximum precision allowed if it has more significant digits than the maximum precision.</li>
 <li><code><a href="#Quantize_int_PeterO_Numbers_EContext">Quantize(int, PeterO.Numbers.EContext)</a></code> - Returns a binary floating-point number with the same value but a new exponent.</li>
 <li><code><a href="#Quantize_PeterO_Numbers_EFloat_PeterO_Numbers_EContext">Quantize(PeterO.Numbers.EFloat, PeterO.Numbers.EContext)</a></code> - Returns a binary floating-point number with the same value as this object but with the same exponent as another binary floating-point number.</li>
 <li><code><a href="#Quantize_PeterO_Numbers_EInteger_PeterO_Numbers_EContext">Quantize(PeterO.Numbers.EInteger, PeterO.Numbers.EContext)</a></code> - Returns a binary floating-point number with the same value but a new exponent.</li>
@@ -255,8 +255,8 @@
 <li><code><a href="#ToSByteUnchecked">ToSByteUnchecked()</a></code> - Converts this number&#39;s value to an integer by discarding its fractional part, and returns the least-significant bits of its two&#39;s-complement form as an 8-bit signed integer.</li>
 <li><code><a href="#ToShortestString_PeterO_Numbers_EContext">ToShortestString(PeterO.Numbers.EContext)</a></code> - Returns a string representation of this number&#39;s value after rounding that value to the given precision (using the given arithmetic context, such as EContext.</li>
 <li><code><a href="#ToSingle">ToSingle()</a></code> - Converts this value to its closest equivalent as 32-bit floating-point number.</li>
-<li><code><a href="#ToSizedEInteger_int">ToSizedEInteger(int)</a></code> -</li>
-<li><code><a href="#ToSizedEIntegerIfExact_int">ToSizedEIntegerIfExact(int)</a></code> -</li>
+<li><code><a href="#ToSizedEInteger_int">ToSizedEInteger(int)</a></code> - Converts this value to an arbitrary-precision integer by discarding its fractional part and checking whether the resulting integer overflows the given signed bit count.</li>
+<li><code><a href="#ToSizedEIntegerIfExact_int">ToSizedEIntegerIfExact(int)</a></code> - Converts this value to an arbitrary-precision integer, only if this number&#39;s value is an exact integer and that integer does not overflow the given signed bit count.</li>
 <li><code><a href="#ToString">ToString()</a></code> - Converts this number&#39;s value to a text string.</li>
 <li><code><a href="#ToUInt16Checked">ToUInt16Checked()</a></code> - Converts this number&#39;s value to a 16-bit unsigned integer if it can fit in a 16-bit unsigned integer after converting it to an integer by discarding its fractional part.</li>
 <li><code><a href="#ToUInt16IfExact">ToUInt16IfExact()</a></code> - Converts this number&#39;s value to a 16-bit unsigned integer if it can fit in a 16-bit unsigned integer without rounding to a different numerical value.</li>
@@ -3789,16 +3789,17 @@ is null.</li>
     PeterO.Numbers.EContext ctx);
 </pre>
 
+<p>Returns a number in which the value of this object is rounded to fit the maximum precision allowed if it has more significant digits than the maximum precision. The maximum precision allowed is given in an arithmetic context. This method is designed for preparing operands to a custom arithmetic operation in accordance with the &quot;simplified&quot; arithmetic given in Appendix A of the General Decimal Arithmetic Specification.</p>
+
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>ctx</i>: The parameter  <i>ctx</i>
-is a Numbers.EContext object.</li>
+<li><i>ctx</i>: An arithmetic context to control the precision, rounding, and exponent range of the result. If  <code>HasFlags</code>  of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null, in which case the precision is unlimited. Signals the flag LostDigits if the input number has greater precision than allowed and was rounded to a different numerical value in order to fit the precision.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p>The return value is not documented yet.</p>
+<p>This object rounded to the given precision. Returns this object and signals no flags if &quot;ctx&quot; is null or specifies an unlimited precision, if this object is infinity or not-a-number (including signaling NaN), or if the number&#39;s value has no more significant digits than the maximum precision given in &quot;ctx&quot;.</p>
 
 <p><a id="Quantize_int_PeterO_Numbers_EContext"></a></p>
 
@@ -4908,16 +4909,24 @@ This value is infinity or not-a-number, is not an exact integer, or is less than
     int maxBitLength);
 </pre>
 
+<p>Converts this value to an arbitrary-precision integer by discarding its fractional part and checking whether the resulting integer overflows the given signed bit count.</p>
+
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>maxBitLength</i>: The parameter  <i>maxBitLength</i>
-is a 32-bit signed integer.</li>
+<li><i>maxBitLength</i>: The maximum number of signed bits the integer can have. The integer&#39;s value may not be less than -(2^maxBitLength) or greater than (2^maxBitLength) - 1.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p>The return value is not documented yet.</p>
+<p>An arbitrary-precision integer.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.OverflowException:
+This object&#39;s value is infinity or not-a-number (NaN), or this number&#39;s value, once converted to an integer by discarding its fractional part, is less than -(2^maxBitLength) or greater than (2^maxBitLength) - 1.</li>
+</ul>
 
 <p><a id="ToSizedEIntegerIfExact_int"></a></p>
 
@@ -4927,16 +4936,26 @@ is a 32-bit signed integer.</li>
     int maxBitLength);
 </pre>
 
+<p>Converts this value to an arbitrary-precision integer, only if this number&#39;s value is an exact integer and that integer does not overflow the given signed bit count.</p>
+
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>maxBitLength</i>: The parameter  <i>maxBitLength</i>
-is a 32-bit signed integer.</li>
+<li><i>maxBitLength</i>: The maximum number of signed bits the integer can have. The integer&#39;s value may not be less than -(2^maxBitLength) or greater than (2^maxBitLength) - 1.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p>The return value is not documented yet.</p>
+<p>An arbitrary-precision integer.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li><p>System.OverflowException:
+This object&#39;s value is infinity or not-a-number (NaN), or this number&#39;s value, once converted to an integer by discarding its fractional part, is less than -(2^maxBitLength) or greater than (2^maxBitLength) - 1.</p></li>
+<li><p>System.ArithmeticException:
+This object&#39;s value is not an exact integer.</p></li>
+</ul>
 
 <p><a id="ToString"></a></p>
 
