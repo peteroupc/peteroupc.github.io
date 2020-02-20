@@ -100,9 +100,9 @@ All the random number methods presented on this page are ultimately based on an 
     - [**Dice: Optimization for Many Dice**](#Dice_Optimization_for_Many_Dice)
     - [**Normal (Gaussian) Distribution**](#Normal_Gaussian_Distribution)
     - [**Binomial Distribution: Optimization for Many Trials**](#Binomial_Distribution_Optimization_for_Many_Trials)
-    - [**Poisson Distribution**](#Poisson_Distribution)
     - [**Gamma Distribution**](#Gamma_Distribution)
     - [**Beta Distribution**](#Beta_Distribution)
+    - [**Poisson Distribution**](#Poisson_Distribution)
     - [**Negative Binomial Distribution: Extensions for Non-Integer Successes**](#Negative_Binomial_Distribution_Extensions_for_Non_Integer_Successes)
     - [**von Mises Distribution**](#von_Mises_Distribution)
     - [**Stable Distribution**](#Stable_Distribution)
@@ -1385,6 +1385,7 @@ The pseudocode below takes two lists as follows:
 4. A **hypoexponential distribution** models the sum<sup>[**(14)**](#Note14)</sup>
  of _n_ random numbers that follow an exponential distribution and each have a separate `lamda` parameter (see "[**Gamma Distribution**](#Gamma_Distribution)").
 5. A random point (`x`, `y`) can be transformed (strategy 9, geometric transformation) to derive a point with **correlated random** coordinates (old `x`, new `x`) as follows (see (Saucier 2000)<sup>[**(27)**](#Note27)</sup>, sec. 3.8): `[x, y*sqrt(1 - rho * rho) + rho * x]`, where `x` and `y` are independent random numbers generated the same way, and `rho` is a _correlation coefficient_ in the interval \[-1, 1\] (if `rho` is 0, the variables are uncorrelated).
+6. It is reasonable to talk about sampling the sum of N random numbers, where N has a fractional part.  In this case, `ceil(N)` random numbers are generated and the last number is multiplied by that fractional part.  For example, to sample the sum of 2.5 random numbers, generate three random numbers, multiply the last by 0.5 (the fractional part of 2.5), then sum all three numbers.
 
 <a id=Random_Numbers_from_a_Distribution_of_Data_Points></a>
 ### Random Numbers from a Distribution of Data Points
@@ -1561,16 +1562,40 @@ The _binomial distribution_ models the number of successes in a fixed number of 
         // Always fails
         if p <= 0.0: return 0
         count = 0
-        // Suggested by Saucier, R. in "Computer
-        // generation of probability distributions",
-        // 2000, p. 49
-        tp = trials * p
-        if tp > 25 or (tp > 5 and p > 0.1 and p < 0.9)
-             countval = -1
-             while countval < 0 or countval > trials
-                  countval = round(Normal(tp, sqrt(tp)))
-             end
-             return countval
+        if tp > 25
+          sign=1
+          ret=0
+          // p. 537 of Devroye 1986 with errata
+          // incorporated
+          while true
+            if n*p < 9
+               // Base case
+               if p == 0: return ret
+               sum = 0
+               t=-1
+               while sum <= n
+                  // Geometric variable plus 1
+                  geo=floor(ln(RNDU01ZeroExc()) / ln(1-p))+1
+                  sum=sum+geo
+                  ret = ret + sign
+               end
+               return ret - sign
+            else
+               // Recursion case
+               i=(p*(n+1)).floor
+               b=BetaDist(i, n+1-i)
+               ret=i+ret*sign
+               if b<=p
+                  n=n-i
+                  p=(p-b)/(1.0-b)
+               else
+                  ret=ret-sign
+                  n=i-1
+                  sign=-sign
+                  p=(b-p)/b
+               end
+            end
+          end
         end
         if p == 0.5
           for i in 0...trials: count=count+RNDINT(1)
@@ -1582,45 +1607,12 @@ The _binomial distribution_ models the number of successes in a fixed number of 
         return count
     END METHOD
 
-<a id=Poisson_Distribution></a>
-### Poisson Distribution
-
-**Requires random real numbers.**
-
-The following method generates a random integer that follows a _Poisson distribution_ and is based on Knuth's method from 1969.  In the method&mdash;
-
-- `mean` is the average number of independent events of a certain kind per fixed unit of time or space (for example, per day, hour, or square kilometer), and can be an integer or a non-integer (the method allows `mean` to be 0 mainly for convenience), and
-- the method's return value gives a random number of such events within one such unit.
-
-&nbsp;
-
-    METHOD Poisson(mean)
-        if mean < 0: return error
-        if mean == 0: return 0
-        p = 1.0
-        // Suggested by Saucier, R. in "Computer
-        // generation of probability distributions", 2000, p. 49
-        if mean > 9
-            p = -1.0
-            while p < 0: p = round(
-              Normal(mean, sqrt(mean)))
-            return p
-        end
-        pn = exp(-mean)
-        count = 0
-        while true
-            p = p * RNDU01OneExc()
-            if p <= pn: return count
-            count = count + 1
-        end
-    END METHOD
-
 <a id=Gamma_Distribution></a>
 ### Gamma Distribution
 
 **Requires random real numbers.**
 
-The following method generates a random number that follows a _gamma distribution_ and is based on Marsaglia and Tsang's method from 2000<<|"A simple method for generating gamma variables",_ACM Transactions on Mathematical Software_ 26(3), 2000.>>.  Usually, the number expresses either&mdash;
+The following method generates a random number that follows a _gamma distribution_ and is based on Marsaglia and Tsang's method from 2000<sup>[**(40)**](#Note40)</sup>.  Usually, the number expresses either&mdash;
 
 - the lifetime (in days, hours, or other fixed units) of a random component with an average lifetime of `meanLifetime`, or
 - a random amount of time (in days, hours, or other fixed units) that passes until as many events as `meanLifetime` happen.
@@ -1685,6 +1677,42 @@ The following method generates a random number that follows a _beta distribution
       return x/(x+GammaDist(b,1))
     END METHOD
 
+<a id=Poisson_Distribution></a>
+### Poisson Distribution
+
+**Requires random real numbers.**
+
+The following method generates a random integer that follows a _Poisson distribution_.  In the method&mdash;
+
+- `mean` is the average number of independent events of a certain kind per fixed unit of time or space (for example, per day, hour, or square kilometer), and can be an integer or a non-integer (the method allows `mean` to be 0 mainly for convenience), and
+- the method's return value gives a random number of such events within one such unit.
+
+&nbsp;
+
+    METHOD Poisson(mean)
+        if mean < 0: return error
+        if mean == 0: return 0
+        count = 0
+        // Uses algorithm by Ahrens and Dieter 1974
+        while mean > 9
+            n = floor(mean * 0.875)
+            g = GammaDist(n, 1)
+            if g > mean
+               return count + Binomial(n - 1, mean / g)
+            end
+            mean = mean - g
+            count = count + n
+        end
+        // Base case uses Knuth's method from 1969
+        p = 1.0
+        pn = exp(-mean)
+        while true
+            p = p * RNDU01OneExc()
+            if p <= pn: return count
+            count = count + 1
+        end
+    END METHOD
+
 <a id=Negative_Binomial_Distribution_Extensions_for_Non_Integer_Successes></a>
 ### Negative Binomial Distribution: Extensions for Non-Integer Successes
 
@@ -1713,8 +1741,8 @@ The following pseudocode shows an extension of  the [**_negative binomial distri
               while RNDINT(1) == 0: count = count + 1
               return count
             end
-            // Geometric distribution special case (see Saucier 2000)
-            return floor(ln(RNDU01ZeroExc()) / ln(1.0 - p))
+            // Geometric distribution
+            return floor(ln(RNDU01ZeroExc()) / ln(1-p))
         end
         while total < successes
             if RNDU01OneExc() < p: total = total + 1
@@ -1723,7 +1751,7 @@ The following pseudocode shows an extension of  the [**_negative binomial distri
         return count
     END METHOD
 
-> **Note:** A **geometric distribution** can be sampled by generating `NegativeBinomial(1, p)`, where `p` has the same meaning as in the negative binomial distribution.  Here, the sampled number is the number of failures that have happened before a success happens. (Saucier 2000, p. 44, also mentions an alternative definition that includes the success.)  For example, if `p` is 0.5, the geometric distribution models the task "Flip a coin until you get tails, then count the number of heads."
+> **Note:** A **geometric distribution** can be sampled by generating `NegativeBinomial(1, p)`, where `p` has the same meaning as in the negative binomial distribution.  Here, the sampled number is the number of failures that have happened before a success happens. (This is the definition used in _Mathematica_, for example.  Saucier 2000, p. 44, also mentions an alternative definition that includes the success, and this is the definition used, for example, in Devroye 1986, p. 498.)  For example, if `p` is 0.5, the geometric distribution models the task "Flip a coin until you get tails, then count the number of heads."
 
 <a id=von_Mises_Distribution></a>
 ### von Mises Distribution
@@ -2002,11 +2030,11 @@ Miscellaneous:
 - **Beckmann distribution**: See [**Multivariate Normal (Multinormal) Distribution**](#Multivariate_Normal_Multinormal_Distribution).
 - **Beta binomial distribution**: `Binomial(trials, BetaDist(a, b))`, where `a` and `b` are
  the two parameters of the beta distribution, and `trials` is a parameter of the binomial distribution.
-- **Beta negative binomial distribution**: `NegativeBinomial(successes, BetaDist(a, b))`, where `a` and `b` are the two parameters of the beta distribution, and `successes` is a parameter of the negative binomial distribution. If _successes_ is 1, the result is a _Waring&ndash;Yule distribution_.
+- **Beta negative binomial distribution**: `NegativeBinomial(successes, BetaDist(a, b))`, where `a` and `b` are the two parameters of the beta distribution, and `successes` is a parameter of the negative binomial distribution. If _successes_ is 1, the result is a _Waring&ndash;Yule distribution_. A _Yule&ndash;Simon distribution_ results if _successes_ and _b_ are both 1 (e.g., in _Mathematica_) or if _successes_ and _a_ are both 1 (in other works).
 - **Beta-PERT distribution**: `startpt + size * BetaDist(1.0 + (midpt - startpt) * shape / size, 1.0 + (endpt - midpt) * shape / size)`. The distribution starts  at `startpt`, peaks at `midpt`, and ends at `endpt`, `size` is `endpt - startpt`, and `shape` is a shape parameter that's 0 or greater, but usually 4.  If the mean (`mean`) is known rather than the peak, `midpt = 3 * mean / 2 - (startpt + endpt) / 4`.
 - **Beta prime distribution**&dagger;: `pow(GammaDist(a, 1), 1.0 / alpha) / pow(GammaDist(b, 1), 1.0 / alpha)`, where `a`, `b`, and `alpha` are shape parameters. If _a_ is 1, the result is a _Singh&ndash;Maddala distribution_; if _b_ is 1, a _Dagum distribution_; if _a_ and _b_ are both 1, a _logarithmic logistic distribution_.
 - **Birnbaum&ndash;Saunders distribution**: `pow(sqrt(4+x*x)+x,2)/(4.0*lamda)`, where `x = Normal(0,gamma)`, `gamma` is a shape parameter, and `lamda` is a scale parameter.
-- **Chi distribution**: `sqrt(GammaDist(df * 0.5, 2))`, where `df` is the number of degrees of freedom.
+- **Chi distribution**: Square root of a chi-squared random number.  See chi-squared distribution.
 - **Compound Poisson distribution**: See [**Transformations of Random Numbers: Additional Examples**](#Transformations_of_Random_Numbers_Additional_Examples).
 - **Cosine distribution**: `min + (max - min) * atan2(x, sqrt(1 - x * x)) / pi`, where `x = RNDRANGE(-1, 1)` and `min` is the minimum value and `max` is the maximum value (Saucier 2000, p. 17; inverse sine replaced with `atan2` equivalent).
 - **Dagum distribution**: See beta prime distribution.
@@ -2014,6 +2042,7 @@ Miscellaneous:
 - **Double logarithmic distribution**: `min + (max - min) * (0.5 + (RNDINT(1) * 2 - 1) * 0.5 * RNDU01OneExc() * RNDU01OneExc())`, where `min` is the minimum value and `max` is the maximum value (see also Saucier 2000, p. 15, which shows the wrong X axes).
 - **Erlang distribution**: See [**Gamma Distribution**](#Gamma_Distribution).
 - **Estoup distribution**: See zeta distribution.
+- **Exponential power distribution** (generalized normal distribution version 1): `(RNDINT(1) * 2 - 1) * pow(GammaDist(1.0/a), a)`, where `a` is a shape parameter.
 - **Fr&eacute;chet distribution**: See generalized extreme value distribution.
 - **Fr&eacute;chet&ndash;Hoeffding lower bound copula**: See [**Gaussian and Other Copulas**](#Gaussian_and_Other_Copulas).
 - **Fr&eacute;chet&ndash;Hoeffding upper bound copula**: See [**Gaussian and Other Copulas**](#Gaussian_and_Other_Copulas).
@@ -2026,7 +2055,7 @@ Miscellaneous:
 - **Generalized Tukey lambda distribution**: `(s1 * (pow(x, lamda1)-1.0)/lamda1 - s2 * (pow(1.0-x, lamda2)-1.0)/lamda2) + loc`, where `x` is `RNDU01()`, `lamda1` and `lamda2` are shape parameters, `s1` and `s2` are scale parameters, and `loc` is a location parameter.
 - **Half-normal distribution**. Parameterizations include:
     - _Mathematica_: `abs(Normal(0, sqrt(pi * 0.5) / invscale)))`, where `invscale` is a parameter of the half-normal distribution.
-    - MATLAB: `abs(Normal(mu, sigma)))`, where `mu` and `sigma` are the same as in the normal distribution.
+    - MATLAB: `abs(Normal(mu, sigma)))`, where `mu` and `sigma` are the underlying normal distribution's parameters.
 - **Hyperexponential distribution**: See [**Mixtures: Additional Examples**](#Mixtures_Additional_Examples).
 - **Hypergeometric distribution**: See [**Hypergeometric Distribution**](#Hypergeometric_Distribution).
 - **Hypoexponential distribution**: See [**Transformations of Random Numbers: Additional Examples**](#Transformations_of_Random_Numbers_Additional_Examples).
@@ -2075,6 +2104,7 @@ Miscellaneous:
 - **von Mises distribution**: See [**von Mises Distribution**](#von_Mises_Distribution).
 - **Waring&ndash;Yule distribution**: See beta negative binomial distribution.
 - **Wigner (semicircle) distribution**&dagger;: `(BetaDist(1.5, 1.5)*2-1)`.  The scale parameter (`sigma`) is the semicircular radius.
+- **Yule&ndash;Simon distribution**: See beta negative binomial distribution.
 - **Zeta distribution**: Generate `n = floor(pow(RNDU01ZeroOneExc(), -1.0 / r))`, and if `d / pow(2, r) < (d - 1) * RNDU01OneExc() * n / (pow(2, r) - 1.0)`, where `d = pow((1.0 / n) + 1, r)`, repeat this process. The parameter `r` is greater than 0. Based on method described in Devroye 1986. A zeta distribution [**truncated**](#Rejection_Sampling) by rejecting random values greater than some positive integer is called a _Zipf distribution_ or _Estoup distribution_. (Note that Devroye uses "Zipf distribution" to refer to the untruncated zeta distribution.)
 - **Zipf distribution**: See zeta distribution.
 </small>
@@ -2269,7 +2299,7 @@ provided the PDF's values are all 0 or greater and the area under the PDF's curv
 <small><sup id=Note34>(34)</sup> For example, besides the methods given in this section's main text:
 
 1. In the _Box&ndash;Muller transformation_, `mu + radius * cos(angle)` and `mu + radius * sin(angle)`, where `angle = RNDRANGEMaxExc(0, 2 * pi)` and `radius = sqrt(-2 * ln(RNDU01ZeroExc())) * sigma`, are two independent normally-distributed random numbers.
-2. Computing the sum of twelve `RNDU01OneExc()` numbers (see Note 13) and subtracting the sum by 6 (see also [**"Irwin&ndash;Hall distribution" on Wikipedia**](https://en.wikipedia.org/wiki/Irwin%E2%80%93Hall_distribution)) results in approximate standard normal (`mu`=0, `sigma`=1) random numbers, whose values are not less than -6 or greater than 6; on the other hand, in a standard normal distribution, results less than -6 or greater than 6 will occur only with a generally negligible probability.  (The twelve can be a different number, even a fraction.  For example, the sum of 3.5 random numbers means the sum of three random numbers and half of another.)
+2. Computing the sum of twelve `RNDU01OneExc()` numbers (see Note 13) and subtracting the sum by 6 (see also [**"Irwin&ndash;Hall distribution" on Wikipedia**](https://en.wikipedia.org/wiki/Irwin%E2%80%93Hall_distribution)) results in approximate standard normal (`mu`=0, `sigma`=1) random numbers, whose values are not less than -6 or greater than 6; on the other hand, in a standard normal distribution, the chance of results less than -6 or greater than 6 is generally negligible.
 3. Computing the sum of twelve `RNDRANGEMaxExc(0, sigma)` numbers (see Note 13) and subtracting the sum by 6 * `sigma` results in approximate normal random numbers with `mu`=0 and the given `sigma`, whose values are not less than -6 * `sigma` or greater than 6 * `sigma`.
 4. Generating `RNDU01ZeroOneExc()`, then running the standard normal distribution's inverse cumulative distribution function on that number, results in a random number from that distribution.  An approximation is found in M. Wichura, _Applied Statistics_ 37(3), 1988.  See also [**"A literate program to compute the inverse of the normal CDF"**](https://www.johndcook.com/blog/normal_cdf_inverse/).
 5. Methods implementing a variant of the normal distribution, the _discrete Gaussian distribution_, generate _integers_ that approximately follow the normal distribution.  Two recent algorithms, one by A. Karmakar et al. ("Constant-Time Gaussian Random Sampling"), and another by Micciancio and Walter (2017, "Gaussian Sampling over the Integers: Efficient, Generic, Constant-Time"), are designed to reduce timing differences that a security attack could exploit.
@@ -2285,6 +2315,8 @@ In 2007, Thomas, D., et al. gave a survey of normal random number methods in "Ga
 <small><sup id=Note38>(38)</sup> See also a [**MathWorld article**](http://mathworld.wolfram.com/BallPointPicking.html), which was the inspiration for these two methods, and the _Stack Overflow_ question "How to generate uniform random points in (arbitrary) N-dimension ball?", `questions/54544971`.</small>
 
 <small><sup id=Note39>(39)</sup> See the _Mathematics Stack Exchange_ question titled "Random multivariate in hyperannulus", `questions/1885630`.</small>
+
+<small><sup id=Note40>(40)</sup> "A simple method for generating gamma variables",_ACM Transactions on Mathematical Software_ 26(3), 2000.</small>
 
 <a id=Appendix></a>
 ## Appendix
