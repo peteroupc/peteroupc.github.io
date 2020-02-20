@@ -204,7 +204,7 @@ The pseudocode below implements `RNDINT` and uses rejection sampling for most in
           rngNumber = RNG()
           if wordBits > bitCount
             wordBits = bitCount
-            // Truncate number to 'wordBits' bits
+            // Shrink number to 'wordBits' bits
             // NOTE: If the programming language supports a bitwise
             // AND operator, the mod operation can be implemented
             // as "rndNumber AND ((1 << wordBits) - 1)"
@@ -227,7 +227,6 @@ The pseudocode below implements `RNDINT` and uses rejection sampling for most in
       // maxInclusive must be 0 or greater
       if maxInclusive < 0: return error
       if maxInclusive == 0: return 0
-      // N equals modulus
       if maxInclusive == MODULUS - 1: return RNG()
       // NOTE: Finds the number of bits minus 1 needed
       // to represent MODULUS (if it's a power of 2).
@@ -1114,31 +1113,7 @@ For arbitrary-precision or non-negative number formats, the following pseudocode
         return minInclusive + (maxInclusive - minInclusive) * RNDU01()
     END METHOD
 
-For other number formats (including Java's `double` and `float`), the pseudocode above can overflow if the difference between `maxInclusive` and `minInclusive` exceeds the maximum possible value for the format.  For such formats, the following pseudocode for `RNDRANGE()` can be used instead.  In the pseudocode below, `NUM_MAX` is the highest possible finite number for the number format.  The pseudocode assumes that the highest possible value is positive and the lowest possible value is negative.
-
-    METHOD RNDRANGE(minInclusive, maxInclusive)
-       if minInclusive > maxInclusive: return error
-       if minInclusive == maxInclusive: return minInclusive
-       // usual: Difference does not exceed maxInclusive
-       usual=minInclusive >= 0 or
-           minInclusive + NUM_MAX >= maxInclusive
-       rng=NUM_MAX
-       if usual: rng = (maxInclusive - minInclusive)
-       while true
-         ret = rng * RNDU01()
-         if usual: return minInclusive + ret
-         negative = RNDINT(1) == 0
-         if negative: ret = 0 - ret
-         // NOTE: If the number format has positive and negative
-         // zero, as is the case for Java `float` and
-         // `double` and .NET's implementation of `System.Decimal`,
-         // for example, use the following line:
-         if negative and ret == 0: continue
-         if ret >= minInclusive and ret <= maxInclusive: return ret
-       end
-    END METHOD
-
-**REMARK:** Multiplying by `RNDU01()` in both cases above is not ideal, since doing so merely stretches that number to fit the range if the range is greater than 1.  The [**Rademacher Floating-Point Library**](https://gitlab.com/christoph-conrads/rademacher-fpl) has a more sophisticated implementation of this method, but the implementation is far from trivial and is described only in the source code.
+For other number formats (including Java's `double` and `float`), the pseudocode above can overflow if the difference between `maxInclusive` and `minInclusive` exceeds the maximum possible value for the format, among other problems with this implementation of `RNDRANGE`. For binary floating-point numbers, the [**Rademacher Floating-Point Library**](https://gitlab.com/christoph-conrads/rademacher-fpl) has a more sophisticated implementation of this method, but the implementation is far from trivial and is described only in the source code.
 
 Three related methods can be derived from `RNDRANGE` as follows:
 
@@ -1612,7 +1587,7 @@ The _binomial distribution_ models the number of successes in a fixed number of 
 
 **Requires random real numbers.**
 
-The following method generates a random number that follows a _gamma distribution_ and is based on Marsaglia and Tsang's method from 2000<sup>[**(40)**](#Note40)</sup>.  Usually, the number expresses either&mdash;
+The following method generates a random number that follows a _gamma distribution_ and is based on Marsaglia and Tsang's method from 2000<sup>[**(35)**](#Note35)</sup>.  Usually, the number expresses either&mdash;
 
 - the lifetime (in days, hours, or other fixed units) of a random component with an average lifetime of `meanLifetime`, or
 - a random amount of time (in days, hours, or other fixed units) that passes until as many events as `meanLifetime` happen.
@@ -1977,7 +1952,7 @@ Other kinds of copulas describe different kinds of dependence between random num
 - the **Fr&eacute;chet&ndash;Hoeffding upper bound copula** _\[x, x, ..., x\]_ (e.g., `[x, x]`), where `x = RNDU01()`,
 - the **Fr&eacute;chet&ndash;Hoeffding lower bound copula** `[x, 1.0 - x]` where `x = RNDU01()`,
 - the **product copula**, where each number is a separately generated `RNDU01()` (indicating no dependence between the numbers), and
-- the **Archimedean copulas**, described by M. Hofert and M. M&auml;chler (2011)<sup>[**(35)**](#Note35)</sup>.
+- the **Archimedean copulas**, described by M. Hofert and M. M&auml;chler (2011)<sup>[**(36)**](#Note36)</sup>.
 
 <a id=Index_of_Non_Uniform_Distributions></a>
 ### Index of Non-Uniform Distributions
@@ -2099,7 +2074,7 @@ Miscellaneous:
 - **Stable distribution**: See [**Stable Distribution**](#Stable_Distribution).
 - **Standard complex normal distribution**: See [**Multivariate Normal (Multinormal) Distribution**](#Multivariate_Normal_Multinormal_Distribution).
 - **Suzuki distribution**: See Rayleigh distribution.
-- **Tukey lambda distribution**: `(pow(x, lamda)-pow(1.0-x,lamda))/lamda`, where `x` is `RNDU01()` and `lamda` is a shape parameter (if 0, the result is a logistic distribution).
+- **Tukey lambda distribution**: `(pow(x, lamda)-pow(1.0-x,lamda))/lamda`, where `x` is `RNDU01()` and `lamda` is a shape parameter.
 - **"Type 0" stable distribution**: See [**Stable Distribution**](#Stable_Distribution).
 - **von Mises distribution**: See [**von Mises Distribution**](#von_Mises_Distribution).
 - **Waring&ndash;Yule distribution**: See beta negative binomial distribution.
@@ -2159,7 +2134,7 @@ The following pseudocode generates a random point inside an _n_-dimensional simp
 <a id=Random_Points_on_the_Surface_of_a_Hypersphere></a>
 #### Random Points on the Surface of a Hypersphere
 
-The following pseudocode shows how to generate a random N-dimensional point on the surface of an N-dimensional hypersphere, centered at the origin, of radius `radius` (if `radius` is 1, the result can also serve as a unit vector in N-dimensional space).  Here, `Norm` is given in the appendix.  See also (Weisstein)<sup>[**(36)**](#Note36)</sup>.
+The following pseudocode shows how to generate a random N-dimensional point on the surface of an N-dimensional hypersphere, centered at the origin, of radius `radius` (if `radius` is 1, the result can also serve as a unit vector in N-dimensional space).  Here, `Norm` is given in the appendix.  See also (Weisstein)<sup>[**(37)**](#Note37)</sup>.
 
     METHOD RandomPointInHypersphere(dims, radius)
       x=0
@@ -2181,11 +2156,11 @@ The following pseudocode shows how to generate a random N-dimensional point on t
 #### Random Points Inside a Ball or Shell
 
 To generate a random N-dimensional point on or inside an N-dimensional ball, centered at the origin, of radius R, follow the pseudocode in `RandomPointInHypersphere`, except replace `Norm(ret)` with `sqrt( S - ln(RNDU01ZeroExc()))`, where `S` is the sum of squares of the numbers in `ret`<sup>[**(14)**](#Note14)</sup>
-.  For discs and spheres (2- or 3-dimensional balls), an alternative is to generate a vector (list) of N `RNDRANGE(-R, R)` random numbers<sup>[**(37)**](#Note37)</sup> until its _norm_ is R or less (see the [**appendix**](#Appendix)).<sup>[**(38)**](#Note38)</sup>
+.  For discs and spheres (2- or 3-dimensional balls), an alternative is to generate a vector (list) of N `RNDRANGE(-R, R)` random numbers<sup>[**(38)**](#Note38)</sup> until its _norm_ is R or less (see the [**appendix**](#Appendix)).<sup>[**(39)**](#Note39)</sup>
 
 To generate a random point on or inside an N-dimensional spherical shell (a hollow ball), centered at the origin, with inner radius A and outer radius B (where A is less than B), either&mdash;
 - generate a random point for a ball of radius B until the norm of that point is A or greater (see the [**appendix**](#Appendix)), or
-- generate a random point on the surface of an N-dimensional hypersphere with radius equal to `pow(RNDRANGE(pow(A, N), pow(B, N)), 1.0 / N)`<sup>[**(39)**](#Note39)</sup>.
+- generate a random point on the surface of an N-dimensional hypersphere with radius equal to `pow(RNDRANGE(pow(A, N), pow(B, N)), 1.0 / N)`<sup>[**(40)**](#Note40)</sup>.
 
 > **Example:** To generate a random point inside a cylinder running along the Z axis, generate random X and Y coordinates inside a disk (2-dimensional ball) and generate a random Z coordinate by `RNDRANGE(mn, mx)`, where `mn` and `mx` are the highest and lowest Z coordinates possible.
 >
@@ -2306,17 +2281,17 @@ provided the PDF's values are all 0 or greater and the area under the PDF's curv
 
 In 2007, Thomas, D., et al. gave a survey of normal random number methods in "Gaussian Random Number Generators", _ACM Computing Surveys_ 39(4), 2007, article 11.</small>
 
-<small><sup id=Note35>(35)</sup> Hofert, M., and Maechler, M.  "Nested Archimedean Copulas Meet R: The nacopula Package".  Journal of Statistical Software 39(9), 2011, pp. 1-20.</small>
+<small><sup id=Note35>(35)</sup> "A simple method for generating gamma variables",_ACM Transactions on Mathematical Software_ 26(3), 2000.</small>
 
-<small><sup id=Note36>(36)</sup> Weisstein, Eric W.  "[**Hypersphere Point Picking**](http://mathworld.wolfram.com/HyperspherePointPicking.html)".  From MathWorld&mdash;A Wolfram Web Resource.</small>
+<small><sup id=Note36>(36)</sup> Hofert, M., and Maechler, M.  "Nested Archimedean Copulas Meet R: The nacopula Package".  Journal of Statistical Software 39(9), 2011, pp. 1-20.</small>
 
-<small><sup id=Note37>(37)</sup> The N numbers generated this way will form a point inside an N-dimensional _hypercube_ with length `2 * R` in each dimension and centered at the origin of space.</small>
+<small><sup id=Note37>(37)</sup> Weisstein, Eric W.  "[**Hypersphere Point Picking**](http://mathworld.wolfram.com/HyperspherePointPicking.html)".  From MathWorld&mdash;A Wolfram Web Resource.</small>
 
-<small><sup id=Note38>(38)</sup> See also a [**MathWorld article**](http://mathworld.wolfram.com/BallPointPicking.html), which was the inspiration for these two methods, and the _Stack Overflow_ question "How to generate uniform random points in (arbitrary) N-dimension ball?", `questions/54544971`.</small>
+<small><sup id=Note38>(38)</sup> The N numbers generated this way will form a point inside an N-dimensional _hypercube_ with length `2 * R` in each dimension and centered at the origin of space.</small>
 
-<small><sup id=Note39>(39)</sup> See the _Mathematics Stack Exchange_ question titled "Random multivariate in hyperannulus", `questions/1885630`.</small>
+<small><sup id=Note39>(39)</sup> See also a [**MathWorld article**](http://mathworld.wolfram.com/BallPointPicking.html), which was the inspiration for these two methods, and the _Stack Overflow_ question "How to generate uniform random points in (arbitrary) N-dimension ball?", `questions/54544971`.</small>
 
-<small><sup id=Note40>(40)</sup> "A simple method for generating gamma variables",_ACM Transactions on Mathematical Software_ 26(3), 2000.</small>
+<small><sup id=Note40>(40)</sup> See the _Mathematics Stack Exchange_ question titled "Random multivariate in hyperannulus", `questions/1885630`.</small>
 
 <a id=Appendix></a>
 ## Appendix

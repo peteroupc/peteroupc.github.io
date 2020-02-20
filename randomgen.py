@@ -83,9 +83,9 @@ class RandomGen:
      2. 'rndint' (and functions that ultimately call it) may be
      slower than desirable if many random numbers are
      needed at once.  Ways to improve the performance
-     of generating many random numbers at once, such
-     as parallel processing or vectorization, are currently outside
-     the scope of this code. """
+     of generating many random numbers at once include
+     vectorization (which is often PRNG specific) and multithreading
+     (which is too complicated to show here). """
         if rng == None:
             self.rng = random.Random()
         else:
@@ -459,11 +459,41 @@ Returns 'list'. """
         i = 0
         count = 0
         tp = trials * p * 1.0
-        if tp > 25 or (tp > 5 and p > 0.1 and p < 0.9):
-            countval = -1
-            while countval < 0 or countval > trials:
-                countval = self.normal(tp, math.sqrt(tp))
-            return round(countval)
+        if tp > 25:
+            sign = 1
+            ret = 0
+            n = trials
+            # p. 537 of Devroye 1986 with errata
+            # incorporated
+            while True:
+                if n * p < 9:
+                    # Base case
+                    if p == 0:
+                        return ret
+                    sum = 0
+                    t = -1
+                    while sum <= n:
+                        # Geometric variable plus 1
+                        geo = (
+                            math.floor(math.log(self.rndu01zeroexc()) / math.log(1 - p))
+                            + 1
+                        )
+                        sum = sum + geo
+                        ret = ret + sign
+                    return ret - sign
+                else:
+                    # Recursion case
+                    i = math.floor(p * (n + 1))
+                    b = self.beta(i, n + 1 - i)
+                    ret = i + ret * sign
+                    if b <= p:
+                        n = n - i
+                        p = (p - b) / (1.0 - b)
+                    else:
+                        ret = ret - sign
+                        n = i - 1
+                        sign = -sign
+                        p = (b - p) / b
         while i < trials:
             if self.rndu01oneexc() < p:
                 count += 1
@@ -493,14 +523,16 @@ Returns 'list'. """
             raise ValueError
         if mean == 0:
             return 0
+        count = 0
         if mean > 9:
-            p = -1.0
-            while p < 0:
-                p = self.normal(mean, math.sqrt(mean))
-            return round(p)
+            n = math.floor(mean * 0.875)
+            g = self.gamma(n, 1)
+            if g > mean:
+                return count + self.binomial(n - 1, mean / g)
+            mean = mean - g
+            count = count + n
         p = 1.0
         pn = math.exp(-mean)
-        count = 0
         while True:
             count += 1
             p *= self.rndu01oneexc()
