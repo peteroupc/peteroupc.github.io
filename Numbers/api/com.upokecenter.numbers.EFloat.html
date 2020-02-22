@@ -85,17 +85,28 @@
  rounding, among other things). Also, the EDecimal and EFloat classes
   avoid the use of &quot;native&quot; floating-point data types, where most of
  these differences can occur (except for methods that convert to or
- from <code>float</code>, <code>double</code>, or <code>System.Decimal</code>).</p>
- <p>EContext allows arithmetic operations in this class to return
- results rounded to a given precision and exponent range. Note,
- however, that by limiting the precision of floating-point numbers
- (including <code>EDecimal</code> and <code>EFloat</code>) in this way, operations
- such as addition and multiplication on three or more numbers can be
- <i>non-associative</i>, meaning the result can change depending on the
- order in which those numbers are added or multiplied. This property
- means that if an algorithm does not ensure such numbers are added or
- multiplied in the same order every time, its results may not be
- reproducible across computers or across runs of the application.</p></p>
+ from <code>float</code>, <code>double</code>, or <code>System.Decimal</code>). In
+ general, the operations defined in the General Decimal Arithmetic
+ Specification require delivering the correctly rounded result, with
+ the exception of square root, logarithm, exponential, and power. In
+ addition, the pi constant generator in this class has not been
+ verified to be correctly rounded in all cases.</p> <p>As for the
+ ToDouble, ToSingle, FromDouble, and FromSingle methods, note that some
+ implementations of Java and.NET may or may not support preserving the
+ value of subnormal numbers (numbers with the lowest possible exponent,
+ but are not zero) or the payloads held in a not-a-number (NaN) value
+ of <code>float</code> or <code>double</code> ; thus these methods should not be
+ considered reproducible across computers.</p> <p>EContext allows
+ arithmetic operations in this class to return results rounded to a
+ given precision and exponent range. Note, however, that by limiting
+ the precision of floating-point numbers (including <code>EDecimal</code> and
+ <code>EFloat</code>) in this way, operations such as addition and
+ multiplication on three or more numbers can be <i>non-associative</i>,
+ meaning the result can change depending on the order in which those
+ numbers are added or multiplied. This property means that if an
+ algorithm does not ensure such numbers are added or multiplied in the
+ same order every time, its results may not be reproducible across
+ computers or across runs of the application.</p></p>
 
 <h2>Fields</h2>
 

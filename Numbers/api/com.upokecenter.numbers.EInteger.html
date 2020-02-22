@@ -72,6 +72,9 @@ Returns one subtracted from this arbitrary-precision integer.</li>
 Divides this instance by the value of an arbitrary-precision integer.</li>
 <li><code>EInteger Divide​(EInteger bigintDivisor)</code><br>
 Divides this instance by the value of an arbitrary-precision integer.</li>
+<li><code>EInteger[] DivRem​(int intDivisor)</code><br>
+Divides this object by a 32-bit signed integer and returns the quotient and
+remainder.</li>
 <li><code>EInteger[] DivRem​(EInteger divisor)</code><br>
 Divides this object by another arbitrary-precision integer and returns the
 quotient and remainder.</li>
@@ -1058,6 +1061,33 @@ less, or a positive number if this instance is greater.</li>
 
 <h3>DivRem</h3>
 
+<pre>public EInteger[] DivRem​(int intDivisor)
+</pre>
+
+<p>Divides this object by a 32-bit signed integer and returns the quotient and
+ remainder.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>intDivisor</code> - The number to divide by.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An array with two arbitrary-precision integers: the first is the
+quotient, and the second is the remainder.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>java.lang.ArithmeticException</code> - The parameter &quot;intDivisor&quot; is 0.</li>
+</ul>
+
+<h3>DivRem</h3>
+
 <pre>public EInteger[] DivRem​(EInteger divisor)
 </pre>
 
@@ -1080,7 +1110,7 @@ quotient, and the second is the remainder.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.ArithmeticException</code> - The parameter divisor is 0.</p></li>
+<li><p><code>java.lang.ArithmeticException</code> - The parameter &quot;divisor&quot; is 0.</p></li>
 <li><p><code>java.lang.NullPointerException</code> - The parameter <code>divisor</code> is null.</p></li>
 </ul>
 
