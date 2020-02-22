@@ -852,15 +852,11 @@ END METHOD
 
 <p>If an application generates random numbers for information security purposes, such as to generate random passwords or encryption keys, the following applies:</p>
 
-<ul>
-<li>The application has to use a cryptographic RNG.  Choosing a cryptographic RNG is outside the scope of this document.</li>
-<li>Certain security attacks have exploited timing and other differences to recover cleartext, encryption keys, or other sensitive data.  To mitigate these attacks, the application may have to use &quot;constant-time&quot; implementations of random generation methods.</li>
-<li>For information security purposes, an implementation is &quot;constant-time&quot; if it has no timing differences that reveal anything about any secret inputs (such as keys, passwords, or RNG &quot;seeds&quot;).  Generally, a &quot;constant-time&quot; implementation has no data-dependent control flows or memory access patterns.</li>
-<li>For example, a &quot;constant-time&quot; <code>RNDINT()</code> implementation can use reduction strategies (such as Montgomery reduction).</li>
-<li>A <a href="#Rejection_Sampling"><strong>rejection sampling</strong></a> strategy inherently has variable running time, but may or may not have security-relevant timing differences.  Generally, these differences are relevant only if the strategy takes as input a secret (such as a private key) that is used more than once.</li>
-</ul>
-
-<p>This document does not detail how to generate random parameters for information security algorithms, such as encryption keys, public/private key pairs, elliptic curves, or points on an elliptic curve.  In general, this is equivalent to passing a randomly generated secret (128 bits or more, generated securely at random), as well as additional data, to a special algorithm designed for this purpose.</p>
+<ol>
+<li><strong>Cryptographic RNG.</strong> The application has to use a cryptographic RNG.  Choosing a cryptographic RNG is outside the scope of this document.</li>
+<li><strong>Timing attacks.</strong>  Certain security attacks have exploited timing and other differences to recover cleartext, encryption keys, or other sensitive data.  Thus, so-called &quot;constant-time&quot; security algorithms have been developed.  Such algorithms are designed to have no timing differences that reveal anything about any secret inputs (such as keys, passwords, or RNG &quot;seeds&quot;), and they often have no data-dependent control flows or memory access patterns.  Examples of &quot;constant-time&quot; algorithms can include a <code>RNDINT()</code> implementation that uses Montgomery reduction.  But even if an algorithm has variable running time (e.g., <a href="#Rejection_Sampling"><strong>rejection sampling</strong></a>), it may or may not have security-relevant timing differences, especially if it does not reuse secrets.</li>
+<li><strong>Security algorithms out of scope.</strong> Security algorithms that take random secrets to generate random security parameters, such as encryption keys, public/private key pairs, elliptic curves, or points on an elliptic curve, are outside this document&#39;s scope.</li>
+</ol>
 
 <p><a id=General_Non_Uniform_Distributions></a></p>
 

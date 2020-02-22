@@ -160,8 +160,8 @@
 <li><code><a href="#ToSByteIfExact">ToSByteIfExact()</a></code> - Converts this number&#39;s value to an 8-bit signed integer if it can fit in an 8-bit signed integer without rounding to a different numerical value.</li>
 <li><code><a href="#ToSByteUnchecked">ToSByteUnchecked()</a></code> - Converts this number&#39;s value to an integer by discarding its fractional part, and returns the least-significant bits of its two&#39;s-complement form as an 8-bit signed integer.</li>
 <li><code><a href="#ToSingle">ToSingle()</a></code> - Converts this value to a 32-bit binary floating-point number.</li>
-<li><code><a href="#ToSizedEInteger_int">ToSizedEInteger(int)</a></code> - Not documented yet.</li>
-<li><code><a href="#ToSizedEIntegerIfExact_int">ToSizedEIntegerIfExact(int)</a></code> - Not documented yet.</li>
+<li><code><a href="#ToSizedEInteger_int">ToSizedEInteger(int)</a></code> - Converts this value to an arbitrary-precision integer by dividing the numerator by the denominator, discarding its fractional part, and checking whether the resulting integer overflows the given signed bit count.</li>
+<li><code><a href="#ToSizedEIntegerIfExact_int">ToSizedEIntegerIfExact(int)</a></code> - Converts this value to an arbitrary-precision integer, only if this number&#39;s value is an exact integer and that integer does not overflow the given signed bit count.</li>
 <li><code><a href="#ToString">ToString()</a></code> - Converts this object to a text string.</li>
 <li><code><a href="#ToUInt16Checked">ToUInt16Checked()</a></code> - Converts this number&#39;s value to a 16-bit unsigned integer if it can fit in a 16-bit unsigned integer after converting it to an integer by discarding its fractional part.</li>
 <li><code><a href="#ToUInt16IfExact">ToUInt16IfExact()</a></code> - Converts this number&#39;s value to a 16-bit unsigned integer if it can fit in a 16-bit unsigned integer without rounding to a different numerical value.</li>
@@ -3349,18 +3349,24 @@ This value is infinity or not-a-number, is not an exact integer, or is less than
     int maxBitLength);
 </pre>
 
-<p>Not documented yet.</p>
+<p>Converts this value to an arbitrary-precision integer by dividing the numerator by the denominator, discarding its fractional part, and checking whether the resulting integer overflows the given signed bit count.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>maxBitLength</i>: The parameter  <i>maxBitLength</i>
-is a 32-bit signed integer.</li>
+<li><i>maxBitLength</i>: The maximum number of signed bits the integer can have. The integer&#39;s value may not be less than -(2^maxBitLength) or greater than (2^maxBitLength) - 1.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p>The return value is not documented yet.</p>
+<p>An arbitrary-precision integer.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.OverflowException:
+This object&#39;s value is infinity or not-a-number (NaN), or this number&#39;s value, once converted to an integer by dividing the numerator by the denominator and discarding its fractional part, is less than -(2^maxBitLength) or greater than (2^maxBitLength) - 1.</li>
+</ul>
 
 <p><a id="ToSizedEIntegerIfExact_int"></a></p>
 
@@ -3370,18 +3376,26 @@ is a 32-bit signed integer.</li>
     int maxBitLength);
 </pre>
 
-<p>Not documented yet.</p>
+<p>Converts this value to an arbitrary-precision integer, only if this number&#39;s value is an exact integer and that integer does not overflow the given signed bit count.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>maxBitLength</i>: The parameter  <i>maxBitLength</i>
-is a 32-bit signed integer.</li>
+<li><i>maxBitLength</i>: The maximum number of signed bits the integer can have. The integer&#39;s value may not be less than -(2^maxBitLength) or greater than (2^maxBitLength) - 1.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p>The return value is not documented yet.</p>
+<p>An arbitrary-precision integer.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li><p>System.OverflowException:
+This object&#39;s value is infinity or not-a-number (NaN), or this number&#39;s value as an integer is less than -(2^maxBitLength) or greater than (2^maxBitLength) - 1.</p></li>
+<li><p>System.ArithmeticException:
+This object&#39;s value is not an exact integer.</p></li>
+</ul>
 
 <p><a id="ToString"></a></p>
 
