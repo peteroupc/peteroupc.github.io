@@ -554,7 +554,7 @@ There are several possible ways to implement a PRNG:
     - A method that takes no parameters.  It uses only the internal state to output one or more "random" numbers and update the internal state.  This method is available after the initializer is called.
 2. As a function that takes a seed and outputs one or more "random" numbers.  An example is a [**hash function**](#Hash_Functions).
 3. As a function that takes an internal state and outputs a new internal state and one or more "random" numbers.  This is how PRNGs can be implemented as so-called "pure functions" in functional programming languages (as in the package `AC-Random` for the Haskell language).
-4. As a so-called "splittable" PRNG (Claessen et al., 2013)<sup>[**(49)**](#Note49)</sup> with two functions:
+4. As a so-called "splittable" PRNG (Claessen et al., 2013)<sup>[**(49)**](#Note49)</sup> (Schaathun 2015)<sup>[**(51)**](#Note51)</sup> with two functions:
     - Split: A function that takes an internal state and outputs two or more new internal states.
     - Generate: A function that takes an internal state and outputs one or more "random" numbers.
 
@@ -712,6 +712,8 @@ See also N. Reed, "Quick And Easy GPU Random Numbers In D3D11", Nathan Reed's co
 <small><sup id=Note49>(49)</sup> Claessen, K., Palma, M. "Splittable Pseudorandom Number Generators using Cryptographic Hashing", _Proceedings of Haskell Symposium 2013_, pp. 47-58.</small>
 
 <small><sup id=Note50>(50)</sup> Allowing applications to do so would hamper forward compatibility &mdash; the API would then be less free to change how the RNG is implemented in the future (e.g., to use a cryptographic or otherwise "better" RNG), or to make improvements or bug fixes in methods that use that RNG (such as shuffling and Gaussian number generation).  (As a notable example, the V8 JavaScript engine recently changed its `Math.random()` implementation to use a variant of `xorshift128+`, which is backward compatible because nothing in JavaScript allows  `Math.random()` to be seeded.)  Nevertheless, APIs can still allow applications to provide additional input ("entropy") to the RNG in order to increase its randomness rather than to ensure repeatability.</small>
+
+<small><sup id=Note51>(51)</sup> Schaathun, H.G., "Evaluation of Splittable Pseudo-Random Generators", 2015.</small>
 
 <a id=Appendix></a>
 ## Appendix
