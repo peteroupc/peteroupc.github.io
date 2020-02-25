@@ -43,6 +43,7 @@
 <li><code><a href="#Decrement">Decrement()</a></code> - Returns one subtracted from this arbitrary-precision integer.</li>
 <li><code><a href="#Divide_int">Divide(int)</a></code> - Divides this instance by the value of an arbitrary-precision integer.</li>
 <li><code><a href="#Divide_PeterO_Numbers_EInteger">Divide(PeterO.Numbers.EInteger)</a></code> - Divides this instance by the value of an arbitrary-precision integer.</li>
+<li><code><a href="#DivRem_int">DivRem(int)</a></code> - Divides this object by a 32-bit signed integer and returns the quotient and remainder.</li>
 <li><code><a href="#DivRem_PeterO_Numbers_EInteger">DivRem(PeterO.Numbers.EInteger)</a></code> - Divides this object by another arbitrary-precision integer and returns the quotient and remainder.</li>
 <li><code><a href="#DivRem_PeterO_Numbers_EInteger_PeterO_Numbers_EInteger_PeterO_Numbers_EInteger">DivRem(PeterO.Numbers.EInteger, PeterO.Numbers.EInteger, PeterO.Numbers.EInteger&amp;)</a></code> - <b>Deprecated:</b> Use the DivRem instance method instead.</li>
 <li><code><a href="#Equals_object">Equals(object)</a></code> - Determines whether this object and another object are equal and have the same type.</li>
@@ -604,6 +605,33 @@ is null.</p></li>
 Attempted to divide by zero.</p></li>
 </ul>
 
+<p><a id="DivRem_int"></a></p>
+
+<h3>DivRem</h3>
+
+<pre>public PeterO.Numbers.EInteger[] DivRem(
+    int intDivisor);
+</pre>
+
+<p>Divides this object by a 32-bit signed integer and returns the quotient and remainder.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>intDivisor</i>: The number to divide by.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>An array with two arbitrary-precision integers: the first is the quotient, and the second is the remainder.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.DivideByZeroException:
+The parameter &quot;intDivisor&quot; is 0.</li>
+</ul>
+
 <p><a id="DivRem_PeterO_Numbers_EInteger"></a></p>
 
 <h3>DivRem</h3>
@@ -628,7 +656,7 @@ Attempted to divide by zero.</p></li>
 
 <ul>
 <li><p>System.DivideByZeroException:
-The parameter divisor is 0.</p></li>
+The parameter &quot;divisor&quot; is 0.</p></li>
 <li><p>System.ArgumentNullException:
 The parameter  <i>divisor</i>
 is null.</p></li>

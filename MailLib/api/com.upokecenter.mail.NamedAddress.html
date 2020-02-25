@@ -9,94 +9,47 @@
 <pre>public class NamedAddress extends java.lang.Object
 </pre>
 
-<p>Represents an email address and a name for that address. Can represent a
- group of email addresses instead.</p>
-
 <h2>Methods</h2>
 
 <ul>
-<li><code>NamedAddress​(java.lang.String address) NamedAddress</code><br>
-Initializes a new instance of the NamedAddress
-class.</li>
+<li><code>NamedAddress​(java.lang.String address)</code><br></li>
 <li><code>NamedAddress​(java.lang.String displayName,
-        Address address) NamedAddress</code><br>
-Initializes a new instance of the NamedAddress
-class using the given display name and email address.</li>
+        Address address)</code><br></li>
 <li><code>NamedAddress​(java.lang.String displayName,
-        java.lang.String address) NamedAddress</code><br>
-Initializes a new instance of the NamedAddress
-class using the given display name and email address.</li>
+        java.lang.String address)</code><br></li>
 <li><code>NamedAddress​(java.lang.String displayName,
         java.lang.String localPart,
-        java.lang.String domain) NamedAddress</code><br>
-Initializes a new instance of the NamedAddress
-class using the given name and an email address made up of its local
-part and domain.</li>
+        java.lang.String domain)</code><br></li>
 <li><code>NamedAddress​(java.lang.String groupName,
-        java.util.List&lt;NamedAddress&gt; mailboxes) NamedAddress</code><br>
-Initializes a new instance of the NamedAddress
-class.</li>
-<li><code>boolean AddressesEqual​(NamedAddress na)</code><br>
-Determines whether the email addresses stored this object are the same
-between this object and the given object, regardless of the display
-names they store.</li>
-<li><code>boolean equals​(java.lang.Object obj)</code><br>
-Determines whether this object and another object are equal.</li>
-<li><code>Address getAddress()</code><br>
-Gets the email address associated with this object.</li>
-<li><code>java.lang.String getDisplayName()</code><br>
-Gets the display name for this email address.</li>
-<li><code>java.util.List&lt;NamedAddress&gt; getGroupAddresses()</code><br>
-Gets a read-only list of addresses that make up the group, if this object
-represents a group, or an empty list otherwise.</li>
-<li><code>java.lang.String getName()</code><br>
-Gets the display name for this email address, or the email address&#39;s value
-if the display name is null.</li>
-<li><code>int hashCode()</code><br>
-Calculates the hash code of this object.</li>
-<li><code>boolean isGroup()</code><br>
-Gets a value indicating whether this represents a group of addresses rather
-than a single address.</li>
-<li><code>static java.util.List&lt;NamedAddress&gt; ParseAddresses​(java.lang.String addressValue)</code><br>
-Generates a list of NamedAddress objects from a comma-separated list of
-addresses.</li>
-<li><code>java.lang.String ToDisplayString()</code><br>
-Converts this named-address object to a text string intended for display to
-end users.</li>
-<li><code>static java.lang.String ToDisplayString​(java.util.List&lt;NamedAddress&gt; addresses)</code><br>
-Generates a string containing the display names and email addresses of the
-given named-address objects, separated by commas.</li>
-<li><code>static java.lang.String ToDisplayStringShort​(java.util.List&lt;NamedAddress&gt; addresses)</code><br>
-Generates a string containing the display names of the given named-address
-objects, separated by commas.</li>
-<li><code>java.lang.String toString()</code><br>
-Converts this object to a text string.</li>
+        java.util.List&lt;NamedAddress&gt; mailboxes)</code><br></li>
+<li><code>boolean AddressesEqual​(NamedAddress na)</code><br></li>
+<li><code>boolean equals​(java.lang.Object obj)</code><br></li>
+<li><code>Address getAddress()</code><br></li>
+<li><code>java.lang.String getDisplayName()</code><br></li>
+<li><code>java.util.List&lt;NamedAddress&gt; getGroupAddresses()</code><br></li>
+<li><code>java.lang.String getName()</code><br></li>
+<li><code>int hashCode()</code><br></li>
+<li><code>boolean isGroup()</code><br></li>
+<li><code>static java.util.List&lt;NamedAddress&gt; ParseAddresses​(java.lang.String addressValue)</code><br></li>
+<li><code>java.lang.String ToDisplayString()</code><br></li>
+<li><code>static java.lang.String ToDisplayString​(java.util.List&lt;NamedAddress&gt; addresses)</code><br></li>
+<li><code>static java.lang.String ToDisplayStringShort​(java.util.List&lt;NamedAddress&gt; addresses)</code><br></li>
+<li><code>java.lang.String toString()</code><br></li>
 </ul>
 
 <h2>Constructors</h2>
 
 <ul>
-<li><code>NamedAddress​(java.lang.String address) NamedAddress</code><br>
-Initializes a new instance of the NamedAddress
-class.</li>
+<li><code>NamedAddress​(java.lang.String address)</code><br></li>
 <li><code>NamedAddress​(java.lang.String displayName,
-        Address address) NamedAddress</code><br>
-Initializes a new instance of the NamedAddress
-class using the given display name and email address.</li>
+        Address address)</code><br></li>
 <li><code>NamedAddress​(java.lang.String displayName,
-        java.lang.String address) NamedAddress</code><br>
-Initializes a new instance of the NamedAddress
-class using the given display name and email address.</li>
+        java.lang.String address)</code><br></li>
 <li><code>NamedAddress​(java.lang.String displayName,
         java.lang.String localPart,
-        java.lang.String domain) NamedAddress</code><br>
-Initializes a new instance of the NamedAddress
-class using the given name and an email address made up of its local
-part and domain.</li>
+        java.lang.String domain)</code><br></li>
 <li><code>NamedAddress​(java.lang.String groupName,
-        java.util.List&lt;NamedAddress&gt; mailboxes) NamedAddress</code><br>
-Initializes a new instance of the NamedAddress
-class.</li>
+        java.util.List&lt;NamedAddress&gt; mailboxes)</code><br></li>
 </ul>
 
 <h2>Method Details</h2>
@@ -106,234 +59,45 @@ class.</li>
 <pre>public NamedAddress​(java.lang.String address)
 </pre>
 
-<p>Initializes a new instance of the <code>NamedAddress</code>
-  class. Examples: <ul> <li><code><a href="mailto:john@example.com">john@example.com</a></code></li> <li><code>&quot;John
-  Doe&quot; &lt;<a href="mailto:john@example.com">john@example.com</a>&gt;</code></li></p>
-
-<p><li><code>=?utf-8?q?John</code><code>=</code><code>27s_Office?=&lt;<a href="mailto:john@example.com">john@example.com</a>&gt;</code></li>
-  <li><code>John &lt;<a href="mailto:john@example.com">john@example.com</a>&gt;</code></li> <li><code>&quot;Group&quot; : Tom
- &lt;<a href="mailto:tom@example.com">tom@example.com</a>&gt;, Jane
- &lt;<a href="mailto:jane@example.com">jane@example.com</a>&gt;;</code></li></ul></p>
-
-<p><strong>Parameters:</strong></p>
-
-<ul>
-<li><code>address</code> - A text string identifying a single email address or a group
-of email addresses. Comments, or text within parentheses, can
-appear. Multiple email addresses are not allowed unless they appear
-in the group syntax given above. Encoded words under RFC 2047 that
-appear within comments or display names will be decoded. <p>An RFC
-2047 encoded word consists of &quot;=?&quot;, a character encoding name, such
-as <code>utf-8</code>, either &quot;?B?&quot; or &quot;?Q?&quot; (in upper or lower case), a
-series of bytes in the character encoding, further encoded using B
-or Q encoding, and finally &quot;?=&quot;. B encoding uses Base64, while in Q
-encoding, spaces are changed to &quot;_&quot;, equals are changed to &quot;=3D&quot;,
-and most bytes other than the basic digits 0 to 9 (0x30 to 0x39) and
-the basic letters A/a to Z/z (0x41 to 0x5a, 0x61 to 0x7a) are
-changed to &quot;=&quot; followed by their 2-digit hexadecimal form. An
-encoded word&#39;s maximum length is 75 characters. See the third
-example.</p>.</li>
-</ul>
-
-<p><strong>Throws:</strong></p>
-
-<ul>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>address</code> is null.</p></li>
-<li><p><code>java.lang.IllegalArgumentException</code> - Address has an invalid syntax.; Address has an
-invalid syntax.</p></li>
-</ul>
-
 <h3>NamedAddress</h3>
 
 <pre>public NamedAddress​(java.lang.String displayName, java.lang.String address)
 </pre>
-
-<p>Initializes a new instance of the <code>NamedAddress</code>
- class using the given display name and email address.</p>
-
-<p><strong>Parameters:</strong></p>
-
-<ul>
-<li><p><code>displayName</code> - The display name of the email address. Can be null or
-empty. Encoded words under RFC 2047 will not be decoded.</p></li>
-<li><p><code>address</code> - An email address.</p></li>
-</ul>
-
-<p><strong>Throws:</strong></p>
-
-<ul>
-<li><code>java.lang.NullPointerException</code> - The parameter <code>address</code> is null.</li>
-</ul>
 
 <h3>NamedAddress</h3>
 
 <pre>public NamedAddress​(java.lang.String displayName, Address address)
 </pre>
 
-<p>Initializes a new instance of the <code>NamedAddress</code>
- class using the given display name and email address.</p>
-
-<p><strong>Parameters:</strong></p>
-
-<ul>
-<li><p><code>displayName</code> - The display name of the email address. Can be null or
-empty. Encoded words under RFC 2047 will not be decoded.</p></li>
-<li><p><code>address</code> - An email address.</p></li>
-</ul>
-
-<p><strong>Throws:</strong></p>
-
-<ul>
-<li><code>java.lang.NullPointerException</code> - The parameter <code>address</code> is null.</li>
-</ul>
-
 <h3>NamedAddress</h3>
 
 <pre>public NamedAddress​(java.lang.String displayName, java.lang.String localPart, java.lang.String domain)
 </pre>
-
-<p>Initializes a new instance of the <code>NamedAddress</code>
- class using the given name and an email address made up of its local
- part and domain.</p>
-
-<p><strong>Parameters:</strong></p>
-
-<ul>
-<li><p><code>displayName</code> - The display name of the email address. Can be null or
-empty.</p></li>
-<li><p><code>localPart</code> - The local part of the email address (before the &quot;@&quot;).</p></li>
-<li><p><code>domain</code> - The domain of the email address (before the &quot;@&quot;).</p></li>
-</ul>
-
-<p><strong>Throws:</strong></p>
-
-<ul>
-<li><code>java.lang.NullPointerException</code> - The parameter <code>localPart</code> or <code>
-domain</code> is null.</li>
-</ul>
 
 <h3>NamedAddress</h3>
 
 <pre>public NamedAddress​(java.lang.String groupName, java.util.List&lt;NamedAddress&gt; mailboxes)
 </pre>
 
-<p>Initializes a new instance of the <code>NamedAddress</code>
- class. Takes a group name and several named email addresses as
- parameters, and forms a group with them.</p>
-
-<p><strong>Parameters:</strong></p>
-
-<ul>
-<li><p><code>groupName</code> - The group&#39;s name.</p></li>
-<li><p><code>mailboxes</code> - A list of named addresses that make up the group.</p></li>
-</ul>
-
-<p><strong>Throws:</strong></p>
-
-<ul>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>groupName</code> or <code>
-mailboxes</code> is null.</p></li>
-<li><p><code>java.lang.IllegalArgumentException</code> - GroupName is empty.; A mailbox in the list is a
-group.</p></li>
-</ul>
-
 <h3>ToDisplayStringShort</h3>
 
 <pre>public static java.lang.String ToDisplayStringShort​(java.util.List&lt;NamedAddress&gt; addresses)
 </pre>
-
-<p>Generates a string containing the display names of the given named-address
- objects, separated by commas. The generated string is intended to be
- displayed to end users, and is not intended to be parsed by computer
- programs. If a named address has no display name, its email address
- is used as the display name.</p>
-
-<p><strong>Parameters:</strong></p>
-
-<ul>
-<li><code>addresses</code> - A list of named address objects.</li>
-</ul>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>A string containing the display names of the given named-address
-objects, separated by commas.</li>
-</ul>
-
-<p><strong>Throws:</strong></p>
-
-<ul>
-<li><code>java.lang.NullPointerException</code> - The parameter <code>addresses</code> is null.</li>
-</ul>
 
 <h3>ToDisplayString</h3>
 
 <pre>public static java.lang.String ToDisplayString​(java.util.List&lt;NamedAddress&gt; addresses)
 </pre>
 
-<p>Generates a string containing the display names and email addresses of the
- given named-address objects, separated by commas. The generated
- string is intended to be displayed to end users, and is not intended
- to be parsed by computer programs.</p>
-
-<p><strong>Parameters:</strong></p>
-
-<ul>
-<li><code>addresses</code> - A list of named address objects.</li>
-</ul>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>A string containing the display names and email addresses of the
-given named-address objects, separated by commas.</li>
-</ul>
-
-<p><strong>Throws:</strong></p>
-
-<ul>
-<li><code>java.lang.NullPointerException</code> - The parameter <code>addresses</code> is null.</li>
-</ul>
-
 <h3>ParseAddresses</h3>
 
 <pre>public static java.util.List&lt;NamedAddress&gt; ParseAddresses​(java.lang.String addressValue)
 </pre>
 
-<p>Generates a list of NamedAddress objects from a comma-separated list of
- addresses. Each address must follow the syntax accepted by the
- one-argument constructor of NamedAddress.</p>
-
-<p><strong>Parameters:</strong></p>
-
-<ul>
-<li><code>addressValue</code> - A comma-separated list of addresses in the form of a
-text string.</li>
-</ul>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>A list of addresses generated from the <code>addressValue</code>
-parameter.</li>
-</ul>
-
-<p><strong>Throws:</strong></p>
-
-<ul>
-<li><code>java.lang.NullPointerException</code> - The parameter <code>addressValue</code> is null.</li>
-</ul>
-
 <h3>hashCode</h3>
 
 <pre>public int hashCode()
 </pre>
-
-<p>Calculates the hash code of this object. The exact algorithm used by this
- method is not guaranteed to be the same between versions of this
- library, and no application or process IDs are used in the hash code
- calculation.</p>
 
 <p><strong>Overrides:</strong></p>
 
@@ -341,20 +105,10 @@ parameter.</li>
 <li><code>hashCode</code> in class <code>java.lang.Object</code></li>
 </ul>
 
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>A 32-bit hash code.</li>
-</ul>
-
 <h3>equals</h3>
 
 <pre>public boolean equals​(java.lang.Object obj)
 </pre>
-
-<p>Determines whether this object and another object are equal. For groups, the
- named addresses (display name/email address pairs) must be equal and
- in the same order in both objects.</p>
 
 <p><strong>Overrides:</strong></p>
 
@@ -362,106 +116,35 @@ parameter.</li>
 <li><code>equals</code> in class <code>java.lang.Object</code></li>
 </ul>
 
-<p><strong>Parameters:</strong></p>
-
-<ul>
-<li><code>obj</code> - An arbitrary object to compare with this one.</li>
-</ul>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li><code>true</code> if this object and another object are equal and have
-the same type; otherwise, <code>false</code>.</li>
-</ul>
-
 <h3>AddressesEqual</h3>
 
 <pre>public boolean AddressesEqual​(NamedAddress na)
 </pre>
-
-<p>Determines whether the email addresses stored this object are the same
- between this object and the given object, regardless of the display
- names they store. For groups, the email addresses must be equal and
- in the same order in both objects.</p>
-
-<p><strong>Parameters:</strong></p>
-
-<ul>
-<li><code>na</code> - A named address object to compare with this one. Can be null.</li>
-</ul>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>Either <code>true</code> or <code>false</code>.</li>
-</ul>
 
 <h3>getName</h3>
 
 <pre>public final java.lang.String getName()
 </pre>
 
-<p>Gets the display name for this email address, or the email address&#39;s value
- if the display name is null. Returns an empty string if the address
- and display name are null.</p>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>The name for this email address.</li>
-</ul>
-
 <h3>getDisplayName</h3>
 
 <pre>public final java.lang.String getDisplayName()
 </pre>
-
-<p>Gets the display name for this email address.</p>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>The display name for this email address. Returns null if the display
-name is absent.</li>
-</ul>
 
 <h3>getAddress</h3>
 
 <pre>public final Address getAddress()
 </pre>
 
-<p>Gets the email address associated with this object.</p>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>The email address associated with this object. This value is null if
-this object represents a group of addresses instead.</li>
-</ul>
-
 <h3>isGroup</h3>
 
 <pre>public final boolean isGroup()
 </pre>
 
-<p>Gets a value indicating whether this represents a group of addresses rather
- than a single address.</p>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li><code>true</code> If this represents a group of addresses; otherwise,
-<code>false</code>.</li>
-</ul>
-
 <h3>toString</h3>
 
 <pre>public java.lang.String toString()
 </pre>
-
-<p>Converts this object to a text string. This will generally be the form of
-  this NamedAddress object as it could appear in a &quot;To&quot; header field.</p>
 
 <p><strong>Overrides:</strong></p>
 
@@ -469,42 +152,15 @@ this object represents a group of addresses instead.</li>
 <li><code>toString</code> in class <code>java.lang.Object</code></li>
 </ul>
 
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>A string representation of this object.</li>
-</ul>
-
 <h3>ToDisplayString</h3>
 
 <pre>public java.lang.String ToDisplayString()
 </pre>
 
-<p>Converts this named-address object to a text string intended for display to
- end users. The returned string is not intended to be parsed by
- computer programs.</p>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>A text string of this named-address object, intended for display to
-end-users.</li>
-</ul>
-
 <h3>getGroupAddresses</h3>
 
 <pre>public final java.util.List&lt;NamedAddress&gt; getGroupAddresses()
 </pre>
-
-<p>Gets a read-only list of addresses that make up the group, if this object
- represents a group, or an empty list otherwise.</p>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>A list of addresses that make up the group, if this object
-represents a group, or an empty list otherwise.</li>
-</ul>
 
 <p><a href="/MailLib/">Back to MailLib start page.</a></p>
 </div><nav id="navigation"><ul>
