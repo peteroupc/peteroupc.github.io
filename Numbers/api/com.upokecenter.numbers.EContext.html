@@ -149,7 +149,9 @@ or more trap enablers, or both.</li>
 <li><code>boolean getHasMaxPrecision()</code><br>
 Gets a value indicating whether this context defines a maximum precision.</li>
 <li><code>EContext GetNontrapping()</code><br>
-Not documented yet.</li>
+Returns this context if it doesn&#39;t set traps, or a context without traps and
+with blank flags if it does, so that the resulting context does not
+cause trap exceptions to occur.</li>
 <li><code>EInteger getPrecision()</code><br>
 Gets the maximum length of a converted number in digits, ignoring the radix
 point and exponent.</li>
@@ -1053,15 +1055,17 @@ the copy.</li>
 <pre>public EContext GetNontrapping()
 </pre>
 
-<p>Not documented yet.</p>
+<p>Returns this context if it doesn&#39;t set traps, or a context without traps and
+ with blank flags if it does, so that the resulting context does not
+ cause trap exceptions to occur. This is not a general-purpose method;
+ it is intended to support custom implementations of arithmetic
+ operations.</p>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>Returns this context if it doesn&#39;t set traps, or a context without
-traps and with blank flags if it does. This is not a general-purpose
-method; it is intended to support custom implementations of arithmetic
-operations.</li>
+<li>This context if it doesn&#39;t set traps, or a context without traps and
+with blank flags if it does.</li>
 </ul>
 
 <h3>TriggerTraps</h3>

@@ -109,8 +109,8 @@
 <ul>
 <li><p>A. Low 52 bits (Precision minus 1 bits): Lowest bits of the significand.</p></li>
 <li><p>B. Next 11 bits: Exponent area:</p></li>
-<li><p>If all bits are ones, this value is infinity (positive or negative depending on the C bit) if all bits in area A are zeros, or not-a-number (NaN) otherwise.</p></li>
-<li><p>If all bits are zeros, this is a subnormal number. The exponent is EMin and the highest bit of the significand is zero.</p></li>
+<li><p>If all bits are ones, the final stored value is infinity (positive or negative depending on the C bit) if all bits in area A are zeros, or not-a-number (NaN) otherwise.</p></li>
+<li><p>If all bits are zeros, the final stored value is a subnormal number, the exponent is EMin, and the highest bit of the significand is zero.</p></li>
 <li><p>If any other number, the exponent is this value reduced by 1, then raised by EMin, and the highest bit of the significand is one.</p></li>
 <li><p>C. Highest bit: If one, this is a negative number.</p></li>
 </ul>

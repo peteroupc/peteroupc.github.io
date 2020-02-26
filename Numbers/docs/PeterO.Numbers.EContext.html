@@ -43,7 +43,7 @@
 <li><code><a href="#ForPrecision_int">ForPrecision(int)</a></code> - Creates a new arithmetic context using the given maximum number of digits, an unlimited exponent range, and the HalfUp rounding mode.</li>
 <li><code><a href="#ForPrecisionAndRounding_int_PeterO_Numbers_ERounding">ForPrecisionAndRounding(int, PeterO.Numbers.ERounding)</a></code> - Creates a new EContext object initialized with an unlimited exponent range, and the given rounding mode and maximum precision.</li>
 <li><code><a href="#ForRounding_PeterO_Numbers_ERounding">ForRounding(PeterO.Numbers.ERounding)</a></code> - Creates a new EContext object initialized with an unlimited precision, an unlimited exponent range, and the given rounding mode.</li>
-<li><code><a href="#GetNontrapping">GetNontrapping()</a></code> - Not documented yet.</li>
+<li><code><a href="#GetNontrapping">GetNontrapping()</a></code> - Returns this context if it doesn&#39;t set traps, or a context without traps and with blank flags if it does, so that the resulting context does not cause trap exceptions to occur.</li>
 <li><code><a href="#HasExponentRange">HasExponentRange</a></code> - Gets a value indicating whether this context defines a minimum and maximum exponent.</li>
 <li><code><a href="#HasFlags">HasFlags</a></code> - Gets a value indicating whether this context has a mutable Flags field.</li>
 <li><code><a href="#HasFlagsOrTraps">HasFlagsOrTraps</a></code> - Gets a value indicating whether this context has a mutable Flags field, one or more trap enablers, or both.</li>
@@ -607,11 +607,11 @@ is an ERounding object.</p></li>
 <pre>public PeterO.Numbers.EContext GetNontrapping();
 </pre>
 
-<p>Not documented yet.</p>
+<p>Returns this context if it doesn&#39;t set traps, or a context without traps and with blank flags if it does, so that the resulting context does not cause trap exceptions to occur. This is not a general-purpose method; it is intended to support custom implementations of arithmetic operations.</p>
 
 <p><b>Return Value:</b></p>
 
-<p>Returns this context if it doesn&#39;t set traps, or a context without traps and with blank flags if it does. This is not a general-purpose method; it is intended to support custom implementations of arithmetic operations.</p>
+<p>This context if it doesn&#39;t set traps, or a context without traps and with blank flags if it does.</p>
 
 <p><a id="ToString"></a></p>
 
