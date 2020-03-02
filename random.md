@@ -497,8 +497,9 @@ A PRNG is a high-quality RNG if&mdash;
 - it generates bits that behave like independent uniform random bits (at least for nearly all practical purposes outside of information security),
 - the number of different seeds the PRNG admits without shortening or compressing those seeds is 2<sup>63</sup> or more, and
 - it either&mdash;
-    - provides multiple sequences that are different for each seed, have at least 2<sup>64</sup> numbers each, do not overlap, and behave like independent random number sequences (at least for nearly all practical purposes outside of information security), or
-    - has a period (maximum size of a "random" number cycle) equal or close to the number of different seeds the PRNG admits.
+    - provides multiple sequences that are different for each seed, have at least 2<sup>64</sup> numbers each, do not overlap, and behave like independent random number sequences (at least for nearly all practical purposes outside of information security),
+    - has a maximum "random" number cycle length equal to the number of different seeds the PRNG admits, or
+    - has a minimum "random" number cycle length of 2<sup>127</sup> or greater.
 
 The high-quality PRNG SHOULD admit any of 2<sup>127</sup> or more seeds.
 
@@ -509,7 +510,7 @@ A Bays&ndash;Durham shuffle (see the appendix) of a high-quality RNG is also a h
 <a id=High_Quality_PRNG_Examples></a>
 #### High-Quality PRNG Examples
 
-Besides cryptographic RNGs, the following are examples of high-quality PRNGs:
+Besides cryptographic RNGs, the following are examples of high-quality PRNGs (here "period" is the maximum size of a random number "cycle" for the PRNG):
 
 | PRNG | Seeds Allowed | Period | Stream Support | Notes |
  ----------| --- | --- | --- | --- |
@@ -531,15 +532,15 @@ Besides cryptographic RNGs, the following are examples of high-quality PRNGs:
 | A multiplicative [**linear congruential generator**](https://en.wikipedia.org/wiki/Linear_congruential_generator) (LCG) with prime modulus greater than 2<sup>63</sup> described in Table 2 of (L'Ecuyer 1999)<sup>[**(42)**](#Note42)</sup> | Modulus - 1 | Modulus - 1 | Jump-ahead | Memory used depends on modulus size |
 | XorShift\* 128/64 | 2^128 - 1 | 2^128 - 1 | No known implementation | 128-bit state.  Described by M. O'Neill in "You don't have to use PCG!", 2017.<sup>[**(43)**](#Note43)</sup> |
 | XorShift\* 64/32 | 2^64 - 1 | 2^64 - 1 | No known implementation | 64-bit state. Described by M. O'Neill in "You don't have to use PCG!", 2017. |
-| C++'s [**`std::ranlux48` engine**](http://www.cplusplus.com/reference/random/ranlux48/) | 2^577 - 2 | Not discussed (see notes) | No known implementation | Usually takes about 192 8-bit bytes of memory. Seed's bits cannot be all zeros or all ones (L&uuml;scher 1994)<sup>[**(44)**](#Note44)</sup>.  The period for `ranlux48`'s underlying generator is very close to 2^576.  This PRNG is not preferred.  |
-| A high-quality PRNG that is an LCG with non-prime modulus (or a PRNG based on one, such as PCG) | Depends on parameters | Depends on parameters | Jump-ahead. What PCG calls "streams" does not produce independent sequences. | These PRNGs are not preferred; in particular, if the modulus is a power of 2, they produce highly correlated "random" number sequences from seeds that differ only in their high bits (see S. Vigna, "[**The wrap-up on PCG generators**](http://pcg.di.unimi.it/pcg.php)") and lowest bits have short periods. |
+| C++'s [**`std::ranlux48` engine**](http://www.cplusplus.com/reference/random/ranlux48/) | 2^577 - 2 | Not discussed (see notes) | No known implementation | Usually takes about 192 8-bit bytes of memory. Seed's bits cannot be all zeros or all ones (L&uuml;scher 1994)<sup>[**(44)**](#Note44)</sup>.  The maximum cycle length for `ranlux48`'s underlying generator is very close to 2^576.  This PRNG is not preferred.  |
+| A high-quality PRNG that is an LCG with non-prime modulus (or a PRNG based on one, such as PCG) | Depends on parameters | Depends on parameters | Jump-ahead. What PCG calls "streams" does not produce independent sequences. | These PRNGs are not preferred; in particular, if the modulus is a power of 2, they produce highly correlated "random" number sequences from seeds that differ only in their high bits (see S. Vigna, "[**The wrap-up on PCG generators**](http://pcg.di.unimi.it/pcg.php)") and lowest bits have short "periods". |
 
 The following are not considered high-quality PRNGs:
 - Any LCG with modulus less than 2<sup>63</sup> (such as `java.util.Random` and C++'s `std::minstd_rand` and `std::minstd_rand0` engines) admits fewer than 2<sup>63</sup> seeds.
 - `System.Random`, as implemented in the .NET Framework 4.7, can take a seed of at most 32 bits, so it admits fewer than 2<sup>63</sup> seeds.
 - Mersenne Twister (MT19937) shows a [**systematic failure**](http://xoroshiro.di.unimi.it/#quality) in BigCrush's LinearComp test (part of L'Ecuyer and Simard's "TestU01"). (See also (Vigna 2019)<sup>[**(45)**](#Note45)</sup>.) Moreover, it usually takes about 2500 8-bit bytes of memory.
 - Tyche and Tyche-i, as given in (Neves and Araujo 2011)<sup>[**(46)**](#Note46)</sup>, allow 2<sup>64</sup> valid seeds, but have no guaranteed cycle length of at least 2<sup>64</sup> per seed.
-- In general, any so-called "chaotic" PRNG whose period is not close to the number of admissible seeds.  This includes middle square, Rule-30 and other cellular-automaton PRNGs, multiply-with-carry (MWC), and PRNGs that use MWC, such as JKISS, JLKISS, and JLKISS64 (Jones 2007/2010)<sup>[**(47)**](#Note47)</sup>.
+- In general, any so-called "chaotic" PRNG with no guaranteed minimum cycle length.  This includes middle square, Rule-30 and other cellular-automaton PRNGs, multiply-with-carry (MWC), and PRNGs that use MWC, such as JKISS, JLKISS, and JLKISS64 (Jones 2007/2010)<sup>[**(47)**](#Note47)</sup>.
 - B. Jenkins's "A small noncryptographic PRNG" (sometimes known as JSF or JSF64) has no guaranteed cycle length of at least 2<sup>64</sup> per seed.  Moreover, the 32-bit version (JSF32) allows only 2<sup>32</sup> valid seeds (however, Jenkins found JSF32 to produce nonoverlapping streams of at least 2^20 values per seed).
 - `msws` (Widynski 2017)<sup>[**(48)**](#Note48)</sup> allows only about 2<sup>54.1</sup> valid seeds.
 - Sequential counters.
@@ -659,7 +660,7 @@ See also N. Reed, "Quick And Easy GPU Random Numbers In D3D11", Nathan Reed's co
 
 <small><sup id=Note28>(28)</sup> If an application expects end users to type in a unique identifier, it could find that very long unique identifiers are unsuitable for it (e.g. 128-bit numbers take up 32 base-16 characters).  There are ways to deal with these and other long identifiers, including (1) separating memorable chunks of the identifier with a hyphen, space, or another character (e.g., "ABCDEF" becomes "ABC-DEF"); (2) generating the identifier from a sequence of memorable words (as in Electrum or in Bitcoin's BIP39); or (3) adding a so-called "checksum digit" at the end of the identifier to guard against typing mistakes.  The application ought to consider trying (1) or (2) before deciding to use shorter identifiers than what this document recommends.</small>
 
-<small><sup id=Note29>(29)</sup> For suggested full-period [**LCGs**](https://en.wikipedia.org/wiki/Linear_congruential_generator), see tables 3, 5, 7, and 8 of Steele and Vigna, "Computationally easy, spectrally good multipliers for congruential pseudorandom number generators", arXiv:2001.05304 [cs.DS].</small>
+<small><sup id=Note29>(29)</sup> For suggested "full-period" [**LCGs**](https://en.wikipedia.org/wiki/Linear_congruential_generator), see tables 3, 5, 7, and 8 of Steele and Vigna, "Computationally easy, spectrally good multipliers for congruential pseudorandom number generators", arXiv:2001.05304 [cs.DS].</small>
 
 <small><sup id=Note30>(30)</sup> The following are some reasons an algorithm might produce different results from run to run or from machine to machine (making it an _inconsistent_ algorithm):
 
@@ -691,7 +692,7 @@ See also N. Reed, "Quick And Easy GPU Random Numbers In D3D11", Nathan Reed's co
 
 <small><sup id=Note39>(39)</sup> For example, a new RNG can be constructed from two independent RNGs using the so-called "shrinking generator" technique: generate one bit from the first RNG and one bit from the second, and take the second bit if the first bit is 1, or repeat this process otherwise.  See J. D. Cook, "Using one RNG to sample another", June 4, 2019, for more on this technique, including its advantages and drawbacks.</small>
 
-<small><sup id=Note40>(40)</sup> Although any linear PRNG, such as LCGs and the Xorshift, xoroshiro, and xoshiro families, can support jump-ahead by any number of steps, one interesting choice of jump size is a size equal to the period divided by the golden ratio (see, e.g., the [**NumPy implementation**](https://docs.scipy.org/doc/numpy/reference/random/parallel.html#jumping-the-bitgenerator-state)).</small>
+<small><sup id=Note40>(40)</sup> Although any linear PRNG, such as LCGs and the Xorshift, xoroshiro, and xoshiro families, can support jump-ahead by any number of steps, one interesting choice of jump size is a size equal to the maximum cycle length divided by the golden ratio (see, e.g., the [**NumPy implementation**](https://docs.scipy.org/doc/numpy/reference/random/parallel.html#jumping-the-bitgenerator-state)).</small>
 
 <small><sup id=Note41>(41)</sup> Blackman, D., Vigna, S. "Scrambled Linear Pseudorandom Number Generators", 2019 (xoroshiro and xoshiro families); S. Vigna, "[**An experimental exploration of Marsaglia's `xorshift` generators, scrambled**](http://vigna.di.unimi.it/ftp/papers/xorshift.pdf)", 2016 (scrambled xorshift family).</small>
 
@@ -764,7 +765,7 @@ The following Python code suggests how many bits of entropy are needed for shuff
 <a id=Bays_ndash_Durham_Shuffle></a>
 ### Bays&ndash;Durham Shuffle
 
-The Bays&ndash;Durham shuffle extends a PRNG's period (maximum size of a "random" number cycle) by giving it a bigger state. Generally, for a size of `tablesize`, the period is extended to about the number of ways to arrange a list of size `tablesize`.  The following describes the Bays&ndash;Durham shuffle with a size of `tablesize`. (C++'s `shuffle_order_engine` implements something similar to the shuffle described below.) For PRNGs that output 32- or 64-bit integers 0 or greater, a `tablesize` of 256, 512, or 1024 is suggested.
+The Bays&ndash;Durham shuffle extends a PRNG's maximum cycle length by giving it a bigger state. Generally, for a size of `tablesize`, that maximum is extended to about the number of ways to arrange a list of size `tablesize`.  The following describes the Bays&ndash;Durham shuffle with a size of `tablesize`. (C++'s `shuffle_order_engine` implements something similar to the shuffle described below.) For PRNGs that output 32- or 64-bit integers 0 or greater, a `tablesize` of 256, 512, or 1024 is suggested.
 
 - To initialize, fill a list with as many numbers from the PRNG as `tablesize`, then set `k` to another number from the PRNG.
 - For each "random" number, take the entry at position (`k` % `tablesize`) in the list, where '%' is the remainder operator and positions start at 0, then set `k` to that entry, then replace the entry at that position with a new number from the PRNG, then output `k`.
