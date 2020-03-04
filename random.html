@@ -425,10 +425,10 @@ For cryptographic RNGs, an application SHOULD use only one thread-safe instance 
 <p>The steps above include hashing several things to generate a new seed.  This has to be done with either a <a href="#Hash_Functions"><strong>hash function</strong></a> of N or more bits (where N is the PRNG&#39;s maximum seed size), or a so-called &quot;seed sequence generator&quot; like C++&#39;s <code>std::seed_seq</code>.<sup><a href="#Note17"><strong>(17)</strong></a></sup></p>
 
 <blockquote>
-<p><strong>Example:</strong> SFC64 is a counter-based PRNG. To seed two processes based on the seed &quot;seed&quot; and this PRNG, an application can&mdash;</p>
+<p><strong>Example:</strong> Philox is a counter-based PRNG. To seed two processes based on the seed &quot;seed&quot; and this PRNG, an application can&mdash;</p>
 
 <ul>
-<li>take the first 192 bits of the SHA2-256 hash of &quot;seed-mysimulation&quot; as a new seed,</li>
+<li>take the SHA2-256 hash of &quot;seed-mysimulation&quot; as a new seed,</li>
 <li>initialize the first process&#39;s PRNG with the new seed and a counter of 0, and</li>
 <li>initialize the second process&#39;s PRNG with 1 plus the new seed and a counter of 0.</li>
 </ul>
@@ -760,13 +760,13 @@ For cryptographic RNGs, an application SHOULD use only one thread-safe instance 
 
 <h4>High-Quality PRNG Examples</h4>
 
-<p>Besides cryptographic RNGs, the following are examples of high-quality PRNGs (here &quot;period&quot; is the maximum size of a random number &quot;cycle&quot; for the PRNG):</p>
+<p>Besides cryptographic RNGs, the following are examples of high-quality PRNGs:</p>
 
 <table><thead>
 <tr>
 <th>PRNG</th>
 <th>Seeds Allowed</th>
-<th>Period</th>
+<th>Cycle Length</th>
 <th>Stream Support</th>
 <th>Notes</th>
 </tr>
@@ -1032,7 +1032,7 @@ For cryptographic RNGs, an application SHOULD use only one thread-safe instance 
 
 <p><small><sup id=Note15>(15)</sup> P. L&#39;Ecuyer, D. Munger, et al. &quot;Random Numbers for Parallel Computers: Requirements and Methods, With Emphasis on GPUs&quot;, April 17, 2015, section 4, goes in greater detail on ways to initialize PRNGs for generating random numbers in parallel, including how to ensure reproducible &quot;randomness&quot; this way if that is desired.</small></p>
 
-<p><small><sup id=Note16>(16)</sup> Using two or more PRNG designs can reduce correlation risks due to a particular PRNG&#39;s design.  For further discussion and an example of a PRNG combining two different PRNG designs, see Agner Fog, &quot;<a href="http://digitalcommons.wayne.edu/jmasm/vol14/iss1/23"><strong>Pseudo-Random Number Generators for Vector Processors and Multicore Processors</strong></a>&quot;, <em>Journal of Modern Applied Statistical Methods</em> 14(1), article 23 (2015).</small></p>
+<p><small><sup id=Note16>(16)</sup> For single-cycle PRNGs, the probability of overlap for N processes each generating L numbers with a PRNG whose cycle length is P is at most N<em>N</em>L/P (S. Vigna, &quot;On the probability of overlap of random subsequences of pseudorandom number generators&quot;, <em>Information Processing Letters</em> 158 (2020)).  Using two or more PRNG designs can reduce correlation risks due to a particular PRNG&#39;s design.  For further discussion and an example of a PRNG combining two different PRNG designs, see Agner Fog, &quot;<a href="http://digitalcommons.wayne.edu/jmasm/vol14/iss1/23"><strong>Pseudo-Random Number Generators for Vector Processors and Multicore Processors</strong></a>&quot;, <em>Journal of Modern Applied Statistical Methods</em> 14(1), article 23 (2015).</small></p>
 
 <p><small><sup id=Note17>(17)</sup> Besides the seed, other things are hashed that together serve as a <em>domain separation tag</em> (see, e.g., the work-in-progress document &quot;draft-irtf-cfrg-hash-to-curve&quot;).  Note the following:</p>
 

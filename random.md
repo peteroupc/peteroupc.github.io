@@ -293,8 +293,8 @@ Depending on the PRNG, there are different ways to seed multiple processes for r
 
 The steps above include hashing several things to generate a new seed.  This has to be done with either a [**hash function**](#Hash_Functions) of N or more bits (where N is the PRNG's maximum seed size), or a so-called "seed sequence generator" like C++'s `std::seed_seq`.<sup>[**(17)**](#Note17)</sup>
 
-> **Example:** SFC64 is a counter-based PRNG. To seed two processes based on the seed "seed" and this PRNG, an application can&mdash;
-> - take the first 192 bits of the SHA2-256 hash of "seed-mysimulation" as a new seed,
+> **Example:** Philox is a counter-based PRNG. To seed two processes based on the seed "seed" and this PRNG, an application can&mdash;
+> - take the SHA2-256 hash of "seed-mysimulation" as a new seed,
 > - initialize the first process's PRNG with the new seed and a counter of 0, and
 > - initialize the second process's PRNG with 1 plus the new seed and a counter of 0.
 
@@ -510,9 +510,9 @@ A Bays&ndash;Durham shuffle (see the appendix) of a high-quality RNG is also a h
 <a id=High_Quality_PRNG_Examples></a>
 #### High-Quality PRNG Examples
 
-Besides cryptographic RNGs, the following are examples of high-quality PRNGs (here "period" is the maximum size of a random number "cycle" for the PRNG):
+Besides cryptographic RNGs, the following are examples of high-quality PRNGs:
 
-| PRNG | Seeds Allowed | Period | Stream Support | Notes |
+| PRNG | Seeds Allowed | Cycle Length | Stream Support | Notes |
  ----------| --- | --- | --- | --- |
 | xoshiro256\*\* | 2^256 - 1 | 2^256 - 1 | Jump-ahead<sup>[**(40)**](#Note40)</sup> | |
 | xoshiro256+ | 2^256 - 1 | 2^256 - 1 | Jump-ahead | Lowest bits have low linear complexity (see (Blackman and Vigna 2019)<sup>[**(41)**](#Note41)</sup> and see also "[**Testing low bits in isolation**](http://xoshiro.di.unimi.it/lowcomp.php)"); if the application or library cares, it can discard those bits before using this PRNG's output. |
@@ -627,7 +627,7 @@ See also N. Reed, "Quick And Easy GPU Random Numbers In D3D11", Nathan Reed's co
 
 <small><sup id=Note15>(15)</sup> P. L'Ecuyer, D. Munger, et al. "Random Numbers for Parallel Computers: Requirements and Methods, With Emphasis on GPUs", April 17, 2015, section 4, goes in greater detail on ways to initialize PRNGs for generating random numbers in parallel, including how to ensure reproducible "randomness" this way if that is desired.</small>
 
-<small><sup id=Note16>(16)</sup> Using two or more PRNG designs can reduce correlation risks due to a particular PRNG's design.  For further discussion and an example of a PRNG combining two different PRNG designs, see Agner Fog, "[**Pseudo-Random Number Generators for Vector Processors and Multicore Processors**](http://digitalcommons.wayne.edu/jmasm/vol14/iss1/23)", _Journal of Modern Applied Statistical Methods_ 14(1), article 23 (2015).</small>
+<small><sup id=Note16>(16)</sup> For single-cycle PRNGs, the probability of overlap for N processes each generating L numbers with a PRNG whose cycle length is P is at most N*N*L/P (S. Vigna, "On the probability of overlap of random subsequences of pseudorandom number generators", _Information Processing Letters_ 158 (2020)).  Using two or more PRNG designs can reduce correlation risks due to a particular PRNG's design.  For further discussion and an example of a PRNG combining two different PRNG designs, see Agner Fog, "[**Pseudo-Random Number Generators for Vector Processors and Multicore Processors**](http://digitalcommons.wayne.edu/jmasm/vol14/iss1/23)", _Journal of Modern Applied Statistical Methods_ 14(1), article 23 (2015).</small>
 
 <small><sup id=Note17>(17)</sup> Besides the seed, other things are hashed that together serve as a _domain separation tag_ (see, e.g., the work-in-progress document "draft-irtf-cfrg-hash-to-curve").  Note the following:
 - In general, hash functions carry the risk that two processes will end up with the same PRNG seed (a _collision risk_) or that a seed not allowed by the PRNG is produced (a "rejection risk"), but this risk decreases the more seeds the PRNG admits (see "[**Birthday problem**](https://en.wikipedia.org/wiki/Birthday_problem)").
