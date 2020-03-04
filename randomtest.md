@@ -41,12 +41,17 @@ The Schaathun paper suggests the following four random number sequences for test
     2. Set `seed` and `g` to `split(seed)[0]` and `split(seed)[1]`, respectively, and write out `generate(g)`.
     3. Go to the first step.
 
-**Combinations and other transformations.** There are other kinds of PRNG sequences to test for adequate randomness:
+**Combined PRNGs.** As G. Marsaglia (in KISS), D. Jones (in JKISS), and A. Fog (Pseudo-Random Number Generators for Vector Processors and Multicore Processors", Journal of Modern Applied Statistical Methods 14(1), article 23 (2015)) have recognized, combining two or more PRNGs of weaker quality often leads to a higher-quality PRNG.  Examples of combined PRNGs include:
 
-- Two PRNGs can be combined and their combined sequence used.  There are several ways to do this:
-    - By taking one output from each generator and combining them with XOR or modular addition (A. Fog, "Pseudo-Random Number Generators for Vector Processors and Multicore Processors", Journal of Modern Applied Statistical Methods 14(1), article 23 (2015)).  This can be used, for example, if one PRNG has a guaranteed minimum cycle length and the other does not.
-    - By using the "shrinking generator" technique (J. D. Cook, "Using one RNG to sample another", June 4, 2019).
-- A single PRNG can be transformed&mdash;
-    - by using a "self-shrinking generator" technique,
-    - by keeping some of its outputs and discarding others (e.g., C++'s `discard_block_engine`), and/or
-    - by doing a Bays&ndash;Durham shuffle (e.g., C++'s `shuffle_block_engine`).
+1. The top N bits of `P(C)`, where P is an `N * 2`-bit or longer permutation and C is an incrementing counter (Salmon, et al., 2011).
+2. `(PRNG() xor LCG()) mod 2^N`, where `PRNG` is a PRNG admitting 2<sup>63</sup> or more seeds and outputting `N` bits, and `LCG` is an `N`-bit or longer linear congruential generator.
+3. `(PRNG() xor WS()) mod 2^N`, where `PRNG` is a PRNG admitting 2<sup>63</sup> or more seeds and outputting `N` bits, and `WS` is an `N`-bit or longer Weyl sequence (Marsaglia's XORWOW and Widynski's MSWS are examples of this sequence's use in published PRNGs).
+4. A PRNG described in (2) or (3), except with wraparound addition rather than `xor`.
+
+In the examples above, if N is 64 or greater and the combination meets the independence requirement in this document, it will count as a high-quality PRNG.
+
+Other examples of combining two PRNGs include&mdash;
+- an XOR or wraparound addition of their outputs, and/or
+- the "shrinking generator" technique (J. D. Cook, "Using one RNG to sample another", June 4, 2019).
+
+**Transformed PRNGs.** A single PRNG's output can be transformed, but this generally produces a slower PRNG.  Examples of such transformations include "self-shrinking"; keeping some outputs and discarding others (as in RANLUX); and the Bays&ndash;Durham shuffle (as in C++'s `shuffle_block_engine`).

@@ -831,7 +831,7 @@ For cryptographic RNGs, an application SHOULD use only one thread-safe instance 
 <td>SFC64 (C. Doty-Humphrey)</td>
 <td>2^192</td>
 <td>At least 2^64 per seed</td>
-<td>64-bit counter</td>
+<td>Separate stream per seed</td>
 <td>256-bit state</td>
 </tr>
 <tr>
@@ -870,6 +870,20 @@ For cryptographic RNGs, an application SHOULD use only one thread-safe instance 
 <td>256-bit state</td>
 </tr>
 <tr>
+<td>JLKISS (Jones 2007/2010)<sup><a href="#Note42"><strong>(42)</strong></a></sup></td>
+<td>2^64 * (2^64 - 1)^2</td>
+<td>At least (2^128 - 2^64)</td>
+<td>No known implementation</td>
+<td>192-bit state</td>
+</tr>
+<tr>
+<td>JLKISS64 (Jones 2007/2010)<sup><a href="#Note42"><strong>(42)</strong></a></sup></td>
+<td>2^64 * (2^64 - 1)^3</td>
+<td>At least (2^128 - 2^64)</td>
+<td>No known implementation</td>
+<td>256-bit state</td>
+</tr>
+<tr>
 <td>TinyMT64 (Tiny Mersenne Twister)</td>
 <td>2^127 - 1</td>
 <td>2^127 - 1</td>
@@ -877,7 +891,7 @@ For cryptographic RNGs, an application SHOULD use only one thread-safe instance 
 <td>Millions of possible parameter sets</td>
 </tr>
 <tr>
-<td>A multiplicative <a href="https://en.wikipedia.org/wiki/Linear_congruential_generator"><strong>linear congruential generator</strong></a> (LCG) with prime modulus greater than 2<sup>63</sup> described in Table 2 of (L&#39;Ecuyer 1999)<sup><a href="#Note42"><strong>(42)</strong></a></sup></td>
+<td>A multiplicative <a href="https://en.wikipedia.org/wiki/Linear_congruential_generator"><strong>linear congruential generator</strong></a> (LCG) with prime modulus greater than 2<sup>63</sup> described in Table 2 of (L&#39;Ecuyer 1999)<sup><a href="#Note43"><strong>(43)</strong></a></sup></td>
 <td>Modulus - 1</td>
 <td>Modulus - 1</td>
 <td>Jump-ahead</td>
@@ -888,7 +902,7 @@ For cryptographic RNGs, an application SHOULD use only one thread-safe instance 
 <td>2^128 - 1</td>
 <td>2^128 - 1</td>
 <td>No known implementation</td>
-<td>128-bit state.  Described by M. O&#39;Neill in &quot;You don&#39;t have to use PCG!&quot;, 2017.<sup><a href="#Note43"><strong>(43)</strong></a></sup></td>
+<td>128-bit state.  Described by M. O&#39;Neill in &quot;You don&#39;t have to use PCG!&quot;, 2017.<sup><a href="#Note44"><strong>(44)</strong></a></sup></td>
 </tr>
 <tr>
 <td>XorShift* 64/32</td>
@@ -902,7 +916,7 @@ For cryptographic RNGs, an application SHOULD use only one thread-safe instance 
 <td>2^577 - 2</td>
 <td>Not discussed (see notes)</td>
 <td>No known implementation</td>
-<td>Usually takes about 192 8-bit bytes of memory. Seed&#39;s bits cannot be all zeros or all ones (L&uuml;scher 1994)<sup><a href="#Note44"><strong>(44)</strong></a></sup>.  The maximum cycle length for <code>ranlux48</code>&#39;s underlying generator is very close to 2^576.  This PRNG is not preferred.</td>
+<td>Usually takes about 192 8-bit bytes of memory. Seed&#39;s bits cannot be all zeros or all ones (L&uuml;scher 1994)<sup><a href="#Note45"><strong>(45)</strong></a></sup>.  The maximum cycle length for <code>ranlux48</code>&#39;s underlying generator is very close to 2^576.  This PRNG is not preferred.</td>
 </tr>
 <tr>
 <td>A high-quality PRNG that is an LCG with non-prime modulus (or a PRNG based on one, such as PCG)</td>
@@ -918,10 +932,16 @@ For cryptographic RNGs, an application SHOULD use only one thread-safe instance 
 <ul>
 <li>Any LCG with modulus less than 2<sup>63</sup> (such as <code>java.util.Random</code> and C++&#39;s <code>std::minstd_rand</code> and <code>std::minstd_rand0</code> engines) admits fewer than 2<sup>63</sup> seeds.</li>
 <li><code>System.Random</code>, as implemented in the .NET Framework 4.7, can take a seed of at most 32 bits, so it admits fewer than 2<sup>63</sup> seeds.</li>
-<li>Mersenne Twister (MT19937) shows a <a href="http://xoroshiro.di.unimi.it/#quality"><strong>systematic failure</strong></a> in BigCrush&#39;s LinearComp test (part of L&#39;Ecuyer and Simard&#39;s &quot;TestU01&quot;). (See also (Vigna 2019)<sup><a href="#Note45"><strong>(45)</strong></a></sup>.) Moreover, it usually takes about 2500 8-bit bytes of memory.</li>
-<li>Tyche and Tyche-i, as given in (Neves and Araujo 2011)<sup><a href="#Note46"><strong>(46)</strong></a></sup>, allow 2<sup>64</sup> valid seeds, but have no guaranteed cycle length of at least 2<sup>64</sup> per seed.</li>
-<li>In general, any so-called &quot;chaotic&quot; PRNG with no guaranteed minimum cycle length.  This includes middle square, Rule-30 and other cellular-automaton PRNGs, multiply-with-carry (MWC), and PRNGs that use MWC, such as JKISS, JLKISS, and JLKISS64 (Jones 2007/2010)<sup><a href="#Note47"><strong>(47)</strong></a></sup>.</li>
-<li>B. Jenkins&#39;s &quot;A small noncryptographic PRNG&quot; (sometimes known as JSF or JSF64) has no guaranteed cycle length of at least 2<sup>64</sup> per seed.  Moreover, the 32-bit version (JSF32) allows only 2<sup>32</sup> valid seeds (however, Jenkins found JSF32 to produce nonoverlapping streams of at least 2^20 values per seed).</li>
+<li>Mersenne Twister (MT19937) shows a <a href="http://xoroshiro.di.unimi.it/#quality"><strong>systematic failure</strong></a> in BigCrush&#39;s LinearComp test (part of L&#39;Ecuyer and Simard&#39;s &quot;TestU01&quot;). (See also (Vigna 2019)<sup><a href="#Note46"><strong>(46)</strong></a></sup>.) Moreover, it usually takes about 2500 8-bit bytes of memory.</li>
+<li>In general, any PRNG with no guaranteed minimum cycle length of 2<sup>63</sup> or greater, including:
+
+<ul>
+<li>Middle square.</li>
+<li>Tyche and Tyche-i (Neves and Araujo 2011)<sup><a href="#Note47"><strong>(47)</strong></a></sup>.</li>
+<li>Cellular-automaton PRNGs, including Rule 30.</li>
+<li>B. Jenkins&#39;s &quot;A small noncryptographic PRNG&quot; (sometimes known as JSF or JSF64).  For example, JSF32 (the 32-bit version) has a proven minimum cycle length of only 2<sup>20</sup> values per seed.</li>
+<li>Multiply-with-carry (MWC) generators.</li>
+</ul></li>
 <li><code>msws</code> (Widynski 2017)<sup><a href="#Note48"><strong>(48)</strong></a></sup> allows only about 2<sup>54.1</sup> valid seeds.</li>
 <li>Sequential counters.</li>
 </ul>
@@ -1032,7 +1052,7 @@ For cryptographic RNGs, an application SHOULD use only one thread-safe instance 
 
 <p><small><sup id=Note15>(15)</sup> P. L&#39;Ecuyer, D. Munger, et al. &quot;Random Numbers for Parallel Computers: Requirements and Methods, With Emphasis on GPUs&quot;, April 17, 2015, section 4, goes in greater detail on ways to initialize PRNGs for generating random numbers in parallel, including how to ensure reproducible &quot;randomness&quot; this way if that is desired.</small></p>
 
-<p><small><sup id=Note16>(16)</sup> For single-cycle PRNGs, the probability of overlap for N processes each generating L numbers with a PRNG whose cycle length is P is at most N<em>N</em>L/P (S. Vigna, &quot;On the probability of overlap of random subsequences of pseudorandom number generators&quot;, <em>Information Processing Letters</em> 158 (2020)).  Using two or more PRNG designs can reduce correlation risks due to a particular PRNG&#39;s design.  For further discussion and an example of a PRNG combining two different PRNG designs, see Agner Fog, &quot;<a href="http://digitalcommons.wayne.edu/jmasm/vol14/iss1/23"><strong>Pseudo-Random Number Generators for Vector Processors and Multicore Processors</strong></a>&quot;, <em>Journal of Modern Applied Statistical Methods</em> 14(1), article 23 (2015).</small></p>
+<p><small><sup id=Note16>(16)</sup> For single-cycle PRNGs, the probability of overlap for N processes each generating L numbers with a PRNG whose cycle length is P is at most N*N*L/P (S. Vigna, &quot;On the probability of overlap of random subsequences of pseudorandom number generators&quot;, <em>Information Processing Letters</em> 158 (2020)).  Using two or more PRNG designs can reduce correlation risks due to a particular PRNG&#39;s design.  For further discussion and an example of a PRNG combining two different PRNG designs, see Agner Fog, &quot;<a href="http://digitalcommons.wayne.edu/jmasm/vol14/iss1/23"><strong>Pseudo-Random Number Generators for Vector Processors and Multicore Processors</strong></a>&quot;, <em>Journal of Modern Applied Statistical Methods</em> 14(1), article 23 (2015).</small></p>
 
 <p><small><sup id=Note17>(17)</sup> Besides the seed, other things are hashed that together serve as a <em>domain separation tag</em> (see, e.g., the work-in-progress document &quot;draft-irtf-cfrg-hash-to-curve&quot;).  Note the following:</p>
 
@@ -1111,21 +1131,21 @@ For cryptographic RNGs, an application SHOULD use only one thread-safe instance 
 
 <p><small><sup id=Note41>(41)</sup> Blackman, D., Vigna, S. &quot;Scrambled Linear Pseudorandom Number Generators&quot;, 2019 (xoroshiro and xoshiro families); S. Vigna, &quot;<a href="http://vigna.di.unimi.it/ftp/papers/xorshift.pdf"><strong>An experimental exploration of Marsaglia&#39;s <code>xorshift</code> generators, scrambled</strong></a>&quot;, 2016 (scrambled xorshift family).</small></p>
 
-<p><small><sup id=Note42>(42)</sup> P. L&#39;Ecuyer, &quot;Tables of Linear Congruential Generators of Different Sizes and Good Lattice Structure&quot;, <em>Mathematics of Computation</em> 68(225), January 1999.</small></p>
+<p><small><sup id=Note42>(42)</sup> Jones, D., &quot;Good Practice in (Pseudo) Random Number Generation for Bioinformatics Applications&quot;, 2007/2010.</small></p>
 
-<p><small><sup id=Note43>(43)</sup> This XorShift* generator is not to be confused with S. Vigna&#39;s *-scrambled PRNGs, which multiply the PRNG state differently than this one does.</small></p>
+<p><small><sup id=Note43>(43)</sup> P. L&#39;Ecuyer, &quot;Tables of Linear Congruential Generators of Different Sizes and Good Lattice Structure&quot;, <em>Mathematics of Computation</em> 68(225), January 1999.</small></p>
 
-<p><small><sup id=Note44>(44)</sup> L&uuml;scher, M., &quot;A Portable High-Quality Random Number Generator for Lattice Field Theory Simulations&quot;, arXiv:hep-lat/9309020 (1994).</small></p>
+<p><small><sup id=Note44>(44)</sup> This XorShift* generator is not to be confused with S. Vigna&#39;s *-scrambled PRNGs, which multiply the PRNG state differently than this one does.</small></p>
 
-<p><small><sup id=Note45>(45)</sup> S. Vigna, &quot;It Is High Time We Let Go of the Mersenne Twister&quot;, arXiv:1910.06437 [cs.DS], 2019.</small></p>
+<p><small><sup id=Note45>(45)</sup> L&uuml;scher, M., &quot;A Portable High-Quality Random Number Generator for Lattice Field Theory Simulations&quot;, arXiv:hep-lat/9309020 (1994).</small></p>
 
-<p><small><sup id=Note46>(46)</sup> Neves, S., and Araujo, F., &quot;Fast and Small Nonlinear Pseudorandom Number Generators for Computer Simulation&quot;, 2011.</small></p>
+<p><small><sup id=Note46>(46)</sup> S. Vigna, &quot;It Is High Time We Let Go of the Mersenne Twister&quot;, arXiv:1910.06437 [cs.DS], 2019.</small></p>
 
-<p><small><sup id=Note47>(47)</sup> Jones, D., &quot;Good Practice in (Pseudo) Random Number Generation for Bioinformatics Applications&quot;, 2007/2010.</small></p>
+<p><small><sup id=Note47>(47)</sup> Neves, S., and Araujo, F., &quot;Fast and Small Nonlinear Pseudorandom Number Generators for Computer Simulation&quot;, 2011.</small></p>
 
 <p><small><sup id=Note48>(48)</sup> Widynski, B., &quot;Middle Square Weyl Sequence RNG&quot;, arXiv:1704.00358 [cs.CR], 2017.</small></p>
 
-<p><small><sup id=Note49>(49)</sup> Claessen, K., Palma, M. &quot;Splittable Pseudorandom Number Generators using Cryptographic Hashing&quot;, <em>Proceedings of Haskell Symposium 2013</em>, pp. 47-58.</small></p>
+<p><small><sup id=Note49>(49)</sup> Claessen, K., et al. &quot;Splittable Pseudorandom Number Generators using Cryptographic Hashing&quot;, <em>Proceedings of Haskell Symposium 2013</em>, pp. 47-58.</small></p>
 
 <p><small><sup id=Note50>(50)</sup> Schaathun, H.G., &quot;Evaluation of Splittable Pseudo-Random Generators&quot;, 2015.</small></p>
 
