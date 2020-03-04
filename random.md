@@ -553,18 +553,11 @@ The following are not considered high-quality PRNGs:
 <a id=Designs_for_PRNGs></a>
 ### Designs for PRNGs
 
-There are several possible ways to implement a PRNG:
+The following are some ways a PRNG can be implemented:
 
-1. As an object that uses an internal state and the following methods:
-    - An initializer method that takes a seed and converts it to an internal state.  This method is called while the PRNG object is being created.
-    - A method that takes no parameters.  It uses only the internal state to output one or more "random" numbers and update the internal state.  This method is available after the initializer is called.
-2. As a function that takes a seed and outputs one or more "random" numbers.  An example is a [**hash function**](#Hash_Functions).
-3. As a function that takes an internal state and outputs a new internal state and one or more "random" numbers.  This is how PRNGs can be implemented as so-called "pure functions" in functional programming languages (as in the package `AC-Random` for the Haskell language).
-4. As a so-called "splittable" PRNG (Claessen et al., 2013)<sup>[**(49)**](#Note49)</sup> (Schaathun 2015)<sup>[**(50)**](#Note50)</sup> with two functions:
-    - Split: A function that takes an internal state and outputs two or more new internal states.
-    - Generate: A function that takes an internal state and outputs one or more "random" numbers.
-
-Of the designs just given, the first is _stateful_ and the last three are _stateless_.
+- As a stateful object that stores an internal state and transforms it each time a "random" number is generated.  This kind of PRNG is initialized by converting a _seed_ to an internal state.
+- As a (stateless) function that transforms an internal state and outputs "random" numbers and the transformed state. This design in most often seen in Haskell and other functional programming languages.
+- As a (stateless) "splittable PRNG", further described in my document on [testing PRNGs](https://peteroupc.github.io/randomtest.md).
 
 <a id=Implementing_New_RNG_APIs></a>
 ### Implementing New RNG APIs
@@ -714,8 +707,6 @@ See also N. Reed, "Quick And Easy GPU Random Numbers In D3D11", Nathan Reed's co
 <small><sup id=Note47>(47)</sup> Neves, S., and Araujo, F., "Fast and Small Nonlinear Pseudorandom Number Generators for Computer Simulation", 2011.</small>
 
 <small><sup id=Note48>(48)</sup> Widynski, B., "Middle Square Weyl Sequence RNG", arXiv:1704.00358 [cs.CR], 2017.</small>
-
-<small><sup id=Note49>(49)</sup> Claessen, K., et al. "Splittable Pseudorandom Number Generators using Cryptographic Hashing", _Proceedings of Haskell Symposium 2013_, pp. 47-58.</small>
 
 <small><sup id=Note50>(50)</sup> Schaathun, H.G., "Evaluation of Splittable Pseudo-Random Generators", 2015.</small>
 

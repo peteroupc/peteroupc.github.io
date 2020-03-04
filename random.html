@@ -933,7 +933,7 @@ For cryptographic RNGs, an application SHOULD use only one thread-safe instance 
 <li>Any LCG with modulus less than 2<sup>63</sup> (such as <code>java.util.Random</code> and C++&#39;s <code>std::minstd_rand</code> and <code>std::minstd_rand0</code> engines) admits fewer than 2<sup>63</sup> seeds.</li>
 <li><code>System.Random</code>, as implemented in the .NET Framework 4.7, can take a seed of at most 32 bits, so it admits fewer than 2<sup>63</sup> seeds.</li>
 <li>Mersenne Twister (MT19937) shows a <a href="http://xoroshiro.di.unimi.it/#quality"><strong>systematic failure</strong></a> in BigCrush&#39;s LinearComp test (part of L&#39;Ecuyer and Simard&#39;s &quot;TestU01&quot;). (See also (Vigna 2019)<sup><a href="#Note46"><strong>(46)</strong></a></sup>.) Moreover, it usually takes about 2500 8-bit bytes of memory.</li>
-<li>In general, any PRNG with no guaranteed minimum cycle length of 2<sup>63</sup> or greater, including:
+<li>In general, any PRNG with no guaranteed minimum cycle length of at least 2<sup>63</sup>, including:
 
 <ul>
 <li>Middle square.</li>
@@ -950,26 +950,13 @@ For cryptographic RNGs, an application SHOULD use only one thread-safe instance 
 
 <h3>Designs for PRNGs</h3>
 
-<p>There are several possible ways to implement a PRNG:</p>
-
-<ol>
-<li>As an object that uses an internal state and the following methods:
+<p>There are several possible ways to implement a PRNG. </p>
 
 <ul>
-<li>An initializer method that takes a seed and converts it to an internal state.  This method is called while the PRNG object is being created.</li>
-<li>A method that takes no parameters.  It uses only the internal state to output one or more &quot;random&quot; numbers and update the internal state.  This method is available after the initializer is called.</li>
-</ul></li>
-<li>As a function that takes a seed and outputs one or more &quot;random&quot; numbers.  An example is a <a href="#Hash_Functions"><strong>hash function</strong></a>.</li>
-<li>As a function that takes an internal state and outputs a new internal state and one or more &quot;random&quot; numbers.  This is how PRNGs can be implemented as so-called &quot;pure functions&quot; in functional programming languages (as in the package <code>AC-Random</code> for the Haskell language).</li>
-<li>As a so-called &quot;splittable&quot; PRNG (Claessen et al., 2013)<sup><a href="#Note49"><strong>(49)</strong></a></sup> (Schaathun 2015)<sup><a href="#Note50"><strong>(50)</strong></a></sup> with two functions:
-
-<ul>
-<li>Split: A function that takes an internal state and outputs two or more new internal states.</li>
-<li>Generate: A function that takes an internal state and outputs one or more &quot;random&quot; numbers.</li>
-</ul></li>
-</ol>
-
-<p>Of the designs just given, the first is <em>stateful</em> and the last three are <em>stateless</em>.</p>
+<li>As a stateful object that stores an internal state and transforms it each time a &quot;random&quot; number is generated.  This kind of PRNG is initialized by converting a <em>seed</em> to an internal state.</li>
+<li>As a (stateless) function that transforms an internal state and outputs &quot;random&quot; numbers and the transformed state.</li>
+<li>As a (stateless) &quot;splittable PRNG&quot;, further described in my document on <a href="https://peteroupc.github.io/randomtest.md">testing PRNGs</a>.</li>
+</ul>
 
 <p><a id=Implementing_New_RNG_APIs></a></p>
 
