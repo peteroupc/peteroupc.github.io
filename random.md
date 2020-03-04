@@ -505,8 +505,6 @@ The high-quality PRNG SHOULD admit any of 2<sup>127</sup> or more seeds.
 
 Every cryptographic RNG is also a high-quality RNG.
 
-A Bays&ndash;Durham shuffle (see the appendix) of a high-quality RNG is also a high-quality RNG.
-
 <a id=High_Quality_PRNG_Examples></a>
 #### High-Quality PRNG Examples
 
@@ -556,8 +554,8 @@ The following are not considered high-quality PRNGs:
 The following are some ways a PRNG can be implemented:
 
 - As a stateful object that stores an internal state and transforms it each time a "random" number is generated.  This kind of PRNG is initialized by converting a _seed_ to an internal state.
-- As a (stateless) function that transforms an internal state and outputs "random" numbers and the transformed state. This design in most often seen in Haskell and other functional programming languages.
-- As a (stateless) "splittable PRNG", further described in my document on [testing PRNGs](https://peteroupc.github.io/randomtest.md).
+- As a (stateless) function that transforms an internal state and outputs "random" numbers and the transformed state. This design is often seen in Haskell and other functional programming languages.
+- As a (stateless) "splittable PRNG", further described in my document on [**testing PRNGs**](https://peteroupc.github.io/randomtest.md).
 
 <a id=Implementing_New_RNG_APIs></a>
 ### Implementing New RNG APIs
@@ -565,7 +563,7 @@ The following are some ways a PRNG can be implemented:
 A **programming language API** designed for reuse by applications could implement RNGs using the following guidelines:
 
 1.  The RNG API can include a method that fills one or more memory units (such as 8-bit bytes) completely with random bits.  See example 1.
-2.  If the API implements an automatically-seeded RNG, it SHOULD NOT allow applications to initialize that same RNG with a seed for reproducible "randomness"<sup>[**(51)**](#Note51)</sup> (it MAY provide a separate PRNG to accept such a seed). See example 2.
+2.  If the API implements an automatically-seeded RNG, it SHOULD NOT allow applications to initialize that same RNG with a seed for reproducible "randomness"<sup>[**(49)**](#Note49)</sup> (it MAY provide a separate PRNG to accept such a seed). See example 2.
 3.  If the API provides a PRNG that an application can seed for reproducible "randomness", it SHOULD document that PRNG and any methods the API provides that use that PRNG (such as shuffling and Gaussian number generation), and SHOULD NOT change that PRNG or those methods in a way that would change the "random" numbers they deliver for a given seed. See example 2.
 4.  A new programming language's **standard library** ought to include the following methods for generating numbers that behave like independent uniform random numbers (see my document on [**random number generation methods**](https://peteroupc.github.io/randomfunc.html) for details).
     - Four methods for random integers: 0 to `n` including `n`, 0 to `n` excluding `n`, `a` to `b` including `b`, and `a` to `b` excluding `b`.
@@ -708,9 +706,7 @@ See also N. Reed, "Quick And Easy GPU Random Numbers In D3D11", Nathan Reed's co
 
 <small><sup id=Note48>(48)</sup> Widynski, B., "Middle Square Weyl Sequence RNG", arXiv:1704.00358 [cs.CR], 2017.</small>
 
-<small><sup id=Note50>(50)</sup> Schaathun, H.G., "Evaluation of Splittable Pseudo-Random Generators", 2015.</small>
-
-<small><sup id=Note51>(51)</sup> Allowing applications to do so would hamper forward compatibility &mdash; the API would then be less free to change how the RNG is implemented in the future (e.g., to use a cryptographic or otherwise "better" RNG), or to make improvements or bug fixes in methods that use that RNG (such as shuffling and Gaussian number generation).  (As a notable example, the V8 JavaScript engine recently changed its `Math.random()` implementation to use a variant of `xorshift128+`, which is backward compatible because nothing in JavaScript allows  `Math.random()` to be seeded.)  Nevertheless, APIs can still allow applications to provide additional input ("entropy") to the RNG in order to increase its randomness rather than to ensure repeatability.</small>
+<small><sup id=Note49>(49)</sup> Allowing applications to do so would hamper forward compatibility &mdash; the API would then be less free to change how the RNG is implemented in the future (e.g., to use a cryptographic or otherwise "better" RNG), or to make improvements or bug fixes in methods that use that RNG (such as shuffling and Gaussian number generation).  (As a notable example, the V8 JavaScript engine recently changed its `Math.random()` implementation to use a variant of `xorshift128+`, which is backward compatible because nothing in JavaScript allows  `Math.random()` to be seeded.)  Nevertheless, APIs can still allow applications to provide additional input ("entropy") to the RNG in order to increase its randomness rather than to ensure repeatability.</small>
 
 <a id=Appendix></a>
 ## Appendix
