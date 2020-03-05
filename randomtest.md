@@ -44,7 +44,7 @@ The Schaathun paper suggests the following four random number sequences for test
 **Combined PRNGs.** As G. Marsaglia (in KISS), D. Jones (in JKISS), and A. Fog (Pseudo-Random Number Generators for Vector Processors and Multicore Processors", Journal of Modern Applied Statistical Methods 14(1), article 23 (2015)) have recognized, combining two or more PRNGs of weaker quality often leads to a higher-quality PRNG.  Examples of combined PRNGs include:
 
 1. The top N bits of `P(C)`, where `P` is an `N * 2`-bit or longer permutation of an incrementing counter `C` (Salmon, et al., 2011).
-2. `(PRNG() xor LCG()) mod 2^N`, where `PRNG` is a PRNG admitting 2<sup>63</sup> or more seeds and outputting `N` bits, and `LCG` is an `N`-bit or longer linear congruential generator or Weyl sequence (Weyl sequences are used, e.g., in G. Marsaglia's XORWOW and B. Widynski's MSWS).
+2. `(PRNG() xor LCG()) mod 2^N`, where `PRNG` is a PRNG admitting 2<sup>63</sup> or more seeds and outputting `N` bits, and `LCG` is an `N`-bit or longer "full-period" linear congruential generator or Weyl sequence (Weyl sequences are used, e.g., in G. Marsaglia's XORWOW and B. Widynski's MSWS).
 3. `(PRNG() xor P(C)) mod 2^N`, where `PRNG` is a PRNG admitting 2<sup>63</sup> or more seeds and outputting `N` bits, and `P` is an `N * 2`-bit or longer permutation of an incrementing counter `C`.
 4. A PRNG described in (2) or (3), except with wraparound addition rather than `xor`.
 
