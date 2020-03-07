@@ -71,7 +71,7 @@
 
 <p><b>Reproducibility note</b></p>
 
-<p>Some applications, such as simulations, care about results that are reproducible, bit for bit, across computers and across runs of the application. Bruce Dawson, in &quot;Floating-Point Determinism&quot; (  <code>https://randomascii.wordpress.com/</code>  <code>2013/07/16/floating-point-determinism/</code> ), identified many reproducibility issues with floating-point numbers, and here is how they relate to the EDecimal and EFloat classes of this library:</p>
+<p>Some applications, such as simulations, care about results that are reproducible, bit for bit, across computers and across runs of the application. Bruce Dawson, in &quot;Floating-Point Determinism&quot; (  <code>https://randomascii.wordpress.com/</code>  <code>2013/07/16/floating-point-determinism/</code>  ), identified many reproducibility issues with floating-point numbers, and here is how they relate to the EDecimal and EFloat classes of this library:</p>
 
 <ul>
 <li><p>Runtime floating-point settings: All the settings that change how EDecimal and EFloat behave are given as parameters to the appropriate methods, especially via EContext objects, which specify the precision, rounding, and exponent range of numbers, among other things. The EDecimal and EFloat classes avoid the use of &quot;native&quot; floating-point data types (except for methods that convert to or from  <code>float</code>  ,  <code>double</code>  , or  <code>System.Decimal</code>  ). Such &quot;native&quot; types are often subject to runtime settings that change how floating-point math behaves with them, and these settings are often not accessible to .NET or Java code.</p></li>
