@@ -34,7 +34,7 @@ NuGet Package Manager Console.</p>
 
 <h2>About</h2>
 
-<p>Written by Peter O. in 2017.</p>
+<p>Written by Peter O.</p>
 
 <p>Any copyright is dedicated to the Public Domain.
 <a href="http://creativecommons.org/publicdomain/zero/1.0/">http://creativecommons.org/publicdomain/zero/1.0/</a></p>
@@ -43,6 +43,19 @@ NuGet Package Manager Console.</p>
 at: <a href="http://peteroupc.github.io/Numbers/">http://peteroupc.github.io/Numbers/</a></p>
 
 <h2>Release notes</h2>
+
+<p>Version 1.6.0</p>
+
+<ul>
+<li>Numerous performance improvements in the EInteger, EDecimal, EFloat, and ERational classes.  Among them is the use of caches for small EInteger, EDecimal, and EFloat values, and faster multiplication algorithms for large EIntegers.</li>
+<li>Correctness fixes to the Log() methods in EDecimal and EFloat</li>
+<li>New LogN() method in EDecimal and EFloat</li>
+<li>New methods in EInteger, including FromBytes, GetDigitCountAsEInteger, and DivRem(long)</li>
+<li>New ToSizedEInteger/ToSizedEIntegerIfExact/IsInteger methods in EDecimal, EFloat, and ERational</li>
+<li>New Create overloads in EFloat and ERational</li>
+<li>New Min and Max methods in EInteger and ERational</li>
+<li>Bug fixes</li>
+</ul>
 
 <p>Version 1.5.1</p>
 
@@ -64,172 +77,7 @@ at: <a href="http://peteroupc.github.io/Numbers/">http://peteroupc.github.io/Num
 <li>Other bug fixes.</li>
 </ul>
 
-<p>Version 1.4.3</p>
-
-<ul>
-<li>Fix accuracy issue with Log, especially where 1 &lt; x &lt; 1.07</li>
-<li>Remove StyleCop.Analyzers, which is used only in development, as dependency in .NET version</li>
-</ul>
-
-<p>Version 1.4.2</p>
-
-<ul>
-<li>Bug fix in the EInteger.CanFitInInt64 method</li>
-</ul>
-
-<p>Version 1.4.1</p>
-
-<ul>
-<li>Added EDecimals and EFloats classes to .NET 2.0 and .NET 4.0 versions; those classes were inadvertently omitted there</li>
-</ul>
-
-<p>Version 1.4.0</p>
-
-<ul>
-<li>Added EDecimals and EFloats class that implements more methods for arbitrary-precision decimal and binary numbers</li>
-<li>Increment and decrement operators added to EInteger, EDecimal, EFloat, and ERational classes</li>
-<li>Allowed EDecimal values in (-1, 0) to EDecimal&#39;s *Checked methods, to conform to documentation.</li>
-<li>Added WithNoFlagsOrTraps method and HasFlagsOrTraps property to EContext</li>
-<li>Add Mod(int), Pow(int), and FromBoolean methods to EInteger</li>
-<li>Add And, Not, Xor, and Or methods to EInteger.cs</li>
-<li>Add Copy method to EDecimal, EFloat, and ERational</li>
-<li>Add CompareToTotalMagnitude overload to EDecimal, EFloat, and ERational</li>
-<li>Deprecated Odd and ZeroFiveUp rounding modes</li>
-<li>Bug fixes and performance improvements</li>
-</ul>
-
-<p>Version 1.3.0:</p>
-
-<ul>
-<li>Improve performance of EDecimal.CompareToBinary in certain cases</li>
-<li>Fix ERational.ToSingle method</li>
-<li>Add EInteger overloads to EInteger.GetSignedBit, EInteger.GetUnsignedBit, EInteger.ShiftLeft, and EInteger.ShiftRight</li>
-<li>Add GetDigitCountAsEInteger and GetSignedBitLengthAsEInteger methods to EInteger class</li>
-<li>Check for overflow in GetLowBit, GetDigitCount, GetUnsignedBitLength, and
-GetSignedBitLength methods in EInteger class; deprecate those methods</li>
-<li>Add FromBoolean methods to EDecimal, EFloat, and ERational</li>
-</ul>
-
-<p>Version 1.2.2:</p>
-
-<ul>
-<li>Fixed referencing issues with minor version 1.2.1</li>
-</ul>
-
-<p>Version 1.2.1:</p>
-
-<ul>
-<li>Fixed bugs with new EInteger.Add and EInteger.Subtract overloads</li>
-</ul>
-
-<p>Version 1.2:</p>
-
-<ul>
-<li>Add arithmetic methods to EInteger, EDecimal, and EFloat that
-take &#39;int&#39; operands.</li>
-<li>Fix issues with EDecimal/EFloat Remainder method in corner cases</li>
-<li>Add RemainderNoRoundAfterDivide in EDecimal and EFloat</li>
-</ul>
-
-<p>Version 1.1.2</p>
-
-<ul>
-<li>Add .NET Framework 4.0 targeted assembly to avoid compiler warnings that can appear when this package is added to a project that targets .NET Framework 4.0 or later.</li>
-</ul>
-
-<p>Version 1.1.1</p>
-
-<ul>
-<li>Numbers .NET 2.0 assembly had wrong version number.</li>
-</ul>
-
-<p>Version 1.1.0</p>
-
-<ul>
-<li>Added build targeting .NET Framework 2.0.</li>
-</ul>
-
-<p>Version 1.0.2</p>
-
-<ul>
-<li>Really strong-name sign the assembly, which (probably) was inadvertently delay-signed in version 1.0.</li>
-</ul>
-
-<p>Version 1.0</p>
-
-<ul>
-<li>Filled out documentation so that there are no more undocumented parts</li>
-</ul>
-
-<p>Version 0.5</p>
-
-<ul>
-<li>Moved from .NET Portable to .NET Standard 1.0. Contributed by GitHub user NZSmartie</li>
-<li>Broke backwards compatibility with .NET Framework 4.0</li>
-<li>Bug fixes</li>
-</ul>
-
-<p>Version 0.4:</p>
-
-<ul>
-<li>Assembly signed with a strong name</li>
-<li>Some improvements to documentation</li>
-</ul>
-
-<p>Version 0.3:</p>
-
-<ul>
-<li>Deprecated ERational constructor</li>
-<li>Added many type conversion operators and methods
-to EDecimal, EFloat, ERational, and EInteger</li>
-<li>Added FromString, CompareToTotal, and
-CompareToTotalMagnitude methods to ERational</li>
-<li>An overload of RoundToExponentExact in EDecimal is
-no longer obsolete and uses the rounding mode specified</li>
-<li>Used a new division implementation in EInteger</li>
-<li>Used the new division implementation to optimize conversion
-of huge EIntegers to decimal strings</li>
-<li>Bug fixes</li>
-</ul>
-
-<p>Version 0.2.2:</p>
-
-<ul>
-<li>Previous assembly was released with wrong version number</li>
-</ul>
-
-<p>Version 0.2.1:</p>
-
-<ul>
-<li>Fixed corner cases in EFloat&#39;s ToSingle and ToDouble methods</li>
-</ul>
-
-<p>Version 0.2:</p>
-
-<ul>
-<li>Performance improvements</li>
-<li>Added several overloads for DivideToExponent method</li>
-<li>GCD code in EInteger rewritten</li>
-<li>Added CopySign, CompareToTotal, and CompareToTotalMagnitude
-methods to EDecimal and EFloat.</li>
-<li>Renamed several methods in EDecimal and EFloat</li>
-<li>RoundToIntegral* methods renamed to RoundToInteger* methods</li>
-<li>Renamed some EInteger integer conversion methods; added
-CanFitInInt64, GetUnsignedBitLengthAsEInteger,
-and GetLowBitAsEInteger methods</li>
-<li>Several operators added to EDecimal in C# version</li>
-<li>Rewrote code that converts from decimal to binary floating-point;
-add ToEFloat method taking an EContext in EDecimal</li>
-<li>Added ToShortestString method in EFloat</li>
-<li>Add UnlimitedHalfEven EContext object</li>
-<li>Bug fixes</li>
-</ul>
-
-<p>Version 0.1:</p>
-
-<ul>
-<li>Initial release</li>
-</ul>
+<p>For full release history, see <a href="History.md">History.md</a>.</p>
 </div><nav id="navigation"><ul>
 <li><a href="/">Back to start site.</a>
 <li><a href="https://github.com/peteroupc/peteroupc.github.io">This site's repository (source code)</a>

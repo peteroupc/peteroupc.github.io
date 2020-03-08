@@ -542,7 +542,7 @@ The following are not considered high-quality PRNGs:
     - `System.Random`, as implemented in the .NET Framework 4.7 (32-bit seed).
     - `msws` (Widynski 2017)<sup>[**(46)**](#Note46)</sup> (about 2<sup>54.1</sup> valid seeds).
     - JSF32.
-- In general, any PRNG with no guaranteed minimum cycle length of at least 2<sup>63</sup>, including:
+- Any PRNG with no guaranteed minimum cycle length of at least 2<sup>63</sup>, including:
     - Middle square.
     - Tyche and Tyche-i (Neves and Araujo 2011)<sup>[**(47)**](#Note47)</sup>.
     - Cellular-automaton PRNGs, including Rule 30.
