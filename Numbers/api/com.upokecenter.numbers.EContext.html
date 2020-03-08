@@ -170,7 +170,9 @@ Gets a value indicating whether to use a &quot;simplified&quot; arithmetic.</li>
 Returns this object in a text form intended to be read by humans.</li>
 <li><code>&lt;T&gt; T TriggerTraps​(T result,
         EContext trappableContext)</code><br>
-Not documented yet.</li>
+Throws trap exceptions if the given context has flags set that also have
+traps enabled for them in this context, and adds the given context&#39;s
+flags to this context if HasFlags for this context is true.</li>
 <li><code>EContext WithAdjustExponent​(boolean adjustExponent)</code><br>
 Copies this EContext and sets the copy&#39;s &quot;AdjustExponent&quot; property to the
 given value.</li>
@@ -1073,26 +1075,30 @@ with blank flags if it does.</li>
 <pre>public &lt;T&gt; T TriggerTraps​(T result, EContext trappableContext)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Throws trap exceptions if the given context has flags set that also have
+ traps enabled for them in this context, and adds the given context&#39;s
+ flags to this context if HasFlags for this context is true. This is
+ not a general-purpose method; it is intended to support custom
+ implementations of arithmetic operations.</p>
 
 <p><strong>Type Parameters:</strong></p>
 
 <ul>
-<li><code>T</code> - Type parameter not documented yet.</li>
+<li><code>T</code> - Data type for the result of the operation.</li>
 </ul>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>result</code> - The parameter <code>result</code> is a ``0 object.</p></li>
-<li><p><code>trappableContext</code> - The parameter <code>trappableContext</code> is a
-Numbers.EContext object.</p></li>
+<li><p><code>result</code> - The result of the operation.</p></li>
+<li><p><code>trappableContext</code> - An arithmetic context, usually a context returned by
+the GetNontrapping method. Can be null.</p></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>The return value is not documented yet.</li>
+<li>The parameter &quot;result&quot; if no trap exceptions were thrown.</li>
 </ul>
 
 <p><a href="/Numbers/">Back to Numbers start page.</a></p>
