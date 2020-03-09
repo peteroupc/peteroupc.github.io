@@ -28,15 +28,17 @@ In general, a hash function that passes is worthy of mention if it's noncryptogr
 **Combined PRNGs.** As G. Marsaglia (in KISS), D. Jones (in JKISS), and A. Fog (2015)<sup>[**(2)**](#Note2)</sup> have recognized, combining two or more PRNGs of weaker quality often leads to a higher-quality PRNG.  A PRNG that isn't high-quality could be converted to a high-quality PRNG in one of the following ways:
 
 - If the PRNG has at least 128 bits of state and uses a _permutation_ `P(x)` to transform that state, make the PRNG generate each number roughly like this instead: `NextNumber() = { seed = seed + 1; return P(seed); }`.  The following are examples of permutations: JSF64 by B. Jenkins; MIX and MIX-i (part of Tyche and Tyche-i); the Romu family by Mark Overton; block ciphers with a fixed seed; 32-bit to 32-bit mixing functions.
--If the PRNG admits 2<sup>63</sup> or more seeds, then each number it outputs can be combined with the next number from a sequence that cycles through at least 2<sup>128</sup> numbers, such as one of the following. (These two numbers can be combined via XOR or wraparound addition if they have the same size, or hashed together otherwise.)
+- If the PRNG admits 2<sup>63</sup> or more seeds, then each number it outputs can be combined with the next number from a sequence that cycles through at least 2<sup>128</sup> numbers, such as one of the following. (These two numbers can be combined via XOR or wraparound addition if they have the same size, or hashed together otherwise.)
      - A _Weyl sequence_.
      - A _permutation_ of an incrementing counter that starts at 0.
      - A PRNG with a fixed seed and a single cycle of 2<sup>128</sup> or more numbers, such as a linear congruential generator.
 - If the PRNG admits 2<sup>63</sup> or more seeds and has a minimum cycle length of 2<sup>128</sup> or more, each number it outputs can be combined with the next number from another PRNG with the same output length.
 
-Another example of combining two PRNGs is the "shrinking generator" technique (Cook 2019)<sup>[**(3)**](#Note3)</sup>.
+_Other combinations and transformations._  There are other ways to combine two PRNGs, or to transform a single PRNG, but they are not preferred ways to build a _high-quality PRNG_:
 
-**Transformed PRNGs.** A single PRNG can be transformed to one with higher quality, but the new PRNG is generally slower.  Examples of such transformations include "self-shrinking"; keeping some outputs and discarding others (as in RANLUX); and the Bays&ndash;Durham shuffle (as in C++'s `shuffle_block_engine`).
+- Keeping some outputs and discarding others (as in RANLUX). - The Bays&ndash;Durham shuffle (as in C++'s `shuffle_block_engine`).
+- The "shrinking generator" technique takes each bit from one PRNG only if the corresponding bit from another PRNG is set (see (Cook 2019)<sup>[**(3)**](#Note3)</sup>).
+- "Self-shrinking" and von Neumann unbiasing, which each transform a PRNG based on pairs of output bits.
 
 **Splittable PRNGs.** A _splittable PRNG_ consists of two operations: a `split` operation to create multiple new internal states from one, and a `generate` operation to produce a pseudorandom number from a state (Schaathun 2015; Claessen et al., 2013)<sup>[**(4)**](#Note4)</sup>. The Schaathun paper surveys several known constructions of splittable PRNGs.  Some of the constructions can be used by any PRNG, but do not necessarily lead to high-quality splittable PRNGs.
 

@@ -66,7 +66,7 @@ def prepareMarkdown(data)
    ret="#{$1} #{$2}\n\n"+contents+"\n\n"
    next ret
   }
-  data=data.gsub(/^(\#\#+)[ \t]+(Notes\b.*)\n+([\s\S]+?)(?=\#\#|\z)/){
+  data=data.gsub(/^(\#\#+)[ \t]+(Notes\b.*)\n+([\s\S]*?)(?=\#\#|\z)/){
    p1=$1
    p2=$2
    nt=$3
