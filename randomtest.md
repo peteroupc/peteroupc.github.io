@@ -34,9 +34,10 @@ In general, a hash function that passes is worthy of mention if it's noncryptogr
      - A PRNG with a fixed seed and a single cycle of 2<sup>128</sup> or more numbers, such as a linear congruential generator.
 - If the PRNG admits 2<sup>63</sup> or more seeds and has a minimum cycle length of 2<sup>128</sup> or more, each number it outputs can be combined with the next number from another PRNG with the same output length.
 
-_Other combinations and transformations._  There are other ways to combine two PRNGs, or to transform a single PRNG, but they are not preferred ways to build a _high-quality PRNG_:
+_Other combinations and transformations._  There are other ways to combine two PRNGs, or to transform a single PRNG, but they are not preferred ways to build a _high-quality PRNG_.  They include:
 
-- Keeping some outputs and discarding others (as in RANLUX). - The Bays&ndash;Durham shuffle (as in C++'s `shuffle_block_engine`).
+- Keeping some outputs and discarding others (as in RANLUX).
+- The Bays&ndash;Durham shuffle (as in C++'s `shuffle_block_engine`).
 - The "shrinking generator" technique takes each bit from one PRNG only if the corresponding bit from another PRNG is set (see (Cook 2019)<sup>[**(3)**](#Note3)</sup>).
 - "Self-shrinking" and von Neumann unbiasing, which each transform a PRNG based on pairs of output bits.
 
