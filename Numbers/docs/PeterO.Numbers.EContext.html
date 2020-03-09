@@ -54,7 +54,7 @@
 <li><code><a href="#Rounding">Rounding</a></code> - Gets the desired rounding mode when converting numbers that can&#39;t be represented in the given precision and exponent range.</li>
 <li><code><a href="#ToString">ToString()</a></code> - Returns this object in a text form intended to be read by humans.</li>
 <li><code><a href="#Traps">Traps</a></code> - Gets the traps that are set for each flag in the context.</li>
-<li><code><a href="#TriggerTraps_T_T_PeterO_Numbers_EContext">TriggerTraps&lt;T&gt;(T, PeterO.Numbers.EContext)</a></code> - Not documented yet.</li>
+<li><code><a href="#TriggerTraps_T_T_PeterO_Numbers_EContext">TriggerTraps&lt;T&gt;(T, PeterO.Numbers.EContext)</a></code> - Throws trap exceptions if the given context has flags set that also have traps enabled for them in this context, and adds the given context&#39;s flags to this context if HasFlags for this context is true.</li>
 <li><code><a href="#Unlimited">public static readonly PeterO.Numbers.EContext Unlimited;</a></code> - No specific (theoretical) limit on precision.</li>
 <li><code><a href="#UnlimitedHalfEven">public static readonly PeterO.Numbers.EContext UnlimitedHalfEven;</a></code> - No specific (theoretical) limit on precision.</li>
 <li><code><a href="#WithAdjustExponent_bool">WithAdjustExponent(bool)</a></code> - Copies this EContext and sets the copy&#39;s &quot;AdjustExponent&quot; property to the given value.</li>
@@ -635,21 +635,19 @@ is an ERounding object.</p></li>
     PeterO.Numbers.EContext trappableContext);
 </pre>
 
-<p>Not documented yet.</p>
+<p>Throws trap exceptions if the given context has flags set that also have traps enabled for them in this context, and adds the given context&#39;s flags to this context if HasFlags for this context is true. This is not a general-purpose method; it is intended to support custom implementations of arithmetic operations.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>result</i>: The parameter  <i>result</i>
-is a ``0 object.</p></li>
-<li><p><i>trappableContext</i>: The parameter  <i>trappableContext</i>
-is a Numbers.EContext object.</p></li>
-<li><p>&lt;T&gt;: Type parameter not documented yet.</p></li>
+<li><p>&lt;T&gt;: Data type for the result of the operation.</p></li>
+<li><p><i>result</i>: The result of the operation.</p></li>
+<li><p><i>trappableContext</i>: An arithmetic context, usually a context returned by the GetNontrapping method. Can be null.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p>The return value is not documented yet.</p>
+<p>The parameter &quot;result&quot; if no trap exceptions were thrown.</p>
 
 <p><a id="WithAdjustExponent_bool"></a></p>
 
