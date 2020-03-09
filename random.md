@@ -28,7 +28,7 @@ so that as a result, many applications use RNGs, especially built-in RNGs, that 
 
 **This document does not cover:**
 
-- Testing an RNG implementation for correctness<sup>[**(3)**](#Note3)</sup> or adequate random number generation.  See my document on [**testing PRNGs**](https://peteroupc.github.io/randomtest.md).
+- Testing an RNG implementation for correctness<sup>[**(3)**](#Note3)</sup> or adequate random number generation.  See my document on [**testing PRNGs**](https://peteroupc.github.io/randomtest.html).
 - Generation of random numbers with unequal probabilities (_nonuniform_ random numbers); I discuss this topic in [**another document**](https://peteroupc.github.io/randomfunc.html).
 - Generators of low-discrepancy sequences (quasirandom sequences), such as Sobol sequences.  They are not RNGs since the numbers they produce depend on prior results.
 - Applications for which the selection of RNGs is limited by regulatory requirements.
@@ -426,7 +426,7 @@ For random number generation purposes:
 - Good hash functions include cryptographic hash functions (e.g., SHA2-256, BLAKE2) and other hash functions that tend to produce wildly dispersed hash codes for nearby inputs.
 - Poor hash functions include linear PRNGs such as LCGs and the Xorshift family.
 
-The use of hash functions for other purposes (such as data lookup and data integrity) is beyond the scope of this document.  See my note on [**hash functions**](https://peteroupc.github.io/hash.md).
+The use of hash functions for other purposes (such as data lookup and data integrity) is beyond the scope of this document.  See my note on [**hash functions**](https://peteroupc.github.io/hash.html).
 
 <a id=Procedural_Noise_Functions></a>
 ### Procedural Noise Functions
@@ -556,7 +556,7 @@ The following are some ways a PRNG can be implemented:
 
 - As a _stateful_ object that stores an internal state and transforms it each time a "random" number is generated.  This kind of PRNG is initialized by converting a _seed_ to an internal state.
 - As a (stateless) function that transforms an internal state and outputs "random" numbers and the transformed state. This design is often seen in Haskell and other functional programming languages.
-- As a (stateless) "splittable PRNG", further described in my document on [**testing PRNGs**](https://peteroupc.github.io/randomtest.md).
+- As a (stateless) "splittable PRNG", further described in my document on [**testing PRNGs**](https://peteroupc.github.io/randomtest.html).
 
 <a id=Implementing_New_RNG_APIs></a>
 ### Implementing New RNG APIs
