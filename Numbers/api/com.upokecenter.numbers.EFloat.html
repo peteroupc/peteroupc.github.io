@@ -156,12 +156,14 @@ Returns a number with the same value as this one, but copying the sign
   int exponentSmall)</code><br>
 Returns a number with the value exponent*2^significand.</li>
 <li><code>static EFloat Create​(long mantissaLong,
-  int exponentSmall)</code><br></li>
+  int exponentSmall)</code><br>
+Returns a number with the value exponent*2^significand.</li>
 <li><code>static EFloat Create​(long mantissaLong,
   long exponentLong)</code><br>
 Returns a number with the value exponent*2^significand.</li>
 <li><code>static EFloat Create​(EInteger mantissa,
-  int exponentSmall)</code><br></li>
+  int exponentSmall)</code><br>
+Returns a number with the value exponent*2^significand.</li>
 <li><code>static EFloat Create​(EInteger mantissa,
   long exponentLong)</code><br>
 Returns a number with the value exponent*2^significand.</li>
@@ -871,10 +873,46 @@ value is negative (including a negative NaN).</li>
 <pre>public static EFloat Create​(long mantissaLong, int exponentSmall)
 </pre>
 
+<p>Returns a number with the value exponent*2^significand.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>mantissaLong</code> - Desired value for the significand.</p></li>
+<li><p><code>exponentSmall</code> - Desired value for the exponent.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An arbitrary-precision binary floating-point number.</li>
+</ul>
+
 <h3>Create</h3>
 
 <pre>public static EFloat Create​(EInteger mantissa, int exponentSmall)
 </pre>
+
+<p>Returns a number with the value exponent*2^significand.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>mantissa</code> - Desired value for the significand.</p></li>
+<li><p><code>exponentSmall</code> - Desired value for the exponent.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An arbitrary-precision binary floating-point number.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>java.lang.NullPointerException</code> - The parameter <code>mantissa</code> is null.</li>
+</ul>
 
 <h3>Create</h3>
 

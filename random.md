@@ -85,13 +85,13 @@ so that as a result, many applications use RNGs, especially built-in RNGs, that 
 <a id=Definitions></a>
 ## Definitions
 
-The following definitions are helpful in better understanding this document.
+In this document:
 
-- **Random number generator (RNG).** Software and/or hardware that seeks to generate numbers with the property that each possible outcome is as likely as any other without influence by anything else<sup>[**(4)**](#Note4)</sup>.
-- **Pseudorandom number generator (PRNG).** A random number generator in which the numbers it generates are completely determined by its input.
-- **Seed.**  Arbitrary data serving as a PRNG's input.
-- **Information security.** Keeping information safe from attacks that could access, use, delay, or manipulate that information.<sup>[**(5)**](#Note5)</sup>
-- **SHOULD, SHOULD NOT, MAY, RECOMMENDED, NOT RECOMMENDED.**  These terms have the meanings given in RFC 2119 and RFC 8174.
+- **Random number generator (RNG)** means software and/or hardware that seeks to generate numbers with the property that each possible outcome is as likely as any other without influence by anything else<sup>[**(4)**](#Note4)</sup>.
+- **Pseudorandom number generator (PRNG)** means a random number generator in which the numbers it generates are completely determined by its input.
+- **Seed** means arbitrary data serving as a PRNG's input.
+- **Information security** means keeping information safe from attacks that could access, use, delay, or manipulate that information.<sup>[**(5)**](#Note5)</sup>
+- **SHOULD, SHOULD NOT, MAY, RECOMMENDED, and NOT RECOMMENDED** are terms whose meanings are given in RFC 2119 and RFC 8174.
 
 <a id=Summary></a>
 ## Summary
@@ -526,28 +526,29 @@ Besides cryptographic RNGs, the following are examples of high-quality PRNGs:
 | A high-quality PRNG that uses a C-bit block cipher with an S-bit key to output C-bit encrypted counters (Salmon et al. 2011)<sup>[**(14)**](#Note14)</sup> | 2^S | At least 2^C per seed | C-bit counter | (C + S) bit state; C and S are each 64 or greater |
 | A high-quality PRNG that outputs hash codes of a C-bit counter and an S-bit seed (Salmon et al. 2011)<sup>[**(14)**](#Note14)</sup> | 2^S | At least 2^C per seed | C-bit counter | (C + S) bit state; C and S are each 64 or greater |
 | `gjrand` named after Geronimo Jones | 2^128 | At least 2^64 per seed | Separate stream per seed | 256-bit state |
-| JLKISS (Jones 2007/2010)<sup>[**(40)**](#Note40)</sup> | 2^64 * (2^64 - 1)^2 | At least (2^128 - 2^64) | No known implementation | 192-bit state |
-| JLKISS64 (Jones 2007/2010)<sup>[**(40)**](#Note40)</sup> | 2^64 * (2^64 - 1)^3 | At least (2^128 - 2^64) | No known implementation | 256-bit state |
-| A multiplicative [**linear congruential generator**](https://en.wikipedia.org/wiki/Linear_congruential_generator) (LCG) with prime modulus greater than 2<sup>63</sup> described in Table 2 of (L'Ecuyer 1999)<sup>[**(41)**](#Note41)</sup> | Modulus - 1 | Modulus - 1 | Jump-ahead | Memory used depends on modulus size |
-| XorShift\* 128/64 | 2^128 - 1 | 2^128 - 1 | No known implementation | 128-bit state.  Described by M. O'Neill in "You don't have to use PCG!", 2017.<sup>[**(42)**](#Note42)</sup> |
+| MRG32k3a (L'Ecuyer 1999)<sup>[**(40)**](#Note40)</sup>| Near 2^192 | 2 cycles with length near 2^191 | No known implementation | 192-bit state |
+| MRG31k3p (L'Ecuyer and Touzin 2000)<sup>[**(49)**](#Note49)</sup> | Near 2^186 | 2 cycles with length near 2^185 | No known implementation | 192-bit state |
+| JLKISS (Jones 2007/2010)<sup>[**(41)**](#Note41)</sup> | 2^64 * (2^64 - 1)^2 | At least (2^128 - 2^64) | No known implementation | 192-bit state |
+| JLKISS64 (Jones 2007/2010)<sup>[**(41)**](#Note41)</sup> | 2^64 * (2^64 - 1)^3 | At least (2^128 - 2^64) | No known implementation | 256-bit state |
+| A multiplicative [**linear congruential generator**](https://en.wikipedia.org/wiki/Linear_congruential_generator) (LCG) with prime modulus greater than 2<sup>63</sup> described in Table 2 of (L'Ecuyer 1999)<sup>[**(42)**](#Note42)</sup> | Modulus - 1 | Modulus - 1 | Jump-ahead | Memory used depends on modulus size |
+| XorShift\* 128/64 | 2^128 - 1 | 2^128 - 1 | No known implementation | 128-bit state.  Described by M. O'Neill in "You don't have to use PCG!", 2017.<sup>[**(43)**](#Note43)</sup> |
 | XorShift\* 64/32 | 2^64 - 1 | 2^64 - 1 | No known implementation | 64-bit state. Described by M. O'Neill in "You don't have to use PCG!", 2017. |
-| C++'s [**`std::ranlux48` engine**](http://www.cplusplus.com/reference/random/ranlux48/) | 2^577 - 2 | Not discussed (see notes) | No known implementation | Usually takes about 192 8-bit bytes of memory. Seed's bits cannot be all zeros or all ones (L&uuml;scher 1994)<sup>[**(43)**](#Note43)</sup>.  The maximum cycle length for `ranlux48`'s underlying generator is very close to 2^576.  This PRNG is not preferred.  |
+| C++'s [**`std::ranlux48` engine**](http://www.cplusplus.com/reference/random/ranlux48/) | 2^577 - 2 | Not discussed (see notes) | No known implementation | Usually takes about 192 8-bit bytes of memory. Seed's bits cannot be all zeros or all ones (L&uuml;scher 1994)<sup>[**(44)**](#Note44)</sup>.  The maximum cycle length for `ranlux48`'s underlying generator is very close to 2^576.  This PRNG is not preferred.  |
 | A high-quality PRNG that is an LCG with non-prime modulus (or a PRNG based on one, such as PCG) | Depends on parameters | Depends on parameters | Jump-ahead. What PCG calls "streams" does not produce independent sequences. | These PRNGs are not preferred; in particular, if the modulus is a power of 2, they produce highly correlated "random" number sequences from seeds that differ only in their high bits (see S. Vigna, "[**The wrap-up on PCG generators**](http://pcg.di.unimi.it/pcg.php)") and lowest bits have short cycles. |
 
 The following are not considered high-quality PRNGs:
 - Sequential counters.
-- Mersenne Twister (MT19937) shows a [**systematic failure**](http://xoroshiro.di.unimi.it/#quality) in BigCrush's LinearComp test (part of L'Ecuyer and Simard's "TestU01"). (See also (Vigna 2019)<sup>[**(44)**](#Note44)</sup>.) Moreover, it usually takes about 2500 8-bit bytes of memory.
+- Mersenne Twister (MT19937) shows a [**systematic failure**](http://xoroshiro.di.unimi.it/#quality) in BigCrush's LinearComp test (part of L'Ecuyer and Simard's "TestU01"). (See also (Vigna 2019)<sup>[**(45)**](#Note45)</sup>.) Moreover, it usually takes about 2500 8-bit bytes of memory.
 - Any PRNG that admits fewer than 2<sup>63</sup> seeds, including:
     - An LCG with modulus less than 2<sup>63</sup> (such as `java.util.Random` and C++'s `std::minstd_rand` and `std::minstd_rand0` engines).
     - `System.Random`, as implemented in the .NET Framework 4.7 (32-bit seed).
-    - `msws` (Widynski 2017)<sup>[**(45)**](#Note45)</sup> (about 2<sup>54.1</sup> valid seeds).
+    - `msws` (Widynski 2017)<sup>[**(46)**](#Note46)</sup> (about 2<sup>54.1</sup> valid seeds).
     - JSF32.
 - Any PRNG with no guaranteed minimum cycle length of at least 2<sup>63</sup>, including:
     - Middle square.
-    - Tyche and Tyche-i (Neves and Araujo 2011)<sup>[**(46)**](#Note46)</sup>.
+    - Tyche and Tyche-i (Neves and Araujo 2011)<sup>[**(47)**](#Note47)</sup>.
     - Cellular-automaton PRNGs, including Rule 30.
     - B. Jenkins's "A small noncryptographic PRNG" (sometimes known as JSF or JSF64).  For example, JSF32 (the 32-bit version) has a proven minimum cycle length of only 2<sup>20</sup> values per seed.
-    - Multiply-with-carry (MWC) generators.
 
 <a id=Designs_for_PRNGs></a>
 ### Designs for PRNGs
@@ -564,7 +565,7 @@ The following are some ways a PRNG can be implemented:
 A **programming language API** designed for reuse by applications could implement RNGs using the following guidelines:
 
 1.  The RNG API can include a method that fills one or more memory units (such as 8-bit bytes) completely with random bits.  See example 1.
-2.  If the API implements an automatically-seeded RNG, it SHOULD NOT allow applications to initialize that same RNG with a seed for reproducible "randomness"<sup>[**(47)**](#Note47)</sup> (it MAY provide a separate PRNG to accept such a seed). See example 2.
+2.  If the API implements an automatically-seeded RNG, it SHOULD NOT allow applications to initialize that same RNG with a seed for reproducible "randomness"<sup>[**(48)**](#Note48)</sup> (it MAY provide a separate PRNG to accept such a seed). See example 2.
 3.  If the API provides a PRNG that an application can seed for reproducible "randomness", it SHOULD document that PRNG and any methods the API provides that use that PRNG (such as shuffling and Gaussian number generation), and SHOULD NOT change that PRNG or those methods in a way that would change the "random" numbers they deliver for a given seed. See example 2.
 4.  A new programming language's **standard library** ought to include the following methods for generating numbers that behave like independent uniform random numbers (see my document on [**random number generation methods**](https://peteroupc.github.io/randomfunc.html) for details).
     - Four methods for random integers: 0 to `n` including `n`, 0 to `n` excluding `n`, `a` to `b` including `b`, and `a` to `b` excluding `b`.
@@ -685,25 +686,29 @@ See also N. Reed, "Quick And Easy GPU Random Numbers In D3D11", Nathan Reed's co
 
 <small><sup id=Note37>(37)</sup> Bernstein, D.J.  "Fast-key-erasure random number generators", Jun. 23, 2017.</small>
 
-<small><sup id=Note38>(38)</sup> For example, a new RNG can be constructed from two independent RNGs using the so-called "shrinking generator" technique: generate one bit from the first RNG and one bit from the second, and take the second bit if the first bit is 1, or repeat this process otherwise.  See J. D. Cook, "Using one RNG to sample another", June 4, 2019, for more on this technique, including its advantages and drawbacks.</small>
+<small><sup id=Note38>(38)</sup> An example is the "shrinking generator" technique to combine two RNGs; see J. D. Cook, "Using one RNG to sample another", June 4, 2019, for more.</small>
 
 <small><sup id=Note39>(39)</sup> Blackman, D., Vigna, S. "Scrambled Linear Pseudorandom Number Generators", 2019 (xoroshiro and xoshiro families); S. Vigna, "[**An experimental exploration of Marsaglia's `xorshift` generators, scrambled**](http://vigna.di.unimi.it/ftp/papers/xorshift.pdf)", 2016 (scrambled xorshift family).</small>
 
-<small><sup id=Note40>(40)</sup> Jones, D., "Good Practice in (Pseudo) Random Number Generation for Bioinformatics Applications", 2007/2010.</small>
+<small><sup id=Note40>(40)</sup> L'Ecuyer, P., "Good Parameters and Implementations for Combined Multiple Recursive Random Number Generators", _Operations Research_ 47(1), 1999.</small>
 
-<small><sup id=Note41>(41)</sup> P. L'Ecuyer, "Tables of Linear Congruential Generators of Different Sizes and Good Lattice Structure", _Mathematics of Computation_ 68(225), January 1999.</small>
+<small><sup id=Note41>(41)</sup> Jones, D., "Good Practice in (Pseudo) Random Number Generation for Bioinformatics Applications", 2007/2010.</small>
 
-<small><sup id=Note42>(42)</sup> This XorShift\* generator is not to be confused with S. Vigna's \*-scrambled PRNGs, which multiply the PRNG state differently than this one does.</small>
+<small><sup id=Note42>(42)</sup> P. L'Ecuyer, "Tables of Linear Congruential Generators of Different Sizes and Good Lattice Structure", _Mathematics of Computation_ 68(225), January 1999.</small>
 
-<small><sup id=Note43>(43)</sup> L&uuml;scher, M., "A Portable High-Quality Random Number Generator for Lattice Field Theory Simulations", arXiv:hep-lat/9309020 (1994).  See also Conrads, C., "[**Faster RANLUX Pseudo-Random Number Generators**](https://christoph-conrads.name/faster-ranlux-pseudo-random-number-generators/)".</small>
+<small><sup id=Note43>(43)</sup> This XorShift\* generator is not to be confused with S. Vigna's \*-scrambled PRNGs, which multiply the PRNG state differently than this one does.</small>
 
-<small><sup id=Note44>(44)</sup> S. Vigna, "It Is High Time We Let Go of the Mersenne Twister", arXiv:1910.06437 [cs.DS], 2019.</small>
+<small><sup id=Note44>(44)</sup> L&uuml;scher, M., "A Portable High-Quality Random Number Generator for Lattice Field Theory Simulations", arXiv:hep-lat/9309020 (1994).  See also Conrads, C., "[**Faster RANLUX Pseudo-Random Number Generators**](https://christoph-conrads.name/faster-ranlux-pseudo-random-number-generators/)".</small>
 
-<small><sup id=Note45>(45)</sup> Widynski, B., "Middle Square Weyl Sequence RNG", arXiv:1704.00358 [cs.CR], 2017.</small>
+<small><sup id=Note45>(45)</sup> S. Vigna, "It Is High Time We Let Go of the Mersenne Twister", arXiv:1910.06437 [cs.DS], 2019.</small>
 
-<small><sup id=Note46>(46)</sup> Neves, S., and Araujo, F., "Fast and Small Nonlinear Pseudorandom Number Generators for Computer Simulation", 2011.</small>
+<small><sup id=Note46>(46)</sup> Widynski, B., "Middle Square Weyl Sequence RNG", arXiv:1704.00358 [cs.CR], 2017.</small>
 
-<small><sup id=Note47>(47)</sup> Allowing applications to do so would hamper forward compatibility &mdash; the API would then be less free to change how the RNG is implemented in the future (e.g., to use a cryptographic or otherwise "better" RNG), or to make improvements or bug fixes in methods that use that RNG (such as shuffling and Gaussian number generation).  (As a notable example, the V8 JavaScript engine recently changed its `Math.random()` implementation to use a variant of `xorshift128+`, which is backward compatible because nothing in JavaScript allows  `Math.random()` to be seeded.)  Nevertheless, APIs can still allow applications to provide additional input ("entropy") to the RNG in order to increase its randomness rather than to ensure repeatability.</small>
+<small><sup id=Note47>(47)</sup> Neves, S., and Araujo, F., "Fast and Small Nonlinear Pseudorandom Number Generators for Computer Simulation", 2011.</small>
+
+<small><sup id=Note48>(48)</sup> Allowing applications to do so would hamper forward compatibility &mdash; the API would then be less free to change how the RNG is implemented in the future (e.g., to use a cryptographic or otherwise "better" RNG), or to make improvements or bug fixes in methods that use that RNG (such as shuffling and Gaussian number generation).  (As a notable example, the V8 JavaScript engine recently changed its `Math.random()` implementation to use a variant of `xorshift128+`, which is backward compatible because nothing in JavaScript allows  `Math.random()` to be seeded.)  Nevertheless, APIs can still allow applications to provide additional input ("entropy") to the RNG in order to increase its randomness rather than to ensure repeatability.</small>
+
+<small><sup id=Note49>(49)</sup> L'Ecuyer, P., Touzin, R., "Fast Combined Multiple Recursive Generators with Multipliers of the Form a = &pm;2<sup>q</sup> &pm; 2<sup>r</sup>", _Proceedings of the 2000 Winter Simulation Conference_, 2000.</small>
 
 <a id=Appendix></a>
 ## Appendix

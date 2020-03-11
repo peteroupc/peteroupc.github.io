@@ -27,7 +27,7 @@ In general, a hash function that passes is worthy of mention if it's noncryptogr
 
 **Combined PRNGs.** As G. Marsaglia (in KISS), D. Jones (in JKISS), and A. Fog (2015)<sup>[**(2)**](#Note2)</sup> have recognized, combining two or more PRNGs of weaker quality often leads to a higher-quality PRNG.  A PRNG that isn't high-quality could be converted to a high-quality PRNG in one of the following ways:
 
-- If the PRNG has at least 128 bits of state and uses a _permutation_ `P(x)` to transform that state, make the PRNG generate each number roughly like this instead: `NextNumber() = { seed = seed + 1; return P(seed); }`.  The following are examples of permutations: JSF64 by B. Jenkins; MIX and MIX-i (part of Tyche and Tyche-i); the Romu family by Mark Overton; block ciphers with a fixed seed; 32-bit to 32-bit mixing functions.
+- If the PRNG has at least 128 bits of state and uses a _permutation_ `P(x)` to transform that state, make the PRNG generate each number roughly like this instead: `NextNumber() = { seed = seed + 1; return P(seed); }`.  The following are examples of permutations: JSF64 by B. Jenkins; MIX and MIX-i (part of Tyche and Tyche-i); the Romu family by Mark Overton; block ciphers with a fixed key; 32-bit to 32-bit mixing functions.
 - If the PRNG admits 2<sup>63</sup> or more seeds, then each number it outputs can be combined with the next number from a sequence that cycles through at least 2<sup>128</sup> numbers, such as one of the following. (These two numbers can be combined via XOR or wraparound addition if they have the same size, or hashed together otherwise.)
      - A _Weyl sequence_.
      - A _permutation_ of an incrementing counter that starts at 0.
