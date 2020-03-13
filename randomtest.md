@@ -27,9 +27,9 @@ In general, a hash function that passes is worthy of mention if it's noncryptogr
 
 **Combined PRNGs.** As G. Marsaglia (in KISS), D. Jones (in JKISS), and A. Fog (2015)<sup>[**(2)**](#Note2)</sup> have recognized, combining two or more PRNGs of weaker quality often leads to a higher-quality PRNG.  A PRNG that isn't high-quality could be converted to a high-quality PRNG in one of the following ways:
 
-- If the PRNG has at least 128 bits of state and uses a _permutation_<sup>[**(5)**](#Note5)</sup> `P(x)` to transform that state, have the PRNG generate each number as follows instead:
-     - Add 1 to the state (using wraparound addition).
-     - Output either `P(state)` or `S(P(state))`, where `S(x)` is one of the four _scramblers_ defined in (Blackman and Vigna 2019)<sup>[**(6)**](#Note6)</sup> (+, ++, \*, \*\*).
+- If the PRNG has at least 128 bits of state and uses a _permutation_<sup>[**(3)**](#Note3)</sup> `P(x)` to transform that state, have the PRNG generate each number as follows instead:
+     1. Add 1 to the state (using wraparound addition).
+     2. Output either `P(state)` or `S(P(state))`, where `S(x)` is one of the four _scramblers_ defined in (Blackman and Vigna 2019)<sup>[**(4)**](#Note4)</sup> (+, ++, \*, \*\*).
 - If the PRNG admits 2<sup>63</sup> or more seeds, then each number it outputs can be combined with the next number from a sequence that cycles through at least 2<sup>128</sup> numbers, such as one of the following. (These two numbers can be combined via XOR or wraparound addition if they have the same size, or hashed together otherwise.)
      - A _Weyl sequence_.
      - A _permutation_ of an incrementing counter that starts at 0.
@@ -41,10 +41,10 @@ _Other combinations and transformations._  There are other ways to combine two P
 - Keeping some outputs and discarding others (as in RANLUX).
 - The Bays&ndash;Durham shuffle (as in C++'s `shuffle_block_engine`).
 - Transforming a PRNG's outputs with a reversible function.
-- The "shrinking generator" technique takes each bit from one PRNG only if the corresponding bit from another PRNG is set (see (Cook 2019)<sup>[**(3)**](#Note3)</sup>).
+- The "shrinking generator" technique, which takes each bit from one PRNG only if the corresponding bit from another PRNG is set (see (Cook 2019)<sup>[**(5)**](#Note5)</sup>).
 - "Self-shrinking" and von Neumann unbiasing, which each transform a PRNG based on pairs of output bits.
 
-**Splittable PRNGs.** A _splittable PRNG_ consists of two operations: a `split` operation to create multiple new internal states from one, and a `generate` operation to produce a pseudorandom number from a state (Schaathun 2015; Claessen et al., 2013)<sup>[**(4)**](#Note4)</sup>. The Schaathun paper surveys several known constructions of splittable PRNGs.  Some of the constructions can be used by any PRNG, but do not necessarily lead to high-quality splittable PRNGs.
+**Splittable PRNGs.** A _splittable PRNG_ consists of two operations: a `split` operation to create multiple new internal states from one, and a `generate` operation to produce a pseudorandom number from a state (Schaathun 2015; Claessen et al., 2013)<sup>[**(6)**](#Note6)</sup>. The Schaathun paper surveys several known constructions of splittable PRNGs.  Some of the constructions can be used by any PRNG, but do not necessarily lead to high-quality splittable PRNGs.
 
 The Schaathun paper suggests the following four random number sequences for testing purposes:
 
@@ -67,10 +67,10 @@ The Schaathun paper suggests the following four random number sequences for test
 
 <small><sup id=Note2>(2)</sup> Agner Fog, "[**Pseudo-Random Number Generators for Vector Processors and Multicore Processors**](http://digitalcommons.wayne.edu/jmasm/vol14/iss1/23)", _Journal of Modern Applied Statistical Methods_ 14(1), article 23 (2015).</small>
 
-<small><sup id=Note3>(3)</sup> J. D. Cook, "Using one RNG to sample another", June 4, 2019.</small>
+<small><sup id=Note3>(3)</sup> A _permutation_ is a reversible mapping from N-bit integers to N-bit integers.  Examples include: JSF64 by B. Jenkins; MIX and MIX-i (part of Tyche and Tyche-i); the Romu family by Mark Overton; block ciphers with a fixed key; 32-bit to 32-bit mixing functions.</small>
 
-<small><sup id=Note4>(4)</sup> Schaathun, H.G. "Evaluation of Splittable Pseudo-Random Generators", 2015; Claessen, K., et al. "Splittable Pseudorandom Number Generators using Cryptographic Hashing", Proceedings of Haskell Symposium 2013, pp. 47-58.</small>
+<small><sup id=Note4>(4)</sup> Blackman, D., Vigna, S., "Scrambled Linear Pseudorandom Number Generators", 2019.</small>
 
-<small><sup id=Note5>(5)</sup> A _permutation_ is a reversible mapping from N-bit integers to N-bit integers.  Examples include: JSF64 by B. Jenkins; MIX and MIX-i (part of Tyche and Tyche-i); the Romu family by Mark Overton; block ciphers with a fixed key; 32-bit to 32-bit mixing functions.</small>
+<small><sup id=Note5>(5)</sup> J. D. Cook, "Using one RNG to sample another", June 4, 2019.</small>
 
-<small><sup id=Note6>(6)</sup> Blackman, D., Vigna, S., "Scrambled Linear Pseudorandom Number Generators", 2019.</small>
+<small><sup id=Note6>(6)</sup> Schaathun, H.G. "Evaluation of Splittable Pseudo-Random Generators", 2015; Claessen, K., et al. "Splittable Pseudorandom Number Generators using Cryptographic Hashing", Proceedings of Haskell Symposium 2013, pp. 47-58.</small>
