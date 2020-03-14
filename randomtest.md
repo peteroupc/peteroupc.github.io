@@ -40,7 +40,7 @@ _Other combinations and transformations._  There are other ways to combine two P
 
 - Keeping some outputs and discarding others (as in RANLUX).
 - The [**Bays&ndash;Durham shuffle**](https://peteroupc.github.io/bdshuffle.html) (as in C++'s `shuffle_block_engine`).
-- Transforming a PRNG's outputs with a reversible function.
+- Transforming a PRNG's outputs with a reversible function (e.g., Mersenne Twister's "tempering").
 - The "shrinking generator" technique, which takes each bit from one PRNG only if the corresponding bit from another PRNG is set (see (Cook 2019)<sup>[**(5)**](#Note5)</sup>).
 - "Self-shrinking" and von Neumann unbiasing, which each transform a PRNG based on pairs of output bits.
 
