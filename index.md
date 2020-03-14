@@ -14,6 +14,7 @@ Open-source articles on programming subjects.
 * [Random Number Generation and Sampling Methods](./randomfunc.html)
 * [Testing PRNGs for High-Quality Randomness](./randomtest.html)
 * [A Note on Hash Functions](./hash.html)
+* [A Note on the Bays&ndash;Durham Shuffle](./bdshuffle.html)
 * [File Name Support in Applications](./filenames.html)
 * [Color Topics for Programmers](./colorgen.html)
 * [Supplemental Color Topics for Programmers](./suppcolor.html)

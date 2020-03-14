@@ -79,7 +79,6 @@ so that as a result, many applications use RNGs, especially built-in RNGs, that 
 - [**Notes**](#Notes)
 - [**Appendix**](#Appendix)
     - [**Suggested Entropy Size**](#Suggested_Entropy_Size)
-    - [**Bays&ndash;Durham Shuffle**](#Bays_ndash_Durham_Shuffle)
 - [**License**](#License)
 
 <a id=Definitions></a>
@@ -755,16 +754,6 @@ The following Python code suggests how many bits of entropy are needed for shuff
         multiple decks of cards in one. """
       return ceillog2(fac(numDecks*numCards)/ \
           (fac(numDecks)**numCards))
-
-<a id=Bays_ndash_Durham_Shuffle></a>
-### Bays&ndash;Durham Shuffle
-
-The Bays&ndash;Durham shuffle extends a PRNG's maximum cycle length by giving it a bigger state. Generally, for a size of `tablesize`, that maximum is extended to about the number of ways to arrange a list of size `tablesize`.  The following describes the Bays&ndash;Durham shuffle with a size of `tablesize`. (C++'s `shuffle_order_engine` implements something similar to the shuffle described below.) For PRNGs that output 32- or 64-bit integers 0 or greater, a `tablesize` of 256, 512, or 1024 is suggested.
-
-- To initialize, fill a list with as many numbers from the PRNG as `tablesize`, then set `k` to another number from the PRNG.
-- For each "random" number, take the entry at position (`k` % `tablesize`) in the list, where '%' is the remainder operator and positions start at 0, then set `k` to that entry, then replace the entry at that position with a new number from the PRNG, then output `k`.
-
-The Bays&ndash;Durham shuffle is NOT RECOMMENDED for information security purposes.
 
 <a id=License></a>
 ## License

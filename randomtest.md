@@ -39,7 +39,7 @@ In general, a hash function that passes is worthy of mention if it's noncryptogr
 _Other combinations and transformations._  There are other ways to combine two PRNGs, or to transform a single PRNG, but they are not preferred ways to build a _high-quality PRNG_.  They include:
 
 - Keeping some outputs and discarding others (as in RANLUX).
-- The Bays&ndash;Durham shuffle (as in C++'s `shuffle_block_engine`).
+- The [**Bays&ndash;Durham shuffle**](https://peteroupc.github.io/bdshuffle.html) (as in C++'s `shuffle_block_engine`).
 - Transforming a PRNG's outputs with a reversible function.
 - The "shrinking generator" technique, which takes each bit from one PRNG only if the corresponding bit from another PRNG is set (see (Cook 2019)<sup>[**(5)**](#Note5)</sup>).
 - "Self-shrinking" and von Neumann unbiasing, which each transform a PRNG based on pairs of output bits.

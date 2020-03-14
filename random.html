@@ -119,7 +119,6 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 
 <ul>
 <li><a href="#Suggested_Entropy_Size"><strong>Suggested Entropy Size</strong></a></li>
-<li><a href="#Bays_ndash_Durham_Shuffle"><strong>Bays&ndash;Durham Shuffle</strong></a></li>
 </ul></li>
 <li><a href="#License"><strong>License</strong></a></li>
 </ul>
@@ -1194,19 +1193,6 @@ def stateLengthDecks(numDecks, numCards):
   return ceillog2(fac(numDecks*numCards)/ \
       (fac(numDecks)**numCards))
 </pre>
-
-<p><a id=Bays_ndash_Durham_Shuffle></a></p>
-
-<h3>Bays&ndash;Durham Shuffle</h3>
-
-<p>The Bays&ndash;Durham shuffle extends a PRNG&#39;s maximum cycle length by giving it a bigger state. Generally, for a size of <code>tablesize</code>, that maximum is extended to about the number of ways to arrange a list of size <code>tablesize</code>.  The following describes the Bays&ndash;Durham shuffle with a size of <code>tablesize</code>. (C++&#39;s <code>shuffle_order_engine</code> implements something similar to the shuffle described below.) For PRNGs that output 32- or 64-bit integers 0 or greater, a <code>tablesize</code> of 256, 512, or 1024 is suggested.</p>
-
-<ul>
-<li>To initialize, fill a list with as many numbers from the PRNG as <code>tablesize</code>, then set <code>k</code> to another number from the PRNG.</li>
-<li>For each &quot;random&quot; number, take the entry at position (<code>k</code> % <code>tablesize</code>) in the list, where &#39;%&#39; is the remainder operator and positions start at 0, then set <code>k</code> to that entry, then replace the entry at that position with a new number from the PRNG, then output <code>k</code>.</li>
-</ul>
-
-<p>The Bays&ndash;Durham shuffle is NOT RECOMMENDED for information security purposes.</p>
 
 <p><a id=License></a></p>
 
