@@ -91,7 +91,6 @@
 <li><a href="#Random_Walks"><strong>Random Walks</strong></a></li>
 <li><a href="#Randomization_in_Statistical_Testing"><strong>Randomization in Statistical Testing</strong></a></li>
 <li><a href="#A_Note_on_Sorting_Random_Numbers"><strong>A Note on Sorting Random Numbers</strong></a></li>
-<li><a href="#Security_Considerations"><strong>Security Considerations</strong></a></li>
 </ul></li>
 <li><a href="#General_Non_Uniform_Distributions"><strong>General Non-Uniform Distributions</strong></a>
 
@@ -176,6 +175,7 @@
 <li><a href="#Mean_and_Variance_Calculation"><strong>Mean and Variance Calculation</strong></a></li>
 <li><a href="#Norm_Calculation"><strong>Norm Calculation</strong></a></li>
 <li><a href="#Multithreading_Note"><strong>Multithreading Note</strong></a></li>
+<li><a href="#Security_Considerations"><strong>Security Considerations</strong></a></li>
 </ul></li>
 <li><a href="#License"><strong>License</strong></a></li>
 </ul>
@@ -846,18 +846,6 @@ END METHOD
 
 <p>In general, sorting random numbers is no different from sorting any other data. (Sorting algorithms are outside this document&#39;s scope.) <sup><a href="#Note11"><strong>(11)</strong></a></sup></p>
 
-<p><a id=Security_Considerations></a></p>
-
-<h3>Security Considerations</h3>
-
-<p>If an application generates random numbers for information security purposes, such as to generate random passwords or encryption keys, the following applies:</p>
-
-<ol>
-<li><strong>Cryptographic RNG.</strong> The application has to use a cryptographic RNG.  Choosing a cryptographic RNG is outside the scope of this document.</li>
-<li><strong>Timing attacks.</strong>  Certain security attacks have exploited timing and other differences to recover cleartext, encryption keys, or other sensitive data.  Thus, so-called &quot;constant-time&quot; security algorithms have been developed.  Such algorithms are designed to have no timing differences that reveal anything about any secret inputs (such as keys, passwords, or RNG &quot;seeds&quot;), and they often have no data-dependent control flows or memory access patterns.  Examples of &quot;constant-time&quot; algorithms can include a <code>RNDINT()</code> implementation that uses Montgomery reduction.  But even if an algorithm has variable running time (e.g., <a href="#Rejection_Sampling"><strong>rejection sampling</strong></a>), it may or may not have security-relevant timing differences, especially if it does not reuse secrets.</li>
-<li><strong>Security algorithms out of scope.</strong> Security algorithms that take random secrets to generate random security parameters, such as encryption keys, public/private key pairs, elliptic curves, or points on an elliptic curve, are outside this document&#39;s scope.</li>
-</ol>
-
 <p><a id=General_Non_Uniform_Distributions></a></p>
 
 <h2>General Non-Uniform Distributions</h2>
@@ -1254,7 +1242,7 @@ END METHOD
 <li>For applications that may care about reproducible &quot;random&quot; numbers (unit tests, simulations, machine learning, and so on), using non-integer numbers can complicate the task of making a method reproducible from run to run or across computers.<sup><a href="#Note19"><strong>(19)</strong></a></sup></li>
 </ul>
 
-<p>Even when used with a secure random number generator, none of the methods given in this section are designed to generate random numbers for information security purposes (e.g., random encryption keys or other secrets), unless noted otherwise.  In fact, random non-integer numbers are rarely if ever seen in serious information security applications.</p>
+<p>The methods in this section should not be used to generate random numbers for information security purposes, even with a secure random number generator.  See &quot;Security Considerations&quot; in the appendix.</p>
 
 <p><a id=Uniform_Random_Real_Numbers></a></p>
 
@@ -2739,12 +2727,12 @@ and &quot;<a href="https://randomascii.wordpress.com/2013/07/16/floating-point-d
 <li>Computing the sum of twelve <code>RNDU01OneExc()</code> numbers (see Note 13) and subtracting the sum by 6 (see also <a href="https://en.wikipedia.org/wiki/Irwin%E2%80%93Hall_distribution"><strong>&quot;Irwin&ndash;Hall distribution&quot; on Wikipedia</strong></a>) results in approximate standard normal (<code>mu</code>=0, <code>sigma</code>=1) random numbers, whose values are not less than -6 or greater than 6; on the other hand, in a standard normal distribution, the chance of results less than -6 or greater than 6 is generally negligible.</li>
 <li>Computing the sum of twelve <code>RNDRANGEMaxExc(0, sigma)</code> numbers (see Note 13) and subtracting the sum by 6 * <code>sigma</code> results in approximate normal random numbers with <code>mu</code>=0 and the given <code>sigma</code>, whose values are not less than -6 * <code>sigma</code> or greater than 6 * <code>sigma</code>.</li>
 <li>Generating <code>RNDU01ZeroOneExc()</code>, then running the standard normal distribution&#39;s inverse cumulative distribution function on that number, results in a random number from that distribution.  An approximation is found in M. Wichura, <em>Applied Statistics</em> 37(3), 1988.  See also <a href="https://www.johndcook.com/blog/normal_cdf_inverse/"><strong>&quot;A literate program to compute the inverse of the normal CDF&quot;</strong></a>.</li>
-<li>Methods implementing a variant of the normal distribution, the <em>discrete Gaussian distribution</em>, generate <em>integers</em> that approximately follow the normal distribution.  Two recent algorithms, one by A. Karmakar et al. (&quot;Constant-Time Gaussian Random Sampling&quot;), and another by Micciancio and Walter (2017, &quot;Gaussian Sampling over the Integers: Efficient, Generic, Constant-Time&quot;), are designed to reduce timing differences that a security attack could exploit.</li>
+<li>Methods implementing a variant of the normal distribution, the <em>discrete Gaussian distribution</em>, generate <em>integers</em> that approximately follow the normal distribution.  There are so-called &quot;constant-time&quot; algorithms to sample from this distribution (e.g., Karmakar and Micciancio&ndash;Walter), but they are meant for use in specific security algorithms (digital signatures) rather than general use.</li>
 </ol>
 
 <p>In 2007, Thomas, D., et al. gave a survey of normal random number methods in &quot;Gaussian Random Number Generators&quot;, <em>ACM Computing Surveys</em> 39(4), 2007, article 11.</small></p>
 
-<p><small><sup id=Note35>(35)</sup> &quot;A simple method for generating gamma variables&quot;,<em>ACM Transactions on Mathematical Software</em> 26(3), 2000.</small></p>
+<p><small><sup id=Note35>(35)</sup> &quot;A simple method for generating gamma variables&quot;, <em>ACM Transactions on Mathematical Software</em> 26(3), 2000.</small></p>
 
 <p><small><sup id=Note36>(36)</sup> Hofert, M., and Maechler, M.  &quot;Nested Archimedean Copulas Meet R: The nacopula Package&quot;.  Journal of Statistical Software 39(9), 2011, pp. 1-20.</small></p>
 
@@ -2755,6 +2743,8 @@ and &quot;<a href="https://randomascii.wordpress.com/2013/07/16/floating-point-d
 <p><small><sup id=Note39>(39)</sup> See also a <a href="http://mathworld.wolfram.com/BallPointPicking.html"><strong>MathWorld article</strong></a>, which was the inspiration for these two methods, and the <em>Stack Overflow</em> question &quot;How to generate uniform random points in (arbitrary) N-dimension ball?&quot;, <code>questions/54544971</code>.</small></p>
 
 <p><small><sup id=Note40>(40)</sup> See the <em>Mathematics Stack Exchange</em> question titled &quot;Random multivariate in hyperannulus&quot;, <code>questions/1885630</code>.</small></p>
+
+<p><small><sup id=Note41>(41)</sup> Mironov, I., &quot;On Significance of the Least Significant Bits For Differential Privacy&quot;, 2012.</small></p>
 
 <p><a id=Appendix></a></p>
 
@@ -2846,6 +2836,20 @@ END METHOD
 <h3>Multithreading Note</h3>
 
 <p>Multithreading can serve as a fast way to generate multiple random numbers at once; it is not reflected in the pseudocode given in this page.  In general, this involves dividing a block of memory into chunks, assigning each chunk to a thread, giving each thread its own RNG instance, and letting each thread fill its assigned chunk with random numbers.  For an example, see &quot;<a href="https://docs.scipy.org/doc/numpy/reference/random/multithreading.html"><strong>Multithreaded Generation</strong></a>&quot;.</p>
+
+<p><a id=Security_Considerations></a></p>
+
+<h3>Security Considerations</h3>
+
+<p>If an application generates random numbers for information security purposes, such as to generate random passwords or encryption keys, the following applies:</p>
+
+<ol>
+<li><strong>Cryptographic RNG.</strong> The application has to use a cryptographic RNG.  Choosing a cryptographic RNG is outside the scope of this document.</li>
+<li><strong>Timing attacks.</strong>  Certain security attacks have exploited timing and other differences to recover cleartext, encryption keys, or other sensitive data.  Thus, so-called &quot;constant-time&quot; security algorithms have been developed.  Such algorithms are designed to have no timing differences that reveal anything about any secret inputs (such as keys, passwords, or RNG &quot;seeds&quot;), and they often have no data-dependent control flows or memory access patterns.  Examples of &quot;constant-time&quot; algorithms can include a <code>RNDINT()</code> implementation that uses Montgomery reduction.  But even if an algorithm has variable running time (e.g., <a href="#Rejection_Sampling"><strong>rejection sampling</strong></a>), it may or may not have security-relevant timing differences, especially if it does not reuse secrets.</li>
+<li><strong>Security algorithms out of scope.</strong> Security algorithms that take random secrets to generate random security parameters, such as encryption keys, public/private key pairs, elliptic curves, or points on an elliptic curve, are outside this document&#39;s scope.</li>
+</ol>
+
+<p>In nearly all security-sensitive applications, random numbers generated for security purposes are integers.  In very rare cases, they&#39;re fixed-point numbers.  Even with a secure random number generator, the use of random floating-point numbers can cause security issues not present with integers or fixed point numbers; one example is found in (Mironov 2012)<sup><a href="#Note41"><strong>(41)</strong></a></sup></p>
 
 <p><a id=License></a></p>
 

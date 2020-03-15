@@ -65,7 +65,6 @@ All the random number methods presented on this page are ultimately based on an 
     - [**Random Walks**](#Random_Walks)
     - [**Randomization in Statistical Testing**](#Randomization_in_Statistical_Testing)
     - [**A Note on Sorting Random Numbers**](#A_Note_on_Sorting_Random_Numbers)
-    - [**Security Considerations**](#Security_Considerations)
 - [**General Non-Uniform Distributions**](#General_Non_Uniform_Distributions)
     - [**Weighted Choice**](#Weighted_Choice)
         - [**Weighted Choice With Replacement**](#Weighted_Choice_With_Replacement)
@@ -123,6 +122,7 @@ All the random number methods presented on this page are ultimately based on an 
     - [**Mean and Variance Calculation**](#Mean_and_Variance_Calculation)
     - [**Norm Calculation**](#Norm_Calculation)
     - [**Multithreading Note**](#Multithreading_Note)
+    - [**Security Considerations**](#Security_Considerations)
 - [**License**](#License)
 
 <a id=Notation_and_Definitions></a>
@@ -661,15 +661,6 @@ After creating the simulated data sets, one or more statistics, such as the mean
 
 In general, sorting random numbers is no different from sorting any other data. (Sorting algorithms are outside this document's scope.) <sup>[**(11)**](#Note11)</sup>
 
-<a id=Security_Considerations></a>
-### Security Considerations
-
-If an application generates random numbers for information security purposes, such as to generate random passwords or encryption keys, the following applies:
-
-1. **Cryptographic RNG.** The application has to use a cryptographic RNG.  Choosing a cryptographic RNG is outside the scope of this document.
-2. **Timing attacks.**  Certain security attacks have exploited timing and other differences to recover cleartext, encryption keys, or other sensitive data.  Thus, so-called "constant-time" security algorithms have been developed.  Such algorithms are designed to have no timing differences that reveal anything about any secret inputs (such as keys, passwords, or RNG "seeds"), and they often have no data-dependent control flows or memory access patterns.  Examples of "constant-time" algorithms can include a `RNDINT()` implementation that uses Montgomery reduction.  But even if an algorithm has variable running time (e.g., [**rejection sampling**](#Rejection_Sampling)), it may or may not have security-relevant timing differences, especially if it does not reuse secrets.
-3. **Security algorithms out of scope.** Security algorithms that take random secrets to generate random security parameters, such as encryption keys, public/private key pairs, elliptic curves, or points on an elliptic curve, are outside this document's scope.
-
 <a id=General_Non_Uniform_Distributions></a>
 ## General Non-Uniform Distributions
 
@@ -1002,7 +993,7 @@ However, whenever possible, **applications should work with random integers**, r
 - No computer can choose from among all real numbers between two others, since there are infinitely many of them.
 - For applications that may care about reproducible "random" numbers (unit tests, simulations, machine learning, and so on), using non-integer numbers can complicate the task of making a method reproducible from run to run or across computers.<sup>[**(19)**](#Note19)</sup>
 
-Even when used with a secure random number generator, none of the methods given in this section are designed to generate random numbers for information security purposes (e.g., random encryption keys or other secrets), unless noted otherwise.  In fact, random non-integer numbers are rarely if ever seen in serious information security applications.
+The methods in this section should not be used to generate random numbers for information security purposes, even with a secure random number generator.  See "Security Considerations" in the appendix.
 
 <a id=Uniform_Random_Real_Numbers></a>
 ### Uniform Random Real Numbers
@@ -2273,11 +2264,11 @@ provided the PDF's values are all 0 or greater and the area under the PDF's curv
 2. Computing the sum of twelve `RNDU01OneExc()` numbers (see Note 13) and subtracting the sum by 6 (see also [**"Irwin&ndash;Hall distribution" on Wikipedia**](https://en.wikipedia.org/wiki/Irwin%E2%80%93Hall_distribution)) results in approximate standard normal (`mu`=0, `sigma`=1) random numbers, whose values are not less than -6 or greater than 6; on the other hand, in a standard normal distribution, the chance of results less than -6 or greater than 6 is generally negligible.
 3. Computing the sum of twelve `RNDRANGEMaxExc(0, sigma)` numbers (see Note 13) and subtracting the sum by 6 * `sigma` results in approximate normal random numbers with `mu`=0 and the given `sigma`, whose values are not less than -6 * `sigma` or greater than 6 * `sigma`.
 4. Generating `RNDU01ZeroOneExc()`, then running the standard normal distribution's inverse cumulative distribution function on that number, results in a random number from that distribution.  An approximation is found in M. Wichura, _Applied Statistics_ 37(3), 1988.  See also [**"A literate program to compute the inverse of the normal CDF"**](https://www.johndcook.com/blog/normal_cdf_inverse/).
-5. Methods implementing a variant of the normal distribution, the _discrete Gaussian distribution_, generate _integers_ that approximately follow the normal distribution.  Two recent algorithms, one by A. Karmakar et al. ("Constant-Time Gaussian Random Sampling"), and another by Micciancio and Walter (2017, "Gaussian Sampling over the Integers: Efficient, Generic, Constant-Time"), are designed to reduce timing differences that a security attack could exploit.
+5. Methods implementing a variant of the normal distribution, the _discrete Gaussian distribution_, generate _integers_ that approximately follow the normal distribution.  There are so-called "constant-time" algorithms to sample from this distribution (e.g., Karmakar and Micciancio&ndash;Walter), but they are meant for use in specific security algorithms (digital signatures) rather than general use.
 
 In 2007, Thomas, D., et al. gave a survey of normal random number methods in "Gaussian Random Number Generators", _ACM Computing Surveys_ 39(4), 2007, article 11.</small>
 
-<small><sup id=Note35>(35)</sup> "A simple method for generating gamma variables",_ACM Transactions on Mathematical Software_ 26(3), 2000.</small>
+<small><sup id=Note35>(35)</sup> "A simple method for generating gamma variables", _ACM Transactions on Mathematical Software_ 26(3), 2000.</small>
 
 <small><sup id=Note36>(36)</sup> Hofert, M., and Maechler, M.  "Nested Archimedean Copulas Meet R: The nacopula Package".  Journal of Statistical Software 39(9), 2011, pp. 1-20.</small>
 
@@ -2288,6 +2279,8 @@ In 2007, Thomas, D., et al. gave a survey of normal random number methods in "Ga
 <small><sup id=Note39>(39)</sup> See also a [**MathWorld article**](http://mathworld.wolfram.com/BallPointPicking.html), which was the inspiration for these two methods, and the _Stack Overflow_ question "How to generate uniform random points in (arbitrary) N-dimension ball?", `questions/54544971`.</small>
 
 <small><sup id=Note40>(40)</sup> See the _Mathematics Stack Exchange_ question titled "Random multivariate in hyperannulus", `questions/1885630`.</small>
+
+<small><sup id=Note41>(41)</sup> Mironov, I., "On Significance of the Least Significant Bits For Differential Privacy", 2012.</small>
 
 <a id=Appendix></a>
 ## Appendix
@@ -2369,6 +2362,17 @@ The following method calculates the norm of a vector (list of numbers).
 ### Multithreading Note
 
 Multithreading can serve as a fast way to generate multiple random numbers at once; it is not reflected in the pseudocode given in this page.  In general, this involves dividing a block of memory into chunks, assigning each chunk to a thread, giving each thread its own RNG instance, and letting each thread fill its assigned chunk with random numbers.  For an example, see "[**Multithreaded Generation**](https://docs.scipy.org/doc/numpy/reference/random/multithreading.html)".
+
+<a id=Security_Considerations></a>
+### Security Considerations
+
+If an application generates random numbers for information security purposes, such as to generate random passwords or encryption keys, the following applies:
+
+1. **Cryptographic RNG.** The application has to use a cryptographic RNG.  Choosing a cryptographic RNG is outside the scope of this document.
+2. **Timing attacks.**  Certain security attacks have exploited timing and other differences to recover cleartext, encryption keys, or other sensitive data.  Thus, so-called "constant-time" security algorithms have been developed.  Such algorithms are designed to have no timing differences that reveal anything about any secret inputs (such as keys, passwords, or RNG "seeds"), and they often have no data-dependent control flows or memory access patterns.  Examples of "constant-time" algorithms can include a `RNDINT()` implementation that uses Montgomery reduction.  But even if an algorithm has variable running time (e.g., [**rejection sampling**](#Rejection_Sampling)), it may or may not have security-relevant timing differences, especially if it does not reuse secrets.
+3. **Security algorithms out of scope.** Security algorithms that take random secrets to generate random security parameters, such as encryption keys, public/private key pairs, elliptic curves, or points on an elliptic curve, are outside this document's scope.
+
+In nearly all security-sensitive applications, random numbers generated for security purposes are integers.  In very rare cases, they're fixed-point numbers.  Even with a secure random number generator, the use of random floating-point numbers can cause security issues not present with integers or fixed point numbers; one example is found in (Mironov 2012)<sup>[**(41)**](#Note41)</sup>
 
 <a id=License></a>
 ## License
