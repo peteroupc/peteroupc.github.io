@@ -35,7 +35,6 @@ All the random number methods presented on this page are ultimately based on an 
 - Should this page discuss approaches to generate random graphs or matrices?  If so, how?
 - Ways to implement any of the randomization methods given in "[**Randomization with Real Numbers**](https://peteroupc.github.io/randomfunc.html#Randomization_with_Real_Numbers)" using only random integers.
 - Suggestions to trim the size of this document, such as by limiting it to the most common and most useful methods for generating random numbers.
-- Is there any non-trivial use of random real numbers ("floating-point" numbers) in cryptography or other security-sensitive applications &mdash; except perhaps in machine learning models?
 - Is there any non-trivial use of random fixed-point numbers in any applications, other than uniformly distributed numbers?
 - Integer-quantized numbers are seeing increased use today, especially in "deep-learning" neural networks.  What are ways to generate non-uniform integer-quantized numbers (especially 8-bit or smaller numbers)?
 
@@ -2372,7 +2371,7 @@ If an application generates random numbers for information security purposes, su
 2. **Timing attacks.**  Certain security attacks have exploited timing and other differences to recover cleartext, encryption keys, or other sensitive data.  Thus, so-called "constant-time" security algorithms have been developed.  Such algorithms are designed to have no timing differences that reveal anything about any secret inputs (such as keys, passwords, or RNG "seeds"), and they often have no data-dependent control flows or memory access patterns.  Examples of "constant-time" algorithms can include a `RNDINT()` implementation that uses Montgomery reduction.  But even if an algorithm has variable running time (e.g., [**rejection sampling**](#Rejection_Sampling)), it may or may not have security-relevant timing differences, especially if it does not reuse secrets.
 3. **Security algorithms out of scope.** Security algorithms that take random secrets to generate random security parameters, such as encryption keys, public/private key pairs, elliptic curves, or points on an elliptic curve, are outside this document's scope.
 
-In nearly all security-sensitive applications, random numbers generated for security purposes are integers.  In very rare cases, they're fixed-point numbers.  Even with a secure random number generator, the use of random floating-point numbers can cause security issues not present with integers or fixed point numbers; one example is found in (Mironov 2012)<sup>[**(41)**](#Note41)</sup>
+In nearly all security-sensitive applications, random numbers generated for security purposes are integers.  In very rare cases, they're fixed-point numbers.  Even with a secure random number generator, the use of random floating-point numbers can cause security issues not present with integers or fixed-point numbers; one example is found in (Mironov 2012)<sup>[**(41)**](#Note41)</sup>.
 
 <a id=License></a>
 ## License

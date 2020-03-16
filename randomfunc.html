@@ -47,7 +47,6 @@
 <li>Should this page discuss approaches to generate random graphs or matrices?  If so, how?</li>
 <li>Ways to implement any of the randomization methods given in &quot;<a href="https://peteroupc.github.io/randomfunc.html#Randomization_with_Real_Numbers"><strong>Randomization with Real Numbers</strong></a>&quot; using only random integers.</li>
 <li>Suggestions to trim the size of this document, such as by limiting it to the most common and most useful methods for generating random numbers.</li>
-<li>Is there any non-trivial use of random real numbers (&quot;floating-point&quot; numbers) in cryptography or other security-sensitive applications &mdash; except perhaps in machine learning models?</li>
 <li>Is there any non-trivial use of random fixed-point numbers in any applications, other than uniformly distributed numbers?</li>
 <li>Integer-quantized numbers are seeing increased use today, especially in &quot;deep-learning&quot; neural networks.  What are ways to generate non-uniform integer-quantized numbers (especially 8-bit or smaller numbers)?</li>
 </ul>
@@ -2849,7 +2848,7 @@ END METHOD
 <li><strong>Security algorithms out of scope.</strong> Security algorithms that take random secrets to generate random security parameters, such as encryption keys, public/private key pairs, elliptic curves, or points on an elliptic curve, are outside this document&#39;s scope.</li>
 </ol>
 
-<p>In nearly all security-sensitive applications, random numbers generated for security purposes are integers.  In very rare cases, they&#39;re fixed-point numbers.  Even with a secure random number generator, the use of random floating-point numbers can cause security issues not present with integers or fixed point numbers; one example is found in (Mironov 2012)<sup><a href="#Note41"><strong>(41)</strong></a></sup></p>
+<p>In nearly all security-sensitive applications, random numbers generated for security purposes are integers.  In very rare cases, they&#39;re fixed-point numbers.  Even with a secure random number generator, the use of random floating-point numbers can cause security issues not present with integers or fixed-point numbers; one example is found in (Mironov 2012)<sup><a href="#Note41"><strong>(41)</strong></a></sup>.</p>
 
 <p><a id=License></a></p>
 
