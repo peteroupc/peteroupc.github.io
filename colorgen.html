@@ -181,9 +181,9 @@
 
 <p>When a person views an object, the light it reflects reaches that person&#39;s eyes.</p>
 
-<p>The human eye has an inner back lining (called the <em>retina</em>) filled with three kinds of <em>cones</em> (L, M, and S<sup><a href="#Note5"><strong>(5)</strong></a></sup>), and each kind of cone is differently sensitive to light.</p>
+<p>The human eye has an inner back lining (called the <em>retina</em>) filled with three kinds of <em>cones</em>, and each kind of cone is differently sensitive to light.</p>
 
-<p>The human visual system compares the responses it receives from the cones and converts them to three kinds of signals, namely a light-dark signal and the two <em>opponent signals</em> red/green and blue/yellow. It&#39;s these signals, and not the cone responses, that are passed to the brain.<sup><a href="#Note6"><strong>(6)</strong></a></sup></p>
+<p>The human visual system compares the responses it receives from the cones and converts them to three kinds of signals, namely a light&ndash;dark signal and the two <em>opponent signals</em> red/green and blue/yellow. It&#39;s these signals, and not the cone responses, that are passed to the brain.<sup><a href="#Note6"><strong>(6)</strong></a></sup></p>
 
 <p>The human brain interprets the signals from the eyes to judge color appearance, taking into account the visual situation. One process involved in this is called <em>adaptation</em>, in which the human visual system, roughly speaking, treats the brightest thing in the scene as &quot;white&quot; and mentally adjusts the rest of the colors it sees accordingly, to account for differences in lighting.  Adaptation is thus similar to a digital camera&#39;s &quot;auto white balance&quot;.</p>
 
@@ -191,7 +191,7 @@
 <p><strong>Notes:</strong></p>
 
 <ol>
-<li>The cone responses can be described by three overlapping &quot;curves&quot; that peak at different places in the visible spectrum &mdash; where the M and L curves span the entire visible spectrum.  As a result, at least two of the three kinds of cones will react to light, not just one by itself.</li>
+<li>The cone responses can be described by three overlapping &quot;curves&quot; that peak at different places in the visible spectrum &mdash; in fact, two of these curves span the entire visible spectrum.  As a result, at least two of the three kinds of cones will react to light, not just one by itself.</li>
 <li>Because there are three kinds of cones, three numbers are enough to uniquely identify a color humans can see &mdash; which is why many <a href="https://peteroupc.github.io/suppcolor.html#Kinds_of_Color_Spaces"><strong>color spaces</strong></a> are 3-dimensional, such as RGB or CIE XYZ spaces.</li>
 </ol>
 </blockquote>
@@ -200,7 +200,7 @@
 
 <h3>Defective and Animal Color Vision</h3>
 
-<p><a href="http://eilv.cie.co.at/term/287"><strong>Defective color vision</strong></a>, including so-called <a href="https://en.wikipedia.org/wiki/Color_blindness"><strong>&quot;colorblindness&quot;</strong></a>, results from defective or missing cones and affects a small portion of people, mostly males. Two forms of defective color vision, <em>protanopia</em> and <em>deuteranopia</em>, result from defects in the L or M cones, respectively, so that for a person with either condition, kinds of light that result in a similar response of the S and M or S and L cones, respectively (usually appearing magenta/red or green/cyan), are harder to distinguish.<sup><a href="#Note7"><strong>(7)</strong></a></sup></p>
+<p><a href="http://eilv.cie.co.at/term/287">Defective color vision</a>, including so-called <a href="https://en.wikipedia.org/wiki/Color_blindness"><strong>&quot;colorblindness&quot;</strong></a>, can make certain kinds of light harder to distinguish than is the case with normal color vision.<sup><a href="#Note7"><strong>(7)</strong></a></sup></p>
 
 <p>In addition to humans, many other animals possess color vision to a greater or lesser extent.  As an extreme example, the <a href="https://en.wikipedia.org/wiki/Mantis_shrimp"><strong>mantis shrimp</strong></a> has at least twelve different cone types, making its color vision considerably sharper than humans&#39;.</p>
 
@@ -1239,8 +1239,8 @@ END METHOD
 <p><em>Binarization</em>, also known as <em>thresholding</em>, involves classifying pixels or colors into one of two categories (usually black or white).  It involves applying a function to a pixel or color and returning 1 if the result is greater than a threshold, or 0 otherwise.  The following are examples of binarization with RGB colors in 0-1 format.</p>
 
 <ul>
-<li><strong>Black and white.</strong> Generate <code>[1, 1, 1]</code> (white) if a <em>light-dark factor</em> (such as the color&#39;s <a href="#CIELAB"><strong>CIELAB</strong></a> lightness, <em>L*</em>, divided by 100) is greater than 0.5, or <code>[0, 0, 0]</code> (black) otherwise.</li>
-<li><strong>Contrasting color.</strong> Generate <code>[1, 1, 1]</code> (white) if a <em>light-dark factor</em> is less than 0.5, or <code>[0, 0, 0]</code> (black) otherwise.</li>
+<li><strong>Black and white.</strong> Generate <code>[1, 1, 1]</code> (white) if a <em>light&ndash;dark factor</em> (such as the color&#39;s <a href="#CIELAB"><strong>CIELAB</strong></a> lightness, <em>L*</em>, divided by 100) is greater than 0.5, or <code>[0, 0, 0]</code> (black) otherwise.</li>
+<li><strong>Contrasting color.</strong> Generate <code>[1, 1, 1]</code> (white) if a <em>light&ndash;dark factor</em> is less than 0.5, or <code>[0, 0, 0]</code> (black) otherwise.</li>
 </ul>
 
 <p>Other forms of binarization may classify pixels based at least in part on their positions in the image.</p>
@@ -1726,7 +1726,7 @@ were intended for readers with normal and <a href="#Defective_and_Animal_Color_V
 
 <ul>
 <li><code>RNDRANGE</code>, <code>RNDU01</code>, <code>RNDINT</code>, and <code>RNDINTEXC</code> are methods defined in my article on <a href="https://peteroupc.github.io/randomfunc.html"><strong>random number generation methods</strong></a>.</li>
-<li><p>Some techniques here refer to a <strong><em>light-dark factor</em></strong>.  This factor can be implemented by any of the following, in order of preference from most to least.</p>
+<li><p>Some techniques here refer to a <strong><em>light&ndash;dark factor</em></strong>.  This factor can be implemented by any of the following, in order of preference from most to least.</p>
 
 <ol>
 <li>The color&#39;s <a href="#CIELAB"><strong>CIELAB</strong></a> lightness (<em>L*</em>) divided by 100, or another value from 0 through 1 that expresses a color&#39;s lightness (in terms of human perception).</li>
@@ -1745,17 +1745,17 @@ were intended for readers with normal and <a href="#Defective_and_Animal_Color_V
 <li>To generate a random <strong>dark RGB color</strong>, either&mdash;
 
 <ul>
-<li>generate <code>color = [RNDU01(), RNDU01(), RNDU01()]</code> until a <em>light-dark factor</em>  is less than a given threshold, e.g., 0.5, or</li>
+<li>generate <code>color = [RNDU01(), RNDU01(), RNDU01()]</code> until a <em>light&ndash;dark factor</em>  is less than a given threshold, e.g., 0.5, or</li>
 <li>generate <code>color = [RNDRANGE(0, maxComp), RNDRANGE(0, maxComp), RNDRANGE(0, maxComp)]</code>, where <code>maxComp</code> is the
 maximum value of each color component, e.g., 0.5.</li>
 </ul></li>
 <li>To generate a random <strong>light RGB color</strong>, either&mdash;
 
 <ul>
-<li>generate <code>color = [RNDU01(), RNDU01(), RNDU01()]</code> until a <em>light-dark factor</em> is greater than a given threshold, e.g., 0.5, or</li>
+<li>generate <code>color = [RNDU01(), RNDU01(), RNDU01()]</code> until a <em>light&ndash;dark factor</em> is greater than a given threshold, e.g., 0.5, or</li>
 <li>generate <code>color = [minComp + RNDU01() * (1.0 - minComp), minComp + RNDU01() * (1.0 - minComp), minComp + RNDU01() * (1.0 - minComp)]</code>, where <code>minComp</code> is the minimum value of each color component, e.g., 0.5.</li>
 </ul></li>
-<li>One way to generate a random <strong>pastel RGB color</strong> is to generate <code>color = [RNDU01(), RNDU01(), RNDU01()]</code> until a <em>light-dark factor</em> is greater than 0.75 and less than 0.9.</li>
+<li>One way to generate a random <strong>pastel RGB color</strong> is to generate <code>color = [RNDU01(), RNDU01(), RNDU01()]</code> until a <em>light&ndash;dark factor</em> is greater than 0.75 and less than 0.9.</li>
 <li>To generate a <strong>random three-component color at or between two others</strong> (<code>color1</code> and <code>color2</code>), generate <code>Lerp3(color1, color2, RNDU01())</code>.</li>
 <li>To generate a <strong>random shade</strong> of a given RGB color, generate <code>Lerp3(color1, [0, 0, 0], RNDRANGE(0.2, 1.0))</code>.</li>
 <li>To generate a <strong>random tint</strong> of a given RGB color, generate <code>Lerp3(color1, [1, 1, 1], RNDRANGE(0.0, 0.9))</code>.</li>
@@ -1997,9 +1997,7 @@ END METHOD
 
 <p>For a detailed overview on phenomena involving human color vision, see section 9 of Kirk, R., &quot;Standard Colour Spaces&quot;, <a href="https://www.filmlight.ltd.uk/support/documents/other/legacy_tl.php"><strong>FilmLight Technical Note</strong></a>, version 4.0, 2004-2018.</small></p>
 
-<p><small><sup id=Note5>(5)</sup> Standing for long, medium, and short wavelength, respectively.  It&#39;s not quite accurate to speak of &quot;red&quot;, &quot;green&quot;, and &quot;blue&quot; cones, respectively.</small></p>
-
-<p><small><sup id=Note6>(6)</sup> The light-dark signal is roughly the sum of the three cone responses; the red/green signal is roughly the M response minus the L response; and the blue/yellow signal is roughly the sum of the M and L responses minus the S response.  The theory of opponent colors is largely due to E. Hering&#39;s work and was reconciled with the three-cone theory around the mid-20th century (for example, through work by Hurvich and Jameson).</small></p>
+<p><small><sup id=Note6>(6)</sup> For example, the light&ndash;dark signal is roughly the sum of the three cone responses.  The theory of opponent colors is largely due to E. Hering&#39;s work and was reconciled with the three-cone theory around the mid-20th century (for example, through work by Hurvich and Jameson).</small></p>
 
 <p><small><sup id=Note7>(7)</sup> For information on how defective color vision can be simulated, see &quot;<a href="http://ixora.io/projects/colorblindness/color-blindness-simulation-research/"><strong>Color Blindness Simulation Research</strong></a>&quot;, by &quot;Jim&quot;.</small></p>
 
@@ -2048,7 +2046,7 @@ END METHOD
 <li>such a claim &quot;is really only the case for very low spatial frequencies&quot;, according to P. Kovesi (P. Kovesi, &quot;Good Colour Maps: How to Design Them&quot;, arXiv:1509.03700 [cs.GR], 2015).</small></li>
 </ul>
 
-<p><small><sup id=Note22>(22)</sup> The placement of the <em>L*</em>, <em>a*</em>, and <em>b*</em> axes is related to the light-dark signal and the two opponent signals red/green and blue/yellow. See also endnote 6.</small></p>
+<p><small><sup id=Note22>(22)</sup> The placement of the <em>L*</em>, <em>a*</em>, and <em>b*</em> axes is related to the light&ndash;dark signal and the two opponent signals red/green and blue/yellow. See also endnote 6.</small></p>
 
 <p><small><sup id=Note23>(23)</sup> The terms <em>lightness</em> and <em>chroma</em> are relative to an area appearing white.  The corresponding terms <em>brightness</em> and <em>saturation</em>, respectively, are subjective terms: <em>brightness</em> is the perceived degree of reflected or emitted light, and <em>saturation</em> is the perceived hue strength (<em>colorfulness</em>) of an area in proportion to its brightness. (See also the CIE&#39;s International Lighting Vocabulary.) CIELAB has no formal saturation formula, however (see the Wikipedia article on <a href="https://en.wikipedia.org/wiki/Colorfulness"><strong>colorfulness</strong></a>).</small></p>
 
