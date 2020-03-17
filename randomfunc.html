@@ -72,8 +72,8 @@
 <li><a href="#RNDINTEXCRANGE_Random_Integers_in_N_M"><strong><code>RNDINTEXCRANGE</code>: Random Integers in [N, M)</strong></a></li>
 <li><a href="#Uniform_Random_Bits"><strong>Uniform Random Bits</strong></a></li>
 <li><a href="#Certain_Programming_Environments"><strong>Certain Programming Environments</strong></a></li>
+<li><a href="#Examples_of_Using_the_RNDINT_Family"><strong>Examples of Using the <code>RNDINT</code> Family</strong></a></li>
 </ul></li>
-<li><a href="#Examples_of_Using_the_Uniform_Integer_Methods"><strong>Examples of Using the Uniform Integer Methods</strong></a></li>
 <li><a href="#Randomization_Techniques"><strong>Randomization Techniques</strong></a>
 
 <ul>
@@ -431,9 +431,9 @@ END METHOD
 
 <p>Whenever possible, the methods in this document should be implemented in a more general-purpose programming language than query languages, shell scripts, and batch files, especially if information security is a goal.</p>
 
-<p><a id=Examples_of_Using_the_Uniform_Integer_Methods></a></p>
+<p><a id=Examples_of_Using_the_RNDINT_Family></a></p>
 
-<h2>Examples of Using the Uniform Integer Methods</h2>
+<h3>Examples of Using the <code>RNDINT</code> Family</h3>
 
 <ol>
 <li>To generate a random number that&#39;s either -1 or 1, one of the following idioms can be used: <code>(RNDINT(1) * 2 - 1)</code> or <code>(RNDINTEXC(2) * 2 - 1)</code>.</li>
@@ -1683,8 +1683,7 @@ of <em>n</em> random numbers that follow an exponential distribution and each ha
 
 <ol>
 <li>by choosing a random data point based on all the existing data points, then finding its category (e.g., via machine learning models known as <em>classification models</em>), or</li>
-<li>by choosing a random category as given above, then by choosing a random data point based only on the existing data points of that category.
-.</li>
+<li>by choosing a random category as given above, then by choosing a random data point based only on the existing data points of that category.</li>
 </ol></li>
 </ul>
 </blockquote>
@@ -2612,7 +2611,7 @@ END METHOD
 
 <p><small><sup id=Note3>(3)</sup> D. Lemire, &quot;A fast alternative to the modulo reduction&quot;, Daniel Lemire&#39;s blog, 2016.</small></p>
 
-<p><small><sup id=Note4>(4)</sup> Lumbroso, J., &quot;Optimal Discrete Uniform Generation from Coin Flips, and Applications&quot;, arXiv:         arXiv:1304.1916 [cs.DS].</small></p>
+<p><small><sup id=Note4>(4)</sup> Lumbroso, J., &quot;Optimal Discrete Uniform Generation from Coin Flips, and Applications&quot;, arXiv:1304.1916 [cs.DS].</small></p>
 
 <p><small><sup id=Note5>(5)</sup> A na&iuml;ve <code>RNDINTEXC</code> implementation often seen in certain languages like JavaScript is the idiom <code>floor(Math.random()*maxExclusive)</code>, where <code>Math.random()</code> is any method that outputs an independent uniform random number in the interval [0, 1).  However:</p>
 

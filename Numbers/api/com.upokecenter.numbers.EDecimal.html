@@ -4778,7 +4778,9 @@ digits than the maximum precision given in <code>ctx</code>.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>An arbitrary-precision decimal number.</li>
+<li>A number whose exponent is increased by <code>places</code>. For example,
+if <code>places</code> is 5, &quot;78E-2&quot; becomes &quot;78E+3&quot; and has a bigger
+value.</li>
 </ul>
 
 <h3>ScaleByPowerOfTen</h3>
@@ -4802,7 +4804,9 @@ which case the precision is unlimited and no rounding is needed.</p></li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>An arbitrary-precision decimal number.</li>
+<li>A number whose exponent is generally increased by <code>places</code>.
+For example, in general, if <code>places</code> is 5, &quot;78E-2&quot; becomes
+&quot;78E+3&quot; and has a bigger value.</li>
 </ul>
 
 <h3>ScaleByPowerOfTen</h3>
@@ -4821,7 +4825,9 @@ which case the precision is unlimited and no rounding is needed.</p></li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>An arbitrary-precision decimal number.</li>
+<li>A number whose exponent is increased by <code>bigPlaces</code>. For
+example, if <code>bigPlaces</code> is 5, &quot;78E-2&quot; becomes &quot;78E+3&quot; and has
+a bigger value.</li>
 </ul>
 
 <h3>ScaleByPowerOfTen</h3>
@@ -4845,7 +4851,9 @@ which case the precision is unlimited and no rounding is needed.</p></li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A number whose exponent is increased by <code>bigPlaces</code>.</li>
+<li>A number whose exponent is generally increased by <code>bigPlaces</code>.
+For example, in general, if <code>bigPlaces</code> is 5, &quot;78E-2&quot; becomes
+&quot;78E+3&quot; and has a bigger value.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>

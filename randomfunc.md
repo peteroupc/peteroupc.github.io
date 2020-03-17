@@ -52,7 +52,7 @@ All the random number methods presented on this page are ultimately based on an 
     - [**`RNDINTEXCRANGE`: Random Integers in \[N, M)**](#RNDINTEXCRANGE_Random_Integers_in_N_M)
     - [**Uniform Random Bits**](#Uniform_Random_Bits)
     - [**Certain Programming Environments**](#Certain_Programming_Environments)
-- [**Examples of Using the Uniform Integer Methods**](#Examples_of_Using_the_Uniform_Integer_Methods)
+    - [**Examples of Using the `RNDINT` Family**](#Examples_of_Using_the_RNDINT_Family)
 - [**Randomization Techniques**](#Randomization_Techniques)
     - [**Boolean (True/False) Conditions**](#Boolean_True_False_Conditions)
     - [**Random Sampling**](#Random_Sampling)
@@ -326,7 +326,7 @@ For certain programming environments, there are special considerations:
 
 Whenever possible, the methods in this document should be implemented in a more general-purpose programming language than query languages, shell scripts, and batch files, especially if information security is a goal.
 
-<a id=Examples_of_Using_the_Uniform_Integer_Methods></a>
+<a id=Examples_of_Using_the_RNDINT_Family></a>
 ### Examples of Using the `RNDINT` Family
 
 1. To generate a random number that's either -1 or 1, one of the following idioms can be used: `(RNDINT(1) * 2 - 1)` or `(RNDINTEXC(2) * 2 - 1)`.
