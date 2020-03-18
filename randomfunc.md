@@ -86,13 +86,14 @@ All the random number methods presented on this page are ultimately based on an 
         - [**`RNDU01`: Alternative Implementation**](#RNDU01_Alternative_Implementation)
         - [**`RNDRANGE` Family: Random Numbers in an Arbitrary Interval**](#RNDRANGE_Family_Random_Numbers_in_an_Arbitrary_Interval)
     - [**Monte Carlo Sampling: Expected Values, Integration, and Optimization**](#Monte_Carlo_Sampling_Expected_Values_Integration_and_Optimization)
-    - [**Random Walks: Additional Examples**](#Random_Walks_Additional_Examples)
     - [**Low-Discrepancy Sequences**](#Low_Discrepancy_Sequences)
     - [**Weighted Choice Involving Real Numbers**](#Weighted_Choice_Involving_Real_Numbers)
         - [**Weighted Choice Without Replacement (Indefinite-Size List)**](#Weighted_Choice_Without_Replacement_Indefinite_Size_List)
         - [**Continuous Weighted Choice**](#Continuous_Weighted_Choice)
-    - [**Mixtures: Additional Examples**](#Mixtures_Additional_Examples)
-    - [**Transformations of Random Numbers: Additional Examples**](#Transformations_of_Random_Numbers_Additional_Examples)
+    - [**Additional Examples Involving Real Numbers**](#Additional_Examples_Involving_Real_Numbers)
+        - [**Random Walks (Real Numbers)**](#Random_Walks_Real_Numbers)
+        - [**Mixtures (Real Numbers)**](#Mixtures_Real_Numbers)
+        - [**Transformations of Random Numbers (Real Numbers)**](#Transformations_of_Random_Numbers_Real_Numbers)
     - [**Random Numbers from a Distribution of Data Points**](#Random_Numbers_from_a_Distribution_of_Data_Points)
     - [**Random Numbers from an Arbitrary Distribution**](#Random_Numbers_from_an_Arbitrary_Distribution)
         - [**Pseudocode for Piecewise Interpolation**](#Pseudocode_for_Piecewise_Interpolation)
@@ -129,13 +130,15 @@ All the random number methods presented on this page are ultimately based on an 
 <a id=Notation_and_Definitions></a>
 ## Notation and Definitions
 
-* The [**pseudocode conventions**](https://peteroupc.github.io/pseudocode.html) apply to this document.
-* **Intervals.** The following notation is used for intervals:
+In this document, a **random number generator (RNG)** means software and/or hardware that seeks to generate numbers with the property that each possible outcome is as likely as any other without influence by anything else<sup>[**(1)**](#Note1)</sup>.
+
+The [**pseudocode conventions**](https://peteroupc.github.io/pseudocode.html) apply to this document.
+
+This document uses the following notation for intervals:
     - [`a`, `b`) means "`a` or greater, but less than `b`".
     - (`a`, `b`) means "greater than `a`, but less than `b`".
     - (`a`, `b`] means "greater than `a` and less than or equal to `b`".
     - [`a`, `b`] means "`a` or greater and `b` or less".
-- **Random number generator (RNG).** Software and/or hardware that seeks to generate numbers with the property that each possible outcome is as likely as any other without influence by anything else<sup>[**(1)**](#Note1)</sup>.
 
 <a id=Uniform_Random_Integers></a>
 ## Uniform Random Integers
@@ -1123,17 +1126,6 @@ Randomization is the core of **Monte Carlo sampling**.  There are three main use
 
 3. [**Stochastic optimization**](http://mathworld.wolfram.com/StochasticOptimization.html). This uses randomness to help find the minimum or maximum value of a function with one or more variables; examples include [**_simulated annealing_**](https://en.wikipedia.org/wiki/Simulated_annealing) and [**_simultaneous perturbation stochastic approximation_**](https://en.wikipedia.org/wiki/Simultaneous_perturbation_stochastic_approximation) (see also (Spall 1998)<sup>[**(23)**](#Note23)</sup>).
 
-<a id=Random_Walks_Additional_Examples></a>
-### Random Walks: Additional Examples
-
-**Requires random real numbers.**
-
-- One example of a white noise process is a list of `Normal(0, 1)` numbers (_Gaussian white noise_).
-- If `STATEJUMP()` is `RNDRANGE(-1, 1)`, the random state is advanced by a random real number in the interval [-1, 1].
-- A **continuous-time process** models random behavior at every moment, not just at discrete times.  There are two popular examples:
-    - A _Wiener process_ has random states and jumps that are normally distributed (a process of this kind is also known as _Brownian motion_). For a random walk that follows a Wiener process, `STATEJUMP()` is `Normal(mu * timediff, sigma * sqrt(timediff))`, where  `mu` is the average value per time unit, `sigma` is the volatility, and `timediff` is the time difference between samples.  A _Brownian bridge_ (Revuz and Yor 1999)<sup>[**(24)**](#Note24)</sup> modifies a Wiener process as follows: For each time X, calculate `W(X) - W(E) * (X - S) / (E - S)`, where `S` and `E` are the starting and ending times of the process, respectively, and `W(X)` and `W(E)` are the state at times X and E, respectively.
-    - In a _Poisson process_, the time between each event is its own random exponential variable, namely, `-ln(RNDU01ZeroOneExc()) / rate`, where `rate` is the average number of events per time unit. An _inhomogeneous Poisson process_ results if `rate` can vary with the "timestamp" before each event jump.
-
 <a id=Low_Discrepancy_Sequences></a>
 ### Low-Discrepancy Sequences
 
@@ -1144,7 +1136,7 @@ A [**_low-discrepancy sequence_**](https://en.wikipedia.org/wiki/Low-discrepancy
 - A _Halton sequence_ is a set of two or more van der Corput sequences with different prime bases; a Halton point at a given index has coordinates equal to the points for that index in the van der Corput sequences.
 - Roberts, M., in "[**The Unreasonable Effectiveness of Quasirandom Sequences**](http://extremelearning.com.au/unreasonable-effectiveness-of-quasirandom-sequences/)", presents a low-discrepancy sequence based on a "generalized" version of the golden ratio.
 - Sobol sequences are explained in "[**Sobol sequence generator**](https://web.maths.unsw.edu.au/~fkuo/sobol/)" by S. Joe and F. Kuo.
-- Linear congruential generators with modulus `m`, a full period, and "good lattice structure"; a sequence of `n`-dimensional points is then `[MLCG(i), MLCG(i+1), ..., MLCG(i+n-1)]` for each integer `i` in the interval \[1, `m`\] (L'Ecuyer 1999)<sup>[**(25)**](#Note25)</sup> (see example pseudocode below).
+- Linear congruential generators with modulus `m`, a full period, and "good lattice structure"; a sequence of `n`-dimensional points is then `[MLCG(i), MLCG(i+1), ..., MLCG(i+n-1)]` for each integer `i` in the interval \[1, `m`\] (L'Ecuyer 1999)<sup>[**(24)**](#Note24)</sup> (see example pseudocode below).
 
 &nbsp;
 
@@ -1167,7 +1159,7 @@ The `WeightedChoice` method in "[**Weighted Choice With Replacement**](#Weighted
 
 **Requires random real numbers.**
 
-If the number of items in a list is not known in advance, then the following pseudocode implements a `RandomKItemsFromFileWeighted` that selects up to `k` random items from a file (`file`) of indefinite size (similarly to [**`RandomKItemsFromFile`**](#Pseudocode_for_Random_Sampling)).  See (Efraimidis and Spirakis 2005)<sup>[**(26)**](#Note26)</sup>, and see also (Efraimidis 2015)<sup>[**(27)**](#Note27)</sup>.  In the pseudocode below, `WEIGHT_OF_ITEM(item, thisIndex)` is a placeholder for arbitrary code that calculates the weight of an individual item based on its value and its index (starting at 0); the item is ignored if its weight is 0 or less.
+If the number of items in a list is not known in advance, then the following pseudocode implements a `RandomKItemsFromFileWeighted` that selects up to `k` random items from a file (`file`) of indefinite size (similarly to [**`RandomKItemsFromFile`**](#Pseudocode_for_Random_Sampling)).  See (Efraimidis and Spirakis 2005)<sup>[**(25)**](#Note25)</sup>, and see also (Efraimidis 2015)<sup>[**(26)**](#Note26)</sup>.  In the pseudocode below, `WEIGHT_OF_ITEM(item, thisIndex)` is a placeholder for arbitrary code that calculates the weight of an individual item based on its value and its index (starting at 0); the item is ignored if its weight is 0 or less.
 
     METHOD RandomKItemsFromFileWeighted(file, k)
       list = NewList()
@@ -1220,7 +1212,7 @@ If the number of items in a list is not known in advance, then the following pse
       return list
     end
 
-> **Note:** Weighted choice _with replacement_ can be implemented by doing one or more concurrent runs of `RandomKItemsFromFileWeighted(file, 1)` (making sure each run traverses `file` the same way for multiple runs as for a single run) (Efraimidis 2015)<sup>[**(27)**](#Note27)</sup>.
+> **Note:** Weighted choice _with replacement_ can be implemented by doing one or more concurrent runs of `RandomKItemsFromFileWeighted(file, 1)` (making sure each run traverses `file` the same way for multiple runs as for a single run) (Efraimidis 2015)<sup>[**(26)**](#Note26)</sup>.
 
 <a id=Continuous_Weighted_Choice></a>
 #### Continuous Weighted Choice
@@ -1297,10 +1289,22 @@ The pseudocode below takes two lists as follows:
 >
 > **Example**: Assume `values` is the following: `[0, 1, 2, 2.5, 3]`, and `weights` is the following: `[0.2, 0.8, 0.5, 0.3, 0.1]`.  The weight for 2 is 0.5, and that for 2.5 is 0.3.  Since 2 has a higher weight than 2.5, numbers near 2 are more likely to be chosen than numbers near 2.5 with the `ContinuousWeightedChoice` method.
 
-<a id=Mixtures_Additional_Examples></a>
-### Mixtures: Additional Examples
+<a id=Additional_Examples_Involving_Real_Numbers></a>
+### Additional Examples Involving Real Numbers
 
 **Requires random real numbers.**
+
+<a id=Random_Walks_Real_Numbers></a>
+#### Random Walks (Real Numbers)
+
+- One example of a white noise process is a list of `Normal(0, 1)` numbers (_Gaussian white noise_).
+- If `STATEJUMP()` is `RNDRANGE(-1, 1)`, the random state is advanced by a random real number in the interval [-1, 1].
+- A **continuous-time process** models random behavior at every moment, not just at discrete times.  There are two popular examples:
+    - A _Wiener process_ has random states and jumps that are normally distributed (a process of this kind is also known as _Brownian motion_). For a random walk that follows a Wiener process, `STATEJUMP()` is `Normal(mu * timediff, sigma * sqrt(timediff))`, where  `mu` is the average value per time unit, `sigma` is the volatility, and `timediff` is the time difference between samples.  A _Brownian bridge_ (Revuz and Yor 1999)<sup>[**(27)**](#Note27)</sup> modifies a Wiener process as follows: For each time X, calculate `W(X) - W(E) * (X - S) / (E - S)`, where `S` and `E` are the starting and ending times of the process, respectively, and `W(X)` and `W(E)` are the state at times X and E, respectively.
+    - In a _Poisson process_, the time between each event is its own random exponential variable, namely, `-ln(RNDU01ZeroOneExc()) / rate`, where `rate` is the average number of events per time unit. An _inhomogeneous Poisson process_ results if `rate` can vary with the "timestamp" before each event jump.
+
+<a id=Mixtures_Real_Numbers></a>
+#### Mixtures (Real Numbers)
 
 1. Example 3 in "[**Mixtures of Distributions**](#Mixtures_of_Distributions)" can be adapted to nonoverlapping real number ranges by assigning weights `mx - mn` instead of `(mx - mn) + 1` and using `RNDRANGEMaxExc` instead of `RNDINTRANGE`.
 2. A **hyperexponential distribution** is a mixture of [**exponential distributions**](#Gamma_Distribution), each one with a separate weight and separate rate.  An example is below.
@@ -1313,10 +1317,8 @@ The pseudocode below takes two lists as follows:
 
 &nbsp;
 
-<a id=Transformations_of_Random_Numbers_Additional_Examples></a>
-### Transformations of Random Numbers: Additional Examples
-
-**Requires random real numbers.**
+<a id=Transformations_of_Random_Numbers_Real_Numbers></a>
+#### Transformations of Random Numbers (Real Numbers)
 
 1. Sampling a **Bates distribution** involves sampling _n_ random numbers by `RNDRANGE(minimum, maximum)`, then finding the mean of those numbers (strategy 8, mean; see the [**appendix**](#Mean_and_Variance_Calculation)).
 2. A **compound Poisson distribution** models the sum<sup>[**(15)**](#Note15)</sup>
@@ -1877,7 +1879,7 @@ Generating _n_ `GammaDist(total, 1)` numbers and dividing them by their sum<sup>
 
 **Requires random real numbers.**
 
-A _copula_ is a distribution describing the dependence between random numbers.
+A _copula_ is a way to describe the dependence between random numbers.
 
 One example is a _Gaussian copula_; this copula is sampled by sampling from a [**multinormal distribution**](#Multivariate_Normal_Multinormal_Distribution), then converting the resulting numbers to _dependent_ uniform random numbers. In the following pseudocode, which implements a Gaussian copula:
 
@@ -2207,13 +2209,13 @@ and "[**Floating-Point Determinism**](https://randomascii.wordpress.com/2013/07/
 
 <small><sup id=Note23>(23)</sup> Spall, J.C., "An Overview of the Simultaneous Perturbation Method for Efficient Optimization", _Johns Hopkins APL Technical Digest_ 19(4), 1998, pp. 482-492.</small>
 
-<small><sup id=Note24>(24)</sup> D. Revuz, M. Yor, "Continuous Martingales and Brownian Motion", 1999.</small>
+<small><sup id=Note24>(24)</sup> P. L'Ecuyer, "Tables of Linear Congruential Generators of Different Sizes and Good Lattice Structure", _Mathematics of Computation_ 68(225), January 1999.</small>
 
-<small><sup id=Note25>(25)</sup> P. L'Ecuyer, "Tables of Linear Congruential Generators of Different Sizes and Good Lattice Structure", _Mathematics of Computation_ 68(225), January 1999.</small>
+<small><sup id=Note25>(25)</sup> Efraimidis, P. and Spirakis, P. "[**Weighted Random Sampling (2005; Efraimidis, Spirakis)**](http://utopia.duth.gr/~pefraimi/research/data/2007EncOfAlg.pdf)", 2005.</small>
 
-<small><sup id=Note26>(26)</sup> Efraimidis, P. and Spirakis, P. "[**Weighted Random Sampling (2005; Efraimidis, Spirakis)**](http://utopia.duth.gr/~pefraimi/research/data/2007EncOfAlg.pdf)", 2005.</small>
+<small><sup id=Note26>(26)</sup> Efraimidis, P. "Weighted Random Sampling over Data Streams". arXiv:1012.0256v2 [cs.DS], 2015.</small>
 
-<small><sup id=Note27>(27)</sup> Efraimidis, P. "Weighted Random Sampling over Data Streams". arXiv:1012.0256v2 [cs.DS], 2015.</small>
+<small><sup id=Note27>(27)</sup> D. Revuz, M. Yor, "Continuous Martingales and Brownian Motion", 1999.</small>
 
 <small><sup id=Note28>(28)</sup> Saucier, R. "Computer Generation of Statistical Distributions", March 2000.</small>
 

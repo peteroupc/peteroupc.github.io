@@ -127,7 +127,6 @@
 <li><a href="#RNDRANGE_Family_Random_Numbers_in_an_Arbitrary_Interval"><strong><code>RNDRANGE</code> Family: Random Numbers in an Arbitrary Interval</strong></a></li>
 </ul></li>
 <li><a href="#Monte_Carlo_Sampling_Expected_Values_Integration_and_Optimization"><strong>Monte Carlo Sampling: Expected Values, Integration, and Optimization</strong></a></li>
-<li><a href="#Random_Walks_Additional_Examples"><strong>Random Walks: Additional Examples</strong></a></li>
 <li><a href="#Low_Discrepancy_Sequences"><strong>Low-Discrepancy Sequences</strong></a></li>
 <li><a href="#Weighted_Choice_Involving_Real_Numbers"><strong>Weighted Choice Involving Real Numbers</strong></a>
 
@@ -135,8 +134,13 @@
 <li><a href="#Weighted_Choice_Without_Replacement_Indefinite_Size_List"><strong>Weighted Choice Without Replacement (Indefinite-Size List)</strong></a></li>
 <li><a href="#Continuous_Weighted_Choice"><strong>Continuous Weighted Choice</strong></a></li>
 </ul></li>
-<li><a href="#Mixtures_Additional_Examples"><strong>Mixtures: Additional Examples</strong></a></li>
-<li><a href="#Transformations_of_Random_Numbers_Additional_Examples"><strong>Transformations of Random Numbers: Additional Examples</strong></a></li>
+<li><a href="#Additional_Examples_Involving_Real_Numbers"><strong>Additional Examples Involving Real Numbers</strong></a>
+
+<ul>
+<li><a href="#Random_Walks_Real_Numbers"><strong>Random Walks (Real Numbers)</strong></a></li>
+<li><a href="#Mixtures_Real_Numbers"><strong>Mixtures (Real Numbers)</strong></a></li>
+<li><a href="#Transformations_of_Random_Numbers_Real_Numbers"><strong>Transformations of Random Numbers (Real Numbers)</strong></a></li>
+</ul></li>
 <li><a href="#Random_Numbers_from_a_Distribution_of_Data_Points"><strong>Random Numbers from a Distribution of Data Points</strong></a></li>
 <li><a href="#Random_Numbers_from_an_Arbitrary_Distribution"><strong>Random Numbers from an Arbitrary Distribution</strong></a>
 
@@ -185,18 +189,15 @@
 
 <h2>Notation and Definitions</h2>
 
-<ul>
-<li>The <a href="https://peteroupc.github.io/pseudocode.html"><strong>pseudocode conventions</strong></a> apply to this document.</li>
-<li><strong>Intervals.</strong> The following notation is used for intervals:
+<p>In this document, a <strong>random number generator (RNG)</strong> means software and/or hardware that seeks to generate numbers with the property that each possible outcome is as likely as any other without influence by anything else<sup><a href="#Note1"><strong>(1)</strong></a></sup>.</p>
 
-<ul>
-<li>[<code>a</code>, <code>b</code>) means &quot;<code>a</code> or greater, but less than <code>b</code>&quot;.</li>
-<li>(<code>a</code>, <code>b</code>) means &quot;greater than <code>a</code>, but less than <code>b</code>&quot;.</li>
-<li>(<code>a</code>, <code>b</code>] means &quot;greater than <code>a</code> and less than or equal to <code>b</code>&quot;.</li>
-<li>[<code>a</code>, <code>b</code>] means &quot;<code>a</code> or greater and <code>b</code> or less&quot;.</li>
-</ul></li>
-<li><strong>Random number generator (RNG).</strong> Software and/or hardware that seeks to generate numbers with the property that each possible outcome is as likely as any other without influence by anything else<sup><a href="#Note1"><strong>(1)</strong></a></sup>.</li>
-</ul>
+<p>The <a href="https://peteroupc.github.io/pseudocode.html"><strong>pseudocode conventions</strong></a> apply to this document.</p>
+
+<p>This document uses the following notation for intervals:
+    - [<code>a</code>, <code>b</code>) means &quot;<code>a</code> or greater, but less than <code>b</code>&quot;.
+    - (<code>a</code>, <code>b</code>) means &quot;greater than <code>a</code>, but less than <code>b</code>&quot;.
+    - (<code>a</code>, <code>b</code>] means &quot;greater than <code>a</code> and less than or equal to <code>b</code>&quot;.
+    - [<code>a</code>, <code>b</code>] means &quot;<code>a</code> or greater and <code>b</code> or less&quot;.</p>
 
 <p><a id=Uniform_Random_Integers></a></p>
 
@@ -1414,23 +1415,6 @@ END METHOD
 <li><p><a href="http://mathworld.wolfram.com/StochasticOptimization.html"><strong>Stochastic optimization</strong></a>. This uses randomness to help find the minimum or maximum value of a function with one or more variables; examples include <a href="https://en.wikipedia.org/wiki/Simulated_annealing"><strong><em>simulated annealing</em></strong></a> and <a href="https://en.wikipedia.org/wiki/Simultaneous_perturbation_stochastic_approximation"><strong><em>simultaneous perturbation stochastic approximation</em></strong></a> (see also (Spall 1998)<sup><a href="#Note23"><strong>(23)</strong></a></sup>).</p></li>
 </ol>
 
-<p><a id=Random_Walks_Additional_Examples></a></p>
-
-<h3>Random Walks: Additional Examples</h3>
-
-<p><strong>Requires random real numbers.</strong></p>
-
-<ul>
-<li>One example of a white noise process is a list of <code>Normal(0, 1)</code> numbers (<em>Gaussian white noise</em>).</li>
-<li>If <code>STATEJUMP()</code> is <code>RNDRANGE(-1, 1)</code>, the random state is advanced by a random real number in the interval [-1, 1].</li>
-<li>A <strong>continuous-time process</strong> models random behavior at every moment, not just at discrete times.  There are two popular examples:
-
-<ul>
-<li>A <em>Wiener process</em> has random states and jumps that are normally distributed (a process of this kind is also known as <em>Brownian motion</em>). For a random walk that follows a Wiener process, <code>STATEJUMP()</code> is <code>Normal(mu * timediff, sigma * sqrt(timediff))</code>, where  <code>mu</code> is the average value per time unit, <code>sigma</code> is the volatility, and <code>timediff</code> is the time difference between samples.  A <em>Brownian bridge</em> (Revuz and Yor 1999)<sup><a href="#Note24"><strong>(24)</strong></a></sup> modifies a Wiener process as follows: For each time X, calculate <code>W(X) - W(E) * (X - S) / (E - S)</code>, where <code>S</code> and <code>E</code> are the starting and ending times of the process, respectively, and <code>W(X)</code> and <code>W(E)</code> are the state at times X and E, respectively.</li>
-<li>In a <em>Poisson process</em>, the time between each event is its own random exponential variable, namely, <code>-ln(RNDU01ZeroOneExc()) / rate</code>, where <code>rate</code> is the average number of events per time unit. An <em>inhomogeneous Poisson process</em> results if <code>rate</code> can vary with the &quot;timestamp&quot; before each event jump.</li>
-</ul></li>
-</ul>
-
 <p><a id=Low_Discrepancy_Sequences></a></p>
 
 <h3>Low-Discrepancy Sequences</h3>
@@ -1444,7 +1428,7 @@ END METHOD
 <li>A <em>Halton sequence</em> is a set of two or more van der Corput sequences with different prime bases; a Halton point at a given index has coordinates equal to the points for that index in the van der Corput sequences.</li>
 <li>Roberts, M., in &quot;<a href="http://extremelearning.com.au/unreasonable-effectiveness-of-quasirandom-sequences/"><strong>The Unreasonable Effectiveness of Quasirandom Sequences</strong></a>&quot;, presents a low-discrepancy sequence based on a &quot;generalized&quot; version of the golden ratio.</li>
 <li>Sobol sequences are explained in &quot;<a href="https://web.maths.unsw.edu.au/%7Efkuo/sobol/"><strong>Sobol sequence generator</strong></a>&quot; by S. Joe and F. Kuo.</li>
-<li>Linear congruential generators with modulus <code>m</code>, a full period, and &quot;good lattice structure&quot;; a sequence of <code>n</code>-dimensional points is then <code>[MLCG(i), MLCG(i+1), ..., MLCG(i+n-1)]</code> for each integer <code>i</code> in the interval [1, <code>m</code>] (L&#39;Ecuyer 1999)<sup><a href="#Note25"><strong>(25)</strong></a></sup> (see example pseudocode below).</li>
+<li>Linear congruential generators with modulus <code>m</code>, a full period, and &quot;good lattice structure&quot;; a sequence of <code>n</code>-dimensional points is then <code>[MLCG(i), MLCG(i+1), ..., MLCG(i+n-1)]</code> for each integer <code>i</code> in the interval [1, <code>m</code>] (L&#39;Ecuyer 1999)<sup><a href="#Note24"><strong>(24)</strong></a></sup> (see example pseudocode below).</li>
 </ul>
 
 <p>&nbsp;</p>
@@ -1471,7 +1455,7 @@ END METHOD
 
 <p><strong>Requires random real numbers.</strong></p>
 
-<p>If the number of items in a list is not known in advance, then the following pseudocode implements a <code>RandomKItemsFromFileWeighted</code> that selects up to <code>k</code> random items from a file (<code>file</code>) of indefinite size (similarly to <a href="#Pseudocode_for_Random_Sampling"><strong><code>RandomKItemsFromFile</code></strong></a>).  See (Efraimidis and Spirakis 2005)<sup><a href="#Note26"><strong>(26)</strong></a></sup>, and see also (Efraimidis 2015)<sup><a href="#Note27"><strong>(27)</strong></a></sup>.  In the pseudocode below, <code>WEIGHT_OF_ITEM(item, thisIndex)</code> is a placeholder for arbitrary code that calculates the weight of an individual item based on its value and its index (starting at 0); the item is ignored if its weight is 0 or less.</p>
+<p>If the number of items in a list is not known in advance, then the following pseudocode implements a <code>RandomKItemsFromFileWeighted</code> that selects up to <code>k</code> random items from a file (<code>file</code>) of indefinite size (similarly to <a href="#Pseudocode_for_Random_Sampling"><strong><code>RandomKItemsFromFile</code></strong></a>).  See (Efraimidis and Spirakis 2005)<sup><a href="#Note25"><strong>(25)</strong></a></sup>, and see also (Efraimidis 2015)<sup><a href="#Note26"><strong>(26)</strong></a></sup>.  In the pseudocode below, <code>WEIGHT_OF_ITEM(item, thisIndex)</code> is a placeholder for arbitrary code that calculates the weight of an individual item based on its value and its index (starting at 0); the item is ignored if its weight is 0 or less.</p>
 
 <pre>METHOD RandomKItemsFromFileWeighted(file, k)
   list = NewList()
@@ -1526,7 +1510,7 @@ end
 </pre>
 
 <blockquote>
-<p><strong>Note:</strong> Weighted choice <em>with replacement</em> can be implemented by doing one or more concurrent runs of <code>RandomKItemsFromFileWeighted(file, 1)</code> (making sure each run traverses <code>file</code> the same way for multiple runs as for a single run) (Efraimidis 2015)<sup><a href="#Note27"><strong>(27)</strong></a></sup>.</p>
+<p><strong>Note:</strong> Weighted choice <em>with replacement</em> can be implemented by doing one or more concurrent runs of <code>RandomKItemsFromFileWeighted(file, 1)</code> (making sure each run traverses <code>file</code> the same way for multiple runs as for a single run) (Efraimidis 2015)<sup><a href="#Note26"><strong>(26)</strong></a></sup>.</p>
 </blockquote>
 
 <p><a id=Continuous_Weighted_Choice></a></p>
@@ -1610,11 +1594,30 @@ above for returning more than one random number in one call.</p>
 <p><strong>Example</strong>: Assume <code>values</code> is the following: <code>[0, 1, 2, 2.5, 3]</code>, and <code>weights</code> is the following: <code>[0.2, 0.8, 0.5, 0.3, 0.1]</code>.  The weight for 2 is 0.5, and that for 2.5 is 0.3.  Since 2 has a higher weight than 2.5, numbers near 2 are more likely to be chosen than numbers near 2.5 with the <code>ContinuousWeightedChoice</code> method.</p>
 </blockquote>
 
-<p><a id=Mixtures_Additional_Examples></a></p>
+<p><a id=Additional_Examples_Involving_Real_Numbers></a></p>
 
-<h3>Mixtures: Additional Examples</h3>
+<h3>Additional Examples Involving Real Numbers</h3>
 
 <p><strong>Requires random real numbers.</strong></p>
+
+<p><a id=Random_Walks_Real_Numbers></a></p>
+
+<h4>Random Walks (Real Numbers)</h4>
+
+<ul>
+<li>One example of a white noise process is a list of <code>Normal(0, 1)</code> numbers (<em>Gaussian white noise</em>).</li>
+<li>If <code>STATEJUMP()</code> is <code>RNDRANGE(-1, 1)</code>, the random state is advanced by a random real number in the interval [-1, 1].</li>
+<li>A <strong>continuous-time process</strong> models random behavior at every moment, not just at discrete times.  There are two popular examples:
+
+<ul>
+<li>A <em>Wiener process</em> has random states and jumps that are normally distributed (a process of this kind is also known as <em>Brownian motion</em>). For a random walk that follows a Wiener process, <code>STATEJUMP()</code> is <code>Normal(mu * timediff, sigma * sqrt(timediff))</code>, where  <code>mu</code> is the average value per time unit, <code>sigma</code> is the volatility, and <code>timediff</code> is the time difference between samples.  A <em>Brownian bridge</em> (Revuz and Yor 1999)<sup><a href="#Note27"><strong>(27)</strong></a></sup> modifies a Wiener process as follows: For each time X, calculate <code>W(X) - W(E) * (X - S) / (E - S)</code>, where <code>S</code> and <code>E</code> are the starting and ending times of the process, respectively, and <code>W(X)</code> and <code>W(E)</code> are the state at times X and E, respectively.</li>
+<li>In a <em>Poisson process</em>, the time between each event is its own random exponential variable, namely, <code>-ln(RNDU01ZeroOneExc()) / rate</code>, where <code>rate</code> is the average number of events per time unit. An <em>inhomogeneous Poisson process</em> results if <code>rate</code> can vary with the &quot;timestamp&quot; before each event jump.</li>
+</ul></li>
+</ul>
+
+<p><a id=Mixtures_Real_Numbers></a></p>
+
+<h4>Mixtures (Real Numbers)</h4>
 
 <ol>
 <li>Example 3 in &quot;<a href="#Mixtures_of_Distributions"><strong>Mixtures of Distributions</strong></a>&quot; can be adapted to nonoverlapping real number ranges by assigning weights <code>mx - mn</code> instead of <code>(mx - mn) + 1</code> and using <code>RNDRANGEMaxExc</code> instead of <code>RNDINTRANGE</code>.</li>
@@ -1630,11 +1633,9 @@ above for returning more than one random number in one call.</p>
 
 <p>&nbsp;</p>
 
-<p><a id=Transformations_of_Random_Numbers_Additional_Examples></a></p>
+<p><a id=Transformations_of_Random_Numbers_Real_Numbers></a></p>
 
-<h3>Transformations of Random Numbers: Additional Examples</h3>
-
-<p><strong>Requires random real numbers.</strong></p>
+<h4>Transformations of Random Numbers (Real Numbers)</h4>
 
 <ol>
 <li>Sampling a <strong>Bates distribution</strong> involves sampling <em>n</em> random numbers by <code>RNDRANGE(minimum, maximum)</code>, then finding the mean of those numbers (strategy 8, mean; see the <a href="#Mean_and_Variance_Calculation"><strong>appendix</strong></a>).</li>
@@ -2279,7 +2280,7 @@ method for generating multiple random points in one call.</p>
 
 <p><strong>Requires random real numbers.</strong></p>
 
-<p>A <em>copula</em> is a distribution describing the dependence between random numbers.</p>
+<p>A <em>copula</em> is a way to describe the dependence between random numbers.</p>
 
 <p>One example is a <em>Gaussian copula</em>; this copula is sampled by sampling from a <a href="#Multivariate_Normal_Multinormal_Distribution"><strong>multinormal distribution</strong></a>, then converting the resulting numbers to <em>dependent</em> uniform random numbers. In the following pseudocode, which implements a Gaussian copula:</p>
 
@@ -2659,13 +2660,13 @@ and &quot;<a href="https://randomascii.wordpress.com/2013/07/16/floating-point-d
 
 <p><small><sup id=Note23>(23)</sup> Spall, J.C., &quot;An Overview of the Simultaneous Perturbation Method for Efficient Optimization&quot;, <em>Johns Hopkins APL Technical Digest</em> 19(4), 1998, pp. 482-492.</small></p>
 
-<p><small><sup id=Note24>(24)</sup> D. Revuz, M. Yor, &quot;Continuous Martingales and Brownian Motion&quot;, 1999.</small></p>
+<p><small><sup id=Note24>(24)</sup> P. L&#39;Ecuyer, &quot;Tables of Linear Congruential Generators of Different Sizes and Good Lattice Structure&quot;, <em>Mathematics of Computation</em> 68(225), January 1999.</small></p>
 
-<p><small><sup id=Note25>(25)</sup> P. L&#39;Ecuyer, &quot;Tables of Linear Congruential Generators of Different Sizes and Good Lattice Structure&quot;, <em>Mathematics of Computation</em> 68(225), January 1999.</small></p>
+<p><small><sup id=Note25>(25)</sup> Efraimidis, P. and Spirakis, P. &quot;<a href="http://utopia.duth.gr/%7Epefraimi/research/data/2007EncOfAlg.pdf"><strong>Weighted Random Sampling (2005; Efraimidis, Spirakis)</strong></a>&quot;, 2005.</small></p>
 
-<p><small><sup id=Note26>(26)</sup> Efraimidis, P. and Spirakis, P. &quot;<a href="http://utopia.duth.gr/%7Epefraimi/research/data/2007EncOfAlg.pdf"><strong>Weighted Random Sampling (2005; Efraimidis, Spirakis)</strong></a>&quot;, 2005.</small></p>
+<p><small><sup id=Note26>(26)</sup> Efraimidis, P. &quot;Weighted Random Sampling over Data Streams&quot;. arXiv:1012.0256v2 [cs.DS], 2015.</small></p>
 
-<p><small><sup id=Note27>(27)</sup> Efraimidis, P. &quot;Weighted Random Sampling over Data Streams&quot;. arXiv:1012.0256v2 [cs.DS], 2015.</small></p>
+<p><small><sup id=Note27>(27)</sup> D. Revuz, M. Yor, &quot;Continuous Martingales and Brownian Motion&quot;, 1999.</small></p>
 
 <p><small><sup id=Note28>(28)</sup> Saucier, R. &quot;Computer Generation of Statistical Distributions&quot;, March 2000.</small></p>
 
