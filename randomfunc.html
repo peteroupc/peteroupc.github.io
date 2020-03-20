@@ -1428,6 +1428,7 @@ END METHOD
 <li>Roberts, M., in &quot;<a href="http://extremelearning.com.au/unreasonable-effectiveness-of-quasirandom-sequences/"><strong>The Unreasonable Effectiveness of Quasirandom Sequences</strong></a>&quot;, presents a low-discrepancy sequence based on a &quot;generalized&quot; version of the golden ratio.</li>
 <li>Sobol sequences are explained in &quot;<a href="https://web.maths.unsw.edu.au/%7Efkuo/sobol/"><strong>Sobol sequence generator</strong></a>&quot; by S. Joe and F. Kuo.</li>
 <li>Linear congruential generators with modulus <code>m</code>, a full period, and &quot;good lattice structure&quot;; a sequence of <code>n</code>-dimensional points is then <code>[MLCG(i), MLCG(i+1), ..., MLCG(i+n-1)]</code> for each integer <code>i</code> in the interval [1, <code>m</code>] (L&#39;Ecuyer 1999)<sup><a href="#Note24"><strong>(24)</strong></a></sup> (see example pseudocode below).</li>
+<li>If the sequence outputs numbers in the interval [0, 1], the <a href="http://en.wikipedia.org/wiki/Baker&#x27;s_map"><strong>Baker&#39;s map</strong></a> of the sequence is <code>2 * (0.5-abs(x - 0.5))</code>, where <code>x</code> is each number in the sequence.</li>
 </ul>
 
 <p>&nbsp;</p>

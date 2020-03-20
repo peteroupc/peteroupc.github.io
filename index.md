@@ -13,6 +13,7 @@ Open-source articles on programming subjects.
 * [Random Number Generator Recommendations for Applications](./random.html)
 * [Random Number Generation and Sampling Methods](./randomfunc.html)
 * [Testing PRNGs for High-Quality Randomness](./randomtest.html)
+* [Examples of High-Quality PRNGs](./hqprng.html)
 * [A Note on Hash Functions](./hash.html)
 * [A Note on the Bays&ndash;Durham Shuffle](./bdshuffle.html)
 * [File Name Support in Applications](./filenames.html)
