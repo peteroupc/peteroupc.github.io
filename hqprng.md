@@ -1,0 +1,137 @@
+<a id=Examples_of_High_Quality_PRNGs></a>
+## Examples of High-Quality PRNGs
+
+Besides cryptographic RNGs, the following are examples of high-quality PRNGs:
+
+| PRNG | Seeds Allowed | Cycle Length | Notes |
+ ----------| --- | --- | --- |
+| xoshiro256\*\* | 2^256 - 1 | 2^256 - 1  | |
+| xoshiro256+ | 2^256 - 1 | 2^256 - 1  | Lowest bits have low linear complexity (see (Blackman and Vigna 2019)<sup>[**(1)**](#Note1)</sup> and see also "[**Testing low bits in isolation**](http://xoshiro.di.unimi.it/lowcomp.php)"); if the application or library cares, it can discard those bits before using this PRNG's output. |
+| xoshiro256++ | 2^256 - 1 | 2^256 - 1  |  |
+| xoshiro512\*\* | 2^512 - 1 | 2^512 - 1  |  |
+| xoshiro512+ | 2^512 - 1 | 2^512 - 1  | Lowest bits have low linear complexity |
+| xoshiro512++ | 2^512 - 1 | 2^512 - 1  |  |
+| xoroshiro128++ | 2^128 - 1 | 2^128 - 1  |  |
+| xoroshiro128\*\* | 2^128 - 1 | 2^128 - 1  |  |
+| SFC64 (C. Doty-Humphrey) | 2^192 | At least 2^64 per seed | 256-bit state |
+| Philox | 2^128 | At least 2^256 per seed | 384-bit state |
+| Velox3b | 2^64 | At least 2^128 per seed | 256-bit state |
+| `gjrand` named after Geronimo Jones | 2^128 | At least 2^64 per seed | 256-bit state |
+| MRG32k3a (L'Ecuyer 1999)<sup>[**(2)**](#Note2)</sup>| Near 2^192 | 2 cycles with length near 2^191 | 192-bit state |
+| MRG31k3p (L'Ecuyer and Touzin 2000)<sup>[**(3)**](#Note3)</sup> | Near 2^186 | 2 cycles with length near 2^185 | 192-bit state |
+| JLKISS (Jones 2007/2010)<sup>[**(4)**](#Note4)</sup> | 2^64 * (2^64 - 1)^2 | At least (2^128 - 2^64) | 192-bit state |
+| JLKISS64 (Jones 2007/2010)<sup>[**(4)**](#Note4)</sup> | 2^64 * (2^64 - 1)^3 | At least (2^128 - 2^64) | 256-bit state |
+| A multiplicative [**linear congruential generator**](https://en.wikipedia.org/wiki/Linear_congruential_generator) (LCG) with prime modulus greater than 2<sup>63</sup> described in Table 2 of (L'Ecuyer 1999)<sup>[**(5)**](#Note5)</sup> | Modulus - 1 | Modulus - 1 | Memory used depends on modulus size |
+| XorShift\* 128/64 | 2^128 - 1 | 2^128 - 1 | 128-bit state.  Described by M. O'Neill in "You don't have to use PCG!", 2017.<sup>[**(6)**](#Note6)</sup> |
+| XorShift\* 64/32 | 2^64 - 1 | 2^64 - 1 | 64-bit state. Described by M. O'Neill in "You don't have to use PCG!", 2017. |
+
+<a id=PRNGs_with_Stream_Support></a>
+### PRNGs with Stream Support
+
+Some PRNGs support multiple "streams" that behave like independent random number sequences.  The test for independence involves interleaving the two "streams" and sending the interleaved stream to the PractRand tests.
+
+The following lists PRNGs that support streams and their PractRand results for different strategies of forming random number "streams".  The PractRand result shown is the level at which a PractRand failure was demonstrated for the given strategy.
+
+| PRNG | Stream Support |
+ ----------| --- |
+| xoshiro256** | Jump-ahead by 2^64: ??? TiB<br>Jump-ahead by 2^128: ??? TiB<br>Jump-ahead by 2^256/&phi;: ???  TiB<br>Consecutive seeds: ??? TiB
+| xoshiro256++ | Jump-ahead by 2^64: ??? TiB<br>Jump-ahead by 2^128: ??? TiB<br>Jump-ahead by 2^256/&phi;: ???  TiB<br>Consecutive seeds: ??? TiB
+| xoroshiro128**  | Jump-ahead by 2^64: ??? TiB<br>Jump-ahead by 2^128/&phi;: ??? TiB<br>Consecutive seeds: ??? TiB
+| xoroshiro128++  | Jump-ahead by 2^64: ??? TiB<br>Jump-ahead by 2^128/&phi;: ??? TiB<br>Consecutive seeds: ??? TiB
+| SFC64 | Consecutive seeds: ??? TiB<br>Seed increment by 2^64: ??? TiB<br>
+| Philox | Consecutive seeds: ??? TiB<br>Seed increment by 2^64: ??? TiB<br>
+| PCG64  by period/&phi;: ??? TiB
+
+<a id=Counter_Based_PRNGs></a>
+### Counter-Based PRNGs
+
+Constructions for counter-based PRNGs (Salmon et al. 2011)<sup>[**(11)**](#Note11)</sup> include:
+
+- A PRNG that outputs hash codes of a C-bit counter and an S-bit seed, where C and S are each 64 or greater and divisible by 8.
+- A PRNG that uses a C-bit block cipher with an S-bit key to output C-bit encrypted counters, where C and S are each 64 or greater and divisible by 8.
+
+The following lists hash functions and block ciphers that form high-quality counter-based PRNGs.  It's possible that reduced-round versions of these and other functions will also produce high-quality counter-based PRNGs.  For hash functions, the construction is `H(seed || 0x5C || counter)`, where `H` is the hash function, `||` means concatenation, and `seed` and `counter` are little-endian encodings of the seed and the counter, aligned to an S-bit or C-bit boundary, respectively.  For block ciphers, the construction is `E(counter, seed)`, where `E` is the cipher, `counter` is the cleartext, and `seed` is the key.
+
+| Function | Fails PractRand Starting At |
+ ----------| --- |
+| ??? | ??? TiB (Interleaved streams from consecutive seeds: ??? TiB) |
+| ??? | ??? TiB (Consecutive seeds: ??? TiB) |
+| ??? | ??? TiB (Consecutive seeds: ??? TiB) |
+| ??? | ??? TiB (Consecutive seeds: ??? TiB) |
+
+<a id=Combined_PRNGs></a>
+### Combined PRNGs
+
+| Function | Fails PractRand Starting At |
+ ----------| --- |
+| ??? combined with Weyl sequence | ??? TiB |
+| ??? combined with 128-bit LCG | ??? TiB |
+| JSF64 combined with ??? | ??? TiB |
+| JSF64 combined with ??? | ??? TiB |
+| Tyche combined with ??? | ??? TiB |
+| Tyche-i combined with ??? | ??? TiB |
+| ??? combined with ??? | ??? TiB |
+
+<a id=Splittable_PRNGs></a>
+### Splittable PRNGs
+
+| Function | Fails PractRand Starting At | Notes |
+ ----------| --- |
+| ??? | ??? TiB | |
+| ??? | ??? TiB | |
+| ??? | ??? TiB | |
+
+<a id=PRNGs_Not_Preferred></a>
+### PRNGs Not Preferred
+
+Although the following are technically high-quality PRNGs, they are not preferred:
+
+| PRNG | Notes |
+ ----------| --- |
+| C++'s [**`std::ranlux48` engine**](http://www.cplusplus.com/reference/random/ranlux48/) | Usually takes about 192 8-bit bytes of memory. Seed's bits cannot be all zeros or all ones (L&uuml;scher 1994)<sup>[**(7)**](#Note7)</sup>.  The maximum cycle length for `ranlux48`'s underlying generator is very close to 2^576.  Admits up to 2^577 - 2 seeds.  This PRNG is not preferred.  |
+| A high-quality PRNG that is an LCG with non-prime modulus (or a PRNG based on one, such as PCG) | If the modulus is a power of 2, they produce highly correlated "random" number sequences from seeds that differ only in their high bits (see S. Vigna, "[**The wrap-up on PCG generators**](http://pcg.di.unimi.it/pcg.php)") and lowest bits have short cycles. What PCG calls "streams" does not produce independent sequences. |
+
+<a id=Non_High_Quality_PRNGs></a>
+### Non-High-Quality PRNGs
+
+The following are not considered high-quality PRNGs:
+- Sequential counters.
+- Mersenne Twister (MT19937) shows a [**systematic failure**](http://xoroshiro.di.unimi.it/#quality) in BigCrush's LinearComp test (part of L'Ecuyer and Simard's "TestU01"). (See also (Vigna 2019)<sup>[**(8)**](#Note8)</sup>.) Moreover, it usually takes about 2500 8-bit bytes of memory.
+- Any PRNG that admits fewer than 2<sup>63</sup> seeds, including:
+    - An LCG with modulus less than 2<sup>63</sup> (such as `java.util.Random` and C++'s `std::minstd_rand` and `std::minstd_rand0` engines).
+    - `System.Random`, as implemented in the .NET Framework 4.7 (32-bit seed).
+    - `msws` (Widynski 2017)<sup>[**(9)**](#Note9)</sup> (about 2<sup>54.1</sup> valid seeds).
+    - JSF32.
+- Any PRNG with no guaranteed minimum cycle length of at least 2<sup>63</sup>, including:
+    - Middle square.
+    - Tyche and Tyche-i (Neves and Araujo 2011)<sup>[**(10)**](#Note10)</sup>.
+    - Cellular-automaton PRNGs, including Rule 30.
+    - B. Jenkins's "A small noncryptographic PRNG" (sometimes known as JSF or JSF64).  For example, JSF32 (the 32-bit version) has a proven minimum cycle length of only 2<sup>20</sup> values per seed.
+
+<a id=Notes></a>
+## Notes
+
+<small><sup id=Note1>(1)</sup> Blackman, D., Vigna, S. "Scrambled Linear Pseudorandom Number Generators", 2019 (xoroshiro and xoshiro families); S. Vigna, "[**An experimental exploration of Marsaglia's `xorshift` generators, scrambled**](http://vigna.di.unimi.it/ftp/papers/xorshift.pdf)", 2016 (scrambled xorshift family).</small>
+
+<small><sup id=Note2>(2)</sup> L'Ecuyer, P., "Good Parameters and Implementations for Combined Multiple Recursive Random Number Generators", _Operations Research_ 47(1), 1999.</small>
+
+<small><sup id=Note3>(3)</sup> L'Ecuyer, P., Touzin, R., "Fast Combined Multiple Recursive Generators with Multipliers of the Form a = &pm;2<sup>q</sup> &pm; 2<sup>r</sup>", _Proceedings of the 2000 Winter Simulation Conference_, 2000.</small>
+
+<small><sup id=Note4>(4)</sup> Jones, D., "Good Practice in (Pseudo) Random Number Generation for Bioinformatics Applications", 2007/2010.</small>
+
+<small><sup id=Note5>(5)</sup> P. L'Ecuyer, "Tables of Linear Congruential Generators of Different Sizes and Good Lattice Structure", _Mathematics of Computation_ 68(225), January 1999.</small>
+
+<small><sup id=Note6>(6)</sup> This XorShift\* generator is not to be confused with S. Vigna's \*-scrambled PRNGs, which multiply the PRNG state differently than this one does.</small>
+
+<small><sup id=Note7>(7)</sup> L&uuml;scher, M., "A Portable High-Quality Random Number Generator for Lattice Field Theory Simulations", arXiv:hep-lat/9309020 (1994).  See also Conrads, C., "[**Faster RANLUX Pseudo-Random Number Generators**](https://christoph-conrads.name/faster-ranlux-pseudo-random-number-generators/)".</small>
+
+<small><sup id=Note8>(8)</sup> S. Vigna, "It Is High Time We Let Go of the Mersenne Twister", arXiv:1910.06437 [cs.DS], 2019.</small>
+
+<small><sup id=Note9>(9)</sup> Widynski, B., "Middle Square Weyl Sequence RNG", arXiv:1704.00358 [cs.CR], 2017.</small>
+
+<small><sup id=Note10>(10)</sup> Neves, S., and Araujo, F., "Fast and Small Nonlinear Pseudorandom Number Generators for Computer Simulation", 2011.</small>
+
+<small><sup id=Note11>(11)</sup> Salmon, J.K.; Moraes, M.A.; et al., "Parallel Random Numbers: As Easy as 1, 2, 3", 2011.</small>
+
+<a id=Appendix></a>
+## Appendix
