@@ -114,7 +114,7 @@ All the random number methods presented on this page are ultimately based on an 
         - [**Random Points Inside a Box**](#Random_Points_Inside_a_Box)
         - [**Random Points Inside a Simplex**](#Random_Points_Inside_a_Simplex)
         - [**Random Points on the Surface of a Hypersphere**](#Random_Points_on_the_Surface_of_a_Hypersphere)
-        - [**Random Points Inside a Ball or Shell**](#Random_Points_Inside_a_Ball_or_Shell)
+        - [**Random Points Inside a Ball, Shell, or Cone**](#Random_Points_Inside_a_Ball_Shell_or_Cone)
         - [**Random Latitude and Longitude**](#Random_Latitude_and_Longitude)
 - [**Acknowledgments**](#Acknowledgments)
 - [**Notes**](#Notes)
@@ -882,7 +882,7 @@ The following method generates a random integer that follows a _hypergeometric d
         currentCount = count
         currentOnes = ones
         while i < trials and currentOnes > 0
-          if RNDINTEXC(currentCount) < currentOnes
+          if ZeroOrOne(currentOnes, currentCount) == 1
             currentOnes = currentOnes - 1
             successes = successes + 1
           end
@@ -907,7 +907,7 @@ The _negative binomial distribution_ models the number of failing trials that ha
         total = 0
         count = 0
         while total < successes
-            if RNDINTEXC(py) < px: total = total + 1
+            if ZeroOrOne(px, py) == 1: total = total + 1
             else: count = count + 1
         end
         return count
@@ -2117,8 +2117,8 @@ The following pseudocode shows how to generate a random N-dimensional point on t
 >
 > **Example:** To generate a random point on the surface of a cylinder running along the Z axis, generate random X and Y coordinates on the edge of a circle (2-dimensional hypersphere) and generate a random Z coordinate by `RNDRANGE(mn, mx)`, where `mn` and `mx` are the highest and lowest Z coordinates possible.
 
-<a id=Random_Points_Inside_a_Ball_or_Shell></a>
-#### Random Points Inside a Ball or Shell
+<a id=Random_Points_Inside_a_Ball_Shell_or_Cone></a>
+#### Random Points Inside a Ball, Shell, or Cone
 
 To generate a random N-dimensional point on or inside an N-dimensional ball, centered at the origin, of radius R, follow the pseudocode in `RandomPointInHypersphere`, except replace `Norm(ret)` with `sqrt( S - ln(RNDU01ZeroExc()))`, where `S` is the sum of squares of the numbers in `ret`<sup>[**(15)**](#Note15)</sup>
 .  For discs and spheres (2- or 3-dimensional balls), an alternative is to generate a vector (list) of N `RNDRANGE(-R, R)` random numbers<sup>[**(38)**](#Note38)</sup> until its _norm_ is R or less (see the [**appendix**](#Appendix)).<sup>[**(39)**](#Note39)</sup>
@@ -2126,6 +2126,8 @@ To generate a random N-dimensional point on or inside an N-dimensional ball, cen
 To generate a random point on or inside an N-dimensional spherical shell (a hollow ball), centered at the origin, with inner radius A and outer radius B (where A is less than B), either&mdash;
 - generate a random point for a ball of radius B until the norm of that point is A or greater (see the [**appendix**](#Appendix)), or
 - generate a random point on the surface of an N-dimensional hypersphere with radius equal to `pow(RNDRANGE(pow(A, N), pow(B, N)), 1.0 / N)`<sup>[**(40)**](#Note40)</sup>.
+
+To generate a random point inside a cone with height `H` and radius `R` at its base, running along the Z axis, generate a random Z coordinate by `Z = H * pow(RNDU01(), 1.0 / 3)`, then generate random X and Y coordinates inside a circle with radius `R * Z * sqrt(RNDU01()) / H`<sup>[**(42)**](#Note42)</sup>.
 
 > **Example:** To generate a random point inside a cylinder running along the Z axis, generate random X and Y coordinates inside a disk (2-dimensional ball) and generate a random Z coordinate by `RNDRANGE(mn, mx)`, where `mn` and `mx` are the highest and lowest Z coordinates possible.
 >
@@ -2255,6 +2257,8 @@ In 2007, Thomas, D., et al. gave a survey of normal random number methods in "Ga
 <small><sup id=Note40>(40)</sup> See the _Mathematics Stack Exchange_ question titled "Random multivariate in hyperannulus", `questions/1885630`.</small>
 
 <small><sup id=Note41>(41)</sup> Mironov, I., "On Significance of the Least Significant Bits For Differential Privacy", 2012.</small>
+
+<small><sup id=Note42>(42)</sup> See the _Stack Overflow_ question "Uniform sampling (by volume) within a cone", `questions/41749411`.</small>
 
 <a id=Appendix></a>
 ## Appendix
