@@ -376,6 +376,22 @@ The following helper method generates 1 with probability `x`/`y` and 0 otherwise
       return 0
     END METHOD
 
+The method can also be implemented in the following way (as pointed out by Lumbroso (2013, Appendix B)<sup>[**(4)**](#Note4)</sup>):
+
+    // NOTE: Modified from Lumbroso
+    // Appendix B to add 'z==0' and error checks
+    METHOD ZeroOrOne(x,y)
+      if y <= 0: return error
+      z = x
+      while true
+        z = z * 2
+        if z >= y
+          if RNDINT(1) == 0: return 1
+          z = z - y
+        else if z == 0 or RNDINT(1) == 0: return 0
+      end
+    END METHOD
+
 <a id=Random_Sampling></a>
 ### Random Sampling
 
