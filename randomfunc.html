@@ -2565,10 +2565,10 @@ END METHOD
 <li>generate a random point on the surface of an N-dimensional hypersphere with radius equal to <code>pow(RNDRANGE(pow(A, N), pow(B, N)), 1.0 / N)</code><sup><a href="#Note40"><strong>(40)</strong></a></sup>.</li>
 </ul>
 
-<p>To generate a random point inside a cone with height <code>H</code> and radius <code>R</code> at its base, running along the Z axis, generate a random Z coordinate by <code>Z = H * pow(RNDU01(), 1.0 / 3)</code>, then generate random X and Y coordinates inside a circle with radius <code>R * Z * sqrt(RNDU01()) / H</code><sup><a href="#Note42"><strong>(42)</strong></a></sup>.</p>
+<p>To generate a random point inside a cone with height <code>H</code> and radius <code>R</code> at its base, running along the Z axis, generate a random Z coordinate by <code>Z = H * pow(RNDU01(), 1.0 / 3)</code>, then generate random X and Y coordinates inside a disc (2-dimensional ball) with radius equal to <code>R * Z * sqrt(RNDU01()) / H</code><sup><a href="#Note41"><strong>(41)</strong></a></sup>.</p>
 
 <blockquote>
-<p><strong>Example:</strong> To generate a random point inside a cylinder running along the Z axis, generate random X and Y coordinates inside a disk (2-dimensional ball) and generate a random Z coordinate by <code>RNDRANGE(mn, mx)</code>, where <code>mn</code> and <code>mx</code> are the highest and lowest Z coordinates possible.</p>
+<p><strong>Example:</strong> To generate a random point inside a cylinder running along the Z axis, generate random X and Y coordinates inside a disc (2-dimensional ball) and generate a random Z coordinate by <code>RNDRANGE(mn, mx)</code>, where <code>mn</code> and <code>mx</code> are the highest and lowest Z coordinates possible.</p>
 
 <p><strong>Note:</strong> The Python sample code contains a method for generating a random point on the surface of an ellipsoid modeling the Earth.</p>
 </blockquote>
@@ -2711,9 +2711,9 @@ and &quot;<a href="https://randomascii.wordpress.com/2013/07/16/floating-point-d
 
 <p><small><sup id=Note40>(40)</sup> See the <em>Mathematics Stack Exchange</em> question titled &quot;Random multivariate in hyperannulus&quot;, <code>questions/1885630</code>.</small></p>
 
-<p><small><sup id=Note41>(41)</sup> Mironov, I., &quot;On Significance of the Least Significant Bits For Differential Privacy&quot;, 2012.</small></p>
+<p><small><sup id=Note41>(41)</sup> See the <em>Stack Overflow</em> question &quot;Uniform sampling (by volume) within a cone&quot;, <code>questions/41749411</code>.</small></p>
 
-<p><small><sup id=Note42>(42)</sup> See the <em>Stack Overflow</em> question &quot;Uniform sampling (by volume) within a cone&quot;, <code>questions/41749411</code>.</small></p>
+<p><small><sup id=Note42>(42)</sup> Mironov, I., &quot;On Significance of the Least Significant Bits For Differential Privacy&quot;, 2012.</small></p>
 
 <p><a id=Appendix></a></p>
 
@@ -2818,7 +2818,7 @@ END METHOD
 <li><strong>Security algorithms out of scope.</strong> Security algorithms that take random secrets to generate random security parameters, such as encryption keys, public/private key pairs, elliptic curves, or points on an elliptic curve, are outside this document&#39;s scope.</li>
 </ol>
 
-<p>In nearly all security-sensitive applications, random numbers generated for security purposes are integers.  In very rare cases, they&#39;re fixed-point numbers.  Even with a secure random number generator, the use of random floating-point numbers can cause security issues not present with integers or fixed-point numbers; one example is found in (Mironov 2012)<sup><a href="#Note41"><strong>(41)</strong></a></sup>.</p>
+<p>In nearly all security-sensitive applications, random numbers generated for security purposes are integers.  In very rare cases, they&#39;re fixed-point numbers.  Even with a secure random number generator, the use of random floating-point numbers can cause security issues not present with integers or fixed-point numbers; one example is found in (Mironov 2012)<sup><a href="#Note42"><strong>(42)</strong></a></sup>.</p>
 
 <p><a id=License></a></p>
 

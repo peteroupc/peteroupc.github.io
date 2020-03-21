@@ -1,10 +1,10 @@
 <a id=Examples_of_High_Quality_PRNGs></a>
 ## Examples of High-Quality PRNGs
 
-Besides cryptographic RNGs, the following are examples of [**high-quality PRNGs**](https://peteroupc.github.io/random.html#High_Quality_RNGs_Requirements).  The "Fails PractRand Starting At" column in this and other lists in this page means the number of bytes (rounded up to the nearest power of two) at which PractRand detects a failure in the PRNG.
+Besides cryptographic random number generators (RNGs), the following are examples of [**high-quality pseudorandom number generators (PRNGs)**](https://peteroupc.github.io/random.html#High_Quality_RNGs_Requirements).  The "Fails PractRand Starting At" column in this and other lists in this page means the number of bytes (rounded up to the nearest power of two) at which PractRand detects a failure in the PRNG.
 
-| PRNG | Seeds Allowed | Cycle Length | Fails PractRand Starting At |Notes |
- ----------| --- | --- | --- |
+| PRNG | Seeds Allowed | Cycle Length | Fails PractRand Starting At | Notes |
+ ----------| --- | --- | --- | --- |
 | xoshiro256\*\* | 2^256 - 1 | 2^256 - 1 | ??? TiB | |
 | xoshiro256+ | 2^256 - 1 | 2^256 - 1   | ??? TiB | Lowest bits have low linear complexity (see (Blackman and Vigna 2019)<sup>[**(1)**](#Note1)</sup> and see also "[**Testing low bits in isolation**](http://xoshiro.di.unimi.it/lowcomp.php)"); if the application or library cares, it can discard those bits before using this PRNG's output. |
 | xoshiro256++ | 2^256 - 1 | 2^256 - 1  | ??? TiB  |  |
@@ -106,15 +106,15 @@ The following are not considered high-quality PRNGs:
 | Sequential counter | Doesn't behave like independent random sequence |
 | A linear congruential generator with modulus less than 2<sup>63</sup> (such as `java.util.Random` and C++'s `std::minstd_rand` and `std::minstd_rand0` engines) | Admits fewer than 2<sup>63</sup> seeds |
 | Mersenne Twister (MT19937) | Shows a [**systematic failure**](http://xoroshiro.di.unimi.it/#quality) in BigCrush's LinearComp test (part of L'Ecuyer and Simard's "TestU01"). (See also (Vigna 2019)<sup>[**(9)**](#Note9)</sup>.) Moreover, it usually takes about 2500 8-bit bytes of memory. |
-| Marsaglia's `xorshift` family ("Xorshift RNGs", 2003) | Shows systematic failures in SmallCrush's MatrixRank test (Vigna 2016)<sup>[**(12)**](#Note12)</sup>|
+| Marsaglia's `xorshift` family ("Xorshift RNGs", 2003) | Shows systematic failures in SmallCrush's MatrixRank test (Vigna 2016)<sup>[**(10)**](#Note10)</sup>|
 | `System.Random`, as implemented in the .NET Framework 4.7 | Admits fewer than 2<sup>63</sup> seeds |
 | Ran2 (_Numerical Recipes_) | Minimum cycle length less than 2<sup>63</sup> |
-| `msws` (Widynski 2017)<sup>[**(10)**](#Note10)</sup> | Admits fewer than 2<sup>63</sup> seeds (about 2<sup>54.1</sup> valid seeds) |
+| `msws` (Widynski 2017)<sup>[**(11)**](#Note11)</sup> | Admits fewer than 2<sup>63</sup> seeds (about 2<sup>54.1</sup> valid seeds) |
 | JSF32 (B. Jenkins's "A small noncryptographic PRNG") | Admits fewer than 2<sup>63</sup> seeds; proven minimum cycle length is only 2<sup>20</sup> |
 | JSF64 (B. Jenkins's "A small noncryptographic PRNG") | No proven minimum cycle of at least 2<sup>63</sup> values |
-| Middle square | No proven minimum cycle of at least 2<sup>63</sup> |
+| Middle square | No proven minimum cycle of at least 2<sup>63</sup> values |
 | Cellular-automaton PRNGs, including Rule 30 | No proven minimum cycle of at least 2<sup>63</sup> values |
-| Tyche/Tyche-i (Neves and Araujo 2011)<sup>[**(11)**](#Note11)</sup> | No proven minimum cycle of at least 2<sup>63</sup> values |
+| Tyche/Tyche-i (Neves and Araujo 2011)<sup>[**(12)**](#Note12)</sup> | No proven minimum cycle of at least 2<sup>63</sup> values |
 
 <a id=Notes></a>
 ## Notes
@@ -137,8 +137,8 @@ The following are not considered high-quality PRNGs:
 
 <small><sup id=Note9>(9)</sup> S. Vigna, "It Is High Time We Let Go of the Mersenne Twister", arXiv:1910.06437 [cs.DS], 2019.</small>
 
-<small><sup id=Note10>(10)</sup> Widynski, B., "Middle Square Weyl Sequence RNG", arXiv:1704.00358 [cs.CR], 2017.</small>
+<small><sup id=Note10>(10)</sup> S. Vigna, "[**An experimental exploration of Marsaglia's `xorshift` generators, scrambled**](http://vigna.di.unimi.it/ftp/papers/xorshift.pdf)", 2016.</small>
 
-<small><sup id=Note11>(11)</sup> Neves, S., and Araujo, F., "Fast and Small Nonlinear Pseudorandom Number Generators for Computer Simulation", 2011.</small>
+<small><sup id=Note11>(11)</sup> Widynski, B., "Middle Square Weyl Sequence RNG", arXiv:1704.00358 [cs.CR], 2017.</small>
 
-<small><sup id=Note12>(12)</sup> S. Vigna, "[**An experimental exploration of Marsaglia's `xorshift` generators, scrambled**](http://vigna.di.unimi.it/ftp/papers/xorshift.pdf)", 2016.</small>
+<small><sup id=Note12>(12)</sup> Neves, S., and Araujo, F., "Fast and Small Nonlinear Pseudorandom Number Generators for Computer Simulation", 2011.</small>
