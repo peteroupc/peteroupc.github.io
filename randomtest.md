@@ -30,11 +30,11 @@ In general, a hash function that passes is worthy of mention if it's noncryptogr
 - If the PRNG has at least 128 bits of state and uses a _permutation_<sup>[**(3)**](#Note3)</sup> `P(x)` to transform that state, have the PRNG generate each number as follows instead:
      1. Add 1 to the state (using wraparound addition).
      2. Output either `P(state)` or `S(P(state))`, where `S(x)` is one of the four _scramblers_ defined in (Blackman and Vigna 2019)<sup>[**(4)**](#Note4)</sup> (+, ++, \*, \*\*).
-- If the PRNG admits 2<sup>63</sup> or more seeds, then each number it outputs can be combined with the next number from a sequence that cycles through at least 2<sup>128</sup> numbers, such as one of the following. (These two numbers can be combined via XOR or wraparound addition if they have the same size, or hashed together otherwise.)
+- If the PRNG admits 2<sup>63</sup> or more seeds and outputs N-bit numbers, then each number it outputs can be _combined_ with the next number from a sequence that cycles through at least 2<sup>128</sup> numbers, to produce a new N-bit number. (These two numbers can be combined via XOR or wraparound addition if they have the same size, or via hashing.) This sequence can be one of the following:
      - A _Weyl sequence_.
      - A _permutation_ of an incrementing counter that starts at 0.
      - A PRNG with a fixed seed and a single cycle of 2<sup>128</sup> or more numbers, such as a linear congruential generator.
-- If the PRNG admits 2<sup>63</sup> or more seeds and has a minimum cycle length of 2<sup>128</sup> or more, each number it outputs can be combined with the next number from another PRNG with the same output length.
+- If the PRNG admits 2<sup>63</sup> or more seeds, has a minimum cycle length of 2<sup>128</sup> or more, and outputs N-bit numbers, each number it outputs can be _combined_ with the next number from another PRNG to produce a new N-bit number.
 
 _Other combinations and transformations._  There are other ways to combine two PRNGs, or to transform a single PRNG, but they are not preferred ways to build a _high-quality PRNG_.  They include:
 

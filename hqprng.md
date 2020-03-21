@@ -1,7 +1,7 @@
 <a id=Examples_of_High_Quality_PRNGs></a>
 ## Examples of High-Quality PRNGs
 
-Besides cryptographic random number generators (RNGs), the following are examples of [**high-quality pseudorandom number generators (PRNGs)**](https://peteroupc.github.io/random.html#High_Quality_RNGs_Requirements).  The "Fails PractRand Starting At" column in this and other lists in this page means the number of bytes (rounded up to the nearest power of two) at which PractRand detects a failure in the PRNG.
+Besides cryptographic random number generators (RNGs), the following are examples of [**high-quality pseudorandom number generators (PRNGs)**](https://peteroupc.github.io/random.html#High_Quality_RNGs_Requirements).  The "Fails PractRand Starting At" column in this and other tables in this page means the number of bytes (rounded up to the nearest power of two) at which PractRand detects a failure in the PRNG.
 
 | PRNG | Seeds Allowed | Cycle Length | Fails PractRand Starting At | Notes |
  ----------| --- | --- | --- | --- |
@@ -48,10 +48,15 @@ The following lists high-quality PRNGs that support streams and their PractRand 
 
 Constructions for counter-based PRNGs (Salmon et al. 2011)<sup>[**(7)**](#Note7)</sup> include:
 
-- A PRNG that outputs hash codes of a C-bit counter and an S-bit seed, where C and S are each 64 or greater and divisible by 8.
-- A PRNG that uses a C-bit block cipher with an S-bit key to output C-bit encrypted counters, where C and S are each 64 or greater and divisible by 8.
+1. A PRNG that outputs hash codes of a counter and the seed.
+2. A PRNG that uses a block cipher with the seed as a key to output encrypted counters.
 
-The following lists hash functions and block ciphers that form high-quality counter-based PRNGs.  It's possible that reduced-round versions of these and other functions will also produce high-quality counter-based PRNGs.  For hash functions, the construction is `H(seed || 0x5F || counter)`, where `H` is the hash function, `||` means concatenation, `0x5F` is the 8-bit block 0x5F, and `seed` and `counter` are S-bit or C-bit blocks of the seed or counter, respectively.  For block ciphers, the construction is `E(counter, seed)`, where `E` is the cipher, `counter` is the cleartext, and `seed` is the key.
+More specifically, let C and S be 64 or greater and divisible by 8.  Then:
+
+1. A C-bit counter is set to 0 and an S-bit seed is chosen.  In each iteration, the PRNG outputs `H(seed || 0x5F || counter)` (where `H` is a hash function, `||` means concatenation, `0x5F` is the 8-bit block 0x5F, and `seed` and `counter` are little-endian encodings of the seed or counter, respectively), and adds 1 to the counter by wraparound addition.  Or...
+2. A C-bit counter is set to 0 and an S-bit seed is chosen.  In each iteration, the PRNG outputs `E(counter, seed)` (where `E` is a C-bit block cipher and `seed` and `counter` are little-endian encodings of the seed [key] or counter [cleartext], respectively), and adds 1 to the counter by wraparound addition.
+
+The following lists hash functions and block ciphers that form high-quality counter-based PRNGs.  It's possible that reduced-round versions of these and other functions will also produce high-quality counter-based PRNGs.
 
 | Function | Fails PractRand Starting At | Notes |
  ----------| --- | --- |
@@ -110,7 +115,7 @@ The following are not considered high-quality PRNGs:
 | `System.Random`, as implemented in the .NET Framework 4.7 | Admits fewer than 2<sup>63</sup> seeds |
 | Ran2 (_Numerical Recipes_) | Minimum cycle length less than 2<sup>63</sup> |
 | `msws` (Widynski 2017)<sup>[**(11)**](#Note11)</sup> | Admits fewer than 2<sup>63</sup> seeds (about 2<sup>54.1</sup> valid seeds) |
-| JSF32 (B. Jenkins's "A small noncryptographic PRNG") | Admits fewer than 2<sup>63</sup> seeds; proven minimum cycle length is only 2<sup>20</sup> |
+| JSF32 (B. Jenkins's "A small noncryptographic PRNG") | Admits fewer than 2<sup>63</sup> seeds; proven minimum cycle length is only 2<sup>20</sup> or more |
 | JSF64 (B. Jenkins's "A small noncryptographic PRNG") | No proven minimum cycle of at least 2<sup>63</sup> values |
 | Middle square | No proven minimum cycle of at least 2<sup>63</sup> values |
 | Cellular-automaton PRNGs, including Rule 30 | No proven minimum cycle of at least 2<sup>63</sup> values |

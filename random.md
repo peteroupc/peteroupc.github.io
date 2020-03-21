@@ -296,6 +296,8 @@ The steps above include hashing several things to generate a new seed.  This has
 > - initialize the first process's PRNG with the new seed and a counter of 0, and
 > - initialize the second process's PRNG with 1 plus the new seed and a counter of 0.
 
+Some _dynamic threading_ (_task-parallel_) platforms employ task schedulers that divide tasks into chunks of instructions called _strands_ (or _fibers_ or subtasks), which are not associated with a particular process or thread.  For these platforms, a unique number for each strand (also known as a _pedigree_), together with an optional seed, can be hashed together to generate a seed for a PRNG used only by that strand <<Leierson et al., 2012|Leierson, C.E., et al., "Deterministic Parallel Random-Number Generation for Dynamic Multithreading Platforms", 2012.>>.
+
 <a id=Existing_RNG_APIs_in_Programming_Languages></a>
 ## Existing RNG APIs in Programming Languages
 
