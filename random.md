@@ -268,35 +268,32 @@ It is NOT RECOMMENDED to seed PRNGs with timestamps, since they can carry the ri
 
 Some applications require multiple processes (including threads, tasks, or subtasks) to use [**reproducible "random" numbers**](#Manually_Seeded_PRNGs) for the same purpose.  An example is multiple instances of a simulation with random starting conditions.  However, noncryptographic PRNGs tend to produce number sequences that are correlated to each other, which is undesirable for simulations in particular.
 
-To reduce this correlation risk, the application can choose a [**high-quality PRNG**](#High_Quality_RNGs_Requirements) that supports "streams" of uncorrelated sequences (sequences that behave like independent random number sequences and don't overlap) and has an efficient way to assign a different stream to each process.  Examples of such PRNGs include so-called "counter-based" PRNGs (Salmon et al. 2011)<sup>[**(14)**](#Note14)</sup>.
+To reduce this correlation risk, the application can choose a [**high-quality PRNG**](#High_Quality_RNGs_Requirements) that supports "streams" of uncorrelated sequences (sequences that behave like independent random number sequences and don't overlap) and has an efficient way to assign a different stream to each process.  For example:
+
+- In some PRNGs (such as "counter-based" PRNGs (Salmon et al. 2011)<sup>[**(14)**](#Note14)</sup>), "streams" can be formed by initializing PRNGs with consecutive seeds.
+- In other PRNGs, "streams" can be formed by discarding a fixed but huge number of PRNG outputs in an efficient way ("jump-ahead").
 
 Depending on the PRNG, there are different ways to seed multiple processes for random number generation, described as follows.<sup>[**(15)**](#Note15)</sup>
 
-1. For counter-based PRNGs: Generate a seed (or use a predetermined seed), then:
+1. If the PRNG supports "streams" as described above: Generate a seed (or use a predetermined seed), then:
 
     1. Create a PRNG instance for each process.
-    2. Hash the seed and a fixed identifier to generate a new seed allowed by the PRNG.  The counter either is 0 or is generated similarly to the new seed.
-    3. For each process, initialize its PRNG instance with the new seed and the counter, then add 1 to the new seed (in case of overflow, the new seed is 0 instead).
+    2. Hash the seed and a fixed identifier to generate a new seed allowed by the PRNG.
+    3. For each process, advance the PRNG to the next stream (unless it's the first process), then give that process a copy of the PRNG's current internal state.
 
-2. For PRNGs that implement "streams" by providing an efficient way to discard a fixed but huge number of PRNG outputs (that is, to "jump the PRNG ahead"): Generate a seed (or use a predetermined seed), then:
-
-    1. Create one PRNG instance.
-    2. Hash the seed and a fixed identifier to generate a new seed allowed by the PRNG, and initialize the PRNG with that seed.
-    3. For each process, jump the original PRNG ahead (unless it's the first process), then give that process a copy of the PRNG's current internal state.
-
-3. For other PRNGs, or if each process uses a different PRNG design, the following is a way to seed multiple processes for random number generation, but it carries the risk of generating seeds that lead to overlapping, correlated, or even identical number sequences, especially if the processes use the same PRNG.<sup>[**(16)**](#Note16)</sup> Generate a seed (or use a predetermined seed), then:
+2. For other PRNGs, or if each process uses a different PRNG design, the following is a way to seed multiple processes for random number generation, but it carries the risk of generating seeds that lead to overlapping, correlated, or even identical number sequences, especially if the processes use the same PRNG.<sup>[**(16)**](#Note16)</sup> Generate a seed (or use a predetermined seed), then:
 
     1. Create a PRNG instance for each process.  The instances need not all use the same PRNG design or the same parameters; for example, some can be Philox and others `xoroshiro128**`.
     2. For each process, hash the seed, a unique number for that process, and a fixed identifier to generate a new seed allowed by the process's PRNG, and initialize that PRNG with the new seed.
 
 The steps above include hashing several things to generate a new seed.  This has to be done with either a [**hash function**](#Hash_Functions) of N or more bits (where N is the PRNG's maximum seed size), or a so-called "seed sequence generator" like C++'s `std::seed_seq`.<sup>[**(17)**](#Note17)</sup>
 
-> **Example:** Philox is a counter-based PRNG. To seed two processes based on the seed "seed" and this PRNG, an application can&mdash;
+> **Example:** Philox is a counter-based PRNG that supports one "stream" per seed. To seed two processes based on the seed "seed" and this PRNG, an application can&mdash;
 > - take the SHA2-256 hash of "seed-mysimulation" as a new seed,
 > - initialize the first process's PRNG with the new seed and a counter of 0, and
 > - initialize the second process's PRNG with 1 plus the new seed and a counter of 0.
 
-Some _dynamic threading_ (_task-parallel_) platforms employ task schedulers that divide tasks into chunks of instructions called _strands_ (or _fibers_ or subtasks), which are not associated with a particular process or thread.  For these platforms, a unique number for each strand (also known as a _pedigree_), together with an optional seed, can be hashed together to generate a seed for a PRNG used only by that strand <<Leierson et al., 2012|Leierson, C.E., et al., "Deterministic Parallel Random-Number Generation for Dynamic Multithreading Platforms", 2012.>>.
+Some _dynamic threading_ (_task-parallel_) platforms employ task schedulers that divide tasks into chunks of instructions called _strands_ (or _fibers_ or subtasks), which are not associated with a particular process or thread.  For these platforms, a unique number for each strand (also known as a _pedigree_), together with an optional seed, can be hashed together to generate a seed for a PRNG used only by that strand (Leierson et al., 2012)<sup>[**(40)**](#Note40)</sup>.
 
 <a id=Existing_RNG_APIs_in_Programming_Languages></a>
 ## Existing RNG APIs in Programming Languages
@@ -646,6 +643,8 @@ See also N. Reed, "Quick And Easy GPU Random Numbers In D3D11", Nathan Reed's co
 <small><sup id=Note38>(38)</sup> An example is the "shrinking generator" technique to combine two RNGs; see J. D. Cook, "Using one RNG to sample another", June 4, 2019, for more.</small>
 
 <small><sup id=Note39>(39)</sup> Allowing applications to do so would hamper forward compatibility &mdash; the API would then be less free to change how the RNG is implemented in the future (e.g., to use a cryptographic or otherwise "better" RNG), or to make improvements or bug fixes in methods that use that RNG (such as shuffling and Gaussian number generation).  (As a notable example, the V8 JavaScript engine recently changed its `Math.random()` implementation to use a variant of `xorshift128+`, which is backward compatible because nothing in JavaScript allows  `Math.random()` to be seeded.)  Nevertheless, APIs can still allow applications to provide additional input ("entropy") to the RNG in order to increase its randomness rather than to ensure repeatability.</small>
+
+<small><sup id=Note40>(40)</sup> Leierson, C.E., et al., "Deterministic Parallel Random-Number Generation for Dynamic Multithreading Platforms", 2012.</small>
 
 <a id=Appendix></a>
 ## Appendix

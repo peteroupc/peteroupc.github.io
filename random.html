@@ -429,6 +429,8 @@ For cryptographic RNGs, an application SHOULD use only one thread-safe instance 
 </ul>
 </blockquote>
 
+<p>Some <em>dynamic threading</em> (<em>task-parallel</em>) platforms employ task schedulers that divide tasks into chunks of instructions called <em>strands</em> (or <em>fibers</em> or subtasks), which are not associated with a particular process or thread.  For these platforms, a unique number for each strand (also known as a <em>pedigree</em>), together with an optional seed, can be hashed together to generate a seed for a PRNG used only by that strand (Leierson et al., 2012)<sup><a href="#Note40"><strong>(40)</strong></a></sup>.</p>
+
 <p><a id=Existing_RNG_APIs_in_Programming_Languages></a></p>
 
 <h2>Existing RNG APIs in Programming Languages</h2>
@@ -920,6 +922,8 @@ For cryptographic RNGs, an application SHOULD use only one thread-safe instance 
 <p><small><sup id=Note38>(38)</sup> An example is the &quot;shrinking generator&quot; technique to combine two RNGs; see J. D. Cook, &quot;Using one RNG to sample another&quot;, June 4, 2019, for more.</small></p>
 
 <p><small><sup id=Note39>(39)</sup> Allowing applications to do so would hamper forward compatibility &mdash; the API would then be less free to change how the RNG is implemented in the future (e.g., to use a cryptographic or otherwise &quot;better&quot; RNG), or to make improvements or bug fixes in methods that use that RNG (such as shuffling and Gaussian number generation).  (As a notable example, the V8 JavaScript engine recently changed its <code>Math.random()</code> implementation to use a variant of <code>xorshift128+</code>, which is backward compatible because nothing in JavaScript allows  <code>Math.random()</code> to be seeded.)  Nevertheless, APIs can still allow applications to provide additional input (&quot;entropy&quot;) to the RNG in order to increase its randomness rather than to ensure repeatability.</small></p>
+
+<p><small><sup id=Note40>(40)</sup> Leierson, C.E., et al., &quot;Deterministic Parallel Random-Number Generation for Dynamic Multithreading Platforms&quot;, 2012.</small></p>
 
 <p><a id=Appendix></a></p>
 
