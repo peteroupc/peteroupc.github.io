@@ -51,7 +51,7 @@ Constructions for counter-based PRNGs (Salmon et al. 2011)<sup>[**(7)**](#Note7)
 1. A PRNG that outputs hash codes of a counter and the seed.
 2. A PRNG that uses a block cipher with the seed as a key to output encrypted counters.
 
-More specifically, let C and S be 64 or greater and divisible by 8.  Then:
+More specifically, let C and S each be 64 or greater and divisible by 8.  Then:
 
 1. A C-bit counter is set to 0 and an S-bit seed is chosen.  In each iteration, the PRNG outputs `H(seed || 0x5F || counter)` (where `H` is a hash function, `||` means concatenation, `0x5F` is the 8-bit block 0x5F, and `seed` and `counter` are little-endian encodings of the seed or counter, respectively), and adds 1 to the counter by wraparound addition.  Or...
 2. A C-bit counter is set to 0 and an S-bit seed is chosen.  In each iteration, the PRNG outputs `E(counter, seed)` (where `E` is a C-bit block cipher and `seed` and `counter` are little-endian encodings of the seed (key) or counter (cleartext), respectively), and adds 1 to the counter by wraparound addition.
