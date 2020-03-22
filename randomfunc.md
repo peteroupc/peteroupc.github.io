@@ -2120,14 +2120,15 @@ The following pseudocode shows how to generate a random N-dimensional point on t
 <a id=Random_Points_Inside_a_Ball_Shell_or_Cone></a>
 #### Random Points Inside a Ball, Shell, or Cone
 
-To generate a random N-dimensional point on or inside an N-dimensional ball, centered at the origin, of radius R, follow the pseudocode in `RandomPointInHypersphere`, except replace `Norm(ret)` with `sqrt( S - ln(RNDU01ZeroExc()))`, where `S` is the sum of squares of the numbers in `ret`<sup>[**(15)**](#Note15)</sup>
-.  For discs and spheres (2- or 3-dimensional balls), an alternative is to generate a vector (list) of N `RNDRANGE(-R, R)` random numbers<sup>[**(38)**](#Note38)</sup> until its _norm_ is R or less (see the [**appendix**](#Appendix)).<sup>[**(39)**](#Note39)</sup>
+To generate a random N-dimensional point on or inside an N-dimensional ball, centered at the origin, of radius R, either&mdash;
+- generate a random (N+2)-dimensional point on the surface of an (N+2)-dimensional hypersphere (e.g., using `RandomPointInHypersphere`), then discard the last two coordinates (Voelker et al., 2017)<sup>[**(38)**](#Note38)</sup>, or
+- follow the pseudocode in `RandomPointInHypersphere`, except replace `Norm(ret)` with `sqrt( S - ln(RNDU01ZeroExc()))`, where `S` is the sum of squares of the numbers in `ret`<sup>[**(15)**](#Note15)</sup>.
 
 To generate a random point on or inside an N-dimensional spherical shell (a hollow ball), centered at the origin, with inner radius A and outer radius B (where A is less than B), either&mdash;
 - generate a random point for a ball of radius B until the norm of that point is A or greater (see the [**appendix**](#Appendix)), or
-- generate a random point on the surface of an N-dimensional hypersphere with radius equal to `pow(RNDRANGE(pow(A, N), pow(B, N)), 1.0 / N)`<sup>[**(40)**](#Note40)</sup>.
+- generate a random point on the surface of an N-dimensional hypersphere with radius equal to `pow(RNDRANGE(pow(A, N), pow(B, N)), 1.0 / N)`<sup>[**(39)**](#Note39)</sup>.
 
-To generate a random point inside a cone with height `H` and radius `R` at its base, running along the Z axis, generate a random Z coordinate by `Z = H * pow(RNDU01(), 1.0 / 3)`, then generate random X and Y coordinates inside a disc (2-dimensional ball) with radius equal to `R * Z * sqrt(RNDU01()) / H`<sup>[**(41)**](#Note41)</sup>.
+To generate a random point inside a cone with height `H` and radius `R` at its base, running along the Z axis, generate a random Z coordinate by `Z = H * pow(RNDU01(), 1.0 / 3)`, then generate random X and Y coordinates inside a disc (2-dimensional ball) with radius equal to `R * Z * sqrt(RNDU01()) / H`<sup>[**(40)**](#Note40)</sup>.
 
 > **Example:** To generate a random point inside a cylinder running along the Z axis, generate random X and Y coordinates inside a disc (2-dimensional ball) and generate a random Z coordinate by `RNDRANGE(mn, mx)`, where `mn` and `mx` are the highest and lowest Z coordinates possible.
 >
@@ -2250,15 +2251,13 @@ In 2007, Thomas, D., et al. gave a survey of normal random number methods in "Ga
 
 <small><sup id=Note37>(37)</sup> Weisstein, Eric W.  "[**Hypersphere Point Picking**](http://mathworld.wolfram.com/HyperspherePointPicking.html)".  From MathWorld&mdash;A Wolfram Web Resource.</small>
 
-<small><sup id=Note38>(38)</sup> The N numbers generated this way will form a point inside an N-dimensional _hypercube_ with length `2 * R` in each dimension and centered at the origin of space.</small>
+<small><sup id=Note38>(38)</sup> Voelker, A.R., Gosmann, J., Stewart, T.C., "Efficiently sampling vectors and coordinates from the _n_-sphere and _n_-ball", Jan. 4, 2017.</small>
 
-<small><sup id=Note39>(39)</sup> See also a [**MathWorld article**](http://mathworld.wolfram.com/BallPointPicking.html), which was the inspiration for these two methods, and the _Stack Overflow_ question "How to generate uniform random points in (arbitrary) N-dimension ball?", `questions/54544971`.</small>
+<small><sup id=Note39>(39)</sup> See the _Mathematics Stack Exchange_ question titled "Random multivariate in hyperannulus", `questions/1885630`.</small>
 
-<small><sup id=Note40>(40)</sup> See the _Mathematics Stack Exchange_ question titled "Random multivariate in hyperannulus", `questions/1885630`.</small>
+<small><sup id=Note40>(40)</sup> See the _Stack Overflow_ question "Uniform sampling (by volume) within a cone", `questions/41749411`.</small>
 
-<small><sup id=Note41>(41)</sup> See the _Stack Overflow_ question "Uniform sampling (by volume) within a cone", `questions/41749411`.</small>
-
-<small><sup id=Note42>(42)</sup> Mironov, I., "On Significance of the Least Significant Bits For Differential Privacy", 2012.</small>
+<small><sup id=Note41>(41)</sup> Mironov, I., "On Significance of the Least Significant Bits For Differential Privacy", 2012.</small>
 
 <a id=Appendix></a>
 ## Appendix
@@ -2350,7 +2349,7 @@ If an application generates random numbers for information security purposes, su
 2. **Timing attacks.**  Certain security attacks have exploited timing and other differences to recover cleartext, encryption keys, or other sensitive data.  Thus, so-called "constant-time" security algorithms have been developed.  Such algorithms are designed to have no timing differences that reveal anything about any secret inputs (such as keys, passwords, or RNG "seeds"), and they often have no data-dependent control flows or memory access patterns.  Examples of "constant-time" algorithms can include a `RNDINT()` implementation that uses Montgomery reduction.  But even if an algorithm has variable running time (e.g., [**rejection sampling**](#Rejection_Sampling)), it may or may not have security-relevant timing differences, especially if it does not reuse secrets.
 3. **Security algorithms out of scope.** Security algorithms that take random secrets to generate random security parameters, such as encryption keys, public/private key pairs, elliptic curves, or points on an elliptic curve, are outside this document's scope.
 
-In nearly all security-sensitive applications, random numbers generated for security purposes are integers.  In very rare cases, they're fixed-point numbers.  Even with a secure random number generator, the use of random floating-point numbers can cause security issues not present with integers or fixed-point numbers; one example is found in (Mironov 2012)<sup>[**(42)**](#Note42)</sup>.
+In nearly all security-sensitive applications, random numbers generated for security purposes are integers.  In very rare cases, they're fixed-point numbers.  Even with a secure random number generator, the use of random floating-point numbers can cause security issues not present with integers or fixed-point numbers; one example is found in (Mironov 2012)<sup>[**(41)**](#Note41)</sup>.
 
 <a id=License></a>
 ## License
