@@ -290,7 +290,7 @@ The steps above include hashing several things to generate a new seed.  This has
 
 > **Examples:**
 >
-> 1. Philox is a counter-based PRNG that supports one _stream_ per seed. To seed two processes based on the seed "seed" and this PRNG, an application can&mdash;
+> 1. Philox4&times;64-7 is a counter-based PRNG that supports one _stream_ per seed. To seed two processes based on the seed "seed" and this PRNG, an application can&mdash;
 >     - take the SHA2-256 hash of "seed-mysimulation" as a new seed,
 >     - initialize the first process's PRNG with the new seed and a counter of 0, and
 >     - initialize the second process's PRNG with 1 plus the new seed and a counter of 0.
@@ -504,7 +504,7 @@ The high-quality PRNG SHOULD admit any of 2<sup>127</sup> or more seeds.
 
 Every cryptographic RNG is also a high-quality RNG.
 
-> **Examples:** Examples of high-quality PRNGs include xoshiro256\*\*, xoroshiro128\*\*, xoroshiro128++, Philox, and SFC64.  I give additional examples in a [**separate page**](https://peteroupc.github.io/hqprng.html).
+> **Examples:** Examples of high-quality PRNGs include xoshiro256\*\*, xoroshiro128\*\*, xoroshiro128++, Philox4&times;64-7, and SFC64.  I give additional examples in a [**separate page**](https://peteroupc.github.io/hqprng.html).
 
 <a id=Designs_for_PRNGs></a>
 ### Designs for PRNGs

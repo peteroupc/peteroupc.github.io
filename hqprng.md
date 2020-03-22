@@ -14,7 +14,7 @@ Besides cryptographic random number generators (RNGs), the following are example
 | xoroshiro128++ | 2^128 - 1 | 2^128 - 1   | ??? TiB |  |
 | xoroshiro128\*\* | 2^128 - 1 | 2^128 - 1  | ??? TiB  |  |
 | SFC64 (C. Doty-Humphrey) | 2^192 | At least 2^64 per seed  | ??? TiB | 256-bit state |
-| Philox | 2^128 | At least 2^256 per seed  | ??? TiB | 384-bit state |
+| Philox4&times;64-7 | 2^128 | At least 2^256 per seed  | ??? TiB | 384-bit state |
 | Velox3b | 2^64 | At least 2^128 per seed  | ??? TiB | 256-bit state |
 | `gjrand` named after Geronimo Jones | 2^128 | At least 2^64 per seed  | ??? TiB | 256-bit state |
 | MRG32k3a (L'Ecuyer 1999)<sup>[**(2)**](#Note2)</sup>| Near 2^192 | 2 cycles with length near 2^191  | ??? TiB | 192-bit state |
@@ -39,14 +39,14 @@ The following lists high-quality PRNGs that support streams and their PractRand 
 | xoroshiro128**  | Jump-ahead by 2^64: ??? TiB<br>Jump-ahead by 2^128/&phi;: ??? TiB<br>Consecutive seeds: ??? TiB |  |
 | xoroshiro128++  | Jump-ahead by 2^64: ??? TiB<br>Jump-ahead by 2^128/&phi;: ??? TiB<br>Consecutive seeds: ??? TiB |  |
 | SFC64 | Consecutive seeds: ??? TiB<br>Seed increment by 2^64: ??? TiB<br> |  |
-| Philox | Consecutive seeds: ??? TiB<br>Seed increment by 2^64: ??? TiB<br> |  |
+| Philox4&times;64-7 | Consecutive seeds: ??? TiB<br>Seed increment by 2^64: ??? TiB<br> |  |
 | PCG64  | Jump-ahead by period/&phi;: ??? TiB | What PCG calls "streams" does not produce independent sequences. |
 | ???  | Jump-ahead by period/&phi;: ??? TiB | |
 
 <a id=Counter_Based_PRNGs></a>
 ### Counter-Based PRNGs
 
-Constructions for counter-based PRNGs (Salmon et al. 2011)<sup>[**(7)**](#Note7)</sup> include:
+Constructions for counter-based PRNGs (using the definition from (Salmon et al. 2011)<sup>[**(7)**](#Note7)</sup>, section 2) include:
 
 1. A PRNG that outputs hash codes of a counter and the seed.
 2. A PRNG that uses a block cipher with the seed as a key to output encrypted counters.

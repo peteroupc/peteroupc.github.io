@@ -421,7 +421,7 @@ For cryptographic RNGs, an application SHOULD use only one thread-safe instance 
 <p><strong>Examples:</strong></p>
 
 <ol>
-<li><p>Philox is a counter-based PRNG that supports one <em>stream</em> per seed. To seed two processes based on the seed &quot;seed&quot; and this PRNG, an application can&mdash;</p>
+<li><p>Philox4&times;64-7 is a counter-based PRNG that supports one <em>stream</em> per seed. To seed two processes based on the seed &quot;seed&quot; and this PRNG, an application can&mdash;</p>
 
 <ul>
 <li>take the SHA2-256 hash of &quot;seed-mysimulation&quot; as a new seed,</li>
@@ -753,7 +753,7 @@ For cryptographic RNGs, an application SHOULD use only one thread-safe instance 
 <p>Every cryptographic RNG is also a high-quality RNG.</p>
 
 <blockquote>
-<p><strong>Examples:</strong> Examples of high-quality PRNGs include xoshiro256**, xoroshiro128**, xoroshiro128++, Philox, and SFC64.  I give additional examples in a <a href="https://peteroupc.github.io/hqprng.html"><strong>separate page</strong></a>.</p>
+<p><strong>Examples:</strong> Examples of high-quality PRNGs include xoshiro256**, xoroshiro128**, xoroshiro128++, Philox4&times;64-7, and SFC64.  I give additional examples in a <a href="https://peteroupc.github.io/hqprng.html"><strong>separate page</strong></a>.</p>
 </blockquote>
 
 <p><a id=Designs_for_PRNGs></a></p>

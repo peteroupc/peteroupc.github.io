@@ -45,7 +45,7 @@
 <li>Should this page include implementations of these methods in other programming languages, in addition to Python?</li>
 <li>Should this page include additional probability distributions?  If so, which ones?</li>
 <li>Should this page discuss approaches to generate random graphs or matrices?  If so, how?</li>
-<li>Ways to implement any of the randomization methods given in &quot;<a href="https://peteroupc.github.io/randomfunc.html#Randomization_with_Real_Numbers"><strong>Randomization with Real Numbers</strong></a>&quot; using only random integers.</li>
+<li>Ways to implement any of the randomization methods given in &quot;<a href="https://peteroupc.github.io/randomfunc.html#Randomization_with_Real_Numbers"><strong>Randomization with Real Numbers</strong></a>&quot; without rounding errors.</li>
 <li>Suggestions to trim the size of this document, such as by limiting it to the most common and most useful methods for generating random numbers.</li>
 <li>Is there any non-trivial use of random fixed-point numbers in any applications, other than uniformly distributed numbers?</li>
 <li>Integer-quantized numbers are seeing increased use today, especially in &quot;deep-learning&quot; neural networks.  What are ways to generate non-uniform integer-quantized numbers (especially 8-bit or smaller numbers)?</li>
@@ -145,7 +145,7 @@
 <li><a href="#Random_Numbers_from_an_Arbitrary_Distribution"><strong>Random Numbers from an Arbitrary Distribution</strong></a>
 
 <ul>
-<li><a href="#Pseudocode_for_Piecewise_Interpolation"><strong>Pseudocode for Piecewise Interpolation</strong></a></li>
+<li><a href="#Piecewise_Interpolation"><strong>Piecewise Interpolation</strong></a></li>
 </ul></li>
 <li><a href="#Gibbs_Sampling"><strong>Gibbs Sampling</strong></a></li>
 <li><a href="#Normal_Gaussian_Distribution"><strong>Normal (Gaussian) Distribution</strong></a></li>
@@ -852,16 +852,19 @@ END METHOD
 
 <h4>Weighted Choice With Replacement</h4>
 
-<p>The first kind is called weighted choice <em>with replacement</em> (which can be thought of as drawing a ball, then putting it back) or a <em>categorical distribution</em>, where the probability of choosing each item doesn&#39;t change as items are chosen.</p>
+<p>The first kind is called weighted choice <em>with replacement</em> (which can be thought of as drawing a ball, then putting it back) or a <em>categorical distribution</em>, where the probability of choosing each item doesn&#39;t change as items are chosen.  In the following pseudocode:</p>
 
-<p>The following pseudocode implements a method <code>WeightedChoice</code> that takes a single list <code>weights</code> of weights (integers 0 or greater), and returns the index of a weight from that list.  The greater the weight, the more likely its index will be chosen.</p>
+<ul>
+<li><code>WeightedChoice</code> takes a single list <code>weights</code> of weights (integers 0 or greater) and returns the index of a weight from that list.  The greater the weight, the more likely its index will be chosen.</li>
+<li><code>CumulativeWeightedChoice</code> takes a single list <code>weights</code> of N <em>cumulative weights</em>; they start at 0 and the next weight is not less than the previous.  Returns a number in the interval [0, N - 1).</li>
+</ul>
+
+<p>&mdash;</p>
 
 <pre>METHOD WeightedChoice(weights)
     if size(weights) == 0: return error
     msum = 0
     // Get the sum of all weights
-    // NOTE: Kahan summation is more robust
-    // than the naive summing given here
     i = 0
     while i &lt; size(weights)
         msum = msum + weights[i]
@@ -870,11 +873,10 @@ END METHOD
     // Choose a random integer from 0 and less than
     // the sum of weights.
     value = RNDINTEXC(sum)
-    // Choose the object according to the given value
-    i = 0
+    // Choose the index according to the given value
     lastItem = size(weights) - 1
     runningValue = 0
-    while i &lt; size(weights)
+    for i in 0...size(weights) - 1
        if weights[i] &gt; 0
           newValue = runningValue + weights[i]
           lastItem = i
@@ -882,12 +884,27 @@ END METHOD
           if value &lt; newValue: break
           runningValue = newValue
        end
-       i = i + 1
     end
     // If we didn&#39;t break above, this is a last
     // resort (might happen because rounding
     // error happened somehow)
     return lastItem
+END METHOD
+
+METHOD CumulativeWeightedChoice(weights)
+    if size(weights)==0 or weights[0]!=0: return error
+    // Weights is a list of cumulative weights. Chooses
+    // a random number in [0, size(weights) - 1).
+    sum = weights[size(weights) - 1]
+    value = RNDINTEXC(sum)
+    // Choose the index according to the given value
+    for i in 0...size(weights) - 1
+       if weights[i] &lt; weights[i+1] and weights[i]&gt;=value
+          // Choose only if difference is positive
+          return i
+       end
+    end
+    return 0
 END METHOD
 </pre>
 
@@ -903,6 +920,7 @@ END METHOD
 
 <ol>
 <li>Assume we have the following list: <code>[&quot;apples&quot;, &quot;oranges&quot;, &quot;bananas&quot;, &quot;grapes&quot;]</code>, and <code>weights</code> is the following: <code>[3, 15, 1, 2]</code>.  The weight for &quot;apples&quot; is 3, and the weight for &quot;oranges&quot; is 15.  Since &quot;oranges&quot; has a higher weight than &quot;apples&quot;, the index for &quot;oranges&quot; (1) is more likely to be chosen than the index for &quot;apples&quot; (0) with the <code>WeightedChoice</code> method.  The following idiom implements how to get a randomly chosen item from the list with that method: <code>item = list[WeightedChoice(weights)]</code>.</li>
+<li>Example 1 can be implemented with <code>CumulativeWeightedChoice</code> instead of <code>WeightedChoice</code> if <code>weights</code> is the following list of cumulative weights: <code>[0, 3, 18, 19, 21]</code>.</li>
 <li><strong>Piecewise constant distribution.</strong> Assume the weights from example 1 are used and the list contains the following: <code>[0, 5, 10, 11, 13]</code> (one more item than the weights).  This expresses four intervals: [0, 5), [5, 10), and so on.  After a random index is chosen with <code>index = WeightedChoice(weights)</code>, an independent uniform random number in the chosen interval is chosen.  For example, code like the following chooses a random integer this way: <code>number = RNDINTEXCRANGE(list[index], list[index + 1])</code>.</li>
 <li>A <a href="https://en.wikipedia.org/wiki/Markov_chain"><strong>Markov chain</strong></a> models one or more <em>states</em> (for example, individual letters or syllables), and stores the probabilities to transition from one state to another (e.g., &quot;b&quot; to &quot;e&quot; with a chance of 20 percent, or &quot;b&quot; to &quot;b&quot; with a chance of 1 percent).  Thus, each state can be seen as having its own list of <em>weights</em> for each relevant state transition.  For example, a Markov chain for generating <strong>&quot;pronounceable&quot; words</strong>, or words similar to natural-language words, can include &quot;start&quot; and &quot;stop&quot; states for the start and end of the word, respectively.</li>
 </ol>
@@ -1444,7 +1462,7 @@ END METHOD
 <li>A <em>Halton sequence</em> is a set of two or more van der Corput sequences with different prime bases; a Halton point at a given index has coordinates equal to the points for that index in the van der Corput sequences.</li>
 <li>Roberts, M., in &quot;<a href="http://extremelearning.com.au/unreasonable-effectiveness-of-quasirandom-sequences/"><strong>The Unreasonable Effectiveness of Quasirandom Sequences</strong></a>&quot;, presents a low-discrepancy sequence based on a &quot;generalized&quot; version of the golden ratio.</li>
 <li>Sobol sequences are explained in &quot;<a href="https://web.maths.unsw.edu.au/%7Efkuo/sobol/"><strong>Sobol sequence generator</strong></a>&quot; by S. Joe and F. Kuo.</li>
-<li><em>Latin hypercube sampling</em> doesn&#39;t exactly produce low-discrepancy sequences, but serves much the same purpose.  The following pseudocode implements this sampling for an <code>n</code>-number sequence: <code>lhs = []; for i in 0...n: ListAdd(RNDRANGEMinMaxExc(i*1.0/n,(i+1)*1.0/n)); lhs = Shuffle(lhs)</code>.</li>
+<li><em>Latin hypercube sampling</em> doesn&#39;t exactly produce low-discrepancy sequences, but serves much the same purpose.  The following pseudocode implements this sampling for an <code>n</code>-number sequence: <code>lhs = []; for i in 0...n: AddItem(RNDRANGEMinMaxExc(i*1.0/n,(i+1)*1.0/n)); lhs = Shuffle(lhs)</code>.</li>
 <li>Linear congruential generators with modulus <code>m</code>, a full period, and &quot;good lattice structure&quot;; a sequence of <code>n</code>-dimensional points is then <code>[MLCG(i), MLCG(i+1), ..., MLCG(i+n-1)]</code> for each integer <code>i</code> in the interval [1, <code>m</code>] (L&#39;Ecuyer 1999)<sup><a href="#Note24"><strong>(24)</strong></a></sup> (see example pseudocode below).</li>
 <li>If the sequence outputs numbers in the interval [0, 1], the <a href="http://en.wikipedia.org/wiki/Baker&#x27;s_map"><strong>Baker&#39;s map</strong></a> of the sequence is <code>2 * (0.5-abs(x - 0.5))</code>, where <code>x</code> is each number in the sequence.</li>
 </ul>
@@ -1465,7 +1483,7 @@ END METHOD
 
 <h3>Weighted Choice Involving Real Numbers</h3>
 
-<p>The <code>WeightedChoice</code> method in &quot;<a href="#Weighted_Choice_With_Replacement"><strong>Weighted Choice With Replacement</strong></a>&quot; can be modified to accept real numbers other than integers as weights by changing <code>value = RNDINTEXC(sum)</code> to <code>value = RNDRANGEMaxExc(0, sum)</code>.</p>
+<p>The <code>WeightedChoice</code> and <code>CumulativeWeightedChoice</code> methods in &quot;<a href="#Weighted_Choice_With_Replacement"><strong>Weighted Choice With Replacement</strong></a>&quot; can be modified to accept real numbers other than integers as weights by changing <code>value = RNDINTEXC(sum)</code> to <code>value = RNDRANGEMaxExc(0, sum)</code>.</p>
 
 <p><a id=Weighted_Choice_Without_Replacement_Indefinite_Size_List></a></p>
 
@@ -1727,31 +1745,43 @@ of <em>n</em> random numbers that follow an exponential distribution and each ha
 <li><p><strong>PDF is known</strong>, even if the area under the PDF isn&#39;t 1:</p>
 
 <ul>
-<li><strong>Piecewise interpolation.</strong> Use the PDF to calculate the weights for a number of sample points (usually regularly spaced). Create one list with the sampled points in ascending order (the <code>list</code>) and another list of the same size with the PDF&#39;s values at those points (the <code>weights</code>).  Finally, generate a random number bounded by the lowest and highest sampled point using a weighted choice method. See also the next section.</li>
 <li><p><a href="#Rejection_Sampling"><strong>Rejection sampling.</strong></a>  If the PDF can be more easily sampled by another distribution with its own PDF (<code>PDF2</code>) that &quot;dominates&quot; <code>PDF</code> in the sense that <code>PDF2(x) &gt;= PDF(x)</code> at every valid <code>x</code>, then generate random numbers with that distribution until a number (<code>n</code>) that satisfies <code>PDF(n) &gt;= RNDRANGEMaxExc(0, PDF2(n))</code> is generated this way (that is, sample points in <code>PDF2</code> until a point falls within <code>PDF</code>). (See also Saucier 2000, pp. 6-7, 39; Devroye 1986, pp. 41-43; and &quot;<a href="https://mathworks.com/help/stats/generating-random-data.html"><strong>Generating Pseudorandom Numbers</strong></a>&quot;.)  Examples:</p>
 
 <ol>
 <li><p>To sample a random number in the interval [<code>low</code>, <code>high</code>) from a PDF with a positive maximum value no greater than <code>peak</code> at that interval, generate <code>x = RNDRANGEMaxExc(low, high)</code> and <code>y = RNDRANGEMaxExc(0, peak)</code> until <code>y &lt; PDF(x)</code>, then take the last <code>x</code> generated this way. (See also Saucier 2000, pp. 6-7.)</p></li>
 <li><p>A custom distribution&#39;s PDF, <code>PDF</code>, is <code>exp(-abs(x*x*x))</code>, and the exponential distribution&#39;s PDF, <code>PDF2</code>, is <code>exp(-x)</code>.  The exponential PDF &quot;dominates&quot; the other PDF (at every <code>x</code> 0 or greater) if we multiply it by 1.5, so that <code>PDF2</code> is now <code>1.5 * exp(-x)</code>.  Now we can generate numbers from our custom distribution by sampling exponential points until a point falls within <code>PDF</code>.  This is done by generating <code>n = -ln(RNDU01ZeroOneExc())</code> until <code>PDF(n) &gt;= RNDRANGEMaxExc(0, PDF2(n))</code>.</p></li>
 </ol></li>
-<li><p><a href="https://en.wikipedia.org/wiki/Markov_chain_Monte_Carlo"><strong>Markov-chain Monte Carlo</strong></a> <strong>(MCMC).</strong> If many random numbers from the given PDF need to be generated, then an MCMC algorithm can be used, with the disadvantage that the resulting random numbers are <em>dependent</em> on each other.  MCMC algorithms include Metropolis&ndash;Hastings and slice sampling (Neal 2003)<sup><a href="#Note32"><strong>(32)</strong></a></sup>. Generally, as more numbers are generated, the MCMC algorithm converges to the given distribution; this is why usually, random numbers from the first few (e.g., first 1000) iterations are ignored (&quot;burn in&quot;).  MCMC can also be used to find a suitable sampling range for the <em>piecewise interpolation</em> method, above.  The <a href="https://peteroupc.github.io/randomgen.zip"><strong>Python sample code</strong></a> includes methods called <code>mcmc</code> and <code>mcmc2</code> that implement Metropolis&ndash;Hastings for PDFs that take single numbers or two-dimensional points, respectively, and a method called <code>slicesample</code> that implements slice sampling.</p></li>
+<li><p><strong>Piecewise interpolation.</strong> See the next section, &quot;Piecewise Interpolation&quot;.</p></li>
+<li><a href="https://en.wikipedia.org/wiki/Markov_chain_Monte_Carlo"><strong>Markov-chain Monte Carlo</strong></a> <strong>(MCMC).</strong> If many random numbers from the given PDF need to be generated, then an MCMC algorithm can be used, with the disadvantage that the resulting random numbers are <em>dependent</em> on each other.  MCMC algorithms include Metropolis&ndash;Hastings and slice sampling (Neal 2003)<sup><a href="#Note32"><strong>(32)</strong></a></sup>. Generally, as more numbers are generated, the MCMC algorithm converges to the given distribution; this is why usually, random numbers from the first few (e.g., first 1000) iterations are ignored (&quot;burn in&quot;).  MCMC can also be used to find a suitable sampling range for the <em>piecewise interpolation</em> method, above.  The <a href="https://peteroupc.github.io/randomgen.zip"><strong>Python sample code</strong></a> includes methods called <code>mcmc</code> and <code>mcmc2</code> that implement Metropolis&ndash;Hastings for PDFs that take single numbers or two-dimensional points, respectively, and a method called <code>slicesample</code> that implements slice sampling.</li>
 </ul></li>
 <li><p><strong>PDF and a uniform random variable in the interval [0, 1) (<code>randomVariable</code>)</strong> are known: Create <code>list</code> and <code>weights</code> as given in the Piecewise interpolation method, above, then divide each item in <code>weights</code> by the sum<sup><a href="#Note15"><strong>(15)</strong></a></sup>
 of <code>weights</code>&#39;s items, then generate <a href="#Continuous_Weighted_Choice"><strong><code>ContinuousWeightedChoice(list, weights)</code></strong></a> (except that method is modified to use <code>value = randomVariable</code> rather than <code>value = RNDRANGEMaxExc(0, sum)</code>).</p></li>
 <li><p><strong>Inverse CDF is known:</strong> Generate <code>ICDF(RNDU01ZeroOneExc())</code>, where <code>ICDF(X)</code> is the inverse CDF (<a href="https://en.wikipedia.org/wiki/Inverse_transform_sampling"><strong><em>inverse transform sampling</em></strong></a>).</p></li>
 <li><p><strong>Inverse CDF and a uniform random variable in the interval [0, 1) (<code>randomVariable</code>)</strong> are known: Generate <code>ICDF(randomVariable)</code>, where <code>ICDF(X)</code> is the inverse CDF.</p></li>
-<li><p><strong>CDF is known</strong>: In this case, the CDF is usually numerically inverted to generate a random number from that distribution.  For example, see the <code>from_interp</code> and <code>numbers_from_cdf</code> methods in the <a href="https://peteroupc.github.io/randomgen.zip"><strong>Python sample code</strong></a>.</p></li>
+<li><p><strong>CDF is known</strong>: In this case, the CDF is usually numerically inverted to generate a random number from that distribution.  For example, see the <code>from_interp</code> and <code>numbers_from_cdf</code> methods in the <a href="https://peteroupc.github.io/randomgen.zip"><strong>Python sample code</strong></a>.  See also the next section, &quot;Piecewise Interpolation&quot;.</p></li>
 </ul>
 
 <blockquote>
 <p><strong>Note:</strong> Lists of PDFs, CDFs, or inverse CDFs are outside the scope of this page.</p>
 </blockquote>
 
-<p><a id=Pseudocode_for_Piecewise_Interpolation></a></p>
+<p><a id=Piecewise_Interpolation></a></p>
 
-<h4>Pseudocode for Piecewise Interpolation</h4>
+<h4>Piecewise Interpolation</h4>
 
-<p>Random numbers that closely follow a given distribution (described by its PDF, <code>PDF(x)</code>) can be generated using <strong>piecewise interpolation</strong>.  The following method calculates a list of weights for numbers in the interval [<code>mini</code>, <code>maxi</code>], with a step count of <code>step</code> and a weight scale of <code>mult</code>.  The weights can then be used in the <a href="#Weighted_Choice_With_Replacement"><strong><code>WeightedChoice</code></strong></a> or <a href="#Continuous_Weighted_Choice"><strong><code>ContinuousWeightedChoice</code></strong></a> method to generate the random numbers:</p>
+<p>If the distribution has a known CDF (<code>CDF(x)</code>) and takes on a limited number of integers, the following pseudocode generates a random number from that distribution via a table of cumulative weights.&lt;&lt;|If the weights are stored as N floating-point numbers with K bits of precision, where <code>N = (maxi - mini) + 1</code>, the relative error of approximating those weights this way is at most N*2<sup>-K+1</sup> (Walter, M., &quot;Sampling the Integers with Low Relative Error&quot;, 2019).  It follows here that probabilities closer to 0 have a smaller relative error when stored as such floating-point numbers.&gt;&gt;</p>
+
+<pre>METHOD Sample(mini, maxi)
+  weights=[0]
+  for i in mini..maxi: AddItem(weights, CDF(i))
+  if weights[size(weights)-1]!=1: return error
+  return mini + CumulativeWeightedChoice(weights)
+END METHOD
+</pre>
+
+<p>If the distribution has a known PDF (<code>PDF(x)</code>), random numbers that closely follow it can be generated as follows: Create one list with points that cover the distribution, in ascending order, and another list of the same size with the PDF&#39;s values at those points (the <em>weights</em>).  Finally, generate a random number bounded by the lowest and highest point using a weighted choice method.</p>
+
+<p>The following method calculates a list of weights for numbers in the interval [<code>mini</code>, <code>maxi</code>], with a step count of <code>step</code> and a weight scale of <code>mult</code>.  The weights can then be used in the <a href="#Weighted_Choice_With_Replacement"><strong><code>WeightedChoice</code></strong></a> or <a href="#Continuous_Weighted_Choice"><strong><code>ContinuousWeightedChoice</code></strong></a> method to generate the random numbers:</p>
 
 <ul>
 <li>For discrete (integer-only) distributions, use <code>WeightedChoice</code>.</li>
@@ -1776,7 +1806,13 @@ END METHOD
 <p><strong>Examples:</strong></p>
 
 <ol>
-<li>The following weights approximate a discrete <a href="#Poisson_Distribution"><strong>Poisson distribution</strong></a> with a mean of 0.1: <code>[90483742, 9048374, 452419, 15081, 377, 8]</code>; this can be generated with <code>WeightTable(0, 5, 1, 100000000)</code> and the Poisson PDF.</li>
+<li>To generate a random number that closely follows a <a href="#Poisson_Distribution"><strong>Poisson distribution</strong></a> with a mean of 0.1:
+
+<ul>
+<li>Set <code>list</code> to <code>[0, 1, 2, 3, 4, 5]</code> (values that the random number can be).</li>
+<li>Set <code>weights</code> to the corresponding values of the Poisson PDF: <code>[90483742, 9048374, 452419, 15081, 377, 8]</code>; this can be generated with <code>WeightTable(0, 5, 1, 100000000)</code>.</li>
+<li>Generate the random number with <code>list[WeightedChoice(weights)]</code>.</li>
+</ul></li>
 <li>A 3-bit-integer-quantized number format can take on values 0, 1/8, 2/8, ..., 7/8.  For this format, the following weights approximate a continuous <a href="#Beta_Distribution"><strong>beta distribution</strong></a> with <code>a = 2</code> and <code>b = 2</code>: <code>[0, 656, 1125, 1406, 1500, 1406, 1125, 656]</code>; this can be generated with <code>WeightTable(0, 7/8, 1/8, 10000)</code> and the beta PDF.</li>
 </ol>
 </blockquote>
@@ -2558,7 +2594,7 @@ END METHOD
 <p>To generate a random N-dimensional point on or inside an N-dimensional ball, centered at the origin, of radius R, either&mdash;</p>
 
 <ul>
-<li>generate a random (N+2)-dimensional point on the surface of an (N+2)-dimensional hypersphere (e.g., using <code>RandomPointInHypersphere</code>), then discard the last two coordinates (Voelker et al., 2017)<sup><a href="#Note38"><strong>(38)</strong></a></sup>, or</li>
+<li>generate a random (N+2)-dimensional point on the surface of an (N+2)-dimensional hypersphere with that radius (e.g., using <code>RandomPointInHypersphere</code>), then discard the last two coordinates (Voelker et al., 2017)<sup><a href="#Note38"><strong>(38)</strong></a></sup>, or</li>
 <li>follow the pseudocode in <code>RandomPointInHypersphere</code>, except replace <code>Norm(ret)</code> with <code>sqrt( S - ln(RNDU01ZeroExc()))</code>, where <code>S</code> is the sum of squares of the numbers in <code>ret</code><sup><a href="#Note15"><strong>(15)</strong></a></sup>.</li>
 </ul>
 
