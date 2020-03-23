@@ -468,7 +468,7 @@ This section contains suggested requirements on cryptographic and high-quality R
 <a id=Cryptographic_RNGs_Requirements></a>
 ### Cryptographic RNGs: Requirements
 
-A cryptographic RNG generates random bits that behave like independent uniform random bits, such that it would be cost-prohibitive for an outside party to correctly guess, with more than a 50% chance per bit, prior or future unseen outputs of that RNG after knowing how the RNG works and/or extremely many outputs of the RNG, or prior unseen outputs of that RNG after knowing the RNG's internal state at the given point in time.<sup>[**(36)**](#Note36)</sup>
+A cryptographic RNG generates random bits that behave like independent uniform random bits, such that it would be cost-prohibitive for an outside party to correctly guess, with more than a negligible advantage per bit, prior or future unseen outputs of that RNG after knowing how the RNG works and/or extremely many outputs of the RNG, or prior unseen outputs of that RNG after knowing the RNG's internal state at the given point in time.<sup>[**(36)**](#Note36)</sup>
 
 If a cryptographic RNG implementation uses a PRNG, the following requirements apply.
 

@@ -702,7 +702,7 @@ For cryptographic RNGs, an application SHOULD use only one thread-safe instance 
 
 <h3>Cryptographic RNGs: Requirements</h3>
 
-<p>A cryptographic RNG generates random bits that behave like independent uniform random bits, such that it would be cost-prohibitive for an outside party to correctly guess, with more than a 50% chance per bit, prior or future unseen outputs of that RNG after knowing how the RNG works and/or extremely many outputs of the RNG, or prior unseen outputs of that RNG after knowing the RNG&#39;s internal state at the given point in time.<sup><a href="#Note36"><strong>(36)</strong></a></sup></p>
+<p>A cryptographic RNG generates random bits that behave like independent uniform random bits, such that it would be cost-prohibitive for an outside party to correctly guess, with more than a negligible advantage per bit, prior or future unseen outputs of that RNG after knowing how the RNG works and/or extremely many outputs of the RNG, or prior unseen outputs of that RNG after knowing the RNG&#39;s internal state at the given point in time.<sup><a href="#Note36"><strong>(36)</strong></a></sup></p>
 
 <p>If a cryptographic RNG implementation uses a PRNG, the following requirements apply.</p>
 
