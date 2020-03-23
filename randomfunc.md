@@ -96,7 +96,8 @@ All the random number methods presented on this page are ultimately based on an 
         - [**Transformations of Random Numbers (Real Numbers)**](#Transformations_of_Random_Numbers_Real_Numbers)
     - [**Random Numbers from a Distribution of Data Points**](#Random_Numbers_from_a_Distribution_of_Data_Points)
     - [**Random Numbers from an Arbitrary Distribution**](#Random_Numbers_from_an_Arbitrary_Distribution)
-        - [**Piecewise Interpolation**](#Piecewise_Interpolation)
+        - [**Weighted Approximation: Discrete Distributions**](#Weighted_Approximation_Discrete_Distributions)
+        - [**Weighted Approximation: Continuous Distributions**](#Weighted_Approximation_Continuous_Distributions)
     - [**Gibbs Sampling**](#Gibbs_Sampling)
     - [**Normal (Gaussian) Distribution**](#Normal_Gaussian_Distribution)
     - [**Binomial Distribution: Optimization for Many Trials**](#Binomial_Distribution_Optimization_for_Many_Trials)
@@ -726,7 +727,7 @@ The first kind is called weighted choice _with replacement_ (which can be though
 > **Notes:**
 >
 > - The Python sample code contains a variant of this method for generating multiple random points in one call, and uses Vose's _alias method_ (described in "[**Darts, Dice, and Coins: Sampling from a Discrete Distribution**](https://www.keithschwarz.com/darts-dice-coins/)") in certain cases.
-> - See also "[**Mixtures of Distributions**](#Mixtures_of_Distributions)" and "[**Pseudocode for Piecewise Interpolation**](#Pseudocode_for_Piecewise_Interpolation)".
+> - See also "[**Mixtures of Distributions**](#Mixtures_of_Distributions)" and "[**Weighted Approximation: Discrete Distributions**](#Piecewise_Interpolation_Discrete_Distributions)".
 >
 > **Examples:**
 >
@@ -1410,59 +1411,69 @@ Depending on what information is known about the distribution, random numbers th
 
         2. A custom distribution's PDF, `PDF`, is `exp(-abs(x*x*x))`, and the exponential distribution's PDF, `PDF2`, is `exp(-x)`.  The exponential PDF "dominates" the other PDF (at every `x` 0 or greater) if we multiply it by 1.5, so that `PDF2` is now `1.5 * exp(-x)`.  Now we can generate numbers from our custom distribution by sampling exponential points until a point falls within `PDF`.  This is done by generating `n = -ln(RNDU01ZeroOneExc())` until `PDF(n) >= RNDRANGEMaxExc(0, PDF2(n))`.
 
-    - **Piecewise interpolation.** See the next section, "Piecewise Interpolation".
-    - [**Markov-chain Monte Carlo**](https://en.wikipedia.org/wiki/Markov_chain_Monte_Carlo) **(MCMC).** If many random numbers from the given PDF need to be generated, then an MCMC algorithm can be used, with the disadvantage that the resulting random numbers are _dependent_ on each other.  MCMC algorithms include Metropolis&ndash;Hastings and slice sampling (Neal 2003)<sup>[**(32)**](#Note32)</sup>. Generally, as more numbers are generated, the MCMC algorithm converges to the given distribution; this is why usually, random numbers from the first few (e.g., first 1000) iterations are ignored ("burn in").  MCMC can also be used to find a suitable sampling range for the _piecewise interpolation_ method, above.  The [**Python sample code**](https://peteroupc.github.io/randomgen.zip) includes methods called `mcmc` and `mcmc2` that implement Metropolis&ndash;Hastings for PDFs that take single numbers or two-dimensional points, respectively, and a method called `slicesample` that implements slice sampling.
+    - **Weighted approximation.** See the next two sections on weighted approximation.
+    - [**Markov-chain Monte Carlo**](https://en.wikipedia.org/wiki/Markov_chain_Monte_Carlo) **(MCMC).** If many random numbers from the given PDF need to be generated, then an MCMC algorithm can be used, with the disadvantage that the resulting random numbers are _dependent_ on each other.  MCMC algorithms include Metropolis&ndash;Hastings and slice sampling (Neal 2003)<sup>[**(32)**](#Note32)</sup>. Generally, as more numbers are generated, the MCMC algorithm converges to the given distribution; this is why usually, random numbers from the first few (e.g., first 1000) iterations are ignored ("burn in").  MCMC can also be used to find a suitable sampling range for the _weighted approximation_ method (see the next two sections).  The [**Python sample code**](https://peteroupc.github.io/randomgen.zip) includes methods called `mcmc` and `mcmc2` that implement Metropolis&ndash;Hastings for PDFs that take single numbers or two-dimensional points, respectively, and a method called `slicesample` that implements slice sampling.
 
-- **PDF and a uniform random variable in the interval \[0, 1\) (`randomVariable`)** are known: Create `list` and `weights` as given in the Piecewise interpolation method, above, then divide each item in `weights` by the sum<sup>[**(15)**](#Note15)</sup>
+- **PDF and a uniform random variable in the interval \[0, 1\) (`randomVariable`)** are known: Create `list` and `weights` as given in the Weighted approximation method, above, then divide each item in `weights` by the sum<sup>[**(15)**](#Note15)</sup>
  of `weights`'s items, then generate [**`ContinuousWeightedChoice(list, weights)`**](#Continuous_Weighted_Choice) (except that method is modified to use `value = randomVariable` rather than `value = RNDRANGEMaxExc(0, sum)`).
 
 - **Inverse CDF is known:** Generate `ICDF(RNDU01ZeroOneExc())`, where `ICDF(X)` is the inverse CDF ([**_inverse transform sampling_**](https://en.wikipedia.org/wiki/Inverse_transform_sampling)).
 
 - **Inverse CDF and a uniform random variable in the interval \[0, 1\) (`randomVariable`)** are known: Generate `ICDF(randomVariable)`, where `ICDF(X)` is the inverse CDF.
 
-- **CDF is known**: In this case, the CDF is usually numerically inverted to generate a random number from that distribution.  For example, see the `from_interp` and `numbers_from_cdf` methods in the [**Python sample code**](https://peteroupc.github.io/randomgen.zip).  See also the next section, "Piecewise Interpolation".
+- **CDF is known**: In this case, the CDF is usually numerically inverted to generate a random number from that distribution.  For example, see the `from_interp` and `numbers_from_cdf` methods in the [**Python sample code**](https://peteroupc.github.io/randomgen.zip).  See also the next two sections on weighted approximation.
 
 > **Note:** Lists of PDFs, CDFs, or inverse CDFs are outside the scope of this page.
 
-<a id=Piecewise_Interpolation></a>
-#### Piecewise Interpolation
+<a id=Weighted_Approximation_Discrete_Distributions></a>
+#### Weighted Approximation: Discrete Distributions
 
-If the distribution has a known CDF (`CDF(x)`) and takes on a limited number of integers, the following pseudocode generates a random number from that distribution via a table of cumulative weights.<<|If the weights are stored as N floating-point numbers with K bits of precision, where `N = (maxi - mini) + 1`, the relative error of approximating those weights this way is at most N*2<sup>-K+1</sup> (Walter, M., "Sampling the Integers with Low Relative Error", 2019).  It follows here that probabilities closer to 0 have a smaller relative error when stored as such floating-point numbers.>>
+If the distribution is discrete (integer-only), numbers that closely follow it can be sampled by choosing points that cover all or almost all of the distribution, finding their weights or cumulative weights, and choosing a random point based on those weights.  In the pseudocode below:
+
+- `InversionSample(mini, maxi)` chooses a random number in [`mini`, `maxi`] based on a known CDF (`CDF(x)`). This method should be used over `Sample` whenever possible.<<|This pseudocode generates `N = (maxi - mini) + 1` weights, including 0 and 1. If the weights are stored as N floating-point numbers with K bits of precision, where `N = (maxi - mini) + 1`, the relative error of approximating those weights this way is at most N*2<sup>-K+1</sup> (Walter, M., "Sampling the Integers with Low Relative Error", 2019).  It follows here that probabilities closer to 0 have a smaller relative error when stored as such floating-point numbers.>>
+- `Sample(mini, maxi)` chooses a random number in [`mini`, `maxi`] based on a known PDF (`PDF(x)`, more properly called _probability mass function_).
+- `IntegerWeights(mini, maxi, mult)` generates a list of integer weights for the interval [`mini`, `maxi`] based on a known PDF (`PDF(x)`) and weight scale `mult`.
+
+&nbsp;
 
     METHOD Sample(mini, maxi)
+      weights=[]
+      for i in mini..maxi: AddItem(weights, PDF(i))
+      return mini + WeightedChoice(weights)
+    END METHOD
+
+    METHOD InversionSample(mini, maxi)
       weights=[0]
       for i in mini..maxi: AddItem(weights, CDF(i))
       if weights[size(weights)-1]!=1: return error
       return mini + CumulativeWeightedChoice(weights)
     END METHOD
 
-If the distribution has a known PDF (`PDF(x)`), random numbers that closely follow it can be generated as follows: Create one list with points that cover the distribution, in ascending order, and another list of the same size with the PDF's values at those points (the _weights_).  Finally, generate a random number bounded by the lowest and highest point using a weighted choice method.
-
-The following method calculates a list of weights for numbers in the interval [`mini`, `maxi`], with a step count of `step` and a weight scale of `mult`.  The weights can then be used in the [**`WeightedChoice`**](#Weighted_Choice_With_Replacement) or [**`ContinuousWeightedChoice`**](#Continuous_Weighted_Choice) method to generate the random numbers:
-
-- For discrete (integer-only) distributions, use `WeightedChoice`.
-- For continuous distributions, use `ContinuousWeightedChoice` or `WeightedChoice`; the latter can be less accurate, though.
-
-&nbsp;
-
-    METHOD WeightTable(mini, maxi, step, mult)
-       list = []
-       i = mini; while i <= maxi
-         AddItem(list, round(PDF(i) * mult))
-         i = i + step
-       end
-       return list
+    METHOD IntegerWeights(mini, maxi, mult)
+      weights=[]
+      for i in mini..maxi: AddItem(weights, round(PDF(i) * mult))
+      return weights
     END METHOD
 
-Also, [**Python sample code**](https://peteroupc.github.io/randomgen.zip) includes a `numbers_from_pdf` method (continuous) and an `integers_from_pdf` method (discrete) that implement piecewise interpolation.
-
-> **Examples:**
+> **Note:** [**Python sample code**](https://peteroupc.github.io/randomgen.zip) includes an `integers_from_pdf` method (discrete) that implements weighted approximation.
 >
-> 1. To generate a random number that closely follows a [**Poisson distribution**](#Poisson_Distribution) with a mean of 0.1:
->     - Set `list` to `[0, 1, 2, 3, 4, 5]` (values that the random number can be).
->     - Set `weights` to the corresponding values of the Poisson PDF: `[90483742, 9048374, 452419, 15081, 377, 8]`; this can be generated with `WeightTable(0, 5, 1, 100000000)`.
->     - Generate the random number with `list[WeightedChoice(weights)]`.
-> 2. A 3-bit-integer-quantized number format can take on values 0, 1/8, 2/8, ..., 7/8.  For this format, the following weights approximate a continuous [**beta distribution**](#Beta_Distribution) with `a = 2` and `b = 2`: `[0, 656, 1125, 1406, 1500, 1406, 1125, 656]`; this can be generated with `WeightTable(0, 7/8, 1/8, 10000)` and the beta PDF.
+> **Example:** For a Poisson distribution with mean 0.1, `IntegerWeights(0, 5, 100000000)` generates `[90483742, 9048374, 452419, 15081, 377, 8]`.  Numbers that closely follow that distribution can then be generated with the `WeightedChoice` method and that list.
+
+<a id=Weighted_Approximation_Continuous_Distributions></a>
+#### Weighted Approximation: Continuous Distributions
+
+If the distribution is continuous and has a known PDF, the following method, in the pseudocode below, can be used to generate a random number in the interval [`mini`, `maxi`] that closely follows that distribution, in part by sampling weights in that interval with a step count of `step`.  The interval is chosen to cover all or almost all of the distribution.
+
+    METHOD ContinuousSample(mini, maxi, step)
+       list = []
+       weights = []
+       i = mini; while i <= maxi
+         AddItem(list, i)
+         AddItem(weights, round(PDF(i)))
+         i = i + step
+       end
+       return ContinuousWeightedChoice(list, weights)
+    END METHOD
 
 <a id=Gibbs_Sampling></a>
 ### Gibbs Sampling
@@ -1958,6 +1969,7 @@ A &dagger; symbol next to a distribution means the random number can be shifted 
 Most commonly used:
 
 <small>
+
 - **Beta distribution**: See [**Beta Distribution**](#Beta_Distribution).
 - **Binomial distribution**: See [**Binomial Distribution: Optimization for Many Trials**](#Binomial_Distribution_Optimization_for_Many_Trials).
 - **Binormal distribution**: See [**Multivariate Normal (Multinormal) Distribution**](#Multivariate_Normal_Multinormal_Distribution).
@@ -1985,11 +1997,13 @@ Most commonly used:
 - **Student's _t_-distribution**: `Normal(cent, 1) / sqrt(GammaDist(df * 0.5, 2 / df))`, where `df` is the number of degrees of freedom, and _cent_ is the mean of the normally-distributed random number.  A `cent` other than 0 indicates a _noncentral_ distribution.
 - **Triangular distribution**: `ContinuousWeightedChoice([startpt, midpt, endpt], [0, 1, 0])`. The distribution starts at `startpt`, peaks at `midpt`, and ends at `endpt`.
 - **Weibull distribution**: See generalized extreme value distribution.
+
 </small>
 
 Miscellaneous:
 
 <small>
+
 - **3-parameter gamma distribution**: See [**Gamma Distribution**](#Gamma_Distribution).
 - **4-parameter gamma distribution**: See [**Gamma Distribution**](#Gamma_Distribution).
 - **4-parameter stable distribution**: See [**Stable Distribution**](#Stable_Distribution).
@@ -2076,6 +2090,7 @@ Miscellaneous:
 - **Yule&ndash;Simon distribution**: See beta negative binomial distribution.
 - **Zeta distribution**: Generate `n = floor(pow(RNDU01ZeroOneExc(), -1.0 / r))`, and if `d / pow(2, r) < (d - 1) * RNDU01OneExc() * n / (pow(2, r) - 1.0)`, where `d = pow((1.0 / n) + 1, r)`, repeat this process. The parameter `r` is greater than 0. Based on method described in Devroye 1986. A zeta distribution [**truncated**](#Rejection_Sampling) by rejecting random values greater than some positive integer is called a _Zipf distribution_ or _Estoup distribution_. (Note that Devroye uses "Zipf distribution" to refer to the untruncated zeta distribution.)
 - **Zipf distribution**: See zeta distribution.
+
 </small>
 
 <a id=Geometric_Sampling></a>
