@@ -5,17 +5,23 @@ def prepareMarkdown(data)
   data=data.gsub(/<a\s+(id|name)[^>]*>\s*<\/a>/,"")
   data=data.gsub(/\t/," "*8)
   notetexts={}
+  textstorefs={} # to help remove duplicate note texts
   data.scan(/<sup\s+id\s*\=\s*([^>]+)>\s*\(\d+\)\s*<\/sup>\s*([\s\S]+?)(?=<sup\s+id|\#\#|\z)/){|n|
     notetext=n[1].gsub(/\s+\z/,"")
     notetext=notetext.gsub(/<\/?small>/,"").gsub(/\s+\z/,"")
+    textstorefs[notetext]=n[0] if !textstorefs[notetext]
     notetexts[n[0]]=notetext
   }
-  noterefs={}
+  noterefs={} # Associates old note refs with new refs
   newnotetexts=[]
   data=data.gsub(/<sup>\s*\[(?:\*\*)?\(\d+\)(?:\*\*)?\]\s*\(\#([^>]+)\)\s*<\/sup>/){
      noteref=$1
      newrefid=""
      newref=0
+     ntext=notetexts[noteref] || "No note text yet."
+     # Use canonical note reference for note text,
+     # to avoid duplicate note texts
+     noteref=textstorefs[ntext] || noteref
      if !noterefs[noteref]
        newref=newnotetexts.length
        newrefid="Note#{newref+1}"
