@@ -151,6 +151,7 @@
 <li><a href="#Gibbs_Sampling"><strong>Gibbs Sampling</strong></a></li>
 <li><a href="#Normal_Gaussian_Distribution"><strong>Normal (Gaussian) Distribution</strong></a></li>
 <li><a href="#Binomial_Distribution_Optimization_for_Many_Trials"><strong>Binomial Distribution: Optimization for Many Trials</strong></a></li>
+<li><a href="#Exponential_Distribution"><strong>Exponential Distribution</strong></a></li>
 <li><a href="#Gamma_Distribution"><strong>Gamma Distribution</strong></a></li>
 <li><a href="#Beta_Distribution"><strong>Beta Distribution</strong></a></li>
 <li><a href="#Poisson_Distribution"><strong>Poisson Distribution</strong></a></li>
@@ -663,7 +664,7 @@ END METHOD
 
 <ol>
 <li><code>RandomKItemsFromFile</code> implements <a href="https://en.wikipedia.org/wiki/Reservoir_sampling"><strong><em>reservoir sampling</em></strong></a>; it chooses up to <code>k</code> random items from a file of indefinite size (<code>file</code>). Although the pseudocode refers to files and lines, the technique applies to any situation when items are retrieved one at a time from a data set or list whose size is not known in advance.  See the comments to find out how <code>RandomKItemsFromFile</code> can be used to choose an item at random only if it meets certain criteria (see &quot;<a href="#Rejection_Sampling"><strong>Rejection Sampling</strong></a>&quot; for example criteria).</li>
-<li><code>RandomKItemsInOrder</code> returns a list of up to <code>k</code> random items from the given list (<code>list</code>), in the order in which they appeared in the list.  It is based on a technique presented in Devroye 1986, p. 620.</li>
+<li><code>RandomKItemsInOrder</code> returns a list of up to <code>k</code> random items from the given list (<code>list</code>), in the order in which they appeared in the list.  It is based on a technique presented in (Devroye 1986)<sup><a href="#Note42"><strong>(42)</strong></a></sup>, p. 620.</li>
 </ol>
 
 <p>&nbsp;</p>
@@ -1648,7 +1649,7 @@ above for returning more than one random number in one call.</p>
 
 <ul>
 <li>A <em>Wiener process</em> has random states and jumps that are normally distributed (a process of this kind is also known as <em>Brownian motion</em>). For a random walk that follows a Wiener process, <code>STATEJUMP()</code> is <code>Normal(mu * timediff, sigma * sqrt(timediff))</code>, where  <code>mu</code> is the average value per time unit, <code>sigma</code> is the volatility, and <code>timediff</code> is the time difference between samples.  A <em>Brownian bridge</em> (Revuz and Yor 1999)<sup><a href="#Note27"><strong>(27)</strong></a></sup> modifies a Wiener process as follows: For each time X, calculate <code>W(X) - W(E) * (X - S) / (E - S)</code>, where <code>S</code> and <code>E</code> are the starting and ending times of the process, respectively, and <code>W(X)</code> and <code>W(E)</code> are the state at times X and E, respectively.</li>
-<li>In a <em>Poisson process</em>, the time between each event is its own random exponential variable, namely, <code>-ln(RNDU01ZeroOneExc()) / rate</code>, where <code>rate</code> is the average number of events per time unit. An <em>inhomogeneous Poisson process</em> results if <code>rate</code> can vary with the &quot;timestamp&quot; before each event jump.</li>
+<li>In a <em>Poisson process</em>, the time between each event is its own random <code>Expo(rate)</code> variable (see &quot;Exponential Distribution&quot;). An <em>inhomogeneous Poisson process</em> results if <code>rate</code> can vary with the &quot;timestamp&quot; before each event jump.</li>
 </ul></li>
 </ul>
 
@@ -1658,13 +1659,13 @@ above for returning more than one random number in one call.</p>
 
 <ol>
 <li>Example 3 in &quot;<a href="#Mixtures_of_Distributions"><strong>Mixtures of Distributions</strong></a>&quot; can be adapted to nonoverlapping real number ranges by assigning weights <code>mx - mn</code> instead of <code>(mx - mn) + 1</code> and using <code>RNDRANGEMaxExc</code> instead of <code>RNDINTRANGE</code>.</li>
-<li><p>A <strong>hyperexponential distribution</strong> is a mixture of <a href="#Gamma_Distribution"><strong>exponential distributions</strong></a>, each one with a separate weight and separate rate.  An example is below.</p>
+<li><p>A <strong>hyperexponential distribution</strong> is a mixture of <a href="#Exponential_Distribution"><strong>exponential distributions</strong></a>, each one with a separate weight and separate rate.  An example is below.</p>
 
 <pre> index = WeightedChoice([0.6, 0.3, 0.1])
  // Rates of the three exponential distributions
  rates = [0.3, 0.1, 0.05]
  // Generate an exponential random number with chosen rate
- number = -ln(RNDU01ZeroOneExc()) / rates[index]
+ number = Expo(rates[index])
 </pre></li>
 </ol>
 
@@ -1680,7 +1681,7 @@ above for returning more than one random number in one call.</p>
 of <em>n</em> random numbers each generated the same way, where <em>n</em> follows a <a href="#Poisson_Distribution"><strong>Poisson distribution</strong></a> (e.g., <code>n = Poisson(10)</code> for an average of 10 numbers) (strategy 7, sum).</li>
 <li>A <strong>P&oacute;lya&ndash;Aeppli distribution</strong> is a compound Poisson distribution in which the random numbers are generated by <code>NegativeBinomial(1, 1-p)+1</code> for a fixed <code>p</code>.</li>
 <li>A <strong>hypoexponential distribution</strong> models the sum<sup><a href="#Note15"><strong>(15)</strong></a></sup>
-of <em>n</em> random numbers that follow an exponential distribution and each have a separate <code>lamda</code> parameter (see &quot;<a href="#Gamma_Distribution"><strong>Gamma Distribution</strong></a>&quot;).</li>
+of <em>n</em> random numbers that follow an exponential distribution and each have a separate <code>lamda</code> parameter (see &quot;<a href="#Exponential_Distribution"><strong>Exponential Distribution</strong></a>&quot;).</li>
 <li>A random point (<code>x</code>, <code>y</code>) can be transformed (strategy 9, geometric transformation) to derive a point with <strong>correlated random</strong> coordinates (old <code>x</code>, new <code>x</code>) as follows (see (Saucier 2000)<sup><a href="#Note28"><strong>(28)</strong></a></sup>, sec. 3.8): <code>[x, y*sqrt(1 - rho * rho) + rho * x]</code>, where <code>x</code> and <code>y</code> are independent random numbers generated the same way, and <code>rho</code> is a <em>correlation coefficient</em> in the interval [-1, 1] (if <code>rho</code> is 0, the variables are uncorrelated).</li>
 <li>It is reasonable to talk about sampling the sum of N random numbers, where N has a fractional part.  In this case, <code>ceil(N)</code> random numbers are generated and the last number is multiplied by that fractional part.  For example, to sample the sum of 2.5 random numbers, generate three random numbers, multiply the last by 0.5 (the fractional part of 2.5), then sum all three numbers.</li>
 </ol>
@@ -1746,11 +1747,11 @@ of <em>n</em> random numbers that follow an exponential distribution and each ha
 <li><p><strong>PDF is known</strong>, even if the area under the PDF isn&#39;t 1:</p>
 
 <ul>
-<li><p><a href="#Rejection_Sampling"><strong>Rejection sampling.</strong></a>  If the PDF can be more easily sampled by another distribution with its own PDF (<code>PDF2</code>) that &quot;dominates&quot; <code>PDF</code> in the sense that <code>PDF2(x) &gt;= PDF(x)</code> at every valid <code>x</code>, then generate random numbers with that distribution until a number (<code>n</code>) that satisfies <code>PDF(n) &gt;= RNDRANGEMaxExc(0, PDF2(n))</code> is generated this way (that is, sample points in <code>PDF2</code> until a point falls within <code>PDF</code>). (See also Saucier 2000, pp. 6-7, 39; Devroye 1986, pp. 41-43; and &quot;<a href="https://mathworks.com/help/stats/generating-random-data.html"><strong>Generating Pseudorandom Numbers</strong></a>&quot;.)  Examples:</p>
+<li><p><a href="#Rejection_Sampling"><strong>Rejection sampling.</strong></a>  If the PDF can be more easily sampled by another distribution with its own PDF (<code>PDF2</code>) that &quot;dominates&quot; <code>PDF</code> in the sense that <code>PDF2(x) &gt;= PDF(x)</code> at every valid <code>x</code>, then generate random numbers with that distribution until a number (<code>n</code>) that satisfies <code>PDF(n) &gt;= RNDRANGEMaxExc(0, PDF2(n))</code> is generated this way (that is, sample points in <code>PDF2</code> until a point falls within <code>PDF</code>). (See also Saucier 2000, pp. 6-7, 39; (Devroye 1986)<sup><a href="#Note43"><strong>(43)</strong></a></sup>, pp. 41-43; and &quot;<a href="https://mathworks.com/help/stats/generating-random-data.html"><strong>Generating Pseudorandom Numbers</strong></a>&quot;.)  Examples:</p>
 
 <ol>
 <li><p>To sample a random number in the interval [<code>low</code>, <code>high</code>) from a PDF with a positive maximum value no greater than <code>peak</code> at that interval, generate <code>x = RNDRANGEMaxExc(low, high)</code> and <code>y = RNDRANGEMaxExc(0, peak)</code> until <code>y &lt; PDF(x)</code>, then take the last <code>x</code> generated this way. (See also Saucier 2000, pp. 6-7.)</p></li>
-<li><p>A custom distribution&#39;s PDF, <code>PDF</code>, is <code>exp(-abs(x*x*x))</code>, and the exponential distribution&#39;s PDF, <code>PDF2</code>, is <code>exp(-x)</code>.  The exponential PDF &quot;dominates&quot; the other PDF (at every <code>x</code> 0 or greater) if we multiply it by 1.5, so that <code>PDF2</code> is now <code>1.5 * exp(-x)</code>.  Now we can generate numbers from our custom distribution by sampling exponential points until a point falls within <code>PDF</code>.  This is done by generating <code>n = -ln(RNDU01ZeroOneExc())</code> until <code>PDF(n) &gt;= RNDRANGEMaxExc(0, PDF2(n))</code>.</p></li>
+<li><p>A custom distribution&#39;s PDF, <code>PDF</code>, is <code>exp(-abs(x*x*x))</code>, and the exponential distribution&#39;s PDF, <code>PDF2</code>, is <code>exp(-x)</code>.  The exponential PDF &quot;dominates&quot; the other PDF (at every <code>x</code> 0 or greater) if we multiply it by 1.5, so that <code>PDF2</code> is now <code>1.5 * exp(-x)</code>.  Now we can generate numbers from our custom distribution by sampling exponential points until a point falls within <code>PDF</code>.  This is done by generating <code>n = Expo(1)</code> until <code>PDF(n) &gt;= RNDRANGEMaxExc(0, PDF2(n))</code>.</p></li>
 </ol></li>
 <li><p><strong>Weighted approximation.</strong> See the next two sections on weighted approximation.</p></li>
 <li><a href="https://en.wikipedia.org/wiki/Markov_chain_Monte_Carlo"><strong>Markov-chain Monte Carlo</strong></a> <strong>(MCMC).</strong> If many random numbers from the given PDF need to be generated, then an MCMC algorithm can be used, with the disadvantage that the resulting random numbers are <em>dependent</em> on each other.  MCMC algorithms include Metropolis&ndash;Hastings and slice sampling (Neal 2003)<sup><a href="#Note32"><strong>(32)</strong></a></sup>. Generally, as more numbers are generated, the MCMC algorithm converges to the given distribution; this is why usually, random numbers from the first few (e.g., first 1000) iterations are ignored (&quot;burn in&quot;).  MCMC can also be used to find a suitable sampling range for the <em>weighted approximation</em> method (see the next two sections).  The <a href="https://peteroupc.github.io/randomgen.zip"><strong>Python sample code</strong></a> includes methods called <code>mcmc</code> and <code>mcmc2</code> that implement Metropolis&ndash;Hastings for PDFs that take single numbers or two-dimensional points, respectively, and a method called <code>slicesample</code> that implements slice sampling.</li>
@@ -1773,7 +1774,7 @@ of <code>weights</code>&#39;s items, then generate <a href="#Continuous_Weighted
 <p>If the distribution is discrete (integer-only), numbers that closely follow it can be sampled by choosing points that cover all or almost all of the distribution, finding their weights or cumulative weights, and choosing a random point based on those weights.  In the pseudocode below:</p>
 
 <ul>
-<li><code>InversionSample(mini, maxi)</code> chooses a random number in [<code>mini</code>, <code>maxi</code>] based on a known CDF (<code>CDF(x)</code>). This method should be used over <code>Sample</code> whenever possible.&lt;&lt;|This pseudocode generates <code>N = (maxi - mini) + 1</code> weights, including 0 and 1. If the weights are stored as N floating-point numbers with K bits of precision, where <code>N = (maxi - mini) + 1</code>, the relative error of approximating those weights this way is at most N*2<sup>-K+1</sup> (Walter, M., &quot;Sampling the Integers with Low Relative Error&quot;, 2019).  It follows here that probabilities closer to 0 have a smaller relative error when stored as such floating-point numbers.&gt;&gt;</li>
+<li><code>InversionSample(mini, maxi)</code> chooses a random number in [<code>mini</code>, <code>maxi</code>] based on a known CDF (<code>CDF(x)</code>). This method should be used over <code>Sample</code> whenever possible.&lt;&lt;|This pseudocode generates <code>N = (maxi - mini) + 1</code> weights, excluding the initial 0. If the weights are stored as N floating-point numbers with K bits of precision, where <code>N = (maxi - mini) + 1</code>, the relative error of this method is at most N*2<sup>-K+1</sup> (Walter, M., &quot;Sampling the Integers with Low Relative Error&quot;, 2019).  It follows here that probabilities closer to 0 have a smaller relative error when stored as such floating-point numbers.&gt;&gt;</li>
 <li><code>Sample(mini, maxi)</code> chooses a random number in [<code>mini</code>, <code>maxi</code>] based on a known PDF (<code>PDF(x)</code>, more properly called <em>probability mass function</em>).</li>
 <li><code>IntegerWeights(mini, maxi, mult)</code> generates a list of integer weights for the interval [<code>mini</code>, <code>maxi</code>] based on a known PDF (<code>PDF(x)</code>) and weight scale <code>mult</code>.</li>
 </ul>
@@ -1860,7 +1861,7 @@ probability that a normally-distributed random number will be within one standar
     if RNDINT(1) == 0: b = 0 - b
     c = a * a + b * b
     if c != 0 and c &lt;= 1
-       c = sqrt(-2 * ln(c) / c)
+       c = sqrt(-ln(c) * 2 / c)
        return [a * mu * c + sigma, b * mu * c + sigma]
     end
   end
@@ -1907,7 +1908,7 @@ END METHOD
     if tp &gt; 25
       sign=1
       ret=0
-      // p. 537 of Devroye 1986 with errata
+      // p. 537 of (Devroye 1986) with errata
       // incorporated
       while true
         if n*p &lt; 9
@@ -1917,7 +1918,7 @@ END METHOD
            t=-1
            while sum &lt;= n
               // Geometric variable plus 1
-              geo=floor(ln(RNDU01ZeroExc()) / ln(1-p))+1
+              geo=floor(-Expo(ln(1-p)))+1
               sum=sum+geo
               ret = ret + sign
            end
@@ -1950,6 +1951,36 @@ END METHOD
 END METHOD
 </pre>
 
+<p><a id=Exponential_Distribution></a></p>
+
+<h3>Exponential Distribution</h3>
+
+<p><strong>Requires random real numbers.</strong></p>
+
+<p>In the following method, which generates random numbers following an exponential distribution:</p>
+
+<ul>
+<li><code>lamda</code> is the inverse scale, usually 1.  Usually, <code>lamda</code> is the probability that an independent event of a given kind will occur in a given span of time (such as in a given day or year), and the random result is the number of spans of time until that event happens.  (This distribution is thus useful for modeling a <em>Poisson process</em>.) <code>1.0 / lamda</code> is the scale (mean), which is usually the average waiting time between two independent events of the same kind.</li>
+</ul>
+
+<p>&nbsp;</p>
+
+<pre>METHOD Expo(lamda)
+   if RNDINT(2) == 0
+     return -ln(RNDRANGEMinExc(0, 0.5)) / lamda
+   else
+     // NOTE: If `log1p(x)` is available, replace
+     // `-ln(1 - x)` with `log1p(-x)` for robustness
+     // (Pederson 2018).
+     return -ln(1.0 - RNDRANGEMinExc(0, 0.5)) / lamda
+   end
+END METHOD
+</pre>
+
+<blockquote>
+<p><strong>Note:</strong> A random number following the exponential distribution has the following na&iuml;ve implementation: <code>-ln(RNDU01())</code>.  But there are several problems with this; for example, this implementation is ill-conditioned at large values because of the distribution&#39;s right-sided tail (Pederson 2018)<sup><a href="#Note44"><strong>(44)</strong></a></sup>, and it can return infinity if <code>RNDU01()</code> becomes 0.  The method above implements Pederson&#39;s suggestion of &quot;flip-flopping&quot; the uniform value at random.</p>
+</blockquote>
+
 <p><a id=Gamma_Distribution></a></p>
 
 <h3>Gamma Distribution</h3>
@@ -1969,10 +2000,8 @@ END METHOD
     // Needs to be greater than 0
     if meanLifetime &lt;= 0 or scale &lt;= 0: return error
     // Exponential distribution special case if
-    // `meanLifetime` is 1 (see also Devroye 1986, p. 405)
-    if meanLifetime == 1: return -ln(RNDU01ZeroOneExc()) * scale
-    // Alternative of previous line:
-    // if meanLifetime == 1: return -ln(1 - RNDU01OneExc()) * scale
+    // `meanLifetime` is 1 (see also (Devroye 1986), p. 405)
+    if meanLifetime == 1: return Expo(1.0 / scale)
     d = meanLifetime
     v = 0
     if meanLifetime &lt; 1: d = d + 1
@@ -1993,7 +2022,7 @@ END METHOD
     end
     ret = d * v
     if meanLifetime &lt; 1
-       ret = ret * exp(ln(RNDU01ZeroExc()) / meanLifetime)
+       ret = ret * pow(RNDU01(), 1.0 / meanLifetime)
     end
     return ret * scale
 END METHOD
@@ -2004,9 +2033,8 @@ END METHOD
 <ul>
 <li><strong>3-parameter gamma distribution</strong>: <code>pow(GammaDist(a, 1), 1.0 / c) * b</code>, where <code>c</code> is another shape parameter.</li>
 <li><strong>4-parameter gamma distribution</strong>: <code>pow(GammaDist(a, 1), 1.0 / c) * b + d</code>, where <code>d</code> is the minimum value.</li>
-<li><strong>Exponential distribution</strong> (<code>Expo(lamda)</code> in this document): <code>GammaDist(1, 1.0 / lamda)</code> or <code>-ln(RNDU01ZeroOneExc()) / lamda</code> or  <code>-ln(1 - RNDU01OneExc()) / lamda</code>, where <code>lamda</code> is the inverse scale. Usually, <code>lamda</code> is the probability that an independent event of a given kind will occur in a given span of time (such as in a given day or year), and the random result is the number of spans of time until that event happens.  (This distribution is thus useful for modeling a <em>Poisson process</em>.) <code>1.0 / lamda</code> is the scale (mean), which is usually the average waiting time between two independent events of the same kind.</li>
 <li><strong>Erlang distribution</strong>: <code>GammaDist(n, 1.0 / lamda)</code>.  Expresses a sum of <code>n</code> exponential random variables with the given <code>lamda</code> parameter.</li>
-<li><strong>Max-of-uniform distribution</strong> (Devroye 1986, p. 675):  <code>1.0 - x/(x+GammaDist(n,1))</code>, where <code>n</code> is the number of uniform random variables, and <code>x</code> is <code>GammaDist(1,1)</code>.  Using <code>x/(x+GammaDist(n,1))</code> instead results in a <strong>min-of-uniform distribution</strong> (Devroye 1986, p. 210).</li>
+<li><strong>Max-of-uniform distribution</strong> (Devroye 1986, p. 675)<sup><a href="#Note45"><strong>(45)</strong></a></sup>:  <code>1.0 - x/(x+GammaDist(n,1))</code>, where <code>n</code> is the number of uniform random variables, and <code>x</code> is <code>GammaDist(1,1)</code>.  Using <code>x/(x+GammaDist(n,1))</code> instead results in a <strong>min-of-uniform distribution</strong> (Devroye 1986, p. 210)<sup><a href="#Note46"><strong>(46)</strong></a></sup>.</li>
 </ul>
 
 <p><a id=Beta_Distribution></a></p>
@@ -2019,7 +2047,7 @@ END METHOD
 
 <p>The following method generates a random number that follows a <em>beta distribution</em>, in the interval [0, 1).</p>
 
-<pre>METHOD BetaDist(self, a, b)
+<pre>METHOD BetaDist(a, b)
   if b==1 and a==1: return RNDU01()
   if a==1: return 1.0-pow(RNDU01(),1.0/b)
   if b==1: return pow(RNDU01(),1.0/a)
@@ -2098,7 +2126,7 @@ END METHOD
           return count
         end
         // Geometric distribution
-        return floor(ln(RNDU01ZeroExc()) / ln(1-p))
+        return floor(-Expo(ln(1-p)))
     end
     while total &lt; successes
         if RNDU01OneExc() &lt; p: total = total + 1
@@ -2109,7 +2137,7 @@ END METHOD
 </pre>
 
 <blockquote>
-<p><strong>Note:</strong> A <strong>geometric distribution</strong> can be sampled by generating <code>NegativeBinomial(1, p)</code>, where <code>p</code> has the same meaning as in the negative binomial distribution.  Here, the sampled number is the number of failures that have happened before a success happens. (This is the definition used in <em>Mathematica</em>, for example.  Saucier 2000, p. 44, also mentions an alternative definition that includes the success, and this is the definition used, for example, in Devroye 1986, p. 498.)  For example, if <code>p</code> is 0.5, the geometric distribution models the task &quot;Flip a coin until you get tails, then count the number of heads.&quot;</p>
+<p><strong>Note:</strong> A <strong>geometric distribution</strong> can be sampled by generating <code>NegativeBinomial(1, p)</code>, where <code>p</code> has the same meaning as in the negative binomial distribution.  Here, the sampled number is the number of failures that have happened before a success happens. (This is the definition used in <em>Mathematica</em>, for example.  Saucier 2000, p. 44, also mentions an alternative definition that includes the success, and this is the definition used, for example, in (Devroye 1986)<sup><a href="#Note47"><strong>(47)</strong></a></sup>, p. 498.)  For example, if <code>p</code> is 0.5, the geometric distribution models the task &quot;Flip a coin until you get tails, then count the number of heads.&quot;</p>
 </blockquote>
 
 <p><a id=von_Mises_Distribution></a></p>
@@ -2126,7 +2154,7 @@ END METHOD
 <li>the method can return a number within &pi; of that mean.</li>
 </ul>
 
-<p>The algorithm below is based on the Best&ndash;Fisher algorithm from 1979 (as described in Devroye 1986 with errata incorporated).</p>
+<p>The algorithm below is based on the Best&ndash;Fisher algorithm from 1979 (as described in (Devroye 1986)<sup><a href="#Note48"><strong>(48)</strong></a></sup> with errata incorporated).</p>
 
 <pre>METHOD VonMises(mean, kappa)
     if kappa &lt; 0: return error
@@ -2177,7 +2205,7 @@ END METHOD
     unif=RNDRANGEMinMaxExc(-halfpi, halfpi)
     // Cauchy special case
     if alpha == 1 and beta == 0: return tan(unif)
-    expo=-ln(RNDU01ZeroExc())
+    expo=Expo(1)
     c=cos(unif)
     if alpha == 1
        s=sin(unif)
@@ -2311,7 +2339,7 @@ method for generating multiple random points in one call.</p>
 
 <ol>
 <li>Notes 1 and 2 in the section &quot;Random Integers with a Given Positive Sum&quot; apply here.</li>
-<li>The <strong>Dirichlet distribution</strong>, as defined in some places (e.g., <em>Mathematica</em>; Devroye 1986, p. 594), models a uniform random combination of <em>n</em> random numbers that sum to 1, and can be sampled by generating <em>n</em>+1 random <a href="#Gamma_Distribution"><strong>gamma-distributed</strong></a> numbers, each with separate parameters, taking their sum<sup><a href="#Note15"><strong>(15)</strong></a></sup>, and dividing the first <em>n</em> numbers by that sum.</li>
+<li>The <strong>Dirichlet distribution</strong>, as defined in some places (e.g., <em>Mathematica</em>; (Devroye 1986)<sup><a href="#Note49"><strong>(49)</strong></a></sup>, p. 594), models a uniform random combination of <em>n</em> random numbers that sum to 1, and can be sampled by generating <em>n</em>+1 random <a href="#Gamma_Distribution"><strong>gamma-distributed</strong></a> numbers, each with separate parameters, taking their sum<sup><a href="#Note15"><strong>(15)</strong></a></sup>, and dividing the first <em>n</em> numbers by that sum.</li>
 </ol>
 </blockquote>
 
@@ -2391,7 +2419,7 @@ END METHOD
 <li><strong>Cauchy (Lorentz) distribution</strong>&dagger;: <code>tan(RNDRANGEMinMaxExc(-pi*0.5, pi*0.5))</code>.  This distribution is similar to the normal distribution, but with &quot;fatter&quot; tails.</li>
 <li><strong>Chi-squared distribution</strong>: <code>GammaDist(df * 0.5 + Poisson(sms * 0.5), 2)</code>, where <code>df</code> is the number of degrees of freedom and <code>sms</code> is the sum of mean squares (where <code>sms</code> other than 0 indicates a <em>noncentral</em> distribution).</li>
 <li><strong>Dice</strong>: See <a href="#Dice"><strong>Dice</strong></a>.</li>
-<li><strong>Exponential distribution</strong>: See <a href="#Gamma_Distribution"><strong>Gamma Distribution</strong></a>.</li>
+<li><strong>Exponential distribution</strong>: See <a href="#Exponential_Distribution"><strong>Exponential Distribution</strong></a>.</li>
 <li><strong>Extreme value distribution</strong>: See generalized extreme value distribution.</li>
 <li><strong>Gamma distribution</strong>: See <a href="#Gamma_Distribution"><strong>Gamma Distribution</strong></a>.</li>
 <li><strong>Gaussian distribution</strong>: See <a href="#Normal_Gaussian_Distribution"><strong>Normal (Gaussian) Distribution</strong></a>.</li>
@@ -2442,7 +2470,8 @@ the two parameters of the beta distribution, and <code>trials</code> is a parame
 <li><strong>Double logarithmic distribution</strong>: <code>min + (max - min) * (0.5 + (RNDINT(1) * 2 - 1) * 0.5 * RNDU01OneExc() * RNDU01OneExc())</code>, where <code>min</code> is the minimum value and <code>max</code> is the maximum value (see also Saucier 2000, p. 15, which shows the wrong X axes).</li>
 <li><strong>Erlang distribution</strong>: See <a href="#Gamma_Distribution"><strong>Gamma Distribution</strong></a>.</li>
 <li><strong>Estoup distribution</strong>: See zeta distribution.</li>
-<li><strong>Exponential power distribution</strong> (generalized normal distribution version 1): <code>(RNDINT(1) * 2 - 1) * pow(GammaDist(1.0/a), a)</code>, where <code>a</code> is a shape parameter.</li>
+<li><strong>Exponential power distribution</strong> (generalized normal distribution version 1): <code>(RNDINT(1) * 2 - 1) * pow(GammaDist(1.0/a, 1), a)</code>, where <code>a</code> is a shape parameter.</li>
+<li><strong>Extended xgamma distribution</strong> (Saha et al. 2019)<sup><a href="#Note50"><strong>(50)</strong></a></sup>: <code>GammaDist(alpha + x, theta)</code>, where <code>x</code> is 0 if <code>RNDU01() &lt;= theta/(theta+beta)</code> and 2 otherwise, and where <code>alpha</code>, <code>theta</code>, and <code>beta</code> are shape parameters.  If <code>alpha = 0</code>, the result is an <strong>xgamma distribution</strong> (Sen et al., 2016)<sup><a href="#Note51"><strong>(51)</strong></a></sup>.</li>
 <li><strong>Fr&eacute;chet distribution</strong>: See generalized extreme value distribution.</li>
 <li><strong>Fr&eacute;chet&ndash;Hoeffding lower bound copula</strong>: See <a href="#Gaussian_and_Other_Copulas"><strong>Gaussian and Other Copulas</strong></a>.</li>
 <li><strong>Fr&eacute;chet&ndash;Hoeffding upper bound copula</strong>: See <a href="#Gaussian_and_Other_Copulas"><strong>Gaussian and Other Copulas</strong></a>.</li>
@@ -2466,12 +2495,12 @@ the two parameters of the beta distribution, and <code>trials</code> is a parame
 <li><strong>Hypergeometric distribution</strong>: See <a href="#Hypergeometric_Distribution"><strong>Hypergeometric Distribution</strong></a>.</li>
 <li><strong>Hypoexponential distribution</strong>: See <a href="#Transformations_of_Random_Numbers_Additional_Examples"><strong>Transformations of Random Numbers: Additional Examples</strong></a>.</li>
 <li><strong>Inverse chi-squared distribution</strong>&dagger;: <code>df / (GammaDist(df * 0.5, 2))</code>, where <code>df</code> is the number of degrees of freedom.  The scale parameter (<code>sigma</code>) is usually <code>1.0 / df</code>.</li>
-<li><strong>Inverse Gaussian distribution (Wald distribution)</strong>: Generate <code>n = mu + (mu*mu*y/(2*lamda)) - mu * sqrt(4 * mu * lamda * y + mu * mu * y * y) / (2 * lamda)</code>, where <code>y = pow(Normal(0, 1), 2)</code>, then return <code>n</code> if <code>RNDU01OneExc() &lt;= mu / (mu + n)</code>, or <code>mu * mu / n</code> otherwise. <code>mu</code> is the mean and <code>lamda</code> is the scale; both parameters are greater than 0. Based on method published in <a href="http://luc.devroye.org/rnbookindex.html"><strong>Devroye 1986</strong></a>.</li>
+<li><strong>Inverse Gaussian distribution (Wald distribution)</strong>: Generate <code>n = mu + (mu*mu*y/(2*lamda)) - mu * sqrt(4 * mu * lamda * y + mu * mu * y * y) / (2 * lamda)</code>, where <code>y = pow(Normal(0, 1), 2)</code>, then return <code>n</code> if <code>RNDU01OneExc() &lt;= mu / (mu + n)</code>, or <code>mu * mu / n</code> otherwise. <code>mu</code> is the mean and <code>lamda</code> is the scale; both parameters are greater than 0. Based on method published in (Devroye 1986)<sup><a href="#Note52"><strong>(52)</strong></a></sup>.</li>
 <li><strong>Kumaraswamy distribution</strong>: <code>min + (max - min) * pow(1-pow(RNDU01ZeroExc(),1.0/b),1.0/a)</code>, where <code>a</code> and <code>b</code> are shape parameters, <code>min</code> is the minimum value, and <code>max</code> is the maximum value.</li>
 <li><strong>Landau distribution</strong>: See <a href="#Stable_Distribution"><strong>Stable Distribution</strong></a>.</li>
 <li><strong>L&eacute;vy distribution</strong>&dagger;: <code>0.5 / GammaDist(0.5, 1)</code>.  The scale parameter (<code>sigma</code>) is also called dispersion.</li>
 <li><strong>Logarithmic logistic distribution</strong>: See beta prime distribution.</li>
-<li><strong>Logarithmic series distribution</strong>: <code>floor(1.0 + ln(RNDU01ZeroExc()) / ln(1.0 - pow(1.0 - param, RNDU01ZeroOneExc())))</code>, where <code>param</code> is a number greater than 0 and less than 1. Based on method described in Devroye 1986.</li>
+<li><strong>Logarithmic series distribution</strong>: <code>floor(1.0 - Expo(ln(1.0 - pow(1.0 - param, RNDU01ZeroOneExc()))))</code>, where <code>param</code> is a number greater than 0 and less than 1. Based on method described in (Devroye 1986)<sup><a href="#Note53"><strong>(53)</strong></a></sup>.</li>
 <li><strong>Logistic distribution</strong>&dagger;: <code>(ln(x)-ln(1.0 - x))</code>, where <code>x</code> is <code>RNDU01ZeroOneExc()</code>.</li>
 <li><strong>Log-multinormal distribution</strong>: See <a href="#Multivariate_Normal_Multinormal_Distribution"><strong>Multivariate Normal (Multinormal) Distribution</strong></a>.</li>
 <li><strong>Max-of-uniform distribution</strong>: See <a href="#Gamma_Distribution"><strong>Gamma Distribution</strong></a>.</li>
@@ -2511,7 +2540,7 @@ the two parameters of the beta distribution, and <code>trials</code> is a parame
 <li><strong>Waring&ndash;Yule distribution</strong>: See beta negative binomial distribution.</li>
 <li><strong>Wigner (semicircle) distribution</strong>&dagger;: <code>(BetaDist(1.5, 1.5)*2-1)</code>.  The scale parameter (<code>sigma</code>) is the semicircular radius.</li>
 <li><strong>Yule&ndash;Simon distribution</strong>: See beta negative binomial distribution.</li>
-<li><strong>Zeta distribution</strong>: Generate <code>n = floor(pow(RNDU01ZeroOneExc(), -1.0 / r))</code>, and if <code>d / pow(2, r) &lt; (d - 1) * RNDU01OneExc() * n / (pow(2, r) - 1.0)</code>, where <code>d = pow((1.0 / n) + 1, r)</code>, repeat this process. The parameter <code>r</code> is greater than 0. Based on method described in Devroye 1986. A zeta distribution <a href="#Rejection_Sampling"><strong>truncated</strong></a> by rejecting random values greater than some positive integer is called a <em>Zipf distribution</em> or <em>Estoup distribution</em>. (Note that Devroye uses &quot;Zipf distribution&quot; to refer to the untruncated zeta distribution.)</li>
+<li><strong>Zeta distribution</strong>: Generate <code>n = floor(pow(RNDU01ZeroOneExc(), -1.0 / r))</code>, and if <code>d / pow(2, r) &lt; (d - 1) * RNDU01OneExc() * n / (pow(2, r) - 1.0)</code>, where <code>d = pow((1.0 / n) + 1, r)</code>, repeat this process. The parameter <code>r</code> is greater than 0. Based on method described in (Devroye 1986)<sup><a href="#Note54"><strong>(54)</strong></a></sup>. A zeta distribution <a href="#Rejection_Sampling"><strong>truncated</strong></a> by rejecting random values greater than some positive integer is called a <em>Zipf distribution</em> or <em>Estoup distribution</em>. (Note that Devroye uses &quot;Zipf distribution&quot; to refer to the untruncated zeta distribution.)</li>
 <li><strong>Zipf distribution</strong>: See zeta distribution.</li>
 </ul>
 
@@ -2551,8 +2580,7 @@ the two parameters of the beta distribution, and <code>trials</code> is a parame
    end
    gammas=NewList()
    // Sample from a Dirichlet distribution
-   for i in 0...size(points): AddItem(gammas,
-       -ln(RNDU01ZeroOneExc()))
+   for i in 0...size(points): AddItem(gammas, Expo(1))
    tsum=0
    for i in 0...size(gammas): tsum = tsum + gammas[i]
    tot = 0
@@ -2604,7 +2632,7 @@ END METHOD
 
 <ul>
 <li>generate a random (N+2)-dimensional point on the surface of an (N+2)-dimensional hypersphere with that radius (e.g., using <code>RandomPointInHypersphere</code>), then discard the last two coordinates (Voelker et al., 2017)<sup><a href="#Note38"><strong>(38)</strong></a></sup>, or</li>
-<li>follow the pseudocode in <code>RandomPointInHypersphere</code>, except replace <code>Norm(ret)</code> with <code>sqrt( S - ln(RNDU01ZeroExc()))</code>, where <code>S</code> is the sum of squares of the numbers in <code>ret</code><sup><a href="#Note15"><strong>(15)</strong></a></sup>.</li>
+<li>follow the pseudocode in <code>RandomPointInHypersphere</code>, except replace <code>Norm(ret)</code> with <code>sqrt(S + Expo(1))</code>, where <code>S</code> is the sum of squares of the numbers in <code>ret</code><sup><a href="#Note15"><strong>(15)</strong></a></sup>.</li>
 </ul>
 
 <p>To generate a random point on or inside an N-dimensional spherical shell (a hollow ball), centered at the origin, with inner radius A and outer radius B (where A is less than B), either&mdash;</p>
@@ -2739,7 +2767,7 @@ and &quot;<a href="https://randomascii.wordpress.com/2013/07/16/floating-point-d
 <p><small><sup id=Note34>(34)</sup> For example, besides the methods given in this section&#39;s main text:</p>
 
 <ol>
-<li>In the <em>Box&ndash;Muller transformation</em>, <code>mu + radius * cos(angle)</code> and <code>mu + radius * sin(angle)</code>, where <code>angle = RNDRANGEMaxExc(0, 2 * pi)</code> and <code>radius = sqrt(-2 * ln(RNDU01ZeroExc())) * sigma</code>, are two independent normally-distributed random numbers.</li>
+<li>In the <em>Box&ndash;Muller transformation</em>, <code>mu + radius * cos(angle)</code> and <code>mu + radius * sin(angle)</code>, where <code>angle = RNDRANGEMaxExc(0, 2 * pi)</code> and <code>radius = sqrt(Expo(0.5)) * sigma</code>, are two independent normally-distributed random numbers.</li>
 <li>Computing the sum of twelve <code>RNDU01OneExc()</code> numbers (see Note 13) and subtracting the sum by 6 (see also <a href="https://en.wikipedia.org/wiki/Irwin%E2%80%93Hall_distribution"><strong>&quot;Irwin&ndash;Hall distribution&quot; on Wikipedia</strong></a>) results in approximate standard normal (<code>mu</code>=0, <code>sigma</code>=1) random numbers, whose values are not less than -6 or greater than 6; on the other hand, in a standard normal distribution, the chance of results less than -6 or greater than 6 is generally negligible.</li>
 <li>Computing the sum of twelve <code>RNDRANGEMaxExc(0, sigma)</code> numbers (see Note 13) and subtracting the sum by 6 * <code>sigma</code> results in approximate normal random numbers with <code>mu</code>=0 and the given <code>sigma</code>, whose values are not less than -6 * <code>sigma</code> or greater than 6 * <code>sigma</code>.</li>
 <li>Generating <code>RNDU01ZeroOneExc()</code>, then running the standard normal distribution&#39;s inverse cumulative distribution function on that number, results in a random number from that distribution.  An approximation is found in M. Wichura, <em>Applied Statistics</em> 37(3), 1988.  See also <a href="https://www.johndcook.com/blog/normal_cdf_inverse/"><strong>&quot;A literate program to compute the inverse of the normal CDF&quot;</strong></a>.</li>
@@ -2761,6 +2789,32 @@ and &quot;<a href="https://randomascii.wordpress.com/2013/07/16/floating-point-d
 <p><small><sup id=Note40>(40)</sup> See the <em>Stack Overflow</em> question &quot;Uniform sampling (by volume) within a cone&quot;, <code>questions/41749411</code>.</small></p>
 
 <p><small><sup id=Note41>(41)</sup> Mironov, I., &quot;On Significance of the Least Significant Bits For Differential Privacy&quot;, 2012.</small></p>
+
+<p><small><sup id=Note42>(42)</sup> Devroye, L., <a href="http://luc.devroye.org/rnbookindex.html"><strong><em>Non-Uniform Random Variate Generation</em></strong></a>, 1986.</small></p>
+
+<p><small><sup id=Note43>(43)</sup> Devroye, L., <a href="http://luc.devroye.org/rnbookindex.html"><strong><em>Non-Uniform Random Variate Generation</em></strong></a>, 1986.</small></p>
+
+<p><small><sup id=Note44>(44)</sup> Pederson, K., &quot;Reconditioning your quantile function&quot;, arXiv:1704.07949v3 [stat.CO], 2018.</small></p>
+
+<p><small><sup id=Note45>(45)</sup> Devroye, L., <a href="http://luc.devroye.org/rnbookindex.html"><strong><em>Non-Uniform Random Variate Generation</em></strong></a>, 1986.</small></p>
+
+<p><small><sup id=Note46>(46)</sup> Devroye, L., <a href="http://luc.devroye.org/rnbookindex.html"><strong><em>Non-Uniform Random Variate Generation</em></strong></a>, 1986.</small></p>
+
+<p><small><sup id=Note47>(47)</sup> Devroye, L., <a href="http://luc.devroye.org/rnbookindex.html"><strong><em>Non-Uniform Random Variate Generation</em></strong></a>, 1986.</small></p>
+
+<p><small><sup id=Note48>(48)</sup> Devroye, L., <a href="http://luc.devroye.org/rnbookindex.html"><strong><em>Non-Uniform Random Variate Generation</em></strong></a>, 1986.</small></p>
+
+<p><small><sup id=Note49>(49)</sup> Devroye, L., <a href="http://luc.devroye.org/rnbookindex.html"><strong><em>Non-Uniform Random Variate Generation</em></strong></a>, 1986.</small></p>
+
+<p><small><sup id=Note50>(50)</sup> Saha, M., et al., &quot;The extended xgamma distribution&quot;, arXiv:1909.01103 [math.ST], 2019.</small></p>
+
+<p><small><sup id=Note51>(51)</sup> Sen, S., et al., &quot;The xgamma distribution: statistical properties and application&quot;, 2016.</small></p>
+
+<p><small><sup id=Note52>(52)</sup> Devroye, L., <a href="http://luc.devroye.org/rnbookindex.html"><strong><em>Non-Uniform Random Variate Generation</em></strong></a>, 1986.</small></p>
+
+<p><small><sup id=Note53>(53)</sup> Devroye, L., <a href="http://luc.devroye.org/rnbookindex.html"><strong><em>Non-Uniform Random Variate Generation</em></strong></a>, 1986.</small></p>
+
+<p><small><sup id=Note54>(54)</sup> Devroye, L., <a href="http://luc.devroye.org/rnbookindex.html"><strong><em>Non-Uniform Random Variate Generation</em></strong></a>, 1986.</small></p>
 
 <p><a id=Appendix></a></p>
 
