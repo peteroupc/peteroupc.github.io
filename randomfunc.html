@@ -147,7 +147,6 @@
 <ul>
 <li><a href="#Weighted_Approximation_Discrete_Distributions"><strong>Weighted Approximation: Discrete Distributions</strong></a></li>
 <li><a href="#Weighted_Approximation_Continuous_Distributions"><strong>Weighted Approximation: Continuous Distributions</strong></a></li>
-<li><a href="#Inverse_Transform_Sampling"><strong>Inverse Transform Sampling</strong></a></li>
 <li><a href="#Rejection_Sampling_with_a_PDF"><strong>Rejection Sampling with a PDF</strong></a></li>
 <li><a href="#Markov_Chain_Monte_Carlo"><strong>Markov-Chain Monte Carlo</strong></a></li>
 </ul></li>
@@ -863,7 +862,7 @@ END METHOD
 <li><code>CumulativeWeightedChoice</code> takes a single list <code>weights</code> of N <em>cumulative weights</em>; they start at 0 and the next weight is not less than the previous.  Returns a number in the interval [0, N - 1).</li>
 </ul>
 
-<p>&mdash;</p>
+<p>&nbsp;</p>
 
 <pre>METHOD CWChoose(weights, value)
     // Choose the index according to the given value
@@ -902,7 +901,7 @@ METHOD WeightedChoice(weights)
     for i in 0...size(weights): msum = msum + weights[i]
     // Choose a random integer from 0 and less than
     // the sum of weights.
-    return WChoose(RNDINTEXC(sum))
+    return WChoose(RNDINTEXC(msum))
 END METHOD
 
 METHOD CumulativeWeightedChoice(weights)
@@ -1745,7 +1744,7 @@ of <em>n</em> random numbers that follow an exponential distribution and each ha
 <li>The <em>inverse cumulative distribution function</em> (<em>inverse CDF</em>) is the inverse of the CDF and maps numbers in the interval [0, 1) to numbers in the distribution, from low to high.</li>
 </ul>
 
-<p>Depending on what information is known about the distribution, the following sections show how to generate random numbers based on that distribution.</p>
+<p>The following sections show different ways to generate random numbers based on a distribution, depending on what is known about that distribution.</p>
 
 <blockquote>
 <p><strong>Notes:</strong></p>
@@ -1814,9 +1813,7 @@ END METHOD
 END METHOD
 </pre>
 
-<p>If the distribution <strong>is continuous and has a known CDF</strong>, the CDF is usually numerically inverted to generate a random number from that distribution.  For example, <strong>Python sample code</strong>](<a href="https://peteroupc.github.io/randomgen.zip">https://peteroupc.github.io/randomgen.zip</a>) includes an <code>integers_from_cdf</code> method that implements this kind of sampling given a CDF, and a <code>from_interp</code> method that generates random numbers from a list of pairs of CDF values and points.</p>
-
-<p><a id=Inverse_Transform_Sampling></a></p>
+<p>If the distribution <strong>is continuous and has a known CDF</strong>, the CDF is usually numerically inverted to generate a random number from that distribution.  For example, <a href="https://peteroupc.github.io/randomgen.zip"><strong>Python sample code</strong></a> includes an <code>integers_from_cdf</code> method that implements this kind of sampling given a CDF, and a <code>from_interp</code> method that generates random numbers from a list of pairs of CDF values and points.</p>
 
 <h4>Inverse Transform Sampling</h4>
 
@@ -1828,7 +1825,7 @@ END METHOD
 
 <ul>
 <li>If the distribution <strong>has a known inverse CDF</strong>: Generate <code>ICDF(randomVariable)</code>, where <code>ICDF(X)</code> is the inverse CDF.</li>
-<li>If the distribution <strong>is discrete and has a known PDF or CDF</strong>: Use <code>SampleU01</code> or <code>InversionSampleU01</code>, respectively (given below).</li>
+<li>If the distribution <strong>is discrete and has a known PDF or CDF</strong>: Use <code>SampleU01</code> or <code>InversionSampleU01</code>, respectively (given below), choosing an interval [<code>mini</code>, <code>maxi</code>] that covers all or almost all of the distribution.</li>
 <li>If the distribution <strong>is continuous and has a known PDF or CDF</strong>: To be added.</li>
 </ul>
 
@@ -1865,7 +1862,7 @@ END METHOD
 <p><strong>Examples:</strong></p>
 
 <ol>
-<li>To sample a random number in the interval [<code>low</code>, <code>high</code>) from a PDF with a positive maximum value no greater than <code>peak</code> at that interval, generate <code>x = RNDRANGEMaxExc(low, high)</code> and <code>y = RNDRANGEMaxExc(0, peak)</code> until <code>y &lt; PDF(x)</code>, then take the last <code>x</code> generated this way. (See also Saucier 2000, pp. 6-7.)</li>
+<li>To sample a random number in the interval [<code>low</code>, <code>high</code>) from a PDF with a positive maximum value no greater than <code>peak</code> at that interval, generate <code>x = RNDRANGEMaxExc(low, high)</code> and <code>y = RNDRANGEMaxExc(0, peak)</code> until <code>y &lt; PDF(x)</code>, then take the last <code>x</code> generated this way. (See also Saucier 2000, pp. 6-7.)  If the distribution <strong>is discrete (integer-only)</strong>, generate <code>x</code> with <code>x = RNDINTEXCRANGE(low, high)</code> instead.</li>
 <li>A custom distribution&#39;s PDF, <code>PDF</code>, is <code>exp(-abs(x*x*x))</code>, and the exponential distribution&#39;s PDF, <code>PDF2</code>, is <code>exp(-x)</code>.  The exponential PDF &quot;dominates&quot; the other PDF (at every <code>x</code> 0 or greater) if we multiply it by 1.5, so that <code>PDF2</code> is now <code>1.5 * exp(-x)</code>.  Now we can generate numbers from our custom distribution by sampling exponential points until a point falls within <code>PDF</code>.  This is done by generating <code>n = Expo(1)</code> until <code>PDF(n) &gt;= RNDRANGEMaxExc(0, PDF2(n))</code>.</li>
 </ol>
 </blockquote>
@@ -2425,7 +2422,7 @@ method for generating multiple random points in one call.</p>
 END METHOD
 </pre>
 
-<p>Each of the resulting uniform random numbers will be in the interval [0, 1], and each one can be further transformed to any other probability distribution (which is called a <em>marginal distribution</em> here) by one of the methods given in &quot;<a href="#Random_Numbers_from_an_Arbitrary_Distribution"><strong>Random Numbers from an Arbitrary Distribution</strong></a>&quot;. (See also Cario and Nelson 1997.)</p>
+<p>Each of the resulting uniform random numbers will be in the interval [0, 1], and each one can be further transformed to any other probability distribution (which is called a <em>marginal distribution</em> here) by one of the methods given in &quot;<a href="#Inverse_Transform_Sampling"><strong>Inverse Transform Sampling</strong></a>&quot;. (See also Cario and Nelson 1997.)</p>
 
 <blockquote>
 <p><strong>Examples:</strong></p>
@@ -2708,7 +2705,7 @@ END METHOD
 
 <h4>Random Latitude and Longitude</h4>
 
-<p>To generate a random point on the surface of a sphere in the form of a latitude and longitude (in radians with west and south coordinates negative)<sup><a href="#Note46"><strong>(46)</strong></a></sup>&mdash;</p>
+<p>To generate a random point on the surface of a sphere in the form of a latitude and longitude (in radians with west and south coordinates negative)<sup><a href="#Note47"><strong>(47)</strong></a></sup>&mdash;</p>
 
 <ul>
 <li>generate the longitude <code>RNDRANGEMaxExc(-pi, pi)</code>, where the longitude is in the interval [-&pi;, &pi;), and</li>
@@ -2852,9 +2849,9 @@ and &quot;<a href="https://randomascii.wordpress.com/2013/07/16/floating-point-d
 
 <p><small><sup id=Note45>(45)</sup> See the <em>Stack Overflow</em> question &quot;Uniform sampling (by volume) within a cone&quot;, <code>questions/41749411</code>.</small></p>
 
-<p><small><sup id=Note46>(46)</sup> Reference: <a href="http://mathworld.wolfram.com/SpherePointPicking.html"><strong>&quot;Sphere Point Picking&quot;</strong></a> in MathWorld (replacing inverse cosine with <code>atan2</code> equivalent).</small></p>
+<p><small><sup id=Note46>(46)</sup> Mironov, I., &quot;On Significance of the Least Significant Bits For Differential Privacy&quot;, 2012.</small></p>
 
-<p><small><sup id=Note47>(47)</sup> Mironov, I., &quot;On Significance of the Least Significant Bits For Differential Privacy&quot;, 2012.</small></p>
+<p><small><sup id=Note47>(47)</sup> Reference: <a href="http://mathworld.wolfram.com/SpherePointPicking.html"><strong>&quot;Sphere Point Picking&quot;</strong></a> in MathWorld (replacing inverse cosine with <code>atan2</code> equivalent).</small></p>
 
 <p><a id=Appendix></a></p>
 
@@ -2959,7 +2956,7 @@ END METHOD
 <li><strong>Security algorithms out of scope.</strong> Security algorithms that take random secrets to generate random security parameters, such as encryption keys, public/private key pairs, elliptic curves, or points on an elliptic curve, are outside this document&#39;s scope.</li>
 </ol>
 
-<p>In nearly all security-sensitive applications, random numbers generated for security purposes are integers.  In very rare cases, they&#39;re fixed-point numbers.  Even with a secure random number generator, the use of random floating-point numbers can cause security issues not present with integers or fixed-point numbers; one example is found in (Mironov 2012)<sup><a href="#Note47"><strong>(47)</strong></a></sup>.</p>
+<p>In nearly all security-sensitive applications, random numbers generated for security purposes are integers.  In very rare cases, they&#39;re fixed-point numbers.  Even with a secure random number generator, the use of random floating-point numbers can cause security issues not present with integers or fixed-point numbers; one example is found in (Mironov 2012)<sup><a href="#Note46"><strong>(46)</strong></a></sup>.</p>
 
 <p><a id=License></a></p>
 
