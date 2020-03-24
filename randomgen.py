@@ -109,7 +109,17 @@ class RandomGen:
             return 0
         if maxInclusive == 1:
             return self._rndbit()
-        return self.rng.randint(0, maxInclusive)
+        # Lumbroso's fast dice roller method
+        x = 1
+        y = 0
+        while True:
+            x = x * 2
+            y = y * 2 + self._rndbit()
+            if x > maxInclusive:
+                if y <= maxInclusive:
+                    return y
+                x = x - maxInclusive - 1
+                y = y - maxInclusive - 1
 
     def rndintexc(self, maxExclusive):
         if maxExclusive <= 0:

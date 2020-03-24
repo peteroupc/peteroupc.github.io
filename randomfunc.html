@@ -297,8 +297,8 @@ METHOD RndIntHelperPowerOfTwo(maxInclusive)
     y = y * 2 + rem(rngv, 2)
     rngv = floor(rngv / 2)
     nextBit = nextBit + 1
-    if x - 1 &gt;= maxInclusive
-      if y - 1 &lt; maxInclusive: return y
+    if x &gt; maxInclusive
+      if y &lt;= maxInclusive: return y
       x = x - maxInclusive - 1
       y = y - maxInclusive - 1
     end
@@ -1748,9 +1748,8 @@ of <em>n</em> random numbers that follow an exponential distribution and each ha
 <li> <strong>PDF is known</strong>, even if the area under the PDF isn&#39;t 1:  There are three methods, namely, rejection sampling, weighted approximation, and Markov-chain Monte Carlo, described in later sections.</li>
 <li><strong>Inverse CDF is known:</strong> Generate <code>ICDF(RNDU01ZeroOneExc())</code>, where <code>ICDF(X)</code> is the inverse CDF (<a href="https://en.wikipedia.org/wiki/Inverse_transform_sampling"><strong><em>inverse transform sampling</em></strong></a>).</li>
 <li><strong>CDF is known</strong>: In this case, the CDF is usually numerically inverted to generate a random number from that distribution.  For example, see the <code>from_interp</code> and <code>numbers_from_cdf</code> methods in the <a href="https://peteroupc.github.io/randomgen.zip"><strong>Python sample code</strong></a>.  See also the next two sections on weighted approximation.</li>
-<li><p><strong>PDF and a uniform random variable in the interval [0, 1) (<code>randomVariable</code>)</strong> are known: Create <code>list</code> and <code>weights</code> as given in the weighted approximation method, described later, then divide each item in <code>weights</code> by the sum<sup><a href="#Note16"><strong>(16)</strong></a></sup>
-of <code>weights</code>&#39;s items, then generate <a href="#Continuous_Weighted_Choice"><strong><code>ContinuousWeightedChoice(list, weights)</code></strong></a> (except that method is modified to use <code>value = randomVariable</code> rather than <code>value = RNDRANGEMaxExc(0, sum)</code>).</p></li>
-<li><p><strong>Inverse CDF and a uniform random variable in the interval [0, 1) (<code>randomVariable</code>)</strong> are known: Generate <code>ICDF(randomVariable)</code>, where <code>ICDF(X)</code> is the inverse CDF.</p></li>
+<li><strong>PDF and a uniform random variable in the interval [0, 1) (<code>randomVariable</code>)</strong> are known: Create <code>list</code> and <code>weights</code> as given in the weighted approximation method, described later, then generate <a href="#Continuous_Weighted_Choice"><strong><code>ContinuousWeightedChoice(list, weights)</code></strong></a> (except that method is modified to use <code>value = randomVariable * sum</code> rather than <code>value = RNDRANGEMaxExc(0, sum)</code>).</li>
+<li><strong>Inverse CDF and a uniform random variable in the interval [0, 1) (<code>randomVariable</code>)</strong> are known: Generate <code>ICDF(randomVariable)</code>, where <code>ICDF(X)</code> is the inverse CDF.</li>
 </ul>
 
 <blockquote>
@@ -2675,14 +2674,14 @@ END METHOD
 
 <h4>Random Latitude and Longitude</h4>
 
-<p>To generate a random point on the surface of a sphere in the form of a latitude and longitude (in radians with west and south coordinates negative)&mdash;</p>
+<p>To generate a random point on the surface of a sphere in the form of a latitude and longitude (in radians with west and south coordinates negative)<sup><a href="#Note47"><strong>(47)</strong></a></sup>&mdash;</p>
 
 <ul>
 <li>generate the longitude <code>RNDRANGEMaxExc(-pi, pi)</code>, where the longitude is in the interval [-&pi;, &pi;), and</li>
 <li>generate the latitude <code>atan2(sqrt(1 - x * x), x) - pi / 2</code>, where <code>x = RNDRANGE(-1, 1)</code> and the latitude is in the interval [-&pi;/2, &pi;/2] (the interval excludes the poles, which have many equivalent forms; if poles are not desired, generate <code>x</code> until neither -1 nor 1 is generated this way).</li>
 </ul>
 
-<p>Reference: <a href="http://mathworld.wolfram.com/SpherePointPicking.html"><strong>&quot;Sphere Point Picking&quot;</strong></a> in MathWorld (replacing inverse cosine with <code>atan2</code> equivalent).</p>
+<p>.</p>
 
 <p><a id=Acknowledgments></a></p>
 
@@ -2820,6 +2819,8 @@ and &quot;<a href="https://randomascii.wordpress.com/2013/07/16/floating-point-d
 <p><small><sup id=Note45>(45)</sup> See the <em>Stack Overflow</em> question &quot;Uniform sampling (by volume) within a cone&quot;, <code>questions/41749411</code>.</small></p>
 
 <p><small><sup id=Note46>(46)</sup> Mironov, I., &quot;On Significance of the Least Significant Bits For Differential Privacy&quot;, 2012.</small></p>
+
+<p><small><sup id=Note47>(47)</sup> Reference: <a href="http://mathworld.wolfram.com/SpherePointPicking.html"><strong>&quot;Sphere Point Picking&quot;</strong></a> in MathWorld (replacing inverse cosine with <code>atan2</code> equivalent).</small></p>
 
 <p><a id=Appendix></a></p>
 

@@ -213,8 +213,8 @@ The pseudocode below implements `RNDINT` and, depending on the case, uses reject
         y = y * 2 + rem(rngv, 2)
         rngv = floor(rngv / 2)
         nextBit = nextBit + 1
-        if x - 1 >= maxInclusive
-          if y - 1 < maxInclusive: return y
+        if x > maxInclusive
+          if y <= maxInclusive: return y
           x = x - maxInclusive - 1
           y = y - maxInclusive - 1
         end
@@ -1409,9 +1409,7 @@ Depending on what information is known about the distribution, random numbers th
 -  **PDF is known**, even if the area under the PDF isn't 1:  There are three methods, namely, rejection sampling, weighted approximation, and Markov-chain Monte Carlo, described in later sections.
 - **Inverse CDF is known:** Generate `ICDF(RNDU01ZeroOneExc())`, where `ICDF(X)` is the inverse CDF ([**_inverse transform sampling_**](https://en.wikipedia.org/wiki/Inverse_transform_sampling)).
 - **CDF is known**: In this case, the CDF is usually numerically inverted to generate a random number from that distribution.  For example, see the `from_interp` and `numbers_from_cdf` methods in the [**Python sample code**](https://peteroupc.github.io/randomgen.zip).  See also the next two sections on weighted approximation.
-- **PDF and a uniform random variable in the interval \[0, 1\) (`randomVariable`)** are known: Create `list` and `weights` as given in the weighted approximation method, described later, then divide each item in `weights` by the sum<sup>[**(16)**](#Note16)</sup>
- of `weights`'s items, then generate [**`ContinuousWeightedChoice(list, weights)`**](#Continuous_Weighted_Choice) (except that method is modified to use `value = randomVariable` rather than `value = RNDRANGEMaxExc(0, sum)`).
-
+- **PDF and a uniform random variable in the interval \[0, 1\) (`randomVariable`)** are known: Create `list` and `weights` as given in the weighted approximation method, described later, then generate [**`ContinuousWeightedChoice(list, weights)`**](#Continuous_Weighted_Choice) (except that method is modified to use `value = randomVariable * sum` rather than `value = RNDRANGEMaxExc(0, sum)`).
 - **Inverse CDF and a uniform random variable in the interval \[0, 1\) (`randomVariable`)** are known: Generate `ICDF(randomVariable)`, where `ICDF(X)` is the inverse CDF.
 
 > **Notes:**
@@ -2217,12 +2215,12 @@ To generate a random point inside a cone with height `H` and radius `R` at its b
 <a id=Random_Latitude_and_Longitude></a>
 #### Random Latitude and Longitude
 
-To generate a random point on the surface of a sphere in the form of a latitude and longitude (in radians with west and south coordinates negative)&mdash;
+To generate a random point on the surface of a sphere in the form of a latitude and longitude (in radians with west and south coordinates negative)<sup>[**(47)**](#Note47)</sup>&mdash;
 
 - generate the longitude `RNDRANGEMaxExc(-pi, pi)`, where the longitude is in the interval [-&pi;, &pi;), and
 - generate the latitude `atan2(sqrt(1 - x * x), x) - pi / 2`, where `x = RNDRANGE(-1, 1)` and the latitude is in the interval \[-&pi;/2, &pi;/2\] (the interval excludes the poles, which have many equivalent forms; if poles are not desired, generate `x` until neither -1 nor 1 is generated this way).
 
-Reference: [**"Sphere Point Picking"**](http://mathworld.wolfram.com/SpherePointPicking.html) in MathWorld (replacing inverse cosine with `atan2` equivalent).
+.
 
 <a id=Acknowledgments></a>
 ## Acknowledgments
@@ -2348,6 +2346,8 @@ In 2007, Thomas, D., et al. gave a survey of normal random number methods in "Ga
 <small><sup id=Note45>(45)</sup> See the _Stack Overflow_ question "Uniform sampling (by volume) within a cone", `questions/41749411`.</small>
 
 <small><sup id=Note46>(46)</sup> Mironov, I., "On Significance of the Least Significant Bits For Differential Privacy", 2012.</small>
+
+<small><sup id=Note47>(47)</sup> Reference: [**"Sphere Point Picking"**](http://mathworld.wolfram.com/SpherePointPicking.html) in MathWorld (replacing inverse cosine with `atan2` equivalent).</small>
 
 <a id=Appendix></a>
 ## Appendix
