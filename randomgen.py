@@ -421,7 +421,7 @@ Returns 'list'. """
 
     def weibull(self, a, b):
         """ Generates a Weibull-distributed random number. """
-        return b * (-math.log(self.rndu01zerooneexc())) ** (1.0 / a)
+        return b * (self.exponential()) ** (1.0 / a)
 
     def triangular(self, startpt, midpt, endpt):
         return self.continuous_choice([startpt, midpt, endpt], [0, 1, 0])
@@ -474,10 +474,7 @@ Returns 'list'. """
                     t = -1
                     while sum <= n:
                         # Geometric variable plus 1
-                        geo = (
-                            math.floor(math.log(self.rndu01zeroexc()) / math.log(1 - p))
-                            + 1
-                        )
+                        geo = math.floor(-self.exponential(math.log(1 - p))) + 1
                         sum = sum + geo
                         ret = ret + sign
                     return ret - sign
@@ -541,7 +538,7 @@ Returns 'list'. """
 
     def rayleigh(self, a):
         """ Generates a random number following a Rayleigh distribution.  """
-        return a * math.sqrt(-2 * math.log(self.rndu01zerooneexc()))
+        return a * math.sqrt(2 * self.exponential())
 
     def gamma(self, mean, b=1.0, c=1.0, d=0.0):
         """ Generates a random number following a gamma distribution.  """
@@ -550,7 +547,7 @@ Returns 'list'. """
         dd = mean
         v = 0
         if mean == 1:
-            return -math.log(self.rndu01zerooneexc())
+            return self.exponential()
         if mean < 1:
             dd += 1
         dd -= 1.0 / 3
@@ -571,7 +568,7 @@ Returns 'list'. """
                 break
         ret = dd * v
         if mean < 1:
-            ret = ret * math.exp(math.log(1.0 - self.rndu01oneexc()) / mean)
+            ret = ret * math.pow(self.rndu01(), 1.0 / mean)
         return ret ** (1.0 / c) * b + d
 
     def stable(self, alpha, beta):
@@ -587,7 +584,7 @@ Returns 'list'. """
         # Cauchy special case
         if alpha == 1 and beta == 0:
             return tan(unif)
-        expo = -math.log(self.rndu01zeroexc())
+        expo = self.exponential()
         c = math.cos(unif)
         if alpha == 1:
             s = math.sin(unif)
@@ -637,7 +634,7 @@ Returns 'list'. """
         if p <= 0.0:
             return 1.0 / 0.0
         if successes == 1.0:
-            return int(math.log(self.rndu01zerooneexc()) / math.log(1.0 - p))
+            return int(-self.exponential(math.log(1.0 - p)))
         if int(successes) != successes or successes > 1000:
             return self.poisson(self.gamma(successes) * (1 - p) / p)
         else:
@@ -661,7 +658,15 @@ Returns 'list'. """
         return [first + self.poisson(m) for m in othermeans]
 
     def exponential(self, lamda=1.0):
-        return -math.log(self.rndu01zerooneexc()) / lamda
+        # Flip-flopping idea taken from (Pederson 2018)
+        if self.rndint(1) == 0:
+            x = self.rndrangeminexc(0, 0.5)
+            # avoid bias
+            while x == 0.5 and self.rndint(1) == 0:
+                x = self.rndrangeminexc(0, 0.5)
+            return -math.log(x) / lamda
+        else:
+            return -math.log1p(self.rndrangeminmaxexc(-0.5, 0)) / lamda
 
     def pareto(self, minimum, alpha):
         return self.rndu01zerooneexc() ** (-1.0 / alpha) * minimum
