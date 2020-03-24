@@ -147,6 +147,7 @@
 <ul>
 <li><a href="#Weighted_Approximation_Discrete_Distributions"><strong>Weighted Approximation: Discrete Distributions</strong></a></li>
 <li><a href="#Weighted_Approximation_Continuous_Distributions"><strong>Weighted Approximation: Continuous Distributions</strong></a></li>
+<li><a href="#Inverse_Transform_Sampling"><strong>Inverse Transform Sampling</strong></a></li>
 <li><a href="#Rejection_Sampling_with_a_PDF"><strong>Rejection Sampling with a PDF</strong></a></li>
 <li><a href="#Markov_Chain_Monte_Carlo"><strong>Markov-Chain Monte Carlo</strong></a></li>
 </ul></li>
@@ -864,18 +865,18 @@ END METHOD
 
 <p>&mdash;</p>
 
-<pre>METHOD WeightedChoice(weights)
-    if size(weights) == 0: return error
-    msum = 0
-    // Get the sum of all weights
-    i = 0
-    while i &lt; size(weights)
-        msum = msum + weights[i]
-        i = i + 1
+<pre>METHOD CWChoose(weights, value)
+    // Choose the index according to the given value
+    for i in 0...size(weights) - 1
+       if weights[i] &lt; weights[i+1] and weights[i]&gt;=value
+          // Choose only if difference is positive
+          return i
+       end
     end
-    // Choose a random integer from 0 and less than
-    // the sum of weights.
-    value = RNDINTEXC(sum)
+    return 0
+END METHOD
+
+METHOD WChoose(weights, value)
     // Choose the index according to the given value
     lastItem = size(weights) - 1
     runningValue = 0
@@ -894,20 +895,22 @@ END METHOD
     return lastItem
 END METHOD
 
+METHOD WeightedChoice(weights)
+    if size(weights) == 0: return error
+    msum = 0
+    // Get the sum of all weights
+    for i in 0...size(weights): msum = msum + weights[i]
+    // Choose a random integer from 0 and less than
+    // the sum of weights.
+    return WChoose(RNDINTEXC(sum))
+END METHOD
+
 METHOD CumulativeWeightedChoice(weights)
     if size(weights)==0 or weights[0]!=0: return error
     // Weights is a list of cumulative weights. Chooses
     // a random number in [0, size(weights) - 1).
     sum = weights[size(weights) - 1]
-    value = RNDINTEXC(sum)
-    // Choose the index according to the given value
-    for i in 0...size(weights) - 1
-       if weights[i] &lt; weights[i+1] and weights[i]&gt;=value
-          // Choose only if difference is positive
-          return i
-       end
-    end
-    return 0
+    return CWChoose(RNDINTEXC(sum))
 END METHOD
 </pre>
 
@@ -1586,7 +1589,7 @@ end
        i = i + 1
     end
     // Generate random numbers
-    value = RNDRANGEMaxExc(0, sum)
+    value = RNDRANGEMaxExc(0, msum)
     wt=RNDU01OneExc()
     // Interpolate a number according to the given value
     i=0
@@ -1738,19 +1741,11 @@ of <em>n</em> random numbers that follow an exponential distribution and each ha
 
 <ul>
 <li>The <a href="https://en.wikipedia.org/wiki/Cumulative_distribution_function"><strong><em>cumulative distribution function</em></strong></a>, or <em>CDF</em>, returns, for each number, the probability for a randomly generated variable to be equal to or less than that number; the probability is in the interval [0, 1].</li>
-<li>The <a href="https://en.wikipedia.org/wiki/Probability_density_function"><strong><em>probability density function</em></strong></a>, or <em>PDF</em>, is, roughly and intuitively, a curve of weights 0 or greater, where for each number, the greater its weight, the more likely a number close to that number is randomly chosen.<sup><a href="#Note32"><strong>(32)</strong></a></sup></li>
+<li>The <a href="https://en.wikipedia.org/wiki/Probability_density_function"><strong><em>probability density function</em></strong></a>, or <em>PDF</em>, is, roughly and intuitively, a curve of weights 0 or greater, where for each number, the greater its weight, the more likely a number close to that number is randomly chosen.  In this document, the area under the PDF need not equal 1.<sup><a href="#Note32"><strong>(32)</strong></a></sup></li>
 <li>The <em>inverse cumulative distribution function</em> (<em>inverse CDF</em>) is the inverse of the CDF and maps numbers in the interval [0, 1) to numbers in the distribution, from low to high.</li>
 </ul>
 
-<p>Depending on what information is known about the distribution, random numbers that approximately follow that distribution can be generated as follows:</p>
-
-<ul>
-<li> <strong>PDF is known</strong>, even if the area under the PDF isn&#39;t 1:  There are three methods, namely, rejection sampling, weighted approximation, and Markov-chain Monte Carlo, described in later sections.</li>
-<li><strong>Inverse CDF is known:</strong> Generate <code>ICDF(RNDU01ZeroOneExc())</code>, where <code>ICDF(X)</code> is the inverse CDF (<a href="https://en.wikipedia.org/wiki/Inverse_transform_sampling"><strong><em>inverse transform sampling</em></strong></a>).</li>
-<li><strong>CDF is known</strong>: In this case, the CDF is usually numerically inverted to generate a random number from that distribution.  For example, see the <code>from_interp</code> and <code>numbers_from_cdf</code> methods in the <a href="https://peteroupc.github.io/randomgen.zip"><strong>Python sample code</strong></a>.  See also the next two sections on weighted approximation.</li>
-<li><strong>PDF and a uniform random variable in the interval [0, 1) (<code>randomVariable</code>)</strong> are known: Create <code>list</code> and <code>weights</code> as given in the weighted approximation method, described later, then generate <a href="#Continuous_Weighted_Choice"><strong><code>ContinuousWeightedChoice(list, weights)</code></strong></a> (except that method is modified to use <code>value = randomVariable * sum</code> rather than <code>value = RNDRANGEMaxExc(0, sum)</code>).</li>
-<li><strong>Inverse CDF and a uniform random variable in the interval [0, 1) (<code>randomVariable</code>)</strong> are known: Generate <code>ICDF(randomVariable)</code>, where <code>ICDF(X)</code> is the inverse CDF.</li>
-</ul>
+<p>Depending on what information is known about the distribution, the following sections show how to generate random numbers based on that distribution.</p>
 
 <blockquote>
 <p><strong>Notes:</strong></p>
@@ -1768,9 +1763,9 @@ of <em>n</em> random numbers that follow an exponential distribution and each ha
 <p>If the distribution <strong>is discrete (integer-only)</strong>, numbers that closely follow it can be sampled by choosing points that cover all or almost all of the distribution, finding their weights or cumulative weights, and choosing a random point based on those weights.  In the pseudocode below:</p>
 
 <ul>
-<li><code>InversionSample(mini, maxi)</code> chooses a random number in [<code>mini</code>, <code>maxi</code>] based on a known CDF (<code>CDF(x)</code>). This method should be used over <code>Sample</code> whenever possible.<sup><a href="#Note33"><strong>(33)</strong></a></sup></li>
-<li><code>Sample(mini, maxi)</code> chooses a random number in [<code>mini</code>, <code>maxi</code>] based on a known PDF (<code>PDF(x)</code>, more properly called <em>probability mass function</em>).</li>
-<li><code>IntegerWeights(mini, maxi, mult)</code> generates a list of integer weights for the interval [<code>mini</code>, <code>maxi</code>] based on a known PDF (<code>PDF(x)</code>) and weight scale <code>mult</code>.  A more sophisticated algorithm is given as Algorithm 3 in (Saad et al., 2020)<sup><a href="#Note34"><strong>(34)</strong></a></sup>.</li>
+<li><code>InversionSample(mini, maxi)</code> chooses a random number in [<code>mini</code>, <code>maxi</code>] based on a <strong>known CDF</strong> (<code>CDF(x)</code>). This method should be used over <code>Sample</code> whenever possible.<sup><a href="#Note33"><strong>(33)</strong></a></sup></li>
+<li><code>Sample(mini, maxi)</code> chooses a random number in [<code>mini</code>, <code>maxi</code>] based on a <strong>known PDF</strong> (<code>PDF(x)</code>, more properly called <em>probability mass function</em>).</li>
+<li><code>IntegerWeights(mini, maxi, mult)</code> generates a list of integer weights for the interval [<code>mini</code>, <code>maxi</code>] based on a <strong>known PDF</strong> (<code>PDF(x)</code>) and weight scale <code>mult</code>.  A more sophisticated algorithm is given as Algorithm 3 in (Saad et al., 2020)<sup><a href="#Note34"><strong>(34)</strong></a></sup>.</li>
 </ul>
 
 <p>&nbsp;</p>
@@ -1785,7 +1780,7 @@ METHOD InversionSample(mini, maxi)
   weights=[0]
   for i in mini..maxi: AddItem(weights, CDF(i))
   if weights[size(weights)-1]!=1: return error
-  return mini + CumulativeWeightedChoice(weights)
+  return mini + CWChoose(weights, RNDU01OneExc())
 END METHOD
 
 METHOD IntegerWeights(mini, maxi, mult)
@@ -1816,6 +1811,45 @@ END METHOD
      i = i + step
    end
    return ContinuousWeightedChoice(list, weights)
+END METHOD
+</pre>
+
+<p>If the distribution <strong>is continuous and has a known CDF</strong>, the CDF is usually numerically inverted to generate a random number from that distribution.  For example, <strong>Python sample code</strong>](<a href="https://peteroupc.github.io/randomgen.zip">https://peteroupc.github.io/randomgen.zip</a>) includes an <code>integers_from_cdf</code> method that implements this kind of sampling given a CDF, and a <code>from_interp</code> method that generates random numbers from a list of pairs of CDF values and points.</p>
+
+<p><a id=Inverse_Transform_Sampling></a></p>
+
+<h4>Inverse Transform Sampling</h4>
+
+<p><a href="https://en.wikipedia.org/wiki/Inverse_transform_sampling"><strong><em>Inverse transform sampling</em></strong></a> is the most generic way to generate a random number that follows a distribution.</p>
+
+<p>If the distribution <strong>has a known inverse CDF</strong>, generate <code>ICDF(RNDU01ZeroOneExc())</code>, where <code>ICDF(X)</code> is the inverse CDF.</p>
+
+<p>To generate a random number from a distribution and a <strong>pregenerated uniform random variable in the interval [0, 1)</strong>:</p>
+
+<ul>
+<li>If the distribution <strong>has a known inverse CDF</strong>: Generate <code>ICDF(randomVariable)</code>, where <code>ICDF(X)</code> is the inverse CDF.</li>
+<li>If the distribution <strong>is discrete and has a known PDF or CDF</strong>: Use <code>SampleU01</code> or <code>InversionSampleU01</code>, respectively (given below).</li>
+<li>If the distribution <strong>is continuous and has a known PDF or CDF</strong>: To be added.</li>
+</ul>
+
+<p>&nbsp;</p>
+
+<pre>METHOD SampleU01(mini, maxi, u01)
+  weights=[]
+  sum=0
+  for i in mini..maxi
+    pv=PDF(i)
+    AddItem(weights, pv)
+    sum=sum + pv
+  end
+  return mini + WChoose(weights, u01 * sum)
+END METHOD
+
+METHOD InversionSampleU01(mini, maxi, u01)
+  weights=[0]
+  for i in mini..maxi: AddItem(weights, CDF(i))
+  if weights[size(weights)-1]!=1: return error
+  return mini + CWChoose(weights, u01)
 END METHOD
 </pre>
 
@@ -2674,7 +2708,7 @@ END METHOD
 
 <h4>Random Latitude and Longitude</h4>
 
-<p>To generate a random point on the surface of a sphere in the form of a latitude and longitude (in radians with west and south coordinates negative)<sup><a href="#Note47"><strong>(47)</strong></a></sup>&mdash;</p>
+<p>To generate a random point on the surface of a sphere in the form of a latitude and longitude (in radians with west and south coordinates negative)<sup><a href="#Note46"><strong>(46)</strong></a></sup>&mdash;</p>
 
 <ul>
 <li>generate the longitude <code>RNDRANGEMaxExc(-pi, pi)</code>, where the longitude is in the interval [-&pi;, &pi;), and</li>
@@ -2818,9 +2852,9 @@ and &quot;<a href="https://randomascii.wordpress.com/2013/07/16/floating-point-d
 
 <p><small><sup id=Note45>(45)</sup> See the <em>Stack Overflow</em> question &quot;Uniform sampling (by volume) within a cone&quot;, <code>questions/41749411</code>.</small></p>
 
-<p><small><sup id=Note46>(46)</sup> Mironov, I., &quot;On Significance of the Least Significant Bits For Differential Privacy&quot;, 2012.</small></p>
+<p><small><sup id=Note46>(46)</sup> Reference: <a href="http://mathworld.wolfram.com/SpherePointPicking.html"><strong>&quot;Sphere Point Picking&quot;</strong></a> in MathWorld (replacing inverse cosine with <code>atan2</code> equivalent).</small></p>
 
-<p><small><sup id=Note47>(47)</sup> Reference: <a href="http://mathworld.wolfram.com/SpherePointPicking.html"><strong>&quot;Sphere Point Picking&quot;</strong></a> in MathWorld (replacing inverse cosine with <code>atan2</code> equivalent).</small></p>
+<p><small><sup id=Note47>(47)</sup> Mironov, I., &quot;On Significance of the Least Significant Bits For Differential Privacy&quot;, 2012.</small></p>
 
 <p><a id=Appendix></a></p>
 
@@ -2925,7 +2959,7 @@ END METHOD
 <li><strong>Security algorithms out of scope.</strong> Security algorithms that take random secrets to generate random security parameters, such as encryption keys, public/private key pairs, elliptic curves, or points on an elliptic curve, are outside this document&#39;s scope.</li>
 </ol>
 
-<p>In nearly all security-sensitive applications, random numbers generated for security purposes are integers.  In very rare cases, they&#39;re fixed-point numbers.  Even with a secure random number generator, the use of random floating-point numbers can cause security issues not present with integers or fixed-point numbers; one example is found in (Mironov 2012)<sup><a href="#Note46"><strong>(46)</strong></a></sup>.</p>
+<p>In nearly all security-sensitive applications, random numbers generated for security purposes are integers.  In very rare cases, they&#39;re fixed-point numbers.  Even with a secure random number generator, the use of random floating-point numbers can cause security issues not present with integers or fixed-point numbers; one example is found in (Mironov 2012)<sup><a href="#Note47"><strong>(47)</strong></a></sup>.</p>
 
 <p><a id=License></a></p>
 
