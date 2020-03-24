@@ -147,6 +147,7 @@
 <ul>
 <li><a href="#Weighted_Approximation_Discrete_Distributions"><strong>Weighted Approximation: Discrete Distributions</strong></a></li>
 <li><a href="#Weighted_Approximation_Continuous_Distributions"><strong>Weighted Approximation: Continuous Distributions</strong></a></li>
+<li><a href="#Inverse_Transform_Sampling"><strong>Inverse Transform Sampling</strong></a></li>
 <li><a href="#Rejection_Sampling_with_a_PDF"><strong>Rejection Sampling with a PDF</strong></a></li>
 <li><a href="#Markov_Chain_Monte_Carlo"><strong>Markov-Chain Monte Carlo</strong></a></li>
 </ul></li>
@@ -1571,24 +1572,7 @@ end
 
 <p>&nbsp;</p>
 
-<pre>METHOD ContinuousWeightedChoice(values, weights)
-    if size(values) &lt;= 0 or size(weights) &lt; size(values): return error
-    if size(values) == 1: return values[0]
-    // Get the sum of all areas between weights
-    // NOTE: Kahan summation is more robust
-    // than the naive summing given here
-    msum = 0
-    areas = NewList()
-    i = 0
-    while i &lt; size(values) - 1
-      weightArea = abs((weights[i] + weights[i + 1]) * 0.5 *
-            (values[i + 1] - values[i]))
-      AddItem(areas, weightArea)
-      msum = msum + weightArea
-       i = i + 1
-    end
-    // Generate random numbers
-    value = RNDRANGEMaxExc(0, msum)
+<pre>METHOD ContWChoose(values, weights, areas, value)
     wt=RNDU01OneExc()
     // Interpolate a number according to the given value
     i=0
@@ -1602,17 +1586,15 @@ end
       if value &lt; newValue
        w1=weights[i]
        w2=weights[i+1]
+       diff=w2-w1
+       wmin=min(w1, w2)
+       wmax=max(w1, w2)
        interp=wt
-       if diff&gt;0
-        s=sqrt(w2*w2*wt+w1*w1-w1*w1*wt)
-        interp=(s-w1)/diff
-        if interp&lt;0 or interp&gt;1: interp=-(s+w1)/diff
-       end
-       if diff&lt;0
-        s=sqrt(w1*w1*wt+w2*w2-w2*w2*wt)
-        interp=-(s-w2)/diff
-        if interp&lt;0 or interp&gt;1: interp=(s+w2)/diff
-        interp=1-interp
+       if diff!=0
+         s=sqrt(wmax*wmax*wt+wmin*wmin-
+            wmin*wmin*wt)
+         interp=abs((s-wmin)/diff)
+         if diff&lt;0: interp=1-interp
        end
        retValue = values[i] + (values[i + 1] - values[i]) *
          interp
@@ -1625,6 +1607,33 @@ end
     // Last resort (might happen because rounding
     // error happened somehow)
     return values[size(values) - 1]
+END METHOD
+
+METHOD GatherAreas(values, weights, areas)
+    // Get the sum of all areas between weights
+    // NOTE: Kahan summation is more robust
+    // than the naive summing given here
+    msum = 0
+    i = 0
+    while i &lt; size(values) - 1
+      weightArea = abs((weights[i] + weights[i + 1]) * 0.5 *
+            (values[i + 1] - values[i]))
+      AddItem(areas, weightArea)
+      msum = msum + weightArea
+       i = i + 1
+    end
+    return msum
+END METHOD
+
+METHOD ContinuousWeightedChoice(values, weights)
+    if size(values) &lt;= 0 or
+       size(weights) &lt; size(values): return error
+    if size(values) == 1: return values[0]
+    areas = []
+    msum = GatherAreas(values, weights, areas)
+    // Generate random numbers
+    value = RNDRANGEMaxExc(0, msum)
+    return ContWChoose(values, weights, areas, value)
 END METHOD
 </pre>
 
@@ -1799,21 +1808,29 @@ END METHOD
 
 <h4>Weighted Approximation: Continuous Distributions</h4>
 
-<p>If the distribution <strong>is continuous and has a known PDF</strong>, the following method, in the pseudocode below, can be used to generate a random number in the interval [<code>mini</code>, <code>maxi</code>] that closely follows that distribution, in part by sampling weights in that interval with a step count of <code>step</code>.  The interval is chosen to cover all or almost all of the distribution.</p>
+<p>If the distribution <strong>is continuous and has a known PDF</strong>, the <code>ContinuousSample</code> method, in the pseudocode below, can be used to generate a random number in the interval [<code>mini</code>, <code>maxi</code>] that closely follows that distribution, in part by sampling weights in that interval with a step count of <code>step</code>.  The interval is chosen to cover all or almost all of the distribution.</p>
 
-<pre>METHOD ContinuousSample(mini, maxi, step)
-   list = []
-   weights = []
-   i = mini; while i &lt;= maxi
+<pre>METHOD SampleWeights(list, weights, mini, maxi, step)
+   i = mini; while i &lt; maxi
      AddItem(list, i)
      AddItem(weights, round(PDF(i)))
      i = i + step
    end
+   AddItem(list, maxi)
+   AddItem(weights, round(PDF(maxi)))
+END METHOD
+
+METHOD ContinuousSample(mini, maxi, step)
+   list = []
+   weights = []
+   SampleWeights(list, weights, mini, maxi, step)
    return ContinuousWeightedChoice(list, weights)
 END METHOD
 </pre>
 
 <p>If the distribution <strong>is continuous and has a known CDF</strong>, the CDF is usually numerically inverted to generate a random number from that distribution.  For example, <a href="https://peteroupc.github.io/randomgen.zip"><strong>Python sample code</strong></a> includes an <code>integers_from_cdf</code> method that implements this kind of sampling given a CDF, and a <code>from_interp</code> method that generates random numbers from a list of pairs of CDF values and points.</p>
+
+<p><a id=Inverse_Transform_Sampling></a></p>
 
 <h4>Inverse Transform Sampling</h4>
 
@@ -1826,7 +1843,7 @@ END METHOD
 <ul>
 <li>If the distribution <strong>has a known inverse CDF</strong>: Generate <code>ICDF(randomVariable)</code>, where <code>ICDF(X)</code> is the inverse CDF.</li>
 <li>If the distribution <strong>is discrete and has a known PDF or CDF</strong>: Use <code>SampleU01</code> or <code>InversionSampleU01</code>, respectively (given below), choosing an interval [<code>mini</code>, <code>maxi</code>] that covers all or almost all of the distribution.</li>
-<li>If the distribution <strong>is continuous and has a known PDF or CDF</strong>: To be added.</li>
+<li>If the distribution <strong>is continuous and has a known PDF</strong>: Use <code>CSampleU01</code> (given below), choosing an interval [<code>mini</code>, <code>maxi</code>] that covers all or almost all of the distribution.</li>
 </ul>
 
 <p>&nbsp;</p>
@@ -1847,6 +1864,15 @@ METHOD InversionSampleU01(mini, maxi, u01)
   for i in mini..maxi: AddItem(weights, CDF(i))
   if weights[size(weights)-1]!=1: return error
   return mini + CWChoose(weights, u01)
+END METHOD
+
+METHOD CSampleU01(mini, maxi, step, u01)
+  values=[]
+  weights=[]
+  areas=[]
+  SampleWeights(values, weights, mini, maxi, step)
+  sum=GatherAreas(values, weights, areas)
+  return ContWChoose(values, weights, areas, u01 * sum)
 END METHOD
 </pre>
 
@@ -2705,7 +2731,7 @@ END METHOD
 
 <h4>Random Latitude and Longitude</h4>
 
-<p>To generate a random point on the surface of a sphere in the form of a latitude and longitude (in radians with west and south coordinates negative)<sup><a href="#Note47"><strong>(47)</strong></a></sup>&mdash;</p>
+<p>To generate a random point on the surface of a sphere in the form of a latitude and longitude (in radians with west and south coordinates negative)<sup><a href="#Note46"><strong>(46)</strong></a></sup>&mdash;</p>
 
 <ul>
 <li>generate the longitude <code>RNDRANGEMaxExc(-pi, pi)</code>, where the longitude is in the interval [-&pi;, &pi;), and</li>
@@ -2849,9 +2875,9 @@ and &quot;<a href="https://randomascii.wordpress.com/2013/07/16/floating-point-d
 
 <p><small><sup id=Note45>(45)</sup> See the <em>Stack Overflow</em> question &quot;Uniform sampling (by volume) within a cone&quot;, <code>questions/41749411</code>.</small></p>
 
-<p><small><sup id=Note46>(46)</sup> Mironov, I., &quot;On Significance of the Least Significant Bits For Differential Privacy&quot;, 2012.</small></p>
+<p><small><sup id=Note46>(46)</sup> Reference: <a href="http://mathworld.wolfram.com/SpherePointPicking.html"><strong>&quot;Sphere Point Picking&quot;</strong></a> in MathWorld (replacing inverse cosine with <code>atan2</code> equivalent).</small></p>
 
-<p><small><sup id=Note47>(47)</sup> Reference: <a href="http://mathworld.wolfram.com/SpherePointPicking.html"><strong>&quot;Sphere Point Picking&quot;</strong></a> in MathWorld (replacing inverse cosine with <code>atan2</code> equivalent).</small></p>
+<p><small><sup id=Note47>(47)</sup> Mironov, I., &quot;On Significance of the Least Significant Bits For Differential Privacy&quot;, 2012.</small></p>
 
 <p><a id=Appendix></a></p>
 
@@ -2956,7 +2982,7 @@ END METHOD
 <li><strong>Security algorithms out of scope.</strong> Security algorithms that take random secrets to generate random security parameters, such as encryption keys, public/private key pairs, elliptic curves, or points on an elliptic curve, are outside this document&#39;s scope.</li>
 </ol>
 
-<p>In nearly all security-sensitive applications, random numbers generated for security purposes are integers.  In very rare cases, they&#39;re fixed-point numbers.  Even with a secure random number generator, the use of random floating-point numbers can cause security issues not present with integers or fixed-point numbers; one example is found in (Mironov 2012)<sup><a href="#Note46"><strong>(46)</strong></a></sup>.</p>
+<p>In nearly all security-sensitive applications, random numbers generated for security purposes are integers.  In very rare cases, they&#39;re fixed-point numbers.  Even with a secure random number generator, the use of random floating-point numbers can cause security issues not present with integers or fixed-point numbers; one example is found in (Mironov 2012)<sup><a href="#Note47"><strong>(47)</strong></a></sup>.</p>
 
 <p><a id=License></a></p>
 

@@ -98,6 +98,7 @@ All the random number methods presented on this page are ultimately based on an 
     - [**Random Numbers from an Arbitrary Distribution**](#Random_Numbers_from_an_Arbitrary_Distribution)
         - [**Weighted Approximation: Discrete Distributions**](#Weighted_Approximation_Discrete_Distributions)
         - [**Weighted Approximation: Continuous Distributions**](#Weighted_Approximation_Continuous_Distributions)
+        - [**Inverse Transform Sampling**](#Inverse_Transform_Sampling)
         - [**Rejection Sampling with a PDF**](#Rejection_Sampling_with_a_PDF)
         - [**Markov-Chain Monte Carlo**](#Markov_Chain_Monte_Carlo)
     - [**Normal (Gaussian) Distribution**](#Normal_Gaussian_Distribution)
@@ -1266,24 +1267,7 @@ The pseudocode below takes two lists as follows:
 
 &nbsp;
 
-    METHOD ContinuousWeightedChoice(values, weights)
-        if size(values) <= 0 or size(weights) < size(values): return error
-        if size(values) == 1: return values[0]
-        // Get the sum of all areas between weights
-        // NOTE: Kahan summation is more robust
-        // than the naive summing given here
-        msum = 0
-        areas = NewList()
-        i = 0
-        while i < size(values) - 1
-          weightArea = abs((weights[i] + weights[i + 1]) * 0.5 *
-                (values[i + 1] - values[i]))
-          AddItem(areas, weightArea)
-          msum = msum + weightArea
-           i = i + 1
-        end
-        // Generate random numbers
-        value = RNDRANGEMaxExc(0, msum)
+    METHOD ContWChoose(values, weights, areas, value)
         wt=RNDU01OneExc()
         // Interpolate a number according to the given value
         i=0
@@ -1297,17 +1281,15 @@ The pseudocode below takes two lists as follows:
           if value < newValue
            w1=weights[i]
            w2=weights[i+1]
+           diff=w2-w1
+           wmin=min(w1, w2)
+           wmax=max(w1, w2)
            interp=wt
-           if diff>0
-            s=sqrt(w2*w2*wt+w1*w1-w1*w1*wt)
-            interp=(s-w1)/diff
-            if interp<0 or interp>1: interp=-(s+w1)/diff
-           end
-           if diff<0
-            s=sqrt(w1*w1*wt+w2*w2-w2*w2*wt)
-            interp=-(s-w2)/diff
-            if interp<0 or interp>1: interp=(s+w2)/diff
-            interp=1-interp
+           if diff!=0
+             s=sqrt(wmax*wmax*wt+wmin*wmin-
+                wmin*wmin*wt)
+             interp=abs((s-wmin)/diff)
+             if diff<0: interp=1-interp
            end
            retValue = values[i] + (values[i + 1] - values[i]) *
              interp
@@ -1320,6 +1302,33 @@ The pseudocode below takes two lists as follows:
         // Last resort (might happen because rounding
         // error happened somehow)
         return values[size(values) - 1]
+    END METHOD
+
+    METHOD GatherAreas(values, weights, areas)
+        // Get the sum of all areas between weights
+        // NOTE: Kahan summation is more robust
+        // than the naive summing given here
+        msum = 0
+        i = 0
+        while i < size(values) - 1
+          weightArea = abs((weights[i] + weights[i + 1]) * 0.5 *
+                (values[i + 1] - values[i]))
+          AddItem(areas, weightArea)
+          msum = msum + weightArea
+           i = i + 1
+        end
+        return msum
+    END METHOD
+
+    METHOD ContinuousWeightedChoice(values, weights)
+        if size(values) <= 0 or
+           size(weights) < size(values): return error
+        if size(values) == 1: return values[0]
+        areas = []
+        msum = GatherAreas(values, weights, areas)
+        // Generate random numbers
+        value = RNDRANGEMaxExc(0, msum)
+        return ContWChoose(values, weights, areas, value)
     END METHOD
 
 > **Note:** The Python sample code contains a variant to the method
@@ -1450,21 +1459,28 @@ If the distribution **is discrete (integer-only)**, numbers that closely follow 
 <a id=Weighted_Approximation_Continuous_Distributions></a>
 #### Weighted Approximation: Continuous Distributions
 
-If the distribution **is continuous and has a known PDF**, the following method, in the pseudocode below, can be used to generate a random number in the interval [`mini`, `maxi`] that closely follows that distribution, in part by sampling weights in that interval with a step count of `step`.  The interval is chosen to cover all or almost all of the distribution.
+If the distribution **is continuous and has a known PDF**, the `ContinuousSample` method, in the pseudocode below, can be used to generate a random number in the interval [`mini`, `maxi`] that closely follows that distribution, in part by sampling weights in that interval with a step count of `step`.  The interval is chosen to cover all or almost all of the distribution.
 
-    METHOD ContinuousSample(mini, maxi, step)
-       list = []
-       weights = []
-       i = mini; while i <= maxi
+    METHOD SampleWeights(list, weights, mini, maxi, step)
+       i = mini; while i < maxi
          AddItem(list, i)
          AddItem(weights, round(PDF(i)))
          i = i + step
        end
+       AddItem(list, maxi)
+       AddItem(weights, round(PDF(maxi)))
+    END METHOD
+
+    METHOD ContinuousSample(mini, maxi, step)
+       list = []
+       weights = []
+       SampleWeights(list, weights, mini, maxi, step)
        return ContinuousWeightedChoice(list, weights)
     END METHOD
 
 If the distribution **is continuous and has a known CDF**, the CDF is usually numerically inverted to generate a random number from that distribution.  For example, [**Python sample code**](https://peteroupc.github.io/randomgen.zip) includes an `integers_from_cdf` method that implements this kind of sampling given a CDF, and a `from_interp` method that generates random numbers from a list of pairs of CDF values and points.
 
+<a id=Inverse_Transform_Sampling></a>
 #### Inverse Transform Sampling
 
 [**_Inverse transform sampling_**](https://en.wikipedia.org/wiki/Inverse_transform_sampling) is the most generic way to generate a random number that follows a distribution.
@@ -1475,7 +1491,7 @@ To generate a random number from a distribution and a **pregenerated uniform ran
 
 - If the distribution **has a known inverse CDF**: Generate `ICDF(randomVariable)`, where `ICDF(X)` is the inverse CDF.
 - If the distribution **is discrete and has a known PDF or CDF**: Use `SampleU01` or `InversionSampleU01`, respectively (given below), choosing an interval [`mini`, `maxi`] that covers all or almost all of the distribution.
-- If the distribution **is continuous and has a known PDF or CDF**: To be added.
+- If the distribution **is continuous and has a known PDF**: Use `CSampleU01` (given below), choosing an interval [`mini`, `maxi`] that covers all or almost all of the distribution.
 
 &nbsp;
 
@@ -1495,6 +1511,15 @@ To generate a random number from a distribution and a **pregenerated uniform ran
       for i in mini..maxi: AddItem(weights, CDF(i))
       if weights[size(weights)-1]!=1: return error
       return mini + CWChoose(weights, u01)
+    END METHOD
+
+    METHOD CSampleU01(mini, maxi, step, u01)
+      values=[]
+      weights=[]
+      areas=[]
+      SampleWeights(values, weights, mini, maxi, step)
+      sum=GatherAreas(values, weights, areas)
+      return ContWChoose(values, weights, areas, u01 * sum)
     END METHOD
 
 <a id=Rejection_Sampling_with_a_PDF></a>
@@ -2245,7 +2270,7 @@ To generate a random point inside a cone with height `H` and radius `R` at its b
 <a id=Random_Latitude_and_Longitude></a>
 #### Random Latitude and Longitude
 
-To generate a random point on the surface of a sphere in the form of a latitude and longitude (in radians with west and south coordinates negative)<sup>[**(47)**](#Note47)</sup>&mdash;
+To generate a random point on the surface of a sphere in the form of a latitude and longitude (in radians with west and south coordinates negative)<sup>[**(46)**](#Note46)</sup>&mdash;
 
 - generate the longitude `RNDRANGEMaxExc(-pi, pi)`, where the longitude is in the interval [-&pi;, &pi;), and
 - generate the latitude `atan2(sqrt(1 - x * x), x) - pi / 2`, where `x = RNDRANGE(-1, 1)` and the latitude is in the interval \[-&pi;/2, &pi;/2\] (the interval excludes the poles, which have many equivalent forms; if poles are not desired, generate `x` until neither -1 nor 1 is generated this way).
@@ -2375,9 +2400,9 @@ In 2007, Thomas, D., et al. gave a survey of normal random number methods in "Ga
 
 <small><sup id=Note45>(45)</sup> See the _Stack Overflow_ question "Uniform sampling (by volume) within a cone", `questions/41749411`.</small>
 
-<small><sup id=Note46>(46)</sup> Mironov, I., "On Significance of the Least Significant Bits For Differential Privacy", 2012.</small>
+<small><sup id=Note46>(46)</sup> Reference: [**"Sphere Point Picking"**](http://mathworld.wolfram.com/SpherePointPicking.html) in MathWorld (replacing inverse cosine with `atan2` equivalent).</small>
 
-<small><sup id=Note47>(47)</sup> Reference: [**"Sphere Point Picking"**](http://mathworld.wolfram.com/SpherePointPicking.html) in MathWorld (replacing inverse cosine with `atan2` equivalent).</small>
+<small><sup id=Note47>(47)</sup> Mironov, I., "On Significance of the Least Significant Bits For Differential Privacy", 2012.</small>
 
 <a id=Appendix></a>
 ## Appendix
@@ -2469,7 +2494,7 @@ If an application generates random numbers for information security purposes, su
 2. **Timing attacks.**  Certain security attacks have exploited timing and other differences to recover cleartext, encryption keys, or other sensitive data.  Thus, so-called "constant-time" security algorithms have been developed.  Such algorithms are designed to have no timing differences that reveal anything about any secret inputs (such as keys, passwords, or RNG "seeds"), and they often have no data-dependent control flows or memory access patterns.  Examples of "constant-time" algorithms can include a `RNDINT()` implementation that uses Montgomery reduction.  But even if an algorithm has variable running time (e.g., [**rejection sampling**](#Rejection_Sampling)), it may or may not have security-relevant timing differences, especially if it does not reuse secrets.
 3. **Security algorithms out of scope.** Security algorithms that take random secrets to generate random security parameters, such as encryption keys, public/private key pairs, elliptic curves, or points on an elliptic curve, are outside this document's scope.
 
-In nearly all security-sensitive applications, random numbers generated for security purposes are integers.  In very rare cases, they're fixed-point numbers.  Even with a secure random number generator, the use of random floating-point numbers can cause security issues not present with integers or fixed-point numbers; one example is found in (Mironov 2012)<sup>[**(46)**](#Note46)</sup>.
+In nearly all security-sensitive applications, random numbers generated for security purposes are integers.  In very rare cases, they're fixed-point numbers.  Even with a secure random number generator, the use of random floating-point numbers can cause security issues not present with integers or fixed-point numbers; one example is found in (Mironov 2012)<sup>[**(47)**](#Note47)</sup>.
 
 <a id=License></a>
 ## License
