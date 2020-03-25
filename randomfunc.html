@@ -111,7 +111,8 @@
 <ul>
 <li><a href="#Dice"><strong>Dice</strong></a></li>
 <li><a href="#Hypergeometric_Distribution"><strong>Hypergeometric Distribution</strong></a></li>
-<li><a href="#Negative_Binomial_and_Geometric_Distributions"><strong>Negative Binomial and Geometric Distributions</strong></a></li>
+<li><a href="#Negative_Binomial_Distribution"><strong>Negative Binomial Distribution</strong></a></li>
+<li><a href="#Geometric_Distribution"><strong>Geometric Distribution</strong></a></li>
 <li><a href="#Random_Integers_with_a_Given_Positive_Sum"><strong>Random Integers with a Given Positive Sum</strong></a></li>
 <li><a href="#Multinomial_Distribution"><strong>Multinomial Distribution</strong></a></li>
 </ul></li>
@@ -1146,9 +1147,9 @@ END METHOD
 12, and <code>count</code> is 52.</p>
 </blockquote>
 
-<p><a id=Negative_Binomial_and_Geometric_Distributions></a></p>
+<p><a id=Negative_Binomial_Distribution></a></p>
 
-<h3>Negative Binomial and Geometric Distributions</h3>
+<h3>Negative Binomial Distribution</h3>
 
 <p>The <em>negative binomial distribution</em> models the number of failing trials that happen before a fixed number of successful trials (<code>successes</code>). Each trial is independent and has a success probability of <code>px/py</code> (where 0 means never and 1 means always).</p>
 
@@ -1166,7 +1167,11 @@ END METHOD
 END METHOD
 </pre>
 
-<p>The <em>geometric distribution</em> is a negative binomial distribution with <code>successes = 1</code>; if <code>px</code>/<code>py</code> is 1/2, it models the task &quot;Flip a coin until you get tails, then count the number of heads.&quot;  As a unique property of the geometric distribution, the number of trials that have already failed in a row says nothing about the number of new trials that will fail in a row.</p>
+<p><a id=Geometric_Distribution></a></p>
+
+<h3>Geometric Distribution</h3>
+
+<p>The geometric distribution is a negative binomial distribution with <code>successes = 1</code>.  Here, the sampled number is the number of failures that have happened before one success happens. (This is the definition used in <em>Mathematica</em>, for example.  Saucier 2000, p. 44, also mentions an alternative definition that includes the success, and this is the definition used, for example, in (Devroye 1986, p. 498)<sup><a href="#Note9"><strong>(9)</strong></a></sup>.)  For example, if <code>p</code> is 1/2, the geometric distribution models the task &quot;Flip a coin until you get tails, then count the number of heads.&quot;  As a unique property of the geometric distribution, the number of trials that have already failed in a row says nothing about the number of new trials that will fail in a row.</p>
 
 <p><a id=Random_Integers_with_a_Given_Positive_Sum></a></p>
 
@@ -1563,7 +1568,7 @@ end
 
 <p>The continuous weighted choice method generates a random number that follows a continuous probability distribution (here, a <a href="http://en.cppreference.com/w/cpp/numeric/random/piecewise_linear_distribution"><strong><em>piecewise linear distribution</em></strong></a>).</p>
 
-<p>The pseudocode below takes two lists as follows:</p>
+<p>The <code>ContinuousWeightedChoice</code> method (in the pseudocode below) takes two lists as follows:</p>
 
 <ul>
 <li><code>values</code> is a list of numbers (which need not be integers). If the numbers are arranged in ascending order, which they should, the first number in this list can be returned exactly, but not the last number.</li>
@@ -1843,7 +1848,7 @@ END METHOD
 <ul>
 <li>If the distribution <strong>has a known inverse CDF</strong>: Generate <code>ICDF(randomVariable)</code>, where <code>ICDF(X)</code> is the inverse CDF.</li>
 <li>If the distribution <strong>is discrete and has a known PDF or CDF</strong>: Use <code>SampleU01</code> or <code>InversionSampleU01</code>, respectively (given below), choosing an interval [<code>mini</code>, <code>maxi</code>] that covers all or almost all of the distribution.</li>
-<li>If the distribution <strong>is continuous and has a known PDF</strong>: Use <code>CSampleU01</code> (given below), choosing an interval [<code>mini</code>, <code>maxi</code>] that covers all or almost all of the distribution.</li>
+<li>If the distribution <strong>is continuous and has a known PDF</strong>: Use <code>CSampleU01</code> (given below), choosing an interval [<code>mini</code>, <code>maxi</code>] that covers all or almost all of the distribution, as well as a step size (<code>step</code>).</li>
 </ul>
 
 <p>&nbsp;</p>
@@ -1901,7 +1906,7 @@ END METHOD
 
 <p>Because it takes time to converge, random numbers from the first few (e.g., first 1000) iterations of MCMC are usually ignored (&quot;burn in&quot;).  MCMC can also be used to find a suitable sampling range for weighted approximation (see the previous two sections).</p>
 
-<p>The <a href="https://peteroupc.github.io/randomgen.zip"><strong>Python sample code</strong></a> includes methods that implement two MCMC algorithms: <code>mcmc</code> and <code>mcmc2</code> implement <em>Metropolis&ndash;Hastings</em> for PDFs that take single numbers or two-dimensional points, respectively, and a method called <code>slicesample</code> that implements <em>slice sampling</em>.</p>
+<p>The <a href="https://peteroupc.github.io/randomgen.zip"><strong>Python sample code</strong></a> includes methods that implement two MCMC algorithms: <code>mcmc</code> and <code>mcmc2</code> implement <em>Metropolis&ndash;Hastings</em> for PDFs that take single numbers or two-dimensional points, respectively, and a method called <code>slicesample</code> implements <em>slice sampling</em>.<sup><a href="#Note48"><strong>(48)</strong></a></sup></p>
 
 <p>Most MCMC algorithms <strong>require knowing the distribution&#39;s PDF</strong>, but <em>Gibbs sampling</em><sup><a href="#Note35"><strong>(35)</strong></a></sup> is an exception.  This sampling technique involves repeatedly generating random numbers from two or more distributions, each of which uses a random number from the previous distribution (<em>conditional distributions</em>). The random numbers generated this way converge to the <em>joint distribution</em> of those conditional distributions.</p>
 
@@ -2032,7 +2037,7 @@ END METHOD
 <p>In the following method, which generates random numbers following an exponential distribution:</p>
 
 <ul>
-<li><code>lamda</code> is the inverse scale, usually 1.  Usually, <code>lamda</code> is the probability that an independent event of a given kind will occur in a given span of time (such as in a given day or year), and the random result is the number of spans of time until that event happens.  (This distribution is thus useful for modeling a <em>Poisson process</em>.) <code>1.0 / lamda</code> is the scale (mean), which is usually the average waiting time between two independent events of the same kind.</li>
+<li><code>lamda</code> is the inverse scale, usually 1.  Usually, <code>lamda</code> is the probability that an independent event of a given kind will occur in a given span of time (such as in a given day or year), and the random result is the number of spans of time until that event happens. <code>1.0 / lamda</code> is the scale (mean), which is usually the average waiting time between two independent events of the same kind.</li>
 </ul>
 
 <p>&nbsp;</p>
@@ -2048,14 +2053,14 @@ END METHOD
    else
      // NOTE: If `log1p(x)` is available, replace
      // `-ln(1 - x)` with `log1p(-x)` for robustness
-     // (Pederson 2018).
+     // (Pedersen 2018).
      return -ln(1.0 - RNDRANGEMinMaxExc(0, 0.5)) / lamda
    end
 END METHOD
 </pre>
 
 <blockquote>
-<p><strong>Note:</strong> A random number following the exponential distribution has the following na&iuml;ve implementation: <code>-ln(RNDU01())</code>.  But there are several problems with this; for example, this implementation is ill-conditioned at large values because of the distribution&#39;s right-sided tail (Pederson 2018)<sup><a href="#Note37"><strong>(37)</strong></a></sup>, and it can return infinity if <code>RNDU01()</code> becomes 0.  The method above implements Pederson&#39;s suggestion of &quot;flip-flopping&quot; the uniform value at random.</p>
+<p><strong>Note:</strong> A random number following the exponential distribution has the following na&iuml;ve implementation: <code>-ln(RNDU01())</code>.  But there are several problems here; for example, this implementation is ill-conditioned at large values because of the distribution&#39;s right-sided tail (Pedersen 2018)<sup><a href="#Note37"><strong>(37)</strong></a></sup>, and it can return infinity if <code>RNDU01()</code> becomes 0.  The method above implements Pedersen&#39;s suggestion of &quot;flip-flopping&quot; the uniform value at random.</p>
 </blockquote>
 
 <p><a id=Gamma_Distribution></a></p>
@@ -2214,7 +2219,7 @@ END METHOD
 </pre>
 
 <blockquote>
-<p><strong>Note:</strong> A <strong>geometric distribution</strong> can be sampled by generating <code>NegativeBinomial(1, p)</code>, where <code>p</code> has the same meaning as in the negative binomial distribution.  Here, the sampled number is the number of failures that have happened before a success happens. (This is the definition used in <em>Mathematica</em>, for example.  Saucier 2000, p. 44, also mentions an alternative definition that includes the success, and this is the definition used, for example, in (Devroye 1986)<sup><a href="#Note9"><strong>(9)</strong></a></sup>, p. 498.)  For example, if <code>p</code> is 0.5, the geometric distribution models the task &quot;Flip a coin until you get tails, then count the number of heads.&quot;</p>
+<p><strong>Note:</strong> For the <strong>geometric distribution</strong>, which is a special case of the negative binomial distribution, see <a href="#Geometric_Distribution"><strong>Geometric Distribution</strong></a>.</p>
 </blockquote>
 
 <p><a id=von_Mises_Distribution></a></p>
@@ -2500,7 +2505,7 @@ END METHOD
 <li><strong>Extreme value distribution</strong>: See generalized extreme value distribution.</li>
 <li><strong>Gamma distribution</strong>: See <a href="#Gamma_Distribution"><strong>Gamma Distribution</strong></a>.</li>
 <li><strong>Gaussian distribution</strong>: See <a href="#Normal_Gaussian_Distribution"><strong>Normal (Gaussian) Distribution</strong></a>.</li>
-<li><strong>Geometric distribution</strong>: See <a href="#Negative_Binomial_and_Geometric_Distributions"><strong>Negative Binomial and Geometric Distributions</strong></a>.</li>
+<li><strong>Geometric distribution</strong>: See <a href="#Geometric_Distribution"><strong>Geometric Distribution</strong></a>.</li>
 <li><strong>Gumbel distribution</strong>: See generalized extreme value distribution.</li>
 <li><strong>Inverse gamma distribution</strong>: <code>b / GammaDist(a, 1)</code>, where <code>a</code> and <code>b</code> have the
 same meaning as in the gamma distribution.  Alternatively, <code>1.0 / (pow(GammaDist(a, 1), 1.0 / c) / b + d)</code>, where <code>c</code> and <code>d</code> are shape and location parameters, respectively.</li>
@@ -2612,6 +2617,7 @@ the two parameters of the beta distribution, and <code>trials</code> is a parame
 <li><strong>Standard complex normal distribution</strong>: See <a href="#Multivariate_Normal_Multinormal_Distribution"><strong>Multivariate Normal (Multinormal) Distribution</strong></a>.</li>
 <li><strong>Suzuki distribution</strong>: See Rayleigh distribution.</li>
 <li><strong>Tukey lambda distribution</strong>: <code>(pow(x, lamda)-pow(1.0-x,lamda))/lamda</code>, where <code>x</code> is <code>RNDU01()</code> and <code>lamda</code> is a shape parameter.</li>
+<li><strong>Twin-<em>t</em> distribution</strong> (Baker and Jackson 2018)<sup><a href="#Note49"><strong>(49)</strong></a></sup>: Let <code>x</code> be a random Student&#39;s <em>t</em>-distributed number (not a noncentral one).  Accept <code>x</code> if <code>RNDU01OneExc() &lt; pow((1 + y) / ((1 + y * y) + y), (df + 1) * 0.5)</code>, where <code>y = x * x / df</code> and <code>df</code> is the degrees of freedom used to generate the number; repeat this process otherwise.</li>
 <li><strong>&quot;Type 0&quot; stable distribution</strong>: See <a href="#Stable_Distribution"><strong>Stable Distribution</strong></a>.</li>
 <li><strong>von Mises distribution</strong>: See <a href="#von_Mises_Distribution"><strong>von Mises Distribution</strong></a>.</li>
 <li><strong>Waring&ndash;Yule distribution</strong>: See beta negative binomial distribution.</li>
@@ -2762,7 +2768,7 @@ END METHOD
 
 <p>If the generator produces numbers with unequal probabilities, but is otherwise an RNG as defined here, then  <em>randomness extraction</em> (which is outside the scope of this document) can make it produce numbers with closer to equal probabilities.</small></p>
 
-<p><small><sup id=Note2>(2)</sup> For an exercise solved by the <code>RNDINT</code> pseudocode, see A. Koenig and B. E. Moo, <em>Accelerated C++</em>, 2000; see also a <a href="http://mathalope.co.uk/2014/10/26/accelerated-c-solution-to-exercise-7-9/"><strong>blog post by Johnny Chan</strong></a>.  In addition, M. O&#39;Neill discusses various methods, both biased and unbiased, for generating random integers in a range with an RNG in a <a href="http://www.pcg-random.org/posts/bounded-rands.html"><strong>blog post from July 2018</strong></a>.</small></p>
+<p><small><sup id=Note2>(2)</sup> For an exercise solved by the <code>RNDINT</code> pseudocode, see A. Koenig and B. E. Moo, <em>Accelerated C++</em>, 2000; see also a <a href="http://mathalope.co.uk/2014/10/26/accelerated-c-solution-to-exercise-7-9/"><strong>blog post by Johnny Chan</strong></a>.  In addition, M. O&#39;Neill discusses various methods, both biased and unbiased, for generating random integers in a range with an RNG in a <a href="http://www.pcg-random.org/posts/bounded-rands.html"><strong>blog post from July 2018</strong></a>.  Finally, a post in the Math Forum (&quot;<a href="http://mathforum.org/library/drmath/view/65653.html"><strong>Probability and Random Numbers</strong></a>&quot;, Feb. 29, 2004) and Mennucci, A.C.G., &quot;Bit Recycling for Scaling Random Number Generators&quot;, arXiv:1012.4290 [cs.IT], 2018, independently show a method for batching and recycling random bits to produce random integers in a range.</small></p>
 
 <p><small><sup id=Note3>(3)</sup> D. Lemire, &quot;A fast alternative to the modulo reduction&quot;, Daniel Lemire&#39;s blog, 2016.</small></p>
 
@@ -2852,12 +2858,12 @@ and &quot;<a href="https://randomascii.wordpress.com/2013/07/16/floating-point-d
 <li>Computing the sum of twelve <code>RNDU01OneExc()</code> numbers (see Note 13) and subtracting the sum by 6 (see also <a href="https://en.wikipedia.org/wiki/Irwin%E2%80%93Hall_distribution"><strong>&quot;Irwin&ndash;Hall distribution&quot; on Wikipedia</strong></a>) results in approximate standard normal (<code>mu</code>=0, <code>sigma</code>=1) random numbers, whose values are not less than -6 or greater than 6; on the other hand, in a standard normal distribution, the chance of results less than -6 or greater than 6 is generally negligible.</li>
 <li>Computing the sum of twelve <code>RNDRANGEMaxExc(0, sigma)</code> numbers (see Note 13) and subtracting the sum by 6 * <code>sigma</code> results in approximate normal random numbers with <code>mu</code>=0 and the given <code>sigma</code>, whose values are not less than -6 * <code>sigma</code> or greater than 6 * <code>sigma</code>.</li>
 <li>Generating <code>RNDU01ZeroOneExc()</code>, then running the standard normal distribution&#39;s inverse cumulative distribution function on that number, results in a random number from that distribution.  An approximation is found in M. Wichura, <em>Applied Statistics</em> 37(3), 1988.  See also <a href="https://www.johndcook.com/blog/normal_cdf_inverse/"><strong>&quot;A literate program to compute the inverse of the normal CDF&quot;</strong></a>.</li>
-<li>Methods implementing a variant of the normal distribution, the <em>discrete Gaussian distribution</em>, generate <em>integers</em> that approximately follow the normal distribution.  There are so-called &quot;constant-time&quot; algorithms to sample from this distribution (e.g., Karmakar and Micciancio&ndash;Walter), but they are meant for use in specific security algorithms (digital signatures) rather than general use.</li>
+<li>Methods implementing a variant of the normal distribution, the <em>discrete Gaussian distribution</em>, generate <em>integers</em> that approximately follow the normal distribution.  There are so-called &quot;constant-time&quot; algorithms to sample from this distribution (e.g., Karmakar and Micciancio&ndash;Walter), but they are meant for use in specific security algorithms (lattice-based cryptography) rather than general use.</li>
 </ol>
 
 <p>In 2007, Thomas, D., et al. gave a survey of normal random number methods in &quot;Gaussian Random Number Generators&quot;, <em>ACM Computing Surveys</em> 39(4), 2007, article 11.</small></p>
 
-<p><small><sup id=Note37>(37)</sup> Pederson, K., &quot;Reconditioning your quantile function&quot;, arXiv:1704.07949v3 [stat.CO], 2018.</small></p>
+<p><small><sup id=Note37>(37)</sup> Pedersen, K., &quot;Reconditioning your quantile function&quot;, arXiv:1704.07949v3 [stat.CO], 2018.</small></p>
 
 <p><small><sup id=Note38>(38)</sup> &quot;A simple method for generating gamma variables&quot;, <em>ACM Transactions on Mathematical Software</em> 26(3), 2000.</small></p>
 
@@ -2878,6 +2884,12 @@ and &quot;<a href="https://randomascii.wordpress.com/2013/07/16/floating-point-d
 <p><small><sup id=Note46>(46)</sup> Reference: <a href="http://mathworld.wolfram.com/SpherePointPicking.html"><strong>&quot;Sphere Point Picking&quot;</strong></a> in MathWorld (replacing inverse cosine with <code>atan2</code> equivalent).</small></p>
 
 <p><small><sup id=Note47>(47)</sup> Mironov, I., &quot;On Significance of the Least Significant Bits For Differential Privacy&quot;, 2012.</small></p>
+
+<p><small><sup id=Note48>(48)</sup> Tran, K.H., &quot;A Common Derivation for Markov Chain Monte Carlo Algorithms with Tractable and Intractable Targets&quot;, arXiv:1607.01985 [stat.CO], 2006-2008, gives a common framework for describing many MCMC algorithms, including Metropolis&ndash;Hastings, slice sampling, and Gibbs sampling.</small></p>
+
+<p><small><sup id=Note49>(49)</sup> Baker, R., Jackson, D., &quot;A new distribution for robust least squares&quot;, arXiv:1408.3237 [stat.ME], 2018.</small></p>
+
+<p><small><sup id=Note50>(50)</sup> For example, see Balcer, V., Vadhan, S., &quot;Differential Privacy on Finite Computers&quot;, Dec. 4, 2018; as well as the Miccancio&ndash;Walter discrete Gaussian generator (for lattice-based cryptography).</small></p>
 
 <p><a id=Appendix></a></p>
 
@@ -2982,7 +2994,7 @@ END METHOD
 <li><strong>Security algorithms out of scope.</strong> Security algorithms that take random secrets to generate random security parameters, such as encryption keys, public/private key pairs, elliptic curves, or points on an elliptic curve, are outside this document&#39;s scope.</li>
 </ol>
 
-<p>In nearly all security-sensitive applications, random numbers generated for security purposes are integers.  In very rare cases, they&#39;re fixed-point numbers.  Even with a secure random number generator, the use of random floating-point numbers can cause security issues not present with integers or fixed-point numbers; one example is found in (Mironov 2012)<sup><a href="#Note47"><strong>(47)</strong></a></sup>.</p>
+<p>In nearly all security-sensitive applications, random numbers generated for security purposes are integers.  In very rare cases, they&#39;re fixed-point numbers.  Even with a secure random number generator, the use of random floating-point numbers can cause security issues not present with integers or fixed-point numbers; one example is found in (Mironov 2012)<sup><a href="#Note47"><strong>(47)</strong></a></sup>.  And even in the few security applications where random floating-point numbers are used (differential privacy and lattice-based cryptography), there are ways to avoid such random numbers<sup><a href="#Note50"><strong>(50)</strong></a></sup>.</p>
 
 <p><a id=License></a></p>
 

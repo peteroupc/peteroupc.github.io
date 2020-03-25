@@ -484,7 +484,7 @@ Returns 'list'. """
                     t = -1
                     while sum <= n:
                         # Geometric variable plus 1
-                        geo = math.floor(-self.exponential(math.log(1 - p))) + 1
+                        geo = math.floor(-self.exponential(math.log1p(-p))) + 1
                         sum = sum + geo
                         ret = ret + sign
                     return ret - sign
@@ -1652,6 +1652,9 @@ if __name__ == "__main__":
     # White noise
     print("White noise")
     print([randgen.normal() for i in range(20)])
+    # White noise
+    print("Binomial values")
+    print([randgen.binomial(98, 0.8) for i in range(20)])
     # Demonstrate numerical CDF inversion
     print("Gaussian values by CDF inversion")
     normal_cdf = lambda x: 0.5 * (1 + math.erf(x / math.sqrt(2)))
