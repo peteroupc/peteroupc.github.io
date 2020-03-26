@@ -1434,6 +1434,7 @@ If the distribution **is discrete (integer-only)**, numbers that closely follow 
 - `InversionSample(mini, maxi)` chooses a random number in [`mini`, `maxi`] based on a **known CDF** (`CDF(x)`). This method should be used over `Sample` whenever possible.<sup>[**(33)**](#Note33)</sup>
 - `Sample(mini, maxi)` chooses a random number in [`mini`, `maxi`] based on a **known PDF** (`PDF(x)`, more properly called _probability mass function_).
 - `IntegerWeights(mini, maxi, mult)` generates a list of integer weights for the interval [`mini`, `maxi`] based on a **known PDF** (`PDF(x)`) and weight scale `mult`.  A more sophisticated algorithm is given as Algorithm 3 in (Saad et al., 2020)<sup>[**(34)**](#Note34)</sup>.
+- `IntegerWeightsFP(mini, maxi)` generates a list of integer weights for the interval [`mini`, `maxi`] based on a **known PDF** (`PDF(x)`) that outputs floating-point numbers of the form `FPSignificand` * `FPRadix`<sup>`FPExponent`</sup>.<sup>[**(51)**](#Note51)</sup>
 
 &nbsp;
 
@@ -1453,6 +1454,27 @@ If the distribution **is discrete (integer-only)**, numbers that closely follow 
     METHOD IntegerWeights(mini, maxi, mult)
       weights=[]
       for i in mini..maxi: AddItem(weights, round(PDF(i) * mult))
+      return weights
+    END METHOD
+
+    METHOD FPRatio(fp)
+      expo=FPExponent(fp)
+      sig=FPSignificand(fp)
+      radix=FPRadix(fp)
+      if expo>=0: return [sig * pow(radix, expo), 1]
+      return [sig, pow(radix, abs(expo))]
+    END METHOD
+
+    METHOD IntegerWeightsFP(mini, maxi)
+      ratios=[]
+      maxden=0
+      for i in mini..maxi
+        r=FPRatio(PDF(i))
+        AddItem(ratios, r)
+        maxden=max(maxden, r[1])
+      end
+      weights=[]
+      for r in ratios: AddItem(weights, r[0]*floor(maxden/r[1]))
       return weights
     END METHOD
 
@@ -2414,6 +2436,8 @@ In 2007, Thomas, D., et al. gave a survey of normal random number methods in "Ga
 <small><sup id=Note49>(49)</sup> Mironov, I., "On Significance of the Least Significant Bits For Differential Privacy", 2012.</small>
 
 <small><sup id=Note50>(50)</sup> For example, see Balcer, V., Vadhan, S., "Differential Privacy on Finite Computers", Dec. 4, 2018; as well as the Miccancio&ndash;Walter discrete Gaussian generator (for lattice-based cryptography).</small>
+
+<small><sup id=Note51>(51)</sup> Based on a suggestion by F. Saad in a personal communication (Mar. 26, 2020).</small>
 
 <a id=Appendix></a>
 ## Appendix
