@@ -118,7 +118,7 @@ The following are not considered high-quality PRNGs:
 | JSF32 (B. Jenkins's "A small noncryptographic PRNG") | Admits fewer than 2<sup>63</sup> seeds; proven minimum cycle length is only 2<sup>20</sup> or more |
 | JSF64 (B. Jenkins's "A small noncryptographic PRNG") | No proven minimum cycle of at least 2<sup>63</sup> values |
 | Middle square | No proven minimum cycle of at least 2<sup>63</sup> values |
-| Cellular-automaton PRNGs, including Rule 30 | No proven minimum cycle of at least 2<sup>63</sup> values |
+| Many cellular-automaton PRNGs (especially if they are neither reversible nor maximal-length<sup>[**(13)**](#Note13)</sup>) | No proven minimum cycle of at least 2<sup>63</sup> values |
 | Tyche/Tyche-i (Neves and Araujo 2011)<sup>[**(12)**](#Note12)</sup> | No proven minimum cycle of at least 2<sup>63</sup> values |
 
 <a id=Notes></a>
@@ -147,3 +147,5 @@ The following are not considered high-quality PRNGs:
 <small><sup id=Note11>(11)</sup> Widynski, B., "Middle Square Weyl Sequence RNG", arXiv:1704.00358 [cs.CR], 2017.</small>
 
 <small><sup id=Note12>(12)</sup> Neves, S., and Araujo, F., "Fast and Small Nonlinear Pseudorandom Number Generators for Computer Simulation", 2011.</small>
+
+<small><sup id=Note13>(13)</sup> Bhattacharjee, K., "Cellular Automata: Reversibility, Semi-reversibility and Randomness", arXiv:1911.03609 [cs.FL], 2019.</small>
