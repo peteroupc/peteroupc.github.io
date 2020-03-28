@@ -14,7 +14,12 @@ For an F2-linear PRNG, there is an efficient way to discard a given (and arbitra
 2. Find the _characteristic polynomial_ of `M`.  This has to be done in the two-element field F2, so that each coefficient of the polynomial is either 0 or 1. Unfortunately, SymPy's `charpoly()` method is inadequate for this purpose, since it doesn't operate on the correct field.
 3. Convert the characteristic polynomial to an integer (`CP`), so that its least significant bit is the 0-order coefficient, its next bit is the 1st-order coefficient, and so on.
 4. Calculate `powmodf2(2, N, CP)`, where `powmodf2` is a modular power function that calculates `2^N mod CP` in the field F2.  Regular modular power functions, such as BigInteger's `modPow` method, won't work here.
-5. The result is a _jump polynomial_ for jumping the PRNG ahead N steps.  An example of its use is found in the `jump` and `long_jump` functions in the [**`xoroshiro128plus` source code**](http://xoshiro.di.unimi.it/xoroshiro128plus.c), where are identical except for the jump polynomial.
+5. The result is a _jump polynomial_ for jumping the PRNG ahead N steps.  An example of its use is found in the `jump` and `long_jump` functions in the [**`xoroshiro128plus` source code**](http://xoshiro.di.unimi.it/xoroshiro128plus.c), which are identical except for the jump polynomial.
 
 <a id=Notes></a>
 ## Notes
+
+<small></small>
+
+<a id=></a>
+##
