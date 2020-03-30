@@ -1,26 +1,26 @@
 <a id=Notes_on_Jumping_PRNGs_Ahead></a>
 ## Notes on Jumping PRNGs Ahead
 
-Some PRNGs have an efficient way to advance their state as though a huge number of PRNG outputs were discarded.  Notes on how they work are described in the following sections.
+Some pseudorandom number generators (PRNGs) have an efficient way to advance their state as though a huge number of PRNG outputs were discarded.  Notes on how they work are described in the following sections.
 
 <a id=Linear_Congruential_Generators></a>
 ### Linear Congruential Generators
 
-For linear congruential generators, an efficient way to jump the PRNG ahead is described in (Brown 1994)<sup>[**(3)**](#Note3)</sup>.
+For linear congruential generators (LCGs), an efficient way to jump the PRNG ahead is described in (Brown 1994)<sup>[**(1)**](#Note1)</sup>.  This also applies to LCGs with a relatively complex output transform, such as M.O'Neill's PCG32 and PCG64.
 
 <a id=F2_linear_PRNGs></a>
 ### F<sub>2</sub>-linear PRNGs
 
-For some pseudorandom number generators (PRNGs), each bit of the PRNG's state can be described as a linear recurrence on its entire state.  These PRNGs are called _F<sub>2</sub>-linear PRNGs_, and they include the following:
+For some PRNGs, each bit of the PRNG's state can be described as a linear recurrence on its entire state.  These PRNGs are called _F<sub>2</sub>-linear PRNGs_, and they include the following:
 
-- Linear congruential generators with a power-of-two modulus.
+- LCGs with a power-of-two modulus.
 - Xorshift PRNGs.
 - PRNGs in the xoroshiro and xoshiro families.
 - Linear or generalized feedback shift register generators, including Mersenne Twister.
 
-For an F<sub>2</sub>-linear PRNG, there is an efficient way to discard a given (and arbitrary) number of its outputs (to "jump the PRNG ahead").  This jump-ahead strategy is further described in (Haramoto et al., 2008)<sup>[**(1)**](#Note1)</sup>.  To calculate the jump-ahead parameters needed to advance the PRNG N steps:
+For an F<sub>2</sub>-linear PRNG, there is an efficient way to discard a given (and arbitrary) number of its outputs (to "jump the PRNG ahead").  This jump-ahead strategy is further described in (Haramoto et al., 2008)<sup>[**(2)**](#Note2)</sup>.  See also (Vigna 2017)<sup>[**(5)**](#Note5)</sup> To calculate the jump-ahead parameters needed to advance the PRNG N steps:
 
-1. Build `M`, an S&times;S matrix of zeros and ones that describes the linear transformation of the PRNG's state, where S is the size of that state in bits.  For an example, see sections 3.1 and 3.2 of (Blackman and Vigna 2019)<sup>[**(2)**](#Note2)</sup>, where it should be noted that the additions inside the matrix are actually XORs.
+1. Build `M`, an S&times;S matrix of zeros and ones that describes the linear transformation of the PRNG's state, where S is the size of that state in bits.  For an example, see sections 3.1 and 3.2 of (Blackman and Vigna 2019)<sup>[**(3)**](#Note3)</sup>, where it should be noted that the additions inside the matrix are actually XORs.
 2. Find the _characteristic polynomial_ of `M`.  This has to be done in the two-element field F<sub>2</sub>, so that each coefficient of the polynomial is either 0 or 1.
 
     For example, SymPy's `charpoly()` method alone is inadequate for this purpose, since it doesn't operate on the correct field.  However, it's easy to adapt that method's output for the field F<sub>2</sub>: even coefficients become zeros and odd coefficients become ones.
@@ -38,7 +38,7 @@ Counter-based PRNGs, in which their state is updated simply by incrementing a co
 <a id=Jump_Parameters_for_Some_PRNGs></a>
 ### Jump Parameters for Some PRNGs
 
-The following table shows the characteristic polynomial and jump polynomials for some PRNG families.  In the table, "'Period'/&phi;" means the PRNG's maximum cycle length divided by the golden ratio, and rounded to the closest odd integer; this jump parameter is chosen to avoid overlapping number sequences as much as possible.
+The following table shows the characteristic polynomial and jump polynomials for some PRNG families.  In the table, "'Period'/&phi;" means the PRNG's maximum cycle length divided by the golden ratio, and rounded to the closest odd integer; this jump parameter is chosen to avoid overlapping number sequences as much as possible (see also [**NumPy documentation**](https://docs.scipy.org/doc/numpy/reference/random/parallel.html)).
 
 | PRNG |  Characteristic Polynomial  | Jump Polynomials |
 | --- | --- | --- |
@@ -50,10 +50,12 @@ The following table shows the characteristic polynomial and jump polynomials for
 <a id=Notes></a>
 ## Notes
 
-<small><sup id=Note1>(1)</sup> Haramoto, Matsumoto, Nishimura, Panneton, L'Ecuyer, "Efficient Jump Ahead for F<sub>2</sub>-Linear Random Number Generators", _INFORMS Journal on Computing_ 20(3), Summer 2008.</small>
+<small><sup id=Note1>(1)</sup> Brown, F., "Random Number Generation with Arbitrary Strides", _Transactions of the American Nuclear Society_ Nov. 1994.</small>
 
-<small><sup id=Note2>(2)</sup> Blackman, Vigna, "Scrambled Linear Pseudorandom Number Generators", 2019.</small>
+<small><sup id=Note2>(2)</sup> Haramoto, Matsumoto, Nishimura, Panneton, L'Ecuyer, "Efficient Jump Ahead for F<sub>2</sub>-Linear Random Number Generators", _INFORMS Journal on Computing_ 20(3), Summer 2008.</small>
 
-<small><sup id=Note3>(3)</sup> Brown, F., "Random Number Generation with Arbitrary Stride", _Transactions of the American Nuclear Society_ Nov. 1994.</small>
+<small><sup id=Note3>(3)</sup> Blackman, Vigna, "Scrambled Linear Pseudorandom Number Generators", 2019.</small>
 
 <small><sup id=Note4>(4)</sup> Salmon, J.K.; Moraes, M.A.; et al., "Parallel Random Numbers: As Easy as 1, 2, 3", 2011.</small>
+
+<small><sup id=Note5>(5)</sup> Vigna, S., "Further scramblings of Marsaglia's xorshift generators", _Journal of Computational and Applied Mathematics_ 315 (2017).</small>

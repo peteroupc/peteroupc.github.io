@@ -13,7 +13,7 @@ To determine whether a PRNG meets the independence requirement, its output shoul
 
 There are several kinds of nearby sequences to test for this purpose:
 
-- The original PRNG state, and the state produced by discarding a huge number of PRNG outputs in an efficient way.  That number can matter; one suggestion found in [**NumPy documentation**](https://docs.scipy.org/doc/numpy/reference/random/parallel.html) is the maximum cycle length divided by the golden ratio.
+- The original PRNG state, and the state produced by discarding a huge number of PRNG outputs in an efficient way ("[**jump-ahead**](https://peteroupc.github.io/jump.html)").  That number can matter.
 - Two or more PRNGs initialized with consecutive seeds.
 - Two or more PRNGs initialized with seeds that differ from each other by one bit (see also "[**The wrap-up on PCG generators**](http://pcg.di.unimi.it/pcg.php#flaws)").
 

@@ -394,7 +394,7 @@ For cryptographic RNGs, an application SHOULD use only one thread-safe instance 
 
 <ul>
 <li>by initializing PRNGs with consecutive seeds (as in &quot;counter-based&quot; PRNGs (Salmon et al. 2011)<sup><a href="#Note14"><strong>(14)</strong></a></sup>), or</li>
-<li>by discarding a fixed but huge number of PRNG outputs in an efficient way (&quot;jump-ahead&quot;).</li>
+<li>by discarding a fixed but huge number of PRNG outputs in an efficient way (&quot;<a href="https://peteroupc.github.io/jump.html"><strong>jump-ahead</strong></a>&quot;).</li>
 </ul>
 
 <p>Multiple processes can be seeded for random number generation as follows.<sup><a href="#Note15"><strong>(15)</strong></a></sup></p>

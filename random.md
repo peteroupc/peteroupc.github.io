@@ -271,7 +271,7 @@ Some applications require multiple processes (including threads, tasks, or subta
 To reduce this correlation risk, the application can choose a [**high-quality PRNG that supports _streams_**](https://peteroupc.github.io/hqprng.md#prngs-with-stream-support) of uncorrelated sequences (sequences that behave like independent random number sequences and don't overlap) and has an efficient way to assign a different _stream_ to each process.  For example, in some PRNGs, these _streams_ can be formed&mdash;
 
 - by initializing PRNGs with consecutive seeds (as in "counter-based" PRNGs (Salmon et al. 2011)<sup>[**(14)**](#Note14)</sup>), or
-- by discarding a fixed but huge number of PRNG outputs in an efficient way ("jump-ahead").
+- by discarding a fixed but huge number of PRNG outputs in an efficient way ("[**jump-ahead**](https://peteroupc.github.io/jump.html)").
 
 Multiple processes can be seeded for random number generation as follows.<sup>[**(15)**](#Note15)</sup>
 
