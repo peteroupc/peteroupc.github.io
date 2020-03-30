@@ -64,6 +64,11 @@ An MRG with only one multiplier expresses the special case of an LCG with `c = 0
 
 Jumping the LCG ahead can then be done using this matrix as described in the previous section.
 
+<a id=Multiply_with_Carry_Add_with_Carry_Subtract_with_Borrow></a>
+### Multiply-with Carry, Add-with-Carry, Subtract-with-Borrow
+
+I am not aware of any efficient ways to jump these PRNGs ahead an arbitrary number of steps.  These PRNGs describe almost linear recurrences, but the carry renders them nonlinear.
+
 <a id=Combined_PRNGs></a>
 ### Combined PRNGs
 
