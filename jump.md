@@ -13,9 +13,9 @@ For some PRNGs, each bit of the PRNG's state can be described as a linear recurr
 - PRNGs in the xoroshiro and xoshiro families.
 - Linear or generalized feedback shift register generators, including Mersenne Twister.
 
-For an F<sub>2</sub>-linear PRNG, there is an efficient way to discard a given (and arbitrary) number of its outputs (to "jump the PRNG ahead").  This jump-ahead strategy is further described in (Haramoto et al., 2008)<sup>[**(2)**](#Note2)</sup>.  See also (Vigna 2017)<sup>[**(3)**](#Note3)</sup>. To calculate the jump-ahead parameters needed to advance the PRNG N steps:
+For an F<sub>2</sub>-linear PRNG, there is an efficient way to discard a given (and arbitrary) number of its outputs (to "jump the PRNG ahead").  This jump-ahead strategy is further described in (Haramoto et al., 2008)<sup>[**(1)**](#Note1)</sup>.  See also (Vigna 2017)<sup>[**(2)**](#Note2)</sup>. To calculate the jump-ahead parameters needed to advance the PRNG N steps:
 
-1. Build `M`, an S&times;S matrix of zeros and ones that describes the linear transformation of the PRNG's state, where S is the size of that state in bits.  For an example, see sections 3.1 and 3.2 of (Blackman and Vigna 2019)<sup>[**(4)**](#Note4)</sup>, where it should be noted that the additions inside the matrix are actually XORs.
+1. Build `M`, an S&times;S matrix of zeros and ones that describes the linear transformation of the PRNG's state, where S is the size of that state in bits.  For an example, see sections 3.1 and 3.2 of (Blackman and Vigna 2019)<sup>[**(3)**](#Note3)</sup>, where it should be noted that the additions inside the matrix are actually XORs.
 2. Find the _characteristic polynomial_ of `M`.  This has to be done in the two-element field F<sub>2</sub>, so that each coefficient of the polynomial is either 0 or 1.
 
     For example, SymPy's `charpoly()` method alone is inadequate for this purpose, since it doesn't operate on the correct field.  However, it's easy to adapt that method's output for the field F<sub>2</sub>: even coefficients become zeros and odd coefficients become ones.
@@ -28,14 +28,14 @@ For an F<sub>2</sub>-linear PRNG, there is an efficient way to discard a given (
 <a id=Counter_Based_PRNGs></a>
 ### Counter-Based PRNGs
 
-Counter-based PRNGs, in which their state is updated simply by incrementing a counter, can be trivially jumped ahead just by changing the seed, the counter, or both (Salmon et al. 2011)<sup>[**(5)**](#Note5)</sup>.
+Counter-based PRNGs, in which their state is updated simply by incrementing a counter, can be trivially jumped ahead just by changing the seed, the counter, or both (Salmon et al. 2011)<sup>[**(4)**](#Note4)</sup>.
 
 <a id=Multiple_Recursive_Generators></a>
 ### Multiple Recursive Generators
 
 A _multiple recursive generator_ (MRG) generates numbers by transforming its state using the following formula: `x(k) = (x(k-1)*A(1) + x(k-2)*A(2) + ... + x(k-n)*A(n)) mod modulus`, where `A(i)` are the _multipliers_ and `modulus` is the _modulus_.
 
-For an MRG, the following matrix (`M`) describes its state transition (mod `modulus`):
+For an MRG, the following matrix (`M`) describes the state transition `[x(k-n), ..., x(k-1)]` to `[x(k-n+1), ..., x(k)]` (mod `modulus`):
 
      | 0   1   0  ...  0  |
      | 0   0   1  ...  0  |
@@ -46,18 +46,23 @@ For an MRG, the following matrix (`M`) describes its state transition (mod `modu
 
 To calculate the parameter needed to jump the MRG ahead N steps, calculate `M`<sup>N</sup> mod `modulus`; the result is a _jump matrix_ `J`.
 
-Then, to jump the MRG ahead N steps, calculate `J * S` mod `modulus`, where `J` is the jump matrix and `S` is a row vector consisting of the `n` most recently generated numbers of the MRG, oldest first; the result is a new state for the MRG.
+Then, to jump the MRG ahead N steps, calculate `J * S` mod `modulus`, where `J` is the jump matrix and `S` is the state in the form of a column vector; the result is a new state for the MRG.
 
-This technique was mentioned (but for binary matrices) in Haramoto, in sections 1 and 3.1.  They point out, though, that it isn't efficient if the transition matrix is large.  See also (L'Ecuyer et al., 2002)<sup>[**(6)**](#Note6)</sup>.
+This technique was mentioned (but for binary matrices) in Haramoto, in sections 1 and 3.1.  They point out, though, that it isn't efficient if the transition matrix is large.  See also (L'Ecuyer et al., 2002)<sup>[**(5)**](#Note5)</sup>.
 
 <a id=Linear_Congruential_Generators></a>
 ### Linear Congruential Generators
 
 A _linear congruential generator_ (LCG) generates numbers by transforming its state using the following formula: `x(k) = (x(k-1)*a + c) mod modulus`, where `a` is the _multiplier_, `c` is the additive constant, and `modulus` is the _modulus_.
 
-An efficient way to jump an LCG ahead is described in (Brown 1994)<sup>[**(1)**](#Note1)</sup>. This also applies to LCGs that transform each `x(k)` before outputting it, such as M.O'Neill's PCG32 and PCG64.
+An efficient way to jump an LCG ahead is described in (Brown 1994)<sup>[**(6)**](#Note6)</sup>. This also applies to LCGs that transform each `x(k)` before outputting it, such as M.O'Neill's PCG32 and PCG64.
 
-An MRG with only one multiplier expresses the special case of an LCG with `c = 0` (also known as a _multiplicative_ LCG).
+An MRG with only one multiplier expresses the special case of an LCG with `c = 0` (also known as a _multiplicative_ LCG).  For `c` other than 0, the following matrix describes the state transition `[x(k-1), 1]` to `[x(k), 1]` (mod `modulus`):
+
+     | a   c |
+     | 0   1 |
+
+Jumping the LCG ahead can then be done using this matrix as described in the previous section.
 
 <a id=Combined_PRNGs></a>
 ### Combined PRNGs
@@ -80,14 +85,14 @@ The following table shows the characteristic polynomial and jump polynomials for
 <a id=Notes></a>
 ## Notes
 
-<small><sup id=Note1>(1)</sup> Brown, F., "Random Number Generation with Arbitrary Strides", _Transactions of the American Nuclear Society_ Nov. 1994.</small>
+<small><sup id=Note1>(1)</sup> Haramoto, Matsumoto, Nishimura, Panneton, L'Ecuyer, "Efficient Jump Ahead for F<sub>2</sub>-Linear Random Number Generators", _INFORMS Journal on Computing_ 20(3), Summer 2008.</small>
 
-<small><sup id=Note2>(2)</sup> Haramoto, Matsumoto, Nishimura, Panneton, L'Ecuyer, "Efficient Jump Ahead for F<sub>2</sub>-Linear Random Number Generators", _INFORMS Journal on Computing_ 20(3), Summer 2008.</small>
+<small><sup id=Note2>(2)</sup> Vigna, S., "Further scramblings of Marsaglia's xorshift generators", _Journal of Computational and Applied Mathematics_ 315 (2017).</small>
 
-<small><sup id=Note3>(3)</sup> Vigna, S., "Further scramblings of Marsaglia's xorshift generators", _Journal of Computational and Applied Mathematics_ 315 (2017).</small>
+<small><sup id=Note3>(3)</sup> Blackman, Vigna, "Scrambled Linear Pseudorandom Number Generators", 2019.</small>
 
-<small><sup id=Note4>(4)</sup> Blackman, Vigna, "Scrambled Linear Pseudorandom Number Generators", 2019.</small>
+<small><sup id=Note4>(4)</sup> Salmon, J.K.; Moraes, M.A.; et al., "Parallel Random Numbers: As Easy as 1, 2, 3", 2011.</small>
 
-<small><sup id=Note5>(5)</sup> Salmon, J.K.; Moraes, M.A.; et al., "Parallel Random Numbers: As Easy as 1, 2, 3", 2011.</small>
+<small><sup id=Note5>(5)</sup> L'Ecuyer, Simard, Chen, Kelton, "An Object-Oriented Random-Number Package with Many Long Streams and Substreams", _Operations Research_ 50(6), 2002.</small>
 
-<small><sup id=Note6>(6)</sup> L'Ecuyer, Simard, Chen, Kelton, "An Object-Oriented Random-Number Package with Many Long Streams and Substreams", _Operations Research_ 50(6), 2002.</small>
+<small><sup id=Note6>(6)</sup> Brown, F., "Random Number Generation with Arbitrary Strides", _Transactions of the American Nuclear Society_ Nov. 1994.</small>
