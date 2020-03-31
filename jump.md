@@ -55,9 +55,9 @@ This technique was mentioned (but for binary matrices) in Haramoto, in sections 
 
 A multiple recursive generator with a modulus of 1449 has the following transition matrix:
 
-  |  0   1   0  |
-  |  0   0   1  |
-  | 444 342 499 |
+    |  0   1   0  |
+    |  0   0   1  |
+    | 444 342 499 |
 
 To calculate the 3&times;3 jump matrix to jump 100 steps from this MRG, multiply this matrix by 100 then reduce the result's elements mod 1449.  One way to do this is the "square-and-multiply" method, described by D. Knuth in _The Art of Computer Programming_: Set J to the identity matrix, N to 100, and M to a copy of the transition matrix, then while N is greater than 0:
 
@@ -66,9 +66,9 @@ To calculate the 3&times;3 jump matrix to jump 100 steps from this MRG, multiply
 
 The resulting J is a _jump matrix_ as follows:
 
-  | 156   93  1240 |
-  | 1389 1128  130 |
-  | 1209  930  793 |
+    | 156   93  1240 |
+    | 1389 1128  130 |
+    | 1209  930  793 |
 
 Transforming the MRG's state with J (and reducing mod 1449) will transform the state as though 100 outputs were discarded from the MRG.
 
