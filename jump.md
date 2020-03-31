@@ -50,6 +50,28 @@ Then, to jump the MRG ahead N steps, calculate `J * S` mod `modulus`, where `J` 
 
 This technique was mentioned (but for binary matrices) in Haramoto, in sections 1 and 3.1.  They point out, though, that it isn't efficient if the transition matrix is large.  See also (L'Ecuyer et al., 2002)<sup>[**(5)**](#Note5)</sup>.
 
+<a id=Example></a>
+#### Example
+
+A multiple recursive generator with a modulus of 1449 has the following transition matrix:
+
+  |  0   1   0  |
+  |  0   0   1  |
+  | 444 342 499 |
+
+To calculate the 3&times;3 jump matrix to jump 100 steps from this MRG, multiply this matrix by 100 then reduce the result's elements mod 1449.  One way to do this is the "square-and-multiply" method, described by D. Knuth in _The Art of Computer Programming_: Set J to the identity matrix, N to 100, and M to a copy of the transition matrix, then while N is greater than 0:
+
+1. If N is odd, multiply J by M then reduce J's elements mod 1449.
+2. Divide N by 2 and round down, then multiply M by M then reduce M's elements mod 1449.
+
+The resulting J is a _jump matrix_ as follows:
+
+  | 156   93  1240 |
+  | 1389 1128  130 |
+  | 1209  930  793 |
+
+Transforming the MRG's state with J (and reducing mod 1449) will transform the state as though 100 outputs were discarded from the MRG.
+
 <a id=Linear_Congruential_Generators></a>
 ### Linear Congruential Generators
 
@@ -65,7 +87,7 @@ An MRG with only one multiplier expresses the special case of an LCG with `c = 0
 Jumping the LCG ahead can then be done using this matrix as described in the previous section.
 
 <a id=Multiply_with_Carry_Add_with_Carry_Subtract_with_Borrow></a>
-### Multiply-with Carry, Add-with-Carry, Subtract-with-Borrow
+### Multiply-with-Carry, Add-with-Carry, Subtract-with-Borrow
 
 I am not aware of any efficient ways to jump these PRNGs ahead an arbitrary number of steps.  These PRNGs describe almost linear recurrences, but the carry renders them nonlinear.
 
