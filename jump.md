@@ -19,6 +19,8 @@ For an F<sub>2</sub>-linear PRNG, there is an efficient way to discard a given (
 2. Find the _characteristic polynomial_ of `M`.  This has to be done in the two-element field F<sub>2</sub>, so that each coefficient of the polynomial is either 0 or 1.
 
     For example, SymPy's `charpoly()` method alone is inadequate for this purpose, since it doesn't operate on the correct field.  However, it's easy to adapt that method's output for the field F<sub>2</sub>: even coefficients become zeros and odd coefficients become ones.
+
+    Note that for a linear feedback shift register (LFSR) generator, the characteristic polynomial's coeffients are 1 for each of its "taps" (and "tap" 0), and 0 elsewhere.  For example, an LFSR generator with taps 6 and 8 has the characteristic polynomial x<sup>8</sup> + x<sup>6</sup> + 1.
 3. Convert the characteristic polynomial to an integer (`CP`), so that its least significant bit is the 0-order coefficient, its next bit is the 1st-order coefficient, and so on.
 4. Calculate `powmodf2(2, N, CP)`, where `powmodf2` is a modular power function that calculates `2^N mod CP` in the field F<sub>2</sub>.  Regular modular power functions, such as BigInteger's `modPow` method, won't work here.
 5. The result is a _jump polynomial_ for jumping the PRNG ahead N steps.
@@ -89,7 +91,9 @@ Jumping the LCG ahead can then be done using this matrix as described in the pre
 <a id=Multiply_with_Carry_Add_with_Carry_Subtract_with_Borrow></a>
 ### Multiply-with-Carry, Add-with-Carry, Subtract-with-Borrow
 
-I am not aware of any efficient ways to jump these PRNGs ahead an arbitrary number of steps.  These PRNGs describe almost linear recurrences, but the carry renders them nonlinear.
+There are implementations for jumping a multiply-with-carry (MWC) PRNG ahead, but only in source code form ([**ref. 1**](https://github.com/rsaucier/Random/blob/3a7981bd6a8ac6d4507e9630393303b18e8967ca/kiss.h)).  I am not aware of an article or paper that describes how jumping an MWC PRNG ahead works.
+
+I am not aware of any efficient ways to jump an add-with-carry or subtract-with-borrow PRNG ahead an arbitrary number of steps.
 
 <a id=Combined_PRNGs></a>
 ### Combined PRNGs
