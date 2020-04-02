@@ -106,7 +106,7 @@ A combined PRNG can be jumped ahead N steps by jumping each of its components ah
 
 The following table shows the characteristic polynomial and jump polynomials for some PRNG families.  In the table:
 
-- Each polynomial's coefficients are zeros and ones, so the table shows them as a base-16 integer that stores the coefficients as individual bits: the least significant bit is the 0-order coefficient; the next bit is the first-order coefficient, and so on.  For example, the integer 0x23 stores the coefficients of the polynomial x<sup>5</sup> + x + 1.
+- Each polynomial's coefficients are zeros and ones, so the table shows them as a base-16 integer that stores the coefficients as individual bits: the least significant bit is the 0-order coefficient, the next bit is the first-order coefficient, and so on.  For example, the integer 0x23 stores the coefficients of the polynomial x<sup>5</sup> + x + 1.
 - "'Period'/&phi;" means the PRNG's maximum cycle length divided by the golden ratio, and rounded to the closest odd integer; this jump parameter is chosen to avoid overlapping number sequences as much as possible (see also [**NumPy documentation**](https://docs.scipy.org/doc/numpy/reference/random/parallel.html)).
 
 &nbsp;

@@ -153,14 +153,14 @@ The following are not considered high-quality PRNGs:
 <small><sup id=Note14>(14)</sup> Claessen, K, Pa&#x142;ka, M., "Splittable Pseudorandom Number Generators using Cryptographic Hashing", _ACM SIGPLAN Notices_ 48(12), December 2013.</small>
 
 <a id=Appendix></a>
-### Appendix
+## Appendix
 
 <a id=Implementation_Notes_Splittable_PRNGs></a>
-## Implementation Notes: Splittable PRNGs
+### Implementation Notes: Splittable PRNGs
 
 Here are implementation notes on splittable PRNGs.  The [**pseudocode conventions**](https://peteroupc.github.io/pseudocode.html) apply to this section.  In addition, the following notation is used:
 
-- `TOBYTES(x, n)` converts an integer to a sequence of `n` 8-bit bytes, in "little-endian" encoding: the first byte is the 8 most significant bits, the second byte is the next 8 bits, and so on. No more than `n` times 8 bits are encoded, and unused bytes become zeros.
+- `TOBYTES(x, n)` converts an integer to a sequence of `n` 8-bit bytes, in "little-endian" encoding: the first byte is the 8 least significant bits, the second byte is the next 8 bits, and so on. No more than `n` times 8 bits are encoded, and unused bytes become zeros.
 - `BLOCKLEN` is the hash function's block size in bits.  For noncryptographic hash functions, this can be the function's output size in bits instead. `BLOCKLEN` is rounded up to the closest multiple of 8.
 - `TOBLOCK(x)` is the same as `TOBYTES(x, BLOCKLEN / 8)`.
 
@@ -168,25 +168,25 @@ The splittable PRNG designs described here use _keyed hash functions_, which has
 
 The Claessen&ndash;Pa&#x142;ka splittable PRNG (Claessen and Pa&#x142;ka 2013)<sup>[**(14)**](#Note14)</sup> can be described as follows:
 
-- A PRNG state has two components: a seed and a path (a vector of bits).  A new state is generated from a seed with `TOBLOCK(seed)` and has a path consisting of an empty bit vector.
-- `split` creates two new states from the old one; the first (or second) is a copy of the old state, except a 0 (or 1, respectively) is appended to the path.  If the new path's size becomes greater than `BLOCKLEN` this way, hash `BitsToBytes(path)` with the seed as the key, then set the new path to `BytesToBits(hash)`, where `hash` is the hash code.
+- A PRNG state has two components: a seed and a path (a vector of bits).  A new state's seed is `TOBLOCK(seed)` and its path is an empty bit vector.
+- `split` creates two new states from the old one; the first (or second) is a copy of the old state, except a 0 (or 1, respectively) is appended to the path.  If a new state's path reaches `BLOCKLEN` bits this way, the state's seed is set to the result of hashing `BitsToBytes(path)` with the seed as the key, and the state's path is set to an empty bit vector.
 - `generate` creates a random number by hashing `BitsToBytes(path)` with the seed as the key.
 
 (The Claessen paper, section 5, also shows how a sequence of numbers can be generated from a state, essentially by hashing the path with the seed as the key, and in turn hashing a counter with that hash code as the key, but uses a rather complicated encoding to achieve this.)
 
-The following helper methods, in pseudocode, are used in the description above:
+The following helper method, in pseudocode, is used in the description above:
 
     METHOD BitsToBytes(bits)
-       v = 0
-       for i in 0...size(bits): v = v | (bits[i] << i)
-       return TOBYTES(v, ceil(size(bits) / 8))
-    END METHOD
-
-    METHOD BytesToBits(bytes)
+       // Unfortunately, the Claessen paper sec. 3.3 pads
+       // blocks with zeros, creating a risk that different paths
+       // encode to the same byte sequence (e.g., <1100> vs.
+       // <11000> or <0011> vs. <00011>). Even without this padding,
+       // this risk exists unless the underlying hash function hashes
+       // bit sequences (not just byte sequences), which is rare.
+       // Therefore, encode the bits to a sequence of bytes
+       // rather than using the encoding given in sec. 3.3.
        v = []
-       for i in 0...size(bytes)
-         for j in 0...8: AddItem(v, (bytes[i]>>j) & 1)
-       end
+       for i in 0...size(bits): v = v || TOBYTES(bits[i], 1)
        return v
     END METHOD
 
