@@ -83,7 +83,7 @@ The following lists high-quality combined PRNGs.  See "[**Testing PRNGs for High
 <a id=Splittable_PRNGs></a>
 ### Splittable PRNGs
 
-The following lists high-quality splittable PRNGs.  See "[**Testing PRNGs for High-Quality Randomness**](https://github.com/peteroupc/peteroupc.github.io/blob/master/randomtest.md)" for more information on testing splittable PRNGs.
+The following lists high-quality splittable PRNGs.  See "[**Testing PRNGs for High-Quality Randomness**](https://github.com/peteroupc/peteroupc.github.io/blob/master/randomtest.md)" for more information on testing splittable PRNGs, and see the appendix for splittable PRNG constructions.
 
 | Function | Fails PractRand Starting At | Notes |
  ----------| --- |  --- |
@@ -149,3 +149,49 @@ The following are not considered high-quality PRNGs:
 <small><sup id=Note12>(12)</sup> Bhattacharjee, K., "Cellular Automata: Reversibility, Semi-reversibility and Randomness", arXiv:1911.03609 [cs.FL], 2019.</small>
 
 <small><sup id=Note13>(13)</sup> Neves, S., and Araujo, F., "Fast and Small Nonlinear Pseudorandom Number Generators for Computer Simulation", 2011.</small>
+
+<small><sup id=Note14>(14)</sup> Claessen, K, Pa&#x142;ka, M., "Splittable Pseudorandom Number Generators using Cryptographic Hashing", _ACM SIGPLAN Notices_ 48(12), December 2013.</small>
+
+<a id=Appendix></a>
+### Appendix
+
+<a id=Implementation_Notes_Splittable_PRNGs></a>
+## Implementation Notes: Splittable PRNGs
+
+Here are implementation notes on splittable PRNGs.  The [**pseudocode conventions**](https://peteroupc.github.io/pseudocode.html) apply to this section.  In addition, the following notation is used:
+
+- `TOBYTES(x, n)` converts an integer to a sequence of `n` 8-bit bytes, in "little-endian" encoding: the first byte is the 8 most significant bits, the second byte is the next 8 bits, and so on. No more than `n` times 8 bits are encoded, and unused bytes become zeros.
+- `BLOCKLEN` is the hash function's block size in bits.  For noncryptographic hash functions, this can be the function's output size in bits instead. `BLOCKLEN` is rounded up to the closest multiple of 8.
+- `TOBLOCK(x)` is the same as `TOBYTES(x, BLOCKLEN / 8)`.
+
+The splittable PRNG designs described here use _keyed hash functions_, which hash a message with a given key and output a hash code.  An unkeyed hash function can become a keyed hash function by hashing the following data: `key || TOBYTES(0x5F, 1) || message`, where `||` means concatenation.
+
+The Claessen&ndash;Pa&#x142;ka splittable PRNG (Claessen and Pa&#x142;ka 2013)<sup>[**(14)**](#Note14)</sup> can be described as follows:
+
+- A PRNG state has two components: a seed and a path (a vector of bits).  A new state is generated from a seed with `TOBLOCK(seed)` and has a path consisting of an empty bit vector.
+- `split` creates two new states from the old one; the first (or second) is a copy of the old state, except a 0 (or 1, respectively) is appended to the path.  If the new path's size becomes greater than `BLOCKLEN` this way, hash `BitsToBytes(path)` with the seed as the key, then set the new path to `BytesToBits(hash)`, where `hash` is the hash code.
+- `generate` creates a random number by hashing `BitsToBytes(path)` with the seed as the key.
+
+(The Claessen paper, section 5, also shows how a sequence of numbers can be generated from a state, essentially by hashing the path with the seed as the key, and in turn hashing a counter with that hash code as the key, but uses a rather complicated encoding to achieve this.)
+
+The following helper methods, in pseudocode, are used in the description above:
+
+    METHOD BitsToBytes(bits)
+       v = 0
+       for i in 0...size(bits): v = v | (bits[i] << i)
+       return TOBYTES(v, ceil(size(bits) / 8))
+    END METHOD
+
+    METHOD BytesToBits(bytes)
+       v = []
+       for i in 0...size(bytes)
+         for j in 0...8: AddItem(v, (bytes[i]>>j) & 1)
+       end
+       return v
+    END METHOD
+
+The splittable PRNG described in "[**JAX PRNG Design**](https://github.com/google/jax/blob/master/design_notes/prng.md)" can be described as follows:
+
+- A PRNG state is generated from a seed with `TOBLOCK(seed)`.
+- `split` creates two new states from the old one; the first (or second) is a hash of `TOBLOCK(0)` (or `TOBLOCK(1)`, respectively) with the old state as the key.
+- `generate` creates one or more random numbers by hashing `TOBLOCK(n)` with the state as the key, where `n` starts at 1 and increases by 1 for each new random number.
