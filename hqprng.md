@@ -160,11 +160,12 @@ The following are not considered high-quality PRNGs:
 
 Here are implementation notes on splittable PRNGs.  The [**pseudocode conventions**](https://peteroupc.github.io/pseudocode.html) apply to this section.  In addition, the following notation is used:
 
+- The `||` symbol means concatenation.
 - `TOBYTES(x, n)` converts an integer to a sequence of `n` 8-bit bytes, in "little-endian" encoding: the first byte is the 8 least significant bits, the second byte is the next 8 bits, and so on. No more than `n` times 8 bits are encoded, and unused bytes become zeros.
 - `BLOCKLEN` is the hash function's block size in bits.  For noncryptographic hash functions, this can be the function's output size in bits instead. `BLOCKLEN` is rounded up to the closest multiple of 8.
 - `TOBLOCK(x)` is the same as `TOBYTES(x, BLOCKLEN / 8)`.
 
-The splittable PRNG designs described here use _keyed hash functions_, which hash a message with a given key and output a hash code.  An unkeyed hash function can become a keyed hash function by hashing the following data: `key || TOBYTES(0x5F, 1) || message`, where `||` means concatenation.
+The splittable PRNG designs described here use _keyed hash functions_, which hash a message with a given key and output a hash code.  An unkeyed hash function can become a keyed hash function by hashing the following data: `key || TOBYTES(0x5F, 1) || message`.
 
 The Claessen&ndash;Pa&#x142;ka splittable PRNG (Claessen and Pa&#x142;ka 2013)<sup>[**(14)**](#Note14)</sup> can be described as follows:
 
