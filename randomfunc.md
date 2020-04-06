@@ -348,8 +348,7 @@ Whenever possible, the methods in this document should be implemented in a more 
 6. To generate a random integer with N base-10 digits (where N is 2 or greater), where the first digit can't be 0, generate `RNDINTRANGE(pow(10, N-1), pow(10, N) - 1)`.
 7. To generate a random number in the interval [`mn`, `mx`) in increments equal to `step`: `mn+step*RNDINTEXC(ceil((mx-mn)/(1.0*step)))`.
 8. To generate a random integer in the interval [0, `X`):
-     - And favor low numbers:  `floor((RNDINTEXC(X) + RNDINTEXC(X)) / 2)`.
-     - And favor high numbers:  `X - 1 - floor((RNDINTEXC(X) + RNDINTEXC(X)) / 2)`.
+     - And favor numbers in the middle:  `floor((RNDINTEXC(X) + RNDINTEXC(X)) / 2)`.
      - And strongly favor low numbers:  `floor(RNDINTEXC(X) * RNDINTEXC(X) / X)`.
      - And strongly favor high numbers:  `X - 1 - floor(RNDINTEXC(X) * RNDINTEXC(X) / X)`.
 
