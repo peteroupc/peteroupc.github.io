@@ -326,11 +326,11 @@ UTF-8 bytes (the UTF-8 length of the replacement character U+FFFD).</p></li>
 
 <ul>
 <li>The Unicode code point at the previous position. Returns -1 if
-<code>index</code> is 0 or less, or is greater than the string&#39;s length.
-Returns the replacement character (U+FFFD) if the code point at the
-previous position is an unpaired surrogate code point. If the return
-value is 65536 (0x10000) or greater, the code point takes up two
-UTF-16 code units.</li>
+<code>index</code> is 0 or less, or is greater than or equal to the
+string&#39;s length. Returns the replacement character (U+FFFD) if the
+code point at the previous position is an unpaired surrogate code
+point. If the return value is 65536 (0x10000) or greater, the code
+point takes up two UTF-16 code units.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -361,11 +361,11 @@ the surrogate code point; if neither 0 nor 1, return -1.</p></li>
 
 <ul>
 <li>The Unicode code point at the previous position. Returns -1 if
-<code>index</code> is 0 or less, or is greater than the string&#39;s length.
-Returns a value as specified under <code>surrogateBehavior</code> if the
-code point at the previous position is an unpaired surrogate code
-point. If the return value is 65536 (0x10000) or greater, the code
-point takes up two UTF-16 code units.</li>
+<code>index</code> is 0 or less, or is greater than or equal to the
+string&#39;s length. Returns a value as specified under <code>
+surrogateBehavior</code> if the code point at the previous position is an
+unpaired surrogate code point. If the return value is 65536
+(0x10000) or greater, the code point takes up two UTF-16 code units.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -392,11 +392,11 @@ point takes up two UTF-16 code units.</li>
 
 <ul>
 <li>The Unicode code point at the given position. Returns -1 if <code>
-index</code> is 0 or less, or is greater than the string&#39;s length. Returns
-the replacement character (U+FFFD) if the code point at that
-position is an unpaired surrogate code point. If the return value is
-65536 (0x10000) or greater, the code point takes up two UTF-16 code
-units.</li>
+index</code> is 0 or less, or is greater than or equal to the string&#39;s
+length. Returns the replacement character (U+FFFD) if the code point
+at that position is an unpaired surrogate code point. If the return
+value is 65536 (0x10000) or greater, the code point takes up two
+UTF-16 code units.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -430,11 +430,11 @@ the surrogate code point; if neither 0 nor 1, return -1.</p></li>
 
 <ul>
 <li>The Unicode code point at the given position. Returns -1 if <code>
-index</code> is 0 or less, or is greater than the string&#39;s length. Returns
-a value as specified under <code>surrogateBehavior</code> if the code
-point at that position is an unpaired surrogate code point. If the
-return value is 65536 (0x10000) or greater, the code point takes up
-two UTF-16 code units.</li>
+index</code> is 0 or less, or is greater than or equal to the string&#39;s
+length. Returns a value as specified under <code>surrogateBehavior</code>
+if the code point at that position is an unpaired surrogate code
+point. If the return value is 65536 (0x10000) or greater, the code
+point takes up two UTF-16 code units.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>

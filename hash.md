@@ -6,7 +6,7 @@ A _hash function_ is a function that maps an input of arbitrary size into an out
 Hash functions are used for the following purposes:
 
 - For random number generation. See my article on [**random generator recommendations**](https://peteroupc.github.io/random.html#Hash_Functions).
-- In hash tables to speed up data lookup by reducing the number of hash collisions to a manageable number.  Here, hash codes are usually small (e.g., 32 bits long).
+- In hash tables to speed up data lookup by mapping data to a sequence of bits in a way that avoids hash collisions.  Here, hash codes are usually small (e.g., 32 bits long).
 - For data lookup in databases and file systems (e.g., to partition many files into a small number of directories to speed up file lookup).  Here, hash codes generally are 64 bits or more long and can use cryptographic hash functions (e.g., SHA2-256, BLAKE2) and other hash functions that tend to produce wildly dispersed hash codes for nearby inputs.
 - For data integrity (such as checksums and authentication codes).  In general, only cryptographic hash functions are appropriate here.
 

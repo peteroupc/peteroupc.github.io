@@ -471,7 +471,10 @@ The [**Fisher&ndash;Yates shuffle method**](https://en.wikipedia.org/wiki/Fisher
        return list
     END METHOD
 
-The choice of underlying RNG is important when it comes to shuffling; see my [**RNG recommendation document on shuffling**](https://peteroupc.github.io/random.html#Shuffling).
+> **Notes: **
+>
+> 1. The choice of underlying RNG is important when it comes to shuffling; see my [**RNG recommendation document on shuffling**](https://peteroupc.github.io/random.html#Shuffling).
+> 2. A shuffling algorithm that can be carried out in parallel is described in (Bacher et al., 2015)<sup>[**(53)**](#Note53)</sup>.
 
 <a id=Random_Character_Strings></a>
 #### Random Character Strings
@@ -1195,7 +1198,7 @@ In Monte Carlo sampling, low-discrepancy sequences are often used to achieve mor
 <a id=Weighted_Choice_Involving_Real_Numbers></a>
 ### Weighted Choice Involving Real Numbers
 
-The `WeightedChoice` and `CumulativeWeightedChoice` methods in "[**Weighted Choice With Replacement**](#Weighted_Choice_With_Replacement)" can be modified to accept real numbers other than integers as weights by changing `value = RNDINTEXC(sum)` to `value = RNDRANGEMaxExc(0, sum)`.
+In general, to implement weighted choice given a list of weights or cumulative weights expressed as real numbers, convert those weights to integers (see "[**Weighted Approximation: Discrete Distributions**](#Weighted_Approximation_Discrete_Distributions)"), then use those integers in the `WeightedChoice` or `CumulativeWeightedChoice` methods, as appropriate (see "[**Weighted Choice With Replacement**](#Weighted_Choice_With_Replacement)"). Those two methods could instead be modified by changing `value = RNDINTEXC(sum)` to `value = RNDRANGEMaxExc(0, sum)`, but this is more likely to introduce error.
 
 <a id=Weighted_Choice_Without_Replacement_Indefinite_Size_List></a>
 #### Weighted Choice Without Replacement (Indefinite-Size List)
@@ -1416,7 +1419,7 @@ Generating random data points based on how a list of data points is distributed 
 Many probability distributions can be defined in terms of any of the following:
 
 * The [**_cumulative distribution function_**](https://en.wikipedia.org/wiki/Cumulative_distribution_function), or _CDF_, returns, for each number, the probability for a randomly generated variable to be equal to or less than that number; the probability is in the interval [0, 1].
-* The [**_probability density function_**](https://en.wikipedia.org/wiki/Probability_density_function), or _PDF_, is, roughly and intuitively, a curve of weights 0 or greater, where for each number, the greater its weight, the more likely a number close to that number is randomly chosen.  In this document, the area under the PDF need not equal 1.<sup>[**(33)**](#Note33)</sup>
+* The [**_probability density function_**](https://en.wikipedia.org/wiki/Probability_density_function), or _PDF_, is, roughly and intuitively, a curve of weights 0 or greater, where for each number, the greater its weight, the more likely a number close to that number is randomly chosen.  In this document, the area under the PDF need not equal 1.<sup>[**(33)**](#Note33)</sup> For discrete distributions, the PDF is more properly called _probability mass function_.
 * The _inverse cumulative distribution function_ (_inverse CDF_) is the inverse of the CDF and maps numbers in the interval [0, 1\) to numbers in the distribution, from low to high.
 
 The following sections show different ways to generate random numbers based on a distribution, depending on what is known about that distribution.
@@ -1429,19 +1432,63 @@ The following sections show different ways to generate random numbers based on a
 <a id=Weighted_Approximation_Discrete_Distributions></a>
 #### Weighted Approximation: Discrete Distributions
 
-If the distribution **is discrete (integer-only)**, numbers that closely follow it can be sampled by choosing points that cover all or almost all of the distribution, finding their weights or cumulative weights, and choosing a random point based on those weights.  In the pseudocode below:
+If the distribution **is discrete (integer-only)**, numbers that closely follow it can be sampled by choosing points that cover all or almost all of the distribution, finding their weights or cumulative weights, and choosing a random point based on those weights.
 
-- `InversionSample(mini, maxi)` chooses a random number in [`mini`, `maxi`] based on a **known CDF** (`CDF(x)`). This method should be used over `Sample` whenever possible.<sup>[**(34)**](#Note34)</sup>
-- `Sample(mini, maxi)` chooses a random number in [`mini`, `maxi`] based on a **known PDF** (`PDF(x)`, more properly called _probability mass function_).
-- `IntegerWeights(mini, maxi, mult)` generates a list of integer weights for the interval [`mini`, `maxi`] based on a **known PDF** (`PDF(x)`) and weight scale `mult`.  A more sophisticated algorithm is given as Algorithm 3 in (Saad et al., 2020)<sup>[**(35)**](#Note35)</sup>.
-- `IntegerWeightsFP(mini, maxi)` generates a list of integer weights for the interval [`mini`, `maxi`] based on a **known PDF** (`PDF(x)`) that outputs floating-point numbers of the form `FPSignificand` * `FPRadix`<sup>`FPExponent`</sup>.<sup>[**(36)**](#Note36)</sup>
+The pseudocode below shows the following methods that work with a **known PDF** (`PDF(x)`) or a **known CDF** (`CDF(x)`) that outputs floating-point numbers of the form  `FPSignificand` * `FPRadix`<sup>`FPExponent`</sup> (which include Java's `double` and `float`).
+
+- `SampleFP(mini, maxi)` chooses a random number in [`mini`, `maxi`] based on a **known PDF**.  `InversionSampleFP` is similar, but is based on a **known CDF**; however, `SampleFP` should be used instead where possible.
+- `IntegerWeightsFP(mini, maxi)` generates a list of integer weights for the interval [`mini`, `maxi`] based on a **known PDF**<sup>[**(34)**](#Note34)</sup>. `IntegerCDFFP` is similar, but generates cumulative weights based on a **known CDF**. `IntegerWeightsListFP` generates integer weights from a list of weights or cumulative weights expressed as floating-point numbers.
+
+The pseudocode below shows methods that should be used only if the PDF or CDF is not known to output floating-point numbers, since these methods can introduce error.
+
+- `InversionSample(mini, maxi)` chooses a random number in [`mini`, `maxi`] based on a **known CDF** (`CDF(x)`).<sup>[**(35)**](#Note35)</sup>
+- `IntegerWeights(mini, maxi, mult)` generates a list of integer weights for the interval [`mini`, `maxi`] based on a **known PDF** and weight scale `mult`.  A more sophisticated algorithm is given as Algorithm 3 in (Saad et al., 2020)<sup>[**(36)**](#Note36)</sup>. `IntegerCDF` is similar, but generates cumulative weights based on a **known CDF**. `IntegerWeightsList` generates integer weights from a list of weights or cumulative weights.
 
 &nbsp;
 
-    METHOD Sample(mini, maxi)
-      weights=[]
-      for i in mini..maxi: AddItem(weights, PDF(i))
+    METHOD SampleFP(mini, maxi)
+      weights=IntegerWeightsFP(mini, maxi)
       return mini + WeightedChoice(weights)
+    END METHOD
+
+    METHOD InversionSampleFP(mini, maxi)
+      weights=IntegerCDFFP(mini, maxi)
+      return mini + CWChoose(weights,
+         weights[size(weights) - 1])
+    END METHOD
+
+    METHOD FPRatio(fp)
+      expo=FPExponent(fp)
+      sig=FPSignificand(fp)
+      radix=FPRadix(fp)
+      if expo>=0: return [sig * pow(radix, expo), 1]
+      return [sig, pow(radix, abs(expo))]
+    END METHOD
+
+    METHOD NormalizeRatios(ratios)
+      maxden=0
+      for r in ratios: maxden=max(maxden, r[1])
+      weights=[]
+      for r in ratios: AddItem(weights, r[0]*floor(maxden/r[1]))
+      return weights
+    END METHOD
+
+    METHOD IntegerWeightsFP(mini, maxi)
+      ratios=[]
+      for i in mini..maxi: AddItem(ratios, FPRatio(PDF(i)))
+      return NormalizeRatios(ratios)
+    END METHOD
+
+    METHOD IntegerCDFFP(mini, maxi)
+      ratios=[[0, 1]]
+      for i in mini..maxi: AddItem(ratios, FPRatio(CDF(i)))
+      return NormalizeRatios(ratios)
+    END METHOD
+
+    METHOD IntegerWeightsListFP(weights)
+      ratios=[]
+      for w in weights: AddItem(ratios, FPRatio(w))
+      return NormalizeRatios(ratios)
     END METHOD
 
     METHOD InversionSample(mini, maxi)
@@ -1457,24 +1504,15 @@ If the distribution **is discrete (integer-only)**, numbers that closely follow 
       return weights
     END METHOD
 
-    METHOD FPRatio(fp)
-      expo=FPExponent(fp)
-      sig=FPSignificand(fp)
-      radix=FPRadix(fp)
-      if expo>=0: return [sig * pow(radix, expo), 1]
-      return [sig, pow(radix, abs(expo))]
+    METHOD IntegerWeightsList(weights, mult)
+      nweights=[]
+      for w in weights: AddItem(nweights, round(w * mult))
+      return nweights
     END METHOD
 
-    METHOD IntegerWeightsFP(mini, maxi)
-      ratios=[]
-      maxden=0
-      for i in mini..maxi
-        r=FPRatio(PDF(i))
-        AddItem(ratios, r)
-        maxden=max(maxden, r[1])
-      end
-      weights=[]
-      for r in ratios: AddItem(weights, r[0]*floor(maxden/r[1]))
+    METHOD IntegerCDF(mini, maxi, mult)
+      weights=[0]
+      for i in mini..maxi: AddItem(weights, round(CDF(i) * mult))
       return weights
     END METHOD
 
@@ -2395,11 +2433,11 @@ and "[**Floating-Point Determinism**](https://randomascii.wordpress.com/2013/07/
 
 provided the PDF's values are all 0 or greater and the area under the PDF's curve is 1.</small>
 
-<small><sup id=Note34>(34)</sup> This pseudocode generates `N = (maxi - mini) + 1` weights, excluding the initial 0. If the weights are stored as N floating-point numbers with K bits of precision, where `N = (maxi - mini) + 1`, the relative error of this method is at most N*2^(-K+1) (Walter, M., "Sampling the Integers with Low Relative Error", 2019).  It follows here that probabilities closer to 0 have a smaller relative error when stored as such floating-point numbers.</small>
+<small><sup id=Note34>(34)</sup> Based on a suggestion by F. Saad in a personal communication (Mar. 26, 2020).</small>
 
-<small><sup id=Note35>(35)</sup> Saad, F.A., et al., "Optimal Approximate Sampling from Discrete Probability Distributions", arXiv:2001.04555 [cs.DS], 2020.  See also the [**associated source code**](https://github.com/probcomp/optimal-approximate-sampling).</small>
+<small><sup id=Note35>(35)</sup> This pseudocode generates `N = (maxi - mini) + 1` weights, excluding the initial 0. If the weights are stored as N floating-point numbers with K bits of precision, where `N = (maxi - mini) + 1`, the relative error of this method is at most N*2^(-K+1) (Walter, M., "Sampling the Integers with Low Relative Error", 2019).  It follows here that probabilities closer to 0 have a smaller relative error when stored as such floating-point numbers.</small>
 
-<small><sup id=Note36>(36)</sup> Based on a suggestion by F. Saad in a personal communication (Mar. 26, 2020).</small>
+<small><sup id=Note36>(36)</sup> Saad, F.A., et al., "Optimal Approximate Sampling from Discrete Probability Distributions", arXiv:2001.04555 [cs.DS], 2020.  See also the [**associated source code**](https://github.com/probcomp/optimal-approximate-sampling).</small>
 
 <small><sup id=Note37>(37)</sup> Tran, K.H., "A Common Derivation for Markov Chain Monte Carlo Algorithms with Tractable and Intractable Targets", arXiv:1607.01985v5 [stat.CO], 2018, gives a common framework for describing many MCMC algorithms, including Metropolis&ndash;Hastings, slice sampling, and Gibbs sampling.</small>
 
@@ -2440,6 +2478,8 @@ In 2007, Thomas, D., et al. gave a survey of normal random number methods in "Ga
 <small><sup id=Note51>(51)</sup> Mironov, I., "On Significance of the Least Significant Bits For Differential Privacy", 2012.</small>
 
 <small><sup id=Note52>(52)</sup> For example, see Balcer, V., Vadhan, S., "Differential Privacy on Finite Computers", Dec. 4, 2018; as well as the Miccancio&ndash;Walter discrete Gaussian generator (for lattice-based cryptography).</small>
+
+<small><sup id=Note53>(53)</sup> Bacher, A., Bodini, O., et al., "MergeShuffle: A Very Fast, Parallel Random Permutation Algorithm", arXiv:1508.03167 [cs.DS], 2015.</small>
 
 <a id=Appendix></a>
 ## Appendix

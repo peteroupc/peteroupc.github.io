@@ -62,7 +62,7 @@ A multiple recursive generator with a modulus of 1449 has the following transiti
     |  0   0   1  |
     | 444 342 499 |
 
-To calculate the 3&times;3 jump matrix to jump 100 steps from this MRG, multiply this matrix by 100 then reduce the result's elements mod 1449.  One way to do this is the "square-and-multiply" method, described by D. Knuth in _The Art of Computer Programming_: Set J to the identity matrix, N to 100, and M to a copy of the transition matrix, then while N is greater than 0:
+To calculate the 3&times;3 jump matrix to jump 100 steps from this MRG, raise this matrix to the power of 100 then reduce the result's elements mod 1449.  One way to do this is the "square-and-multiply" method, described by D. Knuth in _The Art of Computer Programming_: Set J to the identity matrix, N to 100, and M to a copy of the transition matrix, then while N is greater than 0:
 
 1. If N is odd, multiply J by M then reduce J's elements mod 1449.
 2. Divide N by 2 and round down, then multiply M by M then reduce M's elements mod 1449.
