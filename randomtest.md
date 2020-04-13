@@ -7,7 +7,7 @@ According to my document on [**pseudorandom number generator (PRNG) recommendati
 
 a requirement called the "independence requirement" in this short document.
 
-To determine whether a PRNG meets the independence requirement, its output should be sent to the PractRand program by Chris Doty-Humphrey and pass the PractRand tests at 1 TiB (2^40 bytes) or greater.  For more information, see "[**How to Test with PractRand**](http://www.pcg-random.org/posts/how-to-test-with-practrand.html)" by M. E. O'Neill.
+To determine whether a PRNG meets the independence requirement, its output should be sent to the PractRand program by Chris Doty-Humphrey and show no failures ("FAILs" in) the PractRand tests at 1 TiB (2^40 bytes) or greater.  For more information, see "[**How to Test with PractRand**](http://www.pcg-random.org/posts/how-to-test-with-practrand.html)" by M. E. O'Neill.
 
 **Random number streams.** Many PRNGs use different strategies to produce nearby sequences (or _streams_) of pseudorandom numbers.  But not every strategy produces _independent_ streams.  To determine whether nearby sequences of the PRNG meet the independence requirement, the output sent to PractRand should consist of one output from the first sequence, one output from the second, another output from the first, another from the second, and so on.
 
@@ -17,13 +17,13 @@ There are several kinds of nearby sequences to test for this purpose:
 - Two or more PRNGs initialized with consecutive seeds.
 - Two or more PRNGs initialized with seeds that differ from each other by one bit (see also "[**The wrap-up on PCG generators**](http://pcg.di.unimi.it/pcg.php#flaws)").
 
-**Hash functions and counter-based PRNGs.** In general, a _counter-based PRNG_ produces pseudorandom numbers by transforming a seed and a _counter_; with each number, it increments the counter and leaves the seed unchanged (Salmon et al. 2011)<sup>[**(1)**](#Note1)</sup>.  The seed and counter can be transformed using block ciphers, other permutations, or hash functions.  In general, counter-based PRNGs that use hash functions (such as MD5, SHA-1, MurmurHash, CityHash, xxHash) will meet the independence requirement if the following hash stream (for that hash function) passes the PractRand tests at 1 TiB or greater:
+**Hash functions and counter-based PRNGs.** In general, a _counter-based PRNG_ produces pseudorandom numbers by transforming a seed and a _counter_; with each number, it increments the counter and leaves the seed unchanged (Salmon et al. 2011)<sup>[**(1)**](#Note1)</sup>.  The seed and counter can be transformed using block ciphers, other permutations, or hash functions.  In general, counter-based PRNGs that use hash functions (such as MD5, SHA-1, MurmurHash, CityHash, xxHash) will meet the independence requirement if the following hash stream (for that hash function) doesn't fail the PractRand tests at 1 TiB or greater:
 
 1. Write out the hash code of `seed || 0x5F || counter` (the `||` symbol means concatenation).
 2. Write out the hash code of `(seed+1) || 0x5F || counter`.
 3. Add 1 to `counter` and go to the first step.
 
-In general, a hash function that passes is worthy of mention if it's noncryptographic and faster than hash functions designed for cryptography, such as MD5 and the SHA family.
+In general, a hash function without PractRand failures is worthy of mention if it's noncryptographic and faster than hash functions designed for cryptography, such as MD5 and the SHA family.
 
 **Combined PRNGs.** As G. Marsaglia (in KISS), D. Jones (in JKISS), and A. Fog (2015)<sup>[**(2)**](#Note2)</sup> have recognized, combining two or more PRNGs of weaker quality often leads to a higher-quality PRNG.  A PRNG that isn't high-quality could be converted to a high-quality PRNG in one of the following ways:
 
@@ -67,7 +67,7 @@ The Schaathun paper suggests the following four random number sequences for test
 
 <small><sup id=Note2>(2)</sup> Agner Fog, "[**Pseudo-Random Number Generators for Vector Processors and Multicore Processors**](http://digitalcommons.wayne.edu/jmasm/vol14/iss1/23)", _Journal of Modern Applied Statistical Methods_ 14(1), article 23 (2015).</small>
 
-<small><sup id=Note3>(3)</sup> A _permutation_ is a reversible mapping from N-bit integers to N-bit integers.  Examples include: JSF64 by B. Jenkins; MIX and MIX-i (part of Tyche and Tyche-i); the Romu family by Mark Overton; block ciphers with a fixed key; 32-bit to 32-bit mixing functions.</small>
+<small><sup id=Note3>(3)</sup> A _permutation_ (or _bijection_) is a reversible mapping from N-bit integers to N-bit integers.  Examples include: JSF64 by B. Jenkins; MIX and MIX-i (part of Tyche and Tyche-i); the Romu family by Mark Overton; block ciphers with a fixed key; 32-bit to 32-bit reversible mixing functions.</small>
 
 <small><sup id=Note4>(4)</sup> Blackman, D., Vigna, S., "Scrambled Linear Pseudorandom Number Generators", 2019.</small>
 
