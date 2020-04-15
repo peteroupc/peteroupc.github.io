@@ -168,6 +168,7 @@ The pseudocode below implements `RNDINT` and, depending on the case, uses reject
  --------- | ------ | ------ |
 | Integers in the interval \[0, _n_\). | The underlying RNG. | _n_. |
 | Numbers in the interval \[0, 1\) known to be evenly spaced by a number _p_ (e.g., dSFMT). | The underlying RNG, except with its outputs multiplied by _p_. | 1/_p_. |
+| Numbers in the interval \[0, 1\), where numbers in \[0, 0.5\) and those in \[0.5, 1\) are known to occur with equal probability (e.g., Java's `Math.random()`). | An RNG that outputs 0 if the underlying RNG outputs a number less than 0.5, or 1 otherwise. | 2. |
 | Numbers not specified above. | A new RNG formed by writing the underlying RNG's outputs to a stream of memory units (such as 8-bit bytes) and using a _randomness extraction_ technique to transform that stream to _n_-bit integers. | 2<sup>_n_</sup>. |
 
     METHOD RndIntHelperNonPowerOfTwo(maxInclusive)
@@ -1432,17 +1433,17 @@ The following sections show different ways to generate random numbers based on a
 <a id=Weighted_Approximation_Discrete_Distributions></a>
 #### Weighted Approximation: Discrete Distributions
 
-If the distribution **is discrete (integer-only)**, numbers that closely follow it can be sampled by choosing points that cover all or almost all of the distribution, finding their weights or cumulative weights, and choosing a random point based on those weights.<sup>[**(54)**](#Note54)</sup>
+If the distribution **is discrete (integer-only)**, numbers that closely follow it can be sampled by choosing points that cover all or almost all of the distribution, finding their weights or cumulative weights, and choosing a random point based on those weights.<sup>[**(35)**](#Note35)</sup>
 
 The pseudocode below shows the following methods that work with a **known PDF** (`PDF(x)`) or a **known CDF** (`CDF(x)`) that outputs floating-point numbers of the form  `FPSignificand` * `FPRadix`<sup>`FPExponent`</sup> (which include Java's `double` and `float`).
 
 - `SampleFP(mini, maxi)` chooses a random number in [`mini`, `maxi`] based on a **known PDF**.  `InversionSampleFP` is similar, but is based on a **known CDF**; however, `SampleFP` should be used instead where possible.
-- `IntegerWeightsFP(mini, maxi)` generates a list of integer weights for the interval [`mini`, `maxi`] based on a **known PDF**<sup>[**(35)**](#Note35)</sup>. `IntegerCDFFP` is similar, but generates cumulative weights based on a **known CDF**. `IntegerWeightsListFP` generates integer weights from a list of weights or cumulative weights expressed as floating-point numbers.
+- `IntegerWeightsFP(mini, maxi)` generates a list of integer weights for the interval [`mini`, `maxi`] based on a **known PDF**<sup>[**(36)**](#Note36)</sup>. `IntegerCDFFP` is similar, but generates cumulative weights based on a **known CDF**. `IntegerWeightsListFP` generates integer weights from a list of weights or cumulative weights expressed as floating-point numbers.
 
 The pseudocode below shows methods that should be used only if the PDF or CDF is not known to output floating-point numbers, since these methods can introduce error.
 
-- `InversionSample(mini, maxi)` chooses a random number in [`mini`, `maxi`] based on a **known CDF** (`CDF(x)`).<sup>[**(36)**](#Note36)</sup>
-- `IntegerWeights(mini, maxi, mult)` generates a list of integer weights for the interval [`mini`, `maxi`] based on a **known PDF** and weight scale `mult`.  A more sophisticated algorithm is given as Algorithm 3 in (Saad et al., 2020)<sup>[**(37)**](#Note37)</sup>. `IntegerCDF` is similar, but generates cumulative weights based on a **known CDF**. `IntegerWeightsList` generates integer weights from a list of weights or cumulative weights.
+- `InversionSample(mini, maxi)` chooses a random number in [`mini`, `maxi`] based on a **known CDF** (`CDF(x)`).<sup>[**(37)**](#Note37)</sup>
+- `IntegerWeights(mini, maxi, mult)` generates a list of integer weights for the interval [`mini`, `maxi`] based on a **known PDF** and weight scale `mult`.  A more sophisticated algorithm is given as Algorithm 3 in (Saad et al., 2020)<sup>[**(38)**](#Note38)</sup>. `IntegerCDF` is similar, but generates cumulative weights based on a **known CDF**. `IntegerWeightsList` generates integer weights from a list of weights or cumulative weights.
 
 &nbsp;
 
@@ -1605,9 +1606,9 @@ See also Saucier 2000, pp. 6-7, 39; (Devroye 1986)<sup>[**(10)**](#Note10)</sup>
 
 Because it takes time to converge, random numbers from the first few (e.g., first 1000) iterations of MCMC are usually ignored ("burn in").  MCMC can also be used to find a suitable sampling range for weighted approximation (see the previous two sections).
 
-The [**Python sample code**](https://peteroupc.github.io/randomgen.zip) includes methods that implement two MCMC algorithms: `mcmc` and `mcmc2` implement _Metropolis&ndash;Hastings_ for PDFs that take single numbers or two-dimensional points, respectively, and a method called `slicesample` implements _slice sampling_.<sup>[**(38)**](#Note38)</sup>
+The [**Python sample code**](https://peteroupc.github.io/randomgen.zip) includes methods that implement two MCMC algorithms: `mcmc` and `mcmc2` implement _Metropolis&ndash;Hastings_ for PDFs that take single numbers or two-dimensional points, respectively, and a method called `slicesample` implements _slice sampling_.<sup>[**(39)**](#Note39)</sup>
 
-Most MCMC algorithms **require knowing the distribution's PDF**, but _Gibbs sampling_<sup>[**(39)**](#Note39)</sup> is an exception.  This sampling technique involves repeatedly generating random numbers from two or more distributions, each of which uses a random number from the previous distribution (_conditional distributions_). The random numbers generated this way converge to the _joint distribution_ of those conditional distributions.
+Most MCMC algorithms **require knowing the distribution's PDF**, but _Gibbs sampling_<sup>[**(40)**](#Note40)</sup> is an exception.  This sampling technique involves repeatedly generating random numbers from two or more distributions, each of which uses a random number from the previous distribution (_conditional distributions_). The random numbers generated this way converge to the _joint distribution_ of those conditional distributions.
 
 > **Example:** In one Gibbs sampler, an initial value for `y` is chosen, then multiple `x`, `y` pairs of random numbers are generated, where `x = BetaDist(y, 5)` then `y = Poisson(x * 10)`.
 
@@ -1621,7 +1622,7 @@ The [**_normal distribution_**](https://en.wikipedia.org/wiki/Normal_distributio
 - `sigma` (&sigma;), the standard deviation, affects how wide the "bell curve" appears. The
 probability that a normally-distributed random number will be within one standard deviation from the mean is about 68.3%; within two standard deviations (2 times `sigma`), about 95.4%; and within three standard deviations, about 99.7%.  (Some publications give &sigma;<sup>2</sup>, or variance, rather than standard deviation, as the second parameter.  In this case, the standard deviation is the variance's square root.)
 
-There are a number of methods for normal random number generation.<sup>[**(40)**](#Note40)</sup> The pseudocode below uses the polar method to generate two normal random numbers. (Ways to adapt the pseudocode to output only one random number at a time, rather than two, are outside the scope of this document.  In this document, the name `Normal` means a method that returns only one normally-distributed random number rather than two.)
+There are a number of methods for normal random number generation.<sup>[**(41)**](#Note41)</sup> The pseudocode below uses the polar method to generate two normal random numbers. (Ways to adapt the pseudocode to output only one random number at a time, rather than two, are outside the scope of this document.  In this document, the name `Normal` means a method that returns only one normally-distributed random number rather than two.)
 
     METHOD Normal2(mu, sigma)
       while true
@@ -1741,14 +1742,14 @@ In the following method, which generates random numbers following an exponential
        end
     END METHOD
 
-> **Note:** A random number following the exponential distribution has the following na&iuml;ve implementation: `-ln(RNDU01())`.  But there are several problems here; for example, this implementation is ill-conditioned at large values because of the distribution's right-sided tail (Pedersen 2018)<sup>[**(41)**](#Note41)</sup>, and it can return infinity if `RNDU01()` becomes 0.  The method above implements Pedersen's suggestion of "flip-flopping" the uniform value at random.
+> **Note:** A random number following the exponential distribution has the following na&iuml;ve implementation: `-ln(RNDU01())`.  But there are several problems here; for example, this implementation is ill-conditioned at large values because of the distribution's right-sided tail (Pedersen 2018)<sup>[**(42)**](#Note42)</sup>, and it can return infinity if `RNDU01()` becomes 0.  The method above implements Pedersen's suggestion of "flip-flopping" the uniform value at random.
 
 <a id=Gamma_Distribution></a>
 ### Gamma Distribution
 
 **Requires random real numbers.**
 
-The following method generates a random number that follows a _gamma distribution_ and is based on Marsaglia and Tsang's method from 2000<sup>[**(42)**](#Note42)</sup>.  Usually, the number expresses either&mdash;
+The following method generates a random number that follows a _gamma distribution_ and is based on Marsaglia and Tsang's method from 2000<sup>[**(43)**](#Note43)</sup>.  Usually, the number expresses either&mdash;
 
 - the lifetime (in days, hours, or other fixed units) of a random component with an average lifetime of `meanLifetime`, or
 - a random amount of time (in days, hours, or other fixed units) that passes until as many events as `meanLifetime` happen.
@@ -2110,7 +2111,7 @@ Other kinds of copulas describe different kinds of dependence between random num
 - the **Fr&eacute;chet&ndash;Hoeffding upper bound copula** _\[x, x, ..., x\]_ (e.g., `[x, x]`), where `x = RNDU01()`,
 - the **Fr&eacute;chet&ndash;Hoeffding lower bound copula** `[x, 1.0 - x]` where `x = RNDU01()`,
 - the **product copula**, where each number is a separately generated `RNDU01()` (indicating no dependence between the numbers), and
-- the **Archimedean copulas**, described by M. Hofert and M. M&auml;chler (2011)<sup>[**(43)**](#Note43)</sup>.
+- the **Archimedean copulas**, described by M. Hofert and M. M&auml;chler (2011)<sup>[**(44)**](#Note44)</sup>.
 
 <a id=Index_of_Non_Uniform_Distributions></a>
 ### Index of Non-Uniform Distributions
@@ -2179,7 +2180,7 @@ Miscellaneous:
 - **Erlang distribution**: See [**Gamma Distribution**](#Gamma_Distribution).
 - **Estoup distribution**: See zeta distribution.
 - **Exponential power distribution** (generalized normal distribution version 1): `(RNDINT(1) * 2 - 1) * pow(GammaDist(1.0/a, 1), a)`, where `a` is a shape parameter.
-- **Extended xgamma distribution** (Saha et al. 2019)<sup>[**(44)**](#Note44)</sup>: `GammaDist(alpha + x, theta)`, where `x` is 0 if `RNDU01() <= theta/(theta+beta)` and 2 otherwise, and where `alpha`, `theta`, and `beta` are shape parameters.  If `alpha = 0`, the result is an **xgamma distribution** (Sen et al., 2016)<sup>[**(45)**](#Note45)</sup>.
+- **Extended xgamma distribution** (Saha et al. 2019)<sup>[**(45)**](#Note45)</sup>: `GammaDist(alpha + x, theta)`, where `x` is 0 if `RNDU01() <= theta/(theta+beta)` and 2 otherwise, and where `alpha`, `theta`, and `beta` are shape parameters.  If `alpha = 0`, the result is an **xgamma distribution** (Sen et al., 2016)<sup>[**(46)**](#Note46)</sup>.
 - **Fr&eacute;chet distribution**: See generalized extreme value distribution.
 - **Fr&eacute;chet&ndash;Hoeffding lower bound copula**: See [**Gaussian and Other Copulas**](#Gaussian_and_Other_Copulas).
 - **Fr&eacute;chet&ndash;Hoeffding upper bound copula**: See [**Gaussian and Other Copulas**](#Gaussian_and_Other_Copulas).
@@ -2237,7 +2238,7 @@ Miscellaneous:
 - **Standard complex normal distribution**: See [**Multivariate Normal (Multinormal) Distribution**](#Multivariate_Normal_Multinormal_Distribution).
 - **Suzuki distribution**: See Rayleigh distribution.
 - **Tukey lambda distribution**: `(pow(x, lamda)-pow(1.0-x,lamda))/lamda`, where `x` is `RNDU01()` and `lamda` is a shape parameter.
-- **Twin-_t_ distribution** (Baker and Jackson 2018)<sup>[**(46)**](#Note46)</sup>: Generate `x`, a random Student's _t_-distributed number (not a noncentral one).  Accept `x` if `RNDU01OneExc() < pow((1 + y) / ((1 + y * y) + y), (df + 1) * 0.5)`, where `y = x * x / df` and `df` is the degrees of freedom used to generate the number; repeat this process otherwise.
+- **Twin-_t_ distribution** (Baker and Jackson 2018)<sup>[**(47)**](#Note47)</sup>: Generate `x`, a random Student's _t_-distributed number (not a noncentral one).  Accept `x` if `RNDU01OneExc() < pow((1 + y) / ((1 + y * y) + y), (df + 1) * 0.5)`, where `y = x * x / df` and `df` is the degrees of freedom used to generate the number; repeat this process otherwise.
 - **"Type 0" stable distribution**: See [**Stable Distribution**](#Stable_Distribution).
 - **von Mises distribution**: See [**von Mises Distribution**](#von_Mises_Distribution).
 - **Waring&ndash;Yule distribution**: See beta negative binomial distribution.
@@ -2297,7 +2298,7 @@ The following pseudocode generates a random point inside an _n_-dimensional simp
 <a id=Random_Points_on_the_Surface_of_a_Hypersphere></a>
 #### Random Points on the Surface of a Hypersphere
 
-The following pseudocode shows how to generate a random N-dimensional point on the surface of an N-dimensional hypersphere, centered at the origin, of radius `radius` (if `radius` is 1, the result can also serve as a unit vector in N-dimensional space).  Here, `Norm` is given in the appendix.  See also (Weisstein)<sup>[**(47)**](#Note47)</sup>.
+The following pseudocode shows how to generate a random N-dimensional point on the surface of an N-dimensional hypersphere, centered at the origin, of radius `radius` (if `radius` is 1, the result can also serve as a unit vector in N-dimensional space).  Here, `Norm` is given in the appendix.  See also (Weisstein)<sup>[**(48)**](#Note48)</sup>.
 
     METHOD RandomPointInHypersphere(dims, radius)
       x=0
@@ -2319,14 +2320,14 @@ The following pseudocode shows how to generate a random N-dimensional point on t
 #### Random Points Inside a Ball, Shell, or Cone
 
 To generate a random N-dimensional point on or inside an N-dimensional ball, centered at the origin, of radius R, either&mdash;
-- generate a random (N+2)-dimensional point on the surface of an (N+2)-dimensional hypersphere with that radius (e.g., using `RandomPointInHypersphere`), then discard the last two coordinates (Voelker et al., 2017)<sup>[**(48)**](#Note48)</sup>, or
+- generate a random (N+2)-dimensional point on the surface of an (N+2)-dimensional hypersphere with that radius (e.g., using `RandomPointInHypersphere`), then discard the last two coordinates (Voelker et al., 2017)<sup>[**(49)**](#Note49)</sup>, or
 - follow the pseudocode in `RandomPointInHypersphere`, except replace `Norm(ret)` with `sqrt(S + Expo(1))`, where `S` is the sum of squares of the numbers in `ret`<sup>[**(17)**](#Note17)</sup>.
 
 To generate a random point on or inside an N-dimensional spherical shell (a hollow ball), centered at the origin, with inner radius A and outer radius B (where A is less than B), either&mdash;
 - generate a random point for a ball of radius B until the norm of that point is A or greater (see the [**appendix**](#Appendix)), or
-- generate a random point on the surface of an N-dimensional hypersphere with radius equal to `pow(RNDRANGE(pow(A, N), pow(B, N)), 1.0 / N)`<sup>[**(49)**](#Note49)</sup>.
+- generate a random point on the surface of an N-dimensional hypersphere with radius equal to `pow(RNDRANGE(pow(A, N), pow(B, N)), 1.0 / N)`<sup>[**(50)**](#Note50)</sup>.
 
-To generate a random point inside a cone with height `H` and radius `R` at its base, running along the Z axis, generate a random Z coordinate by `Z = H * pow(RNDU01(), 1.0 / 3)`, then generate random X and Y coordinates inside a disc (2-dimensional ball) with radius equal to `R * Z * sqrt(RNDU01()) / H`<sup>[**(50)**](#Note50)</sup>.
+To generate a random point inside a cone with height `H` and radius `R` at its base, running along the Z axis, generate a random Z coordinate by `Z = H * pow(RNDU01(), 1.0 / 3)`, then generate random X and Y coordinates inside a disc (2-dimensional ball) with radius equal to `R * Z * sqrt(RNDU01()) / H`<sup>[**(51)**](#Note51)</sup>.
 
 > **Example:** To generate a random point inside a cylinder running along the Z axis, generate random X and Y coordinates inside a disc (2-dimensional ball) and generate a random Z coordinate by `RNDRANGE(mn, mx)`, where `mn` and `mx` are the highest and lowest Z coordinates possible.
 >
@@ -2335,7 +2336,7 @@ To generate a random point inside a cone with height `H` and radius `R` at its b
 <a id=Random_Latitude_and_Longitude></a>
 #### Random Latitude and Longitude
 
-To generate a random point on the surface of a sphere in the form of a latitude and longitude (in radians with west and south coordinates negative)<sup>[**(51)**](#Note51)</sup>&mdash;
+To generate a random point on the surface of a sphere in the form of a latitude and longitude (in radians with west and south coordinates negative)<sup>[**(52)**](#Note52)</sup>&mdash;
 
 - generate the longitude `RNDRANGEMaxExc(-pi, pi)`, where the longitude is in the interval [-&pi;, &pi;), and
 - generate the latitude `atan2(sqrt(1 - x * x), x) - pi / 2`, where `x = RNDRANGE(-1, 1)` and the latitude is in the interval \[-&pi;/2, &pi;/2\] (the interval excludes the poles, which have many equivalent forms; if poles are not desired, generate `x` until neither -1 nor 1 is generated this way).
@@ -2365,12 +2366,7 @@ If the generator produces numbers with unequal probabilities, but is otherwise a
 
 <small><sup id=Note4>(4)</sup> Lumbroso, J., "Optimal Discrete Uniform Generation from Coin Flips, and Applications", arXiv:1304.1916 [cs.DS].</small>
 
-<small><sup id=Note5>(5)</sup> A na&iuml;ve `RNDINTEXC` implementation often seen in certain languages like JavaScript is the idiom `floor(Math.random()*maxExclusive)`, where `Math.random()` is any method that outputs an independent uniform random number in the interval \[0, 1\).  However:
-
-1. Depending on how `Math.random()` is implemented, this idiom can't choose from among all integers in its range or may bias some integers over others; this bias may or may not be negligible in a given application.  For example, if `Math.random()` is implemented as `RNDINT(255)/256`, not all numbers can "randomly" occur by this idiom with `maxExclusive` greater than 256.
-2. Depending on the number format, rounding error can result in `maxExclusive` being returned in rare cases.  A more robust implementation could use a loop to check whether `maxExclusive` was generated and try again if so.  Where a loop is not possible, such as within an SQL query, the idiom above can be replaced with `min(floor(Math.random() * maxExclusive, maxExclusive - 1))`.  Neither modification addresses item 1, however.
-
-If an application is concerned about these issues, it should treat the `Math.random()` implementation as the underlying RNG for `RNDINT` and implement `RNDINTEXC` through `RNDINT` instead.</small>
+<small><sup id=Note5>(5)</sup> A na&iuml;ve `RNDINTEXC` implementation often seen in certain languages like JavaScript is the idiom `floor(Math.random()*maxExclusive)`, where `Math.random()` is any method that outputs an independent uniform random number in the interval \[0, 1\).  However, no implementation of `Math.random()` can choose from all real numbers in \[0, 1\), so this idiom may bias some results over others depending on the value of `maxExclusive`, or rounding error can make the idiom return `maxExclusive` in rare cases, depending on the rounding mode and the number format.  For example, if `Math.random()` is implemented as `RNDINT(X - 1)/X` and `X` is not divisible by `maxExclusive`, the result will be biased.  If an application is concerned about these issues, it should treat the `Math.random()` implementation as the underlying RNG for `RNDINT` and implement `RNDINTEXC` through `RNDINT` instead.</small>
 
 <small><sup id=Note6>(6)</sup> Describing differences between SQL dialects is outside the scope of this document, but [**Flourish SQL**](http://flourishlib.com/docs/FlourishSQL) describes many such differences, including those concerning RNGs.</small>
 
@@ -2435,17 +2431,19 @@ and "[**Floating-Point Determinism**](https://randomascii.wordpress.com/2013/07/
 
 provided the PDF's values are all 0 or greater and the area under the PDF's curve is 1.</small>
 
-<small><sup id=Note35>(35)</sup> Based on a suggestion by F. Saad in a personal communication (Mar. 26, 2020).</small>
+<small><sup id=Note35>(35)</sup> The methods shown here do not introduce any error beyond the sampling error that occurs when approximating a PDF's or CDF's points as floating-point numbers.  Generally, these approximations will have a smaller relative error the closer they are to 0 (see also Walter, M., "Sampling the Integers with Low Relative Error", 2019).  For example, the relative error for CDF values closer to 1 is much greater than for values closer to 0.</small>
 
-<small><sup id=Note36>(36)</sup> This pseudocode generates `N = (maxi - mini) + 1` weights, excluding the initial 0. If the weights are stored as N floating-point numbers with K bits of precision, where `N = (maxi - mini) + 1`, the relative error of this method is at most N*2^(-K+1) (Walter, M., "Sampling the Integers with Low Relative Error", 2019).</small>
+<small><sup id=Note36>(36)</sup> Based on a suggestion by F. Saad in a personal communication (Mar. 26, 2020).</small>
 
-<small><sup id=Note37>(37)</sup> Saad, F.A., et al., "Optimal Approximate Sampling from Discrete Probability Distributions", arXiv:2001.04555 [cs.DS], 2020.  See also the [**associated source code**](https://github.com/probcomp/optimal-approximate-sampling).</small>
+<small><sup id=Note37>(37)</sup> This pseudocode generates `N = (maxi - mini) + 1` weights, excluding the initial 0. If the weights are stored as N floating-point numbers with K bits of precision, where `N = (maxi - mini) + 1`, the relative error of this method is at most N*2^(-K+1) (Walter, M., "Sampling the Integers with Low Relative Error", 2019).</small>
 
-<small><sup id=Note38>(38)</sup> Tran, K.H., "A Common Derivation for Markov Chain Monte Carlo Algorithms with Tractable and Intractable Targets", arXiv:1607.01985v5 [stat.CO], 2018, gives a common framework for describing many MCMC algorithms, including Metropolis&ndash;Hastings, slice sampling, and Gibbs sampling.</small>
+<small><sup id=Note38>(38)</sup> Saad, F.A., et al., "Optimal Approximate Sampling from Discrete Probability Distributions", arXiv:2001.04555 [cs.DS], 2020.  See also the [**associated source code**](https://github.com/probcomp/optimal-approximate-sampling).</small>
 
-<small><sup id=Note39>(39)</sup> _See also_ Casella, G., and George, E.I., "Explaining the Gibbs Sampler", The American Statistician 46:3 (1992).</small>
+<small><sup id=Note39>(39)</sup> Tran, K.H., "A Common Derivation for Markov Chain Monte Carlo Algorithms with Tractable and Intractable Targets", arXiv:1607.01985v5 [stat.CO], 2018, gives a common framework for describing many MCMC algorithms, including Metropolis&ndash;Hastings, slice sampling, and Gibbs sampling.</small>
 
-<small><sup id=Note40>(40)</sup> For example, besides the methods given in this section's main text:
+<small><sup id=Note40>(40)</sup> _See also_ Casella, G., and George, E.I., "Explaining the Gibbs Sampler", The American Statistician 46:3 (1992).</small>
+
+<small><sup id=Note41>(41)</sup> For example, besides the methods given in this section's main text:
 
 1. In the _Box&ndash;Muller transformation_, `mu + radius * cos(angle)` and `mu + radius * sin(angle)`, where `angle = RNDRANGEMaxExc(0, 2 * pi)` and `radius = sqrt(Expo(0.5)) * sigma`, are two independent normally-distributed random numbers.
 2. Computing the sum of twelve `RNDU01OneExc()` numbers (see Note 13) and subtracting the sum by 6 (see also [**"Irwin&ndash;Hall distribution" on Wikipedia**](https://en.wikipedia.org/wiki/Irwin%E2%80%93Hall_distribution)) results in approximate standard normal (`mu`=0, `sigma`=1) random numbers, whose values are not less than -6 or greater than 6; on the other hand, in a standard normal distribution, the chance of results less than -6 or greater than 6 is generally negligible.
@@ -2455,33 +2453,31 @@ provided the PDF's values are all 0 or greater and the area under the PDF's curv
 
 In 2007, Thomas, D., et al. gave a survey of normal random number methods in "Gaussian Random Number Generators", _ACM Computing Surveys_ 39(4), 2007, article 11.</small>
 
-<small><sup id=Note41>(41)</sup> Pedersen, K., "Reconditioning your quantile function", arXiv:1704.07949v3 [stat.CO], 2018.</small>
+<small><sup id=Note42>(42)</sup> Pedersen, K., "Reconditioning your quantile function", arXiv:1704.07949v3 [stat.CO], 2018.</small>
 
-<small><sup id=Note42>(42)</sup> "A simple method for generating gamma variables", _ACM Transactions on Mathematical Software_ 26(3), 2000.</small>
+<small><sup id=Note43>(43)</sup> "A simple method for generating gamma variables", _ACM Transactions on Mathematical Software_ 26(3), 2000.</small>
 
-<small><sup id=Note43>(43)</sup> Hofert, M., and Maechler, M.  "Nested Archimedean Copulas Meet R: The nacopula Package".  Journal of Statistical Software 39(9), 2011, pp. 1-20.</small>
+<small><sup id=Note44>(44)</sup> Hofert, M., and Maechler, M.  "Nested Archimedean Copulas Meet R: The nacopula Package".  Journal of Statistical Software 39(9), 2011, pp. 1-20.</small>
 
-<small><sup id=Note44>(44)</sup> Saha, M., et al., "The extended xgamma distribution", arXiv:1909.01103 [math.ST], 2019.</small>
+<small><sup id=Note45>(45)</sup> Saha, M., et al., "The extended xgamma distribution", arXiv:1909.01103 [math.ST], 2019.</small>
 
-<small><sup id=Note45>(45)</sup> Sen, S., et al., "The xgamma distribution: statistical properties and application", 2016.</small>
+<small><sup id=Note46>(46)</sup> Sen, S., et al., "The xgamma distribution: statistical properties and application", 2016.</small>
 
-<small><sup id=Note46>(46)</sup> Baker, R., Jackson, D., "A new distribution for robust least squares", arXiv:1408.3237 [stat.ME], 2018.</small>
+<small><sup id=Note47>(47)</sup> Baker, R., Jackson, D., "A new distribution for robust least squares", arXiv:1408.3237 [stat.ME], 2018.</small>
 
-<small><sup id=Note47>(47)</sup> Weisstein, Eric W.  "[**Hypersphere Point Picking**](http://mathworld.wolfram.com/HyperspherePointPicking.html)".  From MathWorld&mdash;A Wolfram Web Resource.</small>
+<small><sup id=Note48>(48)</sup> Weisstein, Eric W.  "[**Hypersphere Point Picking**](http://mathworld.wolfram.com/HyperspherePointPicking.html)".  From MathWorld&mdash;A Wolfram Web Resource.</small>
 
-<small><sup id=Note48>(48)</sup> Voelker, A.R., Gosmann, J., Stewart, T.C., "Efficiently sampling vectors and coordinates from the _n_-sphere and _n_-ball", Jan. 4, 2017.</small>
+<small><sup id=Note49>(49)</sup> Voelker, A.R., Gosmann, J., Stewart, T.C., "Efficiently sampling vectors and coordinates from the _n_-sphere and _n_-ball", Jan. 4, 2017.</small>
 
-<small><sup id=Note49>(49)</sup> See the _Mathematics Stack Exchange_ question titled "Random multivariate in hyperannulus", `questions/1885630`.</small>
+<small><sup id=Note50>(50)</sup> See the _Mathematics Stack Exchange_ question titled "Random multivariate in hyperannulus", `questions/1885630`.</small>
 
-<small><sup id=Note50>(50)</sup> See the _Stack Overflow_ question "Uniform sampling (by volume) within a cone", `questions/41749411`.</small>
+<small><sup id=Note51>(51)</sup> See the _Stack Overflow_ question "Uniform sampling (by volume) within a cone", `questions/41749411`.</small>
 
-<small><sup id=Note51>(51)</sup> Reference: [**"Sphere Point Picking"**](http://mathworld.wolfram.com/SpherePointPicking.html) in MathWorld (replacing inverse cosine with `atan2` equivalent).</small>
+<small><sup id=Note52>(52)</sup> Reference: [**"Sphere Point Picking"**](http://mathworld.wolfram.com/SpherePointPicking.html) in MathWorld (replacing inverse cosine with `atan2` equivalent).</small>
 
-<small><sup id=Note52>(52)</sup> Mironov, I., "On Significance of the Least Significant Bits For Differential Privacy", 2012.</small>
+<small><sup id=Note53>(53)</sup> Mironov, I., "On Significance of the Least Significant Bits For Differential Privacy", 2012.</small>
 
-<small><sup id=Note53>(53)</sup> For example, see Balcer, V., Vadhan, S., "Differential Privacy on Finite Computers", Dec. 4, 2018; as well as the Miccancio&ndash;Walter discrete Gaussian generator (for lattice-based cryptography).</small>
-
-<small><sup id=Note54>(54)</sup> The methods shown here do not introduce any error beyond the sampling error that occurs when approximating a PDF's or CDF's points as floating-point numbers.  Generally, these approximations will have a smaller relative error the closer they are to 0 (see also Walter, M., "Sampling the Integers with Low Relative Error", 2019).  For example, the relative error for CDF values closer to 1 is much greater than for values closer to 0.</small>
+<small><sup id=Note54>(54)</sup> For example, see Balcer, V., Vadhan, S., "Differential Privacy on Finite Computers", Dec. 4, 2018; as well as the Miccancio&ndash;Walter discrete Gaussian generator (for lattice-based cryptography).</small>
 
 <a id=Appendix></a>
 ## Appendix
@@ -2573,7 +2569,7 @@ If an application generates random numbers for information security purposes, su
 2. **Timing attacks.**  Certain security attacks have exploited timing and other differences to recover cleartext, encryption keys, or other sensitive data.  Thus, so-called "constant-time" security algorithms have been developed.  Such algorithms are designed to have no timing differences that reveal anything about any secret inputs (such as keys, passwords, or RNG "seeds"), and they often have no data-dependent control flows or memory access patterns.  Examples of "constant-time" algorithms can include a `RNDINT()` implementation that uses Montgomery reduction.  But even if an algorithm has variable running time (e.g., [**rejection sampling**](#Rejection_Sampling)), it may or may not have security-relevant timing differences, especially if it does not reuse secrets.
 3. **Security algorithms out of scope.** Security algorithms that take random secrets to generate random security parameters, such as encryption keys, public/private key pairs, elliptic curves, or points on an elliptic curve, are outside this document's scope.
 
-In nearly all security-sensitive applications, random numbers generated for security purposes are integers.  In very rare cases, they're fixed-point numbers.  Even with a secure random number generator, the use of random floating-point numbers can cause security issues not present with integers or fixed-point numbers; one example is found in (Mironov 2012)<sup>[**(52)**](#Note52)</sup>.  And even in the few security applications where random floating-point numbers are used (differential privacy and lattice-based cryptography), there are ways to avoid such random numbers<sup>[**(53)**](#Note53)</sup>.
+In nearly all security-sensitive applications, random numbers generated for security purposes are integers.  In very rare cases, they're fixed-point numbers.  Even with a secure random number generator, the use of random floating-point numbers can cause security issues not present with integers or fixed-point numbers; one example is found in (Mironov 2012)<sup>[**(53)**](#Note53)</sup>.  And even in the few security applications where random floating-point numbers are used (differential privacy and lattice-based cryptography), there are ways to avoid such random numbers<sup>[**(54)**](#Note54)</sup>.
 
 <a id=License></a>
 ## License
