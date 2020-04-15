@@ -7,7 +7,7 @@ According to my document on [**pseudorandom number generator (PRNG) recommendati
 
 a requirement called the "independence requirement" in this short document.
 
-To determine whether a PRNG meets the independence requirement, its output should be sent to the PractRand program by Chris Doty-Humphrey and show no failures ("FAILs" in) the PractRand tests at 1 TiB (2^40 bytes) or greater.  For more information, see "[**How to Test with PractRand**](http://www.pcg-random.org/posts/how-to-test-with-practrand.html)" by M. E. O'Neill.
+To determine whether a PRNG meets the independence requirement, its output should be sent to the PractRand program by Chris Doty-Humphrey and show no failures ("FAILs") in the PractRand tests at 1 TiB (2^40 bytes) or greater.  For more information, see "[**How to Test with PractRand**](http://www.pcg-random.org/posts/how-to-test-with-practrand.html)" by M. E. O'Neill.
 
 **Random number streams.** Many PRNGs use different strategies to produce nearby sequences (or _streams_) of pseudorandom numbers.  But not every strategy produces _independent_ streams.  To determine whether nearby sequences of the PRNG meet the independence requirement, the output sent to PractRand should consist of one output from the first sequence, one output from the second, another output from the first, another from the second, and so on.
 
@@ -31,7 +31,7 @@ In general, a hash function without PractRand failures is worthy of mention if i
      1. Add 1 to the state (using wraparound addition).
      2. Output either `P(state)` or `S(P(state))`, where `S(x)` is one of the four _scramblers_ defined in (Blackman and Vigna 2019)<sup>[**(4)**](#Note4)</sup> (+, ++, \*, \*\*).
 - If the PRNG admits 2<sup>63</sup> or more seeds and outputs N-bit numbers, then each number it outputs can be _combined_ with the next number from a sequence that cycles through at least 2<sup>128</sup> numbers, to produce a new N-bit number. (These two numbers can be combined via XOR or wraparound addition if they have the same size, or via hashing.) This sequence can be one of the following:
-     - A _Weyl sequence_.
+     - A _Weyl sequence_ (a sequence formed by wraparound addition of a constant odd number).
      - A _permutation_ of an incrementing counter that starts at 0.
      - A PRNG with a fixed seed and a single cycle of 2<sup>128</sup> or more numbers, such as a linear congruential generator.
 - If the PRNG admits 2<sup>63</sup> or more seeds, has a minimum cycle length of 2<sup>128</sup> or more, and outputs N-bit numbers, each number it outputs can be _combined_ with the next number from another PRNG to produce a new N-bit number.

@@ -1782,7 +1782,7 @@ of <em>n</em> random numbers that follow an exponential distribution and each ha
 
 <h4>Weighted Approximation: Discrete Distributions</h4>
 
-<p>If the distribution <strong>is discrete (integer-only)</strong>, numbers that closely follow it can be sampled by choosing points that cover all or almost all of the distribution, finding their weights or cumulative weights, and choosing a random point based on those weights.</p>
+<p>If the distribution <strong>is discrete (integer-only)</strong>, numbers that closely follow it can be sampled by choosing points that cover all or almost all of the distribution, finding their weights or cumulative weights, and choosing a random point based on those weights.<sup><a href="#Note54"><strong>(54)</strong></a></sup></p>
 
 <p>The pseudocode below shows the following methods that work with a <strong>known PDF</strong> (<code>PDF(x)</code>) or a <strong>known CDF</strong> (<code>CDF(x)</code>) that outputs floating-point numbers of the form  <code>FPSignificand</code> * <code>FPRadix</code><sup><code>FPExponent</code></sup> (which include Java&#39;s <code>double</code> and <code>float</code>).</p>
 
@@ -2919,7 +2919,7 @@ and &quot;<a href="https://randomascii.wordpress.com/2013/07/16/floating-point-d
 
 <p><small><sup id=Note35>(35)</sup> Based on a suggestion by F. Saad in a personal communication (Mar. 26, 2020).</small></p>
 
-<p><small><sup id=Note36>(36)</sup> This pseudocode generates <code>N = (maxi - mini) + 1</code> weights, excluding the initial 0. If the weights are stored as N floating-point numbers with K bits of precision, where <code>N = (maxi - mini) + 1</code>, the relative error of this method is at most N*2^(-K+1) (Walter, M., &quot;Sampling the Integers with Low Relative Error&quot;, 2019).  It follows here that probabilities closer to 0 have a smaller relative error when stored as such floating-point numbers.</small></p>
+<p><small><sup id=Note36>(36)</sup> This pseudocode generates <code>N = (maxi - mini) + 1</code> weights, excluding the initial 0. If the weights are stored as N floating-point numbers with K bits of precision, where <code>N = (maxi - mini) + 1</code>, the relative error of this method is at most N*2^(-K+1) (Walter, M., &quot;Sampling the Integers with Low Relative Error&quot;, 2019).</small></p>
 
 <p><small><sup id=Note37>(37)</sup> Saad, F.A., et al., &quot;Optimal Approximate Sampling from Discrete Probability Distributions&quot;, arXiv:2001.04555 [cs.DS], 2020.  See also the <a href="https://github.com/probcomp/optimal-approximate-sampling"><strong>associated source code</strong></a>.</small></p>
 
@@ -2964,6 +2964,8 @@ and &quot;<a href="https://randomascii.wordpress.com/2013/07/16/floating-point-d
 <p><small><sup id=Note52>(52)</sup> Mironov, I., &quot;On Significance of the Least Significant Bits For Differential Privacy&quot;, 2012.</small></p>
 
 <p><small><sup id=Note53>(53)</sup> For example, see Balcer, V., Vadhan, S., &quot;Differential Privacy on Finite Computers&quot;, Dec. 4, 2018; as well as the Miccancio&ndash;Walter discrete Gaussian generator (for lattice-based cryptography).</small></p>
+
+<p><small><sup id=Note54>(54)</sup> The methods shown here do not introduce any error beyond the sampling error that occurs when approximating a PDF&#39;s or CDF&#39;s points as floating-point numbers.  Generally, these approximations will have a smaller relative error the closer they are to 0 (see also Walter, M., &quot;Sampling the Integers with Low Relative Error&quot;, 2019).  For example, the relative error for CDF values closer to 1 is much greater than for values closer to 0.</small></p>
 
 <p><a id=Appendix></a></p>
 
