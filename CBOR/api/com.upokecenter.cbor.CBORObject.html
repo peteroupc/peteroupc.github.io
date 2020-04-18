@@ -183,10 +183,10 @@ Instead, use.getToObject()&lt;PeterO.Numbers.ERational&gt;() in
 in Java.</li>
 <li><code>short AsInt16()</code><br>
 Deprecated.
-Instead, use the following: (cbor.AsNumber().ToInt16Checked()), or
-.ToObject&lt;short&gt;() in .getNET().
-Instead, use the following: (cbor.AsNumber().ToInt16Checked()), or
-.ToObject&lt;short&gt;() in .getNET().</li>
+Instead, use the following: (cbor.AsNumber().ToInt16Checked()),
+or .getToObject()&lt;short&gt;() in .getNET().
+Instead, use the following: (cbor.AsNumber().ToInt16Checked()),
+or .getToObject()&lt;short&gt;() in .getNET().</li>
 <li><code>int AsInt32()</code><br>
 Converts this object to a 32-bit signed integer.</li>
 <li><code>int AsInt32Value()</code><br>
@@ -1096,8 +1096,8 @@ untagged.</li>
 
 <p>Deprecated.
 Instead, convert this object to a number with.AsNumber(),   and use the
- Sign property in.NET or the signum method in Java. Either will treat
- not-a-number (NaN) values differently than here.</p>
+ Sign property in.NET or the signum method in Java. Either will
+ treat not-a-number (NaN) values differently than here.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -4346,8 +4346,8 @@ Instead, use.getToObject()&amp;lt;PeterO.Numbers.ERational&amp;gt;() in
 ### AsInt16
     @Deprecated public short AsInt16()
 Deprecated.
-Instead, use the following: (cbor.AsNumber().ToInt16Checked()), or
-.ToObject&amp;lt;short&amp;gt;() in .getNET().
+Instead, use the following: (cbor.AsNumber().ToInt16Checked()),
+ or .getToObject()&amp;lt;short&amp;gt;() in .getNET().
 
 **Returns:**
 
