@@ -54,6 +54,7 @@ so that as a result, many applications use RNGs, especially built-in RNGs, that 
     - [**Manually-Seeded PRNG Use Cases**](#Manually_Seeded_PRNG_Use_Cases)
     - [**Manually-Seeded PRNGs in Games**](#Manually_Seeded_PRNGs_in_Games)
     - [**Single Random Value**](#Single_Random_Value)
+    - [**Ensuring Reproducibility**](#Ensuring_Reproducibility)
 - [**Nondeterministic Sources and Seed Generation**](#Nondeterministic_Sources_and_Seed_Generation)
     - [**What Is a Nondeterministic Source?**](#What_Is_a_Nondeterministic_Source)
     - [**What Is Entropy?**](#What_Is_Entropy)
@@ -64,7 +65,6 @@ so that as a result, many applications use RNGs, especially built-in RNGs, that 
 - [**RNG Topics**](#RNG_Topics)
     - [**Shuffling**](#Shuffling)
     - [**Unique Random Identifiers**](#Unique_Random_Identifiers)
-    - [**Determinism and Consistency**](#Determinism_and_Consistency)
 - [**Hash Functions**](#Hash_Functions)
     - [**Procedural Noise Functions**](#Procedural_Noise_Functions)
     - [**Pseudorandom Functions**](#Pseudorandom_Functions)
@@ -153,7 +153,7 @@ By seeding a PRNG manually for reproducible "randomness", an application will be
 2. the application either&mdash;
     - makes the seed (or a "code" or "password" based on the seed) accessible to the user, or
     - finds it impractical to store or distribute the "random" numbers or "random" content, rather than the seed, for later use (e.g., to store those numbers to "replay" later, to store that content in a "save file", or to distribute that content rather than a seed to networked users), and
-3. any feature that uses such a PRNG to generate that "random" result will be consistent (see "Determinism and Consistency") for as long as that feature is still in use by that application.
+3. any feature that uses such a PRNG to generate that "random" result is reproducible, in that it produces the same "random" result for the same seed for as long as the feature is still in use by the application.
 
 <a id=Manually_Seeded_PRNG_Recommendations></a>
 ### Manually-Seeded PRNG Recommendations
@@ -214,6 +214,23 @@ If an application requires only one random value, with a fixed number of bits, t
 - Generating a random color by passing the seed to the MD5 hash function, which outputs a 128-bit hash code, and taking the first 24 bits of the hash code as the random color.
 - Generating a random number in a GLSL (OpenGL Shading Language) fragment shader by passing the fragment coordinates (which vary for each fragment, or "pixel") as well as a seed (which is the same for all fragments) to the Wang hash, which outputs a 32-bit integer.<sup>[**(6)**](#Note6)</sup>
 
+<a id=Ensuring_Reproducibility></a>
+### Ensuring Reproducibility
+
+To ensure that a manually-seeded PRNG delivers reproducible "random" numbers across computers, across runs, and across application versions, an application needs to take special care.  In general, this goal of reproducibility is not achieved if the application relies on features or behavior outside the application's control, including any of the following:
+
+- **Floating-point numbers** are a major source of inconsistency. Different implementations of the same floating-point operation might have subtle differences, including in terms of accuracy, rounding, and operation order, even if they're given the same input (e.g., Java's `Math` vs. `StrictMath`; the x87 `FSIN` instruction vs. a software implementation of sine; or a dot product method that decides which implementation to use at runtime). It is nontrivial to control for all of these differences.  For more information, see "[**Floating-Point Determinism**](https://randomascii.wordpress.com/2013/07/16/floating-point-determinism/)" by Bruce Dawson, and the white paper "[**Floating Point and IEEE 754 Compliance for NVIDIA GPUs**](https://docs.nvidia.com/cuda/floating-point/)".
+- **Multithreading** and dynamic task scheduling can cause random numbers to be generated in a different order or by different threads from one run to the next, causing inconsistent results; this can happen even if each thread by itself produces the same random numbers for the same input (Leierson et al., 2012)<sup>[**(7)**](#Note7)</sup>.  Dealing with this issue requires either using a single thread, or assigning PRNGs to individual tasks rather than threads or the whole application.
+- **Nondeterministic sources** (where the output can vary even if input and state are the same), such as the file system or the system clock.
+- **Undocumented, undefined, or implementation-dependent behavior** or features, including a particular hash table traversal order or a particular size for C/C++'s `int` or `long`.
+
+Thus, an application ought to use manually-seeded PRNGs only when necessary, to minimize the need for reproducible "randomness".  Where reproducibility is required, the application ought to avoid floating-point numbers, nondeterministic features, and other behavior outside its control, and ought to stick to the same versions of algorithms it uses.
+
+As for reproducible PRNGs, [**`java.util.Random`**](https://docs.oracle.com/javase/8/docs/api/java/util/Random.html) is one example of a PRNG with consistent behavior, but none of the following is such a PRNG:
+
+- The C [**`rand` method**](http://en.cppreference.com/w/cpp/numeric/random/rand), as well as C++'s random number distribution classes, such as [**`std::uniform_int_distribution`**](http://en.cppreference.com/w/cpp/numeric/random/uniform_int_distribution), use implementation-defined algorithms for random number generation.
+- .NET's [**`System.Random`**](https://docs.microsoft.com/dotnet/api/system.random) has random number generation behavior that could change in the future.
+
 <a id=Nondeterministic_Sources_and_Seed_Generation></a>
 ## Nondeterministic Sources and Seed Generation
 
@@ -229,11 +246,11 @@ A _nondeterministic source_ is a source that doesn't give the same output for th
 - thermal noise,
 - the output of assembly instructions specially dedicated to random number generation, such as RdSeed,
 - the output generated with A. Seznec's technique called hardware volatile entropy gathering and expansion (HAVEGE), provided a high-resolution counter is available, and
-- differences between two high-resolution counter values taken in quick succession (such as in "Jitter RNG"; see (M&uuml;ller)<sup>[**(7)**](#Note7)</sup>).
+- differences between two high-resolution counter values taken in quick succession (such as in "Jitter RNG"; see (M&uuml;ller)<sup>[**(8)**](#Note8)</sup>).
 
 RFC 4086, "Randomness Requirements for Security", section 3, contains a survey of nondeterministic sources.
 
-> **Note:** Online services that make random numbers available to applications, as well as the noise registered by microphone and camera recordings (see RFC 4086 sec. 3.2.1, (Liebow-Feeser 2017a)<sup>[**(8)**](#Note8)</sup>, and  (Liebow-Feeser 2017b)<sup>[**(9)**](#Note9)</sup>), are additional nondeterministic sources.  However, online services require Internet or other network access, and some of them require access credentials.  Also, many mobile operating systems require applications to declare network, camera, and microphone access to users upon installation.  For these reasons, these kinds of sources are NOT RECOMMENDED if other approaches are adequate.
+> **Note:** Online services that make random numbers available to applications, as well as the noise registered by microphone and camera recordings (see RFC 4086 sec. 3.2.1, (Liebow-Feeser 2017a)<sup>[**(9)**](#Note9)</sup>, and  (Liebow-Feeser 2017b)<sup>[**(10)**](#Note10)</sup>), are additional nondeterministic sources.  However, online services require Internet or other network access, and some of them require access credentials.  Also, many mobile operating systems require applications to declare network, camera, and microphone access to users upon installation.  For these reasons, these kinds of sources are NOT RECOMMENDED if other approaches are adequate.
 
 <a id=What_Is_Entropy></a>
 ### What Is Entropy?
@@ -243,12 +260,12 @@ _Entropy_ is a value that describes how hard it is to guess a nondeterministic s
 <a id=Seed_Generation></a>
 ### Seed Generation
 
-In general, there are two steps to generate an `N`-bit seed for a PRNG<sup>[**(10)**](#Note10)</sup>:
+In general, there are two steps to generate an `N`-bit seed for a PRNG<sup>[**(11)**](#Note11)</sup>:
 
 1. Gather enough data from _nondeterministic sources_ to reach `N` bits of _entropy_ or more.
-2. Then, condense the data into an `N`-bit number, a process called _randomness extraction_.<sup>[**(11)**](#Note11)</sup>
+2. Then, condense the data into an `N`-bit number, a process called _randomness extraction_.<sup>[**(12)**](#Note12)</sup>
 
-Randomness extraction is discussed in NIST SP 800-90B sec. 3.1.5.1, RFC 4086 sec. 4.2 and 5.2, and (Cliff et al., 2009)<sup>[**(12)**](#Note12)</sup>.
+Randomness extraction is discussed in NIST SP 800-90B sec. 3.1.5.1, RFC 4086 sec. 4.2 and 5.2, and (Cliff et al., 2009)<sup>[**(13)**](#Note13)</sup>.
 
 > **Example:** The Cliff reference reviewed the use of HMAC (hash-based message authentication code) algorithms, and implies that one way to generate a seed is as follows:
 >
@@ -261,7 +278,7 @@ Randomness extraction is discussed in NIST SP 800-90B sec. 3.1.5.1, RFC 4086 sec
 
 In general, to generate a seed allowed by a noncryptographic PRNG, an application ought to use a cryptographic RNG or a method described in the [**previous section**](#Seed_Generation).
 
-It is NOT RECOMMENDED to seed PRNGs with timestamps, since they can carry the risk of generating the same "random" number sequence accidentally.<sup>[**(13)**](#Note13)</sup>
+It is NOT RECOMMENDED to seed PRNGs with timestamps, since they can carry the risk of generating the same "random" number sequence accidentally.<sup>[**(14)**](#Note14)</sup>
 
 <a id=Seeding_Multiple_Processes></a>
 #### Seeding Multiple Processes
@@ -270,10 +287,10 @@ Some applications require multiple processes (including threads, tasks, or subta
 
 To reduce this correlation risk, the application can choose a [**high-quality PRNG that supports _streams_**](https://peteroupc.github.io/hqprng.md#prngs-with-stream-support) of uncorrelated sequences (sequences that behave like independent random number sequences and don't overlap) and has an efficient way to assign a different _stream_ to each process.  For example, in some PRNGs, these _streams_ can be formed&mdash;
 
-- by initializing PRNGs with consecutive seeds (as in "counter-based" PRNGs (Salmon et al. 2011)<sup>[**(14)**](#Note14)</sup>), or
+- by initializing PRNGs with consecutive seeds (as in "counter-based" PRNGs (Salmon et al. 2011)<sup>[**(15)**](#Note15)</sup>), or
 - by discarding a fixed but huge number of PRNG outputs in an efficient way ("[**jump-ahead**](https://peteroupc.github.io/jump.html)").
 
-Multiple processes can be seeded for random number generation as follows.<sup>[**(15)**](#Note15)</sup>
+Multiple processes can be seeded for random number generation as follows.<sup>[**(16)**](#Note16)</sup>
 
 1. **Stream case.** If the PRNG supports _streams_ as described above: Generate a seed (or use a predetermined seed), then:
 
@@ -281,12 +298,12 @@ Multiple processes can be seeded for random number generation as follows.<sup>[*
     2. Hash the seed and a fixed identifier to generate a new seed allowed by the PRNG.
     3. For each process, advance the PRNG to the next stream (unless it's the first process), then give that process a copy of the PRNG's current internal state.
 
-2. **General case.** For other PRNGs, or if each process uses a different PRNG design, the following is a way to seed multiple processes for random number generation, but it carries the risk of generating seeds that lead to overlapping, correlated, or even identical number sequences, especially if the processes use the same PRNG.<sup>[**(16)**](#Note16)</sup> Generate a seed (or use a predetermined seed), then:
+2. **General case.** For other PRNGs, or if each process uses a different PRNG design, the following is a way to seed multiple processes for random number generation, but it carries the risk of generating seeds that lead to overlapping, correlated, or even identical number sequences, especially if the processes use the same PRNG.<sup>[**(17)**](#Note17)</sup> Generate a seed (or use a predetermined seed), then:
 
     1. Create a PRNG instance for each process.  The instances need not all use the same PRNG design or the same parameters; for example, some can be Philox and others `xoroshiro128**`.
     2. For each process, hash the seed, a unique number for that process, and a fixed identifier to generate a new seed allowed by the process's PRNG, and initialize that PRNG with the new seed.
 
-The steps above include hashing several things to generate a new seed.  This has to be done with either a [**hash function**](#Hash_Functions) of N or more bits (where N is the PRNG's maximum seed size), or a so-called "seed sequence generator" like C++'s `std::seed_seq`.<sup>[**(17)**](#Note17)</sup>
+The steps above include hashing several things to generate a new seed.  This has to be done with either a [**hash function**](#Hash_Functions) of N or more bits (where N is the PRNG's maximum seed size), or a so-called "seed sequence generator" like C++'s `std::seed_seq`.<sup>[**(18)**](#Note18)</sup>
 
 > **Examples:**
 >
@@ -295,7 +312,7 @@ The steps above include hashing several things to generate a new seed.  This has
 >     - initialize the first process's PRNG with the new seed and a counter of 0, and
 >     - initialize the second process's PRNG with 1 plus the new seed and a counter of 0.
 >
-> 2. Some _dynamic threading_ (_task-parallel_) platforms employ task schedulers where _tasks_ or _subtasks_ (sometimes called _strands_ or _fibers_) are not assigned to a particular operating system process or thread.  To ensure reproducible "randomness" in these platforms, PRNGs have to be assigned to tasks (rather than system processes or threads) and are not shared between tasks, and each task's PRNG can be initialized as given in the "general case" steps above (where the task's unique number is also known as a _pedigree_) (Leierson et al., 2012)<sup>[**(18)**](#Note18)</sup>.
+> 2. Some _dynamic threading_ (_task-parallel_) platforms employ task schedulers where _tasks_ or _subtasks_ (sometimes called _strands_ or _fibers_) are not assigned to a particular operating system process or thread.  To ensure reproducible "randomness" in these platforms, PRNGs have to be assigned to tasks (rather than system processes or threads) and are not shared between tasks, and each task's PRNG can be initialized as given in the "general case" steps above (where the task's unique number is also known as a _pedigree_) (Leierson et al., 2012)<sup>[**(7)**](#Note7)</sup>.
 
 <a id=Existing_RNG_APIs_in_Programming_Languages></a>
 ## Existing RNG APIs in Programming Languages
@@ -394,27 +411,6 @@ An application that generates unique identifiers SHOULD do so as follows:
 - Otherwise:
    - If identifiers have to be hard to guess: Use a unique integer which is followed by a random integer generated using a cryptographic RNG (the random integer's length depends on the answer to 5, as above).
    - Otherwise: Use a unique integer. (Note that generally, random numbers alone can't ensure uniqueness.)
-
-<a id=Determinism_and_Consistency></a>
-### Determinism and Consistency
-
-For an RNG algorithm to generate "random" numbers that are reproducible across computers, it needs to be a _consistent_ algorithm.  (This factor is important only for manually-seeded PRNGs, not necessarily for other RNGs.)
-
-A _consistent algorithm_ is an algorithm that delivers the same output each time if given the same input twice (is _deterministic_) and that does so across time, across runs, across application versions, and across supported hardware and operating systems.
-
-In general, an algorithm's results might not be reproducible across computers or runs because it relies on features or behavior outside the application's control, including any of the following:
-
-- **Floating-point numbers** are a major source of inconsistency. Different implementations of the same floating-point operation might have subtle differences, including in terms of accuracy, rounding, and operation order, even if they're given the same input (e.g., Java's `Math` vs. `StrictMath`; the x87 `FSIN` instruction vs. a software implementation of sine; or a dot product method that decides which implementation to use at runtime). It is nontrivial to control for all of these differences.  For more information, see "[**Floating-Point Determinism**](https://randomascii.wordpress.com/2013/07/16/floating-point-determinism/)" by Bruce Dawson, and the white paper "[**Floating Point and IEEE 754 Compliance for NVIDIA GPUs**](https://docs.nvidia.com/cuda/floating-point/)".
-- **Multithreading** and dynamic task scheduling can cause random numbers to be generated in a different order or by different threads from one run to the next, causing inconsistent results; this can happen even if each thread by itself produces deterministic random numbers (Leierson et al., 2012)<sup>[**(18)**](#Note18)</sup>.  Dealing with this issue requires either using a single thread, or assigning PRNGs to individual tasks rather than threads or the whole application.
-- **Nondeterministic sources** (where the output can vary even if input and state are the same), such as the file system or the system clock.
-- **Undocumented, undefined, or implementation-dependent behavior** or features, including a particular hash table traversal order or a particular size for C/C++'s `int` or `long`.
-
-Thus, an application ought to use manually-seeded PRNGs only when necessary, to minimize the need for reproducible "randomness".  Where reproducibility is required, the application ought to avoid floating-point numbers, nondeterministic features, and other behavior outside its control, and ought to stick to the same versions of algorithms it uses.
-
-As for reproducible PRNGs, [**`java.util.Random`**](https://docs.oracle.com/javase/8/docs/api/java/util/Random.html) is one example of a PRNG with consistent behavior, but none of the following is such a PRNG:
-
-- The C [**`rand` method**](http://en.cppreference.com/w/cpp/numeric/random/rand), as well as C++'s random number distribution classes, such as [**`std::uniform_int_distribution`**](http://en.cppreference.com/w/cpp/numeric/random/uniform_int_distribution), use implementation-defined algorithms for random number generation.
-- .NET's [**`System.Random`**](https://docs.microsoft.com/dotnet/api/system.random) has random number generation behavior that could change in the future.
 
 <a id=Hash_Functions></a>
 ## Hash Functions
@@ -564,33 +560,33 @@ An alternative for GLSL and other fragment or pixel shaders to support randomnes
 
 See also N. Reed, "Quick And Easy GPU Random Numbers In D3D11", Nathan Reed's coding blog, Jan. 12, 2013.</small>
 
-<small><sup id=Note7>(7)</sup> M&uuml;ller, S. "CPU Time Jitter Based Non-Physical True Random Number Generator".</small>
+<small><sup id=Note7>(7)</sup> Leierson, C.E., et al., "Deterministic Parallel Random-Number Generation for Dynamic Multithreading Platforms", 2012.</small>
 
-<small><sup id=Note8>(8)</sup> Liebow-Feeser, J., "Randomness 101: LavaRand in Production", blog.cloudflare.com, Nov. 6, 2017.</small>
+<small><sup id=Note8>(8)</sup> M&uuml;ller, S. "CPU Time Jitter Based Non-Physical True Random Number Generator".</small>
 
-<small><sup id=Note9>(9)</sup> Liebow-Feeser, J., "LavaRand in Production: The Nitty-Gritty Technical Details", blog.cloudflare.com, Nov. 6, 2017.</small>
+<small><sup id=Note9>(9)</sup> Liebow-Feeser, J., "Randomness 101: LavaRand in Production", blog.cloudflare.com, Nov. 6, 2017.</small>
 
-<small><sup id=Note10>(10)</sup> These steps could also generate random numbers, rather than a seed, but this is generally slower than using PRNGs to do so.</small>
+<small><sup id=Note10>(10)</sup> Liebow-Feeser, J., "LavaRand in Production: The Nitty-Gritty Technical Details", blog.cloudflare.com, Nov. 6, 2017.</small>
 
-<small><sup id=Note11>(11)</sup> Also known as _entropy extraction_, _deskewing_, _whitening_, or _unbiasing_.</small>
+<small><sup id=Note11>(11)</sup> These steps could also generate random numbers, rather than a seed, but this is generally slower than using PRNGs to do so.</small>
 
-<small><sup id=Note12>(12)</sup> Cliff, Y., Boyd, C., Gonzalez Nieto, J.  "How to Extract and Expand Randomness: A Summary and Explanation of Existing Results", 2009.</small>
+<small><sup id=Note12>(12)</sup> Also known as _entropy extraction_, _deskewing_, _whitening_, or _unbiasing_.</small>
 
-<small><sup id=Note13>(13)</sup> For example, many questions on _Stack Overflow_ highlight the pitfalls of creating a new instance of the .NET Framework's `System.Random` each time a random number is needed, rather than only once in the application.  See also Johansen, R. S., "[**A Primer on Repeatable Random Numbers**](https://blogs.unity3d.com/2015/01/07/a-primer-on-repeatable-random-numbers/)", Unity Blog, Jan. 7, 2015.</small>
+<small><sup id=Note13>(13)</sup> Cliff, Y., Boyd, C., Gonzalez Nieto, J.  "How to Extract and Expand Randomness: A Summary and Explanation of Existing Results", 2009.</small>
 
-<small><sup id=Note14>(14)</sup> Salmon, J.K.; Moraes, M.A.; et al., "Parallel Random Numbers: As Easy as 1, 2, 3", 2011.</small>
+<small><sup id=Note14>(14)</sup> For example, many questions on _Stack Overflow_ highlight the pitfalls of creating a new instance of the .NET Framework's `System.Random` each time a random number is needed, rather than only once in the application.  See also Johansen, R. S., "[**A Primer on Repeatable Random Numbers**](https://blogs.unity3d.com/2015/01/07/a-primer-on-repeatable-random-numbers/)", Unity Blog, Jan. 7, 2015.</small>
 
-<small><sup id=Note15>(15)</sup> P. L'Ecuyer, D. Munger, et al. "Random Numbers for Parallel Computers: Requirements and Methods, With Emphasis on GPUs", April 17, 2015, section 4, goes in greater detail on ways to initialize PRNGs for generating random numbers in parallel, including how to ensure reproducible "randomness" this way if that is desired.</small>
+<small><sup id=Note15>(15)</sup> Salmon, J.K.; Moraes, M.A.; et al., "Parallel Random Numbers: As Easy as 1, 2, 3", 2011.</small>
 
-<small><sup id=Note16>(16)</sup> For single-cycle PRNGs, the probability of overlap for N processes each generating L numbers with a PRNG whose cycle length is P is at most N\*N\*L/P (S. Vigna, "On the probability of overlap of random subsequences of pseudorandom number generators", _Information Processing Letters_ 158 (2020)).  Using two or more PRNG designs can reduce correlation risks due to a particular PRNG's design.  For further discussion and an example of a PRNG combining two different PRNG designs, see Agner Fog, "[**Pseudo-Random Number Generators for Vector Processors and Multicore Processors**](http://digitalcommons.wayne.edu/jmasm/vol14/iss1/23)", _Journal of Modern Applied Statistical Methods_ 14(1), article 23 (2015).</small>
+<small><sup id=Note16>(16)</sup> P. L'Ecuyer, D. Munger, et al. "Random Numbers for Parallel Computers: Requirements and Methods, With Emphasis on GPUs", April 17, 2015, section 4, goes in greater detail on ways to initialize PRNGs for generating random numbers in parallel, including how to ensure reproducible "randomness" this way if that is desired.</small>
 
-<small><sup id=Note17>(17)</sup> Besides the seed, other things are hashed that together serve as a _domain separation tag_ (see, e.g., the work-in-progress document "draft-irtf-cfrg-hash-to-curve").  Note the following:
+<small><sup id=Note17>(17)</sup> For single-cycle PRNGs, the probability of overlap for N processes each generating L numbers with a PRNG whose cycle length is P is at most N\*N\*L/P (S. Vigna, "On the probability of overlap of random subsequences of pseudorandom number generators", _Information Processing Letters_ 158 (2020)).  Using two or more PRNG designs can reduce correlation risks due to a particular PRNG's design.  For further discussion and an example of a PRNG combining two different PRNG designs, see Agner Fog, "[**Pseudo-Random Number Generators for Vector Processors and Multicore Processors**](http://digitalcommons.wayne.edu/jmasm/vol14/iss1/23)", _Journal of Modern Applied Statistical Methods_ 14(1), article 23 (2015).</small>
+
+<small><sup id=Note18>(18)</sup> Besides the seed, other things are hashed that together serve as a _domain separation tag_ (see, e.g., the work-in-progress document "draft-irtf-cfrg-hash-to-curve").  Note the following:
 - In general, hash functions carry the risk that two processes will end up with the same PRNG seed (a _collision risk_) or that a seed not allowed by the PRNG is produced (a "rejection risk"), but this risk decreases the more seeds the PRNG admits (see "[**Birthday problem**](https://en.wikipedia.org/wiki/Birthday_problem)").
 - M. O'Neill (in "Developing a seed_seq Alternative", Apr. 30, 2015) developed hash functions (`seed_seq_fe`) that are designed to avoid collisions if possible, and otherwise to reduce collision bias.   For example, `seed_seq_fe128` hashes 128-bit seeds to 128-bit or longer unique values.
 - An application can handle a rejected seed by hashing with a different value or by using a backup seed instead, depending on how tolerant the application is to bias.
 - See also Matsumoto, M., et al., "Common defects in initialization of pseudorandom number generators", _Transactions on Modeling and Computer Simulation_ 17(4), Sep. 2007.</small>
-
-<small><sup id=Note18>(18)</sup> Leierson, C.E., et al., "Deterministic Parallel Random-Number Generation for Dynamic Multithreading Platforms", 2012.</small>
 
 <small><sup id=Note19>(19)</sup> Using the similar `/dev/random` is NOT RECOMMENDED, since in some implementations it can block for seconds at a time, especially if not enough randomness is available.  See also [**"Myths about /dev/urandom"**](https://www.2uo.de/myths-about-urandom).</small>
 
