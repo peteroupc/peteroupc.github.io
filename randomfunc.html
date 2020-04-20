@@ -554,13 +554,19 @@ END METHOD
 
 <ol>
 <li><strong>If <code>n</code> is not known in advance:</strong> Use the <em>reservoir sampling</em> method; see the <code>RandomKItemsFromFile</code> method, in <a href="#Pseudocode_for_Random_Sampling"><strong>pseudocode given later</strong></a>.</li>
-<li><strong>If <code>n</code> is relatively small (for example, if there are 200 available items, or there is a range of numbers from 0 through 200 to choose from):</strong>  If <strong>items are to be chosen from a list in relative order</strong>, then the <code>RandomKItemsInOrder</code> method, in <a href="#Pseudocode_for_Random_Sampling"><strong>pseudocode given later</strong></a>, demonstrates a solution.  Otherwise, one of the following will choose <code>k</code> items <strong>in random order</strong>:
+<li><strong>If <code>n</code> is relatively small (for example, if there are 200 available items, or there is a range of numbers from 0 through 200 to choose from):</strong>
+
+<ul>
+<li>If items have to be chosen from a list <strong>in relative order</strong>, then use <code>RandomKItemsInOrder</code> (given later).</li>
+<li>Otherwise, if the sampled items need not be in random order, and each item can be derived from its <em>index</em> (the item&#39;s position as an integer starting at 0) without looking it up in a list: Use the <code>RandomKItemsFromFile</code> method.</li>
+<li>Otherwise, the first three cases below will choose <code>k</code> items in random order:
 
 <ul>
 <li>Store all the items in a list, <a href="#Shuffling"><strong>shuffle</strong></a> that list, then choose the first <code>k</code> items from that list.</li>
 <li>If the items are already stored in a list and the list&#39;s order can be changed, then shuffle that list and choose the first <code>k</code> items from the shuffled list.</li>
 <li>If the items are already stored in a list and the list&#39;s order can&#39;t be changed, then store the indices to those items in another list, shuffle the latter list, then choose the first <code>k</code> indices (or the items corresponding to those indices) from the latter list.</li>
 <li>If <code>k</code> is much smaller than <code>n</code>, proceed as in item 3 instead.</li>
+</ul></li>
 </ul></li>
 <li><strong>If <code>k</code> is much smaller than <code>n</code>:</strong>  The first three cases below will choose <code>k</code> items in random order:
 
@@ -570,7 +576,7 @@ END METHOD
 <li>Otherwise, <strong>if <code>n</code> is not very large:</strong> Store all the items in a list, do a <em>partial shuffle</em> of that list, then choose the <em>last</em> <code>k</code> items from that list.</li>
 <li>Otherwise, see item 5.</li>
 </ul></li>
-<li><strong>If <code>n - k</code> is much smaller than <code>n</code> and the sampled items need not be in random order:</strong>  Proceed as in step 3, except the partial shuffle involves <code>n - k</code> swaps and the <em>first</em> <code>k</code> items are chosen rather than the last <code>k</code>.</li>
+<li><strong>If <code>n - k</code> is much smaller than <code>n</code> and the sampled items need not be in random order:</strong>  Proceed as in item 3, except the partial shuffle involves <code>n - k</code> swaps and the <em>first</em> <code>k</code> items are chosen rather than the last <code>k</code>.</li>
 <li><p><strong>Otherwise (for example, if 32-bit or larger integers will be chosen so that <code>n</code> is 2<sup>32</sup>, or if <code>n</code> is otherwise very large):</strong> Create a data structure to store the indices to items already chosen.  When a new index to an item is randomly chosen, add it to the data structure if it&#39;s not already there, or if it is, choose a new random index.  Repeat this process until <code>k</code> indices were added to the data structure this way.  Examples of suitable data structures are&mdash;</p>
 
 <ul>
@@ -1979,7 +1985,7 @@ END METHOD
 
 <p><a href="https://en.wikipedia.org/wiki/Markov_chain_Monte_Carlo"><strong>Markov-chain Monte Carlo</strong></a> (MCMC) is a family of algorithms for sampling many random numbers from a probability distribution by building a <em>Markov chain</em> of random values that build on each other until they converge to the given distribution.  In general, however, these random numbers will have a statistical <em>dependence</em> on each other.</p>
 
-<p>Because it takes time to converge, random numbers from the first few (e.g., first 1000) iterations of MCMC are usually ignored (&quot;burn in&quot;).  MCMC can also be used to find a suitable sampling range for weighted approximation (see the previous two sections).</p>
+<p>Because it takes time to converge, random numbers from the first few (e.g., first 1000) iterations of MCMC are usually ignored (&quot;burn in&quot;).  MCMC can also be used to find a suitable sampling range for weighted approximation (see earlier).</p>
 
 <p>The <a href="https://peteroupc.github.io/randomgen.zip"><strong>Python sample code</strong></a> includes methods that implement two MCMC algorithms: <code>mcmc</code> and <code>mcmc2</code> implement <em>Metropolis&ndash;Hastings</em> for PDFs that take single numbers or two-dimensional points, respectively, and a method called <code>slicesample</code> implements <em>slice sampling</em>.<sup><a href="#Note40"><strong>(40)</strong></a></sup></p>
 
@@ -2848,7 +2854,7 @@ END METHOD
 
 <p><small><sup id=Note5>(5)</sup> Lumbroso, J., &quot;Optimal Discrete Uniform Generation from Coin Flips, and Applications&quot;, arXiv:1304.1916 [cs.DS].</small></p>
 
-<p><small><sup id=Note6>(6)</sup> A na&iuml;ve <code>RNDINTEXC</code> implementation often seen in certain languages like JavaScript is the idiom <code>floor(Math.random() * maxExclusive)</code>, where <code>Math.random()</code> is any method that outputs an independent uniform random number in the interval [0, 1).  However, no implementation of <code>Math.random()</code> can choose from all real numbers in [0, 1), so this idiom can bias some results over others depending on the value of <code>maxExclusive</code>.  For example, if <code>Math.random()</code> is implemented as <code>RNDINT(X - 1)/X</code> and <code>X</code> is not divisible by <code>maxExclusive</code>, the result will be biased.  Also, an implementation might round <code>Math.random() * maxExclusive</code> (before the <code>floor</code>) to the closest number it can represent; in rare cases, that might be <code>maxExclusive</code> for certain rounding modes. If an application is concerned about these issues, it should treat the <code>Math.random()</code> implementation as the underlying RNG for <code>RNDINT</code> and implement <code>RNDINTEXC</code> through <code>RNDINT</code> instead.</small></p>
+<p><small><sup id=Note6>(6)</sup> A na&iuml;ve <code>RNDINTEXC</code> implementation often seen in certain languages like JavaScript is the idiom <code>floor(Math.random() * maxExclusive)</code>, where <code>Math.random()</code> is any method that outputs an independent uniform random number in the interval [0, 1).  However, no implementation of <code>Math.random()</code> can choose from all real numbers in [0, 1), so this idiom can bias some results over others depending on the value of <code>maxExclusive</code>.  For example, if <code>Math.random()</code> is implemented as <code>RNDINT(X - 1)/X</code> and <code>X</code> is not divisible by <code>maxExclusive</code>, the result will be biased.  Also, an implementation might pre-round <code>Math.random() * maxExclusive</code> (before the <code>floor</code>) to the closest number it can represent; in rare cases, that might be <code>maxExclusive</code> for certain rounding modes. If an application is concerned about these issues, it should treat the <code>Math.random()</code> implementation as the underlying RNG for <code>RNDINT</code> and implement <code>RNDINTEXC</code> through <code>RNDINT</code> instead.</small></p>
 
 <p><small><sup id=Note7>(7)</sup> Describing differences between SQL dialects is outside the scope of this document, but <a href="http://flourishlib.com/docs/FlourishSQL"><strong>Flourish SQL</strong></a> describes many such differences, including those concerning RNGs.</small></p>
 
