@@ -88,19 +88,19 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 </ul></li>
 </ul></li>
 <li><a href="#Existing_RNG_APIs_in_Programming_Languages"><strong>Existing RNG APIs in Programming Languages</strong></a></li>
-<li><a href="#RNG_Topics"><strong>RNG Topics</strong></a>
-
-<ul>
-<li><a href="#Shuffling"><strong>Shuffling</strong></a></li>
-<li><a href="#Unique_Random_Identifiers"><strong>Unique Random Identifiers</strong></a></li>
-</ul></li>
 <li><a href="#Hash_Functions"><strong>Hash Functions</strong></a>
 
 <ul>
 <li><a href="#Procedural_Noise_Functions"><strong>Procedural Noise Functions</strong></a></li>
 <li><a href="#Pseudorandom_Functions"><strong>Pseudorandom Functions</strong></a></li>
 </ul></li>
+<li><a href="#RNG_Topics"><strong>RNG Topics</strong></a>
+
+<ul>
+<li><a href="#Shuffling"><strong>Shuffling</strong></a></li>
+<li><a href="#Unique_Random_Identifiers"><strong>Unique Random Identifiers</strong></a></li>
 <li><a href="#Verifiable_Random_Numbers"><strong>Verifiable Random Numbers</strong></a></li>
+</ul></li>
 <li><a href="#Guidelines_for_New_RNG_APIs"><strong>Guidelines for New RNG APIs</strong></a>
 
 <ul>
@@ -556,78 +556,6 @@ For cryptographic RNGs, an application SHOULD use only one thread-safe instance 
 
 <p><small>(H) The .NET Framework&#39;s <code>System.Random</code> class uses a seed of at most 32 bits, so is not considered a high-quality RNG.  However, a subclass of <code>System.Random</code> might be implemented as a high-quality RNG.</small></p>
 
-<p><a id=RNG_Topics></a></p>
-
-<h2>RNG Topics</h2>
-
-<p>This section discusses several important points on the use and selection of RNGs, including things to consider when shuffling or generating &quot;unique&quot; random numbers.</p>
-
-<p><a id=Shuffling></a></p>
-
-<h3>Shuffling</h3>
-
-<p>In a list with <code>N</code> different items, there are <code>N</code> factorial (that is, <code>1 * 2 * ... * N</code>, or <code>N!</code>) ways to arrange the items in that list.  These ways are called <em>permutations</em><sup><a href="#Note24"><strong>(24)</strong></a></sup>.</p>
-
-<p>In practice, an application can <strong>shuffle a list</strong> by doing a <a href="https://en.wikipedia.org/wiki/Fisher-Yates_shuffle"><strong>Fisher&ndash;Yates shuffle</strong></a>, which is unfortunately easy to mess up &mdash; see (Atwood 2007)<sup><a href="#Note25"><strong>(25)</strong></a></sup> &mdash; and is implemented correctly in <a href="https://peteroupc.github.io/randomfunc.html"><strong>another document of mine</strong></a>.</p>
-
-<p>However, if a PRNG admits fewer seeds than the number of permutations, then there are <strong>some permutations that that PRNG can&#39;t choose</strong> when it shuffles that list. (This is not the same as <em>generating</em> all permutations of a list, which, for a list big enough, can&#39;t be done by any computer in a reasonable time.)</p>
-
-<p>On the other hand, for a list big enough, it&#39;s generally <strong>more important to have shuffles act random</strong> than to choose from among all permutations.</p>
-
-<p>An application that shuffles a list can do the shuffling&mdash;</p>
-
-<ol>
-<li>using a cryptographic RNG, preferably one with a security strength of <code>B</code> bits or greater, or</li>
-<li>if a noncryptographic RNG is otherwise appropriate, using a <em>high-quality PRNG</em> that&mdash;
-
-<ul>
-<li>admits <code>B</code>-bit seeds without shortening or compressing those seeds, and</li>
-<li>is initialized with a seed derived from data with at least <strong><code>B</code> bits of</strong> <a href="#Nondeterministic_Sources_and_Seed_Generation"><strong><em>entropy</em></strong></a>, or &quot;randomness&quot;.</li>
-</ul></li>
-</ol>
-
-<p>For shuffling purposes, <code>B</code> can usually be calculated for different lists using the Python code in the <a href="#Suggested_Entropy_Size"><strong>appendix</strong></a>; see also (van Staveren 2000, &quot;Lack of randomness&quot;)<sup><a href="#Note26"><strong>(26)</strong></a></sup>.  For example, <code>B</code> is 226 (bits) for a 52-item list.  For shuffling purposes, an application MAY limit <code>B</code> to 256 or greater, in cases when variety of permutations is not important.</p>
-
-<p><a id=Unique_Random_Identifiers></a></p>
-
-<h3>Unique Random Identifiers</h3>
-
-<p>Some applications require generating unique identifiers, especially to identify database records or other shared resources.  Such identifiers include auto-incremented numbers, sequentially assigned numbers, random numbers, and combinations of these.  The following are some questions to consider when generating unique identifiers, especially random ones:</p>
-
-<ol>
-<li>Can the application easily check identifiers for uniqueness within the desired scope and range (e.g., check whether a file or database record with that identifier already exists)<sup><a href="#Note27"><strong>(27)</strong></a></sup>?</li>
-<li>Can the application tolerate the risk of generating the same identifier for different resources<sup><a href="#Note28"><strong>(28)</strong></a></sup>?</li>
-<li>Do identifiers have to be hard to guess, be simply &quot;random-looking&quot;, or be neither?</li>
-<li>Do identifiers have to be typed in or otherwise relayed by end users<sup><a href="#Note29"><strong>(29)</strong></a></sup>?</li>
-<li>Is the resource an identifier identifies available to anyone who knows that identifier (even without being logged in or authorized in some way)?</li>
-<li>Do identifiers have to be memorable?</li>
-</ol>
-
-<p>Examples of unique integers include sequentially-assigned integers as well as the primary key of a database table.  If the application requires a unique integer to &quot;look random&quot;, it can apply any of the following operations to that integer:</p>
-
-<ol>
-<li>A reversible mixing function, also known as a permutation (see &quot;<a href="https://papa.bretmulvey.com/post/124027987928"><strong>Hash functions</strong></a>&quot; by B. Mulvey).</li>
-<li>A &quot;full-period&quot; linear PRNG that cycles through all N-bit integers exactly once<sup><a href="#Note30"><strong>(30)</strong></a></sup>.</li>
-<li>If unique integers 0 or greater, but less than K, are desired, choose an N-bit function described in (1) or (2), where N is the number of bits needed to store the number K-minus-1, and discard all outputs that are K or greater.</li>
-</ol>
-
-<p>An application that generates unique identifiers SHOULD do so as follows:</p>
-
-<ul>
-<li>If the application can answer yes to 1 or 2 above:
-
-<ul>
-<li>And yes to 5: Generate a 128-bit-long or longer random integer using a cryptographic RNG.</li>
-<li>And no to 5: Generate a 32-bit-long or longer random integer using a cryptographic RNG.</li>
-</ul></li>
-<li>Otherwise:
-
-<ul>
-<li>If identifiers have to be hard to guess: Use a unique integer which is followed by a random integer generated using a cryptographic RNG (the random integer&#39;s length depends on the answer to 5, as above).</li>
-<li>Otherwise: Use a unique integer. (Note that generally, random numbers alone can&#39;t ensure uniqueness.)</li>
-</ul></li>
-</ul>
-
 <p><a id=Hash_Functions></a></p>
 
 <h2>Hash Functions</h2>
@@ -648,9 +576,9 @@ For cryptographic RNGs, an application SHOULD use only one thread-safe instance 
 
 <h3>Procedural Noise Functions</h3>
 
-<p><em>Noise</em> is a randomized variation in images, sound, and other data.<sup><a href="#Note31"><strong>(31)</strong></a></sup></p>
+<p><em>Noise</em> is a randomized variation in images, sound, and other data.<sup><a href="#Note24"><strong>(24)</strong></a></sup></p>
 
-<p>A <em>noise function</em> is similar to a hash function; it takes an <em>n</em>-dimensional point and, optionally, additional data, and outputs a seemingly random number.<sup><a href="#Note32"><strong>(32)</strong></a></sup>  Noise functions generate <strong><em>procedural noise</em></strong> such as <a href="https://en.wikipedia.org/wiki/Cellular_noise"><strong>cellular noise</strong></a>, <a href="https://en.wikipedia.org/wiki/Value_noise"><strong>value noise</strong></a>, and <a href="https://en.wikipedia.org/wiki/Gradient_noise"><strong>gradient noise</strong></a> (including <a href="https://en.wikipedia.org/wiki/Perlin_noise"><strong>Perlin noise</strong></a>).  If the noise function takes additional data, that data&mdash;</p>
+<p>A <em>noise function</em> is similar to a hash function; it takes an <em>n</em>-dimensional point and, optionally, additional data, and outputs a seemingly random number.<sup><a href="#Note25"><strong>(25)</strong></a></sup>  Noise functions generate <strong><em>procedural noise</em></strong> such as <a href="https://en.wikipedia.org/wiki/Cellular_noise"><strong>cellular noise</strong></a>, <a href="https://en.wikipedia.org/wiki/Value_noise"><strong>value noise</strong></a>, and <a href="https://en.wikipedia.org/wiki/Gradient_noise"><strong>gradient noise</strong></a> (including <a href="https://en.wikipedia.org/wiki/Perlin_noise"><strong>Perlin noise</strong></a>).  If the noise function takes additional data, that data&mdash;</p>
 
 <ul>
 <li>SHOULD include random numbers (from any RNG), and</li>
@@ -670,9 +598,81 @@ For cryptographic RNGs, an application SHOULD use only one thread-safe instance 
 
 <p>and outputs a seemingly random number.  (If the output is encryption keys, the function is also called a <em>key derivation function</em>; see NIST SP 800-108.)  Some pseudorandom functions deliberately take time to compute their output; these are designed above all for cases in which the secret is a password or is otherwise easy to guess &mdash; examples of such functions include PBKDF2 (RFC 2898), <code>scrypt</code> (RFC 7914), and Ethash.  Pseudorandom functions are also used in proofs of work such as the one described in RFC 8019 sec. 4.4.</p>
 
+<p><a id=RNG_Topics></a></p>
+
+<h2>RNG Topics</h2>
+
+<p>This section discusses several important points on the use and selection of RNGs, including things to consider when shuffling or generating &quot;unique&quot; random numbers.</p>
+
+<p><a id=Shuffling></a></p>
+
+<h3>Shuffling</h3>
+
+<p>In a list with <code>N</code> different items, there are <code>N</code> factorial (that is, <code>1 * 2 * ... * N</code>, or <code>N!</code>) ways to arrange the items in that list.  These ways are called <em>permutations</em><sup><a href="#Note26"><strong>(26)</strong></a></sup>.</p>
+
+<p>In practice, an application can <strong>shuffle a list</strong> by doing a <a href="https://en.wikipedia.org/wiki/Fisher-Yates_shuffle"><strong>Fisher&ndash;Yates shuffle</strong></a>, which is unfortunately easy to mess up &mdash; see (Atwood 2007)<sup><a href="#Note27"><strong>(27)</strong></a></sup> &mdash; and is implemented correctly in <a href="https://peteroupc.github.io/randomfunc.html"><strong>another document of mine</strong></a>.</p>
+
+<p>However, if a PRNG admits fewer seeds than the number of permutations, then there are <strong>some permutations that that PRNG can&#39;t choose</strong> when it shuffles that list. (This is not the same as <em>generating</em> all permutations of a list, which, for a list big enough, can&#39;t be done by any computer in a reasonable time.)</p>
+
+<p>On the other hand, for a list big enough, it&#39;s generally <strong>more important to have shuffles act random</strong> than to choose from among all permutations.</p>
+
+<p>An application that shuffles a list can do the shuffling&mdash;</p>
+
+<ol>
+<li>using a cryptographic RNG, preferably one with a security strength of <code>B</code> bits or greater, or</li>
+<li>if a noncryptographic RNG is otherwise appropriate, using a <em>high-quality PRNG</em> that&mdash;
+
+<ul>
+<li>admits <code>B</code>-bit seeds without shortening or compressing those seeds, and</li>
+<li>is initialized with a seed derived from data with at least <strong><code>B</code> bits of</strong> <a href="#Nondeterministic_Sources_and_Seed_Generation"><strong><em>entropy</em></strong></a>, or &quot;randomness&quot;.</li>
+</ul></li>
+</ol>
+
+<p>For shuffling purposes, <code>B</code> can usually be calculated for different lists using the Python code in the <a href="#Suggested_Entropy_Size"><strong>appendix</strong></a>; see also (van Staveren 2000, &quot;Lack of randomness&quot;)<sup><a href="#Note28"><strong>(28)</strong></a></sup>.  For example, <code>B</code> is 226 (bits) for a 52-item list.  For shuffling purposes, an application MAY limit <code>B</code> to 256 or greater, in cases when variety of permutations is not important.</p>
+
+<p><a id=Unique_Random_Identifiers></a></p>
+
+<h3>Unique Random Identifiers</h3>
+
+<p>Some applications require generating unique identifiers, especially to identify database records or other shared resources.  Such identifiers include auto-incremented numbers, sequentially assigned numbers, random numbers, and combinations of these.  The following are some questions to consider when generating unique identifiers, especially random ones:</p>
+
+<ol>
+<li>Can the application easily check identifiers for uniqueness within the desired scope and range (e.g., check whether a file or database record with that identifier already exists)<sup><a href="#Note29"><strong>(29)</strong></a></sup>?</li>
+<li>Can the application tolerate the risk of generating the same identifier for different resources<sup><a href="#Note30"><strong>(30)</strong></a></sup>?</li>
+<li>Do identifiers have to be hard to guess, be simply &quot;random-looking&quot;, or be neither?</li>
+<li>Do identifiers have to be typed in or otherwise relayed by end users<sup><a href="#Note31"><strong>(31)</strong></a></sup>?</li>
+<li>Is the resource an identifier identifies available to anyone who knows that identifier (even without being logged in or authorized in some way)?</li>
+<li>Do identifiers have to be memorable?</li>
+</ol>
+
+<p>Examples of unique integers include sequentially-assigned integers as well as the primary key of a database table.  If the application requires a unique integer to &quot;look random&quot;, it can apply any of the following operations to that integer:</p>
+
+<ol>
+<li>A reversible mixing function, also known as a permutation (see &quot;<a href="https://papa.bretmulvey.com/post/124027987928"><strong>Hash functions</strong></a>&quot; by B. Mulvey).</li>
+<li>A &quot;full-period&quot; linear PRNG that cycles through all N-bit integers exactly once<sup><a href="#Note32"><strong>(32)</strong></a></sup>.</li>
+<li>If unique integers 0 or greater, but less than K, are desired, choose an N-bit function described in (1) or (2), where N is the number of bits needed to store the number K-minus-1, and discard all outputs that are K or greater.</li>
+</ol>
+
+<p>An application that generates unique identifiers SHOULD do so as follows:</p>
+
+<ul>
+<li>If the application can answer yes to 1 or 2 above:
+
+<ul>
+<li>And yes to 5: Generate a 128-bit-long or longer random integer using a cryptographic RNG.</li>
+<li>And no to 5: Generate a 32-bit-long or longer random integer using a cryptographic RNG.</li>
+</ul></li>
+<li>Otherwise:
+
+<ul>
+<li>If identifiers have to be hard to guess: Use a unique integer which is followed by a random integer generated using a cryptographic RNG (the random integer&#39;s length depends on the answer to 5, as above).</li>
+<li>Otherwise: Use a unique integer. (Note that generally, random numbers alone can&#39;t ensure uniqueness.)</li>
+</ul></li>
+</ul>
+
 <p><a id=Verifiable_Random_Numbers></a></p>
 
-<h2>Verifiable Random Numbers</h2>
+<h3>Verifiable Random Numbers</h3>
 
 <p><em>Verifiable random numbers</em> are random numbers (such as seeds for PRNGs) that are disclosed along with all the information necessary to verify their generation.  Usually, such information includes random numbers and/or uncertain data to be determined and publicly disclosed in the future.  Techniques to generate verifiable random numbers (as opposed to cryptographic RNGs alone) are used whenever one party alone can&#39;t be trusted to produce a number at random.  Verifiable random numbers that are disclosed <em>publicly</em> SHOULD NOT be used as encryption keys or other secret parameters.</p>
 
@@ -869,15 +869,19 @@ For cryptographic RNGs, an application SHOULD use only one thread-safe instance 
 
 <p><small><sup id=Note23>(23)</sup> Michaelis, K., Meyer, C., and Schwenk, J. &quot;Randomly Failed! The State of Randomness in Current Java Implementations&quot;, 2013.</small></p>
 
-<p><small><sup id=Note24>(24)</sup> More generally, a list has <code>N! / (W_1! * W_2! * ... * W_K!)</code> permutations (a <a href="http://mathworld.wolfram.com/MultinomialCoefficient.html"><strong>multinomial coefficient</strong></a>), where <code>N</code> is the list&#39;s size, <code>K</code> is the number of different items in the list, and <code>W_i</code> is the number of times the item identified by <code>i</code> appears in the list.  However, this number is never more than <code>N!</code> and suggests using less randomness, so an application need not use this more complicated formula and MAY assume that a list has <code>N!</code> permutations even if some of its items occur more than once.</small></p>
+<p><small><sup id=Note24>(24)</sup> There are many kinds of noise, such as procedural noise (including Perlin noise, cellular noise, and value noise), <a href="https://en.wikipedia.org/wiki/Colors_of_noise"><strong>colored noise</strong></a> (including white noise and pink noise), periodic noise, and noise following a Gaussian or other <a href="https://peteroupc.github.io/randomfunc.html#Specific_Non_Uniform_Distributions"><strong>probability distribution</strong></a>.  See also two articles by Red Blob Games: <a href="http://www.redblobgames.com/articles/noise/introduction.html"><strong>&quot;Noise Functions and Map Generation&quot;</strong></a> and <a href="https://www.redblobgames.com/maps/terrain-from-noise/"><strong>&quot;Making maps from noise functions&quot;</strong></a>.</small></p>
 
-<p><small><sup id=Note25>(25)</sup> Atwood, Jeff. &quot;<a href="https://blog.codinghorror.com/the-danger-of-naivete/"><strong>The danger of na&iuml;vet&eacute;</strong></a>&quot;, Dec. 7, 2007.</small></p>
+<p><small><sup id=Note25>(25)</sup> Noise functions include functions that combine several outputs of a noise function, including by <a href="https://en.wikipedia.org/wiki/Fractional_Brownian_motion"><strong>fractional Brownian motion</strong></a>.  By definition, noise functions deliver the same output for the same input.</small></p>
 
-<p><small><sup id=Note26>(26)</sup> van Staveren, Hans. <a href="https://sater.home.xs4all.nl/doc.html"><strong>&quot;Big Deal: A new program for dealing bridge hands&quot;</strong></a>, Sep. 8, 2000</small></p>
+<p><small><sup id=Note26>(26)</sup> More generally, a list has <code>N! / (W_1! * W_2! * ... * W_K!)</code> permutations (a <a href="http://mathworld.wolfram.com/MultinomialCoefficient.html"><strong>multinomial coefficient</strong></a>), where <code>N</code> is the list&#39;s size, <code>K</code> is the number of different items in the list, and <code>W_i</code> is the number of times the item identified by <code>i</code> appears in the list.  However, this number is never more than <code>N!</code> and suggests using less randomness, so an application need not use this more complicated formula and MAY assume that a list has <code>N!</code> permutations even if some of its items occur more than once.</small></p>
 
-<p><small><sup id=Note27>(27)</sup> For applications distributed across multiple computers, this check is made easier if each computer is assigned a unique value from a central database, because then the computer can use that unique value as part of unique identifiers it generates and ensure that the identifiers are unique across the application without further contacting other computers or the central database.  An example is Twitter&#39;s <a href="https://blog.twitter.com/engineering/en_us/a/2010/announcing-snowflake.html"><strong>Snowflake service</strong></a>.</small></p>
+<p><small><sup id=Note27>(27)</sup> Atwood, Jeff. &quot;<a href="https://blog.codinghorror.com/the-danger-of-naivete/"><strong>The danger of na&iuml;vet&eacute;</strong></a>&quot;, Dec. 7, 2007.</small></p>
 
-<p><small><sup id=Note28>(28)</sup> In theory, generating two or more random integers of the same size runs the risk of producing a duplicate number this way.  However, this risk decreases as that size increases (see &quot;<a href="https://en.wikipedia.org/wiki/Birthday_problem"><strong>Birthday problem</strong></a>&quot;).  For example, in theory, an application has a 50% chance for duplicate numbers after generating&mdash;</p>
+<p><small><sup id=Note28>(28)</sup> van Staveren, Hans. <a href="https://sater.home.xs4all.nl/doc.html"><strong>&quot;Big Deal: A new program for dealing bridge hands&quot;</strong></a>, Sep. 8, 2000</small></p>
+
+<p><small><sup id=Note29>(29)</sup> For applications distributed across multiple computers, this check is made easier if each computer is assigned a unique value from a central database, because then the computer can use that unique value as part of unique identifiers it generates and ensure that the identifiers are unique across the application without further contacting other computers or the central database.  An example is Twitter&#39;s <a href="https://blog.twitter.com/engineering/en_us/a/2010/announcing-snowflake.html"><strong>Snowflake service</strong></a>.</small></p>
+
+<p><small><sup id=Note30>(30)</sup> In theory, generating two or more random integers of the same size runs the risk of producing a duplicate number this way.  However, this risk decreases as that size increases (see &quot;<a href="https://en.wikipedia.org/wiki/Birthday_problem"><strong>Birthday problem</strong></a>&quot;).  For example, in theory, an application has a 50% chance for duplicate numbers after generating&mdash;</p>
 
 <ul>
 <li>about 2.7 billion billion random 122-bit integers (including those found in version-4 UUIDs, or universally unique identifiers),</li>
@@ -885,13 +889,9 @@ For cryptographic RNGs, an application SHOULD use only one thread-safe instance 
 <li>about 93 billion billion billion random 192-bit integers.</small></li>
 </ul>
 
-<p><small><sup id=Note29>(29)</sup> If an application expects end users to type in a unique identifier, it could find that very long unique identifiers are unsuitable for it (e.g. 128-bit numbers take up 32 base-16 characters).  There are ways to deal with these and other long identifiers, including (1) separating memorable chunks of the identifier with a hyphen, space, or another character (e.g., &quot;ABCDEF&quot; becomes &quot;ABC-DEF&quot;); (2) generating the identifier from a sequence of memorable words (as in Electrum or in Bitcoin&#39;s BIP39); or (3) adding a so-called &quot;checksum digit&quot; at the end of the identifier to guard against typing mistakes.  The application ought to consider trying (1) or (2) before deciding to use shorter identifiers than what this document recommends.</small></p>
+<p><small><sup id=Note31>(31)</sup> If an application expects end users to type in a unique identifier, it could find that very long unique identifiers are unsuitable for it (e.g. 128-bit numbers take up 32 base-16 characters).  There are ways to deal with these and other long identifiers, including (1) separating memorable chunks of the identifier with a hyphen, space, or another character (e.g., &quot;ABCDEF&quot; becomes &quot;ABC-DEF&quot;); (2) generating the identifier from a sequence of memorable words (as in Electrum or in Bitcoin&#39;s BIP39); or (3) adding a so-called &quot;checksum digit&quot; at the end of the identifier to guard against typing mistakes.  The application ought to consider trying (1) or (2) before deciding to use shorter identifiers than what this document recommends.</small></p>
 
-<p><small><sup id=Note30>(30)</sup> For suggested &quot;full-period&quot; <a href="https://en.wikipedia.org/wiki/Linear_congruential_generator"><strong>LCGs</strong></a>, see tables 3, 5, 7, and 8 of Steele and Vigna, &quot;Computationally easy, spectrally good multipliers for congruential pseudorandom number generators&quot;, arXiv:2001.05304 [cs.DS].</small></p>
-
-<p><small><sup id=Note31>(31)</sup> There are many kinds of noise, such as procedural noise (including Perlin noise, cellular noise, and value noise), <a href="https://en.wikipedia.org/wiki/Colors_of_noise"><strong>colored noise</strong></a> (including white noise and pink noise), periodic noise, and noise following a Gaussian or other <a href="https://peteroupc.github.io/randomfunc.html#Specific_Non_Uniform_Distributions"><strong>probability distribution</strong></a>.  See also two articles by Red Blob Games: <a href="http://www.redblobgames.com/articles/noise/introduction.html"><strong>&quot;Noise Functions and Map Generation&quot;</strong></a> and <a href="https://www.redblobgames.com/maps/terrain-from-noise/"><strong>&quot;Making maps from noise functions&quot;</strong></a>.</small></p>
-
-<p><small><sup id=Note32>(32)</sup> Noise functions include functions that combine several outputs of a noise function, including by <a href="https://en.wikipedia.org/wiki/Fractional_Brownian_motion"><strong>fractional Brownian motion</strong></a>.  By definition, noise functions deliver the same output for the same input.</small></p>
+<p><small><sup id=Note32>(32)</sup> For suggested &quot;full-period&quot; <a href="https://en.wikipedia.org/wiki/Linear_congruential_generator"><strong>LCGs</strong></a>, see tables 3, 5, 7, and 8 of Steele and Vigna, &quot;Computationally easy, spectrally good multipliers for congruential pseudorandom number generators&quot;, arXiv:2001.05304 [cs.DS].</small></p>
 
 <p><small><sup id=Note33>(33)</sup> Verifiable delay functions are different from proofs of work, in which there can be multiple correct answers. These functions were first formally defined in Boneh, D., Bonneau, J., et al., &quot;Verifiable Delay Functions&quot;, 2018, but such functions appeared earlier in Lenstra, A.K., Wesolowski, B., &quot;A random zoo: sloth, unicorn, and trx&quot;, 2015.</small></p>
 
