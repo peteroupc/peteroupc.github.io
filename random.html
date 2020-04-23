@@ -111,11 +111,6 @@ however, it&#39;s not enough for random numbers to merely &quot;look random&quot
 </ul></li>
 <li><a href="#Acknowledgments"><strong>Acknowledgments</strong></a></li>
 <li><a href="#Notes"><strong>Notes</strong></a></li>
-<li><a href="#Appendix"><strong>Appendix</strong></a>
-
-<ul>
-<li><a href="#Suggested_Entropy_Size"><strong>Suggested Entropy Size</strong></a></li>
-</ul></li>
 <li><a href="#License"><strong>License</strong></a></li>
 </ul>
 
@@ -438,14 +433,21 @@ For cryptographic RNGs, an application SHOULD use only one thread-safe instance 
 <li><p><strong>General case.</strong> For other PRNGs, or if each process uses a different PRNG design, the following is a way to seed multiple processes for random number generation, but it carries the risk of generating seeds that lead to overlapping, correlated, or even identical number sequences, especially if the processes use the same PRNG.<sup><a href="#Note19"><strong>(19)</strong></a></sup> Generate a seed (or use a predetermined seed), then:</p>
 
 <ol>
-<li>Create a PRNG instance for each process.  The instances need not all use the same PRNG design or the same parameters; for example, some can be Philox and others <code>xoroshiro128**</code>.</li>
+<li>Create a PRNG instance for each process.  The instances need not all use the same PRNG design or the same parameters; for example, some can be SFC64 and others <code>xoroshiro128**</code>.</li>
 <li>For each process, hash the seed, a unique number for that process, and a fixed identifier to generate a new seed allowed by the process&#39;s PRNG, and initialize that PRNG with the new seed.</li>
+</ol></li>
+<li><p><strong>Leapfrogging (Bauke and Mertens 2007)<sup><a href="#Note42"><strong>(42)</strong></a></sup>.</strong> The following is an alternative way to initialize a PRNG for each process if the number of processes (<code>N</code>) is small:</p>
+
+<ol>
+<li>Create one PRNG instance. Hash the seed and a fixed identifier to generate a new seed allowed by the PRNG.</li>
+<li>Give each process a copy of the PRNG&#39;s state.  Then, for the <em>second</em> process, discard 1 output from its PRNG; for the <em>third</em> process, discard 2 outputs from its PRNG; and so on.</li>
+<li>Now, whenever a PRNG created this way produces an output, it then discards the next N minus 1 outputs before finishing.</li>
 </ol></li>
 </ol>
 
-<p>The steps above include hashing several things to generate a new seed.  This has to be done with either a <a href="#Hash_Functions"><strong>hash function</strong></a> of N or more bits (where N is the PRNG&#39;s maximum seed size), or a so-called &quot;seed sequence generator&quot; like C++&#39;s <code>std::seed_seq</code>.<sup><a href="#Note20"><strong>(20)</strong></a></sup></p>
-
 <blockquote>
+<p><strong>Note:</strong> The steps above include hashing several things to generate a new seed.  This has to be done with either a <a href="#Hash_Functions"><strong>hash function</strong></a> of N or more bits (where N is the PRNG&#39;s maximum seed size), or a so-called &quot;seed sequence generator&quot; like C++&#39;s <code>std::seed_seq</code>.<sup><a href="#Note20"><strong>(20)</strong></a></sup></p>
+
 <p><strong>Examples:</strong></p>
 
 <ol>
@@ -625,16 +627,21 @@ For cryptographic RNGs, an application SHOULD use only one thread-safe instance 
 <p>An application that shuffles a list can do the shuffling&mdash;</p>
 
 <ol>
-<li>using a cryptographic RNG, preferably one with a security strength of <code>B</code> bits or greater, or</li>
+<li>using a cryptographic RNG, preferably one with a security strength of <code>b</code> bits or greater, or</li>
 <li>if a noncryptographic RNG is otherwise appropriate, using a <em>high-quality PRNG</em> that&mdash;
 
 <ul>
-<li>admits <code>B</code>-bit seeds without shortening or compressing those seeds, and</li>
-<li>is initialized with a seed derived from data with at least <strong><code>B</code> bits of</strong> <a href="#Nondeterministic_Sources_and_Seed_Generation"><strong><em>entropy</em></strong></a>, or &quot;randomness&quot;.</li>
+<li>admits <code>b</code>-bit seeds without shortening or compressing those seeds, and</li>
+<li>is initialized with a seed derived from data with at least <strong><code>b</code> bits of</strong> <a href="#Nondeterministic_Sources_and_Seed_Generation"><strong><em>entropy</em></strong></a>, or &quot;randomness&quot;.</li>
 </ul></li>
 </ol>
 
-<p>For shuffling purposes, <code>B</code> can usually be calculated for different lists using the Python code in the <a href="#Suggested_Entropy_Size"><strong>appendix</strong></a>; see also (van Staveren 2000, &quot;Lack of randomness&quot;)<sup><a href="#Note30"><strong>(30)</strong></a></sup>.  For example, <code>B</code> is 226 (bits) for a 52-item list.  For shuffling purposes, an application MAY limit <code>B</code> to 256 or greater, in cases when variety of permutations is not important.</p>
+<p>For shuffling purposes, <code>b</code> can usually be calculated by taking <code>n</code> factorial minus 1 (where <code>n</code> is the list&#39;s size) and calculating its bit length.  A Python example is <code>b = (math.factorial(n)-1).bit_length()</code>.  See also (van Staveren 2000, &quot;Lack of randomness&quot;)<sup><a href="#Note30"><strong>(30)</strong></a></sup>.  For shuffling purposes, an application MAY limit <code>b</code> to 256 or greater, in cases when variety of permutations is not important. For other sampling tasks, the following Python examples show how to calculate <code>b</code>:</p>
+
+<ul>
+<li>Choosing <code>k</code> out of <code>n</code> different items at random (RFC 3797, sec. 3.3): <code>b = ((math.factorial(n)/(math.factorial(k) * math.factorial(n-k)))-1).bit_length()</code>.</li>
+<li>Shuffling <code>d</code> identical lists of <code>c</code> items: <code>b = ((math.factorial(d*c)/ (math.factorial(d)**c))-1).bit_length()</code>.</li>
+</ul>
 
 <p><a id=Unique_Random_Identifiers></a></p>
 
@@ -925,57 +932,7 @@ For cryptographic RNGs, an application SHOULD use only one thread-safe instance 
 
 <p><small><sup id=Note41>(41)</sup> Allowing applications to do so would hamper forward compatibility &mdash; the API would then be less free to change how the RNG is implemented in the future (e.g., to use a cryptographic or otherwise &quot;better&quot; RNG), or to make improvements or bug fixes in methods that use that RNG (such as shuffling and Gaussian number generation).  (As a notable example, the V8 JavaScript engine recently changed its <code>Math.random()</code> implementation to use a variant of <code>xorshift128+</code>, which is backward compatible because nothing in JavaScript allows  <code>Math.random()</code> to be seeded.)  Nevertheless, APIs can still allow applications to provide additional input (&quot;entropy&quot;) to the RNG in order to increase its randomness rather than to ensure repeatability.</small></p>
 
-<p><a id=Appendix></a></p>
-
-<h2>Appendix</h2>
-
-<p>&nbsp;</p>
-
-<p><a id=Suggested_Entropy_Size></a></p>
-
-<h3>Suggested Entropy Size</h3>
-
-<p>The following Python code suggests how many bits of entropy are needed for shuffling.  For example:</p>
-
-<ul>
-<li>To shuffle an <code>n</code>-item list, the suggested bits of entropy is at least as high as the base-2 logarithm, rounded up, of <code>n!</code> (<code>stateLengthN(n)</code>).</li>
-<li>To shuffle a 52-item list, at least 226 bits of entropy is suggested (<code>stateLengthN(52)</code>).</li>
-<li>To shuffle two 52-item lists of identical contents together, at least 500 bits of entropy is suggested (<code>stateLengthDecks(2, 52)</code>).</li>
-</ul>
-
-<p>&nbsp;</p>
-
-<pre>from math import factorial as fac
-
-def ceillog2(x):
-    &quot;&quot;&quot; Calculates base-2 logarithm, rounded up, of x. &quot;&quot;&quot;
-    ret=0
-    needCeil=True
-    while x&gt;1:
-       one=needCeil and ((x&amp;1)!=0)
-       x=x&gt;&gt;1
-       if one:
-         ret+=1; needCeil=False
-       ret+=1
-    return ret
-
-def stateLengthN(n):
-  &quot;&quot;&quot; Suggested bits of entropy for PRNGs that shuffle
-    a list of n items. &quot;&quot;&quot;
-  return ceillog2(fac(n))
-
-def stateLengthNChooseK(n, k):
-  &quot;&quot;&quot; Suggested bits of entropy for PRNGs that choose k
-   different items randomly from a list of n items
-   (see RFC 3797, sec. 3.3) &quot;&quot;&quot;
-  return ceillog2(fac(n)/(fac(k)*fac(n-k)))
-
-def stateLengthDecks(numDecks, numCards):
-  &quot;&quot;&quot; Suggested bits of entropy for PRNGs that shuffle
-    multiple decks of cards in one. &quot;&quot;&quot;
-  return ceillog2(fac(numDecks*numCards)/ \
-      (fac(numDecks)**numCards))
-</pre>
+<p><small><sup id=Note42>(42)</sup> Bauke and Mertens, &quot;Random numbers for large-scale distributed Monte Carlo simulations&quot;, 2007.</small></p>
 
 <p><a id=License></a></p>
 

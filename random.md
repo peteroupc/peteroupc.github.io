@@ -76,8 +76,6 @@ so that as a result, many applications use RNGs, especially built-in RNGs, that 
     - [**Implementing New RNG APIs**](#Implementing_New_RNG_APIs)
 - [**Acknowledgments**](#Acknowledgments)
 - [**Notes**](#Notes)
-- [**Appendix**](#Appendix)
-    - [**Suggested Entropy Size**](#Suggested_Entropy_Size)
 - [**License**](#License)
 
 <a id=Definitions></a>
@@ -303,11 +301,17 @@ Multiple processes can be seeded for random number generation as follows.<sup>[*
 
 2. **General case.** For other PRNGs, or if each process uses a different PRNG design, the following is a way to seed multiple processes for random number generation, but it carries the risk of generating seeds that lead to overlapping, correlated, or even identical number sequences, especially if the processes use the same PRNG.<sup>[**(19)**](#Note19)</sup> Generate a seed (or use a predetermined seed), then:
 
-    1. Create a PRNG instance for each process.  The instances need not all use the same PRNG design or the same parameters; for example, some can be Philox and others `xoroshiro128**`.
+    1. Create a PRNG instance for each process.  The instances need not all use the same PRNG design or the same parameters; for example, some can be SFC64 and others `xoroshiro128**`.
     2. For each process, hash the seed, a unique number for that process, and a fixed identifier to generate a new seed allowed by the process's PRNG, and initialize that PRNG with the new seed.
 
-The steps above include hashing several things to generate a new seed.  This has to be done with either a [**hash function**](#Hash_Functions) of N or more bits (where N is the PRNG's maximum seed size), or a so-called "seed sequence generator" like C++'s `std::seed_seq`.<sup>[**(20)**](#Note20)</sup>
+3. **Leapfrogging (Bauke and Mertens 2007)<sup>[**(42)**](#Note42)</sup>.** The following is an alternative way to initialize a PRNG for each process if the number of processes (`N`) is small:
 
+    1. Create one PRNG instance. Hash the seed and a fixed identifier to generate a new seed allowed by the PRNG.
+    2. Give each process a copy of the PRNG's state.  Then, for the _second_ process, discard 1 output from its PRNG; for the _third_ process, discard 2 outputs from its PRNG; and so on.
+    3. Now, whenever a PRNG created this way produces an output, it then discards the next N minus 1 outputs before finishing.
+
+> **Note:** The steps above include hashing several things to generate a new seed.  This has to be done with either a [**hash function**](#Hash_Functions) of N or more bits (where N is the PRNG's maximum seed size), or a so-called "seed sequence generator" like C++'s `std::seed_seq`.<sup>[**(20)**](#Note20)</sup>
+>
 > **Examples:**
 >
 > 1. Philox4&times;64-7 is a counter-based PRNG that supports one _stream_ per seed. To seed two processes based on the seed "seed" and this PRNG, an application can&mdash;
@@ -412,12 +416,15 @@ On the other hand, for a list big enough, it's generally **more important to hav
 
 An application that shuffles a list can do the shuffling&mdash;
 
-1. using a cryptographic RNG, preferably one with a security strength of `B` bits or greater, or
+1. using a cryptographic RNG, preferably one with a security strength of `b` bits or greater, or
 2. if a noncryptographic RNG is otherwise appropriate, using a _high-quality PRNG_ that&mdash;
-    - admits `B`-bit seeds without shortening or compressing those seeds, and
-    - is initialized with a seed derived from data with at least **`B` bits of** [**_entropy_**](#Nondeterministic_Sources_and_Seed_Generation), or "randomness".
+    - admits `b`-bit seeds without shortening or compressing those seeds, and
+    - is initialized with a seed derived from data with at least **`b` bits of** [**_entropy_**](#Nondeterministic_Sources_and_Seed_Generation), or "randomness".
 
-For shuffling purposes, `B` can usually be calculated for different lists using the Python code in the [**appendix**](#Suggested_Entropy_Size); see also (van Staveren 2000, "Lack of randomness")<sup>[**(30)**](#Note30)</sup>.  For example, `B` is 226 (bits) for a 52-item list.  For shuffling purposes, an application MAY limit `B` to 256 or greater, in cases when variety of permutations is not important.
+For shuffling purposes, `b` can usually be calculated by taking `n` factorial minus 1 (where `n` is the list's size) and calculating its bit length.  A Python example is `b = (math.factorial(n)-1).bit_length()`.  See also (van Staveren 2000, "Lack of randomness")<sup>[**(30)**](#Note30)</sup>.  For shuffling purposes, an application MAY limit `b` to 256 or greater, in cases when variety of permutations is not important. For other sampling tasks, the following Python examples show how to calculate `b`:
+
+- Choosing `k` out of `n` different items at random (RFC 3797, sec. 3.3): `b = ((math.factorial(n)/(math.factorial(k) * math.factorial(n-k)))-1).bit_length()`.
+- Shuffling `d` identical lists of `c` items: `b = ((math.factorial(d*c)/ (math.factorial(d)**c))-1).bit_length()`.
 
 <a id=Unique_Random_Identifiers></a>
 ### Unique Random Identifiers
@@ -646,51 +653,7 @@ See also N. Reed, "Quick And Easy GPU Random Numbers In D3D11", Nathan Reed's co
 
 <small><sup id=Note41>(41)</sup> Allowing applications to do so would hamper forward compatibility &mdash; the API would then be less free to change how the RNG is implemented in the future (e.g., to use a cryptographic or otherwise "better" RNG), or to make improvements or bug fixes in methods that use that RNG (such as shuffling and Gaussian number generation).  (As a notable example, the V8 JavaScript engine recently changed its `Math.random()` implementation to use a variant of `xorshift128+`, which is backward compatible because nothing in JavaScript allows  `Math.random()` to be seeded.)  Nevertheless, APIs can still allow applications to provide additional input ("entropy") to the RNG in order to increase its randomness rather than to ensure repeatability.</small>
 
-<a id=Appendix></a>
-## Appendix
-
-&nbsp;
-
-<a id=Suggested_Entropy_Size></a>
-### Suggested Entropy Size
-
-The following Python code suggests how many bits of entropy are needed for shuffling.  For example:
-- To shuffle an `n`-item list, the suggested bits of entropy is at least as high as the base-2 logarithm, rounded up, of `n!` (`stateLengthN(n)`).
-- To shuffle a 52-item list, at least 226 bits of entropy is suggested (`stateLengthN(52)`).
-- To shuffle two 52-item lists of identical contents together, at least 500 bits of entropy is suggested (`stateLengthDecks(2, 52)`).
-
-&nbsp;
-
-    from math import factorial as fac
-
-    def ceillog2(x):
-        """ Calculates base-2 logarithm, rounded up, of x. """
-        ret=0
-        needCeil=True
-        while x>1:
-           one=needCeil and ((x&1)!=0)
-           x=x>>1
-           if one:
-             ret+=1; needCeil=False
-           ret+=1
-        return ret
-
-    def stateLengthN(n):
-      """ Suggested bits of entropy for PRNGs that shuffle
-        a list of n items. """
-      return ceillog2(fac(n))
-
-    def stateLengthNChooseK(n, k):
-      """ Suggested bits of entropy for PRNGs that choose k
-       different items randomly from a list of n items
-       (see RFC 3797, sec. 3.3) """
-      return ceillog2(fac(n)/(fac(k)*fac(n-k)))
-
-    def stateLengthDecks(numDecks, numCards):
-      """ Suggested bits of entropy for PRNGs that shuffle
-        multiple decks of cards in one. """
-      return ceillog2(fac(numDecks*numCards)/ \
-          (fac(numDecks)**numCards))
+<small><sup id=Note42>(42)</sup> Bauke and Mertens, "Random numbers for large-scale distributed Monte Carlo simulations", 2007.</small>
 
 <a id=License></a>
 ## License
