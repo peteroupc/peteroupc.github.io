@@ -19,7 +19,7 @@ There are several kinds of nearby sequences to test for this purpose:
 
 Note that testing nearby sequences produced by _leapfrogging_ is redundant with testing the regular PRNG sequence without streams.
 
-**Hash functions and counter-based PRNGs.** In general, a _counter-based PRNG_ produces pseudorandom numbers by transforming a seed and a _counter_; with each number, it increments the counter and leaves the seed unchanged (Salmon et al. 2011)<sup>[**(1)**](#Note1)</sup>.  The seed and counter can be transformed using block ciphers, other permutations, or hash functions.  In general, counter-based PRNGs that use hash functions (such as MD5, SHA-1, MurmurHash, CityHash, xxHash) will meet the independence requirement if the following hash stream (for that hash function) doesn't fail the PractRand tests at 1 TiB or greater:
+**Hash functions and counter-based PRNGs.** In general, a _counter-based PRNG_ produces pseudorandom numbers by transforming a seed and a _counter_; with each number, it increments the counter and leaves the seed unchanged (Salmon et al. 2011)<sup>[**(1)**](#Note1)</sup>.  The seed and counter can be transformed using block ciphers, other permutation functions, or hash functions.  In general, counter-based PRNGs that use hash functions (such as MD5, SHA-1, MurmurHash, CityHash, xxHash) will meet the independence requirement if the following hash stream (for that hash function) doesn't fail the PractRand tests at 1 TiB or greater:
 
 1. Write out the hash code of `seed || 0x5F || counter` (the `||` symbol means concatenation).
 2. Write out the hash code of `(seed+1) || 0x5F || counter`.
@@ -29,14 +29,15 @@ In general, a hash function without PractRand failures is worthy of mention if i
 
 **Combined PRNGs.** As G. Marsaglia (in KISS), D. Jones (in JKISS), and A. Fog (2015)<sup>[**(2)**](#Note2)</sup> have recognized, combining two or more PRNGs of weaker quality often leads to a higher-quality PRNG.  A PRNG that isn't high-quality could be converted to a high-quality PRNG in one of the following ways:
 
-- If the PRNG has at least 128 bits of state and uses a _permutation_<sup>[**(3)**](#Note3)</sup> `P(x)` to transform that state, have the PRNG generate each number as follows instead:
+- If the PRNG has at least 128 bits of state and uses a _permutation function_<sup>[**(3)**](#Note3)</sup> `P(x)` to transform that state, have the PRNG generate each number as follows instead:
      1. Add 1 (or another odd constant<sup>[**(4)**](#Note4)</sup>) to the state (using wraparound addition).
      2. Output either `P(state)` or `S(P(state))`, where `S(x)` is one of the four _scramblers_ defined in (Blackman and Vigna 2019)<sup>[**(5)**](#Note5)</sup> (+, ++, \*, \*\*).
 - If the PRNG admits 2<sup>63</sup> or more seeds and outputs N-bit numbers, then each number it outputs can be _combined_ with the next number from a sequence that cycles through at least 2<sup>128</sup> numbers, to produce a new N-bit number. (These two numbers can be combined via XOR or wraparound addition if they have the same size, or via hashing.) This sequence can be one of the following:
      - A _Weyl sequence_ (a sequence formed by wraparound addition of a constant odd number).
-     - A _permutation_ of an incrementing counter that starts at 0.
+     - A _permutation function_ of an incrementing counter that starts at 0.
      - A PRNG with a fixed seed and a single cycle of 2<sup>128</sup> or more numbers, such as a linear congruential generator.
-- If the PRNG admits 2<sup>63</sup> or more seeds, has a minimum cycle length of 2<sup>128</sup> or more, and outputs N-bit numbers, each number it outputs can be _combined_ with the next number from another PRNG to produce a new N-bit number.
+- If the PRNG admits 2<sup>63</sup> or more seeds has a minimum cycle length of 2<sup>128</sup> or more, and outputs N-bit numbers, each number it outputs can be _combined_ with the next number from another PRNG to produce a new N-bit number.
+- If the PRNG has a single cycle of at least 2<sup>63</sup>, admits that many seeds, and outputs N-bit numbers, each number it outputs can be _combined_ with the next number from another PRNG to produce a new N-bit number.
 
 _Other combinations and transformations._  There are other ways to combine two PRNGs, or to transform a single PRNG, but they are not preferred ways to build a _high-quality PRNG_.  They include:
 
@@ -69,9 +70,9 @@ The Schaathun paper suggests the following four random number sequences for test
 
 <small><sup id=Note2>(2)</sup> Agner Fog, "[**Pseudo-Random Number Generators for Vector Processors and Multicore Processors**](http://digitalcommons.wayne.edu/jmasm/vol14/iss1/23)", _Journal of Modern Applied Statistical Methods_ 14(1), article 23 (2015).</small>
 
-<small><sup id=Note3>(3)</sup> A _permutation_ (or _bijection_) is a reversible mapping from N-bit integers to N-bit integers.  Examples include: JSF64 by B. Jenkins; MIX and MIX-i (part of Tyche and Tyche-i); the Romu family by Mark Overton; block ciphers with a fixed key; 32-bit to 32-bit reversible mixing functions.</small>
+<small><sup id=Note3>(3)</sup> A _permutation function_ (or _bijection_) is a reversible mapping from N-bit integers to N-bit integers.  Examples include: JSF64 by B. Jenkins; MIX and MIX-i (part of Tyche and Tyche-i); the Romu family by Mark Overton; block ciphers with a fixed key; 32-bit to 32-bit reversible mixing functions.</small>
 
-<small><sup id=Note4>(4)</sup> As [**P. Evensen shows**](https://mostlymangling.blogspot.com/2018/07/on-mixing-functions-in-fast-splittable.html#testing_with_practrand), the choice of constant can matter for a given permutation.</small>
+<small><sup id=Note4>(4)</sup> As [**P. Evensen shows**](https://mostlymangling.blogspot.com/2018/07/on-mixing-functions-in-fast-splittable.html#testing_with_practrand), the choice of constant can matter for a given permutation function.</small>
 
 <small><sup id=Note5>(5)</sup> Blackman, D., Vigna, S., "Scrambled Linear Pseudorandom Number Generators", 2019.</small>
 
