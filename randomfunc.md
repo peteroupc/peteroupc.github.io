@@ -1548,7 +1548,10 @@ If the distribution **is continuous and has a known PDF**, the `ContinuousSample
        return ContinuousWeightedChoice(list, weights)
     END METHOD
 
-If the distribution **is continuous and has a known CDF**, the CDF is usually numerically inverted to generate a random number from that distribution.  For example, [**Python sample code**](https://peteroupc.github.io/randomgen.zip) includes an `integers_from_cdf` method that implements this kind of sampling given a CDF, and a `from_interp` method that generates random numbers from a list of pairs of CDF values and points.
+If the distribution **is continuous and has a known CDF**, the CDF is usually numerically inverted to generate a random number from that distribution.  For example, in the [**Python sample code**](https://peteroupc.github.io/randomgen.zip):
+
+- An `integers_from_cdf` method and a `KVectorSampler` class<sup>[**(55)**](#Note55)</sup> each implement this kind of sampling given a CDF.
+- A `from_interp` method generates random numbers from a list of pairs of CDF values and points.
 
 <a id=Inverse_Transform_Sampling></a>
 #### Inverse Transform Sampling
@@ -2268,7 +2271,7 @@ To generate a random point inside an N-dimensional box, generate `RNDRANGEMaxExc
 <a id=Random_Points_Inside_a_Simplex></a>
 #### Random Points Inside a Simplex
 
-The following pseudocode generates a random point inside an _n_-dimensional simplex (simplest convex figure, such as a line segment, triangle, or tetrahedron).  It takes one parameter, _points_, a list consisting of the _n_ plus one vertices of the simplex, all of a single dimension _n_ or greater.
+The following pseudocode generates a random point inside an _n_-dimensional simplex (simplest convex figure, such as a line segment, triangle, or tetrahedron).  It takes one parameter, _points_, a list consisting of the _n_ plus one vertices of the simplex, all of a single dimension _n_ or greater. See also (Grimme 2015)<sup>[**(56)**](#Note56)</sup>, which shows MATLAB code for generating a random point uniformly inside a simplex just described, but in a different way.
 
     METHOD RandomPointInSimplex(points):
        ret=NewList()
@@ -2480,6 +2483,10 @@ In 2007, Thomas, D., et al. gave a survey of normal random number methods in "Ga
 <small><sup id=Note53>(53)</sup> Mironov, I., "On Significance of the Least Significant Bits For Differential Privacy", 2012.</small>
 
 <small><sup id=Note54>(54)</sup> For example, see Balcer, V., Vadhan, S., "Differential Privacy on Finite Computers", Dec. 4, 2018; as well as the Miccancio&ndash;Walter discrete Gaussian generator (for lattice-based cryptography).</small>
+
+<small><sup id=Note55>(55)</sup> The `KVectorSampler` class uses algorithms described in Arnas, D., Leake, C., Mortari, D., "Random Sampling using k-vector", _Computing in Science & Engineering_ 21(1) pp. 94-107, 2019, and Mortari, D., Neta, B., "k-Vector Range Searching Techniques".</small>
+
+<small><sup id=Note56>(56)</sup> Grimme, C., "Picking a Uniformly Random Point from an Arbitrary Simplex", 2015.</small>
 
 <a id=Appendix></a>
 ## Appendix

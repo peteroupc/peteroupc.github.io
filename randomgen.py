@@ -1590,6 +1590,164 @@ class ConvexPolygonSampler:
         tri = self.triangles[index]
         return self.randgen.simplex_point(tri)
 
+class _KVectorRootSolver:
+    def _derivcdf(self, cdf, x):
+        return (cdf(x + 0.0001) - cdf(x)) / 0.0001
+
+    def _linspace(self, a, b, size):
+        return [a + (b - a) * (x * 1.0 / size) for x in range(size + 1)]
+
+    def _newton(self, f, df, y, x):
+        for i in range(5):
+            fv = f(x) - y
+            dfv = df(x)
+            if dfv == 0:
+                return x
+            fv /= dfv
+            if abs(fv) < 2.22e-16:
+                return x
+            x -= fv
+        return x
+
+    def __init__(self, cdf, xmin, xmax, pdf=None):
+        self.pdf = pdf
+        self.cdf = cdf
+        if self.pdf == None:
+            self.pdf = lambda x: self._derivcdf(self.cdf, x)
+        eps = 2.22e-16
+        x = self._linspace(xmin, xmax, 2000)
+        n = len(x)
+        xy = [[cdf(v), v] for v in x]
+        ys = [v[0] for v in xy]
+        self.delta = max([abs(ys[i + 1] - ys[i]) for i in range(n - 1)]) * 4 * eps
+        xy.sort()
+        xs = [v[1] for v in xy]  # x's corresponding to sorted y's
+        ys.sort()  # sorted y's
+        self.delta_x = (xmax - xmin) * 1.0 / (n - 1)
+        ymax = ys[n - 1]
+        ymin = ys[0]
+        xi = eps * max(abs(ymin), abs(ymax))
+        self.m = ((ymax - ymin) + 2.0 * xi) / (n - 1)
+        self.q = ymin - self.m - xi
+        self.xs = xs
+        self.ys = ys
+        self.k = [0 for i in range(n + 1)]  # One-based
+        self.k[1] = 0
+        self.k[n] = n
+        for i in range(1, n + 1):
+            self.k[i] = n
+            for j in range(1, n + 1):
+                if self.ys[j - 1] > self.m * i + self.q:
+                    self.k[i] = j - 1
+                    break
+
+    def solve(self, ylist):
+        return [self._solveone(v) for v in ylist]
+
+    def _solveone(self, yr):
+        halfdelta = self.delta * 0.5
+        delta_x_and_half = self.delta_x * 1.5
+        ya = yr - halfdelta
+        yb = yr + halfdelta
+        n = len(self.ys)
+        ja = int(math.floor((ya - self.q) / self.m))
+        jb = int(math.ceil((yb - self.q) / self.m))
+        ja = max(1, min(n, ja))
+        jb = max(1, min(n, jb))
+        ja = self.k[ja] + 1  # One-based
+        jb = self.k[jb]  # One-based
+        ka = min(ja, jb)
+        kb = max(ja, jb)
+        xy = [[self.xs[i - 1], self.ys[i - 1]] for i in range(ka, kb + 1)]
+        if len(xy) == 1:
+            return self._newton(self.cdf, self.pdf, yr, xy[0][0])
+        xy.sort()
+        roots = []
+        for i in range(len(xy) - 1):
+            xdiff = xy[i + 1][0] - xy[i][0]
+            if xdiff >= delta_x_and_half:
+                # New potential root found
+                roots.append(self._newton(self.cdf, self.pdf, yr, xy[i][0]))
+            if xdiff < delta_x_and_half and i == 0:
+                # New potential root found
+                roots.append(
+                    self._newton(self.cdf, self.pdf, yr, xy[i][0] + xdiff * 0.5)
+                )
+        return roots[0]  # Return the first root found
+
+class KVectorSampler:
+    """ A K-Vector-like sampler of a continuous distribution
+      with a known cumulative distribution function (CDF).
+      Uses algorithms
+      described in Arnas, D., Leake, C., Mortari, D., "Random
+      Sampling using k-vector", Computing in Science &
+      Engineering 21(1) pp. 94-107, 2019, and Mortari, D.,
+      Neta, B., "k-Vector Range Searching Techniques".  """
+
+    def _linspace(self, a, b, size):
+        return [a + (b - a) * (x * 1.0 / size) for x in range(size + 1)]
+
+    def __init__(self, rg, cdf, xmin, xmax, pdf=None, nd=200):
+        """ Initializes the K-Vector-like sampler.
+         Parameters:
+         - randgen: A random generator (RandGen) object.
+         - cdf: Cumulative distribution function (CDF) of the
+            distribution.  The CDF must be
+            monotonically nondecreasing everywhere in the
+            interval [xmin, xmax] and must output values in [0, 1];
+            for best results, the CDF should
+            be increasing everywhere in [xmin, xmax].
+         - xmin: Maximum x-value to generate.
+         - xmax: Maximum y-value to generate.
+         - pdf: Optional. Distribution's probability density
+            function (PDF), to improve accuracy in the root-finding
+            process.
+         - nd: Optional. Size of tables used in the sampler.
+            Default is 200.
+         """
+        eps = 2.22e-16
+        ymin = cdf(xmin)
+        ymax = cdf(xmax)
+        xi = max(abs(ymin), abs(ymax))
+        self.ys = self._linspace(ymin, ymax, nd - 1)
+        # NOTE: Using the K-vector function inversion approach
+        # in Arnas et al., but any other root-finding method
+        # will work well here, especially since we're only doing
+        # root-finding in the setup phase, not the sampling phase.
+        # This is perhaps the only non-trivial part of the algorithm.
+        roots = _KVectorRootSolver(cdf, xmin, xmax, pdf).solve(self.ys)
+        roots = [[self.ys[i], roots[i]] for i in range(len(roots))]
+        # Use known roots at endpoints for robustness
+        roots[0][1] = xmin
+        roots[nd - 1][1] = xmax
+        roots.sort()
+        self.xs = [v[1] for v in roots]
+        self.m = (nd - 1) * 1.0 / (ymax - ymin + 2 * xi)
+        self.q = 1 - self.m * (ymin - xi)
+        self.rg = rg
+
+    def _sampleone(self):
+        mn = self.ys[0]
+        mx = self.ys[len(self.ys) - 1]
+        while True:
+            a = self.rg.rndrange(mn, mx)
+            # Do a "search" for 'a'
+            b = int(math.floor(self.m * a + self.q))
+            x0 = self.xs[b - 1]
+            x1 = self.xs[b]
+            y0 = self.ys[b - 1]
+            y1 = self.ys[b]
+            # Reject regions where the PDF is
+            # zero
+            if y1 == y0:
+                continue
+            return x0 + (a - y0) * (x1 - x0) / (y1 - y0)
+
+    def sample(self, n):
+        """ Returns a list of 'n' random numbers of
+         the distribution represented by this sampler. """
+        return [self._sampleone() for i in range(n)]
+
 class AlmostRandom:
     def __init__(self, randgen, list):
         if len(list) == 0:
@@ -1608,8 +1766,21 @@ class AlmostRandom:
 
 # Examples of use
 if __name__ == "__main__":
-    # Generate multiple dice rolls
+    # Initialize random generator
     randgen = RandomGen()
+
+    def normalcdf(x, mu=0, sigma=1):
+        return (1 + math.erf((x - mu) / (math.sqrt(2) * sigma))) / 2.0
+
+    def normalpdf(x, mu=0, sigma=1):
+        x -= mu
+        return math.exp(-(x * x) / (2 * sigma * sigma)) / (
+            math.sqrt(2 * math.pi) * sigma
+        )
+
+    kvs = KVectorSampler(randgen, normalcdf, -4, 4, pdf=normalpdf, nd=50)
+    print(kvs.sample(20))
+    # Generate multiple dice rolls
     dierolls = [randgen.diceRoll(2, 6) for i in range(10)]
     # Results
     print("Results: %s" % (dierolls))
