@@ -36,7 +36,7 @@ In general, a hash function without PractRand failures is worthy of mention if i
      - A _Weyl sequence_ (a sequence formed by wraparound addition of a constant odd number).
      - A _permutation function_ of an incrementing counter that starts at 0.
      - A PRNG with a fixed seed and a single cycle of 2<sup>128</sup> or more numbers, such as a linear congruential generator.
-- If the PRNG admits 2<sup>63</sup> or more seeds has a minimum cycle length of 2<sup>128</sup> or more, and outputs N-bit numbers, each number it outputs can be _combined_ with the next number from another PRNG to produce a new N-bit number.
+- If the PRNG admits 2<sup>63</sup> or more seeds, has a minimum cycle length of 2<sup>128</sup> or more, and outputs N-bit numbers, each number it outputs can be _combined_ with the next number from another PRNG to produce a new N-bit number.
 - If the PRNG has a single cycle of at least 2<sup>63</sup>, admits that many seeds, and outputs N-bit numbers, each number it outputs can be _combined_ with the next number from another PRNG to produce a new N-bit number.
 
 _Other combinations and transformations._  There are other ways to combine two PRNGs, or to transform a single PRNG, but they are not preferred ways to build a _high-quality PRNG_.  They include:

@@ -1619,8 +1619,7 @@ class _KVectorRootSolver:
         n = len(x)
         xy = [[cdf(v), v] for v in x]
         ys = [v[0] for v in xy]
-        deltas = [abs(ys[i + 1] - ys[i]) \
-            for i in range(n - 1)]
+        deltas = [abs(ys[i + 1] - ys[i]) for i in range(n - 1)]
         self.delta = max(deltas) * 4 * eps
         xy.sort()
         xs = [v[1] for v in xy]  # x's corresponding to sorted y's
@@ -1685,6 +1684,7 @@ class KVectorSampler:
       Sampling using k-vector", Computing in Science &
       Engineering 21(1) pp. 94-107, 2019, and Mortari, D.,
       Neta, B., "k-Vector Range Searching Techniques".  """
+
     def _linspace(self, a, b, size):
         return [a + (b - a) * (x * 1.0 / size) for x in range(size + 1)]
 
@@ -1718,31 +1718,34 @@ class KVectorSampler:
         # This is perhaps the only non-trivial part of the algorithm.
         roots = _KVectorRootSolver(cdf, xmin, xmax, pdf).solve(self.ys)
         roots = [[self.ys[i], roots[i]] for i in range(len(roots))]
-        # Clamp roots for robustness
-        for i in range(len(roots)):
-          roots[i][1]=min(xmax, max(xmin, roots[i][1]))
-        roots.sort()
-        self.xs = [v[1] for v in roots]
-        # Recalculate CDFs for the roots,
+        # Clamp roots for robustness, then
+        # recalculate CDFs for the roots,
         # in case some parts of the
         # CDF have zero derivative
+        for i in range(len(roots)):
+            r = min(xmax, max(xmin, roots[i][1]))
+            roots[i][1] = r
+            roots[i][0] = cdf(r)
+        roots.sort()
+        self.xs = [v[1] for v in roots]
+        self.ys = [v[0] for v in roots]
+        self.ymin = self.ys[0]
+        self.ymax = self.ys[len(self.ys) - 1]
         self.ys = [cdf(x) for x in self.xs]
-        self.m = (nd - 1) * 1.0 / (ymax - ymin + 2 * xi)
-        self.q = 1 - self.m * (ymin - xi)
+        self.m = (nd - 1) * 1.0 / (self.ymax - self.ymin + 2 * xi)
+        self.q = 1 - self.m * (self.ymin - xi)
         self.rg = rg
 
     def _sampleone(self):
-        mn = self.ys[0]
-        mx = self.ys[len(self.ys) - 1]
         while True:
-            a = self.rg.rndrange(mn, mx)
+            a = self.rg.rndrange(self.ymin, self.ymax)
             # Do a "search" for 'a'
             b = int(math.floor(self.m * a + self.q))
             x0 = self.xs[b - 1]
             x1 = self.xs[b]
             y0 = self.ys[b - 1]
             y1 = self.ys[b]
-            #print([a,x0, x1, y0, y1])
+            # print([a,x0, x1, y0, y1])
             # Reject "empty" regions
             if y1 == y0 or x1 == x0:
                 continue
@@ -1778,7 +1781,7 @@ if __name__ == "__main__":
         return [a + (b - a) * (x * 1.0 / size) for x in range(size + 1)]
 
     def normalcdf(x, mu=0, sigma=1):
-        cdf=(1 + math.erf((x - mu) / (math.sqrt(2) * sigma))) / 2.0
+        cdf = (1 + math.erf((x - mu) / (math.sqrt(2) * sigma))) / 2.0
         return cdf
 
     def normalpdf(x, mu=0, sigma=1):
@@ -1787,32 +1790,34 @@ if __name__ == "__main__":
             math.sqrt(2 * math.pi) * sigma
         )
 
-    def showbuckets(ls,buckets):
-      mx=max(buckets)
-      for i in range(len(buckets)):
-        print(("%0.3f %f" % (ls[i],buckets[i]))+" "+ \
-          ("*"*int(buckets[i]*40/mx)))
+    def showbuckets(ls, buckets):
+        mx = max(buckets)
+        for i in range(len(buckets)):
+            print(
+                ("%0.3f %f" % (ls[i], buckets[i]))
+                + " "
+                + ("*" * int(buckets[i] * 40 / mx))
+            )
 
-    def bucket(v,ls,buckets):
-      for i in range(len(buckets)-1):
-         if v>=ls[i] and v<ls[i+1]:
-           buckets[i]+=1;break
+    def bucket(v, ls, buckets):
+        for i in range(len(buckets) - 1):
+            if v >= ls[i] and v < ls[i + 1]:
+                buckets[i] += 1
+                break
 
     def showfunc(f, mn, mx):
-       ls=linspace(mn,mx,30)
-       showbuckets(ls, [f(x) for x in ls])
+        ls = linspace(mn, mx, 30)
+        showbuckets(ls, [f(x) for x in ls])
 
     # Generate normal random numbers
     print("Generating normal random numbers with KVectorSampler")
-    kvs = KVectorSampler(randgen, normalcdf, -4, 4, nd=200,
-       pdf=normalpdf)
-    ksample=kvs.sample(10000)
-    ls=linspace(-4,4,30)
-    buckets=[0 for x in ls]
+    kvs = KVectorSampler(randgen, normalcdf, -4, 4, nd=200, pdf=normalpdf)
+    ksample = kvs.sample(10000)
+    ls = linspace(-4, 4, 30)
+    buckets = [0 for x in ls]
     for ks in ksample:
-       bucket(ks,ls,buckets)
-    showbuckets(ls,buckets)
-    exit()
+        bucket(ks, ls, buckets)
+    showbuckets(ls, buckets)
     # Generate multiple dice rolls
     dierolls = [randgen.diceRoll(2, 6) for i in range(10)]
     # Results
