@@ -6,8 +6,9 @@ The issue of supporting file names is tricky, because different file systems&mda
 
 - support different character encodings,
 - use different rules in the storage of file names,
-- use different rules for case comparisons and normalization comparisons, and
-- have different limits on the number of code units a file name can have.
+- use different rules for case comparisons and normalization comparisons,
+- have different limits on the number of code units a file name can have, and
+- could reject certain file names.
 
 For example, by default&mdash;
 
@@ -16,6 +17,8 @@ For example, by default&mdash;
 - HFS Plus uses a particular normalization form in file name storage.
 
 Most but not all modern file systems support file names with _non-basic code points_ (names with code points beyond the Basic Latin range of the Unicode Standard).  Such file names are called _internationalized file names_ here.
+
+In addition, certain file names are problematic; examples as "con", "aux", and other names reserved by earlier versions of the Windows operating system.  (For Windows-specific information on file name support, see "[Naming Files, Paths, and Namespaces](https://docs.microsoft.com/en-us/windows/win32/fileio/naming-a-file)" in Microsoft Docs.)
 
 Applications that wish to support internationalized file names can follow the suggestions below.
 
