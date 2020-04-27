@@ -368,6 +368,8 @@ For cryptographic RNGs, an application SHOULD use only one thread-safe instance 
 
 <blockquote>
 <p><strong>Note:</strong> Online services that make random numbers available to applications, as well as the noise registered by microphone and camera recordings (see RFC 4086 sec. 3.2.1, (Liebow-Feeser 2017a)<sup><a href="#Note11"><strong>(11)</strong></a></sup>, and  (Liebow-Feeser 2017b)<sup><a href="#Note12"><strong>(12)</strong></a></sup>), are additional nondeterministic sources.  However, online services require Internet or other network access, and some of them require access credentials.  Also, many mobile operating systems require applications to declare network, camera, and microphone access to users upon installation.  For these reasons, these kinds of sources are NOT RECOMMENDED if other approaches are adequate.</p>
+
+<p><strong>Example:</strong> A program could ask users to flip coins or roll dice and type in their results.  If users do so, the results typed this way will have come from nondeterministic sources (here, coins or dice).</p>
 </blockquote>
 
 <p><a id=What_Is_Entropy></a></p>

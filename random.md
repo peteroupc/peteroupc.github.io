@@ -252,6 +252,8 @@ A _nondeterministic source_ is a source that doesn't give the same output for th
 RFC 4086, "Randomness Requirements for Security", section 3, contains a survey of nondeterministic sources.
 
 > **Note:** Online services that make random numbers available to applications, as well as the noise registered by microphone and camera recordings (see RFC 4086 sec. 3.2.1, (Liebow-Feeser 2017a)<sup>[**(11)**](#Note11)</sup>, and  (Liebow-Feeser 2017b)<sup>[**(12)**](#Note12)</sup>), are additional nondeterministic sources.  However, online services require Internet or other network access, and some of them require access credentials.  Also, many mobile operating systems require applications to declare network, camera, and microphone access to users upon installation.  For these reasons, these kinds of sources are NOT RECOMMENDED if other approaches are adequate.
+>
+> **Example:** A program could ask users to flip coins or roll dice and type in their results.  If users do so, the results typed this way will have come from nondeterministic sources (here, coins or dice).
 
 <a id=What_Is_Entropy></a>
 ### What Is Entropy?
