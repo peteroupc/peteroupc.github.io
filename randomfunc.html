@@ -1199,11 +1199,11 @@ END METHOD
 
 <h3>Random Integers with a Given Positive Sum</h3>
 
-<p>The following pseudocode shows how to generate a uniform random combination of integers with a given positive sum. (The algorithm for this was presented in (Smith and Tromble 2004)<sup><a href="#Note21"><strong>(21)</strong></a></sup>.)  In the pseudocode below&mdash;</p>
+<p>The following pseudocode shows how to generate <code>n</code> uniform random integers greater than 0 with a given positive sum, in random order. (The algorithm for this was presented in (Smith and Tromble 2004)<sup><a href="#Note21"><strong>(21)</strong></a></sup>.)  In the pseudocode below&mdash;</p>
 
 <ul>
-<li>the method <code>PositiveIntegersWithSum</code> returns <code>n</code> integers greater than 0 that sum to <code>total</code>,</li>
-<li>the method <code>IntegersWithSum</code> returns <code>n</code> integers 0 or greater that sum to <code>total</code>, and</li>
+<li>the method <code>PositiveIntegersWithSum</code> returns <code>n</code> integers greater than 0 that sum to <code>total</code>, in random order,</li>
+<li>the method <code>IntegersWithSum</code> returns <code>n</code> integers 0 or greater that sum to <code>total</code>, in random order, and</li>
 <li><code>Sort(list)</code> sorts the items in <code>list</code> in ascending order (note that sort algorithms are outside the scope of this document).</li>
 </ul>
 
@@ -1243,8 +1243,8 @@ END METHOD
 <p><strong>Notes:</strong></p>
 
 <ol>
-<li>To generate a uniform random combination of <code>N</code> numbers with a given positive average <code>avg</code>, generate a uniform random combination of <code>N</code> numbers with the sum <code>N * avg</code>.</li>
-<li>To generate a uniform random combination of <code>N</code> numbers <code>min</code> or greater and with a given positive sum <code>sum</code>, generate <code>IntegersWithSum(N, sum - N * min)</code> (or its equivalent for real numbers), then add <code>min</code> to each number generated this way.</li>
+<li>To generate <code>N</code> uniform random numbers with a given positive average <code>avg</code>, in random order, generate <code>IntegersWithSum(N, N * avg)</code> (or its equivalent for real numbers).</li>
+<li>To generate <code>N</code> uniform random numbers <code>min</code> or greater and with a given positive sum <code>sum</code>, in random order, generate <code>IntegersWithSum(N, sum - N * min)</code> (or its equivalent for real numbers), then add <code>min</code> to each number generated this way.</li>
 </ol>
 </blockquote>
 
@@ -2497,14 +2497,14 @@ method for generating multiple random points in one call.</p>
 <p><strong>Requires random real numbers.</strong></p>
 
 <p>Generating <em>n</em> <code>GammaDist(total, 1)</code> numbers and dividing them by their sum<sup><a href="#Note18"><strong>(18)</strong></a></sup>
- will result in a uniform random combination of <em>n</em> numbers that (approximately) sum to <code>total</code> (see a <a href="https://en.wikipedia.org/wiki/Dirichlet_distribution#Gamma_distribution"><strong>Wikipedia article</strong></a>).  For example, if <code>total</code> is 1, the numbers will (approximately) sum to 1.  Note that in the exceptional case that all numbers are 0, the process should repeat.</p>
+ will result in <em>n</em> uniform random numbers that (approximately) sum to <code>total</code>, in random order (see a <a href="https://en.wikipedia.org/wiki/Dirichlet_distribution#Gamma_distribution"><strong>Wikipedia article</strong></a>).  For example, if <code>total</code> is 1, the numbers will (approximately) sum to 1.  Note that in the exceptional case that all numbers are 0, the process should repeat.</p>
 
 <blockquote>
 <p><strong>Notes:</strong></p>
 
 <ol>
 <li>Notes 1 and 2 in the section &quot;Random Integers with a Given Positive Sum&quot; apply here.</li>
-<li>The <strong>Dirichlet distribution</strong>, as defined in some places (e.g., <em>Mathematica</em>; (Devroye 1986)<sup><a href="#Note11"><strong>(11)</strong></a></sup>, p. 594), models a uniform random combination of <em>n</em> random numbers that sum to 1, and can be sampled by generating <em>n</em>+1 random <a href="#Gamma_Distribution"><strong>gamma-distributed</strong></a> numbers, each with separate parameters, taking their sum<sup><a href="#Note18"><strong>(18)</strong></a></sup>, and dividing the first <em>n</em> numbers by that sum.</li>
+<li>The <strong>Dirichlet distribution</strong>, as defined in some places (e.g., <em>Mathematica</em>; (Devroye 1986)<sup><a href="#Note11"><strong>(11)</strong></a></sup>, p. 594), models <em>n</em> uniform random numbers that sum to 1, in random order,and can be sampled by generating <em>n</em>+1 random <a href="#Gamma_Distribution"><strong>gamma-distributed</strong></a> numbers, each with separate parameters, taking their sum<sup><a href="#Note18"><strong>(18)</strong></a></sup>, and dividing the first <em>n</em> numbers by that sum.</li>
 </ol>
 </blockquote>
 

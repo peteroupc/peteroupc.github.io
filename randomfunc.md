@@ -953,10 +953,10 @@ The geometric distribution is a negative binomial distribution with `successes =
 <a id=Random_Integers_with_a_Given_Positive_Sum></a>
 ### Random Integers with a Given Positive Sum
 
-The following pseudocode shows how to generate a uniform random combination of integers with a given positive sum. (The algorithm for this was presented in (Smith and Tromble 2004)<sup>[**(21)**](#Note21)</sup>.)  In the pseudocode below&mdash;
+The following pseudocode shows how to generate `n` uniform random integers greater than 0 with a given positive sum, in random order. (The algorithm for this was presented in (Smith and Tromble 2004)<sup>[**(21)**](#Note21)</sup>.)  In the pseudocode below&mdash;
 
-- the method `PositiveIntegersWithSum` returns `n` integers greater than 0 that sum to `total`,
-- the method `IntegersWithSum` returns `n` integers 0 or greater that sum to `total`, and
+- the method `PositiveIntegersWithSum` returns `n` integers greater than 0 that sum to `total`, in random order,
+- the method `IntegersWithSum` returns `n` integers 0 or greater that sum to `total`, in random order, and
 - `Sort(list)` sorts the items in `list` in ascending order (note that sort algorithms are outside the scope of this document).
 
 &nbsp;
@@ -992,8 +992,8 @@ The following pseudocode shows how to generate a uniform random combination of i
 
 > **Notes:**
 >
-> 1. To generate a uniform random combination of `N` numbers with a given positive average `avg`, generate a uniform random combination of `N` numbers with the sum `N * avg`.
-> 2. To generate a uniform random combination of `N` numbers `min` or greater and with a given positive sum `sum`, generate `IntegersWithSum(N, sum - N * min)` (or its equivalent for real numbers), then add `min` to each number generated this way.
+> 1. To generate `N` uniform random numbers with a given positive average `avg`, in random order, generate `IntegersWithSum(N, N * avg)` (or its equivalent for real numbers).
+> 2. To generate `N` uniform random numbers `min` or greater and with a given positive sum `sum`, in random order, generate `IntegersWithSum(N, sum - N * min)` (or its equivalent for real numbers), then add `min` to each number generated this way.
 
 <a id=Multinomial_Distribution></a>
 ### Multinomial Distribution
@@ -2065,12 +2065,12 @@ The following pseudocode calculates a random point in space that follows a [**_m
 **Requires random real numbers.**
 
 Generating _n_ `GammaDist(total, 1)` numbers and dividing them by their sum<sup>[**(18)**](#Note18)</sup>
- will result in a uniform random combination of _n_ numbers that (approximately) sum to `total` (see a [**Wikipedia article**](https://en.wikipedia.org/wiki/Dirichlet_distribution#Gamma_distribution)).  For example, if `total` is 1, the numbers will (approximately) sum to 1.  Note that in the exceptional case that all numbers are 0, the process should repeat.
+ will result in _n_ uniform random numbers that (approximately) sum to `total`, in random order (see a [**Wikipedia article**](https://en.wikipedia.org/wiki/Dirichlet_distribution#Gamma_distribution)).  For example, if `total` is 1, the numbers will (approximately) sum to 1.  Note that in the exceptional case that all numbers are 0, the process should repeat.
 
 > **Notes:**
 >
 > 1. Notes 1 and 2 in the section "Random Integers with a Given Positive Sum" apply here.
-> 2. The **Dirichlet distribution**, as defined in some places (e.g., _Mathematica_; (Devroye 1986)<sup>[**(11)**](#Note11)</sup>, p. 594), models a uniform random combination of _n_ random numbers that sum to 1, and can be sampled by generating _n_+1 random [**gamma-distributed**](#Gamma_Distribution) numbers, each with separate parameters, taking their sum<sup>[**(18)**](#Note18)</sup>, and dividing the first _n_ numbers by that sum.
+> 2. The **Dirichlet distribution**, as defined in some places (e.g., _Mathematica_; (Devroye 1986)<sup>[**(11)**](#Note11)</sup>, p. 594), models _n_ uniform random numbers that sum to 1, in random order,and can be sampled by generating _n_+1 random [**gamma-distributed**](#Gamma_Distribution) numbers, each with separate parameters, taking their sum<sup>[**(18)**](#Note18)</sup>, and dividing the first _n_ numbers by that sum.
 
 <a id=Gaussian_and_Other_Copulas></a>
 ### Gaussian and Other Copulas
