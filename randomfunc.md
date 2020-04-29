@@ -83,9 +83,7 @@ All the random number methods presented on this page are ultimately based on an 
 - [**Randomization with Real Numbers**](#Randomization_with_Real_Numbers)
     - [**Uniform Random Real Numbers**](#Uniform_Random_Real_Numbers)
         - [**For Fixed-Point Number Formats**](#For_Fixed_Point_Number_Formats)
-        - [**`RNDU01` Family: Random Numbers Bounded by 0 and 1**](#RNDU01_Family_Random_Numbers_Bounded_by_0_and_1)
-        - [**`RNDU01`: Alternative Implementation**](#RNDU01_Alternative_Implementation)
-        - [**`RNDRANGE` Family: Random Numbers in an Arbitrary Interval**](#RNDRANGE_Family_Random_Numbers_in_an_Arbitrary_Interval)
+        - [**For Floating-Point Number Formats**](#For_Floating_Point_Number_Formats)
     - [**Monte Carlo Sampling: Expected Values, Integration, and Optimization**](#Monte_Carlo_Sampling_Expected_Values_Integration_and_Optimization)
     - [**Low-Discrepancy Sequences**](#Low_Discrepancy_Sequences)
     - [**Weighted Choice Involving Real Numbers**](#Weighted_Choice_Involving_Real_Numbers)
@@ -1059,81 +1057,62 @@ For fixed-point number formats representing multiples of 1/`n`, these eight meth
 * `RNDRANGEMaxExc(a, b)`: `RNDINTEXCRANGE(fpa, fpb)`.
 * `RNDRANGEMinMaxExc(a, b)`: `RNDINTRANGE(fpa + 1, fpb - 1)`, or an error if `fpa >= fpb or a == fpb - 1`.
 
-<a id=RNDU01_Family_Random_Numbers_Bounded_by_0_and_1></a>
-#### `RNDU01` Family: Random Numbers Bounded by 0 and 1
+<a id=For_Floating_Point_Number_Formats></a>
+#### For Floating-Point Number Formats
 
-For the `RNDU01` family, the list below shows different ways to implement each method, ordered from most preferred to least preferred. `X` and `INVX` are defined later.
+For floating-point number formats representing numbers of the form `s` * `FPRADIX`<sup>`e`</sup>, the following pseudocode implements `RNDRANGE(lo, hi)`.  In the pseudocode:
 
-- **`RNDU01()`, interval [0, 1]**:
-    - For Java `float` or `double`, use the alternative implementation given later.
-    - `RNDINT(X) * INVX`.
-    - `RNDINT(X) / X`, if the number format can represent `X`.
-- **`RNDU01OneExc()`, interval [0, 1)**:
-    - Generate `RNDU01()` in a loop until a number other than 1.0 is generated this way.
-    - `RNDINT(X - 1) * INVX`.
-    - `RNDINTEXC(X) * INVX`.
-    - `RNDINT(X - 1) / X`, if the number format can represent `X`.
-    - `RNDINTEXC(X) / X`, if the number format can represent `X`.
-- **`RNDU01ZeroExc()`, interval (0, 1]**:
-    - Generate `RNDU01()` in a loop until a number other than 0.0 is generated this way.
-    - `(RNDINT(X - 1) + 1) * INVX`.
-    - `(RNDINTEXC(X) + 1) * INVX`.
-    - `(RNDINT(X - 1) + 1) / X`, if the number format can represent `X`.
-    - `(RNDINTEXC(X) + 1) / X`, if the number format can represent `X`.
-    - `1.0 - RNDU01OneExc()` (but this is recommended only if the set of numbers `RNDU01OneExc()` could return &mdash; as opposed to their probability &mdash; is evenly distributed).
-- **`RNDU01ZeroOneExc()`, interval (0, 1)**:
-    - Generate `RNDU01()` in a loop until a number other than 0.0 or 1.0 is generated this way.
-    - `(RNDINT(X - 2) + 1) * INVX`.
-    - `(RNDINTEXC(X - 1) + 1) * INVX`.
-    - `(RNDINT(X - 2) + 1) / X`, if the number format can represent `X`.
-    - `(RNDINTEXC(X - 1) + 1) / X`, if the number format can represent `X`.
+- `MINEXP` is the lowest exponent a number can have in the floating-point format.  For the IEEE 754 binary64 format (Java `double`), `MINEXP = -1074`.  For the IEEE 754 binary32 format (Java `float`), `MINEXP = -149`.
+- `FPPRECISION` is the number of significant digits in the floating-point format. Equals 53 for binary64, or 24 for binary32.
+- `FPRADIX` is the digit base of the floating-point format.  Equals 2 for binary64 and binary32.
+- `FPExponent(x)` returns the value of `e` for the number `x` such that the number of digits in `s` equals `FPPRECISION`, but not less than `MINEXP`.  Returns `MINEXP` if `x = 0`.
+- `FPSignificand(x)` returns `s`, the significand of the number `x`.  Returns 0 if `x = 0`. Has `FPPRECISION` digits unless `e = MINEXP`.
 
-In the idioms above:
+See also (Downey 2007)<sup>[**(25)**](#Note25)</sup> and the [**Rademacher Floating-Point Library**](https://gitlab.com/christoph-conrads/rademacher-fpl).
 
-- `X` is the highest integer `p` such that all multiples of `1/p` in the interval [0, 1] are representable in the number format in question.  For example&mdash;
-    - for the 64-bit IEEE 754 binary floating-point format (e.g., Java `double`), `X` is 2<sup>53</sup> (9007199254740992),
-    - for the 32-bit IEEE 754 binary floating-point format (e.g., Java `float`), `X` is 2<sup>24</sup> (16777216),
-    - for the 64-bit IEEE 754 decimal floating-point format, `X` is 10<sup>16</sup>, and
-    - for the .NET Framework decimal format (`System.Decimal`), `X` is 10<sup>28</sup>.
-- `INVX` is the constant 1 divided by `X`.
-
-<a id=RNDU01_Alternative_Implementation></a>
-#### `RNDU01`: Alternative Implementation
-
-For Java's `double` and `float` (or generally, any fixed-precision binary floating-point format with fixed exponent range), the following pseudocode for `RNDU01()` can be used instead. See also (Downey 2007)<sup>[**(25)**](#Note25)</sup>.  In the pseudocode below, `SIGBITS` is the binary floating-point format's precision (the number of binary digits the format can represent without loss; e.g., 53 for Java's `double`).
-
-    METHOD RNDU01()
-        e=-SIGBITS
+    METHOD RNDRANGE(lo, hi)
+      loexp = FPExponent(lo)
+      hiexp = FPExponent(hi)
+      losig = FPSignificand(lo)
+      hisig = FPSignificand(hi)
+      if lo<0 and hi>0
+        mabs = max(abs(lo),abs(hi))
         while true
-            if RNDINT(1)==0: e = e - 1
-          else: break
+           ret=RNDRANGE(0, mabs)
+           neg=rand(2)
+           if neg==0: ret=-ret
+           if ret==0 and neg==0: continue
+           if ret>=lo and ret<hi: return ret
         end
-        sig = RNDINT((1 << (SIGBITS - 1)) - 1)
-        if sig==0 and RNDINT(1)==0: e = e + 1
-        sig = sig + (1 << (SIGBITS - 1))
-        // NOTE: This multiplication should result in
-        // a real number, not necessarily an integer;
-        // if `e` is sufficiently
-        // small, the number might underflow to 0
-        // depending on the number format
-        return sig * pow(2, e)
+      end
+      expdiff=hiexp-loexp
+      if loexp==hiexp
+        // Exponents are the same
+        // NOTE: Automatically handles
+        // subnormals
+        s=RNDINTRANGE(losig, hisig)
+        return s*1.0*pow(FPRADIX, loexp)
+      end
+      while true
+        ex=hiexp
+        while ex>MINEXPONENT
+          v=RNDINTEXC(FPRADIX)
+          if v==0: ex-=1
+          break
+        end
+        s=0
+        if ex==MINEXPONENT
+          s=RNDINTEXC(pow(FPRADIX,FPPRECISION))
+        else
+          sm=pow(FPRADIX,FPPRECISION-1)
+          s=RNDINTEXC(sm)+sm
+        end
+        ret=s*1.0*pow(FPRADIX, ex)
+        if ret>=lo and ret<=hi: return ret
+      end
     END METHOD
 
-<a id=RNDRANGE_Family_Random_Numbers_in_an_Arbitrary_Interval></a>
-#### `RNDRANGE` Family: Random Numbers in an Arbitrary Interval
-
-**`RNDRANGE`** generates a **random number in the interval \[`minInclusive`, `maxInclusive`\]**.
-
-For arbitrary-precision or non-negative number formats, the following pseudocode implements `RNDRANGE()`.
-
-    METHOD RNDRANGE(minInclusive, maxInclusive)
-        if minInclusive > maxInclusive: return error
-        return minInclusive + (maxInclusive - minInclusive) * RNDU01()
-    END METHOD
-
-For other number formats (including Java's `double` and `float`), the pseudocode above can overflow if the difference between `maxInclusive` and `minInclusive` exceeds the maximum possible value for the format, among other problems with this implementation of `RNDRANGE`. For binary floating-point numbers, the [**Rademacher Floating-Point Library**](https://gitlab.com/christoph-conrads/rademacher-fpl) has a more sophisticated implementation of this method, but the implementation is far from trivial and is described only in the source code.
-
-Three related methods can be derived from `RNDRANGE` as follows:
+The other seven methods can be derived from `RNDRANGE` as follows:
 
 - **`RNDRANGEMaxExc`, interval \[`mn`, `mx`\)**:
     - Generate `RNDRANGE(mn, mx)` in a loop until a number other than `mx` is generated this way.  Return an error if `mn >= mx`.
@@ -1141,6 +1120,12 @@ Three related methods can be derived from `RNDRANGE` as follows:
     - Generate `RNDRANGE(mn, mx)` in a loop until a number other than `mn` is generated this way.  Return an error if `mn >= mx`.
 - **`RNDRANGEMinMaxExc`, interval \(`mn`, `mx`\)**:
     - Generate `RNDRANGE(mn, mx)` in a loop until a number other than `mn` or `mx` is generated this way.  Return an error if `mn >= mx`.
+- **`RNDU01()`: `RNDRANGE(0, 1)`.
+- **`RNDU01ZeroExc()`: `RNDRANGEMinExc(0, 1)`.
+- **`RNDU01OneExc()`: `RNDRANGEMaxExc(0, 1)`.
+- **`RNDU01ZeroOneExc()`: `RNDRANGEMinMaxExc(0, 1)`.
+
+> **Note:** In many software libraries, random numbers in a range are generated by dividing or multiplying a random integer by a constant.  For example, `RNDU01OneExc()` is often implemented like `RNDINTEXC(X) * (1.0/X)` or `RNDINTEXC(X) / X`, where X varies based on the software library.<<|Ideally, `X` is the highest integer `p` such that all multiples of `1/p` in the interval [0, 1] are representable in the number format in question.  For example, `X` is 2<sup>53</sup> (9007199254740992) for binary64, and 2<sup>24</sup> (16777216) for binary32.>> The disadvantage here is that not all numbers a floating-point format can represent can be covered this way.  As another example, `RNDRANGEMaxExc(a, b)` is often implemented like `a + RNDU01() * (b - a)`; however, this not only has the same disadvantage, but has many other issues where floating-point numbers are involved.
 
 <a id=Monte_Carlo_Sampling_Expected_Values_Integration_and_Optimization></a>
 ### Monte Carlo Sampling: Expected Values, Integration, and Optimization
