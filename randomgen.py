@@ -1453,10 +1453,82 @@ acap - Optional.  A setting used in the optimization process; an
                 v = 0
                 for k in range(jm, j + 1):
                     v += t[i - 1][k]
-            t[i][j] = v
+                t[i][j] = v
         return t
 
-    def intsInRangeWithSum(self, numSamples, numPerSample, sum, mn, mx):
+    def _getSolTableForRanges(self, ranges, adjsum):
+        n = len(ranges)
+        t = [[0 for i in range(adjsum + 1)] for j in range(n + 1)]
+        t[0][0] = 1
+        for i in range(1, n + 1):
+            for j in range(0, adjsum + 1):
+                krange = ranges[i - 1][1] - ranges[i - 1][0]
+                jm = max(j - krange, 0)
+                v = 0
+                for k in range(jm, j + 1):
+                    v += t[i - 1][k]
+                t[i][j] = v
+        return t
+
+    def intsInRangesWithSum(self, numSamples, ranges, total):
+        """ Generates one or more combinations of
+           'len(ranges)' numbers each, where each
+           combination's numbers sum to 'total', and each number
+           has its own valid range.  'ranges' is a list of valid ranges
+           for each number; the first item in each range is the minimum
+           value and the second is the maximum value.  For example,
+           'ranges' can be [[1,4],[3,5],[2,6]], which says that the first
+           number must be in the interval [1, 4], the second in [3, 5],
+           and the third in [2, 6].
+            The combinations are chosen uniformly at random.
+               Neither the integers in the 'ranges' list nor
+           'total' may be negative.  Returns an empty
+           list if 'numSamples' is zero.
+            This is a modification I made to an algorithm that
+              was contributed in a _Stack Overflow_
+          answer (`questions/61393463`) by John McClane.
+          Raises an error if there is no solution for the given
+          parameters.  """
+        mintotal = sum([x[0] for x in ranges])
+        maxtotal = sum([x[1] for x in ranges])
+        adjsum = total - mintotal
+        print([total, adjsum])
+        # Min, max, sum negative
+        if total < 0:
+            raise ValueError
+        for r in ranges:
+            if r[0] < 0 or r[1] < 0:
+                raise ValueError
+        # No solution
+        if mintotal > total or maxtotal < total:
+            raise ValueError
+        if numSamples == 0:
+            return []
+        # One solution
+        if maxtotal == total:
+            return [[x[1] for x in ranges] for i in range(numSamples)]
+        if mintotal == total:
+            return [[x[0] for x in ranges] for i in range(numSamples)]
+        samples = [None for i in range(numSamples)]
+        numPerSample = len(ranges)
+        table = self._getSolTableForRanges(ranges, adjsum)
+        for sample in range(numSamples):
+            s = adjsum
+            ret = [0 for i in range(numPerSample)]
+            for ib in range(numPerSample):
+                i = numPerSample - 1 - ib
+                v = self.rndintexc(table[i + 1][s])
+                r = ranges[i][0]
+                v -= table[i][s]
+                while v >= 0:
+                    s -= 1
+                    r += 1
+                    v -= table[i][s]
+                ret[i] = r
+            samples[sample] = ret
+        return samples
+
+    def intsInRangeWithSum(self, numSamples, numPerSample, mn, mx, sum):
         """ Generates one or more combinations of
            'numPerSample' numbers each, where each
            combination's numbers sum to 'sum' and are listed
@@ -1471,8 +1543,6 @@ acap - Optional.  A setting used in the optimization process; an
           Raises an error if there is no solution for the given
           parameters.  """
         adjsum = sum - numPerSample * mn
-        if numSamples == 0:
-            return []
         # Min, max, sum negative
         if mn < 0 or mx < 0 or sum < 0:
             raise ValueError
@@ -1481,13 +1551,15 @@ acap - Optional.  A setting used in the optimization process; an
             raise ValueError
         if numPerSample * mn > sum:
             raise ValueError
+        if numSamples == 0:
+            return []
         # One solution
         if numPerSample * mx == sum:
             return [[mx for i in range(numPerSample)] for i in range(numSamples)]
         if numPerSample * mn == sum:
             return [[mn for i in range(numPerSample)] for i in range(numSamples)]
         samples = [None for i in range(numSamples)]
-        table = self._getSolTable(n, mn, mx, adjsum)
+        table = self._getSolTable(numPerSample, mn, mx, adjsum)
         for sample in range(numSamples):
             s = adjsum
             ret = [0 for i in range(numPerSample)]
@@ -1914,6 +1986,10 @@ if __name__ == "__main__":
     for ks in ksample:
         bucket(ks, ls, buckets)
     showbuckets(ls, buckets)
+
+    print(randgen.intsInRangesWithSum(10, [[1, 4], [3, 5], [2, 6]], 12))
+    print(randgen.intsInRangeWithSum(10, 3, 1, 6, 12))
+
     # Generate multiple dice rolls
     dierolls = [randgen.diceRoll(2, 6) for i in range(10)]
     # Results
