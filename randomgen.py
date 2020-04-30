@@ -1127,7 +1127,7 @@ acap - Optional.  A setting used in the optimization process; an
 
     def kth_smallest_of_n_u01(self, k, n):
         """ Generates the kth smallest number among n random numbers
-         from 0 to 1. """
+         in the interval [0, 1]. """
         if k > n or n < 1:
             raise ValueError
         if n < 20:
@@ -1443,6 +1443,66 @@ acap - Optional.  A setting used in the optimization process; an
             latx = self.rndrange(-1, 1)
         lat = math.atan2(math.sqrt(1 - latx * latx), latx) - math.pi * 0.5
         return [lat, lon]
+
+    def _getSolTable(self, n, mn, mx, sum):
+        t = [[0 for i in range(sum + 1)] for j in range(n + 1)]
+        t[0][0] = 1
+        for i in range(1, n + 1):
+            for j in range(0, sum + 1):
+                jm = max(j - (mx - mn), 0)
+                v = 0
+                for k in range(jm, j + 1):
+                    v += t[i - 1][k]
+            t[i][j] = v
+        return t
+
+    def intsInRangeWithSum(self, numSamples, numPerSample, sum, mn, mx):
+        """ Generates one or more combinations of
+           'numPerSample' numbers each, where each
+           combination's numbers sum to 'sum' and are listed
+           in any order, and each
+           number is in the interval '[mn, mx]'.
+            The combinations are chosen uniformly at random.
+               'mn', 'mx', and
+           'sum' may not be negative.  Returns an empty
+           list if 'numSamples' is zero.
+            The algorithm is thanks to a _Stack Overflow_
+          answer (`questions/61393463`) by John McClane.
+          Raises an error if there is no solution for the given
+          parameters.  """
+        adjsum = sum - numPerSample * mn
+        if numSamples == 0:
+            return []
+        # Min, max, sum negative
+        if mn < 0 or mx < 0 or sum < 0:
+            raise ValueError
+        # No solution
+        if numPerSample * mx < sum:
+            raise ValueError
+        if numPerSample * mn > sum:
+            raise ValueError
+        # One solution
+        if numPerSample * mx == sum:
+            return [[mx for i in range(numPerSample)] for i in range(numSamples)]
+        if numPerSample * mn == sum:
+            return [[mn for i in range(numPerSample)] for i in range(numSamples)]
+        samples = [None for i in range(numSamples)]
+        table = self._getSolTable(n, mn, mx, adjsum)
+        for sample in range(numSamples):
+            s = adjsum
+            ret = [0 for i in range(numPerSample)]
+            for ib in range(numPerSample):
+                i = numPerSample - 1 - ib
+                v = self.rndintexc(table[i + 1][s])
+                r = mn
+                v -= table[i][s]
+                while v >= 0:
+                    s -= 1
+                    r += 1
+                    v -= table[i][s]
+                ret[i] = r
+            samples[sample] = ret
+        return samples
 
     def integers_from_pdf(self, pdf, mn, mx, n=1):
         """ Generates one or more random integers from a discrete probability
