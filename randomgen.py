@@ -1576,6 +1576,82 @@ acap - Optional.  A setting used in the optimization process; an
             samples[sample] = ret
         return samples
 
+    def _getSolTableSorted(self, n, mn, mx, sum):
+        mrange = mx - mn
+        t = [
+            [[0 for _ in range(sum + 1)] for _ in range(mrange + 1)]
+            for _ in range(n + 1)
+        ]
+        for i in range(0, mrange + 1):
+            t[0][i][0] = 1
+        for i in range(1, n + 1):
+            for k in range(0, sum + 1):
+                t[i][0][k] = t[i - 1][0][k]
+            for j in range(1, mrange + 1):
+                for k in range(0, sum + 1):
+                    kj = k - j
+                    v = t[i][j - 1][k]
+                    if kj >= 0:
+                        v += t[i - 1][j][k - j]
+                    t[i][j][k] = v
+        print(t)
+        return t
+
+    def intsInRangeSortedWithSum(self, numSamples, numPerSample, mn, mx, sum):
+        """ Generates one or more combinations of
+           'numPerSample' numbers each, where each
+           combination's numbers sum to 'sum' and are listed
+           in sorted order, and each
+           number is in the interval '[mn, mx]'.
+            The combinations are chosen uniformly at random.
+               'mn', 'mx', and
+           'sum' may not be negative.  Returns an empty
+           list if 'numSamples' is zero.
+            The algorithm is thanks to a _Stack Overflow_
+          answer (`questions/61393463`) by John McClane.
+          Raises an error if there is no solution for the given
+          parameters.  """
+        adjsum = sum - numPerSample * mn
+        # Min, max, sum negative
+        if mn < 0 or mx < 0 or sum < 0:
+            raise ValueError
+        # No solution
+        if numPerSample * mx < sum:
+            raise ValueError
+        if numPerSample * mn > sum:
+            raise ValueError
+        if numSamples == 0:
+            return []
+        # One solution
+        if numPerSample * mx == sum:
+            return [[mx for i in range(numPerSample)] for i in range(numSamples)]
+        if numPerSample * mn == sum:
+            return [[mn for i in range(numPerSample)] for i in range(numSamples)]
+        samples = [None for i in range(numSamples)]
+        table = self._getSolTableSorted(numPerSample, mn, mx, adjsum)
+        for sample in range(numSamples):
+            s = adjsum
+            mrange = mx - mn
+            ret = [0 for i in range(numPerSample)]
+            for ib in range(numPerSample):
+                i = numPerSample - 1 - ib
+                ts = table[i + 1][mrange][s]
+                v = self.rndintexc(ts)
+                mrange = min(mrange, s)
+                s -= mrange
+                r = mn + mrange
+                v -= table[i][mrange][s]
+                while v >= 0:
+                    s += 1
+                    mrange -= 1
+                    r -= 1
+                    v -= table[i][mrange][s]
+                ret[i] = r
+            samples[sample] = ret
+        if s != 0:
+            raise ValueError
+        return samples
+
     def integers_from_pdf(self, pdf, mn, mx, n=1):
         """ Generates one or more random integers from a discrete probability
          distribution expressed as a probability density
@@ -1989,6 +2065,7 @@ if __name__ == "__main__":
 
     print(randgen.intsInRangesWithSum(10, [[1, 4], [3, 5], [2, 6]], 12))
     print(randgen.intsInRangeWithSum(10, 3, 1, 6, 12))
+    print(randgen.intsInRangeSortedWithSum(10, 3, 1, 6, 12))
 
     # Generate multiple dice rolls
     dierolls = [randgen.diceRoll(2, 6) for i in range(10)]
