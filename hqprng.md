@@ -17,7 +17,7 @@ Besides cryptographic random number generators (RNGs), the following are example
 | Philox4&times;64-7 | 2^128 | At least 2^256 per seed  | ??? TiB | 384-bit state |
 | Velox3b | 2^64 | At least 2^128 per seed  | ??? TiB | 256-bit state |
 | `gjrand` named after Geronimo Jones | 2^128 | At least 2^64 per seed  | ??? TiB | 256-bit state |
-| MRG32k3a (L'Ecuyer 1999)<sup>[**(2)**](#Note2)</sup>| Near 2^192 | 2 cycles with length near 2^191  | ??? TiB | 192-bit state |
+| MRG32k3a (L'Ecuyer 1999; L'Ecuyer et al. 2002)<sup>[**(2)**](#Note2)</sup>| Near 2^192 | 2 cycles with length near 2^191  | ??? TiB | 192-bit state |
 | MRG31k3p (L'Ecuyer and Touzin 2000)<sup>[**(3)**](#Note3)</sup> | Near 2^186 | 2 cycles with length near 2^185  | ??? TiB | 192-bit state |
 | JLKISS (Jones 2007/2010)<sup>[**(4)**](#Note4)</sup> | 2^64 * (2^64 - 1)^2 | At least (2^128 - 2^64)  | ??? TiB | 192-bit state |
 | JLKISS64 (Jones 2007/2010)<sup>[**(4)**](#Note4)</sup> | 2^64 * (2^64 - 1)^3 | At least (2^128 - 2^64)  | ??? TiB | 256-bit state |
@@ -126,7 +126,7 @@ The following are not considered high-quality PRNGs:
 
 <small><sup id=Note1>(1)</sup> Blackman, D., Vigna, S. "Scrambled Linear Pseudorandom Number Generators", 2019 (xoroshiro and xoshiro families); S. Vigna, "[**An experimental exploration of Marsaglia's `xorshift` generators, scrambled**](http://vigna.di.unimi.it/ftp/papers/xorshift.pdf)", 2016 (scrambled xorshift family).</small>
 
-<small><sup id=Note2>(2)</sup> L'Ecuyer, P., "Good Parameters and Implementations for Combined Multiple Recursive Random Number Generators", _Operations Research_ 47(1), 1999.</small>
+<small><sup id=Note2>(2)</sup> L'Ecuyer, P., "Good Parameters and Implementations for Combined Multiple Recursive Random Number Generators", _Operations Research_ 47(1), 1999; L'Ecuyer, P., Simard, R., et al., "An Object-Oriented Random Number Package with Many Long Streams and Substreams", _Operations Research_ 50(6), 2002.</small>
 
 <small><sup id=Note3>(3)</sup> L'Ecuyer, P., Touzin, R., "Fast Combined Multiple Recursive Generators with Multipliers of the Form a = &pm;2<sup>q</sup> &pm; 2<sup>r</sup>", _Proceedings of the 2000 Winter Simulation Conference_, 2000.</small>
 

@@ -8,7 +8,10 @@ Hash functions are used for the following purposes:
 - For random number generation. See my article on [**random generator recommendations**](https://peteroupc.github.io/random.html#Hash_Functions).
 - In hash tables to speed up data lookup by mapping data to a sequence of bits in a way that avoids hash collisions.  Here, hash codes are usually small (e.g., 32 bits long).
 - For data lookup in databases and file systems (e.g., to partition many files into a small number of directories to speed up file lookup).  Here, hash codes generally are 64 bits or more long and can use cryptographic hash functions (e.g., SHA2-256, BLAKE2) and other hash functions that tend to produce wildly dispersed hash codes for nearby inputs.
-- For data integrity (such as checksums and authentication codes).  In general, only cryptographic hash functions are appropriate here.
+- For information security.  Only cryptographic hash functions are appropriate here, and they serve as building blocks for many kinds of security algorithms, such as:
+    - Checksums and authentication codes for data integrity.
+    - Pseudorandom functions, for deriving secrets from other secrets.
+    - Key derivation functions that deliberately take time to calculate, for verifying secrets without storing the secrets themselves.
 
 For the use in hash tables, (Richter et al. 2015)<sup>[**(1)**](#Note1)</sup> recommends multiply-then-shift hashing over more complicated hash functions in most cases. [**_Fibonacci hashing_**](https://probablydance.com/2018/06/16/fibonacci-hashing-the-optimization-that-the-world-forgot-or-a-better-alternative-to-integer-modulo/) is a special case of multiply-then-shift hashing that serves to improve hash codes.
 

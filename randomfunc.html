@@ -1948,6 +1948,10 @@ METHOD CSampleU01(mini, maxi, step, u01)
 END METHOD
 </pre>
 
+<blockquote>
+<p><strong>Note:</strong> In many cases, the inverse CDF can be approximated from data by calculating or estimating its percentiles (including the median or 50th percentile), as well as the minimum and maximum values (0th and 100th percentile).  The Nth percentile corresponds to <code>ICDF(N/100.0)</code>.  Missing values of the inverse CDF can then be filled in by interpolation (such as linear interpolation or spline fitting).</p>
+</blockquote>
+
 <p><a id=Rejection_Sampling_with_a_PDF></a></p>
 
 <h4>Rejection Sampling with a PDF</h4>

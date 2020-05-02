@@ -1592,6 +1592,8 @@ To generate a random number from a distribution and a **pregenerated uniform ran
       return ContWChoose(values, weights, areas, u01 * sum)
     END METHOD
 
+> **Note:** In many cases, the inverse CDF can be approximated from data by calculating or estimating its percentiles (including the median or 50th percentile), as well as the minimum and maximum values (0th and 100th percentile).  The Nth percentile corresponds to `ICDF(N/100.0)`.  Missing values of the inverse CDF can then be filled in by interpolation (such as linear interpolation or spline fitting).
+
 <a id=Rejection_Sampling_with_a_PDF></a>
 #### Rejection Sampling with a PDF
 
