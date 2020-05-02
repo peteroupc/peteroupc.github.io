@@ -11,7 +11,7 @@ Hash functions are used for the following purposes:
 - For information security.  Only cryptographic hash functions are appropriate here, and they serve as building blocks for many kinds of security algorithms, such as:
     - Checksums and authentication codes for data integrity.
     - Pseudorandom functions, for deriving secrets from other secrets.
-    - Key derivation functions that deliberately take time to calculate, for verifying secrets without storing the secrets themselves.
+    - Key derivation functions for verifying secrets without storing the secrets themselves.  Because the secret may be easy to guess, like a password, some of these functions are designed to deliberately take time to calculate.
 
 For the use in hash tables, (Richter et al. 2015)<sup>[**(1)**](#Note1)</sup> recommends multiply-then-shift hashing over more complicated hash functions in most cases. [**_Fibonacci hashing_**](https://probablydance.com/2018/06/16/fibonacci-hashing-the-optimization-that-the-world-forgot-or-a-better-alternative-to-integer-modulo/) is a special case of multiply-then-shift hashing that serves to improve hash codes.
 

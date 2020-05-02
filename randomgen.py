@@ -678,6 +678,38 @@ Returns 'list'. """
         else:
             return -math.log1p(self.rndrangeminmaxexc(-0.5, 0)) / lamda
 
+    def expoRatio(self, base, rx=1, ry=1):
+        """ Generates an exponential random number
+          (in the form of a ratio, or two-element list) given
+          the rate `rx`/`ry` and the base `base`.
+          The number will have the denominator `base*rx`. """
+        return [self.expoNumerator(base * ry), base * rx]
+
+    def expoNumerator(self, denom):
+        """ Generates the numerator of an exponential random
+           variable with a given denominator,
+           using von Neumann's
+           algorithm ("Various techniques used in connection with
+           random digits", 1951). """
+        count = 0
+        while True:
+            y1 = self.rndintexc(denom)
+            y = y1
+            accept = True
+            while True:
+                z = self.rndintexc(denom)
+                if y <= z:
+                    break
+                accept = not accept
+                y = z
+            if accept:
+                count += y1
+            else:
+                count += denom
+            if accept:
+                break
+        return count
+
     def pareto(self, minimum, alpha):
         return self.rndu01zerooneexc() ** (-1.0 / alpha) * minimum
 
@@ -2099,6 +2131,8 @@ if __name__ == "__main__":
     rate = 1.0 / 1000  # Failure rate
     print("Times to failure (rate: %f)" % (rate))
     print([randgen.exponential(rate) for i in range(25)])
+    print("Times to failure (rate: %f; rationals)" % (rate))
+    print([randgen.expoRatio(3000, 1, 1000) for i in range(25)])
     #  Multinormal
     print("Multinormal sample")
     for i in range(10):
