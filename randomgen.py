@@ -1832,7 +1832,8 @@ class ConvexPolygonSampler:
 
 class _KVectorRootSolver:
     def _derivcdf(self, cdf, x):
-        return (cdf(x + 0.0001) - cdf(x)) / 0.0001
+        eps = 0.0001
+        return (cdf(x + eps) - cdf(x - eps)) / (2 * eps)
 
     def _linspace(self, a, b, size):
         return [a + (b - a) * (x * 1.0 / size) for x in range(size + 1)]

@@ -92,6 +92,7 @@ All the random number methods presented on this page are ultimately based on an 
     - [**Low-Discrepancy Sequences**](#Low_Discrepancy_Sequences)
     - [**Weighted Choice Involving Real Numbers**](#Weighted_Choice_Involving_Real_Numbers)
         - [**Continuous Weighted Choice**](#Continuous_Weighted_Choice)
+        - [**Priority Sampling**](#Priority_Sampling)
     - [**Additional Examples Involving Real Numbers**](#Additional_Examples_Involving_Real_Numbers)
         - [**Random Walks (Real Numbers)**](#Random_Walks_Real_Numbers)
         - [**Mixtures (Real Numbers)**](#Mixtures_Real_Numbers)
@@ -800,7 +801,12 @@ The following are ways to implement weighted choice without replacement, where e
 <a id=Weighted_Choice_Without_Replacement_List_of_Unknown_Size></a>
 #### Weighted Choice Without Replacement (List of Unknown Size)
 
-If the number of items in a list is not known in advance, then the following pseudocode implements a `RandomKItemsFromFileWeighted` that selects up to `k` random items from a file (`file`) of indefinite size (similarly to [**`RandomKItemsFromFile`**](#Pseudocode_for_Random_Sampling)).  See (Efraimidis and Spirakis 2005)<sup>[**(16)**](#Note16)</sup>, and see also (Efraimidis 2015)<sup>[**(17)**](#Note17)</sup>, (Vieira 2014)<sup>[**(18)**](#Note18)</sup>, and (Vieira 2019)<sup>[**(19)**](#Note19)</sup>.  In the pseudocode below, `WEIGHT_OF_ITEM(item, thisIndex)` is a placeholder for arbitrary code that calculates the integer weight of an individual item based on its value and its index (starting at 0); the item is ignored if its weight is 0 or less.
+If the number of items in a list is not known in advance, then the following pseudocode implements a `RandomKItemsFromFileWeighted` that selects up to `k` random items from a file (`file`) of indefinite size (similarly to [**`RandomKItemsFromFile`**](#Pseudocode_for_Random_Sampling)).  See (Efraimidis and Spirakis 2005)<sup>[**(16)**](#Note16)</sup>, and see also (Efraimidis 2015)<sup>[**(17)**](#Note17)</sup>, (Vieira 2014)<sup>[**(18)**](#Note18)</sup>, and (Vieira 2019)<sup>[**(19)**](#Note19)</sup>.  In the pseudocode below:
+
+- `WEIGHT_OF_ITEM(item, thisIndex)` is a placeholder for arbitrary code that calculates the integer weight of an individual item based on its value and its index (starting at 0); the item is ignored if its weight is 0 or less.
+- `ITEM_OUTPUT(item, thisIndex, key)` is a placeholder for code that returns the item to store in the list; this can include the item's value, its index starting at 0, the item's key, or any combination of these.
+
+&nbsp;
 
     METHOD RandomKItemsFromFileWeighted(file, k)
       queue=[] // Initialize priority queue
@@ -818,16 +824,19 @@ If the number of items in a list is not known in advance, then the following pse
         // NOTE: Equivalent to Expo(weight), except
         // it uses ratios
         key = ExpoRatio(100000000, weight, 1)
+        itemToStore = ITEM_OUTPUT(item, thisIndex, key)
         // Begin priority queue add operation.  Instead
         // of the item ('item'), the line number starting at one
         // ('thisIndex') can be added to the queue.
         if size(queue) < k // Fewer than k items
-          AddItem(queue, [key, item])
+          AddItem(queue, [key, itemToStore])
           Sort(queue)
         else // phase 2
-          // Compare with largest key
+          // Check whether this key is smaller
+          // than the largest key in the queue
           if key < queue[size(queue)-1][0]
-              queue[size(queue)-1]=[key, item]
+              // Replace item with largest key
+              queue[size(queue)-1]=[key, itemToStore]
               Sort(queue)
           end
         end
@@ -842,6 +851,26 @@ If the number of items in a list is not known in advance, then the following pse
     end
 
 > **Note:** Weighted choice _with replacement_ can be implemented by doing one or more concurrent runs of `RandomKItemsFromFileWeighted(file, 1)` (making sure each run traverses `file` the same way for multiple runs as for a single run) (Efraimidis 2015)<sup>[**(17)**](#Note17)</sup>.
+
+<a id=Priority_Sampling></a>
+#### Priority Sampling
+
+_Priority sampling_ (Duffield et al., 2007)<sup>[**(62)**](#Note62)</sup> samples from a weighted stream of items in a way that allows the total weight of some or all the items to be estimated simply by adding their weight estimates.  The pseudocode below generates weight estimates for `m` sampled items; all other items have weight estimates of 0. See also "[Estimating means in a finite universe](https://timvieira.github.io/blog/post/2017/07/03/estimating-means-in-a-finite-universe/)", which shows how priority sampling can help estimate the mean of a function over a limited but high number of data points via the weighted sum of that function's value at the sampled data points.
+
+    METHOD PrioritySample(file, m)
+       // Uses RandomKItemsFromFileWeighted modified
+       // as follows:  Keys are generated by
+       // `MakeRatio(-weight, RNDINTRANGE(1, 1000000000))`
+       // and `ITEM_OUTPUT(a, b, key)` is `[a, b, -key]`.
+       items=RandomKItemsFromFileWeighted(file, m+1)
+       threshold=items[m][2] # Get the (m+1)th highest key
+       ret=[] 
+       for i in 0...m: AddItem(ret, 
+          [max(items[i][0], threshold), items[i][1]])
+       // Returns, for each item, the weight estimate and its
+       // index starting at 0
+       return ret
+    END METHOD
 
 <a id=Mixtures_of_Distributions></a>
 ### Mixtures of Distributions
@@ -995,7 +1024,7 @@ The _exponential distribution_ uses a parameter known as &lambda;, the rate, or 
     METHOD ExpoRatio(base, rx, ry)
         // Generates a numerator and denominator of
         // an exponential random number with rate rx/ry.
-        return [ExpoNumerator(base*ry), base*rx)]
+        return MakeRatio(ExpoNumerator(base*ry), base*rx))
     END METHOD
 
     METHOD ExpoNumerator(denom)
@@ -2399,7 +2428,7 @@ If the generator produces numbers with unequal probabilities, but is otherwise a
 
 <small><sup id=Note21>(21)</sup> That article also mentions a critical-hit distribution, which is actually a [**mixture**](#Mixtures_of_Distributions) of two distributions: one roll of dice and the sum of two rolls of dice.</small>
 
-<small><sup id=Note22>(22)</sup> [**Kahan summation**](https://en.wikipedia.org/wiki/Kahan_summation_algorithm) can be a more robust way than the na&iuml;ve approach to compute the sum of three or more numbers.  This algorithm is not needed for fixed-point numbers.</small>
+<small><sup id=Note22>(22)</sup> [**Kahan summation**](https://en.wikipedia.org/wiki/Kahan_summation_algorithm) can be a more robust way than the na&iuml;ve approach to compute the sum of three or more floating-point numbers.</small>
 
 <small><sup id=Note23>(23)</sup> An _affine transformation_ is one that keeps straight lines straight and parallel lines parallel.</small>
 
@@ -2491,6 +2520,8 @@ In 2007, Thomas, D., et al. gave a survey of normal random number methods in "Ga
 <small><sup id=Note60>(60)</sup> Mironov, I., "On Significance of the Least Significant Bits For Differential Privacy", 2012.</small>
 
 <small><sup id=Note61>(61)</sup> For example, see Balcer, V., Vadhan, S., "Differential Privacy on Finite Computers", Dec. 4, 2018; as well as the Miccancio&ndash;Walter discrete Gaussian generator (for lattice-based cryptography).</small>
+
+<small><sup id=Note62>(62)</sup> Duffield, N., Lund, C., Thorup, M., "Priority sampling for estimation of arbitrary subset sums", October 2007.</small>
 
 <a id=Appendix></a>
 ## Appendix
