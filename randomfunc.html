@@ -1081,7 +1081,7 @@ end
    // `MakeRatio(-weight, RNDINTRANGE(1, 1000000000))`
    // and `ITEM_OUTPUT(a, b, key)` is `[a, b, -key]`.
    items=RandomKItemsFromFileWeighted(file, m+1)
-   threshold=items[m][2] # Get the (m+1)th highest key
+   threshold=items[m][2] // Get the (m+1)th highest key
    ret=[]
    for i in 0...m: AddItem(ret,
       [max(items[i][0], threshold), items[i][1]])
@@ -1445,33 +1445,45 @@ END METHOD
 
 <h4>For Floating-Point Number Formats</h4>
 
-<p>For floating-point number formats representing numbers of the form <code>s</code> * <code>FPRADIX</code><sup><code>e</code></sup>, the following pseudocode implements <code>RNDRANGE(lo, hi)</code>.  In the pseudocode:</p>
+<p>For floating-point number formats representing numbers of the form <code>FPSign</code> * <code>s</code> * <code>FPRADIX</code><sup><code>e</code></sup>, the following pseudocode implements <code>RNDRANGE(lo, hi)</code>.  In the pseudocode:</p>
 
 <ul>
 <li><code>MINEXP</code> is the lowest exponent a number can have in the floating-point format.  For the IEEE 754 binary64 format (Java <code>double</code>), <code>MINEXP = -1074</code>.  For the IEEE 754 binary32 format (Java <code>float</code>), <code>MINEXP = -149</code>.</li>
-<li><code>FPPRECISION</code> is the number of significant digits in the floating-point format. Equals 53 for binary64, or 24 for binary32.</li>
+<li><code>FPPRECISION</code> is the number of significant digits in the floating-point format, whether the format stores them as such or not. Equals 53 for binary64, or 24 for binary32.</li>
 <li><code>FPRADIX</code> is the digit base of the floating-point format.  Equals 2 for binary64 and binary32.</li>
 <li><code>FPExponent(x)</code> returns the value of <code>e</code> for the number <code>x</code> such that the number of digits in <code>s</code> equals <code>FPPRECISION</code>.  Returns <code>MINEXP</code> if <code>x = 0</code> or if <code>e</code> would be less than <code>MINEXP</code>.</li>
 <li><code>FPSignificand(x)</code> returns <code>s</code>, the significand of the number <code>x</code>.  Returns 0 if <code>x = 0</code>. Has <code>FPPRECISION</code> digits unless <code>FPExponent(x) == MINEXP</code>.</li>
+<li><code>FPSign(x)</code> returns either -1 or 1 indicating whether the number is positive or negative.  Can be -1 even if <code>s</code> is 0.</li>
 </ul>
 
 <p>See also (Downey 2007)<sup><a href="#Note31"><strong>(31)</strong></a></sup> and the <a href="https://gitlab.com/christoph-conrads/rademacher-fpl"><strong>Rademacher Floating-Point Library</strong></a>.</p>
 
 <pre>METHOD RNDRANGE(lo, hi)
+  losgn = FPSign(lo)
+  hisgn = FPSign(hi)
   loexp = FPExponent(lo)
   hiexp = FPExponent(hi)
   losig = FPSignificand(lo)
   hisig = FPSignificand(hi)
-  if lo&lt;0 and hi&gt;0
+  if lo &gt; hi: return error
+  if losgn == 1 and hisgn == -1: return error
+  if losgn == -1 and hisgn == 1
+    // Straddles negative and positive ranges
+    // NOTE: Changes negative zero to positive
     mabs = max(abs(lo),abs(hi))
     while true
        ret=RNDRANGE(0, mabs)
        neg=rand(2)
        if neg==0: ret=-ret
-       if ret==0 and neg==0: continue
-       if ret&gt;=lo and ret&lt;hi: return ret
+       if ret&gt;=lo and ret&lt;=hi: return ret
     end
   end
+  if lo == hi: return lo
+  if losgn == -1
+    // Negative range
+    return -RNDRANGE(abs(lo), abs(hi))
+  end
+  // Positive range
   expdiff=hiexp-loexp
   if loexp==hiexp
     // Exponents are the same
@@ -1482,15 +1494,25 @@ END METHOD
   end
   while true
     ex=hiexp
-    while ex&gt;MINEXPONENT
+    while ex&gt;MINEXP
       v=RNDINTEXC(FPRADIX)
-      if v==0: ex-=1
-      break
+      if v==0: ex=ex-1
+      else: break
     end
     s=0
-    if ex==MINEXPONENT
+    if ex==MINEXP
+      // Has FPPRECISION or fewer digits
+      // and so can be normal or subnormal
       s=RNDINTEXC(pow(FPRADIX,FPPRECISION))
+    else if FPRADIX != 2
+      // Has FPPRECISION digits
+      s=RNDINTEXCRANGE(
+        pow(FPRADIX,FPPRECISION-1),
+        pow(FPRADIX,FPPRECISION))
     else
+      // Has FPPRECISION digits (bits), the highest
+      // of which is always 1 because it&#39;s the
+      // only nonzero bit
       sm=pow(FPRADIX,FPPRECISION-1)
       s=RNDINTEXC(sm)+sm
     end
@@ -1506,17 +1528,17 @@ END METHOD
 <li><strong><code>RNDRANGEMaxExc</code>, interval [<code>mn</code>, <code>mx</code>)</strong>:
 
 <ul>
-<li>Generate <code>RNDRANGE(mn, mx)</code> in a loop until a number other than <code>mx</code> is generated this way.  Return an error if <code>mn &gt;= mx</code>.</li>
+<li>Generate <code>RNDRANGE(mn, mx)</code> in a loop until a number other than <code>mx</code> is generated this way.  Return an error if <code>mn &gt;= mx</code> (treating positive and negative zero as different).</li>
 </ul></li>
 <li><strong><code>RNDRANGEMinExc</code>, interval [<code>mn</code>, <code>mx</code>)</strong>:
 
 <ul>
-<li>Generate <code>RNDRANGE(mn, mx)</code> in a loop until a number other than <code>mn</code> is generated this way.  Return an error if <code>mn &gt;= mx</code>.</li>
+<li>Generate <code>RNDRANGE(mn, mx)</code> in a loop until a number other than <code>mn</code> is generated this way.  Return an error if <code>mn &gt;= mx</code> (treating positive and negative zero as different).</li>
 </ul></li>
 <li><strong><code>RNDRANGEMinMaxExc</code>, interval (<code>mn</code>, <code>mx</code>)</strong>:
 
 <ul>
-<li>Generate <code>RNDRANGE(mn, mx)</code> in a loop until a number other than <code>mn</code> or <code>mx</code> is generated this way.  Return an error if <code>mn &gt;= mx</code>.</li>
+<li>Generate <code>RNDRANGE(mn, mx)</code> in a loop until a number other than <code>mn</code> or <code>mx</code> is generated this way.  Return an error if <code>mn &gt;= mx</code> (treating positive and negative zero as different).</li>
 </ul></li>
 <li><strong><code>RNDU01()</code></strong>: <code>RNDRANGE(0, 1)</code>.</li>
 <li><strong><code>RNDU01ZeroExc()</code></strong>: <code>RNDRANGEMinExc(0, 1)</code>.</li>
@@ -2849,6 +2871,8 @@ END METHOD
 <h2>Acknowledgments</h2>
 
 <p>I acknowledge the commenters to the CodeProject version of this page, including George Swan, who referred me to the reservoir sampling method.</p>
+
+<p>I also acknowledge Christoph Conrads, who gave suggestions in parts of this article.</p>
 
 <p><a id=Notes></a></p>
 

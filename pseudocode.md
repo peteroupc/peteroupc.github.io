@@ -70,7 +70,7 @@ A _list_ can be expressed by wrapping items in brackets; for example, `[0, 1, 2]
     - &pi; divided by 2 if `y > 0 and x == 0`, and
     - 0 if `y == 0 and x == 0`.
 * `pow(a, b)` is the number `a` raised to the power `b`.
-* `abs(a)` is the absolute value of `a`.
+* `abs(a)` is the absolute value of `a`; it makes negative numbers non-negative.
 * `sqrt(a)` is the square root of `a`, and is equivalent to `pow(a, 0.5)`.
 * `floor(a)` is the highest integer that is less than or equal to `a`.
 * `round(a)` is the closest integer to `a` or, if two integers are tied for closest, the integer among them that is farther from 0.

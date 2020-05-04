@@ -863,7 +863,7 @@ _Priority sampling_ (Duffield et al., 2007)<sup>[**(20)**](#Note20)</sup> sample
        // `MakeRatio(-weight, RNDINTRANGE(1, 1000000000))`
        // and `ITEM_OUTPUT(a, b, key)` is `[a, b, -key]`.
        items=RandomKItemsFromFileWeighted(file, m+1)
-       threshold=items[m][2] # Get the (m+1)th highest key
+       threshold=items[m][2] // Get the (m+1)th highest key
        ret=[]
        for i in 0...m: AddItem(ret,
           [max(items[i][0], threshold), items[i][1]])
@@ -1164,31 +1164,43 @@ For rational number formats with a fixed denominator, the eight methods can be i
 <a id=For_Floating_Point_Number_Formats></a>
 #### For Floating-Point Number Formats
 
-For floating-point number formats representing numbers of the form `s` * `FPRADIX`<sup>`e`</sup>, the following pseudocode implements `RNDRANGE(lo, hi)`.  In the pseudocode:
+For floating-point number formats representing numbers of the form `FPSign` * `s` * `FPRADIX`<sup>`e`</sup>, the following pseudocode implements `RNDRANGE(lo, hi)`.  In the pseudocode:
 
 - `MINEXP` is the lowest exponent a number can have in the floating-point format.  For the IEEE 754 binary64 format (Java `double`), `MINEXP = -1074`.  For the IEEE 754 binary32 format (Java `float`), `MINEXP = -149`.
-- `FPPRECISION` is the number of significant digits in the floating-point format. Equals 53 for binary64, or 24 for binary32.
+- `FPPRECISION` is the number of significant digits in the floating-point format, whether the format stores them as such or not. Equals 53 for binary64, or 24 for binary32.
 - `FPRADIX` is the digit base of the floating-point format.  Equals 2 for binary64 and binary32.
 - `FPExponent(x)` returns the value of `e` for the number `x` such that the number of digits in `s` equals `FPPRECISION`.  Returns `MINEXP` if `x = 0` or if `e` would be less than `MINEXP`.
 - `FPSignificand(x)` returns `s`, the significand of the number `x`.  Returns 0 if `x = 0`. Has `FPPRECISION` digits unless `FPExponent(x) == MINEXP`.
+- `FPSign(x)` returns either -1 or 1 indicating whether the number is positive or negative.  Can be -1 even if `s` is 0.
 
 See also (Downey 2007)<sup>[**(31)**](#Note31)</sup> and the [**Rademacher Floating-Point Library**](https://gitlab.com/christoph-conrads/rademacher-fpl).
 
     METHOD RNDRANGE(lo, hi)
+      losgn = FPSign(lo)
+      hisgn = FPSign(hi)
       loexp = FPExponent(lo)
       hiexp = FPExponent(hi)
       losig = FPSignificand(lo)
       hisig = FPSignificand(hi)
-      if lo<0 and hi>0
+      if lo > hi: return error
+      if losgn == 1 and hisgn == -1: return error
+      if losgn == -1 and hisgn == 1
+        // Straddles negative and positive ranges
+        // NOTE: Changes negative zero to positive
         mabs = max(abs(lo),abs(hi))
         while true
            ret=RNDRANGE(0, mabs)
            neg=rand(2)
            if neg==0: ret=-ret
-           if ret==0 and neg==0: continue
-           if ret>=lo and ret<hi: return ret
+           if ret>=lo and ret<=hi: return ret
         end
       end
+      if lo == hi: return lo
+      if losgn == -1
+        // Negative range
+        return -RNDRANGE(abs(lo), abs(hi))
+      end
+      // Positive range
       expdiff=hiexp-loexp
       if loexp==hiexp
         // Exponents are the same
@@ -1199,15 +1211,25 @@ See also (Downey 2007)<sup>[**(31)**](#Note31)</sup> and the [**Rademacher Float
       end
       while true
         ex=hiexp
-        while ex>MINEXPONENT
+        while ex>MINEXP
           v=RNDINTEXC(FPRADIX)
-          if v==0: ex-=1
-          break
+          if v==0: ex=ex-1
+          else: break
         end
         s=0
-        if ex==MINEXPONENT
+        if ex==MINEXP
+          // Has FPPRECISION or fewer digits
+          // and so can be normal or subnormal
           s=RNDINTEXC(pow(FPRADIX,FPPRECISION))
+        else if FPRADIX != 2
+          // Has FPPRECISION digits
+          s=RNDINTEXCRANGE(
+            pow(FPRADIX,FPPRECISION-1),
+            pow(FPRADIX,FPPRECISION))
         else
+          // Has FPPRECISION digits (bits), the highest
+          // of which is always 1 because it's the
+          // only nonzero bit
           sm=pow(FPRADIX,FPPRECISION-1)
           s=RNDINTEXC(sm)+sm
         end
@@ -1219,11 +1241,11 @@ See also (Downey 2007)<sup>[**(31)**](#Note31)</sup> and the [**Rademacher Float
 The other seven methods can be derived from `RNDRANGE` as follows:
 
 - **`RNDRANGEMaxExc`, interval \[`mn`, `mx`\)**:
-    - Generate `RNDRANGE(mn, mx)` in a loop until a number other than `mx` is generated this way.  Return an error if `mn >= mx`.
+    - Generate `RNDRANGE(mn, mx)` in a loop until a number other than `mx` is generated this way.  Return an error if `mn >= mx` (treating positive and negative zero as different).
 - **`RNDRANGEMinExc`, interval \[`mn`, `mx`\)**:
-    - Generate `RNDRANGE(mn, mx)` in a loop until a number other than `mn` is generated this way.  Return an error if `mn >= mx`.
+    - Generate `RNDRANGE(mn, mx)` in a loop until a number other than `mn` is generated this way.  Return an error if `mn >= mx` (treating positive and negative zero as different).
 - **`RNDRANGEMinMaxExc`, interval \(`mn`, `mx`\)**:
-    - Generate `RNDRANGE(mn, mx)` in a loop until a number other than `mn` or `mx` is generated this way.  Return an error if `mn >= mx`.
+    - Generate `RNDRANGE(mn, mx)` in a loop until a number other than `mn` or `mx` is generated this way.  Return an error if `mn >= mx` (treating positive and negative zero as different).
 - **`RNDU01()`**: `RNDRANGE(0, 1)`.
 - **`RNDU01ZeroExc()`**: `RNDRANGEMinExc(0, 1)`.
 - **`RNDU01OneExc()`**: `RNDRANGEMaxExc(0, 1)`.
@@ -2375,6 +2397,8 @@ To generate a random point on the surface of a sphere in the form of a latitude 
 ## Acknowledgments
 
 I acknowledge the commenters to the CodeProject version of this page, including George Swan, who referred me to the reservoir sampling method.
+
+I also acknowledge Christoph Conrads, who gave suggestions in parts of this article.
 
 <a id=Notes></a>
 ## Notes
