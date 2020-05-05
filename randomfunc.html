@@ -559,7 +559,7 @@ END METHOD
 <li><strong>If <code>n</code> is relatively small (for example, if there are 200 available items, or there is a range of numbers from 0 through 200 to choose from):</strong>
 
 <ul>
-<li>If items have to be chosen from a list <strong>in relative order</strong>, then use <code>RandomKItemsInOrder</code> (given later).</li>
+<li>If items have to be chosen from a list <strong>in relative order</strong>, or if <code>n</code> is 1, then use <code>RandomKItemsInOrder</code> (given later).</li>
 <li>Otherwise, if the sampled items need not be in random order, and each item can be derived from its <em>index</em> (the item&#39;s position as an integer starting at 0) without looking it up in a list: Use the <code>RandomKItemsFromFile</code> method.</li>
 <li>Otherwise, the first three cases below will choose <code>k</code> items in random order:
 
@@ -743,10 +743,12 @@ END METHOD
 end
 
 METHOD RandomKItemsInOrder(list, k)
+  n = size(list)
+  // Special case if k is 1
+  if k==1: return [list[RNDINTEXC(n)]]
   i = 0
   kk = k
   ret = NewList()
-  n = size(list)
   while i &lt; n and size(ret) &lt; k
     u = RNDINTEXC(n - i)
     if u &lt;= kk
@@ -2231,7 +2233,6 @@ END METHOD
 <li><strong>3-parameter gamma distribution</strong>: <code>pow(GammaDist(a, 1), 1.0 / c) * b</code>, where <code>c</code> is another shape parameter.</li>
 <li><strong>4-parameter gamma distribution</strong>: <code>pow(GammaDist(a, 1), 1.0 / c) * b + d</code>, where <code>d</code> is the minimum value.</li>
 <li><strong>Erlang distribution</strong>: <code>GammaDist(n, 1.0 / lamda)</code>.  Expresses a sum of <code>n</code> exponential random variables with the given <code>lamda</code> parameter.</li>
-<li><strong>Max-of-uniform distribution</strong> (Devroye 1986, p. 675)<sup><a href="#Note11"><strong>(11)</strong></a></sup>:  <code>1.0 - x/(x+GammaDist(n,1))</code>, where <code>n</code> is the number of uniform random variables, and <code>x</code> is <code>GammaDist(1,1)</code>.  Using <code>x/(x+GammaDist(n,1))</code> instead results in a <strong>min-of-uniform distribution</strong> (Devroye 1986, p. 210)<sup><a href="#Note11"><strong>(11)</strong></a></sup>.</li>
 </ul>
 
 <p><a id=Beta_Distribution></a></p>
@@ -2246,12 +2247,22 @@ END METHOD
 
 <pre>METHOD BetaDist(a, b)
   if b==1 and a==1: return RNDU01()
+  // Min-of-uniform
   if a==1: return 1.0-pow(RNDU01(),1.0/b)
+  // Max-of-uniform
   if b==1: return pow(RNDU01(),1.0/a)
   x=GammaDist(a,1)
   return x/(x+GammaDist(b,1))
 END METHOD
 </pre>
+
+<p>Distributions based on the beta distribution:</p>
+
+<ul>
+<li><strong>Max-of-uniform distribution</strong>: <code>BetaDist(n, 1)</code>.  Returns the largest out of <code>n</code> uniform random variables.  See also (Devroye 1986, p. 675)<sup><a href="#Note11"><strong>(11)</strong></a></sup>.</li>
+<li><strong>Min-of-uniform distribution</strong>: <code>BetaDist(1, n)</code>.  Returns the smallest out of <code>n</code> uniform random variables.  See also (Devroye 1986, p. 210)<sup><a href="#Note11"><strong>(11)</strong></a></sup>.</li>
+<li><strong><code>k</code>th-order statistic distribution</strong>: <code>BetaDist(k, n+1-k)</code>. Returns the <code>k</code>th smallest out of <code>n</code> uniform random variables. See also (Devroye 1986, p. 210)<sup><a href="#Note11"><strong>(11)</strong></a></sup>.</li>
+</ul>
 
 <p><a id=Poisson_Distribution></a></p>
 

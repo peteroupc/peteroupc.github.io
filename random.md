@@ -443,7 +443,7 @@ Some applications require generating unique identifiers, especially to identify 
 
 Examples of unique integers include sequentially-assigned integers as well as the primary key of a database table.  If the application requires a unique integer to "look random", it can apply any of the following operations to that integer:
 
-1. A reversible mixing function (see "[**Hash functions**](https://papa.bretmulvey.com/post/124027987928)" by B. Mulvey).
+1. A function that maps N-bit integers to N-bit integers in a reversible way (also called a _mixing function_ with reversible operations; see "[**Hash functions**](https://papa.bretmulvey.com/post/124027987928)" by B. Mulvey).
 2. A "full-period" linear PRNG that cycles through all N-bit integers exactly once<sup>[**(35)**](#Note35)</sup>.
 3. If unique integers 0 or greater, but less than K, are desired, choose an N-bit function described in (1) or (2), where N is the number of bits needed to store the number K-minus-1, and discard all outputs that are K or greater.
 

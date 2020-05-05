@@ -70,7 +70,7 @@ The Schaathun paper suggests the following four random number sequences for test
 
 <small><sup id=Note2>(2)</sup> Agner Fog, "[**Pseudo-Random Number Generators for Vector Processors and Multicore Processors**](http://digitalcommons.wayne.edu/jmasm/vol14/iss1/23)", _Journal of Modern Applied Statistical Methods_ 14(1), article 23 (2015).</small>
 
-<small><sup id=Note3>(3)</sup> A _permutation function_ (or _bijection_) is a reversible mapping from N-bit integers to N-bit integers.  Examples include: JSF64 by B. Jenkins; MIX and MIX-i (part of Tyche and Tyche-i); the Romu family by Mark Overton; block ciphers with a fixed key; 32-bit to 32-bit reversible mixing functions.</small>
+<small><sup id=Note3>(3)</sup> A _permutation function_ (or _bijection_) is a reversible mapping from N-bit integers to N-bit integers.  Examples include: JSF64 by B. Jenkins; MIX and MIX-i (part of Tyche and Tyche-i); the Romu family by Mark Overton; block ciphers with a fixed key; mixing functions with reversible operations as described in "[**Hash functions**](https://papa.bretmulvey.com/post/124027987928)" by B. Mulvey.</small>
 
 <small><sup id=Note4>(4)</sup> As [**P. Evensen shows**](https://mostlymangling.blogspot.com/2018/07/on-mixing-functions-in-fast-splittable.html#testing_with_practrand), the choice of constant can matter for a given permutation function.</small>
 

@@ -422,7 +422,7 @@ _Sampling without replacement_  essentially means taking a random item _without_
 
 1. **If `n` is not known in advance:** Use the _reservoir sampling_ method; see the `RandomKItemsFromFile` method, in [**pseudocode given later**](#Pseudocode_for_Random_Sampling).
 2. **If `n` is relatively small (for example, if there are 200 available items, or there is a range of numbers from 0 through 200 to choose from):**
-    - If items have to be chosen from a list **in relative order**, then use `RandomKItemsInOrder` (given later).
+    - If items have to be chosen from a list **in relative order**, or if `n` is 1, then use `RandomKItemsInOrder` (given later).
     - Otherwise, if the sampled items need not be in random order, and each item can be derived from its _index_ (the item's position as an integer starting at 0) without looking it up in a list: Use the `RandomKItemsFromFile` method.
     - Otherwise, the first three cases below will choose `k` items in random order:
         - Store all the items in a list, [**shuffle**](#Shuffling) that list, then choose the first `k` items from that list.
@@ -576,10 +576,12 @@ The following pseudocode implements two methods:
     end
 
     METHOD RandomKItemsInOrder(list, k)
+      n = size(list)
+      // Special case if k is 1
+      if k==1: return [list[RNDINTEXC(n)]]
       i = 0
       kk = k
       ret = NewList()
-      n = size(list)
       while i < n and size(ret) < k
         u = RNDINTEXC(n - i)
         if u <= kk
@@ -1840,7 +1842,6 @@ Distributions based on the gamma distribution:
 - **3-parameter gamma distribution**: `pow(GammaDist(a, 1), 1.0 / c) * b`, where `c` is another shape parameter.
 - **4-parameter gamma distribution**: `pow(GammaDist(a, 1), 1.0 / c) * b + d`, where `d` is the minimum value.
 - **Erlang distribution**: `GammaDist(n, 1.0 / lamda)`.  Expresses a sum of `n` exponential random variables with the given `lamda` parameter.
-- **Max-of-uniform distribution** (Devroye 1986, p. 675)<sup>[**(11)**](#Note11)</sup>:  `1.0 - x/(x+GammaDist(n,1))`, where `n` is the number of uniform random variables, and `x` is `GammaDist(1,1)`.  Using `x/(x+GammaDist(n,1))` instead results in a **min-of-uniform distribution** (Devroye 1986, p. 210)<sup>[**(11)**](#Note11)</sup>.
 
 <a id=Beta_Distribution></a>
 ### Beta Distribution
@@ -1853,11 +1854,19 @@ The following method generates a random number that follows a _beta distribution
 
     METHOD BetaDist(a, b)
       if b==1 and a==1: return RNDU01()
+      // Min-of-uniform
       if a==1: return 1.0-pow(RNDU01(),1.0/b)
+      // Max-of-uniform
       if b==1: return pow(RNDU01(),1.0/a)
       x=GammaDist(a,1)
       return x/(x+GammaDist(b,1))
     END METHOD
+
+Distributions based on the beta distribution:
+
+- **Max-of-uniform distribution**: `BetaDist(n, 1)`.  Returns the largest out of `n` uniform random variables.  See also (Devroye 1986, p. 675)<sup>[**(11)**](#Note11)</sup>.
+- **Min-of-uniform distribution**: `BetaDist(1, n)`.  Returns the smallest out of `n` uniform random variables.  See also (Devroye 1986, p. 210)<sup>[**(11)**](#Note11)</sup>.
+- **`k`th-order statistic distribution**: `BetaDist(k, n+1-k)`. Returns the `k`th smallest out of `n` uniform random variables. See also (Devroye 1986, p. 210)<sup>[**(11)**](#Note11)</sup>.
 
 <a id=Poisson_Distribution></a>
 ### Poisson Distribution
