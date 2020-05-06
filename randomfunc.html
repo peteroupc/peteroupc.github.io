@@ -493,7 +493,7 @@ the following idioms in an <code>if</code> condition:</p>
 <li>True with X percent probability: <code>RNDINTEXC(100) &lt; X</code>.</li>
 <li>True with probability X/Y: <code>RNDINTEXC(Y) &lt; X</code>.</li>
 <li>True with odds of X to Y: <code>RNDINTEXC(X + Y) &lt; X</code>.</li>
-<li>True with probability P, where P is in the interval [0, 1] (a <em>Bernoulli trial</em>): Convert P to an acceptably close rational number X/Y, then do <code>RNDINTEXC(Y) &lt; X</code>.</li>
+<li>True with probability P, where P is in the interval [0, 1] (a <em>Bernoulli trial</em>): Express P in the form of an acceptably close rational number X/Y, then do <code>RNDINTEXC(Y) &lt; X</code>.</li>
 </ul>
 
 <blockquote>
@@ -1611,7 +1611,9 @@ END METHOD
 <li>Sobol sequences are explained in &quot;<a href="https://web.maths.unsw.edu.au/%7Efkuo/sobol/"><strong>Sobol sequence generator</strong></a>&quot; by S. Joe and F. Kuo.</li>
 <li><em>Latin hypercube sampling</em> doesn&#39;t exactly produce low-discrepancy sequences, but serves much the same purpose.  The following pseudocode implements this sampling for an <code>n</code>-number sequence: <code>lhs = []; for i in 0...n: AddItem(RNDRANGEMinMaxExc(i*1.0/n,(i+1)*1.0/n)); lhs = Shuffle(lhs)</code>.</li>
 <li>Linear congruential generators with modulus <code>m</code>, a full period, and &quot;good lattice structure&quot;; a sequence of <code>n</code>-dimensional points is then <code>[MLCG(i), MLCG(i+1), ..., MLCG(i+n-1)]</code> for each integer <code>i</code> in the interval [1, <code>m</code>] (L&#39;Ecuyer 1999)<sup><a href="#Note34"><strong>(34)</strong></a></sup> (see example pseudocode below).</li>
-<li>If the sequence outputs numbers in the interval [0, 1], the <a href="http://en.wikipedia.org/wiki/Baker&#x27;s_map"><strong>Baker&#39;s map</strong></a> of the sequence is <code>2 * (0.5-abs(x - 0.5))</code>, where <code>x</code> is each number in the sequence.</li>
+<li>Linear feedback shift register generators with good &quot;uniformity&quot; for Monte Carlo sampling (e.g., (Harase 2020)<sup><a href="#Note63"><strong>(63)</strong></a></sup>).</li>
+<li>If the sequence outputs numbers in the interval [0, 1], the <a href="http://en.wikipedia.org/wiki/Baker&#x27;s_map"><strong>Baker&#39;s map</strong></a> of the sequence is <code>2 * (0.5-abs(x - 0.5))</code>, where <code>x</code> is each
+number in the sequence.</li>
 </ul>
 
 <p>&nbsp;</p>
@@ -2270,14 +2272,11 @@ END METHOD
 
 <p><strong>Requires random real numbers.</strong></p>
 
-<p>The following method generates a random integer that follows a <em>Poisson distribution</em>.  In the method&mdash;</p>
+<p>The <em>Poisson distribution</em> uses a parameter <code>mean</code> (also known as &lambda;). &lambda; is the average number of independent events of a certain kind per fixed unit of time or space (for example, per day, hour, or square kilometer).  A Poisson-distributed variable is the number of such events within one such unit.</p>
 
-<ul>
-<li><code>mean</code> is the average number of independent events of a certain kind per fixed unit of time or space (for example, per day, hour, or square kilometer), and can be an integer or a non-integer (the method allows <code>mean</code> to be 0 mainly for convenience), and</li>
-<li>the method&#39;s return value gives a random number of such events within one such unit.</li>
-</ul>
+<p>In this document, <code>Poisson(mean)</code> is a Poisson-distributed variable if <code>mean</code> is greater than 0, or 0 if <code>mean</code> is 0.</p>
 
-<p>&nbsp;</p>
+<p>The following method generates a random integer that follows a <em>Poisson distribution</em> using the parameter <code>mean</code> (which the method allows to be 0 for convenience).</p>
 
 <pre>METHOD Poisson(mean)
     if mean &lt; 0: return error
@@ -3040,6 +3039,8 @@ and &quot;<a href="https://randomascii.wordpress.com/2013/07/16/floating-point-d
 <p><small><sup id=Note61>(61)</sup> Mironov, I., &quot;On Significance of the Least Significant Bits For Differential Privacy&quot;, 2012.</small></p>
 
 <p><small><sup id=Note62>(62)</sup> For example, see Balcer, V., Vadhan, S., &quot;Differential Privacy on Finite Computers&quot;, Dec. 4, 2018; as well as the Miccancio&ndash;Walter discrete Gaussian generator (for lattice-based cryptography).</small></p>
+
+<p><small><sup id=Note63>(63)</sup> Harase, S., &quot;A table of short-period Tausworthe generators for Markov chain quasi-Monte Carlo&quot;, arXiv:2002.09006 [math.NA], 2020.</small></p>
 
 <p><a id=Appendix></a></p>
 

@@ -9,16 +9,11 @@
 <pre>public interface ICharacterEncoding
 </pre>
 
-<p>Defines methods that can be implemented by classes that convert to and from
- bytes and character code points.</p>
-
 <h2>Methods</h2>
 
 <ul>
-<li><code>ICharacterDecoder GetDecoder()</code><br>
-Creates a decoder for this character encoding with initial state.</li>
-<li><code>ICharacterEncoder GetEncoder()</code><br>
-Creates an encoder for this character encoding with initial state.</li>
+<li><code>ICharacterDecoder GetDecoder()</code><br></li>
+<li><code>ICharacterEncoder GetEncoder()</code><br></li>
 </ul>
 
 <h2>Method Details</h2>
@@ -28,30 +23,10 @@ Creates an encoder for this character encoding with initial state.</li>
 <pre>ICharacterEncoder GetEncoder()
 </pre>
 
-<p>Creates an encoder for this character encoding with initial state. If the
- encoder is stateless, multiple calls of this method can return the
- same encoder.</p>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>A character encoder object.</li>
-</ul>
-
 <h3>GetDecoder</h3>
 
 <pre>ICharacterDecoder GetDecoder()
 </pre>
-
-<p>Creates a decoder for this character encoding with initial state. If the
- decoder is stateless, multiple calls of this method can return the
- same decoder.</p>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>A character decoder object.</li>
-</ul>
 
 <p><a href="/Encoding/">Back to Encoding start page.</a></p>
 </div><nav id="navigation"><ul>

@@ -372,7 +372,7 @@ the following idioms in an `if` condition:
 - True with X percent probability: `RNDINTEXC(100) < X`.
 - True with probability X/Y: `RNDINTEXC(Y) < X`.
 - True with odds of X to Y: `RNDINTEXC(X + Y) < X`.
-- True with probability P, where P is in the interval \[0, 1\] (a _Bernoulli trial_): Convert P to an acceptably close rational number X/Y, then do `RNDINTEXC(Y) < X`.
+- True with probability P, where P is in the interval \[0, 1\] (a _Bernoulli trial_): Express P in the form of an acceptably close rational number X/Y, then do `RNDINTEXC(Y) < X`.
 
 > **Examples:**
 > - True with probability 3/8: `RNDINTEXC(8) < 3`.
@@ -1306,7 +1306,9 @@ A [**_low-discrepancy sequence_**](https://en.wikipedia.org/wiki/Low-discrepancy
 - Sobol sequences are explained in "[**Sobol sequence generator**](https://web.maths.unsw.edu.au/~fkuo/sobol/)" by S. Joe and F. Kuo.
 - _Latin hypercube sampling_ doesn't exactly produce low-discrepancy sequences, but serves much the same purpose.  The following pseudocode implements this sampling for an `n`-number sequence: `lhs = []; for i in 0...n: AddItem(RNDRANGEMinMaxExc(i*1.0/n,(i+1)*1.0/n)); lhs = Shuffle(lhs)`.
 - Linear congruential generators with modulus `m`, a full period, and "good lattice structure"; a sequence of `n`-dimensional points is then `[MLCG(i), MLCG(i+1), ..., MLCG(i+n-1)]` for each integer `i` in the interval \[1, `m`\] (L'Ecuyer 1999)<sup>[**(34)**](#Note34)</sup> (see example pseudocode below).
-- If the sequence outputs numbers in the interval [0, 1], the [**Baker's map**](http://en.wikipedia.org/wiki/Baker's_map) of the sequence is `2 * (0.5-abs(x - 0.5))`, where `x` is each number in the sequence.
+- Linear feedback shift register generators with good "uniformity" for Monte Carlo sampling (e.g., (Harase 2020)<sup>[**(63)**](#Note63)</sup>).
+- If the sequence outputs numbers in the interval [0, 1], the [**Baker's map**](http://en.wikipedia.org/wiki/Baker's_map) of the sequence is `2 * (0.5-abs(x - 0.5))`, where `x` is each
+number in the sequence.
 
 &nbsp;
 
@@ -1873,12 +1875,11 @@ Distributions based on the beta distribution:
 
 **Requires random real numbers.**
 
-The following method generates a random integer that follows a _Poisson distribution_.  In the method&mdash;
+The _Poisson distribution_ uses a parameter `mean` (also known as &lambda;). &lambda; is the average number of independent events of a certain kind per fixed unit of time or space (for example, per day, hour, or square kilometer).  A Poisson-distributed variable is the number of such events within one such unit.
 
-- `mean` is the average number of independent events of a certain kind per fixed unit of time or space (for example, per day, hour, or square kilometer), and can be an integer or a non-integer (the method allows `mean` to be 0 mainly for convenience), and
-- the method's return value gives a random number of such events within one such unit.
+In this document, `Poisson(mean)` is a Poisson-distributed variable if `mean` is greater than 0, or 0 if `mean` is 0.
 
-&nbsp;
+The following method generates a random integer that follows a _Poisson distribution_ using the parameter `mean` (which the method allows to be 0 for convenience).
 
     METHOD Poisson(mean)
         if mean < 0: return error
@@ -2555,6 +2556,8 @@ In 2007, Thomas, D., et al. gave a survey of normal random number methods in "Ga
 <small><sup id=Note61>(61)</sup> Mironov, I., "On Significance of the Least Significant Bits For Differential Privacy", 2012.</small>
 
 <small><sup id=Note62>(62)</sup> For example, see Balcer, V., Vadhan, S., "Differential Privacy on Finite Computers", Dec. 4, 2018; as well as the Miccancio&ndash;Walter discrete Gaussian generator (for lattice-based cryptography).</small>
+
+<small><sup id=Note63>(63)</sup> Harase, S., "A table of short-period Tausworthe generators for Markov chain quasi-Monte Carlo", arXiv:2002.09006 [math.NA], 2020.</small>
 
 <a id=Appendix></a>
 ## Appendix
