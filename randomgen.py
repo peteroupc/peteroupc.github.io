@@ -462,49 +462,53 @@ Returns 'list'. """
             raise ValueError
         if trials == 0:
             return 0
+        # Always succeeds
         if p >= 1.0:
             return trials
+        # Always fails
         if p <= 0.0:
             return 0
-        i = 0
         count = 0
-        tp = trials * p * 1.0
-        if tp > 25:
-            sign = 1
-            ret = 0
-            n = trials
-            # p. 537 of Devroye 1986 with errata
-            # incorporated
-            while True:
-                if n * p < 9:
-                    # Base case
-                    if p == 0:
-                        return ret
-                    sum = 0
-                    t = -1
-                    while sum <= n:
-                        # Geometric variable plus 1
-                        geo = math.floor(-self.exponential(math.log1p(-p))) + 1
-                        sum = sum + geo
-                        ret = ret + sign
-                    return ret - sign
+        sign = 1
+        ret = 0
+        recursed = False
+        while trials > 100:
+            # Devroye's recursive generator.
+            # Recursion case (base case omitted).
+            # NOTE: Not strictly necessary, except
+            # as a speed boost.  Is not exact.
+            recursed = true
+            i = (p * (trials + 1)).floor
+            b = self.beta(i, trials + 1 - i)
+            ret = i + ret * sign
+            if b <= p:
+                trials = trials - i
+                p = (p - b) / (1.0 - b)
+            else:
+                ret = ret - sign
+                trials = i - 1
+                sign = -sign
+                p = (b - p) / b
+        if p == 0.5:
+            for i in range(trials):
+                count = count + self.rndint(1)
+        else:
+            # Based on proof of Theorem 2 in Farach-Colton and Tsai.
+            # Decompose prob into its binary expansion (assuming
+            # division by 2 is exact except on underflow)
+            pw = p
+            pt = 0.5
+            while trials > 0 and pw > 0:
+                c = self.binomial(trials, 0.5)
+                if pw >= pt:
+                    count = count + c
+                    trials = trials - c
+                    pw = pw - pt
                 else:
-                    # Recursion case
-                    i = math.floor(p * (n + 1))
-                    b = self.beta(i, n + 1 - i)
-                    ret = i + ret * sign
-                    if b <= p:
-                        n = n - i
-                        p = (p - b) / (1.0 - b)
-                    else:
-                        ret = ret - sign
-                        n = i - 1
-                        sign = -sign
-                        p = (b - p) / b
-        while i < trials:
-            if self.rndu01oneexc() < p:
-                count += 1
-            i += 1
+                    trials = c
+                pt = pt / 2.0  # NOTE: Not rounded
+        if recursed:
+            return count * sign + ret
         return count
 
     def hypergeometric(self, trials, ones, count):
