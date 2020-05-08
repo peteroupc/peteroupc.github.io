@@ -67,6 +67,57 @@ def numericalTable(func, x, y, n=100):
     ret = [x + (y - x) * (i * 1.0 / n) for i in range(n + 1)]
     return [[func(b), b] for b in ret]
 
+class PascalTriangle:
+    """ Generates the rows of Pascal's triangle, or the
+      weight table for a binomial(n) distribution. """
+
+    def __init__(self):
+        self.table = []
+
+    def next(self):
+        x = self.table
+        xr = [
+            1 if i == 0 or i == len(x) else x[i] + x[i - 1] for i in range(len(x) + 1)
+        ]
+        self.table = xr
+        return [x for x in self.table]
+
+class BinaryExpansion:
+    """ Generates the binary expansion of a 64-bit floating-point
+        number 'fp', assuming the number is greater than 0 and
+        less than 1.  An example of a binary expansion is:
+        0.1010111000010... """
+
+    def __init__(self, fp):
+        pw = fp
+        pt = 0.5
+        x = 0
+        sh = 0
+        while pw > 0:
+            x |= (1 if (pw >= pt) else 0) << sh
+            sh += 1
+            if pw >= pt:
+                pw -= pt
+            pt /= 2
+        self.x = x
+        self.xorig = x
+
+    def eof():
+        """ Returns whether the expansion has no more ones. """
+        return self.x == 0
+
+    def next():
+        """ Generates the next bit in the binary expansion, starting
+           with the bit after the point."""
+        ret = self.x & 1
+        self.x >>= 1
+        return ret
+
+    def reset():
+        """ Resets the expansion to before any bits were extracted
+           with the 'next' method. """
+        self.x = self.xorig
+
 class RandomGen:
     """ A class that implements many methods for
       random number generation and sampling.  It takes
@@ -90,13 +141,13 @@ class RandomGen:
             self.rng = random.Random()
         else:
             self.rng = rng
-        self.bitcount = 24
+        self.bitcount = 31
         self.curbit = 0
 
     def _rndbit(self):
-        if self.bitcount >= 24:
+        if self.bitcount >= 31:
             self.bitcount = 0
-            self.curbit = self.rng.randint(0, (1 << 24) - 1)
+            self.curbit = self.rng.randint(0, (1 << 31) - 1)
         ret = self.curbit & 1
         self.curbit >>= 1
         self.bitcount += 1
@@ -281,6 +332,18 @@ Returns 'list'. """
         """ Returns 1 at probability px/py, 0 otherwise. """
         return 1 if self.rndintexc(py) < px else 0
 
+    def bernoulli(self, p):
+        """ Returns 1 at probability px, 0 otherwise. """
+        bexp = BinaryExpansion(p)
+        while not bexp.eof():
+            bp = bexp.next()
+            br = self.rndint(2)
+            if br < bp:
+                return 1
+            if br > bp:
+                return 0
+        return 0
+
     def weighted_choice(self, weights):
         return self._weighted_choice_n(weights, 1, 0)[0]
 
@@ -314,7 +377,26 @@ Returns 'list'. """
             prob[small[i]] = ms
         for i in range(lc):
             prob[large[i]] = ms
+        if len(prob) != len(weights):
+            raise ValueError("Internal error")
+        if len(alias) != len(weights):
+            raise ValueError("Internal error")
         return [ms, prob, alias]
+
+    def _aliassample(self, table):
+        total = table[0]
+        prob = table[1]
+        alias = table[2]
+        d = self.rndintexc(len(prob))
+        da = alias[d]
+        if d == da:
+            return d
+        tsample = (
+            self.rndintexc(total)
+            if int(total) == total
+            else self.rndrangemaxexc(0, total)
+        )
+        return d if tsample < prob[d] else da
 
     def _weighted_choice_n(self, weights, n, addvalue):
         if len(weights) == 0:
@@ -334,12 +416,7 @@ Returns 'list'. """
             total = aliasinfo[0]
             prob = aliasinfo[1]
             alias = aliasinfo[2]
-            rx = [
-                [self.rndintexc(len(weights)), self.rndrangemaxexc(0, total)]
-                for k in range(n)
-            ]
-            return [x[0] if x[1] < prob[x[0]] else alias[x[0]] for x in rx]
-        rv = [self.rndrangemaxexc(0, msum) for k in range(n)]
+            return [self._aliassample(aliasinfo) for k in range(n)]
         ret = [0 for k in range(n)]
         k = 0
         while k < n:
@@ -457,6 +534,33 @@ Returns 'list'. """
         x = self.gamma(avar)
         return x / (x + self.gamma(b))
 
+    class PascalTriangle:
+        def __init__(self):
+            self.table = []
+
+        def next(self):
+            x = self.table
+            xr = [
+                1 if i == 0 or i == len(x) else x[i] + x[i - 1]
+                for i in range(len(x) + 1)
+            ]
+            self.table = xr
+            return [x for x in self.table]
+
+    _aliastables = []
+    _pascal = PascalTriangle()
+
+    def _getaliastable(self, n):
+        if n < len(self._aliastables):
+            return self._aliastables[n]
+        # print("setting up %d"%(n))
+        for i in range(len(self._aliastables), n + 1):
+            if i == 0:
+                self._aliastables.append(0)
+            else:
+                self._aliastables.append(self._aliassetup(self._pascal.next()))
+        return self._aliastables[n]
+
     def binomial(self, trials, p):
         if trials < 0:
             raise ValueError
@@ -472,26 +576,18 @@ Returns 'list'. """
         sign = 1
         ret = 0
         recursed = False
-        while trials > 100:
-            # Devroye's recursive generator.
-            # Recursion case (base case omitted).
-            # NOTE: Not strictly necessary, except
-            # as a speed boost.  Is not exact.
-            recursed = true
-            i = (p * (trials + 1)).floor
-            b = self.beta(i, trials + 1 - i)
-            ret = i + ret * sign
-            if b <= p:
-                trials = trials - i
-                p = (p - b) / (1.0 - b)
-            else:
-                ret = ret - sign
-                trials = i - 1
-                sign = -sign
-                p = (b - p) / b
         if p == 0.5:
-            for i in range(trials):
-                count = count + self.rndint(1)
+            if trials < 32:
+                r = self.rndintexc(1 << trials)
+                while r > 0:
+                    if (r & 1) != 0:
+                        count += 1
+                    r >>= 1
+            elif trials > 8:
+                count = count + self._aliassample(self._getaliastable(trials))
+            else:
+                for i in range(trials):
+                    count = count + self.rndint(1)
         else:
             # Based on proof of Theorem 2 in Farach-Colton and Tsai.
             # Decompose prob into its binary expansion (assuming
@@ -691,7 +787,7 @@ Returns 'list'. """
 
     def expoNumerator(self, denom):
         """ Generates the numerator of an exponential random
-           variable with a given denominator,
+           number with a given denominator,
            using von Neumann's
            algorithm ("Various techniques used in connection with
            random digits", 1951). """
@@ -1181,7 +1277,7 @@ acap - Optional.  A setting used in the optimization process; an
             if mulen != len(cov[0]):
                 raise ValueError
         cho = self._decompose(cov)
-        variables = [self.normal(0, 1) for i in range(mulen * n)]
+        vts = [self.normal(0, 1) for i in range(mulen * n)]
         ret = [[0 for i in range(mulen)] for i in range(n)]
         for k in range(n):
             js = mulen * k
@@ -1191,7 +1287,7 @@ acap - Optional.  A setting used in the optimization process; an
                 if mu != None:
                     msum = mu[i]
                 for j in range(mulen):
-                    msum = msum + variables[js + j] * cho[j][i]
+                    msum = msum + vts[js + j] * cho[j][i]
                 ret[k][i] = msum
                 i = i + 1
         return ret
@@ -1214,7 +1310,7 @@ acap - Optional.  A setting used in the optimization process; an
         mvn = self.multinormal(None, cov)
         for i in range(len(cov)):
             # Apply the normal distribution's CDF
-            # to get uniform variables
+            # to get uniform random number
             mvn[i] = (
                 math.erf(mvn[i] / (math.sqrt(2) * math.sqrt(cov[i][i]))) + 1
             ) * 0.5
@@ -1688,6 +1784,42 @@ acap - Optional.  A setting used in the optimization process; an
             raise ValueError
         return samples
 
+    MINEXPONENT = -1074
+    FPPRECISION = 53
+    FPRADIX = 2
+
+    def _fpExponent(self, x):  # The 'e' in s*2**e
+        if x == 0:
+            return MINEXPONENT
+        return max(MINEXPONENT, math.frexp(x)[1] - FPPRECISION)
+
+    def _fpSignificand(self, x):  # The 's' in s*2**e
+        if x == 0:
+            return 0
+        fre = math.frexp(x)
+        fexp = fre[1] - FPPRECISION
+        c = ((fre[0] - 0.5) * (1 << FPPRECISION)).to_i | (1 << (FPPRECISION - 1))
+        if fexp < MINEXPONENT:
+            diff = -(fexp - MINEXPONENT)
+            if (c & ((1 << diff) - 1)) != 0:
+                raise ValueError
+            c >>= diff
+        return c
+
+    def _fpRatio(self, fp):
+        expo = self._fpExponent(fp)
+        sig = self._fpSignificand(fp)
+        if expo >= 0:
+            return [sig * (1 << expo), 1]
+        return [sig, 1 << abs(expo)]
+
+    def _toWeights(self, ratios):
+        ret = [self._fpRatio(r) for r in ratios]
+        maxden = 0
+        for r in ratios:
+            maxden = max(maxden, r[1])
+        return [r[0] * (maxden // r[1]) for i in ratios]
+
     def integers_from_pdf(self, pdf, mn, mx, n=1):
         """ Generates one or more random integers from a discrete probability
          distribution expressed as a probability density
@@ -1699,7 +1831,7 @@ acap - Optional.  A setting used in the optimization process; an
          that a random integer will equal that parameter.
          The area under the "curve" of the PDF need not be 1.
          By default, `n` is 1.  """
-        wt = [pdf(x) for x in range(mn, mx)]
+        wt = self._toWeights([pdf(x) for x in range(mn, mx)])
         return r._weighted_choice_n(wt, n, mn)
 
     def numbers_from_pdf(self, pdf, mn, mx, n=1, steps=100):
@@ -2014,7 +2146,7 @@ class KVectorSampler:
 
     def invert(self, uniforms):
         """ Returns a list of 'n' numbers that correspond
-            to the given uniform random variables and follow
+            to the given uniform random numbers and follow
             the distribution represented by this sampler.  'uniforms'
             is a list of uniform random values in the interval
             [0, 1].  For best results, this sampler's range
@@ -2057,6 +2189,7 @@ class AlmostRandom:
 if __name__ == "__main__":
     # Initialize random generator
     randgen = RandomGen()
+    import time
 
     def linspace(a, b, size):
         return [a + (b - a) * (x * 1.0 / size) for x in range(size + 1)]
@@ -2093,11 +2226,21 @@ if __name__ == "__main__":
     # Generate normal random numbers
     print("Generating normal random numbers with KVectorSampler")
     kvs = KVectorSampler(randgen, normalcdf, -4, 4, nd=200, pdf=normalpdf)
-    ksample = kvs.sample(10000)
+    ksample = kvs.sample(1000)
     ls = linspace(-4, 4, 30)
     buckets = [0 for x in ls]
     for ks in ksample:
         bucket(ks, ls, buckets)
+    showbuckets(ls, buckets)
+
+    t = time.time()
+    ksample = [randgen.binomial(100, 0.7) for i in range(10000)]
+    print(time.time() - t)
+    ls = linspace(0, 100, 100)
+    buckets = [0 for x in ls]
+    for ks in ksample:
+        bucket(ks, ls, buckets)
+    print(buckets)
     showbuckets(ls, buckets)
 
     print(randgen.intsInRangesWithSum(10, [[1, 4], [3, 5], [2, 6]], 12))
