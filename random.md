@@ -268,7 +268,7 @@ In general, there are two steps to generate an `N`-bit seed for a PRNG<sup>[**(1
 1. Gather enough data from _nondeterministic sources_ to reach `N` bits of _entropy_ or more.
 2. Then, condense the data into an `N`-bit number, a process called _randomness extraction_.<sup>[**(15)**](#Note15)</sup>
 
-Randomness extraction is discussed in NIST SP 800-90B sec. 3.1.5.1, RFC 4086 sec. 4.2 and 5.2, and (Cliff et al., 2009)<sup>[**(16)**](#Note16)</sup>.
+Randomness extraction is discussed in NIST SP 800-90B sec. 3.1.5.1, and RFC 4086 sec. 4.2 and 5.2.  Examples include von Neumann unbiasing (von Neumann 1951)<sup>[**(44)**](#Note44)</sup>, a streaming version by (Zhou and Bruck 2012)<sup>[**(45)**](#Note45)</sup>, and extraction via keyed and unkeyed hash algorithms (e.g., (Cliff et al., 2009)<sup>[**(16)**](#Note16)</sup>).
 
 > **Example:** The Cliff reference reviewed the use of HMAC (hash-based message authentication code) algorithms, and implies that one way to generate a seed is as follows:
 >
@@ -659,6 +659,10 @@ See also N. Reed, "Quick And Easy GPU Random Numbers In D3D11", Nathan Reed's co
 <small><sup id=Note42>(42)</sup> An example is the "shrinking generator" technique to combine two RNGs; see J. D. Cook, "Using one RNG to sample another", June 4, 2019, for more.</small>
 
 <small><sup id=Note43>(43)</sup> Allowing applications to do so would hamper forward compatibility &mdash; the API would then be less free to change how the RNG is implemented in the future (e.g., to use a cryptographic or otherwise "better" RNG), or to make improvements or bug fixes in methods that use that RNG (such as shuffling and Gaussian number generation).  (As a notable example, the V8 JavaScript engine recently changed its `Math.random()` implementation to use a variant of `xorshift128+`, which is backward compatible because nothing in JavaScript allows  `Math.random()` to be seeded.)  Nevertheless, APIs can still allow applications to provide additional input ("entropy") to the RNG in order to increase its randomness rather than to ensure repeatability.</small>
+
+<small><sup id=Note44>(44)</sup> von Neumann, J., "Various techniques used in connection with random digits", 1951.</small>
+
+<small><sup id=Note45>(45)</sup> Zhou, H. and Bruck, J., 2012. Streaming algorithms for optimal generation of random bits. arXiv preprint arXiv:1209.0730.  See [**source code of my implementation**](https://github.com/peteroupc/peteroupc.github.io/blob/master/rextract.rb).</small>
 
 <a id=License></a>
 ## License

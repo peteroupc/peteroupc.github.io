@@ -497,11 +497,24 @@ Returns 'list'. """
     def normal(self, mu=0.0, sigma=1.0):
         """ Generates a normally-distributed random number. """
         bmp = 0.8577638849607068  # sqrt(2/exp(1))
-        while True:
-            a = self.rndu01zeroexc()
-            b = self.rndrange(-bmp, bmp)
-            if b * b <= -4 * a * a * math.log(a):
-                return (b * sigma / a) + mu
+        if self.rndu01(1):
+            while True:
+                a = self.rndu01zeroexc()
+                b = self.rndu01zeroexc()
+                if rndint(1) == 0:
+                    a = 0 - a
+                if rndint(1) == 0:
+                    b = 0 - b
+                c = a * a + b * b
+                if c != 0 and c <= 1:
+                    c = math.sqrt(-math.log(c) * 2 / c)
+                    return [a * mu * c + sigma, b * mu * c + sigma]
+        else:
+            while True:
+                a = self.rndu01zeroexc()
+                b = self.rndrange(-bmp, bmp)
+                if b * b <= -4 * a * a * math.log(a):
+                    return (b * sigma / a) + mu
 
     def lognormal(self, mu=0.0, sigma=0.0):
         return math.exp(self.normal(mu, sigma))
@@ -751,7 +764,7 @@ Returns 'list'. """
             count = 0
             total = 0
             while True:
-                if r.rndu01oneexc() < p:
+                if self.bernoulli(p) == 1:
                     total += 1
                     if total >= successes:
                         return count

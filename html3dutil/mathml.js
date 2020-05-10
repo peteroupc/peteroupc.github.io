@@ -1,7 +1,7 @@
 /*
 Quick-and-dirty MathML polyfill.
 
-Written by Peter O. in 2015.
+Written by Peter O.
 
 Any copyright is dedicated to the Public Domain.
 http://creativecommons.org/publicdomain/zero/1.0/

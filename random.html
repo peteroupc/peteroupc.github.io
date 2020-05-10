@@ -389,7 +389,7 @@ For cryptographic RNGs, an application SHOULD use only one thread-safe instance 
 <li>Then, condense the data into an <code>N</code>-bit number, a process called <em>randomness extraction</em>.<sup><a href="#Note15"><strong>(15)</strong></a></sup></li>
 </ol>
 
-<p>Randomness extraction is discussed in NIST SP 800-90B sec. 3.1.5.1, RFC 4086 sec. 4.2 and 5.2, and (Cliff et al., 2009)<sup><a href="#Note16"><strong>(16)</strong></a></sup>.</p>
+<p>Randomness extraction is discussed in NIST SP 800-90B sec. 3.1.5.1, and RFC 4086 sec. 4.2 and 5.2.  Examples include von Neumann unbiasing (von Neumann 1951)<sup><a href="#Note44"><strong>(44)</strong></a></sup>, a streaming version by (Zhou and Bruck 2012)<sup><a href="#Note45"><strong>(45)</strong></a></sup>, and extraction via keyed and unkeyed hash algorithms (e.g., (Cliff et al., 2009)<sup><a href="#Note16"><strong>(16)</strong></a></sup>).</p>
 
 <blockquote>
 <p><strong>Example:</strong> The Cliff reference reviewed the use of HMAC (hash-based message authentication code) algorithms, and implies that one way to generate a seed is as follows:</p>
@@ -938,6 +938,10 @@ For cryptographic RNGs, an application SHOULD use only one thread-safe instance 
 <p><small><sup id=Note42>(42)</sup> An example is the &quot;shrinking generator&quot; technique to combine two RNGs; see J. D. Cook, &quot;Using one RNG to sample another&quot;, June 4, 2019, for more.</small></p>
 
 <p><small><sup id=Note43>(43)</sup> Allowing applications to do so would hamper forward compatibility &mdash; the API would then be less free to change how the RNG is implemented in the future (e.g., to use a cryptographic or otherwise &quot;better&quot; RNG), or to make improvements or bug fixes in methods that use that RNG (such as shuffling and Gaussian number generation).  (As a notable example, the V8 JavaScript engine recently changed its <code>Math.random()</code> implementation to use a variant of <code>xorshift128+</code>, which is backward compatible because nothing in JavaScript allows  <code>Math.random()</code> to be seeded.)  Nevertheless, APIs can still allow applications to provide additional input (&quot;entropy&quot;) to the RNG in order to increase its randomness rather than to ensure repeatability.</small></p>
+
+<p><small><sup id=Note44>(44)</sup> von Neumann, J., &quot;Various techniques used in connection with random digits&quot;, 1951.</small></p>
+
+<p><small><sup id=Note45>(45)</sup> Zhou, H. and Bruck, J., 2012. Streaming algorithms for optimal generation of random bits. arXiv preprint arXiv:1209.0730.  See <a href="https://github.com/peteroupc/peteroupc.github.io/blob/master/rextract.rb"><strong>source code of my implementation</strong></a>.</small></p>
 
 <p><a id=License></a></p>
 
