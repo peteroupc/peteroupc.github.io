@@ -443,6 +443,9 @@ Converts a byte (from 0 to 255) to an arbitrary-precision decimal number.</li>
 <li><code>static EDecimal FromDouble​(double dbl)</code><br>
 Creates an arbitrary-precision decimal number from a 64-bit binary
 floating-point number.</li>
+<li><code>static EDecimal FromDoubleBits​(long dblBits)</code><br>
+Creates an arbitrary-precision decimal number from a 64-bit binary
+floating-point number, encoded in the IEEE 754 binary64 format.</li>
 <li><code>static EDecimal FromEFloat​(EFloat bigfloat)</code><br>
 Creates an arbitrary-precision decimal number from an arbitrary-precision
 binary floating-point number.</li>
@@ -461,6 +464,9 @@ Creates an arbitrary-precision decimal number from a 64-bit signed integer.</li>
 <li><code>static EDecimal FromSingle​(float flt)</code><br>
 Creates an arbitrary-precision decimal number from a 32-bit binary
 floating-point number.</li>
+<li><code>static EDecimal FromSingleBits​(int value)</code><br>
+Creates an arbitrary-precision decimal number from a 32-bit binary
+floating-point number encoded in the IEEE 754 binary32 format.</li>
 <li><code>static EDecimal FromString​(java.lang.String str)</code><br>
 Creates an arbitrary-precision decimal number from a text string that
 represents a number.</li>
@@ -779,6 +785,10 @@ form as a byte (from 0 to 255).</li>
 <li><code>double ToDouble()</code><br>
 Converts this value to its closest equivalent as a 64-bit floating-point
 number, using the half-even rounding mode.</li>
+<li><code>long ToDoubleBits()</code><br>
+Converts this value to its closest equivalent as a 64-bit floating-point
+number encoded in the IEEE 754 binary64 format, using the half-even
+rounding mode.</li>
 <li><code>EFloat ToEFloat()</code><br>
 Creates a binary floating-point number from this object&#39;s value.</li>
 <li><code>EFloat ToEFloat​(EContext ec)</code><br>
@@ -841,6 +851,10 @@ Converts this value to a string, but without using exponential notation.</li>
 <li><code>float ToSingle()</code><br>
 Converts this value to its closest equivalent as a 32-bit floating-point
 number, using the half-even rounding mode.</li>
+<li><code>float ToSingleBits()</code><br>
+Converts this value to its closest equivalent as a 32-bit floating-point
+number encoded in the IEEE 754 binary32 format, using the half-even
+rounding mode.</li>
 <li><code>EInteger ToSizedEInteger​(int maxBitLength)</code><br>
 Converts this value to an arbitrary-precision integer by discarding its
 fractional part and checking whether the resulting integer overflows
@@ -1260,14 +1274,13 @@ than 0.</li>
  converting the floating point number to a string first. Remember,
  though, that the exact value of a 64-bit binary floating-point
  number is not always the value that results when passing a literal
- decimal number (for example, calling
- <code>ExtendedDecimal.FromDouble(0.1)</code>), since not all decimal
- numbers can be converted to exact binary numbers (in the example
- given, the resulting arbitrary-precision decimal will be the value
-  of the closest &quot;double&quot; to 0.1, not 0.1 exactly). To create an
- arbitrary-precision decimal number from a decimal value, use
- FromString instead in most cases (for example:
-  <code>ExtendedDecimal.FromString(&quot;0.1&quot;)</code>).</p>
+ decimal number (for example, calling <code>EDecimal.FromDouble(0.1)</code>
+), since not all decimal numbers can be converted to exact binary
+ numbers (in the example given, the resulting arbitrary-precision
+  decimal will be the value of the closest &quot;double&quot; to 0.1, not 0.1
+ exactly). To create an arbitrary-precision decimal number from a
+ decimal value, use FromString instead in most cases (for example:
+  <code>EDecimal.FromString(&quot;0.1&quot;)</code>).</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1280,6 +1293,37 @@ than 0.</li>
 <ul>
 <li>An arbitrary-precision decimal number with the same value as <code>
 dbl</code>.</li>
+</ul>
+
+<h3>FromDoubleBits</h3>
+
+<pre>public static EDecimal FromDoubleBits​(long dblBits)
+</pre>
+
+<p>Creates an arbitrary-precision decimal number from a 64-bit binary
+ floating-point number, encoded in the IEEE 754 binary64 format. This
+ method computes the exact value of the floating point number, not an
+ approximation, as is often the case by converting the floating point
+ number to a string first. Remember, though, that the exact value of
+ a 64-bit binary floating-point number is not always the value that
+ results when passing a literal decimal number, since not all decimal
+ numbers can be converted to exact binary numbers (in the example
+ given, the resulting arbitrary-precision decimal will be the value
+  of the closest &quot;double&quot; to 0.1, not 0.1 exactly). To create an
+ arbitrary-precision decimal number from a decimal value, use
+ FromString instead in most cases.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>dblBits</code> -</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An arbitrary-precision decimal number with the same value as <code>
+value</code>.</li>
 </ul>
 
 <h3>FromEInteger</h3>
@@ -1419,13 +1463,13 @@ integer.</li>
  though, that the exact value of a 32-bit binary floating-point
  number is not always the value that results when passing a literal
  decimal number (for example, calling
- <code>ExtendedDecimal.FromSingle(0.1f)</code>), since not all decimal
- numbers can be converted to exact binary numbers (in the example
- given, the resulting arbitrary-precision decimal will be the the
-  value of the closest &quot;float&quot; to 0.1, not 0.1 exactly). To create an
+ <code>EDecimal.FromSingle(0.1f)</code>), since not all decimal numbers
+ can be converted to exact binary numbers (in the example given, the
+ resulting arbitrary-precision decimal will be the the value of the
+  closest &quot;float&quot; to 0.1, not 0.1 exactly). To create an
  arbitrary-precision decimal number from a decimal value, use
  FromString instead in most cases (for example:
-  <code>ExtendedDecimal.FromString(&quot;0.1&quot;)</code>).</p>
+  <code>EDecimal.FromString(&quot;0.1&quot;)</code>).</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1439,6 +1483,38 @@ number.</li>
 <ul>
 <li>An arbitrary-precision decimal number with the same value as <code>
 flt</code>.</li>
+</ul>
+
+<h3>FromSingleBits</h3>
+
+<pre>public static EDecimal FromSingleBits​(int value)
+</pre>
+
+<p>Creates an arbitrary-precision decimal number from a 32-bit binary
+ floating-point number encoded in the IEEE 754 binary32 format. This
+ method computes the exact value of the floating point number, not an
+ approximation, as is often the case by converting the floating point
+ number to a string first. Remember, though, that the exact value of
+ a 32-bit binary floating-point number is not always the value that
+ results when passing a literal decimal number, since not all decimal
+ numbers can be converted to exact binary numbers (in the example
+ given, the resulting arbitrary-precision decimal will be the the
+  value of the closest &quot;float&quot; to 0.1, not 0.1 exactly). To create an
+ arbitrary-precision decimal number from a decimal value, use
+ FromString instead in most cases.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>value</code> - The parameter <code>flt</code> is a 32-bit binary floating-point
+number encoded in the IEEE 754 binary32 format.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An arbitrary-precision decimal number with the same value as <code>
+value</code>.</li>
 </ul>
 
 <h3>FromString</h3>
@@ -4971,6 +5047,30 @@ which case the precision is unlimited and no rounding is needed.</p></li>
 <li><code>java.lang.NullPointerException</code> - The parameter <code>otherValue</code> is null.</li>
 </ul>
 
+<h3>ToDoubleBits</h3>
+
+<pre>public long ToDoubleBits()
+</pre>
+
+<p>Converts this value to its closest equivalent as a 64-bit floating-point
+ number encoded in the IEEE 754 binary64 format, using the half-even
+ rounding mode. <p>If this value is a NaN, sets the high bit of the
+ binary64 value&#39;s significand area for a quiet NaN, and clears it for
+ a signaling NaN. Then the other bits of the significand area are set
+ to the lowest bits of this object&#39;s unsigned significand, and the
+ next-highest bit of the significand area is set if those bits are
+ all zeros and this is a signaling NaN.</p></p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The closest 64-bit floating-point number to this value, encoded in
+the IEEE 754 binary64 format. The return value can be positive
+infinity or negative infinity, encoded in the IEEE 754 binary64
+format, if this value exceeds the range of a 64-bit floating point
+number.</li>
+</ul>
+
 <h3>ToDouble</h3>
 
 <pre>public double ToDouble()
@@ -5127,6 +5227,30 @@ Renamed to ToEFloat.</p>
 
 <ul>
 <li>A text string.</li>
+</ul>
+
+<h3>ToSingleBits</h3>
+
+<pre>public float ToSingleBits()
+</pre>
+
+<p>Converts this value to its closest equivalent as a 32-bit floating-point
+ number encoded in the IEEE 754 binary32 format, using the half-even
+ rounding mode. <p>If this value is a NaN, sets the high bit of the
+ 32-bit floating point number&#39;s significand area for a quiet NaN, and
+ clears it for a signaling NaN. Then the other bits of the
+ significand area are set to the lowest bits of this object&#39;s
+ unsigned significand, and the next-highest bit of the significand
+ area is set if those bits are all zeros and this is a signaling
+ NaN.</p></p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The closest 32-bit binary floating-point number to this value,
+encoded in the IEEE 754 binary32 format. The return value can be
+positive infinity or negative infinity if this value exceeds the
+range of a 32-bit floating point number.</li>
 </ul>
 
 <h3>ToSingle</h3>

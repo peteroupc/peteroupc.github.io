@@ -67,6 +67,125 @@ def numericalTable(func, x, y, n=100):
     ret = [x + (y - x) * (i * 1.0 / n) for i in range(n + 1)]
     return [[func(b), b] for b in ret]
 
+class VoseAlias:
+    """
+    Implements Vose's alias sampler, which chooses a random number in [0, n)
+    where the probability that each number is chosen is weighted.  The 'weights' is the
+    list of integer weights each 0 or greater; the higher the weight, the greater
+    the probability.
+    """
+
+    def __init__(self, weights):
+        prob = [0 for _ in weights]
+        alias = [0 for _ in weights]
+        tmp = [p * len(weights) for p in weights]
+        mn = min(weights)
+        mx = max(weights)
+        ms = sum(weights)
+        small = [i for i in range(len(tmp)) if tmp[i] < ms]
+        large = [i for i in range(len(tmp)) if tmp[i] >= ms]
+        sc = len(small)
+        lc = len(large)
+        while sc > 0 and lc > 0:
+            lv = small[sc - 1]
+            g = large[lc - 1]
+            prob[lv] = tmp[lv]
+            alias[lv] = g
+            overhead = (tmp[g] + tmp[lv]) - ms
+            if overhead < ms:
+                small[sc - 1] = g
+                lc -= 1
+            else:
+                sc -= 1
+            tmp[g] = overhead
+        for i in range(sc):
+            prob[small[i]] = ms
+        for i in range(lc):
+            prob[large[i]] = ms
+        if len(prob) != len(weights):
+            raise ValueError("Internal error")
+        if len(alias) != len(weights):
+            raise ValueError("Internal error")
+        self.total = ms
+        self.prob = prob
+        self.alias
+
+    def next(self, randgen):
+        d = randgen.rndintexc(len(self.prob))
+        da = self.alias[d]
+        if d == da:
+            return d
+        tsample = (
+            randgen.rndintexc(self.total)
+            if int(self.total) == self.total
+            else randgen.rndrangemaxexc(0, tself.otal)
+        )
+        return d if tsample < self.prob[d] else da
+
+class FastLoadedDiceRoller:
+    """
+    Implements the Fast Loaded Dice Roller, which chooses a random number in [0, n)
+    where the probability that each number is chosen is weighted.  The 'weights' is the
+    list of integer weights each 0 or greater; the higher the weight, the greater
+    the probability.
+
+    Reference: Saad, F.A., Freer C.E., et al. "The Fast Loaded Dice Roller: A
+    Near-Optimal Exact Sampler for Discrete Probability Distributions", in
+    _AISTATS 2020: Proceedings of the 23rd International Conference on Artificial
+    Intelligence and Statistics, Proceedings of Machine Learning Research_ 108,
+    Palermo, Sicily, Italy, 2020.
+    """
+
+    def __init__(self, weights):
+        self.n = len(weights)
+        weightBits = 0
+        totalWeights = sum(weights)
+        tmp = totalWeights
+        while tmp > 0:
+            tmp >>= 1
+            weightBits += 1
+        lasta = (1 << weightBits) - totalWeights
+        self.leavesAndLabels = [
+            [0 for i in range(weightBits)] for j in range(self.n + 2)
+        ]
+        shift = weightBits - 1
+        for j in range(weightBits):
+            level = 1
+            for i in range(self.n + 1):
+                ai = lasta if i == self.n else weights[i]
+                if ai < 0:
+                    raise ValueError
+                leaf = (ai >> shift) & 1
+                if leaf > 0:
+                    # NOTE: Labels start at 1
+                    self.leavesAndLabels[0][j] += leaf
+                    self.leavesAndLabels[level][j] = i + 1
+                    level += 1
+            shift -= 1
+
+    def next(self, randgen):
+        x = 0
+        y = 0
+        while True:
+            x = randgen.rndint(1) + (x << 1)
+            leaves = self.leavesAndLabels[0][y]
+            if x < leaves:
+                label = self.leavesAndLabels[x + 1][y]
+                if label <= self.n:
+                    # NOTE: The pair [label-1, x] could be
+                    # recycled via a randomness extraction
+                    # method to generate additional uniform
+                    # random bits, as explained by L.
+                    # Devroye and C. Gravel
+                    # ("Sampling with arbitrary precision",
+                    # 2015/2018, arXiv:1502.02539 [cs.IT])
+                    return label - 1
+                x = 0
+                y = 0
+            else:
+                x -= leaves
+                y += 1
+
 class PascalTriangle:
     """ Generates the rows of Pascal's triangle, or the
       weight table for a binomial(n) distribution. """
@@ -350,74 +469,32 @@ Returns 'list'. """
     def weighted_choice_n(self, weights, n=1):
         return self._weighted_choice_n(weights, n, 0)
 
-    def _aliassetup(self, weights):
-        prob = [0 for _ in weights]
-        alias = [0 for _ in weights]
-        tmp = [p * len(weights) for p in weights]
-        mn = min(weights)
-        mx = max(weights)
-        ms = sum(weights)
-        small = [i for i in range(len(tmp)) if tmp[i] < ms]
-        large = [i for i in range(len(tmp)) if tmp[i] >= ms]
-        sc = len(small)
-        lc = len(large)
-        while sc > 0 and lc > 0:
-            lv = small[sc - 1]
-            g = large[lc - 1]
-            prob[lv] = tmp[lv]
-            alias[lv] = g
-            overhead = (tmp[g] + tmp[lv]) - ms
-            if overhead < ms:
-                small[sc - 1] = g
-                lc -= 1
-            else:
-                sc -= 1
-            tmp[g] = overhead
-        for i in range(sc):
-            prob[small[i]] = ms
-        for i in range(lc):
-            prob[large[i]] = ms
-        if len(prob) != len(weights):
-            raise ValueError("Internal error")
-        if len(alias) != len(weights):
-            raise ValueError("Internal error")
-        return [ms, prob, alias]
-
-    def _aliassample(self, table):
-        total = table[0]
-        prob = table[1]
-        alias = table[2]
-        d = self.rndintexc(len(prob))
-        da = alias[d]
-        if d == da:
-            return d
-        tsample = (
-            self.rndintexc(total)
-            if int(total) == total
-            else self.rndrangemaxexc(0, total)
-        )
-        return d if tsample < prob[d] else da
-
     def _weighted_choice_n(self, weights, n, addvalue):
         if len(weights) == 0:
             raise ValueError
         msum = 0
         i = 0
         negweights = False
+        nonintweights = False
         while i < len(weights):
             negweights = negweights or weights[i] < 0
+            if int(weights[i]) != weights[i]:
+                nonintweights = True
             msum += weights[i]
             i += 1
         # Vose's alias method for large n and nonnegative
         # weights.  This method has a non-trivial setup,
         # but a linear-time sampling step in n.
-        if n > 100 and not negweights:
-            aliasinfo = self._aliassetup(weights)
-            total = aliasinfo[0]
-            prob = aliasinfo[1]
-            alias = aliasinfo[2]
-            return [self._aliassample(aliasinfo) for k in range(n)]
+        if n > 100 and not negweights and not nonintweights:
+            aliasinfo = FastLoadedDiceRoller(weights)
+            return [aliasinfo.next(self) for k in range(n)]
         ret = [0 for k in range(n)]
+        rv = [
+            randgen.rndintexc(msum)
+            if not nonintweights
+            else randgen.rndrangemaxexc(0, msum)
+            for k in range(n)
+        ]
         k = 0
         while k < n:
             value = rv[k]
@@ -497,18 +574,21 @@ Returns 'list'. """
     def normal(self, mu=0.0, sigma=1.0):
         """ Generates a normally-distributed random number. """
         bmp = 0.8577638849607068  # sqrt(2/exp(1))
-        if self.rndu01(1):
+        if self.rndint(1) == 0:
             while True:
                 a = self.rndu01zeroexc()
                 b = self.rndu01zeroexc()
-                if rndint(1) == 0:
+                if self.rndint(1) == 0:
                     a = 0 - a
-                if rndint(1) == 0:
+                if self.rndint(1) == 0:
                     b = 0 - b
                 c = a * a + b * b
                 if c != 0 and c <= 1:
                     c = math.sqrt(-math.log(c) * 2 / c)
-                    return [a * mu * c + sigma, b * mu * c + sigma]
+                    if self.rndint(1) == 0:
+                        return a * mu * c + sigma
+                    else:
+                        return b * mu * c + sigma
         else:
             while True:
                 a = self.rndu01zeroexc()
@@ -571,7 +651,7 @@ Returns 'list'. """
             if i == 0:
                 self._aliastables.append(0)
             else:
-                self._aliastables.append(self._aliassetup(self._pascal.next()))
+                self._aliastables.append(FastLoadedDiceRoller(self._pascal.next()))
         return self._aliastables[n]
 
     def binomial(self, trials, p):
@@ -597,7 +677,7 @@ Returns 'list'. """
                         count += 1
                     r >>= 1
             elif trials > 8:
-                count = count + self._aliassample(self._getaliastable(trials))
+                count = count + self._getaliastable(trials).next(self)
             else:
                 for i in range(trials):
                     count = count + self.rndint(1)

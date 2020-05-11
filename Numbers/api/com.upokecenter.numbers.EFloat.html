@@ -263,6 +263,9 @@ Converts a byte (from 0 to 255) to an arbitrary-precision binary
 floating-point number.</li>
 <li><code>static EFloat FromDouble​(double dbl)</code><br>
 Creates a binary floating-point number from a 64-bit floating-point number.</li>
+<li><code>static EFloat FromDoubleBits​(long dblBits)</code><br>
+Creates a binary floating-point number from a 64-bit floating-point number
+encoded in the IEEE 754 binary64 format.</li>
 <li><code>static EFloat FromEInteger​(EInteger bigint)</code><br>
 Converts an arbitrary-precision integer to the same value as a binary
 floating-point number.</li>
@@ -277,6 +280,9 @@ Converts a 64-bit signed integer to an arbitrary-precision binary
 floating-point number.</li>
 <li><code>static EFloat FromSingle​(float flt)</code><br>
 Creates a binary floating-point number from a 32-bit floating-point number.</li>
+<li><code>static EFloat FromSingleBits​(int singleBits)</code><br>
+Creates a binary floating-point number from a 32-bit floating-point number
+encoded in the IEEE 754 binary32 format.</li>
 <li><code>static EFloat FromString​(java.lang.String str)</code><br>
 Creates a binary floating-point number from a text string that represents a
 number, using an unlimited precision context.</li>
@@ -572,6 +578,9 @@ part, and returns the least-significant bits of its two&#39;s-complement
 form as a byte (from 0 to 255).</li>
 <li><code>double ToDouble()</code><br>
 Converts this value to a 64-bit floating-point number.</li>
+<li><code>long ToDoubleBits()</code><br>
+Converts this value to a 64-bit floating-point number encoded in the IEEE
+754 binary64 format.</li>
 <li><code>EDecimal ToEDecimal()</code><br>
 Converts this value to an arbitrary-precision decimal number.</li>
 <li><code>EInteger ToEInteger()</code><br>
@@ -635,6 +644,9 @@ such as EContext.Binary64).</li>
 <li><code>float ToSingle()</code><br>
 Converts this value to its closest equivalent as 32-bit floating-point
 number.</li>
+<li><code>int ToSingleBits()</code><br>
+Converts this value to a 32-bit floating-point number encoded in the IEEE
+754 binary32 format.</li>
 <li><code>EInteger ToSizedEInteger​(int maxBitLength)</code><br>
 Converts this value to an arbitrary-precision integer by discarding its
 fractional part and checking whether the resulting integer overflows
@@ -1032,6 +1044,52 @@ do so.</p></li>
 
 <ul>
 <li><code>java.lang.NullPointerException</code> - The parameter <code>diag</code> is null.</li>
+</ul>
+
+<h3>FromDoubleBits</h3>
+
+<pre>public static EFloat FromDoubleBits​(long dblBits)
+</pre>
+
+<p>Creates a binary floating-point number from a 64-bit floating-point number
+ encoded in the IEEE 754 binary64 format. This method computes the
+ exact value of the floating point number, not an approximation, as
+ is often the case by converting the floating point number to a
+ string first.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>dblBits</code> -</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A binary floating-point number with the same value as <code>dbl</code>.</li>
+</ul>
+
+<h3>FromSingleBits</h3>
+
+<pre>public static EFloat FromSingleBits​(int singleBits)
+</pre>
+
+<p>Creates a binary floating-point number from a 32-bit floating-point number
+ encoded in the IEEE 754 binary32 format. This method computes the
+ exact value of the floating point number, not an approximation, as
+ is often the case by converting the floating point number to a
+ string first.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>singleBits</code> -</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A binary floating-point number with the same value as <code>dbl</code>.</li>
 </ul>
 
 <h3>FromDouble</h3>
@@ -4292,6 +4350,36 @@ which case the precision is unlimited and no rounding is needed.</p></li>
 
 <ul>
 <li><code>java.lang.NullPointerException</code> - The parameter <code>otherValue</code> is null.</li>
+</ul>
+
+<h3>ToDoubleBits</h3>
+
+<pre>public long ToDoubleBits()
+</pre>
+
+<p>Converts this value to a 64-bit floating-point number encoded in the IEEE
+ 754 binary64 format.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>This number, converted to a 64-bit floating-point number encoded in
+the IEEE 754 binary64 format.</li>
+</ul>
+
+<h3>ToSingleBits</h3>
+
+<pre>public int ToSingleBits()
+</pre>
+
+<p>Converts this value to a 32-bit floating-point number encoded in the IEEE
+ 754 binary32 format.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>This number, converted to a 32-bit floating-point number encoded in
+the IEEE 754 binary32 format.</li>
 </ul>
 
 <h3>ToDouble</h3>

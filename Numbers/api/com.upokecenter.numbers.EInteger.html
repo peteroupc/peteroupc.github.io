@@ -41,7 +41,8 @@ Adds this object and another object.</li>
 <li><code>EInteger Add​(EInteger bigintAugend)</code><br>
 Adds this object and another object.</li>
 <li><code>EInteger And​(EInteger other)</code><br>
-Does an AND operation between two arbitrary-precision integer values.</li>
+Does an AND operation between this arbitrary-precision integer and another
+one.</li>
 <li><code>int AsInt32Checked()</code><br>
 Deprecated.
 Renamed to ToInt32Checked.
@@ -211,10 +212,11 @@ object.</li>
 <li><code>EInteger Negate()</code><br>
 Gets the value of this object with the sign reversed.</li>
 <li><code>EInteger Not()</code><br>
-Returns an arbitrary-precision integer with every bit flipped from this one.</li>
+Returns an arbitrary-precision integer with every bit flipped from this one
+(also called an inversion or NOT operation).</li>
 <li><code>EInteger Or​(EInteger second)</code><br>
-Does an OR operation between two arbitrary-precision integer
-instances.</li>
+Does an OR operation between this arbitrary-precision integer and another
+one.</li>
 <li><code>EInteger Pow​(int powerSmall)</code><br>
 Raises an arbitrary-precision integer to a power.</li>
 <li><code>EInteger Pow​(EInteger bigPower)</code><br>
@@ -280,7 +282,8 @@ radix.</li>
 <li><code>java.lang.String toString()</code><br>
 Converts this object to a text string in base 10.</li>
 <li><code>EInteger Xor​(EInteger other)</code><br>
-Finds the exclusive &quot;or&quot; of two arbitrary-precision integer objects.</li>
+Does an exclusive OR (XOR) operation between this arbitrary-precision
+integer and another one.</li>
 </ul>
 
 <h2>Method Details</h2>
@@ -1850,12 +1853,21 @@ parameter.</li>
 <pre>public EInteger Not()
 </pre>
 
-<p>Returns an arbitrary-precision integer with every bit flipped from this one.</p>
+<p>Returns an arbitrary-precision integer with every bit flipped from this one
+ (also called an inversion or NOT operation).</p>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>An arbitrary-precision integer.</li>
+<li>An arbitrary-precision integer in which each bit in its two&#39;s
+complement representation is set if the corresponding bit of this
+integer is clear, and vice versa. Returns -1 if this integer is 0.
+If this integer is positive, the return value is negative, and vice
+versa. This method uses the two&#39;s complement form of negative
+integers (see <code>EDecimal</code>). For
+example, in binary, NOT 10100 =...11101011 (or in decimal, NOT 20 =
+-21). In binary, NOT...11100110 = 11001 (or in decimal, NOT -26 =
+25).</li>
 </ul>
 
 <h3>And</h3>
@@ -1863,23 +1875,27 @@ parameter.</li>
 <pre>public EInteger And​(EInteger other)
 </pre>
 
-<p>Does an AND operation between two arbitrary-precision integer values.<p>Each
- arbitrary-precision integer is treated as a two&#39;s-complement form
-  (see <code>&quot;Forms of numbers&quot;</code>)
- for the purposes of this operator.</p></p>
+<p>Does an AND operation between this arbitrary-precision integer and another
+ one.<p>Each arbitrary-precision integer is treated as a
+ two&#39;s-complement form (see <code>&quot;Forms of numbers&quot;</code>) for the purposes of this operator.</p></p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>other</code> - An arbitrary-precision integer.</li>
+<li><code>other</code> - Another arbitrary-precision integer that participates in the
+operation.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
 <li>An arbitrary-precision integer in which each bit is set if the
-corresponding bits of this integer and the other integer are both
-set.</li>
+corresponding bits of this integer and the other integer (in their
+two&#39;s-complement representation) are both set. For example, in
+binary, 10110 AND 01100 = 00100 (or in decimal, 22 AND 12 = 4). This
+method uses the two&#39;s complement form of negative integers (see
+<code>EDecimal</code>). For example, in binary,
+...11100111 AND 01100 = 00100 (or in decimal, -25 AND 12 = 4).</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -1893,20 +1909,26 @@ set.</li>
 <pre>public EInteger Or​(EInteger second)
 </pre>
 
-<p>Does an OR operation between two arbitrary-precision integer
- instances.<p>Each arbitrary-precision integer is treated as a
+<p>Does an OR operation between this arbitrary-precision integer and another
+ one.<p>Each arbitrary-precision integer is treated as a
  two&#39;s-complement form (see <code>&quot;Forms of numbers&quot;</code>) for the purposes of this operator.</p></p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>second</code> - The second operand.</li>
+<li><code>second</code> - Another arbitrary-precision integer that participates in the
+operation.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>An arbitrary-precision integer.</li>
+<li>An arbitrary-precision integer in which each bit is set if the
+corresponding bit of this integer is set, the other integer&#39;s
+corresponding bit is set, or both. For example, in binary, 10110 OR
+11010 = 11110 (or in decimal, 22 OR 26 = 30). This method uses the
+two&#39;s complement form of negative integers (see <code>EDecimal</code>). For example, in binary,
+...11101110 OR 01011 =...11101111 (or in decimal, -18 OR 11 = -17).</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -1920,22 +1942,26 @@ set.</li>
 <pre>public EInteger Xor​(EInteger other)
 </pre>
 
-<p>Finds the exclusive &quot;or&quot; of two arbitrary-precision integer objects. <p>Each
- arbitrary-precision integer is treated as a two&#39;s-complement form
-  (see <code>&quot;Forms of numbers&quot;</code>)
- for the purposes of this operator.</p></p>
+<p>Does an exclusive OR (XOR) operation between this arbitrary-precision
+ integer and another one.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>other</code> - An arbitrary-precision integer.</li>
+<li><code>other</code> - Another arbitrary-precision integer that participates in the
+operation.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
 <li>An arbitrary-precision integer in which each bit is set if the
-corresponding bit is set in one input integer but not in the other.</li>
+corresponding bit is set in one input integer but not in the other.
+For example, in binary, 11010 XOR 01001 = 10011 (or in decimal, 26
+XOR 9 = 19). This method uses the two&#39;s complement form of negative
+integers (see <code>EDecimal</code>). For
+example, in binary, ...11101101 XOR 00011 =...11101110 (or in
+decimal, -19 XOR 3 = -18).</li>
 </ul>
 
 <p><strong>Throws:</strong></p>

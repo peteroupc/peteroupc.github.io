@@ -745,7 +745,7 @@ The first kind is called weighted choice _with replacement_ (which can be though
 > **Notes:**
 >
 > - The [**Python sample code**](https://peteroupc.github.io/randomgen.zip) contains a variant of this method for generating multiple random points in one call, and uses Vose's _alias method_ (described in "[**Darts, Dice, and Coins: Sampling from a Discrete Distribution**](https://www.keithschwarz.com/darts-dice-coins/)") in certain cases.
-> - See also "[**Mixtures of Distributions**](#Mixtures_of_Distributions)" and "[**Weighted Approximation: Discrete Distributions**](#Piecewise_Interpolation_Discrete_Distributions)".
+> - See also "[**Mixtures of Distributions**](#Mixtures_of_Distributions)" and "[**Weighted Approximation: Discrete Distributions**](#Weighted_Approximation_Discrete_Distributions)".
 >
 > **Examples:**
 >
@@ -2190,7 +2190,9 @@ Most commonly used:
 - **Rayleigh distribution**&dagger;: `sqrt(Expo(0.5))`.  If the scale parameter (`sigma`) follows a logarithmic normal distribution, the result is a _Suzuki distribution_.
 - **Standard normal distribution**&dagger;: `Normal(0, 1)`.  See also [**Normal (Gaussian) Distribution**](#Normal_Gaussian_Distribution).
 - **Student's _t_-distribution**: `Normal(cent, 1) / sqrt(GammaDist(df * 0.5, 2 / df))`, where `df` is the number of degrees of freedom, and _cent_ is the mean of the normally-distributed random number.  A `cent` other than 0 indicates a _noncentral_ distribution.
-- **Triangular distribution**: `ContinuousWeightedChoice([startpt, midpt, endpt], [0, 1, 0])`. The distribution starts at `startpt`, peaks at `midpt`, and ends at `endpt`.
+- **Triangular distribution**:
+   - **Generalized** <<Kabal 2000/2019|Kabal, P., "Generating Gaussian Pseudo-Random Variates", McGill University, 2000/2019.>>: `alpha * min(startpt, endpt) + alpha * max(startpt, endpt)`.  The distribution starts at `startpt` and ends at `endpt`.
+   - As used in _Mathematica_: `x * min(startpt, endpt) + x * max(startpt, endpt)` where `x = (midpt - startpt)/(endpt - startpt)`.
 - **Weibull distribution**: See generalized extreme value distribution.
 
 </small>
