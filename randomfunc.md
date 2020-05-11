@@ -1358,13 +1358,13 @@ The `ContinuousWeightedChoice` method (in the pseudocode below) takes two lists 
            wmax=max(w1, w2)
            interp=wt
            if diff!=0
-             s=sqrt(wmax*wmax*wt+wmin*wmin-
-                wmin*wmin*wt)
-             interp=abs((s-wmin)/diff)
-             if diff<0: interp=1-interp
+              s=sqrt(wmax*wmax*wt+wmin*wmin-
+                 wmin*wmin*wt)
+              interp=abs((s-wmin)/diff)
+              if diff<0: interp=1-interp
            end
            retValue = values[i] + (values[i + 1] - values[i]) *
-             interp
+              interp
            return retValue
           end
           runningValue = newValue
@@ -1665,11 +1665,22 @@ There are a number of methods for normal random number generation, including the
 
 1. The ratio-of-uniforms method (given as `NormalRatioOfUniforms` below).
 2. In the _Box&ndash;Muller transformation_, `mu + radius * cos(angle)` and `mu + radius * sin(angle)`, where `angle = RNDRANGEMaxExc(0, 2 * pi)` and `radius = sqrt(Expo(0.5)) * sigma`, are two independent normally-distributed random numbers.  The polar method (given as `NormalPolar` below) likewise produces two independent normal random numbers at a time.
-3. An _approximation_ to a normal random number is the sum of twelve `RNDRANGEMaxExc(0, sigma)` numbers (see Note 13), subtracted by 6 * `sigma`. The approximation will have a value not less than -6 * `sigma` or greater than 6 * `sigma`. See also [**"Irwin&ndash;Hall distribution" on Wikipedia**](https://en.wikipedia.org/wiki/Irwin%E2%80%93Hall_distribution).
+3. An _approximation_ to a normal random number is the sum of twelve `RNDRANGEMaxExc(0, sigma)` numbers (see Note 13), subtracted by 6 * `sigma`. See `NormalCLT` below, which also includes an optional step to "warp" the random number for better accuracy (Kabal 2000/2019)<sup>[**(69)**](#Note69)</sup> See also [**"Irwin&ndash;Hall distribution" on Wikipedia**](https://en.wikipedia.org/wiki/Irwin%E2%80%93Hall_distribution).
 4. Methods that invert the normal distribution's CDF; for one approximation, see M. Wichura, _Applied Statistics_ 37(3), 1988.  See also [**"Inverse Transform Sampling"**](#Inverse_Transform_Sampling) and [**"A literate program to compute the inverse of the normal CDF"**](https://www.johndcook.com/blog/normal_cdf_inverse/).
 5. Karney's algorithm to sample exactly from the normal distribution, without using floating-point numbers(Karney 2014)<sup>[**(51)**](#Note51)</sup>.
 
 In 2007, Thomas, D., et al. gave a survey of normal random number methods in "Gaussian Random Number Generators", _ACM Computing Surveys_ 39(4), 2007, article 11.
+
+    METHOD NormalRatioOfUniforms(mu, sigma)
+        while true
+            a=RNDU01ZeroExc()
+            b=RNDRANGE(0,sqrt(2.0/exp(1.0)))
+            if b*b <= -a * a * 4 * ln(a)
+              return (RNDINT(1) * 2 - 1) *
+                (b * sigma / a) + mu
+            end
+        end
+    END METHOD
 
     METHOD NormalPolar(mu, sigma)
       while true
@@ -1685,15 +1696,18 @@ In 2007, Thomas, D., et al. gave a survey of normal random number methods in "Ga
       end
     END METHOD
 
-    METHOD NormalRatioOfUniforms(mu, sigma)
-        while true
-            a=RNDU01ZeroExc()
-            b=RNDRANGE(0,sqrt(2.0/exp(1.0)))
-            if b*b <= -a * a * 4 * ln(a)
-              return (RNDINT(1) * 2 - 1) *
-                (b * sigma / a) + mu
-            end
-        end
+    METHOD NormalCLT(mu, sigma)
+      sum = 0
+      for i in 0...12: sum=sum+RNDRANGEMaxExc(0, sigma)
+      sum = sum + mu - 6*sigma
+      // Optional: "Warp" the sum for better accuracy
+      ssq = sum * sum
+      sum = ((((0.0000001141*ssq - 0.0000005102) *
+                ssq + 0.00007474) *
+                ssq + 0.0039439) *
+                ssq + 0.98746) * sum
+      return sum
+     end
     END METHOD
 
 > **Note:** Methods implementing a variant of the normal distribution, the _discrete Gaussian distribution_, generate _integers_ that closely follow the normal distribution.  Examples include the one in (Karney 2014)<sup>[**(51)**](#Note51)</sup>, as well as so-called "constant-time" methods such as (Micciancio and Walter 2017)<sup>[**(52)**](#Note52)</sup> that are used above all in _lattice-based cryptography_.
@@ -2191,7 +2205,7 @@ Most commonly used:
 - **Standard normal distribution**&dagger;: `Normal(0, 1)`.  See also [**Normal (Gaussian) Distribution**](#Normal_Gaussian_Distribution).
 - **Student's _t_-distribution**: `Normal(cent, 1) / sqrt(GammaDist(df * 0.5, 2 / df))`, where `df` is the number of degrees of freedom, and _cent_ is the mean of the normally-distributed random number.  A `cent` other than 0 indicates a _noncentral_ distribution.
 - **Triangular distribution**:
-   - **Generalized** <<Kabal 2000/2019|Kabal, P., "Generating Gaussian Pseudo-Random Variates", McGill University, 2000/2019.>>: `alpha * min(startpt, endpt) + alpha * max(startpt, endpt)`.  The distribution starts at `startpt` and ends at `endpt`.
+   - **Generalized** (Kabal 2000/2019)<sup>[**(70)**](#Note70)</sup>: `alpha * min(startpt, endpt) + alpha * max(startpt, endpt)`.  The distribution starts at `startpt` and ends at `endpt`.
    - As used in _Mathematica_: `x * min(startpt, endpt) + x * max(startpt, endpt)` where `x = (midpt - startpt)/(endpt - startpt)`.
 - **Weibull distribution**: See generalized extreme value distribution.
 
@@ -2543,6 +2557,10 @@ The methods shown here do not introduce any error beyond the sampling error that
 <small><sup id=Note67>(67)</sup> Mironov, I., "On Significance of the Least Significant Bits For Differential Privacy", 2012.</small>
 
 <small><sup id=Note68>(68)</sup> For example, see Balcer, V., Vadhan, S., "Differential Privacy on Finite Computers", Dec. 4, 2018; as well as Micciancio, D. and Walter, M., "Gaussian sampling over the integers: Efficient, generic, constant-time", in Annual International Cryptology Conference, August 2017 (pp. 455-485).</small>
+
+<small><sup id=Note69>(69)</sup> Kabal, P., "Generating Gaussian Pseudo-Random Variates", McGill University, 2000/2019.</small>
+
+<small><sup id=Note70>(70)</sup> Kabal, P., "Generating Gaussian Pseudo-Random Variates", McGill University, 2000/2019.</small>
 
 <a id=Appendix></a>
 ## Appendix

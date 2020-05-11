@@ -945,7 +945,7 @@ END METHOD
 
 <ul>
 <li>The <a href="https://peteroupc.github.io/randomgen.zip"><strong>Python sample code</strong></a> contains a variant of this method for generating multiple random points in one call, and uses Vose&#39;s <em>alias method</em> (described in &quot;<a href="https://www.keithschwarz.com/darts-dice-coins/"><strong>Darts, Dice, and Coins: Sampling from a Discrete Distribution</strong></a>&quot;) in certain cases.</li>
-<li>See also &quot;<a href="#Mixtures_of_Distributions"><strong>Mixtures of Distributions</strong></a>&quot; and &quot;<a href="#Piecewise_Interpolation_Discrete_Distributions"><strong>Weighted Approximation: Discrete Distributions</strong></a>&quot;.</li>
+<li>See also &quot;<a href="#Mixtures_of_Distributions"><strong>Mixtures of Distributions</strong></a>&quot; and &quot;<a href="#Weighted_Approximation_Discrete_Distributions"><strong>Weighted Approximation: Discrete Distributions</strong></a>&quot;.</li>
 </ul>
 
 <p><strong>Examples:</strong></p>
@@ -1669,13 +1669,13 @@ END METHOD
        wmax=max(w1, w2)
        interp=wt
        if diff!=0
-         s=sqrt(wmax*wmax*wt+wmin*wmin-
-            wmin*wmin*wt)
-         interp=abs((s-wmin)/diff)
-         if diff&lt;0: interp=1-interp
+          s=sqrt(wmax*wmax*wt+wmin*wmin-
+             wmin*wmin*wt)
+          interp=abs((s-wmin)/diff)
+          if diff&lt;0: interp=1-interp
        end
        retValue = values[i] + (values[i + 1] - values[i]) *
-         interp
+          interp
        return retValue
       end
       runningValue = newValue
@@ -2042,14 +2042,25 @@ probability that a normally-distributed random number will be within one standar
 <ol>
 <li>The ratio-of-uniforms method (given as <code>NormalRatioOfUniforms</code> below).</li>
 <li>In the <em>Box&ndash;Muller transformation</em>, <code>mu + radius * cos(angle)</code> and <code>mu + radius * sin(angle)</code>, where <code>angle = RNDRANGEMaxExc(0, 2 * pi)</code> and <code>radius = sqrt(Expo(0.5)) * sigma</code>, are two independent normally-distributed random numbers.  The polar method (given as <code>NormalPolar</code> below) likewise produces two independent normal random numbers at a time.</li>
-<li>An <em>approximation</em> to a normal random number is the sum of twelve <code>RNDRANGEMaxExc(0, sigma)</code> numbers (see Note 13), subtracted by 6 * <code>sigma</code>. The approximation will have a value not less than -6 * <code>sigma</code> or greater than 6 * <code>sigma</code>. See also <a href="https://en.wikipedia.org/wiki/Irwin%E2%80%93Hall_distribution"><strong>&quot;Irwin&ndash;Hall distribution&quot; on Wikipedia</strong></a>.</li>
+<li>An <em>approximation</em> to a normal random number is the sum of twelve <code>RNDRANGEMaxExc(0, sigma)</code> numbers (see Note 13), subtracted by 6 * <code>sigma</code>. See <code>NormalCLT</code> below, which also includes an optional step to &quot;warp&quot; the random number for better accuracy (Kabal 2000/2019)<sup><a href="#Note69"><strong>(69)</strong></a></sup> See also <a href="https://en.wikipedia.org/wiki/Irwin%E2%80%93Hall_distribution"><strong>&quot;Irwin&ndash;Hall distribution&quot; on Wikipedia</strong></a>.</li>
 <li>Methods that invert the normal distribution&#39;s CDF; for one approximation, see M. Wichura, <em>Applied Statistics</em> 37(3), 1988.  See also <a href="#Inverse_Transform_Sampling"><strong>&quot;Inverse Transform Sampling&quot;</strong></a> and <a href="https://www.johndcook.com/blog/normal_cdf_inverse/"><strong>&quot;A literate program to compute the inverse of the normal CDF&quot;</strong></a>.</li>
 <li>Karney&#39;s algorithm to sample exactly from the normal distribution, without using floating-point numbers(Karney 2014)<sup><a href="#Note51"><strong>(51)</strong></a></sup>.</li>
 </ol>
 
 <p>In 2007, Thomas, D., et al. gave a survey of normal random number methods in &quot;Gaussian Random Number Generators&quot;, <em>ACM Computing Surveys</em> 39(4), 2007, article 11.</p>
 
-<pre>METHOD NormalPolar(mu, sigma)
+<pre>METHOD NormalRatioOfUniforms(mu, sigma)
+    while true
+        a=RNDU01ZeroExc()
+        b=RNDRANGE(0,sqrt(2.0/exp(1.0)))
+        if b*b &lt;= -a * a * 4 * ln(a)
+          return (RNDINT(1) * 2 - 1) *
+            (b * sigma / a) + mu
+        end
+    end
+END METHOD
+
+METHOD NormalPolar(mu, sigma)
   while true
     a = RNDU01ZeroExc()
     b = RNDU01ZeroExc()
@@ -2063,15 +2074,18 @@ probability that a normally-distributed random number will be within one standar
   end
 END METHOD
 
-METHOD NormalRatioOfUniforms(mu, sigma)
-    while true
-        a=RNDU01ZeroExc()
-        b=RNDRANGE(0,sqrt(2.0/exp(1.0)))
-        if b*b &lt;= -a * a * 4 * ln(a)
-          return (RNDINT(1) * 2 - 1) *
-            (b * sigma / a) + mu
-        end
-    end
+METHOD NormalCLT(mu, sigma)
+  sum = 0
+  for i in 0...12: sum=sum+RNDRANGEMaxExc(0, sigma)
+  sum = sum + mu - 6*sigma
+  // Optional: &quot;Warp&quot; the sum for better accuracy
+  ssq = sum * sum
+  sum = ((((0.0000001141*ssq - 0.0000005102) *
+            ssq + 0.00007474) *
+            ssq + 0.0039439) *
+            ssq + 0.98746) * sum
+  return sum
+ end
 END METHOD
 </pre>
 
@@ -2637,7 +2651,12 @@ same meaning as in the gamma distribution.  Alternatively, <code>1.0 / (pow(Gamm
 <li><strong>Rayleigh distribution</strong>&dagger;: <code>sqrt(Expo(0.5))</code>.  If the scale parameter (<code>sigma</code>) follows a logarithmic normal distribution, the result is a <em>Suzuki distribution</em>.</li>
 <li><strong>Standard normal distribution</strong>&dagger;: <code>Normal(0, 1)</code>.  See also <a href="#Normal_Gaussian_Distribution"><strong>Normal (Gaussian) Distribution</strong></a>.</li>
 <li><strong>Student&#39;s <em>t</em>-distribution</strong>: <code>Normal(cent, 1) / sqrt(GammaDist(df * 0.5, 2 / df))</code>, where <code>df</code> is the number of degrees of freedom, and <em>cent</em> is the mean of the normally-distributed random number.  A <code>cent</code> other than 0 indicates a <em>noncentral</em> distribution.</li>
-<li><strong>Triangular distribution</strong>: <code>ContinuousWeightedChoice([startpt, midpt, endpt], [0, 1, 0])</code>. The distribution starts at <code>startpt</code>, peaks at <code>midpt</code>, and ends at <code>endpt</code>.</li>
+<li><strong>Triangular distribution</strong>:
+
+<ul>
+<li><strong>Generalized</strong> (Kabal 2000/2019)<sup><a href="#Note70"><strong>(70)</strong></a></sup>: <code>alpha * min(startpt, endpt) + alpha * max(startpt, endpt)</code>.  The distribution starts at <code>startpt</code> and ends at <code>endpt</code>.</li>
+<li>As used in <em>Mathematica</em>: <code>x * min(startpt, endpt) + x * max(startpt, endpt)</code> where <code>x = (midpt - startpt)/(endpt - startpt)</code>.</li>
+</ul></li>
 <li><strong>Weibull distribution</strong>: See generalized extreme value distribution.</li>
 </ul>
 
@@ -3028,6 +3047,10 @@ and &quot;<a href="https://randomascii.wordpress.com/2013/07/16/floating-point-d
 <p><small><sup id=Note67>(67)</sup> Mironov, I., &quot;On Significance of the Least Significant Bits For Differential Privacy&quot;, 2012.</small></p>
 
 <p><small><sup id=Note68>(68)</sup> For example, see Balcer, V., Vadhan, S., &quot;Differential Privacy on Finite Computers&quot;, Dec. 4, 2018; as well as Micciancio, D. and Walter, M., &quot;Gaussian sampling over the integers: Efficient, generic, constant-time&quot;, in Annual International Cryptology Conference, August 2017 (pp. 455-485).</small></p>
+
+<p><small><sup id=Note69>(69)</sup> Kabal, P., &quot;Generating Gaussian Pseudo-Random Variates&quot;, McGill University, 2000/2019.</small></p>
+
+<p><small><sup id=Note70>(70)</sup> Kabal, P., &quot;Generating Gaussian Pseudo-Random Variates&quot;, McGill University, 2000/2019.</small></p>
 
 <p><a id=Appendix></a></p>
 

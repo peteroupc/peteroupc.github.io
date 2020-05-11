@@ -2299,10 +2299,19 @@ if __name__ == "__main__":
 
     def showbuckets(ls, buckets):
         mx = max(buckets)
+        if mx == 0:
+            return
+        labels = [
+            ("%0.3f %d" % (ls[i], buckets[i]))
+            if int(buckets[i]) == buckets[i]
+            else ("%0.3f %f" % (ls[i], buckets[i]))
+            for i in range(len(buckets))
+        ]
+        maxlen = max([len(x) for x in labels])
         for i in range(len(buckets)):
             print(
-                ("%0.3f %f" % (ls[i], buckets[i]))
-                + " "
+                labels[i]
+                + " " * (1 + (maxlen - len(labels[i])))
                 + ("*" * int(buckets[i] * 40 / mx))
             )
 
@@ -2317,6 +2326,14 @@ if __name__ == "__main__":
         showbuckets(ls, [f(x) for x in ls])
 
     # Generate normal random numbers
+    print("Generating normal random numbers with numbers_from_pdf")
+    ls = linspace(-4, 4, 30)
+    buckets = [0 for x in ls]
+    ksample = randgen.numbers_from_pdf(normalpdf, -4, 4, 5000, steps=40)
+    for ks in ksample:
+        bucket(ks, ls, buckets)
+    showbuckets(ls, buckets)
+
     print("Generating normal random numbers with KVectorSampler")
     kvs = KVectorSampler(randgen, normalcdf, -4, 4, nd=200, pdf=normalpdf)
     ksample = kvs.sample(1000)
@@ -2326,6 +2343,7 @@ if __name__ == "__main__":
         bucket(ks, ls, buckets)
     showbuckets(ls, buckets)
 
+    print("Generating binomial random numbers")
     t = time.time()
     ksample = [randgen.binomial(100, 0.7) for i in range(10000)]
     print(time.time() - t)
