@@ -627,19 +627,6 @@ Returns 'list'. """
         x = self.gamma(avar)
         return x / (x + self.gamma(b))
 
-    class PascalTriangle:
-        def __init__(self):
-            self.table = []
-
-        def next(self):
-            x = self.table
-            xr = [
-                1 if i == 0 or i == len(x) else x[i] + x[i - 1]
-                for i in range(len(x) + 1)
-            ]
-            self.table = xr
-            return [x for x in self.table]
-
     _aliastables = []
     _pascal = PascalTriangle()
 
@@ -742,6 +729,29 @@ Returns 'list'. """
     def rayleigh(self, a):
         """ Generates a random number following a Rayleigh distribution.  """
         return a * math.sqrt(2 * self.exponential())
+
+    def truncnormal(randgen, a, b):
+        """
+        Samples from a truncated normal distribution in [a, b]; this method is
+        designed to sample from either tail of that distribution.
+
+        Reference:
+        Botev, Z. and L'Ecuyer, P., 2019. Simulation from the Tail of the Univariate and Multivariate Normal Distribution. In _Systems Modeling: Methodologies and Tools_ (pp. 115-132). Springer, Cham.
+        """
+        c = a * a * 0.5
+        if b == math.inf:
+            while True:
+                v = self.rndu01zerooneexc()
+                x = c + self.exponential()
+                if x * v * v <= a:
+                    return math.sqrt(2 * x)
+        else:
+            q = 1.0 - math.exp(c - b * b * 0.5)
+            while True:
+                v = self.rndu01zerooneexc()
+                x = c - math.log1p(-q * self.rndu01zerooneexc())
+                if x * v * v <= a:
+                    return math.sqrt(2 * x)
 
     def gamma(self, mean, b=1.0, c=1.0, d=0.0):
         """ Generates a random number following a gamma distribution.  """
