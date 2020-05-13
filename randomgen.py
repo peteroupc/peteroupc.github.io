@@ -76,6 +76,9 @@ class VoseAlias:
     """
 
     def __init__(self, weights):
+        # Vose's alias method for large n and nonnegative
+        # weights.  This method has a non-trivial setup,
+        # but a linear-time sampling step in n.
         prob = [0 for _ in weights]
         alias = [0 for _ in weights]
         tmp = [p * len(weights) for p in weights]
@@ -108,7 +111,7 @@ class VoseAlias:
             raise ValueError("Internal error")
         self.total = ms
         self.prob = prob
-        self.alias
+        self.alias = alias
 
     def next(self, randgen):
         d = randgen.rndintexc(len(self.prob))
@@ -172,7 +175,7 @@ class FastLoadedDiceRoller:
             if x < leaves:
                 label = self.leavesAndLabels[x + 1][y]
                 if label <= self.n:
-                    # NOTE: The pair [label-1, x] could be
+                    # NOTE: The pair [label-1, (x, y)] could be
                     # recycled via a randomness extraction
                     # method to generate additional uniform
                     # random bits, as explained by L.
@@ -188,17 +191,27 @@ class FastLoadedDiceRoller:
 
 class PascalTriangle:
     """ Generates the rows of Pascal's triangle, or the
-      weight table for a binomial(n) distribution. """
+      weight table for a binomial(n,1/2) distribution. """
 
     def __init__(self):
         self.table = []
+        self.rownumber = 0
+
+    def row(self):
+        """ Gets the row number of the row that will be generated
+            the next time _next_ is called."""
+        return self.rownumber
 
     def next(self):
+        """ Generates the next row of Pascal's triangle, starting with
+            row 0. The return value is a list of row-number-choose-k
+            values. """
         x = self.table
         xr = [
             1 if i == 0 or i == len(x) else x[i] + x[i - 1] for i in range(len(x) + 1)
         ]
         self.table = xr
+        self.rownumber += 1
         return [x for x in self.table]
 
 class BinaryExpansion:
@@ -482,9 +495,6 @@ Returns 'list'. """
                 nonintweights = True
             msum += weights[i]
             i += 1
-        # Vose's alias method for large n and nonnegative
-        # weights.  This method has a non-trivial setup,
-        # but a linear-time sampling step in n.
         if n > 100 and not negweights and not nonintweights:
             aliasinfo = FastLoadedDiceRoller(weights)
             return [aliasinfo.next(self) for k in range(n)]
@@ -627,19 +637,22 @@ Returns 'list'. """
         x = self.gamma(avar)
         return x / (x + self.gamma(b))
 
-    _aliastables = []
+    _aliastables = {}
     _pascal = PascalTriangle()
 
     def _getaliastable(self, n):
-        if n < len(self._aliastables):
+        if n in self._aliastables:
             return self._aliastables[n]
-        # print("setting up %d"%(n))
-        for i in range(len(self._aliastables), n + 1):
-            if i == 0:
-                self._aliastables.append(0)
-            else:
-                self._aliastables.append(FastLoadedDiceRoller(self._pascal.next()))
+        for i in range(self._pascal.row(), n + 1):
+            p = self._pascal.next()
+            if self._ispoweroftwo(i):
+                self._aliastables[i] = FastLoadedDiceRoller(p)
         return self._aliastables[n]
+
+    def _ispoweroftwo(self, n):
+        while n != 0 and (n & 1) == 0:
+            n >>= 1
+        return n == 1
 
     def binomial(self, trials, p):
         if trials < 0:
@@ -663,11 +676,20 @@ Returns 'list'. """
                     if (r & 1) != 0:
                         count += 1
                     r >>= 1
-            elif trials > 8:
-                count = count + self._getaliastable(trials).next(self)
+            elif not self._ispoweroftwo(trials):
+                # Decompose _trials_ into powers of two (taking idea
+                # from "simple reduction" in Farach-Colton and Tsai),
+                # except a simple table-free algorithm is used for
+                # the lowest bits of _trials_.
+                count += self.binomial(trials & 31, 0.5)
+                trials -= trials & 31
+                shift = 5
+                while trials > 0:
+                    count += self.binomial(trials & (1 << shift), 0.5)
+                    trials -= trials & (1 << shift)
+                    shift += 1
             else:
-                for i in range(trials):
-                    count = count + self.rndint(1)
+                count = count + self._getaliastable(trials).next(self)
         else:
             # Based on proof of Theorem 2 in Farach-Colton and Tsai.
             # Decompose prob into its binary expansion (assuming
@@ -736,7 +758,9 @@ Returns 'list'. """
         designed to sample from either tail of that distribution.
 
         Reference:
-        Botev, Z. and L'Ecuyer, P., 2019. Simulation from the Tail of the Univariate and Multivariate Normal Distribution. In _Systems Modeling: Methodologies and Tools_ (pp. 115-132). Springer, Cham.
+        Botev, Z. and L'Ecuyer, P., 2019. Simulation from the Tail of the
+        Univariate and Multivariate Normal Distribution. In _Systems
+        Modeling: Methodologies and Tools_ (pp. 115-132). Springer, Cham.
         """
         c = a * a * 0.5
         if b == math.inf:
@@ -870,7 +894,70 @@ Returns 'list'. """
         first = self.poisson(firstmean)
         return [first + self.poisson(m) for m in othermeans]
 
+    def _urandnew(self):
+        return [0, 0]
+
+    def _urandnonequal(self, a, b):
+        abits = a[1]
+        if abits == 0:
+            abits = 1
+            tmp = self.rndintexc(1 << (abits + 1))
+            a[0] = tmp & 1
+            bb = tmp >> 1
+        else:
+            bb = self.rndintexc(1 << abits)
+        while bb == a[0]:
+            abits += 1
+            sr = self.rndint(3)
+            bb = (bb << 1) | (sr & 1)
+            a[0] = (a[0] << 1) | ((sr >> 1) & 1)
+        a[1] = abits
+        b[0] = bb
+        b[1] = abits
+
+    def _urandgreater(self, a, b):
+        self._urandnonequal(a, b)
+        return a[0] > b[0]
+
+    def _urandfill(self, a, bits):
+        if a[1] > bits:
+            # NOTE: Using a simple rounding
+            # down.  Other rounding modes, such
+            # as round-to-nearest, could be used
+            # instead.  In this case, additional
+            # digits have to be sampled as
+            # necessary until
+            # the rounded result is unambiguous.
+            a[0] >>= a[1] - bits
+        elif a[1] < bits:
+            bc = bits - a[1]
+            a[0] <<= bc
+            a[0] |= self.rndintexc(1 << bc)
+        return a[0]
+
+    # The von Neumann exponential generator,
+    # but using u-rands as defined in Karney.
+    def _expovnbits(self, bits):
+        count = 0
+        while True:
+            y1 = self._urandnew()
+            y = y1
+            accept = True
+            while True:
+                z = self._urandnew()
+                if self._urandgreater(y, z):
+                    accept = not accept
+                    y = z
+                break
+            if accept:
+                count += self._urandfill(y1, bits)
+                break
+            count += 1 << bits
+        return count * 1.0 / (1 << bits)
+
     def exponential(self, lamda=1.0):
+        if self.rndint(1) == 0:
+            return self._expovnbits(53)
         # Flip-flopping idea taken from (Pederson 2018)
         if self.rndint(1) == 0:
             x = self.rndrangeminexc(0, 0.5)
@@ -1727,7 +1814,6 @@ acap - Optional.  A setting used in the optimization process; an
         mintotal = sum([x[0] for x in ranges])
         maxtotal = sum([x[1] for x in ranges])
         adjsum = total - mintotal
-        print([total, adjsum])
         # Min, max, sum negative
         if total < 0:
             raise ValueError
@@ -1829,7 +1915,6 @@ acap - Optional.  A setting used in the optimization process; an
                     if kj >= 0:
                         v += t[i - 1][j][k - j]
                     t[i][j][k] = v
-        print(t)
         return t
 
     def intsInRangeSortedWithSum(self, numSamples, numPerSample, mn, mx, sum):
@@ -2337,17 +2422,21 @@ if __name__ == "__main__":
 
     # Generate normal random numbers
     print("Generating normal random numbers with numbers_from_pdf")
-    ls = linspace(-4, 4, 30)
+    ls = linspace(-3.3, 3.3, 30)
     buckets = [0 for x in ls]
+    t = time.time()
     ksample = randgen.numbers_from_pdf(normalpdf, -4, 4, 5000, steps=40)
+    print("Took %f seconds" % (time.time() - t))
     for ks in ksample:
         bucket(ks, ls, buckets)
     showbuckets(ls, buckets)
 
     print("Generating normal random numbers with KVectorSampler")
-    kvs = KVectorSampler(randgen, normalcdf, -4, 4, nd=200, pdf=normalpdf)
+    kvs = KVectorSampler(randgen, normalcdf, -4, 4, nd=1000, pdf=normalpdf)
+    t = time.time()
     ksample = kvs.sample(1000)
-    ls = linspace(-4, 4, 30)
+    print("Took %f seconds" % (time.time() - t))
+    ls = linspace(-3.3, 3.3, 30)
     buckets = [0 for x in ls]
     for ks in ksample:
         bucket(ks, ls, buckets)
@@ -2361,7 +2450,6 @@ if __name__ == "__main__":
     buckets = [0 for x in ls]
     for ks in ksample:
         bucket(ks, ls, buckets)
-    print(buckets)
     showbuckets(ls, buckets)
 
     print(randgen.intsInRangesWithSum(10, [[1, 4], [3, 5], [2, 6]], 12))

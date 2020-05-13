@@ -280,7 +280,7 @@ Converts a 64-bit signed integer to an arbitrary-precision binary
 floating-point number.</li>
 <li><code>static EFloat FromSingle​(float flt)</code><br>
 Creates a binary floating-point number from a 32-bit floating-point number.</li>
-<li><code>static EFloat FromSingleBits​(int singleBits)</code><br>
+<li><code>static EFloat FromSingleBits​(int value)</code><br>
 Creates a binary floating-point number from a 32-bit floating-point number
 encoded in the IEEE 754 binary32 format.</li>
 <li><code>static EFloat FromString​(java.lang.String str)</code><br>
@@ -577,10 +577,10 @@ Converts this number&#39;s value to an integer by discarding its fractional
 part, and returns the least-significant bits of its two&#39;s-complement
 form as a byte (from 0 to 255).</li>
 <li><code>double ToDouble()</code><br>
-Converts this value to a 64-bit floating-point number.</li>
-<li><code>long ToDoubleBits()</code><br>
 Converts this value to a 64-bit floating-point number encoded in the IEEE
 754 binary64 format.</li>
+<li><code>long ToDoubleBits()</code><br>
+Converts this value to a 64-bit floating-point number.</li>
 <li><code>EDecimal ToEDecimal()</code><br>
 Converts this value to an arbitrary-precision decimal number.</li>
 <li><code>EInteger ToEInteger()</code><br>
@@ -1069,27 +1069,26 @@ do so.</p></li>
 <li>A binary floating-point number with the same value as <code>dbl</code>.</li>
 </ul>
 
-<h3>FromSingleBits</h3>
+<h3>FromSingle</h3>
 
-<pre>public static EFloat FromSingleBits​(int singleBits)
+<pre>public static EFloat FromSingle​(float flt)
 </pre>
 
-<p>Creates a binary floating-point number from a 32-bit floating-point number
- encoded in the IEEE 754 binary32 format. This method computes the
- exact value of the floating point number, not an approximation, as
- is often the case by converting the floating point number to a
- string first.</p>
+<p>Creates a binary floating-point number from a 32-bit floating-point number.
+ This method computes the exact value of the floating point number,
+ not an approximation, as is often the case by converting the
+ floating point number to a string first.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>singleBits</code> -</li>
+<li><code>flt</code> - The parameter <code>flt</code> is a 64-bit floating-point number.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A binary floating-point number with the same value as <code>dbl</code>.</li>
+<li>A binary floating-point number with the same value as <code>flt</code>.</li>
 </ul>
 
 <h3>FromDouble</h3>
@@ -1134,27 +1133,29 @@ do so.</p></li>
 <li>An arbitrary-precision binary floating-point number.</li>
 </ul>
 
-<h3>FromSingle</h3>
+<h3>FromSingleBits</h3>
 
-<pre>public static EFloat FromSingle​(float flt)
+<pre>public static EFloat FromSingleBits​(int value)
 </pre>
 
-<p>Creates a binary floating-point number from a 32-bit floating-point number.
- This method computes the exact value of the floating point number,
- not an approximation, as is often the case by converting the
- floating point number to a string first.</p>
+<p>Creates a binary floating-point number from a 32-bit floating-point number
+ encoded in the IEEE 754 binary32 format. This method computes the
+ exact value of the floating point number, not an approximation, as
+ is often the case by converting the floating point number to a
+ string first.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>flt</code> - The parameter <code>flt</code> is a 32-bit binary floating-point
-number.</li>
+<li><code>value</code> - A 32-bit binary floating-point number encoded in the IEEE 754
+binary32 format.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A binary floating-point number with the same value as <code>flt</code>.</li>
+<li>A binary floating-point number with the same floating-point value as
+<code>flt</code>.</li>
 </ul>
 
 <h3>FromString</h3>
@@ -4352,9 +4353,9 @@ which case the precision is unlimited and no rounding is needed.</p></li>
 <li><code>java.lang.NullPointerException</code> - The parameter <code>otherValue</code> is null.</li>
 </ul>
 
-<h3>ToDoubleBits</h3>
+<h3>ToDouble</h3>
 
-<pre>public long ToDoubleBits()
+<pre>public double ToDouble()
 </pre>
 
 <p>Converts this value to a 64-bit floating-point number encoded in the IEEE
@@ -4364,7 +4365,9 @@ which case the precision is unlimited and no rounding is needed.</p></li>
 
 <ul>
 <li>This number, converted to a 64-bit floating-point number encoded in
-the IEEE 754 binary64 format.</li>
+the IEEE 754 binary64 format. The return value can be positive
+infinity or negative infinity if this value exceeds the range of a
+64-bit floating point number.</li>
 </ul>
 
 <h3>ToSingleBits</h3>
@@ -4382,9 +4385,9 @@ the IEEE 754 binary64 format.</li>
 the IEEE 754 binary32 format.</li>
 </ul>
 
-<h3>ToDouble</h3>
+<h3>ToDoubleBits</h3>
 
-<pre>public double ToDouble()
+<pre>public long ToDoubleBits()
 </pre>
 
 <p>Converts this value to a 64-bit floating-point number.</p>
@@ -4392,7 +4395,9 @@ the IEEE 754 binary32 format.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>This number, converted to a 64-bit floating-point number.</li>
+<li>This number, converted to a 64-bit floating-point number. The return
+value can express positive infinity or negative infinity if this
+value exceeds the range of a 64-bit floating point number.</li>
 </ul>
 
 <h3>ToEDecimal</h3>
