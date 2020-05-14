@@ -159,7 +159,6 @@
 <li><a href="#Gamma_Distribution"><strong>Gamma Distribution</strong></a></li>
 <li><a href="#Beta_Distribution"><strong>Beta Distribution</strong></a></li>
 <li><a href="#Poisson_Distribution"><strong>Poisson Distribution</strong></a></li>
-<li><a href="#Negative_Binomial_Distribution_Extensions_for_Non_Integer_Successes"><strong>Negative Binomial Distribution: Extensions for Non-Integer Successes</strong></a></li>
 <li><a href="#von_Mises_Distribution"><strong>von Mises Distribution</strong></a></li>
 <li><a href="#Stable_Distribution"><strong>Stable Distribution</strong></a></li>
 <li><a href="#Multivariate_Normal_Multinormal_Distribution"><strong>Multivariate Normal (Multinormal) Distribution</strong></a></li>
@@ -1334,7 +1333,7 @@ END METHOD
 </pre>
 
 <blockquote>
-<p><strong>Note:</strong> <code>Expo(lamda)</code> has the following na&iuml;ve implementation: <code>-ln(RNDU01()) / lamda</code>.  But there are several problems here; for example, this implementation is ill-conditioned at large values because of the distribution&#39;s right-sided tail (Pedersen 2018)<sup><a href="#Note2"><strong>(2)</strong></a></sup>, and it can return infinity if <code>RNDU01()</code> becomes 0. Pedersen suggests using either <code>-ln(RNDRANGEMinExc(0, 0.5))</code> or <code>-log1p(-RNDRANGEMinExc(0, 0.5))</code> (rather than <code>-ln(RNDU01())</code>), chosen at random each time.</p>
+<p><strong>Note:</strong> <code>Expo(lamda)</code> has the following na&iuml;ve implementation: <code>-ln(1-RNDU01()) / lamda</code>.  But there are several problems here; for example, this implementation is ill-conditioned at large values because of the distribution&#39;s right-sided tail (Pedersen 2018)<sup><a href="#Note2"><strong>(2)</strong></a></sup>, and it can return infinity if <code>RNDU01()</code> becomes 1. Pedersen suggests using either <code>-ln(RNDRANGEMinExc(0, 0.5))</code> or <code>-log1p(-RNDRANGEMinExc(0, 0.5))</code> (rather than <code>-ln(1-RNDU01())</code>), chosen at random each time.</p>
 </blockquote>
 
 <p><a id=Random_Integers_with_a_Given_Positive_Sum></a></p>
@@ -1773,8 +1772,6 @@ above for returning more than one random number in one call.</p>
 
 <p>This algorithm is suitable for probabilities that are irrational numbers, such as <code>exp(-x/y)</code> or <code>log(2)</code>; for these numbers, the digit expansion is calculated &quot;on the fly&quot;, while the algorithm is in progress (in some cases, the first few digits of that expansion can be precalculated and saved for later use).</p>
 
-<p>In this document, <code>Bernoulli(p)</code> is 1 with probability <code>p</code>, or 0 otherwise.</p>
-
 <p><a id=Random_Walks_Real_Numbers></a></p>
 
 <h4>Random Walks (Real Numbers)</h4>
@@ -1861,7 +1858,7 @@ of <em>n</em> random numbers each generated the same way, where <em>n</em> follo
 <ul>
 <li>The <a href="https://en.wikipedia.org/wiki/Cumulative_distribution_function"><strong><em>cumulative distribution function</em></strong></a>, or <em>CDF</em>, returns, for each number, the probability that a number equal to or greater than that number is randomly chosen; the probability is in the interval [0, 1].</li>
 <li>The <a href="https://en.wikipedia.org/wiki/Probability_density_function"><strong><em>probability density function</em></strong></a>, or <em>PDF</em>, is, roughly and intuitively, a curve of weights 0 or greater, where for each number, the greater its weight, the more likely a number close to that number is randomly chosen.  In this document, the area under the PDF need not equal 1.<sup><a href="#Note44"><strong>(44)</strong></a></sup> For discrete distributions, the PDF is more properly called <em>probability mass function</em>.</li>
-<li>The <em>inverse cumulative distribution function</em> (<em>inverse CDF</em>) is the inverse of the CDF and maps numbers in the interval [0, 1) to numbers in the distribution, from low to high.</li>
+<li>The <em>inverse cumulative distribution function</em> (<em>inverse CDF</em> or <em>quantile function</em>) is the inverse of the CDF and maps numbers in the interval [0, 1) to numbers in the distribution, from low to high.</li>
 </ul>
 
 <p>The following sections show different ways to generate random numbers based on a distribution, depending on what is known about that distribution.</p>
@@ -2092,8 +2089,8 @@ probability that a normally-distributed random number will be within one standar
 <li>The ratio-of-uniforms method (given as <code>NormalRatioOfUniforms</code> below).</li>
 <li>In the <em>Box&ndash;Muller transformation</em>, <code>mu + radius * cos(angle)</code> and <code>mu + radius * sin(angle)</code>, where <code>angle = RNDRANGEMaxExc(0, 2 * pi)</code> and <code>radius = sqrt(Expo(0.5)) * sigma</code>, are two independent normally-distributed random numbers.  The polar method (given as <code>NormalPolar</code> below) likewise produces two independent normal random numbers at a time.</li>
 <li>An <em>approximation</em> to a normal random number is the sum of twelve <code>RNDRANGEMaxExc(0, sigma)</code> numbers (see Note 13), subtracted by 6 * <code>sigma</code>. See <code>NormalCLT</code> below, which also includes an optional step to &quot;warp&quot; the random number for better accuracy (Kabal 2000/2019)<sup><a href="#Note53"><strong>(53)</strong></a></sup> See also <a href="https://en.wikipedia.org/wiki/Irwin%E2%80%93Hall_distribution"><strong>&quot;Irwin&ndash;Hall distribution&quot; on Wikipedia</strong></a>.</li>
-<li>Methods that invert the normal distribution&#39;s CDF; for one approximation, see M. Wichura, <em>Applied Statistics</em> 37(3), 1988.  See also <a href="#Inverse_Transform_Sampling"><strong>&quot;Inverse Transform Sampling&quot;</strong></a> and <a href="https://www.johndcook.com/blog/normal_cdf_inverse/"><strong>&quot;A literate program to compute the inverse of the normal CDF&quot;</strong></a>.</li>
-<li>Karney&#39;s algorithm to sample exactly from the normal distribution, without using floating-point numbers(Karney 2014)<sup><a href="#Note54"><strong>(54)</strong></a></sup>.</li>
+<li>Methods that <a href="#Inverse_Transform_Sampling"><strong>invert</strong></a> the normal distribution&#39;s CDF, including those by Wichura, Acklam, and Luu (Luu 2016)<sup><a href="#Note73"><strong>(73)</strong></a></sup>.  See also <a href="https://www.johndcook.com/blog/normal_cdf_inverse/"><strong>&quot;A literate program to compute the inverse of the normal CDF&quot;</strong></a>.</li>
+<li>Karney&#39;s algorithm to sample exactly from the normal distribution, without using floating-point numbers (Karney 2014)<sup><a href="#Note54"><strong>(54)</strong></a></sup>.</li>
 </ol>
 
 <p>In 2007, Thomas, D., et al. gave a survey of normal random number methods in &quot;Gaussian Random Number Generators&quot;, <em>ACM Computing Surveys</em> 39(4), 2007, article 11.</p>
@@ -2126,14 +2123,14 @@ END METHOD
 METHOD NormalCLT(mu, sigma)
   sum = 0
   for i in 0...12: sum=sum+RNDRANGEMaxExc(0, sigma)
-  sum = sum + mu - 6*sigma
+  sum = sum - 6*sigma
   // Optional: &quot;Warp&quot; the sum for better accuracy
   ssq = sum * sum
   sum = ((((0.0000001141*ssq - 0.0000005102) *
             ssq + 0.00007474) *
             ssq + 0.0039439) *
             ssq + 0.98746) * sum
-  return sum
+  return sum + mu
  end
 END METHOD
 </pre>
@@ -2320,59 +2317,19 @@ END METHOD
         mean = mean - g
         count = count + n
     end
-    // Base case uses Knuth&#39;s method from 1969
-    p = 1.0
-    pn = exp(-mean)
+    // Base case uses generator found in Devroye
+    // 1986, p. 504.
+    s = 0
     while true
-        p = p * RNDU01OneExc()
-        if p &lt;= pn: return count
-        count = count + 1
+       sum = sum + Expo(1)
+       if sum &gt;= mean: return count
+       count = count + 1
     end
 END METHOD
 </pre>
 
 <blockquote>
 <p><strong>Note:</strong> To generate a sum of <code>n</code> independent Poisson random numbers with separate means, generate <code>Poisson(sum)</code>, where <code>sum</code> is the sum of those means (see (Devroye 1986)<sup><a href="#Note12"><strong>(12)</strong></a></sup>, p. 501).  For example, to generate a sum of 1000 independent Poisson random numbers with a mean of 10<sup>-6</sup>, simply generate <code>Poisson(0.001)</code>.</p>
-</blockquote>
-
-<p><a id=Negative_Binomial_Distribution_Extensions_for_Non_Integer_Successes></a></p>
-
-<h3>Negative Binomial Distribution: Extensions for Non-Integer Successes</h3>
-
-<p><strong>Requires random real numbers.</strong></p>
-
-<p>The following pseudocode shows an extension of  the <a href="#Negative_Binomial_Distribution"><strong><em>negative binomial distribution</em></strong></a> for a <code>successes</code> value other than an integer.</p>
-
-<pre>METHOD NegativeBinomial(successes, p)
-    // Needs to be 0 or greater
-    if successes &lt; 0: return error
-    // No failures if no successes or if always succeeds
-    if successes == 0 or p &gt;= 1.0: return 0
-    // Always fails (NOTE: infinity can be the maximum possible
-    // integer value if NegativeBinomial is implemented to return
-    // an integer)
-    if p &lt;= 0.0: return infinity
-    // NOTE: If &#39;successes&#39; can be an integer only,
-    // omit the following three lines:
-    if floor(successes) != successes
-        return Poisson(GammaDist(successes, (1 - p) / p))
-    end
-    count = 0
-    total = 0
-    if successes == 1 and p == 0.5
-       while RNDINT(1) == 0: count = count + 1
-       return count
-    end
-    while total &lt; successes
-        if RNDU01OneExc() &lt; p: total = total + 1
-        else: count = count + 1
-    end
-    return count
-END METHOD
-</pre>
-
-<blockquote>
-<p><strong>Note:</strong> For the <strong>geometric distribution</strong>, which is a special case of the negative binomial distribution, see <a href="#Geometric_Distribution"><strong>Geometric Distribution</strong></a>.</p>
 </blockquote>
 
 <p><a id=von_Mises_Distribution></a></p>
@@ -2438,27 +2395,28 @@ END METHOD
     if beta &lt; -1 or beta &gt; 1: return error
     halfpi = pi * 0.5
     unif=RNDRANGEMinMaxExc(-halfpi, halfpi)
-    // Cauchy special case
-    if alpha == 1 and beta == 0: return tan(unif)
-    expo=Expo(1)
     c=cos(unif)
     if alpha == 1
        s=sin(unif)
+       if beta == 0: return s/c
+       expo=Expo(1)
        return 2.0*((unif*beta+halfpi)*s/c -
          beta * ln(halfpi*expo*c/(unif*beta+halfpi)))/pi
+    else
+       z=-tan(alpha*halfpi)*beta
+       ug=unif+atan2(-z, 1)/alpha
+       cpow=pow(c, -1.0 / alpha)
+       return pow(1.0+z*z, 1.0 / (2*alpha))*
+          (sin(alpha*ug)*cpow)*
+          pow(cos(unif-alpha*ug)/expo, (1.0 - alpha) / alpha)
     end
-    z=-tan(alpha*halfpi)*beta
-    ug=unif+atan2(-z, 1)/alpha
-    cpow=pow(c, -1.0 / alpha)
-    return pow(1.0+z*z, 1.0 / (2*alpha))*
-       (sin(alpha*ug)*cpow)*
-       pow(cos(unif-alpha*ug)/expo, (1.0 - alpha) / alpha)
 END METHOD
 </pre>
 
-<p>Extended versions of the stable distribution:</p>
+<p>Derived from the stable distribution:</p>
 
 <ul>
+<li><strong>Cauchy (Lorentz) distribution</strong>: <code>Stable(1, 0)</code>.  This distribution is similar to the normal distribution, but with &quot;fatter&quot; tails. Alternative algorithm mentioned in (McGrath and Irving 1975)<sup><a href="#Note59"><strong>(59)</strong></a></sup>: Generate <code>x = RNDU01ZeroExc()</code> and <code>y = RNDRANGE(-1, 1)</code> until <code>x * x + y * y &lt;= 1</code>, then generate <code>y / x</code>.</li>
 <li><strong>Four-parameter stable distribution</strong>: <code>Stable(alpha, beta) * sigma + mu</code>, where <code>mu</code> is the mean and <code>sigma</code> is the scale.  If <code>alpha</code> and <code>beta</code> are 1, the result is a <strong>Landau distribution</strong>.</li>
 <li><strong>&quot;Type 0&quot; stable distribution</strong>: <code>Stable(alpha, beta) * sigma + (mu - sigma * beta * x)</code>, where <code>x</code> is <code>ln(sigma)*2.0/pi</code> if <code>alpha</code> is 1, and <code>tan(pi*0.5*alpha)</code> otherwise.</li>
 </ul>
@@ -2632,7 +2590,7 @@ END METHOD
 <li>the <strong>Fr&eacute;chet&ndash;Hoeffding upper bound copula</strong> <em>[x, x, ..., x]</em> (e.g., <code>[x, x]</code>), where <code>x = RNDU01()</code>,</li>
 <li>the <strong>Fr&eacute;chet&ndash;Hoeffding lower bound copula</strong> <code>[x, 1.0 - x]</code> where <code>x = RNDU01()</code>,</li>
 <li>the <strong>product copula</strong>, where each number is a separately generated <code>RNDU01()</code> (indicating no dependence between the numbers), and</li>
-<li>the <strong>Archimedean copulas</strong>, described by M. Hofert and M. M&auml;chler (2011)<sup><a href="#Note59"><strong>(59)</strong></a></sup>.</li>
+<li>the <strong>Archimedean copulas</strong>, described by M. Hofert and M. M&auml;chler (2011)<sup><a href="#Note60"><strong>(60)</strong></a></sup>.</li>
 </ul>
 
 <p><a id=Index_of_Non_Uniform_Distributions></a></p>
@@ -2651,12 +2609,7 @@ END METHOD
 <li><strong>Beta distribution</strong>: See <a href="#Beta_Distribution"><strong>Beta Distribution</strong></a>.</li>
 <li><strong>Binomial distribution</strong>: See <a href="#Binomial_Distribution_An_Exact_Algorithm"><strong>Binomial Distribution: An Exact Algorithm</strong></a>.</li>
 <li><strong>Binormal distribution</strong>: See <a href="#Multivariate_Normal_Multinormal_Distribution"><strong>Multivariate Normal (Multinormal) Distribution</strong></a>.</li>
-<li><strong>Cauchy (Lorentz) distribution</strong>&dagger;:  This distribution is similar to the normal distribution, but with &quot;fatter&quot; tails.
-
-<ul>
-<li><code>tan(RNDRANGEMinMaxExc(-pi*0.5, pi*0.5))</code>.</li>
-<li>Mentioned in (McGrath and Irving 1975)<sup><a href="#Note60"><strong>(60)</strong></a></sup>: Generate <code>x = RNDU01ZeroExc()</code> and <code>y = RNDRANGE(-1, 1)</code> until <code>x * x + y * y &lt;= 1</code>, then generate <code>y / x</code>.</li>
-</ul></li>
+<li><strong>Cauchy (Lorentz) distribution</strong>&dagger;:  <code>Stable(1, 0)</code>.</li>
 <li><strong>Chi-squared distribution</strong>: <code>GammaDist(df * 0.5 + Poisson(sms * 0.5), 2)</code>, where <code>df</code> is the number of degrees of freedom and <code>sms</code> is the sum of mean squares (where <code>sms</code> other than 0 indicates a <em>noncentral</em> distribution).</li>
 <li><strong>Dice</strong>: See <a href="#Dice"><strong>Dice</strong></a>.</li>
 <li><strong>Exponential distribution</strong>: See <a href="#Exponential_Distribution"><strong>Exponential Distribution</strong></a>.</li>
@@ -2756,7 +2709,7 @@ the two parameters of the beta distribution, and <code>trials</code> is a parame
 <li><strong>Multivariate Poisson distribution</strong>: See the <a href="https://peteroupc.github.io/randomgen.zip"><strong>Python sample code</strong></a>.</li>
 <li><strong>Multivariate <em>t</em>-copula</strong>: See the <a href="https://peteroupc.github.io/randomgen.zip"><strong>Python sample code</strong></a>.</li>
 <li><strong>Multivariate <em>t</em>-distribution</strong>: See the <a href="https://peteroupc.github.io/randomgen.zip"><strong>Python sample code</strong></a>.</li>
-<li><strong>Negative binomial distribution</strong>: See <a href="#Negative_Binomial_Distribution"><strong>Negative Binomial Distribution</strong></a>.</li>
+<li><strong>Negative binomial distribution</strong> (<code>NegativeBinomial(successes, p)</code>): See <a href="#Negative_Binomial_Distribution"><strong>Negative Binomial Distribution</strong></a>.  The negative binomial distribution can take a <code>successes</code> value other than an integer; in that case, a negative binomial (<code>successes</code>, <code>p</code>) random number is <code>Poisson(GammaDist(successes, (1 - p) / p))</code>.</li>
 <li><strong>Negative multinomial distribution</strong>: See the <a href="https://peteroupc.github.io/randomgen.zip"><strong>Python sample code</strong></a>.</li>
 <li><strong>Noncentral beta distribution</strong>: <code>BetaDist(a + Poisson(nc), b)</code>, where <code>nc</code> (a noncentrality), <code>a</code>, and <code>b</code> are greater than 0.</li>
 <li><strong>Parabolic distribution</strong>: <code>min + (max - min) * BetaDist(2, 2)</code>, where <code>min</code> is the minimum value and <code>max</code> is the maximum value (Saucier 2000, p. 30).</li>
@@ -3000,7 +2953,7 @@ and &quot;<a href="https://randomascii.wordpress.com/2013/07/16/floating-point-d
 
 <p><small><sup id=Note35>(35)</sup> Spall, J.C., &quot;An Overview of the Simultaneous Perturbation Method for Efficient Optimization&quot;, <em>Johns Hopkins APL Technical Digest</em> 19(4), 1998, pp. 482-492.</small></p>
 
-<p><small><sup id=Note36>(36)</sup> P. L&#39;Ecuyer, &quot;Tables of Linear Congruential Generators of Different Sizes and Good Lattice Structure&quot;, <em>Mathematics of Computation</em> 68(225), January 1999.</small></p>
+<p><small><sup id=Note36>(36)</sup> P. L&#39;Ecuyer, &quot;Tables of Linear Congruential Generators of Different Sizes and Good Lattice Structure&quot;, <em>Mathematics of Computation</em> 68(225), January 1999, with <a href="http://www.iro.umontreal.ca/%7Elecuyer/myftp/papers/latrules99Errata.pdf"><strong>errata</strong></a>.</small></p>
 
 <p><small><sup id=Note37>(37)</sup> Harase, S., &quot;A table of short-period Tausworthe generators for Markov chain quasi-Monte Carlo&quot;, arXiv:2002.09006 [math.NA], 2020.</small></p>
 
@@ -3055,9 +3008,9 @@ and &quot;<a href="https://randomascii.wordpress.com/2013/07/16/floating-point-d
 
 <p><small><sup id=Note58>(58)</sup> Ahrens, J.H., Dieter, U., &quot;Computer methods for sampling from gamma, beta, Poisson and binomial distributions&quot;, <em>Computing</em> 12 (1974), pp. 223-246.</small></p>
 
-<p><small><sup id=Note59>(59)</sup> Hofert, M., and Maechler, M.  &quot;Nested Archimedean Copulas Meet R: The nacopula Package&quot;.  <em>Journal of Statistical Software</em> 39(9), 2011, pp. 1-20.</small></p>
+<p><small><sup id=Note59>(59)</sup> McGrath, E.J., Irving, D.C., &quot;Techniques for Efficient Monte Carlo Simulation, Volume II&quot;, Oak Ridge National Laboratory, April 1975.</small></p>
 
-<p><small><sup id=Note60>(60)</sup> McGrath, E.J., Irving, D.C., &quot;Techniques for Efficient Monte Carlo Simulation, Volume II&quot;, Oak Ridge National Laboratory, April 1975.</small></p>
+<p><small><sup id=Note60>(60)</sup> Hofert, M., and Maechler, M.  &quot;Nested Archimedean Copulas Meet R: The nacopula Package&quot;.  <em>Journal of Statistical Software</em> 39(9), 2011, pp. 1-20.</small></p>
 
 <p><small><sup id=Note61>(61)</sup> Saha, M., et al., &quot;The extended xgamma distribution&quot;, arXiv:1909.01103 [math.ST], 2019.</small></p>
 
@@ -3082,6 +3035,8 @@ and &quot;<a href="https://randomascii.wordpress.com/2013/07/16/floating-point-d
 <p><small><sup id=Note71>(71)</sup> For example, see Balcer, V., Vadhan, S., &quot;Differential Privacy on Finite Computers&quot;, Dec. 4, 2018; as well as Micciancio, D. and Walter, M., &quot;Gaussian sampling over the integers: Efficient, generic, constant-time&quot;, in Annual International Cryptology Conference, August 2017 (pp. 455-485).</small></p>
 
 <p><small><sup id=Note72>(72)</sup> Devroye, L., Gravel, C., &quot;Sampling with arbitrary precision&quot;, arXiv:1502.02539v5 [cs.IT]</small></p>
+
+<p><small><sup id=Note73>(73)</sup> Luu, T., &quot;Fast and Accurate Parallel Computation of Quantile Functions for Random Number Generation&quot;, Dissertation, University College London, 2016.</small></p>
 
 <p><a id=Appendix></a></p>
 
@@ -3192,7 +3147,7 @@ END METHOD
 
 <h3>Exponential Distribution: Another Exact Algorithm</h3>
 
-<p>The following method samples exactly from an exponential distribution (with an accuracy of 2<sup><code>-precision</code></sup>)(Devroye and Gravel 2015)<sup><a href="#Note72"><strong>(72)</strong></a></sup>.  In the method, <code>precision</code> is the number of binary digits (bits) after the point in the random number&#39;s binary expansion (in other words, the number will be a multiple of 2<sup><code>-precision</code></sup>), and <code>BINEXP(x, b)</code> calculates the expression <code>x</code> such that the result is within 2<sup><code>-precision</code></sup> of the correct result. <code>Expo(lamda)</code> is then defined as <code>ExpoExact(precision) / lamda</code>.</p>
+<p>The following method samples exactly from an exponential distribution (with an accuracy of 2<sup><code>-precision</code></sup>)(Devroye and Gravel 2015)<sup><a href="#Note72"><strong>(72)</strong></a></sup>.  In the method, <code>precision</code> is the number of binary digits (bits) after the point in the random number&#39;s binary expansion (in other words, the number will be a multiple of 2<sup><code>-precision</code></sup>); <code>BINEXP(x, b)</code> calculates the expression <code>x</code> such that the result is within 2<sup><code>-precision</code></sup> of the correct result; and <code>Bernoulli(p)</code> is 1 with probability <code>p</code>, or 0 otherwise. <code>Expo(lamda)</code> is then defined as <code>ExpoExact(precision) / lamda</code>.</p>
 
 <pre>def ExpoExact(precision)
    ret=0

@@ -109,7 +109,6 @@ All the random number methods presented on this page are ultimately based on an 
     - [**Gamma Distribution**](#Gamma_Distribution)
     - [**Beta Distribution**](#Beta_Distribution)
     - [**Poisson Distribution**](#Poisson_Distribution)
-    - [**Negative Binomial Distribution: Extensions for Non-Integer Successes**](#Negative_Binomial_Distribution_Extensions_for_Non_Integer_Successes)
     - [**von Mises Distribution**](#von_Mises_Distribution)
     - [**Stable Distribution**](#Stable_Distribution)
     - [**Multivariate Normal (Multinormal) Distribution**](#Multivariate_Normal_Multinormal_Distribution)
@@ -1075,7 +1074,7 @@ In the pseudocode below, `ExpoRatio` generates an exponential random number (in 
        return count
     END METHOD
 
-> **Note:** `Expo(lamda)` has the following na&iuml;ve implementation: `-ln(RNDU01()) / lamda`.  But there are several problems here; for example, this implementation is ill-conditioned at large values because of the distribution's right-sided tail (Pedersen 2018)<sup>[**(2)**](#Note2)</sup>, and it can return infinity if `RNDU01()` becomes 0. Pedersen suggests using either `-ln(RNDRANGEMinExc(0, 0.5))` or `-log1p(-RNDRANGEMinExc(0, 0.5))` (rather than `-ln(RNDU01())`), chosen at random each time.
+> **Note:** `Expo(lamda)` has the following na&iuml;ve implementation: `-ln(1-RNDU01()) / lamda`.  But there are several problems here; for example, this implementation is ill-conditioned at large values because of the distribution's right-sided tail (Pedersen 2018)<sup>[**(2)**](#Note2)</sup>, and it can return infinity if `RNDU01()` becomes 1. Pedersen suggests using either `-ln(RNDRANGEMinExc(0, 0.5))` or `-log1p(-RNDRANGEMinExc(0, 0.5))` (rather than `-ln(1-RNDU01())`), chosen at random each time.
 
 <a id=Random_Integers_with_a_Given_Positive_Sum></a>
 ### Random Integers with a Given Positive Sum
@@ -1452,8 +1451,6 @@ To generate 1 or 0 at random depending on a probability expressed as a digit exp
 
 This algorithm is suitable for probabilities that are irrational numbers, such as `exp(-x/y)` or `log(2)`; for these numbers, the digit expansion is calculated "on the fly", while the algorithm is in progress (in some cases, the first few digits of that expansion can be precalculated and saved for later use).
 
-In this document, `Bernoulli(p)` is 1 with probability `p`, or 0 otherwise.
-
 <a id=Random_Walks_Real_Numbers></a>
 #### Random Walks (Real Numbers)
 
@@ -1515,7 +1512,7 @@ Many probability distributions can be defined in terms of any of the following:
 
 * The [**_cumulative distribution function_**](https://en.wikipedia.org/wiki/Cumulative_distribution_function), or _CDF_, returns, for each number, the probability that a number equal to or greater than that number is randomly chosen; the probability is in the interval [0, 1].
 * The [**_probability density function_**](https://en.wikipedia.org/wiki/Probability_density_function), or _PDF_, is, roughly and intuitively, a curve of weights 0 or greater, where for each number, the greater its weight, the more likely a number close to that number is randomly chosen.  In this document, the area under the PDF need not equal 1.<sup>[**(44)**](#Note44)</sup> For discrete distributions, the PDF is more properly called _probability mass function_.
-* The _inverse cumulative distribution function_ (_inverse CDF_) is the inverse of the CDF and maps numbers in the interval [0, 1\) to numbers in the distribution, from low to high.
+* The _inverse cumulative distribution function_ (_inverse CDF_ or _quantile function_) is the inverse of the CDF and maps numbers in the interval [0, 1\) to numbers in the distribution, from low to high.
 
 The following sections show different ways to generate random numbers based on a distribution, depending on what is known about that distribution.
 
@@ -1711,7 +1708,7 @@ There are a number of methods for normal random number generation, including the
 1. The ratio-of-uniforms method (given as `NormalRatioOfUniforms` below).
 2. In the _Box&ndash;Muller transformation_, `mu + radius * cos(angle)` and `mu + radius * sin(angle)`, where `angle = RNDRANGEMaxExc(0, 2 * pi)` and `radius = sqrt(Expo(0.5)) * sigma`, are two independent normally-distributed random numbers.  The polar method (given as `NormalPolar` below) likewise produces two independent normal random numbers at a time.
 3. An _approximation_ to a normal random number is the sum of twelve `RNDRANGEMaxExc(0, sigma)` numbers (see Note 13), subtracted by 6 * `sigma`. See `NormalCLT` below, which also includes an optional step to "warp" the random number for better accuracy (Kabal 2000/2019)<sup>[**(53)**](#Note53)</sup> See also [**"Irwin&ndash;Hall distribution" on Wikipedia**](https://en.wikipedia.org/wiki/Irwin%E2%80%93Hall_distribution).
-4. Methods that invert the normal distribution's CDF; for one approximation, see M. Wichura, _Applied Statistics_ 37(3), 1988.  See also [**"Inverse Transform Sampling"**](#Inverse_Transform_Sampling) and [**"A literate program to compute the inverse of the normal CDF"**](https://www.johndcook.com/blog/normal_cdf_inverse/).
+4. Methods that [**invert**](#Inverse_Transform_Sampling) the normal distribution's CDF, including those by Wichura, Acklam, and Luu (Luu 2016)<sup>[**(73)**](#Note73)</sup>.  See also [**"A literate program to compute the inverse of the normal CDF"**](https://www.johndcook.com/blog/normal_cdf_inverse/).
 5. Karney's algorithm to sample exactly from the normal distribution, without using floating-point numbers (Karney 2014)<sup>[**(54)**](#Note54)</sup>.
 
 In 2007, Thomas, D., et al. gave a survey of normal random number methods in "Gaussian Random Number Generators", _ACM Computing Surveys_ 39(4), 2007, article 11.
@@ -1931,42 +1928,6 @@ The following method generates a Poisson random number.  For means greater than 
 
 > **Note:** To generate a sum of `n` independent Poisson random numbers with separate means, generate `Poisson(sum)`, where `sum` is the sum of those means (see (Devroye 1986)<sup>[**(12)**](#Note12)</sup>, p. 501).  For example, to generate a sum of 1000 independent Poisson random numbers with a mean of 10<sup>-6</sup>, simply generate `Poisson(0.001)`.
 
-<a id=Negative_Binomial_Distribution_Extensions_for_Non_Integer_Successes></a>
-### Negative Binomial Distribution: Extensions for Non-Integer Successes
-
-**Requires random real numbers.**
-
-The following pseudocode shows an extension of  the [**_negative binomial distribution_**](#Negative_Binomial_Distribution) for a `successes` value other than an integer.
-
-    METHOD NegativeBinomial(successes, p)
-        // Needs to be 0 or greater
-        if successes < 0: return error
-        // No failures if no successes or if always succeeds
-        if successes == 0 or p >= 1.0: return 0
-        // Always fails (NOTE: infinity can be the maximum possible
-        // integer value if NegativeBinomial is implemented to return
-        // an integer)
-        if p <= 0.0: return infinity
-        // NOTE: If 'successes' can be an integer only,
-        // omit the following three lines:
-        if floor(successes) != successes
-            return Poisson(GammaDist(successes, (1 - p) / p))
-        end
-        count = 0
-        total = 0
-        if successes == 1 and p == 0.5
-           while RNDINT(1) == 0: count = count + 1
-           return count
-        end
-        while total < successes
-            if RNDU01OneExc() < p: total = total + 1
-            else: count = count + 1
-        end
-        return count
-    END METHOD
-
-> **Note:** For the **geometric distribution**, which is a special case of the negative binomial distribution, see [**Geometric Distribution**](#Geometric_Distribution).
-
 <a id=von_Mises_Distribution></a>
 ### von Mises Distribution
 
@@ -2023,25 +1984,26 @@ As more and more independent random numbers, generated the same way, are added t
         if beta < -1 or beta > 1: return error
         halfpi = pi * 0.5
         unif=RNDRANGEMinMaxExc(-halfpi, halfpi)
-        // Cauchy special case
-        if alpha == 1 and beta == 0: return tan(unif)
-        expo=Expo(1)
         c=cos(unif)
         if alpha == 1
            s=sin(unif)
+           if beta == 0: return s/c
+           expo=Expo(1)
            return 2.0*((unif*beta+halfpi)*s/c -
              beta * ln(halfpi*expo*c/(unif*beta+halfpi)))/pi
+        else
+           z=-tan(alpha*halfpi)*beta
+           ug=unif+atan2(-z, 1)/alpha
+           cpow=pow(c, -1.0 / alpha)
+           return pow(1.0+z*z, 1.0 / (2*alpha))*
+              (sin(alpha*ug)*cpow)*
+              pow(cos(unif-alpha*ug)/expo, (1.0 - alpha) / alpha)
         end
-        z=-tan(alpha*halfpi)*beta
-        ug=unif+atan2(-z, 1)/alpha
-        cpow=pow(c, -1.0 / alpha)
-        return pow(1.0+z*z, 1.0 / (2*alpha))*
-           (sin(alpha*ug)*cpow)*
-           pow(cos(unif-alpha*ug)/expo, (1.0 - alpha) / alpha)
     END METHOD
 
-Extended versions of the stable distribution:
+Derived from the stable distribution:
 
+- **Cauchy (Lorentz) distribution**: `Stable(1, 0)`.  This distribution is similar to the normal distribution, but with "fatter" tails. Alternative algorithm mentioned in (McGrath and Irving 1975)<sup>[**(59)**](#Note59)</sup>: Generate `x = RNDU01ZeroExc()` and `y = RNDRANGE(-1, 1)` until `x * x + y * y <= 1`, then generate `y / x`.
 - **Four-parameter stable distribution**: `Stable(alpha, beta) * sigma + mu`, where `mu` is the mean and ` sigma` is the scale.  If `alpha` and `beta` are 1, the result is a **Landau distribution**.
 - **"Type 0" stable distribution**: `Stable(alpha, beta) * sigma + (mu - sigma * beta * x)`, where `x` is `ln(sigma)*2.0/pi` if `alpha` is 1, and `tan(pi*0.5*alpha)` otherwise.
 
@@ -2191,7 +2153,7 @@ Other kinds of copulas describe different kinds of dependence between random num
 - the **Fr&eacute;chet&ndash;Hoeffding upper bound copula** _\[x, x, ..., x\]_ (e.g., `[x, x]`), where `x = RNDU01()`,
 - the **Fr&eacute;chet&ndash;Hoeffding lower bound copula** `[x, 1.0 - x]` where `x = RNDU01()`,
 - the **product copula**, where each number is a separately generated `RNDU01()` (indicating no dependence between the numbers), and
-- the **Archimedean copulas**, described by M. Hofert and M. M&auml;chler (2011)<sup>[**(59)**](#Note59)</sup>.
+- the **Archimedean copulas**, described by M. Hofert and M. M&auml;chler (2011)<sup>[**(60)**](#Note60)</sup>.
 
 <a id=Index_of_Non_Uniform_Distributions></a>
 ### Index of Non-Uniform Distributions
@@ -2207,9 +2169,7 @@ Most commonly used:
 - **Beta distribution**: See [**Beta Distribution**](#Beta_Distribution).
 - **Binomial distribution**: See [**Binomial Distribution: An Exact Algorithm**](#Binomial_Distribution_An_Exact_Algorithm).
 - **Binormal distribution**: See [**Multivariate Normal (Multinormal) Distribution**](#Multivariate_Normal_Multinormal_Distribution).
-- **Cauchy (Lorentz) distribution**&dagger;:  This distribution is similar to the normal distribution, but with "fatter" tails.
-    - `tan(RNDRANGEMinMaxExc(-pi*0.5, pi*0.5))`.
-    - Mentioned in (McGrath and Irving 1975)<sup>[**(60)**](#Note60)</sup>: Generate `x = RNDU01ZeroExc()` and `y = RNDRANGE(-1, 1)` until `x * x + y * y <= 1`, then generate `y / x`.
+- **Cauchy (Lorentz) distribution**&dagger;:  `Stable(1, 0)`.
 - **Chi-squared distribution**: `GammaDist(df * 0.5 + Poisson(sms * 0.5), 2)`, where `df` is the number of degrees of freedom and `sms` is the sum of mean squares (where `sms` other than 0 indicates a _noncentral_ distribution).
 - **Dice**: See [**Dice**](#Dice).
 - **Exponential distribution**: See [**Exponential Distribution**](#Exponential_Distribution).
@@ -2298,7 +2258,7 @@ Miscellaneous:
 - **Multivariate Poisson distribution**: See the [**Python sample code**](https://peteroupc.github.io/randomgen.zip).
 - **Multivariate _t_-copula**: See the [**Python sample code**](https://peteroupc.github.io/randomgen.zip).
 - **Multivariate _t_-distribution**: See the [**Python sample code**](https://peteroupc.github.io/randomgen.zip).
-- **Negative binomial distribution**: See [**Negative Binomial Distribution**](#Negative_Binomial_Distribution).
+- **Negative binomial distribution** (`NegativeBinomial(successes, p)`): See [**Negative Binomial Distribution**](#Negative_Binomial_Distribution).  The negative binomial distribution can take a `successes` value other than an integer; in that case, a negative binomial (`successes`, `p`) random number is `Poisson(GammaDist(successes, (1 - p) / p))`.
 - **Negative multinomial distribution**: See the [**Python sample code**](https://peteroupc.github.io/randomgen.zip).
 - **Noncentral beta distribution**: `BetaDist(a + Poisson(nc), b)`, where `nc` (a noncentrality), `a`, and `b` are greater than 0.
 - **Parabolic distribution**: `min + (max - min) * BetaDist(2, 2)`, where `min` is the minimum value and `max` is the maximum value (Saucier 2000, p. 30).
@@ -2513,7 +2473,7 @@ and "[**Floating-Point Determinism**](https://randomascii.wordpress.com/2013/07/
 
 <small><sup id=Note35>(35)</sup> Spall, J.C., "An Overview of the Simultaneous Perturbation Method for Efficient Optimization", _Johns Hopkins APL Technical Digest_ 19(4), 1998, pp. 482-492.</small>
 
-<small><sup id=Note36>(36)</sup> P. L'Ecuyer, "Tables of Linear Congruential Generators of Different Sizes and Good Lattice Structure", _Mathematics of Computation_ 68(225), January 1999.</small>
+<small><sup id=Note36>(36)</sup> P. L'Ecuyer, "Tables of Linear Congruential Generators of Different Sizes and Good Lattice Structure", _Mathematics of Computation_ 68(225), January 1999, with [**errata**](http://www.iro.umontreal.ca/~lecuyer/myftp/papers/latrules99Errata.pdf).</small>
 
 <small><sup id=Note37>(37)</sup> Harase, S., "A table of short-period Tausworthe generators for Markov chain quasi-Monte Carlo", arXiv:2002.09006 [math.NA], 2020.</small>
 
@@ -2565,9 +2525,9 @@ The methods shown here do not introduce any error beyond the sampling error that
 
 <small><sup id=Note58>(58)</sup> Ahrens, J.H., Dieter, U., "Computer methods for sampling from gamma, beta, Poisson and binomial distributions", _Computing_ 12 (1974), pp. 223-246.</small>
 
-<small><sup id=Note59>(59)</sup> Hofert, M., and Maechler, M.  "Nested Archimedean Copulas Meet R: The nacopula Package".  _Journal of Statistical Software_ 39(9), 2011, pp. 1-20.</small>
+<small><sup id=Note59>(59)</sup> McGrath, E.J., Irving, D.C., "Techniques for Efficient Monte Carlo Simulation, Volume II", Oak Ridge National Laboratory, April 1975.</small>
 
-<small><sup id=Note60>(60)</sup> McGrath, E.J., Irving, D.C., "Techniques for Efficient Monte Carlo Simulation, Volume II", Oak Ridge National Laboratory, April 1975.</small>
+<small><sup id=Note60>(60)</sup> Hofert, M., and Maechler, M.  "Nested Archimedean Copulas Meet R: The nacopula Package".  _Journal of Statistical Software_ 39(9), 2011, pp. 1-20.</small>
 
 <small><sup id=Note61>(61)</sup> Saha, M., et al., "The extended xgamma distribution", arXiv:1909.01103 [math.ST], 2019.</small>
 
@@ -2592,6 +2552,8 @@ The methods shown here do not introduce any error beyond the sampling error that
 <small><sup id=Note71>(71)</sup> For example, see Balcer, V., Vadhan, S., "Differential Privacy on Finite Computers", Dec. 4, 2018; as well as Micciancio, D. and Walter, M., "Gaussian sampling over the integers: Efficient, generic, constant-time", in Annual International Cryptology Conference, August 2017 (pp. 455-485).</small>
 
 <small><sup id=Note72>(72)</sup> Devroye, L., Gravel, C., "Sampling with arbitrary precision", arXiv:1502.02539v5 [cs.IT]</small>
+
+<small><sup id=Note73>(73)</sup> Luu, T., "Fast and Accurate Parallel Computation of Quantile Functions for Random Number Generation", Dissertation, University College London, 2016.</small>
 
 <a id=Appendix></a>
 ## Appendix
@@ -2688,7 +2650,7 @@ In nearly all security-sensitive applications, random numbers generated for secu
 <a id=Exponential_Distribution_Another_Exact_Algorithm></a>
 ### Exponential Distribution: Another Exact Algorithm
 
-The following method samples exactly from an exponential distribution (with an accuracy of 2<sup>`-precision`</sup>)(Devroye and Gravel 2015)<sup>[**(72)**](#Note72)</sup>.  In the method, `precision` is the number of binary digits (bits) after the point in the random number's binary expansion (in other words, the number will be a multiple of 2<sup>`-precision`</sup>), and `BINEXP(x, b)` calculates the expression `x` such that the result is within 2<sup>`-precision`</sup> of the correct result. `Expo(lamda)` is then defined as `ExpoExact(precision) / lamda`.
+The following method samples exactly from an exponential distribution (with an accuracy of 2<sup>`-precision`</sup>)(Devroye and Gravel 2015)<sup>[**(72)**](#Note72)</sup>.  In the method, `precision` is the number of binary digits (bits) after the point in the random number's binary expansion (in other words, the number will be a multiple of 2<sup>`-precision`</sup>); `BINEXP(x, b)` calculates the expression `x` such that the result is within 2<sup>`-precision`</sup> of the correct result; and `Bernoulli(p)` is 1 with probability `p`, or 0 otherwise. `Expo(lamda)` is then defined as `ExpoExact(precision) / lamda`.
 
     def ExpoExact(precision)
        ret=0

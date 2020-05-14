@@ -808,6 +808,9 @@ Returns 'list'. """
             ret = ret * math.pow(self.rndu01(), 1.0 / mean)
         return ret ** (1.0 / c) * b + d
 
+    def cauchy(self):
+        return stable(1, 0)
+
     def stable(self, alpha, beta):
         """ Generates a random number following a stable distribution.  """
         if alpha <= 0 or alpha > 2:
@@ -928,12 +931,15 @@ Returns 'list'. """
             # digits have to be sampled as
             # necessary until
             # the rounded result is unambiguous.
-            a[0] >>= a[1] - bits
+            return a[0] >> (a[1] - bits)
         elif a[1] < bits:
             bc = bits - a[1]
             a[0] <<= bc
             a[0] |= self.rndintexc(1 << bc)
-        return a[0]
+            a[1] = bits
+            return a[0]
+        else:
+            return a[0]
 
     # The von Neumann exponential generator,
     # but using u-rands as defined in Karney.
