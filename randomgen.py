@@ -9,6 +9,7 @@ https://creativecommons.org/publicdomain/zero/1.0/
 
 import math
 import random
+from fractions import Fraction
 
 _SIGBITS = 53
 _FLOAT_MAX = 1.7976931348623157e308
@@ -2065,6 +2066,102 @@ acap - Optional.  A setting used in the optimization process; an
         wt = self._toWeights([pdf(x) for x in range(mn, mx)])
         return r._weighted_choice_n(wt, n, mn)
 
+    def _bisectionuniform(self, a, b, bitplaces):
+        """  Devroye/Gravel bisection algorithm. """
+        if a > b:
+            raise ValueError
+        if a == b:
+            return mn
+        epsdenom = 1 << bitplaces
+        eps = Fraction(1, epsdenom)
+        aax = a / eps
+        bbx = b / eps
+        if aax.denominator == 1 and bbx.denominator == 1:
+            # Fast track
+            diff = bbx.numerator - aax.numerator
+            return a + Fraction(self.rndint(diff), epsdenom)
+        twoEps = eps * 2
+        mn = Fraction(a)
+        mx = Fraction(b)
+        mxmn = mx - mn
+        cdfa = Fraction(0)
+        cdfb = Fraction(1)
+        while True:
+            bit = self.rndint(2)
+            cdf = (cdfa + cdfb) / 2
+            z = mn + (mx - mn) * cdf
+            cdfz = (z - mn) / mxmn
+            if bit == 0:
+                b = z
+                cdfb = cdfz
+            else:
+                a = z
+                cdfa = cdfz
+            if b - a <= twoEps:
+                return (a + b) / 2
+
+    def numbers_from_dist(self, pdf, mn=0, mx=1, n=1, bitplaces=53):
+        """
+Generates 'n' random numbers that follow a continuous
+distribution in an interval [mn, mx].  The distribution's
+PDF (probability density function) must be bounded
+and be continuous almost everywhere
+in the interval.  Implements section 4 of Devroye and Gravel,
+"The expected bit complexity of the von Neumann rejection
+algorithm", arXiv:1511.02273v2  [cs.IT], 2016/2018.
+- 'n' is the number of random numbers to generate.  Default is 1.
+- 'pdf' is a procedure that takes three arguments: xmin, xmax, bitplaces,
+   and returns an array of two items: a lower bound of f(x) anywhere
+   in the interval [xmin, xmax] (where f(x) is the PDF), and an upper
+   bound of f(x) anywhere there.  Both bounds are multiples of 2^-bitplaces.
+- 'bitplaces' is an accuracy expressed as a number of bits after the
+   binary point. The random number will be a multiple of 2^-bitplaces,
+   or have a smaller granularity. Default is 53.
+- 'mn' and 'mx' express the interval.  Both are optional and
+   are set to 0 and 1, respectively, by default.
+      """
+        if n < 0 or bitplaces < 0:
+            raise ValueError
+        r = [Fraction(mn), 0, Fraction(mx), 0]
+        infsup = pdf(r[0], r[2], bitplaces)
+        firstinfsup = infsup
+        r[3] = infsup[1]
+        firstrect = [Fraction(r[0]), Fraction(r[1]), Fraction(r[2]), Fraction(r[3])]
+        ret = [None for i in range(n)]
+        k = 0
+        hsh = {}
+        while k < n:
+            r = firstrect
+            first = True
+            decision = 0
+            while decision == 0:
+                if first:
+                    infsup = firstinfsup
+                else:
+                    tup = (r[0], r[2])
+                    if not (tup in hsh):
+                        infsup = pdf(r[0], r[2], bitplaces)
+                        hsh[tup] = [Fraction(infsup[0]), Fraction(infsup[1])]
+                    else:
+                        infsup = hsh[tup]
+                first = False
+                if max(r[1], r[3]) <= infsup[0]:  # Below the infimum, accept
+                    decision = 1
+                elif min(r[1], r[3]) > infsup[1]:  # Above the supremum, reject
+                    decision = 2
+                else:
+                    rcx = (r[0] + r[2]) / 2
+                    rcy = (r[1] + r[3]) / 2
+                    rx = self.rndint(3)
+                    rix = r[0] if (rx >> 1) == 0 else r[2]
+                    riy = r[1] if (rx & 1) == 0 else r[3]
+                    r = [min(rcx, rix), min(rcy, riy), max(rcx, rix), max(rcy, riy)]
+            if decision == 1:
+                ret[k] = self._bisectionuniform(r[0], r[2], bitplaces)
+                ret[k] = float(ret[k])
+                k += 1
+        return ret
+
     def numbers_from_pdf(self, pdf, mn, mx, n=1, steps=100):
         """ Generates one or more random numbers from a continuous probability
          distribution expressed as a probability density
@@ -2205,23 +2302,46 @@ class _KVectorRootSolver:
     def _linspace(self, a, b, size):
         return [a + (b - a) * (x * 1.0 / size) for x in range(size + 1)]
 
-    def _newton(self, f, df, y, x):
-        for i in range(5):
-            fv = f(x) - y
-            dfv = df(x)
-            if dfv == 0:
+    def _findroot(self, f, df, y, x, x2):
+        if df != None:
+            # Use Newton method if df is given
+            for i in range(5):
+                fv = f(x) - y
+                dfv = df(x)
+                if dfv == 0:
+                    return x
+                fv /= dfv
+                if abs(fv) < 2.22e-16:
+                    return x
+                x -= fv
+            return x
+        else:
+            # Use regula falsi (secant) method if df is not given
+            nx = x
+            if x == x2:
                 return x
-            fv /= dfv
-            if abs(fv) < 2.22e-16:
-                return x
-            x -= fv
-        return x
+            for i in range(10):
+                fa = f(x)
+                fb = f(x2)
+                if fb == fa:
+                    return nx
+                nx = x + (x2 - x) * (y - fa) / (fb - fa)
+                fnx = f(nx)
+                if fnx <= y:
+                    x = nx
+                else:
+                    x2 = nx
+                if abs(x2 - x) < 2.22e-16:
+                    return nx
+            return nx
 
     def __init__(self, cdf, xmin, xmax, pdf=None):
         self.pdf = pdf
         self.cdf = cdf
+        self.numElements = 1
         if self.pdf == None:
-            self.pdf = lambda x: self._derivcdf(self.cdf, x)
+            self.numElements = 2
+            # self.pdf = lambda x: self._derivcdf(self.cdf, x)
         eps = 2.22e-16
         x = self._linspace(xmin, xmax, 2000)
         n = len(x)
@@ -2255,8 +2375,8 @@ class _KVectorRootSolver:
 
     def _solveone(self, yr):
         halfdelta = self.delta * 0.5
-        ya = yr - halfdelta
-        yb = yr + halfdelta
+        ya = yr - halfdelta * self.numElements
+        yb = yr + halfdelta * self.numElements
         n = len(self.ys)
         ja = int(math.floor((ya - self.q) / self.m))
         jb = int(math.ceil((yb - self.q) / self.m))
@@ -2268,7 +2388,9 @@ class _KVectorRootSolver:
         kb = max(ja, jb)
         xy = [[self.xs[i - 1], self.ys[i - 1]] for i in range(ka, kb + 1)]
         if len(xy) == 1:
-            return self._newton(self.cdf, self.pdf, yr, xy[0][0])
+            return self._findroot(self.cdf, self.pdf, yr, xy[0][0], xy[0][0])
+        elif len(xy) == 2 and self.numElements == 2:
+            return self._findroot(self.cdf, self.pdf, yr, xy[0][0], xy[1][0])
         xy.sort()
         roots = []
         delta_x_and_half = self.delta_x * 1.5
@@ -2276,11 +2398,11 @@ class _KVectorRootSolver:
             xdiff = xy[i + 1][0] - xy[i][0]
             if xdiff >= delta_x_and_half:
                 # New potential root found
-                roots.append(self._newton(self.cdf, self.pdf, yr, xy[i][0]))
+                roots.append(self._findroot(self.cdf, self.pdf, yr, xy[i][0], xy[i][0]))
             if xdiff < delta_x_and_half and i == 0:
                 # New potential root found
                 roots.append(
-                    self._newton(self.cdf, self.pdf, yr, xy[i][0] + xdiff * 0.5)
+                    self._findroot(self.cdf, self.pdf, yr, xy[i][0], xy[i + 1][0])
                 )
         return roots[0]  # Return the first root found
 
@@ -2435,6 +2557,17 @@ if __name__ == "__main__":
             math.sqrt(2 * math.pi) * sigma
         )
 
+    def normaloracle(mn, mx, bitplaces):
+        points = []
+        if mn < 0 and mx > 0:
+            points.append(Fraction(1))
+        points.append(Fraction(math.exp(-(mn * mn) / 2)))
+        points.append(Fraction(math.exp(-(mx * mx) / 2)))
+        eps = Fraction(1, 1 << (bitplaces + 1))
+        pmn = max(min(points) - eps, 0)
+        pmx = max(points) + eps
+        return [pmn, pmx]
+
     def showbuckets(ls, buckets):
         mx = max(buckets)
         if mx == 0:
@@ -2464,6 +2597,15 @@ if __name__ == "__main__":
         showbuckets(ls, [f(x) for x in ls])
 
     # Generate normal random numbers
+    print("Generating normal random numbers with numbers_from_dist")
+    ls = linspace(-3.3, 3.3, 30)
+    buckets = [0 for x in ls]
+    t = time.time()
+    ksample = randgen.numbers_from_dist(normaloracle, -4, 4, 3000)
+    print("Took %f seconds" % (time.time() - t))
+    for ks in ksample:
+        bucket(ks, ls, buckets)
+    showbuckets(ls, buckets)
     print("Generating normal random numbers with numbers_from_pdf")
     ls = linspace(-3.3, 3.3, 30)
     buckets = [0 for x in ls]
@@ -2475,7 +2617,7 @@ if __name__ == "__main__":
     showbuckets(ls, buckets)
 
     print("Generating normal random numbers with KVectorSampler")
-    kvs = KVectorSampler(randgen, normalcdf, -4, 4, nd=1000, pdf=normalpdf)
+    kvs = KVectorSampler(randgen, normalcdf, -4, 4, nd=1000)  # , pdf=normalpdf)
     t = time.time()
     ksample = kvs.sample(1000)
     print("Took %f seconds" % (time.time() - t))
