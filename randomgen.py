@@ -900,7 +900,7 @@ Returns 'list'. """
     def _urandnew(self):
         return [0, 0]
 
-    def _urandnonequal(self, a, b):
+    def _urandless(self, a, b):
         abits = a[1]
         if abits == 0:
             abits = 1
@@ -908,7 +908,20 @@ Returns 'list'. """
             a[0] = tmp & 1
             bb = tmp >> 1
         else:
-            bb = self.rndintexc(1 << abits)
+            bb = 0
+            # Set bits of b from most to least
+            # significant bit
+            for i in range(abits):
+                sh = abits - 1 - i
+                bb |= self.rndintexc(2) << sh
+                # Bits not yet determined are set to ones,
+                # since we're checking if a is greater
+                # than the highest possible value for b,
+                # which indicates failure
+                bbc = bb | (1 << sh) - 1
+                if a[0] > bbc:
+                    # a turned out to be greater than b
+                    return false
         while bb == a[0]:
             abits += 1
             sr = self.rndint(3)
@@ -917,21 +930,45 @@ Returns 'list'. """
         a[1] = abits
         b[0] = bb
         b[1] = abits
+        return a[0] < b[0]
 
     def _urandgreater(self, a, b):
-        self._urandnonequal(a, b)
+        abits = a[1]
+        if abits == 0:
+            abits = 1
+            tmp = self.rndintexc(1 << (abits + 1))
+            a[0] = tmp & 1
+            bb = tmp >> 1
+        else:
+            bb = 0
+            # Set bits of b from most to least
+            # significant bit
+            for i in range(abits):
+                sh = abits - 1 - i
+                bb |= self.rndintexc(2) << sh
+                # Bits not yet determined are set to zeros,
+                # since we're checking if a is less
+                # than the lowest possible value for b,
+                # which indicates failure
+                if a[0] < bb:
+                    # a turned out to be less than b
+                    return false
+        while bb == a[0]:
+            abits += 1
+            sr = self.rndint(3)
+            bb = (bb << 1) | (sr & 1)
+            a[0] = (a[0] << 1) | ((sr >> 1) & 1)
+        a[1] = abits
+        b[0] = bb
+        b[1] = abits
         return a[0] > b[0]
 
     def _urandfill(self, a, bits):
         if a[1] > bits:
-            # NOTE: Using a simple rounding
-            # down.  Other rounding modes, such
-            # as round-to-nearest, could be used
-            # instead.  In this case, additional
-            # digits have to be sampled as
-            # necessary until
-            # the rounded result is unambiguous.
-            return a[0] >> (a[1] - bits)
+            # Shifting bits beyond the first excess bit.
+            aa = a[0] >> (a[1] - bits - 1)
+            # Check the excess bit; if odd, round up.
+            return aa >> 1 if (aa & 1) == 0 else (aa >> 1) + 1
         elif a[1] < bits:
             bc = bits - a[1]
             a[0] <<= bc

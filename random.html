@@ -715,20 +715,14 @@ For cryptographic RNGs, an application SHOULD use only one thread-safe instance 
 
 <h3>Cryptographic RNGs: Requirements</h3>
 
-<p>A cryptographic RNG generates random bits that behave like independent uniform random bits, such that it would be cost-prohibitive for an outside party to correctly guess, with more than a negligible advantage per bit, prior or future unseen outputs of that RNG after knowing how the RNG works and/or extremely many outputs of the RNG, or prior unseen outputs of that RNG after knowing the RNG&#39;s internal state at the given point in time.<sup><a href="#Note41"><strong>(41)</strong></a></sup></p>
+<p>A cryptographic RNG generates random bits that behave like independent uniform random bits, such that an outside party has no more than negligible advantage in correctly guessing prior or future unseen output bits of that RNG even after knowing how the RNG works and/or extremely many outputs of the RNG, or prior unseen output bits of that RNG after compromising its security, such as reading its internal state.<sup><a href="#Note41"><strong>(41)</strong></a></sup></p>
 
-<p>If a cryptographic RNG implementation uses a PRNG, the following requirements apply.</p>
-
-<ol>
-<li><p>The maximum size of seeds the PRNG admits is 128 bits or more and SHOULD be 256 bits or more.</p></li>
-<li><p>The <em>security strength</em> used by the RNG is at least 128 bits and is not more than the maximum size, in bits, of seeds the PRNG admits.</p></li>
-<li><p>While or after the PRNG is created, and before it generates a random number, it is initialized (&quot;seeded&quot;) with a seed that&mdash;</p>
+<p>If a cryptographic RNG implementation uses a PRNG:</p>
 
 <ul>
-<li>consists of data that ultimately derives from the output of one or more <a href="#Nondeterministic_Sources_and_Seed_Generation"><strong>nondeterministic sources</strong></a>, where the output is at least as hard to guess as ideal random data with as many bits as the <em>security strength</em>, and</li>
-<li>MAY be mixed with arbitrary data other than the seed as long as the result is no easier to guess<sup><a href="#Note42"><strong>(42)</strong></a></sup>.</li>
-</ul></li>
-</ol>
+<li>The security strength used by the RNG is at least 128 bits and SHOULD be at least 256 bits.</li>
+<li>Before the RNG generates a random number, the RNG has to have been initialized to a state that ultimately derives from data that, as a whole, is at least as hard to guess as ideal random data with as many bits as the security strength<sup><a href="#Note42"><strong>(42)</strong></a></sup>.</li>
+</ul>
 
 <p>A cryptographic RNG is not required to reseed itself.</p>
 
@@ -933,9 +927,9 @@ For cryptographic RNGs, an application SHOULD use only one thread-safe instance 
 <li>If a cryptographic RNG is not &quot;constant-time&quot; (the RNG is data-dependent), its timing differences could be exploited in a security attack.</li>
 </ol>
 
-<p>(A) &quot;Post-Spectre Threat Model Re-Think&quot; in the Chromium source code repository (May 29, 2018).<br/>(B) Bernstein, D.J. &quot;Entropy Attacks!&quot;, Feb. 5, 2014.<br/>(C) Everspaugh, A., Zhai, Y., et al. &quot;Not-So-Random Numbers in Virtualized Linux and the Whirlwind RNG&quot;, 2014.<br/>(D) Ristenpart, T., Yilek, S. &quot;When Good Randomness Goes Bad: Virtual Machine Reset Vulnerabilities and Hedging Deployed Cryptography&quot;, 2010.</small></p>
+<p>(A) &quot;Post-Spectre Threat Model Re-Think&quot; in the Chromium source code repository (May 29, 2018).<br/>(B) Bernstein, D.J. &quot;Entropy Attacks!&quot;, Feb. 5, 2014.<br/>(C) Everspaugh, A., Zhai, Y., et al. &quot;Not-So-Random Numbers in Virtualized Linux and the Whirlwind RNG&quot;, 2014.<br/>(D) Ristenpart, T., Yilek, S. &quot;When Good Randomness Goes Bad: Virtual Machine Reset Vulnerabilities and Hedging Deployed Cryptography&quot;, 2010.<br/>For a detailed notion of a secure RNG, see Coretti, Dodis, et al., &quot;Seedless Fruit is the Sweetest: Random Number Generation, Revisited&quot;, 2019.</small></p>
 
-<p><small><sup id=Note42>(42)</sup> Such arbitrary data can include process identifiers, time stamps, environment variables, random numbers, virtual machine guest identifiers, and/or other data specific to the session or to the instance of the RNG.  See also NIST SP800-90A and the previous note.</small></p>
+<p><small><sup id=Note42>(42)</sup> This data can come from nondeterministic sources, and also include process identifiers, time stamps, environment variables, random numbers, virtual machine guest identifiers, and/or other data specific to the session or to the instance of the RNG.  See also NIST SP800-90A and the previous note.</small></p>
 
 <p><small><sup id=Note43>(43)</sup> Bernstein, D.J.  &quot;Fast-key-erasure random number generators&quot;, Jun. 23, 2017.</small></p>
 
