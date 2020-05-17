@@ -2128,6 +2128,8 @@ algorithm", arXiv:1511.02273v2  [cs.IT], 2016/2018.
         r[3] = infsup[1]
         firstrect = [Fraction(r[0]), Fraction(r[1]), Fraction(r[2]), Fraction(r[3])]
         ret = [None for i in range(n)]
+        if r[1] > r[3]:
+            raise ValueError("pdf() returned negative lower bound")
         k = 0
         hsh = {}
         while k < n:
@@ -2153,17 +2155,24 @@ algorithm", arXiv:1511.02273v2  [cs.IT], 2016/2018.
                     else:
                         infsup = hsh[tup]
                 first = False
-                if max(r[1], r[3]) <= infsup[0]:  # Below the infimum, accept
+                if r[3] <= infsup[0]:  # Below the infimum, accept
                     decision = 1
-                elif min(r[1], r[3]) > infsup[1]:  # Above the supremum, reject
+                elif r[1] > infsup[1]:  # Above the supremum, reject
                     decision = 2
                 else:
                     rcx = (r[0] + r[2]) / 2
                     rcy = (r[1] + r[3]) / 2
                     rx = self.rndint(3)
-                    rix = r[0] if (rx >> 1) == 0 else r[2]
-                    riy = r[1] if (rx & 1) == 0 else r[3]
-                    r = [min(rcx, rix), min(rcy, riy), max(rcx, rix), max(rcy, riy)]
+                    rn = [r[0], r[1], r[2], r[3]]
+                    if (rx >> 1) == 0:
+                        rn[2] = rcx
+                    else:
+                        rn[0] = rcx
+                    if (rx & 1) == 0:
+                        rn[1] = rcy
+                    else:
+                        rn[3] = rcy
+                    r = rn
             if decision == 1:
                 ret[k] = self._bisectionuniform(r[0], r[2], bitplaces)
                 ret[k] = float(ret[k])
@@ -2572,8 +2581,8 @@ if __name__ == "__main__":
         points.append(Fraction(math.exp(-(mn * mn) / 2)))
         points.append(Fraction(math.exp(-(mx * mx) / 2)))
         eps = Fraction(1, 1 << (bitplaces + 1))
-        pmn = max(min(points) - eps, 0)
-        pmx = max(points) + eps
+        pmn = max(min(points), 0)
+        pmx = max(points)
         return [pmn, pmx]
 
     def showbuckets(ls, buckets):
@@ -2605,9 +2614,9 @@ if __name__ == "__main__":
         showbuckets(ls, [f(x) for x in ls])
 
     # Generate normal random numbers
-    print("Generating normal random numbers with numbers_from_dist")
 
     def uu():
+        print("Generating normal random numbers with numbers_from_dist")
         ls = linspace(-3.3, 3.3, 30)
         buckets = [0 for x in ls]
         t = time.time()
@@ -2617,7 +2626,10 @@ if __name__ == "__main__":
             bucket(ks, ls, buckets)
         showbuckets(ls, buckets)
 
-    uu()
+    import cProfile
+
+    cProfile.run("uu()")
+    exit()
     print("Generating normal random numbers with numbers_from_pdf")
     ls = linspace(-3.3, 3.3, 30)
     buckets = [0 for x in ls]
