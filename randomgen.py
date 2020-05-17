@@ -2138,7 +2138,15 @@ algorithm", arXiv:1511.02273v2  [cs.IT], 2016/2018.
                 if first:
                     infsup = firstinfsup
                 else:
-                    tup = (r[0], r[2])
+                    # NOTE: Fractions not stored directly in the
+                    # tuple, since otherwise lookup time
+                    # would take much longer
+                    tup = (
+                        r[0].numerator,
+                        r[0].denominator,
+                        r[2].numerator,
+                        r[2].denominator,
+                    )
                     if not (tup in hsh):
                         infsup = pdf(r[0], r[2], bitplaces)
                         hsh[tup] = [Fraction(infsup[0]), Fraction(infsup[1])]
@@ -2598,14 +2606,18 @@ if __name__ == "__main__":
 
     # Generate normal random numbers
     print("Generating normal random numbers with numbers_from_dist")
-    ls = linspace(-3.3, 3.3, 30)
-    buckets = [0 for x in ls]
-    t = time.time()
-    ksample = randgen.numbers_from_dist(normaloracle, -4, 4, 3000)
-    print("Took %f seconds" % (time.time() - t))
-    for ks in ksample:
-        bucket(ks, ls, buckets)
-    showbuckets(ls, buckets)
+
+    def uu():
+        ls = linspace(-3.3, 3.3, 30)
+        buckets = [0 for x in ls]
+        t = time.time()
+        ksample = randgen.numbers_from_dist(normaloracle, -4, 4, 3000)
+        print("Took %f seconds" % (time.time() - t))
+        for ks in ksample:
+            bucket(ks, ls, buckets)
+        showbuckets(ls, buckets)
+
+    uu()
     print("Generating normal random numbers with numbers_from_pdf")
     ls = linspace(-3.3, 3.3, 30)
     buckets = [0 for x in ls]
