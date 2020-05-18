@@ -105,15 +105,6 @@ All the random number methods presented on this page are ultimately based on an 
         - [**Rejection Sampling with a PDF**](#Rejection_Sampling_with_a_PDF)
         - [**Markov-Chain Monte Carlo**](#Markov_Chain_Monte_Carlo)
     - [**Specific Distributions**](#Specific_Distributions)
-        - [**Normal (Gaussian) Distribution**](#Normal_Gaussian_Distribution)
-        - [**Gamma Distribution**](#Gamma_Distribution)
-        - [**Beta Distribution**](#Beta_Distribution)
-        - [**Poisson Distribution: Optimization for Large Mean**](#Poisson_Distribution_Optimization_for_Large_Mean)
-        - [**von Mises Distribution**](#von_Mises_Distribution)
-        - [**Stable Distribution**](#Stable_Distribution)
-        - [**Multivariate Normal (Multinormal) Distribution**](#Multivariate_Normal_Multinormal_Distribution)
-        - [**Random Real Numbers with a Given Positive Sum**](#Random_Real_Numbers_with_a_Given_Positive_Sum)
-        - [**Gaussian and Other Copulas**](#Gaussian_and_Other_Copulas)
     - [**Index of Non-Uniform Distributions**](#Index_of_Non_Uniform_Distributions)
     - [**Geometric Sampling**](#Geometric_Sampling)
         - [**Random Points Inside a Box**](#Random_Points_Inside_a_Box)
@@ -1562,7 +1553,7 @@ Probabilities can be expressed as a digit expansion (of the form `0.dddddd...`).
 
 If the probability is a rational number, express it as a rational number (`n`/`d`) and use `ZeroToOne(n, d)` to generate 1 with probability `n`/`d` and 0 otherwise (a _Bernoulli trial_).
 
-If the probability is an irrational number, such as `exp(-x/y)` or `log(2)`, then the digit expansion is infinite and can only be approximated.  In that case, assuming the probability is in \[0, 1], use the following algorithm to do a Bernoulli trial with that probability ((Brassard et al., 2015)<sup>[**(41)**](#Note41)</sup>; see also (Devroye 1986, p. 769)<sup>[**(14)**](#Note14)</sup>), where `BASE` is the digit base, such as 2 for binary or 10 for decimal:
+If the probability is an irrational number, such as `exp(-x/y)` or `ln(2)`, then the digit expansion is infinite and can only be approximated.  In that case, assuming the probability is in \[0, 1), use the following algorithm to do a Bernoulli trial with that probability ((Brassard et al., 2015)<sup>[**(41)**](#Note41)</sup>; see also (Devroye 1986, p. 769)<sup>[**(14)**](#Note14)</sup>), where `BASE` is the digit base, such as 2 for binary or 10 for decimal:
 
 1. Set `u` to 0 and `k` to 1.
 2. Set `u` to `(u * BASE) + RNDINTEXC(BASE)`.  Set `pk` to the `k` digits after the point in `p`'s digit expansion.  Example: If `p` is &pi;/4, `BASE` is 10, and `k` is 5, then `pk = 78539`.
@@ -1782,370 +1773,7 @@ Most MCMC algorithms **require knowing the distribution's PDF**, but _Gibbs samp
 <a id=Specific_Distributions></a>
 ### Specific Distributions
 
-**Requires random real numbers.**  This section shows algorithms to sample several popular non-uniform distributions.  Many of these algorithms evaluate irrational numbers, use transcendental functions, or do numerical approximations; as a result, they won't sample the given distribution _exactly_, but they may still be useful to applications that are willing to trade accuracy for speed.
-
-<a id=Normal_Gaussian_Distribution></a>
-#### Normal (Gaussian) Distribution
-
-The [**_normal distribution_**](https://en.wikipedia.org/wiki/Normal_distribution) (also called the Gaussian distribution) takes the following two parameters:
-- `mu` (&mu;) is the mean (average), or where the peak of the distribution's "bell curve" is.
-- `sigma` (&sigma;), the standard deviation, affects how wide the "bell curve" appears. The
-probability that a normally-distributed random number will be within one standard deviation from the mean is about 68.3%; within two standard deviations (2 times `sigma`), about 95.4%; and within three standard deviations, about 99.7%.  (Some publications give &sigma;<sup>2</sup>, or variance, rather than standard deviation, as the second parameter.  In this case, the standard deviation is the variance's square root.)
-
-There are a number of methods for normal random number generation, including the following.  An application can combine some or all of these.
-
-1. The ratio-of-uniforms method (given as `NormalRatioOfUniforms` below).
-2. In the _Box&ndash;Muller transformation_, `mu + radius * cos(angle)` and `mu + radius * sin(angle)`, where `angle = RNDRANGEMaxExc(0, 2 * pi)` and `radius = sqrt(Expo(0.5)) * sigma`, are two independent normally-distributed random numbers.  The polar method (given as `NormalPolar` below) likewise produces two independent normal random numbers at a time.
-3. An _approximation_ to a normal random number is the sum of twelve `RNDRANGEMaxExc(0, sigma)` numbers (see Note 13), subtracted by 6 * `sigma`. See `NormalCLT` below, which also includes an optional step to "warp" the random number for better accuracy (Kabal 2000/2019)<sup>[**(55)**](#Note55)</sup> See also [**"Irwin&ndash;Hall distribution" on Wikipedia**](https://en.wikipedia.org/wiki/Irwin%E2%80%93Hall_distribution).
-4. Methods that [**invert**](#Inverse_Transform_Sampling) the normal distribution's CDF, including those by Wichura, by Acklam, and by Luu (Luu 2016)<sup>[**(56)**](#Note56)</sup>.  See also [**"A literate program to compute the inverse of the normal CDF"**](https://www.johndcook.com/blog/normal_cdf_inverse/).
-5. Karney's algorithm to sample exactly from the normal distribution, without using floating-point numbers (Karney 2014)<sup>[**(30)**](#Note30)</sup>.
-
-In 2007, Thomas, D., et al. gave a survey of normal random number methods in "Gaussian Random Number Generators", _ACM Computing Surveys_ 39(4), 2007, article 11.
-
-    METHOD NormalRatioOfUniforms(mu, sigma)
-        while true
-            a=RNDU01ZeroExc()
-            b=RNDRANGE(0,sqrt(2.0/exp(1.0)))
-            if b*b <= -a * a * 4 * ln(a)
-              return (RNDINT(1) * 2 - 1) *
-                (b * sigma / a) + mu
-            end
-        end
-    END METHOD
-
-    METHOD NormalPolar(mu, sigma)
-      while true
-        a = RNDU01ZeroExc()
-        b = RNDU01ZeroExc()
-        if RNDINT(1) == 0: a = 0 - a
-        if RNDINT(1) == 0: b = 0 - b
-        c = a * a + b * b
-        if c != 0 and c <= 1
-           c = sqrt(-ln(c) * 2 / c)
-           return [a * mu * c + sigma, b * mu * c + sigma]
-        end
-      end
-    END METHOD
-
-    METHOD NormalCLT(mu, sigma)
-      sum = 0
-      for i in 0...12: sum=sum+RNDRANGEMaxExc(0, sigma)
-      sum = sum - 6*sigma
-      // Optional: "Warp" the sum for better accuracy
-      ssq = sum * sum
-      sum = ((((0.0000001141*ssq - 0.0000005102) *
-                ssq + 0.00007474) *
-                ssq + 0.0039439) *
-                ssq + 0.98746) * sum
-      return sum + mu
-     end
-    END METHOD
-
-> **Note:** Methods implementing a variant of the normal distribution, the _discrete Gaussian distribution_, generate _integers_ that closely follow the normal distribution.  Examples include the one in (Karney 2014)<sup>[**(30)**](#Note30)</sup>, as well as so-called "constant-time" methods such as (Micciancio and Walter 2017)<sup>[**(57)**](#Note57)</sup> that are used above all in _lattice-based cryptography_.
-
-<a id=Gamma_Distribution></a>
-#### Gamma Distribution
-
-The following method generates a random number that follows a _gamma distribution_ and is based on Marsaglia and Tsang's method from 2000<sup>[**(58)**](#Note58)</sup>.  Usually, the number expresses either&mdash;
-
-- the lifetime (in days, hours, or other fixed units) of a random component with an average lifetime of `meanLifetime`, or
-- a random amount of time (in days, hours, or other fixed units) that passes until as many events as `meanLifetime` happen.
-
-Here, `meanLifetime` must be an integer or noninteger greater than 0, and `scale` is a scaling parameter that is greater than 0, but usually 1.
-
-    METHOD GammaDist(meanLifetime, scale)
-        // Needs to be greater than 0
-        if meanLifetime <= 0 or scale <= 0: return error
-        // Exponential distribution special case if
-        // `meanLifetime` is 1 (see also (Devroye 1986), p. 405)
-        if meanLifetime == 1: return Expo(1.0 / scale)
-        d = meanLifetime
-        v = 0
-        if meanLifetime < 1: d = d + 1
-        d = d - (1.0 / 3) // NOTE: 1.0 / 3 must be a fractional number
-        c = 1.0 / sqrt(9 * d)
-        while true
-            x = 0
-            while true
-               x = Normal(0, 1)
-               v = c * x + 1;
-               v = v * v * v
-               if v > 0: break
-            end
-            u = RNDU01ZeroExc()
-            x2 = x * x
-            if u < 1 - (0.0331 * x2 * x2): break
-            if ln(u) < (0.5 * x2) + (d * (1 - v + ln(v))): break
-        end
-        ret = d * v
-        if meanLifetime < 1
-           ret = ret * pow(RNDU01(), 1.0 / meanLifetime)
-        end
-        return ret * scale
-    END METHOD
-
-Distributions based on the gamma distribution:
-
-- **3-parameter gamma distribution**: `pow(GammaDist(a, 1), 1.0 / c) * b`, where `c` is another shape parameter.
-- **4-parameter gamma distribution**: `pow(GammaDist(a, 1), 1.0 / c) * b + d`, where `d` is the minimum value.
-- **Erlang distribution**: `GammaDist(n, 1.0 / lamda)`.  Returns a number that simulates a sum of `n` exponential random numbers with the given `lamda` parameter.
-
-<a id=Beta_Distribution></a>
-#### Beta Distribution
-
-The beta distribution is a bounded distribution; its two parameters, `a` and `b`, are both greater than 0 and describe the distribution's shape.  Depending on `a` and `b`, the shape can be a smooth peak or a smooth valley.
-
-The following method generates a random number that follows a _beta distribution_, in the interval [0, 1).
-
-    METHOD BetaDist(a, b)
-      if b==1 and a==1: return RNDU01()
-      // Min-of-uniform
-      if a==1: return 1.0-pow(RNDU01(),1.0/b)
-      // Max-of-uniform.  Use only if a is small to
-      // avoid accuracy problems, as pointed out
-      // by Devroye 1986, p. 675.
-      if b==1 and a < 10: return pow(RNDU01(),1.0/a)
-      x=GammaDist(a,1)
-      return x/(x+GammaDist(b,1))
-    END METHOD
-
-<a id=Poisson_Distribution_Optimization_for_Large_Mean></a>
-#### Poisson Distribution: Optimization for Large Mean
-
-The following method generates a Poisson random number given the mean (&lambda;), which is a real number.  For means greater than 9, uses a method from (Ahrens and Dieter 1974)<sup>[**(59)**](#Note59)</sup>
-
-    METHOD Poisson(mean)
-        if mean < 0: return error
-        if mean == 0: return 0
-        count = 0
-        while mean > 9
-            n = floor(mean * 0.875)
-            g = GammaDist(n, 1)
-            if g > mean: return count + Binomial(n - 1, mean / g)
-            mean = mean - g
-            count = count + n
-        end
-        // Base case uses generator found in Devroye
-        // 1986, p. 504.
-        s = 0
-        while true
-           sum = sum + Expo(1)
-           if sum >= mean: return count
-           count = count + 1
-        end
-    END METHOD
-
-<a id=von_Mises_Distribution></a>
-#### von Mises Distribution
-
-The _von Mises distribution_ describes a distribution of circular angles and uses two parameters: `mean` is the mean angle and `kappa` is a shape parameter.  The distribution is uniform at `kappa = 0` and approaches a normal distribution with increasing `kappa`.
-
-The algorithm below generates a random number from the von Mises distribution, and is based on the Best&ndash;Fisher algorithm from 1979 (as described in (Devroye 1986)<sup>[**(14)**](#Note14)</sup> with errata incorporated).
-
-    METHOD VonMises(mean, kappa)
-        if kappa < 0: return error
-        if kappa == 0
-            return RNDRANGEMinMaxExc(mean-pi, mean+pi)
-        end
-        r = 1.0 + sqrt(4 * kappa * kappa + 1)
-        rho = (r - sqrt(2 * r)) / (kappa * 2)
-        s = (1 + rho * rho) / (2 * rho)
-        while true
-            u = RNDRANGEMaxExc(-pi, pi)
-            v = RNDU01ZeroOneExc()
-            z = cos(u)
-            w = (1 + s*z) / (s + z)
-            y = kappa * (s - w)
-            if y*(2 - y) - v >=0 or ln(y / v) + 1 - y >= 0
-               if angle<-1: angle=-1
-               if angle>1: angle=1
-               // NOTE: Inverse cosine replaced here
-               // with `atan2` equivalent
-               angle = atan2(sqrt(1-w*w),w)
-               if u < 0: angle = -angle
-               return mean + angle
-            end
-        end
-    END METHOD
-
-<a id=Stable_Distribution></a>
-#### Stable Distribution
-
-As more and more independent random numbers, generated the same way, are added together, their distribution tends to a [**_stable distribution_**](https://en.wikipedia.org/wiki/Stable_distribution), which resembles a curve with a single peak, but with generally "fatter" tails than the normal distribution.  The pseudocode below uses the Chambers&ndash;Mallows&ndash;Stuck algorithm.  The `Stable` method, implemented below, takes two parameters:
-
-- `alpha` is a stability index in the interval (0, 2].
-- `beta` is a skewness in the interval [-1, 1]; if `beta` is 0, the curve is symmetric.
-
-&nbsp;
-
-    METHOD Stable(alpha, beta)
-        if alpha <=0 or alpha > 2: return error
-        if beta < -1 or beta > 1: return error
-        halfpi = pi * 0.5
-        unif=RNDRANGEMinMaxExc(-halfpi, halfpi)
-        c=cos(unif)
-        if alpha == 1
-           s=sin(unif)
-           if beta == 0: return s/c
-           expo=Expo(1)
-           return 2.0*((unif*beta+halfpi)*s/c -
-             beta * ln(halfpi*expo*c/(unif*beta+halfpi)))/pi
-        else
-           z=-tan(alpha*halfpi)*beta
-           ug=unif+atan2(-z, 1)/alpha
-           cpow=pow(c, -1.0 / alpha)
-           return pow(1.0+z*z, 1.0 / (2*alpha))*
-              (sin(alpha*ug)*cpow)*
-              pow(cos(unif-alpha*ug)/expo, (1.0 - alpha) / alpha)
-        end
-    END METHOD
-
-Derived from the stable distribution:
-
-- **Four-parameter stable distribution**: `Stable(alpha, beta) * sigma + mu`, where `mu` is the mean and ` sigma` is the scale.  If `alpha` and `beta` are 1, the result is a **Landau distribution**.
-- **"Type 0" stable distribution**: `Stable(alpha, beta) * sigma + (mu - sigma * beta * x)`, where `x` is `ln(sigma)*2.0/pi` if `alpha` is 1, and `tan(pi*0.5*alpha)` otherwise.
-
-<a id=Multivariate_Normal_Multinormal_Distribution></a>
-#### Multivariate Normal (Multinormal) Distribution
-
-The following pseudocode calculates a random point in space that follows a [**_multivariate normal (multinormal) distribution_**](https://en.wikipedia.org/wiki/Multivariate_normal_distribution).  The method `MultivariateNormal` takes the following parameters:
-
-- A list, `mu` (&mu;), which indicates the means to add to the random point's components. `mu` can be `nothing`, in which case each component will have a mean of zero.
-- A list of lists `cov`, that specifies a _covariance matrix_ (&Sigma;, a symmetric positive definite N&times;N matrix, where N is the number of components of the random point).
-
-&nbsp;
-
-    METHOD Decompose(matrix)
-      numrows = size(matrix)
-      if size(matrix[0])!=numrows: return error
-      // Does a Cholesky decomposition of a matrix
-      // assuming it's positive definite and invertible
-      ret=NewList()
-      for i in 0...numrows
-        submat = NewList()
-        for j in 0...numrows: AddItem(submat, 0)
-        AddItem(ret, submat)
-      end
-      s1 = sqrt(matrix[0][0])
-      if s1==0: return ret // For robustness
-      for i in 0...numrows
-        ret[0][i]=matrix[0][i]*1.0/s1
-      end
-      for i in 0...numrows
-        msum=0.0
-        for j in 0...i: msum = msum + ret[j][i]*ret[j][i]
-        sq=matrix[i][i]-msum
-        if sq<0: sq=0 // For robustness
-        ret[i][i]=math.sqrt(sq)
-      end
-      for j in 0...numrows
-        for i in (j + 1)...numrows
-          // For robustness
-          if ret[j][j]==0: ret[j][i]=0
-          if ret[j][j]!=0
-            msum=0
-            for k in 0...j: msum = msum + ret[k][i]*ret[k][j]
-            ret[j][i]=(matrix[j][i]-msum)*1.0/ret[j][j]
-          end
-        end
-      end
-      return ret
-    END METHOD
-
-    METHOD MultivariateNormal(mu, cov)
-      mulen=size(cov)
-      if mu != nothing
-        mulen = size(mu)
-        if mulen!=size(cov): return error
-        if mulen!=size(cov[0]): return error
-      end
-      // NOTE: If multiple random points will
-      // be generated using the same covariance
-      // matrix, an implementation can consider
-      // precalculating the decomposed matrix
-      // in advance rather than calculating it here.
-      cho=Decompose(cov)
-      i=0
-      ret=NewList()
-      vars=NewList()
-      for j in 0...mulen: AddItem(vars, Normal(0, 1))
-      while i<mulen
-        nv=Normal(0,1)
-        msum = 0
-        if mu == nothing: msum=mu[i]
-        for j in 0...mulen: msum=msum+vars[j]*cho[j][i]
-        AddItem(ret, msum)
-        i=i+1
-      end
-      return ret
-    end
-
-> **Note:** The [**Python sample code**](https://peteroupc.github.io/randomgen.zip) contains a variant of this
-> method for generating multiple random points in one call.
->
-> **Examples:**
->
-> 1. A **binormal distribution** (two-variable multinormal distribution) can be sampled using the following idiom: `MultivariateNormal([mu1, mu2], [[s1*s1, s1*s2*rho], [rho*s1*s2, s2*s2]])`, where `mu1` and `mu2` are the means of the two normal random numbers, `s1` and `s2` are their standard deviations, and `rho` is a _correlation coefficient_ greater than -1 and less than 1 (0 means no correlation).
-> 2. A **log-multinormal distribution** can be sampled by generating numbers from a multinormal distribution, then applying `exp(n)` to the resulting numbers, where `n` is each number generated this way.
-> 3. A **Beckmann distribution** is the norm of a binormal random pair (that is, a random binormally-distributed point; for norm, see the appendix).
-> 4. A **Rice (Rician) distribution** is a Beckmann distribution in which the binormal random pair is generated with `m1 = m2 = a / sqrt(2)`, `rho = 0`, and `s1 = s2 = b`, where `a` and `b` are the parameters to the Rice distribution.
-> 5. A **Rice&ndash;Norton distributed** random number is the norm (see the appendix) of the following point: `MultivariateNormal([v,v,v],[[w,0,0],[0,w,0],[0,0,w]])`, where `v = a/sqrt(m*2)`, `w = b*b/m`, and `a`, `b`, and `m` are the parameters to the Rice&ndash;Norton distribution.
-> 6. A **standard [**complex normal distribution**](https://en.wikipedia.org/wiki/Complex_normal_distribution)** is a binormal distribution in which the binormal random pair is generated with `s1 = s2 = sqrt(0.5)` and `mu1 = mu2 = 0` and treated as the real and imaginary parts of a complex number.
-
-<a id=Random_Real_Numbers_with_a_Given_Positive_Sum></a>
-#### Random Real Numbers with a Given Positive Sum
-
-Generating _n_ `GammaDist(total, 1)` numbers and dividing them by their sum<sup>[**(26)**](#Note26)</sup>
- will result in _n_ uniform random numbers that (approximately) sum to `total`, in random order (see a [**Wikipedia article**](https://en.wikipedia.org/wiki/Dirichlet_distribution#Gamma_distribution)).  For example, if `total` is 1, the numbers will (approximately) sum to 1.  Note that in the exceptional case that all numbers are 0, the process should repeat.
-
-> **Notes:**
->
-> 1. Notes 1 and 2 in the section "Random Integers with a Given Positive Sum" apply here.
-> 2. The **Dirichlet distribution**, as defined in some places (e.g., _Mathematica_; (Devroye 1986)<sup>[**(14)**](#Note14)</sup>, p. 593-594), can be sampled by generating _n_+1 random [**gamma-distributed**](#Gamma_Distribution) numbers, each with separate parameters, taking their sum<sup>[**(26)**](#Note26)</sup>, dividing them by that sum, and taking the first _n_ numbers. (The _n_+1 numbers sum to 1, but the Dirichlet distribution models the first _n_ of them, which will generally sum to less than 1.)
-
-<a id=Gaussian_and_Other_Copulas></a>
-#### Gaussian and Other Copulas
-
-A _copula_ is a way to describe the dependence between random numbers.
-
-One example is a _Gaussian copula_; this copula is sampled by sampling from a [**multinormal distribution**](#Multivariate_Normal_Multinormal_Distribution), then converting the resulting numbers to _dependent_ uniform random numbers. In the following pseudocode, which implements a Gaussian copula:
-
-- The parameter `covar` is the covariance matrix for the multinormal distribution.
-- `erf(v)` is the [**error function**](https://en.wikipedia.org/wiki/Error_function) of the number `v` (see the appendix).
-
-&nbsp;
-
-    METHOD GaussianCopula(covar)
-       mvn=MultivariateNormal(nothing, covar)
-       for i in 0...size(covar)
-          // Apply the normal distribution's CDF
-          // to get uniform random numbers
-          mvn[i] = (erf(mvn[i]/(sqrt(2)*sqrt(covar[i][i])))+1)*0.5
-       end
-       return mvn
-    END METHOD
-
-Each of the resulting uniform random numbers will be in the interval [0, 1], and each one can be further transformed to any other probability distribution (which is called a _marginal distribution_ here) by passing the uniform number to the distribution's inverse CDF (see "[**Inverse Transform Sampling**](#Inverse_Transform_Sampling)", and see also Cario and Nelson 1997.)
-
-> **Examples:**
->
-> 1. To generate two dependent uniform random numbers with a Gaussian copula, generate `GaussianCopula([[1, rho], [rho, 1]])`, where `rho` is the Pearson correlation coefficient, in the interval [-1, 1]. (Other correlation coefficients besides `rho` exist. For example, for a two-variable Gaussian copula, the [**Spearman correlation coefficient**](https://en.wikipedia.org/wiki/Rank_correlation) `srho` can be converted to `rho` by `rho = sin(srho * pi / 6) * 2`.  Other correlation coefficients are not further discussed in this document.)
-> 2. The following example generates two random numbers that follow a Gaussian copula with exponential marginals (`rho` is the Pearson correlation coefficient, and `rate1` and `rate2` are the rates of the two exponential marginals).
->
->         METHOD CorrelatedExpo(rho, rate1, rate2)
->            copula = GaussianCopula([[1, rho], [rho, 1]])
->            // Transform to exponentials using that
->            // distribution's inverse CDF
->            return [-logp1(-copula[0]) / rate1,
->              -logp1(-copula[1]) / rate2]
->         END METHOD
-
-Other kinds of copulas describe different kinds of dependence between random numbers.  Examples of other copulas are&mdash;
-
-- the **Fr&eacute;chet&ndash;Hoeffding upper bound copula** _\[x, x, ..., x\]_ (e.g., `[x, x]`), where `x = RNDU01()`,
-- the **Fr&eacute;chet&ndash;Hoeffding lower bound copula** `[x, 1.0 - x]` where `x = RNDU01()`,
-- the **product copula**, where each number is a separately generated `RNDU01()` (indicating no dependence between the numbers), and
-- the **Archimedean copulas**, described by M. Hofert and M. M&auml;chler (2011)<sup>[**(60)**](#Note60)</sup>.
+Methods to sample additional distributions are given in a [**separate page**](https://github.com/peteroupc/peteroupc.github.io/blob/master/randomnotes.md). They cover the normal, gamma, beta, von Mises, stable, and multivariate normal distributions as well as copulas.  Note, however, that most of the methods won't sample the given distribution _exactly_ (in the sense of minimizing approximation error), but they may still be useful if the application is willing to trade accuracy for speed.
 
 <a id=Index_of_Non_Uniform_Distributions></a>
 ### Index of Non-Uniform Distributions
@@ -2157,19 +1785,18 @@ A &dagger; symbol next to a distribution means the random number can be shifted 
 A &#x2b26; symbol next to a distribution means the random number can be scaled to any range, which is given with the minimum and maximum values `mini` and `maxi`.  Example: `mini + (maxi - mini) * num`.
 
 Most commonly used:
-
 <small>
 
 - **Beta distribution**: See [**Beta Distribution**](#Beta_Distribution).
 - **Binomial distribution**: See [**Binomial Distribution**](#Binomial_Distribution).
-- **Binormal distribution**: See [**Multivariate Normal (Multinormal) Distribution**](#Multivariate_Normal_Multinormal_Distribution).
-- **Cauchy (Lorentz) distribution**&dagger;:  `Stable(1, 0)`.  This distribution is similar to the normal distribution, but with "fatter" tails. Alternative algorithm mentioned in (McGrath and Irving 1975)<sup>[**(61)**](#Note61)</sup>: Generate `x = RNDU01ZeroExc()` and `y = RNDRANGE(-1, 1)` until `x * x + y * y <= 1`, then generate `y / x`.
+- **Binormal distribution**: See [**Multivariate Normal (Multinormal) Distribution**](https://github.com/peteroupc/peteroupc.github.io/blob/master/randomfunc.md#Multivariate_Normal_Multinormal_Distribution).
+- **Cauchy (Lorentz) distribution**&dagger;:  `Stable(1, 0)`.  This distribution is similar to the normal distribution, but with "fatter" tails. Alternative algorithm mentioned in (McGrath and Irving 1975)<sup>[**(55)**](#Note55)</sup>: Generate `x = RNDU01ZeroExc()` and `y = RNDRANGE(-1, 1)` until `x * x + y * y <= 1`, then generate `y / x`.
 - **Chi-squared distribution**: `GammaDist(df * 0.5 + Poisson(sms * 0.5), 2)`, where `df` is the number of degrees of freedom and `sms` is the sum of mean squares (where `sms` other than 0 indicates a _noncentral_ distribution).
 - **Dice**: See [**Dice**](#Dice).
 - **Exponential distribution**: See [**Exponential Distribution**](#Exponential_Distribution).
 - **Extreme value distribution**: See generalized extreme value distribution.
-- **Gamma distribution**: See [**Gamma Distribution**](#Gamma_Distribution).
-- **Gaussian distribution**: See [**Normal (Gaussian) Distribution**](#Normal_Gaussian_Distribution).
+- **Gamma distribution**: See [**Gamma Distribution**](https://github.com/peteroupc/peteroupc.github.io/blob/master/randomfunc.md#Gamma_Distribution).  _3-parameter gamma distribution_: `pow(GammaDist(a, 1), 1.0 / c) * b`, where `c` is another shape parameter. _4-parameter gamma distribution_: `pow(GammaDist(a, 1), 1.0 / c) * b + d`, where `d` is the minimum value.
+- **Gaussian distribution**: See [**Normal (Gaussian) Distribution**](https://github.com/peteroupc/peteroupc.github.io/blob/master/randomfunc.md#Normal_Gaussian_Distribution).
 - **Geometric distribution**: See [**Geometric Distribution**](#Geometric_Distribution).
 - **Gumbel distribution**: See generalized extreme value distribution.
 - **Inverse gamma distribution**: `b / GammaDist(a, 1)`, where `a` and `b` have the
@@ -2178,15 +1805,15 @@ Most commonly used:
 - **Logarithmic distribution**&#x2b26;: `RNDU01OneExc() * RNDU01OneExc()` (Saucier 2000, p. 26).  In this distribution, lower numbers are exponentially more likely than higher numbers.
 - **Logarithmic normal distribution**: `exp(Normal(mu, sigma))`, where `mu` and `sigma` are the underlying normal distribution's parameters.
 - **Multinormal distribution**: See multivariate normal distribution.
-- **Multivariate normal distribution**: See [**Multivariate Normal (Multinormal) Distribution**](#Multivariate_Normal_Multinormal_Distribution).
-- **Normal distribution**: See [**Normal (Gaussian) Distribution**](#Normal_Gaussian_Distribution).
-- **Poisson distribution**: See [**Poisson Distribution**](#Poisson_Distribution).
+- **Multivariate normal distribution**: See [**Multivariate Normal (Multinormal) Distribution**](https://github.com/peteroupc/peteroupc.github.io/blob/master/randomfunc.md#Multivariate_Normal_Multinormal_Distribution).
+- **Normal distribution**: See [**Normal (Gaussian) Distribution**](https://github.com/peteroupc/peteroupc.github.io/blob/master/randomfunc.md#Normal_Gaussian_Distribution).
+- **Poisson distribution**: See "[**Poisson Distribution**](#Poisson_Distribution)". If the application can trade accuracy for speed, the following can be used (Devroye 1986, p. 504)<sup>[**(14)**](#Note14)</sup>: `c = 0; s = 0; while true; sum = sum + Expo(1); if sum>=mean: return c; else: c = c + 1; end`; and the following optimization from (Ahrens and Dieter 1974)<sup>[**(56)**](#Note56)</sup> can be used in addition: `while mean>9; n = floor(mean * 0.875); g = GammaDist(n, 1); if g > mean: return c + Binomial(n - 1, mean / g); mean = mean - g; count = count + n`.
 - **Pareto distribution**: `pow(RNDU01ZeroOneExc(), -1.0 / alpha) * minimum`, where `alpha`  is the shape and `minimum` is the minimum.
 - **Rayleigh distribution**&dagger;: `sqrt(Expo(0.5))`.  If the scale parameter (`sigma`) follows a logarithmic normal distribution, the result is a _Suzuki distribution_.
-- **Standard normal distribution**&dagger;: `Normal(0, 1)`.  See also [**Normal (Gaussian) Distribution**](#Normal_Gaussian_Distribution).
+- **Standard normal distribution**&dagger;: `Normal(0, 1)`.  See also [**Normal (Gaussian) Distribution**](https://github.com/peteroupc/peteroupc.github.io/blob/master/randomfunc.md#Normal_Gaussian_Distribution).
 - **Student's _t_-distribution**: `Normal(cent, 1) / sqrt(GammaDist(df * 0.5, 2 / df))`, where `df` is the number of degrees of freedom, and _cent_ is the mean of the normally-distributed random number.  A `cent` other than 0 indicates a _noncentral_ distribution.
 - **Triangular distribution**:
-   - **Generalized** (Kabal 2000/2019)<sup>[**(55)**](#Note55)</sup>: `alpha * min(startpt, endpt) + alpha * max(startpt, endpt)`.  The distribution starts at `startpt` and ends at `endpt`.
+   - **Generalized** (Kabal 2000/2019)<sup>[**(57)**](#Note57)</sup>: `alpha * min(startpt, endpt) + alpha * max(startpt, endpt)`.  The distribution starts at `startpt` and ends at `endpt`.
    - As used in _Mathematica_: `x * min(startpt, endpt) + x * max(startpt, endpt)` where `x = (midpt - startpt)/(endpt - startpt)`.
 - **Weibull distribution**: See generalized extreme value distribution.
 
@@ -2215,10 +1842,10 @@ Miscellaneous:
 - **Dagum distribution**: See beta prime distribution.
 - **Dirichlet distribution**: See [**Random Real Numbers with a Given Positive Sum**](#Random_Real_Numbers_with_a_Given_Positive_Sum).
 - **Double logarithmic distribution**&#x2b26;: `(0.5 + (RNDINT(1) * 2 - 1) * 0.5 * RNDU01OneExc() * RNDU01OneExc())` (see also Saucier 2000, p. 15, which shows the wrong X axes).
-- **Erlang distribution**: See [**Gamma Distribution**](#Gamma_Distribution).
+- **Erlang distribution**: `GammaDist(n, 1.0 / lamda)`.  Returns a number that simulates a sum of `n` exponential random numbers with the given `lamda` parameter.
 - **Estoup distribution**: See zeta distribution.
 - **Exponential power distribution** (generalized normal distribution version 1): `(RNDINT(1) * 2 - 1) * pow(GammaDist(1.0/a, 1), a)`, where `a` is a shape parameter.
-- **Extended xgamma distribution** (Saha et al. 2019)<sup>[**(62)**](#Note62)</sup>: `GammaDist(alpha + x, theta)`, where `x` is 0 if `RNDU01() <= theta/(theta+beta)` and 2 otherwise, and where `alpha`, `theta`, and `beta` are shape parameters.  If `alpha = 0`, the result is an **xgamma distribution** (Sen et al., 2016)<sup>[**(63)**](#Note63)</sup>.
+- **Extended xgamma distribution** (Saha et al. 2019)<sup>[**(58)**](#Note58)</sup>: `GammaDist(alpha + x, theta)`, where `x` is 0 if `RNDU01() <= theta/(theta+beta)` and 2 otherwise, and where `alpha`, `theta`, and `beta` are shape parameters.  If `alpha = 0`, the result is an **xgamma distribution** (Sen et al., 2016)<sup>[**(59)**](#Note59)</sup>.
 - **Fr&eacute;chet distribution**: See generalized extreme value distribution.
 - **Fr&eacute;chet&ndash;Hoeffding lower bound copula**: See [**Gaussian and Other Copulas**](#Gaussian_and_Other_Copulas).
 - **Fr&eacute;chet&ndash;Hoeffding upper bound copula**: See [**Gaussian and Other Copulas**](#Gaussian_and_Other_Copulas).
@@ -2266,20 +1893,20 @@ Miscellaneous:
 - **Power law distribution**: `pow(RNDRANGE(pow(mn,n+1),pow(mx,n+1)), 1.0 / (n+1))`, where `n`  is the exponent, `mn` is the minimum, and `mx` is the maximum.  [**Reference**](http://mathworld.wolfram.com/RandomNumber.html).
 - **Power lognormal distribution**: See the [**Python sample code**](https://peteroupc.github.io/randomgen.zip).
 - **Power normal distribution**: See the [**Python sample code**](https://peteroupc.github.io/randomgen.zip).
-- **Product copula**: See [**Gaussian and Other Copulas**](#Gaussian_and_Other_Copulas).
-- **Rice distribution**: See [**Multivariate Normal (Multinormal) Distribution**](#Multivariate_Normal_Multinormal_Distribution).
-- **Rice&ndash;Norton distribution**: See [**Multivariate Normal (Multinormal) Distribution**](#Multivariate_Normal_Multinormal_Distribution).
+- **Product copula**: See [**Gaussian and Other Copulas**](https://github.com/peteroupc/peteroupc.github.io/blob/master/randomfunc.md#Gaussian_and_Other_Copulas).
+- **Rice distribution**: See [**Multivariate Normal (Multinormal) Distribution**](https://github.com/peteroupc/peteroupc.github.io/blob/master/randomfunc.md#Multivariate_Normal_Multinormal_Distribution).
+- **Rice&ndash;Norton distribution**: See [**Multivariate Normal (Multinormal) Distribution**](https://github.com/peteroupc/peteroupc.github.io/blob/master/randomfunc.md#Multivariate_Normal_Multinormal_Distribution).
 - **Singh&ndash;Maddala distribution**: See beta prime distribution.
 - **Skellam distribution**: `Poisson(mean1) - Poisson(mean2)`, where `mean1` and `mean2` are the means of the two Poisson random numbers.
 - **Skewed normal distribution**: `Normal(0, x) + mu + alpha * abs(Normal(0, x))`, where `x` is `sigma / sqrt(alpha * alpha + 1.0)`, `mu` and `sigma` have the same meaning as in the normal distribution, and `alpha` is a shape parameter.
 - **Snedecor's (Fisher's) _F_-distribution**: `GammaDist(m * 0.5, n) / (GammaDist(n * 0.5 + Poisson(sms * 0.5)) * m, 1)`, where `m` and `n` are the numbers of degrees of freedom of two random numbers with a chi-squared distribution, and if `sms` is other than 0, one of those distributions is _noncentral_ with sum of mean squares equal to `sms`.
-- **Stable distribution**: See [**Stable Distribution**](#Stable_Distribution).
-- **Standard complex normal distribution**: See [**Multivariate Normal (Multinormal) Distribution**](#Multivariate_Normal_Multinormal_Distribution).
+- **Stable distribution**: See [**Stable Distribution**](https://github.com/peteroupc/peteroupc.github.io/blob/master/randomfunc.md#Stable_Distribution).
+- **Standard complex normal distribution**: See [**Multivariate Normal (Multinormal) Distribution**](https://github.com/peteroupc/peteroupc.github.io/blob/master/randomfunc.md#Multivariate_Normal_Multinormal_Distribution).
 - **Suzuki distribution**: See Rayleigh distribution.
 - **Tukey lambda distribution**: `(pow(x, lamda)-pow(1.0-x,lamda))/lamda`, where `x` is `RNDU01()` and `lamda` is a shape parameter.
-- **Twin-_t_ distribution** (Baker and Jackson 2018)<sup>[**(64)**](#Note64)</sup>: Generate `x`, a random Student's _t_-distributed number (not a noncentral one).  Accept `x` if `RNDU01OneExc() < pow((1 + y) / ((1 + y * y) + y), (df + 1) * 0.5)`, where `y = x * x / df` and `df` is the degrees of freedom used to generate the number; repeat this process otherwise.
-- **"Type 0" stable distribution**: See [**Stable Distribution**](#Stable_Distribution).
-- **von Mises distribution**: See [**von Mises Distribution**](#von_Mises_Distribution).
+- **Twin-_t_ distribution** (Baker and Jackson 2018)<sup>[**(60)**](#Note60)</sup>: Generate `x`, a random Student's _t_-distributed number (not a noncentral one).  Accept `x` if `RNDU01OneExc() < pow((1 + y) / ((1 + y * y) + y), (df + 1) * 0.5)`, where `y = x * x / df` and `df` is the degrees of freedom used to generate the number; repeat this process otherwise.
+- **"Type 0" stable distribution**: See [**Stable Distribution**](https://github.com/peteroupc/peteroupc.github.io/blob/master/randomfunc.md#Stable_Distribution).
+- **von Mises distribution**: See [**von Mises Distribution**](https://github.com/peteroupc/peteroupc.github.io/blob/master/randomfunc.md#von_Mises_Distribution).
 - **Waring&ndash;Yule distribution**: See beta negative binomial distribution.
 - **Wigner (semicircle) distribution**&dagger;: `(BetaDist(1.5, 1.5)*2-1)`.  The scale parameter (`sigma`) is the semicircular radius.
 - **Yule&ndash;Simon distribution**: See beta negative binomial distribution.
@@ -2305,7 +1932,7 @@ To generate a random point inside an N-dimensional box, generate `RNDRANGEMaxExc
 <a id=Random_Points_Inside_a_Simplex></a>
 #### Random Points Inside a Simplex
 
-The following pseudocode generates a random point inside an _n_-dimensional simplex (simplest convex figure, such as a line segment, triangle, or tetrahedron).  It takes one parameter, _points_, a list consisting of the _n_ plus one vertices of the simplex, all of a single dimension _n_ or greater. See also (Grimme 2015)<sup>[**(65)**](#Note65)</sup>, which shows MATLAB code for generating a random point uniformly inside a simplex just described, but in a different way.
+The following pseudocode generates a random point inside an _n_-dimensional simplex (simplest convex figure, such as a line segment, triangle, or tetrahedron).  It takes one parameter, _points_, a list consisting of the _n_ plus one vertices of the simplex, all of a single dimension _n_ or greater. See also (Grimme 2015)<sup>[**(61)**](#Note61)</sup>, which shows MATLAB code for generating a random point uniformly inside a simplex just described, but in a different way.
 
     METHOD RandomPointInSimplex(points):
        ret=NewList()
@@ -2337,7 +1964,7 @@ The following pseudocode generates a random point inside an _n_-dimensional simp
 <a id=Random_Points_on_the_Surface_of_a_Hypersphere></a>
 #### Random Points on the Surface of a Hypersphere
 
-The following pseudocode shows how to generate a random N-dimensional point on the surface of an N-dimensional hypersphere, centered at the origin, of radius `radius` (if `radius` is 1, the result can also serve as a unit vector in N-dimensional space).  Here, `Norm` is given in the appendix.  See also (Weisstein)<sup>[**(66)**](#Note66)</sup>.
+The following pseudocode shows how to generate a random N-dimensional point on the surface of an N-dimensional hypersphere, centered at the origin, of radius `radius` (if `radius` is 1, the result can also serve as a unit vector in N-dimensional space).  Here, `Norm` is given in the appendix.  See also (Weisstein)<sup>[**(62)**](#Note62)</sup>.
 
     METHOD RandomPointInHypersphere(dims, radius)
       x=0
@@ -2359,14 +1986,14 @@ The following pseudocode shows how to generate a random N-dimensional point on t
 #### Random Points Inside a Ball, Shell, or Cone
 
 To generate a random N-dimensional point on or inside an N-dimensional ball, centered at the origin, of radius R, either&mdash;
-- generate a random (N+2)-dimensional point on the surface of an (N+2)-dimensional hypersphere with that radius (e.g., using `RandomPointInHypersphere`), then discard the last two coordinates (Voelker et al., 2017)<sup>[**(67)**](#Note67)</sup>, or
+- generate a random (N+2)-dimensional point on the surface of an (N+2)-dimensional hypersphere with that radius (e.g., using `RandomPointInHypersphere`), then discard the last two coordinates (Voelker et al., 2017)<sup>[**(63)**](#Note63)</sup>, or
 - follow the pseudocode in `RandomPointInHypersphere`, except replace `Norm(ret)` with `sqrt(S + Expo(1))`, where `S` is the sum of squares of the numbers in `ret`<sup>[**(26)**](#Note26)</sup>.
 
 To generate a random point on or inside an N-dimensional spherical shell (a hollow ball), centered at the origin, with inner radius A and outer radius B (where A is less than B), either&mdash;
 - generate a random point for a ball of radius B until the norm of that point is A or greater (see the [**appendix**](#Appendix)), or
-- generate a random point on the surface of an N-dimensional hypersphere with radius equal to `pow(RNDRANGE(pow(A, N), pow(B, N)), 1.0 / N)`<sup>[**(68)**](#Note68)</sup>.
+- generate a random point on the surface of an N-dimensional hypersphere with radius equal to `pow(RNDRANGE(pow(A, N), pow(B, N)), 1.0 / N)`<sup>[**(64)**](#Note64)</sup>.
 
-To generate a random point on or inside a cone with height `H` and radius `R` at its base, running along the Z axis, generate a random Z coordinate by `Z = H * pow(RNDU01(), 1.0 / 3)`, then generate random X and Y coordinates inside a disc (2-dimensional ball) with radius equal to `R * Z * sqrt(RNDU01()) / H`<sup>[**(69)**](#Note69)</sup>.
+To generate a random point on or inside a cone with height `H` and radius `R` at its base, running along the Z axis, generate a random Z coordinate by `Z = H * pow(RNDU01(), 1.0 / 3)`, then generate random X and Y coordinates inside a disc (2-dimensional ball) with radius equal to `R * Z * sqrt(RNDU01()) / H`<sup>[**(65)**](#Note65)</sup>.
 
 > **Example:** To generate a random point inside a cylinder running along the Z axis, generate random X and Y coordinates inside a disc (2-dimensional ball) and generate a random Z coordinate by `RNDRANGE(mn, mx)`, where `mn` and `mx` are the highest and lowest Z coordinates possible.
 >
@@ -2375,7 +2002,7 @@ To generate a random point on or inside a cone with height `H` and radius `R` at
 <a id=Random_Latitude_and_Longitude></a>
 #### Random Latitude and Longitude
 
-To generate a random point on the surface of a sphere in the form of a latitude and longitude (in radians with west and south coordinates negative)<sup>[**(70)**](#Note70)</sup>&mdash;
+To generate a random point on the surface of a sphere in the form of a latitude and longitude (in radians with west and south coordinates negative)<sup>[**(66)**](#Note66)</sup>&mdash;
 
 - generate the longitude `RNDRANGEMaxExc(-pi, pi)`, where the longitude is in the interval [-&pi;, &pi;), and
 - generate the latitude `atan2(sqrt(1 - x * x), x) - pi / 2`, where `x = RNDRANGE(-1, 1)` and the latitude is in the interval \[-&pi;/2, &pi;/2\] (the interval excludes the poles, which have many equivalent forms; if poles are not desired, generate `x` until neither -1 nor 1 is generated this way).
@@ -2512,41 +2139,33 @@ The methods shown here do not introduce any error beyond the sampling error that
 
 <small><sup id=Note54>(54)</sup> See also Casella, G., and George, E.I., "Explaining the Gibbs Sampler", _The American Statistician_ 46(3) (1992).</small>
 
-<small><sup id=Note55>(55)</sup> Kabal, P., "Generating Gaussian Pseudo-Random Variates", McGill University, 2000/2019.</small>
+<small><sup id=Note55>(55)</sup> McGrath, E.J., Irving, D.C., "Techniques for Efficient Monte Carlo Simulation, Volume II", Oak Ridge National Laboratory, April 1975.</small>
 
-<small><sup id=Note56>(56)</sup> Luu, T., "Fast and Accurate Parallel Computation of Quantile Functions for Random Number Generation", Dissertation, University College London, 2016.</small>
+<small><sup id=Note56>(56)</sup> Ahrens, J.H., Dieter, U., "Computer methods for sampling from gamma, beta, Poisson and binomial distributions", _Computing_ 12 (1974), pp. 223-246.</small>
 
-<small><sup id=Note57>(57)</sup> Micciancio, D. and Walter, M., "Gaussian sampling over the integers: Efficient, generic, constant-time", in Annual International Cryptology Conference, August 2017 (pp. 455-485).</small>
+<small><sup id=Note57>(57)</sup> Kabal, P., "Generating Gaussian Pseudo-Random Variates", McGill University, 2000/2019.</small>
 
-<small><sup id=Note58>(58)</sup> "A simple method for generating gamma variables", _ACM Transactions on Mathematical Software_ 26(3), 2000.</small>
+<small><sup id=Note58>(58)</sup> Saha, M., et al., "The extended xgamma distribution", arXiv:1909.01103 [math.ST], 2019.</small>
 
-<small><sup id=Note59>(59)</sup> Ahrens, J.H., Dieter, U., "Computer methods for sampling from gamma, beta, Poisson and binomial distributions", _Computing_ 12 (1974), pp. 223-246.</small>
+<small><sup id=Note59>(59)</sup> Sen, S., et al., "The xgamma distribution: statistical properties and application", 2016.</small>
 
-<small><sup id=Note60>(60)</sup> Hofert, M., and Maechler, M.  "Nested Archimedean Copulas Meet R: The nacopula Package".  _Journal of Statistical Software_ 39(9), 2011, pp. 1-20.</small>
+<small><sup id=Note60>(60)</sup> Baker, R., Jackson, D., "A new distribution for robust least squares", arXiv:1408.3237 [stat.ME], 2018.</small>
 
-<small><sup id=Note61>(61)</sup> McGrath, E.J., Irving, D.C., "Techniques for Efficient Monte Carlo Simulation, Volume II", Oak Ridge National Laboratory, April 1975.</small>
+<small><sup id=Note61>(61)</sup> Grimme, C., "Picking a Uniformly Random Point from an Arbitrary Simplex", 2015.</small>
 
-<small><sup id=Note62>(62)</sup> Saha, M., et al., "The extended xgamma distribution", arXiv:1909.01103 [math.ST], 2019.</small>
+<small><sup id=Note62>(62)</sup> Weisstein, Eric W.  "[**Hypersphere Point Picking**](http://mathworld.wolfram.com/HyperspherePointPicking.html)".  From MathWorld&mdash;A Wolfram Web Resource.</small>
 
-<small><sup id=Note63>(63)</sup> Sen, S., et al., "The xgamma distribution: statistical properties and application", 2016.</small>
+<small><sup id=Note63>(63)</sup> Voelker, A.R., Gosmann, J., Stewart, T.C., "Efficiently sampling vectors and coordinates from the _n_-sphere and _n_-ball", Jan. 4, 2017.</small>
 
-<small><sup id=Note64>(64)</sup> Baker, R., Jackson, D., "A new distribution for robust least squares", arXiv:1408.3237 [stat.ME], 2018.</small>
+<small><sup id=Note64>(64)</sup> See the _Mathematics Stack Exchange_ question titled "Random multivariate in hyperannulus", `questions/1885630`.</small>
 
-<small><sup id=Note65>(65)</sup> Grimme, C., "Picking a Uniformly Random Point from an Arbitrary Simplex", 2015.</small>
+<small><sup id=Note65>(65)</sup> See the _Stack Overflow_ question "Uniform sampling (by volume) within a cone", `questions/41749411`.</small>
 
-<small><sup id=Note66>(66)</sup> Weisstein, Eric W.  "[**Hypersphere Point Picking**](http://mathworld.wolfram.com/HyperspherePointPicking.html)".  From MathWorld&mdash;A Wolfram Web Resource.</small>
+<small><sup id=Note66>(66)</sup> Reference: [**"Sphere Point Picking"**](http://mathworld.wolfram.com/SpherePointPicking.html) in MathWorld (replacing inverse cosine with `atan2` equivalent).</small>
 
-<small><sup id=Note67>(67)</sup> Voelker, A.R., Gosmann, J., Stewart, T.C., "Efficiently sampling vectors and coordinates from the _n_-sphere and _n_-ball", Jan. 4, 2017.</small>
+<small><sup id=Note67>(67)</sup> Mironov, I., "On Significance of the Least Significant Bits For Differential Privacy", 2012.</small>
 
-<small><sup id=Note68>(68)</sup> See the _Mathematics Stack Exchange_ question titled "Random multivariate in hyperannulus", `questions/1885630`.</small>
-
-<small><sup id=Note69>(69)</sup> See the _Stack Overflow_ question "Uniform sampling (by volume) within a cone", `questions/41749411`.</small>
-
-<small><sup id=Note70>(70)</sup> Reference: [**"Sphere Point Picking"**](http://mathworld.wolfram.com/SpherePointPicking.html) in MathWorld (replacing inverse cosine with `atan2` equivalent).</small>
-
-<small><sup id=Note71>(71)</sup> Mironov, I., "On Significance of the Least Significant Bits For Differential Privacy", 2012.</small>
-
-<small><sup id=Note72>(72)</sup> For example, see Balcer, V., Vadhan, S., "Differential Privacy on Finite Computers", Dec. 4, 2018; as well as Micciancio, D. and Walter, M., "Gaussian sampling over the integers: Efficient, generic, constant-time", in Annual International Cryptology Conference, August 2017 (pp. 455-485).</small>
+<small><sup id=Note68>(68)</sup> For example, see Balcer, V., Vadhan, S., "Differential Privacy on Finite Computers", Dec. 4, 2018; as well as Micciancio, D. and Walter, M., "Gaussian sampling over the integers: Efficient, generic, constant-time", in Annual International Cryptology Conference, August 2017 (pp. 455-485).</small>
 
 <a id=Appendix></a>
 ## Appendix
@@ -2638,7 +2257,7 @@ If an application generates random numbers for information security purposes, su
 2. **Timing attacks.**  Certain security attacks have exploited timing and other differences to recover cleartext, encryption keys, or other sensitive data.  Thus, so-called "constant-time" security algorithms have been developed.  Such algorithms are designed to have no timing differences that reveal anything about any secret inputs (such as keys, passwords, or RNG "seeds"), and they often have no data-dependent control flows or memory access patterns.  Examples of "constant-time" algorithms can include a `RNDINT()` implementation that uses Montgomery reduction.  But even if an algorithm has variable running time (e.g., [**rejection sampling**](#Rejection_Sampling)), it may or may not have security-relevant timing differences, especially if it does not reuse secrets.
 3. **Security algorithms out of scope.** Security algorithms that take random secrets to generate random security parameters, such as encryption keys, public/private key pairs, elliptic curves, or points on an elliptic curve, are outside this document's scope.
 
-In nearly all security-sensitive applications, random numbers generated for security purposes are integers.  In very rare cases, they're fixed-point numbers.  Even with a secure random number generator, the use of random floating-point numbers can cause security issues not present with integers or fixed-point numbers; one example is found in (Mironov 2012)<sup>[**(71)**](#Note71)</sup>.  And even in the few security applications where random floating-point numbers are used (differential privacy and lattice-based cryptography), there are ways to avoid such random numbers<sup>[**(72)**](#Note72)</sup>.
+In nearly all security-sensitive applications, random numbers generated for security purposes are integers.  In very rare cases, they're fixed-point numbers.  Even with a secure random number generator, the use of random floating-point numbers can cause security issues not present with integers or fixed-point numbers; one example is found in (Mironov 2012)<sup>[**(67)**](#Note67)</sup>.  And even in the few security applications where random floating-point numbers are used (differential privacy and lattice-based cryptography), there are ways to avoid such random numbers<sup>[**(68)**](#Note68)</sup>.
 
 <a id=License></a>
 ## License
