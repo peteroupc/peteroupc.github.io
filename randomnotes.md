@@ -376,13 +376,15 @@ The following method samples exactly from an exponential distribution (with an a
 
 <small><sup id=Note5>(5)</sup> "A simple method for generating gamma variables", _ACM Transactions on Mathematical Software_ 26(3), 2000.</small>
 
-<small><sup id=Note6>(6)</sup> No note text yet.</small>
+<small><sup id=Note6>(6)</sup> Devroye, L., [**_Non-Uniform Random Variate Generation_**](http://luc.devroye.org/rnbookindex.html), 1986.</small>
 
-<small><sup id=Note7>(7)</sup> No note text yet.</small>
+<small><sup id=Note7>(7)</sup> [**Kahan summation**](https://en.wikipedia.org/wiki/Kahan_summation_algorithm) can be a more robust way than the na&iuml;ve approach to compute the sum of three or more floating-point numbers.</small>
 
 <small><sup id=Note8>(8)</sup> Hofert, M., and Maechler, M.  "Nested Archimedean Copulas Meet R: The nacopula Package".  _Journal of Statistical Software_ 39(9), 2011, pp. 1-20.</small>
 
 <small><sup id=Note9>(9)</sup> Devroye, L., Gravel, C., "Sampling with arbitrary precision", arXiv:1502.02539v5 [cs.IT]</small>
 
-<a id=Appendix></a>
-## Appendix
+<a id=License></a>
+## License
+
+Any copyright to this page is released to the Public Domain.  In case this is not possible, this page is also licensed under [**Creative Commons Zero**](https://creativecommons.org/publicdomain/zero/1.0/).

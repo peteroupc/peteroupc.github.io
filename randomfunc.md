@@ -1787,7 +1787,7 @@ A &#x2b26; symbol next to a distribution means the random number can be scaled t
 Most commonly used:
 <small>
 
-- **Beta distribution**: See [**Beta Distribution**](#Beta_Distribution).
+- **Beta distribution**&#x2b26;: See [**Beta Distribution**](#Beta_Distribution).
 - **Binomial distribution**: See [**Binomial Distribution**](#Binomial_Distribution).
 - **Binormal distribution**: See [**Multivariate Normal (Multinormal) Distribution**](https://github.com/peteroupc/peteroupc.github.io/blob/master/randomfunc.md#Multivariate_Normal_Multinormal_Distribution).
 - **Cauchy (Lorentz) distribution**&dagger;:  `Stable(1, 0)`.  This distribution is similar to the normal distribution, but with "fatter" tails. Alternative algorithm mentioned in (McGrath and Irving 1975)<sup>[**(55)**](#Note55)</sup>: Generate `x = RNDU01ZeroExc()` and `y = RNDRANGE(-1, 1)` until `x * x + y * y <= 1`, then generate `y / x`.
@@ -2262,4 +2262,4 @@ In nearly all security-sensitive applications, random numbers generated for secu
 <a id=License></a>
 ## License
 
-This page is licensed under [**Creative Commons Zero**](https://creativecommons.org/publicdomain/zero/1.0/).
+Any copyright to this page is released to the Public Domain.  In case this is not possible, this page is also licensed under [**Creative Commons Zero**](https://creativecommons.org/publicdomain/zero/1.0/).
