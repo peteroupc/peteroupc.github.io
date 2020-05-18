@@ -1896,10 +1896,11 @@ above for returning more than one random number in one call.</p>
 
 <p>If the probability is an irrational number, such as <code>exp(-x/y)</code> or <code>log(2)</code>, then the digit expansion is infinite and can only be approximated.  In that case, assuming the probability is in [0, 1], use the following algorithm to do a Bernoulli trial with that probability ((Brassard et al., 2015)<sup><a href="#Note41"><strong>(41)</strong></a></sup>; see also (Devroye 1986, p. 769)<sup><a href="#Note14"><strong>(14)</strong></a></sup>), where <code>BASE</code> is the digit base, such as 2 for binary or 10 for decimal:</p>
 
-<pre>1. Set `u` to 0 and `k` to 1.
-2.  Set `u` to `(u * BASE) + RNDINTEXC(BASE)`.  Set `pk` to the `k` digits after the point in `p`&#39;s digit expansion.  Example: If `p` is &amp;pi;/4, `BASE` is 10, and `k` is 5, then `pk = 78539`.
-3.  If `pk + 1 &lt;= u`, return 0.  If `pk - 2 &gt;= u`, return 1.  If neither is the case, add 1 to `k` and go to step 2.
-</pre>
+<ol>
+<li>Set <code>u</code> to 0 and <code>k</code> to 1.</li>
+<li>Set <code>u</code> to <code>(u * BASE) + RNDINTEXC(BASE)</code>.  Set <code>pk</code> to the <code>k</code> digits after the point in <code>p</code>&#39;s digit expansion.  Example: If <code>p</code> is &pi;/4, <code>BASE</code> is 10, and <code>k</code> is 5, then <code>pk = 78539</code>.</li>
+<li>If <code>pk + 1 &lt;= u</code>, return 0.  If <code>pk - 2 &gt;= u</code>, return 1.  If neither is the case, add 1 to <code>k</code> and go to step 2.</li>
+</ol>
 
 <p><a id=Random_Walks_Real_Numbers></a></p>
 
@@ -2592,7 +2593,7 @@ END METHOD
 
 <p>A &dagger; symbol next to a distribution means the random number can be shifted by a location parameter (<code>mu</code>) then scaled by a scale parameter greater than 0 (<code>sigma</code>).  Example: <code>num * sigma + mu</code>.</p>
 
-<p>A &#2b26; symbol next to a distribution means the random number can be scaled to any range, which is given with the minimum and maximum values <code>mini</code> and <code>maxi</code>.  Example: <code>mini + (maxi - mini) * num</code>.</p>
+<p>A &#x2b26; symbol next to a distribution means the random number can be scaled to any range, which is given with the minimum and maximum values <code>mini</code> and <code>maxi</code>.  Example: <code>mini + (maxi - mini) * num</code>.</p>
 
 <p>Most commonly used:</p>
 
@@ -2614,7 +2615,7 @@ END METHOD
 <li><strong>Inverse gamma distribution</strong>: <code>b / GammaDist(a, 1)</code>, where <code>a</code> and <code>b</code> have the
 same meaning as in the gamma distribution.  Alternatively, <code>1.0 / (pow(GammaDist(a, 1), 1.0 / c) / b + d)</code>, where <code>c</code> and <code>d</code> are shape and location parameters, respectively.</li>
 <li><strong>Laplace (double exponential) distribution</strong>&dagger;: <code>(Expo(1) - Expo(1))</code>.</li>
-<li><strong>Logarithmic distribution</strong>&#2b26;: <code>RNDU01OneExc() * RNDU01OneExc()</code> (Saucier 2000, p. 26).  In this distribution, lower numbers are exponentially more likely than higher numbers.</li>
+<li><strong>Logarithmic distribution</strong>&#x2b26;: <code>RNDU01OneExc() * RNDU01OneExc()</code> (Saucier 2000, p. 26).  In this distribution, lower numbers are exponentially more likely than higher numbers.</li>
 <li><strong>Logarithmic normal distribution</strong>: <code>exp(Normal(mu, sigma))</code>, where <code>mu</code> and <code>sigma</code> are the underlying normal distribution&#39;s parameters.</li>
 <li><strong>Multinormal distribution</strong>: See multivariate normal distribution.</li>
 <li><strong>Multivariate normal distribution</strong>: See <a href="#Multivariate_Normal_Multinormal_Distribution"><strong>Multivariate Normal (Multinormal) Distribution</strong></a>.</li>
@@ -2644,7 +2645,7 @@ same meaning as in the gamma distribution.  Alternatively, <code>1.0 / (pow(Gamm
 <li><strong>4-parameter gamma distribution</strong>: See <a href="#Gamma_Distribution"><strong>Gamma Distribution</strong></a>.</li>
 <li><strong>4-parameter stable distribution</strong>: See <a href="#Stable_Distribution"><strong>Stable Distribution</strong></a>.</li>
 <li><strong>Archimedean copulas</strong>: See <a href="#Gaussian_and_Other_Copulas"><strong>Gaussian and Other Copulas</strong></a>.</li>
-<li><strong>Arcsine distribution</strong>&#2b26;: <code>BetaDist(0.5, 0.5)</code> (Saucier 2000, p. 14).</li>
+<li><strong>Arcsine distribution</strong>&#x2b26;: <code>BetaDist(0.5, 0.5)</code> (Saucier 2000, p. 14).</li>
 <li><strong>Bates distribution</strong>: See <a href="#Transformations_of_Random_Numbers_Additional_Examples"><strong>Transformations of Random Numbers: Additional Examples</strong></a>.</li>
 <li><strong>Beckmann distribution</strong>: See <a href="#Multivariate_Normal_Multinormal_Distribution"><strong>Multivariate Normal (Multinormal) Distribution</strong></a>.</li>
 <li><strong>Beta binomial distribution</strong>: <code>Binomial(trials, BetaDist(a, b))</code>, where <code>a</code> and <code>b</code> are
@@ -2655,10 +2656,10 @@ the two parameters of the beta distribution, and <code>trials</code> is a parame
 <li><strong>Birnbaum&ndash;Saunders distribution</strong>: <code>pow(sqrt(4+x*x)+x,2)/(4.0*lamda)</code>, where <code>x = Normal(0,gamma)</code>, <code>gamma</code> is a shape parameter, and <code>lamda</code> is a scale parameter.</li>
 <li><strong>Chi distribution</strong>: Square root of a chi-squared random number.  See chi-squared distribution.</li>
 <li><strong>Compound Poisson distribution</strong>: See <a href="#Transformations_of_Random_Numbers_Additional_Examples"><strong>Transformations of Random Numbers: Additional Examples</strong></a>.</li>
-<li><strong>Cosine distribution</strong>&#2b26;: <code>atan2(x, sqrt(1 - x * x)) / pi</code>, where <code>x = RNDRANGE(-1, 1)</code> (Saucier 2000, p. 17; inverse sine replaced with <code>atan2</code> equivalent).</li>
+<li><strong>Cosine distribution</strong>&#x2b26;: <code>atan2(x, sqrt(1 - x * x)) / pi</code>, where <code>x = RNDRANGE(-1, 1)</code> (Saucier 2000, p. 17; inverse sine replaced with <code>atan2</code> equivalent).</li>
 <li><strong>Dagum distribution</strong>: See beta prime distribution.</li>
 <li><strong>Dirichlet distribution</strong>: See <a href="#Random_Real_Numbers_with_a_Given_Positive_Sum"><strong>Random Real Numbers with a Given Positive Sum</strong></a>.</li>
-<li><strong>Double logarithmic distribution</strong>&#2b26;: <code>(0.5 + (RNDINT(1) * 2 - 1) * 0.5 * RNDU01OneExc() * RNDU01OneExc())</code> (see also Saucier 2000, p. 15, which shows the wrong X axes).</li>
+<li><strong>Double logarithmic distribution</strong>&#x2b26;: <code>(0.5 + (RNDINT(1) * 2 - 1) * 0.5 * RNDU01OneExc() * RNDU01OneExc())</code> (see also Saucier 2000, p. 15, which shows the wrong X axes).</li>
 <li><strong>Erlang distribution</strong>: See <a href="#Gamma_Distribution"><strong>Gamma Distribution</strong></a>.</li>
 <li><strong>Estoup distribution</strong>: See zeta distribution.</li>
 <li><strong>Exponential power distribution</strong> (generalized normal distribution version 1): <code>(RNDINT(1) * 2 - 1) * pow(GammaDist(1.0/a, 1), a)</code>, where <code>a</code> is a shape parameter.</li>
@@ -2688,7 +2689,7 @@ the two parameters of the beta distribution, and <code>trials</code> is a parame
 <li><strong>Inverse chi-squared distribution</strong>&dagger;: <code>df / (GammaDist(df * 0.5, 2))</code>, where <code>df</code> is the number of degrees of freedom.  The scale parameter (<code>sigma</code>) is usually <code>1.0 / df</code>.</li>
 <li><strong>Inverse Gaussian distribution (Wald distribution)</strong>: Generate <code>n = mu + (mu*mu*y/(2*lamda)) - mu * sqrt(4 * mu * lamda * y + mu * mu * y * y) / (2 * lamda)</code>, where <code>y = pow(Normal(0, 1), 2)</code>, then return <code>n</code> if <code>RNDU01OneExc() &lt;= mu / (mu + n)</code>, or <code>mu * mu / n</code> otherwise. <code>mu</code> is the mean and <code>lamda</code> is the scale; both parameters are greater than 0. Based on method published in (Devroye 1986)<sup><a href="#Note14"><strong>(14)</strong></a></sup>.</li>
 <li><strong><code>k</code>th-order statistic distribution</strong>: <code>BetaDist(k, n+1-k)</code>. Returns the <code>k</code>th smallest out of <code>n</code> uniform random numbers. See also (Devroye 1986, p. 210)<sup><a href="#Note14"><strong>(14)</strong></a></sup>.</li>
-<li><strong>Kumaraswamy distribution</strong>&#2b26;: <code>pow(1-pow(RNDU01ZeroExc(),1.0/b),1.0/a)</code>, where <code>a</code> and <code>b</code> are shape parameters.</li>
+<li><strong>Kumaraswamy distribution</strong>&#x2b26;: <code>pow(1-pow(RNDU01ZeroExc(),1.0/b),1.0/a)</code>, where <code>a</code> and <code>b</code> are shape parameters.</li>
 <li><strong>Landau distribution</strong>: See <a href="#Stable_Distribution"><strong>Stable Distribution</strong></a>.</li>
 <li><strong>L&eacute;vy distribution</strong>&dagger;: <code>0.5 / GammaDist(0.5, 1)</code>.  The scale parameter (<code>sigma</code>) is also called dispersion.</li>
 <li><strong>Logarithmic logistic distribution</strong>: See beta prime distribution.</li>
@@ -2705,8 +2706,8 @@ the two parameters of the beta distribution, and <code>trials</code> is a parame
 <li><strong>Multivariate <em>t</em>-distribution</strong>: See the <a href="https://peteroupc.github.io/randomgen.zip"><strong>Python sample code</strong></a>.</li>
 <li><strong>Negative binomial distribution</strong> (<code>NegativeBinomial(successes, p)</code>): See <a href="#Negative_Binomial_Distribution"><strong>Negative Binomial Distribution</strong></a>.  The negative binomial distribution can take a <code>successes</code> value other than an integer; in that case, a negative binomial (<code>successes</code>, <code>p</code>) random number is <code>Poisson(GammaDist(successes, (1 - p) / p))</code>.</li>
 <li><strong>Negative multinomial distribution</strong>: See the <a href="https://peteroupc.github.io/randomgen.zip"><strong>Python sample code</strong></a>.</li>
-<li><strong>Noncentral beta distribution</strong>&#2b26;: <code>BetaDist(a + Poisson(nc), b)</code>, where <code>nc</code> (a noncentrality), <code>a</code>, and <code>b</code> are greater than 0.</li>
-<li><strong>Parabolic distribution</strong>&#2b26;: <code>BetaDist(2, 2)</code> (Saucier 2000, p. 30).</li>
+<li><strong>Noncentral beta distribution</strong>&#x2b26;: <code>BetaDist(a + Poisson(nc), b)</code>, where <code>nc</code> (a noncentrality), <code>a</code>, and <code>b</code> are greater than 0.</li>
+<li><strong>Parabolic distribution</strong>&#x2b26;: <code>BetaDist(2, 2)</code> (Saucier 2000, p. 30).</li>
 <li><strong>Pascal distribution</strong>: <code>NegativeBinomial(successes, p) + successes</code>, where <code>successes</code> and <code>p</code> have the same meaning as in the negative binomial distribution, except <code>successes</code> is always an integer.</li>
 <li><strong>Pearson VI distribution</strong>: <code>GammaDist(v, 1) / GammaDist(w, 1)</code>, where <code>v</code> and <code>w</code> are shape parameters greater than 0 (Saucier 2000, p. 33; there, an additional <code>b</code> parameter is defined, but that parameter is canceled out in the source code).</li>
 <li><strong>Piecewise constant distribution</strong>: See <a href="#Weighted_Choice_With_Replacement"><strong>Weighted Choice With Replacement</strong></a>.</li>

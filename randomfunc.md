@@ -1564,9 +1564,9 @@ If the probability is a rational number, express it as a rational number (`n`/`d
 
 If the probability is an irrational number, such as `exp(-x/y)` or `log(2)`, then the digit expansion is infinite and can only be approximated.  In that case, assuming the probability is in \[0, 1], use the following algorithm to do a Bernoulli trial with that probability ((Brassard et al., 2015)<sup>[**(41)**](#Note41)</sup>; see also (Devroye 1986, p. 769)<sup>[**(14)**](#Note14)</sup>), where `BASE` is the digit base, such as 2 for binary or 10 for decimal:
 
-    1. Set `u` to 0 and `k` to 1.
-    2.  Set `u` to `(u * BASE) + RNDINTEXC(BASE)`.  Set `pk` to the `k` digits after the point in `p`'s digit expansion.  Example: If `p` is &pi;/4, `BASE` is 10, and `k` is 5, then `pk = 78539`.
-    3.  If `pk + 1 <= u`, return 0.  If `pk - 2 >= u`, return 1.  If neither is the case, add 1 to `k` and go to step 2.
+1. Set `u` to 0 and `k` to 1.
+2. Set `u` to `(u * BASE) + RNDINTEXC(BASE)`.  Set `pk` to the `k` digits after the point in `p`'s digit expansion.  Example: If `p` is &pi;/4, `BASE` is 10, and `k` is 5, then `pk = 78539`.
+3. If `pk + 1 <= u`, return 0.  If `pk - 2 >= u`, return 1.  If neither is the case, add 1 to `k` and go to step 2.
 
 <a id=Random_Walks_Real_Numbers></a>
 #### Random Walks (Real Numbers)
@@ -2154,7 +2154,7 @@ Other kinds of copulas describe different kinds of dependence between random num
 
 A &dagger; symbol next to a distribution means the random number can be shifted by a location parameter (`mu`) then scaled by a scale parameter greater than 0 (`sigma`).  Example: `num * sigma + mu`.
 
-A &#2b26; symbol next to a distribution means the random number can be scaled to any range, which is given with the minimum and maximum values `mini` and `maxi`.  Example: `mini + (maxi - mini) * num`.
+A &#x2b26; symbol next to a distribution means the random number can be scaled to any range, which is given with the minimum and maximum values `mini` and `maxi`.  Example: `mini + (maxi - mini) * num`.
 
 Most commonly used:
 
@@ -2175,7 +2175,7 @@ Most commonly used:
 - **Inverse gamma distribution**: `b / GammaDist(a, 1)`, where `a` and `b` have the
  same meaning as in the gamma distribution.  Alternatively, `1.0 / (pow(GammaDist(a, 1), 1.0 / c) / b + d)`, where `c` and `d` are shape and location parameters, respectively.
 - **Laplace (double exponential) distribution**&dagger;: `(Expo(1) - Expo(1))`.
-- **Logarithmic distribution**&#2b26;: `RNDU01OneExc() * RNDU01OneExc()` (Saucier 2000, p. 26).  In this distribution, lower numbers are exponentially more likely than higher numbers.
+- **Logarithmic distribution**&#x2b26;: `RNDU01OneExc() * RNDU01OneExc()` (Saucier 2000, p. 26).  In this distribution, lower numbers are exponentially more likely than higher numbers.
 - **Logarithmic normal distribution**: `exp(Normal(mu, sigma))`, where `mu` and `sigma` are the underlying normal distribution's parameters.
 - **Multinormal distribution**: See multivariate normal distribution.
 - **Multivariate normal distribution**: See [**Multivariate Normal (Multinormal) Distribution**](#Multivariate_Normal_Multinormal_Distribution).
@@ -2200,7 +2200,7 @@ Miscellaneous:
 - **4-parameter gamma distribution**: See [**Gamma Distribution**](#Gamma_Distribution).
 - **4-parameter stable distribution**: See [**Stable Distribution**](#Stable_Distribution).
 - **Archimedean copulas**: See [**Gaussian and Other Copulas**](#Gaussian_and_Other_Copulas).
-- **Arcsine distribution**&#2b26;: `BetaDist(0.5, 0.5)` (Saucier 2000, p. 14).
+- **Arcsine distribution**&#x2b26;: `BetaDist(0.5, 0.5)` (Saucier 2000, p. 14).
 - **Bates distribution**: See [**Transformations of Random Numbers: Additional Examples**](#Transformations_of_Random_Numbers_Additional_Examples).
 - **Beckmann distribution**: See [**Multivariate Normal (Multinormal) Distribution**](#Multivariate_Normal_Multinormal_Distribution).
 - **Beta binomial distribution**: `Binomial(trials, BetaDist(a, b))`, where `a` and `b` are
@@ -2211,10 +2211,10 @@ Miscellaneous:
 - **Birnbaum&ndash;Saunders distribution**: `pow(sqrt(4+x*x)+x,2)/(4.0*lamda)`, where `x = Normal(0,gamma)`, `gamma` is a shape parameter, and `lamda` is a scale parameter.
 - **Chi distribution**: Square root of a chi-squared random number.  See chi-squared distribution.
 - **Compound Poisson distribution**: See [**Transformations of Random Numbers: Additional Examples**](#Transformations_of_Random_Numbers_Additional_Examples).
-- **Cosine distribution**&#2b26;: `atan2(x, sqrt(1 - x * x)) / pi`, where `x = RNDRANGE(-1, 1)` (Saucier 2000, p. 17; inverse sine replaced with `atan2` equivalent).
+- **Cosine distribution**&#x2b26;: `atan2(x, sqrt(1 - x * x)) / pi`, where `x = RNDRANGE(-1, 1)` (Saucier 2000, p. 17; inverse sine replaced with `atan2` equivalent).
 - **Dagum distribution**: See beta prime distribution.
 - **Dirichlet distribution**: See [**Random Real Numbers with a Given Positive Sum**](#Random_Real_Numbers_with_a_Given_Positive_Sum).
-- **Double logarithmic distribution**&#2b26;: `(0.5 + (RNDINT(1) * 2 - 1) * 0.5 * RNDU01OneExc() * RNDU01OneExc())` (see also Saucier 2000, p. 15, which shows the wrong X axes).
+- **Double logarithmic distribution**&#x2b26;: `(0.5 + (RNDINT(1) * 2 - 1) * 0.5 * RNDU01OneExc() * RNDU01OneExc())` (see also Saucier 2000, p. 15, which shows the wrong X axes).
 - **Erlang distribution**: See [**Gamma Distribution**](#Gamma_Distribution).
 - **Estoup distribution**: See zeta distribution.
 - **Exponential power distribution** (generalized normal distribution version 1): `(RNDINT(1) * 2 - 1) * pow(GammaDist(1.0/a, 1), a)`, where `a` is a shape parameter.
@@ -2238,7 +2238,7 @@ Miscellaneous:
 - **Inverse chi-squared distribution**&dagger;: `df / (GammaDist(df * 0.5, 2))`, where `df` is the number of degrees of freedom.  The scale parameter (`sigma`) is usually `1.0 / df`.
 - **Inverse Gaussian distribution (Wald distribution)**: Generate `n = mu + (mu*mu*y/(2*lamda)) - mu * sqrt(4 * mu * lamda * y + mu * mu * y * y) / (2 * lamda)`, where `y = pow(Normal(0, 1), 2)`, then return `n` if `RNDU01OneExc() <= mu / (mu + n)`, or `mu * mu / n` otherwise. `mu` is the mean and `lamda` is the scale; both parameters are greater than 0. Based on method published in (Devroye 1986)<sup>[**(14)**](#Note14)</sup>.
 - **`k`th-order statistic distribution**: `BetaDist(k, n+1-k)`. Returns the `k`th smallest out of `n` uniform random numbers. See also (Devroye 1986, p. 210)<sup>[**(14)**](#Note14)</sup>.
-- **Kumaraswamy distribution**&#2b26;: `pow(1-pow(RNDU01ZeroExc(),1.0/b),1.0/a)`, where `a` and `b` are shape parameters.
+- **Kumaraswamy distribution**&#x2b26;: `pow(1-pow(RNDU01ZeroExc(),1.0/b),1.0/a)`, where `a` and `b` are shape parameters.
 - **Landau distribution**: See [**Stable Distribution**](#Stable_Distribution).
 - **L&eacute;vy distribution**&dagger;: `0.5 / GammaDist(0.5, 1)`.  The scale parameter (`sigma`) is also called dispersion.
 - **Logarithmic logistic distribution**: See beta prime distribution.
@@ -2255,8 +2255,8 @@ Miscellaneous:
 - **Multivariate _t_-distribution**: See the [**Python sample code**](https://peteroupc.github.io/randomgen.zip).
 - **Negative binomial distribution** (`NegativeBinomial(successes, p)`): See [**Negative Binomial Distribution**](#Negative_Binomial_Distribution).  The negative binomial distribution can take a `successes` value other than an integer; in that case, a negative binomial (`successes`, `p`) random number is `Poisson(GammaDist(successes, (1 - p) / p))`.
 - **Negative multinomial distribution**: See the [**Python sample code**](https://peteroupc.github.io/randomgen.zip).
-- **Noncentral beta distribution**&#2b26;: `BetaDist(a + Poisson(nc), b)`, where `nc` (a noncentrality), `a`, and `b` are greater than 0.
-- **Parabolic distribution**&#2b26;: `BetaDist(2, 2)` (Saucier 2000, p. 30).
+- **Noncentral beta distribution**&#x2b26;: `BetaDist(a + Poisson(nc), b)`, where `nc` (a noncentrality), `a`, and `b` are greater than 0.
+- **Parabolic distribution**&#x2b26;: `BetaDist(2, 2)` (Saucier 2000, p. 30).
 - **Pascal distribution**: `NegativeBinomial(successes, p) + successes`, where `successes` and `p` have the same meaning as in the negative binomial distribution, except `successes` is always an integer.
 - **Pearson VI distribution**: `GammaDist(v, 1) / GammaDist(w, 1)`, where `v` and `w` are shape parameters greater than 0 (Saucier 2000, p. 33; there, an additional `b` parameter is defined, but that parameter is canceled out in the source code).
 - **Piecewise constant distribution**: See [**Weighted Choice With Replacement**](#Weighted_Choice_With_Replacement).
