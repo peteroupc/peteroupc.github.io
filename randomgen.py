@@ -846,9 +846,13 @@ Returns 'list'. """
             * pow(math.cos(unif - alpha * ug) / expo, (1.0 - alpha) / alpha)
         )
 
-    def stable0(self, alpha, beta, mu, sigma):
+    def stable0(self, alpha, beta, mu=0, sigma=1):
         """ Generates a random number following a 'type 0' stable distribution.  """
-        x = math.log(sigma) * 2.0 / pi if alpha == 1 else math.tan(pi * 0.5 * alpha)
+        x = (
+            math.log(sigma) * 2.0 / pi
+            if alpha == 1
+            else math.tan(math.pi * 0.5 * alpha)
+        )
         return self.stable(alpha, beta) * sigma + (mu - sigma * beta * x)
 
     def moyal(self, mu=0, sigma=1):
@@ -2626,10 +2630,7 @@ if __name__ == "__main__":
             bucket(ks, ls, buckets)
         showbuckets(ls, buckets)
 
-    import cProfile
-
-    cProfile.run("uu()")
-    exit()
+    uu()
     print("Generating normal random numbers with numbers_from_pdf")
     ls = linspace(-3.3, 3.3, 30)
     buckets = [0 for x in ls]
