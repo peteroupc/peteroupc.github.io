@@ -847,11 +847,12 @@ Converts this number&#39;s value to an integer by discarding its fractional
 part, and returns the least-significant bits of its two&#39;s-complement
 form as a 64-bit signed integer.</li>
 <li><code>java.lang.String ToPlainString()</code><br>
-Converts this value to a string, but without using exponential notation.</li>
+Converts this value to a string as though with the toString method, but
+without using exponential notation.</li>
 <li><code>float ToSingle()</code><br>
 Converts this value to its closest equivalent as a 32-bit floating-point
 number, using the half-even rounding mode.</li>
-<li><code>float ToSingleBits()</code><br>
+<li><code>int ToSingleBits()</code><br>
 Converts this value to its closest equivalent as a 32-bit floating-point
 number encoded in the IEEE 754 binary32 format, using the half-even
 rounding mode.</li>
@@ -5221,7 +5222,8 @@ Renamed to ToEFloat.</p>
 <pre>public java.lang.String ToPlainString()
 </pre>
 
-<p>Converts this value to a string, but without using exponential notation.</p>
+<p>Converts this value to a string as though with the toString method, but
+ without using exponential notation.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -5231,7 +5233,7 @@ Renamed to ToEFloat.</p>
 
 <h3>ToSingleBits</h3>
 
-<pre>public float ToSingleBits()
+<pre>public int ToSingleBits()
 </pre>
 
 <p>Converts this value to its closest equivalent as a 32-bit floating-point
