@@ -203,6 +203,25 @@ class PascalTriangle:
             the next time _next_ is called."""
         return self.rownumber
 
+    def nextto(self, desiredRow):
+        """ Generates the row of Pascal's triangle with the given row number,
+            skipping all rows in between.  The return value is a list of
+            row-number-choose-k values. """
+        if self.rownumber > desiredRow:
+            raise ValueError
+        xr = [
+            self.table[i] if i < len(self.table) else 0 for i in range(desiredRow + 1)
+        ]
+        for i in range(self.rownumber, desiredRow + 1):
+            last = 1
+            for j in range(1, i + 1):
+                n = xr[j] + last
+                last = xr[j]
+                xr[j] = n
+        self.table = xr
+        self.rownumber = desiredRow + 1
+        return [x for x in self.table]
+
     def next(self):
         """ Generates the next row of Pascal's triangle, starting with
             row 0. The return value is a list of row-number-choose-k
@@ -645,8 +664,8 @@ Returns 'list'. """
         if n in self._aliastables:
             return self._aliastables[n]
         for i in range(self._pascal.row(), n + 1):
-            p = self._pascal.next()
             if self._ispoweroftwo(i):
+                p = self._pascal.nextto(i)
                 self._aliastables[i] = FastLoadedDiceRoller(p)
         return self._aliastables[n]
 
@@ -654,6 +673,36 @@ Returns 'list'. """
         while n != 0 and (n & 1) == 0:
             n >>= 1
         return n == 1
+
+    def binomial_int(self, trials, px, py):
+        if trials < 0:
+            raise ValueError
+        if trials == 0:
+            return 0
+        # Always succeeds
+        if px == py:
+            return trials
+        # Always fails
+        if px == 0:
+            return 0
+        if px * 2 == py:
+            return binomial(self, trials, 0.5)
+        count = 0
+        # Based on proof of Theorem 2 in Farach-Colton and Tsai.
+        # Decompose prob into its binary expansion (assuming
+        # division by 2 is exact except on underflow)
+        pw = Fraction(px, py)
+        pt = Fraction(1, 2)
+        while trials > 0:
+            c = self.binomial(trials, 0.5)
+            if pw >= pt:
+                count = count + c
+                trials = trials - c
+                pw = pw - pt
+            else:
+                trials = c
+            pt /= 2
+        return count
 
     def binomial(self, trials, p):
         if trials < 0:
@@ -667,9 +716,6 @@ Returns 'list'. """
         if p <= 0.0:
             return 0
         count = 0
-        sign = 1
-        ret = 0
-        recursed = False
         if p == 0.5:
             if trials < 32:
                 r = self.rndintexc(1 << trials)
@@ -706,8 +752,6 @@ Returns 'list'. """
                 else:
                     trials = c
                 pt = pt / 2.0  # NOTE: Not rounded
-        if recursed:
-            return count * sign + ret
         return count
 
     def hypergeometric(self, trials, ones, count):
@@ -1102,6 +1146,33 @@ of failures of each kind of failure.
             if not nosuccess:
                 i += 1
         return ret
+
+    def multinomial(self, trials, weights):
+        ls = [0 for i in range(len(weights))]
+        for i in range(trials):
+            wc = self.weighted_choice(weights)
+            ls[wc] += 1
+        return ls
+
+    def multinomial2(self, trials, weights):
+        # Corollary 45's proof in Durfee, et al., l1 Regression
+        # using Lewis Weights Preconditioning and Stochastic
+        # Gradient Descent, Proc. of Machine Learning Research
+        # 75(1), 2018.  Assumes weights are integers.
+        ls = [0 for i in range(len(weights))]
+        s = sum(weights)
+        # Note: Corollary assumes each item in this list
+        # is a rational number
+        ratios = [Fraction(w, s) for w in weights]
+        t = trials
+        for i in range(len(weights)):
+            r = ratios[i]
+            b = self.binomial_int(t, r.numerator, r.denominator)
+            ls[i] = b
+            t -= b
+            for j in range(i + 1, len(weights)):
+                ratios[j] /= 1 - r
+        return ls
 
     def nonzeroIntegersWithSum(self, n, total):
         """"
@@ -2629,6 +2700,18 @@ if __name__ == "__main__":
         for ks in ksample:
             bucket(ks, ls, buckets)
         showbuckets(ls, buckets)
+
+    weights = [2, 45, 3, 1, 44, 23, 9, 22, 33, 11, 88]
+    t = time.time()
+    ksample = randgen.multinomial(1000, weights)
+    print(ksample)
+    print("multinomial: Took %f seconds" % (time.time() - t))
+    t = time.time()
+    import cProfile
+
+    cProfile.run("ksample = randgen.multinomial2(1000,weights)")
+    print(ksample)
+    print("multinomial2: Took %f seconds" % (time.time() - t))
 
     uu()
     print("Generating normal random numbers with numbers_from_pdf")

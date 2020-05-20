@@ -87,7 +87,6 @@ In this document:
 - **Pseudorandom number generator (PRNG)** means a random number generator in which the numbers it generates are completely determined by its input.
 - **Seed** means arbitrary data serving as a PRNG's input.
 - **Information security** means keeping information safe from attacks that could access, use, delay, or manipulate that information.<sup>[**(5)**](#Note5)</sup>
-- **should, should not, may, recommended, and not recommended** are terms whose meanings are given in RFC 2119 and RFC 8174.
 
 <a id=Summary></a>
 ## Summary
@@ -268,7 +267,7 @@ In general, there are two steps to generate an `N`-bit seed for a PRNG<sup>[**(1
 1. Gather enough data from _nondeterministic sources_ to reach `N` bits of _entropy_ or more.
 2. Then, condense the data into an `N`-bit number, a process called _randomness extraction_.<sup>[**(15)**](#Note15)</sup>
 
-Randomness extraction is discussed in NIST SP 800-90B sec. 3.1.5.1, and RFC 4086 sec. 4.2 and 5.2.  Examples include von Neumann unbiasing (von Neumann 1951)<sup>[**(16)**](#Note16)</sup>, a streaming version by (Zhou and Bruck 2012)<sup>[**(17)**](#Note17)</sup>, and extraction via keyed and unkeyed hash algorithms (e.g., (Cliff et al., 2009)<sup>[**(18)**](#Note18)</sup>).
+Randomness extraction is discussed in NIST SP 800-90B sec. 3.1.5.1, and RFC 4086 sec. 4.2 and 5.2.   Examples of extractors include keyed hash functions (see, e.g., (Cliff et al., 2009)<sup>[**(16)**](#Note16)</sup>), von Neumann unbiasing (von Neumann 1951)<sup>[**(17)**](#Note17)</sup>, and a streaming version by (Zhou and Bruck 2012)<sup>[**(18)**](#Note18)</sup>. In information security applications, extractors other than keyed hash functions should not be used by themselves in randomness extraction.
 
 > **Example:** The Cliff reference reviewed the use of HMAC (hash-based message authentication code) algorithms, and implies that one way to generate a seed is as follows:
 >
@@ -585,11 +584,11 @@ See also N. Reed, "Quick And Easy GPU Random Numbers In D3D11", Nathan Reed's co
 
 <small><sup id=Note15>(15)</sup> Also known as _entropy extraction_, _deskewing_, _whitening_, or _unbiasing_.</small>
 
-<small><sup id=Note16>(16)</sup> von Neumann, J., "Various techniques used in connection with random digits", 1951.</small>
+<small><sup id=Note16>(16)</sup> Cliff, Y., Boyd, C., Gonzalez Nieto, J.  "How to Extract and Expand Randomness: A Summary and Explanation of Existing Results", 2009.</small>
 
-<small><sup id=Note17>(17)</sup> Zhou, H. and Bruck, J., 2012. Streaming algorithms for optimal generation of random bits. arXiv preprint arXiv:1209.0730.  See [**source code of my implementation**](https://github.com/peteroupc/peteroupc.github.io/blob/master/rextract.rb).</small>
+<small><sup id=Note17>(17)</sup> von Neumann, J., "Various techniques used in connection with random digits", 1951.</small>
 
-<small><sup id=Note18>(18)</sup> Cliff, Y., Boyd, C., Gonzalez Nieto, J.  "How to Extract and Expand Randomness: A Summary and Explanation of Existing Results", 2009.</small>
+<small><sup id=Note18>(18)</sup> Zhou, H. and Bruck, J., 2012. Streaming algorithms for optimal generation of random bits. arXiv preprint arXiv:1209.0730.  See [**source code of my implementation**](https://github.com/peteroupc/peteroupc.github.io/blob/master/rextract.rb).</small>
 
 <small><sup id=Note19>(19)</sup> For example, many questions on _Stack Overflow_ highlight the pitfalls of creating a new instance of the .NET Framework's `System.Random` each time a random number is needed, rather than only once in the application.  See also Johansen, R. S., "[**A Primer on Repeatable Random Numbers**](https://blogs.unity3d.com/2015/01/07/a-primer-on-repeatable-random-numbers/)", Unity Blog, Jan. 7, 2015.</small>
 
