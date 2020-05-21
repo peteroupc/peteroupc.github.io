@@ -2133,7 +2133,7 @@ END METHOD
 
 <h4>Rejection Sampling with a PDF</h4>
 
-<p>If the distribution <strong>has a known PDF</strong>, and the PDF can be more easily sampled by another distribution with its own PDF (<code>PDF2</code>) that &quot;dominates&quot; <code>PDF</code> in the sense that <code>PDF2(x) &gt;= PDF(x)</code> at every valid <code>x</code>, then generate random numbers with that distribution until a number (<code>n</code>) that satisfies <code>PDF(n) &gt;= RNDRANGEMaxExc(0, PDF2(n))</code> is generated this way (that is, sample points in <code>PDF2</code> until a point falls within <code>PDF</code>).</p>
+<p>If the distribution <strong>has a known PDF</strong>, and the PDF can be more easily sampled by another distribution with its own PDF (<code>PDF2</code>) that &quot;dominates&quot; <code>PDF</code> in the sense that <code>PDF2(x) &gt;= PDF(x)</code> at every valid <code>x</code>, then generate random numbers with the latter distribution until a number (<code>n</code>) that satisfies <code>PDF(n) &gt;= RNDRANGEMaxExc(0, PDF2(n))</code> is generated this way (that is, sample points in <code>PDF2</code> until a point falls within <code>PDF</code>).</p>
 
 <p>See also (von Neumann 1951)<sup><a href="#Note29"><strong>(29)</strong></a></sup>; (Devroye 1986)<sup><a href="#Note14"><strong>(14)</strong></a></sup>, pp. 41-43; &quot;<a href="#Rejection_Sampling"><strong>Rejection Sampling</strong></a>&quot;; and &quot;<a href="https://mathworks.com/help/stats/generating-random-data.html"><strong>Generating Pseudorandom Numbers</strong></a>&quot;.</p>
 
@@ -2520,7 +2520,7 @@ END METHOD
 
 <p><small><sup id=Note31>(31)</sup> Smith and Tromble, &quot;<a href="http://www.cs.cmu.edu/%7Enasmith/papers/smith+tromble.tr04.pdf"><strong>Sampling Uniformly from the Unit Simplex</strong></a>&quot;, 2004.</small></p>
 
-<p><small><sup id=Note32>(32)</sup> Durfee, et al., &quot;l1 Regression using Lewis Weights Preconditioning and Stochastic Gradient Descent&quot;, _Proceedings of Machine Learning Research 75(1), 2018.</small></p>
+<p><small><sup id=Note32>(32)</sup> Durfee, et al., &quot;l1 Regression using Lewis Weights Preconditioning and Stochastic Gradient Descent&quot;, <em>Proceedings of Machine Learning Research</em> 75(1), 2018.</small></p>
 
 <p><small><sup id=Note33>(33)</sup> The NVIDIA white paper &quot;<a href="https://docs.nvidia.com/cuda/floating-point/"><strong>Floating Point and IEEE 754 Compliance for NVIDIA GPUs</strong></a>&quot;,
 and &quot;<a href="https://randomascii.wordpress.com/2013/07/16/floating-point-determinism/"><strong>Floating-Point Determinism</strong></a>&quot; by Bruce Dawson, discuss issues with non-integer numbers in much more detail.</small></p>

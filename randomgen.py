@@ -485,7 +485,7 @@ Returns 'list'. """
         return 1 if self.rndintexc(py) < px else 0
 
     def bernoulli(self, p):
-        """ Returns 1 at probability px, 0 otherwise. """
+        """ Returns 1 at probability p, 0 otherwise. """
         bexp = BinaryExpansion(p)
         while not bexp.eof():
             bp = bexp.next()
@@ -915,6 +915,72 @@ Returns 'list'. """
     def geometric(self, p):
         return self.negativebinomial(1, p)
 
+    def zero_or_onePower(self, px, py, n):
+        """ Generates 1 with probability (px/py)^n; 0 otherwise. """
+        if n == 0 or px >= py:
+            return 1
+        n1 = 1
+        npx = px
+        npy = py
+        while n1 < n and px < (1 << 32) and py < (1 << 32):
+            npx *= px
+            npy *= py
+            n1 += 1
+        if n1 > 1:
+            quo = int(n / n1)
+            if self.zero_or_onePower(npx, npy, quo) == 0:
+                return 0
+            n -= quo * n1
+        for i in range(n):
+            if self.zero_or_one(px, py) == 0:
+                return 0
+        return 1
+
+    def negativebinomialint(self, successes, px, py):
+        if successes < 0 or py == 0:
+            raise ValueError
+        if successes == 0 or px >= py:
+            return 0
+        if px < 0.0:
+            return 1.0 / 0.0
+        if successes > 1:
+            r = 0
+            for i in range(successes):
+                r += self.negativebinomialint(1, px, py)
+            return r
+        # Geometric distribution for successes=1
+        px = py - px
+        if px * 10 < py:
+            # Use the trivial algorithm if success
+            # probability is high enough
+            count = 0
+            while True:
+                if self.zero_or_one(px, py) == 0:
+                    return count
+                count += 1
+            return count
+        # Based on the algorithm given in Bringmann, K.
+        # and Friedrich, T., 2013, July. Exact and efficient generation
+        # of geometric random variates and random graphs, in
+        # _International Colloquium on Automata, Languages, and
+        # Programming_ (pp. 267-278).
+        d = 0
+        k = 4
+        while self.zero_or_onePower(px, py, 1 << k) == 1:
+            d += 1
+        m = 0
+        accepted = False
+        while not accepted:
+            m = 0
+            accepted = True
+            for i in range(k):
+                mb = self.rndint(1) << (k - 1 - i)
+                m |= mb
+                if self.zero_or_onePower(px, py, mb) == 0:
+                    accepted = False
+                    break
+        return (d << k) + m
+
     def negativebinomial(self, successes, p):
         if successes < 0:
             raise ValueError
@@ -928,13 +994,11 @@ Returns 'list'. """
             return self.poisson(self.gamma(successes) * (1 - p) / p)
         else:
             count = 0
-            total = 0
             while True:
                 if self.bernoulli(p) == 1:
-                    total += 1
-                    if total >= successes:
-                        return count
-                count += 1
+                    return count
+                else:
+                    count += 1
 
     def dirichlet(alphas):
         gammas = [self.gamma(x, 1) for x in alphas]
@@ -2706,12 +2770,6 @@ if __name__ == "__main__":
     ksample = randgen.multinomial(1000, weights)
     print(ksample)
     print("multinomial: Took %f seconds" % (time.time() - t))
-    t = time.time()
-    import cProfile
-
-    cProfile.run("ksample = randgen.multinomial2(1000,weights)")
-    print(ksample)
-    print("multinomial2: Took %f seconds" % (time.time() - t))
 
     uu()
     print("Generating normal random numbers with numbers_from_pdf")
@@ -2787,6 +2845,10 @@ if __name__ == "__main__":
     print("Multinormal sample")
     for i in range(10):
         print(randgen.multinormal(None, [[1, 0], [0, 1]]))
+    #  Multinormal
+    print("Geometric sample")
+    print([randgen.negativebinomialint(1, 1, 20) for i in range(25)])
+    print([randgen.negativebinomialint(1, 18, 20) for i in range(25)])
     # Random walks
     print("Random walks")
     print(randgen.randomwalk_u01(50))

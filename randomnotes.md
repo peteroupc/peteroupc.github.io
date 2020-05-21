@@ -346,8 +346,8 @@ The following method samples exactly from an exponential distribution (with an a
     def ExpoExact(precision)
        ret=0
        for i in 1..precision
-        prob=BINEXP(1/(exp(pow(2,-x))+1), precision)
-        if Bernoulli(prob)==1: ret=ret+pow(2,-x)
+        prob=BINEXP(1/(exp(pow(2,-precision))+1), precision)
+        if Bernoulli(prob)==1: ret=ret+pow(2,-precision)
        end
        while ZeroOrOneExpMinus(1,1)==1: ret=ret+1
        return ret
