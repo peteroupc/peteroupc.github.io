@@ -6,9 +6,9 @@
 
 **Requires random real numbers.**  This section shows algorithms to sample several popular non-uniform distributions. Note, however, that most of these algorithms won't sample the given distribution _exactly_<sup>[**(1)**](#Note1)</sup>, for many reasons:
 
-    - They may not take a parameter specifying the maximum error tolerable.
-    - They may use a `RNDU01` or `RNDRANGE` method, which has no precision requirements.
-    - They may use irrational numbers, use transcendental functions, or do numerical approximations.
+- They may not take a parameter specifying the maximum error tolerable.
+- They may use a `RNDU01` or `RNDRANGE` method, which has no precision requirements.
+- They may use irrational numbers, use transcendental functions, or do numerical approximations.
 
 Even so, however, these algorithms may be useful if the application is willing to trade accuracy for speed.
 

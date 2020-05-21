@@ -1148,31 +1148,31 @@ of failures of each kind of failure.
         return ret
 
     def multinomial(self, trials, weights):
-        ls = [0 for i in range(len(weights))]
-        for i in range(trials):
-            wc = self.weighted_choice(weights)
-            ls[wc] += 1
-        return ls
-
-    def multinomial2(self, trials, weights):
-        # Corollary 45's proof in Durfee, et al., l1 Regression
-        # using Lewis Weights Preconditioning and Stochastic
-        # Gradient Descent, Proc. of Machine Learning Research
-        # 75(1), 2018.  Assumes weights are integers.
-        ls = [0 for i in range(len(weights))]
-        s = sum(weights)
-        # Note: Corollary assumes each item in this list
-        # is a rational number
-        ratios = [Fraction(w, s) for w in weights]
-        t = trials
-        for i in range(len(weights)):
-            r = ratios[i]
-            b = self.binomial_int(t, r.numerator, r.denominator)
-            ls[i] = b
-            t -= b
-            for j in range(i + 1, len(weights)):
-                ratios[j] /= 1 - r
-        return ls
+        if trials * 2 < len(weights):
+            ls = [0 for i in range(len(weights))]
+            for i in range(trials):
+                wc = self.weighted_choice(weights)
+                ls[wc] += 1
+            return ls
+        else:
+            # Corollary 45's proof in Durfee, et al., l1 Regression
+            # using Lewis Weights Preconditioning and Stochastic
+            # Gradient Descent, Proc. of Machine Learning Research
+            # 75(1), 2018.  Assumes weights are integers.
+            ls = [0 for i in range(len(weights))]
+            s = sum(weights)
+            # Note: Corollary assumes each item in this list
+            # is a rational number
+            ratios = [Fraction(w, s) for w in weights]
+            t = trials
+            for i in range(len(weights)):
+                r = ratios[i]
+                b = self.binomial_int(t, r.numerator, r.denominator)
+                ls[i] = b
+                t -= b
+                for j in range(i + 1, len(weights)):
+                    ratios[j] /= 1 - r
+            return ls
 
     def nonzeroIntegersWithSum(self, n, total):
         """"
