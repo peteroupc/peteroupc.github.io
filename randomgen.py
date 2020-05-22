@@ -778,11 +778,11 @@ Returns 'list'. """
         if mean == 0:
             return 0
         count = 0
-        if mean > 9:
-            n = math.floor(mean * 0.875)
+        while mean > 20:
+            n = math.ceil(mean - pow(mean, 0.7))
             g = self.gamma(n, 1)
-            if g > mean:
-                return count + self.binomial(n - 1, mean / g)
+            if g >= mean:
+                return count + (n - 1 - self.binomial(n - 1, (g - mean) / g))
             mean = mean - g
             count = count + n
         p = 1.0
@@ -915,7 +915,7 @@ Returns 'list'. """
     def geometric(self, p):
         return self.negativebinomial(1, p)
 
-    def zero_or_onePower(self, px, py, n):
+    def zero_or_one_power(self, px, py, n):
         """ Generates 1 with probability (px/py)^n; 0 otherwise. """
         if n == 0 or px >= py:
             return 1
@@ -928,7 +928,7 @@ Returns 'list'. """
             n1 += 1
         if n1 > 1:
             quo = int(n / n1)
-            if self.zero_or_onePower(npx, npy, quo) == 0:
+            if self.zero_or_one_power(npx, npy, quo) == 0:
                 return 0
             n -= quo * n1
         for i in range(n):
@@ -966,7 +966,7 @@ Returns 'list'. """
         # Programming_ (pp. 267-278).
         d = 0
         k = 4
-        while self.zero_or_onePower(px, py, 1 << k) == 1:
+        while self.zero_or_one_power(px, py, 1 << k) == 1:
             d += 1
         m = 0
         accepted = False
@@ -976,7 +976,7 @@ Returns 'list'. """
             for i in range(k):
                 mb = self.rndint(1) << (k - 1 - i)
                 m |= mb
-                if self.zero_or_onePower(px, py, mb) == 0:
+                if self.zero_or_one_power(px, py, mb) == 0:
                     accepted = False
                     break
         return (d << k) + m
