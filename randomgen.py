@@ -1840,7 +1840,8 @@ acap - Optional.  A setting used in the optimization process; an
         """ Generates a uniform random point on
         a parametric surface, using a rejection
         approach developed by Williamson, J.F.,
-        Physics in Medicine & Biology 32(10), 1987.
+        "Random selection of points distributed on
+         curved surfaces", Physics in Medicine & Biology 32(10), 1987.
      - f: Takes two parameters (u and v) and returns
        a 3-element array expressing
        a 3-dimensional position at the given point.
@@ -1883,7 +1884,8 @@ acap - Optional.  A setting used in the optimization process; an
             # reject it depending on its stretch factor (norm-of-
             # gradient).  This rejection approach for sampling
             # curved surfaces was developed by Williamson, J.F.,
-            # Physics in Medicine & Biology 32(10), 1987.
+            # "Random selection of points distributed on
+            # curved surfaces", Physics in Medicine & Biology 32(10), 1987.
             # Generate a spherical point
             pt = self.hypersphere_point(3)
             # Make it ellipsoidal
