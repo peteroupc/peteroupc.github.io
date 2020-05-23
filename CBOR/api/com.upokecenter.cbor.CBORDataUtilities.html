@@ -9,10 +9,13 @@
 <pre>public final class CBORDataUtilities extends java.lang.Object
 </pre>
 
+<p>Contains methods useful for reading and writing data, with a focus on CBOR.</p>
+
 <h2>Methods</h2>
 
 <ul>
-<li><code>static CBORObject ParseJSONNumber​(java.lang.String str)</code><br></li>
+<li><code>static CBORObject ParseJSONNumber​(java.lang.String str)</code><br>
+Parses a number whose format follows the JSON specification.</li>
 <li><code>static CBORObject ParseJSONNumber​(java.lang.String str,
            boolean integersOnly,
            boolean positiveOnly)</code><br>
@@ -32,13 +35,20 @@ sets preserveNegativeZero to the desired value, either true or
 false.</li>
 <li><code>static CBORObject ParseJSONNumber​(java.lang.String str,
            int offset,
-           int count)</code><br></li>
+           int count)</code><br>
+Parses a number whose format follows the JSON specification (RFC 8259) from
+a portion of a text string, and converts that number to a CBOR
+object.</li>
 <li><code>static CBORObject ParseJSONNumber​(java.lang.String str,
            int offset,
            int count,
-           JSONOptions options)</code><br></li>
+           JSONOptions options)</code><br>
+Parses a number whose format follows the JSON specification (RFC 8259) and
+converts that number to a CBOR object.</li>
 <li><code>static CBORObject ParseJSONNumber​(java.lang.String str,
-           JSONOptions options)</code><br></li>
+           JSONOptions options)</code><br>
+Parses a number whose format follows the JSON specification (RFC 8259) and
+converts that number to a CBOR object.</li>
 </ul>
 
 <h2>Method Details</h2>
@@ -47,6 +57,25 @@ false.</li>
 
 <pre>public static CBORObject ParseJSONNumber​(java.lang.String str)
 </pre>
+
+<p>Parses a number whose format follows the JSON specification. The method uses
+ a JSONOptions with all default properties except for a
+ PreserveNegativeZero property of false.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>str</code> - A text string to parse as a JSON string.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A CBOR object that represents the parsed number. Returns positive
+zero if the number is a zero that starts with a minus sign (such as
+&quot;-0&quot; or &quot;-0.0&quot;). Returns null if the parsing fails, including if the
+string is null or empty.</li>
+</ul>
 
 <h3>ParseJSONNumber</h3>
 
@@ -59,6 +88,25 @@ Call the one-argument version of this method instead. If this method
  not begin with &#39;-&#39; before calling that version. If this method
  call used integersOnly  = true, check that the String does not
  contain &#39;.&#39;, &#39;E&#39;, or &#39;e&#39; before calling that version.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>str</code> - A text string to parse as a JSON number.</p></li>
+<li><p><code>integersOnly</code> - If true, no decimal points or exponents are allowed in
+the string. The default is false.</p></li>
+<li><p><code>positiveOnly</code> - If true, only positive numbers are allowed (the leading
+minus is disallowed). The default is false.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A CBOR object that represents the parsed number. Returns positive
+zero if the number is a zero that starts with a minus sign (such as
+&quot;-0&quot; or &quot;-0.0&quot;). Returns null if the parsing fails, including if the
+string is null or empty.</li>
+</ul>
 
 <h3>ParseJSONNumber</h3>
 
@@ -74,20 +122,141 @@ Instead, call ParseJSONNumber(str, jsonoptions) with a JSONOptions that
  that the String does not contain &#39;.&#39;, &#39;E&#39;,
  or &#39;e&#39; before calling that version.</p>
 
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>str</code> - A text string to parse as a JSON number.</p></li>
+<li><p><code>integersOnly</code> - If true, no decimal points or exponents are allowed in
+the string. The default is false.</p></li>
+<li><p><code>positiveOnly</code> - If true, the leading minus is disallowed in the string.
+The default is false.</p></li>
+<li><p><code>preserveNegativeZero</code> - If true, returns positive zero if the number is
+a zero that starts with a minus sign (such as &quot;-0&quot; or &quot;-0.0&quot;).
+Otherwise, returns negative zero in this case. The default is false.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A CBOR object that represents the parsed number. Returns null if the
+parsing fails, including if the string is null or empty.</li>
+</ul>
+
 <h3>ParseJSONNumber</h3>
 
 <pre>public static CBORObject ParseJSONNumber​(java.lang.String str, JSONOptions options)
 </pre>
+
+<p>Parses a number whose format follows the JSON specification (RFC 8259) and
+ converts that number to a CBOR object.<p>Roughly speaking, a valid
+ JSON number consists of an optional minus sign, one or more basic
+ digits (starting with 1 to 9 unless there is only one digit and that
+  digit is 0), an optional decimal point (&quot;.&quot;, full stop) with one or
+ more basic digits, and an optional letter E or e with an optional
+ plus or minus sign and one or more basic digits (the exponent). A
+ string representing a valid JSON number is not allowed to contain
+ white space characters, including spaces.</p></p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>str</code> - A text string to parse as a JSON number.</p></li>
+<li><p><code>options</code> - An object containing options to control how JSON numbers are
+decoded to CBOR objects. Can be null, in which case a JSONOptions
+object with all default properties is used instead.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A CBOR object that represents the parsed number. Returns null if the
+parsing fails, including if the string is null or empty.</li>
+</ul>
 
 <h3>ParseJSONNumber</h3>
 
 <pre>public static CBORObject ParseJSONNumber​(java.lang.String str, int offset, int count)
 </pre>
 
+<p>Parses a number whose format follows the JSON specification (RFC 8259) from
+ a portion of a text string, and converts that number to a CBOR
+ object.<p>Roughly speaking, a valid JSON number consists of an
+ optional minus sign, one or more basic digits (starting with 1 to 9
+ unless there is only one digit and that digit is 0), an optional
+  decimal point (&quot;.&quot;, full stop) with one or more basic digits, and an
+ optional letter E or e with an optional plus or minus sign and one
+ or more basic digits (the exponent). A string representing a valid
+ JSON number is not allowed to contain white space characters,
+ including spaces.</p></p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>str</code> - A text string containing the portion to parse as a JSON number.</p></li>
+<li><p><code>offset</code> - An index, starting at 0, showing where the desired portion of
+<code>str</code> begins.</p></li>
+<li><p><code>count</code> - The length, in code units, of the desired portion of <code>
+str</code> (but not more than <code>str</code> &#39;s length).</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A CBOR object that represents the parsed number. Returns null if the
+parsing fails, including if the string is null or empty.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>java.lang.IllegalArgumentException</code> - Either <code>offset</code> or <code>count</code> is less
+than 0 or greater than <code>str</code> &#39;s length, or <code>str</code> &#39;s
+length minus <code>offset</code> is less than <code>count</code>.</p></li>
+<li><p><code>java.lang.NullPointerException</code> - The parameter <code>str</code> is null.</p></li>
+</ul>
+
 <h3>ParseJSONNumber</h3>
 
 <pre>public static CBORObject ParseJSONNumber​(java.lang.String str, int offset, int count, JSONOptions options)
 </pre>
+
+<p>Parses a number whose format follows the JSON specification (RFC 8259) and
+ converts that number to a CBOR object.<p>Roughly speaking, a valid
+ JSON number consists of an optional minus sign, one or more basic
+ digits (starting with 1 to 9 unless there is only one digit and that
+  digit is 0), an optional decimal point (&quot;.&quot;, full stop) with one or
+ more basic digits, and an optional letter E or e with an optional
+ plus or minus sign and one or more basic digits (the exponent). A
+ string representing a valid JSON number is not allowed to contain
+ white space characters, including spaces.</p></p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>str</code> - A text string to parse as a JSON number.</p></li>
+<li><p><code>offset</code> - An index, starting at 0, showing where the desired portion of
+<code>str</code> begins.</p></li>
+<li><p><code>count</code> - The length, in code units, of the desired portion of <code>
+str</code> (but not more than <code>str</code> &#39;s length).</p></li>
+<li><p><code>options</code> - An object containing options to control how JSON numbers are
+decoded to CBOR objects. Can be null, in which case a JSONOptions
+object with all default properties is used instead.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A CBOR object that represents the parsed number. Returns null if the
+parsing fails, including if the string is null or empty or <code>
+count</code> is 0 or less.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>java.lang.NullPointerException</code> - The parameter <code>str</code> is null.</p></li>
+<li><p><code>java.lang.IllegalArgumentException</code> - Unsupported conversion kind.</p></li>
+</ul>
 
 <p><a href="/CBOR/">Back to CBOR start page.</a></p>
 </div><nav id="navigation"><ul>

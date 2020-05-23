@@ -482,7 +482,19 @@ Returns 'list'. """
 
     def zero_or_one(self, px, py):
         """ Returns 1 at probability px/py, 0 otherwise. """
-        return 1 if self.rndintexc(py) < px else 0
+        if py <= 0:
+            raise ValueError
+        if px == py:
+            return 1
+        z = x
+        while True:
+            z = z * 2
+            if z >= py:
+                if self.rndint(1) == 0:
+                    return 1
+                z = z - py
+            elif z == 0 or self.rndint(1) == 0:
+                return 0
 
     def bernoulli(self, p):
         """ Returns 1 at probability p, 0 otherwise. """
