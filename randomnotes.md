@@ -199,10 +199,10 @@ As more and more independent random numbers, generated the same way, are added t
 <a id=Multivariate_Normal_Multinormal_Distribution></a>
 #### Multivariate Normal (Multinormal) Distribution
 
-The following pseudocode calculates a random point in space that follows a [**_multivariate normal (multinormal) distribution_**](https://en.wikipedia.org/wiki/Multivariate_normal_distribution).  The method `MultivariateNormal` takes the following parameters:
+The following pseudocode calculates a random vector (list of numbers) that follows a [**_multivariate normal (multinormal) distribution_**](https://en.wikipedia.org/wiki/Multivariate_normal_distribution).  The method `MultivariateNormal` takes the following parameters:
 
-- A list, `mu` (&mu;), which indicates the means to add to the random point's components. `mu` can be `nothing`, in which case each component will have a mean of zero.
-- A list of lists `cov`, that specifies a _covariance matrix_ (&Sigma;, a symmetric positive definite N&times;N matrix, where N is the number of components of the random point).
+- A list, `mu` (&mu;), which indicates the means to add to the random vector's components. `mu` can be `nothing`, in which case each component will have a mean of zero.
+- A list of lists `cov`, that specifies a _covariance matrix_ (&Sigma;, a symmetric positive definite N&times;N matrix, where N is the number of components of the random vector).
 
 &nbsp;
 
@@ -272,16 +272,16 @@ The following pseudocode calculates a random point in space that follows a [**_m
     end
 
 > **Note:** The [**Python sample code**](https://peteroupc.github.io/randomgen.zip) contains a variant of this
-> method for generating multiple random points in one call.
+> method for generating multiple random vectors in one call.
 >
 > **Examples:**
 >
 > 1. A **binormal distribution** (two-variable multinormal distribution) can be sampled using the following idiom: `MultivariateNormal([mu1, mu2], [[s1*s1, s1*s2*rho], [rho*s1*s2, s2*s2]])`, where `mu1` and `mu2` are the means of the two normal random numbers, `s1` and `s2` are their standard deviations, and `rho` is a _correlation coefficient_ greater than -1 and less than 1 (0 means no correlation).
-> 2. A **log-multinormal distribution** can be sampled by generating numbers from a multinormal distribution, then applying `exp(n)` to the resulting numbers, where `n` is each number generated this way.
-> 3. A **Beckmann distribution** is the norm of a binormal random pair (that is, a random binormally-distributed point; for norm, see the appendix).
+> 2. **Log-multinormal distribution**: Generate a multinormal random vector, then apply `exp(n)` to each component `n`.
+> 3. A **Beckmann distribution** is the norm (see the appendix) of a random binormal vector.
 > 4. A **Rice (Rician) distribution** is a Beckmann distribution in which the binormal random pair is generated with `m1 = m2 = a / sqrt(2)`, `rho = 0`, and `s1 = s2 = b`, where `a` and `b` are the parameters to the Rice distribution.
-> 5. A **Rice&ndash;Norton distributed** random number is the norm (see the appendix) of the following point: `MultivariateNormal([v,v,v],[[w,0,0],[0,w,0],[0,0,w]])`, where `v = a/sqrt(m*2)`, `w = b*b/m`, and `a`, `b`, and `m` are the parameters to the Rice&ndash;Norton distribution.
-> 6. A **standard [**complex normal distribution**](https://en.wikipedia.org/wiki/Complex_normal_distribution)** is a binormal distribution in which the binormal random pair is generated with `s1 = s2 = sqrt(0.5)` and `mu1 = mu2 = 0` and treated as the real and imaginary parts of a complex number.
+> 5. A **Rice&ndash;Norton distributed** random number is the norm of the following vector: `MultivariateNormal([v,v,v],[[w,0,0],[0,w,0],[0,0,w]])`, where `v = a/sqrt(m*2)`, `w = b*b/m`, and `a`, `b`, and `m` are the parameters to the Rice&ndash;Norton distribution.
+> 6. A **standard** [**complex normal distribution**](https://en.wikipedia.org/wiki/Complex_normal_distribution) is a binormal distribution in which the binormal random pair is generated with `s1 = s2 = sqrt(0.5)` and `mu1 = mu2 = 0` and treated as the real and imaginary parts of a complex number.
 
 <a id=Random_Real_Numbers_with_a_Given_Positive_Sum></a>
 #### Random Real Numbers with a Given Positive Sum
