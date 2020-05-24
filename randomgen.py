@@ -880,7 +880,7 @@ Returns 'list'. """
             unif = self.rndrangemaxexc(-halfpi, halfpi)
         # Cauchy special case
         if alpha == 1 and beta == 0:
-            return tan(unif)
+            return -math.cos(unif)/math.sin(unif)
         expo = self.exponential()
         c = math.cos(unif)
         if alpha == 1:
@@ -917,8 +917,7 @@ Returns 'list'. """
          Statistical Distributions for Experimentalists",
          pp. 93-94."""
         while True:
-            y = self.rndrangeminmaxexc(-math.pi / 2, math.pi / 2)
-            tany = math.tan(y)
+            tany = self.cauchy()
             hy = math.exp(-(tany + math.exp(-tany)) * 0.5)
             hy = hy / ((math.cos(y) ** 2) * sqrt(2.0 * math.pi))
             if self.rndrange(0, 0.912) <= hy:
@@ -926,6 +925,27 @@ Returns 'list'. """
 
     def geometric(self, p):
         return self.negativebinomial(1, p)
+
+    def zero_or_one_exp_minus(self, x, y)
+        """ Generates 1 with probability exp(-px/py); 0 otherwise.
+               Reference:
+               Canonne, C., Kamath, G., Steinke, T., "The Discrete Gaussian
+               for Differential Privacy", arXiv:2004.00010v2 [cs.DS], 2020. """
+      if y <= 0 or x<0: raise ValueError
+      if x > y:
+        xf = int(x/y)
+        x = x % y
+        if self.zero_or_one_exp_minus(x, y) == 0: return 0
+        for i in range(1,xf+1):
+          if self.zero_or_one_exp_minus(1,1) == 0: return 0
+        return 1
+      r = 1
+      oy = y
+      while True:
+        if self.zero_or_one(x, y) == 0: return r
+        if r==1: r=0
+        else: r=1
+        y = y + oy
 
     def zero_or_one_power(self, px, py, n):
         """ Generates 1 with probability (px/py)^n; 0 otherwise. """
@@ -2219,6 +2239,13 @@ acap - Optional.  A setting used in the optimization process; an
         wt = self._toWeights([pdf(x) for x in range(mn, mx)])
         return r._weighted_choice_n(wt, n, mn)
 
+    def _ensuredenom(self, frac, denom):
+        if frac.denominator>denom:
+             newnum=int(abs(frac)*denom)
+             if frac<0: newnum=-newnum
+             return Fraction(newnum,denom)
+        return frac
+
     def _bisectionuniform(self, a, b, bitplaces):
         """  Devroye/Gravel bisection algorithm. """
         if a > b:
@@ -2232,7 +2259,9 @@ acap - Optional.  A setting used in the optimization process; an
         if aax.denominator == 1 and bbx.denominator == 1:
             # Fast track
             diff = bbx.numerator - aax.numerator
-            return a + Fraction(self.rndint(diff), epsdenom)
+            return self._ensuredenom( \
+                a + Fraction(self.rndint(diff), epsdenom), \
+                epsdenom)
         twoEps = eps * 2
         mn = Fraction(a)
         mx = Fraction(b)
@@ -2251,7 +2280,7 @@ acap - Optional.  A setting used in the optimization process; an
                 a = z
                 cdfa = cdfz
             if b - a <= twoEps:
-                return (a + b) / 2
+                return self._ensuredenom((a + b) / 2, epsdenom)
 
     def numbers_from_dist(self, pdf, mn=0, mx=1, n=1, bitplaces=53):
         """

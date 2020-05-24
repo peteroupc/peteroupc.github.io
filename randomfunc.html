@@ -1363,10 +1363,6 @@ METHOD ExpoNumerator(denom)
 END METHOD
 </pre>
 
-<blockquote>
-<p><strong>Note:</strong> <code>Expo(lamda)</code> has the following na&iuml;ve implementation: <code>-ln(1-RNDU01()) / lamda</code>.  But there are several problems here; for example, this implementation is ill-conditioned at large values because of the distribution&#39;s right-sided tail (Pedersen 2018)<sup><a href="#Note2"><strong>(2)</strong></a></sup>, and it can return infinity if <code>RNDU01()</code> becomes 1. Pedersen suggests using either <code>-ln(RNDRANGEMinExc(0, 0.5))</code> or <code>-log1p(-RNDRANGEMinExc(0, 0.5))</code> (rather than <code>-ln(1-RNDU01())</code>), chosen at random each time.</p>
-</blockquote>
-
 <p><a id=Poisson_Distribution></a></p>
 
 <h3>Poisson Distribution</h3>
@@ -1401,10 +1397,8 @@ END METHOD
       // FAILURE, not counting the failure, so we
       // have to complement the probability here)
       n = NegativeBinomialInt(1, my - mx, my)
-      // If n uniform random numbers turn out
-      // to be sorted, accept n
       if n&lt;=1: return n
-      u = UniformNew()
+      // Flip n-1 coins, and if all are 0, accept
       success = true
       i=1
       while i&lt;n and success
@@ -2192,7 +2186,7 @@ END METHOD
 <li><strong>Cauchy (Lorentz) distribution</strong>&dagger;:  <code>Stable(1, 0)</code>.  This distribution is similar to the normal distribution, but with &quot;fatter&quot; tails. Alternative algorithm based on one mentioned in (McGrath and Irving 1975)<sup><a href="#Note57"><strong>(57)</strong></a></sup>: Generate <code>x = RNDU01ZeroExc()</code> and <code>y = RNDU01ZeroExc()</code> until <code>x * x + y * y &lt;= 1</code>, then generate <code>(RNDINT(1) * 2 - 1) * y / x</code>.</li>
 <li><strong>Chi-squared distribution</strong>: <code>GammaDist(df * 0.5 + Poisson(sms * 0.5), 2)</code>, where <code>df</code> is the number of degrees of freedom and <code>sms</code> is the sum of mean squares (where <code>sms</code> other than 0 indicates a <em>noncentral</em> distribution).</li>
 <li><strong>Dice</strong>: See <a href="#Dice"><strong>Dice</strong></a>.</li>
-<li><strong>Exponential distribution</strong>: See <a href="#Exponential_Distribution"><strong>Exponential Distribution</strong></a>.</li>
+<li><strong>Exponential distribution</strong>: See <a href="#Exponential_Distribution"><strong>Exponential Distribution</strong></a>.  The na&iuml;ve implementation <code>-ln(1-RNDU01()) / lamda</code> has several problems, such as being ill-conditioned at large values because of the distribution&#39;s right-sided tail (Pedersen 2018)<sup><a href="#Note2"><strong>(2)</strong></a></sup>, as well as returning infinity if <code>RNDU01()</code> becomes 1. If an application can trade accuracy for speed, it can apply Pedersen&#39;s suggestion of using either <code>-ln(RNDRANGEMinExc(0, 0.5))</code> or <code>-log1p(-RNDRANGEMinExc(0, 0.5))</code> (rather than <code>-ln(1-RNDU01())</code>), chosen at random each time.</li>
 <li><strong>Extreme value distribution</strong>: See generalized extreme value distribution.</li>
 <li><strong>Gamma distribution</strong>: See <a href="https://github.com/peteroupc/peteroupc.github.io/blob/master/randomnotes.md#Gamma_Distribution"><strong>Gamma Distribution</strong></a>.  <em>3-parameter gamma distribution</em>: <code>pow(GammaDist(a, 1), 1.0 / c) * b</code>, where <code>c</code> is another shape parameter. <em>4-parameter gamma distribution</em>: <code>pow(GammaDist(a, 1), 1.0 / c) * b + d</code>, where <code>d</code> is the minimum value.</li>
 <li><strong>Gaussian distribution</strong>: See <a href="https://github.com/peteroupc/peteroupc.github.io/blob/master/randomnotes.md#Normal_Gaussian_Distribution"><strong>Normal (Gaussian) Distribution</strong></a>.</li>
