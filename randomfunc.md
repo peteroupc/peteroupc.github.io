@@ -1136,8 +1136,10 @@ The following method generates a Poisson random number with mean `mx`/`my`, usin
           // FAILURE, not counting the failure, so we
           // have to complement the probability here)
           n = NegativeBinomialInt(1, my - mx, my)
+          // If n uniform random numbers turn out
+          // to be sorted, accept n
           if n<=1: return n
-          // Flip n-1 coins, and if all are 0, accept
+          u = UniformNew()
           success = true
           i=1
           while i<n and success

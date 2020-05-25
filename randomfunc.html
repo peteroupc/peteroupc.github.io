@@ -1397,8 +1397,10 @@ END METHOD
       // FAILURE, not counting the failure, so we
       // have to complement the probability here)
       n = NegativeBinomialInt(1, my - mx, my)
+      // If n uniform random numbers turn out
+      // to be sorted, accept n
       if n&lt;=1: return n
-      // Flip n-1 coins, and if all are 0, accept
+      u = UniformNew()
       success = true
       i=1
       while i&lt;n and success

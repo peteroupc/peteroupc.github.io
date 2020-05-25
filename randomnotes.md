@@ -341,19 +341,28 @@ Other kinds of copulas describe different kinds of dependence between random num
 <a id=Exponential_Distribution_Another_Exact_Algorithm></a>
 ### Exponential Distribution: Another Exact Algorithm
 
-The following method samples exactly from an exponential distribution (with an accuracy of 2<sup>`-precision`</sup>)(Devroye and Gravel 2015)<sup>[**(13)**](#Note13)</sup>.  In the method, `precision` is the number of binary digits (bits) after the point in the random number's binary expansion (in other words, the number will be a multiple of 2<sup>`-precision`</sup>); `BINEXP(x, b)` calculates the expression `x` such that the result is within 2<sup>`-precision`</sup> of the correct result; and `Bernoulli(p)` is 1 with probability `p`, or 0 otherwise. `Expo(lamda)` is then defined as `ExpoExact(precision) / lamda`.
+The following method samples exactly from an exponential distribution (with an accuracy of 2<sup>`-precision`</sup> and a &lambda; parameter of 1)(Devroye and Gravel 2015)<sup>[**(13)**](#Note13)</sup>.  Includes an algorithm due to (Morina et al. 2019)<sup>[**(14)**](#Note14)</sup>.
 
-    def ExpoExact(precision)
+    METHOD LogisticExp(prec)
+        // Generates 1 with probability 1/(exp(2^-prec)+1).
+        // References: Alg. 6 of Morina et al. 2019; Carinne et al. 2020.
+        denom=pow(2,prec)
+        while true
+           if RNDINT(1)==0: return 0
+           if ZeroOrOneExpMinus(1,denom) == 1: return 1
+        end
+    END METHOD
+
+    METHOD ExpoExact(precision)
        ret=0
        for i in 1..precision
-        prob=BINEXP(1/(exp(pow(2,-precision))+1), precision)
-        if Bernoulli(prob)==1: ret=ret+pow(2,-precision)
+        if LogisticExp(i)==1: ret=ret+pow(2,-i)
        end
        while ZeroOrOneExpMinus(1,1)==1: ret=ret+1
        return ret
-    end
+    END METHOD
 
-> **Note:** After `ExpoExact` is used to generate a random number, an application can append additional binary digits (such as `RNDINT(1)`) to that number without affecting the distribution (Karney 2014)<sup>[**(5)**](#Note5)</sup>.
+> **Note:** After `ExpoExact` is used to generate a random number, an application can append additional binary digits (such as `RNDINT(1)`) to the end of that number without affecting the distribution (Karney 2014)<sup>[**(5)**](#Note5)</sup>.
 
 <a id=Notes></a>
 ## Notes
@@ -387,6 +396,8 @@ In general, the only random numbers an exact algorithm uses are random bits (bin
 <small><sup id=Note12>(12)</sup> Hofert, M., and Maechler, M.  "Nested Archimedean Copulas Meet R: The nacopula Package".  _Journal of Statistical Software_ 39(9), 2011, pp. 1-20.</small>
 
 <small><sup id=Note13>(13)</sup> Devroye, L., Gravel, C., "Sampling with arbitrary precision", arXiv:1502.02539v5 [cs.IT]</small>
+
+<small><sup id=Note14>(14)</sup> Morina, G., Łatuszyński, K., et al., "From the Bernoulli Factory to a Dice Enterprise via Perfect Sampling ofMarkov Chains", 2019.</small>
 
 <a id=License></a>
 ## License
