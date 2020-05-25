@@ -341,7 +341,7 @@ Other kinds of copulas describe different kinds of dependence between random num
 <a id=Exponential_Distribution_Another_Exact_Algorithm></a>
 ### Exponential Distribution: Another Exact Algorithm
 
-The following method samples exactly from an exponential distribution (with an accuracy of 2<sup>`-precision`</sup> and a &lambda; parameter of 1)(Devroye and Gravel 2015)<sup>[**(13)**](#Note13)</sup>.  Includes an algorithm due to (Morina et al. 2019)<sup>[**(14)**](#Note14)</sup>.
+The following method samples exactly from an exponential distribution (with an accuracy of 2<sup>`-precision`</sup> and a &lambda; parameter of 1) (Devroye and Gravel 2015)<sup>[**(13)**](#Note13)</sup>.  Includes an algorithm due to (Morina et al. 2019)<sup>[**(14)**](#Note14)</sup>.
 
     METHOD LogisticExp(prec)
         // Generates 1 with probability 1/(exp(2^-prec)+1).
@@ -349,7 +349,7 @@ The following method samples exactly from an exponential distribution (with an a
         denom=pow(2,prec)
         while true
            if RNDINT(1)==0: return 0
-           if ZeroOrOneExpMinus(1,denom) == 1: return 1
+           if ZeroOrOneExpMinus(1, denom) == 1: return 1
         end
     END METHOD
 
@@ -397,7 +397,7 @@ In general, the only random numbers an exact algorithm uses are random bits (bin
 
 <small><sup id=Note13>(13)</sup> Devroye, L., Gravel, C., "Sampling with arbitrary precision", arXiv:1502.02539v5 [cs.IT]</small>
 
-<small><sup id=Note14>(14)</sup> Morina, G., Łatuszyński, K., et al., "From the Bernoulli Factory to a Dice Enterprise via Perfect Sampling ofMarkov Chains", 2019.</small>
+<small><sup id=Note14>(14)</sup> Morina, G., Łatuszyński, K., et al., "From the Bernoulli Factory to a Dice Enterprise via Perfect Sampling of Markov Chains", 2019.</small>
 
 <a id=License></a>
 ## License
