@@ -34,7 +34,6 @@ All the random number methods presented on this page are ultimately based on an 
 - Should this page discuss approaches to generate random graphs or matrices?  If so, how?
 - Ways to implement any of the randomization methods given in "[**Randomization with Real Numbers**](https://peteroupc.github.io/randomfunc.html#Randomization_with_Real_Numbers)" without rounding errors.
 - Methods to sample a random number from a distribution exactly, with arbitrary precision and using only a source of random bits.
-- Integer-quantized numbers are seeing increased use today, especially in "deep-learning" neural networks.  What are ways to generate non-uniform integer-quantized numbers (especially 8-bit or smaller numbers)?
 
 <a id=Contents></a>
 ## Contents
@@ -1702,7 +1701,7 @@ The pseudocode below shows the following methods that work with a **known PDF** 
 
 [**_Inverse transform sampling_**](https://en.wikipedia.org/wiki/Inverse_transform_sampling) is the most generic way to generate a random number that follows a distribution.
 
-If the distribution **has a known inverse CDF**, generate a uniform random number in [0, 1) if that number wasn't already pregenerated (e.g. via `RNDU01OneExc()`), and take the inverse CDF of that number.  Inversion has the following disadvantages, however:
+If the distribution **has a known inverse CDF**, generate a uniform random number in (0, 1) if that number wasn't already pregenerated (e.g. via `RNDU01ZeroOneExc()`), and take the inverse CDF of that number.  Note the following about inversion, however:
 
 - If the distribution spans a bigger range than [0, 1], then taking the inverse CDF of the uniform random number can leave gaps, in the sense that some numbers with the same precision as the uniform number may not be generated even if the distribution gives them a chance of occurring; this is especially the case for uniform floating-point numbers close to 1 (Monahan 1985, sec. 4 and 6)<sup>[**(39)**](#Note39)</sup>.
 - In most cases, the inverse CDF is not available.  Thus, it has to be approximated.
@@ -2135,7 +2134,10 @@ and "[**Floating-Point Determinism**](https://randomascii.wordpress.com/2013/07/
 
 provided the PDF's values are all 0 or greater and the area under the PDF's curve is 1.</small>
 
-<small><sup id=Note50>(50)</sup> A _discrete distribution_ is a distribution that associates one or more items with a separate probability. This page assumes (without loss of generality) that these items are integers.  A discrete distribution can produce non-integer values (e.g., `x/y` with probability `x/(1+y)`) as long as the values can be converted to and from integers.  There are many ways to convert them this way. For example, a rational number in lowest terms can be converted to an integer by interleaving the bits of the numerator and denominator.</small>
+<small><sup id=Note50>(50)</sup> A _discrete distribution_ is a distribution that associates one or more items with a separate probability. This page assumes (without loss of generality) that these items are integers.  A discrete distribution can produce non-integer values (e.g., `x/y` with probability `x/(1+y)`) as long as the values can be converted to and from integers. Two examples:
+
+- A rational number in lowest terms can be converted to an integer by interleaving the bits of the numerator and denominator.
+- Integer-quantized numbers (popular in "deep-learning" neural networks) take a relatively small number of bits (usually 8 bits or even smaller).  An 8-bit quantized number format is effectively a "look-up table" that maps 256 integers to real numbers.</small>
 
 <small><sup id=Note51>(51)</sup> This includes integers if `FPExponent` is limited to 0, and fixed-point numbers if `FPExponent` is limited to a single exponent less than 0.
 

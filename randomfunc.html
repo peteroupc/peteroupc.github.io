@@ -46,7 +46,6 @@
 <li>Should this page discuss approaches to generate random graphs or matrices?  If so, how?</li>
 <li>Ways to implement any of the randomization methods given in &quot;<a href="https://peteroupc.github.io/randomfunc.html#Randomization_with_Real_Numbers"><strong>Randomization with Real Numbers</strong></a>&quot; without rounding errors.</li>
 <li>Methods to sample a random number from a distribution exactly, with arbitrary precision and using only a source of random bits.</li>
-<li>Integer-quantized numbers are seeing increased use today, especially in &quot;deep-learning&quot; neural networks.  What are ways to generate non-uniform integer-quantized numbers (especially 8-bit or smaller numbers)?</li>
 </ul>
 
 <p><a id=Contents></a></p>
@@ -2068,7 +2067,7 @@ END METHOD
 
 <p><a href="https://en.wikipedia.org/wiki/Inverse_transform_sampling"><strong><em>Inverse transform sampling</em></strong></a> is the most generic way to generate a random number that follows a distribution.</p>
 
-<p>If the distribution <strong>has a known inverse CDF</strong>, generate a uniform random number in [0, 1) if that number wasn&#39;t already pregenerated (e.g. via <code>RNDU01OneExc()</code>), and take the inverse CDF of that number.  Inversion has the following disadvantages, however:</p>
+<p>If the distribution <strong>has a known inverse CDF</strong>, generate a uniform random number in (0, 1) if that number wasn&#39;t already pregenerated (e.g. via <code>RNDU01ZeroOneExc()</code>), and take the inverse CDF of that number.  Inversion has the following disadvantages, however:</p>
 
 <ul>
 <li>If the distribution spans a bigger range than [0, 1], then taking the inverse CDF of the uniform random number can leave gaps, in the sense that some numbers with the same precision as the uniform number may not be generated even if the distribution gives them a chance of occurring; this is especially the case for uniform floating-point numbers close to 1 (Monahan 1985, sec. 4 and 6)<sup><a href="#Note39"><strong>(39)</strong></a></sup>.</li>
@@ -2127,7 +2126,7 @@ END METHOD
 <p><strong>Notes:</strong></p>
 
 <ol>
-<li>If only percentiles of data (such as the median or 50th percentile, the minimum or 0th percentile, or the maximum or 100th percentile) are available, the inverse CDF can be approximated via those percentiles.  The Nth percentile corresponds to <code>ICDF(N/100.0)</code>.  Missing values of the inverse CDF can then be filled in by interpolation (such as spline fitting).  If the raw data points are available, see &quot;<a href="#Random_Numbers_from_a_Distribution_of_Data_Points"><strong>Random Numbers from a Distribution of Data Points</strong></a>&quot; instead.</li>
+<li>If only percentiles of data (such as the median or 50th percentile, the minimum or 0th percentile, or the maximum or 100th percentile) are available, the inverse CDF can be approximated via those percentiles.  The Nth percentile corresponds to the inverse CDF of <code>N/100.0</code>.  Missing values of the inverse CDF can then be filled in by interpolation (such as spline fitting).  If the raw data points are available, see &quot;<a href="#Random_Numbers_from_a_Distribution_of_Data_Points"><strong>Random Numbers from a Distribution of Data Points</strong></a>&quot; instead.</li>
 <li>In the <a href="https://peteroupc.github.io/randomgen.zip"><strong>Python sample code</strong></a>, the <code>numbers_from_cdf</code> method, the <code>from_interp</code> method, and a <code>KVectorSampler</code> class<sup><a href="#Note54"><strong>(54)</strong></a></sup> use inversion to sample a random number given a <strong>distribution&#39;s CDF</strong>.  These are all approximations. For <code>from_interp</code>, the CDF is expressed as a list of input/output pairs.</li>
 </ol>
 </blockquote>
@@ -2213,7 +2212,7 @@ same meaning as in the gamma distribution.  Alternatively, <code>1.0 / (pow(Gamm
 <li><strong>Triangular distribution</strong>:
 
 <ul>
-<li><strong>Generalized</strong> (Kabal 2000/2019)<sup><a href="#Note60"><strong>(60)</strong></a></sup>: <code>alpha * min(startpt, endpt) + alpha * max(startpt, endpt)</code>.  The distribution starts at <code>startpt</code> and ends at <code>endpt</code>.</li>
+<li><strong>Generalized</strong> (Kabal 2000/2019)<sup><a href="#Note60"><strong>(60)</strong></a></sup>: <code>(1-alpha) * min(startpt, endpt) + alpha * max(startpt, endpt)</code>.  The distribution starts at <code>startpt</code> and ends at <code>endpt</code>.</li>
 <li>As used in <em>Mathematica</em>: <code>x * min(startpt, endpt) + x * max(startpt, endpt)</code> where <code>x = (midpt - startpt)/(endpt - startpt)</code>.</li>
 </ul></li>
 <li><strong>Weibull distribution</strong>: See generalized extreme value distribution.</li>
@@ -2564,7 +2563,12 @@ and &quot;<a href="https://randomascii.wordpress.com/2013/07/16/floating-point-d
 
 <p>provided the PDF&#39;s values are all 0 or greater and the area under the PDF&#39;s curve is 1.</small></p>
 
-<p><small><sup id=Note50>(50)</sup> A <em>discrete distribution</em> is a distribution that associates one or more items with a separate probability. This page assumes (without loss of generality) that these items are integers.  A discrete distribution can produce non-integer values (e.g., <code>x/y</code> with probability <code>x/(1+y)</code>) as long as the values can be converted to and from integers.  There are many ways to convert them this way. For example, a rational number in lowest terms can be converted to an integer by interleaving the bits of the numerator and denominator.</small></p>
+<p><small><sup id=Note50>(50)</sup> A <em>discrete distribution</em> is a distribution that associates one or more items with a separate probability. This page assumes (without loss of generality) that these items are integers.  A discrete distribution can produce non-integer values (e.g., <code>x/y</code> with probability <code>x/(1+y)</code>) as long as the values can be converted to and from integers. Two examples:</p>
+
+<ul>
+<li>A rational number in lowest terms can be converted to an integer by interleaving the bits of the numerator and denominator.</li>
+<li>Integer-quantized numbers (popular in &quot;deep-learning&quot; neural networks) take a relatively small number of bits (usually 8 bits or even smaller).  An 8-bit quantized number format is effectively a &quot;look-up table&quot; that maps 256 integers to real numbers.</small></li>
+</ul>
 
 <p><small><sup id=Note51>(51)</sup> This includes integers if <code>FPExponent</code> is limited to 0, and fixed-point numbers if <code>FPExponent</code> is limited to a single exponent less than 0.</p>
 
