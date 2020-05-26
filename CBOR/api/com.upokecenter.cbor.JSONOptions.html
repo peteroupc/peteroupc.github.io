@@ -9,30 +9,23 @@
 <pre>public final class JSONOptions extends java.lang.Object
 </pre>
 
-<p>Includes options to control how CBOR objects are converted to JSON.</p>
-
 <h2>Fields</h2>
 
 <ul>
-<li><code>static class  JSONOptions.ConversionMode</code><br>
-Specifies how JSON numbers are converted to CBOR when decoding JSON.</li>
-<li><code>static JSONOptions Default</code><br>
-The default options for converting CBOR objects to JSON.</li>
+<li><code>static class  JSONOptions.ConversionMode</code><br></li>
+<li><code>static JSONOptions Default</code><br></li>
 </ul>
 
 <h2>Nested Classes</h2>
 
 <ul>
-<li><code>static class  JSONOptions.ConversionMode</code><br>
-Specifies how JSON numbers are converted to CBOR when decoding JSON.</li>
+<li><code>static class  JSONOptions.ConversionMode</code><br></li>
 </ul>
 
 <h2>Constructors</h2>
 
 <ul>
-<li><code>JSONOptions() JSONOptions</code><br>
-Initializes a new instance of the JSONOptions
-class with default options.</li>
+<li><code>JSONOptions()</code><br></li>
 <li><code>JSONOptions​(boolean base64Padding)</code><br>
 Deprecated.
 Use the String constructor instead.
@@ -40,34 +33,21 @@ Use the String constructor instead.</li>
 <li><code>JSONOptions​(boolean base64Padding,
        boolean replaceSurrogates)</code><br>
 Deprecated.</li>
-<li><code>JSONOptions​(java.lang.String paramString) JSONOptions</code><br>
-Initializes a new instance of the JSONOptions
-class.</li>
+<li><code>JSONOptions​(java.lang.String paramString)</code><br></li>
 </ul>
 
 <h2>Methods</h2>
 
 <ul>
-<li><code>boolean getAllowDuplicateKeys()</code><br>
-Gets a value indicating whether to allow duplicate keys when reading JSON.</li>
+<li><code>boolean getAllowDuplicateKeys()</code><br></li>
 <li><code>boolean getBase64Padding()</code><br>
 Deprecated.
 This property now has no effect.
 This property now has no effect.</li>
-<li><code>JSONOptions.ConversionMode getNumberConversion()</code><br>
-Gets a value indicating how JSON numbers are decoded to CBOR.</li>
-<li><code>boolean getPreserveNegativeZero()</code><br>
-Gets a value indicating whether the JSON decoder should preserve the
-distinction between positive zero and negative zero when the decoder
-decodes JSON to a floating-point number format that makes this
-distinction.</li>
-<li><code>boolean getReplaceSurrogates() char</code><br>
-Gets a value indicating whether surrogate code points not part of a
-surrogate pair (which consists of two consecutive char s
-forming one Unicode code point) are each replaced with a replacement
-character (U+FFFD).</li>
-<li><code>java.lang.String toString()</code><br>
-Gets the values of this options object&#39;s properties in text form.</li>
+<li><code>JSONOptions.ConversionMode getNumberConversion()</code><br></li>
+<li><code>boolean getPreserveNegativeZero()</code><br></li>
+<li><code>boolean getReplaceSurrogates()</code><br></li>
+<li><code>java.lang.String toString()</code><br></li>
 </ul>
 
 <h2>Field Details</h2>
@@ -77,8 +57,6 @@ Gets the values of this options object&#39;s properties in text form.</li>
 <pre>public static final JSONOptions Default
 </pre>
 
-<p>The default options for converting CBOR objects to JSON.</p>
-
 <h2>Method Details</h2>
 
 <h3>toString</h3>
@@ -86,20 +64,10 @@ Gets the values of this options object&#39;s properties in text form.</li>
 <pre>public java.lang.String toString()
 </pre>
 
-<p>Gets the values of this options object&#39;s properties in text form.</p>
-
 <p><strong>Overrides:</strong></p>
 
 <ul>
 <li><code>toString</code> in class <code>java.lang.Object</code></li>
-</ul>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>A text string containing the values of this options object&#39;s
-properties. The format of the string is the same as the one
-described in the string constructor for this class.</li>
 </ul>
 
 <h3>getBase64Padding</h3>
@@ -113,83 +81,25 @@ This property now has no effect. This library now includes  necessary
  padding when writing base64url to JSON, in  accordance with the
  revision of the CBOR specification.</p>
 
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>A value indicating whether the Base64Padding property is true.</li>
-</ul>
-
 <h3>getPreserveNegativeZero</h3>
 
 <pre>public final boolean getPreserveNegativeZero()
 </pre>
-
-<p>Gets a value indicating whether the JSON decoder should preserve the
- distinction between positive zero and negative zero when the decoder
- decodes JSON to a floating-point number format that makes this
- distinction. For a value of <code>false</code>, if the result of parsing a
- JSON string would be a floating-point negative zero, that result is
- a positive zero instead. (Note that this property has no effect for
- conversion kind <code>IntOrFloatFromDouble</code>, where floating-point
- zeros are not possible.).</p>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>A value indicating whether to preserve the distinction between
-positive zero and negative zero when decoding JSON. The default is
-true.</li>
-</ul>
 
 <h3>getNumberConversion</h3>
 
 <pre>public final JSONOptions.ConversionMode getNumberConversion()
 </pre>
 
-<p>Gets a value indicating how JSON numbers are decoded to CBOR.</p>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>A value indicating how JSON numbers are decoded to CBOR. The default
-is <code>ConversionMode.Full</code>.</li>
-</ul>
-
 <h3>getAllowDuplicateKeys</h3>
 
 <pre>public final boolean getAllowDuplicateKeys()
 </pre>
 
-<p>Gets a value indicating whether to allow duplicate keys when reading JSON.
- Used only when decoding JSON. If this property is <code>true</code> and a
- JSON object has two or more values with the same key, the last value
- of that key set forth in the JSON object is taken.</p>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>A value indicating whether to allow duplicate keys when reading
-JSON. The default is false.</li>
-</ul>
-
 <h3>getReplaceSurrogates</h3>
 
 <pre>public final boolean getReplaceSurrogates()
 </pre>
-
-<p>Gets a value indicating whether surrogate code points not part of a
- surrogate pair (which consists of two consecutive <code>char</code> s
- forming one Unicode code point) are each replaced with a replacement
- character (U+FFFD). If false, an exception is thrown when such code
- points are encountered.</p>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>True, if surrogate code points not part of a surrogate pair are each
-replaced with a replacement character, or false if an exception is
-thrown when such code points are encountered. The default is false.</li>
-</ul>
 
 <p><a href="/CBOR/">Back to CBOR start page.</a></p>
 </div><nav id="navigation"><ul>
