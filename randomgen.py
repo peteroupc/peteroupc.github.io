@@ -880,7 +880,7 @@ Returns 'list'. """
             unif = self.rndrangemaxexc(-halfpi, halfpi)
         # Cauchy special case
         if alpha == 1 and beta == 0:
-            return -math.cos(unif)/math.sin(unif)
+            return -math.cos(unif) / math.sin(unif)
         expo = self.exponential()
         c = math.cos(unif)
         if alpha == 1:
@@ -926,26 +926,32 @@ Returns 'list'. """
     def geometric(self, p):
         return self.negativebinomial(1, p)
 
-    def zero_or_one_exp_minus(self, x, y)
+    def zero_or_one_exp_minus(self, x, y):
         """ Generates 1 with probability exp(-px/py); 0 otherwise.
                Reference:
                Canonne, C., Kamath, G., Steinke, T., "The Discrete Gaussian
                for Differential Privacy", arXiv:2004.00010v2 [cs.DS], 2020. """
-      if y <= 0 or x<0: raise ValueError
-      if x > y:
-        xf = int(x/y)
-        x = x % y
-        if self.zero_or_one_exp_minus(x, y) == 0: return 0
-        for i in range(1,xf+1):
-          if self.zero_or_one_exp_minus(1,1) == 0: return 0
-        return 1
-      r = 1
-      oy = y
-      while True:
-        if self.zero_or_one(x, y) == 0: return r
-        if r==1: r=0
-        else: r=1
-        y = y + oy
+        if y <= 0 or x < 0:
+            raise ValueError
+        if x > y:
+            xf = int(x / y)
+            x = x % y
+            if self.zero_or_one_exp_minus(x, y) == 0:
+                return 0
+            for i in range(1, xf + 1):
+                if self.zero_or_one_exp_minus(1, 1) == 0:
+                    return 0
+            return 1
+        r = 1
+        oy = y
+        while True:
+            if self.zero_or_one(x, y) == 0:
+                return r
+            if r == 1:
+                r = 0
+            else:
+                r = 1
+            y = y + oy
 
     def zero_or_one_power(self, px, py, n):
         """ Generates 1 with probability (px/py)^n; 0 otherwise. """
@@ -2240,10 +2246,11 @@ acap - Optional.  A setting used in the optimization process; an
         return r._weighted_choice_n(wt, n, mn)
 
     def _ensuredenom(self, frac, denom):
-        if frac.denominator>denom:
-             newnum=int(abs(frac)*denom)
-             if frac<0: newnum=-newnum
-             return Fraction(newnum,denom)
+        if frac.denominator > denom:
+            newnum = int(abs(frac) * denom)
+            if frac < 0:
+                newnum = -newnum
+            return Fraction(newnum, denom)
         return frac
 
     def _bisectionuniform(self, a, b, bitplaces):
@@ -2259,9 +2266,9 @@ acap - Optional.  A setting used in the optimization process; an
         if aax.denominator == 1 and bbx.denominator == 1:
             # Fast track
             diff = bbx.numerator - aax.numerator
-            return self._ensuredenom( \
-                a + Fraction(self.rndint(diff), epsdenom), \
-                epsdenom)
+            return self._ensuredenom(
+                a + Fraction(self.rndint(diff), epsdenom), epsdenom
+            )
         twoEps = eps * 2
         mn = Fraction(a)
         mx = Fraction(b)
@@ -2281,6 +2288,43 @@ acap - Optional.  A setting used in the optimization process; an
                 cdfa = cdfz
             if b - a <= twoEps:
                 return self._ensuredenom((a + b) / 2, epsdenom)
+
+    def numbers_from_dist_inversion(self, icdf, n=1, bitplaces=53):
+        """
+Generates 'n' random numbers that follow a continuous
+or discrete probability distribution, using the inversion method.
+Implements section 5 of Devroye and Gravel,
+"Sampling with arbitrary precision", arXiv:1502.02539v5 [cs.IT], 2018.
+- 'n' is the number of random numbers to generate.  Default is 1.
+- 'icdf' is a procedure that takes three arguments: u, ubits, bitplaces,
+   and returns a number within 2^-bitplaces of the true inverse
+   CDF (inverse cumulative distribution function, or quantile function)
+   of u/2^ubits.
+- 'bitplaces' is an accuracy expressed as a number of bits after the
+   binary point. The random number will be a multiple of 2^-bitplaces,
+   or have a smaller granularity. Default is 53.
+       """
+        u = 0
+        ubits = 0
+        threshold = Fraction(1, 1 << bitplaces) * 2
+        ret = [None for i in range(n)]
+        k = 0
+        while k < n:
+            incr = precision if (ubits == 0) else 8
+            u = (u << incr) | self.rndintexc(1 << incr)
+            ubits += incr
+            lower = icdf(u, ubits, precision)
+            upper = icdf(u + 1, ubits, precision)
+            # ICDF must be monotonically nondecreasing
+            if lower > upper:
+                raise ValueError
+            diff = upper - lower
+            if diff <= threshold:
+                ret[k] = upper + (upper - lower) / 2
+                k += 1
+                u = 0
+                ubits = 0
+        return ret
 
     def numbers_from_dist(self, pdf, mn=0, mx=1, n=1, bitplaces=53):
         """

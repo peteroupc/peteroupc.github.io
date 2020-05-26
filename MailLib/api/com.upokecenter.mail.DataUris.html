@@ -9,16 +9,31 @@
 <pre>public final class DataUris extends java.lang.Object
 </pre>
 
+<p>Contains methods for parsing and generating Data URIs (uniform resource
+ identifiers). Data URIs are described in RFC 2397. Examples for Data
+ URIs follow. <pre>data:, hello%20world</pre> <pre>data:text/markdown, hello%20world</pre> <pre>data:application/octet-stream;base64, AAAAAA==</pre>.</p>
+
 <h2>Methods</h2>
 
 <ul>
-<li><code>static byte[] DataUriBytes​(java.lang.String uri)</code><br></li>
-<li><code>static byte[] DataUriBytes​(java.net.URI uri)</code><br></li>
-<li><code>static MediaType DataUriMediaType​(java.lang.String uri)</code><br></li>
-<li><code>static MediaType DataUriMediaType​(java.net.URI uri)</code><br></li>
+<li><code>static byte[] DataUriBytes​(java.lang.String uri)</code><br>
+Extracts the data from a Data URI (uniform resource identifier) in the form
+of a byte array.</li>
+<li><code>static byte[] DataUriBytes​(java.net.URI uri)</code><br>
+Extracts the data from a Data URI (uniform resource identifier) in the form
+of a byte array, where the Data URI is given as a URI object.</li>
+<li><code>static MediaType DataUriMediaType​(java.lang.String uri)</code><br>
+Extracts the media type from a Data URI (uniform resource identifier) in the
+form of a text string.</li>
+<li><code>static MediaType DataUriMediaType​(java.net.URI uri)</code><br>
+Extracts the media type from a Data URI (uniform resource identifier) in the
+form of a URI object.</li>
 <li><code>static java.lang.String MakeDataUri​(byte[] bytes,
-       MediaType mediaType)</code><br></li>
-<li><code>static java.lang.String MakeDataUri​(java.lang.String textString)</code><br></li>
+       MediaType mediaType)</code><br>
+Encodes data with the given media type in a Data URI (uniform resource
+identifier).</li>
+<li><code>static java.lang.String MakeDataUri​(java.lang.String textString)</code><br>
+Encodes text as a Data URI (uniform resource identifier).</li>
 </ul>
 
 <h2>Method Details</h2>
@@ -28,30 +43,161 @@
 <pre>public static MediaType DataUriMediaType​(java.lang.String uri)
 </pre>
 
+<p>Extracts the media type from a Data URI (uniform resource identifier) in the
+ form of a text string.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>uri</code> - A data URI in the form of a text string.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The media type. Returns null if <code>uri</code> is null, is
+syntactically invalid, or is not a Data URI.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>java.lang.NullPointerException</code> - The parameter <code>uri</code> is null.</li>
+</ul>
+
 <h3>DataUriMediaType</h3>
 
 <pre>public static MediaType DataUriMediaType​(java.net.URI uri)
 </pre>
+
+<p>Extracts the media type from a Data URI (uniform resource identifier) in the
+ form of a URI object.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>uri</code> - A data URI in the form of a URI object.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The media type. Returns null if <code>uri</code> is null, is
+syntactically invalid, or is not a Data URI.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>java.lang.NullPointerException</code> - The parameter <code>uri</code> is null.</li>
+</ul>
 
 <h3>DataUriBytes</h3>
 
 <pre>public static byte[] DataUriBytes​(java.net.URI uri)
 </pre>
 
+<p>Extracts the data from a Data URI (uniform resource identifier) in the form
+ of a byte array, where the Data URI is given as a URI object.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>uri</code> - The Data URI in the form of a URI object.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The data as a byte array. Returns null if <code>uri</code> is null, is
+syntactically invalid, or is not a data URI.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>java.lang.NullPointerException</code> - The parameter <code>uri</code> is null.</li>
+</ul>
+
 <h3>DataUriBytes</h3>
 
 <pre>public static byte[] DataUriBytes​(java.lang.String uri)
 </pre>
+
+<p>Extracts the data from a Data URI (uniform resource identifier) in the form
+ of a byte array.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>uri</code> - The parameter <code>uri</code> is a text string.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The data as a byte array. Returns null if <code>uri</code> is null, is
+syntactically invalid, or is not a data URI.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>java.lang.NullPointerException</code> - The parameter <code>uri</code> is null.</li>
+</ul>
 
 <h3>MakeDataUri</h3>
 
 <pre>public static java.lang.String MakeDataUri​(java.lang.String textString)
 </pre>
 
+<p>Encodes text as a Data URI (uniform resource identifier).</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>textString</code> - A text string to encode as a data URI.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A Data URI that encodes the given text.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>java.lang.NullPointerException</code> - The parameter <code>textString</code> is null.</li>
+</ul>
+
 <h3>MakeDataUri</h3>
 
 <pre>public static java.lang.String MakeDataUri​(byte[] bytes, MediaType mediaType)
 </pre>
+
+<p>Encodes data with the given media type in a Data URI (uniform resource
+ identifier).</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>bytes</code> - A byte array containing the data to encode in a Data URI.</p></li>
+<li><p><code>mediaType</code> - A media type to assign to the data.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A Data URI that encodes the given data and media type.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>java.lang.NullPointerException</code> - The parameter <code>bytes</code> or <code>
+mediaType</code> is null.</li>
+</ul>
 
 <p><a href="/MailLib/">Back to MailLib start page.</a></p>
 </div><nav id="navigation"><ul>

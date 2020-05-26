@@ -9,13 +9,21 @@
 <pre>public enum Normalization extends java.lang.Enum&lt;Normalization&gt;
 </pre>
 
+<p>Represents a Unicode normalization form.</p>
+
 <h2>Enum Constants</h2>
 
 <ul>
-<li><code>NFC</code><br></li>
-<li><code>NFD</code><br></li>
-<li><code>NFKC</code><br></li>
-<li><code>NFKD</code><br></li>
+<li><code>NFC</code><br>
+Normalization form C: canonical decomposition followed by canonical
+composition.</li>
+<li><code>NFD</code><br>
+Normalization form D: canonical decomposition.</li>
+<li><code>NFKC</code><br>
+Normalization form KC: compatibility decomposition followed by canonical
+composition.</li>
+<li><code>NFKD</code><br>
+Normalization form KD: compatibility decomposition.</li>
 </ul>
 
 <h2>Methods</h2>
@@ -67,20 +75,30 @@ the order they are declared.</li>
 <pre>public static final Normalization NFC
 </pre>
 
+<p>Normalization form C: canonical decomposition followed by canonical
+ composition.</p>
+
 <h3>NFD</h3>
 
 <pre>public static final Normalization NFD
 </pre>
+
+<p>Normalization form D: canonical decomposition.</p>
 
 <h3>NFKC</h3>
 
 <pre>public static final Normalization NFKC
 </pre>
 
+<p>Normalization form KC: compatibility decomposition followed by canonical
+ composition.</p>
+
 <h3>NFKD</h3>
 
 <pre>public static final Normalization NFKD
 </pre>
+
+<p>Normalization form KD: compatibility decomposition.</p>
 
 <p><a href="/MailLib/">Back to MailLib start page.</a></p>
 </div><nav id="navigation"><ul>
