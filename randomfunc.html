@@ -2030,7 +2030,7 @@ METHOD FPRatio(fp)
 END METHOD
 
 METHOD NormalizeRatios(ratios)
-  # NOTE: Assumes denominators are powers of the same base
+  // NOTE: Assumes denominators are powers of the same base
   maxden=0
   for r in ratios: maxden=max(maxden, r[1])
   weights=[]
@@ -2099,7 +2099,7 @@ END METHOD
 end
 </pre>
 
-<p>If an application can trade accuracy for speed, the following three methods approximate the inverse CDF given a uniform random number and additional information:</p>
+<p>The following three methods approximate the inverse CDF given a uniform random number and additional information.  They should be used only if the application can trade accuracy for speed and if the uniform random number was <em>pregenerated</em> (e.g., from a copula or a <a href="#Low_Discrepancy_Sequences"><strong>low-discrepancy sequence</strong></a>):</p>
 
 <ul>
 <li><code>ICDFFromDiscretePDF(u01, mini, maxi)</code>: <strong>PDF of discrete distribution</strong>; interval [<code>mini</code>, <code>maxi</code>] that covers all or almost all of the distribution.</li>
@@ -2127,21 +2127,17 @@ METHOD ICDFFromDiscreteCDF(u01, mini, maxi)
   return mini + CWChoose(weights, u01)
 END METHOD
 
-METHOD SampleWeights(list, weights, mini, maxi, step)
+METHOD ICDFFromContPDF(u01, mini, maxi, step)
+  values=[]
+  weights=[]
+  areas=[]
    i = mini; while i &lt; maxi
-     AddItem(list, i)
+     AddItem(values, i)
      AddItem(weights, PDF(i))
      i = i + step
    end
    AddItem(list, maxi)
    AddItem(weights, PDF(maxi))
-END METHOD
-
-METHOD ICDFFromContPDF(u01, mini, maxi, step)
-  values=[]
-  weights=[]
-  areas=[]
-  SampleWeights(values, weights, mini, maxi, step)
   sum=GatherAreas(values, weights, areas)
   return ContWChoose(values, weights, areas, u01 * sum)
 END METHOD

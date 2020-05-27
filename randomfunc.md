@@ -343,7 +343,8 @@ Whenever possible, the methods in this document should be implemented in a more 
 8. To generate a random integer in the interval [0, `X`):
      - And favor numbers in the middle:  `floor((RNDINTEXC(X) + RNDINTEXC(X)) / 2)`.
      - And strongly favor low numbers:  `floor(RNDINTEXC(X) * RNDINTEXC(X) / X)`.
-     - And strongly favor high numbers:  `X - 1 - floor(RNDINTEXC(X) * RNDINTEXC(X) / X)`.
+     - And favor high numbers:  `max(RNDINTEXC(X), RNDINTEXC(X))`.
+     - And strongly favor high numbers:  `X - 1 - floor(RNDINTEXC(X) * RNDINTEXC(X) / X)` or `max(RNDINTEXC(X), RNDINTEXC(X), RNDINTEXC(X))`.
 
 <a id=Randomization_Techniques></a>
 ## Randomization Techniques
@@ -1481,7 +1482,6 @@ The `ContinuousWeightedChoice` method (in the pseudocode below) takes two lists 
 &nbsp;
 
     METHOD ContWChoose(values, weights, areas, value)
-        wt=RNDU01OneExc()
         // Interpolate a number according to the given value
         i=0
         // Get the number corresponding to the random number
@@ -1497,6 +1497,7 @@ The `ContinuousWeightedChoice` method (in the pseudocode below) takes two lists 
            diff=w2-w1
            wmin=min(w1, w2)
            wmax=max(w1, w2)
+           wt=(value - runningValue)/area
            interp=wt
            if diff!=0
               s=sqrt(wmax*wmax*wt+wmin*wmin-
@@ -1668,7 +1669,7 @@ The pseudocode below shows the following methods that work with a **known PDF** 
     END METHOD
 
     METHOD NormalizeRatios(ratios)
-      # NOTE: Assumes denominators are powers of the same base
+      // NOTE: Assumes denominators are powers of the same base
       maxden=0
       for r in ratios: maxden=max(maxden, r[1])
       weights=[]
@@ -1730,7 +1731,7 @@ The following method generates a random number from a distribution via inversion
        end
     end
 
-If an application can trade accuracy for speed, the following three methods approximate the inverse CDF given a uniform random number and additional information:
+The following three methods approximate the inverse CDF given a uniform random number and additional information.  They should be used only if the application can trade accuracy for speed and if the uniform random number was _pregenerated_ (e.g., from a copula or a [**low-discrepancy sequence**](#Low_Discrepancy_Sequences)):
 
 - `ICDFFromDiscretePDF(u01, mini, maxi)`: **PDF of discrete distribution**; interval [`mini`, `maxi`] that covers all or almost all of the distribution.
 - `ICDFFromDiscreteCDF(u01, mini, maxi)`: **CDF of discrete distribution**; interval [`mini`, `maxi`].
@@ -1756,21 +1757,17 @@ If an application can trade accuracy for speed, the following three methods appr
       return mini + CWChoose(weights, u01)
     END METHOD
 
-    METHOD SampleWeights(list, weights, mini, maxi, step)
+    METHOD ICDFFromContPDF(u01, mini, maxi, step)
+      values=[]
+      weights=[]
+      areas=[]
        i = mini; while i < maxi
-         AddItem(list, i)
+         AddItem(values, i)
          AddItem(weights, PDF(i))
          i = i + step
        end
        AddItem(list, maxi)
        AddItem(weights, PDF(maxi))
-    END METHOD
-
-    METHOD ICDFFromContPDF(u01, mini, maxi, step)
-      values=[]
-      weights=[]
-      areas=[]
-      SampleWeights(values, weights, mini, maxi, step)
       sum=GatherAreas(values, weights, areas)
       return ContWChoose(values, weights, areas, u01 * sum)
     END METHOD
@@ -1828,7 +1825,7 @@ Most commonly used:
 - **Cauchy (Lorentz) distribution**&dagger;:  `Stable(1, 0)`.  This distribution is similar to the normal distribution, but with "fatter" tails. Alternative algorithm based on one mentioned in (McGrath and Irving 1975)<sup>[**(59)**](#Note59)</sup>: Generate `x = RNDU01ZeroExc()` and `y = RNDU01ZeroExc()` until `x * x + y * y <= 1`, then generate `(RNDINT(1) * 2 - 1) * y / x`.
 - **Chi-squared distribution**: `GammaDist(df * 0.5 + Poisson(sms * 0.5), 2)`, where `df` is the number of degrees of freedom and `sms` is the sum of mean squares (where `sms` other than 0 indicates a _noncentral_ distribution).
 - **Dice**: See [**Dice**](#Dice).
-- **Exponential distribution**: See [**Exponential Distribution**](#Exponential_Distribution).  The na&iuml;ve implementation `-ln(1-RNDU01()) / lamda` has several problems, such as being ill-conditioned at large values because of the distribution's right-sided tail (Pedersen 2018)<sup>[**(2)**](#Note2)</sup>, as well as returning infinity if `RNDU01()` becomes 1. An application can reduce some of these problems by appling Pedersen's suggestion of using either `-ln(RNDRANGEMinExc(0, 0.5))` or `-log1p(-RNDRANGEMinExc(0, 0.5))` (rather than `-ln(1-RNDU01())`), chosen at random each time.
+- **Exponential distribution**: See [**Exponential Distribution**](#Exponential_Distribution).  The na&iuml;ve implementation `-ln(1-RNDU01()) / lamda` has several problems, such as being ill-conditioned at large values because of the distribution's right-sided tail (Pedersen 2018)<sup>[**(2)**](#Note2)</sup>, as well as returning infinity if `RNDU01()` becomes 1. An application can reduce some of these problems by applying Pedersen's suggestion of using either `-ln(RNDRANGEMinExc(0, 0.5))` or `-log1p(-RNDRANGEMinExc(0, 0.5))` (rather than `-ln(1-RNDU01())`), chosen at random each time; an alternative is `log(1/RNDU01ZeroExc())` mentioned in <<Devroye 2004|Devroye, L., "Non-Uniform Random Variate Generation", 2004 (this is a more recent survey paper).>>.
 - **Extreme value distribution**: See generalized extreme value distribution.
 - **Gamma distribution**: See [**Gamma Distribution**](https://github.com/peteroupc/peteroupc.github.io/blob/master/randomnotes.md#Gamma_Distribution).  _3-parameter gamma distribution_: `pow(GammaDist(a, 1), 1.0 / c) * b`, where `c` is another shape parameter. _4-parameter gamma distribution_: `pow(GammaDist(a, 1), 1.0 / c) * b + d`, where `d` is the minimum value.
 - **Gaussian distribution**: See [**Normal (Gaussian) Distribution**](https://github.com/peteroupc/peteroupc.github.io/blob/master/randomnotes.md#Normal_Gaussian_Distribution).
@@ -1846,7 +1843,7 @@ Most commonly used:
 - **Pareto distribution**: `pow(RNDU01ZeroOneExc(), -1.0 / alpha) * minimum`, where `alpha`  is the shape and `minimum` is the minimum.
 - **Rayleigh distribution**&dagger;: `sqrt(Expo(0.5))`.  If the scale parameter (`sigma`) follows a logarithmic normal distribution, the result is a _Suzuki distribution_.
 - **Standard normal distribution**&dagger;: `Normal(0, 1)`.  See also [**Normal (Gaussian) Distribution**](https://github.com/peteroupc/peteroupc.github.io/blob/master/randomnotes.md#Normal_Gaussian_Distribution).
-- **Student's _t_-distribution**: `Normal(cent, 1) / sqrt(GammaDist(df * 0.5, 2 / df))`, where `df` is the number of degrees of freedom, and _cent_ is the mean of the normally-distributed random number.  A `cent` other than 0 indicates a _noncentral_ distribution.
+- **Student's _t_-distribution**: `Normal(cent, 1) / sqrt(GammaDist(df * 0.5, 2 / df))`, where `df` is the number of degrees of freedom, and _cent_ is the mean of the normally-distributed random number.  A `cent` other than 0 indicates a _noncentral_ distribution.  Alternatively, `cos(RNDRANGE(0, pi * 2)) * sqrt((pow(RNDU01(),-2.0/df)-1) * df)` <<Bailey 1994|Bailey, R.W., " Polar generation of random variates with the t distribution", _Mathematics of Computation 62 (1984).>>.
 - **Triangular distribution**:
    - **Generalized** (Kabal 2000/2019)<sup>[**(62)**](#Note62)</sup>: `(1-alpha) * min(startpt, endpt) + alpha * max(startpt, endpt)`.  The distribution starts at `startpt` and ends at `endpt`.
    - As used in _Mathematica_: `x * min(startpt, endpt) + x * max(startpt, endpt)` where `x = (midpt - startpt)/(endpt - startpt)`.
@@ -2024,7 +2021,7 @@ To generate a random point on or inside an N-dimensional spherical shell (a holl
 - generate a random point for a ball of radius B until the norm of that point is A or greater (see the [**appendix**](#Appendix)), or
 - generate a random point on the surface of an N-dimensional hypersphere with radius equal to `pow(RNDRANGE(pow(A, N), pow(B, N)), 1.0 / N)`<sup>[**(69)**](#Note69)</sup>.
 
-To generate a random point on or inside a cone with height `H` and radius `R` at its base, running along the Z axis, generate a random Z coordinate by `Z = H * max(max(RNDU01(), RNDU01()), RNDU01())`, then generate random X and Y coordinates inside a disc (2-dimensional ball) with radius equal to `R * Z * max(RNDU01(), RNDU01()) / H`<sup>[**(70)**](#Note70)</sup>.
+To generate a random point on or inside a cone with height `H` and radius `R` at its base, running along the Z axis, generate a random Z coordinate by `Z = max(max(RNDRANGE(0, H), RNDRANGE(0, H)), RNDRANGE(0, H))`, then generate random X and Y coordinates inside a disc (2-dimensional ball) with radius equal to `max(RNDRANGE(0,R*Z/H), RNDRANGE(0,R*Z/H))`<sup>[**(70)**](#Note70)</sup>.
 
 > **Example:** To generate a random point inside a cylinder running along the Z axis, generate random X and Y coordinates inside a disc (2-dimensional ball) and generate a random Z coordinate by `RNDRANGE(mn, mx)`, where `mn` and `mx` are the highest and lowest Z coordinates possible.
 >
