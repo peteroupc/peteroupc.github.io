@@ -2315,7 +2315,7 @@ Implements section 5 of Devroye and Gravel,
             ubits += incr
             lower = icdf(u, ubits, precision)
             upper = icdf(u + 1, ubits, precision)
-            # ICDF must be monotonically nondecreasing
+            # ICDF can never go down
             if lower > upper:
                 raise ValueError
             diff = upper - lower

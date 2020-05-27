@@ -731,7 +731,7 @@ For cryptographic RNGs, an application should use only one thread-safe instance 
 <ul>
 <li>Randomness extractors or cryptographic <a href="#Hash_Functions"><strong>hash functions</strong></a> that take very hard-to-predict signals from two or more <a href="#Nondeterministic_Sources_and_Seed_Generation"><strong>nondeterministic sources</strong></a> as input.</li>
 <li>A &quot;fast-key-erasure&quot; random number generator described by D.J. Bernstein in his blog (Bernstein 2017)<sup><a href="#Note43"><strong>(43)</strong></a></sup>.</li>
-<li>An RNG implementation complying with NIST SP 800-90A.  The SP 800-90 series goes into further detail on how RNGs appropriate for information security can be constructed, and inspired much of this section.</li>
+<li>The Hash_DRBG and HMAC_DRBG generators specified in NIST SP 800-90A.  The SP 800-90 series goes into further detail on how RNGs appropriate for information security can be constructed, and inspired much of this section.</li>
 <li>An RNG made up of two or more independently initialized cryptographic RNGs of different designs.<sup><a href="#Note44"><strong>(44)</strong></a></sup></li>
 </ul>
 </blockquote>
@@ -928,7 +928,7 @@ For cryptographic RNGs, an application should use only one thread-safe instance 
 
 <p>(A) &quot;Post-Spectre Threat Model Re-Think&quot; in the Chromium source code repository (May 29, 2018).<br/>(B) Bernstein, D.J. &quot;Entropy Attacks!&quot;, Feb. 5, 2014.<br/>(C) Everspaugh, A., Zhai, Y., et al. &quot;Not-So-Random Numbers in Virtualized Linux and the Whirlwind RNG&quot;, 2014.<br/>(D) Ristenpart, T., Yilek, S. &quot;When Good Randomness Goes Bad: Virtual Machine Reset Vulnerabilities and Hedging Deployed Cryptography&quot;, 2010.<br/>For a detailed notion of a secure RNG, see Coretti, Dodis, et al., &quot;Seedless Fruit is the Sweetest: Random Number Generation, Revisited&quot;, 2019.</small></p>
 
-<p><small><sup id=Note42>(42)</sup> This data can come from nondeterministic sources, and also include process identifiers, time stamps, environment variables, random numbers, virtual machine guest identifiers, and/or other data specific to the session or to the instance of the RNG.  See also NIST SP800-90A and the previous note.</small></p>
+<p><small><sup id=Note42>(42)</sup> This data can come from nondeterministic sources, and also include process identifiers, time stamps, environment variables, random numbers, virtual machine guest identifiers, and/or other data specific to the session or to the instance of the RNG.  See also NIST SP 800-90A and the previous note.</small></p>
 
 <p><small><sup id=Note43>(43)</sup> Bernstein, D.J.  &quot;Fast-key-erasure random number generators&quot;, Jun. 23, 2017.</small></p>
 
