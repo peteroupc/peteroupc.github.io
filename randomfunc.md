@@ -135,7 +135,10 @@ This document uses the following notation for intervals:
 - (`a`, `b`] means "greater than `a` and less than or equal to `b`".
 - [`a`, `b`] means "`a` or greater and `b` or less".
 
-In this document, `log1p(x)` is equivalent to `ln(1 + x)` and is a robust alternative where `x` is a floating-point number (Pedersen 2018)<sup>[**(2)**](#Note2)</sup>.
+In this document:
+
+- `log1p(x)` is equivalent to `ln(1 + x)` and is a robust alternative where `x` is a floating-point number (Pedersen 2018)<sup>[**(2)**](#Note2)</sup>.
+- `MakeRatio(n, d)` creates a rational number with the given numerator `n` and denominator `d`.
 
 <a id=Uniform_Random_Integers></a>
 ## Uniform Random Integers
