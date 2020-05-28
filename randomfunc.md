@@ -398,7 +398,7 @@ The following method generates 1 with probability `exp(-x/y)` and 0 otherwise (C
       if x > y
         xf = floor(x/y)
         x = mod(x, y)
-        if ZeroOrOneExpMinus(x, y) == 0: return 0
+        if x>0 and ZeroOrOneExpMinus(x, y) == 0: return 0
         for i in 1..xf
           if ZeroOrOneExpMinus(1,1) == 0: return 0
         end

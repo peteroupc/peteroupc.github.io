@@ -934,9 +934,9 @@ Returns 'list'. """
         if y <= 0 or x < 0:
             raise ValueError
         if x > y:
-            xf = int(x / y)
-            x = x % y
-            if self.zero_or_one_exp_minus(x, y) == 0:
+            xf = int(x / y)  # Get integer part
+            x = x % y  # Reduce to fraction
+            if x > 0 and self.zero_or_one_exp_minus(x, y) == 0:
                 return 0
             for i in range(1, xf + 1):
                 if self.zero_or_one_exp_minus(1, 1) == 0:
@@ -953,8 +953,42 @@ Returns 'list'. """
                 r = 1
             y = y + oy
 
+    def _zero_or_one_power_frac(self, px, py, nx, ny):
+        # Generates a random number, namely 1 with
+        # probability (px/py)^(ax/ay) (where ax/ay is in (0, 1)),
+        # and 1 otherwise.  Returns 1 if ax/ay is 0.  Reference:
+        # Mendo, Luis. "An asymptotically optimal Bernoulli
+        # factory for certain functions that can be expressed
+        # as power series." Stochastic Processes and their
+        # Applications 129, no. 11 (2019): 4366-4384.
+        i = 1
+        while True:
+            x = self.zero_or_one(px, py)
+            if x == 1:
+                return 1
+            if ax == ay or self.zero_or_one(ax, ay * i):
+                return 0
+            i = i + 1
+
+    def zero_or_one_power_ratio(self, px, py, nx, ny):
+        """ Generates 1 with probability (px/py)^(nx/ny) (where nx/ny must be 0 or
+           greater); 0 otherwise. """
+        if y <= 0 or x < 0:
+            raise ValueError
+        if nx > ny:
+            # (px/py)^(nx/ny) -> (px/py)^int(nx/ny) * (px/py)^frac(nx/ny)
+            xf = int(nx / ny)  # Get integer part
+            nx = nx % ny  # Reduce to fraction
+            if nx > 0 and self._zero_or_one_power_frac(nx, ny) == 0:
+                return 0
+            return self.zero_or_one_power(px, py, xf)
+        return self._zero_or_one_power_frac(nx, ny)
+
     def zero_or_one_power(self, px, py, n):
-        """ Generates 1 with probability (px/py)^n; 0 otherwise. """
+        """ Generates 1 with probability (px/py)^n (where n must be an integer
+          and 0 or greater); 0 otherwise. """
+        if n < 0:
+            raise ValueError
         if n == 0 or px >= py:
             return 1
         n1 = 1

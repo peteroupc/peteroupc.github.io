@@ -527,7 +527,7 @@ END METHOD
   if x &gt; y
     xf = floor(x/y)
     x = mod(x, y)
-    if ZeroOrOneExpMinus(x, y) == 0: return 0
+    if x&gt;0 and ZeroOrOneExpMinus(x, y) == 0: return 0
     for i in 1..xf
       if ZeroOrOneExpMinus(1,1) == 0: return 0
     end
