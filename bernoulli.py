@@ -10,6 +10,8 @@ class Bernoulli:
       References:
       - Flajolet, P., Pelletier, M., Soria, M., "On Buffon machines and numbers",
       arXiv:0906.5560v2 [math.PR], 2010.
+      - Huber, M., "Designing perfect simulation algorithms using local correctness",
+      arXiv:1907.06748v1 [cs.DS], 2019.
       - Huber, M., "Optimal linear Bernoulli factories for small mean problems",
       arXiv:1507.00843v2 [math.PR], 2016.
       - Morina, G., Łatuszyński, K., et al., "From the Bernoulli Factory to a Dice
@@ -161,7 +163,7 @@ class Bernoulli:
     def coin(self, c):
         """ Convenience method to generate a function that returns
          1 (heads) with the given probability c (which must be in (0, 1))
-         and 0 otherwise. """
+         and 0 (tails) otherwise. """
         c = Fraction(c)
         return lambda: self.zero_or_one(c.numerator, c.denominator)
 
@@ -212,8 +214,8 @@ class Bernoulli:
             if f() == 0:
                 return 0
 
-    def logistic(self, f, cx, cy):
-        """ Logistic Bernoulli factory: B(p) -> B(cx*p/(cy+a*p)) or
+    def logistic(self, f, cx, cy=1):
+        """ Logistic Bernoulli factory: B(p) -> B(cx*p/(cy+cx*p)) or
          B(p) -> B((cx/cy)*p/(1+(cx/cy)*p)) (Morina et al. 2019)
      - f: Function that returns 1 if heads and 0 if tails.
      - cx, cy: numerator and denominator of c; the probability of heads (p) is multiplied
@@ -370,9 +372,8 @@ class Bernoulli:
             i = i + 1
 
     def zero_or_one_power_ratio(self, px, py, nx, ny):
-        """ Generates 1 with probability (px/py)^(nx/ny) (where nx/ny must be 0 or
-           greater); 0 otherwise. """
-        if y <= 0 or x < 0:
+        """ Generates 1 with probability (px/py)^(nx/ny) (where nx/ny can be positive, negative, or zero); 0 otherwise. """
+        if py <= 0 or px < 0:
             raise ValueError
         n = Fraction(nx, ny)
         p = Fraction(px, py)
@@ -380,8 +381,9 @@ class Bernoulli:
         ny = n.denominator
         px = p.numerator
         py = p.denominator
-        if n < 0:
-            raise ValueError
+        if n < 0:  # (px/py)^(nx/ny) -> (py/px)^-(nx/ny)
+            n = -n
+            return self.zero_or_one_power_ratio(py, px, n.numerator, n.denominator)
         if n == 0 or px >= py:
             return 1
         if nx == ny:
@@ -404,18 +406,18 @@ class Bernoulli:
                 if self.zero_or_one_power(npx, npy, quo) == 0:
                     return 0
                 xf -= quo * n1
-            for i in range(n):
+            for i in range(xf):
                 if self.zero_or_one(px, py) == 0:
                     return 0
             return 1
         return self._zero_or_one_power_frac(nx, ny)
 
     def zero_or_one_power(self, px, py, n):
-        """ Generates 1 with probability (px/py)^n (where n must be 0 or greater); 0 otherwise. """
-        return zero_or_one_power_ratio(px, py, n, 1)
+        """ Generates 1 with probability (px/py)^n (where n can be positive, negative, or zero); 0 otherwise. """
+        return self.zero_or_one_power_ratio(px, py, n, 1)
 
     def twocoin(self, f1, f2, c1=1, c2=1, beta=1):
-        """ Two-coin Bernoulli factory: B(p), B(q) => B(c1*p*beta / (c1*p+c2*q)
+        """ Two-coin Bernoulli factory: B(p), B(q) => B(c1*p*beta / (c1*p+c2*q))
          (Gonçalves et al. 2017, Vats et al. 2020; in Vats et al.,
           C1,p1 corresponds to cy and C2,p2 corresponds to cx).
          Logistic Bernoulli factory is a special case with q=1, c2=1, beta=1.
@@ -461,8 +463,7 @@ class Bernoulli:
      - cx, cy: numerator and denominator of c; the probability of heads (p) is multiplied
        by c. c must be 0 or greater. If c > 1, c must be chosen so that c*p <= 1 - eps.
      - eps: A Fraction in (0, 1). If c > 1, eps must be chosen so that c*p <= 1 - eps.
-       This method is more accurate, but slower, when eps is close to 1, and is more
-       accurate when p is close to 0.
+       This method is more accurate, but slower, when eps is close to 1.
      """
         c = Fraction(cx, cy)
         # Fast cases, not covered in Huber, to make this more general than c > 1
@@ -479,12 +480,13 @@ class Bernoulli:
                 if self.zero_or_one(c.numerator, c.denominator) == 1 and f() == 1
                 else 0
             )
+        eps = Fraction(eps)
         m = (Fraction(45, 10) / eps) + 1
         # Ceiling operation
         m += Fraction(m.denominator - m.numerator % m.denominator, m.denominator)
+        beta = 1 + Fraction(1) / (m - 1)
         if self._algorithm_a(f, m, c) == 0:
             return 0
-        beta = 1 + Fraction(1) / (m - 1)
         if self.zero_or_one(beta.denominator, beta.numerator) == 1:
             return 1  # Bern(1/beta)
         # Algorithm B (B(p) -> B((m-1)*(beta*c*p)^(m-1)/(1+(beta*c*p)+...+(beta*c*p)^(m-2)))
@@ -496,13 +498,57 @@ class Bernoulli:
                 return 1
             m -= 1
 
+    def linear_power(self, f, cx, cy=1, i=1, eps=Fraction(5, 100)):
+        """ Linear-and-power Bernoulli factory: B(p) => B((p*cx/cy)^i) (Huber 2019).
+     - f: Function that returns 1 if heads and 0 if tails.
+     - cx, cy: numerator and denominator of c; the probability of heads (p) is multiplied
+       by c. c must be 0 or greater. If c > 1, c must be chosen so that c*p <= 1 - eps.
+     - i: The exponent.  Must be an integer and 0 or greater.
+     - eps: A Fraction in (0, 1). If c > 1, eps must be chosen so that c*p <= 1 - eps.
+     """
+        if i == 0:
+            return 1
+        if i < 0:
+            raise ValueError
+        eps = Fraction(eps)
+        if eps <= 0:
+            raise ValueError
+        c = Fraction(cx, cy)
+        # Fast cases, not covered in Huber, to make this more general than c > 1
+        if c < 0:
+            raise ValueError
+        if c == 0:
+            return 0
+        if c == 1 and i == 1:
+            return f()
+        if c.numerator < c.denominator:
+            # B(p) -> B((c*p)^i), where c is in (0, 1)
+            fv = lambda: (
+                1
+                if self.zero_or_one(c.numerator, c.denominator) == 1 and f() == 1
+                else 0
+            )
+            return self.linear_power(fv, 1, 1, i, eps)
+        thresh = Fraction(355, 100)
+        while True:
+            if i == 0:
+                return 1
+            while i > thresh / eps:
+                halfeps = eps / 2
+                beta = (1 - halfeps) / (1 - eps)
+                if self.zero_or_one_power(beta.denominator, beta.numerator, i) == 0:
+                    return 0
+                c *= beta
+                eps = halfeps
+            i = i + 1 - self.logistic(f, c, 1) * 2
+
     def linear_lowprob(self, f, cx, cy=1, m=Fraction(249, 500)):
         """ Linear Bernoulli factory which is faster if the probability of heads is known
          to be less than half: B(p) => B((cx/cy)*p) (Huber 2016).
      - f: Function that returns 1 if heads and 0 if tails.
      - cx, cy: numerator and denominator of c; the probability of heads (p) is multiplied
        by c. c must be 0 or greater. If c > 1, c must be chosen so that c*p <= m < 1/2.
-     - m: A Fraction in (0, 1/2). If c > 1, eps must be chosen so that c*p <= m < 1/2.
+     - m: A Fraction in (0, 1/2). If c > 1, m must be chosen so that c*p <= m < 1/2.
      """
         c = Fraction(cx, cy)
         # Fast cases, not covered in Huber, to make this more general than c > 1
@@ -532,7 +578,7 @@ class Bernoulli:
         if self.zero_or_one(beta.denominator, beta.numerator) == 1:
             return 1  # Bern(1/beta)
         c = beta * c / (beta - 1)
-        return self.linear_huber2016(f, c)
+        return self.linear(f, c)
 
 # Examples of use
 if __name__ == "__main__":
@@ -551,6 +597,14 @@ if __name__ == "__main__":
 
     b = Bernoulli()
     c = [b.zero_or_one(20, 100) for i in range(10000)]
-    print(_mean(c))
-    c = [b.linear(b.coin(0.2), 2, 1) for i in range(10000)]
-    print(_mean(c))
+    print([_mean(c), 0.2])
+    c = [b.linear_lowprob(b.coin(0.2), 2, 1, 0.41) for i in range(1000)]
+    print([_mean(c), 0.4])
+    c = [b.linear(b.coin(0.2), 2, 1, 0.89) for i in range(1000)]
+    print([_mean(c), 0.4])
+    c = [b.linear_power(b.coin(0.2), 2, 1, 1, 0.59) for i in range(1000)]
+    print([_mean(c), 0.4])
+    c = [b.linear_power(b.coin(0.2), 1, 2, 2, 0.1) for i in range(1000)]
+    print([_mean(c), (0.2 * 0.5) ** 2])
+    c = [b.linear_power(b.coin(0.2), 2, 1, 3, 0.59) for i in range(1000)]
+    print([_mean(c), 0.064])

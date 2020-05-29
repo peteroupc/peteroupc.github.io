@@ -446,7 +446,7 @@ END METHOD
 <h3>Examples of Using the <code>RNDINT</code> Family</h3>
 
 <ol>
-<li>To generate a random number that&#39;s either -1 or 1, one of the following idioms can be used: <code>(RNDINT(1) * 2 - 1)</code> or <code>(RNDINTEXC(2) * 2 - 1)</code>.</li>
+<li>To generate a random number that&#39;s either -1 or 1 (a <em>Rademacher random number</em>), one of the following idioms can be used: <code>(RNDINT(1) * 2 - 1)</code> or <code>(RNDINTEXC(2) * 2 - 1)</code>.</li>
 <li>To generate a random integer that&#39;s divisible by a positive integer (<code>DIV</code>), generate the integer with any method (such as <code>RNDINT</code>), let <code>X</code> be that integer, then generate <code>X - rem(X, DIV)</code> if <code>X &gt;= 0</code>, or <code>X - (DIV - rem(abs(X), DIV))</code> otherwise. (Depending on the method, the resulting integer may be out of range, in which case this procedure is to be repeated.)</li>
 <li>A random 2-dimensional point on an NxM grid can be expressed as a single integer as follows:
 

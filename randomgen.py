@@ -971,9 +971,8 @@ Returns 'list'. """
             i = i + 1
 
     def zero_or_one_power_ratio(self, px, py, nx, ny):
-        """ Generates 1 with probability (px/py)^(nx/ny) (where nx/ny must be 0 or
-           greater); 0 otherwise. """
-        if y <= 0 or x < 0:
+        """ Generates 1 with probability (px/py)^(nx/ny) (where nx/ny can be positive, negative, or zero); 0 otherwise. """
+        if py <= 0 or px < 0:
             raise ValueError
         n = Fraction(nx, ny)
         p = Fraction(px, py)
@@ -981,8 +980,9 @@ Returns 'list'. """
         ny = n.denominator
         px = p.numerator
         py = p.denominator
-        if n < 0:
-            raise ValueError
+        if n < 0:  # (px/py)^(nx/ny) -> (py/px)^-(nx/ny)
+            n = -n
+            return self.zero_or_one_power_ratio(py, px, n.numerator, n.denominator)
         if n == 0 or px >= py:
             return 1
         if nx == ny:
@@ -1005,15 +1005,15 @@ Returns 'list'. """
                 if self.zero_or_one_power(npx, npy, quo) == 0:
                     return 0
                 xf -= quo * n1
-            for i in range(n):
+            for i in range(xf):
                 if self.zero_or_one(px, py) == 0:
                     return 0
             return 1
         return self._zero_or_one_power_frac(nx, ny)
 
     def zero_or_one_power(self, px, py, n):
-        """ Generates 1 with probability (px/py)^n (where n must be 0 or greater); 0 otherwise. """
-        return zero_or_one_power_ratio(px, py, n, 1)
+        """ Generates 1 with probability (px/py)^n (where n can be positive, negative, or zero); 0 otherwise. """
+        return self.zero_or_one_power_ratio(px, py, n, 1)
 
     def negativebinomialint(self, successes, px, py):
         if successes < 0 or py == 0:
