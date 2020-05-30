@@ -119,7 +119,9 @@ class Bernoulli:
         """ Bernoulli factory for a uniformly-distributed random number in (0, 1)
          (Flajolet et al. 2010).
          - u: List that holds the binary expansion, from left to right, of the uniformly-
-           distributed random number.
+           distributed random number.  Each element of the list is 0, 1, or None (meaning
+           the digit is not yet known).  The list may be expanded as necessary to put
+           a new digit in the appropriate place in the binary expansion.
      """
         r = 0
         while self.r.randint(0, 1) == 0:

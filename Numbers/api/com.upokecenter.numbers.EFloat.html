@@ -161,30 +161,36 @@ Creates a copy of this arbitrary-precision binary number.</li>
 Returns a number with the same value as this one, but copying the sign
 (positive or negative) of another number.</li>
 <li><code>static EFloat Create​(int mantissaSmall,
-  int exponentSmall)</code><br>
-Returns a number with the value exponent*2^significand.</li>
+  int exponentSmall) exponent*2^significand</code><br>
+Returns an arbitrary-precision number with the value
+exponent*2^significand.</li>
 <li><code>static EFloat Create​(long mantissaLong,
-  int exponentSmall)</code><br>
-Returns a number with the value exponent*2^significand.</li>
+  int exponentSmall) exponent*2^significand</code><br>
+Returns an arbitrary-precision number with the value
+exponent*2^significand.</li>
 <li><code>static EFloat Create​(long mantissaLong,
-  long exponentLong)</code><br>
-Returns a number with the value exponent*2^significand.</li>
+  long exponentLong) exponent*2^significand</code><br>
+Returns an arbitrary-precision number with the value
+exponent*2^significand.</li>
 <li><code>static EFloat Create​(EInteger mantissa,
-  int exponentSmall)</code><br>
-Returns a number with the value exponent*2^significand.</li>
+  int exponentSmall) exponent*2^significand</code><br>
+Returns an arbitrary-precision number with the value
+exponent*2^significand.</li>
 <li><code>static EFloat Create​(EInteger mantissa,
-  long exponentLong)</code><br>
-Returns a number with the value exponent*2^significand.</li>
+  long exponentLong) exponent*2^significand</code><br>
+Returns an arbitrary-precision number with the value
+exponent*2^significand.</li>
 <li><code>static EFloat Create​(EInteger mantissa,
-  EInteger exponent)</code><br>
-Returns a number with the value exponent*2^significand.</li>
+  EInteger exponent) exponent*2^significand</code><br>
+Returns an arbitrary-precision number with the value
+exponent*2^significand.</li>
 <li><code>static EFloat CreateNaN​(EInteger diag)</code><br>
-Creates a not-a-number arbitrary-precision binary floating-point number.</li>
+Creates a not-a-number arbitrary-precision binary number.</li>
 <li><code>static EFloat CreateNaN​(EInteger diag,
      boolean signaling,
      boolean negative,
      EContext ctx)</code><br>
-Creates a not-a-number arbitrary-precision binary floating-point number.</li>
+Creates a not-a-number arbitrary-precision binary number.</li>
 <li><code>EFloat Decrement()</code><br>
 Returns one subtracted from this arbitrary-precision binary floating-point
 number.</li>
@@ -323,7 +329,8 @@ Calculates this object&#39;s hash code.</li>
 <li><code>EFloat Increment()</code><br>
 Returns one added to this arbitrary-precision binary floating-point number.</li>
 <li><code>boolean isFinite()</code><br>
-Gets a value indicating whether this object is finite (not infinity or NaN).</li>
+Gets a value indicating whether this object is finite (not infinity or
+not-a-number, NaN).</li>
 <li><code>boolean IsInfinity()</code><br>
 Gets a value indicating whether this object is positive or negative
 infinity.</li>
@@ -757,13 +764,14 @@ the exponent is positive or zero.</li>
 <pre>public final boolean isFinite()
 </pre>
 
-<p>Gets a value indicating whether this object is finite (not infinity or NaN).</p>
+<p>Gets a value indicating whether this object is finite (not infinity or
+ not-a-number, NaN).</p>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li><code>true</code> if this object is finite (not infinity or NaN);
-otherwise, <code>false</code>.</li>
+<li><code>true</code> if this object is finite (not infinity or not-a-number,
+NaN); otherwise, <code>false</code>.</li>
 </ul>
 
 <h3>isNegative</h3>
@@ -859,7 +867,8 @@ value is negative (including a negative NaN).</li>
 <pre>public static EFloat Create​(int mantissaSmall, int exponentSmall)
 </pre>
 
-<p>Returns a number with the value exponent*2^significand.</p>
+<p>Returns an arbitrary-precision number with the value
+ <code>exponent*2^significand</code>.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -871,47 +880,7 @@ value is negative (including a negative NaN).</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>An arbitrary-precision binary floating-point number.</li>
-</ul>
-
-<h3>Create</h3>
-
-<pre>public static EFloat Create​(long mantissaLong, long exponentLong)
-</pre>
-
-<p>Returns a number with the value exponent*2^significand.</p>
-
-<p><strong>Parameters:</strong></p>
-
-<ul>
-<li><p><code>mantissaLong</code> - Desired value for the significand.</p></li>
-<li><p><code>exponentLong</code> - Desired value for the exponent.</p></li>
-</ul>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>An arbitrary-precision binary floating-point number.</li>
-</ul>
-
-<h3>Create</h3>
-
-<pre>public static EFloat Create​(long mantissaLong, int exponentSmall)
-</pre>
-
-<p>Returns a number with the value exponent*2^significand.</p>
-
-<p><strong>Parameters:</strong></p>
-
-<ul>
-<li><p><code>mantissaLong</code> - Desired value for the significand.</p></li>
-<li><p><code>exponentSmall</code> - Desired value for the exponent.</p></li>
-</ul>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>An arbitrary-precision binary floating-point number.</li>
+<li>An arbitrary-precision binary number.</li>
 </ul>
 
 <h3>Create</h3>
@@ -919,7 +888,8 @@ value is negative (including a negative NaN).</li>
 <pre>public static EFloat Create​(EInteger mantissa, int exponentSmall)
 </pre>
 
-<p>Returns a number with the value exponent*2^significand.</p>
+<p>Returns an arbitrary-precision number with the value
+ <code>exponent*2^significand</code>.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -931,7 +901,7 @@ value is negative (including a negative NaN).</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>An arbitrary-precision binary floating-point number.</li>
+<li>An arbitrary-precision binary number.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -945,7 +915,8 @@ value is negative (including a negative NaN).</li>
 <pre>public static EFloat Create​(EInteger mantissa, long exponentLong)
 </pre>
 
-<p>Returns a number with the value exponent*2^significand.</p>
+<p>Returns an arbitrary-precision number with the value
+ <code>exponent*2^significand</code>.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -957,7 +928,7 @@ value is negative (including a negative NaN).</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>An arbitrary-precision binary floating-point number.</li>
+<li>An arbitrary-precision binary number.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -971,7 +942,8 @@ value is negative (including a negative NaN).</li>
 <pre>public static EFloat Create​(EInteger mantissa, EInteger exponent)
 </pre>
 
-<p>Returns a number with the value exponent*2^significand.</p>
+<p>Returns an arbitrary-precision number with the value
+ <code>exponent*2^significand</code>.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -983,7 +955,7 @@ value is negative (including a negative NaN).</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>An arbitrary-precision binary floating-point number.</li>
+<li>An arbitrary-precision binary number.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -993,12 +965,54 @@ value is negative (including a negative NaN).</li>
 exponent</code> is null.</li>
 </ul>
 
+<h3>Create</h3>
+
+<pre>public static EFloat Create​(long mantissaLong, int exponentSmall)
+</pre>
+
+<p>Returns an arbitrary-precision number with the value
+ <code>exponent*2^significand</code>.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>mantissaLong</code> - Desired value for the significand.</p></li>
+<li><p><code>exponentSmall</code> - Desired value for the exponent.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An arbitrary-precision binary number.</li>
+</ul>
+
+<h3>Create</h3>
+
+<pre>public static EFloat Create​(long mantissaLong, long exponentLong)
+</pre>
+
+<p>Returns an arbitrary-precision number with the value
+ <code>exponent*2^significand</code>.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>mantissaLong</code> - Desired value for the significand.</p></li>
+<li><p><code>exponentLong</code> - Desired value for the exponent.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An arbitrary-precision binary number.</li>
+</ul>
+
 <h3>CreateNaN</h3>
 
 <pre>public static EFloat CreateNaN​(EInteger diag)
 </pre>
 
-<p>Creates a not-a-number arbitrary-precision binary floating-point number.</p>
+<p>Creates a not-a-number arbitrary-precision binary number.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1016,18 +1030,12 @@ UnsignedMantissa</code> property.</li>
 <li>A quiet not-a-number.</li>
 </ul>
 
-<p><strong>Throws:</strong></p>
-
-<ul>
-<li><code>java.lang.IllegalArgumentException</code> - The parameter <code>diag</code> is less than 0.</li>
-</ul>
-
 <h3>CreateNaN</h3>
 
 <pre>public static EFloat CreateNaN​(EInteger diag, boolean signaling, boolean negative, EContext ctx)
 </pre>
 
-<p>Creates a not-a-number arbitrary-precision binary floating-point number.</p>
+<p>Creates a not-a-number arbitrary-precision binary number.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1040,9 +1048,9 @@ UnsignedMantissa</code> property.</p></li>
 <li><p><code>signaling</code> - Whether the return value will be signaling (true) or quiet
 (false).</p></li>
 <li><p><code>negative</code> - Whether the return value is negative.</p></li>
-<li><p><code>ctx</code> - An arithmetic context to control the precision (in bits) of the
-diagnostic information. The rounding and exponent range of this
-context will be ignored. Can be null. The only flag that can be
+<li><p><code>ctx</code> - An arithmetic context to control the precision (in binary digits)
+of the diagnostic information. The rounding and exponent range of
+this context will be ignored. Can be null. The only flag that can be
 signaled in this context is FlagInvalid, which happens if diagnostic
 information needs to be truncated and too much memory is required to
 do so.</p></li>
@@ -1051,13 +1059,14 @@ do so.</p></li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>An arbitrary-precision binary floating-point number.</li>
+<li>An arbitrary-precision binary number.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>java.lang.NullPointerException</code> - The parameter <code>diag</code> is null.</li>
+<li><code>java.lang.NullPointerException</code> - The parameter <code>diag</code> is null or is less
+than 0.</li>
 </ul>
 
 <h3>FromDoubleBits</h3>
