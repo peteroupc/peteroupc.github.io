@@ -110,17 +110,34 @@ Converts a 16-bit signed integer to an arbitrary-precision integer.</li>
 Converts a 32-bit signed integer to an arbitrary-precision integer.</li>
 <li><code>static EInteger FromInt64​(long longerValue)</code><br>
 Converts a 64-bit signed integer to an arbitrary-precision integer.</li>
+<li><code>static EInteger FromRadixString​(char[] cs,
+           int radix) char</code><br>
+Converts a sequence of char s to an arbitrary-precision integer in a
+given radix.</li>
 <li><code>static EInteger FromRadixString​(java.lang.String str,
            int radix)</code><br>
 Converts a string to an arbitrary-precision integer in a given radix.</li>
+<li><code>static EInteger FromRadixSubstring​(char[] cs,
+              int radix,
+              int index,
+              int endIndex) char</code><br>
+Converts a portion of a sequence of char s to an arbitrary-precision
+integer in a given radix.</li>
 <li><code>static EInteger FromRadixSubstring​(java.lang.String str,
               int radix,
               int index,
               int endIndex)</code><br>
 Converts a portion of a string to an arbitrary-precision integer in a given
 radix.</li>
+<li><code>static EInteger FromString​(char[] cs) char</code><br>
+Converts a sequence of char s to an arbitrary-precision integer.</li>
 <li><code>static EInteger FromString​(java.lang.String str)</code><br>
 Converts a string to an arbitrary-precision integer.</li>
+<li><code>static EInteger FromSubstring​(char[] cs,
+         int index,
+         int endIndex) char</code><br>
+Converts a portion of a sequence of char s to an arbitrary-precision
+integer.</li>
 <li><code>static EInteger FromSubstring​(java.lang.String str,
          int index,
          int endIndex)</code><br>
@@ -549,7 +566,8 @@ string.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>java.lang.NullPointerException</code> - The parameter <code>str</code> is null.</li>
+<li><p><code>java.lang.NullPointerException</code> - The parameter <code>str</code> is null.</p></li>
+<li><p><code>java.lang.NumberFormatException</code> - The string is empty or in an invalid format.</p></li>
 </ul>
 
 <h3>FromRadixSubstring</h3>
@@ -594,6 +612,119 @@ string portion.</li>
 <li><p><code>java.lang.NumberFormatException</code> - The string portion is empty or in an invalid format.</p></li>
 </ul>
 
+<h3>FromRadixString</h3>
+
+<pre>public static EInteger FromRadixString​(char[] cs, int radix)
+</pre>
+
+<p>Converts a sequence of <code>char</code> s to an arbitrary-precision integer in a
+ given radix.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>cs</code> - A sequence of <code>char</code> s described by the FromRadixSubstring
+method.</p></li>
+<li><p><code>radix</code> - A base from 2 to 36. Depending on the radix, the sequence of
+<code>char</code> s can use the basic digits 0 to 9 (U+0030 to U+0039)
+and then the basic upper-case letters A to Z (U+0041 to U+005A). For
+example, 0-9 in radix 10, and 0-9, then A-F in radix 16. Where a
+basic upper-case letter A to Z is allowed in the sequence of <code>
+char</code> s, the corresponding basic lower-case letter (U+0061 to
+U+007a) is allowed instead.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An arbitrary-precision integer with the same value as the given
+sequence of <code>char</code> s.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>java.lang.NullPointerException</code> - The parameter <code>cs</code> is null.</p></li>
+<li><p><code>java.lang.NumberFormatException</code> - The sequence of <code>char</code> s is empty or in an
+invalid format.</p></li>
+</ul>
+
+<h3>FromRadixSubstring</h3>
+
+<pre>public static EInteger FromRadixSubstring​(char[] cs, int radix, int index, int endIndex)
+</pre>
+
+<p>Converts a portion of a sequence of <code>char</code> s to an arbitrary-precision
+ integer in a given radix.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>cs</code> - A text sequence of <code>char</code> s. The desired portion of the
+sequence of <code>char</code> s must contain only characters allowed by
+the given radix, except that it may start with a minus sign (&quot;-&quot;,
+U+002D) to indicate a negative number. The desired portion is not
+allowed to contain white space characters, including spaces. The
+desired portion may start with any number of zeros.</p></li>
+<li><p><code>radix</code> - A base from 2 to 36. Depending on the radix, the sequence of
+<code>char</code> s can use the basic digits 0 to 9 (U+0030 to U+0039)
+and then the basic upper-case letters A to Z (U+0041 to U+005A). For
+example, 0-9 in radix 10, and 0-9, then A-F in radix 16. Where a
+basic upper-case letter A to Z is allowed in the sequence of <code>
+char</code> s, the corresponding basic lower-case letter (U+0061 to
+U+007a) is allowed instead.</p></li>
+<li><p><code>index</code> - The index of the sequence of <code>char</code> s that starts the
+desired portion.</p></li>
+<li><p><code>endIndex</code> - The index of the sequence of <code>char</code> s that ends the
+desired portion. The length will be index + endIndex - 1.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An arbitrary-precision integer with the same value as given in the
+sequence&#39;s portion.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>java.lang.NullPointerException</code> - The parameter <code>cs</code> is null.</p></li>
+<li><p><code>java.lang.NumberFormatException</code> - The portion is empty or in an invalid format.</p></li>
+</ul>
+
+<h3>FromString</h3>
+
+<pre>public static EInteger FromString​(char[] cs)
+</pre>
+
+<p>Converts a sequence of <code>char</code> s to an arbitrary-precision integer.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>cs</code> - A sequence of <code>char</code> s describing an integer in base-10
+(decimal) form. The sequence must contain only basic digits 0 to 9
+(U+0030 to U+0039), except that it may start with a minus sign (&quot;-&quot;,
+U+002D) to indicate a negative number. The sequence is not allowed
+to contain white space characters, including spaces. The sequence
+may start with any number of zeros.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An arbitrary-precision integer with the same value as given in the
+sequence of <code>char</code> s.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>java.lang.NumberFormatException</code> - The parameter <code>cs</code> is in an invalid format.</p></li>
+<li><p><code>java.lang.NullPointerException</code> - The parameter <code>cs</code> is null.</p></li>
+</ul>
+
 <h3>FromString</h3>
 
 <pre>public static EInteger FromString​(java.lang.String str)
@@ -624,6 +755,46 @@ string.</li>
 <ul>
 <li><p><code>java.lang.NumberFormatException</code> - The parameter <code>str</code> is in an invalid format.</p></li>
 <li><p><code>java.lang.NullPointerException</code> - The parameter <code>str</code> is null.</p></li>
+</ul>
+
+<h3>FromSubstring</h3>
+
+<pre>public static EInteger FromSubstring​(char[] cs, int index, int endIndex)
+</pre>
+
+<p>Converts a portion of a sequence of <code>char</code> s to an arbitrary-precision
+ integer.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>cs</code> - A sequence of <code>char</code> s, the desired portion of which
+describes an integer in base-10 (decimal) form. The desired portion
+of the sequence of <code>char</code> s must contain only basic digits 0
+to 9 (U+0030 to U+0039), except that it may start with a minus sign
+(&quot;-&quot;, U+002D) to indicate a negative number. The desired portion is
+not allowed to contain white space characters, including spaces. The
+desired portion may start with any number of zeros.</p></li>
+<li><p><code>index</code> - The index of the sequence of <code>char</code> s that starts the
+desired portion.</p></li>
+<li><p><code>endIndex</code> - The index of the sequence of <code>char</code> s that ends the
+desired portion. The length will be index + endIndex - 1.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An arbitrary-precision integer with the same value as given in the
+sequence of <code>char</code> s portion.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>java.lang.IllegalArgumentException</code> - The parameter <code>index</code> is less than 0, <code>
+endIndex</code> is less than 0, or either is greater than the sequence&#39;s
+length, or <code>endIndex</code> is less than <code>index</code>.</p></li>
+<li><p><code>java.lang.NullPointerException</code> - The parameter <code>cs</code> is null.</p></li>
 </ul>
 
 <h3>FromSubstring</h3>

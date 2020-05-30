@@ -88,6 +88,7 @@
 <li><a href="#Random_Walks"><strong>Random Walks</strong></a></li>
 <li><a href="#Random_Dates_and_Times"><strong>Random Dates and Times</strong></a></li>
 <li><a href="#Randomization_in_Statistical_Testing"><strong>Randomization in Statistical Testing</strong></a></li>
+<li><a href="#Markov_Chains"><strong>Markov Chains</strong></a></li>
 <li><a href="#A_Note_on_Sorting_Random_Numbers"><strong>A Note on Sorting Random Numbers</strong></a></li>
 </ul></li>
 <li><a href="#General_Non_Uniform_Distributions"><strong>General Non-Uniform Distributions</strong></a>
@@ -883,6 +884,36 @@ END METHOD
 
 <p>After creating the simulated data sets, one or more statistics, such as the mean, are calculated for each simulated data set as well as the original data set, then the statistics for the simulated data sets are compared with those of the original (such comparisons are outside the scope of this document).</p>
 
+<p><a id=Markov_Chains></a></p>
+
+<h3>Markov Chains</h3>
+
+<p>A <a href="https://en.wikipedia.org/wiki/Markov_chain"><strong>Markov chain</strong></a> models one or more <em>states</em> (for example, individual letters or syllables), and stores the probabilities to transition from one state to another (e.g., &quot;b&quot; to &quot;e&quot; with a chance of 20 percent, or &quot;b&quot; to &quot;b&quot; with a chance of 1 percent).  Thus, each state can be seen as having its own list of <em>weights</em> for each relevant state transition (see &quot;<a href="#Weighted_Choice_With_Replacement"><strong>Weighted Choice With Replacement</strong></a>.  For example, a Markov chain for generating <strong>&quot;pronounceable&quot; words</strong>, or words similar to natural-language words, can include &quot;start&quot; and &quot;stop&quot; states for the start and end of the word, respectively.</p>
+
+<p>An algorithm called <em>coupling from the past</em> (Propp and Wilson 1996)<sup><a href="#Note76"><strong>(76)</strong></a></sup> can sample a state from a Markov chain&#39;s <em>stationary distribution</em>, that is, the chain&#39;s steady state, by starting multiple chains at different states and running them until they all reach the same state at the same time.  The following pseudocode implements coupling from the past.  In the method, <code>StateCount</code> is the number of states in the Markov chain, <code>UPDATE(chain, state, random)</code> transitions the Markov chain to the next state given the current state and random numbers, and <code>RANDOM()</code> generates one or more random numbers needed by <code>UPDATE</code>.</p>
+
+<pre>METHOD CFTP(chain)
+   states=[]
+   # Start multiple chains at different states.  NOTE:
+   # If the states are ordered with respect to each
+   # other, then just two chains can be created instead,
+   # starting at the first and last state, respectively.
+   numstates=StateCount(chain)
+   for i in 0...numstates: AddItem(states, i)
+   done=false
+   while not done
+      # Update each chain with the same randomness
+      r=RANDOM()
+      for i in 0...numstates: states[i]=UPDATE(chain, states[i], r)
+      # Stop when all states are the same
+      fs=states[0]
+      done=true
+      for i in 1...numstates: done=done and states[i]==fs
+   end
+   return states[0] # Return the steady state
+END METHOD
+</pre>
+
 <p><a id=A_Note_on_Sorting_Random_Numbers></a></p>
 
 <h3>A Note on Sorting Random Numbers</h3>
@@ -976,7 +1007,6 @@ END METHOD
 <li>Assume we have the following list: <code>[&quot;apples&quot;, &quot;oranges&quot;, &quot;bananas&quot;, &quot;grapes&quot;]</code>, and <code>weights</code> is the following: <code>[3, 15, 1, 2]</code>.  The weight for &quot;apples&quot; is 3, and the weight for &quot;oranges&quot; is 15.  Since &quot;oranges&quot; has a higher weight than &quot;apples&quot;, the index for &quot;oranges&quot; (1) is more likely to be chosen than the index for &quot;apples&quot; (0) with the <code>WeightedChoice</code> method.  The following idiom implements how to get a randomly chosen item from the list with that method: <code>item = list[WeightedChoice(weights)]</code>.</li>
 <li>Example 1 can be implemented with <code>CumulativeWeightedChoice</code> instead of <code>WeightedChoice</code> if <code>weights</code> is the following list of cumulative weights: <code>[0, 3, 18, 19, 21]</code>.</li>
 <li><strong>Piecewise constant distribution.</strong> Assume the weights from example 1 are used and the list contains the following: <code>[0, 5, 10, 11, 13]</code> (one more item than the weights).  This expresses four intervals: [0, 5), [5, 10), and so on.  After a random index is chosen with <code>index = WeightedChoice(weights)</code>, an independent uniform random number in the chosen interval is chosen.  For example, code like the following chooses a random integer this way: <code>number = RNDINTEXCRANGE(list[index], list[index + 1])</code>.</li>
-<li>A <a href="https://en.wikipedia.org/wiki/Markov_chain"><strong>Markov chain</strong></a> models one or more <em>states</em> (for example, individual letters or syllables), and stores the probabilities to transition from one state to another (e.g., &quot;b&quot; to &quot;e&quot; with a chance of 20 percent, or &quot;b&quot; to &quot;b&quot; with a chance of 1 percent).  Thus, each state can be seen as having its own list of <em>weights</em> for each relevant state transition.  For example, a Markov chain for generating <strong>&quot;pronounceable&quot; words</strong>, or words similar to natural-language words, can include &quot;start&quot; and &quot;stop&quot; states for the start and end of the word, respectively.</li>
 </ol>
 </blockquote>
 
@@ -1912,7 +1942,7 @@ above for returning more than one random number in one call.</p>
 <li>A <strong>continuous-time process</strong> models random behavior at every moment, not just at discrete times.  There are two popular examples:
 
 <ul>
-<li>A <em>Wiener process</em> (also known as <em>Brownian motion</em>) has random states and jumps that are normally distributed. For a random walk that follows a Wiener process, <code>STATEJUMP()</code> is <code>Normal(mu * timediff, sigma * sqrt(timediff))</code>, where  <code>mu</code> is the average value per time unit, <code>sigma</code> is the volatility, and <code>timediff</code> is the time difference between samples.  A <em>Brownian bridge</em> (Revuz and Yor 1999)<sup><a href="#Note44"><strong>(44)</strong></a></sup> modifies a Wiener process as follows: For each time X, calculate <code>W(X) - W(E) * (X - S) / (E - S)</code>, where <code>S</code> and <code>E</code> are the starting and ending times of the process, respectively, and <code>W(X)</code> and <code>W(E)</code> are the state at times X and E, respectively.</li>
+<li>A <em>Wiener process</em> (also known as <em>Brownian motion</em>) has random states and jumps that are normally distributed. For a random walk that follows a Wiener process, <code>STATEJUMP()</code> is <code>Normal(mu * timediff, sigma * sqrt(timediff))</code>, where  <code>mu</code> is the drift (or average value per time unit), <code>sigma</code> is the volatility, and <code>timediff</code> is the time difference between samples.  A <em>Brownian bridge</em> (Revuz and Yor 1999)<sup><a href="#Note44"><strong>(44)</strong></a></sup> modifies a Wiener process as follows: For each time X, calculate <code>W(X) - W(E) * (X - S) / (E - S)</code>, where <code>S</code> and <code>E</code> are the starting and ending times of the process, respectively, and <code>W(X)</code> and <code>W(E)</code> are the state at times X and E, respectively.</li>
 <li>In a <em>Poisson process</em>, the time between each event is its own exponential random number with its own rate parameter (e.g., <code>Expo(rate)</code>) (see &quot;<a href="#Exponential_Distribution"><strong>Exponential Distribution</strong></a>&quot;), and sorting N random <code>RNDRANGE(x, y)</code> expresses N arrival times in the interval <code>[x, y]</code>. The process is <em>homogeneous</em> if all the rates are the same, and <em>inhomogeneous</em> if the rate can vary with the &quot;timestamp&quot; before each event jump; to generate arrival times here, potential arrival times are generated at the maximum possible rate (<code>maxrate</code>) and each one is accepted if <code>RNDRANGE(0, maxrate) &lt; thisrate</code>, where <code>thisrate</code> is the rate for the given arrival time (Alexoupolos 2017)<sup><a href="#Note45"><strong>(45)</strong></a></sup>.</li>
 </ul></li>
 </ul>
@@ -2651,6 +2681,8 @@ and &quot;<a href="https://randomascii.wordpress.com/2013/07/16/floating-point-d
 <p><small><sup id=Note74>(74)</sup> Mironov, I., &quot;On Significance of the Least Significant Bits For Differential Privacy&quot;, 2012.</small></p>
 
 <p><small><sup id=Note75>(75)</sup> For example, see Balcer, V., Vadhan, S., &quot;Differential Privacy on Finite Computers&quot;, Dec. 4, 2018; as well as Micciancio, D. and Walter, M., &quot;Gaussian sampling over the integers: Efficient, generic, constant-time&quot;, in Annual International Cryptology Conference, August 2017 (pp. 455-485).</small></p>
+
+<p><small><sup id=Note76>(76)</sup> Propp, J.G., Wilson, D.B., &quot;Exact sampling with coupled Markov chains and applications to statistical mechanics&quot;, 1996.</small></p>
 
 <p><a id=Appendix></a></p>
 

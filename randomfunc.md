@@ -62,6 +62,7 @@ All the random number methods presented on this page are ultimately based on an 
     - [**Random Walks**](#Random_Walks)
     - [**Random Dates and Times**](#Random_Dates_and_Times)
     - [**Randomization in Statistical Testing**](#Randomization_in_Statistical_Testing)
+    - [**Markov Chains**](#Markov_Chains)
     - [**A Note on Sorting Random Numbers**](#A_Note_on_Sorting_Random_Numbers)
 - [**General Non-Uniform Distributions**](#General_Non_Uniform_Distributions)
     - [**Weighted Choice**](#Weighted_Choice)
@@ -687,6 +688,34 @@ Statistical testing uses shuffling and _bootstrapping_ to help draw conclusions 
 
 After creating the simulated data sets, one or more statistics, such as the mean, are calculated for each simulated data set as well as the original data set, then the statistics for the simulated data sets are compared with those of the original (such comparisons are outside the scope of this document).
 
+<a id=Markov_Chains></a>
+### Markov Chains
+
+A [**Markov chain**](https://en.wikipedia.org/wiki/Markov_chain) models one or more _states_ (for example, individual letters or syllables), and stores the probabilities to transition from one state to another (e.g., "b" to "e" with a chance of 20 percent, or "b" to "b" with a chance of 1 percent).  Thus, each state can be seen as having its own list of _weights_ for each relevant state transition (see "[**Weighted Choice With Replacement**](#Weighted_Choice_With_Replacement)).  For example, a Markov chain for generating **"pronounceable" words**, or words similar to natural-language words, can include "start" and "stop" states for the start and end of the word, respectively.
+
+An algorithm called _coupling from the past_ (Propp and Wilson 1996)<sup>[**(76)**](#Note76)</sup> can sample a state from a Markov chain's _stationary distribution_, that is, the chain's steady state, by starting multiple chains at different states and running them until they all reach the same state at the same time.  The following pseudocode implements coupling from the past.  In the method, `StateCount` is the number of states in the Markov chain, `UPDATE(chain, state, random)` transitions the Markov chain to the next state given the current state and random numbers, and `RANDOM()` generates one or more random numbers needed by `UPDATE`.
+
+    METHOD CFTP(chain)
+       states=[]
+       # Start multiple chains at different states.  NOTE:
+       # If the states are ordered with respect to each
+       # other, then just two chains can be created instead,
+       # starting at the first and last state, respectively.
+       numstates=StateCount(chain)
+       for i in 0...numstates: AddItem(states, i)
+       done=false
+       while not done
+          # Update each chain with the same randomness
+          r=RANDOM()
+          for i in 0...numstates: states[i]=UPDATE(chain, states[i], r)
+          # Stop when all states are the same
+          fs=states[0]
+          done=true
+          for i in 1...numstates: done=done and states[i]==fs
+       end
+       return states[0] # Return the steady state
+    END METHOD
+
 <a id=A_Note_on_Sorting_Random_Numbers></a>
 ### A Note on Sorting Random Numbers
 
@@ -769,7 +798,6 @@ The first kind is called weighted choice _with replacement_ (which can be though
 > 1. Assume we have the following list: `["apples", "oranges", "bananas", "grapes"]`, and `weights` is the following: `[3, 15, 1, 2]`.  The weight for "apples" is 3, and the weight for "oranges" is 15.  Since "oranges" has a higher weight than "apples", the index for "oranges" (1) is more likely to be chosen than the index for "apples" (0) with the `WeightedChoice` method.  The following idiom implements how to get a randomly chosen item from the list with that method: `item = list[WeightedChoice(weights)]`.
 > 2. Example 1 can be implemented with `CumulativeWeightedChoice` instead of `WeightedChoice` if `weights` is the following list of cumulative weights: `[0, 3, 18, 19, 21]`.
 > 3. **Piecewise constant distribution.** Assume the weights from example 1 are used and the list contains the following: `[0, 5, 10, 11, 13]` (one more item than the weights).  This expresses four intervals: [0, 5), [5, 10), and so on.  After a random index is chosen with `index = WeightedChoice(weights)`, an independent uniform random number in the chosen interval is chosen.  For example, code like the following chooses a random integer this way: `number = RNDINTEXCRANGE(list[index], list[index + 1])`.
-> 4. A [**Markov chain**](https://en.wikipedia.org/wiki/Markov_chain) models one or more _states_ (for example, individual letters or syllables), and stores the probabilities to transition from one state to another (e.g., "b" to "e" with a chance of 20 percent, or "b" to "b" with a chance of 1 percent).  Thus, each state can be seen as having its own list of _weights_ for each relevant state transition.  For example, a Markov chain for generating **"pronounceable" words**, or words similar to natural-language words, can include "start" and "stop" states for the start and end of the word, respectively.
 
 <a id=Weighted_Choice_Without_Replacement_Multiple_Copies></a>
 #### Weighted Choice Without Replacement (Multiple Copies)
@@ -2217,6 +2245,8 @@ The methods shown here do not introduce any error beyond the sampling error that
 <small><sup id=Note74>(74)</sup> Mironov, I., "On Significance of the Least Significant Bits For Differential Privacy", 2012.</small>
 
 <small><sup id=Note75>(75)</sup> For example, see Balcer, V., Vadhan, S., "Differential Privacy on Finite Computers", Dec. 4, 2018; as well as Micciancio, D. and Walter, M., "Gaussian sampling over the integers: Efficient, generic, constant-time", in Annual International Cryptology Conference, August 2017 (pp. 455-485).</small>
+
+<small><sup id=Note76>(76)</sup> Propp, J.G., Wilson, D.B., "Exact sampling with coupled Markov chains and applications to statistical mechanics", 1996.</small>
 
 <a id=Appendix></a>
 ## Appendix

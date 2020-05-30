@@ -3,7 +3,9 @@ import random
 from fractions import Fraction
 
 class Bernoulli:
-    """ This class contains implementations of so-called "Bernoulli factories", algorithms
+    """ This class contains methods that generate Bernoulli random numbers,
+         (either 1 or heads with a given probability, or 0 or tails otherwise).
+         This class also includes implementations of so-called "Bernoulli factories", algorithms
       that turn coins biased one way into coins biased another way.
       Written by Peter O.
 
