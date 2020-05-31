@@ -16,6 +16,8 @@ class Bernoulli:
       arXiv:1907.06748v1 [cs.DS], 2019.
       - Huber, M., "Optimal linear Bernoulli factories for small mean problems",
       arXiv:1507.00843v2 [math.PR], 2016.
+      - Łatuszyński, K., Kosmidis, I.,  Papaspiliopoulos, O., Roberts, G.O., "Simulating
+      events of unknown probabilities via reverse time martingales", 2011.
       - Morina, G., Łatuszyński, K., et al., "From the Bernoulli Factory to a Dice
       Enterprise via Perfect Sampling of Markov Chains",
       arXiv:1912.09229v1 [math.PR], 2019.
@@ -142,6 +144,40 @@ class Bernoulli:
             if self.zero_or_one(x, y) == 0 or self.geometric_bag(bag) == 0:
                 return 0
 
+    def _uniform_less(self, bag, frac):
+        """ Determines whether a uniformly-distributed random number
+             (given as an incomplete binary expansion that is built up
+              as necessary) is less than the given Fraction (in the interval [0, 1]). """
+        if frac == 0:
+            return 0
+        if frac == 1:
+            return 1
+        frac = Fraction(frac)
+        pt = Fraction(1, 2)
+        i = 0
+        while True:
+            while len(bag) <= i:
+                bag.append(self.r.randint(0, 1))
+            if bag[i] == None:
+                bag[i] = self.r.randint(0, 1)
+            mybit = bag[i]
+            bit = 1 if frac >= pt else 0
+            if mybit == 0 and bit == 1:
+                return 1
+            if mybit == 1 and bit == 0:
+                return 0
+            if frac >= pt:
+                frac -= pt
+            pt /= 2
+            i += 1
+        return 0
+
+    def _uniform_greater(self, bag, frac):
+        """ Determines whether a uniformly-distributed random number
+             (given as an incomplete binary expansion that is built up
+              as necessary) is greater than the given Fraction (in the interval [0, 1]). """
+        return self._uniform_less(bag, frac) ^ 1
+
     def bernoulli_x(self, f, x):
         """ Bernoulli factory with a given probability: B(p) => B(x) (Mendo 2019).
          Mendo calls Bernoulli factories "non-randomized" if their randomness
@@ -154,7 +190,7 @@ class Bernoulli:
         if pw == 1:
             return 1
         pt = Rational(1, 2)
-        while pw != 0:
+        while True:
             y = f()
             z = f()
             if y == 1 and z == 0:
@@ -503,6 +539,31 @@ class Bernoulli:
                 return 1
             m -= 1
 
+    def exp_minus(self, f):
+        """
+        Exp-minus Bernoulli factory: B(p) -> B(exp(-p)) (Łatuszyński et al. 2011).
+        - f: Function that returns 1 if heads and 0 if tails.
+        """
+        u = Fraction(1)
+        l = Fraction(0)
+        uw = 1
+        bag = []
+        n = 1
+        fac = Fraction(1)
+        while True:
+            if uw != 0:
+                uw *= f()
+            if n % 2 == 0:
+                u = l + uw / fac
+            else:
+                l = u - uw / fac
+            if self._uniform_less(bag, l):
+                return 1
+            if self._uniform_greater(bag, u):
+                return 0
+            n += 1
+            fac *= n
+
     def linear_power(self, f, cx, cy=1, i=1, eps=Fraction(5, 100)):
         """ Linear-and-power Bernoulli factory: B(p) => B((p*cx/cy)^i) (Huber 2019).
      - f: Function that returns 1 if heads and 0 if tails.
@@ -601,6 +662,19 @@ if __name__ == "__main__":
         return xm
 
     b = Bernoulli()
+    c = [b.exp_minus(b.coin(0.2)) for i in range(10000)]
+    print([_mean(c), math.exp(-0.2)])
+    c = [b.exp_minus(b.coin(0.4)) for i in range(10000)]
+    print([_mean(c), math.exp(-0.4)])
+    c = [b.exp_minus(b.coin(0.6)) for i in range(10000)]
+    print([_mean(c), math.exp(-0.6)])
+    c = [b._uniform_less([], math.exp(-0.4)) for i in range(10000)]
+    print([_mean(c), math.exp(-0.4)])
+    c = [b._uniform_greater([], math.exp(-0.4)) for i in range(10000)]
+    print([_mean(c), 1 - math.exp(-0.4)])
+    exit()
+    c = [b.zero_or_one(20, 100) for i in range(10000)]
+    print([_mean(c), 0.2])
     c = [b.zero_or_one(20, 100) for i in range(10000)]
     print([_mean(c), 0.2])
     c = [b.linear_lowprob(b.coin(0.2), 2, 1, 0.41) for i in range(1000)]

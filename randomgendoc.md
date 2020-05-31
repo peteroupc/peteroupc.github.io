@@ -1037,6 +1037,8 @@ CLASSES
      |  arXiv:1907.06748v1 [cs.DS], 2019.
      |  - Huber, M., "Optimal linear Bernoulli factories for small mean problems",
      |  arXiv:1507.00843v2 [math.PR], 2016.
+     |  - Łatuszyński, K., Kosmidis, I.,  Papaspiliopoulos, O., Roberts, G.O., "Simulating
+     |  events of unknown probabilities via reverse time martingales", 2011.
      |  - Morina, G., Łatuszyński, K., et al., "From the Bernoulli Factory to a Dice
      |  Enterprise via Perfect Sampling of Markov Chains",
      |  arXiv:1912.09229v1 [math.PR], 2019.
@@ -1103,6 +1105,10 @@ CLASSES
      |      Even parity: B(p) => B(1/(1+p)) (Flajolet et al. 2010)
      |      - f: Function that returns 1 if heads and 0 if tails.
      |      Note that this function is slow as the probability of heads approaches 1.
+     |
+     |  exp_minus(self, f)
+     |      Exp-minus Bernoulli factory: B(p) -> B(exp(-p)) (Łatuszyński et al. 2011).
+     |      - f: Function that returns 1 if heads and 0 if tails.
      |
      |  geometric_bag(self, u)
      |      Bernoulli factory for a uniformly-distributed random number in (0, 1)

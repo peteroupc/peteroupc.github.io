@@ -8,7 +8,7 @@
 
 - They may not take a parameter specifying the maximum error tolerable.
 - They may use a `RNDU01` or `RNDRANGE` method, which has no precision requirements.
-- They may use irrational numbers, use transcendental functions, or do numerical approximations.
+- They may incur errors due to numerical approximations, including when they calculate irrational numbers or transcendental functions.
 
 Even so, however, these algorithms may be useful if the application is willing to trade accuracy for speed.
 

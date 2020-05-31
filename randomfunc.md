@@ -102,6 +102,7 @@ All the random number methods presented on this page are ultimately based on an 
         - [**Approximate Sampling for Discrete Distributions**](#Approximate_Sampling_for_Discrete_Distributions)
         - [**Inverse Transform Sampling**](#Inverse_Transform_Sampling)
         - [**Rejection Sampling with a PDF**](#Rejection_Sampling_with_a_PDF)
+        - [**Alternating Series**](#Alternating_Series)
         - [**Markov-Chain Monte Carlo**](#Markov_Chain_Monte_Carlo)
     - [**Piecewise Linear Distribution**](#Piecewise_Linear_Distribution)
     - [**Specific Distributions**](#Specific_Distributions)
@@ -534,7 +535,7 @@ The following are examples of character lists:
 >
 > 1. If the list of characters is fixed, the list can be created in advance at runtime or compile time, or (if every character takes up the same number of code units) a string type as provided in the programming language can be used to store the list as a string.
 > 2. **Unique random strings:** Often applications need to generate a string of characters that's not only random, but also unique.  This can be done by storing a list (such as a hash table) of strings already generated and checking newly generated strings against that list.<sup>[**(13)**](#Note13)</sup>
-> 3. **Word generation:** This technique could also be used to generate "pronounceable" words, but this is less flexible than other approaches; see also "[**Weighted Choice With Replacement**](#Weighted_Choice_With_Replacement)".
+> 3. **Word generation:** This technique could also be used to generate "pronounceable" words, but this is less flexible than other approaches; see also "[**Markov Chains**](#Markov_Chains)".
 
 <a id=Pseudocode_for_Random_Sampling></a>
 #### Pseudocode for Random Sampling
@@ -696,24 +697,29 @@ An algorithm called _coupling from the past_ (Propp and Wilson 1996)<sup>[**(18)
 
     METHOD CFTP(chain)
        states=[]
-       # Start multiple chains at different states.  NOTE:
-       # If the states are ordered with respect to each
-       # other, then just two chains can be created instead,
-       # starting at the first and last state, respectively.
+       // Start multiple chains at different states.  NOTE:
+       // If the chain is monotonic (meaning the states
+       // are ordered and, whenever state A is less
+       // than state B, A's next state is never higher than
+       // B's next state), then just two chains can be
+       // created instead, starting
+       // at the first and last state, respectively.
        numstates=StateCount(chain)
        for i in 0...numstates: AddItem(states, i)
        done=false
        while not done
-          # Update each chain with the same randomness
+          // Update each chain with the same randomness
           r=RANDOM()
           for i in 0...numstates: states[i]=UPDATE(chain, states[i], r)
-          # Stop when all states are the same
+          // Stop when all states are the same
           fs=states[0]
           done=true
           for i in 1...numstates: done=done and states[i]==fs
        end
-       return states[0] # Return the steady state
+       return states[0] // Return the steady state
     END METHOD
+
+meaning the states are ordered and, for any two different states A and B, if A is less than B, A's highest state transition is less than or equal to B's lowest state transition.
 
 <a id=A_Note_on_Sorting_Random_Numbers></a>
 ### A Note on Sorting Random Numbers
@@ -1739,6 +1745,11 @@ See also (von Neumann 1951)<sup>[**(30)**](#Note30)</sup>; (Devroye 1986)<sup>[*
 > 1. To sample a random number in the interval [`low`, `high`) from a PDF with a positive maximum value no greater than `peak` at that interval, generate `x = RNDRANGEMaxExc(low, high)` and `y = RNDRANGEMaxExc(0, peak)` until `y < PDF(x)`, then take the last `x` generated this way. (See also Saucier 2000, pp. 6-7.)  If the distribution **is discrete**, generate `x` with `x = RNDINTEXCRANGE(low, high)` instead.
 > 2. A custom distribution's PDF, `PDF`, is `exp(-abs(x*x*x))`, and the exponential distribution's PDF, `PDF2`, is `exp(-x)`.  The exponential PDF "dominates" the other PDF (at every `x` 0 or greater) if we multiply it by 1.5, so that `PDF2` is now `1.5 * exp(-x)`.  Now we can generate numbers from our custom distribution by sampling exponential points until a point falls within `PDF`.  This is done by generating `n = Expo(1)` until `PDF(n) >= RNDRANGEMaxExc(0, PDF2(n))`.
 
+<a id=Alternating_Series></a>
+#### Alternating Series
+
+If the target PDF is not known exactly, but can be approximated from above and below by two series expansions that converge to the PDF as more terms are added, the  _alternating series method_ can be used.  This still requires a "dominating" PDF (`PDF2(x)`) to serve as the "easy-to-sample" distribution.  Call the series expansions `UPDF(x, n)` and `LPDF(x, n)`, respectively, where `n` is the number of terms in the series to add.  To generate a random number using this method (Devroye 2004)<sup>[**(58)**](#Note58)</sup>: (1) Generate a random number `x` that follows the "dominating" distribution; (2) set `n` to 0; (3) accept `x` if `r <= LPDF(x, n)`, or go to step 1 if `r >= UPDF(x, n)`, or repeat this step with `n` increased by 1 if neither is the case.
+
 <a id=Markov_Chain_Monte_Carlo></a>
 #### Markov-Chain Monte Carlo
 
@@ -1986,7 +1997,7 @@ This section contains ways to choose independent uniform random points in or on 
 
 To generate a random point inside an N-dimensional box, generate `RNDRANGEMaxExc(mn, mx)` for each coordinate, where `mn` and `mx` are the lower and upper bounds for that coordinate.  For example&mdash;
 - to generate a random point inside a rectangle bounded in \[0, 2\) along the X axis and \[3, 6\) along the Y axis, generate `[RNDRANGEMaxExc(0,2), RNDRANGEMaxExc(3,6)]`, and
-- to generate a _complex number_ with real and imaginary parts bounded in \[0, 1\], generate `[RNDU01(), RNDU01()]`.
+- to generate a _complex number_ with real and imaginary parts bounded in \[0, 1\], generate `[RNDRANGE(0, 1), RNDRANGE(0, 1)]`.
 
 <a id=Random_Points_Inside_a_Simplex></a>
 #### Random Points Inside a Simplex
