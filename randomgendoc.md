@@ -267,10 +267,6 @@ CLASSES
      |
      |  choice(self, list)
      |
-     |  continuous_choice(self, values, weights)
-     |
-     |  continuous_choice_n(self, values, weights, n=1)
-     |
      |  diceRoll(self, dice, sides=6, bonus=0)
      |
      |  dirichlet(alphas)
@@ -570,6 +566,10 @@ CLASSES
      |      are shuffled); the shuffled items
      |      will appear at the end of the list.
      |      Returns 'list'.
+     |
+     |  piecewise_linear(self, values, weights)
+     |
+     |  piecewise_linear_n(self, values, weights, n=1)
      |
      |  poisson(self, mean)
      |      Generates a random number following a Poisson distribution.
@@ -1161,9 +1161,10 @@ CLASSES
      |      - c: List of coefficients in the power series, all of which must be
      |        non-negative integers.
      |
-     |  probfunc(self, f, rng)
-     |      Probability generating Bernoulli factory: B(p) => B(E[p^x]), where x is rng()
-     |       (Dughmi et al. 2017) (E[p^x] is the expected value of p^x).
+     |  probgenfunc(self, f, rng)
+     |      Probability generating function Bernoulli factory: B(p) => B(E[p^x]), where x is rng()
+     |       (Dughmi et al. 2017). E[p^x] is the expected value of p^x and is also known
+     |       as the probability generating function.
      |      - f: Function that returns 1 if heads and 0 if tails.
      |      - rng: Function that returns a non-negative integer at random.
      |        Example (Dughmi et al. 2017): if 'rng' is Poisson(lamda) we have

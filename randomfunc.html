@@ -132,18 +132,14 @@
 </ul></li>
 <li><a href="#Monte_Carlo_Sampling_Expected_Values_Integration_and_Optimization"><strong>Monte Carlo Sampling: Expected Values, Integration, and Optimization</strong></a></li>
 <li><a href="#Low_Discrepancy_Sequences"><strong>Low-Discrepancy Sequences</strong></a></li>
-<li><a href="#Weighted_Choice_Involving_Real_Numbers"><strong>Weighted Choice Involving Real Numbers</strong></a>
-
-<ul>
-<li><a href="#Continuous_Weighted_Choice"><strong>Continuous Weighted Choice</strong></a></li>
-</ul></li>
-<li><a href="#Additional_Examples_Involving_Real_Numbers"><strong>Additional Examples Involving Real Numbers</strong></a>
+<li><a href="#Notes_on_Randomization_Involving_Real_Numbers"><strong>Notes on Randomization Involving Real Numbers</strong></a>
 
 <ul>
 <li><a href="#Probabilities_As_Their_Digit_Expansions"><strong>Probabilities As Their Digit Expansions</strong></a></li>
-<li><a href="#Random_Walks_Real_Numbers"><strong>Random Walks (Real Numbers)</strong></a></li>
-<li><a href="#Mixtures_Real_Numbers"><strong>Mixtures (Real Numbers)</strong></a></li>
-<li><a href="#Transformations_of_Random_Numbers_Real_Numbers"><strong>Transformations of Random Numbers (Real Numbers)</strong></a></li>
+<li><a href="#Weighted_Choice_Involving_Real_Numbers"><strong>Weighted Choice Involving Real Numbers</strong></a></li>
+<li><a href="#Random_Walks_Additional_Examples"><strong>Random Walks: Additional Examples</strong></a></li>
+<li><a href="#Mixtures_Additional_Examples"><strong>Mixtures: Additional Examples</strong></a></li>
+<li><a href="#Transformations_Additional_Examples"><strong>Transformations: Additional Examples</strong></a></li>
 </ul></li>
 <li><a href="#Random_Numbers_from_a_Distribution_of_Data_Points"><strong>Random Numbers from a Distribution of Data Points</strong></a></li>
 <li><a href="#Random_Numbers_from_an_Arbitrary_Distribution"><strong>Random Numbers from an Arbitrary Distribution</strong></a>
@@ -154,6 +150,7 @@
 <li><a href="#Rejection_Sampling_with_a_PDF"><strong>Rejection Sampling with a PDF</strong></a></li>
 <li><a href="#Markov_Chain_Monte_Carlo"><strong>Markov-Chain Monte Carlo</strong></a></li>
 </ul></li>
+<li><a href="#Piecewise_Linear_Distribution"><strong>Piecewise Linear Distribution</strong></a></li>
 <li><a href="#Specific_Distributions"><strong>Specific Distributions</strong></a></li>
 <li><a href="#Index_of_Non_Uniform_Distributions"><strong>Index of Non-Uniform Distributions</strong></a></li>
 <li><a href="#Geometric_Sampling"><strong>Geometric Sampling</strong></a>
@@ -1815,104 +1812,9 @@ END METHOD
 
 <p>In Monte Carlo sampling, low-discrepancy sequences are often used to achieve more efficient &quot;random&quot; sampling.</p>
 
-<p><a id=Weighted_Choice_Involving_Real_Numbers></a></p>
+<p><a id=Notes_on_Randomization_Involving_Real_Numbers></a></p>
 
-<h3>Weighted Choice Involving Real Numbers</h3>
-
-<p>In general, to implement weighted choice given a list of weights or cumulative weights expressed as real numbers, convert those weights to integers (see &quot;<a href="#Approximate_Sampling_for_Discrete_Distributions"><strong>Approximate Sampling for Discrete Distributions</strong></a>&quot;), then use those integers in the <code>WeightedChoice</code> or <code>CumulativeWeightedChoice</code> methods, as appropriate (see &quot;<a href="#Weighted_Choice_With_Replacement"><strong>Weighted Choice With Replacement</strong></a>&quot;). Those two methods could instead be modified by changing <code>value = RNDINTEXC(sum)</code> to <code>value = RNDRANGEMaxExc(0, sum)</code>, but this is more likely to introduce error.</p>
-
-<p><a id=Continuous_Weighted_Choice></a></p>
-
-<h4>Continuous Weighted Choice</h4>
-
-<p><strong>Requires random real numbers.</strong></p>
-
-<p>The continuous weighted choice method generates a random number that follows a continuous probability distribution (here, a <a href="http://en.cppreference.com/w/cpp/numeric/random/piecewise_linear_distribution"><strong><em>piecewise linear distribution</em></strong></a>).</p>
-
-<p>The <code>ContinuousWeightedChoice</code> method (in the pseudocode below) takes two lists as follows:</p>
-
-<ul>
-<li><code>values</code> is a list of numbers (which need not be integers). If the numbers are arranged in ascending order, which they should, the first number in this list can be returned exactly, but not the last number.</li>
-<li><code>weights</code> is a list of weights for the given numbers (where each number and its weight have the same index in both lists).   The greater a number&#39;s weight, the more likely it is that a number close to that number will be chosen.  Each weight should be 0 or greater.</li>
-</ul>
-
-<p>&nbsp;</p>
-
-<pre>METHOD ContWChoose(values, weights, areas, value)
-    // Interpolate a number according to the given value
-    i=0
-    // Get the number corresponding to the random number
-    runningValue = 0
-    while i &lt; size(values) - 1
-     area = areas[i]
-     if area &gt; 0
-      newValue = runningValue + area
-      // NOTE: Includes start, excludes end
-      if value &lt; newValue
-       w1=weights[i]
-       w2=weights[i+1]
-       diff=w2-w1
-       wmin=min(w1, w2)
-       wmax=max(w1, w2)
-       wt=(value - runningValue)/area
-       interp=wt
-       if diff!=0
-          s=sqrt(wmax*wmax*wt+wmin*wmin-
-             wmin*wmin*wt)
-          interp=abs((s-wmin)/diff)
-          if diff&lt;0: interp=1-interp
-       end
-       retValue = values[i] + (values[i + 1] - values[i]) *
-          interp
-       return retValue
-      end
-      runningValue = newValue
-     end
-     i = i + 1
-    end
-    // Last resort (might happen because rounding
-    // error happened somehow)
-    return values[size(values) - 1]
-END METHOD
-
-METHOD GatherAreas(values, weights, areas)
-    // Get the sum of all areas between weights
-    // NOTE: Kahan summation is more robust
-    // than the naive summing given here
-    msum = 0
-    i = 0
-    while i &lt; size(values) - 1
-      weightArea = abs((weights[i] + weights[i + 1]) * 0.5 *
-            (values[i + 1] - values[i]))
-      AddItem(areas, weightArea)
-      msum = msum + weightArea
-       i = i + 1
-    end
-    return msum
-END METHOD
-
-METHOD ContinuousWeightedChoice(values, weights)
-    if size(values) &lt;= 0 or
-       size(weights) &lt; size(values): return error
-    if size(values) == 1: return values[0]
-    areas = []
-    msum = GatherAreas(values, weights, areas)
-    // Generate random numbers
-    value = RNDRANGEMaxExc(0, msum)
-    return ContWChoose(values, weights, areas, value)
-END METHOD
-</pre>
-
-<blockquote>
-<p><strong>Note:</strong> The <a href="https://peteroupc.github.io/randomgen.zip"><strong>Python sample code</strong></a> contains a variant to the method
-above for returning more than one random number in one call.</p>
-
-<p><strong>Example</strong>: Assume <code>values</code> is the following: <code>[0, 1, 2, 2.5, 3]</code>, and <code>weights</code> is the following: <code>[0.2, 0.8, 0.5, 0.3, 0.1]</code>.  The weight for 2 is 0.5, and that for 2.5 is 0.3.  Since 2 has a higher weight than 2.5, numbers near 2 are more likely to be chosen than numbers near 2.5 with the <code>ContinuousWeightedChoice</code> method.</p>
-</blockquote>
-
-<p><a id=Additional_Examples_Involving_Real_Numbers></a></p>
-
-<h3>Additional Examples Involving Real Numbers</h3>
+<h3>Notes on Randomization Involving Real Numbers</h3>
 
 <p><strong>Requires random real numbers.</strong></p>
 
@@ -1932,9 +1834,15 @@ above for returning more than one random number in one call.</p>
 <li>If <code>pk + 1 &lt;= u</code>, return 0.  If <code>pk - 2 &gt;= u</code>, return 1.  If neither is the case, add 1 to <code>k</code> and go to step 2.</li>
 </ol>
 
-<p><a id=Random_Walks_Real_Numbers></a></p>
+<p><a id=Weighted_Choice_Involving_Real_Numbers></a></p>
 
-<h4>Random Walks (Real Numbers)</h4>
+<h4>Weighted Choice Involving Real Numbers</h4>
+
+<p>In general, to implement weighted choice given a list of weights or cumulative weights expressed as real numbers, convert those weights to integers (see &quot;<a href="#Approximate_Sampling_for_Discrete_Distributions"><strong>Approximate Sampling for Discrete Distributions</strong></a>&quot;), then use those integers in the <code>WeightedChoice</code> or <code>CumulativeWeightedChoice</code> methods, as appropriate (see &quot;<a href="#Weighted_Choice_With_Replacement"><strong>Weighted Choice With Replacement</strong></a>&quot;). Those two methods could instead be modified by changing <code>value = RNDINTEXC(sum)</code> to <code>value = RNDRANGEMaxExc(0, sum)</code>, but this is more likely to introduce error.</p>
+
+<p><a id=Random_Walks_Additional_Examples></a></p>
+
+<h4>Random Walks: Additional Examples</h4>
 
 <ul>
 <li>One example of a white noise process is a list of <code>Normal(0, 1)</code> numbers (<em>Gaussian white noise</em>).</li>
@@ -1947,15 +1855,15 @@ above for returning more than one random number in one call.</p>
 </ul></li>
 </ul>
 
-<p><a id=Mixtures_Real_Numbers></a></p>
+<p><a id=Mixtures_Additional_Examples></a></p>
 
-<h4>Mixtures (Real Numbers)</h4>
+<h4>Mixtures: Additional Examples</h4>
 
 <p>Example 3 in &quot;<a href="#Mixtures_of_Distributions"><strong>Mixtures of Distributions</strong></a>&quot; can be adapted to nonoverlapping real number ranges by assigning weights <code>mx - mn</code> instead of <code>(mx - mn) + 1</code> and using <code>RNDRANGEMaxExc</code> instead of <code>RNDINTRANGE</code>.</p>
 
-<p><a id=Transformations_of_Random_Numbers_Real_Numbers></a></p>
+<p><a id=Transformations_Additional_Examples></a></p>
 
-<h4>Transformations of Random Numbers (Real Numbers)</h4>
+<h4>Transformations: Additional Examples</h4>
 
 <ol>
 <li><strong>Bates distribution</strong>: Find the mean of <em>n</em> uniform random numbers in a given range (such as by <code>RNDRANGE(minimum, maximum)</code>) (strategy 8, mean; see the <a href="#Mean_and_Variance_Calculation"><strong>appendix</strong></a>).</li>
@@ -2175,7 +2083,7 @@ METHOD ICDFFromContPDF(u01, mini, maxi, step)
    AddItem(list, maxi)
    AddItem(weights, PDF(maxi))
   sum=GatherAreas(values, weights, areas)
-  return ContWChoose(values, weights, areas, u01 * sum)
+  return PWLChoose(values, weights, areas, u01 * sum)
 END METHOD
 </pre>
 
@@ -2222,6 +2130,93 @@ END METHOD
 
 <blockquote>
 <p><strong>Example:</strong> In one Gibbs sampler, an initial value for <code>y</code> is chosen, then multiple <code>x</code>, <code>y</code> pairs of random numbers are generated, where <code>x = BetaDist(y, 5)</code> then <code>y = Poisson(x * 10)</code>.</p>
+</blockquote>
+
+<p><a id=Piecewise_Linear_Distribution></a></p>
+
+<h3>Piecewise Linear Distribution</h3>
+
+<p><strong>Requires random real numbers.</strong></p>
+
+<p>A <a href="http://en.cppreference.com/w/cpp/numeric/random/piecewise_linear_distribution"><strong><em>piecewise linear distribution</em></strong></a> describes a continuous distribution with weights at known points and other weights determined by linear interpolation (smoothing).  The <code>PiecewiseLinear</code> method (in the pseudocode below) takes two lists as follows:</p>
+
+<ul>
+<li><code>values</code> is a list of numbers (which need not be integers). If the numbers are arranged in ascending order, which they should, the first number in this list can be returned exactly, but not the last number.</li>
+<li><code>weights</code> is a list of weights for the given numbers (where each number and its weight have the same index in both lists).   The greater a number&#39;s weight, the more likely it is that a number close to that number will be chosen.  Each weight should be 0 or greater.</li>
+</ul>
+
+<p>&nbsp;</p>
+
+<pre>METHOD PWLChoose(values, weights, areas, value)
+    // Interpolate a number according to the given value
+    i=0
+    // Get the number corresponding to the random number
+    runningValue = 0
+    while i &lt; size(values) - 1
+     area = areas[i]
+     if area &gt; 0
+      newValue = runningValue + area
+      // NOTE: Includes start, excludes end
+      if value &lt; newValue
+       w1=weights[i]
+       w2=weights[i+1]
+       diff=w2-w1
+       wmin=min(w1, w2)
+       wmax=max(w1, w2)
+       wt=(value - runningValue)/area
+       interp=wt
+       if diff!=0
+          s=sqrt(wmax*wmax*wt+wmin*wmin-
+             wmin*wmin*wt)
+          interp=abs((s-wmin)/diff)
+          if diff&lt;0: interp=1-interp
+       end
+       retValue = values[i] + (values[i + 1] - values[i]) *
+          interp
+       return retValue
+      end
+      runningValue = newValue
+     end
+     i = i + 1
+    end
+    // Last resort (might happen because rounding
+    // error happened somehow)
+    return values[size(values) - 1]
+END METHOD
+
+METHOD GatherAreas(values, weights, areas)
+    // Get the sum of all areas between weights
+    // NOTE: Kahan summation is more robust
+    // than the naive summing given here
+    msum = 0
+    i = 0
+    while i &lt; size(values) - 1
+      weightArea = abs((weights[i] + weights[i + 1]) * 0.5 *
+            (values[i + 1] - values[i]))
+      AddItem(areas, weightArea)
+      msum = msum + weightArea
+       i = i + 1
+    end
+    return msum
+END METHOD
+
+METHOD PiecewiseLinear(values, weights)
+    if size(values) &lt;= 0 or
+       size(weights) &lt; size(values): return error
+    if size(values) == 1: return values[0]
+    areas = []
+    msum = GatherAreas(values, weights, areas)
+    // Generate random numbers
+    value = RNDRANGEMaxExc(0, msum)
+    return PWLChoose(values, weights, areas, value)
+END METHOD
+</pre>
+
+<blockquote>
+<p><strong>Note:</strong> The <a href="https://peteroupc.github.io/randomgen.zip"><strong>Python sample code</strong></a> contains a variant to the method
+above for returning more than one random number in one call.</p>
+
+<p><strong>Example</strong>: Assume <code>values</code> is the following: <code>[0, 1, 2, 2.5, 3]</code>, and <code>weights</code> is the following: <code>[0.2, 0.8, 0.5, 0.3, 0.1]</code>.  The weight for 2 is 0.5, and that for 2.5 is 0.3.  Since 2 has a higher weight than 2.5, numbers near 2 are more likely to be chosen than numbers near 2.5 with the <code>PiecewiseLinear</code> method.</p>
 </blockquote>
 
 <p><a id=Specific_Distributions></a></p>

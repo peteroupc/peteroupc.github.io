@@ -91,19 +91,19 @@ All the random number methods presented on this page are ultimately based on an 
         - [**Uniform Numbers As Their Digit Expansions**](#Uniform_Numbers_As_Their_Digit_Expansions)
     - [**Monte Carlo Sampling: Expected Values, Integration, and Optimization**](#Monte_Carlo_Sampling_Expected_Values_Integration_and_Optimization)
     - [**Low-Discrepancy Sequences**](#Low_Discrepancy_Sequences)
-    - [**Weighted Choice Involving Real Numbers**](#Weighted_Choice_Involving_Real_Numbers)
-        - [**Continuous Weighted Choice**](#Continuous_Weighted_Choice)
-    - [**Additional Examples Involving Real Numbers**](#Additional_Examples_Involving_Real_Numbers)
+    - [**Notes on Randomization Involving Real Numbers**](#Notes_on_Randomization_Involving_Real_Numbers)
         - [**Probabilities As Their Digit Expansions**](#Probabilities_As_Their_Digit_Expansions)
-        - [**Random Walks (Real Numbers)**](#Random_Walks_Real_Numbers)
-        - [**Mixtures (Real Numbers)**](#Mixtures_Real_Numbers)
-        - [**Transformations of Random Numbers (Real Numbers)**](#Transformations_of_Random_Numbers_Real_Numbers)
+        - [**Weighted Choice Involving Real Numbers**](#Weighted_Choice_Involving_Real_Numbers)
+        - [**Random Walks: Additional Examples**](#Random_Walks_Additional_Examples)
+        - [**Mixtures: Additional Examples**](#Mixtures_Additional_Examples)
+        - [**Transformations: Additional Examples**](#Transformations_Additional_Examples)
     - [**Random Numbers from a Distribution of Data Points**](#Random_Numbers_from_a_Distribution_of_Data_Points)
     - [**Random Numbers from an Arbitrary Distribution**](#Random_Numbers_from_an_Arbitrary_Distribution)
         - [**Approximate Sampling for Discrete Distributions**](#Approximate_Sampling_for_Discrete_Distributions)
         - [**Inverse Transform Sampling**](#Inverse_Transform_Sampling)
         - [**Rejection Sampling with a PDF**](#Rejection_Sampling_with_a_PDF)
         - [**Markov-Chain Monte Carlo**](#Markov_Chain_Monte_Carlo)
+    - [**Piecewise Linear Distribution**](#Piecewise_Linear_Distribution)
     - [**Specific Distributions**](#Specific_Distributions)
     - [**Index of Non-Uniform Distributions**](#Index_of_Non_Uniform_Distributions)
     - [**Geometric Sampling**](#Geometric_Sampling)
@@ -1493,88 +1493,7 @@ In most cases, RNGs can be used to generate a "seed" to start the low-discrepanc
 
 In Monte Carlo sampling, low-discrepancy sequences are often used to achieve more efficient "random" sampling.
 
-<a id=Continuous_Weighted_Choice></a>
-### Piecewise Linear Distribution
-
-**Requires random real numbers.**
-
-A [**_piecewise linear distribution_**](http://en.cppreference.com/w/cpp/numeric/random/piecewise_linear_distribution) describes a continuous distribution with weights at known points and other weights determined by linear interpolation (smoothing).  The `PiecewiseLinear` method (in the pseudocode below) takes two lists as follows:
-
-- `values` is a list of numbers (which need not be integers). If the numbers are arranged in ascending order, which they should, the first number in this list can be returned exactly, but not the last number.
-- `weights` is a list of weights for the given numbers (where each number and its weight have the same index in both lists).   The greater a number's weight, the more likely it is that a number close to that number will be chosen.  Each weight should be 0 or greater.
-
-&nbsp;
-
-    METHOD PWLChoose(values, weights, areas, value)
-        // Interpolate a number according to the given value
-        i=0
-        // Get the number corresponding to the random number
-        runningValue = 0
-        while i < size(values) - 1
-         area = areas[i]
-         if area > 0
-          newValue = runningValue + area
-          // NOTE: Includes start, excludes end
-          if value < newValue
-           w1=weights[i]
-           w2=weights[i+1]
-           diff=w2-w1
-           wmin=min(w1, w2)
-           wmax=max(w1, w2)
-           wt=(value - runningValue)/area
-           interp=wt
-           if diff!=0
-              s=sqrt(wmax*wmax*wt+wmin*wmin-
-                 wmin*wmin*wt)
-              interp=abs((s-wmin)/diff)
-              if diff<0: interp=1-interp
-           end
-           retValue = values[i] + (values[i + 1] - values[i]) *
-              interp
-           return retValue
-          end
-          runningValue = newValue
-         end
-         i = i + 1
-        end
-        // Last resort (might happen because rounding
-        // error happened somehow)
-        return values[size(values) - 1]
-    END METHOD
-
-    METHOD GatherAreas(values, weights, areas)
-        // Get the sum of all areas between weights
-        // NOTE: Kahan summation is more robust
-        // than the naive summing given here
-        msum = 0
-        i = 0
-        while i < size(values) - 1
-          weightArea = abs((weights[i] + weights[i + 1]) * 0.5 *
-                (values[i + 1] - values[i]))
-          AddItem(areas, weightArea)
-          msum = msum + weightArea
-           i = i + 1
-        end
-        return msum
-    END METHOD
-
-    METHOD PiecewiseLinear(values, weights)
-        if size(values) <= 0 or
-           size(weights) < size(values): return error
-        if size(values) == 1: return values[0]
-        areas = []
-        msum = GatherAreas(values, weights, areas)
-        // Generate random numbers
-        value = RNDRANGEMaxExc(0, msum)
-        return PWLChoose(values, weights, areas, value)
-    END METHOD
-
-> **Note:** The [**Python sample code**](https://peteroupc.github.io/randomgen.zip) contains a variant to the method
-> above for returning more than one random number in one call.
->
-> **Example**: Assume `values` is the following: `[0, 1, 2, 2.5, 3]`, and `weights` is the following: `[0.2, 0.8, 0.5, 0.3, 0.1]`.  The weight for 2 is 0.5, and that for 2.5 is 0.3.  Since 2 has a higher weight than 2.5, numbers near 2 are more likely to be chosen than numbers near 2.5 with the `PiecewiseLinear` method.
-
-<a id=Additional_Examples_Involving_Real_Numbers></a>
+<a id=Notes_on_Randomization_Involving_Real_Numbers></a>
 ### Notes on Randomization Involving Real Numbers
 
 **Requires random real numbers.**
@@ -1593,12 +1512,12 @@ If the probability is an irrational number, such as `exp(-x/y)` or `ln(2)`, then
 3. If `pk + 1 <= u`, return 0.  If `pk - 2 >= u`, return 1.  If neither is the case, add 1 to `k` and go to step 2.
 
 <a id=Weighted_Choice_Involving_Real_Numbers></a>
-### Weighted Choice Involving Real Numbers
+#### Weighted Choice Involving Real Numbers
 
 In general, to implement weighted choice given a list of weights or cumulative weights expressed as real numbers, convert those weights to integers (see "[**Approximate Sampling for Discrete Distributions**](#Approximate_Sampling_for_Discrete_Distributions)"), then use those integers in the `WeightedChoice` or `CumulativeWeightedChoice` methods, as appropriate (see "[**Weighted Choice With Replacement**](#Weighted_Choice_With_Replacement)"). Those two methods could instead be modified by changing `value = RNDINTEXC(sum)` to `value = RNDRANGEMaxExc(0, sum)`, but this is more likely to introduce error.
 
-<a id=Random_Walks_Real_Numbers></a>
-#### Random Walks (Real Numbers)
+<a id=Random_Walks_Additional_Examples></a>
+#### Random Walks: Additional Examples
 
 - One example of a white noise process is a list of `Normal(0, 1)` numbers (_Gaussian white noise_).
 - If `STATEJUMP()` is `RNDRANGE(-1, 1)`, the random state is advanced by a random real number in the interval [-1, 1].
@@ -1606,13 +1525,13 @@ In general, to implement weighted choice given a list of weights or cumulative w
     - A _Wiener process_ (also known as _Brownian motion_) has random states and jumps that are normally distributed. For a random walk that follows a Wiener process, `STATEJUMP()` is `Normal(mu * timediff, sigma * sqrt(timediff))`, where  `mu` is the drift (or average value per time unit), `sigma` is the volatility, and `timediff` is the time difference between samples.  A _Brownian bridge_ (Revuz and Yor 1999)<sup>[**(45)**](#Note45)</sup> modifies a Wiener process as follows: For each time X, calculate `W(X) - W(E) * (X - S) / (E - S)`, where `S` and `E` are the starting and ending times of the process, respectively, and `W(X)` and `W(E)` are the state at times X and E, respectively.
     - In a _Poisson process_, the time between each event is its own exponential random number with its own rate parameter (e.g., `Expo(rate)`) (see "[**Exponential Distribution**](#Exponential_Distribution)"), and sorting N random `RNDRANGE(x, y)` expresses N arrival times in the interval `[x, y]`. The process is _homogeneous_ if all the rates are the same, and _inhomogeneous_ if the rate can vary with the "timestamp" before each event jump; to generate arrival times here, potential arrival times are generated at the maximum possible rate (`maxrate`) and each one is accepted if `RNDRANGE(0, maxrate) < thisrate`, where `thisrate` is the rate for the given arrival time (Alexoupolos 2017)<sup>[**(46)**](#Note46)</sup>.
 
-<a id=Mixtures_Real_Numbers></a>
-#### Mixtures (Real Numbers)
+<a id=Mixtures_Additional_Examples></a>
+#### Mixtures: Additional Examples
 
 Example 3 in "[**Mixtures of Distributions**](#Mixtures_of_Distributions)" can be adapted to nonoverlapping real number ranges by assigning weights `mx - mn` instead of `(mx - mn) + 1` and using `RNDRANGEMaxExc` instead of `RNDINTRANGE`.
 
-<a id=Transformations_of_Random_Numbers_Real_Numbers></a>
-#### Transformations of Random Numbers (Real Numbers)
+<a id=Transformations_Additional_Examples></a>
+#### Transformations: Additional Examples
 
 1. **Bates distribution**: Find the mean of _n_ uniform random numbers in a given range (such as by `RNDRANGE(minimum, maximum)`) (strategy 8, mean; see the [**appendix**](#Mean_and_Variance_Calculation)).
 2. A random point (`x`, `y`) can be transformed (strategy 9, geometric transformation) to derive a point with **correlated random** coordinates (old `x`, new `x`) as follows (see (Saucier 2000)<sup>[**(47)**](#Note47)</sup>, sec. 3.8): `[x, y*sqrt(1 - rho * rho) + rho * x]`, where `x` and `y` are independent random numbers generated the same way, and `rho` is a _correlation coefficient_ in the interval \[-1, 1\] (if `rho` is 0, `x` and `y` are uncorrelated).
@@ -1833,6 +1752,87 @@ The [**Python sample code**](https://peteroupc.github.io/randomgen.zip) includes
 Most MCMC algorithms **require knowing the distribution's PDF**, but _Gibbs sampling_<sup>[**(60)**](#Note60)</sup> is an exception.  This sampling technique involves repeatedly generating random numbers from two or more distributions, each of which uses a random number from the previous distribution (_conditional distributions_). The random numbers generated this way converge to the _joint distribution_ of those conditional distributions.
 
 > **Example:** In one Gibbs sampler, an initial value for `y` is chosen, then multiple `x`, `y` pairs of random numbers are generated, where `x = BetaDist(y, 5)` then `y = Poisson(x * 10)`.
+
+<a id=Piecewise_Linear_Distribution></a>
+### Piecewise Linear Distribution
+
+**Requires random real numbers.**
+
+A [**_piecewise linear distribution_**](http://en.cppreference.com/w/cpp/numeric/random/piecewise_linear_distribution) describes a continuous distribution with weights at known points and other weights determined by linear interpolation (smoothing).  The `PiecewiseLinear` method (in the pseudocode below) takes two lists as follows:
+
+- `values` is a list of numbers (which need not be integers). If the numbers are arranged in ascending order, which they should, the first number in this list can be returned exactly, but not the last number.
+- `weights` is a list of weights for the given numbers (where each number and its weight have the same index in both lists).   The greater a number's weight, the more likely it is that a number close to that number will be chosen.  Each weight should be 0 or greater.
+
+&nbsp;
+
+    METHOD PWLChoose(values, weights, areas, value)
+        // Interpolate a number according to the given value
+        i=0
+        // Get the number corresponding to the random number
+        runningValue = 0
+        while i < size(values) - 1
+         area = areas[i]
+         if area > 0
+          newValue = runningValue + area
+          // NOTE: Includes start, excludes end
+          if value < newValue
+           w1=weights[i]
+           w2=weights[i+1]
+           diff=w2-w1
+           wmin=min(w1, w2)
+           wmax=max(w1, w2)
+           wt=(value - runningValue)/area
+           interp=wt
+           if diff!=0
+              s=sqrt(wmax*wmax*wt+wmin*wmin-
+                 wmin*wmin*wt)
+              interp=abs((s-wmin)/diff)
+              if diff<0: interp=1-interp
+           end
+           retValue = values[i] + (values[i + 1] - values[i]) *
+              interp
+           return retValue
+          end
+          runningValue = newValue
+         end
+         i = i + 1
+        end
+        // Last resort (might happen because rounding
+        // error happened somehow)
+        return values[size(values) - 1]
+    END METHOD
+
+    METHOD GatherAreas(values, weights, areas)
+        // Get the sum of all areas between weights
+        // NOTE: Kahan summation is more robust
+        // than the naive summing given here
+        msum = 0
+        i = 0
+        while i < size(values) - 1
+          weightArea = abs((weights[i] + weights[i + 1]) * 0.5 *
+                (values[i + 1] - values[i]))
+          AddItem(areas, weightArea)
+          msum = msum + weightArea
+           i = i + 1
+        end
+        return msum
+    END METHOD
+
+    METHOD PiecewiseLinear(values, weights)
+        if size(values) <= 0 or
+           size(weights) < size(values): return error
+        if size(values) == 1: return values[0]
+        areas = []
+        msum = GatherAreas(values, weights, areas)
+        // Generate random numbers
+        value = RNDRANGEMaxExc(0, msum)
+        return PWLChoose(values, weights, areas, value)
+    END METHOD
+
+> **Note:** The [**Python sample code**](https://peteroupc.github.io/randomgen.zip) contains a variant to the method
+> above for returning more than one random number in one call.
+>
+> **Example**: Assume `values` is the following: `[0, 1, 2, 2.5, 3]`, and `weights` is the following: `[0.2, 0.8, 0.5, 0.3, 0.1]`.  The weight for 2 is 0.5, and that for 2.5 is 0.3.  Since 2 has a higher weight than 2.5, numbers near 2 are more likely to be chosen than numbers near 2.5 with the `PiecewiseLinear` method.
 
 <a id=Specific_Distributions></a>
 ### Specific Distributions
