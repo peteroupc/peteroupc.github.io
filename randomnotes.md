@@ -399,6 +399,40 @@ In general, the only random numbers an exact algorithm uses are random bits (bin
 
 <small><sup id=Note14>(14)</sup> Morina, G., Łatuszyński, K., et al., "From the Bernoulli Factory to a Dice Enterprise via Perfect Sampling of Markov Chains", 2019.</small>
 
+<a id=Appendix></a>
+## Appendix
+
+<a id=Implementation_of_erf></a>
+### Implementation of `erf`
+
+The pseudocode below shows how the [**error function**](https://en.wikipedia.org/wiki/Error_function) `erf` can be implemented, in case the programming language used doesn't include a built-in version of `erf` (such as JavaScript at the time of this writing).   In the pseudocode, `EPSILON` is a very small number to end the iterative calculation.
+
+    METHOD erf(v)
+        if v==0: return 0
+        if v<0: return -erf(-v)
+        if v==infinity: return 1
+        // NOTE: For Java `double`, the following
+        // line can be added:
+        // if v>=6: return 1
+        i=1
+        ret=0
+        zp=-(v*v)
+        zval=1.0
+        den=1.0
+        while i < 100
+            r=v*zval/den
+            den=den+2
+            ret=ret+r
+            // NOTE: EPSILON can be pow(10,14),
+            // for example.
+            if abs(r)<EPSILON: break
+            if i==1: zval=zp
+            else: zval = zval*zp/i
+            i = i + 1
+        end
+        return ret*2/sqrt(pi)
+    END METHOD
+
 <a id=License></a>
 ## License
 

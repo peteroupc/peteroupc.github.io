@@ -168,7 +168,6 @@
 <li><a href="#Appendix"><strong>Appendix</strong></a>
 
 <ul>
-<li><a href="#Implementation_of_erf"><strong>Implementation of <code>erf</code></strong></a></li>
 <li><a href="#Mean_and_Variance_Calculation"><strong>Mean and Variance Calculation</strong></a></li>
 <li><a href="#Norm_Calculation"><strong>Norm Calculation</strong></a></li>
 <li><a href="#Multithreading_Note"><strong>Multithreading Note</strong></a></li>
@@ -2684,39 +2683,6 @@ and &quot;<a href="https://randomascii.wordpress.com/2013/07/16/floating-point-d
 <h2>Appendix</h2>
 
 <p>&nbsp;</p>
-
-<p><a id=Implementation_of_erf></a></p>
-
-<h3>Implementation of <code>erf</code></h3>
-
-<p>The pseudocode below shows how the <a href="https://en.wikipedia.org/wiki/Error_function"><strong>error function</strong></a> <code>erf</code> can be implemented, in case the programming language used doesn&#39;t include a built-in version of <code>erf</code> (such as JavaScript at the time of this writing).   In the pseudocode, <code>EPSILON</code> is a very small number to end the iterative calculation.</p>
-
-<pre>METHOD erf(v)
-    if v==0: return 0
-    if v&lt;0: return -erf(-v)
-    if v==infinity: return 1
-    // NOTE: For Java `double`, the following
-    // line can be added:
-    // if v&gt;=6: return 1
-    i=1
-    ret=0
-    zp=-(v*v)
-    zval=1.0
-    den=1.0
-    while i &lt; 100
-        r=v*zval/den
-        den=den+2
-        ret=ret+r
-        // NOTE: EPSILON can be pow(10,14),
-        // for example.
-        if abs(r)&lt;EPSILON: break
-        if i==1: zval=zp
-        else: zval = zval*zp/i
-        i = i + 1
-    end
-    return ret*2/sqrt(pi)
-END METHOD
-</pre>
 
 <p><a id=Mean_and_Variance_Calculation></a></p>
 

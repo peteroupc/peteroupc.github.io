@@ -115,7 +115,6 @@ All the random number methods presented on this page are ultimately based on an 
 - [**Acknowledgments**](#Acknowledgments)
 - [**Notes**](#Notes)
 - [**Appendix**](#Appendix)
-    - [**Implementation of `erf`**](#Implementation_of_erf)
     - [**Mean and Variance Calculation**](#Mean_and_Variance_Calculation)
     - [**Norm Calculation**](#Norm_Calculation)
     - [**Multithreading Note**](#Multithreading_Note)
@@ -2220,7 +2219,7 @@ The methods shown here do not introduce any error beyond the sampling error that
 
 <small><sup id=Note63>(63)</sup> Giammatteo, P., and Di Mascio, T., "Wilson-Hilferty-type approximation for Poisson Random Variable", _Advances in Science, Technology and Engineering Systems Journal_ 5(2), 2020.</small>
 
-<small><sup id=Note64>(64)</sup> Bailey, R.W., " Polar generation of random variates with the t distribution", _Mathematics of Computation 62 (1984).</small>
+<small><sup id=Note64>(64)</sup> Bailey, R.W., "Polar generation of random variates with the t distribution", _Mathematics of Computation 62 (1984).</small>
 
 <small><sup id=Note65>(65)</sup> Kabal, P., "Generating Gaussian Pseudo-Random Variates", McGill University, 2000/2019.</small>
 
@@ -2250,37 +2249,6 @@ The methods shown here do not introduce any error beyond the sampling error that
 ## Appendix
 
 &nbsp;
-
-<a id=Implementation_of_erf></a>
-### Implementation of `erf`
-
-The pseudocode below shows how the [**error function**](https://en.wikipedia.org/wiki/Error_function) `erf` can be implemented, in case the programming language used doesn't include a built-in version of `erf` (such as JavaScript at the time of this writing).   In the pseudocode, `EPSILON` is a very small number to end the iterative calculation.
-
-    METHOD erf(v)
-        if v==0: return 0
-        if v<0: return -erf(-v)
-        if v==infinity: return 1
-        // NOTE: For Java `double`, the following
-        // line can be added:
-        // if v>=6: return 1
-        i=1
-        ret=0
-        zp=-(v*v)
-        zval=1.0
-        den=1.0
-        while i < 100
-            r=v*zval/den
-            den=den+2
-            ret=ret+r
-            // NOTE: EPSILON can be pow(10,14),
-            // for example.
-            if abs(r)<EPSILON: break
-            if i==1: zval=zp
-            else: zval = zval*zp/i
-            i = i + 1
-        end
-        return ret*2/sqrt(pi)
-    END METHOD
 
 <a id=Mean_and_Variance_Calculation></a>
 ### Mean and Variance Calculation
