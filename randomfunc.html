@@ -20,7 +20,7 @@
 <li>generating non-uniform random numbers, including <a href="#Weighted_Choice"><strong>weighted choice</strong></a>, the <a href="#Poisson_Distribution"><strong>Poisson distribution</strong></a>, and <a href="#Index_of_Non_Uniform_Distributions"><strong>other probability distributions</strong></a>.</li>
 </ul>
 
-<p><a href="https://peteroupc.github.io/randomgen.zip"><strong>Sample Python code</strong></a> that implements many of the methods in this document is available.</p>
+<p><a href="https://peteroupc.github.io/randomgen.zip"><strong>Sample Python code</strong></a> that implements many of the methods in this document is available, together with <a href="https://peteroupc.github.io/randomgendoc.html"><strong>documentation for the code</strong></a>.</p>
 
 <p>All the random number methods presented on this page are ultimately based on an underlying RNG; however, the methods make no assumptions on that RNG&#39;s implementation (e.g., whether that RNG uses only its input and its state to produce numbers) or on that RNG&#39;s statistical quality or predictability.</p>
 
@@ -551,7 +551,7 @@ END METHOD
 </pre>
 
 <blockquote>
-<p><strong>Note:</strong> An algorithm that transforms &quot;coin flips&quot; biased one way into coin flips biased another way is called a <em>Bernoulli factory</em> (Keane and O&#39;Brien 1994)<sup><a href="#Note9"><strong>(9)</strong></a></sup> (Flajolet et al., 2010)<sup><a href="#Note10"><strong>(10)</strong></a></sup>.</p>
+<p><strong>Note:</strong> An algorithm that transforms &quot;coin flips&quot; biased one way into coin flips biased another way is called a <em>Bernoulli factory</em> (Keane and O&#39;Brien 1994)<sup><a href="#Note9"><strong>(9)</strong></a></sup> (Flajolet et al., 2010)<sup><a href="#Note10"><strong>(10)</strong></a></sup>.  The <a href="https://peteroupc.github.io/randomgen.zip"><strong>Python sample code</strong></a> includes implementations of several Bernoulli factories.</p>
 </blockquote>
 
 <p><a id=Random_Sampling></a></p>
@@ -2014,7 +2014,7 @@ above for returning more than one random number in one call.</p>
 
 <ul>
 <li>The <a href="https://en.wikipedia.org/wiki/Cumulative_distribution_function"><strong><em>cumulative distribution function</em></strong></a>, or <em>CDF</em>, returns, for each number, the probability that a number equal to or greater than that number is randomly chosen; the probability is in the interval [0, 1].</li>
-<li>The <a href="https://en.wikipedia.org/wiki/Probability_density_function"><strong><em>probability density function</em></strong></a>, or <em>PDF</em>, is, roughly and intuitively, a curve of weights 0 or greater, where for each number, the greater its weight, the more likely a number close to that number is randomly chosen.  In this document, the area under the PDF need not equal 1.<sup><a href="#Note50"><strong>(50)</strong></a></sup> For discrete distributions, the PDF is more properly called <em>probability mass function</em>.</li>
+<li>The <a href="https://en.wikipedia.org/wiki/Probability_density_function"><strong><em>probability density function</em></strong></a>, or <em>PDF</em>, is, roughly and intuitively, a curve of weights 0 or greater, where for each number, the greater its weight, the more likely a number close to that number is randomly chosen.  In this document, the area under the PDF need not equal 1.<sup><a href="#Note50"><strong>(50)</strong></a></sup></li>
 <li>The <em>inverse cumulative distribution function</em> (<em>inverse CDF</em> or <em>quantile function</em>) is the inverse of the CDF and maps numbers in the interval [0, 1) to numbers in the distribution, from low to high.</li>
 </ul>
 
@@ -2035,7 +2035,7 @@ above for returning more than one random number in one call.</p>
 
 <p>If the distribution <strong>is discrete</strong><sup><a href="#Note51"><strong>(51)</strong></a></sup>, numbers that closely follow it can be sampled by choosing points that cover all or almost all of the distribution, finding their weights or cumulative weights, and choosing a random point based on those weights.</p>
 
-<p>The pseudocode below shows the following methods that work with a <strong>known PDF</strong> (<code>PDF(x)</code>) or a <strong>known CDF</strong> (<code>CDF(x)</code>) that outputs floating-point numbers of the form  <code>FPSignificand</code> * <code>FPRadix</code><sup><code>FPExponent</code></sup> (which include Java&#39;s <code>double</code> and <code>float</code>).<sup><a href="#Note52"><strong>(52)</strong></a></sup></p>
+<p>The pseudocode below shows the following methods that work with a <strong>known PDF</strong> (more properly called <em>probability mass function</em>, <code>PDF(x)</code>) or a <strong>known CDF</strong> (<code>CDF(x)</code>) that outputs floating-point numbers of the form  <code>FPSignificand</code> * <code>FPRadix</code><sup><code>FPExponent</code></sup> (which include Java&#39;s <code>double</code> and <code>float</code>).<sup><a href="#Note52"><strong>(52)</strong></a></sup></p>
 
 <ul>
 <li><code>SampleFP(mini, maxi)</code> chooses a random number in [<code>mini</code>, <code>maxi</code>] based on a <strong>known PDF</strong>.  <code>InversionSampleFP</code> is similar, but is based on a <strong>known CDF</strong>; however, <code>SampleFP</code> should be used instead where possible.</li>

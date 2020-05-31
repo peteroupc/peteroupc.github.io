@@ -555,10 +555,10 @@ Returns 'list'. """
             k += 1
         return ret
 
-    def continuous_choice(self, values, weights):
-        return self.continuous_choice_n(values, weights)[0]
+    def piecewise_linear(self, values, weights):
+        return self.piecewise_linear_n(values, weights)[0]
 
-    def continuous_choice_n(self, values, weights, n=1):
+    def piecewise_linear_n(self, values, weights, n=1):
         if len(values) <= 0 or len(weights) < len(values):
             raise ValueError
         if len(values) == 1:
@@ -646,7 +646,7 @@ Returns 'list'. """
         return b * (self.exponential()) ** (1.0 / a)
 
     def triangular(self, startpt, midpt, endpt):
-        return self.continuous_choice([startpt, midpt, endpt], [0, 1, 0])
+        return self.piecewise_linear([startpt, midpt, endpt], [0, 1, 0])
 
     def gumbel(self, a, b):
         return a + math.log(self.exponential()) * b
@@ -2459,7 +2459,7 @@ algorithm", arXiv:1511.02273v2  [cs.IT], 2016/2018.
          By default, `n` is 1 and `steps` is 100.  """
         values = [mn + (mx - mn) * i * 1.0 / steps for i in range(steps + 1)]
         weights = [pdf(v) for v in values]
-        return self.continuous_choice_n(values, weights, n)
+        return self.piecewise_linear_n(values, weights, n)
 
     def numbers_from_cdf(self, cdf, mn, mx, n=1, steps=100):
         """ Generates one or more random numbers from a continuous probability

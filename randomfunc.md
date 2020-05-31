@@ -12,7 +12,7 @@ This page discusses many ways applications can generate and sample random conten
 - ways to generate randomized content and conditions, such as [**true/false conditions**](#Boolean_True_False_Conditions), [**shuffling**](#Shuffling), and [**sampling unique items from a list**](#Sampling_Without_Replacement_Choosing_Several_Unique_Items), and
 - generating non-uniform random numbers, including [**weighted choice**](#Weighted_Choice), the [**Poisson distribution**](#Poisson_Distribution), and [**other probability distributions**](#Index_of_Non_Uniform_Distributions).
 
-[**Sample Python code**](https://peteroupc.github.io/randomgen.zip) that implements many of the methods in this document is available.
+[**Sample Python code**](https://peteroupc.github.io/randomgen.zip) that implements many of the methods in this document is available, together with [**documentation for the code**](https://peteroupc.github.io/randomgendoc.html).
 
 All the random number methods presented on this page are ultimately based on an underlying RNG; however, the methods make no assumptions on that RNG's implementation (e.g., whether that RNG uses only its input and its state to produce numbers) or on that RNG's statistical quality or predictability.
 
@@ -418,7 +418,7 @@ The following method generates 1 with probability `exp(-x/y)` and 0 otherwise (C
       end
     END METHOD
 
-> **Note:** An algorithm that transforms "coin flips" biased one way into coin flips biased another way is called a _Bernoulli factory_ (Keane and O'Brien 1994)<sup>[**(9)**](#Note9)</sup> (Flajolet et al., 2010)<sup>[**(10)**](#Note10)</sup>.
+> **Note:** An algorithm that transforms "coin flips" biased one way into coin flips biased another way is called a _Bernoulli factory_ (Keane and O'Brien 1994)<sup>[**(9)**](#Note9)</sup> (Flajolet et al., 2010)<sup>[**(10)**](#Note10)</sup>.  The [**Python sample code**](https://peteroupc.github.io/randomgen.zip) includes implementations of several Bernoulli factories.
 
 <a id=Random_Sampling></a>
 ### Random Sampling
@@ -1493,26 +1493,19 @@ In most cases, RNGs can be used to generate a "seed" to start the low-discrepanc
 
 In Monte Carlo sampling, low-discrepancy sequences are often used to achieve more efficient "random" sampling.
 
-<a id=Weighted_Choice_Involving_Real_Numbers></a>
-### Weighted Choice Involving Real Numbers
-
-In general, to implement weighted choice given a list of weights or cumulative weights expressed as real numbers, convert those weights to integers (see "[**Approximate Sampling for Discrete Distributions**](#Approximate_Sampling_for_Discrete_Distributions)"), then use those integers in the `WeightedChoice` or `CumulativeWeightedChoice` methods, as appropriate (see "[**Weighted Choice With Replacement**](#Weighted_Choice_With_Replacement)"). Those two methods could instead be modified by changing `value = RNDINTEXC(sum)` to `value = RNDRANGEMaxExc(0, sum)`, but this is more likely to introduce error.
-
 <a id=Continuous_Weighted_Choice></a>
-#### Continuous Weighted Choice
+### Piecewise Linear Distribution
 
 **Requires random real numbers.**
 
-The continuous weighted choice method generates a random number that follows a continuous probability distribution (here, a [**_piecewise linear distribution_**](http://en.cppreference.com/w/cpp/numeric/random/piecewise_linear_distribution)).
-
-The `ContinuousWeightedChoice` method (in the pseudocode below) takes two lists as follows:
+A [**_piecewise linear distribution_**](http://en.cppreference.com/w/cpp/numeric/random/piecewise_linear_distribution) describes a continuous distribution with weights at known points and other weights determined by linear interpolation (smoothing).  The `PiecewiseLinear` method (in the pseudocode below) takes two lists as follows:
 
 - `values` is a list of numbers (which need not be integers). If the numbers are arranged in ascending order, which they should, the first number in this list can be returned exactly, but not the last number.
 - `weights` is a list of weights for the given numbers (where each number and its weight have the same index in both lists).   The greater a number's weight, the more likely it is that a number close to that number will be chosen.  Each weight should be 0 or greater.
 
 &nbsp;
 
-    METHOD ContWChoose(values, weights, areas, value)
+    METHOD PWLChoose(values, weights, areas, value)
         // Interpolate a number according to the given value
         i=0
         // Get the number corresponding to the random number
@@ -1565,7 +1558,7 @@ The `ContinuousWeightedChoice` method (in the pseudocode below) takes two lists 
         return msum
     END METHOD
 
-    METHOD ContinuousWeightedChoice(values, weights)
+    METHOD PiecewiseLinear(values, weights)
         if size(values) <= 0 or
            size(weights) < size(values): return error
         if size(values) == 1: return values[0]
@@ -1573,16 +1566,16 @@ The `ContinuousWeightedChoice` method (in the pseudocode below) takes two lists 
         msum = GatherAreas(values, weights, areas)
         // Generate random numbers
         value = RNDRANGEMaxExc(0, msum)
-        return ContWChoose(values, weights, areas, value)
+        return PWLChoose(values, weights, areas, value)
     END METHOD
 
 > **Note:** The [**Python sample code**](https://peteroupc.github.io/randomgen.zip) contains a variant to the method
 > above for returning more than one random number in one call.
 >
-> **Example**: Assume `values` is the following: `[0, 1, 2, 2.5, 3]`, and `weights` is the following: `[0.2, 0.8, 0.5, 0.3, 0.1]`.  The weight for 2 is 0.5, and that for 2.5 is 0.3.  Since 2 has a higher weight than 2.5, numbers near 2 are more likely to be chosen than numbers near 2.5 with the `ContinuousWeightedChoice` method.
+> **Example**: Assume `values` is the following: `[0, 1, 2, 2.5, 3]`, and `weights` is the following: `[0.2, 0.8, 0.5, 0.3, 0.1]`.  The weight for 2 is 0.5, and that for 2.5 is 0.3.  Since 2 has a higher weight than 2.5, numbers near 2 are more likely to be chosen than numbers near 2.5 with the `PiecewiseLinear` method.
 
 <a id=Additional_Examples_Involving_Real_Numbers></a>
-### Additional Examples Involving Real Numbers
+### Notes on Randomization Involving Real Numbers
 
 **Requires random real numbers.**
 
@@ -1598,6 +1591,11 @@ If the probability is an irrational number, such as `exp(-x/y)` or `ln(2)`, then
 1. Set `u` to 0 and `k` to 1.
 2. Set `u` to `(u * BASE) + RNDINTEXC(BASE)`.  Set `pk` to the `k` digits after the point in `p`'s digit expansion.  Example: If `p` is &pi;/4, `BASE` is 10, and `k` is 5, then `pk = 78539`.
 3. If `pk + 1 <= u`, return 0.  If `pk - 2 >= u`, return 1.  If neither is the case, add 1 to `k` and go to step 2.
+
+<a id=Weighted_Choice_Involving_Real_Numbers></a>
+### Weighted Choice Involving Real Numbers
+
+In general, to implement weighted choice given a list of weights or cumulative weights expressed as real numbers, convert those weights to integers (see "[**Approximate Sampling for Discrete Distributions**](#Approximate_Sampling_for_Discrete_Distributions)"), then use those integers in the `WeightedChoice` or `CumulativeWeightedChoice` methods, as appropriate (see "[**Weighted Choice With Replacement**](#Weighted_Choice_With_Replacement)"). Those two methods could instead be modified by changing `value = RNDINTEXC(sum)` to `value = RNDRANGEMaxExc(0, sum)`, but this is more likely to introduce error.
 
 <a id=Random_Walks_Real_Numbers></a>
 #### Random Walks (Real Numbers)
@@ -1656,7 +1654,7 @@ Generating random data points based on how a list of data points is distributed 
 Many probability distributions can be defined in terms of any of the following:
 
 * The [**_cumulative distribution function_**](https://en.wikipedia.org/wiki/Cumulative_distribution_function), or _CDF_, returns, for each number, the probability that a number equal to or greater than that number is randomly chosen; the probability is in the interval [0, 1].
-* The [**_probability density function_**](https://en.wikipedia.org/wiki/Probability_density_function), or _PDF_, is, roughly and intuitively, a curve of weights 0 or greater, where for each number, the greater its weight, the more likely a number close to that number is randomly chosen.  In this document, the area under the PDF need not equal 1.<sup>[**(50)**](#Note50)</sup> For discrete distributions, the PDF is more properly called _probability mass function_.
+* The [**_probability density function_**](https://en.wikipedia.org/wiki/Probability_density_function), or _PDF_, is, roughly and intuitively, a curve of weights 0 or greater, where for each number, the greater its weight, the more likely a number close to that number is randomly chosen.  In this document, the area under the PDF need not equal 1.<sup>[**(50)**](#Note50)</sup>
 * The _inverse cumulative distribution function_ (_inverse CDF_ or _quantile function_) is the inverse of the CDF and maps numbers in the interval [0, 1\) to numbers in the distribution, from low to high.
 
 The following sections show different ways to generate random numbers based on a distribution, depending on what is known about that distribution.
@@ -1671,7 +1669,7 @@ The following sections show different ways to generate random numbers based on a
 
 If the distribution **is discrete**<sup>[**(51)**](#Note51)</sup>, numbers that closely follow it can be sampled by choosing points that cover all or almost all of the distribution, finding their weights or cumulative weights, and choosing a random point based on those weights.
 
-The pseudocode below shows the following methods that work with a **known PDF** (`PDF(x)`) or a **known CDF** (`CDF(x)`) that outputs floating-point numbers of the form  `FPSignificand` * `FPRadix`<sup>`FPExponent`</sup> (which include Java's `double` and `float`).<sup>[**(52)**](#Note52)</sup>
+The pseudocode below shows the following methods that work with a **known PDF** (more properly called _probability mass function_, `PDF(x)`) or a **known CDF** (`CDF(x)`) that outputs floating-point numbers of the form  `FPSignificand` * `FPRadix`<sup>`FPExponent`</sup> (which include Java's `double` and `float`).<sup>[**(52)**](#Note52)</sup>
 
 - `SampleFP(mini, maxi)` chooses a random number in [`mini`, `maxi`] based on a **known PDF**.  `InversionSampleFP` is similar, but is based on a **known CDF**; however, `SampleFP` should be used instead where possible.
 - `IntegerWeightsFP(mini, maxi)` generates a list of integer weights for the interval [`mini`, `maxi`] based on a **known PDF**<sup>[**(53)**](#Note53)</sup>. (Alternatively, the weights could be approximated, such as by scaling and rounding [e.g., `round(PDF(i) * mult)`] or by using a more sophisticated algorithm (Saad et al., 2020)<sup>[**(54)**](#Note54)</sup>, but doing so can introduce error.)
@@ -1800,7 +1798,7 @@ The following three methods approximate the inverse CDF given a uniform random n
        AddItem(list, maxi)
        AddItem(weights, PDF(maxi))
       sum=GatherAreas(values, weights, areas)
-      return ContWChoose(values, weights, areas, u01 * sum)
+      return PWLChoose(values, weights, areas, u01 * sum)
     END METHOD
 
 > **Notes:**

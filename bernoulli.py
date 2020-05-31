@@ -81,7 +81,7 @@ class Bernoulli:
             x += f()
         lh = Fraction(x, i + 1)
         rh = (1 - Fraction(1, i + 1)) / 2
-        z = min(lh, rh) * 2  # B(p) -> B(2*p - (2*p - E[z]))
+        z = min(lh, rh) * 2  # B(p) -> B(2*p - (2*p - E[z])) == B(E[z])
         return self.zero_or_one(z.numerator, z.denominator)
 
     def _nacu_peres_double(self, f, n=100):
@@ -293,9 +293,10 @@ class Bernoulli:
                 r = 1
             y = y + oy
 
-    def probfunc(self, f, rng):
-        """ Probability generating Bernoulli factory: B(p) => B(E[p^x]), where x is rng()
-         (Dughmi et al. 2017) (E[p^x] is the expected value of p^x).
+    def probgenfunc(self, f, rng):
+        """ Probability generating function Bernoulli factory: B(p) => B(E[p^x]), where x is rng()
+         (Dughmi et al. 2017). E[p^x] is the expected value of p^x and is also known
+         as the probability generating function.
         - f: Function that returns 1 if heads and 0 if tails.
         - rng: Function that returns a non-negative integer at random.
           Example (Dughmi et al. 2017): if 'rng' is Poisson(lamda) we have
