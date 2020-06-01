@@ -133,6 +133,9 @@ number.</li>
 Converts a byte (from 0 to 255) to an arbitrary-precision rational number.</li>
 <li><code>static ERational FromDouble​(double flt)</code><br>
 Converts a 64-bit floating-point number to a rational number.</li>
+<li><code>static EFloat FromDoubleBits​(long value)</code><br>
+Creates a binary rational number from a 64-bit floating-point number encoded
+in the IEEE 754 binary64 format.</li>
 <li><code>static ERational FromEDecimal​(EDecimal ef)</code><br>
 Converts an arbitrary-precision decimal number to a rational number.</li>
 <li><code>static ERational FromEFloat​(EFloat ef)</code><br>
@@ -156,6 +159,9 @@ Converts a 32-bit signed integer to an arbitrary-precision rational number.</li>
 Converts a 64-bit signed integer to an arbitrary-precision rational number.</li>
 <li><code>static ERational FromSingle​(float flt)</code><br>
 Converts a 32-bit binary floating-point number to a rational number.</li>
+<li><code>static EFloat FromSingleBits​(int value)</code><br>
+Creates a binary rational number from a 32-bit floating-point number encoded
+in the IEEE 754 binary32 format.</li>
 <li><code>static ERational FromString​(java.lang.String str)</code><br>
 Creates a rational number from a text string that represents a number.</li>
 <li><code>static ERational FromString​(java.lang.String str,
@@ -251,6 +257,9 @@ the least-significant bits of that integer&#39;s two&#39;s-complement form
 as a byte (from 0 to 255).</li>
 <li><code>double ToDouble()</code><br>
 Converts this value to a 64-bit floating-point number.</li>
+<li><code>long ToDoubleBits()</code><br>
+Converts this value to its closest equivalent as a 64-bit floating-point
+number, expressed as an integer in the IEEE 754 binary64 format.</li>
 <li><code>EDecimal ToEDecimal()</code><br>
 Converts this rational number to an arbitrary-precision decimal number.</li>
 <li><code>EDecimal ToEDecimal​(EContext ctx)</code><br>
@@ -344,6 +353,9 @@ form as a 64-bit signed integer.</li>
 Converts this value to its form in lowest terms.</li>
 <li><code>float ToSingle()</code><br>
 Converts this value to a 32-bit binary floating-point number.</li>
+<li><code>long ToSingleBits()</code><br>
+Converts this value to its closest equivalent as 32-bit floating-point
+number, expressed as an integer in the IEEE 754 binary32 format.</li>
 <li><code>EInteger ToSizedEInteger​(int maxBitLength)</code><br>
 Converts this value to an arbitrary-precision integer by dividing the
 numerator by the denominator, discarding its fractional part, and
@@ -839,6 +851,50 @@ number.</li>
 
 <ul>
 <li>A rational number with the same value as <code>flt</code>.</li>
+</ul>
+
+<h3>FromSingleBits</h3>
+
+<pre>public static EFloat FromSingleBits​(int value)
+</pre>
+
+<p>Creates a binary rational number from a 32-bit floating-point number encoded
+ in the IEEE 754 binary32 format. This method computes the exact
+ value of the floating point number, not an approximation, as is
+ often the case by converting the number to a string.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>value</code> - A 32-bit integer encoded in the IEEE 754 binary32 format.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A rational number with the same floating-point value as <code>flt</code>.</li>
+</ul>
+
+<h3>FromDoubleBits</h3>
+
+<pre>public static EFloat FromDoubleBits​(long value)
+</pre>
+
+<p>Creates a binary rational number from a 64-bit floating-point number encoded
+ in the IEEE 754 binary64 format. This method computes the exact
+ value of the floating point number, not an approximation, as is
+ often the case by converting the number to a string.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>value</code> - A 64-bit integer encoded in the IEEE 754 binary64 format.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A rational number with the same floating-point value as <code>flt</code>.</li>
 </ul>
 
 <h3>FromString</h3>
@@ -1658,6 +1714,54 @@ in this class); otherwise, <code>false</code>.</li>
 <li>The closest 64-bit floating-point number to this value. The return
 value can be positive infinity or negative infinity if this value
 exceeds the range of a 64-bit floating point number.</li>
+</ul>
+
+<h3>ToDoubleBits</h3>
+
+<pre>public long ToDoubleBits()
+</pre>
+
+<p>Converts this value to its closest equivalent as a 64-bit floating-point
+ number, expressed as an integer in the IEEE 754 binary64 format. The
+ half-even rounding mode is used. <p>If this value is a NaN, sets the
+ high bit of the 64-bit floating point number&#39;s significand area for
+ a quiet NaN, and clears it for a signaling NaN. Then the other bits
+ of the significand area are set to the lowest bits of this object&#39;s
+ unsigned significand, and the next-highest bit of the significand
+ area is set if those bits are all zeros and this is a signaling
+ NaN.</p></p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The closest 64-bit binary floating-point number to this value,
+expressed as an integer in the IEEE 754 binary64 format. The return
+value can be positive infinity or negative infinity if this value
+exceeds the range of a 64-bit floating point number.</li>
+</ul>
+
+<h3>ToSingleBits</h3>
+
+<pre>public long ToSingleBits()
+</pre>
+
+<p>Converts this value to its closest equivalent as 32-bit floating-point
+ number, expressed as an integer in the IEEE 754 binary32 format. The
+ half-even rounding mode is used. <p>If this value is a NaN, sets the
+ high bit of the 32-bit floating point number&#39;s significand area for
+ a quiet NaN, and clears it for a signaling NaN. Then the other bits
+ of the significand area are set to the lowest bits of this object&#39;s
+ unsigned significand, and the next-highest bit of the significand
+ area is set if those bits are all zeros and this is a signaling
+ NaN.</p></p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The closest 32-bit binary floating-point number to this value,
+expressed as an integer in the IEEE 754 binary32 format. The return
+value can be positive infinity or negative infinity if this value
+exceeds the range of a 32-bit floating point number.</li>
 </ul>
 
 <h3>ToLowestTerms</h3>

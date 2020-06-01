@@ -601,7 +601,8 @@ form as a byte (from 0 to 255).</li>
 Converts this value to a 64-bit floating-point number encoded in the IEEE
 754 binary64 format.</li>
 <li><code>long ToDoubleBits()</code><br>
-Converts this value to a 64-bit floating-point number.</li>
+Converts this value to its closest equivalent as a 64-bit floating-point
+number, expressed as an integer in the IEEE 754 binary64 format.</li>
 <li><code>EDecimal ToEDecimal()</code><br>
 Converts this value to an arbitrary-precision decimal number.</li>
 <li><code>EInteger ToEInteger()</code><br>
@@ -663,11 +664,11 @@ Returns a string representation of this number&#39;s value after rounding that
 value to the given precision (using the given arithmetic context,
 such as EContext.Binary64).</li>
 <li><code>float ToSingle()</code><br>
-Converts this value to its closest equivalent as 32-bit floating-point
+Converts this value to its closest equivalent as a 32-bit floating-point
 number.</li>
 <li><code>int ToSingleBits()</code><br>
-Converts this value to a 32-bit floating-point number encoded in the IEEE
-754 binary32 format.</li>
+Converts this value to its closest equivalent as 32-bit floating-point
+number, expressed as an integer in the IEEE 754 binary32 format.</li>
 <li><code>EInteger ToSizedEInteger​(int maxBitLength)</code><br>
 Converts this value to an arbitrary-precision integer by discarding its
 fractional part and checking whether the resulting integer overflows
@@ -4538,14 +4539,23 @@ infinity or negative infinity if this value exceeds the range of a
 <pre>public int ToSingleBits()
 </pre>
 
-<p>Converts this value to a 32-bit floating-point number encoded in the IEEE
- 754 binary32 format.</p>
+<p>Converts this value to its closest equivalent as 32-bit floating-point
+ number, expressed as an integer in the IEEE 754 binary32 format. The
+ half-even rounding mode is used. <p>If this value is a NaN, sets the
+ high bit of the 32-bit floating point number&#39;s significand area for
+ a quiet NaN, and clears it for a signaling NaN. Then the other bits
+ of the significand area are set to the lowest bits of this object&#39;s
+ unsigned significand, and the next-highest bit of the significand
+ area is set if those bits are all zeros and this is a signaling
+ NaN.</p></p>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>This number, converted to a 32-bit floating-point number encoded in
-the IEEE 754 binary32 format.</li>
+<li>The closest 32-bit binary floating-point number to this value,
+expressed as an integer in the IEEE 754 binary32 format. The return
+value can be positive infinity or negative infinity if this value
+exceeds the range of a 32-bit floating point number.</li>
 </ul>
 
 <h3>ToDoubleBits</h3>
@@ -4553,14 +4563,23 @@ the IEEE 754 binary32 format.</li>
 <pre>public long ToDoubleBits()
 </pre>
 
-<p>Converts this value to a 64-bit floating-point number.</p>
+<p>Converts this value to its closest equivalent as a 64-bit floating-point
+ number, expressed as an integer in the IEEE 754 binary64 format. The
+ half-even rounding mode is used. <p>If this value is a NaN, sets the
+ high bit of the 64-bit floating point number&#39;s significand area for
+ a quiet NaN, and clears it for a signaling NaN. Then the other bits
+ of the significand area are set to the lowest bits of this object&#39;s
+ unsigned significand, and the next-highest bit of the significand
+ area is set if those bits are all zeros and this is a signaling
+ NaN.</p></p>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>This number, converted to a 64-bit floating-point number. The return
-value can express positive infinity or negative infinity if this
-value exceeds the range of a 64-bit floating point number.</li>
+<li>The closest 64-bit binary floating-point number to this value,
+expressed as an integer in the IEEE 754 binary64 format. The return
+value can be positive infinity or negative infinity if this value
+exceeds the range of a 64-bit floating point number.</li>
 </ul>
 
 <h3>ToEDecimal</h3>
@@ -4736,7 +4755,7 @@ greater than 0 and its value is 10, 000, 000 or greater.</li>
 <pre>public float ToSingle()
 </pre>
 
-<p>Converts this value to its closest equivalent as 32-bit floating-point
+<p>Converts this value to its closest equivalent as a 32-bit floating-point
  number. The half-even rounding mode is used. <p>If this value is a
  NaN, sets the high bit of the 32-bit floating point number&#39;s
  significand area for a quiet NaN, and clears it for a signaling NaN.
