@@ -46,6 +46,7 @@ class Bernoulli:
     def __init__(self):
         """ Creates a new instance of the Bernoulli class."""
         self.r = random.Random()
+        self.rbit = -1
 
     def _algorithm_a(self, f, m, c):
         # B(p) -> B(c*p*(1-(c*p)^(m-1))/(1-(c*p)^m)) (Huber 2016)
@@ -114,11 +115,20 @@ class Bernoulli:
         while True:
             z = z * 2
             if z >= py:
-                if self.r.randint(0, 1) == 0:
+                if self.randbit() == 0:
                     return 1
                 z = z - py
-            elif z == 0 or self.r.randint(0, 1) == 0:
+            elif z == 0 or self.randbit() == 0:
                 return 0
+
+    def randbit(self):
+        """ Generates a random bit that is 1 or 0 with equal probability. """
+        if self.rbit < 0 or self.rbit >= 32:
+            self.rbit = 0
+            self.rvalue = self.r.randint(0, (1 << 32) - 1)
+        ret = (self.rvalue >> self.rbit) & 1
+        self.rbit += 1
+        return ret
 
     def geometric_bag(self, u):
         """ Bernoulli factory for a uniformly-distributed random number in (0, 1)
@@ -129,12 +139,13 @@ class Bernoulli:
            a new digit in the appropriate place in the binary expansion.
      """
         r = 0
-        while self.r.randint(0, 1) == 0:
+        c = 0
+        while self.randbit() == 0:
             r += 1
         while len(u) <= r:
             u.append(None)
         if u[r] == None:
-            u[r] = self.r.randint(0, 1)
+            u[r] = self.randbit()
         return u[r]
 
     def zero_or_one_log1p(self, x, y):
@@ -160,9 +171,9 @@ class Bernoulli:
         i = 0
         while True:
             while len(bag) <= i:
-                bag.append(self.r.randint(0, 1))
+                bag.append(self.randbit())
             if bag[i] == None:
-                bag[i] = self.r.randint(0, 1)
+                bag[i] = self.randbit()
             mybit = bag[i]
             bit = 1 if frac >= pt else 0
             if mybit == 0 and bit == 1:
@@ -238,7 +249,7 @@ class Bernoulli:
         """ Mean: B(p), B(q) => B((p+q)/2)  (Flajolet et al. 2010)
      - f1, f2: Functions that return 1 if heads and 0 if tails.
      """
-        return f1() if self.r.randint(0, 1) == 0 else f2()
+        return f1() if self.randbit() == 0 else f2()
 
     def conditional(self, f1, f2, f3):
         """ Conditional: B(p), B(q), B(r) => B((1-r)*q+r*p)  (Flajolet et al. 2010)
@@ -416,7 +427,8 @@ class Bernoulli:
             i = i + 1
 
     def zero_or_one_power_ratio(self, px, py, nx, ny):
-        """ Generates 1 with probability (px/py)^(nx/ny) (where nx/ny can be positive, negative, or zero); 0 otherwise. """
+        """ Generates 1 with probability (px/py)^(nx/ny) (where nx/ny can be
+           positive, negative, or zero); 0 otherwise. """
         if py <= 0 or px < 0:
             raise ValueError
         n = Fraction(nx, ny)
@@ -457,7 +469,8 @@ class Bernoulli:
         return self._zero_or_one_power_frac(nx, ny)
 
     def zero_or_one_power(self, px, py, n):
-        """ Generates 1 with probability (px/py)^n (where n can be positive, negative, or zero); 0 otherwise. """
+        """ Generates 1 with probability (px/py)^n (where n can be
+            positive, negative, or zero); 0 otherwise. """
         return self.zero_or_one_power_ratio(px, py, n, 1)
 
     def twocoin(self, f1, f2, c1=1, c2=1, beta=1):
@@ -676,7 +689,49 @@ if __name__ == "__main__":
             xm += cxm * 1.0 / i
         return xm
 
+    def linspace(a, b, size):
+        return [a + (b - a) * (x * 1.0 / size) for x in range(size + 1)]
+
+    def showbuckets(ls, buckets):
+        mx = max(buckets)
+        if mx == 0:
+            return
+        labels = [
+            ("%0.3f %d" % (ls[i], buckets[i]))
+            if int(buckets[i]) == buckets[i]
+            else ("%0.3f %f" % (ls[i], buckets[i]))
+            for i in range(len(buckets))
+        ]
+        maxlen = max([len(x) for x in labels])
+        for i in range(len(buckets)):
+            print(
+                labels[i]
+                + " " * (1 + (maxlen - len(labels[i])))
+                + ("*" * int(buckets[i] * 40 / mx))
+            )
+
+    def bucket(v, ls, buckets):
+        for i in range(len(buckets) - 1):
+            if v >= ls[i] and v < ls[i + 1]:
+                buckets[i] += 1
+                break
+
     b = Bernoulli()
+    """
+    ls = linspace(0, 1, 30)
+    buckets = [0 for x in ls]
+    ksample = [b.betadistc(2,1,3,2) for i in range(5000)]
+    for ks in ksample:
+            bucket(ks, ls, buckets)
+    showbuckets(ls, buckets)
+
+    ls = linspace(0, 1, 30)
+    buckets = [0 for x in ls]
+    ksample = [b.betadist(2,1,3,2) for i in range(5000)]
+    for ks in ksample:
+            bucket(ks, ls, buckets)
+    showbuckets(ls, buckets)
+    """
     c = [b.exp_minus(b.coin(0.2)) for i in range(10000)]
     print([_mean(c), math.exp(-0.2)])
     c = [b.exp_minus(b.coin(0.4)) for i in range(10000)]

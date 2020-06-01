@@ -12,6 +12,8 @@ Open-source articles on programming subjects.
 * [Pseudocode Conventions](./pseudocode.html)
 * [Random Number Generator Recommendations for Applications](./random.html)
 * [Random Number Generation and Sampling Methods](./randomfunc.html)
+* [More Random Number Sampling Methods](./randomnotes.html)
+* [An Exact Beta Generator](./betadist.html)
 * [Testing PRNGs for High-Quality Randomness](./randomtest.html)
 * [Examples of High-Quality PRNGs](./hqprng.html)
 * [Notes on Calculating Jump Parameters for Some PRNGs](./jump.html)

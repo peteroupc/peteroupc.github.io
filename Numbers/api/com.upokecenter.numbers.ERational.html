@@ -133,7 +133,7 @@ number.</li>
 Converts a byte (from 0 to 255) to an arbitrary-precision rational number.</li>
 <li><code>static ERational FromDouble​(double flt)</code><br>
 Converts a 64-bit floating-point number to a rational number.</li>
-<li><code>static EFloat FromDoubleBits​(long value)</code><br>
+<li><code>static ERational FromDoubleBits​(long value)</code><br>
 Creates a binary rational number from a 64-bit floating-point number encoded
 in the IEEE 754 binary64 format.</li>
 <li><code>static ERational FromEDecimal​(EDecimal ef)</code><br>
@@ -159,7 +159,7 @@ Converts a 32-bit signed integer to an arbitrary-precision rational number.</li>
 Converts a 64-bit signed integer to an arbitrary-precision rational number.</li>
 <li><code>static ERational FromSingle​(float flt)</code><br>
 Converts a 32-bit binary floating-point number to a rational number.</li>
-<li><code>static EFloat FromSingleBits​(int value)</code><br>
+<li><code>static ERational FromSingleBits​(int value)</code><br>
 Creates a binary rational number from a 32-bit floating-point number encoded
 in the IEEE 754 binary32 format.</li>
 <li><code>static ERational FromString​(java.lang.String str)</code><br>
@@ -855,7 +855,7 @@ number.</li>
 
 <h3>FromSingleBits</h3>
 
-<pre>public static EFloat FromSingleBits​(int value)
+<pre>public static ERational FromSingleBits​(int value)
 </pre>
 
 <p>Creates a binary rational number from a 32-bit floating-point number encoded
@@ -877,7 +877,7 @@ number.</li>
 
 <h3>FromDoubleBits</h3>
 
-<pre>public static EFloat FromDoubleBits​(long value)
+<pre>public static ERational FromDoubleBits​(long value)
 </pre>
 
 <p>Creates a binary rational number from a 64-bit floating-point number encoded

@@ -131,6 +131,8 @@ The following method generates a random number that follows a _beta distribution
       return x/(x+GammaDist(b,1))
     END METHOD
 
+I give an [**exact sampler**](https://peteroupc.github.io/betadist.html) for the beta distribution (when `a` and `b` are both 1 or greater) in a separate page.
+
 <a id=von_Mises_Distribution></a>
 #### von Mises Distribution
 

@@ -1191,6 +1191,9 @@ CLASSES
      |      Product (conjunction; AND): B(p), B(q) => B(p*q)  (Flajolet et al. 2010)
      |      - f1, f2: Functions that return 1 if heads and 0 if tails.
      |
+     |  randbit(self)
+     |      Generates a random bit that is 1 or 0 with equal probability.
+     |
      |  square(self, f1, f2)
      |      Square: B(p) => B(1-p). (Flajolet et al. 2010)
      |      - f1, f2: Functions that return 1 if heads and 0 if tails.
@@ -1217,10 +1220,12 @@ CLASSES
      |      Reference: Flajolet et al. 2010.
      |
      |  zero_or_one_power(self, px, py, n)
-     |      Generates 1 with probability (px/py)^n (where n can be positive, negative, or zero); 0 otherwise.
+     |      Generates 1 with probability (px/py)^n (where n can be
+     |      positive, negative, or zero); 0 otherwise.
      |
      |  zero_or_one_power_ratio(self, px, py, nx, ny)
-     |      Generates 1 with probability (px/py)^(nx/ny) (where nx/ny can be positive, negative, or zero); 0 otherwise.
+     |      Generates 1 with probability (px/py)^(nx/ny) (where nx/ny can be
+     |      positive, negative, or zero); 0 otherwise.
      |
      |  ----------------------------------------------------------------------
      |  Data descriptors defined here:
