@@ -1039,6 +1039,9 @@ CLASSES
      |  arXiv:1507.00843v2 [math.PR], 2016.
      |  - Łatuszyński, K., Kosmidis, I.,  Papaspiliopoulos, O., Roberts, G.O., "Simulating
      |  events of unknown probabilities via reverse time martingales", 2011.
+     |  - Goyal, V. and Sigman, K. 2012. On simulating a class of Bernstein
+     |  polynomials. ACM Transactions on Modeling and Computer Simulation 22(2),
+     |  Article 12 (March 2012), 5 pages.
      |  - Morina, G., Łatuszyński, K., et al., "From the Bernoulli Factory to a Dice
      |  Enterprise via Perfect Sampling of Markov Chains",
      |  arXiv:1912.09229v1 [math.PR], 2019.
@@ -1077,6 +1080,13 @@ CLASSES
      |          is based entirely on the underlying coin.
      |      - f: Function that returns 1 if heads and 0 if tails.
      |      - x: Desired probability, in [0, 1].
+     |
+     |  bernstein(self, f, alpha)
+     |      Bernstein polynomial Bernoulli factory: B(p) => B(Bernstein(alpha))
+     |           (Goyal and Sigman 2012).
+     |      - f: Function that returns 1 if heads and 0 if tails.
+     |      - alpha: List of Bernstein coefficients for the Bernstein polynomial.
+     |         For this to work, each coefficient must be in [0, 1].
      |
      |  coin(self, c)
      |      Convenience method to generate a function that returns
