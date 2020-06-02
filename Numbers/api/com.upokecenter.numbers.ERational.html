@@ -353,7 +353,7 @@ form as a 64-bit signed integer.</li>
 Converts this value to its form in lowest terms.</li>
 <li><code>float ToSingle()</code><br>
 Converts this value to a 32-bit binary floating-point number.</li>
-<li><code>long ToSingleBits()</code><br>
+<li><code>int ToSingleBits()</code><br>
 Converts this value to its closest equivalent as 32-bit floating-point
 number, expressed as an integer in the IEEE 754 binary32 format.</li>
 <li><code>EInteger ToSizedEInteger​(int maxBitLength)</code><br>
@@ -1742,7 +1742,7 @@ exceeds the range of a 64-bit floating point number.</li>
 
 <h3>ToSingleBits</h3>
 
-<pre>public long ToSingleBits()
+<pre>public int ToSingleBits()
 </pre>
 
 <p>Converts this value to its closest equivalent as 32-bit floating-point

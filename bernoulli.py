@@ -400,7 +400,7 @@ class Bernoulli:
             nx = ax % ay  # Reduce to fraction
             if nx > 0 and self.power(f, nx, ay) == 0:
                 return 0
-            for i in range(n):
+            for i in range(xf):
                 if f() == 0:
                     return 0
             return 1
@@ -732,6 +732,7 @@ if __name__ == "__main__":
             bucket(ks, ls, buckets)
     showbuckets(ls, buckets)
     """
+
     c = [b.exp_minus(b.coin(0.2)) for i in range(10000)]
     print([_mean(c), math.exp(-0.2)])
     c = [b.exp_minus(b.coin(0.4)) for i in range(10000)]
