@@ -409,7 +409,7 @@ class Bernoulli:
         while True:
             if f() == 1:
                 return 1
-            if ax == ay or self.zero_or_one(ax, ay * i):
+            if self.zero_or_one(ax, ay * i) == 1:
                 return 0
             i = i + 1
 
@@ -422,7 +422,7 @@ class Bernoulli:
             x = self.zero_or_one(px, py)
             if x == 1:
                 return 1
-            if ax == ay or self.zero_or_one(ax, ay * i):
+            if self.zero_or_one(nx, ny * i) == 1:
                 return 0
             i = i + 1
 
