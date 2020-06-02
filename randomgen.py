@@ -2853,7 +2853,7 @@ if __name__ == "__main__":
         return [pmn, pmx]
 
     def showbuckets(ls, buckets):
-        mx = max(buckets)
+        mx = max(0.00000001, max(buckets))
         if mx == 0:
             return
         labels = [
@@ -2863,12 +2863,28 @@ if __name__ == "__main__":
             for i in range(len(buckets))
         ]
         maxlen = max([len(x) for x in labels])
-        for i in range(len(buckets)):
+        i = 0
+        while i < (len(buckets)):
             print(
                 labels[i]
                 + " " * (1 + (maxlen - len(labels[i])))
                 + ("*" * int(buckets[i] * 40 / mx))
             )
+            if (
+                buckets[i] == 0
+                and i + 2 < len(buckets)
+                and buckets[i + 1] == 0
+                and buckets[i + 2] == 0
+            ):
+                print(" ... ")
+                while (
+                    buckets[i] == 0
+                    and i + 2 < len(buckets)
+                    and buckets[i + 1] == 0
+                    and buckets[i + 2] == 0
+                ):
+                    i += 1
+            i += 1
 
     def bucket(v, ls, buckets):
         for i in range(len(buckets) - 1):

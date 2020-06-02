@@ -39,22 +39,33 @@ from fractions import Fraction
 def betadist(b, ax, ay, bx, by, precision=53):
         # Beta distribution for alpha>=1 and beta>=1
         bag=[]
+        bpower=Fraction(bx, by)-1
+        apower=Fraction(ax, ay)-1
+        # Special case for a=b=1
+        if bpower==0 and apower==0:
+           return random.randint(0, (1<<precision)-1)*1.0/(1<<precision)
         # Create a "geometric bag" to hold a uniform random
         # number (U), described by Flajolet et al. 2010
         gb=lambda: b.geometric_bag(bag)
         # Complement of "geometric bag"
         gbcomp=lambda: b.geometric_bag(bag)^1
-        bpower=Fraction(bx, by)-1
-        apower=Fraction(ax, ay)-1
+        bPowerBigger=(bpower > apower)
         while True:
            # Create a uniform random number (U) bit-by-bit, and
            # accept it with probability U^(a-1)*(1-U)^(b-1), which
            # is the unnormalized PDF of the beta distribution
            bag.clear()
-           # Return 1 with probability U^(a-1)
-           r=b.power(gb, apower)
-           # Return 1 with probability (1-U)^(b-1)
-           if r==1: r=b.power(gbcomp, bpower)
+           r=1
+           if bPowerBigger:
+             # Produce 1 with probability (1-U)^(b-1)
+             r=b.power(gbcomp, bpower)
+             # Produce 1 with probability U^(a-1)
+             if r==1: r=b.power(gb, apower)
+           else:
+             # Produce 1 with probability U^(a-1)
+             r=b.power(gb, apower)
+             # Produce 1 with probability (1-U)^(b-1)
+             if r==1: r=b.power(gbcomp, bpower)
            if r == 1:
                  # Accepted, so fill up the "bag" and return the
                  # uniform number
@@ -71,7 +82,7 @@ def _fill_geometric_bag(b, bag, precision):
               ret=(ret<<1)|bag[i]
         if len(bag) < precision:
            diff=precision-len(bag)
-           ret=(ret<<diff)|random.randint(0,(1<<diff)-1)
+           ret=(ret<<diff)|random.randint(0,(1(diff)-1)
         # Now we have a number that is a multiple of
         # 2^-precision.
         # NOTE: Although we convert to a floating-point
@@ -79,6 +90,15 @@ def _fill_geometric_bag(b, bag, precision):
         # is merely for convenience.
         return ret*1.0/(1<<precision)
 ```
+
+<a id=Known_Issues></a>
+### Known Issues
+
+The bigger `alpha` or `beta` is, the smaller the area of acceptance becomes (and the more likely random numbers get rejected by this method, raising its run-time).  This is because `max(u^(alpha-1)*(1-u)^(beta-1))`, the peak of the density, approaches 0 as the parameters get bigger.  One idea to solve this issue is to expand the density so that the acceptance rate increases.  This can be done as follows:
+
+- Estimate an upper bound for the peak of the density `peak`, given `alpha` and `beta`.
+- Calculate a largest factor `c` such that `peak * c = m < 0.5`.
+- Use Huber's `linear_lowprob` Bernoulli factory (implemented in _bernoulli.py_) <<Huber 2016)<sup>[**(5)**](#Note5)</sup>, taking the values found for `c` and `m`.  Testing shows that the choice of `m` is crucial for performance.
 
 <a id=Correctness_Testing></a>
 ## Correctness Testing
@@ -97,6 +117,8 @@ See the results of the [**correctness testing**](https://peteroupc.github.io/bet
 <small><sup id=Note3>(3)</sup> Flajolet, P., Pelletier, M., Soria, M., "On Buffon machines and numbers", arXiv:0906.5560v2  [math.PR], 2010.</small>
 
 <small><sup id=Note4>(4)</sup> Mendo, Luis. "An asymptotically optimal Bernoulli factory for certain functions that can be expressed as power series." Stochastic Processes and their Applications 129, no. 11 (2019): 4366-4384.</small>
+
+<small><sup id=Note5>(5)</sup> Huber, M., "Optimal linear Bernoulli factories for small mean problems", arXiv:1507.00843v2 [math.PR], 2016</small>
 
 <a id=License></a>
 ## License

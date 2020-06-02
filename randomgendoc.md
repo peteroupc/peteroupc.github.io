@@ -1155,7 +1155,8 @@ CLASSES
      |  logistic(self, f, cx, cy=1)
      |      Logistic Bernoulli factory: B(p) -> B(cx*p/(cy+cx*p)) or
      |          B(p) -> B((cx/cy)*p/(1+(cx/cy)*p)) (Morina et al. 2019)
-     |      - f: Function that returns 1 if heads and 0 if tails.
+     |      - f: Function that returns 1 if heads and 0 if tails.  Note that this function can
+     |        be slow as the probability of heads approaches 0.
      |      - cx, cy: numerator and denominator of c; the probability of heads (p) is multiplied
      |        by c. c must be in (0, 1).
      |

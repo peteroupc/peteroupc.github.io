@@ -271,7 +271,8 @@ class Bernoulli:
     def logistic(self, f, cx, cy=1):
         """ Logistic Bernoulli factory: B(p) -> B(cx*p/(cy+cx*p)) or
          B(p) -> B((cx/cy)*p/(1+(cx/cy)*p)) (Morina et al. 2019)
-     - f: Function that returns 1 if heads and 0 if tails.
+     - f: Function that returns 1 if heads and 0 if tails.  Note that this function can
+       be slow as the probability of heads approaches 0.
      - cx, cy: numerator and denominator of c; the probability of heads (p) is multiplied
        by c. c must be in (0, 1).
      """
@@ -282,20 +283,20 @@ class Bernoulli:
             elif f() == 1:
                 return 1
 
-    def _multilogistic(fa, ca):
+    def _multilogistic(self, fa, ca):
         # Huber 2016, replaces logistic(f, c) in linear Bernoulli factory to make a multivariate
         # Bernoulli factory of the form B(p1), ..., B(pn) -> B(c1*p1 + ... + cn*pn).
         # For this method:
         # B(p1), ..., B(pn) -> B(r/(1+r)), where r = c1*p1 + ... + cn*pn
         x = 0
         a = -math.log(self.r.random())
-        t = [0 for i in range(fa.length)]
+        t = [0 for i in range(len(fa))]
         for i in range(len(fa)):
-            t[i] = -math.log(self.r.random()) / ca[i].to_f
+            t[i] = -math.log(self.r.random()) / ca[i]
             while x == 0 and t[i] < a:
-                if fa[i].call() == 1:
+                if fa[i]() == 1:
                     return 1
-                t[i] -= math.log(self.r.random()) / ca[i].to_f
+                t[i] -= math.log(self.r.random()) / ca[i]
         return 0
 
     def eps_div(self, f, eps):
@@ -678,7 +679,7 @@ class Bernoulli:
         if self.zero_or_one(beta.denominator, beta.numerator) == 1:
             return 1  # Bern(1/beta)
         c = beta * c / (beta - 1)
-        return self.linear(f, c)
+        return self.linear_power(f, c, eps=Fraction(1, 2) + m)
 
 # Examples of use
 if __name__ == "__main__":
@@ -699,7 +700,7 @@ if __name__ == "__main__":
         return [a + (b - a) * (x * 1.0 / size) for x in range(size + 1)]
 
     def showbuckets(ls, buckets):
-        mx = max(buckets)
+        mx = max(0.00000001, max(buckets))
         if mx == 0:
             return
         labels = [
@@ -709,12 +710,28 @@ if __name__ == "__main__":
             for i in range(len(buckets))
         ]
         maxlen = max([len(x) for x in labels])
-        for i in range(len(buckets)):
+        i = 0
+        while i < (len(buckets)):
             print(
                 labels[i]
                 + " " * (1 + (maxlen - len(labels[i])))
                 + ("*" * int(buckets[i] * 40 / mx))
             )
+            if (
+                buckets[i] == 0
+                and i + 2 < len(buckets)
+                and buckets[i + 1] == 0
+                and buckets[i + 2] == 0
+            ):
+                print(" ... ")
+                while (
+                    buckets[i] == 0
+                    and i + 2 < len(buckets)
+                    and buckets[i + 1] == 0
+                    and buckets[i + 2] == 0
+                ):
+                    i += 1
+            i += 1
 
     def bucket(v, ls, buckets):
         for i in range(len(buckets) - 1):
