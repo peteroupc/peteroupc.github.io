@@ -53,13 +53,13 @@ def betadist(b, ax, ay, bx, by, precision=53):
            bag.clear()
            # Return 1 with probability U^(a-1)
            r=b.power(gb, apower)
+           # Return 1 with probability (1-U)^(b-1)
+           if r==1: r=b.power(gbcomp, bpower)
            if r == 1:
-              # Return 1 with probability (1-U)^(b-1)
-              r=b.power(gbcomp, bpower)
-              if r==1:
                  # Accepted, so fill up the "bag" and return the
                  # uniform number
-                 return _fill_geometric_bag(bag, precision)
+                 ret=_fill_geometric_bag(b, bag, precision)
+                 return ret
 
 def _fill_geometric_bag(b, bag, precision):
         ret=0
@@ -78,15 +78,14 @@ def _fill_geometric_bag(b, bag, precision):
         # number here, this is not strictly necessary and
         # is merely for convenience.
         return ret*1.0/(1<<precision)
-
 ```
 
 <a id=Correctness_Testing></a>
 ## Correctness Testing
 
-To test the correctness of this sampler, the Kolmogorov&ndash;Smirnov test will be applied with various values of `alpha` and `beta` and the default precision of 53, using SciPy's `kstest` method.  The code for the test is very simple: `kst = scipy.stats.kstest(ksample, lambda x: scipy.stats.beta.cdf(x, alpha, beta))`, where `ksample` is a sample of random numbers generated using the sampler above.  Note that SciPy uses a two-sided Kolmogorov&ndash;Smirnov test by default.
+To test the correctness of this sampler, the Kolmogorov&ndash;Smirnov test was applied with various values of `alpha` and `beta` and the default precision of 53, using SciPy's `kstest` method.  The code for the test is very simple: `kst = scipy.stats.kstest(ksample, lambda x: scipy.stats.beta.cdf(x, alpha, beta))`, where `ksample` is a sample of random numbers generated using the sampler above.  Note that SciPy uses a two-sided Kolmogorov&ndash;Smirnov test by default.
 
-This page will be updated with results of this test.  For each pair of parameters, five samples with 50,000 numbers per sample will be taken.
+See the results of the [**correctness testing**](https://peteroupc.github.io/betadistresults.html).   For each pair of parameters, five samples with 50,000 numbers per sample were taken, and results show the lowest and highest Kolmogorov&ndash;Smirnov statistics and p-values achieved for the five samples.  Note that a p-value extremely close to 0 or 1 strongly indicates that the samples do not come from a beta distribution.
 
 <a id=Notes></a>
 ## Notes

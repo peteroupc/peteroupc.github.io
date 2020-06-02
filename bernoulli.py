@@ -385,12 +385,18 @@ class Bernoulli:
         - f: Function that returns 1 if heads and 0 if tails.
         - ax, ay: numerator and denominator of the desired power to raise the probability
          of heads to. This power must be 0 or greater. """
-        a = Fraction(ax, ay)
-        ax = a.numerator
-        ay = a.denominator
-        if a < 0:
+        a = None
+        if ay == 1 and isinstance(ax, Fraction):
+            a = ax
+            ax = a.numerator
+            ay = a.denominator
+        elif not (isinstance(ax, int) and isinstance(ay, int)):
+            a = Fraction(ax, ay)
+            ax = a.numerator
+            ay = a.denominator
+        if (ax < 0) ^ (ay < 0) or ay == 0:  # Denominator is 0 or power is negative
             raise ValueError
-        if a == 0:
+        if ax == 0:
             return 1
         if ax == ay:
             return f()
