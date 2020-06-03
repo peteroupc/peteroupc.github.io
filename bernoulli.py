@@ -2,7 +2,6 @@ import math
 import random
 from fractions import Fraction
 
-
 class Bernoulli:
     """ This class contains methods that generate Bernoulli random numbers,
          (either 1 or heads with a given probability, or 0 or tails otherwise).
@@ -681,7 +680,6 @@ class Bernoulli:
             return 1  # Bern(1/beta)
         c = beta * c / (beta - 1)
         return self.linear_power(f, c, eps=Fraction(1, 2) + m)
-
 
 # Examples of use
 if __name__ == "__main__":
