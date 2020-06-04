@@ -327,7 +327,8 @@ class RandomGen:
     def rndintexc(self, maxExclusive):
         if maxExclusive <= 0:
             raise ValueError("maxExclusive 0 or less")
-        return self.rndint(maxExclusive - 1)
+        return self.rng.randint(0, maxExclusive - 1)
+        # return self.rndint(maxExclusive - 1)
 
     def rndintrange(self, minInclusive, maxInclusive):
         # NOTE: Since Python integers are arbitrary-precision,
@@ -2539,6 +2540,48 @@ algorithm", arXiv:1511.02273v2  [cs.IT], 2016/2018.
         ret.append([i, lastv])
         return ret
 
+    def _kthsmallest_internal(self, ret, index, n, k, compl=0):
+        # Generate a sorted list of u-rands in the portion
+        # of ret at the position range [index, n + index].
+        # compl=0 -> kth smallest; compl=1 -> kth largest
+        # Early exit if we go beyond the kth smallest index
+        if index >= k:
+            return
+        leftcount = self.binomial(n, 0.5)
+        rightcount = n - leftcount
+        clearbit = compl
+        setbit = 1 - compl
+        # Add clear bit to left-hand side
+        for i in range(index, index + leftcount):
+            ret[i][0] = (ret[i][0] << 1) | clearbit
+            ret[i][1] += 1
+        # Recurse for left-hand side
+        if leftcount > 1:
+            self._kthsmallest_internal(ret, index, leftcount, k, compl)
+        # Add set bit to right-hand side
+        if index + leftcount < k:
+            for i in range(index + leftcount, index + n):
+                ret[i][0] = (ret[i][0] << 1) | setbit
+                ret[i][1] += 1
+            # Recurse for right-hand side
+            if rightcount > 1:
+                self._kthsmallest_internal(ret, index + leftcount, rightcount, k, compl)
+
+    def kthsmallest(self, n, k, bits):
+        """ Generates the 'k'th smallest 'bits'-bit uniform random
+            number out of 'n' of them. """
+        if k <= 0 or k > n:
+            raise ValueError
+        ret = [[0, 0] for i in range(n)]
+        if k < n / 2:
+            # kth smallest
+            self._kthsmallest_internal(ret, 0, n, k, 0)
+            return self._urandfill(ret[k - 1], bits)
+        else:
+            # (n-k+1)th largest
+            self._kthsmallest_internal(ret, 0, n, n - k + 1, 1)
+            return self._urandfill(ret[n - k], bits)
+
 class ConvexPolygonSampler:
     """ A class for uniform random sampling of
       points from a convex polygon.  This
@@ -2897,7 +2940,6 @@ if __name__ == "__main__":
         showbuckets(ls, [f(x) for x in ls])
 
     # Generate normal random numbers
-
     def uu():
         print("Generating normal random numbers with numbers_from_dist")
         ls = linspace(-3.3, 3.3, 30)

@@ -410,6 +410,10 @@ CLASSES
      |      Generates the kth smallest number among n random numbers
      |      in the interval [0, 1].
      |
+     |  kthsmallest(self, n, k, bits)
+     |      Generates the 'k'th smallest 'bits'-bit uniform random
+     |      number out of 'n' of them.
+     |
      |  latlon(self)
      |      Generates an independent and uniform random latitude and
      |      longitude, in radians.  West and south coordinates
