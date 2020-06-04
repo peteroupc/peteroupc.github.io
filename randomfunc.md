@@ -1950,7 +1950,7 @@ Miscellaneous:
 - **Piecewise constant distribution**: See [**Weighted Choice With Replacement**](#Weighted_Choice_With_Replacement).
 - **Piecewise linear distribution**: See [**Continuous Weighted Choice**](#Continuous_Weighted_Choice).
 - **P&oacute;lya&ndash;Aeppli distribution**: See [**Transformations of Random Numbers: Additional Examples**](#Transformations_of_Random_Numbers_Additional_Examples).
-- **Power distribution**: `pow(RNDU01ZeroOneExc(), 1.0 / alpha) / b`, where `alpha`  is the shape and `b` is the domain.  Nominally in the interval (0, 1).
+- **Power distribution**: `BetaDist(alpha, 1) / b`, where `alpha`  is the shape and `b` is the domain.  Nominally in the interval (0, 1).
 - **Power law distribution**: `pow(RNDRANGE(pow(mn,n+1),pow(mx,n+1)), 1.0 / (n+1))`, where `n`  is the exponent, `mn` is the minimum, and `mx` is the maximum.  [**Reference**](http://mathworld.wolfram.com/RandomNumber.html).
 - **Power lognormal distribution**: See the [**Python sample code**](https://peteroupc.github.io/randomgen.zip).
 - **Power normal distribution**: See the [**Python sample code**](https://peteroupc.github.io/randomgen.zip).

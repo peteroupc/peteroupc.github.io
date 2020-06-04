@@ -523,8 +523,8 @@ CLASSES
      |      algorithm", arXiv:1511.02273v2  [cs.IT], 2016/2018.
      |      - 'n' is the number of random numbers to generate.  Default is 1.
      |      - 'pdf' is a procedure that takes three arguments: xmin, xmax, bitplaces,
-     |         and returns an array of two items: a lower bound of f(x) anywhere
-     |         in the interval [xmin, xmax] (where f(x) is the PDF), and an upper
+     |         and returns an array of two items: the greatest lower bound of f(x) anywhere
+     |         in the interval [xmin, xmax] (where f(x) is the PDF), and the least upper
      |         bound of f(x) anywhere there.  Both bounds are multiples of 2^-bitplaces.
      |      - 'bitplaces' is an accuracy expressed as a number of bits after the
      |         binary point. The random number will be a multiple of 2^-bitplaces,

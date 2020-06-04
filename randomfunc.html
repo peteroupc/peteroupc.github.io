@@ -2347,7 +2347,7 @@ the two parameters of the beta distribution, and <code>trials</code> is a parame
 <li><strong>Piecewise constant distribution</strong>: See <a href="#Weighted_Choice_With_Replacement"><strong>Weighted Choice With Replacement</strong></a>.</li>
 <li><strong>Piecewise linear distribution</strong>: See <a href="#Continuous_Weighted_Choice"><strong>Continuous Weighted Choice</strong></a>.</li>
 <li><strong>P&oacute;lya&ndash;Aeppli distribution</strong>: See <a href="#Transformations_of_Random_Numbers_Additional_Examples"><strong>Transformations of Random Numbers: Additional Examples</strong></a>.</li>
-<li><strong>Power distribution</strong>: <code>pow(RNDU01ZeroOneExc(), 1.0 / alpha) / b</code>, where <code>alpha</code>  is the shape and <code>b</code> is the domain.  Nominally in the interval (0, 1).</li>
+<li><strong>Power distribution</strong>: <code>BetaDist(alpha, 1) / b</code>, where <code>alpha</code>  is the shape and <code>b</code> is the domain.  Nominally in the interval (0, 1).</li>
 <li><strong>Power law distribution</strong>: <code>pow(RNDRANGE(pow(mn,n+1),pow(mx,n+1)), 1.0 / (n+1))</code>, where <code>n</code>  is the exponent, <code>mn</code> is the minimum, and <code>mx</code> is the maximum.  <a href="http://mathworld.wolfram.com/RandomNumber.html"><strong>Reference</strong></a>.</li>
 <li><strong>Power lognormal distribution</strong>: See the <a href="https://peteroupc.github.io/randomgen.zip"><strong>Python sample code</strong></a>.</li>
 <li><strong>Power normal distribution</strong>: See the <a href="https://peteroupc.github.io/randomgen.zip"><strong>Python sample code</strong></a>.</li>

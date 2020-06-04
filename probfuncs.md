@@ -14,16 +14,8 @@ A word about probability density functions and inverse CDFs:
 
 Both functions normally take one number in and put one number out, but in the case of the sampling methods by Devroye and Gravel, special versions of these functions are needed.  Specifically:
 
-* For the rejection sampler, `EPDF(min_x, max_x, precision)` calculates lower and upper bounds of the PDF anywhere in a region of interest.  Specifically:
-    - `min_x` and `max_x` are the lowest and highest values of the region of interest, as multiples of 2<sup>`-precision`</sup>.  Thus, the region of interest is the interval [`min_x` * 2<sup>`-precision`</sup>, `max_x` * 2<sup>`-precision`</sup>].
-    - `precision` is the bit precision of `min_x` and `max_x`.
-
-    `EPDF` returns two values in this order: a lower bound of the PDF anywhere in the region of interest, and an upper bound of the PDF anywhere in that region.
-* For the inversion sampler, `EICDF(u, ubits, bitplaces)` calculates an accurate approximation to the inverse CDF.  Specifically:
-    - `u` and `ubits` together specify the value of interest, namely `u` * 2<sup>`-ubits`</sup>.
-    - `bitplaces` specifies the desired accuracy of the result.
-
-   `EICDF` returns a number that is within 2<sup>`-bitplaces` of the true inverse CDF of `u` * 2<sup>`-ubits`</sup>.
+* For the rejection sampler, `EPDF(min_x, max_x, precision)` calculates tight bounds of the PDF anywhere in a region of interest, namely the interval [`min_x` * 2<sup>`-precision`</sup>, `max_x` * 2<sup>`-precision`</sup>].   `EPDF` returns two values in this order: the greatest lower bound of the PDF anywhere in the region of interest, and the least upper bound of the PDF anywhere in that region.
+* For the inversion sampler, `EICDF(u, ubits, bitplaces)` calculates an accurate approximation to the inverse CDF. Specifically, `EICDF` returns a number that is within 2<sup>`-bitplaces`</sup> of the true inverse CDF of `u` * 2<sup>`-ubits`</sup>.
 
 <a id=Functions></a>
 ## Functions
