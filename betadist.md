@@ -28,13 +28,22 @@ Although `alpha` and `beta` can each be greater than 0, this sampler only works 
 
 The following Python code relies on a class I wrote called "[**bernoulli.py**](https://github.com/peteroupc/peteroupc.github.io/blob/master/bernoulli.py)", which collects a number of Bernoulli factories, some of which are relied on by the code below.  This includes the "geometric bag" mentioned earlier, as well as a Bernoulli factory that transforms a coin that produces heads with probability `p` with one that produces heads with probability `pow(p, y)`.  The case where `y` is in (0, 1) is due to recent work by Mendo (2019)<sup>[**(4)**](#Note4)</sup>.
 
+The Python code also relies on a method I wrote called `ksmallest`, which generates the kth smallest number in an arbitrary precision.  This will be described later in this page.
+
 This code is far from fast, though, at least in Python.
 
 ```python
 import math
 import random
 import bernoulli
+from randomgen import RandomGen
 from fractions import Fraction
+
+def _toreal(ret, precision):
+        # NOTE: Although we convert to a floating-point
+        # number here, this is not strictly necessary and
+        # is merely for convenience.
+        return ret*1.0/(1<<precision)
 
 def betadist(b, ax, ay, bx, by, precision=53):
         # Beta distribution for alpha>=1 and beta>=1
@@ -44,6 +53,12 @@ def betadist(b, ax, ay, bx, by, precision=53):
         # Special case for a=b=1
         if bpower==0 and apower==0:
            return random.randint(0, (1<<precision)-1)*1.0/(1<<precision)
+        # Special case if a and b are integers
+        if int(bpower) == bpower and int(apower) == apower:
+           a=int(Fraction(ax, ay))
+           b=int(Fraction(bx, by))
+           return _toreal(RandomGen().kthsmallest(a+b-1,a, \
+                  precision), precision)
         # Create a "geometric bag" to hold a uniform random
         # number (U), described by Flajolet et al. 2010
         gb=lambda: b.geometric_bag(bag)
@@ -82,14 +97,29 @@ def _fill_geometric_bag(b, bag, precision):
               ret=(ret<<1)|bag[i]
         if len(bag) < precision:
            diff=precision-len(bag)
-           ret=(ret<<diff)|random.randint(0,(1(diff)-1)
+           ret=(ret << diff)|random.randint(0,(1 << diff)-1)
         # Now we have a number that is a multiple of
         # 2^-precision.
-        # NOTE: Although we convert to a floating-point
-        # number here, this is not strictly necessary and
-        # is merely for convenience.
-        return ret*1.0/(1<<precision)
+        return _toreal(ret, precision)
 ```
+
+<a id=The_kthsmallest_Method></a>
+### The kthsmallest Method
+
+`kthsmallest`, which generates the 'k'th smallest 'b'-bit uniform random number out of 'n' of them, is implemented in "[**randomgen.py**](https://github.com/peteroupc/peteroupc.github.io/blob/master/randomgen.py)" and relied on by this beta sampler.  It is used when both `a` and `b` are integers, based on the known property that a beta random variable in this case is the `a`th smallest uniform (0, 1) random number out of `a + b - 1` of them (Devroye 1986, p. 431)<sup>[**(5)**](#Note5)</sup>.
+
+`kthsmallest`, however, doesn't simply generate 'n' 'b'-bit numbers and then sort them.  Rather, it builds up their binary expansions bit by bit, via the concept of "u-rands" (Karney 2014)<sup>[**(1)**](#Note1)</sup>.    It uses the observation that each uniform (0, 1) random number is equally likely to be less than half or greater than half; thus, the number of uniform numbers that are less than half vs. greater than half follows a binomial(n, 1/2) distribution (and a similar observation applies for other digits in the binary expansion, such as 1/4, 1/8, 1/16, etc.).  Thanks to this observation, the algorithm can generate a sorted sample "on the fly".
+
+The algorithm is as follows:
+
+- 1. Create `n` empty u-rands.
+- 2. Set `index` to 1.
+- 3. If `index <= k`:
+- 3a. Generate `LC`, a binomial(n, 0.5) random number.
+- 3b. Append a 0 bit to the first `LC` u-rands (starting at `index`) and a 1 bit to the next `n - LC` u-rands.
+- 3c. Repeat steps 3 to 3d with the same `index` and `n = LC`.
+- 3d. Repeat steps 3 to 3d with `index = index+LC`, and `n = n - LC`.
+- 4. Take the `k`th u-rand (starting at 1) and fill it with uniform random bits as necessary to make a `b`-bit number.  Return that u-rand.
 
 <a id=Known_Issues></a>
 ### Known Issues
@@ -98,7 +128,7 @@ The bigger `alpha` or `beta` is, the smaller the area of acceptance becomes (and
 
 - Estimate an upper bound for the peak of the density `peak`, given `alpha` and `beta`.
 - Calculate a largest factor `c` such that `peak * c = m < 0.5`.
-- Use Huber's `linear_lowprob` Bernoulli factory (implemented in _bernoulli.py_) <<Huber 2016)<sup>[**(5)**](#Note5)</sup>, taking the values found for `c` and `m`.  Testing shows that the choice of `m` is crucial for performance.
+- Use Huber's `linear_lowprob` Bernoulli factory (implemented in _bernoulli.py_) <<Huber 2016)<sup>[**(6)**](#Note6)</sup>, taking the values found for `c` and `m`.  Testing shows that the choice of `m` is crucial for performance.
 
 <a id=Correctness_Testing></a>
 ## Correctness Testing
@@ -118,7 +148,9 @@ See the results of the [**correctness testing**](https://peteroupc.github.io/bet
 
 <small><sup id=Note4>(4)</sup> Mendo, Luis. "An asymptotically optimal Bernoulli factory for certain functions that can be expressed as power series." Stochastic Processes and their Applications 129, no. 11 (2019): 4366-4384.</small>
 
-<small><sup id=Note5>(5)</sup> Huber, M., "Optimal linear Bernoulli factories for small mean problems", arXiv:1507.00843v2 [math.PR], 2016</small>
+<small><sup id=Note5>(5)</sup> Devroye, L., [**_Non-Uniform Random Variate Generation_**](http://luc.devroye.org/rnbookindex.html), 1986.</small>
+
+<small><sup id=Note6>(6)</sup> Huber, M., "Optimal linear Bernoulli factories for small mean problems", arXiv:1507.00843v2 [math.PR], 2016</small>
 
 <a id=License></a>
 ## License

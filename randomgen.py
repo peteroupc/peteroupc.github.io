@@ -2547,6 +2547,12 @@ algorithm", arXiv:1511.02273v2  [cs.IT], 2016/2018.
         # Early exit if we go beyond the kth smallest index
         if index >= k:
             return
+        # Each uniform (0, 1) random number is equally likely to
+        # be less than half or greater than half; thus, the number
+        # of uniform numbers that are less than half vs. greater
+        # than half follows a binomial(n, 1/2) distribution.
+        # The same applies to other digits in the number's
+        # binary expansion, such as 1/4, 1/8, 1/16, etc.
         leftcount = self.binomial(n, 0.5)
         rightcount = n - leftcount
         clearbit = compl
@@ -2567,8 +2573,8 @@ algorithm", arXiv:1511.02273v2  [cs.IT], 2016/2018.
             if rightcount > 1:
                 self._kthsmallest_internal(ret, index + leftcount, rightcount, k, compl)
 
-    def kthsmallest(self, n, k, bits):
-        """ Generates the 'k'th smallest 'bits'-bit uniform random
+    def kthsmallest(self, n, k, b):
+        """ Generates the 'k'th smallest 'b'-bit uniform random
             number out of 'n' of them. """
         if k <= 0 or k > n:
             raise ValueError
@@ -2576,11 +2582,11 @@ algorithm", arXiv:1511.02273v2  [cs.IT], 2016/2018.
         if k < n / 2:
             # kth smallest
             self._kthsmallest_internal(ret, 0, n, k, 0)
-            return self._urandfill(ret[k - 1], bits)
+            return self._urandfill(ret[k - 1], b)
         else:
             # (n-k+1)th largest
             self._kthsmallest_internal(ret, 0, n, n - k + 1, 1)
-            return self._urandfill(ret[n - k], bits)
+            return self._urandfill(ret[n - k], b)
 
 class ConvexPolygonSampler:
     """ A class for uniform random sampling of

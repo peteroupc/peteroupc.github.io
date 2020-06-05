@@ -410,8 +410,8 @@ CLASSES
      |      Generates the kth smallest number among n random numbers
      |      in the interval [0, 1].
      |
-     |  kthsmallest(self, n, k, bits)
-     |      Generates the 'k'th smallest 'bits'-bit uniform random
+     |  kthsmallest(self, n, k, b)
+     |      Generates the 'k'th smallest 'b'-bit uniform random
      |      number out of 'n' of them.
      |
      |  latlon(self)
