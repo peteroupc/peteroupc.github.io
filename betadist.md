@@ -28,7 +28,7 @@ Although `alpha` and `beta` can each be greater than 0, this sampler only works 
 
 The following Python code relies on a class I wrote called "[**bernoulli.py**](https://github.com/peteroupc/peteroupc.github.io/blob/master/bernoulli.py)", which collects a number of Bernoulli factories, some of which are relied on by the code below.  This includes the "geometric bag" mentioned earlier, as well as a Bernoulli factory that transforms a coin that produces heads with probability `p` with one that produces heads with probability `pow(p, y)`.  The case where `y` is in (0, 1) is due to recent work by Mendo (2019)<sup>[**(4)**](#Note4)</sup>.
 
-The Python code also relies on a method I wrote called `ksmallest`, which generates the kth smallest number in an arbitrary precision.  This will be described later in this page.
+The Python code also relies on a method I wrote called `kthsmallest`, which generates the kth smallest number in an arbitrary precision.  This will be described later in this page.
 
 This code is far from fast, though, at least in Python.
 
@@ -106,20 +106,20 @@ def _fill_geometric_bag(b, bag, precision):
 <a id=The_kthsmallest_Method></a>
 ### The kthsmallest Method
 
-`kthsmallest`, which generates the 'k'th smallest 'b'-bit uniform random number out of 'n' of them, is implemented in "[**randomgen.py**](https://github.com/peteroupc/peteroupc.github.io/blob/master/randomgen.py)" and relied on by this beta sampler.  It is used when both `a` and `b` are integers, based on the known property that a beta random variable in this case is the `a`th smallest uniform (0, 1) random number out of `a + b - 1` of them (Devroye 1986, p. 431)<sup>[**(5)**](#Note5)</sup>.
+`kthsmallest`, which generates the 'k'th smallest 'bitcount'-bit uniform random number out of 'n' of them, is implemented in "[**randomgen.py**](https://github.com/peteroupc/peteroupc.github.io/blob/master/randomgen.py)" and relied on by this beta sampler.  It is used when both `a` and `b` are integers, based on the known property that a beta random variable in this case is the `a`th smallest uniform (0, 1) random number out of `a + b - 1` of them (Devroye 1986, p. 431)<sup>[**(5)**](#Note5)</sup>.
 
-`kthsmallest`, however, doesn't simply generate 'n' 'b'-bit numbers and then sort them.  Rather, it builds up their binary expansions bit by bit, via the concept of "u-rands" (Karney 2014)<sup>[**(1)**](#Note1)</sup>.    It uses the observation that each uniform (0, 1) random number is equally likely to be less than half or greater than half; thus, the number of uniform numbers that are less than half vs. greater than half follows a binomial(n, 1/2) distribution (and a similar observation applies for other digits in the binary expansion, such as 1/4, 1/8, 1/16, etc.).  Thanks to this observation, the algorithm can generate a sorted sample "on the fly".
+`kthsmallest`, however, doesn't simply generate 'n' 'bitcount'-bit numbers and then sort them.  Rather, it builds up their binary expansions bit by bit, via the concept of "u-rands" (Karney 2014)<sup>[**(1)**](#Note1)</sup>.    It uses the observation that each uniform (0, 1) random number is equally likely to be less than half or greater than half; thus, the number of uniform numbers that are less than half vs. greater than half follows a binomial(n, 1/2) distribution (and a similar observation applies for other digits in the binary expansion, such as 1/4, 1/8, 1/16, etc.).  Thanks to this observation, the algorithm can generate a sorted sample "on the fly".
 
 The algorithm is as follows:
 
 1. Create `n` empty u-rands.
 2. Set `index` to 1.
 3. If `index <= k`:
-    1. Generate `LC`, a binomial(n, 0.5) random number.
+    1. Generate `LC`, a binomial(`n`, 0.5) random number.
     2. Append a 0 bit to the first `LC` u-rands (starting at `index`) and a 1 bit to the next `n - LC` u-rands.
     3. Repeat step 3 and these substeps with the same `index` and `n = LC`.
     4. Repeat step 3 and these substeps with `index = index+LC`, and `n = n - LC`.
-4. Take the `k`th u-rand (starting at 1) and fill it with uniform random bits as necessary to make a `b`-bit number.  Return that u-rand.
+4. Take the `k`th u-rand (starting at 1) and fill it with uniform random bits as necessary to make a `bitcount`-bit number.  Return that u-rand.
 
 <a id=Known_Issues></a>
 ### Known Issues
@@ -140,17 +140,17 @@ See the results of the [**correctness testing**](https://peteroupc.github.io/bet
 <a id=Notes></a>
 ## Notes
 
-<small><sup id=Note1>(1)</sup> Karney, C.F.F., "[Sampling exactly from the normal distribution](https://arxiv.org/abs/1303.6257v2)", arXiv:1303.6257v2  [physics.comp-ph], 2014.</small>
+<small><sup id=Note1>(1)</sup> Karney, C.F.F., "[**Sampling exactly from the normal distribution**](https://arxiv.org/abs/1303.6257v2)", arXiv:1303.6257v2  [physics.comp-ph], 2014.</small>
 
 <small><sup id=Note2>(2)</sup> Keane,  M.  S.,  and  O'Brien,  G.  L., "A  Bernoulli factory", _ACM Transactions on Modeling and Computer Simulation_ 4(2), 1994.</small>
 
-<small><sup id=Note3>(3)</sup> Flajolet, P., Pelletier, M., Soria, M., "[On Buffon machines and numbers](https://arxiv.org/abs/0906.5560v2)", arXiv:0906.5560v2  [math.PR], 2010.</small>
+<small><sup id=Note3>(3)</sup> Flajolet, P., Pelletier, M., Soria, M., "[**On Buffon machines and numbers**](https://arxiv.org/abs/0906.5560v2)", arXiv:0906.5560v2  [math.PR], 2010.</small>
 
 <small><sup id=Note4>(4)</sup> Mendo, Luis. "An asymptotically optimal Bernoulli factory for certain functions that can be expressed as power series." Stochastic Processes and their Applications 129, no. 11 (2019): 4366-4384.</small>
 
 <small><sup id=Note5>(5)</sup> Devroye, L., [**_Non-Uniform Random Variate Generation_**](http://luc.devroye.org/rnbookindex.html), 1986.</small>
 
-<small><sup id=Note6>(6)</sup> Huber, M., "[Optimal linear Bernoulli factories for small mean problems](https://arxiv.org/abs/1507.00843v2)", arXiv:1507.00843v2 [math.PR], 2016</small>
+<small><sup id=Note6>(6)</sup> Huber, M., "[**Optimal linear Bernoulli factories for small mean problems**](https://arxiv.org/abs/1507.00843v2)", arXiv:1507.00843v2 [math.PR], 2016</small>
 
 <a id=License></a>
 ## License

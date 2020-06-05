@@ -87,10 +87,7 @@
 <li><a href="#Random_Dates_and_Times"><strong>Random Dates and Times</strong></a></li>
 <li><a href="#Randomization_in_Statistical_Testing"><strong>Randomization in Statistical Testing</strong></a></li>
 <li><a href="#Markov_Chains"><strong>Markov Chains</strong></a></li>
-</ul></li>
-<li><a href="#Random_Graphs"><strong>Random Graphs</strong></a>
-
-<ul>
+<li><a href="#Random_Graphs"><strong>Random Graphs</strong></a></li>
 <li><a href="#A_Note_on_Sorting_Random_Numbers"><strong>A Note on Sorting Random Numbers</strong></a></li>
 </ul></li>
 <li><a href="#General_Non_Uniform_Distributions"><strong>General Non-Uniform Distributions</strong></a>
@@ -908,7 +905,7 @@ END METHOD
 
 <p><a id=Random_Graphs></a></p>
 
-<h2>Random Graphs</h2>
+<h3>Random Graphs</h3>
 
 <p>A <em>graph</em> is a listing of points and the connections between them.  The points are called <em>vertices</em> and the connections, <em>edges</em>.</p>
 
@@ -935,7 +932,7 @@ END METHOD
 END METHOD
 </pre>
 
-<p>Other kinds of graphs are possible, including the <em>Erdős&ndash;Rényi model</em> (choose <em>n</em> random edges without replacement), Chung&ndash;Lu graphs, preferential attachment graphs, and more.  Penschuck et al. (2020)<sup><a href="#Note20"><strong>(20)</strong></a></sup> give a survey of random graph generation techniques.</p>
+<p>Other kinds of graphs are possible, including <em>Erdős&ndash;Rényi graphs</em> (choose <em>n</em> random edges without replacement), Chung&ndash;Lu graphs, preferential attachment graphs, and more.  Penschuck et al. (2020)<sup><a href="#Note20"><strong>(20)</strong></a></sup> give a survey of random graph generation techniques.</p>
 
 <p><a id=A_Note_on_Sorting_Random_Numbers></a></p>
 
@@ -2266,7 +2263,7 @@ above for returning more than one random number in one call.</p>
 <small></p>
 
 <ul>
-<li><strong>Beta distribution</strong>&#x2b26;: See <a href="#Beta_Distribution"><strong>Beta Distribution</strong></a>.</li>
+<li><strong>Beta distribution</strong>&#x2b26;: See <a href="hhttps://github.com/peteroupc/peteroupc.github.io/blob/master/randomnotes.md#Beta_Distribution"><strong>Beta Distribution</strong></a>.</li>
 <li><strong>Binomial distribution</strong>: See <a href="#Binomial_Distribution"><strong>Binomial Distribution</strong></a>.</li>
 <li><strong>Binormal distribution</strong>: See <a href="https://github.com/peteroupc/peteroupc.github.io/blob/master/randomnotes.md#Multivariate_Normal_Multinormal_Distribution"><strong>Multivariate Normal (Multinormal) Distribution</strong></a>.</li>
 <li><strong>Cauchy (Lorentz) distribution</strong>&dagger;:  <code>Stable(1, 0)</code>.  This distribution is similar to the normal distribution, but with &quot;fatter&quot; tails. Alternative algorithm based on one mentioned in (McGrath and Irving 1975)<sup><a href="#Note63"><strong>(63)</strong></a></sup>: Generate <code>x = RNDU01ZeroExc()</code> and <code>y = RNDU01ZeroExc()</code> until <code>x * x + y * y &lt;= 1</code>, then generate <code>(RNDINT(1) * 2 - 1) * y / x</code>.</li>
@@ -2541,25 +2538,25 @@ END METHOD
 
 <p>If the generator produces numbers with unequal probabilities, but is otherwise an RNG as defined here, then  <em>randomness extraction</em> (which is outside the scope of this document) can make it produce numbers with closer to equal probabilities.</small></p>
 
-<p><small><sup id=Note2>(2)</sup> Pedersen, K., &quot;<a href="https://arxiv.org/abs/1704.07949v3">Reconditioning your quantile function</a>&quot;, arXiv:1704.07949v3 [stat.CO], 2018.</small></p>
+<p><small><sup id=Note2>(2)</sup> Pedersen, K., &quot;<a href="https://arxiv.org/abs/1704.07949v3"><strong>Reconditioning your quantile function</strong></a>&quot;, arXiv:1704.07949v3 [stat.CO], 2018.</small></p>
 
-<p><small><sup id=Note3>(3)</sup> For an exercise solved by the <code>RNDINT</code> pseudocode, see A. Koenig and B. E. Moo, <em>Accelerated C++</em>, 2000; see also a <a href="http://mathalope.co.uk/2014/10/26/accelerated-c-solution-to-exercise-7-9/"><strong>blog post by Johnny Chan</strong></a>.  In addition, M. O&#39;Neill discusses various methods, both biased and unbiased, for generating random integers in a range with an RNG in a <a href="http://www.pcg-random.org/posts/bounded-rands.html"><strong>blog post from July 2018</strong></a>.  Finally, a post in the Math Forum (&quot;<a href="http://mathforum.org/library/drmath/view/65653.html"><strong>Probability and Random Numbers</strong></a>&quot;, Feb. 29, 2004) and Mennucci, A.C.G., &quot;<a href="https://arxiv.org/abs/1012.4290">Bit Recycling for Scaling Random Number Generators</a>&quot;, arXiv:1012.4290 [cs.IT], 2018, independently show a method for batching and recycling random bits to produce random integers in a range.</small></p>
+<p><small><sup id=Note3>(3)</sup> For an exercise solved by the <code>RNDINT</code> pseudocode, see A. Koenig and B. E. Moo, <em>Accelerated C++</em>, 2000; see also a <a href="http://mathalope.co.uk/2014/10/26/accelerated-c-solution-to-exercise-7-9/"><strong>blog post by Johnny Chan</strong></a>.  In addition, M. O&#39;Neill discusses various methods, both biased and unbiased, for generating random integers in a range with an RNG in a <a href="http://www.pcg-random.org/posts/bounded-rands.html"><strong>blog post from July 2018</strong></a>.  Finally, a post in the Math Forum (&quot;<a href="http://mathforum.org/library/drmath/view/65653.html"><strong>Probability and Random Numbers</strong></a>&quot;, Feb. 29, 2004) and Mennucci, A.C.G., &quot;<a href="https://arxiv.org/abs/1012.4290"><strong>Bit Recycling for Scaling Random Number Generators</strong></a>&quot;, arXiv:1012.4290 [cs.IT], 2018, independently show a method for batching and recycling random bits to produce random integers in a range.</small></p>
 
 <p><small><sup id=Note4>(4)</sup> D. Lemire, &quot;A fast alternative to the modulo reduction&quot;, Daniel Lemire&#39;s blog, 2016.</small></p>
 
-<p><small><sup id=Note5>(5)</sup> Lumbroso, J., &quot;<a href="https://arxiv.org/abs/1304.1916">Optimal Discrete Uniform Generation from Coin Flips, and Applications</a>&quot;, arXiv:1304.1916 [cs.DS].</small></p>
+<p><small><sup id=Note5>(5)</sup> Lumbroso, J., &quot;<a href="https://arxiv.org/abs/1304.1916"><strong>Optimal Discrete Uniform Generation from Coin Flips, and Applications</strong></a>&quot;, arXiv:1304.1916 [cs.DS].</small></p>
 
 <p><small><sup id=Note6>(6)</sup> A na&iuml;ve <code>RNDINTEXC</code> implementation often seen in certain languages like JavaScript is the idiom <code>floor(Math.random() * maxExclusive)</code>, where <code>Math.random()</code> is any method that outputs an independent uniform random number in the interval [0, 1).  However, no implementation of <code>Math.random()</code> can choose from all real numbers in [0, 1), so this idiom can bias some results over others depending on the value of <code>maxExclusive</code>.  For example, if <code>Math.random()</code> is implemented as <code>RNDINT(X - 1)/X</code> and <code>X</code> is not divisible by <code>maxExclusive</code>, the result will be biased.  Also, an implementation might pre-round <code>Math.random() * maxExclusive</code> (before the <code>floor</code>) to the closest number it can represent; in rare cases, that might be <code>maxExclusive</code> for certain rounding modes. If an application is concerned about these issues, it should treat the <code>Math.random()</code> implementation as the underlying RNG for <code>RNDINT</code> and implement <code>RNDINTEXC</code> through <code>RNDINT</code> instead.</small></p>
 
-<p><small><sup id=Note7>(7)</sup> Canonne, C., Kamath, G., Steinke, T., &quot;<a href="https://arxiv.org/abs/2004.00010v2">The Discrete Gaussian for Differential Privacy</a>&quot;, arXiv:2004.00010v2 [cs.DS], 2020.</small></p>
+<p><small><sup id=Note7>(7)</sup> Canonne, C., Kamath, G., Steinke, T., &quot;<a href="https://arxiv.org/abs/2004.00010v2"><strong>The Discrete Gaussian for Differential Privacy</strong></a>&quot;, arXiv:2004.00010v2 [cs.DS], 2020.</small></p>
 
 <p><small><sup id=Note8>(8)</sup> Keane,  M.  S.,  and  O&#39;Brien,  G.  L., &quot;A  Bernoulli factory&quot;, <em>ACM Transactions on Modeling and Computer Simulation</em> 4(2), 1994.</small></p>
 
-<p><small><sup id=Note9>(9)</sup> Flajolet, P., Pelletier, M., Soria, M., &quot;<a href="https://arxiv.org/abs/0906.5560v2">On Buffon machines and numbers</a>&quot;, arXiv:0906.5560v2  [math.PR], 2010.</small></p>
+<p><small><sup id=Note9>(9)</sup> Flajolet, P., Pelletier, M., Soria, M., &quot;<a href="https://arxiv.org/abs/0906.5560v2"><strong>On Buffon machines and numbers</strong></a>&quot;, arXiv:0906.5560v2  [math.PR], 2010.</small></p>
 
 <p><small><sup id=Note10>(10)</sup> Jeff Atwood, &quot;<a href="https://blog.codinghorror.com/the-danger-of-naivete/"><strong>The danger of na&iuml;vet&eacute;</strong></a>&quot;, Dec. 7, 2007.</small></p>
 
-<p><small><sup id=Note11>(11)</sup> Bacher, A., Bodini, O., et al., &quot;<a href="https://arxiv.org/abs/1508.03167">MergeShuffle: A Very Fast, Parallel Random Permutation Algorithm</a>&quot;, arXiv:1508.03167 [cs.DS], 2015.</small></p>
+<p><small><sup id=Note11>(11)</sup> Bacher, A., Bodini, O., et al., &quot;<a href="https://arxiv.org/abs/1508.03167"><strong>MergeShuffle: A Very Fast, Parallel Random Permutation Algorithm</strong></a>&quot;, arXiv:1508.03167 [cs.DS], 2015.</small></p>
 
 <p><small><sup id=Note12>(12)</sup> If the strings identify database records, file system paths, or other shared resources, special considerations apply, including the need to synchronize access to those resources.  For uniquely identifying database records, alternatives to random strings include auto-incrementing or sequentially assigned row numbers. The choice of underlying RNG is important when it comes to unique random strings; see my <a href="https://peteroupc.github.io/random.html#Unique_Random_Identifiers"><strong>RNG recommendation document</strong></a>.</small></p>
 
@@ -2577,13 +2574,13 @@ END METHOD
 
 <p><small><sup id=Note19>(19)</sup> V. Batagelj and U. Brandes, &quot;Efficient generation of large random networks&quot;, Phys.Rev. E 71:036113, 2005.</small></p>
 
-<p><small><sup id=Note20>(20)</sup> Penschuck, M., et al., &quot;<a href="https://arxiv.org/abs/2003.00736v1">Recent Advances in Scalable Network Generation</a>&quot;, arXiv:2003.00736v1  [cs.DS], 2020.</small></p>
+<p><small><sup id=Note20>(20)</sup> Penschuck, M., et al., &quot;<a href="https://arxiv.org/abs/2003.00736v1"><strong>Recent Advances in Scalable Network Generation</strong></a>&quot;, arXiv:2003.00736v1  [cs.DS], 2020.</small></p>
 
 <p><small><sup id=Note21>(21)</sup> Jon Louis Bentley and James B. Saxe, &quot;Generating Sorted Lists of Random Numbers&quot;, <em>ACM Trans. Math. Softw.</em> 6 (1980), pp. 359-364, describes a way to generate random numbers in sorted order, but it&#39;s not given here because it relies on generating real numbers in the interval [0, 1], which is inherently imperfect because computers can&#39;t choose among all random numbers between 0 and 1, and there are infinitely many of them.</small></p>
 
 <p><small><sup id=Note22>(22)</sup> Efraimidis, P. and Spirakis, P. &quot;<a href="http://utopia.duth.gr/%7Epefraimi/research/data/2007EncOfAlg.pdf"><strong>Weighted Random Sampling (2005; Efraimidis, Spirakis)</strong></a>&quot;, 2005.</small></p>
 
-<p><small><sup id=Note23>(23)</sup> Efraimidis, P. &quot;<a href="https://arxiv.org/abs/1012.0256v2">Weighted Random Sampling over Data Streams</a>&quot;, arXiv:1012.0256v2 [cs.DS], 2015.</small></p>
+<p><small><sup id=Note23>(23)</sup> Efraimidis, P. &quot;<a href="https://arxiv.org/abs/1012.0256v2"><strong>Weighted Random Sampling over Data Streams</strong></a>&quot;, arXiv:1012.0256v2 [cs.DS], 2015.</small></p>
 
 <p><small><sup id=Note24>(24)</sup> T. Vieira, &quot;<a href="http://timvieira.github.io/blog/post/2014/08/01/gumbel-max-trick-and-weighted-reservoir-sampling/"><strong>Gumbel-max trick and weighted reservoir sampling</strong></a>&quot;, 2014.</small></p>
 
@@ -2603,7 +2600,7 @@ END METHOD
 
 <p><small><sup id=Note32>(32)</sup> von Neumann, J., &quot;Various techniques used in connection with random digits&quot;, 1951.</small></p>
 
-<p><small><sup id=Note33>(33)</sup> Karney, C.F.F., &quot;<a href="https://arxiv.org/abs/1303.6257v2">Sampling exactly from the normal distribution</a>&quot;, arXiv:1303.6257v2  [physics.comp-ph], 2014.</small></p>
+<p><small><sup id=Note33>(33)</sup> Karney, C.F.F., &quot;<a href="https://arxiv.org/abs/1303.6257v2"><strong>Sampling exactly from the normal distribution</strong></a>&quot;, arXiv:1303.6257v2  [physics.comp-ph], 2014.</small></p>
 
 <p><small><sup id=Note34>(34)</sup> Smith and Tromble, &quot;<a href="http://www.cs.cmu.edu/%7Enasmith/papers/smith+tromble.tr04.pdf"><strong>Sampling Uniformly from the Unit Simplex</strong></a>&quot;, 2004.</small></p>
 
@@ -2628,7 +2625,7 @@ and &quot;<a href="https://randomascii.wordpress.com/2013/07/16/floating-point-d
 
 <p><small><sup id=Note44>(44)</sup> P. L&#39;Ecuyer, &quot;Tables of Linear Congruential Generators of Different Sizes and Good Lattice Structure&quot;, <em>Mathematics of Computation</em> 68(225), January 1999, with <a href="http://www.iro.umontreal.ca/%7Elecuyer/myftp/papers/latrules99Errata.pdf"><strong>errata</strong></a>.</small></p>
 
-<p><small><sup id=Note45>(45)</sup> Harase, S., &quot;<a href="https://arxiv.org/abs/2002.09006">A table of short-period Tausworthe generators for Markov chain quasi-Monte Carlo</a>&quot;, arXiv:2002.09006 [math.NA], 2020.</small></p>
+<p><small><sup id=Note45>(45)</sup> Harase, S., &quot;<a href="https://arxiv.org/abs/2002.09006"><strong>A table of short-period Tausworthe generators for Markov chain quasi-Monte Carlo</strong></a>&quot;, arXiv:2002.09006 [math.NA], 2020.</small></p>
 
 <p><small><sup id=Note46>(46)</sup> Brassard, G., Devroye, L., Gravel, C., &quot;Exact Classical Simulation of the Quantum-Mechanical GHZ Distribution&quot;, <em>IEEE Transactions on Information Theory</em> 62(2), February 2016.  Note that that paper defines a Bernoulli trial as 0 for success and 1 for failure, rather than the other way around, as in this document.</small></p>
 
@@ -2664,9 +2661,9 @@ and &quot;<a href="https://randomascii.wordpress.com/2013/07/16/floating-point-d
 
 <p><small><sup id=Note55>(55)</sup> Based on a suggestion by F. Saad in a personal communication (Mar. 26, 2020).</small></p>
 
-<p><small><sup id=Note56>(56)</sup> Saad, F.A., et al., &quot;<a href="https://arxiv.org/abs/2001.04555">Optimal Approximate Sampling from Discrete Probability Distributions</a>&quot;, arXiv:2001.04555 [cs.DS], 2020.  See also the <a href="https://github.com/probcomp/optimal-approximate-sampling"><strong>associated source code</strong></a>.</small></p>
+<p><small><sup id=Note56>(56)</sup> Saad, F.A., et al., &quot;<a href="https://arxiv.org/abs/2001.04555"><strong>Optimal Approximate Sampling from Discrete Probability Distributions</strong></a>&quot;, arXiv:2001.04555 [cs.DS], 2020.  See also the <a href="https://github.com/probcomp/optimal-approximate-sampling"><strong>associated source code</strong></a>.</small></p>
 
-<p><small><sup id=Note57>(57)</sup> Devroye, L., Gravel, C., &quot;<a href="https://arxiv.org/abs/1502.02539v5">Sampling with arbitrary precision</a>&quot;, arXiv:1502.02539v5 [cs.IT]</small></p>
+<p><small><sup id=Note57>(57)</sup> Devroye, L., Gravel, C., &quot;<a href="https://arxiv.org/abs/1502.02539v5"><strong>Sampling with arbitrary precision</strong></a>&quot;, arXiv:1502.02539v5 [cs.IT]</small></p>
 
 <p><small><sup id=Note58>(58)</sup> Bringmann, K., and Friedrich, T., 2013, July. Exact and efficient generation of geometric random variates and random graphs, in <em>International Colloquium on Automata, Languages, and Programming</em> (pp. 267-278).</small></p>
 
@@ -2674,7 +2671,7 @@ and &quot;<a href="https://randomascii.wordpress.com/2013/07/16/floating-point-d
 
 <p><small><sup id=Note60>(60)</sup> Devroye, L., &quot;Non-Uniform Random Variate Generation&quot;.  In <em>Handbooks in Operations Research and Management Science: Simulation</em>, Henderson, S.G., Nelson, B.L. (eds.), 2006, p.83.</small></p>
 
-<p><small><sup id=Note61>(61)</sup> Tran, K.H., &quot;<a href="https://arxiv.org/abs/1607.01985v5">A Common Derivation for Markov Chain Monte Carlo Algorithms with Tractable and Intractable Targets</a>&quot;, arXiv:1607.01985v5 [stat.CO], 2018, gives a common framework for describing many MCMC algorithms, including Metropolis&ndash;Hastings, slice sampling, and Gibbs sampling.</small></p>
+<p><small><sup id=Note61>(61)</sup> Tran, K.H., &quot;<a href="https://arxiv.org/abs/1607.01985v5"><strong>A Common Derivation for Markov Chain Monte Carlo Algorithms with Tractable and Intractable Targets</strong></a>&quot;, arXiv:1607.01985v5 [stat.CO], 2018, gives a common framework for describing many MCMC algorithms, including Metropolis&ndash;Hastings, slice sampling, and Gibbs sampling.</small></p>
 
 <p><small><sup id=Note62>(62)</sup> See also Casella, G., and George, E.I., &quot;Explaining the Gibbs Sampler&quot;, <em>The American Statistician</em> 46(3) (1992).</small></p>
 
@@ -2688,11 +2685,11 @@ and &quot;<a href="https://randomascii.wordpress.com/2013/07/16/floating-point-d
 
 <p><small><sup id=Note67>(67)</sup> Kabal, P., &quot;Generating Gaussian Pseudo-Random Variates&quot;, McGill University, 2000/2019.</small></p>
 
-<p><small><sup id=Note68>(68)</sup> Saha, M., et al., &quot;<a href="https://arxiv.org/abs/1909.01103">The extended xgamma distribution</a>&quot;, arXiv:1909.01103 [math.ST], 2019.</small></p>
+<p><small><sup id=Note68>(68)</sup> Saha, M., et al., &quot;<a href="https://arxiv.org/abs/1909.01103"><strong>The extended xgamma distribution</strong></a>&quot;, arXiv:1909.01103 [math.ST], 2019.</small></p>
 
 <p><small><sup id=Note69>(69)</sup> Sen, S., et al., &quot;The xgamma distribution: statistical properties and application&quot;, 2016.</small></p>
 
-<p><small><sup id=Note70>(70)</sup> Baker, R., Jackson, D., &quot;<a href="https://arxiv.org/abs/1408.3237">A new distribution for robust least squares</a>&quot;, arXiv:1408.3237 [stat.ME], 2018.</small></p>
+<p><small><sup id=Note70>(70)</sup> Baker, R., Jackson, D., &quot;<a href="https://arxiv.org/abs/1408.3237"><strong>A new distribution for robust least squares</strong></a>&quot;, arXiv:1408.3237 [stat.ME], 2018.</small></p>
 
 <p><small><sup id=Note71>(71)</sup> Grimme, C., &quot;Picking a Uniformly Random Point from an Arbitrary Simplex&quot;, 2015.</small></p>
 

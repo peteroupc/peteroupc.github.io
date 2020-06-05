@@ -1690,7 +1690,7 @@ For a detailed overview on phenomena involving human color vision, see section 9
 
 <small><sup id=Note20>(20)</sup> Although the CIELAB color model is also often called "perceptually uniform"&mdash;
 - CIELAB "was not designed to have the perceptual qualities needed for gamut mapping", according to [**B. Lindbloom**](http://www.brucelindbloom.com/index.html?UPLab.html), and
-- such a claim "is really only the case for very low spatial frequencies", according to P. Kovesi (P. Kovesi, "[Good Colour Maps: How to Design Them](https://arxiv.org/abs/1509.03700)", arXiv:1509.03700 [cs.GR], 2015).</small>
+- such a claim "is really only the case for very low spatial frequencies", according to P. Kovesi (P. Kovesi, "[**Good Colour Maps: How to Design Them**](https://arxiv.org/abs/1509.03700)", arXiv:1509.03700 [cs.GR], 2015).</small>
 
 <small><sup id=Note21>(21)</sup> The placement of the _L\*_, _a\*_, and _b\*_ axes is related to the light&ndash;dark signal and the two opponent signals red/green and blue/yellow. See also endnote 6.</small>
 
