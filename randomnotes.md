@@ -381,7 +381,7 @@ In general, the only random numbers an exact algorithm uses are random bits (bin
 
 <small><sup id=Note4>(4)</sup> Luu, T., "Fast and Accurate Parallel Computation of Quantile Functions for Random Number Generation", Dissertation, University College London, 2016.</small>
 
-<small><sup id=Note5>(5)</sup> Karney, C.F.F., "Sampling exactly from the normal distribution", arXiv:1303.6257v2  [physics.comp-ph], 2014.</small>
+<small><sup id=Note5>(5)</sup> Karney, C.F.F., "[Sampling exactly from the normal distribution](https://arxiv.org/abs/1303.6257v2)", arXiv:1303.6257v2  [physics.comp-ph], 2014.</small>
 
 <small><sup id=Note6>(6)</sup> Thomas, D., et al., "Gaussian Random Number Generators", _ACM Computing Surveys_ 39(4), 2007.</small>
 
@@ -397,7 +397,7 @@ In general, the only random numbers an exact algorithm uses are random bits (bin
 
 <small><sup id=Note12>(12)</sup> Hofert, M., and Maechler, M.  "Nested Archimedean Copulas Meet R: The nacopula Package".  _Journal of Statistical Software_ 39(9), 2011, pp. 1-20.</small>
 
-<small><sup id=Note13>(13)</sup> Devroye, L., Gravel, C., "Sampling with arbitrary precision", arXiv:1502.02539v5 [cs.IT], 2018.</small>
+<small><sup id=Note13>(13)</sup> Devroye, L., Gravel, C., "[Sampling with arbitrary precision](https://arxiv.org/abs/1502.02539v5)", arXiv:1502.02539v5 [cs.IT], 2018.</small>
 
 <small><sup id=Note14>(14)</sup> Morina, G., Łatuszyński, K., et al., "From the Bernoulli Factory to a Dice Enterprise via Perfect Sampling of Markov Chains", 2019.</small>
 

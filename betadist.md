@@ -112,14 +112,14 @@ def _fill_geometric_bag(b, bag, precision):
 
 The algorithm is as follows:
 
-- 1. Create `n` empty u-rands.
-- 2. Set `index` to 1.
-- 3. If `index <= k`:
-- 3a. Generate `LC`, a binomial(n, 0.5) random number.
-- 3b. Append a 0 bit to the first `LC` u-rands (starting at `index`) and a 1 bit to the next `n - LC` u-rands.
-- 3c. Repeat steps 3 to 3d with the same `index` and `n = LC`.
-- 3d. Repeat steps 3 to 3d with `index = index+LC`, and `n = n - LC`.
-- 4. Take the `k`th u-rand (starting at 1) and fill it with uniform random bits as necessary to make a `b`-bit number.  Return that u-rand.
+1. Create `n` empty u-rands.
+2. Set `index` to 1.
+3. If `index <= k`:
+    1. Generate `LC`, a binomial(n, 0.5) random number.
+    2. Append a 0 bit to the first `LC` u-rands (starting at `index`) and a 1 bit to the next `n - LC` u-rands.
+    3. Repeat step 3 and these substeps with the same `index` and `n = LC`.
+    4. Repeat step 3 and these substeps with `index = index+LC`, and `n = n - LC`.
+4. Take the `k`th u-rand (starting at 1) and fill it with uniform random bits as necessary to make a `b`-bit number.  Return that u-rand.
 
 <a id=Known_Issues></a>
 ### Known Issues
@@ -140,17 +140,17 @@ See the results of the [**correctness testing**](https://peteroupc.github.io/bet
 <a id=Notes></a>
 ## Notes
 
-<small><sup id=Note1>(1)</sup> Karney, C.F.F., "Sampling exactly from the normal distribution", arXiv:1303.6257v2  [physics.comp-ph], 2014.</small>
+<small><sup id=Note1>(1)</sup> Karney, C.F.F., "[Sampling exactly from the normal distribution](https://arxiv.org/abs/1303.6257v2)", arXiv:1303.6257v2  [physics.comp-ph], 2014.</small>
 
 <small><sup id=Note2>(2)</sup> Keane,  M.  S.,  and  O'Brien,  G.  L., "A  Bernoulli factory", _ACM Transactions on Modeling and Computer Simulation_ 4(2), 1994.</small>
 
-<small><sup id=Note3>(3)</sup> Flajolet, P., Pelletier, M., Soria, M., "On Buffon machines and numbers", arXiv:0906.5560v2  [math.PR], 2010.</small>
+<small><sup id=Note3>(3)</sup> Flajolet, P., Pelletier, M., Soria, M., "[On Buffon machines and numbers](https://arxiv.org/abs/0906.5560v2)", arXiv:0906.5560v2  [math.PR], 2010.</small>
 
 <small><sup id=Note4>(4)</sup> Mendo, Luis. "An asymptotically optimal Bernoulli factory for certain functions that can be expressed as power series." Stochastic Processes and their Applications 129, no. 11 (2019): 4366-4384.</small>
 
 <small><sup id=Note5>(5)</sup> Devroye, L., [**_Non-Uniform Random Variate Generation_**](http://luc.devroye.org/rnbookindex.html), 1986.</small>
 
-<small><sup id=Note6>(6)</sup> Huber, M., "Optimal linear Bernoulli factories for small mean problems", arXiv:1507.00843v2 [math.PR], 2016</small>
+<small><sup id=Note6>(6)</sup> Huber, M., "[Optimal linear Bernoulli factories for small mean problems](https://arxiv.org/abs/1507.00843v2)", arXiv:1507.00843v2 [math.PR], 2016</small>
 
 <a id=License></a>
 ## License

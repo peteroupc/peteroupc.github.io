@@ -140,13 +140,13 @@ The following are not considered high-quality PRNGs:
 
 <small><sup id=Note8>(8)</sup> L&uuml;scher, M., "A Portable High-Quality Random Number Generator for Lattice Field Theory Simulations", arXiv:hep-lat/9309020 (1994).  See also Conrads, C., "[**Faster RANLUX Pseudo-Random Number Generators**](https://christoph-conrads.name/faster-ranlux-pseudo-random-number-generators/)".</small>
 
-<small><sup id=Note9>(9)</sup> S. Vigna, "It Is High Time We Let Go of the Mersenne Twister", arXiv:1910.06437 [cs.DS], 2019.</small>
+<small><sup id=Note9>(9)</sup> S. Vigna, "[It Is High Time We Let Go of the Mersenne Twister](https://arxiv.org/abs/1910.06437)", arXiv:1910.06437 [cs.DS], 2019.</small>
 
 <small><sup id=Note10>(10)</sup> S. Vigna, "[**An experimental exploration of Marsaglia's `xorshift` generators, scrambled**](http://vigna.di.unimi.it/ftp/papers/xorshift.pdf)", 2016.</small>
 
-<small><sup id=Note11>(11)</sup> Widynski, B., "Middle Square Weyl Sequence RNG", arXiv:1704.00358 [cs.CR], 2017.</small>
+<small><sup id=Note11>(11)</sup> Widynski, B., "[Middle Square Weyl Sequence RNG](https://arxiv.org/abs/1704.00358)", arXiv:1704.00358 [cs.CR], 2017.</small>
 
-<small><sup id=Note12>(12)</sup> Bhattacharjee, K., "Cellular Automata: Reversibility, Semi-reversibility and Randomness", arXiv:1911.03609 [cs.FL], 2019.</small>
+<small><sup id=Note12>(12)</sup> Bhattacharjee, K., "[Cellular Automata: Reversibility, Semi-reversibility and Randomness](https://arxiv.org/abs/1911.03609)", arXiv:1911.03609 [cs.FL], 2019.</small>
 
 <small><sup id=Note13>(13)</sup> Neves, S., and Araujo, F., "Fast and Small Nonlinear Pseudorandom Number Generators for Computer Simulation", 2011.</small>
 

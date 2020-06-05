@@ -588,7 +588,7 @@ See also N. Reed, "Quick And Easy GPU Random Numbers In D3D11", Nathan Reed's co
 
 <small><sup id=Note17>(17)</sup> von Neumann, J., "Various techniques used in connection with random digits", 1951.</small>
 
-<small><sup id=Note18>(18)</sup> Zhou, H. and Bruck, J., 2012. Streaming algorithms for optimal generation of random bits. arXiv preprint arXiv:1209.0730.  See [**source code of my implementation**](https://github.com/peteroupc/peteroupc.github.io/blob/master/rextract.rb).</small>
+<small><sup id=Note18>(18)</sup> Zhou, H. and Bruck, J., "[Streaming algorithms for optimal generation of random bits](https://arxiv.org/abs/1209.0730)", arXiv:1209.0730 [cs.IT], 2012.  See [**source code of my implementation**](https://github.com/peteroupc/peteroupc.github.io/blob/master/rextract.rb).</small>
 
 <small><sup id=Note19>(19)</sup> For example, many questions on _Stack Overflow_ highlight the pitfalls of creating a new instance of the .NET Framework's `System.Random` each time a random number is needed, rather than only once in the application.  See also Johansen, R. S., "[**A Primer on Repeatable Random Numbers**](https://blogs.unity3d.com/2015/01/07/a-primer-on-repeatable-random-numbers/)", Unity Blog, Jan. 7, 2015.</small>
 
@@ -635,7 +635,7 @@ See also N. Reed, "Quick And Easy GPU Random Numbers In D3D11", Nathan Reed's co
 
 <small><sup id=Note37>(37)</sup> If an application expects end users to type in a unique identifier, it could find that very long unique identifiers are unsuitable for it (e.g. 128-bit numbers take up 32 base-16 characters).  There are ways to deal with these and other long identifiers, including (1) separating memorable chunks of the identifier with a hyphen, space, or another character (e.g., "ABCDEF" becomes "ABC-DEF"); (2) generating the identifier from a sequence of memorable words (as in Electrum or in Bitcoin's BIP39); or (3) adding a so-called "checksum digit" at the end of the identifier to guard against typing mistakes.  The application ought to consider trying (1) or (2) before deciding to use shorter identifiers than what this document recommends.</small>
 
-<small><sup id=Note38>(38)</sup> For suggested "full-period" [**LCGs**](https://en.wikipedia.org/wiki/Linear_congruential_generator), see tables 3, 5, 7, and 8 of Steele and Vigna, "Computationally easy, spectrally good multipliers for congruential pseudorandom number generators", arXiv:2001.05304 [cs.DS].</small>
+<small><sup id=Note38>(38)</sup> For suggested "full-period" [**LCGs**](https://en.wikipedia.org/wiki/Linear_congruential_generator), see tables 3, 5, 7, and 8 of Steele and Vigna, "[Computationally easy, spectrally good multipliers for congruential pseudorandom number generators](https://arxiv.org/abs/2001.05304)", arXiv:2001.05304 [cs.DS].</small>
 
 <small><sup id=Note39>(39)</sup> Verifiable delay functions are different from proofs of work, in which there can be multiple correct answers. These functions were first formally defined in Boneh, D., Bonneau, J., et al., "Verifiable Delay Functions", 2018, but such functions appeared earlier in Lenstra, A.K., Wesolowski, B., "A random zoo: sloth, unicorn, and trx", 2015.</small>
 
