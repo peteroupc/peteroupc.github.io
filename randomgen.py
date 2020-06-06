@@ -784,6 +784,54 @@ Returns 'list'. """
             i += 1
         return successes
 
+    def poissonint(self, mx, my):
+        """ Generates a random number following a Poisson distribution with mean mx/my.  """
+        if my == 0:
+            raise ValueError
+        if mx == 0:
+            return 0
+        if (mx < 0 and my < 0) or (mx > 0 and my < 0):
+            return 0
+        if mx == my:
+            return self.poissonint(1, 2) + self.poissonint(1, 2)
+        if mx > my:
+            # Mean is 1 or greater
+            mm = mx % my
+            if mm == 0:
+                mf = int(mx / my)
+                ret = 0
+                if mf % 2 == 1:
+                    ret += self.poissonint(1, 1)
+                    mf -= 1
+                ret += self.poissonint(mf / 2, 1) + self.poissonint(mf / 2, 1)
+                return ret
+            else:
+                return self.poissonint(mm, my) + self.poissonint(mx - mm, my)
+        while True:
+            # Generate n, a geometric random number
+            # (NOTE: Flajolet et al. define a geometric
+            # distribution as number of SUCCESSES BEFORE
+            # FAILURE, not counting the failure, so we
+            # have to complement the probability here)
+            n = self.negativebinomialint(1, my - mx, my)
+            # If n uniform random numbers turn out
+            # to be sorted, accept n
+            if n <= 1:
+                return n
+            u = self._urandnew()
+            success = True
+            i = 1
+            while i < n and success:
+                u2 = self._urandnew()
+                if self._urandless(u, u2):
+                    u = u2
+                else:
+                    success = False  # Not sorted
+                i = i + 1
+            if success:
+                return n
+        return count
+
     def poisson(self, mean):
         """ Generates a random number following a Poisson distribution.  """
         if mean < 0:
@@ -1114,7 +1162,7 @@ Returns 'list'. """
                 bbc = bb | (1 << sh) - 1
                 if a[0] > bbc:
                     # a turned out to be greater than b
-                    return false
+                    return False
         while bb == a[0]:
             abits += 1
             sr = self.rndint(3)
@@ -1145,7 +1193,7 @@ Returns 'list'. """
                 # which indicates failure
                 if a[0] < bb:
                     # a turned out to be less than b
-                    return false
+                    return False
         while bb == a[0]:
             abits += 1
             sr = self.rndint(3)
@@ -2373,7 +2421,7 @@ Implements section 5 of Devroye and Gravel,
 Generates 'n' random numbers that follow a continuous
 distribution in an interval [mn, mx].  The distribution's
 PDF (probability density function) must be bounded
-and be continuous almost everywhere
+(have a finite value) and be continuous almost everywhere
 in the interval.  Implements section 4 of Devroye and Gravel,
 "The expected bit complexity of the von Neumann rejection
 algorithm", arXiv:1511.02273v2  [cs.IT], 2016/2018.

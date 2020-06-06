@@ -17,7 +17,7 @@ This page shows Python code for my new sampler.
 <a id=About_the_Beta_Distribution></a>
 ## About the Beta Distribution
 
-The [**beta distribution**](https://en.wikipedia.org/wiki/Beta_distribution) is a bounded probability distribution; its two parameters, `alpha` and `beta`, are both greater than 0 and describe the distribution's shape.  Depending on `alpha` and `beta`, the shape can be a smooth peak or a smooth valley.  The beta distribution can take on values in the interval [0, 1].  Any value in this interval (`x`) can occur with a probability proportional to&mdash;
+The [**beta distribution**](https://en.wikipedia.org/wiki/Beta_distribution) is a bounded-domain probability distribution; its two parameters, `alpha` and `beta`, are both greater than 0 and describe the distribution's shape.  Depending on `alpha` and `beta`, the shape can be a smooth peak or a smooth valley.  The beta distribution can take on values in the interval [0, 1].  Any value in this interval (`x`) can occur with a probability proportional to&mdash;
 
     pow(x, alpha - 1) * pow(1 - x, beta - 1).
 
@@ -117,18 +117,20 @@ The algorithm is as follows:
 3. If `index <= k`:
     1. Generate `LC`, a binomial(`n`, 0.5) random number.
     2. Append a 0 bit to the first `LC` u-rands (starting at `index`) and a 1 bit to the next `n - LC` u-rands.
-    3. Repeat step 3 and these substeps with the same `index` and `n = LC`.
-    4. Repeat step 3 and these substeps with `index = index+LC`, and `n = n - LC`.
+    3. If `LC > 1`, repeat step 3 and these substeps with the same `index` and `n = LC`.
+    4. If `n - LC > 1`, repeat step 3 and these substeps with `index = index+LC`, and `n = n - LC`.
 4. Take the `k`th u-rand (starting at 1) and fill it with uniform random bits as necessary to make a `bitcount`-bit number.  Return that u-rand.
 
 <a id=Known_Issues></a>
 ### Known Issues
 
-The bigger `alpha` or `beta` is, the smaller the area of acceptance becomes (and the more likely random numbers get rejected by this method, raising its run-time).  This is because `max(u^(alpha-1)*(1-u)^(beta-1))`, the peak of the density, approaches 0 as the parameters get bigger.  One idea to solve this issue is to expand the density so that the acceptance rate increases.  This can be done as follows:
+The bigger `alpha` or `beta` is, the smaller the area of acceptance becomes (and the more likely random numbers get rejected by this method, raising its run-time).  This is because `max(u^(alpha-1)*(1-u)^(beta-1))`, the peak of the density, approaches 0 as the parameters get bigger.  One idea to solve this issue is to expand the density so that the acceptance rate increases.  The following was tried:
 
 - Estimate an upper bound for the peak of the density `peak`, given `alpha` and `beta`.
 - Calculate a largest factor `c` such that `peak * c = m < 0.5`.
-- Use Huber's `linear_lowprob` Bernoulli factory (implemented in _bernoulli.py_) <<Huber 2016)<sup>[**(6)**](#Note6)</sup>, taking the values found for `c` and `m`.  Testing shows that the choice of `m` is crucial for performance.
+- Use Huber's `linear_lowprob` Bernoulli factory (implemented in _bernoulli.py_) (Huber 2016)<sup>[**(6)**](#Note6)</sup>, taking the values found for `c` and `m`.  Testing shows that the choice of `m` is crucial for performance.
+
+But doing so apparently worsened the performance (in terms of random bits used) compared to the simple rejection approach.
 
 <a id=Correctness_Testing></a>
 ## Correctness Testing

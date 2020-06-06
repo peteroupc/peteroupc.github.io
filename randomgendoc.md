@@ -521,7 +521,7 @@ CLASSES
      |      Generates 'n' random numbers that follow a continuous
      |      distribution in an interval [mn, mx].  The distribution's
      |      PDF (probability density function) must be bounded
-     |      and be continuous almost everywhere
+     |      (have a finite value) and be continuous almost everywhere
      |      in the interval.  Implements section 4 of Devroye and Gravel,
      |      "The expected bit complexity of the von Neumann rejection
      |      algorithm", arXiv:1511.02273v2  [cs.IT], 2016/2018.
@@ -577,6 +577,9 @@ CLASSES
      |
      |  poisson(self, mean)
      |      Generates a random number following a Poisson distribution.
+     |
+     |  poissonint(self, mx, my)
+     |      Generates a random number following a Poisson distribution with mean mx/my.
      |
      |  powerlognormal(self, p, sigma=1.0)
      |      Power lognormal distribution, as described in NIST/SEMATECH
@@ -1124,6 +1127,10 @@ CLASSES
      |      Exp-minus Bernoulli factory: B(p) -> B(exp(-p)) (Łatuszyński et al. 2011).
      |      - f: Function that returns 1 if heads and 0 if tails.
      |
+     |  exp_minus_flajolet(b, f)
+     |      Exp-minus Bernoulli factory: B(p) -> B(exp(-p)) (Flajolet et al. 2010).
+     |      - f: Function that returns 1 if heads and 0 if tails.
+     |
      |  geometric_bag(self, u)
      |      Bernoulli factory for a uniformly-distributed random number in (0, 1)
      |      (Flajolet et al. 2010).
@@ -1167,6 +1174,12 @@ CLASSES
      |  mean(self, f1, f2)
      |      Mean: B(p), B(q) => B((p+q)/2)  (Flajolet et al. 2010)
      |      - f1, f2: Functions that return 1 if heads and 0 if tails.
+     |
+     |  polylog(self, f, n)
+     |      Polylogarithm Bernoulli factory: B(p) -> B(Li_n(p))  (Flajolet et al. 2010).
+     |      - f: Function that returns 1 if heads and 0 if tails.
+     |      - n: Order of polylogarithm.  Must be an integer and 1 or greater.  The case
+     |         1 results in B(p) -> B(-log(1-p)).
      |
      |  power(self, f, ax, ay=1)
      |      Power Bernoulli factory: B(p) => B(p^(ax/ay)). (case of (0, 1) provided by

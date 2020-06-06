@@ -61,6 +61,7 @@
 <li><code><a href="#FromByte_byte">FromByte(byte)</a></code> - Converts a byte (from 0 to 255) to an arbitrary-precision rational number.</li>
 <li><code><a href="#FromDecimal_decimal">FromDecimal(decimal)</a></code> - Converts a decimal under the Common Language Infrastructure (usually a.</li>
 <li><code><a href="#FromDouble_double">FromDouble(double)</a></code> - Converts a 64-bit floating-point number to a rational number.</li>
+<li><code><a href="#FromDoubleBits_long">FromDoubleBits(long)</a></code> - Creates a binary rational number from a 64-bit floating-point number encoded in the IEEE 754 binary64 format.</li>
 <li><code><a href="#FromEDecimal_PeterO_Numbers_EDecimal">FromEDecimal(PeterO.Numbers.EDecimal)</a></code> - Converts an arbitrary-precision decimal number to a rational number.</li>
 <li><code><a href="#FromEFloat_PeterO_Numbers_EFloat">FromEFloat(PeterO.Numbers.EFloat)</a></code> - Converts an arbitrary-precision binary floating-point number to a rational number.</li>
 <li><code><a href="#FromEInteger_PeterO_Numbers_EInteger">FromEInteger(PeterO.Numbers.EInteger)</a></code> - Converts an arbitrary-precision integer to a rational number.</li>
@@ -71,6 +72,7 @@
 <li><code><a href="#FromInt64_long">FromInt64(long)</a></code> - Converts a 64-bit signed integer to an arbitrary-precision rational number.</li>
 <li><code><a href="#FromSByte_sbyte">FromSByte(sbyte)</a></code> - Converts an 8-bit signed integer to an arbitrary-precision rational number.</li>
 <li><code><a href="#FromSingle_float">FromSingle(float)</a></code> - Converts a 32-bit binary floating-point number to a rational number.</li>
+<li><code><a href="#FromSingleBits_int">FromSingleBits(int)</a></code> - Creates a binary rational number from a 32-bit floating-point number encoded in the IEEE 754 binary32 format.</li>
 <li><code><a href="#FromString_string">FromString(string)</a></code> - Creates a rational number from a text string that represents a number.</li>
 <li><code><a href="#FromString_string_int_int">FromString(string, int, int)</a></code> - Creates a rational number from a text string that represents a number.</li>
 <li><code><a href="#FromUInt16_ushort">FromUInt16(ushort)</a></code> - Converts a 16-bit unsigned integer to an arbitrary-precision rational number.</li>
@@ -138,6 +140,7 @@
 <li><code><a href="#ToByteUnchecked">ToByteUnchecked()</a></code> - Converts this number&#39;s value to an integer (using ToEInteger), and returns the least-significant bits of that integer&#39;s two&#39;s-complement form as a byte (from 0 to 255).</li>
 <li><code><a href="#ToDecimal">ToDecimal()</a></code> - Converts this value to a decimal under the Common Language Infrastructure (usually a.</li>
 <li><code><a href="#ToDouble">ToDouble()</a></code> - Converts this value to a 64-bit floating-point number.</li>
+<li><code><a href="#ToDoubleBits">ToDoubleBits()</a></code> - Converts this value to its closest equivalent as a 64-bit floating-point number, expressed as an integer in the IEEE 754 binary64 format.</li>
 <li><code><a href="#ToEDecimal">ToEDecimal()</a></code> - Converts this rational number to an arbitrary-precision decimal number.</li>
 <li><code><a href="#ToEDecimal_PeterO_Numbers_EContext">ToEDecimal(PeterO.Numbers.EContext)</a></code> - Converts this rational number to an arbitrary-precision decimal number and rounds the result to the given precision.</li>
 <li><code><a href="#ToEDecimalExactIfPossible_PeterO_Numbers_EContext">ToEDecimalExactIfPossible(PeterO.Numbers.EContext)</a></code> - Converts this rational number to an arbitrary-precision decimal number, but if the result would have a nonterminating decimal expansion, rounds that result to the given precision.</li>
@@ -167,6 +170,7 @@
 <li><code><a href="#ToSByteIfExact">ToSByteIfExact()</a></code> - Converts this number&#39;s value to an 8-bit signed integer if it can fit in an 8-bit signed integer without rounding to a different numerical value.</li>
 <li><code><a href="#ToSByteUnchecked">ToSByteUnchecked()</a></code> - Converts this number&#39;s value to an integer by discarding its fractional part, and returns the least-significant bits of its two&#39;s-complement form as an 8-bit signed integer.</li>
 <li><code><a href="#ToSingle">ToSingle()</a></code> - Converts this value to a 32-bit binary floating-point number.</li>
+<li><code><a href="#ToSingleBits">ToSingleBits()</a></code> - Converts this value to its closest equivalent as 32-bit floating-point number, expressed as an integer in the IEEE 754 binary32 format.</li>
 <li><code><a href="#ToSizedEInteger_int">ToSizedEInteger(int)</a></code> - Converts this value to an arbitrary-precision integer by dividing the numerator by the denominator, discarding its fractional part, and checking whether the resulting integer overflows the given signed bit count.</li>
 <li><code><a href="#ToSizedEIntegerIfExact_int">ToSizedEIntegerIfExact(int)</a></code> - Converts this value to an arbitrary-precision integer, only if this number&#39;s value is an exact integer and that integer does not overflow the given signed bit count.</li>
 <li><code><a href="#ToString">ToString()</a></code> - Converts this object to a text string.</li>
@@ -1113,6 +1117,27 @@ is a 64-bit floating-point number.</li>
 <p>A rational number with the same value as  <i>flt</i>
 .</p>
 
+<p><a id="FromDoubleBits_long"></a></p>
+
+<h3>FromDoubleBits</h3>
+
+<pre>public static PeterO.Numbers.ERational FromDoubleBits(
+    long value);
+</pre>
+
+<p>Creates a binary rational number from a 64-bit floating-point number encoded in the IEEE 754 binary64 format. This method computes the exact value of the floating point number, not an approximation, as is often the case by converting the number to a string.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>value</i>: A 64-bit integer encoded in the IEEE 754 binary64 format.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>A rational number with the same floating-point value as  <i>flt</i>
+.</p>
+
 <p><a id="FromEDecimal_PeterO_Numbers_EDecimal"></a></p>
 
 <h3>FromEDecimal</h3>
@@ -1335,6 +1360,27 @@ is a 32-bit binary floating-point number.</li>
 <p><b>Return Value:</b></p>
 
 <p>A rational number with the same value as  <i>flt</i>
+.</p>
+
+<p><a id="FromSingleBits_int"></a></p>
+
+<h3>FromSingleBits</h3>
+
+<pre>public static PeterO.Numbers.ERational FromSingleBits(
+    int value);
+</pre>
+
+<p>Creates a binary rational number from a 32-bit floating-point number encoded in the IEEE 754 binary32 format. This method computes the exact value of the floating point number, not an approximation, as is often the case by converting the number to a string.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>value</i>: A 32-bit integer encoded in the IEEE 754 binary32 format.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>A rational number with the same floating-point value as  <i>flt</i>
 .</p>
 
 <p><a id="FromString_string"></a></p>
@@ -2976,6 +3022,19 @@ This value is infinity or not-a-number, is not an exact integer, or is less than
 
 <p>The closest 64-bit floating-point number to this value. The return value can be positive infinity or negative infinity if this value exceeds the range of a 64-bit floating point number.</p>
 
+<p><a id="ToDoubleBits"></a></p>
+
+<h3>ToDoubleBits</h3>
+
+<pre>public long ToDoubleBits();
+</pre>
+
+<p>Converts this value to its closest equivalent as a 64-bit floating-point number, expressed as an integer in the IEEE 754 binary64 format. The half-even rounding mode is used. If this value is a NaN, sets the high bit of the 64-bit floating point number&#39;s significand area for a quiet NaN, and clears it for a signaling NaN. Then the other bits of the significand area are set to the lowest bits of this object&#39;s unsigned significand, and the next-highest bit of the significand area is set if those bits are all zeros and this is a signaling NaN.</p>
+
+<p><b>Return Value:</b></p>
+
+<p>The closest 64-bit binary floating-point number to this value, expressed as an integer in the IEEE 754 binary64 format. The return value can be positive infinity or negative infinity if this value exceeds the range of a 64-bit floating point number.</p>
+
 <p><a id="ToEDecimal_PeterO_Numbers_EContext"></a></p>
 
 <h3>ToEDecimal</h3>
@@ -3512,6 +3571,19 @@ This value is infinity or not-a-number, is not an exact integer, or is less than
 <p><b>Return Value:</b></p>
 
 <p>The closest 32-bit binary floating-point number to this value. The return value can be positive infinity or negative infinity if this value exceeds the range of a 32-bit floating point number.</p>
+
+<p><a id="ToSingleBits"></a></p>
+
+<h3>ToSingleBits</h3>
+
+<pre>public int ToSingleBits();
+</pre>
+
+<p>Converts this value to its closest equivalent as 32-bit floating-point number, expressed as an integer in the IEEE 754 binary32 format. The half-even rounding mode is used. If this value is a NaN, sets the high bit of the 32-bit floating point number&#39;s significand area for a quiet NaN, and clears it for a signaling NaN. Then the other bits of the significand area are set to the lowest bits of this object&#39;s unsigned significand, and the next-highest bit of the significand area is set if those bits are all zeros and this is a signaling NaN.</p>
+
+<p><b>Return Value:</b></p>
+
+<p>The closest 32-bit binary floating-point number to this value, expressed as an integer in the IEEE 754 binary32 format. The return value can be positive infinity or negative infinity if this value exceeds the range of a 32-bit floating point number.</p>
 
 <p><a id="ToSizedEInteger_int"></a></p>
 

@@ -738,7 +738,7 @@ The following method generates a random `n`-vertex graph that follows the model 
         return graph
     END METHOD
 
-Other kinds of graphs are possible, including _Erdős&ndash;Rényi graphs_ (choose _n_ random edges without replacement), Chung&ndash;Lu graphs, preferential attachment graphs, and more.  Penschuck et al. (2020)<sup>[**(20)**](#Note20)</sup> give a survey of random graph generation techniques.
+Other kinds of graphs are possible, including _Erdős&ndash;Rényi graphs_ (choose _n_ random edges without replacement), Chung&ndash;Lu graphs, preferential attachment graphs, and more.  For example, a _mesh graph_ is a graph in the form of a rectangular mesh, where vertices are the corners and edges are the sides of the mesh's rectangles.  A random _maze_ is a random spanning tree of a mesh graph.  Penschuck et al. (2020)<sup>[**(20)**](#Note20)</sup> give a survey of random graph generation techniques.
 
 <a id=A_Note_on_Sorting_Random_Numbers></a>
 ### A Note on Sorting Random Numbers
@@ -1166,16 +1166,17 @@ The following method generates a Poisson random number with mean `mx`/`my`, usin
         if my == 0: return error
         if mx == 0: return 0
         if (mx < 0 and my < 0) or (mx > 0 and my < 0): return 0
-        if mx >= my
+        if mx==my: return PoissonInt(1,2)+PoissonInt(1,2)
+        if mx > my
            // Mean is 1 or greater
            mm=mod(mx, my)
            if mm == 0
               mf=floor(mx/my)
-              if mod(mf, 2)==0: return
-                 PoissonInt(mf/2, 1)+PoissonInt(mf/2, 1)
-              mf=mf-1
-              return PoissonInt(1,2)+PoissonInt(1,2)+
-                  PoissonInt(mf/2, 1)+PoissonInt(mf/2, 1)
+              ret=0
+              if mod(mf, 2)==0: ret=ret+PoissonInt(1, 1)
+              if mod(mf, 2)==0: mf=mf-1
+              ret=ret+PoissonInt(mf/2, 1)+PoissonInt(mf/2, 1)
+              return ret
            else: return PoissonInt(mm, my)+
                PoissonInt(mx-mm, my)
         end
@@ -1956,7 +1957,7 @@ Miscellaneous:
 - **Landau distribution**: See stable distribution.
 - **L&eacute;vy distribution**&dagger;: `0.5 / GammaDist(0.5, 1)`.  The scale parameter (`sigma`) is also called dispersion.
 - **Logarithmic logistic distribution**: See beta prime distribution.
-- **Logarithmic series distribution**: Generate `n = NegativeBinomialInt(1, py - px, py)+1` (where `px`/`py` is a parameter in (0,1)), then return `n` if `ZeroOrOne(1, n) == 1`, or repeat this process otherwise (Flajolet et al., 2010)<sup>[**(9)**](#Note9)</sup>.  If the application can trade accuracy for speed, the following can be used instead: `floor(1.0 - Expo(log1p(-pow(1.0 - p, RNDU01ZeroOneExc()))))`, where `param` is the parameter in (0, 1); see (Devroye 1986)<sup>[**(13)**](#Note13)</sup>.
+- **Logarithmic series distribution**: Generate `n = NegativeBinomialInt(1, py - px, py)+1` (where `px`/`py` is a parameter in (0,1)), then return `n` if `ZeroOrOne(1, n) == 1`, or repeat this process otherwise (Flajolet et al., 2010)<sup>[**(9)**](#Note9)</sup>.  If the application can trade accuracy for speed, the following can be used instead: `floor(1.0 - Expo(log1p(-pow(1.0 - p, RNDU01ZeroOneExc()))))`, where `p` is the parameter in (0, 1); see (Devroye 1986)<sup>[**(13)**](#Note13)</sup>.
 - **Logistic distribution**&dagger;: `(ln(x)-log1p(-x))` ([**_logit function_**](http://timvieira.github.io/blog/post/2016/07/04/fast-sigmoid-sampling/)), where `x` is `RNDU01ZeroOneExc()`.
 - **Log-multinormal distribution**: See [**Multivariate Normal (Multinormal) Distribution**](#Multivariate_Normal_Multinormal_Distribution).
 - **Max-of-uniform distribution**: `BetaDist(n, 1)`.  Returns a number that simulates the largest out of `n` uniform random numbers.  See also (Devroye 1986, p. 675)<sup>[**(13)**](#Note13)</sup>.

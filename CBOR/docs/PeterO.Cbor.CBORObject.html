@@ -257,6 +257,7 @@
 <li><code><a href="#Write_ulong_System_IO_Stream">Write(ulong, System.IO.Stream)</a></code> - Writes a 64-bit unsigned integer in CBOR format to a data stream.</li>
 <li><code><a href="#Write_ushort_System_IO_Stream">Write(ushort, System.IO.Stream)</a></code> - Writes a 16-bit unsigned integer in CBOR format to a data stream.</li>
 <li><code><a href="#WriteFloatingPointBits_System_IO_Stream_long_int">WriteFloatingPointBits(System.IO.Stream, long, int)</a></code> - Writes the bits of a floating-point number in CBOR format to a data stream.</li>
+<li><code><a href="#WriteFloatingPointBits_System_IO_Stream_long_int_bool">WriteFloatingPointBits(System.IO.Stream, long, int, bool)</a></code> - Writes the bits of a floating-point number in CBOR format to a data stream.</li>
 <li><code><a href="#WriteFloatingPointValue_System_IO_Stream_double_int">WriteFloatingPointValue(System.IO.Stream, double, int)</a></code> - Writes a 64-bit binary floating-point number in CBOR format to a data stream, either in its 64-bit form, or its rounded 32-bit or 16-bit equivalent.</li>
 <li><code><a href="#WriteFloatingPointValue_System_IO_Stream_float_int">WriteFloatingPointValue(System.IO.Stream, float, int)</a></code> - Writes a 32-bit binary floating-point number in CBOR format to a data stream, either in its 64- or 32-bit form, or its rounded 16-bit equivalent.</li>
 <li><code><a href="#WriteJSON_object_System_IO_Stream">WriteJSON(object, System.IO.Stream)</a></code> - Converts an arbitrary object to a text string in JavaScript Object Notation (JSON) format, as in the ToJSONString method, and writes that string to a data stream in UTF-8.</li>
@@ -5543,7 +5544,44 @@ is null.</li>
 <ul>
 <li><p><i>outputStream</i>: A writable data stream.</p></li>
 <li><p><i>floatingBits</i>: The bits of a floating-point number number to write.</p></li>
+<li><p><i>byteCount</i>: The number of bytes of the stored floating-point number; this also specifies the format of the &quot;floatingBits&quot; parameter. This value can be 2 if &quot;floatingBits&quot;&#39;s lowest (least significant) 16 bits identify the floating-point number in IEEE 754r binary16 format; or 4 if &quot;floatingBits&quot;&#39;s lowest (least significant) 32 bits identify the floating-point number in IEEE 754r binary32 format; or 8 if &quot;floatingBits&quot; identifies the floating point number in IEEE 754r binary64 format. Any other values for this parameter are invalid. This method will write one plus this many bytes to the data stream.</p></li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>The number of 8-bit bytes ordered to be written to the data stream.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li><p>System.ArgumentException:
+The parameter  <i>byteCount</i>
+is other than 2, 4, or 8.</p></li>
+<li><p>System.ArgumentNullException:
+The parameter  <i>outputStream</i>
+is null.</p></li>
+</ul>
+
+<p><a id="WriteFloatingPointBits_System_IO_Stream_long_int_bool"></a></p>
+
+<h3>WriteFloatingPointBits</h3>
+
+<pre>public static int WriteFloatingPointBits(
+    System.IO.Stream outputStream,
+    long floatingBits,
+    int byteCount,
+    bool shortestForm);
+</pre>
+
+<p>Writes the bits of a floating-point number in CBOR format to a data stream.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>outputStream</i>: A writable data stream.</p></li>
+<li><p><i>floatingBits</i>: The bits of a floating-point number number to write.</p></li>
 <li><p><i>byteCount</i>: The number of bytes of the stored floating-point number; this also specifies the format of the &quot;floatingBits&quot; parameter. This value can be 2 if &quot;floatingBits&quot;&#39;s lowest (least significant) 16 bits identify the floating-point number in IEEE 754r binary16 format; or 4 if &quot;floatingBits&quot;&#39;s lowest (least significant) 32 bits identify the floating-point number in IEEE 754r binary32 format; or 8 if &quot;floatingBits&quot; identifies the floating point number in IEEE 754r binary64 format. Any other values for this parameter are invalid.</p></li>
+<li><p><i>shortestForm</i>: If true, writes the shortest form of the floating-point number that preserves its value. If false, this method will write the number in the form given by &#39;floatingBits&#39; by writing one plus the number of bytes given by &#39;byteCount&#39; to the data stream.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>

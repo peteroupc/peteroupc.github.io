@@ -232,6 +232,10 @@
 <li><code><a href="#FromSByte_sbyte">FromSByte(sbyte)</a></code> - Converts an 8-bit signed integer to an arbitrary-precision decimal number.</li>
 <li><code><a href="#FromSingle_float">FromSingle(float)</a></code> - Creates an arbitrary-precision decimal number from a 32-bit binary floating-point number.</li>
 <li><code><a href="#FromSingleBits_int">FromSingleBits(int)</a></code> - Creates an arbitrary-precision decimal number from a 32-bit binary floating-point number encoded in the IEEE 754 binary32 format.</li>
+<li><code><a href="#FromString_char">FromString(char[])</a></code> - Creates an arbitrary-precision decimal number from a sequence of chars that represents a number.</li>
+<li><code><a href="#FromString_char_int_int">FromString(char[], int, int)</a></code> - Creates an arbitrary-precision decimal number from a sequence of chars that represents a number.</li>
+<li><code><a href="#FromString_char_int_int_PeterO_Numbers_EContext">FromString(char[], int, int, PeterO.Numbers.EContext)</a></code> - Creates an arbitrary-precision decimal number from a sequence of chars that represents a number.</li>
+<li><code><a href="#FromString_char_PeterO_Numbers_EContext">FromString(char[], PeterO.Numbers.EContext)</a></code> - Creates an arbitrary-precision decimal number from a sequence of chars that represents a number.</li>
 <li><code><a href="#FromString_string">FromString(string)</a></code> - Creates an arbitrary-precision decimal number from a text string that represents a number.</li>
 <li><code><a href="#FromString_string_int_int">FromString(string, int, int)</a></code> - Creates an arbitrary-precision decimal number from a text string that represents a number.</li>
 <li><code><a href="#FromString_string_int_int_PeterO_Numbers_EContext">FromString(string, int, int, PeterO.Numbers.EContext)</a></code> - Creates an arbitrary-precision decimal number from a text string that represents a number.</li>
@@ -2127,6 +2131,170 @@ is a 32-bit binary floating-point number encoded in the IEEE 754 binary32 format
 
 <p>An arbitrary-precision decimal number with the same value as  <i>value</i>
 .</p>
+
+<p><a id="FromString_char"></a></p>
+
+<h3>FromString</h3>
+
+<pre>public static PeterO.Numbers.EDecimal FromString(
+    char[] chars);
+</pre>
+
+<p>Creates an arbitrary-precision decimal number from a sequence of  <code>char</code> s that represents a number. See  <code>FromString(String, int,
+            int, EContext)</code>  for more information. Note that calling the overload that takes an EContext is often much faster than creating the EDecimal then calling  <code>RoundToPrecision</code>  on that EDecimal, especially if the context specifies a precision limit and exponent range.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>chars</i>: A sequence that represents a number.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>An arbitrary-precision decimal number with the same value as the given sequence of  <code>char</code> s.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.FormatException:
+The parameter  <i>chars</i>
+is not a correctly formatted number sequence.</li>
+</ul>
+
+<p><a id="FromString_char_int_int"></a></p>
+
+<h3>FromString</h3>
+
+<pre>public static PeterO.Numbers.EDecimal FromString(
+    char[] chars,
+    int offset,
+    int length);
+</pre>
+
+<p>Creates an arbitrary-precision decimal number from a sequence of  <code>char</code> s that represents a number. See  <code>FromString(String, int,
+            int, EContext)</code>  for more information. Note that calling the overload that takes an EContext is often much faster than creating the EDecimal then calling  <code>RoundToPrecision</code>  on that EDecimal, especially if the context specifies a precision limit and exponent range.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>chars</i>: A sequence that represents a number.</p></li>
+<li><p><i>offset</i>: An index starting at 0 showing where the desired portion of  <i>chars</i>
+begins.</p></li>
+<li><p><i>length</i>: The length, in code units, of the desired portion of  <i>chars</i>
+(but not more than  <i>chars</i>
+&#39;s length).</p></li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>An arbitrary-precision decimal number with the same value as the given sequence of  <code>char</code> s.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li><p>System.FormatException:
+The parameter  <i>chars</i>
+is not a correctly formatted number sequence.</p></li>
+<li><p>System.ArgumentNullException:
+The parameter  <i>chars</i>
+is null.</p></li>
+<li><p>System.ArgumentException:
+Either  <i>offset</i>
+or  <i>length</i>
+is less than 0 or greater than  <i>chars</i>
+&#39;s length, or  <i>chars</i>
+&#39;s length minus  <i>offset</i>
+is less than  <i>length</i>
+.</p></li>
+</ul>
+
+<p><a id="FromString_char_int_int_PeterO_Numbers_EContext"></a></p>
+
+<h3>FromString</h3>
+
+<pre>public static PeterO.Numbers.EDecimal FromString(
+    char[] chars,
+    int offset,
+    int length,
+    PeterO.Numbers.EContext ctx);
+</pre>
+
+<p>Creates an arbitrary-precision decimal number from a sequence of  <code>char</code> s that represents a number.</p>
+
+<p>The format of the sequence generally consists of:</p>
+
+<ul>
+<li><p>An optional plus sign (&quot;+&quot; , U+002B) or minus sign (&quot;-&quot;, U+002D) (if the minus sign, the value is negative.)</p></li>
+<li><p>One or more digits, with a single optional decimal point (&quot;.&quot;, U+002E) before or after those digits or between two of them. These digits may begin with any number of zeros.</p></li>
+<li><p>Optionally, &quot;E&quot;/&quot;e&quot; followed by an optional (positive exponent) or &quot;-&quot; (negative exponent) and followed by one or more digits specifying the exponent (these digits may begin with any number of zeros).</p></li>
+</ul>
+
+<p>The sequence can also be &quot;-INF&quot;, &quot;-Infinity&quot;, &quot;Infinity&quot;, &quot;INF&quot;, quiet NaN (&quot;NaN&quot; /&quot;-NaN&quot;) followed by any number of digits (these digits may begin with any number of zeros), or signaling NaN (&quot;sNaN&quot; /&quot;-sNaN&quot;) followed by any number of digits (these digits may begin with any number of zeros), all where the letters can be any combination of basic upper-case and/or basic lower-case letters.</p>
+
+<p>All characters mentioned above are the corresponding characters in the Basic Latin range. In particular, the digits must be the basic digits 0 to 9 (U+0030 to U+0039). The sequence is not allowed to contain white space characters, including spaces.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>chars</i>: A sequence of  <code>char</code> s, a portion of which represents a number.</p></li>
+<li><p><i>offset</i>: An index starting at 0 showing where the desired portion of  <i>chars</i>
+begins.</p></li>
+<li><p><i>length</i>: The length, in code units, of the desired portion of  <i>chars</i>
+(but not more than  <i>chars</i>
+&#39;s length).</p></li>
+<li><p><i>ctx</i>: An arithmetic context to control the precision, rounding, and exponent range of the result. If  <code>HasFlags</code>  of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null, in which case the precision is unlimited and rounding isn&#39;t needed. Note that providing a context is often much faster than creating the EDecimal without a context then calling  <code>RoundToPrecision</code>  on that EDecimal, especially if the context specifies a precision limit and exponent range.</p></li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>An arbitrary-precision decimal number with the same value as the given sequence of  <code>char</code> s.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li><p>System.ArgumentNullException:
+The parameter  <i>chars</i>
+is null.</p></li>
+<li><p>System.ArgumentException:
+Either  <i>offset</i>
+or  <i>length</i>
+is less than 0 or greater than  <i>chars</i>
+&#39;s length, or  <i>chars</i>
+&#39;s length minus  <i>offset</i>
+is less than  <i>length</i>
+.</p></li>
+</ul>
+
+<p><a id="FromString_char_PeterO_Numbers_EContext"></a></p>
+
+<h3>FromString</h3>
+
+<pre>public static PeterO.Numbers.EDecimal FromString(
+    char[] chars,
+    PeterO.Numbers.EContext ctx);
+</pre>
+
+<p>Creates an arbitrary-precision decimal number from a sequence of  <code>char</code> s that represents a number. See  <code>FromString(String, int,
+            int, EContext)</code>  for more information.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>chars</i>: A sequence of  <code>char</code> s that represents a number.</p></li>
+<li><p><i>ctx</i>: An arithmetic context to control the precision, rounding, and exponent range of the result. If  <code>HasFlags</code>  of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null, in which case the precision is unlimited and rounding isn&#39;t needed. Note that providing a context is often much faster than creating the EDecimal without a context then calling  <code>RoundToPrecision</code>  on that EDecimal, especially if the context specifies a precision limit and exponent range.</p></li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>An arbitrary-precision decimal number with the same value as the given sequence of  <code>char</code> s.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter  <i>chars</i>
+is null.</li>
+</ul>
 
 <p><a id="FromString_string"></a></p>
 

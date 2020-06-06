@@ -932,7 +932,7 @@ END METHOD
 END METHOD
 </pre>
 
-<p>Other kinds of graphs are possible, including <em>Erdős&ndash;Rényi graphs</em> (choose <em>n</em> random edges without replacement), Chung&ndash;Lu graphs, preferential attachment graphs, and more.  Penschuck et al. (2020)<sup><a href="#Note20"><strong>(20)</strong></a></sup> give a survey of random graph generation techniques.</p>
+<p>Other kinds of graphs are possible, including <em>Erdős&ndash;Rényi graphs</em> (choose <em>n</em> random edges without replacement), Chung&ndash;Lu graphs, preferential attachment graphs, and more.  For example, a <em>mesh graph</em> is a graph in the form of a rectangular mesh, where vertices are the corners and edges are the sides of the mesh&#39;s rectangles.  A random <em>maze</em> is a random spanning tree of a mesh graph.  Penschuck et al. (2020)<sup><a href="#Note20"><strong>(20)</strong></a></sup> give a survey of random graph generation techniques.</p>
 
 <p><a id=A_Note_on_Sorting_Random_Numbers></a></p>
 
@@ -1425,16 +1425,17 @@ END METHOD
     if my == 0: return error
     if mx == 0: return 0
     if (mx &lt; 0 and my &lt; 0) or (mx &gt; 0 and my &lt; 0): return 0
-    if mx &gt;= my
+    if mx==my: return PoissonInt(1,2)+PoissonInt(1,2)
+    if mx &gt; my
        // Mean is 1 or greater
        mm=mod(mx, my)
        if mm == 0
           mf=floor(mx/my)
-          if mod(mf, 2)==0: return
-             PoissonInt(mf/2, 1)+PoissonInt(mf/2, 1)
-          mf=mf-1
-          return PoissonInt(1,2)+PoissonInt(1,2)+
-              PoissonInt(mf/2, 1)+PoissonInt(mf/2, 1)
+          ret=0
+          if mod(mf, 2)==0: ret=ret+PoissonInt(1, 1)
+          if mod(mf, 2)==0: mf=mf-1
+          ret=ret+PoissonInt(mf/2, 1)+PoissonInt(mf/2, 1)
+          return ret
        else: return PoissonInt(mm, my)+
            PoissonInt(mx-mm, my)
     end
@@ -2353,7 +2354,7 @@ the two parameters of the beta distribution, and <code>trials</code> is a parame
 <li><strong>Landau distribution</strong>: See stable distribution.</li>
 <li><strong>L&eacute;vy distribution</strong>&dagger;: <code>0.5 / GammaDist(0.5, 1)</code>.  The scale parameter (<code>sigma</code>) is also called dispersion.</li>
 <li><strong>Logarithmic logistic distribution</strong>: See beta prime distribution.</li>
-<li><strong>Logarithmic series distribution</strong>: Generate <code>n = NegativeBinomialInt(1, py - px, py)+1</code> (where <code>px</code>/<code>py</code> is a parameter in (0,1)), then return <code>n</code> if <code>ZeroOrOne(1, n) == 1</code>, or repeat this process otherwise (Flajolet et al., 2010)<sup><a href="#Note9"><strong>(9)</strong></a></sup>.  If the application can trade accuracy for speed, the following can be used instead: <code>floor(1.0 - Expo(log1p(-pow(1.0 - p, RNDU01ZeroOneExc()))))</code>, where <code>param</code> is the parameter in (0, 1); see (Devroye 1986)<sup><a href="#Note13"><strong>(13)</strong></a></sup>.</li>
+<li><strong>Logarithmic series distribution</strong>: Generate <code>n = NegativeBinomialInt(1, py - px, py)+1</code> (where <code>px</code>/<code>py</code> is a parameter in (0,1)), then return <code>n</code> if <code>ZeroOrOne(1, n) == 1</code>, or repeat this process otherwise (Flajolet et al., 2010)<sup><a href="#Note9"><strong>(9)</strong></a></sup>.  If the application can trade accuracy for speed, the following can be used instead: <code>floor(1.0 - Expo(log1p(-pow(1.0 - p, RNDU01ZeroOneExc()))))</code>, where <code>p</code> is the parameter in (0, 1); see (Devroye 1986)<sup><a href="#Note13"><strong>(13)</strong></a></sup>.</li>
 <li><strong>Logistic distribution</strong>&dagger;: <code>(ln(x)-log1p(-x))</code> (<a href="http://timvieira.github.io/blog/post/2016/07/04/fast-sigmoid-sampling/"><strong><em>logit function</em></strong></a>), where <code>x</code> is <code>RNDU01ZeroOneExc()</code>.</li>
 <li><strong>Log-multinormal distribution</strong>: See <a href="#Multivariate_Normal_Multinormal_Distribution"><strong>Multivariate Normal (Multinormal) Distribution</strong></a>.</li>
 <li><strong>Max-of-uniform distribution</strong>: <code>BetaDist(n, 1)</code>.  Returns a number that simulates the largest out of <code>n</code> uniform random numbers.  See also (Devroye 1986, p. 675)<sup><a href="#Note13"><strong>(13)</strong></a></sup>.</li>

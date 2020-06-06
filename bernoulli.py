@@ -130,6 +130,89 @@ class Bernoulli:
         self.rbit += 1
         return ret
 
+    def _urandnew(self):
+        return [0, 0]
+
+    def _urandless(self, a, b):
+        abits = a[1]
+        if abits == 0:
+            abits = 1
+            tmp = self.rndintexc(1 << (abits + 1))
+            a[0] = tmp & 1
+            bb = tmp >> 1
+        else:
+            bb = 0
+            # Set bits of b from most to least
+            # significant bit
+            for i in range(abits):
+                sh = abits - 1 - i
+                bb |= self.rndintexc(2) << sh
+                # Bits not yet determined are set to ones,
+                # since we're checking if a is greater
+                # than the highest possible value for b,
+                # which indicates failure
+                bbc = bb | (1 << sh) - 1
+                if a[0] > bbc:
+                    # a turned out to be greater than b
+                    return False
+        while bb == a[0]:
+            abits += 1
+            sr = self.rndint(3)
+            bb = (bb << 1) | (sr & 1)
+            a[0] = (a[0] << 1) | ((sr >> 1) & 1)
+        a[1] = abits
+        b[0] = bb
+        b[1] = abits
+        return a[0] < b[0]
+
+    def _gamma_g(self, f):
+        """ Gamma-G generator (Flajolet et al. 2010).  Returns the number of successes
+             before failure. """
+        i = 0
+        while True:
+            if f() == 0:
+                return i
+            i += 1
+
+    def polylog(self, f, n):
+        """ Polylogarithm Bernoulli factory: B(p) -> B(Li_n(p))  (Flajolet et al. 2010).
+        - f: Function that returns 1 if heads and 0 if tails.
+        - n: Order of polylogarithm.  Must be an integer and 1 or greater.  The case
+           1 results in B(p) -> B(-log(1-p)).
+        """
+        if n <= 0:
+            raise ValueError
+        v = self._gamma_g(f) + 1
+        if v > 1:
+            for i in range(n):
+                if self.zero_or_one(1, v) == 0:
+                    return 0
+        return 1
+
+    def exp_minus_flajolet(b, f):
+        """
+        Exp-minus Bernoulli factory: B(p) -> B(exp(-p)) (Flajolet et al. 2010).
+        - f: Function that returns 1 if heads and 0 if tails.
+        """
+        while True:
+            n = self._gamma_g(f)
+            if n == 0:
+                return 1
+            if n == 1:
+                return 0
+            u = self._urandnew()
+            success = True
+            i = 1
+            while i < n and success:
+                u2 = self._urandnew()
+                if self._urandless(u, u2):
+                    u = u2
+                else:
+                    success = False  # Not sorted
+                i = i + 1
+            if success:
+                return 0
+
     def geometric_bag(self, u):
         """ Bernoulli factory for a uniformly-distributed random number in (0, 1)
          (Flajolet et al. 2010).
