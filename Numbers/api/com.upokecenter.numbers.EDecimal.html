@@ -477,6 +477,24 @@ floating-point number.</li>
 <li><code>static EDecimal FromSingleBits​(int value)</code><br>
 Creates an arbitrary-precision decimal number from a 32-bit binary
 floating-point number encoded in the IEEE 754 binary32 format.</li>
+<li><code>static EDecimal FromString​(byte[] bytes)</code><br>
+Creates an arbitrary-precision decimal number from a sequence of bytes
+(interpreted as text) that represents a number.</li>
+<li><code>static EDecimal FromString​(byte[] bytes,
+      int offset,
+      int length)</code><br>
+Creates an arbitrary-precision decimal number from a sequence of bytes
+(interpreted as text) that represents a number.</li>
+<li><code>static EDecimal FromString​(byte[] bytes,
+      int offset,
+      int length,
+      EContext ctx)</code><br>
+Creates an arbitrary-precision decimal number from a sequence of bytes
+(interpreted as text) that represents a number.</li>
+<li><code>static EDecimal FromString​(byte[] bytes,
+      EContext ctx)</code><br>
+Creates an arbitrary-precision decimal number from a sequence of bytes
+(interpreted as text) that represents a number.</li>
 <li><code>static EDecimal FromString​(char[] chars) char</code><br>
 Creates an arbitrary-precision decimal number from a sequence of char
 s that represents a number.</li>
@@ -1721,6 +1739,183 @@ given sequence of <code>char</code> s.</li>
 <li><p><code>java.lang.NullPointerException</code> - The parameter <code>chars</code> is null.</p></li>
 <li><p><code>java.lang.IllegalArgumentException</code> - Either <code>offset</code> or <code>length</code> is less
 than 0 or greater than <code>chars</code> &#39;s length, or <code>chars</code> &#39;s
+length minus <code>offset</code> is less than <code>length</code>.</p></li>
+</ul>
+
+<h3>FromString</h3>
+
+<pre>public static EDecimal FromString​(byte[] bytes)
+</pre>
+
+<p>Creates an arbitrary-precision decimal number from a sequence of bytes
+ (interpreted as text) that represents a number. See
+ <code>FromString(string, int, int, EContext)</code> for more information.
+ Note that calling the overload that takes an EContext is often much
+ faster than creating the EDecimal then calling
+ <code>RoundToPrecision</code> on that EDecimal, especially if the context
+ specifies a precision limit and exponent range.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>bytes</code> - A sequence that represents a number.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An arbitrary-precision decimal number with the same value as the
+given sequence of bytes (interpreted as text).</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>java.lang.NumberFormatException</code> - The parameter <code>bytes</code> is not a correctly
+formatted number sequence.</li>
+</ul>
+
+<h3>FromString</h3>
+
+<pre>public static EDecimal FromString​(byte[] bytes, EContext ctx)
+</pre>
+
+<p>Creates an arbitrary-precision decimal number from a sequence of bytes
+ (interpreted as text) that represents a number. See
+ <code>FromString(string, int, int, EContext)</code> for more information.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>bytes</code> - A sequence of bytes (interpreted as text) that represents a
+number.</p></li>
+<li><p><code>ctx</code> - An arithmetic context to control the precision, rounding, and
+exponent range of the result. If <code>HasFlags</code> of the context is
+true, will also store the flags resulting from the operation (the
+flags are in addition to the pre-existing flags). Can be null, in
+which case the precision is unlimited and rounding isn&#39;t needed.
+Note that providing a context is often much faster than creating the
+EDecimal without a context then calling <code>RoundToPrecision</code> on
+that EDecimal, especially if the context specifies a precision limit
+and exponent range.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An arbitrary-precision decimal number with the same value as the
+given sequence of bytes (interpreted as text).</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>java.lang.NullPointerException</code> - The parameter <code>bytes</code> is null.</li>
+</ul>
+
+<h3>FromString</h3>
+
+<pre>public static EDecimal FromString​(byte[] bytes, int offset, int length)
+</pre>
+
+<p>Creates an arbitrary-precision decimal number from a sequence of bytes
+ (interpreted as text) that represents a number. See
+ <code>FromString(string, int, int, EContext)</code> for more information.
+ Note that calling the overload that takes an EContext is often much
+ faster than creating the EDecimal then calling
+ <code>RoundToPrecision</code> on that EDecimal, especially if the context
+ specifies a precision limit and exponent range.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>bytes</code> - A sequence that represents a number.</p></li>
+<li><p><code>offset</code> - An index starting at 0 showing where the desired portion of
+<code>bytes</code> begins.</p></li>
+<li><p><code>length</code> - The length, in code units, of the desired portion of <code>
+bytes</code> (but not more than <code>bytes</code> &#39;s length).</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An arbitrary-precision decimal number with the same value as the
+given sequence of bytes (interpreted as text).</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>java.lang.NumberFormatException</code> - The parameter <code>bytes</code> is not a correctly
+formatted number sequence.</p></li>
+<li><p><code>java.lang.NullPointerException</code> - The parameter <code>bytes</code> is null.</p></li>
+<li><p><code>java.lang.IllegalArgumentException</code> - Either <code>offset</code> or <code>length</code> is less
+than 0 or greater than <code>bytes</code> &#39;s length, or <code>bytes</code> &#39;s
+length minus <code>offset</code> is less than <code>length</code>.</p></li>
+</ul>
+
+<h3>FromString</h3>
+
+<pre>public static EDecimal FromString​(byte[] bytes, int offset, int length, EContext ctx)
+</pre>
+
+<p>Creates an arbitrary-precision decimal number from a sequence of bytes
+ (interpreted as text) that represents a number. Each byte in the
+ sequence has to be a code point in the Basic Latin range (0x00 to
+ 0x7f or U+0000 to U+007F) of the Unicode Standard.</p> <p>The format
+ of the sequence generally consists of:</p> <ul> <li>An optional plus
+  sign ("+" , U+002B) or minus sign ("-", U+002D) (if the minus sign,
+ the value is negative.)</li> <li>One or more digits, with a single
+  optional decimal point (".", U+002E) before or after those digits or
+ between two of them. These digits may begin with any number of
+  zeros.</li> <li>Optionally, "E"/"e" followed by an optional
+  (positive exponent) or "-" (negative exponent) and followed by one
+ or more digits specifying the exponent (these digits may begin with
+  any number of zeros).</li></ul> <p>The sequence can also be "-INF",
+  "-Infinity", "Infinity", "INF", quiet NaN ("NaN" /"-NaN") followed
+ by any number of digits (these digits may begin with any number of
+  zeros), or signaling NaN ("sNaN" /"-sNaN") followed by any number of
+ digits (these digits may begin with any number of zeros), all where
+ the letters can be any combination of basic upper-case and/or basic
+ lower-case letters.</p> <p>All characters mentioned above are the
+ corresponding characters in the Basic Latin range. In particular,
+ the digits must be the basic digits 0 to 9 (U+0030 to U+0039). The
+ sequence is not allowed to contain white space characters, including
+ spaces.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>bytes</code> - A sequence of bytes (interpreted as text), a portion of which
+represents a number.</p></li>
+<li><p><code>offset</code> - An index starting at 0 showing where the desired portion of
+<code>bytes</code> begins.</p></li>
+<li><p><code>length</code> - The length, in code units, of the desired portion of <code>
+bytes</code> (but not more than <code>bytes</code> &#39;s length).</p></li>
+<li><p><code>ctx</code> - An arithmetic context to control the precision, rounding, and
+exponent range of the result. If <code>HasFlags</code> of the context is
+true, will also store the flags resulting from the operation (the
+flags are in addition to the pre-existing flags). Can be null, in
+which case the precision is unlimited and rounding isn&#39;t needed.
+Note that providing a context is often much faster than creating the
+EDecimal without a context then calling <code>RoundToPrecision</code> on
+that EDecimal, especially if the context specifies a precision limit
+and exponent range.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An arbitrary-precision decimal number with the same value as the
+given sequence of bytes (interpreted as text).</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>java.lang.NullPointerException</code> - The parameter <code>bytes</code> is null.</p></li>
+<li><p><code>java.lang.IllegalArgumentException</code> - Either <code>offset</code> or <code>length</code> is less
+than 0 or greater than <code>bytes</code> &#39;s length, or <code>bytes</code> &#39;s
 length minus <code>offset</code> is less than <code>length</code>.</p></li>
 </ul>
 

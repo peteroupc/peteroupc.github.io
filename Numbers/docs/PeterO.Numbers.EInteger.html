@@ -69,13 +69,17 @@
 <li><code><a href="#FromInt16_short">FromInt16(short)</a></code> - Converts a 16-bit signed integer to an arbitrary-precision integer.</li>
 <li><code><a href="#FromInt32_int">FromInt32(int)</a></code> - Converts a 32-bit signed integer to an arbitrary-precision integer.</li>
 <li><code><a href="#FromInt64_long">FromInt64(long)</a></code> - Converts a 64-bit signed integer to an arbitrary-precision integer.</li>
+<li><code><a href="#FromRadixString_byte_int">FromRadixString(byte[], int)</a></code> - Converts a sequence of bytes (interpreted as text) to an arbitrary-precision integer in a given radix.</li>
 <li><code><a href="#FromRadixString_char_int">FromRadixString(char[], int)</a></code> - Converts a sequence of char s to an arbitrary-precision integer in a given radix.</li>
 <li><code><a href="#FromRadixString_string_int">FromRadixString(string, int)</a></code> - Converts a string to an arbitrary-precision integer in a given radix.</li>
+<li><code><a href="#FromRadixSubstring_byte_int_int_int">FromRadixSubstring(byte[], int, int, int)</a></code> - Converts a portion of a sequence of bytes (interpreted as text) to an arbitrary-precision integer in a given radix.</li>
 <li><code><a href="#FromRadixSubstring_char_int_int_int">FromRadixSubstring(char[], int, int, int)</a></code> - Converts a portion of a sequence of char s to an arbitrary-precision integer in a given radix.</li>
 <li><code><a href="#FromRadixSubstring_string_int_int_int">FromRadixSubstring(string, int, int, int)</a></code> - Converts a portion of a string to an arbitrary-precision integer in a given radix.</li>
 <li><code><a href="#FromSByte_sbyte">FromSByte(sbyte)</a></code> - Converts an 8-bit signed integer to an arbitrary-precision integer.</li>
+<li><code><a href="#FromString_byte">FromString(byte[])</a></code> - Converts a sequence of bytes (interpreted as text) to an arbitrary-precision integer.</li>
 <li><code><a href="#FromString_char">FromString(char[])</a></code> - Converts a sequence of char s to an arbitrary-precision integer.</li>
 <li><code><a href="#FromString_string">FromString(string)</a></code> - Converts a string to an arbitrary-precision integer.</li>
+<li><code><a href="#FromSubstring_byte_int_int">FromSubstring(byte[], int, int)</a></code> - Converts a portion of a sequence of bytes (interpreted as text) to an arbitrary-precision integer.</li>
 <li><code><a href="#FromSubstring_char_int_int">FromSubstring(char[], int, int)</a></code> - Converts a portion of a sequence of char s to an arbitrary-precision integer.</li>
 <li><code><a href="#FromSubstring_string_int_int">FromSubstring(string, int, int)</a></code> - Converts a portion of a string to an arbitrary-precision integer.</li>
 <li><code><a href="#FromUInt16_ushort">FromUInt16(ushort)</a></code> - Converts a 16-bit unsigned integer to an arbitrary-precision integer.</li>
@@ -1044,6 +1048,38 @@ is a 64-bit signed integer.</li>
 
 <p>An arbitrary-precision integer with the same value as the 64-bit number.</p>
 
+<p><a id="FromRadixString_byte_int"></a></p>
+
+<h3>FromRadixString</h3>
+
+<pre>public static PeterO.Numbers.EInteger FromRadixString(
+    byte[] bytes,
+    int radix);
+</pre>
+
+<p>Converts a sequence of bytes (interpreted as text) to an arbitrary-precision integer in a given radix. Each byte in the sequence has to be a character in the Basic Latin range (0x00 to 0x7F or U+0000 to U+007F) of the Unicode Standard.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>bytes</i>: A sequence of bytes (interpreted as text) described by the FromRadixSubstring method.</p></li>
+<li><p><i>radix</i>: A base from 2 to 36. Depending on the radix, the sequence of bytes can use the basic digits 0 to 9 (U+0030 to U+0039) and then the basic upper-case letters A to Z (U+0041 to U+005A). For example, 0-9 in radix 10, and 0-9, then A-F in radix 16. Where a basic upper-case letter A to Z is allowed in the sequence of bytes, the corresponding basic lower-case letter (U+0061 to U+007a) is allowed instead.</p></li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>An arbitrary-precision integer with the same value as the given sequence of bytes.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li><p>System.ArgumentNullException:
+The parameter  <i>bytes</i>
+is null.</p></li>
+<li><p>System.FormatException:
+The sequence of bytes (interpreted as text) is empty or in an invalid format.</p></li>
+</ul>
+
 <p><a id="FromRadixString_char_int"></a></p>
 
 <h3>FromRadixString</h3>
@@ -1106,6 +1142,42 @@ The parameter  <i>str</i>
 is null.</p></li>
 <li><p>System.FormatException:
 The string is empty or in an invalid format.</p></li>
+</ul>
+
+<p><a id="FromRadixSubstring_byte_int_int_int"></a></p>
+
+<h3>FromRadixSubstring</h3>
+
+<pre>public static PeterO.Numbers.EInteger FromRadixSubstring(
+    byte[] bytes,
+    int radix,
+    int index,
+    int endIndex);
+</pre>
+
+<p>Converts a portion of a sequence of bytes (interpreted as text) to an arbitrary-precision integer in a given radix. Each byte in the sequence has to be a character in the Basic Latin range (0x00 to 0x7F or U+0000 to U+007F) of the Unicode Standard.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>bytes</i>: A sequence of bytes (interpreted as text). The desired portion of the sequence of bytes (interpreted as text) must contain only characters allowed by the given radix, except that it may start with a minus sign (&quot;-&quot;, U+002D) to indicate a negative number. The desired portion is not allowed to contain white space characters, including spaces. The desired portion may start with any number of zeros.</p></li>
+<li><p><i>radix</i>: A base from 2 to 36. Depending on the radix, the sequence of bytes (interpreted as text) can use the basic digits 0 to 9 (U+0030 to U+0039) and then the basic upper-case letters A to Z (U+0041 to U+005A). For example, 0-9 in radix 10, and 0-9, then A-F in radix 16. Where a basic upper-case letter A to Z is allowed in the sequence of bytes (interpreted as text), the corresponding basic lower-case letter (U+0061 to U+007a) is allowed instead.</p></li>
+<li><p><i>index</i>: The index of the sequence of bytes (interpreted as text) that starts the desired portion.</p></li>
+<li><p><i>endIndex</i>: The index of the sequence of bytes (interpreted as text) that ends the desired portion. The length will be index + endIndex - 1.</p></li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>An arbitrary-precision integer with the same value as given in the sequence&#39;s portion.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li><p>System.ArgumentNullException:
+The parameter  <i>bytes</i>
+is null.</p></li>
+<li><p>System.FormatException:
+The portion is empty or in an invalid format.</p></li>
 </ul>
 
 <p><a id="FromRadixSubstring_char_int_int_int"></a></p>
@@ -1202,6 +1274,37 @@ The string portion is empty or in an invalid format.</p></li>
 
 <p>This number&#39;s value as an arbitrary-precision integer.</p>
 
+<p><a id="FromString_byte"></a></p>
+
+<h3>FromString</h3>
+
+<pre>public static PeterO.Numbers.EInteger FromString(
+    byte[] bytes);
+</pre>
+
+<p>Converts a sequence of bytes (interpreted as text) to an arbitrary-precision integer. Each byte in the sequence has to be a code point in the Basic Latin range (0x00 to 0x7F or U+0000 to U+007F) of the Unicode Standard.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>bytes</i>: A sequence of bytes describing an integer in base-10 (decimal) form. The sequence must contain only basic digits 0 to 9 (U+0030 to U+0039), except that it may start with a minus sign (&quot;-&quot;, U+002D) to indicate a negative number. The sequence is not allowed to contain white space characters, including spaces. The sequence may start with any number of zeros.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>An arbitrary-precision integer with the same value as given in the sequence of bytes.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li><p>System.FormatException:
+The parameter  <i>bytes</i>
+is in an invalid format.</p></li>
+<li><p>System.ArgumentNullException:
+The parameter  <i>bytes</i>
+is null.</p></li>
+</ul>
+
 <p><a id="FromString_char"></a></p>
 
 <h3>FromString</h3>
@@ -1261,6 +1364,44 @@ The parameter  <i>str</i>
 is in an invalid format.</p></li>
 <li><p>System.ArgumentNullException:
 The parameter  <i>str</i>
+is null.</p></li>
+</ul>
+
+<p><a id="FromSubstring_byte_int_int"></a></p>
+
+<h3>FromSubstring</h3>
+
+<pre>public static PeterO.Numbers.EInteger FromSubstring(
+    byte[] bytes,
+    int index,
+    int endIndex);
+</pre>
+
+<p>Converts a portion of a sequence of bytes (interpreted as text) to an arbitrary-precision integer. Each byte in the sequence has to be a character in the Basic Latin range (0x00 to 0x7F or U+0000 to U+007F) of the Unicode Standard.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>bytes</i>: A sequence of bytes (interpreted as text), the desired portion of which describes an integer in base-10 (decimal) form. The desired portion of the sequence of bytes (interpreted as text) must contain only basic digits 0 to 9 (U+0030 to U+0039), except that it may start with a minus sign (&quot;-&quot;, U+002D) to indicate a negative number. The desired portion is not allowed to contain white space characters, including spaces. The desired portion may start with any number of zeros.</p></li>
+<li><p><i>index</i>: The index of the sequence of bytes (interpreted as text) that starts the desired portion.</p></li>
+<li><p><i>endIndex</i>: The index of the sequence of bytes (interpreted as text) that ends the desired portion. The length will be index + endIndex - 1.</p></li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>An arbitrary-precision integer with the same value as given in the sequence of bytes (interpreted as text) portion.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li><p>System.ArgumentException:
+The parameter  <i>index</i>
+is less than 0,  <i>endIndex</i>
+is less than 0, or either is greater than the sequence&#39;s length, or  <i>endIndex</i>
+is less than  <i>index</i>
+.</p></li>
+<li><p>System.ArgumentNullException:
+The parameter  <i>bytes</i>
 is null.</p></li>
 </ul>
 

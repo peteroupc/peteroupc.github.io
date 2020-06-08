@@ -2037,27 +2037,27 @@ END METHOD
 <li>In most cases, the inverse CDF is not available.  Thus, it has to be approximated.</li>
 </ul>
 
-<p>The following method generates a random number from a distribution via inversion, with an accuracy of 2<sup><code>-precision</code></sup> ((Devroye and Gravel 2018)<sup><a href="#Note57"><strong>(57)</strong></a></sup>; see also (Bringmann and Friedrich 2013, Appendix A)<sup><a href="#Note58"><strong>(58)</strong></a></sup>).  In the method, <code>ICDF(u, ubits, prec)</code> calculates a number that is within 2<sup><code>-prec</code></sup> of the true inverse CDF of <code>u</code>/2<sup><code>ubits</code></sup>.</p>
+<p>The following method generates a random number from a distribution via inversion, with an accuracy of <code>BASE</code><sup><code>-precision</code></sup> ((Devroye and Gravel 2018)<sup><a href="#Note57"><strong>(57)</strong></a></sup>, but extended for any base; see also (Bringmann and Friedrich 2013, Appendix A)<sup><a href="#Note58"><strong>(58)</strong></a></sup>).  In the method, <code>ICDF(u, ubits, prec)</code> calculates a number that is within <code>BASE</code><sup><code>-prec</code></sup> of the true inverse CDF of <code>u</code>/2<sup><code>ubits</code></sup>, and <code>BASE</code> is the digit base (e.g. 2 for binary or 10 for decimal).</p>
 
 <pre>METHOD Inversion(precision)
    u=0
    ubits=0
-   threshold=MakeRatio(1,pow(2, precision))*2
+   threshold=MakeRatio(1,pow(BASE, precision))*2
    incr=8
    while true
       incr=8
       if ubits==0: incr=precision
       // NOTE: If a uniform number (`n`) is already pregenerated,
       // use the following instead:
-      // u = mod(floor(n*pow(2, ubits+incr)), pow(2, incr))
-      u=u*pow(2,incr)+RNDINTEXC(pow(2,incr))
+      // u = mod(floor(n*pow(BASE, ubits+incr)), pow(BASE, incr))
+      u=u*pow(BASE,incr)+RNDINTEXC(pow(BASE,incr))
       ubits=ubits+incr
       lower=ICDF(u,ubits,precision)
       upper=ICDF(u+1,ubits,precision)
       // inverse CDF can never go down
       if lower&gt;upper: return error
       diff=upper-lower
-      if diff&lt;=threshold: return upper+(upper-lower)/2
+      if diff&lt;=threshold: return upper+diff/2
    end
 end
 </pre>

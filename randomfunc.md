@@ -1677,27 +1677,27 @@ If the distribution **has a known inverse CDF**, generate a uniform random numbe
 - If the distribution spans a bigger range than \[0, 1\], then calculating the inverse CDF na&iuml;vely (e.g., `ICDF(RNDU01ZeroOneExc())`) can leave gaps, in the sense that some numbers with the same precision as the uniform number may not be generated even if the distribution gives them a chance of occurring; this is especially the case for uniform floating-point numbers close to 1 (Monahan 1985, sec. 4 and 6)<sup>[**(42)**](#Note42)</sup>.
 - In most cases, the inverse CDF is not available.  Thus, it has to be approximated.
 
-The following method generates a random number from a distribution via inversion, with an accuracy of 2<sup>`-precision`</sup> ((Devroye and Gravel 2018)<sup>[**(57)**](#Note57)</sup>; see also (Bringmann and Friedrich 2013, Appendix A)<sup>[**(58)**](#Note58)</sup>).  In the method, `ICDF(u, ubits, prec)` calculates a number that is within 2<sup>`-prec`</sup> of the true inverse CDF of `u`/2<sup>`ubits`</sup>.
+The following method generates a random number from a distribution via inversion, with an accuracy of `BASE`<sup>`-precision`</sup> ((Devroye and Gravel 2018)<sup>[**(57)**](#Note57)</sup>, but extended for any base; see also (Bringmann and Friedrich 2013, Appendix A)<sup>[**(58)**](#Note58)</sup>).  In the method, `ICDF(u, ubits, prec)` calculates a number that is within `BASE`<sup>`-prec`</sup> of the true inverse CDF of `u`/2<sup>`ubits`</sup>, and `BASE` is the digit base (e.g. 2 for binary or 10 for decimal).
 
     METHOD Inversion(precision)
        u=0
        ubits=0
-       threshold=MakeRatio(1,pow(2, precision))*2
+       threshold=MakeRatio(1,pow(BASE, precision))*2
        incr=8
        while true
           incr=8
           if ubits==0: incr=precision
           // NOTE: If a uniform number (`n`) is already pregenerated,
           // use the following instead:
-          // u = mod(floor(n*pow(2, ubits+incr)), pow(2, incr))
-          u=u*pow(2,incr)+RNDINTEXC(pow(2,incr))
+          // u = mod(floor(n*pow(BASE, ubits+incr)), pow(BASE, incr))
+          u=u*pow(BASE,incr)+RNDINTEXC(pow(BASE,incr))
           ubits=ubits+incr
           lower=ICDF(u,ubits,precision)
           upper=ICDF(u+1,ubits,precision)
           // inverse CDF can never go down
           if lower>upper: return error
           diff=upper-lower
-          if diff<=threshold: return upper+(upper-lower)/2
+          if diff<=threshold: return upper+diff/2
        end
     end
 
