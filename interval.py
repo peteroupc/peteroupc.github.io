@@ -166,7 +166,7 @@ class Interval:
         # of ln is, in general, inexact
         while True:
             inf = self._floor().plus(vh)
-            #print(["inf", vh, inf])
+            # print(["inf", vh, inf])
             if inf != vh:
                 break
             highprec = Context(prec=highprec.prec + 16)
@@ -174,7 +174,7 @@ class Interval:
         vh = highprec.ln(self.sup)
         while True:
             sup = self._ceil().plus(vh)
-            #print(["sup", vh, sup])
+            # print(["sup", vh, sup])
             if sup != vh:
                 break
             highprec = Context(prec=highprec.prec + 16)
@@ -207,29 +207,29 @@ class Interval:
         sup = None
         inf = None
         if self.inf == 0:
-           inf = 1
+            inf = 1
         else:
-           vh = highprec.exp(self.inf)
-           # NOTE: These loops rely on the fact that the result
-           # of exp is, in general, inexact
-           while True:
-            inf = self._floor().plus(vh)
-            #print(["inf", vh, inf])
-            if inf != vh:
-                break
-            highprec = Context(prec=highprec.prec + 16)
             vh = highprec.exp(self.inf)
+            # NOTE: These loops rely on the fact that the result
+            # of exp is, in general, inexact
+            while True:
+                inf = self._floor().plus(vh)
+                # print(["inf", vh, inf])
+                if inf != vh:
+                    break
+                highprec = Context(prec=highprec.prec + 16)
+                vh = highprec.exp(self.inf)
         if self.sup == 0:
-           sup = 1
+            sup = 1
         else:
-           vh = highprec.exp(self.sup)
-           while True:
-            sup = self._ceil().plus(vh)
-            #print(["sup", vh, sup])
-            if sup != vh:
-                break
-            highprec = Context(prec=highprec.prec + 16)
             vh = highprec.exp(self.sup)
+            while True:
+                sup = self._ceil().plus(vh)
+                # print(["sup", vh, sup])
+                if sup != vh:
+                    break
+                highprec = Context(prec=highprec.prec + 16)
+                vh = highprec.exp(self.sup)
         return self._newintv(inf, sup)
 
     def __repr__(self):
@@ -237,4 +237,3 @@ class Interval:
 
     RCEILING = Context(rounding=decimal.ROUND_CEILING)
     RFLOOR = Context(rounding=decimal.ROUND_FLOOR)
-

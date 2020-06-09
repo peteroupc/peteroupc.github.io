@@ -107,15 +107,20 @@ positive).</li>
 Finds the absolute value of this object (if it&#39;s negative, it becomes
 positive).</li>
 <li><code>EFloat Add​(int intValue)</code><br>
-Adds this object and another number and returns the result.</li>
+Adds this arbitrary-precision binary floating-point number and a 32-bit
+signed integer and returns the result.</li>
 <li><code>EFloat Add​(long longValue)</code><br>
-Not documented yet.</li>
+Adds this arbitrary-precision binary floating-point number and a 64-bit
+signed integer and returns the result.</li>
 <li><code>EFloat Add​(EFloat otherValue)</code><br>
-Adds this object and another binary floating-point number and returns the
+Adds this arbitrary-precision binary floating-point number and another
+arbitrary-precision binary floating-point number and returns the
 result.</li>
 <li><code>EFloat Add​(EFloat otherValue,
 EContext ctx)</code><br>
-Finds the sum of this object and another object.</li>
+Adds this arbitrary-precision binary floating-point number and another
+arbitrary-precision binary floating-point number and returns the
+result.</li>
 <li><code>int compareTo​(int intOther)</code><br>
 Compares the mathematical values of this object and another object,
 accepting NaN values.</li>
@@ -195,16 +200,20 @@ Creates a not-a-number arbitrary-precision binary number.</li>
 Returns one subtracted from this arbitrary-precision binary floating-point
 number.</li>
 <li><code>EFloat Divide​(int intValue)</code><br>
-Divides this instance by the value of a 32-bit signed integer.</li>
+Divides this arbitrary-precision binary floating-point number by a 32-bit
+signed integer and returns the result.</li>
 <li><code>EFloat Divide​(long longValue)</code><br>
-Divides this instance by the value of a 64-bit signed integer.</li>
+Divides this arbitrary-precision binary floating-point number by a 64-bit
+signed integer and returns the result.</li>
 <li><code>EFloat Divide​(EFloat divisor)</code><br>
-Divides this object by another binary floating-point number and returns the
+Divides this arbitrary-precision binary floating-point number by another
+arbitrary-precision binary floating-point number and returns the
 result.</li>
 <li><code>EFloat Divide​(EFloat divisor,
   EContext ctx)</code><br>
 Divides this arbitrary-precision binary floating-point number by another
-arbitrary-precision binary floating-point number.</li>
+arbitrary-precision binary floating-point number and returns the
+result.</li>
 <li><code>EFloat[] DivideAndRemainderNaturalScale​(EFloat divisor)</code><br>
 Deprecated.
 Renamed to DivRemNaturalScale.
@@ -422,15 +431,20 @@ the right.</li>
 Returns a number similar to this number but with the radix point moved to
 the right.</li>
 <li><code>EFloat Multiply​(int intValue)</code><br>
-Multiplies this instance by the value of an arbitrary-precision integer
-object.</li>
+Multiplies this arbitrary-precision binary floating-point number by a 32-bit
+signed integer and returns the result.</li>
 <li><code>EFloat Multiply​(long longValue)</code><br>
-Not documented yet.</li>
+Multiplies this arbitrary-precision binary floating-point number by a 64-bit
+signed integer and returns the result.</li>
 <li><code>EFloat Multiply​(EFloat otherValue)</code><br>
-Multiplies two binary floating-point numbers.</li>
+Multiplies this arbitrary-precision binary floating-point number by another
+arbitrary-precision binary floating-point number and returns the
+result.</li>
 <li><code>EFloat Multiply​(EFloat op,
     EContext ctx)</code><br>
-Multiplies two binary floating-point numbers.</li>
+Multiplies this arbitrary-precision binary floating-point number by another
+arbitrary-precision binary floating-point number and returns the
+result.</li>
 <li><code>EFloat MultiplyAndAdd​(EFloat multiplicand,
           EFloat augend)</code><br>
 Multiplies by one binary floating-point number, and then adds another binary
@@ -495,8 +509,9 @@ Returns an object with the same numerical value as this one but with
 trailing zeros removed from its significand.</li>
 <li><code>EFloat Remainder​(EFloat divisor,
      EContext ctx)</code><br>
-Finds the remainder that results when dividing two arbitrary-precision
-binary floating-point numbers.</li>
+Returns the remainder that would result when this arbitrary-precision binary
+floating-point number is divided by another arbitrary-precision
+binary floating-point number.</li>
 <li><code>EFloat RemainderNaturalScale​(EFloat divisor) &quot;this&quot; - ((&quot;this&quot; /
 &quot;divisor&quot;) * &quot;divisor&quot;)</code><br>
 Calculates the remainder of a number by the formula &quot;this&quot; - ((&quot;this&quot; /
@@ -574,17 +589,20 @@ Deprecated.
 Renamed to Sqrt.
 Renamed to Sqrt.</li>
 <li><code>EFloat Subtract​(int intValue)</code><br>
-Subtracts an arbitrary-precision integer from this arbitrary-precision
-integer.</li>
+Subtracts a 32-bit signed integer from this arbitrary-precision binary
+floating-point number and returns the result.</li>
 <li><code>EFloat Subtract​(long longValue)</code><br>
-Not documented yet.</li>
+Subtracts a 64-bit signed integer from this arbitrary-precision binary
+floating-point number and returns the result.</li>
 <li><code>EFloat Subtract​(EFloat otherValue)</code><br>
 Subtracts an arbitrary-precision binary floating-point number from this
-instance and returns the result.</li>
+arbitrary-precision binary floating-point number and returns the
+result.</li>
 <li><code>EFloat Subtract​(EFloat otherValue,
     EContext ctx)</code><br>
 Subtracts an arbitrary-precision binary floating-point number from this
-instance.</li>
+arbitrary-precision binary floating-point number and returns the
+result.</li>
 <li><code>byte ToByteChecked()</code><br>
 Converts this number&#39;s value to a byte (from 0 to 255) if it can fit in a
 byte (from 0 to 255) after converting it to an integer by discarding
@@ -1677,7 +1695,8 @@ quiet NaN if this value is signaling NaN.</li>
 <pre>public EFloat Add​(int intValue)
 </pre>
 
-<p>Adds this object and another number and returns the result.</p>
+<p>Adds this arbitrary-precision binary floating-point number and a 32-bit
+ signed integer and returns the result.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1696,8 +1715,8 @@ quiet NaN if this value is signaling NaN.</li>
 <pre>public EFloat Subtract​(int intValue)
 </pre>
 
-<p>Subtracts an arbitrary-precision integer from this arbitrary-precision
- integer.</p>
+<p>Subtracts a 32-bit signed integer from this arbitrary-precision binary
+ floating-point number and returns the result.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1716,8 +1735,8 @@ quiet NaN if this value is signaling NaN.</li>
 <pre>public EFloat Multiply​(int intValue)
 </pre>
 
-<p>Multiplies this instance by the value of an arbitrary-precision integer
-  object.<p> </p><pre>EInteger result = EInteger.FromString(&quot;5&quot;).Multiply(200);</pre> .</p>
+<p>Multiplies this arbitrary-precision binary floating-point number by a 32-bit
+  signed integer and returns the result.<p> </p><pre>EInteger result = EInteger.FromString(&quot;5&quot;).Multiply(200);</pre> .</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1736,11 +1755,8 @@ quiet NaN if this value is signaling NaN.</li>
 <pre>public EFloat Divide​(int intValue)
 </pre>
 
-<p>Divides this instance by the value of a 32-bit signed integer. The result is
- rounded down (the fractional part is discarded). Except if the
- result is 0, it will be negative if this object is positive and the
- other is negative, or vice versa, and will be positive if both are
- positive or both are negative.</p>
+<p>Divides this arbitrary-precision binary floating-point number by a 32-bit
+ signed integer and returns the result.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1765,7 +1781,8 @@ quiet NaN if this value is signaling NaN.</li>
 <pre>public EFloat Add​(long longValue)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Adds this arbitrary-precision binary floating-point number and a 64-bit
+ signed integer and returns the result.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1784,18 +1801,19 @@ quiet NaN if this value is signaling NaN.</li>
 <pre>public EFloat Subtract​(long longValue)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Subtracts a 64-bit signed integer from this arbitrary-precision binary
+ floating-point number and returns the result.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>longValue</code> - The parameter <code>longValue</code> is a 64-bit signed integer.</li>
+<li><code>longValue</code> -</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>The return value is not documented yet.</li>
+<li>The difference of the two objects.</li>
 </ul>
 
 <h3>Multiply</h3>
@@ -1803,18 +1821,19 @@ quiet NaN if this value is signaling NaN.</li>
 <pre>public EFloat Multiply​(long longValue)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Multiplies this arbitrary-precision binary floating-point number by a 64-bit
+  signed integer and returns the result.<p> </p><pre>EInteger result = EInteger.FromString(&quot;5&quot;).Multiply(200L);</pre> .</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>longValue</code> - The parameter <code>longValue</code> is a 64-bit signed integer.</li>
+<li><code>longValue</code> -</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>The return value is not documented yet.</li>
+<li>The product of the two numbers.</li>
 </ul>
 
 <h3>Divide</h3>
@@ -1822,11 +1841,8 @@ quiet NaN if this value is signaling NaN.</li>
 <pre>public EFloat Divide​(long longValue)
 </pre>
 
-<p>Divides this instance by the value of a 64-bit signed integer. The result is
- rounded down (the fractional part is discarded). Except if the
- result is 0, it will be negative if this object is positive and the
- other is negative, or vice versa, and will be positive if both are
- positive or both are negative.</p>
+<p>Divides this arbitrary-precision binary floating-point number by a 64-bit
+ signed integer and returns the result.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1851,7 +1867,8 @@ quiet NaN if this value is signaling NaN.</li>
 <pre>public EFloat Add​(EFloat otherValue)
 </pre>
 
-<p>Adds this object and another binary floating-point number and returns the
+<p>Adds this arbitrary-precision binary floating-point number and another
+ arbitrary-precision binary floating-point number and returns the
  result.</p>
 
 <p><strong>Parameters:</strong></p>
@@ -1871,8 +1888,9 @@ quiet NaN if this value is signaling NaN.</li>
 <pre>public EFloat Add​(EFloat otherValue, EContext ctx)
 </pre>
 
-<p>Finds the sum of this object and another object. The result&#39;s exponent is
- set to the lower of the exponents of the two operands.</p>
+<p>Adds this arbitrary-precision binary floating-point number and another
+ arbitrary-precision binary floating-point number and returns the
+ result.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2290,8 +2308,9 @@ returns a positive number if.</li>
 <pre>public EFloat Divide​(EFloat divisor)
 </pre>
 
-<p>Divides this object by another binary floating-point number and returns the
- result. When possible, the result will be exact.</p>
+<p>Divides this arbitrary-precision binary floating-point number by another
+ arbitrary-precision binary floating-point number and returns the
+ result.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2314,9 +2333,8 @@ exact because it would have a nonterminating binary expansion.</li>
 </pre>
 
 <p>Divides this arbitrary-precision binary floating-point number by another
- arbitrary-precision binary floating-point number. The preferred
- exponent for the result is this object&#39;s exponent minus the
- divisor&#39;s exponent.</p>
+ arbitrary-precision binary floating-point number and returns the
+ result.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -3214,8 +3232,9 @@ to more than 0.</li>
 <pre>public EFloat Multiply​(EFloat otherValue)
 </pre>
 
-<p>Multiplies two binary floating-point numbers. The resulting exponent will be
- the sum of the exponents of the two binary floating-point numbers.</p>
+<p>Multiplies this arbitrary-precision binary floating-point number by another
+ arbitrary-precision binary floating-point number and returns the
+ result.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -3240,10 +3259,9 @@ to more than 0.</li>
 <pre>public EFloat Multiply​(EFloat op, EContext ctx)
 </pre>
 
-<p>Multiplies two binary floating-point numbers. The resulting scale will be
- the sum of the scales of the two binary floating-point numbers. The
- result&#39;s sign is positive if both operands have the same sign, and
- negative if they have different signs.</p>
+<p>Multiplies this arbitrary-precision binary floating-point number by another
+ arbitrary-precision binary floating-point number and returns the
+ result.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -3796,11 +3814,9 @@ there may still be some trailing zeros in the significand.</li>
 <pre>public EFloat Remainder​(EFloat divisor, EContext ctx)
 </pre>
 
-<p>Finds the remainder that results when dividing two arbitrary-precision
- binary floating-point numbers. The remainder is the value that
- remains when the absolute value of this object is divided by the
- absolute value of the other object; the remainder has the same sign
- (positive or negative) as this object&#39;s value.</p>
+<p>Returns the remainder that would result when this arbitrary-precision binary
+ floating-point number is divided by another arbitrary-precision
+ binary floating-point number.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -4472,7 +4488,8 @@ the precision is unlimited (the context&#39;s Precision property is 0).</li>
 </pre>
 
 <p>Subtracts an arbitrary-precision binary floating-point number from this
- instance and returns the result.</p>
+ arbitrary-precision binary floating-point number and returns the
+ result.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -4492,7 +4509,8 @@ the precision is unlimited (the context&#39;s Precision property is 0).</li>
 </pre>
 
 <p>Subtracts an arbitrary-precision binary floating-point number from this
- instance.</p>
+ arbitrary-precision binary floating-point number and returns the
+ result.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -5008,7 +5026,7 @@ number.</li>
 <ul>
 <li><code>java.lang.ArithmeticException</code> - This value is infinity or not-a-number, or the
 number, once converted to an integer by discarding its fractional
-part, is less than -32768 or greater than 32767.</li>
+part, is less than -32768 or greater tha 32767.</li>
 </ul>
 
 <h3>ToInt16Unchecked</h3>
@@ -5046,7 +5064,7 @@ value is infinity or not-a-number.</li>
 
 <ul>
 <li><code>java.lang.ArithmeticException</code> - This value is infinity or not-a-number, is not
-an exact integer, or is less than -32768 or greater than 32767.</li>
+an exact integer, or is less than -32768 or greater tha 32767.</li>
 </ul>
 
 <h3>FromInt16</h3>

@@ -56,11 +56,14 @@ class.</li>
 Returns the absolute value of this rational number, that is, a number with
 the same value as this one but as a nonnegative number.</li>
 <li><code>ERational Add​(int v)</code><br>
-Returns the sum of a rational number and a 32-bit signed integer.</li>
+Adds this arbitrary-precision rational number and a 32-bit signed integer
+and returns the result.</li>
 <li><code>ERational Add​(long v)</code><br>
-Returns the sum of a rational number and a 64-bit signed integer.</li>
+Adds this arbitrary-precision rational number and a 64-bit signed integer
+and returns the result.</li>
 <li><code>ERational Add​(ERational otherValue)</code><br>
-Adds two rational numbers.</li>
+Adds this arbitrary-precision rational number and another
+arbitrary-precision rational number and returns the result.</li>
 <li><code>int compareTo​(int intOther)</code><br>
 Compares the mathematical value of an arbitrary-precision rational number
 with that of this instance.</li>
@@ -113,12 +116,14 @@ Creates a not-a-number arbitrary-precision rational number.</li>
 <li><code>ERational Decrement()</code><br>
 Subtracts one from an arbitrary-precision rational number.</li>
 <li><code>ERational Divide​(int v)</code><br>
-Divides this instance by the value of a 32-bit signed integer.</li>
+Divides this arbitrary-precision rational number by a 32-bit signed integer
+and returns the result.</li>
 <li><code>ERational Divide​(long v)</code><br>
-Divides this instance by the value of a 64-bit signed integer.</li>
+Divides this arbitrary-precision rational number by a 64-bit signed integer
+and returns the result.</li>
 <li><code>ERational Divide​(ERational otherValue)</code><br>
-Divides this instance by the value of an arbitrary-precision rational number
-object.</li>
+Divides this arbitrary-precision rational number by another
+arbitrary-precision rational number and returns the result.</li>
 <li><code>boolean equals​(ERational other)</code><br>
 Determines whether this object&#39;s numerator, denominator, and properties are
 equal to those of another object.</li>
@@ -215,34 +220,38 @@ Gets the lesser value between two rational numbers.</li>
         ERational second)</code><br>
 Gets the lesser value between two values, ignoring their signs.</li>
 <li><code>ERational Multiply​(int v)</code><br>
-Returns the value of this instance multiplied by a 32-bit signed integer.</li>
+Multiplies this arbitrary-precision rational number by a 32-bit signed
+integer and returns the result.</li>
 <li><code>ERational Multiply​(long v)</code><br>
-Returns the value of this instance multiplied by a 64-bit signed integer.</li>
+Multiplies this arbitrary-precision rational number by a 64-bit signed
+integer and returns the result.</li>
 <li><code>ERational Multiply​(ERational otherValue)</code><br>
-Multiplies this instance by the value of an arbitrary-precision rational
-number.</li>
+Multiplies this arbitrary-precision rational number by another
+arbitrary-precision rational number and returns the result.</li>
 <li><code>ERational Negate()</code><br>
 Returns a rational number with the same value as this one but with the sign
 reversed.</li>
 <li><code>ERational Remainder​(int v)</code><br>
-Finds the remainder that results when this instance is divided by the value
-of a 32-bit signed integer.</li>
+Returns the remainder that would result when this arbitrary-precision
+rational number is divided by a 32-bit signed integer.</li>
 <li><code>ERational Remainder​(long v)</code><br>
-Finds the remainder that results when this instance is divided by the value
-of a 64-bit signed integer.</li>
+Returns the remainder that would result when this arbitrary-precision
+rational number is divided by a 64-bit signed integer.</li>
 <li><code>ERational Remainder​(ERational otherValue)</code><br>
-Finds the remainder that results when this instance is divided by the value
-of an arbitrary-precision rational number.</li>
+Returns the remainder that would result when this arbitrary-precision
+rational number is divided by another arbitrary-precision rational
+number.</li>
 <li><code>int signum()</code><br>
 Gets the sign of this rational number.</li>
 <li><code>ERational Subtract​(int v)</code><br>
-Returns the result of subtracting a 32-bit signed integer from this
-instance.</li>
+Subtracts a 32-bit signed integer from this arbitrary-precision rational
+number and returns the result.</li>
 <li><code>ERational Subtract​(long v)</code><br>
-Returns the result of subtracting a 64-bit signed integer from this
-instance.</li>
+Subtracts a 64-bit signed integer from this arbitrary-precision rational
+number and returns the result.</li>
 <li><code>ERational Subtract​(ERational otherValue)</code><br>
-Subtracts an arbitrary-precision rational number from this instance.</li>
+Subtracts an arbitrary-precision rational number from this
+arbitrary-precision rational number and returns the result.</li>
 <li><code>byte ToByteChecked()</code><br>
 Converts this number&#39;s value to a byte (from 0 to 255) if it can fit in a
 byte (from 0 to 255) after converting it to an integer by discarding
@@ -1058,7 +1067,8 @@ This implementation returns a positive number if.</li>
 <pre>public ERational Add​(ERational otherValue)
 </pre>
 
-<p>Adds two rational numbers.</p>
+<p>Adds this arbitrary-precision rational number and another
+ arbitrary-precision rational number and returns the result.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1430,8 +1440,8 @@ implementation returns a positive number if.</li>
 <pre>public ERational Divide​(ERational otherValue)
 </pre>
 
-<p>Divides this instance by the value of an arbitrary-precision rational number
- object.</p>
+<p>Divides this arbitrary-precision rational number by another
+ arbitrary-precision rational number and returns the result.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1614,8 +1624,8 @@ in this class); otherwise, <code>false</code>.</li>
 <pre>public ERational Multiply​(ERational otherValue)
 </pre>
 
-<p>Multiplies this instance by the value of an arbitrary-precision rational
- number.</p>
+<p>Multiplies this arbitrary-precision rational number by another
+ arbitrary-precision rational number and returns the result.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1654,8 +1664,9 @@ in this class); otherwise, <code>false</code>.</li>
 <pre>public ERational Remainder​(ERational otherValue)
 </pre>
 
-<p>Finds the remainder that results when this instance is divided by the value
- of an arbitrary-precision rational number.</p>
+<p>Returns the remainder that would result when this arbitrary-precision
+ rational number is divided by another arbitrary-precision rational
+ number.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1680,7 +1691,8 @@ in this class); otherwise, <code>false</code>.</li>
 <pre>public ERational Subtract​(ERational otherValue)
 </pre>
 
-<p>Subtracts an arbitrary-precision rational number from this instance.</p>
+<p>Subtracts an arbitrary-precision rational number from this
+ arbitrary-precision rational number and returns the result.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2271,7 +2283,8 @@ has the following form: <code>[-]numerator.Divide(denominator)</code>.</li>
 <pre>public ERational Add​(int v)
 </pre>
 
-<p>Returns the sum of a rational number and a 32-bit signed integer.</p>
+<p>Adds this arbitrary-precision rational number and a 32-bit signed integer
+ and returns the result.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2291,8 +2304,8 @@ object is NaN.</li>
 <pre>public ERational Subtract​(int v)
 </pre>
 
-<p>Returns the result of subtracting a 32-bit signed integer from this
- instance.</p>
+<p>Subtracts a 32-bit signed integer from this arbitrary-precision rational
+ number and returns the result.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2311,7 +2324,8 @@ object is NaN.</li>
 <pre>public ERational Multiply​(int v)
 </pre>
 
-<p>Returns the value of this instance multiplied by a 32-bit signed integer.</p>
+<p>Multiplies this arbitrary-precision rational number by a 32-bit signed
+ integer and returns the result.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2330,7 +2344,8 @@ object is NaN.</li>
 <pre>public ERational Divide​(int v)
 </pre>
 
-<p>Divides this instance by the value of a 32-bit signed integer.</p>
+<p>Divides this arbitrary-precision rational number by a 32-bit signed integer
+ and returns the result.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2355,8 +2370,8 @@ object is NaN.</li>
 <pre>public ERational Remainder​(int v)
 </pre>
 
-<p>Finds the remainder that results when this instance is divided by the value
- of a 32-bit signed integer.</p>
+<p>Returns the remainder that would result when this arbitrary-precision
+ rational number is divided by a 32-bit signed integer.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2381,7 +2396,8 @@ object is NaN.</li>
 <pre>public ERational Add​(long v)
 </pre>
 
-<p>Returns the sum of a rational number and a 64-bit signed integer.</p>
+<p>Adds this arbitrary-precision rational number and a 64-bit signed integer
+ and returns the result.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2401,8 +2417,8 @@ object is NaN.</li>
 <pre>public ERational Subtract​(long v)
 </pre>
 
-<p>Returns the result of subtracting a 64-bit signed integer from this
- instance.</p>
+<p>Subtracts a 64-bit signed integer from this arbitrary-precision rational
+ number and returns the result.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2421,7 +2437,8 @@ object is NaN.</li>
 <pre>public ERational Multiply​(long v)
 </pre>
 
-<p>Returns the value of this instance multiplied by a 64-bit signed integer.</p>
+<p>Multiplies this arbitrary-precision rational number by a 64-bit signed
+ integer and returns the result.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2440,7 +2457,8 @@ object is NaN.</li>
 <pre>public ERational Divide​(long v)
 </pre>
 
-<p>Divides this instance by the value of a 64-bit signed integer.</p>
+<p>Divides this arbitrary-precision rational number by a 64-bit signed integer
+ and returns the result.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2465,8 +2483,8 @@ object is NaN.</li>
 <pre>public ERational Remainder​(long v)
 </pre>
 
-<p>Finds the remainder that results when this instance is divided by the value
- of a 64-bit signed integer.</p>
+<p>Returns the remainder that would result when this arbitrary-precision
+ rational number is divided by a 64-bit signed integer.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2586,7 +2604,7 @@ an exact integer, or is less than 0 or greater than 255.</li>
 <ul>
 <li><code>java.lang.ArithmeticException</code> - This value is infinity or not-a-number, or the
 number, once converted to an integer by discarding its fractional
-part, is less than -32768 or greater than 32767.</li>
+part, is less than -32768 or greater tha 32767.</li>
 </ul>
 
 <h3>ToInt16Unchecked</h3>
@@ -2624,7 +2642,7 @@ value is infinity or not-a-number.</li>
 
 <ul>
 <li><code>java.lang.ArithmeticException</code> - This value is infinity or not-a-number, is not
-an exact integer, or is less than -32768 or greater than 32767.</li>
+an exact integer, or is less than -32768 or greater tha 32767.</li>
 </ul>
 
 <h3>FromInt16</h3>

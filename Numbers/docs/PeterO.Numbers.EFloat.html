@@ -178,7 +178,7 @@
 <li><code><a href="#MovePointRight_PeterO_Numbers_EInteger">MovePointRight(PeterO.Numbers.EInteger)</a></code> - Returns a number similar to this number but with the radix point moved to the right.</li>
 <li><code><a href="#MovePointRight_PeterO_Numbers_EInteger_PeterO_Numbers_EContext">MovePointRight(PeterO.Numbers.EInteger, PeterO.Numbers.EContext)</a></code> - Returns a number similar to this number but with the radix point moved to the right.</li>
 <li><code><a href="#Multiply_int">Multiply(int)</a></code> - Multiplies this instance by the value of an arbitrary-precision integer object.</li>
-<li><code><a href="#Multiply_long">Multiply(long)</a></code> - Not documented yet.</li>
+<li><code><a href="#Multiply_long">Multiply(long)</a></code> - Returns the result of this instance multiplied by the value of a 64-bit signed integer.</li>
 <li><code><a href="#Multiply_PeterO_Numbers_EFloat">Multiply(PeterO.Numbers.EFloat)</a></code> - Multiplies two binary floating-point numbers.</li>
 <li><code><a href="#Multiply_PeterO_Numbers_EFloat_PeterO_Numbers_EContext">Multiply(PeterO.Numbers.EFloat, PeterO.Numbers.EContext)</a></code> - Multiplies two binary floating-point numbers.</li>
 <li><code><a href="#MultiplyAndAdd_PeterO_Numbers_EFloat_PeterO_Numbers_EFloat">MultiplyAndAdd(PeterO.Numbers.EFloat, PeterO.Numbers.EFloat)</a></code> - Multiplies by one binary floating-point number, and then adds another binary floating-point number.</li>
@@ -238,7 +238,7 @@
 <li><code><a href="#Sqrt_PeterO_Numbers_EContext">Sqrt(PeterO.Numbers.EContext)</a></code> - Finds the square root of this object&#39;s value.</li>
 <li><code><a href="#SquareRoot_PeterO_Numbers_EContext">SquareRoot(PeterO.Numbers.EContext)</a></code> - <b>Deprecated:</b> Renamed to Sqrt.</li>
 <li><code><a href="#Subtract_int">Subtract(int)</a></code> - Subtracts an arbitrary-precision integer from this arbitrary-precision integer.</li>
-<li><code><a href="#Subtract_long">Subtract(long)</a></code> - Not documented yet.</li>
+<li><code><a href="#Subtract_long">Subtract(long)</a></code> - Subtracts a 64-bit integer from this arbitrary-precision binary floating-point number.</li>
 <li><code><a href="#Subtract_PeterO_Numbers_EFloat">Subtract(PeterO.Numbers.EFloat)</a></code> - Subtracts an arbitrary-precision binary floating-point number from this instance and returns the result.</li>
 <li><code><a href="#Subtract_PeterO_Numbers_EFloat_PeterO_Numbers_EContext">Subtract(PeterO.Numbers.EFloat, PeterO.Numbers.EContext)</a></code> - Subtracts an arbitrary-precision binary floating-point number from this instance.</li>
 <li><code><a href="#Ten">public static readonly PeterO.Numbers.EFloat Ten;</a></code> - Represents the number 10.</li>
@@ -2731,18 +2731,23 @@ is a 32-bit signed integer.</li>
     long longValue);
 </pre>
 
-<p>Not documented yet.</p>
+<p>Returns the result of this instance multiplied by the value of a 64-bit signed integer.</p>
+
+<pre>EInteger result = EInteger.FromString(&quot;5&quot;).Multiply(200L);
+</pre>
+
+<p>.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>longValue</i>: The parameter  <i>longValue</i>
+<li><i>intValue</i>: The parameter  <i>intValue</i>
 is a 64-bit signed integer.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p>The return value is not documented yet.</p>
+<p>The product of the two numbers.</p>
 
 <p><a id="Multiply_PeterO_Numbers_EFloat_PeterO_Numbers_EContext"></a></p>
 
@@ -3327,7 +3332,7 @@ is null.</p></li>
 <ul>
 <li><p>System.OverflowException:
 The parameter  <i>input</i>
-is infinity or not-a-number, or the number, once converted to an integer by discarding its fractional part, is less than -32768 or greater than 32767.</p></li>
+is infinity or not-a-number, or the number, once converted to an integer by discarding its fractional part, is less than -32768 or greater tha 32767.</p></li>
 <li><p>System.ArgumentNullException:
 The parameter  <i>input</i>
 is null.</p></li>
@@ -4600,18 +4605,18 @@ is a 32-bit signed integer.</li>
     long longValue);
 </pre>
 
-<p>Not documented yet.</p>
+<p>Subtracts a 64-bit integer from this arbitrary-precision binary floating-point number.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>longValue</i>: The parameter  <i>longValue</i>
-is a 64-bit signed integer.</li>
+<li><i>intValue</i>: The parameter  <i>intValue</i>
+is a 32-bit signed integer.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p>The return value is not documented yet.</p>
+<p>The difference of the two objects.</p>
 
 <p><a id="Subtract_PeterO_Numbers_EFloat"></a></p>
 
@@ -4866,7 +4871,7 @@ This object&#39;s value is not an exact integer.</p></li>
 
 <ul>
 <li>System.OverflowException:
-This value is infinity or not-a-number, or the number, once converted to an integer by discarding its fractional part, is less than -32768 or greater than 32767.</li>
+This value is infinity or not-a-number, or the number, once converted to an integer by discarding its fractional part, is less than -32768 or greater tha 32767.</li>
 </ul>
 
 <p><a id="ToInt16IfExact"></a></p>
@@ -4886,7 +4891,7 @@ This value is infinity or not-a-number, or the number, once converted to an inte
 
 <ul>
 <li>System.ArithmeticException:
-This value is infinity or not-a-number, is not an exact integer, or is less than -32768 or greater than 32767.</li>
+This value is infinity or not-a-number, is not an exact integer, or is less than -32768 or greater tha 32767.</li>
 </ul>
 
 <p><a id="ToInt16Unchecked"></a></p>

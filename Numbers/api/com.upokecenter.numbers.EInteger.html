@@ -37,11 +37,14 @@
 <li><code>EInteger Abs()</code><br>
 Returns the absolute value of this object&#39;s value.</li>
 <li><code>EInteger Add​(int intValue)</code><br>
-Adds this object and another object.</li>
+Adds this arbitrary-precision integer and a 32-bit signed integer and
+returns the result.</li>
 <li><code>EInteger Add​(long longValue)</code><br>
-Not documented yet.</li>
+Adds this arbitrary-precision integer and a 64-bit signed integer and
+returns the result.</li>
 <li><code>EInteger Add​(EInteger bigintAugend)</code><br>
-Adds this object and another object.</li>
+Adds this arbitrary-precision integer and another arbitrary-precision
+integer and returns the result.</li>
 <li><code>EInteger And​(EInteger other)</code><br>
 Does an AND operation between this arbitrary-precision integer and another
 one.</li>
@@ -77,19 +80,26 @@ Compares an arbitrary-precision integer with this instance.</li>
 <li><code>EInteger Decrement()</code><br>
 Returns one subtracted from this arbitrary-precision integer.</li>
 <li><code>EInteger Divide​(int intValue)</code><br>
-Divides this instance by the value of an arbitrary-precision integer.</li>
+Divides this arbitrary-precision integer by a 32-bit signed integer and
+returns the result.</li>
 <li><code>EInteger Divide​(long longValue)</code><br>
-Not documented yet.</li>
+Divides this arbitrary-precision integer by a 64-bit signed integer and
+returns the result.</li>
 <li><code>EInteger Divide​(EInteger bigintDivisor)</code><br>
-Divides this instance by the value of an arbitrary-precision integer.</li>
+Divides this arbitrary-precision integer by another arbitrary-precision
+integer and returns the result.</li>
 <li><code>EInteger[] DivRem​(int intDivisor)</code><br>
-Divides this object by a 32-bit signed integer and returns the quotient and
-remainder.</li>
+Divides this arbitrary-precision integer by a 32-bit signed integer and
+returns a two-item array containing the result of the division and
+the remainder, in that order.</li>
 <li><code>EInteger[] DivRem​(long intDivisor)</code><br>
-Not documented yet.</li>
+Divides this arbitrary-precision integer by a 64-bit signed integer and
+returns a two-item array containing the result of the division and the
+remainder, in that order.</li>
 <li><code>EInteger[] DivRem​(EInteger divisor)</code><br>
-Divides this object by another arbitrary-precision integer and returns the
-quotient and remainder.</li>
+Divides this arbitrary-precision integer by another arbitrary-precision
+integer and returns a two-item array containing the result of the
+division and the remainder, in that order.</li>
 <li><code>boolean equals​(java.lang.Object obj)</code><br>
 Determines whether this object and another object are equal and have the
 same type.</li>
@@ -257,13 +267,14 @@ the value of an arbitrary-precision integer.</li>
 Calculates the remainder when this arbitrary-precision integer raised to a
 certain power is divided by another arbitrary-precision integer.</li>
 <li><code>EInteger Multiply​(int intValue)</code><br>
-Multiplies this instance by the value of an arbitrary-precision integer
-object.</li>
+Multiplies this arbitrary-precision integer by a 32-bit signed integer and
+returns the result.</li>
 <li><code>EInteger Multiply​(long longValue)</code><br>
-Not documented yet.</li>
+Multiplies this arbitrary-precision integer by a 64-bit signed integer and
+returns the result.</li>
 <li><code>EInteger Multiply​(EInteger bigintMult)</code><br>
-Multiplies this instance by the value of an arbitrary-precision integer
-object.</li>
+Multiplies this arbitrary-precision integer by another arbitrary-precision
+integer and returns the result.</li>
 <li><code>EInteger Negate()</code><br>
 Gets the value of this object with the sign reversed.</li>
 <li><code>EInteger Not()</code><br>
@@ -283,13 +294,14 @@ Raises an arbitrary-precision integer to a power.</li>
 Raises an arbitrary-precision integer to a power, which is given as another
 arbitrary-precision integer.</li>
 <li><code>EInteger Remainder​(int intValue)</code><br>
-Finds the remainder that results when this instance is divided by the value
-of an arbitrary-precision integer.</li>
+Returns the remainder that would result when this arbitrary-precision
+integer is divided by a 32-bit signed integer.</li>
 <li><code>EInteger Remainder​(long longValue)</code><br>
-Not documented yet.</li>
+Returns the remainder that would result when this arbitrary-precision
+integer is divided by a 64-bit signed integer.</li>
 <li><code>EInteger Remainder​(EInteger divisor)</code><br>
-Finds the remainder that results when this instance is divided by the value
-of an arbitrary-precision integer.</li>
+Returns the remainder that would result when this arbitrary-precision
+integer is divided by another arbitrary-precision integer.</li>
 <li><code>EInteger ShiftLeft​(int numberBits)</code><br>
 Returns an arbitrary-precision integer with the bits shifted to the left by
 a number of bits.</li>
@@ -307,13 +319,14 @@ Finds the square root of this instance&#39;s value, rounded down.</li>
 <li><code>EInteger[] SqrtRem()</code><br>
 Calculates the square root and the remainder.</li>
 <li><code>EInteger Subtract​(int intValue)</code><br>
-Subtracts an arbitrary-precision integer from this arbitrary-precision
-integer.</li>
+Subtracts a 32-bit signed integer from this arbitrary-precision integer and
+returns the result.</li>
 <li><code>EInteger Subtract​(long longValue)</code><br>
-Not documented yet.</li>
+Subtracts a 64-bit signed integer from this arbitrary-precision integer and
+returns the result.</li>
 <li><code>EInteger Subtract​(EInteger subtrahend)</code><br>
 Subtracts an arbitrary-precision integer from this arbitrary-precision
-integer.</li>
+integer and returns the result.</li>
 <li><code>byte ToByteChecked()</code><br>
 Converts this number&#39;s value to a byte (from 0 to 255) if it can fit in a
 byte (from 0 to 255).</li>
@@ -1040,7 +1053,8 @@ length, or <code>endIndex</code> is less than <code>index</code>.</p></li>
 <pre>public EInteger Add​(EInteger bigintAugend)
 </pre>
 
-<p>Adds this object and another object.</p>
+<p>Adds this arbitrary-precision integer and another arbitrary-precision
+ integer and returns the result.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1288,7 +1302,8 @@ is null.</li>
 <pre>public EInteger Add​(int intValue)
 </pre>
 
-<p>Adds this object and another object.</p>
+<p>Adds this arbitrary-precision integer and a 32-bit signed integer and
+ returns the result.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1307,8 +1322,8 @@ is null.</li>
 <pre>public EInteger Subtract​(int intValue)
 </pre>
 
-<p>Subtracts an arbitrary-precision integer from this arbitrary-precision
- integer.</p>
+<p>Subtracts a 32-bit signed integer from this arbitrary-precision integer and
+ returns the result.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1327,8 +1342,8 @@ is null.</li>
 <pre>public EInteger Multiply​(int intValue)
 </pre>
 
-<p>Multiplies this instance by the value of an arbitrary-precision integer
-  object.<p> </p><pre>EInteger result = EInteger.FromString(&quot;5&quot;).Multiply(200);</pre> .</p>
+<p>Multiplies this arbitrary-precision integer by a 32-bit signed integer and
+  returns the result.<p> </p><pre>EInteger result = EInteger.FromString(&quot;5&quot;).Multiply(200);</pre> .</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1347,11 +1362,13 @@ is null.</li>
 <pre>public EInteger Divide​(int intValue)
 </pre>
 
-<p>Divides this instance by the value of an arbitrary-precision integer. The
- result is rounded down (the fractional part is discarded). Except if
- the result is 0, it will be negative if this object is positive and
- the other is negative, or vice versa, and will be positive if both
- are positive or both are negative.</p>
+<p>Divides this arbitrary-precision integer by a 32-bit signed integer and
+ returns the result. The result of the division is rounded down (the
+ fractional part is discarded). Except if the result of the division
+ is 0, it will be negative if this arbitrary-precision integer is
+ positive and the other 32-bit signed integer is negative, or vice
+ versa, and will be positive if both are positive or both are
+ negative.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1376,11 +1393,12 @@ is null.</li>
 <pre>public EInteger Remainder​(int intValue)
 </pre>
 
-<p>Finds the remainder that results when this instance is divided by the value
- of an arbitrary-precision integer. The remainder is the value that
- remains when the absolute value of this object is divided by the
- absolute value of the other object; the remainder has the same sign
- (positive or negative) as this object.</p>
+<p>Returns the remainder that would result when this arbitrary-precision
+ integer is divided by a 32-bit signed integer. The remainder is the
+ number that remains when the absolute value of this
+ arbitrary-precision integer is divided by the absolute value of the
+ other 32-bit signed integer; the remainder has the same sign
+ (positive or negative) as this arbitrary-precision integer.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1426,11 +1444,13 @@ less, or a positive number if this instance is greater.</li>
 <pre>public EInteger Divide​(EInteger bigintDivisor)
 </pre>
 
-<p>Divides this instance by the value of an arbitrary-precision integer. The
- result is rounded down (the fractional part is discarded). Except if
- the result is 0, it will be negative if this object is positive and
- the other is negative, or vice versa, and will be positive if both
- are positive or both are negative.</p>
+<p>Divides this arbitrary-precision integer by another arbitrary-precision
+ integer and returns the result. The result of the division is
+ rounded down (the fractional part is discarded). Except if the
+ result of the division is 0, it will be negative if this
+ arbitrary-precision integer is positive and the other
+ arbitrary-precision integer is negative, or vice versa, and will be
+ positive if both are positive or both are negative.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1456,8 +1476,17 @@ less, or a positive number if this instance is greater.</li>
 <pre>public EInteger[] DivRem​(int intDivisor)
 </pre>
 
-<p>Divides this object by a 32-bit signed integer and returns the quotient and
- remainder.</p>
+<p>Divides this arbitrary-precision integer by a 32-bit signed integer and
+ returns a two-item array containing the result of the division and
+ the remainder, in that order. The result of the division is rounded
+ down (the fractional part is discarded). Except if the result of the
+ division is 0, it will be negative if this arbitrary-precision
+ integer is positive and the other 32-bit signed integer is negative,
+ or vice versa, and will be positive if both are positive or both are
+ negative. The remainder is the number that remains when the absolute
+ value of this arbitrary-precision integer is divided by the absolute
+ value of the other 32-bit signed integer; the remainder has the same
+ sign (positive or negative) as this arbitrary-precision integer.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1483,7 +1512,8 @@ quotient, and the second is the remainder.</li>
 <pre>public EInteger Add​(long longValue)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Adds this arbitrary-precision integer and a 64-bit signed integer and
+ returns the result.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1502,7 +1532,8 @@ quotient, and the second is the remainder.</li>
 <pre>public EInteger Subtract​(long longValue)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Subtracts a 64-bit signed integer from this arbitrary-precision integer and
+ returns the result.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1521,7 +1552,8 @@ quotient, and the second is the remainder.</li>
 <pre>public EInteger Multiply​(long longValue)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Multiplies this arbitrary-precision integer by a 64-bit signed integer and
+ returns the result.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1540,7 +1572,12 @@ quotient, and the second is the remainder.</li>
 <pre>public EInteger Divide​(long longValue)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Divides this arbitrary-precision integer by a 64-bit signed integer and
+ returns the result. The result of the division is rounded down (the
+ fractional part is discarded). Except if the result of the division is
+ 0, it will be negative if this arbitrary-precision integer is positive
+ and the other 64-bit signed integer is negative, or vice versa, and
+ will be positive if both are positive or both are negative.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1559,7 +1596,12 @@ quotient, and the second is the remainder.</li>
 <pre>public EInteger Remainder​(long longValue)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Returns the remainder that would result when this arbitrary-precision
+ integer is divided by a 64-bit signed integer. The remainder is the
+ number that remains when the absolute value of this
+ arbitrary-precision integer is divided by the absolute value of the
+ other 64-bit signed integer; the remainder has the same sign (positive
+ or negative) as this arbitrary-precision integer.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1597,7 +1639,17 @@ quotient, and the second is the remainder.</li>
 <pre>public EInteger[] DivRem​(long intDivisor)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Divides this arbitrary-precision integer by a 64-bit signed integer and
+ returns a two-item array containing the result of the division and the
+ remainder, in that order. The result of the division is rounded down
+ (the fractional part is discarded). Except if the result of the
+ division is 0, it will be negative if this arbitrary-precision integer
+ is positive and the other 64-bit signed integer is negative, or vice
+ versa, and will be positive if both are positive or both are negative.
+ The remainder is the number that remains when the absolute value of
+ this arbitrary-precision integer is divided by the absolute value of
+ the other 64-bit signed integer; the remainder has the same sign
+ (positive or negative) as this arbitrary-precision integer.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1617,8 +1669,18 @@ integer.</li>
 <pre>public EInteger[] DivRem​(EInteger divisor)
 </pre>
 
-<p>Divides this object by another arbitrary-precision integer and returns the
- quotient and remainder.</p>
+<p>Divides this arbitrary-precision integer by another arbitrary-precision
+ integer and returns a two-item array containing the result of the
+ division and the remainder, in that order. The result of the
+ division is rounded down (the fractional part is discarded). Except
+ if the result of the division is 0, it will be negative if this
+ arbitrary-precision integer is positive and the other
+ arbitrary-precision integer is negative, or vice versa, and will be
+ positive if both are positive or both are negative. The remainder is
+ the number that remains when the absolute value of this
+ arbitrary-precision integer is divided by the absolute value of the
+ other arbitrary-precision integer; the remainder has the same sign
+ (positive or negative) as this arbitrary-precision integer.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2151,8 +2213,8 @@ null.</li>
 <pre>public EInteger Multiply​(EInteger bigintMult)
 </pre>
 
-<p>Multiplies this instance by the value of an arbitrary-precision integer
- object.</p>
+<p>Multiplies this arbitrary-precision integer by another arbitrary-precision
+ integer and returns the result.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2262,11 +2324,12 @@ null.</li>
 <pre>public EInteger Remainder​(EInteger divisor)
 </pre>
 
-<p>Finds the remainder that results when this instance is divided by the value
- of an arbitrary-precision integer. The remainder is the value that
- remains when the absolute value of this object is divided by the
- absolute value of the other object; the remainder has the same sign
- (positive or negative) as this object.</p>
+<p>Returns the remainder that would result when this arbitrary-precision
+ integer is divided by another arbitrary-precision integer. The
+ remainder is the number that remains when the absolute value of this
+ arbitrary-precision integer is divided by the absolute value of the
+ other arbitrary-precision integer; the remainder has the same sign
+ (positive or negative) as this arbitrary-precision integer.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2730,7 +2793,7 @@ is 0 or less, or one and zero if this value equals 1.</li>
 </pre>
 
 <p>Subtracts an arbitrary-precision integer from this arbitrary-precision
- integer.</p>
+ integer and returns the result.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2980,7 +3043,7 @@ digits 0 to 9 (U+0030 to U+0039).</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>java.lang.ArithmeticException</code> - This value is less than -32768 or greater than
+<li><code>java.lang.ArithmeticException</code> - This value is less than -32768 or greater tha
 32767.</li>
 </ul>
 

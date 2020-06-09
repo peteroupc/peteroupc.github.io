@@ -1,5 +1,5 @@
 #
-#  Demonstrates how a random number following a 
+#  Demonstrates how a random number following a
 #  given distribution can be generated
 #  to a given accuracy using CDF inversion and interval arithmetic.
 #
