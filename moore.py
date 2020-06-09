@@ -131,7 +131,7 @@ if __name__ == "__main__":
     import time
     import math
 
-    mrs = MooreRejectionSampler(normalpdf, -4, 4)
+    mrs = MooreSampler(nakagami_m10, -4, 4)
     ls = linspace(-4, 4, 30)
     buckets = [0 for x in ls]
     t = time.time()

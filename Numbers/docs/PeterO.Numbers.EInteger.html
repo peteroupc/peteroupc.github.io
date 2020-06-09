@@ -28,9 +28,9 @@
 
 <ul>
 <li><code><a href="#Abs">Abs()</a></code> - Returns the absolute value of this object&#39;s value.</li>
-<li><code><a href="#Add_int">Add(int)</a></code> - Adds this object and another object.</li>
-<li><code><a href="#Add_long">Add(long)</a></code> - Not documented yet.</li>
-<li><code><a href="#Add_PeterO_Numbers_EInteger">Add(PeterO.Numbers.EInteger)</a></code> - Adds this object and another object.</li>
+<li><code><a href="#Add_int">Add(int)</a></code> - Adds this arbitrary-precision integer and a 32-bit signed integer and returns the result.</li>
+<li><code><a href="#Add_long">Add(long)</a></code> - Adds this arbitrary-precision integer and a 64-bit signed integer and returns the result.</li>
+<li><code><a href="#Add_PeterO_Numbers_EInteger">Add(PeterO.Numbers.EInteger)</a></code> - Adds this arbitrary-precision integer and another arbitrary-precision integer and returns the result.</li>
 <li><code><a href="#And_PeterO_Numbers_EInteger">And(PeterO.Numbers.EInteger)</a></code> - Does an AND operation between this arbitrary-precision integer and another one.</li>
 <li><code><a href="#And_PeterO_Numbers_EInteger_PeterO_Numbers_EInteger">And(PeterO.Numbers.EInteger, PeterO.Numbers.EInteger)</a></code> - Does an AND operation between two arbitrary-precision integer values.</li>
 <li><code><a href="#AndNot_PeterO_Numbers_EInteger">AndNot(PeterO.Numbers.EInteger)</a></code> - Does an AND NOT operation between this arbitrary-precision integer and another one.</li>
@@ -44,12 +44,12 @@
 <li><code><a href="#CompareTo_long">CompareTo(long)</a></code> - Not documented yet.</li>
 <li><code><a href="#CompareTo_PeterO_Numbers_EInteger">CompareTo(PeterO.Numbers.EInteger)</a></code> - Compares an arbitrary-precision integer with this instance.</li>
 <li><code><a href="#Decrement">Decrement()</a></code> - Returns one subtracted from this arbitrary-precision integer.</li>
-<li><code><a href="#Divide_int">Divide(int)</a></code> - Divides this instance by the value of an arbitrary-precision integer.</li>
-<li><code><a href="#Divide_long">Divide(long)</a></code> - Not documented yet.</li>
-<li><code><a href="#Divide_PeterO_Numbers_EInteger">Divide(PeterO.Numbers.EInteger)</a></code> - Divides this instance by the value of an arbitrary-precision integer.</li>
-<li><code><a href="#DivRem_int">DivRem(int)</a></code> - Divides this object by a 32-bit signed integer and returns the quotient and remainder.</li>
-<li><code><a href="#DivRem_long">DivRem(long)</a></code> - Not documented yet.</li>
-<li><code><a href="#DivRem_PeterO_Numbers_EInteger">DivRem(PeterO.Numbers.EInteger)</a></code> - Divides this object by another arbitrary-precision integer and returns the quotient and remainder.</li>
+<li><code><a href="#Divide_int">Divide(int)</a></code> - Divides this arbitrary-precision integer by a 32-bit signed integer and returns the result.</li>
+<li><code><a href="#Divide_long">Divide(long)</a></code> - Divides this arbitrary-precision integer by a 64-bit signed integer and returns the result.</li>
+<li><code><a href="#Divide_PeterO_Numbers_EInteger">Divide(PeterO.Numbers.EInteger)</a></code> - Divides this arbitrary-precision integer by another arbitrary-precision integer and returns the result.</li>
+<li><code><a href="#DivRem_int">DivRem(int)</a></code> - Divides this arbitrary-precision integer by a 32-bit signed integer and returns a two-item array containing the result of the division and the remainder, in that order.</li>
+<li><code><a href="#DivRem_long">DivRem(long)</a></code> - Divides this arbitrary-precision integer by a 64-bit signed integer and returns a two-item array containing the result of the division and the remainder, in that order.</li>
+<li><code><a href="#DivRem_PeterO_Numbers_EInteger">DivRem(PeterO.Numbers.EInteger)</a></code> - Divides this arbitrary-precision integer by another arbitrary-precision integer and returns a two-item array containing the result of the division and the remainder, in that order.</li>
 <li><code><a href="#DivRem_PeterO_Numbers_EInteger_PeterO_Numbers_EInteger_PeterO_Numbers_EInteger">DivRem(PeterO.Numbers.EInteger, PeterO.Numbers.EInteger, PeterO.Numbers.EInteger&amp;)</a></code> - <b>Deprecated:</b> Use the DivRem instance method instead.</li>
 <li><code><a href="#Equals_object">Equals(object)</a></code> - Determines whether this object and another object are equal and have the same type.</li>
 <li><code><a href="#Equals_PeterO_Numbers_EInteger">Equals(PeterO.Numbers.EInteger)</a></code> - Determines whether this object and another object are equal.</li>
@@ -125,14 +125,14 @@
 <li><code><a href="#Mod_PeterO_Numbers_EInteger">Mod(PeterO.Numbers.EInteger)</a></code> - Finds the modulus remainder that results when this instance is divided by the value of an arbitrary-precision integer.</li>
 <li><code><a href="#ModPow_PeterO_Numbers_EInteger_PeterO_Numbers_EInteger">ModPow(PeterO.Numbers.EInteger, PeterO.Numbers.EInteger)</a></code> - Calculates the remainder when this arbitrary-precision integer raised to a certain power is divided by another arbitrary-precision integer.</li>
 <li><code><a href="#ModPow_PeterO_Numbers_EInteger_PeterO_Numbers_EInteger_PeterO_Numbers_EInteger">ModPow(PeterO.Numbers.EInteger, PeterO.Numbers.EInteger, PeterO.Numbers.EInteger)</a></code> - Calculates the remainder when an arbitrary-precision integer raised to a certain power is divided by another arbitrary-precision integer.</li>
-<li><code><a href="#Multiply_int">Multiply(int)</a></code> - Multiplies this instance by the value of an arbitrary-precision integer object.</li>
-<li><code><a href="#Multiply_long">Multiply(long)</a></code> - Not documented yet.</li>
-<li><code><a href="#Multiply_PeterO_Numbers_EInteger">Multiply(PeterO.Numbers.EInteger)</a></code> - Multiplies this instance by the value of an arbitrary-precision integer object.</li>
+<li><code><a href="#Multiply_int">Multiply(int)</a></code> - Multiplies this arbitrary-precision integer by a 32-bit signed integer and returns the result.</li>
+<li><code><a href="#Multiply_long">Multiply(long)</a></code> - Multiplies this arbitrary-precision integer by a 64-bit signed integer and returns the result.</li>
+<li><code><a href="#Multiply_PeterO_Numbers_EInteger">Multiply(PeterO.Numbers.EInteger)</a></code> - Multiplies this arbitrary-precision integer by another arbitrary-precision integer and returns the result.</li>
 <li><code><a href="#Negate">Negate()</a></code> - Gets the value of this object with the sign reversed.</li>
 <li><code><a href="#Not">Not()</a></code> - Returns an arbitrary-precision integer with every bit flipped from this one (also called an inversion or NOT operation).</li>
 <li><code><a href="#Not_PeterO_Numbers_EInteger">Not(PeterO.Numbers.EInteger)</a></code> - Returns an arbitrary-precision integer with every bit flipped.</li>
 <li><code><a href="#One">One</a></code> - Gets the number 1 as an arbitrary-precision integer.</li>
-<li><code><a href="#op_Addition">PeterO.Numbers.EInteger operator +(PeterO.Numbers.EInteger, PeterO.Numbers.EInteger)</a></code> - Adds two arbitrary-precision integer objects and returns the result.</li>
+<li><code><a href="#op_Addition">PeterO.Numbers.EInteger operator +(PeterO.Numbers.EInteger, PeterO.Numbers.EInteger)</a></code> - Adds an arbitrary-precision integer and another arbitrary-precision integer and returns the result.</li>
 <li><code><a href="#op_BitwiseAnd">PeterO.Numbers.EInteger operator &amp;(PeterO.Numbers.EInteger, PeterO.Numbers.EInteger)</a></code> - Does an AND operation between two arbitrary-precision integer values.</li>
 <li><code><a href="#op_BitwiseOr">PeterO.Numbers.EInteger operator |(PeterO.Numbers.EInteger, PeterO.Numbers.EInteger)</a></code> - Does an OR operation between two arbitrary-precision integer instances.</li>
 <li><code><a href="#op_Decrement">PeterO.Numbers.EInteger operator --(PeterO.Numbers.EInteger)</a></code> - Subtracts one from an arbitrary-precision integer.</li>
@@ -144,8 +144,8 @@
 <li><code><a href="#op_LeftShift">PeterO.Numbers.EInteger operator &lt;&lt;(PeterO.Numbers.EInteger, int)</a></code> - Returns an arbitrary-precision integer with the bits shifted to the left by a number of bits.</li>
 <li><code><a href="#op_LessThan">bool operator &lt;(PeterO.Numbers.EInteger, PeterO.Numbers.EInteger)</a></code> - Determines whether an arbitrary-precision integer is less than another arbitrary-precision integer.</li>
 <li><code><a href="#op_LessThanOrEqual">bool operator &lt;=(PeterO.Numbers.EInteger, PeterO.Numbers.EInteger)</a></code> - Determines whether an arbitrary-precision integer is up to another arbitrary-precision integer.</li>
-<li><code><a href="#op_Modulus">PeterO.Numbers.EInteger operator %(PeterO.Numbers.EInteger, PeterO.Numbers.EInteger)</a></code> - Finds the remainder that results when an arbitrary-precision integer is divided by the value of another arbitrary-precision integer.</li>
-<li><code><a href="#op_Multiply">PeterO.Numbers.EInteger operator &#x2a;(PeterO.Numbers.EInteger, PeterO.Numbers.EInteger)</a></code> - Multiplies an arbitrary-precision integer by the value of an arbitrary-precision integer.</li>
+<li><code><a href="#op_Modulus">PeterO.Numbers.EInteger operator %(PeterO.Numbers.EInteger, PeterO.Numbers.EInteger)</a></code> - Returns the remainder that would result when an arbitrary-precision integer is divided by another arbitrary-precision integer.</li>
+<li><code><a href="#op_Multiply">PeterO.Numbers.EInteger operator &#x2a;(PeterO.Numbers.EInteger, PeterO.Numbers.EInteger)</a></code> - Multiplies an arbitrary-precision integer by another arbitrary-precision integer and returns the result.</li>
 <li><code><a href="#op_OnesComplement">PeterO.Numbers.EInteger operator ~(PeterO.Numbers.EInteger)</a></code> - Returns an arbitrary-precision integer with every bit flipped.</li>
 <li><code><a href="#op_RightShift">PeterO.Numbers.EInteger operator &gt;&gt;(PeterO.Numbers.EInteger, int)</a></code> - Shifts the bits of an arbitrary-precision integer to the right.</li>
 <li><code><a href="#op_Subtraction">PeterO.Numbers.EInteger operator -(PeterO.Numbers.EInteger, PeterO.Numbers.EInteger)</a></code> - Subtracts two arbitrary-precision integer values.</li>
@@ -156,9 +156,9 @@
 <li><code><a href="#Pow_int">Pow(int)</a></code> - Raises an arbitrary-precision integer to a power.</li>
 <li><code><a href="#Pow_PeterO_Numbers_EInteger">Pow(PeterO.Numbers.EInteger)</a></code> - Raises an arbitrary-precision integer to a power.</li>
 <li><code><a href="#PowBigIntVar_PeterO_Numbers_EInteger">PowBigIntVar(PeterO.Numbers.EInteger)</a></code> - Raises an arbitrary-precision integer to a power, which is given as another arbitrary-precision integer.</li>
-<li><code><a href="#Remainder_int">Remainder(int)</a></code> - Finds the remainder that results when this instance is divided by the value of an arbitrary-precision integer.</li>
-<li><code><a href="#Remainder_long">Remainder(long)</a></code> - Not documented yet.</li>
-<li><code><a href="#Remainder_PeterO_Numbers_EInteger">Remainder(PeterO.Numbers.EInteger)</a></code> - Finds the remainder that results when this instance is divided by the value of an arbitrary-precision integer.</li>
+<li><code><a href="#Remainder_int">Remainder(int)</a></code> - Returns the remainder that would result when this arbitrary-precision integer is divided by a 32-bit signed integer.</li>
+<li><code><a href="#Remainder_long">Remainder(long)</a></code> - Returns the remainder that would result when this arbitrary-precision integer is divided by a 64-bit signed integer.</li>
+<li><code><a href="#Remainder_PeterO_Numbers_EInteger">Remainder(PeterO.Numbers.EInteger)</a></code> - Returns the remainder that would result when this arbitrary-precision integer is divided by another arbitrary-precision integer.</li>
 <li><code><a href="#ShiftLeft_int">ShiftLeft(int)</a></code> - Returns an arbitrary-precision integer with the bits shifted to the left by a number of bits.</li>
 <li><code><a href="#ShiftLeft_PeterO_Numbers_EInteger">ShiftLeft(PeterO.Numbers.EInteger)</a></code> - Returns an arbitrary-precision integer with the bits shifted to the left by a number of bits given as an arbitrary-precision integer.</li>
 <li><code><a href="#ShiftRight_int">ShiftRight(int)</a></code> - Returns an arbitrary-precision integer with the bits shifted to the right.</li>
@@ -166,9 +166,9 @@
 <li><code><a href="#Sign">Sign</a></code> - Gets the sign of this object&#39;s value.</li>
 <li><code><a href="#Sqrt">Sqrt()</a></code> - Finds the square root of this instance&#39;s value, rounded down.</li>
 <li><code><a href="#SqrtRem">SqrtRem()</a></code> - Calculates the square root and the remainder.</li>
-<li><code><a href="#Subtract_int">Subtract(int)</a></code> - Subtracts an arbitrary-precision integer from this arbitrary-precision integer.</li>
-<li><code><a href="#Subtract_long">Subtract(long)</a></code> - Not documented yet.</li>
-<li><code><a href="#Subtract_PeterO_Numbers_EInteger">Subtract(PeterO.Numbers.EInteger)</a></code> - Subtracts an arbitrary-precision integer from this arbitrary-precision integer.</li>
+<li><code><a href="#Subtract_int">Subtract(int)</a></code> - Subtracts a 32-bit signed integer from this arbitrary-precision integer and returns the result.</li>
+<li><code><a href="#Subtract_long">Subtract(long)</a></code> - Subtracts a 64-bit signed integer from this arbitrary-precision integer and returns the result.</li>
+<li><code><a href="#Subtract_PeterO_Numbers_EInteger">Subtract(PeterO.Numbers.EInteger)</a></code> - Subtracts an arbitrary-precision integer from this arbitrary-precision integer and returns the result.</li>
 <li><code><a href="#Ten">Ten</a></code> - Gets the number 10 as an arbitrary-precision integer.</li>
 <li><code><a href="#ToByteChecked">ToByteChecked()</a></code> - Converts this number&#39;s value to a byte (from 0 to 255) if it can fit in a byte (from 0 to 255).</li>
 <li><code><a href="#ToBytes_bool">ToBytes(bool)</a></code> - Returns a byte array of this integer&#39;s value.</li>
@@ -307,7 +307,7 @@
     int intValue);
 </pre>
 
-<p>Adds this object and another object.</p>
+<p>Adds this arbitrary-precision integer and a 32-bit signed integer and returns the result.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -328,7 +328,7 @@ is a 32-bit signed integer.</li>
     long longValue);
 </pre>
 
-<p>Not documented yet.</p>
+<p>Adds this arbitrary-precision integer and a 64-bit signed integer and returns the result.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -349,7 +349,7 @@ is a 64-bit signed integer.</li>
     PeterO.Numbers.EInteger bigintAugend);
 </pre>
 
-<p>Adds this object and another object.</p>
+<p>Adds this arbitrary-precision integer and another arbitrary-precision integer and returns the result.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -648,7 +648,7 @@ is a 64-bit signed integer.</li>
     int intValue);
 </pre>
 
-<p>Divides this instance by the value of an arbitrary-precision integer. The result is rounded down (the fractional part is discarded). Except if the result is 0, it will be negative if this object is positive and the other is negative, or vice versa, and will be positive if both are positive or both are negative.</p>
+<p>Divides this arbitrary-precision integer by a 32-bit signed integer and returns the result. The result of the division is rounded down (the fractional part is discarded). Except if the result of the division is 0, it will be negative if this arbitrary-precision integer is positive and the other 32-bit signed integer is negative, or vice versa, and will be positive if both are positive or both are negative.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -675,7 +675,7 @@ Attempted to divide by zero.</li>
     long longValue);
 </pre>
 
-<p>Not documented yet.</p>
+<p>Divides this arbitrary-precision integer by a 64-bit signed integer and returns the result. The result of the division is rounded down (the fractional part is discarded). Except if the result of the division is 0, it will be negative if this arbitrary-precision integer is positive and the other 64-bit signed integer is negative, or vice versa, and will be positive if both are positive or both are negative.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -696,7 +696,7 @@ is a 64-bit signed integer.</li>
     PeterO.Numbers.EInteger bigintDivisor);
 </pre>
 
-<p>Divides this instance by the value of an arbitrary-precision integer. The result is rounded down (the fractional part is discarded). Except if the result is 0, it will be negative if this object is positive and the other is negative, or vice versa, and will be positive if both are positive or both are negative.</p>
+<p>Divides this arbitrary-precision integer by another arbitrary-precision integer and returns the result. The result of the division is rounded down (the fractional part is discarded). Except if the result of the division is 0, it will be negative if this arbitrary-precision integer is positive and the other arbitrary-precision integer is negative, or vice versa, and will be positive if both are positive or both are negative.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -726,7 +726,7 @@ Attempted to divide by zero.</p></li>
     int intDivisor);
 </pre>
 
-<p>Divides this object by a 32-bit signed integer and returns the quotient and remainder.</p>
+<p>Divides this arbitrary-precision integer by a 32-bit signed integer and returns a two-item array containing the result of the division and the remainder, in that order. The result of the division is rounded down (the fractional part is discarded). Except if the result of the division is 0, it will be negative if this arbitrary-precision integer is positive and the other 32-bit signed integer is negative, or vice versa, and will be positive if both are positive or both are negative. The remainder is the number that remains when the absolute value of this arbitrary-precision integer is divided by the absolute value of the other 32-bit signed integer; the remainder has the same sign (positive or negative) as this arbitrary-precision integer.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -754,7 +754,7 @@ is 0.</li>
     long intDivisor);
 </pre>
 
-<p>Not documented yet.</p>
+<p>Divides this arbitrary-precision integer by a 64-bit signed integer and returns a two-item array containing the result of the division and the remainder, in that order. The result of the division is rounded down (the fractional part is discarded). Except if the result of the division is 0, it will be negative if this arbitrary-precision integer is positive and the other 64-bit signed integer is negative, or vice versa, and will be positive if both are positive or both are negative. The remainder is the number that remains when the absolute value of this arbitrary-precision integer is divided by the absolute value of the other 64-bit signed integer; the remainder has the same sign (positive or negative) as this arbitrary-precision integer.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -775,7 +775,7 @@ is a 64-bit signed integer.</li>
     PeterO.Numbers.EInteger divisor);
 </pre>
 
-<p>Divides this object by another arbitrary-precision integer and returns the quotient and remainder.</p>
+<p>Divides this arbitrary-precision integer by another arbitrary-precision integer and returns a two-item array containing the result of the division and the remainder, in that order. The result of the division is rounded down (the fractional part is discarded). Except if the result of the division is 0, it will be negative if this arbitrary-precision integer is positive and the other arbitrary-precision integer is negative, or vice versa, and will be positive if both are positive or both are negative. The remainder is the number that remains when the absolute value of this arbitrary-precision integer is divided by the absolute value of the other arbitrary-precision integer; the remainder has the same sign (positive or negative) as this arbitrary-precision integer.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -810,7 +810,7 @@ is null.</p></li>
 
 <p><b>Deprecated.</b> Use the DivRem instance method instead.</p>
 
-<p>Divides one arbitrary-precision integer by another, and returns the quotient and sets an output parameter to the remainder.</p>
+<p>Divides this arbitrary-precision integer by another arbitrary-precision integer and returns a two-item array containing the result of the division and the remainder, in that order. The result of the division is rounded down (the fractional part is discarded). Except if the result of the division is 0, it will be negative if this arbitrary-precision integer is positive and the other arbitrary-precision integer is negative, or vice versa, and will be positive if both are positive or both are negative. The remainder is the number that remains when the absolute value of this arbitrary-precision integer is divided by the absolute value of the other arbitrary-precision integer; the remainder has the same sign (positive or negative) as this arbitrary-precision integer.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -2192,7 +2192,7 @@ is null.</li>
     int intValue);
 </pre>
 
-<p>Multiplies this instance by the value of an arbitrary-precision integer object.</p>
+<p>Multiplies this arbitrary-precision integer by a 32-bit signed integer and returns the result.</p>
 
 <pre>EInteger result = EInteger.FromString(&quot;5&quot;).Multiply(200);
 </pre>
@@ -2218,7 +2218,7 @@ is a 32-bit signed integer.</li>
     long longValue);
 </pre>
 
-<p>Not documented yet.</p>
+<p>Multiplies this arbitrary-precision integer by a 64-bit signed integer and returns the result.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -2239,7 +2239,7 @@ is a 64-bit signed integer.</li>
     PeterO.Numbers.EInteger bigintMult);
 </pre>
 
-<p>Multiplies this instance by the value of an arbitrary-precision integer object.</p>
+<p>Multiplies this arbitrary-precision integer by another arbitrary-precision integer and returns the result.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -2322,7 +2322,7 @@ is null.</li>
     PeterO.Numbers.EInteger augend);
 </pre>
 
-<p>Adds two arbitrary-precision integer objects and returns the result.</p>
+<p>Adds an arbitrary-precision integer and another arbitrary-precision integer and returns the result.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -3118,7 +3118,7 @@ is null.</li>
     PeterO.Numbers.EInteger divisor);
 </pre>
 
-<p>Finds the remainder that results when an arbitrary-precision integer is divided by the value of another arbitrary-precision integer.</p>
+<p>Returns the remainder that would result when an arbitrary-precision integer is divided by another arbitrary-precision integer. The remainder is the number that remains when the absolute value of an arbitrary-precision integer is divided by the absolute value of the other arbitrary-precision integer; the remainder has the same sign (positive or negative) as this arbitrary-precision integer.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -3148,7 +3148,7 @@ is null.</li>
     PeterO.Numbers.EInteger operand2);
 </pre>
 
-<p>Multiplies an arbitrary-precision integer by the value of an arbitrary-precision integer.</p>
+<p>Multiplies an arbitrary-precision integer by another arbitrary-precision integer and returns the result.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -3473,7 +3473,7 @@ is null.</p></li>
     int intValue);
 </pre>
 
-<p>Finds the remainder that results when this instance is divided by the value of an arbitrary-precision integer. The remainder is the value that remains when the absolute value of this object is divided by the absolute value of the other object; the remainder has the same sign (positive or negative) as this object.</p>
+<p>Returns the remainder that would result when this arbitrary-precision integer is divided by a 32-bit signed integer. The remainder is the number that remains when the absolute value of this arbitrary-precision integer is divided by the absolute value of the other 32-bit signed integer; the remainder has the same sign (positive or negative) as this arbitrary-precision integer.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -3504,7 +3504,7 @@ is null.</p></li>
     long longValue);
 </pre>
 
-<p>Not documented yet.</p>
+<p>Returns the remainder that would result when this arbitrary-precision integer is divided by a 64-bit signed integer. The remainder is the number that remains when the absolute value of this arbitrary-precision integer is divided by the absolute value of the other 64-bit signed integer; the remainder has the same sign (positive or negative) as this arbitrary-precision integer.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -3525,7 +3525,7 @@ is a 64-bit signed integer.</li>
     PeterO.Numbers.EInteger divisor);
 </pre>
 
-<p>Finds the remainder that results when this instance is divided by the value of an arbitrary-precision integer. The remainder is the value that remains when the absolute value of this object is divided by the absolute value of the other object; the remainder has the same sign (positive or negative) as this object.</p>
+<p>Returns the remainder that would result when this arbitrary-precision integer is divided by another arbitrary-precision integer. The remainder is the number that remains when the absolute value of this arbitrary-precision integer is divided by the absolute value of the other arbitrary-precision integer; the remainder has the same sign (positive or negative) as this arbitrary-precision integer.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -3677,7 +3677,7 @@ is null.</li>
     int intValue);
 </pre>
 
-<p>Subtracts an arbitrary-precision integer from this arbitrary-precision integer.</p>
+<p>Subtracts a 32-bit signed integer from this arbitrary-precision integer and returns the result.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -3698,7 +3698,7 @@ is a 32-bit signed integer.</li>
     long longValue);
 </pre>
 
-<p>Not documented yet.</p>
+<p>Subtracts a 64-bit signed integer from this arbitrary-precision integer and returns the result.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -3719,7 +3719,7 @@ is a 64-bit signed integer.</li>
     PeterO.Numbers.EInteger subtrahend);
 </pre>
 
-<p>Subtracts an arbitrary-precision integer from this arbitrary-precision integer.</p>
+<p>Subtracts an arbitrary-precision integer from this arbitrary-precision integer and returns the result.</p>
 
 <p><b>Parameters:</b></p>
 

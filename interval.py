@@ -151,7 +151,7 @@ class Interval:
 
     def log(self):
         if self.inf <= 0:
-            raise ValueError
+            raise ValueError("Out of range for log: %s" % (self))
         if self.sup == 1 and self.inf == 1:
             return Interval(0, self.prec)
         # Unfortunately, Decimal.ln doesn't support multiple
@@ -159,26 +159,32 @@ class Interval:
         # for this function is more convoluted
         rprec = self._floor().prec + 4
         highprec = Context(prec=rprec)
-        vh = highprec.ln(self.inf)
         sup = None
         inf = None
         # NOTE: These loops rely on the fact that the result
         # of ln is, in general, inexact
-        while True:
-            inf = self._floor().plus(vh)
-            # print(["inf", vh, inf])
-            if inf != vh:
-                break
-            highprec = Context(prec=highprec.prec + 16)
+        if self.inf == 1:
+            inf = 0
+        else:
             vh = highprec.ln(self.inf)
-        vh = highprec.ln(self.sup)
-        while True:
-            sup = self._ceil().plus(vh)
-            # print(["sup", vh, sup])
-            if sup != vh:
-                break
-            highprec = Context(prec=highprec.prec + 16)
+            while True:
+                inf = self._floor().plus(vh)
+                # print(["inf", vh, inf])
+                if inf != vh:
+                    break
+                highprec = Context(prec=highprec.prec + 16)
+                vh = highprec.ln(self.inf)
+        if self.sup == 1:
+            sup = 0
+        else:
             vh = highprec.ln(self.sup)
+            while True:
+                sup = self._ceil().plus(vh)
+                # print(["sup", vh, sup])
+                if sup != vh:
+                    break
+                highprec = Context(prec=highprec.prec + 16)
+                vh = highprec.ln(self.sup)
         return self._newintv(inf, sup)
 
     def abs(self):
