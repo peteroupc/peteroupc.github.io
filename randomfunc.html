@@ -2037,7 +2037,7 @@ END METHOD
 <li>In most cases, the inverse CDF is not available.  Thus, it has to be approximated.</li>
 </ul>
 
-<p>The following method generates a random number from a distribution via inversion, with an accuracy of <code>BASE</code><sup><code>-precision</code></sup> ((Devroye and Gravel 2018)<sup><a href="#Note57"><strong>(57)</strong></a></sup>, but extended for any base; see also (Bringmann and Friedrich 2013, Appendix A)<sup><a href="#Note58"><strong>(58)</strong></a></sup>).  In the method, <code>ICDF(u, ubits, prec)</code> calculates a number that is within <code>BASE</code><sup><code>-prec</code></sup> of the true inverse CDF of <code>u</code>/2<sup><code>ubits</code></sup>, and <code>BASE</code> is the digit base (e.g. 2 for binary or 10 for decimal).</p>
+<p>The following method generates a random number from a distribution via inversion, with an accuracy of <code>BASE</code><sup><code>-precision</code></sup> ((Devroye and Gravel 2018)<sup><a href="#Note57"><strong>(57)</strong></a></sup>, but extended for any base; see also (Bringmann and Friedrich 2013, Appendix A)<sup><a href="#Note58"><strong>(58)</strong></a></sup>).  In the method, <code>ICDF(u, ubits, prec)</code> calculates a number that is within <code>BASE</code><sup><code>-prec</code></sup> of the true inverse CDF of <code>u</code>/<code>BASE</code><sup><code>ubits</code></sup>, and <code>BASE</code> is the digit base (e.g. 2 for binary or 10 for decimal).</p>
 
 <pre>METHOD Inversion(precision)
    u=0
@@ -2111,7 +2111,7 @@ END METHOD
 
 <ol>
 <li>If only percentiles of data (such as the median or 50th percentile, the minimum or 0th percentile, or the maximum or 100th percentile) are available, the inverse CDF can be approximated via those percentiles.  The Nth percentile corresponds to the inverse CDF of <code>N/100.0</code>.  Missing values of the inverse CDF can then be filled in by interpolation (such as spline fitting).  If the raw data points are available, see &quot;<a href="#Random_Numbers_from_a_Distribution_of_Data_Points"><strong>Random Numbers from a Distribution of Data Points</strong></a>&quot; instead.</li>
-<li>In the <a href="https://peteroupc.github.io/randomgen.zip"><strong>Python sample code</strong></a>, the <code>numbers_from_cdf</code> method, the <code>from_interp</code> method, and a <code>KVectorSampler</code> class<sup><a href="#Note59"><strong>(59)</strong></a></sup> use inversion to sample a random number given a <strong>distribution&#39;s CDF</strong>.  These are all approximations. For <code>from_interp</code>, the CDF is expressed as a list of input/output pairs.</li>
+<li>In the <a href="https://peteroupc.github.io/randomgen.zip"><strong>Python sample code</strong></a>, the <code>numbers_from_cdf</code> method, the <code>from_interp</code> method, and a <code>KVectorSampler</code> class<sup><a href="#Note59"><strong>(59)</strong></a></sup> use inversion to sample a random number given a <strong>distribution&#39;s CDF</strong>.  These are all approximations. For <code>from_interp</code>, the CDF is expressed as a list of input/output pairs.  See <a href="https://github.com/peteroupc/peteroupc.github.io/blob/master/inversion.py"><strong>inversion.py</strong></a> for an implementation of <code>Inversion</code>.</li>
 <li>Taking the maximum of <code>n</code> random numbers is the same as taking the inverse CDF of <code>pow(u, 1/n)</code>, where <code>u</code> is a uniform random number (Devroye 2006)<sup><a href="#Note60"><strong>(60)</strong></a></sup>.</li>
 </ol>
 </blockquote>

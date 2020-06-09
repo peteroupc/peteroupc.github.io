@@ -122,7 +122,7 @@ class VoseAlias:
         tsample = (
             randgen.rndintexc(self.total)
             if int(self.total) == self.total
-            else randgen.rndrangemaxexc(0, tself.otal)
+            else randgen.rndrangemaxexc(0, self.total)
         )
         return d if tsample < self.prob[d] else da
 

@@ -1677,7 +1677,7 @@ If the distribution **has a known inverse CDF**, generate a uniform random numbe
 - If the distribution spans a bigger range than \[0, 1\], then calculating the inverse CDF na&iuml;vely (e.g., `ICDF(RNDU01ZeroOneExc())`) can leave gaps, in the sense that some numbers with the same precision as the uniform number may not be generated even if the distribution gives them a chance of occurring; this is especially the case for uniform floating-point numbers close to 1 (Monahan 1985, sec. 4 and 6)<sup>[**(42)**](#Note42)</sup>.
 - In most cases, the inverse CDF is not available.  Thus, it has to be approximated.
 
-The following method generates a random number from a distribution via inversion, with an accuracy of `BASE`<sup>`-precision`</sup> ((Devroye and Gravel 2018)<sup>[**(57)**](#Note57)</sup>, but extended for any base; see also (Bringmann and Friedrich 2013, Appendix A)<sup>[**(58)**](#Note58)</sup>).  In the method, `ICDF(u, ubits, prec)` calculates a number that is within `BASE`<sup>`-prec`</sup> of the true inverse CDF of `u`/2<sup>`ubits`</sup>, and `BASE` is the digit base (e.g. 2 for binary or 10 for decimal).
+The following method generates a random number from a distribution via inversion, with an accuracy of `BASE`<sup>`-precision`</sup> ((Devroye and Gravel 2018)<sup>[**(57)**](#Note57)</sup>, but extended for any base; see also (Bringmann and Friedrich 2013, Appendix A)<sup>[**(58)**](#Note58)</sup>).  In the method, `ICDF(u, ubits, prec)` calculates a number that is within `BASE`<sup>`-prec`</sup> of the true inverse CDF of `u`/`BASE`<sup>`ubits`</sup>, and `BASE` is the digit base (e.g. 2 for binary or 10 for decimal).
 
     METHOD Inversion(precision)
        u=0
@@ -1745,7 +1745,7 @@ The following three methods approximate the inverse CDF given a uniform random n
 > **Notes:**
 >
 > 1. If only percentiles of data (such as the median or 50th percentile, the minimum or 0th percentile, or the maximum or 100th percentile) are available, the inverse CDF can be approximated via those percentiles.  The Nth percentile corresponds to the inverse CDF of `N/100.0`.  Missing values of the inverse CDF can then be filled in by interpolation (such as spline fitting).  If the raw data points are available, see "[**Random Numbers from a Distribution of Data Points**](#Random_Numbers_from_a_Distribution_of_Data_Points)" instead.
-> 2. In the [**Python sample code**](https://peteroupc.github.io/randomgen.zip), the `numbers_from_cdf` method, the `from_interp` method, and a `KVectorSampler` class<sup>[**(59)**](#Note59)</sup> use inversion to sample a random number given a **distribution's CDF**.  These are all approximations. For `from_interp`, the CDF is expressed as a list of input/output pairs.
+> 2. In the [**Python sample code**](https://peteroupc.github.io/randomgen.zip), the `numbers_from_cdf` method, the `from_interp` method, and a `KVectorSampler` class<sup>[**(59)**](#Note59)</sup> use inversion to sample a random number given a **distribution's CDF**.  These are all approximations. For `from_interp`, the CDF is expressed as a list of input/output pairs.  See [**inversion.py**](https://github.com/peteroupc/peteroupc.github.io/blob/master/inversion.py) for an implementation of `Inversion`.
 > 3. Taking the maximum of `n` random numbers is the same as taking the inverse CDF of `pow(u, 1/n)`, where `u` is a uniform random number (Devroye 2006)<sup>[**(60)**](#Note60)</sup>.
 
 <a id=Rejection_Sampling_with_a_PDF></a>
