@@ -132,12 +132,16 @@ class Interval:
         )
 
     def mignitude(self):
+        if self.inf < 0 and self.sup > 0:
+            return Decimal(0)
         return min(abs(self.sup), abs(self.inf))
 
     def magnitude(self):
         return max(abs(self.sup), abs(self.inf))
 
     def sqrt(self):
+        if self.inf < 0:
+            raise ValueError("Out of range for sqrt: %s" % (self))
         return self.pow(0.5)
 
     def isAccurateTo(self, v):
@@ -153,7 +157,7 @@ class Interval:
         if self.inf <= 0:
             raise ValueError("Out of range for log: %s" % (self))
         if self.sup == 1 and self.inf == 1:
-            return Interval(0, self.prec)
+            return Interval(0, 0)
         # Unfortunately, Decimal.ln doesn't support multiple
         # rounding modes, so implementing rounding
         # for this function is more convoluted
@@ -195,8 +199,15 @@ class Interval:
         if v.inf == v.sup:
             if v.inf == 1:
                 return self
-            if v.inf == 2:
-                return self._newintv(self.mignitude() ** 2, self.magnitude() ** 2)
+            intinf = int(v.inf)
+            if intinf == 2:
+                return self._newintv(
+                    self.mignitude() ** intinf, self.magnitude() ** intinf
+                )
+            if intinf >= 2 and intinf <= 100 and intinf == v.inf and self.inf >= 0:
+                return self._newintv(
+                    self.mignitude() ** intinf, self.magnitude() ** intinf
+                )
         return (v * self.log()).exp()
 
     def __pow__(self, v):
@@ -204,7 +215,7 @@ class Interval:
 
     def exp(self):
         if self.sup == 0 and self.inf == 0:
-            return self._newintv(1, self.prec)
+            return self._newintv(1, 1)
         # Unfortunately, Decimal.exp doesn't support multiple
         # rounding modes, so implementing rounding
         # for this function is more convoluted

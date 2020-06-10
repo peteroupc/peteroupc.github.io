@@ -308,6 +308,42 @@ Creates a binary floating-point number from a 32-bit floating-point number.</li>
 <li><code>static EFloat FromSingleBits​(int value)</code><br>
 Creates a binary floating-point number from a 32-bit floating-point number
 encoded in the IEEE 754 binary32 format.</li>
+<li><code>static EFloat FromString​(byte[] bytes)</code><br>
+Creates a binary floating-point number from a sequence of bytes that
+represents a number, using an unlimited precision context.</li>
+<li><code>static EFloat FromString​(byte[] bytes,
+      int offset,
+      int length)</code><br>
+Creates a binary floating-point number from a sequence of bytes that
+represents a number.</li>
+<li><code>static EFloat FromString​(byte[] bytes,
+      int offset,
+      int length,
+      EContext ctx)</code><br>
+Creates a binary floating-point number from a sequence of bytes that
+represents a number.</li>
+<li><code>static EFloat FromString​(byte[] bytes,
+      EContext ctx)</code><br>
+Creates a binary floating-point number from a sequence of bytes that
+represents a number.</li>
+<li><code>static EFloat FromString​(char[] chars) char</code><br>
+Creates a binary floating-point number from a sequence of char s that
+represents a number, using an unlimited precision context.</li>
+<li><code>static EFloat FromString​(char[] chars,
+      int offset,
+      int length) char</code><br>
+Creates a binary floating-point number from a sequence of char s that
+represents a number.</li>
+<li><code>static EFloat FromString​(char[] chars,
+      int offset,
+      int length,
+      EContext ctx) char</code><br>
+Creates a binary floating-point number from a sequence of char s that
+represents a number.</li>
+<li><code>static EFloat FromString​(char[] chars,
+      EContext ctx) char</code><br>
+Creates a binary floating-point number from a sequence of char s that
+represents a number.</li>
 <li><code>static EFloat FromString​(java.lang.String str)</code><br>
 Creates a binary floating-point number from a text string that represents a
 number, using an unlimited precision context.</li>
@@ -1365,6 +1401,346 @@ than 0 or greater than <code>str</code> &#39;s length, or <code>str</code> &#39;
 length minus <code>offset</code> is less than <code>length</code>.</p></li>
 </ul>
 
+<h3>FromString</h3>
+
+<pre>public static EFloat FromString​(char[] chars, int offset, int length, EContext ctx)
+</pre>
+
+<p>Creates a binary floating-point number from a sequence of <code>char</code> s that
+ represents a number. Note that if the sequence contains a negative
+ exponent, the resulting value might not be exact, in which case the
+ resulting binary floating-point number will be an approximation of
+ this decimal number&#39;s value. <p>The format of the sequence generally
+  consists of:</p> <ul> <li>An optional plus sign (&quot;+&quot; , U+002B) or
+  minus sign (&quot;-&quot;, U+002D) (if &#39;-&#39; , the value is negative.)</li>
+  <li>One or more digits, with a single optional decimal point (&quot;.&quot;,
+ U+002E) before or after those digits or between two of them. These
+ digits may begin with any number of zeros.</li> <li>Optionally,
+  &quot;E+&quot;/&quot;e+&quot; (positive exponent) or &quot;E-&quot;/&quot;e-&quot; (negative exponent) plus
+ one or more digits specifying the exponent (these digits may begin
+ with any number of zeros).</li></ul> <p>The sequence can also be
+  &quot;-INF&quot;, &quot;-Infinity&quot;, &quot;Infinity&quot;, &quot;INF&quot;, quiet NaN (&quot;NaN&quot;) followed
+ by any number of digits (these digits may begin with any number of
+  zeros), or signaling NaN (&quot;sNaN&quot;) followed by any number of digits
+ (these digits may begin with any number of zeros), all where the
+ letters can be any combination of basic upper-case and/or basic
+ lower-case letters.</p> <p>All characters mentioned above are the
+ corresponding characters in the Basic Latin range. In particular,
+ the digits must be the basic digits 0 to 9 (U+0030 to U+0039). The
+ sequence is not allowed to contain white space characters, including
+ spaces.</p></p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>chars</code> - A sequence of <code>char</code> s to convert to a binary
+floating-point number.</p></li>
+<li><p><code>offset</code> - An index starting at 0 showing where the desired portion of
+<code>chars</code> begins.</p></li>
+<li><p><code>length</code> - The length, in code units, of the desired portion of <code>
+chars</code> (but not more than <code>chars</code> &#39;s length).</p></li>
+<li><p><code>ctx</code> - An arithmetic context to control the precision, rounding, and
+exponent range of the result. If HasFlags of the context is true,
+will also store the flags resulting from the operation (the flags
+are in addition to the pre-existing flags). Can be null, in which
+case the precision is unlimited. Note that providing a context is
+often much faster than creating an EDecimal without a context then
+calling ToEFloat on that EDecimal, especially if the context
+specifies a precision limit and exponent range.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The parsed number, converted to arbitrary-precision binary
+floating-point number.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>java.lang.NullPointerException</code> - The parameter <code>chars</code> is null.</p></li>
+<li><p><code>java.lang.NumberFormatException</code> - The portion given of <code>chars</code> is not a
+correctly formatted number sequence; or either <code>offset</code> or
+<code>length</code> is less than 0 or greater than <code>chars</code> &#39;s
+length, or <code>chars</code> &#39;s length minus <code>offset</code> is less than
+<code>length</code>.</p></li>
+</ul>
+
+<h3>FromString</h3>
+
+<pre>public static EFloat FromString​(char[] chars)
+</pre>
+
+<p>Creates a binary floating-point number from a sequence of <code>char</code> s that
+ represents a number, using an unlimited precision context. For more
+ information, see the <code>FromString(string, int, int, EContext)</code>
+ method.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>chars</code> - A sequence of <code>char</code> s to convert to a binary
+floating-point number.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The parsed number, converted to arbitrary-precision binary
+floating-point number.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>java.lang.NullPointerException</code> - The parameter <code>chars</code> is null.</p></li>
+<li><p><code>java.lang.NumberFormatException</code> - The portion given of <code>chars</code> is not a
+correctly formatted number sequence.</p></li>
+</ul>
+
+<h3>FromString</h3>
+
+<pre>public static EFloat FromString​(char[] chars, EContext ctx)
+</pre>
+
+<p>Creates a binary floating-point number from a sequence of <code>char</code> s that
+ represents a number. For more information, see the
+ <code>FromString(string, int, int, EContext)</code> method.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>chars</code> - A sequence of <code>char</code> s to convert to a binary
+floating-point number.</p></li>
+<li><p><code>ctx</code> - An arithmetic context to control the precision, rounding, and
+exponent range of the result. If HasFlags of the context is true,
+will also store the flags resulting from the operation (the flags
+are in addition to the pre-existing flags). Can be null, in which
+case the precision is unlimited. Note that providing a context is
+often much faster than creating an EDecimal without a context then
+calling ToEFloat on that EDecimal, especially if the context
+specifies a precision limit and exponent range.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The parsed number, converted to arbitrary-precision binary
+floating-point number.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>java.lang.NullPointerException</code> - The parameter <code>chars</code> is null.</li>
+</ul>
+
+<h3>FromString</h3>
+
+<pre>public static EFloat FromString​(char[] chars, int offset, int length)
+</pre>
+
+<p>Creates a binary floating-point number from a sequence of <code>char</code> s that
+ represents a number. For more information, see the
+ <code>FromString(string, int, int, EContext)</code> method.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>chars</code> - A sequence of <code>char</code> s to convert to a binary
+floating-point number.</p></li>
+<li><p><code>offset</code> - An index starting at 0 showing where the desired portion of
+<code>chars</code> begins.</p></li>
+<li><p><code>length</code> - The length, in code units, of the desired portion of <code>
+chars</code> (but not more than <code>chars</code> &#39;s length).</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An arbitrary-precision binary floating-point number.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>java.lang.NullPointerException</code> - The parameter <code>chars</code> is null.</p></li>
+<li><p><code>java.lang.IllegalArgumentException</code> - Either <code>offset</code> or <code>length</code> is less
+than 0 or greater than <code>chars</code> &#39;s length, or <code>chars</code> &#39;s
+length minus <code>offset</code> is less than <code>length</code>.</p></li>
+</ul>
+
+<h3>FromString</h3>
+
+<pre>public static EFloat FromString​(byte[] bytes, int offset, int length, EContext ctx)
+</pre>
+
+<p>Creates a binary floating-point number from a sequence of bytes that
+ represents a number. Note that if the sequence contains a negative
+ exponent, the resulting value might not be exact, in which case the
+ resulting binary floating-point number will be an approximation of
+ this decimal number&#39;s value. <p>The format of the sequence generally
+  consists of:</p> <ul> <li>An optional plus sign (&quot;+&quot; , U+002B) or
+  minus sign (&quot;-&quot;, U+002D) (if &#39;-&#39; , the value is negative.)</li>
+  <li>One or more digits, with a single optional decimal point (&quot;.&quot;,
+ U+002E) before or after those digits or between two of them. These
+ digits may begin with any number of zeros.</li> <li>Optionally,
+  &quot;E+&quot;/&quot;e+&quot; (positive exponent) or &quot;E-&quot;/&quot;e-&quot; (negative exponent) plus
+ one or more digits specifying the exponent (these digits may begin
+ with any number of zeros).</li></ul> <p>The sequence can also be
+  &quot;-INF&quot;, &quot;-Infinity&quot;, &quot;Infinity&quot;, &quot;INF&quot;, quiet NaN (&quot;NaN&quot;) followed
+ by any number of digits (these digits may begin with any number of
+  zeros), or signaling NaN (&quot;sNaN&quot;) followed by any number of digits
+ (these digits may begin with any number of zeros), all where the
+ letters can be any combination of basic upper-case and/or basic
+ lower-case letters.</p> <p>All characters mentioned above are the
+ corresponding characters in the Basic Latin range. In particular,
+ the digits must be the basic digits 0 to 9 (U+0030 to U+0039). The
+ sequence is not allowed to contain white space characters, including
+ spaces.</p></p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>bytes</code> - A sequence of bytes to convert to a binary floating-point
+number.</p></li>
+<li><p><code>offset</code> - An index starting at 0 showing where the desired portion of
+<code>bytes</code> begins.</p></li>
+<li><p><code>length</code> - The length, in code units, of the desired portion of <code>
+bytes</code> (but not more than <code>bytes</code> &#39;s length).</p></li>
+<li><p><code>ctx</code> - An arithmetic context to control the precision, rounding, and
+exponent range of the result. If HasFlags of the context is true,
+will also store the flags resulting from the operation (the flags
+are in addition to the pre-existing flags). Can be null, in which
+case the precision is unlimited. Note that providing a context is
+often much faster than creating an EDecimal without a context then
+calling ToEFloat on that EDecimal, especially if the context
+specifies a precision limit and exponent range.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The parsed number, converted to arbitrary-precision binary
+floating-point number.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>java.lang.NullPointerException</code> - The parameter <code>bytes</code> is null.</p></li>
+<li><p><code>java.lang.NumberFormatException</code> - The portion given of <code>bytes</code> is not a
+correctly formatted number sequence; or either <code>offset</code> or
+<code>length</code> is less than 0 or greater than <code>bytes</code> &#39;s
+length, or <code>bytes</code> &#39;s length minus <code>offset</code> is less than
+<code>length</code>.</p></li>
+</ul>
+
+<h3>FromString</h3>
+
+<pre>public static EFloat FromString​(byte[] bytes)
+</pre>
+
+<p>Creates a binary floating-point number from a sequence of bytes that
+ represents a number, using an unlimited precision context. For more
+ information, see the <code>FromString(string, int, int, EContext)</code>
+ method.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>bytes</code> - A sequence of bytes to convert to a binary floating-point
+number.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The parsed number, converted to arbitrary-precision binary
+floating-point number.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>java.lang.NullPointerException</code> - The parameter <code>bytes</code> is null.</p></li>
+<li><p><code>java.lang.NumberFormatException</code> - The portion given of <code>bytes</code> is not a
+correctly formatted number sequence.</p></li>
+</ul>
+
+<h3>FromString</h3>
+
+<pre>public static EFloat FromString​(byte[] bytes, EContext ctx)
+</pre>
+
+<p>Creates a binary floating-point number from a sequence of bytes that
+ represents a number. For more information, see the
+ <code>FromString(string, int, int, EContext)</code> method.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>bytes</code> - A sequence of bytes to convert to a binary floating-point
+number.</p></li>
+<li><p><code>ctx</code> - An arithmetic context to control the precision, rounding, and
+exponent range of the result. If HasFlags of the context is true,
+will also store the flags resulting from the operation (the flags
+are in addition to the pre-existing flags). Can be null, in which
+case the precision is unlimited. Note that providing a context is
+often much faster than creating an EDecimal without a context then
+calling ToEFloat on that EDecimal, especially if the context
+specifies a precision limit and exponent range.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The parsed number, converted to arbitrary-precision binary
+floating-point number.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>java.lang.NullPointerException</code> - The parameter <code>bytes</code> is null.</li>
+</ul>
+
+<h3>FromString</h3>
+
+<pre>public static EFloat FromString​(byte[] bytes, int offset, int length)
+</pre>
+
+<p>Creates a binary floating-point number from a sequence of bytes that
+ represents a number. For more information, see the
+ <code>FromString(string, int, int, EContext)</code> method.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>bytes</code> - A sequence of bytes to convert to a binary floating-point
+number.</p></li>
+<li><p><code>offset</code> - An index starting at 0 showing where the desired portion of
+<code>bytes</code> begins.</p></li>
+<li><p><code>length</code> - The length, in code units, of the desired portion of <code>
+bytes</code> (but not more than <code>bytes</code> &#39;s length).</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An arbitrary-precision binary floating-point number.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>java.lang.NullPointerException</code> - The parameter <code>bytes</code> is null.</p></li>
+<li><p><code>java.lang.IllegalArgumentException</code> - Either <code>offset</code> or <code>length</code> is less
+than 0 or greater than <code>bytes</code> &#39;s length, or <code>bytes</code> &#39;s
+length minus <code>offset</code> is less than <code>length</code>.</p></li>
+</ul>
+
 <h3>Max</h3>
 
 <pre>public static EFloat Max​(EFloat first, EFloat second, EContext ctx)
@@ -1696,7 +2072,9 @@ quiet NaN if this value is signaling NaN.</li>
 </pre>
 
 <p>Adds this arbitrary-precision binary floating-point number and a 32-bit
- signed integer and returns the result.</p>
+ signed integer and returns the result. The exponent for the result
+ is the lower of this arbitrary-precision binary floating-point
+ number&#39;s exponent and the other 32-bit signed integer&#39;s exponent.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1716,7 +2094,10 @@ quiet NaN if this value is signaling NaN.</li>
 </pre>
 
 <p>Subtracts a 32-bit signed integer from this arbitrary-precision binary
- floating-point number and returns the result.</p>
+ floating-point number and returns the result. The exponent for the
+ result is the lower of this arbitrary-precision binary
+ floating-point number&#39;s exponent and the other 32-bit signed
+ integer&#39;s exponent.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1736,7 +2117,9 @@ quiet NaN if this value is signaling NaN.</li>
 </pre>
 
 <p>Multiplies this arbitrary-precision binary floating-point number by a 32-bit
-  signed integer and returns the result.<p> </p><pre>EInteger result = EInteger.FromString(&quot;5&quot;).Multiply(200);</pre> .</p>
+ signed integer and returns the result. The exponent for the result
+ is this arbitrary-precision binary floating-point number&#39;s exponent
+  plus the other 32-bit signed integer&#39;s exponent.<p> </p><pre>EInteger result = EInteger.FromString(&quot;5&quot;).Multiply(200);</pre> .</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1783,7 +2166,9 @@ quiet NaN if this value is signaling NaN.</li>
 </pre>
 
 <p>Adds this arbitrary-precision binary floating-point number and a 64-bit
- signed integer and returns the result.</p>
+ signed integer and returns the result. The exponent for the result
+ is the lower of this arbitrary-precision binary floating-point
+ number&#39;s exponent and the other 64-bit signed integer&#39;s exponent.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1803,7 +2188,10 @@ quiet NaN if this value is signaling NaN.</li>
 </pre>
 
 <p>Subtracts a 64-bit signed integer from this arbitrary-precision binary
- floating-point number and returns the result.</p>
+ floating-point number and returns the result. The exponent for the
+ result is the lower of this arbitrary-precision binary
+ floating-point number&#39;s exponent and the other 64-bit signed
+ integer&#39;s exponent.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1823,7 +2211,9 @@ quiet NaN if this value is signaling NaN.</li>
 </pre>
 
 <p>Multiplies this arbitrary-precision binary floating-point number by a 64-bit
-  signed integer and returns the result.<p> </p><pre>EInteger result = EInteger.FromString(&quot;5&quot;).Multiply(200L);</pre> .</p>
+ signed integer and returns the result. The exponent for the result
+ is this arbitrary-precision binary floating-point number&#39;s exponent
+  plus the other 64-bit signed integer&#39;s exponent.<p> </p><pre>EInteger result = EInteger.FromString(&quot;5&quot;).Multiply(200L);</pre> .</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1871,7 +2261,9 @@ quiet NaN if this value is signaling NaN.</li>
 
 <p>Adds this arbitrary-precision binary floating-point number and another
  arbitrary-precision binary floating-point number and returns the
- result.</p>
+ result. The exponent for the result is the lower of this
+ arbitrary-precision binary floating-point number&#39;s exponent and the
+ other arbitrary-precision binary floating-point number&#39;s exponent.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -3236,7 +3628,9 @@ to more than 0.</li>
 
 <p>Multiplies this arbitrary-precision binary floating-point number by another
  arbitrary-precision binary floating-point number and returns the
- result.</p>
+ result. The exponent for the result is this arbitrary-precision
+ binary floating-point number&#39;s exponent plus the other
+ arbitrary-precision binary floating-point number&#39;s exponent.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -4491,7 +4885,9 @@ the precision is unlimited (the context&#39;s Precision property is 0).</li>
 
 <p>Subtracts an arbitrary-precision binary floating-point number from this
  arbitrary-precision binary floating-point number and returns the
- result.</p>
+ result. The exponent for the result is the lower of this
+ arbitrary-precision binary floating-point number&#39;s exponent and the
+ other arbitrary-precision binary floating-point number&#39;s exponent.</p>
 
 <p><strong>Parameters:</strong></p>
 

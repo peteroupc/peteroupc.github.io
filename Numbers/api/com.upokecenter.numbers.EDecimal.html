@@ -2476,7 +2476,9 @@ quiet NaN if this value is signaling NaN.</li>
 
 <p>Adds this arbitrary-precision decimal floating-point number and another
  arbitrary-precision decimal floating-point number and returns the
- result.</p>
+ result. The exponent for the result is the lower of this
+ arbitrary-precision decimal floating-point number&#39;s exponent and the
+ other arbitrary-precision decimal floating-point number&#39;s exponent.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -3978,7 +3980,9 @@ to more than 0.</li>
 
 <p>Multiplies this arbitrary-precision decimal floating-point number by another
  arbitrary-precision decimal floating-point number and returns the
- result.</p>
+ result. The exponent for the result is this arbitrary-precision
+ decimal floating-point number&#39;s exponent plus the other
+ arbitrary-precision decimal floating-point number&#39;s exponent.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -4030,7 +4034,9 @@ which case the precision is unlimited and rounding isn&#39;t needed.</p></li>
 </pre>
 
 <p>Adds this arbitrary-precision decimal floating-point number and a 64-bit
- signed integer and returns the result.</p>
+ signed integer and returns the result. The exponent for the result
+ is the lower of this arbitrary-precision decimal floating-point
+ number&#39;s exponent and the other 64-bit signed integer&#39;s exponent.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -4050,7 +4056,10 @@ which case the precision is unlimited and rounding isn&#39;t needed.</p></li>
 </pre>
 
 <p>Subtracts a 64-bit signed integer from this arbitrary-precision decimal
- floating-point number and returns the result.</p>
+ floating-point number and returns the result. The exponent for the
+ result is the lower of this arbitrary-precision decimal
+ floating-point number&#39;s exponent and the other 64-bit signed
+ integer&#39;s exponent.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -4070,7 +4079,9 @@ which case the precision is unlimited and rounding isn&#39;t needed.</p></li>
 </pre>
 
 <p>Multiplies this arbitrary-precision decimal floating-point number by a
- 64-bit signed integer and returns the result.</p>
+ 64-bit signed integer and returns the result. The exponent for the
+ result is this arbitrary-precision decimal floating-point number&#39;s
+ exponent plus the other 64-bit signed integer&#39;s exponent.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -4116,7 +4127,9 @@ examples include 1 divided by any multiple of 3, such as 1/3 or
 </pre>
 
 <p>Adds this arbitrary-precision decimal floating-point number and a 32-bit
- signed integer and returns the result.</p>
+ signed integer and returns the result. The exponent for the result
+ is the lower of this arbitrary-precision decimal floating-point
+ number&#39;s exponent and the other 32-bit signed integer&#39;s exponent.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -4136,7 +4149,10 @@ examples include 1 divided by any multiple of 3, such as 1/3 or
 </pre>
 
 <p>Subtracts a 32-bit signed integer from this arbitrary-precision decimal
- floating-point number and returns the result.</p>
+ floating-point number and returns the result. The exponent for the
+ result is the lower of this arbitrary-precision decimal
+ floating-point number&#39;s exponent and the other 32-bit signed
+ integer&#39;s exponent.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -4156,7 +4172,9 @@ examples include 1 divided by any multiple of 3, such as 1/3 or
 </pre>
 
 <p>Multiplies this arbitrary-precision decimal floating-point number by a
- 32-bit signed integer and returns the result.</p>
+ 32-bit signed integer and returns the result. The exponent for the
+ result is this arbitrary-precision decimal floating-point number&#39;s
+ exponent plus the other 32-bit signed integer&#39;s exponent.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -5572,7 +5590,9 @@ the precision is unlimited (the context&#39;s Precision property is 0).</li>
 
 <p>Subtracts an arbitrary-precision decimal floating-point number from this
  arbitrary-precision decimal floating-point number and returns the
- result.</p>
+ result. The exponent for the result is the lower of this
+ arbitrary-precision decimal floating-point number&#39;s exponent and the
+ other arbitrary-precision decimal floating-point number&#39;s exponent.</p>
 
 <p><strong>Parameters:</strong></p>
 

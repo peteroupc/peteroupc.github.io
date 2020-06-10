@@ -18,10 +18,13 @@ class MooreSampler:
        expressions.  More formally, the PDF must be "locally Lipschitz", meaning
        that the function is continuous and has no slope that
        tends to a vertical slope anywhere in the sampling domain.
-    - kf: PDF that takes a floating-point number
-      and returns an Interval (a mathematical object that specifies upper and lower
-      bounds of the result).
+    - kf: PDF that takes a floating-point number or an Interval
+       (a mathematical object that specifies upper and lower
+      bounds of a number) and returns an Interval.  For best results,
+      the PDF should use interval arithmetic throughout.
     - mn, mx: The interval [mn, mx] specifies the sampling domain of the PDF.
+
+    TODO: Support multidimensional PDFs.
 
     Reference:
     Sainudiin, Raazesh, and Thomas L. York. "An Auto-Validating, Trans-Dimensional,
@@ -32,16 +35,12 @@ class MooreSampler:
     def __init__(self, kf, mn, mx):
         if mn >= mx:
             raise ValueError
-        numintervals = 8
+        numintervals = 50
         areasize = (mx - mn) / numintervals
         self.intervals = [
             Interval(mn + i * areasize, mn + (i + 1) * areasize)
             for i in range(numintervals)
         ]
-        # XXX: As it turns out, the ranges produced here will "miss" part of
-        # the density unless one of the boxes' endpoints is a mode of the PDF.  If
-        # all the modes are in between the boxes, the calculated upper bound
-        # will be wrong.
         self.ranges = [kf(x) for x in self.intervals]
         weights = [
             float(self.intervals[i].width() * self.ranges[i].sup)
@@ -126,16 +125,17 @@ if __name__ == "__main__":
     def normalpdf(x):
         mean = Interval(0)
         sd = Interval(1)
+        x = Interval(x)
         return (-((x - mean) ** 2) / (2 * sd ** 2)).exp()
 
     import time
     import math
 
-    mrs = MooreSampler(nakagami_m10, -4, 4)
+    mrs = MooreSampler(normalpdf, -4, 4)
     ls = linspace(-4, 4, 30)
     buckets = [0 for x in ls]
     t = time.time()
-    ksample = [mrs.sample()[0] for i in range(10000)]
+    ksample = [mrs.sample()[0] for i in range(20000)]
     print("Took %f seconds" % (time.time() - t))
     for ks in ksample:
         bucket(ks, ls, buckets)
