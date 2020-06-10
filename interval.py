@@ -32,15 +32,15 @@ class Interval:
         if isinstance(v, Fraction):
             return (Interval(v.numerator, prec=prec) / v.denominator).sup
         if prec == None:
-            return Decimal(v)
-        return Context(rounding=decimal.ROUND_CEILING, prec=prec).plus(Decimal(v))
+            return Interval.RCEILING.create_decimal(v)
+        return Context(rounding=decimal.ROUND_CEILING, prec=prec).create_decimal(v)
 
     def _toinf(v, prec):
         if isinstance(v, Fraction):
             return (Interval(v.numerator, prec=prec) / v.denominator).inf
         if prec == None:
-            return Decimal(v)
-        return Context(rounding=decimal.ROUND_FLOOR, prec=prec).plus(Decimal(v))
+            return Interval.RFLOOR.create_decimal(v)
+        return Context(rounding=decimal.ROUND_FLOOR, prec=prec).create_decimal(v)
 
     def _convert(self, v):
         if isinstance(v, Interval):
@@ -55,6 +55,16 @@ class Interval:
     def _ceil(self):
         if self.prec == None:
             return Interval.RCEILING
+        return Context(rounding=decimal.ROUND_CEILING, prec=self.prec)
+
+    def _floorprec(self):
+        if self.prec == None:
+            return Context(rounding=decimal.ROUND_FLOOR, prec=56)
+        return Context(rounding=decimal.ROUND_FLOOR, prec=self.prec)
+
+    def _ceilprec(self):
+        if self.prec == None:
+            return Context(rounding=decimal.ROUND_CEILING, prec=56)
         return Context(rounding=decimal.ROUND_CEILING, prec=self.prec)
 
     def vol(self):
@@ -128,7 +138,7 @@ class Interval:
     def __truediv__(self, v):
         v = self._convert(v)
         return self * self._newintv(
-            self._floor().divide(1, v.sup), self._ceil().divide(1, v.inf)
+            self._floorprec().divide(1, v.sup), self._ceilprec().divide(1, v.inf)
         )
 
     def mignitude(self):
@@ -161,7 +171,7 @@ class Interval:
         # Unfortunately, Decimal.ln doesn't support multiple
         # rounding modes, so implementing rounding
         # for this function is more convoluted
-        rprec = self._floor().prec + 4
+        rprec = self._floorprec().prec + 4
         highprec = Context(prec=rprec)
         sup = None
         inf = None
@@ -172,7 +182,7 @@ class Interval:
         else:
             vh = highprec.ln(self.inf)
             while True:
-                inf = self._floor().plus(vh)
+                inf = self._floorprec().plus(vh)
                 # print(["inf", vh, inf])
                 if inf != vh:
                     break
@@ -183,7 +193,7 @@ class Interval:
         else:
             vh = highprec.ln(self.sup)
             while True:
-                sup = self._ceil().plus(vh)
+                sup = self._ceilprec().plus(vh)
                 # print(["sup", vh, sup])
                 if sup != vh:
                     break
@@ -219,7 +229,7 @@ class Interval:
         # Unfortunately, Decimal.exp doesn't support multiple
         # rounding modes, so implementing rounding
         # for this function is more convoluted
-        rprec = self._floor().prec + 4
+        rprec = self._floorprec().prec + 4
         highprec = Context(prec=rprec)
         sup = None
         inf = None
@@ -230,7 +240,7 @@ class Interval:
             # NOTE: These loops rely on the fact that the result
             # of exp is, in general, inexact
             while True:
-                inf = self._floor().plus(vh)
+                inf = self._floorprec().plus(vh)
                 # print(["inf", vh, inf])
                 if inf != vh:
                     break
@@ -241,7 +251,7 @@ class Interval:
         else:
             vh = highprec.exp(self.sup)
             while True:
-                sup = self._ceil().plus(vh)
+                sup = self._ceilprec().plus(vh)
                 # print(["sup", vh, sup])
                 if sup != vh:
                     break
@@ -252,5 +262,5 @@ class Interval:
     def __repr__(self):
         return "[%s, %s]" % (self.inf, self.sup)
 
-    RCEILING = Context(rounding=decimal.ROUND_CEILING)
-    RFLOOR = Context(rounding=decimal.ROUND_FLOOR)
+    RCEILING = Context(rounding=decimal.ROUND_CEILING, prec=decimal.MAX_PREC)
+    RFLOOR = Context(rounding=decimal.ROUND_FLOOR, prec=decimal.MAX_PREC)
