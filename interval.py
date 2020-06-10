@@ -19,12 +19,28 @@ class Interval:
             self.sup = v.sup
             self.inf = v.inf
             self.prec = v.prec
-        else:
-            inf = v
-            sup = v if sup == None else sup
+            return
+        elif isinstance(v, Decimal) and isinstance(sup, Decimal):
+            self.sup = sup
+            self.inf = v
             self.prec = prec
-            self.sup = Interval._tosup(sup, prec)
-            self.inf = Interval._toinf(inf, prec)
+            return
+        elif isinstance(v, int) and sup == None:
+            self.prec = prec
+            self.sup = Decimal(v)
+            self.inf = self.sup
+        elif isinstance(v, Fraction) and sup == None:
+            d = Decimal(v.numerator) / v.denominator
+            if d == v:
+                self.prec = prec
+                self.sup = d
+                self.inf = d
+                return
+        inf = v
+        sup = v if sup == None else sup
+        self.prec = prec
+        self.sup = Interval._tosup(sup, prec)
+        self.inf = Interval._toinf(inf, prec)
         if self.sup < self.inf:
             raise ValueError
 
@@ -32,14 +48,14 @@ class Interval:
         if isinstance(v, Fraction):
             return (Interval(v.numerator, prec=prec) / v.denominator).sup
         if prec == None:
-            return Interval.RCEILING.create_decimal(v)
+            return _RCEILING.create_decimal(v)
         return Context(rounding=decimal.ROUND_CEILING, prec=prec).create_decimal(v)
 
     def _toinf(v, prec):
         if isinstance(v, Fraction):
             return (Interval(v.numerator, prec=prec) / v.denominator).inf
         if prec == None:
-            return Interval.RFLOOR.create_decimal(v)
+            return _RFLOOR.create_decimal(v)
         return Context(rounding=decimal.ROUND_FLOOR, prec=prec).create_decimal(v)
 
     def _convert(self, v):
@@ -49,12 +65,12 @@ class Interval:
 
     def _floor(self):
         if self.prec == None:
-            return Interval.RFLOOR
+            return _RFLOOR
         return Context(rounding=decimal.ROUND_FLOOR, prec=self.prec)
 
     def _ceil(self):
         if self.prec == None:
-            return Interval.RCEILING
+            return _RCEILING
         return Context(rounding=decimal.ROUND_CEILING, prec=self.prec)
 
     def _floorprec(self):
@@ -93,7 +109,7 @@ class Interval:
         )
 
     def __neg__(self):
-        return self._newintv(0, 0) - self
+        return _ZERO - self
 
     def __rsub__(self, v):
         return self._convert(v) - self
@@ -119,7 +135,7 @@ class Interval:
         if self == 1:
             return v
         if self == 0 or v == 0:
-            return self._newintv(0, 0)
+            return _ZERO
         return self._newintv(
             min(
                 self._floor().multiply(self.inf, v.inf),
@@ -169,7 +185,7 @@ class Interval:
         if self.inf <= 0:
             raise ValueError("Out of range for log: %s" % (self))
         if self.sup == 1 and self.inf == 1:
-            return Interval(0, 0)
+            return _ZERO
         # Unfortunately, Decimal.ln doesn't support multiple
         # rounding modes, so implementing rounding
         # for this function is more convoluted
@@ -227,7 +243,7 @@ class Interval:
 
     def exp(self):
         if self.sup == 0 and self.inf == 0:
-            return self._newintv(1, 1)
+            return _ONE
         # Unfortunately, Decimal.exp doesn't support multiple
         # rounding modes, so implementing rounding
         # for this function is more convoluted
@@ -264,5 +280,7 @@ class Interval:
     def __repr__(self):
         return "[%s, %s]" % (self.inf, self.sup)
 
-    RCEILING = Context(rounding=decimal.ROUND_CEILING)
-    RFLOOR = Context(rounding=decimal.ROUND_FLOOR)
+_RCEILING = Context(rounding=decimal.ROUND_CEILING)
+_RFLOOR = Context(rounding=decimal.ROUND_FLOOR)
+_ZERO = Interval(0)
+_ONE = Interval(1)

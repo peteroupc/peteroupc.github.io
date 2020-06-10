@@ -48,9 +48,6 @@ class MooreSampler:
     Constraint Programming and Decision Making (pp. 143-152). Springer, Cham.
     """
 
-    # TODO: Avoid floating point (including Decimal) arithmetic as much as possible
-    # outside the PDF.
-
     def __init__(self, pdf, mn, mx):
         if not isinstance(mn, list):
             mn = [mn]
@@ -61,7 +58,7 @@ class MooreSampler:
         # Check whether minimums and maximums are proper
         for i in range(len(mn)):
             if mn[i] >= mx[i]:
-                raise ValueError
+                raise ValueError("A minimum is not less than a maximum")
         self.pdf = pdf
         self.queue = []
         box = [Interval(mn[i], mx[i]) for i in range(len(mn))]
@@ -69,7 +66,7 @@ class MooreSampler:
         self.boxes = []
         self.weights = []
         heapq.heappush(self.queue, (boxkey, len(self.boxes)))
-        self.boxes.append((box, boxrange))
+        self.boxes.append((box, boxrange, self._boxToISD(box)))
         self.weights.append(boxweight)
         self._regenTable()
         self.rg = RandomGen()
@@ -81,10 +78,21 @@ class MooreSampler:
         # Regenerate alias table
         self.alias = FastLoadedDiceRoller(intweights)
 
+    def _boxToISD(self, box):  # ISD = inf, sup, denominator
+        return [self._intvToISD(intv) for intv in box]
+
+    def _intvToISD(self, intv):
+        rangeInf = Fraction(intv.inf)
+        rangeSup = Fraction(intv.sup)
+        denom = max(10000000, (rangeSup + rangeInf).denominator)
+        rangeSup = int(rangeSup * denom)
+        rangeInf = int(rangeInf * denom)
+        return [rangeInf, rangeSup, denom]
+
     def _bisect(self):
         # Pop the item with the smallest key
         _, boxindex = heapq.heappop(self.queue)
-        box, boxrange = self.boxes[boxindex]
+        box, boxrange, _ = self.boxes[boxindex]
         # Find dimension with the greatest width
         dim = 0
         dimbest = 0
@@ -96,17 +104,16 @@ class MooreSampler:
         # Split chosen dimension in two
         leftbox = [x for x in box]
         rightbox = [x for x in box]
-        wid = box[dim].width()
-        # XXX: Division by 2 will reduce number to default precision,
-        # even if dividend's precision is higher
-        mid = box[dim].inf + box[dim].width() / 2
+        fsup = Fraction(box[dim].sup)
+        finf = Fraction(box[dim].inf)
+        mid = finf + (fsup - finf) / 2
         # Left box
         leftbox[dim] = Interval(box[dim].inf, mid)
         newBoxIndex = boxindex  # Replace chosen box with left box
         if leftbox[dim].inf != leftbox[dim].sup:
             boxkey, boxrange, boxweight = self._boxInfo(leftbox)
             heapq.heappush(self.queue, (boxkey, newBoxIndex))
-            self.boxes[newBoxIndex] = (leftbox, boxrange)
+            self.boxes[newBoxIndex] = (leftbox, boxrange, self._boxToISD(leftbox))
             self.weights[newBoxIndex] = boxweight
             newBoxIndex = len(self.boxes)  # Add right box
         # Right box
@@ -114,7 +121,7 @@ class MooreSampler:
         if rightbox[dim].inf != rightbox[dim].sup:
             boxkey, boxrange, boxweight = self._boxInfo(rightbox)
             heapq.heappush(self.queue, (boxkey, newBoxIndex))
-            self.boxes.append((rightbox, boxrange))
+            self.boxes.append((rightbox, boxrange, self._boxToISD(rightbox)))
             self.weights.append(boxweight)
 
     def _widthAsFrac(self, intv):
@@ -129,7 +136,7 @@ class MooreSampler:
             volume = self._widthAsFrac(box[0])
             funcrange = self.pdf(box[0])
         else:
-            volume = Fraction(box[0])
+            volume = self._widthAsFrac(box[0])
             for i in range(1, len(box)):
                 volume *= self._widthAsFrac(box[i])
             funcrange = self.pdf(box)
@@ -147,13 +154,33 @@ class MooreSampler:
         # decimal fractions) exactly, without issues with
         # default precision found in Decimal
         aliasWeight = volume * Fraction(funcrange.sup)
-        return (priorityKey, funcrange, aliasWeight)
+        # Convert box range elements to integers
+        rangeSup = Fraction(funcrange.sup)
+        rangeInf = Fraction(funcrange.inf)
+        denom = max(1 << 32, (rangeSup + rangeInf).denominator)
+        rangeSup = int(rangeSup * denom)
+        rangeInf = int(rangeInf * denom)
+        # Return box info
+        return (priorityKey, [rangeInf, rangeSup, denom], aliasWeight)
 
-    def _rndrange(self, a, b):
-        return float(a) + random.random() * (float(b) - float(a))
+    def _rndrange(self, isd):
+        frac = Fraction(isd[0] + random.randint(0, isd[1] - isd[0] + 1), isd[2])
+        return frac
+
+    def _cvtsample(self, kx):
+        if isinstance(kx, list):
+            return [float(v) for v in kx]
+        else:
+            return float(kx)
+
+    def _intvsample(self, kx):
+        if isinstance(kx, list):
+            return [Interval(v) for v in kx]
+        else:
+            return Interval(kx)
 
     def _rndbox(self, box):
-        ret = [self._rndrange(intv.inf, intv.sup) for intv in box]
+        ret = [self._rndrange(isd) for isd in box]
         return ret[0] if len(ret) == 1 else ret
 
     def sample(self):
@@ -164,10 +191,11 @@ class MooreSampler:
         trials = 50
         while True:
             s = self._sample(trials)
-            if (s[0] == None or s[1] >= 3) and len(self.boxes) < 100000:
+            if (s[0] == None or s[1] >= 5) and len(self.boxes) < 100000:
                 for i in range(10):
                     self._bisect()
                 self._regenTable()
+                # print(len(self.boxes))
             if s[0] != None:
                 return s[0]
 
@@ -182,18 +210,31 @@ class MooreSampler:
         for i in range(trials):
             area = self.alias.next(self.rg)
             # kx ~ Kg, may be a scalar or vector
-            box, boxrange = self.boxes[area]
-            kx = self._rndbox(box)
+            _, boxrange, boxisd = self.boxes[area]
+            kx = self._rndbox(boxisd)
             # Kĝ(kx), a scalar, where kx may be a scalar or vector
-            u = self._rndrange(0, boxrange.sup)
+            udenom = boxrange[2]
+            u = random.randint(0, boxrange[1] - 1)
             # Quick accept
-            if u <= boxrange.inf:
-                return [kx, i - 1]
-            # Evaluate PDF, which returns an interval.
-            # XXX: What if u is between the interval's .inf and .sup?
-            # Should we bisect and try again?
-            if u <= self.pdf(kx).inf:
-                return [kx, i + 1]
+            if u <= boxrange[0]:
+                return [self._cvtsample(kx), i - 1]
+            while True:
+                ufrac = Fraction(u, udenom)
+                # Evaluate PDF, which returns an interval.
+                pdfvalue = self.pdf(self._intvsample(kx))
+                if ufrac <= pdfvalue.inf:
+                    # Accepted
+                    return [self._cvtsample(kx), i + 1]
+                elif ufrac >= pdfvalue.sup:
+                    # Rejected
+                    break
+                else:
+                    # Don't know whether to accept or reject, so increase
+                    # granularity of ufrac
+                    print([pdfvalue.inf, Decimal(ufrac), pdfvalue.sup, ufrac])
+                    udenom <<= 8
+                    u = (u << 8) | random.randint(0, 255)
+                    ufrac = Fraction(u, denom)
         return [None, trials]
 
 if __name__ == "__main__":
@@ -244,8 +285,10 @@ if __name__ == "__main__":
     def normalpdf(x):
         mean = Interval(0.1)
         sd = Interval(1)
-        x = Interval(x)
         return (-((x - mean) ** 2) / (2 * sd ** 2)).exp()
+
+    def normalpdf2(x):
+        return normalpdf(x[0])
 
     import time
     import math
