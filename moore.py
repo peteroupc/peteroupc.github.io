@@ -7,7 +7,8 @@
 #
 import decimal
 import heapq
-from randomgen import VoseAlias, RandomGen
+import random
+from randomgen import RandomGen, FastLoadedDiceRoller
 from decimal import Decimal, Context
 from fractions import Fraction
 from interval import Interval
@@ -15,11 +16,11 @@ from interval import Interval
 class MooreSampler:
     """
     Moore rejection sampler, for sampling distributions whose
-       PDF (probability density function) uses "well-defined" arithmetic
-       expressions.  More formally, the PDF must be "locally Lipschitz", meaning
-       that the function is continuous and has no slope that
-       tends to a vertical slope anywhere in the sampling domain.
-       It can sample from one-dimensional or multidimensional distributions.
+    PDF (probability density function) uses "well-defined" arithmetic
+    expressions.  More formally, the PDF must be "locally Lipschitz", meaning
+    that the function is continuous and has no slope that
+    tends to a vertical slope anywhere in the sampling domain.
+    It can sample from one-dimensional or multidimensional distributions.
 
     - pdf: A function that specifies the PDF.  It takes a single parameter that
         differs as follows, depending on the case:
@@ -70,12 +71,15 @@ class MooreSampler:
         heapq.heappush(self.queue, (boxkey, len(self.boxes)))
         self.boxes.append((box, boxrange))
         self.weights.append(boxweight)
-        self.alias = VoseAlias(self.weights)
+        self._regenTable()
         self.rg = RandomGen()
 
     def _regenTable(self):
+        # Convert to integer weights
+        wsum = sum(self.weights)
+        intweights = [int(x * wsum.denominator) for x in self.weights]
         # Regenerate alias table
-        self.alias = VoseAlias(self.weights)
+        self.alias = FastLoadedDiceRoller(intweights)
 
     def _bisect(self):
         # Pop the item with the smallest key
@@ -93,6 +97,8 @@ class MooreSampler:
         leftbox = [x for x in box]
         rightbox = [x for x in box]
         wid = box[dim].width()
+        # XXX: Division by 2 will reduce number to default precision,
+        # even if dividend's precision is higher
         mid = box[dim].inf + box[dim].width() / 2
         # Left box
         leftbox[dim] = Interval(box[dim].inf, mid)
@@ -111,33 +117,43 @@ class MooreSampler:
             self.boxes.append((rightbox, boxrange))
             self.weights.append(boxweight)
 
+    def _widthAsFrac(self, intv):
+        return Fraction(intv.sup) - Fraction(intv.inf)
+
     def _boxInfo(self, box):
         # Calculates the sort key (for the priority queue), the
         # range, and the weight (for the alias table)
+        volume = None
+        funcrange = None
         if len(box) == 1:
-            volume = box[0].width()
+            volume = self._widthAsFrac(box[0])
             funcrange = self.pdf(box[0])
-            return (
-                -volume * funcrange.width(),
-                funcrange,
-                float(volume * funcrange.sup),
-            )
         else:
-            volume = box[0]
+            volume = Fraction(box[0])
             for i in range(1, len(box)):
-                volume *= box[i].width()
+                volume *= self._widthAsFrac(box[i])
             funcrange = self.pdf(box)
-            return (
-                -volume * funcrange.width(),
-                funcrange,
-                float(volume * funcrange.sup),
-            )
+        if not isinstance(funcrange, Interval):
+            raise ValueError("pdf must output an Interval")
+        # NOTE: Priority key can be a coarse-precision
+        # floating-point number, since the exact value of
+        # the key is not crucial for the sampler's correctness
+        priorityKey = float(-volume * float(funcrange.width()))
+        # NOTE: On the other hand, the weight's exact value
+        # is crucial for correctness, since this affects the
+        # probability of the sampler choosing each box
+        # in the density's approximation.  Therefore, use
+        # Fraction, which can store rational numbers (including
+        # decimal fractions) exactly, without issues with
+        # default precision found in Decimal
+        aliasWeight = volume * Fraction(funcrange.sup)
+        return (priorityKey, funcrange, aliasWeight)
 
     def _rndrange(self, a, b):
-        return self.rg.rndrange(float(a), float(b))
+        return float(a) + random.random() * (float(b) - float(a))
 
     def _rndbox(self, box):
-        ret = [self.rg.rndrange(float(intv.inf), float(intv.sup)) for intv in box]
+        ret = [self._rndrange(intv.inf, intv.sup) for intv in box]
         return ret[0] if len(ret) == 1 else ret
 
     def sample(self):
@@ -148,7 +164,7 @@ class MooreSampler:
         trials = 50
         while True:
             s = self._sample(trials)
-            if (s[0] == None or s[1] >= 15) and len(self.boxes) < 100000:
+            if (s[0] == None or s[1] >= 3) and len(self.boxes) < 100000:
                 for i in range(10):
                     self._bisect()
                 self._regenTable()
@@ -233,6 +249,7 @@ if __name__ == "__main__":
 
     import time
     import math
+    import cProfile
 
     mrs = MooreSampler(normalpdf, -4, 4)
     ls = linspace(-4, 4, 30)

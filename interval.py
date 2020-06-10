@@ -137,6 +137,8 @@ class Interval:
 
     def __truediv__(self, v):
         v = self._convert(v)
+        if self == 1:
+            return v
         return self * self._newintv(
             self._floorprec().divide(1, v.sup), self._ceilprec().divide(1, v.inf)
         )
@@ -262,5 +264,5 @@ class Interval:
     def __repr__(self):
         return "[%s, %s]" % (self.inf, self.sup)
 
-    RCEILING = Context(rounding=decimal.ROUND_CEILING, prec=decimal.MAX_PREC)
-    RFLOOR = Context(rounding=decimal.ROUND_FLOOR, prec=decimal.MAX_PREC)
+    RCEILING = Context(rounding=decimal.ROUND_CEILING)
+    RFLOOR = Context(rounding=decimal.ROUND_FLOOR)

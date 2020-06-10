@@ -607,6 +607,8 @@ CLASSES
      |
      |  rndint(self, maxInclusive)
      |
+     |  rndint_fastdiceroller(self, maxInclusive)
+     |
      |  rndintexc(self, maxExclusive)
      |
      |  rndintexcrange(self, minInclusive, maxExclusive)

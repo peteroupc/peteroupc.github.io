@@ -305,7 +305,7 @@ class RandomGen:
         self.bitcount += 1
         return ret
 
-    def rndint(self, maxInclusive):
+    def rndint_fastdiceroller(self, maxInclusive):
         if maxInclusive < 0:
             raise ValueError("maxInclusive less than 0")
         if maxInclusive == 0:
@@ -323,6 +323,15 @@ class RandomGen:
                     return y
                 x = x - maxInclusive - 1
                 y = y - maxInclusive - 1
+
+    def rndint(self, maxInclusive):
+        if maxInclusive < 0:
+            raise ValueError("maxInclusive less than 0")
+        if maxInclusive == 0:
+            return 0
+        if maxInclusive == 1:
+            return self._rndbit()
+        return self.rng.randint(0, maxInclusive)
 
     def rndintexc(self, maxExclusive):
         if maxExclusive <= 0:
