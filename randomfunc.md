@@ -410,7 +410,7 @@ The following method generates 1 with probability `exp(-x/y)` and 0 otherwise (C
 
 > **Note:** An algorithm that transforms "coin flips" biased one way into coin flips biased another way is called a _Bernoulli factory_ (Keane and O'Brien 1994)<sup>[**(8)**](#Note8)</sup> (Flajolet et al., 2010)<sup>[**(9)**](#Note9)</sup>.  The [**Python sample code**](https://peteroupc.github.io/randomgen.zip) includes implementations of several Bernoulli factories.
 >
-> **Example**: The following pseudocode generates a random integer in [0, `y`), but produces -1 instead if that number would be less than `x`: `if ZeroToOne(x, y) == 1: return -1; else: return RNDINTEXCRANGE(x, y)`.
+> **Example**: The following pseudocode generates a random integer in [0, `y`), or -1 instead if that number would be less than `x`, using fewer random bits than the naïve approach: `if ZeroOrOne(x, y) == 1: return -1; else: return RNDINTEXCRANGE(x, y)`.
 
 <a id=Random_Sampling></a>
 ### Random Sampling
@@ -1527,7 +1527,7 @@ In Monte Carlo sampling, low-discrepancy sequences are often used to achieve mor
 
 Probabilities can be expressed as a digit expansion (of the form `0.dddddd...`).
 
-If the probability is a rational number, express it as a rational number (`n`/`d`) and use `ZeroToOne(n, d)` to generate 1 with probability `n`/`d` and 0 otherwise (a _Bernoulli trial_).
+If the probability is a rational number, express it as a rational number (`n`/`d`) and use `ZeroOrOne(n, d)` to generate 1 with probability `n`/`d` and 0 otherwise (a _Bernoulli trial_).
 
 If the probability is an irrational number, such as `exp(-x/y)` or `ln(2)`, then the digit expansion is infinite and can only be approximated.  In that case, assuming the probability is in \[0, 1), use the following algorithm to do a Bernoulli trial with that probability ((Brassard et al., 2015)<sup>[**(46)**](#Note46)</sup>; see also (Devroye 1986, p. 769)<sup>[**(13)**](#Note13)</sup>), where `BASE` is the digit base, such as 2 for binary or 10 for decimal:
 

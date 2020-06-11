@@ -103,7 +103,7 @@ class MooreSampler:
         # sampling process.  A random number x/denom is chosen, where
         # x is a random integer in [rangeInf, rangeSup).
         # NOTE FOR IMPROVEMENT: Minimum denominator is a high
-        # power of 10.  An future version may take
+        # power of 10.  A future version may take
         # a user-specified accuracy into account (e.g., 2^-prec)
         # and set the minimum denominator to be that accuracy
         # instead, so that all vectors with a coarsest resolution
@@ -187,15 +187,16 @@ class MooreSampler:
         # default precision found in Decimal
         aliasWeight = volume * Fraction(funcrange.sup)
         # Convert box range elements to integers
-        # NOTE: We are dealing here with a point between 0 and
-        # the top of the function's range.  A proposed vector is
+        # NOTE: We are dealing here with a random point between 0
+        # and the top of the PDF's range anywhere in the box.  A
+        # proposed vector is
         # accepted if the point is less than the bottom of the
-        # function's range, and a "slower" process is done otherwise,
+        # PDF's range, and a "slower" process is done otherwise,
         # which requires evaluating the PDF.  The random point
         # x/denom is chosen, where x is a random integer in
-        # [rangeInf, rangeSup).
+        # [0, rangeSup).
         # NOTE FOR IMPROVEMENT: Minimum denominator is a high
-        # power of 2.  An future version could take
+        # power of 2.  A future version could take
         # a user-specified accuracy into account (e.g., 2^-prec)
         # and set the minimum denominator to be that accuracy
         # instead.  However, the exact minimum denominator is
@@ -203,7 +204,9 @@ class MooreSampler:
         # check in which this random point is involved
         # only serves to determine whether evaluating the PDF is
         # necessary or not, and omitting the check doesn't affect
-        # the sampler's correctness.
+        # the sampler's correctness.  Rather, the correctness depends
+        # on whether the PDF given to this sampler has provided an
+        # interval that correctly bounds the true PDF.
         rangeSup = Fraction(funcrange.sup)
         rangeInf = Fraction(funcrange.inf)
         denom = max(1 << 32, (rangeSup + rangeInf).denominator)
@@ -348,10 +351,15 @@ if __name__ == "__main__":
                     i += 1
             i += 1
 
-    def normalpdf(x):
-        mean = Interval(0.1)
-        sd = Interval(1)
+    def normalpdf(x, mean=0, sd=1):
+        mean = Interval(mean)
+        sd = Interval(sd)
         return (-((x - mean) ** 2) / (2 * sd ** 2)).exp()
+
+    def normalpdfv(x, mean=0, vari=1):
+        mean = Interval(mean)
+        vari = Interval(vari)
+        return (-((x - mean) ** 2) / (2 * vari)).exp()
 
     def betapdf(x):
         if x.sup < 0 or x.inf >= 1:
@@ -361,12 +369,13 @@ if __name__ == "__main__":
         beta = Interval(3)
         return (1 - x) ** (alpha) * x ** (beta)
 
-    def normalpdf2(x):
-        return normalpdf(x[0])
-
     import time
     import math
     import cProfile
+
+    def stovolp(x):
+        global yi
+        return stovol(x, yi, 0.3, 0.95, 0.7)
 
     mrs = MooreSampler(normalpdf, -4, 4)
     ls = linspace(-4, 4, 30)

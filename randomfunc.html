@@ -537,7 +537,7 @@ END METHOD
 <blockquote>
 <p><strong>Note:</strong> An algorithm that transforms &quot;coin flips&quot; biased one way into coin flips biased another way is called a <em>Bernoulli factory</em> (Keane and O&#39;Brien 1994)<sup><a href="#Note8"><strong>(8)</strong></a></sup> (Flajolet et al., 2010)<sup><a href="#Note9"><strong>(9)</strong></a></sup>.  The <a href="https://peteroupc.github.io/randomgen.zip"><strong>Python sample code</strong></a> includes implementations of several Bernoulli factories.</p>
 
-<p><strong>Example</strong>: The following pseudocode generates a random integer in [0, <code>y</code>), but produces -1 instead if that number would be less than <code>x</code>: <code>if ZeroToOne(x, y) == 1: return -1; else: return RNDINTEXCRANGE(x, y)</code>.</p>
+<p><strong>Example</strong>: The following pseudocode generates a random integer in [0, <code>y</code>), or -1 instead if that number would be less than <code>x</code>, using fewer random bits than the naïve approach: <code>if ZeroOrOne(x, y) == 1: return -1; else: return RNDINTEXCRANGE(x, y)</code>.</p>
 </blockquote>
 
 <p><a id=Random_Sampling></a></p>
@@ -1845,7 +1845,7 @@ END METHOD
 
 <p>Probabilities can be expressed as a digit expansion (of the form <code>0.dddddd...</code>).</p>
 
-<p>If the probability is a rational number, express it as a rational number (<code>n</code>/<code>d</code>) and use <code>ZeroToOne(n, d)</code> to generate 1 with probability <code>n</code>/<code>d</code> and 0 otherwise (a <em>Bernoulli trial</em>).</p>
+<p>If the probability is a rational number, express it as a rational number (<code>n</code>/<code>d</code>) and use <code>ZeroOrOne(n, d)</code> to generate 1 with probability <code>n</code>/<code>d</code> and 0 otherwise (a <em>Bernoulli trial</em>).</p>
 
 <p>If the probability is an irrational number, such as <code>exp(-x/y)</code> or <code>ln(2)</code>, then the digit expansion is infinite and can only be approximated.  In that case, assuming the probability is in [0, 1), use the following algorithm to do a Bernoulli trial with that probability ((Brassard et al., 2015)<sup><a href="#Note46"><strong>(46)</strong></a></sup>; see also (Devroye 1986, p. 769)<sup><a href="#Note13"><strong>(13)</strong></a></sup>), where <code>BASE</code> is the digit base, such as 2 for binary or 10 for decimal:</p>
 

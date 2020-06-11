@@ -14,17 +14,21 @@ from fractions import Fraction
 class Interval:
     """ An interval of two Decimal values. """
 
-    def __init__(self, v, sup=None, prec=None):
+    def __new__(cl, v, sup=None, prec=None):
+        if isinstance(v, Interval) and sup == None and prec == None:
+            return v
+        scl = super(Interval, cl)
+        self = scl.__new__(cl)
         if isinstance(v, Interval) and sup == None:
             self.sup = v.sup
             self.inf = v.inf
             self.prec = v.prec
-            return
+            return self
         elif isinstance(v, Decimal) and isinstance(sup, Decimal):
             self.sup = sup
             self.inf = v
             self.prec = prec
-            return
+            return self
         elif isinstance(v, int) and sup == None:
             self.prec = prec
             self.sup = Decimal(v)
@@ -35,7 +39,7 @@ class Interval:
                 self.prec = prec
                 self.sup = d
                 self.inf = d
-                return
+                return self
         inf = v
         sup = v if sup == None else sup
         self.prec = prec
@@ -43,6 +47,7 @@ class Interval:
         self.inf = Interval._toinf(inf, prec)
         if self.sup < self.inf:
             raise ValueError
+        return self
 
     def _tosup(v, prec):
         if isinstance(v, Fraction):

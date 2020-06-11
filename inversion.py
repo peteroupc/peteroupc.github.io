@@ -10,6 +10,7 @@
 
 import random
 import decimal
+from intervals import Interval
 from decimal import Decimal, Context
 from fractions import Fraction
 
