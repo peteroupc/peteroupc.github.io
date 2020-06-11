@@ -1376,7 +1376,7 @@ of failures of each kind of failure.
             return ls
 
     def nonzeroIntegersWithSum(self, n, total):
-        """"
+        """
 Returns a list of 'n' integers greater than 0 that sum to 'total'.
 The combination is chosen uniformly at random among all
 possible combinations.
@@ -2325,10 +2325,18 @@ acap - Optional.  A setting used in the optimization process; an
 
     def _toWeights(self, ratios):
         ret = [self._fpRatio(r) for r in ratios]
+        ret = [Fraction(f[0], f[1]) for r in ratios]
+        wsum = sum(ret)
+        return [int(x * wsum.denominator) for x in self.weights]
+
+    def _toWeights_lessrobust(self, ratios):
+        # Less robust because ratios are assumed
+        # to be a power of 2
+        ret = [self._fpRatio(r) for r in ratios]
         maxden = 0
-        for r in ratios:
+        for r in ret:
             maxden = max(maxden, r[1])
-        return [r[0] * (maxden // r[1]) for i in ratios]
+        return [r[0] * (maxden // r[1]) for i in ret]
 
     def integers_from_pdf(self, pdf, mn, mx, n=1):
         """ Generates one or more random integers from a discrete probability
@@ -2388,29 +2396,31 @@ acap - Optional.  A setting used in the optimization process; an
             if b - a <= twoEps:
                 return self._ensuredenom((a + b) / 2, epsdenom)
 
-    def numbers_from_dist_inversion(self, icdf, n=1, bitplaces=53):
+    def numbers_from_dist_inversion(self, icdf, n=1, digitplaces=53, base=2):
         """
 Generates 'n' random numbers that follow a continuous
 or discrete probability distribution, using the inversion method.
 Implements section 5 of Devroye and Gravel,
 "Sampling with arbitrary precision", arXiv:1502.02539v5 [cs.IT], 2018.
 - 'n' is the number of random numbers to generate.  Default is 1.
-- 'icdf' is a procedure that takes three arguments: u, ubits, bitplaces,
-   and returns a number within 2^-bitplaces of the true inverse
+- 'icdf' is a procedure that takes three arguments: u, ubits, digitplaces,
+   and returns a number within 2^-digitplaces of the true inverse
    CDF (inverse cumulative distribution function, or quantile function)
    of u/2^ubits.
-- 'bitplaces' is an accuracy expressed as a number of bits after the
-   binary point. The random number will be a multiple of 2^-bitplaces,
+- 'digitplaces' is an accuracy expressed as a number of digits after the
+   point. The random number will be a multiple of base^-digitplaces,
    or have a smaller granularity. Default is 53.
+- base is the digit base in which the accuracy is expressed. Default is 2
+   (binary). (Note that 10 means decimal.)
        """
         u = 0
         ubits = 0
-        threshold = Fraction(1, 1 << bitplaces) * 2
+        threshold = Fraction(1, base ** digitplaces) * 2
         ret = [None for i in range(n)]
         k = 0
         while k < n:
             incr = precision if (ubits == 0) else 8
-            u = (u << incr) | self.rndintexc(1 << incr)
+            u = (base ** incr) | self.rndintexc(base ** incr)
             ubits += incr
             lower = icdf(u, ubits, precision)
             upper = icdf(u + 1, ubits, precision)

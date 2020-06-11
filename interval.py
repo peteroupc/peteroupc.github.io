@@ -100,6 +100,15 @@ class Interval:
             raise ValueError
         newinf = max(a, self.inf)
         newsup = min(b, self.sup)
+        if self.inf == newinf and self.sup == newsup:
+            return self
+        return self._newintv(newinf, newsup)
+
+    def clampleft(self, a):
+        newinf = max(a, self.inf)
+        newsup = max(newinf, self.sup)
+        if self.inf == newinf and self.sup == newsup:
+            return self
         return self._newintv(newinf, newsup)
 
     def __add__(self, v):
@@ -262,11 +271,16 @@ class Interval:
         if self.inf == 1 and self.sup == 1:
             return self
         if self.inf == 0:
-            if self.sup == 0:
+            if self.sup == 0 and v.inf == v.sup and v.inf == 0:
                 return _ONE
+            if self.sup == 0 and v.inf == v.sup:
+                return _ZERO
+            powInf = 0
+            if v.inf == v.sup and v.inf == 0:
+                powInf = 1
             tmp = self._newintv(self.sup, self.sup)
             tpow = tmp.pow(v)
-            return self._newintv(min(1, tpow.inf), max(1, tpow.sup))
+            return self._newintv(min(1, tpow.inf, powInf), max(1, tpow.sup, powInf))
         return (v * self.log()).exp()
 
     def __pow__(self, v):

@@ -496,7 +496,6 @@ CLASSES
      |  negativebinomialint(self, successes, px, py)
      |
      |  nonzeroIntegersWithSum(self, n, total)
-     |      "
      |      Returns a list of 'n' integers greater than 0 that sum to 'total'.
      |      The combination is chosen uniformly at random among all
      |      possible combinations.
@@ -536,19 +535,21 @@ CLASSES
      |      - 'mn' and 'mx' express the interval.  Both are optional and
      |         are set to 0 and 1, respectively, by default.
      |
-     |  numbers_from_dist_inversion(self, icdf, n=1, bitplaces=53)
+     |  numbers_from_dist_inversion(self, icdf, n=1, digitplaces=53, base=2)
      |      Generates 'n' random numbers that follow a continuous
      |      or discrete probability distribution, using the inversion method.
      |      Implements section 5 of Devroye and Gravel,
      |      "Sampling with arbitrary precision", arXiv:1502.02539v5 [cs.IT], 2018.
      |      - 'n' is the number of random numbers to generate.  Default is 1.
-     |      - 'icdf' is a procedure that takes three arguments: u, ubits, bitplaces,
-     |         and returns a number within 2^-bitplaces of the true inverse
+     |      - 'icdf' is a procedure that takes three arguments: u, ubits, digitplaces,
+     |         and returns a number within 2^-digitplaces of the true inverse
      |         CDF (inverse cumulative distribution function, or quantile function)
      |         of u/2^ubits.
-     |      - 'bitplaces' is an accuracy expressed as a number of bits after the
-     |         binary point. The random number will be a multiple of 2^-bitplaces,
+     |      - 'digitplaces' is an accuracy expressed as a number of digits after the
+     |         point. The random number will be a multiple of base^-digitplaces,
      |         or have a smaller granularity. Default is 53.
+     |      - base is the digit base in which the accuracy is expressed. Default is 2
+     |         (binary). (Note that 10 means decimal.)
      |
      |  numbers_from_pdf(self, pdf, mn, mx, n=1, steps=100)
      |      Generates one or more random numbers from a continuous probability
@@ -1258,5 +1259,197 @@ CLASSES
 
 FILE
     /home/rooster/Documents/SharpDevelopProjects/peteroupc.github.io/bernoulli.py
+
+```
+
+```
+Help on module interval:
+
+NAME
+    interval
+
+DESCRIPTION
+    #  Implements interval numbers and interval arithmetic, backed
+    #  by Decimal values.
+    #
+    #  Written by Peter O. Any copyright to this file is released to the Public Domain.
+    #  In case this is not possible, this file is also licensed under Creative Commons Zero
+    #  (https://creativecommons.org/publicdomain/zero/1.0/).
+    #
+
+CLASSES
+    builtins.object
+        Interval
+
+    class Interval(builtins.object)
+     |  An interval of two Decimal values.
+     |
+     |  Methods defined here:
+     |
+     |  __add__(self, v)
+     |
+     |  __max__(a, b)
+     |
+     |  __min__(a, b)
+     |
+     |  __mul__(self, v)
+     |
+     |  __neg__(self)
+     |
+     |  __pow__(self, v)
+     |
+     |  __radd__(self, v)
+     |
+     |  __repr__(self)
+     |      Return repr(self).
+     |
+     |  __rmul__(self, v)
+     |
+     |  __rsub__(self, v)
+     |
+     |  __rtruediv__(self, v)
+     |
+     |  __sub__(self, v)
+     |
+     |  __truediv__(self, v)
+     |
+     |  abs(self)
+     |
+     |  clamp(self, a, b)
+     |
+     |  clampleft(self, a)
+     |
+     |  exp(self)
+     |
+     |  isAccurateTo(self, v)
+     |
+     |  log(self)
+     |
+     |  magnitude(self)
+     |
+     |  midpoint(self)
+     |
+     |  mignitude(self)
+     |
+     |  pow(self, v)
+     |
+     |  sqrt(self)
+     |
+     |  vol(self)
+     |
+     |  width(self)
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods defined here:
+     |
+     |  __new__(cl, v, sup=None, prec=None)
+     |      Create and return a new object.  See help(type) for accurate signature.
+     |
+     |  ----------------------------------------------------------------------
+     |  Data descriptors defined here:
+     |
+     |  __dict__
+     |      dictionary for instance variables (if defined)
+     |
+     |  __weakref__
+     |      list of weak references to the object (if defined)
+
+FILE
+    /home/rooster/Documents/SharpDevelopProjects/peteroupc.github.io/interval.py
+
+```
+
+```
+Help on module moore:
+
+NAME
+    moore
+
+DESCRIPTION
+    #  Implements the Moore Rejection Sampler.
+    #
+    #  Written by Peter O. Any copyright to this file is released to the Public Domain.
+    #  In case this is not possible, this file is also licensed under Creative Commons Zero
+    #  (https://creativecommons.org/publicdomain/zero/1.0/).
+    #
+
+CLASSES
+    builtins.object
+        MooreSampler
+
+    class MooreSampler(builtins.object)
+     |  Moore rejection sampler, for generating independent samples
+     |  exactly from continuous distributions whose PDF (probability
+     |  density function) uses "well-defined" arithmetic
+     |  expressions. It can sample from one-dimensional or multidimensional
+     |  distributions.  It can also sample from so-called "transdimensional
+     |  distributions" if the distribution is the union of several component
+     |  distributions that may have different dimensions and are associated
+     |  with one of several _labels_.
+     |
+     |  Parameters:
+     |
+     |  - pdf: A function that specifies the PDF.  It takes a single parameter that
+     |      differs as follows, depending on the case:
+     |      - One-dimensional case: A single Interval. (An Interval is a mathematical
+     |        object that specifies upper and lower bounds of a number.)
+     |      - Multidimensional case: A list of Intervals, one for each dimension.
+     |      - Transdimensional case (numLabels > 1): A list of two items: the Interval
+     |         or Intervals, followed by a label number (an integer in [0, numLabels)).
+     |      This function returns an Interval.  For best results,
+     |      the function should use interval arithmetic throughout.  The area under
+     |      the PDF need not equal 1 (this sampler works even if the PDF is only known
+     |      up to a normalizing constant).
+     |  - mn, mx: Specifies the sampling domain of the PDF.  There are three cases:
+     |     - One-dimensional case: Both mn and mx are numbers giving the domain,
+     |        which in this case is [mn, mx].
+     |     - Multidimensional case: Both mn and mx are lists giving the minimum
+     |        and maximum bounds for each dimension in the sampling domain.
+     |        In this case, both lists must have the same size.
+     |     - Transdimensional case: Currently, this class assumes the component
+     |        distributions share the same sampling domain, which
+     |        is given depending on the preceding two cases.
+     |     For this sampler to work, the PDF must be "locally Lipschitz" in the
+     |     sampling domain, meaning that the function is continuous everywhere
+     |     in the domain, and has no slope that tends to a vertical slope anywhere in
+     |     that domain.
+     |  - numlabels: The number of labels associated with the distribution, if it's a
+     |     transdimensional distribution.  Optional; the default is 1.
+     |
+     |  Reference:
+     |  Sainudiin, Raazesh, and Thomas L. York. "An Auto-Validating, Trans-Dimensional,
+     |  Universal Rejection Sampler for Locally Lipschitz Arithmetical Expressions."
+     |  Reliable Computing 18 (2013): 15-54.
+     |
+     |  The following reference describes an optimization, not yet implemented here:
+     |  Sainudiin, R., 2014. An Auto-validating Rejection Sampler for Differentiable
+     |  Arithmetical Expressions: Posterior Sampling of Phylogenetic Quartets. In
+     |  Constraint Programming and Decision Making (pp. 143-152). Springer, Cham.
+     |
+     |  Methods defined here:
+     |
+     |  __init__(self, pdf, mn, mx, numLabels=1)
+     |      Initialize self.  See help(type(self)) for accurate signature.
+     |
+     |  acceptRate(self)
+     |
+     |  sample(self)
+     |      Samples a number or vector (depending on the number of dimensions)
+     |      from the distribution and returns that sample.
+     |      If the sampler is transdimensional (the number of labels is greater than 1),
+     |      instead returns a list containing the sample and a random label in the
+     |      interval [0, numLabels), in that order.
+     |
+     |  ----------------------------------------------------------------------
+     |  Data descriptors defined here:
+     |
+     |  __dict__
+     |      dictionary for instance variables (if defined)
+     |
+     |  __weakref__
+     |      list of weak references to the object (if defined)
+
+FILE
+    /home/rooster/Documents/SharpDevelopProjects/peteroupc.github.io/moore.py
 
 ```

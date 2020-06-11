@@ -24,6 +24,8 @@ class MooreSampler:
     distributions that may have different dimensions and are associated
     with one of several _labels_.
 
+    Parameters:
+
     - pdf: A function that specifies the PDF.  It takes a single parameter that
         differs as follows, depending on the case:
         - One-dimensional case: A single Interval. (An Interval is a mathematical
@@ -32,7 +34,9 @@ class MooreSampler:
         - Transdimensional case (numLabels > 1): A list of two items: the Interval
            or Intervals, followed by a label number (an integer in [0, numLabels)).
         This function returns an Interval.  For best results,
-        the function should use interval arithmetic throughout.
+        the function should use interval arithmetic throughout.  The area under
+        the PDF need not equal 1 (this sampler works even if the PDF is only known
+        up to a normalizing constant).
     - mn, mx: Specifies the sampling domain of the PDF.  There are three cases:
        - One-dimensional case: Both mn and mx are numbers giving the domain,
           which in this case is [mn, mx].
@@ -84,6 +88,11 @@ class MooreSampler:
             self.weights.append(boxweight)
         self._regenTable()
         self.rg = RandomGen()
+        self.accepts = 0
+        self.totaltrials = 0
+
+    def acceptRate(self):
+        return Decimal(self.accepts) / Decimal(self.totaltrials)
 
     def _regenTable(self):
         # Convert to integer weights
@@ -147,12 +156,16 @@ class MooreSampler:
             )
             self.weights[newBoxIndex] = boxweight
             newBoxIndex = len(self.boxes)  # Add right box
+        else:
+            # Weight is 0, since the old box was removed
+            self.weights[newBoxIndex] = 0
         # Right box
         rightbox[dim] = Interval(mid, box[dim].sup)
         if rightbox[dim].inf != rightbox[dim].sup:
             boxkey, boxrange, boxweight = self._boxInfo(rightbox, label)
             heapq.heappush(self.queue, (boxkey, newBoxIndex))
-            self.boxes.append((rightbox, boxrange, self._boxToISD(rightbox), label))
+            box = (rightbox, boxrange, self._boxToISD(rightbox), label)
+            self.boxes.append(box)
             self.weights.append(boxweight)
 
     def _widthAsFrac(self, intv):
@@ -213,7 +226,8 @@ class MooreSampler:
         rangeSup = int(rangeSup * denom)
         rangeInf = int(rangeInf * denom)
         # Return box info: priority key, function range, weight
-        return (priorityKey, [rangeInf, rangeSup, denom], aliasWeight)
+        boxinfo = (priorityKey, [rangeInf, rangeSup, denom], aliasWeight)
+        return boxinfo
 
     def _rndrange(self, isd):
         frac = Fraction(isd[0] + random.randint(0, isd[1] - isd[0] - 1), isd[2])
@@ -248,11 +262,13 @@ class MooreSampler:
         trials = 50
         while True:
             s = self._sample(trials)
+            self.accepts += 1
+            self.totaltrials += s[1]
             if (s[0] == None or s[1] >= 5) and len(self.boxes) < 100000:
+                # print(["accept",self.acceptRate()])
                 for i in range(10):
                     self._bisect()
                 self._regenTable()
-                # print(len(self.boxes))
             if s[0] != None:
                 return s[0]
 
@@ -285,13 +301,13 @@ class MooreSampler:
             u = self._fastrandint(boxrange[0], boxrange[1])
             # Quick accept
             if u < 0:
-                return [self._cvtsample(kx, label), i - 1]
+                return [self._cvtsample(kx, label), i + 1]
             while True:
                 ufrac = Fraction(u, udenom)
                 # Evaluate PDF, which returns an interval.
                 intv = self._intvsample(kx)
                 pdfvalue = self.pdf([intv, label]) if self.transdim else self.pdf(intv)
-                if ufrac <= pdfvalue.inf:
+                if ufrac < pdfvalue.inf:
                     # Accepted
                     return [self._cvtsample(kx, label), i + 1]
                 elif ufrac >= pdfvalue.sup:
@@ -356,6 +372,9 @@ if __name__ == "__main__":
         sd = Interval(sd)
         return (-((x - mean) ** 2) / (2 * sd ** 2)).exp()
 
+    def gammapdf(x, al=2, sc=2):
+        return (x ** (al - 1)) * (-x / sc).exp()
+
     def normalpdfv(x, mean=0, vari=1):
         mean = Interval(mean)
         vari = Interval(vari)
@@ -373,16 +392,12 @@ if __name__ == "__main__":
     import math
     import cProfile
 
-    def stovolp(x):
-        global yi
-        return stovol(x, yi, 0.3, 0.95, 0.7)
-
-    mrs = MooreSampler(normalpdf, -4, 4)
-    ls = linspace(-4, 4, 30)
+    mrs = MooreSampler(gammapdf, 0, 8)
+    ls = linspace(0, 8, 30)
     buckets = [0 for x in ls]
     t = time.time()
-    ksample = [mrs.sample() for i in range(20000)]
-    print("Took %f seconds" % (time.time() - t))
+    ksample = [mrs.sample() for i in range(50000)]
+    print("Took %f seconds (accept rate %0.3f)" % (time.time() - t, mrs.acceptRate()))
     for ks in ksample:
         bucket(ks, ls, buckets)
     showbuckets(ls, buckets)

@@ -15,12 +15,24 @@ A word about probability density functions and inverse CDFs:
 Both functions normally take one number in and put one number out, but in the case of the sampling methods by Devroye and Gravel, special versions of these functions are needed.  Specifically:
 
 * For the rejection sampler, `EPDF(min_x, max_x, precision)` calculates tight bounds of the PDF anywhere in a region of interest, namely the interval [`min_x` * 2<sup>`-precision`</sup>, `max_x` * 2<sup>`-precision`</sup>].   `EPDF` returns two values in this order: the greatest lower bound of the PDF anywhere in the region of interest, and the least upper bound of the PDF anywhere in that region.
-* For the inversion sampler, `EICDF(u, ubits, bitplaces)` calculates an accurate approximation to the inverse CDF. Specifically, `EICDF` returns a number that is within 2<sup>`-bitplaces`</sup> of the true inverse CDF of `u` * 2<sup>`-ubits`</sup>.
+* For the inversion sampler, `EICDF(u, ubits, digitplaces)` calculates an accurate approximation to the quantile. Specifically, `EICDF` returns a number that is within `base`<sup>`-digitplaces`</sup> of the true quantile of `u` * `base`<sup>`-ubits`</sup>.  `base` is the digit base of the accuracy, and `numbers_from_dist_inversion` can take any digit base (such as 2 for binary or 10 for decimal).
 
 <a id=Functions></a>
 ## Functions
 
-Nothing here yet.
+Generally, `EICDF` can make use of interval arithmetic, which provides rigorous error bounds on the result of calculations.  The following Python code is an example of `EICDF` that produces an accurate approximation of the exponential quantile, to within 10<sup>`-precision`</sup>, using interval arithmetic.
+
+    def expoicdf(u, ubits, precision):
+        """ Inverse CDF for the exponential distribution, implemented
+             accurately using interval arithmetic. """
+        intv = Fraction(u, 10 ** ubits)
+        threshold = Fraction(1, 10 ** precision)
+        while True:
+           ret = 1 - intv
+           ret = -(Interval(ret, prec=precision).log())
+           if ret.isAccurateTo(threshold):
+               return ret.midpoint()
+           precision += 8
 
 <a id=Notes></a>
 ## Notes
