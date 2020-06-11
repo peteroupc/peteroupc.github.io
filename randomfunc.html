@@ -536,6 +536,8 @@ END METHOD
 
 <blockquote>
 <p><strong>Note:</strong> An algorithm that transforms &quot;coin flips&quot; biased one way into coin flips biased another way is called a <em>Bernoulli factory</em> (Keane and O&#39;Brien 1994)<sup><a href="#Note8"><strong>(8)</strong></a></sup> (Flajolet et al., 2010)<sup><a href="#Note9"><strong>(9)</strong></a></sup>.  The <a href="https://peteroupc.github.io/randomgen.zip"><strong>Python sample code</strong></a> includes implementations of several Bernoulli factories.</p>
+
+<p><strong>Example</strong>: The following pseudocode generates a random integer in [0, <code>y</code>), but produces -1 instead if that number would be less than <code>x</code>: <code>if ZeroToOne(x, y) == 1: return -1; else: return RNDINTEXCRANGE(x, y)</code>.</p>
 </blockquote>
 
 <p><a id=Random_Sampling></a></p>

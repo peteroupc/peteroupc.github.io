@@ -293,13 +293,13 @@ class RandomGen:
             self.rng = random.Random()
         else:
             self.rng = rng
-        self.bitcount = 31
+        self.bitcount = 63
         self.curbit = 0
 
     def _rndbit(self):
-        if self.bitcount >= 31:
+        if self.bitcount >= 63:
             self.bitcount = 0
-            self.curbit = self.rng.randint(0, (1 << 31) - 1)
+            self.curbit = self.rng.randint(0, (1 << 63) - 1)
         ret = self.curbit & 1
         self.curbit >>= 1
         self.bitcount += 1
@@ -500,10 +500,10 @@ Returns 'list'. """
         while True:
             z = z * 2
             if z >= py:
-                if self.rndint(1) == 0:
+                if self._rndbit() == 0:
                     return 1
                 z = z - py
-            elif z == 0 or self.rndint(1) == 0:
+            elif z == 0 or self._rndbit() == 0:
                 return 0
 
     def bernoulli(self, p):

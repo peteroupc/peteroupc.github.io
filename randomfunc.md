@@ -409,6 +409,8 @@ The following method generates 1 with probability `exp(-x/y)` and 0 otherwise (C
     END METHOD
 
 > **Note:** An algorithm that transforms "coin flips" biased one way into coin flips biased another way is called a _Bernoulli factory_ (Keane and O'Brien 1994)<sup>[**(8)**](#Note8)</sup> (Flajolet et al., 2010)<sup>[**(9)**](#Note9)</sup>.  The [**Python sample code**](https://peteroupc.github.io/randomgen.zip) includes implementations of several Bernoulli factories.
+>
+> **Example**: The following pseudocode generates a random integer in [0, `y`), but produces -1 instead if that number would be less than `x`: `if ZeroToOne(x, y) == 1: return -1; else: return RNDINTEXCRANGE(x, y)`.
 
 <a id=Random_Sampling></a>
 ### Random Sampling

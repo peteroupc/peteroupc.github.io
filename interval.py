@@ -90,6 +90,13 @@ class Interval:
     def _newintv(self, a, b):
         return Interval(a, b, prec=self.prec)
 
+    def clamp(self, a, b):
+        if a > b:
+            raise ValueError
+        newinf = max(a, self.inf)
+        newsup = min(b, self.sup)
+        return self._newintv(newinf, newsup)
+
     def __add__(self, v):
         v = self._convert(v)
         return self._newintv(
@@ -236,6 +243,25 @@ class Interval:
                 return self._newintv(
                     self.mignitude() ** intinf, self.magnitude() ** intinf
                 )
+            if intinf == v.inf:
+                if intinf >= 1 and intinf % 2 == 1:
+                    return self._newintv(self.inf ** intinf, self.sup ** intinf)
+                elif intinf >= 1 and intinf % 2 == 0:
+                    return self._newintv(
+                        self.mignitude() ** intinf, self.magnitude() ** intinf
+                    )
+                elif intinf == 0:
+                    return _ONE
+                elif intinf <= -1 and self.inf != 0 and self.sup != 0:
+                    return (_ONE / self) ** (-intinf)
+        if self.inf == 1 and self.sup == 1:
+            return self
+        if self.inf == 0:
+            if self.sup == 0:
+                return _ONE
+            tmp = self._newintv(self.sup, self.sup)
+            tpow = tmp.pow(v)
+            return self._newintv(min(1, tpow.inf), max(1, tpow.sup))
         return (v * self.log()).exp()
 
     def __pow__(self, v):
