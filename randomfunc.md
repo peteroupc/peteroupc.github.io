@@ -32,7 +32,7 @@ All the random number methods presented on this page are ultimately based on an 
 - Corrections to any method given on this page.
 - Should this page include additional probability distributions?  If so, which ones?
 - Ways to implement any of the randomization methods given in "[**Randomization with Real Numbers**](https://peteroupc.github.io/randomfunc.html#Randomization_with_Real_Numbers)" without rounding errors.
-- Methods to sample a random number from a distribution exactly, with arbitrary precision and using only a source of random bits.
+- Methods to sample a random number from a distribution with arbitrary precision, in a manner that minimizes approximation error, and using only a source of random bits.
 
 <a id=Contents></a>
 ## Contents
@@ -1610,8 +1610,7 @@ The pseudocode below shows the following methods that work with a **known PDF** 
 &nbsp;
 
     METHOD SampleFP(mini, maxi)
-      weights=IntegerWeightsFP(mini, maxi)
-      return mini + WeightedChoice(weights)
+      return mini + WeightedChoice(IntegerWeightsFP(mini, maxi))
     END METHOD
 
     METHOD InversionSampleFP(mini, maxi)
@@ -1689,10 +1688,10 @@ The following method generates a random number from a distribution via inversion
        end
     end
 
-The following three methods approximate the quantile given a uniform random number and additional information.  They should be used only if the application can trade accuracy for speed and if the uniform random number was _pregenerated_ (e.g., from a copula):
+Some cases require converting a uniform random number to a non-uniform one via quantiles (notable cases include _copulas_ or Monte Carlo methods involving low-discrepancy sequences).  For these cases, the following methods approximate the quantile if the application can trade accuracy for speed:
 
-- Distribution is **discrete with known PDF**: The most general method is sequential search (Devroye 1986, p. 85)<sup>[**(13)**](#Note13)</sup>, assuming the distribution produces only integers 0 or greater: `i = 0; p = PDF(i); while u01 > p; u01 = u01 - p; i = i + 1; p = PDF(i); end; return p`, but this is not always fast.  If the interval \[a, b\] covers all or almost all the distribution, then the application can store the interval's PDF values in a list and call `WChoose`: `for i in a..b: AddItem(weights, PDF(i)); return a + WChoose(weights, u01 * Sum(weights))`.  Note that finding the quantile based on the **CDF** instead can introduce more error than with the PDF (Walter 2019)<sup>[**(58)**](#Note58)</sup>.
-- Distribution is **continuous with known PDF**: See `ICDFFromContPDF(u01, mini, maxi, step)` below.
+- Distribution is **discrete, with known PDF**: The most general method is sequential search (Devroye 1986, p. 85)<sup>[**(13)**](#Note13)</sup>, assuming the distribution covers only integers 0 or greater: `i = 0; p = PDF(i); while u01 > p; u01 = u01 - p; i = i + 1; p = PDF(i); end; return p`, but this is not always fast.  If the interval \[a, b\] covers all or almost all the distribution, then the application can store the interval's PDF values in a list and call `WChoose`: `for i in a..b: AddItem(weights, PDF(i)); return a + WChoose(weights, u01 * Sum(weights))`.  Note that finding the quantile based on the **CDF** instead can introduce more error than with the PDF (Walter 2019)<sup>[**(58)**](#Note58)</sup>.
+- Distribution is **continuous, with known PDF**: See `ICDFFromContPDF(u01, mini, maxi, step)` below.
 
 &nbsp;
 
@@ -1840,7 +1839,7 @@ A [**_piecewise linear distribution_**](http://en.cppreference.com/w/cpp/numeric
 <a id=Specific_Distributions></a>
 ### Specific Distributions
 
-Methods to sample additional distributions are given in a [**separate page**](https://github.com/peteroupc/peteroupc.github.io/blob/master/randomnotes.md). They cover the normal, gamma, beta, von Mises, stable, and multivariate normal distributions as well as copulas.  Note, however, that most of the methods won't sample the given distribution _exactly_ (in the sense of minimizing approximation error), but they may still be useful if the application is willing to trade accuracy for speed.
+Methods to sample additional distributions are given in a [**separate page**](https://github.com/peteroupc/peteroupc.github.io/blob/master/randomnotes.md). They cover the normal, gamma, beta, von Mises, stable, and multivariate normal distributions as well as copulas.  Note, however, that most of the methods won't sample the given distribution in a manner that minimizes approximation error), but they may still be useful if the application is willing to trade accuracy for speed.
 
 <a id=Index_of_Non_Uniform_Distributions></a>
 ### Index of Non-Uniform Distributions
@@ -2201,7 +2200,7 @@ provided the PDF's values are all 0 or greater and the area under the PDF's curv
 
 <small><sup id=Note53>(53)</sup> This includes integers if `FPExponent` is limited to 0, and fixed-point numbers if `FPExponent` is limited to a single exponent less than 0.
 
-The methods shown here do not introduce any error beyond the sampling error that occurs when approximating a PDF's or CDF's points as floating-point numbers.  Generally, these approximations will have a smaller relative error the closer they are to 0 (see also Walter, 2019).  For example, the relative error for CDF values closer to 1 is much greater than for values closer to 0.</small>
+The methods shown here are exact if the PDF's or CDF's points are exact; the methods do not introduce any additional errors.  If those points are inexact, their relative error will generally be smaller the closer they are to 0 (see also Walter, 2019).  For example, the relative error for CDF values closer to 1 is much greater than for values closer to 0.</small>
 
 <small><sup id=Note54>(54)</sup> Based on a suggestion by F. Saad in a personal communication (Mar. 26, 2020).</small>
 

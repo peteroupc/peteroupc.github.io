@@ -8,7 +8,7 @@
 This page introduces a new sampler for beta-distributed random numbers.  Unlike any other specially-designed beta sampler I am aware of, this sampler&mdash;
 
 - avoids floating-point arithmetic, and
-- samples from the beta distribution (with both parameters 1 or greater) to an arbitrary precision (and thus is "exact" in the sense defined in (Karney 2014)<sup>[**(1)**](#Note1)</sup>).
+- samples from the beta distribution (with both parameters 1 or greater) to an arbitrary precision and with user-specified error bounds (and thus is "exact" in the sense defined in (Karney 2014)<sup>[**(1)**](#Note1)</sup>).
 
 It takes advantage of a construct called the _Bernoulli factory_ (Keane and O'Brien 1994)<sup>[**(2)**](#Note2)</sup> (Flajolet et al., 2010)<sup>[**(3)**](#Note3)</sup>, which can simulate an arbitrary probability by transforming biased coins to biased coins, as well as the "geometric bag" technique by Flajolet and others (2010)<sup>[**(3)**](#Note3)</sup>, which generates heads or tails with a probability that is built up bit by bit.  One important feature of Bernoulli factories is that they can simulate a given probability _exactly_, without having to calculate that probability manually, which is important if the probability can be an irrational number that no computer can compute exactly (such as `pow(p, 1/2)` or `exp(-2)`).
 

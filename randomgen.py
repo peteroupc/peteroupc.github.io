@@ -72,8 +72,8 @@ class VoseAlias:
     """
     Implements Vose's alias sampler, which chooses a random number in [0, n)
     where the probability that each number is chosen is weighted.  The 'weights' is the
-    list of integer weights each 0 or greater; the higher the weight, the greater
-    the probability.
+    list of weights each 0 or greater; the higher the weight, the greater
+    the probability.  This sampler supports integer or non-integer weights.
     """
 
     def __init__(self, weights):
@@ -130,8 +130,8 @@ class FastLoadedDiceRoller:
     """
     Implements the Fast Loaded Dice Roller, which chooses a random number in [0, n)
     where the probability that each number is chosen is weighted.  The 'weights' is the
-    list of integer weights each 0 or greater; the higher the weight, the greater
-    the probability.
+    list of weights each 0 or greater; the higher the weight, the greater
+    the probability.  This sampler supports only integer weights.
 
     Reference: Saad, F.A., Freer C.E., et al. "The Fast Loaded Dice Roller: A
     Near-Optimal Exact Sampler for Discrete Probability Distributions", in

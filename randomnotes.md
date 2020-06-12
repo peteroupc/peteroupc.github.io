@@ -4,13 +4,20 @@
 <a id=Specific_Distributions></a>
 ### Specific Distributions
 
-**Requires random real numbers.**  This section shows algorithms to sample several popular non-uniform distributions. Note, however, that most of these algorithms won't sample the given distribution _exactly_<sup>[**(1)**](#Note1)</sup>, for many reasons:
+**Requires random real numbers.**  This section shows algorithms to sample several popular non-uniform distributions.
+
+<a id=A_Note_on_Error_Bounded_Algorithms></a>
+#### A Note on Error-Bounded Algorithms
+
+Note that most algorithms in this section won't sample the given distribution in a manner that  minimizes approximation error <sup>[**(1)**](#Note1)</sup>.  For example:
 
 - They may not take a parameter specifying the maximum error tolerable.
-- They may use a `RNDU01` or `RNDRANGE` method, which has no precision requirements.
+- They may use a `RNDU01` or `RNDRANGE` method, which is not required to be error-bounded.
 - They may incur errors due to numerical approximations, including when they calculate irrational numbers or transcendental functions.
 
 Even so, however, these algorithms may be useful if the application is willing to trade accuracy for speed.
+
+On the other hand, if an algorithm returns results that are accurate to a given number of digits after the point (for example, 53 bits after the point), it can generate any number of digits uniformly at random and append those digits to the result's digit expansion without affecting accuracy. For example, after it generates a normally-distributed random number, an algorithm can fill bits 54 through 100 after the point each with 0 or 1, chosen uniformly at random (Karney 2014)<sup>[**(2)**](#Note2)</sup> (example: `for i in 54..100: ret = ret + RNDINT(1) * pow(2,-i)`).
 
 <a id=Normal_Gaussian_Distribution></a>
 #### Normal (Gaussian) Distribution
@@ -24,9 +31,9 @@ There are a number of methods for normal random number generation, including the
 
 1. The ratio-of-uniforms method (given as `NormalRatioOfUniforms` below).
 2. In the _Box&ndash;Muller transformation_, `mu + radius * cos(angle)` and `mu + radius * sin(angle)`, where `angle = RNDRANGEMaxExc(0, 2 * pi)` and `radius = sqrt(Expo(0.5)) * sigma`, are two independent normally-distributed random numbers.  The polar method (given as `NormalPolar` below) likewise produces two independent normal random numbers at a time.
-3. An _approximation_ to a normal random number is the sum of twelve `RNDRANGEMaxExc(0, sigma)` numbers (see Note 13), subtracted by 6 * `sigma`. See `NormalCLT` below, which also includes an optional step to "warp" the random number for better accuracy (Kabal 2000/2019)<sup>[**(2)**](#Note2)</sup> See also [**"Irwin&ndash;Hall distribution" on Wikipedia**](https://en.wikipedia.org/wiki/Irwin%E2%80%93Hall_distribution).  D. Thomas (2014)<sup>[**(3)**](#Note3)</sup>, describes a more general approximation called CLT<sub>k</sub>, which combines `k` uniform random numbers as follows: `RNDU01() - RNDU01() + RNDU01() - ...`.
-4. Methods that [**invert**](#Inverse_Transform_Sampling) the normal distribution's CDF, including those by Wichura, by Acklam, and by Luu (Luu 2016)<sup>[**(4)**](#Note4)</sup>.  See also [**"A literate program to compute the inverse of the normal CDF"**](https://www.johndcook.com/blog/normal_cdf_inverse/).
-5. Karney's algorithm to sample exactly from the normal distribution, without using floating-point numbers (Karney 2014)<sup>[**(5)**](#Note5)</sup>.
+3. An _approximation_ to a normal random number is the sum of twelve `RNDRANGEMaxExc(0, sigma)` numbers (see Note 13), subtracted by 6 * `sigma`. See `NormalCLT` below, which also includes an optional step to "warp" the random number for better accuracy (Kabal 2000/2019)<sup>[**(3)**](#Note3)</sup> See also [**"Irwin&ndash;Hall distribution" on Wikipedia**](https://en.wikipedia.org/wiki/Irwin%E2%80%93Hall_distribution).  D. Thomas (2014)<sup>[**(4)**](#Note4)</sup>, describes a more general approximation called CLT<sub>k</sub>, which combines `k` uniform random numbers as follows: `RNDU01() - RNDU01() + RNDU01() - ...`.
+4. Methods that [**invert**](#Inverse_Transform_Sampling) the normal distribution's CDF, including those by Wichura, by Acklam, and by Luu (Luu 2016)<sup>[**(5)**](#Note5)</sup>.  See also [**"A literate program to compute the inverse of the normal CDF"**](https://www.johndcook.com/blog/normal_cdf_inverse/).
+5. Karney's algorithm to sample from the normal distribution, in a manner that minimizes approximation error and without using floating-point numbers (Karney 2014)<sup>[**(2)**](#Note2)</sup>.
 
 For surveys of normal random number generators, see (Thomas et al. 2007)<sup>[**(6)**](#Note6)</sup>, and (Malik and Hemani 2016)<sup>[**(7)**](#Note7)</sup>
 
@@ -69,7 +76,7 @@ For surveys of normal random number generators, see (Thomas et al. 2007)<sup>[**
      end
     END METHOD
 
-> **Note:** Methods implementing a variant of the normal distribution, the _discrete Gaussian distribution_, generate _integers_ that closely follow the normal distribution.  Examples include the one in (Karney 2014)<sup>[**(5)**](#Note5)</sup>, as well as so-called "constant-time" methods such as (Micciancio and Walter 2017)<sup>[**(8)**](#Note8)</sup> that are used above all in _lattice-based cryptography_.
+> **Note:** Methods implementing a variant of the normal distribution, the _discrete Gaussian distribution_, generate _integers_ that closely follow the normal distribution.  Examples include the one in (Karney 2014)<sup>[**(2)**](#Note2)</sup>, as well as so-called "constant-time" methods such as (Micciancio and Walter 2017)<sup>[**(8)**](#Note8)</sup> that are used above all in _lattice-based cryptography_.
 
 <a id=Gamma_Distribution></a>
 #### Gamma Distribution
@@ -340,10 +347,10 @@ Other kinds of copulas describe different kinds of dependence between random num
 - the **product copula**, where each number is a separately generated `RNDU01()` (indicating no dependence between the numbers), and
 - the **Archimedean copulas**, described by M. Hofert and M. M&auml;chler (2011)<sup>[**(12)**](#Note12)</sup>.
 
-<a id=Exponential_Distribution_Another_Exact_Algorithm></a>
-### Exponential Distribution: Another Exact Algorithm
+<a id=Exponential_Distribution_Another_Error_Bounded_Algorithm></a>
+### Exponential Distribution: Another Error-Bounded Algorithm
 
-The following method samples exactly from an exponential distribution (with an accuracy of 2<sup>`-precision`</sup> and a &lambda; parameter of 1) (Devroye and Gravel 2018)<sup>[**(13)**](#Note13)</sup>.  Includes an algorithm due to (Morina et al. 2019)<sup>[**(14)**](#Note14)</sup>.
+The following method samples from an exponential distribution with a &lambda; parameter of 1 (within an error tolerance of 2<sup>`-precision`</sup>) (Devroye and Gravel 2018)<sup>[**(13)**](#Note13)</sup>.  Includes an algorithm due to (Morina et al. 2019)<sup>[**(14)**](#Note14)</sup>.
 
     METHOD LogisticExp(prec)
         // Generates 1 with probability 1/(exp(2^-prec)+1).
@@ -364,24 +371,20 @@ The following method samples exactly from an exponential distribution (with an a
        return ret
     END METHOD
 
-> **Note:** After `ExpoExact` is used to generate a random number, an application can append additional binary digits (such as `RNDINT(1)`) to the end of that number without affecting the distribution (Karney 2014)<sup>[**(5)**](#Note5)</sup>.
+> **Note:** After `ExpoExact` is used to generate a random number, an application can append additional binary digits (such as `RNDINT(1)`) to the end of that number without affecting the distribution (Karney 2014)<sup>[**(2)**](#Note2)</sup>.
 
 <a id=Notes></a>
 ## Notes
 
-<small><sup id=Note1>(1)</sup> If an algorithm samples a distribution _exactly_, it means that the algorithm&mdash;
-- gives every representable number the expected probability of occurring, as closely as possible, and
-- can sample the given distribution to arbitrary precision while minimizing approximation error.
+<small><sup id=Note1>(1)</sup> This means the algorithm samples from a continuous distribution that is close to the ideal distribution within a user-specified error tolerance, or samples exactly from a discrete distribution.  Thus, the algorithm gives every representable number the expected probability of occurring.  In general, the only random numbers the algorithm uses are random bits (binary digits).</small>
 
-In general, the only random numbers an exact algorithm uses are random bits (binary digits).</small>
+<small><sup id=Note2>(2)</sup> Karney, C.F.F., "[**Sampling exactly from the normal distribution**](https://arxiv.org/abs/1303.6257v2)", arXiv:1303.6257v2  [physics.comp-ph], 2014.</small>
 
-<small><sup id=Note2>(2)</sup> Kabal, P., "Generating Gaussian Pseudo-Random Variates", McGill University, 2000/2019.</small>
+<small><sup id=Note3>(3)</sup> Kabal, P., "Generating Gaussian Pseudo-Random Variates", McGill University, 2000/2019.</small>
 
-<small><sup id=Note3>(3)</sup> Thomas, D.B., 2014, May. FPGA Gaussian random number generators with guaranteed statistical accuracy. In _2014 IEEE 22nd Annual International Symposium on Field-Programmable Custom Computing Machines_ (pp. 149-156).</small>
+<small><sup id=Note4>(4)</sup> Thomas, D.B., 2014, May. FPGA Gaussian random number generators with guaranteed statistical accuracy. In _2014 IEEE 22nd Annual International Symposium on Field-Programmable Custom Computing Machines_ (pp. 149-156).</small>
 
-<small><sup id=Note4>(4)</sup> Luu, T., "Fast and Accurate Parallel Computation of Quantile Functions for Random Number Generation", Dissertation, University College London, 2016.</small>
-
-<small><sup id=Note5>(5)</sup> Karney, C.F.F., "[**Sampling exactly from the normal distribution**](https://arxiv.org/abs/1303.6257v2)", arXiv:1303.6257v2  [physics.comp-ph], 2014.</small>
+<small><sup id=Note5>(5)</sup> Luu, T., "Fast and Accurate Parallel Computation of Quantile Functions for Random Number Generation", Dissertation, University College London, 2016.</small>
 
 <small><sup id=Note6>(6)</sup> Thomas, D., et al., "Gaussian Random Number Generators", _ACM Computing Surveys_ 39(4), 2007.</small>
 

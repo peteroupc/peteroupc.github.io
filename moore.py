@@ -230,6 +230,8 @@ class MooreSampler:
         return boxinfo
 
     def _rndrange(self, isd):
+        if isd[0] == isd[1]:
+            return isd[0]
         frac = Fraction(isd[0] + random.randint(0, isd[1] - isd[0] - 1), isd[2])
         return frac
 
@@ -388,12 +390,17 @@ if __name__ == "__main__":
         beta = Interval(3)
         return (1 - x) ** (alpha) * x ** (beta)
 
+    def geninvgaussian(x, lamda, chi, psi):
+        if x.sup <= 0:
+            return Interval(0)
+        return x ** (lamda - 1) * (-(chi / x + psi * x) / 2).exp()
+
     import time
     import math
     import cProfile
 
-    mrs = MooreSampler(gammapdf, 0, 8)
-    ls = linspace(0, 8, 30)
+    mrs = MooreSampler(lambda x: geninvgaussian(x, 2, 1, 3), 0.001, 15)
+    ls = linspace(0.001, 15, 30)
     buckets = [0 for x in ls]
     t = time.time()
     ksample = [mrs.sample() for i in range(50000)]
