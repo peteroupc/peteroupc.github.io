@@ -356,6 +356,16 @@ CLASSES
      |      The area under the "curve" of the PDF need not be 1.
      |      By default, `n` is 1.
      |
+     |  integers_from_u01(self, pdf, u01)
+     |      Generates the quantiles for a list of uniform random numbers
+     |      according to a discrete distribution, assuming the distribution
+     |      produces only integers 0 or greater.
+     |      - `pdf` is the PDF
+     |      of the discrete distribution; it takes one parameter and returns,
+     |      for that parameter, the probability that a random number will
+     |      equal to that parameter.
+     |      - `u01` is a list of uniform random numbers, in [0, 1].
+     |
      |  intsInRangeSortedWithSum(self, numSamples, numPerSample, mn, mx, sum)
      |      Generates one or more combinations of
      |       'numPerSample' numbers each, where each

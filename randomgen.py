@@ -2542,6 +2542,28 @@ algorithm", arXiv:1511.02273v2  [cs.IT], 2016/2018.
         ntable = numericalTable(cdf, mn, mx, steps)
         return [self.from_interp(ntable) for i in range(n)]
 
+    def integers_from_u01(self, pdf, u01):
+        """ Generates the quantiles for a list of uniform random numbers
+               according to a discrete distribution, assuming the distribution
+               produces only integers 0 or greater.
+               - `pdf` is the PDF
+               of the discrete distribution; it takes one parameter and returns,
+               for that parameter, the probability that a random number will
+               equal to that parameter.
+               - `u01` is a list of uniform random numbers, in [0, 1].
+               """
+        ret = [0 for i in range(len(u01))]
+        pdftable = [pdf(i) for i in range(10)]
+        for i in range(len(u01)):
+            j = 0
+            p = pdftable[0]
+            while u01 > p:
+                u01 = u01 - p
+                j = j + 1
+                p = pdftable[j] if j < len(pdftable) else pdf(j)
+            ret[i] = j
+        return ret
+
     def from_interp(self, table):
         """ Generates a random number given a list of CDF--number
        pairs sorted by CDF.
