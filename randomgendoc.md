@@ -8,11 +8,11 @@ NAME
 
 DESCRIPTION
     Sample code for the article "Random Number Generation and Sampling Methods"
-    https://www.codeproject.com/Articles/1190459/Random-Number-Generation-Methods
+    [https://www.codeproject.com/Articles/1190459/Random-Number-Generation-Methods](https://www.codeproject.com/Articles/1190459/Random-Number-Generation-Methods)
 
     Written by Peter O.
     Any copyright is released to the Public Domain.
-    https://creativecommons.org/publicdomain/zero/1.0/
+    [https://creativecommons.org/publicdomain/zero/1.0/](https://creativecommons.org/publicdomain/zero/1.0/)
 
 CLASSES
     builtins.object
@@ -356,14 +356,16 @@ CLASSES
      |      The area under the "curve" of the PDF need not be 1.
      |      By default, `n` is 1.
      |
-     |  integers_from_u01(self, pdf, u01)
+     |  integers_from_u01(self, pmf, u01)
      |      Generates the quantiles for a list of uniform random numbers
      |      according to a discrete distribution, assuming the distribution
      |      produces only integers 0 or greater.
-     |      - `pdf` is the PDF
+     |      - `pmf` is the probability mass function (PMF)
      |      of the discrete distribution; it takes one parameter and returns,
-     |      for that parameter, the probability that a random number will
-     |      equal to that parameter.
+     |      for that parameter, the probability that a random number is
+     |      equal to that parameter (each probability is in the interval [0, 1]).
+     |      The area under the PMF must be 1; it
+     |      is not enough for the PMF to be correct up to a constant.
      |      - `u01` is a list of uniform random numbers, in [0, 1].
      |
      |  intsInRangeSortedWithSum(self, numSamples, numPerSample, mn, mx, sum)
@@ -594,12 +596,12 @@ CLASSES
      |
      |  powerlognormal(self, p, sigma=1.0)
      |      Power lognormal distribution, as described in NIST/SEMATECH
-     |      e-Handbook of Statistical Methods, http://www.itl.nist.gov/div898/handbook/,
+     |      e-Handbook of Statistical Methods, [http://www.itl.nist.gov/div898/handbook/,](http://www.itl.nist.gov/div898/handbook/,)
      |      accessed Jun. 9, 2018, sec. 1.3.6.6.14.
      |
      |  powernormal(self, p)
      |      Power normal distribution, as described in NIST/SEMATECH
-     |      e-Handbook of Statistical Methods, http://www.itl.nist.gov/div898/handbook/,
+     |      e-Handbook of Statistical Methods, [http://www.itl.nist.gov/div898/handbook/,](http://www.itl.nist.gov/div898/handbook/,)
      |      accessed Jun. 9, 2018, sec. 1.3.6.6.13.
      |
      |  product_copula(self, n=2)
@@ -1463,4 +1465,3 @@ FILE
     /home/rooster/Documents/SharpDevelopProjects/peteroupc.github.io/moore.py
 
 ```
-

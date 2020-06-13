@@ -98,7 +98,7 @@ All the random number methods presented on this page are ultimately based on an 
         - [**Transformations: Additional Examples**](#Transformations_Additional_Examples)
     - [**Random Numbers from a Distribution of Data Points**](#Random_Numbers_from_a_Distribution_of_Data_Points)
     - [**Random Numbers from an Arbitrary Distribution**](#Random_Numbers_from_an_Arbitrary_Distribution)
-        - [**Approximate Sampling for Discrete Distributions**](#Approximate_Sampling_for_Discrete_Distributions)
+        - [**Sampling for Discrete Distributions**](#Sampling_for_Discrete_Distributions)
         - [**Inverse Transform Sampling**](#Inverse_Transform_Sampling)
         - [**Rejection Sampling with a PDF**](#Rejection_Sampling_with_a_PDF)
         - [**Alternating Series**](#Alternating_Series)
@@ -435,7 +435,7 @@ _Sampling without replacement_  essentially means taking a random item _without_
 1. **If `n` is not known in advance:** Use the _reservoir sampling_ method; see the `RandomKItemsFromFile` method, in [**pseudocode given later**](#Pseudocode_for_Random_Sampling).
 2. **If `n` is relatively small (for example, if there are 200 available items, or there is a range of numbers from 0 through 200 to choose from):**
     - If items have to be chosen from a list **in relative order**, or if `n` is 1, then use `RandomKItemsInOrder` (given later).
-    - Otherwise, if the sampled items need not be in random order, and each item can be derived from its _index_ (the item's position as an integer starting at 0) without looking it up in a list: Use the `RandomKItemsFromFile` method.
+    - Otherwise, if the order of the sampled items is unimportant, and each item can be derived from its _index_ (the item's position as an integer starting at 0) without looking it up in a list: Use the `RandomKItemsFromFile` method.
     - Otherwise, the first three cases below will choose `k` items in random order:
         - Store all the items in a list, [**shuffle**](#Shuffling) that list, then choose the first `k` items from that list.
         - If the items are already stored in a list and the list's order can be changed, then shuffle that list and choose the first `k` items from the shuffled list.
@@ -446,7 +446,7 @@ _Sampling without replacement_  essentially means taking a random item _without_
     - Otherwise, **if the items are stored in a list and `n` is not very large (for example, less than 5000):** Store the indices to those items in another list, do a _partial shuffle_ of the latter list, then choose the _last_ `k` indices (or the items corresponding to those indices) from the latter list.
     - Otherwise, **if `n` is not very large:** Store all the items in a list, do a _partial shuffle_ of that list, then choose the _last_ `k` items from that list.
     - Otherwise, see item 5.
-4. **If `n - k` is much smaller than `n` and the sampled items need not be in random order:**  Proceed as in item 3, except the partial shuffle involves `n - k` swaps and the _first_ `k` items are chosen rather than the last `k`.
+4. **If `n - k` is much smaller than `n` and the order of the sampled items is unimportant:**  Proceed as in item 3, except the partial shuffle involves `n - k` swaps and the _first_ `k` items are chosen rather than the last `k`.
 5. **Otherwise (for example, if 32-bit or larger integers will be chosen so that `n` is 2<sup>32</sup>, or if `n` is otherwise very large):** Create a data structure to store the indices to items already chosen.  When a new index to an item is randomly chosen, add it to the data structure if it's not already there, or if it is, choose a new random index.  Repeat this process until `k` indices were added to the data structure this way.  Examples of suitable data structures are&mdash;
     - a [**hash table**](https://en.wikipedia.org/wiki/Hash_table),
     - a compressed bit set (e.g, "roaring bitmap", EWAH), and
@@ -580,9 +580,8 @@ The following pseudocode implements two methods:
       // case the items would appear in the same
       // order as they appeared in the file
       // if the list weren't shuffled.  This line
-      // can be removed, however, if the items
-      // in the returned list need not appear
-      // in random order.
+      // can be removed, however, if the order of
+      // the items in the list is unimportant.
       if size(list)>=2: Shuffle(list)
       return list
     end
@@ -1526,7 +1525,7 @@ If the probability is an irrational number, such as `exp(-x/y)` or `ln(2)`, then
 <a id=Weighted_Choice_Involving_Real_Numbers></a>
 #### Weighted Choice Involving Real Numbers
 
-In general, to implement weighted choice given a list of weights or cumulative weights expressed as real numbers, convert those weights to integers (see "[**Approximate Sampling for Discrete Distributions**](#Approximate_Sampling_for_Discrete_Distributions)"), then use those integers in the `WeightedChoice` or `CumulativeWeightedChoice` methods, as appropriate (see "[**Weighted Choice With Replacement**](#Weighted_Choice_With_Replacement)"). Those two methods could instead be modified by changing `value = RNDINTEXC(sum)` to `value = RNDRANGEMaxExc(0, sum)`, but this is more likely to introduce error.
+In general, to implement weighted choice given a list of weights or cumulative weights expressed as real numbers, convert those weights to integers (see "[**Sampling for Discrete Distributions**](#Sampling_for_Discrete_Distributions)"), then use those integers in the `WeightedChoice` or `CumulativeWeightedChoice` methods, as appropriate (see "[**Weighted Choice With Replacement**](#Weighted_Choice_With_Replacement)"). Those two methods could instead be modified by changing `value = RNDINTEXC(sum)` to `value = RNDRANGEMaxExc(0, sum)`, but this is more likely to introduce error.
 
 <a id=Random_Walks_Additional_Examples></a>
 #### Random Walks: Additional Examples
@@ -1595,12 +1594,15 @@ The following sections show different ways to generate random numbers based on a
 > 1. Lists of PDFs, CDFs, or quantile functions are outside the scope of this page.
 > 2. In practice, the logarithm of the PDF (log-PDF) is sometimes used instead of the PDF to improve numerical stability.
 
-<a id=Approximate_Sampling_for_Discrete_Distributions></a>
-#### Approximate Sampling for Discrete Distributions
+<a id=Sampling_for_Discrete_Distributions></a>
+#### Sampling for Discrete Distributions
 
-If the distribution **is discrete**<sup>[**(52)**](#Note52)</sup>, numbers that closely follow it can be sampled by choosing points that cover all or almost all of the distribution, finding their weights or cumulative weights, and choosing a random point based on those weights.
+If the distribution **is discrete**<sup>[**(52)**](#Note52)</sup>, numbers that closely follow it can be sampled by choosing points that cover all or almost all of the distribution, finding their weights or cumulative weights, and choosing a random point based on those weights.  The method will be exact as long as&mdash;
 
-The pseudocode below shows the following methods that work with a **known PDF** (`PDF(x)`, more properly called _probability mass function_) or a **known CDF** (`CDF(x)`) that outputs floating-point numbers of the form  `FPSignificand` * `FPRadix`<sup>`FPExponent`</sup> (which include Java's `double` and `float`).<sup>[**(53)**](#Note53)</sup> In the code, `LTDenom(x)` is the lowest-terms denominator of the ratio `x`.
+1. the chosen points cover all of the distribution, and
+2. the values of the PDF or CDF are calculated exactly, without error (if they are not, though, this method will not introduce any additional error).<sup>[**(82)**](#Note82)</sup>
+
+The pseudocode below shows the following methods that work with a **known PDF** (`PDF(x)`, more properly called _probability mass function_) or a **known CDF** (`CDF(x)`) that outputs floating-point numbers of the form  `FPSignificand` * `FPRadix`<sup>`FPExponent`</sup> (which include Java's `double` and `float`)<sup>[**(53)**](#Note53)</sup>. In the code, `LTDenom(x)` is the lowest-terms denominator of the ratio `x`.
 
 - `SampleFP(mini, maxi)` chooses a random number in [`mini`, `maxi`] based on a **known PDF**.  `InversionSampleFP` is similar, but is based on a **known CDF**; however, `SampleFP` should be used instead where possible.
 - `IntegerWeightsFP(mini, maxi)` generates a list of integer weights for the interval [`mini`, `maxi`] based on a **known PDF**<sup>[**(54)**](#Note54)</sup>. (Alternatively, the weights could be approximated, such as by scaling and rounding [e.g., `round(PDF(i) * mult)`] or by using a more sophisticated algorithm (Saad et al., 2020)<sup>[**(55)**](#Note55)</sup>, but doing so can introduce error.)
@@ -1738,7 +1740,7 @@ If the target PDF is not known exactly, but can be approximated from above and b
 <a id=Markov_Chain_Monte_Carlo></a>
 #### Markov-Chain Monte Carlo
 
-[**Markov-chain Monte Carlo**](https://en.wikipedia.org/wiki/Markov_chain_Monte_Carlo) (MCMC) is a family of algorithms for sampling many random numbers from a probability distribution by building a _Markov chain_ of random values that build on each other until they converge to the given distribution.  In general, however, these random numbers will have a statistical _dependence_ on each other, and it takes an unknown time for the chain to converge (which is why techniques such as "thinning" -- skipping random numbers -- or "burn-in" -- skipping iterations before sampling -- are often employed). MCMC can also estimate the distribution's sampling domain for other samplers, such as rejection sampling (above).
+[**Markov-chain Monte Carlo**](https://en.wikipedia.org/wiki/Markov_chain_Monte_Carlo) (MCMC) is a family of algorithms for sampling many random numbers from a probability distribution by building a _Markov chain_ of random values that build on each other until they converge to the given distribution.  In general, however, these random numbers will have a statistical _dependence_ on each other, and it takes an unknown time for the chain to converge (which is why techniques such as "thinning" -- keeping only every Nth sample -- or "burn-in" -- skipping iterations before sampling -- are often employed). MCMC can also estimate the distribution's sampling domain for other samplers, such as rejection sampling (above).
 
 MCMC algorithms<sup>[**(61)**](#Note61)</sup> include _Metropolis&ndash;Hastings_, _slice sampling_, and _Gibbs sampling_ (see also the [**Python sample code**](https://peteroupc.github.io/randomgen.zip)).  The latter is special in that it uses not a PDF, but two or more distributions, each of which uses a random number from the previous distribution (_conditional distributions_), that converge to a _joint distribution_.
 
@@ -2197,9 +2199,7 @@ provided the PDF's values are all 0 or greater and the area under the PDF's curv
 - A rational number in lowest terms can be converted to an integer by interleaving the bits of the numerator and denominator.
 - Integer-quantized numbers (popular in "deep-learning" neural networks) take a relatively small number of bits (usually 8 bits or even smaller).  An 8-bit quantized number format is effectively a "look-up table" that maps 256 integers to real numbers.</small>
 
-<small><sup id=Note53>(53)</sup> This includes integers if `FPExponent` is limited to 0, and fixed-point numbers if `FPExponent` is limited to a single exponent less than 0.
-
-The methods shown here are exact if the PDF's or CDF's points are exact; the methods do not introduce any additional errors.  If those points are inexact floating-point numbers, their relative error will generally be smaller the closer they are to 0 (see also Walter, 2019).</small>
+<small><sup id=Note53>(53)</sup> This includes integers if `FPExponent` is limited to 0, and fixed-point numbers if `FPExponent` is limited to a single exponent less than 0.</small>
 
 <small><sup id=Note54>(54)</sup> Based on a suggestion by F. Saad in a personal communication (Mar. 26, 2020).</small>
 
@@ -2256,6 +2256,8 @@ The methods shown here are exact if the PDF's or CDF's points are exact; the met
 <small><sup id=Note80>(80)</sup> Mironov, I., "On Significance of the Least Significant Bits For Differential Privacy", 2012.</small>
 
 <small><sup id=Note81>(81)</sup> For example, see Balcer, V., Vadhan, S., "Differential Privacy on Finite Computers", Dec. 4, 2018; as well as Micciancio, D. and Walter, M., "Gaussian sampling over the integers: Efficient, generic, constant-time", in Annual International Cryptology Conference, August 2017 (pp. 455-485).</small>
+
+<small><sup id=Note82>(82)</sup> If those values are inexact floating-point numbers, their relative error will generally be smaller the closer they are to 0 (see also Walter, 2019).</small>
 
 <a id=Appendix></a>
 ## Appendix

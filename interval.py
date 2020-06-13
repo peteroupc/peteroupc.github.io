@@ -11,7 +11,6 @@ import decimal
 from decimal import Decimal, Context
 from fractions import Fraction
 
-
 class Interval:
     """ An interval of two Decimal values. """
 
@@ -325,7 +324,6 @@ class Interval:
 
     def __repr__(self):
         return "[%s, %s]" % (self.inf, self.sup)
-
 
 _RCEILING = Context(rounding=decimal.ROUND_CEILING)
 _RFLOOR = Context(rounding=decimal.ROUND_FLOOR)

@@ -144,7 +144,7 @@
 <li><a href="#Random_Numbers_from_an_Arbitrary_Distribution"><strong>Random Numbers from an Arbitrary Distribution</strong></a>
 
 <ul>
-<li><a href="#Approximate_Sampling_for_Discrete_Distributions"><strong>Approximate Sampling for Discrete Distributions</strong></a></li>
+<li><a href="#Sampling_for_Discrete_Distributions"><strong>Sampling for Discrete Distributions</strong></a></li>
 <li><a href="#Inverse_Transform_Sampling"><strong>Inverse Transform Sampling</strong></a></li>
 <li><a href="#Rejection_Sampling_with_a_PDF"><strong>Rejection Sampling with a PDF</strong></a></li>
 <li><a href="#Alternating_Series"><strong>Alternating Series</strong></a></li>
@@ -571,7 +571,7 @@ END METHOD
 
 <ul>
 <li>If items have to be chosen from a list <strong>in relative order</strong>, or if <code>n</code> is 1, then use <code>RandomKItemsInOrder</code> (given later).</li>
-<li>Otherwise, if the sampled items need not be in random order, and each item can be derived from its <em>index</em> (the item&#39;s position as an integer starting at 0) without looking it up in a list: Use the <code>RandomKItemsFromFile</code> method.</li>
+<li>Otherwise, if the order of the sampled items is unimportant, and each item can be derived from its <em>index</em> (the item&#39;s position as an integer starting at 0) without looking it up in a list: Use the <code>RandomKItemsFromFile</code> method.</li>
 <li>Otherwise, the first three cases below will choose <code>k</code> items in random order:
 
 <ul>
@@ -589,7 +589,7 @@ END METHOD
 <li>Otherwise, <strong>if <code>n</code> is not very large:</strong> Store all the items in a list, do a <em>partial shuffle</em> of that list, then choose the <em>last</em> <code>k</code> items from that list.</li>
 <li>Otherwise, see item 5.</li>
 </ul></li>
-<li><strong>If <code>n - k</code> is much smaller than <code>n</code> and the sampled items need not be in random order:</strong>  Proceed as in item 3, except the partial shuffle involves <code>n - k</code> swaps and the <em>first</em> <code>k</code> items are chosen rather than the last <code>k</code>.</li>
+<li><strong>If <code>n - k</code> is much smaller than <code>n</code> and the order of the sampled items is unimportant:</strong>  Proceed as in item 3, except the partial shuffle involves <code>n - k</code> swaps and the <em>first</em> <code>k</code> items are chosen rather than the last <code>k</code>.</li>
 <li><p><strong>Otherwise (for example, if 32-bit or larger integers will be chosen so that <code>n</code> is 2<sup>32</sup>, or if <code>n</code> is otherwise very large):</strong> Create a data structure to store the indices to items already chosen.  When a new index to an item is randomly chosen, add it to the data structure if it&#39;s not already there, or if it is, choose a new random index.  Repeat this process until <code>k</code> indices were added to the data structure this way.  Examples of suitable data structures are&mdash;</p>
 
 <ul>
@@ -746,9 +746,8 @@ END METHOD
   // case the items would appear in the same
   // order as they appeared in the file
   // if the list weren&#39;t shuffled.  This line
-  // can be removed, however, if the items
-  // in the returned list need not appear
-  // in random order.
+  // can be removed, however, if the order of
+  // the items in the list is unimportant.
   if size(list)&gt;=2: Shuffle(list)
   return list
 end
@@ -1847,7 +1846,7 @@ END METHOD
 
 <h4>Weighted Choice Involving Real Numbers</h4>
 
-<p>In general, to implement weighted choice given a list of weights or cumulative weights expressed as real numbers, convert those weights to integers (see &quot;<a href="#Approximate_Sampling_for_Discrete_Distributions"><strong>Approximate Sampling for Discrete Distributions</strong></a>&quot;), then use those integers in the <code>WeightedChoice</code> or <code>CumulativeWeightedChoice</code> methods, as appropriate (see &quot;<a href="#Weighted_Choice_With_Replacement"><strong>Weighted Choice With Replacement</strong></a>&quot;). Those two methods could instead be modified by changing <code>value = RNDINTEXC(sum)</code> to <code>value = RNDRANGEMaxExc(0, sum)</code>, but this is more likely to introduce error.</p>
+<p>In general, to implement weighted choice given a list of weights or cumulative weights expressed as real numbers, convert those weights to integers (see &quot;<a href="#Sampling_for_Discrete_Distributions"><strong>Sampling for Discrete Distributions</strong></a>&quot;), then use those integers in the <code>WeightedChoice</code> or <code>CumulativeWeightedChoice</code> methods, as appropriate (see &quot;<a href="#Weighted_Choice_With_Replacement"><strong>Weighted Choice With Replacement</strong></a>&quot;). Those two methods could instead be modified by changing <code>value = RNDINTEXC(sum)</code> to <code>value = RNDRANGEMaxExc(0, sum)</code>, but this is more likely to introduce error.</p>
 
 <p><a id=Random_Walks_Additional_Examples></a></p>
 
@@ -1946,13 +1945,18 @@ END METHOD
 </ol>
 </blockquote>
 
-<p><a id=Approximate_Sampling_for_Discrete_Distributions></a></p>
+<p><a id=Sampling_for_Discrete_Distributions></a></p>
 
-<h4>Approximate Sampling for Discrete Distributions</h4>
+<h4>Sampling for Discrete Distributions</h4>
 
-<p>If the distribution <strong>is discrete</strong><sup><a href="#Note52"><strong>(52)</strong></a></sup>, numbers that closely follow it can be sampled by choosing points that cover all or almost all of the distribution, finding their weights or cumulative weights, and choosing a random point based on those weights.</p>
+<p>If the distribution <strong>is discrete</strong><sup><a href="#Note52"><strong>(52)</strong></a></sup>, numbers that closely follow it can be sampled by choosing points that cover all or almost all of the distribution, finding their weights or cumulative weights, and choosing a random point based on those weights.  The method will be exact as long as&mdash;</p>
 
-<p>The pseudocode below shows the following methods that work with a <strong>known PDF</strong> (<code>PDF(x)</code>, more properly called <em>probability mass function</em>) or a <strong>known CDF</strong> (<code>CDF(x)</code>) that outputs floating-point numbers of the form  <code>FPSignificand</code> * <code>FPRadix</code><sup><code>FPExponent</code></sup> (which include Java&#39;s <code>double</code> and <code>float</code>).<sup><a href="#Note53"><strong>(53)</strong></a></sup> In the code, <code>LTDenom(x)</code> is the lowest-terms denominator of the ratio <code>x</code>.</p>
+<ol>
+<li>the chosen points cover all of the distribution, and</li>
+<li>the values of the PDF or CDF are calculated exactly, without error (if they are not, though, this method will not introduce any additional error).<sup><a href="#Note82"><strong>(82)</strong></a></sup></li>
+</ol>
+
+<p>The pseudocode below shows the following methods that work with a <strong>known PDF</strong> (<code>PDF(x)</code>, more properly called <em>probability mass function</em>) or a <strong>known CDF</strong> (<code>CDF(x)</code>) that outputs floating-point numbers of the form  <code>FPSignificand</code> * <code>FPRadix</code><sup><code>FPExponent</code></sup> (which include Java&#39;s <code>double</code> and <code>float</code>)<sup><a href="#Note53"><strong>(53)</strong></a></sup>. In the code, <code>LTDenom(x)</code> is the lowest-terms denominator of the ratio <code>x</code>.</p>
 
 <ul>
 <li><code>SampleFP(mini, maxi)</code> chooses a random number in [<code>mini</code>, <code>maxi</code>] based on a <strong>known PDF</strong>.  <code>InversionSampleFP</code> is similar, but is based on a <strong>known CDF</strong>; however, <code>SampleFP</code> should be used instead where possible.</li>
@@ -2111,7 +2115,7 @@ END METHOD
 
 <h4>Markov-Chain Monte Carlo</h4>
 
-<p><a href="https://en.wikipedia.org/wiki/Markov_chain_Monte_Carlo"><strong>Markov-chain Monte Carlo</strong></a> (MCMC) is a family of algorithms for sampling many random numbers from a probability distribution by building a <em>Markov chain</em> of random values that build on each other until they converge to the given distribution.  In general, however, these random numbers will have a statistical <em>dependence</em> on each other, and it takes an unknown time for the chain to converge (which is why techniques such as &quot;thinning&quot; -- skipping random numbers -- or &quot;burn-in&quot; -- skipping iterations before sampling -- are often employed). MCMC can also estimate the distribution&#39;s sampling domain for other samplers, such as rejection sampling (above).</p>
+<p><a href="https://en.wikipedia.org/wiki/Markov_chain_Monte_Carlo"><strong>Markov-chain Monte Carlo</strong></a> (MCMC) is a family of algorithms for sampling many random numbers from a probability distribution by building a <em>Markov chain</em> of random values that build on each other until they converge to the given distribution.  In general, however, these random numbers will have a statistical <em>dependence</em> on each other, and it takes an unknown time for the chain to converge (which is why techniques such as &quot;thinning&quot; -- keeping only every Nth sample -- or &quot;burn-in&quot; -- skipping iterations before sampling -- are often employed). MCMC can also estimate the distribution&#39;s sampling domain for other samplers, such as rejection sampling (above).</p>
 
 <p>MCMC algorithms<sup><a href="#Note61"><strong>(61)</strong></a></sup> include <em>Metropolis&ndash;Hastings</em>, <em>slice sampling</em>, and <em>Gibbs sampling</em> (see also the <a href="https://peteroupc.github.io/randomgen.zip"><strong>Python sample code</strong></a>).  The latter is special in that it uses not a PDF, but two or more distributions, each of which uses a random number from the previous distribution (<em>conditional distributions</em>), that converge to a <em>joint distribution</em>.</p>
 
@@ -2629,9 +2633,7 @@ and &quot;<a href="https://randomascii.wordpress.com/2013/07/16/floating-point-d
 <li>Integer-quantized numbers (popular in &quot;deep-learning&quot; neural networks) take a relatively small number of bits (usually 8 bits or even smaller).  An 8-bit quantized number format is effectively a &quot;look-up table&quot; that maps 256 integers to real numbers.</small></li>
 </ul>
 
-<p><small><sup id=Note53>(53)</sup> This includes integers if <code>FPExponent</code> is limited to 0, and fixed-point numbers if <code>FPExponent</code> is limited to a single exponent less than 0.</p>
-
-<p>The methods shown here are exact if the PDF&#39;s or CDF&#39;s points are exact; the methods do not introduce any additional errors.  If those points are inexact floating-point numbers, their relative error will generally be smaller the closer they are to 0 (see also Walter, 2019).</small></p>
+<p><small><sup id=Note53>(53)</sup> This includes integers if <code>FPExponent</code> is limited to 0, and fixed-point numbers if <code>FPExponent</code> is limited to a single exponent less than 0.</small></p>
 
 <p><small><sup id=Note54>(54)</sup> Based on a suggestion by F. Saad in a personal communication (Mar. 26, 2020).</small></p>
 
@@ -2645,7 +2647,7 @@ and &quot;<a href="https://randomascii.wordpress.com/2013/07/16/floating-point-d
 
 <p><small><sup id=Note59>(59)</sup> Devroye, L., &quot;Non-Uniform Random Variate Generation&quot;.  In <em>Handbooks in Operations Research and Management Science: Simulation</em>, Henderson, S.G., Nelson, B.L. (eds.), 2006, p.83.</small></p>
 
-<p><small><sup id=Note60>(60)</sup> Nguyen, N. and Ökten, G., 2016. &quot;<a href="https://arxiv.org/abs/1403.5599v1"><strong>The acceptance-rejection method for low-discrepancy sequences</strong></a>&quot;, arXiv:1403.5599v1  [q-fin.CP], 2014; also in <em>Monte Carlo Methods and Applications</em> 22(2), pp. 133-148, 2016.</small></p>
+<p><small><sup id=Note60>(60)</sup> Nguyen, N. and Ökten, G., &quot;<a href="https://arxiv.org/abs/1403.5599v1"><strong>The acceptance-rejection method for low-discrepancy sequences</strong></a>&quot;, arXiv:1403.5599v1  [q-fin.CP], 2014; also in <em>Monte Carlo Methods and Applications</em> 22(2), pp. 133-148, 2016.</small></p>
 
 <p><small><sup id=Note61>(61)</sup> Tran, K.H., &quot;<a href="https://arxiv.org/abs/1607.01985v5"><strong>A Common Derivation for Markov Chain Monte Carlo Algorithms with Tractable and Intractable Targets</strong></a>&quot;, arXiv:1607.01985v5 [stat.CO], 2018, gives a common framework for describing many MCMC algorithms, including Metropolis&ndash;Hastings, slice sampling, and Gibbs sampling.</small></p>
 
@@ -2688,6 +2690,8 @@ and &quot;<a href="https://randomascii.wordpress.com/2013/07/16/floating-point-d
 <p><small><sup id=Note80>(80)</sup> Mironov, I., &quot;On Significance of the Least Significant Bits For Differential Privacy&quot;, 2012.</small></p>
 
 <p><small><sup id=Note81>(81)</sup> For example, see Balcer, V., Vadhan, S., &quot;Differential Privacy on Finite Computers&quot;, Dec. 4, 2018; as well as Micciancio, D. and Walter, M., &quot;Gaussian sampling over the integers: Efficient, generic, constant-time&quot;, in Annual International Cryptology Conference, August 2017 (pp. 455-485).</small></p>
+
+<p><small><sup id=Note82>(82)</sup> If those values are inexact floating-point numbers, their relative error will generally be smaller the closer they are to 0 (see also Walter, 2019).</small></p>
 
 <p><a id=Appendix></a></p>
 

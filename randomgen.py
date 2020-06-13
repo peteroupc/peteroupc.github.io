@@ -2542,25 +2542,28 @@ algorithm", arXiv:1511.02273v2  [cs.IT], 2016/2018.
         ntable = numericalTable(cdf, mn, mx, steps)
         return [self.from_interp(ntable) for i in range(n)]
 
-    def integers_from_u01(self, pdf, u01):
+    def integers_from_u01(self, pmf, u01):
         """ Generates the quantiles for a list of uniform random numbers
                according to a discrete distribution, assuming the distribution
                produces only integers 0 or greater.
-               - `pdf` is the PDF
+               - `pmf` is the probability mass function (PMF)
                of the discrete distribution; it takes one parameter and returns,
-               for that parameter, the probability that a random number will
-               equal to that parameter.
+               for that parameter, the probability that a random number is
+               equal to that parameter (each probability is in the interval [0, 1]).
+               The area under the PMF must be 1; it
+               is not enough for the PMF to be correct up to a constant.
                - `u01` is a list of uniform random numbers, in [0, 1].
                """
         ret = [0 for i in range(len(u01))]
-        pdftable = [pdf(i) for i in range(10)]
+        pdftable = [pmf(i) for i in range(10)]
         for i in range(len(u01)):
             j = 0
             p = pdftable[0]
-            while u01 > p:
-                u01 = u01 - p
+            u = u01[i]
+            while u > p:
+                u = u - p
                 j = j + 1
-                p = pdftable[j] if j < len(pdftable) else pdf(j)
+                p = pdftable[j] if j < len(pdftable) else pmf(j)
             ret[i] = j
         return ret
 

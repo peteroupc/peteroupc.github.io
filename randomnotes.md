@@ -1,6 +1,27 @@
 <a id=More_Random_Sampling_Methods></a>
 ## More Random Sampling Methods
 
+<a id=Contents></a>
+### Contents
+
+- [**More Random Sampling Methods**](#More_Random_Sampling_Methods)
+    - [**Contents**](#Contents)
+    - [**Specific Distributions**](#Specific_Distributions)
+        - [**A Note on Error-Bounded Algorithms**](#A_Note_on_Error_Bounded_Algorithms)
+        - [**Normal (Gaussian) Distribution**](#Normal_Gaussian_Distribution)
+        - [**Gamma Distribution**](#Gamma_Distribution)
+        - [**Beta Distribution**](#Beta_Distribution)
+        - [**von Mises Distribution**](#von_Mises_Distribution)
+        - [**Stable Distribution**](#Stable_Distribution)
+        - [**Multivariate Normal (Multinormal) Distribution**](#Multivariate_Normal_Multinormal_Distribution)
+        - [**Random Real Numbers with a Given Positive Sum**](#Random_Real_Numbers_with_a_Given_Positive_Sum)
+        - [**Gaussian and Other Copulas**](#Gaussian_and_Other_Copulas)
+    - [**Exponential Distribution: Another Error-Bounded Algorithm**](#Exponential_Distribution_Another_Error_Bounded_Algorithm)
+- [**Notes**](#Notes)
+- [**Appendix**](#Appendix)
+    - [**Implementation of `erf`**](#Implementation_of_erf)
+- [**License**](#License)
+
 <a id=Specific_Distributions></a>
 ### Specific Distributions
 
@@ -348,7 +369,7 @@ Other kinds of copulas describe different kinds of dependence between random num
 - the **Archimedean copulas**, described by M. Hofert and M. M&auml;chler (2011)<sup>[**(12)**](#Note12)</sup>.
 
 <a id=Exponential_Distribution_Another_Error_Bounded_Algorithm></a>
-### Exponential Distribution: Another Error-Bounded Algorithm
+#### Exponential Distribution: Another Error-Bounded Algorithm
 
 The following method samples from an exponential distribution with a &lambda; parameter of 1 (within an error tolerance of 2<sup>`-precision`</sup>) (Devroye and Gravel 2018)<sup>[**(13)**](#Note13)</sup>.  Includes an algorithm due to (Morina et al. 2019)<sup>[**(14)**](#Note14)</sup>.
 
@@ -376,7 +397,7 @@ The following method samples from an exponential distribution with a &lambda; pa
 <a id=Notes></a>
 ## Notes
 
-<small><sup id=Note1>(1)</sup> This means the algorithm samples from a continuous distribution that is close to the ideal distribution within a user-specified error tolerance, or samples exactly from a discrete distribution.  Thus, the algorithm gives every representable number the expected probability of occurring.  In general, the only random numbers the algorithm uses are random bits (binary digits).</small>
+<small><sup id=Note1>(1)</sup> This means the algorithm samples from a continuous distribution that is close to the ideal distribution within a user-specified error tolerance, or samples exactly from a discrete distribution (one that takes on a countable number of values).  Thus, the algorithm gives every representable number the expected probability of occurring.  In general, the only random numbers the algorithm uses are random bits (binary digits).</small>
 
 <small><sup id=Note2>(2)</sup> Karney, C.F.F., "[**Sampling exactly from the normal distribution**](https://arxiv.org/abs/1303.6257v2)", arXiv:1303.6257v2  [physics.comp-ph], 2014.</small>
 

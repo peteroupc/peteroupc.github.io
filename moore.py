@@ -13,7 +13,6 @@ from decimal import Decimal, Context
 from fractions import Fraction
 from interval import Interval
 
-
 class MooreSampler:
     """
     Moore rejection sampler, for generating independent samples
@@ -324,7 +323,6 @@ class MooreSampler:
                     u = (u << 8) | random.randint(0, 255)
                     ufrac = Fraction(u, denom)
         return [None, trials]
-
 
 if __name__ == "__main__":
 
