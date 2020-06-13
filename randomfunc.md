@@ -1728,7 +1728,7 @@ See also (von Neumann 1951)<sup>[**(31)**](#Note31)</sup>; (Devroye 1986)<sup>[*
 > 1. To sample a random number in the interval [`low`, `high`) from a PDF with a positive maximum value no greater than `peak` at that interval, generate `x = RNDRANGEMaxExc(low, high)` and `y = RNDRANGEMaxExc(0, peak)` until `y < PDF(x)`, then take the last `x` generated this way. (See also Saucier 2000, pp. 6-7.)  If the distribution **is discrete**, generate `x` with `x = RNDINTEXCRANGE(low, high)` instead.
 > 2. A custom distribution's PDF, `PDF`, is `exp(-abs(x*x*x))`, and the exponential distribution's PDF, `PDF2`, is `exp(-x)`.  The exponential PDF "dominates" the other PDF (at every `x` 0 or greater) if we multiply it by 1.5, so that `PDF2` is now `1.5 * exp(-x)`.  Now we can generate numbers from our custom distribution by sampling exponential points until a point falls within `PDF`.  This is done by generating `n = Expo(1)` until `PDF(n) >= RNDRANGEMaxExc(0, PDF2(n))`.
 >
-> **Note:** Rejection sampling can also be used for [**low-discrepancy sequences**](#Low_Discrepancy_Sequences) (especially if the target distribution has an unknown quantile function), given a distribution with an "easy-to-calculate" quantile function (Nguyen and Ökten 2014/2016)<sup>[**(60)**](#Note60)</sup>.  Example: (1) Generate two numbers A and B from a low-discrepancy sequence;  (2) take the "easy-to-calculate" quantile of A, then accept A if `B * PDF2(A) <= PDF(A)`, or go to step 1 otherwise.
+> **Note:** Rejection sampling can also be used for [**low-discrepancy sequences**](#Low_Discrepancy_Sequences) (especially if the target distribution has an unknown quantile function), given a distribution with an "easy-to-calculate" quantile function (Nguyen and Ökten 2014/2016)<sup>[**(60)**](#Note60)</sup>.  Example: (1) Generate two numbers A and B from a low-discrepancy sequence;  (2) set Q to the "easy-to-calculate" quantile of A, then accept Q if `B * PDF2(Q) <= PDF(Q)`, or go to step 1 otherwise.
 
 <a id=Alternating_Series></a>
 #### Alternating Series
@@ -2213,7 +2213,7 @@ The methods shown here are exact if the PDF's or CDF's points are exact; the met
 
 <small><sup id=Note59>(59)</sup> Devroye, L., "Non-Uniform Random Variate Generation".  In _Handbooks in Operations Research and Management Science: Simulation_, Henderson, S.G., Nelson, B.L. (eds.), 2006, p.83.</small>
 
-<small><sup id=Note60>(60)</sup> Nguyen, N. and Ökten, G., 2016. "[**The acceptance-rejection method for low-discrepancy sequences**](https://arxiv.org/abs/1403.5599v1)", arXiv:1403.5599v1  [q-fin.CP], 2014; also in _Monte Carlo Methods and Applications_ 22(2), pp. 133-148, 2016.</small>
+<small><sup id=Note60>(60)</sup> Nguyen, N. and Ökten, G., "[**The acceptance-rejection method for low-discrepancy sequences**](https://arxiv.org/abs/1403.5599v1)", arXiv:1403.5599v1  [q-fin.CP], 2014; also in _Monte Carlo Methods and Applications_ 22(2), pp. 133-148, 2016.</small>
 
 <small><sup id=Note61>(61)</sup> Tran, K.H., "[**A Common Derivation for Markov Chain Monte Carlo Algorithms with Tractable and Intractable Targets**](https://arxiv.org/abs/1607.01985v5)", arXiv:1607.01985v5 [stat.CO], 2018, gives a common framework for describing many MCMC algorithms, including Metropolis&ndash;Hastings, slice sampling, and Gibbs sampling.</small>
 
