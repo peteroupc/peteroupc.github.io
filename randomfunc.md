@@ -1600,7 +1600,7 @@ The following sections show different ways to generate random numbers based on a
 
 If the distribution **is discrete**<sup>[**(52)**](#Note52)</sup>, numbers that closely follow it can be sampled by choosing points that cover all or almost all of the distribution, finding their weights or cumulative weights, and choosing a random point based on those weights.
 
-The pseudocode below shows the following methods that work with a **known PDF** (`PDF(x)`, more properly called _probability mass function_) or a **known CDF** (`CDF(x)`) that outputs floating-point numbers of the form  `FPSignificand` * `FPRadix`<sup>`FPExponent`</sup> (which include Java's `double` and `float`).<sup>[**(53)**](#Note53)</sup>
+The pseudocode below shows the following methods that work with a **known PDF** (`PDF(x)`, more properly called _probability mass function_) or a **known CDF** (`CDF(x)`) that outputs floating-point numbers of the form  `FPSignificand` * `FPRadix`<sup>`FPExponent`</sup> (which include Java's `double` and `float`).<sup>[**(53)**](#Note53)</sup> In the code, `LTDenom(x)` is the lowest-terms denominator of the ratio `x`.
 
 - `SampleFP(mini, maxi)` chooses a random number in [`mini`, `maxi`] based on a **known PDF**.  `InversionSampleFP` is similar, but is based on a **known CDF**; however, `SampleFP` should be used instead where possible.
 - `IntegerWeightsFP(mini, maxi)` generates a list of integer weights for the interval [`mini`, `maxi`] based on a **known PDF**<sup>[**(54)**](#Note54)</sup>. (Alternatively, the weights could be approximated, such as by scaling and rounding [e.g., `round(PDF(i) * mult)`] or by using a more sophisticated algorithm (Saad et al., 2020)<sup>[**(55)**](#Note55)</sup>, but doing so can introduce error.)
@@ -1623,16 +1623,15 @@ The pseudocode below shows the following methods that work with a **known PDF** 
       expo=FPExponent(fp)
       sig=FPSignificand(fp)
       radix=FPRadix(fp)
-      if expo>=0: return [sig * pow(radix, expo), 1]
-      return [sig, pow(radix, abs(expo))]
+      if expo>=0: return MakeRatio(sig * pow(radix, expo), 1)
+      return MakeRatio(sig, pow(radix, abs(expo)))
     END METHOD
 
     METHOD NormalizeRatios(ratios)
-      // NOTE: Assumes denominators are powers of the same base
-      maxden=0
-      for r in ratios: maxden=max(maxden, r[1])
+      ratioSum = Sum(ratios)
+      denom = LTDenom(ratioSum)
       weights=[]
-      for r in ratios: AddItem(weights, r[0]*floor(maxden/r[1]))
+      for r in ratios: AddItem(weights, floor(r[0]*denom))
       return weights
     END METHOD
 
@@ -1657,9 +1656,9 @@ The pseudocode below shows the following methods that work with a **known PDF** 
 <a id=Inverse_Transform_Sampling></a>
 #### Inverse Transform Sampling
 
-[**_Inverse transform sampling_**](https://en.wikipedia.org/wiki/Inverse_transform_sampling) is the most generic way to generate a random number that follows a distribution.
+[**_Inverse transform sampling_**](https://en.wikipedia.org/wiki/Inverse_transform_sampling) (or simply _inversion_) is the most generic way to generate a random number that follows a distribution.
 
-If the distribution **has a known quantile function**, generate a uniform random number in (0, 1) if that number wasn't already pregenerated, and take the quantile of that number.  Note the following about inversion, however:
+If the distribution **has a known quantile function**, generate a uniform random number in (0, 1) if that number wasn't already pregenerated, and take the quantile of that number.  However:
 
 - If the distribution spans a bigger range than \[0, 1\], then calculating the quantile na&iuml;vely (e.g., `ICDF(RNDU01ZeroOneExc())`) can leave gaps, in the sense that some numbers with the same precision as the uniform number may not be generated even if the distribution gives them a chance of occurring; this is especially the case for uniform floating-point numbers close to 1 (Monahan 1985, sec. 4 and 6)<sup>[**(41)**](#Note41)</sup>.
 - In most cases, the quantile function is not available.  Thus, it has to be approximated.
@@ -1688,9 +1687,9 @@ The following method generates a random number from a distribution via inversion
        end
     end
 
-Some cases require converting a uniform random number to a non-uniform one via quantiles (notable cases include _copulas_ or Monte Carlo methods involving low-discrepancy sequences).  For these cases, the following methods approximate the quantile if the application can trade accuracy for speed:
+Some cases require converting a pregenerated uniform random number to a non-uniform one via quantiles (notable cases include copula methods and Monte Carlo methods involving low-discrepancy sequences).  For these cases, the following methods approximate the quantile if the application can trade accuracy for speed:
 
-- Distribution is **discrete, with known PDF**: The most general method is sequential search (Devroye 1986, p. 85)<sup>[**(13)**](#Note13)</sup>, assuming the distribution covers only integers 0 or greater: `i = 0; p = PDF(i); while u01 > p; u01 = u01 - p; i = i + 1; p = PDF(i); end; return p`, but this is not always fast.  If the interval \[a, b\] covers all or almost all the distribution, then the application can store the interval's PDF values in a list and call `WChoose`: `for i in a..b: AddItem(weights, PDF(i)); return a + WChoose(weights, u01 * Sum(weights))`.  Note that finding the quantile based on the **CDF** instead can introduce more error than with the PDF (Walter 2019)<sup>[**(58)**](#Note58)</sup>.
+- Distribution is **discrete, with known PDF**: The most general method is sequential search (Devroye 1986, p. 85)<sup>[**(13)**](#Note13)</sup>, assuming the area under the PDF is 1 and the distribution covers only integers 0 or greater: `i = 0; p = PDF(i); while u01 > p; u01 = u01 - p; i = i + 1; p = PDF(i); end; return p`, but this is not always fast.  If the interval \[a, b\] covers all or almost all the distribution, then the application can store the interval's PDF values in a list and call `WChoose`: `for i in a..b: AddItem(weights, PDF(i)); return a + WChoose(weights, u01 * Sum(weights))`.  Note that finding the quantile based on the **CDF** instead can introduce more error than with the PDF (Walter 2019)<sup>[**(58)**](#Note58)</sup>.
 - Distribution is **continuous, with known PDF**: See `ICDFFromContPDF(u01, mini, maxi, step)` below.
 
 &nbsp;
@@ -2200,7 +2199,7 @@ provided the PDF's values are all 0 or greater and the area under the PDF's curv
 
 <small><sup id=Note53>(53)</sup> This includes integers if `FPExponent` is limited to 0, and fixed-point numbers if `FPExponent` is limited to a single exponent less than 0.
 
-The methods shown here are exact if the PDF's or CDF's points are exact; the methods do not introduce any additional errors.  If those points are inexact, their relative error will generally be smaller the closer they are to 0 (see also Walter, 2019).  For example, the relative error for CDF values closer to 1 is much greater than for values closer to 0.</small>
+The methods shown here are exact if the PDF's or CDF's points are exact; the methods do not introduce any additional errors.  If those points are inexact floating-point numbers, their relative error will generally be smaller the closer they are to 0 (see also Walter, 2019).</small>
 
 <small><sup id=Note54>(54)</sup> Based on a suggestion by F. Saad in a personal communication (Mar. 26, 2020).</small>
 

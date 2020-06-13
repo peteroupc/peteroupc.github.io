@@ -9,7 +9,7 @@
 <a id=A_Note_on_Error_Bounded_Algorithms></a>
 #### A Note on Error-Bounded Algorithms
 
-Note that most algorithms in this section won't sample the given distribution in a manner that  minimizes approximation error <sup>[**(1)**](#Note1)</sup>.  For example:
+Although there are algorithms that sample a distribution in a manner that minimizes approximation error <sup>[**(1)**](#Note1)</sup>, most of the algorithms in this section won't, for any of these reasons:
 
 - They may not take a parameter specifying the maximum error tolerable.
 - They may use a `RNDU01` or `RNDRANGE` method, which is not required to be error-bounded.
@@ -17,7 +17,7 @@ Note that most algorithms in this section won't sample the given distribution in
 
 Even so, however, these algorithms may be useful if the application is willing to trade accuracy for speed.
 
-On the other hand, if an algorithm returns results that are accurate to a given number of digits after the point (for example, 53 bits after the point), it can generate any number of digits uniformly at random and append those digits to the result's digit expansion without affecting accuracy. For example, after it generates a normally-distributed random number, an algorithm can fill bits 54 through 100 after the point each with 0 or 1, chosen uniformly at random (Karney 2014)<sup>[**(2)**](#Note2)</sup> (example: `for i in 54..100: ret = ret + RNDINT(1) * pow(2,-i)`).
+On the other hand, if an algorithm returns results that are accurate to a given number of digits after the point (for example, 53 bits after the point), it can generate any number of digits uniformly at random and append those digits to the result's digit expansion without affecting accuracy. For example, after it generates a normally-distributed random number, an algorithm can fill it with enough uniform random bits, as necessary, to give the number 100 bits after the point (Karney 2014)<sup>[**(2)**](#Note2)</sup> (example: `for i in 54..100: ret = ret + RNDINT(1) * pow(2,-i)`).
 
 <a id=Normal_Gaussian_Distribution></a>
 #### Normal (Gaussian) Distribution
@@ -325,7 +325,7 @@ One example is a _Gaussian copula_; this copula is sampled by sampling from a [*
        return mvn
     END METHOD
 
-Each of the resulting uniform random numbers will be in the interval [0, 1], and each one can be further transformed to any other probability distribution (which is called a _marginal distribution_ here) by passing the uniform number to the distribution's inverse CDF (see "[**Inverse Transform Sampling**](#Inverse_Transform_Sampling)", and see also Cario and Nelson 1997.)
+Each of the resulting uniform random numbers will be in the interval [0, 1], and each one can be further transformed to any other probability distribution (which is called a _marginal distribution_ here) by taking the quantile of that uniform number for that distribution (see "[**Inverse Transform Sampling**](#Inverse_Transform_Sampling)", and see also Cario and Nelson 1997.)
 
 > **Examples:**
 >
@@ -335,7 +335,7 @@ Each of the resulting uniform random numbers will be in the interval [0, 1], and
 >         METHOD CorrelatedExpo(rho, rate1, rate2)
 >            copula = GaussianCopula([[1, rho], [rho, 1]])
 >            // Transform to exponentials using that
->            // distribution's inverse CDF
+>            // distribution's quantile function
 >            return [-logp1(-copula[0]) / rate1,
 >              -logp1(-copula[1]) / rate2]
 >         END METHOD
