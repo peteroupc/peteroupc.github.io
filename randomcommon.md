@@ -5,7 +5,7 @@
 <a id=Introduction></a>
 ## Introduction
 
-This page lists some of the most common topics involving random number generation in programming.  They were based on an analysis of the _Stack Overflow_ questions that were most often targeted as duplicates of other questions (using the _Stack Exchange Data Explorer_ query named "Most popular duplicate targets by tag", with "random" as the TagName).
+This page lists some of the most common topics involving random number generation in programming.  They were based on an analysis of the _Stack Overflow_ questions that other questions were most often marked as duplicates of (using the _Stack Exchange Data Explorer_ query named "Most popular duplicate targets by tag", with "random" as the TagName).
 
 The analysis showed the following topics were among the most commonly asked:
 
@@ -100,14 +100,24 @@ With that said, the following specific situations tend to come up in random reco
 <a id=Random_Character_Strings></a>
 ## Random Character Strings
 
-Nothing here yet.
+Many applications need to generate a random string whose characters are chosen from a restricted set of characters.  Popular choices include so-called _alphanumeric strings_, where the restricted character set is A to Z, a to z, 0 to 9.  An algorithm for generating random strings is given in "[**Random Character Strings**](https://peteroupc.github.io/randomfunc.html#Random_Character_Strings)".
+
+However, the following are some of the many considerations involving random string generation:
+
+- If the string needs to be typed in by end users, or to be memorable, it may be important to choose a character set carefully or [**allow typing mistakes to be detected**](https://espadrine.github.io/blog/posts/a-base32-checksum.html).
+- If the string identifies something, the application may require strings it generates to be unique; see [**Unique Random Identifiers**](https://peteroupc.github.io/random.html#Unique_Random_Identifiers) for considerations.
 
 <a id=Choosing_Items_with_Separate_Probabilities></a>
 ## Choosing Items with Separate Probabilities
 
-TODO: Discuss weighted choice, the alias method, and the Fast Loaded Dice Roller.
+_Weighted choice_ (also known as a _categorical distribution_) is a random choice of items, where each item has a _weight_ and is chosen with a probability proportional to its weight.  For algorithms on weighted choice, see "[**Weighted Choice With Replacement**](https://peteroupc.github.io/randomfunc.html#Weighted_Choice_With_Replacement).
 
-Note that choosing _true_ with a given probability, or _false_ otherwise, is a special case of weighted sampling involving two items (also known as a _Bernoulli trial_).  But there are much simpler ways of choosing _true_ or _false_ this way; see [**Boolean (True/False) Conditions**](#Boolean_True_False_Conditions).  Perhaps the most practical is the idiom `RNDINTEXC(Y) < X`, which chooses _true_ with probability `X/Y`, _false_ otherwise.
+The algorithm shown there is a straightforward way to implement weighted choice, but there are faster alternatives (which are both implemented in [**Python sample code**](https://peteroupc.github.io/randomgen.zip)):
+
+- Vose's alias method (`VoseAlias`).  See "[**Darts, Dice, and Coins: Sampling from a Discrete Distribution**](https://www.keithschwarz.com/darts-dice-coins/)" by Keith Schwarz for more information.
+- The Fast Loaded Dice Roller (`FastLoadedDiceRoller`) (Saad et al. 2020)<sup>[**(4)**](#Note4)</sup>.
+
+Note that choosing _true_ with a given probability, or _false_ otherwise, is a special case of weighted sampling involving two items (also known as a _Bernoulli trial_).  But there are much simpler ways of choosing _true_ or _false_ this way; see [**Boolean (True/False) Conditions**](https://peteroupc.github.io/randomfunc.html#Boolean_True_False_Conditions).  Perhaps the most practical is the idiom `RNDINTEXC(Y) < X`, which chooses _true_ with probability `X/Y`, _false_ otherwise.
 
 <a id=Other_Topics></a>
 ## Other Topics
@@ -115,13 +125,13 @@ Note that choosing _true_ with a given probability, or _false_ otherwise, is a s
 Other topics showed up in the analysis, and it's worth mentioning them here.  These topics included:
 
 - Generating a random _derangement_, or a random shuffle where every item moves to a different position (see [**"Shuffling"**](https://peteroupc.github.io/randomfunc.html#Shuffling); see also `questions/25200220`).
-- Generating a number that follows the [**normal distribution**](https://peteroupc.github.io/randomnotes.md#Normal_Gaussian_Distribution).
-- Generating a number that follows an [**arbitrary distribution**](https://peteroupc.github.io/randomfunc.html#Random_Numbers_from_an_Arbitrary_Distribution)
+- Generating a number that follows the [**normal distribution**](https://peteroupc.github.io/randomnotes.html#Normal_Gaussian_Distribution).
+- Generating a number that follows an [**arbitrary distribution**](https://peteroupc.github.io/randomfunc.html#Random_Numbers_from_an_Arbitrary_Distribution).
 - [**Random colors**](https://peteroupc.github.io/colorgen.html#Generating_a_Random_Color).
 - Random [**numbers with a given sum**](https://peteroupc.github.io/randomfunc.html#Random_Integers_with_a_Given_Positive_Sum).
 - Random [**dates and times**](https://peteroupc.github.io/randomfunc.html#Random_Dates_and_Times).
 - Stratified sampling (per-group sampling).
-- Generating a [**random point inside a circle**](https://peteroupc.github.io/randomfunc.md#Random_Points_Inside_a_Ball_Shell_or_Cone).
+- Generating a [**random point inside a circle**](https://peteroupc.github.io/randomfunc.html#Random_Points_Inside_a_Ball_Shell_or_Cone).
 
 <a id=Notes></a>
 ## Notes
@@ -131,6 +141,8 @@ Other topics showed up in the analysis, and it's worth mentioning them here.  Th
 <small><sup id=Note2>(2)</sup> Goualard, F., "[**Generating Random Floating-Point Numbers by Dividing Integers: a Case Study**](https://hal.archives-ouvertes.fr/hal-02427338/)", 2020.</small>
 
 <small><sup id=Note3>(3)</sup> Efraimidis, P. "[**Weighted Random Sampling over Data Streams**](https://arxiv.org/abs/1012.0256v2)", arXiv:1012.0256v2 [cs.DS], 2015.</small>
+
+<small><sup id=Note4>(4)</sup> Saad, F.A., Freer C.E., et al. "The Fast Loaded Dice Roller: A Near-Optimal Exact Sampler for Discrete Probability Distributions", in _AISTATS 2020: Proceedings of the 23rd International Conference on Artificial Intelligence and Statistics, Proceedings of Machine Learning Research_ 108, Palermo, Sicily, Italy, 2020.</small>
 
 <a id=License></a>
 ## License
