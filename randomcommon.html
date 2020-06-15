@@ -1,0 +1,205 @@
+<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>The Most Common Topics Involving Random Number Generation</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a> -
+<a href="http://peteroupc.github.io/">Donate to Me</a></p></div>
+<div class="mainarea" id="top">
+<h1>The Most Common Topics Involving Random Number Generation</h1>
+
+<p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
+
+<p><a id=Introduction></a></p>
+
+<h2>Introduction</h2>
+
+<p>This page lists some of the most common topics involving random number generation in programming.  They were based on an analysis of the <em>Stack Overflow</em> questions that other questions were most often marked as duplicates of (using the <em>Stack Exchange Data Explorer</em> query named &quot;Most popular duplicate targets by tag&quot;, with &quot;random&quot; as the TagName).</p>
+
+<p>The analysis showed the following topics were among the most commonly asked:</p>
+
+<ul>
+<li>Generating uniform random integers in a range.</li>
+<li>Generating uniform random floating-point numbers in a range.</li>
+<li>Generating unique random integers in a range.</li>
+<li>Choosing a random item from a list.</li>
+<li>Choosing several unique items from a list.</li>
+<li>Choosing items with separate probabilities.</li>
+<li>Choosing random records from a database.</li>
+<li>Shuffling.</li>
+<li>Generating a random text string of characters selected from a restricted character set (such as only A to Z, a to z, 0 to 9).</li>
+</ul>
+
+<p>Not all topics are covered above.  Notably, the analysis ignores questions that were API-specific or programming-language specific, unless the underlying issue is present in multiple APIs or languages.</p>
+
+<p>Another notable trend is that these topics were asked for programming languages where convenient APIs for these tasks were missing. This is why I recommend that <a href="https://peteroupc.github.io/random.html#Implementing_New_RNG_APIs"><strong>new programming language APIs</strong></a> <em>provide functionality covering the topics above in their standard libraries</em>, to ease the burden of programmers using that language.</p>
+
+<p>The following sections will detail the topics given above, with suggestions on how to solve them.  Many of the links point to sections of my article &quot;<a href="https://peteroupc.github.io/randomfunc.html"><strong>Random Number Generation and Sampling Methods</strong></a>&quot;.</p>
+
+<p>The <a href="https://peteroupc.github.io/pseudocode.html"><strong>pseudocode conventions</strong></a> apply to this document.</p>
+
+<p><a id=Uniform_Numbers_in_a_Range></a></p>
+
+<h2>Uniform Numbers in a Range</h2>
+
+<p>For algorithms on generating uniform random <em>integers</em> in a range, see <a href="https://peteroupc.github.io/randomfunc.html#Uniform_Random_Integers"><strong>&quot;Uniform Random Integers&quot;</strong></a>.  It should be noted there that most RNGs (random number generators) in common use output 32- or 64-bit non-negative integers, and for JavaScript, the idiom <code>(Math.random() &lt; 0.5 ? 0 : 1)</code> will work in many practical cases as a random bit generator.  Here is a JavaScript example of generating a random integer in the interval [<code>minInclusive</code>, <code>maxExclusive</code>], using the Fast Dice Roller by J. Lumbroso (2013)<sup><a href="#Note1"><strong>(1)</strong></a></sup>:</p>
+
+<pre lang="javascript"><code>    function randomInt(minInclusive, maxExclusive) {
+      var maxInclusive = (maxExclusive - minInclusive) - 1
+      var x = 1
+      var y = 0
+      while(true) {
+        x = x * 2
+        var randomBit = (Math.random() &lt; 0.5 ? 0 : 1)
+        y = y * 2 + randomBit
+        nextBit = nextBit + 1
+        if(x &gt; maxInclusive) {
+          if (y &lt;= maxInclusive) { return y + minInclusive }
+          x = x - maxInclusive - 1
+          y = y - maxInclusive - 1
+        }
+      }
+    }
+</pre>
+
+<p>Many common programming languages have no convenient or correct way to generate random numbers in a range.  For example:</p>
+
+<ul>
+<li>Java&#39;s <code>java.util.Random</code> until version 8 had methods to produce <code>int</code>s in the interval [0, n) (<code>nextInt</code>), but not <code>long</code>s in that interval or integers in an arbitrary interval [a, b).   Additional methods named <code>longs</code>, <code>ints</code>, and <code>doubles</code> were provided that offer this functionality, but even so, they are not as convenient in some cases than the existing <code>nextInt</code> method.</li>
+<li>JavaScript until recently has only one API for random number generation, namely <code>Math.random()</code>, and no built-in method for random integer generation or shuffling, among other things.  Naïve solutions such as <code>Math.floor(Math.random()*x)+y</code> are not guaranteed to work reliably, in part because JavaScript doesn&#39;t require any particular implementation for <code>Math.random</code>.</li>
+<li>C&#39;s <code>rand</code> function produces random integers in a predetermined range ([0, <code>RAND_MAX</code>]) that is not within the application&#39;s control.  This is just one of a <a href="https://stackoverflow.com/questions/52869166/why-is-the-use-of-rand-considered-bad/52881465#52881465"><strong>host of issues with <code>rand</code></strong></a>, by the way (unspecified algorithm, yet is initializable with &quot;srand&quot; for repeatability; non-thread-safety; historical implementations had weak low bits; etc.).</li>
+</ul>
+
+<p>For algorithms on generating uniform random <em>floating-point numbers</em> in a range, see <a href="https://peteroupc.github.io/randomfunc.html#For_Floating_Point_Number_Formats"><strong>&quot;For Floating-Point Number Formats&quot;</strong></a>.  Floating-point number generation has a number of issues not present with integer generation.  For example, no computer can choose from all real numbers between two others, since there are infinitely many of them, and also, naïvely multiplying or dividing an integer by a constant (e.g., <code>Math.random()*x</code> in JavaScript) will necessarily miss many representable floating-point numbers (for details, see Goualard 2020<sup><a href="#Note2"><strong>(2)</strong></a></sup>).</p>
+
+<p><a id=Choosing_Random_Items></a></p>
+
+<h2>Choosing Random Items</h2>
+
+<p>In general, choosing a random item from a list is trivial: choose a random integer in <code>[0, n)</code>, where <code>n</code> is the size of the list, then take the item at the chosen position.  The previous section already discussed how to generate a random integer.</p>
+
+<p>However, if the number of items is not known in advance, then a technique called <em>reservoir sampling</em> can be used to choose one or more items at random.   Here is how to implement reservoir sampling.</p>
+
+<ol>
+<li>Set N to 1.</li>
+<li>If no items remain, return the last chosen item.  Otherwise, take the next item and choose it with probability 1/N.</li>
+<li>Add 1 to N and go to step 2.</li>
+</ol>
+
+<p>See &quot;<a href="https://peteroupc.github.io/randomfunc.html#Pseudocode_for_Random_Sampling"><strong>Pseudocode for Random Sampling</strong></a>&quot; for an algorithm for reservoir sampling.</p>
+
+<p><a id=Unique_Integers_or_Items></a></p>
+
+<h2>Unique Integers or Items</h2>
+
+<p>Generating unique random integers or items is also known as sampling <em>without replacement</em>, <em>without repetition</em>, or <em>without duplicates</em>.</p>
+
+<p>There are many ways to generate unique items, depending on the number of items to choose, the number of items to choose <em>from</em>, and so on, and they have different tradeoffs in terms of time and memory requirements.  See &quot;<a href="https://peteroupc.github.io/randomfunc.html#Sampling_Without_Replacement_Choosing_Several_Unique_Items"><strong>Sampling Without Replacement: Choosing Several Unique Items</strong></a>&quot; for advice.</p>
+
+<p>Some applications require generating unique values that identify something, such as database records, user accounts, and so on.  However, there are certain things to keep in mind when generating unique values for this purpose; see &quot;<a href="https://peteroupc.github.io/random.html#Unique_Random_Identifiers"><strong>Unique Random Identifiers</strong></a>&quot; for more information.</p>
+
+<p><a id=Shuffling></a></p>
+
+<h2>Shuffling</h2>
+
+<p>An algorithm to randomize (<em>shuffle</em>) the order of a list is given in <a href="https://peteroupc.github.io/randomfunc.html#Shuffling"><strong>&quot;Shuffling&quot;</strong></a>.  It should be noted that the algorithm is easy to implement incorrectly.</p>
+
+<p><a id=Random_Records_from_a_Database></a></p>
+
+<h2>Random Records from a Database</h2>
+
+<p>Querying random records (<em>rows</em>) from a database usually involves the database language SQL.  However, SQL is implemented very differently in practice between database management systems (DBMSs), so that even trivial SQL statements are not guaranteed to work the same from one DBMS to another.  Moreover, SQL has no loops, no branches, and no standard way to generate random numbers.  Thus, the correct way to generate random records from a database will vary from DBMS to DBMS.</p>
+
+<p>With that said, the following specific situations tend to come up in random record queries.</p>
+
+<ul>
+<li>Querying one random record from a database.</li>
+<li>Querying a specified number of random records from a database.</li>
+<li>Querying one or more records each with a probability proportional to its weight.  Very generally, this can be done by giving the table a column where each entry is a number generated as follows: <code>ln(R) / W</code> (where <code>W</code> is the record&#39;s weight greater than 0, and <code>R</code> is a uniform random number in (0, 1)) (see also (Efraimidis 2015)<sup><a href="#Note3"><strong>(3)</strong></a></sup>), then taking the records with the highest values of that column, but the efficiency of this technique depends on the DBMS.</li>
+</ul>
+
+<p><a id=Random_Character_Strings></a></p>
+
+<h2>Random Character Strings</h2>
+
+<p>Many applications need to generate a random string whose characters are chosen from a restricted set of characters.  Popular choices include so-called <em>alphanumeric strings</em>, where the restricted character set is A to Z, a to z, 0 to 9.  An algorithm for generating random strings is given in &quot;<a href="https://peteroupc.github.io/randomfunc.html#Random_Character_Strings"><strong>Random Character Strings</strong></a>&quot;.</p>
+
+<p>However, the following are some of the many considerations involving random string generation:</p>
+
+<ul>
+<li>If the string needs to be typed in by end users, or to be memorable, it may be important to choose a character set carefully or <a href="https://espadrine.github.io/blog/posts/a-base32-checksum.html"><strong>allow typing mistakes to be detected</strong></a>.</li>
+<li>If the string identifies something, the application may require strings it generates to be unique; see <a href="https://peteroupc.github.io/random.html#Unique_Random_Identifiers"><strong>Unique Random Identifiers</strong></a> for considerations.</li>
+</ul>
+
+<p><a id=Choosing_Items_with_Separate_Probabilities></a></p>
+
+<h2>Choosing Items with Separate Probabilities</h2>
+
+<p><em>Weighted choice</em> (also known as a <em>categorical distribution</em>) is a random choice of items, where each item has a <em>weight</em> and is chosen with a probability proportional to its weight.  For algorithms on weighted choice, see &quot;<a href="https://peteroupc.github.io/randomfunc.html#Weighted_Choice_With_Replacement"><strong>Weighted Choice With Replacement</strong></a>.</p>
+
+<p>The algorithm shown there is a straightforward way to implement weighted choice, but there are faster alternatives (which are both implemented in <a href="https://peteroupc.github.io/randomgen.zip"><strong>Python sample code</strong></a>):</p>
+
+<ul>
+<li>Vose&#39;s alias method (<code>VoseAlias</code>).  See &quot;<a href="https://www.keithschwarz.com/darts-dice-coins/"><strong>Darts, Dice, and Coins: Sampling from a Discrete Distribution</strong></a>&quot; by Keith Schwarz for more information.</li>
+<li>The Fast Loaded Dice Roller (<code>FastLoadedDiceRoller</code>) (Saad et al. 2020)<sup><a href="#Note4"><strong>(4)</strong></a></sup>.</li>
+</ul>
+
+<p>Note that choosing <em>true</em> with a given probability, or <em>false</em> otherwise, is a special case of weighted sampling involving two items (also known as a <em>Bernoulli trial</em>).  But there are much simpler ways of choosing <em>true</em> or <em>false</em> this way; see &quot;<a href="https://peteroupc.github.io/randomfunc.html#Boolean_True_False_Conditions"><strong>Boolean (True/False) Conditions</strong></a>&quot;.  Perhaps the most practical is the idiom <code>RNDINTEXC(Y) &lt; X</code>, which chooses <em>true</em> with probability <code>X/Y</code>, <em>false</em> otherwise.</p>
+
+<p><a id=Other_Topics></a></p>
+
+<h2>Other Topics</h2>
+
+<p>Other topics showed up in the analysis, and it&#39;s worth mentioning them here.  These topics included:</p>
+
+<ul>
+<li>Generating a random <em>derangement</em>, or a random shuffle where every item moves to a different position (see <a href="https://peteroupc.github.io/randomfunc.html#Shuffling"><strong>&quot;Shuffling&quot;</strong></a>; see also <code>questions/25200220</code>).</li>
+<li>Generating a number that follows the <a href="https://peteroupc.github.io/randomnotes.html#Normal_Gaussian_Distribution"><strong>normal distribution</strong></a>.</li>
+<li>Generating a number that follows an <a href="https://peteroupc.github.io/randomfunc.html#Random_Numbers_from_an_Arbitrary_Distribution"><strong>arbitrary distribution</strong></a>.</li>
+<li><a href="https://peteroupc.github.io/colorgen.html#Generating_a_Random_Color"><strong>Random colors</strong></a>.</li>
+<li>Random <a href="https://peteroupc.github.io/randomfunc.html#Random_Integers_with_a_Given_Positive_Sum"><strong>numbers with a given sum</strong></a>.</li>
+<li>Random <a href="https://peteroupc.github.io/randomfunc.html#Random_Dates_and_Times"><strong>dates and times</strong></a>.</li>
+<li>Stratified sampling (per-group sampling).</li>
+<li>Generating a <a href="https://peteroupc.github.io/randomfunc.html#Random_Points_Inside_a_Ball_Shell_or_Cone"><strong>random point inside a circle</strong></a>.</li>
+</ul>
+
+<p><a id=Notes></a></p>
+
+<h2>Notes</h2>
+
+<p><small><sup id=Note1>(1)</sup> Lumbroso, J., &quot;<a href="https://arxiv.org/abs/1304.1916"><strong>Optimal Discrete Uniform Generation from Coin Flips, and Applications</strong></a>&quot;, arXiv:1304.1916 [cs.DS].</small></p>
+
+<p><small><sup id=Note2>(2)</sup> Goualard, F., &quot;<a href="https://hal.archives-ouvertes.fr/hal-02427338/"><strong>Generating Random Floating-Point Numbers by Dividing Integers: a Case Study</strong></a>&quot;, 2020.</small></p>
+
+<p><small><sup id=Note3>(3)</sup> Efraimidis, P. &quot;<a href="https://arxiv.org/abs/1012.0256v2"><strong>Weighted Random Sampling over Data Streams</strong></a>&quot;, arXiv:1012.0256v2 [cs.DS], 2015.</small></p>
+
+<p><small><sup id=Note4>(4)</sup> Saad, F.A., Freer C.E., et al. &quot;The Fast Loaded Dice Roller: A Near-Optimal Exact Sampler for Discrete Probability Distributions&quot;, in <em>AISTATS 2020: Proceedings of the 23rd International Conference on Artificial Intelligence and Statistics, Proceedings of Machine Learning Research</em> 108, Palermo, Sicily, Italy, 2020.</small></p>
+
+<p><a id=License></a></p>
+
+<h2>License</h2>
+
+<p>Any copyright to this page is released to the Public Domain.  In case this is not possible, this page is also licensed under <a href="https://creativecommons.org/publicdomain/zero/1.0/"><strong>Creative Commons Zero</strong></a>.</p>
+</div><nav id="navigation"><ul>
+<li><a href="/">Back to start site.</a>
+<li><a href="https://github.com/peteroupc/peteroupc.github.io">This site's repository (source code)</a>
+<li><a href="https://github.com/peteroupc/peteroupc.github.io/issues">Post an issue or comment</a></ul>
+<p>
+If you like this software, you should consider donating to me, Peter O., at the link below:</p>
+<p class="printonly"><b>peteroupc.github.io</b></p>
+<div class="noprint">
+<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=56E5T4FH7KD2S">
+<img src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif"
+name="submit" border="2" alt="PayPal - The safer, easier way to pay online!"></a>
+<p>
+<a href="//twitter.com/share">Share via Twitter</a>, <a href="//www.facebook.com/sharer/sharer.php" id="sharer">Share via Facebook</a>
+</p>
+</div>
+</nav><script>
+if("share" in navigator){
+ document.getElementById("sharer").href="javascript:void(null)";
+ document.getElementById("sharer").innerHTML="Share This Page";
+ navigator.share({title:document.title,url:document.location.href}).then(
+   function(){});
+} else {
+ document.getElementById("sharer").href="//www.facebook.com/sharer/sharer.php?u="+
+    encodeURIComponent(document.location.href)
+}
+</script>
+</body></html>

@@ -23,7 +23,7 @@ Not all topics are covered above.  Notably, the analysis ignores questions that 
 
 Another notable trend is that these topics were asked for programming languages where convenient APIs for these tasks were missing. This is why I recommend that [**new programming language APIs**](https://peteroupc.github.io/random.html#Implementing_New_RNG_APIs) _provide functionality covering the topics above in their standard libraries_, to ease the burden of programmers using that language.
 
-The following sections will detail the topics given above, with suggestions on how to solve them.
+The following sections will detail the topics given above, with suggestions on how to solve them.  Many of the links point to sections of my article "[**Random Number Generation and Sampling Methods**](https://peteroupc.github.io/randomfunc.html)".
 
 The [**pseudocode conventions**](https://peteroupc.github.io/pseudocode.html) apply to this document.
 
@@ -79,7 +79,7 @@ Generating unique random integers or items is also known as sampling _without re
 
 There are many ways to generate unique items, depending on the number of items to choose, the number of items to choose _from_, and so on, and they have different tradeoffs in terms of time and memory requirements.  See "[**Sampling Without Replacement: Choosing Several Unique Items**](https://peteroupc.github.io/randomfunc.html#Sampling_Without_Replacement_Choosing_Several_Unique_Items)" for advice.
 
-Some applications require generating unique values that identify something, such as database records, user accounts, and so on.  However, there are certain things to keep in mind when generating unique values for this purpose; see [**Unique Random Identifiers**](https://peteroupc.github.io/random.html#Unique_Random_Identifiers) for more information.
+Some applications require generating unique values that identify something, such as database records, user accounts, and so on.  However, there are certain things to keep in mind when generating unique values for this purpose; see "[**Unique Random Identifiers**](https://peteroupc.github.io/random.html#Unique_Random_Identifiers)" for more information.
 
 <a id=Shuffling></a>
 ## Shuffling
@@ -117,7 +117,7 @@ The algorithm shown there is a straightforward way to implement weighted choice,
 - Vose's alias method (`VoseAlias`).  See "[**Darts, Dice, and Coins: Sampling from a Discrete Distribution**](https://www.keithschwarz.com/darts-dice-coins/)" by Keith Schwarz for more information.
 - The Fast Loaded Dice Roller (`FastLoadedDiceRoller`) (Saad et al. 2020)<sup>[**(4)**](#Note4)</sup>.
 
-Note that choosing _true_ with a given probability, or _false_ otherwise, is a special case of weighted sampling involving two items (also known as a _Bernoulli trial_).  But there are much simpler ways of choosing _true_ or _false_ this way; see [**Boolean (True/False) Conditions**](https://peteroupc.github.io/randomfunc.html#Boolean_True_False_Conditions).  Perhaps the most practical is the idiom `RNDINTEXC(Y) < X`, which chooses _true_ with probability `X/Y`, _false_ otherwise.
+Note that choosing _true_ with a given probability, or _false_ otherwise, is a special case of weighted sampling involving two items (also known as a _Bernoulli trial_).  But there are much simpler ways of choosing _true_ or _false_ this way; see "[**Boolean (True/False) Conditions**](https://peteroupc.github.io/randomfunc.html#Boolean_True_False_Conditions)".  Perhaps the most practical is the idiom `RNDINTEXC(Y) < X`, which chooses _true_ with probability `X/Y`, _false_ otherwise.
 
 <a id=Other_Topics></a>
 ## Other Topics
