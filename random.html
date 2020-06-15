@@ -384,7 +384,7 @@ For cryptographic RNGs, an application should use only one thread-safe instance 
 <p>In general, there are two steps to generate an <code>N</code>-bit seed for a PRNG<sup><a href="#Note14"><strong>(14)</strong></a></sup>:</p>
 
 <ol>
-<li>Gather enough data from <em>nondeterministic sources</em> to reach <code>N</code> bits of <em>entropy</em> or more.</li>
+<li>Gather enough data from independent nondeterministic sources to reach <code>N</code> bits of <em>entropy</em> or more.</li>
 <li>Then, condense the data into an <code>N</code>-bit number, a process called <em>randomness extraction</em>.<sup><a href="#Note15"><strong>(15)</strong></a></sup></li>
 </ol>
 

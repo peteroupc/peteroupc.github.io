@@ -1391,9 +1391,10 @@ CLASSES
 
     class MooreSampler(builtins.object)
      |  Moore rejection sampler, for generating independent samples
-     |  exactly from continuous distributions whose PDF (probability
-     |  density function) uses "well-defined" arithmetic
-     |  expressions. It can sample from one-dimensional or multidimensional
+     |  from continuous distributions in a way that minimizes error,
+     |  if the distribution's PDF (probability density function)
+     |  uses "well-defined" arithmetic expressions.
+     |  It can sample from one-dimensional or multidimensional
      |  distributions.  It can also sample from so-called "transdimensional
      |  distributions" if the distribution is the union of several component
      |  distributions that may have different dimensions and are associated
@@ -1427,6 +1428,9 @@ CLASSES
      |     that domain.
      |  - numlabels: The number of labels associated with the distribution, if it's a
      |     transdimensional distribution.  Optional; the default is 1.
+     |  - bitAccuracy: Bit accuracy of the sampler; the sampler will sample from
+     |     a distribution (truncated to the sampling domain) that is close to the
+     |     ideal distribution by 2^-bitAccuracy.  The default is 53.
      |
      |  Reference:
      |  Sainudiin, Raazesh, and Thomas L. York. "An Auto-Validating, Trans-Dimensional,
@@ -1440,7 +1444,7 @@ CLASSES
      |
      |  Methods defined here:
      |
-     |  __init__(self, pdf, mn, mx, numLabels=1)
+     |  __init__(self, pdf, mn, mx, numLabels=1, bitAccuracy=53)
      |      Initialize self.  See help(type(self)) for accurate signature.
      |
      |  acceptRate(self)

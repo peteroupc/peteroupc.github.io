@@ -23,6 +23,8 @@ class Interval:
             self.sup = v.sup
             self.inf = v.inf
             self.prec = v.prec
+            self.sup = Interval._tosup(self.sup, prec)
+            self.inf = Interval._toinf(self.inf, prec)
             return self
         elif isinstance(v, Decimal) and isinstance(sup, Decimal):
             self.sup = sup

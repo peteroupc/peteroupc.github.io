@@ -16,7 +16,7 @@
         - [**Multivariate Normal (Multinormal) Distribution**](#Multivariate_Normal_Multinormal_Distribution)
         - [**Random Real Numbers with a Given Positive Sum**](#Random_Real_Numbers_with_a_Given_Positive_Sum)
         - [**Gaussian and Other Copulas**](#Gaussian_and_Other_Copulas)
-    - [**Exponential Distribution: Another Error-Bounded Algorithm**](#Exponential_Distribution_Another_Error_Bounded_Algorithm)
+        - [**Exponential Distribution: Another Error-Bounded Algorithm**](#Exponential_Distribution_Another_Error_Bounded_Algorithm)
 - [**Notes**](#Notes)
 - [**Appendix**](#Appendix)
     - [**Implementation of `erf`**](#Implementation_of_erf)
@@ -159,7 +159,7 @@ The following method generates a random number that follows a _beta distribution
       return x/(x+GammaDist(b,1))
     END METHOD
 
-I give an [**exact sampler**](https://peteroupc.github.io/betadist.html) for the beta distribution (when `a` and `b` are both 1 or greater) in a separate page.
+I give an [**error-bounded sampler**](https://peteroupc.github.io/betadist.html) for the beta distribution (when `a` and `b` are both 1 or greater) in a separate page.
 
 <a id=von_Mises_Distribution></a>
 #### von Mises Distribution

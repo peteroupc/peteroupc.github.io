@@ -264,7 +264,7 @@ _Entropy_ is a value that describes how hard it is to guess a nondeterministic s
 
 In general, there are two steps to generate an `N`-bit seed for a PRNG<sup>[**(14)**](#Note14)</sup>:
 
-1. Gather enough data from _nondeterministic sources_ to reach `N` bits of _entropy_ or more.
+1. Gather enough data from independent nondeterministic sources to reach `N` bits of _entropy_ or more.
 2. Then, condense the data into an `N`-bit number, a process called _randomness extraction_.<sup>[**(15)**](#Note15)</sup>
 
 Randomness extraction is discussed in NIST SP 800-90B sec. 3.1.5.1, and RFC 4086 sec. 4.2 and 5.2.   Examples of extractors include keyed hash functions (see, e.g., (Cliff et al., 2009)<sup>[**(16)**](#Note16)</sup>), von Neumann unbiasing (von Neumann 1951)<sup>[**(17)**](#Note17)</sup>, and a streaming version by (Zhou and Bruck 2012)<sup>[**(18)**](#Note18)</sup>. In information security applications, extractors other than keyed cryptographic hash functions should not be used by themselves in randomness extraction.

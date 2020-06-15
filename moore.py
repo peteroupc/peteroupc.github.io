@@ -16,9 +16,10 @@ from interval import Interval
 class MooreSampler:
     """
     Moore rejection sampler, for generating independent samples
-    exactly from continuous distributions whose PDF (probability
-    density function) uses "well-defined" arithmetic
-    expressions. It can sample from one-dimensional or multidimensional
+    from continuous distributions in a way that minimizes error,
+    if the distribution's PDF (probability density function)
+    uses "well-defined" arithmetic expressions.
+    It can sample from one-dimensional or multidimensional
     distributions.  It can also sample from so-called "transdimensional
     distributions" if the distribution is the union of several component
     distributions that may have different dimensions and are associated
@@ -52,6 +53,9 @@ class MooreSampler:
        that domain.
     - numlabels: The number of labels associated with the distribution, if it's a
        transdimensional distribution.  Optional; the default is 1.
+    - bitAccuracy: Bit accuracy of the sampler; the sampler will sample from
+       a distribution (truncated to the sampling domain) that is close to the
+       ideal distribution by 2^-bitAccuracy.  The default is 53.
 
     Reference:
     Sainudiin, Raazesh, and Thomas L. York. "An Auto-Validating, Trans-Dimensional,
@@ -64,7 +68,7 @@ class MooreSampler:
     Constraint Programming and Decision Making (pp. 143-152). Springer, Cham.
     """
 
-    def __init__(self, pdf, mn, mx, numLabels=1):
+    def __init__(self, pdf, mn, mx, numLabels=1, bitAccuracy=53):
         if not isinstance(mn, list):
             mn = [mn]
         if not isinstance(mx, list):
@@ -76,6 +80,7 @@ class MooreSampler:
             if mn[i] >= mx[i]:
                 raise ValueError("A minimum is not less than a maximum")
         self.pdf = pdf
+        self.bitAccuracy = bitAccuracy
         self.queue = []
         self.boxes = []
         self.weights = []
@@ -111,15 +116,10 @@ class MooreSampler:
         # a vector is chosen uniformly at random during the
         # sampling process.  A random number x/denom is chosen, where
         # x is a random integer in [rangeInf, rangeSup).
-        # NOTE FOR IMPROVEMENT: Minimum denominator is a high
-        # power of 10.  A future version may take
-        # a user-specified accuracy into account (e.g., 2^-prec)
-        # and set the minimum denominator to be that accuracy
-        # instead, so that all vectors with a coarsest resolution
-        # of, say, 2^-prec have a chance to be chosen.
-        # However, using a power-of-10 denominator as given
-        # here is currently necessary for efficiency reasons.
-        denom = max(10000000, (rangeSup + rangeInf).denominator)
+        # NOTE FOR IMPROVEMENT: Minimum denominator is 2^bitAccuracy
+        # power of 10, so that all vectors with a coarsest resolution
+        # of, say, 2^-bitAccuracy have a chance to be chosen.
+        denom = max(1 << self.bitAccuracy, (rangeSup + rangeInf).denominator)
         rangeSup = int(rangeSup * denom)
         rangeInf = int(rangeInf * denom)
         return [rangeInf, rangeSup, denom]
@@ -202,27 +202,16 @@ class MooreSampler:
         # Convert box range elements to integers
         # NOTE: We are dealing here with a random point between 0
         # and the top of the PDF's range anywhere in the box.  A
-        # proposed vector is
-        # accepted if the point is less than the bottom of the
-        # PDF's range, and a "slower" process is done otherwise,
-        # which requires evaluating the PDF.  The random point
-        # x/denom is chosen, where x is a random integer in
-        # [0, rangeSup).
-        # NOTE FOR IMPROVEMENT: Minimum denominator is a high
-        # power of 2.  A future version could take
-        # a user-specified accuracy into account (e.g., 2^-prec)
-        # and set the minimum denominator to be that accuracy
-        # instead.  However, the exact minimum denominator is
-        # not crucial for correctness here, since the quick acceptance
-        # check in which this random point is involved
-        # only serves to determine whether evaluating the PDF is
-        # necessary or not, and omitting the check doesn't affect
-        # the sampler's correctness.  Rather, the correctness depends
-        # on whether the PDF given to this sampler has provided an
-        # interval that correctly bounds the true PDF.
+        # proposed vector is accepted if the point is less than
+        # the bottom of the PDF's range, and a "slower"
+        # process is done otherwise, which requires evaluating
+        # the PDF.  The random point x/denom is chosen, where
+        # x is a random integer in [0, rangeSup).
+        # NOTE FOR IMPROVEMENT: Minimum denominator is
+        # 2^bitAccuracy.
         rangeSup = Fraction(funcrange.sup)
         rangeInf = Fraction(funcrange.inf)
-        denom = max(1 << 32, (rangeSup + rangeInf).denominator)
+        denom = max(1 << self.bitAccuracy, (rangeSup + rangeInf).denominator)
         rangeSup = int(rangeSup * denom)
         rangeInf = int(rangeInf * denom)
         # Return box info: priority key, function range, weight
@@ -300,6 +289,8 @@ class MooreSampler:
             kx = self._rndbox(boxisd)
             # Kĝ(kx), a scalar, where kx may be a scalar or vector
             udenom = boxrange[2]
+            if boxrange[1] == boxrange[0]:
+                continue
             u = self._fastrandint(boxrange[0], boxrange[1])
             # Quick accept
             if u < 0:
@@ -316,12 +307,18 @@ class MooreSampler:
                     # Rejected
                     break
                 else:
-                    # Don't know whether to accept or reject, so increase
-                    # granularity of ufrac
-                    print([pdfvalue.inf, Decimal(ufrac), pdfvalue.sup, ufrac])
-                    udenom <<= 8
-                    u = (u << 8) | random.randint(0, 255)
-                    ufrac = Fraction(u, denom)
+                    # Don't know whether to accept or reject
+                    if (pdfvalue.sup - pdfvalue.inf) < Fraction(
+                        1, 1 << self.bitAccuracy
+                    ):
+                        # Difference is within accuracy tolerance; safe to reject
+                        break
+                    else:
+                        raise ValueError(
+                            "Sampling failed; PDF may be too inaccurate "
+                            + "(less than 2^-%d accuracy)" % (self.bitAccuracy)
+                        )
+                    break
         return [None, trials]
 
 if __name__ == "__main__":
@@ -393,7 +390,8 @@ if __name__ == "__main__":
     def geninvgaussian(x, lamda, chi, psi):
         if x.sup <= 0:
             return Interval(0)
-        return x ** (lamda - 1) * (-(chi / x + psi * x) / 2).exp()
+        ret = x ** (lamda - 1) * (-(chi / x + psi * x) / 2).exp()
+        return ret
 
     import time
     import math
