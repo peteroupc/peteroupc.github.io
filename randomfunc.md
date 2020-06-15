@@ -19,8 +19,9 @@ All the random number methods presented on this page are ultimately based on an 
 **In general, this document does not cover:**
 
 - How to choose an underlying RNG for a particular application, including in terms of security, performance, and quality.  I have written more on RNG recommendations in [**another document**](https://peteroupc.github.io/random.html).
-- Randomness extraction (also known as _unbiasing_, _deskewing_, or _whitening_), such as [**hash functions**](https://peteroupc.github.io/random.html#Hash_Functions) and von Neumann unbiasing.
 - How to generate random security parameters such as encryption keys.
+- Randomness extraction (also known as _unbiasing_, _deskewing_, or _whitening_), such as [**hash functions**](https://peteroupc.github.io/random.html#Hash_Functions) and von Neumann unbiasing.
+- Variance reduction techniques such as importance sampling or common random numbers.
 
 <a id=About_This_Document></a>
 ### About This Document
