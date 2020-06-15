@@ -32,7 +32,6 @@ The [**pseudocode conventions**](https://peteroupc.github.io/pseudocode.html) ap
 
 For algorithms on generating uniform random _integers_ in a range, see [**"Uniform Random Integers"**](https://peteroupc.github.io/randomfunc.html#Uniform_Random_Integers).  It should be noted there that most RNGs (random number generators) in common use output 32- or 64-bit non-negative integers, and for JavaScript, the idiom `(Math.random() < 0.5 ? 0 : 1)` will work in many practical cases as a random bit generator.  Here is a JavaScript example of generating a random integer in the interval [`minInclusive`, `maxExclusive`], using the Fast Dice Roller by J. Lumbroso (2013)<sup>[**(1)**](#Note1)</sup>:
 
-```javascript
     function randomInt(minInclusive, maxExclusive) {
       var maxInclusive = (maxExclusive - minInclusive) - 1
       var x = 1
@@ -49,11 +48,10 @@ For algorithms on generating uniform random _integers_ in a range, see [**"Unifo
         }
       }
     }
-```
 
 Many common programming languages have no convenient or correct way to generate random numbers in a range.  For example:
 
-- Java's `java.util.Random` until version 8 had methods to produce `int`s in the interval [0, n) (`nextInt`), but not `long`s in that interval or integers in an arbitrary interval [a, b).   Additional methods named `longs`, `ints`, and `doubles` were provided that offer this functionality, but even so, they are not as convenient in some cases than the existing `nextInt` method.
+- Java's `java.util.Random` until version 8 had methods to produce `int`s in the interval [0, n) (`nextInt`), but not `long`s in that interval or integers in an arbitrary interval [a, b).   Additional methods named `longs` and `ints` were later provided that offer this functionality, but even so, they are not as convenient in some cases than the existing `nextInt` method.
 - JavaScript until recently has only one API for random number generation, namely `Math.random()`, and no built-in method for random integer generation or shuffling, among other things.  Naïve solutions such as `Math.floor(Math.random()*x)+y` are not guaranteed to work reliably, in part because JavaScript doesn't require any particular implementation for `Math.random`.
 - C's `rand` function produces random integers in a predetermined range (\[0, `RAND_MAX`\]) that is not within the application's control.  This is just one of a [**host of issues with `rand`**](https://stackoverflow.com/questions/52869166/why-is-the-use-of-rand-considered-bad/52881465#52881465), by the way (unspecified algorithm, yet is initializable with "srand" for repeatability; non-thread-safety; historical implementations had weak low bits; etc.).
 
@@ -84,7 +82,7 @@ Some applications require generating unique values that identify something, such
 <a id=Shuffling></a>
 ## Shuffling
 
-An algorithm to randomize (_shuffle_) the order of a list is given in [**"Shuffling"**](https://peteroupc.github.io/randomfunc.html#Shuffling).  It should be noted that the algorithm is easy to implement incorrectly.
+An algorithm to randomize (_shuffle_) the order of a list is given in [**"Shuffling"**](https://peteroupc.github.io/randomfunc.html#Shuffling).  It should be noted that the algorithm is easy to implement incorrectly.  Also, the choice of underlying RNG is important when it comes to shuffling; see my [**RNG recommendation document on shuffling**](https://peteroupc.github.io/random.html#Shuffling).
 
 <a id=Random_Records_from_a_Database></a>
 ## Random Records from a Database
@@ -106,11 +104,12 @@ However, the following are some of the many considerations involving random stri
 
 - If the string needs to be typed in by end users, or to be memorable, it may be important to choose a character set carefully or [**allow typing mistakes to be detected**](https://espadrine.github.io/blog/posts/a-base32-checksum.html).
 - If the string identifies something, the application may require strings it generates to be unique; see [**Unique Random Identifiers**](https://peteroupc.github.io/random.html#Unique_Random_Identifiers) for considerations.
+- If the string is in the nature of a password or another secret value, then it has to be generated using a [**cryptographic RNG**](https://peteroupc.github.io/random.html#Existing_RNG_APIs_in_Programming_Languages) (such as the `secrets` module in Python or the `random_bytes` function in PHP).
 
 <a id=Choosing_Items_with_Separate_Probabilities></a>
 ## Choosing Items with Separate Probabilities
 
-_Weighted choice_ (also known as a _categorical distribution_) is a random choice of items, where each item has a _weight_ and is chosen with a probability proportional to its weight.  For algorithms on weighted choice, see "[**Weighted Choice With Replacement**](https://peteroupc.github.io/randomfunc.html#Weighted_Choice_With_Replacement).
+_Weighted choice_ (also known as a _categorical distribution_) is a random choice of items, where each item has a _weight_ and is chosen with a probability proportional to its weight.  For algorithms on weighted choice, see "[**Weighted Choice With Replacement**](https://peteroupc.github.io/randomfunc.html#Weighted_Choice_With_Replacement)".
 
 The algorithm shown there is a straightforward way to implement weighted choice, but there are faster alternatives (which are both implemented in [**Python sample code**](https://peteroupc.github.io/randomgen.zip)):
 

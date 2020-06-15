@@ -19,6 +19,7 @@ CLASSES
         AlmostRandom
         BinaryExpansion
         ConvexPolygonSampler
+        DensityInversionSampler
         FastLoadedDiceRoller
         KVectorSampler
         PascalTriangle
@@ -101,6 +102,65 @@ CLASSES
      |  __weakref__
      |      list of weak references to the object (if defined)
 
+    class DensityInversionSampler(builtins.object)
+     |  A sampler that generates random samples from
+     |    a continuous distribution for which
+     |    only the probability density function (PDF) is known,
+     |    using the inversion method.  This sampler
+     |    allows quantiles for the distribution to be calculated
+     |    from pregenerated uniform random numbers in [0, 1].
+     |
+     |  - rg: A random generator (RandGen) object.
+     |  - pdf: A function that specifies the PDF. It takes a single
+     |    number and outputs a single number. The area under
+     |    the PDF need not equal 1 (this sampler works even if the
+     |    PDF is only known up to a normalizing constant).
+     |  - bl, br - Specifies the sampling domain of the PDF.  Both
+     |     bl and br are numbers giving the domain,
+     |     which in this case is [bl, br].  For best results, the
+     |     probabilities outside the sampling domain should be
+     |     negligible (the reference cited below uses cutoff points
+     |     such that the probabilities for each tail integrate to
+     |     about ures*0.05 or less).
+     |  - ures - Maximum approximation error tolerable, or
+     |    "u-resolution".  Default is 10^-8.  This error tolerance
+     |    "does not work for continuous distributions with high
+     |    and narrow peaks or poles".
+     |
+     |    Reference:
+     |    Gerhard Derflinger, Wolfgang Hörmann, and Josef Leydold,
+     |    "Random variate generation by numerical inversion when
+     |    only the density is known", ACM Transactions on Modeling
+     |    and Computer Simulation 20(4) article 18, October 2010.
+     |
+     |  Methods defined here:
+     |
+     |  __init__(self, rg, pdf, bl, br, ures=1e-08)
+     |      Initialize self.  See help(type(self)) for accurate signature.
+     |
+     |  quantile(self, v)
+     |      Calculates quantiles from uniform random numbers
+     |            in the interval [0, 1].
+     |      - v: A list of uniform random numbers.
+     |      Returns a list of the quantiles corresponding to the
+     |      uniform random numbers.  The returned list will have
+     |      the same number of entries as 'v'.
+     |
+     |  sample(self, n=1)
+     |      Generates random numbers that follow the
+     |            distribution modeled by this class.
+     |      - n: The number of random numbers to generate.
+     |      Returns a list of 'n' random numbers.
+     |
+     |  ----------------------------------------------------------------------
+     |  Data descriptors defined here:
+     |
+     |  __dict__
+     |      dictionary for instance variables (if defined)
+     |
+     |  __weakref__
+     |      list of weak references to the object (if defined)
+
     class FastLoadedDiceRoller(builtins.object)
      |  Implements the Fast Loaded Dice Roller, which chooses a random number in [0, n)
      |  where the probability that each number is chosen is weighted.  The 'weights' is the
@@ -143,7 +203,7 @@ CLASSES
      |  __init__(self, rg, cdf, xmin, xmax, pdf=None, nd=200)
      |      Initializes the K-Vector-like sampler.
      |      Parameters:
-     |      - randgen: A random generator (RandGen) object.
+     |      - rg: A random generator (RandGen) object.
      |      - cdf: Cumulative distribution function (CDF) of the
      |         distribution.  The CDF must be
      |         monotonically nondecreasing everywhere in the

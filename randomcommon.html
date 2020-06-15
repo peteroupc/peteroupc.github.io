@@ -40,28 +40,28 @@
 
 <p>For algorithms on generating uniform random <em>integers</em> in a range, see <a href="https://peteroupc.github.io/randomfunc.html#Uniform_Random_Integers"><strong>&quot;Uniform Random Integers&quot;</strong></a>.  It should be noted there that most RNGs (random number generators) in common use output 32- or 64-bit non-negative integers, and for JavaScript, the idiom <code>(Math.random() &lt; 0.5 ? 0 : 1)</code> will work in many practical cases as a random bit generator.  Here is a JavaScript example of generating a random integer in the interval [<code>minInclusive</code>, <code>maxExclusive</code>], using the Fast Dice Roller by J. Lumbroso (2013)<sup><a href="#Note1"><strong>(1)</strong></a></sup>:</p>
 
-<pre lang="javascript"><code>    function randomInt(minInclusive, maxExclusive) {
-      var maxInclusive = (maxExclusive - minInclusive) - 1
-      var x = 1
-      var y = 0
-      while(true) {
-        x = x * 2
-        var randomBit = (Math.random() &lt; 0.5 ? 0 : 1)
-        y = y * 2 + randomBit
-        nextBit = nextBit + 1
-        if(x &gt; maxInclusive) {
-          if (y &lt;= maxInclusive) { return y + minInclusive }
-          x = x - maxInclusive - 1
-          y = y - maxInclusive - 1
-        }
-      }
+<pre>function randomInt(minInclusive, maxExclusive) {
+  var maxInclusive = (maxExclusive - minInclusive) - 1
+  var x = 1
+  var y = 0
+  while(true) {
+    x = x * 2
+    var randomBit = (Math.random() &lt; 0.5 ? 0 : 1)
+    y = y * 2 + randomBit
+    nextBit = nextBit + 1
+    if(x &gt; maxInclusive) {
+      if (y &lt;= maxInclusive) { return y + minInclusive }
+      x = x - maxInclusive - 1
+      y = y - maxInclusive - 1
     }
+  }
+}
 </pre>
 
 <p>Many common programming languages have no convenient or correct way to generate random numbers in a range.  For example:</p>
 
 <ul>
-<li>Java&#39;s <code>java.util.Random</code> until version 8 had methods to produce <code>int</code>s in the interval [0, n) (<code>nextInt</code>), but not <code>long</code>s in that interval or integers in an arbitrary interval [a, b).   Additional methods named <code>longs</code>, <code>ints</code>, and <code>doubles</code> were provided that offer this functionality, but even so, they are not as convenient in some cases than the existing <code>nextInt</code> method.</li>
+<li>Java&#39;s <code>java.util.Random</code> until version 8 had methods to produce <code>int</code>s in the interval [0, n) (<code>nextInt</code>), but not <code>long</code>s in that interval or integers in an arbitrary interval [a, b).   Additional methods named <code>longs</code> and <code>ints</code> were later provided that offer this functionality, but even so, they are not as convenient in some cases than the existing <code>nextInt</code> method.</li>
 <li>JavaScript until recently has only one API for random number generation, namely <code>Math.random()</code>, and no built-in method for random integer generation or shuffling, among other things.  Naïve solutions such as <code>Math.floor(Math.random()*x)+y</code> are not guaranteed to work reliably, in part because JavaScript doesn&#39;t require any particular implementation for <code>Math.random</code>.</li>
 <li>C&#39;s <code>rand</code> function produces random integers in a predetermined range ([0, <code>RAND_MAX</code>]) that is not within the application&#39;s control.  This is just one of a <a href="https://stackoverflow.com/questions/52869166/why-is-the-use-of-rand-considered-bad/52881465#52881465"><strong>host of issues with <code>rand</code></strong></a>, by the way (unspecified algorithm, yet is initializable with &quot;srand&quot; for repeatability; non-thread-safety; historical implementations had weak low bits; etc.).</li>
 </ul>
@@ -98,7 +98,7 @@
 
 <h2>Shuffling</h2>
 
-<p>An algorithm to randomize (<em>shuffle</em>) the order of a list is given in <a href="https://peteroupc.github.io/randomfunc.html#Shuffling"><strong>&quot;Shuffling&quot;</strong></a>.  It should be noted that the algorithm is easy to implement incorrectly.</p>
+<p>An algorithm to randomize (<em>shuffle</em>) the order of a list is given in <a href="https://peteroupc.github.io/randomfunc.html#Shuffling"><strong>&quot;Shuffling&quot;</strong></a>.  It should be noted that the algorithm is easy to implement incorrectly.  Also, the choice of underlying RNG is important when it comes to shuffling; see my <a href="https://peteroupc.github.io/random.html#Shuffling"><strong>RNG recommendation document on shuffling</strong></a>.</p>
 
 <p><a id=Random_Records_from_a_Database></a></p>
 
@@ -125,13 +125,14 @@
 <ul>
 <li>If the string needs to be typed in by end users, or to be memorable, it may be important to choose a character set carefully or <a href="https://espadrine.github.io/blog/posts/a-base32-checksum.html"><strong>allow typing mistakes to be detected</strong></a>.</li>
 <li>If the string identifies something, the application may require strings it generates to be unique; see <a href="https://peteroupc.github.io/random.html#Unique_Random_Identifiers"><strong>Unique Random Identifiers</strong></a> for considerations.</li>
+<li>If the string is in the nature of a password or another secret value, then it has to be generated using a <a href="https://peteroupc.github.io/random.html#Existing_RNG_APIs_in_Programming_Languages"><strong>cryptographic RNG</strong></a> (such as the <code>secrets</code> module in Python or the <code>random_bytes</code> function in PHP).</li>
 </ul>
 
 <p><a id=Choosing_Items_with_Separate_Probabilities></a></p>
 
 <h2>Choosing Items with Separate Probabilities</h2>
 
-<p><em>Weighted choice</em> (also known as a <em>categorical distribution</em>) is a random choice of items, where each item has a <em>weight</em> and is chosen with a probability proportional to its weight.  For algorithms on weighted choice, see &quot;<a href="https://peteroupc.github.io/randomfunc.html#Weighted_Choice_With_Replacement"><strong>Weighted Choice With Replacement</strong></a>.</p>
+<p><em>Weighted choice</em> (also known as a <em>categorical distribution</em>) is a random choice of items, where each item has a <em>weight</em> and is chosen with a probability proportional to its weight.  For algorithms on weighted choice, see &quot;<a href="https://peteroupc.github.io/randomfunc.html#Weighted_Choice_With_Replacement"><strong>Weighted Choice With Replacement</strong></a>&quot;.</p>
 
 <p>The algorithm shown there is a straightforward way to implement weighted choice, but there are faster alternatives (which are both implemented in <a href="https://peteroupc.github.io/randomgen.zip"><strong>Python sample code</strong></a>):</p>
 

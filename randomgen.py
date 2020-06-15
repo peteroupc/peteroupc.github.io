@@ -2831,6 +2831,215 @@ class _KVectorRootSolver:
                 )
         return roots[0]  # Return the first root found
 
+class _GaussLobatto:
+    NODES = [0, 0.17267316464601146, 0.5, 0.8273268353539885, 1]
+    WEIGHTS = [0.05, 49.0 / 180, 64.0 / 180, 49.0 / 180, 0.05]
+
+    def __init__(self, pdf):
+        self.pdf = pdf
+        self.tol = 0
+        self.table = {}
+
+    def setTol(self, tol):
+        self.tol = tol
+
+    def gl(self, a, b):
+        r = 0
+        while a in self.table:
+            v = self.table[a]
+            if v[0] == b:
+                return r + v[1]
+            if v[0] < b:
+                r += v[1]
+                a = v[0]
+            else:
+                break
+        r += self.gl_inner(a, b)
+        return r
+
+    def gl_inner(self, a, b):
+        r = 0
+        h = b - a
+        for i in range(5):
+            fx = h * _GaussLobatto.NODES[i] + a
+            r += _GaussLobatto.WEIGHTS[i] * h * self.pdf(fx)
+        return r
+
+    def agl(self, a, h):
+        if a > h:
+            return -self.agl(h, a)
+        mid = a + (h - a) * 0.5
+        i0 = self.gl_inner(a, h)
+        i1a = self.gl_inner(a, mid)
+        i1b = self.gl_inner(mid, h)
+        i1 = i1a + i1b
+        if abs(i1 - i0) < self.tol:
+            self.table[a] = [mid, i1a]
+            self.table[mid] = [h, i1b]
+            return i1
+        ret = self.agl(a, mid) + self.agl(mid, h)
+        return ret
+
+class DensityInversionSampler:
+    """ A sampler that generates random samples from
+        a continuous distribution for which
+        only the probability density function (PDF) is known,
+        using the inversion method.  This sampler
+        allows quantiles for the distribution to be calculated
+        from pregenerated uniform random numbers in [0, 1].
+
+      - rg: A random generator (RandGen) object.
+      - pdf: A function that specifies the PDF. It takes a single
+        number and outputs a single number. The area under
+        the PDF need not equal 1 (this sampler works even if the
+        PDF is only known up to a normalizing constant).
+      - bl, br - Specifies the sampling domain of the PDF.  Both
+         bl and br are numbers giving the domain,
+         which in this case is [bl, br].  For best results, the
+         probabilities outside the sampling domain should be
+         negligible (the reference cited below uses cutoff points
+         such that the probabilities for each tail integrate to
+         about ures*0.05 or less).
+      - ures - Maximum approximation error tolerable, or
+        "u-resolution".  Default is 10^-8.  This error tolerance
+        "does not work for continuous distributions with high
+        and narrow peaks or poles".
+
+        Reference:
+        Gerhard Derflinger, Wolfgang Hörmann, and Josef Leydold,
+        "Random variate generation by numerical inversion when
+        only the density is known", ACM Transactions on Modeling
+        and Computer Simulation 20(4) article 18, October 2010.
+      """
+
+    def __init__(self, rg, pdf, bl, br, ures=1e-8):
+        if bl > br:
+            raise ValueError
+        self.rg = rg
+        n = 5  # Polynomial order of interpolating polynomials
+        ures *= 0.9
+        glob = _GaussLobatto(pdf)
+        i0 = glob.gl(bl, br)
+        glob.setTol(0.05 * i0 * ures)
+        ii = glob.agl(bl, br)
+        self.ii = ii
+        a = bl
+        h = (br - bl) / 128.0
+        f = 0
+        table = []
+        c = None
+        u = None
+        chn = self._chebyshevNodes(n)
+        while a < br:
+            epsi = []
+            x = None
+            while True:
+                x = [0 if i == 0 else h * chn[i] for i in range(len(chn))]
+                u = [0 for i in range(0, n + 1)]
+                for i in range(1, n + 1):
+                    u[i] = u[i - 1] + glob.gl(a + x[i - 1], a + x[i])
+                testPoints = self._newtonTestPoints(u)
+                c = self._newtonCoeffs(u, x)
+                success = True
+                xi = [0 for ti in testPoints]
+                for i in range(len(xi)):
+                    xi[i] = self._newtonEvaluate(c, u, testPoints[i])
+                    if i > 0:
+                        success |= x[i] <= xi[i] and xi[i] <= x[i + 1]
+                    if not success:
+                        break
+                if not success:
+                    h *= 0.8
+                    continue
+                epsi = [
+                    abs(glob.gl(a, a + xi[i]) - testPoints[i])
+                    for i in range(len(testPoints))
+                ]
+                epsimax = max(epsi)
+                if math.isnan(epsimax):
+                    raise ValueError
+                if epsimax <= ures:
+                    success = True
+                    for i in range(len(xi)):
+                        if not (x[i] <= xi[i] and xi[i] <= x[i + 1]):
+                            success = False
+                            break
+                    if success:
+                        # if epsimax<=ures/3.0:
+                        #   h*=1.3
+                        break
+                h *= 0.8
+            table.append([c, u, a, f])
+            h = min(h, br - (a - h))
+            a += h
+            f += u[n]
+        self.table = table
+
+    def _newtonTestPoints(self, u):
+        t = [0.5 * (u[i - 1] + u[i]) for i in range(1, len(u))]
+        for i in range(1, len(u)):
+            for b in range(2):
+                s = 0
+                sq = 0
+                for k in range(len(u)):
+                    d = t[i - 1] - u[k]
+                    s += 1.0 / d
+                    sq += 1.0 / (d * d)
+                t[i - 1] += s / sq
+        return t
+
+    def _chebyshevNodes(self, n):
+        # Returns n+1 Chebyshev nodes
+        phi = math.pi / (2 * (n + 1))
+        cphi = math.cos(phi)
+        ch = [math.sin(k * phi) * math.sin((k + 1) * phi) / cphi for k in range(n + 1)]
+        return ch
+
+    def _newtonCoeffs(self, x, g):  # NOTE: x[0..n], g(x[0..n])
+        c = [gx for gx in g]
+        for w in range(1, len(x)):
+            i = len(x) - 1
+            while i >= w:
+                c[i] = (c[i] - c[i - 1]) / (x[i] - x[i - w])
+                i -= 1
+        return c
+
+    def _newtonEvaluate(self, c, xn, x):
+        if len(c) != len(xn):
+            raise ValueError
+        n = len(xn) - 1
+        p = c[n]
+        k = n - 1
+        while k >= 0:
+            p = c[k] + p * (x - xn[k])
+            k -= 1
+        return p
+
+    def quantile(self, v):
+        """ Calculates quantiles from uniform random numbers
+            in the interval [0, 1].
+      - v: A list of uniform random numbers.
+      Returns a list of the quantiles corresponding to the
+      uniform random numbers.  The returned list will have
+      the same number of entries as 'v'.  """
+        return [self._onequantile(x * self.ii) for x in v]
+
+    def sample(self, n=1):
+        """ Generates random numbers that follow the
+            distribution modeled by this class.
+      - n: The number of random numbers to generate.
+      Returns a list of 'n' random numbers.  """
+        return [self._onequantile(self.rg.rndu01() * self.ii) for i in range(n)]
+
+    def _onequantile(self, r):
+        for j in range(0, len(self.table) - 1):
+            if self.table[j][3] <= r and r < self.table[j + 1][3]:
+                c = self.table[j][0]
+                u = self.table[j][1]
+                a = self.table[j][2]
+                return a + self._newtonEvaluate(c, u, r - self.table[j][3])
+        return 0
+
 class KVectorSampler:
     """ A K-Vector-like sampler of a continuous distribution
       with a known cumulative distribution function (CDF).
@@ -2846,7 +3055,7 @@ class KVectorSampler:
     def __init__(self, rg, cdf, xmin, xmax, pdf=None, nd=200):
         """ Initializes the K-Vector-like sampler.
          Parameters:
-         - randgen: A random generator (RandGen) object.
+         - rg: A random generator (RandGen) object.
          - cdf: Cumulative distribution function (CDF) of the
             distribution.  The CDF must be
             monotonically nondecreasing everywhere in the
