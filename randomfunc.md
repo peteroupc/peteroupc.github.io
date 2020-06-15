@@ -489,6 +489,7 @@ The [**Fisher&ndash;Yates shuffle method**](https://en.wikipedia.org/wiki/Fisher
 >
 > 1. The choice of underlying RNG is important when it comes to shuffling; see my [**RNG recommendation document on shuffling**](https://peteroupc.github.io/random.html#Shuffling).
 > 2. A shuffling algorithm that can be carried out in parallel is described in (Bacher et al., 2015)<sup>[**(11)**](#Note11)</sup>.
+> 3. A _derangement_ is a permutation where every item moves to a different position.  A random derangement can be generated as follows (Merlini et al. 2007)<sup>[**(83)**](#Note83)</sup>: (1) modify `Shuffle` by adding the following line after `k = RNDINTEXC(i + 1)`: `if i == list[k]: return nothing`; (2) use the following pseudocode with the modified `Shuffle` method: `while True; list = []; for i in 0...n: AddItem(list, n); s=Shuffle(list); if s!=nothing: return s; end`.
 
 <a id=Random_Character_Strings></a>
 #### Random Character Strings
@@ -2245,6 +2246,8 @@ provided the PDF's values are all 0 or greater and the area under the PDF's curv
 
 <small><sup id=Note82>(82)</sup> For example, see Balcer, V., Vadhan, S., "Differential Privacy on Finite Computers", Dec. 4, 2018; as well as Micciancio, D. and Walter, M., "Gaussian sampling over the integers: Efficient, generic, constant-time", in Annual International Cryptology Conference, August 2017 (pp. 455-485).</small>
 
+<small><sup id=Note83>(83)</sup> Merlini, D., Sprugnoli, R., Verri, M.C., "An Analysis of a Simple Algorithm for Random Derangements", 2007.</small>
+
 <a id=Appendix></a>
 ## Appendix
 
@@ -2299,7 +2302,7 @@ Multithreading can serve as a fast way to generate multiple random numbers at on
 ### Implementation Considerations
 
 1. **Shell scripts and Microsoft Windows batch files** are designed for running other programs, rather than general-purpose programming.  However, batch files and `bash` (a shell script interpreter) might support a variable which returns a random integer in the interval \[0, 32767\] (called `%RANDOM%` or `$RANDOM`, respectively); neither variable is designed for information security. Whenever possible, the methods in this document should not be implemented in shell scripts or batch files, especially if information security is a goal.
-2. **Query languages such as SQL** have no procedural elements such as loops and branches.  Moreover, standard SQL does not include an RNG in its suite of functionality, but popular SQL dialects often do &mdash; with idiosyncratic behavior.<sup>[**(80)**](#Note80)</sup> Whenever possible, the methods in this document should not be implemented in SQL, especially if information security is a goal.
+2. **Query languages such as SQL** have no procedural elements such as loops and branches.  Moreover, standard SQL has no way to generate random numbers, but popular SQL dialects often do &mdash; with idiosyncratic behavior.<sup>[**(80)**](#Note80)</sup> Whenever possible, the methods in this document should not be implemented in SQL, especially if information security is a goal.
 3. **Stateless RNGs.** Most RNG designs in common use maintain an internal state and update that state each time a random number is generated.  But for [**_stateless_ RNG designs**](https://peteroupc.github.io/random.html#Designs_for_PRNGs) (including so-called "splittable" RNGs), `RNDINT()`, `RNG()`, and other random sampling methods in this document may have to be adjusted accordingly (usually by adding an additional parameter).
 
 <a id=Security_Considerations></a>
