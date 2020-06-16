@@ -131,10 +131,10 @@
 <li><code><a href="#FromString_byte_int_int">FromString(byte[], int, int)</a></code> - Creates a binary floating-point number from a sequence of bytes that represents a number.</li>
 <li><code><a href="#FromString_byte_int_int_PeterO_Numbers_EContext">FromString(byte[], int, int, PeterO.Numbers.EContext)</a></code> - Creates a binary floating-point number from a sequence of bytes that represents a number.</li>
 <li><code><a href="#FromString_byte_PeterO_Numbers_EContext">FromString(byte[], PeterO.Numbers.EContext)</a></code> - Creates a binary floating-point number from a sequence of bytes that represents a number.</li>
-<li><code><a href="#FromString_char">FromString(char[])</a></code> - Creates a binary floating-point number from a sequence of chars that represents a number, using an unlimited precision context.</li>
-<li><code><a href="#FromString_char_int_int">FromString(char[], int, int)</a></code> - Creates a binary floating-point number from a sequence of chars that represents a number.</li>
-<li><code><a href="#FromString_char_int_int_PeterO_Numbers_EContext">FromString(char[], int, int, PeterO.Numbers.EContext)</a></code> - Creates a binary floating-point number from a sequence of chars that represents a number.</li>
-<li><code><a href="#FromString_char_PeterO_Numbers_EContext">FromString(char[], PeterO.Numbers.EContext)</a></code> - Creates a binary floating-point number from a sequence of chars that represents a number.</li>
+<li><code><a href="#FromString_char">FromString(char[])</a></code> - Creates a binary floating-point number from a sequence of char s that represents a number, using an unlimited precision context.</li>
+<li><code><a href="#FromString_char_int_int">FromString(char[], int, int)</a></code> - Creates a binary floating-point number from a sequence of char s that represents a number.</li>
+<li><code><a href="#FromString_char_int_int_PeterO_Numbers_EContext">FromString(char[], int, int, PeterO.Numbers.EContext)</a></code> - Creates a binary floating-point number from a sequence of char s that represents a number.</li>
+<li><code><a href="#FromString_char_PeterO_Numbers_EContext">FromString(char[], PeterO.Numbers.EContext)</a></code> - Creates a binary floating-point number from a sequence of char s that represents a number.</li>
 <li><code><a href="#FromString_string">FromString(string)</a></code> - Creates a binary floating-point number from a text string that represents a number, using an unlimited precision context.</li>
 <li><code><a href="#FromString_string_int_int">FromString(string, int, int)</a></code> - Creates a binary floating-point number from a text string that represents a number.</li>
 <li><code><a href="#FromString_string_int_int_PeterO_Numbers_EContext">FromString(string, int, int, PeterO.Numbers.EContext)</a></code> - Creates a binary floating-point number from a text string that represents a number.</li>
@@ -498,7 +498,7 @@
     int intValue);
 </pre>
 
-<p>Adds this arbitrary-precision binary floating-point number and a 32-bit signed integer and returns the result.</p>
+<p>Adds this arbitrary-precision binary floating-point number and a 32-bit signed integer and returns the result. The exponent for the result is the lower of this arbitrary-precision binary floating-point number&#39;s exponent and the other 32-bit signed integer&#39;s exponent.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -519,7 +519,7 @@ is a 32-bit signed integer.</li>
     long longValue);
 </pre>
 
-<p>Adds this arbitrary-precision binary floating-point number and a 64-bit signed integer and returns the result.</p>
+<p>Adds this arbitrary-precision binary floating-point number and a 64-bit signed integer and returns the result. The exponent for the result is the lower of this arbitrary-precision binary floating-point number&#39;s exponent and the other 64-bit signed integer&#39;s exponent.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -540,7 +540,7 @@ is a 64-bit signed integer.</li>
     PeterO.Numbers.EFloat otherValue);
 </pre>
 
-<p>Adds this arbitrary-precision binary floating-point number and another arbitrary-precision binary floating-point number and returns the result.</p>
+<p>Adds this arbitrary-precision binary floating-point number and another arbitrary-precision binary floating-point number and returns the result. The exponent for the result is the lower of this arbitrary-precision binary floating-point number&#39;s exponent and the other arbitrary-precision binary floating-point number&#39;s exponent.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -1852,8 +1852,8 @@ is a 64-bit floating-point number.</li>
     byte[] bytes);
 </pre>
 
-<p>Creates a binary floating-point number from a sequence of bytes that represents a number, using an unlimited precision context. For more information, see the  <code>FromString(String, int, int,
-            EContext)</code>  method.</p>
+<p>Creates a binary floating-point number from a sequence of bytes that represents a number, using an unlimited precision context. For more information, see the  <code>FromString(String, int,
+            int, EContext)</code>  method.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -1910,7 +1910,7 @@ begins.</p></li>
 Either  <i> offset</i>
 or  <i> length</i>
 is less than 0 or greater than  <i>bytes</i>
-&#39;s length, or  <i>             bytes</i>
+&#39;s length, or  <i> bytes</i>
 &#39;s length minus  <i>offset</i>
 is less than  <i>length</i>
 .</p></li>
@@ -2021,13 +2021,12 @@ is null.</li>
     char[] chars);
 </pre>
 
-<p>Creates a binary floating-point number from a sequence of  <code>char</code> s that represents a number, using an unlimited precision context. For more information, see the  <code>FromString(String, int, int,
-            EContext)</code>  method.</p>
+<p>Creates a binary floating-point number from a sequence of  <code>char</code>  s that represents a number, using an unlimited precision context. For more information, see the  <code>FromString(String, int, int, EContext)</code>  method.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>chars</i>: A sequence of  <code>char</code> s to convert to a binary floating-point number.</li>
+<li><i>chars</i>: A sequence of  <code>char</code>  s to convert to a binary floating-point number.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -2055,12 +2054,12 @@ is not a correctly formatted number sequence.</p></li>
     int length);
 </pre>
 
-<p>Creates a binary floating-point number from a sequence of  <code>char</code> s that represents a number. For more information, see the  <code>FromString(String, int, int, EContext)</code>  method.</p>
+<p>Creates a binary floating-point number from a sequence of  <code>char</code>  s that represents a number. For more information, see the  <code>FromString(String, int, int, EContext)</code>  method.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>chars</i>: A sequence of  <code>char</code> s to convert to a binary floating-point number.</p></li>
+<li><p><i>chars</i>: A sequence of  <code>char</code>  s to convert to a binary floating-point number.</p></li>
 <li><p><i>offset</i>: An index starting at 0 showing where the desired portion of  <i>chars</i>
 begins.</p></li>
 <li><p><i>length</i>: The length, in code units, of the desired portion of  <i>chars</i>
@@ -2079,7 +2078,7 @@ begins.</p></li>
 Either  <i> offset</i>
 or  <i> length</i>
 is less than 0 or greater than  <i>chars</i>
-&#39;s length, or  <i>             chars</i>
+&#39;s length, or  <i> chars</i>
 &#39;s length minus  <i>offset</i>
 is less than  <i>length</i>
 .</p></li>
@@ -2107,7 +2106,7 @@ is less than  <i>length</i>
     PeterO.Numbers.EContext ctx);
 </pre>
 
-<p>Creates a binary floating-point number from a sequence of  <code>char</code> s that represents a number. Note that if the sequence contains a negative exponent, the resulting value might not be exact, in which case the resulting binary floating-point number will be an approximation of this decimal number&#39;s value. The format of the sequence generally consists of:</p>
+<p>Creates a binary floating-point number from a sequence of  <code>char</code>  s that represents a number. Note that if the sequence contains a negative exponent, the resulting value might not be exact, in which case the resulting binary floating-point number will be an approximation of this decimal number&#39;s value. The format of the sequence generally consists of:</p>
 
 <ul>
 <li><p>An optional plus sign (&quot;+&quot; , U+002B) or minus sign (&quot;-&quot;, U+002D) (if &#39;-&#39; , the value is negative.)</p></li>
@@ -2122,7 +2121,7 @@ is less than  <i>length</i>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>chars</i>: A sequence of  <code>char</code> s to convert to a binary floating-point number.</p></li>
+<li><p><i>chars</i>: A sequence of  <code>char</code>  s to convert to a binary floating-point number.</p></li>
 <li><p><i>offset</i>: An index starting at 0 showing where the desired portion of  <i>chars</i>
 begins.</p></li>
 <li><p><i>length</i>: The length, in code units, of the desired portion of  <i>chars</i>
@@ -2161,12 +2160,12 @@ is less than  <i>length</i>
     PeterO.Numbers.EContext ctx);
 </pre>
 
-<p>Creates a binary floating-point number from a sequence of  <code>char</code> s that represents a number. For more information, see the  <code>FromString(String, int, int, EContext)</code>  method.</p>
+<p>Creates a binary floating-point number from a sequence of  <code>char</code>  s that represents a number. For more information, see the  <code>FromString(String, int, int, EContext)</code>  method.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>chars</i>: A sequence of  <code>char</code> s to convert to a binary floating-point number.</p></li>
+<li><p><i>chars</i>: A sequence of  <code>char</code>  s to convert to a binary floating-point number.</p></li>
 <li><p><i>ctx</i>: An arithmetic context to control the precision, rounding, and exponent range of the result. If HasFlags of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null, in which case the precision is unlimited. Note that providing a context is often much faster than creating an EDecimal without a context then calling ToEFloat on that EDecimal, especially if the context specifies a precision limit and exponent range.</p></li>
 </ul>
 
@@ -3051,7 +3050,7 @@ is null.</li>
     int intValue);
 </pre>
 
-<p>Multiplies this arbitrary-precision binary floating-point number by a 32-bit signed integer and returns the result.</p>
+<p>Multiplies this arbitrary-precision binary floating-point number by a 32-bit signed integer and returns the result. The exponent for the result is this arbitrary-precision binary floating-point number&#39;s exponent plus the other 32-bit signed integer&#39;s exponent.</p>
 
 <pre>EInteger result = EInteger.FromString(&quot;5&quot;).Multiply(200);
 </pre>
@@ -3077,7 +3076,7 @@ is a 32-bit signed integer.</li>
     long longValue);
 </pre>
 
-<p>Multiplies this arbitrary-precision binary floating-point number by a 64-bit signed integer and returns the result.</p>
+<p>Multiplies this arbitrary-precision binary floating-point number by a 64-bit signed integer and returns the result. The exponent for the result is this arbitrary-precision binary floating-point number&#39;s exponent plus the other 64-bit signed integer&#39;s exponent.</p>
 
 <pre>EInteger result = EInteger.FromString(&quot;5&quot;).Multiply(200L);
 </pre>
@@ -3125,7 +3124,7 @@ is a 64-bit signed integer.</li>
     PeterO.Numbers.EFloat otherValue);
 </pre>
 
-<p>Multiplies this arbitrary-precision binary floating-point number by another arbitrary-precision binary floating-point number and returns the result.</p>
+<p>Multiplies this arbitrary-precision binary floating-point number by another arbitrary-precision binary floating-point number and returns the result. The exponent for the result is this arbitrary-precision binary floating-point number&#39;s exponent plus the other arbitrary-precision binary floating-point number&#39;s exponent.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -4930,7 +4929,7 @@ is null.</li>
     int intValue);
 </pre>
 
-<p>Subtracts a 32-bit signed integer from this arbitrary-precision binary floating-point number and returns the result.</p>
+<p>Subtracts a 32-bit signed integer from this arbitrary-precision binary floating-point number and returns the result. The exponent for the result is the lower of this arbitrary-precision binary floating-point number&#39;s exponent and the other 32-bit signed integer&#39;s exponent.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -4951,7 +4950,7 @@ is a 32-bit signed integer.</li>
     long longValue);
 </pre>
 
-<p>Subtracts a 64-bit signed integer from this arbitrary-precision binary floating-point number and returns the result.</p>
+<p>Subtracts a 64-bit signed integer from this arbitrary-precision binary floating-point number and returns the result. The exponent for the result is the lower of this arbitrary-precision binary floating-point number&#39;s exponent and the other 64-bit signed integer&#39;s exponent.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -4972,7 +4971,7 @@ is a 64-bit signed integer.</li>
     PeterO.Numbers.EFloat otherValue);
 </pre>
 
-<p>Subtracts an arbitrary-precision binary floating-point number from this arbitrary-precision binary floating-point number and returns the result.</p>
+<p>Subtracts an arbitrary-precision binary floating-point number from this arbitrary-precision binary floating-point number and returns the result. The exponent for the result is the lower of this arbitrary-precision binary floating-point number&#39;s exponent and the other arbitrary-precision binary floating-point number&#39;s exponent.</p>
 
 <p><b>Parameters:</b></p>
 
