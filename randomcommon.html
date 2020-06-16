@@ -34,11 +34,30 @@
 
 <p>The <a href="https://peteroupc.github.io/pseudocode.html"><strong>pseudocode conventions</strong></a> apply to this document.</p>
 
+<p><a id=Contents></a></p>
+
+<h2>Contents</h2>
+
+<ul>
+<li><a href="#Introduction"><strong>Introduction</strong></a></li>
+<li><a href="#Contents"><strong>Contents</strong></a></li>
+<li><a href="#Uniform_Numbers_in_a_Range"><strong>Uniform Numbers in a Range</strong></a></li>
+<li><a href="#Choosing_Random_Items"><strong>Choosing Random Items</strong></a></li>
+<li><a href="#Unique_Integers_or_Items"><strong>Unique Integers or Items</strong></a></li>
+<li><a href="#Shuffling"><strong>Shuffling</strong></a></li>
+<li><a href="#Random_Records_from_a_Database"><strong>Random Records from a Database</strong></a></li>
+<li><a href="#Random_Character_Strings"><strong>Random Character Strings</strong></a></li>
+<li><a href="#Choosing_Items_with_Separate_Probabilities"><strong>Choosing Items with Separate Probabilities</strong></a></li>
+<li><a href="#Other_Topics"><strong>Other Topics</strong></a></li>
+<li><a href="#Notes"><strong>Notes</strong></a></li>
+<li><a href="#License"><strong>License</strong></a></li>
+</ul>
+
 <p><a id=Uniform_Numbers_in_a_Range></a></p>
 
 <h2>Uniform Numbers in a Range</h2>
 
-<p>For algorithms on generating uniform random <em>integers</em> in a range, see <a href="https://peteroupc.github.io/randomfunc.html#Uniform_Random_Integers"><strong>&quot;Uniform Random Integers&quot;</strong></a>.  It should be noted there that most RNGs (random number generators) in common use output 32- or 64-bit non-negative integers, and for JavaScript, the idiom <code>(Math.random() &lt; 0.5 ? 0 : 1)</code> will work in many practical cases as a random bit generator.  Here is a JavaScript example of generating a random integer in the interval [<code>minInclusive</code>, <code>maxExclusive</code>], using the Fast Dice Roller by J. Lumbroso (2013)<sup><a href="#Note1"><strong>(1)</strong></a></sup>:</p>
+<p>For algorithms on generating uniform random <em>integers</em> in a range, see <a href="https://peteroupc.github.io/randomfunc.html#Uniform_Random_Integers"><strong>&quot;Uniform Random Integers&quot;</strong></a>.  It should be noted there that most RNGs (random number generators) in common use output 32- or 64-bit non-negative integers, and for JavaScript, the idiom <code>(Math.random() &lt; 0.5 ? 0 : 1)</code> will work in many practical cases as a random bit generator.  Here is a JavaScript example of generating a random integer in the interval [**<code>minInclusive</code>, <code>maxExclusive</code>), using the Fast Dice Roller by J. Lumbroso (2013)<sup><a href="#Note1">(1)**</a></sup>:</p>
 
 <pre>function randomInt(minInclusive, maxExclusive) {
   var maxInclusive = (maxExclusive - minInclusive) - 1
@@ -104,7 +123,7 @@
 
 <h2>Random Records from a Database</h2>
 
-<p>Querying random records (<em>rows</em>) from a database usually involves the database language SQL.  However, SQL is implemented very differently in practice between database management systems (DBMSs), so that even trivial SQL statements are not guaranteed to work the same from one DBMS to another.  Moreover, SQL has no loops, no branches, and no standard way to generate random numbers.  Thus, the correct way to generate random records from a database will vary from DBMS to DBMS.</p>
+<p>Querying random records (<em>rows</em>) from a database usually involves the database language SQL.  However, SQL is implemented very differently in practice between database management systems (DBMSs), so that even trivial SQL statements are not guaranteed to work the same from one DBMS to another.  Moreover, SQL has no loops, no branches, and no standard way to generate random numbers.  Thus, the correct way to query random records from a database will vary from DBMS to DBMS.</p>
 
 <p>With that said, the following specific situations tend to come up in random record queries.</p>
 
@@ -125,7 +144,7 @@
 <ul>
 <li>If the string needs to be typed in by end users, or to be memorable, it may be important to choose a character set carefully or <a href="https://espadrine.github.io/blog/posts/a-base32-checksum.html"><strong>allow typing mistakes to be detected</strong></a>.</li>
 <li>If the string identifies something, the application may require strings it generates to be unique; see <a href="https://peteroupc.github.io/random.html#Unique_Random_Identifiers"><strong>Unique Random Identifiers</strong></a> for considerations.</li>
-<li>If the string is in the nature of a password or another secret value, then it has to be generated using a <a href="https://peteroupc.github.io/random.html#Existing_RNG_APIs_in_Programming_Languages"><strong>cryptographic RNG</strong></a> (such as the <code>secrets</code> module in Python or the <code>random_bytes</code> function in PHP).</li>
+<li>If the string is in the nature of a password, a bearer credential, or another secret value, then it has to be generated using a <a href="https://peteroupc.github.io/random.html#Existing_RNG_APIs_in_Programming_Languages"><strong>cryptographic RNG</strong></a> (such as the <code>secrets</code> module in Python or the <code>random_bytes</code> function in PHP).</li>
 </ul>
 
 <p><a id=Choosing_Items_with_Separate_Probabilities></a></p>

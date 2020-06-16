@@ -27,10 +27,26 @@ The following sections will detail the topics given above, with suggestions on h
 
 The [**pseudocode conventions**](https://peteroupc.github.io/pseudocode.html) apply to this document.
 
+<a id=Contents></a>
+## Contents
+
+- [**Introduction**](#Introduction)
+- [**Contents**](#Contents)
+- [**Uniform Numbers in a Range**](#Uniform_Numbers_in_a_Range)
+- [**Choosing Random Items**](#Choosing_Random_Items)
+- [**Unique Integers or Items**](#Unique_Integers_or_Items)
+- [**Shuffling**](#Shuffling)
+- [**Random Records from a Database**](#Random_Records_from_a_Database)
+- [**Random Character Strings**](#Random_Character_Strings)
+- [**Choosing Items with Separate Probabilities**](#Choosing_Items_with_Separate_Probabilities)
+- [**Other Topics**](#Other_Topics)
+- [**Notes**](#Notes)
+- [**License**](#License)
+
 <a id=Uniform_Numbers_in_a_Range></a>
 ## Uniform Numbers in a Range
 
-For algorithms on generating uniform random _integers_ in a range, see [**"Uniform Random Integers"**](https://peteroupc.github.io/randomfunc.html#Uniform_Random_Integers).  It should be noted there that most RNGs (random number generators) in common use output 32- or 64-bit non-negative integers, and for JavaScript, the idiom `(Math.random() < 0.5 ? 0 : 1)` will work in many practical cases as a random bit generator.  Here is a JavaScript example of generating a random integer in the interval [`minInclusive`, `maxExclusive`], using the Fast Dice Roller by J. Lumbroso (2013)<sup>[**(1)**](#Note1)</sup>:
+For algorithms on generating uniform random _integers_ in a range, see [**"Uniform Random Integers"**](https://peteroupc.github.io/randomfunc.html#Uniform_Random_Integers).  It should be noted there that most RNGs (random number generators) in common use output 32- or 64-bit non-negative integers, and for JavaScript, the idiom `(Math.random() < 0.5 ? 0 : 1)` will work in many practical cases as a random bit generator.  Here is a JavaScript example of generating a random integer in the interval [**`minInclusive`, `maxExclusive`), using the Fast Dice Roller by J. Lumbroso (2013)<sup>[(1)**](#Note1)</sup>:
 
     function randomInt(minInclusive, maxExclusive) {
       var maxInclusive = (maxExclusive - minInclusive) - 1
@@ -87,7 +103,7 @@ An algorithm to randomize (_shuffle_) the order of a list is given in [**"Shuffl
 <a id=Random_Records_from_a_Database></a>
 ## Random Records from a Database
 
-Querying random records (_rows_) from a database usually involves the database language SQL.  However, SQL is implemented very differently in practice between database management systems (DBMSs), so that even trivial SQL statements are not guaranteed to work the same from one DBMS to another.  Moreover, SQL has no loops, no branches, and no standard way to generate random numbers.  Thus, the correct way to generate random records from a database will vary from DBMS to DBMS.
+Querying random records (_rows_) from a database usually involves the database language SQL.  However, SQL is implemented very differently in practice between database management systems (DBMSs), so that even trivial SQL statements are not guaranteed to work the same from one DBMS to another.  Moreover, SQL has no loops, no branches, and no standard way to generate random numbers.  Thus, the correct way to query random records from a database will vary from DBMS to DBMS.
 
 With that said, the following specific situations tend to come up in random record queries.
 
@@ -104,7 +120,7 @@ However, the following are some of the many considerations involving random stri
 
 - If the string needs to be typed in by end users, or to be memorable, it may be important to choose a character set carefully or [**allow typing mistakes to be detected**](https://espadrine.github.io/blog/posts/a-base32-checksum.html).
 - If the string identifies something, the application may require strings it generates to be unique; see [**Unique Random Identifiers**](https://peteroupc.github.io/random.html#Unique_Random_Identifiers) for considerations.
-- If the string is in the nature of a password or another secret value, then it has to be generated using a [**cryptographic RNG**](https://peteroupc.github.io/random.html#Existing_RNG_APIs_in_Programming_Languages) (such as the `secrets` module in Python or the `random_bytes` function in PHP).
+- If the string is in the nature of a password, a bearer credential, or another secret value, then it has to be generated using a [**cryptographic RNG**](https://peteroupc.github.io/random.html#Existing_RNG_APIs_in_Programming_Languages) (such as the `secrets` module in Python or the `random_bytes` function in PHP).
 
 <a id=Choosing_Items_with_Separate_Probabilities></a>
 ## Choosing Items with Separate Probabilities
