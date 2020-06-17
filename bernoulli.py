@@ -780,6 +780,9 @@ if __name__ == "__main__":
         return xm
 
     def linspace(a, b, size):
+        if (a - b) % size == 0:
+            # for robustness when all points are integers
+            return [a + ((b - a) * x) // size for x in range(size + 1)]
         return [a + (b - a) * (x * 1.0 / size) for x in range(size + 1)]
 
     def showbuckets(ls, buckets):

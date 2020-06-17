@@ -1,16 +1,20 @@
-<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>The Most Common Topics Involving Random Number Generation</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>The Most Common Topics Involving Randomization</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a> -
 <a href="http://peteroupc.github.io/">Donate to Me</a></p></div>
 <div class="mainarea" id="top">
-<h1>The Most Common Topics Involving Random Number Generation</h1>
+<h1>The Most Common Topics Involving Randomization</h1>
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
+
+<p><strong>Abstract</strong>: This article goes over some of the most common topics involving randomization in programming, and serves as a guide to programmers looking to solve their randomization problems.  They were based on the most commonly pointed-to questions involving randomization on a Q&amp;A site.  The topics included generating uniform random numbers, unique random values, choosing one or more random items, shuffling, and querying random records from a database.</p>
 
 <p><a id=Introduction></a></p>
 
 <h2>Introduction</h2>
 
-<p>This page lists some of the most common topics involving random number generation in programming.  They were based on an analysis of the <em>Stack Overflow</em> questions that other questions were most often marked as duplicates of (using the <em>Stack Exchange Data Explorer</em> query named &quot;Most popular duplicate targets by tag&quot;, with &quot;random&quot; as the TagName).</p>
+<p>This page goes over some of the most common topics involving randomization (including &quot;random number generation&quot;) in programming, and serves as a guide to programmers looking to solve their randomization problems.</p>
+
+<p>The topics on this page were chosen based on an analysis of the <em>Stack Overflow</em> questions that other questions were most often marked as duplicates of (using the <em>Stack Exchange Data Explorer</em> query named &quot;Most popular duplicate targets by tag&quot;, with &quot;random&quot; as the TagName).</p>
 
 <p>The analysis showed the following topics were among the most commonly asked:</p>
 
@@ -33,6 +37,8 @@
 <p>The following sections will detail the topics given above, with suggestions on how to solve them.  Many of the links point to sections of my article &quot;<a href="https://peteroupc.github.io/randomfunc.html"><strong>Random Number Generation and Sampling Methods</strong></a>&quot;.</p>
 
 <p>The <a href="https://peteroupc.github.io/pseudocode.html"><strong>pseudocode conventions</strong></a> apply to this document.</p>
+
+<p>In this document, a <strong>random number generator (RNG)</strong> means software and/or hardware that seeks to generate numbers with the property that each possible outcome is as likely as any other without influence by anything else.  All the randomization methods presented on this page are ultimately based on an underlying RNG; however, the methods make no assumptions on that RNG&#39;s implementation (e.g., whether that RNG uses only its input and its state to produce numbers) or on that RNG&#39;s statistical quality or predictability.</p>
 
 <p><a id=Contents></a></p>
 
@@ -57,7 +63,7 @@
 
 <h2>Uniform Numbers in a Range</h2>
 
-<p>For algorithms on generating uniform random <em>integers</em> in a range, see <a href="https://peteroupc.github.io/randomfunc.html#Uniform_Random_Integers"><strong>&quot;Uniform Random Integers&quot;</strong></a>.  It should be noted there that most RNGs (random number generators) in common use output 32- or 64-bit non-negative integers, and for JavaScript, the idiom <code>(Math.random() &lt; 0.5 ? 0 : 1)</code> will work in many practical cases as a random bit generator.  Here is a JavaScript example of generating a random integer in the interval [**<code>minInclusive</code>, <code>maxExclusive</code>), using the Fast Dice Roller by J. Lumbroso (2013)<sup><a href="#Note1"><strong>(1)</strong></a></sup>:</p>
+<p>For algorithms on generating uniform random <em>integers</em> in a range, see <a href="https://peteroupc.github.io/randomfunc.html#Uniform_Random_Integers"><strong>&quot;Uniform Random Integers&quot;</strong></a>.  It should be noted there that most RNGs in common use output 32- or 64-bit non-negative integers, and for JavaScript, the idiom <code>(Math.random() &lt; 0.5 ? 0 : 1)</code> will work in many practical cases as a random bit generator.  Here is a JavaScript example of generating a random integer in the interval [**<code>minInclusive</code>, <code>maxExclusive</code>), using the Fast Dice Roller by J. Lumbroso (2013)<sup><a href="#Note1"><strong>(1)</strong></a></sup>:</p>
 
 <pre>function randomInt(minInclusive, maxExclusive) {
   var maxInclusive = (maxExclusive - minInclusive) - 1

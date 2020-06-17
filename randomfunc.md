@@ -490,7 +490,7 @@ The [**Fisher&ndash;Yates shuffle method**](https://en.wikipedia.org/wiki/Fisher
 >
 > 1. The choice of underlying RNG is important when it comes to shuffling; see my [**RNG recommendation document on shuffling**](https://peteroupc.github.io/random.html#Shuffling).
 > 2. A shuffling algorithm that can be carried out in parallel is described in (Bacher et al., 2015)<sup>[**(11)**](#Note11)</sup>.
-> 3. A _derangement_ is a permutation where every item moves to a different position.  A random derangement can be generated as follows (Merlini et al. 2007)<sup>[**(12)**](#Note12)</sup>: (1) modify `Shuffle` by adding the following line after `k = RNDINTEXC(i + 1)`: `if i == list[k]: return nothing`; (2) use the following pseudocode with the modified `Shuffle` method: `while True; list = []; for i in 0...n: AddItem(list, n); s=Shuffle(list); if s!=nothing: return s; end`.
+> 3. A _derangement_ is a permutation where every item moves to a different position.  A random derangement can be generated as follows (Merlini et al. 2007)<sup>[**(12)**](#Note12)</sup>: (1) modify `Shuffle` by adding the following line after `k = RNDINTEXC(i + 1)`: `if i == list[k]: return nothing`, and changing `while i > 0` to `while i >= 0`; (2) use the following pseudocode with the modified `Shuffle` method: `while True; list = []; for i in 0...n: AddItem(list, n); s=Shuffle(list); if s!=nothing: return s; end`.
 
 <a id=Random_Character_Strings></a>
 #### Random Character Strings

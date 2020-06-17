@@ -643,7 +643,7 @@ END METHOD
 <ol>
 <li>The choice of underlying RNG is important when it comes to shuffling; see my <a href="https://peteroupc.github.io/random.html#Shuffling"><strong>RNG recommendation document on shuffling</strong></a>.</li>
 <li>A shuffling algorithm that can be carried out in parallel is described in (Bacher et al., 2015)<sup><a href="#Note11"><strong>(11)</strong></a></sup>.</li>
-<li>A <em>derangement</em> is a permutation where every item moves to a different position.  A random derangement can be generated as follows (Merlini et al. 2007)<sup><a href="#Note12"><strong>(12)</strong></a></sup>: (1) modify <code>Shuffle</code> by adding the following line after <code>k = RNDINTEXC(i + 1)</code>: <code>if i == list[k]: return nothing</code>; (2) use the following pseudocode with the modified <code>Shuffle</code> method: <code>while True; list = []; for i in 0...n: AddItem(list, n); s=Shuffle(list); if s!=nothing: return s; end</code>.</li>
+<li>A <em>derangement</em> is a permutation where every item moves to a different position.  A random derangement can be generated as follows (Merlini et al. 2007)<sup><a href="#Note12"><strong>(12)</strong></a></sup>: (1) modify <code>Shuffle</code> by adding the following line after <code>k = RNDINTEXC(i + 1)</code>: <code>if i == list[k]: return nothing</code>, and changing <code>while i &gt; 0</code> to <code>while i &gt;= 0</code>; (2) use the following pseudocode with the modified <code>Shuffle</code> method: <code>while True; list = []; for i in 0...n: AddItem(list, n); s=Shuffle(list); if s!=nothing: return s; end</code>.</li>
 </ol>
 </blockquote>
 

@@ -171,7 +171,7 @@ class FastLoadedDiceRoller:
         x = 0
         y = 0
         while True:
-            x = randgen.rndint(1) + (x << 1)
+            x = randgen.rndbit() + (x << 1)
             leaves = self.leavesAndLabels[0][y]
             if x < leaves:
                 label = self.leavesAndLabels[x + 1][y]
@@ -203,14 +203,104 @@ class PascalTriangle:
             the next time _next_ is called."""
         return self.rownumber
 
+    def _bitcount(self, x):
+        r = 0
+        while x > 0:
+            r += 1
+            x >>= 1
+        return r
+
+    def _verifyAliasTable(self, table, row):
+        # Verify whether an alias table with less
+        # than full precision is correct. 'row' is the
+        # corresponding Pascal triangle row.
+        n = len(table) - 1
+        s = self._bitcount(n)
+        tablesum = sum(table)
+        if tablesum > (1 << s):
+            raise ValueError
+        if table.length != row.length:
+            raise ValueError
+        for i in range(0, len(row)):
+            coarse = table[i]
+            fine = row[i]
+            cr = Rational(coarse, 1 << s)
+            fr = Rational(fine, 1 << n)
+            ls = fr - cr
+            if ls < 0 or ls > Rational(1, 1 << s):
+                raise ValueError
+
+    def _nthOfDoubleRowFromRow(self, row):
+        # Calculates nth entry (starting from 0)
+        # of the Pascal triangle
+        # row for 2*n given a Pascal triangle row for n
+        # (where n is calculated as len(row)-1.
+        r = 0
+        n = len(row) - 1
+        for i in range(0, n + 1):
+            r += Fraction(row[i], 1 << n) * Fraction(row[n - i], 1 << n)
+        return int(r * (1 << (2 * n)))
+
+    def _buildAliasTable(self, prob, n, fullPrecision=False):
+        # prob is (n/2)th entry (starting at 0) of
+        # the Pascal triangle row for n.  The entry
+        # is full precision regardless of the setting
+        # for 'fullPrecision'.
+        half = n >> 1
+        s = self._bitcount(n)
+        odd = n % 2 == 1
+        oddadd = 1 if odd else 0
+        sguard = s * 2  # = 2*ceil(log(n))
+        if fullPrecision:
+            s = n
+            sguard = n  # full precision
+        phalf = prob >> (n - sguard)
+        h_s = Fraction(phalf, 1 << sguard)
+        aliastable = [0 for i in range(n + 1)]
+        aliastable[half] = int(h_s * (1 << s))
+        if odd:
+            aliastable[half + 1] = aliastable[half]
+        for i in range(1, half + 1):
+            delta_t_num = half + 1 - i
+            delta_t_den = half + i
+            hsa = h_s * delta_t_num / delta_t_den
+            hsafloor = int(hsa * (1 << s))
+            if hsafloor == 0:
+                break
+            aliastable[half - i] = hsafloor
+            aliastable[half + i + oddadd] = hsafloor
+            h_s = hsa
+        return aliastable
+
     def nextto(self, desiredRow):
         """ Generates the row of Pascal's triangle with the given row number,
             skipping all rows in between.  The return value is a list of
             row-number-choose-k values. """
+        if self.rownumber - 1 == desiredRow:
+            # Already at desired row
+            return [x for x in self.table]
         if self.rownumber > desiredRow:
             raise ValueError
+        if self.rownumber >= 2 and (self.rownumber - 1) * 2 == desiredRow:
+            # print("Optimizing for %d -> %d" % (self.rownumber, desiredRow))
+            # Optimization for the case where the desired row
+            # number is twice the previously generated row number.
+            # Ideas taken from Farach-Colton and Tsai, "Exact
+            # sublinear binomial sampling".
+            entry = self._nthOfDoubleRowFromRow(self.table)
+            table = self._buildAliasTable(entry, desiredRow, True)
+            self.rownumber = desiredRow + 1
+            self.table = table
+            return [x for x in self.table]
+        elif self.rownumber >= 2 and (self.rownumber - 1) * 2 < desiredRow:
+            dr = desiredRow - (desiredRow % 2)
+            half = dr // 2
+            self.nextto(half)
+            self.nextto(dr)
+            return self.nextto(desiredRow)
         xr = [
-            self.table[i] if i < len(self.table) else 0 for i in range(desiredRow + 1)
+            self.table[i] if i < len(self.table) else (1 if i == 0 else 0)
+            for i in range(desiredRow + 1)
         ]
         for i in range(self.rownumber, desiredRow + 1):
             last = 1
@@ -297,6 +387,9 @@ class RandomGen:
         self.curbit = 0
 
     def _rndbit(self):
+        return self.rndbit()
+
+    def rndbit(self):
         if self.bitcount >= 63:
             self.bitcount = 0
             self.curbit = self.rng.randint(0, (1 << 63) - 1)
@@ -311,13 +404,13 @@ class RandomGen:
         if maxInclusive == 0:
             return 0
         if maxInclusive == 1:
-            return self._rndbit()
+            return self.rndbit()
         # Lumbroso's fast dice roller method
         x = 1
         y = 0
         while True:
             x = x * 2
-            y = y * 2 + self._rndbit()
+            y = y * 2 + self.rndbit()
             if x > maxInclusive:
                 if y <= maxInclusive:
                     return y
@@ -330,7 +423,7 @@ class RandomGen:
         if maxInclusive == 0:
             return 0
         if maxInclusive == 1:
-            return self._rndbit()
+            return self.rndbit()
         return self.rng.randint(0, maxInclusive)
 
     def rndintexc(self, maxExclusive):
@@ -423,10 +516,111 @@ class RandomGen:
                 return ret
 
     def shuffle(self, list):
+        """ Puts the elements of 'list' in random order (does an
+               in-place shuffle).  Returns 'list'. """
         if len(list) >= 2:
             i = len(list) - 1
             while i > 0:
                 k = self.rndintexc(i + 1)
+                tmp = list[i]
+                list[i] = list[k]
+                list[k] = tmp
+                i -= 1
+        return list
+
+    def sattolo(self, list):
+        """ Puts the elements of 'list' in random order, choosing
+                from among all cyclic permutations (Sattolo's algorithm).
+                Returns 'list'. """
+        if len(list) >= 2:
+            i = len(list) - 1
+            while i > 0:
+                # i, not i + 1: difference from shuffle
+                k = self.rndintexc(i)
+                tmp = list[i]
+                list[i] = list[k]
+                list[k] = tmp
+                i -= 1
+        return list
+
+    def derangement_algorithm_s(self, list):
+        """ Returns a copy of 'list' with each of its elements
+                moved to a different position (a derangement),
+                but with the expected number of cycle lengths
+                in probability, even though the list
+                need not be a uniformly randomly
+                chosen derangement.  Uses importance sampling.
+                Reference:
+                J.R.G. Mendonça, "Efficient generation of
+                random derangements with the expected
+                distribution of cycle lengths", arXiv:1809.04571v4
+                [stat.CO], 2020.
+               """
+        n = len(list)
+        x = [0 for i in range(n)]
+        while True:
+            j = [i for i in range(n)]
+            success = True
+            for i in range(n):
+                inj = i in j
+                if len(j) == (1 if inj else 0):
+                    success = False
+                    break
+                elif inj:
+                    j.remove(i)
+                jindex = self.rndintexc(len(j))
+                x[i] = list[j[jindex]]
+                j[jindex] = i
+            if success:
+                return x
+
+    def derangement_algorithm_t(self, list):
+        """ Returns a copy of 'list' with each of its elements
+                moved to a different position (a derangement),
+                but with the expected number of cycle lengths
+                in probability, even though the list
+                need not be a uniformly randomly
+                chosen derangement.  Reference:
+                J.R.G. Mendonça, "Efficient generation of
+                random derangements with the expected
+                distribution of cycle lengths", arXiv:1809.04571v4
+                [stat.CO], 2020.
+               """
+        n = len(list)
+        if n < 4:
+            return self.derangement(list)
+        der = self.sattolo([i for i in range(n)])
+        x = 0
+        y = 0
+        for i in range(n * 2):
+            if n < 65536:
+                xb = self.rndintexc(n * n)
+                x = xb // n
+                y = xb % n
+            else:
+                x = self.rndintexc(n)
+                y = self.rndintexc(n)
+            if der[x] != y and der[y] != x:
+                tmp = der[x]
+                der[x] = der[y]
+                der[y] = tmp
+        return [list[i] for i in der]
+
+    def derangement(self, list):
+        """ Returns a copy of list with each of its elements
+               moved to a different position. """
+        while True:
+            ls = self._shufflemod([i for i in range(len(list))])
+            if ls != None:
+                return [list[i] for i in ls]
+
+    def _shufflemod(self, list):
+        if len(list) >= 2:
+            i = len(list) - 1
+            while i >= 0:
+                k = self.rndintexc(i + 1)
+                if i == list[k]:
+                    return None
                 tmp = list[i]
                 list[i] = list[k]
                 list[k] = tmp
@@ -500,10 +694,10 @@ Returns 'list'. """
         while True:
             z = z * 2
             if z >= py:
-                if self._rndbit() == 0:
+                if self.rndbit() == 0:
                     return 1
                 z = z - py
-            elif z == 0 or self._rndbit() == 0:
+            elif z == 0 or self.rndbit() == 0:
                 return 0
 
     def bernoulli(self, p):
@@ -685,10 +879,14 @@ Returns 'list'. """
     def _getaliastable(self, n):
         if n in self._aliastables:
             return self._aliastables[n]
-        for i in range(self._pascal.row(), n + 1):
+        i = self._pascal.row()
+        while i <= n:
             if self._ispoweroftwo(i):
                 p = self._pascal.nextto(i)
                 self._aliastables[i] = FastLoadedDiceRoller(p)
+                i <<= 1
+            else:
+                i += 1
         return self._aliastables[n]
 
     def _ispoweroftwo(self, n):
@@ -739,7 +937,7 @@ Returns 'list'. """
             return 0
         count = 0
         if p == 0.5:
-            if trials < 32:
+            if trials < 8:
                 r = self.rndintexc(1 << trials)
                 while r > 0:
                     if (r & 1) != 0:
@@ -750,12 +948,14 @@ Returns 'list'. """
                 # from "simple reduction" in Farach-Colton and Tsai),
                 # except a simple table-free algorithm is used for
                 # the lowest bits of _trials_.
-                count += self.binomial(trials & 31, 0.5)
-                trials -= trials & 31
-                shift = 5
+                count += self.binomial(trials & 7, 0.5)
+                trials -= trials & 7
+                shift = 3
                 while trials > 0:
-                    count += self.binomial(trials & (1 << shift), 0.5)
-                    trials -= trials & (1 << shift)
+                    subtrials = trials & (1 << shift)
+                    if subtrials != 0:
+                        count += self._getaliastable(subtrials).next(self)
+                    trials -= subtrials
                     shift += 1
             else:
                 count = count + self._getaliastable(trials).next(self)
@@ -3179,6 +3379,9 @@ if __name__ == "__main__":
     import time
 
     def linspace(a, b, size):
+        if (a - b) % size == 0:
+            # for robustness when all points are integers
+            return [a + ((b - a) * x) // size for x in range(size + 1)]
         return [a + (b - a) * (x * 1.0 / size) for x in range(size + 1)]
 
     def normalcdf(x, mu=0, sigma=1):
@@ -3252,11 +3455,33 @@ if __name__ == "__main__":
         ls = linspace(-3.3, 3.3, 30)
         buckets = [0 for x in ls]
         t = time.time()
-        ksample = randgen.numbers_from_dist(normaloracle, -4, 4, 3000)
+        ksample = randgen.numbers_from_dist(normaloracle, -4, 4, 4000)
         print("Took %f seconds" % (time.time() - t))
         for ks in ksample:
             bucket(ks, ls, buckets)
         showbuckets(ls, buckets)
+
+    print("Generating binomial random numbers")
+    import cProfile
+    import numpy
+
+    t = time.time()
+    ksample = [randgen.binomial(100, 0.5) for i in range(10000)]
+    print(time.time() - t)
+    ls = linspace(0, 100, 100)
+    buckets = [0 for x in ls]
+    for ks in ksample:
+        bucket(ks, ls, buckets)
+    showbuckets(ls, buckets)
+
+    def verify_derangement(x):
+        for i in range(len(x)):
+            if i == x[i]:
+                raise ValueError("%s" % x)
+
+    t = time.time()
+    for i in range(100):
+        verify_derangement(randgen.derangement([i for i in range(1000)]))
 
     weights = [2, 45, 3, 1, 44, 23, 9, 22, 33, 11, 88]
     t = time.time()
@@ -3265,6 +3490,7 @@ if __name__ == "__main__":
     print("multinomial: Took %f seconds" % (time.time() - t))
 
     uu()
+    exit()
     print("Generating normal random numbers with numbers_from_pdf")
     ls = linspace(-3.3, 3.3, 30)
     buckets = [0 for x in ls]
@@ -3281,16 +3507,6 @@ if __name__ == "__main__":
     ksample = kvs.sample(1000)
     print("Took %f seconds" % (time.time() - t))
     ls = linspace(-3.3, 3.3, 30)
-    buckets = [0 for x in ls]
-    for ks in ksample:
-        bucket(ks, ls, buckets)
-    showbuckets(ls, buckets)
-
-    print("Generating binomial random numbers")
-    t = time.time()
-    ksample = [randgen.binomial(100, 0.7) for i in range(10000)]
-    print(time.time() - t)
-    ls = linspace(0, 100, 100)
     buckets = [0 for x in ls]
     for ks in ksample:
         bucket(ks, ls, buckets)

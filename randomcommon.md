@@ -1,11 +1,15 @@
-# The Most Common Topics Involving Random Number Generation
+# The Most Common Topics Involving Randomization
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
+
+**Abstract**: This article goes over some of the most common topics involving randomization in programming, and serves as a guide to programmers looking to solve their randomization problems.  They were based on the most commonly pointed-to questions involving randomization on a Q&A site.  The topics included generating uniform random numbers, unique random values, choosing one or more random items, shuffling, and querying random records from a database.
 
 <a id=Introduction></a>
 ## Introduction
 
-This page lists some of the most common topics involving random number generation in programming.  They were based on an analysis of the _Stack Overflow_ questions that other questions were most often marked as duplicates of (using the _Stack Exchange Data Explorer_ query named "Most popular duplicate targets by tag", with "random" as the TagName).
+This page goes over some of the most common topics involving randomization (including "random number generation") in programming, and serves as a guide to programmers looking to solve their randomization problems.
+
+The topics on this page were chosen based on an analysis of the _Stack Overflow_ questions that other questions were most often marked as duplicates of (using the _Stack Exchange Data Explorer_ query named "Most popular duplicate targets by tag", with "random" as the TagName).
 
 The analysis showed the following topics were among the most commonly asked:
 
@@ -27,7 +31,7 @@ The following sections will detail the topics given above, with suggestions on h
 
 The [**pseudocode conventions**](https://peteroupc.github.io/pseudocode.html) apply to this document.
 
-In this document, a **random number generator (RNG)** means software and/or hardware that seeks to generate numbers with the property that each possible outcome is as likely as any other without influence by anything else.  All the random number methods presented on this page are ultimately based on an underlying RNG; however, the methods make no assumptions on that RNG's implementation (e.g., whether that RNG uses only its input and its state to produce numbers) or on that RNG's statistical quality or predictability.
+In this document, a **random number generator (RNG)** means software and/or hardware that seeks to generate numbers with the property that each possible outcome is as likely as any other without influence by anything else.  All the randomization methods presented on this page are ultimately based on an underlying RNG; however, the methods make no assumptions on that RNG's implementation (e.g., whether that RNG uses only its input and its state to produce numbers) or on that RNG's statistical quality or predictability.
 
 <a id=Contents></a>
 ## Contents
@@ -48,7 +52,7 @@ In this document, a **random number generator (RNG)** means software and/or hard
 <a id=Uniform_Numbers_in_a_Range></a>
 ## Uniform Numbers in a Range
 
-For algorithms on generating uniform random _integers_ in a range, see [**"Uniform Random Integers"**](https://peteroupc.github.io/randomfunc.html#Uniform_Random_Integers).  It should be noted there that most RNGs in common use output 32- or 64-bit non-negative integers, and for JavaScript, the idiom `(Math.random() < 0.5 ? 0 : 1)` will work in many practical cases as a random bit generator.  Here is a JavaScript example of generating a random integer in the interval [**`minInclusive`, `maxExclusive`), using the Fast Dice Roller by J. Lumbroso (2013)<sup>[(1)**](#Note1)</sup>:
+For algorithms on generating uniform random _integers_ in a range, see [**"Uniform Random Integers"**](https://peteroupc.github.io/randomfunc.html#Uniform_Random_Integers).  It should be noted there that most RNGs in common use output 32- or 64-bit non-negative integers, and for JavaScript, the idiom `(Math.random() < 0.5 ? 0 : 1)` will work in many practical cases as a random bit generator.  Here is a JavaScript example of generating a random integer in the interval [**`minInclusive`, `maxExclusive`), using the Fast Dice Roller by J. Lumbroso (2013)<sup>[**(1)**](#Note1)</sup>:
 
     function randomInt(minInclusive, maxExclusive) {
       var maxInclusive = (maxExclusive - minInclusive) - 1

@@ -327,6 +327,35 @@ CLASSES
      |
      |  choice(self, list)
      |
+     |  derangement(self, list)
+     |      Returns a copy of list with each of its elements
+     |      moved to a different position.
+     |
+     |  derangement_algorithm_s(self, list)
+     |      Returns a copy of 'list' with each of its elements
+     |      moved to a different position (a derangement),
+     |      but with the expected number of cycle lengths
+     |      in probability, even though the list
+     |      need not be a uniformly randomly
+     |      chosen derangement.  Uses importance sampling.
+     |      Reference:
+     |      J.R.G. Mendonça, "Efficient generation of
+     |      random derangements with the expected
+     |      distribution of cycle lengths", arXiv:1809.04571v4
+     |      [stat.CO], 2020.
+     |
+     |  derangement_algorithm_t(self, list)
+     |      Returns a copy of 'list' with each of its elements
+     |      moved to a different position (a derangement),
+     |      but with the expected number of cycle lengths
+     |      in probability, even though the list
+     |      need not be a uniformly randomly
+     |      chosen derangement.  Reference:
+     |      J.R.G. Mendonça, "Efficient generation of
+     |      random derangements with the expected
+     |      distribution of cycle lengths", arXiv:1809.04571v4
+     |      [stat.CO], 2020.
+     |
      |  diceRoll(self, dice, sides=6, bonus=0)
      |
      |  dirichlet(alphas)
@@ -675,6 +704,8 @@ CLASSES
      |  rayleigh(self, a)
      |      Generates a random number following a Rayleigh distribution.
      |
+     |  rndbit(self)
+     |
      |  rndbits(self, n)
      |      Generates an n-bit random integer.
      |
@@ -706,12 +737,19 @@ CLASSES
      |
      |  sample(self, list, k)
      |
+     |  sattolo(self, list)
+     |      Puts the elements of 'list' in random order, choosing
+     |      from among all cyclic permutations (Sattolo's algorithm).
+     |      Returns 'list'.
+     |
      |  shell_point(self, dims, outerRadius=1, innerRadius=0.5)
      |      Generates an independent and uniform random point inside a 'dims'-dimensional
      |      spherical shell (donut, hollow sphere, etc.)
      |      centered at the origin.
      |
      |  shuffle(self, list)
+     |      Puts the elements of 'list' in random order (does an
+     |      in-place shuffle).  Returns 'list'.
      |
      |  simplex_point(self, points)
      |      Generates an independent and uniform random point on the surface of an N-dimensional
