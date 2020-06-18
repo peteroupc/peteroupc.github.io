@@ -190,6 +190,92 @@ class FastLoadedDiceRoller:
                 x -= leaves
                 y += 1
 
+class _BinomialAliasTable:
+    def __init__(self, aliases, entries, n):
+        self.aliases = aliases
+        if len(entries) != len(aliases):
+            raise ValueError
+        if aliases[len(aliases) - 1] != -1:
+            raise ValueError
+        self.failureEntry = entries[len(entries) - 1]
+        self.failureCumul = []
+        self.failureRaw = []
+        self.failureAlias = None
+        self.failureCc = 1
+        self.n = n
+        self.entrymap = None
+        # self.entrymap={}
+        # for i in range(len(aliases)): self.entrymap[aliases[i]]=entries[i]
+        self.entries = FastLoadedDiceRoller(entries)
+
+    def _bitcount(self, x):
+        r = 0
+        while x > 0:
+            r += 1
+            x >>= 1
+        return r
+
+    def _verify(self, k, c, sh):
+        if self.entrymap != None:
+            em = 0
+            if k in self.entrymap:
+                em = self.entrymap[k]
+            if (c >> sh) != em:
+                raise ValueError
+
+    def _buildFailureAliasesIfNeeded(self):
+        if self.failureAlias == None and len(self.failureRaw) > self.n//2 + 1:
+           olen=len(self.failureRaw)
+           clen=olen
+           for i in range(olen, self.n+1):
+              self.failureRaw.append(self.failureRaw[self.n - i])
+              clen+=1
+           self.failureAlias=FastLoadedDiceRoller(self.failureRaw)
+           self.failureRaw=None
+           self.failureCumul=None
+
+    def next(self, rg):
+        v = self.aliases[self.entries.next(rg)]
+        if v >= 0:
+            return v
+        if self.failureAlias!=None:
+            return self.failureAlias.next(rg)
+        # Sample from the failure distribution
+        s = max(16, self._bitcount(self.n))
+        failurevalues = self.failureEntry << (self.n - s)
+        cf = (1 << (self.n - s)) - 1
+        failureCumulLen = len(self.failureCumul)
+        if failureCumulLen <= 0:
+            self.failureCumul.append(1)
+            self.failureRaw.append(1)
+            self.failureCc = 1
+            failureCumulLen = 1
+        failureRate = rg.rndint(failurevalues - 1)
+        totalcv = 1
+        if failureRate < totalcv:
+            return 0
+        # Build the row
+        for i in range(1, self.n + 1):
+            if failureCumulLen == i:
+                self.failureCc = self.failureCc * (self.n - (i - 1)) // i
+                self._verify(i, self.failureCc, self.n - s)
+                ccf = self.failureCc & cf
+                totalcv = self.failureCumul[i - 1] + ccf
+                #print("i=%d fcc=%x/%x tcv=%x" % (i, self.failureCc, ccf, totalcv))
+                self.failureCumul.append(totalcv)
+                self.failureRaw.append(ccf)
+                failureCumulLen += 1
+            elif failureCumulLen < i:
+                raise ValueError("should not happen")
+            else:
+                totalcv = self.failureCumul[i]
+            if failureRate < totalcv:
+                #self._buildFailureAliasesIfNeeded()
+                return i
+        if totalcv != failurevalues:
+            raise ValueError("totalcv=%x expected=%x" % (totalcv, failurevalues))
+        raise ValueError("should not happen")
+
 class PascalTriangle:
     """ Generates the rows of Pascal's triangle, or the
       weight table for a binomial(n,1/2) distribution. """
@@ -215,7 +301,7 @@ class PascalTriangle:
         # than full precision is correct. 'row' is the
         # corresponding Pascal triangle row.
         n = len(table) - 1
-        s = self._bitcount(n)
+        s = max(16, self._bitcount(n))
         tablesum = sum(table)
         if tablesum > (1 << s):
             raise ValueError
@@ -224,17 +310,17 @@ class PascalTriangle:
         for i in range(0, len(row)):
             coarse = table[i]
             fine = row[i]
-            cr = Rational(coarse, 1 << s)
-            fr = Rational(fine, 1 << n)
+            cr = Fraction(coarse, 1 << s)
+            fr = Fraction(fine, 1 << n)
             ls = fr - cr
-            if ls < 0 or ls > Rational(1, 1 << s):
+            if ls < 0 or ls > Fraction(1, 1 << s):
                 raise ValueError
 
     def _nthOfDoubleRowFromRow(self, row):
         # Calculates nth entry (starting from 0)
         # of the Pascal triangle
         # row for 2*n given a Pascal triangle row for n
-        # (where n is calculated as len(row)-1.
+        # (where n is calculated as len(row)-1).
         r = 0
         n = len(row) - 1
         for i in range(0, n + 1):
@@ -247,10 +333,10 @@ class PascalTriangle:
         # is full precision regardless of the setting
         # for 'fullPrecision'.
         half = n >> 1
-        s = self._bitcount(n)
+        s = max(16, self._bitcount(n))
         odd = n % 2 == 1
         oddadd = 1 if odd else 0
-        sguard = s * 2  # = 2*ceil(log(n))
+        sguard = s * 2  # should be at least s+ceil(log(n))
         if fullPrecision:
             s = n
             sguard = n  # full precision
@@ -271,6 +357,74 @@ class PascalTriangle:
             aliastable[half + i + oddadd] = hsafloor
             h_s = hsa
         return aliastable
+
+    def getrow(self, desiredRow):
+        """ Calculates an arbitrary row of Pascal's triangle. """
+        r = [1 for i in range(desiredRow + 1)]
+        r[0] = 1
+        c = 1
+        # Build half of the row
+        for i in range(1, desiredRow // 2 + 1):
+            c = c * (desiredRow - (i - 1)) // i
+            r[i] = c
+        # Reflect onto the other half
+        lenr = len(r)
+        for i in range(desiredRow // 2 + 1):
+            r[lenr - 1 - i] = r[i]
+        return r
+
+    def _buildAliasTable2(self, prob, n):
+        # prob is (n/2)th entry (starting at 0) of
+        # the Pascal triangle row for n.  The entry
+        # is full precision.
+        half = n >> 1
+        s = max(16, self._bitcount(n))
+        odd = n % 2 == 1
+        oddadd = 1 if odd else 0
+        sguard = s * 2  # should be at least s+ceil(log(n))
+        phalf = prob >> (n - sguard)
+        h_s = Fraction(phalf, 1 << sguard)
+        aliases = []
+        aliasentries = []
+        aliases.append(half)
+        halfentry = int(h_s * (1 << s))
+        aliasentries.append(halfentry)
+        totalentries = halfentry
+        if odd:
+            aliases.append(half + 1)
+            aliasentries.append(halfentry)
+            totalentries += halfentry
+        for i in range(1, half + 1):
+            delta_t_num = half + 1 - i
+            delta_t_den = half + i
+            hsa = h_s * delta_t_num / delta_t_den
+            hsafloor = int(hsa * (1 << s))
+            if hsafloor < 0:
+                raise ValueError
+            if hsafloor == 0:
+                break
+            aliases.append(half - i)
+            aliases.append(half + i + oddadd)
+            aliasentries.append(hsafloor)
+            aliasentries.append(hsafloor)
+            totalentries += hsafloor * 2
+            h_s = hsa
+        aliases.append(-1)
+        failureentry = (1 << s) - totalentries
+        #print(aliasentries)
+        #print(aliases)
+        #print([totalentries, failureentry])
+        if failureentry < 0:
+            raise ValueError
+        aliasentries.append(failureentry)
+        return _BinomialAliasTable(aliases, aliasentries, n)
+
+    def aliasinfo(self, desiredRow):
+        r = self.nextto(desiredRow)
+        if desiredRow <= 16:
+            # Use simple alias table to avoid overhead
+            return FastLoadedDiceRoller(r)
+        return self._buildAliasTable2(r[desiredRow // 2], desiredRow)
 
     def nextto(self, desiredRow):
         """ Generates the row of Pascal's triangle with the given row number,
@@ -882,8 +1036,8 @@ Returns 'list'. """
         i = self._pascal.row()
         while i <= n:
             if self._ispoweroftwo(i):
-                p = self._pascal.nextto(i)
-                self._aliastables[i] = FastLoadedDiceRoller(p)
+                p = self._pascal.aliasinfo(i)
+                self._aliastables[i] = p
                 i <<= 1
             else:
                 i += 1
@@ -3466,13 +3620,14 @@ if __name__ == "__main__":
     import numpy
 
     t = time.time()
-    ksample = [randgen.binomial(100, 0.5) for i in range(10000)]
+    ksample = [randgen.binomial(2000, 0.5) for i in range(10000)]
     print(time.time() - t)
-    ls = linspace(0, 100, 100)
+    ls = linspace(0, 2000, 100)
     buckets = [0 for x in ls]
     for ks in ksample:
         bucket(ks, ls, buckets)
     showbuckets(ls, buckets)
+    exit()
 
     def verify_derangement(x):
         for i in range(len(x)):
@@ -3490,7 +3645,6 @@ if __name__ == "__main__":
     print("multinomial: Took %f seconds" % (time.time() - t))
 
     uu()
-    exit()
     print("Generating normal random numbers with numbers_from_pdf")
     ls = linspace(-3.3, 3.3, 30)
     buckets = [0 for x in ls]

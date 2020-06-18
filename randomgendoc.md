@@ -261,6 +261,11 @@ CLASSES
      |  __init__(self)
      |      Initialize self.  See help(type(self)) for accurate signature.
      |
+     |  aliasinfo(self, desiredRow)
+     |
+     |  getrow(self, desiredRow)
+     |      Calculates an arbitrary row of Pascal's triangle.
+     |
      |  next(self)
      |      Generates the next row of Pascal's triangle, starting with
      |      row 0. The return value is a list of row-number-choose-k
