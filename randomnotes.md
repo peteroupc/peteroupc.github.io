@@ -226,7 +226,7 @@ As more and more independent random numbers, generated the same way, are added t
         end
     END METHOD
 
-Methods implementing the strictly geometric stable, general geometric stable, and multivariate Linnik distributions are shown below (Kozubowski 2000)<sup>[**(15)**](#Note15)</sup>.  Here, `alpha` is in (0, 2], `lamda` is greater than 0, and `tau`'s absolute value is min(1, 2/`alpha` - 1).
+Methods implementing the strictly geometric stable, general geometric stable, and multivariate Linnik distributions are shown below (Kozubowski 2000)<sup>[**(11)**](#Note11)</sup>.  Here, `alpha` is in (0, 2], `lamda` is greater than 0, and `tau`'s absolute value is min(1, 2/`alpha` - 1).
 
     METHOD GeometricStable(alpha, lamda, tau)
        // If tau is 0, this is a symmetric Linnik distribution.
@@ -352,13 +352,13 @@ The following pseudocode calculates a random vector (list of numbers) that follo
 <a id=Random_Real_Numbers_with_a_Given_Positive_Sum></a>
 #### Random Real Numbers with a Given Positive Sum
 
-Generating _n_ `GammaDist(total, 1)` numbers and dividing them by their sum<sup>[**(11)**](#Note11)</sup>
+Generating _n_ `GammaDist(total, 1)` numbers and dividing them by their sum<sup>[**(12)**](#Note12)</sup>
  will result in _n_ uniform random numbers that (approximately) sum to `total`, in random order (see a [**Wikipedia article**](https://en.wikipedia.org/wiki/Dirichlet_distribution#Gamma_distribution)).  For example, if `total` is 1, the numbers will (approximately) sum to 1.  Note that in the exceptional case that all numbers are 0, the process should repeat.
 
 > **Notes:**
 >
 > 1. Notes 1 and 2 in the section "Random Integers with a Given Positive Sum" apply here.
-> 2. The **Dirichlet distribution**, as defined in some places (e.g., _Mathematica_; (Devroye 1986)<sup>[**(10)**](#Note10)</sup>, p. 593-594), can be sampled by generating _n_+1 random [**gamma-distributed**](#Gamma_Distribution) numbers, each with separate parameters, taking their sum<sup>[**(11)**](#Note11)</sup>, dividing them by that sum, and taking the first _n_ numbers. (The _n_+1 numbers sum to 1, but the Dirichlet distribution models the first _n_ of them, which will generally sum to less than 1.)
+> 2. The **Dirichlet distribution**, as defined in some places (e.g., _Mathematica_; (Devroye 1986)<sup>[**(10)**](#Note10)</sup>, p. 593-594), can be sampled by generating _n_+1 random [**gamma-distributed**](#Gamma_Distribution) numbers, each with separate parameters, taking their sum<sup>[**(12)**](#Note12)</sup>, dividing them by that sum, and taking the first _n_ numbers. (The _n_+1 numbers sum to 1, but the Dirichlet distribution models the first _n_ of them, which will generally sum to less than 1.)
 
 <a id=Gaussian_and_Other_Copulas></a>
 #### Gaussian and Other Copulas
@@ -382,7 +382,7 @@ One example is a _Gaussian copula_; this copula is sampled by sampling from a [*
        return mvn
     END METHOD
 
-Each of the resulting uniform random numbers will be in the interval [0, 1], and each one can be further transformed to any other probability distribution (which is called a _marginal distribution_ here) by taking the quantile of that uniform number for that distribution (see "[**Inverse Transform Sampling**](#Inverse_Transform_Sampling)", and see also (Cario and Nelson 1997)<sup>[**(16)**](#Note16)</sup>.)
+Each of the resulting uniform random numbers will be in the interval [0, 1], and each one can be further transformed to any other probability distribution (which is called a _marginal distribution_ here) by taking the quantile of that uniform number for that distribution (see "[**Inverse Transform Sampling**](#Inverse_Transform_Sampling)", and see also (Cario and Nelson 1997)<sup>[**(13)**](#Note13)</sup>.)
 
 > **Examples:**
 >
@@ -404,12 +404,12 @@ Other kinds of copulas describe different kinds of dependence between random num
 - the **Fr&eacute;chet&ndash;Hoeffding upper bound copula** _\[x, x, ..., x\]_ (e.g., `[x, x]`), where `x = RNDU01()`,
 - the **Fr&eacute;chet&ndash;Hoeffding lower bound copula** `[x, 1.0 - x]` where `x = RNDU01()`,
 - the **product copula**, where each number is a separately generated `RNDU01()` (indicating no dependence between the numbers), and
-- the **Archimedean copulas**, described by M. Hofert and M. M&auml;chler (2011)<sup>[**(12)**](#Note12)</sup>.
+- the **Archimedean copulas**, described by M. Hofert and M. M&auml;chler (2011)<sup>[**(14)**](#Note14)</sup>.
 
 <a id=Exponential_Distribution_Another_Error_Bounded_Algorithm></a>
 #### Exponential Distribution: Another Error-Bounded Algorithm
 
-The following method samples from an exponential distribution with a &lambda; parameter of 1 (within an error tolerance of 2<sup>`-precision`</sup>) (Devroye and Gravel 2018)<sup>[**(13)**](#Note13)</sup>.  Includes an algorithm due to (Morina et al. 2019)<sup>[**(14)**](#Note14)</sup>.
+The following method samples from an exponential distribution with a &lambda; parameter of 1 (within an error tolerance of 2<sup>`-precision`</sup>) (Devroye and Gravel 2018)<sup>[**(15)**](#Note15)</sup>.  Includes an algorithm due to (Morina et al. 2019)<sup>[**(16)**](#Note16)</sup>.
 
     METHOD LogisticExp(prec)
         // Generates 1 with probability 1/(exp(2^-prec)+1).
@@ -455,17 +455,17 @@ The following method samples from an exponential distribution with a &lambda; pa
 
 <small><sup id=Note10>(10)</sup> Devroye, L., [**_Non-Uniform Random Variate Generation_**](http://luc.devroye.org/rnbookindex.html), 1986.</small>
 
-<small><sup id=Note11>(11)</sup> [**Kahan summation**](https://en.wikipedia.org/wiki/Kahan_summation_algorithm) can be a more robust way than the na&iuml;ve approach to compute the sum of three or more floating-point numbers.</small>
+<small><sup id=Note11>(11)</sup> Tomasz J. Kozubowski, "Computer simulation of geometric stable distributions", _Journal of Computational and Applied Mathematics_ 116(2), 2000.</small>
 
-<small><sup id=Note12>(12)</sup> Hofert, M., and Maechler, M.  "Nested Archimedean Copulas Meet R: The nacopula Package".  _Journal of Statistical Software_ 39(9), 2011, pp. 1-20.</small>
+<small><sup id=Note12>(12)</sup> [**Kahan summation**](https://en.wikipedia.org/wiki/Kahan_summation_algorithm) can be a more robust way than the na&iuml;ve approach to compute the sum of three or more floating-point numbers.</small>
 
-<small><sup id=Note13>(13)</sup> Devroye, L., Gravel, C., "[**Sampling with arbitrary precision**](https://arxiv.org/abs/1502.02539v5)", arXiv:1502.02539v5 [cs.IT], 2018.</small>
+<small><sup id=Note13>(13)</sup> Cario, M. C., B. L. Nelson, "Modeling and generating random vectors with arbitrary marginal distributions and correlation matrix", 1997.</small>
 
-<small><sup id=Note14>(14)</sup> Morina, G., Łatuszyński, K., et al., "From the Bernoulli Factory to a Dice Enterprise via Perfect Sampling of Markov Chains", 2019.</small>
+<small><sup id=Note14>(14)</sup> Hofert, M., and Maechler, M.  "Nested Archimedean Copulas Meet R: The nacopula Package".  _Journal of Statistical Software_ 39(9), 2011, pp. 1-20.</small>
 
-<small><sup id=Note15>(15)</sup> Tomasz J. Kozubowski, "Computer simulation of geometric stable distributions", _Journal of Computational and Applied Mathematics_ 116(2), 2000.</small>
+<small><sup id=Note15>(15)</sup> Devroye, L., Gravel, C., "[**Sampling with arbitrary precision**](https://arxiv.org/abs/1502.02539v5)", arXiv:1502.02539v5 [cs.IT], 2018.</small>
 
-<small><sup id=Note16>(16)</sup> Cario, M. C., B. L. Nelson, "Modeling and generating random vectors with arbitrary marginal distributions and correlation matrix", 1997.</small>
+<small><sup id=Note16>(16)</sup> Morina, G., Łatuszyński, K., et al., "From the Bernoulli Factory to a Dice Enterprise via Perfect Sampling of Markov Chains", 2019.</small>
 
 <a id=Appendix></a>
 ## Appendix

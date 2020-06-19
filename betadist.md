@@ -142,7 +142,7 @@ See the results of the [**correctness testing**](https://peteroupc.github.io/bet
 <a id=Exact_Simulation_of_Continuous_Distributions_on_0_1></a>
 ## Exact Simulation of Continuous Distributions on [0, 1]
 
-The beta distribution is one case of a general approach to simulating continuous distributions with support on the interval [0, 1], and this with arbitrary precision, thanks to Bernoulli factories.  This general approach can sample an `n` bit binary expansion of a number following that continuous distribution, and is described as follows:
+The beta distribution is one case of a general approach to simulating continuous distributions with support on the interval [0, 1], and this with arbitrary precision, thanks to Bernoulli factories.  This general approach can sample an `n`-bit binary expansion of a number following that continuous distribution, and is described as follows:
 
 1. Create a "geometric bag", that is, an "empty" uniform random number also known as a "u-rand".
 2. As the geometric bag builds up a uniform random number, accept the number with a probability that can be represented by Bernoulli factories, or reject it otherwise.  As shown by Keane and O'Brien <sup>[**(2)**](#Note2)</sup>, this is possible if and only if the probability function&mdash;
@@ -153,6 +153,65 @@ The beta distribution is one case of a general approach to simulating continuous
 3. If the geometric bag is accepted, fill the unsampled bits of the bag with uniform random bits as necessary to make an `n`-bit number (for an example, see `_fill_geometric_bag` above).
 
 The beta distribution's probability function at (1) fits these requirements (for `alpha` and `beta` both greater than 1), since it's continuous and never returns 0 or 1 outside of the points 0 and 1, thus it can be simulated by Bernoulli factories and is covered by this general approach.
+
+<a id=An_Example_The_Continuous_Bernoulli_Distribution></a>
+### An Example: The Continuous Bernoulli Distribution
+
+The continuous Bernoulli distribution (Loaiza-Ganem and Cunningham 2019)<sup>[**(7)**](#Note7)</sup> was designed to considerably improve performance of variational autoencoders (a machine learning model) in modeling continuous data that takes values in the interval [0, 1], including "almost-binary" image data.
+
+The continous Bernoulli distribution takes one parameter `lamda` (a number in [0, 1]), and takes on values in the interval [0, 1] with a probability proportional to&mdash;
+
+    pow(lamda, x) * pow(1 - lamda, 1 - x).
+
+Again, this function meets the requirements stated by Keane and O'Brien, so it can be simulated via Bernoulli factories.  Thus, this distribution can be simulated in Python using a geometric bag and a two-coin exponentiating Bernoulli factory, as follows:
+
+    def _twofacpower(b, fbase, fexponent):
+        """ Bernoulli factory B(p, q) => B(p^q).
+               Based on algorithm from (Mendo 2019),
+               but changed to accept a Bernoulli factory
+               rather than a fixed value for the exponent.
+               To the best of my knowledge, I am not aware
+               of any other work that presents this exact
+               Bernoulli factory.
+               - fbase, fexponent: Functions that return 1 if heads and 0 if tails.
+                 The first is the base, the second is the exponent.
+                 """
+        i = 1
+        while True:
+            if fbase() == 1:
+                return 1
+            if fexponent() == 1 and \
+                b.zero_or_one(1, i) == 1:
+                return 0
+            i = i + 1
+
+    def contbernoullidist(b, lamda, precision=53):
+        # Continuous Bernoulli distribution
+        bag=[]
+        lamda=Fraction(lamda)
+        gb=lambda: b.geometric_bag(bag)
+        # Complement of "geometric bag"
+        gbcomp=lambda: b.geometric_bag(bag)^1
+        fcoin=b.coin(lamda)
+        lamdab=lambda: fcoin()
+        # Complement of "geometric bag"
+        lamdabcomp=lambda: fcoin()^1
+        acc=0
+        while True:
+           # Create a uniform random number (U) bit-by-bit, and
+           # accept it with probability lamda^U*(1-lamda)^(1-U), which
+           # is the unnormalized PDF of the beta distribution
+           bag.clear()
+           # Produce 1 with probability lamda^U
+           r=_twofacpower(b, lamdab, gb)
+           # Produce 1 with probability (1-lamda)^(1-U)
+           if r==1: r=_twofacpower(b, lamdabcomp, gbcomp)
+           if r == 1:
+                 # Accepted, so fill up the "bag" and return the
+                 # uniform number
+                 ret=_fill_geometric_bag(b, bag, precision)
+                 return ret
+           acc+=1
 
 <a id=Notes></a>
 ## Notes
@@ -168,6 +227,8 @@ The beta distribution's probability function at (1) fits these requirements (for
 <small><sup id=Note5>(5)</sup> Devroye, L., [**_Non-Uniform Random Variate Generation_**](http://luc.devroye.org/rnbookindex.html), 1986.</small>
 
 <small><sup id=Note6>(6)</sup> Huber, M., "[**Optimal linear Bernoulli factories for small mean problems**](https://arxiv.org/abs/1507.00843v2)", arXiv:1507.00843v2 [math.PR], 2016</small>
+
+<small><sup id=Note7>(7)</sup> Loaiza-Ganem, G., Cunningham, J.P., "[The continuous Bernoulli: fixing a pervasive error in variational autoencoders](https://arxiv.org/abs/1907.06845v5)", arXiv:1907.06845v5  [stat.ML], 2019.</small>
 
 <a id=License></a>
 ## License

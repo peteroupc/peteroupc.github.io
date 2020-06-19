@@ -682,6 +682,25 @@ class Bernoulli:
             n += 1
             fac *= n
 
+    def twofacpower(fbase, fexponent):
+        """ Bernoulli factory B(p, q) => B(p^q).
+               Based on algorithm from (Mendo 2019),
+               but changed to accept a Bernoulli factory
+               rather than a fixed value for the exponent.
+               To the best of my knowledge, I am not aware
+               of any other work that presents this exact
+               Bernoulli factory.
+               - fbase, fexponent: Functions that return 1 if heads and 0 if tails.
+                 The first is the base, the second is the exponent.
+                 """
+        i = 1
+        while True:
+            if fbase() == 1:
+                return 1
+            if fexponent() == 1 and self.zero_or_one(1, i) == 1:
+                return 0
+            i = i + 1
+
     def linear_power(self, f, cx, cy=1, i=1, eps=Fraction(5, 100)):
         """ Linear-and-power Bernoulli factory: B(p) => B((p*cx/cy)^i) (Huber 2019).
      - f: Function that returns 1 if heads and 0 if tails.
@@ -825,11 +844,11 @@ if __name__ == "__main__":
                 buckets[i] += 1
                 break
 
-    b = Bernoulli()
     """
+    b = Bernoulli()
     ls = linspace(0, 1, 30)
     buckets = [0 for x in ls]
-    ksample = [b.betadistc(2,1,3,2) for i in range(5000)]
+    ksample = [b.betadist(2,1,3,2) for i in range(5000)]
     for ks in ksample:
             bucket(ks, ls, buckets)
     showbuckets(ls, buckets)

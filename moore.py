@@ -400,7 +400,7 @@ if __name__ == "__main__":
         lam = Interval(lam)
         return (lam + x * x) ** (-lam / 2 - Interval(0.5))
 
-    def continuous_bernoulli(x, lamda=0.3):
+    def continuous_bernoulli(x, lamda=0.01):
         """
         Reference: Loaiza-Ganem, G., Cunningham, J., "The
         continuous Bernoulli: fixing a pervasive error
