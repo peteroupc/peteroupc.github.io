@@ -200,7 +200,7 @@ The algorithm below generates a random number from the von Mises distribution, a
 As more and more independent random numbers, generated the same way, are added together, their distribution tends to a [**_stable distribution_**](https://en.wikipedia.org/wiki/Stable_distribution), which resembles a curve with a single peak, but with generally "fatter" tails than the normal distribution.  (Here, the stable distribution means the "alpha-stable distribution".) The pseudocode below uses the Chambers&ndash;Mallows&ndash;Stuck algorithm.  The `Stable` method, implemented below, takes two parameters:
 
 - `alpha` is a stability index in the interval (0, 2].
-- `beta` is a skewness in the interval [-1, 1]; if `beta` is 0, the curve is symmetric.
+- `beta` is an asymmetry parameter in the interval [-1, 1]; if `beta` is 0, the curve is symmetric.
 
 &nbsp;
 
@@ -224,6 +224,42 @@ As more and more independent random numbers, generated the same way, are added t
               (sin(alpha*ug)*cpow)*
               pow(cos(unif-alpha*ug)/expo, (1.0 - alpha) / alpha)
         end
+    END METHOD
+
+Methods implementing the strictly geometric stable, general geometric stable, and multivariate Linnik distributions are shown below (Kozubowski 2000)<sup>[**(15)**](#Note15)</sup>.  Here, `alpha` is in (0, 2], `lamda` is greater than 0, and `tau`'s absolute value is min(1, 2/`alpha` - 1).
+
+    METHOD GeometricStable(alpha, lamda, tau)
+       // If tau is 0, this is a symmetric Linnik distribution.
+       // If tau is 1 and alpha is less than 1, this is
+       // a Mittag--Leffler distribution.
+       rho = alpha*(1-tau)/2
+       sign = -1
+       if RNDINT(1)==0 or RNDU01() < tau
+           rho = alpha*(1+tau)/2
+           sign = 1
+       end
+       w = 1
+       if rho != 1
+          rho = rho * pi
+          cotparam = rho*RNDU01()
+          w = sin(rho)*cos(cotparam)/sin(cotparam)-cos(rho)
+       end
+       return Expo(1)*sign*pow(lamda*w, 1.0/alpha)
+    END METHOD
+
+    METHOD GeneralGeoStable(alpha, beta, mu, sigma)
+       z = Expo(1)
+       if alpha == 1: return mu*z+Stable(alpha, beta)*sigma*z+
+              sigma*z*beta*2*pi*ln(sigma*z)
+       else: return mu*z+
+              Stable(alpha, beta)*sigma*pow(z, 1.0/alpha)
+    END METHOD
+
+    METHOD MultiLinnik(alpha, cov)
+      mn=MultivariateNormal(nothing, cov)
+      ml=GeometricStable(alpha/2.0, 1, 1)
+      for i in 0...size(mn): mn[i]=mn[i]*ml
+      return ml
     END METHOD
 
 <a id=Multivariate_Normal_Multinormal_Distribution></a>
@@ -346,7 +382,7 @@ One example is a _Gaussian copula_; this copula is sampled by sampling from a [*
        return mvn
     END METHOD
 
-Each of the resulting uniform random numbers will be in the interval [0, 1], and each one can be further transformed to any other probability distribution (which is called a _marginal distribution_ here) by taking the quantile of that uniform number for that distribution (see "[**Inverse Transform Sampling**](#Inverse_Transform_Sampling)", and see also Cario and Nelson 1997.)
+Each of the resulting uniform random numbers will be in the interval [0, 1], and each one can be further transformed to any other probability distribution (which is called a _marginal distribution_ here) by taking the quantile of that uniform number for that distribution (see "[**Inverse Transform Sampling**](#Inverse_Transform_Sampling)", and see also (Cario and Nelson 1997)<sup>[**(16)**](#Note16)</sup>.)
 
 > **Examples:**
 >
@@ -426,6 +462,10 @@ The following method samples from an exponential distribution with a &lambda; pa
 <small><sup id=Note13>(13)</sup> Devroye, L., Gravel, C., "[**Sampling with arbitrary precision**](https://arxiv.org/abs/1502.02539v5)", arXiv:1502.02539v5 [cs.IT], 2018.</small>
 
 <small><sup id=Note14>(14)</sup> Morina, G., Łatuszyński, K., et al., "From the Bernoulli Factory to a Dice Enterprise via Perfect Sampling of Markov Chains", 2019.</small>
+
+<small><sup id=Note15>(15)</sup> Tomasz J. Kozubowski, "Computer simulation of geometric stable distributions", _Journal of Computational and Applied Mathematics_ 116(2), 2000.</small>
+
+<small><sup id=Note16>(16)</sup> Cario, M. C., B. L. Nelson, "Modeling and generating random vectors with arbitrary marginal distributions and correlation matrix", 1997.</small>
 
 <a id=Appendix></a>
 ## Appendix

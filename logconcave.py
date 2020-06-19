@@ -195,8 +195,8 @@ class LogConcaveSamplerMonotonePositive:
       - psi - A function that takes one number and
          outputs one number.  For this sampler to work, psi must be a
          continuous concave function, monotonically
-         nonincreasing, and have a positive domain (informally, a function is concave
-         if the area "above" the function's graph is concave),
+         nonincreasing, and have a positive domain (informally, a
+         function is concave if the area "above" the function's graph is concave),
          and 0 must be the distribution's mode (peak location) and thus
          the peak of psi must be at 0.
 

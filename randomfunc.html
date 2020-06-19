@@ -2229,7 +2229,7 @@ above for returning more than one random number in one call.</p>
 
 <p>A &#x2b26; symbol next to a distribution means the random number can be scaled to any range, which is given with the minimum and maximum values <code>mini</code> and <code>maxi</code>.  Example: <code>mini + (maxi - mini) * num</code>.</p>
 
-<p>For further examples, see (Devroye 1996)<sup><a href="#Note85"><strong>(85)</strong></a></sup></p>
+<p>For further examples, see (Devroye 1996)<sup><a href="#Note68"><strong>(68)</strong></a></sup></p>
 
 <p>Most commonly used:
 <small></p>
@@ -2238,7 +2238,7 @@ above for returning more than one random number in one call.</p>
 <li><strong>Beta distribution</strong>&#x2b26;: See <a href="https://github.com/peteroupc/peteroupc.github.io/blob/master/randomnotes.md#Beta_Distribution"><strong>Beta Distribution</strong></a>.</li>
 <li><strong>Binomial distribution</strong>: See <a href="#Binomial_Distribution"><strong>Binomial Distribution</strong></a>.</li>
 <li><strong>Binormal distribution</strong>: See <a href="https://github.com/peteroupc/peteroupc.github.io/blob/master/randomnotes.md#Multivariate_Normal_Multinormal_Distribution"><strong>Multivariate Normal (Multinormal) Distribution</strong></a>.</li>
-<li><strong>Cauchy (Lorentz) distribution</strong>&dagger;:  <code>Stable(1, 0)</code>.  This distribution is similar to the normal distribution, but with &quot;fatter&quot; tails. Alternative algorithm based on one mentioned in (McGrath and Irving 1975)<sup><a href="#Note68"><strong>(68)</strong></a></sup>: Generate <code>x = RNDU01ZeroExc()</code> and <code>y = RNDU01ZeroExc()</code> until <code>x * x + y * y &lt;= 1</code>, then generate <code>(RNDINT(1) * 2 - 1) * y / x</code>.</li>
+<li><strong>Cauchy (Lorentz) distribution</strong>&dagger;:  <code>Stable(1, 0)</code>.  This distribution is similar to the normal distribution, but with &quot;fatter&quot; tails. Alternative algorithm based on one mentioned in (McGrath and Irving 1975)<sup><a href="#Note69"><strong>(69)</strong></a></sup>: Generate <code>x = RNDU01ZeroExc()</code> and <code>y = RNDU01ZeroExc()</code> until <code>x * x + y * y &lt;= 1</code>, then generate <code>(RNDINT(1) * 2 - 1) * y / x</code>.</li>
 <li><strong>Chi-squared distribution</strong>: <code>GammaDist(df * 0.5 + Poisson(sms * 0.5), 2)</code>, where <code>df</code> is the number of degrees of freedom and <code>sms</code> is the sum of mean squares (where <code>sms</code> other than 0 indicates a <em>noncentral</em> distribution).</li>
 <li><strong>Dice</strong>: See <a href="#Dice"><strong>Dice</strong></a>.</li>
 <li><strong>Exponential distribution</strong>: See <a href="#Exponential_Distribution"><strong>Exponential Distribution</strong></a>.  The na&iuml;ve implementation <code>-ln(1-RNDU01()) / lamda</code> has several problems, such as being ill-conditioned at large values because of the distribution&#39;s right-sided tail (Pedersen 2018)<sup><a href="#Note2"><strong>(2)</strong></a></sup>, as well as returning infinity if <code>RNDU01()</code> becomes 1. An application can reduce some of these problems by applying Pedersen&#39;s suggestion of using either <code>-ln(RNDRANGEMinExc(0, 0.5))</code> or <code>-log1p(-RNDRANGEMinExc(0, 0.5))</code> (rather than <code>-ln(1-RNDU01())</code>), chosen at random each time; an alternative is <code>ln(1/RNDU01ZeroExc())</code> mentioned in (Devroye 2006)<sup><a href="#Note61"><strong>(61)</strong></a></sup>.</li>
@@ -2255,17 +2255,12 @@ same meaning as in the gamma distribution.  Alternatively, <code>1.0 / (pow(Gamm
 <li><strong>Multinormal distribution</strong>: See multivariate normal distribution.</li>
 <li><strong>Multivariate normal distribution</strong>: See <a href="https://github.com/peteroupc/peteroupc.github.io/blob/master/randomnotes.md#Multivariate_Normal_Multinormal_Distribution"><strong>Multivariate Normal (Multinormal) Distribution</strong></a>.</li>
 <li><strong>Normal distribution</strong>: See <a href="https://github.com/peteroupc/peteroupc.github.io/blob/master/randomnotes.md#Normal_Gaussian_Distribution"><strong>Normal (Gaussian) Distribution</strong></a>.</li>
-<li><strong>Poisson distribution</strong>: See &quot;<a href="#Poisson_Distribution"><strong>Poisson Distribution</strong></a>&quot;. If the application can trade accuracy for speed, the following can be used (Devroye 1986, p. 504)<sup><a href="#Note14"><strong>(14)</strong></a></sup>: <code>c = 0; s = 0; while true; sum = sum + Expo(1); if sum&gt;=mean: return c; else: c = c + 1; end</code>; and in addition the following optimization from (Devroye 1991)<sup><a href="#Note69"><strong>(69)</strong></a></sup> can be used: <code>while mean &gt; 20; n=ceil(mean-pow(mean,0.7)); g=GammaDist(n, 1); if g&gt;=mean: return c+(n-1-Binomial(n-1,(g-mean)/g)); mean = mean - g; c = c + n; end</code>, or the following approximation suggested in (Giammatteo and Di Mascio 2020)<sup><a href="#Note70"><strong>(70)</strong></a></sup> for <code>mean</code> greater than 50: <code>floor(1.0/3 + pow(max(0, Normal(0, 1)*pow(mean,1/6.0)*2/3 + pow(mean, 2.0/3)), 3.0/2))</code>.</li>
+<li><strong>Poisson distribution</strong>: See &quot;<a href="#Poisson_Distribution"><strong>Poisson Distribution</strong></a>&quot;. If the application can trade accuracy for speed, the following can be used (Devroye 1986, p. 504)<sup><a href="#Note14"><strong>(14)</strong></a></sup>: <code>c = 0; s = 0; while true; sum = sum + Expo(1); if sum&gt;=mean: return c; else: c = c + 1; end</code>; and in addition the following optimization from (Devroye 1991)<sup><a href="#Note70"><strong>(70)</strong></a></sup> can be used: <code>while mean &gt; 20; n=ceil(mean-pow(mean,0.7)); g=GammaDist(n, 1); if g&gt;=mean: return c+(n-1-Binomial(n-1,(g-mean)/g)); mean = mean - g; c = c + n; end</code>, or the following approximation suggested in (Giammatteo and Di Mascio 2020)<sup><a href="#Note71"><strong>(71)</strong></a></sup> for <code>mean</code> greater than 50: <code>floor(1.0/3 + pow(max(0, Normal(0, 1)*pow(mean,1/6.0)*2/3 + pow(mean, 2.0/3)), 3.0/2))</code>.</li>
 <li><strong>Pareto distribution</strong>: <code>pow(RNDU01ZeroOneExc(), -1.0 / alpha) * minimum</code>, where <code>alpha</code>  is the shape and <code>minimum</code> is the minimum.</li>
 <li><strong>Rayleigh distribution</strong>&dagger;: <code>sqrt(Expo(0.5))</code>.  If the scale parameter (<code>sigma</code>) follows a logarithmic normal distribution, the result is a <em>Suzuki distribution</em>.</li>
 <li><strong>Standard normal distribution</strong>&dagger;: <code>Normal(0, 1)</code>.  See also <a href="https://github.com/peteroupc/peteroupc.github.io/blob/master/randomnotes.md#Normal_Gaussian_Distribution"><strong>Normal (Gaussian) Distribution</strong></a>.</li>
-<li><strong>Student&#39;s <em>t</em>-distribution</strong>: <code>Normal(cent, 1) / sqrt(GammaDist(df * 0.5, 2 / df))</code>, where <code>df</code> is the number of degrees of freedom, and <em>cent</em> is the mean of the normally-distributed random number.  A <code>cent</code> other than 0 indicates a <em>noncentral</em> distribution.  Alternatively, <code>cos(RNDRANGE(0, pi * 2)) * sqrt((pow(RNDU01(),-2.0/df)-1) * df)</code> (Bailey 1994)<sup><a href="#Note71"><strong>(71)</strong></a></sup>.</li>
-<li><strong>Triangular distribution</strong>:
-
-<ul>
-<li><strong>Generalized</strong> (Kabal 2000/2019)<sup><a href="#Note72"><strong>(72)</strong></a></sup>: <code>(1-alpha) * min(startpt, endpt) + alpha * max(startpt, endpt)</code>.  The distribution starts at <code>startpt</code> and ends at <code>endpt</code>.</li>
-<li>As used in <em>Mathematica</em>: <code>x * min(startpt, endpt) + x * max(startpt, endpt)</code> where <code>x = (midpt - startpt)/(endpt - startpt)</code>.</li>
-</ul></li>
+<li><strong>Student&#39;s <em>t</em>-distribution</strong>: <code>Normal(cent, 1) / sqrt(GammaDist(df * 0.5, 2 / df))</code>, where <code>df</code> is the number of degrees of freedom, and <em>cent</em> is the mean of the normally-distributed random number.  A <code>cent</code> other than 0 indicates a <em>noncentral</em> distribution.  Alternatively, <code>cos(RNDRANGE(0, pi * 2)) * sqrt((pow(RNDU01(),-2.0/df)-1) * df)</code> (Bailey 1994)<sup><a href="#Note72"><strong>(72)</strong></a></sup>.</li>
+<li><strong>Triangular distribution</strong>&dagger; (Stein and Keblis 2009)<sup><a href="#Note85"><strong>(85)</strong></a></sup>: <code>(1-alpha) * min(a, b) + alpha * max(a, b)</code>, where <code>alpha</code> is in [0, 1], <code>a = RNDU01()</code>, and <code>b = RNDU01()</code>.</li>
 <li><strong>Weibull distribution</strong>: See generalized extreme value distribution.</li>
 </ul>
 
@@ -2655,15 +2650,15 @@ and &quot;<a href="https://randomascii.wordpress.com/2013/07/16/floating-point-d
 
 <p><small><sup id=Note67>(67)</sup> Sainudiin, Raazesh, and Thomas L. York. &quot;An Auto-Validating, Trans-Dimensional, Universal Rejection Sampler for Locally Lipschitz Arithmetical Expressions,&quot; <em>Reliable Computing</em> 18 (2013): 15-54.</small></p>
 
-<p><small><sup id=Note68>(68)</sup> McGrath, E.J., Irving, D.C., &quot;Techniques for Efficient Monte Carlo Simulation, Volume II&quot;, Oak Ridge National Laboratory, April 1975.</small></p>
+<p><small><sup id=Note68>(68)</sup> Devroye, L., 1996, December, &quot;Random variate generation in one line of code&quot; In <em>Proceedings Winter Simulation Conference</em> (pp. 265-272). IEEE.</small></p>
 
-<p><small><sup id=Note69>(69)</sup> Devroye, L., &quot;Expected Time Analysis of a Simple Recursive Poisson Random Variate Generator&quot;, <em>Computing</em> 46, pp. 165-173, 1991.</small></p>
+<p><small><sup id=Note69>(69)</sup> McGrath, E.J., Irving, D.C., &quot;Techniques for Efficient Monte Carlo Simulation, Volume II&quot;, Oak Ridge National Laboratory, April 1975.</small></p>
 
-<p><small><sup id=Note70>(70)</sup> Giammatteo, P., and Di Mascio, T., &quot;Wilson-Hilferty-type approximation for Poisson Random Variable&quot;, <em>Advances in Science, Technology and Engineering Systems Journal</em> 5(2), 2020.</small></p>
+<p><small><sup id=Note70>(70)</sup> Devroye, L., &quot;Expected Time Analysis of a Simple Recursive Poisson Random Variate Generator&quot;, <em>Computing</em> 46, pp. 165-173, 1991.</small></p>
 
-<p><small><sup id=Note71>(71)</sup> Bailey, R.W., &quot;Polar generation of random variates with the t distribution&quot;, <em>Mathematics of Computation</em> 62 (1984).</small></p>
+<p><small><sup id=Note71>(71)</sup> Giammatteo, P., and Di Mascio, T., &quot;Wilson-Hilferty-type approximation for Poisson Random Variable&quot;, <em>Advances in Science, Technology and Engineering Systems Journal</em> 5(2), 2020.</small></p>
 
-<p><small><sup id=Note72>(72)</sup> Kabal, P., &quot;Generating Gaussian Pseudo-Random Variates&quot;, McGill University, 2000/2019.</small></p>
+<p><small><sup id=Note72>(72)</sup> Bailey, R.W., &quot;Polar generation of random variates with the t distribution&quot;, <em>Mathematics of Computation</em> 62 (1984).</small></p>
 
 <p><small><sup id=Note73>(73)</sup> Saha, M., et al., &quot;<a href="https://arxiv.org/abs/1909.01103"><strong>The extended xgamma distribution</strong></a>&quot;, arXiv:1909.01103 [math.ST], 2019.</small></p>
 
@@ -2689,7 +2684,7 @@ and &quot;<a href="https://randomascii.wordpress.com/2013/07/16/floating-point-d
 
 <p><small><sup id=Note84>(84)</sup> For example, see Balcer, V., Vadhan, S., &quot;Differential Privacy on Finite Computers&quot;, Dec. 4, 2018; as well as Micciancio, D. and Walter, M., &quot;Gaussian sampling over the integers: Efficient, generic, constant-time&quot;, in Annual International Cryptology Conference, August 2017 (pp. 455-485).</small></p>
 
-<p><small><sup id=Note85>(85)</sup> Devroye, L., 1996, December, &quot;Random variate generation in one line of code&quot; In <em>Proceedings Winter Simulation Conference</em> (pp. 265-272). IEEE.</small></p>
+<p><small><sup id=Note85>(85)</sup> Stein, W.E. and Keblis, M.F., &quot;A new method to simulate the triangular distribution&quot;, <em>Mathematical and Computer Modelling</em> 49(5-6), 2009, pp.1143-1147.</small></p>
 
 <p><a id=Appendix></a></p>
 

@@ -144,7 +144,8 @@ class FastLoadedDiceRoller:
         self.n = len(weights)
         weightBits = 0
         totalWeights = sum(weights)
-        if totalWeights<0: raise ValueError("Sum of weights is negative")
+        if totalWeights < 0:
+            raise ValueError("Sum of weights is negative")
         tmp = totalWeights
         while tmp > 0:
             tmp >>= 1

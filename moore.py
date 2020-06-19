@@ -396,18 +396,24 @@ if __name__ == "__main__":
         ret = x ** (lamda - 1) * (-(chi / x + psi * x) / 2).exp()
         return ret
 
-    def student(x,lam=0.5):
-        lam=Interval(lam)
-        return (lam+x*x)**(-lam/2-Interval(0.5))
+    def student_t(x, lam=0.5):
+        lam = Interval(lam)
+        return (lam + x * x) ** (-lam / 2 - Interval(0.5))
 
-
+    def continuous_bernoulli(x, lamda=0.3):
+        """
+        Reference: Loaiza-Ganem, G., Cunningham, J., "The
+        continuous Bernoulli: fixing a pervasive error
+        in variational autoencoders", 2019. """
+        lamda = Interval(lamda)  # Parameter in (0, 1)
+        return lamda ** x * (1 - lamda) ** (1 - x)
 
     import time
     import math
     import cProfile
 
-    mrs = MooreSampler(makeham, -3, 2)
-    ls = linspace(-3, 2, 30)
+    mrs = MooreSampler(continuous_bernoulli, 0, 1)
+    ls = linspace(0, 1, 30)
     buckets = [0 for x in ls]
     t = time.time()
     ksample = [mrs.sample() for i in range(50000)]

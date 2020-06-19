@@ -13,6 +13,7 @@ Open-source articles on programming subjects.
 * [Random Number Generator Recommendations for Applications](./random.html)
 * [Random Number Generation and Sampling Methods](./randomfunc.html)
 * [More Random Number Sampling Methods](./randomnotes.html)
+* [The Most Common Topics Involving Randomization](./randomcommon.html)
 * [An Exact Beta Generator](./betadist.html)
 * [Testing PRNGs for High-Quality Randomness](./randomtest.html)
 * [Examples of High-Quality PRNGs](./hqprng.html)

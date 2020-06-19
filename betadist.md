@@ -19,7 +19,7 @@ This page shows Python code for my new sampler.
 
 The [**beta distribution**](https://en.wikipedia.org/wiki/Beta_distribution) is a bounded-domain probability distribution; its two parameters, `alpha` and `beta`, are both greater than 0 and describe the distribution's shape.  Depending on `alpha` and `beta`, the shape can be a smooth peak or a smooth valley.  The beta distribution can take on values in the interval [0, 1].  Any value in this interval (`x`) can occur with a probability proportional to&mdash;
 
-    pow(x, alpha - 1) * pow(1 - x, beta - 1).
+    pow(x, alpha - 1) * pow(1 - x, beta - 1).               (1)
 
 Although `alpha` and `beta` can each be greater than 0, this sampler only works if both parameters are 1 or greater.
 
@@ -139,12 +139,27 @@ To test the correctness of this sampler, the Kolmogorov&ndash;Smirnov test was a
 
 See the results of the [**correctness testing**](https://peteroupc.github.io/betadistresults.html).   For each pair of parameters, five samples with 50,000 numbers per sample were taken, and results show the lowest and highest Kolmogorov&ndash;Smirnov statistics and p-values achieved for the five samples.  Note that a p-value extremely close to 0 or 1 strongly indicates that the samples do not come from a beta distribution.
 
+<a id=Exact_Simulation_of_Continuous_Distributions_on_0_1></a>
+## Exact Simulation of Continuous Distributions on [0, 1]
+
+The beta distribution is one case of a general approach to simulating continuous distributions with support on the interval [0, 1], and this with arbitrary precision, thanks to Bernoulli factories.  This general approach can sample an `n` bit binary expansion of a number following that continuous distribution, and is described as follows:
+
+1. Create a "geometric bag", that is, an "empty" uniform random number also known as a "u-rand".
+2. As the geometric bag builds up a uniform random number, accept the number with a probability that can be represented by Bernoulli factories, or reject it otherwise.  As shown by Keane and O'Brien <sup>[**(2)**](#Note2)</sup>, this is possible if and only if the probability function&mdash;
+    - always returns the same value in the interval [0, 1], or
+    - is continuous everywhere in the interval [0, 1] and never returns 0 or 1 anywhere in that interval except possibly at the points 0 and/or 1,
+
+   and they give the example of 2*p as a probability function that cannot be represented by a Bernoulli factory.
+3. If the geometric bag is accepted, fill the unsampled bits of the bag with uniform random bits as necessary to make an `n`-bit number (for an example, see `_fill_geometric_bag` above).
+
+The beta distribution's probability function at (1) fits these requirements (for `alpha` and `beta` both greater than 1), since it's continuous and never returns 0 or 1 outside of the points 0 and 1, thus it can be simulated by Bernoulli factories and is covered by this general approach.
+
 <a id=Notes></a>
 ## Notes
 
 <small><sup id=Note1>(1)</sup> Karney, C.F.F., "[**Sampling exactly from the normal distribution**](https://arxiv.org/abs/1303.6257v2)", arXiv:1303.6257v2  [physics.comp-ph], 2014.</small>
 
-<small><sup id=Note2>(2)</sup> Keane,  M.  S.,  and  O'Brien,  G.  L., "A  Bernoulli factory", _ACM Transactions on Modeling and Computer Simulation_ 4(2), 1994.</small>
+<small><sup id=Note2>(2)</sup> Keane,  M.  S.,  and  O'Brien,  G.  L., "A Bernoulli factory", _ACM Transactions on Modeling and Computer Simulation_ 4(2), 1994.</small>
 
 <small><sup id=Note3>(3)</sup> Flajolet, P., Pelletier, M., Soria, M., "[**On Buffon machines and numbers**](https://arxiv.org/abs/0906.5560v2)", arXiv:0906.5560v2  [math.PR], 2010.</small>
 
