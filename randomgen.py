@@ -144,6 +144,7 @@ class FastLoadedDiceRoller:
         self.n = len(weights)
         weightBits = 0
         totalWeights = sum(weights)
+        if totalWeights<0: raise ValueError("Sum of weights is negative")
         tmp = totalWeights
         while tmp > 0:
             tmp >>= 1
@@ -224,23 +225,27 @@ class _BinomialAliasTable:
                 raise ValueError
 
     def _buildFailureAliasesIfNeeded(self):
-        if self.failureAlias == None and len(self.failureRaw) > self.n//2 + 1:
-           olen=len(self.failureRaw)
-           clen=olen
-           for i in range(olen, self.n+1):
-              self.failureRaw.append(self.failureRaw[self.n - i])
-              clen+=1
-           self.failureAlias=FastLoadedDiceRoller(self.failureRaw)
-           self.failureRaw=None
-           self.failureCumul=None
+        if self.failureAlias == None and len(self.failureRaw) > self.n // 2 + 1:
+            olen = len(self.failureRaw)
+            clen = olen
+            for i in range(olen, self.n + 1):
+                self.failureRaw.append(self.failureRaw[self.n - i])
+                clen += 1
+            self.failureAlias = FastLoadedDiceRoller(self.failureRaw)
+            self.failureRaw = None
+            self.failureCumul = None
 
     def next(self, rg):
         v = self.aliases[self.entries.next(rg)]
         if v >= 0:
             return v
-        if self.failureAlias!=None:
+        if self.failureAlias != None:
             return self.failureAlias.next(rg)
+        return self._sampleFromFailure(rg)
+
+    def _sampleFromFailure(self, rg):
         # Sample from the failure distribution
+        # print("sampling from failure")
         s = max(16, self._bitcount(self.n))
         failurevalues = self.failureEntry << (self.n - s)
         cf = (1 << (self.n - s)) - 1
@@ -258,10 +263,10 @@ class _BinomialAliasTable:
         for i in range(1, self.n + 1):
             if failureCumulLen == i:
                 self.failureCc = self.failureCc * (self.n - (i - 1)) // i
-                self._verify(i, self.failureCc, self.n - s)
+                # self._verify(i, self.failureCc, self.n - s)
                 ccf = self.failureCc & cf
                 totalcv = self.failureCumul[i - 1] + ccf
-                #print("i=%d fcc=%x/%x tcv=%x" % (i, self.failureCc, ccf, totalcv))
+                # print("i=%d fcc=%x/%x tcv=%x" % (i, self.failureCc, ccf, totalcv))
                 self.failureCumul.append(totalcv)
                 self.failureRaw.append(ccf)
                 failureCumulLen += 1
@@ -270,8 +275,11 @@ class _BinomialAliasTable:
             else:
                 totalcv = self.failureCumul[i]
             if failureRate < totalcv:
-                #self._buildFailureAliasesIfNeeded()
+                # self._buildFailureAliasesIfNeeded()
+                # print("sampled %d" % (i))
                 return i
+            elif totalcv > failurevalues:
+                raise ValueError("totalcv=%x expected=%x" % (totalcv, failurevalues))
         if totalcv != failurevalues:
             raise ValueError("totalcv=%x expected=%x" % (totalcv, failurevalues))
         raise ValueError("should not happen")
@@ -324,8 +332,8 @@ class PascalTriangle:
         r = 0
         n = len(row) - 1
         for i in range(0, n + 1):
-            r += Fraction(row[i], 1 << n) * Fraction(row[n - i], 1 << n)
-        return int(r * (1 << (2 * n)))
+            r += row[i] * row[n - i]
+        return r
 
     def _buildAliasTable(self, prob, n, fullPrecision=False):
         # prob is (n/2)th entry (starting at 0) of
@@ -382,6 +390,8 @@ class PascalTriangle:
         odd = n % 2 == 1
         oddadd = 1 if odd else 0
         sguard = s * 2  # should be at least s+ceil(log(n))
+        if n < sguard:
+            raise ValueError
         phalf = prob >> (n - sguard)
         h_s = Fraction(phalf, 1 << sguard)
         aliases = []
@@ -398,6 +408,7 @@ class PascalTriangle:
             delta_t_num = half + 1 - i
             delta_t_den = half + i
             hsa = h_s * delta_t_num / delta_t_den
+            # print([math.log(hsa.denominator),math.log(h_s.denominator)])
             hsafloor = int(hsa * (1 << s))
             if hsafloor < 0:
                 raise ValueError
@@ -408,19 +419,20 @@ class PascalTriangle:
             aliasentries.append(hsafloor)
             aliasentries.append(hsafloor)
             totalentries += hsafloor * 2
-            h_s = hsa
+            # h_s = hsa # -- known to be correct
+            h_s = Fraction(int(hsa * (1 << sguard)), 1 << sguard)
         aliases.append(-1)
         failureentry = (1 << s) - totalentries
-        #print(aliasentries)
-        #print(aliases)
-        #print([totalentries, failureentry])
+        # print(aliasentries)
+        # print(aliases)
+        # print([totalentries, failureentry])
         if failureentry < 0:
             raise ValueError
         aliasentries.append(failureentry)
         return _BinomialAliasTable(aliases, aliasentries, n)
 
     def aliasinfo(self, desiredRow):
-        r = self.nextto(desiredRow)
+        r = self.getrow(desiredRow)
         if desiredRow <= 16:
             # Use simple alias table to avoid overhead
             return FastLoadedDiceRoller(r)
@@ -435,34 +447,7 @@ class PascalTriangle:
             return [x for x in self.table]
         if self.rownumber > desiredRow:
             raise ValueError
-        if self.rownumber >= 2 and (self.rownumber - 1) * 2 == desiredRow:
-            # print("Optimizing for %d -> %d" % (self.rownumber, desiredRow))
-            # Optimization for the case where the desired row
-            # number is twice the previously generated row number.
-            # Ideas taken from Farach-Colton and Tsai, "Exact
-            # sublinear binomial sampling".
-            entry = self._nthOfDoubleRowFromRow(self.table)
-            table = self._buildAliasTable(entry, desiredRow, True)
-            self.rownumber = desiredRow + 1
-            self.table = table
-            return [x for x in self.table]
-        elif self.rownumber >= 2 and (self.rownumber - 1) * 2 < desiredRow:
-            dr = desiredRow - (desiredRow % 2)
-            half = dr // 2
-            self.nextto(half)
-            self.nextto(dr)
-            return self.nextto(desiredRow)
-        xr = [
-            self.table[i] if i < len(self.table) else (1 if i == 0 else 0)
-            for i in range(desiredRow + 1)
-        ]
-        for i in range(self.rownumber, desiredRow + 1):
-            last = 1
-            for j in range(1, i + 1):
-                n = xr[j] + last
-                last = xr[j]
-                xr[j] = n
-        self.table = xr
+        self.table = self.getrow(desiredRow)
         self.rownumber = desiredRow + 1
         return [x for x in self.table]
 
@@ -1033,14 +1018,8 @@ Returns 'list'. """
     def _getaliastable(self, n):
         if n in self._aliastables:
             return self._aliastables[n]
-        i = self._pascal.row()
-        while i <= n:
-            if self._ispoweroftwo(i):
-                p = self._pascal.aliasinfo(i)
-                self._aliastables[i] = p
-                i <<= 1
-            else:
-                i += 1
+        p = self._pascal.aliasinfo(n)
+        self._aliastables[n] = p
         return self._aliastables[n]
 
     def _ispoweroftwo(self, n):
@@ -1078,7 +1057,12 @@ Returns 'list'. """
             pt /= 2
         return count
 
-    def binomial(self, trials, p):
+    def binomial(self, trials, p, n=None):
+        if n == None:
+            return self._binomial(trials, p, 1)[0]
+        return self._binomial(trials, p, n)
+
+    def _binomial(self, trials, p, n):
         if trials < 0:
             raise ValueError
         if trials == 0:
@@ -1089,46 +1073,60 @@ Returns 'list'. """
         # Always fails
         if p <= 0.0:
             return 0
-        count = 0
-        if p == 0.5:
-            if trials < 8:
-                r = self.rndintexc(1 << trials)
-                while r > 0:
-                    if (r & 1) != 0:
-                        count += 1
-                    r >>= 1
-            elif not self._ispoweroftwo(trials):
-                # Decompose _trials_ into powers of two (taking idea
-                # from "simple reduction" in Farach-Colton and Tsai),
-                # except a simple table-free algorithm is used for
-                # the lowest bits of _trials_.
-                count += self.binomial(trials & 7, 0.5)
-                trials -= trials & 7
-                shift = 3
-                while trials > 0:
-                    subtrials = trials & (1 << shift)
-                    if subtrials != 0:
-                        count += self._getaliastable(subtrials).next(self)
-                    trials -= subtrials
-                    shift += 1
-            else:
-                count = count + self._getaliastable(trials).next(self)
-        else:
-            # Based on proof of Theorem 2 in Farach-Colton and Tsai.
-            # Decompose prob into its binary expansion (assuming
-            # division by 2 is exact except on underflow)
-            pw = p
-            pt = 0.5
-            while trials > 0 and pw > 0:
-                c = self.binomial(trials, 0.5)
-                if pw >= pt:
-                    count = count + c
-                    trials = trials - c
-                    pw = pw - pt
+        retarr = [0 for i in range(n)]
+        k = 0
+        tbl = None
+        if n > 10 and trials > 32:
+            tbl = self._getaliastable(trials)
+        while k < n:
+            count = 0
+            if p == 0.5:
+                if trials < 8:
+                    r = self.rndintexc(1 << trials)
+                    while r > 0:
+                        if (r & 1) != 0:
+                            count += 1
+                        r >>= 1
+                elif tbl != None:
+                    count = tbl.next(self)
+                elif not self._ispoweroftwo(trials):
+                    # Decompose _trials_ into powers of two (taking idea
+                    # from "simple reduction" in Farach-Colton and Tsai),
+                    # except a simple table-free algorithm is used for
+                    # the lowest bits of _trials_.
+                    tr = trials
+                    count = self.binomial(tr & 7, 0.5)
+                    tr -= tr & 7
+                    shift = 3
+                    while tr > 0:
+                        subtrials = tr & (1 << shift)
+                        if subtrials != 0:
+                            count += self._getaliastable(subtrials).next(self)
+                        tr -= subtrials
+                        shift += 1
                 else:
-                    trials = c
-                pt = pt / 2.0  # NOTE: Not rounded
-        return count
+                    count = self._getaliastable(trials).next(self)
+                retarr[k] = count
+                k += 1
+            else:
+                # Based on proof of Theorem 2 in Farach-Colton and Tsai.
+                # Decompose prob into its binary expansion (assuming
+                # division by 2 is exact except on underflow)
+                pw = p
+                pt = 0.5
+                tr = trials
+                while tr > 0 and pw > 0:
+                    c = self.binomial(tr, 0.5)
+                    if pw >= pt:
+                        count = count + c
+                        tr = tr - c
+                        pw = pw - pt
+                    else:
+                        tr = c
+                    pt = pt / 2.0  # NOTE: Not rounded
+                retarr[k] = count
+                k += 1
+        return retarr
 
     def hypergeometric(self, trials, ones, count):
         if ones < 0 or count < 0 or trials < 0 or ones > count or trials > count:
@@ -3620,9 +3618,9 @@ if __name__ == "__main__":
     import numpy
 
     t = time.time()
-    ksample = [randgen.binomial(2000, 0.5) for i in range(10000)]
-    print(time.time() - t)
-    ls = linspace(0, 2000, 100)
+    ksample = randgen.binomial(20, 0.5, n=10000)
+    print("Took %f seconds" % (time.time() - t))
+    ls = linspace(0, 100, 100)
     buckets = [0 for x in ls]
     for ks in ksample:
         bucket(ks, ls, buckets)

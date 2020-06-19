@@ -396,12 +396,18 @@ if __name__ == "__main__":
         ret = x ** (lamda - 1) * (-(chi / x + psi * x) / 2).exp()
         return ret
 
+    def student(x,lam=0.5):
+        lam=Interval(lam)
+        return (lam+x*x)**(-lam/2-Interval(0.5))
+
+
+
     import time
     import math
     import cProfile
 
-    mrs = MooreSampler(lambda x: geninvgaussian(x, 2, 1, 3), 0.001, 15)
-    ls = linspace(0.001, 15, 30)
+    mrs = MooreSampler(makeham, -3, 2)
+    ls = linspace(-3, 2, 30)
     buckets = [0 for x in ls]
     t = time.time()
     ksample = [mrs.sample() for i in range(50000)]

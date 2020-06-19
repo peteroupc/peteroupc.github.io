@@ -324,7 +324,7 @@ CLASSES
      |      and `nc` is a parameter such that `nc` other than 0
      |      indicates a _noncentral_ distribution.
      |
-     |  binomial(self, trials, p)
+     |  binomial(self, trials, p, n=None)
      |
      |  binomial_int(self, trials, px, py)
      |

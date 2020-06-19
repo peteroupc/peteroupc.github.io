@@ -12,9 +12,13 @@ class LogConcaveSampler:
     Generates a random number that follows a distribution
     whose probability density function (PDF) is log-concave.  Specifically
     the PDF is proportional to exp(psi), where psi is a continuous concave
-    function.
-      - psi - A continuous concave function that takes one number and
-         outputs one number.
+    function. (A log-concave PDF necessarily has a single mode, or peak,
+    and its range is bounded from above by a finite value.  See Devroye, 1986,
+    "Non-Uniform Random Variate Generation".)
+      - psi - A function that takes one number and
+         outputs one number.  For this sampler to work, psi must be a
+         continuous concave function (informally, a function is concave
+         if the area "above" the function's graph is concave).
       - dpsi - Derivative of psi.  Optional; if not given, this derivative will be
          numerically approximated from psi, assuming that 0 is the
          distribution's mode (peak location) and psi(0) = 0 (and thus
@@ -123,6 +127,172 @@ class LogConcaveSampler:
             elif logchi <= pr:
                 return ret
 
+class LogConcaveSampler2:
+    """
+    Generates a random number that follows a distribution
+    whose probability density function (PDF) is log-concave.  Specifically
+    the PDF is proportional to exp(psi), where psi is a continuous concave
+    function. (A log-concave PDF necessarily has a single mode, or peak,
+    and its range is bounded from above by a finite value.
+    See Devroye, 1986, "Non-Uniform Random Variate Generation".)
+      - psi - A function that takes one number and
+         outputs one number.  For this sampler to work, psi must be a
+         continuous concave function (informally, a function is concave
+         if the area "above" the function's graph is concave),
+         and 0 must be the distribution's mode (peak location) and thus
+         the peak of psi must be at 0.
+
+     Example:
+
+     The normal distribution's PDF is a log-concave PDF proportional to
+     exp(psi), where psi is:
+
+     >>> psi = lambda x:  -(x * x) / (2 * sigma * sigma)
+
+     The PDF's mode is 0 (its peak is located at 0), and psi(0) = 0 (and thus
+     exp(psi(0)) = 1). Thus, because the mode of the normal distribution
+     is the mean (mu), the following example
+     generates a number that follows the
+     normal distribution with mean of mu and
+     standard deviation of sigma:
+
+     >>> sampler = LogConcaveSampler2(psi)
+     >>> print([x+mu for x in sampler.sample(10)])
+
+     Reference:
+     Devroye, L., 2012. A note on generating random variables with
+     log-concave densities. Statistics & Probability Letters, 82(5),
+     pp.1035-1039.
+    """
+
+    def __init__(self, psi):
+        self.left = LogConcaveSamplerMonotonePositive(lambda x: psi(-x))
+        self.right = LogConcaveSamplerMonotonePositive(psi)
+
+    def sample(self, n):
+        return [self.sampleOne() for i in range(n)]
+
+    def sampleOne(self):
+        while True:
+            if random.randint(0, 1) == 0:
+                ret = self.left.sampleIteration()
+                if ret != None:
+                    return -ret
+            else:
+                ret = self.right.sampleIteration()
+                if ret != None:
+                    return ret
+
+class LogConcaveSamplerMonotonePositive:
+    """
+    Generates a random number that follows a distribution
+    whose probability density function (PDF) is log-concave, monotonically
+    nonincreasing, and has a positive domain.  Specifically
+    the PDF is proportional to exp(psi), where psi is a continuous concave
+    function. (A log-concave PDF necessarily has a single mode, or peak,
+    and its range is bounded from above by a finite value.
+    See Devroye, 1986, "Non-Uniform Random Variate Generation".)
+      - psi - A function that takes one number and
+         outputs one number.  For this sampler to work, psi must be a
+         continuous concave function, monotonically
+         nonincreasing, and have a positive domain (informally, a function is concave
+         if the area "above" the function's graph is concave),
+         and 0 must be the distribution's mode (peak location) and thus
+         the peak of psi must be at 0.
+
+     Example:
+
+     The normal distribution's PDF is a log-concave PDF proportional to
+     exp(psi), where psi is:
+
+     >>> psi = lambda x:  -(x * x) / (2 * sigma * sigma)
+
+     The PDF's mode is 0 (its peak is located at 0), and psi(0) = 0 (and thus
+     exp(psi(0)) = 1). Thus, because the mode of the normal distribution
+     is the mean (mu), the following example
+     generates a number that follows the right-hand half of a
+     normal distribution with mean of mu and
+     standard deviation of sigma:
+
+     >>> sampler = LogConcaveSamplerMonotonePositive(psi)
+     >>> print([x+mu for x in sampler.sample(10)])
+
+     Reference:
+     Devroye, L., 2012. A note on generating random variables with
+     log-concave densities. Statistics & Probability Letters, 82(5),
+     pp.1035-1039.
+    """
+
+    def _fx(self, psi):
+        f0 = math.exp(psi(0))
+        i = 0
+        while True:
+            a = 2.0 ** i
+            fa = math.exp(psi(a))
+            f2a = math.exp(psi(2 * a))
+            # print([i, fa, 0.25, f2a])
+            if fa / f0 >= 0.25 and 0.25 >= f2a / f0:
+                return a
+            if fa / f0 < 0.25:
+                break
+            i += 1
+        i = -1
+        while True:
+            a = 2.0 ** i
+            fa = math.exp(psi(a))
+            f2a = math.exp(psi(2 * a))
+            if fa / f0 >= 0.25 and 0.25 >= f2a / f0:
+                return a
+            i -= 1
+
+    def __init__(self, psi):
+        self.psi = psi
+        self.a = self._fx(psi)
+        self.logfa = psi(self.a)
+        self.logf2a = psi(2 * self.a)
+        self.fa = math.exp(self.logfa)
+        self.f0 = math.exp(psi(0))
+        f2a = math.exp(self.logf2a)
+        self.r = self.a * self.fa
+        self.q = self.a * self.f0
+        self.qr = self.q + self.r
+        self.sp = self.a / math.log(self.fa / f2a)
+        self.s = self.qr + f2a * self.sp
+
+    def sample(self, n):
+        return [self.sampleOne() for i in range(n)]
+
+    def sampleIteration(self):
+        u = random.random()
+        v = random.random() * self.s
+        chi = random.random()
+        ret = 0
+        if v <= self.q:
+            ret = self.a * u
+            if chi * self.f0 <= math.exp(self.psi(ret)):
+                return ret
+        elif v < self.qr:
+            ret = self.a + self.a * u
+            if chi * self.fa <= math.exp(self.psi(ret)):
+                return ret
+        else:
+            ret = 2 * self.a + math.log(1.0 / u) * self.sp
+            h = 0
+            if self.logf2a != 0:
+                h = math.exp(
+                    (2 * self.a - ret) * self.logfa / self.a
+                    + (ret - self.a) * self.logf2a / self.a
+                )
+            if chi * h <= math.exp(self.psi(ret)):
+                return ret
+        return None
+
+    def sampleOne(self):
+        while True:
+            ret = self.sampleIteration()
+            if ret != None:
+                return ret
+
 class NormalDist:
     def __init__(self, mu=0, sigma=1):
         psi = lambda x: -(x * x) / (2 * sigma * sigma)
@@ -191,3 +361,64 @@ class GenInvGaussian:
 
     def sample(self, n):
         return [self._trans(x) for x in self.sampler.sample(n)]
+
+if __name__ == "__main__":
+
+    def bucket(v, ls, buckets):
+        for i in range(len(buckets) - 1):
+            if v >= ls[i] and v < ls[i + 1]:
+                buckets[i] += 1
+                break
+
+    def linspace(a, b, size):
+        if (a - b) % size == 0:
+            # for robustness when all points are integers
+            return [a + ((b - a) * x) // size for x in range(size + 1)]
+        return [a + (b - a) * (x * 1.0 / size) for x in range(size + 1)]
+
+    def showbuckets(ls, buckets):
+        mx = max(0.00000001, max(buckets))
+        if mx == 0:
+            return
+        labels = [
+            ("%0.3f %d [%f]" % (ls[i], buckets[i], buckets[i] * 1.0 / mx))
+            if int(buckets[i]) == buckets[i]
+            else ("%0.3f %f [%f]" % (ls[i], buckets[i], buckets[i] * 1.0 / mx))
+            for i in range(len(buckets))
+        ]
+        maxlen = max([len(x) for x in labels])
+        i = 0
+        while i < (len(buckets)):
+            print(
+                labels[i]
+                + " " * (1 + (maxlen - len(labels[i])))
+                + ("*" * int(buckets[i] * 40 / mx))
+            )
+            if (
+                buckets[i] == 0
+                and i + 2 < len(buckets)
+                and buckets[i + 1] == 0
+                and buckets[i + 2] == 0
+            ):
+                print(" ... ")
+                while (
+                    buckets[i] == 0
+                    and i + 2 < len(buckets)
+                    and buckets[i + 1] == 0
+                    and buckets[i + 2] == 0
+                ):
+                    i += 1
+            i += 1
+
+    import time
+
+    psi = lambda x: -(x * x) / (2 * 1 * 1)
+    mrs = LogConcaveSampler2(psi)
+    ls = linspace(-4, 4, 30)
+    buckets = [0 for x in ls]
+    t = time.time()
+    ksample = mrs.sample(5000)
+    print("Took %f seconds" % (time.time() - t))
+    for ks in ksample:
+        bucket(ks, ls, buckets)
+    showbuckets(ls, buckets)

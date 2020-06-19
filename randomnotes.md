@@ -360,6 +360,8 @@ Each of the resulting uniform random numbers will be in the interval [0, 1], and
 >            return [-logp1(-copula[0]) / rate1,
 >              -logp1(-copula[1]) / rate2]
 >         END METHOD
+>
+> **Note:** The Gaussian copula is also known as the _normal-to-anything_ method.
 
 Other kinds of copulas describe different kinds of dependence between random numbers.  Examples of other copulas are&mdash;
 
