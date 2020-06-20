@@ -1344,13 +1344,13 @@ CLASSES
      |      - beta: Early rejection parameter ("portkey" two-coin factory).
      |        Returns 0 immediately with probability 1 - beta.
      |
-     |  twofacpower(fbase, fexponent)
+     |  twofacpower(self, fbase, fexponent)
      |      Bernoulli factory B(p, q) => B(p^q).
      |      Based on algorithm from (Mendo 2019),
      |      but changed to accept a Bernoulli factory
      |      rather than a fixed value for the exponent.
      |      To the best of my knowledge, I am not aware
-     |      of any other work that presents this exact
+     |      of any article or paper that presents this exact
      |      Bernoulli factory.
      |      - fbase, fexponent: Functions that return 1 if heads and 0 if tails.
      |        The first is the base, the second is the exponent.

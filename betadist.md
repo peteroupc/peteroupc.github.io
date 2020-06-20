@@ -171,7 +171,7 @@ Again, this function meets the requirements stated by Keane and O'Brien, so it c
                but changed to accept a Bernoulli factory
                rather than a fixed value for the exponent.
                To the best of my knowledge, I am not aware
-               of any other work that presents this exact
+               of any article or paper that presents this exact
                Bernoulli factory.
                - fbase, fexponent: Functions that return 1 if heads and 0 if tails.
                  The first is the base, the second is the exponent.
@@ -228,7 +228,7 @@ Again, this function meets the requirements stated by Keane and O'Brien, so it c
 
 <small><sup id=Note6>(6)</sup> Huber, M., "[**Optimal linear Bernoulli factories for small mean problems**](https://arxiv.org/abs/1507.00843v2)", arXiv:1507.00843v2 [math.PR], 2016</small>
 
-<small><sup id=Note7>(7)</sup> Loaiza-Ganem, G., Cunningham, J.P., "[The continuous Bernoulli: fixing a pervasive error in variational autoencoders](https://arxiv.org/abs/1907.06845v5)", arXiv:1907.06845v5  [stat.ML], 2019.</small>
+<small><sup id=Note7>(7)</sup> Loaiza-Ganem, G., Cunningham, J.P., "[**The continuous Bernoulli: fixing a pervasive error in variational autoencoders**](https://arxiv.org/abs/1907.06845v5)", arXiv:1907.06845v5  [stat.ML], 2019.</small>
 
 <a id=License></a>
 ## License

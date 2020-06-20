@@ -792,7 +792,8 @@ The first kind is called weighted choice _with replacement_ (which can be though
     END METHOD
 
     METHOD WeightedChoice(weights)
-        return WChoose(RNDINTEXC(Sum(weights)))
+        return WChoose(weights,
+            RNDINTEXC(Sum(weights)))
     END METHOD
 
     METHOD CumulativeWeightedChoice(weights)
@@ -1685,18 +1686,30 @@ Some cases require converting a pregenerated uniform random number to a non-unif
 &nbsp;
 
     METHOD ICDFFromContPDF(u01, mini, maxi, step)
-      values=[]
-      weights=[]
+      pieces=[]
       areas=[]
-       i = mini; while i < maxi
-         AddItem(values, i)
-         AddItem(weights, PDF(i))
-         i = i + step
-       end
-       AddItem(list, maxi)
-       AddItem(weights, PDF(maxi))
-      sum=GatherAreas(values, weights, areas)
-      return PWLChoose(values, weights, areas, u01 * sum)
+      lastvalue=i
+      lastweight=PDF(i)
+      cumarea=0
+      i = mini+step; while i <= maxi
+         weight=i; value=PDF(i)
+         area=cumarea+abs((weight + lastweight) * 0.5 *
+                (value - lastvalue))
+         AddItem(pieces,[lastweight,weight,lastvalue,value])
+         AddItem(areas,area)
+         cumarea=cumarea+area
+         lastweight=weight;lastvalue=value
+         if i==maxi: break
+         i = min(i + step, maxi)
+      end
+      total=Sum(area)
+      for i in 0...size(areas)
+         cu=areas[i]/total
+         if u01<=cu
+             // TODO
+         end
+      end
+      return error
     END METHOD
 
 > **Notes:**
@@ -1756,68 +1769,17 @@ A [**_piecewise linear distribution_**](http://en.cppreference.com/w/cpp/numeric
 
 &nbsp;
 
-    METHOD PWLChoose(values, weights, areas, value)
-        // Interpolate a number according to the given value
-        i=0
-        // Get the number corresponding to the random number
-        runningValue = 0
-        while i < size(values) - 1
-         area = areas[i]
-         if area > 0
-          newValue = runningValue + area
-          // NOTE: Includes start, excludes end
-          if value < newValue
-           w1=weights[i]
-           w2=weights[i+1]
-           diff=w2-w1
-           wmin=min(w1, w2)
-           wmax=max(w1, w2)
-           wt=(value - runningValue)/area
-           interp=wt
-           if diff!=0
-              s=sqrt(wmax*wmax*wt+wmin*wmin-
-                 wmin*wmin*wt)
-              interp=abs((s-wmin)/diff)
-              if diff<0: interp=1-interp
-           end
-           retValue = values[i] + (values[i + 1] - values[i]) *
-              interp
-           return retValue
-          end
-          runningValue = newValue
-         end
-         i = i + 1
-        end
-        // Last resort (might happen because rounding
-        // error happened somehow)
-        return values[size(values) - 1]
-    END METHOD
-
-    METHOD GatherAreas(values, weights, areas)
-        // Get the sum of all areas between weights
-        // NOTE: Kahan summation is more robust
-        // than the naive summing given here
-        msum = 0
-        i = 0
-        while i < size(values) - 1
-          weightArea = abs((weights[i] + weights[i + 1]) * 0.5 *
-                (values[i + 1] - values[i]))
-          AddItem(areas, weightArea)
-          msum = msum + weightArea
-           i = i + 1
-        end
-        return msum
-    END METHOD
-
     METHOD PiecewiseLinear(values, weights)
-        if size(values) <= 0 or
-           size(weights) < size(values): return error
-        if size(values) == 1: return values[0]
-        areas = []
-        msum = GatherAreas(values, weights, areas)
-        // Generate random numbers
-        value = RNDRANGEMaxExc(0, msum)
-        return PWLChoose(values, weights, areas, value)
+      if size(values)!=size(weights) or size(values)==0: return error
+      if size(values)==1: return values[0]
+      areas=[]
+      for i in 1...size(values)
+         area=abs((weights[i] + weights[i-1]) * 0.5 *
+                (values[i] - values[i-1]))
+         AddItem(areas,area)
+      end
+      index=WeightedChoice(areas)
+      // TODO: Choose area at random
     END METHOD
 
 > **Note:** The [**Python sample code**](https://peteroupc.github.io/randomgen.zip) contains a variant to the method
@@ -1828,7 +1790,7 @@ A [**_piecewise linear distribution_**](http://en.cppreference.com/w/cpp/numeric
 <a id=Specific_Distributions></a>
 ### Specific Distributions
 
-Methods to sample additional distributions are given in a [**separate page**](https://github.com/peteroupc/peteroupc.github.io/blob/master/randomnotes.md). They cover the normal, gamma, beta, von Mises, stable, and multivariate normal distributions as well as copulas.  Note, however, that most of the methods won't sample the given distribution in a manner that minimizes approximation error), but they may still be useful if the application is willing to trade accuracy for speed.
+Methods to sample additional distributions are given in a [**separate page**](https://github.com/peteroupc/peteroupc.github.io/blob/master/randomnotes.md). They cover the normal, gamma, beta, von Mises, stable, and multivariate normal distributions as well as copulas.  Note, however, that most of the methods won't sample the given distribution in a manner that minimizes approximation error, but they may still be useful if the application is willing to trade accuracy for speed.
 
 <a id=Index_of_Non_Uniform_Distributions></a>
 ### Index of Non-Uniform Distributions
@@ -1839,7 +1801,7 @@ A &dagger; symbol next to a distribution means the random number can be shifted 
 
 A &#x2b26; symbol next to a distribution means the random number can be scaled to any range, which is given with the minimum and maximum values `mini` and `maxi`.  Example: `mini + (maxi - mini) * num`.
 
-For further examples, see (Devroye 1996)<sup>[**(68)**](#Note68)</sup>
+For further examples, see (Devroye 1996)<sup>[**(68)**](#Note68)</sup>.
 
 Most commonly used:
 <small>

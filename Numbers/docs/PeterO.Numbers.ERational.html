@@ -73,6 +73,10 @@
 <li><code><a href="#FromSByte_sbyte">FromSByte(sbyte)</a></code> - Converts an 8-bit signed integer to an arbitrary-precision rational number.</li>
 <li><code><a href="#FromSingle_float">FromSingle(float)</a></code> - Converts a 32-bit binary floating-point number to a rational number.</li>
 <li><code><a href="#FromSingleBits_int">FromSingleBits(int)</a></code> - Creates a binary rational number from a 32-bit floating-point number encoded in the IEEE 754 binary32 format.</li>
+<li><code><a href="#FromString_byte">FromString(byte[])</a></code> - Creates a rational number from a sequence of bytes that represents a number.</li>
+<li><code><a href="#FromString_byte_int_int">FromString(byte[], int, int)</a></code> - Creates a rational number from a sequence of bytes that represents a number.</li>
+<li><code><a href="#FromString_char">FromString(char[])</a></code> - Creates a rational number from a sequence of char s that represents a number.</li>
+<li><code><a href="#FromString_char_int_int">FromString(char[], int, int)</a></code> - Creates a rational number from a sequence of char s that represents a number.</li>
 <li><code><a href="#FromString_string">FromString(string)</a></code> - Creates a rational number from a text string that represents a number.</li>
 <li><code><a href="#FromString_string_int_int">FromString(string, int, int)</a></code> - Creates a rational number from a text string that represents a number.</li>
 <li><code><a href="#FromUInt16_ushort">FromUInt16(ushort)</a></code> - Converts a 16-bit unsigned integer to an arbitrary-precision rational number.</li>
@@ -1382,6 +1386,178 @@ is a 32-bit binary floating-point number.</li>
 
 <p>A rational number with the same floating-point value as  <i>flt</i>
 .</p>
+
+<p><a id="FromString_byte"></a></p>
+
+<h3>FromString</h3>
+
+<pre>public static PeterO.Numbers.ERational FromString(
+    byte[] bytes);
+</pre>
+
+<p>Creates a rational number from a sequence of bytes that represents a number. See  <code>FromString(String, int, int)</code>  for more information.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>bytes</i>: A sequence of bytes that represents a number.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>An arbitrary-precision rational number with the same value as the given sequence of bytes.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.FormatException:
+The parameter  <i>bytes</i>
+is not a correctly formatted sequence of bytes.</li>
+</ul>
+
+<p><a id="FromString_byte_int_int"></a></p>
+
+<h3>FromString</h3>
+
+<pre>public static PeterO.Numbers.ERational FromString(
+    byte[] bytes,
+    int offset,
+    int length);
+</pre>
+
+<p>Creates a rational number from a sequence of bytes that represents a number.</p>
+
+<p>The format of the sequence of bytes generally consists of:</p>
+
+<ul>
+<li><p>An optional plus sign (&quot;+&quot; , U+002B) or minus sign (&quot;-&quot;, U+002D) (if &#39;-&#39; , the value is negative.)</p></li>
+<li><p>The numerator in the form of one or more digits (these digits may begin with any number of zeros).</p></li>
+<li><p>Optionally, &quot;/&quot; followed by the denominator in the form of one or more digits (these digits may begin with any number of zeros). If a denominator is not given, it&#39;s equal to 1.</p></li>
+</ul>
+
+<p>The sequence of bytes can also be &quot;-INF&quot;, &quot;-Infinity&quot;, &quot;Infinity&quot;, &quot;INF&quot;, quiet NaN (&quot;NaN&quot; /&quot;-NaN&quot;) followed by any number of digits, or signaling NaN (&quot;sNaN&quot; /&quot;-sNaN&quot;) followed by any number of digits, all in any combination of upper and lower case.</p>
+
+<p>All characters mentioned above are the corresponding characters in the Basic Latin range. In particular, the digits must be the basic digits 0 to 9 (U+0030 to U+0039). The sequence of bytes is not allowed to contain white space characters, including spaces.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>bytes</i>: A sequence of bytes, a portion of which represents a number.</p></li>
+<li><p><i>offset</i>: An index starting at 0 showing where the desired portion of  <i>bytes</i>
+begins.</p></li>
+<li><p><i>length</i>: The length, in code units, of the desired portion of  <i>bytes</i>
+(but not more than  <i>bytes</i>
+&#39;s length).</p></li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>An arbitrary-precision rational number.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li><p>System.FormatException:
+The parameter  <i>bytes</i>
+is not a correctly formatted sequence of bytes.</p></li>
+<li><p>System.ArgumentNullException:
+The parameter  <i>bytes</i>
+is null.</p></li>
+<li><p>System.ArgumentException:
+Either  <i>offset</i>
+or  <i>length</i>
+is less than 0 or greater than  <i>bytes</i>
+&#39;s length, or  <i>bytes</i>
+&#39;s length minus  <i>offset</i>
+is less than  <i>length</i>
+.</p></li>
+</ul>
+
+<p><a id="FromString_char"></a></p>
+
+<h3>FromString</h3>
+
+<pre>public static PeterO.Numbers.ERational FromString(
+    char[] chars);
+</pre>
+
+<p>Creates a rational number from a sequence of  <code>char</code>  s that represents a number. See  <code>FromString(String, int, int)</code>  for more information.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>chars</i>: A sequence of  <code>char</code>  s that represents a number.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>An arbitrary-precision rational number with the same value as the given sequence of  <code>char</code>  s.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.FormatException:
+The parameter  <i>chars</i>
+is not a correctly formatted sequence of  <code>char</code>  s.</li>
+</ul>
+
+<p><a id="FromString_char_int_int"></a></p>
+
+<h3>FromString</h3>
+
+<pre>public static PeterO.Numbers.ERational FromString(
+    char[] chars,
+    int offset,
+    int length);
+</pre>
+
+<p>Creates a rational number from a sequence of  <code>char</code>  s that represents a number.</p>
+
+<p>The format of the sequence of  <code>char</code>  s generally consists of:</p>
+
+<ul>
+<li><p>An optional plus sign (&quot;+&quot; , U+002B) or minus sign (&quot;-&quot;, U+002D) (if &#39;-&#39; , the value is negative.)</p></li>
+<li><p>The numerator in the form of one or more digits (these digits may begin with any number of zeros).</p></li>
+<li><p>Optionally, &quot;/&quot; followed by the denominator in the form of one or more digits (these digits may begin with any number of zeros). If a denominator is not given, it&#39;s equal to 1.</p></li>
+</ul>
+
+<p>The sequence of  <code>char</code>  s can also be &quot;-INF&quot;, &quot;-Infinity&quot;, &quot;Infinity&quot;, &quot;INF&quot;, quiet NaN (&quot;NaN&quot; /&quot;-NaN&quot;) followed by any number of digits, or signaling NaN (&quot;sNaN&quot; /&quot;-sNaN&quot;) followed by any number of digits, all in any combination of upper and lower case.</p>
+
+<p>All characters mentioned above are the corresponding characters in the Basic Latin range. In particular, the digits must be the basic digits 0 to 9 (U+0030 to U+0039). The sequence of  <code>char</code>  s is not allowed to contain white space characters, including spaces.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>chars</i>: A sequence of  <code>char</code>  s, a portion of which represents a number.</p></li>
+<li><p><i>offset</i>: An index starting at 0 showing where the desired portion of  <i>chars</i>
+begins.</p></li>
+<li><p><i>length</i>: The length, in code units, of the desired portion of  <i>chars</i>
+(but not more than  <i>chars</i>
+&#39;s length).</p></li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>An arbitrary-precision rational number.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li><p>System.FormatException:
+The parameter  <i>chars</i>
+is not a correctly formatted sequence of  <code>char</code>  s.</p></li>
+<li><p>System.ArgumentNullException:
+The parameter  <i>chars</i>
+is null.</p></li>
+<li><p>System.ArgumentException:
+Either  <i>offset</i>
+or  <i>length</i>
+is less than 0 or greater than  <i>chars</i>
+&#39;s length, or  <i>chars</i>
+&#39;s length minus  <i>offset</i>
+is less than  <i>length</i>
+.</p></li>
+</ul>
 
 <p><a id="FromString_string"></a></p>
 
