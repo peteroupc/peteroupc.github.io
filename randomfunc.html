@@ -994,7 +994,8 @@ METHOD WChoose(weights, value)
 END METHOD
 
 METHOD WeightedChoice(weights)
-    return WChoose(RNDINTEXC(Sum(weights)))
+    return WChoose(weights,
+        RNDINTEXC(Sum(weights)))
 END METHOD
 
 METHOD CumulativeWeightedChoice(weights)
@@ -2054,14 +2055,13 @@ end
   areas=[]
   lastvalue=i
   lastweight=PDF(i)
-  cumarea=0
+  cumuarea=0
   i = mini+step; while i &lt;= maxi
      weight=i; value=PDF(i)
-     area=cumarea+abs((weight + lastweight) * 0.5 *
+     cumuarea=cumuarea+abs((weight + lastweight) * 0.5 *
             (value - lastvalue))
      AddItem(pieces,[lastweight,weight,lastvalue,value])
-     AddItem(areas,area)
-     cumarea=cumarea+area
+     AddItem(areas,cumuarea)
      lastweight=weight;lastvalue=value
      if i==maxi: break
      i = min(i + step, maxi)
@@ -2144,7 +2144,7 @@ END METHOD
 
 <p><strong>Requires random real numbers.</strong></p>
 
-<p>A <a href="http://en.cppreference.com/w/cpp/numeric/random/piecewise_linear_distribution"><strong><em>piecewise linear distribution</em></strong></a> describes a continuous distribution with weights at known points and other weights determined by linear interpolation (smoothing).  The <code>PiecewiseLinear</code> method (in the pseudocode below) takes two lists as follows:</p>
+<p>A <a href="http://en.cppreference.com/w/cpp/numeric/random/piecewise_linear_distribution"><strong><em>piecewise linear distribution</em></strong></a> describes a continuous distribution with weights at known points and other weights determined by linear interpolation (smoothing).  The <code>PiecewiseLinear</code> method (in the pseudocode below) takes two lists as follows (see also (Kscischang 2019)<sup><a href="#Note86"><strong>(86)</strong></a></sup>:</p>
 
 <ul>
 <li><code>values</code> is a list of numbers (which need not be integers). If the numbers are arranged in ascending order, which they should, the first number in this list can be returned exactly, but not the last number.</li>
@@ -2163,7 +2163,15 @@ END METHOD
      AddItem(areas,area)
   end
   index=WeightedChoice(areas)
-  // TODO: Choose area at random
+  w=values[index+1]-values[index]
+  if w==0: return values[index]
+  m=(weights[index+1]-weights[index])/w
+  h2=(weights[index+1]+weights[index])
+  ww=w/2.0
+  hh=h2/2.0
+  x=RNDRANGEMaxExc(-ww, ww)
+  if RNDRANGEMaxExc(-hh, hh)&gt;x*m: x=-x
+  return values[index]+x+ww
 END METHOD
 </pre>
 
@@ -2646,6 +2654,8 @@ and &quot;<a href="https://randomascii.wordpress.com/2013/07/16/floating-point-d
 <p><small><sup id=Note84>(84)</sup> Mironov, I., &quot;On Significance of the Least Significant Bits For Differential Privacy&quot;, 2012.</small></p>
 
 <p><small><sup id=Note85>(85)</sup> For example, see Balcer, V., Vadhan, S., &quot;Differential Privacy on Finite Computers&quot;, Dec. 4, 2018; as well as Micciancio, D. and Walter, M., &quot;Gaussian sampling over the integers: Efficient, generic, constant-time&quot;, in Annual International Cryptology Conference, August 2017 (pp. 455-485).</small></p>
+
+<p><small><sup id=Note86>(86)</sup> Kschischang, Frank R. &quot;A Trapezoid-Ziggurat Algorithm for Generating Gaussian Pseudorandom Variates.&quot; (2019).</small></p>
 
 <p><a id=Appendix></a></p>
 

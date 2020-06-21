@@ -1690,24 +1690,28 @@ Some cases require converting a pregenerated uniform random number to a non-unif
       areas=[]
       lastvalue=i
       lastweight=PDF(i)
-      cumarea=0
+      cumuarea=0
       i = mini+step; while i <= maxi
          weight=i; value=PDF(i)
-         area=cumarea+abs((weight + lastweight) * 0.5 *
+         cumuarea=cumuarea+abs((weight + lastweight) * 0.5 *
                 (value - lastvalue))
          AddItem(pieces,[lastweight,weight,lastvalue,value])
-         AddItem(areas,area)
-         cumarea=cumarea+area
+         AddItem(areas,cumuarea)
          lastweight=weight;lastvalue=value
          if i==maxi: break
          i = min(i + step, maxi)
       end
       total=Sum(area)
+      prevarea=0
       for i in 0...size(areas)
          cu=areas[i]/total
          if u01<=cu
-             // TODO
+             p=pieces[i]; u01=(u01-prevarea)/(cu-prevarea)
+             s=p[0]; t=p[1]; v=u01
+             if s!=t: v=(s-sqrt(t*t*u01-s*s*u01+s*s))/(s-t)
+             return p[2]+(p[3]-p[2])*v
          end
+         prevarea=cu
       end
       return error
     END METHOD
@@ -1762,7 +1766,7 @@ In the [**Python sample code**](https://peteroupc.github.io/randomgen.zip):
 
 **Requires random real numbers.**
 
-A [**_piecewise linear distribution_**](http://en.cppreference.com/w/cpp/numeric/random/piecewise_linear_distribution) describes a continuous distribution with weights at known points and other weights determined by linear interpolation (smoothing).  The `PiecewiseLinear` method (in the pseudocode below) takes two lists as follows:
+A [**_piecewise linear distribution_**](http://en.cppreference.com/w/cpp/numeric/random/piecewise_linear_distribution) describes a continuous distribution with weights at known points and other weights determined by linear interpolation (smoothing).  The `PiecewiseLinear` method (in the pseudocode below) takes two lists as follows (see also <<Kscischang 2019|Kschischang, Frank R. "A Trapezoid-Ziggurat Algorithm for Generating Gaussian Pseudorandom Variates." (2019).>>:
 
 - `values` is a list of numbers (which need not be integers). If the numbers are arranged in ascending order, which they should, the first number in this list can be returned exactly, but not the last number.
 - `weights` is a list of weights for the given numbers (where each number and its weight have the same index in both lists).   The greater a number's weight, the more likely it is that a number close to that number will be chosen.  Each weight should be 0 or greater.
@@ -1779,7 +1783,14 @@ A [**_piecewise linear distribution_**](http://en.cppreference.com/w/cpp/numeric
          AddItem(areas,area)
       end
       index=WeightedChoice(areas)
-      // TODO: Choose area at random
+      w=values[index+1]-values[index]
+      if w==0: return values[index]
+      m=(weights[index+1]-weights[index])/w
+      h2=(weights[index+1]+weights[index])
+      ww=w/2.0; hh=h2/2.0
+      x=RNDRANGEMaxExc(-ww, ww)
+      if RNDRANGEMaxExc(-hh, hh)>x*m: x=-x
+      return values[index]+x+ww
     END METHOD
 
 > **Note:** The [**Python sample code**](https://peteroupc.github.io/randomgen.zip) contains a variant to the method
