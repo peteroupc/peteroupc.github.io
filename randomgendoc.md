@@ -138,6 +138,8 @@ CLASSES
      |  __init__(self, rg, pdf, bl, br, ures=1e-08)
      |      Initialize self.  See help(type(self)) for accurate signature.
      |
+     |  codegen(self, name)
+     |
      |  quantile(self, v)
      |      Calculates quantiles from uniform random numbers
      |            in the interval [0, 1].

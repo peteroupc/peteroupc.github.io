@@ -1067,13 +1067,13 @@ Returns 'list'. """
         if trials < 0:
             raise ValueError
         if trials == 0:
-            return 0
+            return [0 for i in range(n)]
         # Always succeeds
         if p >= 1.0:
-            return trials
+            return [trials for i in range(n)]
         # Always fails
         if p <= 0.0:
-            return 0
+            return [0 for i in range(n)]
         retarr = [0 for i in range(n)]
         k = 0
         tbl = None
@@ -3414,6 +3414,45 @@ class DensityInversionSampler:
       the same number of entries as 'v'.  """
         return [self._onequantile(x * self.ii) for x in v]
 
+    def codegen(self, name):
+        # Idea from Leydold, et al., "An Automatic Code Generator for
+        # Nonuniform Random Variate Generation", 2001.
+        ret = "import random\n\n"
+        ret += "TABLE_" + name + " = ["
+        for i in range(len(self.table)):
+            if i > 0:
+                ret += ",\n"
+            ret += "[%s, %s, %f, %f]" % (
+                str(self.table[i][0]),
+                str(self.table[i][1]),
+                self.table[i][2],
+                self.table[i][3],
+            )
+        ret += "]\n\n"
+        ret += "def sample_" + name + "():\n"
+        ret += "  r = random.random() * " + str(self.ii) + "\n"
+        ret += "  for j in range(0, len(TABLE_" + name + ") - 1):\n"
+        ret += (
+            "    if TABLE_"
+            + name
+            + "[j][3] <= r and r < TABLE_"
+            + name
+            + "[j + 1][3]:\n"
+        )
+        ret += "        c = TABLE_" + name + "[j][0]\n"
+        ret += "        u = TABLE_" + name + "[j][1]\n"
+        ret += "        a = TABLE_" + name + "[j][2]\n"
+        ret += "        x = r - TABLE_" + name + "[j][3]\n"
+        n = len(self.table[i][1]) - 1
+        ret += "        p = c[%d]\n" % (n)
+        ret += "        k = %d\n" % (n - 1)
+        ret += "        while k >= 0:\n"
+        ret += "            p = c[k] + p * (x - u[k])\n"
+        ret += "            k -= 1\n"
+        ret += "        return a + p\n"
+        ret += "  return 0\n\n"
+        return ret
+
     def sample(self, n=1):
         """ Generates random numbers that follow the
             distribution modeled by this class.
@@ -3651,14 +3690,19 @@ if __name__ == "__main__":
             bucket(ks, ls, buckets)
         showbuckets(ls, buckets)
 
-    print("Generating binomial random numbers")
+    print("# Generating binomial random numbers")
     import cProfile
     import numpy
 
     t = time.time()
-    ksample = randgen.binomial(20, 0.5, n=10000)
+    dens = DensityInversionSampler(RandomGen(), normalpdf, -8, 8)
+    print(dens.codegen("normal"))
+    exit()
+    ksample = [
+        dens.sample()[0] for i in range(10000)
+    ]  # randgen.binomial(20, 0.5, n=10000)
     print("Took %f seconds" % (time.time() - t))
-    ls = linspace(0, 100, 100)
+    ls = linspace(-8, 8, 100)
     buckets = [0 for x in ls]
     for ks in ksample:
         bucket(ks, ls, buckets)
@@ -3678,8 +3722,8 @@ if __name__ == "__main__":
     ksample = randgen.multinomial(1000, weights)
     print(ksample)
     print("multinomial: Took %f seconds" % (time.time() - t))
-
     uu()
+
     print("Generating normal random numbers with numbers_from_pdf")
     ls = linspace(-3.3, 3.3, 30)
     buckets = [0 for x in ls]
