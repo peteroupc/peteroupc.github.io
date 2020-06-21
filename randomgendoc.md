@@ -648,11 +648,11 @@ CLASSES
      |      "Sampling with arbitrary precision", arXiv:1502.02539v5 [cs.IT], 2018.
      |      - 'n' is the number of random numbers to generate.  Default is 1.
      |      - 'icdf' is a procedure that takes three arguments: u, ubits, digitplaces,
-     |         and returns a number within 2^-digitplaces of the true inverse
+     |         and returns a number within base^-digitplaces of the true inverse
      |         CDF (inverse cumulative distribution function, or quantile function)
-     |         of u/2^ubits.
+     |         of u/base^ubits.
      |      - 'digitplaces' is an accuracy expressed as a number of digits after the
-     |         point. The random number will be a multiple of base^-digitplaces,
+     |         point. Each random number will be a multiple of base^-digitplaces,
      |         or have a smaller granularity. Default is 53.
      |      - base is the digit base in which the accuracy is expressed. Default is 2
      |         (binary). (Note that 10 means decimal.)
@@ -699,6 +699,18 @@ CLASSES
      |      accessed Jun. 9, 2018, sec. 1.3.6.6.13.
      |
      |  product_copula(self, n=2)
+     |
+     |  quantile_urands(self, icdf, urands, digitplaces=53)
+     |      Finds the quantile of 'n' uniform random numbers expressed as "u-rands", or partially-sampled uniform random numbers (Karney, "Sampling exactly from the normal distribution").  Implements section 5 of Devroye and Gravel,  "Sampling with arbitrary precision", arXiv:1502.02539v5 [cs.IT], 2018.
+     |      - 'urands' is a list of "u-rands", or partially-sampled uniform random numbers.  Each u-rand is a list of two items, namely a multiple of 1/2^X, followed by X.  For example, the following generates a list of five empty
+     |      u-rands: `[[0,0] for i in range(5)]`.
+     |      - 'icdf' is a procedure that takes three arguments: u, ubits, digitplaces,
+     |         and returns a number within 2^-digitplaces of the true inverse
+     |         CDF (inverse cumulative distribution function, or quantile function)
+     |         of u/2^ubits.
+     |      - 'digitplaces' is an accuracy expressed as a number of bits after the
+     |         point. Each quantile will be a multiple of 2^-digitplaces,
+     |         or have a smaller granularity. Default is 53.
      |
      |  randomwalk_posneg1(self, n)
      |      Random walk of uniform positive and negative steps.

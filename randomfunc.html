@@ -1658,7 +1658,7 @@ END METHOD
     mabs = max(abs(lo),abs(hi))
     while true
        ret=RNDRANGE(0, mabs)
-       neg=rand(2)
+       neg=RNDINT(1)
        if neg==0: ret=-ret
        if ret&gt;=lo and ret&lt;=hi: return ret
     end
@@ -2045,7 +2045,7 @@ end
 
 <ul>
 <li>Distribution is <strong>discrete, with known PDF</strong>: The most general method is sequential search (Devroye 1986, p. 85)<sup><a href="#Note14"><strong>(14)</strong></a></sup>, assuming the area under the PDF is 1 and the distribution covers only integers 0 or greater: <code>i = 0; p = PDF(i); while u01 &gt; p; u01 = u01 - p; i = i + 1; p = PDF(i); end; return p</code>, but this is not always fast.  If the interval [a, b] covers all or almost all the distribution, then the application can store the interval&#39;s PDF values in a list and call <code>WChoose</code>: <code>for i in a..b: AddItem(weights, PDF(i)); return a + WChoose(weights, u01 * Sum(weights))</code>.  Note that finding the quantile based on the <strong>CDF</strong> instead can introduce more error than with the PDF (Walter 2019)<sup><a href="#Note60"><strong>(60)</strong></a></sup>.</li>
-<li>Distribution is <strong>continuous, with known PDF</strong>: See <code>ICDFFromContPDF(u01, mini, maxi, step)</code> below.</li>
+<li>Distribution is <strong>continuous, with known PDF</strong>: <code>ICDFFromContPDF(u01, mini, maxi, step)</code>, below, finds the quantile based on a piecewise linear approximation of the PDF in [<code>mini</code>, <code>maxi</code>], with pieces up to <code>step</code> wide.</li>
 </ul>
 
 <p>&nbsp;</p>
@@ -2067,11 +2067,16 @@ end
      i = min(i + step, maxi)
   end
   total=Sum(area)
+  prevarea=0
   for i in 0...size(areas)
      cu=areas[i]/total
      if u01&lt;=cu
-         // TODO
+         p=pieces[i]; u01=(u01-prevarea)/(cu-prevarea)
+         s=p[0]; t=p[1]; v=u01
+         if s!=t: v=(s-sqrt(t*t*u01-s*s*u01+s*s))/(s-t)
+         return p[2]+(p[3]-p[2])*v
      end
+     prevarea=cu
   end
   return error
 END METHOD
@@ -2082,7 +2087,7 @@ END METHOD
 
 <ol>
 <li>If only percentiles of data (such as the median or 50th percentile, the minimum or 0th percentile, or the maximum or 100th percentile) are available, the quantile function can be approximated via those percentiles.  The Nth percentile corresponds to the quantile for <code>N/100.0</code>.  Missing values for the quantile function can then be filled in by interpolation (such as spline fitting).  If the raw data points are available, see &quot;<a href="#Random_Numbers_from_a_Distribution_of_Data_Points"><strong>Random Numbers from a Distribution of Data Points</strong></a>&quot; instead.</li>
-<li>Taking the maximum of <code>n</code> random numbers is the same as taking the quantile of <code>pow(u, 1/n)</code>, where <code>u</code> is a uniform random number (Devroye 2006)<sup><a href="#Note61"><strong>(61)</strong></a></sup>.</li>
+<li>Taking the <code>k</code>th smallest of <code>n</code> random numbers distributed the same way is the same as taking the  quantile of the <code>k</code>th smallest of <code>n</code> <em>uniform</em> random numbers (e.g., <code>pow(u, 1/n)</code> for the maximum) (Devroye 2006)<sup><a href="#Note61"><strong>(61)</strong></a></sup>; (Devroye 1986, p. 30)<sup><a href="#Note14"><strong>(14)</strong></a>.</li>
 </ol>
 </blockquote>
 
@@ -2144,7 +2149,7 @@ END METHOD
 
 <p><strong>Requires random real numbers.</strong></p>
 
-<p>A <a href="http://en.cppreference.com/w/cpp/numeric/random/piecewise_linear_distribution"><strong><em>piecewise linear distribution</em></strong></a> describes a continuous distribution with weights at known points and other weights determined by linear interpolation (smoothing).  The <code>PiecewiseLinear</code> method (in the pseudocode below) takes two lists as follows (see also (Kscischang 2019)<sup><a href="#Note86"><strong>(86)</strong></a></sup>:</p>
+<p>A <a href="http://en.cppreference.com/w/cpp/numeric/random/piecewise_linear_distribution"><strong><em>piecewise linear distribution</em></strong></a> describes a continuous distribution with weights at known points and other weights determined by linear interpolation (smoothing).  The <code>PiecewiseLinear</code> method (in the pseudocode below) takes two lists as follows (see also (Kscischang 2019)<sup><a href="#Note86"><strong>(86)</strong></a></sup>):</p>
 
 <ul>
 <li><code>values</code> is a list of numbers (which need not be integers). If the numbers are arranged in ascending order, which they should, the first number in this list can be returned exactly, but not the last number.</li>
@@ -2167,8 +2172,7 @@ END METHOD
   if w==0: return values[index]
   m=(weights[index+1]-weights[index])/w
   h2=(weights[index+1]+weights[index])
-  ww=w/2.0
-  hh=h2/2.0
+  ww=w/2.0; hh=h2/2.0
   x=RNDRANGEMaxExc(-ww, ww)
   if RNDRANGEMaxExc(-hh, hh)&gt;x*m: x=-x
   return values[index]+x+ww

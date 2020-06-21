@@ -1364,7 +1364,7 @@ See also (Downey 2007)<sup>[**(39)**](#Note39)</sup> and the [**Rademacher Float
         mabs = max(abs(lo),abs(hi))
         while true
            ret=RNDRANGE(0, mabs)
-           neg=rand(2)
+           neg=RNDINT(1)
            if neg==0: ret=-ret
            if ret>=lo and ret<=hi: return ret
         end
@@ -1681,7 +1681,7 @@ The following method generates a random number from a distribution via inversion
 Some cases require converting a pregenerated uniform random number to a non-uniform one via quantiles (notable cases include copula methods and Monte Carlo methods involving low-discrepancy sequences).  For these cases, the following methods approximate the quantile if the application can trade accuracy for speed:
 
 - Distribution is **discrete, with known PDF**: The most general method is sequential search (Devroye 1986, p. 85)<sup>[**(14)**](#Note14)</sup>, assuming the area under the PDF is 1 and the distribution covers only integers 0 or greater: `i = 0; p = PDF(i); while u01 > p; u01 = u01 - p; i = i + 1; p = PDF(i); end; return p`, but this is not always fast.  If the interval \[a, b\] covers all or almost all the distribution, then the application can store the interval's PDF values in a list and call `WChoose`: `for i in a..b: AddItem(weights, PDF(i)); return a + WChoose(weights, u01 * Sum(weights))`.  Note that finding the quantile based on the **CDF** instead can introduce more error than with the PDF (Walter 2019)<sup>[**(60)**](#Note60)</sup>.
-- Distribution is **continuous, with known PDF**: See `ICDFFromContPDF(u01, mini, maxi, step)` below.
+- Distribution is **continuous, with known PDF**: `ICDFFromContPDF(u01, mini, maxi, step)`, below, finds the quantile based on a piecewise linear approximation of the PDF in [`mini`, `maxi`], with pieces up to `step` wide.
 
 &nbsp;
 
@@ -1719,7 +1719,7 @@ Some cases require converting a pregenerated uniform random number to a non-unif
 > **Notes:**
 >
 > 1. If only percentiles of data (such as the median or 50th percentile, the minimum or 0th percentile, or the maximum or 100th percentile) are available, the quantile function can be approximated via those percentiles.  The Nth percentile corresponds to the quantile for `N/100.0`.  Missing values for the quantile function can then be filled in by interpolation (such as spline fitting).  If the raw data points are available, see "[**Random Numbers from a Distribution of Data Points**](#Random_Numbers_from_a_Distribution_of_Data_Points)" instead.
-> 2. Taking the maximum of `n` random numbers is the same as taking the quantile of `pow(u, 1/n)`, where `u` is a uniform random number (Devroye 2006)<sup>[**(61)**](#Note61)</sup>.
+> 2. Taking the `k`th smallest of `n` random numbers distributed the same way is the same as taking the  quantile of the `k`th smallest of `n` _uniform_ random numbers (e.g., `pow(u, 1/n)` for the maximum) (Devroye 2006)<sup>[**(61)**](#Note61)</sup>; (Devroye 1986, p. 30)<sup>[**(14)**](#Note14).
 
 <a id=Rejection_Sampling_with_a_PDF></a>
 #### Rejection Sampling with a PDF
@@ -1766,7 +1766,7 @@ In the [**Python sample code**](https://peteroupc.github.io/randomgen.zip):
 
 **Requires random real numbers.**
 
-A [**_piecewise linear distribution_**](http://en.cppreference.com/w/cpp/numeric/random/piecewise_linear_distribution) describes a continuous distribution with weights at known points and other weights determined by linear interpolation (smoothing).  The `PiecewiseLinear` method (in the pseudocode below) takes two lists as follows (see also <<Kscischang 2019|Kschischang, Frank R. "A Trapezoid-Ziggurat Algorithm for Generating Gaussian Pseudorandom Variates." (2019).>>:
+A [**_piecewise linear distribution_**](http://en.cppreference.com/w/cpp/numeric/random/piecewise_linear_distribution) describes a continuous distribution with weights at known points and other weights determined by linear interpolation (smoothing).  The `PiecewiseLinear` method (in the pseudocode below) takes two lists as follows (see also (Kscischang 2019)<sup>[**(86)**](#Note86)</sup>):
 
 - `values` is a list of numbers (which need not be integers). If the numbers are arranged in ascending order, which they should, the first number in this list can be returned exactly, but not the last number.
 - `weights` is a list of weights for the given numbers (where each number and its weight have the same index in both lists).   The greater a number's weight, the more likely it is that a number close to that number will be chosen.  Each weight should be 0 or greater.
@@ -2225,6 +2225,8 @@ provided the PDF's values are all 0 or greater and the area under the PDF's curv
 <small><sup id=Note84>(84)</sup> Mironov, I., "On Significance of the Least Significant Bits For Differential Privacy", 2012.</small>
 
 <small><sup id=Note85>(85)</sup> For example, see Balcer, V., Vadhan, S., "Differential Privacy on Finite Computers", Dec. 4, 2018; as well as Micciancio, D. and Walter, M., "Gaussian sampling over the integers: Efficient, generic, constant-time", in Annual International Cryptology Conference, August 2017 (pp. 455-485).</small>
+
+<small><sup id=Note86>(86)</sup> Kschischang, Frank R. "A Trapezoid-Ziggurat Algorithm for Generating Gaussian Pseudorandom Variates." (2019).</small>
 
 <a id=Appendix></a>
 ## Appendix
