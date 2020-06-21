@@ -374,6 +374,13 @@ if __name__ == "__main__":
         sd = Interval(sd)
         return (-((x - mean) ** 2) / (2 * sd ** 2)).exp()
 
+    def fullnormalpdf(x, mean=0, sd=1):
+        mean = Interval(mean)
+        sd = Interval(sd)
+        return (-((x - mean) ** 2) / (2 * sd ** 2)).exp() / (
+            sd * Interval(2 * math.pi).sqrt()
+        )
+
     def gammapdf(x, al=2, sc=2):
         return (x ** (al - 1)) * (-x / sc).exp()
 
@@ -412,8 +419,8 @@ if __name__ == "__main__":
     import math
     import cProfile
 
-    mrs = MooreSampler(continuous_bernoulli, 0, 1)
-    ls = linspace(0, 1, 30)
+    mrs = MooreSampler(threemodes, -20, 20)
+    ls = linspace(-20, 20, 60)
     buckets = [0 for x in ls]
     t = time.time()
     ksample = [mrs.sample() for i in range(50000)]
