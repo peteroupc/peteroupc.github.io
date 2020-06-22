@@ -68,6 +68,105 @@ def numericalTable(func, x, y, n=100):
     ret = [x + (y - x) * (i * 1.0 / n) for i in range(n + 1)]
     return [[func(b), b] for b in ret]
 
+def urandnew():
+    """ Returns an object to serve as a partially-sampled uniform random
+            number called a "u-rand" (Karney, "Sampling exactly from the normal distribution").
+            A u-rand is a list of two numbers: the first is a multiple of 2^X, and the second is X.
+            The urand created by this method will be "empty" (no bits sampled yet).
+            """
+    return [0, 0]
+
+def urandless(rg, a, b):
+    """ Determines whether the first u-rand is less than another u-rand; returns
+               true if so and false otherwise.  During
+               the comparison, additional bits will be sampled in both u-rands if necessary
+               for the comparison. """
+    abits = a[1]
+    if abits == 0:
+        abits = 1
+        tmp = rg.rndintexc(1 << (abits + 1))
+        a[0] = tmp & 1
+        bb = tmp >> 1
+    else:
+        bb = 0
+        # Set bits of b from most to least
+        # significant bit
+        for i in range(abits):
+            sh = abits - 1 - i
+            bb |= rg.rndintexc(2) << sh
+            # Bits not yet determined are set to ones,
+            # since we're checking if a is greater
+            # than the highest possible value for b,
+            # which indicates failure
+            bbc = bb | (1 << sh) - 1
+            if a[0] > bbc:
+                # a turned out to be greater than b
+                return False
+    while bb == a[0]:
+        abits += 1
+        sr = rg.rndint(3)
+        bb = (bb << 1) | (sr & 1)
+        a[0] = (a[0] << 1) | ((sr >> 1) & 1)
+    a[1] = abits
+    b[0] = bb
+    b[1] = abits
+    return a[0] < b[0]
+
+def urandgreater(rg, a, b):
+    """ Determines whether the first u-rand is greater than another u-rand; returns
+               true if so and false otherwise.  During
+               the comparison, additional bits will be sampled in both u-rands if necessary
+               for the comparison. """
+    abits = a[1]
+    if abits == 0:
+        abits = 1
+        tmp = rg.rndintexc(1 << (abits + 1))
+        a[0] = tmp & 1
+        bb = tmp >> 1
+    else:
+        bb = 0
+        # Set bits of b from most to least
+        # significant bit
+        for i in range(abits):
+            sh = abits - 1 - i
+            bb |= rg.rndintexc(2) << sh
+            # Bits not yet determined are set to zeros,
+            # since we're checking if a is less
+            # than the lowest possible value for b,
+            # which indicates failure
+            if a[0] < bb:
+                # a turned out to be less than b
+                return False
+    while bb == a[0]:
+        abits += 1
+        sr = rg.rndint(3)
+        bb = (bb << 1) | (sr & 1)
+        a[0] = (a[0] << 1) | ((sr >> 1) & 1)
+    a[1] = abits
+    b[0] = bb
+    b[1] = abits
+    return a[0] > b[0]
+
+def urandfill(rg, a, bits):
+    """ Fills the unsampled bits of the given u-rand 'a' as necessary to
+               make a number with 'bits' many bits.  If the u-rand already has
+               that many bits or more, the u-rand is rounded using the round-to-nearest,
+               ties to even rounding rule.  Returns the resulting number as a
+               multiple of 2^'bits'. """
+    if a[1] > bits:
+        # Shifting bits beyond the first excess bit.
+        aa = a[0] >> (a[1] - bits - 1)
+        # Check the excess bit; if odd, round up.
+        return aa >> 1 if (aa & 1) == 0 else (aa >> 1) + 1
+    elif a[1] < bits:
+        bc = bits - a[1]
+        a[0] <<= bc
+        a[0] |= rg.rndintexc(1 << bc)
+        a[1] = bits
+        return a[0]
+    else:
+        return a[0]
+
 class VoseAlias:
     """
     Implements Vose's alias sampler, which chooses a random number in [0, n)
@@ -1077,7 +1176,7 @@ Returns 'list'. """
         retarr = [0 for i in range(n)]
         k = 0
         tbl = None
-        if n > 10 and trials > 32:
+        if n > 10 and trials > 32 and trials < 150:
             tbl = self._getaliastable(trials)
         while k < n:
             count = 0
@@ -1180,12 +1279,12 @@ Returns 'list'. """
             # to be sorted, accept n
             if n <= 1:
                 return n
-            u = self._urandnew()
+            u = urandnew()
             success = True
             i = 1
             while i < n and success:
-                u2 = self._urandnew()
-                if self._urandless(u, u2):
+                u2 = urandnew()
+                if urandless(self, u, u2):
                     u = u2
                 else:
                     success = False  # Not sorted
@@ -1500,103 +1599,22 @@ Returns 'list'. """
         first = self.poisson(firstmean)
         return [first + self.poisson(m) for m in othermeans]
 
-    def _urandnew(self):
-        return [0, 0]
-
-    def _urandless(self, a, b):
-        abits = a[1]
-        if abits == 0:
-            abits = 1
-            tmp = self.rndintexc(1 << (abits + 1))
-            a[0] = tmp & 1
-            bb = tmp >> 1
-        else:
-            bb = 0
-            # Set bits of b from most to least
-            # significant bit
-            for i in range(abits):
-                sh = abits - 1 - i
-                bb |= self.rndintexc(2) << sh
-                # Bits not yet determined are set to ones,
-                # since we're checking if a is greater
-                # than the highest possible value for b,
-                # which indicates failure
-                bbc = bb | (1 << sh) - 1
-                if a[0] > bbc:
-                    # a turned out to be greater than b
-                    return False
-        while bb == a[0]:
-            abits += 1
-            sr = self.rndint(3)
-            bb = (bb << 1) | (sr & 1)
-            a[0] = (a[0] << 1) | ((sr >> 1) & 1)
-        a[1] = abits
-        b[0] = bb
-        b[1] = abits
-        return a[0] < b[0]
-
-    def _urandgreater(self, a, b):
-        abits = a[1]
-        if abits == 0:
-            abits = 1
-            tmp = self.rndintexc(1 << (abits + 1))
-            a[0] = tmp & 1
-            bb = tmp >> 1
-        else:
-            bb = 0
-            # Set bits of b from most to least
-            # significant bit
-            for i in range(abits):
-                sh = abits - 1 - i
-                bb |= self.rndintexc(2) << sh
-                # Bits not yet determined are set to zeros,
-                # since we're checking if a is less
-                # than the lowest possible value for b,
-                # which indicates failure
-                if a[0] < bb:
-                    # a turned out to be less than b
-                    return False
-        while bb == a[0]:
-            abits += 1
-            sr = self.rndint(3)
-            bb = (bb << 1) | (sr & 1)
-            a[0] = (a[0] << 1) | ((sr >> 1) & 1)
-        a[1] = abits
-        b[0] = bb
-        b[1] = abits
-        return a[0] > b[0]
-
-    def _urandfill(self, a, bits):
-        if a[1] > bits:
-            # Shifting bits beyond the first excess bit.
-            aa = a[0] >> (a[1] - bits - 1)
-            # Check the excess bit; if odd, round up.
-            return aa >> 1 if (aa & 1) == 0 else (aa >> 1) + 1
-        elif a[1] < bits:
-            bc = bits - a[1]
-            a[0] <<= bc
-            a[0] |= self.rndintexc(1 << bc)
-            a[1] = bits
-            return a[0]
-        else:
-            return a[0]
-
     # The von Neumann exponential generator,
     # but using u-rands as defined in Karney.
     def _expovnbits(self, bits):
         count = 0
         while True:
-            y1 = self._urandnew()
+            y1 = urandnew()
             y = y1
             accept = True
             while True:
-                z = self._urandnew()
-                if self._urandgreater(y, z):
+                z = urandnew()
+                if urandgreater(self, y, z):
                     accept = not accept
                     y = z
                 break
             if accept:
-                count += self._urandfill(y1, bits)
+                count += urandfill(self, y1, bits)
                 break
             count += 1 << bits
         return count * 1.0 / (1 << bits)
@@ -2759,7 +2777,7 @@ Implements section 5 of Devroye and Gravel,
 - 'icdf' is a procedure that takes three arguments: u, ubits, digitplaces,
    and returns a number within base^-digitplaces of the true inverse
    CDF (inverse cumulative distribution function, or quantile function)
-   of u/base^ubits.
+   of u/base^ubits, and is monotonic for a given value of `digitplaces`.
 - 'digitplaces' is an accuracy expressed as a number of digits after the
    point. Each random number will be a multiple of base^-digitplaces,
    or have a smaller granularity. Default is 53.
@@ -2796,10 +2814,17 @@ u-rands: `[[0,0] for i in range(5)]`.
 - 'icdf' is a procedure that takes three arguments: u, ubits, digitplaces,
    and returns a number within 2^-digitplaces of the true inverse
    CDF (inverse cumulative distribution function, or quantile function)
-   of u/2^ubits.
+   of u/2^ubits, and is monotonic for a given value of `digitplaces`.
 - 'digitplaces' is an accuracy expressed as a number of bits after the
    point. Each quantile will be a multiple of 2^-digitplaces,
    or have a smaller granularity. Default is 53.
+
+Example:  The following example generates the maximum of 10
+random numbers, to an accuracy of 2^53.
+
+ur=randgen.kthsmallest_urand(10, 10)
+maxrand=randgen.quantile_urands(icdf, [ur], 53)[0]
+
        """
         ubits = 0
         base = 2
@@ -3055,20 +3080,29 @@ algorithm", arXiv:1511.02273v2  [cs.IT], 2016/2018.
             if rightcount > 1:
                 self._kthsmallest_internal(ret, index + leftcount, rightcount, k, compl)
 
-    def kthsmallest(self, n, k, b):
+    def kthsmallest_urand(self, n, k):
         """ Generates the 'k'th smallest 'b'-bit uniform random
-            number out of 'n' of them. """
+            number out of 'n' of them; returns the result in
+            the form of a "u-rand", or a partially sampled uniform
+            random number (Karney, "Sampling exactly from the normal distribution"). """
         if k <= 0 or k > n:
             raise ValueError
         ret = [[0, 0] for i in range(n)]
         if k < n / 2:
             # kth smallest
             self._kthsmallest_internal(ret, 0, n, k, 0)
-            return self._urandfill(ret[k - 1], b)
+            return ret[k - 1]
         else:
             # (n-k+1)th largest
             self._kthsmallest_internal(ret, 0, n, n - k + 1, 1)
-            return self._urandfill(ret[n - k], b)
+            return ret[n - k]
+
+    def kthsmallest(self, n, k, b):
+        """ Generates the 'k'th smallest 'b'-bit uniform random
+            number out of 'n' of them. """
+        if k <= 0 or k > n:
+            raise ValueError
+        return urandfill(self, kthsmallest_urand(n, k), b)
 
 class ConvexPolygonSampler:
     """ A class for uniform random sampling of
@@ -3312,7 +3346,7 @@ class DensityInversionSampler:
         i0 = glob.gl(bl, br)
         glob.setTol(0.05 * i0 * ures)
         ii = glob.agl(bl, br)
-        self.ii = ii
+        self.integral = ii
         a = bl
         h = (br - bl) / 128.0
         f = 0
@@ -3412,11 +3446,18 @@ class DensityInversionSampler:
       Returns a list of the quantiles corresponding to the
       uniform random numbers.  The returned list will have
       the same number of entries as 'v'.  """
-        return [self._onequantile(x * self.ii) for x in v]
+        return [self._onequantile(x * self.integral) for x in v]
 
-    def codegen(self, name):
-        # Idea from Leydold, et al., "An Automatic Code Generator for
-        # Nonuniform Random Variate Generation", 2001.
+    def codegen(self, name="dist"):
+        """ Generates standalone Python code that samples
+                (approximately) from the distribution estimated
+                in this class.  Idea from Leydold, et al.,
+                "An Automatic Code Generator for
+                Nonuniform Random Variate Generation", 2001.
+        - name: Distribution name.  Generates Python methods called
+           sample_X where X is the name given here (samples one
+           random number), and quantile_X (finds the quantile
+           for a uniform random number in [0, 1]). """
         ret = "import random\n\n"
         ret += "TABLE_" + name + " = ["
         for i in range(len(self.table)):
@@ -3429,8 +3470,10 @@ class DensityInversionSampler:
                 self.table[i][3],
             )
         ret += "]\n\n"
-        ret += "def sample_" + name + "():\n"
-        ret += "  r = random.random() * " + str(self.ii) + "\n"
+        ret += "def sample_" + name + "(unif):\n"
+        ret += "  return quantile_" + name + "(random.random())\n\n"
+        ret += "def quantile_" + name + "(unif):\n"
+        ret += "  r = unif * " + str(self.integral) + "\n"
         ret += "  for j in range(0, len(TABLE_" + name + ") - 1):\n"
         ret += (
             "    if TABLE_"
@@ -3458,7 +3501,7 @@ class DensityInversionSampler:
             distribution modeled by this class.
       - n: The number of random numbers to generate.
       Returns a list of 'n' random numbers.  """
-        return [self._onequantile(self.rg.rndu01() * self.ii) for i in range(n)]
+        return [self._onequantile(self.rg.rndu01() * self.integral) for i in range(n)]
 
     def _onequantile(self, r):
         for j in range(0, len(self.table) - 1):
@@ -3695,19 +3738,16 @@ if __name__ == "__main__":
     import numpy
 
     t = time.time()
-    dens = DensityInversionSampler(RandomGen(), normalpdf, -8, 8)
-    print(dens.codegen("normal"))
-    exit()
-    ksample = [
-        dens.sample()[0] for i in range(10000)
-    ]  # randgen.binomial(20, 0.5, n=10000)
+    # dens=DensityInversionSampler(RandomGen(), normalpdf, -10, 10)
+    # print(dens.codegen("normal"))
+    ksample = randgen.binomial(20, 0.5, n=10000)
     print("Took %f seconds" % (time.time() - t))
-    ls = linspace(-8, 8, 100)
+    ls = linspace(0, 20, 20)
     buckets = [0 for x in ls]
     for ks in ksample:
         bucket(ks, ls, buckets)
     showbuckets(ls, buckets)
-
+    # exit()
     def verify_derangement(x):
         for i in range(len(x)):
             if i == x[i]:

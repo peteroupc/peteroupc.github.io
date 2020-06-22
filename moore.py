@@ -419,12 +419,12 @@ if __name__ == "__main__":
     import math
     import cProfile
 
-    mrs = MooreSampler(threemodes, -20, 20)
-    ls = linspace(-20, 20, 60)
+    mrs = MooreSampler(continuous_bernoulli, -10, 10)
+    ls = linspace(-10, 10, 60)
     buckets = [0 for x in ls]
     t = time.time()
     ksample = [mrs.sample() for i in range(50000)]
-    print("Took %f seconds (accept rate %0.3f)" % (time.time() - t, mrs.acceptRate()))
+    # print("Took %f seconds (accept rate %0.3f)" % (time.time() - t, mrs.acceptRate()))
     for ks in ksample:
         bucket(ks, ls, buckets)
     showbuckets(ls, buckets)

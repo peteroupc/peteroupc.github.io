@@ -157,14 +157,17 @@
 
 <h2>Choosing Items with Separate Probabilities</h2>
 
-<p><em>Weighted choice</em> (also known as a <em>categorical distribution</em>) is a random choice of items, where each item has a <em>weight</em> and is chosen with a probability proportional to its weight.  For algorithms on weighted choice, see &quot;<a href="https://peteroupc.github.io/randomfunc.html#Weighted_Choice_With_Replacement"><strong>Weighted Choice With Replacement</strong></a>&quot;.</p>
+<p><em>Weighted choice</em> (also known as a <em>categorical distribution</em>) is a random choice of items, where each item has a <em>weight</em> and is chosen with a probability proportional to its weight.  For algorithms on weighted choice, see &quot;<a href="https://peteroupc.github.io/randomfunc.html#Weighted_Choice_With_Replacement"><strong>Weighted Choice With Replacement</strong></a>&quot;, which covers choices in which items are taken and put back.</p>
 
 <p>The algorithm shown there is a straightforward way to implement weighted choice, but there are faster alternatives (which are both implemented in <a href="https://peteroupc.github.io/randomgen.zip"><strong>Python sample code</strong></a>):</p>
 
 <ul>
-<li>Vose&#39;s alias method (<code>VoseAlias</code>).  See &quot;<a href="https://www.keithschwarz.com/darts-dice-coins/"><strong>Darts, Dice, and Coins: Sampling from a Discrete Distribution</strong></a>&quot; by Keith Schwarz for more information.</li>
+<li>Vose&#39;s version of the alias method (<code>VoseAlias</code>).  See &quot;<a href="https://www.keithschwarz.com/darts-dice-coins/"><strong>Darts, Dice, and Coins: Sampling from a Discrete Distribution</strong></a>&quot; by Keith Schwarz for more information.</li>
 <li>The Fast Loaded Dice Roller (<code>FastLoadedDiceRoller</code>) (Saad et al. 2020)<sup><a href="#Note4"><strong>(4)</strong></a></sup>.</li>
+<li>Bram van de Klumpert <a href="https://dspace.library.uu.nl/handle/1874/393383"><strong>compares various data structures</strong></a> for weighted choice.</li>
 </ul>
+
+<p>Weighted choice <em>without replacement</em> is a choice where each item can be chosen no more than once.  The simplest way to implement this kind of weighted choice is to use weighted choice with replacement, except that after an index is chosen, that index&#39;s weight is set to 0 to keep the index from being chosen again.  Other options are given in &quot;<a href="https://peteroupc.github.io/randomfunc.html#Weighted_Choice_Without_Replacement_Single_Copies"><strong>Weighted Choice Without Replacement (Single Copies)</strong></a>&quot; and &quot;<a href="https://peteroupc.github.io/randomfunc.html#Weighted_Choice_Without_Replacement_List_of_Unknown_Size"><strong>Weighted Choice Without Replacement (List of Unknown Size)</strong></a>&quot;.</p>
 
 <p>Note that choosing <em>true</em> with a given probability, or <em>false</em> otherwise, is a special case of weighted sampling involving two items (also known as a <em>Bernoulli trial</em>).  But there are much simpler ways of choosing <em>true</em> or <em>false</em> this way; see &quot;<a href="https://peteroupc.github.io/randomfunc.html#Boolean_True_False_Conditions"><strong>Boolean (True/False) Conditions</strong></a>&quot;.  Perhaps the most practical is the idiom <code>RNDINTEXC(Y) &lt; X</code>, which chooses <em>true</em> with probability <code>X/Y</code>, <em>false</em> otherwise.</p>
 

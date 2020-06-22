@@ -131,12 +131,15 @@ However, the following are some of the many considerations involving random stri
 <a id=Choosing_Items_with_Separate_Probabilities></a>
 ## Choosing Items with Separate Probabilities
 
-_Weighted choice_ (also known as a _categorical distribution_) is a random choice of items, where each item has a _weight_ and is chosen with a probability proportional to its weight.  For algorithms on weighted choice, see "[**Weighted Choice With Replacement**](https://peteroupc.github.io/randomfunc.html#Weighted_Choice_With_Replacement)".
+_Weighted choice_ (also known as a _categorical distribution_) is a random choice of items, where each item has a _weight_ and is chosen with a probability proportional to its weight.  For algorithms on weighted choice, see "[**Weighted Choice With Replacement**](https://peteroupc.github.io/randomfunc.html#Weighted_Choice_With_Replacement)", which covers choices in which items are taken and put back.
 
 The algorithm shown there is a straightforward way to implement weighted choice, but there are faster alternatives (which are both implemented in [**Python sample code**](https://peteroupc.github.io/randomgen.zip)):
 
-- Vose's alias method (`VoseAlias`).  See "[**Darts, Dice, and Coins: Sampling from a Discrete Distribution**](https://www.keithschwarz.com/darts-dice-coins/)" by Keith Schwarz for more information.
+- Vose's version of the alias method (`VoseAlias`).  See "[**Darts, Dice, and Coins: Sampling from a Discrete Distribution**](https://www.keithschwarz.com/darts-dice-coins/)" by Keith Schwarz for more information.
 - The Fast Loaded Dice Roller (`FastLoadedDiceRoller`) (Saad et al. 2020)<sup>[**(4)**](#Note4)</sup>.
+- Bram van de Klumpert [**compares various data structures**](https://dspace.library.uu.nl/handle/1874/393383) for weighted choice.
+
+Weighted choice _without replacement_ is a choice where each item can be chosen no more than once.  The simplest way to implement this kind of weighted choice is to use weighted choice with replacement, except that after an index is chosen, that index's weight is set to 0 to keep the index from being chosen again.  Other options are given in "[**Weighted Choice Without Replacement (Single Copies)**](https://peteroupc.github.io/randomfunc.html#Weighted_Choice_Without_Replacement_Single_Copies)" and "[**Weighted Choice Without Replacement (List of Unknown Size)**](https://peteroupc.github.io/randomfunc.html#Weighted_Choice_Without_Replacement_List_of_Unknown_Size)".
 
 Note that choosing _true_ with a given probability, or _false_ otherwise, is a special case of weighted sampling involving two items (also known as a _Bernoulli trial_).  But there are much simpler ways of choosing _true_ or _false_ this way; see "[**Boolean (True/False) Conditions**](https://peteroupc.github.io/randomfunc.html#Boolean_True_False_Conditions)".  Perhaps the most practical is the idiom `RNDINTEXC(Y) < X`, which chooses _true_ with probability `X/Y`, _false_ otherwise.
 

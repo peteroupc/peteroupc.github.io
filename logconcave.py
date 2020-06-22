@@ -64,6 +64,7 @@ class LogConcaveSampler:
                 for i in range(10):
                     psis = psi(-s)
                     dpsis = dpsi(-s) if dpsi != None else self._derivpsi(psi, -s)
+                    if dpsis==0: break
                     s += (psis + rho) / dpsis
                 if s > 0:
                     break
@@ -75,6 +76,7 @@ class LogConcaveSampler:
                 for i in range(10):
                     psis = psi(t)
                     dpsis = dpsi(t) if dpsi != None else self._derivpsi(psi, t)
+                    if dpsis==0: break
                     t -= (psis + rho) / dpsis
                 if t > 0:
                     break
@@ -183,7 +185,7 @@ class LogConcaveSampler2:
                 if ret != None:
                     return ret
 
-class LogConcaveSamplerMonotonePositive:
+class LogConcaveSamplerMonotone:
     """
     Generates a random number that follows a distribution
     whose probability density function (PDF) is log-concave, monotonically
@@ -199,6 +201,9 @@ class LogConcaveSamplerMonotonePositive:
          function is concave if the area "above" the function's graph is concave),
          and 0 must be the distribution's mode (peak location) and thus
          the peak of psi must be at 0.
+      - symmetric - If true, the PDF is symmetric on both sides of the origin.
+         This is done by mirroring the right half on the left half, but doesn't change
+         the requirement that psi must have a positive domain only.
 
      Example:
 
@@ -245,13 +250,15 @@ class LogConcaveSamplerMonotonePositive:
                 return a
             i -= 1
 
-    def __init__(self, psi):
+    def __init__(self, psi, symmetric=False):
         self.psi = psi
+        self.symmetric=symmetric
         self.a = self._fx(psi)
         self.logfa = psi(self.a)
         self.logf2a = psi(2 * self.a)
         self.fa = math.exp(self.logfa)
-        self.f0 = math.exp(psi(0))
+        self.logf0 = psi(0)
+        self.f0 = math.exp(self.logf0)
         f2a = math.exp(self.logf2a)
         self.r = self.a * self.fa
         self.q = self.a * self.f0
@@ -262,28 +269,74 @@ class LogConcaveSamplerMonotonePositive:
     def sample(self, n):
         return [self.sampleOne() for i in range(n)]
 
+    def codegen(self, name, pdfcall=None):
+        """ Generates Python code that samples
+                (approximately) from the distribution estimated
+                in this class.  Idea from Leydold, et al.,
+                "An Automatic Code Generator for
+                Nonuniform Random Variate Generation", 2001.
+        - name: Distribution name.  Generates a Python method called
+           sample_X where X is the name given here (samples one
+           random number).
+        - pdfcall: Name of the method representing psi (for more information,
+           see the __init__ method of this class).  Optional. """
+       if pdfcall==None: pdfcall="psi_"+name
+       retv="ret*(random.randint(0,1)*2-1)" if self.symmetric else "ret"
+       ret="def sample_"+name+"():\n"
+       ret+="     while True:\n"
+       ret+="        u = random.random()\n"
+       ret+="        v = random.random() * %.15g\n" % (self.s)
+       ret+="        chi = math.log(random.random())\n"
+       ret+="        ret = 0\n"
+       ret+="        if v <= %.15g:\n" % (self.q)
+       if self.a==1:
+           ret+="            ret = u\n"
+       else:
+           ret+="            ret = %.15g * u\n" % (self.a)
+       if self.logf0 == 0:
+           ret+="            if chi <= %s(ret):\n" % (pdfcall)
+       else:
+           ret+="            if chi + %.15g <= %s(ret):\n" % (self.logf0, pdfcall)
+       ret+="                return "+retv+"\n"
+       ret+="        elif v < %.15g:\n" % (self.qr)
+       if self.a==1:
+           ret+="            ret = 1 + u\n"
+       else:
+           ret+="            ret = %.15g + %.15g * u\n" % (self.a, self.a)
+       ret+="            if chi + %.15g <= %s(ret):\n" % (self.logfa, pdfcall)
+       ret+="                return "+retv+"\n"
+       ret+="        else:\n"
+       ret+="            ret = %.15g + math.log(1.0 / u) * %.15g\n" % (2 * self.a, self.sp)
+       if self.logf2a!=0:
+         ret+="            h = (%.15g - ret) * %.15g\n" % (2 * self.a, self.logfa / self.a)
+         ret+="                    + (ret - %.15g) * %.15g\n" % (self.a, self.logf2a / self.a)
+         ret+="            if chi + h <= "+pdfcall+"(ret):\n"
+         ret+="                return "+retv+"\n\n"
+       else:
+         ret+="            return "+retv+"\n\n"
+       return ret
+
     def sampleIteration(self):
         u = random.random()
         v = random.random() * self.s
-        chi = random.random()
+        chi = math.log(random.random())
         ret = 0
         if v <= self.q:
             ret = self.a * u
-            if chi * self.f0 <= math.exp(self.psi(ret)):
-                return ret
+            if chi + self.logf0 <= self.psi(ret):
+                return ret*((random.randint(0,1)*2-1) if self.symmetric else 1)
         elif v < self.qr:
             ret = self.a + self.a * u
-            if chi * self.fa <= math.exp(self.psi(ret)):
-                return ret
+            if chi + self.logfa <= self.psi(ret):
+                return ret*((random.randint(0,1)*2-1) if self.symmetric else 1)
         else:
             ret = 2 * self.a + math.log(1.0 / u) * self.sp
             h = 0
             if self.logf2a != 0:
-                h = math.exp(
-                    (2 * self.a - ret) * self.logfa / self.a
-                    + (ret - self.a) * self.logf2a / self.a
-                )
-            if chi * h <= math.exp(self.psi(ret)):
+                h = (2 * self.a - ret) * self.logfa / self.a + (ret - self.a) * self.logf2a / self.a
+                if chi + h <= self.psi(ret):
+                    return ret*((random.randint(0,1)*2-1) if self.symmetric else 1)
+            else:
                 return ret
         return None
 
@@ -381,9 +434,9 @@ if __name__ == "__main__":
         if mx == 0:
             return
         labels = [
-            ("%0.3f %d [%f]" % (ls[i], buckets[i], buckets[i] * 1.0 / mx))
+            ("%0.3f %d [%.15g]" % (ls[i], buckets[i], buckets[i] * 1.0 / mx))
             if int(buckets[i]) == buckets[i]
-            else ("%0.3f %f [%f]" % (ls[i], buckets[i], buckets[i] * 1.0 / mx))
+            else ("%0.3f %.15g [%.15g]" % (ls[i], buckets[i], buckets[i] * 1.0 / mx))
             for i in range(len(buckets))
         ]
         maxlen = max([len(x) for x in labels])
@@ -413,12 +466,13 @@ if __name__ == "__main__":
     import time
 
     psi = lambda x: -(x * x) / (2 * 1 * 1)
-    mrs = LogConcaveSampler2(psi)
+    mrs = LogConcaveSamplerMonotone(psi)
+    print(mrs.codegen("halfnormal"))
     ls = linspace(-4, 4, 30)
     buckets = [0 for x in ls]
     t = time.time()
     ksample = mrs.sample(5000)
-    print("Took %f seconds" % (time.time() - t))
+    print("Took %.15g seconds" % (time.time() - t))
     for ks in ksample:
         bucket(ks, ls, buckets)
     showbuckets(ls, buckets)

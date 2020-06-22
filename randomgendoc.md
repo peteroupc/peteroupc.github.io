@@ -138,7 +138,16 @@ CLASSES
      |  __init__(self, rg, pdf, bl, br, ures=1e-08)
      |      Initialize self.  See help(type(self)) for accurate signature.
      |
-     |  codegen(self, name)
+     |  codegen(self, name='dist')
+     |      Generates standalone Python code that samples
+     |              (approximately) from the distribution estimated
+     |              in this class.  Idea from Leydold, et al.,
+     |              "An Automatic Code Generator for
+     |              Nonuniform Random Variate Generation", 2001.
+     |      - name: Distribution name.  Generates Python methods called
+     |         sample_X where X is the name given here (samples one
+     |         random number), and quantile_X (finds the quantile
+     |         for a uniform random number in [0, 1]).
      |
      |  quantile(self, v)
      |      Calculates quantiles from uniform random numbers
@@ -522,6 +531,12 @@ CLASSES
      |      Generates the 'k'th smallest 'b'-bit uniform random
      |      number out of 'n' of them.
      |
+     |  kthsmallest_urand(self, n, k)
+     |      Generates the 'k'th smallest 'b'-bit uniform random
+     |      number out of 'n' of them; returns the result in
+     |      the form of a "u-rand", or a partially sampled uniform
+     |      random number (Karney, "Sampling exactly from the normal distribution").
+     |
      |  latlon(self)
      |      Generates an independent and uniform random latitude and
      |      longitude, in radians.  West and south coordinates
@@ -652,7 +667,7 @@ CLASSES
      |      - 'icdf' is a procedure that takes three arguments: u, ubits, digitplaces,
      |         and returns a number within base^-digitplaces of the true inverse
      |         CDF (inverse cumulative distribution function, or quantile function)
-     |         of u/base^ubits.
+     |         of u/base^ubits, and is monotonic for a given value of `digitplaces`.
      |      - 'digitplaces' is an accuracy expressed as a number of digits after the
      |         point. Each random number will be a multiple of base^-digitplaces,
      |         or have a smaller granularity. Default is 53.
@@ -709,10 +724,16 @@ CLASSES
      |      - 'icdf' is a procedure that takes three arguments: u, ubits, digitplaces,
      |         and returns a number within 2^-digitplaces of the true inverse
      |         CDF (inverse cumulative distribution function, or quantile function)
-     |         of u/2^ubits.
+     |         of u/2^ubits, and is monotonic for a given value of `digitplaces`.
      |      - 'digitplaces' is an accuracy expressed as a number of bits after the
      |         point. Each quantile will be a multiple of 2^-digitplaces,
      |         or have a smaller granularity. Default is 53.
+     |
+     |      Example:  The following example generates the maximum of 10
+     |      random numbers, to an accuracy of 2^53.
+     |
+     |      ur=randgen.kthsmallest_urand(10, 10)
+     |      maxrand=randgen.quantile_urands(icdf, [ur], 53)[0]
      |
      |  randomwalk_posneg1(self, n)
      |      Random walk of uniform positive and negative steps.
@@ -930,6 +951,31 @@ CLASSES
 
 FUNCTIONS
     numericalTable(func, x, y, n=100)
+
+    urandfill(rg, a, bits)
+        Fills the unsampled bits of the given u-rand 'a' as necessary to
+        make a number with 'bits' many bits.  If the u-rand already has
+        that many bits or more, the u-rand is rounded using the round-to-nearest,
+        ties to even rounding rule.  Returns the resulting number as a
+        multiple of 2^'bits'.
+
+    urandgreater(rg, a, b)
+        Determines whether the first u-rand is greater than another u-rand; returns
+        true if so and false otherwise.  During
+        the comparison, additional bits will be sampled in both u-rands if necessary
+        for the comparison.
+
+    urandless(rg, a, b)
+        Determines whether the first u-rand is less than another u-rand; returns
+        true if so and false otherwise.  During
+        the comparison, additional bits will be sampled in both u-rands if necessary
+        for the comparison.
+
+    urandnew()
+        Returns an object to serve as a partially-sampled uniform random
+        number called a "u-rand" (Karney, "Sampling exactly from the normal distribution").
+        A u-rand is a list of two numbers: the first is a multiple of 2^X, and the second is X.
+        The urand created by this method will be "empty" (no bits sampled yet).
 
 FILE
     /home/rooster/Documents/SharpDevelopProjects/peteroupc.github.io/randomgen.py
