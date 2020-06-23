@@ -145,9 +145,10 @@ CLASSES
      |              "An Automatic Code Generator for
      |              Nonuniform Random Variate Generation", 2001.
      |      - name: Distribution name.  Generates Python methods called
-     |         sample_X where X is the name given here (samples one
-     |         random number), and quantile_X (finds the quantile
-     |         for a uniform random number in [0, 1]).
+     |         sample_X (samples one random number), and quantile_X
+     |         (finds the quantile
+     |         for a uniform random number in [0, 1]),
+     |         where X is the name given here.
      |
      |  quantile(self, v)
      |      Calculates quantiles from uniform random numbers

@@ -116,8 +116,8 @@ class MooreSampler:
         # a vector is chosen uniformly at random during the
         # sampling process.  A random number x/denom is chosen, where
         # x is a random integer in [rangeInf, rangeSup).
-        # NOTE FOR IMPROVEMENT: Minimum denominator is 2^bitAccuracy
-        # power of 10, so that all vectors with a coarsest resolution
+        # Minimum denominator is 2^bitAccuracy,
+        # so that all vectors with a coarsest resolution
         # of, say, 2^-bitAccuracy have a chance to be chosen.
         denom = max(1 << self.bitAccuracy, (rangeSup + rangeInf).denominator)
         rangeSup = int(rangeSup * denom)
@@ -207,8 +207,7 @@ class MooreSampler:
         # process is done otherwise, which requires evaluating
         # the PDF.  The random point x/denom is chosen, where
         # x is a random integer in [0, rangeSup).
-        # NOTE FOR IMPROVEMENT: Minimum denominator is
-        # 2^bitAccuracy.
+        # Minimum denominator is 2^bitAccuracy.
         rangeSup = Fraction(funcrange.sup)
         rangeInf = Fraction(funcrange.inf)
         denom = max(1 << self.bitAccuracy, (rangeSup + rangeInf).denominator)

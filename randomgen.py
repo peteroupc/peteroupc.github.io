@@ -3484,9 +3484,10 @@ class DensityInversionSampler:
                 "An Automatic Code Generator for
                 Nonuniform Random Variate Generation", 2001.
         - name: Distribution name.  Generates Python methods called
-           sample_X where X is the name given here (samples one
-           random number), and quantile_X (finds the quantile
-           for a uniform random number in [0, 1]). """
+           sample_X (samples one random number), and quantile_X
+           (finds the quantile
+           for a uniform random number in [0, 1]),
+           where X is the name given here. """
         ret = "import random\n\n"
         ret += "TABLE_" + name + " = ["
         for i in range(len(self.table)):
