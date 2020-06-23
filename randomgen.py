@@ -583,18 +583,18 @@ class BinaryExpansion:
         self.x = x
         self.xorig = x
 
-    def eof():
+    def eof(self):
         """ Returns whether the expansion has no more ones. """
         return self.x == 0
 
-    def next():
+    def next(self):
         """ Generates the next bit in the binary expansion, starting
            with the bit after the point."""
         ret = self.x & 1
         self.x >>= 1
         return ret
 
-    def reset():
+    def reset(self):
         """ Resets the expansion to before any bits were extracted
            with the 'next' method. """
         self.x = self.xorig
@@ -944,7 +944,7 @@ Returns 'list'. """
         bexp = BinaryExpansion(p)
         while not bexp.eof():
             bp = bexp.next()
-            br = self.rndint(2)
+            br = self.rndint(1)
             if br < bp:
                 return 1
             if br > bp:
@@ -1059,7 +1059,7 @@ Returns 'list'. """
     def normal(self, mu=0.0, sigma=1.0):
         """ Generates a normally-distributed random number. """
         bmp = 0.8577638849607068  # sqrt(2/exp(1))
-        if self.rndint(1) == 0:
+        if False and self.rndint(1) == 0:
             while True:
                 a = self.rndu01zeroexc()
                 b = self.rndu01zeroexc()
@@ -1071,9 +1071,9 @@ Returns 'list'. """
                 if c != 0 and c <= 1:
                     c = math.sqrt(-math.log(c) * 2 / c)
                     if self.rndint(1) == 0:
-                        return a * mu * c + sigma
+                        return a * sigma * c + mu
                     else:
-                        return b * mu * c + sigma
+                        return b * sigma * c + mu
         else:
             while True:
                 a = self.rndu01zeroexc()
@@ -1525,7 +1525,34 @@ Returns 'list'. """
         """ Generates 1 with probability (px/py)^n (where n can be positive, negative, or zero); 0 otherwise. """
         return self.zero_or_one_power_ratio(px, py, n, 1)
 
+    def polya_int(self, sx, sy, px, py):
+        """ Generates a negative binomial (Polya) random number, defined
+           here as the number of failures before 'successes' many
+           successful trials (sx/sy), where the probability of success in
+           each trial is px/py. """
+        isinteger = sx % sy == 0
+        sxceil = (sx // sy) if isinteger else (sx // sy) + 1
+        while True:
+            w = self.negativebinomialint(sxceil, px, py)
+            if isinteger or w == 0:
+                return w
+            tmp = Fraction(sx, sy)
+            anum = tmp
+            for i in range(1, w):
+                anum *= tmp + i
+            tmp = sxceil
+            aden = tmp
+            for i in range(1, w):
+                aden *= tmp + i
+            a = Fraction(anum, aden)
+            if self.zero_or_one(a.numerator, a.denominator) == 1:
+                return w
+
     def negativebinomialint(self, successes, px, py):
+        """ Generates a negative binomial random number, defined
+           here as the number of failures before 'successes' many
+           successful trials, where the probability of success in
+           each trial is px/py. """
         if successes < 0 or py == 0:
             raise ValueError
         if successes == 0 or px >= py:
@@ -1579,13 +1606,15 @@ Returns 'list'. """
             return 1.0 / 0.0
         if successes == 1.0:
             return int(-self.exponential(math.log(1.0 - p)))
-        if int(successes) != successes or successes > 1000:
+        if True or int(successes) != successes or successes > 1000:
             return self.poisson(self.gamma(successes) * (1 - p) / p)
         else:
             count = 0
             while True:
                 if self.bernoulli(p) == 1:
-                    return count
+                    successes -= 1
+                    if successes <= 0:
+                        return count
                 else:
                     count += 1
 

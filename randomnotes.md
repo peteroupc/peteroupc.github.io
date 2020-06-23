@@ -56,7 +56,7 @@ There are a number of methods for normal random number generation, including the
 4. Methods that [**invert**](#Inverse_Transform_Sampling) the normal distribution's CDF, including those by Wichura, by Acklam, and by Luu (Luu 2016)<sup>[**(5)**](#Note5)</sup>.  See also [**"A literate program to compute the inverse of the normal CDF"**](https://www.johndcook.com/blog/normal_cdf_inverse/).
 5. Karney's algorithm to sample from the normal distribution, in a manner that minimizes approximation error and without using floating-point numbers (Karney 2014)<sup>[**(2)**](#Note2)</sup>.
 
-For surveys of normal random number generators, see (Thomas et al. 2007)<sup>[**(6)**](#Note6)</sup>, and (Malik and Hemani 2016)<sup>[**(7)**](#Note7)</sup>
+For surveys of normal random number generators, see (Thomas et al. 2007)<sup>[**(6)**](#Note6)</sup>, and (Malik and Hemani 2016)<sup>[**(7)**](#Note7)</sup>.
 
     METHOD NormalRatioOfUniforms(mu, sigma)
         while true
@@ -78,7 +78,7 @@ For surveys of normal random number generators, see (Thomas et al. 2007)<sup>[**
         c = a * a + b * b
         if c != 0 and c <= 1
            c = sqrt(-ln(c) * 2 / c)
-           return [a * mu * c + sigma, b * mu * c + sigma]
+           return [a * sigma * c + mu, b * sigma * c + mu]
         end
       end
     END METHOD

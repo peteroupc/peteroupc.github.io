@@ -54,14 +54,14 @@ CLASSES
      |  __init__(self, fp)
      |      Initialize self.  See help(type(self)) for accurate signature.
      |
-     |  eof()
+     |  eof(self)
      |      Returns whether the expansion has no more ones.
      |
-     |  next()
+     |  next(self)
      |      Generates the next bit in the binary expansion, starting
      |      with the bit after the point.
      |
-     |  reset()
+     |  reset(self)
      |      Resets the expansion to before any bits were extracted
      |      with the 'next' method.
      |
@@ -617,6 +617,10 @@ CLASSES
      |  negativebinomial(self, successes, p)
      |
      |  negativebinomialint(self, successes, px, py)
+     |      Generates a negative binomial random number, defined
+     |      here as the number of failures before 'successes' many
+     |      successful trials, where the probability of success in
+     |      each trial is px/py.
      |
      |  nonzeroIntegersWithSum(self, n, total)
      |      Returns a list of 'n' integers greater than 0 that sum to 'total'.
@@ -704,6 +708,12 @@ CLASSES
      |
      |  poissonint(self, mx, my)
      |      Generates a random number following a Poisson distribution with mean mx/my.
+     |
+     |  polya_int(self, sx, sy, px, py)
+     |      Generates a negative binomial (Polya) random number, defined
+     |      here as the number of failures before 'successes' many
+     |      successful trials (sx/sy), where the probability of success in
+     |      each trial is px/py.
      |
      |  powerlognormal(self, p, sigma=1.0)
      |      Power lognormal distribution, as described in NIST/SEMATECH
