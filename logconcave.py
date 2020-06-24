@@ -19,7 +19,7 @@ class TConcaveDiscreteSampler:
     necessarily has a single mode, or peak,
     and its range is bounded from above by a finite value.
     Informally, a function is concave if
-    if the area "above" the function's graph is concave.)
+    the area "above" the function's graph is concave.)
       - f: A function that takes one integer and
          outputs the probability for a random number to equal
          that integer.  For this sampler to work, f must

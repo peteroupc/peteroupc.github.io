@@ -8,6 +8,7 @@
 #
 
 import decimal
+import math
 from decimal import Decimal, Context
 from fractions import Fraction
 
@@ -35,6 +36,10 @@ class Interval:
             self.prec = prec
             self.sup = Decimal(v)
             self.inf = self.sup
+        elif isinstance(v, int) and isinstance(sup, int):
+            self.prec = prec
+            self.sup = Decimal(sup)
+            self.inf = Decimal(v)
         elif isinstance(v, Fraction) and sup == None:
             d = Decimal(v.numerator) / v.denominator
             if d == v:
@@ -182,6 +187,12 @@ class Interval:
             self._floorprec().divide(1, v.sup), self._ceilprec().divide(1, v.inf)
         )
 
+    def _supintv(self):
+        return self._newintv(self.sup, self.sup)
+
+    def _infintv(self):
+        return self._newintv(self.inf, self.inf)
+
     def mignitude(self):
         if self.inf < 0 and self.sup > 0:
             return Decimal(0)
@@ -194,6 +205,54 @@ class Interval:
         if self.inf < 0:
             raise ValueError("Out of range for sqrt: %s" % (self))
         return self.pow(0.5)
+
+    def pi(prec=56):
+        if prec == None:
+            prec = 56
+        ret = Interval(0, prec=prec)
+        k = 0
+        sign = 1
+        for i in range(prec + 10):
+            fr = (
+                Fraction(2, 4 * k + 2) + Fraction(1, 4 * k + 3) + Fraction(2, 4 * k + 1)
+            )
+            ret += Interval(sign, prec=prec) * fr / 4 ** k
+            k += 1
+            sign = -sign
+        return ret
+
+    def sin(self):
+        k = 0
+        sp = 56 if self.prec == None else self.prec
+        pi = Interval.pi(sp)
+        if (self._supintv() - self._infintv()).sup > (pi * 2).inf:
+            return self._newintv(Decimal(-1), Decimal(1))
+        sinmod = self.rem(pi * 2)
+        halfpi = pi / 2
+        k = 2
+        kf = 2
+        shp = sinmod - halfpi
+        ret = 1 - shp ** 2 / 2
+        ks = -1
+        for i in range(sp):
+            kf *= (k + 1) * (k + 2)
+            ks = -ks
+            k += 2
+            oldwid = ret.width()
+            newret = ret + ks * shp ** k / kf
+            # print(newret)
+            if oldwid < newret.width() and (
+                ret.inf == newret.inf or ret.sup == newret.sup
+            ):
+                return ret
+            ret = newret
+        return ret
+
+    def cos(self):
+        return (self + Interval.pi() / 2).sin()
+
+    def tan(self):
+        return self.sin() / self.cos()
 
     def isAccurateTo(self, v):
         return self.vol() <= Interval(v).sup
@@ -244,6 +303,19 @@ class Interval:
 
     def abs(self):
         return self._newintv(self.mignitude(), self.magnitude())
+
+    def floor(self):
+        floorinf = math.floor(self.inf)
+        floorsup = math.floor(self.sup)
+        return self._newintv(min(floorinf, floorsup), max(floorinf, floorsup))
+
+    def ceil(self):
+        ceilinf = math.ceil(self.inf)
+        ceilsup = math.ceil(self.sup)
+        return self._newintv(min(ceilinf, ceilsup), max(ceilinf, ceilsup))
+
+    def rem(self, v):
+        return self - (self / v).floor() * v
 
     def pow(self, v):
         v = self._convert(v)

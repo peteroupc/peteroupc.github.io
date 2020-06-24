@@ -185,6 +185,8 @@ class MooreSampler:
             for i in range(1, len(box)):
                 volume *= self._widthAsFrac(box[i])
             funcrange = self.pdf([box, label]) if self.transdim else self.pdf(box)
+        if funcrange.sup < 0:
+            raise ValueError("pdf is negative at %s" % (box))
         if not isinstance(funcrange, Interval):
             raise ValueError("pdf must output an Interval")
         # NOTE: Priority key can be a coarse-precision
@@ -414,16 +416,25 @@ if __name__ == "__main__":
         lamda = Interval(lamda)  # Parameter in (0, 1)
         return lamda ** x * (1 - lamda) ** (1 - x)
 
+    def osciexpo(x, a=1.0 / 8, b=9.0 / 20, c=1.0 / 2):
+        axb = a * x ** b
+        rt = 1 + c * (axb * (b * Interval.pi()).tan()).sin()
+        ret = (axb).exp() * (rt)
+        ret = ret.clampleft(0)
+        if ret.sup < 0:
+            return Interval(0)
+        return ret
+
     import time
     import math
     import cProfile
 
-    mrs = MooreSampler(continuous_bernoulli, -10, 10)
-    ls = linspace(-10, 10, 60)
+    mrs = MooreSampler(continuous_bernoulli, 0, 1)
+    ls = linspace(0, 1, 60)
     buckets = [0 for x in ls]
     t = time.time()
-    ksample = [mrs.sample() for i in range(50000)]
-    # print("Took %f seconds (accept rate %0.3f)" % (time.time() - t, mrs.acceptRate()))
+    ksample = [mrs.sample() for i in range(1000)]
+    print("Took %f seconds (accept rate %0.3f)" % (time.time() - t, mrs.acceptRate()))
     for ks in ksample:
         bucket(ks, ls, buckets)
     showbuckets(ls, buckets)

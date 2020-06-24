@@ -1512,11 +1512,17 @@ CLASSES
      |
      |  abs(self)
      |
+     |  ceil(self)
+     |
      |  clamp(self, a, b)
      |
      |  clampleft(self, a)
      |
+     |  cos(self)
+     |
      |  exp(self)
+     |
+     |  floor(self)
      |
      |  isAccurateTo(self, v)
      |
@@ -1528,9 +1534,17 @@ CLASSES
      |
      |  mignitude(self)
      |
+     |  pi(prec=56)
+     |
      |  pow(self, v)
      |
+     |  rem(self, v)
+     |
+     |  sin(self)
+     |
      |  sqrt(self)
+     |
+     |  tan(self)
      |
      |  vol(self)
      |
