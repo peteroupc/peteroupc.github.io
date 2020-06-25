@@ -78,7 +78,7 @@ class Bernoulli:
             s = s + b * 2 - 1
         return 1 if s == m + 1 else 0
 
-    def _henderson_glynn_double(self, f, n=100):
+    def _henderson_glynn_double_inexact(self, f, n=100):
         # Henderson-Glynn doubling scheme.  Reference:
         # Henderson, S.G., Glynn, P.W., "Nonexistence of a
         # Class of Variate Generation Schemes", Operations Research Letters 31 (2), 2001.
@@ -90,7 +90,7 @@ class Bernoulli:
         z = min(lh, rh) * 2  # B(p) -> B(2*p - (2*p - E[z])) == B(E[z])
         return self.zero_or_one(z.numerator, z.denominator)
 
-    def _nacu_peres_double(self, f, n=100):
+    def _nacu_peres_double_inexact(self, f, n=100):
         # B(p) -> B(2*p - eps), where eps is less than or equal to
         # 2*exp(−2*n(1/2−p)^2), and where p is in (0, 1/2). Reference:
         # Nacu, Şerban, and Yuval Peres. "Fast simulation of
@@ -366,7 +366,7 @@ class Bernoulli:
             elif f() == 1:
                 return 1
 
-    def _multilogistic(self, fa, ca):
+    def _multilogistic_inexact(self, fa, ca):
         # Huber 2016, replaces logistic(f, c) in linear Bernoulli factory to make a multivariate
         # Bernoulli factory of the form B(p1), ..., B(pn) -> B(c1*p1 + ... + cn*pn).
         # For this method:

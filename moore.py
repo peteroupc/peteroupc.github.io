@@ -129,6 +129,8 @@ class MooreSampler:
         _, boxindex = heapq.heappop(self.queue)
         box, boxrange, _, label = self.boxes[boxindex]
         # Find dimension with the greatest width
+        # NOTE: The use of width is not rigorous, but
+        # accuracy is not crucial here
         dim = 0
         dimbest = 0
         if len(box) >= 2:
@@ -191,7 +193,8 @@ class MooreSampler:
             raise ValueError("pdf must output an Interval")
         # NOTE: Priority key can be a coarse-precision
         # floating-point number, since the exact value of
-        # the key is not crucial for the sampler's correctness
+        # the key is not crucial for the sampler's correctness.
+        # The same goes for the use of width, which is not rigorous.
         priorityKey = float(-volume * float(funcrange.width()))
         # NOTE: On the other hand, the weight's exact value
         # is crucial for correctness, since this affects the
@@ -199,7 +202,7 @@ class MooreSampler:
         # in the density's approximation.  Therefore, use
         # Fraction, which can store rational numbers (including
         # decimal fractions) exactly, without issues with
-        # default precision found in Decimal
+        # default precision found in Decimal.
         aliasWeight = volume * Fraction(funcrange.sup)
         # Convert box range elements to integers
         # NOTE: We are dealing here with a random point between 0
@@ -429,11 +432,11 @@ if __name__ == "__main__":
     import math
     import cProfile
 
-    mrs = MooreSampler(continuous_bernoulli, 0, 1)
-    ls = linspace(0, 1, 60)
+    mrs = MooreSampler(normalpdf, -4, 4)
+    ls = linspace(-4, 4, 60)
     buckets = [0 for x in ls]
     t = time.time()
-    ksample = [mrs.sample() for i in range(1000)]
+    ksample = [mrs.sample() for i in range(5000)]
     print("Took %f seconds (accept rate %0.3f)" % (time.time() - t, mrs.acceptRate()))
     for ks in ksample:
         bucket(ks, ls, buckets)

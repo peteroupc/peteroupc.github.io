@@ -225,6 +225,80 @@ class VoseAlias:
         )
         return d if tsample < self.prob[d] else da
 
+class BringmannLarsen:
+    """
+    Implements Bringmann and Larsen's sampler, which chooses a random number in [0, n)
+    where the probability that each number is chosen is weighted.  The 'weights' is the
+    list of weights each 0 or greater; the higher the weight, the greater
+    the probability.  This sampler supports only integer weights.
+    This is a succinct (space-saving) data structure for this purpose.
+
+    Reference:
+    K. Bringmann and K. G. Larsen, "Succinct Sampling from Discrete
+    Distributions", In: Proc. 45th Annual ACM Symposium on Theory
+    of Computing (STOC'13), 2013.
+    """
+
+    def __init__(self, weights):
+        w = 32
+        wc = w - 12
+        totalWeights = sum(weights)
+        n = len(weights)
+        if totalWeights < 0:
+            raise ValueError("Sum of weights is negative")
+        self.large = totalWeights >= (1 << (wc - 1)) * n
+        # NOTE: Storing the max is not strictly necessary,
+        # but helps avoid high rejection rates
+        self.maxWeight = max(weights)
+        if not self.large:
+            bitlength = 0
+            self.bits = 0
+            self.shorts = 0
+            self.n = n
+            bs = 0
+            for i in range(n):
+                if weights[i] < (1 << wc):
+                    self.bits |= weights[i] << bs
+                    bs += wc
+                else:
+                    if weights[i] >= (1 << w):
+                        raise ValueError
+                    self.bits |= weights[i] << bs
+                    self.shorts |= 1 << i
+                    bs += w
+        else:
+            self.weights = [x for x in weights]
+
+    def _ranki(self, i):
+        ret = 0
+        for j in range(i):
+            ret += (self.shorts >> j) & 1
+        return ret
+
+    def next(self, randgen):
+        w = 32
+        wc = w - 12
+        if self.large:
+            while True:
+                v = randgen.rndintexc(len(self.weights))
+                # NOTE: Using stored max weight instead of a constant 2^w
+                # (which the paper uses for space saving), to avoid
+                # high rejection rates.  However, the algorithm is
+                # still correct in either case (except in the latter case
+                # when self.maxWeight >= 2^w).
+                if randgen.zero_or_one(self.weights[v], self.maxWeight) == 1:
+                    return v
+        else:
+            while True:
+                v = randgen.rndintexc(self.n)
+                k = self._ranki(v)
+                bp = k * w + (v - k) * wc
+                bl = w if self._ranki(v + 1) > k else wc
+                weight = (self.bits >> bp) & ((1 << bl) - 1)
+                # NOTE: See note above
+                if randgen.zero_or_one(weight, self.maxWeight) == 1:
+                    return v
+
 class FastLoadedDiceRoller:
     """
     Implements the Fast Loaded Dice Roller, which chooses a random number in [0, n)

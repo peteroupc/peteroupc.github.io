@@ -59,45 +59,37 @@ class Interval:
     def _tosup(v, prec):
         if isinstance(v, Fraction):
             return (Interval(v.numerator, prec=prec) / v.denominator).sup
-        if prec == None:
-            return _RCEILING.create_decimal(v)
-        return Context(rounding=decimal.ROUND_CEILING, prec=prec).create_decimal(v)
+        return _RCEILING.create_decimal(v)
 
     def _toinf(v, prec):
         if isinstance(v, Fraction):
             return (Interval(v.numerator, prec=prec) / v.denominator).inf
-        if prec == None:
-            return _RFLOOR.create_decimal(v)
-        return Context(rounding=decimal.ROUND_FLOOR, prec=prec).create_decimal(v)
+        return _RFLOOR.create_decimal(v)
 
     def _convert(self, v):
         if isinstance(v, Interval):
             return v
-        return Interval(v)
+        return Interval(v, prec=self.prec)
 
     def _floor(self):
-        if self.prec == None:
-            return _RFLOOR
-        return Context(rounding=decimal.ROUND_FLOOR, prec=self.prec)
+        return _RFLOOR  # Floor context for exact operations (addition, multiplication)
 
     def _ceil(self):
-        if self.prec == None:
-            return _RCEILING
-        return Context(rounding=decimal.ROUND_CEILING, prec=self.prec)
+        return (
+            _RCEILING
+        )  # Ceiling context for exact operations (addition, multiplication)
 
     def _floorprec(self):
+        # Floor context for inexact operations (division, log, exp, etc.)
         if self.prec == None:
             return Context(rounding=decimal.ROUND_FLOOR, prec=56)
         return Context(rounding=decimal.ROUND_FLOOR, prec=self.prec)
 
     def _ceilprec(self):
+        # Ceiling context for inexact operations (division, log, exp, etc.)
         if self.prec == None:
             return Context(rounding=decimal.ROUND_CEILING, prec=56)
         return Context(rounding=decimal.ROUND_CEILING, prec=self.prec)
-
-    def vol(self):
-        # NOTE: For multidimensional intervals, vol is product of wid's
-        return self.sup - self.inf
 
     def _newintv(self, a, b):
         return Interval(a, b, prec=self.prec)
@@ -215,8 +207,8 @@ class Interval:
         for i in range(prec + 10):
             fr = (
                 Fraction(2, 4 * k + 2) + Fraction(1, 4 * k + 3) + Fraction(2, 4 * k + 1)
-            )
-            ret += Interval(sign, prec=prec) * fr / 4 ** k
+            ) / 4 ** k
+            ret += Interval(sign, prec=prec) * fr
             k += 1
             sign = -sign
         return ret
@@ -255,13 +247,12 @@ class Interval:
         return self.sin() / self.cos()
 
     def isAccurateTo(self, v):
-        return self.vol() <= Interval(v).sup
+        # If upper bound on width is less than or equal to desired accuracy
+        return (self._supintv() - self._infintv()).sup <= Interval(v).inf
 
     def width(self):
+        """ NOTE: Not rigorous! """
         return self.sup - self.inf
-
-    def midpoint(self):
-        return self.inf + (self.sup - self.inf) / 2
 
     def log(self):
         if self.inf <= 0:
@@ -305,13 +296,13 @@ class Interval:
         return self._newintv(self.mignitude(), self.magnitude())
 
     def floor(self):
-        floorinf = math.floor(self.inf)
-        floorsup = math.floor(self.sup)
+        floorinf = self._floor().quantize(self.inf, Decimal("1."))
+        floorsup = self._floor().quantize(self.sup, Decimal("1."))
         return self._newintv(min(floorinf, floorsup), max(floorinf, floorsup))
 
     def ceil(self):
-        ceilinf = math.ceil(self.inf)
-        ceilsup = math.ceil(self.sup)
+        ceilinf = self._ceil().quantize(self.inf, Decimal("1."))
+        ceilsup = self._ceil().quantize(self.sup, Decimal("1."))
         return self._newintv(min(ceilinf, ceilsup), max(ceilinf, ceilsup))
 
     def rem(self, v):
@@ -399,7 +390,7 @@ class Interval:
     def __repr__(self):
         return "[%s, %s]" % (self.inf, self.sup)
 
-_RCEILING = Context(rounding=decimal.ROUND_CEILING)
-_RFLOOR = Context(rounding=decimal.ROUND_FLOOR)
+_RCEILING = Context(rounding=decimal.ROUND_CEILING, prec=9999999999)
+_RFLOOR = Context(rounding=decimal.ROUND_FLOOR, prec=9999999999)
 _ZERO = Interval(0)
 _ONE = Interval(1)

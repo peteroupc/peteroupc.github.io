@@ -18,6 +18,7 @@ CLASSES
     builtins.object
         AlmostRandom
         BinaryExpansion
+        BringmannLarsen
         ConvexPolygonSampler
         DensityInversionSampler
         FastLoadedDiceRoller
@@ -64,6 +65,34 @@ CLASSES
      |  reset(self)
      |      Resets the expansion to before any bits were extracted
      |      with the 'next' method.
+     |
+     |  ----------------------------------------------------------------------
+     |  Data descriptors defined here:
+     |
+     |  __dict__
+     |      dictionary for instance variables (if defined)
+     |
+     |  __weakref__
+     |      list of weak references to the object (if defined)
+
+    class BringmannLarsen(builtins.object)
+     |  Implements Bringmann and Larsen's sampler, which chooses a random number in [0, n)
+     |  where the probability that each number is chosen is weighted.  The 'weights' is the
+     |  list of weights each 0 or greater; the higher the weight, the greater
+     |  the probability.  This sampler supports only integer weights.
+     |  This is a succinct (space-saving) data structure for this purpose.
+     |
+     |  Reference:
+     |  K. Bringmann and K. G. Larsen, "Succinct Sampling from Discrete
+     |  Distributions", In: Proc. 45th Annual ACM Symposium on Theory
+     |  of Computing (STOC'13), 2013.
+     |
+     |  Methods defined here:
+     |
+     |  __init__(self, weights)
+     |      Initialize self.  See help(type(self)) for accurate signature.
+     |
+     |  next(self, randgen)
      |
      |  ----------------------------------------------------------------------
      |  Data descriptors defined here:
@@ -1530,8 +1559,6 @@ CLASSES
      |
      |  magnitude(self)
      |
-     |  midpoint(self)
-     |
      |  mignitude(self)
      |
      |  pi(prec=56)
@@ -1546,9 +1573,8 @@ CLASSES
      |
      |  tan(self)
      |
-     |  vol(self)
-     |
      |  width(self)
+     |      NOTE: Not rigorous!
      |
      |  ----------------------------------------------------------------------
      |  Static methods defined here:
