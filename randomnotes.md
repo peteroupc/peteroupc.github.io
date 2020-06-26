@@ -30,13 +30,13 @@
 <a id=A_Note_on_Error_Bounded_Algorithms></a>
 #### A Note on Error-Bounded Algorithms
 
-Although there are algorithms that sample a distribution in a manner that minimizes approximation error <sup>[**(1)**](#Note1)</sup>, most of the algorithms in this section won't, for any of these reasons:
+There are three kinds of randomization algorithms:
 
-- They may not take a parameter specifying the maximum error tolerable.
-- They may use a `RNDU01` or `RNDRANGE` method, which is not required to be error-bounded.
-- They may incur errors due to numerical approximations, including when they calculate irrational numbers or transcendental functions.
+1. An _error-bounded algorithm_ is an algorithm that samples a distribution in a manner that minimizes approximation error.  This means the algorithm samples from a continuous distribution that is close to the ideal distribution within a user-specified error tolerance, or samples exactly from a discrete distribution (one that takes on a countable number of values).  Thus, the algorithm gives every representable number the expected probability of occurring.  In general, the only random numbers the algorithm uses are random bits (binary digits).  An application should use error-bounded algorithms whenever possible.
+2. An _exact algorithm_ is an algorithm that samples from the exact distribution requested, assuming that computers can store and operate on real numbers of any precision and can generate independent uniform random real numbers of any precision (Devroye 1986, p. 1-2)<sup>[**(1)**](#Note1)</sup>.  Without more, however, an exact algorithm implemented using floating-point arithmetic can incur rounding and other errors, especially when they calculate irrational numbers or transcendental functions.  An exact algorithm can achieve a guaranteed bound on accuracy (and thus be an _error-bounded algorithm_) using either arbitrary-precision or interval arithmetic (see also Devroye 1986, p. 2)<sup>[**(1)**](#Note1)</sup>.  In this page, all methods given here are exact unless otherwise noted.  Note that `RNDU01` or `RNDRANGE` are exact in theory, but have no required implementation.
+3. An _inexact algorithm_ or _approximate algorithm_ uses "a mathematical approximation of sorts" to generate a random number that is close to the desired distribution (Devroye 1986, p. 2)<sup>[**(1)**](#Note1)</sup>.  An application should use this kind of algorithm only if it's willing to trade accuracy for speed.
 
-Even so, however, these algorithms may be useful if the application is willing to trade accuracy for speed.
+Most of these algorithms, though, are not _error-bounded_, but even so, they may still be useful to an application willing to trade accuracy for speed.
 
 On the other hand, if an algorithm returns results that are accurate to a given number of digits after the point (for example, 53 bits after the point), it can generate any number of digits uniformly at random and append those digits to the result's digit expansion without affecting accuracy. For example, after it generates a normally-distributed random number, an algorithm can fill it with enough uniform random bits, as necessary, to give the number 100 bits after the point (Karney 2014)<sup>[**(2)**](#Note2)</sup> (example: `for i in 54..100: ret = ret + RNDINT(1) * pow(2,-i)`).
 
@@ -52,9 +52,10 @@ There are a number of methods for normal random number generation, including the
 
 1. The ratio-of-uniforms method (given as `NormalRatioOfUniforms` below).
 2. In the _Box&ndash;Muller transformation_, `mu + radius * cos(angle)` and `mu + radius * sin(angle)`, where `angle = RNDRANGEMaxExc(0, 2 * pi)` and `radius = sqrt(Expo(0.5)) * sigma`, are two independent normally-distributed random numbers.  The polar method (given as `NormalPolar` below) likewise produces two independent normal random numbers at a time.
-3. An _approximation_ to a normal random number is the sum of twelve `RNDRANGEMaxExc(0, sigma)` numbers (see Note 13), subtracted by 6 * `sigma`. See `NormalCLT` below, which also includes an optional step to "warp" the random number for better accuracy (Kabal 2000/2019)<sup>[**(3)**](#Note3)</sup> See also [**"Irwin&ndash;Hall distribution" on Wikipedia**](https://en.wikipedia.org/wiki/Irwin%E2%80%93Hall_distribution).  D. Thomas (2014)<sup>[**(4)**](#Note4)</sup>, describes a more general approximation called CLT<sub>k</sub>, which combines `k` uniform random numbers as follows: `RNDU01() - RNDU01() + RNDU01() - ...`.
-4. Methods that [**invert**](#Inverse_Transform_Sampling) the normal distribution's CDF, including those by Wichura, by Acklam, and by Luu (Luu 2016)<sup>[**(5)**](#Note5)</sup>.  See also [**"A literate program to compute the inverse of the normal CDF"**](https://www.johndcook.com/blog/normal_cdf_inverse/).
-5. Karney's algorithm to sample from the normal distribution, in a manner that minimizes approximation error and without using floating-point numbers (Karney 2014)<sup>[**(2)**](#Note2)</sup>.
+3. Karney's algorithm to sample from the normal distribution, in a manner that minimizes approximation error and without using floating-point numbers (Karney 2014)<sup>[**(2)**](#Note2)</sup>.
+4. The following are approximations to the normal distribution:
+    - The sum of twelve `RNDRANGEMaxExc(0, sigma)` numbers (see Note 13), subtracted by 6 * `sigma`. See `NormalCLT` below, which also includes an optional step to "warp" the random number for better accuracy (Kabal 2000/2019)<sup>[**(3)**](#Note3)</sup> See also [**"Irwin&ndash;Hall distribution" on Wikipedia**](https://en.wikipedia.org/wiki/Irwin%E2%80%93Hall_distribution).  D. Thomas (2014)<sup>[**(4)**](#Note4)</sup>, describes a more general approximation called CLT<sub>k</sub>, which combines `k` uniform random numbers as follows: `RNDU01() - RNDU01() + RNDU01() - ...`.
+    - [**Inversion**](#Inverse_Transform_Sampling) of the normal distribution's CDF, including those by Wichura, by Acklam, and by Luu (Luu 2016)<sup>[**(5)**](#Note5)</sup>.  See also [**"A literate program to compute the inverse of the normal CDF"**](https://www.johndcook.com/blog/normal_cdf_inverse/).  Notice that the normal distribution's inverse CDF has no closed form.
 
 For surveys of normal random number generators, see (Thomas et al. 2007)<sup>[**(6)**](#Note6)</sup>, and (Malik and Hemani 2016)<sup>[**(7)**](#Note7)</sup>.
 
@@ -169,7 +170,7 @@ I give an [**error-bounded sampler**](https://peteroupc.github.io/betadist.html)
 
 The _von Mises distribution_ describes a distribution of circular angles and uses two parameters: `mean` is the mean angle and `kappa` is a shape parameter.  The distribution is uniform at `kappa = 0` and approaches a normal distribution with increasing `kappa`.
 
-The algorithm below generates a random number from the von Mises distribution, and is based on the Best&ndash;Fisher algorithm from 1979 (as described in (Devroye 1986)<sup>[**(10)**](#Note10)</sup> with errata incorporated).
+The algorithm below generates a random number from the von Mises distribution, and is based on the Best&ndash;Fisher algorithm from 1979 (as described in (Devroye 1986)<sup>[**(1)**](#Note1)</sup> with errata incorporated).
 
     METHOD VonMises(mean, kappa)
         if kappa < 0: return error
@@ -229,7 +230,7 @@ As more and more independent random numbers, generated the same way, are added t
         end
     END METHOD
 
-Methods implementing the strictly geometric stable, general geometric stable, and multivariate Linnik distributions are shown below (Kozubowski 2000)<sup>[**(11)**](#Note11)</sup>.  Here, `alpha` is in (0, 2], `lamda` is greater than 0, and `tau`'s absolute value is min(1, 2/`alpha` - 1).
+Methods implementing the strictly geometric stable, general geometric stable, and multivariate Linnik distributions are shown below (Kozubowski 2000)<sup>[**(10)**](#Note10)</sup>.  Here, `alpha` is in (0, 2], `lamda` is greater than 0, and `tau`'s absolute value is min(1, 2/`alpha` - 1).
 
     METHOD GeometricStable(alpha, lamda, tau)
        // If tau is 0, this is a symmetric Linnik distribution.
@@ -355,13 +356,13 @@ The following pseudocode calculates a random vector (list of numbers) that follo
 <a id=Random_Real_Numbers_with_a_Given_Positive_Sum></a>
 #### Random Real Numbers with a Given Positive Sum
 
-Generating _n_ `GammaDist(total, 1)` numbers and dividing them by their sum<sup>[**(12)**](#Note12)</sup>
+Generating _n_ `GammaDist(total, 1)` numbers and dividing them by their sum<sup>[**(11)**](#Note11)</sup>
  will result in _n_ uniform random numbers that (approximately) sum to `total`, in random order (see a [**Wikipedia article**](https://en.wikipedia.org/wiki/Dirichlet_distribution#Gamma_distribution)).  For example, if `total` is 1, the numbers will (approximately) sum to 1.  Note that in the exceptional case that all numbers are 0, the process should repeat.
 
 > **Notes:**
 >
 > 1. Notes 1 and 2 in the section "Random Integers with a Given Positive Sum" apply here.
-> 2. The **Dirichlet distribution**, as defined in some places (e.g., _Mathematica_; (Devroye 1986)<sup>[**(10)**](#Note10)</sup>, p. 593-594), can be sampled by generating _n_+1 random [**gamma-distributed**](#Gamma_Distribution) numbers, each with separate parameters, taking their sum<sup>[**(12)**](#Note12)</sup>, dividing them by that sum, and taking the first _n_ numbers. (The _n_+1 numbers sum to 1, but the Dirichlet distribution models the first _n_ of them, which will generally sum to less than 1.)
+> 2. The **Dirichlet distribution**, as defined in some places (e.g., _Mathematica_; (Devroye 1986)<sup>[**(1)**](#Note1)</sup>, p. 593-594), can be sampled by generating _n_+1 random [**gamma-distributed**](#Gamma_Distribution) numbers, each with separate parameters, taking their sum<sup>[**(11)**](#Note11)</sup>, dividing them by that sum, and taking the first _n_ numbers. (The _n_+1 numbers sum to 1, but the Dirichlet distribution models the first _n_ of them, which will generally sum to less than 1.)
 
 <a id=Gaussian_and_Other_Copulas></a>
 #### Gaussian and Other Copulas
@@ -385,7 +386,7 @@ One example is a _Gaussian copula_; this copula is sampled by sampling from a [*
        return mvn
     END METHOD
 
-Each of the resulting uniform random numbers will be in the interval [0, 1], and each one can be further transformed to any other probability distribution (which is called a _marginal distribution_ here) by taking the quantile of that uniform number for that distribution (see "[**Inverse Transform Sampling**](#Inverse_Transform_Sampling)", and see also (Cario and Nelson 1997)<sup>[**(13)**](#Note13)</sup>.)
+Each of the resulting uniform random numbers will be in the interval [0, 1], and each one can be further transformed to any other probability distribution (which is called a _marginal distribution_ here) by taking the quantile of that uniform number for that distribution (see "[**Inverse Transform Sampling**](#Inverse_Transform_Sampling)", and see also (Cario and Nelson 1997)<sup>[**(12)**](#Note12)</sup>.)
 
 > **Examples:**
 >
@@ -407,12 +408,12 @@ Other kinds of copulas describe different kinds of dependence between random num
 - the **Fr&eacute;chet&ndash;Hoeffding upper bound copula** _\[x, x, ..., x\]_ (e.g., `[x, x]`), where `x = RNDU01()`,
 - the **Fr&eacute;chet&ndash;Hoeffding lower bound copula** `[x, 1.0 - x]` where `x = RNDU01()`,
 - the **product copula**, where each number is a separately generated `RNDU01()` (indicating no dependence between the numbers), and
-- the **Archimedean copulas**, described by M. Hofert and M. M&auml;chler (2011)<sup>[**(14)**](#Note14)</sup>.
+- the **Archimedean copulas**, described by M. Hofert and M. M&auml;chler (2011)<sup>[**(13)**](#Note13)</sup>.
 
 <a id=Exponential_Distribution_Another_Error_Bounded_Algorithm></a>
 #### Exponential Distribution: Another Error-Bounded Algorithm
 
-The following method samples from an exponential distribution with a &lambda; parameter of 1 (within an error tolerance of 2<sup>`-precision`</sup>) (Devroye and Gravel 2018)<sup>[**(15)**](#Note15)</sup>.  Includes algorithms due to (Morina et al. 2019)<sup>[**(16)**](#Note16)</sup> and (Canonne et al. 2020)<sup>[**(17)**](#Note17)</sup>.
+The following method samples from an exponential distribution with a &lambda; parameter of 1 (within an error tolerance of 2<sup>`-precision`</sup>) (Devroye and Gravel 2018)<sup>[**(14)**](#Note14)</sup>.  Includes algorithms due to (Morina et al. 2019)<sup>[**(15)**](#Note15)</sup> and (Canonne et al. 2020)<sup>[**(16)**](#Note16)</sup>.
 
     METHOD ZeroOrOneExpMinus(x, y)
       # Generates 1 with probability exp(-x/y) (Canonne et al. 2020)
@@ -460,7 +461,7 @@ The following method samples from an exponential distribution with a &lambda; pa
 <a id=Notes></a>
 ## Notes
 
-<small><sup id=Note1>(1)</sup> This means the algorithm samples from a continuous distribution that is close to the ideal distribution within a user-specified error tolerance, or samples exactly from a discrete distribution (one that takes on a countable number of values).  Thus, the algorithm gives every representable number the expected probability of occurring.  In general, the only random numbers the algorithm uses are random bits (binary digits).</small>
+<small><sup id=Note1>(1)</sup> Devroye, L., [**_Non-Uniform Random Variate Generation_**](http://luc.devroye.org/rnbookindex.html), 1986.</small>
 
 <small><sup id=Note2>(2)</sup> Karney, C.F.F., "[**Sampling exactly from the normal distribution**](https://arxiv.org/abs/1303.6257v2)", arXiv:1303.6257v2  [physics.comp-ph], 2014.</small>
 
@@ -478,21 +479,19 @@ The following method samples from an exponential distribution with a &lambda; pa
 
 <small><sup id=Note9>(9)</sup> "A simple method for generating gamma variables", _ACM Transactions on Mathematical Software_ 26(3), 2000.</small>
 
-<small><sup id=Note10>(10)</sup> Devroye, L., [**_Non-Uniform Random Variate Generation_**](http://luc.devroye.org/rnbookindex.html), 1986.</small>
+<small><sup id=Note10>(10)</sup> Tomasz J. Kozubowski, "Computer simulation of geometric stable distributions", _Journal of Computational and Applied Mathematics_ 116(2), 2000.</small>
 
-<small><sup id=Note11>(11)</sup> Tomasz J. Kozubowski, "Computer simulation of geometric stable distributions", _Journal of Computational and Applied Mathematics_ 116(2), 2000.</small>
+<small><sup id=Note11>(11)</sup> [**Kahan summation**](https://en.wikipedia.org/wiki/Kahan_summation_algorithm) can be a more robust way than the na&iuml;ve approach to compute the sum of three or more floating-point numbers.</small>
 
-<small><sup id=Note12>(12)</sup> [**Kahan summation**](https://en.wikipedia.org/wiki/Kahan_summation_algorithm) can be a more robust way than the na&iuml;ve approach to compute the sum of three or more floating-point numbers.</small>
+<small><sup id=Note12>(12)</sup> Cario, M. C., B. L. Nelson, "Modeling and generating random vectors with arbitrary marginal distributions and correlation matrix", 1997.</small>
 
-<small><sup id=Note13>(13)</sup> Cario, M. C., B. L. Nelson, "Modeling and generating random vectors with arbitrary marginal distributions and correlation matrix", 1997.</small>
+<small><sup id=Note13>(13)</sup> Hofert, M., and Maechler, M.  "Nested Archimedean Copulas Meet R: The nacopula Package".  _Journal of Statistical Software_ 39(9), 2011, pp. 1-20.</small>
 
-<small><sup id=Note14>(14)</sup> Hofert, M., and Maechler, M.  "Nested Archimedean Copulas Meet R: The nacopula Package".  _Journal of Statistical Software_ 39(9), 2011, pp. 1-20.</small>
+<small><sup id=Note14>(14)</sup> Devroye, L., Gravel, C., "[**Sampling with arbitrary precision**](https://arxiv.org/abs/1502.02539v5)", arXiv:1502.02539v5 [cs.IT], 2018.</small>
 
-<small><sup id=Note15>(15)</sup> Devroye, L., Gravel, C., "[**Sampling with arbitrary precision**](https://arxiv.org/abs/1502.02539v5)", arXiv:1502.02539v5 [cs.IT], 2018.</small>
+<small><sup id=Note15>(15)</sup> Morina, G., Łatuszyński, K., et al., "From the Bernoulli Factory to a Dice Enterprise via Perfect Sampling of Markov Chains", 2019.</small>
 
-<small><sup id=Note16>(16)</sup> Morina, G., Łatuszyński, K., et al., "From the Bernoulli Factory to a Dice Enterprise via Perfect Sampling of Markov Chains", 2019.</small>
-
-<small><sup id=Note17>(17)</sup> Canonne, C., Kamath, G., Steinke, T., "[**The Discrete Gaussian for Differential Privacy**](https://arxiv.org/abs/2004.00010v2)", arXiv:2004.00010v2 [cs.DS], 2020.</small>
+<small><sup id=Note16>(16)</sup> Canonne, C., Kamath, G., Steinke, T., "[**The Discrete Gaussian for Differential Privacy**](https://arxiv.org/abs/2004.00010v2)", arXiv:2004.00010v2 [cs.DS], 2020.</small>
 
 <a id=Appendix></a>
 ## Appendix
