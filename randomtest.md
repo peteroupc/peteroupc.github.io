@@ -17,7 +17,7 @@ There are several kinds of nearby sequences to test for this purpose:
 - Two or more PRNGs initialized with consecutive seeds.
 - Two or more PRNGs initialized with seeds that differ from each other by one bit (see also "[**The wrap-up on PCG generators**](http://pcg.di.unimi.it/pcg.php#flaws)").
 
-Note that testing nearby sequences produced by _leapfrogging_ is redundant with testing the regular PRNG sequence without streams.
+The _leapfrogging_ technique involves assigning N processes a PRNG that each differ from the last by 1 step, then having each such PRNG advance N steps, where N is the number of PRNGs, each time it generates a random number.  Note that testing nearby sequences produced by leapfrogging is redundant with testing the regular PRNG sequence without streams.
 
 **Hash functions and counter-based PRNGs.** In general, a _counter-based PRNG_ produces pseudorandom numbers by transforming a seed and a _counter_; with each number, it increments the counter and leaves the seed unchanged (Salmon et al. 2011)<sup>[**(1)**](#Note1)</sup>.  The seed and counter can be transformed using block ciphers, other permutation functions, or hash functions.  In general, counter-based PRNGs that use hash functions (such as MD5, SHA-1, MurmurHash, CityHash, xxHash) will meet the independence requirement if the following hash stream (for that hash function) doesn't fail the PractRand tests at 1 TiB or greater:
 
