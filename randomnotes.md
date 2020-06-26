@@ -1,13 +1,14 @@
 <a id=More_Random_Sampling_Methods></a>
 ## More Random Sampling Methods
 
+[**Peter Occil**](mailto:poccil14@gmail.com)
+
 <a id=Contents></a>
 ### Contents
 
 - [**More Random Sampling Methods**](#More_Random_Sampling_Methods)
     - [**Contents**](#Contents)
     - [**Specific Distributions**](#Specific_Distributions)
-        - [**A Note on Error-Bounded Algorithms**](#A_Note_on_Error_Bounded_Algorithms)
         - [**Normal (Gaussian) Distribution**](#Normal_Gaussian_Distribution)
         - [**Gamma Distribution**](#Gamma_Distribution)
         - [**Beta Distribution**](#Beta_Distribution)
@@ -20,25 +21,13 @@
 - [**Notes**](#Notes)
 - [**Appendix**](#Appendix)
     - [**Implementation of `erf`**](#Implementation_of_erf)
+    - [**A Note on Error-Bounded Algorithms**](#A_Note_on_Error_Bounded_Algorithms)
 - [**License**](#License)
 
 <a id=Specific_Distributions></a>
 ### Specific Distributions
 
-**Requires random real numbers.**  This section shows algorithms to sample several popular non-uniform distributions.
-
-<a id=A_Note_on_Error_Bounded_Algorithms></a>
-#### A Note on Error-Bounded Algorithms
-
-There are three kinds of randomization algorithms:
-
-1. An _error-bounded algorithm_ is an algorithm that samples a distribution in a manner that minimizes approximation error.  This means the algorithm samples from a continuous distribution that is close to the ideal distribution within a user-specified error tolerance, or samples exactly from a discrete distribution (one that takes on a countable number of values).  Thus, the algorithm gives every representable number the expected probability of occurring.  In general, the only random numbers the algorithm uses are random bits (binary digits).  An application should use error-bounded algorithms whenever possible.
-2. An _exact algorithm_ is an algorithm that samples from the exact distribution requested, assuming that computers can store and operate on real numbers of any precision and can generate independent uniform random real numbers of any precision (Devroye 1986, p. 1-2)<sup>[**(1)**](#Note1)</sup>.  Without more, however, an exact algorithm implemented using floating-point arithmetic can incur rounding and other errors, especially when they calculate irrational numbers or transcendental functions.  An exact algorithm can achieve a guaranteed bound on accuracy (and thus be an _error-bounded algorithm_) using either arbitrary-precision or interval arithmetic (see also Devroye 1986, p. 2)<sup>[**(1)**](#Note1)</sup>.  In this page, all methods given here are exact unless otherwise noted.  Note that `RNDU01` or `RNDRANGE` are exact in theory, but have no required implementation.
-3. An _inexact algorithm_ or _approximate algorithm_ is neither exact nor error-bounded; it uses "a mathematical approximation of sorts" to generate a random number that is close to the desired distribution (Devroye 1986, p. 2)<sup>[**(1)**](#Note1)</sup>.  An application should use this kind of algorithm only if it's willing to trade accuracy for speed.
-
-Most algorithms on this page, though, are not _error-bounded_, but even so, they may still be useful to an application willing to trade accuracy for speed.
-
-On the other hand, if an algorithm returns results that are accurate to a given number of digits after the point (for example, 53 bits after the point), it can generate any number of digits uniformly at random and append those digits to the result's digit expansion without affecting accuracy. For example, after it generates a normally-distributed random number, an algorithm can fill it with enough uniform random bits, as necessary, to give the number 100 bits after the point (Karney 2014)<sup>[**(2)**](#Note2)</sup> (example: `for i in 54..100: ret = ret + RNDINT(1) * pow(2,-i)`).
+**Requires random real numbers.**  This section shows algorithms to sample several popular non-uniform distributions.  The algorithms are exact unless otherwise noted, and applications should choose algorithms with either no error (including rounding error) or a user-settable error bound.  See the [**appendix**](#A_Note_on_Error_Bounded_Algorithms) for more information.
 
 <a id=Normal_Gaussian_Distribution></a>
 #### Normal (Gaussian) Distribution
@@ -52,12 +41,12 @@ There are a number of methods for normal random number generation, including the
 
 1. The ratio-of-uniforms method (given as `NormalRatioOfUniforms` below).
 2. In the _Box&ndash;Muller transformation_, `mu + radius * cos(angle)` and `mu + radius * sin(angle)`, where `angle = RNDRANGEMaxExc(0, 2 * pi)` and `radius = sqrt(Expo(0.5)) * sigma`, are two independent normally-distributed random numbers.  The polar method (given as `NormalPolar` below) likewise produces two independent normal random numbers at a time.
-3. Karney's algorithm to sample from the normal distribution, in a manner that minimizes approximation error and without using floating-point numbers (Karney 2014)<sup>[**(2)**](#Note2)</sup>.
+3. Karney's algorithm to sample from the normal distribution, in a manner that minimizes approximation error and without using floating-point numbers (Karney 2014)<sup>[**(1)**](#Note1)</sup>.
 4. The following are approximations to the normal distribution:
-    - The sum of twelve `RNDRANGEMaxExc(0, sigma)` numbers (see Note 13), subtracted by 6 * `sigma`. See `NormalCLT` below, which also includes an optional step to "warp" the random number for better accuracy (Kabal 2000/2019)<sup>[**(3)**](#Note3)</sup> See also [**"Irwin&ndash;Hall distribution" on Wikipedia**](https://en.wikipedia.org/wiki/Irwin%E2%80%93Hall_distribution).  D. Thomas (2014)<sup>[**(4)**](#Note4)</sup>, describes a more general approximation called CLT<sub>k</sub>, which combines `k` uniform random numbers as follows: `RNDU01() - RNDU01() + RNDU01() - ...`.
-    - [**Inversion**](#Inverse_Transform_Sampling) of the normal distribution's CDF, including those by Wichura, by Acklam, and by Luu (Luu 2016)<sup>[**(5)**](#Note5)</sup>.  See also [**"A literate program to compute the inverse of the normal CDF"**](https://www.johndcook.com/blog/normal_cdf_inverse/).  Notice that the normal distribution's inverse CDF has no closed form.
+    - The sum of twelve `RNDRANGEMaxExc(0, sigma)` numbers (see Note 13), subtracted by 6 * `sigma`. See `NormalCLT` below, which also includes an optional step to "warp" the random number for better accuracy (Kabal 2000/2019)<sup>[**(2)**](#Note2)</sup> See also [**"Irwin&ndash;Hall distribution" on Wikipedia**](https://en.wikipedia.org/wiki/Irwin%E2%80%93Hall_distribution).  D. Thomas (2014)<sup>[**(3)**](#Note3)</sup>, describes a more general approximation called CLT<sub>k</sub>, which combines `k` uniform random numbers as follows: `RNDU01() - RNDU01() + RNDU01() - ...`.
+    - [**Inversions**](#Inverse_Transform_Sampling) of the normal distribution's cumulative distribution function (CDF), including those by Wichura, by Acklam, and by Luu (Luu 2016)<sup>[**(4)**](#Note4)</sup>.  See also [**"A literate program to compute the inverse of the normal CDF"**](https://www.johndcook.com/blog/normal_cdf_inverse/).  Notice that the normal distribution's inverse CDF has no closed form.
 
-For surveys of normal random number generators, see (Thomas et al. 2007)<sup>[**(6)**](#Note6)</sup>, and (Malik and Hemani 2016)<sup>[**(7)**](#Note7)</sup>.
+For surveys of normal random number generators, see (Thomas et al. 2007)<sup>[**(5)**](#Note5)</sup>, and (Malik and Hemani 2016)<sup>[**(6)**](#Note6)</sup>.
 
     METHOD NormalRatioOfUniforms(mu, sigma)
         while true
@@ -101,12 +90,12 @@ For surveys of normal random number generators, see (Thomas et al. 2007)<sup>[**
 > **Notes:**
 >
 > 1. The _standard normal distribution_ is implemented as `Normal(0, 1)`.
-> 2. Methods implementing a variant of the normal distribution, the _discrete Gaussian distribution_, generate _integers_ that closely follow the normal distribution.  Examples include the one in (Karney 2014)<sup>[**(2)**](#Note2)</sup>, as well as so-called "constant-time" methods such as (Micciancio and Walter 2017)<sup>[**(8)**](#Note8)</sup> that are used above all in _lattice-based cryptography_.
+> 2. Methods implementing a variant of the normal distribution, the _discrete Gaussian distribution_, generate _integers_ that closely follow the normal distribution.  Examples include the one in (Karney 2014)<sup>[**(1)**](#Note1)</sup>, as well as so-called "constant-time" methods such as (Micciancio and Walter 2017)<sup>[**(7)**](#Note7)</sup> that are used above all in _lattice-based cryptography_.
 
 <a id=Gamma_Distribution></a>
 #### Gamma Distribution
 
-The following method generates a random number that follows a _gamma distribution_ and is based on Marsaglia and Tsang's method from 2000<sup>[**(9)**](#Note9)</sup>.  Usually, the number expresses either&mdash;
+The following method generates a random number that follows a _gamma distribution_ and is based on Marsaglia and Tsang's method from 2000<sup>[**(8)**](#Note8)</sup>.  Usually, the number expresses either&mdash;
 
 - the lifetime (in days, hours, or other fixed units) of a random component with an average lifetime of `meanLifetime`, or
 - a random amount of time (in days, hours, or other fixed units) that passes until as many events as `meanLifetime` happen.
@@ -170,7 +159,7 @@ I give an [**error-bounded sampler**](https://peteroupc.github.io/betadist.html)
 
 The _von Mises distribution_ describes a distribution of circular angles and uses two parameters: `mean` is the mean angle and `kappa` is a shape parameter.  The distribution is uniform at `kappa = 0` and approaches a normal distribution with increasing `kappa`.
 
-The algorithm below generates a random number from the von Mises distribution, and is based on the Best&ndash;Fisher algorithm from 1979 (as described in (Devroye 1986)<sup>[**(1)**](#Note1)</sup> with errata incorporated).
+The algorithm below generates a random number from the von Mises distribution, and is based on the Best&ndash;Fisher algorithm from 1979 (as described in (Devroye 1986)<sup>[**(9)**](#Note9)</sup> with errata incorporated).
 
     METHOD VonMises(mean, kappa)
         if kappa < 0: return error
@@ -362,7 +351,7 @@ Generating _n_ `GammaDist(1, 1)` numbers and dividing them by `total` times thei
 > **Notes:**
 >
 > 1. Notes 1 and 2 in the section "Random Integers with a Given Positive Sum" apply here.
-> 2. The **Dirichlet distribution**, as defined in some places (e.g., _Mathematica_; (Devroye 1986)<sup>[**(1)**](#Note1)</sup>, p. 593-594), can be sampled by generating _n_+1 random [**gamma-distributed**](#Gamma_Distribution) numbers, each with separate parameters, taking their sum<sup>[**(11)**](#Note11)</sup>, dividing them by that sum, and taking the first _n_ numbers. (The _n_+1 numbers sum to 1, but the Dirichlet distribution models the first _n_ of them, which will generally sum to less than 1.)
+> 2. The **Dirichlet distribution**, as defined in some places (e.g., _Mathematica_; (Devroye 1986)<sup>[**(9)**](#Note9)</sup>, p. 593-594), can be sampled by generating _n_+1 random [**gamma-distributed**](#Gamma_Distribution) numbers, each with separate parameters, taking their sum<sup>[**(11)**](#Note11)</sup>, dividing them by that sum, and taking the first _n_ numbers. (The _n_+1 numbers sum to 1, but the Dirichlet distribution models the first _n_ of them, which will generally sum to less than 1.)
 
 <a id=Gaussian_and_Other_Copulas></a>
 #### Gaussian and Other Copulas
@@ -456,28 +445,28 @@ The following method samples from an exponential distribution with a &lambda; pa
        return ret
     END METHOD
 
-> **Note:** After `ExpoExact` is used to generate a random number, an application can append additional binary digits (such as `RNDINT(1)`) to the end of that number without affecting the distribution (Karney 2014)<sup>[**(2)**](#Note2)</sup>.
+> **Note:** After `ExpoExact` is used to generate a random number, an application can append additional binary digits (such as `RNDINT(1)`) to the end of that number while remaining accurate to the given precision (Karney 2014)<sup>[**(1)**](#Note1)</sup>.
 
 <a id=Notes></a>
 ## Notes
 
-<small><sup id=Note1>(1)</sup> Devroye, L., [**_Non-Uniform Random Variate Generation_**](http://luc.devroye.org/rnbookindex.html), 1986.</small>
+<small><sup id=Note1>(1)</sup> Karney, C.F.F., "[**Sampling exactly from the normal distribution**](https://arxiv.org/abs/1303.6257v2)", arXiv:1303.6257v2  [physics.comp-ph], 2014.</small>
 
-<small><sup id=Note2>(2)</sup> Karney, C.F.F., "[**Sampling exactly from the normal distribution**](https://arxiv.org/abs/1303.6257v2)", arXiv:1303.6257v2  [physics.comp-ph], 2014.</small>
+<small><sup id=Note2>(2)</sup> Kabal, P., "Generating Gaussian Pseudo-Random Variates", McGill University, 2000/2019.</small>
 
-<small><sup id=Note3>(3)</sup> Kabal, P., "Generating Gaussian Pseudo-Random Variates", McGill University, 2000/2019.</small>
+<small><sup id=Note3>(3)</sup> Thomas, D.B., 2014, May. FPGA Gaussian random number generators with guaranteed statistical accuracy. In _2014 IEEE 22nd Annual International Symposium on Field-Programmable Custom Computing Machines_ (pp. 149-156).</small>
 
-<small><sup id=Note4>(4)</sup> Thomas, D.B., 2014, May. FPGA Gaussian random number generators with guaranteed statistical accuracy. In _2014 IEEE 22nd Annual International Symposium on Field-Programmable Custom Computing Machines_ (pp. 149-156).</small>
+<small><sup id=Note4>(4)</sup> Luu, T., "Fast and Accurate Parallel Computation of Quantile Functions for Random Number Generation", Dissertation, University College London, 2016.</small>
 
-<small><sup id=Note5>(5)</sup> Luu, T., "Fast and Accurate Parallel Computation of Quantile Functions for Random Number Generation", Dissertation, University College London, 2016.</small>
+<small><sup id=Note5>(5)</sup> Thomas, D., et al., "Gaussian Random Number Generators", _ACM Computing Surveys_ 39(4), 2007.</small>
 
-<small><sup id=Note6>(6)</sup> Thomas, D., et al., "Gaussian Random Number Generators", _ACM Computing Surveys_ 39(4), 2007.</small>
+<small><sup id=Note6>(6)</sup> Malik, J.S., Hemani, A., "Gaussian random number generation: A survey on hardware architectures", _ACM Computing Surveys_ 49(3), 2016.</small>
 
-<small><sup id=Note7>(7)</sup> Malik, J.S., Hemani, A., "Gaussian random number generation: A survey on hardware architectures", _ACM Computing Surveys_ 49(3), 2016.</small>
+<small><sup id=Note7>(7)</sup> Micciancio, D. and Walter, M., "Gaussian sampling over the integers: Efficient, generic, constant-time", in Annual International Cryptology Conference, August 2017 (pp. 455-485).</small>
 
-<small><sup id=Note8>(8)</sup> Micciancio, D. and Walter, M., "Gaussian sampling over the integers: Efficient, generic, constant-time", in Annual International Cryptology Conference, August 2017 (pp. 455-485).</small>
+<small><sup id=Note8>(8)</sup> "A simple method for generating gamma variables", _ACM Transactions on Mathematical Software_ 26(3), 2000.</small>
 
-<small><sup id=Note9>(9)</sup> "A simple method for generating gamma variables", _ACM Transactions on Mathematical Software_ 26(3), 2000.</small>
+<small><sup id=Note9>(9)</sup> Devroye, L., [**_Non-Uniform Random Variate Generation_**](http://luc.devroye.org/rnbookindex.html), 1986.</small>
 
 <small><sup id=Note10>(10)</sup> Tomasz J. Kozubowski, "Computer simulation of geometric stable distributions", _Journal of Computational and Applied Mathematics_ 116(2), 2000.</small>
 
@@ -526,6 +515,19 @@ The pseudocode below shows how the [**error function**](https://en.wikipedia.org
         end
         return ret*2/sqrt(pi)
     END METHOD
+
+<a id=A_Note_on_Error_Bounded_Algorithms></a>
+### A Note on Error-Bounded Algorithms
+
+There are three kinds of randomization algorithms:
+
+1. An _error-bounded algorithm_ is an algorithm that samples a distribution in a manner that minimizes approximation error.  This means the algorithm samples from a continuous distribution that is close to the ideal distribution within a user-specified error tolerance, or samples exactly from a discrete distribution (one that takes on a countable number of values).  Thus, the algorithm gives every representable number the expected probability of occurring.  In general, the only random numbers the algorithm uses are random bits (binary digits).  An application should use error-bounded algorithms whenever possible.
+2. An _exact algorithm_ is an algorithm that samples from the exact distribution requested, assuming that computers can store and operate on real numbers of any precision and can generate independent uniform random real numbers of any precision (Devroye 1986, p. 1-2)<sup>[**(9)**](#Note9)</sup>.  Without more, however, an exact algorithm implemented on real-life computers can incur rounding and other errors, especially when floating-point arithmetic is used or when irrational numbers or transcendental functions are involved.  An exact algorithm can achieve a guaranteed bound on accuracy (and thus be an _error-bounded algorithm_) using either arbitrary-precision or interval arithmetic (see also Devroye 1986, p. 2)<sup>[**(9)**](#Note9)</sup>.  In this page, all methods given here are exact unless otherwise noted.  Note that `RNDU01` or `RNDRANGE` are exact in theory, but have no required implementation.
+3. An _inexact algorithm_ or _approximate algorithm_ is neither exact nor error-bounded; it uses "a mathematical approximation of sorts" to generate a random number that is close to the desired distribution (Devroye 1986, p. 2)<sup>[**(9)**](#Note9)</sup>.  An application should use this kind of algorithm only if it's willing to trade accuracy for speed.
+
+Most algorithms on this page, though, are not _error-bounded_, but even so, they may still be useful to an application willing to trade accuracy for speed.
+
+On the other hand, if an algorithm returns results that are accurate to a given number of digits after the point (for example, 53 bits after the point), it can generate any number of digits uniformly at random and append those digits to the result's digit expansion while remaining accurate to that many digits. For example, after it generates a normally-distributed random number, an algorithm can fill it with enough uniform random bits, as necessary, to give the number 100 bits after the point (Karney 2014)<sup>[**(1)**](#Note1)</sup> (example: `for i in 54..100: ret = ret + RNDINT(1) * pow(2,-i)`).
 
 <a id=License></a>
 ## License

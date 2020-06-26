@@ -35,9 +35,10 @@ def prepareMarkdown(data)
      end
      next "<sup>[(#{newref+1})](##{newrefid})</sup>"
   }
-  data=data.gsub(/<<([^\|>]*)\|([^\|>]+)>>/){
+  data=data.gsub(/<<([^\|>\n]*)\|([^\|>]+)>>/){
      noteref=$1||""
      notedata=$2
+     next $& if noteref[/^\s+/] # sanity check
      newref=newnotetexts.length
      newrefid="Note#{newref+1}"
      noterefs[noteref]=newref

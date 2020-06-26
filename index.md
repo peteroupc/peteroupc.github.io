@@ -15,6 +15,7 @@ Open-source articles on programming subjects.
 * [More Random Number Sampling Methods](./randomnotes.html)
 * [The Most Common Topics Involving Randomization](./randomcommon.html)
 * [An Exact Beta Generator](./betadist.html)
+* [Partially-Sampled Exponential Random Numbers](./exporand.html)
 * [Testing PRNGs for High-Quality Randomness](./randomtest.html)
 * [Examples of High-Quality PRNGs](./hqprng.html)
 * [Notes on Calculating Jump Parameters for Some PRNGs](./jump.html)
