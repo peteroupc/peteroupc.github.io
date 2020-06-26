@@ -34,9 +34,9 @@ There are three kinds of randomization algorithms:
 
 1. An _error-bounded algorithm_ is an algorithm that samples a distribution in a manner that minimizes approximation error.  This means the algorithm samples from a continuous distribution that is close to the ideal distribution within a user-specified error tolerance, or samples exactly from a discrete distribution (one that takes on a countable number of values).  Thus, the algorithm gives every representable number the expected probability of occurring.  In general, the only random numbers the algorithm uses are random bits (binary digits).  An application should use error-bounded algorithms whenever possible.
 2. An _exact algorithm_ is an algorithm that samples from the exact distribution requested, assuming that computers can store and operate on real numbers of any precision and can generate independent uniform random real numbers of any precision (Devroye 1986, p. 1-2)<sup>[**(1)**](#Note1)</sup>.  Without more, however, an exact algorithm implemented using floating-point arithmetic can incur rounding and other errors, especially when they calculate irrational numbers or transcendental functions.  An exact algorithm can achieve a guaranteed bound on accuracy (and thus be an _error-bounded algorithm_) using either arbitrary-precision or interval arithmetic (see also Devroye 1986, p. 2)<sup>[**(1)**](#Note1)</sup>.  In this page, all methods given here are exact unless otherwise noted.  Note that `RNDU01` or `RNDRANGE` are exact in theory, but have no required implementation.
-3. An _inexact algorithm_ or _approximate algorithm_ uses "a mathematical approximation of sorts" to generate a random number that is close to the desired distribution (Devroye 1986, p. 2)<sup>[**(1)**](#Note1)</sup>.  An application should use this kind of algorithm only if it's willing to trade accuracy for speed.
+3. An _inexact algorithm_ or _approximate algorithm_ is neither exact nor error-bounded; it uses "a mathematical approximation of sorts" to generate a random number that is close to the desired distribution (Devroye 1986, p. 2)<sup>[**(1)**](#Note1)</sup>.  An application should use this kind of algorithm only if it's willing to trade accuracy for speed.
 
-Most of these algorithms, though, are not _error-bounded_, but even so, they may still be useful to an application willing to trade accuracy for speed.
+Most algorithms on this page, though, are not _error-bounded_, but even so, they may still be useful to an application willing to trade accuracy for speed.
 
 On the other hand, if an algorithm returns results that are accurate to a given number of digits after the point (for example, 53 bits after the point), it can generate any number of digits uniformly at random and append those digits to the result's digit expansion without affecting accuracy. For example, after it generates a normally-distributed random number, an algorithm can fill it with enough uniform random bits, as necessary, to give the number 100 bits after the point (Karney 2014)<sup>[**(2)**](#Note2)</sup> (example: `for i in 54..100: ret = ret + RNDINT(1) * pow(2,-i)`).
 
@@ -356,8 +356,8 @@ The following pseudocode calculates a random vector (list of numbers) that follo
 <a id=Random_Real_Numbers_with_a_Given_Positive_Sum></a>
 #### Random Real Numbers with a Given Positive Sum
 
-Generating _n_ `GammaDist(total, 1)` numbers and dividing them by their sum<sup>[**(11)**](#Note11)</sup>
- will result in _n_ uniform random numbers that (approximately) sum to `total`, in random order (see a [**Wikipedia article**](https://en.wikipedia.org/wiki/Dirichlet_distribution#Gamma_distribution)).  For example, if `total` is 1, the numbers will (approximately) sum to 1.  Note that in the exceptional case that all numbers are 0, the process should repeat.
+Generating _n_ `GammaDist(1, 1)` numbers and dividing them by `total` times their sum<sup>[**(11)**](#Note11)</sup>
+ will result in _n_ uniform random numbers, in random order, that sum to `total` assuming no rounding error (see a [**Wikipedia article**](https://en.wikipedia.org/wiki/Dirichlet_distribution#Gamma_distribution)).  For example, if `total` is 1, the numbers will (approximately) sum to 1.  Note that in the exceptional case that all numbers are 0, the process should repeat.
 
 > **Notes:**
 >

@@ -1111,7 +1111,7 @@ CLASSES
      |  __truediv__(a, b)
      |
      |  acos(a)
-     |      Calculates an approximation of the inverse sine of the given number.
+     |      Calculates an approximation of the inverse cosine of the given number.
      |
      |  asin(a)
      |      Calculates an approximation of the inverse sine of the given number.
@@ -1151,7 +1151,7 @@ CLASSES
      |      This method's accuracy decreases beyond that range.
      |
      |  sqrt(a)
-     |      Calculates an approximation of the square root of a the given number.
+     |      Calculates an approximation of the square root of the given number.
      |
      |  tan(a)
      |      Calculates the approximate tangent of the given angle; the angle is in radians.

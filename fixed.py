@@ -306,7 +306,7 @@ class Fixed:
 
     def acos(a):
         """
-     Calculates an approximation of the inverse sine of the given number.
+     Calculates an approximation of the inverse cosine of the given number.
      """
         av = Fixed.v(a)
         if av < -1 or av > 1:
@@ -315,7 +315,7 @@ class Fixed:
 
     def sqrt(a):
         """
-     Calculates an approximation of the square root of a the given number.
+     Calculates an approximation of the square root of the given number.
      """
         return Fixed.v(a).pow(Fixed(Fixed.HALF))
 
