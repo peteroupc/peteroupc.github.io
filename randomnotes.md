@@ -409,7 +409,29 @@ Other kinds of copulas describe different kinds of dependence between random num
 <a id=Exponential_Distribution_Another_Error_Bounded_Algorithm></a>
 #### Exponential Distribution: Another Error-Bounded Algorithm
 
-The following method samples from an exponential distribution with a &lambda; parameter of 1 (within an error tolerance of 2<sup>`-precision`</sup>) (Devroye and Gravel 2018)<sup>[**(15)**](#Note15)</sup>.  Includes an algorithm due to (Morina et al. 2019)<sup>[**(16)**](#Note16)</sup>.
+The following method samples from an exponential distribution with a &lambda; parameter of 1 (within an error tolerance of 2<sup>`-precision`</sup>) (Devroye and Gravel 2018)<sup>[**(15)**](#Note15)</sup>.  Includes algorithms due to (Morina et al. 2019)<sup>[**(16)**](#Note16)</sup> and (Canonne et al. 2020)<sup>[**(17)**](#Note17)</sup>.
+
+    METHOD ZeroOrOneExpMinus(x, y)
+      # Generates 1 with probability exp(-x/y) (Canonne et al. 2020)
+      if y <= 0 or x<0: return error
+      if x > y
+        xf = floor(x/y)
+        x = mod(x, y)
+        if x>0 and ZeroOrOneExpMinus(x, y) == 0: return 0
+        for i in 1..xf
+          if ZeroOrOneExpMinus(1,1) == 0: return 0
+        end
+        return 1
+      end
+      r = 1
+      oy = y
+      while true
+        if ZeroOrOne(x, y) == 0: return r
+        if r==1: r=0
+        else: r=1
+        y = y + oy
+      end
+    END METHOD
 
     METHOD LogisticExp(prec)
         // Generates 1 with probability 1/(exp(2^-prec)+1).
@@ -466,6 +488,8 @@ The following method samples from an exponential distribution with a &lambda; pa
 <small><sup id=Note15>(15)</sup> Devroye, L., Gravel, C., "[**Sampling with arbitrary precision**](https://arxiv.org/abs/1502.02539v5)", arXiv:1502.02539v5 [cs.IT], 2018.</small>
 
 <small><sup id=Note16>(16)</sup> Morina, G., Łatuszyński, K., et al., "From the Bernoulli Factory to a Dice Enterprise via Perfect Sampling of Markov Chains", 2019.</small>
+
+<small><sup id=Note17>(17)</sup> Canonne, C., Kamath, G., Steinke, T., "[**The Discrete Gaussian for Differential Privacy**](https://arxiv.org/abs/2004.00010v2)", arXiv:2004.00010v2 [cs.DS], 2020.</small>
 
 <a id=Appendix></a>
 ## Appendix
