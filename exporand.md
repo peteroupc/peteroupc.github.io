@@ -80,39 +80,45 @@ def exprandfill(a, bits):
     return a[0]|(a[2]<<bits)
 
 def exprandless(a, b):
-    """ Determines whether one partially-sampled exponential number
+        """ Determines whether one partially-sampled exponential number
            is less than another; returns
            true if so and false otherwise.  During
            the comparison, additional bits will be sampled in both numbers
            if necessary for the comparison. """
-    # Check integer part of exponentials
-    if a[2]==-1:
-        a[2]=0
-        while zero_or_one_exp_minus(a[3], a[4]) == 1:
-            a[2]+=1
-    if b[2]==-1:
-        b[2]=0
-        while zero_or_one_exp_minus(b[3], b[4]) == 1:
-            b[2]+=1
-    if a[2]<b[2]: return True
-    if a[2]>b[2]: return False
-    index=0
-    while True:
-        # Fill with next bit in a's exponential number
-        if a[1]<index: raise ValueError
-        if b[1]<index: raise ValueError
-        if a[1]<=index:
-           a[1]+=1
-           a[0]=logisticexp(a[3], a[4], index+1) | (a[0] << 1)
-        # Fill with next bit in b's exponential number
-        if b[1]<=index:
-           b[1]+=1
-           b[0]=logisticexp(b[3], b[4], index+1) | (b[0] << 1)
-        aa = (a[0] >> (a[1]-1-index))&1
-        bb = (b[0] >> (b[1]-1-index))&1
-        if ab<bb: return True
-        if ab>bb: return False
-        index+=1
+        # Check integer part of exponentials
+        if a[2] == -1:
+            a[2] = 0
+            while zero_or_one_exp_minus(a[3], a[4]) == 1:
+                a[2] += 1
+        if b[2] == -1:
+            b[2] = 0
+            while zero_or_one_exp_minus(b[3], b[4]) == 1:
+                b[2] += 1
+        if a[2] < b[2]:
+            return True
+        if a[2] > b[2]:
+            return False
+        index = 0
+        while True:
+            # Fill with next bit in a's exponential number
+            if a[1] < index:
+                raise ValueError
+            if b[1] < index:
+                raise ValueError
+            if a[1] <= index:
+                a[1] += 1
+                a[0] = logisticexp(a[3], a[4], index + 1) | (a[0] << 1)
+            # Fill with next bit in b's exponential number
+            if b[1] <= index:
+                b[1] += 1
+                b[0] = logisticexp(b[3], b[4], index + 1) | (b[0] << 1)
+            aa = (a[0] >> (a[1] - 1 - index)) & 1
+            bb = (b[0] >> (b[1] - 1 - index)) & 1
+            if aa < bb:
+                return True
+            if aa > bb:
+                return False
+            index += 1
 
 def zero_or_one_exp_minus(x, y):
         """ Generates 1 with probability exp(-px/py); 0 otherwise.
@@ -172,6 +178,48 @@ The table below shows the results of the correctness testing. For each parameter
 | 5 | 0.00256-0.00546 | 0.10130-0.89935 |
 | 10 | 0.00279-0.00528 | 0.12358-0.82974 |
 
+To test the correctness of `exprandless`, a two-independent-sample T-test was applied to scores involving e-rands and scores involving the Python `random.expovariate` method.  Specifically, the score is calculated as the number of times one exponential number compares as less than another; for the same &lambda; this event should ideally be as likely as the event that it compares as greater.  The Python code that follows the table calculates this score for e-rands and `expovariate`.   Even here, the code for the test is very simple: `kst = scipy.stats.ttest_ind(exppyscores, exprandscores)`, where `exppyscores` and `exprandscores` are each lists of 20 results from `exppyscore` or `exprandscore`, respectively.
+
+The table below shows the results of the correctness testing. For each pair of parameters, results show the lowest and highest T-test statistics and p-values achieved for the 20 results.  Note that a p-value extremely close to 0 or 1 strongly indicates that exponential random numbers are not compared as less or greater with the expected probability.
+
+|  Left &lambda; | Right &lambda; | Statistic | _p_-value |
+ ---- | ---- | ---- |
+| 1/10 | 1/10 | -1.21015 &ndash; 0.93682 | 0.23369 &ndash; 0.75610 |
+| 1/10 | 1/2 | -1.25248 &ndash; 3.56291 | 0.00101 &ndash; 0.39963 |
+| 1/10 | 1 | -0.76586 &ndash; 1.07628 | 0.28859 &ndash; 0.94709 |
+| 1/10 | 2 | -1.80624 &ndash; 1.58347 | 0.07881 &ndash; 0.90802 |
+| 1/10 | 5 | -0.16197 &ndash; 1.78700 | 0.08192 &ndash; 0.87219 |
+| 1/2 | 1/10 | -1.46973 &ndash; 1.40308 | 0.14987 &ndash; 0.74549 |
+| 1/2 | 1/2 | -0.79555 &ndash; 1.21538 | 0.23172 &ndash; 0.93613 |
+| 1/2 | 1 | -0.90496 &ndash; 0.11113 | 0.37119 &ndash; 0.91210 |
+| 1/2 | 2 | -1.32157 &ndash; -0.07066 | 0.19421 &ndash; 0.94404 |
+| 1/2 | 5 | -0.55135 &ndash; 1.85604 | 0.07122 &ndash; 0.76994 |
+| 1 | 1/10 | -1.27023 &ndash; 0.73501 | 0.21173 &ndash; 0.87314 |
+| 1 | 1/2 | -2.33246 &ndash; 0.66827 | 0.02507 &ndash; 0.58741 |
+| 1 | 1 | -1.24446 &ndash; 0.84555 | 0.22095 &ndash; 0.90587 |
+| 1 | 2 | -1.13643 &ndash; 0.84148 | 0.26289 &ndash; 0.95717 |
+| 1 | 5 | -0.70037 &ndash; 1.46778 | 0.15039 &ndash; 0.86996 |
+| 2 | 1/10 | -0.77675 &ndash; 1.15350 | 0.25591 &ndash; 0.97870 |
+| 2 | 1/2 | -0.23122 &ndash; 1.20764 | 0.23465 &ndash; 0.91855 |
+| 2 | 1 | -0.92273 &ndash; -0.05904 | 0.36197 &ndash; 0.95323 |
+| 2 | 2 | -1.88150 &ndash; 0.64096 | 0.06758 &ndash; 0.73056 |
+| 2 | 5 | -0.08315 &ndash; 1.01951 | 0.31441 &ndash; 0.93417 |
+| 5 | 1/10 | -0.60921 &ndash; 1.54606 | 0.13038 &ndash; 0.91563 |
+| 5 | 1/2 | -1.30038 &ndash; 1.43602 | 0.15918 &ndash; 0.86349 |
+| 5 | 1 | -1.22803 &ndash; 1.35380 | 0.18380 &ndash; 0.64158 |
+| 5 | 2 | -1.83124 &ndash; 1.40222 | 0.07491 &ndash; 0.66075 |
+| 5 | 5 | -0.97110 &ndash; 2.00904 | 0.05168 &ndash; 0.74398 |
+
+```
+def exppyscore(ln,ld,ln2,ld2):
+        return sum(1 if random.expovariate(ln*1.0/ld)<random.expovariate(ln2*1.0/ld2) \
+              else 0 for i in range(1000))
+
+def exprandscore(ln,ld,ln2,ld2):
+        return sum(1 if exprandless(exprandnew(ln,ld), exprandnew(ln2,ld2)) \
+              else 0 for i in range(1000))
+```
+
 <a id=Application_to_Weighted_Reservoir_Sampling></a>
 ## Application to Weighted Reservoir Sampling
 
@@ -181,7 +229,7 @@ The table below shows the results of the correctness testing. For each parameter
 - giving each item an exponential random number with &lambda; = _w_, call it the key, and
 - choosing the item with the smallest key
 
-(see also (Efraimidis 2015)<sup>[**(8)**](#Note8)</sup>). However, using fully-sampled exponential random numbers as keys (such as the naïve idiom `-ln(1-RNDU01())/w` in binary64) can lead to inexact sampling, since the keys have a limited precision, it's possible for multiple items to have the same random key (which can make sampling those items depend on their order rather than on randomness), and the maximum weight is unknown.  Partially-sampled e-rands, as given in this document, eliminate the problem of inexact sampling.  This is notably because the `exprandless` method returns only two answers&mdash;either "less" or "greater"&mdash;and samples from both e-rands as necessary so that they will differ from each other by the end of the operation. Another reason is that partially-sampled e-rands have potentially arbitrary precision.
+(see also (Efraimidis 2015)<sup>[**(8)**](#Note8)</sup>). However, using fully-sampled exponential random numbers as keys (such as the naïve idiom `-ln(1-RNDU01())/w` in binary64) can lead to inexact sampling, since the keys have a limited precision, it's possible for multiple items to have the same random key (which can make sampling those items depend on their order rather than on randomness), and the maximum weight is unknown.  Partially-sampled e-rands, as given in this document, eliminate the problem of inexact sampling.  This is notably because the `exprandless` method returns one of only two answers&mdash;either "less" or "greater"&mdash;and samples from both e-rands as necessary so that they will differ from each other by the end of the operation. Another reason is that partially-sampled e-rands have potentially arbitrary precision.
 
 <a id=Notes></a>
 ## Notes
@@ -200,7 +248,7 @@ The table below shows the results of the correctness testing. For each parameter
 
 <small><sup id=Note7>(7)</sup> Lumbroso, J., "[**Optimal Discrete Uniform Generation from Coin Flips, and Applications**](https://arxiv.org/abs/1304.1916)", arXiv:1304.1916 [cs.DS].</small>
 
-<small><sup id=Note8>(8)</sup> Efraimidis, P. "[Weighted Random Sampling over Data Streams](https://arxiv.org/abs/1012.0256v2)", arXiv:1012.0256v2 [cs.DS], 2015.</small>
+<small><sup id=Note8>(8)</sup> Efraimidis, P. "[**Weighted Random Sampling over Data Streams**](https://arxiv.org/abs/1012.0256v2)", arXiv:1012.0256v2 [cs.DS], 2015.</small>
 
 <a id=License></a>
 ## License

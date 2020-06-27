@@ -1817,9 +1817,9 @@ Returns 'list'. """
                 b[0] = self._logisticexp(b[3], b[4], index + 1) | (b[0] << 1)
             aa = (a[0] >> (a[1] - 1 - index)) & 1
             bb = (b[0] >> (b[1] - 1 - index)) & 1
-            if ab < bb:
+            if aa < bb:
                 return True
-            if ab > bb:
+            if aa > bb:
                 return False
             index += 1
 
