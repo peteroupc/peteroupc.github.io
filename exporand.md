@@ -16,8 +16,8 @@ The following Python code implements partially-sampled exponential random number
 
 It makes use of two observations (based on the parameter &lambda; of the exponential distribution):
 
-- With probability exp(-&lambda;), the exponential random number is increased by 1.
-- With probability 1/(1+exp(&lambda;/2<sup>_k_</sup>), the exponential random number is increased by 2<sup>-_k_</sup>, where _k_ > 0 is an integer.
+- While a coin flip with probability of heads of exp(-&lambda;) is heads, the exponential random number is increased by 1.
+- If a coin flip with probability of heads of 1/(1+exp(&lambda;/2<sup>_k_</sup>)) is heads, the exponential random number is increased by 2<sup>-_k_</sup>, where _k_ > 0 is an integer.
 
 (Devroye and Gravel 2018)<sup>[**(3)**](#Note3)</sup> already made these observations in their Appendix, but only for &lambda; = 1.
 
@@ -32,23 +32,25 @@ Both algorithms are included in the Python code below.
 
 import random
 
-def logisticexp(lamda, prec):
-        denom=2**prec
+def logisticexp(ln, ld, prec):
+        denom=ld*2**prec
         while True:
            if random.randint(0,1)==0: return 0
-           if zero_or_one_exp_minus(lamda, denom) == 1: return 1
+           if zero_or_one_exp_minus(ln, denom) == 1: return 1
 
-def exprandnew(lamda=1):
-   """ Returns an object to serve as a partially-sampled
+def exprandnew(lamdanum=1, lamdaden=1):
+     """ Returns an object to serve as a partially-sampled
           exponential random number with the given
-          rate 'lamda'.  The object is a list of four numbers:
+          rate 'lamdanum'/'lamdaden'.  The object is a list of five numbers:
           the first is a multiple of 2^X, the second is X, the third is the integer
           part (initially -1 to indicate the integer part wasn't sampled yet),
-          and the fourth is the 'lamda' parameter.  Default for 'lamda' is 1.
+          and the fourth and fifth are the lamda parameter's
+          numerator and denominator, respectively.  Default for 'lamdanum'
+          and 'lamdaden' is 1.
           The number created by this method will be "empty"
           (no bits sampled yet).
           """
-   return [0, 0, -1, lamda]
+     return [0, 0, -1, lamdanum, lamdaden]
 
 def exprandfill(a, bits):
     """ Fills the unsampled bits of the given exponential random number
@@ -60,7 +62,7 @@ def exprandfill(a, bits):
     # Fill the integer if necessary.
     if a[2]==-1:
         a[2]=0
-        while zero_or_one_exp_minus(a[3], 1) == 1:
+        while zero_or_one_exp_minus(a[3], a[4]) == 1:
             a[2]+=1
     if a[1] > bits:
         # Shifting bits beyond the first excess bit.
@@ -72,7 +74,7 @@ def exprandfill(a, bits):
     while a[1] < bits:
        index = a[1]
        a[1]+=1
-       a[0]=(a[0]<<1)|logisticexp(a[3], index+1)
+       a[0]=(a[0]<<1)|logisticexp(a[3], a[4], index+1)
     return a[0]|(a[2]<<bits)
 
 def exprandless(a, b):
@@ -84,11 +86,11 @@ def exprandless(a, b):
     # Check integer part of exponentials
     if a[2]==-1:
         a[2]=0
-        while zero_or_one_exp_minus(a[3], 1) == 1:
+        while zero_or_one_exp_minus(a[3], a[4]) == 1:
             a[2]+=1
     if b[2]==-1:
         b[2]=0
-        while zero_or_one_exp_minus(b[3], 1) == 1:
+        while zero_or_one_exp_minus(b[3], b[4]) == 1:
             b[2]+=1
     if a[2]<b[2]: return True
     if a[2]>b[2]: return False
@@ -99,14 +101,13 @@ def exprandless(a, b):
         if b[1]<index: raise ValueError
         if a[1]<=index:
            a[1]+=1
-           a[0]=logisticexp(a[3], index+1) | (a[0] << 1)
+           a[0]=logisticexp(a[3], a[4], index+1) | (a[0] << 1)
         # Fill with next bit in b's exponential number
         if b[1]<=index:
            b[1]+=1
-           b[0]=logisticexp(b[3], index+1) | (b[0] << 1)
+           b[0]=logisticexp(b[3], b[4], index+1) | (b[0] << 1)
         aa = (a[0] >> (a[1]-1-index))&1
         bb = (b[0] >> (b[1]-1-index))&1
-        #print([index,ab,bb])
         if ab<bb: return True
         if ab>bb: return False
         index+=1
@@ -143,11 +144,6 @@ def exprand(lam):
    return exprandfill(exprandnew(lam),53)*1.0/(1<<53)
 
 ```
-
-<a id=Application_to_Weighted_Reservoir_Sampling></a>
-## Application to Weighted Reservoir Sampling
-
-Details on this application will be given later.
 
 <a id=Notes></a>
 ## Notes

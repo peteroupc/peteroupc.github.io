@@ -421,6 +421,33 @@ CLASSES
      |
      |  exponential(self, lamda=1.0)
      |
+     |  exprandfill(self, a, bits)
+     |      Fills the unsampled bits of the given exponential random number
+     |      'a' as necessary to make a number whose fractional part
+     |      has 'bits' many bits.  If the number's fractional part already has
+     |      that many bits or more, the number is rounded using the round-to-nearest,
+     |      ties to even rounding rule.  Returns the resulting number as a
+     |      multiple of 2^'bits'.
+     |
+     |  exprandless(self, a, b)
+     |      Determines whether one partially-sampled exponential number
+     |      is less than another; returns
+     |      true if so and false otherwise.  During
+     |      the comparison, additional bits will be sampled in both numbers
+     |      if necessary for the comparison.
+     |
+     |  exprandnew(self, lamdanum=1, lamdaden=1)
+     |      Returns an object to serve as a partially-sampled
+     |      exponential random number with the given
+     |      rate 'lamdanum'/'lamdaden'.  The object is a list of five numbers:
+     |      the first is a multiple of 2^X, the second is X, the third is the integer
+     |      part (initially -1 to indicate the integer part wasn't sampled yet),
+     |      and the fourth and fifth are the lamda parameter's
+     |      numerator and denominator, respectively.  Default for 'lamdanum'
+     |      and 'lamdaden' is 1.
+     |      The number created by this method will be "empty"
+     |      (no bits sampled yet).
+     |
      |  frechet(self, a, b, mu=0)
      |
      |  from_interp(self, table)

@@ -95,7 +95,7 @@ For surveys of normal random number generators, see (Thomas et al. 2007)<sup>[**
 <a id=Gamma_Distribution></a>
 #### Gamma Distribution
 
-The following method generates a random number that follows a _gamma distribution_ and is based on Marsaglia and Tsang's method from 2000<sup>[**(8)**](#Note8)</sup>.  Usually, the number expresses either&mdash;
+The following method generates a random number that follows a _gamma distribution_ and is based on Marsaglia and Tsang's method from 2000<sup>[**(8)**](#Note8)</sup> (which is an approximate but simple algorithm) and (Liu et al. 2015)<sup>[**(9)**](#Note9)</sup>.  Usually, the number expresses either&mdash;
 
 - the lifetime (in days, hours, or other fixed units) of a random component with an average lifetime of `meanLifetime`, or
 - a random amount of time (in days, hours, or other fixed units) that passes until as many events as `meanLifetime` happen.
@@ -108,6 +108,22 @@ Here, `meanLifetime` must be an integer or noninteger greater than 0, and `scale
         // Exponential distribution special case if
         // `meanLifetime` is 1 (see also (Devroye 1986), p. 405)
         if meanLifetime == 1: return Expo(1.0 / scale)
+        if meanLifetime < 0.3 // Liu, Martin, Syring 2015
+           lamda = (1.0/meanLifetime) - 1
+           w = meanLifetime / (1-meanLifetime) * exp(1)
+           r = 1.0/(1+w)
+           while true
+                z = 0
+                x = RNDU01()
+                if x <= r: z = -ln(x/r)
+                else: z = -Expo(lamda)
+                ret = exp(-z/meanLifetime)
+                eta = 0
+                if z>=0: eta=exp(-z)
+                else: eta=w*lamda*exp(lamda*z)
+                if RNDRANGE(0, eta) < exp(-ret-z): return ret * scale
+           end
+        end
         d = meanLifetime
         v = 0
         if meanLifetime < 1: d = d + 1
@@ -159,7 +175,7 @@ I give an [**error-bounded sampler**](https://peteroupc.github.io/betadist.html)
 
 The _von Mises distribution_ describes a distribution of circular angles and uses two parameters: `mean` is the mean angle and `kappa` is a shape parameter.  The distribution is uniform at `kappa = 0` and approaches a normal distribution with increasing `kappa`.
 
-The algorithm below generates a random number from the von Mises distribution, and is based on the Best&ndash;Fisher algorithm from 1979 (as described in (Devroye 1986)<sup>[**(9)**](#Note9)</sup> with errata incorporated).
+The algorithm below generates a random number from the von Mises distribution, and is based on the Best&ndash;Fisher algorithm from 1979 (as described in (Devroye 1986)<sup>[**(10)**](#Note10)</sup> with errata incorporated).
 
     METHOD VonMises(mean, kappa)
         if kappa < 0: return error
@@ -219,7 +235,7 @@ As more and more independent random numbers, generated the same way, are added t
         end
     END METHOD
 
-Methods implementing the strictly geometric stable, general geometric stable, and multivariate Linnik distributions are shown below (Kozubowski 2000)<sup>[**(10)**](#Note10)</sup>.  Here, `alpha` is in (0, 2], `lamda` is greater than 0, and `tau`'s absolute value is min(1, 2/`alpha` - 1).
+Methods implementing the strictly geometric stable and general geometric stable distributions are shown below (Kozubowski 2000)<sup>[**(11)**](#Note11)</sup>.  Here, `alpha` is in (0, 2], `lamda` is greater than 0, and `tau`'s absolute value is min(1, 2/`alpha` - 1).
 
     METHOD GeometricStable(alpha, lamda, tau)
        // If tau is 0, this is a symmetric Linnik distribution.
@@ -246,13 +262,6 @@ Methods implementing the strictly geometric stable, general geometric stable, an
               sigma*z*beta*2*pi*ln(sigma*z)
        else: return mu*z+
               Stable(alpha, beta)*sigma*pow(z, 1.0/alpha)
-    END METHOD
-
-    METHOD MultiLinnik(alpha, cov)
-      mn=MultivariateNormal(nothing, cov)
-      ml=GeometricStable(alpha/2.0, 1, 1)
-      for i in 0...size(mn): mn[i]=mn[i]*ml
-      return ml
     END METHOD
 
 <a id=Multivariate_Normal_Multinormal_Distribution></a>
@@ -341,17 +350,18 @@ The following pseudocode calculates a random vector (list of numbers) that follo
 > 4. A **Rice (Rician) distribution** is a Beckmann distribution in which the binormal random pair is generated with `m1 = m2 = a / sqrt(2)`, `rho = 0`, and `s1 = s2 = b`, where `a` and `b` are the parameters to the Rice distribution.
 > 5. A **Rice&ndash;Norton distributed** random number is the norm of the following vector: `MultivariateNormal([v,v,v],[[w,0,0],[0,w,0],[0,0,w]])`, where `v = a/sqrt(m*2)`, `w = b*b/m`, and `a`, `b`, and `m` are the parameters to the Rice&ndash;Norton distribution.
 > 6. A **standard** [**complex normal distribution**](https://en.wikipedia.org/wiki/Complex_normal_distribution) is a binormal distribution in which the binormal random pair is generated with `s1 = s2 = sqrt(0.5)` and `mu1 = mu2 = 0` and treated as the real and imaginary parts of a complex number.
+> 7. **Multivariate Linnik distribution**: Generate a multinormal random vector, then multiply each component by `GeometricStable(alpha/2.0, 1, 1)`, where `alpha` is a parameter in (0, 2] (Kozubowski 2000)<sup>[**(11)**](#Note11)</sup>.
 
 <a id=Random_Real_Numbers_with_a_Given_Positive_Sum></a>
 #### Random Real Numbers with a Given Positive Sum
 
-Generating _n_ `GammaDist(1, 1)` numbers and dividing them by `total` times their sum<sup>[**(11)**](#Note11)</sup>
+Generating _n_ `GammaDist(1, 1)` numbers and dividing them by `total` times their sum<sup>[**(12)**](#Note12)</sup>
  will result in _n_ uniform random numbers, in random order, that sum to `total` assuming no rounding error (see a [**Wikipedia article**](https://en.wikipedia.org/wiki/Dirichlet_distribution#Gamma_distribution)).  For example, if `total` is 1, the numbers will (approximately) sum to 1.  Note that in the exceptional case that all numbers are 0, the process should repeat.
 
 > **Notes:**
 >
 > 1. Notes 1 and 2 in the section "Random Integers with a Given Positive Sum" apply here.
-> 2. The **Dirichlet distribution**, as defined in some places (e.g., _Mathematica_; (Devroye 1986)<sup>[**(9)**](#Note9)</sup>, p. 593-594), can be sampled by generating _n_+1 random [**gamma-distributed**](#Gamma_Distribution) numbers, each with separate parameters, taking their sum<sup>[**(11)**](#Note11)</sup>, dividing them by that sum, and taking the first _n_ numbers. (The _n_+1 numbers sum to 1, but the Dirichlet distribution models the first _n_ of them, which will generally sum to less than 1.)
+> 2. The **Dirichlet distribution**, as defined in some places (e.g., _Mathematica_; (Devroye 1986)<sup>[**(10)**](#Note10)</sup>, p. 593-594), can be sampled by generating _n_+1 random [**gamma-distributed**](#Gamma_Distribution) numbers, each with separate parameters, taking their sum<sup>[**(12)**](#Note12)</sup>, dividing them by that sum, and taking the first _n_ numbers. (The _n_+1 numbers sum to 1, but the Dirichlet distribution models the first _n_ of them, which will generally sum to less than 1.)
 
 <a id=Gaussian_and_Other_Copulas></a>
 #### Gaussian and Other Copulas
@@ -375,7 +385,7 @@ One example is a _Gaussian copula_; this copula is sampled by sampling from a [*
        return mvn
     END METHOD
 
-Each of the resulting uniform random numbers will be in the interval [0, 1], and each one can be further transformed to any other probability distribution (which is called a _marginal distribution_ here) by taking the quantile of that uniform number for that distribution (see "[**Inverse Transform Sampling**](#Inverse_Transform_Sampling)", and see also (Cario and Nelson 1997)<sup>[**(12)**](#Note12)</sup>.)
+Each of the resulting uniform random numbers will be in the interval [0, 1], and each one can be further transformed to any other probability distribution (which is called a _marginal distribution_ here) by taking the quantile of that uniform number for that distribution (see "[**Inverse Transform Sampling**](#Inverse_Transform_Sampling)", and see also (Cario and Nelson 1997)<sup>[**(13)**](#Note13)</sup>.)
 
 > **Examples:**
 >
@@ -397,12 +407,12 @@ Other kinds of copulas describe different kinds of dependence between random num
 - the **Fr&eacute;chet&ndash;Hoeffding upper bound copula** _\[x, x, ..., x\]_ (e.g., `[x, x]`), where `x = RNDU01()`,
 - the **Fr&eacute;chet&ndash;Hoeffding lower bound copula** `[x, 1.0 - x]` where `x = RNDU01()`,
 - the **product copula**, where each number is a separately generated `RNDU01()` (indicating no dependence between the numbers), and
-- the **Archimedean copulas**, described by M. Hofert and M. M&auml;chler (2011)<sup>[**(13)**](#Note13)</sup>.
+- the **Archimedean copulas**, described by M. Hofert and M. M&auml;chler (2011)<sup>[**(14)**](#Note14)</sup>.
 
 <a id=Exponential_Distribution_Another_Error_Bounded_Algorithm></a>
 #### Exponential Distribution: Another Error-Bounded Algorithm
 
-The following method samples from an exponential distribution with a &lambda; parameter of 1 (within an error tolerance of 2<sup>`-precision`</sup>) (Devroye and Gravel 2018)<sup>[**(14)**](#Note14)</sup>.  Includes algorithms due to (Morina et al. 2019)<sup>[**(15)**](#Note15)</sup> and (Canonne et al. 2020)<sup>[**(16)**](#Note16)</sup>.
+The following method samples from an exponential distribution with an &lambda; parameter greater than 0, expressed as `lnum`/`lden` (where the sampling occurs within an error tolerance of 2<sup>`-precision`</sup>).  For more information, see "[**Partially-Sampled Exponential Random Numbers**](https://peteroupc.github.io/exporand.html)".
 
     METHOD ZeroOrOneExpMinus(x, y)
       # Generates 1 with probability exp(-x/y) (Canonne et al. 2020)
@@ -426,22 +436,22 @@ The following method samples from an exponential distribution with a &lambda; pa
       end
     END METHOD
 
-    METHOD LogisticExp(prec)
+    METHOD LogisticExp(lnum, lden, prec)
         // Generates 1 with probability 1/(exp(2^-prec)+1).
         // References: Alg. 6 of Morina et al. 2019; Carinne et al. 2020.
-        denom=pow(2,prec)
+        denom=pow(2,prec)*lden
         while true
            if RNDINT(1)==0: return 0
-           if ZeroOrOneExpMinus(1, denom) == 1: return 1
+           if ZeroOrOneExpMinus(lnum, denom) == 1: return 1
         end
     END METHOD
 
-    METHOD ExpoExact(precision)
+    METHOD ExpoExact(lnum, lden, precision)
        ret=0
        for i in 1..precision
-        if LogisticExp(i)==1: ret=ret+pow(2,-i)
+        if LogisticExp(lnum, lden, i)==1: ret=ret+pow(2,-i)
        end
-       while ZeroOrOneExpMinus(1,1)==1: ret=ret+1
+       while ZeroOrOneExpMinus(lnum,lden)==1: ret=ret+1
        return ret
     END METHOD
 
@@ -466,21 +476,17 @@ The following method samples from an exponential distribution with a &lambda; pa
 
 <small><sup id=Note8>(8)</sup> "A simple method for generating gamma variables", _ACM Transactions on Mathematical Software_ 26(3), 2000.</small>
 
-<small><sup id=Note9>(9)</sup> Devroye, L., [**_Non-Uniform Random Variate Generation_**](http://luc.devroye.org/rnbookindex.html), 1986.</small>
+<small><sup id=Note9>(9)</sup> Liu, C., Martin, R., Syring, N., "[**Simulating from a gamma distribution with small shape parameter**](https://arxiv.org/abs/1302.1884v3)", arXiv:1302.1884v3  [stat.CO], 2015.</small>
 
-<small><sup id=Note10>(10)</sup> Tomasz J. Kozubowski, "Computer simulation of geometric stable distributions", _Journal of Computational and Applied Mathematics_ 116(2), 2000.</small>
+<small><sup id=Note10>(10)</sup> Devroye, L., [**_Non-Uniform Random Variate Generation_**](http://luc.devroye.org/rnbookindex.html), 1986.</small>
 
-<small><sup id=Note11>(11)</sup> [**Kahan summation**](https://en.wikipedia.org/wiki/Kahan_summation_algorithm) can be a more robust way than the na&iuml;ve approach to compute the sum of three or more floating-point numbers.</small>
+<small><sup id=Note11>(11)</sup> Tomasz J. Kozubowski, "Computer simulation of geometric stable distributions", _Journal of Computational and Applied Mathematics_ 116(2), 2000.</small>
 
-<small><sup id=Note12>(12)</sup> Cario, M. C., B. L. Nelson, "Modeling and generating random vectors with arbitrary marginal distributions and correlation matrix", 1997.</small>
+<small><sup id=Note12>(12)</sup> [**Kahan summation**](https://en.wikipedia.org/wiki/Kahan_summation_algorithm) can be a more robust way than the na&iuml;ve approach to compute the sum of three or more floating-point numbers.</small>
 
-<small><sup id=Note13>(13)</sup> Hofert, M., and Maechler, M.  "Nested Archimedean Copulas Meet R: The nacopula Package".  _Journal of Statistical Software_ 39(9), 2011, pp. 1-20.</small>
+<small><sup id=Note13>(13)</sup> Cario, M. C., B. L. Nelson, "Modeling and generating random vectors with arbitrary marginal distributions and correlation matrix", 1997.</small>
 
-<small><sup id=Note14>(14)</sup> Devroye, L., Gravel, C., "[**Sampling with arbitrary precision**](https://arxiv.org/abs/1502.02539v5)", arXiv:1502.02539v5 [cs.IT], 2018.</small>
-
-<small><sup id=Note15>(15)</sup> Morina, G., Łatuszyński, K., et al., "From the Bernoulli Factory to a Dice Enterprise via Perfect Sampling of Markov Chains", 2019.</small>
-
-<small><sup id=Note16>(16)</sup> Canonne, C., Kamath, G., Steinke, T., "[**The Discrete Gaussian for Differential Privacy**](https://arxiv.org/abs/2004.00010v2)", arXiv:2004.00010v2 [cs.DS], 2020.</small>
+<small><sup id=Note14>(14)</sup> Hofert, M., and Maechler, M.  "Nested Archimedean Copulas Meet R: The nacopula Package".  _Journal of Statistical Software_ 39(9), 2011, pp. 1-20.</small>
 
 <a id=Appendix></a>
 ## Appendix
@@ -522,8 +528,8 @@ The pseudocode below shows how the [**error function**](https://en.wikipedia.org
 There are three kinds of randomization algorithms:
 
 1. An _error-bounded algorithm_ is an algorithm that samples a distribution in a manner that minimizes approximation error.  This means the algorithm samples from a continuous distribution that is close to the ideal distribution within a user-specified error tolerance, or samples exactly from a discrete distribution (one that takes on a countable number of values).  Thus, the algorithm gives every representable number the expected probability of occurring.  In general, the only random numbers the algorithm uses are random bits (binary digits).  An application should use error-bounded algorithms whenever possible.
-2. An _exact algorithm_ is an algorithm that samples from the exact distribution requested, assuming that computers can store and operate on real numbers of any precision and can generate independent uniform random real numbers of any precision (Devroye 1986, p. 1-2)<sup>[**(9)**](#Note9)</sup>.  Without more, however, an exact algorithm implemented on real-life computers can incur rounding and other errors, especially when floating-point arithmetic is used or when irrational numbers or transcendental functions are involved.  An exact algorithm can achieve a guaranteed bound on accuracy (and thus be an _error-bounded algorithm_) using either arbitrary-precision or interval arithmetic (see also Devroye 1986, p. 2)<sup>[**(9)**](#Note9)</sup>.  In this page, all methods given here are exact unless otherwise noted.  Note that `RNDU01` or `RNDRANGE` are exact in theory, but have no required implementation.
-3. An _inexact algorithm_ or _approximate algorithm_ is neither exact nor error-bounded; it uses "a mathematical approximation of sorts" to generate a random number that is close to the desired distribution (Devroye 1986, p. 2)<sup>[**(9)**](#Note9)</sup>.  An application should use this kind of algorithm only if it's willing to trade accuracy for speed.
+2. An _exact algorithm_ is an algorithm that samples from the exact distribution requested, assuming that computers can store and operate on real numbers of any precision and can generate independent uniform random real numbers of any precision (Devroye 1986, p. 1-2)<sup>[**(10)**](#Note10)</sup>.  Without more, however, an exact algorithm implemented on real-life computers can incur rounding and other errors, especially when floating-point arithmetic is used or when irrational numbers or transcendental functions are involved.  An exact algorithm can achieve a guaranteed bound on accuracy (and thus be an _error-bounded algorithm_) using either arbitrary-precision or interval arithmetic (see also Devroye 1986, p. 2)<sup>[**(10)**](#Note10)</sup>.  In this page, all methods given here are exact unless otherwise noted.  Note that `RNDU01` or `RNDRANGE` are exact in theory, but have no required implementation.
+3. An _inexact algorithm_ or _approximate algorithm_ is neither exact nor error-bounded; it uses "a mathematical approximation of sorts" to generate a random number that is close to the desired distribution (Devroye 1986, p. 2)<sup>[**(10)**](#Note10)</sup>.  An application should use this kind of algorithm only if it's willing to trade accuracy for speed.
 
 Most algorithms on this page, though, are not _error-bounded_, but even so, they may still be useful to an application willing to trade accuracy for speed.
 

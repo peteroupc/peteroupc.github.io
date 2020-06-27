@@ -1735,6 +1735,94 @@ Returns 'list'. """
         else:
             return -math.log1p(self.rndrangeminmaxexc(-0.5, 0)) / lamda
 
+    def _logisticexp(self, ln, ld, prec):
+        denom = ld * 2 ** prec
+        while True:
+            if self.rndbit() == 0:
+                return 0
+            if self.zero_or_one_exp_minus(ln, denom) == 1:
+                return 1
+
+    def exprandnew(self, lamdanum=1, lamdaden=1):
+        """ Returns an object to serve as a partially-sampled
+          exponential random number with the given
+          rate 'lamdanum'/'lamdaden'.  The object is a list of five numbers:
+          the first is a multiple of 2^X, the second is X, the third is the integer
+          part (initially -1 to indicate the integer part wasn't sampled yet),
+          and the fourth and fifth are the lamda parameter's
+          numerator and denominator, respectively.  Default for 'lamdanum'
+          and 'lamdaden' is 1.
+          The number created by this method will be "empty"
+          (no bits sampled yet).
+          """
+        return [0, 0, -1, lamdanum, lamdaden]
+
+    def exprandfill(self, a, bits):
+        """ Fills the unsampled bits of the given exponential random number
+           'a' as necessary to make a number whose fractional part
+           has 'bits' many bits.  If the number's fractional part already has
+           that many bits or more, the number is rounded using the round-to-nearest,
+           ties to even rounding rule.  Returns the resulting number as a
+           multiple of 2^'bits'. """
+        # Fill the integer if necessary.
+        if a[2] == -1:
+            a[2] = 0
+            while self.zero_or_one_exp_minus(a[3], a[4]) == 1:
+                a[2] += 1
+        if a[1] > bits:
+            # Shifting bits beyond the first excess bit.
+            aa = a[0] >> (a[1] - bits - 1)
+            # Check the excess bit; if odd, round up.
+            ret = aa >> 1 if (aa & 1) == 0 else (aa >> 1) + 1
+            return ret | (a[2] << bits)
+        # Fill the fractional part if necessary.
+        while a[1] < bits:
+            index = a[1]
+            a[1] += 1
+            a[0] = (a[0] << 1) | self._logisticexp(a[3], a[4], index + 1)
+        return a[0] | (a[2] << bits)
+
+    def exprandless(self, a, b):
+        """ Determines whether one partially-sampled exponential number
+           is less than another; returns
+           true if so and false otherwise.  During
+           the comparison, additional bits will be sampled in both numbers
+           if necessary for the comparison. """
+        # Check integer part of exponentials
+        if a[2] == -1:
+            a[2] = 0
+            while self.zero_or_one_exp_minus(a[3], a[4]) == 1:
+                a[2] += 1
+        if b[2] == -1:
+            b[2] = 0
+            while self.zero_or_one_exp_minus(b[3], b[4]) == 1:
+                b[2] += 1
+        if a[2] < b[2]:
+            return True
+        if a[2] > b[2]:
+            return False
+        index = 0
+        while True:
+            # Fill with next bit in a's exponential number
+            if a[1] < index:
+                raise ValueError
+            if b[1] < index:
+                raise ValueError
+            if a[1] <= index:
+                a[1] += 1
+                a[0] = self._logisticexp(a[3], a[4], index + 1) | (a[0] << 1)
+            # Fill with next bit in b's exponential number
+            if b[1] <= index:
+                b[1] += 1
+                b[0] = self._logisticexp(b[3], b[4], index + 1) | (b[0] << 1)
+            aa = (a[0] >> (a[1] - 1 - index)) & 1
+            bb = (b[0] >> (b[1] - 1 - index)) & 1
+            if ab < bb:
+                return True
+            if ab > bb:
+                return False
+            index += 1
+
     def expoRatio(self, base, rx=1, ry=1):
         """ Generates an exponential random number
           (in the form of a ratio, or two-element list) given
