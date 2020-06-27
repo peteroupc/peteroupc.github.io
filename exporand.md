@@ -5,7 +5,9 @@
 <a id=Introduction></a>
 ## Introduction
 
-This page introduces an implementation of partially-sampled exponential random numbers.
+This page introduces an implementation of partially-sampled exponential random numbers.   Called e-rands in this document, they represent incomplete numbers whose contents are determined only when necessary, making them have potentially arbitrary precision.
+
+Moreover, this document includes methods that operate on e-rands in a way that uses only uniform random bits, and without relying on floating-point arithmetic (except for conversion purposes in the example method `exprand`).  Also, the methods support e-rands with an arbitrary rate parameter (&lambda;) greater than 0.
 
 There are papers that discuss generating exponential random numbers using random bits (Flajolet and Saheb 1982)<sup>[**(1)**](#Note1)</sup>, (Karney 2014)<sup>[**(2)**](#Note2)</sup>, (Devroye and Gravel 2018)<sup>[**(3)**](#Note3)</sup>, (Thomas and Luk 2008)<sup>[**(4)**](#Note4)</sup>, but none I am aware of deal with generating partially-sampled exponential random numbers using an arbitrary rate, not just 1.
 
@@ -26,7 +28,7 @@ To implement these probabilities using just random bits, the code uses two algor
 - One to simulate a probability of the form `exp(-x/y)` (`zero_or_one_exp_minus`; (Canonne et al. 2020)<sup>[**(5)**](#Note5)</sup>).
 - One to simulate a probability of the form `1/(1+exp(lamda/pow(2, prec)))` (`logisticexp` (Morina et al. 2019)<sup>[**(6)**](#Note6)</sup>).
 
-Both algorithms are included in the Python code below.
+Both algorithms are included in the Python code below.  (Note that `zero_or_one_exp_minus` uses `random.randint` which does not necessarily use only random bits; it could be replaced with a random-bit-only algorithm such as FastDiceRoller or Bernoulli, both of which were presented by Lumbroso (2013)<sup>[**(7)**](#Note7)</sup>.)
 
 ```python
 
@@ -131,6 +133,10 @@ def zero_or_one_exp_minus(x, y):
         r = 1
         oy = y
         while True:
+            # NOTE: randint is used in this example, but
+            # it could be replaced by a random-bit-only
+            # algorithm such as the Fast Dice Roller (Lumbroso 2013),
+            # or the Bernoulli method given in the same paper.
             if random.randint(0, y-1) >= x:
                 return r
             if r == 1:
@@ -148,9 +154,9 @@ def exprand(lam):
 <a id=Correctness_Testing></a>
 ## Correctness Testing
 
-To test the correctness of the `exprandfill` method, the Kolmogorov&ndash;Smirnov test was applied with various values of &lambda; and the default precision of 53, using SciPy's `kstest` method.  The code for the test is very simple: `kst = scipy.stats.kstest(ksample, lambda x: scipy.stats.beta.cdf(x, alpha, beta))`, where `ksample` is a sample of random numbers generated using the sampler above.  Note that SciPy uses a two-sided Kolmogorov&ndash;Smirnov test by default.
+To test the correctness of the `exprandfill` method, the Kolmogorov&ndash;Smirnov test was applied with various values of &lambda; and the default precision of 53, using SciPy's `kstest` method.  The code for the test is very simple: `kst = scipy.stats.kstest(ksample, lambda x: scipy.stats.expon.cdf(x, scale=1/lamda))`, where `ksample` is a sample of random numbers generated using the `exprand` method above.  Note that SciPy uses a two-sided Kolmogorov&ndash;Smirnov test by default.
 
-The table below shows the results of the correctness testing. For each parameter, five samples with 50,000 numbers per sample were taken, and results show the lowest and highest Kolmogorov&ndash;Smirnov statistics and p-values achieved for the five samples.  Note that a p-value extremely close to 0 or 1 strongly indicates that the samples do not come from a beta distribution.
+The table below shows the results of the correctness testing. For each parameter, five samples with 50,000 numbers per sample were taken, and results show the lowest and highest Kolmogorov&ndash;Smirnov statistics and p-values achieved for the five samples.  Note that a p-value extremely close to 0 or 1 strongly indicates that the samples do not come from the corresponding exponential distribution.
 
 |  &lambda; | Statistic | _p_-value |
  ---- | ---- | ---- |
@@ -166,6 +172,17 @@ The table below shows the results of the correctness testing. For each parameter
 | 5 | 0.00256-0.00546 | 0.10130-0.89935 |
 | 10 | 0.00279-0.00528 | 0.12358-0.82974 |
 
+<a id=Application_to_Weighted_Reservoir_Sampling></a>
+## Application to Weighted Reservoir Sampling
+
+[**Weighted reservoir sampling**](https://peteroupc.github.io/randomfunc.html#Weighted_Choice_Without_Replacement_List_of_Unknown_Size) (choosing an item at random from a list of unknown size) is often implemented by&mdash;
+
+- assigning each item a _weight_ (an integer 0 or greater) as it's encountered, call it _w_,
+- giving each item an exponential random number with &lambda; = _w_, call it the key, and
+- choosing the item with the smallest key
+
+(see also (Efraimidis 2015)<sup>[**(8)**](#Note8)</sup>). However, using fully-sampled exponential random numbers as keys (such as the naïve idiom `-ln(1-RNDU01())/w` in binary64) can lead to inexact sampling, since the keys have a limited precision, it's possible for multiple items to have the same random key (which can make sampling those items depend on their order rather than on randomness), and the maximum weight is unknown.  Partially-sampled e-rands, as given in this document, eliminate the problem of inexact sampling.  This is notably because the `exprandless` method returns only two answers&mdash;either "less" or "greater"&mdash;and samples from both e-rands as necessary so that they will differ from each other by the end of the operation. Another reason is that partially-sampled e-rands have potentially arbitrary precision.
+
 <a id=Notes></a>
 ## Notes
 
@@ -180,6 +197,10 @@ The table below shows the results of the correctness testing. For each parameter
 <small><sup id=Note5>(5)</sup> Canonne, C., Kamath, G., Steinke, T., "[**The Discrete Gaussian for Differential Privacy**](https://arxiv.org/abs/2004.00010v2)", arXiv:2004.00010v2 [cs.DS], 2020.</small>
 
 <small><sup id=Note6>(6)</sup> Morina, G., Łatuszyński, K., et al., "From the Bernoulli Factory to a Dice Enterprise via Perfect Sampling of Markov Chains", 2019.</small>
+
+<small><sup id=Note7>(7)</sup> Lumbroso, J., "[**Optimal Discrete Uniform Generation from Coin Flips, and Applications**](https://arxiv.org/abs/1304.1916)", arXiv:1304.1916 [cs.DS].</small>
+
+<small><sup id=Note8>(8)</sup> Efraimidis, P. "[Weighted Random Sampling over Data Streams](https://arxiv.org/abs/1012.0256v2)", arXiv:1012.0256v2 [cs.DS], 2015.</small>
 
 <a id=License></a>
 ## License
