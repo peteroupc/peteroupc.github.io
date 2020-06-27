@@ -843,7 +843,7 @@ If the number of items in a list is not known in advance, then the following pse
 
 - `WEIGHT_OF_ITEM(item, thisIndex)` is a placeholder for arbitrary code that calculates the integer weight of an individual item based on its value and its index (starting at 0); the item is ignored if its weight is 0 or less.
 - `ITEM_OUTPUT(item, thisIndex, key)` is a placeholder for code that returns the item to store in the list; this can include the item's value, its index starting at 0, the item's key, or any combination of these.
--  `ExpoNew(weight)` creates an "empty" exponential number with rate `weight`, whose bits are not yet determined (see "[**Partially-Sampled Exponential Random Numbers**](https://peteroupc.github.io/exporand.html)), and `ExpoLess(a, b)` returns whether one exponential number (`a`) is less than another (`b`), building up the bits of both as necessary.  For a less exact algorithm, replace `ExpoNew(weight)` with `ExpoRatio(1000000, weight, 1)` and `ExpoLess(a, b)` with `a < b`.
+-  `ExpoNew(weight)` creates an "empty" exponential number with rate `weight`, whose bits are not yet determined (see "[**Partially-Sampled Exponential Random Numbers**](https://peteroupc.github.io/exporand.html)"), and `ExpoLess(a, b)` returns whether one exponential number (`a`) is less than another (`b`), building up the bits of both as necessary.  For a less exact algorithm, replace `ExpoNew(weight)` with `ExpoRatio(1000000, weight, 1)` and `ExpoLess(a, b)` with `a < b`.
 
 &nbsp;
 
@@ -1097,7 +1097,7 @@ The _exponential distribution_ uses a parameter known as &lambda;, the rate, or 
 
 In this document, `Expo(lamda)` is an exponentially-distributed random number with the rate `lamda`.
 
-In the pseudocode below, `ExpoRatio` generates an exponential random number (in the form of a ratio) given the rate `rx`/`ry` (or scale `ry`/`rx`) and the base `base`.  `ExpoNumerator` generates the numerator of an exponential random number with rate 1 given that number's denominator.  The algorithm is due to von Neumann (1951)<sup>[**(33)**](#Note33)</sup>.  Exponential random numbers can also be partially sampled; for more information see "[**Partially-Sampled Exponential Random Numbers**](https://peteroupc.github.io/exporand.html).
+In the pseudocode below, `ExpoRatio` generates an exponential random number (in the form of a ratio) given the rate `rx`/`ry` (or scale `ry`/`rx`) and the base `base`.  `ExpoNumerator` generates the numerator of an exponential random number with rate 1 given that number's denominator.  The algorithm is due to von Neumann (1951)<sup>[**(33)**](#Note33)</sup>.  Exponential random numbers can also be partially sampled; for more information see "[**Partially-Sampled Exponential Random Numbers**](https://peteroupc.github.io/exporand.html)".
 
     METHOD ExpoRatio(base, rx, ry)
         // Generates a numerator and denominator of

@@ -145,6 +145,27 @@ def exprand(lam):
 
 ```
 
+<a id=Correctness_Testing></a>
+## Correctness Testing
+
+To test the correctness of the `exprandfill` method, the Kolmogorov&ndash;Smirnov test was applied with various values of &lambda; and the default precision of 53, using SciPy's `kstest` method.  The code for the test is very simple: `kst = scipy.stats.kstest(ksample, lambda x: scipy.stats.beta.cdf(x, alpha, beta))`, where `ksample` is a sample of random numbers generated using the sampler above.  Note that SciPy uses a two-sided Kolmogorov&ndash;Smirnov test by default.
+
+The table below shows the results of the correctness testing. For each parameter, five samples with 50,000 numbers per sample were taken, and results show the lowest and highest Kolmogorov&ndash;Smirnov statistics and p-values achieved for the five samples.  Note that a p-value extremely close to 0 or 1 strongly indicates that the samples do not come from a beta distribution.
+
+|  &lambda; | Statistic | _p_-value |
+ ---- | ---- | ---- |
+| 1/10 | 0.00233-0.00435 | 0.29954-0.94867 |
+| 1/4 | 0.00254-0.00738 | 0.00864-0.90282 |
+| 1/2 | 0.00195-0.00521 | 0.13238-0.99139 |
+| 2/3 | 0.00295-0.00457 | 0.24659-0.77715 |
+| 3/4 | 0.00190-0.00636 | 0.03514-0.99381 |
+| 9/10 | 0.00226-0.00474 | 0.21032-0.96029 |
+| 1 | 0.00267-0.00601 | 0.05389-0.86676 |
+| 2 | 0.00293-0.00684 | 0.01870-0.78310 |
+| 3 | 0.00284-0.00675 | 0.02091-0.81589 |
+| 5 | 0.00256-0.00546 | 0.10130-0.89935 |
+| 10 | 0.00279-0.00528 | 0.12358-0.82974 |
+
 <a id=Notes></a>
 ## Notes
 
