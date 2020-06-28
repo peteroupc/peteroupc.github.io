@@ -226,7 +226,7 @@ def exprandscore(ln,ld,ln2,ld2):
 [**Weighted reservoir sampling**](https://peteroupc.github.io/randomfunc.html#Weighted_Choice_Without_Replacement_List_of_Unknown_Size) (choosing an item at random from a list of unknown size) is often implemented by&mdash;
 
 - assigning each item a _weight_ (an integer 0 or greater) as it's encountered, call it _w_,
-- giving each item an exponential random number with &lambda; = _w_, call it the key, and
+- giving each item an exponential random number with &lambda; = _w_, call it a key, and
 - choosing the item with the smallest key
 
 (see also (Efraimidis 2015)<sup>[**(8)**](#Note8)</sup>). However, using fully-sampled exponential random numbers as keys (such as the naïve idiom `-ln(1-RNDU01())/w` in binary64) can lead to inexact sampling, since the keys have a limited precision, it's possible for multiple items to have the same random key (which can make sampling those items depend on their order rather than on randomness), and the maximum weight is unknown.  Partially-sampled e-rands, as given in this document, eliminate the problem of inexact sampling.  This is notably because the `exprandless` method returns one of only two answers&mdash;either "less" or "greater"&mdash;and samples from both e-rands as necessary so that they will differ from each other by the end of the operation. Another reason is that partially-sampled e-rands have potentially arbitrary precision.
@@ -248,7 +248,7 @@ def exprandscore(ln,ld,ln2,ld2):
 
 <small><sup id=Note7>(7)</sup> Lumbroso, J., "[**Optimal Discrete Uniform Generation from Coin Flips, and Applications**](https://arxiv.org/abs/1304.1916)", arXiv:1304.1916 [cs.DS].</small>
 
-<small><sup id=Note8>(8)</sup> Efraimidis, P. "[Weighted Random Sampling over Data Streams](https://arxiv.org/abs/1012.0256v2)", arXiv:1012.0256v2 [cs.DS], 2015.</small>
+<small><sup id=Note8>(8)</sup> Efraimidis, P. "[**Weighted Random Sampling over Data Streams**](https://arxiv.org/abs/1012.0256v2)", arXiv:1012.0256v2 [cs.DS], 2015.</small>
 
 <a id=License></a>
 ## License

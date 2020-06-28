@@ -145,9 +145,9 @@ See the results of the [**correctness testing**](https://peteroupc.github.io/bet
 The beta distribution is one case of a general approach to simulating continuous distributions with support on the interval [0, 1], and this with arbitrary precision, thanks to Bernoulli factories.  This general approach can sample an `n`-bit binary expansion of a number following that continuous distribution, and is described as follows:
 
 1. Create a "geometric bag", that is, an "empty" uniform random number also known as a "u-rand".
-2. As the geometric bag builds up a uniform random number, accept the number with a probability that can be represented by Bernoulli factories, or reject it otherwise.  As shown by Keane and O'Brien <sup>[**(2)**](#Note2)</sup>, this is possible if and only if the probability function&mdash;
-    - always returns the same value in the interval [0, 1], or
-    - is continuous everywhere in the interval [0, 1] and never returns 0 or 1 anywhere in that interval except possibly at the points 0 and/or 1,
+2. As the geometric bag builds up a uniform random number, accept the number with a probability that can be represented by Bernoulli factories, or reject it otherwise.  As shown by Keane and O'Brien <sup>[**(2)**](#Note2)</sup>, this is possible if and only if the probability function, in the interval [0, 1]&mdash;
+    - is continuous everywhere, and
+    - either returns a constant value in [0, 1] everywhere, or returns a value in [0, 1] at the points 0 and 1 and a value in (0, 1) elsewhere,
 
    and they give the example of 2*p as a probability function that cannot be represented by a Bernoulli factory.
 3. If the geometric bag is accepted, fill the unsampled bits of the bag with uniform random bits as necessary to make an `n`-bit number (for an example, see `_fill_geometric_bag` above).
@@ -163,7 +163,7 @@ The continous Bernoulli distribution takes one parameter `lamda` (a number in [0
 
     pow(lamda, x) * pow(1 - lamda, 1 - x).
 
-Again, this function meets the requirements stated by Keane and O'Brien, so it can be simulated via Bernoulli factories.  Thus, this distribution can be simulated in Python using a geometric bag and a two-coin exponentiating Bernoulli factory, as follows:
+Again, this function meets the requirements stated by Keane and O'Brien, so it can be simulated via Bernoulli factories.  Thus, this distribution can be simulated in Python using a geometric bag (which represents _x_ in the formula above) and a two-coin exponentiating Bernoulli factory, as follows:
 
     def _twofacpower(b, fbase, fexponent):
         """ Bernoulli factory B(p, q) => B(p^q).

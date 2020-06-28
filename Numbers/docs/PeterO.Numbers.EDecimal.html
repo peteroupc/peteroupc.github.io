@@ -1339,7 +1339,7 @@ is a 64-bit signed integer.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>The quotient of the two numbers. Returns infinity if the divisor is 0 and the dividend is nonzero. Returns not-a-number (NaN) if the divisor and the dividend are 0. Returns NaN if the result can&#39;t be exact because it would have a nonterminating decimal expansion; examples include 1 divided by any multiple of 3, such as 1/3 or 1/12.</p>
+<p>The quotient of the two numbers. Returns infinity if the divisor is 0 and the dividend is nonzero. Returns not-a-number (NaN) if the divisor and the dividend are 0. Returns NaN if the result can&#39;t be exact because it would have a nonterminating decimal expansion; examples include 1 divided by any multiple of 3, such as 1/3 or 1/12. If this is not desired, use DivideToExponent instead, or use the Divide overload that takes an EContext instead.</p>
 
 <p><a id="Divide_PeterO_Numbers_EDecimal"></a></p>
 
@@ -3662,7 +3662,7 @@ is null.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>The quotient of the two numbers. Returns infinity if the divisor is 0 and the dividend is nonzero. Returns not-a-number (NaN) if the divisor and the dividend are 0. Returns NaN if the result can&#39;t be exact because it would have a nonterminating decimal expansion; examples include 1 divided by any multiple of 3, such as 1/3 or 1/12.</p>
+<p>The quotient of the two numbers. Returns infinity if the divisor is 0 and the dividend is nonzero. Returns not-a-number (NaN) if the divisor and the dividend are 0. Returns NaN if the result can&#39;t be exact because it would have a nonterminating decimal expansion; examples include 1 divided by any multiple of 3, such as 1/3 or 1/12. If this is not desired, use DivideToExponent instead, or use the Divide overload that takes an EContext instead.</p>
 
 <p><b>Exceptions:</b></p>
 

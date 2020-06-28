@@ -250,7 +250,7 @@ Methods implementing the strictly geometric stable and general geometric stable 
        w = 1
        if rho != 1
           rho = rho * pi
-          cotparam = rho*RNDU01()
+          cotparam = RNDRANGE(0, rho)
           w = sin(rho)*cos(cotparam)/sin(cotparam)-cos(rho)
        end
        return Expo(1)*sign*pow(lamda*w, 1.0/alpha)

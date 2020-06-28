@@ -115,7 +115,7 @@ With that said, the following specific situations tend to come up in random reco
 
 - Querying one random record from a database.
 - Querying a specified number of random records from a database.
-- Querying one or more records each with a probability proportional to its weight.  Very generally, this can be done by giving the table a column where each entry is a number generated as follows: `ln(R) / W` (where `W` is the record's weight greater than 0, and `R` is a uniform random number in (0, 1)) (see also (Efraimidis 2015)<sup>[**(3)**](#Note3)</sup>), then taking the records with the highest values of that column, but the efficiency of this technique depends on the DBMS.
+- Querying one or more records each with a probability proportional to its weight.  Very generally, this can be done by giving the table a column where each entry is a number generated as follows: `ln(R) / W` (where `W` is the record's weight greater than 0, and `R` is a per-record uniform random number in (0, 1)) (see also (Efraimidis 2015)<sup>[**(3)**](#Note3)</sup>), then taking the records with the highest values of that column, but the efficiency of this technique depends on the DBMS.
 
 <a id=Random_Character_Strings></a>
 ## Random Character Strings

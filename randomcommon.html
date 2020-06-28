@@ -136,7 +136,7 @@
 <ul>
 <li>Querying one random record from a database.</li>
 <li>Querying a specified number of random records from a database.</li>
-<li>Querying one or more records each with a probability proportional to its weight.  Very generally, this can be done by giving the table a column where each entry is a number generated as follows: <code>ln(R) / W</code> (where <code>W</code> is the record&#39;s weight greater than 0, and <code>R</code> is a uniform random number in (0, 1)) (see also (Efraimidis 2015)<sup><a href="#Note3"><strong>(3)</strong></a></sup>), then taking the records with the highest values of that column, but the efficiency of this technique depends on the DBMS.</li>
+<li>Querying one or more records each with a probability proportional to its weight.  Very generally, this can be done by giving the table a column where each entry is a number generated as follows: <code>ln(R) / W</code> (where <code>W</code> is the record&#39;s weight greater than 0, and <code>R</code> is a per-record uniform random number in (0, 1)) (see also (Efraimidis 2015)<sup><a href="#Note3"><strong>(3)</strong></a></sup>), then taking the records with the highest values of that column, but the efficiency of this technique depends on the DBMS.</li>
 </ul>
 
 <p><a id=Random_Character_Strings></a></p>
