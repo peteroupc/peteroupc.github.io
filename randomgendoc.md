@@ -141,7 +141,6 @@ CLASSES
      |    allows quantiles for the distribution to be calculated
      |    from pregenerated uniform random numbers in [0, 1].
      |
-     |  - rg: A random generator (RandGen) object.
      |  - pdf: A function that specifies the PDF. It takes a single
      |    number and outputs a single number. The area under
      |    the PDF need not equal 1 (this sampler works even if the
@@ -155,8 +154,8 @@ CLASSES
      |     about ures*0.05 or less).
      |  - ures - Maximum approximation error tolerable, or
      |    "u-resolution".  Default is 10^-8.  This error tolerance
-     |    "does not work for continuous distributions with high
-     |    and narrow peaks or poles".
+     |    "does not work for continuous distributions [whose PDFs
+     |    have] high and narrow peaks or poles".
      |
      |    Reference:
      |    Gerhard Derflinger, Wolfgang Hörmann, and Josef Leydold,
@@ -166,7 +165,7 @@ CLASSES
      |
      |  Methods defined here:
      |
-     |  __init__(self, rg, pdf, bl, br, ures=1e-08)
+     |  __init__(self, pdf, bl, br, ures=1e-08)
      |      Initialize self.  See help(type(self)) for accurate signature.
      |
      |  codegen(self, name='dist')
@@ -189,8 +188,8 @@ CLASSES
      |      uniform random numbers.  The returned list will have
      |      the same number of entries as 'v'.
      |
-     |  sample(self, n=1)
-     |      Generates random numbers that follow the
+     |  sample(self, rg, n=1)
+     |      Generates random numbers that (approximately) follow the
      |            distribution modeled by this class.
      |      - n: The number of random numbers to generate.
      |      Returns a list of 'n' random numbers.
@@ -251,10 +250,9 @@ CLASSES
      |
      |  Methods defined here:
      |
-     |  __init__(self, rg, cdf, xmin, xmax, pdf=None, nd=200)
+     |  __init__(self, cdf, xmin, xmax, pdf=None, nd=200)
      |      Initializes the K-Vector-like sampler.
      |      Parameters:
-     |      - rg: A random generator (RandGen) object.
      |      - cdf: Cumulative distribution function (CDF) of the
      |         distribution.  The CDF must be
      |         monotonically nondecreasing everywhere in the
@@ -262,7 +260,7 @@ CLASSES
      |         for best results, the CDF should
      |         be increasing everywhere in [xmin, xmax].
      |      - xmin: Maximum x-value to generate.
-     |      - xmax: Maximum y-value to generate.  For best results,
+     |      - xmax: Maximum x-value to generate.  For best results,
      |         the range given by xmin and xmax should cover all or
      |         almost all of the distribution.
      |      - pdf: Optional. Distribution's probability density
@@ -271,7 +269,7 @@ CLASSES
      |      - nd: Optional. Size of tables used in the sampler.
      |         Default is 200.
      |
-     |  invert(self, uniforms)
+     |  quantile(self, uniforms)
      |      Returns a list of 'n' numbers that correspond
      |      to the given uniform random numbers and follow
      |      the distribution represented by this sampler.  'uniforms'
@@ -290,9 +288,10 @@ CLASSES
      |      constant CDF) are handled by replacing those
      |      values with the minimum CDF value covered.
      |
-     |  sample(self, n)
+     |  sample(self, rg, n)
      |      Returns a list of 'n' random numbers of
      |      the distribution represented by this sampler.
+     |      - rg: A random generator (RandGen) object.
      |
      |  ----------------------------------------------------------------------
      |  Data descriptors defined here:
@@ -494,24 +493,6 @@ CLASSES
      |
      |  frechet(self, a, b, mu=0)
      |
-     |  from_interp(self, table)
-     |      Generates a random number given a list of CDF--number
-     |      pairs sorted by CDF.
-     |
-     |      An example of this list is as follows.
-     |      ` [[0.1, 0], [0.4, 1], [0.8, 2], [0.9, 3], [0.95, 4], [0.99, 5]]`
-     |
-     |      In this example, the first item of each pair is the value of
-     |      a cumulative distribution function (CDF) and is in the interval [0, 1],
-     |      and the second item is the number associated with that CDF's
-     |      value. The random number will fall within the range of numbers
-     |      suggested in the table, which will be in the interval [0, 5] in the
-     |      example above.
-     |
-     |      The `numericalTable` method generates an appropriate table
-     |      for this method's `table` parameter, given a CDF and a range
-     |      of numbers.
-     |
      |  gamma(self, mean, b=1.0, c=1.0, d=0.0)
      |      Generates a random number following a gamma distribution.
      |
@@ -562,17 +543,18 @@ CLASSES
      |      The area under the "curve" of the PDF need not be 1.
      |      By default, `n` is 1.
      |
-     |  integers_from_u01(self, pmf, u01)
-     |      Generates the quantiles for a list of uniform random numbers
-     |      according to a discrete distribution, assuming the distribution
-     |      produces only integers 0 or greater.
-     |      - `pmf` is the probability mass function (PMF)
-     |      of the discrete distribution; it takes one parameter and returns,
-     |      for that parameter, the probability that a random number is
-     |      equal to that parameter (each probability is in the interval [0, 1]).
-     |      The area under the PMF must be 1; it
-     |      is not enough for the PMF to be correct up to a constant.
-     |      - `u01` is a list of uniform random numbers, in [0, 1].
+     |  integers_from_u01(self, u01, pmf)
+     |      Transforms one or more random numbers into numbers
+     |      (called quantiles) that
+     |      follow a discrete distribution, assuming the distribution
+     |            produces only integers 0 or greater.
+     |            - `u01` is a list of uniform random numbers, in [0, 1].
+     |            - `pmf` is the probability mass function (PMF)
+     |            of the discrete distribution; it takes one parameter and returns,
+     |            for that parameter, the probability that a random number is
+     |            equal to that parameter (each probability is in the interval [0, 1]).
+     |            The area under the PMF must be 1; it
+     |            is not enough for the PMF to be correct up to a constant.
      |
      |  intsInRangeSortedWithSum(self, numSamples, numPerSample, mn, mx, sum)
      |      Generates one or more combinations of
@@ -733,16 +715,17 @@ CLASSES
      |
      |  numbersWithSum(self, count, sum=1.0)
      |
-     |  numbers_from_cdf(self, cdf, mn, mx, n=1, steps=100)
+     |  numbers_from_cdf(self, cdf, mn, mx, n=1)
      |      Generates one or more random numbers from a continuous probability
      |      distribution by numerically inverting its cumulative
-     |      distribution function (CDF).  The random number
-     |      will be in the interval [mn, mx].  `n` random numbers will be
-     |      generated. `cdf` is the CDF; it takes one parameter and returns,
+     |      distribution function (CDF).
+     |
+     |      - cdf: The CDF; it takes one parameter and returns,
      |      for that parameter, the probability that a random number will
-     |      be less than or equal to that parameter. `steps` is the number
-     |      of subintervals between sample points of the CDF.
-     |      By default, `n` is 1 and `steps` is 100.
+     |      be less than or equal to that parameter.
+     |      - mn, mx: Sampling domain.  The random number
+     |      will be in the interval [mn, mx].
+     |      - n: How many random numbers to generate. Default is 1.
      |
      |  numbers_from_dist(self, pdf, mn=0, mx=1, n=1, bitplaces=53)
      |      Generates 'n' random numbers that follow a continuous
@@ -790,6 +773,35 @@ CLASSES
      |      is the number of subintervals between sample points of the PDF.
      |      The area under the curve of the PDF need not be 1.
      |      By default, `n` is 1 and `steps` is 100.
+     |
+     |  numbers_from_u01(self, u01, pdf, cdf, mn, mx, ures=None)
+     |      Transforms one or more random numbers into numbers
+     |      (called quantiles) that follow a continuous probability distribution, based on its PDF
+     |      (probability density function) and/or its CDF (cumulative distribution
+     |      function).
+     |
+     |      - u01: List of uniform random numbers in [0, 1] that will be
+     |      transformed into numbers that follow the distribution.
+     |      - pdf: The PDF; it takes one parameter and returns,
+     |      for that parameter, the relative probability that a
+     |      random number close to that number is chosen.  The area under
+     |      the PDF need not be 1 (this method works even if the PDF
+     |      is only known up to a normalizing constant). Optional if a CDF is given.
+     |      - cdf: The CDF; it takes one parameter and returns,
+     |      for that parameter, the probability that a random number will
+     |      be less than or equal to that parameter. Optional if a PDF is given.
+     |      For best results, the CDF should be
+     |      monotonically nondecreasing everywhere in the
+     |      interval [xmin, xmax] and must output values in [0, 1];
+     |      for best results, the CDF should
+     |      be increasing everywhere in [xmin, xmax].
+     |      - mn, mx: Sampling domain.  The random number
+     |      will be in the interval [mn, mx].  For best results,
+     |      the range given by mn and mx should cover all or
+     |      almost all of the distribution.
+     |      - ures - Maximum approximation error tolerable, or
+     |      "u-resolution".  Default is 10^-8.  Currently used only if a
+     |      PDF is given.
      |
      |  pareto(self, minimum, alpha)
      |

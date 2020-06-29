@@ -3320,7 +3320,6 @@ random numbers, to an accuracy of 2^53.
 
 ur=randgen.kthsmallest_urand(10, 10)
 maxrand=randgen.quantile_urands(icdf, [ur], 53)[0]
-
        """
         ubits = 0
         base = 2
@@ -3440,30 +3439,71 @@ algorithm", arXiv:1511.02273v2  [cs.IT], 2016/2018.
         weights = [pdf(v) for v in values]
         return self.piecewise_linear_n(values, weights, n)
 
-    def numbers_from_cdf(self, cdf, mn, mx, n=1, steps=100):
+    def numbers_from_cdf(self, cdf, mn, mx, n=1):
         """ Generates one or more random numbers from a continuous probability
          distribution by numerically inverting its cumulative
-         distribution function (CDF).  The random number
-         will be in the interval [mn, mx].  `n` random numbers will be
-         generated. `cdf` is the CDF; it takes one parameter and returns,
-         for that parameter, the probability that a random number will
-         be less than or equal to that parameter. `steps` is the number
-         of subintervals between sample points of the CDF.
-         By default, `n` is 1 and `steps` is 100.  """
-        ntable = numericalTable(cdf, mn, mx, steps)
-        return [self.from_interp(ntable) for i in range(n)]
+         distribution function (CDF).
 
-    def integers_from_u01(self, pmf, u01):
-        """ Generates the quantiles for a list of uniform random numbers
-               according to a discrete distribution, assuming the distribution
+         - cdf: The CDF; it takes one parameter and returns,
+         for that parameter, the probability that a random number will
+         be less than or equal to that parameter.
+         - mn, mx: Sampling domain.  The random number
+         will be in the interval [mn, mx].
+         - n: How many random numbers to generate. Default is 1. """
+        return self.numbers_from_u01([rg.rndu01() for i in range(n)], None, cdf, mn, mx)
+
+    def numbers_from_u01(self, u01, pdf, cdf, mn, mx, ures=None):
+        """ Transforms one or more random numbers into numbers
+         (called quantiles) that follow a continuous probability distribution, based on its PDF
+         (probability density function) and/or its CDF (cumulative distribution
+         function).
+
+         - u01: List of uniform random numbers in [0, 1] that will be
+         transformed into numbers that follow the distribution.
+         - pdf: The PDF; it takes one parameter and returns,
+         for that parameter, the relative probability that a
+         random number close to that number is chosen.  The area under
+         the PDF need not be 1 (this method works even if the PDF
+         is only known up to a normalizing constant). Optional if a CDF is given.
+         - cdf: The CDF; it takes one parameter and returns,
+         for that parameter, the probability that a random number will
+         be less than or equal to that parameter. Optional if a PDF is given.
+         For best results, the CDF should be
+         monotonically nondecreasing everywhere in the
+         interval [xmin, xmax] and must output values in [0, 1];
+         for best results, the CDF should
+         be increasing everywhere in [xmin, xmax].
+         - mn, mx: Sampling domain.  The random number
+         will be in the interval [mn, mx].  For best results,
+         the range given by mn and mx should cover all or
+         almost all of the distribution.
+         - ures - Maximum approximation error tolerable, or
+         "u-resolution".  Default is 10^-8.  Currently used only if a
+         PDF is given.
+        """
+        if pdf != None and (cdf == None or ures != None):
+            sampler = DensityInversionSampler(
+                pdf, mn, mx, ures=(1e-8 if ures == None else ures)
+            )
+            return sampler.quantile(u01)
+        elif cdf != None:
+            sampler = KVectorSampler(cdf, mn, mx, pdf)
+            return sampler.quantile(u01)
+        else:
+            raise ValueError
+
+    def integers_from_u01(self, u01, pmf):
+        """ Transforms one or more random numbers into numbers
+         (called quantiles) that
+         follow a discrete distribution, assuming the distribution
                produces only integers 0 or greater.
+               - `u01` is a list of uniform random numbers, in [0, 1].
                - `pmf` is the probability mass function (PMF)
                of the discrete distribution; it takes one parameter and returns,
                for that parameter, the probability that a random number is
                equal to that parameter (each probability is in the interval [0, 1]).
                The area under the PMF must be 1; it
                is not enough for the PMF to be correct up to a constant.
-               - `u01` is a list of uniform random numbers, in [0, 1].
                """
         ret = [0 for i in range(len(u01))]
         pdftable = [pmf(i) for i in range(10)]
@@ -3477,29 +3517,6 @@ algorithm", arXiv:1511.02273v2  [cs.IT], 2016/2018.
                 p = pdftable[j] if j < len(pdftable) else pmf(j)
             ret[i] = j
         return ret
-
-    def from_interp(self, table):
-        """ Generates a random number given a list of CDF--number
-       pairs sorted by CDF.
-
-       An example of this list is as follows.
-       ` [[0.1, 0], [0.4, 1], [0.8, 2], [0.9, 3], [0.95, 4], [0.99, 5]]`
-
-       In this example, the first item of each pair is the value of
-       a cumulative distribution function (CDF) and is in the interval [0, 1],
-       and the second item is the number associated with that CDF's
-       value. The random number will fall within the range of numbers
-       suggested in the table, which will be in the interval [0, 5] in the
-       example above.
-
-       The `numericalTable` method generates an appropriate table
-       for this method's `table` parameter, given a CDF and a range
-       of numbers.
-       """
-        while True:
-            x = _tableInterpSearch(table, self.rndu01())
-            if x != None:
-                return x
 
     def randomwalk_u01(self, n):
         """ Random walk of uniform 0-1 random numbers. """
@@ -3808,7 +3825,6 @@ class DensityInversionSampler:
         allows quantiles for the distribution to be calculated
         from pregenerated uniform random numbers in [0, 1].
 
-      - rg: A random generator (RandGen) object.
       - pdf: A function that specifies the PDF. It takes a single
         number and outputs a single number. The area under
         the PDF need not equal 1 (this sampler works even if the
@@ -3822,8 +3838,8 @@ class DensityInversionSampler:
          about ures*0.05 or less).
       - ures - Maximum approximation error tolerable, or
         "u-resolution".  Default is 10^-8.  This error tolerance
-        "does not work for continuous distributions with high
-        and narrow peaks or poles".
+        "does not work for continuous distributions [whose PDFs
+        have] high and narrow peaks or poles".
 
         Reference:
         Gerhard Derflinger, Wolfgang Hörmann, and Josef Leydold,
@@ -3832,10 +3848,9 @@ class DensityInversionSampler:
         and Computer Simulation 20(4) article 18, October 2010.
       """
 
-    def __init__(self, rg, pdf, bl, br, ures=1e-8):
+    def __init__(self, pdf, bl, br, ures=1e-8):
         if bl > br:
             raise ValueError
-        self.rg = rg
         n = 5  # Polynomial order of interpolating polynomials
         ures *= 0.9
         glob = _GaussLobatto(pdf)
@@ -3993,12 +4008,12 @@ class DensityInversionSampler:
         ret += "  return 0\n\n"
         return ret
 
-    def sample(self, n=1):
+    def sample(self, rg, n=1):
         """ Generates random numbers that (approximately) follow the
             distribution modeled by this class.
       - n: The number of random numbers to generate.
       Returns a list of 'n' random numbers.  """
-        return [self._onequantile(self.rg.rndu01() * self.integral) for i in range(n)]
+        return [self._onequantile(rg.rndu01() * self.integral) for i in range(n)]
 
     def _onequantile(self, r):
         for j in range(0, len(self.table) - 1):
@@ -4021,10 +4036,9 @@ class KVectorSampler:
     def _linspace(self, a, b, size):
         return [a + (b - a) * (x * 1.0 / size) for x in range(size + 1)]
 
-    def __init__(self, rg, cdf, xmin, xmax, pdf=None, nd=200):
+    def __init__(self, cdf, xmin, xmax, pdf=None, nd=200):
         """ Initializes the K-Vector-like sampler.
          Parameters:
-         - rg: A random generator (RandGen) object.
          - cdf: Cumulative distribution function (CDF) of the
             distribution.  The CDF must be
             monotonically nondecreasing everywhere in the
@@ -4032,7 +4046,7 @@ class KVectorSampler:
             for best results, the CDF should
             be increasing everywhere in [xmin, xmax].
          - xmin: Maximum x-value to generate.
-         - xmax: Maximum y-value to generate.  For best results,
+         - xmax: Maximum x-value to generate.  For best results,
             the range given by xmin and xmax should cover all or
             almost all of the distribution.
          - pdf: Optional. Distribution's probability density
@@ -4069,11 +4083,10 @@ class KVectorSampler:
         self.ys = [cdf(x) for x in self.xs]
         self.m = (nd - 1) * 1.0 / (self.ymax - self.ymin + 2 * xi)
         self.q = 1 - self.m * (self.ymin - xi)
-        self.rg = rg
 
-    def _sampleone(self):
+    def _sampleone(self, rg):
         while True:
-            a = self.rg.rndrange(self.ymin, self.ymax)
+            a = rg.rndrange(self.ymin, self.ymax)
             # Do a "search" for 'a'
             b = int(math.floor(self.m * a + self.q))
             x0 = self.xs[b - 1]
@@ -4100,7 +4113,7 @@ class KVectorSampler:
             return self.xs[0]
         return x0 + (a - y0) * (x1 - x0) / (y1 - y0)
 
-    def invert(self, uniforms):
+    def quantile(self, uniforms):
         """ Returns a list of 'n' numbers that correspond
             to the given uniform random numbers and follow
             the distribution represented by this sampler.  'uniforms'
@@ -4120,9 +4133,10 @@ class KVectorSampler:
             values with the minimum CDF value covered. """
         return [self._invertone(u) for u in uniforms]
 
-    def sample(self, n):
+    def sample(self, rg, n):
         """ Returns a list of 'n' random numbers of
-         the distribution represented by this sampler. """
+         the distribution represented by this sampler.
+         - rg: A random generator (RandGen) object. """
         return [self._sampleone() for i in range(n)]
 
 class AlmostRandom:
@@ -4235,8 +4249,6 @@ if __name__ == "__main__":
     import numpy
 
     t = time.time()
-    # dens=DensityInversionSampler(RandomGen(), normalpdf, -10, 10)
-    # print(dens.codegen("normal"))
     ksample = randgen.binomial(20, 0.5, n=10000)
     print("Took %f seconds" % (time.time() - t))
     ls = linspace(0, 20, 20)
@@ -4272,9 +4284,9 @@ if __name__ == "__main__":
     showbuckets(ls, buckets)
 
     print("Generating normal random numbers with KVectorSampler")
-    kvs = KVectorSampler(randgen, normalcdf, -4, 4, nd=1000)  # , pdf=normalpdf)
+    kvs = KVectorSampler(normalcdf, -4, 4, nd=1000)  # , pdf=normalpdf)
     t = time.time()
-    ksample = kvs.sample(1000)
+    ksample = kvs.sample(randgen, 1000)
     print("Took %f seconds" % (time.time() - t))
     ls = linspace(-3.3, 3.3, 30)
     buckets = [0 for x in ls]
