@@ -23,8 +23,10 @@ CLASSES
         DensityInversionSampler
         FastLoadedDiceRoller
         KVectorSampler
+        OptimalSampler
         PascalTriangle
         RandomGen
+        SortedAliasMethod
         VoseAlias
 
     class AlmostRandom(builtins.object)
@@ -219,6 +221,14 @@ CLASSES
      |  __init__(self, weights)
      |      Initialize self.  See help(type(self)) for accurate signature.
      |
+     |  codegen(self, name='sample_discrete')
+     |      Generates standalone Python code that samples
+     |              from the distribution modeled by this class.
+     |              Idea from Leydold, et al.,
+     |              "An Automatic Code Generator for
+     |              Nonuniform Random Variate Generation", 2001.
+     |      - name: Method name. Default: 'sample_discrete'.
+     |
      |  next(self, randgen)
      |
      |  ----------------------------------------------------------------------
@@ -283,6 +293,40 @@ CLASSES
      |  sample(self, n)
      |      Returns a list of 'n' random numbers of
      |      the distribution represented by this sampler.
+     |
+     |  ----------------------------------------------------------------------
+     |  Data descriptors defined here:
+     |
+     |  __dict__
+     |      dictionary for instance variables (if defined)
+     |
+     |  __weakref__
+     |      list of weak references to the object (if defined)
+
+    class OptimalSampler(builtins.object)
+     |  Implements a sampler which chooses a random number in [0, n)
+     |  where the probability that each number is chosen is weighted.  The 'weights' is the
+     |  list of weights each 0 or greater; the higher the weight, the greater
+     |  the probability.  This sampler supports only integer weights, but the sampler is entropy-optimal as long as the sum of those weights is of the form 2^k or 2^k-2^m.
+     |
+     |  Reference: Feras A. Saad, Cameron E. Freer, Martin C. Rinard, and Vikash K. Mansinghka. Optimal Approximate Sampling From Discrete Probability Distributions. Proc. ACM Program. Lang. 4, POPL, Article 36 (January 2020), 33 pages.
+     |
+     |  Methods defined here:
+     |
+     |  __init__(self, m)
+     |      Initialize self.  See help(type(self)) for accurate signature.
+     |
+     |  codegen(self, name='sample_discrete')
+     |      Generates standalone Python code that samples
+     |              from the distribution modeled by this class.
+     |              Idea from Leydold, et al.,
+     |              "An Automatic Code Generator for
+     |              Nonuniform Random Variate Generation", 2001.
+     |      - name: Method name. Default: 'sample_discrete'.
+     |
+     |  next(self, rg)
+     |
+     |  nextFromMatrix(self, pm, rg)
      |
      |  ----------------------------------------------------------------------
      |  Data descriptors defined here:
@@ -993,6 +1037,36 @@ CLASSES
      |  FPRADIX = 2
      |
      |  MINEXPONENT = -1074
+
+    class SortedAliasMethod(builtins.object)
+     |  Implements a weighted sampling table
+     |  where each weight must be in sorted
+     |  order (ascending or descending).
+     |  When many entries are in the table,
+     |  the initialization is faster than with
+     |  FastLoadedDiceRoller or VoseAlias.  Reference:
+     |  K. Bringmann and K. Panagiotou, "Efficient Sampling
+     |  Methods for Discrete Distributions." In: Proc. 39th
+     |  International Colloquium on Automata, Languages,
+     |  and Programming (ICALP'12), 2012.
+     |  -  p: List of weights, in sorted order (ascending or
+     |      descending).
+     |
+     |  Methods defined here:
+     |
+     |  __init__(self, p)
+     |      Initialize self.  See help(type(self)) for accurate signature.
+     |
+     |  next(self, rg)
+     |
+     |  ----------------------------------------------------------------------
+     |  Data descriptors defined here:
+     |
+     |  __dict__
+     |      dictionary for instance variables (if defined)
+     |
+     |  __weakref__
+     |      list of weak references to the object (if defined)
 
     class VoseAlias(builtins.object)
      |  Implements Vose's version of the alias sampler, which chooses a random number in [0, n)

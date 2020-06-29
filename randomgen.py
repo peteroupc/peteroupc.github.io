@@ -345,11 +345,42 @@ class FastLoadedDiceRoller:
                     level += 1
             shift -= 1
 
+    def codegen(self, name="sample_discrete"):
+        """ Generates standalone Python code that samples
+                from the distribution modeled by this class.
+                Idea from Leydold, et al.,
+                "An Automatic Code Generator for
+                Nonuniform Random Variate Generation", 2001.
+        - name: Method name. Default: 'sample_discrete'. """
+        ret = "import random\n\n"
+        ret += "TABLE_" + name + " = ["
+        for i in range(len(self.leavesAndLabels)):
+            if i > 0:
+                ret += ", "
+            ret += "%s" % (str(self.leavesAndLabels[i]),)
+        ret += "]\n\n"
+        ret += "def " + name + "():\n"
+        ret += "  x = 0\n"
+        ret += "  y = 0\n"
+        ret += "  while True:\n"
+        ret += "    x = random.randint(0, 1) | (x << 1)\n"
+        ret += "    leaves = TABLE_" + name + "[0][y]\n"
+        ret += "    if x < leaves:\n"
+        ret += "        label = TABLE_" + name + "[x + 1][y]\n"
+        ret += "        if label <= %d:\n" % (self.n)
+        ret += "            return label - 1\n"
+        ret += "        x = 0\n"
+        ret += "        y = 0\n"
+        ret += "    else:\n"
+        ret += "        x -= leaves\n"
+        ret += "        y += 1\n"
+        return ret
+
     def next(self, randgen):
         x = 0
         y = 0
         while True:
-            x = randgen.rndbit() + (x << 1)
+            x = randgen.rndbit() | (x << 1)
             leaves = self.leavesAndLabels[0][y]
             if x < leaves:
                 label = self.leavesAndLabels[x + 1][y]
@@ -367,6 +398,277 @@ class FastLoadedDiceRoller:
             else:
                 x -= leaves
                 y += 1
+
+class SortedAliasMethod:
+    """ Implements a weighted sampling table
+          where each weight must be in sorted
+          order (ascending or descending).
+          When many entries are in the table,
+          the initialization is faster than with
+          FastLoadedDiceRoller or VoseAlias.  Reference:
+          K. Bringmann and K. Panagiotou, "Efficient Sampling
+          Methods for Discrete Distributions." In: Proc. 39th
+          International Colloquium on Automata, Languages,
+          and Programming (ICALP'12), 2012.
+          -  p: List of weights, in sorted order (ascending or
+              descending).
+          """
+
+    def __init__(self, p):
+        ps = sum(p)
+        asc = True
+        if p[0] > p[1] or p[0] > p[len(p) - 1]:
+            asc = False
+            for i in range(len(p) - 1):
+                if p[i] < p[i + 1]:
+                    raise ValueError("Not in sorted order")
+        else:
+            for i in range(len(p) - 1):
+                if p[i] > p[i + 1]:
+                    raise ValueError("Not in sorted order")
+        q = []
+        k = 0
+        self.asc = asc
+        self.n = len(p)
+        while ((1 << k) - 1) < len(p):
+            qk = min(2 << k, len(p) + 1) - (1 << k)
+            pIndex = (1 << k) - 1
+            if asc:
+                pIndex = self.n - 1 - pIndex
+            qk *= Fraction(p[pIndex], ps)
+            q.append(int(qk * ps))
+            k += 1
+        self.alias = randomgen.FastLoadedDiceRoller(q)
+        self.p = [x for x in p]
+
+    def next(self, rg):
+        while True:
+            k = self.alias.next(rg)
+            rmn = 1 << k
+            rmx = min((2 << k) - 1, self.n)
+            ret = rg.rndintrange(rmn, rmx) - 1
+            pIndex = (1 << k) - 1
+            if self.asc:
+                ret = self.n - 1 - ret
+                pIndex = self.n - 1 - pIndex
+            if rg.zero_or_one(self.p[ret], self.p[pIndex]) == 1:
+                return ret
+
+class OptimalSampler:
+    """
+    Implements a sampler which chooses a random number in [0, n)
+    where the probability that each number is chosen is weighted.  The 'weights' is the
+    list of weights each 0 or greater; the higher the weight, the greater
+    the probability.  This sampler supports only integer weights, but the sampler is entropy-optimal as long as the sum of those weights is of the form 2^k or 2^k-2^m.
+
+    Reference: Feras A. Saad, Cameron E. Freer, Martin C. Rinard, and Vikash K. Mansinghka. Optimal Approximate Sampling From Discrete Probability Distributions. Proc. ACM Program. Lang. 4, POPL, Article 36 (January 2020), 33 pages.
+ """
+
+    def __init__(self, m):
+        s = sum(m)
+        if s <= 0:
+            raise ValueError
+        if len(m) == 1:
+            # degenerate
+            self.k = self.l = 0
+            self.rej = -1
+            self.lin = [-1]
+        else:
+            pm, self.l, self.rej = self._preparematrix(m)
+            self.k = s.bit_length()
+            leaves = {}
+            i = 2
+            for x in range(self.k):
+                for y in range(len(pm)):
+                    if ((pm[y] >> (self.k - 1 - x)) & 1) != 0:
+                        leaves[i] = y + 1
+                        i -= 1
+                i = 2 + (i << 1)
+            root = self._tree(0, [], leaves)
+            self.lin = []
+            self._pack(self.lin, root, 0)
+
+    def next(self, rg):
+        if len(self.lin) == 1:
+            return 0
+        x = 0
+        while True:
+            x = self.lin[x + rg.rndbit()]
+            if self.lin[x] < 0:
+                # Subtract by 1 because we're returning
+                # values in [0, n)
+                ret = (-self.lin[x]) - 1
+                if ret == self.rej:
+                    continue
+                return ret
+
+    def nextFromMatrix(self, pm, rg):
+        # Alternate sampler that samples directly
+        # from the probability matrix,
+        # rather than the encoded DDG tree.  It is
+        # entropy-optimal as long as there is no
+        # rejection event.
+        if len(pm) == 1:
+            return 0
+        x = 0
+        y = 0
+        while True:
+            x = (x << 1) | rg.rndbit()
+            for z in range(len(pm)):
+                x -= (pm[z] >> (self.k - 1 - y)) & 1
+                # Handle rejection event
+                if x == -1 and z == self.rej:
+                    x = 0
+                    y = -1
+                    break
+                # Use z, not z+1, because we're returning
+                # values in [0, n)
+                if x == -1:
+                    return z
+            y = self.l if (y == self.k - 1) else (y + 1)
+
+    def codegen(self, name="sample_discrete"):
+        """ Generates standalone Python code that samples
+                from the distribution modeled by this class.
+                Idea from Leydold, et al.,
+                "An Automatic Code Generator for
+                Nonuniform Random Variate Generation", 2001.
+        - name: Method name. Default: 'sample_discrete'. """
+        ret = "import random\n\n"
+        ret += "TABLE_" + name + " = ["
+        for i in range(len(self.lin)):
+            if i > 0:
+                ret += ", "
+            ret += "%s" % (self.lin[i],)
+        ret += "]\n\n"
+        ret += "def " + name + "():\n"
+        if self.lin == 1:
+            ret += "  return 0\n\n"
+        else:
+            ret += "  x = 0\n"
+            ret += "  while True:\n"
+            ret += "    x = TABLE_" + name + "[x + random.randint(0, 1)]\n"
+            ret += "    if TABLE_" + name + "[x] < 0:\n"
+            if self.rej >= 0:
+                ret += "      ret = (-TABLE_" + name + "[x]) - 1\n"
+                ret += "      if ret == self.rej: continue\n"
+                ret += "      return ret\n\n"
+            else:
+                ret += "      return (-TABLE_" + name + "[x]) - 1\n\n"
+        return ret
+
+    def _pack(self, lin, node, o):
+        node[3] = o
+        wt = 0
+        if node[0] != None:
+            while o >= len(lin):
+                lin.append(0)
+            lin[o] = -node[0]
+            return o + 1
+        if (not node[1]) or (not node[2]):
+            raise ValueError
+        if node[1][3] != None:
+            while o >= len(lin):
+                lin.append(0)
+            lin[o] = node[1][3]
+            wt = o + 2
+        else:
+            while o >= len(lin):
+                lin.append(0)
+            lin[o] = o + 2
+            wt = self._pack(lin, node[1], o + 2)
+        if node[2][3] != None:
+            while o + 1 >= len(lin):
+                lin.append(0)
+            lin[o + 1] = node[2][3]
+        else:
+            while o + 1 >= len(lin):
+                lin.append(0)
+            lin[o + 1] = wt
+            wt = self._pack(lin, node[2], wt)
+        return wt
+
+    def _makeleaftable(self, p, k):
+        leaves = {}
+        i = 2
+        for x in range(k):
+            for y in range(len(p)):
+                if ((p[y] >> (k - 1 - x)) & 1) != 0:
+                    leaves[i] = y + 1
+                    i -= 1
+            i = 2 + (i << 1)
+        return leaves
+
+    def _tree(self, i, ancestors, leaves):
+        # sanity check
+        if i > (1 << (self.k + 3)):
+            raise ValueError
+        if i in leaves:
+            return [leaves[i], None, None, None]  # Leaf node
+        else:
+            node = [None, None, None, None]  # label, left, right, loc
+            level = (i + 1).bit_length() - 1
+            if level == self.l:
+                ancestors.append(node)
+            if level == self.k - 1 and not (2 * i + 2 in leaves):
+                node[2] = ancestors.pop()
+            else:
+                node[2] = self._tree(2 * i + 2, ancestors, leaves)
+            if level == self.k - 1 and not (2 * i + 1 in leaves):
+                node[1] = ancestors.pop()
+            else:
+                node[1] = self._tree(2 * i + 1, ancestors, leaves)
+            return node
+
+    def _preparematrix(self, m):
+        s = sum(m)
+        if s <= 0 or len(m) < 2:
+            raise ValueError
+        k = s.bit_length()
+        l = 0
+        rejectionEvent = -1
+        if s != (1 << k):
+            accept = False
+            acceptable = 1 << k
+            acceptableL = k
+            l = 1
+            while l < k:
+                if s == (1 << k) - (1 << l):
+                    accept = True
+                    break
+                elif s > (1 << k) - (1 << l):
+                    break
+                else:
+                    acceptableL = l
+                    acceptable = (1 << k) - (1 << l)
+                l += 1
+            if not accept:
+                # Add a "rejection" event (suggested
+                # for the Fast Loaded Dice Roller but not
+                # in optimal approximate sampling paper,
+                # which supports only certain sums of
+                # weights)
+                l = acceptableL
+                rejectionEvent = acceptable - s
+        b = []
+        mv = len(m) + 1 if rejectionEvent >= 0 else len(m)
+        for i in range(mv):
+            mi = rejectionEvent if i >= len(m) else m[i]
+            x = 0
+            y = 0
+            if l == k:
+                x = mi
+            elif l == 0:
+                y = mi
+            else:
+                msk = (1 << (k - l)) - 1
+                x = mi // msk
+                y = mi - msk * x
+            xy = (x << (k - l)) | y
+            if xy >= (1 << k):
+                raise ValueError
+            b.append(xy)
+        return [b, l, len(m) if rejectionEvent >= 0 else -1]
 
 class _BinomialAliasTable:
     def __init__(self, aliases, entries, n):
@@ -3692,7 +3994,7 @@ class DensityInversionSampler:
         return ret
 
     def sample(self, n=1):
-        """ Generates random numbers that follow the
+        """ Generates random numbers that (approximately) follow the
             distribution modeled by this class.
       - n: The number of random numbers to generate.
       Returns a list of 'n' random numbers.  """
