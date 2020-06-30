@@ -27,6 +27,7 @@ CLASSES
         OptimalSampler
         PascalTriangle
         RandomGen
+        RatioOfUniformsTiling
         SortedAliasMethod
         VoseAlias
 
@@ -1102,6 +1103,56 @@ CLASSES
      |  FPRADIX = 2
      |
      |  MINEXPONENT = -1074
+
+    class RatioOfUniformsTiling(builtins.object)
+     |  Produces a tiling for the purposes
+     |       of fast sampling from a probability distribution via the
+     |       ratio of uniforms method.
+     |
+     |  - pdf: The probability density function (PDF); it takes one parameter and returns,
+     |     for that parameter, the relative probability that a
+     |     random number close to that number is chosen.  The area under
+     |     the PDF need not be 1 (this method works even if the PDF
+     |     is only known up to a normalizing constant).   For the ratio of uniforms method
+     |     to work, both pdf(x) and x*x*pdf(x) must be bounded away from infinity.
+     |  - mode: X-coordinate of the PDF's highest peak or one of them,
+     |     or a location close to it.  Optional; default is 0.
+     |  - y0, y1: Bounding coordinates for the ratio-of-uniforms tiling.
+     |     For this class to work, y0 <= min( x*sqrt(pdf(x)) ) and
+     |     y1 >= max( x*sqrt(pdf(x)) ) for all x.  Optional.
+     |  - cycles - Number of recursion cycles in which to split tiles
+     |     for the ratio-of-uniforms tiling.  Default is 10.
+     |
+     |   References:
+     |   Section IV.7 of Devroye, L., "Non-Uniform Random Variate Generation", 1986.
+     |   Section 4.5 of Fulger, D., "From phenomenological modelling of anomalous
+     |   diffusion through continuous-time random walks and fractional
+     |   calculus to correlation analysis of complex systems", dissertation,
+     |   Philipps-Universität Marburg, 2009.
+     |
+     |  Methods defined here:
+     |
+     |  __init__(self, pdf, mode=0, y0=-10, y1=10, cycles=10)
+     |      Initialize self.  See help(type(self)) for accurate signature.
+     |
+     |  maybeAppend(self, newtiles, xmn, xmx, ymn, ymx)
+     |
+     |  sample(self, rg, n=1)
+     |      Generates random numbers that (approximately) follow the
+     |            distribution modeled by this class.
+     |      - n: The number of random numbers to generate.
+     |      Returns a list of 'n' random numbers.
+     |
+     |  svg(self)
+     |
+     |  ----------------------------------------------------------------------
+     |  Data descriptors defined here:
+     |
+     |  __dict__
+     |      dictionary for instance variables (if defined)
+     |
+     |  __weakref__
+     |      list of weak references to the object (if defined)
 
     class SortedAliasMethod(builtins.object)
      |  Implements a weighted sampling table

@@ -3889,6 +3889,117 @@ def _gaussKronrod(func, mn, mx, direction=1, depth=0):
             func, bp, mx, direction, depth + 1
         )
 
+class RatioOfUniformsTiling:
+    """ Produces a tiling for the purposes
+           of fast sampling from a probability distribution via the
+           ratio of uniforms method.
+
+      - pdf: The probability density function (PDF); it takes one parameter and returns,
+         for that parameter, the relative probability that a
+         random number close to that number is chosen.  The area under
+         the PDF need not be 1 (this method works even if the PDF
+         is only known up to a normalizing constant).   For the ratio of uniforms method
+         to work, both pdf(x) and x*x*pdf(x) must be bounded away from infinity.
+      - mode: X-coordinate of the PDF's highest peak or one of them,
+         or a location close to it.  Optional; default is 0.
+      - y0, y1: Bounding coordinates for the ratio-of-uniforms tiling.
+         For this class to work, y0 <= min( x*sqrt(pdf(x)) ) and
+         y1 >= max( x*sqrt(pdf(x)) ) for all x.  Optional.
+      - cycles - Number of recursion cycles in which to split tiles
+         for the ratio-of-uniforms tiling.  Default is 10.
+
+       References:
+       Section IV.7 of Devroye, L., "Non-Uniform Random Variate Generation", 1986.
+       Section 4.5 of Fulger, D., "From phenomenological modelling of anomalous
+       diffusion through continuous-time random walks and fractional
+       calculus to correlation analysis of complex systems", dissertation,
+       Philipps-Universität Marburg, 2009.
+           """
+
+    def __init__(self, pdf, mode=0, y0=-10, y1=10, cycles=10):
+        self.pdf = pdf
+        # NOTE: Multiply by 2 in case the mode was given approximately
+        self.tiles = [[0, math.sqrt(self.pdf(mode)) * 2, False, y0, y1]]
+        for i in range(cycles):
+            newtiles = []
+            for t in self.tiles:
+                cx = (t[0] + t[1]) / 2.0
+                cy = (t[3] + t[4]) / 2.0
+                if t[2]:
+                    # entirely within PDF, so just split
+                    newtiles.append([t[0], cx, True, cy, t[4]])
+                    newtiles.append([t[0], cx, True, t[3], cy])
+                    newtiles.append([cx, t[1], True, cy, t[4]])
+                    newtiles.append([cx, t[1], True, t[3], cy])
+                else:
+                    self.maybeAppend(newtiles, t[0], cx, t[3], cy)
+                    self.maybeAppend(newtiles, t[0], cx, cy, t[4])
+                    self.maybeAppend(newtiles, cx, t[1], t[3], cy)
+                    self.maybeAppend(newtiles, cx, t[1], cy, t[4])
+            self.tiles = newtiles
+
+    def maybeAppend(self, newtiles, xmn, xmx, ymn, ymx):
+        m = []
+        discarded = False
+        for xi in range(10 + 1):
+            x = xmn + (xmx - xmn) * xi / 10.0
+            if x <= 0:
+                continue
+            for yi in range(10 + 1):
+                y = ymn + (ymx - ymn) * yi / 10.0
+                try:
+                    yx = y / x
+                    val = math.sqrt(self.pdf(yx))
+                    if (not math.isnan(val)) and x <= val:
+                        m.append(y / x)
+                    else:
+                        discarded = True
+                except:
+                    discarded = True
+                    pass
+        if len(m) == 0:
+            return
+        # print(m)
+        if not discarded:
+            # Accept
+            newtiles.append([xmn, xmx, True, ymn, ymx])
+        else:
+            # Maybe accept
+            newtiles.append([xmn, xmx, False, ymn, ymx])
+
+    def svg(self):
+        ret = (
+            "<svg width='640px' height='640px' viewBox='-1 -1 2 2'"
+            + " xmlns='http://www.w3.org/2000/svg'>\n"
+        )
+        for tile in self.tiles:
+            ret += (
+                "<path style='fill:none;stroke:black;stroke-width:0.01px' "
+                + "d='M%f %fL%f %fL%f %fL%f %fZ'/>\n"
+            ) % (tile[0], tile[3], tile[0], tile[4], tile[1], tile[4], tile[1], tile[3])
+        ret += "</svg>\n"
+        return ret
+
+    def sample(self, rg, n=1):
+        """ Generates random numbers that (approximately) follow the
+            distribution modeled by this class.
+      - n: The number of random numbers to generate.
+      Returns a list of 'n' random numbers.  """
+        # self.iters=0
+        ret = [self._sampleOne(rg) for i in range(n)]
+        # print(n*1.0/self.iters)
+        return ret
+
+    def _sampleOne(self, rg):
+        while True:
+            # self.iters+=1
+            tile = self.tiles[rg.rndintexc(len(self.tiles))]
+            x = rg.rndrangemaxexc(tile[0], tile[1])
+            y = rg.rndrangemaxexc(tile[3], tile[4])
+            ret = y / x
+            if tile[2] or x <= math.sqrt(self.pdf(ret)):
+                return ret
+
 class DensityTiling:
     """ Produces a tiling of a probability density function (PDF)
            for the purposes of random number generation.  The PDF is
@@ -4089,6 +4200,8 @@ class DensityInversionSampler:
                             success = False
                             break
                     if success:
+                        # NOTE: Commented out because it apparently
+                        # doesn't work.
                         # if epsimax<=ures/3.0:
                         #   h*=1.3
                         break
