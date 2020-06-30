@@ -21,6 +21,7 @@ CLASSES
         BringmannLarsen
         ConvexPolygonSampler
         DensityInversionSampler
+        DensityTiling
         FastLoadedDiceRoller
         KVectorSampler
         OptimalSampler
@@ -187,6 +188,58 @@ CLASSES
      |      Returns a list of the quantiles corresponding to the
      |      uniform random numbers.  The returned list will have
      |      the same number of entries as 'v'.
+     |
+     |  sample(self, rg, n=1)
+     |      Generates random numbers that (approximately) follow the
+     |            distribution modeled by this class.
+     |      - n: The number of random numbers to generate.
+     |      Returns a list of 'n' random numbers.
+     |
+     |  ----------------------------------------------------------------------
+     |  Data descriptors defined here:
+     |
+     |  __dict__
+     |      dictionary for instance variables (if defined)
+     |
+     |  __weakref__
+     |      list of weak references to the object (if defined)
+
+    class DensityTiling(builtins.object)
+     |  Produces a tiling of a probability density function (PDF)
+     |       for the purposes of random number generation.  The PDF is
+     |       decomposed into tiles; these tiles will either cross the PDF
+     |       or go below the PDF.  In each recursion cycle, each tile is
+     |       split into four tiles, and tiles that end up above the PDF are
+     |       discarded.
+     |
+     |  - pdf: A function that specifies the PDF. It takes a single
+     |    number and outputs a single number. The area under
+     |    the PDF need not equal 1 (this class tolerates the PDF even if
+     |    it is only known up to a normalizing constant).
+     |    If the PDF contains a _pole_, that is, a point that approaches
+     |    infinity, the actual PDF may be modified to accommodate the pole,
+     |    so that points extremely close to the pole may be sampled
+     |    at a higher or lower probability than otherwise (but not in a way
+     |    that significantly affects the chance of sampling points
+     |    outside the pole region).
+     |  - bl, br - Specifies the sampling domain of the PDF.  Both
+     |     bl and br are numbers giving the domain,
+     |     which in this case is [bl, br].
+     |  - cycles - Number of recursion cycles in which to split tiles
+     |     that follow the PDF.  Default is 10.
+     |
+     |   Reference:
+     |   Fulger, Daniel and Guido Germano. "Automatic generation of
+     |   non-uniform random variates for arbitrary pointwise computable
+     |   probability densities by tiling",
+     |   arXiv:0902.3088v1  [cs.MS], 2009.
+     |
+     |  Methods defined here:
+     |
+     |  __init__(self, pdf, bl, br, cycles=10)
+     |      Initialize self.  See help(type(self)) for accurate signature.
+     |
+     |  maybeAppend(self, newtiles, xmn, xmx, ymn, ymx)
      |
      |  sample(self, rg, n=1)
      |      Generates random numbers that (approximately) follow the
@@ -1132,6 +1185,9 @@ FUNCTIONS
         number called a "u-rand" (Karney, "Sampling exactly from the normal distribution").
         A u-rand is a list of two numbers: the first is a multiple of 2^X, and the second is X.
         The urand created by this method will be "empty" (no bits sampled yet).
+
+DATA
+    GaussKronrodArray = [0.9969339225295955, 0.00825771143316837, 0.0, 0.9...
 
 FILE
     /home/rooster/Documents/SharpDevelopProjects/peteroupc.github.io/randomgen.py

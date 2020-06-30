@@ -3791,10 +3791,10 @@ class _GaussLobatto:
                 a = v[0]
             else:
                 break
-        r += self.gl_inner(a, b)
+        r += self._gl_inner(a, b)
         return r
 
-    def gl_inner(self, a, b):
+    def _gl_inner(self, a, b):
         r = 0
         h = b - a
         for i in range(5):
@@ -3806,9 +3806,9 @@ class _GaussLobatto:
         if a > h:
             return -self.agl(h, a)
         mid = a + (h - a) * 0.5
-        i0 = self.gl_inner(a, h)
-        i1a = self.gl_inner(a, mid)
-        i1b = self.gl_inner(mid, h)
+        i0 = self._gl_inner(a, h)
+        i1a = self._gl_inner(a, mid)
+        i1b = self._gl_inner(mid, h)
         i1 = i1a + i1b
         if abs(i1 - i0) < self.tol:
             self.table[a] = [mid, i1a]
@@ -3816,6 +3816,195 @@ class _GaussLobatto:
             return i1
         ret = self.agl(a, mid) + self.agl(mid, h)
         return ret
+
+GaussKronrodArray = [
+    0.99693392252959545,
+    0.00825771143316837,
+    0.00000000000000000,
+    0.98156063424671924,
+    0.02303608403898155,
+    0.04717533638651112,
+    0.95053779594312127,
+    0.03891523046929952,
+    0.00000000000000000,
+    0.90411725637047491,
+    0.05369701760775668,
+    0.10693932599531891,
+    0.84355812416115328,
+    0.06725090705083998,
+    0.00000000000000000,
+    0.76990267419430469,
+    0.07992027533360173,
+    0.16007832854334625,
+    0.68405989547005586,
+    0.09154946829504924,
+    0.00000000000000000,
+    0.58731795428661748,
+    0.10164973227906016,
+    0.20316742672306579,
+    0.48133945047815713,
+    0.11002260497764407,
+    0.00000000000000000,
+    0.36783149899818018,
+    0.11671205350175679,
+    0.23349253653835478,
+    0.24850574832046932,
+    0.12162630352394839,
+    0.00000000000000000,
+    0.12523340851146891,
+    0.12458416453615606,
+    0.24914704581340283,
+    0.00000000000000000,
+    0.12555689390547423,
+    0.00000000000000000,
+]
+
+def _gaussKronrod(func, mn, mx, direction=1, depth=0):
+    bm = (mx - mn) * 0.5
+    bp = mn + bm
+    gauss = 0
+    kronrod = 0
+    i = 0
+    while i < len(GaussKronrodArray):
+        gaussWeight = GaussKronrodArray[i + 2]
+        kronrodWeight = GaussKronrodArray[i + 1]
+        abscissa = GaussKronrodArray[i]
+        x = func(bm * abscissa + bp)
+        # print([bm * abscissa + bp, x])
+        gauss += gaussWeight * x
+        kronrod += kronrodWeight * x
+        if abscissa > 0:
+            x = func(-bm * abscissa + bp)
+            gauss += gaussWeight * x
+            kronrod += kronrodWeight * x
+        i += 3
+    gauss = gauss * bm * direction
+    kronrod = kronrod * bm * direction
+    if abs(gauss - kronrod) < 1e-6:
+        return kronrod + (kronrod - gauss) / 8191.0
+    elif depth >= 10:
+        return kronrod + (kronrod - gauss) / 8191.0
+    else:
+        return _gaussKronrod(func, mn, bp, direction, depth + 1) + _gaussKronrod(
+            func, bp, mx, direction, depth + 1
+        )
+
+class DensityTiling:
+    """ Produces a tiling of a probability density function (PDF)
+           for the purposes of random number generation.  The PDF is
+           decomposed into tiles; these tiles will either cross the PDF
+           or go below the PDF.  In each recursion cycle, each tile is
+           split into four tiles, and tiles that end up above the PDF are
+           discarded.
+
+      - pdf: A function that specifies the PDF. It takes a single
+        number and outputs a single number. The area under
+        the PDF need not equal 1 (this class tolerates the PDF even if
+        it is only known up to a normalizing constant).
+        If the PDF contains a _pole_, that is, a point that approaches
+        infinity, the actual PDF may be modified to accommodate the pole,
+        so that points extremely close to the pole may be sampled
+        at a higher or lower probability than otherwise (but not in a way
+        that significantly affects the chance of sampling points
+        outside the pole region).
+      - bl, br - Specifies the sampling domain of the PDF.  Both
+         bl and br are numbers giving the domain,
+         which in this case is [bl, br].
+      - cycles - Number of recursion cycles in which to split tiles
+         that follow the PDF.  Default is 10.
+
+       Reference:
+       Fulger, Daniel and Guido Germano. "Automatic generation of
+       non-uniform random variates for arbitrary pointwise computable
+       probability densities by tiling",
+       arXiv:0902.3088v1  [cs.MS], 2009.
+           """
+
+    def __init__(self, pdf, bl, br, cycles=10):
+        self.pdf = pdf
+        self.poles = []
+        mnmx = self._minmax(bl, br)
+        # MinX, MaxX, EntirelyWithinPDF, MinY, MaxY
+        self.tiles = [[bl, br, False, 0, mnmx[1] * 1.5]]
+        for i in range(cycles):
+            newtiles = []
+            for t in self.tiles:
+                cx = (t[0] + t[1]) / 2.0
+                if t[2]:
+                    # entirely within PDF, so just split
+                    newtiles.append([t[0], cx, True])
+                    newtiles.append([t[0], cx, True])
+                    newtiles.append([cx, t[1], True])
+                    newtiles.append([cx, t[1], True])
+                else:
+                    cy = (t[3] + t[4]) / 2.0
+                    self.maybeAppend(newtiles, t[0], cx, t[3], cy)
+                    self.maybeAppend(newtiles, t[0], cx, cy, t[4])
+                    self.maybeAppend(newtiles, cx, t[1], t[3], cy)
+                    self.maybeAppend(newtiles, cx, t[1], cy, t[4])
+            self.tiles = newtiles
+
+    def _evalpdf(self, x):
+        for pole in self.poles:
+            if x >= pole[0] and x < pole[1]:
+                return pole[2]
+        try:
+            return self.pdf(x)
+        except:
+            return math.inf
+
+    def maybeAppend(self, newtiles, xmn, xmx, ymn, ymx):
+        fminmax = self._minmax(xmn, xmx)
+        if fminmax[1] == 0:
+            # Zero at all sampled points, so discard
+            return
+        tol = (ymx - ymn) * 0.1
+        if max(0, fminmax[0] - tol) > ymx:
+            # Entirely below PDF
+            newtiles.append([xmn, xmx, True])
+        elif fminmax[1] + tol > ymn:
+            # Not entirely above PDF
+            newtiles.append([xmn, xmx, False, ymn, ymx])
+
+    def _minmax(self, mn, mx):
+        ct = 100
+        m = [self._evalpdf(mn + (mx - mn) * x * 1.0 / ct) for x in range(ct + 1)]
+        retmax = max(m)
+        if retmax == math.inf:
+            # There are poles somewhere in the PDF
+            newpoles = []
+            for i in range(len(m)):
+                if m[i] == math.inf:
+                    x = mn + (mx - mn) * i * 1.0 / ct
+                    epsilon = 0.0001
+                    xlow = x - epsilon
+                    xhigh = x + epsilon
+                    maxpt = _gaussKronrod(lambda x: self._evalpdf(x), xlow, xhigh) / (
+                        epsilon * 2
+                    )
+                    m[i] = maxpt
+                    newpoles.append([xlow, xhigh, maxpt])
+            retmax = max(m)
+            for pole in newpoles:
+                self.poles.append(pole)
+        return [min(m), retmax]
+
+    def sample(self, rg, n=1):
+        """ Generates random numbers that (approximately) follow the
+            distribution modeled by this class.
+      - n: The number of random numbers to generate.
+      Returns a list of 'n' random numbers.  """
+        return [self._sampleOne(rg) for i in range(n)]
+
+    def _sampleOne(self, rg):
+        while True:
+            tile = self.tiles[rg.rndintexc(len(self.tiles))]
+            x = rg.rndrangemaxexc(tile[0], tile[1])
+            if tile[2]:
+                return x
+            y = rg.rndrangemaxexc(tile[3], tile[4])
+            if y < self._evalpdf(x):
+                return x
 
 class DensityInversionSampler:
     """ A sampler that generates random samples from
