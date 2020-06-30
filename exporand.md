@@ -5,11 +5,18 @@
 <a id=Introduction></a>
 ## Introduction
 
-This page introduces an implementation of partially-sampled exponential random numbers.   Called e-rands in this document, they represent incomplete numbers whose contents are determined only when necessary, making them have potentially arbitrary precision.
+This page introduces an implementation of _partially-sampled_ exponential random numbers.   Called _e-rands_ in this document, they represent incomplete numbers whose contents are determined only when necessary, making them have potentially arbitrary precision.
 
 Moreover, this document includes methods that operate on e-rands in a way that uses only uniform random bits, and without relying on floating-point arithmetic (except for conversion purposes in the example method `exprand`).  Also, the methods support e-rands with an arbitrary rate parameter (&lambda;) greater than 0.
 
 There are papers that discuss generating exponential random numbers using random bits (Flajolet and Saheb 1982)<sup>[**(1)**](#Note1)</sup>, (Karney 2014)<sup>[**(2)**](#Note2)</sup>, (Devroye and Gravel 2018)<sup>[**(3)**](#Note3)</sup>, (Thomas and Luk 2008)<sup>[**(4)**](#Note4)</sup>, but none I am aware of deal with generating partially-sampled exponential random numbers using an arbitrary rate, not just 1.
+
+<a id=About_the_Exponential_Distribution></a>
+## About the Exponential Distribution
+
+The _exponential distribution_ takes a parameter &lambda;.  Informally speaking, a random number that follows an exponential distribution is the number of units of time between one event and the next, and &lambda; is the expected average number of events per unit of time.  Usually, &lambda; is equal to 1.
+
+An exponential random number is commonly generated as follows: `-ln(1 - RNDU01())`, where `RNDU01()` is a uniform random number in the interval [**0, 1).  (This particular formula is not robust, though, for reasons that are outside the scope of this document, but see (Pedersen 2018)<sup>[(9)**](#Note9)</sup>.)  This page presents an alternative way to sample exponential random numbers.
 
 <a id=Code></a>
 ## Code
@@ -249,6 +256,8 @@ def exprandscore(ln,ld,ln2,ld2):
 <small><sup id=Note7>(7)</sup> Lumbroso, J., "[**Optimal Discrete Uniform Generation from Coin Flips, and Applications**](https://arxiv.org/abs/1304.1916)", arXiv:1304.1916 [cs.DS].</small>
 
 <small><sup id=Note8>(8)</sup> Efraimidis, P. "[**Weighted Random Sampling over Data Streams**](https://arxiv.org/abs/1012.0256v2)", arXiv:1012.0256v2 [cs.DS], 2015.</small>
+
+<small><sup id=Note9>(9)</sup> Pedersen, K., "[**Reconditioning your quantile function**](https://arxiv.org/abs/1704.07949v3)", arXiv:1704.07949v3 [stat.CO], 2018</small>
 
 <a id=License></a>
 ## License

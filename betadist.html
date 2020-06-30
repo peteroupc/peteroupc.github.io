@@ -1,0 +1,293 @@
+<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>An Exact Beta Generator</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a> -
+<a href="http://peteroupc.github.io/">Donate to Me</a></p></div>
+<div class="mainarea" id="top">
+<h1>An Exact Beta Generator</h1>
+
+<p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
+
+<p><a id=Introduction></a></p>
+
+<h2>Introduction</h2>
+
+<p>This page introduces a new sampler for beta-distributed random numbers.  Unlike any other specially-designed beta sampler I am aware of, this sampler&mdash;</p>
+
+<ul>
+<li>avoids floating-point arithmetic, and</li>
+<li>samples from the beta distribution (with both parameters 1 or greater) to an arbitrary precision and with user-specified error bounds (and thus is &quot;exact&quot; in the sense defined in (Karney 2014)<sup><a href="#Note1"><strong>(1)</strong></a></sup>).</li>
+</ul>
+
+<p>It takes advantage of a construct called the <em>Bernoulli factory</em> (Keane and O&#39;Brien 1994)<sup><a href="#Note2"><strong>(2)</strong></a></sup> (Flajolet et al., 2010)<sup><a href="#Note3"><strong>(3)</strong></a></sup>, which can simulate an arbitrary probability by transforming biased coins to biased coins, as well as the &quot;geometric bag&quot; technique by Flajolet and others (2010)<sup><a href="#Note3"><strong>(3)</strong></a></sup>, which generates heads or tails with a probability that is built up bit by bit.  One important feature of Bernoulli factories is that they can simulate a given probability <em>exactly</em>, without having to calculate that probability manually, which is important if the probability can be an irrational number that no computer can compute exactly (such as <code>pow(p, 1/2)</code> or <code>exp(-2)</code>).</p>
+
+<p>This page shows Python code for my new sampler.</p>
+
+<p><a id=About_the_Beta_Distribution></a></p>
+
+<h2>About the Beta Distribution</h2>
+
+<p>The <a href="https://en.wikipedia.org/wiki/Beta_distribution"><strong>beta distribution</strong></a> is a bounded-domain probability distribution; its two parameters, <code>alpha</code> and <code>beta</code>, are both greater than 0 and describe the distribution&#39;s shape.  Depending on <code>alpha</code> and <code>beta</code>, the shape can be a smooth peak or a smooth valley.  The beta distribution can take on values in the interval [0, 1].  Any value in this interval (<code>x</code>) can occur with a probability proportional to&mdash;</p>
+
+<pre>pow(x, alpha - 1) * pow(1 - x, beta - 1).               (1)
+</pre>
+
+<p>Although <code>alpha</code> and <code>beta</code> can each be greater than 0, this sampler only works if both parameters are 1 or greater.</p>
+
+<p><a id=Sampler_Code></a></p>
+
+<h2>Sampler Code</h2>
+
+<p>The following Python code relies on a class I wrote called &quot;<a href="https://github.com/peteroupc/peteroupc.github.io/blob/master/bernoulli.py"><strong>bernoulli.py</strong></a>&quot;, which collects a number of Bernoulli factories, some of which are relied on by the code below.  This includes the &quot;geometric bag&quot; mentioned earlier, as well as a Bernoulli factory that transforms a coin that produces heads with probability <code>p</code> with one that produces heads with probability <code>pow(p, y)</code>.  The case where <code>y</code> is in (0, 1) is due to recent work by Mendo (2019)<sup><a href="#Note4"><strong>(4)</strong></a></sup>.</p>
+
+<p>The Python code also relies on a method I wrote called <code>kthsmallest</code>, which generates the kth smallest number in an arbitrary precision.  This will be described later in this page.</p>
+
+<p>This code is far from fast, though, at least in Python.</p>
+
+<pre lang="python"><code>import math
+import random
+import bernoulli
+from randomgen import RandomGen
+from fractions import Fraction
+
+def _toreal(ret, precision):
+        # NOTE: Although we convert to a floating-point
+        # number here, this is not strictly necessary and
+        # is merely for convenience.
+        return ret*1.0/(1&lt;&lt;precision)
+
+def betadist(b, ax, ay, bx, by, precision=53):
+        # Beta distribution for alpha&gt;=1 and beta&gt;=1
+        bag=[]
+        bpower=Fraction(bx, by)-1
+        apower=Fraction(ax, ay)-1
+        # Special case for a=b=1
+        if bpower==0 and apower==0:
+           return random.randint(0, (1&lt;&lt;precision)-1)*1.0/(1&lt;&lt;precision)
+        # Special case if a and b are integers
+        if int(bpower) == bpower and int(apower) == apower:
+           a=int(Fraction(ax, ay))
+           b=int(Fraction(bx, by))
+           return _toreal(RandomGen().kthsmallest(a+b-1,a, \
+                  precision), precision)
+        # Create a &quot;geometric bag&quot; to hold a uniform random
+        # number (U), described by Flajolet et al. 2010
+        gb=lambda: b.geometric_bag(bag)
+        # Complement of &quot;geometric bag&quot;
+        gbcomp=lambda: b.geometric_bag(bag)^1
+        bPowerBigger=(bpower &gt; apower)
+        while True:
+           # Create a uniform random number (U) bit-by-bit, and
+           # accept it with probability U^(a-1)*(1-U)^(b-1), which
+           # is the unnormalized PDF of the beta distribution
+           bag.clear()
+           r=1
+           if bPowerBigger:
+             # Produce 1 with probability (1-U)^(b-1)
+             r=b.power(gbcomp, bpower)
+             # Produce 1 with probability U^(a-1)
+             if r==1: r=b.power(gb, apower)
+           else:
+             # Produce 1 with probability U^(a-1)
+             r=b.power(gb, apower)
+             # Produce 1 with probability (1-U)^(b-1)
+             if r==1: r=b.power(gbcomp, bpower)
+           if r == 1:
+                 # Accepted, so fill up the &quot;bag&quot; and return the
+                 # uniform number
+                 ret=_fill_geometric_bag(b, bag, precision)
+                 return ret
+
+def _fill_geometric_bag(b, bag, precision):
+        ret=0
+        lb=min(len(bag), precision)
+        for i in range(lb):
+           if i&gt;=len(bag) or bag[i]==None:
+              ret=(ret&lt;&lt;1)|b.randbit()
+           else:
+              ret=(ret&lt;&lt;1)|bag[i]
+        if len(bag) &lt; precision:
+           diff=precision-len(bag)
+           ret=(ret &lt;&lt; diff)|random.randint(0,(1 &lt;&lt; diff)-1)
+        # Now we have a number that is a multiple of
+        # 2^-precision.
+        return _toreal(ret, precision)
+</pre>
+
+<p><a id=The_kthsmallest_Method></a></p>
+
+<h3>The kthsmallest Method</h3>
+
+<p><code>kthsmallest</code>, which generates the &#39;k&#39;th smallest &#39;bitcount&#39;-bit uniform random number out of &#39;n&#39; of them, is implemented in &quot;<a href="https://github.com/peteroupc/peteroupc.github.io/blob/master/randomgen.py"><strong>randomgen.py</strong></a>&quot; and relied on by this beta sampler.  It is used when both <code>a</code> and <code>b</code> are integers, based on the known property that a beta random variable in this case is the <code>a</code>th smallest uniform (0, 1) random number out of <code>a + b - 1</code> of them (Devroye 1986, p. 431)<sup><a href="#Note5"><strong>(5)</strong></a></sup>.</p>
+
+<p><code>kthsmallest</code>, however, doesn&#39;t simply generate &#39;n&#39; &#39;bitcount&#39;-bit numbers and then sort them.  Rather, it builds up their binary expansions bit by bit, via the concept of &quot;u-rands&quot; (Karney 2014)<sup><a href="#Note1"><strong>(1)</strong></a></sup>.    It uses the observation that each uniform (0, 1) random number is equally likely to be less than half or greater than half; thus, the number of uniform numbers that are less than half vs. greater than half follows a binomial(n, 1/2) distribution (and of the numbers less than half, say, the less-than-one-quarter vs. greater-than-one-quarter numbers follows the same distribution, and so on).  Thanks to this observation, the algorithm can generate a sorted sample &quot;on the fly&quot;.</p>
+
+<p>The algorithm is as follows:</p>
+
+<ol>
+<li>Create <code>n</code> empty u-rands.</li>
+<li>Set <code>index</code> to 1.</li>
+<li>If <code>index &lt;= k</code>:
+
+<ol>
+<li>Generate <code>LC</code>, a binomial(<code>n</code>, 0.5) random number.</li>
+<li>Append a 0 bit to the first <code>LC</code> u-rands (starting at <code>index</code>) and a 1 bit to the next <code>n - LC</code> u-rands.</li>
+<li>If <code>LC &gt; 1</code>, repeat step 3 and these substeps with the same <code>index</code> and <code>n = LC</code>.</li>
+<li>If <code>n - LC &gt; 1</code>, repeat step 3 and these substeps with <code>index = index+LC</code>, and <code>n = n - LC</code>.</li>
+</ol></li>
+<li>Take the <code>k</code>th u-rand (starting at 1) and fill it with uniform random bits as necessary to make a <code>bitcount</code>-bit number.  Return that u-rand.</li>
+</ol>
+
+<p><a id=Known_Issues></a></p>
+
+<h3>Known Issues</h3>
+
+<p>The bigger <code>alpha</code> or <code>beta</code> is, the smaller the area of acceptance becomes (and the more likely random numbers get rejected by this method, raising its run-time).  This is because <code>max(u^(alpha-1)*(1-u)^(beta-1))</code>, the peak of the density, approaches 0 as the parameters get bigger.  One idea to solve this issue is to expand the density so that the acceptance rate increases.  The following was tried:</p>
+
+<ul>
+<li>Estimate an upper bound for the peak of the density <code>peak</code>, given <code>alpha</code> and <code>beta</code>.</li>
+<li>Calculate a largest factor <code>c</code> such that <code>peak * c = m &lt; 0.5</code>.</li>
+<li>Use Huber&#39;s <code>linear_lowprob</code> Bernoulli factory (implemented in <em>bernoulli.py</em>) (Huber 2016)<sup><a href="#Note6"><strong>(6)</strong></a></sup>, taking the values found for <code>c</code> and <code>m</code>.  Testing shows that the choice of <code>m</code> is crucial for performance.</li>
+</ul>
+
+<p>But doing so apparently worsened the performance (in terms of random bits used) compared to the simple rejection approach.</p>
+
+<p><a id=Correctness_Testing></a></p>
+
+<h2>Correctness Testing</h2>
+
+<p>To test the correctness of this sampler, the Kolmogorov&ndash;Smirnov test was applied with various values of <code>alpha</code> and <code>beta</code> and the default precision of 53, using SciPy&#39;s <code>kstest</code> method.  The code for the test is very simple: <code>kst = scipy.stats.kstest(ksample, lambda x: scipy.stats.beta.cdf(x, alpha, beta))</code>, where <code>ksample</code> is a sample of random numbers generated using the sampler above.  Note that SciPy uses a two-sided Kolmogorov&ndash;Smirnov test by default.</p>
+
+<p>See the results of the <a href="https://peteroupc.github.io/betadistresults.html"><strong>correctness testing</strong></a>.   For each pair of parameters, five samples with 50,000 numbers per sample were taken, and results show the lowest and highest Kolmogorov&ndash;Smirnov statistics and p-values achieved for the five samples.  Note that a p-value extremely close to 0 or 1 strongly indicates that the samples do not come from the corresponding beta distribution.</p>
+
+<p><a id=Exact_Simulation_of_Continuous_Distributions_on_0_1></a></p>
+
+<h2>Exact Simulation of Continuous Distributions on [0, 1]</h2>
+
+<p>The beta distribution is one case of a general approach to simulating continuous distributions with support on the interval [0, 1], and this with arbitrary precision, thanks to Bernoulli factories.  This general approach can sample an <code>n</code>-bit binary expansion of a number following that continuous distribution, and is described as follows:</p>
+
+<ol>
+<li>Create a &quot;geometric bag&quot;, that is, an &quot;empty&quot; uniform random number also known as a &quot;u-rand&quot;.</li>
+<li><p>As the geometric bag builds up a uniform random number, accept the number with a probability that can be represented by Bernoulli factories, or reject it otherwise.  As shown by Keane and O&#39;Brien <sup><a href="#Note2"><strong>(2)</strong></a></sup>, this is possible if and only if the probability function, in the interval [0, 1]&mdash;</p>
+
+<ul>
+<li>is continuous everywhere, and</li>
+<li>either returns a constant value in [0, 1] everywhere, or returns a value in [0, 1] at the points 0 and 1 and a value in (0, 1) elsewhere,</li>
+</ul>
+
+<p>and they give the example of 2*p as a probability function that cannot be represented by a Bernoulli factory.</p></li>
+<li>If the geometric bag is accepted, fill the unsampled bits of the bag with uniform random bits as necessary to make an <code>n</code>-bit number (for an example, see <code>_fill_geometric_bag</code> above).</li>
+</ol>
+
+<p>The beta distribution&#39;s probability function at (1) fits these requirements (for <code>alpha</code> and <code>beta</code> both greater than 1), since it&#39;s continuous and never returns 0 or 1 outside of the points 0 and 1, thus it can be simulated by Bernoulli factories and is covered by this general approach.</p>
+
+<p><a id=An_Example_The_Continuous_Bernoulli_Distribution></a></p>
+
+<h3>An Example: The Continuous Bernoulli Distribution</h3>
+
+<p>The continuous Bernoulli distribution (Loaiza-Ganem and Cunningham 2019)<sup><a href="#Note7"><strong>(7)</strong></a></sup> was designed to considerably improve performance of variational autoencoders (a machine learning model) in modeling continuous data that takes values in the interval [0, 1], including &quot;almost-binary&quot; image data.</p>
+
+<p>The continous Bernoulli distribution takes one parameter <code>lamda</code> (a number in [0, 1]), and takes on values in the interval [0, 1] with a probability proportional to&mdash;</p>
+
+<pre>pow(lamda, x) * pow(1 - lamda, 1 - x).
+</pre>
+
+<p>Again, this function meets the requirements stated by Keane and O&#39;Brien, so it can be simulated via Bernoulli factories.  Thus, this distribution can be simulated in Python using a geometric bag (which represents <em>x</em> in the formula above) and a two-coin exponentiating Bernoulli factory, as follows:</p>
+
+<pre>def _twofacpower(b, fbase, fexponent):
+    &quot;&quot;&quot; Bernoulli factory B(p, q) =&gt; B(p^q).
+           Based on algorithm from (Mendo 2019),
+           but changed to accept a Bernoulli factory
+           rather than a fixed value for the exponent.
+           To the best of my knowledge, I am not aware
+           of any article or paper that presents this exact
+           Bernoulli factory.
+           - fbase, fexponent: Functions that return 1 if heads and 0 if tails.
+             The first is the base, the second is the exponent.
+             &quot;&quot;&quot;
+    i = 1
+    while True:
+        if fbase() == 1:
+            return 1
+        if fexponent() == 1 and \
+            b.zero_or_one(1, i) == 1:
+            return 0
+        i = i + 1
+
+def contbernoullidist(b, lamda, precision=53):
+    # Continuous Bernoulli distribution
+    bag=[]
+    lamda=Fraction(lamda)
+    gb=lambda: b.geometric_bag(bag)
+    # Complement of &quot;geometric bag&quot;
+    gbcomp=lambda: b.geometric_bag(bag)^1
+    fcoin=b.coin(lamda)
+    lamdab=lambda: fcoin()
+    # Complement of &quot;geometric bag&quot;
+    lamdabcomp=lambda: fcoin()^1
+    acc=0
+    while True:
+       # Create a uniform random number (U) bit-by-bit, and
+       # accept it with probability lamda^U*(1-lamda)^(1-U), which
+       # is the unnormalized PDF of the beta distribution
+       bag.clear()
+       # Produce 1 with probability lamda^U
+       r=_twofacpower(b, lamdab, gb)
+       # Produce 1 with probability (1-lamda)^(1-U)
+       if r==1: r=_twofacpower(b, lamdabcomp, gbcomp)
+       if r == 1:
+             # Accepted, so fill up the &quot;bag&quot; and return the
+             # uniform number
+             ret=_fill_geometric_bag(b, bag, precision)
+             return ret
+       acc+=1
+</pre>
+
+<p><a id=Notes></a></p>
+
+<h2>Notes</h2>
+
+<p><small><sup id=Note1>(1)</sup> Karney, C.F.F., &quot;<a href="https://arxiv.org/abs/1303.6257v2"><strong>Sampling exactly from the normal distribution</strong></a>&quot;, arXiv:1303.6257v2  [physics.comp-ph], 2014.</small></p>
+
+<p><small><sup id=Note2>(2)</sup> Keane,  M.  S.,  and  O&#39;Brien,  G.  L., &quot;A Bernoulli factory&quot;, <em>ACM Transactions on Modeling and Computer Simulation</em> 4(2), 1994.</small></p>
+
+<p><small><sup id=Note3>(3)</sup> Flajolet, P., Pelletier, M., Soria, M., &quot;<a href="https://arxiv.org/abs/0906.5560v2"><strong>On Buffon machines and numbers</strong></a>&quot;, arXiv:0906.5560v2  [math.PR], 2010.</small></p>
+
+<p><small><sup id=Note4>(4)</sup> Mendo, Luis. &quot;An asymptotically optimal Bernoulli factory for certain functions that can be expressed as power series.&quot; Stochastic Processes and their Applications 129, no. 11 (2019): 4366-4384.</small></p>
+
+<p><small><sup id=Note5>(5)</sup> Devroye, L., <a href="http://luc.devroye.org/rnbookindex.html"><strong><em>Non-Uniform Random Variate Generation</em></strong></a>, 1986.</small></p>
+
+<p><small><sup id=Note6>(6)</sup> Huber, M., &quot;<a href="https://arxiv.org/abs/1507.00843v2"><strong>Optimal linear Bernoulli factories for small mean problems</strong></a>&quot;, arXiv:1507.00843v2 [math.PR], 2016</small></p>
+
+<p><small><sup id=Note7>(7)</sup> Loaiza-Ganem, G., Cunningham, J.P., &quot;<a href="https://arxiv.org/abs/1907.06845v5"><strong>The continuous Bernoulli: fixing a pervasive error in variational autoencoders</strong></a>&quot;, arXiv:1907.06845v5  [stat.ML], 2019.</small></p>
+
+<p><a id=License></a></p>
+
+<h2>License</h2>
+
+<p>Any copyright to this page is released to the Public Domain.  In case this is not possible, this page is also licensed under <a href="https://creativecommons.org/publicdomain/zero/1.0/"><strong>Creative Commons Zero</strong></a>.</p>
+</div><nav id="navigation"><ul>
+<li><a href="/">Back to start site.</a>
+<li><a href="https://github.com/peteroupc/peteroupc.github.io">This site's repository (source code)</a>
+<li><a href="https://github.com/peteroupc/peteroupc.github.io/issues">Post an issue or comment</a></ul>
+<p>
+If you like this software, you should consider donating to me, Peter O., at the link below:</p>
+<p class="printonly"><b>peteroupc.github.io</b></p>
+<div class="noprint">
+<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=56E5T4FH7KD2S">
+<img src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif"
+name="submit" border="2" alt="PayPal - The safer, easier way to pay online!"></a>
+<p>
+<a href="//twitter.com/share">Share via Twitter</a>, <a href="//www.facebook.com/sharer/sharer.php" id="sharer">Share via Facebook</a>
+</p>
+</div>
+</nav><script>
+if("share" in navigator){
+ document.getElementById("sharer").href="javascript:void(null)";
+ document.getElementById("sharer").innerHTML="Share This Page";
+ navigator.share({title:document.title,url:document.location.href}).then(
+   function(){});
+} else {
+ document.getElementById("sharer").href="//www.facebook.com/sharer/sharer.php?u="+
+    encodeURIComponent(document.location.href)
+}
+</script>
+</body></html>

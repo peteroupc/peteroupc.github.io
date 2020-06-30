@@ -1,0 +1,489 @@
+<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Partially-Sampled Exponential Random Numbers</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a> -
+<a href="http://peteroupc.github.io/">Donate to Me</a></p></div>
+<div class="mainarea" id="top">
+<h1>Partially-Sampled Exponential Random Numbers</h1>
+
+<p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
+
+<p><a id=Introduction></a></p>
+
+<h2>Introduction</h2>
+
+<p>This page introduces an implementation of <em>partially-sampled</em> exponential random numbers.   Called <em>e-rands</em> in this document, they represent incomplete numbers whose contents are determined only when necessary, making them have potentially arbitrary precision.</p>
+
+<p>Moreover, this document includes methods that operate on e-rands in a way that uses only uniform random bits, and without relying on floating-point arithmetic (except for conversion purposes in the example method <code>exprand</code>).  Also, the methods support e-rands with an arbitrary rate parameter (&lambda;) greater than 0.</p>
+
+<p>There are papers that discuss generating exponential random numbers using random bits (Flajolet and Saheb 1982)<sup><a href="#Note1"><strong>(1)</strong></a></sup>, (Karney 2014)<sup><a href="#Note2"><strong>(2)</strong></a></sup>, (Devroye and Gravel 2018)<sup><a href="#Note3"><strong>(3)</strong></a></sup>, (Thomas and Luk 2008)<sup><a href="#Note4"><strong>(4)</strong></a></sup>, but none I am aware of deal with generating partially-sampled exponential random numbers using an arbitrary rate, not just 1.</p>
+
+<p><a id=About_the_Exponential_Distribution></a></p>
+
+<h2>About the Exponential Distribution</h2>
+
+<p>The <em>exponential distribution</em> takes a parameter &lambda;.  Informally speaking, a random number that follows an exponential distribution is the number of units of time between one event and the next, and &lambda; is the expected average number of events per unit of time.  Usually, &lambda; is equal to 1.</p>
+
+<p>An exponential random number is commonly generated as follows: <code>-ln(1 - RNDU01())</code>, where <code>RNDU01()</code> is a uniform random number in the interval [**0, 1).  (This particular formula is not robust, though, for reasons that are outside the scope of this document, but see (Pedersen 2018)<sup><a href="#Note9">(9)**</a></sup>.)  This page presents an alternative way to sample exponential random numbers.</p>
+
+<p><a id=Code></a></p>
+
+<h2>Code</h2>
+
+<p>The following Python code implements partially-sampled exponential random numbers, called e-rands in this document for convenience (similarly to Karney&#39;s &quot;u-rands&quot; for partially-sampled uniform random numbers (Karney 2014)<sup><a href="#Note2"><strong>(2)</strong></a></sup>).  It implements a way to determine whether one e-rand is less than another, as well as a way to fill an e-rand as necessary to give its fractional part a given number of bits.</p>
+
+<p>It makes use of two observations (based on the parameter &lambda; of the exponential distribution):</p>
+
+<ul>
+<li>While a coin flip with probability of heads of exp(-&lambda;) is heads, the exponential random number is increased by 1.</li>
+<li>If a coin flip with probability of heads of 1/(1+exp(&lambda;/2<sup><em>k</em></sup>)) is heads, the exponential random number is increased by 2<sup>-<em>k</em></sup>, where <em>k</em> &gt; 0 is an integer.</li>
+</ul>
+
+<p>(Devroye and Gravel 2018)<sup><a href="#Note3"><strong>(3)</strong></a></sup> already made these observations in their Appendix, but only for &lambda; = 1.</p>
+
+<p>To implement these probabilities using just random bits, the code uses two algorithms:</p>
+
+<ul>
+<li>One to simulate a probability of the form <code>exp(-x/y)</code> (<code>zero_or_one_exp_minus</code>; (Canonne et al. 2020)<sup><a href="#Note5"><strong>(5)</strong></a></sup>).</li>
+<li>One to simulate a probability of the form <code>1/(1+exp(lamda/pow(2, prec)))</code> (<code>logisticexp</code> (Morina et al. 2019)<sup><a href="#Note6"><strong>(6)</strong></a></sup>).</li>
+</ul>
+
+<p>Both algorithms are included in the Python code below.  (Note that <code>zero_or_one_exp_minus</code> uses <code>random.randint</code> which does not necessarily use only random bits; it could be replaced with a random-bit-only algorithm such as FastDiceRoller or Bernoulli, both of which were presented by Lumbroso (2013)<sup><a href="#Note7"><strong>(7)</strong></a></sup>.)</p>
+
+<pre lang="python"><code>
+import random
+
+def logisticexp(ln, ld, prec):
+        denom=ld*2**prec
+        while True:
+           if random.randint(0,1)==0: return 0
+           if zero_or_one_exp_minus(ln, denom) == 1: return 1
+
+def exprandnew(lamdanum=1, lamdaden=1):
+     &quot;&quot;&quot; Returns an object to serve as a partially-sampled
+          exponential random number with the given
+          rate &#39;lamdanum&#39;/&#39;lamdaden&#39;.  The object is a list of five numbers:
+          the first is a multiple of 2^X, the second is X, the third is the integer
+          part (initially -1 to indicate the integer part wasn&#39;t sampled yet),
+          and the fourth and fifth are the lamda parameter&#39;s
+          numerator and denominator, respectively.  Default for &#39;lamdanum&#39;
+          and &#39;lamdaden&#39; is 1.
+          The number created by this method will be &quot;empty&quot;
+          (no bits sampled yet).
+          &quot;&quot;&quot;
+     return [0, 0, -1, lamdanum, lamdaden]
+
+def exprandfill(a, bits):
+    &quot;&quot;&quot; Fills the unsampled bits of the given exponential random number
+           &#39;a&#39; as necessary to make a number whose fractional part
+           has &#39;bits&#39; many bits.  If the number&#39;s fractional part already has
+           that many bits or more, the number is rounded using the round-to-nearest,
+           ties to even rounding rule.  Returns the resulting number as a
+           multiple of 2^&#39;bits&#39;. &quot;&quot;&quot;
+    # Fill the integer if necessary.
+    if a[2]==-1:
+        a[2]=0
+        while zero_or_one_exp_minus(a[3], a[4]) == 1:
+            a[2]+=1
+    if a[1] &gt; bits:
+        # Shifting bits beyond the first excess bit.
+        aa = a[0] &gt;&gt; (a[1] - bits - 1)
+        # Check the excess bit; if odd, round up.
+        ret=aa &gt;&gt; 1 if (aa &amp; 1) == 0 else (aa &gt;&gt; 1) + 1
+        return ret|(a[2]&lt;&lt;bits)
+    # Fill the fractional part if necessary.
+    while a[1] &lt; bits:
+       index = a[1]
+       a[1]+=1
+       a[0]=(a[0]&lt;&lt;1)|logisticexp(a[3], a[4], index+1)
+    return a[0]|(a[2]&lt;&lt;bits)
+
+def exprandless(a, b):
+        &quot;&quot;&quot; Determines whether one partially-sampled exponential number
+           is less than another; returns
+           true if so and false otherwise.  During
+           the comparison, additional bits will be sampled in both numbers
+           if necessary for the comparison. &quot;&quot;&quot;
+        # Check integer part of exponentials
+        if a[2] == -1:
+            a[2] = 0
+            while zero_or_one_exp_minus(a[3], a[4]) == 1:
+                a[2] += 1
+        if b[2] == -1:
+            b[2] = 0
+            while zero_or_one_exp_minus(b[3], b[4]) == 1:
+                b[2] += 1
+        if a[2] &lt; b[2]:
+            return True
+        if a[2] &gt; b[2]:
+            return False
+        index = 0
+        while True:
+            # Fill with next bit in a&#39;s exponential number
+            if a[1] &lt; index:
+                raise ValueError
+            if b[1] &lt; index:
+                raise ValueError
+            if a[1] &lt;= index:
+                a[1] += 1
+                a[0] = logisticexp(a[3], a[4], index + 1) | (a[0] &lt;&lt; 1)
+            # Fill with next bit in b&#39;s exponential number
+            if b[1] &lt;= index:
+                b[1] += 1
+                b[0] = logisticexp(b[3], b[4], index + 1) | (b[0] &lt;&lt; 1)
+            aa = (a[0] &gt;&gt; (a[1] - 1 - index)) &amp; 1
+            bb = (b[0] &gt;&gt; (b[1] - 1 - index)) &amp; 1
+            if aa &lt; bb:
+                return True
+            if aa &gt; bb:
+                return False
+            index += 1
+
+def zero_or_one_exp_minus(x, y):
+        &quot;&quot;&quot; Generates 1 with probability exp(-px/py); 0 otherwise.
+               Reference:
+               Canonne, C., Kamath, G., Steinke, T., &quot;[The Discrete Gaussian
+               for Differential Privacy](https://arxiv.org/abs/2004.00010v2)&quot;, arXiv:2004.00010v2 [cs.DS], 2020. &quot;&quot;&quot;
+        if y &lt;= 0 or x &lt; 0:
+            raise ValueError
+        if x &gt; y:
+            xf = int(x / y)  # Get integer part
+            x = x % y  # Reduce to fraction
+            if x &gt; 0 and zero_or_one_exp_minus(x, y) == 0:
+                return 0
+            for i in range(1, xf + 1):
+                if zero_or_one_exp_minus(1, 1) == 0:
+                    return 0
+            return 1
+        r = 1
+        oy = y
+        while True:
+            # NOTE: randint is used in this example, but
+            # it could be replaced by a random-bit-only
+            # algorithm such as the Fast Dice Roller (Lumbroso 2013),
+            # or the Bernoulli method given in the same paper.
+            if random.randint(0, y-1) &gt;= x:
+                return r
+            if r == 1:
+                r = 0
+            else:
+                r = 1
+            y = y + oy
+
+# Example of use
+def exprand(lam):
+   return exprandfill(exprandnew(lam),53)*1.0/(1&lt;&lt;53)
+
+</pre>
+
+<p><a id=Correctness_Testing></a></p>
+
+<h2>Correctness Testing</h2>
+
+<p>To test the correctness of the <code>exprandfill</code> method, the Kolmogorov&ndash;Smirnov test was applied with various values of &lambda; and the default precision of 53, using SciPy&#39;s <code>kstest</code> method.  The code for the test is very simple: <code>kst = scipy.stats.kstest(ksample, lambda x: scipy.stats.expon.cdf(x, scale=1/lamda))</code>, where <code>ksample</code> is a sample of random numbers generated using the <code>exprand</code> method above.  Note that SciPy uses a two-sided Kolmogorov&ndash;Smirnov test by default.</p>
+
+<p>The table below shows the results of the correctness testing. For each parameter, five samples with 50,000 numbers per sample were taken, and results show the lowest and highest Kolmogorov&ndash;Smirnov statistics and p-values achieved for the five samples.  Note that a p-value extremely close to 0 or 1 strongly indicates that the samples do not come from the corresponding exponential distribution.</p>
+
+<table><thead>
+<tr>
+<th>&lambda;</th>
+<th>Statistic</th>
+<th><em>p</em>-value</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>1/10</td>
+<td>0.00233-0.00435</td>
+<td>0.29954-0.94867</td>
+</tr>
+<tr>
+<td>1/4</td>
+<td>0.00254-0.00738</td>
+<td>0.00864-0.90282</td>
+</tr>
+<tr>
+<td>1/2</td>
+<td>0.00195-0.00521</td>
+<td>0.13238-0.99139</td>
+</tr>
+<tr>
+<td>2/3</td>
+<td>0.00295-0.00457</td>
+<td>0.24659-0.77715</td>
+</tr>
+<tr>
+<td>3/4</td>
+<td>0.00190-0.00636</td>
+<td>0.03514-0.99381</td>
+</tr>
+<tr>
+<td>9/10</td>
+<td>0.00226-0.00474</td>
+<td>0.21032-0.96029</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0.00267-0.00601</td>
+<td>0.05389-0.86676</td>
+</tr>
+<tr>
+<td>2</td>
+<td>0.00293-0.00684</td>
+<td>0.01870-0.78310</td>
+</tr>
+<tr>
+<td>3</td>
+<td>0.00284-0.00675</td>
+<td>0.02091-0.81589</td>
+</tr>
+<tr>
+<td>5</td>
+<td>0.00256-0.00546</td>
+<td>0.10130-0.89935</td>
+</tr>
+<tr>
+<td>10</td>
+<td>0.00279-0.00528</td>
+<td>0.12358-0.82974</td>
+</tr>
+</tbody></table>
+
+<p>To test the correctness of <code>exprandless</code>, a two-independent-sample T-test was applied to scores involving e-rands and scores involving the Python <code>random.expovariate</code> method.  Specifically, the score is calculated as the number of times one exponential number compares as less than another; for the same &lambda; this event should ideally be as likely as the event that it compares as greater.  The Python code that follows the table calculates this score for e-rands and <code>expovariate</code>.   Even here, the code for the test is very simple: <code>kst = scipy.stats.ttest_ind(exppyscores, exprandscores)</code>, where <code>exppyscores</code> and <code>exprandscores</code> are each lists of 20 results from <code>exppyscore</code> or <code>exprandscore</code>, respectively.</p>
+
+<p>The table below shows the results of the correctness testing. For each pair of parameters, results show the lowest and highest T-test statistics and p-values achieved for the 20 results.  Note that a p-value extremely close to 0 or 1 strongly indicates that exponential random numbers are not compared as less or greater with the expected probability.</p>
+
+<table><thead>
+<tr>
+<th>Left &lambda;</th>
+<th>Right &lambda;</th>
+<th>Statistic</th>
+<th><em>p</em>-value</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>1/10</td>
+<td>1/10</td>
+<td>-1.21015 &ndash; 0.93682</td>
+<td>0.23369 &ndash; 0.75610</td>
+</tr>
+<tr>
+<td>1/10</td>
+<td>1/2</td>
+<td>-1.25248 &ndash; 3.56291</td>
+<td>0.00101 &ndash; 0.39963</td>
+</tr>
+<tr>
+<td>1/10</td>
+<td>1</td>
+<td>-0.76586 &ndash; 1.07628</td>
+<td>0.28859 &ndash; 0.94709</td>
+</tr>
+<tr>
+<td>1/10</td>
+<td>2</td>
+<td>-1.80624 &ndash; 1.58347</td>
+<td>0.07881 &ndash; 0.90802</td>
+</tr>
+<tr>
+<td>1/10</td>
+<td>5</td>
+<td>-0.16197 &ndash; 1.78700</td>
+<td>0.08192 &ndash; 0.87219</td>
+</tr>
+<tr>
+<td>1/2</td>
+<td>1/10</td>
+<td>-1.46973 &ndash; 1.40308</td>
+<td>0.14987 &ndash; 0.74549</td>
+</tr>
+<tr>
+<td>1/2</td>
+<td>1/2</td>
+<td>-0.79555 &ndash; 1.21538</td>
+<td>0.23172 &ndash; 0.93613</td>
+</tr>
+<tr>
+<td>1/2</td>
+<td>1</td>
+<td>-0.90496 &ndash; 0.11113</td>
+<td>0.37119 &ndash; 0.91210</td>
+</tr>
+<tr>
+<td>1/2</td>
+<td>2</td>
+<td>-1.32157 &ndash; -0.07066</td>
+<td>0.19421 &ndash; 0.94404</td>
+</tr>
+<tr>
+<td>1/2</td>
+<td>5</td>
+<td>-0.55135 &ndash; 1.85604</td>
+<td>0.07122 &ndash; 0.76994</td>
+</tr>
+<tr>
+<td>1</td>
+<td>1/10</td>
+<td>-1.27023 &ndash; 0.73501</td>
+<td>0.21173 &ndash; 0.87314</td>
+</tr>
+<tr>
+<td>1</td>
+<td>1/2</td>
+<td>-2.33246 &ndash; 0.66827</td>
+<td>0.02507 &ndash; 0.58741</td>
+</tr>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>-1.24446 &ndash; 0.84555</td>
+<td>0.22095 &ndash; 0.90587</td>
+</tr>
+<tr>
+<td>1</td>
+<td>2</td>
+<td>-1.13643 &ndash; 0.84148</td>
+<td>0.26289 &ndash; 0.95717</td>
+</tr>
+<tr>
+<td>1</td>
+<td>5</td>
+<td>-0.70037 &ndash; 1.46778</td>
+<td>0.15039 &ndash; 0.86996</td>
+</tr>
+<tr>
+<td>2</td>
+<td>1/10</td>
+<td>-0.77675 &ndash; 1.15350</td>
+<td>0.25591 &ndash; 0.97870</td>
+</tr>
+<tr>
+<td>2</td>
+<td>1/2</td>
+<td>-0.23122 &ndash; 1.20764</td>
+<td>0.23465 &ndash; 0.91855</td>
+</tr>
+<tr>
+<td>2</td>
+<td>1</td>
+<td>-0.92273 &ndash; -0.05904</td>
+<td>0.36197 &ndash; 0.95323</td>
+</tr>
+<tr>
+<td>2</td>
+<td>2</td>
+<td>-1.88150 &ndash; 0.64096</td>
+<td>0.06758 &ndash; 0.73056</td>
+</tr>
+<tr>
+<td>2</td>
+<td>5</td>
+<td>-0.08315 &ndash; 1.01951</td>
+<td>0.31441 &ndash; 0.93417</td>
+</tr>
+<tr>
+<td>5</td>
+<td>1/10</td>
+<td>-0.60921 &ndash; 1.54606</td>
+<td>0.13038 &ndash; 0.91563</td>
+</tr>
+<tr>
+<td>5</td>
+<td>1/2</td>
+<td>-1.30038 &ndash; 1.43602</td>
+<td>0.15918 &ndash; 0.86349</td>
+</tr>
+<tr>
+<td>5</td>
+<td>1</td>
+<td>-1.22803 &ndash; 1.35380</td>
+<td>0.18380 &ndash; 0.64158</td>
+</tr>
+<tr>
+<td>5</td>
+<td>2</td>
+<td>-1.83124 &ndash; 1.40222</td>
+<td>0.07491 &ndash; 0.66075</td>
+</tr>
+<tr>
+<td>5</td>
+<td>5</td>
+<td>-0.97110 &ndash; 2.00904</td>
+<td>0.05168 &ndash; 0.74398</td>
+</tr>
+</tbody></table>
+
+<pre>def exppyscore(ln,ld,ln2,ld2):
+        return sum(1 if random.expovariate(ln*1.0/ld)&lt;random.expovariate(ln2*1.0/ld2) \
+              else 0 for i in range(1000))
+
+def exprandscore(ln,ld,ln2,ld2):
+        return sum(1 if exprandless(exprandnew(ln,ld), exprandnew(ln2,ld2)) \
+              else 0 for i in range(1000))
+</pre>
+
+<p><a id=Application_to_Weighted_Reservoir_Sampling></a></p>
+
+<h2>Application to Weighted Reservoir Sampling</h2>
+
+<p><a href="https://peteroupc.github.io/randomfunc.html#Weighted_Choice_Without_Replacement_List_of_Unknown_Size"><strong>Weighted reservoir sampling</strong></a> (choosing an item at random from a list of unknown size) is often implemented by&mdash;</p>
+
+<ul>
+<li>assigning each item a <em>weight</em> (an integer 0 or greater) as it&#39;s encountered, call it <em>w</em>,</li>
+<li>giving each item an exponential random number with &lambda; = <em>w</em>, call it a key, and</li>
+<li>choosing the item with the smallest key</li>
+</ul>
+
+<p>(see also (Efraimidis 2015)<sup><a href="#Note8"><strong>(8)</strong></a></sup>). However, using fully-sampled exponential random numbers as keys (such as the naïve idiom <code>-ln(1-RNDU01())/w</code> in binary64) can lead to inexact sampling, since the keys have a limited precision, it&#39;s possible for multiple items to have the same random key (which can make sampling those items depend on their order rather than on randomness), and the maximum weight is unknown.  Partially-sampled e-rands, as given in this document, eliminate the problem of inexact sampling.  This is notably because the <code>exprandless</code> method returns one of only two answers&mdash;either &quot;less&quot; or &quot;greater&quot;&mdash;and samples from both e-rands as necessary so that they will differ from each other by the end of the operation. Another reason is that partially-sampled e-rands have potentially arbitrary precision.</p>
+
+<p><a id=Notes></a></p>
+
+<h2>Notes</h2>
+
+<p><small><sup id=Note1>(1)</sup> Philippe Flajolet, Nasser Saheb. The complexity of generating an exponentially distributed variate. [Research Report] RR-0159, INRIA. 1982. inria-00076400.</small></p>
+
+<p><small><sup id=Note2>(2)</sup> Karney, C.F.F., &quot;<a href="https://arxiv.org/abs/1303.6257v2"><strong>Sampling exactly from the normal distribution</strong></a>&quot;, arXiv:1303.6257v2  [physics.comp-ph], 2014.</small></p>
+
+<p><small><sup id=Note3>(3)</sup> Devroye, L., Gravel, C., &quot;<a href="https://arxiv.org/abs/1502.02539v5"><strong>Sampling with arbitrary precision</strong></a>&quot;, arXiv:1502.02539v5 [cs.IT], 2018.</small></p>
+
+<p><small><sup id=Note4>(4)</sup> Thomas, D.B. and Luk, W., 2008, September. Sampling from the exponential distribution using independent bernoulli variates. In 2008 International Conference on Field Programmable Logic and Applications (pp. 239-244). IEEE.</small></p>
+
+<p><small><sup id=Note5>(5)</sup> Canonne, C., Kamath, G., Steinke, T., &quot;<a href="https://arxiv.org/abs/2004.00010v2"><strong>The Discrete Gaussian for Differential Privacy</strong></a>&quot;, arXiv:2004.00010v2 [cs.DS], 2020.</small></p>
+
+<p><small><sup id=Note6>(6)</sup> Morina, G., Łatuszyński, K., et al., &quot;From the Bernoulli Factory to a Dice Enterprise via Perfect Sampling of Markov Chains&quot;, 2019.</small></p>
+
+<p><small><sup id=Note7>(7)</sup> Lumbroso, J., &quot;<a href="https://arxiv.org/abs/1304.1916"><strong>Optimal Discrete Uniform Generation from Coin Flips, and Applications</strong></a>&quot;, arXiv:1304.1916 [cs.DS].</small></p>
+
+<p><small><sup id=Note8>(8)</sup> Efraimidis, P. &quot;<a href="https://arxiv.org/abs/1012.0256v2"><strong>Weighted Random Sampling over Data Streams</strong></a>&quot;, arXiv:1012.0256v2 [cs.DS], 2015.</small></p>
+
+<p><small><sup id=Note9>(9)</sup> Pedersen, K., &quot;<a href="https://arxiv.org/abs/1704.07949v3"><strong>Reconditioning your quantile function</strong></a>&quot;, arXiv:1704.07949v3 [stat.CO], 2018</small></p>
+
+<p><a id=License></a></p>
+
+<h2>License</h2>
+
+<p>Any copyright to this page is released to the Public Domain.  In case this is not possible, this page is also licensed under <a href="https://creativecommons.org/publicdomain/zero/1.0/"><strong>Creative Commons Zero</strong></a>.</p>
+</div><nav id="navigation"><ul>
+<li><a href="/">Back to start site.</a>
+<li><a href="https://github.com/peteroupc/peteroupc.github.io">This site's repository (source code)</a>
+<li><a href="https://github.com/peteroupc/peteroupc.github.io/issues">Post an issue or comment</a></ul>
+<p>
+If you like this software, you should consider donating to me, Peter O., at the link below:</p>
+<p class="printonly"><b>peteroupc.github.io</b></p>
+<div class="noprint">
+<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=56E5T4FH7KD2S">
+<img src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif"
+name="submit" border="2" alt="PayPal - The safer, easier way to pay online!"></a>
+<p>
+<a href="//twitter.com/share">Share via Twitter</a>, <a href="//www.facebook.com/sharer/sharer.php" id="sharer">Share via Facebook</a>
+</p>
+</div>
+</nav><script>
+if("share" in navigator){
+ document.getElementById("sharer").href="javascript:void(null)";
+ document.getElementById("sharer").innerHTML="Share This Page";
+ navigator.share({title:document.title,url:document.location.href}).then(
+   function(){});
+} else {
+ document.getElementById("sharer").href="//www.facebook.com/sharer/sharer.php?u="+
+    encodeURIComponent(document.location.href)
+}
+</script>
+</body></html>

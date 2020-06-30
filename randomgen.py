@@ -3937,6 +3937,8 @@ class RatioOfUniformsTiling:
                     self.maybeAppend(newtiles, cx, t[1], t[3], cy)
                     self.maybeAppend(newtiles, cx, t[1], cy, t[4])
             self.tiles = newtiles
+        if len(self.tiles) == 0:
+            raise ValueError("Tiling failed")
 
     def maybeAppend(self, newtiles, xmn, xmx, ymn, ymx):
         m = []
@@ -4011,9 +4013,10 @@ class DensityTiling:
       - pdf: A function that specifies the PDF. It takes a single
         number and outputs a single number. The area under
         the PDF need not equal 1 (this class tolerates the PDF even if
-        it is only known up to a normalizing constant).
-        If the PDF contains a _pole_, that is, a point that approaches
-        infinity, the actual PDF may be modified to accommodate the pole,
+        it is only known up to a normalizing constant).  For best results,
+        the PDF should be bounded (that is, it should be free of _poles_, or points
+        that approach infinity).  If the PDF does contain a pole, this class
+        may accommodate the pole by sampling from a modified version of the PDF,
         so that points extremely close to the pole may be sampled
         at a higher or lower probability than otherwise (but not in a way
         that significantly affects the chance of sampling points
@@ -4054,6 +4057,8 @@ class DensityTiling:
                     self.maybeAppend(newtiles, cx, t[1], t[3], cy)
                     self.maybeAppend(newtiles, cx, t[1], cy, t[4])
             self.tiles = newtiles
+        if len(self.tiles) == 0:
+            raise ValueError("Tiling failed")
 
     def _evalpdf(self, x):
         for pole in self.poles:
