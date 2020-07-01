@@ -36,13 +36,13 @@
 
 <h2>Sampler Code</h2>
 
-<p>The following Python code relies on a class I wrote called &quot;<a href="https://github.com/peteroupc/peteroupc.github.io/blob/master/bernoulli.py"><strong>bernoulli.py</strong></a>&quot;, which collects a number of Bernoulli factories, some of which are relied on by the code below.  This includes the &quot;geometric bag&quot; mentioned earlier, as well as a Bernoulli factory that transforms a coin that produces heads with probability <code>p</code> with one that produces heads with probability <code>pow(p, y)</code>.  The case where <code>y</code> is in (0, 1) is due to recent work by Mendo (2019)<sup><a href="#Note4"><strong>(4)</strong></a></sup>.</p>
+<p>The following Python code relies on a class I wrote called &quot;<a href="https://github.com/peteroupc/peteroupc.github.io/blob/master/bernoulli.py"><strong>bernoulli.py</strong></a>&quot;, which collects a number of Bernoulli factories, some of which are relied on by the code below.  This includes the &quot;geometric bag&quot; mentioned earlier, as well as a Bernoulli factory that transforms a coin that produces heads with probability <code>p</code> into a coin that produces heads with probability <code>pow(p, y)</code>.  The case where <code>y</code> is in (0, 1) is due to recent work by Mendo (2019)<sup><a href="#Note4"><strong>(4)</strong></a></sup>.</p>
 
 <p>The Python code also relies on a method I wrote called <code>kthsmallest</code>, which generates the kth smallest number in an arbitrary precision.  This will be described later in this page.</p>
 
 <p>This code is far from fast, though, at least in Python.</p>
 
-<pre lang="python"><code>import math
+<pre>import math
 import random
 import bernoulli
 from randomgen import RandomGen

@@ -26,13 +26,13 @@ Although `alpha` and `beta` can each be greater than 0, this sampler only works 
 <a id=Sampler_Code></a>
 ## Sampler Code
 
-The following Python code relies on a class I wrote called "[**bernoulli.py**](https://github.com/peteroupc/peteroupc.github.io/blob/master/bernoulli.py)", which collects a number of Bernoulli factories, some of which are relied on by the code below.  This includes the "geometric bag" mentioned earlier, as well as a Bernoulli factory that transforms a coin that produces heads with probability `p` with one that produces heads with probability `pow(p, y)`.  The case where `y` is in (0, 1) is due to recent work by Mendo (2019)<sup>[**(4)**](#Note4)</sup>.
+The following Python code relies on a class I wrote called "[**bernoulli.py**](https://github.com/peteroupc/peteroupc.github.io/blob/master/bernoulli.py)", which collects a number of Bernoulli factories, some of which are relied on by the code below.  This includes the "geometric bag" mentioned earlier, as well as a Bernoulli factory that transforms a coin that produces heads with probability `p` into a coin that produces heads with probability `pow(p, y)`.  The case where `y` is in (0, 1) is due to recent work by Mendo (2019)<sup>[**(4)**](#Note4)</sup>.
 
 The Python code also relies on a method I wrote called `kthsmallest`, which generates the kth smallest number in an arbitrary precision.  This will be described later in this page.
 
 This code is far from fast, though, at least in Python.
 
-```python
+```
 import math
 import random
 import bernoulli

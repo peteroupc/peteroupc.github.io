@@ -3919,7 +3919,7 @@ class RatioOfUniformsTiling:
     def __init__(self, pdf, mode=0, y0=-10, y1=10, cycles=10):
         self.pdf = pdf
         # NOTE: Multiply by 2 in case the mode was given approximately
-        self.tiles = [[0, math.sqrt(self.pdf(mode)) * 2, False, y0, y1]]
+        self.tiles = [[0, max(1, math.sqrt(self.pdf(mode)) * 2), False, y0, y1]]
         for i in range(cycles):
             newtiles = []
             for t in self.tiles:
@@ -3943,20 +3943,23 @@ class RatioOfUniformsTiling:
     def maybeAppend(self, newtiles, xmn, xmx, ymn, ymx):
         m = []
         discarded = False
-        for xi in range(10 + 1):
-            x = xmn + (xmx - xmn) * xi / 10.0
+        points=max((xmx-xmn)/0.02, 10)
+        for xi in range(points + 1):
+            x = xmn + (xmx - xmn) * xi * 1.0 / points
             if x <= 0:
                 continue
-            for yi in range(10 + 1):
-                y = ymn + (ymx - ymn) * yi / 10.0
+            for yi in range(points + 1):
+                y = ymn + (ymx - ymn) * yi * 1.0 / points
                 try:
                     yx = y / x
                     val = math.sqrt(self.pdf(yx))
+                    print(val)
                     if (not math.isnan(val)) and x <= val:
                         m.append(y / x)
                     else:
                         discarded = True
                 except:
+                    print([y,x])
                     discarded = True
                     pass
         if len(m) == 0:
@@ -4037,7 +4040,8 @@ class DensityTiling:
     def __init__(self, pdf, bl, br, cycles=10):
         self.pdf = pdf
         self.poles = []
-        mnmx = self._minmax(bl, br)
+        pdfevals={}
+        mnmx = self._minmax(pdfevals, bl, br)
         # MinX, MaxX, EntirelyWithinPDF, MinY, MaxY
         self.tiles = [[bl, br, False, 0, mnmx[1] * 1.5]]
         for i in range(cycles):
@@ -4052,10 +4056,10 @@ class DensityTiling:
                     newtiles.append([cx, t[1], True])
                 else:
                     cy = (t[3] + t[4]) / 2.0
-                    self.maybeAppend(newtiles, t[0], cx, t[3], cy)
-                    self.maybeAppend(newtiles, t[0], cx, cy, t[4])
-                    self.maybeAppend(newtiles, cx, t[1], t[3], cy)
-                    self.maybeAppend(newtiles, cx, t[1], cy, t[4])
+                    self.maybeAppend(pdfevals, newtiles, t[0], cx, t[3], cy)
+                    self.maybeAppend(pdfevals, newtiles, t[0], cx, cy, t[4])
+                    self.maybeAppend(pdfevals, newtiles, cx, t[1], t[3], cy)
+                    self.maybeAppend(pdfevals, newtiles, cx, t[1], cy, t[4])
             self.tiles = newtiles
         if len(self.tiles) == 0:
             raise ValueError("Tiling failed")
@@ -4069,8 +4073,8 @@ class DensityTiling:
         except:
             return math.inf
 
-    def maybeAppend(self, newtiles, xmn, xmx, ymn, ymx):
-        fminmax = self._minmax(xmn, xmx)
+    def maybeAppend(self, pdfevals, newtiles, xmn, xmx, ymn, ymx):
+        fminmax = self._minmax(pdfevals, xmn, xmx)
         if fminmax[1] == 0:
             # Zero at all sampled points, so discard
             return
@@ -4082,9 +4086,24 @@ class DensityTiling:
             # Not entirely above PDF
             newtiles.append([xmn, xmx, False, ymn, ymx])
 
-    def _minmax(self, mn, mx):
-        ct = 100
-        m = [self._evalpdf(mn + (mx - mn) * x * 1.0 / ct) for x in range(ct + 1)]
+    def _cachedevalpdf(self, pdfevals, x):
+        for pole in self.poles:
+            if x >= pole[0] and x < pole[1]:
+                return pole[2]
+        try:
+            if x in pdfevals:
+               return pdfevals[x]
+            ret=self.pdf(x)
+            pdfevals[x]=ret
+            return ret
+        except:
+            pdfevals[x]=math.inf
+            return math.inf
+
+    def _minmax(self, pdfevals, mn, mx):
+        ct = 50
+        m = [self._cachedevalpdf(pdfevals, mn + (mx - mn) * x * 1.0 / ct) \
+            for x in range(ct + 1)]
         retmax = max(m)
         if retmax == math.inf:
             # There are poles somewhere in the PDF
