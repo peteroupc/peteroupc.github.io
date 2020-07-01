@@ -77,10 +77,12 @@ class TConcaveDiscreteSampler:
            sample_X where X is the name given here (samples one
            random number).
         - pdfcall: Name of the method representing psi (for more information,
-           see the __init__ method of this class).  Optional. """
+           see the __init__ method of this class).  Optional; if not given
+           the name is psi_X where X is the name given in the name parameter. """
         if pdfcall == None:
             pdfcall = "psi_" + name
-        ret = "def sample_" + name + "():\n"
+        ret = "import random\nimport math\n\n"
+        ret += "def sample_" + name + "():\n"
         ret += "     while True:\n"
         ret += "        v = random.random() * %.15g + %.15g\n" % (
             (self.vr - self.vl),
@@ -94,7 +96,7 @@ class TConcaveDiscreteSampler:
                 self.uur,
             )
         ret += "        ret = math.floor(v/u)+%.15g\n" % (self.mode)
-        ret += "        if u*u <= %s(ret): return ret\n" % (pdfcall)
+        ret += "        if u*u <= %s(ret): return ret\n\n" % (pdfcall)
         return ret
 
 class TConcaveSampler:
@@ -503,11 +505,13 @@ class LogConcaveSamplerMonotone:
            sample_X where X is the name given here (samples one
            random number).
         - pdfcall: Name of the method representing psi (for more information,
-           see the __init__ method of this class).  Optional. """
+           see the __init__ method of this class).   Optional; if not given
+           the name is psi_X where X is the name given in the name parameter. """
         if pdfcall == None:
             pdfcall = "psi_" + name
         retv = "ret*(random.randint(0,1)*2-1)" if self.symmetric else "ret"
-        ret = "def sample_" + name + "():\n"
+        ret = "import random\nimport math\n\n"
+        ret += "def sample_" + name + "():\n"
         ret += "     while True:\n"
         ret += "        u = random.random()\n"
         ret += "        v = random.random() * %.15g\n" % (self.s)

@@ -3897,16 +3897,18 @@ class RatioOfUniformsTiling:
       - pdf: The probability density function (PDF); it takes one parameter and returns,
          for that parameter, the relative probability that a
          random number close to that number is chosen.  The area under
-         the PDF need not be 1 (this method works even if the PDF
-         is only known up to a normalizing constant).   For the ratio of uniforms method
-         to work, both pdf(x) and x*x*pdf(x) must be bounded away from infinity.
+         the PDF need not be 1; this method works even if the PDF
+         is only known up to a normalizing constant, and even if
+         the distribution has infinitely extending tails to the left and/or right.
+         However, for the ratio of uniforms method to work, both pdf(x) and
+         x*x*pdf(x) must be bounded away from infinity.
       - mode: X-coordinate of the PDF's highest peak or one of them,
          or a location close to it.  Optional; default is 0.
       - y0, y1: Bounding coordinates for the ratio-of-uniforms tiling.
          For this class to work, y0 <= min( x*sqrt(pdf(x)) ) and
-         y1 >= max( x*sqrt(pdf(x)) ) for all x.  Optional.
+         y1 >= max( x*sqrt(pdf(x)) ) for all x.  Optional; the default is y0=-10, y1=10.
       - cycles - Number of recursion cycles in which to split tiles
-         for the ratio-of-uniforms tiling.  Default is 10.
+         for the ratio-of-uniforms tiling.  Default is 8.
 
        References:
        Section IV.7 of Devroye, L., "Non-Uniform Random Variate Generation", 1986.
@@ -3916,10 +3918,11 @@ class RatioOfUniformsTiling:
        Philipps-Universität Marburg, 2009.
            """
 
-    def __init__(self, pdf, mode=0, y0=-10, y1=10, cycles=10):
+    def __init__(self, pdf, mode=0, y0=-10, y1=10, cycles=8):
         self.pdf = pdf
-        # NOTE: Multiply by 2 in case the mode was given approximately
-        self.tiles = [[0, max(1, math.sqrt(self.pdf(mode)) * 2), False, y0, y1]]
+        x0 = math.sqrt(self.pdf(mode))
+        # NOTE: Adjust x0 in case the mode was given approximately
+        self.tiles = [[0, max(1, x0) * 2, False, y0, y1]]
         for i in range(cycles):
             newtiles = []
             for t in self.tiles:
@@ -3943,7 +3946,7 @@ class RatioOfUniformsTiling:
     def maybeAppend(self, newtiles, xmn, xmx, ymn, ymx):
         m = []
         discarded = False
-        points=max((xmx-xmn)/0.02, 10)
+        points = 10  # max(int((xmx-xmn)/0.02), 10)
         for xi in range(points + 1):
             x = xmn + (xmx - xmn) * xi * 1.0 / points
             if x <= 0:
@@ -3953,14 +3956,18 @@ class RatioOfUniformsTiling:
                 try:
                     yx = y / x
                     val = math.sqrt(self.pdf(yx))
-                    print(val)
+                    # print(val)
                     if (not math.isnan(val)) and x <= val:
                         m.append(y / x)
                     else:
                         discarded = True
+                        if len(m) > 0:
+                            break
                 except:
-                    print([y,x])
+                    # print([y,x])
                     discarded = True
+                    if len(m) > 0:
+                        break
                     pass
         if len(m) == 0:
             return
@@ -3974,12 +3981,12 @@ class RatioOfUniformsTiling:
 
     def svg(self):
         ret = (
-            "<svg width='640px' height='640px' viewBox='-1 -1 2 2'"
+            "<svg width='640px' height='640px' viewBox='0 -1 1 2'"
             + " xmlns='http://www.w3.org/2000/svg'>\n"
         )
         for tile in self.tiles:
             ret += (
-                "<path style='fill:none;stroke:black;stroke-width:0.01px' "
+                "<path style='fill:none;stroke:black;stroke-width:0.001px' "
                 + "d='M%f %fL%f %fL%f %fL%f %fZ'/>\n"
             ) % (tile[0], tile[3], tile[0], tile[4], tile[1], tile[4], tile[1], tile[3])
         ret += "</svg>\n"
@@ -3995,12 +4002,51 @@ class RatioOfUniformsTiling:
         # print(n*1.0/self.iters)
         return ret
 
+    def codegen(self, name, pdfcall=None):
+        """ Generates Python code that samples
+                (approximately) from the distribution estimated
+                in this class.  Idea from Leydold, et al.,
+                "An Automatic Code Generator for
+                Nonuniform Random Variate Generation", 2001.
+        - name: Distribution name.  Generates a Python method called
+           sample_X where X is the name given here (samples one
+           random number).
+        - pdfcall: Name of the method representing pdf (for more information,
+           see the __init__ method of this class).  Optional; if not given
+           the name is pdf_X where X is the name given in the name parameter. """
+        if pdfcall == None:
+            pdfcall = "pdf_" + name
+        ret = "import random\n\n"
+        ret += "TABLE_" + name + " = ["
+        for i in range(len(self.tiles)):
+            if i > 0:
+                ret += ",\n"
+            ret += "%s" % (str(self.tiles[i]))
+        ret += "]\n\n"
+        ret += "def sample_" + name + "():\n"
+        ret += "     while True:\n"
+        ret += (
+            "        tile = TABLE_"
+            + name
+            + "[random.randint(0, %d)]\n" % (len(self.tiles) - 1)
+        )
+        ret += "        x = random.random() * (tile[1] - tile[0]) + tile[0]\n"
+        ret += "        y = random.random() * (tile[3] - tile[4]) + tile[3]\n"
+        ret += "        if x == 0: continue\n"
+        ret += "        ret = y / x\n"
+        ret += "        if tile[2] or x <= math.sqrt(%s(ret)): return ret\n\n" % (
+            pdfcall
+        )
+        return ret
+
     def _sampleOne(self, rg):
         while True:
             # self.iters+=1
             tile = self.tiles[rg.rndintexc(len(self.tiles))]
             x = rg.rndrangemaxexc(tile[0], tile[1])
             y = rg.rndrangemaxexc(tile[3], tile[4])
+            if x == 0:
+                continue
             ret = y / x
             if tile[2] or x <= math.sqrt(self.pdf(ret)):
                 return ret
@@ -4028,7 +4074,7 @@ class DensityTiling:
          bl and br are numbers giving the domain,
          which in this case is [bl, br].
       - cycles - Number of recursion cycles in which to split tiles
-         that follow the PDF.  Default is 10.
+         that follow the PDF.  Default is 8.
 
        Reference:
        Fulger, Daniel and Guido Germano. "Automatic generation of
@@ -4037,10 +4083,10 @@ class DensityTiling:
        arXiv:0902.3088v1  [cs.MS], 2009.
            """
 
-    def __init__(self, pdf, bl, br, cycles=10):
+    def __init__(self, pdf, bl, br, cycles=8):
         self.pdf = pdf
         self.poles = []
-        pdfevals={}
+        pdfevals = {}
         mnmx = self._minmax(pdfevals, bl, br)
         # MinX, MaxX, EntirelyWithinPDF, MinY, MaxY
         self.tiles = [[bl, br, False, 0, mnmx[1] * 1.5]]
@@ -4092,18 +4138,20 @@ class DensityTiling:
                 return pole[2]
         try:
             if x in pdfevals:
-               return pdfevals[x]
-            ret=self.pdf(x)
-            pdfevals[x]=ret
+                return pdfevals[x]
+            ret = self.pdf(x)
+            pdfevals[x] = ret
             return ret
         except:
-            pdfevals[x]=math.inf
+            pdfevals[x] = math.inf
             return math.inf
 
     def _minmax(self, pdfevals, mn, mx):
         ct = 50
-        m = [self._cachedevalpdf(pdfevals, mn + (mx - mn) * x * 1.0 / ct) \
-            for x in range(ct + 1)]
+        m = [
+            self._cachedevalpdf(pdfevals, mn + (mx - mn) * x * 1.0 / ct)
+            for x in range(ct + 1)
+        ]
         retmax = max(m)
         if retmax == math.inf:
             # There are poles somewhere in the PDF

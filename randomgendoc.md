@@ -228,7 +228,7 @@ CLASSES
      |     bl and br are numbers giving the domain,
      |     which in this case is [bl, br].
      |  - cycles - Number of recursion cycles in which to split tiles
-     |     that follow the PDF.  Default is 10.
+     |     that follow the PDF.  Default is 8.
      |
      |   Reference:
      |   Fulger, Daniel and Guido Germano. "Automatic generation of
@@ -238,10 +238,10 @@ CLASSES
      |
      |  Methods defined here:
      |
-     |  __init__(self, pdf, bl, br, cycles=10)
+     |  __init__(self, pdf, bl, br, cycles=8)
      |      Initialize self.  See help(type(self)) for accurate signature.
      |
-     |  maybeAppend(self, newtiles, xmn, xmx, ymn, ymx)
+     |  maybeAppend(self, pdfevals, newtiles, xmn, xmx, ymn, ymx)
      |
      |  sample(self, rg, n=1)
      |      Generates random numbers that (approximately) follow the
@@ -1113,16 +1113,18 @@ CLASSES
      |  - pdf: The probability density function (PDF); it takes one parameter and returns,
      |     for that parameter, the relative probability that a
      |     random number close to that number is chosen.  The area under
-     |     the PDF need not be 1 (this method works even if the PDF
-     |     is only known up to a normalizing constant).   For the ratio of uniforms method
-     |     to work, both pdf(x) and x*x*pdf(x) must be bounded away from infinity.
+     |     the PDF need not be 1; this method works even if the PDF
+     |     is only known up to a normalizing constant, and even if
+     |     the distribution has infinitely extending tails to the left and/or right.
+     |     However, for the ratio of uniforms method to work, both pdf(x) and
+     |     x*x*pdf(x) must be bounded away from infinity.
      |  - mode: X-coordinate of the PDF's highest peak or one of them,
      |     or a location close to it.  Optional; default is 0.
      |  - y0, y1: Bounding coordinates for the ratio-of-uniforms tiling.
      |     For this class to work, y0 <= min( x*sqrt(pdf(x)) ) and
-     |     y1 >= max( x*sqrt(pdf(x)) ) for all x.  Optional.
+     |     y1 >= max( x*sqrt(pdf(x)) ) for all x.  Optional; the default is y0=-10, y1=10.
      |  - cycles - Number of recursion cycles in which to split tiles
-     |     for the ratio-of-uniforms tiling.  Default is 10.
+     |     for the ratio-of-uniforms tiling.  Default is 8.
      |
      |   References:
      |   Section IV.7 of Devroye, L., "Non-Uniform Random Variate Generation", 1986.
@@ -1133,8 +1135,21 @@ CLASSES
      |
      |  Methods defined here:
      |
-     |  __init__(self, pdf, mode=0, y0=-10, y1=10, cycles=10)
+     |  __init__(self, pdf, mode=0, y0=-10, y1=10, cycles=8)
      |      Initialize self.  See help(type(self)) for accurate signature.
+     |
+     |  codegen(self, name, pdfcall=None)
+     |      Generates Python code that samples
+     |              (approximately) from the distribution estimated
+     |              in this class.  Idea from Leydold, et al.,
+     |              "An Automatic Code Generator for
+     |              Nonuniform Random Variate Generation", 2001.
+     |      - name: Distribution name.  Generates a Python method called
+     |         sample_X where X is the name given here (samples one
+     |         random number).
+     |      - pdfcall: Name of the method representing pdf (for more information,
+     |         see the __init__ method of this class).  Optional; if not given
+     |         the name is pdf_X where X is the name given in the name parameter.
      |
      |  maybeAppend(self, newtiles, xmn, xmx, ymn, ymx)
      |
