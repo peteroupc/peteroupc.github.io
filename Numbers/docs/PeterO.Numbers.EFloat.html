@@ -83,9 +83,9 @@
 <li><code><a href="#CreateNaN_PeterO_Numbers_EInteger">CreateNaN(PeterO.Numbers.EInteger)</a></code> - Creates a not-a-number arbitrary-precision binary number.</li>
 <li><code><a href="#CreateNaN_PeterO_Numbers_EInteger_bool_bool_PeterO_Numbers_EContext">CreateNaN(PeterO.Numbers.EInteger, bool, bool, PeterO.Numbers.EContext)</a></code> - Creates a not-a-number arbitrary-precision binary number.</li>
 <li><code><a href="#Decrement">Decrement()</a></code> - Returns one subtracted from this arbitrary-precision binary floating-point number.</li>
-<li><code><a href="#Divide_int">Divide(int)</a></code> - Divides this arbitrary-precision binary floating-point number by a 32-bit signed integer and returns the result.</li>
-<li><code><a href="#Divide_long">Divide(long)</a></code> - Divides this arbitrary-precision binary floating-point number by a 64-bit signed integer and returns the result.</li>
-<li><code><a href="#Divide_PeterO_Numbers_EFloat">Divide(PeterO.Numbers.EFloat)</a></code> - Divides this arbitrary-precision binary floating-point number by another arbitrary-precision binary floating-point number and returns the result.</li>
+<li><code><a href="#Divide_int">Divide(int)</a></code> - Divides this arbitrary-precision binary floating-point number by a 32-bit signed integer and returns the result; returns NaN instead if the result would have a nonterminating binary expansion (including 1/3, 1/12, 1/7, 2/3, and so on); if this is not desired, use DivideToExponent, or use the Divide overload that takes an EContext.</li>
+<li><code><a href="#Divide_long">Divide(long)</a></code> - Divides this arbitrary-precision binary floating-point number by a 64-bit signed integer and returns the result; returns NaN instead if the result would have a nonterminating binary expansion (including 1/3, 1/12, 1/7, 2/3, and so on); if this is not desired, use DivideToExponent, or use the Divide overload that takes an EContext.</li>
+<li><code><a href="#Divide_PeterO_Numbers_EFloat">Divide(PeterO.Numbers.EFloat)</a></code> - Divides this arbitrary-precision binary floating-point number by another arbitrary-precision binary floating-point number and returns the result; returns NaN instead if the result would have a nonterminating binary expansion (including 1/3, 1/12, 1/7, 2/3, and so on); if this is not desired, use DivideToExponent, or use the Divide overload that takes an EContext.</li>
 <li><code><a href="#Divide_PeterO_Numbers_EFloat_PeterO_Numbers_EContext">Divide(PeterO.Numbers.EFloat, PeterO.Numbers.EContext)</a></code> - Divides this arbitrary-precision binary floating-point number by another arbitrary-precision binary floating-point number and returns the result.</li>
 <li><code><a href="#DivideAndRemainderNaturalScale_PeterO_Numbers_EFloat">DivideAndRemainderNaturalScale(PeterO.Numbers.EFloat)</a></code> - <b>Deprecated:</b> Renamed to DivRemNaturalScale.</li>
 <li><code><a href="#DivideAndRemainderNaturalScale_PeterO_Numbers_EFloat_PeterO_Numbers_EContext">DivideAndRemainderNaturalScale(PeterO.Numbers.EFloat, PeterO.Numbers.EContext)</a></code> - <b>Deprecated:</b> Renamed to DivRemNaturalScale.</li>
@@ -115,6 +115,7 @@
 <li><code><a href="#explicit_operator_uint_PeterO_Numbers_EFloat">explicit operator uint(PeterO.Numbers.EFloat)</a></code> - Converts an arbitrary-precision binary floating-point number to a 32-bit signed integer if it can fit in a 32-bit signed integer after converting it to an integer by discarding its fractional part.</li>
 <li><code><a href="#explicit_operator_ulong_PeterO_Numbers_EFloat">explicit operator ulong(PeterO.Numbers.EFloat)</a></code> - Converts an arbitrary-precision binary floating-point number to a 64-bit unsigned integer if it can fit in a 64-bit unsigned integer after converting it to an integer by discarding its fractional part.</li>
 <li><code><a href="#explicit_operator_ushort_PeterO_Numbers_EFloat">explicit operator ushort(PeterO.Numbers.EFloat)</a></code> - Converts an arbitrary-precision binary floating-point number to a 16-bit unsigned integer if it can fit in a 16-bit unsigned integer after converting it to an integer by discarding its fractional part.</li>
+<li><code><a href="#ExpM1_PeterO_Numbers_EContext">ExpM1(PeterO.Numbers.EContext)</a></code> - Finds e (the base of natural logarithms) raised to the power of this object&#39;s value, and subtracts the result by 1 and returns the final result, in a way that avoids loss of precision if the true result is very close to 0.</li>
 <li><code><a href="#Exponent">Exponent</a></code> - Gets this object&#39;s exponent.</li>
 <li><code><a href="#FromBoolean_bool">FromBoolean(bool)</a></code> - Converts a boolean value (either true or false) to an arbitrary-precision binary floating-point number.</li>
 <li><code><a href="#FromByte_byte">FromByte(byte)</a></code> - Converts a byte (from 0 to 255) to an arbitrary-precision binary floating-point number.</li>
@@ -167,6 +168,7 @@
 <li><code><a href="#IsZero">IsZero</a></code> - Gets a value indicating whether this object&#39;s value equals 0.</li>
 <li><code><a href="#Log_PeterO_Numbers_EContext">Log(PeterO.Numbers.EContext)</a></code> - Finds the natural logarithm of this object, that is, the power (exponent) that e (the base of natural logarithms) must be raised to in order to equal this object&#39;s value.</li>
 <li><code><a href="#Log10_PeterO_Numbers_EContext">Log10(PeterO.Numbers.EContext)</a></code> - Finds the base-10 logarithm of this object, that is, the power (exponent) that the number 10 must be raised to in order to equal this object&#39;s value.</li>
+<li><code><a href="#Log1P_PeterO_Numbers_EContext">Log1P(PeterO.Numbers.EContext)</a></code> - Adds 1 to this object&#39;s value and finds the natural logarithm of the result, in a way that avoids loss of precision when this object&#39;s value is between 0 and 1.</li>
 <li><code><a href="#LogN_PeterO_Numbers_EFloat_PeterO_Numbers_EContext">LogN(PeterO.Numbers.EFloat, PeterO.Numbers.EContext)</a></code> - Finds the base-N logarithm of this object, that is, the power (exponent) that the number N must be raised to in order to equal this object&#39;s value.</li>
 <li><code><a href="#Mantissa">Mantissa</a></code> - Gets this object&#39;s unscaled value, or significand, and makes it negative if this object is negative.</li>
 <li><code><a href="#Max_PeterO_Numbers_EFloat_PeterO_Numbers_EFloat">Max(PeterO.Numbers.EFloat, PeterO.Numbers.EFloat)</a></code> - Gets the greater value between two binary floating-point numbers.</li>
@@ -1170,7 +1172,7 @@ is null or is less than 0.</li>
     int intValue);
 </pre>
 
-<p>Divides this arbitrary-precision binary floating-point number by a 32-bit signed integer and returns the result. When possible, the result will be exact.</p>
+<p>Divides this arbitrary-precision binary floating-point number by a 32-bit signed integer and returns the result; returns NaN instead if the result would have a nonterminating binary expansion (including 1/3, 1/12, 1/7, 2/3, and so on); if this is not desired, use DivideToExponent, or use the Divide overload that takes an EContext.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -1197,7 +1199,7 @@ Attempted to divide by zero.</li>
     long longValue);
 </pre>
 
-<p>Divides this arbitrary-precision binary floating-point number by a 64-bit signed integer and returns the result. When possible, the result will be exact.</p>
+<p>Divides this arbitrary-precision binary floating-point number by a 64-bit signed integer and returns the result; returns NaN instead if the result would have a nonterminating binary expansion (including 1/3, 1/12, 1/7, 2/3, and so on); if this is not desired, use DivideToExponent, or use the Divide overload that takes an EContext.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -1225,7 +1227,7 @@ Attempted to divide by zero.</li>
     PeterO.Numbers.EFloat divisor);
 </pre>
 
-<p>Divides this arbitrary-precision binary floating-point number by another arbitrary-precision binary floating-point number and returns the result. When possible, the result will be exact.</p>
+<p>Divides this arbitrary-precision binary floating-point number by another arbitrary-precision binary floating-point number and returns the result; returns NaN instead if the result would have a nonterminating binary expansion (including 1/3, 1/12, 1/7, 2/3, and so on); if this is not desired, use DivideToExponent, or use the Divide overload that takes an EContext.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -1246,7 +1248,7 @@ Attempted to divide by zero.</li>
     PeterO.Numbers.EContext ctx);
 </pre>
 
-<p>Divides this arbitrary-precision binary floating-point number by another arbitrary-precision binary floating-point number and returns the result. When possible, the result will be exact.</p>
+<p>Divides this arbitrary-precision binary floating-point number by another arbitrary-precision binary floating-point number and returns the result.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -1614,6 +1616,27 @@ is an arbitrary object.</li>
 <p>Exponential of this object. If this object&#39;s value is 1, returns an approximation to &quot; e&quot; within the given precision. Signals FlagInvalid and returns not-a-number (NaN) if the parameter  <i>ctx</i>
  is null or the precision is unlimited (the context&#39;s Precision property is 0).</p>
 
+<p><a id="ExpM1_PeterO_Numbers_EContext"></a></p>
+
+<h3>ExpM1</h3>
+
+<pre>public PeterO.Numbers.EFloat ExpM1(
+    PeterO.Numbers.EContext ctx);
+</pre>
+
+<p>Finds e (the base of natural logarithms) raised to the power of this object&#39;s value, and subtracts the result by 1 and returns the final result, in a way that avoids loss of precision if the true result is very close to 0.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>ctx</i>: An arithmetic context to control the precision, rounding, and exponent range of the result. If  <code>HasFlags</code>  of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). <i>This parameter can&#39;t be null, as the exponential function&#39;s results are generally not exact.</i> (Unlike in the General Binary Arithmetic Specification, any rounding mode is allowed.).</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>Exponential of this object, minus 1. Signals FlagInvalid and returns not-a-number (NaN) if the parameter  <i>ctx</i>
+ is null or the precision is unlimited (the context&#39;s Precision property is 0).</p>
+
 <p><a id="FromBoolean_bool"></a></p>
 
 <h3>FromBoolean</h3>
@@ -1696,7 +1719,7 @@ is a 64-bit signed integer.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>A binary floating-point number with the same value as the floating-point number encoded in  <i>dbl</i>
+<p>A binary floating-point number with the same value as the floating-point number encoded in  <i>dblBits</i>
 .</p>
 
 <p><a id="FromEInteger_PeterO_Numbers_EInteger"></a></p>
@@ -1841,7 +1864,7 @@ is a 64-bit floating-point number.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>A binary floating-point number with the same floating-point value as  <i>flt</i>
+<p>A binary floating-point number with the same floating-point value as  <i>value</i>
 .</p>
 
 <p><a id="FromString_byte"></a></p>
@@ -2576,6 +2599,27 @@ is null.</li>
 
 <p>Ln(this object)/Ln(10). Signals the flag FlagInvalid and returns not-a-number (NaN) if this object is less than 0. Signals FlagInvalid and returns not-a-number (NaN) if the parameter  <i>ctx</i>
  is null or the precision is unlimited (the context&#39;s Precision property is 0).</p>
+
+<p><a id="Log1P_PeterO_Numbers_EContext"></a></p>
+
+<h3>Log1P</h3>
+
+<pre>public PeterO.Numbers.EFloat Log1P(
+    PeterO.Numbers.EContext ctx);
+</pre>
+
+<p>Adds 1 to this object&#39;s value and finds the natural logarithm of the result, in a way that avoids loss of precision when this object&#39;s value is between 0 and 1.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>ctx</i>: An arithmetic context to control the precision, rounding, and exponent range of the result. If  <code>HasFlags</code>  of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). <i>This parameter can&#39;t be null, as the ln function&#39;s results are generally not exact.</i> (Unlike in the General Binary Arithmetic Specification, any rounding mode is allowed.).</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>Ln(1+(this object)). Signals the flag FlagInvalid and returns NaN if this object is less than -1 (the result would be a complex number with a real part equal to Ln of 1 plus this object&#39;s absolute value and an imaginary part equal to pi, but the return value is still NaN.). Signals FlagInvalid and returns not-a-number (NaN) if the parameter  <i>ctx</i>
+ is null or the precision is unlimited (the context&#39;s Precision property is 0). Signals no flags and returns negative infinity if this object&#39;s value is 0.</p>
 
 <p><a id="LogN_PeterO_Numbers_EFloat_PeterO_Numbers_EContext"></a></p>
 
@@ -3677,7 +3721,7 @@ is null.</p></li>
 <ul>
 <li><p>System.OverflowException:
 The parameter  <i>input</i>
-is infinity or not-a-number, or the number, once converted to an integer by discarding its fractional part, is less than -32768 or greater tha 32767.</p></li>
+is infinity or not-a-number, or the number, once converted to an integer by discarding its fractional part, is less than -32768 or greater than 32767.</p></li>
 <li><p>System.ArgumentNullException:
 The parameter  <i>input</i>
 is null.</p></li>
@@ -5216,7 +5260,7 @@ This object&#39;s value is not an exact integer.</p></li>
 
 <ul>
 <li>System.OverflowException:
-This value is infinity or not-a-number, or the number, once converted to an integer by discarding its fractional part, is less than -32768 or greater tha 32767.</li>
+This value is infinity or not-a-number, or the number, once converted to an integer by discarding its fractional part, is less than -32768 or greater than 32767.</li>
 </ul>
 
 <p><a id="ToInt16IfExact"></a></p>
@@ -5236,7 +5280,7 @@ This value is infinity or not-a-number, or the number, once converted to an inte
 
 <ul>
 <li>System.ArithmeticException:
-This value is infinity or not-a-number, is not an exact integer, or is less than -32768 or greater tha 32767.</li>
+This value is infinity or not-a-number, is not an exact integer, or is less than -32768 or greater than 32767.</li>
 </ul>
 
 <p><a id="ToInt16Unchecked"></a></p>

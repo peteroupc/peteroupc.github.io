@@ -22,7 +22,7 @@
 
 <p>The <em>exponential distribution</em> takes a parameter &lambda;.  Informally speaking, a random number that follows an exponential distribution is the number of units of time between one event and the next, and &lambda; is the expected average number of events per unit of time.  Usually, &lambda; is equal to 1.</p>
 
-<p>An exponential random number is commonly generated as follows: <code>-ln(1 - RNDU01())</code>, where <code>RNDU01()</code> is a uniform random number in the interval [**0, 1).  (This particular formula is not robust, though, for reasons that are outside the scope of this document, but see (Pedersen 2018)<sup><a href="#Note5"><strong>(5)</strong></a></sup>.)  This page presents an alternative way to sample exponential random numbers.</p>
+<p>An exponential random number is commonly generated as follows: <code>-ln(1 - RNDU01()) / lamda</code>, where <code>RNDU01()</code> is a uniform random number in the interval [**0, 1).  (This particular formula is not robust, though, for reasons that are outside the scope of this document, but see (Pedersen 2018)<sup><a href="#Note5"><strong>(5)</strong></a></sup>.)  This page presents an alternative way to sample exponential random numbers.</p>
 
 <p><a id=Code></a></p>
 

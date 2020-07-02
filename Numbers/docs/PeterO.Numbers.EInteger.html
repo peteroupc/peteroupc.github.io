@@ -159,6 +159,10 @@
 <li><code><a href="#Remainder_int">Remainder(int)</a></code> - Returns the remainder that would result when this arbitrary-precision integer is divided by a 32-bit signed integer.</li>
 <li><code><a href="#Remainder_long">Remainder(long)</a></code> - Returns the remainder that would result when this arbitrary-precision integer is divided by a 64-bit signed integer.</li>
 <li><code><a href="#Remainder_PeterO_Numbers_EInteger">Remainder(PeterO.Numbers.EInteger)</a></code> - Returns the remainder that would result when this arbitrary-precision integer is divided by another arbitrary-precision integer.</li>
+<li><code><a href="#Root_int">Root(int)</a></code> - Finds the nth root of this instance&#39;s value, rounded down.</li>
+<li><code><a href="#Root_PeterO_Numbers_EInteger">Root(PeterO.Numbers.EInteger)</a></code> - Finds the nth root of this instance&#39;s value, rounded down.</li>
+<li><code><a href="#RootRem_int">RootRem(int)</a></code> - Calculates the nth root and the remainder.</li>
+<li><code><a href="#RootRem_PeterO_Numbers_EInteger">RootRem(PeterO.Numbers.EInteger)</a></code> - Calculates the nth root and the remainder.</li>
 <li><code><a href="#ShiftLeft_int">ShiftLeft(int)</a></code> - Returns an arbitrary-precision integer with the bits shifted to the left by a number of bits.</li>
 <li><code><a href="#ShiftLeft_PeterO_Numbers_EInteger">ShiftLeft(PeterO.Numbers.EInteger)</a></code> - Returns an arbitrary-precision integer with the bits shifted to the left by a number of bits given as an arbitrary-precision integer.</li>
 <li><code><a href="#ShiftRight_int">ShiftRight(int)</a></code> - Returns an arbitrary-precision integer with the bits shifted to the right.</li>
@@ -2671,7 +2675,7 @@ is null.</p></li>
 <ul>
 <li><p>System.OverflowException:
 The parameter  <i>input</i>
-is less than -32768 or greater tha 32767.</p></li>
+is less than -32768 or greater than 32767.</p></li>
 <li><p>System.ArgumentNullException:
 The parameter  <i>input</i>
 is null.</p></li>
@@ -3547,6 +3551,102 @@ The parameter  <i>divisor</i>
 is null.</p></li>
 </ul>
 
+<p><a id="Root_int"></a></p>
+
+<h3>Root</h3>
+
+<pre>public PeterO.Numbers.EInteger Root(
+    int root);
+</pre>
+
+<p>Finds the nth root of this instance&#39;s value, rounded down.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>root</i>: The root to find; must be 1 or greater. If this value is 2, this method finds the square root; if 3, the cube root, and so on.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>The square root of this object&#39;s value. Returns 0 if this value is 0 or less.</p>
+
+<p><a id="Root_PeterO_Numbers_EInteger"></a></p>
+
+<h3>Root</h3>
+
+<pre>public PeterO.Numbers.EInteger Root(
+    PeterO.Numbers.EInteger root);
+</pre>
+
+<p>Finds the nth root of this instance&#39;s value, rounded down.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>root</i>: The root to find; must be 1 or greater. If this value is 2, this method finds the square root; if 3, the cube root, and so on.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>The square root of this object&#39;s value. Returns 0 if this value is 0 or less.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter  <i>root</i>
+is null.</li>
+</ul>
+
+<p><a id="RootRem_int"></a></p>
+
+<h3>RootRem</h3>
+
+<pre>public PeterO.Numbers.EInteger[] RootRem(
+    int root);
+</pre>
+
+<p>Calculates the nth root and the remainder.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>root</i>: The root to find; must be 1 or greater. If this value is 2, this method finds the square root; if 3, the cube root, and so on.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>An array of two arbitrary-precision integers: the first integer is the nth root, and the second is the difference between this value and the nth power of the first integer. Returns two zeros if this value is 0 or less, or one and zero if this value equals 1.</p>
+
+<p><a id="RootRem_PeterO_Numbers_EInteger"></a></p>
+
+<h3>RootRem</h3>
+
+<pre>public PeterO.Numbers.EInteger[] RootRem(
+    PeterO.Numbers.EInteger root);
+</pre>
+
+<p>Calculates the nth root and the remainder.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>root</i>: The root to find; must be 1 or greater. If this value is 2, this method finds the square root; if 3, the cube root, and so on.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>An array of two arbitrary-precision integers: the first integer is the nth root, and the second is the difference between this value and the nth power of the first integer. Returns two zeros if this value is 0 or less, or one and zero if this value equals 1.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter  <i>root</i>
+is null.</li>
+</ul>
+
 <p><a id="ShiftLeft_int"></a></p>
 
 <h3>ShiftLeft</h3>
@@ -3809,7 +3909,7 @@ This value is less than 0 or greater than 255.</li>
 
 <ul>
 <li>System.OverflowException:
-This value is less than -32768 or greater tha 32767.</li>
+This value is less than -32768 or greater than 32767.</li>
 </ul>
 
 <p><a id="ToInt16Unchecked"></a></p>

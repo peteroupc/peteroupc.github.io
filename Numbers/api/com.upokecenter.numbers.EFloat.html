@@ -289,6 +289,11 @@ of another object.</li>
 <li><code>EFloat Exp​(EContext ctx)</code><br>
 Finds e (the base of natural logarithms) raised to the power of this
 object&#39;s value.</li>
+<li><code>EFloat ExpM1​(EContext ctx)</code><br>
+Finds e (the base of natural logarithms) raised to the power of this
+object&#39;s value, and subtracts the result by 1 and returns the final
+result, in a way that avoids loss of precision if the true result is
+very close to 0.</li>
 <li><code>static EFloat FromBoolean​(boolean boolValue)</code><br>
 Converts a boolean value (either true or false) to an arbitrary-precision
 binary floating-point number.</li>
@@ -415,7 +420,9 @@ Finds the base-10 logarithm of this object, that is, the power (exponent)
 that the number 10 must be raised to in order to equal this object&#39;s
 value.</li>
 <li><code>EFloat Log1P​(EContext ctx)</code><br>
-Not documented yet.</li>
+Adds 1 to this object&#39;s value and finds the natural logarithm of the result,
+in a way that avoids loss of precision when this object&#39;s value is
+between 0 and 1.</li>
 <li><code>EFloat LogN​(EFloat baseValue,
 EContext ctx)</code><br>
 Finds the base-N logarithm of this object, that is, the power (exponent)
@@ -3234,6 +3241,36 @@ ctx</code> is null or the precision is unlimited (the context&#39;s Precision
 property is 0).</li>
 </ul>
 
+<h3>ExpM1</h3>
+
+<pre>public EFloat ExpM1​(EContext ctx)
+</pre>
+
+<p>Finds e (the base of natural logarithms) raised to the power of this
+ object&#39;s value, and subtracts the result by 1 and returns the final
+ result, in a way that avoids loss of precision if the true result is
+ very close to 0.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>ctx</code> - An arithmetic context to control the precision, rounding, and
+exponent range of the result. If <code>HasFlags</code> of the context is
+true, will also store the flags resulting from the operation (the
+flags are in addition to the pre-existing flags). <i>This parameter
+can&#39;t be null, as the exponential function&#39;s results are generally
+not exact.</i> (Unlike in the General Binary Arithmetic
+Specification, any rounding mode is allowed.).</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>Exponential of this object, minus 1. Signals FlagInvalid and returns
+not-a-number (NaN) if the parameter <code>ctx</code> is null or the
+precision is unlimited (the context&#39;s Precision property is 0).</li>
+</ul>
+
 <h3>hashCode</h3>
 
 <pre>public int hashCode()
@@ -3410,18 +3447,33 @@ property is 0).</li>
 <pre>public EFloat Log1P​(EContext ctx)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Adds 1 to this object&#39;s value and finds the natural logarithm of the result,
+ in a way that avoids loss of precision when this object&#39;s value is
+ between 0 and 1.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>ctx</code> - Not documented yet.</li>
+<li><code>ctx</code> - An arithmetic context to control the precision, rounding, and
+exponent range of the result. If <code>HasFlags</code> of the context is
+true, will also store the flags resulting from the operation (the
+flags are in addition to the pre-existing flags). <i>This parameter
+can&#39;t be null, as the ln function&#39;s results are generally not
+exact.</i> (Unlike in the General Binary Arithmetic Specification,
+any rounding mode is allowed.).</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>The return value is not documented yet.</li>
+<li>Ln(1+(this object)). Signals the flag FlagInvalid and returns NaN if
+this object is less than -1 (the result would be a complex number
+with a real part equal to Ln of 1 plus this object&#39;s absolute value
+and an imaginary part equal to pi, but the return value is still
+NaN.). Signals FlagInvalid and returns not-a-number (NaN) if the
+parameter <code>ctx</code> is null or the precision is unlimited (the
+context&#39;s Precision property is 0). Signals no flags and returns
+negative infinity if this object&#39;s value is 0.</li>
 </ul>
 
 <h3>LogN</h3>
