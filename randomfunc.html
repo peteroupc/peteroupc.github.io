@@ -1990,7 +1990,7 @@ END METHOD
 <li>Even if the quantile function is available, a na&iuml;ve quantile calculation (e.g., <code>ICDF(RNDU01ZeroOneExc())</code>) may mean that small changes in the uniform number lead to huge changes in the quantile, leading to gaps in random number coverage (Monahan 1985, sec. 4 and 6)<sup><a href="#Note43"><strong>(43)</strong></a></sup>.</li>
 </ul>
 
-<p>The following method generates a random number from a distribution via inversion, with an accuracy of <code>BASE</code><sup><code>-precision</code></sup> ((Devroye and Gravel 2018)<sup><a href="#Note59"><strong>(59)</strong></a></sup>, but extended for any base; see also (Bringmann and Friedrich 2013, Appendix A)<sup><a href="#Note60"><strong>(60)</strong></a></sup>).  In the method, <code>ICDF(u, ubits, prec)</code> calculates a number that is within <code>BASE</code><sup><code>-prec</code></sup> of the true quantile of <code>u</code>/<code>BASE</code><sup><code>ubits</code></sup>, and <code>BASE</code> is the digit base (e.g. 2 for binary or 10 for decimal).</p>
+<p>The following method generates a random number from a distribution via inversion, with an accuracy of <code>BASE</code><sup><code>-precision</code></sup> ((Devroye and Gravel 2015)<sup><a href="#Note59"><strong>(59)</strong></a></sup>, but extended for any base; see also (Bringmann and Friedrich 2013, Appendix A)<sup><a href="#Note60"><strong>(60)</strong></a></sup>).  In the method, <code>ICDF(u, ubits, prec)</code> calculates a number that is within <code>BASE</code><sup><code>-prec</code></sup> of the true quantile of <code>u</code>/<code>BASE</code><sup><code>ubits</code></sup>, and <code>BASE</code> is the digit base (e.g. 2 for binary or 10 for decimal).</p>
 
 <pre>METHOD Inversion(precision)
    u=0
@@ -2019,7 +2019,7 @@ end
 
 <ul>
 <li>Distribution is <strong>discrete, with known PDF</strong>: The most general method is sequential search (Devroye 1986, p. 85)<sup><a href="#Note13"><strong>(13)</strong></a></sup>, assuming the area under the PDF is 1 and the distribution covers only integers 0 or greater: <code>i = 0; p = PDF(i); while u01 &gt; p; u01 = u01 - p; i = i + 1; p = PDF(i); end; return p</code>, but this is not always fast.  If the interval [a, b] covers all or almost all the distribution, then the application can store the interval&#39;s PDF values in a list and call <code>WChoose</code>: <code>for i in a..b: AddItem(weights, PDF(i)); return a + WChoose(weights, u01 * Sum(weights))</code>.  Note that finding the quantile based on the <strong>CDF</strong> instead can introduce more error than with the PDF (Walter 2019)<sup><a href="#Note61"><strong>(61)</strong></a></sup>.  See also <code>integers_from_u01</code> in the <a href="https://peteroupc.github.io/randomgen.zip"><strong>Python sample code</strong></a>.</li>
-<li>Distribution is <strong>continuous, with known PDF</strong>: <code>ICDFFromContPDF(u01, mini, maxi, step)</code>, below, finds the quantile based on a piecewise linear approximation of the PDF in [<code>mini</code>, <code>maxi</code>], with pieces up to <code>step</code> wide.  See also <code>DensityInversionSampler</code>, <code>numbers_from_u01</code>, and <code>numbers_from_dist_inversion</code> (Derflinger et al. 2010)<sup><a href="#Note62"><strong>(62)</strong></a></sup>, (Devroye and Gravel 2018)<sup><a href="#Note59"><strong>(59)</strong></a></sup> in the Python sample code <sup><a href="#Note63"><strong>(63)</strong></a></sup>.</li>
+<li>Distribution is <strong>continuous, with known PDF</strong>: <code>ICDFFromContPDF(u01, mini, maxi, step)</code>, below, finds the quantile based on a piecewise linear approximation of the PDF in [<code>mini</code>, <code>maxi</code>], with pieces up to <code>step</code> wide.  See also <code>DensityInversionSampler</code>, <code>numbers_from_u01</code>, and <code>numbers_from_dist_inversion</code> (Derflinger et al. 2010)<sup><a href="#Note62"><strong>(62)</strong></a></sup>, (Devroye and Gravel 2015)<sup><a href="#Note59"><strong>(59)</strong></a></sup> in the Python sample code <sup><a href="#Note63"><strong>(63)</strong></a></sup>.</li>
 <li>Distribution is <strong>continuous, with known CDF</strong>: See <code>numbers_from_u01</code> in the Python sample code.</li>
 </ul>
 
@@ -2086,7 +2086,7 @@ END METHOD
 <li>A custom distribution&#39;s PDF, <code>PDF</code>, is <code>exp(-abs(x*x*x))</code>, and the exponential distribution&#39;s PDF, <code>PDF2</code>, is <code>exp(-x)</code>.  The exponential PDF &quot;dominates&quot; the other PDF (at every <code>x</code> 0 or greater) if we multiply it by 1.5, so that <code>PDF2</code> is now <code>1.5 * exp(-x)</code>.  Now we can generate numbers from our custom distribution by sampling exponential points until a point falls within <code>PDF</code>.  This is done by generating <code>n = Expo(1)</code> until <code>PDF(n) &gt;= RNDRANGEMaxExc(0, PDF2(n))</code>.</li>
 </ol>
 
-<p><strong>Note:</strong> In the Python sample code, <a href="https://github.com/peteroupc/peteroupc.github.io/blob/master/moore.py"><strong>moore.py</strong></a> and <code>numbers_from_dist</code> generate random numbers from a distribution via rejection sampling (Devroye and Gravel 2016/2018)<sup><a href="#Note65"><strong>(65)</strong></a></sup>, (Sainudiin and York 2013)<sup><a href="#Note66"><strong>(66)</strong></a></sup>.</p>
+<p><strong>Note:</strong> In the Python sample code, <a href="https://github.com/peteroupc/peteroupc.github.io/blob/master/moore.py"><strong>moore.py</strong></a> and <code>numbers_from_dist</code> generate random numbers from a distribution via rejection sampling (Devroye and Gravel 2016)<sup><a href="#Note65"><strong>(65)</strong></a></sup>, (Sainudiin and York 2013)<sup><a href="#Note66"><strong>(66)</strong></a></sup>.</p>
 </blockquote>
 
 <p><a id=Alternating_Series></a></p>
@@ -2183,7 +2183,7 @@ above for returning more than one random number in one call.</p>
 <li><strong>Extreme value distribution</strong>: See generalized extreme value distribution.</li>
 <li><strong>Gamma distribution</strong>: See <a href="https://github.com/peteroupc/peteroupc.github.io/blob/master/randomnotes.md#Gamma_Distribution"><strong>Gamma Distribution</strong></a>.  <em>3-parameter gamma distribution</em>: <code>pow(GammaDist(a, 1), 1.0 / c) * b</code>, where <code>c</code> is another shape parameter. <em>4-parameter gamma distribution</em>: <code>pow(GammaDist(a, 1), 1.0 / c) * b + d</code>, where <code>d</code> is the minimum value.</li>
 <li><strong>Gaussian distribution</strong>: See <a href="https://github.com/peteroupc/peteroupc.github.io/blob/master/randomnotes.md#Normal_Gaussian_Distribution"><strong>Normal (Gaussian) Distribution</strong></a>.</li>
-<li><strong>Geometric distribution</strong>: See <a href="#Geometric_Distribution"><strong>Geometric Distribution</strong></a>.</li>
+<li><strong>Geometric distribution</strong>: See <a href="#Geometric_Distribution"><strong>Geometric Distribution</strong></a>.  If the application can trade accuracy for speed: <code>floor(-Expo(1)/ln(1-p))</code> (Devroye 1996, p. 500)<sup><a href="#Note69"><strong>(69)</strong></a></sup> (ceil replaced with floor because this page defines geometric distribution differently).</li>
 <li><strong>Gumbel distribution</strong>: See generalized extreme value distribution.</li>
 <li><strong>Inverse gamma distribution</strong>: <code>b / GammaDist(a, 1)</code>, where <code>a</code> and <code>b</code> have the
 same meaning as in the gamma distribution.  Alternatively, <code>1.0 / (pow(GammaDist(a, 1), 1.0 / c) / b + d)</code>, where <code>c</code> and <code>d</code> are shape and location parameters, respectively.</li>
@@ -2570,7 +2570,7 @@ and &quot;<a href="https://randomascii.wordpress.com/2013/07/16/floating-point-d
 
 <p><small><sup id=Note58>(58)</sup> Saad, F.A., et al., &quot;<a href="https://arxiv.org/abs/2001.04555"><strong>Optimal Approximate Sampling from Discrete Probability Distributions</strong></a>&quot;, arXiv:2001.04555 [cs.DS], 2020.  See also the <a href="https://github.com/probcomp/optimal-approximate-sampling"><strong>associated source code</strong></a>.</small></p>
 
-<p><small><sup id=Note59>(59)</sup> Devroye, L., Gravel, C., &quot;<a href="https://arxiv.org/abs/1502.02539v5"><strong>Sampling with arbitrary precision</strong></a>&quot;, arXiv:1502.02539v5 [cs.IT]</small></p>
+<p><small><sup id=Note59>(59)</sup> Devroye, L., Gravel, C., &quot;<a href="https://arxiv.org/abs/1502.02539v5"><strong>Sampling with arbitrary precision</strong></a>&quot;, arXiv:1502.02539v5 [cs.IT], 2015.</small></p>
 
 <p><small><sup id=Note60>(60)</sup> Bringmann, K., and Friedrich, T., 2013, July. Exact and efficient generation of geometric random variates and random graphs, in <em>International Colloquium on Automata, Languages, and Programming</em> (pp. 267-278).</small></p>
 
@@ -2582,7 +2582,7 @@ and &quot;<a href="https://randomascii.wordpress.com/2013/07/16/floating-point-d
 
 <p><small><sup id=Note64>(64)</sup> Devroye, L., &quot;Non-Uniform Random Variate Generation&quot;.  In <em>Handbooks in Operations Research and Management Science: Simulation</em>, Henderson, S.G., Nelson, B.L. (eds.), 2006, p.83.</small></p>
 
-<p><small><sup id=Note65>(65)</sup> Devroye, L., Gravel, C., &quot;<a href="https://arxiv.org/abs/1511.02273v2"><strong>The expected bit complexity of the von Neumann rejection algorithm</strong></a>&quot;, arXiv:1511.02273v2  [cs.IT], 2016/2018</small></p>
+<p><small><sup id=Note65>(65)</sup> Devroye, L., Gravel, C., &quot;<a href="https://arxiv.org/abs/1511.02273v2"><strong>The expected bit complexity of the von Neumann rejection algorithm</strong></a>&quot;, arXiv:1511.02273v2  [cs.IT], 2016.</small></p>
 
 <p><small><sup id=Note66>(66)</sup> Sainudiin, Raazesh, and Thomas L. York. &quot;An Auto-Validating, Trans-Dimensional, Universal Rejection Sampler for Locally Lipschitz Arithmetical Expressions,&quot; <em>Reliable Computing</em> 18 (2013): 15-54.</small></p>
 

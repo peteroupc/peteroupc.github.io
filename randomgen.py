@@ -391,7 +391,7 @@ class FastLoadedDiceRoller:
                     # random bits, as explained by L.
                     # Devroye and C. Gravel
                     # ("Sampling with arbitrary precision",
-                    # 2015/2018, arXiv:1502.02539 [cs.IT])
+                    # 2015, arXiv:1502.02539 [cs.IT])
                     return label - 1
                 x = 0
                 y = 0
@@ -3268,7 +3268,7 @@ acap - Optional.  A setting used in the optimization process; an
 Generates 'n' random numbers that follow a continuous
 or discrete probability distribution, using the inversion method.
 Implements section 5 of Devroye and Gravel,
-"Sampling with arbitrary precision", arXiv:1502.02539v5 [cs.IT], 2018.
+"Sampling with arbitrary precision", arXiv:1502.02539v5 [cs.IT], 2015.
 - 'n' is the number of random numbers to generate.  Default is 1.
 - 'icdf' is a procedure that takes three arguments: u, ubits, digitplaces,
    and returns a number within base^-digitplaces of the true inverse
@@ -3304,7 +3304,7 @@ Implements section 5 of Devroye and Gravel,
 
     def quantile_urands(self, icdf, urands, digitplaces=53):
         """
-Finds the quantile of 'n' uniform random numbers expressed as "u-rands", or partially-sampled uniform random numbers (Karney, "Sampling exactly from the normal distribution").  Implements section 5 of Devroye and Gravel,  "Sampling with arbitrary precision", arXiv:1502.02539v5 [cs.IT], 2018.
+Finds the quantile of 'n' uniform random numbers expressed as "u-rands", or partially-sampled uniform random numbers (Karney, "Sampling exactly from the normal distribution").  Implements section 5 of Devroye and Gravel,  "Sampling with arbitrary precision", arXiv:1502.02539v5 [cs.IT], 2015.
 - 'urands' is a list of "u-rands", or partially-sampled uniform random numbers.  Each u-rand is a list of two items, namely a multiple of 1/2^X, followed by X.  For example, the following generates a list of five empty
 u-rands: `[[0,0] for i in range(5)]`.
 - 'icdf' is a procedure that takes three arguments: u, ubits, digitplaces,
@@ -3353,7 +3353,7 @@ PDF (probability density function) must be bounded
 (have a finite value) and be continuous almost everywhere
 in the interval.  Implements section 4 of Devroye and Gravel,
 "The expected bit complexity of the von Neumann rejection
-algorithm", arXiv:1511.02273v2  [cs.IT], 2016/2018.
+algorithm", arXiv:1511.02273v2  [cs.IT], 2016.
 - 'n' is the number of random numbers to generate.  Default is 1.
 - 'pdf' is a procedure that takes three arguments: xmin, xmax, bitplaces,
    and returns an array of two items: the greatest lower bound of f(x) anywhere
@@ -3946,13 +3946,14 @@ class RatioOfUniformsTiling:
     def maybeAppend(self, newtiles, xmn, xmx, ymn, ymx):
         m = []
         discarded = False
-        points = 10  # max(int((xmx-xmn)/0.02), 10)
-        for xi in range(points + 1):
-            x = xmn + (xmx - xmn) * xi * 1.0 / points
+        xpoints = 10
+        ypoints = max(int((ymx - ymn) / 0.5), 10)
+        for xi in range(xpoints + 1):
+            x = xmn + (xmx - xmn) * xi * 1.0 / xpoints
             if x <= 0:
                 continue
-            for yi in range(points + 1):
-                y = ymn + (ymx - ymn) * yi * 1.0 / points
+            for yi in range(ypoints + 1):
+                y = ymn + (ymx - ymn) * yi * 1.0 / ypoints
                 try:
                     yx = y / x
                     val = math.sqrt(self.pdf(yx))

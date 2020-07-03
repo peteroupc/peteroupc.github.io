@@ -44,39 +44,6 @@ at: <a href="http://peteroupc.github.io/Numbers/">http://peteroupc.github.io/Num
 
 <h2>Release notes</h2>
 
-<p>Version 1.6.0</p>
-
-<ul>
-<li>Numerous performance improvements in the EInteger, EDecimal, EFloat, and ERational classes.  Among them is the use of caches for small EInteger, EDecimal, and EFloat values, and faster multiplication algorithms for large EIntegers.</li>
-<li>Correctness fixes to the Log() methods in EDecimal and EFloat</li>
-<li>New LogN() method in EDecimal and EFloat</li>
-<li>New methods in EInteger, including FromBytes, GetDigitCountAsEInteger, and DivRem(long)</li>
-<li>New ToSizedEInteger/ToSizedEIntegerIfExact/IsInteger methods in EDecimal, EFloat, and ERational</li>
-<li>New Create overloads in EFloat and ERational</li>
-<li>New Min and Max methods in EInteger and ERational</li>
-<li>Bug fixes</li>
-</ul>
-
-<p>Version 1.5.1</p>
-
-<ul>
-<li>Fix bugs in EDecimal.FromString and ERational.FromString involving substrings containing negative numbers.</li>
-</ul>
-
-<p>Version 1.5.0</p>
-
-<ul>
-<li>Major performance improvements in certain number parsing and generating methods, including the FromString methods of EInteger, EDecimal, EFloat, and ERational, and the ToEFloat method of EDecimal, especially where they take an arithmetic context (EContext) that specifies a limited precision and exponent range.</li>
-<li>There were also performance improvements in digit count calculation and in rounding many-digit-long numbers.</li>
-<li>Add int overloads to EDecimal.Pow and EFloat.Pow.</li>
-<li>Add int overloads to several ERational methods.</li>
-<li>Add CompareTo overloads and CompareToValue (which implements current CompareTo) in EDecimal, EFloat, and ERational.  In a future version, CompareTo&#39;s behavior might change to CompareToTotal in each of these classes.  Also certain CompareTo* methods now have consistent behavior when they receive a null argument.</li>
-<li>ETrapException now has an Errors property that holds all errors that occur at the same time as the primary error.</li>
-<li>Fixed edge cases when ToShortestString might return an incorrect result.</li>
-<li>Fixed bug when some ETrapExceptions aren&#39;t thrown as they should.</li>
-<li>Other bug fixes.</li>
-</ul>
-
 <p>For full release history, see <a href="History.md">History.md</a>.</p>
 </div><nav id="navigation"><ul>
 <li><a href="/">Back to start site.</a>

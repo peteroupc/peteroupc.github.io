@@ -14,7 +14,7 @@
 
 <p>Moreover, this document includes methods that operate on e-rands in a way that uses only uniform random bits, and without relying on floating-point arithmetic (except for conversion purposes in the example method <code>exprand</code>).  Also, the methods support e-rands with an arbitrary rate parameter (&lambda;) greater than 0.</p>
 
-<p>There are papers that discuss generating exponential random numbers using random bits (Flajolet and Saheb 1982)<sup><a href="#Note1"><strong>(1)</strong></a></sup>, (Karney 2014)<sup><a href="#Note2"><strong>(2)</strong></a></sup>, (Devroye and Gravel 2018)<sup><a href="#Note3"><strong>(3)</strong></a></sup>, (Thomas and Luk 2008)<sup><a href="#Note4"><strong>(4)</strong></a></sup>, but none I am aware of deal with generating partially-sampled exponential random numbers using an arbitrary rate, not just 1.</p>
+<p>There are papers that discuss generating exponential random numbers using random bits (Flajolet and Saheb 1982)<sup><a href="#Note1"><strong>(1)</strong></a></sup>, (Karney 2014)<sup><a href="#Note2"><strong>(2)</strong></a></sup>, (Devroye and Gravel 2015)<sup><a href="#Note3"><strong>(3)</strong></a></sup>, (Thomas and Luk 2008)<sup><a href="#Note4"><strong>(4)</strong></a></sup>, but none I am aware of deal with generating partially-sampled exponential random numbers using an arbitrary rate, not just 1.</p>
 
 <p><a id=About_the_Exponential_Distribution></a></p>
 
@@ -22,7 +22,7 @@
 
 <p>The <em>exponential distribution</em> takes a parameter &lambda;.  Informally speaking, a random number that follows an exponential distribution is the number of units of time between one event and the next, and &lambda; is the expected average number of events per unit of time.  Usually, &lambda; is equal to 1.</p>
 
-<p>An exponential random number is commonly generated as follows: <code>-ln(1 - RNDU01()) / lamda</code>, where <code>RNDU01()</code> is a uniform random number in the interval [**0, 1).  (This particular formula is not robust, though, for reasons that are outside the scope of this document, but see (Pedersen 2018)<sup><a href="#Note5"><strong>(5)</strong></a></sup>.)  This page presents an alternative way to sample exponential random numbers.</p>
+<p>An exponential random number is commonly generated as follows: <code>-ln(1 - RNDU01()) / lamda</code>, where <code>RNDU01()</code> is a uniform random number in the interval [0, 1).  (This particular formula is not robust, though, for reasons that are outside the scope of this document, but see (Pedersen 2018)<sup><a href="#Note5"><strong>(5)</strong></a></sup>.)  This page presents an alternative way to sample exponential random numbers.</p>
 
 <p><a id=Code></a></p>
 
@@ -431,7 +431,7 @@ def exprandscore(ln,ld,ln2,ld2):
 <li>choosing the item with the smallest key</li>
 </ul>
 
-<p>(see also (Efraimidis 2015)<sup><a href="#Note9"><strong>(9)</strong></a></sup>). However, using fully-sampled exponential random numbers as keys (such as the naïve idiom <code>-ln(1-RNDU01())/w</code> in binary64) can lead to inexact sampling, since the keys have a limited precision, it&#39;s possible for multiple items to have the same random key (which can make sampling those items depend on their order rather than on randomness), and the maximum weight is unknown.  Partially-sampled e-rands, as given in this document, eliminate the problem of inexact sampling.  This is notably because the <code>exprandless</code> method returns one of only two answers&mdash;either &quot;less&quot; or &quot;greater&quot;&mdash;and samples from both e-rands as necessary so that they will differ from each other by the end of the operation. Another reason is that partially-sampled e-rands have potentially arbitrary precision.</p>
+<p>(see also (Efraimidis 2015)<sup><a href="#Note9"><strong>(9)</strong></a></sup>). However, using fully-sampled exponential random numbers as keys (such as the naïve idiom <code>-ln(1-RNDU01())/w</code> in binary64) can lead to inexact sampling, since the keys have a limited precision, it&#39;s possible for multiple items to have the same random key (which can make sampling those items depend on their order rather than on randomness), and the maximum weight is unknown.  Partially-sampled e-rands, as given in this document, eliminate the problem of inexact sampling.  This is notably because the <code>exprandless</code> method returns one of only two answers&mdash;either &quot;less&quot; or &quot;greater&quot;&mdash;and samples from both e-rands as necessary so that they will differ from each other by the end of the operation.  (This is not a problem because randomly generated real numbers are expected to differ from each other almost surely.) Another reason is that partially-sampled e-rands have potentially arbitrary precision.</p>
 
 <p><a id=Notes></a></p>
 
@@ -441,7 +441,7 @@ def exprandscore(ln,ld,ln2,ld2):
 
 <p><small><sup id=Note2>(2)</sup> Karney, C.F.F., &quot;<a href="https://arxiv.org/abs/1303.6257v2"><strong>Sampling exactly from the normal distribution</strong></a>&quot;, arXiv:1303.6257v2  [physics.comp-ph], 2014.</small></p>
 
-<p><small><sup id=Note3>(3)</sup> Devroye, L., Gravel, C., &quot;<a href="https://arxiv.org/abs/1502.02539v5"><strong>Sampling with arbitrary precision</strong></a>&quot;, arXiv:1502.02539v5 [cs.IT], 2018.</small></p>
+<p><small><sup id=Note3>(3)</sup> Devroye, L., Gravel, C., &quot;<a href="https://arxiv.org/abs/1502.02539v5"><strong>Sampling with arbitrary precision</strong></a>&quot;, arXiv:1502.02539v5 [cs.IT], 2015.</small></p>
 
 <p><small><sup id=Note4>(4)</sup> Thomas, D.B. and Luk, W., 2008, September. Sampling from the exponential distribution using independent bernoulli variates. In 2008 International Conference on Field Programmable Logic and Applications (pp. 239-244). IEEE.</small></p>
 

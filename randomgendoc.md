@@ -789,7 +789,7 @@ CLASSES
      |      (have a finite value) and be continuous almost everywhere
      |      in the interval.  Implements section 4 of Devroye and Gravel,
      |      "The expected bit complexity of the von Neumann rejection
-     |      algorithm", arXiv:1511.02273v2  [cs.IT], 2016/2018.
+     |      algorithm", arXiv:1511.02273v2  [cs.IT], 2016.
      |      - 'n' is the number of random numbers to generate.  Default is 1.
      |      - 'pdf' is a procedure that takes three arguments: xmin, xmax, bitplaces,
      |         and returns an array of two items: the greatest lower bound of f(x) anywhere
@@ -805,7 +805,7 @@ CLASSES
      |      Generates 'n' random numbers that follow a continuous
      |      or discrete probability distribution, using the inversion method.
      |      Implements section 5 of Devroye and Gravel,
-     |      "Sampling with arbitrary precision", arXiv:1502.02539v5 [cs.IT], 2018.
+     |      "Sampling with arbitrary precision", arXiv:1502.02539v5 [cs.IT], 2015.
      |      - 'n' is the number of random numbers to generate.  Default is 1.
      |      - 'icdf' is a procedure that takes three arguments: u, ubits, digitplaces,
      |         and returns a number within base^-digitplaces of the true inverse
@@ -896,7 +896,7 @@ CLASSES
      |  product_copula(self, n=2)
      |
      |  quantile_urands(self, icdf, urands, digitplaces=53)
-     |      Finds the quantile of 'n' uniform random numbers expressed as "u-rands", or partially-sampled uniform random numbers (Karney, "Sampling exactly from the normal distribution").  Implements section 5 of Devroye and Gravel,  "Sampling with arbitrary precision", arXiv:1502.02539v5 [cs.IT], 2018.
+     |      Finds the quantile of 'n' uniform random numbers expressed as "u-rands", or partially-sampled uniform random numbers (Karney, "Sampling exactly from the normal distribution").  Implements section 5 of Devroye and Gravel,  "Sampling with arbitrary precision", arXiv:1502.02539v5 [cs.IT], 2015.
      |      - 'urands' is a list of "u-rands", or partially-sampled uniform random numbers.  Each u-rand is a list of two items, namely a multiple of 1/2^X, followed by X.  For example, the following generates a list of five empty
      |      u-rands: `[[0,0] for i in range(5)]`.
      |      - 'icdf' is a procedure that takes three arguments: u, ubits, digitplaces,
