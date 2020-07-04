@@ -8,11 +8,11 @@ NAME
 
 DESCRIPTION
     Sample code for the article "Random Number Generation and Sampling Methods"
-    https://www.codeproject.com/Articles/1190459/Random-Number-Generation-Methods
+    [https://www.codeproject.com/Articles/1190459/Random-Number-Generation-Methods](https://www.codeproject.com/Articles/1190459/Random-Number-Generation-Methods)
 
     Written by Peter O.
     Any copyright is released to the Public Domain.
-    https://creativecommons.org/publicdomain/zero/1.0/
+    [https://creativecommons.org/publicdomain/zero/1.0/](https://creativecommons.org/publicdomain/zero/1.0/)
 
 CLASSES
     builtins.object
@@ -885,12 +885,12 @@ CLASSES
      |
      |  powerlognormal(self, p, sigma=1.0)
      |      Power lognormal distribution, as described in NIST/SEMATECH
-     |      e-Handbook of Statistical Methods, http://www.itl.nist.gov/div898/handbook/,
+     |      e-Handbook of Statistical Methods, [http://www.itl.nist.gov/div898/handbook/,](http://www.itl.nist.gov/div898/handbook/,)
      |      accessed Jun. 9, 2018, sec. 1.3.6.6.14.
      |
      |  powernormal(self, p)
      |      Power normal distribution, as described in NIST/SEMATECH
-     |      e-Handbook of Statistical Methods, http://www.itl.nist.gov/div898/handbook/,
+     |      e-Handbook of Statistical Methods, [http://www.itl.nist.gov/div898/handbook/,](http://www.itl.nist.gov/div898/handbook/,)
      |      accessed Jun. 9, 2018, sec. 1.3.6.6.13.
      |
      |  product_copula(self, n=2)
@@ -1933,4 +1933,3 @@ FILE
     /home/rooster/Documents/SharpDevelopProjects/peteroupc.github.io/moore.py
 
 ```
-

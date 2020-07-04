@@ -511,7 +511,7 @@ is a 32-bit signed integer.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>The sum of the two objects.</p>
+<p>The sum of the two numbers, that is, this arbitrary-precision binary floating-point number plus a 32-bit signed integer.</p>
 
 <p><a id="Add_long"></a></p>
 
@@ -532,7 +532,7 @@ is a 64-bit signed integer.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>The return value is not documented yet.</p>
+<p>The sum of the two numbers, that is, this arbitrary-precision binary floating-point number plus a 64-bit signed integer.</p>
 
 <p><a id="Add_PeterO_Numbers_EFloat"></a></p>
 
@@ -552,7 +552,7 @@ is a 64-bit signed integer.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>The sum of the two objects.</p>
+<p>The sum of the two numbers, that is, this arbitrary-precision binary floating-point number plus another arbitrary-precision binary floating-point number.</p>
 
 <p><a id="Add_PeterO_Numbers_EFloat_PeterO_Numbers_EContext"></a></p>
 
@@ -574,7 +574,7 @@ is a 64-bit signed integer.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>An arbitrary-precision binary floating-point number.</p>
+<p>The sum of the two numbers, that is, this arbitrary-precision binary floating-point number plus another arbitrary-precision binary floating-point number.</p>
 
 <p><a id="CompareTo_int"></a></p>
 
@@ -1182,7 +1182,7 @@ is null or is less than 0.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>The quotient of the two objects.</p>
+<p>The result of dividing this arbitrary-precision binary floating-point number by a 32-bit signed integer.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -1210,7 +1210,7 @@ is a 64-bit signed integer.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>The quotient of the two objects.</p>
+<p>The result of dividing this arbitrary-precision binary floating-point number by a 64-bit signed integer.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -1237,7 +1237,7 @@ Attempted to divide by zero.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>The quotient of the two numbers. Returns infinity if the divisor is 0 and the dividend is nonzero. Returns not-a-number (NaN) if the divisor and the dividend are 0. Returns NaN if the result can&#39;t be exact because it would have a nonterminating binary expansion. If this is not desired, use DivideToExponent instead, or use the Divide overload that takes an EContext instead.</p>
+<p>The result of dividing this arbitrary-precision binary floating-point number by another arbitrary-precision binary floating-point number.</p>
 
 <p><a id="Divide_PeterO_Numbers_EFloat_PeterO_Numbers_EContext"></a></p>
 
@@ -1259,9 +1259,7 @@ Attempted to divide by zero.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>The quotient of the two objects. Signals FlagDivideByZero and returns infinity if the divisor is 0 and the dividend is nonzero. Signals FlagInvalid and returns not-a-number (NaN) if the divisor and the dividend are 0; or, either  <i>ctx</i>
- is null or  <i>ctx</i>
- &#39;s precision is 0, and the result would have a nonterminating binary expansion; or, the rounding mode is ERounding.None and the result is not exact.</p>
+<p>The result of dividing this arbitrary-precision binary floating-point number by another arbitrary-precision binary floating-point number.</p>
 
 <p><a id="DivideAndRemainderNaturalScale_PeterO_Numbers_EFloat"></a></p>
 
@@ -3094,7 +3092,7 @@ is a 32-bit signed integer.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>The product of the two numbers.</p>
+<p>The product of the two numbers, that is, this arbitrary-precision binary floating-point number times a 32-bit signed integer.</p>
 
 <p><a id="Multiply_long"></a></p>
 
@@ -3120,7 +3118,7 @@ is a 64-bit signed integer.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>The product of the two numbers.</p>
+<p>The product of the two numbers, that is, this arbitrary-precision binary floating-point number times a 64-bit signed integer.</p>
 
 <p><a id="Multiply_PeterO_Numbers_EFloat_PeterO_Numbers_EContext"></a></p>
 
@@ -3142,7 +3140,7 @@ is a 64-bit signed integer.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>An arbitrary-precision binary floating-point number.</p>
+<p>The product of the two numbers, that is, this arbitrary-precision binary floating-point number times another arbitrary-precision binary floating-point number.</p>
 
 <p><a id="Multiply_PeterO_Numbers_EFloat"></a></p>
 
@@ -3162,7 +3160,7 @@ is a 64-bit signed integer.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>The product of the two binary floating-point numbers.</p>
+<p>The product of the two numbers, that is, this arbitrary-precision binary floating-point number times another arbitrary-precision binary floating-point number.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -3372,7 +3370,7 @@ is null.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>The sum of the two objects.</p>
+<p>The sum of the two numbers, that is, an arbitrary-precision binary floating-point number plus another arbitrary-precision binary floating-point number.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -4102,7 +4100,7 @@ is null.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>The result of the operation.</p>
+<p>The remainder that would result when an arbitrary-precision binary floating-point number is divided by another arbitrary-precision binary floating-point number.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -4132,7 +4130,7 @@ is null.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>The product of the two binary floating-point numbers.</p>
+<p>The product of the two numbers, that is, an arbitrary-precision binary floating-point number times another arbitrary-precision binary floating-point number.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -4497,7 +4495,7 @@ is an EContext object.</p></li>
 
 <p><b>Return Value:</b></p>
 
-<p>The remainder of the two numbers. Signals FlagInvalid and returns not-a-number (NaN) if the divisor is 0, or if the result doesn&#39;t fit the given precision.</p>
+<p>The remainder that would result when this arbitrary-precision binary floating-point number is divided by another arbitrary-precision binary floating-point number.</p>
 
 <p><a id="RemainderNaturalScale_PeterO_Numbers_EFloat"></a></p>
 
@@ -4968,7 +4966,7 @@ is a 32-bit signed integer.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>The difference of the two objects.</p>
+<p>The difference between the two numbers, that is, this arbitrary-precision binary floating-point number minus a 32-bit signed integer.</p>
 
 <p><a id="Subtract_long"></a></p>
 
@@ -4989,7 +4987,7 @@ is a 64-bit signed integer.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>The difference of the two objects.</p>
+<p>The difference between the two numbers, that is, this arbitrary-precision binary floating-point number minus a 64-bit signed integer.</p>
 
 <p><a id="Subtract_PeterO_Numbers_EFloat"></a></p>
 
@@ -5009,7 +5007,7 @@ is a 64-bit signed integer.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>The difference of the two objects.</p>
+<p>The difference between the two numbers, that is, this arbitrary-precision binary floating-point number minus another arbitrary-precision binary floating-point number.</p>
 
 <p><a id="Subtract_PeterO_Numbers_EFloat_PeterO_Numbers_EContext"></a></p>
 
@@ -5031,7 +5029,7 @@ is a 64-bit signed integer.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>An arbitrary-precision binary floating-point number.</p>
+<p>The difference between the two numbers, that is, this arbitrary-precision binary floating-point number minus another arbitrary-precision binary floating-point number.</p>
 
 <p><b>Exceptions:</b></p>
 

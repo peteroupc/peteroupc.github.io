@@ -2103,7 +2103,8 @@ quiet NaN if this value is signaling NaN.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>The sum of the two objects.</li>
+<li>The sum of the two numbers, that is, this arbitrary-precision binary
+floating-point number plus a 32-bit signed integer.</li>
 </ul>
 
 <h3>Subtract</h3>
@@ -2126,7 +2127,9 @@ quiet NaN if this value is signaling NaN.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>The difference of the two objects.</li>
+<li>The difference between the two numbers, that is, this
+arbitrary-precision binary floating-point number minus a 32-bit
+signed integer.</li>
 </ul>
 
 <h3>Multiply</h3>
@@ -2148,7 +2151,8 @@ quiet NaN if this value is signaling NaN.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>The product of the two numbers.</li>
+<li>The product of the two numbers, that is, this arbitrary-precision
+binary floating-point number times a 32-bit signed integer.</li>
 </ul>
 
 <h3>Divide</h3>
@@ -2171,7 +2175,8 @@ quiet NaN if this value is signaling NaN.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>The quotient of the two objects.</li>
+<li>The result of dividing this arbitrary-precision binary
+floating-point number by a 32-bit signed integer.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -2199,7 +2204,8 @@ quiet NaN if this value is signaling NaN.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>The return value is not documented yet.</li>
+<li>The sum of the two numbers, that is, this arbitrary-precision binary
+floating-point number plus a 64-bit signed integer.</li>
 </ul>
 
 <h3>Subtract</h3>
@@ -2222,7 +2228,9 @@ quiet NaN if this value is signaling NaN.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>The difference of the two objects.</li>
+<li>The difference between the two numbers, that is, this
+arbitrary-precision binary floating-point number minus a 64-bit
+signed integer.</li>
 </ul>
 
 <h3>Multiply</h3>
@@ -2244,7 +2252,8 @@ quiet NaN if this value is signaling NaN.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>The product of the two numbers.</li>
+<li>The product of the two numbers, that is, this arbitrary-precision
+binary floating-point number times a 64-bit signed integer.</li>
 </ul>
 
 <h3>Divide</h3>
@@ -2267,7 +2276,8 @@ quiet NaN if this value is signaling NaN.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>The quotient of the two objects.</li>
+<li>The result of dividing this arbitrary-precision binary
+floating-point number by a 64-bit signed integer.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -2296,7 +2306,9 @@ quiet NaN if this value is signaling NaN.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>The sum of the two objects.</li>
+<li>The sum of the two numbers, that is, this arbitrary-precision binary
+floating-point number plus another arbitrary-precision binary
+floating-point number.</li>
 </ul>
 
 <h3>Add</h3>
@@ -2322,7 +2334,9 @@ which case the precision is unlimited and no rounding is needed.</p></li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>An arbitrary-precision binary floating-point number.</li>
+<li>The sum of the two numbers, that is, this arbitrary-precision binary
+floating-point number plus another arbitrary-precision binary
+floating-point number.</li>
 </ul>
 
 <h3>compareTo</h3>
@@ -2740,12 +2754,9 @@ returns a positive number if.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>The quotient of the two numbers. Returns infinity if the divisor is
-0 and the dividend is nonzero. Returns not-a-number (NaN) if the
-divisor and the dividend are 0. Returns NaN if the result can&#39;t be
-exact because it would have a nonterminating binary expansion. If
-this is not desired, use DivideToExponent instead, or use the Divide
-overload that takes an EContext instead.</li>
+<li>The result of dividing this arbitrary-precision binary
+floating-point number by another arbitrary-precision binary
+floating-point number.</li>
 </ul>
 
 <h3>Divide</h3>
@@ -2771,13 +2782,9 @@ which case the precision is unlimited and no rounding is needed.</p></li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>The quotient of the two objects. Signals FlagDivideByZero and
-returns infinity if the divisor is 0 and the dividend is nonzero.
-Signals FlagInvalid and returns not-a-number (NaN) if the divisor
-and the dividend are 0; or, either <code>ctx</code> is null or <code>
-ctx</code> &#39;s precision is 0, and the result would have a nonterminating
-binary expansion; or, the rounding mode is ERounding.None and the
-result is not exact.</li>
+<li>The result of dividing this arbitrary-precision binary
+floating-point number by another arbitrary-precision binary
+floating-point number.</li>
 </ul>
 
 <h3>DivideAndRemainderNaturalScale</h3>
@@ -3732,7 +3739,9 @@ to more than 0.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>The product of the two binary floating-point numbers.</li>
+<li>The product of the two numbers, that is, this arbitrary-precision
+binary floating-point number times another arbitrary-precision
+binary floating-point number.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -3764,7 +3773,9 @@ which case the precision is unlimited and rounding isn&#39;t needed.</p></li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>An arbitrary-precision binary floating-point number.</li>
+<li>The product of the two numbers, that is, this arbitrary-precision
+binary floating-point number times another arbitrary-precision
+binary floating-point number.</li>
 </ul>
 
 <h3>MultiplyAndAdd</h3>
@@ -4315,9 +4326,9 @@ there may still be some trailing zeros in the significand.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>The remainder of the two numbers. Signals FlagInvalid and returns
-not-a-number (NaN) if the divisor is 0, or if the result doesn&#39;t fit
-the given precision.</li>
+<li>The remainder that would result when this arbitrary-precision binary
+floating-point number is divided by another arbitrary-precision
+binary floating-point number.</li>
 </ul>
 
 <h3>RemainderNoRoundAfterDivide</h3>
@@ -4989,7 +5000,9 @@ the precision is unlimited (the context&#39;s Precision property is 0).</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>The difference of the two objects.</li>
+<li>The difference between the two numbers, that is, this
+arbitrary-precision binary floating-point number minus another
+arbitrary-precision binary floating-point number.</li>
 </ul>
 
 <h3>Subtract</h3>
@@ -5015,7 +5028,9 @@ which case the precision is unlimited and no rounding is needed.</p></li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>An arbitrary-precision binary floating-point number.</li>
+<li>The difference between the two numbers, that is, this
+arbitrary-precision binary floating-point number minus another
+arbitrary-precision binary floating-point number.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>

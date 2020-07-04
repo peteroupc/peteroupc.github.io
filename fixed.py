@@ -1,7 +1,6 @@
 import decimal as dec
 import math
 
-
 class Fixed:
     """
    Fixed-point numbers, represented using integers that store multiples
@@ -757,7 +756,6 @@ class Fixed:
 
     def __repr__(self):
         return str(dec.Decimal(self.value) / dec.Decimal((1 << Fixed.BITS)))
-
 
 if __name__ == "__main__":
 

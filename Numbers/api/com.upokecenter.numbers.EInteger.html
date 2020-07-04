@@ -1073,7 +1073,8 @@ length, or <code>endIndex</code> is less than <code>index</code>.</p></li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>The sum of the two objects.</li>
+<li>The sum of the two numbers, that is, this arbitrary-precision
+integer plus another arbitrary-precision integer.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -1322,7 +1323,8 @@ is null.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>An arbitrary-precision integer.</li>
+<li>The sum of the two numbers, that is, this arbitrary-precision
+integer plus a 32-bit signed integer.</li>
 </ul>
 
 <h3>Subtract</h3>
@@ -1342,7 +1344,8 @@ is null.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>The difference of the two objects.</li>
+<li>The difference between the two numbers, that is, this
+arbitrary-precision integer minus a 32-bit signed integer.</li>
 </ul>
 
 <h3>Multiply</h3>
@@ -1362,7 +1365,8 @@ is null.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>The product of the two numbers.</li>
+<li>The product of the two numbers, that is, this arbitrary-precision
+integer times a 32-bit signed integer.</li>
 </ul>
 
 <h3>Divide</h3>
@@ -1387,7 +1391,13 @@ is null.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>The quotient of the two objects.</li>
+<li>The result of dividing this arbitrary-precision integer by a 32-bit
+signed integer. The result of the division is rounded down (the
+fractional part is discarded). Except if the result of the division
+is 0, it will be negative if this arbitrary-precision integer is
+positive and the other 32-bit signed integer is negative, or vice
+versa, and will be positive if both are positive or both are
+negative.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -1417,7 +1427,8 @@ is null.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>The remainder of the two numbers.</li>
+<li>The remainder that would result when this arbitrary-precision
+integer is divided by a 32-bit signed integer.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -1469,7 +1480,13 @@ less, or a positive number if this instance is greater.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>The quotient of the two objects.</li>
+<li>The result of dividing this arbitrary-precision integer by another
+arbitrary-precision integer. The result of the division is rounded
+down (the fractional part is discarded). Except if the result of the
+division is 0, it will be negative if this arbitrary-precision
+integer is positive and the other arbitrary-precision integer is
+negative, or vice versa, and will be positive if both are positive
+or both are negative.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -1505,8 +1522,8 @@ less, or a positive number if this instance is greater.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>An array with two arbitrary-precision integers: the first is the
-quotient, and the second is the remainder.</li>
+<li>A two-item array containing the result of the division and the
+remainder, in that order.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -1532,7 +1549,8 @@ quotient, and the second is the remainder.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>The return value is not documented yet.</li>
+<li>The sum of the two numbers, that is, this arbitrary-precision
+integer plus a 64-bit signed integer.</li>
 </ul>
 
 <h3>Subtract</h3>
@@ -1552,7 +1570,8 @@ quotient, and the second is the remainder.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>The return value is not documented yet.</li>
+<li>The difference between the two numbers, that is, this
+arbitrary-precision integer minus a 64-bit signed integer.</li>
 </ul>
 
 <h3>Multiply</h3>
@@ -1572,7 +1591,8 @@ quotient, and the second is the remainder.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>The return value is not documented yet.</li>
+<li>The product of the two numbers, that is, this arbitrary-precision
+integer times a 64-bit signed integer.</li>
 </ul>
 
 <h3>Divide</h3>
@@ -1597,7 +1617,13 @@ quotient, and the second is the remainder.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>The return value is not documented yet.</li>
+<li>The result of dividing this arbitrary-precision integer by a 64-bit
+signed integer. The result of the division is rounded down (the
+fractional part is discarded). Except if the result of the division
+is 0, it will be negative if this arbitrary-precision integer is
+positive and the other 64-bit signed integer is negative, or vice
+versa, and will be positive if both are positive or both are
+negative.</li>
 </ul>
 
 <h3>Remainder</h3>
@@ -1621,7 +1647,8 @@ quotient, and the second is the remainder.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>The return value is not documented yet.</li>
+<li>The remainder that would result when this arbitrary-precision
+integer is divided by a 64-bit signed integer.</li>
 </ul>
 
 <h3>compareTo</h3>
@@ -1670,7 +1697,8 @@ integer.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>The return value is not documented yet.</li>
+<li>A two-item array containing the result of the division and the
+remainder, in that order.</li>
 </ul>
 
 <h3>DivRem</h3>
@@ -1700,8 +1728,8 @@ integer.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>An array with two arbitrary-precision integers: the first is the
-quotient, and the second is the remainder.</li>
+<li>A two-item array containing the result of the division and the
+remainder, in that order.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -2234,7 +2262,8 @@ null.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>The product of the two numbers.</li>
+<li>The product of the two numbers, that is, this arbitrary-precision
+integer times another arbitrary-precision integer.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -2349,7 +2378,8 @@ null.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>The remainder of the two numbers.</li>
+<li>The remainder that would result when this arbitrary-precision
+integer is divided by another arbitrary-precision integer.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -2913,7 +2943,9 @@ value is 0 or less, or one and zero if this value equals 1.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>The difference of the two objects.</li>
+<li>The difference between the two numbers, that is, this
+arbitrary-precision integer minus another arbitrary-precision
+integer.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>

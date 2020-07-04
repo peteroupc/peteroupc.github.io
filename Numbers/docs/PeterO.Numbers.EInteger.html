@@ -322,7 +322,7 @@ is a 32-bit signed integer.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>An arbitrary-precision integer.</p>
+<p>The sum of the two numbers, that is, this arbitrary-precision integer plus a 32-bit signed integer.</p>
 
 <p><a id="Add_long"></a></p>
 
@@ -343,7 +343,7 @@ is a 64-bit signed integer.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>The return value is not documented yet.</p>
+<p>The sum of the two numbers, that is, this arbitrary-precision integer plus a 64-bit signed integer.</p>
 
 <p><a id="Add_PeterO_Numbers_EInteger"></a></p>
 
@@ -363,7 +363,7 @@ is a 64-bit signed integer.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>The sum of the two objects.</p>
+<p>The sum of the two numbers, that is, this arbitrary-precision integer plus another arbitrary-precision integer.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -662,7 +662,7 @@ is a 64-bit signed integer.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>The quotient of the two objects.</p>
+<p>The result of dividing this arbitrary-precision integer by a 32-bit signed integer. The result of the division is rounded down (the fractional part is discarded). Except if the result of the division is 0, it will be negative if this arbitrary-precision integer is positive and the other 32-bit signed integer is negative, or vice versa, and will be positive if both are positive or both are negative.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -690,7 +690,7 @@ is a 64-bit signed integer.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>The return value is not documented yet.</p>
+<p>The result of dividing this arbitrary-precision integer by a 64-bit signed integer. The result of the division is rounded down (the fractional part is discarded). Except if the result of the division is 0, it will be negative if this arbitrary-precision integer is positive and the other 64-bit signed integer is negative, or vice versa, and will be positive if both are positive or both are negative.</p>
 
 <p><a id="Divide_PeterO_Numbers_EInteger"></a></p>
 
@@ -710,7 +710,7 @@ is a 64-bit signed integer.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>The quotient of the two objects.</p>
+<p>The result of dividing this arbitrary-precision integer by another arbitrary-precision integer. The result of the division is rounded down (the fractional part is discarded). Except if the result of the division is 0, it will be negative if this arbitrary-precision integer is positive and the other arbitrary-precision integer is negative, or vice versa, and will be positive if both are positive or both are negative.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -740,7 +740,7 @@ Attempted to divide by zero.</p></li>
 
 <p><b>Return Value:</b></p>
 
-<p>An array with two arbitrary-precision integers: the first is the quotient, and the second is the remainder.</p>
+<p>A two-item array containing the result of the division and the remainder, in that order.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -769,7 +769,7 @@ is a 64-bit signed integer.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>The return value is not documented yet.</p>
+<p>A two-item array containing the result of the division and the remainder, in that order.</p>
 
 <p><a id="DivRem_PeterO_Numbers_EInteger"></a></p>
 
@@ -789,7 +789,7 @@ is a 64-bit signed integer.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>An array with two arbitrary-precision integers: the first is the quotient, and the second is the remainder.</p>
+<p>A two-item array containing the result of the division and the remainder, in that order.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -826,7 +826,7 @@ is null.</p></li>
 
 <p><b>Return Value:</b></p>
 
-<p>An array of two arbitrary-precision integers: the first is the quotient, and the second is the remainder.</p>
+<p>A two-item array containing the result of the division and the remainder, in that order.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -2212,7 +2212,7 @@ is a 32-bit signed integer.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>The product of the two numbers.</p>
+<p>The product of the two numbers, that is, this arbitrary-precision integer times a 32-bit signed integer.</p>
 
 <p><a id="Multiply_long"></a></p>
 
@@ -2233,7 +2233,7 @@ is a 64-bit signed integer.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>The return value is not documented yet.</p>
+<p>The product of the two numbers, that is, this arbitrary-precision integer times a 64-bit signed integer.</p>
 
 <p><a id="Multiply_PeterO_Numbers_EInteger"></a></p>
 
@@ -2253,7 +2253,7 @@ is a 64-bit signed integer.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>The product of the two numbers.</p>
+<p>The product of the two numbers, that is, this arbitrary-precision integer times another arbitrary-precision integer.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -2337,7 +2337,7 @@ is null.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>The sum of the two objects.</p>
+<p>The sum of the two numbers, that is, an arbitrary-precision integer plus another arbitrary-precision integer.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -3133,7 +3133,7 @@ is null.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>The remainder of the two numbers.</p>
+<p>The remainder that would result when an arbitrary-precision integer is divided by another arbitrary-precision integer.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -3163,7 +3163,7 @@ is null.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>The product of the two numbers.</p>
+<p>The product of the two numbers, that is, an arbitrary-precision integer times another arbitrary-precision integer.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -3488,7 +3488,7 @@ is a 32-bit signed integer.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>The remainder of the two numbers.</p>
+<p>The remainder that would result when this arbitrary-precision integer is divided by a 32-bit signed integer.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -3519,7 +3519,7 @@ is a 64-bit signed integer.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>The return value is not documented yet.</p>
+<p>The remainder that would result when this arbitrary-precision integer is divided by a 64-bit signed integer.</p>
 
 <p><a id="Remainder_PeterO_Numbers_EInteger"></a></p>
 
@@ -3539,7 +3539,7 @@ is a 64-bit signed integer.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>The remainder of the two numbers.</p>
+<p>The remainder that would result when this arbitrary-precision integer is divided by another arbitrary-precision integer.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -3788,7 +3788,7 @@ is a 32-bit signed integer.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>The difference of the two objects.</p>
+<p>The difference between the two numbers, that is, this arbitrary-precision integer minus a 32-bit signed integer.</p>
 
 <p><a id="Subtract_long"></a></p>
 
@@ -3809,7 +3809,7 @@ is a 64-bit signed integer.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>The return value is not documented yet.</p>
+<p>The difference between the two numbers, that is, this arbitrary-precision integer minus a 64-bit signed integer.</p>
 
 <p><a id="Subtract_PeterO_Numbers_EInteger"></a></p>
 
@@ -3829,7 +3829,7 @@ is a 64-bit signed integer.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>The difference of the two objects.</p>
+<p>The difference between the two numbers, that is, this arbitrary-precision integer minus another arbitrary-precision integer.</p>
 
 <p><b>Exceptions:</b></p>
 

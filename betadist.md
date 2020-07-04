@@ -147,7 +147,7 @@ The beta distribution is one case of a general approach to simulating continuous
 1. Create a "geometric bag", that is, an "empty" uniform random number also known as a "u-rand".
 2. As the geometric bag builds up a uniform random number, accept the number with a probability that can be represented by Bernoulli factories, or reject it otherwise.  As shown by Keane and O'Brien <sup>[**(2)**](#Note2)</sup>, this is possible if and only if the probability function, in the interval [0, 1]&mdash;
     - is continuous everywhere, and
-    - either returns a constant value in [0, 1] everywhere, or returns a value in [0, 1] at the points 0 and 1 and a value in (0, 1) elsewhere,
+    - either returns a constant value in [0, 1] everywhere, or returns a value in [0, 1] at each of the points 0 and 1 and a value in (0, 1) at each other point,
 
    and they give the example of 2*p as a probability function that cannot be represented by a Bernoulli factory.
 3. If the geometric bag is accepted, fill the unsampled bits of the bag with uniform random bits as necessary to make an `n`-bit number (for an example, see `_fill_geometric_bag` above).
