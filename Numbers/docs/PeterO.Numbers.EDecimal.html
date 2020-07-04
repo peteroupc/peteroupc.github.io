@@ -199,8 +199,8 @@
 <li><code><a href="#DivideToIntegerNaturalScale_PeterO_Numbers_EDecimal_PeterO_Numbers_EContext">DivideToIntegerNaturalScale(PeterO.Numbers.EDecimal, PeterO.Numbers.EContext)</a></code> - Divides this object by another object, and returns the integer part of the result (which is initially rounded down), with the preferred exponent set to this value&#39;s exponent minus the divisor&#39;s exponent.</li>
 <li><code><a href="#DivideToIntegerZeroScale_PeterO_Numbers_EDecimal_PeterO_Numbers_EContext">DivideToIntegerZeroScale(PeterO.Numbers.EDecimal, PeterO.Numbers.EContext)</a></code> - Divides this object by another object, and returns the integer part of the result, with the exponent set to 0.</li>
 <li><code><a href="#DivideToSameExponent_PeterO_Numbers_EDecimal_PeterO_Numbers_ERounding">DivideToSameExponent(PeterO.Numbers.EDecimal, PeterO.Numbers.ERounding)</a></code> - Divides this object by another decimal number and returns a result with the same exponent as this object (the dividend).</li>
-<li><code><a href="#DivRemNaturalScale_PeterO_Numbers_EDecimal">DivRemNaturalScale(PeterO.Numbers.EDecimal)</a></code> - Calculates the quotient and remainder using the DivideToIntegerNaturalScale and the formula in RemainderNaturalScale.</li>
-<li><code><a href="#DivRemNaturalScale_PeterO_Numbers_EDecimal_PeterO_Numbers_EContext">DivRemNaturalScale(PeterO.Numbers.EDecimal, PeterO.Numbers.EContext)</a></code> - Calculates the quotient and remainder using the DivideToIntegerNaturalScale and the formula in RemainderNaturalScale.</li>
+<li><code><a href="#DivRemNaturalScale_PeterO_Numbers_EDecimal">DivRemNaturalScale(PeterO.Numbers.EDecimal)</a></code> - Divides this arbitrary-precision decimal floating-point number by another arbitrary-precision decimal floating-point number and returns a two-item array containing the result of the division and the remainder, in that order.</li>
+<li><code><a href="#DivRemNaturalScale_PeterO_Numbers_EDecimal_PeterO_Numbers_EContext">DivRemNaturalScale(PeterO.Numbers.EDecimal, PeterO.Numbers.EContext)</a></code> - Divides this arbitrary-precision decimal floating-point number by another arbitrary-precision decimal floating-point number and returns a two-item array containing the result of the division and the remainder, in that order.</li>
 <li><code><a href="#Equals_object">Equals(object)</a></code> - Determines whether this object&#39;s significand, exponent, and properties are equal to those of another object and that other object is an arbitrary-precision decimal number.</li>
 <li><code><a href="#Equals_PeterO_Numbers_EDecimal">Equals(PeterO.Numbers.EDecimal)</a></code> - Determines whether this object&#39;s significand, exponent, and properties are equal to those of another object.</li>
 <li><code><a href="#Exp_PeterO_Numbers_EContext">Exp(PeterO.Numbers.EContext)</a></code> - Finds e (the base of natural logarithms) raised to the power of this object&#39;s value.</li>
@@ -1320,7 +1320,7 @@ is null or is less than 0.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>The result of dividing this arbitrary-precision decimal floating-point number by a 32-bit signed integer. Returns infinity if the divisor (this arbitrary-precision decimal floating-point number) is 0 and the dividend (the other 32-bit signed integer) is nonzero. Returns not-a-number (NaN) if the divisor and the dividend are 0. Returns NaN if the result can&#39;t be exact because it would have a nonterminating binary expansion (examples include 1 divided by any multiple of 3, such as 1/3 or 1/12). If this is not desired, use DivideToExponent instead, or use the Divide overload that takes an  <code>EContext</code>  (such as  <code>EContext.Decimal128</code> ) instead.</p>
+<p>The result of dividing this arbitrary-precision decimal floating-point number by a 32-bit signed integer. Returns infinity if the divisor (this arbitrary-precision decimal floating-point number) is 0 and the dividend (the other 32-bit signed integer) is nonzero. Returns not-a-number (NaN) if the divisor and the dividend are 0. Returns NaN if the result can&#39;t be exact because it would have a nonterminating binary expansion (examples include 1 divided by any multiple of 3, such as 1/3 or 1/12). If this is not desired, use DivideToExponent instead, or use the Divide overload that takes an  <code>EContext</code>  (such as  <code>EContext.Decimal128</code>  ) instead.</p>
 
 <p><a id="Divide_long"></a></p>
 
@@ -1341,7 +1341,7 @@ is a 64-bit signed integer.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>The result of dividing this arbitrary-precision decimal floating-point number by a 64-bit signed integer. Returns infinity if the divisor (this arbitrary-precision decimal floating-point number) is 0 and the dividend (the other 64-bit signed integer) is nonzero. Returns not-a-number (NaN) if the divisor and the dividend are 0. Returns NaN if the result can&#39;t be exact because it would have a nonterminating binary expansion (examples include 1 divided by any multiple of 3, such as 1/3 or 1/12). If this is not desired, use DivideToExponent instead, or use the Divide overload that takes an  <code>EContext</code>  (such as  <code>EContext.Decimal128</code> ) instead.</p>
+<p>The result of dividing this arbitrary-precision decimal floating-point number by a 64-bit signed integer. Returns infinity if the divisor (this arbitrary-precision decimal floating-point number) is 0 and the dividend (the other 64-bit signed integer) is nonzero. Returns not-a-number (NaN) if the divisor and the dividend are 0. Returns NaN if the result can&#39;t be exact because it would have a nonterminating binary expansion (examples include 1 divided by any multiple of 3, such as 1/3 or 1/12). If this is not desired, use DivideToExponent instead, or use the Divide overload that takes an  <code>EContext</code>  (such as  <code>EContext.Decimal128</code>  ) instead.</p>
 
 <p><a id="Divide_PeterO_Numbers_EDecimal"></a></p>
 
@@ -1361,7 +1361,7 @@ is a 64-bit signed integer.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>The result of dividing this arbitrary-precision decimal floating-point number by another arbitrary-precision decimal floating-point number. Returns infinity if the divisor (this arbitrary-precision decimal floating-point number) is 0 and the dividend (the other arbitrary-precision decimal floating-point number) is nonzero. Returns not-a-number (NaN) if the divisor and the dividend are 0. Returns NaN if the result can&#39;t be exact because it would have a nonterminating binary expansion (examples include 1 divided by any multiple of 3, such as 1/3 or 1/12). If this is not desired, use DivideToExponent instead, or use the Divide overload that takes an  <code>EContext</code>  (such as  <code>EContext.Decimal128</code> ) instead.</p>
+<p>The result of dividing this arbitrary-precision decimal floating-point number by another arbitrary-precision decimal floating-point number. Returns infinity if the divisor (this arbitrary-precision decimal floating-point number) is 0 and the dividend (the other arbitrary-precision decimal floating-point number) is nonzero. Returns not-a-number (NaN) if the divisor and the dividend are 0. Returns NaN if the result can&#39;t be exact because it would have a nonterminating binary expansion (examples include 1 divided by any multiple of 3, such as 1/3 or 1/12). If this is not desired, use DivideToExponent instead, or use the Divide overload that takes an  <code>EContext</code>  (such as  <code>EContext.Decimal128</code>  ) instead.</p>
 
 <p><a id="Divide_PeterO_Numbers_EDecimal_PeterO_Numbers_EContext"></a></p>
 
@@ -1383,7 +1383,9 @@ is a 64-bit signed integer.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>The result of dividing this arbitrary-precision decimal floating-point number by another arbitrary-precision decimal floating-point number.</p>
+<p>The result of dividing this arbitrary-precision decimal floating-point number by another arbitrary-precision decimal floating-point number. Signals FlagDivideByZero and returns infinity if the divisor (this arbitrary-precision decimal floating-point number) is 0 and the dividend (the other arbitrary-precision decimal floating-point number) is nonzero. Signals FlagInvalid and returns not-a-number (NaN) if the divisor and the dividend are 0; or, either  <i>ctx</i>
+ is null or  <i>ctx</i>
+ &#39;s precision is 0, and the result would have a nonterminating decimal expansion (examples include 1 divided by any multiple of 3, such as 1/3 or 1/12); or, the rounding mode is ERounding.None and the result is not exact.</p>
 
 <p><a id="DivideAndRemainderNaturalScale_PeterO_Numbers_EDecimal"></a></p>
 
@@ -1737,7 +1739,7 @@ is an EContext object.</p></li>
     PeterO.Numbers.EDecimal divisor);
 </pre>
 
-<p>Calculates the quotient and remainder using the DivideToIntegerNaturalScale and the formula in RemainderNaturalScale.</p>
+<p>Divides this arbitrary-precision decimal floating-point number by another arbitrary-precision decimal floating-point number and returns a two-item array containing the result of the division and the remainder, in that order. The result of division is calculated as though by  <code>DivideToIntegerNaturalScale</code> , and the remainder is calculated as though by  <code>RemainderNaturalScale</code> .</p>
 
 <p><b>Parameters:</b></p>
 
@@ -1747,7 +1749,7 @@ is an EContext object.</p></li>
 
 <p><b>Return Value:</b></p>
 
-<p>A 2 element array consisting of the quotient and remainder in that order.</p>
+<p>An array of two items: the first is the result of the division as an arbitrary-precision decimal floating-point number, and the second is the remainder as an arbitrary-precision decimal floating-point number. The result of division is the result of the method on the two operands, and the remainder is the result of the Remainder method on the two operands.</p>
 
 <p><a id="DivRemNaturalScale_PeterO_Numbers_EDecimal_PeterO_Numbers_EContext"></a></p>
 
@@ -1758,7 +1760,7 @@ is an EContext object.</p></li>
     PeterO.Numbers.EContext ctx);
 </pre>
 
-<p>Calculates the quotient and remainder using the DivideToIntegerNaturalScale and the formula in RemainderNaturalScale.</p>
+<p>Divides this arbitrary-precision decimal floating-point number by another arbitrary-precision decimal floating-point number and returns a two-item array containing the result of the division and the remainder, in that order. The result of division is calculated as though by  <code>DivideToIntegerNaturalScale</code> , and the remainder is calculated as though by  <code>RemainderNaturalScale</code> .</p>
 
 <p><b>Parameters:</b></p>
 
@@ -1769,7 +1771,7 @@ is an EContext object.</p></li>
 
 <p><b>Return Value:</b></p>
 
-<p>A 2 element array consisting of the quotient and remainder in that order.</p>
+<p>An array of two items: the first is the result of the division as an arbitrary-precision decimal floating-point number, and the second is the remainder as an arbitrary-precision decimal floating-point number. The result of division is the result of the method on the two operands, and the remainder is the result of the Remainder method on the two operands.</p>
 
 <p><a id="Equals_object"></a></p>
 
@@ -4366,7 +4368,7 @@ is null.</li>
     PeterO.Numbers.EDecimal divisor);
 </pre>
 
-<p>Returns the remainder that would result when an arbitrary-precision decimal floating-point number is divided by another arbitrary-precision decimal floating-point number.</p>
+<p>Returns the remainder that would result when an arbitrary-precision decimal floating-point number is divided by another arbitrary-precision decimal floating-point number. The remainder is the number that remains when the absolute value of an arbitrary-precision decimal floating-point number is divided (as though by DivideToIntegerZeroScale) by the absolute value of the other arbitrary-precision decimal floating-point number; the remainder has the same sign (positive or negative) as this arbitrary-precision decimal floating-point number.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -4783,7 +4785,7 @@ is null.</li>
     PeterO.Numbers.EContext ctx);
 </pre>
 
-<p>Returns the remainder that would result when this arbitrary-precision decimal floating-point number is divided by another arbitrary-precision decimal floating-point number.</p>
+<p>Returns the remainder that would result when this arbitrary-precision decimal floating-point number is divided by another arbitrary-precision decimal floating-point number. The remainder is the number that remains when the absolute value of this arbitrary-precision decimal floating-point number is divided (as though by DivideToIntegerZeroScale) by the absolute value of the other arbitrary-precision decimal floating-point number; the remainder has the same sign (positive or negative) as this arbitrary-precision decimal floating-point number.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -4794,7 +4796,7 @@ is null.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>The remainder that would result when this arbitrary-precision decimal floating-point number is divided by another arbitrary-precision decimal floating-point number.</p>
+<p>The remainder that would result when this arbitrary-precision decimal floating-point number is divided by another arbitrary-precision decimal floating-point number. Signals FlagDivideByZero and returns infinity if the divisor is 0 and the dividend is nonzero. Signals FlagInvalid and returns not-a-number (NaN) if the divisor and the dividend are 0, or if the result of the division doesn&#39;t fit the given precision.</p>
 
 <p><a id="RemainderNaturalScale_PeterO_Numbers_EDecimal"></a></p>
 
