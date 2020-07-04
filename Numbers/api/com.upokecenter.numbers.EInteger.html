@@ -74,7 +74,7 @@ Returns whether this object&#39;s value can fit in a 64-bit signed integer.</li>
 <li><code>int compareTo​(int intValue)</code><br>
 Compares an arbitrary-precision integer with this instance.</li>
 <li><code>int compareTo​(long longValue)</code><br>
-Not documented yet.</li>
+Compares an arbitrary-precision integer with this instance.</li>
 <li><code>int compareTo​(EInteger other)</code><br>
 Compares an arbitrary-precision integer with this instance.</li>
 <li><code>EInteger Decrement()</code><br>
@@ -1659,18 +1659,19 @@ integer is divided by a 64-bit signed integer.</li>
 <pre>public int compareTo​(long longValue)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Compares an arbitrary-precision integer with this instance.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>longValue</code> - The parameter <code>longValue</code> is a 64-bit signed integer.</li>
+<li><code>intValue</code> - The parameter <code>intValue</code> is a 64-bit signed integer.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>The return value is not documented yet.</li>
+<li>Zero if the values are equal; a negative number if this instance is
+less, or a positive number if this instance is greater.</li>
 </ul>
 
 <h3>DivRem</h3>
