@@ -14,7 +14,7 @@ A word about probability density functions and inverse CDFs:
 
 Both functions normally take one number in and put one number out, but in the case of the sampling methods by Devroye and Gravel, special versions of these functions are needed.  Specifically:
 
-* For the rejection sampler, `EPDF(min_x, max_x, precision)` calculates tight bounds of the PDF anywhere in a region of interest, namely the interval [`min_x` * 2<sup>`-precision`</sup>, `max_x` * 2<sup>`-precision`</sup>].   `EPDF` returns two values in this order: the greatest lower bound of the PDF anywhere in the region of interest, and the least upper bound of the PDF anywhere in that region.
+* For the rejection sampler, `EPDF(min_x, max_x, precision)` calculates tight bounds of the PDF anywhere in a region of interest, namely, in the interval [`min_x` * 2<sup>`-precision`</sup>, `max_x` * 2<sup>`-precision`</sup>].   `EPDF` returns two values: the first is the greatest lower bound of the PDF anywhere in the region of interest, and the second is the least upper bound of the PDF anywhere in that region.
 * For the inversion sampler, `EICDF(u, ubits, digitplaces)` calculates an accurate approximation to the quantile. Specifically, `EICDF` returns a number that is within `base`<sup>`-digitplaces`</sup> of the true quantile of `u` * `base`<sup>`-ubits`</sup>, and is monotonic for a given value of `digitplaces`.  `base` is the digit base of the accuracy, and `numbers_from_dist_inversion` can take any digit base (such as 2 for binary or 10 for decimal).
 
 <a id=Functions></a>
