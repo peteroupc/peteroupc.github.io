@@ -3947,7 +3947,7 @@ class RatioOfUniformsTiling:
         m = []
         discarded = False
         xpoints = 10
-        ypoints = max(int((ymx - ymn) / 0.5), 10)
+        ypoints = max(int((ymx - ymn) / 0.2), 10)
         for xi in range(xpoints + 1):
             x = xmn + (xmx - xmn) * xi * 1.0 / xpoints
             if x <= 0:
@@ -3957,7 +3957,7 @@ class RatioOfUniformsTiling:
                 try:
                     yx = y / x
                     val = math.sqrt(self.pdf(yx))
-                    # print(val)
+                    print([x,val,y,"y/x",y/x])
                     if (not math.isnan(val)) and x <= val:
                         m.append(y / x)
                     else:
@@ -4118,7 +4118,7 @@ class DensityTiling:
         try:
             return self.pdf(x)
         except:
-            return math.inf
+            return 0 # Assume pdf is 0 on failure
 
     def maybeAppend(self, pdfevals, newtiles, xmn, xmx, ymn, ymx):
         fminmax = self._minmax(pdfevals, xmn, xmx)
@@ -4144,6 +4144,7 @@ class DensityTiling:
             pdfevals[x] = ret
             return ret
         except:
+            # Assume there is a pole at infinity at the given point
             pdfevals[x] = math.inf
             return math.inf
 
@@ -4172,6 +4173,63 @@ class DensityTiling:
             for pole in newpoles:
                 self.poles.append(pole)
         return [min(m), retmax]
+
+    def codegen(self, name, pdfcall=None):
+        """ Generates Python code that samples
+                (approximately) from the distribution estimated
+                in this class.  Idea from Leydold, et al.,
+                "An Automatic Code Generator for
+                Nonuniform Random Variate Generation", 2001.
+        - name: Distribution name.  Generates a Python method called
+           sample_X where X is the name given here (samples one
+           random number).
+        - pdfcall: Name of the method representing pdf (for more information,
+           see the __init__ method of this class).  Optional; if not given
+           the name is pdf_X where X is the name given in the name parameter. """
+        if pdfcall == None:
+            pdfcall = "pdf_" + name
+        ret = "import random\n\n"
+        ret += "TABLE_" + name + " = ["
+        for i in range(len(self.tiles)):
+            if i > 0:
+                ret += ",\n"
+            ret += "%s" % (str(self.tiles[i]))
+        ret += "]\n\n"
+        if len(self.poles) > 0:
+          ret += "POLES_" + name + " = ["
+          for i in range(len(self.poles)):
+              if i > 0:
+                  ret += ",\n"
+              ret += "%s" % (str(self.poles[i]))
+          ret += "]\n\n"
+        ret += "def sample_" + name + "():\n"
+        ret += "     while True:\n"
+        ret += (
+            "        tile = TABLE_"
+            + name
+            + "[random.randint(0, %d)]\n" % (len(self.tiles) - 1)
+        )
+        ret += "        x = random.random() * (tile[1] - tile[0]) + tile[0]\n"
+        ret += "        if tile[2]: return x\n"
+        ret += "        y = random.random() * (tile[3] - tile[4]) + tile[3]\n"
+        ret += "        try:\n"
+        if len(self.poles) > 0:
+          ret+="          px = None:\n"
+          ret+="          for pole in POLES_"+name+":\n"
+          ret+="            if x >= pole[0] and x < pole[1]:\n"
+          ret+="               px = pole[2]\n"
+          ret+="               break\n"
+          ret+="          if px == None: px = %s(ret)\n" % (
+            pdfcall
+          )
+          ret+="          if y < px: return x\n"
+        else:
+          ret+="          if y < %s(ret): return x\n" % (
+            pdfcall
+          )
+        ret += "        except:\n"
+        ret += "          pass\n\n"
+        return ret
 
     def sample(self, rg, n=1):
         """ Generates random numbers that (approximately) follow the
