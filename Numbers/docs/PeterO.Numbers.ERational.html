@@ -416,7 +416,7 @@ Denominator is zero.</p></li>
 
 <p><b>Return Value:</b></p>
 
-<p>The sum of the two numbers, that is, this arbitrary-precision rational number plus a 32-bit signed integer.</p>
+<p>The sum of the two numbers. Returns not-a-number (NaN) if this object is NaN.</p>
 
 <p><a id="Add_long"></a></p>
 
@@ -436,7 +436,7 @@ Denominator is zero.</p></li>
 
 <p><b>Return Value:</b></p>
 
-<p>The sum of the two numbers, that is, this arbitrary-precision rational number plus a 64-bit signed integer.</p>
+<p>The sum of the two numbers. Returns not-a-number (NaN) if this object is NaN.</p>
 
 <p><a id="Add_PeterO_Numbers_ERational"></a></p>
 
@@ -456,7 +456,7 @@ Denominator is zero.</p></li>
 
 <p><b>Return Value:</b></p>
 
-<p>The sum of the two numbers, that is, this arbitrary-precision rational number plus another arbitrary-precision rational number.</p>
+<p>The sum of the two numbers. Returns not-a-number (NaN) if either operand is NaN.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -936,7 +936,7 @@ is a 32-bit signed integer.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>The result of dividing this arbitrary-precision rational number by a 32-bit signed integer.</p>
+<p>The quotient of the two objects.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -965,7 +965,7 @@ is a 64-bit signed integer.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>The result of dividing this arbitrary-precision rational number by a 64-bit signed integer.</p>
+<p>The quotient of the two objects.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -993,7 +993,7 @@ is zero.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>The result of dividing this arbitrary-precision rational number by another arbitrary-precision rational number.</p>
+<p>The quotient of the two objects.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -1977,7 +1977,7 @@ is a 32-bit signed integer.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>The product of the two numbers, that is, this arbitrary-precision rational number times a 32-bit signed integer.</p>
+<p>The product of the two numbers.</p>
 
 <p><a id="Multiply_long"></a></p>
 
@@ -1998,7 +1998,7 @@ is a 64-bit signed integer.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>The product of the two numbers, that is, this arbitrary-precision rational number times a 64-bit signed integer.</p>
+<p>The product of the two numbers.</p>
 
 <p><a id="Multiply_PeterO_Numbers_ERational"></a></p>
 
@@ -2018,7 +2018,7 @@ is a 64-bit signed integer.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>The product of the two numbers, that is, this arbitrary-precision rational number times another arbitrary-precision rational number.</p>
+<p>The product of the two numbers.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -2989,7 +2989,7 @@ is null.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>The remainder that would result when this arbitrary-precision rational number is divided by a 32-bit signed integer.</p>
+<p>The remainder of the two numbers.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -3017,7 +3017,7 @@ is zero.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>The remainder that would result when this arbitrary-precision rational number is divided by a 64-bit signed integer.</p>
+<p>The remainder of the two numbers.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -3045,7 +3045,7 @@ is zero.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>The remainder that would result when this arbitrary-precision rational number is divided by another arbitrary-precision rational number.</p>
+<p>The remainder of the two numbers.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -3074,7 +3074,7 @@ is a 32-bit signed integer.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>The difference between the two numbers, that is, this arbitrary-precision rational number minus a 32-bit signed integer.</p>
+<p>The difference of the two objects.</p>
 
 <p><a id="Subtract_long"></a></p>
 
@@ -3095,7 +3095,7 @@ is a 64-bit signed integer.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>The difference between the two numbers, that is, this arbitrary-precision rational number minus a 64-bit signed integer.</p>
+<p>The difference of the two objects.</p>
 
 <p><a id="Subtract_PeterO_Numbers_ERational"></a></p>
 
@@ -3115,7 +3115,7 @@ is a 64-bit signed integer.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>The difference between the two numbers, that is, this arbitrary-precision rational number minus another arbitrary-precision rational number.</p>
+<p>The difference of the two objects.</p>
 
 <p><b>Exceptions:</b></p>
 
