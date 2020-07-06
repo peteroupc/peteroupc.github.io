@@ -3923,6 +3923,14 @@ class RatioOfUniformsTiling:
         x0 = math.sqrt(self.pdf(mode))
         # NOTE: Adjust x0 in case the mode was given approximately
         self.tiles = [[0, max(1, x0) * 2, False, y0, y1]]
+        self._appendTiles(cycles)
+        if len(self.tiles) == 0:
+            self.tiles = self._estimateExtents(0, max(1, x0) * 2, y0, y1)
+            self._appendTiles(cycles)
+            if len(self.tiles) == 0:
+                raise ValueError("Tiling failed")
+
+    def _appendTiles(self, cycles):
         for i in range(cycles):
             newtiles = []
             for t in self.tiles:
@@ -3940,10 +3948,36 @@ class RatioOfUniformsTiling:
                     self.maybeAppend(newtiles, cx, t[1], t[3], cy)
                     self.maybeAppend(newtiles, cx, t[1], cy, t[4])
             self.tiles = newtiles
-        if len(self.tiles) == 0:
-            raise ValueError("Tiling failed")
 
-    def maybeAppend(self, newtiles, xmn, xmx, ymn, ymx):
+    def _estimateExtents(self, xmn, xmx, ymn, ymx):
+        m = []
+        discarded = False
+        xpoints = 10
+        ypoints = max(int((ymx - ymn) / 0.2), 10)
+        miny = math.inf
+        maxy = -math.inf
+        maxx = 0
+        for xi in range(xpoints + 1):
+            x = xmn + (xmx - xmn) * xi * 1.0 / xpoints
+            if x <= 0:
+                continue
+            for yi in range(ypoints + 1):
+                y = ymn + (ymx - ymn) * yi * 1.0 / ypoints
+                try:
+                    yx = y / x
+                    ppdf = self.pdf(yx)
+                    val = math.sqrt(ppdf)
+                    if ppdf >= 0 and (not math.isnan(val)):
+                        miny = min(miny, yx * val)
+                        maxy = max(maxy, yx * val)
+                        maxx = max(maxx, val)
+                except:
+                    pass
+        if miny == math.inf:
+            raise ValueError("Tiling failed")
+        return [[0, maxx * 1.5, False, miny * 1.2, maxy * 1.2]]
+
+    def maybeAppend(self, newtiles, xmn, xmx, ymn, ymx, depth=0):
         m = []
         discarded = False
         xpoints = 10
@@ -3956,9 +3990,9 @@ class RatioOfUniformsTiling:
                 y = ymn + (ymx - ymn) * yi * 1.0 / ypoints
                 try:
                     yx = y / x
-                    val = math.sqrt(self.pdf(yx))
-                    print([x,val,y,"y/x",y/x])
-                    if (not math.isnan(val)) and x <= val:
+                    ppdf = self.pdf(yx)
+                    val = math.sqrt(ppdf)
+                    if ppdf >= 0 and (not math.isnan(val)) and x <= val:
                         m.append(y / x)
                     else:
                         discarded = True
@@ -4118,7 +4152,7 @@ class DensityTiling:
         try:
             return self.pdf(x)
         except:
-            return 0 # Assume pdf is 0 on failure
+            return 0  # Assume pdf is 0 on failure
 
     def maybeAppend(self, pdfevals, newtiles, xmn, xmx, ymn, ymx):
         fminmax = self._minmax(pdfevals, xmn, xmx)
@@ -4196,12 +4230,12 @@ class DensityTiling:
             ret += "%s" % (str(self.tiles[i]))
         ret += "]\n\n"
         if len(self.poles) > 0:
-          ret += "POLES_" + name + " = ["
-          for i in range(len(self.poles)):
-              if i > 0:
-                  ret += ",\n"
-              ret += "%s" % (str(self.poles[i]))
-          ret += "]\n\n"
+            ret += "POLES_" + name + " = ["
+            for i in range(len(self.poles)):
+                if i > 0:
+                    ret += ",\n"
+                ret += "%s" % (str(self.poles[i]))
+            ret += "]\n\n"
         ret += "def sample_" + name + "():\n"
         ret += "     while True:\n"
         ret += (
@@ -4214,19 +4248,15 @@ class DensityTiling:
         ret += "        y = random.random() * (tile[3] - tile[4]) + tile[3]\n"
         ret += "        try:\n"
         if len(self.poles) > 0:
-          ret+="          px = None:\n"
-          ret+="          for pole in POLES_"+name+":\n"
-          ret+="            if x >= pole[0] and x < pole[1]:\n"
-          ret+="               px = pole[2]\n"
-          ret+="               break\n"
-          ret+="          if px == None: px = %s(ret)\n" % (
-            pdfcall
-          )
-          ret+="          if y < px: return x\n"
+            ret += "          px = None:\n"
+            ret += "          for pole in POLES_" + name + ":\n"
+            ret += "            if x >= pole[0] and x < pole[1]:\n"
+            ret += "               px = pole[2]\n"
+            ret += "               break\n"
+            ret += "          if px == None: px = %s(ret)\n" % (pdfcall)
+            ret += "          if y < px: return x\n"
         else:
-          ret+="          if y < %s(ret): return x\n" % (
-            pdfcall
-          )
+            ret += "          if y < %s(ret): return x\n" % (pdfcall)
         ret += "        except:\n"
         ret += "          pass\n\n"
         return ret

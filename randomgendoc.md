@@ -241,6 +241,19 @@ CLASSES
      |  __init__(self, pdf, bl, br, cycles=8)
      |      Initialize self.  See help(type(self)) for accurate signature.
      |
+     |  codegen(self, name, pdfcall=None)
+     |      Generates Python code that samples
+     |              (approximately) from the distribution estimated
+     |              in this class.  Idea from Leydold, et al.,
+     |              "An Automatic Code Generator for
+     |              Nonuniform Random Variate Generation", 2001.
+     |      - name: Distribution name.  Generates a Python method called
+     |         sample_X where X is the name given here (samples one
+     |         random number).
+     |      - pdfcall: Name of the method representing pdf (for more information,
+     |         see the __init__ method of this class).  Optional; if not given
+     |         the name is pdf_X where X is the name given in the name parameter.
+     |
      |  maybeAppend(self, pdfevals, newtiles, xmn, xmx, ymn, ymx)
      |
      |  sample(self, rg, n=1)
@@ -1151,7 +1164,7 @@ CLASSES
      |         see the __init__ method of this class).  Optional; if not given
      |         the name is pdf_X where X is the name given in the name parameter.
      |
-     |  maybeAppend(self, newtiles, xmn, xmx, ymn, ymx)
+     |  maybeAppend(self, newtiles, xmn, xmx, ymn, ymx, depth=0)
      |
      |  sample(self, rg, n=1)
      |      Generates random numbers that (approximately) follow the

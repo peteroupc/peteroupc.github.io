@@ -2108,7 +2108,9 @@ quiet NaN if this value is signaling NaN.</li>
 
 <ul>
 <li>The sum of the two numbers, that is, this arbitrary-precision binary
-floating-point number plus a 32-bit signed integer.</li>
+floating-point number plus a 32-bit signed integer. If this
+arbitrary-precision binary floating-point number is not-a-number
+(NaN), returns NaN.</li>
 </ul>
 
 <h3>Subtract</h3>
@@ -2133,7 +2135,8 @@ floating-point number plus a 32-bit signed integer.</li>
 <ul>
 <li>The difference between the two numbers, that is, this
 arbitrary-precision binary floating-point number minus a 32-bit
-signed integer.</li>
+signed integer. If this arbitrary-precision binary floating-point
+number is not-a-number (NaN), returns NaN.</li>
 </ul>
 
 <h3>Multiply</h3>
@@ -2217,7 +2220,9 @@ an <code>EContext</code> (such as <code>EContext.Binary64</code>) instead.</li>
 
 <ul>
 <li>The sum of the two numbers, that is, this arbitrary-precision binary
-floating-point number plus a 64-bit signed integer.</li>
+floating-point number plus a 64-bit signed integer. If this
+arbitrary-precision binary floating-point number is not-a-number
+(NaN), returns NaN.</li>
 </ul>
 
 <h3>Subtract</h3>
@@ -2242,7 +2247,8 @@ floating-point number plus a 64-bit signed integer.</li>
 <ul>
 <li>The difference between the two numbers, that is, this
 arbitrary-precision binary floating-point number minus a 64-bit
-signed integer.</li>
+signed integer. If this arbitrary-precision binary floating-point
+number is not-a-number (NaN), returns NaN.</li>
 </ul>
 
 <h3>Multiply</h3>
@@ -2328,7 +2334,8 @@ an <code>EContext</code> (such as <code>EContext.Binary64</code>) instead.</li>
 <ul>
 <li>The sum of the two numbers, that is, this arbitrary-precision binary
 floating-point number plus another arbitrary-precision binary
-floating-point number.</li>
+floating-point number. If this arbitrary-precision binary
+floating-point number is not-a-number (NaN), returns NaN.</li>
 </ul>
 
 <h3>Add</h3>
@@ -2356,7 +2363,8 @@ which case the precision is unlimited and no rounding is needed.</p></li>
 <ul>
 <li>The sum of the two numbers, that is, this arbitrary-precision binary
 floating-point number plus another arbitrary-precision binary
-floating-point number.</li>
+floating-point number. If this arbitrary-precision binary
+floating-point number is not-a-number (NaN), returns NaN.</li>
 </ul>
 
 <h3>compareTo</h3>
@@ -5067,7 +5075,9 @@ the precision is unlimited (the context&#39;s Precision property is 0).</li>
 <ul>
 <li>The difference between the two numbers, that is, this
 arbitrary-precision binary floating-point number minus another
-arbitrary-precision binary floating-point number.</li>
+arbitrary-precision binary floating-point number. If this
+arbitrary-precision binary floating-point number is not-a-number
+(NaN), returns NaN.</li>
 </ul>
 
 <h3>Subtract</h3>
@@ -5095,7 +5105,9 @@ which case the precision is unlimited and no rounding is needed.</p></li>
 <ul>
 <li>The difference between the two numbers, that is, this
 arbitrary-precision binary floating-point number minus another
-arbitrary-precision binary floating-point number.</li>
+arbitrary-precision binary floating-point number. If this
+arbitrary-precision binary floating-point number is not-a-number
+(NaN), returns NaN.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
