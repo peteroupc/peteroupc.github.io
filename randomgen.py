@@ -3901,7 +3901,8 @@ class RatioOfUniformsTiling:
          is only known up to a normalizing constant, and even if
          the distribution has infinitely extending tails to the left and/or right.
          However, for the ratio of uniforms method to work, both pdf(x) and
-         x*x*pdf(x) must be bounded away from infinity.
+         x*x*pdf(x) must be bounded from above (thus, if the distribution has
+         tails, they must drop off at a faster than quadratic rate).
       - mode: X-coordinate of the PDF's highest peak or one of them,
          or a location close to it.  Optional; default is 0.
       - y0, y1: Bounding coordinates for the ratio-of-uniforms tiling.
@@ -3909,6 +3910,10 @@ class RatioOfUniformsTiling:
          y1 >= max( x*sqrt(pdf(x)) ) for all x.  Optional; the default is y0=-10, y1=10.
       - cycles - Number of recursion cycles in which to split tiles
          for the ratio-of-uniforms tiling.  Default is 8.
+
+       Additional improvements not yet implemented:
+       Generalized ratio-of-uniforms in Hörmann et al., "Automatic
+       Nonuniform Random Variate Generation", 2004.
 
        References:
        Section IV.7 of Devroye, L., "Non-Uniform Random Variate Generation", 1986.
@@ -4110,6 +4115,10 @@ class DensityTiling:
          which in this case is [bl, br].
       - cycles - Number of recursion cycles in which to split tiles
          that follow the PDF.  Default is 8.
+
+       Additional improvements not yet implemented:
+       Inverse transformed density rejection for poles: Hörmann et al., 
+       "Automatic Random Variate Generation for Unbounded Densities", 2007.
 
        Reference:
        Fulger, Daniel and Guido Germano. "Automatic generation of

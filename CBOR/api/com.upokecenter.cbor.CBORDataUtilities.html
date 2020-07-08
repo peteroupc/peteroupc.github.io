@@ -322,10 +322,14 @@ count</code> is 0 or less.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>bytes</code> - Not documented yet.</p></li>
-<li><p><code>offset</code> - Not documented yet.</p></li>
-<li><p><code>count</code> - Not documented yet.</p></li>
-<li><p><code>options</code> - Not documented yet.</p></li>
+<li><p><code>bytes</code> - A sequence of bytes to parse as a JSON number.</p></li>
+<li><p><code>offset</code> - An index, starting at 0, showing where the desired portion of
+<code>bytes</code> begins.</p></li>
+<li><p><code>count</code> - The length, in code units, of the desired portion of <code>
+bytes</code> (but not more than <code>bytes</code> &#39;s length).</p></li>
+<li><p><code>options</code> - An object containing options to control how JSON numbers are
+decoded to CBOR objects. Can be null, in which case a JSONOptions
+object with all default properties is used instead.</p></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -339,7 +343,7 @@ parsing fails, including if the byte sequence is null or empty or
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>str</code> is null.</p></li>
+<li><p><code>java.lang.NullPointerException</code> - The parameter <code>bytes</code> is null.</p></li>
 <li><p><code>java.lang.IllegalArgumentException</code> - Unsupported conversion kind.</p></li>
 </ul>
 
@@ -362,8 +366,10 @@ parsing fails, including if the byte sequence is null or empty or
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>bytes</code> - Not documented yet.</p></li>
-<li><p><code>options</code> - Not documented yet.</p></li>
+<li><p><code>bytes</code> - A sequence of bytes to parse as a JSON number.</p></li>
+<li><p><code>options</code> - An object containing options to control how JSON numbers are
+decoded to CBOR objects. Can be null, in which case a JSONOptions
+object with all default properties is used instead.</p></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -392,9 +398,11 @@ parsing fails, including if the byte sequence is null or empty.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>bytes</code> - Not documented yet.</p></li>
-<li><p><code>offset</code> - Not documented yet.</p></li>
-<li><p><code>count</code> - Not documented yet.</p></li>
+<li><p><code>bytes</code> - A sequence of bytes to parse as a JSON number.</p></li>
+<li><p><code>offset</code> - An index, starting at 0, showing where the desired portion of
+<code>bytes</code> begins.</p></li>
+<li><p><code>count</code> - The length, in code units, of the desired portion of <code>
+bytes</code> (but not more than <code>bytes</code> &#39;s length).</p></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -408,9 +416,9 @@ parsing fails, including if the byte sequence is null or empty.</li>
 
 <ul>
 <li><p><code>java.lang.IllegalArgumentException</code> - Either <code>offset</code> or <code>count</code> is less
-than 0 or greater than <code>str</code> &#39;s length, or <code>str</code> &#39;s
+than 0 or greater than <code>bytes</code> &#39;s length, or <code>bytes</code> &#39;s
 length minus <code>offset</code> is less than <code>count</code>.</p></li>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>str</code> is null.</p></li>
+<li><p><code>java.lang.NullPointerException</code> - The parameter <code>bytes</code> is null.</p></li>
 </ul>
 
 <p><a href="/CBOR/">Back to CBOR start page.</a></p>

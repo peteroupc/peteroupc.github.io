@@ -39,9 +39,7 @@
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>bytes</i>: A byte sequence to parse as a JSON number.</p></li>
-<li><p><i>bytes</i>: The parameter  <i>bytes</i>
-is not documented yet.</p></li>
+<li><i>bytes</i>: A byte sequence to parse as a JSON number.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -62,6 +60,17 @@ is not documented yet.</p></li>
 
 <p>Roughly speaking, a valid JSON number consists of an optional minus sign, one or more basic digits (starting with 1 to 9 unless there is only one digit and that digit is 0), an optional decimal point (&quot;.&quot;, full stop) with one or more basic digits, and an optional letter E or e with an optional plus or minus sign and one or more basic digits (the exponent). A byte sequence representing a valid JSON number is not allowed to contain white space characters, including spaces.</p>
 
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>bytes</i>: A sequence of bytes to parse as a JSON number.</p></li>
+<li><p><i>offset</i>: An index, starting at 0, showing where the desired portion of  <i>bytes</i>
+begins.</p></li>
+<li><p><i>count</i>: The length, in code units, of the desired portion of  <i>bytes</i>
+(but not more than  <i>bytes</i>
+&#39;s length).</p></li>
+</ul>
+
 <p><b>Return Value:</b></p>
 
 <p>A CBOR object that represents the parsed number. Returns null if the parsing fails, including if the byte sequence is null or empty.</p>
@@ -72,13 +81,13 @@ is not documented yet.</p></li>
 <li><p>System.ArgumentException:
 Either  <i>offset</i>
 or  <i>count</i>
-is less than 0 or greater than  <i>str</i>
-&#39;s length, or  <i>str</i>
+is less than 0 or greater than  <i>bytes</i>
+&#39;s length, or  <i>bytes</i>
 &#39;s length minus  <i>offset</i>
 is less than  <i>count</i>
 .</p></li>
 <li><p>System.ArgumentNullException:
-The parameter  <i>str</i>
+The parameter  <i>bytes</i>
 is null.</p></li>
 </ul>
 
@@ -97,6 +106,18 @@ is null.</p></li>
 
 <p>Roughly speaking, a valid JSON number consists of an optional minus sign, one or more basic digits (starting with 1 to 9 unless there is only one digit and that digit is 0), an optional decimal point (&quot;.&quot;, full stop) with one or more basic digits, and an optional letter E or e with an optional plus or minus sign and one or more basic digits (the exponent). A byte sequence representing a valid JSON number is not allowed to contain white space characters, including spaces.</p>
 
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>bytes</i>: A sequence of bytes to parse as a JSON number.</p></li>
+<li><p><i>offset</i>: An index, starting at 0, showing where the desired portion of  <i>bytes</i>
+begins.</p></li>
+<li><p><i>count</i>: The length, in code units, of the desired portion of  <i>bytes</i>
+(but not more than  <i>bytes</i>
+&#39;s length).</p></li>
+<li><p><i>options</i>: An object containing options to control how JSON numbers are decoded to CBOR objects. Can be null, in which case a JSONOptions object with all default properties is used instead.</p></li>
+</ul>
+
 <p><b>Return Value:</b></p>
 
 <p>A CBOR object that represents the parsed number. Returns null if the parsing fails, including if the byte sequence is null or empty or  <i>count</i>
@@ -106,7 +127,7 @@ is null.</p></li>
 
 <ul>
 <li><p>System.ArgumentNullException:
-The parameter  <i>str</i>
+The parameter  <i>bytes</i>
 is null.</p></li>
 <li><p>System.ArgumentException:
 Unsupported conversion kind.</p></li>
@@ -124,6 +145,13 @@ Unsupported conversion kind.</p></li>
 <p>Parses a number from a byte sequence whose format follows the JSON specification (RFC 8259) and converts that number to a CBOR object.</p>
 
 <p>Roughly speaking, a valid JSON number consists of an optional minus sign, one or more basic digits (starting with 1 to 9 unless there is only one digit and that digit is 0), an optional decimal point (&quot;.&quot;, full stop) with one or more basic digits, and an optional letter E or e with an optional plus or minus sign and one or more basic digits (the exponent). A byte sequence representing a valid JSON number is not allowed to contain white space characters, including spaces.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>bytes</i>: A sequence of bytes to parse as a JSON number.</p></li>
+<li><p><i>options</i>: An object containing options to control how JSON numbers are decoded to CBOR objects. Can be null, in which case a JSONOptions object with all default properties is used instead.</p></li>
+</ul>
 
 <p><b>Return Value:</b></p>
 

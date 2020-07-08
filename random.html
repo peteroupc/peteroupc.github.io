@@ -649,7 +649,9 @@ For cryptographic RNGs, an application should use only one thread-safe instance 
 
 <h3>Unique Random Identifiers</h3>
 
-<p>Some applications require generating unique identifiers, especially to identify database records or other shared resources.  Such identifiers include auto-incremented numbers, sequentially assigned numbers, random numbers, and combinations of these.  The following are some questions to consider when generating unique identifiers, especially random ones:</p>
+<p>Some applications require generating unique identifiers, especially to identify database records or other shared resources.  Examples of unique values include auto-incremented numbers, sequentially assigned numbers, primary keys of a database table, and combinations of these.  Applications have also generated unique values at random.</p>
+
+<p>The following are some questions to consider when generating unique identifiers:</p>
 
 <ol>
 <li>Can the application easily check identifiers for uniqueness within the desired scope and range (e.g., check whether a file or database record with that identifier already exists)<sup><a href="#Note35"><strong>(35)</strong></a></sup>?</li>
@@ -660,28 +662,29 @@ For cryptographic RNGs, an application should use only one thread-safe instance 
 <li>Do identifiers have to be memorable?</li>
 </ol>
 
-<p>Examples of unique integers include sequentially-assigned integers as well as the primary key of a database table.  If the application requires a unique integer to &quot;look random&quot;, it can apply any of the following operations to that integer:</p>
+<p>Some applications may also care about &quot;unique random&quot; values.  Generally, however, values that are both <em>unique</em> and <em>random</em> are impossible.  Thus, applications that want &quot;unique random&quot; values have to either settle for numbers that merely &quot;look random&quot;; or check for or tolerate possible duplicates; or pair random numbers with unique ones.</p>
+
+<p>If the application can settle for &quot;random-looking&quot; unique integers, it can produce a unique N-bit integer and apply any of the following to that integer:</p>
 
 <ol>
-<li>A function that maps N-bit integers to N-bit integers in a reversible way (also called a <em>mixing function</em> with reversible operations; see &quot;<a href="https://papa.bretmulvey.com/post/124027987928"><strong>Hash functions</strong></a>&quot; by B. Mulvey).</li>
-<li>A &quot;full-period&quot; linear PRNG that cycles through all N-bit integers exactly once<sup><a href="#Note38"><strong>(38)</strong></a></sup>.</li>
-<li>If unique integers 0 or greater, but less than K, are desired, choose an N-bit function described in (1) or (2), where N is the number of bits needed to store the number K-minus-1, and discard all outputs that are K or greater.</li>
+<li>A function that maps N-bit integers to N-bit integers in a reversible way (also called a <em>mixing function</em> with reversible operations; see &quot;<a href="https://papa.bretmulvey.com/post/124027987928"><strong>Hash functions</strong></a>&quot; by B. Mulvey).  This includes using the unique integer as the seed for a &quot;full-period&quot; linear PRNG that cycles through all N-bit integers exactly once<sup><a href="#Note38"><strong>(38)</strong></a></sup>.</li>
+<li>If unique integers 0 or greater, but less than K, are desired, choose an N-bit function described earlier, where N is the number of bits needed to store the number K-minus-1, and discard all outputs that are K or greater.</li>
 </ol>
 
 <p>An application that generates unique identifiers should do so as follows:</p>
 
 <ul>
-<li>If the application can answer yes to 1 or 2 above:
+<li>If the application can answer yes to question 1 or 2 above:
 
 <ul>
-<li>And yes to 5: Generate a 128-bit-long or longer random integer using a cryptographic RNG.</li>
-<li>And no to 5: Generate a 32-bit-long or longer random integer using a cryptographic RNG.</li>
+<li>And yes to question 5: Generate a 128-bit-long or longer random integer using a cryptographic RNG.</li>
+<li>And no to question 5: Generate a 32-bit-long or longer random integer using a cryptographic RNG.</li>
 </ul></li>
 <li>Otherwise:
 
 <ul>
-<li>If identifiers have to be hard to guess: Use a unique integer which is followed by a random integer generated using a cryptographic RNG (the random integer&#39;s length depends on the answer to 5, as above).</li>
-<li>Otherwise: Use a unique integer. (Note that generally, random numbers alone can&#39;t ensure uniqueness.)</li>
+<li>If identifiers don&#39;t have to be hard to guess: Use a unique integer (either one that&#39;s naturally unique, or a random number that was checked for uniqueness).</li>
+<li>If they do have to be hard to guess: Use a unique integer which is followed by a random integer generated using a cryptographic RNG (the random integer&#39;s length depends on the answer to question 5, as above).</li>
 </ul></li>
 </ul>
 
