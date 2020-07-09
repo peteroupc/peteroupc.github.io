@@ -1,31 +1,31 @@
-<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>com.upokecenter.mail.DispositionBuilder</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>com.upokecenter.mail.ContentDisposition.Builder</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a> -
 <a href="http://peteroupc.github.io/">Donate to Me</a></p></div>
 <div class="mainarea" id="top">
-<h1>com.upokecenter.mail.DispositionBuilder</h1>
+<h1>com.upokecenter.mail.ContentDisposition.Builder</h1>
 
-<h1>com.upokecenter.mail.DispositionBuilder</h1>
+<h1>com.upokecenter.mail.ContentDisposition.Builder</h1>
 
-<pre>@Deprecated public class DispositionBuilder extends java.lang.Object
+<pre>public final class ContentDisposition.Builder extends java.lang.Object
 </pre>
 
-<p>Deprecated.
-Use ContentDisposition.Builder instead.</p>
+<p>A mutable data type that allows a content disposition to be built.</p>
 
 <h2>Methods</h2>
 
 <ul>
-<li><code>DispositionBuilder() DispositionBuilder</code><br>
-Deprecated. Initializes a new instance of the DispositionBuilder class using the disposition
+<li><code>Builder() DispositionBuilder</code><br>
+Initializes a new instance of the DispositionBuilder class using the disposition
 type &quot;attachment&quot; .</li>
-<li><code>DispositionBuilder​(ContentDisposition mt) DispositionBuilder</code><br>
-Deprecated. Initializes a new instance of the DispositionBuilder class using the data from
+<li><code>Builder​(ContentDisposition mt) DispositionBuilder</code><br>
+Initializes a new instance of the DispositionBuilder class using the data from
 the given content disposition.</li>
-<li><code>DispositionBuilder​(java.lang.String type) DispositionBuilder</code><br>
-Deprecated. Initializes a new instance of the DispositionBuilder class using the given
-disposition type.</li>
+<li><code>Builder​(java.lang.String type)</code><br>
+Initializes a new instance of the {@link
+com.upokecenter.mail.ContentDisposition.getBuilder()} class using the
+given disposition type.</li>
 <li><code>java.lang.String getDispositionType()</code><br>
-Deprecated. Gets this value&#39;s disposition type, such as &quot;inline&quot; or &quot;attachment&quot;.</li>
+Gets this value&#39;s disposition type, such as &quot;inline&quot; or &quot;attachment&quot;.</li>
 <li><code>boolean isMultipart()</code><br>
 Deprecated.
 Irrelevant for content dispositions; will be removed in the future.
@@ -35,49 +35,51 @@ Deprecated.
 Irrelevant for content dispositions; will be removed in the future.
 Irrelevant for content dispositions; will be removed in the future.</li>
 <li><code>DispositionBuilder RemoveParameter​(java.lang.String name)</code><br>
-Deprecated. Removes a parameter from this content disposition.</li>
-<li><code>void setDispositionType​(java.lang.String value)</code><br>
-Deprecated.</li>
+Removes a parameter from this content disposition.</li>
+<li><code>void setDispositionType​(java.lang.String value)</code><br></li>
 <li><code>DispositionBuilder SetDispositionType​(java.lang.String str)</code><br>
-Deprecated. Sets the disposition type, such as &quot;inline&quot;.</li>
+Sets the disposition type, such as &quot;inline&quot;.</li>
 <li><code>DispositionBuilder SetParameter​(java.lang.String name,
         java.lang.String value)</code><br>
-Deprecated. Sets a parameter of this content disposition.</li>
+Sets a parameter of this content disposition.</li>
 <li><code>ContentDisposition ToDisposition()</code><br>
-Deprecated. Converts this object to an immutable ContentDisposition object.</li>
+Converts this object to an immutable ContentDisposition object.</li>
 <li><code>java.lang.String toString()</code><br>
-Deprecated. Converts this object to a text string.</li>
+Converts this object to a text string.</li>
 </ul>
 
 <h2>Constructors</h2>
 
 <ul>
-<li><code>DispositionBuilder() DispositionBuilder</code><br>
-Deprecated. Initializes a new instance of the DispositionBuilder class using the disposition
+<li><code>Builder() DispositionBuilder</code><br>
+Initializes a new instance of the DispositionBuilder class using the disposition
 type &quot;attachment&quot; .</li>
-<li><code>DispositionBuilder​(ContentDisposition mt) DispositionBuilder</code><br>
-Deprecated. Initializes a new instance of the DispositionBuilder class using the data from
+<li><code>Builder​(ContentDisposition mt) DispositionBuilder</code><br>
+Initializes a new instance of the DispositionBuilder class using the data from
 the given content disposition.</li>
-<li><code>DispositionBuilder​(java.lang.String type) DispositionBuilder</code><br>
-Deprecated. Initializes a new instance of the DispositionBuilder class using the given
-disposition type.</li>
+<li><code>Builder​(java.lang.String type)</code><br>
+Initializes a new instance of the {@link
+com.upokecenter.mail.ContentDisposition.getBuilder()} class using the
+given disposition type.</li>
 </ul>
 
 <h2>Method Details</h2>
 
-<h3>DispositionBuilder</h3>
+<h3>Builder</h3>
 
-<pre>public DispositionBuilder()
+<pre>public Builder()
 </pre>
 
-<p>Deprecated.</p>
+<p>Initializes a new instance of the <code>DispositionBuilder</code> class using the disposition
+  type &quot;attachment&quot; .</p>
 
-<h3>DispositionBuilder</h3>
+<h3>Builder</h3>
 
-<pre>public DispositionBuilder​(ContentDisposition mt)
+<pre>public Builder​(ContentDisposition mt)
 </pre>
 
-<p>Deprecated.</p>
+<p>Initializes a new instance of the <code>DispositionBuilder</code> class using the data from
+ the given content disposition.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -91,12 +93,14 @@ disposition type.</li>
 <li><code>java.lang.NullPointerException</code> - The parameter <code>mt</code> is null.</li>
 </ul>
 
-<h3>DispositionBuilder</h3>
+<h3>Builder</h3>
 
-<pre>public DispositionBuilder​(java.lang.String type)
+<pre>public Builder​(java.lang.String type)
 </pre>
 
-<p>Deprecated.</p>
+<p>Initializes a new instance of the {@link
+ com.upokecenter.mail.ContentDisposition.getBuilder()} class using the
+ given disposition type.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -116,7 +120,7 @@ disposition type.</li>
 <pre>public final java.lang.String getDispositionType()
 </pre>
 
-<p>Deprecated.</p>
+<p>Gets this value&#39;s disposition type, such as &quot;inline&quot; or &quot;attachment&quot;.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -137,8 +141,6 @@ empty string.</p></li>
 
 <pre>public final void setDispositionType​(java.lang.String value)
 </pre>
-
-<p>Deprecated.</p>
 
 <h3>isText</h3>
 
@@ -174,7 +176,7 @@ false</code>.</li>
 <pre>public ContentDisposition ToDisposition()
 </pre>
 
-<p>Deprecated.</p>
+<p>Converts this object to an immutable ContentDisposition object.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -187,7 +189,10 @@ false</code>.</li>
 <pre>public DispositionBuilder SetDispositionType​(java.lang.String str)
 </pre>
 
-<p>Deprecated.</p>
+<p>Sets the disposition type, such as &quot;inline&quot;. This method enables the pattern
+ of method chaining (e.g., <code>new ...().getSet()...().getSet()...()</code>)
+ unlike with the DispositionType property in .NET or the
+ setDispositionType method (with small s) in Java.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -213,7 +218,8 @@ false</code>.</li>
 <pre>public DispositionBuilder RemoveParameter​(java.lang.String name)
 </pre>
 
-<p>Deprecated.</p>
+<p>Removes a parameter from this content disposition. Does nothing if the
+ parameter&#39;s name doesn&#39;t exist.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -242,7 +248,7 @@ lower-case letters.).</li>
 <pre>public DispositionBuilder SetParameter​(java.lang.String name, java.lang.String value)
 </pre>
 
-<p>Deprecated.</p>
+<p>Sets a parameter of this content disposition.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -275,7 +281,7 @@ well-formed parameter name.</p></li>
 <pre>public java.lang.String toString()
 </pre>
 
-<p>Deprecated.</p>
+<p>Converts this object to a text string.</p>
 
 <p><strong>Overrides:</strong></p>
 

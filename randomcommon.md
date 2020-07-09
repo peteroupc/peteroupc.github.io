@@ -62,7 +62,6 @@ For algorithms on generating uniform random _integers_ in a range, see [**"Unifo
         x = x * 2
         var randomBit = (Math.random() < 0.5 ? 0 : 1)
         y = y * 2 + randomBit
-        nextBit = nextBit + 1
         if(x > maxInclusive) {
           if (y <= maxInclusive) { return y + minInclusive }
           x = x - maxInclusive - 1

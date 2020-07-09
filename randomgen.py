@@ -4117,7 +4117,7 @@ class DensityTiling:
          that follow the PDF.  Default is 8.
 
        Additional improvements not yet implemented:
-       Inverse transformed density rejection for poles: Hörmann et al., 
+       Inverse transformed density rejection for poles: Hörmann et al.,
        "Automatic Random Variate Generation for Unbounded Densities", 2007.
 
        Reference:

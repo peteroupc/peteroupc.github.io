@@ -18,6 +18,7 @@
         - [**Random Real Numbers with a Given Positive Sum**](#Random_Real_Numbers_with_a_Given_Positive_Sum)
         - [**Gaussian and Other Copulas**](#Gaussian_and_Other_Copulas)
         - [**Exponential Distribution: Another Error-Bounded Algorithm**](#Exponential_Distribution_Another_Error_Bounded_Algorithm)
+    - [**Weighted Choice with Biased Coins**](#Weighted_Choice_with_Biased_Coins)
 - [**Notes**](#Notes)
 - [**Appendix**](#Appendix)
     - [**Implementation of `erf`**](#Implementation_of_erf)
@@ -456,6 +457,60 @@ The following method samples from an exponential distribution with an &lambda; p
     END METHOD
 
 > **Note:** After `ExpoExact` is used to generate a random number, an application can append additional binary digits (such as `RNDINT(1)`) to the end of that number while remaining accurate to the given precision (Karney 2014)<sup>[**(1)**](#Note1)</sup>.
+
+<a id=Weighted_Choice_with_Biased_Coins></a>
+### Weighted Choice with Biased Coins
+
+This section describes weighted choice algorithms that can be used if the only source of randomness we have is coins with known or unknown bias.
+
+Assuming that we only have&mdash;
+
+- a list of probabilities that sum to 1, and
+- `UnfairCoin(p)`, a "biased coin" which returns true with _known_ probability `p` and false otherwise (such as `ZeroToOne` or `RNDU01() < p`),
+
+then there are at least two ways to choose a random item with the given probabilities.  Both algorithms are given in the following pseudocode (see the [**_Stack Overflow_ question**](https://stackoverflow.com/questions/62806441/can-i-achieve-weighted-randomness-with-a-function-that-returns-weighted-booleans) by Daniel Kaplan):
+
+    // Uses iteration.  Has linear time complexity, or
+    // has expected constant time complexity instead
+    // if the weights are sorted in descending order.
+    METHOD Algorithm1(weights)
+       cumu=1.0 // Total of unsampled probabilities
+       for i in 0...size(weights)
+          if UnfairCoin(weights[i]/cumu): return i
+          cumu=cumu-weights[i]
+       end
+    END METHOD
+
+    METHOD Algorithm2(weights)
+      while true
+       // Lumbroso's Fast Dice Roller
+       s=size(weights)-1
+       x = 1; y = 0
+       while true
+         x = x * 2
+         y = y * 2 + UnfairCoin(0.5)
+         if x > s
+           if y <= s: break
+           x = x - s - 1
+           y = y - s - 1
+          end
+         end
+       end
+       if UnfairCoin(weights[y]): return y
+      end
+    END METHOD
+
+(Note that both algorithms are exact if only rational numbers are allowed for probabilities, such as with the `ZeroOrOne` method.)
+
+Assuming that we only have&mdash;
+
+- a list of integer weights (that need not sum to 1), and
+- a "biased coin" which returns true with _unknown_ probability of heads and false otherwise,
+
+then the solution involves turning a biased coin to a fair coin, and then turning the fair coin into a loaded die.
+
+1.  Biased coin to fair coin:  This can be achieved with _randomness extraction_ techniques, such as von Neumann unbiasing.  Randomness extraction is outside the scope of this document.
+2.  Fair coin to loaded die:  There are many ways to solve this problem.  For example, fair coins can serve as the RNG for `RNDINT` (see "[**Uniform Random Integers**](https://peteroupc.github.io/randomfunc.html#Uniform_Random_Integers)"), and `RNDINT` can in turn be used to implement [**`WeightedChoice`**](https://peteroupc.github.io/randomfunc.html#Weighted_Choice_With_Replacement), which implements loaded dice.  Some algorithms also produce a loaded die _directly_ from fair coins, such as the [**Fast Loaded Dice Roller**](https://github.com/probcomp/fast-loaded-dice-roller).
 
 <a id=Notes></a>
 ## Notes
