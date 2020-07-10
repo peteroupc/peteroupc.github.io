@@ -504,7 +504,7 @@ then there are at least two ways to choose a random item with the given probabil
 
 Assuming that we only have&mdash;
 
-- a list of integer weights (that need not sum to 1), and
+- a list of non-negative integer weights (that need not sum to 1), and
 - a "biased coin" which returns true with _unknown_ probability of heads and false otherwise,
 
 then the solution involves turning a biased coin to a fair coin, and then turning the fair coin into a loaded die.
