@@ -217,7 +217,7 @@ CLASSES
      |    number and outputs a single number. The area under
      |    the PDF need not equal 1 (this class tolerates the PDF even if
      |    it is only known up to a normalizing constant).  For best results,
-     |    the PDF should be bounded (that is, it should be free of _poles_, or points
+     |    the PDF should be bounded from above (that is, it should be free of _poles_, or points
      |    that approach infinity).  If the PDF does contain a pole, this class
      |    may accommodate the pole by sampling from a modified version of the PDF,
      |    so that points extremely close to the pole may be sampled
@@ -230,9 +230,8 @@ CLASSES
      |  - cycles - Number of recursion cycles in which to split tiles
      |     that follow the PDF.  Default is 8.
      |
-     |   Additional improvements not yet implemented:
-     |   Inverse transformed density rejection for poles: Hörmann et al.,
-     |   "Automatic Random Variate Generation for Unbounded Densities", 2007.
+     |   Additional improvements not yet implemented: Hörmann et al.,
+     |   "Inverse Transformed Density Rejection for Unbounded Monotone Densities", 2007.
      |
      |   Reference:
      |   Fulger, Daniel and Guido Germano. "Automatic generation of
@@ -802,7 +801,7 @@ CLASSES
      |  numbers_from_dist(self, pdf, mn=0, mx=1, n=1, bitplaces=53)
      |      Generates 'n' random numbers that follow a continuous
      |      distribution in an interval [mn, mx].  The distribution's
-     |      PDF (probability density function) must be bounded
+     |      PDF (probability density function) must be bounded from above
      |      (have a finite value) and be continuous almost everywhere
      |      in the interval.  Implements section 4 of Devroye and Gravel,
      |      "The expected bit complexity of the von Neumann rejection

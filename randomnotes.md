@@ -413,7 +413,7 @@ Other kinds of copulas describe different kinds of dependence between random num
 <a id=Exponential_Distribution_Another_Error_Bounded_Algorithm></a>
 #### Exponential Distribution: Another Error-Bounded Algorithm
 
-The following method samples from an exponential distribution with an &lambda; parameter greater than 0, expressed as `lnum`/`lden` (where the sampling occurs within an error tolerance of 2<sup>`-precision`</sup>).  For more information, see "[**Partially-Sampled Exponential Random Numbers**](https://peteroupc.github.io/exporand.html)".
+The following method samples from an exponential distribution with a &lambda; parameter greater than 0, expressed as `lnum`/`lden` (where the sampling occurs within an error tolerance of 2<sup>`-precision`</sup>).  For more information, see "[**Partially-Sampled Exponential Random Numbers**](https://peteroupc.github.io/exporand.html)".
 
     METHOD ZeroOrOneExpMinus(x, y)
       # Generates 1 with probability exp(-x/y) (Canonne et al. 2020)

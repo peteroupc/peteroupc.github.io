@@ -439,14 +439,14 @@ The following are some questions to consider when generating unique identifiers:
 2. Can the application tolerate the risk of generating the same identifier for different resources<sup>[**(36)**](#Note36)</sup>?
 3. Do identifiers have to be hard to guess, be simply "random-looking", or be neither?
 4. Do identifiers have to be typed in or otherwise relayed by end users<sup>[**(37)**](#Note37)</sup>?
-5. Is the resource an identifier identifies available to anyone who knows that identifier (even without being logged in or authorized in some way)?<sup>[**(46)**](#Note46)</sup>
+5. Is the resource an identifier identifies available to anyone who knows that identifier (even without being logged in or authorized in some way)?<sup>[**(38)**](#Note38)</sup>
 6. Do identifiers have to be memorable?
 
 Some applications may also care about "unique random" values.  Generally, however, values that are both _unique_ and _random_ are impossible.  Thus, applications that want "unique random" values have to either settle for numbers that merely "look random"; or check for or tolerate possible duplicates; or pair random numbers with unique ones.
 
 If the application can settle for "random-looking" unique integers, it can produce a unique N-bit integer and apply any of the following to that integer:
 
-1. A function that maps N-bit integers to N-bit integers in a reversible way (also called a _mixing function_ with reversible operations; see "[**Hash functions**](https://papa.bretmulvey.com/post/124027987928)" by B. Mulvey).  This includes using the unique integer as the seed for a "full-period" linear PRNG that cycles through all N-bit integers exactly once<sup>[**(38)**](#Note38)</sup>.
+1. A function that maps N-bit integers to N-bit integers in a reversible way (also called a _mixing function_ with reversible operations; see "[**Hash functions**](https://papa.bretmulvey.com/post/124027987928)" by B. Mulvey).  This includes using the unique integer as the seed for a "full-period" linear PRNG that cycles through all N-bit integers exactly once<sup>[**(39)**](#Note39)</sup>.
 2. If unique integers 0 or greater, but less than K, are desired, choose an N-bit function described earlier, where N is the number of bits needed to store the number K-minus-1, and discard all outputs that are K or greater.
 
 An application that generates unique identifiers should do so as follows:
@@ -466,9 +466,9 @@ _Verifiable random numbers_ are random numbers (such as seeds for PRNGs) that ar
 > **Examples:**
 >
 > 1. Generating verifiable randomness has been described in [**RFC 3797**](https://www.rfc-editor.org/rfc/rfc3797.txt), which describes the selection process for the Nominations Committee (NomCom) of the Internet Engineering Task Force.
-> 2. _Verifiable delay functions_ calculate an output as well as a proof that the output was correctly calculated; these functions deliberately take much more time to calculate the output (e.g., to generate a seemingly random number from public data) than to verify its correctness.<sup>[**(39)**](#Note39)</sup> In many cases, such a function deliberately takes much more time than the time allowed to contribute randomness to that function.<sup>[**(40)**](#Note40)</sup>
-> 3. In a so-called [**_commitment scheme_**](https://en.wikipedia.org/wiki/Commitment_scheme), one computer generates data to be committed (e.g. a random number or a chess move), then reveals its hash code or digital signature (_commitment_), and only later reveals to all participants the committed data (along with other information needed, if any, to verify that the data wasn't changed in between).  Examples of commitment schemes are _hash-based commitments_.<sup>[**(40)**](#Note40)</sup>
-> 4. So-called _mental card game_ (_mental poker_) schemes can be used in networked games where a deck of cards has to be shuffled and dealt to players, so that the identity of some cards is known to some but not all players.<sup>[**(40)**](#Note40)</sup>
+> 2. _Verifiable delay functions_ calculate an output as well as a proof that the output was correctly calculated; these functions deliberately take much more time to calculate the output (e.g., to generate a seemingly random number from public data) than to verify its correctness.<sup>[**(40)**](#Note40)</sup> In many cases, such a function deliberately takes much more time than the time allowed to contribute randomness to that function.<sup>[**(41)**](#Note41)</sup>
+> 3. In a so-called [**_commitment scheme_**](https://en.wikipedia.org/wiki/Commitment_scheme), one computer generates data to be committed (e.g. a random number or a chess move), then reveals its hash code or digital signature (_commitment_), and only later reveals to all participants the committed data (along with other information needed, if any, to verify that the data wasn't changed in between).  Examples of commitment schemes are _hash-based commitments_.<sup>[**(41)**](#Note41)</sup>
+> 4. So-called _mental card game_ (_mental poker_) schemes can be used in networked games where a deck of cards has to be shuffled and dealt to players, so that the identity of some cards is known to some but not all players.<sup>[**(41)**](#Note41)</sup>
 
 <a id=Guidelines_for_New_RNG_APIs></a>
 ## Guidelines for New RNG APIs
@@ -479,21 +479,21 @@ This section contains suggested requirements on cryptographic and high-quality R
 
 <a id=Cryptographic_RNGs_Requirements></a>
 ### Cryptographic RNGs: Requirements
-A cryptographic RNG generates random bits that behave like independent uniform random bits, such that an outside party has no more than negligible advantage in correctly guessing prior or future unseen output bits of that RNG even after knowing how the RNG works and/or extremely many outputs of the RNG, or prior unseen output bits of that RNG after compromising its security, such as reading its internal state.<sup>[**(41)**](#Note41)</sup>
+A cryptographic RNG generates random bits that behave like independent uniform random bits, such that an outside party has no more than negligible advantage in correctly guessing prior or future unseen output bits of that RNG even after knowing how the RNG works and/or extremely many outputs of the RNG, or prior unseen output bits of that RNG after compromising its security, such as reading its internal state.<sup>[**(42)**](#Note42)</sup>
 
 If a cryptographic RNG implementation uses a PRNG:
 
 - The security strength used by the RNG is at least 128 bits and should be at least 256 bits.
-- Before the RNG generates a random number, the RNG has to have been initialized to a state that ultimately derives from data that, as a whole, is at least as hard to guess as ideal random data with as many bits as the security strength<sup>[**(42)**](#Note42)</sup>.
+- Before the RNG generates a random number, the RNG has to have been initialized to a state that ultimately derives from data that, as a whole, is at least as hard to guess as ideal random data with as many bits as the security strength<sup>[**(43)**](#Note43)</sup>.
 
 A cryptographic RNG is not required to reseed itself.
 
 > **Examples:** The following are examples of cryptographic RNGs:
 >
 > - Randomness extractors or cryptographic [**hash functions**](#Hash_Functions) that take very hard-to-predict signals from two or more [**nondeterministic sources**](#Nondeterministic_Sources_and_Seed_Generation) as input.
-> - A "fast-key-erasure" random number generator described by D.J. Bernstein in his blog (Bernstein 2017)<sup>[**(43)**](#Note43)</sup>.
+> - A "fast-key-erasure" random number generator described by D.J. Bernstein in his blog (Bernstein 2017)<sup>[**(44)**](#Note44)</sup>.
 > - The Hash_DRBG and HMAC_DRBG generators specified in NIST SP 800-90A.  The SP 800-90 series goes into further detail on how RNGs appropriate for information security can be constructed, and inspired much of this section.
-> - An RNG made up of two or more independently initialized cryptographic RNGs of different designs.<sup>[**(44)**](#Note44)</sup>
+> - An RNG made up of two or more independently initialized cryptographic RNGs of different designs.<sup>[**(45)**](#Note45)</sup>
 
 <a id=High_Quality_RNGs_Requirements></a>
 ### High-Quality RNGs: Requirements
@@ -527,7 +527,7 @@ The following are some ways a PRNG can be implemented:
 A **programming language API** designed for reuse by applications could implement RNGs using the following guidelines:
 
 1.  The RNG API can include a method that fills one or more memory units (such as 8-bit bytes) completely with random bits.  See example 1.
-2.  If the API implements an automatically-seeded RNG, it should not allow applications to initialize that same RNG with a seed for reproducible "randomness"<sup>[**(45)**](#Note45)</sup> (it may provide a separate PRNG to accept such a seed). See example 2.
+2.  If the API implements an automatically-seeded RNG, it should not allow applications to initialize that same RNG with a seed for reproducible "randomness"<sup>[**(46)**](#Note46)</sup> (it may provide a separate PRNG to accept such a seed). See example 2.
 3.  If the API provides a PRNG that an application can seed for reproducible "randomness", it should document that PRNG and any methods the API provides that use that PRNG (such as shuffling and Gaussian number generation), and should not change that PRNG or those methods in a way that would change the "random" numbers they deliver for a given seed. See example 2.
 4.  A new programming language's **standard library** ought to include the following methods for generating numbers that behave like independent uniform random numbers (see my document on [**random number generation methods**](https://peteroupc.github.io/randomfunc.html) for details).
     - Four methods for random integers: 0 to `n` including `n`, 0 to `n` excluding `n`, `a` to `b` including `b`, and `a` to `b` excluding `b`.
@@ -638,13 +638,15 @@ See also N. Reed, "Quick And Easy GPU Random Numbers In D3D11", Nathan Reed's co
 
 <small><sup id=Note37>(37)</sup> If an application expects end users to type in a unique identifier, it could find that very long unique identifiers are unsuitable for it (e.g. 128-bit numbers take up 32 base-16 characters).  There are ways to deal with these and other long identifiers, including (1) separating memorable chunks of the identifier with a hyphen, space, or another character (e.g., "ABCDEF" becomes "ABC-DEF"); (2) generating the identifier from a sequence of memorable words (as in Electrum or in Bitcoin's BIP39); or (3) adding a so-called "checksum digit" at the end of the identifier to guard against typing mistakes.  The application ought to consider trying (1) or (2) before deciding to use shorter identifiers than what this document recommends.</small>
 
-<small><sup id=Note38>(38)</sup> For suggested "full-period" [**LCGs**](https://en.wikipedia.org/wiki/Linear_congruential_generator), see tables 3, 5, 7, and 8 of Steele and Vigna, "[**Computationally easy, spectrally good multipliers for congruential pseudorandom number generators**](https://arxiv.org/abs/2001.05304)", arXiv:2001.05304 [cs.DS].</small>
+<small><sup id=Note38>(38)</sup> The _insecure direct object references_ problem can occur if an application enables access to a sensitive resource via an easy-to-guess identifier, but without any access control checks.</small>
 
-<small><sup id=Note39>(39)</sup> Verifiable delay functions are different from proofs of work, in which there can be multiple correct answers. These functions were first formally defined in Boneh, D., Bonneau, J., et al., "Verifiable Delay Functions", 2018, but such functions appeared earlier in Lenstra, A.K., Wesolowski, B., "A random zoo: sloth, unicorn, and trx", 2015.</small>
+<small><sup id=Note39>(39)</sup> For suggested "full-period" [**LCGs**](https://en.wikipedia.org/wiki/Linear_congruential_generator), see tables 3, 5, 7, and 8 of Steele and Vigna, "[**Computationally easy, spectrally good multipliers for congruential pseudorandom number generators**](https://arxiv.org/abs/2001.05304)", arXiv:2001.05304 [cs.DS].</small>
 
-<small><sup id=Note40>(40)</sup> It is outside the scope of this page to explain how to build a protocol using verifiable delay functions, commitment schemes, or mental card game schemes, especially because such protocols are not yet standardized for general use and few implementations of them are used in production.</small>
+<small><sup id=Note40>(40)</sup> Verifiable delay functions are different from proofs of work, in which there can be multiple correct answers. These functions were first formally defined in Boneh, D., Bonneau, J., et al., "Verifiable Delay Functions", 2018, but such functions appeared earlier in Lenstra, A.K., Wesolowski, B., "A random zoo: sloth, unicorn, and trx", 2015.</small>
 
-<small><sup id=Note41>(41)</sup> Implementing a cryptographic RNG involves many security considerations, including these:
+<small><sup id=Note41>(41)</sup> It is outside the scope of this page to explain how to build a protocol using verifiable delay functions, commitment schemes, or mental card game schemes, especially because such protocols are not yet standardized for general use and few implementations of them are used in production.</small>
+
+<small><sup id=Note42>(42)</sup> Implementing a cryptographic RNG involves many security considerations, including these:
 
 1. If an application runs code from untrusted sources in the same operating system process in which a cryptographic RNG's state is stored, it's possible for malicious code to read out that state via side-channel attacks. A cryptographic RNG should not be implemented in such a process. See (A) and see also (B).
 2. A cryptographic RNG's state could be reused due to process forking or virtual machine snapshot resets.  See (C) and (D), for example.
@@ -652,15 +654,13 @@ See also N. Reed, "Quick And Easy GPU Random Numbers In D3D11", Nathan Reed's co
 
 (A) "Post-Spectre Threat Model Re-Think" in the Chromium source code repository (May 29, 2018).<br/>(B) Bernstein, D.J. "Entropy Attacks!", Feb. 5, 2014.<br/>(C) Everspaugh, A., Zhai, Y., et al. "Not-So-Random Numbers in Virtualized Linux and the Whirlwind RNG", 2014.<br/>(D) Ristenpart, T., Yilek, S. "When Good Randomness Goes Bad: Virtual Machine Reset Vulnerabilities and Hedging Deployed Cryptography", 2010.<br/>For a detailed notion of a secure RNG, see Coretti, Dodis, et al., "Seedless Fruit is the Sweetest: Random Number Generation, Revisited", 2019.</small>
 
-<small><sup id=Note42>(42)</sup> This data can come from nondeterministic sources, and also include process identifiers, time stamps, environment variables, random numbers, virtual machine guest identifiers, and/or other data specific to the session or to the instance of the RNG.  See also NIST SP 800-90A and the previous note.</small>
+<small><sup id=Note43>(43)</sup> This data can come from nondeterministic sources, and also include process identifiers, time stamps, environment variables, random numbers, virtual machine guest identifiers, and/or other data specific to the session or to the instance of the RNG.  See also NIST SP 800-90A and the previous note.</small>
 
-<small><sup id=Note43>(43)</sup> Bernstein, D.J.  "Fast-key-erasure random number generators", Jun. 23, 2017.</small>
+<small><sup id=Note44>(44)</sup> Bernstein, D.J.  "Fast-key-erasure random number generators", Jun. 23, 2017.</small>
 
-<small><sup id=Note44>(44)</sup> An example is the "shrinking generator" technique to combine two RNGs; see J. D. Cook, "Using one RNG to sample another", June 4, 2019, for more.</small>
+<small><sup id=Note45>(45)</sup> An example is the "shrinking generator" technique to combine two RNGs; see J. D. Cook, "Using one RNG to sample another", June 4, 2019, for more.</small>
 
-<small><sup id=Note45>(45)</sup> Allowing applications to do so would hamper forward compatibility &mdash; the API would then be less free to change how the RNG is implemented in the future (e.g., to use a cryptographic or otherwise "better" RNG), or to make improvements or bug fixes in methods that use that RNG (such as shuffling and Gaussian number generation).  (As a notable example, the V8 JavaScript engine recently changed its `Math.random()` implementation to use a variant of `xorshift128+`, which is backward compatible because nothing in JavaScript allows  `Math.random()` to be seeded.)  Nevertheless, APIs can still allow applications to provide additional input ("entropy") to the RNG in order to increase its randomness rather than to ensure repeatability.</small>
-
-<small><sup id=Note46>(46)</sup> The _insecure direct object references_ problem can occur if an application enables access to a sensitive resource via an easy-to-guess identifier, but without any access control checks.</small>
+<small><sup id=Note46>(46)</sup> Allowing applications to do so would hamper forward compatibility &mdash; the API would then be less free to change how the RNG is implemented in the future (e.g., to use a cryptographic or otherwise "better" RNG), or to make improvements or bug fixes in methods that use that RNG (such as shuffling and Gaussian number generation).  (As a notable example, the V8 JavaScript engine recently changed its `Math.random()` implementation to use a variant of `xorshift128+`, which is backward compatible because nothing in JavaScript allows  `Math.random()` to be seeded.)  Nevertheless, APIs can still allow applications to provide additional input ("entropy") to the RNG in order to increase its randomness rather than to ensure repeatability.</small>
 
 <a id=License></a>
 ## License
