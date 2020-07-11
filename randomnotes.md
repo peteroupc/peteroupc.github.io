@@ -466,7 +466,7 @@ This section describes weighted choice algorithms that can be used if the only s
 Assuming that we only have&mdash;
 
 - a list of probabilities that sum to 1, and
-- `UnfairCoin(p)`, a "biased coin" which returns true with _known_ probability `p` and false otherwise (such as `ZeroToOne` or `RNDU01() < p`),
+- `UnfairCoin(p)`, a "biased coin" which returns true with _known_ probability `p` and false otherwise (such as `ZeroOrOne` or `RNDU01() < p`),
 
 then there are at least two ways to choose a random item with the given probabilities.  Both algorithms are given in the following pseudocode (see the [**_Stack Overflow_ question**](https://stackoverflow.com/questions/62806441/can-i-achieve-weighted-randomness-with-a-function-that-returns-weighted-booleans) by Daniel Kaplan):
 
