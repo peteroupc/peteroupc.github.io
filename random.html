@@ -658,7 +658,7 @@ For cryptographic RNGs, an application should use only one thread-safe instance 
 <li>Can the application tolerate the risk of generating the same identifier for different resources<sup><a href="#Note36"><strong>(36)</strong></a></sup>?</li>
 <li>Do identifiers have to be hard to guess, be simply &quot;random-looking&quot;, or be neither?</li>
 <li>Do identifiers have to be typed in or otherwise relayed by end users<sup><a href="#Note37"><strong>(37)</strong></a></sup>?</li>
-<li>Is the resource an identifier identifies available to anyone who knows that identifier (even without being logged in or authorized in some way)?</li>
+<li>Is the resource an identifier identifies available to anyone who knows that identifier (even without being logged in or authorized in some way)?<sup><a href="#Note46"><strong>(46)</strong></a></sup></li>
 <li>Do identifiers have to be memorable?</li>
 </ol>
 
@@ -938,6 +938,8 @@ For cryptographic RNGs, an application should use only one thread-safe instance 
 <p><small><sup id=Note44>(44)</sup> An example is the &quot;shrinking generator&quot; technique to combine two RNGs; see J. D. Cook, &quot;Using one RNG to sample another&quot;, June 4, 2019, for more.</small></p>
 
 <p><small><sup id=Note45>(45)</sup> Allowing applications to do so would hamper forward compatibility &mdash; the API would then be less free to change how the RNG is implemented in the future (e.g., to use a cryptographic or otherwise &quot;better&quot; RNG), or to make improvements or bug fixes in methods that use that RNG (such as shuffling and Gaussian number generation).  (As a notable example, the V8 JavaScript engine recently changed its <code>Math.random()</code> implementation to use a variant of <code>xorshift128+</code>, which is backward compatible because nothing in JavaScript allows  <code>Math.random()</code> to be seeded.)  Nevertheless, APIs can still allow applications to provide additional input (&quot;entropy&quot;) to the RNG in order to increase its randomness rather than to ensure repeatability.</small></p>
+
+<p><small><sup id=Note46>(46)</sup> The <em>insecure direct object references</em> problem can occur if an application enables access to a sensitive resource via an easy-to-guess identifier, but without any access control checks.</small></p>
 
 <p><a id=License></a></p>
 

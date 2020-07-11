@@ -439,7 +439,7 @@ The following are some questions to consider when generating unique identifiers:
 2. Can the application tolerate the risk of generating the same identifier for different resources<sup>[**(36)**](#Note36)</sup>?
 3. Do identifiers have to be hard to guess, be simply "random-looking", or be neither?
 4. Do identifiers have to be typed in or otherwise relayed by end users<sup>[**(37)**](#Note37)</sup>?
-5. Is the resource an identifier identifies available to anyone who knows that identifier (even without being logged in or authorized in some way)?
+5. Is the resource an identifier identifies available to anyone who knows that identifier (even without being logged in or authorized in some way)?<sup>[**(46)**](#Note46)</sup>
 6. Do identifiers have to be memorable?
 
 Some applications may also care about "unique random" values.  Generally, however, values that are both _unique_ and _random_ are impossible.  Thus, applications that want "unique random" values have to either settle for numbers that merely "look random"; or check for or tolerate possible duplicates; or pair random numbers with unique ones.
@@ -659,6 +659,8 @@ See also N. Reed, "Quick And Easy GPU Random Numbers In D3D11", Nathan Reed's co
 <small><sup id=Note44>(44)</sup> An example is the "shrinking generator" technique to combine two RNGs; see J. D. Cook, "Using one RNG to sample another", June 4, 2019, for more.</small>
 
 <small><sup id=Note45>(45)</sup> Allowing applications to do so would hamper forward compatibility &mdash; the API would then be less free to change how the RNG is implemented in the future (e.g., to use a cryptographic or otherwise "better" RNG), or to make improvements or bug fixes in methods that use that RNG (such as shuffling and Gaussian number generation).  (As a notable example, the V8 JavaScript engine recently changed its `Math.random()` implementation to use a variant of `xorshift128+`, which is backward compatible because nothing in JavaScript allows  `Math.random()` to be seeded.)  Nevertheless, APIs can still allow applications to provide additional input ("entropy") to the RNG in order to increase its randomness rather than to ensure repeatability.</small>
+
+<small><sup id=Note46>(46)</sup> The _insecure direct object references_ problem can occur if an application enables access to a sensitive resource via an easy-to-guess identifier, but without any access control checks.</small>
 
 <a id=License></a>
 ## License

@@ -101,7 +101,7 @@ The following method generates a random number that follows a _gamma distributio
 - the lifetime (in days, hours, or other fixed units) of a random component with an average lifetime of `meanLifetime`, or
 - a random amount of time (in days, hours, or other fixed units) that passes until as many events as `meanLifetime` happen.
 
-Here, `meanLifetime` must be an integer or noninteger greater than 0, and `scale` is a scaling parameter that is greater than 0, but usually 1.
+Here, `meanLifetime` must be an integer or noninteger greater than 0, and `scale` is a scaling parameter that is greater than 0, but usually 1 (the random gamma number is multiplied by `scale`).
 
     METHOD GammaDist(meanLifetime, scale)
         // Needs to be greater than 0
