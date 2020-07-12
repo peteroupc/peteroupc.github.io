@@ -9,70 +9,41 @@
 <pre>public final class ETrapException extends java.lang.ArithmeticException
 </pre>
 
-<p>Exception thrown for arithmetic trap errors. (The &quot;E&quot; stands for &quot;extended&quot;,
- and has this prefix to group it with the other classes common to this
- library, particularly EDecimal, EFloat, and ERational.). <p>This
- library may throw exceptions of this type in certain cases, notably
- when errors occur, and may supply messages to those exceptions (the
- message can be accessed through the <code>Message</code> property in.NET or
- the <code>getMessage()</code> method in Java). These messages are intended
- to be read by humans to help diagnose the error (or other cause of the
- exception); they are not intended to be parsed by computer programs,
- and the exact text of the messages may change at any time between
- versions of this library.</p></p>
-
 <h2>Methods</h2>
 
 <ul>
-<li><code>ETrapException() ETrapException</code><br>
-Initializes a new instance of the ETrapException class.</li>
+<li><code>ETrapException()</code><br></li>
 <li><code>ETrapException​(int flags,
           int flag,
           EContext ctx,
-          java.lang.Object result) ETrapException</code><br>
-Initializes a new instance of the ETrapException class.</li>
+          java.lang.Object result)</code><br></li>
 <li><code>ETrapException​(int flag,
           EContext ctx,
-          java.lang.Object result) ETrapException</code><br>
-Initializes a new instance of the ETrapException class.</li>
-<li><code>ETrapException​(java.lang.String message) ETrapException</code><br>
-Initializes a new instance of the ETrapException class.</li>
+          java.lang.Object result)</code><br></li>
+<li><code>ETrapException​(java.lang.String message)</code><br></li>
 <li><code>ETrapException​(java.lang.String message,
-          java.lang.Throwable innerException) ETrapException</code><br>
-Initializes a new instance of the ETrapException class.</li>
-<li><code>EContext getContext()</code><br>
-Gets the arithmetic context used during the operation that triggered the
-trap.</li>
-<li><code>int getError()</code><br>
-Gets the flag that specifies the primary kind of error in one or more
-operations (EContext.FlagXXX).</li>
-<li><code>int getErrors()</code><br>
-Gets the flags that were signaled as the result of one or more operations.</li>
-<li><code>java.lang.Object getResult()</code><br>
-Gets the defined result of the operation that caused the trap.</li>
-<li><code>boolean HasError​(int flag)</code><br>
-Returns whether this trap exception specifies all the flags given.</li>
+          java.lang.Throwable innerException)</code><br></li>
+<li><code>EContext getContext()</code><br></li>
+<li><code>int getError()</code><br></li>
+<li><code>int getErrors()</code><br></li>
+<li><code>java.lang.Object getResult()</code><br></li>
+<li><code>boolean HasError​(int flag)</code><br></li>
 </ul>
 
 <h2>Constructors</h2>
 
 <ul>
-<li><code>ETrapException() ETrapException</code><br>
-Initializes a new instance of the ETrapException class.</li>
+<li><code>ETrapException()</code><br></li>
 <li><code>ETrapException​(int flags,
           int flag,
           EContext ctx,
-          java.lang.Object result) ETrapException</code><br>
-Initializes a new instance of the ETrapException class.</li>
+          java.lang.Object result)</code><br></li>
 <li><code>ETrapException​(int flag,
           EContext ctx,
-          java.lang.Object result) ETrapException</code><br>
-Initializes a new instance of the ETrapException class.</li>
-<li><code>ETrapException​(java.lang.String message) ETrapException</code><br>
-Initializes a new instance of the ETrapException class.</li>
+          java.lang.Object result)</code><br></li>
+<li><code>ETrapException​(java.lang.String message)</code><br></li>
 <li><code>ETrapException​(java.lang.String message,
-          java.lang.Throwable innerException) ETrapException</code><br>
-Initializes a new instance of the ETrapException class.</li>
+          java.lang.Throwable innerException)</code><br></li>
 </ul>
 
 <h2>Method Details</h2>
@@ -82,168 +53,50 @@ Initializes a new instance of the ETrapException class.</li>
 <pre>public ETrapException()
 </pre>
 
-<p>Initializes a new instance of the <code>ETrapException</code> class.</p>
-
 <h3>ETrapException</h3>
 
 <pre>public ETrapException​(java.lang.String message)
 </pre>
-
-<p>Initializes a new instance of the <code>ETrapException</code> class.</p>
-
-<p><strong>Parameters:</strong></p>
-
-<ul>
-<li><code>message</code> - The parameter <code>message</code> is a text string.</li>
-</ul>
 
 <h3>ETrapException</h3>
 
 <pre>public ETrapException​(java.lang.String message, java.lang.Throwable innerException)
 </pre>
 
-<p>Initializes a new instance of the <code>ETrapException</code> class.</p>
-
-<p><strong>Parameters:</strong></p>
-
-<ul>
-<li><p><code>message</code> - The parameter <code>message</code> is a text string.</p></li>
-<li><p><code>innerException</code> - The parameter <code>innerException</code> is an Exception
-object.</p></li>
-</ul>
-
 <h3>ETrapException</h3>
 
 <pre>public ETrapException​(int flag, EContext ctx, java.lang.Object result)
 </pre>
-
-<p>Initializes a new instance of the <code>ETrapException</code> class.</p>
-
-<p><strong>Parameters:</strong></p>
-
-<ul>
-<li><p><code>flag</code> - The flag that specifies the kind of error from one or more
-operations (EContext.FlagXXX). This will only be one flag, such as
-<code>FlagInexact</code> or FlagSubnormal.</p></li>
-<li><p><code>ctx</code> - The arithmetic context used during the operation that triggered
-the trap. Can be null.</p></li>
-<li><p><code>result</code> - The defined result of the operation that caused the trap.</p></li>
-</ul>
 
 <h3>ETrapException</h3>
 
 <pre>public ETrapException​(int flags, int flag, EContext ctx, java.lang.Object result)
 </pre>
 
-<p>Initializes a new instance of the <code>ETrapException</code> class.</p>
-
-<p><strong>Parameters:</strong></p>
-
-<ul>
-<li><p><code>flags</code> - Specifies the flags that were signaled as the result of one or
-more operations. This includes the flag specified in the &quot;flag&quot;
-parameter, but can include other flags. For instance, if &quot;flag&quot; is
-<code>EContext.FlagInexact</code>, this parameter might be <code>
-EContext.FlagInexact | EContext.FlagRounded</code>.</p></li>
-<li><p><code>flag</code> - Specifies the flag that specifies the primary kind of error from
-one or more operations (EContext.FlagXXX). This will only be one
-flag, such as <code>FlagInexact</code> or FlagSubnormal.</p></li>
-<li><p><code>ctx</code> - The arithmetic context used during the operation that triggered
-the trap. Can be null.</p></li>
-<li><p><code>result</code> - The defined result of the operation that caused the trap.</p></li>
-</ul>
-
-<p><strong>Throws:</strong></p>
-
-<ul>
-<li><code>java.lang.IllegalArgumentException</code> - The parameter <code>flags</code> doesn&#39;t include all
-the flags in the <code>flag</code> parameter.</li>
-</ul>
-
 <h3>getContext</h3>
 
 <pre>public final EContext getContext()
 </pre>
-
-<p>Gets the arithmetic context used during the operation that triggered the
- trap. May be null.</p>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>The arithmetic context used during the operation that triggered the
-trap. May be null.</li>
-</ul>
 
 <h3>getResult</h3>
 
 <pre>public final java.lang.Object getResult()
 </pre>
 
-<p>Gets the defined result of the operation that caused the trap.</p>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>The defined result of the operation that caused the trap.</li>
-</ul>
-
 <h3>getError</h3>
 
 <pre>public final int getError()
 </pre>
-
-<p>Gets the flag that specifies the primary kind of error in one or more
- operations (EContext.FlagXXX). This will only be one flag, such as
- <code>FlagInexact</code> or FlagSubnormal.</p>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>The flag that specifies the primary kind of error in one or more
-operations.</li>
-</ul>
 
 <h3>getErrors</h3>
 
 <pre>public final int getErrors()
 </pre>
 
-<p>Gets the flags that were signaled as the result of one or more operations.
-  This includes the flag specified in the &quot;flag&quot; parameter, but can
-  include other flags. For instance, if &quot;flag&quot; is
- <code>EContext.FlagInexact</code>, this parameter might be
- <code>EContext.FlagInexact | EContext.FlagRounded</code>.</p>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>The flags that specify the errors in one or more operations.</li>
-</ul>
-
 <h3>HasError</h3>
 
 <pre>public boolean HasError​(int flag)
 </pre>
-
-<p>Returns whether this trap exception specifies all the flags given. (Flags
- are signaled in a trap exception as the result of one or more
- operations involving arbitrary-precision numbers, such as
- multiplication of two EDecimals.).</p>
-
-<p><strong>Parameters:</strong></p>
-
-<ul>
-<li><code>flag</code> - A combination of one or more flags, such as <code>
-EContext.FlagInexact | EContext.FlagRounded</code>.</li>
-</ul>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>True if this exception pertains to all of the flags given in <code>
-flag</code> ; otherwise, false.</li>
-</ul>
 
 <p><a href="/Numbers/">Back to Numbers start page.</a></p>
 </div><nav id="navigation"><ul>
