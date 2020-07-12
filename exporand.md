@@ -32,16 +32,21 @@ It makes use of two observations (based on the parameter &lambda; of the exponen
 
 To implement these probabilities using just random bits, the code uses two algorithms:
 
-- One to simulate a probability of the form `exp(-x/y)` (`zero_or_one_exp_minus`; (Canonne et al. 2020)<sup>[**(6)**](#Note6)</sup>).
-- One to simulate a probability of the form `1/(1+exp(lamda/pow(2, prec)))` (`logisticexp` (Morina et al. 2019)<sup>[**(7)**](#Note7)</sup>).
+1. One to simulate a probability of the form `exp(-x/y)` (`zero_or_one_exp_minus`; (Canonne et al. 2020)<sup>[**(6)**](#Note6)</sup>).
+2. One to simulate a probability of the form `1/(1+exp(x/(y*pow(2, prec))))` (`logisticexp` (Morina et al. 2019)<sup>[**(7)**](#Note7)</sup>).
 
 Both algorithms are included in the Python code below.  (Note that `zero_or_one_exp_minus` uses `random.randint` which does not necessarily use only random bits; it could be replaced with a random-bit-only algorithm such as FastDiceRoller or Bernoulli, both of which were presented by Lumbroso (2013)<sup>[**(8)**](#Note8)</sup>.)
 
-```
+The code below supports rational-valued &lambda; parameters.  It can be extended to also support any real-valued &lambda; parameter in (0, 1), as long as it can be simulated by an algorithm that outputs heads with probability equal to &lambda;.  For example, in the code below:
 
+- `zero_or_one_exp_minus(a, b)` can be replaced with the `exp_minus` algorithm of (Łatuszyński et al. 2011)<sup>[**(10)**](#Note10)</sup> or that of (Flajolet et al. 2010)<sup>[**(11)**](#Note11)</sup> (e.g., `bernoulli.exp_minus(lambda: random.randint(0, y-1) < x)`; see a class I wrote called "[**bernoulli.py**](https://github.com/peteroupc/peteroupc.github.io/blob/master/bernoulli.py)).
+- `logisticexp(a, b, index+1)` can be replaced with a modified `logisticexp` as follows: `bf=lambda: 1 if (random.randint(0, (2**prec)-1) == 0 and prob()==1) else 0`, and loop the following two statements: `if random.randint(0,1)==0: return 0` and `if bernoulli.exp_minus(bf) == 1: return 1`.
+
+```
 import random
 
 def logisticexp(ln, ld, prec):
+    "'" Returns 1 with probability 1/(1+exp(ln/(ld*2^prec))). """
         denom=ld*2**prec
         while True:
            if random.randint(0,1)==0: return 0
@@ -258,6 +263,10 @@ def exprandscore(ln,ld,ln2,ld2):
 <small><sup id=Note8>(8)</sup> Lumbroso, J., "[**Optimal Discrete Uniform Generation from Coin Flips, and Applications**](https://arxiv.org/abs/1304.1916)", arXiv:1304.1916 [cs.DS].</small>
 
 <small><sup id=Note9>(9)</sup> Efraimidis, P. "[**Weighted Random Sampling over Data Streams**](https://arxiv.org/abs/1012.0256v2)", arXiv:1012.0256v2 [cs.DS], 2015.</small>
+
+<small><sup id=Note10>(10)</sup> Łatuszyński, K., Kosmidis, I.,  Papaspiliopoulos, O., Roberts, G.O., "Simulating events of unknown probabilities via reverse time martingales", 2011.</small>
+
+<small><sup id=Note11>(11)</sup> Flajolet, P., Pelletier, M., Soria, M., "[**On Buffon machines and numbers**](https://arxiv.org/abs/0906.5560v2)", arXiv:0906.5560v2  [math.PR], 2010.</small>
 
 <a id=License></a>
 ## License

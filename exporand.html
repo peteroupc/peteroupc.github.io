@@ -41,17 +41,24 @@
 
 <p>To implement these probabilities using just random bits, the code uses two algorithms:</p>
 
-<ul>
+<ol>
 <li>One to simulate a probability of the form <code>exp(-x/y)</code> (<code>zero_or_one_exp_minus</code>; (Canonne et al. 2020)<sup><a href="#Note6"><strong>(6)</strong></a></sup>).</li>
-<li>One to simulate a probability of the form <code>1/(1+exp(lamda/pow(2, prec)))</code> (<code>logisticexp</code> (Morina et al. 2019)<sup><a href="#Note7"><strong>(7)</strong></a></sup>).</li>
-</ul>
+<li>One to simulate a probability of the form <code>1/(1+exp(x/(y*pow(2, prec))))</code> (<code>logisticexp</code> (Morina et al. 2019)<sup><a href="#Note7"><strong>(7)</strong></a></sup>).</li>
+</ol>
 
 <p>Both algorithms are included in the Python code below.  (Note that <code>zero_or_one_exp_minus</code> uses <code>random.randint</code> which does not necessarily use only random bits; it could be replaced with a random-bit-only algorithm such as FastDiceRoller or Bernoulli, both of which were presented by Lumbroso (2013)<sup><a href="#Note8"><strong>(8)</strong></a></sup>.)</p>
 
-<pre>
-import random
+<p>The code below supports rational-valued &lambda; parameters.  It can be extended to also support any real-valued &lambda; parameter in (0, 1), as long as it can be simulated by an algorithm that outputs heads with probability equal to &lambda;.  For example, in the code below:</p>
+
+<ul>
+<li><code>zero_or_one_exp_minus(a, b)</code> can be replaced with the <code>exp_minus</code> algorithm of (Łatuszyński et al. 2011)<sup><a href="#Note10"><strong>(10)</strong></a></sup> or that of (Flajolet et al. 2010)<sup><a href="#Note11"><strong>(11)</strong></a></sup> (e.g., <code>bernoulli.exp_minus(lambda: random.randint(0, y-1) &lt; x)</code>; see a class I wrote called &quot;<a href="https://github.com/peteroupc/peteroupc.github.io/blob/master/bernoulli.py"><strong>bernoulli.py</strong></a>).</li>
+<li><code>logisticexp(a, b, index+1)</code> can be replaced with a modified <code>logisticexp</code> as follows: <code>bf=lambda: 1 if (random.randint(0, (2**prec)-1) == 0 and prob()==1) else 0</code>, and loop the following two statements: <code>if random.randint(0,1)==0: return 0</code> and <code>if bernoulli.exp_minus(bf) == 1: return 1</code>.</li>
+</ul>
+
+<pre>import random
 
 def logisticexp(ln, ld, prec):
+    &quot;&#39;&quot; Returns 1 with probability 1/(1+exp(ln/(ld*2^prec))). &quot;&quot;&quot;
         denom=ld*2**prec
         while True:
            if random.randint(0,1)==0: return 0
@@ -454,6 +461,10 @@ def exprandscore(ln,ld,ln2,ld2):
 <p><small><sup id=Note8>(8)</sup> Lumbroso, J., &quot;<a href="https://arxiv.org/abs/1304.1916"><strong>Optimal Discrete Uniform Generation from Coin Flips, and Applications</strong></a>&quot;, arXiv:1304.1916 [cs.DS].</small></p>
 
 <p><small><sup id=Note9>(9)</sup> Efraimidis, P. &quot;<a href="https://arxiv.org/abs/1012.0256v2"><strong>Weighted Random Sampling over Data Streams</strong></a>&quot;, arXiv:1012.0256v2 [cs.DS], 2015.</small></p>
+
+<p><small><sup id=Note10>(10)</sup> Łatuszyński, K., Kosmidis, I.,  Papaspiliopoulos, O., Roberts, G.O., &quot;Simulating events of unknown probabilities via reverse time martingales&quot;, 2011.</small></p>
+
+<p><small><sup id=Note11>(11)</sup> Flajolet, P., Pelletier, M., Soria, M., &quot;<a href="https://arxiv.org/abs/0906.5560v2"><strong>On Buffon machines and numbers</strong></a>&quot;, arXiv:0906.5560v2  [math.PR], 2010.</small></p>
 
 <p><a id=License></a></p>
 
