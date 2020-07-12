@@ -35,6 +35,27 @@ object.</li>
 Parses a number from a byte sequence whose format follows the JSON
 specification (RFC 8259) and converts that number to a CBOR
 object.</li>
+<li><code>static CBORObject ParseJSONNumber​(char[] chars) char</code><br>
+Parses a number from a sequence of char s whose format follows the
+JSON specification.</li>
+<li><code>static CBORObject ParseJSONNumber​(char[] chars,
+           int offset,
+           int count) char</code><br>
+Parses a number whose format follows the JSON specification (RFC 8259) from
+a portion of a sequence of char s, and converts that number
+to a CBOR object.</li>
+<li><code>static CBORObject ParseJSONNumber​(char[] chars,
+           int offset,
+           int count,
+           JSONOptions options) char</code><br>
+Parses a number from a sequence of char s whose format follows the
+JSON specification (RFC 8259) and converts that number to a CBOR
+object.</li>
+<li><code>static CBORObject ParseJSONNumber​(char[] chars,
+           JSONOptions options) char</code><br>
+Parses a number from a sequence of char s whose format follows the
+JSON specification (RFC 8259) and converts that number to a CBOR
+object.</li>
 <li><code>static CBORObject ParseJSONNumber​(java.lang.String str)</code><br>
 Parses a number whose format follows the JSON specification.</li>
 <li><code>static CBORObject ParseJSONNumber​(java.lang.String str,
@@ -96,30 +117,6 @@ converts that number to a CBOR object.</li>
 zero if the number is a zero that starts with a minus sign (such as
 &quot;-0&quot; or &quot;-0.0&quot;). Returns null if the parsing fails, including if the
 string is null or empty.</li>
-</ul>
-
-<h3>ParseJSONNumber</h3>
-
-<pre>public static CBORObject ParseJSONNumber​(byte[] bytes)
-</pre>
-
-<p>Parses a number from a byte sequence whose format follows the JSON
- specification. The method uses a JSONOptions with all default
- properties except for a PreserveNegativeZero property of false.</p>
-
-<p><strong>Parameters:</strong></p>
-
-<ul>
-<li><code>bytes</code> - A byte sequence to parse as a JSON number.</li>
-</ul>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>A CBOR object that represents the parsed number. Returns positive
-zero if the number is a zero that starts with a minus sign (such as
-&quot;-0&quot; or &quot;-0.0&quot;). Returns null if the parsing fails, including if the
-byte sequence is null or empty.</li>
 </ul>
 
 <h3>ParseJSONNumber</h3>
@@ -419,6 +416,174 @@ parsing fails, including if the byte sequence is null or empty.</li>
 than 0 or greater than <code>bytes</code> &#39;s length, or <code>bytes</code> &#39;s
 length minus <code>offset</code> is less than <code>count</code>.</p></li>
 <li><p><code>java.lang.NullPointerException</code> - The parameter <code>bytes</code> is null.</p></li>
+</ul>
+
+<h3>ParseJSONNumber</h3>
+
+<pre>public static CBORObject ParseJSONNumber​(byte[] bytes)
+</pre>
+
+<p>Parses a number from a byte sequence whose format follows the JSON
+ specification. The method uses a JSONOptions with all default
+ properties except for a PreserveNegativeZero property of false.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>bytes</code> - A byte sequence to parse as a JSON number.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A CBOR object that represents the parsed number. Returns positive
+zero if the number is a zero that starts with a minus sign (such as
+&quot;-0&quot; or &quot;-0.0&quot;). Returns null if the parsing fails, including if the
+byte sequence is null or empty.</li>
+</ul>
+
+<h3>ParseJSONNumber</h3>
+
+<pre>public static CBORObject ParseJSONNumber​(char[] chars, int offset, int count, JSONOptions options)
+</pre>
+
+<p>Parses a number from a sequence of <code>char</code> s whose format follows the
+ JSON specification (RFC 8259) and converts that number to a CBOR
+ object.<p>Roughly speaking, a valid JSON number consists of an
+ optional minus sign, one or more basic digits (starting with 1 to 9
+ unless there is only one digit and that digit is 0), an optional
+  decimal point (&quot;.&quot;, full stop) with one or more basic digits, and an
+ optional letter E or e with an optional plus or minus sign and one
+ or more basic digits (the exponent). A sequence of <code>char</code> s
+ representing a valid JSON number is not allowed to contain white
+ space characters, including spaces.</p></p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>chars</code> - A sequence of <code>char</code> s to parse as a JSON number.</p></li>
+<li><p><code>offset</code> - An index, starting at 0, showing where the desired portion of
+<code>chars</code> begins.</p></li>
+<li><p><code>count</code> - The length, in code units, of the desired portion of <code>
+chars</code> (but not more than <code>chars</code> &#39;s length).</p></li>
+<li><p><code>options</code> - An object containing options to control how JSON numbers are
+decoded to CBOR objects. Can be null, in which case a JSONOptions
+object with all default properties is used instead.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A CBOR object that represents the parsed number. Returns null if the
+parsing fails, including if the sequence of <code>char</code> s is null
+or empty or <code>count</code> is 0 or less.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>java.lang.NullPointerException</code> - The parameter <code>chars</code> is null.</p></li>
+<li><p><code>java.lang.IllegalArgumentException</code> - Unsupported conversion kind.</p></li>
+</ul>
+
+<h3>ParseJSONNumber</h3>
+
+<pre>public static CBORObject ParseJSONNumber​(char[] chars, JSONOptions options)
+</pre>
+
+<p>Parses a number from a sequence of <code>char</code> s whose format follows the
+ JSON specification (RFC 8259) and converts that number to a CBOR
+ object.<p>Roughly speaking, a valid JSON number consists of an
+ optional minus sign, one or more basic digits (starting with 1 to 9
+ unless there is only one digit and that digit is 0), an optional
+  decimal point (&quot;.&quot;, full stop) with one or more basic digits, and an
+ optional letter E or e with an optional plus or minus sign and one
+ or more basic digits (the exponent). A sequence of <code>char</code> s
+ representing a valid JSON number is not allowed to contain white
+ space characters, including spaces.</p></p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>chars</code> - A sequence of <code>char</code> s to parse as a JSON number.</p></li>
+<li><p><code>options</code> - An object containing options to control how JSON numbers are
+decoded to CBOR objects. Can be null, in which case a JSONOptions
+object with all default properties is used instead.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A CBOR object that represents the parsed number. Returns null if the
+parsing fails, including if the sequence of <code>char</code> s is null
+or empty.</li>
+</ul>
+
+<h3>ParseJSONNumber</h3>
+
+<pre>public static CBORObject ParseJSONNumber​(char[] chars, int offset, int count)
+</pre>
+
+<p>Parses a number whose format follows the JSON specification (RFC 8259) from
+ a portion of a sequence of <code>char</code> s, and converts that number
+ to a CBOR object.<p>Roughly speaking, a valid JSON number consists
+ of an optional minus sign, one or more basic digits (starting with 1
+ to 9 unless there is only one digit and that digit is 0), an
+  optional decimal point (&quot;.&quot;, full stop) with one or more basic
+ digits, and an optional letter E or e with an optional plus or minus
+ sign and one or more basic digits (the exponent). A sequence of
+ <code>char</code> s representing a valid JSON number is not allowed to
+ contain white space characters, including spaces.</p></p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>chars</code> - A sequence of <code>char</code> s to parse as a JSON number.</p></li>
+<li><p><code>offset</code> - An index, starting at 0, showing where the desired portion of
+<code>chars</code> begins.</p></li>
+<li><p><code>count</code> - The length, in code units, of the desired portion of <code>
+chars</code> (but not more than <code>chars</code> &#39;s length).</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A CBOR object that represents the parsed number. Returns null if the
+parsing fails, including if the sequence of <code>char</code> s is null
+or empty.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>java.lang.IllegalArgumentException</code> - Either <code>offset</code> or <code>count</code> is less
+than 0 or greater than <code>chars</code> &#39;s length, or <code>chars</code> &#39;s
+length minus <code>offset</code> is less than <code>count</code>.</p></li>
+<li><p><code>java.lang.NullPointerException</code> - The parameter <code>chars</code> is null.</p></li>
+</ul>
+
+<h3>ParseJSONNumber</h3>
+
+<pre>public static CBORObject ParseJSONNumber​(char[] chars)
+</pre>
+
+<p>Parses a number from a sequence of <code>char</code> s whose format follows the
+ JSON specification. The method uses a JSONOptions with all default
+ properties except for a PreserveNegativeZero property of false.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>chars</code> - A sequence of <code>char</code> s to parse as a JSON number.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A CBOR object that represents the parsed number. Returns positive
+zero if the number is a zero that starts with a minus sign (such as
+&quot;-0&quot; or &quot;-0.0&quot;). Returns null if the parsing fails, including if the
+sequence of <code>char</code> s is null or empty.</li>
 </ul>
 
 <p><a href="/CBOR/">Back to CBOR start page.</a></p>
