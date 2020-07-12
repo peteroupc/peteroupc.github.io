@@ -1783,26 +1783,25 @@ result of the Remainder method on the two operands.</li>
 
 <p>Returns the greatest common divisor of this integer and the given integer.
  The greatest common divisor (GCD) is also known as the greatest
- common factor (GCF).</p>
+ common factor (GCF). This method works even if either or both
+ integers are negative.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>bigintSecond</code> - Another arbitrary-precision integer.</li>
+<li><code>bigintSecond</code> - Another arbitrary-precision integer. Can be negative.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>An arbitrary-precision integer.</li>
+<li>The greatest common divisor of this integer and the given integer.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
 
 <ul>
 <li><p><code>java.lang.NullPointerException</code> - The parameter <code>bigintSecond</code> is null.</p></li>
-<li><p><code>java.lang.IllegalArgumentException</code> - bigPower is negative; doesn&#39;t satisfy
-shiftBits&lt;16; doesn&#39;t satisfy sqroot.signum()&gt;= 0</p></li>
 <li><p><code>java.lang.ArithmeticException</code> - Attempted to divide by zero.</p></li>
 </ul>
 
