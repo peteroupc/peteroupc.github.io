@@ -13,6 +13,7 @@ Open-source articles on programming subjects.
 * [Random Number Generator Recommendations for Applications](./random.html)
 * [Random Number Generation and Sampling Methods](./randomfunc.html)
 * [More Random Number Sampling Methods](./randomnotes.html)
+* [Code Generator for Discrete Distributions](./autodist.html)
 * [The Most Common Topics Involving Randomization](./randomcommon.html)
 * [An Exact Beta Generator](./betadist.html)
 * [Partially-Sampled Exponential Random Numbers](./exporand.html)

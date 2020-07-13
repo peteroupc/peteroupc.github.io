@@ -963,19 +963,8 @@ is null.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>bytes</i>: A byte array consisting of the two&#39;s-complement form (see <a href="PeterO.Numbers.EDecimal.html">&#x22;Forms of numbers&#x22;</a>&quot;Forms of numbers&quot; ) of the arbitrary-precision integer to create. The byte array is encoded using the following rules:</p></li>
-<li><p>Positive numbers have the first byte&#39;s highest bit cleared, and negative numbers have the bit set.</p></li>
-<li><p>The last byte contains the lowest 8-bits, the next-to-last contains the next lowest 8 bits, and so on. For example, the number 300 can be encoded as  <code>0x01, 0x2C</code>  and 200 as  <code>0x00,
-        0xC8</code> . (Note that the second example contains a set high bit in  <code>0xC8</code> , so an additional 0 is added at the start to ensure it&#39;s interpreted as positive.)</p></li>
-<li><p>To encode negative numbers, take the absolute value of the number, subtract by 1, encode the number into bytes, and toggle each bit of each byte. Any further bits that appear beyond the most significant bit of the number will be all ones. For example, the number -450 can be encoded as  <code>0xfe, 0x70</code>  and -52869 as  <code>0xff, 0x31, 0x7B</code> . (Note that the second example contains a cleared high bit in  <code>0x31, 0x7B</code> , so an additional 0xff is added at the start to ensure it&#39;s interpreted as negative.)</p></li>
-</ul>
-
-<p>For little-endian, the byte order is reversed from the byte order just discussed.</p>
-
-<p>.</p>
-
-<ul>
-<li><i>littleEndian</i>: If true, the byte order is little-endian, or least-significant-byte first. If false, the byte order is big-endian, or most-significant-byte first.</li>
+<li><p><i>bytes</i>: A byte array consisting of the two&#39;s-complement form (see <a href="PeterO.Numbers.EDecimal.html">&#x22;Forms of numbers&#x22;</a>&quot;Forms of numbers&quot; ) of the arbitrary-precision integer to create. The byte array is encoded using the rules given in the FromBytes(bytes, offset, length, littleEndian) overload.</p></li>
+<li><p><i>littleEndian</i>: If true, the byte order is little-endian, or least-significant-byte first. If false, the byte order is big-endian, or most-significant-byte first.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -1560,17 +1549,17 @@ is null.</p></li>
     PeterO.Numbers.EInteger bigintSecond);
 </pre>
 
-<p>Returns the greatest common divisor of this integer and the given integer. The greatest common divisor (GCD) is also known as the greatest common factor (GCF).</p>
+<p>Returns the greatest common divisor of this integer and the given integer. The greatest common divisor (GCD) is also known as the greatest common factor (GCF). This method works even if either or both integers are negative.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>bigintSecond</i>: Another arbitrary-precision integer.</li>
+<li><i>bigintSecond</i>: Another arbitrary-precision integer. Can be negative.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p>An arbitrary-precision integer.</p>
+<p>The greatest common divisor of this integer and the given integer.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -1578,8 +1567,6 @@ is null.</p></li>
 <li><p>System.ArgumentNullException:
 The parameter  <i>bigintSecond</i>
 is null.</p></li>
-<li><p>System.ArgumentException:
-bigPower is negative; doesn&#39;t satisfy shiftBits&lt;16; doesn&#39;t satisfy sqroot.Sign&gt;= 0</p></li>
 <li><p>System.DivideByZeroException:
 Attempted to divide by zero.</p></li>
 </ul>

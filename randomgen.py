@@ -318,11 +318,15 @@ class FastLoadedDiceRoller:
 
     def __init__(self, weights):
         self.n = len(weights)
+        if self.n == 1:
+            return
         weightBits = 0
         totalWeights = sum(weights)
         if totalWeights < 0:
             raise ValueError("Sum of weights is negative")
-        tmp = totalWeights
+        if totalWeights == 0:
+            raise ValueError("Sum of weights is zero")
+        tmp = totalWeights - 1
         while tmp > 0:
             tmp >>= 1
             weightBits += 1
@@ -360,23 +364,28 @@ class FastLoadedDiceRoller:
             ret += "%s" % (str(self.leavesAndLabels[i]),)
         ret += "]\n\n"
         ret += "def " + name + "():\n"
-        ret += "  x = 0\n"
-        ret += "  y = 0\n"
-        ret += "  while True:\n"
-        ret += "    x = random.randint(0, 1) | (x << 1)\n"
-        ret += "    leaves = TABLE_" + name + "[0][y]\n"
-        ret += "    if x < leaves:\n"
-        ret += "        label = TABLE_" + name + "[x + 1][y]\n"
-        ret += "        if label <= %d:\n" % (self.n)
-        ret += "            return label - 1\n"
-        ret += "        x = 0\n"
-        ret += "        y = 0\n"
-        ret += "    else:\n"
-        ret += "        x -= leaves\n"
-        ret += "        y += 1\n"
-        return ret
+        if self.n <= 1:
+            ret += "return 0\n\n"
+        else:
+            ret += "  x = 0\n"
+            ret += "  y = 0\n"
+            ret += "  while True:\n"
+            ret += "    x = random.randint(0, 1) | (x << 1)\n"
+            ret += "    leaves = TABLE_" + name + "[0][y]\n"
+            ret += "    if x < leaves:\n"
+            ret += "        label = TABLE_" + name + "[x + 1][y]\n"
+            ret += "        if label <= %d:\n" % (self.n)
+            ret += "            return label - 1\n"
+            ret += "        x = 0\n"
+            ret += "        y = 0\n"
+            ret += "    else:\n"
+            ret += "        x -= leaves\n"
+            ret += "        y += 1\n"
+            return ret
 
     def next(self, randgen):
+        if self.n == 1:
+            return 0
         x = 0
         y = 0
         while True:
