@@ -1560,17 +1560,17 @@ is null.</p></li>
     PeterO.Numbers.EInteger bigintSecond);
 </pre>
 
-<p>Returns the greatest common divisor of this integer and the given integer. The greatest common divisor (GCD) is also known as the greatest common factor (GCF). This method works even if either or both integers are negative.</p>
+<p>Returns the greatest common divisor of this integer and the given integer. The greatest common divisor (GCD) is also known as the greatest common factor (GCF).</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>bigintSecond</i>: Another arbitrary-precision integer. Can be negative.</li>
+<li><i>bigintSecond</i>: Another arbitrary-precision integer.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p>The greatest common divisor of this integer and the given integer.</p>
+<p>An arbitrary-precision integer.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -1578,6 +1578,8 @@ is null.</p></li>
 <li><p>System.ArgumentNullException:
 The parameter  <i>bigintSecond</i>
 is null.</p></li>
+<li><p>System.ArgumentException:
+bigPower is negative; doesn&#39;t satisfy shiftBits&lt;16; doesn&#39;t satisfy sqroot.Sign&gt;= 0</p></li>
 <li><p>System.DivideByZeroException:
 Attempted to divide by zero.</p></li>
 </ul>
