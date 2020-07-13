@@ -540,6 +540,10 @@ is 0.</li>
 arbitrary-precision integer to create. The byte array is encoded
 using the rules given in the FromBytes(bytes, offset, length,
 littleEndian) overload.</p></li>
+<li><p><code>offset</code> - An index starting at 0 showing where the desired portion of
+<code>bytes</code> begins.</p></li>
+<li><p><code>length</code> - The length, in bytes, of the desired portion of <code>bytes</code>
+(but not more than <code>bytes</code> &#39;s length).</p></li>
 <li><p><code>littleEndian</code> - If true, the byte order is little-endian, or
 least-significant-byte first. If false, the byte order is
 big-endian, or most-significant-byte first.</p></li>
@@ -555,7 +559,10 @@ is 0.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>java.lang.NullPointerException</code> - The parameter <code>bytes</code> is null.</li>
+<li><p><code>java.lang.NullPointerException</code> - The parameter <code>bytes</code> is null.</p></li>
+<li><p><code>java.lang.IllegalArgumentException</code> - Either <code>offset</code> or <code>length</code> is less
+than 0 or greater than <code>bytes</code> &#39;s length, or <code>bytes</code> &#39;s
+length minus <code>offset</code> is less than <code>length</code>.</p></li>
 </ul>
 
 <h3>FromBoolean</h3>

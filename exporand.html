@@ -178,7 +178,7 @@ def exprand(lam):
 
 <h3>Extension</h3>
 
-<p>The code above supports rational-valued &lambda; parameters.  It can be extended to support any real-valued &lambda; parameter in (0, 1), as long as the parameter can be simulated by an algorithm that outputs heads with probability equal to &lambda; &lt;<This algorithm is also known as a _Bernoulli factory_, an algorithm that turns coins biased one way into coins biased another way (Keane,  M.  S.,  and  O'Brien,  G.  L., "A Bernoulli factory", _ACM Transactions on Modeling and Computer Simulation_ 4(2), 1994.)>&gt;.  For example, in the code above:</p>
+<p>The code above supports rational-valued &lambda; parameters.  It can be extended to support any real-valued &lambda; parameter in (0, 1), as long as the parameter can be simulated by an algorithm that outputs heads with probability equal to &lambda; <sup><a href="#Note12"><strong>(12)</strong></a></sup>.  For example, in the code above:</p>
 
 <ul>
 <li><code>exprandnew</code> is modified to take a function that implements the simulation algorithm (e.g., <code>prob</code>), rather than <code>lamdanum</code> and <code>lamdaden</code>.</li>
@@ -470,6 +470,8 @@ def exprandscore(ln,ld,ln2,ld2):
 <p><small><sup id=Note10>(10)</sup> Flajolet, P., Pelletier, M., Soria, M., &quot;<a href="https://arxiv.org/abs/0906.5560v2"><strong>On Buffon machines and numbers</strong></a>&quot;, arXiv:0906.5560v2  [math.PR], 2010.</small></p>
 
 <p><small><sup id=Note11>(11)</sup> Efraimidis, P. &quot;<a href="https://arxiv.org/abs/1012.0256v2"><strong>Weighted Random Sampling over Data Streams</strong></a>&quot;, arXiv:1012.0256v2 [cs.DS], 2015.</small></p>
+
+<p><small><sup id=Note12>(12)</sup> This algorithm is also known as a <em>Bernoulli factory</em>, an algorithm that turns coins biased one way into coins biased another way (Keane,  M.  S.,  and  O&#39;Brien,  G.  L., &quot;A Bernoulli factory&quot;, <em>ACM Transactions on Modeling and Computer Simulation</em> 4(2), 1994.)</small></p>
 
 <p><a id=License></a></p>
 

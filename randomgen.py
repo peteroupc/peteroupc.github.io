@@ -459,7 +459,8 @@ class OptimalSampler:
     Implements a sampler which chooses a random number in [0, n)
     where the probability that each number is chosen is weighted.  The 'weights' is the
     list of weights each 0 or greater; the higher the weight, the greater
-    the probability.  This sampler supports only integer weights, but the sampler is entropy-optimal as long as the sum of those weights is of the form 2^k or 2^k-2^m.
+    the probability.  This sampler supports only integer weights, but the sampler is
+    entropy-optimal as long as the sum of those weights is of the form 2^k or 2^k-2^m.
 
     Reference: Feras A. Saad, Cameron E. Freer, Martin C. Rinard, and Vikash K. Mansinghka. Optimal Approximate Sampling From Discrete Probability Distributions. Proc. ACM Program. Lang. 4, POPL, Article 36 (January 2020), 33 pages.
  """
