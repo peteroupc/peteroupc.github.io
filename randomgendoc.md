@@ -52,23 +52,26 @@ CLASSES
      |  Methods defined here:
      |
      |  __init__(self, arr, zerosAtEnd=False)
-     |      # Binary expansion of a real number in (0, 1), initialized
-     |      # from an array of zeros and ones expressing the binary
-     |      # expansion.
-     |      # The first binary digit is the half digit, the second
-     |      # is the quarter digit, the third is the one-eighth digit,
-     |      # and so on.  Note that the number 1 can be
-     |      # expressed by passing an empty array and specifying
-     |      # zerosAtEnd = False, and the number 0 can be
-     |      # expressed by passing an empty array and specifying
-     |      # zerosAtEnd = True.
-     |      # arr - Array indicating the initial digits of the binary
-     |      # expansion.
-     |      # zerosAtEnd - Indicates whether the rest of the binary
-     |      # expansion is filled with zeros or ones.  Default is False,
-     |      # meaning the expansion is filled with ones at the end.
+     |      Binary expansion of a real number in (0, 1), initialized
+     |      from an array of zeros and ones expressing the binary
+     |      expansion.
+     |      The first binary digit is the half digit, the second
+     |      is the quarter digit, the third is the one-eighth digit,
+     |      and so on.  Note that the number 1 can be
+     |      expressed by passing an empty array and specifying
+     |      zerosAtEnd = False, and the number 0 can be
+     |      expressed by passing an empty array and specifying
+     |      zerosAtEnd = True.
+     |      arr - Array indicating the initial digits of the binary
+     |      expansion.
+     |      zerosAtEnd - Indicates whether the binary expansion
+     |      is expressed as 0.xxx0000... or 0.yyy1111... (e.g., 0.1010000...
+     |      vs. 0.1001111....  Default is the latter case (False).
      |
      |  entropy(self)
+     |
+     |  eof(self)
+     |      Returns True if the end of the binary expansion was reached; False otherwise.
      |
      |  fromFloat(f)
      |      Creates a binary expansion object from a 64-bit floating-point number in the
@@ -547,8 +550,8 @@ CLASSES
      |
      |  discretegen(self, probs)
      |      Generates a random integer in [0, n), where the probability
-     |      of drawing each integer is specified as an
-     |      array of probabilities that sum to 1, where n is the
+     |      of drawing each integer is specified as a list
+     |      of probabilities that sum to 1, where n is the
      |      number of probabilities.  This method is optimal,
      |      or at least nearly so, in terms of the number of random
      |      bits required to generate the number
@@ -556,34 +559,30 @@ CLASSES
      |      a solution to exercise 3.4.2 of chapter 15 of Luc Devroye's
      |      _Non-Uniform Random Variate Generation_, 1986.
      |
-     |      - probs.  Array of probability objects, where for each item
-     |         in the probability array, the integer 'i' is chosen
+     |      - probs.  List of probability objects, where for each item
+     |         in the probability list, the integer 'i' is chosen
      |         with probability 'probs[i]'.
      |         Each probability object provides access to a binary
      |         expansion of the probability, which must be a real number in
-     |         (0, 1); that is, probabilities of zero are not allowed.
-     |         The binary expansion is a sequence of zeros and ones
+     |         the interval [0, 1]. The binary expansion is a sequence of zeros and ones
      |         expressed as follows: The first binary digit is the half digit, the second
      |         is the quarter digit, the third is the one-eighth digit,
-     |         and so on. In addition, the probability must have an _infinite_ binary
-     |         expansion; that is, any expansion that has an endless sequence
-     |         of zeros is not allowed. (This requirement is necessary because
-     |         the sampler can only terminate if a 1 bit is read from a probability's
-     |         binary expansion.) Any probability with a terminating binary
-     |         expansion can be implemented by "subtracting" 1 from the expansion
-     |         and then appending an infinite sequence of ones at the end.
-     |         The probability object must implement the following
-     |         two methods:
+     |         and so on. Note that any probability with a terminating binary
+     |         expansion (except 0) can be implemented by "subtracting" 1
+     |         from the expansion and then appending an infinite sequence
+     |         of ones at the end. The probability object must implement the following
+     |         three methods:
      |         - reset(): Resets the probability object to the first digit in
      |            the binary expansion.
      |         - nextbit(): Gets the next digit in the binary expansion.
+     |         - eof(): Gets whether the end of the binary expansion was reached
+     |            (True or False), meaning the rest of the digits in the expansion are
+     |            all zeros.
      |         The probability object will have to be mutable for this method
      |         to work.
      |         The BinaryExpansion class is a convenient way to express numbers
      |         as probability objects that meet these criteria.  Each probability object
-     |         can also be a float, int, or Fraction in the interval (0, 1), but this method
-     |         will convert such an object to a binary expansion,
-     |         which may be a slow process.
+     |         can also be a float, int, or Fraction in the interval [0, 1].
      |
      |  expoNumerator(self, denom)
      |      Generates the numerator of an exponential random
@@ -662,7 +661,6 @@ CLASSES
      |      centered at the origin.
      |
      |  integersWithSum(self, n, total)
-     |      "
      |      Returns a list of 'n' integers 0 or greater that sum to 'total'.
      |      The combination is chosen uniformly at random among all
      |      possible combinations.
@@ -1338,9 +1336,6 @@ FUNCTIONS
         number called a "u-rand" (Karney, "Sampling exactly from the normal distribution").
         A u-rand is a list of two numbers: the first is a multiple of 2^X, and the second is X.
         The urand created by this method will be "empty" (no bits sampled yet).
-
-DATA
-    GaussKronrodArray = [0.9969339225295955, 0.00825771143316837, 0.0, 0.9...
 
 FILE
     /home/rooster/Documents/SharpDevelopProjects/peteroupc.github.io/randomgen.py

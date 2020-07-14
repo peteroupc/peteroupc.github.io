@@ -953,19 +953,51 @@ class PascalTriangle:
         return [x for x in self.table]
 
 class _FractionBinaryExpansion:
-    """ For fractions with an infinite binary expansion,
-      that is, non-dyadic fractions. """
-
     def __init__(self, frac):
         self.frac = frac
         self.tmpfrac = frac
         self.px = Fraction(1, 2)
 
     def reset(self):
+        """ Resets this object to the first bit in the binary expansion. """
         self.tmpfrac = frac
         self.px = Fraction(1, 2)
 
+    def eof(self):
+        """ Returns True if the end of the binary expansion was reached; False otherwise. """
+        return self.tmpfrac == 0
+
     def nextbit(self):
+        """ Reads the next bit in the binary expansion. """
+        if self.tmpfrac == 0:
+            return 0
+        if self.tmpfrac > self.px:
+            self.tmpfrac -= self.px
+            self.px /= 2
+            return 1
+        else:
+            self.px /= 2
+            return 0
+
+class _FloatBinaryExpansion:
+    def __init__(self, frac):
+        self.frac = frac
+        self.tmpfrac = frac
+        self.px = 0.5
+
+    def reset(self):
+        """ Resets this object to the first bit in the binary expansion. """
+        self.tmpfrac = frac
+        self.px = 0.5
+
+    def eof(self):
+        """ Returns True if the end of the binary expansion was reached; False otherwise. """
+        return self.tmpfrac == 0
+
+    def nextbit(self):
+        """ Reads the next bit in the binary expansion. """
+        if self.tmpfrac == 0:
+            return 0
         if self.tmpfrac > self.px:
             self.tmpfrac -= self.px
             self.px /= 2
@@ -977,25 +1009,25 @@ class _FractionBinaryExpansion:
 class BinaryExpansion:
     def __init__(self, arr, zerosAtEnd=False):
         """
-  # Binary expansion of a real number in (0, 1), initialized
-  # from an array of zeros and ones expressing the binary
-  # expansion.
-  # The first binary digit is the half digit, the second
-  # is the quarter digit, the third is the one-eighth digit,
-  # and so on.  Note that the number 1 can be
-  # expressed by passing an empty array and specifying
-  # zerosAtEnd = False, and the number 0 can be
-  # expressed by passing an empty array and specifying
-  # zerosAtEnd = True.
-  # arr - Array indicating the initial digits of the binary
-  # expansion.
-  # zerosAtEnd - Indicates whether the rest of the binary
-  # expansion is filled with zeros or ones.  Default is False,
-  # meaning the expansion is filled with ones at the end.
+  Binary expansion of a real number in (0, 1), initialized
+  from an array of zeros and ones expressing the binary
+  expansion.
+  The first binary digit is the half digit, the second
+  is the quarter digit, the third is the one-eighth digit,
+  and so on.  Note that the number 1 can be
+  expressed by passing an empty array and specifying
+  zerosAtEnd = False, and the number 0 can be
+  expressed by passing an empty array and specifying
+  zerosAtEnd = True.
+  arr - Array indicating the initial digits of the binary
+  expansion.
+  zerosAtEnd - Indicates whether the binary expansion
+  is expressed as 0.xxx0000... or 0.yyy1111... (e.g., 0.1010000...
+  vs. 0.1001111....  Default is the latter case (False).
      """
         self.arr = [x for x in arr]
         self.zerosAtEnd = zerosAtEnd
-        if sum(self.arr) > 0:
+        if sum(self.arr) > 0 and not zerosAtEnd:
             # "Subtract" 1 from the binary expansion
             i = len(self.arr) - 1
             while i >= 0:
@@ -1004,6 +1036,10 @@ class BinaryExpansion:
                     break
                 i -= 1
         self.index = 0
+
+    def eof(self):
+        """ Returns True if the end of the binary expansion was reached; False otherwise. """
+        return self.zerosAtEnd and self.index >= len(self.arr)
 
     def entropy(self):
         # Binary entropy
@@ -1048,24 +1084,6 @@ class BinaryExpansion:
             return BinaryExpansion([], False)
         if f < 0 or f > 1:
             raise ValueError
-        # Only dyadic fractions (those with a power-of-2
-        # denominator) have a finite binary expansion.
-        den = abs(f.denominator)
-        while den > 0 and (den & 1) != 0:
-            den >>= 1
-        if den == 1:
-            # This is a dyadic fraction
-            px = Fraction(1, 2)
-            ret = []
-            while f != 0:
-                ret.append(1 if f > px else 0)
-                if f > px:
-                    f -= px
-                if f == 0:
-                    break
-                px /= 2
-            return BinaryExpansion(ret)
-        # Non-dyadic fraction
         return _FractionBinaryExpansion(f)
 
     def fromFloat(f):
@@ -1077,16 +1095,7 @@ class BinaryExpansion:
             return BinaryExpansion([], False)
         if f < 0 or f > 1:
             raise ValueError
-        px = 0.5
-        ret = []
-        for b in range(1075):
-            ret.append(1 if f > px else 0)
-            if f > px:
-                f -= px
-            if f == 0:
-                break
-            px /= 2
-        return BinaryExpansion(ret)
+        return _FloatBinaryExpansion(f)
 
     def value(self):
         px = 0.5
@@ -2406,7 +2415,7 @@ possible combinations.
         return [ls[i] - ls[i - 1] for i in range(1, len(ls))]
 
     def integersWithSum(self, n, total):
-        """"
+        """
 Returns a list of 'n' integers 0 or greater that sum to 'total'.
 The combination is chosen uniformly at random among all
 possible combinations.
@@ -3564,8 +3573,8 @@ algorithm", arXiv:1511.02273v2  [cs.IT], 2016.
     def discretegen(self, probs):
         """
 Generates a random integer in [0, n), where the probability
-of drawing each integer is specified as an
-array of probabilities that sum to 1, where n is the
+of drawing each integer is specified as a list
+of probabilities that sum to 1, where n is the
 number of probabilities.  This method is optimal,
 or at least nearly so, in terms of the number of random
 bits required to generate the number
@@ -3573,66 +3582,69 @@ on average. This method implements
 a solution to exercise 3.4.2 of chapter 15 of Luc Devroye's
 _Non-Uniform Random Variate Generation_, 1986.
 
-- probs.  Array of probability objects, where for each item
-   in the probability array, the integer 'i' is chosen
+- probs.  List of probability objects, where for each item
+   in the probability list, the integer 'i' is chosen
    with probability 'probs[i]'.
    Each probability object provides access to a binary
    expansion of the probability, which must be a real number in
-   (0, 1); that is, probabilities of zero are not allowed.
-   The binary expansion is a sequence of zeros and ones
+   the interval [0, 1]. The binary expansion is a sequence of zeros and ones
    expressed as follows: The first binary digit is the half digit, the second
    is the quarter digit, the third is the one-eighth digit,
-   and so on. In addition, the probability must have an _infinite_ binary
-   expansion; that is, any expansion that has an endless sequence
-   of zeros is not allowed. (This requirement is necessary because
-   the sampler can only terminate if a 1 bit is read from a probability's
-   binary expansion.) Any probability with a terminating binary
-   expansion can be implemented by "subtracting" 1 from the expansion
-   and then appending an infinite sequence of ones at the end.
-   The probability object must implement the following
-   two methods:
+   and so on. Note that any probability with a terminating binary
+   expansion (except 0) can be implemented by "subtracting" 1
+   from the expansion and then appending an infinite sequence
+   of ones at the end. The probability object must implement the following
+   three methods:
    - reset(): Resets the probability object to the first digit in
       the binary expansion.
    - nextbit(): Gets the next digit in the binary expansion.
+   - eof(): Gets whether the end of the binary expansion was reached
+      (True or False), meaning the rest of the digits in the expansion are
+      all zeros.
    The probability object will have to be mutable for this method
    to work.
    The BinaryExpansion class is a convenient way to express numbers
    as probability objects that meet these criteria.  Each probability object
-   can also be a float, int, or Fraction in the interval (0, 1), but this method
-   will convert such an object to a binary expansion,
-   which may be a slow process.
+   can also be a float, int, or Fraction in the interval [0, 1].
       """
-        # Reset probabilities to beginning
+        # Degenerate case
+        if len(probs) == 1:
+            return 0
+        # Reset probabilities' binary expansions to beginning
         probs = [BinaryExpansion.getOrReset(x) for x in probs]
         # Determined by num. of probs.
         maxNodes = 1 << (len(probs).bit_length())
         bitmask = maxNodes - 1
-        level = 1
+        # level = 1
         nodesInLevel = 2
         path = 0
         numRandomBits = 0
+        # print("--start--")
         while True:
             path = (path << 1) + self.rndbit()
             numRandomBits += 1
             path &= bitmask
             # Get next bit in binary expansion
             currbits = [pr.nextbit() for pr in probs]
+            eofs = sum(1 if pr.eof() else 0 for pr in probs)
             nodesum = sum(currbits)
-            for i in range(len(currbits)):
-                if currbits == 0:
-                    nodesInLevel += 1
             innerNodes = nodesInLevel - nodesum
-            if nodesum > 0 and nodesInLevel <= nodesum:
+            # Inner nodes are not needed if the end of all the
+            # binary expansions was already reached
+            innerNodesNeeded = 0 if (eofs == len(currbits)) else 1
+            # print([level, path, nodesInLevel, innerNodes, nodesum, currbits, \
+            #    [1 if pr.eof() else 0 for pr in probs]])
+            if nodesum > 0 and innerNodes < innerNodesNeeded:
                 # Fill path as necessary so that the number of nodes
                 # exceeds the node sum
-                while nodesum > 0 and nodesInLevel <= nodesum:
+                while nodesum > 0 and innerNodes < innerNodesNeeded:
                     path = (path << 1) + self.rndbit()
                     numRandomBits += 1
                     nodesInLevel += 1
                     path &= bitmask
-                    level += 1
-                innerNodes = nodesInLevel - nodesum
-            if nodesInLevel > nodesum and path >= nodesInLevel - nodesum:
+                    # level += 1
+                    innerNodes = nodesInLevel - nodesum
+            if innerNodes >= innerNodesNeeded and path >= nodesInLevel - nodesum:
                 # Check for leaves
                 pnode = 0
                 curnode = nodesInLevel - nodesum
@@ -3645,7 +3657,7 @@ _Non-Uniform Random Variate Generation_, 1986.
                 nodesInLevel -= nodesum
             elif nodesInLevel > nodesum:
                 nodesInLevel -= nodesum
-            level += 1
+            # level += 1
             nodesInLevel += innerNodes
             nodesInLevel = min(maxNodes, nodesInLevel)
 
@@ -4042,7 +4054,7 @@ class _GaussLobatto:
         ret = self.agl(a, mid) + self.agl(mid, h)
         return ret
 
-GaussKronrodArray = [
+_GaussKronrodArray = [
     0.99693392252959545,
     0.00825771143316837,
     0.00000000000000000,
@@ -4090,10 +4102,10 @@ def _gaussKronrod(func, mn, mx, direction=1, depth=0):
     gauss = 0
     kronrod = 0
     i = 0
-    while i < len(GaussKronrodArray):
-        gaussWeight = GaussKronrodArray[i + 2]
-        kronrodWeight = GaussKronrodArray[i + 1]
-        abscissa = GaussKronrodArray[i]
+    while i < len(_GaussKronrodArray):
+        gaussWeight = _GaussKronrodArray[i + 2]
+        kronrodWeight = _GaussKronrodArray[i + 1]
+        abscissa = _GaussKronrodArray[i]
         x = func(bm * abscissa + bp)
         # print([bm * abscissa + bp, x])
         gauss += gaussWeight * x
