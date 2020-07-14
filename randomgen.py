@@ -78,7 +78,7 @@ def urandnew():
 
 def urandless(rg, a, b):
     """ Determines whether the first u-rand is less than another u-rand; returns
-               true if so and false otherwise.  During
+               True if so and False otherwise.  During
                the comparison, additional bits will be sampled in both u-rands if necessary
                for the comparison. """
     abits = a[1]
@@ -114,7 +114,7 @@ def urandless(rg, a, b):
 
 def urandgreater(rg, a, b):
     """ Determines whether the first u-rand is greater than another u-rand; returns
-               true if so and false otherwise.  During
+               True if so and False otherwise.  During
                the comparison, additional bits will be sampled in both u-rands if necessary
                for the comparison. """
     abits = a[1]
@@ -802,7 +802,7 @@ class PascalTriangle:
         tablesum = sum(table)
         if tablesum > (1 << s):
             raise ValueError
-        if table.length != row.length:
+        if len(table) != len(row):
             raise ValueError
         for i in range(0, len(row)):
             coarse = table[i]
@@ -952,41 +952,168 @@ class PascalTriangle:
         self.rownumber += 1
         return [x for x in self.table]
 
+class _FractionBinaryExpansion:
+    """ For fractions with an infinite binary expansion,
+      that is, non-dyadic fractions. """
+
+    def __init__(self, frac):
+        self.frac = frac
+        self.tmpfrac = frac
+        self.px = Fraction(1, 2)
+
+    def reset(self):
+        self.tmpfrac = frac
+        self.px = Fraction(1, 2)
+
+    def nextbit(self):
+        if self.tmpfrac > self.px:
+            self.tmpfrac -= self.px
+            self.px /= 2
+            return 1
+        else:
+            self.px /= 2
+            return 0
+
 class BinaryExpansion:
-    """ Generates the binary expansion of a 64-bit floating-point
-        number 'fp', assuming the number is greater than 0 and
-        less than 1.  An example of a binary expansion is:
-        0.1010111000010... """
+    def __init__(self, arr, zerosAtEnd=False):
+        """
+  # Binary expansion of a real number in (0, 1), initialized
+  # from an array of zeros and ones expressing the binary
+  # expansion.
+  # The first binary digit is the half digit, the second
+  # is the quarter digit, the third is the one-eighth digit,
+  # and so on.  Note that the number 1 can be
+  # expressed by passing an empty array and specifying
+  # zerosAtEnd = False, and the number 0 can be
+  # expressed by passing an empty array and specifying
+  # zerosAtEnd = True.
+  # arr - Array indicating the initial digits of the binary
+  # expansion.
+  # zerosAtEnd - Indicates whether the rest of the binary
+  # expansion is filled with zeros or ones.  Default is False,
+  # meaning the expansion is filled with ones at the end.
+     """
+        self.arr = [x for x in arr]
+        self.zerosAtEnd = zerosAtEnd
+        if sum(self.arr) > 0:
+            # "Subtract" 1 from the binary expansion
+            i = len(self.arr) - 1
+            while i >= 0:
+                self.arr[i] ^= 1
+                if self.arr[i] == 0:
+                    break
+                i -= 1
+        self.index = 0
 
-    def __init__(self, fp):
-        pw = fp
-        pt = 0.5
-        x = 0
-        sh = 0
-        while pw > 0:
-            x |= (1 if (pw >= pt) else 0) << sh
-            sh += 1
-            if pw >= pt:
-                pw -= pt
-            pt /= 2
-        self.x = x
-        self.xorig = x
+    def entropy(self):
+        # Binary entropy
+        v = self.value()
+        return v * math.log2(1.0 / v)
 
-    def eof(self):
-        """ Returns whether the expansion has no more ones. """
-        return self.x == 0
+    def get(f):
+        """ Creates a binary expansion object from a fraction, 'int', or
+         'float' in the interval [0, 1]; returns 'f' unchanged, otherwise. """
+        if f == 0:
+            return BinaryExpansion([], True)
+        if f == 1:
+            return BinaryExpansion([], False)
+        if isinstance(f, Fraction):
+            return BinaryExpansion.fromFraction(f)
+        elif isinstance(f, float):
+            return BinaryExpansion.fromFloat(f)
+        else:
+            return f
 
-    def next(self):
-        """ Generates the next bit in the binary expansion, starting
-           with the bit after the point."""
-        ret = self.x & 1
-        self.x >>= 1
+    def getOrReset(f):
+        """ Creates a binary expansion object from a fraction, 'int', or
+         'float' in the interval [0, 1]; resets 'f' (calls its reset method) otherwise. """
+        if f == 0:
+            return BinaryExpansion([], True)
+        if f == 1:
+            return BinaryExpansion([], False)
+        if isinstance(f, Fraction):
+            return BinaryExpansion.fromFraction(f)
+        elif isinstance(f, float):
+            return BinaryExpansion.fromFloat(f)
+        else:
+            f.reset()
+            return f
+
+    def fromFraction(f):
+        """ Creates a binary expansion object from a fraction in the
+         interval [0, 1]. """
+        if f == 0:
+            return BinaryExpansion([], True)
+        if f == 1:
+            return BinaryExpansion([], False)
+        if f < 0 or f > 1:
+            raise ValueError
+        # Only dyadic fractions (those with a power-of-2
+        # denominator) have a finite binary expansion.
+        den = abs(f.denominator)
+        while den > 0 and (den & 1) != 0:
+            den >>= 1
+        if den == 1:
+            # This is a dyadic fraction
+            px = Fraction(1, 2)
+            ret = []
+            while f != 0:
+                ret.append(1 if f > px else 0)
+                if f > px:
+                    f -= px
+                if f == 0:
+                    break
+                px /= 2
+            return BinaryExpansion(ret)
+        # Non-dyadic fraction
+        return _FractionBinaryExpansion(f)
+
+    def fromFloat(f):
+        """ Creates a binary expansion object from a 64-bit floating-point number in the
+         interval [0, 1]. """
+        if f == 0:
+            return BinaryExpansion([], True)
+        if f == 1:
+            return BinaryExpansion([], False)
+        if f < 0 or f > 1:
+            raise ValueError
+        px = 0.5
+        ret = []
+        for b in range(1075):
+            ret.append(1 if f > px else 0)
+            if f > px:
+                f -= px
+            if f == 0:
+                break
+            px /= 2
+        return BinaryExpansion(ret)
+
+    def value(self):
+        px = 0.5
+        ret = 0
+        for b in range(max(128, len(self.arr) + 2)):
+            ret += px * self._nextbitat(b)
+            px /= 2
+        return ret
+
+    def _nextbitat(self, index):
+        if index >= len(self.arr):
+            return 0 if self.zerosAtEnd else 1
+        return self.arr[index]
+
+    def nextbit(self):
+        """ Reads the next bit in the binary expansion. """
+        # Append an infinite sequence of 1s so that, for example,
+        # if the expansion passed to this class is 0.1101010
+        # the expansion becomes  0.110100111111..., which expresses
+        # the same number.
+        ret = self._nextbitat(self.index)
+        self.index += 1
         return ret
 
     def reset(self):
-        """ Resets the expansion to before any bits were extracted
-           with the 'next' method. """
-        self.x = self.xorig
+        """ Resets this object to the first bit in the binary expansion. """
+        self.index = 0
 
 class RandomGen:
     """ A class that implements many methods for
@@ -1330,9 +1457,9 @@ Returns 'list'. """
 
     def bernoulli(self, p):
         """ Returns 1 at probability p, 0 otherwise. """
-        bexp = BinaryExpansion(p)
-        while not bexp.eof():
-            bp = bexp.next()
+        bexp = BinaryExpansion.fromFloat(p)
+        while True:
+            bp = bexp.nextbit()
             br = self.rndint(1)
             if br < bp:
                 return 1
@@ -2100,7 +2227,7 @@ Returns 'list'. """
     def exprandless(self, a, b):
         """ Determines whether one partially-sampled exponential number
            is less than another; returns
-           true if so and false otherwise.  During
+           True if so and False otherwise.  During
            the comparison, additional bits will be sampled in both numbers
            if necessary for the comparison. """
         # Check integer part of exponentials
@@ -2214,11 +2341,11 @@ of failures of each kind of failure.
         while i < succ:
             r = self.rndu01oneexc()
             p = 0
-            nosuccess = false
+            nosuccess = False
             for j in range(len(failures)):
                 if r >= p and r < p + failures[j]:
                     ret[j] += 1
-                    nosuccess = true
+                    nosuccess = True
                     break
                 p += failures[j]
             if not nosuccess:
@@ -3281,7 +3408,7 @@ Implements section 5 of Devroye and Gravel,
 "Sampling with arbitrary precision", arXiv:1502.02539v5 [cs.IT], 2015.
 - 'n' is the number of random numbers to generate.  Default is 1.
 - 'icdf' is a procedure that takes three arguments: u, ubits, digitplaces,
-   and returns a number within base^-digitplaces of the true inverse
+   and returns a number within base^-digitplaces of the True inverse
    CDF (inverse cumulative distribution function, or quantile function)
    of u/base^ubits, and is monotonic for a given value of `digitplaces`.
 - 'digitplaces' is an accuracy expressed as a number of digits after the
@@ -3318,7 +3445,7 @@ Finds the quantile of 'n' uniform random numbers expressed as "u-rands", or part
 - 'urands' is a list of "u-rands", or partially-sampled uniform random numbers.  Each u-rand is a list of two items, namely a multiple of 1/2^X, followed by X.  For example, the following generates a list of five empty
 u-rands: `[[0,0] for i in range(5)]`.
 - 'icdf' is a procedure that takes three arguments: u, ubits, digitplaces,
-   and returns a number within 2^-digitplaces of the true inverse
+   and returns a number within 2^-digitplaces of the True inverse
    CDF (inverse cumulative distribution function, or quantile function)
    of u/2^ubits, and is monotonic for a given value of `digitplaces`.
 - 'digitplaces' is an accuracy expressed as a number of bits after the
@@ -3433,6 +3560,94 @@ algorithm", arXiv:1511.02273v2  [cs.IT], 2016.
                 ret[k] = float(ret[k])
                 k += 1
         return ret
+
+    def discretegen(self, probs):
+        """
+Generates a random integer in [0, n), where the probability
+of drawing each integer is specified as an
+array of probabilities that sum to 1, where n is the
+number of probabilities.  This method is optimal,
+or at least nearly so, in terms of the number of random
+bits required to generate the number
+on average. This method implements
+a solution to exercise 3.4.2 of chapter 15 of Luc Devroye's
+_Non-Uniform Random Variate Generation_, 1986.
+
+- probs.  Array of probability objects, where for each item
+   in the probability array, the integer 'i' is chosen
+   with probability 'probs[i]'.
+   Each probability object provides access to a binary
+   expansion of the probability, which must be a real number in
+   (0, 1); that is, probabilities of zero are not allowed.
+   The binary expansion is a sequence of zeros and ones
+   expressed as follows: The first binary digit is the half digit, the second
+   is the quarter digit, the third is the one-eighth digit,
+   and so on. In addition, the probability must have an _infinite_ binary
+   expansion; that is, any expansion that has an endless sequence
+   of zeros is not allowed. (This requirement is necessary because
+   the sampler can only terminate if a 1 bit is read from a probability's
+   binary expansion.) Any probability with a terminating binary
+   expansion can be implemented by "subtracting" 1 from the expansion
+   and then appending an infinite sequence of ones at the end.
+   The probability object must implement the following
+   two methods:
+   - reset(): Resets the probability object to the first digit in
+      the binary expansion.
+   - nextbit(): Gets the next digit in the binary expansion.
+   The probability object will have to be mutable for this method
+   to work.
+   The BinaryExpansion class is a convenient way to express numbers
+   as probability objects that meet these criteria.  Each probability object
+   can also be a float, int, or Fraction in the interval (0, 1), but this method
+   will convert such an object to a binary expansion,
+   which may be a slow process.
+      """
+        # Reset probabilities to beginning
+        probs = [BinaryExpansion.getOrReset(x) for x in probs]
+        # Determined by num. of probs.
+        maxNodes = 1 << (len(probs).bit_length())
+        bitmask = maxNodes - 1
+        level = 1
+        nodesInLevel = 2
+        path = 0
+        numRandomBits = 0
+        while True:
+            path = (path << 1) + self.rndbit()
+            numRandomBits += 1
+            path &= bitmask
+            # Get next bit in binary expansion
+            currbits = [pr.nextbit() for pr in probs]
+            nodesum = sum(currbits)
+            for i in range(len(currbits)):
+                if currbits == 0:
+                    nodesInLevel += 1
+            innerNodes = nodesInLevel - nodesum
+            if nodesum > 0 and nodesInLevel <= nodesum:
+                # Fill path as necessary so that the number of nodes
+                # exceeds the node sum
+                while nodesum > 0 and nodesInLevel <= nodesum:
+                    path = (path << 1) + self.rndbit()
+                    numRandomBits += 1
+                    nodesInLevel += 1
+                    path &= bitmask
+                    level += 1
+                innerNodes = nodesInLevel - nodesum
+            if nodesInLevel > nodesum and path >= nodesInLevel - nodesum:
+                # Check for leaves
+                pnode = 0
+                curnode = nodesInLevel - nodesum
+                for i in range(len(currbits)):
+                    if currbits[i] == 1:
+                        if path == curnode:
+                            return i  # Reached end
+                        else:
+                            curnode += 1
+                nodesInLevel -= nodesum
+            elif nodesInLevel > nodesum:
+                nodesInLevel -= nodesum
+            level += 1
+            nodesInLevel += innerNodes
+            nodesInLevel = min(maxNodes, nodesInLevel)
 
     def numbers_from_pdf(self, pdf, mn, mx, n=1, steps=100):
         """ Generates one or more random numbers from a continuous probability
