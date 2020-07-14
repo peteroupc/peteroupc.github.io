@@ -184,6 +184,7 @@ var changefunc=function() {
      if(currentValue==curval)return
      currentValue=curval
      var weights=document.getElementById("probabilities").value
+     if(weights.length==0)return
      var genname=document.getElementById("genname").value.replace(/[^A-Za-z0-9_]+/g,"_")
        .replace(/^[0-9]/,"_")
      weights=weights.replace(/^\s+/g,"")
