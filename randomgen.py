@@ -3615,11 +3615,9 @@ _Non-Uniform Random Variate Generation_, 1986.
         # Determined by num. of probs.
         maxNodes = 1 << (len(probs).bit_length())
         bitmask = maxNodes - 1
-        # level = 1
         nodesInLevel = 2
         path = 0
         numRandomBits = 0
-        # print("--start--")
         while True:
             path = (path << 1) + self.rndbit()
             numRandomBits += 1
@@ -3632,8 +3630,6 @@ _Non-Uniform Random Variate Generation_, 1986.
             # Inner nodes are not needed if the end of all the
             # binary expansions was already reached
             innerNodesNeeded = 0 if (eofs == len(currbits)) else 1
-            # print([level, path, nodesInLevel, innerNodes, nodesum, currbits, \
-            #    [1 if pr.eof() else 0 for pr in probs]])
             if nodesum > 0 and innerNodes < innerNodesNeeded:
                 # Fill path as necessary so that the number of nodes
                 # exceeds the node sum
@@ -3642,7 +3638,6 @@ _Non-Uniform Random Variate Generation_, 1986.
                     numRandomBits += 1
                     nodesInLevel += 1
                     path &= bitmask
-                    # level += 1
                     innerNodes = nodesInLevel - nodesum
             if innerNodes >= innerNodesNeeded and path >= nodesInLevel - nodesum:
                 # Check for leaves
@@ -3657,7 +3652,6 @@ _Non-Uniform Random Variate Generation_, 1986.
                 nodesInLevel -= nodesum
             elif nodesInLevel > nodesum:
                 nodesInLevel -= nodesum
-            # level += 1
             nodesInLevel += innerNodes
             nodesInLevel = min(maxNodes, nodesInLevel)
 

@@ -22,6 +22,7 @@
 - [**Notes**](#Notes)
 - [**Appendix**](#Appendix)
     - [**Implementation of `erf`**](#Implementation_of_erf)
+    - [**A Note on Integer Generation Algorithms**](#A_Note_on_Integer_Generation_Algorithms)
     - [**A Note on Error-Bounded Algorithms**](#A_Note_on_Error_Bounded_Algorithms)
 - [**License**](#License)
 
@@ -543,6 +544,18 @@ then the solution involves turning a biased coin to a fair coin, and then turnin
 
 <small><sup id=Note14>(14)</sup> Hofert, M., and Maechler, M.  "Nested Archimedean Copulas Meet R: The nacopula Package".  _Journal of Statistical Software_ 39(9), 2011, pp. 1-20.</small>
 
+<small><sup id=Note15>(15)</sup> Knuth, Donald E. and Andrew Chi-Chih Yao. "The complexity of nonuniform random number generation", in _Algorithms and Complexity: New Directions and Recent Results_, 1976.</small>
+
+<small><sup id=Note16>(16)</sup> This is because the binary entropy of `p = 1/n` is `p * log2(1/p) = log2(n) / n`, and the sum of `n` binary entropies (for `n` outcomes with probability `1/n` each) is `log2(n)`.  Any optimal integer generator will come within 2 bits of this lower bound on average.</small>
+
+<small><sup id=Note17>(17)</sup> D. Lemire, "A fast alternative to the modulo reduction", Daniel Lemire's blog, 2016.</small>
+
+<small><sup id=Note18>(18)</sup> Lumbroso, J., "[**Optimal Discrete Uniform Generation from Coin Flips, and Applications**](https://arxiv.org/abs/1304.1916)", arXiv:1304.1916 [cs.DS]</small>
+
+<small><sup id=Note19>(19)</sup> "[**Probability and Random Numbers**](http://mathforum.org/library/drmath/view/65653.html)", Feb. 29, 2004.</small>
+
+<small><sup id=Note20>(20)</sup> Mennucci, A.C.G. "[**Bit Recycling for Scaling Random Number Generators**](https://arxiv.org/abs/1012.4290)", arXiv:1012.4290 [cs.IT], 2018.</small>
+
 <a id=Appendix></a>
 ## Appendix
 
@@ -577,6 +590,30 @@ The pseudocode below shows how the [**error function**](https://en.wikipedia.org
         return ret*2/sqrt(pi)
     END METHOD
 
+<a id=A_Note_on_Integer_Generation_Algorithms></a>
+### A Note on Integer Generation Algorithms
+
+There are many algorithms for the `RNDINT(maxInclusive)` method, which generates uniform random integers in [0, maxInclusive].  This section deals with "optimal" `RNDINT` algorithms in terms of the number of random bits they use on average (assuming we have a "true" random generator that outputs independent unbiased random bits).
+
+Knuth and Yao (1976)<sup>[**(15)**](#Note15)</sup> showed that any algorithm that uses only random bits to generate random integers with separate probabilities can be described as a _binary tree_ (also known as a _DDG tree_ or _discrete distribution generating tree_).  Random bits trace a path in this tree, and each leaf (terminal node) in the tree represents an outcome.  They also gave lower bounds on the number of random bits an algorithm needs on average for this purpose.  In the case of `RNDINT`, there are `n = maxInclusive + 1` outcomes that each occur with probability `1/n`, so any _optimal_ algorithm for `RNDINT` needs at least `log2(n)` and at most `log2(n) + 2` bits on average (where `log2(x) = ln(x)/ln(2)`).<sup>[**(16)**](#Note16)</sup>
+
+As also shown by Knuth and Yao, however, any integer generating algorithm that is both optimal _and unbiased (exact)_ will also run forever in the worst case, even if it uses few random bits on average.  This is because in most cases, `n` will not be a power of 2, so that `n` will have an infinite binary expansion, so that the resulting DDG tree will have to either be infinitely deep, or include "rejection leaves" at the end of the tree. (If `n` is a power of 2, the binary expansion will be finite, so that the DDG tree will have a finite depth and no rejection leaves.)
+
+Because of this, there is no general way to "fix" the worst case of running forever, while still having an unbiased (exact) algorithm.  For instance, modulo reductions can be represented by a DDG tree in which rejection leaves are replaced with labeled outcomes, but the bias occurs because only some outcomes can replace rejection leaves this way.  Even with rejection sampling, if the rejections stop after a set number of iterations, the same kind of bias will result.
+
+The following are some ways to implement `RNDINT`.  (The column "Unbiased?" means whether the algorithm generates random integers without bias, even if `n` is not a power of 2.)
+
+| Algorithm | Optimal? | Unbiased? | Time Complexity |
+  --- | --- | --- | --- |
+| _Rejection sampling_: Sample in a bigger range until a sampled number fits the smaller range. | Not always | Yes | Runs forever in worst case |
+| _Multiply-and-shift reduction_: Generate `bignumber`, a `k`-bit random integer with many more bits than `n` has, then find `(bignumber * n) >> k` (see (Lemire 2016)<sup>[**(17)**](#Note17)</sup> and the "Integer Multiplication" algorithm surveyed by M. O'Neill. | No | No | Constant |
+| _Modulo reduction_: Generate `bignumber` as above, then find `rem(bignumber, n)`  | No | No | Constant |
+| _Fast Loaded Dice Roller_ (Lumbroso 2013)<sup>[**(18)**](#Note18)</sup> | Yes | Yes | Runs forever in worst case |
+| Math Forum (2004)<sup>[**(19)**](#Note19)</sup> or (Mennucci 2018)<sup>[**(20)**](#Note20)</sup> (batching/recycling random bits) | Yes | Yes | Runs forever in worst case |
+| "FP Multiply" surveyed by [**M. O'Neill**](http://www.pcg-random.org/posts/bounded-rands.html) | No | No | Constant |
+| Algorithm in "Conclusion" section by O'Neill | No | Yes | Runs forever in worst case |
+| "Debiased" and "Bitmask with Rejection" surveyed by M. O'Neill | No | Yes | Runs forever in worst case |
+
 <a id=A_Note_on_Error_Bounded_Algorithms></a>
 ### A Note on Error-Bounded Algorithms
 
@@ -584,7 +621,7 @@ There are three kinds of randomization algorithms:
 
 1. An _error-bounded algorithm_ is an algorithm that samples a distribution in a manner that minimizes approximation error.  This means the algorithm samples from a continuous distribution that is close to the ideal distribution within a user-specified error tolerance, or samples exactly from a discrete distribution (one that takes on a countable number of values).  Thus, the algorithm gives every representable number the expected probability of occurring.  In general, the only random numbers the algorithm uses are random bits (binary digits).  An application should use error-bounded algorithms whenever possible.
 2. An _exact algorithm_ is an algorithm that samples from the exact distribution requested, assuming that computers can store and operate on real numbers of any precision and can generate independent uniform random real numbers of any precision (Devroye 1986, p. 1-2)<sup>[**(10)**](#Note10)</sup>.  Without more, however, an exact algorithm implemented on real-life computers can incur rounding and other errors, especially when floating-point arithmetic is used or when irrational numbers or transcendental functions are involved.  An exact algorithm can achieve a guaranteed bound on accuracy (and thus be an _error-bounded algorithm_) using either arbitrary-precision or interval arithmetic (see also Devroye 1986, p. 2)<sup>[**(10)**](#Note10)</sup>.  In this page, all methods given here are exact unless otherwise noted.  Note that `RNDU01` or `RNDRANGE` are exact in theory, but have no required implementation.
-3. An _inexact algorithm_ or _approximate algorithm_ is neither exact nor error-bounded; it uses "a mathematical approximation of sorts" to generate a random number that is close to the desired distribution (Devroye 1986, p. 2)<sup>[**(10)**](#Note10)</sup>.  An application should use this kind of algorithm only if it's willing to trade accuracy for speed.
+3. An _inexact_, _approximate_, or _biased algorithm_ is neither exact nor error-bounded; it uses "a mathematical approximation of sorts" to generate a random number that is close to the desired distribution (Devroye 1986, p. 2)<sup>[**(10)**](#Note10)</sup>.  An application should use this kind of algorithm only if it's willing to trade accuracy for speed.
 
 Most algorithms on this page, though, are not _error-bounded_, but even so, they may still be useful to an application willing to trade accuracy for speed.
 
