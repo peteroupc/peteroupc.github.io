@@ -175,7 +175,8 @@ class VoseAlias:
     the probability.  This sampler supports integer or non-integer weights.
 
     Reference:
-    Vose, Michael D. "A linear algorithm for generating random numbers with a given distribution." IEEE Transactions on software engineering 17, no. 9 (1991): 972-975.
+    Vose, Michael D. "A linear algorithm for generating random numbers with a given
+    distribution." IEEE Transactions on software engineering 17, no. 9 (1991): 972-975.
     """
 
     def __init__(self, weights):
@@ -471,8 +472,10 @@ class OptimalSampler:
     the probability.  This sampler supports only integer weights, but the sampler is
     entropy-optimal as long as the sum of those weights is of the form 2^k or 2^k-2^m.
 
-    Reference: Feras A. Saad, Cameron E. Freer, Martin C. Rinard, and Vikash K. Mansinghka. Optimal Approximate Sampling From Discrete Probability Distributions. Proc. ACM Program. Lang. 4, POPL, Article 36 (January 2020), 33 pages.
- """
+    Reference: Feras A. Saad, Cameron E. Freer, Martin C. Rinard, and Vikash K. Mansinghka.
+    Optimal Approximate Sampling From Discrete Probability Distributions. Proc.
+    ACM Program. Lang. 4, POPL, Article 36 (January 2020), 33 pages.
+    """
 
     def __init__(self, m):
         s = sum(m)
@@ -1009,7 +1012,7 @@ class _FloatBinaryExpansion:
 class BinaryExpansion:
     def __init__(self, arr, zerosAtEnd=False):
         """
-  Binary expansion of a real number in (0, 1), initialized
+  Binary expansion of a real number in [0, 1], initialized
   from an array of zeros and ones expressing the binary
   expansion.
   The first binary digit is the half digit, the second
@@ -1107,15 +1110,16 @@ class BinaryExpansion:
 
     def _nextbitat(self, index):
         if index >= len(self.arr):
+            # If zerosAtEnd is False:
+            # Append an infinite sequence of 1s so that, for example,
+            # if the expansion passed to this class is 0.1101010
+            # the expansion becomes  0.110100111111..., which expresses
+            # the same number.
             return 0 if self.zerosAtEnd else 1
         return self.arr[index]
 
     def nextbit(self):
         """ Reads the next bit in the binary expansion. """
-        # Append an infinite sequence of 1s so that, for example,
-        # if the expansion passed to this class is 0.1101010
-        # the expansion becomes  0.110100111111..., which expresses
-        # the same number.
         ret = self._nextbitat(self.index)
         self.index += 1
         return ret

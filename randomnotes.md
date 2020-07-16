@@ -24,6 +24,7 @@
     - [**Implementation of `erf`**](#Implementation_of_erf)
     - [**A Note on Integer Generation Algorithms**](#A_Note_on_Integer_Generation_Algorithms)
     - [**A Note on Error-Bounded Algorithms**](#A_Note_on_Error_Bounded_Algorithms)
+    - [**Weighted Choice with Coins of Known Bias**](#Weighted_Choice_with_Coins_of_Known_Bias)
 - [**License**](#License)
 
 <a id=Specific_Distributions></a>
@@ -462,9 +463,7 @@ The following method samples from an exponential distribution with a &lambda; pa
 <a id=Weighted_Choice_with_Biased_Coins></a>
 ### Weighted Choice with Biased Coins
 
-This section describes weighted choice algorithms that can be used if the only source of randomness we have is coins with known or unknown bias.
-
-Assuming that we only have&mdash;
+This section describes a way to implement weighted choice of one or more items from coins with unknown bias.  Assuming that we only have&mdash;
 
 - a list of non-negative integer weights (that need not sum to 1), and
 - a "biased coin" which returns true with _unknown_ probability of heads and false otherwise,
@@ -474,15 +473,7 @@ then the solution involves turning a biased coin to a fair coin, and then turnin
 1.  Biased coin to fair coin:  This can be achieved with _randomness extraction_ techniques, such as von Neumann unbiasing.  Randomness extraction is outside the scope of this document.
 2.  Fair coin to loaded die:  There are many ways to solve this problem.  For example, fair coins can serve as the RNG for `RNDINT` (see "[**Uniform Random Integers**](https://peteroupc.github.io/randomfunc.html#Uniform_Random_Integers)"), and `RNDINT` can in turn be used to implement [**`WeightedChoice`**](https://peteroupc.github.io/randomfunc.html#Weighted_Choice_With_Replacement), which implements loaded dice.  Some algorithms also produce a loaded die _directly_ from fair coins, such as the [**Fast Loaded Dice Roller**](https://github.com/probcomp/fast-loaded-dice-roller).
 
-Assuming that we only have&mdash;
-
-- a list of probabilities (`probs`) that sum to 1, and
-- `UnfairCoin(p)`, which returns 1 with probability `p` and zero otherwise (such as `ZeroOrOne` or `RNDU01() < p`),
-
-one of the following two algorithms can be used (see the [**_Stack Overflow_ question**](https://stackoverflow.com/questions/62806441/can-i-achieve-weighted-randomness-with-a-function-that-returns-weighted-booleans) by Daniel Kaplan).  Since in this case we can treat `UnfairCoin(q)` (for any fixed value of `q` in (0, 1)) as a coin with _unknown_ bias (allowing us to use the algorithm above), the algorithms given below are not very useful in practice.
-
-1. The first uses iteration and is as follows: `cumu = 1.0; for i in 0...size(probs): if UnfairCoin(probs[i]/cumu): return i; else: cumu = cumu - probs[i]`.  This algorithm runs on average in linear time (or in constant time if the weights are sorted in descending order), and it is exact at least when all the probabilities are rational numbers.
-2. The second uses rejection sampling and relies on generating a random integer using fair coins: `while true; y=RNDINT(size(probs)-1); if UnfairCoin(probs[y]): return y; else continue; end`, where `UnfairCoin(0.5)` serves as the RNG for `RNDINT`. This algorithm is exact when all the probabilities in `probs` can be simulated exactly by `UnfairCoin`.
+For related algorithms, see the appendix.
 
 <a id=Notes></a>
 ## Notes
@@ -599,6 +590,19 @@ There are three kinds of randomization algorithms:
 Most algorithms on this page, though, are not _error-bounded_, but even so, they may still be useful to an application willing to trade accuracy for speed.
 
 On the other hand, if an algorithm returns results that are accurate to a given number of digits after the point (for example, 53 bits after the point), it can generate any number of digits uniformly at random and append those digits to the result's digit expansion while remaining accurate to that many digits. For example, after it generates a normally-distributed random number, an algorithm can fill it with enough uniform random bits, as necessary, to give the number 100 bits after the point (Karney 2014)<sup>[**(1)**](#Note1)</sup>, see also (Oberhoff 2018)<sup>[**(21)**](#Note21)</sup> (example: `for i in 54..100: ret = ret + RNDINT(1) * pow(2,-i)`).
+
+<a id=Weighted_Choice_with_Coins_of_Known_Bias></a>
+### Weighted Choice with Coins of Known Bias
+
+Assuming that we only have&mdash;
+
+- a list of probabilities (`probs`) that sum to 1, and
+- `UnfairCoin(p)`, which returns 1 with probability `p` and zero otherwise (such as `ZeroOrOne` or `RNDU01() < p`),
+
+one of the following two algorithms can be used (see the [**_Stack Overflow_ question**](https://stackoverflow.com/questions/62806441/can-i-achieve-weighted-randomness-with-a-function-that-returns-weighted-booleans) by Daniel Kaplan).  Since in this case we can treat `UnfairCoin(q)` (for any fixed value of `q` in (0, 1)) as a coin with _unknown_ bias (allowing us to use the method in "[**Weighted Choice with Biased Coins**](#Weighted_Choice_with_Biased_Coins)), these algorithms given below are not very useful in practice.
+
+1. The first uses iteration and is as follows: `cumu = 1.0; for i in 0...size(probs): if UnfairCoin(probs[i]/cumu): return i; else: cumu = cumu - probs[i]`.  This algorithm runs on average in linear time (or in constant time if the weights are sorted in descending order), and it is exact at least when all the probabilities are rational numbers.
+2. The second uses rejection sampling and relies on generating a random integer using fair coins: `while true; y=RNDINT(size(probs)-1); if UnfairCoin(probs[y]): return y; else continue; end`, where `UnfairCoin(0.5)` serves as the RNG for `RNDINT`. This algorithm is exact when all the probabilities in `probs` can be simulated exactly by `UnfairCoin`.
 
 <a id=License></a>
 ## License
