@@ -445,6 +445,24 @@ def exprandscore(ln,ld,ln2,ld2):
 
 <p>(see also (Efraimidis 2015)<sup><a href="#Note12"><strong>(12)</strong></a></sup>). However, using fully-sampled exponential random numbers as keys (such as the naïve idiom <code>-ln(1-RNDU01())/w</code> in binary64) can lead to inexact sampling, since the keys have a limited precision, it&#39;s possible for multiple items to have the same random key (which can make sampling those items depend on their order rather than on randomness), and the maximum weight is unknown.  Partially-sampled e-rands, as given in this document, eliminate the problem of inexact sampling.  This is notably because the <code>exprandless</code> method returns one of only two answers&mdash;either &quot;less&quot; or &quot;greater&quot;&mdash;and samples from both e-rands as necessary so that they will differ from each other by the end of the operation.  (This is not a problem because randomly generated real numbers are expected to differ from each other almost surely.) Another reason is that partially-sampled e-rands have potentially arbitrary precision.</p>
 
+<p><a id=Other_Distributions_and_Open_Questions></a></p>
+
+<h2>Other Distributions and Open Questions</h2>
+
+<p>Other distributions than the exponential distribution might allow a partially-sampled version.  For example:</p>
+
+<ul>
+<li> For uniform distributions in [0, <em>n</em>) (not just [0, 1]), a partially-sampled version might be trivial by first ensuring that the first &quot;few&quot; bits are such that the resulting number will be less than <em>n</em>, via rejection sampling.</li>
+<li>For the standard normal distribution, we can get a partially-sampled version by running Karney&#39;s Algorithm N first (Karney 2014)<sup><a href="#Note2"><strong>(2)</strong></a></sup> and filling unsampled bits uniformly at random.</li>
+</ul>
+
+<p>There are some open questions on whether partially-sampled random numbers are possible:</p>
+
+<ol>
+<li>Are there constructions for partially-sampled normal random numbers with a standard deviation other than 1 and/or a mean other than an integer?</li>
+<li>Are there constructions for partially-sampled random numbers other than for the uniform, exponential, or normal distributions? (The concept of <em>prefix distributions</em> (Oberhoff 2018)<sup><a href="#Note13"><strong>(13)</strong></a></sup> comes close to partially-sampled random numbers, but requires calculating maximums of probabilities and is hard to generalize to all continuous distributions. )</li>
+</ol>
+
 <p><a id=Notes></a></p>
 
 <h2>Notes</h2>
@@ -472,6 +490,8 @@ def exprandscore(ln,ld,ln2,ld2):
 <p><small><sup id=Note11>(11)</sup> Flajolet, P., Pelletier, M., Soria, M., &quot;<a href="https://arxiv.org/abs/0906.5560v2"><strong>On Buffon machines and numbers</strong></a>&quot;, arXiv:0906.5560v2  [math.PR], 2010.</small></p>
 
 <p><small><sup id=Note12>(12)</sup> Efraimidis, P. &quot;<a href="https://arxiv.org/abs/1012.0256v2"><strong>Weighted Random Sampling over Data Streams</strong></a>&quot;, arXiv:1012.0256v2 [cs.DS], 2015.</small></p>
+
+<p><small><sup id=Note13>(13)</sup> Oberhoff, Sebastian, &quot;<a href="https://dc.uwm.edu/etd/1888"><strong>Exact Sampling and Prefix Distributions</strong></a>&quot;, <em>Theses and Dissertations</em>, University of Wisconsin Milwaukee, 2018.</small></p>
 
 <p><a id=License></a></p>
 

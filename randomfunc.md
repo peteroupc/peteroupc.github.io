@@ -1760,7 +1760,7 @@ A [**_piecewise linear distribution_**](http://en.cppreference.com/w/cpp/numeric
 <a id=Specific_Distributions></a>
 ### Specific Distributions
 
-Methods to sample additional distributions are given in a [**separate page**](https://github.com/peteroupc/peteroupc.github.io/blob/master/randomnotes.md). They cover the normal, gamma, beta, von Mises, stable, and multivariate normal distributions as well as copulas.  Note, however, that most of the methods won't sample the given distribution in a manner that minimizes approximation error, but they may still be useful if the application is willing to trade accuracy for speed.
+Methods to sample additional distributions are given in a [**separate page**](https://github.com/peteroupc/peteroupc.github.io/blob/master/randomnotes.html). They cover the normal, gamma, beta, von Mises, stable, and multivariate normal distributions as well as copulas.  Note, however, that most of the methods won't sample the given distribution in a manner that minimizes approximation error, but they may still be useful if the application is willing to trade accuracy for speed.
 
 <a id=Index_of_Non_Uniform_Distributions></a>
 ### Index of Non-Uniform Distributions
@@ -2015,7 +2015,7 @@ If the generator produces numbers with unequal probabilities, but is otherwise a
 
 <small><sup id=Note4>(4)</sup> A na&iuml;ve `RNDINTEXC` implementation often seen in certain languages like JavaScript is the idiom `floor(Math.random() * maxExclusive)`, where `Math.random()` is any method that outputs an independent uniform random number in the interval \[0, 1\).  However, no implementation of `Math.random()` can choose from all real numbers in \[0, 1\), so this idiom can bias some results over others depending on the value of `maxExclusive`.  For example, if `Math.random()` is implemented as `RNDINT(X - 1)/X` and `X` is not divisible by `maxExclusive`, the result will be biased.  Also, an implementation might pre-round `Math.random() * maxExclusive` (before the `floor`) to the closest number it can represent; in rare cases, that might be `maxExclusive` for certain rounding modes. If an application is concerned about these issues, it should treat the `Math.random()` implementation as the underlying RNG for `RNDINT` and implement `RNDINTEXC` through `RNDINT` instead.</small>
 
-<small><sup id=Note5>(5)</sup> No note text yet.</small>
+<small><sup id=Note5>(5)</sup> Lumbroso, J., "[**Optimal Discrete Uniform Generation from Coin Flips, and Applications**](https://arxiv.org/abs/1304.1916)", arXiv:1304.1916 [cs.DS].</small>
 
 <small><sup id=Note6>(6)</sup> Canonne, C., Kamath, G., Steinke, T., "[**The Discrete Gaussian for Differential Privacy**](https://arxiv.org/abs/2004.00010v2)", arXiv:2004.00010v2 [cs.DS], 2020.</small>
 

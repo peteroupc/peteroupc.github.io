@@ -247,6 +247,19 @@ def exprandscore(ln,ld,ln2,ld2):
 
 (see also (Efraimidis 2015)<sup>[**(12)**](#Note12)</sup>). However, using fully-sampled exponential random numbers as keys (such as the naïve idiom `-ln(1-RNDU01())/w` in binary64) can lead to inexact sampling, since the keys have a limited precision, it's possible for multiple items to have the same random key (which can make sampling those items depend on their order rather than on randomness), and the maximum weight is unknown.  Partially-sampled e-rands, as given in this document, eliminate the problem of inexact sampling.  This is notably because the `exprandless` method returns one of only two answers&mdash;either "less" or "greater"&mdash;and samples from both e-rands as necessary so that they will differ from each other by the end of the operation.  (This is not a problem because randomly generated real numbers are expected to differ from each other almost surely.) Another reason is that partially-sampled e-rands have potentially arbitrary precision.
 
+<a id=Other_Distributions_and_Open_Questions></a>
+## Other Distributions and Open Questions
+
+Other distributions than the exponential distribution might allow a partially-sampled version.  For example:
+
+-  For uniform distributions in \[0, _n_\) (not just [0, 1]), a partially-sampled version might be trivial by first ensuring that the first "few" bits are such that the resulting number will be less than _n_, via rejection sampling.
+- For the standard normal distribution, we can get a partially-sampled version by running Karney's Algorithm N first (Karney 2014)<sup>[**(2)**](#Note2)</sup> and filling unsampled bits uniformly at random.
+
+There are some open questions on whether partially-sampled random numbers are possible:
+
+1. Are there constructions for partially-sampled normal random numbers with a standard deviation other than 1 and/or a mean other than an integer?
+2. Are there constructions for partially-sampled random numbers other than for the uniform, exponential, or normal distributions? (The concept of _prefix distributions_ (Oberhoff 2018)<sup>[**(13)**](#Note13)</sup> comes close to partially-sampled random numbers, but requires calculating maximums of probabilities and is hard to generalize, in practice, to all continuous distributions.)
+
 <a id=Notes></a>
 ## Notes
 
@@ -273,6 +286,8 @@ def exprandscore(ln,ld,ln2,ld2):
 <small><sup id=Note11>(11)</sup> Flajolet, P., Pelletier, M., Soria, M., "[**On Buffon machines and numbers**](https://arxiv.org/abs/0906.5560v2)", arXiv:0906.5560v2  [math.PR], 2010.</small>
 
 <small><sup id=Note12>(12)</sup> Efraimidis, P. "[**Weighted Random Sampling over Data Streams**](https://arxiv.org/abs/1012.0256v2)", arXiv:1012.0256v2 [cs.DS], 2015.</small>
+
+<small><sup id=Note13>(13)</sup> Oberhoff, Sebastian, "[**Exact Sampling and Prefix Distributions**](https://dc.uwm.edu/etd/1888)", _Theses and Dissertations_, University of Wisconsin Milwaukee, 2018.</small>
 
 <a id=License></a>
 ## License
