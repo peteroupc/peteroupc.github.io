@@ -449,7 +449,7 @@ def exprandscore(ln,ld,ln2,ld2):
 
 <h2>Other Distributions and Open Questions</h2>
 
-<p>Other distributions than the exponential distribution might allow a partially-sampled version.  For example:</p>
+<p>Other distributions than the exponential distribution might allow a partially-sampled version.  For purposes of this section, a <em>partially-sampled</em> random number is a data structure that allows a random number that exactly follows a continuous distribution to be sampled bit by bit and with arbitrary precision, without relying on floating-point arithmetic or calculations of irrational or transcendental numbers (other than binary digit extractions). For example:</p>
 
 <ul>
 <li> For uniform distributions in [0, <em>n</em>) (not just [0, 1]), a partially-sampled version might be trivial by first ensuring that the first &quot;few&quot; bits are such that the resulting number will be less than <em>n</em>, via rejection sampling.</li>

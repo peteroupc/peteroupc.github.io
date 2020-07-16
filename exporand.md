@@ -250,7 +250,7 @@ def exprandscore(ln,ld,ln2,ld2):
 <a id=Other_Distributions_and_Open_Questions></a>
 ## Other Distributions and Open Questions
 
-Other distributions than the exponential distribution might allow a partially-sampled version.  For example:
+Other distributions than the exponential distribution might allow a partially-sampled version.  For purposes of this section, a _partially-sampled_ random number is a data structure that allows a random number that exactly follows a continuous distribution to be sampled bit by bit and with arbitrary precision, without relying on floating-point arithmetic or calculations of irrational or transcendental numbers (other than binary digit extractions). For example:
 
 -  For uniform distributions in \[0, _n_\) (not just [0, 1]), a partially-sampled version might be trivial by first ensuring that the first "few" bits are such that the resulting number will be less than _n_, via rejection sampling.
 - For the standard normal distribution, we can get a partially-sampled version by running Karney's Algorithm N first (Karney 2014)<sup>[**(2)**](#Note2)</sup> and filling unsampled bits uniformly at random.
