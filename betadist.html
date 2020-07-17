@@ -17,7 +17,7 @@
 <li>samples from the beta distribution (with both parameters 1 or greater) to an arbitrary precision and with user-specified error bounds (and thus is &quot;exact&quot; in the sense defined in (Karney 2014)<sup><a href="#Note1"><strong>(1)</strong></a></sup>).</li>
 </ul>
 
-<p>It takes advantage of a construct called the <em>Bernoulli factory</em> (Keane and O&#39;Brien 1994)<sup><a href="#Note2"><strong>(2)</strong></a></sup> (Flajolet et al., 2010)<sup><a href="#Note3"><strong>(3)</strong></a></sup>, which can simulate an arbitrary probability by transforming biased coins to biased coins, as well as the &quot;geometric bag&quot; technique by Flajolet and others (2010)<sup><a href="#Note3"><strong>(3)</strong></a></sup>, which generates heads or tails with a probability that is built up bit by bit.  One important feature of Bernoulli factories is that they can simulate a given probability <em>exactly</em>, without having to calculate that probability manually, which is important if the probability can be an irrational number that no computer can compute exactly (such as <code>pow(p, 1/2)</code> or <code>exp(-2)</code>).</p>
+<p>It takes advantage of a construct called the <em>Bernoulli factory</em> (Keane and O&#39;Brien 1994)<sup><a href="#Note2"><strong>(2)</strong></a></sup> (Flajolet et al., 2010)<sup><a href="#Note3"><strong>(3)</strong></a></sup>, which can simulate an arbitrary probability by transforming biased coins to biased coins, as well as the &quot;geometric bag&quot; technique to be described later.  One important feature of Bernoulli factories is that they can simulate a given probability <em>exactly</em>, without having to calculate that probability manually, which is important if the probability can be an irrational number that no computer can compute exactly (such as <code>pow(p, 1/2)</code> or <code>exp(-2)</code>).</p>
 
 <p>This page shows Python code for my new sampler.</p>
 
@@ -32,13 +32,64 @@
 
 <p>Although <code>alpha</code> and <code>beta</code> can each be greater than 0, this sampler only works if both parameters are 1 or greater.</p>
 
+<p><a id=Building_Blocks></a></p>
+
+<h2>Building Blocks</h2>
+
+<p>The beta sampler relies on several building blocks described in this section.</p>
+
+<p>One of them is the &quot;geometric bag&quot; technique by Flajolet and others (2010)<sup><a href="#Note3"><strong>(3)</strong></a></sup>, which generates heads or tails with a probability that is built up bit by bit.  The algorithm <strong>SampleGeometricBag</strong> is a Bernoulli factory algorithm described as follows:</p>
+
+<ol>
+<li> Let N be a geometric random number with parameter 0.5.  That is, flip fair coins until tails is flipped, then let N be the number of heads flipped this way.</li>
+<li> If the item at position N in the geometric bag is 0 or 1, return that item. (Positions start at 0.)  Otherwise, set the item at that position to either 0 or 1 with equal probability, increasing the geometric bag&#39;s capacity as necessary, then return the newly set item.</li>
+</ol>
+
+<p><strong>SampleGeometricBagComplement</strong> is the same as the <strong>SampleGeometricBag</strong> algorithm, except the return value is 1 minus the original return value.  The result is that if <strong>SampleGeometricBag</strong> outputs 1 with probability <em>U</em>, <strong>SampleGeometricBagComplement</strong> outputs 1 with probability 1 &minus; <em>U</em>.</p>
+
+<p><strong>FillGeometricBag</strong> generates a <code>p</code>-bit-precision number (a number with <code>p</code> binary digits after the point) as follows:</p>
+
+<ol>
+<li>For each position in [0, <code>p</code>), if the item at that position is neither 0 nor 1, set the item there to either 0 or 1 with equal probability.</li>
+<li>Take the first <code>p</code> bits of the geometric bag and return &Sigma;<sup><em>i</em>=0, <em>p</em>-1</sup> bag[<em>i</em>] * 2<sup>-<em>i</em>-1</sup>.  (If it somehow happens that bits beyond <code>p</code> are set to 0 or 1, then the implementation could choose instead to round the resulting number in some way, for example with the round-to-nearest-ties-to-even rounding mode, or it could even choose to fill all unset bits between the first and the last set bit and return the full number.)</li>
+</ol>
+
+<p><strong>PowerBernoulliFactory</strong> is a Bernoulli factory algorithm that transforms a coin that produces heads with probability <code>p</code> into a coin that produces heads with probability <code>pow(p, y)</code>.  The case where <code>y</code> is in (0, 1) is due to recent work by Mendo (2019)<sup><a href="#Note4"><strong>(4)</strong></a></sup>.  The algorithm takes a Bernoulli factory sub-algorithm as well as the parameter <em>y</em>, and is described as follows:</p>
+
+<ol>
+<li>If <em>y</em> is equal to 1, call the sub-algorithm and return the result.</li>
+<li>If <em>y</em> is greater than 1, call the sub-algorithm <code>floor(y)</code> times and call this algorithm (once) with <em>y</em> = <em>y</em> - floor(<em>y</em>).  Return 1 if all these calls return 1; otherwise, return 0.</li>
+<li><em>y</em> is less than 1, so set <em>i</em> to 1.</li>
+<li>Call the sub-algorithm; if it returns 1, return 1.</li>
+<li>Return 0 with probability <em>y</em>/<em>i</em>.</li>
+<li>Add 1 to <em>i</em> and go to step 4.</li>
+</ol>
+
+<p><a id=The_Algorithm></a></p>
+
+<h2>The Algorithm</h2>
+
+<p>The full algorithm of the beta generator is as follows:</p>
+
+<ol>
+<li>Special case: If <em>a</em> = 0 and <em>b</em> = 0, return a uniform <em>p</em>-bit-precision number (that is, RNDINT(0, 2<sup><em>p</em></sup> - 1) / 2<sup><em>p</em></sup>).</li>
+<li>Special case: If <em>a</em> and <em>b</em> are both integers, return the result of <code>kthsmallest</code> (described later) with parameters <em>a</em> and <em>b</em> in that order, and fill it as necessary to make a <em>p</em>-bit-precision number (similarly to <strong>FillGeometricBag</strong> above).</li>
+<li>Create an empty list to serve as a &quot;geometric bag&quot;.</li>
+<li>While true:
+
+<ol>
+<li>Remove all bits from the geometric bag.  This will result in an empty uniform random number, <em>U</em>, for the following steps, which will accept <em>U</em> with probability <em>U</em>^(a-1)*(1-<em>U</em>)^(b-1), as <em>U</em> is built up.</li>
+<li>Call the <strong>PowerBernoulliFactory</strong> using the <strong>SampleGeometricBag</strong> algorithm and parameter <em>a</em> - 1 (which will return 1 with probability <em>U</em><sup>a-1</sup>).  If the result is 0, go to substep 1.</li>
+<li>Call the <strong>PowerBernoulliFactory</strong> using the <strong>SampleGeometricBagComplement</strong> algorithm and parameter <em>b</em> - 1 (which will return 1 with probability (1-<em>U</em>)<sup>b-1</sup>).  If the result is 0, go to substep 1.</li>
+<li><em>U</em> was accepted, so return the result of <strong>FillGeometricBag</strong>.</li>
+</ol></li>
+</ol>
+
 <p><a id=Sampler_Code></a></p>
 
 <h2>Sampler Code</h2>
 
-<p>The following Python code relies on a class I wrote called &quot;<a href="https://github.com/peteroupc/peteroupc.github.io/blob/master/bernoulli.py"><strong>bernoulli.py</strong></a>&quot;, which collects a number of Bernoulli factories, some of which are relied on by the code below.  This includes the &quot;geometric bag&quot; mentioned earlier, as well as a Bernoulli factory that transforms a coin that produces heads with probability <code>p</code> into a coin that produces heads with probability <code>pow(p, y)</code>.  The case where <code>y</code> is in (0, 1) is due to recent work by Mendo (2019)<sup><a href="#Note4"><strong>(4)</strong></a></sup>.</p>
-
-<p>The Python code also relies on a method I wrote called <code>kthsmallest</code>, which generates the kth smallest number in an arbitrary precision.  This will be described later in this page.</p>
+<p>The following Python code implements the algorithm just described.  It relies on a class I wrote called &quot;<a href="https://github.com/peteroupc/peteroupc.github.io/blob/master/bernoulli.py"><strong>bernoulli.py</strong></a>&quot;, which collects a number of Bernoulli factories, some of which are relied on by the code below.  This includes the building blocks mentioned earlier.  The Python code also relies on a method I wrote called <code>kthsmallest</code>, which generates the kth smallest number in an arbitrary precision.  This will be described later in this page.</p>
 
 <p>This code is far from fast, though, at least in Python.</p>
 
@@ -174,7 +225,7 @@ def _fill_geometric_bag(b, bag, precision):
 </ul>
 
 <p>and they give the example of 2*p as a probability function that cannot be represented by a Bernoulli factory.</p></li>
-<li>If the geometric bag is accepted, fill the unsampled bits of the bag with uniform random bits as necessary to make an <code>n</code>-bit number (for an example, see <code>_fill_geometric_bag</code> above).</li>
+<li>If the geometric bag is accepted, fill the unsampled bits of the bag with uniform random bits as necessary to make an <code>n</code>-bit number (similarly to <strong>FillGeometricBag</strong> above).</li>
 </ol>
 
 <p>The beta distribution&#39;s probability function at (1) fits these requirements (for <code>alpha</code> and <code>beta</code> both greater than 1), since it&#39;s continuous and never returns 0 or 1 outside of the points 0 and 1, thus it can be simulated by Bernoulli factories and is covered by this general approach.</p>
