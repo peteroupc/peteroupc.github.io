@@ -80,9 +80,9 @@
 <li>While true:
 
 <ol>
-<li>Remove all bits from the geometric bag.  This will result in an empty uniform random number, <em>U</em>, for the following steps, which will accept <em>U</em> with probability <em>U</em><sup>a-1</sup>*(1-<em>U</em>)<sup>b-1</sup>) (the proportional probability for the beta distribution), as <em>U</em> is built up.</li>
-<li>Call the <strong>PowerBernoulliFactory</strong> using the <strong>SampleGeometricBag</strong> algorithm and parameter <em>a</em> - 1 (which will return 1 with probability <em>U</em><sup>a-1</sup>).  If the result is 0, go to substep 1.</li>
-<li>Call the <strong>PowerBernoulliFactory</strong> using the <strong>SampleGeometricBagComplement</strong> algorithm and parameter <em>b</em> - 1 (which will return 1 with probability (1-<em>U</em>)<sup>b-1</sup>).  If the result is 0, go to substep 1. (Note that substeps 2 and 3 don&#39;t depend on each other and can be done in either order without affecting correctness, and this is taken advantage of in the Python code below.)</li>
+<li>Remove all bits from the geometric bag.  This will result in an empty uniform random number, <em>U</em>, for the following steps, which will accept <em>U</em> with probability <em>U</em><sup>a&minus;1</sup>*(1&minus;<em>U</em>)<sup>b&minus;1</sup>) (the proportional probability for the beta distribution), as <em>U</em> is built up.</li>
+<li>Call the <strong>PowerBernoulliFactory</strong> using the <strong>SampleGeometricBag</strong> algorithm and parameter <em>a</em> &minus; 1 (which will return 1 with probability <em>U</em><sup>a&minus;1</sup>).  If the result is 0, go to substep 1.</li>
+<li>Call the <strong>PowerBernoulliFactory</strong> using the <strong>SampleGeometricBagComplement</strong> algorithm and parameter <em>b</em> &minus; 1 (which will return 1 with probability (1&minus;<em>U</em>)<sup>b&minus;1</sup>).  If the result is 0, go to substep 1. (Note that substeps 2 and 3 don&#39;t depend on each other and can be done in either order without affecting correctness, and this is taken advantage of in the Python code below.)</li>
 <li><em>U</em> was accepted, so return the result of <strong>FillGeometricBag</strong>.</li>
 </ol></li>
 </ol>
@@ -267,9 +267,9 @@ def _fill_geometric_bag(b, bag, precision):
 <li>While true:
 
 <ol>
-<li>Remove all bits from the geometric bag.  This will result in an empty uniform random number, <em>U</em>, for the following steps, which will accept <em>U</em> with probability <code>lamda</code><sup><em>U</em></sup>*(1-<code>lamda</code>)<sup>1-<em>U</em></sup>) (the proportional probability for the beta distribution), as <em>U</em> is built up.</li>
+<li>Remove all bits from the geometric bag.  This will result in an empty uniform random number, <em>U</em>, for the following steps, which will accept <em>U</em> with probability <code>lamda</code><sup><em>U</em></sup>*(1&minus;<code>lamda</code>)<sup>1&minus;<em>U</em></sup>) (the proportional probability for the beta distribution), as <em>U</em> is built up.</li>
 <li>Call the <strong>two-coin factory</strong> using the <strong>lambda Bernoulli factory</strong> as the base and <strong>SampleGeometricBag</strong> as the exponent (which will return 1 with probability <code>lamda</code><sup><em>U</em></sup>).  If the result is 0, go to substep 1.</li>
-<li>Call the <strong>two-coin factory</strong> using the <strong>complementary lambda Bernoulli factory</strong> as the base and <strong>SampleGeometricBagComplement</strong> algorithm and parameter <em>b</em> - 1 (which will return 1 with probability (1-<code>lamda</code>)<sup>1-<em>U</em></sup>).  If the result is 0, go to substep 1. (Note that substeps 2 and 3 don&#39;t depend on each other and can be done in either order without affecting correctness.)</li>
+<li>Call the <strong>two-coin factory</strong> using the <strong>complementary lambda Bernoulli factory</strong> as the base and <strong>SampleGeometricBagComplement</strong> algorithm and parameter <em>b</em> &minus; 1 (which will return 1 with probability (1-<code>lamda</code>)<sup>1&minus;<em>U</em></sup>).  If the result is 0, go to substep 1. (Note that substeps 2 and 3 don&#39;t depend on each other and can be done in either order without affecting correctness.)</li>
 <li><em>U</em> was accepted, so return the result of <strong>FillGeometricBag</strong>.</li>
 </ol></li>
 </ol>
