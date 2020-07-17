@@ -28,22 +28,24 @@ Although `alpha` and `beta` can each be greater than 0, this sampler only works 
 
 The beta sampler relies on several building blocks described in this section.
 
-One of them is the "geometric bag" technique by Flajolet and others (2010)<sup>[**(3)**](#Note3)</sup>, which generates heads or tails with a probability that is built up bit by bit.  The algorithm **SampleGeometricBag** is a Bernoulli factory algorithm described as follows:
+One of them is the "geometric bag" technique by Flajolet and others (2010)<sup>[**(3)**](#Note3)</sup>, which generates heads or tails with a probability that is built up bit by bit.   A _geometric bag_ is a list of items, where each item is a zero, a one, or a placeholder value (which represents an unsampled bit), and represents a list of the binary digits after the binary point, from left to right, of a real number in the interval [0, 1], that is, the number's _binary expansion_.
+
+The algorithm **SampleGeometricBag** is a Bernoulli factory algorithm described as follows:
 
 1.  Let N be a geometric random number with parameter 0.5.  That is, flip fair coins until tails is flipped, then let N be the number of heads flipped this way.
-2.  If the item at position N in the geometric bag is 0 or 1, return that item. (Positions start at 0.)  Otherwise, set the item at that position to either 0 or 1 with equal probability, increasing the geometric bag's capacity as necessary, then return the newly set item.
+2.  If the item at position N in the geometric bag is 0 or 1, return that item. (Positions start at 0.)  Otherwise, set the item at that position to either 0 or 1 with equal probability, increasing the geometric bag's capacity as necessary, then return the newly set item.  (As a result, there may be "gaps" in the geometric bag where no bit was sampled yet.)
 
 **SampleGeometricBagComplement** is the same as the **SampleGeometricBag** algorithm, except the return value is 1 minus the original return value.  The result is that if **SampleGeometricBag** outputs 1 with probability _U_, **SampleGeometricBagComplement** outputs 1 with probability 1 &minus; _U_.
 
-**FillGeometricBag** generates a `p`-bit-precision number (a number with `p` binary digits after the point) as follows:
+**FillGeometricBag** generates a `p`-bit-precision number (a number with `p` binary digits after the point) from a geometric bag as follows:
 
-1. For each position in [0, `p`), if the item at that position is neither 0 nor 1, set the item there to either 0 or 1 with equal probability.
-2. Take the first `p` bits of the geometric bag and return &Sigma;<sup>_i_=0, _p_-1</sup> bag[_i_] * 2<sup>-_i_-1</sup>.  (If it somehow happens that bits beyond `p` are set to 0 or 1, then the implementation could choose instead to round the resulting number in some way, for example with the round-to-nearest-ties-to-even rounding mode, or it could even choose to fill all unset bits between the first and the last set bit and return the full number.)
+1. For each position in [0, `p`), if the item at that position is neither 0 nor 1, set the item there to either 0 or 1 with equal probability, increasing the geometric bag's capacity as necessary.
+2. Take the first `p` bits of the geometric bag and return &Sigma;<sub>_i_=0, _p_-1</sub> bag[_i_] * 2<sup>-_i_-1</sup>.  (If it somehow happens that bits beyond `p` are set to 0 or 1, then the implementation could choose instead to round the resulting number in some way, for example with the round-to-nearest-ties-to-even rounding mode, or it could even choose to fill all unsampled bits between the first and the last set bit and return the full number.)
 
-**PowerBernoulliFactory** is a Bernoulli factory algorithm that transforms a coin that produces heads with probability `p` into a coin that produces heads with probability `pow(p, y)`.  The case where `y` is in (0, 1) is due to recent work by Mendo (2019)<sup>[**(4)**](#Note4)</sup>.  The algorithm takes a Bernoulli factory sub-algorithm as well as the parameter _y_, and is described as follows:
+**PowerBernoulliFactory** is a Bernoulli factory algorithm that transforms a coin that produces heads with probability `p` into a coin that produces heads with probability `pow(p, y)`.  The case where `y` is in (0, 1) is due to recent work by Mendo (2019)<sup>[**(4)**](#Note4)</sup>.  The algorithm takes a Bernoulli factory sub-algorithm (the coin that produces heads with probability `p`) as well as the parameter _y_, and is described as follows:
 
 1. If _y_ is equal to 1, call the sub-algorithm and return the result.
-2. If _y_ is greater than 1, call the sub-algorithm `floor(y)` times and call this algorithm (once) with _y_ = _y_ - floor(_y_).  Return 1 if all these calls return 1; otherwise, return 0.
+2. If _y_ is greater than 1, call the sub-algorithm `floor(y)` times and call **PowerBernoulliFactory** (once) with _y_ = _y_ - floor(_y_).  Return 1 if all these calls return 1; otherwise, return 0.
 3. _y_ is less than 1, so set _i_ to 1.
 4. Call the sub-algorithm; if it returns 1, return 1.
 5. Return 0 with probability _y_/_i_.
@@ -52,15 +54,15 @@ One of them is the "geometric bag" technique by Flajolet and others (2010)<sup>[
 <a id=The_Algorithm></a>
 ## The Algorithm
 
-The full algorithm of the beta generator is as follows:
+The full algorithm of the beta generator is as follows.  It takes three parameters: _a_ >= 1 and _b_ >= 1 are the parameters to the beta distribution, and _p_ > 0 is a precision parameter.
 
 1. Special case: If _a_ = 0 and _b_ = 0, return a uniform _p_-bit-precision number (that is, RNDINT(0, 2<sup>_p_</sup> - 1) / 2<sup>_p_</sup>).
-2. Special case: If _a_ and _b_ are both integers, return the result of `kthsmallest` (described later) with parameters _a_ and _b_ in that order, and fill it as necessary to make a _p_-bit-precision number (similarly to **FillGeometricBag** above).
+2. Special case: If _a_ and _b_ are both integers, return the result of `kthsmallest` (described later) with parameters (_a_ &minus; _b_ + 1) and _a_ in that order, and fill it as necessary to make a _p_-bit-precision number (similarly to **FillGeometricBag** above).
 3. Create an empty list to serve as a "geometric bag".
 4. While true:
-     1. Remove all bits from the geometric bag.  This will result in an empty uniform random number, _U_, for the following steps, which will accept _U_ with probability _U_^(a-1)*(1-_U_)^(b-1) (the proportional probability for the beta distribution), as _U_ is built up.
+     1. Remove all bits from the geometric bag.  This will result in an empty uniform random number, _U_, for the following steps, which will accept _U_ with probability _U_<sup>a-1</sup>*(1-_U_)<sup>b-1</sup>) (the proportional probability for the beta distribution), as _U_ is built up.
      2. Call the **PowerBernoulliFactory** using the **SampleGeometricBag** algorithm and parameter _a_ - 1 (which will return 1 with probability _U_<sup>a-1</sup>).  If the result is 0, go to substep 1.
-     3. Call the **PowerBernoulliFactory** using the **SampleGeometricBagComplement** algorithm and parameter _b_ - 1 (which will return 1 with probability (1-_U_)<sup>b-1</sup>).  If the result is 0, go to substep 1.
+     3. Call the **PowerBernoulliFactory** using the **SampleGeometricBagComplement** algorithm and parameter _b_ - 1 (which will return 1 with probability (1-_U_)<sup>b-1</sup>).  If the result is 0, go to substep 1. (Note that substeps 2 and 3 don't depend on each other and can be done in either order without affecting correctness, and this is taken advantage of in the Python code below.)
      4. _U_ was accepted, so return the result of **FillGeometricBag**.
 
 <a id=Sampler_Code></a>
@@ -187,7 +189,7 @@ The beta distribution is one case of a general approach to simulating continuous
     - is continuous everywhere, and
     - either returns a constant value in [0, 1] everywhere, or returns a value in [0, 1] at each of the points 0 and 1 and a value in (0, 1) at each other point,
 
-   and they give the example of 2*p as a probability function that cannot be represented by a Bernoulli factory.
+   and they give the example of 2*p as a probability function that cannot be represented by a Bernoulli factory.  In the case of constants, they can be represented by a geometric bag that is prefilled with the binary expansion of the constant in question or a binary expansion in which each bit is calculated "on the fly" and as necessary (rather than sampled at random) via the **SampleGeometricBag** algorithm.
 3. If the geometric bag is accepted, fill the unsampled bits of the bag with uniform random bits as necessary to make an `n`-bit number (similarly to **FillGeometricBag** above).
 
 The beta distribution's probability function at (1) fits these requirements (for `alpha` and `beta` both greater than 1), since it's continuous and never returns 0 or 1 outside of the points 0 and 1, thus it can be simulated by Bernoulli factories and is covered by this general approach.
@@ -201,7 +203,9 @@ The continous Bernoulli distribution takes one parameter `lamda` (a number in [0
 
     pow(lamda, x) * pow(1 - lamda, 1 - x).
 
-Again, this function meets the requirements stated by Keane and O'Brien, so it can be simulated via Bernoulli factories.  Thus, this distribution can be simulated in Python using a geometric bag (which represents _x_ in the formula above) and a two-coin exponentiating Bernoulli factory, with the following algorithm.  It is based on the **PowerBernoulliFactory** given earlier (including the algorithm from Mendo (2019)<sup>[**(4)**](#Note4)</sup>), but changed to accept a second Bernoulli factory sub-algorithm rather than a fixed value for the exponent. To the best of my knowledge, I am not aware of any article or paper that presents this exact Bernoulli factory.
+Again, this function meets the requirements stated by Keane and O'Brien, so it can be simulated via Bernoulli factories.  Thus, this distribution can be simulated in Python using a geometric bag (which represents _x_ in the formula above) and a two-coin exponentiating Bernoulli factory.
+
+The two-coin factory has the following algorithm.  It is based on the **PowerBernoulliFactory** given earlier (including the algorithm from Mendo (2019)<sup>[**(4)**](#Note4)</sup>), but changed to accept a second Bernoulli factory sub-algorithm rather than a fixed value for the exponent. To the best of my knowledge, I am not aware of any other article or paper that presents this exact Bernoulli factory.
 
 1. Set _i_ to 1.
 2. Call the base sub-algorithm; if it returns 1, return 1.
@@ -233,7 +237,7 @@ The Python code that samples the continuous Bernoulli distribution follows.
         gbcomp=lambda: b.geometric_bag(bag)^1
         fcoin=b.coin(lamda)
         lamdab=lambda: fcoin()
-        # Complement of "geometric bag"
+        # Complement of "lambda coin"
         lamdabcomp=lambda: fcoin()^1
         acc=0
         while True:
@@ -251,6 +255,11 @@ The Python code that samples the continuous Bernoulli distribution follows.
                  ret=_fill_geometric_bag(b, bag, precision)
                  return ret
            acc+=1
+
+<a id=Acknowledgments></a>
+## Acknowledgments
+
+I acknowledge Claude Gravel who reviewed this article.
 
 <a id=Notes></a>
 ## Notes
