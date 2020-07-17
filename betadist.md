@@ -39,10 +39,10 @@ The algorithm **SampleGeometricBag** is a Bernoulli factory algorithm described 
 
 **FillGeometricBag** generates a `p`-bit-precision number (a number with `p` binary digits after the point) from a geometric bag as follows:
 
-1. For each position in [0, `p`), if the item at that position is neither 0 nor 1, set the item there to either 0 or 1 with equal probability, increasing the geometric bag's capacity as necessary.
-2. Take the first `p` bits of the geometric bag and return &Sigma;<sub>_i_=0, _p_-1</sub> bag[_i_] * 2<sup>-_i_-1</sup>.  (If it somehow happens that bits beyond `p` are set to 0 or 1, then the implementation could choose instead to round the resulting number in some way, for example with the round-to-nearest-ties-to-even rounding mode, or it could even choose to fill all unsampled bits between the first and the last set bit and return the full number.)
+1. For each position in [**0, `p`), if the item at that position is neither 0 nor 1, set the item there to either 0 or 1 with equal probability, increasing the geometric bag's capacity as necessary. (See also (Oberhoff 2018, sec. 8)<sup>[**(4)**](#Note4)</sup>.)
+2. Take the first `p` bits of the geometric bag and return &Sigma;<sub>_i_=0, _p_-1</sub> bag[_i_] * 2<sup>-_i_-1</sup>.  (If it somehow happens that bits beyond `p` are set to 0 or 1, then the implementation could choose instead to fill all unsampled bits between the first and the last set bit and return the full number, optionally rounding it to a `p`-bit-precision number with a rounding mode of choice.)
 
-**PowerBernoulliFactory** is a Bernoulli factory algorithm that transforms a coin that produces heads with probability `p` into a coin that produces heads with probability `pow(p, y)`.  The case where `y` is in (0, 1) is due to recent work by Mendo (2019)<sup>[**(4)**](#Note4)</sup>.  The algorithm takes a Bernoulli factory sub-algorithm (the coin that produces heads with probability `p`) as well as the parameter _y_, and is described as follows:
+**PowerBernoulliFactory** is a Bernoulli factory algorithm that transforms a coin that produces heads with probability `p` into a coin that produces heads with probability `pow(p, y)`.  The case where `y` is in (0, 1) is due to recent work by Mendo (2019)<sup>[**(5)**](#Note5)</sup>.  The algorithm takes a Bernoulli factory sub-algorithm (the coin that produces heads with probability `p`) as well as the parameter _y_, and is described as follows:
 
 1. If _y_ is equal to 1, call the sub-algorithm and return the result.
 2. If _y_ is greater than 1, call the sub-algorithm `floor(y)` times and call **PowerBernoulliFactory** (once) with _y_ = _y_ - floor(_y_).  Return 1 if all these calls return 1; otherwise, return 0.
@@ -56,13 +56,13 @@ The algorithm **SampleGeometricBag** is a Bernoulli factory algorithm described 
 
 The full algorithm of the beta generator is as follows.  It takes three parameters: _a_ >= 1 and _b_ >= 1 are the parameters to the beta distribution, and _p_ > 0 is a precision parameter.
 
-1. Special case: If _a_ = 0 and _b_ = 0, return a uniform _p_-bit-precision number (that is, RNDINT(0, 2<sup>_p_</sup> - 1) / 2<sup>_p_</sup>).
+1. Special case: If _a_ = 0 and _b_ = 0, return a uniform _p_-bit-precision number (for example, RandomBits(_p_) / 2<sup>_p_</sup> where `RandomBits(x)` returns an x-bit block of unbiased random bits).
 2. Special case: If _a_ and _b_ are both integers, return the result of `kthsmallest` (described later) with parameters (_a_ &minus; _b_ + 1) and _a_ in that order, and fill it as necessary to make a _p_-bit-precision number (similarly to **FillGeometricBag** above).
 3. Create an empty list to serve as a "geometric bag".
 4. While true:
-     1. Remove all bits from the geometric bag.  This will result in an empty uniform random number, _U_, for the following steps, which will accept _U_ with probability _U_<sup>a-1</sup>*(1-_U_)<sup>b-1</sup>) (the proportional probability for the beta distribution), as _U_ is built up.
-     2. Call the **PowerBernoulliFactory** using the **SampleGeometricBag** algorithm and parameter _a_ - 1 (which will return 1 with probability _U_<sup>a-1</sup>).  If the result is 0, go to substep 1.
-     3. Call the **PowerBernoulliFactory** using the **SampleGeometricBagComplement** algorithm and parameter _b_ - 1 (which will return 1 with probability (1-_U_)<sup>b-1</sup>).  If the result is 0, go to substep 1. (Note that substeps 2 and 3 don't depend on each other and can be done in either order without affecting correctness, and this is taken advantage of in the Python code below.)
+     1. Remove all bits from the geometric bag.  This will result in an empty uniform random number, _U_, for the following steps, which will accept _U_ with probability _U_<sup>a&minus;1</sup>*(1&minus;_U_)<sup>b&minus;1</sup>) (the proportional probability for the beta distribution), as _U_ is built up.
+     2. Call the **PowerBernoulliFactory** using the **SampleGeometricBag** algorithm and parameter _a_ &minus; 1 (which will return 1 with probability _U_<sup>a&minus;1</sup>).  If the result is 0, go to substep 1.
+     3. Call the **PowerBernoulliFactory** using the **SampleGeometricBagComplement** algorithm and parameter _b_ &minus; 1 (which will return 1 with probability (1&minus;_U_)<sup>b&minus;1</sup>).  If the result is 0, go to substep 1. (Note that substeps 2 and 3 don't depend on each other and can be done in either order without affecting correctness, and this is taken advantage of in the Python code below.)
      4. _U_ was accepted, so return the result of **FillGeometricBag**.
 
 <a id=Sampler_Code></a>
@@ -146,7 +146,7 @@ def _fill_geometric_bag(b, bag, precision):
 <a id=The_kthsmallest_Method></a>
 ### The kthsmallest Method
 
-`kthsmallest`, which generates the 'k'th smallest 'bitcount'-bit uniform random number out of 'n' of them, is implemented in "[**randomgen.py**](https://github.com/peteroupc/peteroupc.github.io/blob/master/randomgen.py)" and relied on by this beta sampler.  It is used when both `a` and `b` are integers, based on the known property that a beta random variable in this case is the `a`th smallest uniform (0, 1) random number out of `a + b - 1` of them (Devroye 1986, p. 431)<sup>[**(5)**](#Note5)</sup>.
+`kthsmallest`, which generates the 'k'th smallest 'bitcount'-bit uniform random number out of 'n' of them, is implemented in "[**randomgen.py**](https://github.com/peteroupc/peteroupc.github.io/blob/master/randomgen.py)" and relied on by this beta sampler.  It is used when both `a` and `b` are integers, based on the known property that a beta random variable in this case is the `a`th smallest uniform (0, 1) random number out of `a + b - 1` of them (Devroye 1986, p. 431)<sup>[**(6)**](#Note6)</sup>.
 
 `kthsmallest`, however, doesn't simply generate 'n' 'bitcount'-bit numbers and then sort them.  Rather, it builds up their binary expansions bit by bit, via the concept of "u-rands" (Karney 2014)<sup>[**(1)**](#Note1)</sup>.    It uses the observation that each uniform (0, 1) random number is equally likely to be less than half or greater than half; thus, the number of uniform numbers that are less than half vs. greater than half follows a binomial(n, 1/2) distribution (and of the numbers less than half, say, the less-than-one-quarter vs. greater-than-one-quarter numbers follows the same distribution, and so on).  Thanks to this observation, the algorithm can generate a sorted sample "on the fly".
 
@@ -159,7 +159,7 @@ The algorithm is as follows:
     2. Append a 0 bit to the first `LC` u-rands (starting at `index`) and a 1 bit to the next `n - LC` u-rands.
     3. If `LC > 1`, repeat step 3 and these substeps with the same `index` and `n = LC`.
     4. If `n - LC > 1`, repeat step 3 and these substeps with `index = index+LC`, and `n = n - LC`.
-4. Take the `k`th u-rand (starting at 1) and fill it with uniform random bits as necessary to make a `bitcount`-bit number.  Return that u-rand.
+4. Take the `k`th u-rand (starting at 1) and fill it with uniform random bits as necessary to make a `bitcount`-bit number. (See also (Oberhoff 2018, sec. 8)<sup>[**(4)**](#Note4)</sup>.)  Return that u-rand.
 
 <a id=Known_Issues></a>
 ### Known Issues
@@ -168,7 +168,7 @@ The bigger `alpha` or `beta` is, the smaller the area of acceptance becomes (and
 
 - Estimate an upper bound for the peak of the density `peak`, given `alpha` and `beta`.
 - Calculate a largest factor `c` such that `peak * c = m < 0.5`.
-- Use Huber's `linear_lowprob` Bernoulli factory (implemented in _bernoulli.py_) (Huber 2016)<sup>[**(6)**](#Note6)</sup>, taking the values found for `c` and `m`.  Testing shows that the choice of `m` is crucial for performance.
+- Use Huber's `linear_lowprob` Bernoulli factory (implemented in _bernoulli.py_) (Huber 2016)<sup>[**(7)**](#Note7)</sup>, taking the values found for `c` and `m`.  Testing shows that the choice of `m` is crucial for performance.
 
 But doing so apparently worsened the performance (in terms of random bits used) compared to the simple rejection approach.
 
@@ -189,7 +189,10 @@ The beta distribution is one case of a general approach to simulating continuous
     - is continuous everywhere, and
     - either returns a constant value in [0, 1] everywhere, or returns a value in [0, 1] at each of the points 0 and 1 and a value in (0, 1) at each other point,
 
-   and they give the example of 2*p as a probability function that cannot be represented by a Bernoulli factory.  In the case of constants, they can be represented by a geometric bag that is prefilled with the binary expansion of the constant in question or a binary expansion in which each bit is calculated "on the fly" and as necessary (rather than sampled at random) via the **SampleGeometricBag** algorithm.
+   and they give the example of 2*p* as a probability function that cannot be represented by a Bernoulli factory.  In the case of constants, they can be represented by a geometric bag&mdash;
+    - that is prefilled with the binary expansion of the constant in question, or
+    - that uses a modified **SampleGeometricBag** algorithm in which the constant's binary expansion's bits are not sampled at random, but rather calculated "on the fly" and as necessary.
+
 3. If the geometric bag is accepted, fill the unsampled bits of the bag with uniform random bits as necessary to make an `n`-bit number (similarly to **FillGeometricBag** above).
 
 The beta distribution's probability function at (1) fits these requirements (for `alpha` and `beta` both greater than 1), since it's continuous and never returns 0 or 1 outside of the points 0 and 1, thus it can be simulated by Bernoulli factories and is covered by this general approach.
@@ -197,7 +200,7 @@ The beta distribution's probability function at (1) fits these requirements (for
 <a id=An_Example_The_Continuous_Bernoulli_Distribution></a>
 ### An Example: The Continuous Bernoulli Distribution
 
-The continuous Bernoulli distribution (Loaiza-Ganem and Cunningham 2019)<sup>[**(7)**](#Note7)</sup> was designed to considerably improve performance of variational autoencoders (a machine learning model) in modeling continuous data that takes values in the interval [0, 1], including "almost-binary" image data.
+The continuous Bernoulli distribution (Loaiza-Ganem and Cunningham 2019)<sup>[**(8)**](#Note8)</sup> was designed to considerably improve performance of variational autoencoders (a machine learning model) in modeling continuous data that takes values in the interval [0, 1], including "almost-binary" image data.
 
 The continous Bernoulli distribution takes one parameter `lamda` (a number in [0, 1]), and takes on values in the interval [0, 1] with a probability proportional to&mdash;
 
@@ -205,12 +208,22 @@ The continous Bernoulli distribution takes one parameter `lamda` (a number in [0
 
 Again, this function meets the requirements stated by Keane and O'Brien, so it can be simulated via Bernoulli factories.  Thus, this distribution can be simulated in Python using a geometric bag (which represents _x_ in the formula above) and a two-coin exponentiating Bernoulli factory.
 
-The two-coin factory has the following algorithm.  It is based on the **PowerBernoulliFactory** given earlier (including the algorithm from Mendo (2019)<sup>[**(4)**](#Note4)</sup>), but changed to accept a second Bernoulli factory sub-algorithm rather than a fixed value for the exponent. To the best of my knowledge, I am not aware of any other article or paper that presents this exact Bernoulli factory.
+The **two-coin factory** has the following algorithm.  It is based on the **PowerBernoulliFactory** given earlier (including the algorithm from Mendo (2019)<sup>[**(5)**](#Note5)</sup>), but changed to accept a second Bernoulli factory sub-algorithm rather than a fixed value for the exponent. To the best of my knowledge, I am not aware of any other article or paper that presents this exact Bernoulli factory.
 
 1. Set _i_ to 1.
 2. Call the base sub-algorithm; if it returns 1, return 1.
 3. Call the exponent sub-algorithm; if it returns 1, return 0 with probability 1/_i_.
 4. Add 1 to _i_ and go to step 1.
+
+The algorithm for sampling the continuous Bernoulli distribution follows.  It uses a **lambda Bernoulli factory** algorithm, which returns 1 with probability `lamda`.
+
+1. Create an empty list to serve as a "geometric bag".
+2. Create a **complementary lambda Bernoulli factory** that returns 1 minus the result of the **lambda Bernoulli factory**.
+3. While true:
+     1. Remove all bits from the geometric bag.  This will result in an empty uniform random number, _U_, for the following steps, which will accept _U_ with probability `lamda`<sup>_U_</sup>*(1&minus;`lamda`)<sup>1&minus;_U_</sup>) (the proportional probability for the beta distribution), as _U_ is built up.
+     2. Call the **two-coin factory** using the **lambda Bernoulli factory** as the base and **SampleGeometricBag** as the exponent (which will return 1 with probability `lamda`<sup>_U_</sup>).  If the result is 0, go to substep 1.
+     3. Call the **two-coin factory** using the **complementary lambda Bernoulli factory** as the base and **SampleGeometricBagComplement** algorithm and parameter _b_ &minus; 1 (which will return 1 with probability (1-`lamda`)<sup>1&minus;_U_</sup>).  If the result is 0, go to substep 1. (Note that substeps 2 and 3 don't depend on each other and can be done in either order without affecting correctness.)
+     4. _U_ was accepted, so return the result of **FillGeometricBag**.
 
 The Python code that samples the continuous Bernoulli distribution follows.
 
@@ -270,13 +283,15 @@ I acknowledge Claude Gravel who reviewed this article.
 
 <small><sup id=Note3>(3)</sup> Flajolet, P., Pelletier, M., Soria, M., "[**On Buffon machines and numbers**](https://arxiv.org/abs/0906.5560v2)", arXiv:0906.5560v2  [math.PR], 2010.</small>
 
-<small><sup id=Note4>(4)</sup> Mendo, Luis. "An asymptotically optimal Bernoulli factory for certain functions that can be expressed as power series." Stochastic Processes and their Applications 129, no. 11 (2019): 4366-4384.</small>
+<small><sup id=Note4>(4)</sup> Oberhoff, Sebastian, "[**Exact Sampling and Prefix Distributions**](https://dc.uwm.edu/etd/1888)", _Theses and Dissertations_, University of Wisconsin Milwaukee, 2018.</small>
 
-<small><sup id=Note5>(5)</sup> Devroye, L., [**_Non-Uniform Random Variate Generation_**](http://luc.devroye.org/rnbookindex.html), 1986.</small>
+<small><sup id=Note5>(5)</sup> Mendo, Luis. "An asymptotically optimal Bernoulli factory for certain functions that can be expressed as power series." Stochastic Processes and their Applications 129, no. 11 (2019): 4366-4384.</small>
 
-<small><sup id=Note6>(6)</sup> Huber, M., "[**Optimal linear Bernoulli factories for small mean problems**](https://arxiv.org/abs/1507.00843v2)", arXiv:1507.00843v2 [math.PR], 2016</small>
+<small><sup id=Note6>(6)</sup> Devroye, L., [**_Non-Uniform Random Variate Generation_**](http://luc.devroye.org/rnbookindex.html), 1986.</small>
 
-<small><sup id=Note7>(7)</sup> Loaiza-Ganem, G., Cunningham, J.P., "[**The continuous Bernoulli: fixing a pervasive error in variational autoencoders**](https://arxiv.org/abs/1907.06845v5)", arXiv:1907.06845v5  [stat.ML], 2019.</small>
+<small><sup id=Note7>(7)</sup> Huber, M., "[**Optimal linear Bernoulli factories for small mean problems**](https://arxiv.org/abs/1507.00843v2)", arXiv:1507.00843v2 [math.PR], 2016</small>
+
+<small><sup id=Note8>(8)</sup> Loaiza-Ganem, G., Cunningham, J.P., "[**The continuous Bernoulli: fixing a pervasive error in variational autoencoders**](https://arxiv.org/abs/1907.06845v5)", arXiv:1907.06845v5  [stat.ML], 2019.</small>
 
 <a id=License></a>
 ## License

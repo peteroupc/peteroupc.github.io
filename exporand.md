@@ -146,10 +146,7 @@ def zero_or_one_exp_minus(x, y):
         r = 1
         oy = y
         while True:
-            # NOTE: randint is used in this example, but
-            # it could be replaced by a random-bit-only
-            # algorithm such as the Fast Dice Roller (Lumbroso 2013),
-            # or the Bernoulli method given in the same paper.
+            # NOTE: See note about randint in prose.
             if random.randint(0, y-1) >= x:
                 return r
             if r == 1:
