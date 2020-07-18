@@ -5,7 +5,7 @@
 <a id=Introduction></a>
 ## Introduction
 
-This page introduces an implementation of _partially-sampled_ exponential random numbers.   Called _e-rands_ in this document, they represent incomplete numbers whose contents are determined only when necessary, making them have potentially arbitrary precision.
+This page introduces an implementation of _partially-sampled_ exponential random numbers.   Called _e-rands_ in this document, they represent incomplete numbers whose contents are determined only when necessary, making them have potentially arbitrary precision.  [**See the section "Code" for sample Python code**](#Code).
 
 Moreover, this document includes methods that operate on e-rands in a way that uses only uniform random bits, and without relying on floating-point arithmetic (except for conversion purposes in the example method `exprand`).  Also, the methods support e-rands with an arbitrary rate parameter (&lambda;) greater than 0.
 
@@ -21,23 +21,37 @@ An exponential random number is commonly generated as follows: `-ln(1 - RNDU01()
 <a id=About_Partially_Sampled_Random_Numbers></a>
 ## About Partially-Sampled Random Numbers
 
-In this document, a _partially-sampled_ random number is a data structure that allows a random number that exactly follows a continuous distribution to be sampled bit by bit and with arbitrary precision, without relying on floating-point arithmetic or calculations of irrational or transcendental numbers (other than binary digit extractions).  Informally, they represent incomplete real numbers whose contents are sampled only when necessary, but in a way that follows the distribution being sampled.
+In this document, a _partially-sampled_ random number is a data structure that allows a random number that exactly follows a continuous distribution to be sampled digit by digit and with arbitrary precision, without relying on floating-point arithmetic or calculations of irrational or transcendental numbers (other than digit extractions).  Informally, they represent incomplete real numbers whose contents are sampled only when necessary, but in a way that follows the distribution being sampled.
 
-The most trivial example of a _partially-sampled_ random number is that of the uniform distribution in [0, 1].  Such a random number can be implemented as a list of items, where each item is a zero, a one, or a placeholder value (which represents an unsampled bit), and represents a list of the binary digits after the binary point, from left to right, of a real number in the interval [0, 1], that is, the number's _binary expansion_.  This kind of number is referred to as a _geometric bag_ in (Flajolet et al. 2010)<sup>[**(6)**](#Note6)</sup> and as a _u-rand_ in (Karney 2014)<sup>[**(2)**](#Note2)</sup>.  Each additional bit is sampled simply by setting it to an independent unbiased random bit, an observation that dates from von Neumann (1951)<sup>[**(7)**](#Note7)</sup>.
+The most trivial example of a _partially-sampled_ random number is that of the uniform distribution in [0, 1].  Such a random number can be implemented as a list of items, where each item is either a digit (such as zero or one for binary), or a placeholder value (which represents an unsampled digit), and represents a list of the digits after the radix point, from left to right, of a real number in the interval [0, 1], that is, the number's _digit expansion_ (e.g., _binary expansion_ in the case of binary digits).  This kind of number is referred to&mdash;
+
+- as a _geometric bag_ in (Flajolet et al. 2010)<sup>[**(6)**](#Note6)</sup> (but only in the binary case), and
+- as a _u-rand_ in (Karney 2014)<sup>[**(2)**](#Note2)</sup>.
+
+Each additional bit is sampled simply by setting it to an independent unbiased random digit, an observation that dates from von Neumann (1951)<sup>[**(7)**](#Note7)</sup> in the binary case.
 
 Partially-sampled numbers of other distributions can be implemented via rejection from the uniform distribution. For example:
 
 1. The beta and continuous Bernoulli distributions, as discussed in my companion document on an [**exact beta generator**](https://peteroupc.github.io/betadist.html).
-2. The standard normal distribution, as shown in (Karney 2014)<sup>[**(2)**](#Note2)</sup> by running Karney's Algorithm N and filling unsampled bits uniformly at random.
-3. For uniform distributions in \[0, _n_\) (not just [0, 1]), a partially-sampled version might be trivial by first ensuring that the first "few" bits are such that the resulting number will be less than _n_, via rejection sampling.
+2. The standard normal distribution, as shown in (Karney 2014)<sup>[**(2)**](#Note2)</sup> by running Karney's Algorithm N and filling unsampled digits uniformly at random.
+3. For uniform distributions in \[0, _n_\) (not just [0, 1]), a partially-sampled version might be trivial by first ensuring that the first "few" digits are such that the resulting number will be less than _n_, via rejection sampling.
 
 For these distributions (and others that are continuous almost everywhere and bounded from above), Oberhoff (2018)<sup>[**(8)**](#Note8)</sup> proved that unsampled trailing bits of the partially-sampled number converge to the uniform distribution.
 
-As an additional example, in this document an partially-sampled exponential random number (or _e-rand_, named similarly to Karney's "u-rands" for partially-sampled uniform random numbers (Karney 2014)<sup>[**(2)**](#Note2)</sup>) samples each bit that, when combined with the existing bits, results in an exponentially-distributed random number of the given rate.  Also, because `-ln(1 - RNDU01())` is exponentially distributed, e-rands can also represent the natural logarithm of a partially-sampled uniform random number in (0, 1].  The difference here is that additional bits are not sampled as unbiased random bits, but rather as bits with a vanishing bias.
+As an additional example, in this document a partially-sampled exponential random number (or _e-rand_, named similarly to Karney's "u-rands" for partially-sampled uniform random numbers (Karney 2014)<sup>[**(2)**](#Note2)</sup>) samples each bit that, when combined with the existing bits, results in an exponentially-distributed random number of the given rate.  Also, because `-ln(1 - RNDU01())` is exponentially distributed, e-rands can also represent the natural logarithm of a partially-sampled uniform random number in (0, 1].  The difference here is that additional bits are sampled not as unbiased random bits, but rather as bits with a vanishing bias.
 
 Partially sampled numbers could also be implemented via rejection from the exponential distribution, although no concrete examples are presented here.
 
-On the other hand, the concept of _prefix distributions_ (Oberhoff 2018)<sup>[**(8)**](#Note8)</sup> comes close to partially-sampled random numbers, but numbers sampled this way are not partially-sampled random numbers in the sense used here.  This is because the method requires calculating maximums of probabilities (and, in practice, requires the use of floating-point arithmetic in most cases).  Moreover, the method samples from a discrete distribution whose progression depends on the value of previously sampled bits, not just on the position of those bits as with the uniform and exponential distributions (see also (Thomas and Luk 2008)<sup>[**(4)**](#Note4)</sup>).
+On the other hand, the concept of _prefix distributions_ (Oberhoff 2018)<sup>[**(8)**](#Note8)</sup> comes close to partially-sampled random numbers, but numbers sampled this way are not partially-sampled random numbers in the sense used here.  This is because the method requires calculating minimums of probabilities (and, in practice, requires the use of floating-point arithmetic in most cases).  Moreover, the method samples from a discrete distribution whose progression depends on the value of previously sampled bits, not just on the position of those bits as with the uniform and exponential distributions (see also (Thomas and Luk 2008)<sup>[**(4)**](#Note4)</sup>).
+
+Two partially-sampled random numbers, each of a different distribution but storing digits of the same radix, can be exactly compared to each other using an algorithm similar to the following. The **RandLess** algorithm compares two partially-sampled random numbers, **a** and **b** (and samples additional bits from them as necessary) and returns `true` if **a** turns out to be less than **b**, or `false` otherwise (see also (Karney 2014)<sup>[**(2)**](#Note2)</sup>)).
+
+1. If **a**'s integer part wasn't sampled yet, sample **a**'s integer part.  Do the same for **b**.
+2. Return `true` if **a**'s integer part is less than **b**'s, or `false` if **a**'s integer part is greater than **b**'s.
+3. Set _i_ to 0.
+4. If **a**'s fractional part has _i_ or fewer digits, sample digit _i_ of **a** (positions start at 0 where 0 is the most significant digit after the point, 1 is the next, etc.), and append the result to that fractional part's digit expansion.  Do the same for **b**.
+5. Return `true` if **a**'s fractional part is less than **b**'s, or `false` if **a**'s fractional part is greater than **b**'s.
+6. Add 1 to _i_ and go to step 4.
 
 <a id=Building_Blocks></a>
 ## Building Blocks
@@ -75,7 +89,7 @@ The **LogisticExp** algorithm is a special case of the _logistic Bernoulli facto
 
 As implemented in the code, an e-rand consists of five numbers: the first is a multiple of 2^X, the second is X, the third is the integer part (initially &minus;1 to indicate the integer part wasn't sampled yet), and the fourth and fifth are the &lambda; parameter's numerator and denominator, respectively.
 
-The **ExpRandLess** algorithm compares two e-rands **a** and **b** (and samples additional bits from them as necessary) and returns `true` if **a** turns out to be less than **b**, or `false` otherwise. (Note that **a** and **b** are allowed to have different &lambda; parameters.)
+The **ExpRandLess** algorithm is a special case of the general **RandLess** algorithm given earlier.  It compares two e-rands **a** and **b** (and samples additional bits from them as necessary) and returns `true` if **a** turns out to be less than **b**, or `false` otherwise. (Note that **a** and **b** are allowed to have different &lambda; parameters.)
 
 1. If **a**'s integer part wasn't sampled yet, call **ZeroOrOneExpMinus** with _x_ = &lambda;'s numerator and _y_ = &lambda;'s denominator, until the call returns 0, then set the integer part to the number of times 1 was returned this way.  Do the same for **b**.
 2. Return `true` if **a**'s integer part is less than **b**'s, or `false` if **a**'s integer part is greater than **b**'s.
@@ -83,6 +97,13 @@ The **ExpRandLess** algorithm compares two e-rands **a** and **b** (and samples 
 4. If **a**'s fractional part has _i_ or fewer bits, call **LogisticExp** with _x_ = &lambda;'s numerator, _y_ = &lambda;'s denominator, and _prec_ = _i_ + 1, and append the result to that fractional part's binary expansion.  Do the same for **b**.
 5. Return `true` if **a**'s fractional part is less than **b**'s, or `false` if **a**'s fractional part is greater than **b**'s.
 6. Add 1 to _i_ and go to step 4.
+
+The **ExpRandFill** generates a `p`-bit-precision number (a number with `p` binary digits after the point) from an e-rand **a** as follows:
+
+1. Sample **a**'s integer part as given in step 1 of **ExpRandLess**.
+2. If **a**'s fractional part has greater than _i_ bits, round **a** to a `p`-bit-precision number and return that number.  The rounding can be done, for example, by discarding all bits beyond `p` bits after the rounding point, or by rounding to the nearest 2<sup>-p</sup>, ties-to-up, as done in the sample Python code.
+3. While **a**'s fractional part has fewer than _i_ bits, call **LogisticExp** with _x_ = &lambda;'s numerator, _y_ = &lambda;'s denominator, and _prec_ = _i_ + 1, and append the result to that fractional part's binary expansion.
+4. Return the number represented by **a**.
 
 <a id=Code></a>
 ## Code
@@ -209,11 +230,15 @@ def exprand(lam):
 <a id=Extension></a>
 ### Extension
 
-The code above supports rational-valued &lambda; parameters.  It can be extended to support any real-valued &lambda; parameter in (0, 1), as long as the parameter can be simulated by an algorithm that outputs heads with probability equal to &lambda; <sup>[**(12)**](#Note12)</sup>.  For example, in the code above:
+The code above supports rational-valued &lambda; parameters.  It can be extended to support any real-valued &lambda; parameter in (0, 1), as long as the parameter can be simulated by an algorithm that outputs heads with probability equal to &lambda; <sup>[**(12)**](#Note12)</sup>.  For example:
 
 - `exprandnew` is modified to take a function that implements the simulation algorithm (e.g., `prob`), rather than `lamdanum` and `lamdaden`.
-- `zero_or_one_exp_minus(a, b)` can be replaced with the `exp_minus` algorithm of (Łatuszyński et al. 2011)<sup>[**(13)**](#Note13)</sup> or that of (Flajolet et al. 2010)<sup>[**(6)**](#Note6)</sup> (e.g., `bernoulli.exp_minus(lambda: random.randint(0, y-1) < x)`; see a class I wrote called "[**bernoulli.py**](https://github.com/peteroupc/peteroupc.github.io/blob/master/bernoulli.py)).
-- `logisticexp(a, b, index+1)` can be replaced with a modified `logisticexp` as follows: `bf=lambda: 1 if (random.randint(0, (2**prec)-1) == 0 and prob()==1) else 0`, and loop the following two statements: `if random.randint(0,1)==0: return 0` and `if bernoulli.exp_minus(bf) == 1: return 1`.
+- `zero_or_one_exp_minus(a, b)` can be replaced with the `exp_minus` algorithm of (Łatuszyński et al. 2011)<sup>[**(13)**](#Note13)</sup> or that of (Flajolet et al. 2010)<sup>[**(6)**](#Note6)</sup> (e.g., `bernoulli.exp_minus(lambda: random.randint(0, y-1) < x)`; see a class I wrote called "[**bernoulli.py**](https://github.com/peteroupc/peteroupc.github.io/blob/master/bernoulli.py)).  This `exp_minus` algorithm takes a Bernoulli generator that outputs heads with probability &lambda;, and in turn outputs heads with probability exp(-&lambda;).
+- `logisticexp(a, b, index+1)` can be replaced with a modified `logisticexp` as follows: `bf=lambda: 1 if (random.randint(0, (2**prec)-1) == 0 and prob()==1) else 0`, and loop the following two statements: `if random.randint(0,1)==0: return 0` and `if bernoulli.exp_minus(bf) == 1: return 1`.  The modified **LogisticExp** is described as follows:
+    1. Create a Bernoulli generator that returns 1 with probability 2<sup>_prec_</sup> _and_ if the algorithm that simulates &lambda; returns 1, and 0 otherwise.
+    2. Return 0 with probability 1/2.
+    3. Call the `exp_minus` algorithm (described earlier) with the Bernoulli generator described in step 1; if it returns 1, return 1.
+    4. Go to step 2.
 
 <a id=Correctness_Testing></a>
 ## Correctness Testing
@@ -297,6 +322,11 @@ There are some open questions on whether partially-sampled random numbers are po
 1. Are there constructions for partially-sampled normal random numbers with a standard deviation other than 1 and/or a mean other than an integer?
 2. Are there constructions for partially-sampled random numbers other than for cases given earlier in this document?
 3. How can arithmetic on partially-sampled random numbers (such as addition, multiplication, division, and powering) be carried out?
+
+<a id=Acknowledgments></a>
+## Acknowledgments
+
+I acknowledge Claude Gravel who reviewed this article.
 
 <a id=Notes></a>
 ## Notes
