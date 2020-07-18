@@ -68,6 +68,8 @@
 <li>One to simulate a probability of the form <code>1/(1+exp(x/(y*pow(2, prec))))</code> (<strong>LogisticExp</strong>).</li>
 </ol>
 
+<p>These two algorithms enable e-rands with rational-valued &lambda; parameters and are described below.</p>
+
 <p>The <strong>ZeroOrOneExpMinus</strong> algorithm takes integers <em>x</em> &gt;= 0 and <em>y</em> &gt; 0 and outputs 1 with probability <code>exp(-x/y)</code> or 0 otherwise. It originates from (Canonne et al. 2020)<sup><a href="#Note9"><strong>(9)</strong></a></sup>.</p>
 
 <ol>
@@ -309,7 +311,7 @@ def exprand(lam):
 </tr>
 </tbody></table>
 
-<p>To test the correctness of <code>exprandless</code>, a two-independent-sample T-test was applied to scores involving e-rands and scores involving the Python <code>random.expovariate</code> method.  Specifically, the score is calculated as the number of times one exponential number compares as less than another; for the same &lambda; this event should ideally be as likely as the event that it compares as greater.  The Python code that follows the table calculates this score for e-rands and <code>expovariate</code>.   Even here, the code for the test is very simple: <code>kst = scipy.stats.ttest_ind(exppyscores, exprandscores)</code>, where <code>exppyscores</code> and <code>exprandscores</code> are each lists of 20 results from <code>exppyscore</code> or <code>exprandscore</code>, respectively.</p>
+<p>To test the correctness of <code>exprandless</code>, a two-independent-sample T-test was applied to scores involving e-rands and scores involving the Python <code>random.expovariate</code> method.  Specifically, the score is calculated as the number of times one exponential number compares as less than another; for the same &lambda; this event should ideally be as likely as the event that it compares as greater.  The Python code that follows the table calculates this score for e-rands and <code>expovariate</code>.   Even here, the code for the test is very simple: <code>kst = scipy.stats.ttest_ind(exppyscores, exprandscores)</code>, where <code>exppyscores</code> and <code>exprandscores</code> are each lists of 20 results from <code>exppyscore</code> or <code>exprandscore</code>, respectively, and and each of the results contained in <code>exppyscores</code> and <code>exprandscores</code> were generated independently of each other.</p>
 
 <p>The table below shows the results of the correctness testing. For each pair of parameters, results show the lowest and highest T-test statistics and p-values achieved for the 20 results.  Note that a p-value extremely close to 0 or 1 strongly indicates that exponential random numbers are not compared as less or greater with the expected probability.</p>
 
