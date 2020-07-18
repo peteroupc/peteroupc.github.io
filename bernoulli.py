@@ -407,12 +407,14 @@ class Bernoulli:
                Reference: Canonne et al. 2020. """
         if y <= 0 or x < 0:
             raise ValueError
+        if x == 0:
+            return 1
         if x > y:
             xf = int(x / y)  # Get integer part
             x = x % y  # Reduce to fraction
             if x > 0 and self.zero_or_one_exp_minus(x, y) == 0:
                 return 0
-            for i in range(1, xf + 1):
+            for i in range(xf):
                 if self.zero_or_one_exp_minus(1, 1) == 0:
                     return 0
             return 1
@@ -421,10 +423,7 @@ class Bernoulli:
         while True:
             if self.zero_or_one(x, y) == 0:
                 return r
-            if r == 1:
-                r = 0
-            else:
-                r = 1
+            r = 1 - r
             y = y + oy
 
     def probgenfunc(self, f, rng):

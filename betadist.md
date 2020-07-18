@@ -51,13 +51,28 @@ The algorithm **SampleGeometricBag** is a Bernoulli factory algorithm described 
 5. Return 0 with probability _y_/_i_.
 6. Add 1 to _i_ and go to step 4.
 
+The **kthsmallest** method generates the 'k'th smallest 'bitcount'-bit uniform random number out of 'n' of them, is also relied on by this beta sampler.  It is used when both `a` and `b` are integers, based on the known property that a beta random variable in this case is the `a`th smallest uniform (0, 1) random number out of `a + b - 1` of them (Devroye 1986, p. 431)<sup>[**(6)**](#Note6)</sup>.
+
+**kthsmallest**, however, doesn't simply generate 'n' 'bitcount'-bit numbers and then sort them.  Rather, it builds up their binary expansions bit by bit, via the concept of "u-rands" (Karney 2014)<sup>[**(1)**](#Note1)</sup>.    It uses the observation that each uniform (0, 1) random number is equally likely to be less than half or greater than half; thus, the number of uniform numbers that are less than half vs. greater than half follows a binomial(n, 1/2) distribution (and of the numbers less than half, say, the less-than-one-quarter vs. greater-than-one-quarter numbers follows the same distribution, and so on).  Thanks to this observation, the algorithm can generate a sorted sample "on the fly".
+
+The algorithm is as follows:
+
+1. Create `n` empty u-rands.
+2. Set `index` to 1.
+3. If `index <= k`:
+    1. Generate `LC`, a binomial(`n`, 0.5) random number.
+    2. Append a 0 bit to the first `LC` u-rands (starting at `index`) and a 1 bit to the next `n - LC` u-rands.
+    3. If `LC > 1`, repeat step 3 and these substeps with the same `index` and `n = LC`.
+    4. If `n - LC > 1`, repeat step 3 and these substeps with `index = index+LC`, and `n = n - LC`.
+4. Take the `k`th u-rand (starting at 1) and fill it with uniform random bits as necessary to make a `bitcount`-bit number. (See also (Oberhoff 2018, sec. 8)<sup>[**(4)**](#Note4)</sup>.)  Return that u-rand.
+
 <a id=The_Algorithm></a>
 ## The Algorithm
 
 The full algorithm of the beta generator is as follows.  It takes three parameters: _a_ >= 1 and _b_ >= 1 are the parameters to the beta distribution, and _p_ > 0 is a precision parameter.
 
 1. Special case: If _a_ = 0 and _b_ = 0, return a uniform _p_-bit-precision number (for example, RandomBits(_p_) / 2<sup>_p_</sup> where `RandomBits(x)` returns an x-bit block of unbiased random bits).
-2. Special case: If _a_ and _b_ are both integers, return the result of `kthsmallest` (described later) with parameters (_a_ &minus; _b_ + 1) and _a_ in that order, and fill it as necessary to make a _p_-bit-precision number (similarly to **FillGeometricBag** above).
+2. Special case: If _a_ and _b_ are both integers, return the result of **kthsmallest** with parameters (_a_ &minus; _b_ + 1) and _a_ in that order, and fill it as necessary to make a _p_-bit-precision number (similarly to **FillGeometricBag** above).
 3. Create an empty list to serve as a "geometric bag".
 4. While true:
      1. Remove all bits from the geometric bag.  This will result in an empty uniform random number, _U_, for the following steps, which will accept _U_ with probability _U_<sup>a&minus;1</sup>*(1&minus;_U_)<sup>b&minus;1</sup>) (the proportional probability for the beta distribution), as _U_ is built up.
@@ -142,24 +157,6 @@ def _fill_geometric_bag(b, bag, precision):
         # 2^-precision.
         return _toreal(ret, precision)
 ```
-
-<a id=The_kthsmallest_Method></a>
-### The kthsmallest Method
-
-`kthsmallest`, which generates the 'k'th smallest 'bitcount'-bit uniform random number out of 'n' of them, is implemented in "[**randomgen.py**](https://github.com/peteroupc/peteroupc.github.io/blob/master/randomgen.py)" and relied on by this beta sampler.  It is used when both `a` and `b` are integers, based on the known property that a beta random variable in this case is the `a`th smallest uniform (0, 1) random number out of `a + b - 1` of them (Devroye 1986, p. 431)<sup>[**(6)**](#Note6)</sup>.
-
-`kthsmallest`, however, doesn't simply generate 'n' 'bitcount'-bit numbers and then sort them.  Rather, it builds up their binary expansions bit by bit, via the concept of "u-rands" (Karney 2014)<sup>[**(1)**](#Note1)</sup>.    It uses the observation that each uniform (0, 1) random number is equally likely to be less than half or greater than half; thus, the number of uniform numbers that are less than half vs. greater than half follows a binomial(n, 1/2) distribution (and of the numbers less than half, say, the less-than-one-quarter vs. greater-than-one-quarter numbers follows the same distribution, and so on).  Thanks to this observation, the algorithm can generate a sorted sample "on the fly".
-
-The algorithm is as follows:
-
-1. Create `n` empty u-rands.
-2. Set `index` to 1.
-3. If `index <= k`:
-    1. Generate `LC`, a binomial(`n`, 0.5) random number.
-    2. Append a 0 bit to the first `LC` u-rands (starting at `index`) and a 1 bit to the next `n - LC` u-rands.
-    3. If `LC > 1`, repeat step 3 and these substeps with the same `index` and `n = LC`.
-    4. If `n - LC > 1`, repeat step 3 and these substeps with `index = index+LC`, and `n = n - LC`.
-4. Take the `k`th u-rand (starting at 1) and fill it with uniform random bits as necessary to make a `bitcount`-bit number. (See also (Oberhoff 2018, sec. 8)<sup>[**(4)**](#Note4)</sup>.)  Return that u-rand.
 
 <a id=Known_Issues></a>
 ### Known Issues

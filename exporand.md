@@ -23,7 +23,7 @@ An exponential random number is commonly generated as follows: `-ln(1 - RNDU01()
 
 In this document, a _partially-sampled_ random number is a data structure that allows a random number that exactly follows a continuous distribution to be sampled bit by bit and with arbitrary precision, without relying on floating-point arithmetic or calculations of irrational or transcendental numbers (other than binary digit extractions).  Informally, they represent incomplete real numbers whose contents are sampled only when necessary, but in a way that follows the distribution being sampled.
 
-The most trivial example of a _partially-sampled_ random number is that of the uniform distribution in [0, 1].  Such a random number can be implemented as a list of items, where each item is a zero, a one, or a placeholder value (which represents an unsampled bit), and represents a list of the binary digits after the binary point, from left to right, of a real number in the interval [0, 1], that is, the number's _binary expansion_.  This kind of number is referred to as a _geometric bag_ in (Flajolet et al. 2010)<sup>[**(6)**](#Note6)</sup> and as a _u-rand_ in (Karney 2014)<sup>[**(2)**](#Note2)</sup>.  Each additional bit is sampled simply by setting it to an independent unbiased random bit, an observation that dates from von Neumann (1951)<sup>[**(14)**](#Note14)</sup>.
+The most trivial example of a _partially-sampled_ random number is that of the uniform distribution in [0, 1].  Such a random number can be implemented as a list of items, where each item is a zero, a one, or a placeholder value (which represents an unsampled bit), and represents a list of the binary digits after the binary point, from left to right, of a real number in the interval [0, 1], that is, the number's _binary expansion_.  This kind of number is referred to as a _geometric bag_ in (Flajolet et al. 2010)<sup>[**(6)**](#Note6)</sup> and as a _u-rand_ in (Karney 2014)<sup>[**(2)**](#Note2)</sup>.  Each additional bit is sampled simply by setting it to an independent unbiased random bit, an observation that dates from von Neumann (1951)<sup>[**(7)**](#Note7)</sup>.
 
 Partially-sampled numbers of other distributions can be implemented via rejection from the uniform distribution. For example:
 
@@ -31,34 +31,63 @@ Partially-sampled numbers of other distributions can be implemented via rejectio
 2. The standard normal distribution, as shown in (Karney 2014)<sup>[**(2)**](#Note2)</sup> by running Karney's Algorithm N and filling unsampled bits uniformly at random.
 3. For uniform distributions in \[0, _n_\) (not just [0, 1]), a partially-sampled version might be trivial by first ensuring that the first "few" bits are such that the resulting number will be less than _n_, via rejection sampling.
 
-For these distributions (and others that are continuous almost everywhere and bounded from above), Oberhoff (2018)<sup>[**(7)**](#Note7)</sup> proved that unsampled trailing bits of the partially-sampled number converge to the uniform distribution.
+For these distributions (and others that are continuous almost everywhere and bounded from above), Oberhoff (2018)<sup>[**(8)**](#Note8)</sup> proved that unsampled trailing bits of the partially-sampled number converge to the uniform distribution.
 
-As an additional example, in this document an _e-rand_ samples each bit that, when combined with the existing bits, results in an exponentially-distributed random number of the given rate.  Also, because `-ln(1 - RNDU01())` exponentially distributed, e-rands also represent the natural logarithm of a partially-sampled uniform random number in (0, 1].  The difference here is that additional bits are not sampled as unbiased random bits, but rather as bits with a vanishing bias.
+As an additional example, in this document an partially-sampled exponential random number (or _e-rand_, named similarly to Karney's "u-rands" for partially-sampled uniform random numbers (Karney 2014)<sup>[**(2)**](#Note2)</sup>) samples each bit that, when combined with the existing bits, results in an exponentially-distributed random number of the given rate.  Also, because `-ln(1 - RNDU01())` is exponentially distributed, e-rands can also represent the natural logarithm of a partially-sampled uniform random number in (0, 1].  The difference here is that additional bits are not sampled as unbiased random bits, but rather as bits with a vanishing bias.
 
 Partially sampled numbers could also be implemented via rejection from the exponential distribution, although no concrete examples are presented here.
 
-On the other hand, the concept of _prefix distributions_ (Oberhoff 2018)<sup>[**(7)**](#Note7)</sup> comes close to partially-sampled random numbers, but numbers sampled this way are not partially-sampled random numbers in the sense used here.  This is because the method requires calculating maximums of probabilities (and, in practice, requires the use of floating-point arithmetic in most cases).  Moreover, the method samples from a discrete distribution whose progression depends on the value of previously sampled bits, not just on the position of those bits as with the uniform and exponential distributions (see also (Thomas and Luk 2008)<sup>[**(4)**](#Note4)</sup>).
+On the other hand, the concept of _prefix distributions_ (Oberhoff 2018)<sup>[**(8)**](#Note8)</sup> comes close to partially-sampled random numbers, but numbers sampled this way are not partially-sampled random numbers in the sense used here.  This is because the method requires calculating maximums of probabilities (and, in practice, requires the use of floating-point arithmetic in most cases).  Moreover, the method samples from a discrete distribution whose progression depends on the value of previously sampled bits, not just on the position of those bits as with the uniform and exponential distributions (see also (Thomas and Luk 2008)<sup>[**(4)**](#Note4)</sup>).
 
-<a id=Code></a>
-## Code
+<a id=Building_Blocks></a>
+## Building Blocks
 
-The following Python code implements partially-sampled exponential random numbers, called e-rands in this document for convenience (similarly to Karney's "u-rands" for partially-sampled uniform random numbers (Karney 2014)<sup>[**(2)**](#Note2)</sup>).  It implements a way to determine whether one e-rand is less than another, as well as a way to fill an e-rand as necessary to give its fractional part a given number of bits.
-
-It makes use of two observations (based on the parameter &lambda; of the exponential distribution):
+This section describes the building-blocks used in the sampling algorithm and the code to follow.  Sampling an e-rand makes use of two observations (based on the parameter &lambda; of the exponential distribution):
 
 - While a coin flip with probability of heads of exp(-&lambda;) is heads, the exponential random number is increased by 1.
 - If a coin flip with probability of heads of 1/(1+exp(&lambda;/2<sup>_k_</sup>)) is heads, the exponential random number is increased by 2<sup>-_k_</sup>, where _k_ > 0 is an integer.
 
 (Devroye and Gravel 2015)<sup>[**(3)**](#Note3)</sup> already made these observations in their Appendix, but only for &lambda; = 1.
 
-To implement these probabilities using just random bits, the code uses two algorithms:
+To implement these probabilities using just random bits, the sampler uses two algorithms:
 
-1. One to simulate a probability of the form `exp(-x/y)` (`zero_or_one_exp_minus`; (Canonne et al. 2020)<sup>[**(8)**](#Note8)</sup>).
-2. One to simulate a probability of the form `1/(1+exp(x/(y*pow(2, prec))))` (`logisticexp` (Morina et al. 2019)<sup>[**(9)**](#Note9)</sup>).
+1. One to simulate a probability of the form `exp(-x/y)` (**ZeroOrOneExpMinus**).
+2. One to simulate a probability of the form `1/(1+exp(x/(y*pow(2, prec))))` (**LogisticExp**).
 
-Both algorithms are included in the Python code below.
+These two algorithms enable e-rands with rational-valued &lambda; parameters and are described below.
 
-In the Python code below, note that `zero_or_one_exp_minus` uses `random.randint` which does not necessarily use only random bits; it could be replaced with a random-bit-only algorithm such as FastDiceRoller or Bernoulli, both of which were presented by Lumbroso (2013)<sup>[**(10)**](#Note10)</sup>.
+The **ZeroOrOneExpMinus** algorithm takes integers _x_ >= 0 and _y_ > 0 and outputs 1 with probability `exp(-x/y)` or 0 otherwise. It originates from (Canonne et al. 2020)<sup>[**(9)**](#Note9)</sup>.
+
+1. Special case: If _x_ is 0, return 1. (This is because the probability becomes `exp(0) = 1`.)
+2. If `x > y` (so _x_/_y_ is greater than 1), call **ZeroOrOneExpMinus** `floor(x/y)` times with _x_ = _y_ = 1 and once with _x_ = _x_ - floor(_x_/_y_) * _y_ and _y_ = _y_.  Return 1 if all these calls return 1; otherwise, return 0.
+3. Set _r_ to 1 and _i_ to 1.
+4. Return _r_ with probability _x_/(_y_*_i_).
+5. Set _r_ to 1 - _r_, add 1 to _i_, and go to step 4.
+
+The **LogisticExp** algorithm is a special case of the _logistic Bernoulli factory_ given in (Morina et al. 2019)<sup>[**(10)**](#Note10)</sup>.  It takes integers _x_ >= 0,  _y_ > 0, and _prec_ > 0 and outputs 1 with probability `1/(1+exp(x/(y*pow(2, prec))))` and 0 otherwise.
+
+1. Return 0 with probability 1/2.
+2. Call **ZeroOrOneExpMinus** with _x_ = _x_ and _y_ = _y_*2<sup>_prec_</sup>.  If the call returns 1, return 1.
+3. Go to step 1.
+
+<a id=Algorithm></a>
+## Algorithm
+
+As implemented in the code, an e-rand consists of five numbers: the first is a multiple of 2^X, the second is X, the third is the integer part (initially &minus;1 to indicate the integer part wasn't sampled yet), and the fourth and fifth are the &lambda; parameter's numerator and denominator, respectively.
+
+The **ExpRandLess** algorithm compares two e-rands **a** and **b** (and samples additional bits from them as necessary) and returns `true` if **a** turns out to be less than **b**, or `false` otherwise. (Note that **a** and **b** are allowed to have different &lambda; parameters.)
+
+1. If **a**'s integer part wasn't sampled yet, call **ZeroOrOneExpMinus** with _x_ = &lambda;'s numerator and _y_ = &lambda;'s denominator, until the call returns 0, then set the integer part to the number of times 1 was returned this way.  Do the same for **b**.
+2. Return `true` if **a**'s integer part is less than **b**'s, or `false` if **a**'s integer part is greater than **b**'s.
+3. Set _i_ to 0.
+4. If **a**'s fractional part has _i_ or fewer bits, call **LogisticExp** with _x_ = &lambda;'s numerator, _y_ = &lambda;'s denominator, and _prec_ = _i_ + 1, and append the result to that fractional part's binary expansion.  Do the same for **b**.
+5. Return `true` if **a**'s fractional part is less than **b**'s, or `false` if **a**'s fractional part is greater than **b**'s.
+6. Add 1 to _i_ and go to step 4.
+
+<a id=Code></a>
+## Code
+
+In the Python code below, note that `zero_or_one_exp_minus` uses `random.randint` which does not necessarily use only random bits; it could be replaced with a random-bit-only algorithm such as FastDiceRoller or Bernoulli, both of which were presented by Lumbroso (2013)<sup>[**(11)**](#Note11)</sup>.
 
 ```
 import random
@@ -73,11 +102,8 @@ def logisticexp(ln, ld, prec):
 def exprandnew(lamdanum=1, lamdaden=1):
      """ Returns an object to serve as a partially-sampled
           exponential random number with the given
-          rate 'lamdanum'/'lamdaden'.  The object is a list of five numbers:
-          the first is a multiple of 2^X, the second is X, the third is the integer
-          part (initially -1 to indicate the integer part wasn't sampled yet),
-          and the fourth and fifth are the lamda parameter's
-          numerator and denominator, respectively.  Default for 'lamdanum'
+          rate 'lamdanum'/'lamdaden'.  The object is a list of five numbers
+          as given in the prose.  Default for 'lamdanum'
           and 'lamdaden' is 1.
           The number created by this method will be "empty"
           (no bits sampled yet).
@@ -152,11 +178,10 @@ def exprandless(a, b):
 
 def zero_or_one_exp_minus(x, y):
         """ Generates 1 with probability exp(-px/py); 0 otherwise.
-               Reference:
-               Canonne, C., Kamath, G., Steinke, T., "[The Discrete Gaussian
-               for Differential Privacy](https://arxiv.org/abs/2004.00010v2)", arXiv:2004.00010v2 [cs.DS], 2020. """
+               Reference: Canonne et al. 2020. """
         if y <= 0 or x < 0:
             raise ValueError
+        if x==0: return 1
         if x > y:
             xf = int(x / y)  # Get integer part
             x = x % y  # Reduce to fraction
@@ -167,16 +192,13 @@ def zero_or_one_exp_minus(x, y):
                     return 0
             return 1
         r = 1
-        oy = y
+        ii = 1
         while True:
             # NOTE: See note about randint in prose.
-            if random.randint(0, y-1) >= x:
+            if random.randint(0, (y*ii)-1) >= x:
                 return r
-            if r == 1:
-                r = 0
-            else:
-                r = 1
-            y = y + oy
+            r=1-r
+            ii += 1
 
 # Example of use
 def exprand(lam):
@@ -187,10 +209,10 @@ def exprand(lam):
 <a id=Extension></a>
 ### Extension
 
-The code above supports rational-valued &lambda; parameters.  It can be extended to support any real-valued &lambda; parameter in (0, 1), as long as the parameter can be simulated by an algorithm that outputs heads with probability equal to &lambda; <sup>[**(11)**](#Note11)</sup>.  For example, in the code above:
+The code above supports rational-valued &lambda; parameters.  It can be extended to support any real-valued &lambda; parameter in (0, 1), as long as the parameter can be simulated by an algorithm that outputs heads with probability equal to &lambda; <sup>[**(12)**](#Note12)</sup>.  For example, in the code above:
 
 - `exprandnew` is modified to take a function that implements the simulation algorithm (e.g., `prob`), rather than `lamdanum` and `lamdaden`.
-- `zero_or_one_exp_minus(a, b)` can be replaced with the `exp_minus` algorithm of (Łatuszyński et al. 2011)<sup>[**(12)**](#Note12)</sup> or that of (Flajolet et al. 2010)<sup>[**(6)**](#Note6)</sup> (e.g., `bernoulli.exp_minus(lambda: random.randint(0, y-1) < x)`; see a class I wrote called "[**bernoulli.py**](https://github.com/peteroupc/peteroupc.github.io/blob/master/bernoulli.py)).
+- `zero_or_one_exp_minus(a, b)` can be replaced with the `exp_minus` algorithm of (Łatuszyński et al. 2011)<sup>[**(13)**](#Note13)</sup> or that of (Flajolet et al. 2010)<sup>[**(6)**](#Note6)</sup> (e.g., `bernoulli.exp_minus(lambda: random.randint(0, y-1) < x)`; see a class I wrote called "[**bernoulli.py**](https://github.com/peteroupc/peteroupc.github.io/blob/master/bernoulli.py)).
 - `logisticexp(a, b, index+1)` can be replaced with a modified `logisticexp` as follows: `bf=lambda: 1 if (random.randint(0, (2**prec)-1) == 0 and prob()==1) else 0`, and loop the following two statements: `if random.randint(0,1)==0: return 0` and `if bernoulli.exp_minus(bf) == 1: return 1`.
 
 <a id=Correctness_Testing></a>
@@ -214,7 +236,7 @@ The table below shows the results of the correctness testing. For each parameter
 | 5 | 0.00256-0.00546 | 0.10130-0.89935 |
 | 10 | 0.00279-0.00528 | 0.12358-0.82974 |
 
-To test the correctness of `exprandless`, a two-independent-sample T-test was applied to scores involving e-rands and scores involving the Python `random.expovariate` method.  Specifically, the score is calculated as the number of times one exponential number compares as less than another; for the same &lambda; this event should ideally be as likely as the event that it compares as greater.  The Python code that follows the table calculates this score for e-rands and `expovariate`.   Even here, the code for the test is very simple: `kst = scipy.stats.ttest_ind(exppyscores, exprandscores)`, where `exppyscores` and `exprandscores` are each lists of 20 results from `exppyscore` or `exprandscore`, respectively.
+To test the correctness of `exprandless`, a two-independent-sample T-test was applied to scores involving e-rands and scores involving the Python `random.expovariate` method.  Specifically, the score is calculated as the number of times one exponential number compares as less than another; for the same &lambda; this event should ideally be as likely as the event that it compares as greater.  The Python code that follows the table calculates this score for e-rands and `expovariate`.   Even here, the code for the test is very simple: `kst = scipy.stats.ttest_ind(exppyscores, exprandscores)`, where `exppyscores` and `exprandscores` are each lists of 20 results from `exppyscore` or `exprandscore`, respectively, and and each of the results contained in `exppyscores` and `exprandscores` were generated independently of each other.
 
 The table below shows the results of the correctness testing. For each pair of parameters, results show the lowest and highest T-test statistics and p-values achieved for the 20 results.  Note that a p-value extremely close to 0 or 1 strongly indicates that exponential random numbers are not compared as less or greater with the expected probability.
 
@@ -265,7 +287,7 @@ def exprandscore(ln,ld,ln2,ld2):
 - giving each item an exponential random number with &lambda; = _w_, call it a key, and
 - choosing the item with the smallest key
 
-(see also (Efraimidis 2015)<sup>[**(13)**](#Note13)</sup>). However, using fully-sampled exponential random numbers as keys (such as the naïve idiom `-ln(1-RNDU01())/w` in binary64) can lead to inexact sampling, since the keys have a limited precision, it's possible for multiple items to have the same random key (which can make sampling those items depend on their order rather than on randomness), and the maximum weight is unknown.  Partially-sampled e-rands, as given in this document, eliminate the problem of inexact sampling.  This is notably because the `exprandless` method returns one of only two answers&mdash;either "less" or "greater"&mdash;and samples from both e-rands as necessary so that they will differ from each other by the end of the operation.  (This is not a problem because randomly generated real numbers are expected to differ from each other almost surely.) Another reason is that partially-sampled e-rands have potentially arbitrary precision.
+(see also (Efraimidis 2015)<sup>[**(14)**](#Note14)</sup>). However, using fully-sampled exponential random numbers as keys (such as the naïve idiom `-ln(1-RNDU01())/w` in binary64) can lead to inexact sampling, since the keys have a limited precision, it's possible for multiple items to have the same random key (which can make sampling those items depend on their order rather than on randomness), and the maximum weight is unknown.  Partially-sampled e-rands, as given in this document, eliminate the problem of inexact sampling.  This is notably because the `exprandless` method returns one of only two answers&mdash;either "less" or "greater"&mdash;and samples from both e-rands as necessary so that they will differ from each other by the end of the operation.  (This is not a problem because randomly generated real numbers are expected to differ from each other almost surely.) Another reason is that partially-sampled e-rands have potentially arbitrary precision.
 
 <a id=Open_Questions></a>
 ## Open Questions
@@ -273,7 +295,7 @@ def exprandscore(ln,ld,ln2,ld2):
 There are some open questions on whether partially-sampled random numbers are possible:
 
 1. Are there constructions for partially-sampled normal random numbers with a standard deviation other than 1 and/or a mean other than an integer?
-2. Are there constructions for partially-sampled random numbers other than for cases given earlier in this document? (The concept of _prefix distributions_ (Oberhoff 2018)<sup>[**(7)**](#Note7)</sup> comes close to partially-sampled random numbers, but requires calculating maximums of probabilities and is hard to generalize, in practice, to all continuous distributions.)
+2. Are there constructions for partially-sampled random numbers other than for cases given earlier in this document?
 3. How can arithmetic on partially-sampled random numbers (such as addition, multiplication, division, and powering) be carried out?
 
 <a id=Notes></a>
@@ -291,21 +313,21 @@ There are some open questions on whether partially-sampled random numbers are po
 
 <small><sup id=Note6>(6)</sup> Flajolet, P., Pelletier, M., Soria, M., "[**On Buffon machines and numbers**](https://arxiv.org/abs/0906.5560v2)", arXiv:0906.5560v2  [math.PR], 2010.</small>
 
-<small><sup id=Note7>(7)</sup> Oberhoff, Sebastian, "[**Exact Sampling and Prefix Distributions**](https://dc.uwm.edu/etd/1888)", _Theses and Dissertations_, University of Wisconsin Milwaukee, 2018.</small>
+<small><sup id=Note7>(7)</sup> von Neumann, J., "Various techniques used in connection with random digits", 1951.</small>
 
-<small><sup id=Note8>(8)</sup> Canonne, C., Kamath, G., Steinke, T., "[**The Discrete Gaussian for Differential Privacy**](https://arxiv.org/abs/2004.00010v2)", arXiv:2004.00010v2 [cs.DS], 2020.</small>
+<small><sup id=Note8>(8)</sup> Oberhoff, Sebastian, "[**Exact Sampling and Prefix Distributions**](https://dc.uwm.edu/etd/1888)", _Theses and Dissertations_, University of Wisconsin Milwaukee, 2018.</small>
 
-<small><sup id=Note9>(9)</sup> Morina, G., Łatuszyński, K., et al., "From the Bernoulli Factory to a Dice Enterprise via Perfect Sampling of Markov Chains", 2019.</small>
+<small><sup id=Note9>(9)</sup> Canonne, C., Kamath, G., Steinke, T., "[**The Discrete Gaussian for Differential Privacy**](https://arxiv.org/abs/2004.00010v2)", arXiv:2004.00010v2 [cs.DS], 2020.</small>
 
-<small><sup id=Note10>(10)</sup> Lumbroso, J., "[**Optimal Discrete Uniform Generation from Coin Flips, and Applications**](https://arxiv.org/abs/1304.1916)", arXiv:1304.1916 [cs.DS].</small>
+<small><sup id=Note10>(10)</sup> Morina, G., Łatuszyński, K., et al., "From the Bernoulli Factory to a Dice Enterprise via Perfect Sampling of Markov Chains", 2019.</small>
 
-<small><sup id=Note11>(11)</sup> This algorithm is also known as a _Bernoulli factory_, an algorithm that turns coins biased one way into coins biased another way (Keane,  M.  S.,  and  O'Brien,  G.  L., "A Bernoulli factory", _ACM Transactions on Modeling and Computer Simulation_ 4(2), 1994.)</small>
+<small><sup id=Note11>(11)</sup> Lumbroso, J., "[**Optimal Discrete Uniform Generation from Coin Flips, and Applications**](https://arxiv.org/abs/1304.1916)", arXiv:1304.1916 [cs.DS].</small>
 
-<small><sup id=Note12>(12)</sup> Łatuszyński, K., Kosmidis, I.,  Papaspiliopoulos, O., Roberts, G.O., "Simulating events of unknown probabilities via reverse time martingales", 2011.</small>
+<small><sup id=Note12>(12)</sup> This algorithm is also known as a _Bernoulli factory_, an algorithm that turns coins biased one way into coins biased another way (Keane,  M.  S.,  and  O'Brien,  G.  L., "A Bernoulli factory", _ACM Transactions on Modeling and Computer Simulation_ 4(2), 1994.)</small>
 
-<small><sup id=Note13>(13)</sup> Efraimidis, P. "[**Weighted Random Sampling over Data Streams**](https://arxiv.org/abs/1012.0256v2)", arXiv:1012.0256v2 [cs.DS], 2015.</small>
+<small><sup id=Note13>(13)</sup> Łatuszyński, K., Kosmidis, I.,  Papaspiliopoulos, O., Roberts, G.O., "Simulating events of unknown probabilities via reverse time martingales", 2011.</small>
 
-<small><sup id=Note14>(14)</sup> von Neumann, J., "Various techniques used in connection with random digits", 1951.</small>
+<small><sup id=Note14>(14)</sup> Efraimidis, P. "[**Weighted Random Sampling over Data Streams**](https://arxiv.org/abs/1012.0256v2)", arXiv:1012.0256v2 [cs.DS], 2015.</small>
 
 <a id=License></a>
 ## License

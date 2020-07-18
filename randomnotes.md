@@ -418,13 +418,14 @@ Other kinds of copulas describe different kinds of dependence between random num
 The following method samples from an exponential distribution with a &lambda; parameter greater than 0, expressed as `lnum`/`lden` (where the sampling occurs within an error tolerance of 2<sup>`-precision`</sup>).  For more information, see "[**Partially-Sampled Exponential Random Numbers**](https://peteroupc.github.io/exporand.html)".
 
     METHOD ZeroOrOneExpMinus(x, y)
-      # Generates 1 with probability exp(-x/y) (Canonne et al. 2020)
+      // Generates 1 with probability exp(-x/y) (Canonne et al. 2020)
       if y <= 0 or x<0: return error
+      if x==0: return 1 // exp(0) = 1
       if x > y
         xf = floor(x/y)
         x = mod(x, y)
         if x>0 and ZeroOrOneExpMinus(x, y) == 0: return 0
-        for i in 1..xf
+        for i in 0...xf
           if ZeroOrOneExpMinus(1,1) == 0: return 0
         end
         return 1
@@ -433,8 +434,7 @@ The following method samples from an exponential distribution with a &lambda; pa
       oy = y
       while true
         if ZeroOrOne(x, y) == 0: return r
-        if r==1: r=0
-        else: r=1
+        r=1-r
         y = y + oy
       end
     END METHOD
