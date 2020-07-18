@@ -40,7 +40,7 @@ For these distributions (and others that are continuous almost everywhere and bo
 
 As an additional example, in this document a partially-sampled exponential random number (or _e-rand_, named similarly to Karney's "u-rands" for partially-sampled uniform random numbers (Karney 2014)<sup>[**(2)**](#Note2)</sup>) samples each bit that, when combined with the existing bits, results in an exponentially-distributed random number of the given rate.  Also, because `-ln(1 - RNDU01())` is exponentially distributed, e-rands can also represent the natural logarithm of a partially-sampled uniform random number in (0, 1].  The difference here is that additional bits are sampled not as unbiased random bits, but rather as bits with a vanishing bias.
 
-Partially sampled numbers could also be implemented via rejection from the exponential distribution, although no concrete examples are presented here.
+Partially-sampled numbers could also be implemented via rejection from the exponential distribution, although no concrete examples are presented here.
 
 On the other hand, the concept of _prefix distributions_ (Oberhoff 2018)<sup>[**(8)**](#Note8)</sup> comes close to partially-sampled random numbers, but numbers sampled this way are not partially-sampled random numbers in the sense used here.  This is because the method requires calculating minimums of probabilities (and, in practice, requires the use of floating-point arithmetic in most cases).  Moreover, the method samples from a discrete distribution whose progression depends on the value of previously sampled bits, not just on the position of those bits as with the uniform and exponential distributions (see also (Thomas and Luk 2008)<sup>[**(4)**](#Note4)</sup>).
 
@@ -84,10 +84,10 @@ The **LogisticExp** algorithm is a special case of the _logistic Bernoulli facto
 2. Call **ZeroOrOneExpMinus** with _x_ = _x_ and _y_ = _y_*2<sup>_prec_</sup>.  If the call returns 1, return 1.
 3. Go to step 1.
 
-<a id=Algorithm></a>
-## Algorithm
+<a id=Algorithms></a>
+## Algorithms
 
-As implemented in the code, an e-rand consists of five numbers: the first is a multiple of 2^X, the second is X, the third is the integer part (initially &minus;1 to indicate the integer part wasn't sampled yet), and the fourth and fifth are the &lambda; parameter's numerator and denominator, respectively.
+As implemented in the code, an e-rand consists of five numbers: the first is a multiple of 2<sup>_x_</sup>, the second is _x_, the third is the integer part (initially &minus;1 to indicate the integer part wasn't sampled yet), and the fourth and fifth are the &lambda; parameter's numerator and denominator, respectively.
 
 The **ExpRandLess** algorithm is a special case of the general **RandLess** algorithm given earlier.  It compares two e-rands **a** and **b** (and samples additional bits from them as necessary) and returns `true` if **a** turns out to be less than **b**, or `false` otherwise. (Note that **a** and **b** are allowed to have different &lambda; parameters.)
 
@@ -235,7 +235,7 @@ The code above supports rational-valued &lambda; parameters.  It can be extended
 - `exprandnew` is modified to take a function that implements the simulation algorithm (e.g., `prob`), rather than `lamdanum` and `lamdaden`.
 - `zero_or_one_exp_minus(a, b)` can be replaced with the `exp_minus` algorithm of (Łatuszyński et al. 2011)<sup>[**(13)**](#Note13)</sup> or that of (Flajolet et al. 2010)<sup>[**(6)**](#Note6)</sup> (e.g., `bernoulli.exp_minus(lambda: random.randint(0, y-1) < x)`; see a class I wrote called "[**bernoulli.py**](https://github.com/peteroupc/peteroupc.github.io/blob/master/bernoulli.py)).  This `exp_minus` algorithm takes a Bernoulli generator that outputs heads with probability &lambda;, and in turn outputs heads with probability exp(-&lambda;).
 - `logisticexp(a, b, index+1)` can be replaced with a modified `logisticexp` as follows: `bf=lambda: 1 if (random.randint(0, (2**prec)-1) == 0 and prob()==1) else 0`, and loop the following two statements: `if random.randint(0,1)==0: return 0` and `if bernoulli.exp_minus(bf) == 1: return 1`.  The modified **LogisticExp** is described as follows:
-    1. Create a Bernoulli generator that returns 1 with probability 2<sup>_prec_</sup> _and_ if the algorithm that simulates &lambda; returns 1, and 0 otherwise.
+    1. Create a Bernoulli generator that returns 1 with probability 1/2<sup>_prec_</sup> _and_ if the algorithm that simulates &lambda; returns 1, and 0 otherwise.
     2. Return 0 with probability 1/2.
     3. Call the `exp_minus` algorithm (described earlier) with the Bernoulli generator described in step 1; if it returns 1, return 1.
     4. Go to step 2.

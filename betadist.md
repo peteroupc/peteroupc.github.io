@@ -32,39 +32,38 @@ One of them is the "geometric bag" technique by Flajolet and others (2010)<sup>[
 
 The algorithm **SampleGeometricBag** is a Bernoulli factory algorithm described as follows:
 
-1.  Let N be a geometric random number with parameter 1/_b_, where _b_ is the radix (e.g., 2 for binary).  For example, in the binary case, flip fair coins until tails is flipped, then let N be the number of heads flipped this way.
-2.  If the item at position N in the geometric bag is a digit (e.g., 0 or 1 for binary), return that item. (Positions start at 0.)  Otherwise, set the item at that position to a digit chosen uniformly at random (e.g., either 0 or 1), increasing the geometric bag's capacity as necessary, then return the newly set item.  (As a result, there may be "gaps" in the geometric bag where no digit was sampled yet.)
+1.  Let N be a geometric(1/_b_) random number, where _b_ is the radix (e.g., 2 for binary).  In this document, a geometric(_p_) random number is the number of failures before the first success, where a success occurs with probability _p_. For example, in the binary case, flip fair coins until tails is flipped, then let N be the number of heads flipped this way.
+2.  If the item at position N in the geometric bag is a digit (e.g., 0 or 1 for binary), return that item. (Positions start at 0.)  Otherwise, set the item at that position to a digit chosen uniformly at random (e.g., either 0 or 1 for binary), increasing the geometric bag's capacity as necessary, then return the newly set item.  (As a result, there may be "gaps" in the geometric bag where no digit was sampled yet.)
 
 **SampleGeometricBagComplement** is the same as the **SampleGeometricBag** algorithm, except the return value is 1 minus the original return value.  The result is that if **SampleGeometricBag** outputs 1 with probability _U_, **SampleGeometricBagComplement** outputs 1 with probability 1 &minus; _U_.
 
-**FillGeometricBag** generates a `p`-digits-precision number (a number with `p` digits after the radix point) from a geometric bag as follows:
+**FillGeometricBag** generates a `p`-digit-precision number (a number with `p` digits after the radix point) from a geometric bag as follows:
 
-1. For each position in [**0, `p`), if the item at that position is not a digit, set the item there to to a digit chosen uniformly at random (e.g., either 0 or 1), increasing the geometric bag's capacity as necessary. (See also (Oberhoff 2018, sec. 8)<sup>[**(4)**](#Note4)</sup>.)
-2. Take the first `p` digits of the geometric bag and return &Sigma;<sub>_i_=0, _p_-1</sub> bag[_i_] * _b_<sup>-_i_-1</sup>, where _b_ is the radix.  (If it somehow happens that digits beyond `p` are set to 0 or 1, then the implementation could choose instead to fill all unsampled digits between the first and the last set digit and return the full number, optionally rounding it to a `p`-digit-precision number with a rounding mode of choice.)
+1. For each position in \[0, `p`), if the item at that position is not a digit, set the item there to to a digit chosen uniformly at random (e.g., either 0 or 1 for binary), increasing the geometric bag's capacity as necessary. (See also (Oberhoff 2018, sec. 8)<sup>[**(4)**](#Note4)</sup>.)
+2. Take the first `p` digits of the geometric bag and return &Sigma;<sub>_i_=0, _p_&minus;1</sub> bag[_i_] * _b_<sup>&minus;_i_&minus;1</sup>, where _b_ is the radix.  (If it somehow happens that digits beyond `p` are set to 0 or 1, then the implementation could choose instead to fill all unsampled digits between the first and the last set digit and return the full number, optionally rounding it to a `p`-digit-precision number with a rounding mode of choice.)
 
 **PowerBernoulliFactory** is a Bernoulli factory algorithm that transforms a coin that produces heads with probability `p` into a coin that produces heads with probability `pow(p, y)`.  The case where `y` is in (0, 1) is due to recent work by Mendo (2019)<sup>[**(5)**](#Note5)</sup>.  The algorithm takes a Bernoulli factory sub-algorithm (the coin that produces heads with probability `p`) as well as the parameter _y_, and is described as follows:
 
 1. If _y_ is equal to 1, call the sub-algorithm and return the result.
-2. If _y_ is greater than 1, call the sub-algorithm `floor(y)` times and call **PowerBernoulliFactory** (once) with _y_ = _y_ - floor(_y_).  Return 1 if all these calls return 1; otherwise, return 0.
+2. If _y_ is greater than 1, call the sub-algorithm `floor(y)` times and call **PowerBernoulliFactory** (once) with _y_ = _y_ &minus; floor(_y_).  Return 1 if all these calls return 1; otherwise, return 0.
 3. _y_ is less than 1, so set _i_ to 1.
 4. Call the sub-algorithm; if it returns 1, return 1.
 5. Return 0 with probability _y_/_i_.
 6. Add 1 to _i_ and go to step 4.
 
-The **kthsmallest** method generates the 'k'th smallest 'bitcount'-bit uniform random number out of 'n' of them, is also relied on by this beta sampler.  It is used when both `a` and `b` are integers, based on the known property that a beta random variable in this case is the `a`th smallest uniform (0, 1) random number out of `a + b - 1` of them (Devroye 1986, p. 431)<sup>[**(6)**](#Note6)</sup>.  **kthsmallest** currently only works for binary (base-2) numbers, not numbers of any other radix.
+The **kthsmallest** method generates the 'k'th smallest 'bitcount'-digit uniform random number out of 'n' of them, is also relied on by this beta sampler.  It is used when both `a` and `b` are integers, based on the known property that a beta random variable in this case is the `a`th smallest uniform (0, 1) random number out of `a + b - 1` of them (Devroye 1986, p. 431)<sup>[**(6)**](#Note6)</sup>.
 
-**kthsmallest**, however, doesn't simply generate 'n' 'bitcount'-bit numbers and then sort them.  Rather, it builds up their binary expansions bit by bit, via the concept of "u-rands" (Karney 2014)<sup>[**(1)**](#Note1)</sup>.    It uses the observation that each uniform (0, 1) random number is equally likely to be less than half or greater than half; thus, the number of uniform numbers that are less than half vs. greater than half follows a binomial(n, 1/2) distribution (and of the numbers less than half, say, the less-than-one-quarter vs. greater-than-one-quarter numbers follows the same distribution, and so on).  Thanks to this observation, the algorithm can generate a sorted sample "on the fly".
+**kthsmallest**, however, doesn't simply generate 'n' 'bitcount'-digit numbers and then sort them.  Rather, it builds up their digit expansions digit by digit, via the concept of "u-rands" (Karney 2014)<sup>[**(1)**](#Note1)</sup>.    It uses the observation that (in the binary case) each uniform (0, 1) random number is equally likely to be less than half or greater than half; thus, the number of uniform numbers that are less than half vs. greater than half follows a binomial(n, 1/2) distribution (and of the numbers less than half, say, the less-than-one-quarter vs. greater-than-one-quarter numbers follows the same distribution, and so on).    Thanks to this observation, the algorithm can generate a sorted sample "on the fly".  A similar observation applies to other bases than base 2 if we use the multinomial distribution instead of the binomial distribution.
 
 The algorithm is as follows:
 
 1. Create `n` empty u-rands.
 2. Set `index` to 1.
-3. If `index <= k`:
-    1. Generate `LC`, a binomial(`n`, 0.5) random number.
-    2. Append a 0 bit to the first `LC` u-rands (starting at `index`) and a 1 bit to the next `n - LC` u-rands.
-    3. If `LC > 1`, repeat step 3 and these substeps with the same `index` and `n = LC`.
-    4. If `n - LC > 1`, repeat step 3 and these substeps with `index = index+LC`, and `n = n - LC`.
-4. Take the `k`th u-rand (starting at 1) and fill it with uniform random bits as necessary to make a `bitcount`-bit number. (See also (Oberhoff 2018, sec. 8)<sup>[**(4)**](#Note4)</sup>.)  Return that u-rand.
+3. If `index <= k` and `index + n >= k`:
+    1. Generate **v**, a multinomial random vector with _b_ probabilities equal to 1/_b_, where _b_ is the radix (for the binary case, _b_ = 2, so this is equivalent to generating `LC` = binomial(`n`, 0.5) and setting **v** to {`LC`, `n - LC`}).
+    2. Starting at `index`, append the digit 0 to the first **v**\[0\] u-rands, a 1 digit to the next **v**\[1\] u-rands, and so on to appending a _b_ &minus; 1 digit to the last **v**\[_b_ &minus; 1\] u-rands (for the binary case, this means appending a 0 bit to the first `LC` u-rands and a 1 bit to the next `n - LC` u-rands).
+    3. For each integer _i_ in \[0, _b_): If **v**\[_i_\] > 1, repeat step 3 and these substeps with `index` = `index` + &Sigma;<sub>_j_=0, _i_&minus;1</sub> **v**\[_j_\] and `n` = **v**\[_i_\]. (For the binary case, this means: If`LC > 1`, repeat step 3 and these substeps with the same `index` and `n = LC`; then, if `n - LC > 1`, repeat step 3 and these substeps with `index = index+LC`, and `n = n - LC`).
+4. Take the `k`th u-rand (starting at 1) and fill it with uniform random digits as necessary to make a `bitcount`-digits number (similarly to **FillGeometricBag** above). (See also (Oberhoff 2018, sec. 8)<sup>[**(4)**](#Note4)</sup>.)  Return that u-rand.
 
 <a id=The_Algorithm></a>
 ## The Algorithm
@@ -72,7 +71,7 @@ The algorithm is as follows:
 The full algorithm of the beta generator is as follows.  It takes three parameters: _a_ >= 1 and _b_ >= 1 are the parameters to the beta distribution, and _p_ > 0 is a precision parameter.
 
 1. Special case: If _a_ = 0 and _b_ = 0, return a uniform _p_-digit-precision number (for example, in the binary case, RandomBits(_p_) / 2<sup>_p_</sup> where `RandomBits(x)` returns an x-bit block of unbiased random bits).
-2. Special case (only for base 2): If _a_ and _b_ are both integers, return the result of **kthsmallest** with parameters (_a_ &minus; _b_ + 1) and _a_ in that order, and fill it as necessary to make a _p_-digit-precision number (similarly to **FillGeometricBag** above).
+2. Special case: If _a_ and _b_ are both integers, return the result of **kthsmallest** with parameters (_a_ &minus; _b_ + 1) and _a_ in that order, and fill it as necessary to make a _p_-digit-precision number (similarly to **FillGeometricBag** above).
 3. Create an empty list to serve as a "geometric bag".
 4. While true:
      1. Remove all digits from the geometric bag.  This will result in an empty uniform random number, _U_, for the following steps, which will accept _U_ with probability _U_<sup>a&minus;1</sup>*(1&minus;_U_)<sup>b&minus;1</sup>) (the proportional probability for the beta distribution), as _U_ is built up.
@@ -187,7 +186,7 @@ The beta distribution is one case of a general approach to simulating continuous
     - either returns a constant value in [0, 1] everywhere, or returns a value in [0, 1] at each of the points 0 and 1 and a value in (0, 1) at each other point,
 
    and they give the example of 2*p* as a probability function that cannot be represented by a Bernoulli factory.  In the case of constants, they can be represented by a geometric bag&mdash;
-    - that is prefilled with the binary expansion of the constant in question, or
+    - that is prefilled with the digit expansion of the constant in question, or
     - that uses a modified **SampleGeometricBag** algorithm in which the constant's digit expansion's digits are not sampled at random, but rather calculated "on the fly" and as necessary.
 
 3. If the geometric bag is accepted, fill the unsampled digits of the bag with uniform random digits as necessary to make an `n`-digit-precision number (similarly to **FillGeometricBag** above).
