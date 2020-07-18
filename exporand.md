@@ -53,6 +53,16 @@ Two partially-sampled random numbers, each of a different distribution but stori
 5. Return `true` if **a**'s fractional part is less than **b**'s, or `false` if **a**'s fractional part is greater than **b**'s.
 6. Add 1 to _i_ and go to step 4.
 
+Arithmetic between two partially-sampled random numbers may be possible by relating the relative probabilities of each digit, in the result's digit expansion, to some kind of formula.  For example, I can show empirically that when an exponential(1) random number is multiplied by a uniform \[0, 1\] random number, the following (approximate) probabilities of 1 occur in the following positions of the result's binary expansion:
+
+| Position after the point |  Approx. prob. of 1 |
+  --- | --- |
+| 1st (half) |  0.227233     |
+| 2nd (quarter) |   0.321432    |
+| 3rd |    0.388065   |
+| 4th |    0.433957   |
+| 5th |    0.461612   |
+
 <a id=Building_Blocks></a>
 ## Building Blocks
 
@@ -114,7 +124,7 @@ In the Python code below, note that `zero_or_one_exp_minus` uses `random.randint
 import random
 
 def logisticexp(ln, ld, prec):
-    "'" Returns 1 with probability 1/(1+exp(ln/(ld*2^prec))). """
+        """ Returns 1 with probability 1/(1+exp(ln/(ld*2^prec))). """
         denom=ld*2**prec
         while True:
            if random.randint(0,1)==0: return 0
@@ -317,11 +327,11 @@ def exprandscore(ln,ld,ln2,ld2):
 <a id=Open_Questions></a>
 ## Open Questions
 
-There are some open questions on whether partially-sampled random numbers are possible:
+There are some open questions on partially-sampled random numbers:
 
 1. Are there constructions for partially-sampled normal random numbers with a standard deviation other than 1 and/or a mean other than an integer?
 2. Are there constructions for partially-sampled random numbers other than for cases given earlier in this document?
-3. How can arithmetic on partially-sampled random numbers (such as addition, multiplication, division, and powering) be carried out?
+3. What are exact formulas for the digit probabilities when arithmetic is carried out between two partially-sampled random numbers (such as addition, multiplication, division, and powering)?
 
 <a id=Acknowledgments></a>
 ## Acknowledgments
@@ -353,7 +363,7 @@ I acknowledge Claude Gravel who reviewed this article.
 
 <small><sup id=Note11>(11)</sup> Lumbroso, J., "[**Optimal Discrete Uniform Generation from Coin Flips, and Applications**](https://arxiv.org/abs/1304.1916)", arXiv:1304.1916 [cs.DS].</small>
 
-<small><sup id=Note12>(12)</sup> This algorithm is also known as a _Bernoulli factory_, an algorithm that turns coins biased one way into coins biased another way (Keane,  M.  S.,  and  O'Brien,  G.  L., "A Bernoulli factory", _ACM Transactions on Modeling and Computer Simulation_ 4(2), 1994.)</small>
+<small><sup id=Note12>(12)</sup> This algorithm is also known as a _Bernoulli factory_, an algorithm that turns coins biased one way into coins biased another way (Keane,  M.  S.,  and  O'Brien,  G.  L., "A Bernoulli factory", _ACM Transactions on Modeling and Computer Simulation_ 4(2), 1994.)  In fact, thanks to the "geometric bag" technique of Flajolet et al. (2010), this &lambda; parameter can even be a uniform random number in [0, 1] whose contents are built up digit by digit.</small>
 
 <small><sup id=Note13>(13)</sup> Łatuszyński, K., Kosmidis, I.,  Papaspiliopoulos, O., Roberts, G.O., "Simulating events of unknown probabilities via reverse time martingales", 2011.</small>
 

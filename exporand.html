@@ -66,6 +66,36 @@
 <li>Add 1 to <em>i</em> and go to step 4.</li>
 </ol>
 
+<p>Arithmetic between two partially-sampled random numbers may be possible by relating the relative probabilities of each digit, in the result&#39;s digit expansion, to some kind of formula.  For example, I can show empirically that when an exponential(1) random number is multiplied by a uniform [0, 1] random number, the following (approximate) probabilities of 1 occur in the following positions of the result&#39;s binary expansion:</p>
+
+<table><thead>
+<tr>
+<th>Position after the point</th>
+<th>Approx. prob. of 1</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>1st (half)</td>
+<td>0.227233</td>
+</tr>
+<tr>
+<td>2nd (quarter)</td>
+<td>0.321432</td>
+</tr>
+<tr>
+<td>3rd</td>
+<td>0.388065</td>
+</tr>
+<tr>
+<td>4th</td>
+<td>0.433957</td>
+</tr>
+<tr>
+<td>5th</td>
+<td>0.461612</td>
+</tr>
+</tbody></table>
+
 <p><a id=Building_Blocks></a></p>
 
 <h2>Building Blocks</h2>
@@ -141,7 +171,7 @@
 <pre>import random
 
 def logisticexp(ln, ld, prec):
-    &quot;&#39;&quot; Returns 1 with probability 1/(1+exp(ln/(ld*2^prec))). &quot;&quot;&quot;
+        &quot;&quot;&quot; Returns 1 with probability 1/(1+exp(ln/(ld*2^prec))). &quot;&quot;&quot;
         denom=ld*2**prec
         while True:
            if random.randint(0,1)==0: return 0
@@ -536,12 +566,12 @@ def exprandscore(ln,ld,ln2,ld2):
 
 <h2>Open Questions</h2>
 
-<p>There are some open questions on whether partially-sampled random numbers are possible:</p>
+<p>There are some open questions on partially-sampled random numbers:</p>
 
 <ol>
 <li>Are there constructions for partially-sampled normal random numbers with a standard deviation other than 1 and/or a mean other than an integer?</li>
 <li>Are there constructions for partially-sampled random numbers other than for cases given earlier in this document?</li>
-<li>How can arithmetic on partially-sampled random numbers (such as addition, multiplication, division, and powering) be carried out?</li>
+<li>What are exact formulas for the digit probabilities when arithmetic is carried out between two partially-sampled random numbers (such as addition, multiplication, division, and powering)?</li>
 </ol>
 
 <p><a id=Acknowledgments></a></p>
@@ -576,7 +606,7 @@ def exprandscore(ln,ld,ln2,ld2):
 
 <p><small><sup id=Note11>(11)</sup> Lumbroso, J., &quot;<a href="https://arxiv.org/abs/1304.1916"><strong>Optimal Discrete Uniform Generation from Coin Flips, and Applications</strong></a>&quot;, arXiv:1304.1916 [cs.DS].</small></p>
 
-<p><small><sup id=Note12>(12)</sup> This algorithm is also known as a <em>Bernoulli factory</em>, an algorithm that turns coins biased one way into coins biased another way (Keane,  M.  S.,  and  O&#39;Brien,  G.  L., &quot;A Bernoulli factory&quot;, <em>ACM Transactions on Modeling and Computer Simulation</em> 4(2), 1994.)</small></p>
+<p><small><sup id=Note12>(12)</sup> This algorithm is also known as a <em>Bernoulli factory</em>, an algorithm that turns coins biased one way into coins biased another way (Keane,  M.  S.,  and  O&#39;Brien,  G.  L., &quot;A Bernoulli factory&quot;, <em>ACM Transactions on Modeling and Computer Simulation</em> 4(2), 1994.)  In fact, thanks to the &quot;geometric bag&quot; technique of Flajolet et al. (2010), this &lambda; parameter can even be a uniform random number in [0, 1] whose contents are built up digit by digit.</small></p>
 
 <p><small><sup id=Note13>(13)</sup> Łatuszyński, K., Kosmidis, I.,  Papaspiliopoulos, O., Roberts, G.O., &quot;Simulating events of unknown probabilities via reverse time martingales&quot;, 2011.</small></p>
 

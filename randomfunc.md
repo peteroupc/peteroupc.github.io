@@ -1703,8 +1703,8 @@ MCMC algorithms<sup>[**(65)**](#Note65)</sup> include _Metropolis&ndash;Hastings
 
 A [**_piecewise linear distribution_**](http://en.cppreference.com/w/cpp/numeric/random/piecewise_linear_distribution) describes a continuous distribution with weights at known points and other weights determined by linear interpolation (smoothing).  The `PiecewiseLinear` method (in the pseudocode below) takes two lists as follows (see also (Kscischang 2019)<sup>[**(66)**](#Note66)</sup>):
 
-- `values` is a list of numbers (which need not be integers). If the numbers are arranged in ascending order, which they should, the first number in this list can be returned exactly, but not the last number.
-- `weights` is a list of weights for the given numbers (where each number and its weight have the same index in both lists).   The greater a number's weight, the more likely it is that a number close to that number will be chosen.  Each weight should be 0 or greater.
+- `values` is a list of rational numbers. If the numbers are arranged in ascending order, which they should, the first number in this list can be returned exactly, but not the last number.
+- `weights` is a list of rational-valued weights for the given numbers (where each number and its weight have the same index in both lists).   The greater a number's weight, the more likely it is that a number close to that number will be chosen.  Each weight should be 0 or greater.
 
 &nbsp;
 
@@ -1717,6 +1717,9 @@ A [**_piecewise linear distribution_**](http://en.cppreference.com/w/cpp/numeric
                 (values[i] - values[i-1]))
          AddItem(areas,area)
       end
+      // NOTE: If values and weights are rational
+      // numbers, use NormalizeRatios instead
+      // of IntegerWeightsListFP.
       areas=IntegerWeightsListFP(areas)
       index=WeightedChoice(areas)
       w=values[index+1]-values[index]

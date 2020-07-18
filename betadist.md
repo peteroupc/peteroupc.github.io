@@ -28,7 +28,7 @@ Although `alpha` and `beta` can each be greater than 0, this sampler only works 
 
 The beta sampler relies on several building blocks described in this section.
 
-One of them is the "geometric bag" technique by Flajolet and others (2010)<sup>[**(3)**](#Note3)</sup>, which generates heads or tails with a probability that is built up digit by digit.   A _geometric bag_ is a list of items, where each item is a digit, or a placeholder value (which represents an unsampled digit), and represents a list of the digits after the radix point, from left to right, of a real number in the interval [0, 1], that is, the number's _digit expansion_ (or _binary expansion_ for base 2). (Note that Flajolet et al. cover only the binary case of a geometric bag).
+One of them is the "geometric bag" technique by Flajolet and others (2010)<sup>[**(3)**](#Note3)</sup>, which generates heads or tails with a probability that is built up digit by digit.   A _geometric bag_ is a list of items, where each item is a digit, or a placeholder value (which represents an unsampled digit), and represents a list of the digits after the radix point, from left to right, of a real number in the interval [0, 1], that is, the number's _digit expansion_ (or _binary expansion_ for base 2). (Note that Flajolet et al. cover only the binary case of a geometric bag.)
 
 The algorithm **SampleGeometricBag** is a Bernoulli factory algorithm described as follows:
 
@@ -62,8 +62,8 @@ The algorithm is as follows:
 3. If `index <= k` and `index + n >= k`:
     1. Generate **v**, a multinomial random vector with _b_ probabilities equal to 1/_b_, where _b_ is the radix (for the binary case, _b_ = 2, so this is equivalent to generating `LC` = binomial(`n`, 0.5) and setting **v** to {`LC`, `n - LC`}).
     2. Starting at `index`, append the digit 0 to the first **v**\[0\] u-rands, a 1 digit to the next **v**\[1\] u-rands, and so on to appending a _b_ &minus; 1 digit to the last **v**\[_b_ &minus; 1\] u-rands (for the binary case, this means appending a 0 bit to the first `LC` u-rands and a 1 bit to the next `n - LC` u-rands).
-    3. For each integer _i_ in \[0, _b_): If **v**\[_i_\] > 1, repeat step 3 and these substeps with `index` = `index` + &Sigma;<sub>_j_=0, _i_&minus;1</sub> **v**\[_j_\] and `n` = **v**\[_i_\]. (For the binary case, this means: If`LC > 1`, repeat step 3 and these substeps with the same `index` and `n = LC`; then, if `n - LC > 1`, repeat step 3 and these substeps with `index = index+LC`, and `n = n - LC`).
-4. Take the `k`th u-rand (starting at 1) and fill it with uniform random digits as necessary to make a `bitcount`-digits number (similarly to **FillGeometricBag** above). (See also (Oberhoff 2018, sec. 8)<sup>[**(4)**](#Note4)</sup>.)  Return that u-rand.
+    3. For each integer _i_ in \[0, _b_): If **v**\[_i_\] > 1, repeat step 3 and these substeps with `index` = `index` + &Sigma;<sub>_j_=0, _i_&minus;1</sub> **v**\[_j_\] and `n` = **v**\[_i_\]. (For the binary case, this means: If `LC > 1`, repeat step 3 and these substeps with the same `index` and `n = LC`; then, if `n - LC > 1`, repeat step 3 and these substeps with `index = index + LC`, and `n = n - LC`).
+4. Take the `k`th u-rand (starting at 1) and fill it with uniform random digits as necessary to make a `bitcount`-digit-precision number (similarly to **FillGeometricBag** above). (See also (Oberhoff 2018, sec. 8)<sup>[**(4)**](#Note4)</sup>.)  Return that u-rand.
 
 <a id=The_Algorithm></a>
 ## The Algorithm
@@ -73,11 +73,10 @@ The full algorithm of the beta generator is as follows.  It takes three paramete
 1. Special case: If _a_ = 0 and _b_ = 0, return a uniform _p_-digit-precision number (for example, in the binary case, RandomBits(_p_) / 2<sup>_p_</sup> where `RandomBits(x)` returns an x-bit block of unbiased random bits).
 2. Special case: If _a_ and _b_ are both integers, return the result of **kthsmallest** with parameters (_a_ &minus; _b_ + 1) and _a_ in that order, and fill it as necessary to make a _p_-digit-precision number (similarly to **FillGeometricBag** above).
 3. Create an empty list to serve as a "geometric bag".
-4. While true:
-     1. Remove all digits from the geometric bag.  This will result in an empty uniform random number, _U_, for the following steps, which will accept _U_ with probability _U_<sup>a&minus;1</sup>*(1&minus;_U_)<sup>b&minus;1</sup>) (the proportional probability for the beta distribution), as _U_ is built up.
-     2. Call the **PowerBernoulliFactory** using the **SampleGeometricBag** algorithm and parameter _a_ &minus; 1 (which will return 1 with probability _U_<sup>a&minus;1</sup>).  If the result is 0, go to substep 1.
-     3. Call the **PowerBernoulliFactory** using the **SampleGeometricBagComplement** algorithm and parameter _b_ &minus; 1 (which will return 1 with probability (1&minus;_U_)<sup>b&minus;1</sup>).  If the result is 0, go to substep 1. (Note that substeps 2 and 3 don't depend on each other and can be done in either order without affecting correctness, and this is taken advantage of in the Python code below.)
-     4. _U_ was accepted, so return the result of **FillGeometricBag**.
+4. Remove all digits from the geometric bag.  This will result in an empty uniform random number, _U_, for the following steps, which will accept _U_ with probability _U_<sup>a&minus;1</sup>*(1&minus;_U_)<sup>b&minus;1</sup>) (the proportional probability for the beta distribution), as _U_ is built up.
+5. Call the **PowerBernoulliFactory** using the **SampleGeometricBag** algorithm and parameter _a_ &minus; 1 (which will return 1 with probability _U_<sup>a&minus;1</sup>).  If the result is 0, go to step 4.
+6. Call the **PowerBernoulliFactory** using the **SampleGeometricBagComplement** algorithm and parameter _b_ &minus; 1 (which will return 1 with probability (1&minus;_U_)<sup>b&minus;1</sup>).  If the result is 0, go to step 4. (Note that steps 5 and 6 don't depend on each other and can be done in either order without affecting correctness, and this is taken advantage of in the Python code below.)
+7. _U_ was accepted, so return the result of **FillGeometricBag**.
 
 <a id=Sampler_Code></a>
 ## Sampler Code
@@ -215,11 +214,10 @@ The algorithm for sampling the continuous Bernoulli distribution follows.  It us
 
 1. Create an empty list to serve as a "geometric bag".
 2. Create a **complementary lambda Bernoulli factory** that returns 1 minus the result of the **lambda Bernoulli factory**.
-3. While true:
-     1. Remove all digits from the geometric bag.  This will result in an empty uniform random number, _U_, for the following steps, which will accept _U_ with probability `lamda`<sup>_U_</sup>*(1&minus;`lamda`)<sup>1&minus;_U_</sup>) (the proportional probability for the beta distribution), as _U_ is built up.
-     2. Call the **two-coin power factory** using the **lambda Bernoulli factory** as the base and **SampleGeometricBag** as the exponent (which will return 1 with probability `lamda`<sup>_U_</sup>).  If the result is 0, go to substep 1.
-     3. Call the **two-coin power factory** using the **complementary lambda Bernoulli factory** as the base and **SampleGeometricBagComplement** algorithm and parameter _b_ &minus; 1 (which will return 1 with probability (1-`lamda`)<sup>1&minus;_U_</sup>).  If the result is 0, go to substep 1. (Note that substeps 2 and 3 don't depend on each other and can be done in either order without affecting correctness.)
-     4. _U_ was accepted, so return the result of **FillGeometricBag**.
+3. Remove all digits from the geometric bag.  This will result in an empty uniform random number, _U_, for the following steps, which will accept _U_ with probability `lamda`<sup>_U_</sup>*(1&minus;`lamda`)<sup>1&minus;_U_</sup>) (the proportional probability for the beta distribution), as _U_ is built up.
+4. Call the **two-coin power factory** using the **lambda Bernoulli factory** as the base and **SampleGeometricBag** as the exponent (which will return 1 with probability `lamda`<sup>_U_</sup>).  If the result is 0, go to step 3.
+5. Call the **two-coin power factory** using the **complementary lambda Bernoulli factory** as the base and **SampleGeometricBagComplement** algorithm and parameter _b_ &minus; 1 (which will return 1 with probability (1-`lamda`)<sup>1&minus;_U_</sup>).  If the result is 0, go to step 3. (Note that steps 4 and 5 don't depend on each other and can be done in either order without affecting correctness.)
+6. _U_ was accepted, so return the result of **FillGeometricBag**.
 
 The Python code that samples the continuous Bernoulli distribution follows.
 

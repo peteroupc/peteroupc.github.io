@@ -2076,8 +2076,8 @@ END METHOD
 <p>A <a href="http://en.cppreference.com/w/cpp/numeric/random/piecewise_linear_distribution"><strong><em>piecewise linear distribution</em></strong></a> describes a continuous distribution with weights at known points and other weights determined by linear interpolation (smoothing).  The <code>PiecewiseLinear</code> method (in the pseudocode below) takes two lists as follows (see also (Kscischang 2019)<sup><a href="#Note66"><strong>(66)</strong></a></sup>):</p>
 
 <ul>
-<li><code>values</code> is a list of numbers (which need not be integers). If the numbers are arranged in ascending order, which they should, the first number in this list can be returned exactly, but not the last number.</li>
-<li><code>weights</code> is a list of weights for the given numbers (where each number and its weight have the same index in both lists).   The greater a number&#39;s weight, the more likely it is that a number close to that number will be chosen.  Each weight should be 0 or greater.</li>
+<li><code>values</code> is a list of rational numbers. If the numbers are arranged in ascending order, which they should, the first number in this list can be returned exactly, but not the last number.</li>
+<li><code>weights</code> is a list of rational-valued weights for the given numbers (where each number and its weight have the same index in both lists).   The greater a number&#39;s weight, the more likely it is that a number close to that number will be chosen.  Each weight should be 0 or greater.</li>
 </ul>
 
 <p>&nbsp;</p>
@@ -2091,6 +2091,9 @@ END METHOD
             (values[i] - values[i-1]))
      AddItem(areas,area)
   end
+  // NOTE: If values and weights are rational
+  // numbers, use NormalizeRatios instead
+  // of IntegerWeightsListFP.
   areas=IntegerWeightsListFP(areas)
   index=WeightedChoice(areas)
   w=values[index+1]-values[index]

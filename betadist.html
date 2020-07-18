@@ -81,9 +81,9 @@
 <ol>
 <li>Generate <strong>v</strong>, a multinomial random vector with <em>b</em> probabilities equal to 1/<em>b</em>, where <em>b</em> is the radix (for the binary case, <em>b</em> = 2, so this is equivalent to generating <code>LC</code> = binomial(<code>n</code>, 0.5) and setting <strong>v</strong> to {<code>LC</code>, <code>n - LC</code>}).</li>
 <li>Starting at <code>index</code>, append the digit 0 to the first <strong>v</strong>[0] u-rands, a 1 digit to the next <strong>v</strong>[1] u-rands, and so on to appending a <em>b</em> &minus; 1 digit to the last <strong>v</strong>[<em>b</em> &minus; 1] u-rands (for the binary case, this means appending a 0 bit to the first <code>LC</code> u-rands and a 1 bit to the next <code>n - LC</code> u-rands).</li>
-<li>For each integer <em>i</em> in [0, <em>b</em>): If <strong>v</strong>[<em>i</em>] &gt; 1, repeat step 3 and these substeps with <code>index</code> = <code>index</code> + &Sigma;<sub><em>j</em>=0, <em>i</em>&minus;1</sub> <strong>v</strong>[<em>j</em>] and <code>n</code> = <strong>v</strong>[<em>i</em>]. (For the binary case, this means: If<code>LC &gt; 1</code>, repeat step 3 and these substeps with the same <code>index</code> and <code>n = LC</code>; then, if <code>n - LC &gt; 1</code>, repeat step 3 and these substeps with <code>index = index+LC</code>, and <code>n = n - LC</code>).</li>
+<li>For each integer <em>i</em> in [0, <em>b</em>): If <strong>v</strong>[<em>i</em>] &gt; 1, repeat step 3 and these substeps with <code>index</code> = <code>index</code> + &Sigma;<sub><em>j</em>=0, <em>i</em>&minus;1</sub> <strong>v</strong>[<em>j</em>] and <code>n</code> = <strong>v</strong>[<em>i</em>]. (For the binary case, this means: If <code>LC &gt; 1</code>, repeat step 3 and these substeps with the same <code>index</code> and <code>n = LC</code>; then, if <code>n - LC &gt; 1</code>, repeat step 3 and these substeps with <code>index = index + LC</code>, and <code>n = n - LC</code>).</li>
 </ol></li>
-<li>Take the <code>k</code>th u-rand (starting at 1) and fill it with uniform random digits as necessary to make a <code>bitcount</code>-digits number (similarly to <strong>FillGeometricBag</strong> above). (See also (Oberhoff 2018, sec. 8)<sup><a href="#Note4"><strong>(4)</strong></a></sup>.)  Return that u-rand.</li>
+<li>Take the <code>k</code>th u-rand (starting at 1) and fill it with uniform random digits as necessary to make a <code>bitcount</code>-digit-precision number (similarly to <strong>FillGeometricBag</strong> above). (See also (Oberhoff 2018, sec. 8)<sup><a href="#Note4"><strong>(4)</strong></a></sup>.)  Return that u-rand.</li>
 </ol>
 
 <p><a id=The_Algorithm></a></p>
@@ -96,14 +96,10 @@
 <li>Special case: If <em>a</em> = 0 and <em>b</em> = 0, return a uniform <em>p</em>-digit-precision number (for example, in the binary case, RandomBits(<em>p</em>) / 2<sup><em>p</em></sup> where <code>RandomBits(x)</code> returns an x-bit block of unbiased random bits).</li>
 <li>Special case: If <em>a</em> and <em>b</em> are both integers, return the result of <strong>kthsmallest</strong> with parameters (<em>a</em> &minus; <em>b</em> + 1) and <em>a</em> in that order, and fill it as necessary to make a <em>p</em>-digit-precision number (similarly to <strong>FillGeometricBag</strong> above).</li>
 <li>Create an empty list to serve as a &quot;geometric bag&quot;.</li>
-<li>While true:
-
-<ol>
 <li>Remove all digits from the geometric bag.  This will result in an empty uniform random number, <em>U</em>, for the following steps, which will accept <em>U</em> with probability <em>U</em><sup>a&minus;1</sup>*(1&minus;<em>U</em>)<sup>b&minus;1</sup>) (the proportional probability for the beta distribution), as <em>U</em> is built up.</li>
-<li>Call the <strong>PowerBernoulliFactory</strong> using the <strong>SampleGeometricBag</strong> algorithm and parameter <em>a</em> &minus; 1 (which will return 1 with probability <em>U</em><sup>a&minus;1</sup>).  If the result is 0, go to substep 1.</li>
-<li>Call the <strong>PowerBernoulliFactory</strong> using the <strong>SampleGeometricBagComplement</strong> algorithm and parameter <em>b</em> &minus; 1 (which will return 1 with probability (1&minus;<em>U</em>)<sup>b&minus;1</sup>).  If the result is 0, go to substep 1. (Note that substeps 2 and 3 don&#39;t depend on each other and can be done in either order without affecting correctness, and this is taken advantage of in the Python code below.)</li>
+<li>Call the <strong>PowerBernoulliFactory</strong> using the <strong>SampleGeometricBag</strong> algorithm and parameter <em>a</em> &minus; 1 (which will return 1 with probability <em>U</em><sup>a&minus;1</sup>).  If the result is 0, go to step 4.</li>
+<li>Call the <strong>PowerBernoulliFactory</strong> using the <strong>SampleGeometricBagComplement</strong> algorithm and parameter <em>b</em> &minus; 1 (which will return 1 with probability (1&minus;<em>U</em>)<sup>b&minus;1</sup>).  If the result is 0, go to step 4. (Note that steps 5 and 6 don&#39;t depend on each other and can be done in either order without affecting correctness, and this is taken advantage of in the Python code below.)</li>
 <li><em>U</em> was accepted, so return the result of <strong>FillGeometricBag</strong>.</li>
-</ol></li>
 </ol>
 
 <p><a id=Sampler_Code></a></p>
@@ -259,14 +255,10 @@ def _fill_geometric_bag(b, bag, precision):
 <ol>
 <li>Create an empty list to serve as a &quot;geometric bag&quot;.</li>
 <li>Create a <strong>complementary lambda Bernoulli factory</strong> that returns 1 minus the result of the <strong>lambda Bernoulli factory</strong>.</li>
-<li>While true:
-
-<ol>
 <li>Remove all digits from the geometric bag.  This will result in an empty uniform random number, <em>U</em>, for the following steps, which will accept <em>U</em> with probability <code>lamda</code><sup><em>U</em></sup>*(1&minus;<code>lamda</code>)<sup>1&minus;<em>U</em></sup>) (the proportional probability for the beta distribution), as <em>U</em> is built up.</li>
-<li>Call the <strong>two-coin power factory</strong> using the <strong>lambda Bernoulli factory</strong> as the base and <strong>SampleGeometricBag</strong> as the exponent (which will return 1 with probability <code>lamda</code><sup><em>U</em></sup>).  If the result is 0, go to substep 1.</li>
-<li>Call the <strong>two-coin power factory</strong> using the <strong>complementary lambda Bernoulli factory</strong> as the base and <strong>SampleGeometricBagComplement</strong> algorithm and parameter <em>b</em> &minus; 1 (which will return 1 with probability (1-<code>lamda</code>)<sup>1&minus;<em>U</em></sup>).  If the result is 0, go to substep 1. (Note that substeps 2 and 3 don&#39;t depend on each other and can be done in either order without affecting correctness.)</li>
+<li>Call the <strong>two-coin power factory</strong> using the <strong>lambda Bernoulli factory</strong> as the base and <strong>SampleGeometricBag</strong> as the exponent (which will return 1 with probability <code>lamda</code><sup><em>U</em></sup>).  If the result is 0, go to step 3.</li>
+<li>Call the <strong>two-coin power factory</strong> using the <strong>complementary lambda Bernoulli factory</strong> as the base and <strong>SampleGeometricBagComplement</strong> algorithm and parameter <em>b</em> &minus; 1 (which will return 1 with probability (1-<code>lamda</code>)<sup>1&minus;<em>U</em></sup>).  If the result is 0, go to step 3. (Note that steps 4 and 5 don&#39;t depend on each other and can be done in either order without affecting correctness.)</li>
 <li><em>U</em> was accepted, so return the result of <strong>FillGeometricBag</strong>.</li>
-</ol></li>
 </ol>
 
 <p>The Python code that samples the continuous Bernoulli distribution follows.</p>
