@@ -1,22 +1,38 @@
-# Partially-Sampled Exponential Random Numbers
+# Partially-Sampled Random Numbers for Exact Sampling of the Beta, Exponential, and Other Continuous Distributions
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
+
+_Note: Formerly "Partially Sampled Exponential Random Numbers", due to a merger with "An Exact Beta Generator"._
 
 <a id=Introduction></a>
 ## Introduction
 
-This page introduces an implementation of _partially-sampled_ exponential random numbers.   Called _e-rands_ in this document, they represent incomplete numbers whose contents are determined only when necessary, making them have potentially arbitrary precision.  [**See the section "Code" for sample Python code**](#Code).
+This page introduces a Python implementation of _partially-sampled random numbers_.  Although structures for partially-sampled random numbers were largely described before this work, this document unifies the concepts for these kinds of numbers from prior works and shows how they can be used to sample the beta distribution (with both parameters 1 or greater), the exponential distribution (with an arbitrary rate parameter), and other continuous distributions&mdash;
 
-Moreover, this document includes methods that operate on e-rands in a way that uses only uniform random bits, and without relying on floating-point arithmetic (except for conversion purposes in the example method `exprand`).  Also, the methods support e-rands with an arbitrary rate parameter (&lambda;) greater than 0.
+- while avoiding floating-point arithmetic, and
+- to an arbitrary precision and with user-specified error bounds (and in an "exact" manner in the sense defined in (Karney 2014)<sup>[**(1)**](#Note1)</sup>).
 
-There are papers that discuss generating exponential random numbers using random bits (Flajolet and Saheb 1982)<sup>[**(1)**](#Note1)</sup>, (Karney 2014)<sup>[**(2)**](#Note2)</sup>, (Devroye and Gravel 2015)<sup>[**(3)**](#Note3)</sup>, (Thomas and Luk 2008)<sup>[**(4)**](#Note4)</sup>, but none I am aware of deal with generating partially-sampled exponential random numbers using an arbitrary rate, not just 1.
+For instance, these two points distinguish the beta sampler in this document from any other specially-designed beta-sampler I am aware of.  As for the exponential distribution, there are papers that discuss generating exponential random numbers using random bits (Flajolet and Saheb 1982)<sup>[**(2)**](#Note2)</sup>, (Karney 2014)<sup>[**(1)**](#Note1)</sup>, (Devroye and Gravel 2015)<sup>[**(3)**](#Note3)</sup>, (Thomas and Luk 2008)<sup>[**(4)**](#Note4)</sup>, but none I am aware of deal with generating partially-sampled exponential random numbers using an arbitrary rate, not just 1.
+
+The samplers discussed here also draw on work dealing with a construct called the _Bernoulli factory_ (Keane and O'Brien 1994)<sup>[**(5)**](#Note5)</sup> (Flajolet et al., 2010)<sup>[**(6)**](#Note6)</sup>, which can simulate an arbitrary probability by transforming biased coins to biased coins.  One important feature of Bernoulli factories is that they can simulate a given probability _exactly_, without having to calculate that probability manually, which is important if the probability can be an irrational number that no computer can compute exactly (such as `pow(p, 1/2)` or `exp(-2)`).
+
+This page shows [**Python code**](#Sampler_Code) for these samplers.
+
+<a id=About_the_Beta_Distribution></a>
+## About the Beta Distribution
+
+The [**beta distribution**](https://en.wikipedia.org/wiki/Beta_distribution) is a bounded-domain probability distribution; its two parameters, `alpha` and `beta`, are both greater than 0 and describe the distribution's shape.  Depending on `alpha` and `beta`, the shape can be a smooth peak or a smooth valley.  The beta distribution can take on values in the interval [0, 1].  Any value in this interval (`x`) can occur with a probability proportional to&mdash;
+
+    pow(x, alpha - 1) * pow(1 - x, beta - 1).               (1)
+
+Although `alpha` and `beta` can each be greater than 0, the sampler presented in this document only works if both parameters are 1 or greater.
 
 <a id=About_the_Exponential_Distribution></a>
 ## About the Exponential Distribution
 
 The _exponential distribution_ takes a parameter &lambda;.  Informally speaking, a random number that follows an exponential distribution is the number of units of time between one event and the next, and &lambda; is the expected average number of events per unit of time.  Usually, &lambda; is equal to 1.
 
-An exponential random number is commonly generated as follows: `-ln(1 - RNDU01()) / lamda`, where `RNDU01()` is a uniform random number in the interval \[0, 1).  (This particular formula is not robust, though, for reasons that are outside the scope of this document, but see (Pedersen 2018)<sup>[**(5)**](#Note5)</sup>.)  This page presents an alternative way to sample exponential random numbers.
+An exponential random number is commonly generated as follows: `-ln(1 - RNDU01()) / lamda`, where `RNDU01()` is a uniform random number in the interval \[0, 1).  (This particular formula is not robust, though, for reasons that are outside the scope of this document, but see (Pedersen 2018)<sup>[**(7)**](#Note7)</sup>.)  This page presents an alternative way to sample exponential random numbers.
 
 <a id=About_Partially_Sampled_Random_Numbers></a>
 ## About Partially-Sampled Random Numbers
@@ -25,26 +41,28 @@ In this document, a _partially-sampled_ random number is a data structure that a
 
 The most trivial example of a _partially-sampled_ random number is that of the uniform distribution in [0, 1].  Such a random number can be implemented as a list of items, where each item is either a digit (such as zero or one for binary), or a placeholder value (which represents an unsampled digit), and represents a list of the digits after the radix point, from left to right, of a real number in the interval [0, 1], that is, the number's _digit expansion_ (e.g., _binary expansion_ in the case of binary digits).  This kind of number is referred to&mdash;
 
-- as a _geometric bag_ in (Flajolet et al. 2010)<sup>[**(6)**](#Note6)</sup> (but only in the binary case), and
-- as a _u-rand_ in (Karney 2014)<sup>[**(2)**](#Note2)</sup>.
+- as a _geometric bag_ in (Flajolet 2010)<sup>[**(6)**](#Note6)</sup> (but only in the binary case), and
+- as a _u-rand_ in (Karney 2014)<sup>[**(1)**](#Note1)</sup>.
 
-Each additional bit is sampled simply by setting it to an independent unbiased random digit, an observation that dates from von Neumann (1951)<sup>[**(7)**](#Note7)</sup> in the binary case.
+Each additional digit is sampled simply by setting it to an independent unbiased random digit, an observation that dates from von Neumann (1951)<sup>[**(8)**](#Note8)</sup> in the binary case.
+
+This document may use the terms _geometric bag_ and _partially-sampled random number_ interchangeably.  Note that the _u-rand_ concept by Karney only contemplates sampling bits from left to right without any gaps, whereas the geometric bag concept is more general in this respect.
 
 Partially-sampled numbers of other distributions can be implemented via rejection from the uniform distribution. For example:
 
-1. The beta and continuous Bernoulli distributions, as discussed in my companion document on an [**exact beta generator**](https://peteroupc.github.io/betadist.html).
-2. The standard normal distribution, as shown in (Karney 2014)<sup>[**(2)**](#Note2)</sup> by running Karney's Algorithm N and filling unsampled digits uniformly at random.
+1. The beta and continuous Bernoulli distributions, as discussed later in this document.
+2. The standard normal distribution, as shown in (Karney 2014)<sup>[**(1)**](#Note1)</sup> by running Karney's Algorithm N and filling unsampled digits uniformly at random.
 3. For uniform distributions in \[0, _n_\) (not just [0, 1]), a partially-sampled version might be trivial by first ensuring that the first "few" digits are such that the resulting number will be less than _n_, via rejection sampling.
 
-For these distributions (and others that are continuous almost everywhere and bounded from above), Oberhoff (2018)<sup>[**(8)**](#Note8)</sup> proved that unsampled trailing bits of the partially-sampled number converge to the uniform distribution.
+For these distributions (and others that are continuous almost everywhere and bounded from above), Oberhoff (2018)<sup>[**(9)**](#Note9)</sup> proved that unsampled trailing bits of the partially-sampled number converge to the uniform distribution.
 
-As an additional example, in this document a partially-sampled exponential random number (or _e-rand_, named similarly to Karney's "u-rands" for partially-sampled uniform random numbers (Karney 2014)<sup>[**(2)**](#Note2)</sup>) samples each bit that, when combined with the existing bits, results in an exponentially-distributed random number of the given rate.  Also, because `-ln(1 - RNDU01())` is exponentially distributed, e-rands can also represent the natural logarithm of a partially-sampled uniform random number in (0, 1].  The difference here is that additional bits are sampled not as unbiased random bits, but rather as bits with a vanishing bias.
+As an additional example, in this document a partially-sampled exponential random number (or _e-rand_, named similarly to Karney's "u-rands" for partially-sampled uniform random numbers (Karney 2014)<sup>[**(1)**](#Note1)</sup>) samples each bit that, when combined with the existing bits, results in an exponentially-distributed random number of the given rate.  Also, because `-ln(1 - RNDU01())` is exponentially distributed, e-rands can also represent the natural logarithm of a partially-sampled uniform random number in (0, 1].  The difference here is that additional bits are sampled not as unbiased random bits, but rather as bits with a vanishing bias.
 
 Partially-sampled numbers could also be implemented via rejection from the exponential distribution, although no concrete examples are presented here.
 
-On the other hand, the concept of _prefix distributions_ (Oberhoff 2018)<sup>[**(8)**](#Note8)</sup> comes close to partially-sampled random numbers, but numbers sampled this way are not partially-sampled random numbers in the sense used here.  This is because the method requires calculating minimums of probabilities (and, in practice, requires the use of floating-point arithmetic in most cases).  Moreover, the method samples from a discrete distribution whose progression depends on the value of previously sampled bits, not just on the position of those bits as with the uniform and exponential distributions (see also (Thomas and Luk 2008)<sup>[**(4)**](#Note4)</sup>).
+On the other hand, the concept of _prefix distributions_ (Oberhoff 2018)<sup>[**(9)**](#Note9)</sup> comes close to partially-sampled random numbers, but numbers sampled this way are not partially-sampled random numbers in the sense used here.  This is because the method requires calculating minimums of probabilities (and, in practice, requires the use of floating-point arithmetic in most cases).  Moreover, the method samples from a discrete distribution whose progression depends on the value of previously sampled bits, not just on the position of those bits as with the uniform and exponential distributions (see also (Thomas and Luk 2008)<sup>[**(4)**](#Note4)</sup>).
 
-Two partially-sampled random numbers, each of a different distribution but storing digits of the same radix, can be exactly compared to each other using an algorithm similar to the following. The **RandLess** algorithm compares two partially-sampled random numbers, **a** and **b** (and samples additional bits from them as necessary) and returns `true` if **a** turns out to be less than **b**, or `false` otherwise (see also (Karney 2014)<sup>[**(2)**](#Note2)</sup>)).
+Two partially-sampled random numbers, each of a different distribution but storing digits of the same radix, can be exactly compared to each other using an algorithm similar to the following. The **RandLess** algorithm compares two partially-sampled random numbers, **a** and **b** (and samples additional bits from them as necessary) and returns `true` if **a** turns out to be less than **b**, or `false` otherwise (see also (Karney 2014)<sup>[**(1)**](#Note1)</sup>)).
 
 1. If **a**'s integer part wasn't sampled yet, sample **a**'s integer part.  Do the same for **b**.
 2. Return `true` if **a**'s integer part is less than **b**'s, or `false` if **a**'s integer part is greater than **b**'s.
@@ -53,7 +71,7 @@ Two partially-sampled random numbers, each of a different distribution but stori
 5. Return `true` if **a**'s fractional part is less than **b**'s, or `false` if **a**'s fractional part is greater than **b**'s.
 6. Add 1 to _i_ and go to step 4.
 
-Arithmetic between two partially-sampled random numbers may be possible by relating the relative probabilities of each digit, in the result's digit expansion, to some kind of formula.  For example, I can show empirically that when an exponential(1) random number is multiplied by a uniform \[0, 1\] random number, the following (approximate) probabilities of 1 occur in the following positions of the result's binary expansion:
+Arithmetic between two partially-sampled random numbers may be possible by relating the relative probabilities of each digit, in the result's digit expansion, to some kind of formula.  (This ignores trivial arithmetic operations, such as addition by half provided the radix is even, or negation, both operations mentioned in (Karney 2014)<sup>[**(1)**](#Note1)</sup>, or operations affecting the integer part only.)  For example, I can show empirically that when an exponential(1) random number is multiplied by a uniform \[0, 1\] random number, the following (approximate) probabilities of 1 occur in the following positions of the result's binary expansion:
 
 | Position after the point |  Approx. prob. of 1 |
   --- | --- |
@@ -66,7 +84,46 @@ Arithmetic between two partially-sampled random numbers may be possible by relat
 <a id=Building_Blocks></a>
 ## Building Blocks
 
-This section describes the building-blocks used in the sampling algorithm and the code to follow.  Sampling an e-rand makes use of two observations (based on the parameter &lambda; of the exponential distribution):
+This document relies on several building blocks described in this section.
+
+One of them is the "geometric bag" technique by Flajolet and others (2010)<sup>[**(6)**](#Note6)</sup>, which generates heads or tails with a probability that is built up digit by digit.   A _geometric bag_ was defined earlier.
+
+The algorithm **SampleGeometricBag** is a Bernoulli factory algorithm described as follows:
+
+1.  Let N be a geometric(1/_b_) random number, where _b_ is the radix (e.g., 2 for binary).  In this document, a geometric(_p_) random number is the number of failures before the first success, where a success occurs with probability _p_. For example, in the binary case, flip fair coins until tails is flipped, then let N be the number of heads flipped this way.
+2.  If the item at position N in the geometric bag is a digit (e.g., 0 or 1 for binary), return that item. (Positions start at 0.)  Otherwise, set the item at that position to a digit chosen uniformly at random (e.g., either 0 or 1 for binary), increasing the geometric bag's capacity as necessary, then return the newly set item.  (As a result, there may be "gaps" in the geometric bag where no digit was sampled yet.)
+
+**SampleGeometricBagComplement** is the same as the **SampleGeometricBag** algorithm, except the return value is 1 minus the original return value.  The result is that if **SampleGeometricBag** outputs 1 with probability _U_, **SampleGeometricBagComplement** outputs 1 with probability 1 &minus; _U_.
+
+**FillGeometricBag** generates a `p`-digit-precision number (a number with `p` digits after the radix point) from a geometric bag as follows:
+
+1. For each position in \[0, `p`), if the item at that position is not a digit, set the item there to to a digit chosen uniformly at random (e.g., either 0 or 1 for binary), increasing the geometric bag's capacity as necessary. (See also (Oberhoff 2018, sec. 8)<sup>[**(9)**](#Note9)</sup>.)
+2. Take the first `p` digits of the geometric bag and return &Sigma;<sub>_i_=0, _p_&minus;1</sub> bag[_i_] * _b_<sup>&minus;_i_&minus;1</sup>, where _b_ is the radix.  (If it somehow happens that digits beyond `p` are set to 0 or 1, then the implementation could choose instead to fill all unsampled digits between the first and the last set digit and return the full number, optionally rounding it to a `p`-digit-precision number with a rounding mode of choice.)
+
+**PowerBernoulliFactory** is a Bernoulli factory algorithm that transforms a coin that produces heads with probability `p` into a coin that produces heads with probability `pow(p, y)`.  The case where `y` is in (0, 1) is due to recent work by Mendo (2019)<sup>[**(10)**](#Note10)</sup>.  The algorithm takes a Bernoulli factory sub-algorithm (the coin that produces heads with probability `p`) as well as the parameter _y_, and is described as follows:
+
+1. If _y_ is equal to 1, call the sub-algorithm and return the result.
+2. If _y_ is greater than 1, call the sub-algorithm `floor(y)` times and call **PowerBernoulliFactory** (once) with _y_ = _y_ &minus; floor(_y_).  Return 1 if all these calls return 1; otherwise, return 0.
+3. _y_ is less than 1, so set _i_ to 1.
+4. Call the sub-algorithm; if it returns 1, return 1.
+5. Return 0 with probability _y_/_i_.
+6. Add 1 to _i_ and go to step 4.
+
+The **kthsmallest** method generates the 'k'th smallest 'bitcount'-digit uniform random number out of 'n' of them, is also relied on by this beta sampler.  It is used when both `a` and `b` are integers, based on the known property that a beta random variable in this case is the `a`th smallest uniform (0, 1) random number out of `a + b - 1` of them (Devroye 1986, p. 431)<sup>[**(11)**](#Note11)</sup></sup>.
+
+**kthsmallest**, however, doesn't simply generate 'n' 'bitcount'-digit numbers and then sort them.  Rather, it builds up their digit expansions digit by digit, via partially-sampled random numbers.    It uses the observation that (in the binary case) each uniform (0, 1) random number is equally likely to be less than half or greater than half; thus, the number of uniform numbers that are less than half vs. greater than half follows a binomial(n, 1/2) distribution (and of the numbers less than half, say, the less-than-one-quarter vs. greater-than-one-quarter numbers follows the same distribution, and so on).    Thanks to this observation, the algorithm can generate a sorted sample "on the fly".  A similar observation applies to other bases than base 2 if we use the multinomial distribution instead of the binomial distribution.
+
+The algorithm is as follows:
+
+1. Create `n` empty partially-sampled random numbers.
+2. Set `index` to 1.
+3. If `index <= k` and `index + n >= k`:
+    1. Generate **v**, a multinomial random vector with _b_ probabilities equal to 1/_b_, where _b_ is the radix (for the binary case, _b_ = 2, so this is equivalent to generating `LC` = binomial(`n`, 0.5) and setting **v** to {`LC`, `n - LC`}).
+    2. Starting at `index`, append the digit 0 to the first **v**\[0\] u-rands, a 1 digit to the next **v**\[1\] u-rands, and so on to appending a _b_ &minus; 1 digit to the last **v**\[_b_ &minus; 1\] u-rands (for the binary case, this means appending a 0 bit to the first `LC` u-rands and a 1 bit to the next `n - LC` u-rands).
+    3. For each integer _i_ in \[0, _b_): If **v**\[_i_\] > 1, repeat step 3 and these substeps with `index` = `index` + &Sigma;<sub>_j_=0, _i_&minus;1</sub> **v**\[_j_\] and `n` = **v**\[_i_\]. (For the binary case, this means: If `LC > 1`, repeat step 3 and these substeps with the same `index` and `n = LC`; then, if `n - LC > 1`, repeat step 3 and these substeps with `index = index + LC`, and `n = n - LC`).
+4. Take the `k`th partially-sampled random numbers (starting at 1) and fill it with uniform random digits as necessary to make a `bitcount`-digit-precision number (similarly to **FillGeometricBag** above). Return that number.  (An implementation may instead just return the partially-sampled random number without filling it this way first, but the beta sampler described later doesn't use this alternative.)
+
+**Sampling an e-rand** (partially-sampled exponential random number) makes use of two observations (based on the parameter &lambda; of the exponential distribution):
 
 - While a coin flip with probability of heads of exp(-&lambda;) is heads, the exponential random number is increased by 1.
 - If a coin flip with probability of heads of 1/(1+exp(&lambda;/2<sup>_k_</sup>)) is heads, the exponential random number is increased by 2<sup>-_k_</sup>, where _k_ > 0 is an integer.
@@ -80,7 +137,7 @@ To implement these probabilities using just random bits, the sampler uses two al
 
 These two algorithms enable e-rands with rational-valued &lambda; parameters and are described below.
 
-The **ZeroOrOneExpMinus** algorithm takes integers _x_ >= 0 and _y_ > 0 and outputs 1 with probability `exp(-x/y)` or 0 otherwise. It originates from (Canonne et al. 2020)<sup>[**(9)**](#Note9)</sup>.
+The **ZeroOrOneExpMinus** algorithm takes integers _x_ >= 0 and _y_ > 0 and outputs 1 with probability `exp(-x/y)` or 0 otherwise. It originates from (Canonne et al. 2020)<sup>[**(12)**](#Note12)</sup>.
 
 1. Special case: If _x_ is 0, return 1. (This is because the probability becomes `exp(0) = 1`.)
 2. If `x > y` (so _x_/_y_ is greater than 1), call **ZeroOrOneExpMinus** `floor(x/y)` times with _x_ = _y_ = 1 and once with _x_ = _x_ - floor(_x_/_y_) * _y_ and _y_ = _y_.  Return 1 if all these calls return 1; otherwise, return 0.
@@ -88,16 +145,36 @@ The **ZeroOrOneExpMinus** algorithm takes integers _x_ >= 0 and _y_ > 0 and outp
 4. Return _r_ with probability _x_/(_y_*_i_).
 5. Set _r_ to 1 - _r_, add 1 to _i_, and go to step 4.
 
-The **LogisticExp** algorithm is a special case of the _logistic Bernoulli factory_ given in (Morina et al. 2019)<sup>[**(10)**](#Note10)</sup>.  It takes integers _x_ >= 0,  _y_ > 0, and _prec_ > 0 and outputs 1 with probability `1/(1+exp(x/(y*pow(2, prec))))` and 0 otherwise.
+The **LogisticExp** algorithm is a special case of the _logistic Bernoulli factory_ given in (Morina et al. 2019)<sup>[**(13)**](#Note13)</sup>.  It takes integers _x_ >= 0,  _y_ > 0, and _prec_ > 0 and outputs 1 with probability `1/(1+exp(x/(y*pow(2, prec))))` and 0 otherwise.
 
 1. Return 0 with probability 1/2.
 2. Call **ZeroOrOneExpMinus** with _x_ = _x_ and _y_ = _y_*2<sup>_prec_</sup>.  If the call returns 1, return 1.
 3. Go to step 1.
 
-<a id=Algorithms></a>
-## Algorithms
+<a id=Algorithms_for_the_Beta_and_Exponential_Distributions></a>
+## Algorithms for the Beta and Exponential Distributions
 
-As implemented in the code, an e-rand consists of five numbers: the first is a multiple of 2<sup>_x_</sup>, the second is _x_, the third is the integer part (initially &minus;1 to indicate the integer part wasn't sampled yet), and the fourth and fifth are the &lambda; parameter's numerator and denominator, respectively.
+&nbsp;
+
+<a id=Beta_Distribution></a>
+### Beta Distribution
+
+All the building blocks are now in place to describe a _new_ algorithm to sample the beta distribution, described as follows.  It takes three parameters: _a_ >= 1 and _b_ >= 1 are the parameters to the beta distribution, and _p_ > 0 is a precision parameter.
+
+1. Special case: If _a_ = 1 and _b_ = 1, return a uniform _p_-digit-precision number (for example, in the binary case, RandomBits(_p_) / 2<sup>_p_</sup> where `RandomBits(x)` returns an x-bit block of unbiased random bits).
+2. Special case: If _a_ and _b_ are both integers, return the result of **kthsmallest** with parameters (_a_ &minus; _b_ + 1) and _a_ in that order, and fill it as necessary to make a _p_-digit-precision number (similarly to **FillGeometricBag** above).
+3. Create an empty list to serve as a "geometric bag".
+4. Remove all digits from the geometric bag.  This will result in an empty uniform random number, _U_, for the following steps, which will accept _U_ with probability _U_<sup>a&minus;1</sup>*(1&minus;_U_)<sup>b&minus;1</sup>) (the proportional probability for the beta distribution), as _U_ is built up.
+5. Call the **PowerBernoulliFactory** using the **SampleGeometricBag** algorithm and parameter _a_ &minus; 1 (which will return 1 with probability _U_<sup>a&minus;1</sup>).  If the result is 0, go to step 4.
+6. Call the **PowerBernoulliFactory** using the **SampleGeometricBagComplement** algorithm and parameter _b_ &minus; 1 (which will return 1 with probability (1&minus;_U_)<sup>b&minus;1</sup>).  If the result is 0, go to step 4. (Note that steps 5 and 6 don't depend on each other and can be done in either order without affecting correctness, and this is taken advantage of in the Python code below.)
+7. _U_ was accepted, so return the result of **FillGeometricBag**.
+
+<a id=Exponential_Distribution></a>
+### Exponential Distribution
+
+We also have the necessary building-blocks to describe how to sample e-rands.  As implemented in the Python code, an e-rand consists of five numbers: the first is a multiple of 2<sup>_x_</sup>, the second is _x_, the third is the integer part (initially &minus;1 to indicate the integer part wasn't sampled yet), and the fourth and fifth are the &lambda; parameter's numerator and denominator, respectively.
+
+To sample bit _k_ after the binary point of an exponential random number with rate &lambda; (where 1 means the first digit after the point, 2 means the second, etc.), call the **LogisticExp** algorithm with _x_ = &lambda;'s numerator, _y_ = &lambda;'s denominator, and _prec_ = _k_.
 
 The **ExpRandLess** algorithm is a special case of the general **RandLess** algorithm given earlier.  It compares two e-rands **a** and **b** (and samples additional bits from them as necessary) and returns `true` if **a** turns out to be less than **b**, or `false` otherwise. (Note that **a** and **b** are allowed to have different &lambda; parameters.)
 
@@ -115,10 +192,85 @@ The **ExpRandFill** generates a `p`-bit-precision number (a number with `p` bina
 3. While **a**'s fractional part has fewer than _i_ bits, call **LogisticExp** with _x_ = &lambda;'s numerator, _y_ = &lambda;'s denominator, and _prec_ = _i_ + 1, and append the result to that fractional part's binary expansion.
 4. Return the number represented by **a**.
 
-<a id=Code></a>
-## Code
+<a id=Sampler_Code></a>
+## Sampler Code
 
-In the Python code below, note that `zero_or_one_exp_minus` uses `random.randint` which does not necessarily use only random bits; it could be replaced with a random-bit-only algorithm such as FastDiceRoller or Bernoulli, both of which were presented by Lumbroso (2013)<sup>[**(11)**](#Note11)</sup>.
+The following Python code implements the beta sampler just described.  It relies on a class I wrote called "[**bernoulli.py**](https://github.com/peteroupc/peteroupc.github.io/blob/master/bernoulli.py)", which collects a number of Bernoulli factories, some of which are relied on by the code below.  This includes the building blocks mentioned earlier.  Note that the code uses floating-point arithmetic only to convert the result of the sampler to a convenient form, namely a floating-point number.
+
+This code is far from fast, though, at least in Python.
+
+```
+import math
+import random
+import bernoulli
+from randomgen import RandomGen
+from fractions import Fraction
+
+def _toreal(ret, precision):
+        # NOTE: Although we convert to a floating-point
+        # number here, this is not strictly necessary and
+        # is merely for convenience.
+        return ret*1.0/(1<<precision)
+
+def betadist(b, ax, ay, bx, by, precision=53):
+        # Beta distribution for alpha>=1 and beta>=1
+        bag=[]
+        bpower=Fraction(bx, by)-1
+        apower=Fraction(ax, ay)-1
+        # Special case for a=b=1
+        if bpower==0 and apower==0:
+           return random.randint(0, (1<<precision)-1)*1.0/(1<<precision)
+        # Special case if a and b are integers
+        if int(bpower) == bpower and int(apower) == apower:
+           a=int(Fraction(ax, ay))
+           b=int(Fraction(bx, by))
+           return _toreal(RandomGen().kthsmallest(a+b-1,a, \
+                  precision), precision)
+        # Create a "geometric bag" to hold a uniform random
+        # number (U), described by Flajolet et al. 2010
+        gb=lambda: b.geometric_bag(bag)
+        # Complement of "geometric bag"
+        gbcomp=lambda: b.geometric_bag(bag)^1
+        bPowerBigger=(bpower > apower)
+        while True:
+           # Create a uniform random number (U) bit-by-bit, and
+           # accept it with probability U^(a-1)*(1-U)^(b-1), which
+           # is the unnormalized PDF of the beta distribution
+           bag.clear()
+           r=1
+           if bPowerBigger:
+             # Produce 1 with probability (1-U)^(b-1)
+             r=b.power(gbcomp, bpower)
+             # Produce 1 with probability U^(a-1)
+             if r==1: r=b.power(gb, apower)
+           else:
+             # Produce 1 with probability U^(a-1)
+             r=b.power(gb, apower)
+             # Produce 1 with probability (1-U)^(b-1)
+             if r==1: r=b.power(gbcomp, bpower)
+           if r == 1:
+                 # Accepted, so fill up the "bag" and return the
+                 # uniform number
+                 ret=_fill_geometric_bag(b, bag, precision)
+                 return ret
+
+def _fill_geometric_bag(b, bag, precision):
+        ret=0
+        lb=min(len(bag), precision)
+        for i in range(lb):
+           if i>=len(bag) or bag[i]==None:
+              ret=(ret<<1)|b.randbit()
+           else:
+              ret=(ret<<1)|bag[i]
+        if len(bag) < precision:
+           diff=precision-len(bag)
+           ret=(ret << diff)|random.randint(0,(1 << diff)-1)
+        # Now we have a number that is a multiple of
+        # 2^-precision.
+        return _toreal(ret, precision)
+```
+
+The following Python code implements the exponential sampler described earlier.  In the Python code below, note that `zero_or_one_exp_minus` uses `random.randint` which does not necessarily use only random bits; it could be replaced with a random-bit-only algorithm such as FastDiceRoller or Bernoulli, both of which were presented by Lumbroso (2013)<sup>[**(14)**](#Note14)</sup>
 
 ```
 import random
@@ -218,7 +370,7 @@ def zero_or_one_exp_minus(x, y):
             x = x % y  # Reduce to fraction
             if x > 0 and zero_or_one_exp_minus(x, y) == 0:
                 return 0
-            for i in range(1, xf + 1):
+            for i in range(xf):
                 if zero_or_one_exp_minus(1, 1) == 0:
                     return 0
             return 1
@@ -237,13 +389,24 @@ def exprand(lam):
 
 ```
 
-<a id=Extension></a>
-### Extension
+<a id=Beta_Sampler_Known_Issues></a>
+### Beta Sampler: Known Issues
 
-The code above supports rational-valued &lambda; parameters.  It can be extended to support any real-valued &lambda; parameter in (0, 1), as long as the parameter can be simulated by an algorithm that outputs heads with probability equal to &lambda; <sup>[**(12)**](#Note12)</sup>.  For example:
+In the beta sampler, the bigger `alpha` or `beta` is, the smaller the area of acceptance becomes (and the more likely random numbers get rejected by this method, raising its run-time).  This is because `max(u^(alpha-1)*(1-u)^(beta-1))`, the peak of the density, approaches 0 as the parameters get bigger.  One idea to solve this issue is to expand the density so that the acceptance rate increases.  The following was tried:
+
+- Estimate an upper bound for the peak of the density `peak`, given `alpha` and `beta`.
+- Calculate a largest factor `c` such that `peak * c = m < 0.5`.
+- Use Huber's `linear_lowprob` Bernoulli factory (implemented in _bernoulli.py_) (Huber 2016)<sup>[**(15)**](#Note15)</sup>, taking the values found for `c` and `m`.  Testing shows that the choice of `m` is crucial for performance.
+
+But doing so apparently worsened the performance (in terms of random bits used) compared to the simple rejection approach.
+
+<a id=Exponential_Sampler_Extension></a>
+### Exponential Sampler: Extension
+
+The code above supports rational-valued &lambda; parameters.  It can be extended to support any real-valued &lambda; parameter in (0, 1), as long as the parameter can be simulated by an algorithm that outputs heads with probability equal to &lambda;, also known as a Bernoulli factory algorithm.<sup>[**(16)**](#Note16)</sup>  For example:
 
 - `exprandnew` is modified to take a function that implements the simulation algorithm (e.g., `prob`), rather than `lamdanum` and `lamdaden`.
-- `zero_or_one_exp_minus(a, b)` can be replaced with the `exp_minus` algorithm of (Łatuszyński et al. 2011)<sup>[**(13)**](#Note13)</sup> or that of (Flajolet et al. 2010)<sup>[**(6)**](#Note6)</sup> (e.g., `bernoulli.exp_minus(lambda: random.randint(0, y-1) < x)`; see a class I wrote called "[**bernoulli.py**](https://github.com/peteroupc/peteroupc.github.io/blob/master/bernoulli.py)).  This `exp_minus` algorithm takes a Bernoulli generator that outputs heads with probability &lambda;, and in turn outputs heads with probability exp(-&lambda;).
+- `zero_or_one_exp_minus(a, b)` can be replaced with the `exp_minus` algorithm of (Łatuszyński et al. 2011)<sup>[**(17)**](#Note17)</sup> or that of (Flajolet et al. 2010)<sup>[**(6)**](#Note6)</sup> (e.g., `bernoulli.exp_minus(lambda: random.randint(0, y-1) < x)`; see a class I wrote called "[**bernoulli.py**](https://github.com/peteroupc/peteroupc.github.io/blob/master/bernoulli.py)).  This `exp_minus` algorithm takes a Bernoulli generator that outputs heads with probability &lambda;, and in turn outputs heads with probability exp(-&lambda;).
 - `logisticexp(a, b, index+1)` can be replaced with a modified `logisticexp` as follows: `bf=lambda: 1 if (random.randint(0, (2**prec)-1) == 0 and prob()==1) else 0`, and loop the following two statements: `if random.randint(0,1)==0: return 0` and `if bernoulli.exp_minus(bf) == 1: return 1`.  The modified **LogisticExp** is described as follows:
     1. Create a Bernoulli generator that returns 1 with probability 1/2<sup>_prec_</sup> _and_ if the algorithm that simulates &lambda; returns 1, and 0 otherwise.
     2. Return 0 with probability 1/2.
@@ -253,7 +416,17 @@ The code above supports rational-valued &lambda; parameters.  It can be extended
 <a id=Correctness_Testing></a>
 ## Correctness Testing
 
-To test the correctness of the `exprandfill` method, the Kolmogorov&ndash;Smirnov test was applied with various values of &lambda; and the default precision of 53, using SciPy's `kstest` method.  The code for the test is very simple: `kst = scipy.stats.kstest(ksample, lambda x: scipy.stats.expon.cdf(x, scale=1/lamda))`, where `ksample` is a sample of random numbers generated using the `exprand` method above.  Note that SciPy uses a two-sided Kolmogorov&ndash;Smirnov test by default.
+<a id=Beta_Sampler></a>
+### Beta Sampler
+
+To test the correctness of the beta sampler presented in this document, the Kolmogorov&ndash;Smirnov test was applied with various values of `alpha` and `beta` and the default precision of 53, using SciPy's `kstest` method.  The code for the test is very simple: `kst = scipy.stats.kstest(ksample, lambda x: scipy.stats.beta.cdf(x, alpha, beta))`, where `ksample` is a sample of random numbers generated using the sampler above.  Note that SciPy uses a two-sided Kolmogorov&ndash;Smirnov test by default.
+
+See the results of the [**correctness testing**](https://peteroupc.github.io/betadistresults.html).   For each pair of parameters, five samples with 50,000 numbers per sample were taken, and results show the lowest and highest Kolmogorov&ndash;Smirnov statistics and p-values achieved for the five samples.  Note that a p-value extremely close to 0 or 1 strongly indicates that the samples do not come from the corresponding beta distribution.
+
+<a id=ExpRandFill></a>
+### ExpRandFill
+
+To test the correctness of the `exprandfill` method (which implements the **ExpRandFill** algorithm), the Kolmogorov&ndash;Smirnov test was applied with various values of &lambda; and the default precision of 53, using SciPy's `kstest` method.  The code for the test is very simple: `kst = scipy.stats.kstest(ksample, lambda x: scipy.stats.expon.cdf(x, scale=1/lamda))`, where `ksample` is a sample of random numbers generated using the `exprand` method above.  Note that SciPy uses a two-sided Kolmogorov&ndash;Smirnov test by default.
 
 The table below shows the results of the correctness testing. For each parameter, five samples with 50,000 numbers per sample were taken, and results show the lowest and highest Kolmogorov&ndash;Smirnov statistics and p-values achieved for the five samples.  Note that a p-value extremely close to 0 or 1 strongly indicates that the samples do not come from the corresponding exponential distribution.
 
@@ -271,7 +444,10 @@ The table below shows the results of the correctness testing. For each parameter
 | 5 | 0.00256-0.00546 | 0.10130-0.89935 |
 | 10 | 0.00279-0.00528 | 0.12358-0.82974 |
 
-To test the correctness of `exprandless`, a two-independent-sample T-test was applied to scores involving e-rands and scores involving the Python `random.expovariate` method.  Specifically, the score is calculated as the number of times one exponential number compares as less than another; for the same &lambda; this event should ideally be as likely as the event that it compares as greater.  The Python code that follows the table calculates this score for e-rands and `expovariate`.   Even here, the code for the test is very simple: `kst = scipy.stats.ttest_ind(exppyscores, exprandscores)`, where `exppyscores` and `exprandscores` are each lists of 20 results from `exppyscore` or `exprandscore`, respectively, and and each of the results contained in `exppyscores` and `exprandscores` were generated independently of each other.
+<a id=ExpRandLess></a>
+### ExpRandLess
+
+To test the correctness of `exprandless`, a two-independent-sample T-test was applied to scores involving e-rands and scores involving the Python `random.expovariate` method.  Specifically, the score is calculated as the number of times one exponential number compares as less than another; for the same &lambda; this event should ideally be as likely as the event that it compares as greater.  The Python code that follows the table calculates this score for e-rands and `expovariate`.   Even here, the code for the test is very simple: `kst = scipy.stats.ttest_ind(exppyscores, exprandscores)`, where `exppyscores` and `exprandscores` are each lists of 20 results from `exppyscore` or `exprandscore`, respectively, and each of the results contained in `exppyscores` and `exprandscores` were generated independently of each other.
 
 The table below shows the results of the correctness testing. For each pair of parameters, results show the lowest and highest T-test statistics and p-values achieved for the 20 results.  Note that a p-value extremely close to 0 or 1 strongly indicates that exponential random numbers are not compared as less or greater with the expected probability.
 
@@ -313,6 +489,95 @@ def exprandscore(ln,ld,ln2,ld2):
               else 0 for i in range(1000))
 ```
 
+<a id=Exact_Simulation_of_Continuous_Distributions_on_0_1></a>
+## Exact Simulation of Continuous Distributions on [0, 1]
+
+The beta sampler in this document shows one case of a general approach to simulating continuous distributions with support on the interval \[0, 1\], and this with arbitrary precision, thanks to Bernoulli factories.  This general approach can sample an `n`-digit expansion (of an arbitrary radix) of a number following that continuous distribution, and is described as follows:
+
+1. Create a "geometric bag", that is, an "empty" uniform random number also known as a "u-rand".
+2. As the geometric bag builds up a uniform random number, accept the number with a probability that can be represented by Bernoulli factories, or reject it otherwise.  As shown by Keane and O'Brien <sup>[**(5)**](#Note5)</sup>, this is possible if and only if the probability function, in the interval \[0, 1\]&mdash;
+    - is continuous everywhere, and
+    - either returns a constant value in \[0, 1\] everywhere, or returns a value in \[0, 1\] at each of the points 0 and 1 and a value in (0, 1) at each other point,
+
+   and they give the example of 2*p* as a probability function that cannot be represented by a Bernoulli factory.  In the case of constants, they can be represented by a geometric bag&mdash;
+    - that is prefilled with the digit expansion of the constant in question, or
+    - that uses a modified **SampleGeometricBag** algorithm in which the constant's digit expansion's digits are not sampled at random, but rather calculated "on the fly" and as necessary.
+
+3. If the geometric bag is accepted, fill the unsampled digits of the bag with uniform random digits as necessary to make an `n`-digit-precision number (similarly to **FillGeometricBag** above).
+
+The beta distribution's probability function at (1) fits these requirements (for `alpha` and `beta` both greater than 1), since it's continuous and never returns 0 or 1 outside of the points 0 and 1, thus it can be simulated by Bernoulli factories and is covered by this general approach.
+
+<a id=An_Example_The_Continuous_Bernoulli_Distribution></a>
+### An Example: The Continuous Bernoulli Distribution
+
+The continuous Bernoulli distribution (Loaiza-Ganem and Cunningham 2019)<sup>[**(18)**](#Note18)</sup> was designed to considerably improve performance of variational autoencoders (a machine learning model) in modeling continuous data that takes values in the interval [0, 1], including "almost-binary" image data.
+
+The continous Bernoulli distribution takes one parameter `lamda` (a number in [0, 1]), and takes on values in the interval [0, 1] with a probability proportional to&mdash;
+
+    pow(lamda, x) * pow(1 - lamda, 1 - x).
+
+Again, this function meets the requirements stated by Keane and O'Brien, so it can be simulated via Bernoulli factories.  Thus, this distribution can be simulated in Python using a geometric bag (which represents _x_ in the formula above) and a two-coin exponentiating Bernoulli factory.
+
+The **two-coin power factory** has the following algorithm.  It is based on the **PowerBernoulliFactory** given earlier (including the algorithm from (Mendo 2019)<sup>[**(10)**](#Note10)</sup>), but changed to accept a second Bernoulli factory sub-algorithm rather than a fixed value for the exponent. To the best of my knowledge, I am not aware of any other article or paper that presents this exact Bernoulli factory.
+
+1. Set _i_ to 1.
+2. Call the base sub-algorithm; if it returns 1, return 1.
+3. Call the exponent sub-algorithm; if it returns 1, return 0 with probability 1/_i_.
+4. Add 1 to _i_ and go to step 1.
+
+The algorithm for sampling the continuous Bernoulli distribution follows.  It uses a **lambda Bernoulli factory** algorithm, which returns 1 with probability `lamda`.
+
+1. Create an empty list to serve as a "geometric bag".
+2. Create a **complementary lambda Bernoulli factory** that returns 1 minus the result of the **lambda Bernoulli factory**.
+3. Remove all digits from the geometric bag.  This will result in an empty uniform random number, _U_, for the following steps, which will accept _U_ with probability `lamda`<sup>_U_</sup>*(1&minus;`lamda`)<sup>1&minus;_U_</sup>) (the proportional probability for the beta distribution), as _U_ is built up.
+4. Call the **two-coin power factory** using the **lambda Bernoulli factory** as the base and **SampleGeometricBag** as the exponent (which will return 1 with probability `lamda`<sup>_U_</sup>).  If the result is 0, go to step 3.
+5. Call the **two-coin power factory** using the **complementary lambda Bernoulli factory** as the base and **SampleGeometricBagComplement** algorithm and parameter _b_ &minus; 1 (which will return 1 with probability (1-`lamda`)<sup>1&minus;_U_</sup>).  If the result is 0, go to step 3. (Note that steps 4 and 5 don't depend on each other and can be done in either order without affecting correctness.)
+6. _U_ was accepted, so return the result of **FillGeometricBag**.
+
+The Python code that samples the continuous Bernoulli distribution follows.
+
+    def _twofacpower(b, fbase, fexponent):
+        """ Bernoulli factory B(p, q) => B(p^q).
+               - fbase, fexponent: Functions that return 1 if heads and 0 if tails.
+                 The first is the base, the second is the exponent.
+                 """
+        i = 1
+        while True:
+            if fbase() == 1:
+                return 1
+            if fexponent() == 1 and \
+                b.zero_or_one(1, i) == 1:
+                return 0
+            i = i + 1
+
+    def contbernoullidist(b, lamda, precision=53):
+        # Continuous Bernoulli distribution
+        bag=[]
+        lamda=Fraction(lamda)
+        gb=lambda: b.geometric_bag(bag)
+        # Complement of "geometric bag"
+        gbcomp=lambda: b.geometric_bag(bag)^1
+        fcoin=b.coin(lamda)
+        lamdab=lambda: fcoin()
+        # Complement of "lambda coin"
+        lamdabcomp=lambda: fcoin()^1
+        acc=0
+        while True:
+           # Create a uniform random number (U) bit-by-bit, and
+           # accept it with probability lamda^U*(1-lamda)^(1-U), which
+           # is the unnormalized PDF of the beta distribution
+           bag.clear()
+           # Produce 1 with probability lamda^U
+           r=_twofacpower(b, lamdab, gb)
+           # Produce 1 with probability (1-lamda)^(1-U)
+           if r==1: r=_twofacpower(b, lamdabcomp, gbcomp)
+           if r == 1:
+                 # Accepted, so fill up the "bag" and return the
+                 # uniform number
+                 ret=_fill_geometric_bag(b, bag, precision)
+                 return ret
+           acc+=1
+
 <a id=Application_to_Weighted_Reservoir_Sampling></a>
 ## Application to Weighted Reservoir Sampling
 
@@ -322,7 +587,7 @@ def exprandscore(ln,ld,ln2,ld2):
 - giving each item an exponential random number with &lambda; = _w_, call it a key, and
 - choosing the item with the smallest key
 
-(see also (Efraimidis 2015)<sup>[**(14)**](#Note14)</sup>). However, using fully-sampled exponential random numbers as keys (such as the naïve idiom `-ln(1-RNDU01())/w` in binary64) can lead to inexact sampling, since the keys have a limited precision, it's possible for multiple items to have the same random key (which can make sampling those items depend on their order rather than on randomness), and the maximum weight is unknown.  Partially-sampled e-rands, as given in this document, eliminate the problem of inexact sampling.  This is notably because the `exprandless` method returns one of only two answers&mdash;either "less" or "greater"&mdash;and samples from both e-rands as necessary so that they will differ from each other by the end of the operation.  (This is not a problem because randomly generated real numbers are expected to differ from each other almost surely.) Another reason is that partially-sampled e-rands have potentially arbitrary precision.
+(see also (Efraimidis 2015)<sup>[**(19)**](#Note19)</sup>). However, using fully-sampled exponential random numbers as keys (such as the naïve idiom `-ln(1-RNDU01())/w` in binary64) can lead to inexact sampling, since the keys have a limited precision, it's possible for multiple items to have the same random key (which can make sampling those items depend on their order rather than on randomness), and the maximum weight is unknown.  Partially-sampled e-rands, as given in this document, eliminate the problem of inexact sampling.  This is notably because the `exprandless` method returns one of only two answers&mdash;either "less" or "greater"&mdash;and samples from both e-rands as necessary so that they will differ from each other by the end of the operation.  (This is not a problem because randomly generated real numbers are expected to differ from each other almost surely.) Another reason is that partially-sampled e-rands have potentially arbitrary precision.
 
 <a id=Open_Questions></a>
 ## Open Questions
@@ -336,38 +601,48 @@ There are some open questions on partially-sampled random numbers:
 <a id=Acknowledgments></a>
 ## Acknowledgments
 
-I acknowledge Claude Gravel who reviewed this article.
+I acknowledge Claude Gravel who reviewed a previous version of this article.
 
 <a id=Notes></a>
 ## Notes
 
-<small><sup id=Note1>(1)</sup> Philippe Flajolet, Nasser Saheb. The complexity of generating an exponentially distributed variate. [Research Report] RR-0159, INRIA. 1982. inria-00076400.</small>
+<small><sup id=Note1>(1)</sup> Karney, C.F.F., "[**Sampling exactly from the normal distribution**](https://arxiv.org/abs/1303.6257v2)", arXiv:1303.6257v2  [physics.comp-ph], 2014.</small>
 
-<small><sup id=Note2>(2)</sup> Karney, C.F.F., "[**Sampling exactly from the normal distribution**](https://arxiv.org/abs/1303.6257v2)", arXiv:1303.6257v2  [physics.comp-ph], 2014.</small>
+<small><sup id=Note2>(2)</sup> Philippe Flajolet, Nasser Saheb. The complexity of generating an exponentially distributed variate. [Research Report] RR-0159, INRIA. 1982. inria-00076400.</small>
 
 <small><sup id=Note3>(3)</sup> Devroye, L., Gravel, C., "[**Sampling with arbitrary precision**](https://arxiv.org/abs/1502.02539v5)", arXiv:1502.02539v5 [cs.IT], 2015.</small>
 
 <small><sup id=Note4>(4)</sup> Thomas, D.B. and Luk, W., 2008, September. Sampling from the exponential distribution using independent bernoulli variates. In 2008 International Conference on Field Programmable Logic and Applications (pp. 239-244). IEEE.</small>
 
-<small><sup id=Note5>(5)</sup> Pedersen, K., "[**Reconditioning your quantile function**](https://arxiv.org/abs/1704.07949v3)", arXiv:1704.07949v3 [stat.CO], 2018</small>
+<small><sup id=Note5>(5)</sup> Keane,  M.  S.,  and  O'Brien,  G.  L., "A Bernoulli factory", _ACM Transactions on Modeling and Computer Simulation_ 4(2), 1994.</small>
 
 <small><sup id=Note6>(6)</sup> Flajolet, P., Pelletier, M., Soria, M., "[**On Buffon machines and numbers**](https://arxiv.org/abs/0906.5560v2)", arXiv:0906.5560v2  [math.PR], 2010.</small>
 
-<small><sup id=Note7>(7)</sup> von Neumann, J., "Various techniques used in connection with random digits", 1951.</small>
+<small><sup id=Note7>(7)</sup> Pedersen, K., "[**Reconditioning your quantile function**](https://arxiv.org/abs/1704.07949v3)", arXiv:1704.07949v3 [stat.CO], 2018.</small>
 
-<small><sup id=Note8>(8)</sup> Oberhoff, Sebastian, "[**Exact Sampling and Prefix Distributions**](https://dc.uwm.edu/etd/1888)", _Theses and Dissertations_, University of Wisconsin Milwaukee, 2018.</small>
+<small><sup id=Note8>(8)</sup> von Neumann, J., "Various techniques used in connection with random digits", 1951.</small>
 
-<small><sup id=Note9>(9)</sup> Canonne, C., Kamath, G., Steinke, T., "[**The Discrete Gaussian for Differential Privacy**](https://arxiv.org/abs/2004.00010v2)", arXiv:2004.00010v2 [cs.DS], 2020.</small>
+<small><sup id=Note9>(9)</sup> Oberhoff, Sebastian, "[**Exact Sampling and Prefix Distributions**](https://dc.uwm.edu/etd/1888)", _Theses and Dissertations_, University of Wisconsin Milwaukee, 2018.</small>
 
-<small><sup id=Note10>(10)</sup> Morina, G., Łatuszyński, K., et al., "From the Bernoulli Factory to a Dice Enterprise via Perfect Sampling of Markov Chains", 2019.</small>
+<small><sup id=Note10>(10)</sup> Mendo, Luis. "An asymptotically optimal Bernoulli factory for certain functions that can be expressed as power series." Stochastic Processes and their Applications 129, no. 11 (2019): 4366-4384.</small>
 
-<small><sup id=Note11>(11)</sup> Lumbroso, J., "[**Optimal Discrete Uniform Generation from Coin Flips, and Applications**](https://arxiv.org/abs/1304.1916)", arXiv:1304.1916 [cs.DS].</small>
+<small><sup id=Note11>(11)</sup> Devroye, L., [**_Non-Uniform Random Variate Generation_**](http://luc.devroye.org/rnbookindex.html), 1986.</small>
 
-<small><sup id=Note12>(12)</sup> This algorithm is also known as a _Bernoulli factory_, an algorithm that turns coins biased one way into coins biased another way (Keane,  M.  S.,  and  O'Brien,  G.  L., "A Bernoulli factory", _ACM Transactions on Modeling and Computer Simulation_ 4(2), 1994.)  In fact, thanks to the "geometric bag" technique of Flajolet et al. (2010), this &lambda; parameter can even be a uniform random number in [0, 1] whose contents are built up digit by digit.</small>
+<small><sup id=Note12>(12)</sup> Canonne, C., Kamath, G., Steinke, T., "[**The Discrete Gaussian for Differential Privacy**](https://arxiv.org/abs/2004.00010v2)", arXiv:2004.00010v2 [cs.DS], 2020.</small>
 
-<small><sup id=Note13>(13)</sup> Łatuszyński, K., Kosmidis, I.,  Papaspiliopoulos, O., Roberts, G.O., "Simulating events of unknown probabilities via reverse time martingales", 2011.</small>
+<small><sup id=Note13>(13)</sup> Morina, G., Łatuszyński, K., et al., "From the Bernoulli Factory to a Dice Enterprise via Perfect Sampling of Markov Chains", 2019.</small>
 
-<small><sup id=Note14>(14)</sup> Efraimidis, P. "[**Weighted Random Sampling over Data Streams**](https://arxiv.org/abs/1012.0256v2)", arXiv:1012.0256v2 [cs.DS], 2015.</small>
+<small><sup id=Note14>(14)</sup> Lumbroso, J., "[**Optimal Discrete Uniform Generation from Coin Flips, and Applications**](https://arxiv.org/abs/1304.1916)", arXiv:1304.1916 [cs.DS].</small>
+
+<small><sup id=Note15>(15)</sup> Huber, M., "[**Optimal linear Bernoulli factories for small mean problems**](https://arxiv.org/abs/1507.00843v2)", arXiv:1507.00843v2 [math.PR], 2016</small>
+
+<small><sup id=Note16>(16)</sup> In fact, thanks to the "geometric bag" technique of Flajolet et al. (2010), this &lambda; parameter can even be a uniform random number in [0, 1] whose contents are built up digit by digit.</small>
+
+<small><sup id=Note17>(17)</sup> Łatuszyński, K., Kosmidis, I.,  Papaspiliopoulos, O., Roberts, G.O., "Simulating events of unknown probabilities via reverse time martingales", 2011.</small>
+
+<small><sup id=Note18>(18)</sup> Loaiza-Ganem, G., Cunningham, J.P., "[**The continuous Bernoulli: fixing a pervasive error in variational autoencoders**](https://arxiv.org/abs/1907.06845v5)", arXiv:1907.06845v5  [stat.ML], 2019.</small>
+
+<small><sup id=Note19>(19)</sup> Efraimidis, P. "[**Weighted Random Sampling over Data Streams**](https://arxiv.org/abs/1012.0256v2)", arXiv:1012.0256v2 [cs.DS], 2015.</small>
 
 <a id=License></a>
 ## License
