@@ -41,7 +41,7 @@ In this document, a _partially-sampled_ random number is a data structure that a
 
 The most trivial example of a _partially-sampled_ random number is that of the uniform distribution in [0, 1].  Such a random number can be implemented as a list of items, where each item is either a digit (such as zero or one for binary), or a placeholder value (which represents an unsampled digit), and represents a list of the digits after the radix point, from left to right, of a real number in the interval [0, 1], that is, the number's _digit expansion_ (e.g., _binary expansion_ in the case of binary digits).  This kind of number is referred to&mdash;
 
-- as a _geometric bag_ in (Flajolet 2010)<sup>[**(6)**](#Note6)</sup> (but only in the binary case), and
+- as a _geometric bag_ in (Flajolet et al., 2010)<sup>[**(6)**](#Note6)</sup> (but only in the binary case), and
 - as a _u-rand_ in (Karney 2014)<sup>[**(1)**](#Note1)</sup>.
 
 Each additional digit is sampled simply by setting it to an independent unbiased random digit, an observation that dates from von Neumann (1951)<sup>[**(8)**](#Note8)</sup> in the binary case.
@@ -71,7 +71,7 @@ Two partially-sampled random numbers, each of a different distribution but stori
 5. Return `true` if **a**'s fractional part is less than **b**'s, or `false` if **a**'s fractional part is greater than **b**'s.
 6. Add 1 to _i_ and go to step 4.
 
-Arithmetic between two partially-sampled random numbers may be possible by relating the relative probabilities of each digit, in the result's digit expansion, to some kind of formula.  (This ignores trivial arithmetic operations, such as addition by half provided the radix is even, or negation, both operations mentioned in (Karney 2014)<sup>[**(1)**](#Note1)</sup>, or operations affecting the integer part only.)  For example, I can show empirically that when an exponential(1) random number is multiplied by a uniform \[0, 1\] random number, the following (approximate) probabilities of 1 occur in the following positions of the result's binary expansion:
+Arithmetic between two partially-sampled random numbers may be possible by relating the relative probabilities of each digit, in the result's digit expansion, to some kind of formula.  (This ignores trivial arithmetic operations, such as addition by half provided the radix is even, or negation &mdash; both operations mentioned in (Karney 2014)<sup>[**(1)**](#Note1)</sup> &mdash; or operations affecting the integer part only.)  For example, I can show empirically that when an exponential(1) random number is multiplied by a uniform \[0, 1\] random number, the following (approximate) probabilities of 1 occur in the following positions of the result's binary expansion:
 
 | Position after the point |  Approx. prob. of 1 |
   --- | --- |
@@ -408,13 +408,13 @@ The code above supports rational-valued &lambda; parameters.  It can be extended
 - `exprandnew` is modified to take a function that implements the algorithm that simulates _LF_, rather than taking `lamdanum` and `lamdaden`.
 
 - `zero_or_one_exp_minus(a, b)` is replaced with an extended Bernoulli factory, described below, that takes _LI_ and a Bernoulli generator (coin) that outputs heads with probability _LF_, and in turn outputs heads with probability exp(-&lambda;).  It extends the **ExpMinus Bernoulli factory** (where _LI_ = 0) as described, for example, in (Łatuszyński et al. 2011)<sup>[**(17)**](#Note17)</sup> or (Flajolet et al. 2010)<sup>[**(6)**](#Note6)</sup>.  A Python implementation of the extended factory is found in "[**bernoulli.py**](https://github.com/peteroupc/peteroupc.github.io/blob/master/bernoulli.py)" under `exp_minus_ext`.  The extended factory is described as follows:
-    1. Call **ZeroToOneExpMinus** with _x_ = _LI_ and _y_ = 1; if it returns 0, return 0. (See also (Canonne et al. 2020)<sup>[**(12)**](#Note12)</sup>.)
+    1. Call **ZeroOrOneExpMinus** with _x_ = _LI_ and _y_ = 1; if it returns 0, return 0. (See also (Canonne et al. 2020)<sup>[**(12)**](#Note12)</sup>.)
     2. Return the result of the **ExpMinus Bernoulli factory** using the given Bernoulli generator.
 
 - `logisticexp(a, b, index+1)` is replaced with a modified **LogisticExp** algorithm described as follows.  Here, the probability `1/(1+exp(x/(y*pow(2, prec))))` is rewritten as `1/(1+exp(LI/pow(2, prec)) * exp(LF/pow(2, prec)) )`.
     1. Create a Bernoulli generator that uses the following algorithm: (a) With probability 1/(2<sup>_prec_</sup>), return 1 if the algorithm that simulates _LF_ returns 1; (b) Return 0.
     2. Return 0 with probability 1/2.
-    3. Call **ZeroToOneExpMinus** with _x_ = _LI_ and _y_ = 2<sup>_prec_</sup>, and call the **ExpMinus Bernoulli factory** (not the extended factory) with the Bernoulli generator described in step 1.  Return 1 if both these calls return 1.
+    3. Call **ZeroOrOneExpMinus** with _x_ = _LI_ and _y_ = 2<sup>_prec_</sup>, and call the **ExpMinus Bernoulli factory** (not the extended factory) with the Bernoulli generator described in step 1.  Return 1 if both these calls return 1.
     5. Go to step 2.
 
 <a id=Correctness_Testing></a>

@@ -53,7 +53,7 @@
 <p>The most trivial example of a <em>partially-sampled</em> random number is that of the uniform distribution in [0, 1].  Such a random number can be implemented as a list of items, where each item is either a digit (such as zero or one for binary), or a placeholder value (which represents an unsampled digit), and represents a list of the digits after the radix point, from left to right, of a real number in the interval [0, 1], that is, the number&#39;s <em>digit expansion</em> (e.g., <em>binary expansion</em> in the case of binary digits).  This kind of number is referred to&mdash;</p>
 
 <ul>
-<li>as a <em>geometric bag</em> in (Flajolet 2010)<sup><a href="#Note6"><strong>(6)</strong></a></sup> (but only in the binary case), and</li>
+<li>as a <em>geometric bag</em> in (Flajolet et al., 2010)<sup><a href="#Note6"><strong>(6)</strong></a></sup> (but only in the binary case), and</li>
 <li>as a <em>u-rand</em> in (Karney 2014)<sup><a href="#Note1"><strong>(1)</strong></a></sup>.</li>
 </ul>
 
@@ -88,7 +88,7 @@
 <li>Add 1 to <em>i</em> and go to step 4.</li>
 </ol>
 
-<p>Arithmetic between two partially-sampled random numbers may be possible by relating the relative probabilities of each digit, in the result&#39;s digit expansion, to some kind of formula.  (This ignores trivial arithmetic operations, such as addition by half provided the radix is even, or negation, both operations mentioned in (Karney 2014)<sup><a href="#Note1"><strong>(1)</strong></a></sup>, or operations affecting the integer part only.)  For example, I can show empirically that when an exponential(1) random number is multiplied by a uniform [0, 1] random number, the following (approximate) probabilities of 1 occur in the following positions of the result&#39;s binary expansion:</p>
+<p>Arithmetic between two partially-sampled random numbers may be possible by relating the relative probabilities of each digit, in the result&#39;s digit expansion, to some kind of formula.  (This ignores trivial arithmetic operations, such as addition by half provided the radix is even, or negation &mdash; both operations mentioned in (Karney 2014)<sup><a href="#Note1"><strong>(1)</strong></a></sup> &mdash; or operations affecting the integer part only.)  For example, I can show empirically that when an exponential(1) random number is multiplied by a uniform [0, 1] random number, the following (approximate) probabilities of 1 occur in the following positions of the result&#39;s binary expansion:</p>
 
 <table><thead>
 <tr>
@@ -476,10 +476,10 @@ def exprand(lam):
 
 <ul>
 <li><p><code>exprandnew</code> is modified to take a function that implements the algorithm that simulates <em>LF</em>, rather than taking <code>lamdanum</code> and <code>lamdaden</code>.</p></li>
-<li><p><code>zero_or_one_exp_minus(a, b)</code> is replaced with an extended Bernoulli factory, described below, that takes <em>LI</em> and a Bernoulli generator (coin) that outputs heads with probability <em>LF</em>, and in turn outputs heads with probability exp(-&lambda;).  It extends the <strong>ExpMinus Bernoulli factory</strong> (where <em>LI</em> = 0) as described, for example, in (Łatuszyński et al. 2011)<sup><a href="#Note17"><strong>(17)</strong></a></sup> or (Flajolet et al. 2010)<sup><a href="#Note6"><strong>(6)</strong></a></sup>.  A Python implementation of the extended factory is found in &quot;<a href="https://github.com/peteroupc/peteroupc.github.io/blob/master/bernoulli.py"><strong>bernoulli.py</strong></a>) under <code>exp_minus_ext</code>.  The extended factory is described as follows:</p>
+<li><p><code>zero_or_one_exp_minus(a, b)</code> is replaced with an extended Bernoulli factory, described below, that takes <em>LI</em> and a Bernoulli generator (coin) that outputs heads with probability <em>LF</em>, and in turn outputs heads with probability exp(-&lambda;).  It extends the <strong>ExpMinus Bernoulli factory</strong> (where <em>LI</em> = 0) as described, for example, in (Łatuszyński et al. 2011)<sup><a href="#Note17"><strong>(17)</strong></a></sup> or (Flajolet et al. 2010)<sup><a href="#Note6"><strong>(6)</strong></a></sup>.  A Python implementation of the extended factory is found in &quot;<a href="https://github.com/peteroupc/peteroupc.github.io/blob/master/bernoulli.py"><strong>bernoulli.py</strong></a>&quot; under <code>exp_minus_ext</code>.  The extended factory is described as follows:</p>
 
 <ol>
-<li>Call <strong>ZeroToOneExpMinus</strong> with <em>x</em> = <em>LI</em> and <em>y</em> = 1; if it returns 0, return 0. (See also (Canonne et al. 2020)<sup><a href="#Note12"><strong>(12)</strong></a></sup>.)</li>
+<li>Call <strong>ZeroOrOneExpMinus</strong> with <em>x</em> = <em>LI</em> and <em>y</em> = 1; if it returns 0, return 0. (See also (Canonne et al. 2020)<sup><a href="#Note12"><strong>(12)</strong></a></sup>.)</li>
 <li>Return the result of the <strong>ExpMinus Bernoulli factory</strong> using the given Bernoulli generator.</li>
 </ol></li>
 <li><p><code>logisticexp(a, b, index+1)</code> is replaced with a modified <strong>LogisticExp</strong> algorithm described as follows.  Here, the probability <code>1/(1+exp(x/(y*pow(2, prec))))</code> is rewritten as <code>1/(1+exp(LI/pow(2, prec)) * exp(LF/pow(2, prec)) )</code>.</p>
@@ -487,7 +487,7 @@ def exprand(lam):
 <ol>
 <li>Create a Bernoulli generator that uses the following algorithm: (a) With probability 1/(2<sup><em>prec</em></sup>), return 1 if the algorithm that simulates <em>LF</em> returns 1; (b) Return 0.</li>
 <li>Return 0 with probability 1/2.</li>
-<li>Call <strong>ZeroToOneExpMinus</strong> with <em>x</em> = <em>LI</em> and <em>y</em> = 2<sup><em>prec</em></sup>, and call the <strong>ExpMinus Bernoulli factory</strong> (not the extended factory) with the Bernoulli generator described in step 1.  Return 1 if both these calls return 1.</li>
+<li>Call <strong>ZeroOrOneExpMinus</strong> with <em>x</em> = <em>LI</em> and <em>y</em> = 2<sup><em>prec</em></sup>, and call the <strong>ExpMinus Bernoulli factory</strong> (not the extended factory) with the Bernoulli generator described in step 1.  Return 1 if both these calls return 1.</li>
 <li>Go to step 2.</li>
 </ol></li>
 </ul>
