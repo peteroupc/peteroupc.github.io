@@ -12,7 +12,7 @@ This page introduces a Python implementation of _partially-sampled random number
 - while avoiding floating-point arithmetic, and
 - to an arbitrary precision and with user-specified error bounds (and thus in an "exact" manner in the sense defined in (Karney 2014)<sup>[**(1)**](#Note1)</sup>).
 
-For instance, these two points distinguish the beta sampler in this document from any other specially-designed beta sampler I am aware of.  As for the exponential distribution, there are papers that discuss generating exponential random numbers using random bits (Flajolet and Saheb 1982)<sup>[**(2)**](#Note2)</sup>, (Karney 2014)<sup>[**(1)**](#Note1)</sup>, (Devroye and Gravel 2015)<sup>[**(3)**](#Note3)</sup>, (Thomas and Luk 2008)<sup>[**(4)**](#Note4)</sup>, but none I am aware of deal with generating partially-sampled exponential random numbers using an arbitrary rate, not just 1.
+For instance, these two points distinguish the beta sampler in this document from any other specially-designed beta sampler I am aware of.  As for the exponential distribution, there are papers that discuss generating exponential random numbers using random bits (Flajolet and Saheb 1982)<sup>[**(2)**](#Note2)</sup>, (Karney 2014)<sup>[**(1)**](#Note1)</sup>, (Devroye and Gravel 2015)<sup>[**(3)**](#Note3)</sup>, (Thomas and Luk 2008)<sup>[**(4)**](#Note4)</sup>, but almost all of them that I am aware of don't deal with generating partially-sampled exponential random numbers using an arbitrary rate, not just 1.  (Habibizad Navin et al., 2010)<sup>[**(20)**](#Note20)</sup>, which came to my attention on the afternoon of July 20, after I wrote much of this article, is perhaps an exception; however the approach appears to involve pregenerated tables of digit probabilities.
 
 The samplers discussed here also draw on work dealing with a construct called the _Bernoulli factory_ (Keane and O'Brien 1994)<sup>[**(5)**](#Note5)</sup> (Flajolet et al., 2010)<sup>[**(6)**](#Note6)</sup>, which can simulate an arbitrary probability by transforming biased coins to biased coins.  One important feature of Bernoulli factories is that they can simulate a given probability _exactly_, without having to calculate that probability manually, which is important if the probability can be an irrational number that no computer can compute exactly (such as `pow(p, 1/2)` or `exp(-2)`).
 
@@ -80,6 +80,8 @@ Arithmetic between two partially-sampled random numbers may be possible by relat
 | 3rd |    0.388065   |
 | 4th |    0.433957   |
 | 5th |    0.461612   |
+
+There is previous work that relates continuous distributions to digit probabilities in a similar manner (but only in base 10) (Habibizad Navin et al., 2007)<sup>[**(21)**](#Note21)</sup>, (Nezhad et al., 2013)<sup>[**(22)**](#Note22)</sup>.
 
 <a id=Building_Blocks></a>
 ## Building Blocks
@@ -189,7 +191,7 @@ The **ExpRandFill** algorithm takes an e-rand **a** and generates a number whose
 
 1. Sample **a**'s integer part as given in step 1 of **ExpRandLess**.
 2. If **a**'s fractional part has greater than `p` bits, round **a** to a number whose fractional part has `p` bits, and return that number.  The rounding can be done, for example, by discarding all bits beyond `p` bits after the place to be rounded, or by rounding to the nearest 2<sup>-p</sup>, ties-to-up, as done in the sample Python code.
-3. While **a**'s fractional part has fewer than `p` bits, call **LogisticExp** with _x_ = &lambda;'s numerator, _y_ = &lambda;'s denominator, and _prec_ =_i_, where _i_ is 1 plus the number of bits in **a**'s fractional part, and append the result to that fractional part's binary expansion.
+3. While **a**'s fractional part has fewer than `p` bits, call **LogisticExp** with _x_ = &lambda;'s numerator, _y_ = &lambda;'s denominator, and _prec_ = _i_, where _i_ is 1 plus the number of bits in **a**'s fractional part, and append the result to that fractional part's binary expansion.
 4. Return the number represented by **a**.
 
 <a id=Sampler_Code></a>
@@ -415,7 +417,7 @@ The code above can then be modified as follows:
 - `exprandnew` is modified so that instead of taking `lamdanum` and `lamdaden`, it takes a list of the components described above.  Each component is stored as _LI_\[_i_\] and an algorithm that simulates _LF_\[_i_\].
 
 - `zero_or_one_exp_minus(a, b)` is replaced with a Bernoulli factory, described below, that takes a component list as described above and outputs heads with probability exp(&minus;&lambda;).  It extends the **ExpMinus Bernoulli factory** as described, for example, in (Łatuszyński et al. 2011)<sup>[**(17)**](#Note17)</sup> or (Flajolet et al. 2010)<sup>[**(6)**](#Note6)</sup>. Here, the probability `exp(-x/y)` is rewritten as `exp(-LI[0]) * exp(-LF[0]) * ... * exp(-LI[n-1]) * exp(-LF[n-1])`.
-    1. For each component _LC_\[_i_\], call **ZeroOrOneExpMinus** with _x_ = _LI_ and _y_ = 1, and call the **ExpMinus Bernoulli factory** with the Bernoulli generator that simulates _LF_\[_i_\].  Return 0 if any of these calls returns 0. (See also (Canonne et al. 2020)<sup>[**(12)**](#Note12)</sup>.)
+    1. For each component _LC_\[_i_\], call **ZeroOrOneExpMinus** with _x_ = _LI_\[_i_\] and _y_ = 1, and call the **ExpMinus Bernoulli factory** with the Bernoulli generator that simulates _LF_\[_i_\].  Return 0 if any of these calls returns 0. (See also (Canonne et al. 2020)<sup>[**(12)**](#Note12)</sup>.)
     2. Return 1.
 
 - `logisticexp(a, b, index+1)` is replaced with a modified **LogisticExp** algorithm described as follows.  Here, the probability `1/(1+exp(x/(y*pow(2, prec))))` is rewritten as 1/(1+ &Pi;<sub>_i_</sub> exp(_LI_\[_i_\]/2<sup>_prec_</sup>) * exp(_LF_\[_i_\]/2<sup>_prec_</sup>) ).
@@ -664,6 +666,12 @@ I acknowledge Claude Gravel who reviewed a previous version of this article.
 <small><sup id=Note18>(18)</sup> Loaiza-Ganem, G., Cunningham, J.P., "[**The continuous Bernoulli: fixing a pervasive error in variational autoencoders**](https://arxiv.org/abs/1907.06845v5)", arXiv:1907.06845v5  [stat.ML], 2019.</small>
 
 <small><sup id=Note19>(19)</sup> Efraimidis, P. "[**Weighted Random Sampling over Data Streams**](https://arxiv.org/abs/1012.0256v2)", arXiv:1012.0256v2 [cs.DS], 2015.</small>
+
+<small><sup id=Note20>(20)</sup> A. Habibizad Navin, R. Olfatkhah and M. K. Mirnia, "A data-oriented model of exponential random variable," 2010 2nd International Conference on Advanced Computer Control, Shenyang, 2010, pp. 603-607, doi: 10.1109/ICACC.2010.5487128.</small>
+
+<small><sup id=Note21>(21)</sup> A. Habibizad Navin, Fesharaki, M.N., Teshnelab, M. and Mirnia, M., 2007. "Data oriented modeling of uniform random variable: Applied approach". _World Academy Science Engineering Technology_, 21, pp.382-385.</small>
+
+<small><sup id=Note22>(22)</sup> Nezhad, R.F., Effatparvar, M., Rahimzadeh, M., 2013. "Designing a Universal Data-Oriented Random Number Generator", _International Journal of Modern Education and Computer Science_ 2013(2), pp. 19-24.</small>
 
 <a id=License></a>
 ## License

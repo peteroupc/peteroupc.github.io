@@ -19,7 +19,7 @@
 <li>to an arbitrary precision and with user-specified error bounds (and thus in an &quot;exact&quot; manner in the sense defined in (Karney 2014)<sup><a href="#Note1"><strong>(1)</strong></a></sup>).</li>
 </ul>
 
-<p>For instance, these two points distinguish the beta sampler in this document from any other specially-designed beta sampler I am aware of.  As for the exponential distribution, there are papers that discuss generating exponential random numbers using random bits (Flajolet and Saheb 1982)<sup><a href="#Note2"><strong>(2)</strong></a></sup>, (Karney 2014)<sup><a href="#Note1"><strong>(1)</strong></a></sup>, (Devroye and Gravel 2015)<sup><a href="#Note3"><strong>(3)</strong></a></sup>, (Thomas and Luk 2008)<sup><a href="#Note4"><strong>(4)</strong></a></sup>, but none I am aware of deal with generating partially-sampled exponential random numbers using an arbitrary rate, not just 1.</p>
+<p>For instance, these two points distinguish the beta sampler in this document from any other specially-designed beta sampler I am aware of.  As for the exponential distribution, there are papers that discuss generating exponential random numbers using random bits (Flajolet and Saheb 1982)<sup><a href="#Note2"><strong>(2)</strong></a></sup>, (Karney 2014)<sup><a href="#Note1"><strong>(1)</strong></a></sup>, (Devroye and Gravel 2015)<sup><a href="#Note3"><strong>(3)</strong></a></sup>, (Thomas and Luk 2008)<sup><a href="#Note4"><strong>(4)</strong></a></sup>, but almost all of them that I am aware of don&#39;t deal with generating partially-sampled exponential random numbers using an arbitrary rate, not just 1.  (Habibizad Navin et al., 2010)<sup><a href="#Note20"><strong>(20)</strong></a></sup>, which came to my attention on the afternoon of July 20, after I wrote much of this article, is perhaps an exception; however the approach appears to involve pregenerated tables of digit probabilities.</p>
 
 <p>The samplers discussed here also draw on work dealing with a construct called the <em>Bernoulli factory</em> (Keane and O&#39;Brien 1994)<sup><a href="#Note5"><strong>(5)</strong></a></sup> (Flajolet et al., 2010)<sup><a href="#Note6"><strong>(6)</strong></a></sup>, which can simulate an arbitrary probability by transforming biased coins to biased coins.  One important feature of Bernoulli factories is that they can simulate a given probability <em>exactly</em>, without having to calculate that probability manually, which is important if the probability can be an irrational number that no computer can compute exactly (such as <code>pow(p, 1/2)</code> or <code>exp(-2)</code>).</p>
 
@@ -117,6 +117,8 @@
 <td>0.461612</td>
 </tr>
 </tbody></table>
+
+<p>There is previous work that relates continuous distributions to digit probabilities in a similar manner (but only in base 10) (Habibizad Navin et al., 2007)<sup><a href="#Note21"><strong>(21)</strong></a></sup>, (Nezhad et al., 2013)<sup><a href="#Note22"><strong>(22)</strong></a></sup>.</p>
 
 <p><a id=Building_Blocks></a></p>
 
@@ -254,7 +256,7 @@
 <ol>
 <li>Sample <strong>a</strong>&#39;s integer part as given in step 1 of <strong>ExpRandLess</strong>.</li>
 <li>If <strong>a</strong>&#39;s fractional part has greater than <code>p</code> bits, round <strong>a</strong> to a number whose fractional part has <code>p</code> bits, and return that number.  The rounding can be done, for example, by discarding all bits beyond <code>p</code> bits after the place to be rounded, or by rounding to the nearest 2<sup>-p</sup>, ties-to-up, as done in the sample Python code.</li>
-<li>While <strong>a</strong>&#39;s fractional part has fewer than <code>p</code> bits, call <strong>LogisticExp</strong> with <em>x</em> = &lambda;&#39;s numerator, <em>y</em> = &lambda;&#39;s denominator, and <em>prec</em> =<em>i</em>, where <em>i</em> is 1 plus the number of bits in <strong>a</strong>&#39;s fractional part, and append the result to that fractional part&#39;s binary expansion.</li>
+<li>While <strong>a</strong>&#39;s fractional part has fewer than <code>p</code> bits, call <strong>LogisticExp</strong> with <em>x</em> = &lambda;&#39;s numerator, <em>y</em> = &lambda;&#39;s denominator, and <em>prec</em> = <em>i</em>, where <em>i</em> is 1 plus the number of bits in <strong>a</strong>&#39;s fractional part, and append the result to that fractional part&#39;s binary expansion.</li>
 <li>Return the number represented by <strong>a</strong>.</li>
 </ol>
 
@@ -488,7 +490,7 @@ def exprand(lam):
 <li><p><code>zero_or_one_exp_minus(a, b)</code> is replaced with a Bernoulli factory, described below, that takes a component list as described above and outputs heads with probability exp(&minus;&lambda;).  It extends the <strong>ExpMinus Bernoulli factory</strong> as described, for example, in (Łatuszyński et al. 2011)<sup><a href="#Note17"><strong>(17)</strong></a></sup> or (Flajolet et al. 2010)<sup><a href="#Note6"><strong>(6)</strong></a></sup>. Here, the probability <code>exp(-x/y)</code> is rewritten as <code>exp(-LI[0]) * exp(-LF[0]) * ... * exp(-LI[n-1]) * exp(-LF[n-1])</code>.</p>
 
 <ol>
-<li>For each component <em>LC</em>[<em>i</em>], call <strong>ZeroOrOneExpMinus</strong> with <em>x</em> = <em>LI</em> and <em>y</em> = 1, and call the <strong>ExpMinus Bernoulli factory</strong> with the Bernoulli generator that simulates <em>LF</em>[<em>i</em>].  Return 0 if any of these calls returns 0. (See also (Canonne et al. 2020)<sup><a href="#Note12"><strong>(12)</strong></a></sup>.)</li>
+<li>For each component <em>LC</em>[<em>i</em>], call <strong>ZeroOrOneExpMinus</strong> with <em>x</em> = <em>LI</em>[<em>i</em>] and <em>y</em> = 1, and call the <strong>ExpMinus Bernoulli factory</strong> with the Bernoulli generator that simulates <em>LF</em>[<em>i</em>].  Return 0 if any of these calls returns 0. (See also (Canonne et al. 2020)<sup><a href="#Note12"><strong>(12)</strong></a></sup>.)</li>
 <li>Return 1.</li>
 </ol></li>
 <li><p><code>logisticexp(a, b, index+1)</code> is replaced with a modified <strong>LogisticExp</strong> algorithm described as follows.  Here, the probability <code>1/(1+exp(x/(y*pow(2, prec))))</code> is rewritten as 1/(1+ &Pi;<sub><em>i</em></sub> exp(<em>LI</em>[<em>i</em>]/2<sup><em>prec</em></sup>) * exp(<em>LF</em>[<em>i</em>]/2<sup><em>prec</em></sup>) ).</p>
@@ -951,6 +953,12 @@ def contbernoullidist(b, lamda, precision=53):
 <p><small><sup id=Note18>(18)</sup> Loaiza-Ganem, G., Cunningham, J.P., &quot;<a href="https://arxiv.org/abs/1907.06845v5"><strong>The continuous Bernoulli: fixing a pervasive error in variational autoencoders</strong></a>&quot;, arXiv:1907.06845v5  [stat.ML], 2019.</small></p>
 
 <p><small><sup id=Note19>(19)</sup> Efraimidis, P. &quot;<a href="https://arxiv.org/abs/1012.0256v2"><strong>Weighted Random Sampling over Data Streams</strong></a>&quot;, arXiv:1012.0256v2 [cs.DS], 2015.</small></p>
+
+<p><small><sup id=Note20>(20)</sup> A. Habibizad Navin, R. Olfatkhah and M. K. Mirnia, &quot;A data-oriented model of exponential random variable,&quot; 2010 2nd International Conference on Advanced Computer Control, Shenyang, 2010, pp. 603-607, doi: 10.1109/ICACC.2010.5487128.</small></p>
+
+<p><small><sup id=Note21>(21)</sup> A. Habibizad Navin, Fesharaki, M.N., Teshnelab, M. and Mirnia, M., 2007. &quot;Data oriented modeling of uniform random variable: Applied approach&quot;. <em>World Academy Science Engineering Technology</em>, 21, pp.382-385.</small></p>
+
+<p><small><sup id=Note22>(22)</sup> Nezhad, R.F., Effatparvar, M., Rahimzadeh, M., 2013. &quot;Designing a Universal Data-Oriented Random Number Generator&quot;, <em>International Journal of Modern Education and Computer Science</em> 2013(2), pp. 19-24.</small></p>
 
 <p><a id=License></a></p>
 
