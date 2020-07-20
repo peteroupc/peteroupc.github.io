@@ -472,23 +472,32 @@ def exprand(lam):
 
 <h3>Exponential Sampler: Extension</h3>
 
-<p>The code above supports rational-valued &lambda; parameters.  It can be extended to support any real-valued &lambda; parameter greater than 0, as long as &lambda;&#39;s fractional part can be simulated by a Bernoulli factory algorithm that outputs heads with probability equal to that fractional part.<sup><a href="#Note16"><strong>(16)</strong></a></sup>.  For example, let <em>LI</em> be floor(&lambda;) and let <em>LF</em> be &lambda; &minus; floor(&lambda;) (&lambda;&#39;s fractional part).  Then:</p>
+<p>The code above supports rational-valued &lambda; parameters.  It can be extended to support any real-valued &lambda; parameter greater than 0, as long as &lambda; can be rewritten as the sum of one or more components whose fractional parts can each be simulated by a Bernoulli factory algorithm that outputs heads with probability equal to that fractional part.<sup><a href="#Note16"><strong>(16)</strong></a></sup>.</p>
+
+<p>More specifically:</p>
+
+<ol>
+<li>Decompose &lambda; into <em>n</em> &gt; 0 positive components that sum to &lambda;.  For example, if &lambda; = 3.5, it can be decomposed into only one component, 3.5 (whose fractional part is trivial to simulate), and if &lambda; = &pi;, it can be decomposed into four components that are all (&pi; / 4), which has a not-so-trivial simulation as a so-called <em>Machin machine</em> (as described by (Flajolet et al. 2010)<sup><a href="#Note6"><strong>(6)</strong></a></sup>).</li>
+<li>For each component <em>LC</em>[<em>i</em>] found this way, let <em>LI</em>[<em>i</em>] be floor(<em>LC</em>[<em>i</em>]) and let <em>LF</em>[<em>i</em>] be <em>LC</em>[<em>i</em>] &minus; floor(<em>LC</em>[<em>i</em>]) (<em>LC</em>[<em>i</em>]&#39;s fractional part).</li>
+</ol>
+
+<p>The code above can then be modified as follows:</p>
 
 <ul>
-<li><p><code>exprandnew</code> is modified to take a function that implements the algorithm that simulates <em>LF</em>, rather than taking <code>lamdanum</code> and <code>lamdaden</code>.</p></li>
-<li><p><code>zero_or_one_exp_minus(a, b)</code> is replaced with an extended Bernoulli factory, described below, that takes <em>LI</em> and a Bernoulli generator (coin) that outputs heads with probability <em>LF</em>, and in turn outputs heads with probability exp(-&lambda;).  It extends the <strong>ExpMinus Bernoulli factory</strong> (where <em>LI</em> = 0) as described, for example, in (Łatuszyński et al. 2011)<sup><a href="#Note17"><strong>(17)</strong></a></sup> or (Flajolet et al. 2010)<sup><a href="#Note6"><strong>(6)</strong></a></sup>.  A Python implementation of the extended factory is found in &quot;<a href="https://github.com/peteroupc/peteroupc.github.io/blob/master/bernoulli.py"><strong>bernoulli.py</strong></a>&quot; under <code>exp_minus_ext</code>.  The extended factory is described as follows:</p>
+<li><p><code>exprandnew</code> is modified so that instead of taking <code>lamdanum</code> and <code>lamdaden</code>, it takes a list of the components described above.  Each component is stored as <em>LI</em>[<em>i</em>] and an algorithm that simulates <em>LF</em>[<em>i</em>].</p></li>
+<li><p><code>zero_or_one_exp_minus(a, b)</code> is replaced with a Bernoulli factory, described below, that takes a component list as described above outputs heads with probability exp(-&lambda;).  It extends the <strong>ExpMinus Bernoulli factory</strong> as described, for example, in (Łatuszyński et al. 2011)<sup><a href="#Note17"><strong>(17)</strong></a></sup> or (Flajolet et al. 2010)<sup><a href="#Note6"><strong>(6)</strong></a></sup>. Here, the probability <code>exp(-x/y)</code> is rewritten as <code>exp(-LI[0]) * exp(-LF[0]) * ... * exp(-LI[n-1]) * exp(-LF[n-1])</code>.</p>
 
 <ol>
-<li>Call <strong>ZeroOrOneExpMinus</strong> with <em>x</em> = <em>LI</em> and <em>y</em> = 1; if it returns 0, return 0. (See also (Canonne et al. 2020)<sup><a href="#Note12"><strong>(12)</strong></a></sup>.)</li>
-<li>Return the result of the <strong>ExpMinus Bernoulli factory</strong> using the given Bernoulli generator.</li>
+<li>For each component <em>LC</em>[<em>i</em>], call <strong>ZeroOrOneExpMinus</strong> with <em>x</em> = <em>LI</em> and <em>y</em> = 1, and call the <strong>ExpMinus Bernoulli factory</strong> with the Bernoulli generator that simulates <em>LF</em>[<em>i</em>].  Return 0 if any of these calls returns 0. (See also (Canonne et al. 2020)<sup><a href="#Note12"><strong>(12)</strong></a></sup>.)</li>
+<li>Return 1.</li>
 </ol></li>
-<li><p><code>logisticexp(a, b, index+1)</code> is replaced with a modified <strong>LogisticExp</strong> algorithm described as follows.  Here, the probability <code>1/(1+exp(x/(y*pow(2, prec))))</code> is rewritten as <code>1/(1+exp(LI/pow(2, prec)) * exp(LF/pow(2, prec)) )</code>.</p>
+<li><p><code>logisticexp(a, b, index+1)</code> is replaced with a modified <strong>LogisticExp</strong> algorithm described as follows.  Here, the probability <code>1/(1+exp(x/(y*pow(2, prec))))</code> is rewritten as 1/(1+ &Pi;<sub><em>i</em></sub> exp(<em>LI</em>[<em>i</em>]/2<sup><em>prec</em></sup>) * exp(<em>LF</em>[<em>i</em>]/2<sup><em>prec</em></sup>) )`.</p>
 
 <ol>
-<li>Create a Bernoulli generator that uses the following algorithm: (a) With probability 1/(2<sup><em>prec</em></sup>), return 1 if the algorithm that simulates <em>LF</em> returns 1; (b) Return 0.</li>
+<li>For each component <em>LC</em>[<em>i</em>], create a Bernoulli generator that uses the following algorithm: (a) With probability 1/(2<sup><em>prec</em></sup>), return 1 if the algorithm that simulates <em>LF</em>[<em>i</em>] returns 1; (b) Return 0.</li>
 <li>Return 0 with probability 1/2.</li>
-<li>Call <strong>ZeroOrOneExpMinus</strong> with <em>x</em> = <em>LI</em> and <em>y</em> = 2<sup><em>prec</em></sup>, and call the <strong>ExpMinus Bernoulli factory</strong> (not the extended factory) with the Bernoulli generator described in step 1.  Return 1 if both these calls return 1.</li>
-<li>Go to step 2.</li>
+<li>For each component <em>LC</em>[<em>i</em>], call <strong>ZeroOrOneExpMinus</strong> with <em>x</em> = <em>LI</em>[<em>i</em>] and <em>y</em> = 2<sup><em>prec</em></sup>, and call the <strong>ExpMinus Bernoulli factory</strong> with the Bernoulli generator for that component described in step 1.  Go to step 2 if any of these calls returns 0.</li>
+<li>Return 1.</li>
 </ol></li>
 </ul>
 
@@ -935,7 +944,7 @@ def contbernoullidist(b, lamda, precision=53):
 
 <p><small><sup id=Note15>(15)</sup> Huber, M., &quot;<a href="https://arxiv.org/abs/1507.00843v2"><strong>Optimal linear Bernoulli factories for small mean problems</strong></a>&quot;, arXiv:1507.00843v2 [math.PR], 2016</small></p>
 
-<p><small><sup id=Note16>(16)</sup> In fact, thanks to the &quot;geometric bag&quot; technique of Flajolet et al. (2010), &lambda;&#39;s fractional part can even be a uniform random number in [0, 1] whose contents are built up digit by digit.</small></p>
+<p><small><sup id=Note16>(16)</sup> In fact, thanks to the &quot;geometric bag&quot; technique of Flajolet et al. (2010), that fractional part can even be a uniform random number in [0, 1] whose contents are built up digit by digit.</small></p>
 
 <p><small><sup id=Note17>(17)</sup> Łatuszyński, K., Kosmidis, I.,  Papaspiliopoulos, O., Roberts, G.O., &quot;Simulating events of unknown probabilities via reverse time martingales&quot;, 2011.</small></p>
 

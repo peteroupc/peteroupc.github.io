@@ -403,19 +403,26 @@ But doing so apparently worsened the performance (in terms of random bits used) 
 <a id=Exponential_Sampler_Extension></a>
 ### Exponential Sampler: Extension
 
-The code above supports rational-valued &lambda; parameters.  It can be extended to support any real-valued &lambda; parameter greater than 0, as long as &lambda;'s fractional part can be simulated by a Bernoulli factory algorithm that outputs heads with probability equal to that fractional part.<sup>[**(16)**](#Note16)</sup>.  For example, let _LI_ be floor(&lambda;) and let _LF_ be &lambda; &minus; floor(&lambda;) (&lambda;'s fractional part).  Then:
+The code above supports rational-valued &lambda; parameters.  It can be extended to support any real-valued &lambda; parameter greater than 0, as long as &lambda; can be rewritten as the sum of one or more components whose fractional parts can each be simulated by a Bernoulli factory algorithm that outputs heads with probability equal to that fractional part.<sup>[**(16)**](#Note16)</sup>.
 
-- `exprandnew` is modified to take a function that implements the algorithm that simulates _LF_, rather than taking `lamdanum` and `lamdaden`.
+More specifically:
 
-- `zero_or_one_exp_minus(a, b)` is replaced with an extended Bernoulli factory, described below, that takes _LI_ and a Bernoulli generator (coin) that outputs heads with probability _LF_, and in turn outputs heads with probability exp(-&lambda;).  It extends the **ExpMinus Bernoulli factory** (where _LI_ = 0) as described, for example, in (Łatuszyński et al. 2011)<sup>[**(17)**](#Note17)</sup> or (Flajolet et al. 2010)<sup>[**(6)**](#Note6)</sup>.  A Python implementation of the extended factory is found in "[**bernoulli.py**](https://github.com/peteroupc/peteroupc.github.io/blob/master/bernoulli.py)" under `exp_minus_ext`.  The extended factory is described as follows:
-    1. Call **ZeroOrOneExpMinus** with _x_ = _LI_ and _y_ = 1; if it returns 0, return 0. (See also (Canonne et al. 2020)<sup>[**(12)**](#Note12)</sup>.)
-    2. Return the result of the **ExpMinus Bernoulli factory** using the given Bernoulli generator.
+1. Decompose &lambda; into _n_ > 0 positive components that sum to &lambda;.  For example, if &lambda; = 3.5, it can be decomposed into only one component, 3.5 (whose fractional part is trivial to simulate), and if &lambda; = &pi;, it can be decomposed into four components that are all (&pi; / 4), which has a not-so-trivial simulation as a so-called _Machin machine_ (as described by (Flajolet et al. 2010)<sup>[**(6)**](#Note6)</sup>).
+2. For each component _LC_\[_i_\] found this way, let _LI_\[_i_\] be floor(_LC_\[_i_\]) and let _LF_\[_i_\] be _LC_\[_i_\] &minus; floor(_LC_\[_i_\]) (_LC_\[_i_\]'s fractional part).
 
-- `logisticexp(a, b, index+1)` is replaced with a modified **LogisticExp** algorithm described as follows.  Here, the probability `1/(1+exp(x/(y*pow(2, prec))))` is rewritten as `1/(1+exp(LI/pow(2, prec)) * exp(LF/pow(2, prec)) )`.
-    1. Create a Bernoulli generator that uses the following algorithm: (a) With probability 1/(2<sup>_prec_</sup>), return 1 if the algorithm that simulates _LF_ returns 1; (b) Return 0.
+The code above can then be modified as follows:
+
+- `exprandnew` is modified so that instead of taking `lamdanum` and `lamdaden`, it takes a list of the components described above.  Each component is stored as _LI_\[_i_\] and an algorithm that simulates _LF_\[_i_\].
+
+- `zero_or_one_exp_minus(a, b)` is replaced with a Bernoulli factory, described below, that takes a component list as described above outputs heads with probability exp(-&lambda;).  It extends the **ExpMinus Bernoulli factory** as described, for example, in (Łatuszyński et al. 2011)<sup>[**(17)**](#Note17)</sup> or (Flajolet et al. 2010)<sup>[**(6)**](#Note6)</sup>. Here, the probability `exp(-x/y)` is rewritten as `exp(-LI[0]) * exp(-LF[0]) * ... * exp(-LI[n-1]) * exp(-LF[n-1])`.
+    1. For each component _LC_\[_i_\], call **ZeroOrOneExpMinus** with _x_ = _LI_ and _y_ = 1, and call the **ExpMinus Bernoulli factory** with the Bernoulli generator that simulates _LF_\[_i_\].  Return 0 if any of these calls returns 0. (See also (Canonne et al. 2020)<sup>[**(12)**](#Note12)</sup>.)
+    2. Return 1.
+
+- `logisticexp(a, b, index+1)` is replaced with a modified **LogisticExp** algorithm described as follows.  Here, the probability `1/(1+exp(x/(y*pow(2, prec))))` is rewritten as 1/(1+ &Pi;<sub>_i_</sub> exp(_LI_\[_i_\]/2<sup>_prec_</sup>) * exp(_LF_\[_i_\]/2<sup>_prec_</sup>) )`.
+    1. For each component _LC_\[_i_\], create a Bernoulli generator that uses the following algorithm: (a) With probability 1/(2<sup>_prec_</sup>), return 1 if the algorithm that simulates _LF_\[_i_\] returns 1; (b) Return 0.
     2. Return 0 with probability 1/2.
-    3. Call **ZeroOrOneExpMinus** with _x_ = _LI_ and _y_ = 2<sup>_prec_</sup>, and call the **ExpMinus Bernoulli factory** (not the extended factory) with the Bernoulli generator described in step 1.  Return 1 if both these calls return 1.
-    5. Go to step 2.
+    3. For each component _LC_\[_i_\], call **ZeroOrOneExpMinus** with _x_ = _LI_\[_i_\] and _y_ = 2<sup>_prec_</sup>, and call the **ExpMinus Bernoulli factory** with the Bernoulli generator for that component described in step 1.  Go to step 2 if any of these calls returns 0.
+    4. Return 1.
 
 <a id=Correctness_Testing></a>
 ## Correctness Testing
@@ -650,7 +657,7 @@ I acknowledge Claude Gravel who reviewed a previous version of this article.
 
 <small><sup id=Note15>(15)</sup> Huber, M., "[**Optimal linear Bernoulli factories for small mean problems**](https://arxiv.org/abs/1507.00843v2)", arXiv:1507.00843v2 [math.PR], 2016</small>
 
-<small><sup id=Note16>(16)</sup> In fact, thanks to the "geometric bag" technique of Flajolet et al. (2010), &lambda;'s fractional part can even be a uniform random number in [0, 1] whose contents are built up digit by digit.</small>
+<small><sup id=Note16>(16)</sup> In fact, thanks to the "geometric bag" technique of Flajolet et al. (2010), that fractional part can even be a uniform random number in [0, 1] whose contents are built up digit by digit.</small>
 
 <small><sup id=Note17>(17)</sup> Łatuszyński, K., Kosmidis, I.,  Papaspiliopoulos, O., Roberts, G.O., "Simulating events of unknown probabilities via reverse time martingales", 2011.</small>
 
