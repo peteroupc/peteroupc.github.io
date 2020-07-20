@@ -656,6 +656,21 @@ class Bernoulli:
         j = sum([f() for i in range(n)])
         return 1 if self._uniform_less([], alpha[j]) else 0
 
+    def exp_minus_ext(self, f, c=0):
+        """
+        Extension to the exp-minus Bernoulli factory of (Łatuszyński et al. 2011):
+        B(p) -> B(exp(-p - c))
+        To the best of my knowledge, I am not aware
+               of any article or paper that presents this particular
+               Bernoulli factory (before my articles presenting
+               accurate beta and exponential generators).
+        - f: Function that returns 1 if heads and 0 if tails.
+        - c: Integer part of exp-minus.  Default is 0.
+        """
+        if self.zero_or_one_exp_minus(c, 1) == 0:
+            return 0
+        return self.exp_minus(f)
+
     def exp_minus(self, f):
         """
         Exp-minus Bernoulli factory: B(p) -> B(exp(-p)) (Łatuszyński et al. 2011).
@@ -687,8 +702,9 @@ class Bernoulli:
                but changed to accept a Bernoulli factory
                rather than a fixed value for the exponent.
                To the best of my knowledge, I am not aware
-               of any article or paper that presents this exact
-               Bernoulli factory.
+               of any article or paper that presents this particular
+               Bernoulli factory (before my articles presenting
+               accurate beta and exponential generators).
                - fbase, fexponent: Functions that return 1 if heads and 0 if tails.
                  The first is the base, the second is the exponent.
                  """

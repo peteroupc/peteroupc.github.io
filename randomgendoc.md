@@ -1668,6 +1668,16 @@ CLASSES
      |      Exp-minus Bernoulli factory: B(p) -> B(exp(-p)) (Łatuszyński et al. 2011).
      |      - f: Function that returns 1 if heads and 0 if tails.
      |
+     |  exp_minus_ext(self, f, c=0)
+     |      Extension to the exp-minus Bernoulli factory of (Łatuszyński et al. 2011):
+     |      B(p) -> B(exp(-p - c))
+     |      To the best of my knowledge, I am not aware
+     |             of any article or paper that presents this particular
+     |             Bernoulli factory (before my articles presenting
+     |             accurate beta and exponential generators).
+     |      - f: Function that returns 1 if heads and 0 if tails.
+     |      - c: Integer part of exp-minus.  Default is 0.
+     |
      |  exp_minus_flajolet(b, f)
      |      Exp-minus Bernoulli factory: B(p) -> B(exp(-p)) (Flajolet et al. 2010).
      |      - f: Function that returns 1 if heads and 0 if tails.
@@ -1773,8 +1783,9 @@ CLASSES
      |      but changed to accept a Bernoulli factory
      |      rather than a fixed value for the exponent.
      |      To the best of my knowledge, I am not aware
-     |      of any article or paper that presents this exact
-     |      Bernoulli factory.
+     |      of any article or paper that presents this particular
+     |      Bernoulli factory (before my articles presenting
+     |      accurate beta and exponential generators).
      |      - fbase, fexponent: Functions that return 1 if heads and 0 if tails.
      |        The first is the base, the second is the exponent.
      |

@@ -403,15 +403,19 @@ But doing so apparently worsened the performance (in terms of random bits used) 
 <a id=Exponential_Sampler_Extension></a>
 ### Exponential Sampler: Extension
 
-The code above supports rational-valued &lambda; parameters.  It can be extended to support any real-valued &lambda; parameter in (0, 1), as long as the parameter can be simulated by a Bernoulli factory algorithm that outputs heads with probability equal to &lambda;.<sup>[**(16)**](#Note16)</sup>  For example:
+The code above supports rational-valued &lambda; parameters.  It can be extended to support any real-valued &lambda; parameter greater than 0, as long as &lambda;'s fractional part can be simulated by a Bernoulli factory algorithm that outputs heads with probability equal to that fractional part.<sup>[**(16)**](#Note16)</sup>.  For example, let _LI_ be floor(&lambda;) and let _LF_ be &lambda; &minus; floor(&lambda;) (&lambda;'s fractional part).  Then:
 
-- `exprandnew` is modified to take a function that implements the simulation algorithm (e.g., `prob`), rather than `lamdanum` and `lamdaden`.
-- `zero_or_one_exp_minus(a, b)` can be replaced with the `exp_minus` algorithm of (Łatuszyński et al. 2011)<sup>[**(17)**](#Note17)</sup> or that of (Flajolet et al. 2010)<sup>[**(6)**](#Note6)</sup> (e.g., `bernoulli.exp_minus(lambda: random.randint(0, y-1) < x)`; for a Python implementation, see a class I wrote called "[**bernoulli.py**](https://github.com/peteroupc/peteroupc.github.io/blob/master/bernoulli.py)).  This `exp_minus` algorithm takes a Bernoulli generator that outputs heads with probability &lambda;, and in turn outputs heads with probability exp(-&lambda;).
-- `logisticexp(a, b, index+1)` can be replaced with a modified `logisticexp` as follows: `bf=lambda: 1 if (random.randint(0, (2**prec)-1) == 0 and prob()==1) else 0`, and loop the following two statements: `if random.randint(0,1)==0: return 0` and `if bernoulli.exp_minus(bf) == 1: return 1`.  The modified **LogisticExp** is described as follows:
-    1. Create a Bernoulli generator that uses the following algorithm: (a) If the algorithm that simulates &lambda; returns 1, return 1 with probability 1/(2<sup>_prec_</sup>); (b) Return 0.
+- `exprandnew` is modified to take a function that implements the algorithm that simulates _LF_, rather than taking `lamdanum` and `lamdaden`.
+
+- `zero_or_one_exp_minus(a, b)` is replaced with an extended Bernoulli factory, described below, that takes _LI_ and a Bernoulli generator (coin) that outputs heads with probability _LF_, and in turn outputs heads with probability exp(-&lambda;).  It extends the **ExpMinus Bernoulli factory** (where _LI_ = 0) as described, for example, in (Łatuszyński et al. 2011)<sup>[**(17)**](#Note17)</sup> or (Flajolet et al. 2010)<sup>[**(6)**](#Note6)</sup>.  A Python implementation of the extended factory is found in "[**bernoulli.py**](https://github.com/peteroupc/peteroupc.github.io/blob/master/bernoulli.py)" under `exp_minus_ext`.  The extended factory is described as follows:
+    1. Call **ZeroToOneExpMinus** with _x_ = _LI_ and _y_ = 1; if it returns 0, return 0. (See also (Canonne et al. 2020)<sup>[**(12)**](#Note12)</sup>.)
+    2. Return the result of the **ExpMinus Bernoulli factory** using the given Bernoulli generator.
+
+- `logisticexp(a, b, index+1)` is replaced with a modified **LogisticExp** algorithm described as follows.  Here, the probability `1/(1+exp(x/(y*pow(2, prec))))` is rewritten as `1/(1+exp(LI/pow(2, prec)) * exp(LF/pow(2, prec)) )`.
+    1. Create a Bernoulli generator that uses the following algorithm: (a) With probability 1/(2<sup>_prec_</sup>), return 1 if the algorithm that simulates _LF_ returns 1; (b) Return 0.
     2. Return 0 with probability 1/2.
-    3. Call the `exp_minus` algorithm (described earlier) with the Bernoulli generator described in step 1; if it returns 1, return 1.
-    4. Go to step 2.
+    3. Call **ZeroToOneExpMinus** with _x_ = _LI_ and _y_ = 2<sup>_prec_</sup>, and call the **ExpMinus Bernoulli factory** (not the extended factory) with the Bernoulli generator described in step 1.  Return 1 if both these calls return 1.
+    5. Go to step 2.
 
 <a id=Correctness_Testing></a>
 ## Correctness Testing
@@ -646,7 +650,7 @@ I acknowledge Claude Gravel who reviewed a previous version of this article.
 
 <small><sup id=Note15>(15)</sup> Huber, M., "[**Optimal linear Bernoulli factories for small mean problems**](https://arxiv.org/abs/1507.00843v2)", arXiv:1507.00843v2 [math.PR], 2016</small>
 
-<small><sup id=Note16>(16)</sup> In fact, thanks to the "geometric bag" technique of Flajolet et al. (2010), this &lambda; parameter can even be a uniform random number in [0, 1] whose contents are built up digit by digit.</small>
+<small><sup id=Note16>(16)</sup> In fact, thanks to the "geometric bag" technique of Flajolet et al. (2010), &lambda;'s fractional part can even be a uniform random number in [0, 1] whose contents are built up digit by digit.</small>
 
 <small><sup id=Note17>(17)</sup> Łatuszyński, K., Kosmidis, I.,  Papaspiliopoulos, O., Roberts, G.O., "Simulating events of unknown probabilities via reverse time martingales", 2011.</small>
 
