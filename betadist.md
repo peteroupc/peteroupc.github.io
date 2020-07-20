@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-_Note: This document is now obsolete.  Its contents were merged into what is now [**"Partially-Sampled Random Numbers for Exact Sampling of the Beta, Exponential, and Other Continuous Distributions"**](https://peteroupc.github.io/exporand.html)._
+_Note: This document is now obsolete.  Its contents were merged into what is now [**"Partially-Sampled Random Numbers for Accurate Sampling of the Beta, Exponential, and Other Continuous Distributions"**](https://peteroupc.github.io/exporand.html)._
 
 <a id=License></a>
 ## License
