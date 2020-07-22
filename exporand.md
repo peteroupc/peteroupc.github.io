@@ -105,7 +105,7 @@ The algorithm **SampleGeometricBag** is a Bernoulli factory algorithm.  For base
 1.  Let N be a geometric(1/2) random number.  In this document, a geometric(_p_) random number is the number of failures before the first success, where a success occurs with probability _p_. For example, flip fair coins until tails is flipped, then let N be the number of heads flipped this way.
 2.  If the item at position N in the geometric bag (positions start at 0) is not set to a digit (e.g., 0 or 1 for base 2), set the item at that position to a digit chosen uniformly at random (e.g., either 0 or 1 for base 2), increasing the geometric bag's capacity as necessary.  Return the item at that position (whether the item there was just set to a digit or not).  (As a result of this step, there may be "gaps" in the geometric bag where no digit was sampled yet.)
 
-For another base (radix), such as 10 for decimal, this can be implemented as **RandLess**, with **a** being an empty partially-sampled uniform random number and **b** being the geometric bag.  Return 1 if the algorithm returns `true`, or 0 otherwise.
+For another base (radix), such as 10 for decimal, this can be implemented as **RandLess**, with **a** being an empty partially-sampled uniform random number and **b** being the geometric bag.  (Digit _i_ of **a** or **b** is sampled by choosing one uniformly at random and setting the item at position _i_ to that digit; positions start at 0.) Return 1 if the algorithm returns `true`, or 0 otherwise.
 
 **SampleGeometricBagComplement** is the same as the **SampleGeometricBag** algorithm, except the return value is 1 minus the original return value.  The result is that if **SampleGeometricBag** outputs 1 with probability _U_, **SampleGeometricBagComplement** outputs 1 with probability 1 &minus; _U_.
 
@@ -154,9 +154,9 @@ These two algorithms enable e-rands with rational-valued &lambda; parameters and
 The **ZeroOrOneExpMinus** algorithm takes integers _x_ >= 0 and _y_ > 0 and outputs 1 with probability `exp(-x/y)` or 0 otherwise. It originates from (Canonne et al. 2020)<sup>[**(17)**](#Note17)</sup>.
 
 1. Special case: If _x_ is 0, return 1. (This is because the probability becomes `exp(0) = 1`.)
-2. If `x > y` (so _x_/_y_ is greater than 1), call **ZeroOrOneExpMinus** `floor(x/y)` times with _x_ = _y_ = 1 and once with _x_ = _x_ - floor(_x_/_y_) * _y_ and _y_ = _y_.  Return 1 if all these calls return 1; otherwise, return 0.
+2. If `x > y` (so _x_/_y_ is greater than 1), call **ZeroOrOneExpMinus** `floor(x/y)` times with _x_ = _y_ = 1 and once with _x_ = _x_ - floor(_x_/_y_) \* _y_ and _y_ = _y_.  Return 1 if all these calls return 1; otherwise, return 0.
 3. Set _r_ to 1 and _i_ to 1.
-4. Return _r_ with probability _x_/(_y_*_i_).
+4. Return _r_ with probability (_y_ \* _i_ &minus; _x_) / (_y_ \* _i_).
 5. Set _r_ to 1 - _r_, add 1 to _i_, and go to step 4.
 
 The **LogisticExp** algorithm is a special case of the _logistic Bernoulli factory_ given in (Morina et al. 2019)<sup>[**(18)**](#Note18)</sup>.  It takes integers _x_ >= 0,  _y_ > 0, and _prec_ > 0 and outputs 1 with probability `1/(1+exp(x/(y*pow(2, prec))))` and 0 otherwise.
@@ -293,7 +293,7 @@ def logisticexp(ln, ld, prec):
         """ Returns 1 with probability 1/(1+exp(ln/(ld*2^prec))). """
         denom=ld*2**prec
         while True:
-           if random.randint(0,1)==0: return 0
+           if zero_or_one(1, 2)==0: return 0
            if zero_or_one_exp_minus(ln, denom) == 1: return 1
 
 def exprandnew(lamdanum=1, lamdaden=1):
@@ -373,6 +373,30 @@ def exprandless(a, b):
                 return False
             index += 1
 
+def zero_or_one(px, py):
+        global bitcount
+        """ Returns 1 at probability px/py, 0 otherwise.
+            Uses Bernoulli algorithm from Lumbroso appendix 3,
+            with one exception noted in this code. """
+        if py <= 0:
+            raise ValueError
+        if px == py:
+            return 1
+        z = px
+        while True:
+            z = z * 2
+            if z >= py:
+                bitcount+=1
+                if random.randint(0,1) == 0:
+                    return 1
+                z = z - py
+            # Exception: Condition added to help save bits
+            elif z == 0: return 0
+            else:
+                bitcount+=1
+                if random.randint(0,1) == 0:
+                   return 0
+
 def zero_or_one_exp_minus(x, y):
         """ Generates 1 with probability exp(-px/py); 0 otherwise.
                Reference: Canonne et al. 2020. """
@@ -391,8 +415,7 @@ def zero_or_one_exp_minus(x, y):
         r = 1
         ii = 1
         while True:
-            # NOTE: See note about randint in prose.
-            if random.randint(0, (y*ii)-1) >= x:
+            if zero_or_one(x, y*ii) == 0:
                 return r
             r=1-r
             ii += 1

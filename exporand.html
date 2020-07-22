@@ -144,10 +144,10 @@
 
 <ol>
 <li> Let N be a geometric(1/2) random number.  In this document, a geometric(<em>p</em>) random number is the number of failures before the first success, where a success occurs with probability <em>p</em>. For example, flip fair coins until tails is flipped, then let N be the number of heads flipped this way.</li>
-<li> If the item at position N in the geometric bag (positions start at 0) is not set to a digit (e.g., 0 or 1 for binary), set the item at that position to a digit chosen uniformly at random (e.g., either 0 or 1 for binary), increasing the geometric bag&#39;s capacity as necessary.  Return the item at that position (whether the item there was just set to a digit or not).  (As a result of this step, there may be &quot;gaps&quot; in the geometric bag where no digit was sampled yet.)</li>
+<li> If the item at position N in the geometric bag (positions start at 0) is not set to a digit (e.g., 0 or 1 for base 2), set the item at that position to a digit chosen uniformly at random (e.g., either 0 or 1 for base 2), increasing the geometric bag&#39;s capacity as necessary.  Return the item at that position (whether the item there was just set to a digit or not).  (As a result of this step, there may be &quot;gaps&quot; in the geometric bag where no digit was sampled yet.)</li>
 </ol>
 
-<p>For another base (radix), such as 10 for decimal, this can be implemented as <strong>RandLess</strong>, with <strong>a</strong> being an empty partially-sampled uniform random number and <strong>b</strong> being the geometric bag.  Return 1 if the algorithm returns <code>true</code>, or 0 otherwise.</p>
+<p>For another base (radix), such as 10 for decimal, this can be implemented as <strong>RandLess</strong>, with <strong>a</strong> being an empty partially-sampled uniform random number and <strong>b</strong> being the geometric bag.  (Digit <em>i</em> of <strong>a</strong> or <strong>b</strong> is sampled by choosing one uniformly at random and setting the item at position <em>i</em> to that digit; positions start at 0.) Return 1 if the algorithm returns <code>true</code>, or 0 otherwise.</p>
 
 <p><strong>SampleGeometricBagComplement</strong> is the same as the <strong>SampleGeometricBag</strong> algorithm, except the return value is 1 minus the original return value.  The result is that if <strong>SampleGeometricBag</strong> outputs 1 with probability <em>U</em>, <strong>SampleGeometricBagComplement</strong> outputs 1 with probability 1 &minus; <em>U</em>.</p>
 
@@ -212,7 +212,7 @@
 <li>Special case: If <em>x</em> is 0, return 1. (This is because the probability becomes <code>exp(0) = 1</code>.)</li>
 <li>If <code>x &gt; y</code> (so <em>x</em>/<em>y</em> is greater than 1), call <strong>ZeroOrOneExpMinus</strong> <code>floor(x/y)</code> times with <em>x</em> = <em>y</em> = 1 and once with <em>x</em> = <em>x</em> - floor(<em>x</em>/<em>y</em>) * <em>y</em> and <em>y</em> = <em>y</em>.  Return 1 if all these calls return 1; otherwise, return 0.</li>
 <li>Set <em>r</em> to 1 and <em>i</em> to 1.</li>
-<li>Return <em>r</em> with probability <em>x</em>/(<em>y</em>*<em>i</em>).</li>
+<li>Return <em>r</em> with probability (<em>y</em> * <em>i</em> &minus; <em>x</em>) / (<em>y</em> * <em>i</em>).</li>
 <li>Set <em>r</em> to 1 - <em>r</em>, add 1 to <em>i</em>, and go to step 4.</li>
 </ol>
 
@@ -360,7 +360,7 @@ def logisticexp(ln, ld, prec):
         &quot;&quot;&quot; Returns 1 with probability 1/(1+exp(ln/(ld*2^prec))). &quot;&quot;&quot;
         denom=ld*2**prec
         while True:
-           if random.randint(0,1)==0: return 0
+           if zero_or_one(1, 2)==0: return 0
            if zero_or_one_exp_minus(ln, denom) == 1: return 1
 
 def exprandnew(lamdanum=1, lamdaden=1):
@@ -440,6 +440,30 @@ def exprandless(a, b):
                 return False
             index += 1
 
+def zero_or_one(px, py):
+        global bitcount
+        &quot;&quot;&quot; Returns 1 at probability px/py, 0 otherwise.
+            Uses Bernoulli algorithm from Lumbroso appendix 3,
+            with one exception noted in this code. &quot;&quot;&quot;
+        if py &lt;= 0:
+            raise ValueError
+        if px == py:
+            return 1
+        z = px
+        while True:
+            z = z * 2
+            if z &gt;= py:
+                bitcount+=1
+                if random.randint(0,1) == 0:
+                    return 1
+                z = z - py
+            # Exception: Condition added to help save bits
+            elif z == 0: return 0
+            else:
+                bitcount+=1
+                if random.randint(0,1) == 0:
+                   return 0
+
 def zero_or_one_exp_minus(x, y):
         &quot;&quot;&quot; Generates 1 with probability exp(-px/py); 0 otherwise.
                Reference: Canonne et al. 2020. &quot;&quot;&quot;
@@ -458,8 +482,7 @@ def zero_or_one_exp_minus(x, y):
         r = 1
         ii = 1
         while True:
-            # NOTE: See note about randint in prose.
-            if random.randint(0, (y*ii)-1) &gt;= x:
+            if zero_or_one(x, y*ii) == 0:
                 return r
             r=1-r
             ii += 1
@@ -605,7 +628,7 @@ def exprand(lam):
 
 <h3>ExpRandLess</h3>
 
-<p>To test the correctness of <code>exprandless</code>, a two-independent-sample T-test was applied to scores involving e-rands and scores involving the Python <code>random.expovariate</code> method.  Specifically, the score is calculated as the number of times one exponential number compares as less than another; for the same &lambda; this event should ideally be as likely as the event that it compares as greater.  The Python code that follows the table calculates this score for e-rands and <code>expovariate</code>.   Even here, the code for the test is very simple: <code>kst = scipy.stats.ttest_ind(exppyscores, exprandscores)</code>, where <code>exppyscores</code> and <code>exprandscores</code> are each lists of 20 results from <code>exppyscore</code> or <code>exprandscore</code>, respectively, and each of the results contained in <code>exppyscores</code> and <code>exprandscores</code> were generated independently of each other.</p>
+<p>To test the correctness of <code>exprandless</code>, a two-independent-sample T-test was applied to scores involving e-rands and scores involving the Python <code>random.expovariate</code> method.  Specifically, the score is calculated as the number of times one exponential number compares as less than another; for the same &lambda; this event should ideally be as likely as the event that it compares as greater.  The Python code that follows the table calculates this score for e-rands and <code>expovariate</code>.   Even here, the code for the test is very simple: <code>kst = scipy.stats.ttest_ind(exppyscores, exprandscores)</code>, where <code>exppyscores</code> and <code>exprandscores</code> are each lists of 20 results from <code>exppyscore</code> or <code>exprandscore</code>, respectively, and the results contained in <code>exppyscores</code> and <code>exprandscores</code> were generated independently of each other.</p>
 
 <p>The table below shows the results of the correctness testing. For each pair of parameters, results show the lowest and highest T-test statistics and p-values achieved for the 20 results.  Note that a p-value extremely close to 0 or 1 strongly indicates that exponential random numbers are not compared as less or greater with the expected probability.</p>
 
