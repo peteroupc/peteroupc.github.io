@@ -144,7 +144,8 @@
 
 <ol>
 <li> Let N be a geometric(1/2) random number.  In this document, a geometric(<em>p</em>) random number is the number of failures before the first success, where a success occurs with probability <em>p</em>. For example, flip fair coins until tails is flipped, then let N be the number of heads flipped this way.</li>
-<li> If the item at position N in the geometric bag (positions start at 0) is not set to a digit (e.g., 0 or 1 for base 2), set the item at that position to a digit chosen uniformly at random (e.g., either 0 or 1 for base 2), increasing the geometric bag&#39;s capacity as necessary.  Return the item at that position (whether the item there was just set to a digit or not).  (As a result of this step, there may be &quot;gaps&quot; in the geometric bag where no digit was sampled yet.)</li>
+<li> If the item at position N in the geometric bag (positions start at 0) is not set to a digit (e.g., 0 or 1 for base 2), set the item at that position to a digit chosen uniformly at random (e.g., either 0 or 1 for base 2), increasing the geometric bag&#39;s capacity as necessary.  (As a result of this step, there may be &quot;gaps&quot; in the geometric bag where no digit was sampled yet.)</li>
+<li> Return the item at position N.</li>
 </ol>
 
 <p>For another base (radix), such as 10 for decimal, this can be implemented as <strong>RandLess</strong>, with <strong>a</strong> being an empty partially-sampled uniform random number and <strong>b</strong> being the geometric bag.  (Digit <em>i</em> of <strong>a</strong> or <strong>b</strong> is sampled by choosing one uniformly at random and setting the item at position <em>i</em> to that digit; positions start at 0.) Return 1 if the algorithm returns <code>true</code>, or 0 otherwise.</p>
@@ -917,6 +918,29 @@ def contbernoullidist(b, lamda, precision=53):
        acc+=1
 </pre>
 
+<p><a id=Complexity></a></p>
+
+<h2>Complexity</h2>
+
+<p>The <em>bit complexity</em> of an algorithm that generates random numbers is measured as the number of random bits that algorithm uses on average.  As shown by (Devroye and Gravel 2015)<sup><a href="#Note3"><strong>(3)</strong></a></sup>, any algorithm that generates random numbers from a 1-dimensional continuous distribution will require, on average, at least <code>DE + prec - 1</code> random bits, where <code>DE</code> is the differential entropy for the distribution and <em>prec</em> is the number of bits in the random number&#39;s fractional part.</p>
+
+<p>In the case of the exponential distribution, <code>DE</code> is log2(exp(1)/&lambda;), so the minimum bit complexity for this distribution is log2(exp(1)/&lambda;) + <em>prec</em> &minus; 1.  For example, if <em>prec</em> = 20, this minimum is about 20.443 bits when &lambda; = 1, decreases when &lambda; goes up, and increases when &lambda; goes down.</p>
+
+<p>In the case of any other continuous distribution, <code>DE</code> is the integral of <code>f(x) * log2(1/f(x))</code> over all valid values <code>x</code>, where <code>f</code> is the distribution&#39;s density function.</p>
+
+<p>Note that this is a <em>minimum</em> number of random bits an algorithm will need on average.  In the case of the beta and exponential samplers given here, they are expected to use many more bits on average, especially since they generate a partially-sampled random number one bit at a time.</p>
+
+<p>For <strong>SampleGeometricBag</strong> with base 2, the bit complexity has two components.</p>
+
+<ul>
+<li>One component comes from sampling a geometric (1/2) random number.  Since the binary entropy of this number is 2, the optimal bit complexity is in the interval [2, 4]; that is, an optimal algorithm would use anywhere from 2 to 4 bits on average to generate one geometric (1/2) random number.  (See (Knuth and Yao 1976)<sup><a href="#Note25"><strong>(25)</strong></a></sup>.)</li>
+<li>The other component comes from filling the geometric bag with random bits.  The complexity here depends on the number of times <strong>SampleGeometricBag</strong> is called for the same bag, call it <code>n</code>.  Then the expected number of bits is the expected number of bit positions filled this way after <code>n</code> calls.</li>
+</ul>
+
+<p><strong>SampleGeometricBagComplement</strong> has the same bit complexity as <strong>SampleGeometricBag</strong>.</p>
+
+<p><strong>FillGeometricBag</strong>&#39;s complexity is rather simple.  For base 2, it uses only one bit to sample each unfilled digit. (For bases other than 2, sampling <em>each</em> digit this way might not be optimal, since the digits are generated one at a time and random bits are not recycled over several digits.)  As a result, for an algorithm that uses both <strong>SampleGeometricBag</strong> and <strong>FillGeometricBag</strong> with <code>p</code> bits, these two contribute, on average, anywhere from <code>p + g * 2</code> to <code>p + g * 4</code> bits to the complexity, where <code>g</code> is the number of calls to <strong>SampleGeometricBag</strong>.</p>
+
 <p><a id=Application_to_Weighted_Reservoir_Sampling></a></p>
 
 <h2>Application to Weighted Reservoir Sampling</h2>
@@ -1000,6 +1024,8 @@ def contbernoullidist(b, lamda, precision=53):
 <p><small><sup id=Note23>(23)</sup> Loaiza-Ganem, G., Cunningham, J.P., &quot;<a href="https://arxiv.org/abs/1907.06845v5"><strong>The continuous Bernoulli: fixing a pervasive error in variational autoencoders</strong></a>&quot;, arXiv:1907.06845v5  [stat.ML], 2019.</small></p>
 
 <p><small><sup id=Note24>(24)</sup> Efraimidis, P. &quot;<a href="https://arxiv.org/abs/1012.0256v2"><strong>Weighted Random Sampling over Data Streams</strong></a>&quot;, arXiv:1012.0256v2 [cs.DS], 2015.</small></p>
+
+<p><small><sup id=Note25>(25)</sup> Knuth, Donald E. and Andrew Chi-Chih Yao. &quot;The complexity of nonuniform random number generation&quot;, in <em>Algorithms and Complexity: New Directions and Recent Results</em>, 1976.</small></p>
 
 <p><a id=License></a></p>
 

@@ -572,7 +572,7 @@ The following are some ways to implement `RNDINT`.  (The column "Unbiased?" mean
 | _Rejection sampling_: Sample in a bigger range until a sampled number fits the smaller range. | Not always | Yes | Runs forever in worst case |
 | _Multiply-and-shift reduction_: Generate `bignumber`, a `k`-bit random integer with many more bits than `n` has, then find `(bignumber * n) >> k` (see (Lemire 2016)<sup>[**(17)**](#Note17)</sup> and the "Integer Multiplication" algorithm surveyed by M. O'Neill. | No | No | Constant |
 | _Modulo reduction_: Generate `bignumber` as above, then find `rem(bignumber, n)`  | No | No | Constant |
-| _Fast Loaded Dice Roller_ (Lumbroso 2013)<sup>[**(18)**](#Note18)</sup> | Yes | Yes | Runs forever in worst case |
+| _Fast Dice Roller_ (Lumbroso 2013)<sup>[**(18)**](#Note18)</sup> | Yes | Yes | Runs forever in worst case |
 | Math Forum (2004)<sup>[**(19)**](#Note19)</sup> or (Mennucci 2018)<sup>[**(20)**](#Note20)</sup> (batching/recycling random bits) | Yes | Yes | Runs forever in worst case |
 | "FP Multiply" surveyed by [**M. O'Neill**](http://www.pcg-random.org/posts/bounded-rands.html) | No | No | Constant |
 | Algorithm in "Conclusion" section by O'Neill | No | Yes | Runs forever in worst case |
