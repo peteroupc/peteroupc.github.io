@@ -456,11 +456,12 @@ The code above can then be modified as follows:
     1. For each component _LC_\[_i_\], call **ZeroOrOneExpMinus** with _x_ = _LI_\[_i_\] and _y_ = 1, and call the **ExpMinus Bernoulli factory** with the Bernoulli generator that simulates _LF_\[_i_\].  Return 0 if any of these calls returns 0. (See also (Canonne et al. 2020)<sup>[**(17)**](#Note17)</sup>.)
     2. Return 1.
 
-- `logisticexp(a, b, index+1)` is replaced with a modified **LogisticExp** algorithm described as follows.  Here, the probability `1/(1+exp(x/(y*pow(2, prec))))` is rewritten as 1/(1+ &Pi;<sub>_i_</sub> exp(_LI_\[_i_\]/2<sup>_prec_</sup>) * exp(_LF_\[_i_\]/2<sup>_prec_</sup>) ).
+- `logisticexp(a, b, index+1)` is replaced with a modified **LogisticExp** algorithm described as follows.  Here, the probability `1/(1+exp(x/(y*pow(2, prec))))` is rewritten as 1/(1+exp(&Sigma;<sub>_i_</sub>_LI_\[_i_\]/2<sup>_prec_</sup>) * &Pi;<sub>_i_</sub> exp(_LF_\[_i_\]/2<sup>_prec_</sup>) ).
     1. For each component _LC_\[_i_\], create a Bernoulli generator that uses the following algorithm: (a) With probability 1/(2<sup>_prec_</sup>), return 1 if the algorithm that simulates _LF_\[_i_\] returns 1; (b) Return 0.
     2. Return 0 with probability 1/2.
-    3. For each component _LC_\[_i_\], call **ZeroOrOneExpMinus** with _x_ = _LI_\[_i_\] and _y_ = 2<sup>_prec_</sup>, and call the **ExpMinus Bernoulli factory** with the Bernoulli generator for that component described in step 1.  Go to step 2 if any of these calls returns 0.
-    4. Return 1.
+    3. Call **ZeroOrOneExpMinus** with _x_ = &Sigma;<sub>_i_</sub> _LI_\[_i_\] and _y_ = 2<sup>_prec_</sup>.  If this call returns 0, go to step 2.
+    4. For each component _LC_\[_i_\], call the **ExpMinus Bernoulli factory** with the Bernoulli generator for that component described in step 1.  Go to step 2 if any of these calls returns 0.
+    5. Return 1.
 
 <a id=Correctness_Testing></a>
 ## Correctness Testing
@@ -640,22 +641,43 @@ The Python code that samples the continuous Bernoulli distribution follows.
 <a id=Complexity></a>
 ## Complexity
 
-The _bit complexity_ of an algorithm that generates random numbers is measured as the number of random bits that algorithm uses on average.  As shown by (Devroye and Gravel 2015)<sup>[**(3)**](#Note3)</sup>, any algorithm that generates random numbers from a 1-dimensional continuous distribution will require, on average, at least `DE + prec - 1` random bits, where `DE` is the differential entropy for the distribution and _prec_ is the number of bits in the random number's fractional part.
+The _bit complexity_ of an algorithm that generates random numbers is measured as the number of random bits that algorithm uses on average.  Existing work shows how to calculate the bit complexity for any distribution of random numbers:
 
-In the case of the exponential distribution, `DE` is log2(exp(1)/&lambda;), so the minimum bit complexity for this distribution is log2(exp(1)/&lambda;) + _prec_ &minus; 1.  For example, if _prec_ = 20, this minimum is about 20.443 bits when &lambda; = 1, decreases when &lambda; goes up, and increases when &lambda; goes down.
+- For a 1-dimensional continuous distribution, the bit complexity is bounded from below by `DE + prec - 1` random bits, where `DE` is the differential entropy for the distribution and _prec_ is the number of bits in the random number's fractional part (Devroye and Gravel 2015)<sup>[**(3)**](#Note3)</sup>.
+- For a discrete distribution (a distribution of random integers with separate probabilities of occurring), the bit complexity is bounded from below by the binary entropies of all the probabilities involved, summed together (Knuth and Yao 1976)<sup>[**(24)**](#Note24)</sup>.  (For a given probability _p_, the binary entropy is `p*log2(1/p)`.)  An optimal algorithm will come within 2 bits of this lower bound on average.
 
-In the case of any other continuous distribution, `DE` is the integral of `f(x) * log2(1/f(x))` over all valid values `x`, where `f` is the distribution's density function.
+For example, in the case of the exponential distribution, `DE` is log2(exp(1)/&lambda;), so the minimum bit complexity for this distribution is log2(exp(1)/&lambda;) + _prec_ &minus; 1, so that if _prec_ = 20, this minimum is about 20.443 bits when &lambda; = 1, decreases when &lambda; goes up, and increases when &lambda; goes down.  In the case of any other continuous distribution, `DE` is the integral of `f(x) * log2(1/f(x))` over all valid values `x`, where `f` is the distribution's density function.
 
-Note that this is a _minimum_ number of random bits an algorithm will need on average.  In the case of the beta and exponential samplers given here, they are expected to use many more bits on average, especially since they generate a partially-sampled random number one bit at a time.
+Note that the lower bounds above are the _minimum_ number of random bits an algorithm will need on average.  In the case of the beta and exponential samplers given here, they are expected to use many more bits on average, especially since they generate a partially-sampled random number one bit at a time.
 
 For **SampleGeometricBag** with base 2, the bit complexity has two components.
 
-- One component comes from sampling a geometric (1/2) random number.  Since the binary entropy of this number is 2, the optimal bit complexity is in the interval \[2, 4\]; that is, an optimal algorithm would use anywhere from 2 to 4 bits on average to generate one geometric (1/2) random number.  (See (Knuth and Yao 1976)<sup>[**(25)**](#Note25)</sup>.)
+- One component comes from sampling a geometric (1/2) random number, as follows:
+    - Optimal lower bound: Since the binary entropy of the random number is 2, the optimal lower bound is 2 bits.
+    - Optimal upper bound: Optimal lower bound plus 2.
 - The other component comes from filling the geometric bag with random bits.  The complexity here depends on the number of times **SampleGeometricBag** is called for the same bag, call it `n`.  Then the expected number of bits is the expected number of bit positions filled this way after `n` calls.
 
 **SampleGeometricBagComplement** has the same bit complexity as **SampleGeometricBag**.
 
-**FillGeometricBag**'s complexity is rather easy to find.  For base 2, it uses only one bit to sample each unfilled digit. (For bases other than 2, sampling _each_ digit this way might not be optimal, since the digits are generated one at a time and random bits are not recycled over several digits.)  As a result, for an algorithm that uses both **SampleGeometricBag** and **FillGeometricBag** with `p` bits, these two contribute, on average, anywhere from `p + g * 2` to `p + g * 4` bits to the complexity, where `g` is the number of calls to **SampleGeometricBag**. (This complexity could be increased by 1 bit if **FillGeometricBag** is implemented with a rounding mechanism other than simple truncation.)
+**FillGeometricBag**'s bit complexity is rather easy to find.  For base 2, it uses only one bit to sample each unfilled digit at positions less than `p`. (For bases other than 2, sampling _each_ digit this way might not be optimal, since the digits are generated one at a time and random bits are not recycled over several digits.)  As a result, for an algorithm that uses both **SampleGeometricBag** and **FillGeometricBag** with `p` bits, these two contribute, on average, anywhere from `p + g * 2` to `p + g * 4` bits to the complexity, where `g` is the number of calls to **SampleGeometricBag**. (This complexity could be increased by 1 bit if **FillGeometricBag** is implemented with a rounding mechanism other than simple truncation.)
+
+The complexity of **ZeroOrOneExpMinus** (which outputs 1 with probability exp(&minus;_x_/_y_)) was discussed in some detail by (Canonne et al. 2020)<sup>[**(17)**](#Note17), but not in terms of its bit complexity.  The special case of &gamma; =_x_/_y_ = 0 requires no bits.  If &gamma; is an integer greater than 1, then the bit complexity is the same as that of sampling a geometric(exp(&minus;1)) random number, but truncated to \[0, _n_\]. (In this document, the geometric(`n`) distribution has the probability density function `pow(x, n) * (1 - x)`.)
+
+- Optimal lower bound: Has a complicated formula for general &gamma;, but approaches `log2(exp(1)-(exp(1)+1)*ln(exp(1)-1))` = 2.579730853... bits with increasing &gamma;.
+- Optimal upper bound: Optimal lower bound plus 2.
+- The actual implementation's bit complexity is not optimal in general, since it flips exp(&minus;1)-probability coins that each use their own random bits.
+
+If &gamma; is 1 or less, the complexity is determined as the complexity of sampling a random number _k_ with probability function&mdash;
+
+ - P(_k_) = &gamma;<sup>_k_</sup>/_k_! &minus; &gamma;<sup>_k_ + 1</sup>/(_k_ + 1)!,
+
+and the optimal lower bound is found by taking the binary entropy of each probability (`P(k)/log2(1/P(k))`) and summing them all.
+
+- Optimal lower bound: Again, this has a complicated formula, but it appears to be highest at about 1.85 bits, which is reached when &gamma; is about 0.848.
+- Optimal upper bound: Optimal lower bound plus 2.
+- The actual implementation's bit complexity is not optimal in general, since it flips biased coins that each use their own random bits.
+
+If &gamma; is a non-integer greater than 1, the bit complexity is the sum of the bit complexities for its integer part and for its fractional part.
 
 <a id=Application_to_Weighted_Reservoir_Sampling></a>
 ## Application to Weighted Reservoir Sampling
@@ -666,7 +688,7 @@ For **SampleGeometricBag** with base 2, the bit complexity has two components.
 - giving each item an exponential random number with &lambda; = _w_, call it a key, and
 - choosing the item with the smallest key
 
-(see also (Efraimidis 2015)<sup>[**(24)**](#Note24)</sup>). However, using fully-sampled exponential random numbers as keys (such as the naïve idiom `-ln(1-RNDU01())/w` in binary64) can lead to inexact sampling, since the keys have a limited precision, it's possible for multiple items to have the same random key (which can make sampling those items depend on their order rather than on randomness), and the maximum weight is unknown.  Partially-sampled e-rands, as given in this document, eliminate the problem of inexact sampling.  This is notably because the `exprandless` method returns one of only two answers&mdash;either "less" or "greater"&mdash;and samples from both e-rands as necessary so that they will differ from each other by the end of the operation.  (This is not a problem because randomly generated real numbers are expected to differ from each other almost surely.) Another reason is that partially-sampled e-rands have potentially arbitrary precision.
+(see also (Efraimidis 2015)<sup>[**(25)**](#Note25)</sup>). However, using fully-sampled exponential random numbers as keys (such as the naïve idiom `-ln(1-RNDU01())/w` in common floating-point arithmetic) can lead to inexact sampling, since the keys have a limited precision, it's possible for multiple items to have the same random key (which can make sampling those items depend on their order rather than on randomness), and the maximum weight is unknown.  Partially-sampled e-rands, as given in this document, eliminate the problem of inexact sampling.  This is notably because the `exprandless` method returns one of only two answers&mdash;either "less" or "greater"&mdash;and samples from both e-rands as necessary so that they will differ from each other by the end of the operation.  (This is not a problem because randomly generated real numbers are expected to differ from each other almost surely.) Another reason is that partially-sampled e-rands have potentially arbitrary precision.
 
 <a id=Open_Questions></a>
 ## Open Questions
@@ -731,9 +753,9 @@ I acknowledge Claude Gravel who reviewed a previous version of this article.
 
 <small><sup id=Note23>(23)</sup> Loaiza-Ganem, G., Cunningham, J.P., "[**The continuous Bernoulli: fixing a pervasive error in variational autoencoders**](https://arxiv.org/abs/1907.06845v5)", arXiv:1907.06845v5  [stat.ML], 2019.</small>
 
-<small><sup id=Note24>(24)</sup> Efraimidis, P. "[**Weighted Random Sampling over Data Streams**](https://arxiv.org/abs/1012.0256v2)", arXiv:1012.0256v2 [cs.DS], 2015.</small>
+<small><sup id=Note24>(24)</sup> Knuth, Donald E. and Andrew Chi-Chih Yao. "The complexity of nonuniform random number generation", in _Algorithms and Complexity: New Directions and Recent Results_, 1976.</small>
 
-<small><sup id=Note25>(25)</sup> Knuth, Donald E. and Andrew Chi-Chih Yao. "The complexity of nonuniform random number generation", in _Algorithms and Complexity: New Directions and Recent Results_, 1976.</small>
+<small><sup id=Note25>(25)</sup> Efraimidis, P. "[**Weighted Random Sampling over Data Streams**](https://arxiv.org/abs/1012.0256v2)", arXiv:1012.0256v2 [cs.DS], 2015.</small>
 
 <a id=License></a>
 ## License

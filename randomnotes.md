@@ -171,7 +171,7 @@ The following method generates a random number that follows a _beta distribution
       return x/(x+GammaDist(b,1))
     END METHOD
 
-I give an [**error-bounded sampler**](https://peteroupc.github.io/betadist.html) for the beta distribution (when `a` and `b` are both 1 or greater) in a separate page.
+I give an [**error-bounded sampler**](https://peteroupc.github.io/exporand.html) for the beta distribution (when `a` and `b` are both 1 or greater) in a separate page.
 
 <a id=von_Mises_Distribution></a>
 #### von Mises Distribution
@@ -415,7 +415,7 @@ Other kinds of copulas describe different kinds of dependence between random num
 <a id=Exponential_Distribution_Another_Error_Bounded_Algorithm></a>
 #### Exponential Distribution: Another Error-Bounded Algorithm
 
-The following method samples from an exponential distribution with a &lambda; parameter greater than 0, expressed as `lnum`/`lden` (where the sampling occurs within an error tolerance of 2<sup>`-precision`</sup>).  For more information, see "[**Partially-Sampled Exponential Random Numbers**](https://peteroupc.github.io/exporand.html)".
+The following method samples from an exponential distribution with a &lambda; parameter greater than 0, expressed as `lnum`/`lden` (where the sampling occurs within an error tolerance of 2<sup>`-precision`</sup>).  For more information, see "[**Partially-Sampled Random Numbers**](https://peteroupc.github.io/exporand.html)".
 
     METHOD ZeroOrOneExpMinus(x, y)
       // Generates 1 with probability exp(-x/y) (Canonne et al. 2020)
