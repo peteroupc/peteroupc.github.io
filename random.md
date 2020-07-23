@@ -458,6 +458,8 @@ An application that generates unique identifiers should do so as follows:
    - If identifiers don't have to be hard to guess: Use a unique integer (either one that's naturally unique, or a random number that was checked for uniqueness).
    - If they do have to be hard to guess: Use a unique integer which is followed by a random integer generated using a cryptographic RNG (the random integer's length depends on the answer to question 5, as above).
 
+This section doesn't discuss how to format a unique value into a text string (such as a hexadecimal or alphanumeric string), because ultimately, doing so is the same as mapping unique values one-to-one with formatted strings (which will likewise be unique).
+
 <a id=Verifiable_Random_Numbers></a>
 ### Verifiable Random Numbers
 

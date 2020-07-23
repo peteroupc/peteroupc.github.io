@@ -184,9 +184,8 @@ class Bernoulli:
             raise ValueError
         v = self._gamma_g(f) + 1
         if v > 1:
-            for i in range(n):
-                if self.zero_or_one(1, v) == 0:
-                    return 0
+            # True with probability (1/v)**n
+            return self.zero_or_one_power_ratio(1, v, n, 1)
         return 1
 
     def exp_minus_flajolet(b, f):

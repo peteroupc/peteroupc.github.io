@@ -641,41 +641,62 @@ The Python code that samples the continuous Bernoulli distribution follows.
 <a id=Complexity></a>
 ## Complexity
 
-The _bit complexity_ of an algorithm that generates random numbers is measured as the number of random bits that algorithm uses on average.  Existing work shows how to calculate the bit complexity for any distribution of random numbers:
+The _bit complexity_ of an algorithm that generates random numbers is measured as the number of random bits that algorithm uses on average.
+
+<a id=General_Principles></a>
+### General Principles
+
+Existing work shows how to calculate the bit complexity for any distribution of random numbers:
 
 - For a 1-dimensional continuous distribution, the bit complexity is bounded from below by `DE + prec - 1` random bits, where `DE` is the differential entropy for the distribution and _prec_ is the number of bits in the random number's fractional part (Devroye and Gravel 2015)<sup>[**(3)**](#Note3)</sup>.
-- For a discrete distribution (a distribution of random integers with separate probabilities of occurring), the bit complexity is bounded from below by the binary entropies of all the probabilities involved, summed together (Knuth and Yao 1976)<sup>[**(24)**](#Note24)</sup>.  (For a given probability _p_, the binary entropy is `p*log2(1/p)`.)  An optimal algorithm will come within 2 bits of this lower bound on average.
+- For a discrete distribution (a distribution of random integers with separate probabilities of occurring), the bit complexity is bounded from below by the binary entropies of all the probabilities involved, summed together (Knuth and Yao 1976)<sup>[**(24)**](#Note24)</sup>.  (For a given probability _p_, the binary entropy is `p*log2(1/p)`.)  An optimal algorithm will come within 2*_p_ bits of this lower bound on average.
 
 For example, in the case of the exponential distribution, `DE` is log2(exp(1)/&lambda;), so the minimum bit complexity for this distribution is log2(exp(1)/&lambda;) + _prec_ &minus; 1, so that if _prec_ = 20, this minimum is about 20.443 bits when &lambda; = 1, decreases when &lambda; goes up, and increases when &lambda; goes down.  In the case of any other continuous distribution, `DE` is the integral of `f(x) * log2(1/f(x))` over all valid values `x`, where `f` is the distribution's density function.
 
-Note that the lower bounds above are the _minimum_ number of random bits an algorithm will need on average.  In the case of the beta and exponential samplers given here, they are expected to use many more bits on average, especially since they generate a partially-sampled random number one bit at a time.
+Although existing work shows lower bounds on the number of random bits an algorithm will need on average, these lower bounds are generally not achieved in practice.
+
+In general, if an algorithm calls other algorithms that generate random numbers, the total expected bit complexity is&mdash;
+
+- the expected number of calls to those other algorithms, times
+- the bit complexity for each such call.
+
+<a id=Complexity_of_Specific_Algorithms></a>
+### Complexity of Specific Algorithms
+
+The beta and exponential samplers given here will generally use many more bits on average than the lower bounds on bit complexity, especially since they generate a partially-sampled random number one digit at a time.
+
+The `zero_or_one` method generally uses 2 random bits on average, due to its nature as a Bernoulli trial involving random bits, see also (Lumbroso 2013, Appendix B)<sup>[**(19)**](#Note19)</sup>.  However, it uses no random bits if both its parameters are the same.
 
 For **SampleGeometricBag** with base 2, the bit complexity has two components.
 
 - One component comes from sampling a geometric (1/2) random number, as follows:
     - Optimal lower bound: Since the binary entropy of the random number is 2, the optimal lower bound is 2 bits.
-    - Optimal upper bound: Optimal lower bound plus 2.
+    - Optimal upper bound: 4 bits.
 - The other component comes from filling the geometric bag with random bits.  The complexity here depends on the number of times **SampleGeometricBag** is called for the same bag, call it `n`.  Then the expected number of bits is the expected number of bit positions filled this way after `n` calls.
 
 **SampleGeometricBagComplement** has the same bit complexity as **SampleGeometricBag**.
 
 **FillGeometricBag**'s bit complexity is rather easy to find.  For base 2, it uses only one bit to sample each unfilled digit at positions less than `p`. (For bases other than 2, sampling _each_ digit this way might not be optimal, since the digits are generated one at a time and random bits are not recycled over several digits.)  As a result, for an algorithm that uses both **SampleGeometricBag** and **FillGeometricBag** with `p` bits, these two contribute, on average, anywhere from `p + g * 2` to `p + g * 4` bits to the complexity, where `g` is the number of calls to **SampleGeometricBag**. (This complexity could be increased by 1 bit if **FillGeometricBag** is implemented with a rounding mechanism other than simple truncation.)
 
-The complexity of **ZeroOrOneExpMinus** (which outputs 1 with probability exp(&minus;_x_/_y_)) was discussed in some detail by (Canonne et al. 2020)<sup>[**(17)**](#Note17), but not in terms of its bit complexity.  The special case of &gamma; =_x_/_y_ = 0 requires no bits.  If &gamma; is an integer greater than 1, then the bit complexity is the same as that of sampling a geometric(exp(&minus;1)) random number, but truncated to \[0, _n_\]. (In this document, the geometric(`n`) distribution has the probability density function `pow(x, n) * (1 - x)`.)
+The complexity of **ZeroOrOneExpMinus** (which outputs 1 with probability exp(&minus;_x_/_y_)) was discussed in some detail by (Canonne et al. 2020)<sup>[**(17)**](#Note17)</sup>, but not in terms of its bit complexity.  The special case of &gamma; =_x_/_y_ = 0 requires no bits.  If &gamma; is an integer greater than 1, then the bit complexity is the same as that of sampling a geometric(exp(&minus;1)) random number, but truncated to \[0, &gamma;\]. (In this document, the geometric(`n`) distribution has the density function `pow(x, n) * (1 - x)`.)
 
 - Optimal lower bound: Has a complicated formula for general &gamma;, but approaches `log2(exp(1)-(exp(1)+1)*ln(exp(1)-1))` = 2.579730853... bits with increasing &gamma;.
 - Optimal upper bound: Optimal lower bound plus 2.
-- The actual implementation's bit complexity is not optimal in general, since it flips exp(&minus;1)-probability coins that each use their own random bits.
+- The actual implementation's average bit complexity is generally&mdash;
+    - the expected number of calls to **ZeroOrOneExpMinus** (with &gamma; = 1), which is the expected value of the truncated geometric distribution described above, times
+    - the bit complexity for each such call.
 
-If &gamma; is 1 or less, the complexity is determined as the complexity of sampling a random number _k_ with probability function&mdash;
+If &gamma; is 1 or less, the optimal bit complexity is determined as the complexity of sampling a random integer _k_ with probability function&mdash;
 
  - P(_k_) = &gamma;<sup>_k_</sup>/_k_! &minus; &gamma;<sup>_k_ + 1</sup>/(_k_ + 1)!,
 
 and the optimal lower bound is found by taking the binary entropy of each probability (`P(k)/log2(1/P(k))`) and summing them all.
 
-- Optimal lower bound: Again, this has a complicated formula, but it appears to be highest at about 1.85 bits, which is reached when &gamma; is about 0.848.
+- Optimal lower bound: Again, this has a complicated formula (see the appendix for SymPy code), but it appears to be highest at about 1.85 bits, which is reached when &gamma; is about 0.848.
 - Optimal upper bound: Optimal lower bound plus 2.
-- The actual implementation's bit complexity is not optimal in general, since it flips biased coins that each use their own random bits.
+- The actual implementation's average bit complexity is generally&mdash;
+    - the expected number of calls to `zero_or_one`, which was determined to be exp(&gamma;) in (Canonne et al. 2020)<sup>[**(17)**](#Note17)</sup>, times
+    - the bit complexity for each such call (which is generally 2, but is lower in the case of &gamma; = 1, which involves `zero_or_one(1, 1)` that uses no random bits).
 
 If &gamma; is a non-integer greater than 1, the bit complexity is the sum of the bit complexities for its integer part and for its fractional part.
 
@@ -756,6 +777,26 @@ I acknowledge Claude Gravel who reviewed a previous version of this article.
 <small><sup id=Note24>(24)</sup> Knuth, Donald E. and Andrew Chi-Chih Yao. "The complexity of nonuniform random number generation", in _Algorithms and Complexity: New Directions and Recent Results_, 1976.</small>
 
 <small><sup id=Note25>(25)</sup> Efraimidis, P. "[**Weighted Random Sampling over Data Streams**](https://arxiv.org/abs/1012.0256v2)", arXiv:1012.0256v2 [cs.DS], 2015.</small>
+
+<a id=Appendix></a>
+## Appendix
+
+The following Python code uses SymPy to plot the bit complexity lower bound for **ZeroToOneExpMinus** when &gamma; is 1 or less:
+
+```
+def ent(p):
+   return p*log(1/p,2)
+
+def expminusformula():
+   i=symbols('i',integer=True)
+   x=symbols('x',real=True)
+   # Approximation for k = [0, 6]; the result is little different
+   # for k = [0, infinity]
+   return summation(ent(x**i/factorial(i) - \
+      x**(i+1)/factorial(i+1)), (i,0,6))
+
+plot(expminusformula(), xlim=(0,1), ylim=(0,2))
+```
 
 <a id=License></a>
 ## License
