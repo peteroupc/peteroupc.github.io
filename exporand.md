@@ -649,15 +649,15 @@ The _bit complexity_ of an algorithm that generates random numbers is measured a
 Existing work shows how to calculate the bit complexity for any distribution of random numbers:
 
 - For a 1-dimensional continuous distribution, the bit complexity is bounded from below by `DE + prec - 1` random bits, where `DE` is the differential entropy for the distribution and _prec_ is the number of bits in the random number's fractional part (Devroye and Gravel 2015)<sup>[**(3)**](#Note3)</sup>.
-- For a discrete distribution (a distribution of random integers with separate probabilities of occurring), the bit complexity is bounded from below by the binary entropies of all the probabilities involved, summed together (Knuth and Yao 1976)<sup>[**(24)**](#Note24)</sup>.  (For a given probability _p_, the binary entropy is `p*log2(1/p)`.)  An optimal algorithm will come within 2*_p_ bits of this lower bound on average.
+- For a discrete distribution (a distribution of random integers with separate probabilities of occurring), the bit complexity is bounded from below by the binary entropies of all the probabilities involved, summed together (Knuth and Yao 1976)<sup>[**(24)**](#Note24)</sup>.  (For a given probability _p_, the binary entropy is `p*log2(1/p)`.)  An optimal algorithm will come within 2 bits of this lower bound on average.
 
 For example, in the case of the exponential distribution, `DE` is log2(exp(1)/&lambda;), so the minimum bit complexity for this distribution is log2(exp(1)/&lambda;) + _prec_ &minus; 1, so that if _prec_ = 20, this minimum is about 20.443 bits when &lambda; = 1, decreases when &lambda; goes up, and increases when &lambda; goes down.  In the case of any other continuous distribution, `DE` is the integral of `f(x) * log2(1/f(x))` over all valid values `x`, where `f` is the distribution's density function.
 
-Although existing work shows lower bounds on the number of random bits an algorithm will need on average, these lower bounds are generally not achieved in practice.
+Although existing work shows lower bounds on the number of random bits an algorithm will need on average, most algorithms will generally not achieve these lower bounds in practice.
 
 In general, if an algorithm calls other algorithms that generate random numbers, the total expected bit complexity is&mdash;
 
-- the expected number of calls to those other algorithms, times
+- the expected number of calls to each of those other algorithms, times
 - the bit complexity for each such call.
 
 <a id=Complexity_of_Specific_Algorithms></a>
