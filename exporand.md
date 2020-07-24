@@ -383,7 +383,6 @@ def exprandless(a, b):
             index += 1
 
 def zero_or_one(px, py):
-        global bitcount
         """ Returns 1 at probability px/py, 0 otherwise.
             Uses Bernoulli algorithm from Lumbroso appendix 3,
             with one exception noted in this code. """
@@ -395,14 +394,12 @@ def zero_or_one(px, py):
         while True:
             z = z * 2
             if z >= py:
-                bitcount+=1
                 if random.randint(0,1) == 0:
                     return 1
                 z = z - py
             # Exception: Condition added to help save bits
             elif z == 0: return 0
             else:
-                bitcount+=1
                 if random.randint(0,1) == 0:
                    return 0
 

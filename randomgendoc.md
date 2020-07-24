@@ -1623,7 +1623,7 @@ CLASSES
      |        where p and q are the probability of heads for f1 and f2, respectively.
      |
      |  arctan_n_div_n(self, f)
-     |      Arctan div N: B(p) -> B(arctan(p)/p); 0 otherwise.
+     |      Arctan div N: B(p) -> B(arctan(p)/p).
      |      Reference: Flajolet et al. 2010.
      |       - f: Function that returns 1 if heads and 0 if tails.
      |
@@ -1797,7 +1797,7 @@ CLASSES
      |  zero_or_one(self, px, py)
      |      Returns 1 at probability px/py, 0 otherwise.
      |
-     |  zero_or_one_arctan_n_div_n(self, x, y)
+     |  zero_or_one_arctan_n_div_n(self, x, y=1)
      |      Generates 1 with probability arctan(x/y)*y/x; 0 otherwise.
      |         x/y must be in [0, 1].
      |      Reference: Flajolet et al. 2010.
@@ -1806,7 +1806,7 @@ CLASSES
      |      Generates 1 with probability exp(-x/y); 0 otherwise.
      |      Reference: Canonne et al. 2020.
      |
-     |  zero_or_one_log1p(self, x, y)
+     |  zero_or_one_log1p(self, x, y=1)
      |      Generates 1 with probability log(1+x/y); 0 otherwise.
      |      Reference: Flajolet et al. 2010.
      |

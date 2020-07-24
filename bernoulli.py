@@ -221,7 +221,7 @@ class Bernoulli:
             u[r] = self.randbit()
         return u[r]
 
-    def zero_or_one_log1p(self, x, y):
+    def zero_or_one_log1p(self, x, y=1):
         """ Generates 1 with probability log(1+x/y); 0 otherwise.
          Reference: Flajolet et al. 2010. """
         bag = []
@@ -231,7 +231,7 @@ class Bernoulli:
             if self.zero_or_one(x, y) == 0 or self.geometric_bag(bag) == 0:
                 return 0
 
-    def zero_or_one_arctan_n_div_n(self, x, y):
+    def zero_or_one_arctan_n_div_n(self, x, y=1):
         """ Generates 1 with probability arctan(x/y)*y/x; 0 otherwise.
             x/y must be in [0, 1].
          Reference: Flajolet et al. 2010. """
