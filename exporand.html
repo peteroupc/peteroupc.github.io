@@ -130,7 +130,7 @@
 
 <p>There is previous work that relates continuous distributions to digit probabilities in a similar manner (but only in base 10) (Habibizad Navin et al., 2007)<sup><a href="#Note12"><strong>(12)</strong></a></sup>, (Nezhad et al., 2013)<sup><a href="#Note13"><strong>(13)</strong></a></sup>.</p>
 
-<p>Finally, arithmetic with partially-sampled numbers may be possible if the result of the arithmetic is distributed with a known density function (e.g., one found via Rohatgi&#39;s formula (Rohatgi 1976)<sup><a href="#Note14"><strong>(14)</strong></a></sup>), allowing for an algorithm that implements rejection from the uniform or exponential distribution.  However, that density function may have an unbounded peak, thus ruling out rejection sampling in practice.  For example, if <em>X</em> is a partially-sampled uniform random number, then <em>X</em><sup>1/3</sup> is distributed as <code>pow(X, 3) * 3 / X</code>, which has an unbounded peak at 0, ruling out rejection samplers for <em>X</em><sup>1/3</sup> in practice.</p>
+<p>Finally, arithmetic with partially-sampled numbers may be possible if the result of the arithmetic is distributed with a known density function (e.g., one found via Rohatgi&#39;s formula (Rohatgi 1976)<sup><a href="#Note14"><strong>(14)</strong></a></sup>), allowing for an algorithm that implements rejection from the uniform or exponential distribution.  However, that density function may have an unbounded peak, thus ruling out rejection sampling in practice.  For example, if <em>X</em> is a partially-sampled uniform random number, then <em>X</em><sup>3</sup> is distributed as <code>pow(X, 3) * 3 / X</code>, which has an unbounded peak at 0, ruling out rejection samplers for <em>X</em><sup>3</sup> in practice.</p>
 
 <p><a id=Building_Blocks></a></p>
 
@@ -238,7 +238,7 @@
 <p>All the building blocks are now in place to describe a <em>new</em> algorithm to sample the beta distribution, described as follows.  It takes three parameters: <em>a</em> &gt;= 1 and <em>b</em> &gt;= 1 are the parameters to the beta distribution, and <em>p</em> &gt; 0 is a precision parameter.</p>
 
 <ol>
-<li>Special case: If <em>a</em> = 1 and <em>b</em> = 1, return a uniform number whose fractional part has <em>p</em> digits (for example, in the binary case, RandomBits(<em>p</em>) / 2<sup><em>p</em></sup> where <code>RandomBits(x)</code> returns an x-bit block of unbiased random bits).</li>
+<li>Special case: If <em>a</em> = 1 and <em>b</em> = 1, return a uniform random number whose fractional part has <em>p</em> digits (for example, in the binary case, RandomBits(<em>p</em>) / 2<sup><em>p</em></sup> where <code>RandomBits(x)</code> returns an x-bit block of unbiased random bits).</li>
 <li>Special case: If <em>a</em> and <em>b</em> are both integers, return the result of <strong>kthsmallest</strong> with parameters (<em>a</em> &minus; <em>b</em> + 1) and <em>a</em> in that order, and fill it as necessary to give the number an <em>p</em>-digit fractional part (similarly to <strong>FillGeometricBag</strong> above).</li>
 <li>Create an empty list to serve as a &quot;geometric bag&quot;.</li>
 <li>Remove all digits from the geometric bag.  This will result in an empty uniform random number, <em>U</em>, for the following steps, which will accept <em>U</em> with probability <em>U</em><sup>a&minus;1</sup>*(1&minus;<em>U</em>)<sup>b&minus;1</sup>) (the proportional probability for the beta distribution), as <em>U</em> is built up.</li>
@@ -247,11 +247,13 @@
 <li><em>U</em> was accepted, so return the result of <strong>FillGeometricBag</strong>.</li>
 </ol>
 
+<p>Note that if <em>a</em> = 1/<em>x</em> and <em>b</em> = 1, the result is the same as a uniform random number raised to the power of <em>x</em>.  Any beta(1/<em>x</em>, 1) random number has this property for any <em>x</em> &gt; 0, but for the beta sampler presented here, this works only if <em>x</em> is in the interval (0, 1], due to the restriction of <em>a</em> and <em>b</em> to values 1 or greater.</p>
+
 <p><a id=Exponential_Distribution></a></p>
 
 <h3>Exponential Distribution</h3>
 
-<p>We also have the necessary building blocks to describe how to sample e-rands.  As implemented in the Python code, an e-rand consists of five numbers: the first is a multiple of 2<sup><em>x</em></sup>, the second is <em>x</em>, the third is the integer part (initially &minus;1 to indicate the integer part wasn&#39;t sampled yet), and the fourth and fifth are the &lambda; parameter&#39;s numerator and denominator, respectively.</p>
+<p>We also have the necessary building blocks to describe how to sample e-rands.  As implemented in the Python code, an e-rand consists of five numbers: the first is a multiple of 1/(2<sup><em>x</em></sup>), the second is <em>x</em>, the third is the integer part (initially &minus;1 to indicate the integer part wasn&#39;t sampled yet), and the fourth and fifth are the &lambda; parameter&#39;s numerator and denominator, respectively.</p>
 
 <p>To sample bit <em>k</em> after the binary point of an exponential random number with rate &lambda; (where <em>k</em> = 1 means the first digit after the point, <em>k</em> = 2 means the second, etc.), call the <strong>LogisticExp</strong> algorithm with <em>x</em> = &lambda;&#39;s numerator, <em>y</em> = &lambda;&#39;s denominator, and <em>prec</em> = <em>k</em>.</p>
 
@@ -294,6 +296,12 @@ def _toreal(ret, precision):
         # number here, this is not strictly necessary and
         # is merely for convenience.
         return ret*1.0/(1&lt;&lt;precision)
+
+def powerOfUniform(b, px, py, precision=53):
+        # Special case of beta, returning power of px/py
+        # of a uniform random number, provided px/py
+        # is in (0, 1].
+        return betadist(b, py, px, 1, 1, precision)
 
 def betadist(b, ax, ay, bx, by, precision=53):
         # Beta distribution for alpha&gt;=1 and beta&gt;=1

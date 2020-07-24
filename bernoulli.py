@@ -134,36 +134,27 @@ class Bernoulli:
         return [0, 0]
 
     def _urandless(self, a, b):
-        abits = a[1]
-        if abits == 0:
-            abits = 1
-            tmp = self.rndintexc(1 << (abits + 1))
-            a[0] = tmp & 1
-            bb = tmp >> 1
-        else:
-            bb = 0
-            # Set bits of b from most to least
-            # significant bit
-            for i in range(abits):
-                sh = abits - 1 - i
-                bb |= self.rndintexc(2) << sh
-                # Bits not yet determined are set to ones,
-                # since we're checking if a is greater
-                # than the highest possible value for b,
-                # which indicates failure
-                bbc = bb | (1 << sh) - 1
-                if a[0] > bbc:
-                    # a turned out to be greater than b
-                    return False
-        while bb == a[0]:
-            abits += 1
-            sr = self.rndint(3)
-            bb = (bb << 1) | (sr & 1)
-            a[0] = (a[0] << 1) | ((sr >> 1) & 1)
-        a[1] = abits
-        b[0] = bb
-        b[1] = abits
-        return a[0] < b[0]
+        index = 0
+        while True:
+            # Fill with next bit in a's uniform number
+            if a[1] < index:
+                raise ValueError
+            if b[1] < index:
+                raise ValueError
+            if a[1] <= index:
+                a[1] += 1
+                a[0] = self.rndint(1) | (a[0] << 1)
+            # Fill with next bit in b's uniform number
+            if b[1] <= index:
+                b[1] += 1
+                b[0] = self.rndint(1) | (b[0] << 1)
+            aa = (a[0] >> (a[1] - 1 - index)) & 1
+            bb = (b[0] >> (b[1] - 1 - index)) & 1
+            if aa < bb:
+                return True
+            if aa > bb:
+                return False
+            index += 1
 
     def _gamma_g(self, f):
         """ Gamma-G generator (Flajolet et al. 2010).  Returns the number of successes
@@ -239,6 +230,63 @@ class Bernoulli:
                 return self.zero_or_one(x, y)
             if self.zero_or_one(x, y) == 0 or self.geometric_bag(bag) == 0:
                 return 0
+
+    def zero_or_one_arctan_n_div_n(self, x, y):
+        """ Generates 1 with probability arctan(x/y)*y/x; 0 otherwise.
+            x/y must be in [0, 1].
+         Reference: Flajolet et al. 2010. """
+        bag = []
+        xsq = x * x
+        ysq = y * y
+        while True:
+            if (
+                self.zero_or_one(xsq, ysq) == 0
+                or self.geometric_bag(bag) == 0
+                or self.geometric_bag(bag) == 0
+            ):
+                return 1
+            if (
+                self.zero_or_one(xsq, ysq) == 0
+                or self.geometric_bag(bag) == 0
+                or self.geometric_bag(bag) == 0
+            ):
+                return 0
+
+    def arctan_n_div_n(self, f):
+        """ Arctan div N: B(p) -> B(arctan(p)/p).
+         Reference: Flajolet et al. 2010.
+          - f: Function that returns 1 if heads and 0 if tails.
+         """
+        bag = []
+        while True:
+            if (
+                f() == 0
+                or self.geometric_bag(bag) == 0
+                or f() == 0
+                or self.geometric_bag(bag) == 0
+            ):
+                return 1
+            if (
+                f() == 0
+                or self.geometric_bag(bag) == 0
+                or f() == 0
+                or self.geometric_bag(bag) == 0
+            ):
+                return 0
+
+    def zero_or_one_pi_div_4(self):
+        """ Generates 1 with probability pi/4.
+         Reference: Flajolet et al. 2010.
+         """
+        if self.randbit() == 0:
+            return self.zero_or_one_arctan_n_div_n(1, 2)
+        else:
+            return (
+                1
+                if self.zero_or_one(2, 3) == 1
+                and self.zero_or_one_arctan_n_div_n(1, 3) == 1
+                else 0
+            )
 
     def _uniform_less(self, bag, frac):
         """ Determines whether a uniformly-distributed random number

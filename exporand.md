@@ -91,7 +91,7 @@ On the other hand, partially-sampled-number arithmetic may be possible by relati
 
 There is previous work that relates continuous distributions to digit probabilities in a similar manner (but only in base 10) (Habibizad Navin et al., 2007)<sup>[**(12)**](#Note12)</sup>, (Nezhad et al., 2013)<sup>[**(13)**](#Note13)</sup>.
 
-Finally, arithmetic with partially-sampled numbers may be possible if the result of the arithmetic is distributed with a known density function (e.g., one found via Rohatgi's formula (Rohatgi 1976)<sup>[**(14)**](#Note14)</sup>), allowing for an algorithm that implements rejection from the uniform or exponential distribution.  However, that density function may have an unbounded peak, thus ruling out rejection sampling in practice.  For example, if _X_ is a partially-sampled uniform random number, then _X_<sup>1/3</sup> is distributed as `pow(X, 3) * 3 / X`, which has an unbounded peak at 0, ruling out rejection samplers for _X_<sup>1/3</sup> in practice.
+Finally, arithmetic with partially-sampled numbers may be possible if the result of the arithmetic is distributed with a known density function (e.g., one found via Rohatgi's formula (Rohatgi 1976)<sup>[**(14)**](#Note14)</sup>), allowing for an algorithm that implements rejection from the uniform or exponential distribution.  However, that density function may have an unbounded peak, thus ruling out rejection sampling in practice.  For example, if _X_ is a partially-sampled uniform random number, then _X_<sup>3</sup> is distributed as `pow(X, 3) * 3 / X`, which has an unbounded peak at 0, ruling out rejection samplers for _X_<sup>3</sup> in practice.
 
 <a id=Building_Blocks></a>
 ## Building Blocks
@@ -176,7 +176,7 @@ The **LogisticExp** algorithm is a special case of the _logistic Bernoulli facto
 
 All the building blocks are now in place to describe a _new_ algorithm to sample the beta distribution, described as follows.  It takes three parameters: _a_ >= 1 and _b_ >= 1 are the parameters to the beta distribution, and _p_ > 0 is a precision parameter.
 
-1. Special case: If _a_ = 1 and _b_ = 1, return a uniform number whose fractional part has _p_ digits (for example, in the binary case, RandomBits(_p_) / 2<sup>_p_</sup> where `RandomBits(x)` returns an x-bit block of unbiased random bits).
+1. Special case: If _a_ = 1 and _b_ = 1, return a uniform random number whose fractional part has _p_ digits (for example, in the binary case, RandomBits(_p_) / 2<sup>_p_</sup> where `RandomBits(x)` returns an x-bit block of unbiased random bits).
 2. Special case: If _a_ and _b_ are both integers, return the result of **kthsmallest** with parameters (_a_ &minus; _b_ + 1) and _a_ in that order, and fill it as necessary to give the number an _p_-digit fractional part (similarly to **FillGeometricBag** above).
 3. Create an empty list to serve as a "geometric bag".
 4. Remove all digits from the geometric bag.  This will result in an empty uniform random number, _U_, for the following steps, which will accept _U_ with probability _U_<sup>a&minus;1</sup>*(1&minus;_U_)<sup>b&minus;1</sup>) (the proportional probability for the beta distribution), as _U_ is built up.
@@ -184,10 +184,12 @@ All the building blocks are now in place to describe a _new_ algorithm to sample
 6. Call the **PowerBernoulliFactory** using the **SampleGeometricBagComplement** algorithm and parameter _b_ &minus; 1 (which will return 1 with probability (1&minus;_U_)<sup>b&minus;1</sup>).  If the result is 0, go to step 4. (Note that steps 5 and 6 don't depend on each other and can be done in either order without affecting correctness, and this is taken advantage of in the Python code below.)
 7. _U_ was accepted, so return the result of **FillGeometricBag**.
 
+Note that if _a_ = 1/_x_ and _b_ = 1, the result is the same as a uniform random number raised to the power of _x_.  Any beta(1/_x_, 1) random number has this property for any _x_ > 0, but for the beta sampler presented here, this works only if _x_ is in the interval (0, 1], due to the restriction of _a_ and _b_ to values 1 or greater.
+
 <a id=Exponential_Distribution></a>
 ### Exponential Distribution
 
-We also have the necessary building blocks to describe how to sample e-rands.  As implemented in the Python code, an e-rand consists of five numbers: the first is a multiple of 2<sup>_x_</sup>, the second is _x_, the third is the integer part (initially &minus;1 to indicate the integer part wasn't sampled yet), and the fourth and fifth are the &lambda; parameter's numerator and denominator, respectively.
+We also have the necessary building blocks to describe how to sample e-rands.  As implemented in the Python code, an e-rand consists of five numbers: the first is a multiple of 1/(2<sup>_x_</sup>), the second is _x_, the third is the integer part (initially &minus;1 to indicate the integer part wasn't sampled yet), and the fourth and fifth are the &lambda; parameter's numerator and denominator, respectively.
 
 To sample bit _k_ after the binary point of an exponential random number with rate &lambda; (where _k_ = 1 means the first digit after the point, _k_ = 2 means the second, etc.), call the **LogisticExp** algorithm with _x_ = &lambda;'s numerator, _y_ = &lambda;'s denominator, and _prec_ = _k_.
 
@@ -226,6 +228,12 @@ def _toreal(ret, precision):
         # number here, this is not strictly necessary and
         # is merely for convenience.
         return ret*1.0/(1<<precision)
+
+def powerOfUniform(b, px, py, precision=53):
+        # Special case of beta, returning power of px/py
+        # of a uniform random number, provided px/py
+        # is in (0, 1].
+        return betadist(b, py, px, 1, 1, precision)
 
 def betadist(b, ax, ay, bx, by, precision=53):
         # Beta distribution for alpha>=1 and beta>=1

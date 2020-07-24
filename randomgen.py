@@ -71,7 +71,7 @@ def numericalTable(func, x, y, n=100):
 def urandnew():
     """ Returns an object to serve as a partially-sampled uniform random
             number called a "u-rand" (Karney, "Sampling exactly from the normal distribution").
-            A u-rand is a list of two numbers: the first is a multiple of 2^X, and the second is X.
+            A u-rand is a list of two numbers: the first is a multiple of 1/(2^X), and the second is X.
             The urand created by this method will be "empty" (no bits sampled yet).
             """
     return [0, 0]
@@ -81,71 +81,34 @@ def urandless(rg, a, b):
                True if so and False otherwise.  During
                the comparison, additional bits will be sampled in both u-rands if necessary
                for the comparison. """
-    abits = a[1]
-    if abits == 0:
-        abits = 1
-        tmp = rg.rndintexc(1 << (abits + 1))
-        a[0] = tmp & 1
-        bb = tmp >> 1
-    else:
-        bb = 0
-        # Set bits of b from most to least
-        # significant bit
-        for i in range(abits):
-            sh = abits - 1 - i
-            bb |= rg.rndintexc(2) << sh
-            # Bits not yet determined are set to ones,
-            # since we're checking if a is greater
-            # than the highest possible value for b,
-            # which indicates failure
-            bbc = bb | (1 << sh) - 1
-            if a[0] > bbc:
-                # a turned out to be greater than b
-                return False
-    while bb == a[0]:
-        abits += 1
-        sr = rg.rndint(3)
-        bb = (bb << 1) | (sr & 1)
-        a[0] = (a[0] << 1) | ((sr >> 1) & 1)
-    a[1] = abits
-    b[0] = bb
-    b[1] = abits
-    return a[0] < b[0]
+    index = 0
+    while True:
+        # Fill with next bit in a's uniform number
+        if a[1] < index:
+            raise ValueError
+        if b[1] < index:
+            raise ValueError
+        if a[1] <= index:
+            a[1] += 1
+            a[0] = rg.rndbit() | (a[0] << 1)
+        # Fill with next bit in b's uniform number
+        if b[1] <= index:
+            b[1] += 1
+            b[0] = rg.rndbit() | (b[0] << 1)
+        aa = (a[0] >> (a[1] - 1 - index)) & 1
+        bb = (b[0] >> (b[1] - 1 - index)) & 1
+        if aa < bb:
+            return True
+        if aa > bb:
+            return False
+        index += 1
 
 def urandgreater(rg, a, b):
     """ Determines whether the first u-rand is greater than another u-rand; returns
                True if so and False otherwise.  During
                the comparison, additional bits will be sampled in both u-rands if necessary
                for the comparison. """
-    abits = a[1]
-    if abits == 0:
-        abits = 1
-        tmp = rg.rndintexc(1 << (abits + 1))
-        a[0] = tmp & 1
-        bb = tmp >> 1
-    else:
-        bb = 0
-        # Set bits of b from most to least
-        # significant bit
-        for i in range(abits):
-            sh = abits - 1 - i
-            bb |= rg.rndintexc(2) << sh
-            # Bits not yet determined are set to zeros,
-            # since we're checking if a is less
-            # than the lowest possible value for b,
-            # which indicates failure
-            if a[0] < bb:
-                # a turned out to be less than b
-                return False
-    while bb == a[0]:
-        abits += 1
-        sr = rg.rndint(3)
-        bb = (bb << 1) | (sr & 1)
-        a[0] = (a[0] << 1) | ((sr >> 1) & 1)
-    a[1] = abits
-    b[0] = bb
-    b[1] = abits
-    return a[0] > b[0]
+    return urandless(rg, b, a)
 
 def urandfill(rg, a, bits):
     """ Fills the unsampled bits of the given u-rand 'a' as necessary to
@@ -2201,7 +2164,7 @@ Returns 'list'. """
         """ Returns an object to serve as a partially-sampled
           exponential random number with the given
           rate 'lamdanum'/'lamdaden'.  The object is a list of five numbers:
-          the first is a multiple of 2^X, the second is X, the third is the integer
+          the first is a multiple of 1/(2^X), the second is X, the third is the integer
           part (initially -1 to indicate the integer part wasn't sampled yet),
           and the fourth and fifth are the lamda parameter's
           numerator and denominator, respectively.  Default for 'lamdanum'
@@ -3620,10 +3583,8 @@ _Non-Uniform Random Variate Generation_, 1986.
         bitmask = maxNodes - 1
         nodesInLevel = 2
         path = 0
-        numRandomBits = 0
         while True:
             path = (path << 1) + self.rndbit()
-            numRandomBits += 1
             path &= bitmask
             # Get next bit in binary expansion
             currbits = [pr.nextbit() for pr in probs]
@@ -3638,7 +3599,6 @@ _Non-Uniform Random Variate Generation_, 1986.
                 # exceeds the node sum
                 while nodesum > 0 and innerNodes < innerNodesNeeded:
                     path = (path << 1) + self.rndbit()
-                    numRandomBits += 1
                     nodesInLevel += 1
                     path &= bitmask
                     innerNodes = nodesInLevel - nodesum

@@ -620,7 +620,7 @@ CLASSES
      |      Returns an object to serve as a partially-sampled
      |      exponential random number with the given
      |      rate 'lamdanum'/'lamdaden'.  The object is a list of five numbers:
-     |      the first is a multiple of 2^X, the second is X, the third is the integer
+     |      the first is a multiple of 1/(2^X), the second is X, the third is the integer
      |      part (initially -1 to indicate the integer part wasn't sampled yet),
      |      and the fourth and fifth are the lamda parameter's
      |      numerator and denominator, respectively.  Default for 'lamdanum'
@@ -1337,7 +1337,7 @@ FUNCTIONS
     urandnew()
         Returns an object to serve as a partially-sampled uniform random
         number called a "u-rand" (Karney, "Sampling exactly from the normal distribution").
-        A u-rand is a list of two numbers: the first is a multiple of 2^X, and the second is X.
+        A u-rand is a list of two numbers: the first is a multiple of 1/(2^X), and the second is X.
         The urand created by this method will be "empty" (no bits sampled yet).
 
 FILE
@@ -1622,6 +1622,11 @@ CLASSES
      |      - eps: A Fraction in (0, 1). eps must be chosen so that p+q <= 1 - eps,
      |        where p and q are the probability of heads for f1 and f2, respectively.
      |
+     |  arctan_n_div_n(self, f)
+     |      Arctan div N: B(p) -> B(arctan(p)/p); 0 otherwise.
+     |      Reference: Flajolet et al. 2010.
+     |       - f: Function that returns 1 if heads and 0 if tails.
+     |
      |  bernoulli_x(self, f, x)
      |      Bernoulli factory with a given probability: B(p) => B(x) (Mendo 2019).
      |          Mendo calls Bernoulli factories "non-randomized" if their randomness
@@ -1792,12 +1797,21 @@ CLASSES
      |  zero_or_one(self, px, py)
      |      Returns 1 at probability px/py, 0 otherwise.
      |
+     |  zero_or_one_arctan_n_div_n(self, x, y)
+     |      Generates 1 with probability arctan(x/y)*y/x; 0 otherwise.
+     |         x/y must be in [0, 1].
+     |      Reference: Flajolet et al. 2010.
+     |
      |  zero_or_one_exp_minus(self, x, y)
      |      Generates 1 with probability exp(-x/y); 0 otherwise.
      |      Reference: Canonne et al. 2020.
      |
      |  zero_or_one_log1p(self, x, y)
      |      Generates 1 with probability log(1+x/y); 0 otherwise.
+     |      Reference: Flajolet et al. 2010.
+     |
+     |  zero_or_one_pi_div_4(self)
+     |      Generates 1 with probability pi/4.
      |      Reference: Flajolet et al. 2010.
      |
      |  zero_or_one_power(self, px, py, n)
