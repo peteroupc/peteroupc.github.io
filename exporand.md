@@ -7,12 +7,12 @@ _Note: Formerly "Partially Sampled Exponential Random Numbers", due to a merger 
 <a id=Introduction></a>
 ## Introduction
 
-This page introduces a Python implementation of _partially-sampled random numbers_.  Although structures for partially-sampled random numbers were largely described before this work, this document unifies the concepts for these kinds of numbers from prior works and shows how they can be used to sample the beta distribution (with both parameters 1 or greater), the exponential distribution (with an arbitrary rate parameter), and other continuous distributions&mdash;
+This page introduces a Python implementation of _partially-sampled random numbers_ (PSRNs).  Although structures for PSRNs were largely described before this work, this document unifies the concepts for these kinds of numbers from prior works and shows how they can be used to sample the beta distribution (with both parameters 1 or greater), the exponential distribution (with an arbitrary rate parameter), and other continuous distributions&mdash;
 
 - while avoiding floating-point arithmetic, and
 - to an arbitrary precision and with user-specified error bounds (and thus in an "exact" manner in the sense defined in (Karney 2014)<sup>[**(1)**](#Note1)</sup>).
 
-For instance, these two points distinguish the beta sampler in this document from any other specially-designed beta sampler I am aware of.  As for the exponential distribution, there are papers that discuss generating exponential random numbers using random bits (Flajolet and Saheb 1982)<sup>[**(2)**](#Note2)</sup>, (Karney 2014)<sup>[**(1)**](#Note1)</sup>, (Devroye and Gravel 2015)<sup>[**(3)**](#Note3)</sup>, (Thomas and Luk 2008)<sup>[**(4)**](#Note4)</sup>, but almost all of them that I am aware of don't deal with generating partially-sampled exponential random numbers using an arbitrary rate, not just 1.  (Habibizad Navin et al., 2010)<sup>[**(5)**](#Note5)</sup>, which came to my attention on the afternoon of July 20, after I wrote much of this article, is perhaps an exception; however the approach appears to involve pregenerated tables of digit probabilities.
+For instance, these two points distinguish the beta sampler in this document from any other specially-designed beta sampler I am aware of.  As for the exponential distribution, there are papers that discuss generating exponential random numbers using random bits (Flajolet and Saheb 1982)<sup>[**(2)**](#Note2)</sup>, (Karney 2014)<sup>[**(1)**](#Note1)</sup>, (Devroye and Gravel 2015)<sup>[**(3)**](#Note3)</sup>, (Thomas and Luk 2008)<sup>[**(4)**](#Note4)</sup>, but almost all of them that I am aware of don't deal with generating exponential PSRNs using an arbitrary rate, not just 1.  (Habibizad Navin et al., 2010)<sup>[**(5)**](#Note5)</sup>, which came to my attention on the afternoon of July 20, after I wrote much of this article, is perhaps an exception; however the approach appears to involve pregenerated tables of digit probabilities.
 
 The samplers discussed here also draw on work dealing with a construct called the _Bernoulli factory_ (Keane and O'Brien 1994)<sup>[**(6)**](#Note6)</sup> (Flajolet et al., 2010)<sup>[**(7)**](#Note7)</sup>, which can simulate an arbitrary probability by transforming biased coins to biased coins.  One important feature of Bernoulli factories is that they can simulate a given probability _exactly_, without having to calculate that probability manually, which is important if the probability can be an irrational number that no computer can compute exactly (such as `pow(p, 1/2)` or `exp(-2)`).
 
@@ -37,18 +37,33 @@ An exponential random number is commonly generated as follows: `-ln(1 - RNDU01()
 <a id=About_Partially_Sampled_Random_Numbers></a>
 ## About Partially-Sampled Random Numbers
 
-In this document, a _partially-sampled_ random number is a data structure that allows a random number that exactly follows a continuous distribution to be sampled digit by digit and with arbitrary precision, without relying on floating-point arithmetic or calculations of irrational or transcendental numbers (other than digit extractions).  Informally, they represent incomplete real numbers whose contents are sampled only when necessary, but in a way that follows the distribution being sampled.
+In this document, a _partially-sampled random number_ (PSRN) is a data structure that allows a random number that exactly follows a continuous distribution to be sampled digit by digit, with arbitrary precision, and without floating-point arithmetic (see "Properties" later in this section).  Informally, they represent incomplete real numbers whose contents are sampled only when necessary, but in a way that follows the distribution being sampled.
 
-The most trivial example of a _partially-sampled_ random number is that of the uniform distribution in [0, 1].  Such a random number can be implemented as a list of items, where each item is either a digit (such as zero or one for binary), or a placeholder value (which represents an unsampled digit), and represents a list of the digits after the radix point, from left to right, of a real number in the interval [0, 1], that is, the number's _digit expansion_ (e.g., _binary expansion_ in the case of binary digits).  This kind of number is referred to&mdash;
+This section specifies two kinds of PSRNs: uniform and exponential.
+
+<a id=Uniform_Partially_Sampled_Random_Numbers></a>
+### Uniform Partially-Sampled Random Numbers
+
+The most trivial example of a PSRN is that of the uniform distribution in [0, 1].  Such a random number can be implemented as a list of items, where each item is either a digit (such as zero or one for binary), or a placeholder value (which represents an unsampled digit), and represents a list of the digits after the radix point, from left to right, of a real number in the interval [0, 1], that is, the number's _digit expansion_ (e.g., _binary expansion_ in the case of binary digits).  This kind of number is referred to&mdash;
 
 - as a _geometric bag_ in (Flajolet et al., 2010)<sup>[**(7)**](#Note7)</sup> (but only in the binary case), and
 - as a _u-rand_ in (Karney 2014)<sup>[**(1)**](#Note1)</sup>.
 
 Each additional digit is sampled simply by setting it to an independent unbiased random digit, an observation that dates from von Neumann (1951)<sup>[**(9)**](#Note9)</sup> in the binary case.
 
-This document may use the terms _geometric bag_ and _partially-sampled random number_ interchangeably.  Note that the _u-rand_ concept by Karney only contemplates sampling digits from left to right without any gaps, whereas the geometric bag concept is more general in this respect.
+Note that the _u-rand_ concept by Karney only contemplates sampling digits from left to right without any gaps, whereas the geometric bag concept is more general in this respect.
 
-Partially-sampled numbers of other distributions can be implemented via rejection from the uniform distribution. For example:
+<a id=Exponential_Partially_Sampled_Random_Numbers></a>
+### Exponential Partially-Sampled Random Numbers
+
+In this document, a exponential PSRN (or _e-rand_, named similarly to Karney's "u-rands" for partially-sampled uniform random numbers (Karney 2014)<sup>[**(1)**](#Note1)</sup>) samples each bit that, when combined with the existing bits, results in an exponentially-distributed random number of the given rate.  Also, because `-ln(1 - RNDU01())` is exponentially distributed, e-rands can also represent the natural logarithm of a partially-sampled uniform random number in (0, 1].  The difference here is that additional bits are sampled not as unbiased random bits, but rather as bits with a vanishing bias.
+
+Algorithms for sampling e-rands are given in the section "Algorithms for the Beta and Exponential Distributions".
+
+<a id=Other_Distributions></a>
+### Other Distributions
+
+Partially-sampled numbers of other distributions can be implemented via rejection from the uniform distribution. Examples include the following:
 
 1. The beta and continuous Bernoulli distributions, as discussed later in this document.
 2. The standard normal distribution, as shown in (Karney 2014)<sup>[**(1)**](#Note1)</sup> by running Karney's Algorithm N and filling unsampled digits uniformly at random.
@@ -56,16 +71,23 @@ Partially-sampled numbers of other distributions can be implemented via rejectio
 
 For these distributions (and others that are continuous almost everywhere and bounded from above), Oberhoff (2018)<sup>[**(10)**](#Note10)</sup> proved that unsampled trailing bits of the partially-sampled number converge to the uniform distribution.
 
-As an additional example, in this document a partially-sampled exponential random number (or _e-rand_, named similarly to Karney's "u-rands" for partially-sampled uniform random numbers (Karney 2014)<sup>[**(1)**](#Note1)</sup>) samples each bit that, when combined with the existing bits, results in an exponentially-distributed random number of the given rate.  Also, because `-ln(1 - RNDU01())` is exponentially distributed, e-rands can also represent the natural logarithm of a partially-sampled uniform random number in (0, 1].  The difference here is that additional bits are sampled not as unbiased random bits, but rather as bits with a vanishing bias.
-
 Partially-sampled numbers could also be implemented via rejection from the exponential distribution, although no concrete examples are presented here.
 
-On the other hand, the concept of _prefix distributions_ (Oberhoff 2018)<sup>[**(10)**](#Note10)</sup> comes close to partially-sampled random numbers, but numbers sampled this way are not partially-sampled random numbers in the sense used here.  This is because the method requires calculating minimums of probabilities (and, in practice, requires the use of floating-point arithmetic in most cases).  Moreover, the method samples from a discrete distribution whose progression depends on the value of previously sampled bits, not just on the position of those bits as with the uniform and exponential distributions (see also (Thomas and Luk 2008)<sup>[**(4)**](#Note4)</sup>).
+<a id=Properties></a>
+### Properties
+
+An algorithm that samples from a continuous distribution using PSRNs has the following properties:
+
+1. The algorithm relies only on a source of random bits for randomness, and does not rely on floating-point arithmetic or calculations of irrational or transcendental numbers (other than digit extractions), including when the algorithm samples each digit of a PSRN.
+2. If the algorithm outputs a PSRN, the number represented by the sampled digits must be close to the ideal distribution by a distance of not more than _b_<sup>_n_</sup>, where _b_ is the PSRN's base, or radix (such as 2 for binary), and _n_ is not more than the number of sampled digits in the PSRN's fractional part.  (Devroye and Gravel 2015)<sup>[**(26)**](#Note26)</sup> suggests Wasserstein L<sub>&infinity;</sub> distance as the distance to use for this purpose.  The number has to be close this way even if the algorithm's caller later samples unsampled digits of that number at random (e.g., uniformly at random in the case of a uniform PSRN).
+3. If the algorithm fills a PSRN's unsampled fractional digits at random (e.g., uniformly at random in the case of a uniform PSRN), so that the number's fractional part has _m_ digits, the number must remain close to the ideal distribution by a distance of not more than _b_<sup>_m_</sup>.
+
+The concept of _prefix distributions_ (Oberhoff 2018)<sup>[**(10)**](#Note10)</sup> comes close to PSRNs, but numbers sampled this way are not PSRNs in the sense used here.  This is because the method requires calculating minimums of probabilities and, in practice, requires the use of floating-point arithmetic in most cases (see property 1 above).  Moreover, the method samples from a discrete distribution whose progression depends on the value of previously sampled bits, not just on the position of those bits as with the uniform and exponential distributions (see also (Thomas and Luk 2008)<sup>[**(4)**](#Note4)</sup>).
 
 <a id=Comparisons></a>
 ### Comparisons
 
-Two partially-sampled random numbers, each of a different distribution but storing digits of the same radix, can be exactly compared to each other using an algorithm similar to the following. The **RandLess** algorithm compares two partially-sampled random numbers, **a** and **b** (and samples additional bits from them as necessary) and returns `true` if **a** turns out to be less than **b**, or `false` otherwise (see also (Karney 2014)<sup>[**(1)**](#Note1)</sup>)).
+Two PSRNs, each of a different distribution but storing digits of the same base (radix), can be exactly compared to each other using an algorithm similar to the following. The **RandLess** algorithm compares two PSRNs, **a** and **b** (and samples additional bits from them as necessary) and returns `true` if **a** turns out to be less than **b**, or `false` otherwise (see also (Karney 2014)<sup>[**(1)**](#Note1)</sup>)).
 
 1. If **a**'s integer part wasn't sampled yet, sample **a**'s integer part.  Do the same for **b**.
 2. Return `true` if **a**'s integer part is less than **b**'s, or `false` if **a**'s integer part is greater than **b**'s.
@@ -77,9 +99,9 @@ Two partially-sampled random numbers, each of a different distribution but stori
 <a id=Arithmetic></a>
 ### Arithmetic
 
-Arithmetic between two partially-sampled random numbers is not exactly trivial.  The naïve approach of adding, multiplying or dividing two partially-sampled random numbers _A_ and _B_ (see also (Brassard et al., 2019)<sup>[**(11)**](#Note11)</sup>) may result in a partially-sampled number _C_ that is only an approximation (even if _C_'s distribution is close to the ideal by a given number of digit places), in the sense that appending additional digits to _C_ (so that _C_ now has _d_ fractional digits) may cause _C_ to follow a distribution that is not close to the ideal distribution (that is, the distribution that _C_ would have if _A_ and _B_ had more digits) by _d_ fractional digit places.
+Arithmetic between two PSRNs is not exactly trivial.  The naïve approach of adding, multiplying or dividing two PSRNs _A_ and _B_ (see also (Brassard et al., 2019)<sup>[**(11)**](#Note11)</sup>) may result in a partially-sampled number _C_ that is not close to the ideal distribution once additional digits of _C_ are sampled uniformly at random (see properties 2 and 3 above).
 
-On the other hand, partially-sampled-number arithmetic may be possible by relating the relative probabilities of each digit, in the result's digit expansion, to some kind of formula.  (This ignores trivial arithmetic operations, such as addition by half provided the radix is even, or negation &mdash; both operations mentioned in (Karney 2014)<sup>[**(1)**](#Note1)</sup> &mdash; or operations affecting the integer part only.)  For example, I can show empirically that when an exponential(1) random number is multiplied by a uniform \[0, 1\] random number, the following (approximate) probabilities of 1 occur in the following positions of the result's binary expansion:
+On the other hand, partially-sampled-number arithmetic may be possible by relating the relative probabilities of each digit, in the result's digit expansion, to some kind of formula.  (This ignores trivial arithmetic operations, such as addition by half provided the base (radix) is even, or negation &mdash; both operations mentioned in (Karney 2014)<sup>[**(1)**](#Note1)</sup> &mdash; or operations affecting the integer part only.)  For example, I can show empirically that when an exponential(1) random number is multiplied by a uniform \[0, 1\] random number, the following (approximate) probabilities of 1 occur in the following positions of the result's binary expansion:
 
 | Position after the point |  Approx. prob. of 1 |
   --- | --- |
@@ -113,7 +135,7 @@ For another base (radix), such as 10 for decimal, this can be implemented as **R
 **FillGeometricBag** takes a geometric bag and generates a number whose fractional part has `p` digits as follows:
 
 1. For each position in \[0, `p`), if the item at that position is not a digit, set the item there to to a digit chosen uniformly at random (e.g., either 0 or 1 for binary), increasing the geometric bag's capacity as necessary. (See also (Oberhoff 2018, sec. 8)<sup>[**(10)**](#Note10)</sup>.)
-2. Take the first `p` digits of the geometric bag and return &Sigma;<sub>_i_=0, `p`&minus;1</sub> bag[_i_] * _b_<sup>&minus;_i_&minus;1</sup>, where _b_ is the radix.  (If it somehow happens that digits beyond `p` are set to 0 or 1, then the implementation could choose instead to fill all unsampled digits between the first and the last set digit and return the full number, optionally rounding it to a number whose fractional part has `p` digits, with a rounding mode of choice.)
+2. Take the first `p` digits of the geometric bag and return &Sigma;<sub>_i_=0, `p`&minus;1</sub> bag[_i_] * _b_<sup>&minus;_i_&minus;1</sup>, where _b_ is the base, or radix.  (If it somehow happens that digits beyond `p` are set to 0 or 1, then the implementation could choose instead to fill all unsampled digits between the first and the last set digit and return the full number, optionally rounding it to a number whose fractional part has `p` digits, with a rounding mode of choice.)
 
 **PowerBernoulliFactory** is a Bernoulli factory algorithm that transforms a coin that produces heads with probability `p` into a coin that produces heads with probability `pow(p, y)`.  The case where `y` is in (0, 1) is due to recent work by Mendo (2019)<sup>[**(15)**](#Note15)</sup>.  The algorithm takes a Bernoulli factory sub-algorithm (the coin that produces heads with probability `p`) as well as the parameter _y_, and is described as follows:
 
@@ -126,19 +148,19 @@ For another base (radix), such as 10 for decimal, this can be implemented as **R
 
 The **kthsmallest** method generates the 'k'th smallest 'bitcount'-digit uniform random number out of 'n' of them, is also relied on by this beta sampler.  It is used when both `a` and `b` are integers, based on the known property that a beta random variable in this case is the `a`th smallest uniform (0, 1) random number out of `a + b - 1` of them (Devroye 1986, p. 431)<sup>[**(16)**](#Note16)</sup></sup>.
 
-**kthsmallest**, however, doesn't simply generate 'n' 'bitcount'-digit numbers and then sort them.  Rather, it builds up their digit expansions digit by digit, via partially-sampled random numbers.    It uses the observation that (in the binary case) each uniform (0, 1) random number is equally likely to be less than half or greater than half; thus, the number of uniform numbers that are less than half vs. greater than half follows a binomial(n, 1/2) distribution (and of the numbers less than half, say, the less-than-one-quarter vs. greater-than-one-quarter numbers follows the same distribution, and so on).    Thanks to this observation, the algorithm can generate a sorted sample "on the fly".  A similar observation applies to other bases than base 2 if we use the multinomial distribution instead of the binomial distribution.  I am not aware of any other article or paper (besides one by me) that describes the **kthsmallest** algorithm given here.
+**kthsmallest**, however, doesn't simply generate 'n' 'bitcount'-digit numbers and then sort them.  Rather, it builds up their digit expansions digit by digit, via PSRNs.    It uses the observation that (in the binary case) each uniform (0, 1) random number is equally likely to be less than half or greater than half; thus, the number of uniform numbers that are less than half vs. greater than half follows a binomial(n, 1/2) distribution (and of the numbers less than half, say, the less-than-one-quarter vs. greater-than-one-quarter numbers follows the same distribution, and so on).    Thanks to this observation, the algorithm can generate a sorted sample "on the fly".  A similar observation applies to other bases than base 2 if we use the multinomial distribution instead of the binomial distribution.  I am not aware of any other article or paper (besides one by me) that describes the **kthsmallest** algorithm given here.
 
 The algorithm is as follows:
 
-1. Create `n` empty partially-sampled random numbers.
+1. Create `n` empty PSRNs.
 2. Set `index` to 1.
 3. If `index <= k` and `index + n >= k`:
-    1. Generate **v**, a multinomial random vector with _b_ probabilities equal to 1/_b_, where _b_ is the radix (for the binary case, _b_ = 2, so this is equivalent to generating `LC` = binomial(`n`, 0.5) and setting **v** to {`LC`, `n - LC`}).
+    1. Generate **v**, a multinomial random vector with _b_ probabilities equal to 1/_b_, where _b_ is the base, or radix (for the binary case, _b_ = 2, so this is equivalent to generating `LC` = binomial(`n`, 0.5) and setting **v** to {`LC`, `n - LC`}).
     2. Starting at `index`, append the digit 0 to the first **v**\[0\] partially-sampled numbers, a 1 digit to the next **v**\[1\] partially-sampled numbers, and so on to appending a _b_ &minus; 1 digit to the last **v**\[_b_ &minus; 1\] partially-sampled numbers (for the binary case, this means appending a 0 bit to the first `LC` u-rands and a 1 bit to the next `n - LC` u-rands).
     3. For each integer _i_ in \[0, _b_): If **v**\[_i_\] > 1, repeat step 3 and these substeps with `index` = `index` + &Sigma;<sub>_j_=0, _i_&minus;1</sub> **v**\[_j_\] and `n` = **v**\[_i_\]. (For the binary case, this means: If `LC > 1`, repeat step 3 and these substeps with the same `index` and `n = LC`; then, if `n - LC > 1`, repeat step 3 and these substeps with `index = index + LC`, and `n = n - LC`).
-4. Take the `k`th partially-sampled random number (starting at 1) and fill it with uniform random digits as necessary to give its fractional part `bitcount` many digits (similarly to **FillGeometricBag** above). Return that number.  (An implementation may instead just return the partially-sampled random number without filling it this way first, but the beta sampler described later doesn't use this alternative.)
+4. Take the `k`th PSRN (starting at 1) and fill it with uniform random digits as necessary to give its fractional part `bitcount` many digits (similarly to **FillGeometricBag** above). Return that number.  (An implementation may instead just return the PSRN without filling it this way first, but the beta sampler described later doesn't use this alternative.)
 
-**Sampling an e-rand** (a partially-sampled exponential random number) makes use of two observations (based on the parameter &lambda; of the exponential distribution):
+**Sampling an e-rand** (a exponential PSRN) makes use of two observations (based on the parameter &lambda; of the exponential distribution):
 
 - While a coin flip with probability of heads of exp(-&lambda;) is heads, the exponential random number is increased by 1.
 - If a coin flip with probability of heads of 1/(1+exp(&lambda;/2<sup>_k_</sup>)) is heads, the exponential random number is increased by 2<sup>-_k_</sup>, where _k_ > 0 is an integer.
@@ -552,7 +574,7 @@ def exprandscore(ln,ld,ln2,ld2):
 <a id=Accurate_Simulation_of_Continuous_Distributions_on_0_1></a>
 ## Accurate Simulation of Continuous Distributions on [0, 1]
 
-The beta sampler in this document shows one case of a general approach to simulating a wide class of continuous distributions supported on \[0, 1\], thanks to Bernoulli factories.  This general approach can sample a number that follows one of these distributions, using the algorithm below.  The algorithm allows any arbitrary radix _b_ (such as 2 for binary).
+The beta sampler in this document shows one case of a general approach to simulating a wide class of continuous distributions supported on \[0, 1\], thanks to Bernoulli factories.  This general approach can sample a number that follows one of these distributions, using the algorithm below.  The algorithm allows any arbitrary base (or radix) _b_ (such as 2 for binary).
 
 1. Create an "empty" partially-sampled uniform random number (or "geometric bag").  Create a **SampleGeometricBag** Bernoulli factory that uses that geometric bag.
 2. As the geometric bag builds up a uniform random number, accept the number with a probability that can be represented by a Bernoulli factory (that takes the **SampleGeometricBag** factory from step 1 as part of its input), or reject it otherwise.  Let _f_(_U_) be the probability function modeled by this Bernoulli factory, where _U_ is the uniform random number built up by the geometric bag. _f_ is a multiple of the density function for the underlying continuous distribution (as a result, this algorithm can be used even if the distribution's density function is only known up to a normalization constant).  As shown by Keane and O'Brien <sup>[**(6)**](#Note6)</sup>, however, this step works if and only if _f_, in the interval \[0, 1\]&mdash;
@@ -567,7 +589,7 @@ The beta sampler in this document shows one case of a general approach to simula
 
 The beta distribution's probability function at (1) fits the requirements of Keane and O'Brien (for `alpha` and `beta` both greater than 1), thus it can be simulated by Bernoulli factories and is covered by this general approach.
 
-This algorithm can be modified to produce random numbers in the interval \[_m_, _m_ + _b_<sup>_i_</sup>\] (where _b_ is the radix and _i_ and _m_ are integers), rather than \[0, 1\], as follows:
+This algorithm can be modified to produce random numbers in the interval \[_m_, _m_ + _b_<sup>_i_</sup>\] (where _b_ is the base, or radix, and _i_ and _m_ are integers), rather than \[0, 1\], as follows:
 
 1. Apply the algorithm above, except a modified probability function _f&prime;_(_x_) = _f_(_x_ * _b_<sup>_i_</sup> + _m_) is used rather than _f_.
 2. Multiply the resulting random number or geometric bag by _b_<sup>_i_</sup>, then add _m_ (this step is relatively trivial given that the geometric bag stores a base-_b_ fractional part).
@@ -673,7 +695,7 @@ In general, if an algorithm calls other algorithms that generate random numbers,
 <a id=Complexity_of_Specific_Algorithms></a>
 ### Complexity of Specific Algorithms
 
-The beta and exponential samplers given here will generally use many more bits on average than the lower bounds on bit complexity, especially since they generate a partially-sampled random number one digit at a time.
+The beta and exponential samplers given here will generally use many more bits on average than the lower bounds on bit complexity, especially since they generate a PSRN one digit at a time.
 
 The `zero_or_one` method generally uses 2 random bits on average, due to its nature as a Bernoulli trial involving random bits, see also (Lumbroso 2013, Appendix B)<sup>[**(24)**](#Note24)</sup>.  However, it uses no random bits if both its parameters are the same.
 
@@ -724,11 +746,11 @@ If &gamma; is a non-integer greater than 1, the bit complexity is the sum of the
 <a id=Open_Questions></a>
 ## Open Questions
 
-There are some open questions on partially-sampled random numbers:
+There are some open questions on PSRNs:
 
 1. Are there constructions for partially-sampled normal random numbers with a standard deviation other than 1 and/or a mean other than an integer?
-2. Are there constructions for partially-sampled random numbers other than for cases given earlier in this document?
-3. What are exact formulas for the digit probabilities when arithmetic is carried out between two partially-sampled random numbers (such as addition, multiplication, division, and powering)?
+2. Are there constructions for PSRNs other than for cases given earlier in this document?
+3. What are exact formulas for the digit probabilities when arithmetic is carried out between two PSRNs (such as addition, multiplication, division, and powering)?
 
 <a id=Acknowledgments></a>
 ## Acknowledgments
@@ -788,6 +810,8 @@ I acknowledge Claude Gravel who reviewed a previous version of this article.
 
 <small><sup id=Note25>(25)</sup> Efraimidis, P. "[**Weighted Random Sampling over Data Streams**](https://arxiv.org/abs/1012.0256v2)", arXiv:1012.0256v2 [cs.DS], 2015.</small>
 
+<small><sup id=Note26>(26)</sup> Devroye, L., Gravel, C., "[**Sampling with arbitrary precision**](https://arxiv.org/abs/1502.02539v5)", arXiv:1502.02539v5 [cs.IT], 2015.</small>
+
 <a id=Appendix></a>
 ## Appendix
 
@@ -814,7 +838,7 @@ plot(expminusformula(), xlim=(0,1), ylim=(0,2))
 <a id=Another_Example_of_an_Arbitrary_Precision_Sampler></a>
 ### Another Example of an Arbitrary-Precision Sampler
 
-As an additional example of how partially-sampled random numbers can be useful, here we reimplement an example from Devroye's book _Non-Uniform Random Variate Generation_ (Devroye 1986, pp. 128&ndash;129)<sup>[**(16)**](#Note16)</sup></sup>.  The following algorithm generates a random number from a distribution with the following cumulative distribution function: `1 - cos(pi*x/2).`  The random number will be in the interval [0, 1].  What is notable about this algorithm is that it's an arbitrary-precision algorithm that avoids floating-point arithmetic.  Note that the result is the same as applying acos(_U_)*2/&pi;, where _U_ is a uniform \[0, 1\] random number, as pointed out by Devroye.  The algorithm follows.
+As an additional example of how PSRNs can be useful, here we reimplement an example from Devroye's book _Non-Uniform Random Variate Generation_ (Devroye 1986, pp. 128&ndash;129)<sup>[**(16)**](#Note16)</sup></sup>.  The following algorithm generates a random number from a distribution with the following cumulative distribution function: `1 - cos(pi*x/2).`  The random number will be in the interval [0, 1].  What is notable about this algorithm is that it's an arbitrary-precision algorithm that avoids floating-point arithmetic.  Note that the result is the same as applying acos(_U_)*2/&pi;, where _U_ is a uniform \[0, 1\] random number, as pointed out by Devroye.  The algorithm follows.
 
 1. Call the **kthsmallest** algorithm with `n = 2` and `k = 2`, but without filling it with digits at the last step.  Let _ret_ be the result.
 2. Set _m_ to 1.

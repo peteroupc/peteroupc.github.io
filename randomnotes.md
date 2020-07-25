@@ -349,9 +349,9 @@ The following pseudocode calculates a random vector (list of numbers) that follo
 >
 > 1. A **binormal distribution** (two-variable multinormal distribution) can be sampled using the following idiom: `MultivariateNormal([mu1, mu2], [[s1*s1, s1*s2*rho], [rho*s1*s2, s2*s2]])`, where `mu1` and `mu2` are the means of the two normal random numbers, `s1` and `s2` are their standard deviations, and `rho` is a _correlation coefficient_ greater than -1 and less than 1 (0 means no correlation).
 > 2. **Log-multinormal distribution**: Generate a multinormal random vector, then apply `exp(n)` to each component `n`.
-> 3. A **Beckmann distribution** is the norm (see the appendix) of a random binormal vector.
+> 3. A **Beckmann distribution**: Generate a random binormal vector `vec`, then apply `Norm(vec)` to that vector.
 > 4. A **Rice (Rician) distribution** is a Beckmann distribution in which the binormal random pair is generated with `m1 = m2 = a / sqrt(2)`, `rho = 0`, and `s1 = s2 = b`, where `a` and `b` are the parameters to the Rice distribution.
-> 5. A **Rice&ndash;Norton distributed** random number is the norm of the following vector: `MultivariateNormal([v,v,v],[[w,0,0],[0,w,0],[0,0,w]])`, where `v = a/sqrt(m*2)`, `w = b*b/m`, and `a`, `b`, and `m` are the parameters to the Rice&ndash;Norton distribution.
+> 5. A **Rice&ndash;Norton distributed**: Generate `vec = MultivariateNormal([v,v,v],[[w,0,0],[0,w,0],[0,0,w]])` (where `v = a/sqrt(m*2)`, `w = b*b/m`, and `a`, `b`, and `m` are the parameters to the Rice&ndash;Norton distribution), then apply `Norm(vec)` to that vector.
 > 6. A **standard** [**complex normal distribution**](https://en.wikipedia.org/wiki/Complex_normal_distribution) is a binormal distribution in which the binormal random pair is generated with `s1 = s2 = sqrt(0.5)` and `mu1 = mu2 = 0` and treated as the real and imaginary parts of a complex number.
 > 7. **Multivariate Linnik distribution**: Generate a multinormal random vector, then multiply each component by `GeometricStable(alpha/2.0, 1, 1)`, where `alpha` is a parameter in (0, 2] (Kozubowski 2000)<sup>[**(11)**](#Note11)</sup>.
 
@@ -520,6 +520,8 @@ For related algorithms, see the appendix.
 
 <small><sup id=Note21>(21)</sup> Oberhoff, Sebastian, "[**Exact Sampling and Prefix Distributions**](https://dc.uwm.edu/etd/1888)", _Theses and Dissertations_, University of Wisconsin Milwaukee, 2018.</small>
 
+<small><sup id=Note22>(22)</sup> Devroye, L., Gravel, C., "[**Sampling with arbitrary precision**](https://arxiv.org/abs/1502.02539v5)", arXiv:1502.02539v5 [cs.IT], 2015.</small>
+
 <a id=Appendix></a>
 ## Appendix
 
@@ -583,13 +585,15 @@ The following are some ways to implement `RNDINT`.  (The column "Unbiased?" mean
 
 There are three kinds of randomization algorithms:
 
-1. An _error-bounded algorithm_ is an algorithm that samples a distribution in a manner that minimizes approximation error.  This means the algorithm samples from a continuous distribution that is close to the ideal distribution within a user-specified error tolerance, or samples exactly from a discrete distribution (one that takes on a countable number of values).  Thus, the algorithm gives every representable number the expected probability of occurring.  In general, the only random numbers the algorithm uses are random bits (binary digits).  An application should use error-bounded algorithms whenever possible.
+1. An _error-bounded algorithm_ is an algorithm that samples a distribution in a manner that minimizes approximation error.  This means the algorithm samples from a continuous distribution that is close to the ideal distribution within a user-specified error tolerance (see below for details), or samples exactly from a discrete distribution (one that takes on a countable number of values).  Thus, the algorithm gives every representable number the expected probability of occurring.  In general, the only random numbers the algorithm uses are random bits (binary digits).  An application should use error-bounded algorithms whenever possible.
 2. An _exact algorithm_ is an algorithm that samples from the exact distribution requested, assuming that computers can store and operate on real numbers of any precision and can generate independent uniform random real numbers of any precision (Devroye 1986, p. 1-2)<sup>[**(10)**](#Note10)</sup>.  Without more, however, an exact algorithm implemented on real-life computers can incur rounding and other errors, especially when floating-point arithmetic is used or when irrational numbers or transcendental functions are involved.  An exact algorithm can achieve a guaranteed bound on accuracy (and thus be an _error-bounded algorithm_) using either arbitrary-precision or interval arithmetic (see also Devroye 1986, p. 2)<sup>[**(10)**](#Note10)</sup>.  In this page, all methods given here are exact unless otherwise noted.  Note that `RNDU01` or `RNDRANGE` are exact in theory, but have no required implementation.
 3. An _inexact_, _approximate_, or _biased algorithm_ is neither exact nor error-bounded; it uses "a mathematical approximation of sorts" to generate a random number that is close to the desired distribution (Devroye 1986, p. 2)<sup>[**(10)**](#Note10)</sup>.  An application should use this kind of algorithm only if it's willing to trade accuracy for speed.
 
 Most algorithms on this page, though, are not _error-bounded_, but even so, they may still be useful to an application willing to trade accuracy for speed.
 
 On the other hand, if an algorithm returns results that are accurate to a given number of digits after the point (for example, 53 bits after the point), it can generate any number of digits uniformly at random and append those digits to the result's digit expansion while remaining accurate to that many digits. For example, after it generates a normally-distributed random number, an algorithm can fill it with enough uniform random bits, as necessary, to give the number 100 bits after the point (Karney 2014)<sup>[**(1)**](#Note1)</sup>, see also (Oberhoff 2018)<sup>[**(21)**](#Note21)</sup> (example: `for i in 54..100: ret = ret + RNDINT(1) * pow(2,-i)`).
+
+There are many ways to describe closeness between two distributions.  As one suggestion found in (Devroye and Gravel 2015)<sup>[**(22)**](#Note22)</sup>, an algorithm has accuracy &epsilon; (the user-specified error tolerance) if it samples random numbers whose distribution is close to the ideal distribution by a Wasserstein L<sub>&infinity;</sub> distance of not more than &epsilon;.
 
 <a id=Weighted_Choice_with_Coins_of_Known_Bias></a>
 ### Weighted Choice with Coins of Known Bias

@@ -1953,7 +1953,7 @@ To generate a random N-dimensional point on or inside an N-dimensional ball, cen
 - follow the pseudocode in `RandomPointInHypersphere`, except replace `Norm(ret)` with `sqrt(S + Expo(1))`, where `S` is the sum of squares of the numbers in `ret`.
 
 To generate a random point on or inside an N-dimensional spherical shell (a hollow ball), centered at the origin, with inner radius A and outer radius B (where A is less than B), either&mdash;
-- generate a random point for a ball of radius B until the norm of that point is A or greater (see the [**appendix**](#Appendix)), or
+- generate a random point for a ball of radius B until `Norm(pt)` is A or greater, where `pt` is that point (see the [**appendix**](#Appendix)), or
 - generate a random point on the surface of an N-dimensional hypersphere with radius equal to `pow(RNDRANGE(pow(A, N), pow(B, N)), 1.0 / N)`<sup>[**(79)**](#Note79)</sup>.
 
 To generate a random point on or inside a cone with height `H` and radius `R` at its base, running along the Z axis, generate a random Z coordinate by `Z = max(max(RNDRANGE(0, H), RNDRANGE(0, H)), RNDRANGE(0, H))`, then generate random X and Y coordinates inside a disc (2-dimensional ball) with radius equal to `max(RNDRANGE(0,R*Z/H), RNDRANGE(0,R*Z/H))`<sup>[**(80)**](#Note80)</sup>.
@@ -2194,7 +2194,7 @@ The following method calculates the mean and the [**bias-corrected sample varian
 <a id=Norm_Calculation></a>
 ### Norm Calculation
 
-The following method calculates the norm of a vector (list of numbers).
+The following method calculates the norm of a vector (list of numbers), more specifically the &#x2113;<sub>2</sub> norm of that vector.
 
     METHOD Norm(vec)
       ret=0
@@ -2207,6 +2207,8 @@ The following method calculates the norm of a vector (list of numbers).
       end
       return sqrt(ret)
     END METHOD
+
+There are other kinds of norms besides the &#x2113;<sub>2</sub> norm.  More generally, the &#x2113;<sub>_p_</sub> norm is the _p_th root of the sum of _p_th powers of a vector's components (or, if _p_ is &#x221e;, the highest absolute value among those components).  An &#x2113;<sub>_p_</sub> ball or sphere is a ball or sphere that is bounded by or traces, respectively, all points with an &#x2113;<sub>_p_</sub> norm of that radius.
 
 <a id=Multithreading_Note></a>
 ### Multithreading Note
