@@ -1,0 +1,69 @@
+<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>How to Sample Unbounded Monotone Density Functions</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a> -
+<a href="http://peteroupc.github.io/">Donate to Me</a></p></div>
+<div class="mainarea" id="top">
+<h1>How to Sample Unbounded Monotone Density Functions</h1>
+
+<p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
+
+<p>This short note shows a preprocessing algorithm to generate a random number in [0, 1] from a distribution whose density function&mdash;</p>
+
+<ul>
+<li>is everywhere continuous in [0, 1],</li>
+<li>is monotonically decreasing in [0, 1], and</li>
+<li>has an unbounded peak at 0.</li>
+</ul>
+
+<p>The trick here is to sample the peak in such a way that the result is either forced to be 0 or forced to belong to the bounded part of the density function.  This algorithm does not require the area under the curve of the density in [0, 1] to be 1; in other words, this algorithm works even if the density function is known up to a normalizing constant.  The algorithm is as follows.</p>
+
+<ol>
+<li>Set <em>i</em> to 1.</li>
+<li>Calculate the cumulative probability of the interval [0, 2<sup>&minus;<em>i</em></sup>] and that of [0, 2<sup>&minus;(<em>i</em> &minus; 1)</sup>], call them <em>p</em> and <em>t</em>.</li>
+<li>With probability <em>p</em>/<em>t</em>, add 1 to <em>i</em> and go to step 2. (Alternatively, if <em>i</em> is equal to or higher than the desired number of fractional bits in the result, return 0 instead of adding 1 and going to step 2.)</li>
+<li>At this point, the density function at [2<sup>&minus;<em>i</em></sup>, 2<sup>&minus;(<em>i</em> &minus; 1)</sup>) is bounded from above, so sample a random number in this interval using any appropriate algorithm, including rejection sampling.  Because the density is monotonically decreasing, the peak of the density at this interval is located at 2<sup>&minus;<em>i</em></sup>, so that rejection sampling becomes trivial.</li>
+</ol>
+
+<p>It is relatively straightforward to adapt this algorithm for monotonically increasing density functions with the unbounded peak at 1, or to density functions with a different domain than [0, 1].</p>
+
+<p>This algorithm is similar to the &quot;inversion-rejection&quot; algorithm mentioned in section 4.4 of chapter 7 of Devroye&#39;s <em>Non-Uniform Random Variate Generation</em> (1986)<sup><a href="#Note1"><strong>(1)</strong></a></sup>.  I was unaware of that algorithm at the time I started writing this article.  The difference here is that it assumes the whole distribution (including its density function and cumulative distribution function) is supported on the interval [0, 1], while the algorithm presented in this article doesn&#39;t make that assumption (e.g., the interval [0, 1] can cover only part of the density&#39;s support).</p>
+
+<p>By the way, this algorithm arose while trying to devise an algorithm that can generate an integer power of a uniform random number, with arbitrary precision, without actually calculating that power (a naïve calculation that is merely an approximation and usually introduces bias); for more information, see my other article on <a href="https://peteroupc.github.io/exporand.html"><strong>partially-sampled random numbers</strong></a>.  Although I haven&#39;t succeeded in that yet, I have in the meantime come up with the algorithm in this note, which may be of independent interest.</p>
+
+<p><a id=Notes></a></p>
+
+<h2>Notes</h2>
+
+<p><small><sup id=Note1>(1)</sup> Devroye, L., <a href="http://luc.devroye.org/rnbookindex.html"><strong><em>Non-Uniform Random Variate Generation</em></strong></a>, 1986.</small></p>
+
+<p><a id=License></a></p>
+
+<h2>License</h2>
+
+<p>Any copyright to this page is released to the Public Domain.  In case this is not possible, this page is also licensed under <a href="https://creativecommons.org/publicdomain/zero/1.0/"><strong>Creative Commons Zero</strong></a>.</p>
+</div><nav id="navigation"><ul>
+<li><a href="/">Back to start site.</a>
+<li><a href="https://github.com/peteroupc/peteroupc.github.io">This site's repository (source code)</a>
+<li><a href="https://github.com/peteroupc/peteroupc.github.io/issues">Post an issue or comment</a></ul>
+<p>
+If you like this software, you should consider donating to me, Peter O., at the link below:</p>
+<p class="printonly"><b>peteroupc.github.io</b></p>
+<div class="noprint">
+<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=56E5T4FH7KD2S">
+<img src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif"
+name="submit" border="2" alt="PayPal - The safer, easier way to pay online!"></a>
+<p>
+<a href="//twitter.com/share">Share via Twitter</a>, <a href="//www.facebook.com/sharer/sharer.php" id="sharer">Share via Facebook</a>
+</p>
+</div>
+</nav><script>
+if("share" in navigator){
+ document.getElementById("sharer").href="javascript:void(null)";
+ document.getElementById("sharer").innerHTML="Share This Page";
+ navigator.share({title:document.title,url:document.location.href}).then(
+   function(){});
+} else {
+ document.getElementById("sharer").href="//www.facebook.com/sharer/sharer.php?u="+
+    encodeURIComponent(document.location.href)
+}
+</script>
+</body></html>
