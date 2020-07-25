@@ -79,8 +79,8 @@ Partially-sampled numbers could also be implemented via rejection from the expon
 An algorithm that samples from a continuous distribution using PSRNs has the following properties:
 
 1. The algorithm relies only on a source of random bits for randomness, and does not rely on floating-point arithmetic or calculations of irrational or transcendental numbers (other than digit extractions), including when the algorithm samples each digit of a PSRN.
-2. If the algorithm outputs a PSRN, the number represented by the sampled digits must be close to the ideal distribution by a distance of not more than _b_<sup>_n_</sup>, where _b_ is the PSRN's base, or radix (such as 2 for binary), and _n_ is not more than the number of sampled digits in the PSRN's fractional part.  (Devroye and Gravel 2015)<sup>[**(26)**](#Note26)</sup> suggests Wasserstein L<sub>&infinity;</sub> distance as the distance to use for this purpose.  The number has to be close this way even if the algorithm's caller later samples unsampled digits of that number at random (e.g., uniformly at random in the case of a uniform PSRN).
-3. If the algorithm fills a PSRN's unsampled fractional digits at random (e.g., uniformly at random in the case of a uniform PSRN), so that the number's fractional part has _m_ digits, the number must remain close to the ideal distribution by a distance of not more than _b_<sup>_m_</sup>.
+2. If the algorithm outputs a PSRN, the number represented by the sampled digits must be close to the ideal distribution by a distance of not more than _b_<sup>&minus;_m_</sup>, where _b_ is the PSRN's base, or radix (such as 2 for binary), and _m_ is the number of sampled digits in the PSRN's fractional part.  (Devroye and Gravel 2015)<sup>[**(3)**](#Note3)</sup> suggests Wasserstein L<sub>&infin;</sub> distance as the distance to use for this purpose.  The number has to be close this way even if the algorithm's caller later samples unsampled digits of that PSRN at random (e.g., uniformly at random in the case of a uniform PSRN).
+3. If the algorithm fills a PSRN's unsampled fractional digits at random (e.g., uniformly at random in the case of a uniform PSRN), so that the number's fractional part has _m_ digits, the number must remain close to the ideal distribution by a distance of not more than _b_<sup>&minus;_m_</sup>.
 
 The concept of _prefix distributions_ (Oberhoff 2018)<sup>[**(10)**](#Note10)</sup> comes close to PSRNs, but numbers sampled this way are not PSRNs in the sense used here.  This is because the method requires calculating minimums of probabilities and, in practice, requires the use of floating-point arithmetic in most cases (see property 1 above).  Moreover, the method samples from a discrete distribution whose progression depends on the value of previously sampled bits, not just on the position of those bits as with the uniform and exponential distributions (see also (Thomas and Luk 2008)<sup>[**(4)**](#Note4)</sup>).
 
@@ -95,6 +95,8 @@ Two PSRNs, each of a different distribution but storing digits of the same base 
 4. If **a**'s fractional part has _i_ or fewer digits, sample digit _i_ of **a** (positions start at 0 where 0 is the most significant digit after the point, 1 is the next, etc.), and append the result to that fractional part's digit expansion.  Do the same for **b**.
 5. Return `true` if **a**'s fractional part is less than **b**'s, or `false` if **a**'s fractional part is greater than **b**'s.
 6. Add 1 to _i_ and go to step 4.
+
+**URandLess** is a version of **RandLess** that involves two uniform PSRNs.  The algorithm for **URandLess**, digits samples digit _i_ in step 4 by setting the digit at position _i_ to a digit chosen uniformly at random.
 
 <a id=Arithmetic></a>
 ### Arithmetic
@@ -128,7 +130,7 @@ The algorithm **SampleGeometricBag** is a Bernoulli factory algorithm.  For base
 2.  If the item at position N in the geometric bag (positions start at 0) is not set to a digit (e.g., 0 or 1 for base 2), set the item at that position to a digit chosen uniformly at random (e.g., either 0 or 1 for base 2), increasing the geometric bag's capacity as necessary.  (As a result of this step, there may be "gaps" in the geometric bag where no digit was sampled yet.)
 3.  Return the item at position N.
 
-For another base (radix), such as 10 for decimal, this can be implemented as **RandLess**, with **a** being an empty partially-sampled uniform random number and **b** being the geometric bag.  (Digit _i_ of **a** or **b** is sampled by choosing a digit uniformly at random and setting the item at position _i_ to that digit; positions start at 0.) Return 1 if the algorithm returns `true`, or 0 otherwise.
+For another base (radix), such as 10 for decimal, this can be implemented as **URandLess**, with **a** being an empty partially-sampled uniform random number and **b** being the geometric bag. Return 1 if the algorithm returns `true`, or 0 otherwise.
 
 **SampleGeometricBagComplement** is the same as the **SampleGeometricBag** algorithm, except the return value is 1 minus the original return value.  The result is that if **SampleGeometricBag** outputs 1 with probability _U_, **SampleGeometricBagComplement** outputs 1 with probability 1 &minus; _U_.
 
@@ -810,8 +812,6 @@ I acknowledge Claude Gravel who reviewed a previous version of this article.
 
 <small><sup id=Note25>(25)</sup> Efraimidis, P. "[**Weighted Random Sampling over Data Streams**](https://arxiv.org/abs/1012.0256v2)", arXiv:1012.0256v2 [cs.DS], 2015.</small>
 
-<small><sup id=Note26>(26)</sup> Devroye, L., Gravel, C., "[**Sampling with arbitrary precision**](https://arxiv.org/abs/1502.02539v5)", arXiv:1502.02539v5 [cs.IT], 2015.</small>
-
 <a id=Appendix></a>
 ## Appendix
 
@@ -843,7 +843,7 @@ As an additional example of how PSRNs can be useful, here we reimplement an exam
 1. Call the **kthsmallest** algorithm with `n = 2` and `k = 2`, but without filling it with digits at the last step.  Let _ret_ be the result.
 2. Set _m_ to 1.
 3. Call the **kthsmallest** algorithm with `n = 2` and `k = 2`, but without filling it with digits at the last step.  Let _u_ be the result.
-4. With probability 4/(4\*_m_\*_m_ + 2\*_m_), call the **RandLess** algorithm with parameters _u_ and _ret_ in that order, and if that call returns `true`, call the `zero_or_one_pi_div_4` algorithm (which returns 1 with probability &pi;/4 and is implemented in _bernoulli.py_) twice, and if both of these calls return 1, add 1 to _m_ and go to step 3.  (Here, we incorporate an erratum in the algorithm on page 129 of the book.  For **RandLess**, digit _i_ of _u_ or _ret_ is sampled by choosing a digit uniformly at random and setting the item at position _i_ to that digit; positions start at 0.)
+4. With probability 4/(4\*_m_\*_m_ + 2\*_m_), call the **URandLess** algorithm with parameters _u_ and _ret_ in that order, and if that call returns `true`, call the `zero_or_one_pi_div_4` algorithm (which returns 1 with probability &pi;/4 and is implemented in _bernoulli.py_) twice, and if both of these calls return 1, add 1 to _m_ and go to step 3.  (Here, we incorporate an erratum in the algorithm on page 129 of the book.)
 5. If _m_ is odd, fill _ret_ with uniform random digits as necessary to give its fractional part the desired number of digits  (similarly to **FillGeometricBag**), and return _ret_.
 6. If _m_ is even, go to step 1.
 

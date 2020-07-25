@@ -18,7 +18,7 @@
 
 <ol>
 <li>Set <em>i</em> to 1.</li>
-<li>Calculate the cumulative probability of the interval [0, 2<sup>&minus;<em>i</em></sup>] and that of [0, 2<sup>&minus;(<em>i</em> &minus; 1)</sup>], call them <em>p</em> and <em>t</em>.</li>
+<li>Calculate the cumulative probability of the interval [0, 2<sup>&minus;<em>i</em></sup>] and that of [0, 2<sup>&minus;(<em>i</em> &minus; 1)</sup>], call them <em>p</em> and <em>t</em>, respectively.</li>
 <li>With probability <em>p</em>/<em>t</em>, add 1 to <em>i</em> and go to step 2. (Alternatively, if <em>i</em> is equal to or higher than the desired number of fractional bits in the result, return 0 instead of adding 1 and going to step 2.)</li>
 <li>At this point, the density function at [2<sup>&minus;<em>i</em></sup>, 2<sup>&minus;(<em>i</em> &minus; 1)</sup>) is bounded from above, so sample a random number in this interval using any appropriate algorithm, including rejection sampling.  Because the density is monotonically decreasing, the peak of the density at this interval is located at 2<sup>&minus;<em>i</em></sup>, so that rejection sampling becomes trivial.</li>
 </ol>

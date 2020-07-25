@@ -11,7 +11,7 @@ This short note shows a preprocessing algorithm to generate a random number in [
 The trick here is to sample the peak in such a way that the result is either forced to be 0 or forced to belong to the bounded part of the density function.  This algorithm does not require the area under the curve of the density in [0, 1] to be 1; in other words, this algorithm works even if the density function is known up to a normalizing constant.  The algorithm is as follows.
 
 1. Set _i_ to 1.
-2. Calculate the cumulative probability of the interval [0, 2<sup>&minus;_i_</sup>] and that of [0, 2<sup>&minus;(_i_ &minus; 1)</sup>], call them _p_ and _t_.
+2. Calculate the cumulative probability of the interval [0, 2<sup>&minus;_i_</sup>] and that of [0, 2<sup>&minus;(_i_ &minus; 1)</sup>], call them _p_ and _t_, respectively.
 3. With probability _p_/_t_, add 1 to _i_ and go to step 2. (Alternatively, if _i_ is equal to or higher than the desired number of fractional bits in the result, return 0 instead of adding 1 and going to step 2.)
 4. At this point, the density function at [2<sup>&minus;_i_</sup>, 2<sup>&minus;(_i_ &minus; 1)</sup>) is bounded from above, so sample a random number in this interval using any appropriate algorithm, including rejection sampling.  Because the density is monotonically decreasing, the peak of the density at this interval is located at 2<sup>&minus;_i_</sup>, so that rejection sampling becomes trivial.
 
