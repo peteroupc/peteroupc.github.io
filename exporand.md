@@ -791,8 +791,8 @@ I acknowledge Claude Gravel who reviewed a previous version of this article.
 <a id=Appendix></a>
 ## Appendix
 
-<a id=Sympy_Formula_for_ZeroToOneExpMinus></a>
-### Sympy Formula for ZeroToOneExpMinus
+<a id=SymPy_Formula_for_ZeroToOneExpMinus></a>
+### SymPy Formula for ZeroToOneExpMinus
 
 The following Python code uses SymPy to plot the bit complexity lower bound for **ZeroToOneExpMinus** when &gamma; is 1 or less:
 
@@ -814,12 +814,12 @@ plot(expminusformula(), xlim=(0,1), ylim=(0,2))
 <a id=Another_Example_of_an_Arbitrary_Precision_Sampler></a>
 ### Another Example of an Arbitrary-Precision Sampler
 
-As an additional example of how partially-sampled random numbers can be useful, here we reimplement an example from Devroye's book _Non-Uniform Random Variate Generation_ (Devroye 1986, pp. 128&ndash;129)<sup>[**(16)**](#Note16)</sup></sup>.  The following algorithm generates a random number from a distribution with the following cumulative distribution function: `1 - cos(pi*x/2).`  The random number will be in the interval [0, 1].  What is notable about this algorithm is that it's an arbitrary-precision algorithm that avoids floating-point arithmetic.  Note that the result is the same as applying acos(U)*2/&pi;, where U is a uniform \[0, 1\] random number, as pointed out by Devroye.  The algorithm follows.
+As an additional example of how partially-sampled random numbers can be useful, here we reimplement an example from Devroye's book _Non-Uniform Random Variate Generation_ (Devroye 1986, pp. 128&ndash;129)<sup>[**(16)**](#Note16)</sup></sup>.  The following algorithm generates a random number from a distribution with the following cumulative distribution function: `1 - cos(pi*x/2).`  The random number will be in the interval [0, 1].  What is notable about this algorithm is that it's an arbitrary-precision algorithm that avoids floating-point arithmetic.  Note that the result is the same as applying acos(_U_)*2/&pi;, where _U_ is a uniform \[0, 1\] random number, as pointed out by Devroye.  The algorithm follows.
 
 1. Call the **kthsmallest** algorithm with `n = 2` and `k = 2`, but without filling it with digits at the last step.  Let _ret_ be the result.
 2. Set _m_ to 1.
 3. Call the **kthsmallest** algorithm with `n = 2` and `k = 2`, but without filling it with digits at the last step.  Let _u_ be the result.
-4. With probability 4/(4*_m_*_m_ + 2*_m_), call the **RandLess** algorithm with parameters _u_ and _ret_ in that order, and if that call returns `true`, call the `zero_or_one_pi_div_4` algorithm (which returns 1 with probability &pi;/4 and is implemented in _bernoulli.py_) twice, and if both of these calls return 1, add 1 to _m_ and go to step 3.  (Here, we incorporate an erratum in the algorithm on page 129 of the book.  For **RandLess**, digit _i_ of _u_ or _ret_ is sampled by choosing a digit uniformly at random and setting the item at position _i_ to that digit; positions start at 0.)
+4. With probability 4/(4\*_m_\*_m_ + 2\*_m_), call the **RandLess** algorithm with parameters _u_ and _ret_ in that order, and if that call returns `true`, call the `zero_or_one_pi_div_4` algorithm (which returns 1 with probability &pi;/4 and is implemented in _bernoulli.py_) twice, and if both of these calls return 1, add 1 to _m_ and go to step 3.  (Here, we incorporate an erratum in the algorithm on page 129 of the book.  For **RandLess**, digit _i_ of _u_ or _ret_ is sampled by choosing a digit uniformly at random and setting the item at position _i_ to that digit; positions start at 0.)
 5. If _m_ is odd, fill _ret_ with uniform random digits as necessary to give its fractional part the desired number of digits  (similarly to **FillGeometricBag**), and return _ret_.
 6. If _m_ is even, go to step 1.
 

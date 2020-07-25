@@ -1107,9 +1107,9 @@ def contbernoullidist(b, lamda, precision=53):
 
 <h2>Appendix</h2>
 
-<p><a id=Sympy_Formula_for_ZeroToOneExpMinus></a></p>
+<p><a id=SymPy_Formula_for_ZeroToOneExpMinus></a></p>
 
-<h3>Sympy Formula for ZeroToOneExpMinus</h3>
+<h3>SymPy Formula for ZeroToOneExpMinus</h3>
 
 <p>The following Python code uses SymPy to plot the bit complexity lower bound for <strong>ZeroToOneExpMinus</strong> when &gamma; is 1 or less:</p>
 
@@ -1131,13 +1131,13 @@ plot(expminusformula(), xlim=(0,1), ylim=(0,2))
 
 <h3>Another Example of an Arbitrary-Precision Sampler</h3>
 
-<p>As an additional example of how partially-sampled random numbers can be useful, here we reimplement an example from Devroye&#39;s book <em>Non-Uniform Random Variate Generation</em> (Devroye 1986, pp. 128&ndash;129)<sup><a href="#Note16"><strong>(16)</strong></a></sup></sup>.  The following algorithm generates a random number from a distribution with the following cumulative distribution function: <code>1 - cos(pi*x/2).</code>  The random number will be in the interval [0, 1].  What is notable about this algorithm is that it&#39;s an arbitrary-precision algorithm that avoids floating-point arithmetic.  Note that the result is the same as applying acos(U)*2/&pi;, where U is a uniform [0, 1] random number, as pointed out by Devroye.  The algorithm follows.</p>
+<p>As an additional example of how partially-sampled random numbers can be useful, here we reimplement an example from Devroye&#39;s book <em>Non-Uniform Random Variate Generation</em> (Devroye 1986, pp. 128&ndash;129)<sup><a href="#Note16"><strong>(16)</strong></a></sup></sup>.  The following algorithm generates a random number from a distribution with the following cumulative distribution function: <code>1 - cos(pi*x/2).</code>  The random number will be in the interval [0, 1].  What is notable about this algorithm is that it&#39;s an arbitrary-precision algorithm that avoids floating-point arithmetic.  Note that the result is the same as applying acos(<em>U</em>)*2/&pi;, where <em>U</em> is a uniform [0, 1] random number, as pointed out by Devroye.  The algorithm follows.</p>
 
 <ol>
 <li>Call the <strong>kthsmallest</strong> algorithm with <code>n = 2</code> and <code>k = 2</code>, but without filling it with digits at the last step.  Let <em>ret</em> be the result.</li>
 <li>Set <em>m</em> to 1.</li>
 <li>Call the <strong>kthsmallest</strong> algorithm with <code>n = 2</code> and <code>k = 2</code>, but without filling it with digits at the last step.  Let <em>u</em> be the result.</li>
-<li>With probability 4/(4<em><em>m</em></em><em>m</em> + 2<em><em>m</em>), call the *</em>RandLess** algorithm with parameters <em>u</em> and <em>ret</em> in that order, and if that call returns <code>true</code>, call the <code>zero_or_one_pi_div_4</code> algorithm (which returns 1 with probability &pi;/4 and is implemented in <em>bernoulli.py</em>) twice, and if both of these calls return 1, add 1 to <em>m</em> and go to step 3.  (Here, we incorporate an erratum in the algorithm on page 129 of the book.  For <strong>RandLess</strong>, digit <em>i</em> of <em>u</em> or <em>ret</em> is sampled by choosing a digit uniformly at random and setting the item at position <em>i</em> to that digit; positions start at 0.)</li>
+<li>With probability 4/(4*<em>m</em>*<em>m</em> + 2*<em>m</em>), call the <strong>RandLess</strong> algorithm with parameters <em>u</em> and <em>ret</em> in that order, and if that call returns <code>true</code>, call the <code>zero_or_one_pi_div_4</code> algorithm (which returns 1 with probability &pi;/4 and is implemented in <em>bernoulli.py</em>) twice, and if both of these calls return 1, add 1 to <em>m</em> and go to step 3.  (Here, we incorporate an erratum in the algorithm on page 129 of the book.  For <strong>RandLess</strong>, digit <em>i</em> of <em>u</em> or <em>ret</em> is sampled by choosing a digit uniformly at random and setting the item at position <em>i</em> to that digit; positions start at 0.)</li>
 <li>If <em>m</em> is odd, fill <em>ret</em> with uniform random digits as necessary to give its fractional part the desired number of digits  (similarly to <strong>FillGeometricBag</strong>), and return <em>ret</em>.</li>
 <li>If <em>m</em> is even, go to step 1.</li>
 </ol>
