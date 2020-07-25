@@ -9,7 +9,7 @@
 <p>This short note shows a preprocessing algorithm to generate a random number in [0, 1] from a distribution whose density function&mdash;</p>
 
 <ul>
-<li>is everywhere continuous in [0, 1],</li>
+<li>is continuous in the interval [0, 1],</li>
 <li>is monotonically decreasing in [0, 1], and</li>
 <li>has an unbounded peak at 0.</li>
 </ul>
@@ -28,6 +28,8 @@
 <p>This algorithm is similar to the &quot;inversion-rejection&quot; algorithm mentioned in section 4.4 of chapter 7 of Devroye&#39;s <em>Non-Uniform Random Variate Generation</em> (1986)<sup><a href="#Note1"><strong>(1)</strong></a></sup>.  I was unaware of that algorithm at the time I started writing this article.  The difference here is that it assumes the whole distribution (including its density function and cumulative distribution function) is supported on the interval [0, 1], while the algorithm presented in this article doesn&#39;t make that assumption (e.g., the interval [0, 1] can cover only part of the density&#39;s support).</p>
 
 <p>By the way, this algorithm arose while trying to devise an algorithm that can generate an integer power of a uniform random number, with arbitrary precision, without actually calculating that power (a naïve calculation that is merely an approximation and usually introduces bias); for more information, see my other article on <a href="https://peteroupc.github.io/exporand.html"><strong>partially-sampled random numbers</strong></a>.  Although I haven&#39;t succeeded in that yet, I have in the meantime come up with the algorithm in this note, which may be of independent interest.</p>
+
+<p>In the case of powers of a uniform [0, 1] random number <em>X</em>, namely <em>X</em><sup><em>n</em></sup>, the ratio <em>p</em>/<em>t</em> in this algorithm has a very simple form, namely (1/2)<sup>1/<em>n</em></sup>, which is possible to simulate using a so-called <em>Bernoulli factory</em> algorithm without actually having to calculate this ratio.  Note that this formula is the same regardless of <em>i</em>.  This is found by taking the density function f(<em>x</em>) = <em>x</em><sup>1/<em>n</em></sup>/(<em>x</em> * <em>n</em>)</sup> and finding the appropriate <em>p</em>/<em>t</em> ratios by integrating <em>f</em> over the two intervals mentioned in step 2 of the algorithm.</p>
 
 <p><a id=Notes></a></p>
 
