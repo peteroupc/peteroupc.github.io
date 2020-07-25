@@ -12,6 +12,7 @@ Open-source articles on programming subjects.
 * [Pseudocode Conventions](./pseudocode.html)
 * [Random Number Generator Recommendations for Applications](./random.html)
 * [Random Number Generation and Sampling Methods](./randomfunc.html)
+* [How to Sample Unbounded Monotone Density Functions](./unbounded.html)
 * [More Random Number Sampling Methods](./randomnotes.html)
 * [Code Generator for Discrete Distributions](./autodist.html)
 * [The Most Common Topics Involving Randomization](./randomcommon.html)
