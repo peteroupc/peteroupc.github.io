@@ -25,54 +25,64 @@ This page shows [**Python code**](#Sampler_Code) for these samplers.
 - [**Contents**](#Contents)
 - [**About the Beta Distribution**](#About_the_Beta_Distribution)
 - [**About the Exponential Distribution**](#About_the_Exponential_Distribution)
-    - [**About Partially-Sampled Random Numbers**](#About_Partially_Sampled_Random_Numbers)
+- [**About Partially-Sampled Random Numbers**](#About_Partially_Sampled_Random_Numbers)
     - [**Uniform Partially-Sampled Random Numbers**](#Uniform_Partially_Sampled_Random_Numbers)
     - [**Exponential Partially-Sampled Random Numbers**](#Exponential_Partially_Sampled_Random_Numbers)
     - [**Other Distributions**](#Other_Distributions)
     - [**Properties**](#Properties)
     - [**Comparisons**](#Comparisons)
-- [**Arithmetic**](#Arithmetic)
+    - [**Arithmetic**](#Arithmetic)
 - [**Building Blocks**](#Building_Blocks)
-    - [**Algorithms for the Beta, Exponential, and Power-of-Uniform Distributions**](#Algorithms_for_the_Beta_Exponential_and_Power_of_Uniform_Distributions)
+- [**Algorithms for the Beta, Exponential, and Power-of-Uniform Distributions**](#Algorithms_for_the_Beta_Exponential_and_Power_of_Uniform_Distributions)
     - [**Beta Distribution**](#Beta_Distribution)
-- [**Exponential Distribution**](#Exponential_Distribution)
-- [**Power of Uniform**](#Power_of_Uniform)
-    - [**Sampler Code**](#Sampler_Code)
+    - [**Exponential Distribution**](#Exponential_Distribution)
+    - [**Power of Uniform**](#Power_of_Uniform)
+- [**Sampler Code**](#Sampler_Code)
     - [**Beta Sampler: Known Issues**](#Beta_Sampler_Known_Issues)
-- [**Exponential Sampler: Extension**](#Exponential_Sampler_Extension)
-    - [**Correctness Testing**](#Correctness_Testing)
+    - [**Exponential Sampler: Extension**](#Exponential_Sampler_Extension)
+- [**Correctness Testing**](#Correctness_Testing)
     - [**Beta Sampler**](#Beta_Sampler)
     - [**ExpRandFill**](#ExpRandFill)
-- [**ExpRandLess**](#ExpRandLess)
-    - [Accurate Simulation of Continuous Distributions on \[0, 1\]](#Accurate_Simulation_of_Continuous_Distributions_on_0_1)
-- [**An Example: The Continuous Bernoulli Distribution**](#An_Example_The_Continuous_Bernoulli_Distribution)
-    - [**Complexity**](#Complexity)
+    - [**ExpRandLess**](#ExpRandLess)
+- [Accurate Simulation of Continuous Distributions on \[0, 1\]](#Accurate_Simulation_of_Continuous_Distributions_on_0_1)
+    - [**An Example: The Continuous Bernoulli Distribution**](#An_Example_The_Continuous_Bernoulli_Distribution)
+- [**Complexity**](#Complexity)
     - [**General Principles**](#General_Principles)
-- [**Complexity of Specific Algorithms**](#Complexity_of_Specific_Algorithms)
+    - [**Complexity of Specific Algorithms**](#Complexity_of_Specific_Algorithms)
 - [**Application to Weighted Reservoir Sampling**](#Application_to_Weighted_Reservoir_Sampling)
 - [**Open Questions**](#Open_Questions)
 - [**Acknowledgments**](#Acknowledgments)
 - [**Notes**](#Notes)
-    - [**Appendix**](#Appendix)
+- [**Appendix**](#Appendix)
     - [**SymPy Formula for ZeroToOneExpMinus**](#SymPy_Formula_for_ZeroToOneExpMinus)
-- [**Another Example of an Arbitrary-Precision Sampler**](#Another_Example_of_an_Arbitrary_Precision_Sampler)
+    - [**Another Example of an Arbitrary-Precision Sampler**](#Another_Example_of_an_Arbitrary_Precision_Sampler)
+- [**License**](#License)
 
 <a id=About_the_Beta_Distribution></a>
 ## About the Beta Distribution
+
+The [**beta distribution**](https://en.wikipedia.org/wiki/Beta_distribution) is a bounded-domain probability distribution; its two parameters, `alpha` and `beta`, are both greater than 0 and describe the distribution's shape.  Depending on `alpha` and `beta`, the shape can be a smooth peak or a smooth valley.  The beta distribution can take on values in the interval [0, 1].  Any value in this interval (`x`) can occur with a probability proportional to&mdash;
+
+    pow(x, alpha - 1) * pow(1 - x, beta - 1).               (1)
+
+Although `alpha` and `beta` can each be greater than 0, the sampler presented in this document only works if both parameters are 1 or greater.
+
+<a id=About_the_Exponential_Distribution></a>
+## About the Exponential Distribution
 
 The _exponential distribution_ takes a parameter &lambda;.  Informally speaking, a random number that follows an exponential distribution is the number of units of time between one event and the next, and &lambda; is the expected average number of events per unit of time.  Usually, &lambda; is equal to 1.
 
 An exponential random number is commonly generated as follows: `-ln(1 - RNDU01()) / lamda`, where `RNDU01()` is a uniform random number in the interval \[0, 1).  (This particular formula is not robust, though, for reasons that are outside the scope of this document, but see (Pedersen 2018)<sup>[**(8)**](#Note8)</sup>.)  This page presents an alternative way to sample exponential random numbers.
 
-<a id=About_the_Exponential_Distribution></a>
-## About the Exponential Distribution
+<a id=About_Partially_Sampled_Random_Numbers></a>
+## About Partially-Sampled Random Numbers
 
 In this document, a _partially-sampled random number_ (PSRN) is a data structure that allows a random number that exactly follows a continuous distribution to be sampled digit by digit, with arbitrary precision, and without floating-point arithmetic (see "Properties" later in this section).  Informally, they represent incomplete real numbers whose contents are sampled only when necessary, but in a way that follows the distribution being sampled.
 
 This section specifies two kinds of PSRNs: uniform and exponential.
 
-<a id=About_Partially_Sampled_Random_Numbers></a>
-### About Partially-Sampled Random Numbers
+<a id=Uniform_Partially_Sampled_Random_Numbers></a>
+### Uniform Partially-Sampled Random Numbers
 
 The most trivial example of a PSRN is that of the uniform distribution in [0, 1].  Such a random number can be implemented as a list of items, where each item is either a digit (such as zero or one for binary), or a placeholder value (which represents an unsampled digit), and represents a list of the digits after the radix point, from left to right, of a real number in the interval [0, 1], that is, the number's _digit expansion_ (e.g., _binary expansion_ in the case of binary digits).  This kind of number is referred to&mdash;
 
@@ -83,15 +93,15 @@ Each additional digit is sampled simply by setting it to an independent unbiased
 
 Note that the _u-rand_ concept by Karney only contemplates sampling digits from left to right without any gaps, whereas the geometric bag concept is more general in this respect.
 
-<a id=Uniform_Partially_Sampled_Random_Numbers></a>
-### Uniform Partially-Sampled Random Numbers
+<a id=Exponential_Partially_Sampled_Random_Numbers></a>
+### Exponential Partially-Sampled Random Numbers
 
 In this document, a exponential PSRN (or _e-rand_, named similarly to Karney's "u-rands" for partially-sampled uniform random numbers (Karney 2014)<sup>[**(1)**](#Note1)</sup>) samples each bit that, when combined with the existing bits, results in an exponentially-distributed random number of the given rate.  Also, because `-ln(1 - RNDU01())` is exponentially distributed, e-rands can also represent the natural logarithm of a partially-sampled uniform random number in (0, 1].  The difference here is that additional bits are sampled not as unbiased random bits, but rather as bits with a vanishing bias.
 
 Algorithms for sampling e-rands are given in the section "Algorithms for the Beta and Exponential Distributions".
 
-<a id=Exponential_Partially_Sampled_Random_Numbers></a>
-### Exponential Partially-Sampled Random Numbers
+<a id=Other_Distributions></a>
+### Other Distributions
 
 Partially-sampled numbers of other distributions can be implemented via rejection from the uniform distribution. Examples include the following:
 
@@ -103,8 +113,8 @@ For these distributions (and others that are continuous almost everywhere and bo
 
 Partially-sampled numbers could also be implemented via rejection from the exponential distribution, although no concrete examples are presented here.
 
-<a id=Other_Distributions></a>
-### Other Distributions
+<a id=Properties></a>
+### Properties
 
 An algorithm that samples from a continuous distribution using PSRNs has the following properties:
 
@@ -114,8 +124,8 @@ An algorithm that samples from a continuous distribution using PSRNs has the fol
 
 The concept of _prefix distributions_ (Oberhoff 2018)<sup>[**(10)**](#Note10)</sup> comes close to PSRNs, but numbers sampled this way are not PSRNs in the sense used here.  This is because the method requires calculating minimums of probabilities and, in practice, requires the use of floating-point arithmetic in most cases (see property 1 above).  Moreover, the method samples from a discrete distribution whose progression depends on the value of previously sampled bits, not just on the position of those bits as with the uniform and exponential distributions (see also (Thomas and Luk 2008)<sup>[**(4)**](#Note4)</sup>).
 
-<a id=Properties></a>
-### Properties
+<a id=Comparisons></a>
+### Comparisons
 
 Two PSRNs, each of a different distribution but storing digits of the same base (radix), can be exactly compared to each other using an algorithm similar to the following. The **RandLess** algorithm compares two PSRNs, **a** and **b** (and samples additional bits from them as necessary) and returns `true` if **a** turns out to be less than **b**, or `false` otherwise (see also (Karney 2014)<sup>[**(1)**](#Note1)</sup>)).
 
@@ -128,8 +138,8 @@ Two PSRNs, each of a different distribution but storing digits of the same base 
 
 **URandLess** is a version of **RandLess** that involves two uniform PSRNs.  The algorithm for **URandLess**, digits samples digit _i_ in step 4 by setting the digit at position _i_ to a digit chosen uniformly at random.
 
-<a id=Comparisons></a>
-### Comparisons
+<a id=Arithmetic></a>
+### Arithmetic
 
 Arithmetic between two PSRNs is not exactly trivial.  The naïve approach of adding, multiplying or dividing two PSRNs _A_ and _B_ (see also (Brassard et al., 2019)<sup>[**(11)**](#Note11)</sup>) may result in a partially-sampled number _C_ that is not close to the ideal distribution once additional digits of _C_ are sampled uniformly at random (see properties 2 and 3 above).
 
@@ -147,8 +157,8 @@ There is previous work that relates continuous distributions to digit probabilit
 
 Finally, arithmetic with partially-sampled numbers may be possible if the result of the arithmetic is distributed with a known density function (e.g., one found via Rohatgi's formula (Rohatgi 1976)<sup>[**(14)**](#Note14)</sup>), allowing for an algorithm that implements rejection from the uniform or exponential distribution.  However, that density function may have an unbounded peak, thus ruling out rejection sampling in practice.  For example, if _X_ is a uniform PSRN, then _X_<sup>3</sup> is distributed as `(1/3) / pow(X, 2/3)`, which has an unbounded peak at 0.  While this rules out plain rejection samplers for _X_<sup>3</sup> in practice, it's still possible to sample powers of uniforms using PSRNs, which will be described later in this article.
 
-<a id=Arithmetic></a>
-## Arithmetic
+<a id=Building_Blocks></a>
+## Building Blocks
 
 This document relies on several building blocks described in this section.
 
@@ -220,13 +230,13 @@ The **LogisticExp** algorithm is a special case of the _logistic Bernoulli facto
 2. Call **ZeroOrOneExpMinus** with _x_ = _x_ and _y_ = _y_*2<sup>_prec_</sup>.  If the call returns 1, return 1.
 3. Go to step 1.
 
-<a id=Building_Blocks></a>
-## Building Blocks
+<a id=Algorithms_for_the_Beta_Exponential_and_Power_of_Uniform_Distributions></a>
+## Algorithms for the Beta, Exponential, and Power-of-Uniform Distributions
 
 &nbsp;
 
-<a id=Algorithms_for_the_Beta_Exponential_and_Power_of_Uniform_Distributions></a>
-### Algorithms for the Beta, Exponential, and Power-of-Uniform Distributions
+<a id=Beta_Distribution></a>
+### Beta Distribution
 
 All the building blocks are now in place to describe a _new_ algorithm to sample the beta distribution, described as follows.  It takes three parameters: _a_ >= 1 and _b_ >= 1 are the parameters to the beta distribution, and _p_ > 0 is a precision parameter.
 
@@ -240,8 +250,8 @@ All the building blocks are now in place to describe a _new_ algorithm to sample
 
 Note that if _a_ = 1/_x_ and _b_ = 1, the result is the same as a uniform random number raised to the power of _x_.  Any beta(1/_x_, 1) random number has this property for any _x_ > 0, but for the beta sampler presented here, this works only if _x_ is in the interval (0, 1], due to the restriction of _a_ and _b_ to values 1 or greater.
 
-<a id=Beta_Distribution></a>
-### Beta Distribution
+<a id=Exponential_Distribution></a>
+### Exponential Distribution
 
 We also have the necessary building blocks to describe how to sample e-rands.  As implemented in the Python code, an e-rand consists of five numbers: the first is a multiple of 1/(2<sup>_x_</sup>), the second is _x_, the third is the integer part (initially &minus;1 to indicate the integer part wasn't sampled yet), and the fourth and fifth are the &lambda; parameter's numerator and denominator, respectively.
 
@@ -263,8 +273,8 @@ The **ExpRandFill** algorithm takes an e-rand **a** and generates a number whose
 3. While **a**'s fractional part has fewer than `p` bits, call **LogisticExp** with _x_ = &lambda;'s numerator, _y_ = &lambda;'s denominator, and _prec_ = _i_, where _i_ is 1 plus the number of bits in **a**'s fractional part, and append the result to that fractional part's binary expansion.
 4. Return the number represented by **a**.
 
-<a id=Exponential_Distribution></a>
-## Exponential Distribution
+<a id=Power_of_Uniform></a>
+### Power of Uniform
 
 The power-of-uniform sampler returns _U_<sup>_power_</sup>, where _U_ is a uniform random number in the interval \[0, 1\] and _power_ is greater than 1, but unlike the naïve algorithm it supports an arbitrary precision, uses only random bits, and avoids floating-point arithmetic.
 
@@ -279,15 +289,15 @@ The power-of-uniform algorithm is as follows:
 
 1. Set _i_ to 1.
 2. Call the `zero_or_one_power_ratio` algorithm (which returns 1 with probability (_a_/_b_)<sup>_c_/_d_</sup>)) with parameters `a = 1, b = 2, c = 1, d = power`.  If it returns 1, add 1 to _i_ and repeat this step.
-3. As a result, we will now sample a number in the interval \[2<sup>&minus;_i_</sup>, 2<sup>&minus;(_i_ &minus; 1)</sup>).  We now have to generate a uniform random number _x_ in this interval, then accept it with probability _x_<sup>1 &minus; (1 / _power_)</sup> / (_power_ * _i_); the _i_ in this formula is to help avoid very low probabilities for sampling purposes.  The following steps will achieve this without having to use floating-point arithmetic.
+3. As a result, we will now sample a number in the interval \[2<sup>&minus;_i_</sup>, 2<sup>&minus;(_i_ &minus; 1)</sup>).  We now have to generate a uniform random number _x_ in this interval, then accept it with probability (1 / (_power_ * _i_)) / _x_<sup>1 &minus; 1 / _power_</sup>; the _i_ in this formula is to help avoid very low probabilities for sampling purposes.  The following steps will achieve this without having to use floating-point arithmetic.
 4. Create an empty list to serve as a geometric bag, then create a Bernoulli factory algorithm that uses **SampleGeometricBag** on that geometric bag.
 5. Create a **PowerBernoulliFactory** algorithm that uses the **SampleGeometricBag** Bernoulli factory and the parameter 1 &minus; 1 / _power_.
 6. Append _i_ &minus; 1 zero-digits followed by a single one-digit to the geometric bag.  This will allow us to sample a uniform random number limited to the interval mentioned earlier.
 7. Call the `eps_div` Bernoulli factory (which returns 1 with probability _a_/_b_) using the **PowerBernoulliFactory** mentioned in step 5 (which represents _b_) and the parameter 1/(_power_ * _i_) (which represents _a_).  If the call returns 1, the geometric bag was accepted, so either return the bag as is or fill the unsampled digits of the bag with uniform random digits as necessary to give the number an _n_-digit fractional part (similarly to **FillGeometricBag** above), where _n_ is a precision parameter, then return the resulting number.
 8. If the call to `eps_div` returns 0, remove all but the first _i_ digits from the geometric bag, then go to step 7.
 
-<a id=Power_of_Uniform></a>
-## Power of Uniform
+<a id=Sampler_Code></a>
+## Sampler Code
 
 The following Python code implements the beta sampler just described.  It relies on two Python modules I wrote:
 
@@ -544,27 +554,27 @@ def power_of_uniform(rg, bern, power, precision=53):
       for k in range(i-1):
          bag.append(0)
       bag.append(1)
-      # Simulate x**(1-1/power) * (1/(power*mul))
+      # Simulate epsdividend / x**(1-1/power)
       if bern.eps_div(bf, epsdividend) == 1:
           ret=bern.fill_geometric_bag(bag, precision)
           return ret
 ```
 
-<a id=Sampler_Code></a>
-### Sampler Code
+<a id=Beta_Sampler_Known_Issues></a>
+### Beta Sampler: Known Issues
 
 In the beta sampler, the bigger `alpha` or `beta` is, the smaller the area of acceptance becomes (and the more likely random numbers get rejected by this method, raising its run-time).  This is because `max(u^(alpha-1)*(1-u)^(beta-1))`, the peak of the density, approaches 0 as the parameters get bigger.  One idea to solve this issue is to expand the density so that the acceptance rate increases.  The following was tried:
 
 - Estimate an upper bound for the peak of the density `peak`, given `alpha` and `beta`.
 - Calculate a largest factor `c` such that `peak * c = m < 0.5`.
-- Use Huber's `linear_lowprob` Bernoulli factory (implemented in _bernoulli.py_) (Huber 2016)<sup>[**(21)**](#Note21)</sup>, taking the values found for `c` and `m`.  Testing shows that the choice of `m` is crucial for performance.
+- Use Huber's `linear_lowprob` Bernoulli factory (implemented in _bernoulli.py_) (Huber 2016)<sup>[**(20)**](#Note20)</sup>, taking the values found for `c` and `m`.  Testing shows that the choice of `m` is crucial for performance.
 
 But doing so apparently worsened the performance (in terms of random bits used) compared to the simple rejection approach.
 
-<a id=Beta_Sampler_Known_Issues></a>
-### Beta Sampler: Known Issues
+<a id=Exponential_Sampler_Extension></a>
+### Exponential Sampler: Extension
 
-The code above supports rational-valued &lambda; parameters.  It can be extended to support any real-valued &lambda; parameter greater than 0, as long as &lambda; can be rewritten as the sum of one or more components whose fractional parts can each be simulated by a Bernoulli factory algorithm that outputs heads with probability equal to that fractional part.<sup>[**(22)**](#Note22)</sup>.
+The code above supports rational-valued &lambda; parameters.  It can be extended to support any real-valued &lambda; parameter greater than 0, as long as &lambda; can be rewritten as the sum of one or more components whose fractional parts can each be simulated by a Bernoulli factory algorithm that outputs heads with probability equal to that fractional part.<sup>[**(21)**](#Note21)</sup>.
 
 More specifically:
 
@@ -575,7 +585,7 @@ The code above can then be modified as follows:
 
 - `exprandnew` is modified so that instead of taking `lamdanum` and `lamdaden`, it takes a list of the components described above.  Each component is stored as _LI_\[_i_\] and an algorithm that simulates _LF_\[_i_\].
 
-- `zero_or_one_exp_minus(a, b)` is replaced with a Bernoulli factory, described below, that takes a component list as described above and outputs heads with probability exp(&minus;&lambda;).  It extends the **ExpMinus Bernoulli factory** as described, for example, in (Łatuszyński et al. 2011)<sup>[**(23)**](#Note23)</sup> or (Flajolet et al. 2010)<sup>[**(7)**](#Note7)</sup>. Here, the probability `exp(-x/y)` is rewritten as `exp(-LI[0]) * exp(-LF[0]) * ... * exp(-LI[n-1]) * exp(-LF[n-1])`.
+- `zero_or_one_exp_minus(a, b)` is replaced with a Bernoulli factory, described below, that takes a component list as described above and outputs heads with probability exp(&minus;&lambda;).  It extends the **ExpMinus Bernoulli factory** as described, for example, in (Łatuszyński et al. 2011)<sup>[**(22)**](#Note22)</sup> or (Flajolet et al. 2010)<sup>[**(7)**](#Note7)</sup>. Here, the probability `exp(-x/y)` is rewritten as `exp(-LI[0]) * exp(-LF[0]) * ... * exp(-LI[n-1]) * exp(-LF[n-1])`.
     1. For each component _LC_\[_i_\], call **ZeroOrOneExpMinus** with _x_ = _LI_\[_i_\] and _y_ = 1, and call the **ExpMinus Bernoulli factory** with the Bernoulli generator that simulates _LF_\[_i_\].  Return 0 if any of these calls returns 0. (See also (Canonne et al. 2020)<sup>[**(17)**](#Note17)</sup>.)
     2. Return 1.
 
@@ -586,18 +596,20 @@ The code above can then be modified as follows:
     4. For each component _LC_\[_i_\], call the **ExpMinus Bernoulli factory** with the Bernoulli generator for that component described in step 1.  Go to step 2 if any of these calls returns 0.
     5. Return 1.
 
-<a id=Exponential_Sampler_Extension></a>
-## Exponential Sampler: Extension
-
 <a id=Correctness_Testing></a>
-### Correctness Testing
+## Correctness Testing
+
+&nbsp;
+
+<a id=Beta_Sampler></a>
+### Beta Sampler
 
 To test the correctness of the beta sampler presented in this document, the Kolmogorov&ndash;Smirnov test was applied with various values of `alpha` and `beta` and the default precision of 53, using SciPy's `kstest` method.  The code for the test is very simple: `kst = scipy.stats.kstest(ksample, lambda x: scipy.stats.beta.cdf(x, alpha, beta))`, where `ksample` is a sample of random numbers generated using the sampler above.  Note that SciPy uses a two-sided Kolmogorov&ndash;Smirnov test by default.
 
 See the results of the [**correctness testing**](https://peteroupc.github.io/betadistresults.html).   For each pair of parameters, five samples with 50,000 numbers per sample were taken, and results show the lowest and highest Kolmogorov&ndash;Smirnov statistics and p-values achieved for the five samples.  Note that a p-value extremely close to 0 or 1 strongly indicates that the samples do not come from the corresponding beta distribution.
 
-<a id=Beta_Sampler></a>
-### Beta Sampler
+<a id=ExpRandFill></a>
+### ExpRandFill
 
 To test the correctness of the `exprandfill` method (which implements the **ExpRandFill** algorithm), the Kolmogorov&ndash;Smirnov test was applied with various values of &lambda; and the default precision of 53, using SciPy's `kstest` method.  The code for the test is very simple: `kst = scipy.stats.kstest(ksample, lambda x: scipy.stats.expon.cdf(x, scale=1/lamda))`, where `ksample` is a sample of random numbers generated using the `exprand` method above.  Note that SciPy uses a two-sided Kolmogorov&ndash;Smirnov test by default.
 
@@ -617,8 +629,8 @@ The table below shows the results of the correctness testing. For each parameter
 | 5 | 0.00256-0.00546 | 0.10130-0.89935 |
 | 10 | 0.00279-0.00528 | 0.12358-0.82974 |
 
-<a id=ExpRandFill></a>
-### ExpRandFill
+<a id=ExpRandLess></a>
+### ExpRandLess
 
 To test the correctness of `exprandless`, a two-independent-sample T-test was applied to scores involving e-rands and scores involving the Python `random.expovariate` method.  Specifically, the score is calculated as the number of times one exponential number compares as less than another; for the same &lambda; this event should ideally be as likely as the event that it compares as greater.  The Python code that follows the table calculates this score for e-rands and `expovariate`.   Even here, the code for the test is very simple: `kst = scipy.stats.ttest_ind(exppyscores, exprandscores)`, where `exppyscores` and `exprandscores` are each lists of 20 results from `exppyscore` or `exprandscore`, respectively, and the results contained in `exppyscores` and `exprandscores` were generated independently of each other.
 
@@ -662,8 +674,8 @@ def exprandscore(ln,ld,ln2,ld2):
               else 0 for i in range(1000))
 ```
 
-<a id=ExpRandLess></a>
-## ExpRandLess
+<a id=Accurate_Simulation_of_Continuous_Distributions_on_0_1></a>
+## Accurate Simulation of Continuous Distributions on [0, 1]
 
 The beta sampler in this document shows one case of a general approach to simulating a wide class of continuous distributions supported on \[0, 1\], thanks to Bernoulli factories.  This general approach can sample a number that follows one of these distributions, using the algorithm below.  The algorithm allows any arbitrary base (or radix) _b_ (such as 2 for binary).
 
@@ -690,10 +702,10 @@ Note that here, the probability function _f&prime;_ must meet the requirements o
 
 On the other hand, modifying this algorithm to produce random numbers in any other interval is non-trivial, since it often requires relating digit probabilities to some kind of formula (see "About Partially-Sampled Random Numbers", above).
 
-<a id=Accurate_Simulation_of_Continuous_Distributions_on_0_1></a>
-### Accurate Simulation of Continuous Distributions on [0, 1]
+<a id=An_Example_The_Continuous_Bernoulli_Distribution></a>
+### An Example: The Continuous Bernoulli Distribution
 
-The continuous Bernoulli distribution (Loaiza-Ganem and Cunningham 2019)<sup>[**(24)**](#Note24)</sup> was designed to considerably improve performance of variational autoencoders (a machine learning model) in modeling continuous data that takes values in the interval [0, 1], including "almost-binary" image data.
+The continuous Bernoulli distribution (Loaiza-Ganem and Cunningham 2019)<sup>[**(23)**](#Note23)</sup> was designed to considerably improve performance of variational autoencoders (a machine learning model) in modeling continuous data that takes values in the interval [0, 1], including "almost-binary" image data.
 
 The continous Bernoulli distribution takes one parameter `lamda` (a number in [0, 1]), and takes on values in the interval [0, 1] with a probability proportional to&mdash;
 
@@ -761,18 +773,18 @@ The Python code that samples the continuous Bernoulli distribution follows.
                  return ret
            acc+=1
 
-<a id=An_Example_The_Continuous_Bernoulli_Distribution></a>
-## An Example: The Continuous Bernoulli Distribution
+<a id=Complexity></a>
+## Complexity
 
 The _bit complexity_ of an algorithm that generates random numbers is measured as the number of random bits that algorithm uses on average.
 
-<a id=Complexity></a>
-### Complexity
+<a id=General_Principles></a>
+### General Principles
 
 Existing work shows how to calculate the bit complexity for any distribution of random numbers:
 
 - For a 1-dimensional continuous distribution, the bit complexity is bounded from below by `DE + prec - 1` random bits, where `DE` is the differential entropy for the distribution and _prec_ is the number of bits in the random number's fractional part (Devroye and Gravel 2015)<sup>[**(3)**](#Note3)</sup>.
-- For a discrete distribution (a distribution of random integers with separate probabilities of occurring), the bit complexity is bounded from below by the binary entropies of all the probabilities involved, summed together (Knuth and Yao 1976)<sup>[**(25)**](#Note25)</sup>.  (For a given probability _p_, the binary entropy is `p*log2(1/p)`.)  An optimal algorithm will come within 2 bits of this lower bound on average.
+- For a discrete distribution (a distribution of random integers with separate probabilities of occurring), the bit complexity is bounded from below by the binary entropies of all the probabilities involved, summed together (Knuth and Yao 1976)<sup>[**(24)**](#Note24)</sup>.  (For a given probability _p_, the binary entropy is `p*log2(1/p)`.)  An optimal algorithm will come within 2 bits of this lower bound on average.
 
 For example, in the case of the exponential distribution, `DE` is log2(exp(1)/&lambda;), so the minimum bit complexity for this distribution is log2(exp(1)/&lambda;) + _prec_ &minus; 1, so that if _prec_ = 20, this minimum is about 20.443 bits when &lambda; = 1, decreases when &lambda; goes up, and increases when &lambda; goes down.  In the case of any other continuous distribution, `DE` is the integral of `f(x) * log2(1/f(x))` over all valid values `x`, where `f` is the distribution's density function.
 
@@ -783,12 +795,12 @@ In general, if an algorithm calls other algorithms that generate random numbers,
 - the expected number of calls to each of those other algorithms, times
 - the bit complexity for each such call.
 
-<a id=General_Principles></a>
-### General Principles
+<a id=Complexity_of_Specific_Algorithms></a>
+### Complexity of Specific Algorithms
 
 The beta and exponential samplers given here will generally use many more bits on average than the lower bounds on bit complexity, especially since they generate a PSRN one digit at a time.
 
-The `zero_or_one` method generally uses 2 random bits on average, due to its nature as a Bernoulli trial involving random bits, see also (Lumbroso 2013, Appendix B)<sup>[**(26)**](#Note26)</sup>.  However, it uses no random bits if both its parameters are the same.
+The `zero_or_one` method generally uses 2 random bits on average, due to its nature as a Bernoulli trial involving random bits, see also (Lumbroso 2013, Appendix B)<sup>[**(25)**](#Note25)</sup>.  However, it uses no random bits if both its parameters are the same.
 
 For **SampleGeometricBag** with base 2, the bit complexity has two components.
 
@@ -823,8 +835,8 @@ and the optimal lower bound is found by taking the binary entropy of each probab
 
 If &gamma; is a non-integer greater than 1, the bit complexity is the sum of the bit complexities for its integer part and for its fractional part.
 
-<a id=Complexity_of_Specific_Algorithms></a>
-## Complexity of Specific Algorithms
+<a id=Application_to_Weighted_Reservoir_Sampling></a>
+## Application to Weighted Reservoir Sampling
 
 [**Weighted reservoir sampling**](https://peteroupc.github.io/randomfunc.html#Weighted_Choice_Without_Replacement_List_of_Unknown_Size) (choosing an item at random from a list of unknown size) is often implemented by&mdash;
 
@@ -832,10 +844,10 @@ If &gamma; is a non-integer greater than 1, the bit complexity is the sum of the
 - giving each item an exponential random number with &lambda; = _w_, call it a key, and
 - choosing the item with the smallest key
 
-(see also (Efraimidis 2015)<sup>[**(27)**](#Note27)</sup>). However, using fully-sampled exponential random numbers as keys (such as the naïve idiom `-ln(1-RNDU01())/w` in common floating-point arithmetic) can lead to inexact sampling, since the keys have a limited precision, it's possible for multiple items to have the same random key (which can make sampling those items depend on their order rather than on randomness), and the maximum weight is unknown.  Partially-sampled e-rands, as given in this document, eliminate the problem of inexact sampling.  This is notably because the `exprandless` method returns one of only two answers&mdash;either "less" or "greater"&mdash;and samples from both e-rands as necessary so that they will differ from each other by the end of the operation.  (This is not a problem because randomly generated real numbers are expected to differ from each other almost surely.) Another reason is that partially-sampled e-rands have potentially arbitrary precision.
+(see also (Efraimidis 2015)<sup>[**(26)**](#Note26)</sup>). However, using fully-sampled exponential random numbers as keys (such as the naïve idiom `-ln(1-RNDU01())/w` in common floating-point arithmetic) can lead to inexact sampling, since the keys have a limited precision, it's possible for multiple items to have the same random key (which can make sampling those items depend on their order rather than on randomness), and the maximum weight is unknown.  Partially-sampled e-rands, as given in this document, eliminate the problem of inexact sampling.  This is notably because the `exprandless` method returns one of only two answers&mdash;either "less" or "greater"&mdash;and samples from both e-rands as necessary so that they will differ from each other by the end of the operation.  (This is not a problem because randomly generated real numbers are expected to differ from each other almost surely.) Another reason is that partially-sampled e-rands have potentially arbitrary precision.
 
-<a id=Application_to_Weighted_Reservoir_Sampling></a>
-## Application to Weighted Reservoir Sampling
+<a id=Open_Questions></a>
+## Open Questions
 
 There are some open questions on PSRNs:
 
@@ -843,15 +855,15 @@ There are some open questions on PSRNs:
 2. Are there constructions for PSRNs other than for cases given earlier in this document?
 3. What are exact formulas for the digit probabilities when arithmetic is carried out between two PSRNs (such as addition, multiplication, division, and powering)?
 
-<a id=Open_Questions></a>
-## Open Questions
-
-I acknowledge Claude Gravel who reviewed a previous version of this article.
-
 <a id=Acknowledgments></a>
 ## Acknowledgments
 
-<small><small><sup id=Note1>(1)</sup> Karney, C.F.F., "[**Sampling exactly from the normal distribution**](https://arxiv.org/abs/1303.6257v2)", arXiv:1303.6257v2  [physics.comp-ph], 2014.</small>
+I acknowledge Claude Gravel who reviewed a previous version of this article.
+
+<a id=Notes></a>
+## Notes
+
+<small><sup id=Note1>(1)</sup> Karney, C.F.F., "[**Sampling exactly from the normal distribution**](https://arxiv.org/abs/1303.6257v2)", arXiv:1303.6257v2  [physics.comp-ph], 2014.</small>
 
 <small><sup id=Note2>(2)</sup> Philippe Flajolet, Nasser Saheb. The complexity of generating an exponentially distributed variate. [Research Report] RR-0159, INRIA. 1982. inria-00076400.</small>
 
@@ -891,25 +903,23 @@ I acknowledge Claude Gravel who reviewed a previous version of this article.
 
 <small><sup id=Note20>(20)</sup> Huber, M., "[**Optimal linear Bernoulli factories for small mean problems**](https://arxiv.org/abs/1507.00843v2)", arXiv:1507.00843v2 [math.PR], 2016.</small>
 
-<small><sup id=Note21>(21)</sup> Huber, M., "[**Optimal linear Bernoulli factories for small mean problems**](https://arxiv.org/abs/1507.00843v2)", arXiv:1507.00843v2 [math.PR], 2016</small>
+<small><sup id=Note21>(21)</sup> In fact, thanks to the "geometric bag" technique of Flajolet et al. (2010), that fractional part can even be a uniform random number in [0, 1] whose contents are built up digit by digit.</small>
 
-<small><sup id=Note22>(22)</sup> In fact, thanks to the "geometric bag" technique of Flajolet et al. (2010), that fractional part can even be a uniform random number in [0, 1] whose contents are built up digit by digit.</small>
+<small><sup id=Note22>(22)</sup> Łatuszyński, K., Kosmidis, I.,  Papaspiliopoulos, O., Roberts, G.O., "Simulating events of unknown probabilities via reverse time martingales", 2011.</small>
 
-<small><sup id=Note23>(23)</sup> Łatuszyński, K., Kosmidis, I.,  Papaspiliopoulos, O., Roberts, G.O., "Simulating events of unknown probabilities via reverse time martingales", 2011.</small>
+<small><sup id=Note23>(23)</sup> Loaiza-Ganem, G., Cunningham, J.P., "[**The continuous Bernoulli: fixing a pervasive error in variational autoencoders**](https://arxiv.org/abs/1907.06845v5)", arXiv:1907.06845v5  [stat.ML], 2019.</small>
 
-<small><sup id=Note24>(24)</sup> Loaiza-Ganem, G., Cunningham, J.P., "[**The continuous Bernoulli: fixing a pervasive error in variational autoencoders**](https://arxiv.org/abs/1907.06845v5)", arXiv:1907.06845v5  [stat.ML], 2019.</small>
+<small><sup id=Note24>(24)</sup> Knuth, Donald E. and Andrew Chi-Chih Yao. "The complexity of nonuniform random number generation", in _Algorithms and Complexity: New Directions and Recent Results_, 1976.</small>
 
-<small><sup id=Note25>(25)</sup> Knuth, Donald E. and Andrew Chi-Chih Yao. "The complexity of nonuniform random number generation", in _Algorithms and Complexity: New Directions and Recent Results_, 1976.</small>
+<small><sup id=Note25>(25)</sup> Lumbroso, J., "[**Optimal Discrete Uniform Generation from Coin Flips, and Applications**](https://arxiv.org/abs/1304.1916)", arXiv:1304.1916 [cs.DS].</small>
 
-<small><sup id=Note26>(26)</sup> Lumbroso, J., "[**Optimal Discrete Uniform Generation from Coin Flips, and Applications**](https://arxiv.org/abs/1304.1916)", arXiv:1304.1916 [cs.DS].</small>
-
-<small><sup id=Note27>(27)</sup> Efraimidis, P. "[**Weighted Random Sampling over Data Streams**](https://arxiv.org/abs/1012.0256v2)", arXiv:1012.0256v2 [cs.DS], 2015.</small>
-
-<a id=Notes></a>
-## Notes
+<small><sup id=Note26>(26)</sup> Efraimidis, P. "[**Weighted Random Sampling over Data Streams**](https://arxiv.org/abs/1012.0256v2)", arXiv:1012.0256v2 [cs.DS], 2015.</small>
 
 <a id=Appendix></a>
-### Appendix
+## Appendix
+
+<a id=SymPy_Formula_for_ZeroToOneExpMinus></a>
+### SymPy Formula for ZeroToOneExpMinus
 
 The following Python code uses SymPy to plot the bit complexity lower bound for **ZeroToOneExpMinus** when &gamma; is 1 or less:
 
@@ -928,8 +938,8 @@ def expminusformula():
 plot(expminusformula(), xlim=(0,1), ylim=(0,2))
 ```
 
-<a id=SymPy_Formula_for_ZeroToOneExpMinus></a>
-### SymPy Formula for ZeroToOneExpMinus
+<a id=Another_Example_of_an_Arbitrary_Precision_Sampler></a>
+### Another Example of an Arbitrary-Precision Sampler
 
 As an additional example of how PSRNs can be useful, here we reimplement an example from Devroye's book _Non-Uniform Random Variate Generation_ (Devroye 1986, pp. 128&ndash;129)<sup>[**(16)**](#Note16)</sup></sup>.  The following algorithm generates a random number from a distribution with the following cumulative distribution function: `1 - cos(pi*x/2).`  The random number will be in the interval [0, 1].  What is notable about this algorithm is that it's an arbitrary-precision algorithm that avoids floating-point arithmetic.  Note that the result is the same as applying acos(_U_)*2/&pi;, where _U_ is a uniform \[0, 1\] random number, as pointed out by Devroye.  The algorithm follows.
 
@@ -960,7 +970,7 @@ def example_4_2_1(rg, bern, precision=53):
           else: break
 ```
 
-<a id=Another_Example_of_an_Arbitrary_Precision_Sampler></a>
-## Another Example of an Arbitrary-Precision Sampler
+<a id=License></a>
+## License
 
 Any copyright to this page is released to the Public Domain.  In case this is not possible, this page is also licensed under [**Creative Commons Zero**](https://creativecommons.org/publicdomain/zero/1.0/).
