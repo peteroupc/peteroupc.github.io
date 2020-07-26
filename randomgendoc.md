@@ -1687,6 +1687,8 @@ CLASSES
      |      Exp-minus Bernoulli factory: B(p) -> B(exp(-p)) (Flajolet et al. 2010).
      |      - f: Function that returns 1 if heads and 0 if tails.
      |
+     |  fill_geometric_bag(self, bag, precision)
+     |
      |  geometric_bag(self, u)
      |      Bernoulli factory for a uniformly-distributed random number in (0, 1)
      |      (Flajolet et al. 2010).

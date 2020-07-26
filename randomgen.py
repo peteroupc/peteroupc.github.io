@@ -1956,8 +1956,8 @@ Returns 'list'. """
 
     def _zero_or_one_power_frac(self, px, py, nx, ny):
         # Generates a random number, namely 1 with
-        # probability (px/py)^(ax/ay) (where ax/ay is in (0, 1)),
-        # and 1 otherwise.  Returns 1 if ax/ay is 0.  Reference:
+        # probability (px/py)^(nx/ay) (where nx/ny is in (0, 1)),
+        # and 1 otherwise.  Returns 1 if nx/ny is 0.  Reference:
         # Mendo, Luis. "An asymptotically optimal Bernoulli
         # factory for certain functions that can be expressed
         # as power series." Stochastic Processes and their
@@ -2010,7 +2010,7 @@ Returns 'list'. """
                 if self.zero_or_one(px, py) == 0:
                     return 0
             return 1
-        return self._zero_or_one_power_frac(nx, ny)
+        return self._zero_or_one_power_frac(px, py, nx, ny)
 
     def zero_or_one_power(self, px, py, n):
         """ Generates 1 with probability (px/py)^n (where n can be positive, negative, or zero); 0 otherwise. """

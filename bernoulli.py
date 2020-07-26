@@ -143,11 +143,11 @@ class Bernoulli:
                 raise ValueError
             if a[1] <= index:
                 a[1] += 1
-                a[0] = self.rndint(1) | (a[0] << 1)
+                a[0] = self.r.randint(0, 1) | (a[0] << 1)
             # Fill with next bit in b's uniform number
             if b[1] <= index:
                 b[1] += 1
-                b[0] = self.rndint(1) | (b[0] << 1)
+                b[0] = self.r.randint(0, 1) | (b[0] << 1)
             aa = (a[0] >> (a[1] - 1 - index)) & 1
             bb = (b[0] >> (b[1] - 1 - index)) & 1
             if aa < bb:
@@ -202,6 +202,21 @@ class Bernoulli:
                 i = i + 1
             if success:
                 return 0
+
+    def fill_geometric_bag(self, bag, precision):
+        ret = 0
+        lb = min(len(bag), precision)
+        for i in range(lb):
+            if i >= len(bag) or bag[i] == None:
+                ret = (ret << 1) | self.randbit()
+            else:
+                ret = (ret << 1) | bag[i]
+        if len(bag) < precision:
+            diff = precision - len(bag)
+            ret = (ret << diff) | self.r.randint(0, (1 << diff) - 1)
+        # Now we have a number that is a multiple of
+        # 2^-precision.
+        return ret / (1 << precision)
 
     def geometric_bag(self, u):
         """ Bernoulli factory for a uniformly-distributed random number in (0, 1)
@@ -551,8 +566,8 @@ class Bernoulli:
 
     def _zero_or_one_power_frac(self, px, py, nx, ny):
         # Generates a random number, namely 1 with
-        # probability (px/py)^(ax/ay) (where ax/ay is in (0, 1)),
-        # and 1 otherwise.  Returns 1 if ax/ay is 0.  Reference: Mendo 2019.
+        # probability (px/py)^(nx/ny) (where nx/ny is in (0, 1)),
+        # and 1 otherwise.  Returns 1 if nx/ny is 0.  Reference: Mendo 2019.
         i = 1
         while True:
             x = self.zero_or_one(px, py)
@@ -602,7 +617,7 @@ class Bernoulli:
                 if self.zero_or_one(px, py) == 0:
                     return 0
             return 1
-        return self._zero_or_one_power_frac(nx, ny)
+        return self._zero_or_one_power_frac(px, py, nx, ny)
 
     def zero_or_one_power(self, px, py, n):
         """ Generates 1 with probability (px/py)^n (where n can be
