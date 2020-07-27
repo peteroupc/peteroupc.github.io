@@ -45,6 +45,7 @@
 <li><a href="#Arithmetic"><strong>Arithmetic</strong></a></li>
 </ul></li>
 <li><a href="#Building_Blocks"><strong>Building Blocks</strong></a></li>
+<li><a href="#Imp"><strong>Imp</strong></a></li>
 <li><a href="#Algorithms_for_the_Beta_Exponential_and_Power_of_Uniform_Distributions"><strong>Algorithms for the Beta, Exponential, and Power-of-Uniform Distributions</strong></a>
 
 <ul>
@@ -83,8 +84,12 @@
 <li><a href="#Appendix"><strong>Appendix</strong></a>
 
 <ul>
-<li><a href="#SymPy_Formula_for_ZeroToOneExpMinus"><strong>SymPy Formula for ZeroToOneExpMinus</strong></a></li>
+<li><a href="#SymPy_Formula_for_ZeroOrOneExpMinus"><strong>SymPy Formula for ZeroOrOneExpMinus</strong></a></li>
 <li><a href="#Convergence_of_Bernoulli_Factories"><strong>Convergence of Bernoulli Factories</strong></a></li>
+</ul></li>
+<li><a href="#Alternative_Implementation_of_Bernoulli_Factories"><strong>Alternative Implementation of Bernoulli Factories</strong></a>
+
+<ul>
 <li><a href="#Another_Example_of_an_Arbitrary_Precision_Sampler"><strong>Another Example of an Arbitrary-Precision Sampler</strong></a></li>
 </ul></li>
 <li><a href="#License"><strong>License</strong></a></li>
@@ -247,6 +252,20 @@
 
 <p><strong>SampleGeometricBagComplement</strong> is the same as the <strong>SampleGeometricBag</strong> algorithm, except the return value is 1 minus the original return value.  The result is that if <strong>SampleGeometricBag</strong> outputs 1 with probability <em>U</em>, <strong>SampleGeometricBagComplement</strong> outputs 1 with probability 1 &minus; <em>U</em>.</p>
 
+<p><a id=Imp></a></p>
+
+<h2>Imp</h2>
+
+<blockquote>
+<p><strong>Note:</strong> Let <em>U</em> be the random number represented by a geometric bag.  Let <em>A</em> be a Bernoulli factory algorithm that takes a coin with probability of heads of <em>p</em> and outputs 1 with probability <em>f</em>(p).  If algorithm <em>A</em> takes a geometric bag as the input coin and flips that coin using <strong>SampleGeometricBag</strong>, that algorithm could instead be implemented as follows:</p>
+
+<ol>
+<li>Sample enough digits of the geometric bag (from left to right) to calculate <em>f</em>(p)</li>
+</ol>
+
+<p>However, the focus of this article is on algorithms</p>
+</blockquote>
+
 <p><strong>FillGeometricBag</strong> takes a geometric bag and generates a number whose fractional part has <code>p</code> digits as follows:</p>
 
 <ol>
@@ -265,9 +284,9 @@
 <li>Add 1 to <em>i</em> and go to step 4.</li>
 </ol>
 
-<p>Note, however, that this algorithm converges more and more slowly if the probability <code>p</code> approaches 0.  See the appendix for notes on the convergence of Bernoulli factories.</p>
+<p>Note, however, that this algorithm converges more and more slowly if the probability <code>p</code> approaches 0.  See the appendix for notes on the convergence of Bernoulli factories.  The appendix also shows an alternative way to implement this and other Bernoulli factory algorithms using geometric bags, which is not the focus of this article since it involves arithmetic.</p>
 
-<p>The <strong>kthsmallest</strong> method generates the &#39;k&#39;th smallest &#39;bitcount&#39;-digit uniform random number out of &#39;n&#39; of them, is also relied on by this beta sampler.  It is used when both <code>a</code> and <code>b</code> are integers, based on the known property that a beta random variable in this case is the <code>a</code>th smallest uniform (0, 1) random number out of <code>a + b - 1</code> of them (Devroye 1986, p. 431)<sup><a href="#Note16"><strong>(16)</strong></a></sup></sup>.</p>
+<p>The <strong>kthsmallest</strong> method generates the &#39;k&#39;th smallest &#39;bitcount&#39;-digit uniform random number out of &#39;n&#39; of them, is also relied on by this beta sampler.  It is used when both <code>a</code> and <code>b</code> are integers, based on the known property that a beta random variable in this case is the <code>a</code>th smallest uniform (0, 1) random number out of <code>a + b - 1</code> of them (Devroye 1986, p. 431)<sup><a href="#Note16"><strong>(16)</strong></a></sup>.</p>
 
 <p><strong>kthsmallest</strong>, however, doesn&#39;t simply generate &#39;n&#39; &#39;bitcount&#39;-digit numbers and then sort them.  Rather, it builds up their digit expansions digit by digit, via PSRNs.    It uses the observation that (in the binary case) each uniform (0, 1) random number is equally likely to be less than half or greater than half; thus, the number of uniform numbers that are less than half vs. greater than half follows a binomial(n, 1/2) distribution (and of the numbers less than half, say, the less-than-one-quarter vs. greater-than-one-quarter numbers follows the same distribution, and so on).    Thanks to this observation, the algorithm can generate a sorted sample &quot;on the fly&quot;.  A similar observation applies to other bases than base 2 if we use the multinomial distribution instead of the binomial distribution.  I am not aware of any other article or paper (besides one by me) that describes the <strong>kthsmallest</strong> algorithm given here.</p>
 
@@ -583,7 +602,7 @@ def exprandless(a, b):
 
 def zero_or_one(px, py):
         &quot;&quot;&quot; Returns 1 at probability px/py, 0 otherwise.
-            Uses Bernoulli algorithm from Lumbroso appendix 3,
+            Uses Bernoulli algorithm from Lumbroso appendix B,
             with one exception noted in this code. &quot;&quot;&quot;
         if py &lt;= 0:
             raise ValueError
@@ -1269,11 +1288,11 @@ def contbernoullidist(b, lamda, precision=53):
 
 <h2>Appendix</h2>
 
-<p><a id=SymPy_Formula_for_ZeroToOneExpMinus></a></p>
+<p><a id=SymPy_Formula_for_ZeroOrOneExpMinus></a></p>
 
-<h3>SymPy Formula for ZeroToOneExpMinus</h3>
+<h3>SymPy Formula for ZeroOrOneExpMinus</h3>
 
-<p>The following Python code uses SymPy to plot the bit complexity lower bound for <strong>ZeroToOneExpMinus</strong> when &gamma; is 1 or less:</p>
+<p>The following Python code uses SymPy to plot the bit complexity lower bound for <strong>ZeroOrOneExpMinus</strong> when &gamma; is 1 or less:</p>
 
 <pre>def ent(p):
    return p*log(1/p,2)
@@ -1315,6 +1334,21 @@ for i in range(iters):
   # but only for the first 30 and last 30 iterations
   if i&lt;30 or i&gt;=iters-30: print(passp)
 </pre>
+
+<p><a id=Alternative_Implementation_of_Bernoulli_Factories></a></p>
+
+<h2>Alternative Implementation of Bernoulli Factories</h2>
+
+<p>Say we have a Bernoulli factory algorithm that takes a coin with probability of heads of <em>p</em> and outputs 1 with probability <em>f</em>(<em>p</em>).  If this algorithm takes a geometric bag as the input coin and flips that coin using <strong>SampleGeometricBag</strong>, the algorithm could instead be implemented as follows in order to return 1 with probability <em>f</em>(<em>U</em>), where <em>U</em> is the number represented by the geometric bag (see also (Brassard et al., 2019)<sup><a href="#Note11"><strong>(11)</strong></a></sup>, (Devroye 1986, p. 431)<sup><a href="#Note16"><strong>(16)</strong></a></sup>):</p>
+
+<ol>
+<li>Set <em>v</em> to 0 and <em>k</em> to 1.</li>
+<li>Set <em>v</em> to <em>b</em> * <em>v</em> + <em>d</em>, where <em>b</em> is the base (or radix) of the geometric bag&#39;s digits, and <em>d</em> is a digit chosen uniformly at random.</li>
+<li>Sample enough digits of the geometric bag (from left to right and without using <strong>SampleGeometricBag</strong>) to calculate an approximation of <em>f</em>(<em>U</em>) that is correctly rounded down to the nearest <em>b</em><sup>&minus;<em>k</em></sup>.  Let <em>pk</em> be the <em>k</em> digits after the point in the result&#39;s digit expansion.</li>
+<li>If <em>pk</em> + 1 &lt;= <em>v</em>, return 0. If <em>pk</em> &minus; 2 &gt;= <em>v</em>, return 1.  If neither is the case, add 1 to <em>k</em> and go to step 2.</li>
+</ol>
+
+<p>However, the focus of this article is on algorithms that don&#39;t rely on calculations of irrational numbers, which is why this section is in the appendix.</p>
 
 <p><a id=Another_Example_of_an_Arbitrary_Precision_Sampler></a></p>
 
