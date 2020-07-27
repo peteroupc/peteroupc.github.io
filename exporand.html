@@ -86,10 +86,7 @@
 <ul>
 <li><a href="#SymPy_Formula_for_ZeroOrOneExpMinus"><strong>SymPy Formula for ZeroOrOneExpMinus</strong></a></li>
 <li><a href="#Convergence_of_Bernoulli_Factories"><strong>Convergence of Bernoulli Factories</strong></a></li>
-</ul></li>
-<li><a href="#Alternative_Implementation_of_Bernoulli_Factories"><strong>Alternative Implementation of Bernoulli Factories</strong></a>
-
-<ul>
+<li><a href="#Alternative_Implementation_of_Bernoulli_Factories"><strong>Alternative Implementation of Bernoulli Factories</strong></a></li>
 <li><a href="#Another_Example_of_an_Arbitrary_Precision_Sampler"><strong>Another Example of an Arbitrary-Precision Sampler</strong></a></li>
 </ul></li>
 <li><a href="#License"><strong>License</strong></a></li>
@@ -1337,14 +1334,14 @@ for i in range(iters):
 
 <p><a id=Alternative_Implementation_of_Bernoulli_Factories></a></p>
 
-<h2>Alternative Implementation of Bernoulli Factories</h2>
+<h3>Alternative Implementation of Bernoulli Factories</h3>
 
 <p>Say we have a Bernoulli factory algorithm that takes a coin with probability of heads of <em>p</em> and outputs 1 with probability <em>f</em>(<em>p</em>).  If this algorithm takes a geometric bag as the input coin and flips that coin using <strong>SampleGeometricBag</strong>, the algorithm could instead be implemented as follows in order to return 1 with probability <em>f</em>(<em>U</em>), where <em>U</em> is the number represented by the geometric bag (see also (Brassard et al., 2019)<sup><a href="#Note11"><strong>(11)</strong></a></sup>, (Devroye 1986, p. 431)<sup><a href="#Note16"><strong>(16)</strong></a></sup>):</p>
 
 <ol>
 <li>Set <em>v</em> to 0 and <em>k</em> to 1.</li>
 <li>Set <em>v</em> to <em>b</em> * <em>v</em> + <em>d</em>, where <em>b</em> is the base (or radix) of the geometric bag&#39;s digits, and <em>d</em> is a digit chosen uniformly at random.</li>
-<li>Sample enough digits of the geometric bag (from left to right and without using <strong>SampleGeometricBag</strong>) to calculate an approximation of <em>f</em>(<em>U</em>) that is correctly rounded down to the nearest <em>b</em><sup>&minus;<em>k</em></sup>.  Let <em>pk</em> be the <em>k</em> digits after the point in the result&#39;s digit expansion.</li>
+<li>Sample enough digits of the geometric bag (from left to right and without using <strong>SampleGeometricBag</strong>) to calculate an approximation of <em>f</em>(<em>U</em>) that is correctly rounded down, to the nearest <em>b</em><sup>&minus;<em>k</em></sup>.  Let <em>pk</em> be the <em>k</em> digits after the point in the result&#39;s digit expansion.</li>
 <li>If <em>pk</em> + 1 &lt;= <em>v</em>, return 0. If <em>pk</em> &minus; 2 &gt;= <em>v</em>, return 1.  If neither is the case, add 1 to <em>k</em> and go to step 2.</li>
 </ol>
 
