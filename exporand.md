@@ -984,7 +984,7 @@ Say we have a Bernoulli factory algorithm that takes a coin with probability of 
 
 1. Set _v_ to 0 and _k_ to 1.
 2. Set _v_ to _b_ * _v_ + _d_, where _b_ is the base (or radix) of the geometric bag's digits, and _d_ is a digit chosen uniformly at random.
-3. Sample enough digits of the geometric bag (from left to right and without using **SampleGeometricBag**) to calculate an approximation of _f_(_U_) that is correctly rounded down, to the nearest _b_<sup>&minus;_k_</sup>.  Let _pk_ be the _k_ digits after the point in the result's digit expansion.
+3. Sample enough digits of the geometric bag (from left to right and without using **SampleGeometricBag**) to calculate an approximation of _f_(_U_) that is within _b_<sup>&minus;_k_</sup> of the true result.  Let _pk_ be the _k_ digits after the point in the approximation's digit expansion.
 4. If _pk_ + 1 <= _v_, return 0. If _pk_ &minus; 2 >= _v_, return 1.  If neither is the case, add 1 to _k_ and go to step 2.
 
 However, the focus of this article is on algorithms that don't rely on calculations of irrational numbers, which is why this section is in the appendix.

@@ -1341,7 +1341,7 @@ for i in range(iters):
 <ol>
 <li>Set <em>v</em> to 0 and <em>k</em> to 1.</li>
 <li>Set <em>v</em> to <em>b</em> * <em>v</em> + <em>d</em>, where <em>b</em> is the base (or radix) of the geometric bag&#39;s digits, and <em>d</em> is a digit chosen uniformly at random.</li>
-<li>Sample enough digits of the geometric bag (from left to right and without using <strong>SampleGeometricBag</strong>) to calculate an approximation of <em>f</em>(<em>U</em>) that is correctly rounded down, to the nearest <em>b</em><sup>&minus;<em>k</em></sup>.  Let <em>pk</em> be the <em>k</em> digits after the point in the result&#39;s digit expansion.</li>
+<li>Sample enough digits of the geometric bag (from left to right and without using <strong>SampleGeometricBag</strong>) to calculate an approximation of <em>f</em>(<em>U</em>) that is within <em>b</em><sup>&minus;<em>k</em></sup> of the true result.  Let <em>pk</em> be the <em>k</em> digits after the point in the approximation&#39;s digit expansion.</li>
 <li>If <em>pk</em> + 1 &lt;= <em>v</em>, return 0. If <em>pk</em> &minus; 2 &gt;= <em>v</em>, return 1.  If neither is the case, add 1 to <em>k</em> and go to step 2.</li>
 </ol>
 
