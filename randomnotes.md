@@ -519,9 +519,9 @@ For related algorithms, see the appendix.
 
 <small><sup id=Note20>(20)</sup> Mennucci, A.C.G. "[**Bit Recycling for Scaling Random Number Generators**](https://arxiv.org/abs/1012.4290)", arXiv:1012.4290 [cs.IT], 2018.</small>
 
-<small><sup id=Note21>(21)</sup> Saad, F.A., Freer C.E., et al. "The Fast Loaded Dice Roller: A Near-Optimal Exact Sampler for Discrete Probability Distributions", in _AISTATS 2020: Proceedings of the 23rd International Conference on Artificial Intelligence and Statistics, Proceedings of Machine Learning Research_ 108, Palermo, Sicily, Italy, 2020.</small>
+<small><sup id=Note21>(21)</sup> Saad, F.A., Freer C.E., et al., "[The Fast Loaded Dice Roller: A Near-Optimal Exact Sampler for Discrete Probability Distributions](https://arxiv.org/abs/2003.03830v2)", arXiv:2003.03830v2  [stat.CO], also in _AISTATS 2020: Proceedings of the 23rd International Conference on Artificial Intelligence and Statistics, Proceedings of Machine Learning Research_ 108, Palermo, Sicily, Italy, 2020.</small>
 
-<small><sup id=Note22>(22)</sup> Feras A. Saad, Cameron E. Freer, Martin C. Rinard, and Vikash K. Mansinghka. Optimal Approximate Sampling From Discrete Probability Distributions. Proc. ACM Program. Lang. 4, POPL, Article 36 (January 2020), 33 pages.</small>
+<small><sup id=Note22>(22)</sup> Feras A. Saad, Cameron E. Freer, Martin C. Rinard, and Vikash K. Mansinghka, "[Optimal Approximate Sampling From Discrete Probability Distributions](https://arxiv.org/abs/2001.04555v1)", arXiv:2001.04555v1 [cs.DS], also in Proc. ACM Program. Lang. 4, POPL, Article 36 (January 2020), 33 pages.</small>
 
 <small><sup id=Note23>(23)</sup> Klundert, B. van de, "[**Efficient Generation of Discrete Random Variates**](https://dspace.library.uu.nl/handle/1874/393383)", Master thesis, Universiteit Utrecht, 2019.</small>
 
@@ -531,7 +531,7 @@ For related algorithms, see the appendix.
 
 <small><sup id=Note26>(26)</sup> L. Hübschle-Schneider and P. Sanders, "[**Parallel Weighted Random Sampling**](https://arxiv.org/abs/1903.00227v2)", arXiv:1903.00227v2  [cs.DS], 2019.</small>
 
-<small><sup id=Note27>(27)</sup> A.J. Walker, "An efficient method for generating discrete random variables with general dlstributions", _ACM Transactions on Mathematical Software_ 3, 1977.</small>
+<small><sup id=Note27>(27)</sup> A.J. Walker, "An efficient method for generating discrete random variables with general distributions", _ACM Transactions on Mathematical Software_ 3, 1977.</small>
 
 <small><sup id=Note28>(28)</sup> Vose, Michael D. "A linear algorithm for generating random numbers with a given distribution." IEEE Transactions on software engineering 17, no. 9 (1991): 972-975.</small>
 
@@ -604,11 +604,11 @@ The following are some ways to implement `RNDINT`.  (The column "Unbiased?" mean
 <a id=A_Note_on_Weighted_Choice_Algorithms></a>
 ### A Note on Weighted Choice Algorithms
 
-Just like integer generation algorithms (see the previous section), weighted choice algorithms (implementations of `WeightedChoice`) involve generating random integers with separate probabilities.  And all of them can be described as a binary DDG tree just like integer generating algorithms.
+Just like integer generation algorithms (see the previous section), weighted choice algorithms (implementations of `WeightedChoice` that sample with replacement) involve generating random integers with separate probabilities.  And all of them can be described as a binary DDG tree just like integer generating algorithms.
 
-In this case, though, the number of random bits an algorithm uses on average is bounded from below by the sum of binary entropies of all the probabilities involved.  For example, say we give the four integers 1, 2, 3, 4 the following weights: 3, 15, 1, 2.  The binary entropies of these weights are 0.2779...+0.2403...+0.1449...+0.2239...=0.8872..., so an optimal algorithm will use anywhere from 0.8872... to 2.8872... bits on average to generate a random number with these weights.<sup>[**(16)**](#Note16)</sup>  Another difference from integer generation algorithms is that usually a special data structure has to be built for the sampling to work, and often there is a need to make updates to the structure as items are sampled.  The following are some ways to implement `WeightedChoice`; unless noted, the algorithms are not optimal in terms of the number of bits used:
+In this case, though, the number of random bits an algorithm uses on average is bounded from below by the sum of binary entropies of all the probabilities involved.  For example, say we give the four integers 1, 2, 3, 4 the following weights: 3, 15, 1, 2.  The binary entropies of these weights are 0.4010... + 0.3467... + 0.2091... + 0.3230... = 1.2800... (because the sum of the weights is 21 and the binary entropy of 3/21 is `(3/21) * log2(21/3) = 0.4010...`, and so on for the other weights), so an optimal algorithm will use anywhere from 1.2800... to 3.2800... bits on average to generate a random number with these weights.<sup>[**(16)**](#Note16)</sup>  Another difference from integer generation algorithms is that usually a special data structure has to be built for the sampling to work, and often there is a need to make updates to the structure as items are sampled.  The following are some ways to implement `WeightedChoice`; unless noted, the algorithms are not optimal in terms of the number of bits used.
 
-- The Fast Loaded Dice Roller (Saad et al., 2020)<sup>[**(21)**](#Note21)</sup>.  This sampler comes within 6 bits, on average, of the optimal number of bits.
+- The Fast Loaded Dice Roller (Saad et al., 2020)<sup>[**(21)**](#Note21)</sup>.  This sampler comes within 6 bits, on average, of the optimal number of bits.  The paper for this algorithm also reviews rejection samplers in section 4.
 - The samplers described in (Saad et al., 2020)<sup>[**(22)**](#Note22)</sup>.   The samplers are optimal in the sense given here as long as the sum of the weights is of the form 2<sup>k</sup> or 2<sup>k</sup> &minus; 2<sup>m</sup>.
 - The data structures surveyed and mentioned in (Klundert 2019)<sup>[**(23)**](#Note23)</sup>.
 - The Bringmann&ndash;Larsen succinct data structure (Bringmann and Larsen 2013)<sup>[**(24)**](#Note24)</sup>.
@@ -618,7 +618,7 @@ In this case, though, the number of random bits an algorithm uses on average is 
 There are other weighted choice algorithms that don't necessarily take integer weights.  They include:
 
 - The section "Weighted Choice with Coins of Known Bias" in this appendix.
-- The _alias method_ by Walker (1977)<sup>[**(27)**](#Note27)</sup>.  Michael Vose's version of the alias method (Vose 1991)<sup>[**(28)**](#Note28)</sup> is described in "[**Darts, Dice, and Coins: Sampling from a Discrete Distribution**](https://www.keithschwarz.com/darts-dice-coins/)".
+- The _alias method_ by Walker (1977)<sup>[**(27)**](#Note27)</sup>.  Michael Vose's version of the alias method (Vose 1991)<sup>[**(28)**](#Note28)</sup> is described in "[**Darts, Dice, and Coins: Sampling from a Discrete Distribution**](https://www.keithschwarz.com/darts-dice-coins/)".  The alias method ought to be implemented using rational-number arithmetic, since this method is hard to apply to integer weights if the sum of the weights is not divisible by the number of weights.
 - The Knuth and Yao algorithm that generates a DDG tree from the binary expansions of the probabilities, an algorithm that is optimal, or at least nearly so.  This is suggested in exercise 3.4.2 of chapter 15 of (Devroye 1986, p. 1-2)<sup>[**(10)**](#Note10)</sup>, implemented in _randomgen.py_ as the `discretegen` method, and also described in (Roy et al. 2013)<sup>[**(29)**](#Note29)</sup>.
 - The Han and Hoshi algorithm (Han and Hoshi 1997)<sup>[**(30)**](#Note30)</sup> that uses the cumulative probabilities as input and is described in (Devroye and Gravel 2015)<sup>[**(31)**](#Note31)</sup>.  This algorithm comes within 3 bits, on average, of the optimal number of bits.
 

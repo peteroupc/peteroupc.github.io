@@ -20,6 +20,8 @@
 <li>generating non-uniform random numbers, including <a href="#Weighted_Choice"><strong>weighted choice</strong></a>, the <a href="#Poisson_Distribution"><strong>Poisson distribution</strong></a>, and <a href="#Index_of_Non_Uniform_Distributions"><strong>other probability distributions</strong></a>.</li>
 </ul>
 
+<p>This page is focused on sampling methods that <em>exactly</em> sample from the distribution described, without introducing additional errors beyond those already present in the inputs.  This will be the case if there is a finite number of values to choose from.  But for the normal distribution and other distributions that take on an infinite number of values, there will always be some level of approximation involved; in this case, the focus of this page is on methods that <em>minimize</em> the error they introduce.</p>
+
 <p><a href="https://peteroupc.github.io/randomgen.zip"><strong>Sample Python code</strong></a> that implements many of the methods in this document is available, together with <a href="https://peteroupc.github.io/randomgendoc.html"><strong>documentation for the code</strong></a>.</p>
 
 <p>All the random number methods presented on this page are ultimately based on an underlying RNG; however, the methods make no assumptions on that RNG&#39;s implementation (e.g., whether that RNG uses only its input and its state to produce numbers) or on that RNG&#39;s statistical quality or predictability.</p>
