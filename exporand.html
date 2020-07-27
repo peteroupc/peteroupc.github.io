@@ -12,7 +12,7 @@
 
 <h2>Introduction</h2>
 
-<p>This page introduces a Python implementation of <em>partially-sampled random numbers</em> (PSRNs).  Although structures for PSRNs were largely described before this work, this document unifies the concepts for these kinds of numbers from prior works and shows how they can be used to sample the beta distribution (with both parameters 1 or greater), the exponential distribution (with an arbitrary rate parameter), and other continuous distributions&mdash;</p>
+<p>This page introduces a Python implementation of <em>partially-sampled random numbers</em> (PSRNs).  Although structures for PSRNs were largely described before this work, this document unifies the concepts for these kinds of numbers from prior works and shows how they can be used to sample the beta distribution (for most sets of parameters), the exponential distribution (with an arbitrary rate parameter), and other continuous distributions&mdash;</p>
 
 <ul>
 <li>while avoiding floating-point arithmetic, and</li>
@@ -46,12 +46,12 @@
 </ul></li>
 <li><a href="#Building_Blocks"><strong>Building Blocks</strong></a></li>
 <li><a href="#Imp"><strong>Imp</strong></a></li>
-<li><a href="#Algorithms_for_the_Beta_Exponential_and_Power_of_Uniform_Distributions"><strong>Algorithms for the Beta, Exponential, and Power-of-Uniform Distributions</strong></a>
+<li><a href="#Algorithms_for_the_Beta_and_Exponential_Distributions"><strong>Algorithms for the Beta and Exponential Distributions</strong></a>
 
 <ul>
 <li><a href="#Beta_Distribution"><strong>Beta Distribution</strong></a></li>
 <li><a href="#Exponential_Distribution"><strong>Exponential Distribution</strong></a></li>
-<li><a href="#Power_of_Uniform"><strong>Power of Uniform</strong></a></li>
+<li><a href="#Power_of_Uniform_Sub_Algorithm"><strong>Power-of-Uniform Sub-Algorithm</strong></a></li>
 </ul></li>
 <li><a href="#Sampler_Code"><strong>Sampler Code</strong></a>
 
@@ -101,7 +101,12 @@
 <pre>pow(x, alpha - 1) * pow(1 - x, beta - 1).               (1)
 </pre>
 
-<p>Although <code>alpha</code> and <code>beta</code> can each be greater than 0, the sampler presented in this document only works if both parameters are 1 or greater.</p>
+<p>Although <code>alpha</code> and <code>beta</code> can each be greater than 0, the sampler presented in this document only works if&mdash;</p>
+
+<ul>
+<li>both parameters are 1 or greater, or</li>
+<li>in the case of base-2 numbers, one parameter equals 1 and the other is greater than 0.</li>
+</ul>
 
 <p><a id=About_the_Exponential_Distribution></a></p>
 
@@ -338,9 +343,9 @@
 <li>Go to step 1.</li>
 </ol>
 
-<p><a id=Algorithms_for_the_Beta_Exponential_and_Power_of_Uniform_Distributions></a></p>
+<p><a id=Algorithms_for_the_Beta_and_Exponential_Distributions></a></p>
 
-<h2>Algorithms for the Beta, Exponential, and Power-of-Uniform Distributions</h2>
+<h2>Algorithms for the Beta and Exponential Distributions</h2>
 
 <p>&nbsp;</p>
 
@@ -348,19 +353,25 @@
 
 <h3>Beta Distribution</h3>
 
-<p>All the building blocks are now in place to describe a <em>new</em> algorithm to sample the beta distribution, described as follows.  It takes three parameters: <em>a</em> &gt;= 1 and <em>b</em> &gt;= 1 are the parameters to the beta distribution, and <em>p</em> &gt; 0 is a precision parameter.</p>
+<p>All the building blocks are now in place to describe a <em>new</em> algorithm to sample the beta distribution, described as follows.  It takes three parameters: <em>a</em> &gt;= 1 and <em>b</em> &gt;= 1 (or one parameter is 1 and the other is greater than 0 in the binary case) are the parameters to the beta distribution, and <em>p</em> &gt; 0 is a precision parameter.</p>
 
 <ol>
-<li>Special case: If <em>a</em> = 1 and <em>b</em> = 1, return a uniform random number whose fractional part has <em>p</em> digits (for example, in the binary case, RandomBits(<em>p</em>) / 2<sup><em>p</em></sup> where <code>RandomBits(x)</code> returns an x-bit block of unbiased random bits).</li>
-<li>Special case: If <em>a</em> and <em>b</em> are both integers, return the result of <strong>kthsmallest</strong> with <code>n = a - b + 1</code> and <code>k = a</code>, and fill it as necessary to give the number an <em>p</em>-digit fractional part (similarly to <strong>FillGeometricBag</strong> above).</li>
+<li>Special cases:
+
+<ul>
+<li>If <em>a</em> = 1 and <em>b</em> = 1, return a uniform random number whose fractional part has <em>p</em> digits (for example, in the binary case, RandomBits(<em>p</em>) / 2<sup><em>p</em></sup> where <code>RandomBits(x)</code> returns an x-bit block of unbiased random bits).</li>
+<li>If <em>a</em> and <em>b</em> are both integers, return the result of <strong>kthsmallest</strong> with <code>n = a - b + 1</code> and <code>k = a</code>, and fill it as necessary to give the number an <em>p</em>-digit fractional part (similarly to <strong>FillGeometricBag</strong> above).</li>
+<li>In the binary case, if <em>a</em> is 1 and <em>b</em> is less than 1, return the result of the <strong>power-of-uniform sub-algorithm</strong> described below, with <em>px</em>/<em>py</em> = 1/<em>b</em>, and the <em>complement</em> flag set to <code>true</code>.</li>
+<li>In the binary case, if <em>b</em> is 1 and <em>a</em> is less than 1, return the result of the <strong>power-of-uniform sub-algorithm</strong> described below, with <em>px</em>/<em>py</em> = 1/<em>a</em>, and the <em>complement</em> flag set to <code>false</code>.</li>
+</ul></li>
 <li>Create an empty list to serve as a &quot;geometric bag&quot;.</li>
 <li>Remove all digits from the geometric bag.  This will result in an empty uniform random number, <em>U</em>, for the following steps, which will accept <em>U</em> with probability <em>U</em><sup>a&minus;1</sup>*(1&minus;<em>U</em>)<sup>b&minus;1</sup>) (the proportional probability for the beta distribution), as <em>U</em> is built up.</li>
-<li>Call the <strong>PowerBernoulliFactory</strong> using the <strong>SampleGeometricBag</strong> algorithm and parameter <em>a</em> &minus; 1 (which will return 1 with probability <em>U</em><sup>a&minus;1</sup>).  If the result is 0, go to step 4.</li>
-<li>Call the <strong>PowerBernoulliFactory</strong> using the <strong>SampleGeometricBagComplement</strong> algorithm and parameter <em>b</em> &minus; 1 (which will return 1 with probability (1&minus;<em>U</em>)<sup>b&minus;1</sup>).  If the result is 0, go to step 4. (Note that steps 5 and 6 don&#39;t depend on each other and can be done in either order without affecting correctness, and this is taken advantage of in the Python code below.)</li>
+<li>Call the <strong>PowerBernoulliFactory</strong> using the <strong>SampleGeometricBag</strong> algorithm and parameter <em>a</em> &minus; 1 (which will return 1 with probability <em>U</em><sup>a&minus;1</sup>).  If the result is 0, go to step 3.</li>
+<li>Call the <strong>PowerBernoulliFactory</strong> using the <strong>SampleGeometricBagComplement</strong> algorithm and parameter <em>b</em> &minus; 1 (which will return 1 with probability (1&minus;<em>U</em>)<sup>b&minus;1</sup>).  If the result is 0, go to step 3. (Note that steps 4 and 5 don&#39;t depend on each other and can be done in either order without affecting correctness, and this is taken advantage of in the Python code below.)</li>
 <li><em>U</em> was accepted, so return the result of <strong>FillGeometricBag</strong>.</li>
 </ol>
 
-<p>Note that if <em>a</em> = 1/<em>x</em> and <em>b</em> = 1, the result is the same as a uniform random number raised to the power of <em>x</em>.  Any beta(1/<em>x</em>, 1) random number has this property for any <em>x</em> &gt; 0, but for the beta sampler presented here, this works only if <em>x</em> is in the interval (0, 1], due to the restriction of <em>a</em> and <em>b</em> to values 1 or greater.</p>
+<p>Note that a beta(1/<em>x</em>, 1) random number is the same as a uniform random number raised to the power of <em>x</em>.</p>
 
 <p><a id=Exponential_Distribution></a></p>
 
@@ -390,16 +401,16 @@
 <li>Return the number represented by <strong>a</strong>.</li>
 </ol>
 
-<p><a id=Power_of_Uniform></a></p>
+<p><a id=Power_of_Uniform_Sub_Algorithm></a></p>
 
-<h3>Power of Uniform</h3>
+<h3>Power-of-Uniform Sub-Algorithm</h3>
 
-<p>The power-of-uniform sampler returns <em>U</em><sup><em>power</em></sup>, where <em>U</em> is a uniform random number in the interval [0, 1] and <em>power</em> is greater than 1, but unlike the naïve algorithm it supports an arbitrary precision, uses only random bits, and avoids floating-point arithmetic.</p>
+<p>The power-of-uniform sub-algorithm is used for certain cases of the beta sampler above.  It returns <em>U</em><sup><em>px</em>/<em>py</em></sup>, where <em>U</em> is a uniform random number in the interval [0, 1] and <em>px</em>/<em>py</em> is greater than 1, but unlike the naïve algorithm it supports an arbitrary precision, uses only random bits, and avoids floating-point arithmetic.  It also uses a <em>complement</em> flag to determine whether to return 1 minus the result.</p>
 
 <p>It makes use of a number of algorithms as follows:</p>
 
 <ul>
-<li>It uses an algorithm for <a href="https://peteroupc.github.io/exporand.html"><strong>sampling unbounded monotone density functions</strong></a>, which in turn is similar to the inversion-rejection algorithm in (Devroye 1986, ch. 7, sec. 4.4)<sup><a href="#Note16"><strong>(16)</strong></a></sup>.  This is needed because when <em>power</em> is greater than 1, <em>U</em><sup><em>power</em></sup> is distributed as <code>(1/power) / pow(U, 1-1/power)</code>, which has an unbounded peak at 0.</li>
+<li>It uses an algorithm for <a href="https://peteroupc.github.io/exporand.html"><strong>sampling unbounded monotone density functions</strong></a>, which in turn is similar to the inversion-rejection algorithm in (Devroye 1986, ch. 7, sec. 4.4)<sup><a href="#Note16"><strong>(16)</strong></a></sup>.  This is needed because when <em>px</em>/<em>py</em> is greater than 1, <em>U</em><sup><em>px</em>/<em>py</em></sup> is distributed as <code>(py/px) / pow(U, 1-py/px)</code>, which has an unbounded peak at 0.</li>
 <li>It uses a number of Bernoulli factory algorithms.  In addition to the <strong>SampleGeometricBag</strong> and <strong>PowerBernoulliFactory</strong> algorithms mentioned earlier, it also uses <em>randomgen.py</em>&#39;s <code>zero_or_one_power_ratio</code> method (which returns 1 with probability (<em>a</em>/<em>b</em>)<sup><em>c</em>/<em>d</em></sup>)) and <em>bernoulli.py</em>&#39;s <code>eps_div</code> Bernoulli factory (which returns 1 with probability <em>a</em>/<em>b</em> and originates from (Lee et al. 2014)<sup><a href="#Note19"><strong>(19)</strong></a></sup>).  <code>eps_div</code> in turn relies on Huber&#39;s Bernoulli factory for linear functions (Huber 2016)<sup><a href="#Note20"><strong>(20)</strong></a></sup>.</li>
 </ul>
 
@@ -409,12 +420,17 @@
 
 <ol>
 <li>Set <em>i</em> to 1.</li>
-<li>Call the <code>zero_or_one_power_ratio</code> algorithm (which returns 1 with probability (<em>a</em>/<em>b</em>)<sup><em>c</em>/<em>d</em></sup>)) with parameters <code>a = 1, b = 2, c = 1, d = power</code>.  If it returns 1, add 1 to <em>i</em> and repeat this step.</li>
-<li>As a result, we will now sample a number in the interval [2<sup>&minus;<em>i</em></sup>, 2<sup>&minus;(<em>i</em> &minus; 1)</sup>).  We now have to generate a uniform random number <em>x</em> in this interval, then accept it with probability (1 / (<em>power</em> * 2<sup><em>i</em></sup>)) / <em>x</em><sup>1 &minus; 1 / <em>power</em></sup>; the 2<sup><em>i</em></sup> in this formula is to help avoid very low probabilities for sampling purposes.  The following steps will achieve this without having to use floating-point arithmetic.</li>
+<li>Call the <code>zero_or_one_power_ratio</code> algorithm (which returns 1 with probability (<em>a</em>/<em>b</em>)<sup><em>c</em>/<em>d</em></sup>)) with parameters <code>a = 1, b = 2, c = py, d = px</code>.  If the call returns 1 and <em>i</em> is less than <em>n</em>, add 1 to <em>i</em> and repeat this step.  If the call returns 1 and <em>i</em> is <em>n</em> or greater, return 1 if the <em>complement</em> flag is <code>true</code> or 0 otherwise (or return a geometric bag filled with exactly <em>n</em> ones or zeros, respectively).</li>
+<li>As a result, we will now sample a number in the interval [2<sup>&minus;<em>i</em></sup>, 2<sup>&minus;(<em>i</em> &minus; 1)</sup>).  We now have to generate a uniform random number <em>x</em> in this interval, then accept it with probability (<em>py</em> / (<em>px</em> * 2<sup><em>i</em></sup>)) / <em>x</em><sup>1 &minus; <em>py</em> / <em>px</em></sup>; the 2<sup><em>i</em></sup> in this formula is to help avoid very low probabilities for sampling purposes.  The following steps will achieve this without having to use floating-point arithmetic.</li>
 <li>Create an empty list to serve as a geometric bag, then create a Bernoulli factory algorithm that uses <strong>SampleGeometricBag</strong> on that geometric bag.</li>
-<li>Create a <strong>PowerBernoulliFactory</strong> algorithm that uses the <strong>SampleGeometricBag</strong> Bernoulli factory and the parameter 1 &minus; 1 / <em>power</em>.</li>
+<li>Create a <strong>PowerBernoulliFactory</strong> algorithm that uses the <strong>SampleGeometricBag</strong> Bernoulli factory and the parameter 1 &minus; <em>py</em> / <em>px</em>.</li>
 <li>Append <em>i</em> &minus; 1 zero-digits followed by a single one-digit to the geometric bag.  This will allow us to sample a uniform random number limited to the interval mentioned earlier.</li>
-<li>Call the <code>eps_div</code> Bernoulli factory (which returns 1 with probability <em>a</em>/<em>b</em>) using the <strong>PowerBernoulliFactory</strong> mentioned in step 5 (which represents <em>b</em>) and the parameter 1/(<em>power</em> * 2<sup><em>i</em></sup>) (which represents <em>a</em>).  If the call returns 1, the geometric bag was accepted, so either return the bag as is or fill the unsampled digits of the bag with uniform random digits as necessary to give the number an <em>n</em>-digit fractional part (similarly to <strong>FillGeometricBag</strong> above), where <em>n</em> is a precision parameter, then return the resulting number.</li>
+<li>Call the <code>eps_div</code> Bernoulli factory (which returns 1 with probability <em>a</em>/<em>b</em>) using the <strong>PowerBernoulliFactory</strong> mentioned in step 5 (which represents <em>b</em>) and the parameter <em>py</em>/(<em>px</em> * 2<sup><em>i</em></sup>) (which represents <em>a</em>).  If the call returns 1, the geometric bag was accepted, so do the following:
+
+<ol>
+<li>If the <em>complement</em> flag is <code>true</code>, make each zero-digit in the geometric bag a one-digit and vice versa.</li>
+<li>Either return the geometric bag as is or fill the unsampled digits of the bag with uniform random digits as necessary to give the number an <em>n</em>-digit fractional part (similarly to <strong>FillGeometricBag</strong> above), where <em>n</em> is a precision parameter, then return the resulting number.</li>
+</ol></li>
 <li>If the call to <code>eps_div</code> returns 0, remove all but the first <em>i</em> digits from the geometric bag, then go to step 7.</li>
 </ol>
 
@@ -445,6 +461,39 @@ def _toreal(ret, precision):
         # is merely for convenience.
         return ret*1.0/(1&lt;&lt;precision)
 
+def _power_of_uniform_greaterthan1(bern, power, complement=False, precision=53):
+   if power&lt;1:
+     raise ValueError(&quot;Not supported&quot;)
+   if power==1:
+     bag=[]
+     return bern.fill_geometric_bag(bag, precision)
+   i=1
+   powerfrac=Fraction(power)
+   powerrest=Fraction(1) - Fraction(1)/powerfrac
+   # Choose an interval
+   while bern.zero_or_one_power_ratio(1,2,
+         powerfrac.denominator,powerfrac.numerator) == 1:
+      if i&gt;=precision:
+          # Precision limit reached, so equivalent to endpoint
+         return 1.0 if complement else 0.0
+      i+=1
+   epsdividend = Fraction(1)/(powerfrac * 2**i)
+   bag=[]
+   gb=lambda: bern.geometric_bag(bag)
+   bf =lambda: bern.power(gb, powerrest.numerator, powerrest.denominator)
+   while True:
+      # Limit sampling to the chosen interval
+      bag.clear()
+      for k in range(i-1):
+         bag.append(0)
+      bag.append(1)
+      # Simulate epsdividend / x**(1-1/power)
+      if bern.eps_div(bf, epsdividend) == 1:
+          # Flip all bits if complement is true
+          bag=[1-x for x in bag] if complement
+          ret=bern.fill_geometric_bag(bag, precision)
+          return ret
+
 def powerOfUniform(b, px, py, precision=53):
         # Special case of beta, returning power of px/py
         # of a uniform random number, provided px/py
@@ -456,9 +505,16 @@ def betadist(b, ax, ay, bx, by, precision=53):
         bag=[]
         bpower=Fraction(bx, by)-1
         apower=Fraction(ax, ay)-1
+        if apower&lt;=-1 or bpower&lt;=-1: raise ValueError
         # Special case for a=b=1
         if bpower==0 and apower==0:
            return _toreal(random.randint(0, (1&lt;&lt;precision)-1), 1&lt;&lt;precision)
+        # Special case if a=1
+        if apower==1 and bpower&lt;0:
+           return _power_of_uniform_greaterthan1(b, Fraction(by, bx), True, precision)
+        # Special case if b=1
+        if bpower==1 and apower&lt;0:
+           return _power_of_uniform_greaterthan1(b, Fraction(ay, ax), False, precision)
         # Special case if a and b are integers
         if int(bpower) == bpower and int(apower) == apower:
            a=int(Fraction(ax, ay))
@@ -645,39 +701,6 @@ def zero_or_one_exp_minus(x, y):
 def exprand(lam):
    return exprandfill(exprandnew(lam),53)*1.0/(1&lt;&lt;53)
 
-</pre>
-
-<p>The following Python code implements the power-of-uniform sampler, and likewise relies on <em>bernoulli.py</em> and <em>randomgen.py</em>.</p>
-
-<pre>def power_of_uniform(rg, bern, power, precision=53):
-   if power&lt;1:
-     raise ValueError(&quot;Not supported&quot;)
-   if power==1:
-     bag=[]
-     return bern.fill_geometric_bag(bag, precision)
-   i=1
-   powerfrac=Fraction(power)
-   powerrest=Fraction(1) - Fraction(1)/powerfrac
-   # Choose an interval
-   while bern.zero_or_one_power_ratio(1,2,
-         powerfrac.denominator,powerfrac.numerator) == 1:
-      if i&gt;=precision:
-         return 0.0 # Precision limit reached, so equivalent to 0
-      i+=1
-   epsdividend = Fraction(1)/(powerfrac * 2**i)
-   bag=[]
-   gb=lambda: bern.geometric_bag(bag)
-   bf =lambda: bern.power(gb, powerrest.numerator, powerrest.denominator)
-   while True:
-      # Limit sampling to the chosen interval
-      bag.clear()
-      for k in range(i-1):
-         bag.append(0)
-      bag.append(1)
-      # Simulate epsdividend / x**(1-1/power)
-      if bern.eps_div(bf, epsdividend) == 1:
-          ret=bern.fill_geometric_bag(bag, precision)
-          return ret
 </pre>
 
 <p><a id=Beta_Sampler_Known_Issues></a></p>

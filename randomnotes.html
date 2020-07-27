@@ -1,0 +1,829 @@
+<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>More Random Sampling Methods</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a> -
+<a href="http://peteroupc.github.io/">Donate to Me</a></p></div>
+<div class="mainarea" id="top">
+<p><a id=More_Random_Sampling_Methods></a></p>
+
+<h2>More Random Sampling Methods</h2>
+
+<p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
+
+<p><a id=Contents></a></p>
+
+<h3>Contents</h3>
+
+<ul>
+<li><a href="#More_Random_Sampling_Methods"><strong>More Random Sampling Methods</strong></a>
+
+<ul>
+<li><a href="#Contents"><strong>Contents</strong></a></li>
+<li><a href="#Specific_Distributions"><strong>Specific Distributions</strong></a>
+
+<ul>
+<li><a href="#Normal_Gaussian_Distribution"><strong>Normal (Gaussian) Distribution</strong></a></li>
+<li><a href="#Gamma_Distribution"><strong>Gamma Distribution</strong></a></li>
+<li><a href="#Beta_Distribution"><strong>Beta Distribution</strong></a></li>
+<li><a href="#von_Mises_Distribution"><strong>von Mises Distribution</strong></a></li>
+<li><a href="#Stable_Distribution"><strong>Stable Distribution</strong></a></li>
+<li><a href="#Multivariate_Normal_Multinormal_Distribution"><strong>Multivariate Normal (Multinormal) Distribution</strong></a></li>
+<li><a href="#Random_Real_Numbers_with_a_Given_Positive_Sum"><strong>Random Real Numbers with a Given Positive Sum</strong></a></li>
+<li><a href="#Gaussian_and_Other_Copulas"><strong>Gaussian and Other Copulas</strong></a></li>
+<li><a href="#Exponential_Distribution_Another_Error_Bounded_Algorithm"><strong>Exponential Distribution: Another Error-Bounded Algorithm</strong></a></li>
+</ul></li>
+<li><a href="#Weighted_Choice_with_Biased_Coins"><strong>Weighted Choice with Biased Coins</strong></a></li>
+</ul></li>
+<li><a href="#Notes"><strong>Notes</strong></a></li>
+<li><a href="#Appendix"><strong>Appendix</strong></a>
+
+<ul>
+<li><a href="#Implementation_of_erf"><strong>Implementation of <code>erf</code></strong></a></li>
+<li><a href="#A_Note_on_Integer_Generation_Algorithms"><strong>A Note on Integer Generation Algorithms</strong></a></li>
+<li><a href="#A_Note_on_Weighted_Choice_Algorithms"><strong>A Note on Weighted Choice Algorithms</strong></a></li>
+<li><a href="#A_Note_on_Error_Bounded_Algorithms"><strong>A Note on Error-Bounded Algorithms</strong></a></li>
+<li><a href="#Weighted_Choice_with_Coins_of_Known_Bias"><strong>Weighted Choice with Coins of Known Bias</strong></a></li>
+</ul></li>
+<li><a href="#License"><strong>License</strong></a></li>
+</ul>
+
+<p><a id=Specific_Distributions></a></p>
+
+<h3>Specific Distributions</h3>
+
+<p><strong>Requires random real numbers.</strong>  This section shows algorithms to sample several popular non-uniform distributions.  The algorithms are exact unless otherwise noted, and applications should choose algorithms with either no error (including rounding error) or a user-settable error bound.  See the <a href="#A_Note_on_Error_Bounded_Algorithms"><strong>appendix</strong></a> for more information.</p>
+
+<p><a id=Normal_Gaussian_Distribution></a></p>
+
+<h4>Normal (Gaussian) Distribution</h4>
+
+<p>The <a href="https://en.wikipedia.org/wiki/Normal_distribution"><strong><em>normal distribution</em></strong></a> (also called the Gaussian distribution) takes the following two parameters:</p>
+
+<ul>
+<li><code>mu</code> (&mu;) is the mean (average), or where the peak of the distribution&#39;s &quot;bell curve&quot; is.</li>
+<li><code>sigma</code> (&sigma;), the standard deviation, affects how wide the &quot;bell curve&quot; appears. The
+probability that a normally-distributed random number will be within one standard deviation from the mean is about 68.3%; within two standard deviations (2 times <code>sigma</code>), about 95.4%; and within three standard deviations, about 99.7%.  (Some publications give &sigma;<sup>2</sup>, or variance, rather than standard deviation, as the second parameter.  In this case, the standard deviation is the variance&#39;s square root.)</li>
+</ul>
+
+<p>There are a number of methods for normal random number generation, including the following.  An application can combine some or all of these.</p>
+
+<ol>
+<li>The ratio-of-uniforms method (given as <code>NormalRatioOfUniforms</code> below).</li>
+<li>In the <em>Box&ndash;Muller transformation</em>, <code>mu + radius * cos(angle)</code> and <code>mu + radius * sin(angle)</code>, where <code>angle = RNDRANGEMaxExc(0, 2 * pi)</code> and <code>radius = sqrt(Expo(0.5)) * sigma</code>, are two independent normally-distributed random numbers.  The polar method (given as <code>NormalPolar</code> below) likewise produces two independent normal random numbers at a time.</li>
+<li>Karney&#39;s algorithm to sample from the normal distribution, in a manner that minimizes approximation error and without using floating-point numbers (Karney 2014)<sup><a href="#Note1"><strong>(1)</strong></a></sup>.</li>
+<li>The following are approximations to the normal distribution:
+
+<ul>
+<li>The sum of twelve <code>RNDRANGEMaxExc(0, sigma)</code> numbers (see Note 13), subtracted by 6 * <code>sigma</code>. See <code>NormalCLT</code> below, which also includes an optional step to &quot;warp&quot; the random number for better accuracy (Kabal 2000/2019)<sup><a href="#Note2"><strong>(2)</strong></a></sup> See also <a href="https://en.wikipedia.org/wiki/Irwin%E2%80%93Hall_distribution"><strong>&quot;Irwin&ndash;Hall distribution&quot; on Wikipedia</strong></a>.  D. Thomas (2014)<sup><a href="#Note3"><strong>(3)</strong></a></sup>, describes a more general approximation called CLT<sub>k</sub>, which combines <code>k</code> uniform random numbers as follows: <code>RNDU01() - RNDU01() + RNDU01() - ...</code>.</li>
+<li><a href="#Inverse_Transform_Sampling"><strong>Inversions</strong></a> of the normal distribution&#39;s cumulative distribution function (CDF), including those by Wichura, by Acklam, and by Luu (Luu 2016)<sup><a href="#Note4"><strong>(4)</strong></a></sup>.  See also <a href="https://www.johndcook.com/blog/normal_cdf_inverse/"><strong>&quot;A literate program to compute the inverse of the normal CDF&quot;</strong></a>.  Notice that the normal distribution&#39;s inverse CDF has no closed form.</li>
+</ul></li>
+</ol>
+
+<p>For surveys of normal random number generators, see (Thomas et al. 2007)<sup><a href="#Note5"><strong>(5)</strong></a></sup>, and (Malik and Hemani 2016)<sup><a href="#Note6"><strong>(6)</strong></a></sup>.</p>
+
+<pre>METHOD NormalRatioOfUniforms(mu, sigma)
+    while true
+        a=RNDU01ZeroExc()
+        b=RNDRANGE(0,sqrt(2.0/exp(1.0)))
+        if b*b &lt;= -a * a * 4 * ln(a)
+          return (RNDINT(1) * 2 - 1) *
+            (b * sigma / a) + mu
+        end
+    end
+END METHOD
+
+METHOD NormalPolar(mu, sigma)
+  while true
+    a = RNDU01ZeroExc()
+    b = RNDU01ZeroExc()
+    if RNDINT(1) == 0: a = 0 - a
+    if RNDINT(1) == 0: b = 0 - b
+    c = a * a + b * b
+    if c != 0 and c &lt;= 1
+       c = sqrt(-ln(c) * 2 / c)
+       return [a * sigma * c + mu, b * sigma * c + mu]
+    end
+  end
+END METHOD
+
+METHOD NormalCLT(mu, sigma)
+  sum = 0
+  for i in 0...12: sum=sum+RNDRANGEMaxExc(0, sigma)
+  sum = sum - 6*sigma
+  // Optional: &quot;Warp&quot; the sum for better accuracy
+  ssq = sum * sum
+  sum = ((((0.0000001141*ssq - 0.0000005102) *
+            ssq + 0.00007474) *
+            ssq + 0.0039439) *
+            ssq + 0.98746) * sum
+  return sum + mu
+ end
+END METHOD
+</pre>
+
+<blockquote>
+<p><strong>Notes:</strong></p>
+
+<ol>
+<li>The <em>standard normal distribution</em> is implemented as <code>Normal(0, 1)</code>.</li>
+<li>Methods implementing a variant of the normal distribution, the <em>discrete Gaussian distribution</em>, generate <em>integers</em> that closely follow the normal distribution.  Examples include the one in (Karney 2014)<sup><a href="#Note1"><strong>(1)</strong></a></sup>, as well as so-called &quot;constant-time&quot; methods such as (Micciancio and Walter 2017)<sup><a href="#Note7"><strong>(7)</strong></a></sup> that are used above all in <em>lattice-based cryptography</em>.</li>
+</ol>
+</blockquote>
+
+<p><a id=Gamma_Distribution></a></p>
+
+<h4>Gamma Distribution</h4>
+
+<p>The following method generates a random number that follows a <em>gamma distribution</em> and is based on Marsaglia and Tsang&#39;s method from 2000<sup><a href="#Note8"><strong>(8)</strong></a></sup> (which is an approximate but simple algorithm) and (Liu et al. 2015)<sup><a href="#Note9"><strong>(9)</strong></a></sup>.  Usually, the number expresses either&mdash;</p>
+
+<ul>
+<li>the lifetime (in days, hours, or other fixed units) of a random component with an average lifetime of <code>meanLifetime</code>, or</li>
+<li>a random amount of time (in days, hours, or other fixed units) that passes until as many events as <code>meanLifetime</code> happen.</li>
+</ul>
+
+<p>Here, <code>meanLifetime</code> must be an integer or noninteger greater than 0, and <code>scale</code> is a scaling parameter that is greater than 0, but usually 1 (the random gamma number is multiplied by <code>scale</code>).</p>
+
+<pre>METHOD GammaDist(meanLifetime, scale)
+    // Needs to be greater than 0
+    if meanLifetime &lt;= 0 or scale &lt;= 0: return error
+    // Exponential distribution special case if
+    // `meanLifetime` is 1 (see also (Devroye 1986), p. 405)
+    if meanLifetime == 1: return Expo(1.0 / scale)
+    if meanLifetime &lt; 0.3 // Liu, Martin, Syring 2015
+       lamda = (1.0/meanLifetime) - 1
+       w = meanLifetime / (1-meanLifetime) * exp(1)
+       r = 1.0/(1+w)
+       while true
+            z = 0
+            x = RNDU01()
+            if x &lt;= r: z = -ln(x/r)
+            else: z = -Expo(lamda)
+            ret = exp(-z/meanLifetime)
+            eta = 0
+            if z&gt;=0: eta=exp(-z)
+            else: eta=w*lamda*exp(lamda*z)
+            if RNDRANGE(0, eta) &lt; exp(-ret-z): return ret * scale
+       end
+    end
+    d = meanLifetime
+    v = 0
+    if meanLifetime &lt; 1: d = d + 1
+    d = d - (1.0 / 3) // NOTE: 1.0 / 3 must be a fractional number
+    c = 1.0 / sqrt(9 * d)
+    while true
+        x = 0
+        while true
+           x = Normal(0, 1)
+           v = c * x + 1;
+           v = v * v * v
+           if v &gt; 0: break
+        end
+        u = RNDU01ZeroExc()
+        x2 = x * x
+        if u &lt; 1 - (0.0331 * x2 * x2): break
+        if ln(u) &lt; (0.5 * x2) + (d * (1 - v + ln(v))): break
+    end
+    ret = d * v
+    if meanLifetime &lt; 1
+       ret = ret * pow(RNDU01(), 1.0 / meanLifetime)
+    end
+    return ret * scale
+END METHOD
+</pre>
+
+<p><a id=Beta_Distribution></a></p>
+
+<h4>Beta Distribution</h4>
+
+<p>The beta distribution is a bounded-domain probability distribution; its two parameters, <code>a</code> and <code>b</code>, are both greater than 0 and describe the distribution&#39;s shape.  Depending on <code>a</code> and <code>b</code>, the shape can be a smooth peak or a smooth valley.</p>
+
+<p>The following method generates a random number that follows a <em>beta distribution</em>, in the interval [0, 1).</p>
+
+<pre>METHOD BetaDist(a, b)
+  if b==1 and a==1: return RNDU01()
+  // Min-of-uniform
+  if a==1: return 1.0-pow(RNDU01(),1.0/b)
+  // Max-of-uniform.  Use only if a is small to
+  // avoid accuracy problems, as pointed out
+  // by Devroye 1986, p. 675.
+  if b==1 and a &lt; 10: return pow(RNDU01(),1.0/a)
+  x=GammaDist(a,1)
+  return x/(x+GammaDist(b,1))
+END METHOD
+</pre>
+
+<p>I give an <a href="https://peteroupc.github.io/exporand.html"><strong>error-bounded sampler</strong></a> for the beta distribution (when <code>a</code> and <code>b</code> are both 1 or greater) in a separate page.</p>
+
+<p><a id=von_Mises_Distribution></a></p>
+
+<h4>von Mises Distribution</h4>
+
+<p>The <em>von Mises distribution</em> describes a distribution of circular angles and uses two parameters: <code>mean</code> is the mean angle and <code>kappa</code> is a shape parameter.  The distribution is uniform at <code>kappa = 0</code> and approaches a normal distribution with increasing <code>kappa</code>.</p>
+
+<p>The algorithm below generates a random number from the von Mises distribution, and is based on the Best&ndash;Fisher algorithm from 1979 (as described in (Devroye 1986)<sup><a href="#Note10"><strong>(10)</strong></a></sup> with errata incorporated).</p>
+
+<pre>METHOD VonMises(mean, kappa)
+    if kappa &lt; 0: return error
+    if kappa == 0
+        return RNDRANGEMinMaxExc(mean-pi, mean+pi)
+    end
+    r = 1.0 + sqrt(4 * kappa * kappa + 1)
+    rho = (r - sqrt(2 * r)) / (kappa * 2)
+    s = (1 + rho * rho) / (2 * rho)
+    while true
+        u = RNDRANGEMaxExc(-pi, pi)
+        v = RNDU01ZeroOneExc()
+        z = cos(u)
+        w = (1 + s*z) / (s + z)
+        y = kappa * (s - w)
+        if y*(2 - y) - v &gt;=0 or ln(y / v) + 1 - y &gt;= 0
+           if angle&lt;-1: angle=-1
+           if angle&gt;1: angle=1
+           // NOTE: Inverse cosine replaced here
+           // with `atan2` equivalent
+           angle = atan2(sqrt(1-w*w),w)
+           if u &lt; 0: angle = -angle
+           return mean + angle
+        end
+    end
+END METHOD
+</pre>
+
+<p><a id=Stable_Distribution></a></p>
+
+<h4>Stable Distribution</h4>
+
+<p>As more and more independent random numbers, generated the same way, are added together, their distribution tends to a <a href="https://en.wikipedia.org/wiki/Stable_distribution"><strong><em>stable distribution</em></strong></a>, which resembles a curve with a single peak, but with generally &quot;fatter&quot; tails than the normal distribution.  (Here, the stable distribution means the &quot;alpha-stable distribution&quot;.) The pseudocode below uses the Chambers&ndash;Mallows&ndash;Stuck algorithm.  The <code>Stable</code> method, implemented below, takes two parameters:</p>
+
+<ul>
+<li><code>alpha</code> is a stability index in the interval (0, 2].</li>
+<li><code>beta</code> is an asymmetry parameter in the interval [-1, 1]; if <code>beta</code> is 0, the curve is symmetric.</li>
+</ul>
+
+<p>&nbsp;</p>
+
+<pre>METHOD Stable(alpha, beta)
+    if alpha &lt;=0 or alpha &gt; 2: return error
+    if beta &lt; -1 or beta &gt; 1: return error
+    halfpi = pi * 0.5
+    unif=RNDRANGEMinMaxExc(-halfpi, halfpi)
+    c=cos(unif)
+    if alpha == 1
+       s=sin(unif)
+       if beta == 0: return s/c
+       expo=Expo(1)
+       return 2.0*((unif*beta+halfpi)*s/c -
+         beta * ln(halfpi*expo*c/(unif*beta+halfpi)))/pi
+    else
+       z=-tan(alpha*halfpi)*beta
+       ug=unif+atan2(-z, 1)/alpha
+       cpow=pow(c, -1.0 / alpha)
+       return pow(1.0+z*z, 1.0 / (2*alpha))*
+          (sin(alpha*ug)*cpow)*
+          pow(cos(unif-alpha*ug)/expo, (1.0 - alpha) / alpha)
+    end
+END METHOD
+</pre>
+
+<p>Methods implementing the strictly geometric stable and general geometric stable distributions are shown below (Kozubowski 2000)<sup><a href="#Note11"><strong>(11)</strong></a></sup>.  Here, <code>alpha</code> is in (0, 2], <code>lamda</code> is greater than 0, and <code>tau</code>&#39;s absolute value is min(1, 2/<code>alpha</code> - 1).</p>
+
+<pre>METHOD GeometricStable(alpha, lamda, tau)
+   // If tau is 0, this is a symmetric Linnik distribution.
+   // If tau is 1 and alpha is less than 1, this is
+   // a Mittag--Leffler distribution.
+   rho = alpha*(1-tau)/2
+   sign = -1
+   if RNDINT(1)==0 or RNDU01() &lt; tau
+       rho = alpha*(1+tau)/2
+       sign = 1
+   end
+   w = 1
+   if rho != 1
+      rho = rho * pi
+      cotparam = RNDRANGE(0, rho)
+      w = sin(rho)*cos(cotparam)/sin(cotparam)-cos(rho)
+   end
+   return Expo(1)*sign*pow(lamda*w, 1.0/alpha)
+END METHOD
+
+METHOD GeneralGeoStable(alpha, beta, mu, sigma)
+   z = Expo(1)
+   if alpha == 1: return mu*z+Stable(alpha, beta)*sigma*z+
+          sigma*z*beta*2*pi*ln(sigma*z)
+   else: return mu*z+
+          Stable(alpha, beta)*sigma*pow(z, 1.0/alpha)
+END METHOD
+</pre>
+
+<p><a id=Multivariate_Normal_Multinormal_Distribution></a></p>
+
+<h4>Multivariate Normal (Multinormal) Distribution</h4>
+
+<p>The following pseudocode calculates a random vector (list of numbers) that follows a <a href="https://en.wikipedia.org/wiki/Multivariate_normal_distribution"><strong><em>multivariate normal (multinormal) distribution</em></strong></a>.  The method <code>MultivariateNormal</code> takes the following parameters:</p>
+
+<ul>
+<li>A list, <code>mu</code> (&mu;), which indicates the means to add to the random vector&#39;s components. <code>mu</code> can be <code>nothing</code>, in which case each component will have a mean of zero.</li>
+<li>A list of lists <code>cov</code>, that specifies a <em>covariance matrix</em> (&Sigma;, a symmetric positive definite N&times;N matrix, where N is the number of components of the random vector).</li>
+</ul>
+
+<p>&nbsp;</p>
+
+<pre>METHOD Decompose(matrix)
+  numrows = size(matrix)
+  if size(matrix[0])!=numrows: return error
+  // Does a Cholesky decomposition of a matrix
+  // assuming it&#39;s positive definite and invertible
+  ret=NewList()
+  for i in 0...numrows
+    submat = NewList()
+    for j in 0...numrows: AddItem(submat, 0)
+    AddItem(ret, submat)
+  end
+  s1 = sqrt(matrix[0][0])
+  if s1==0: return ret // For robustness
+  for i in 0...numrows
+    ret[0][i]=matrix[0][i]*1.0/s1
+  end
+  for i in 0...numrows
+    msum=0.0
+    for j in 0...i: msum = msum + ret[j][i]*ret[j][i]
+    sq=matrix[i][i]-msum
+    if sq&lt;0: sq=0 // For robustness
+    ret[i][i]=math.sqrt(sq)
+  end
+  for j in 0...numrows
+    for i in (j + 1)...numrows
+      // For robustness
+      if ret[j][j]==0: ret[j][i]=0
+      if ret[j][j]!=0
+        msum=0
+        for k in 0...j: msum = msum + ret[k][i]*ret[k][j]
+        ret[j][i]=(matrix[j][i]-msum)*1.0/ret[j][j]
+      end
+    end
+  end
+  return ret
+END METHOD
+
+METHOD MultivariateNormal(mu, cov)
+  mulen=size(cov)
+  if mu != nothing
+    mulen = size(mu)
+    if mulen!=size(cov): return error
+    if mulen!=size(cov[0]): return error
+  end
+  // NOTE: If multiple random points will
+  // be generated using the same covariance
+  // matrix, an implementation can consider
+  // precalculating the decomposed matrix
+  // in advance rather than calculating it here.
+  cho=Decompose(cov)
+  i=0
+  ret=NewList()
+  vars=NewList()
+  for j in 0...mulen: AddItem(vars, Normal(0, 1))
+  while i&lt;mulen
+    nv=Normal(0,1)
+    msum = 0
+    if mu == nothing: msum=mu[i]
+    for j in 0...mulen: msum=msum+vars[j]*cho[j][i]
+    AddItem(ret, msum)
+    i=i+1
+  end
+  return ret
+end
+</pre>
+
+<blockquote>
+<p><strong>Note:</strong> The <a href="https://peteroupc.github.io/randomgen.zip"><strong>Python sample code</strong></a> contains a variant of this
+method for generating multiple random vectors in one call.</p>
+
+<p><strong>Examples:</strong></p>
+
+<ol>
+<li>A <strong>binormal distribution</strong> (two-variable multinormal distribution) can be sampled using the following idiom: <code>MultivariateNormal([mu1, mu2], [[s1*s1, s1*s2*rho], [rho*s1*s2, s2*s2]])</code>, where <code>mu1</code> and <code>mu2</code> are the means of the two normal random numbers, <code>s1</code> and <code>s2</code> are their standard deviations, and <code>rho</code> is a <em>correlation coefficient</em> greater than -1 and less than 1 (0 means no correlation).</li>
+<li><strong>Log-multinormal distribution</strong>: Generate a multinormal random vector, then apply <code>exp(n)</code> to each component <code>n</code>.</li>
+<li>A <strong>Beckmann distribution</strong>: Generate a random binormal vector <code>vec</code>, then apply <code>Norm(vec)</code> to that vector.</li>
+<li>A <strong>Rice (Rician) distribution</strong> is a Beckmann distribution in which the binormal random pair is generated with <code>m1 = m2 = a / sqrt(2)</code>, <code>rho = 0</code>, and <code>s1 = s2 = b</code>, where <code>a</code> and <code>b</code> are the parameters to the Rice distribution.</li>
+<li>A <strong>Rice&ndash;Norton distributed</strong>: Generate <code>vec = MultivariateNormal([v,v,v],[[w,0,0],[0,w,0],[0,0,w]])</code> (where <code>v = a/sqrt(m*2)</code>, <code>w = b*b/m</code>, and <code>a</code>, <code>b</code>, and <code>m</code> are the parameters to the Rice&ndash;Norton distribution), then apply <code>Norm(vec)</code> to that vector.</li>
+<li>A <strong>standard</strong> <a href="https://en.wikipedia.org/wiki/Complex_normal_distribution"><strong>complex normal distribution</strong></a> is a binormal distribution in which the binormal random pair is generated with <code>s1 = s2 = sqrt(0.5)</code> and <code>mu1 = mu2 = 0</code> and treated as the real and imaginary parts of a complex number.</li>
+<li><strong>Multivariate Linnik distribution</strong>: Generate a multinormal random vector, then multiply each component by <code>GeometricStable(alpha/2.0, 1, 1)</code>, where <code>alpha</code> is a parameter in (0, 2] (Kozubowski 2000)<sup><a href="#Note11"><strong>(11)</strong></a></sup>.</li>
+</ol>
+</blockquote>
+
+<p><a id=Random_Real_Numbers_with_a_Given_Positive_Sum></a></p>
+
+<h4>Random Real Numbers with a Given Positive Sum</h4>
+
+<p>Generating <em>n</em> <code>GammaDist(1, 1)</code> numbers and dividing them by <code>total</code> times their sum<sup><a href="#Note12"><strong>(12)</strong></a></sup>
+ will result in <em>n</em> uniform random numbers, in random order, that sum to <code>total</code> assuming no rounding error (see a <a href="https://en.wikipedia.org/wiki/Dirichlet_distribution#Gamma_distribution"><strong>Wikipedia article</strong></a>).  For example, if <code>total</code> is 1, the numbers will (approximately) sum to 1.  Note that in the exceptional case that all numbers are 0, the process should repeat.</p>
+
+<blockquote>
+<p><strong>Notes:</strong></p>
+
+<ol>
+<li>Notes 1 and 2 in the section &quot;Random Integers with a Given Positive Sum&quot; apply here.</li>
+<li>The <strong>Dirichlet distribution</strong>, as defined in some places (e.g., <em>Mathematica</em>; (Devroye 1986)<sup><a href="#Note10"><strong>(10)</strong></a></sup>, p. 593-594), can be sampled by generating <em>n</em>+1 random <a href="#Gamma_Distribution"><strong>gamma-distributed</strong></a> numbers, each with separate parameters, taking their sum<sup><a href="#Note12"><strong>(12)</strong></a></sup>, dividing them by that sum, and taking the first <em>n</em> numbers. (The <em>n</em>+1 numbers sum to 1, but the Dirichlet distribution models the first <em>n</em> of them, which will generally sum to less than 1.)</li>
+</ol>
+</blockquote>
+
+<p><a id=Gaussian_and_Other_Copulas></a></p>
+
+<h4>Gaussian and Other Copulas</h4>
+
+<p>A <em>copula</em> is a way to describe the dependence between random numbers.</p>
+
+<p>One example is a <em>Gaussian copula</em>; this copula is sampled by sampling from a <a href="#Multivariate_Normal_Multinormal_Distribution"><strong>multinormal distribution</strong></a>, then converting the resulting numbers to <em>dependent</em> uniform random numbers. In the following pseudocode, which implements a Gaussian copula:</p>
+
+<ul>
+<li>The parameter <code>covar</code> is the covariance matrix for the multinormal distribution.</li>
+<li><code>erf(v)</code> is the <a href="https://en.wikipedia.org/wiki/Error_function"><strong>error function</strong></a> of the number <code>v</code> (see the appendix).</li>
+</ul>
+
+<p>&nbsp;</p>
+
+<pre>METHOD GaussianCopula(covar)
+   mvn=MultivariateNormal(nothing, covar)
+   for i in 0...size(covar)
+      // Apply the normal distribution&#39;s CDF
+      // to get uniform random numbers
+      mvn[i] = (erf(mvn[i]/(sqrt(2)*sqrt(covar[i][i])))+1)*0.5
+   end
+   return mvn
+END METHOD
+</pre>
+
+<p>Each of the resulting uniform random numbers will be in the interval [0, 1], and each one can be further transformed to any other probability distribution (which is called a <em>marginal distribution</em> here) by taking the quantile of that uniform number for that distribution (see &quot;<a href="#Inverse_Transform_Sampling"><strong>Inverse Transform Sampling</strong></a>&quot;, and see also (Cario and Nelson 1997)<sup><a href="#Note13"><strong>(13)</strong></a></sup>.)</p>
+
+<blockquote>
+<p><strong>Examples:</strong></p>
+
+<ol>
+<li>To generate two correlated uniform random numbers with a Gaussian copula, generate <code>GaussianCopula([[1, rho], [rho, 1]])</code>, where <code>rho</code> is the Pearson correlation coefficient, in the interval [-1, 1]. (Other correlation coefficients besides <code>rho</code> exist. For example, for a two-variable Gaussian copula, the <a href="https://en.wikipedia.org/wiki/Rank_correlation"><strong>Spearman correlation coefficient</strong></a> <code>srho</code> can be converted to <code>rho</code> by <code>rho = sin(srho * pi / 6) * 2</code>.  Other correlation coefficients, and other measures of dependence between random numbers, are not further discussed in this document.)</li>
+<li><p>The following example generates two random numbers that follow a Gaussian copula with exponential marginals (<code>rho</code> is the Pearson correlation coefficient, and <code>rate1</code> and <code>rate2</code> are the rates of the two exponential marginals).</p>
+
+<pre>METHOD CorrelatedExpo(rho, rate1, rate2)
+   copula = GaussianCopula([[1, rho], [rho, 1]])
+   // Transform to exponentials using that
+   // distribution&#39;s quantile function
+   return [-logp1(-copula[0]) / rate1,
+     -logp1(-copula[1]) / rate2]
+END METHOD
+</pre></li>
+</ol>
+
+<p><strong>Note:</strong> The Gaussian copula is also known as the <em>normal-to-anything</em> method.</p>
+</blockquote>
+
+<p>Other kinds of copulas describe different kinds of dependence between random numbers.  Examples of other copulas are&mdash;</p>
+
+<ul>
+<li>the <strong>Fr&eacute;chet&ndash;Hoeffding upper bound copula</strong> <em>[x, x, ..., x]</em> (e.g., <code>[x, x]</code>), where <code>x = RNDU01()</code>,</li>
+<li>the <strong>Fr&eacute;chet&ndash;Hoeffding lower bound copula</strong> <code>[x, 1.0 - x]</code> where <code>x = RNDU01()</code>,</li>
+<li>the <strong>product copula</strong>, where each number is a separately generated <code>RNDU01()</code> (indicating no dependence between the numbers), and</li>
+<li>the <strong>Archimedean copulas</strong>, described by M. Hofert and M. M&auml;chler (2011)<sup><a href="#Note14"><strong>(14)</strong></a></sup>.</li>
+</ul>
+
+<p><a id=Exponential_Distribution_Another_Error_Bounded_Algorithm></a></p>
+
+<h4>Exponential Distribution: Another Error-Bounded Algorithm</h4>
+
+<p>The following method samples from an exponential distribution with a &lambda; parameter greater than 0, expressed as <code>lnum</code>/<code>lden</code> (where the sampling occurs within an error tolerance of 2<sup><code>-precision</code></sup>).  For more information, see &quot;<a href="https://peteroupc.github.io/exporand.html"><strong>Partially-Sampled Random Numbers</strong></a>&quot;.</p>
+
+<pre>METHOD ZeroOrOneExpMinus(x, y)
+  // Generates 1 with probability exp(-x/y) (Canonne et al. 2020)
+  if y &lt;= 0 or x&lt;0: return error
+  if x==0: return 1 // exp(0) = 1
+  if x &gt; y
+    xf = floor(x/y)
+    x = mod(x, y)
+    if x&gt;0 and ZeroOrOneExpMinus(x, y) == 0: return 0
+    for i in 0...xf
+      if ZeroOrOneExpMinus(1,1) == 0: return 0
+    end
+    return 1
+  end
+  r = 1
+  oy = y
+  while true
+    if ZeroOrOne(x, y) == 0: return r
+    r=1-r
+    y = y + oy
+  end
+END METHOD
+
+METHOD LogisticExp(lnum, lden, prec)
+    // Generates 1 with probability 1/(exp(2^-prec)+1).
+    // References: Alg. 6 of Morina et al. 2019; Carinne et al. 2020.
+    denom=pow(2,prec)*lden
+    while true
+       if RNDINT(1)==0: return 0
+       if ZeroOrOneExpMinus(lnum, denom) == 1: return 1
+    end
+END METHOD
+
+METHOD ExpoExact(lnum, lden, precision)
+   ret=0
+   for i in 1..precision
+    if LogisticExp(lnum, lden, i)==1: ret=ret+pow(2,-i)
+   end
+   while ZeroOrOneExpMinus(lnum,lden)==1: ret=ret+1
+   return ret
+END METHOD
+</pre>
+
+<blockquote>
+<p><strong>Note:</strong> After <code>ExpoExact</code> is used to generate a random number, an application can append additional binary digits (such as <code>RNDINT(1)</code>) to the end of that number while remaining accurate to the given precision (Karney 2014)<sup><a href="#Note1"><strong>(1)</strong></a></sup>.</p>
+</blockquote>
+
+<p><a id=Weighted_Choice_with_Biased_Coins></a></p>
+
+<h3>Weighted Choice with Biased Coins</h3>
+
+<p>This section describes a way to implement weighted choice of one or more items from coins with unknown bias.  Assuming that we only have&mdash;</p>
+
+<ul>
+<li>a list of non-negative integer weights (that need not sum to 1), and</li>
+<li>a &quot;biased coin&quot; which returns true with <em>unknown</em> probability of heads and false otherwise,</li>
+</ul>
+
+<p>then the solution involves turning a biased coin to a fair coin, and then turning the fair coin into a loaded die.</p>
+
+<ol>
+<li> Biased coin to fair coin:  This can be achieved with <em>randomness extraction</em> techniques, such as von Neumann unbiasing.  Randomness extraction is outside the scope of this document.</li>
+<li> Fair coin to loaded die:  There are many ways to solve this problem.  For example, fair coins can serve as the RNG for <code>RNDINT</code> (see &quot;<a href="https://peteroupc.github.io/randomfunc.html#Uniform_Random_Integers"><strong>Uniform Random Integers</strong></a>&quot;), and <code>RNDINT</code> can in turn be used to implement <a href="https://peteroupc.github.io/randomfunc.html#Weighted_Choice_With_Replacement"><strong><code>WeightedChoice</code></strong></a>, which implements loaded dice.  Some algorithms also produce a loaded die <em>directly</em> from fair coins, such as the <a href="https://github.com/probcomp/fast-loaded-dice-roller"><strong>Fast Loaded Dice Roller</strong></a>.</li>
+</ol>
+
+<p>For related algorithms, see the appendix.</p>
+
+<p><a id=Notes></a></p>
+
+<h2>Notes</h2>
+
+<p><small><sup id=Note1>(1)</sup> Karney, C.F.F., &quot;<a href="https://arxiv.org/abs/1303.6257v2"><strong>Sampling exactly from the normal distribution</strong></a>&quot;, arXiv:1303.6257v2  [physics.comp-ph], 2014.</small></p>
+
+<p><small><sup id=Note2>(2)</sup> Kabal, P., &quot;Generating Gaussian Pseudo-Random Variates&quot;, McGill University, 2000/2019.</small></p>
+
+<p><small><sup id=Note3>(3)</sup> Thomas, D.B., 2014, May. FPGA Gaussian random number generators with guaranteed statistical accuracy. In <em>2014 IEEE 22nd Annual International Symposium on Field-Programmable Custom Computing Machines</em> (pp. 149-156).</small></p>
+
+<p><small><sup id=Note4>(4)</sup> Luu, T., &quot;Fast and Accurate Parallel Computation of Quantile Functions for Random Number Generation&quot;, Dissertation, University College London, 2016.</small></p>
+
+<p><small><sup id=Note5>(5)</sup> Thomas, D., et al., &quot;Gaussian Random Number Generators&quot;, <em>ACM Computing Surveys</em> 39(4), 2007.</small></p>
+
+<p><small><sup id=Note6>(6)</sup> Malik, J.S., Hemani, A., &quot;Gaussian random number generation: A survey on hardware architectures&quot;, <em>ACM Computing Surveys</em> 49(3), 2016.</small></p>
+
+<p><small><sup id=Note7>(7)</sup> Micciancio, D. and Walter, M., &quot;Gaussian sampling over the integers: Efficient, generic, constant-time&quot;, in Annual International Cryptology Conference, August 2017 (pp. 455-485).</small></p>
+
+<p><small><sup id=Note8>(8)</sup> &quot;A simple method for generating gamma variables&quot;, <em>ACM Transactions on Mathematical Software</em> 26(3), 2000.</small></p>
+
+<p><small><sup id=Note9>(9)</sup> Liu, C., Martin, R., Syring, N., &quot;<a href="https://arxiv.org/abs/1302.1884v3"><strong>Simulating from a gamma distribution with small shape parameter</strong></a>&quot;, arXiv:1302.1884v3  [stat.CO], 2015.</small></p>
+
+<p><small><sup id=Note10>(10)</sup> Devroye, L., <a href="http://luc.devroye.org/rnbookindex.html"><strong><em>Non-Uniform Random Variate Generation</em></strong></a>, 1986.</small></p>
+
+<p><small><sup id=Note11>(11)</sup> Tomasz J. Kozubowski, &quot;Computer simulation of geometric stable distributions&quot;, <em>Journal of Computational and Applied Mathematics</em> 116(2), 2000.</small></p>
+
+<p><small><sup id=Note12>(12)</sup> <a href="https://en.wikipedia.org/wiki/Kahan_summation_algorithm"><strong>Kahan summation</strong></a> can be a more robust way than the na&iuml;ve approach to compute the sum of three or more floating-point numbers.</small></p>
+
+<p><small><sup id=Note13>(13)</sup> Cario, M. C., B. L. Nelson, &quot;Modeling and generating random vectors with arbitrary marginal distributions and correlation matrix&quot;, 1997.</small></p>
+
+<p><small><sup id=Note14>(14)</sup> Hofert, M., and Maechler, M.  &quot;Nested Archimedean Copulas Meet R: The nacopula Package&quot;.  <em>Journal of Statistical Software</em> 39(9), 2011, pp. 1-20.</small></p>
+
+<p><small><sup id=Note15>(15)</sup> Knuth, Donald E. and Andrew Chi-Chih Yao. &quot;The complexity of nonuniform random number generation&quot;, in <em>Algorithms and Complexity: New Directions and Recent Results</em>, 1976.</small></p>
+
+<p><small><sup id=Note16>(16)</sup> This is because the binary entropy of <code>p = 1/n</code> is <code>p * log2(1/p) = log2(n) / n</code>, and the sum of <code>n</code> binary entropies (for <code>n</code> outcomes with probability <code>1/n</code> each) is <code>log2(n)</code>.  Any optimal integer generator will come within 2 bits of this lower bound on average.</small></p>
+
+<p><small><sup id=Note17>(17)</sup> D. Lemire, &quot;A fast alternative to the modulo reduction&quot;, Daniel Lemire&#39;s blog, 2016.</small></p>
+
+<p><small><sup id=Note18>(18)</sup> Lemire, D., &quot;<a href="https://arxiv.org/abs/1805.10941v4"><strong>Fast Random Integer Generation in an Interval</strong></a>&quot;, arXiv:1805.10941v4  [cs.DS], 2018.</small></p>
+
+<p><small><sup id=Note19>(19)</sup> Lumbroso, J., &quot;<a href="https://arxiv.org/abs/1304.1916"><strong>Optimal Discrete Uniform Generation from Coin Flips, and Applications</strong></a>&quot;, arXiv:1304.1916 [cs.DS]</small></p>
+
+<p><small><sup id=Note20>(20)</sup> &quot;<a href="http://mathforum.org/library/drmath/view/65653.html"><strong>Probability and Random Numbers</strong></a>&quot;, Feb. 29, 2004.</small></p>
+
+<p><small><sup id=Note21>(21)</sup> Mennucci, A.C.G. &quot;<a href="https://arxiv.org/abs/1012.4290"><strong>Bit Recycling for Scaling Random Number Generators</strong></a>&quot;, arXiv:1012.4290 [cs.IT], 2018.</small></p>
+
+<p><small><sup id=Note22>(22)</sup> Saad, F.A., Freer C.E., et al., &quot;<a href="https://arxiv.org/abs/2003.03830v2"><strong>The Fast Loaded Dice Roller: A Near-Optimal Exact Sampler for Discrete Probability Distributions</strong></a>&quot;, arXiv:2003.03830v2  [stat.CO], also in <em>AISTATS 2020: Proceedings of the 23rd International Conference on Artificial Intelligence and Statistics, Proceedings of Machine Learning Research</em> 108, Palermo, Sicily, Italy, 2020.</small></p>
+
+<p><small><sup id=Note23>(23)</sup> Feras A. Saad, Cameron E. Freer, Martin C. Rinard, and Vikash K. Mansinghka, &quot;<a href="https://arxiv.org/abs/2001.04555v1"><strong>Optimal Approximate Sampling From Discrete Probability Distributions</strong></a>&quot;, arXiv:2001.04555v1 [cs.DS], also in Proc. ACM Program. Lang. 4, POPL, Article 36 (January 2020), 33 pages.</small></p>
+
+<p><small><sup id=Note24>(24)</sup> Klundert, B. van de, &quot;<a href="https://dspace.library.uu.nl/handle/1874/393383"><strong>Efficient Generation of Discrete Random Variates</strong></a>&quot;, Master thesis, Universiteit Utrecht, 2019.</small></p>
+
+<p><small><sup id=Note25>(25)</sup> K. Bringmann and K. G. Larsen, &quot;Succinct Sampling from Discrete Distributions&quot;, In: Proc. 45th Annual ACM Symposium on Theory of Computing (STOC&#39;13), 2013.</small></p>
+
+<p><small><sup id=Note26>(26)</sup> K. Bringmann and K. Panagiotou, &quot;Efficient Sampling Methods for Discrete Distributions.&quot; In: Proc. 39th International Colloquium on Automata, Languages, and Programming (ICALP&#39;12), 2012.</small></p>
+
+<p><small><sup id=Note27>(27)</sup> L. Hübschle-Schneider and P. Sanders, &quot;<a href="https://arxiv.org/abs/1903.00227v2"><strong>Parallel Weighted Random Sampling</strong></a>&quot;, arXiv:1903.00227v2  [cs.DS], 2019.</small></p>
+
+<p><small><sup id=Note28>(28)</sup> A.J. Walker, &quot;An efficient method for generating discrete random variables with general distributions&quot;, <em>ACM Transactions on Mathematical Software</em> 3, 1977.</small></p>
+
+<p><small><sup id=Note29>(29)</sup> Vose, Michael D. &quot;A linear algorithm for generating random numbers with a given distribution.&quot; IEEE Transactions on software engineering 17, no. 9 (1991): 972-975.</small></p>
+
+<p><small><sup id=Note30>(30)</sup> Roy, Sujoy Sinha, Frederik Vercauteren and Ingrid Verbauwhede. &quot;<a href="https://www.esat.kuleuven.be/cosic/publications/article-2372.pdf"><strong>High Precision Discrete Gaussian Sampling on FPGAs</strong></a>.&quot; <em>Selected Areas in Cryptography</em> (2013).</small></p>
+
+<p><small><sup id=Note31>(31)</sup> T. S. Han and M. Hoshi, &quot;Interval algorithm for random number generation&quot;, <em>IEEE Transactions on Information Theory</em> 43(2), March 1997.</small></p>
+
+<p><small><sup id=Note32>(32)</sup> Devroye, L., Gravel, C., &quot;<a href="https://arxiv.org/abs/1502.02539v5"><strong>Sampling with arbitrary precision</strong></a>&quot;, arXiv:1502.02539v5 [cs.IT], 2015.</small></p>
+
+<p><small><sup id=Note33>(33)</sup> Oberhoff, Sebastian, &quot;<a href="https://dc.uwm.edu/etd/1888"><strong>Exact Sampling and Prefix Distributions</strong></a>&quot;, <em>Theses and Dissertations</em>, University of Wisconsin Milwaukee, 2018.</small></p>
+
+<p><a id=Appendix></a></p>
+
+<h2>Appendix</h2>
+
+<p><a id=Implementation_of_erf></a></p>
+
+<h3>Implementation of <code>erf</code></h3>
+
+<p>The pseudocode below shows how the <a href="https://en.wikipedia.org/wiki/Error_function"><strong>error function</strong></a> <code>erf</code> can be implemented, in case the programming language used doesn&#39;t include a built-in version of <code>erf</code> (such as JavaScript at the time of this writing).   In the pseudocode, <code>EPSILON</code> is a very small number to end the iterative calculation.</p>
+
+<pre>METHOD erf(v)
+    if v==0: return 0
+    if v&lt;0: return -erf(-v)
+    if v==infinity: return 1
+    // NOTE: For Java `double`, the following
+    // line can be added:
+    // if v&gt;=6: return 1
+    i=1
+    ret=0
+    zp=-(v*v)
+    zval=1.0
+    den=1.0
+    while i &lt; 100
+        r=v*zval/den
+        den=den+2
+        ret=ret+r
+        // NOTE: EPSILON can be pow(10,14),
+        // for example.
+        if abs(r)&lt;EPSILON: break
+        if i==1: zval=zp
+        else: zval = zval*zp/i
+        i = i + 1
+    end
+    return ret*2/sqrt(pi)
+END METHOD
+</pre>
+
+<p><a id=A_Note_on_Integer_Generation_Algorithms></a></p>
+
+<h3>A Note on Integer Generation Algorithms</h3>
+
+<p>There are many algorithms for the <code>RNDINT(maxInclusive)</code> method, which generates uniform random integers in [0, maxInclusive].  This section deals with &quot;optimal&quot; <code>RNDINT</code> algorithms in terms of the number of random bits they use on average (assuming we have a &quot;true&quot; random generator that outputs independent unbiased random bits).</p>
+
+<p>Knuth and Yao (1976)<sup><a href="#Note15"><strong>(15)</strong></a></sup> showed that any algorithm that uses only random bits to generate random integers with separate probabilities can be described as a <em>binary tree</em> (also known as a <em>DDG tree</em> or <em>discrete distribution generating tree</em>).  Random bits trace a path in this tree, and each leaf (terminal node) in the tree represents an outcome.  They also gave lower bounds on the number of random bits an algorithm needs on average for this purpose.  In the case of <code>RNDINT</code>, there are <code>n = maxInclusive + 1</code> outcomes that each occur with probability <code>1/n</code>, so any <em>optimal</em> algorithm for <code>RNDINT</code> needs at least <code>log2(n)</code> and at most <code>log2(n) + 2</code> bits on average (where <code>log2(x) = ln(x)/ln(2)</code>).<sup><a href="#Note16"><strong>(16)</strong></a></sup></p>
+
+<p>As also shown by Knuth and Yao, however, any integer generating algorithm that is both optimal <em>and unbiased (exact)</em> will also run forever in the worst case, even if it uses few random bits on average.  This is because in most cases, <code>n</code> will not be a power of 2, so that <code>n</code> will have an infinite binary expansion, so that the resulting DDG tree will have to either be infinitely deep, or include &quot;rejection leaves&quot; at the end of the tree. (If <code>n</code> is a power of 2, the binary expansion will be finite, so that the DDG tree will have a finite depth and no rejection leaves.)</p>
+
+<p>Because of this, there is no general way to &quot;fix&quot; the worst case of running forever, while still having an unbiased (exact) algorithm.  For instance, modulo reductions can be represented by a DDG tree in which rejection leaves are replaced with labeled outcomes, but the bias occurs because only some outcomes can replace rejection leaves this way.  Even with rejection sampling, if the rejections stop after a set number of iterations, the same kind of bias will result.</p>
+
+<p>The following are some ways to implement <code>RNDINT</code>.  (The column &quot;Unbiased?&quot; means whether the algorithm generates random integers without bias, even if <code>n</code> is not a power of 2.)</p>
+
+<table><thead>
+<tr>
+<th>Algorithm</th>
+<th>Optimal?</th>
+<th>Unbiased?</th>
+<th>Time Complexity</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><em>Rejection sampling</em>: Sample in a bigger range until a sampled number fits the smaller range.</td>
+<td>Not always</td>
+<td>Yes</td>
+<td>Runs forever in worst case</td>
+</tr>
+<tr>
+<td><em>Multiply-and-shift reduction</em>: Generate <code>bignumber</code>, a <code>k</code>-bit random integer with many more bits than <code>n</code> has, then find <code>(bignumber * n) &gt;&gt; k</code> (see (Lemire 2016)<sup><a href="#Note17"><strong>(17)</strong></a></sup>, (Lemire 2018)<sup><a href="#Note18"><strong>(18)</strong></a></sup>, and the &quot;Integer Multiplication&quot; algorithm surveyed by M. O&#39;Neill.</td>
+<td>No</td>
+<td>No</td>
+<td>Constant</td>
+</tr>
+<tr>
+<td><em>Modulo reduction</em>: Generate <code>bignumber</code> as above, then find <code>rem(bignumber, n)</code></td>
+<td>No</td>
+<td>No</td>
+<td>Constant</td>
+</tr>
+<tr>
+<td><em>Fast Dice Roller</em> (Lumbroso 2013)<sup><a href="#Note19"><strong>(19)</strong></a></sup></td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Runs forever in worst case</td>
+</tr>
+<tr>
+<td>Math Forum (2004)<sup><a href="#Note20"><strong>(20)</strong></a></sup> or (Mennucci 2018)<sup><a href="#Note21"><strong>(21)</strong></a></sup> (batching/recycling random bits)</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Runs forever in worst case</td>
+</tr>
+<tr>
+<td>&quot;FP Multiply&quot; surveyed by <a href="http://www.pcg-random.org/posts/bounded-rands.html"><strong>M. O&#39;Neill</strong></a></td>
+<td>No</td>
+<td>No</td>
+<td>Constant</td>
+</tr>
+<tr>
+<td>Algorithm in &quot;Conclusion&quot; section by O&#39;Neill</td>
+<td>No</td>
+<td>Yes</td>
+<td>Runs forever in worst case</td>
+</tr>
+<tr>
+<td>&quot;Debiased&quot; and &quot;Bitmask with Rejection&quot; surveyed by M. O&#39;Neill</td>
+<td>No</td>
+<td>Yes</td>
+<td>Runs forever in worst case</td>
+</tr>
+</tbody></table>
+
+<p><a id=A_Note_on_Weighted_Choice_Algorithms></a></p>
+
+<h3>A Note on Weighted Choice Algorithms</h3>
+
+<p>Just like integer generation algorithms (see the previous section), weighted choice algorithms (implementations of <code>WeightedChoice</code> that sample with replacement) involve generating random integers with separate probabilities.  And all of them can be described as a binary DDG tree just like integer generating algorithms.</p>
+
+<p>In this case, though, the number of random bits an algorithm uses on average is bounded from below by the sum of binary entropies of all the probabilities involved.  For example, say we give the four integers 1, 2, 3, 4 the following weights: 3, 15, 1, 2.  The binary entropies of these weights are 0.4010... + 0.3467... + 0.2091... + 0.3230... = 1.2800... (because the sum of the weights is 21 and the binary entropy of 3/21 is <code>(3/21) * log2(21/3) = 0.4010...</code>, and so on for the other weights), so an optimal algorithm will use anywhere from 1.2800... to 3.2800... bits on average to generate a random number with these weights.<sup><a href="#Note16"><strong>(16)</strong></a></sup>  Another difference from integer generation algorithms is that usually a special data structure has to be built for the sampling to work, and often there is a need to make updates to the structure as items are sampled.  The following are some ways to implement <code>WeightedChoice</code>; unless noted, the algorithms are not optimal in terms of the number of bits used.</p>
+
+<ul>
+<li>The Fast Loaded Dice Roller (Saad et al., 2020)<sup><a href="#Note22"><strong>(22)</strong></a></sup>.  This sampler comes within 6 bits, on average, of the optimal number of bits.  The paper for this algorithm also reviews rejection samplers in section 4.</li>
+<li>The samplers described in (Saad et al., 2020)<sup><a href="#Note23"><strong>(23)</strong></a></sup>.   The samplers are optimal in the sense given here as long as the sum of the weights is of the form 2<sup>k</sup> or 2<sup>k</sup> &minus; 2<sup>m</sup>.</li>
+<li>The data structures surveyed and mentioned in (Klundert 2019)<sup><a href="#Note24"><strong>(24)</strong></a></sup>.</li>
+<li>The Bringmann&ndash;Larsen succinct data structure (Bringmann and Larsen 2013)<sup><a href="#Note25"><strong>(25)</strong></a></sup>.</li>
+<li>A sampler that is designed to work on a sorted list of weights (Bringmann and Panagiotou 2012)<sup><a href="#Note26"><strong>(26)</strong></a></sup>.</li>
+<li>The parallel weighted random samplers described in (Hübschle-Schneider and Sanders 2019)<sup><a href="#Note27"><strong>(27)</strong></a></sup>.</li>
+</ul>
+
+<p>There are other weighted choice algorithms that don&#39;t necessarily take integer weights.  They include:</p>
+
+<ul>
+<li>The section &quot;Weighted Choice with Coins of Known Bias&quot; in this appendix.</li>
+<li>The <em>alias method</em> by Walker (1977)<sup><a href="#Note28"><strong>(28)</strong></a></sup>.  Michael Vose&#39;s version of the alias method (Vose 1991)<sup><a href="#Note29"><strong>(29)</strong></a></sup> is described in &quot;<a href="https://www.keithschwarz.com/darts-dice-coins/"><strong>Darts, Dice, and Coins: Sampling from a Discrete Distribution</strong></a>&quot;.  The alias method ought to be implemented using rational-valued weights and rational-number arithmetic, since this method is hard to apply to integer weights if the sum of the weights is not divisible by the number of weights.</li>
+<li>The Knuth and Yao algorithm that generates a DDG tree from the binary expansions of the probabilities, an algorithm that is optimal, or at least nearly so.  This is suggested in exercise 3.4.2 of chapter 15 of (Devroye 1986, p. 1-2)<sup><a href="#Note10"><strong>(10)</strong></a></sup>, implemented in <em>randomgen.py</em> as the <code>discretegen</code> method, and also described in (Roy et al. 2013)<sup><a href="#Note30"><strong>(30)</strong></a></sup>.</li>
+<li>The Han and Hoshi algorithm (Han and Hoshi 1997)<sup><a href="#Note31"><strong>(31)</strong></a></sup> that uses the cumulative probabilities as input and is described in (Devroye and Gravel 2015)<sup><a href="#Note32"><strong>(32)</strong></a></sup>.  This algorithm comes within 3 bits, on average, of the optimal number of bits.</li>
+</ul>
+
+<p><a id=A_Note_on_Error_Bounded_Algorithms></a></p>
+
+<h3>A Note on Error-Bounded Algorithms</h3>
+
+<p>There are three kinds of randomization algorithms:</p>
+
+<ol>
+<li>An <em>error-bounded algorithm</em> is an algorithm that samples a distribution in a manner that minimizes approximation error.  This means the algorithm samples from a continuous distribution that is close to the ideal distribution within a user-specified error tolerance (see below for details), or samples exactly from a discrete distribution (one that takes on a countable number of values).  Thus, the algorithm gives every representable number the expected probability of occurring.  In general, the only random numbers the algorithm uses are random bits (binary digits).  An application should use error-bounded algorithms whenever possible.</li>
+<li>An <em>exact algorithm</em> is an algorithm that samples from the exact distribution requested, assuming that computers can store and operate on real numbers of any precision and can generate independent uniform random real numbers of any precision (Devroye 1986, p. 1-2)<sup><a href="#Note10"><strong>(10)</strong></a></sup>.  Without more, however, an exact algorithm implemented on real-life computers can incur rounding and other errors, especially when floating-point arithmetic is used or when irrational numbers or transcendental functions are involved.  An exact algorithm can achieve a guaranteed bound on accuracy (and thus be an <em>error-bounded algorithm</em>) using either arbitrary-precision or interval arithmetic (see also Devroye 1986, p. 2)<sup><a href="#Note10"><strong>(10)</strong></a></sup>.  In this page, all methods given here are exact unless otherwise noted.  Note that <code>RNDU01</code> or <code>RNDRANGE</code> are exact in theory, but have no required implementation.</li>
+<li>An <em>inexact</em>, <em>approximate</em>, or <em>biased algorithm</em> is neither exact nor error-bounded; it uses &quot;a mathematical approximation of sorts&quot; to generate a random number that is close to the desired distribution (Devroye 1986, p. 2)<sup><a href="#Note10"><strong>(10)</strong></a></sup>.  An application should use this kind of algorithm only if it&#39;s willing to trade accuracy for speed.</li>
+</ol>
+
+<p>Most algorithms on this page, though, are not <em>error-bounded</em>, but even so, they may still be useful to an application willing to trade accuracy for speed.</p>
+
+<p>On the other hand, if an algorithm returns results that are accurate to a given number of digits after the point (for example, 53 bits after the point), it can generate any number of digits uniformly at random and append those digits to the result&#39;s digit expansion while remaining accurate to that many digits. For example, after it generates a normally-distributed random number, an algorithm can fill it with enough uniform random bits, as necessary, to give the number 100 bits after the point (Karney 2014)<sup><a href="#Note1"><strong>(1)</strong></a></sup>, see also (Oberhoff 2018)<sup><a href="#Note33"><strong>(33)</strong></a></sup> (example: <code>for i in 54..100: ret = ret + RNDINT(1) * pow(2,-i)</code>).</p>
+
+<p>There are many ways to describe closeness between two distributions.  As one suggestion found in (Devroye and Gravel 2015)<sup><a href="#Note32"><strong>(32)</strong></a></sup>, an algorithm has accuracy &epsilon; (the user-specified error tolerance) if it samples random numbers whose distribution is close to the ideal distribution by a Wasserstein L<sub>&infin;</sub> distance of not more than &epsilon;.</p>
+
+<p><a id=Weighted_Choice_with_Coins_of_Known_Bias></a></p>
+
+<h3>Weighted Choice with Coins of Known Bias</h3>
+
+<p>Assuming that we only have&mdash;</p>
+
+<ul>
+<li>a list of probabilities (<code>probs</code>) that sum to 1, and</li>
+<li><code>UnfairCoin(p)</code>, which returns 1 with probability <code>p</code> and zero otherwise (such as <code>ZeroOrOne</code> or <code>RNDU01() &lt; p</code>),</li>
+</ul>
+
+<p>one of the following two algorithms can be used (see the <a href="https://stackoverflow.com/questions/62806441/can-i-achieve-weighted-randomness-with-a-function-that-returns-weighted-booleans"><strong><em>Stack Overflow</em> question</strong></a> by Daniel Kaplan).  Since in this case we can treat <code>UnfairCoin(q)</code> (for any fixed value of <code>q</code> in (0, 1)) as a coin with <em>unknown</em> bias (allowing us to use the method in &quot;<a href="#Weighted_Choice_with_Biased_Coins"><strong>Weighted Choice with Biased Coins</strong></a>), these algorithms given below are not very useful in practice.</p>
+
+<ol>
+<li>The first uses iteration and is as follows: <code>cumu = 1.0; for i in 0...size(probs): if UnfairCoin(probs[i]/cumu): return i; else: cumu = cumu - probs[i]</code>.  This algorithm runs on average in linear time (or in constant time if the weights are sorted in descending order). This algorithm ought to be implemented using rational-valued weights and rational arithmetic, since the algorithm will be error-bounded in that case.</li>
+<li>The second uses rejection sampling and relies on generating a random integer using fair coins: <code>while true; y=RNDINT(size(probs)-1); if UnfairCoin(probs[y]): return y; else continue; end</code>, where <code>UnfairCoin(0.5)</code> serves as the RNG for <code>RNDINT</code>. This algorithm is error-bounded when all the probabilities in <code>probs</code> can be simulated exactly by <code>UnfairCoin</code>.</li>
+</ol>
+
+<p><a id=License></a></p>
+
+<h2>License</h2>
+
+<p>Any copyright to this page is released to the Public Domain.  In case this is not possible, this page is also licensed under <a href="https://creativecommons.org/publicdomain/zero/1.0/"><strong>Creative Commons Zero</strong></a>.</p>
+</div><nav id="navigation"><ul>
+<li><a href="/">Back to start site.</a>
+<li><a href="https://github.com/peteroupc/peteroupc.github.io">This site's repository (source code)</a>
+<li><a href="https://github.com/peteroupc/peteroupc.github.io/issues">Post an issue or comment</a></ul>
+<p>
+If you like this software, you should consider donating to me, Peter O., at the link below:</p>
+<p class="printonly"><b>peteroupc.github.io</b></p>
+<div class="noprint">
+<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=56E5T4FH7KD2S">
+<img src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif"
+name="submit" border="2" alt="PayPal - The safer, easier way to pay online!"></a>
+<p>
+<a href="//twitter.com/share">Share via Twitter</a>, <a href="//www.facebook.com/sharer/sharer.php" id="sharer">Share via Facebook</a>
+</p>
+</div>
+</nav><script>
+if("share" in navigator){
+ document.getElementById("sharer").href="javascript:void(null)";
+ document.getElementById("sharer").innerHTML="Share This Page";
+ navigator.share({title:document.title,url:document.location.href}).then(
+   function(){});
+} else {
+ document.getElementById("sharer").href="//www.facebook.com/sharer/sharer.php?u="+
+    encodeURIComponent(document.location.href)
+}
+</script>
+</body></html>

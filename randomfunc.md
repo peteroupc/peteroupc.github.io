@@ -2207,7 +2207,7 @@ The following method calculates the norm of a vector (list of numbers), more spe
       return sqrt(ret)
     END METHOD
 
-There are other kinds of norms besides the &#x2113;<sub>2</sub> norm.  More generally, the &#x2113;<sub>_p_</sub> norm is the _p_th root of the sum of _p_th powers of a vector's components (or, if _p_ is &infin;, the highest absolute value among those components).  An &#x2113;<sub>_p_</sub> ball or sphere is a ball or sphere that is bounded by or traces, respectively, all points with an &#x2113;<sub>_p_</sub> norm of that radius.
+There are other kinds of norms besides the &#x2113;<sub>2</sub> norm.  More generally, the &#x2113;<sub>_p_</sub> norm, where _p_ is 1 or greater or is &infin;, is the _p_ th root of the sum of _p_ th powers of a vector's components' absolute values (or, if _p_ is &infin;, the highest absolute value among those components).  An &#x2113;<sub>_p_</sub> ball or sphere of a given radius is a ball or sphere that is bounded by or traces, respectively, all points with an &#x2113;<sub>_p_</sub> norm equal to that radius.  (An &#x2113;<sub>&infin;</sub> ball or sphere is box-shaped.)
 
 <a id=Multithreading_Note></a>
 ### Multithreading Note
