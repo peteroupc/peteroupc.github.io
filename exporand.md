@@ -55,6 +55,7 @@ This page shows [**Python code**](#Sampler_Code) for these samplers.
 - [**Notes**](#Notes)
 - [**Appendix**](#Appendix)
     - [**SymPy Formula for ZeroToOneExpMinus**](#SymPy_Formula_for_ZeroToOneExpMinus)
+    - [**Convergence of Bernoulli Factories**](#Convergence_of_Bernoulli_Factories)
     - [**Another Example of an Arbitrary-Precision Sampler**](#Another_Example_of_an_Arbitrary_Precision_Sampler)
 - [**License**](#License)
 
@@ -119,7 +120,7 @@ Partially-sampled numbers could also be implemented via rejection from the expon
 An algorithm that samples from a continuous distribution using PSRNs has the following properties:
 
 1. The algorithm relies only on a source of random bits for randomness, and does not rely on floating-point arithmetic or calculations of irrational or transcendental numbers (other than digit extractions), including when the algorithm samples each digit of a PSRN.
-2. If the algorithm outputs a PSRN, the number represented by the sampled digits must follow a distribution that is close to the ideal distribution by a distance of not more than _b_<sup>&minus;_m_</sup>, where _b_ is the PSRN's base, or radix (such as 2 for binary), and _m_ is the number of sampled digits in the PSRN's fractional part.  <<|(Devroye and Gravel 2015) suggests Wasserstein L<sub>&infin;</sub> distance as the distance to use for this purpose.>> The number has to be close this way even if the algorithm's caller later samples unsampled digits of that PSRN at random (e.g., uniformly at random in the case of a uniform PSRN).
+2. If the algorithm outputs a PSRN, the number represented by the sampled digits must follow a distribution that is close to the ideal distribution by a distance of not more than _b_<sup>&minus;_m_</sup>, where _b_ is the PSRN's base, or radix (such as 2 for binary), and _m_ is the number of sampled digits in the PSRN's fractional part.  ((Devroye and Gravel 2015)<sup>[**(3)**](#Note3)</sup> suggests Wasserstein L<sub>&infin;</sub> distance as the distance to use for this purpose.) The number has to be close this way even if the algorithm's caller later samples unsampled digits of that PSRN at random (e.g., uniformly at random in the case of a uniform PSRN).
 3. If the algorithm fills a PSRN's unsampled fractional digits at random (e.g., uniformly at random in the case of a uniform PSRN), so that the number's fractional part has _m_ digits, the number's distribution must remain close to the ideal distribution by a distance of not more than _b_<sup>&minus;_m_</sup>.
 
 The concept of _prefix distributions_ (Oberhoff 2018)<sup>[**(10)**](#Note10)</sup> comes close to PSRNs, but numbers sampled this way are not PSRNs in the sense used here.  This is because the method requires calculating minimums of probabilities and, in practice, requires the use of floating-point arithmetic in most cases (see property 1 above).  Moreover, the method samples from a discrete distribution whose progression depends on the value of previously sampled bits, not just on the position of those bits as with the uniform and exponential distributions (see also (Thomas and Luk 2008)<sup>[**(4)**](#Note4)</sup>).
@@ -187,6 +188,8 @@ For another base (radix), such as 10 for decimal, this can be implemented as **U
 4. Call the sub-algorithm; if it returns 1, return 1.
 5. Return 0 with probability _y_/_i_.
 6. Add 1 to _i_ and go to step 4.
+
+Note, however, that this algorithm converges more and more slowly if the probability `p` approaches 0.  See the appendix for notes on the convergence of Bernoulli factories.
 
 The **kthsmallest** method generates the 'k'th smallest 'bitcount'-digit uniform random number out of 'n' of them, is also relied on by this beta sampler.  It is used when both `a` and `b` are integers, based on the known property that a beta random variable in this case is the `a`th smallest uniform (0, 1) random number out of `a + b - 1` of them (Devroye 1986, p. 431)<sup>[**(16)**](#Note16)</sup></sup>.
 
@@ -289,11 +292,11 @@ The power-of-uniform algorithm is as follows:
 
 1. Set _i_ to 1.
 2. Call the `zero_or_one_power_ratio` algorithm (which returns 1 with probability (_a_/_b_)<sup>_c_/_d_</sup>)) with parameters `a = 1, b = 2, c = 1, d = power`.  If it returns 1, add 1 to _i_ and repeat this step.
-3. As a result, we will now sample a number in the interval \[2<sup>&minus;_i_</sup>, 2<sup>&minus;(_i_ &minus; 1)</sup>).  We now have to generate a uniform random number _x_ in this interval, then accept it with probability (1 / (_power_ * _i_)) / _x_<sup>1 &minus; 1 / _power_</sup>; the _i_ in this formula is to help avoid very low probabilities for sampling purposes.  The following steps will achieve this without having to use floating-point arithmetic.
+3. As a result, we will now sample a number in the interval \[2<sup>&minus;_i_</sup>, 2<sup>&minus;(_i_ &minus; 1)</sup>).  We now have to generate a uniform random number _x_ in this interval, then accept it with probability (1 / (_power_ * 2<sup>_i_</sup>)) / _x_<sup>1 &minus; 1 / _power_</sup>; the 2<sup>_i_</sup> in this formula is to help avoid very low probabilities for sampling purposes.  The following steps will achieve this without having to use floating-point arithmetic.
 4. Create an empty list to serve as a geometric bag, then create a Bernoulli factory algorithm that uses **SampleGeometricBag** on that geometric bag.
 5. Create a **PowerBernoulliFactory** algorithm that uses the **SampleGeometricBag** Bernoulli factory and the parameter 1 &minus; 1 / _power_.
 6. Append _i_ &minus; 1 zero-digits followed by a single one-digit to the geometric bag.  This will allow us to sample a uniform random number limited to the interval mentioned earlier.
-7. Call the `eps_div` Bernoulli factory (which returns 1 with probability _a_/_b_) using the **PowerBernoulliFactory** mentioned in step 5 (which represents _b_) and the parameter 1/(_power_ * _i_) (which represents _a_).  If the call returns 1, the geometric bag was accepted, so either return the bag as is or fill the unsampled digits of the bag with uniform random digits as necessary to give the number an _n_-digit fractional part (similarly to **FillGeometricBag** above), where _n_ is a precision parameter, then return the resulting number.
+7. Call the `eps_div` Bernoulli factory (which returns 1 with probability _a_/_b_) using the **PowerBernoulliFactory** mentioned in step 5 (which represents _b_) and the parameter 1/(_power_ * 2<sup>_i_</sup>) (which represents _a_).  If the call returns 1, the geometric bag was accepted, so either return the bag as is or fill the unsampled digits of the bag with uniform random digits as necessary to give the number an _n_-digit fractional part (similarly to **FillGeometricBag** above), where _n_ is a precision parameter, then return the resulting number.
 8. If the call to `eps_div` returns 0, remove all but the first _i_ digits from the geometric bag, then go to step 7.
 
 <a id=Sampler_Code></a>
@@ -534,7 +537,6 @@ def power_of_uniform(rg, bern, power, precision=53):
      bag=[]
      return bern.fill_geometric_bag(bag, precision)
    i=1
-   mul=1
    powerfrac=Fraction(power)
    powerrest=Fraction(1) - Fraction(1)/powerfrac
    # Choose an interval
@@ -543,8 +545,7 @@ def power_of_uniform(rg, bern, power, precision=53):
       if i>=precision:
          return 0.0 # Precision limit reached, so equivalent to 0
       i+=1
-      mul+=1
-   epsdividend = Fraction(1)/(powerfrac * mul)
+   epsdividend = Fraction(1)/(powerfrac * 2**i)
    bag=[]
    gb=lambda: bern.geometric_bag(bag)
    bf =lambda: bern.power(gb, powerrest.numerator, powerrest.denominator)
@@ -919,9 +920,9 @@ I acknowledge Claude Gravel who reviewed a previous version of this article.
 ## Appendix
 
 <a id=SymPy_Formula_for_ZeroToOneExpMinus></a>
-### SymPy Formula for ZeroToOneExpMinus
+### SymPy Formula for ZeroOrOneExpMinus
 
-The following Python code uses SymPy to plot the bit complexity lower bound for **ZeroToOneExpMinus** when &gamma; is 1 or less:
+The following Python code uses SymPy to plot the bit complexity lower bound for **ZeroOrOneExpMinus** when &gamma; is 1 or less:
 
 ```
 def ent(p):
@@ -936,6 +937,33 @@ def expminusformula():
       x**(i+1)/factorial(i+1)), (i,0,6))
 
 plot(expminusformula(), xlim=(0,1), ylim=(0,2))
+```
+
+<a id=Convergence_of_Bernoulli_Factories></a>
+### Convergence of Bernoulli Factories
+
+The following Python code illustrates how to test a Bernoulli factory algorithm for convergence to the correct probability, as well as the speed of this convergence.  In this case, we are testing the **PowerBernoulliFactory** of _x_<sup>_y_/_z_</sup>.  Depending on the parameters _x_, _y_, and _z_, this Bernoulli factory converges faster or slower.  Notably, as _x_ (the probability of heads of the input coin) approaches 0, the convergence rate gets slower and slower.
+
+```
+# Parameters for the Bernoulli factory x**(y/z)
+x=0.005 # x is the input coin's probability of heads
+y=2
+z=3
+# Print the desired probability
+print(x**(y/z))
+passp = 0
+failp = 0
+# Set cumulative probability to 1
+cumu = 1
+iters=4000
+for i in range(iters):
+  # With probability x, the algorithm returns 1 (heads)
+  prob=(x);prob*=cumu; passp+=prob; cumu-=prob
+  # With probability (y/(z*(i+1))), the algorithm returns 0 (tails)
+  prob=(y/(z*(i+1)));prob*=cumu; fail+=prob; cumu-=prob
+  # Output the current probability in this iteration,
+  # but only for the first 30 and last 30 iterations
+  if i<30 or i>=iters-30: print(passp)
 ```
 
 <a id=Another_Example_of_an_Arbitrary_Precision_Sampler></a>
