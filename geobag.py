@@ -26,29 +26,85 @@ def geobagfunc(bag, f, k):
     i = 0
     v = 0
     d = 0
-    while True:
-        if i >= len(bag):
-            d = random.randint(0, 1)
-            bag.append(d)
-        elif bag[i] == None:
-            d = random.randint(0, 1)
-            bag[i] = d
-        else:
-            d = bag[i]
-        if ((i + 1) % 16) == 0:  # To reduce the number of function calls
-            v = (v << 1) | d
-            vnext = v + 1
-            iprec = 1 << (i + 1)
-            vstart = v / iprec
-            vend = vnext / iprec
-            fvstart = f(vstart)
-            fvend = f(vend)
-            # print([vstart,vend,fvstart,fvend,abs(fvstart-fvend),prectol])
-            if abs(fvstart - fvend) <= prectol:
-                # Within desired tolerance; return the
-                # approximation
-                return int(fvstart * prec)
+    for i in range(len(bag)):
+        if bag[i] == None:
+            bag[i] = random.randint(0, 1)
+        v = (v << 1) | bag[i]
         i += 1
+    while True:
+        vnext = v + 1
+        iprec = 1 << i
+        vstart = v / iprec  # v/2^(i+1)
+        vend = vnext / iprec  # vnext/2^(i+1)
+        fvstart = f(vstart)
+        fvend = f(vend)
+        if abs(fvstart - fvend) <= 2 * prectol:
+            # Within desired tolerance; return the
+            # approximation
+            # print(["vs",v,vstart,(vstart+vend)/2,vend,i,len(bag)])
+            # print(["fvs",fvstart,(fvstart+fvend)/2,fvend])
+            # print(bag)
+            return int(((fvstart + fvend) / 2) * prec)
+        if i >= len(bag):
+            bag.append(random.randint(0, 1))
+            v = (v << 1) | bag[i]
+        i += 1
+
+def _verifyless(bag, pk, f, k, v):
+    bagv = 0
+    bagc = 0
+    for i in range(len(bag)):
+        if bag[i] == None:
+            break
+        bagv = (bagv << 1) | bag[i]
+        bagc += 1
+    bagf = f(bagv / (1 << bagc))
+    vf = v / (1 << k)
+    if vf > bagf:
+        raise ValueError(
+            str(
+                [
+                    "verifyless",
+                    k,
+                    v,
+                    "bagv",
+                    bagv,
+                    bagv / (1 << bagc),
+                    bagf,
+                    vf,
+                    pk,
+                    int(bagf * (1 << k)),
+                ]
+            )
+        )
+
+def _verifygreater(bag, pk, f, k, v):
+    bagv = 0
+    bagc = 0
+    for i in range(len(bag)):
+        if bag[i] == None:
+            break
+        bagv = (bagv << 1) | bag[i]
+        bagc += 1
+    bagf = f(bagv / (1 << bagc))
+    vf = v / (1 << k)
+    if vf < bagf:
+        raise ValueError(
+            str(
+                [
+                    "verifygreater",
+                    k,
+                    v,
+                    "bagv",
+                    bagv,
+                    bagv / (1 << bagc),
+                    bagf,
+                    vf,
+                    pk,
+                    int(bagf * (1 << k)),
+                ]
+            )
+        )
 
 def geobagcompare(bag, f):
     """ Returns 1 with probability f(U), where U is the value that
@@ -68,7 +124,9 @@ def geobagcompare(bag, f):
         v = (v << 1) | random.randint(0, 1)
         pk = geobagfunc(bag, f, k)
         if pk + 1 <= v:
+            # _verifygreater(bag,pk,f,k,v)
             return 0
         if pk - 2 >= v:
+            # _verifyless(bag,pk,f,k,v)
             return 1
         k += 1

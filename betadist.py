@@ -2,6 +2,7 @@ import random
 import bernoulli
 import randomgen
 import geobag
+from fractions import Fraction
 
 def _bern_power(bern, bag, num, den, bagfactory):
     if len(bag) >= 4 and bag[0] == 0 and bag[1] == 0 and bag[2] == 0 and bag[3] == 0:
