@@ -400,8 +400,8 @@ Each of the resulting uniform random numbers will be in the interval [0, 1], and
 >            copula = GaussianCopula([[1, rho], [rho, 1]])
 >            // Transform to exponentials using that
 >            // distribution's quantile function
->            return [-logp1(-copula[0]) / rate1,
->              -logp1(-copula[1]) / rate2]
+>            return [-log1p(-copula[0]) / rate1,
+>              -log1p(-copula[1]) / rate2]
 >         END METHOD
 >
 > **Note:** The Gaussian copula is also known as the _normal-to-anything_ method.
@@ -521,27 +521,27 @@ For related algorithms, see the appendix.
 
 <small><sup id=Note21>(21)</sup> Mennucci, A.C.G. "[**Bit Recycling for Scaling Random Number Generators**](https://arxiv.org/abs/1012.4290)", arXiv:1012.4290 [cs.IT], 2018.</small>
 
-<small><sup id=Note22>(22)</sup> Saad, F.A., Freer C.E., et al., "[**The Fast Loaded Dice Roller: A Near-Optimal Exact Sampler for Discrete Probability Distributions**](https://arxiv.org/abs/2003.03830v2)", arXiv:2003.03830v2  [stat.CO], also in _AISTATS 2020: Proceedings of the 23rd International Conference on Artificial Intelligence and Statistics, Proceedings of Machine Learning Research_ 108, Palermo, Sicily, Italy, 2020.</small>
+<small><sup id=Note22>(22)</sup> Devroye, L., Gravel, C., "[**Sampling with arbitrary precision**](https://arxiv.org/abs/1502.02539v5)", arXiv:1502.02539v5 [cs.IT], 2015.</small>
 
-<small><sup id=Note23>(23)</sup> Feras A. Saad, Cameron E. Freer, Martin C. Rinard, and Vikash K. Mansinghka, "[**Optimal Approximate Sampling From Discrete Probability Distributions**](https://arxiv.org/abs/2001.04555v1)", arXiv:2001.04555v1 [cs.DS], also in Proc. ACM Program. Lang. 4, POPL, Article 36 (January 2020), 33 pages.</small>
+<small><sup id=Note23>(23)</sup> Saad, F.A., Freer C.E., et al., "[**The Fast Loaded Dice Roller: A Near-Optimal Exact Sampler for Discrete Probability Distributions**](https://arxiv.org/abs/2003.03830v2)", arXiv:2003.03830v2  [stat.CO], also in _AISTATS 2020: Proceedings of the 23rd International Conference on Artificial Intelligence and Statistics, Proceedings of Machine Learning Research_ 108, Palermo, Sicily, Italy, 2020.</small>
 
-<small><sup id=Note24>(24)</sup> Klundert, B. van de, "[**Efficient Generation of Discrete Random Variates**](https://dspace.library.uu.nl/handle/1874/393383)", Master thesis, Universiteit Utrecht, 2019.</small>
+<small><sup id=Note24>(24)</sup> Feras A. Saad, Cameron E. Freer, Martin C. Rinard, and Vikash K. Mansinghka, "[**Optimal Approximate Sampling From Discrete Probability Distributions**](https://arxiv.org/abs/2001.04555v1)", arXiv:2001.04555v1 [cs.DS], also in Proc. ACM Program. Lang. 4, POPL, Article 36 (January 2020), 33 pages.</small>
 
-<small><sup id=Note25>(25)</sup> K. Bringmann and K. G. Larsen, "Succinct Sampling from Discrete Distributions", In: Proc. 45th Annual ACM Symposium on Theory of Computing (STOC'13), 2013.</small>
+<small><sup id=Note25>(25)</sup> Klundert, B. van de, "[**Efficient Generation of Discrete Random Variates**](https://dspace.library.uu.nl/handle/1874/393383)", Master thesis, Universiteit Utrecht, 2019.</small>
 
-<small><sup id=Note26>(26)</sup> K. Bringmann and K. Panagiotou, "Efficient Sampling Methods for Discrete Distributions." In: Proc. 39th International Colloquium on Automata, Languages, and Programming (ICALP'12), 2012.</small>
+<small><sup id=Note26>(26)</sup> K. Bringmann and K. G. Larsen, "Succinct Sampling from Discrete Distributions", In: Proc. 45th Annual ACM Symposium on Theory of Computing (STOC'13), 2013.</small>
 
-<small><sup id=Note27>(27)</sup> L. Hübschle-Schneider and P. Sanders, "[**Parallel Weighted Random Sampling**](https://arxiv.org/abs/1903.00227v2)", arXiv:1903.00227v2  [cs.DS], 2019.</small>
+<small><sup id=Note27>(27)</sup> K. Bringmann and K. Panagiotou, "Efficient Sampling Methods for Discrete Distributions." In: Proc. 39th International Colloquium on Automata, Languages, and Programming (ICALP'12), 2012.</small>
 
-<small><sup id=Note28>(28)</sup> A.J. Walker, "An efficient method for generating discrete random variables with general distributions", _ACM Transactions on Mathematical Software_ 3, 1977.</small>
+<small><sup id=Note28>(28)</sup> L. Hübschle-Schneider and P. Sanders, "[**Parallel Weighted Random Sampling**](https://arxiv.org/abs/1903.00227v2)", arXiv:1903.00227v2  [cs.DS], 2019.</small>
 
-<small><sup id=Note29>(29)</sup> Vose, Michael D. "A linear algorithm for generating random numbers with a given distribution." IEEE Transactions on software engineering 17, no. 9 (1991): 972-975.</small>
+<small><sup id=Note29>(29)</sup> A.J. Walker, "An efficient method for generating discrete random variables with general distributions", _ACM Transactions on Mathematical Software_ 3, 1977.</small>
 
-<small><sup id=Note30>(30)</sup> Roy, Sujoy Sinha, Frederik Vercauteren and Ingrid Verbauwhede. "[**High Precision Discrete Gaussian Sampling on FPGAs**](https://www.esat.kuleuven.be/cosic/publications/article-2372.pdf)." _Selected Areas in Cryptography_ (2013).</small>
+<small><sup id=Note30>(30)</sup> Vose, Michael D. "A linear algorithm for generating random numbers with a given distribution." IEEE Transactions on software engineering 17, no. 9 (1991): 972-975.</small>
 
-<small><sup id=Note31>(31)</sup> T. S. Han and M. Hoshi, "Interval algorithm for random number generation", _IEEE Transactions on Information Theory_ 43(2), March 1997.</small>
+<small><sup id=Note31>(31)</sup> Roy, Sujoy Sinha, Frederik Vercauteren and Ingrid Verbauwhede. "[**High Precision Discrete Gaussian Sampling on FPGAs**](https://www.esat.kuleuven.be/cosic/publications/article-2372.pdf)." _Selected Areas in Cryptography_ (2013).</small>
 
-<small><sup id=Note32>(32)</sup> Devroye, L., Gravel, C., "[**Sampling with arbitrary precision**](https://arxiv.org/abs/1502.02539v5)", arXiv:1502.02539v5 [cs.IT], 2015.</small>
+<small><sup id=Note32>(32)</sup> T. S. Han and M. Hoshi, "Interval algorithm for random number generation", _IEEE Transactions on Information Theory_ 43(2), March 1997.</small>
 
 <small><sup id=Note33>(33)</sup> Oberhoff, Sebastian, "[**Exact Sampling and Prefix Distributions**](https://dc.uwm.edu/etd/1888)", _Theses and Dissertations_, University of Wisconsin Milwaukee, 2018.</small>
 
@@ -603,7 +603,7 @@ The following are some ways to implement `RNDINT`.  (The column "Unbiased?" mean
 | Algorithm in "Conclusion" section by O'Neill | No | Yes | Runs forever in worst case |
 | "Debiased" and "Bitmask with Rejection" surveyed by M. O'Neill | No | Yes | Runs forever in worst case |
 
-There are various techniques that can reduce the number of bits "wasted" by an integer-generating algorithm, and bring that algorithm closer to the theoretical lower bound of Knuth and Yao, even if the algorithm isn't "optimal".  These techniques, which include batching, bit recycling, and randomness extraction, are discussed, for example, in the Math Forum page and the Lumbroso and Mennucci papers referenced above, and in (Devroye and Gravel 2015)<sup>[**(32)**](#Note32)</sup>.
+There are various techniques that can reduce the number of bits "wasted" by an integer-generating algorithm, and bring that algorithm closer to the theoretical lower bound of Knuth and Yao, even if the algorithm isn't "optimal".  These techniques, which include batching, bit recycling, and randomness extraction, are discussed, for example, in the Math Forum page and the Lumbroso and Mennucci papers referenced above, and in (Devroye and Gravel 2015)<sup>[**(22)**](#Note22)</sup>.
 
 <a id=A_Note_on_Weighted_Choice_Algorithms></a>
 ### A Note on Weighted Choice Algorithms
@@ -612,19 +612,19 @@ Just like integer generation algorithms (see the previous section), weighted cho
 
 In this case, though, the number of random bits an algorithm uses on average is bounded from below by the sum of binary entropies of all the probabilities involved.  For example, say we give the four integers 1, 2, 3, 4 the following weights: 3, 15, 1, 2.  The binary entropies of these weights are 0.4010... + 0.3467... + 0.2091... + 0.3230... = 1.2800... (because the sum of the weights is 21 and the binary entropy of 3/21 is `(3/21) * log2(21/3) = 0.4010...`, and so on for the other weights), so an optimal algorithm will use anywhere from 1.2800... to 3.2800... bits on average to generate a random number with these weights.<sup>[**(16)**](#Note16)</sup>  Another difference from integer generation algorithms is that usually a special data structure has to be built for the sampling to work, and often there is a need to make updates to the structure as items are sampled.  The following are some ways to implement `WeightedChoice`; unless noted, the algorithms are not optimal in terms of the number of bits used.
 
-- The Fast Loaded Dice Roller (Saad et al., 2020)<sup>[**(22)**](#Note22)</sup>.  This sampler comes within 6 bits, on average, of the optimal number of bits.  The paper for this algorithm also reviews rejection samplers in section 4.
-- The samplers described in (Saad et al., 2020)<sup>[**(23)**](#Note23)</sup>.   The samplers are optimal in the sense given here as long as the sum of the weights is of the form 2<sup>k</sup> or 2<sup>k</sup> &minus; 2<sup>m</sup>.
-- The data structures surveyed and mentioned in (Klundert 2019)<sup>[**(24)**](#Note24)</sup>.
-- The Bringmann&ndash;Larsen succinct data structure (Bringmann and Larsen 2013)<sup>[**(25)**](#Note25)</sup>.
-- A sampler that is designed to work on a sorted list of weights (Bringmann and Panagiotou 2012)<sup>[**(26)**](#Note26)</sup>.
-- The parallel weighted random samplers described in (Hübschle-Schneider and Sanders 2019)<sup>[**(27)**](#Note27)</sup>.
+- The Fast Loaded Dice Roller (Saad et al., 2020)<sup>[**(23)**](#Note23)</sup>.  This sampler comes within 6 bits, on average, of the optimal number of bits.  The paper for this algorithm also reviews rejection samplers in section 4.
+- The samplers described in (Saad et al., 2020)<sup>[**(24)**](#Note24)</sup>.   The samplers are optimal in the sense given here as long as the sum of the weights is of the form 2<sup>k</sup> or 2<sup>k</sup> &minus; 2<sup>m</sup>.
+- The data structures surveyed and mentioned in (Klundert 2019)<sup>[**(25)**](#Note25)</sup>.
+- The Bringmann&ndash;Larsen succinct data structure (Bringmann and Larsen 2013)<sup>[**(26)**](#Note26)</sup>.
+- A sampler that is designed to work on a sorted list of weights (Bringmann and Panagiotou 2012)<sup>[**(27)**](#Note27)</sup>.
+- The parallel weighted random samplers described in (Hübschle-Schneider and Sanders 2019)<sup>[**(28)**](#Note28)</sup>.
 
 There are other weighted choice algorithms that don't necessarily take integer weights.  They include:
 
 - The section "Weighted Choice with Coins of Known Bias" in this appendix.
-- The _alias method_ by Walker (1977)<sup>[**(28)**](#Note28)</sup>.  Michael Vose's version of the alias method (Vose 1991)<sup>[**(29)**](#Note29)</sup> is described in "[**Darts, Dice, and Coins: Sampling from a Discrete Distribution**](https://www.keithschwarz.com/darts-dice-coins/)".  The alias method ought to be implemented using rational-valued weights and rational-number arithmetic, since this method is hard to apply to integer weights if the sum of the weights is not divisible by the number of weights.
-- The Knuth and Yao algorithm that generates a DDG tree from the binary expansions of the probabilities, an algorithm that is optimal, or at least nearly so.  This is suggested in exercise 3.4.2 of chapter 15 of (Devroye 1986, p. 1-2)<sup>[**(10)**](#Note10)</sup>, implemented in _randomgen.py_ as the `discretegen` method, and also described in (Roy et al. 2013)<sup>[**(30)**](#Note30)</sup>.
-- The Han and Hoshi algorithm (Han and Hoshi 1997)<sup>[**(31)**](#Note31)</sup> that uses the cumulative probabilities as input and is described in (Devroye and Gravel 2015)<sup>[**(32)**](#Note32)</sup>.  This algorithm comes within 3 bits, on average, of the optimal number of bits.
+- The _alias method_ by Walker (1977)<sup>[**(29)**](#Note29)</sup>.  Michael Vose's version of the alias method (Vose 1991)<sup>[**(30)**](#Note30)</sup> is described in "[**Darts, Dice, and Coins: Sampling from a Discrete Distribution**](https://www.keithschwarz.com/darts-dice-coins/)".  The alias method ought to be implemented using rational-valued weights and rational-number arithmetic, since this method is hard to apply to integer weights if the sum of the weights is not divisible by the number of weights.
+- The Knuth and Yao algorithm that generates a DDG tree from the binary expansions of the probabilities, an algorithm that is optimal, or at least nearly so.  This is suggested in exercise 3.4.2 of chapter 15 of (Devroye 1986, p. 1-2)<sup>[**(10)**](#Note10)</sup>, implemented in _randomgen.py_ as the `discretegen` method, and also described in (Roy et al. 2013)<sup>[**(31)**](#Note31)</sup>.
+- The Han and Hoshi algorithm (Han and Hoshi 1997)<sup>[**(32)**](#Note32)</sup> that uses the cumulative probabilities as input and is described in (Devroye and Gravel 2015)<sup>[**(22)**](#Note22)</sup>.  This algorithm comes within 3 bits, on average, of the optimal number of bits.
 
 <a id=A_Note_on_Error_Bounded_Algorithms></a>
 ### A Note on Error-Bounded Algorithms
@@ -639,7 +639,7 @@ Most algorithms on this page, though, are not _error-bounded_, but even so, they
 
 On the other hand, if an algorithm returns results that are accurate to a given number of digits after the point (for example, 53 bits after the point), it can generate any number of digits uniformly at random and append those digits to the result's digit expansion while remaining accurate to that many digits. For example, after it generates a normally-distributed random number, an algorithm can fill it with enough uniform random bits, as necessary, to give the number 100 bits after the point (Karney 2014)<sup>[**(1)**](#Note1)</sup>, see also (Oberhoff 2018)<sup>[**(33)**](#Note33)</sup> (example: `for i in 54..100: ret = ret + RNDINT(1) * pow(2,-i)`).
 
-There are many ways to describe closeness between two distributions.  As one suggestion found in (Devroye and Gravel 2015)<sup>[**(32)**](#Note32)</sup>, an algorithm has accuracy &epsilon; (the user-specified error tolerance) if it samples random numbers whose distribution is close to the ideal distribution by a Wasserstein L<sub>&infin;</sub> distance of not more than &epsilon;.
+There are many ways to describe closeness between two distributions.  As one suggestion found in (Devroye and Gravel 2015)<sup>[**(22)**](#Note22)</sup>, an algorithm has accuracy &epsilon; (the user-specified error tolerance) if it samples random numbers whose distribution is close to the ideal distribution by a Wasserstein L<sub>&infin;</sub> distance of not more than &epsilon;.
 
 <a id=Weighted_Choice_with_Coins_of_Known_Bias></a>
 ### Weighted Choice with Coins of Known Bias
