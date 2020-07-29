@@ -1583,6 +1583,8 @@ CLASSES
      |  arXiv:0906.5560v2 [math.PR], 2010.
      |  - Huber, M., "Designing perfect simulation algorithms using local correctness",
      |  arXiv:1907.06748v1 [cs.DS], 2019.
+     |  - Huber, M., "Nearly optimal Bernoulli factories for linear functions",
+     |  arXiv:1308.1562v2  [math.PR], 2014.
      |  - Huber, M., "Optimal linear Bernoulli factories for small mean problems",
      |  arXiv:1507.00843v2 [math.PR], 2016.
      |  - Łatuszyński, K., Kosmidis, I.,  Papaspiliopoulos, O., Roberts, G.O., "Simulating
@@ -1732,6 +1734,13 @@ CLASSES
      |  mean(self, f1, f2)
      |      Mean: B(p), B(q) => B((p+q)/2)  (Flajolet et al. 2010)
      |      - f1, f2: Functions that return 1 if heads and 0 if tails.
+     |
+     |  old_linear(self, f, cx, cy=1, eps=Fraction(1, 20))
+     |      Linear Bernoulli factory: B(p) => B((cx/cy)*p). Older algorithm given in (Huber 2014).
+     |      - f: Function that returns 1 if heads and 0 if tails.
+     |      - cx, cy: numerator and denominator of c; the probability of heads (p) is multiplied
+     |        by c. c must be 0 or greater. If c > 1, c must be chosen so that c*p <= 1 - eps.
+     |      - eps: A Fraction in (0, 1). If c > 1, eps must be chosen so that c*p <= 1 - eps.
      |
      |  polylog(self, f, n)
      |      Polylogarithm Bernoulli factory: B(p) -> B(Li_n(p))  (Flajolet et al. 2010).

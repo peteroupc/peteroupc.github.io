@@ -1777,7 +1777,7 @@ number in the sequence.</li>
 
 <ol>
 <li>Set <code>u</code> to 0 and <code>k</code> to 1.</li>
-<li>Set <code>u</code> to <code>(u * BASE) + RNDINTEXC(BASE)</code>.  Set <code>pk</code> to the <code>k</code> digits after the point in <code>p</code>&#39;s digit expansion.  Example: If <code>p</code> is &pi;/4, <code>BASE</code> is 10, and <code>k</code> is 5, then <code>pk = 78539</code>.</li>
+<li>Set <code>u</code> to <code>(u * BASE) + RNDINTEXC(BASE)</code>.  Set <code>pk</code> to <code>p</code>&#39;s digit expansion up to the <code>k</code> digits after the point.  Example: If <code>p</code> is &pi;/4, <code>BASE</code> is 10, and <code>k</code> is 5, then <code>pk = 78539</code>.</li>
 <li>If <code>pk + 1 &lt;= u</code>, return 0.  If <code>pk - 2 &gt;= u</code>, return 1.  If neither is the case, add 1 to <code>k</code> and go to step 2.</li>
 </ol>
 

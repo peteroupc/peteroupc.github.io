@@ -33,7 +33,6 @@ This page shows [**Python code**](#Sampler_Code) for these samplers.
     - [**Comparisons**](#Comparisons)
     - [**Arithmetic**](#Arithmetic)
 - [**Building Blocks**](#Building_Blocks)
-- [**Imp**](#Imp)
 - [**Algorithms for the Beta and Exponential Distributions**](#Algorithms_for_the_Beta_and_Exponential_Distributions)
     - [**Beta Distribution**](#Beta_Distribution)
     - [**Exponential Distribution**](#Exponential_Distribution)
@@ -180,15 +179,6 @@ For another base (radix), such as 10 for decimal, this can be implemented as **U
 
 **SampleGeometricBagComplement** is the same as the **SampleGeometricBag** algorithm, except the return value is 1 minus the original return value.  The result is that if **SampleGeometricBag** outputs 1 with probability _U_, **SampleGeometricBagComplement** outputs 1 with probability 1 &minus; _U_.
 
-<a id=Imp></a>
-## Imp
-> **Note:** Let _U_ be the random number represented by a geometric bag.  Let _A_ be a Bernoulli factory algorithm that takes a coin with probability of heads of _p_ and outputs 1 with probability _f_(p).  If algorithm _A_ takes a geometric bag as the input coin and flips that coin using **SampleGeometricBag**, that algorithm could instead be implemented as follows:
->
->
-> 1. Sample enough digits of the geometric bag (from left to right) to calculate _f_(p)
->
-> However, the focus of this article is on algorithms
-
 **FillGeometricBag** takes a geometric bag and generates a number whose fractional part has `p` digits as follows:
 
 1. For each position in \[0, `p`), if the item at that position is not a digit, set the item there to to a digit chosen uniformly at random (e.g., either 0 or 1 for binary), increasing the geometric bag's capacity as necessary. (See also (Oberhoff 2018, sec. 8)<sup>[**(10)**](#Note10)</sup>.)
@@ -259,7 +249,7 @@ All the building blocks are now in place to describe a _new_ algorithm to sample
 
 1. Special cases:
     - If _a_ = 1 and _b_ = 1, return a uniform random number whose fractional part has _p_ digits (for example, in the binary case, RandomBits(_p_) / 2<sup>_p_</sup> where `RandomBits(x)` returns an x-bit block of unbiased random bits).
-    - If _a_ and _b_ are both integers, return the result of **kthsmallest** with `n = a - b + 1` and `k = a`, and fill it as necessary to give the number an _p_-digit fractional part (similarly to **FillGeometricBag** above).
+    - If _a_ and _b_ are both integers, return the result of **kthsmallest** with `n = a - b + 1` and `k = a`, and fill it as necessary to give the number a _p_-digit fractional part (similarly to **FillGeometricBag** above).
     - In the binary case, if _a_ is 1 and _b_ is less than 1, return the result of the **power-of-uniform sub-algorithm** described below, with _px_/_py_ = 1/_b_, and the _complement_ flag set to `true`.
     - In the binary case, if _b_ is 1 and _a_ is less than 1, return the result of the **power-of-uniform sub-algorithm** described below, with _px_/_py_ = 1/_a_, and the _complement_ flag set to `false`.
 2. Create an empty list to serve as a "geometric bag".
@@ -360,6 +350,12 @@ def _power_of_uniform_greaterthan1(bern, power, complement=False, precision=53):
          return 1.0 if complement else 0.0
       i+=1
    epsdividend = Fraction(1)/(powerfrac * 2**i)
+   # -- A choice for epsdividend which makes eps_div
+   # -- much faster, but this will require floating-point arithmetic
+   # -- to calculate "**powerrest", which is not the focus
+   # -- of this article.
+   # probx=((2.0**(-i-1))**powerrest)
+   # epsdividend=Fraction(probx)*255/256
    bag=[]
    gb=lambda: bern.geometric_bag(bag)
    bf =lambda: bern.power(gb, powerrest.numerator, powerrest.denominator)
@@ -372,7 +368,7 @@ def _power_of_uniform_greaterthan1(bern, power, complement=False, precision=53):
       # Simulate epsdividend / x**(1-1/power)
       if bern.eps_div(bf, epsdividend) == 1:
           # Flip all bits if complement is true
-          bag=[1-x for x in bag] if complement
+          bag=[1-x for x in bag] if complement else bag
           ret=bern.fill_geometric_bag(bag, precision)
           return ret
 
@@ -387,15 +383,14 @@ def betadist(b, ax, ay, bx, by, precision=53):
         bag=[]
         bpower=Fraction(bx, by)-1
         apower=Fraction(ax, ay)-1
-        if apower<=-1 or bpower<=-1: raise ValueError
         # Special case for a=b=1
         if bpower==0 and apower==0:
            return _toreal(random.randint(0, (1<<precision)-1), 1<<precision)
         # Special case if a=1
-        if apower==1 and bpower<0:
+        if apower==0 and bpower<0:
            return _power_of_uniform_greaterthan1(b, Fraction(by, bx), True, precision)
         # Special case if b=1
-        if bpower==1 and apower<0:
+        if bpower==0 and apower<0:
            return _power_of_uniform_greaterthan1(b, Fraction(ay, ax), False, precision)
         # Special case if a and b are integers
         if int(bpower) == bpower and int(apower) == apower:
@@ -403,6 +398,7 @@ def betadist(b, ax, ay, bx, by, precision=53):
            b=int(Fraction(bx, by))
            return _toreal(RandomGen().kthsmallest(a+b-1,a, \
                   precision), precision)
+        if apower<=-1 or bpower<=-1: raise ValueError
         # Create a "geometric bag" to hold a uniform random
         # number (U), described by Flajolet et al. 2010
         gb=lambda: b.geometric_bag(bag)
@@ -941,6 +937,8 @@ I acknowledge Claude Gravel who reviewed a previous version of this article.
 
 <small><sup id=Note26>(26)</sup> Efraimidis, P. "[**Weighted Random Sampling over Data Streams**](https://arxiv.org/abs/1012.0256v2)", arXiv:1012.0256v2 [cs.DS], 2015.</small>
 
+<small><sup id=Note27>(27)</sup> Nacu, Şerban, and Yuval Peres. "Fast simulation of new coins from old", The Annals of Applied Probability 15, no. 1A (2005): 93-115.</small>
+
 <a id=Appendix></a>
 ## Appendix
 
@@ -985,11 +983,13 @@ for i in range(iters):
   # With probability x, the algorithm returns 1 (heads)
   prob=(x);prob*=cumu; passp+=prob; cumu-=prob
   # With probability (y/(z*(i+1))), the algorithm returns 0 (tails)
-  prob=(y/(z*(i+1)));prob*=cumu; fail+=prob; cumu-=prob
+  prob=(y/(z*(i+1)));prob*=cumu; failp+=prob; cumu-=prob
   # Output the current probability in this iteration,
   # but only for the first 30 and last 30 iterations
   if i<30 or i>=iters-30: print(passp)
 ```
+
+As this code shows, when _x_ approaches 0, the probability converges very slowly to the correct one, even though it will eventually converge.  This may be because when _y_/_z_ is less than 1 (and _x_ is in the interval (0,1)), _x_<sup>_y_/_z_</sup> has a slope that tends to a vertical slope near 0, so that the so-called [**_Lipschitz condition_**](https://en.wikipedia.org/wiki/Lipschitz_continuity) is not met at 0 (see also (Nacu and Peres 2005, propositions 10 and 23)<sup>[**(27)**](#Note27)</sup>).
 
 <a id=Alternative_Implementation_of_Bernoulli_Factories></a>
 ### Alternative Implementation of Bernoulli Factories
@@ -998,7 +998,7 @@ Say we have a Bernoulli factory algorithm that takes a coin with probability of 
 
 1. Set _v_ to 0 and _k_ to 1.
 2. Set _v_ to _b_ * _v_ + _d_, where _b_ is the base (or radix) of the geometric bag's digits, and _d_ is a digit chosen uniformly at random.
-3. Sample enough digits of the geometric bag (from left to right and without using **SampleGeometricBag**) to calculate an approximation of _f_(_U_) that is within _b_<sup>&minus;_k_</sup> of the true result.  Let _pk_ be the _k_ digits after the point in the approximation's digit expansion.
+3. Sample enough unsampled digits of the geometric bag (from left to right and without using **SampleGeometricBag**) to calculate an approximation of _f_(_U_) that is within _b_<sup>&minus;_k_</sup> of the true result.  Let _pk_ be the approximation's digit expansion up to the _k_ digits after the point.  For example, if _f_(_U_) is &pi; and _k_ is 2, _pk_ is 314.
 4. If _pk_ + 1 <= _v_, return 0. If _pk_ &minus; 2 >= _v_, return 1.  If neither is the case, add 1 to _k_ and go to step 2.
 
 However, the focus of this article is on algorithms that don't rely on calculations of irrational numbers, which is why this section is in the appendix.

@@ -1461,7 +1461,7 @@ If the probability is a rational number, express it as a rational number (`n`/`d
 If the probability is an irrational number, such as `exp(-x/y)` or `ln(2)`, then the digit expansion is infinite and can only be approximated.  In that case, assuming the probability is in \[0, 1), use the following algorithm to do a Bernoulli trial with that probability ((Brassard et al., 2015)<sup>[**(43)**](#Note43)</sup>; see also (Devroye 1986, p. 769)<sup>[**(11)**](#Note11)</sup>), where `BASE` is the digit base, such as 2 for binary or 10 for decimal:
 
 1. Set `u` to 0 and `k` to 1.
-2. Set `u` to `(u * BASE) + RNDINTEXC(BASE)`.  Set `pk` to the `k` digits after the point in `p`'s digit expansion.  Example: If `p` is &pi;/4, `BASE` is 10, and `k` is 5, then `pk = 78539`.
+2. Set `u` to `(u * BASE) + RNDINTEXC(BASE)`.  Set `pk` to `p`'s digit expansion up to the `k` digits after the point.  Example: If `p` is &pi;/4, `BASE` is 10, and `k` is 5, then `pk = 78539`.
 3. If `pk + 1 <= u`, return 0.  If `pk - 2 >= u`, return 1.  If neither is the case, add 1 to `k` and go to step 2.
 
 <a id=Random_Walks_Additional_Examples></a>

@@ -14,6 +14,8 @@ class Bernoulli:
       arXiv:0906.5560v2 [math.PR], 2010.
       - Huber, M., "Designing perfect simulation algorithms using local correctness",
       arXiv:1907.06748v1 [cs.DS], 2019.
+      - Huber, M., "Nearly optimal Bernoulli factories for linear functions",
+      arXiv:1308.1562v2  [math.PR], 2014.
       - Huber, M., "Optimal linear Bernoulli factories for small mean problems",
       arXiv:1507.00843v2 [math.PR], 2016.
       - Łatuszyński, K., Kosmidis, I.,  Papaspiliopoulos, O., Roberts, G.O., "Simulating
@@ -455,12 +457,21 @@ class Bernoulli:
             raise ValueError
         eps = Fraction(eps)
         ceps = Fraction(1) / (1 - Fraction(eps))
+        cgamma = None
+        # Proposition 4 of Lee et al. 2014
+        half = Fraction(1, 2)
+        if eps >= half:
+            beta = half
+            cgamma = 1 - (1 - beta) / (1 - Fraction(1, 4))
+        else:
+            beta = eps * 2
+            cgamma = 1 - (1 - beta) / (1 - eps)
         finv = lambda: (f() ^ 1)
         while True:
             if self.zero_or_one(eps.numerator, eps.denominator) == 1:
                 return 1
             # Sample B((p-eps)/(1-eps)) or B(1-(1-p)/(1-eps))
-            b = self.linear(finv, ceps, eps) ^ 1
+            b = self.linear(finv, ceps.numerator, ceps.denominator, cgamma) ^ 1
             if b == 1:
                 return 0
 
@@ -664,6 +675,42 @@ class Bernoulli:
      """
         fv = lambda: self.mean(f1, f2)
         return self.linear(fv, 2, 1)
+
+    def old_linear(self, f, cx, cy=1, eps=Fraction(5, 100)):
+        """ Linear Bernoulli factory: B(p) => B((cx/cy)*p). Older algorithm given in (Huber 2014).
+     - f: Function that returns 1 if heads and 0 if tails.
+     - cx, cy: numerator and denominator of c; the probability of heads (p) is multiplied
+       by c. c must be 0 or greater. If c > 1, c must be chosen so that c*p <= 1 - eps.
+     - eps: A Fraction in (0, 1). If c > 1, eps must be chosen so that c*p <= 1 - eps.
+     """
+        gamma = Fraction(1, 2)
+        k = Fraction(23, 10) / (gamma * eps)
+        i = 1
+        eps = min(eps, Fraction(644, 1000))
+        c = Fraction(cx, cy)
+        while True:
+            while True:
+                b = f() ^ 1
+                if b == 1:
+                    i -= 1
+                else:
+                    ce = (c - 1) / c
+                    # Number of failures before first success, plus 1
+                    g = 1
+                    while self.zero_or_one(ce.numerator, ce.denominator) == 0:
+                        g += 1
+                    i = (i - 1) + g
+                if i == 0 or i >= k:
+                    break
+            if i >= k:
+                ce = 1 + gamma * eps
+                if self.zero_or_one_power(ce.numerator, ce.denominator, -i) == 0:
+                    return 1 if i == 0 else 0
+                c *= ce
+                eps *= 1 - gamma
+                k /= 1 - gamma
+            if i == 0:
+                return 1
 
     def linear(self, f, cx, cy=1, eps=Fraction(5, 100)):
         """ Linear Bernoulli factory: B(p) => B((cx/cy)*p) (Huber 2016).

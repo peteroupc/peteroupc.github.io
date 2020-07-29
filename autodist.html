@@ -5,7 +5,7 @@
 <h2>Code Generator for Discrete Distributions</h2>
 <p>This page generates standalone programming code that samples from a discrete distribution.  That is, it chooses an integer in [0, n) at random where each of the n integers has a separate probability of occurring.  The idea for a code generator like this came from Leydold et al. (2001).  The generator supports generating either JavaScript or Ruby code.</p>
 
-<p>The code generator is powered by the recently presented Fast Loaded Dice Roller (Saad et al. 2020).  The code generator is also powered by JavaScript, at least the kind supported by modern Web browsers.  Accordingly, the generator requires JavaScript (active scripting) to be enabled in the browser settings.</p>
+<p>The code generator is powered by the recently presented Fast Loaded Dice Roller (Saad et al. 2020) and by the Fast Dice Roller (Lumbroso 2013).  The code generator is also powered by JavaScript, at least the kind supported by modern Web browsers.  Accordingly, the generator requires JavaScript (active scripting) to be enabled in the browser settings.</p>
 <form action='javascript:void(null)'>
 <p>In the text box below, enter a comma-separated list of integer weights.  Each weight must be 0 or greater.
 Spaces can appear at the beginning and end of the value as well as around the commas.</p>
@@ -26,7 +26,7 @@ Language of generated code: <select id=genlang>
 
 <p>Saad, F.A., Freer C.E., et al. "The Fast Loaded Dice Roller: A Near-Optimal Exact Sampler for Discrete Probability Distributions", in _AISTATS 2020_ 108.</p>
 <p>Leydold, et al., "An Automatic Code Generator for Nonuniform Random Variate Generation", 2001.</p>
-
+<p>Lumbroso, J., "<a href='https://arxiv.org/abs/1304.1916'>Optimal Discrete Uniform Generation from Coin Flips, and Applications</a>", arXiv:1304.1916 [cs.DS]</p>
 <script>
 function times(n) {
   let x=[]
@@ -55,6 +55,56 @@ function zeros(n) {
     x.push(0)
   }
   return x
+}
+
+function fdrruby(name, v) {
+   name=name||"discrete_gen"
+   ret="def "+name+"()\n"
+        if (v==1) {
+           ret += "return 0\n"
+        } else if(v==2) {
+           // Special case of 2 items with equal probability
+           ret += "  return rand(2)\n"
+        } else {
+        ret += "  x = 1\n"
+        ret += "  y = 0\n"
+        ret += "  while true\n"
+        ret += "    x = (x * 2)\n"
+        ret += "    y = rand(2) + (y * 2)\n"
+        ret += "    if x > "+(v-1)+"\n"
+        ret += "      return y if y <= "+(v-1)+"\n"
+        ret += "      x -= "+(v)+"\n"
+        ret += "      y -= "+(v)+"\n"
+        ret += "    end\n"
+        ret += "  end\n"
+        }
+        ret+="end\n"
+       return ret
+}
+
+function fdr(name, v) {
+   name=name||"discrete_gen"
+   ret="function "+name+"() {\n"
+        if (v==1) {
+           ret += "return 0\n"
+        } else if(v==2) {
+           // Special case of 2 items with equal probability
+           ret += "  return Math.random() < 0.5 ? 0 : 1;\n"
+        } else {
+        ret += "  let x = 1;\n"
+        ret += "  let y = 0;\n"
+        ret += "  while (true) {\n"
+        ret += "    x = (x * 2);\n"
+        ret += "    y = (Math.random() < 0.5 ? 0 : 1) + (y * 2);\n"
+        ret += "    if (x > "+(v-1)+") {\n"
+        ret += "      if (y <= "+(v-1)+") { return y; }\n"
+        ret += "      x -= "+(v)+";\n"
+        ret += "      y -= "+(v)+";\n"
+        ret += "    }\n"
+        ret += "  }\n"
+        }
+        ret+="}\n"
+       return ret
 }
 
 function codegenruby(fldr,name) {
@@ -236,6 +286,14 @@ function fldr(weights) {
         return [leavesAndLabels, rejectionLabel, maxLeaf]
 }
 
+function sameweights(x){
+  if(x.length<2)return true
+  for(var i=1;i<x.length;i++){
+    if(x[i]!=x[0])return false
+  }
+  return true
+}
+
 var changefunc=function() {
      var curval=document.getElementById("probabilities").value+"|"+
         document.getElementById("genname").value+"|"+
@@ -270,15 +328,21 @@ var changefunc=function() {
             "support a sum of weights greater than "+Number.MAX_SAFE_INTEGER+"."
          return
      }
-     var data=fldr(weightints)
-     if(!data && document.getElementById("probabilities").value!="") {
-       document.getElementById("error").innerHTML="Failed to generate code for these weights."
-       return
-     }
      var code=""
      var glang=document.getElementById("genlang").value
-     if (glang=="javascript")code=codegen(data,genname)
-     if (glang=="ruby")code=codegenruby(data,genname)
+     if(sameweights(weightints)) {
+       // All weights are the same
+       if (glang=="javascript")code=fdr(data,weightints.length)
+       if (glang=="ruby")code=fdrruby(data,weightints.length)
+     } else {
+       var data=fldr(weightints)
+       if(!data && document.getElementById("probabilities").value!="") {
+         document.getElementById("error").innerHTML="Failed to generate code for these weights."
+         return
+       }
+       if (glang=="javascript")code=codegen(data,genname)
+       if (glang=="ruby")code=codegenruby(data,genname)
+     }
      document.getElementById("code").value=code
      document.getElementById("error").innerHTML=""
   }

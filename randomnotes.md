@@ -603,6 +603,8 @@ The following are some ways to implement `RNDINT`.  (The column "Unbiased?" mean
 | Algorithm in "Conclusion" section by O'Neill | No | Yes | Runs forever in worst case |
 | "Debiased" and "Bitmask with Rejection" surveyed by M. O'Neill | No | Yes | Runs forever in worst case |
 
+There are various techniques that can reduce the number of bits "wasted" by an integer-generating algorithm, and bring that algorithm closer to the theoretical lower bound of Knuth and Yao, even if the algorithm isn't "optimal".  These techniques, which include batching, bit recycling, and randomness extraction, are discussed, for example, in the Math Forum page and the Lumbroso and Mennucci papers referenced above, and in (Devroye and Gravel 2015)<sup>[**(32)**](#Note32)</sup>.
+
 <a id=A_Note_on_Weighted_Choice_Algorithms></a>
 ### A Note on Weighted Choice Algorithms
 

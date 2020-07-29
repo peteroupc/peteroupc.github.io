@@ -45,7 +45,6 @@
 <li><a href="#Arithmetic"><strong>Arithmetic</strong></a></li>
 </ul></li>
 <li><a href="#Building_Blocks"><strong>Building Blocks</strong></a></li>
-<li><a href="#Imp"><strong>Imp</strong></a></li>
 <li><a href="#Algorithms_for_the_Beta_and_Exponential_Distributions"><strong>Algorithms for the Beta and Exponential Distributions</strong></a>
 
 <ul>
@@ -254,20 +253,6 @@
 
 <p><strong>SampleGeometricBagComplement</strong> is the same as the <strong>SampleGeometricBag</strong> algorithm, except the return value is 1 minus the original return value.  The result is that if <strong>SampleGeometricBag</strong> outputs 1 with probability <em>U</em>, <strong>SampleGeometricBagComplement</strong> outputs 1 with probability 1 &minus; <em>U</em>.</p>
 
-<p><a id=Imp></a></p>
-
-<h2>Imp</h2>
-
-<blockquote>
-<p><strong>Note:</strong> Let <em>U</em> be the random number represented by a geometric bag.  Let <em>A</em> be a Bernoulli factory algorithm that takes a coin with probability of heads of <em>p</em> and outputs 1 with probability <em>f</em>(p).  If algorithm <em>A</em> takes a geometric bag as the input coin and flips that coin using <strong>SampleGeometricBag</strong>, that algorithm could instead be implemented as follows:</p>
-
-<ol>
-<li>Sample enough digits of the geometric bag (from left to right) to calculate <em>f</em>(p)</li>
-</ol>
-
-<p>However, the focus of this article is on algorithms</p>
-</blockquote>
-
 <p><strong>FillGeometricBag</strong> takes a geometric bag and generates a number whose fractional part has <code>p</code> digits as follows:</p>
 
 <ol>
@@ -360,7 +345,7 @@
 
 <ul>
 <li>If <em>a</em> = 1 and <em>b</em> = 1, return a uniform random number whose fractional part has <em>p</em> digits (for example, in the binary case, RandomBits(<em>p</em>) / 2<sup><em>p</em></sup> where <code>RandomBits(x)</code> returns an x-bit block of unbiased random bits).</li>
-<li>If <em>a</em> and <em>b</em> are both integers, return the result of <strong>kthsmallest</strong> with <code>n = a - b + 1</code> and <code>k = a</code>, and fill it as necessary to give the number an <em>p</em>-digit fractional part (similarly to <strong>FillGeometricBag</strong> above).</li>
+<li>If <em>a</em> and <em>b</em> are both integers, return the result of <strong>kthsmallest</strong> with <code>n = a - b + 1</code> and <code>k = a</code>, and fill it as necessary to give the number a <em>p</em>-digit fractional part (similarly to <strong>FillGeometricBag</strong> above).</li>
 <li>In the binary case, if <em>a</em> is 1 and <em>b</em> is less than 1, return the result of the <strong>power-of-uniform sub-algorithm</strong> described below, with <em>px</em>/<em>py</em> = 1/<em>b</em>, and the <em>complement</em> flag set to <code>true</code>.</li>
 <li>In the binary case, if <em>b</em> is 1 and <em>a</em> is less than 1, return the result of the <strong>power-of-uniform sub-algorithm</strong> described below, with <em>px</em>/<em>py</em> = 1/<em>a</em>, and the <em>complement</em> flag set to <code>false</code>.</li>
 </ul></li>
@@ -478,6 +463,12 @@ def _power_of_uniform_greaterthan1(bern, power, complement=False, precision=53):
          return 1.0 if complement else 0.0
       i+=1
    epsdividend = Fraction(1)/(powerfrac * 2**i)
+   # -- A choice for epsdividend which makes eps_div
+   # -- much faster, but this will require floating-point arithmetic
+   # -- to calculate &quot;**powerrest&quot;, which is not the focus
+   # -- of this article.
+   # probx=((2.0**(-i-1))**powerrest)
+   # epsdividend=Fraction(probx)*255/256
    bag=[]
    gb=lambda: bern.geometric_bag(bag)
    bf =lambda: bern.power(gb, powerrest.numerator, powerrest.denominator)
@@ -490,7 +481,7 @@ def _power_of_uniform_greaterthan1(bern, power, complement=False, precision=53):
       # Simulate epsdividend / x**(1-1/power)
       if bern.eps_div(bf, epsdividend) == 1:
           # Flip all bits if complement is true
-          bag=[1-x for x in bag] if complement
+          bag=[1-x for x in bag] if complement else bag
           ret=bern.fill_geometric_bag(bag, precision)
           return ret
 
@@ -505,15 +496,14 @@ def betadist(b, ax, ay, bx, by, precision=53):
         bag=[]
         bpower=Fraction(bx, by)-1
         apower=Fraction(ax, ay)-1
-        if apower&lt;=-1 or bpower&lt;=-1: raise ValueError
         # Special case for a=b=1
         if bpower==0 and apower==0:
            return _toreal(random.randint(0, (1&lt;&lt;precision)-1), 1&lt;&lt;precision)
         # Special case if a=1
-        if apower==1 and bpower&lt;0:
+        if apower==0 and bpower&lt;0:
            return _power_of_uniform_greaterthan1(b, Fraction(by, bx), True, precision)
         # Special case if b=1
-        if bpower==1 and apower&lt;0:
+        if bpower==0 and apower&lt;0:
            return _power_of_uniform_greaterthan1(b, Fraction(ay, ax), False, precision)
         # Special case if a and b are integers
         if int(bpower) == bpower and int(apower) == apower:
@@ -521,6 +511,7 @@ def betadist(b, ax, ay, bx, by, precision=53):
            b=int(Fraction(bx, by))
            return _toreal(RandomGen().kthsmallest(a+b-1,a, \
                   precision), precision)
+        if apower&lt;=-1 or bpower&lt;=-1: raise ValueError
         # Create a &quot;geometric bag&quot; to hold a uniform random
         # number (U), described by Flajolet et al. 2010
         gb=lambda: b.geometric_bag(bag)
@@ -1304,6 +1295,8 @@ def contbernoullidist(b, lamda, precision=53):
 
 <p><small><sup id=Note26>(26)</sup> Efraimidis, P. &quot;<a href="https://arxiv.org/abs/1012.0256v2"><strong>Weighted Random Sampling over Data Streams</strong></a>&quot;, arXiv:1012.0256v2 [cs.DS], 2015.</small></p>
 
+<p><small><sup id=Note27>(27)</sup> Nacu, Şerban, and Yuval Peres. &quot;Fast simulation of new coins from old&quot;, The Annals of Applied Probability 15, no. 1A (2005): 93-115.</small></p>
+
 <p><a id=Appendix></a></p>
 
 <h2>Appendix</h2>
@@ -1349,11 +1342,13 @@ for i in range(iters):
   # With probability x, the algorithm returns 1 (heads)
   prob=(x);prob*=cumu; passp+=prob; cumu-=prob
   # With probability (y/(z*(i+1))), the algorithm returns 0 (tails)
-  prob=(y/(z*(i+1)));prob*=cumu; fail+=prob; cumu-=prob
+  prob=(y/(z*(i+1)));prob*=cumu; failp+=prob; cumu-=prob
   # Output the current probability in this iteration,
   # but only for the first 30 and last 30 iterations
   if i&lt;30 or i&gt;=iters-30: print(passp)
 </pre>
+
+<p>As this code shows, when <em>x</em> approaches 0, the probability converges very slowly to the correct one, even though it will eventually converge.  This may be because when <em>y</em>/<em>z</em> is less than 1 (and <em>x</em> is in the interval (0,1)), <em>x</em><sup><em>y</em>/<em>z</em></sup> has a slope that tends to a vertical slope near 0, so that the so-called <a href="https://en.wikipedia.org/wiki/Lipschitz_continuity"><strong><em>Lipschitz condition</em></strong></a> is not met at 0 (see also (Nacu and Peres 2005, propositions 10 and 23)<sup><a href="#Note27"><strong>(27)</strong></a></sup>).</p>
 
 <p><a id=Alternative_Implementation_of_Bernoulli_Factories></a></p>
 
@@ -1364,7 +1359,7 @@ for i in range(iters):
 <ol>
 <li>Set <em>v</em> to 0 and <em>k</em> to 1.</li>
 <li>Set <em>v</em> to <em>b</em> * <em>v</em> + <em>d</em>, where <em>b</em> is the base (or radix) of the geometric bag&#39;s digits, and <em>d</em> is a digit chosen uniformly at random.</li>
-<li>Sample enough digits of the geometric bag (from left to right and without using <strong>SampleGeometricBag</strong>) to calculate an approximation of <em>f</em>(<em>U</em>) that is within <em>b</em><sup>&minus;<em>k</em></sup> of the true result.  Let <em>pk</em> be the <em>k</em> digits after the point in the approximation&#39;s digit expansion.</li>
+<li>Sample enough unsampled digits of the geometric bag (from left to right and without using <strong>SampleGeometricBag</strong>) to calculate an approximation of <em>f</em>(<em>U</em>) that is within <em>b</em><sup>&minus;<em>k</em></sup> of the true result.  Let <em>pk</em> be the approximation&#39;s digit expansion up to the <em>k</em> digits after the point.  For example, if <em>f</em>(<em>U</em>) is &pi; and <em>k</em> is 2, <em>pk</em> is 314.</li>
 <li>If <em>pk</em> + 1 &lt;= <em>v</em>, return 0. If <em>pk</em> &minus; 2 &gt;= <em>v</em>, return 1.  If neither is the case, add 1 to <em>k</em> and go to step 2.</li>
 </ol>
 
