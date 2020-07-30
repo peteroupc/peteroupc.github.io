@@ -18,10 +18,16 @@ The samplers discussed here also draw on work dealing with a construct called th
 
 This page shows [**Python code**](#Sampler_Code) for these samplers.
 
+<a id=About_This_Document></a>
+### About This Document
+
+**This is an open-source document; for an updated version, see the** [**source code**](https://github.com/peteroupc/peteroupc.github.io/raw/master/exporand.md) **or its** [**rendering on GitHub**](https://github.com/peteroupc/peteroupc.github.io/blob/master/exporand.md)**.  You can send comments on this document either on** [**CodeProject**](https://www.codeproject.com/Articles/5272482/Partially-Sampled-Random-Numbers-for-Accurate-Samp) **or on the** [**GitHub issues page**](https://github.com/peteroupc/peteroupc.github.io/issues)**.**
+
 <a id=Contents></a>
 ## Contents
 
 - [**Introduction**](#Introduction)
+    - [**About This Document**](#About_This_Document)
 - [**Contents**](#Contents)
 - [**About the Beta Distribution**](#About_the_Beta_Distribution)
 - [**About the Exponential Distribution**](#About_the_Exponential_Distribution)
@@ -123,7 +129,7 @@ Partially-sampled numbers could also be implemented via rejection from the expon
 
 An algorithm that samples from a continuous distribution using PSRNs has the following properties:
 
-1. The algorithm relies only on a source of random bits for randomness, and does not rely on floating-point arithmetic or calculations of irrational or transcendental numbers (other than digit extractions), including when the algorithm samples each digit of a PSRN.
+1. The algorithm relies only on a source of random bits for randomness, and does not rely on floating-point arithmetic or calculations of irrational or transcendental numbers (other than digit extractions), including when the algorithm samples each digit of a PSRN.  The algorithm may use rational arithmetic (such as `Fraction` in Python or `Rational` in Ruby), as long as the arithmetic is exact.
 2. If the algorithm outputs a PSRN, the number represented by the sampled digits must follow a distribution that is close to the ideal distribution by a distance of not more than _b_<sup>&minus;_m_</sup>, where _b_ is the PSRN's base, or radix (such as 2 for binary), and _m_ is the number of sampled digits in the PSRN's fractional part.  ((Devroye and Gravel 2015)<sup>[**(3)**](#Note3)</sup> suggests Wasserstein L<sub>&infin;</sub> distance as the distance to use for this purpose.) The number has to be close this way even if the algorithm's caller later samples unsampled digits of that PSRN at random (e.g., uniformly at random in the case of a uniform PSRN).
 3. If the algorithm fills a PSRN's unsampled fractional digits at random (e.g., uniformly at random in the case of a uniform PSRN), so that the number's fractional part has _m_ digits, the number's distribution must remain close to the ideal distribution by a distance of not more than _b_<sup>&minus;_m_</sup>.
 
@@ -226,10 +232,10 @@ These two algorithms enable e-rands with rational-valued &lambda; parameters and
 The **ZeroOrOneExpMinus** algorithm takes integers _x_ >= 0 and _y_ > 0 and outputs 1 with probability `exp(-x/y)` or 0 otherwise. It originates from (Canonne et al. 2020)<sup>[**(17)**](#Note17)</sup>.
 
 1. Special case: If _x_ is 0, return 1. (This is because the probability becomes `exp(0) = 1`.)
-2. If `x > y` (so _x_/_y_ is greater than 1), call **ZeroOrOneExpMinus** `floor(x/y)` times with _x_ = _y_ = 1 and once with _x_ = _x_ - floor(_x_/_y_) \* _y_ and _y_ = _y_.  Return 1 if all these calls return 1; otherwise, return 0.
+2. If `x > y` (so _x_/_y_ is greater than 1), call **ZeroOrOneExpMinus** `floor(x/y)` times with _x_ = _y_ = 1 and once with _x_ = _x_ &minus; floor(_x_/_y_) \* _y_ and _y_ = _y_.  Return 1 if all these calls return 1; otherwise, return 0.
 3. Set _r_ to 1 and _i_ to 1.
 4. Return _r_ with probability (_y_ \* _i_ &minus; _x_) / (_y_ \* _i_).
-5. Set _r_ to 1 - _r_, add 1 to _i_, and go to step 4.
+5. Set _r_ to 1 &minus; _r_, add 1 to _i_, and go to step 4.
 
 The **LogisticExp** algorithm is a special case of the _logistic Bernoulli factory_ given in (Morina et al. 2019)<sup>[**(18)**](#Note18)</sup>.  It takes integers _x_ >= 0,  _y_ > 0, and _prec_ > 0 and outputs 1 with probability `1/(1+exp(x/(y*pow(2, prec))))` and 0 otherwise.
 
@@ -712,7 +718,9 @@ The beta sampler in this document shows one case of a general approach to simula
 
 3. If the geometric bag is accepted, either return the bag as is or fill the unsampled digits of the bag with uniform random digits as necessary to give the number an _n_-digit fractional part (similarly to **FillGeometricBag** above), where _n_ is a precision parameter, then return the resulting number.
 
-The beta distribution's probability function at (1) fits the requirements of Keane and O'Brien (for `alpha` and `beta` both greater than 1), thus it can be simulated by Bernoulli factories and is covered by this general approach.
+However, the speed of this step depends crucially on the mode (highest point) of _f_ at \[0, 1\].  As that mode approaches 0, the average rejection rate increases.  Effectively, this step generates a point uniformly at random in a 1&times;1 area in space.  If that mode is close to 0, _f_ will cover only a tiny portion of this area, so that the chance is high that the generated point will fall outside the area of _f_ and have to be rejected.
+
+The beta distribution's probability function at (1) fits the requirements of Keane and O'Brien (for `alpha` and `beta` both greater than 1), thus it can be simulated by Bernoulli factories and is covered by this general algorithm.
 
 This algorithm can be modified to produce random numbers in the interval \[_m_, _m_ + _b_<sup>_i_</sup>\] (where _b_ is the base, or radix, and _i_ and _m_ are integers), rather than \[0, 1\], as follows:
 
@@ -965,7 +973,7 @@ plot(expminusformula(), xlim=(0,1), ylim=(0,2))
 <a id=Convergence_of_Bernoulli_Factories></a>
 ### Convergence of Bernoulli Factories
 
-The following Python code illustrates how to test a Bernoulli factory algorithm for convergence to the correct probability, as well as the speed of this convergence.  In this case, we are testing the **PowerBernoulliFactory** of _x_<sup>_y_/_z_</sup>.  Depending on the parameters _x_, _y_, and _z_, this Bernoulli factory converges faster or slower.  Notably, as _x_ (the probability of heads of the input coin) approaches 0, the convergence rate gets slower and slower.
+The following Python code illustrates how to test a Bernoulli factory algorithm for convergence to the correct probability, as well as the speed of this convergence.  In this case, we are testing the **PowerBernoulliFactory** of _x_<sup>_y_/_z_</sup>.  Depending on the parameters _x_, _y_, and _z_, this Bernoulli factory converges faster or slower.  Notably
 
 ```
 # Parameters for the Bernoulli factory x**(y/z)
@@ -989,7 +997,7 @@ for i in range(iters):
   if i<30 or i>=iters-30: print(passp)
 ```
 
-As this code shows, when _x_ approaches 0, the probability converges very slowly to the correct one, even though it will eventually converge.  This may be because when _y_/_z_ is less than 1 (and _x_ is in the interval (0,1)), _x_<sup>_y_/_z_</sup> has a slope that tends to a vertical slope near 0, so that the so-called [**_Lipschitz condition_**](https://en.wikipedia.org/wiki/Lipschitz_continuity) is not met at 0 (see also (Nacu and Peres 2005, propositions 10 and 23)<sup>[**(27)**](#Note27)</sup>).
+As this code shows, as _x_ (the probability of heads of the input coin) approaches 0, the convergence rate gets slower and slower, even though the probability will eventually converge to the correct one.  This may be because when _y_/_z_ is less than 1 (and _x_ is in the interval (0,1)), _x_<sup>_y_/_z_</sup> has a slope that tends to a vertical slope near 0, so that the so-called [**_Lipschitz condition_**](https://en.wikipedia.org/wiki/Lipschitz_continuity) is not met at 0 (see also (Nacu and Peres 2005, propositions 10 and 23)<sup>[**(27)**](#Note27)</sup>).  Thus, a practical implementation of **PowerBernoulliFactory** may have to switch to an alternative implementation (such as the one described in the next section) when it detects that the geometric bag's first few digits are zeros.
 
 <a id=Alternative_Implementation_of_Bernoulli_Factories></a>
 ### Alternative Implementation of Bernoulli Factories

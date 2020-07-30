@@ -1379,25 +1379,22 @@ END METHOD
            PoissonInt(mx-mm, my)
     end
     while true
-      // Generate n, a geometric random number
-      // (NOTE: Flajolet et al. define a geometric
-      // distribution as number of SUCCESSES BEFORE
-      // FAILURE, not counting the failure, so we
-      // have to complement the probability here)
-      n = NegativeBinomialInt(1, my - mx, my)
-      // If n uniform random numbers turn out
-      // to be sorted, accept n
-      if n&lt;=1: return n
-      u = UniformNew()
-      success = true
-      i=1
-      while i&lt;n and success
+      k = 0
+      w = nothing
+      while true
+         // Similar to generating k, a geometric random
+         // number, then accepting or rejecting based on whether
+         // none of the random numbers are out of order
+         // (NOTE: Flajolet et al. define a geometric
+         // distribution as number of SUCCESSES BEFORE
+         // FAILURE, not counting the failure.)
+         if ZeroOrOne(mx,my)==0: return k
          u2 = UniformNew()
-         if UniformLess(u, u2): u = u2
-         else: success=false // Not sorted
-         i=i+1
+         // Break if we find an out-of-order number
+         if k&gt;0 and UniformLess(w, u): break
+         w = u
+         k=k+1
       end
-      if success: return n
     end
     return count
 END METHOD

@@ -535,17 +535,17 @@ For related algorithms, see the appendix.
 
 <small><sup id=Note28>(28)</sup> L. Hübschle-Schneider and P. Sanders, "[**Parallel Weighted Random Sampling**](https://arxiv.org/abs/1903.00227v2)", arXiv:1903.00227v2  [cs.DS], 2019.</small>
 
-<small><sup id=Note29>(29)</sup> A.J. Walker, "An efficient method for generating discrete random variables with general distributions", _ACM Transactions on Mathematical Software_ 3, 1977.</small>
+<small><sup id=Note29>(29)</sup> Y. Tang, "An Empirical Study of Random Sampling Methods for Changing Discrete Distributions", Master's thesis, University of Alberta, 2019.</small>
 
-<small><sup id=Note30>(30)</sup> Vose, Michael D. "A linear algorithm for generating random numbers with a given distribution." IEEE Transactions on software engineering 17, no. 9 (1991): 972-975.</small>
+<small><sup id=Note30>(30)</sup> A.J. Walker, "An efficient method for generating discrete random variables with general distributions", _ACM Transactions on Mathematical Software_ 3, 1977.</small>
 
-<small><sup id=Note31>(31)</sup> Roy, Sujoy Sinha, Frederik Vercauteren and Ingrid Verbauwhede. "[**High Precision Discrete Gaussian Sampling on FPGAs**](https://www.esat.kuleuven.be/cosic/publications/article-2372.pdf)." _Selected Areas in Cryptography_ (2013).</small>
+<small><sup id=Note31>(31)</sup> Vose, Michael D. "A linear algorithm for generating random numbers with a given distribution." IEEE Transactions on software engineering 17, no. 9 (1991): 972-975.</small>
 
-<small><sup id=Note32>(32)</sup> T. S. Han and M. Hoshi, "Interval algorithm for random number generation", _IEEE Transactions on Information Theory_ 43(2), March 1997.</small>
+<small><sup id=Note32>(32)</sup> Roy, Sujoy Sinha, Frederik Vercauteren and Ingrid Verbauwhede. "[**High Precision Discrete Gaussian Sampling on FPGAs**](https://www.esat.kuleuven.be/cosic/publications/article-2372.pdf)." _Selected Areas in Cryptography_ (2013).</small>
 
-<small><sup id=Note33>(33)</sup> Oberhoff, Sebastian, "[**Exact Sampling and Prefix Distributions**](https://dc.uwm.edu/etd/1888)", _Theses and Dissertations_, University of Wisconsin Milwaukee, 2018.</small>
+<small><sup id=Note33>(33)</sup> T. S. Han and M. Hoshi, "Interval algorithm for random number generation", _IEEE Transactions on Information Theory_ 43(2), March 1997.</small>
 
-<small><sup id=Note34>(34)</sup> Y. Tang, "An Empirical Study of Random Sampling Methods for Changing Discrete Distributions", Master's thesis, University of Alberta, 2019.</small>
+<small><sup id=Note34>(34)</sup> Oberhoff, Sebastian, "[**Exact Sampling and Prefix Distributions**](https://dc.uwm.edu/etd/1888)", _Theses and Dissertations_, University of Wisconsin Milwaukee, 2018.</small>
 
 <a id=Appendix></a>
 ## Appendix
@@ -620,14 +620,14 @@ In this case, though, the number of random bits an algorithm uses on average is 
 - The Bringmann&ndash;Larsen succinct data structure (Bringmann and Larsen 2013)<sup>[**(26)**](#Note26)</sup>.
 - A sampler that is designed to work on a sorted list of weights (Bringmann and Panagiotou 2012)<sup>[**(27)**](#Note27)</sup>.
 - The parallel weighted random samplers described in (Hübschle-Schneider and Sanders 2019)<sup>[**(28)**](#Note28)</sup>.
-- The two-level search, multi-level search, and flat method described in (Tang 2019)<sup>[**(34)**](#Note34)</sup>.
+- The two-level search, multi-level search, and flat method described in (Tang 2019)<sup>[**(29)**](#Note29)</sup>.
 
 There are other weighted choice algorithms that don't necessarily take integer weights.  They include:
 
 - The section "Weighted Choice with Coins of Known Bias" in this appendix.
-- The _alias method_ by Walker (1977)<sup>[**(29)**](#Note29)</sup>.  Michael Vose's version of the alias method (Vose 1991)<sup>[**(30)**](#Note30)</sup> is described in "[**Darts, Dice, and Coins: Sampling from a Discrete Distribution**](https://www.keithschwarz.com/darts-dice-coins/)".  The alias method ought to be implemented using rational-valued weights and rational-number arithmetic, since this method is hard to apply to integer weights if the sum of the weights is not divisible by the number of weights.
-- The Knuth and Yao algorithm that generates a DDG tree from the binary expansions of the probabilities, an algorithm that is optimal, or at least nearly so.  This is suggested in exercise 3.4.2 of chapter 15 of (Devroye 1986, p. 1-2)<sup>[**(10)**](#Note10)</sup>, implemented in _randomgen.py_ as the `discretegen` method, and also described in (Roy et al. 2013)<sup>[**(31)**](#Note31)</sup>.
-- The Han and Hoshi algorithm (Han and Hoshi 1997)<sup>[**(32)**](#Note32)</sup> that uses the cumulative probabilities as input and is described in (Devroye and Gravel 2015)<sup>[**(22)**](#Note22)</sup>.  This algorithm comes within 3 bits, on average, of the optimal number of bits.
+- The _alias method_ by Walker (1977)<sup>[**(30)**](#Note30)</sup>.  Michael Vose's version of the alias method (Vose 1991)<sup>[**(31)**](#Note31)</sup> is described in "[**Darts, Dice, and Coins: Sampling from a Discrete Distribution**](https://www.keithschwarz.com/darts-dice-coins/)".  The alias method ought to be implemented using rational-valued weights and rational-number arithmetic, since this method is hard to apply to integer weights if the sum of the weights is not divisible by the number of weights.
+- The Knuth and Yao algorithm that generates a DDG tree from the binary expansions of the probabilities, an algorithm that is optimal, or at least nearly so.  This is suggested in exercise 3.4.2 of chapter 15 of (Devroye 1986, p. 1-2)<sup>[**(10)**](#Note10)</sup>, implemented in _randomgen.py_ as the `discretegen` method, and also described in (Roy et al. 2013)<sup>[**(32)**](#Note32)</sup>.
+- The Han and Hoshi algorithm (Han and Hoshi 1997)<sup>[**(33)**](#Note33)</sup> that uses the cumulative probabilities as input and is described in (Devroye and Gravel 2015)<sup>[**(22)**](#Note22)</sup>.  This algorithm comes within 3 bits, on average, of the optimal number of bits.
 
 For all weighted-choice algorithms in this section (except the last two algorithms), floating-point arithmetic and floating-point random number generation (such as `RNDRANGE()`) ought to be avoided, since they often introduce bias in real-world implementations.
 
@@ -642,7 +642,7 @@ There are three kinds of randomization algorithms:
 
 Most algorithms on this page, though, are not _error-bounded_, but even so, they may still be useful to an application willing to trade accuracy for speed.
 
-On the other hand, if an algorithm returns results that are accurate to a given number of digits after the point (for example, 53 bits after the point), it can generate any number of digits uniformly at random and append those digits to the result's digit expansion while remaining accurate to that many digits. For example, after it generates a normally-distributed random number, an algorithm can fill it with enough uniform random bits, as necessary, to give the number 100 bits after the point (Karney 2014)<sup>[**(1)**](#Note1)</sup>, see also (Oberhoff 2018)<sup>[**(33)**](#Note33)</sup> (example: `for i in 54..100: ret = ret + RNDINT(1) * pow(2,-i)`).
+On the other hand, if an algorithm returns results that are accurate to a given number of digits after the point (for example, 53 bits after the point), it can generate any number of digits uniformly at random and append those digits to the result's digit expansion while remaining accurate to that many digits. For example, after it generates a normally-distributed random number, an algorithm can fill it with enough uniform random bits, as necessary, to give the number 100 bits after the point (Karney 2014)<sup>[**(1)**](#Note1)</sup>, see also (Oberhoff 2018)<sup>[**(34)**](#Note34)</sup> (example: `for i in 54..100: ret = ret + RNDINT(1) * pow(2,-i)`).
 
 There are many ways to describe closeness between two distributions.  As one suggestion found in (Devroye and Gravel 2015)<sup>[**(22)**](#Note22)</sup>, an algorithm has accuracy &epsilon; (the user-specified error tolerance) if it samples random numbers whose distribution is close to the ideal distribution by a Wasserstein L<sub>&infin;</sub> distance of not more than &epsilon;.
 

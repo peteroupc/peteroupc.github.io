@@ -1,0 +1,80 @@
+<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Bernoulli Factory Algorithms</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a> -
+<a href="http://peteroupc.github.io/">Donate to Me</a></p></div>
+<div class="mainarea" id="top">
+<h1>Bernoulli Factory Algorithms</h1>
+
+<p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
+
+<p><a id=Introduction></a></p>
+
+<h2>Introduction</h2>
+
+<p>This page catalogs algorithms to turn a biased coin into a biased coin, also known as <em>Bernoulli factories</em>.  Many of them were suggested in (Flajolet et al., 2010)<sup><a href="#Note1"><strong>(1)</strong></a></sup>, but without step-by-step instructions in many cases.</p>
+
+<p><a id=About_This_Document></a></p>
+
+<h3>About This Document</h3>
+
+<p><strong>This is an open-source document; for an updated version, see the</strong> <a href="https://github.com/peteroupc/peteroupc.github.io/raw/master/bernoulli.md"><strong>source code</strong></a> <strong>or its</strong> <a href="https://github.com/peteroupc/peteroupc.github.io/blob/master/bernoulli.md"><strong>rendering on GitHub</strong></a><strong>.  You can send comments on this document on the</strong> <a href="https://github.com/peteroupc/peteroupc.github.io/issues"><strong>GitHub issues page</strong></a><strong>.</strong></p>
+
+<p><a id=Algorithms></a></p>
+
+<h2>Algorithms</h2>
+
+<p>In the following algorithms:</p>
+
+<ul>
+<li>&lambda; is the unknown probability of heads of the input coin.</li>
+<li>The instruction to &quot;generate a uniform random number&quot; can be implemented by creating an empty <a href="https://peteroupc.github.io/exporand.html"><strong>partially-sampled uniform random number</strong></a> (most accurate) or by generating <code>RNDEXCRANGE(0, 1)</code> or <code>RNDINT(1000)</code> (less accurate).</li>
+<li>Where an algorithm says &quot;if <em>a</em> is less than <em>b</em>&quot;, where <em>a</em> and <em>b</em> are uniform random numbers, it means to run the <strong>URandLess</strong> algorithm on the two partially-sampled numbers, or do a less-than operation on <em>a</em> and <em>b</em>, as appropriate.</li>
+</ul>
+
+<p>Algorithm for exp(&lambda;)*(1&minus;&lambda;)  (Flajolet et al., 2010)<sup><a href="#Note1"><strong>(1)</strong></a></sup>:</p>
+
+<ol>
+<li>Set <em>k</em> and <em>w</em> each to 0.</li>
+<li>Flip the input coin.  If it returns 0, return 1.</li>
+<li>Generate a uniform random number <em>U</em>.</li>
+<li>If <em>k</em> &gt; 0 and <em>w</em> is less than <em>U</em>, return 0.</li>
+<li>Set <em>w</em> to <em>U</em>, add 1 to <em>k</em>, and go to step 2.</li>
+</ol>
+
+<p><a id=Notes></a></p>
+
+<h2>Notes</h2>
+
+<p><small><sup id=Note1>(1)</sup> Flajolet, P., Pelletier, M., Soria, M., &quot;<a href="https://arxiv.org/abs/0906.5560v2"><strong>On Buffon machines and numbers</strong></a>&quot;, arXiv:0906.5560v2  [math.PR], 2010.</small></p>
+
+<p><a id=License></a></p>
+
+<h2>License</h2>
+
+<p>Any copyright to this page is released to the Public Domain.  In case this is not possible, this page is also licensed under <a href="https://creativecommons.org/publicdomain/zero/1.0/"><strong>Creative Commons Zero</strong></a>.</p>
+</div><nav id="navigation"><ul>
+<li><a href="/">Back to start site.</a>
+<li><a href="https://github.com/peteroupc/peteroupc.github.io">This site's repository (source code)</a>
+<li><a href="https://github.com/peteroupc/peteroupc.github.io/issues">Post an issue or comment</a></ul>
+<p>
+If you like this software, you should consider donating to me, Peter O., at the link below:</p>
+<p class="printonly"><b>peteroupc.github.io</b></p>
+<div class="noprint">
+<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=56E5T4FH7KD2S">
+<img src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif"
+name="submit" border="2" alt="PayPal - The safer, easier way to pay online!"></a>
+<p>
+<a href="//twitter.com/share">Share via Twitter</a>, <a href="//www.facebook.com/sharer/sharer.php" id="sharer">Share via Facebook</a>
+</p>
+</div>
+</nav><script>
+if("share" in navigator){
+ document.getElementById("sharer").href="javascript:void(null)";
+ document.getElementById("sharer").innerHTML="Share This Page";
+ navigator.share({title:document.title,url:document.location.href}).then(
+   function(){});
+} else {
+ document.getElementById("sharer").href="//www.facebook.com/sharer/sharer.php?u="+
+    encodeURIComponent(document.location.href)
+}
+</script>
+</body></html>

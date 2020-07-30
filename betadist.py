@@ -94,7 +94,7 @@ def truncated_gamma(rg, bern, ax, ay, precision=53):
             u = randomgen.urandnew()
             if randomgen.urandless(rg, w, u):
                 if (k & 1) == 1:
-                    return randomgen.urandfill(rg, ret, precision)/(1<<precision)
+                    return randomgen.urandfill(rg, ret, precision) / (1 << precision)
                 break
             w = u
             k += 1
