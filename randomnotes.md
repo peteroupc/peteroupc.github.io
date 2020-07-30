@@ -44,7 +44,7 @@ probability that a normally-distributed random number will be within one standar
 There are a number of methods for normal random number generation, including the following.  An application can combine some or all of these.
 
 1. The ratio-of-uniforms method (given as `NormalRatioOfUniforms` below).
-2. In the _Box&ndash;Muller transformation_, `mu + radius * cos(angle)` and `mu + radius * sin(angle)`, where `angle = RNDRANGEMaxExc(0, 2 * pi)` and `radius = sqrt(Expo(0.5)) * sigma`, are two independent normally-distributed random numbers.  The polar method (given as `NormalPolar` below) likewise produces two independent normal random numbers at a time.
+2. In the _Box&ndash;Müller transformation_, `mu + radius * cos(angle)` and `mu + radius * sin(angle)`, where `angle = RNDRANGEMaxExc(0, 2 * pi)` and `radius = sqrt(Expo(0.5)) * sigma`, are two independent normally-distributed random numbers.  The polar method (given as `NormalPolar` below) likewise produces two independent normal random numbers at a time.
 3. Karney's algorithm to sample from the normal distribution, in a manner that minimizes approximation error and without using floating-point numbers (Karney 2014)<sup>[**(1)**](#Note1)</sup>.
 4. The following are approximations to the normal distribution:
     - The sum of twelve `RNDRANGEMaxExc(0, sigma)` numbers (see Note 13), subtracted by 6 * `sigma`. See `NormalCLT` below, which also includes an optional step to "warp" the random number for better accuracy (Kabal 2000/2019)<sup>[**(2)**](#Note2)</sup> See also [**"Irwin&ndash;Hall distribution" on Wikipedia**](https://en.wikipedia.org/wiki/Irwin%E2%80%93Hall_distribution).  D. Thomas (2014)<sup>[**(3)**](#Note3)</sup>, describes a more general approximation called CLT<sub>k</sub>, which combines `k` uniform random numbers as follows: `RNDU01() - RNDU01() + RNDU01() - ...`.
@@ -545,6 +545,8 @@ For related algorithms, see the appendix.
 
 <small><sup id=Note33>(33)</sup> Oberhoff, Sebastian, "[**Exact Sampling and Prefix Distributions**](https://dc.uwm.edu/etd/1888)", _Theses and Dissertations_, University of Wisconsin Milwaukee, 2018.</small>
 
+<small><sup id=Note34>(34)</sup> Y. Tang, "An Empirical Study of Random Sampling Methods for Changing Discrete Distributions", Master's thesis, University of Alberta, 2019.</small>
+
 <a id=Appendix></a>
 ## Appendix
 
@@ -588,7 +590,7 @@ Knuth and Yao (1976)<sup>[**(15)**](#Note15)</sup> showed that any algorithm tha
 
 As also shown by Knuth and Yao, however, any integer generating algorithm that is both optimal _and unbiased (exact)_ will also run forever in the worst case, even if it uses few random bits on average.  This is because in most cases, `n` will not be a power of 2, so that `n` will have an infinite binary expansion, so that the resulting DDG tree will have to either be infinitely deep, or include "rejection leaves" at the end of the tree. (If `n` is a power of 2, the binary expansion will be finite, so that the DDG tree will have a finite depth and no rejection leaves.)
 
-Because of this, there is no general way to "fix" the worst case of running forever, while still having an unbiased (exact) algorithm.  For instance, modulo reductions can be represented by a DDG tree in which rejection leaves are replaced with labeled outcomes, but the bias occurs because only some outcomes can replace rejection leaves this way.  Even with rejection sampling, if the rejections stop after a set number of iterations, the same kind of bias will result.
+Because of this, there is no general way to "fix" the worst case of running forever, while still having an unbiased (exact) algorithm.  For instance, modulo reductions can be represented by a DDG tree in which rejection leaves are replaced with labeled outcomes, but the bias occurs because only some outcomes can replace rejection leaves this way.  Even with rejection sampling, stopping the rejection after a fixed number of iterations will likewise lead to bias, for the same reasons.
 
 The following are some ways to implement `RNDINT`.  (The column "Unbiased?" means whether the algorithm generates random integers without bias, even if `n` is not a power of 2.)
 
@@ -618,6 +620,7 @@ In this case, though, the number of random bits an algorithm uses on average is 
 - The Bringmann&ndash;Larsen succinct data structure (Bringmann and Larsen 2013)<sup>[**(26)**](#Note26)</sup>.
 - A sampler that is designed to work on a sorted list of weights (Bringmann and Panagiotou 2012)<sup>[**(27)**](#Note27)</sup>.
 - The parallel weighted random samplers described in (Hübschle-Schneider and Sanders 2019)<sup>[**(28)**](#Note28)</sup>.
+- The two-level search, multi-level search, and flat method described in (Tang 2019)<sup>[**(34)**](#Note34)</sup>.
 
 There are other weighted choice algorithms that don't necessarily take integer weights.  They include:
 
@@ -625,6 +628,8 @@ There are other weighted choice algorithms that don't necessarily take integer w
 - The _alias method_ by Walker (1977)<sup>[**(29)**](#Note29)</sup>.  Michael Vose's version of the alias method (Vose 1991)<sup>[**(30)**](#Note30)</sup> is described in "[**Darts, Dice, and Coins: Sampling from a Discrete Distribution**](https://www.keithschwarz.com/darts-dice-coins/)".  The alias method ought to be implemented using rational-valued weights and rational-number arithmetic, since this method is hard to apply to integer weights if the sum of the weights is not divisible by the number of weights.
 - The Knuth and Yao algorithm that generates a DDG tree from the binary expansions of the probabilities, an algorithm that is optimal, or at least nearly so.  This is suggested in exercise 3.4.2 of chapter 15 of (Devroye 1986, p. 1-2)<sup>[**(10)**](#Note10)</sup>, implemented in _randomgen.py_ as the `discretegen` method, and also described in (Roy et al. 2013)<sup>[**(31)**](#Note31)</sup>.
 - The Han and Hoshi algorithm (Han and Hoshi 1997)<sup>[**(32)**](#Note32)</sup> that uses the cumulative probabilities as input and is described in (Devroye and Gravel 2015)<sup>[**(22)**](#Note22)</sup>.  This algorithm comes within 3 bits, on average, of the optimal number of bits.
+
+For all weighted-choice algorithms in this section (except the last two algorithms), floating-point arithmetic and floating-point random number generation (such as `RNDRANGE()`) ought to be avoided, since they often introduce bias in real-world implementations.
 
 <a id=A_Note_on_Error_Bounded_Algorithms></a>
 ### A Note on Error-Bounded Algorithms
@@ -651,7 +656,7 @@ Assuming that we only have&mdash;
 
 one of the following two algorithms can be used (see the [**_Stack Overflow_ question**](https://stackoverflow.com/questions/62806441/can-i-achieve-weighted-randomness-with-a-function-that-returns-weighted-booleans) by Daniel Kaplan).  Since in this case we can treat `UnfairCoin(q)` (for any fixed value of `q` in (0, 1)) as a coin with _unknown_ bias (allowing us to use the method in "[**Weighted Choice with Biased Coins**](#Weighted_Choice_with_Biased_Coins)), these algorithms given below are not very useful in practice.
 
-1. The first uses iteration and is as follows: `cumu = 1.0; for i in 0...size(probs): if UnfairCoin(probs[i]/cumu): return i; else: cumu = cumu - probs[i]`.  This algorithm runs on average in linear time (or in constant time if the weights are sorted in descending order). This algorithm ought to be implemented using rational-valued weights and rational arithmetic, since the algorithm will be error-bounded in that case.
+1. The first uses iteration and is as follows: `cumu = 1.0; for i in 0...size(probs): if UnfairCoin(probs[i]/cumu): return i; else: cumu = cumu - probs[i]`.  This algorithm runs on average in linear time (or in constant time if the weights are sorted in descending order). This algorithm ought to be implemented using rational-valued weights and rational arithmetic, since the algorithm will be error-bounded in that case.  For a proof of its correctness, see [**Darts, Dice, and Coins**](https://www.keithschwarz.com/darts-dice-coins/)" by Keith Schwarz.
 2. The second uses rejection sampling and relies on generating a random integer using fair coins: `while true; y=RNDINT(size(probs)-1); if UnfairCoin(probs[y]): return y; else continue; end`, where `UnfairCoin(0.5)` serves as the RNG for `RNDINT`. This algorithm is error-bounded when all the probabilities in `probs` can be simulated exactly by `UnfairCoin`.
 
 <a id=License></a>

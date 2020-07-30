@@ -481,7 +481,7 @@ def _power_of_uniform_greaterthan1(bern, power, complement=False, precision=53):
       # Simulate epsdividend / x**(1-1/power)
       if bern.eps_div(bf, epsdividend) == 1:
           # Flip all bits if complement is true
-          bag=[1-x for x in bag] if complement else bag
+          bag=[x if x==None else 1-x for x in bag] if complement else bag
           ret=bern.fill_geometric_bag(bag, precision)
           return ret
 
@@ -1362,9 +1362,9 @@ for i in range(iters):
 <li>Calculate an approximation of <em>f</em>(<em>U</em>) as follows:
 
 <ol>
-<li>Set <em>n</em> to the number of items (digits and placeholders) in the geometric bag.</li>
-<li>Of the first <em>n</em> digits of the geometric bag, sample the unsampled digits.  Then let <em>uk</em> be the geometric bag&#39;s digit expansion up to the first <em>n</em> digits after the point.</li>
-<li>Calculate the lowest and highest values of <em>f</em> in the interval [<em>uk</em>, <em>uk</em> + <em>b</em><sup>&minus;<em>n</em></sup>], call them <em>fmin</em> and <em>fmax</em>. If abs(<em>fmin</em> - <em>fmax</em>) &lt;= 2 * <em>b</em><sup>&minus;<em>k</em></sup>, calculate (<em>fmax</em> + <em>fmin</em>) / 2 as the approximation.  Otherwise, add 1 to <em>n</em> and go to the previous step.</li>
+<li>Set <em>n</em> to the number of items (sampled and unsampled digits) in the geometric bag.</li>
+<li>Of the first <em>n</em> items in the geometric bag, sample each of the unsampled digits uniformly at random.  Then let <em>uk</em> be the geometric bag&#39;s digit expansion up to the first <em>n</em> digits after the point.</li>
+<li>Calculate the lowest and highest values of <em>f</em> in the interval [<em>uk</em>, <em>uk</em> + <em>b</em><sup>&minus;<em>n</em></sup>], call them <em>fmin</em> and <em>fmax</em>. If abs(<em>fmin</em> - <em>fmax</em>) &lt;= 2 * <em>b</em><sup>&minus;<em>k</em></sup>, calculate (<em>fmax</em> + <em>fmin</em>) / 2 as the approximation.  Otherwise, add 1 to <em>n</em> and go to the previous substep.</li>
 </ol></li>
 <li>Let <em>pk</em> be the approximation&#39;s digit expansion up to the <em>k</em> digits after the point.  For example, if <em>f</em>(<em>U</em>) is &pi; and <em>k</em> is 2, <em>pk</em> is 314.</li>
 <li>If <em>pk</em> + 1 &lt;= <em>v</em>, return 0. If <em>pk</em> &minus; 2 &gt;= <em>v</em>, return 1.  If neither is the case, add 1 to <em>k</em> and go to step 2.</li>

@@ -133,7 +133,7 @@ class Bernoulli:
         return ret
 
     def _urandnew(self):
-        return [0, 0]
+        return [0, 0]  # Multiple of 2^-X, followed by X
 
     def _urandless(self, a, b):
         index = 0

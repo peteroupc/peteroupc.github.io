@@ -1315,12 +1315,12 @@ CLASSES
 FUNCTIONS
     numericalTable(func, x, y, n=100)
 
-    urandfill(rg, a, bits)
+    urandfill(rg, a, bits=53)
         Fills the unsampled bits of the given u-rand 'a' as necessary to
         make a number with 'bits' many bits.  If the u-rand already has
         that many bits or more, the u-rand is rounded using the round-to-nearest,
         ties to even rounding rule.  Returns the resulting number as a
-        multiple of 2^'bits'.
+        multiple of 2^'bits'.  Default for 'bits' is 53.
 
     urandgreater(rg, a, b)
         Determines whether the first u-rand is greater than another u-rand; returns
@@ -1371,8 +1371,8 @@ CLASSES
      |  The operations given here are not guaranteed to be "constant-time"
      |  (non-data-dependent and branchless) for all relevant inputs.
      |
-     |  Any copyright to this file is dedicated to the Public Domain, under
-     |  Creative Commons Zero version 1.0.
+     |  Any copyright to this file is released to the Public Domain.  In case this is not
+     |  possible, this file is also licensed under Creative Commons Zero version 1.0.
      |
      |  Methods defined here:
      |

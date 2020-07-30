@@ -18,8 +18,8 @@ class Fixed:
    The operations given here are not guaranteed to be "constant-time"
    (non-data-dependent and branchless) for all relevant inputs.
 
-   Any copyright to this file is dedicated to the Public Domain, under
-   Creative Commons Zero version 1.0.
+   Any copyright to this file is released to the Public Domain.  In case this is not
+   possible, this file is also licensed under Creative Commons Zero version 1.0.
    """
 
     """ Number of bits in the fractional part of a fixed-point number. """

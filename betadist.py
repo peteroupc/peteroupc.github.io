@@ -18,12 +18,26 @@ def _bern_power(bern, bag, num, den, bagfactory):
     else:
         return bern.power(bagfactory, num, den)
 
+def _geobag_to_urand(bag):
+    bagc = 0
+    bagv = 0
+    for i in range(len(bag)):
+        if bag[i] == None:
+            bag[i] = random.randint(0, 1)
+        bagv = (bagv << 1) | bag[i]
+        bagc += 1
+    return [bagv, bagc]
+
 def _power_of_uniform_greaterthan1(bern, power, complement=False, precision=53):
+    return bern.fill_geometric_bag(
+        _power_of_uniform_greaterthan1_geobag(bern, power, complement), precision
+    )
+
+def _power_of_uniform_greaterthan1_geobag(bern, power, complement=False):
     if power < 1:
         raise ValueError("Not supported")
     if power == 1:
-        bag = []
-        return bern.fill_geometric_bag(bag, precision)
+        return []  # Empty uniform random number
     i = 1
     powerfrac = Fraction(power)
     powerrest = Fraction(1) - Fraction(1) / powerfrac
@@ -32,9 +46,6 @@ def _power_of_uniform_greaterthan1(bern, power, complement=False, precision=53):
         bern.zero_or_one_power_ratio(1, 2, powerfrac.denominator, powerfrac.numerator)
         == 1
     ):
-        if i >= precision:
-            # Precision limit reached, so equivalent to endpoint
-            return 1.0 if complement else 0.0
         i += 1
     # Crude choice of epsdividend:
     # epsdividend = Fraction(1)/(powerfrac * 2**(i))
@@ -57,10 +68,8 @@ def _power_of_uniform_greaterthan1(bern, power, complement=False, precision=53):
         # Simulate epsdividend / x**(1-1/power)
         if bern.eps_div(bf, epsdividend) == 1:
             # Flip all bits if complement is true
-            bag = [1 - x for x in bag] if complement else bag
-            ret = bern.fill_geometric_bag(bag, precision)
-            # print(ret)
-            return ret
+            bag = [x if x == None else 1 - x for x in bag] if complement else bag
+            return bag
 
 def powerOfUniform(b, px, py, precision=53):
     """ Generates a power of a uniform random number.
@@ -72,6 +81,23 @@ def powerOfUniform(b, px, py, precision=53):
     # of a uniform random number, provided px/py
     # is in (0, 1].
     return betadist(b, py, px, 1, 1, precision)
+
+def truncated_gamma(rg, bern, ax, ay, precision=53):
+    # Văduva's gamma generator truncated to [0, 1],
+    # when ax/ay is in (0, 1].  Described in Devroye 1986, p. 180.
+    while True:
+        ret = _power_of_uniform_greaterthan1_geobag(bern, Fraction(ay, ax))
+        ret = _geobag_to_urand(ret)
+        w = ret
+        k = 1
+        while True:
+            u = randomgen.urandnew()
+            if randomgen.urandless(rg, w, u):
+                if (k & 1) == 1:
+                    return randomgen.urandfill(rg, ret, precision)/(1<<precision)
+                break
+            w = u
+            k += 1
 
 def betadist(b, ax=1, ay=1, bx=1, by=1, precision=53):
     """ Generates a beta-distributed random number with arbitrary

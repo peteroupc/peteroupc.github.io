@@ -67,7 +67,7 @@ probability that a normally-distributed random number will be within one standar
 
 <ol>
 <li>The ratio-of-uniforms method (given as <code>NormalRatioOfUniforms</code> below).</li>
-<li>In the <em>Box&ndash;Muller transformation</em>, <code>mu + radius * cos(angle)</code> and <code>mu + radius * sin(angle)</code>, where <code>angle = RNDRANGEMaxExc(0, 2 * pi)</code> and <code>radius = sqrt(Expo(0.5)) * sigma</code>, are two independent normally-distributed random numbers.  The polar method (given as <code>NormalPolar</code> below) likewise produces two independent normal random numbers at a time.</li>
+<li>In the <em>Box&ndash;Müller transformation</em>, <code>mu + radius * cos(angle)</code> and <code>mu + radius * sin(angle)</code>, where <code>angle = RNDRANGEMaxExc(0, 2 * pi)</code> and <code>radius = sqrt(Expo(0.5)) * sigma</code>, are two independent normally-distributed random numbers.  The polar method (given as <code>NormalPolar</code> below) likewise produces two independent normal random numbers at a time.</li>
 <li>Karney&#39;s algorithm to sample from the normal distribution, in a manner that minimizes approximation error and without using floating-point numbers (Karney 2014)<sup><a href="#Note1"><strong>(1)</strong></a></sup>.</li>
 <li>The following are approximations to the normal distribution:
 
@@ -624,6 +624,8 @@ END METHOD
 
 <p><small><sup id=Note33>(33)</sup> Oberhoff, Sebastian, &quot;<a href="https://dc.uwm.edu/etd/1888"><strong>Exact Sampling and Prefix Distributions</strong></a>&quot;, <em>Theses and Dissertations</em>, University of Wisconsin Milwaukee, 2018.</small></p>
 
+<p><small><sup id=Note34>(34)</sup> Y. Tang, &quot;An Empirical Study of Random Sampling Methods for Changing Discrete Distributions&quot;, Master&#39;s thesis, University of Alberta, 2019.</small></p>
+
 <p><a id=Appendix></a></p>
 
 <h2>Appendix</h2>
@@ -671,7 +673,7 @@ END METHOD
 
 <p>As also shown by Knuth and Yao, however, any integer generating algorithm that is both optimal <em>and unbiased (exact)</em> will also run forever in the worst case, even if it uses few random bits on average.  This is because in most cases, <code>n</code> will not be a power of 2, so that <code>n</code> will have an infinite binary expansion, so that the resulting DDG tree will have to either be infinitely deep, or include &quot;rejection leaves&quot; at the end of the tree. (If <code>n</code> is a power of 2, the binary expansion will be finite, so that the DDG tree will have a finite depth and no rejection leaves.)</p>
 
-<p>Because of this, there is no general way to &quot;fix&quot; the worst case of running forever, while still having an unbiased (exact) algorithm.  For instance, modulo reductions can be represented by a DDG tree in which rejection leaves are replaced with labeled outcomes, but the bias occurs because only some outcomes can replace rejection leaves this way.  Even with rejection sampling, if the rejections stop after a set number of iterations, the same kind of bias will result.</p>
+<p>Because of this, there is no general way to &quot;fix&quot; the worst case of running forever, while still having an unbiased (exact) algorithm.  For instance, modulo reductions can be represented by a DDG tree in which rejection leaves are replaced with labeled outcomes, but the bias occurs because only some outcomes can replace rejection leaves this way.  Even with rejection sampling, stopping the rejection after a fixed number of iterations will likewise lead to bias, for the same reasons.</p>
 
 <p>The following are some ways to implement <code>RNDINT</code>.  (The column &quot;Unbiased?&quot; means whether the algorithm generates random integers without bias, even if <code>n</code> is not a power of 2.)</p>
 
@@ -750,6 +752,7 @@ END METHOD
 <li>The Bringmann&ndash;Larsen succinct data structure (Bringmann and Larsen 2013)<sup><a href="#Note26"><strong>(26)</strong></a></sup>.</li>
 <li>A sampler that is designed to work on a sorted list of weights (Bringmann and Panagiotou 2012)<sup><a href="#Note27"><strong>(27)</strong></a></sup>.</li>
 <li>The parallel weighted random samplers described in (Hübschle-Schneider and Sanders 2019)<sup><a href="#Note28"><strong>(28)</strong></a></sup>.</li>
+<li>The two-level search, multi-level search, and flat method described in (Tang 2019)<sup><a href="#Note34"><strong>(34)</strong></a></sup>.</li>
 </ul>
 
 <p>There are other weighted choice algorithms that don&#39;t necessarily take integer weights.  They include:</p>
@@ -760,6 +763,8 @@ END METHOD
 <li>The Knuth and Yao algorithm that generates a DDG tree from the binary expansions of the probabilities, an algorithm that is optimal, or at least nearly so.  This is suggested in exercise 3.4.2 of chapter 15 of (Devroye 1986, p. 1-2)<sup><a href="#Note10"><strong>(10)</strong></a></sup>, implemented in <em>randomgen.py</em> as the <code>discretegen</code> method, and also described in (Roy et al. 2013)<sup><a href="#Note31"><strong>(31)</strong></a></sup>.</li>
 <li>The Han and Hoshi algorithm (Han and Hoshi 1997)<sup><a href="#Note32"><strong>(32)</strong></a></sup> that uses the cumulative probabilities as input and is described in (Devroye and Gravel 2015)<sup><a href="#Note22"><strong>(22)</strong></a></sup>.  This algorithm comes within 3 bits, on average, of the optimal number of bits.</li>
 </ul>
+
+<p>For all weighted-choice algorithms in this section (except the last two algorithms), floating-point arithmetic and floating-point random number generation (such as <code>RNDRANGE()</code>) ought to be avoided, since they often introduce bias in real-world implementations.</p>
 
 <p><a id=A_Note_on_Error_Bounded_Algorithms></a></p>
 
@@ -793,7 +798,7 @@ END METHOD
 <p>one of the following two algorithms can be used (see the <a href="https://stackoverflow.com/questions/62806441/can-i-achieve-weighted-randomness-with-a-function-that-returns-weighted-booleans"><strong><em>Stack Overflow</em> question</strong></a> by Daniel Kaplan).  Since in this case we can treat <code>UnfairCoin(q)</code> (for any fixed value of <code>q</code> in (0, 1)) as a coin with <em>unknown</em> bias (allowing us to use the method in &quot;<a href="#Weighted_Choice_with_Biased_Coins"><strong>Weighted Choice with Biased Coins</strong></a>), these algorithms given below are not very useful in practice.</p>
 
 <ol>
-<li>The first uses iteration and is as follows: <code>cumu = 1.0; for i in 0...size(probs): if UnfairCoin(probs[i]/cumu): return i; else: cumu = cumu - probs[i]</code>.  This algorithm runs on average in linear time (or in constant time if the weights are sorted in descending order). This algorithm ought to be implemented using rational-valued weights and rational arithmetic, since the algorithm will be error-bounded in that case.</li>
+<li>The first uses iteration and is as follows: <code>cumu = 1.0; for i in 0...size(probs): if UnfairCoin(probs[i]/cumu): return i; else: cumu = cumu - probs[i]</code>.  This algorithm runs on average in linear time (or in constant time if the weights are sorted in descending order). This algorithm ought to be implemented using rational-valued weights and rational arithmetic, since the algorithm will be error-bounded in that case.  For a proof of its correctness, see <a href="https://www.keithschwarz.com/darts-dice-coins/"><strong>Darts, Dice, and Coins</strong></a>&quot; by Keith Schwarz.</li>
 <li>The second uses rejection sampling and relies on generating a random integer using fair coins: <code>while true; y=RNDINT(size(probs)-1); if UnfairCoin(probs[y]): return y; else continue; end</code>, where <code>UnfairCoin(0.5)</code> serves as the RNG for <code>RNDINT</code>. This algorithm is error-bounded when all the probabilities in <code>probs</code> can be simulated exactly by <code>UnfairCoin</code>.</li>
 </ol>
 

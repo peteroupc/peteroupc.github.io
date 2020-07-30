@@ -110,12 +110,12 @@ def urandgreater(rg, a, b):
                for the comparison. """
     return urandless(rg, b, a)
 
-def urandfill(rg, a, bits):
+def urandfill(rg, a, bits=53):
     """ Fills the unsampled bits of the given u-rand 'a' as necessary to
                make a number with 'bits' many bits.  If the u-rand already has
                that many bits or more, the u-rand is rounded using the round-to-nearest,
                ties to even rounding rule.  Returns the resulting number as a
-               multiple of 2^'bits'. """
+               multiple of 2^'bits'.  Default for 'bits' is 53. """
     if a[1] > bits:
         # Shifting bits beyond the first excess bit.
         aa = a[0] >> (a[1] - bits - 1)

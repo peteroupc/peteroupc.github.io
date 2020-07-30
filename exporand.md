@@ -368,7 +368,7 @@ def _power_of_uniform_greaterthan1(bern, power, complement=False, precision=53):
       # Simulate epsdividend / x**(1-1/power)
       if bern.eps_div(bf, epsdividend) == 1:
           # Flip all bits if complement is true
-          bag=[1-x for x in bag] if complement else bag
+          bag=[x if x==None else 1-x for x in bag] if complement else bag
           ret=bern.fill_geometric_bag(bag, precision)
           return ret
 
@@ -999,9 +999,9 @@ Say we have a Bernoulli factory algorithm that takes a coin with probability of 
 1. Set _v_ to 0 and _k_ to 1.
 2. Set _v_ to _b_ * _v_ + _d_, where _b_ is the base (or radix) of the geometric bag's digits, and _d_ is a digit chosen uniformly at random.
 3. Calculate an approximation of _f_(_U_) as follows:
-    1. Set _n_ to the number of items (digits and placeholders) in the geometric bag.
-    2. Of the first _n_ digits of the geometric bag, sample the unsampled digits.  Then let _uk_ be the geometric bag's digit expansion up to the first _n_ digits after the point.
-    3. Calculate the lowest and highest values of _f_ in the interval \[_uk_, _uk_ + _b_<sup>&minus;_n_</sup>\], call them _fmin_ and _fmax_. If abs(_fmin_ - _fmax_) <= 2 * _b_<sup>&minus;_k_</sup>, calculate (_fmax_ + _fmin_) / 2 as the approximation.  Otherwise, add 1 to _n_ and go to the previous step.
+    1. Set _n_ to the number of items (sampled and unsampled digits) in the geometric bag.
+    2. Of the first _n_ items in the geometric bag, sample each of the unsampled digits uniformly at random.  Then let _uk_ be the geometric bag's digit expansion up to the first _n_ digits after the point.
+    3. Calculate the lowest and highest values of _f_ in the interval \[_uk_, _uk_ + _b_<sup>&minus;_n_</sup>\], call them _fmin_ and _fmax_. If abs(_fmin_ - _fmax_) <= 2 * _b_<sup>&minus;_k_</sup>, calculate (_fmax_ + _fmin_) / 2 as the approximation.  Otherwise, add 1 to _n_ and go to the previous substep.
 4. Let _pk_ be the approximation's digit expansion up to the _k_ digits after the point.  For example, if _f_(_U_) is &pi; and _k_ is 2, _pk_ is 314.
 5. If _pk_ + 1 <= _v_, return 0. If _pk_ &minus; 2 >= _v_, return 1.  If neither is the case, add 1 to _k_ and go to step 2.
 
