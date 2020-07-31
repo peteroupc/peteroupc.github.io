@@ -33,6 +33,7 @@ In the following algorithms:
 
 - &lambda; is the unknown probability of heads of the input coin.
 - The **SampleGeometricBag** and **URandLess** algorithms are described in my article on [**partially-sampled uniform random numbers**](https://peteroupc.github.io/exporand.html).
+- The `ZeroOrOne` method should be implemented as shown in my article on [**random sampling methods**](https://peteroupc.github.io/randomfunc.html#Boolean_True_False_Conditions).
 - The instruction to "generate a uniform random number" can be implemented by creating an empty [**partially-sampled uniform random number**](https://peteroupc.github.io/exporand.html) (most accurate) or by generating `RNDEXCRANGE(0, 1)` or `RNDINT(1000)` (less accurate).
 - Where an algorithm says "if _a_ is less than _b_", where _a_ and _b_ are uniform random numbers, it means to run the **URandLess** algorithm on the two partially-sampled numbers, or do a less-than operation on _a_ and _b_, as appropriate.
 - For best results, the algorithms should be implemented using exact rational arithmetic.
@@ -69,13 +70,19 @@ A third algorithm is uniformly fast everywhere in (0, 1).   It uses the reverse-
 
 which is an alternating series whose coefficients are 1, 1, 1/2!, 1/3!, 1/4!, ..., which satisfy the requirements for this approach because the coefficients are nonincreasing and all 1 or less.  However, the algorithm requires a bit more arithmetic, notably rational division.
 
-1. Set _u_ and _w_ to 1, set _l_ to 0, and set _n_ to 1. (Here, _u_ is set to the first coefficient, 1.)
+First, the general algorithm for the reverse-time martingale approach (called the **general martingale algorithm** follows:
+
+1. Let _c[0]_, _c[1]_, etc. be the first, second, etc. coefficients of the alternating series.  Set _u_ to _c[0]_, set _w_ to 1, set _l_ to 0, and set _n_ to 1.
 2. Create an empty uniform PSRN.
-3. If _w_ is not 0, flip the input coin, multiply _w_ by the result of the flip, then divide _w_ by _n_.  (This division by _n_ implements the second and later coefficients, that is, the (_n_+1)th and later coefficients, which consist of 1/(_n_)!.)
-4. If _n_ is even, set _u_ to _l_ + _w_.  Otherwise, set _l_ to _u_ + _w_.
+3. If _w_ is not 0, flip the input coin and multiply _w_ by the result of the flip.
+4. If _n_ is even, set _u_ to _l_ + _w_ * _c[n]_.  Otherwise, set _l_ to _u_ + _w_ * _c[n]_.
 5. If the PSRN turns out to be less than _l_, return 1.
 6. If the PSRN turns out to be greater than _u_, return 0.
 7. Add 1 to _n_ and go to step 3.
+
+For **exp(&minus;&lambda;)**, modify that algorithm as follows for more efficiency:
+
+- Rather than multiplying by _c[n]_ in step 4, divide _w_ by _n_ in step 3 (after multiplying by the result of the flip).  This is a more efficient way to take account of the factorial in the second and later coefficients.
 
 **Algorithm for exp(&lambda;)*(1&minus;&lambda;)**  (Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup>:
 
@@ -94,19 +101,28 @@ which is an alternating series whose coefficients are 1, 1, 1/2!, 1/3!, 1/4!, ..
 5. Call the **SampleGeometricBag** algorithm with the PSRN.  If it returns 0, return 0.
 6. Go to step 2.
 
-Alternatively, flip the result of the algorithm for 1 &minus; log(1+&lambda;) below (make it 1 if it's 0 and vice versa).
+Alternatively, invert the result of the algorithm for 1 &minus; log(1+&lambda;) below (make it 1 if it's 0 and vice versa).
 
-**Algorithm for 1 &minus; log(1+&lambda;).**  This algorithm uses the reverse-time martingale approach in (Łatuszyński et al. 2009/2011)<sup>[**(4)**](#Note4)</sup>.  Here, the alternating series is `1 - x + x^2/2 - x^3/3 + ...`, whose coefficients are 1, 1, 1/2, 1/3, ....
+**Algorithm for 1 &minus; log(1+&lambda;).**  This algorithm uses the reverse-time martingale approach in (Łatuszyński et al. 2009/2011)<sup>[**(4)**](#Note4)</sup>.  Here, the alternating series is `1 - x + x^2/2 - x^3/3 + ...`, whose coefficients are 1, 1, 1/2, 1/3, ....  Follow the general martingale algorithm.
 
-1. Set _u_ and _w_ to 1, set _l_ to 0, and set _n_ to 1. (Here, _u_ is set to the first coefficient, 1.)
-2. Create an empty uniform PSRN.
-3. If _w_ is not 0, flip the input coin and multiply _w_ by the result of the flip.
-4. If _n_ is even, set _u_ to _l_ + _w_ / _n_.  Otherwise, set _l_ to _u_ + _w_ / _n_.  (In each of these cases, the division by _n_ implements the second and later coefficients, that is, the (_n_+1)th and later coefficients.)
-5. If the PSRN turns out to be less than _l_, return 1.
-6. If the PSRN turns out to be greater than _u_, return 0.
-7. Add 1 to _n_ and go to step 3.
+Alternatively, invert the result of the algorithm for log(1+&lambda;) (make it 1 if it's 0 and vice versa).
 
-Alternatively, flip the result of the algorithm for log(1+&lambda;) (make it 1 if it's 0 and vice versa).
+**Algorithms for 1/(1+&lambda;).**
+
+One algorithm is the general martingale algorithm, since when &lambda; is in [0, 1], this function is an alternating series of the form `1 - x + x^2 - x^3 + ...`, whose coefficients are 1, 1, 1, 1, ....  However, this algorithm converges slowly when &lambda; is very close to 1.
+
+A second algorithm is a special case of the two-coin Bernoulli factory of (Gonçalves et al., 2017)<sup>[**(5)**](#Note5)</sup> and is uniformly fast:
+
+1. With probability 1/2, return 1. (For example, generate an unbiased random bit and return 1 if that bit is 1.)
+2. Flip the input coin.  If it returns 1, return 0.  Otherwise, go to step 1.
+
+**Algorithm for _c_ * &lambda; * &beta; / (&beta; (_c_ * &lambda; + _d_ * &mu;) &minus; (&beta; &minus; 1) * (_c_ + _d_)).**
+
+This is the general two-coin algorithm of (Gonçalves et al., 2017)<sup>[**(6)**](#Note6)</sup> and (Vats et al. 2020)<sup>[**(7)**](#Note7)</sup>.  It takes two input coins that each output heads (1) with probability &lambda; or &mu;, respectively.  It also takes a parameter &beta;, which is a so-called "portkey" or early rejection parameter (when &beta; = 1, the formula simplifies to _c_ * &lambda; / (_c_ * &lambda; + _d_ * &mu;)).
+
+1. If &beta; is not 1, return 0 with probability 1 &minus; &beta;. (For example, call `ZeroOrOne` with &beta;'s numerator and denominator and return 0 if that call returns 0.)
+2. With probability _c_ / (_c_ + _d_), flip the &lambda; input coin.  Otherwise, flip the &mu; input coin.  If the &lambda; input coin returns 1, return 1.  If the &mu; input coin returns 1, return 0.
+3. Go to step 1.
 
 <a id=Notes></a>
 ## Notes
@@ -118,6 +134,12 @@ Alternatively, flip the result of the algorithm for log(1+&lambda;) (make it 1 i
 <small><sup id=Note3>(3)</sup> As used here and in the Flajolet paper, a geometric random number is the number of successes before the first failure, where the success probability is &lambda;.</small>
 
 <small><sup id=Note4>(4)</sup> Łatuszyński, K., Kosmidis, I.,  Papaspiliopoulos, O., Roberts, G.O., "[**Simulating events of unknown probabilities via reverse time martingales**](https://arxiv.org/abs/0907.4018v2)", arXiv:0907.4018v2 [stat.CO], 2009/2011.</small>
+
+<small><sup id=Note5>(5)</sup> Gonçalves, F. B., Łatuszyński, K. G., Roberts, G. O. (2017).  Exact Monte Carlo likelihood-based inference for jump-diffusion processes.</small>
+
+<small><sup id=Note6>(6)</sup> Gonçalves, F. B., Łatuszyński, K. G., Roberts, G. O. (2017).  Exact Monte Carlo likelihood-based inference for jump-diffusion processes.</small>
+
+<small><sup id=Note7>(7)</sup> Vats, D., Gonçalves, F. B., Łatuszyński, K. G., Roberts, G. O. Efficient Bernoulli factory MCMC for intractable likelihoods, arXiv:2004.07471v1 [stat.CO], 2020.</small>
 
 <a id=License></a>
 ## License

@@ -1608,7 +1608,7 @@ CLASSES
      |  2017. Bernoulli Factories and Black-Box Reductions in Mechanism Design.
      |  In _Proceedings of 49th Annual ACM SIGACT Symposium on the Theory
      |  of Computing_, Montreal, Canada, June 2017 (STOC’17).
-     |  - Gonçalves, F. B., Łatuszyński, K. G., Roberts, G. O.(2017).  Exact Monte
+     |  - Gonçalves, F. B., Łatuszyński, K. G., Roberts, G. O. (2017).  Exact Monte
      |  Carlo likelihood-based inference for jump-diffusion processes.
      |  - Vats, D., Gonçalves, F. B., Łatuszyński, K. G., Roberts, G. O. Efficient
      |  Bernoulli factory MCMC for intractable likelihoods, arXiv:2004.07471v1
@@ -1664,7 +1664,7 @@ CLASSES
      |
      |  coin(self, c)
      |      Convenience method to generate a function that returns
-     |      1 (heads) with the given probability c (which must be in (0, 1))
+     |      1 (heads) with the given probability c (which must be in [0, 1])
      |      and 0 (tails) otherwise.
      |
      |  complement(self, f)
@@ -1742,7 +1742,7 @@ CLASSES
      |      - i: The exponent.  Must be an integer and 0 or greater.
      |      - eps: A Fraction in (0, 1). If c > 1, eps must be chosen so that c*p <= 1 - eps.
      |
-     |  logistic(self, f, cx, cy=1)
+     |  logistic(self, f, cx=1, cy=1)
      |      Logistic Bernoulli factory: B(p) -> B(cx*p/(cy+cx*p)) or
      |          B(p) -> B((cx/cy)*p/(1+(cx/cy)*p)) (Morina et al. 2019)
      |      - f: Function that returns 1 if heads and 0 if tails.  Note that this function can
@@ -1803,14 +1803,15 @@ CLASSES
      |      - f1, f2: Functions that return 1 if heads and 0 if tails.
      |
      |  twocoin(self, f1, f2, c1=1, c2=1, beta=1)
-     |      Two-coin Bernoulli factory: B(p), B(q) => B(c1*p*beta / (c1*p+c2*q))
+     |      Two-coin Bernoulli factory: B(p), B(q) =>
+     |                B(c1*p*beta / (beta * (c1*p+c2*q) - (beta - 1)*(c1+c2)))
      |          (Gonçalves et al. 2017, Vats et al. 2020; in Vats et al.,
      |           C1,p1 corresponds to cy and C2,p2 corresponds to cx).
      |          Logistic Bernoulli factory is a special case with q=1, c2=1, beta=1.
      |      - f1, f2: Functions that return 1 if heads and 0 if tails.
      |      - c1, c2: Factors to multiply the probabilities of heads for f1 and f2, respectively.
      |      - beta: Early rejection parameter ("portkey" two-coin factory).
-     |        Returns 0 immediately with probability 1 - beta.
+     |        When beta = 1, the formula simplifies to B(c1*p/(c1*p+c2*q)).
      |
      |  twofacpower(self, fbase, fexponent)
      |      Bernoulli factory B(p, q) => B(p^q).
