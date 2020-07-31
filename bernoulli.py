@@ -19,7 +19,8 @@ class Bernoulli:
       - Huber, M., "Optimal linear Bernoulli factories for small mean problems",
       arXiv:1507.00843v2 [math.PR], 2016.
       - Łatuszyński, K., Kosmidis, I.,  Papaspiliopoulos, O., Roberts, G.O., "Simulating
-      events of unknown probabilities via reverse time martingales", 2011.
+      events of unknown probabilities via reverse time martingales", arXiv:0907.4018v2
+      [stat.CO], 2009/2011.
       - Goyal, V. and Sigman, K. 2012. On simulating a class of Bernstein
       polynomials. ACM Transactions on Modeling and Computer Simulation 22(2),
       Article 12 (March 2012), 5 pages.
@@ -49,6 +50,7 @@ class Bernoulli:
         """ Creates a new instance of the Bernoulli class."""
         self.r = random.Random()
         self.rbit = -1
+        self.totalbits = 0
 
     def _algorithm_a(self, f, m, c):
         # B(p) -> B(c*p*(1-(c*p)^(m-1))/(1-(c*p)^m)) (Huber 2016)
@@ -130,7 +132,12 @@ class Bernoulli:
             self.rvalue = self.r.randint(0, (1 << 32) - 1)
         ret = (self.rvalue >> self.rbit) & 1
         self.rbit += 1
+        self.totalbits += 1
         return ret
+
+    def _randbits(self, count):
+        self.totalbits += count
+        return self.r.randint(0, (1 << count) - 1)
 
     def _urandnew(self):
         return [0, 0]  # Multiple of 2^-X, followed by X
@@ -145,11 +152,11 @@ class Bernoulli:
                 raise ValueError
             if a[1] <= index:
                 a[1] += 1
-                a[0] = self.r.randint(0, 1) | (a[0] << 1)
+                a[0] = self.randbit() | (a[0] << 1)
             # Fill with next bit in b's uniform number
             if b[1] <= index:
                 b[1] += 1
-                b[0] = self.r.randint(0, 1) | (b[0] << 1)
+                b[0] = self.randbit() | (b[0] << 1)
             aa = (a[0] >> (a[1] - 1 - index)) & 1
             bb = (b[0] >> (b[1] - 1 - index)) & 1
             if aa < bb:
@@ -205,7 +212,7 @@ class Bernoulli:
             if success:
                 return 0
 
-    def fill_geometric_bag(self, bag, precision):
+    def fill_geometric_bag(self, bag, precision=53):
         ret = 0
         lb = min(len(bag), precision)
         for i in range(lb):
@@ -215,7 +222,7 @@ class Bernoulli:
                 ret = (ret << 1) | bag[i]
         if len(bag) < precision:
             diff = precision - len(bag)
-            ret = (ret << diff) | self.r.randint(0, (1 << diff) - 1)
+            ret = (ret << diff) | self._randbits(diff)
         # Now we have a number that is a multiple of
         # 2^-precision.
         return ret / (1 << precision)
@@ -345,12 +352,12 @@ class Bernoulli:
          is based entirely on the underlying coin.
      - f: Function that returns 1 if heads and 0 if tails.
      - x: Desired probability, in [0, 1].  """
-        pw = Rational(x)
+        pw = Fraction(x)
         if pw == 0:
             return 0
         if pw == 1:
             return 1
-        pt = Rational(1, 2)
+        pt = Fraction(1, 2)
         while True:
             y = f()
             z = f()
@@ -779,6 +786,36 @@ class Bernoulli:
         if self.zero_or_one_exp_minus(c, 1) == 0:
             return 0
         return self.exp_minus(f)
+
+    def alt_series(self, f, series):
+        """
+        Alternating-series Bernoulli factory: B(p) -> B(s[0] - s[1]*p + s[2]*p^2 - ...)
+        (Łatuszyński et al. 2011).
+        - f: Function that returns 1 if heads and 0 if tails.
+        - series: Object that generates each coefficient of the series starting with the first.
+          Each coefficient must be less than or equal to the previous and all of them must
+          be 1 or less.
+          Implements the following two methods: reset() resets the object to the first
+          coefficient; and next() generates the next coefficient.
+        """
+        series.reset()
+        u = Fraction(1) * series.next()
+        l = Fraction(0)
+        w = Fraction(1)
+        bag = []
+        n = 1
+        while True:
+            if w != 0:
+                w *= f()
+            if n % 2 == 0:
+                u = l + w * series.next()
+            else:
+                l = u - w * series.next()
+            if self._uniform_less(bag, l):
+                return 1
+            if self._uniform_greater(bag, u):
+                return 0
+            n += 1
 
     def exp_minus(self, f):
         """

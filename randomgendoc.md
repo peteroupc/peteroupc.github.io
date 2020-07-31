@@ -994,6 +994,11 @@ CLASSES
      |      ur=randgen.kthsmallest_urand(10, 10)
      |      maxrand=randgen.quantile_urands(icdf, [ur], 53)[0]
      |
+     |  randbit(self)
+     |
+     |  randbits(self, n)
+     |      Generates an n-bit random integer.
+     |
      |  randomwalk_posneg1(self, n)
      |      Random walk of uniform positive and negative steps.
      |
@@ -1002,11 +1007,6 @@ CLASSES
      |
      |  rayleigh(self, a)
      |      Generates a random number following a Rayleigh distribution.
-     |
-     |  rndbit(self)
-     |
-     |  rndbits(self, n)
-     |      Generates an n-bit random integer.
      |
      |  rndint(self, maxInclusive)
      |
@@ -1317,22 +1317,30 @@ FUNCTIONS
 
     urandfill(rg, a, bits=53)
         Fills the unsampled bits of the given u-rand 'a' as necessary to
-        make a number with 'bits' many bits.  If the u-rand already has
-        that many bits or more, the u-rand is rounded using the round-to-nearest,
-        ties to even rounding rule.  Returns the resulting number as a
-        multiple of 2^'bits'.  Default for 'bits' is 53.
+              make a number with 'bits' many bits.  If the u-rand already has
+              that many bits or more, the u-rand is rounded using the round-to-nearest,
+              ties to even rounding rule.  Returns the resulting number as a
+              multiple of 2^'bits'.  Default for 'bits' is 53.
+        - rg: An object that must supply a 'randbit' method that generates an
+          unbiased random bit.
 
     urandgreater(rg, a, b)
         Determines whether the first u-rand is greater than another u-rand; returns
-        True if so and False otherwise.  During
-        the comparison, additional bits will be sampled in both u-rands if necessary
-        for the comparison.
+              True if so and False otherwise.  During
+              the comparison, additional bits will be sampled in both u-rands if necessary
+              for the comparison.
+        - rg: An object that must supply a 'randbit' method that generates an
+          unbiased random bit.
+         - a, b: The first and second u-rands.
 
     urandless(rg, a, b)
         Determines whether the first u-rand is less than another u-rand; returns
-        True if so and False otherwise.  During
-        the comparison, additional bits will be sampled in both u-rands if necessary
-        for the comparison.
+              True if so and False otherwise.  During
+              the comparison, additional bits will be sampled in both u-rands if necessary
+              for the comparison.
+        - rg: An object that must supply a 'randbit' method that generates an
+          unbiased random bit.
+         - a, b: The first and second u-rands.
 
     urandnew()
         Returns an object to serve as a partially-sampled uniform random
@@ -1588,7 +1596,8 @@ CLASSES
      |  - Huber, M., "Optimal linear Bernoulli factories for small mean problems",
      |  arXiv:1507.00843v2 [math.PR], 2016.
      |  - Łatuszyński, K., Kosmidis, I.,  Papaspiliopoulos, O., Roberts, G.O., "Simulating
-     |  events of unknown probabilities via reverse time martingales", 2011.
+     |  events of unknown probabilities via reverse time martingales", arXiv:0907.4018v2
+     |  [stat.CO], 2009/2011.
      |  - Goyal, V. and Sigman, K. 2012. On simulating a class of Bernstein
      |  polynomials. ACM Transactions on Modeling and Computer Simulation 22(2),
      |  Article 12 (March 2012), 5 pages.
@@ -1623,6 +1632,16 @@ CLASSES
      |      - f1, f2: Functions that return 1 if heads and 0 if tails.
      |      - eps: A Fraction in (0, 1). eps must be chosen so that p+q <= 1 - eps,
      |        where p and q are the probability of heads for f1 and f2, respectively.
+     |
+     |  alt_series(self, f, series)
+     |      Alternating-series Bernoulli factory: B(p) -> B(s[0] - s[1]*p + s[2]*p^2 - ...)
+     |      (Łatuszyński et al. 2011).
+     |      - f: Function that returns 1 if heads and 0 if tails.
+     |      - series: Object that generates each coefficient of the series starting with the first.
+     |        Each coefficient must be less than or equal to the previous and all of them must
+     |        be 1 or less.
+     |        Implements the following two methods: reset() resets the object to the first
+     |        coefficient; and next() generates the next coefficient.
      |
      |  arctan_n_div_n(self, f)
      |      Arctan div N: B(p) -> B(arctan(p)/p).
@@ -1689,7 +1708,7 @@ CLASSES
      |      Exp-minus Bernoulli factory: B(p) -> B(exp(-p)) (Flajolet et al. 2010).
      |      - f: Function that returns 1 if heads and 0 if tails.
      |
-     |  fill_geometric_bag(self, bag, precision)
+     |  fill_geometric_bag(self, bag, precision=53)
      |
      |  geometric_bag(self, u)
      |      Bernoulli factory for a uniformly-distributed random number in (0, 1)

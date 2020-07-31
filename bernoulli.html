@@ -22,11 +22,13 @@
 
 <h2>About Bernoulli Factories</h2>
 
-<p>A <em>Bernoulli factory</em> (1994)<sup><a href="#Note2"><strong>(2)</strong></a></sup> is an algorithm that takes an input coin (a method that returns 1, or heads, with an unknown probability, or 0, or tails, otherwise) and returns 0 or 1 with a probability that depends on the input coin&#39;s probability of heads.  For example, a Bernoulli factory algorithm can take a coin that returns heads with probability &lambda; and produce a coin that returns heads with probability exp(&minus;&lambda;).</p>
+<p>A <em>Bernoulli factory</em> (Keane and O&#39;Brien 1994)<sup><a href="#Note2"><strong>(2)</strong></a></sup> is an algorithm that takes an input coin (a method that returns 1, or heads, with an unknown probability, or 0, or tails, otherwise) and returns 0 or 1 with a probability that depends on the input coin&#39;s probability of heads.  For example, a Bernoulli factory algorithm can take a coin that returns heads with probability &lambda; and produce a coin that returns heads with probability exp(&minus;&lambda;).</p>
 
-<p>A <em>factory function</em> is a function that relates the old probability to the new one.  Its domain is [0, 1] and returns a probability in [0, 1].  There are certain requirements for factory functions.  As shown by Keane and O&#39;Brien (1994)<sup><a href="#Note3"><strong>(3)</strong></a></sup>, a function <em>f</em> can serve as a factory function if and only if <em>f</em>, in the interval [0, 1]&mdash;
-    - is continuous everywhere, and
-    - either returns a constant value in [0, 1] everywhere, or returns a value in [0, 1] at each of the points 0 and 1 and a value in (0, 1) at each other point.</p>
+<p>A <em>factory function</em> is a function that relates the old probability to the new one.  Its domain is [0, 1] and returns a probability in [0, 1].  There are certain requirements for factory functions.  As shown by Keane and O&#39;Brien (1994)<sup><a href="#Note2"><strong>(2)</strong></a></sup>, a function <em>f</em> can serve as a factory function if and only if <em>f</em>, in the interval [0, 1]&mdash;</p>
+
+<pre>- is continuous everywhere, and
+- either returns a constant value in \[0, 1\] everywhere, or returns a value in \[0, 1\] at each of the points 0 and 1 and a value in (0, 1) at each other point.
+</pre>
 
 <p>As one example, the function <em>f</em> = 2*p cannot serve as a factory function, since its graph touches 1 somewhere in the open interval (0, 1).</p>
 
@@ -40,11 +42,31 @@
 
 <ul>
 <li>&lambda; is the unknown probability of heads of the input coin.</li>
+<li>The <strong>SampleGeometricBag</strong> and <strong>URandLess</strong> algorithms are described in my article on <a href="https://peteroupc.github.io/exporand.html"><strong>partially-sampled uniform random numbers</strong></a>.</li>
 <li>The instruction to &quot;generate a uniform random number&quot; can be implemented by creating an empty <a href="https://peteroupc.github.io/exporand.html"><strong>partially-sampled uniform random number</strong></a> (most accurate) or by generating <code>RNDEXCRANGE(0, 1)</code> or <code>RNDINT(1000)</code> (less accurate).</li>
 <li>Where an algorithm says &quot;if <em>a</em> is less than <em>b</em>&quot;, where <em>a</em> and <em>b</em> are uniform random numbers, it means to run the <strong>URandLess</strong> algorithm on the two partially-sampled numbers, or do a less-than operation on <em>a</em> and <em>b</em>, as appropriate.</li>
+<li>For best results, the algorithms should be implemented using exact rational arithmetic.</li>
 </ul>
 
-<p>Algorithm for exp(&minus;&lambda;)  (Flajolet et al., 2010)<sup><a href="#Note1"><strong>(1)</strong></a></sup>.  This is an optimized version of the algorithm in the Flajolet paper, which calls for generating a Poisson random number and returning 1 if that number is 0, or 0 otherwise.  The Poisson generator in turn involves generating a geometric random number <em>G</em><sup><a href="#Note4"><strong>(4)</strong></a></sup>, then <em>G</em> uniform random numbers, then returning 1 if all <em>G</em> uniform numbers are sorted, or 0 otherwise.</p>
+<p><strong>Algorithms for exp(&minus;&lambda;)</strong>.</p>
+
+<p>The algorithm in (Flajolet et al., 2010)<sup><a href="#Note1"><strong>(1)</strong></a></sup>calls for generating a Poisson(&lambda;) random number and returning 1 if that number is 0, or 0 otherwise.  The Poisson generator in turn involves generating a geometric(&lambda;) random number <em>G</em><sup><a href="#Note3"><strong>(3)</strong></a></sup>, then <em>G</em> uniform random numbers, then returning 1 if all <em>G</em> uniform numbers are sorted, or 0 otherwise.  The algorithm follows.</p>
+
+<ol>
+<li>Flip the input coin until the coin returns 0.  Then set <em>G</em> to the number of times the coin returns 1 this way.</li>
+<li>If <em>G</em> is 0, return 1.</li>
+<li>Generate a uniform random number <em>w</em>, and set <em>i</em> to 1.</li>
+<li>While <em>i</em> is less than <em>G</em>:
+
+<ol>
+<li>Generate a uniform random number <em>U</em>.</li>
+<li>If <em>w</em> is less than <em>U</em>, break out of this loop and go to step 1.</li>
+<li>Add 1 to <em>i</em>, and set <em>w</em> to <em>U</em>.</li>
+</ol></li>
+<li>Return 0.  (<em>G</em> is now a Poisson(&lambda;) random number, but is other than 0.)</li>
+</ol>
+
+<p>This algorithm, however, runs very slowly as &lambda; approaches 1.  Here is an alternative version of the algorithm above, which doesn&#39;t generate a geometric random number at the outset.</p>
 
 <ol>
 <li>Set <em>k</em> and <em>w</em> each to 0.</li>
@@ -54,7 +76,31 @@
 <li>Set <em>w</em> to <em>U</em>, add 1 to <em>k</em>, and go to step 2.</li>
 </ol>
 
-<p>Algorithm for exp(&lambda;)*(1&minus;&lambda;)  (Flajolet et al., 2010)<sup><a href="#Note1"><strong>(1)</strong></a></sup>:</p>
+<p>In turn, this algorithm converges very slowly as &lambda; approaches 0.  Thus:</p>
+
+<ul>
+<li>If &lambda; is known to be less than 1/2, use the first algorithm.</li>
+<li>If &lambda; is known to be greater than 1/2, use the second algorithm.</li>
+</ul>
+
+<p>A third algorithm is uniformly fast everywhere in (0, 1).   It uses the reverse-time martingale approach for alternating series in (Łatuszyński et al. 2009/2011)<sup><a href="#Note4"><strong>(4)</strong></a></sup> and makes use of the fact that exp(1+&lambda;) can be rewritten as&mdash;</p>
+
+<pre>1 - x + x^2/2 - x^3/6 + x^4/24 - ...,
+</pre>
+
+<p>which is an alternating series whose coefficients are 1, 1, 1/2!, 1/3!, 1/4!, ..., which satisfy the requirements for this approach because the coefficients are nonincreasing and all 1 or less.  However, the algorithm requires a bit more arithmetic, notably rational division.</p>
+
+<ol>
+<li>Set <em>u</em> and <em>w</em> to 1, set <em>l</em> to 0, and set <em>n</em> to 1. (Here, <em>u</em> is set to the first coefficient, 1.)</li>
+<li>Create an empty uniform PSRN.</li>
+<li>If <em>w</em> is not 0, flip the input coin, multiply <em>w</em> by the result of the flip, then divide <em>w</em> by <em>n</em>.  (This division by <em>n</em> implements the second and later coefficients, that is, the (<em>n</em>+1)th and later coefficients, which consist of 1/(<em>n</em>)!.)</li>
+<li>If <em>n</em> is even, set <em>u</em> to <em>l</em> + <em>w</em>.  Otherwise, set <em>l</em> to <em>u</em> + <em>w</em>.</li>
+<li>If the PSRN turns out to be less than <em>l</em>, return 1.</li>
+<li>If the PSRN turns out to be greater than <em>u</em>, return 0.</li>
+<li>Add 1 to <em>n</em> and go to step 3.</li>
+</ol>
+
+<p><strong>Algorithm for exp(&lambda;)*(1&minus;&lambda;)</strong>  (Flajolet et al., 2010)<sup><a href="#Note1"><strong>(1)</strong></a></sup>:</p>
 
 <ol>
 <li>Set <em>k</em> and <em>w</em> each to 0.</li>
@@ -64,6 +110,33 @@
 <li>Set <em>w</em> to <em>U</em>, add 1 to <em>k</em>, and go to step 2.</li>
 </ol>
 
+<p><strong>Algorithm for log(1+&lambda;)</strong>  (Flajolet et al., 2010)<sup><a href="#Note1"><strong>(1)</strong></a></sup>:</p>
+
+<ol>
+<li>Create an empty uniform partially-sampled random number (PSRN).</li>
+<li>Flip the input coin.  If it returns 0, flip the coin again and return the result.</li>
+<li>Call the <strong>SampleGeometricBag</strong> algorithm with the PSRN.  If it returns 0, flip the input coin and return the result.</li>
+<li>Flip the input coin.  If it returns 0, return 0.</li>
+<li>Call the <strong>SampleGeometricBag</strong> algorithm with the PSRN.  If it returns 0, return 0.</li>
+<li>Go to step 2.</li>
+</ol>
+
+<p>Alternatively, flip the result of the algorithm for 1 &minus; log(1+&lambda;) below (make it 1 if it&#39;s 0 and vice versa).</p>
+
+<p><strong>Algorithm for 1 &minus; log(1+&lambda;).</strong>  This algorithm uses the reverse-time martingale approach in (Łatuszyński et al. 2009/2011)<sup><a href="#Note4"><strong>(4)</strong></a></sup>.  Here, the alternating series is <code>1 - x + x^2/2 - x^3/3 + ...</code>, whose coefficients are 1, 1, 1/2, 1/3, ....</p>
+
+<ol>
+<li>Set <em>u</em> and <em>w</em> to 1, set <em>l</em> to 0, and set <em>n</em> to 1. (Here, <em>u</em> is set to the first coefficient, 1.)</li>
+<li>Create an empty uniform PSRN.</li>
+<li>If <em>w</em> is not 0, flip the input coin and multiply <em>w</em> by the result of the flip.</li>
+<li>If <em>n</em> is even, set <em>u</em> to <em>l</em> + <em>w</em> / <em>n</em>.  Otherwise, set <em>l</em> to <em>u</em> + <em>w</em> / <em>n</em>.  (In each of these cases, the division by <em>n</em> implements the second and later coefficients, that is, the (<em>n</em>+1)th and later coefficients.)</li>
+<li>If the PSRN turns out to be less than <em>l</em>, return 1.</li>
+<li>If the PSRN turns out to be greater than <em>u</em>, return 0.</li>
+<li>Add 1 to <em>n</em> and go to step 3.</li>
+</ol>
+
+<p>Alternatively, flip the result of the algorithm for log(1+&lambda;) (make it 1 if it&#39;s 0 and vice versa).</p>
+
 <p><a id=Notes></a></p>
 
 <h2>Notes</h2>
@@ -72,9 +145,9 @@
 
 <p><small><sup id=Note2>(2)</sup> Keane,  M.  S.,  and  O&#39;Brien,  G.  L., &quot;A Bernoulli factory&quot;, <em>ACM Transactions on Modeling and Computer Simulation</em> 4(2), 1994.</small></p>
 
-<p><small><sup id=Note3>(3)</sup> Keane,  M.  S.,  and  O&#39;Brien,  G.  L., &quot;A Bernoulli factory&quot;, <em>ACM Transactions on Modeling and Computer Simulation</em> 4(2), 1994.</small></p>
+<p><small><sup id=Note3>(3)</sup> As used here and in the Flajolet paper, a geometric random number is the number of successes before the first failure, where the success probability is &lambda;.</small></p>
 
-<p><small><sup id=Note4>(4)</sup> As used here and in the Flajolet paper, a geometric random number is the number of successes before the first failure, where the success probability is &lambda;.</small></p>
+<p><small><sup id=Note4>(4)</sup> Łatuszyński, K., Kosmidis, I.,  Papaspiliopoulos, O., Roberts, G.O., &quot;<a href="https://arxiv.org/abs/0907.4018v2"><strong>Simulating events of unknown probabilities via reverse time martingales</strong></a>&quot;, arXiv:0907.4018v2 [stat.CO], 2009/2011.</small></p>
 
 <p><a id=License></a></p>
 

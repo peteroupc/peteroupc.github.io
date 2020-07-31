@@ -1,7 +1,7 @@
 <a id=Examples_of_High_Quality_PRNGs></a>
 ## Examples of High-Quality PRNGs
 
-Besides cryptographic random number generators (RNGs), the following are examples of [**high-quality pseudorandom number generators (PRNGs)**](https://peteroupc.github.io/random.html#High_Quality_RNGs_Requirements).  The "Fails PractRand Starting At" column in this and other tables in this page means the number of bytes (rounded up to the nearest power of two) at which PractRand detects a failure in the PRNG.
+Besides cryptographic random number generators (RNGs), the following are examples of [**high-quality pseudorandom number generators (PRNGs)**](https://peteroupc.github.io/random.html#High_Quality_RNGs_Requirements).  The "Fails PractRand Starting At" column in this and other tables in this page means the number of bytes (rounded up to the nearest power of two) at which PractRand detects a failure in the PRNG.  (Note that high-quality PRNGs, as I define them, are not necessarily appropriate for information security.)
 
 | PRNG | Seeds Allowed | Cycle Length | Fails PractRand Starting At | Notes |
  ----------| --- | --- | --- | --- |

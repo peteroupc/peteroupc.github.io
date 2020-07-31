@@ -1120,6 +1120,11 @@ The following method generates a Poisson random number with mean `mx`/`my`, usin
            else: return PoissonInt(mm, my)+
                PoissonInt(mx-mm, my)
         end
+        if mx>floor(my*9/10)
+           // Runs slowly if mx/my is close to 1, so break it up
+           hmx=floor(mx/2)
+           return PoissonInt(hmx,my)+PoissonInt(mx-hmx,my)
+        end
         while true
           k = 0
           w = nothing
@@ -2204,7 +2209,7 @@ The following method calculates the norm of a vector (list of numbers), more spe
       return sqrt(ret)
     END METHOD
 
-There are other kinds of norms besides the &#x2113;<sub>2</sub> norm.  More generally, the &#x2113;<sub>_p_</sub> norm, where _p_ is 1 or greater or is &infin;, is the _p_ th root of the sum of _p_ th powers of a vector's components' absolute values (or, if _p_ is &infin;, the highest absolute value among those components).  An &#x2113;<sub>_p_</sub> ball or sphere of a given radius is a ball or sphere that is bounded by or traces, respectively, all points with an &#x2113;<sub>_p_</sub> norm equal to that radius.  (An &#x2113;<sub>&infin;</sub> ball or sphere is box-shaped.)
+There are other kinds of norms besides the &#x2113;<sub>2</sub> norm.  More generally, the &#x2113;<sub>_p_</sub> norm, where _p_ is 1 or greater or is &infin;, is the _p_<sup>th</sup> root of the sum of _p_<sup>th</sup> powers of a vector's components' absolute values (or, if _p_ is &infin;, the highest absolute value among those components).  An &#x2113;<sub>_p_</sub> ball or sphere of a given radius is a ball or sphere that is bounded by or traces, respectively, all points with an &#x2113;<sub>_p_</sub> norm equal to that radius.  (An &#x2113;<sub>&infin;</sub> ball or sphere is box-shaped.)
 
 <a id=Multithreading_Note></a>
 ### Multithreading Note

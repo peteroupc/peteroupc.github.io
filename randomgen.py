@@ -80,7 +80,10 @@ def urandless(rg, a, b):
     """ Determines whether the first u-rand is less than another u-rand; returns
                True if so and False otherwise.  During
                the comparison, additional bits will be sampled in both u-rands if necessary
-               for the comparison. """
+               for the comparison.
+         - rg: An object that must supply a 'randbit' method that generates an
+           unbiased random bit.
+          - a, b: The first and second u-rands. """
     index = 0
     while True:
         # Fill with next bit in a's uniform number
@@ -90,11 +93,11 @@ def urandless(rg, a, b):
             raise ValueError
         if a[1] <= index:
             a[1] += 1
-            a[0] = rg.rndbit() | (a[0] << 1)
+            a[0] = rg.randbit() | (a[0] << 1)
         # Fill with next bit in b's uniform number
         if b[1] <= index:
             b[1] += 1
-            b[0] = rg.rndbit() | (b[0] << 1)
+            b[0] = rg.randbit() | (b[0] << 1)
         aa = (a[0] >> (a[1] - 1 - index)) & 1
         bb = (b[0] >> (b[1] - 1 - index)) & 1
         if aa < bb:
@@ -107,7 +110,10 @@ def urandgreater(rg, a, b):
     """ Determines whether the first u-rand is greater than another u-rand; returns
                True if so and False otherwise.  During
                the comparison, additional bits will be sampled in both u-rands if necessary
-               for the comparison. """
+               for the comparison.
+         - rg: An object that must supply a 'randbit' method that generates an
+           unbiased random bit.
+          - a, b: The first and second u-rands."""
     return urandless(rg, b, a)
 
 def urandfill(rg, a, bits=53):
@@ -115,7 +121,9 @@ def urandfill(rg, a, bits=53):
                make a number with 'bits' many bits.  If the u-rand already has
                that many bits or more, the u-rand is rounded using the round-to-nearest,
                ties to even rounding rule.  Returns the resulting number as a
-               multiple of 2^'bits'.  Default for 'bits' is 53. """
+               multiple of 2^'bits'.  Default for 'bits' is 53.
+         - rg: An object that must supply a 'randbit' method that generates an
+           unbiased random bit."""
     if a[1] > bits:
         # Shifting bits beyond the first excess bit.
         aa = a[0] >> (a[1] - bits - 1)
@@ -123,8 +131,9 @@ def urandfill(rg, a, bits=53):
         return aa >> 1 if (aa & 1) == 0 else (aa >> 1) + 1
     elif a[1] < bits:
         bc = bits - a[1]
-        a[0] <<= bc
-        a[0] |= rg.rndintexc(1 << bc)
+        for i in range(bc):
+            a[0] <<= 1
+            a[0] |= rg.randbit()
         a[1] = bits
         return a[0]
     else:
@@ -353,7 +362,7 @@ class FastLoadedDiceRoller:
         x = 0
         y = 0
         while True:
-            x = randgen.rndbit() | (x << 1)
+            x = randgen.randbit() | (x << 1)
             leaves = self.leavesAndLabels[0][y]
             if x < leaves:
                 label = self.leavesAndLabels[x + 1][y]
@@ -469,7 +478,7 @@ class OptimalSampler:
             return 0
         x = 0
         while True:
-            x = self.lin[x + rg.rndbit()]
+            x = self.lin[x + rg.randbit()]
             if self.lin[x] < 0:
                 # Subtract by 1 because we're returning
                 # values in [0, n)
@@ -489,7 +498,7 @@ class OptimalSampler:
         x = 0
         y = 0
         while True:
-            x = (x << 1) | rg.rndbit()
+            x = (x << 1) | rg.randbit()
             for z in range(len(pm)):
                 x -= (pm[z] >> (self.k - 1 - y)) & 1
                 # Handle rejection event
@@ -1117,10 +1126,10 @@ class RandomGen:
         self.bitcount = 63
         self.curbit = 0
 
-    def _rndbit(self):
-        return self.rndbit()
+    def randbits(self, count):
+        return self.rndintexc(1 << count)
 
-    def rndbit(self):
+    def randbit(self):
         if self.bitcount >= 63:
             self.bitcount = 0
             self.curbit = self.rng.randint(0, (1 << 63) - 1)
@@ -1135,13 +1144,13 @@ class RandomGen:
         if maxInclusive == 0:
             return 0
         if maxInclusive == 1:
-            return self.rndbit()
+            return self.randbit()
         # Lumbroso's fast dice roller method
         x = 1
         y = 0
         while True:
             x = x * 2
-            y = y * 2 + self.rndbit()
+            y = y * 2 + self.randbit()
             if x > maxInclusive:
                 if y <= maxInclusive:
                     return y
@@ -1154,7 +1163,7 @@ class RandomGen:
         if maxInclusive == 0:
             return 0
         if maxInclusive == 1:
-            return self.rndbit()
+            return self.randbit()
         return self.rng.randint(0, maxInclusive)
 
     def rndintexc(self, maxExclusive):
@@ -1171,7 +1180,7 @@ class RandomGen:
     def rndintexcrange(self, minInclusive, maxExclusive):
         return minInclusive + self.rndint(maxExclusive - minInclusive - 1)
 
-    def rndbits(self, n):
+    def randbits(self, n):
         """ Generates an n-bit random integer. """
         return self.rndint((1 << n) - 1)
 
@@ -1425,10 +1434,10 @@ Returns 'list'. """
         while True:
             z = z * 2
             if z >= py:
-                if self.rndbit() == 0:
+                if self.randbit() == 0:
                     return 1
                 z = z - py
-            elif z == 0 or self.rndbit() == 0:
+            elif z == 0 or self.randbit() == 0:
                 return 0
 
     def bernoulli(self, p):
@@ -1760,6 +1769,9 @@ Returns 'list'. """
                 return ret
             else:
                 return self.poissonint(mm, my) + self.poissonint(mx - mm, my)
+        if mx > my * 9 // 10:
+            hmx = mx // 2
+            return self.poissonint(hmx, my) + self.poissonint(mx - hmx, my)
         while True:
             # Generate n, a geometric random number
             # (NOTE: Flajolet et al. define a geometric
@@ -2155,7 +2167,7 @@ Returns 'list'. """
     def _logisticexp(self, ln, ld, prec):
         denom = ld * 2 ** prec
         while True:
-            if self.rndbit() == 0:
+            if self.randbit() == 0:
                 return 0
             if self.zero_or_one_exp_minus(ln, denom) == 1:
                 return 1
@@ -3584,7 +3596,7 @@ _Non-Uniform Random Variate Generation_, 1986.
         nodesInLevel = 2
         path = 0
         while True:
-            path = (path << 1) + self.rndbit()
+            path = (path << 1) + self.randbit()
             path &= bitmask
             # Get next bit in binary expansion
             currbits = [pr.nextbit() for pr in probs]
@@ -3598,7 +3610,7 @@ _Non-Uniform Random Variate Generation_, 1986.
                 # Fill path as necessary so that the number of nodes
                 # exceeds the node sum
                 while nodesum > 0 and innerNodes < innerNodesNeeded:
-                    path = (path << 1) + self.rndbit()
+                    path = (path << 1) + self.randbit()
                     nodesInLevel += 1
                     path &= bitmask
                     innerNodes = nodesInLevel - nodesum
