@@ -259,7 +259,7 @@
 <li> Return the item at position N.</li>
 </ol>
 
-<p>For another base (radix), such as 10 for decimal, this can be implemented as <strong>URandLess</strong>, with <strong>a</strong> being an empty partially-sampled uniform random number and <strong>b</strong> being the geometric bag. Return 1 if the algorithm returns <code>true</code>, or 0 otherwise.</p>
+<p>For another base (radix), such as 10 for decimal, this can be implemented as <strong>URandLess</strong>, with <strong>a</strong> being an empty uniform PSRN and <strong>b</strong> being the geometric bag. Return 1 if the algorithm returns <code>true</code>, or 0 otherwise.</p>
 
 <p><strong>SampleGeometricBagComplement</strong> is the same as the <strong>SampleGeometricBag</strong> algorithm, except the return value is 1 minus the original return value.  The result is that if <strong>SampleGeometricBag</strong> outputs 1 with probability <em>U</em>, <strong>SampleGeometricBagComplement</strong> outputs 1 with probability 1 &minus; <em>U</em>.</p>
 
@@ -1022,7 +1022,7 @@ def exprandscore(ln,ld,ln2,ld2):
 <p>The beta sampler in this document shows one case of a general approach to simulating a wide class of continuous distributions supported on [0, 1], thanks to Bernoulli factories.  This general approach can sample a number that follows one of these distributions, using the algorithm below.  The algorithm allows any arbitrary base (or radix) <em>b</em> (such as 2 for binary).</p>
 
 <ol>
-<li>Create an &quot;empty&quot; partially-sampled uniform random number (or &quot;geometric bag&quot;).  Create a <strong>SampleGeometricBag</strong> Bernoulli factory that uses that geometric bag.</li>
+<li>Create an &quot;empty&quot; uniform PSRN (or &quot;geometric bag&quot;).  Create a <strong>SampleGeometricBag</strong> Bernoulli factory that uses that geometric bag.</li>
 <li><p>As the geometric bag builds up a uniform random number, accept the number with a probability that can be represented by a Bernoulli factory (that takes the <strong>SampleGeometricBag</strong> factory from step 1 as part of its input), or reject it otherwise.  Let <em>f</em>(<em>U</em>) be the probability function modeled by this Bernoulli factory, where <em>U</em> is the uniform random number built up by the geometric bag. <em>f</em> is a multiple of the density function for the underlying continuous distribution (as a result, this algorithm can be used even if the distribution&#39;s density function is only known up to a normalization constant).  As shown by Keane and O&#39;Brien <sup><a href="#Note6"><strong>(6)</strong></a></sup>, however, this step works if and only if <em>f</em>, in the interval [0, 1]&mdash;</p>
 
 <ul>
@@ -1039,7 +1039,7 @@ def exprandscore(ln,ld,ln2,ld2):
 <li><p>If the geometric bag is accepted, either return the bag as is or fill the unsampled digits of the bag with uniform random digits as necessary to give the number an <em>n</em>-digit fractional part (similarly to <strong>FillGeometricBag</strong> above), where <em>n</em> is a precision parameter, then return the resulting number.</p></li>
 </ol>
 
-<p>However, the speed of this step depends crucially on the mode (highest point) of <em>f</em> at [0, 1].  As that mode approaches 0, the average rejection rate increases.  Effectively, this step generates a point uniformly at random in a 1&times;1 area in space.  If that mode is close to 0, <em>f</em> will cover only a tiny portion of this area, so that the chance is high that the generated point will fall outside the area of <em>f</em> and have to be rejected.</p>
+<p>However, the speed of this algorithm depends crucially on the mode (highest point) of <em>f</em> in [0, 1].  As that mode approaches 0, the average rejection rate increases.  Effectively, this step generates a point uniformly at random in a 1&times;1 area in space.  If that mode is close to 0, <em>f</em> will cover only a tiny portion of this area, so that the chance is high that the generated point will fall outside the area of <em>f</em> and have to be rejected.</p>
 
 <p>The beta distribution&#39;s probability function at (1) fits the requirements of Keane and O&#39;Brien (for <code>alpha</code> and <code>beta</code> both greater than 1), thus it can be simulated by Bernoulli factories and is covered by this general algorithm.</p>
 
@@ -1337,7 +1337,7 @@ plot(expminusformula(), xlim=(0,1), ylim=(0,2))
 
 <h3>Convergence of Bernoulli Factories</h3>
 
-<p>The following Python code illustrates how to test a Bernoulli factory algorithm for convergence to the correct probability, as well as the speed of this convergence.  In this case, we are testing the <strong>PowerBernoulliFactory</strong> of <em>x</em><sup><em>y</em>/<em>z</em></sup>.  Depending on the parameters <em>x</em>, <em>y</em>, and <em>z</em>, this Bernoulli factory converges faster or slower.  Notably</p>
+<p>The following Python code illustrates how to test a Bernoulli factory algorithm for convergence to the correct probability, as well as the speed of this convergence.  In this case, we are testing the <strong>PowerBernoulliFactory</strong> of <em>x</em><sup><em>y</em>/<em>z</em></sup>.  Depending on the parameters <em>x</em>, <em>y</em>, and <em>z</em>, this Bernoulli factory converges faster or slower.</p>
 
 <pre># Parameters for the Bernoulli factory x**(y/z)
 x=0.005 # x is the input coin&#39;s probability of heads

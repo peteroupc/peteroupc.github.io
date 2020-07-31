@@ -181,7 +181,7 @@ The algorithm **SampleGeometricBag** is a Bernoulli factory algorithm.  For base
 2.  If the item at position N in the geometric bag (positions start at 0) is not set to a digit (e.g., 0 or 1 for base 2), set the item at that position to a digit chosen uniformly at random (e.g., either 0 or 1 for base 2), increasing the geometric bag's capacity as necessary.  (As a result of this step, there may be "gaps" in the geometric bag where no digit was sampled yet.)
 3.  Return the item at position N.
 
-For another base (radix), such as 10 for decimal, this can be implemented as **URandLess**, with **a** being an empty partially-sampled uniform random number and **b** being the geometric bag. Return 1 if the algorithm returns `true`, or 0 otherwise.
+For another base (radix), such as 10 for decimal, this can be implemented as **URandLess**, with **a** being an empty uniform PSRN and **b** being the geometric bag. Return 1 if the algorithm returns `true`, or 0 otherwise.
 
 **SampleGeometricBagComplement** is the same as the **SampleGeometricBag** algorithm, except the return value is 1 minus the original return value.  The result is that if **SampleGeometricBag** outputs 1 with probability _U_, **SampleGeometricBagComplement** outputs 1 with probability 1 &minus; _U_.
 
@@ -707,7 +707,7 @@ def exprandscore(ln,ld,ln2,ld2):
 
 The beta sampler in this document shows one case of a general approach to simulating a wide class of continuous distributions supported on \[0, 1\], thanks to Bernoulli factories.  This general approach can sample a number that follows one of these distributions, using the algorithm below.  The algorithm allows any arbitrary base (or radix) _b_ (such as 2 for binary).
 
-1. Create an "empty" partially-sampled uniform random number (or "geometric bag").  Create a **SampleGeometricBag** Bernoulli factory that uses that geometric bag.
+1. Create an "empty" uniform PSRN (or "geometric bag").  Create a **SampleGeometricBag** Bernoulli factory that uses that geometric bag.
 2. As the geometric bag builds up a uniform random number, accept the number with a probability that can be represented by a Bernoulli factory (that takes the **SampleGeometricBag** factory from step 1 as part of its input), or reject it otherwise.  Let _f_(_U_) be the probability function modeled by this Bernoulli factory, where _U_ is the uniform random number built up by the geometric bag. _f_ is a multiple of the density function for the underlying continuous distribution (as a result, this algorithm can be used even if the distribution's density function is only known up to a normalization constant).  As shown by Keane and O'Brien <sup>[**(6)**](#Note6)</sup>, however, this step works if and only if _f_, in the interval \[0, 1\]&mdash;
     - is continuous everywhere, and
     - either returns a constant value in \[0, 1\] everywhere, or returns a value in \[0, 1\] at each of the points 0 and 1 and a value in (0, 1) at each other point,
@@ -718,7 +718,7 @@ The beta sampler in this document shows one case of a general approach to simula
 
 3. If the geometric bag is accepted, either return the bag as is or fill the unsampled digits of the bag with uniform random digits as necessary to give the number an _n_-digit fractional part (similarly to **FillGeometricBag** above), where _n_ is a precision parameter, then return the resulting number.
 
-However, the speed of this step depends crucially on the mode (highest point) of _f_ at \[0, 1\].  As that mode approaches 0, the average rejection rate increases.  Effectively, this step generates a point uniformly at random in a 1&times;1 area in space.  If that mode is close to 0, _f_ will cover only a tiny portion of this area, so that the chance is high that the generated point will fall outside the area of _f_ and have to be rejected.
+However, the speed of this algorithm depends crucially on the mode (highest point) of _f_ in \[0, 1\].  As that mode approaches 0, the average rejection rate increases.  Effectively, this step generates a point uniformly at random in a 1&times;1 area in space.  If that mode is close to 0, _f_ will cover only a tiny portion of this area, so that the chance is high that the generated point will fall outside the area of _f_ and have to be rejected.
 
 The beta distribution's probability function at (1) fits the requirements of Keane and O'Brien (for `alpha` and `beta` both greater than 1), thus it can be simulated by Bernoulli factories and is covered by this general algorithm.
 
@@ -973,7 +973,7 @@ plot(expminusformula(), xlim=(0,1), ylim=(0,2))
 <a id=Convergence_of_Bernoulli_Factories></a>
 ### Convergence of Bernoulli Factories
 
-The following Python code illustrates how to test a Bernoulli factory algorithm for convergence to the correct probability, as well as the speed of this convergence.  In this case, we are testing the **PowerBernoulliFactory** of _x_<sup>_y_/_z_</sup>.  Depending on the parameters _x_, _y_, and _z_, this Bernoulli factory converges faster or slower.  Notably
+The following Python code illustrates how to test a Bernoulli factory algorithm for convergence to the correct probability, as well as the speed of this convergence.  In this case, we are testing the **PowerBernoulliFactory** of _x_<sup>_y_/_z_</sup>.  Depending on the parameters _x_, _y_, and _z_, this Bernoulli factory converges faster or slower.
 
 ```
 # Parameters for the Bernoulli factory x**(y/z)
