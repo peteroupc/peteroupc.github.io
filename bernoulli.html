@@ -82,12 +82,7 @@
 <li>Set <em>w</em> to <em>U</em>, add 1 to <em>k</em>, and go to step 2.</li>
 </ol>
 
-<p>In turn, this algorithm converges very slowly as &lambda; approaches 0.  Thus:</p>
-
-<ul>
-<li>If &lambda; is known to be less than 1/2, use the first algorithm.</li>
-<li>If &lambda; is known to be greater than 1/2, use the second algorithm.</li>
-</ul>
+<p>In turn, this algorithm likewise converges very slowly as &lambda; approaches 1.</p>
 
 <p>A third algorithm is uniformly fast everywhere in (0, 1).   It uses the reverse-time martingale approach for alternating series in (Łatuszyński et al. 2009/2011)<sup><a href="#Note6"><strong>(6)</strong></a></sup> and makes use of the fact that exp(&minus;&lambda;) can be rewritten as 1 &minus; &lambda; + &lambda;<sup>2</sup>/2 - &lambda;<sup>3</sup>/6 + &lambda;<sup>3</sup>/24 - ...,</p>
 

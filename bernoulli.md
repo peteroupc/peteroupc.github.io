@@ -63,10 +63,7 @@ Here is an alternative version of the algorithm above, which doesn't generate a 
 4. If _k_ > 0 and _w_ is less than _U_, go to step 1.
 5. Set _w_ to _U_, add 1 to _k_, and go to step 2.
 
-In turn, this algorithm converges very slowly as &lambda; approaches 0.  Thus:
-
-- If &lambda; is known to be less than 1/2, use the first algorithm.
-- If &lambda; is known to be greater than 1/2, use the second algorithm.
+In turn, this algorithm likewise converges very slowly as &lambda; approaches 1.
 
 A third algorithm is uniformly fast everywhere in (0, 1).   It uses the reverse-time martingale approach for alternating series in (Łatuszyński et al. 2009/2011)<sup>[**(6)**](#Note6)</sup> and makes use of the fact that exp(&minus;&lambda;) can be rewritten as 1 &minus; &lambda; + &lambda;<sup>2</sup>/2 - &lambda;<sup>3</sup>/6 + &lambda;<sup>3</sup>/24 - ...,
 
