@@ -340,12 +340,6 @@ class Bernoulli:
             i += 1
         return 0
 
-    def _uniform_greater(self, bag, frac):
-        """ Determines whether a uniformly-distributed random number
-             (given as an incomplete binary expansion that is built up
-              as necessary) is greater than the given Fraction (in the interval [0, 1]). """
-        return self._uniform_less(bag, frac) ^ 1
-
     def bernoulli_x(self, f, x):
         """ Bernoulli factory with a given probability: B(p) => B(x) (Mendo 2019).
          Mendo calls Bernoulli factories "non-randomized" if their randomness
@@ -775,7 +769,7 @@ class Bernoulli:
             if a < 0 or a > 1:
                 raise ValueError
         j = sum([f() for i in range(n)])
-        return 1 if self._uniform_less([], alpha[j]) else 0
+        return 1 if self._uniform_less([], alpha[j]) == 1 else 0
 
     def exp_minus_ext(self, f, c=0):
         """
@@ -816,9 +810,9 @@ class Bernoulli:
                 u = l + w * series.next()
             else:
                 l = u - w * series.next()
-            if self._uniform_less(bag, l):
+            if self._uniform_less(bag, l) == 1:
                 return 1
-            if self._uniform_greater(bag, u):
+            if self._uniform_less(bag, u) == 0:
                 return 0
             n += 1
 
@@ -840,9 +834,9 @@ class Bernoulli:
                 u = l + uw / fac
             else:
                 l = u - uw / fac
-            if self._uniform_less(bag, l):
+            if self._uniform_less(bag, l) == 1:
                 return 1
-            if self._uniform_greater(bag, u):
+            if self._uniform_less(bag, u) == 0:
                 return 0
             n += 1
             fac *= n
@@ -1028,9 +1022,6 @@ if __name__ == "__main__":
     print([_mean(c), math.exp(-0.6)])
     c = [b._uniform_less([], math.exp(-0.4)) for i in range(10000)]
     print([_mean(c), math.exp(-0.4)])
-    c = [b._uniform_greater([], math.exp(-0.4)) for i in range(10000)]
-    print([_mean(c), 1 - math.exp(-0.4)])
-    exit()
     c = [b.zero_or_one(20, 100) for i in range(10000)]
     print([_mean(c), 0.2])
     c = [b.zero_or_one(20, 100) for i in range(10000)]
