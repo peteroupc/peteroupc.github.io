@@ -52,7 +52,7 @@ In this document, a **random number generator (RNG)** means software and/or hard
 <a id=Uniform_Numbers_in_a_Range></a>
 ## Uniform Numbers in a Range
 
-For algorithms on generating uniform random _integers_ in a range, see [**"Uniform Random Integers"**](https://peteroupc.github.io/randomfunc.html#Uniform_Random_Integers).  It should be noted there that most RNGs in common use output 32- or 64-bit non-negative integers, and for JavaScript, the idiom `(Math.random() < 0.5 ? 0 : 1)` will work in many practical cases as a random bit generator.  Here is a JavaScript example of generating a random integer in the interval [**`minInclusive`, `maxExclusive`), using the Fast Dice Roller by J. Lumbroso (2013)<sup>[**(1)**](#Note1)</sup>:
+For algorithms on generating uniform random _integers_ in a range, see [**"Uniform Random Integers"**](https://peteroupc.github.io/randomfunc.html#Uniform_Random_Integers) and "[**A Note on Integer Generation Algorithms**](https://peteroupc.github.io/randomnotes.html#A_Note_on_Integer_Generation_Algorithms)" for a survey of algorithms.  It should be noted there that most RNGs in common use output 32- or 64-bit non-negative integers, and for JavaScript, the idiom `(Math.random() < 0.5 ? 0 : 1)` will work in many practical cases as a random bit generator.  Here is a JavaScript example of generating a random integer in the interval [**`minInclusive`, `maxExclusive`), using the Fast Dice Roller by J. Lumbroso (2013)<sup>[**(1)**](#Note1)</sup>:
 
     function randomInt(minInclusive, maxExclusive) {
       var maxInclusive = (maxExclusive - minInclusive) - 1
@@ -132,12 +132,7 @@ However, the following are some of the many considerations involving random stri
 
 _Weighted choice_ (also known as a _categorical distribution_) is a random choice of items, where each item has a _weight_ and is chosen with a probability proportional to its weight.  For algorithms on weighted choice, see "[**Weighted Choice With Replacement**](https://peteroupc.github.io/randomfunc.html#Weighted_Choice_With_Replacement)", which covers choices in which items are taken and put back.
 
-The algorithm shown there is a straightforward way to implement weighted choice, but there are faster alternatives (which are both implemented in [**Python sample code**](https://peteroupc.github.io/randomgen.zip)):
-
-- Vose's version of the alias method (`VoseAlias`).  See "[**Darts, Dice, and Coins: Sampling from a Discrete Distribution**](https://www.keithschwarz.com/darts-dice-coins/)" by Keith Schwarz for more information.
-- The Fast Loaded Dice Roller (`FastLoadedDiceRoller`) (Saad et al. 2020)<sup>[**(4)**](#Note4)</sup>.
-
-In addition, Bram van de Klundert [**compares various data structures**](https://dspace.library.uu.nl/handle/1874/393383) for weighted choice.
+The algorithm shown there is a straightforward way to implement weighted choice, but there are other alternatives (many of which are implemented in [**Python sample code**](https://peteroupc.github.io/randomgen.zip)).  They include rejection sampling, Vose's version of the alias method (`VoseAlias`; see "[**Darts, Dice, and Coins: Sampling from a Discrete Distribution**](https://www.keithschwarz.com/darts-dice-coins/)" by Keith Schwarz for more information), and the Fast Loaded Dice Roller (`FastLoadedDiceRoller`) (Saad et al. 2020)<sup>[**(4)**](#Note4)</sup>.  See "[**A Note on Weighted Choice Algorithms**](https://peteroupc.github.io/randomnotes.html#A_Note_on_Weighted_Choice_Algorithms)" for a survey of algorithms.
 
 Weighted choice _without replacement_ is a choice where each item can be chosen no more than once.  The simplest way to implement this kind of weighted choice is to use weighted choice with replacement, except that after an index is chosen, that index's weight is set to 0 to keep the index from being chosen again.  Other options are given in "[**Weighted Choice Without Replacement (Single Copies)**](https://peteroupc.github.io/randomfunc.html#Weighted_Choice_Without_Replacement_Single_Copies)" and "[**Weighted Choice Without Replacement (List of Unknown Size)**](https://peteroupc.github.io/randomfunc.html#Weighted_Choice_Without_Replacement_List_of_Unknown_Size)".
 
