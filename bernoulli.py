@@ -247,54 +247,51 @@ class Bernoulli:
 
     def zero_or_one_log1p(self, x, y=1):
         """ Generates 1 with probability log(1+x/y); 0 otherwise.
-         Reference: Flajolet et al. 2010. """
+         Reference: Flajolet et al. 2010.  Uses a uniformly-fast special case of
+         the two-coin Bernoulli factory, rather than the even-parity construction in
+         Flajolet's paper, which is not uniformly fast. """
         bag = []
         while True:
-            if self.zero_or_one(x, y) == 0 or self.geometric_bag(bag) == 0:
-                return self.zero_or_one(x, y)
-            if self.zero_or_one(x, y) == 0 or self.geometric_bag(bag) == 0:
+            if self.randbit() == 0:
+                return 1
+            if self.zero_or_one(x, y) == 1 and self.geometric_bag(bag) == 1:
                 return 0
 
     def zero_or_one_arctan_n_div_n(self, x, y=1):
         """ Generates 1 with probability arctan(x/y)*y/x; 0 otherwise.
-            x/y must be in [0, 1].
+            x/y must be in [0, 1]. Uses a uniformly-fast special case of
+         the two-coin Bernoulli factory, rather than the even-parity construction in
+         Flajolet's paper, which is not uniformly fast.
          Reference: Flajolet et al. 2010. """
         bag = []
         xsq = x * x
         ysq = y * y
         while True:
-            if (
-                self.zero_or_one(xsq, ysq) == 0
-                or self.geometric_bag(bag) == 0
-                or self.geometric_bag(bag) == 0
-            ):
+            if self.randbit() == 0:
                 return 1
             if (
-                self.zero_or_one(xsq, ysq) == 0
-                or self.geometric_bag(bag) == 0
-                or self.geometric_bag(bag) == 0
+                self.zero_or_one(xsq, ysq) == 1
+                and self.geometric_bag(bag) == 1
+                and self.geometric_bag(bag) == 1
             ):
                 return 0
 
     def arctan_n_div_n(self, f):
-        """ Arctan div N: B(p) -> B(arctan(p)/p).
+        """ Arctan div N: B(p) -> B(arctan(p)/p). Uses a uniformly-fast special case of
+         the two-coin Bernoulli factory, rather than the even-parity construction in
+         Flajolet's paper, which is not uniformly fast.
          Reference: Flajolet et al. 2010.
           - f: Function that returns 1 if heads and 0 if tails.
          """
         bag = []
         while True:
-            if (
-                f() == 0
-                or self.geometric_bag(bag) == 0
-                or f() == 0
-                or self.geometric_bag(bag) == 0
-            ):
+            if self.randbit() == 0:
                 return 1
             if (
                 f() == 0
-                or self.geometric_bag(bag) == 0
-                or f() == 0
-                or self.geometric_bag(bag) == 0
+                and self.geometric_bag(bag) == 0
+                and f() == 0
+                and self.geometric_bag(bag) == 0
             ):
                 return 0
 
@@ -302,15 +299,11 @@ class Bernoulli:
         """ Generates 1 with probability pi/4.
          Reference: Flajolet et al. 2010.
          """
-        if self.randbit() == 0:
+        r = self.rndintexc(6)
+        if r < 3:
             return self.zero_or_one_arctan_n_div_n(1, 2)
         else:
-            return (
-                1
-                if self.zero_or_one(2, 3) == 1
-                and self.zero_or_one_arctan_n_div_n(1, 3) == 1
-                else 0
-            )
+            return 1 if r < 5 and self.zero_or_one_arctan_n_div_n(1, 3) == 1 else 0
 
     def _uniform_less(self, bag, frac):
         """ Determines whether a uniformly-distributed random number
@@ -503,6 +496,24 @@ class Bernoulli:
                 return r
             r = 1 - r
             y = y + oy
+
+    def rndintexc(self, maxexc):
+        """ Returns a random integer in [0, maxexc). """
+        if maxexc <= 0:
+            raise ValueError
+        if maxexc == 1:
+            return 0
+        maxinc = maxexc - 1
+        x = 1
+        y = 0
+        while True:
+            x *= 2
+            y = y * 2 + self.randbit()
+            if x > maxinc:
+                if y <= maxinc:
+                    return y
+                x = x - maxinc - 1
+                y = y - maxinc - 1
 
     def probgenfunc(self, f, rng):
         """ Probability generating function Bernoulli factory: B(p) => B(E[p^x]), where x is rng()

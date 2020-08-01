@@ -38,6 +38,8 @@ In the following algorithms:
 - Where an algorithm says "if _a_ is less than _b_", where _a_ and _b_ are uniform random numbers, it means to run the **URandLess** algorithm on the two PSRNs, or do a less-than operation on _a_ and _b_, as appropriate.
 - For best results, the algorithms should be implemented using exact rational arithmetic (such as `Fraction` in Python or `Rational` in Ruby).
 
+The algorithms as described here do not always lead to the best performance.  An implementation may change these algorithms as long as they produce the same results as the algorithms as described here.  Some algorithms are described as "uniformly fast".  This means that their average running time is bounded from above for all choices of &lambda; and other parameters (Devroye 1986, esp. p. 717)<sup>[**(11)**](#Note11)</sup>.
+
 **Algorithms for exp(&minus;&lambda;)**.
 
 The algorithm in (Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup> calls for generating a Poisson(&lambda;) random number and returning 1 if that number is 0, or 0 otherwise.  The Poisson generator in turn involves generating a geometric(&lambda;) random number _G_<sup>[**(3)**](#Note3)</sup>, then _G_ uniform random numbers, then returning _G_ only if all _G_ uniform numbers are sorted.<sup>[**(4)**](#Note4)</sup>  The algorithm follows.
@@ -70,7 +72,7 @@ A third algorithm is uniformly fast everywhere in (0, 1).   It uses the reverse-
 
 which is an alternating series whose coefficients are 1, 1, 1/(2!), 1/(3!), 1/(4!), ..., which satisfy the requirements for this approach because the coefficients are nonincreasing and all 1 or less.  However, the algorithm requires a bit more arithmetic, notably rational division.
 
-First, the general algorithm for the reverse-time martingale approach (called the **general martingale algorithm**) follows.  It takes a list of coefficients and an input coin, and returns 1 with probability _c[0]_ &minus; _c[1]_ * &lambda; + _c[2]_ &lambda;<sup>2</sup> &minus; ..., and 0 otherwise.
+First, the general algorithm for the reverse-time martingale approach (called the **general martingale algorithm**) follows.  It takes a list of coefficients and an input coin, and returns 1 with probability _c[0]_ &minus; _c[1]_ * &lambda; + _c[2]_ * &lambda;<sup>2</sup> &minus; ..., and 0 otherwise.
 
 1. Let _c[0]_, _c[1]_, etc. be the first, second, etc. coefficients of the alternating series.  Set _u_ to _c[0]_, set _w_ to 1, set _l_ to 0, and set _n_ to 1.
 2. Create an empty uniform PSRN.
@@ -92,29 +94,39 @@ For **exp(&minus;&lambda;)**, modify that algorithm as follows for more efficien
 4. If _k_ > 0 and _w_ is less than _U_, return 0.
 5. Set _w_ to _U_, add 1 to _k_, and go to step 2.
 
+**Algorithms for 1/(1+&lambda;).**
+
+One algorithm is the general martingale algorithm, since when &lambda; is in [0, 1], this function is an alternating series of the form `1 - x + x^2 - x^3 + ...`, whose coefficients are 1, 1, 1, 1, ....  However, this algorithm converges slowly when &lambda; is very close to 1.
+
+A second algorithm is the so-called "even-parity" construction of (Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup>.  However, this algorithm too converges slowly when &lambda; is very close to 1.
+
+1. Flip the input coin.  If it returns 0, return 1.
+2. Flip the input coin.  If it returns 0, return 0.  Otherwise, go to step 1.
+
+A third algorithm is a special case of the two-coin Bernoulli factory of (Gonçalves et al., 2017)<sup>[**(6)**](#Note6)</sup> and is uniformly fast, unlike the previous two algorithms:
+
+1. With probability 1/2, return 1. (For example, generate an unbiased random bit and return 1 if that bit is 1.)
+2. Flip the input coin.  If it returns 1, return 0.  Otherwise, go to step 1.
+
 **Algorithm for log(1+&lambda;)**  (Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup>:
 
 1. Create an empty uniform PSRN.
 2. Flip the input coin.  If it returns 0, flip the coin again and return the result.
 3. Call the **SampleGeometricBag** algorithm with the PSRN.  If it returns 0, flip the input coin and return the result.
 4. Flip the input coin.  If it returns 0, return 0.
-5. Call the **SampleGeometricBag** algorithm with the PSRN.  If it returns 0, return 0.
-6. Go to step 2.
+5. Call the **SampleGeometricBag** algorithm with the PSRN.  If it returns 0, return 0.  Otherwise, go to step 2.
 
-Alternatively, invert the result of the algorithm for 1 &minus; log(1+&lambda;) below (make it 1 if it's 0 and vice versa).
+Observing that the even-parity construction used in the Flajolet paper is equivalent to the two-coin special case, which is uniformly fast for all &lambda; parameters, the algorithm above can be made uniformly fast as follows:
 
-**Algorithm for 1 &minus; log(1+&lambda;).**  This algorithm uses the reverse-time martingale approach in (Łatuszyński et al. 2009/2011)<sup>[**(5)**](#Note5)</sup>.  Here, the alternating series is `1 - x + x^2/2 - x^3/3 + ...`, whose coefficients are 1, 1, 1/2, 1/3, ....  Follow the general martingale algorithm.
+1. Create an empty uniform PSRN.
+2. With probability 1/2, flip the input coin and return the result.
+3. Call **SampleGeometricBag** on the PSRN, then flip the input coin.  If the call and the flip both return 1, return 0.  Otherwise, go to step 2.
 
-Alternatively, invert the result of the algorithm for log(1+&lambda;) (make it 1 if it's 0 and vice versa).
+A third algorithm is to invert the result of the algorithm for 1 &minus; log(1+&lambda;) below (make it 1 if it's 0 and vice versa).
 
-**Algorithms for 1/(1+&lambda;).**
+**Algorithm for 1 &minus; log(1+&lambda;).**  This algorithm uses the reverse-time martingale approach in (Łatuszyński et al. 2009/2011)<sup>[**(5)**](#Note5)</sup>.  Here, the alternating series is `1 - x + x^2/2 - x^3/3 + ...`, whose coefficients are 1, 1, 1/2, 1/3, ....  Follow the general martingale algorithm, but note that this algorithm uses more bits on average as &lambda; approaches 1.
 
-One algorithm is the general martingale algorithm, since when &lambda; is in [0, 1], this function is an alternating series of the form `1 - x + x^2 - x^3 + ...`, whose coefficients are 1, 1, 1, 1, ....  However, this algorithm converges slowly when &lambda; is very close to 1.
-
-A second algorithm is a special case of the two-coin Bernoulli factory of (Gonçalves et al., 2017)<sup>[**(6)**](#Note6)</sup> and is uniformly fast:
-
-1. With probability 1/2, return 1. (For example, generate an unbiased random bit and return 1 if that bit is 1.)
-2. Flip the input coin.  If it returns 1, return 0.  Otherwise, go to step 1.
+Alternatively, invert the result of either of the algorithms for log(1+&lambda;) (make it 1 if it's 0 and vice versa).
 
 **Algorithm for _c_ * &lambda; * &beta; / (&beta; * (_c_ * &lambda; + _d_ * &mu;) &minus; (&beta; &minus; 1) * (_c_ + _d_)).**  This is the general two-coin algorithm of (Gonçalves et al., 2017)<sup>[**(6)**](#Note6)</sup> and (Vats et al. 2020)<sup>[**(7)**](#Note7)</sup>.  It takes two input coins that each output heads (1) with probability &lambda; or &mu;, respectively.  It also takes a parameter &beta; in the interval [0, 1], which is a so-called "portkey" or early rejection parameter (when &beta; = 1, the formula simplifies to _c_ * &lambda; / (_c_ * &lambda; + _d_ * &mu;)).
 
@@ -127,6 +139,45 @@ A second algorithm is a special case of the two-coin Bernoulli factory of (Gonç
 2. Flip the input coin.  If the coin returns 1, return 1.  Otherwise, go to step 1.
 
 (Note that Huber specifies this Bernoulli factory in terms of a Poisson point process, which seems to require much more randomness on average.)
+
+**Algorithm for arctan(&lambda;) /&lambda;** (Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup>:
+
+1. Generate an empty uniform PSRN.
+2. Call **SampleGeometricBag** twice on the PSRN, and flip the input coin twice.  If any of these calls or flips returns 0, return 1.
+3. Call **SampleGeometricBag** twice on the PSRN, and flip the input coin twice.  If any of these calls or flips returns 0, return 0.  Otherwise, go to step 2.
+
+Observing that the even-parity construction used in the Flajolet paper is equivalent to the two-coin special case, which is uniformly fast for all &lambda; parameters, the algorithm above can be made uniformly fast as follows:
+
+1. Create an empty uniform PSRN.
+2. With probability 1/2, return 1.
+3. Call **SampleGeometricBag** twice on the PSRN, and flip the input coin twice.  If all of these calls and flips return 1, return 0.  Otherwise, go to step 2.
+
+**Algorithm for arctan(&lambda;)** (Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup>:
+
+- Call the **algorithm for arctan(&lambda;) /&lambda;** and flip the input coin.  Return 1 if the call and flip both return 1, or 0 otherwise.
+
+<a id=Algorithms_for_Irrational_Constants></a>
+### Algorithms for Irrational Constants
+
+**Algorithm for arctan(_x_/_y_) \* _y_/_x_** (Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup>:
+
+1. Create an empty uniform PSRN.
+2. Generate a number that is 1 with probability _x_*_x_/(_y_*_y_), or 0 otherwise.  If the number is 0, return 1.
+3. Call **SampleGeometricBag** twice on the PSRN.  If either of these calls returns 0, return 1.
+4. Generate a number that is 1 with probability _x_*_x_/(_y_*_y_), or 0 otherwise.  If the number is 0, return 0.
+5. Call **SampleGeometricBag** twice on the PSRN.  If either of these calls returns 0, return 0.  Otherwise, go to step 2.
+
+Observing that the even-parity construction used in the Flajolet paper is equivalent to the two-coin special case, which is uniformly fast, the algorithm above can be made uniformly fast as follows:
+
+1. Create an empty uniform PSRN.
+2. With probability 1/2, return 1.
+3. With probability _x_*_x_/(_y_*_y_), call **SampleGeometricBag** twice on the PSRN.  If both of these calls return 1, return 0.
+4. Go to step 2.
+
+**Algorithm for &pi; / 4** (Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup>:
+
+1. Generate a random integer in the interval [0, 6), call it _n_.
+2. If _n_ is less than 3, return the result of the **algorithm for arctan(1/2) \* 2**.  Otherwise, if _n_ is 4, return 0.  Otherwise, return the result of the **algorithm for arctan(1/3) \* 3**.
 
 <a id=General_Algorithms></a>
 ### General Algorithms
@@ -168,6 +219,8 @@ A second algorithm is a special case of the two-coin Bernoulli factory of (Gonç
 <small><sup id=Note9>(9)</sup> Morina, G., Łatuszyński, K., et al., "[**From the Bernoulli Factory to a Dice Enterprise via Perfect Sampling of Markov Chains**](https://arxiv.org/abs/1912.09229v1)", arXiv:1912.09229v1 [math.PR], 2019.</small>
 
 <small><sup id=Note10>(10)</sup> Shaddin Dughmi, Jason D. Hartline, Robert Kleinberg, and Rad Niazadeh. 2017. Bernoulli Factories and Black-Box Reductions in Mechanism Design. In _Proceedings of 49th Annual ACM SIGACT Symposium on the Theory of Computing_, Montreal, Canada, June 2017 (STOC’17).</small>
+
+<small><sup id=Note11>(11)</sup> Devroye, L., [**_Non-Uniform Random Variate Generation_**](http://luc.devroye.org/rnbookindex.html), 1986.</small>
 
 <a id=License></a>
 ## License

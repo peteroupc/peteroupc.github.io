@@ -1644,7 +1644,9 @@ CLASSES
      |        coefficient; and next() generates the next coefficient.
      |
      |  arctan_n_div_n(self, f)
-     |      Arctan div N: B(p) -> B(arctan(p)/p).
+     |      Arctan div N: B(p) -> B(arctan(p)/p). Uses a uniformly-fast special case of
+     |      the two-coin Bernoulli factory, rather than the even-parity construction in
+     |      Flajolet's paper, which is not uniformly fast.
      |      Reference: Flajolet et al. 2010.
      |       - f: Function that returns 1 if heads and 0 if tails.
      |
@@ -1798,6 +1800,9 @@ CLASSES
      |  randbit(self)
      |      Generates a random bit that is 1 or 0 with equal probability.
      |
+     |  rndintexc(self, maxexc)
+     |      Returns a random integer in [0, maxexc).
+     |
      |  square(self, f1, f2)
      |      Square: B(p) => B(1-p). (Flajolet et al. 2010)
      |      - f1, f2: Functions that return 1 if heads and 0 if tails.
@@ -1830,7 +1835,9 @@ CLASSES
      |
      |  zero_or_one_arctan_n_div_n(self, x, y=1)
      |      Generates 1 with probability arctan(x/y)*y/x; 0 otherwise.
-     |         x/y must be in [0, 1].
+     |         x/y must be in [0, 1]. Uses a uniformly-fast special case of
+     |      the two-coin Bernoulli factory, rather than the even-parity construction in
+     |      Flajolet's paper, which is not uniformly fast.
      |      Reference: Flajolet et al. 2010.
      |
      |  zero_or_one_exp_minus(self, x, y)
@@ -1839,7 +1846,9 @@ CLASSES
      |
      |  zero_or_one_log1p(self, x, y=1)
      |      Generates 1 with probability log(1+x/y); 0 otherwise.
-     |      Reference: Flajolet et al. 2010.
+     |      Reference: Flajolet et al. 2010.  Uses a uniformly-fast special case of
+     |      the two-coin Bernoulli factory, rather than the even-parity construction in
+     |      Flajolet's paper, which is not uniformly fast.
      |
      |  zero_or_one_pi_div_4(self)
      |      Generates 1 with probability pi/4.

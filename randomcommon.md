@@ -56,6 +56,7 @@ For algorithms on generating uniform random _integers_ in a range, see [**"Unifo
 
     function randomInt(minInclusive, maxExclusive) {
       var maxInclusive = (maxExclusive - minInclusive) - 1
+      if (minInclusive == maxInclusive) return minInclusive
       var x = 1
       var y = 0
       while(true) {
