@@ -123,7 +123,7 @@ A second algorithm is a special case of the two-coin Bernoulli factory of (Gonç
 1. If &beta; is not 1, return 0 with probability 1 &minus; &beta;. (For example, call `ZeroOrOne` with &beta;'s numerator and denominator and return 0 if that call returns 0.)
 2. With probability _c_ / (_c_ + _d_), flip the &lambda; input coin.  Otherwise, flip the &mu; input coin.  If the &lambda; input coin returns 1, return 1.  If the &mu; input coin returns 1, return 0.  If the corresponding coin returns 0, go to step 1.
 
-**Algorithm for _c_ * &lambda; / (_c_ * &lambda; + _d_)) or (_c_/_d_) * &lambda; / (1 + (_c_/_d_) * &lambda;)).** This algorithm, also known as the _logistic Bernoulli factory_ (Huber 2016)<sup>[**(8)**](#Note8)</sup>, (Morina et al., 2019)<sup>[**(9)**](#Note9)</sup>, is a special case of the two-coin algorithm above, but this time uses only one input coin.
+**Algorithm for _c_ * &lambda; / (_c_ * &lambda; + _d_) or (_c_/_d_) * &lambda; / (1 + (_c_/_d_) * &lambda;)).** This algorithm, also known as the _logistic Bernoulli factory_ (Huber 2016)<sup>[**(8)**](#Note8)</sup>, (Morina et al., 2019)<sup>[**(9)**](#Note9)</sup>, is a special case of the two-coin algorithm above, but this time uses only one input coin.
 
 1. With probability _d_ / (_c_ + _d_), return 0.
 2. Flip the input coin.  If the coin returns 1, return 1.  Otherwise, go to step 1.
@@ -157,7 +157,7 @@ A second algorithm is a special case of the two-coin Bernoulli factory of (Gonç
 
 <small><sup id=Note3>(3)</sup> As used here and in the Flajolet paper, a geometric random number is the number of successes before the first failure, where the success probability is &lambda;.</small>
 
-<small><sup id=Note4>(4)</sup> The Flajolet paper describes what it calls the _von Neumann schema_, which, given a permutation specification and an input coin, generates a random non-negative integer _n_ with probability equal to (&lambda;<sup>_n_</sup> * P(_n_) / _n_!) / &Sigma;<sub>_k_ = 0, &infin;</sub> (&lambda;<sup>_k_</sup> * P(_k_) / _k_!), where P(_n_) is the number of _valid_ permutations of size _n_ (or 1 if _n_ is 0).  Here, the sum in this formula is also known as an _exponential generating function_.  Effectively, a geometric(&lambda;) random number _G_ is accepted with probability equal to the ratio that P(_G_) bears to the number of _possible_ permutations of size _G_ (or 1 if _G_ is 0), and rejected otherwise.</small>
+<small><sup id=Note4>(4)</sup> The Flajolet paper describes what it calls the _von Neumann schema_, which, given a permutation specification and an input coin, generates a random non-negative integer _n_ with probability equal to (&lambda;<sup>_n_</sup> * V(_n_) / _n_!) / &Sigma;<sub>_k_ = 0, 1, ...</sub> (&lambda;<sup>_k_</sup> * V(_k_) / _k_!), where V(_n_) is the number of _valid_ permutations of size _n_ (or 1 if _n_ is 0).  Here, the sum in this formula is also known as an _exponential generating function_.  Effectively, a geometric(&lambda;) random number _G_ is accepted with probability V(_G_)/_G_! (where _G_! is the number of _possible_ permutations of size _G_, or 1 if _G_ is 0), and rejected otherwise.</small>
 
 <small><sup id=Note5>(5)</sup> Łatuszyński, K., Kosmidis, I.,  Papaspiliopoulos, O., Roberts, G.O., "[**Simulating events of unknown probabilities via reverse time martingales**](https://arxiv.org/abs/0907.4018v2)", arXiv:0907.4018v2 [stat.CO], 2009/2011.</small>
 
