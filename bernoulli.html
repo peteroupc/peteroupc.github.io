@@ -43,7 +43,7 @@
 
 <ul>
 <li>&lambda; is the unknown probability of heads of the input coin.</li>
-<li>The <strong>SampleGeometricBag</strong> and <strong>URandLess</strong> algorithms are described in my article on <a href="https://peteroupc.github.io/exporand.html"><strong>uniform partially-sampled random number (PSRN)</strong></a>.</li>
+<li>The <strong>SampleGeometricBag</strong> and <strong>URandLess</strong> algorithms are described in my article on <a href="https://peteroupc.github.io/exporand.html"><strong>partially-sampled random numbers (PSRNs)</strong></a>.</li>
 <li>The <code>ZeroOrOne</code> method should be implemented as shown in my article on <a href="https://peteroupc.github.io/randomfunc.html#Boolean_True_False_Conditions"><strong>random sampling methods</strong></a>.</li>
 <li>The instruction to &quot;generate a uniform random number&quot; can be implemented by creating an empty <a href="https://peteroupc.github.io/exporand.html"><strong>uniform PSRN</strong></a> (most accurate) or by generating <code>RNDEXCRANGE(0, 1)</code> or <code>RNDINT(1000)</code> (less accurate).</li>
 <li>Where an algorithm says &quot;if <em>a</em> is less than <em>b</em>&quot;, where <em>a</em> and <em>b</em> are uniform random numbers, it means to run the <strong>URandLess</strong> algorithm on the two PSRNs, or do a less-than operation on <em>a</em> and <em>b</em>, as appropriate.</li>
@@ -52,7 +52,7 @@
 
 <p>The algorithms as described here do not always lead to the best performance.  An implementation may change these algorithms as long as they produce the same results as the algorithms as described here.  Some algorithms are described as &quot;uniformly fast&quot;.  This means that their average running time is bounded from above for all choices of &lambda; and other parameters (Devroye 1986, esp. p. 717)<sup><a href="#Note3"><strong>(3)</strong></a></sup>.</p>
 
-<p><strong>Algorithms for exp(&minus;&lambda;)</strong>.</p>
+<p><strong>Algorithms for exp(&minus;&lambda;).</strong></p>
 
 <p>The algorithm in (Flajolet et al., 2010)<sup><a href="#Note1"><strong>(1)</strong></a></sup> calls for generating a Poisson(&lambda;) random number and returning 1 if that number is 0, or 0 otherwise.  The Poisson generator in turn involves generating a geometric(&lambda;) random number <em>G</em><sup><a href="#Note4"><strong>(4)</strong></a></sup>, then <em>G</em> uniform random numbers, then returning <em>G</em> only if all <em>G</em> uniform numbers are sorted.<sup><a href="#Note5"><strong>(5)</strong></a></sup>  The algorithm follows.</p>
 
@@ -84,9 +84,7 @@
 
 <p>In turn, this algorithm likewise converges very slowly as &lambda; approaches 1.</p>
 
-<p>A third algorithm is uniformly fast everywhere in (0, 1).   It uses the reverse-time martingale approach for alternating series in (Łatuszyński et al. 2009/2011)<sup><a href="#Note6"><strong>(6)</strong></a></sup> and makes use of the fact that exp(&minus;&lambda;) can be rewritten as 1 &minus; &lambda; + &lambda;<sup>2</sup>/2 - &lambda;<sup>3</sup>/6 + &lambda;<sup>3</sup>/24 - ...,</p>
-
-<p>which is an alternating series whose coefficients are 1, 1, 1/(2!), 1/(3!), 1/(4!), ..., which satisfy the requirements for this approach because the coefficients are nonincreasing and all 1 or less.  However, the algorithm requires a bit more arithmetic, notably rational division.</p>
+<p>A third algorithm is uniformly fast everywhere in (0, 1).   It uses the reverse-time martingale approach for alternating series in (Łatuszyński et al. 2009/2011)<sup><a href="#Note6"><strong>(6)</strong></a></sup> and makes use of the fact that exp(&minus;&lambda;) can be rewritten as 1 &minus; &lambda; + &lambda;<sup>2</sup>/2 &minus; &lambda;<sup>3</sup>/6 + &lambda;<sup>4</sup>/24 &minus; ..., which is an alternating series whose coefficients are 1, 1, 1/(2!), 1/(3!), 1/(4!), ..., which satisfy the requirements for this approach because the coefficients are nonincreasing and all 1 or less.  However, the algorithm requires a bit more arithmetic, notably rational division.</p>
 
 <p>First, the general algorithm for the reverse-time martingale approach (called the <strong>general martingale algorithm</strong>) follows.  It takes a list of coefficients and an input coin, and returns 1 with probability <em>c[0]</em> &minus; <em>c[1]</em> * &lambda; + <em>c[2]</em> * &lambda;<sup>2</sup> &minus; ..., and 0 otherwise.</p>
 
@@ -262,7 +260,7 @@
 <li>The number of bits used by the runs were averaged, as were the return values of the runs (since the return value is either 0 or 1, the mean return value will be in the interval [0, 1]).</li>
 </ul>
 
-<p>If a single run was detected to use more than 5000 bits for a given &lambda;, the entire data point for that &lambda; was suppressed in the charts below.</p>
+<p>For each algorithm, if a single run was detected to use more than 5000 bits for a given &lambda;, the entire data point for that &lambda; was suppressed in the charts below.</p>
 
 <p><a id=The_Charts></a></p>
 

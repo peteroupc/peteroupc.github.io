@@ -296,7 +296,7 @@ The power-of-uniform sub-algorithm is used for certain cases of the beta sampler
 
 It makes use of a number of algorithms as follows:
 
-- It uses an algorithm for [**sampling unbounded monotone density functions**](https://peteroupc.github.io/exporand.html), which in turn is similar to the inversion-rejection algorithm in (Devroye 1986, ch. 7, sec. 4.4)<sup>[**(16)**](#Note16)</sup>.  This is needed because when _px_/_py_ is greater than 1, _U_<sup>_px_/_py_</sup> is distributed as `(py/px) / pow(U, 1-py/px)`, which has an unbounded peak at 0.
+- It uses an algorithm for [**sampling unbounded monotone density functions**](https://peteroupc.github.io/unbounded.html), which in turn is similar to the inversion-rejection algorithm in (Devroye 1986, ch. 7, sec. 4.4)<sup>[**(16)**](#Note16)</sup>.  This is needed because when _px_/_py_ is greater than 1, _U_<sup>_px_/_py_</sup> is distributed as `(py/px) / pow(U, 1-py/px)`, which has an unbounded peak at 0.
 - It uses a number of Bernoulli factory algorithms.  In addition to the **SampleGeometricBag** and **PowerBernoulliFactory** algorithms mentioned earlier, it also uses _randomgen.py_'s `zero_or_one_power_ratio` method (which returns 1 with probability (_a_/_b_)<sup>_c_/_d_</sup>)) and _bernoulli.py_'s `eps_div` Bernoulli factory (which returns 1 with probability _a_/_b_ and originates from (Lee et al. 2014)<sup>[**(19)**](#Note19)</sup>).  `eps_div` in turn relies on Huber's Bernoulli factory for linear functions (Huber 2016)<sup>[**(20)**](#Note20)</sup>.
 
 However, this algorithm supports only base 2.
