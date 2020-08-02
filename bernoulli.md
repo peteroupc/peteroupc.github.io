@@ -264,7 +264,7 @@ The following charts show the correctness of many of the algorithms on this page
 
 For each algorithm, if a single run was detected to use more than 5000 bits for a given &lambda;, the entire data point for that &lambda; was suppressed in the charts below.
 
-In addition, for each algorithm, a table appears showing the minimum number of coin flips that any fast Bernoulli factory algorithm will need on average to simulate the given function, based on work by Mendo (2019)<sup>[**(12)**](#Note12)</sup>.  Note that some functions require a growing number of coin flips as &lambda; approaches 0 or 1.
+In addition, for each algorithm, a table appears showing the minimum number of input coin flips that any fast Bernoulli factory algorithm will need on average to simulate the given function, based on work by Mendo (2019)<sup>[**(12)**](#Note12)</sup>.  Note that some functions require a growing number of coin flips as &lambda; approaches 0 or 1.
 
 <a id=The_Charts></a>
 ### The Charts
