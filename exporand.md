@@ -190,17 +190,16 @@ For another base (radix), such as 10 for decimal, this can be implemented as **U
 1. For each position in \[0, `p`), if the item at that position is not a digit, set the item there to to a digit chosen uniformly at random (e.g., either 0 or 1 for binary), increasing the geometric bag's capacity as necessary. (See also (Oberhoff 2018, sec. 8)<sup>[**(10)**](#Note10)</sup>.)
 2. Take the first `p` digits of the geometric bag and return &Sigma;<sub>_i_=0, ..., `p`&minus;1</sub> bag[_i_] * _b_<sup>&minus;_i_&minus;1</sup>, where _b_ is the base, or radix.  (If it somehow happens that digits beyond `p` are set to 0 or 1, then the implementation could choose instead to fill all unsampled digits between the first and the last set digit and return the full number, optionally rounding it to a number whose fractional part has `p` digits, with a rounding mode of choice.)
 
-**PowerBernoulliFactory** is a Bernoulli factory algorithm that transforms a coin that produces heads with probability `p` into a coin that produces heads with probability `pow(p, y)`.  The case where `y` is in (0, 1) is due to recent work by Mendo (2019)<sup>[**(15)**](#Note15)</sup>.  The algorithm takes an input coin that produces heads with probability `p`, as well as the parameter _y_, and is described as follows:
+**PowerBernoulliFactory** is a Bernoulli factory algorithm that transforms a coin that produces heads with probability `p` into a coin that produces heads with probability `pow(p, y)`.  The case where `y` is in (0, 1) is due to recent work by Mendo (2019)<sup>[**(15)**](#Note15)</sup>.  The algorithm takes an input coin that produces heads with probability `p`, as well as the parameter _y_, which must be 0 or greater, and is described as follows:
 
-1. If _y_ is 0, return 1.
-2. If _y_ is equal to 1, flip the input coin and return the result.
-3. If _y_ is greater than 1, flip the input coin `floor(y)` times and call **PowerBernoulliFactory** (once) with _y_ = _y_ &minus; floor(_y_).  Return 1 if all these calls and flips return 1; otherwise, return 0.
-4. _y_ is less than 1, so set _i_ to 1.
-5. Flip the input coin; if it returns 1, return 1.
-6. Return 0 with probability _y_/_i_.
-7. Add 1 to _i_ and go to step 5.
+1. If _y_ is 0, return 1.  If _y_ is equal to 1, flip the input coin and return the result.
+2. If _y_ is greater than 1, flip the input coin `floor(y)` times and call **PowerBernoulliFactory** (once) with _y_ = _y_ &minus; floor(_y_).  Return 1 if all these calls and flips return 1; otherwise, return 0.
+3. _y_ is less than 1, so set _i_ to 1.
+4. Flip the input coin; if it returns 1, return 1.
+5. Return 0 with probability _y_/_i_.
+6. Add 1 to _i_ and go to step 4.
 
-Note, however, that when _y_ < 1, this algorithm converges more and more slowly as the probability `p` approaches 0.  See the appendix for notes on the convergence of Bernoulli factories.  The appendix also shows an alternative way to implement this and other Bernoulli factory algorithms using geometric bags, which is not the focus of this article since it involves arithmetic.
+Note, however, that when _y_ is less than 1, the minimum number of coin flips needed, on average, by this algorithm will grow without bound as `p`approaches 0. Mendo (2019)<sup>[**(15)**](#Note15)</sup> showed that this is a lower bound; that is, no Bernoulli factory algorithm can do better without knowing more information on `p`.  Because of this, the appendix shows an alternative way to implement this and other Bernoulli factory algorithms using geometric bags, which exploits knowledge of `p` but is not the focus of this article since it involves arithmetic.   The appendix also has notes on the convergence of Bernoulli factories.
 
 The **kthsmallest** method generates the 'k'th smallest 'bitcount'-digit uniform random number out of 'n' of them, is also relied on by this beta sampler.  It is used when both `a` and `b` are integers, based on the known property that a beta random variable in this case is the `a`th smallest uniform (0, 1) random number out of `a + b - 1` of them (Devroye 1986, p. 431)<sup>[**(16)**](#Note16)</sup>.
 
@@ -744,11 +743,11 @@ The continous Bernoulli distribution takes one parameter `lamda` (a number in [0
 
 Again, this function meets the requirements stated by Keane and O'Brien, so it can be simulated via Bernoulli factories.  Thus, this distribution can be simulated in Python using a geometric bag (which represents _x_ in the formula above) and a two-coin Bernoulli factory described below.
 
-The **two-coin power factory** has the following algorithm.  It is based on the **PowerBernoulliFactory** given earlier (including the algorithm from (Mendo 2019)<sup>[**(15)**](#Note15)</sup>), but changed to accept a second Bernoulli factory sub-algorithm rather than a fixed value for the exponent. To the best of my knowledge, I am not aware of any other article or paper that presents this particular Bernoulli factory.
+The **two-coin power factory** has the following algorithm.  It is based on the **PowerBernoulliFactory** given earlier (including the algorithm from (Mendo 2019)<sup>[**(15)**](#Note15)</sup>), but changed to accept a second input coin rather than a fixed value for the exponent. To the best of my knowledge, I am not aware of any other article or paper that presents this particular Bernoulli factory.
 
 1. Set _i_ to 1.
-2. Call the base sub-algorithm; if it returns 1, return 1.
-3. Call the exponent sub-algorithm; if it returns 1, return 0 with probability 1/_i_.
+2. Flip the input coin that simulates the base; if it returns 1, return 1.
+3. Flip the input coin that simulates the exponent; if it returns 1, return 0 with probability 1/_i_.
 4. Add 1 to _i_ and go to step 1.
 
 The algorithm for sampling the continuous Bernoulli distribution follows.  It uses a **lambda Bernoulli factory** algorithm, which returns 1 with probability `lamda`.
@@ -974,7 +973,7 @@ plot(expminusformula(), xlim=(0,1), ylim=(0,2))
 <a id=Convergence_of_Bernoulli_Factories></a>
 ### Convergence of Bernoulli Factories
 
-The following Python code illustrates how to test a Bernoulli factory algorithm for convergence to the correct probability, as well as the speed of this convergence.  In this case, we are testing the **PowerBernoulliFactory** of _x_<sup>_y_/_z_</sup>.  Depending on the parameters _x_, _y_, and _z_, this Bernoulli factory converges faster or slower.
+The following Python code illustrates how to test a Bernoulli factory algorithm for convergence to the correct probability, as well as the speed of this convergence.  In this case, we are testing the **PowerBernoulliFactory** of _x_<sup>_y_/_z_</sup>, where _x_ is in the interval (0, 1) and _y_/_z_ is greater than 0.  Depending on the parameters _x_, _y_, and _z_, this Bernoulli factory converges faster or slower.
 
 ```
 # Parameters for the Bernoulli factory x**(y/z)
@@ -998,7 +997,13 @@ for i in range(iters):
   if i<30 or i>=iters-30: print(passp)
 ```
 
-As this code shows, as _x_ (the probability of heads of the input coin) approaches 0, the convergence rate gets slower and slower, even though the probability will eventually converge to the correct one.  This may be because when _y_/_z_ is less than 1 (and _x_ is in the interval (0,1)), _x_<sup>_y_/_z_</sup> has a slope that tends to a vertical slope near 0, so that the so-called [**_Lipschitz condition_**](https://en.wikipedia.org/wiki/Lipschitz_continuity) is not met at 0 (see also (Nacu and Peres 2005, propositions 10 and 23)<sup>[**(27)**](#Note27)</sup>).  Thus, a practical implementation of **PowerBernoulliFactory** may have to switch to an alternative implementation (such as the one described in the next section) when it detects that the geometric bag's first few digits are zeros.
+As this code shows, as _x_ (the probability of heads of the input coin) approaches 0, the convergence rate gets slower and slower, even though the probability will eventually converge to the correct one.
+In fact, when _y_/_z_ is less than 1:
+
+- The minimum average number of coin flips needed by **PowerBernoulliFactory** will grow without bound as _x_ approaches 0, and Mendo (2019)<sup>[**(15)**](#Note15)</sup> showed that this is a lower bound; that is, no Bernoulli factory algorithm can do better without knowing more information on _x_.
+- _x_<sup>_y_/_z_</sup> has a slope that tends to a vertical slope near 0, so that the so-called [**_Lipschitz condition_**](https://en.wikipedia.org/wiki/Lipschitz_continuity) is not met at 0 (see also (Nacu and Peres 2005, propositions 10 and 23)<sup>[**(27)**](#Note27)</sup>).
+
+Thus, a practical implementation of **PowerBernoulliFactory** may have to switch to an alternative implementation (such as the one described in the next section) when it detects that the geometric bag's first few digits are zeros.
 
 <a id=Alternative_Implementation_of_Bernoulli_Factories></a>
 ### Alternative Implementation of Bernoulli Factories

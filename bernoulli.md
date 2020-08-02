@@ -190,11 +190,6 @@ Note, however, that when _x_/_y_ < 1, this algorithm converges more and more slo
     - Flip the input coin twice.  If both flips return 1, return 0.  Otherwise, return 1.
 3. Call the **algorithm for &mu;<sup>1/2</sup>** using the secondary coin &mu;.  If it returns 0, return 1; otherwise, return 0.
 
-**Algorithm for Li<sub>_n_</sub>(&lambda;)** (Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup>.
-
-1. Flip the input coin until it returns 0, then set _v_ to the number of coin flips (including the last).
-2. If _v_ is 1, return 1.  Otherwise, run the **algorithm for (1/_v_)<sup>_n_</sup>** and return the result.
-
 <a id=Algorithms_for_Irrational_Constants></a>
 ### Algorithms for Irrational Constants
 
@@ -280,10 +275,6 @@ For each algorithm, if a single run was detected to use more than 5000 bits for 
 | arctan(x) (Flajolet) | ![**Simulated Mean for arctan(x) (Flajolet)**](bernoullicharts/arctan_x_flajolet__mean.svg) | ![**Expected Bits Consumed by arctan(x) (Flajolet)**](bernoullicharts/arctan_x_flajolet__bits.svg) |
 | exp(-x) (Alt. Series) | ![**Simulated Mean for exp(-x) (Alt. Series)**](bernoullicharts/exp_-x_alt_series__mean.svg) | ![**Expected Bits Consumed by exp(-x) (Alt. Series)**](bernoullicharts/exp_-x_alt_series__bits.svg) |
 | sqrt(x) | ![**Simulated Mean for sqrt(x)**](bernoullicharts/sqrt_x__mean.svg) | ![**Expected Bits Consumed by sqrt(x)**](bernoullicharts/sqrt_x__bits.svg) |
-| Li_1(x) | ![**Simulated Mean for Li_1(x)**](bernoullicharts/li_1_x__mean.svg) | ![**Expected Bits Consumed by Li_1(x)**](bernoullicharts/li_1_x__bits.svg) |
-| Li_2(x) | ![**Simulated Mean for Li_2(x)**](bernoullicharts/li_2_x__mean.svg) | ![**Expected Bits Consumed by Li_2(x)**](bernoullicharts/li_2_x__bits.svg) |
-| Li_3(x) | ![**Simulated Mean for Li_3(x)**](bernoullicharts/li_3_x__mean.svg) | ![**Expected Bits Consumed by Li_3(x)**](bernoullicharts/li_3_x__bits.svg) |
-| Li_4(x) | ![**Simulated Mean for Li_4(x)**](bernoullicharts/li_4_x__mean.svg) | ![**Expected Bits Consumed by Li_4(x)**](bernoullicharts/li_4_x__bits.svg) |
 | pow(x,1/3) | ![**Simulated Mean for pow(x,1/3)**](bernoullicharts/pow_x_1_3__mean.svg) | ![**Expected Bits Consumed by pow(x,1/3)**](bernoullicharts/pow_x_1_3__bits.svg) |
 | pow(x,3/4) | ![**Simulated Mean for pow(x,3/4)**](bernoullicharts/pow_x_3_4__mean.svg) | ![**Expected Bits Consumed by pow(x,3/4)**](bernoullicharts/pow_x_3_4__bits.svg) |
 | pow(x,4/5) | ![**Simulated Mean for pow(x,4/5)**](bernoullicharts/pow_x_4_5__mean.svg) | ![**Expected Bits Consumed by pow(x,4/5)**](bernoullicharts/pow_x_4_5__bits.svg) |
