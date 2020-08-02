@@ -199,7 +199,7 @@ For another base (radix), such as 10 for decimal, this can be implemented as **U
 5. Return 0 with probability _y_/_i_.
 6. Add 1 to _i_ and go to step 4.
 
-Note, however, that when _y_ is less than 1, the minimum number of coin flips needed, on average, by this algorithm will grow without bound as `p`approaches 0. Mendo (2019)<sup>[**(15)**](#Note15)</sup> showed that this is a lower bound; that is, no Bernoulli factory algorithm can do better without knowing more information on `p`.  Because of this, the appendix shows an alternative way to implement this and other Bernoulli factory algorithms using geometric bags, which exploits knowledge of `p` but is not the focus of this article since it involves arithmetic.   The appendix also has notes on the convergence of Bernoulli factories.
+Note, however, that when _y_ is less than 1, the minimum number of coin flips needed, on average, by this algorithm will grow without bound as `p` approaches 0. Mendo (2019)<sup>[**(15)**](#Note15)</sup> showed that this is a lower bound; that is, no Bernoulli factory algorithm can do much better without knowing more information on `p`.  Because of this, the appendix shows an alternative way to implement this and other Bernoulli factory algorithms using geometric bags, which exploits knowledge of `p` but is not the focus of this article since it involves arithmetic.   The appendix also has notes on the convergence of Bernoulli factories.
 
 The **kthsmallest** method generates the 'k'th smallest 'bitcount'-digit uniform random number out of 'n' of them, is also relied on by this beta sampler.  It is used when both `a` and `b` are integers, based on the known property that a beta random variable in this case is the `a`th smallest uniform (0, 1) random number out of `a + b - 1` of them (Devroye 1986, p. 431)<sup>[**(16)**](#Note16)</sup>.
 
@@ -997,11 +997,10 @@ for i in range(iters):
   if i<30 or i>=iters-30: print(passp)
 ```
 
-As this code shows, as _x_ (the probability of heads of the input coin) approaches 0, the convergence rate gets slower and slower, even though the probability will eventually converge to the correct one.
-In fact, when _y_/_z_ is less than 1:
+As this code shows, as _x_ (the probability of heads of the input coin) approaches 0, the convergence rate gets slower and slower, even though the probability will eventually converge to the correct one. In fact, when _y_/_z_ is less than 1:
 
-- The minimum average number of coin flips needed by **PowerBernoulliFactory** will grow without bound as _x_ approaches 0, and Mendo (2019)<sup>[**(15)**](#Note15)</sup> showed that this is a lower bound; that is, no Bernoulli factory algorithm can do better without knowing more information on _x_.
-- _x_<sup>_y_/_z_</sup> has a slope that tends to a vertical slope near 0, so that the so-called [**_Lipschitz condition_**](https://en.wikipedia.org/wiki/Lipschitz_continuity) is not met at 0 (see also (Nacu and Peres 2005, propositions 10 and 23)<sup>[**(27)**](#Note27)</sup>).
+- The average number of coin flips needed by **PowerBernoulliFactory** will grow without bound as _x_ approaches 0, and Mendo (2019)<sup>[**(15)**](#Note15)</sup> showed that this is a lower bound; that is, no Bernoulli factory algorithm can do much better without knowing more information on _x_.
+- _x_<sup>_y_/_z_</sup> has a slope that tends to a vertical slope near 0, so that the so-called [**_Lipschitz condition_**](https://en.wikipedia.org/wiki/Lipschitz_continuity) is not met at 0.  And (Nacu and Peres 2005, propositions 10 and 23)<sup>[**(27)**](#Note27)</sup> showed that the Lipschitz condition is necessary for a Bernoulli factory to have an upper bound on the average running time.
 
 Thus, a practical implementation of **PowerBernoulliFactory** may have to switch to an alternative implementation (such as the one described in the next section) when it detects that the geometric bag's first few digits are zeros.
 

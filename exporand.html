@@ -281,7 +281,7 @@
 <li>Add 1 to <em>i</em> and go to step 4.</li>
 </ol>
 
-<p>Note, however, that when <em>y</em> is less than 1, the minimum number of coin flips needed, on average, by this algorithm will grow without bound as <code>p</code>approaches 0. Mendo (2019)<sup><a href="#Note15"><strong>(15)</strong></a></sup> showed that this is a lower bound; that is, no Bernoulli factory algorithm can do better without knowing more information on <code>p</code>.  Because of this, the appendix shows an alternative way to implement this and other Bernoulli factory algorithms using geometric bags, which exploits knowledge of <code>p</code> but is not the focus of this article since it involves arithmetic.   The appendix also has notes on the convergence of Bernoulli factories.</p>
+<p>Note, however, that when <em>y</em> is less than 1, the minimum number of coin flips needed, on average, by this algorithm will grow without bound as <code>p</code> approaches 0. Mendo (2019)<sup><a href="#Note15"><strong>(15)</strong></a></sup> showed that this is a lower bound; that is, no Bernoulli factory algorithm can do much better without knowing more information on <code>p</code>.  Because of this, the appendix shows an alternative way to implement this and other Bernoulli factory algorithms using geometric bags, which exploits knowledge of <code>p</code> but is not the focus of this article since it involves arithmetic.   The appendix also has notes on the convergence of Bernoulli factories.</p>
 
 <p>The <strong>kthsmallest</strong> method generates the &#39;k&#39;th smallest &#39;bitcount&#39;-digit uniform random number out of &#39;n&#39; of them, is also relied on by this beta sampler.  It is used when both <code>a</code> and <code>b</code> are integers, based on the known property that a beta random variable in this case is the <code>a</code>th smallest uniform (0, 1) random number out of <code>a + b - 1</code> of them (Devroye 1986, p. 431)<sup><a href="#Note16"><strong>(16)</strong></a></sup>.</p>
 
@@ -1360,12 +1360,11 @@ for i in range(iters):
   if i&lt;30 or i&gt;=iters-30: print(passp)
 </pre>
 
-<p>As this code shows, as <em>x</em> (the probability of heads of the input coin) approaches 0, the convergence rate gets slower and slower, even though the probability will eventually converge to the correct one.
-In fact, when <em>y</em>/<em>z</em> is less than 1:</p>
+<p>As this code shows, as <em>x</em> (the probability of heads of the input coin) approaches 0, the convergence rate gets slower and slower, even though the probability will eventually converge to the correct one. In fact, when <em>y</em>/<em>z</em> is less than 1:</p>
 
 <ul>
-<li>The minimum number of coin flips needed by <strong>PowerBernoulliFactory</strong> will grow without bound as <em>x</em> approaches 0, and Mendo (2019)<sup><a href="#Note15"><strong>(15)</strong></a></sup> showed that this is a lower bound; that is, no Bernoulli factory algorithm can do better without knowing more information on <em>x</em>.</li>
-<li><em>x</em><sup><em>y</em>/<em>z</em></sup> has a slope that tends to a vertical slope near 0, so that the so-called <a href="https://en.wikipedia.org/wiki/Lipschitz_continuity"><strong><em>Lipschitz condition</em></strong></a> is not met at 0 (see also (Nacu and Peres 2005, propositions 10 and 23)<sup><a href="#Note27"><strong>(27)</strong></a></sup>).</li>
+<li>The average number of coin flips needed by <strong>PowerBernoulliFactory</strong> will grow without bound as <em>x</em> approaches 0, and Mendo (2019)<sup><a href="#Note15"><strong>(15)</strong></a></sup> showed that this is a lower bound; that is, no Bernoulli factory algorithm can do much better without knowing more information on <em>x</em>.</li>
+<li><em>x</em><sup><em>y</em>/<em>z</em></sup> has a slope that tends to a vertical slope near 0, so that the so-called <a href="https://en.wikipedia.org/wiki/Lipschitz_continuity"><strong><em>Lipschitz condition</em></strong></a> is not met at 0.  And (Nacu and Peres 2005, propositions 10 and 23)<sup><a href="#Note27"><strong>(27)</strong></a></sup> showed that the Lipschitz condition is necessary for a Bernoulli factory to have an upper bound on the average running time.</li>
 </ul>
 
 <p>Thus, a practical implementation of <strong>PowerBernoulliFactory</strong> may have to switch to an alternative implementation (such as the one described in the next section) when it detects that the geometric bag&#39;s first few digits are zeros.</p>

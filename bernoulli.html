@@ -237,7 +237,7 @@
 <li>Call <strong>SampleGeometricBag</strong> once on the PSRN, and flip the input coin once.  If both the call and flip return 1, return 0.  Otherwise, go to step 4.</li>
 </ol>
 
-<p><strong>Algorithm for arcsin(&lambda;) / 2.</strong>  The Flajolet paper doesn&#39;t explain in detail how arcsin(&lambda;)/2 arises out of arcsin(&lambda;) + sqrt(1 &minus; &lambda;<sup>2</sup>) &minus; 1 via Bernoulli factory constructions, but here is an algorithm.<sup><a href="#Note12"><strong>(12)</strong></a></sup></p>
+<p><strong>Algorithm for arcsin(&lambda;) / 2.</strong>  The Flajolet paper doesn&#39;t explain in detail how arcsin(&lambda;)/2 arises out of arcsin(&lambda;) + sqrt(1 &minus; &lambda;<sup>2</sup>) &minus; 1 via Bernoulli factory constructions, but here is an algorithm.<sup><a href="#Note12"><strong>(12)</strong></a></sup> Note, however, that the number of input coin flips is expected to grow without bound as &lambda; approaches 0.</p>
 
 <ol>
 <li>With probability 1/2, run the <strong>algorithm for arcsin(&lambda;) + sqrt(1 &minus; &lambda;<sup>2</sup>) &minus; 1</strong> and return the result.</li>
@@ -345,6 +345,8 @@
 
 <p>For each algorithm, if a single run was detected to use more than 5000 bits for a given &lambda;, the entire data point for that &lambda; was suppressed in the charts below.</p>
 
+<p>In addition, for each algorithm, a table appears showing the minimum number of coin flips that any fast Bernoulli factory algorithm will need on average to simulate the given function, based on work by Mendo (2019)<sup><a href="#Note11"><strong>(11)</strong></a></sup>.  Note that some functions require a growing number of coin flips as &lambda; approaches 0 or 1.</p>
+
 <p><a id=The_Charts></a></p>
 
 <h3>The Charts</h3>
@@ -354,122 +356,146 @@
 <th>Algorithm</th>
 <th>Simulated Mean</th>
 <th>Average Bits Consumed</th>
+<th>Coin Flip Lower Bound</th>
 </tr>
 </thead><tbody>
 <tr>
 <td>arcsin(x)+sqrt(1-x*x)-1</td>
 <td><img src="bernoullicharts/arcsin_x_sqrt_1-x_x_-1_mean.svg" alt="**Simulated Mean for arcsin(x)+sqrt(1-x\*x)-1**"></td>
 <td><img src="bernoullicharts/arcsin_x_sqrt_1-x_x_-1_bits.svg" alt="**Expected Bits Consumed by arcsin(x)+sqrt(1-x\*x)-1**"></td>
+<td><img src="bernoullicharts/arcsin_x_sqrt_1-x_x_-1_bound.svg" alt="**Coin Flip Lower Bound for the Function**"></td>
 </tr>
 <tr>
 <td>arcsin(x)/2</td>
 <td><img src="bernoullicharts/arcsin_x_2_mean.svg" alt="**Simulated Mean for arcsin(x)/2**"></td>
 <td><img src="bernoullicharts/arcsin_x_2_bits.svg" alt="**Expected Bits Consumed by arcsin(x)/2**"></td>
+<td><img src="bernoullicharts/arcsin_x_2_bound.svg" alt="**Coin Flip Lower Bound for the Function**"></td>
 </tr>
 <tr>
 <td>arctan(x) (Two-Coin Special Case)</td>
 <td><img src="bernoullicharts/arctan_x_two-coin_special_case__mean.svg" alt="**Simulated Mean for arctan(x) (Two-Coin Special Case)**"></td>
 <td><img src="bernoullicharts/arctan_x_two-coin_special_case__bits.svg" alt="**Expected Bits Consumed by arctan(x) (Two-Coin Special Case)**"></td>
+<td><img src="bernoullicharts/arctan_x_two-coin_special_case__bound.svg" alt="**Coin Flip Lower Bound for the Function**"></td>
 </tr>
 <tr>
 <td>arctan(x) (Flajolet)</td>
 <td><img src="bernoullicharts/arctan_x_flajolet__mean.svg" alt="**Simulated Mean for arctan(x) (Flajolet)**"></td>
 <td><img src="bernoullicharts/arctan_x_flajolet__bits.svg" alt="**Expected Bits Consumed by arctan(x) (Flajolet)**"></td>
+<td><img src="bernoullicharts/arctan_x_flajolet__bound.svg" alt="**Coin Flip Lower Bound for the Function**"></td>
 </tr>
 <tr>
 <td>exp(-x) (Alt. Series)</td>
 <td><img src="bernoullicharts/exp_-x_alt_series__mean.svg" alt="**Simulated Mean for exp(-x) (Alt. Series)**"></td>
 <td><img src="bernoullicharts/exp_-x_alt_series__bits.svg" alt="**Expected Bits Consumed by exp(-x) (Alt. Series)**"></td>
+<td><img src="bernoullicharts/exp_-x_alt_series__bound.svg" alt="**Coin Flip Lower Bound for the Function**"></td>
 </tr>
 <tr>
 <td>sqrt(x)</td>
 <td><img src="bernoullicharts/sqrt_x__mean.svg" alt="**Simulated Mean for sqrt(x)**"></td>
 <td><img src="bernoullicharts/sqrt_x__bits.svg" alt="**Expected Bits Consumed by sqrt(x)**"></td>
+<td><img src="bernoullicharts/sqrt_x__bound.svg" alt="**Coin Flip Lower Bound for the Function**"></td>
 </tr>
 <tr>
 <td>pow(x,1/3)</td>
 <td><img src="bernoullicharts/pow_x_1_3__mean.svg" alt="**Simulated Mean for pow(x,1/3)**"></td>
 <td><img src="bernoullicharts/pow_x_1_3__bits.svg" alt="**Expected Bits Consumed by pow(x,1/3)**"></td>
+<td><img src="bernoullicharts/pow_x_1_3__bound.svg" alt="**Coin Flip Lower Bound for the Function**"></td>
 </tr>
 <tr>
 <td>pow(x,3/4)</td>
 <td><img src="bernoullicharts/pow_x_3_4__mean.svg" alt="**Simulated Mean for pow(x,3/4)**"></td>
 <td><img src="bernoullicharts/pow_x_3_4__bits.svg" alt="**Expected Bits Consumed by pow(x,3/4)**"></td>
+<td><img src="bernoullicharts/pow_x_3_4__bound.svg" alt="**Coin Flip Lower Bound for the Function**"></td>
 </tr>
 <tr>
 <td>pow(x,4/5)</td>
 <td><img src="bernoullicharts/pow_x_4_5__mean.svg" alt="**Simulated Mean for pow(x,4/5)**"></td>
 <td><img src="bernoullicharts/pow_x_4_5__bits.svg" alt="**Expected Bits Consumed by pow(x,4/5)**"></td>
+<td><img src="bernoullicharts/pow_x_4_5__bound.svg" alt="**Coin Flip Lower Bound for the Function**"></td>
 </tr>
 <tr>
 <td>pow(x,5/4)</td>
 <td><img src="bernoullicharts/pow_x_5_4__mean.svg" alt="**Simulated Mean for pow(x,5/4)**"></td>
 <td><img src="bernoullicharts/pow_x_5_4__bits.svg" alt="**Expected Bits Consumed by pow(x,5/4)**"></td>
+<td><img src="bernoullicharts/pow_x_5_4__bound.svg" alt="**Coin Flip Lower Bound for the Function**"></td>
 </tr>
 <tr>
 <td>pow(x,2/1)</td>
 <td><img src="bernoullicharts/pow_x_2_1__mean.svg" alt="**Simulated Mean for pow(x,2/1)**"></td>
 <td><img src="bernoullicharts/pow_x_2_1__bits.svg" alt="**Expected Bits Consumed by pow(x,2/1)**"></td>
+<td><img src="bernoullicharts/pow_x_2_1__bound.svg" alt="**Coin Flip Lower Bound for the Function**"></td>
 </tr>
 <tr>
 <td>pow(x,5/1)</td>
 <td><img src="bernoullicharts/pow_x_5_1__mean.svg" alt="**Simulated Mean for pow(x,5/1)**"></td>
 <td><img src="bernoullicharts/pow_x_5_1__bits.svg" alt="**Expected Bits Consumed by pow(x,5/1)**"></td>
+<td><img src="bernoullicharts/pow_x_5_1__bound.svg" alt="**Coin Flip Lower Bound for the Function**"></td>
 </tr>
 <tr>
 <td>exp(-x) (Flajolet)</td>
 <td><img src="bernoullicharts/exp_-x_flajolet__mean.svg" alt="**Simulated Mean for exp(-x) (Flajolet)**"></td>
 <td><img src="bernoullicharts/exp_-x_flajolet__bits.svg" alt="**Expected Bits Consumed by exp(-x) (Flajolet)**"></td>
+<td><img src="bernoullicharts/exp_-x_flajolet__bound.svg" alt="**Coin Flip Lower Bound for the Function**"></td>
 </tr>
 <tr>
 <td>exp(-x) (Alg. 2)</td>
 <td><img src="bernoullicharts/exp_-x_alg_2__mean.svg" alt="**Simulated Mean for exp(-x) (Alg. 2)**"></td>
 <td><img src="bernoullicharts/exp_-x_alg_2__bits.svg" alt="**Expected Bits Consumed by exp(-x) (Alg. 2)**"></td>
+<td><img src="bernoullicharts/exp_-x_alg_2__bound.svg" alt="**Coin Flip Lower Bound for the Function**"></td>
 </tr>
 <tr>
 <td>1/(1+x) (Alt. Series)</td>
 <td><img src="bernoullicharts/1_1_x_alt_series__mean.svg" alt="**Simulated Mean for 1/(1+x) (Alt. Series)**"></td>
 <td><img src="bernoullicharts/1_1_x_alt_series__bits.svg" alt="**Expected Bits Consumed by 1/(1+x) (Alt. Series)**"></td>
+<td><img src="bernoullicharts/1_1_x_alt_series__bound.svg" alt="**Coin Flip Lower Bound for the Function**"></td>
 </tr>
 <tr>
 <td>1/(1+x) (Even Parity)</td>
 <td><img src="bernoullicharts/1_1_x_even_parity__mean.svg" alt="**Simulated Mean for 1/(1+x) (Even Parity)**"></td>
 <td><img src="bernoullicharts/1_1_x_even_parity__bits.svg" alt="**Expected Bits Consumed by 1/(1+x) (Even Parity)**"></td>
+<td><img src="bernoullicharts/1_1_x_even_parity__bound.svg" alt="**Coin Flip Lower Bound for the Function**"></td>
 </tr>
 <tr>
 <td>1/(1+x) (Two-Coin Special Case)</td>
 <td><img src="bernoullicharts/1_1_x_two-coin_special_case__mean.svg" alt="**Simulated Mean for 1/(1+x) (Two-Coin Special Case)**"></td>
 <td><img src="bernoullicharts/1_1_x_two-coin_special_case__bits.svg" alt="**Expected Bits Consumed by 1/(1+x) (Two-Coin Special Case)**"></td>
+<td><img src="bernoullicharts/1_1_x_two-coin_special_case__bound.svg" alt="**Coin Flip Lower Bound for the Function**"></td>
 </tr>
 <tr>
 <td>log(1+x) (Flajolet)</td>
 <td><img src="bernoullicharts/log_1_x_flajolet__mean.svg" alt="**Simulated Mean for log(1+x) (Flajolet)**"></td>
 <td><img src="bernoullicharts/log_1_x_flajolet__bits.svg" alt="**Expected Bits Consumed by log(1+x) (Flajolet)**"></td>
+<td><img src="bernoullicharts/log_1_x_flajolet__bound.svg" alt="**Coin Flip Lower Bound for the Function**"></td>
 </tr>
 <tr>
 <td>log(1+x) (Two-Coin Special Case)</td>
 <td><img src="bernoullicharts/log_1_x_two-coin_special_case__mean.svg" alt="**Simulated Mean for log(1+x) (Two-Coin Special Case)**"></td>
 <td><img src="bernoullicharts/log_1_x_two-coin_special_case__bits.svg" alt="**Expected Bits Consumed by log(1+x) (Two-Coin Special Case)**"></td>
+<td><img src="bernoullicharts/log_1_x_two-coin_special_case__bound.svg" alt="**Coin Flip Lower Bound for the Function**"></td>
 </tr>
 <tr>
 <td>1 - log(1+x) (Alt. Series)</td>
 <td><img src="bernoullicharts/1_-_log_1_x_alt_series__mean.svg" alt="**Simulated Mean for 1 - log(1+x) (Alt. Series)**"></td>
 <td><img src="bernoullicharts/1_-_log_1_x_alt_series__bits.svg" alt="**Expected Bits Consumed by 1 - log(1+x) (Alt. Series)**"></td>
+<td><img src="bernoullicharts/1_-_log_1_x_alt_series__bound.svg" alt="**Coin Flip Lower Bound for the Function**"></td>
 </tr>
 <tr>
 <td>0.5*x/(1+0.5*x)</td>
 <td><img src="bernoullicharts/0_5_x_1_0_5_x__mean.svg" alt="**Simulated Mean for 0.5\*x/(1+0.5\*x)**"></td>
 <td><img src="bernoullicharts/0_5_x_1_0_5_x__bits.svg" alt="**Expected Bits Consumed by 0.5\*x/(1+0.5\*x)**"></td>
+<td><img src="bernoullicharts/0_5_x_1_0_5_x__bound.svg" alt="**Coin Flip Lower Bound for the Function**"></td>
 </tr>
 <tr>
 <td>(1/3)*x/(1+(1/3)*x)</td>
 <td><img src="bernoullicharts/1_3_x_1_1_3_x__mean.svg" alt="**Simulated Mean for (1/3)\*x/(1+(1/3)\*x)**"></td>
 <td><img src="bernoullicharts/1_3_x_1_1_3_x__bits.svg" alt="**Expected Bits Consumed by (1/3)\*x/(1+(1/3)\*x)**"></td>
+<td><img src="bernoullicharts/1_3_x_1_1_3_x__bound.svg" alt="**Coin Flip Lower Bound for the Function**"></td>
 </tr>
 <tr>
 <td>exp(x)*(1-x)</td>
 <td><img src="bernoullicharts/exp_x_1-x__mean.svg" alt="**Simulated Mean for exp(x)\*(1-x)**"></td>
 <td><img src="bernoullicharts/exp_x_1-x__bits.svg" alt="**Expected Bits Consumed by exp(x)\*(1-x)**"></td>
+<td><img src="bernoullicharts/exp_x_1-x__bound.svg" alt="**Coin Flip Lower Bound for the Function**"></td>
 </tr>
 </tbody></table>
 
