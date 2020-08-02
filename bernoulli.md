@@ -209,7 +209,7 @@ If a single run was detected to use more than 5000 bits for a given &lambda;, th
 <a id=The_Charts></a>
 ### The Charts
 
-| Algorithm | Simulated Mean | Expected Bits Consumed |
+| Algorithm | Simulated Mean | Average Bits Consumed |
  --- | --- | --- |
 | exp(-x) (Alt. Series) | ![**Simulated Mean for exp(-x) (Alt. Series)**](bernoullicharts/exp_-x_alt_series__mean.svg) | ![**Expected Bits Consumed by exp(-x) (Alt. Series)**](bernoullicharts/exp_-x_alt_series__bits.svg) |
 | exp(-x) (Flajolet) | ![**Simulated Mean for exp(-x) (Flajolet)**](bernoullicharts/exp_-x_flajolet__mean.svg) | ![**Expected Bits Consumed by exp(-x) (Flajolet)**](bernoullicharts/exp_-x_flajolet__bits.svg) |
