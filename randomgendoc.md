@@ -1770,12 +1770,6 @@ CLASSES
      |        by c. c must be 0 or greater. If c > 1, c must be chosen so that c*p <= 1 - eps.
      |      - eps: A Fraction in (0, 1). If c > 1, eps must be chosen so that c*p <= 1 - eps.
      |
-     |  polylog(self, f, n)
-     |      Polylogarithm Bernoulli factory: B(p) -> B(Li_n(p))  (Flajolet et al. 2010).
-     |      - f: Function that returns 1 if heads and 0 if tails.
-     |      - n: Order of polylogarithm.  Must be an integer and 1 or greater.  The case
-     |         1 results in B(p) -> B(-log(1-p)).
-     |
      |  power(self, f, ax, ay=1)
      |      Power Bernoulli factory: B(p) => B(p^(ax/ay)). (case of (0, 1) provided by
      |       Mendo 2019).

@@ -38,7 +38,11 @@ In the following algorithms:
 - Where an algorithm says "if _a_ is less than _b_", where _a_ and _b_ are uniform random numbers, it means to run the **URandLess** algorithm on the two PSRNs, or do a less-than operation on _a_ and _b_, as appropriate.
 - For best results, the algorithms should be implemented using exact rational arithmetic (such as `Fraction` in Python or `Rational` in Ruby).
 
-The algorithms as described here do not always lead to the best performance.  An implementation may change these algorithms as long as they produce the same results as the algorithms as described here.  Some algorithms are described as "uniformly fast".  This means that their average running time is bounded from above for all choices of &lambda; and other parameters (Devroye 1986, esp. p. 717)<sup>[**(3)**](#Note3)</sup>.
+> **Performance notes:**
+>
+> The algorithms as described here do not always lead to the best performance.  An implementation may change these algorithms as long as they produce the same results as the algorithms as described here.  Some algorithms are described as "uniformly fast".  This means that their average running time is bounded from above for all choices of &lambda; and other parameters (Devroye 1986, esp. p. 717)<sup>[**(3)**](#Note3)</sup>.
+>
+> An algorithm can be uniformly fast for all &lambda; parameters in a closed interval in (0, 1) only if its factory function meets the Lipschitz condition on that closed interval, that is, it is continuous and has no slope that tends to a vertical slope anywhere in that interval (Nacu and Peres 2005, proposition 23)<sup>[**(14)**](#Note14)</sup>.
 
 **Algorithms for exp(&minus;&lambda;).**
 
@@ -88,6 +92,11 @@ For **exp(&minus;&lambda;)**, modify that algorithm as follows for more efficien
 3. Generate a uniform random number _U_.
 4. If _k_ > 0 and _w_ is less than _U_, return 0.
 5. Set _w_ to _U_, add 1 to _k_, and go to step 2.
+
+**Algorithm for exp(&minus;&lambda; &minus; _c_)**.  To the best of my knowledge, I am not aware of any article or paper by others that presents this particular Bernoulli factory. In this algorithm, _c_ is an integer that is 0 or greater.
+
+1. Run the **ZeroOrOneExpMinus** algorithm, described in my article on [**partially-sampled random numbers (PSRNs)**](https://peteroupc.github.io/exporand.html), with _x_ = _c_ and _y_ = 1.  Return 0 if the algorithm returns 0.
+2. Return the result of the **algorithm for exp(&minus;&lambda;)**.
 
 **Algorithms for 1/(1+&lambda;).**
 
@@ -181,6 +190,11 @@ Note, however, that when _x_/_y_ < 1, this algorithm converges more and more slo
     - Flip the input coin twice.  If both flips return 1, return 0.  Otherwise, return 1.
 3. Call the **algorithm for &mu;<sup>1/2</sup>** using the secondary coin &mu;.  If it returns 0, return 1; otherwise, return 0.
 
+**Algorithm for Li<sub>_n_</sub>(&lambda;)** (Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup>.
+
+1. Flip the input coin until it returns 0, then set _v_ to the number of coin flips (including the last).
+2. If _v_ is 1, return 1.  Otherwise, run the **algorithm for (1/_v_)<sup>_n_</sup>** and return the result.
+
 <a id=Algorithms_for_Irrational_Constants></a>
 ### Algorithms for Irrational Constants
 
@@ -201,10 +215,31 @@ Observing that the even-parity construction used in the Flajolet paper is equiva
 3. With probability _x_ * _x_/(_y_ * _y_), call **SampleGeometricBag** twice on the PSRN.  If both of these calls return 1, return 0.
 4. Go to step 2.
 
+**Algorithm for &pi; / 12**:  Use the algorithm for **arcsin(1/2) / 2**.  Where the algorithm says to "flip the input coin", instead generate an unbiased random bit.
+
 **Algorithm for &pi; / 4** (Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup>:
 
 1. Generate a random integer in the interval [0, 6), call it _n_.
 2. If _n_ is less than 3, return the result of the **algorithm for arctan(1/2) \* 2**.  Otherwise, if _n_ is 3, return 0.  Otherwise, return the result of the **algorithm for arctan(1/3) \* 3**.
+
+**Algorithm for 1 / &pi;** (Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup>:
+
+1. Generate two geometric(1/4) random numbers, and call _t_ their sum.  (As used here, a geometric(1/4) random number is the number of successes before the first failure, with success probability 1/4.)
+2. With probability 5/9, add 1 to _t_.
+3. Generate 2*_t_ unbiased random bits, and return 0 if there are more zeros than ones generated this way or vice versa.  (Note that this condition can be checked even before all the bits are generated this way.)  Repeat this step two more times.
+4. Return 1.
+
+**Algorithm for (_a_/_b_)<sup>_x_/_y_</sup>.** In the algorithm below, the case where _x_/_y_ is in (0, 1) is due to recent work by Mendo (2019)<sup>[**(11)**](#Note11)</sup>.  The algorithm works only if _x_/_y_ is 0 or greater and _a_/_b_ is in the interval [0, 1].
+
+1. If _x_ is 0, return 1.  Otherwise, if _a_ is 0, return 0.  Otherwise, if _a_ equals _b_, return 1.
+2. If _x_/_y_ is equal to 1, return 1 with probability _a_/_b_ and 0 otherwise.
+3. If _x_/_y_ is greater than 1:
+    1. Generate a random number that is 1 with probability _a_<sup>_k_</sup>/_b_<sup>_k_</sup> or 0 otherwise, where _k_ = floor(_x_/_y_). (Or generate _k_ random numbers that are 1 with probability _a_/_b_ or 0 otherwise, then multiply them all.)  If the number is 0, return 0.
+    2. Otherwise, set _x_ and _y_ such that _x_/_y_ =_x_/_y_ &minus; _k_.
+4. Set _i_ to 1.
+5. With probability _a_/_b_, return 1.
+6. Otherwise, with probability _x_/(_y_*_i_), return 0.
+7. Add 1 to _i_ and go to step 5.
 
 <a id=General_Algorithms></a>
 ### General Algorithms
@@ -245,6 +280,10 @@ For each algorithm, if a single run was detected to use more than 5000 bits for 
 | arctan(x) (Flajolet) | ![**Simulated Mean for arctan(x) (Flajolet)**](bernoullicharts/arctan_x_flajolet__mean.svg) | ![**Expected Bits Consumed by arctan(x) (Flajolet)**](bernoullicharts/arctan_x_flajolet__bits.svg) |
 | exp(-x) (Alt. Series) | ![**Simulated Mean for exp(-x) (Alt. Series)**](bernoullicharts/exp_-x_alt_series__mean.svg) | ![**Expected Bits Consumed by exp(-x) (Alt. Series)**](bernoullicharts/exp_-x_alt_series__bits.svg) |
 | sqrt(x) | ![**Simulated Mean for sqrt(x)**](bernoullicharts/sqrt_x__mean.svg) | ![**Expected Bits Consumed by sqrt(x)**](bernoullicharts/sqrt_x__bits.svg) |
+| Li_1(x) | ![**Simulated Mean for Li_1(x)**](bernoullicharts/li_1_x__mean.svg) | ![**Expected Bits Consumed by Li_1(x)**](bernoullicharts/li_1_x__bits.svg) |
+| Li_2(x) | ![**Simulated Mean for Li_2(x)**](bernoullicharts/li_2_x__mean.svg) | ![**Expected Bits Consumed by Li_2(x)**](bernoullicharts/li_2_x__bits.svg) |
+| Li_3(x) | ![**Simulated Mean for Li_3(x)**](bernoullicharts/li_3_x__mean.svg) | ![**Expected Bits Consumed by Li_3(x)**](bernoullicharts/li_3_x__bits.svg) |
+| Li_4(x) | ![**Simulated Mean for Li_4(x)**](bernoullicharts/li_4_x__mean.svg) | ![**Expected Bits Consumed by Li_4(x)**](bernoullicharts/li_4_x__bits.svg) |
 | pow(x,1/3) | ![**Simulated Mean for pow(x,1/3)**](bernoullicharts/pow_x_1_3__mean.svg) | ![**Expected Bits Consumed by pow(x,1/3)**](bernoullicharts/pow_x_1_3__bits.svg) |
 | pow(x,3/4) | ![**Simulated Mean for pow(x,3/4)**](bernoullicharts/pow_x_3_4__mean.svg) | ![**Expected Bits Consumed by pow(x,3/4)**](bernoullicharts/pow_x_3_4__bits.svg) |
 | pow(x,4/5) | ![**Simulated Mean for pow(x,4/5)**](bernoullicharts/pow_x_4_5__mean.svg) | ![**Expected Bits Consumed by pow(x,4/5)**](bernoullicharts/pow_x_4_5__bits.svg) |
@@ -274,7 +313,7 @@ For each algorithm, if a single run was detected to use more than 5000 bits for 
 
 <small><sup id=Note4>(4)</sup> As used here and in the Flajolet paper, a geometric random number is the number of successes before the first failure, where the success probability is &lambda;.</small>
 
-<small><sup id=Note5>(5)</sup> The Flajolet paper describes what it calls the _von Neumann schema_, which, given a permutation specification and an input coin, generates a random non-negative integer _n_ with probability equal to (&lambda;<sup>_n_</sup> * V(_n_) / _n_!) / &Sigma;<sub>_k_ = 0, 1, ...</sub> (&lambda;<sup>_k_</sup> * V(_k_) / _k_!), where V(_n_) is the number of _valid_ permutations of size _n_.  Here, the sum in this formula is also known as an _exponential generating function_.  Effectively, a geometric(&lambda;) random number _G_ is accepted with probability V(_G_)/_G_! (where _G_! is the number of _possible_ permutations of size _G_, or 1 if _G_ is 0), and rejected otherwise.</small>
+<small><sup id=Note5>(5)</sup> The Flajolet paper describes what it calls the _von Neumann schema_, which, given a permutation class and an input coin, generates a random non-negative integer _n_ with probability equal to (&lambda;<sup>_n_</sup> * V(_n_) / _n_!) / EGF(&lambda;), where EGF(&lambda;) = &Sigma;<sub>_k_ = 0, 1, ...</sub> (&lambda;<sup>_k_</sup> * V(_k_) / _k_!), and V(_n_) is the number of _valid_ permutations of size _n_.  Here, EGF(&lambda;) is the _exponential generating function_.  Effectively, a geometric(&lambda;) random number _G_ is accepted with probability V(_G_)/_G_! (where _G_! is the number of _possible_ permutations of size _G_, or 1 if _G_ is 0), and rejected otherwise.  The probability that _r_ geometric random numbers are rejected this way is _p_*(1 &minus; _p_)<sup>_r_</sup>, where _p_ = (1 &minus; &lambda;) * EGF(&lambda;).</small>
 
 <small><sup id=Note6>(6)</sup> Łatuszyński, K., Kosmidis, I.,  Papaspiliopoulos, O., Roberts, G.O., "[**Simulating events of unknown probabilities via reverse time martingales**](https://arxiv.org/abs/0907.4018v2)", arXiv:0907.4018v2 [stat.CO], 2009/2011.</small>
 
@@ -291,6 +330,8 @@ For each algorithm, if a single run was detected to use more than 5000 bits for 
 <small><sup id=Note12>(12)</sup> One of the only implementations I could find of this, if not the only, was a [**Haskell implementation**](https://github.com/derekelkins/buffon/blob/master/Data/Distribution/Buffon.hs).</small>
 
 <small><sup id=Note13>(13)</sup> Shaddin Dughmi, Jason D. Hartline, Robert Kleinberg, and Rad Niazadeh. 2017. Bernoulli Factories and Black-Box Reductions in Mechanism Design. In _Proceedings of 49th Annual ACM SIGACT Symposium on the Theory of Computing_, Montreal, Canada, June 2017 (STOC’17).</small>
+
+<small><sup id=Note14>(14)</sup> Nacu, Şerban, and Yuval Peres. "Fast simulation of new coins from old", The Annals of Applied Probability 15, no. 1A (2005): 93-115.</small>
 
 <a id=License></a>
 ## License

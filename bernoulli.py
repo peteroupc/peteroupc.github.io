@@ -174,20 +174,6 @@ class Bernoulli:
                 return i
             i += 1
 
-    def polylog(self, f, n):
-        """ Polylogarithm Bernoulli factory: B(p) -> B(Li_n(p))  (Flajolet et al. 2010).
-        - f: Function that returns 1 if heads and 0 if tails.
-        - n: Order of polylogarithm.  Must be an integer and 1 or greater.  The case
-           1 results in B(p) -> B(-log(1-p)).
-        """
-        if n <= 0:
-            raise ValueError
-        v = self._gamma_g(f) + 1
-        if v > 1:
-            # True with probability (1/v)**n
-            return self.zero_or_one_power_ratio(1, v, n, 1)
-        return 1
-
     def exp_minus_flajolet(b, f):
         """
         Exp-minus Bernoulli factory: B(p) -> B(exp(-p)) (Flajolet et al. 2010).
