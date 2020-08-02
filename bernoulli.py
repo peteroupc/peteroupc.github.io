@@ -413,6 +413,19 @@ class Bernoulli:
             if f() == 0:
                 return 0
 
+    def divoneplus(self, f):
+        """ Divided by one plus p: B(p) => B(1/(1+p)), implemented
+             as a special case of the two-coin construction.  Prefer over even-parity
+             for being uniformly fast.
+     - f: Function that returns 1 if heads and 0 if tails.
+     Note that this function is slow as the probability of heads approaches 1.
+     """
+        while True:
+            if self.randbit() == 0:
+                return 1
+            if f() == 1:
+                return 0
+
     def logistic(self, f, cx=1, cy=1):
         """ Logistic Bernoulli factory: B(p) -> B(cx*p/(cy+cx*p)) or
          B(p) -> B((cx/cy)*p/(1+(cx/cy)*p)) (Morina et al. 2019)

@@ -194,13 +194,13 @@
 <li>Call the <strong>algorithm for arctan(&lambda;) /&lambda;</strong> and flip the input coin.  Return 1 if the call and flip both return 1, or 0 otherwise.</li>
 </ul>
 
-<p><strong>Algorithm for &lambda;<sup><em>x</em>/<em>y</em></sup>.</strong> In the algorithm below, the case where <em>x</em>/<em>y</em> is in (0, 1) is due to recent work by Mendo (2019)<sup><a href="#Note11"><strong>(11)</strong></a></sup>.  The algorithm works only when <em>x</em>/<em>y</em> is 0 or greater.</p>
+<p><strong>Algorithm for &lambda;<sup><em>x</em>/<em>y</em></sup>.</strong> In the algorithm below, the case where <em>x</em>/<em>y</em> is in (0, 1) is due to recent work by Mendo (2019)<sup><a href="#Note12"><strong>(12)</strong></a></sup>.  The algorithm works only when <em>x</em>/<em>y</em> is 0 or greater.</p>
 
 <ol>
 <li>If <em>x</em>/<em>y</em> is 0, return 1.</li>
 <li>If <em>x</em>/<em>y</em> is equal to 1, flip the input coin and return the result.</li>
-<li>If <em>x</em>/<em>y</em> is greater than 1, flip the input coin <code>floor(_x_/_y_)</code> times and call <strong>PowerBernoulliFactory</strong> (once) with <em>x</em>/<em>y</em> =<em>x</em>/<em>y</em> &minus; floor(<em>x</em>/<em>y</em>).  Return 1 if all these calls and flips return 1; otherwise, return 0.
-4.<em>x</em>/<em>y</em> is less than 1, so set <em>i</em> to 1.</li>
+<li>If <em>x</em>/<em>y</em> is greater than 1, flip the input coin <code>floor(_x_/_y_)</code> times and call this algorithm (once and recursively) with <em>x</em>/<em>y</em> =<em>x</em>/<em>y</em> &minus; floor(<em>x</em>/<em>y</em>).  Return 1 if all these calls and flips return 1; otherwise, return 0.</li>
+<li><em>x</em>/<em>y</em> is less than 1, so set <em>i</em> to 1.</li>
 <li>Flip the input coin; if it returns 1, return 1.</li>
 <li>Return 0 with probability <em>x</em>/(<em>y</em>*<em>i</em>).</li>
 <li>Add 1 to <em>i</em> and go to step 5.</li>
@@ -209,6 +209,22 @@
 <p>Note, however, that when <em>x</em>/<em>y</em> &lt; 1, this algorithm converges more and more slowly as &lambda; approaches 0.</p>
 
 <p><strong>Algorithm for sqrt(&lambda;).</strong> Use the algorithm for &lambda;<sup>1/2</sup>.</p>
+
+<p><strong>Algorithm for arcsin(&lambda;) + sqrt(1 &minus; &lambda;<sup>2</sup>) &minus; 1.</strong> (Flajolet et al., 2010)<sup><a href="#Note1"><strong>(1)</strong></a></sup>.  The algorithm given here uses the special two-coin case rather than the even-parity construction.</p>
+
+<ol>
+<li>Create an empty uniform PSRN.</li>
+<li>Create a secondary coin &mu; that does the following:
+
+<ul>
+<li>Call <strong>SampleGeometricBag</strong> twice on the PSRN, and flip the input coin twice.  If all of these calls and flips return 1, return 0.  Otherwise, return 1.</li>
+</ul></li>
+<li>Call the <strong>algorithm for &mu;<sup>1/2</sup></strong> using the secondary coin &mu;.  If it returns 0, return 0.</li>
+<li>With probability 1/2, flip the input coin and return the result.</li>
+<li>Call <strong>SampleGeometricBag</strong> once on the PSRN, and flip the input coin once.  If both the call and flip return 1, return 0.  Otherwise, go to step 4.</li>
+</ol>
+
+<p>Unfortunately, the Flajolet paper doesn&#39;t explain in detail how arcsin(&lambda;)/2 arises out of arcsin(&lambda;) + sqrt(1 &minus; &lambda;<sup>2</sup>) &minus; 1 via Bernoulli factory constructions, and I have been unable to find a derivation.</p>
 
 <p><a id=Algorithms_for_Irrational_Constants></a></p>
 
@@ -239,14 +255,14 @@
 
 <ol>
 <li>Generate a random integer in the interval [0, 6), call it <em>n</em>.</li>
-<li>If <em>n</em> is less than 3, return the result of the <strong>algorithm for arctan(1/2) * 2</strong>.  Otherwise, if <em>n</em> is 4, return 0.  Otherwise, return the result of the <strong>algorithm for arctan(1/3) * 3</strong>.</li>
+<li>If <em>n</em> is less than 3, return the result of the <strong>algorithm for arctan(1/2) * 2</strong>.  Otherwise, if <em>n</em> is 3, return 0.  Otherwise, return the result of the <strong>algorithm for arctan(1/3) * 3</strong>.</li>
 </ol>
 
 <p><a id=General_Algorithms></a></p>
 
 <h3>General Algorithms</h3>
 
-<p><strong>Algorithm for the probability generating function.</strong>  Let <em>X</em> be a random number that follows a discrete distribution (one that takes on a countable number of values).  The following algorithm generates heads with probability <strong>E</strong>[&lambda;<sup><em>X</em></sup>], that is, the expected (average) value of &lambda;<sup><em>X</em></sup>.  <strong>E</strong>[&lambda;<sup><em>X</em></sup>] is the distribution&#39;s <em>probability generating function</em>, also known as <em>factorial moment generating function</em> (Dughmi et al. 2017)<sup><a href="#Note12"><strong>(12)</strong></a></sup>.</p>
+<p><strong>Algorithm for the probability generating function.</strong>  Let <em>X</em> be a random number that follows a discrete distribution (one that takes on a countable number of values).  The following algorithm generates heads with probability <strong>E</strong>[&lambda;<sup><em>X</em></sup>], that is, the expected (average) value of &lambda;<sup><em>X</em></sup>.  <strong>E</strong>[&lambda;<sup><em>X</em></sup>] is the distribution&#39;s <em>probability generating function</em>, also known as <em>factorial moment generating function</em> (Dughmi et al. 2017)<sup><a href="#Note11"><strong>(11)</strong></a></sup>.</p>
 
 <ol>
 <li>Generate a random number <em>N</em> of the given distribution.</li>
@@ -410,9 +426,9 @@
 
 <p><small><sup id=Note10>(10)</sup> Morina, G., Łatuszyński, K., et al., &quot;<a href="https://arxiv.org/abs/1912.09229v1"><strong>From the Bernoulli Factory to a Dice Enterprise via Perfect Sampling of Markov Chains</strong></a>&quot;, arXiv:1912.09229v1 [math.PR], 2019.</small></p>
 
-<p><small><sup id=Note11>(11)</sup> No note text yet.</small></p>
+<p><small><sup id=Note11>(11)</sup> Shaddin Dughmi, Jason D. Hartline, Robert Kleinberg, and Rad Niazadeh. 2017. Bernoulli Factories and Black-Box Reductions in Mechanism Design. In <em>Proceedings of 49th Annual ACM SIGACT Symposium on the Theory of Computing</em>, Montreal, Canada, June 2017 (STOC’17).</small></p>
 
-<p><small><sup id=Note12>(12)</sup> Shaddin Dughmi, Jason D. Hartline, Robert Kleinberg, and Rad Niazadeh. 2017. Bernoulli Factories and Black-Box Reductions in Mechanism Design. In <em>Proceedings of 49th Annual ACM SIGACT Symposium on the Theory of Computing</em>, Montreal, Canada, June 2017 (STOC’17).</small></p>
+<p><small><sup id=Note12>(12)</sup> Mendo, Luis. &quot;An asymptotically optimal Bernoulli factory for certain functions that can be expressed as power series.&quot; Stochastic Processes and their Applications 129, no. 11 (2019): 4366-4384.</small></p>
 
 <p><a id=License></a></p>
 

@@ -1681,6 +1681,13 @@ CLASSES
      |      Disjunction (OR): B(p), B(q) => B(p+q-p*q) (Flajolet et al. 2010)
      |      - f1, f2: Functions that return 1 if heads and 0 if tails.
      |
+     |  divoneplus(self, f)
+     |      Divided by one plus p: B(p) => B(1/(1+p)), implemented
+     |              as a special case of the two-coin construction.  Prefer over even-parity
+     |              for being uniformly fast.
+     |      - f: Function that returns 1 if heads and 0 if tails.
+     |      Note that this function is slow as the probability of heads approaches 1.
+     |
      |  eps_div(self, f, eps)
      |      Bernoulli factory as follows: B(p) -> B(eps/p) (Lee et al. 2014).
      |      - f: Function that returns 1 if heads and 0 if tails.
