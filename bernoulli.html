@@ -194,7 +194,7 @@
 <li>Call the <strong>algorithm for arctan(&lambda;) /&lambda;</strong> and flip the input coin.  Return 1 if the call and flip both return 1, or 0 otherwise.</li>
 </ul>
 
-<p><strong>Algorithm for &lambda;<sup><em>x</em>/<em>y</em></sup>.</strong> In the algorithm below, the case where <em>x</em>/<em>y</em> is in (0, 1) is due to recent work by Mendo (2019)<sup><a href="#Note12"><strong>(12)</strong></a></sup>.  The algorithm works only when <em>x</em>/<em>y</em> is 0 or greater.</p>
+<p><strong>Algorithm for &lambda;<sup><em>x</em>/<em>y</em></sup>.</strong> In the algorithm below, the case where <em>x</em>/<em>y</em> is in (0, 1) is due to recent work by Mendo (2019)<sup><a href="#Note11"><strong>(11)</strong></a></sup>.  The algorithm works only when <em>x</em>/<em>y</em> is 0 or greater.</p>
 
 <ol>
 <li>If <em>x</em>/<em>y</em> is 0, return 1.</li>
@@ -224,7 +224,17 @@
 <li>Call <strong>SampleGeometricBag</strong> once on the PSRN, and flip the input coin once.  If both the call and flip return 1, return 0.  Otherwise, go to step 4.</li>
 </ol>
 
-<p>Unfortunately, the Flajolet paper doesn&#39;t explain in detail how arcsin(&lambda;)/2 arises out of arcsin(&lambda;) + sqrt(1 &minus; &lambda;<sup>2</sup>) &minus; 1 via Bernoulli factory constructions, and I have been unable to find a derivation.</p>
+<p><strong>Algorithm for arcsin(&lambda;) / 2.</strong>  The Flajolet paper doesn&#39;t explain in detail how arcsin(&lambda;)/2 arises out of arcsin(&lambda;) + sqrt(1 &minus; &lambda;<sup>2</sup>) &minus; 1 via Bernoulli factory constructions, but here is an algorithm.<sup><a href="#Note12"><strong>(12)</strong></a></sup></p>
+
+<ol>
+<li>With probability 1/2, run the <strong>algorithm for arcsin(&lambda;) + sqrt(1 &minus; &lambda;<sup>2</sup>) &minus; 1</strong> and return the result.</li>
+<li>Create a secondary coin &mu; that does the following:
+
+<ul>
+<li>Flip the input coin twice.  If both flips return 1, return 0.  Otherwise, return 1.</li>
+</ul></li>
+<li>Call the <strong>algorithm for &mu;<sup>1/2</sup></strong> using the secondary coin &mu;.  If it returns 0, return 1; otherwise, return 0.</li>
+</ol>
 
 <p><a id=Algorithms_for_Irrational_Constants></a></p>
 
@@ -262,7 +272,7 @@
 
 <h3>General Algorithms</h3>
 
-<p><strong>Algorithm for the probability generating function.</strong>  Let <em>X</em> be a random number that follows a discrete distribution (one that takes on a countable number of values).  The following algorithm generates heads with probability <strong>E</strong>[&lambda;<sup><em>X</em></sup>], that is, the expected (average) value of &lambda;<sup><em>X</em></sup>.  <strong>E</strong>[&lambda;<sup><em>X</em></sup>] is the distribution&#39;s <em>probability generating function</em>, also known as <em>factorial moment generating function</em> (Dughmi et al. 2017)<sup><a href="#Note11"><strong>(11)</strong></a></sup>.</p>
+<p><strong>Algorithm for the probability generating function.</strong>  Let <em>X</em> be a random number that follows a discrete distribution (one that takes on a countable number of values).  The following algorithm generates heads with probability <strong>E</strong>[&lambda;<sup><em>X</em></sup>], that is, the expected (average) value of &lambda;<sup><em>X</em></sup>.  <strong>E</strong>[&lambda;<sup><em>X</em></sup>] is the distribution&#39;s <em>probability generating function</em>, also known as <em>factorial moment generating function</em> (Dughmi et al. 2017)<sup><a href="#Note13"><strong>(13)</strong></a></sup>.</p>
 
 <ol>
 <li>Generate a random number <em>N</em> of the given distribution.</li>
@@ -305,6 +315,26 @@
 <th>Average Bits Consumed</th>
 </tr>
 </thead><tbody>
+<tr>
+<td>arcsin(x)+sqrt(1-x*x)-1</td>
+<td><img src="bernoullicharts/arcsin_x_sqrt_1-x_x_-1_mean.svg" alt="**Simulated Mean for arcsin(x)+sqrt(1-x\*x)-1**"></td>
+<td><img src="bernoullicharts/arcsin_x_sqrt_1-x_x_-1_bits.svg" alt="**Expected Bits Consumed by arcsin(x)+sqrt(1-x\*x)-1**"></td>
+</tr>
+<tr>
+<td>arcsin(x)/2</td>
+<td><img src="bernoullicharts/arcsin_x_2_mean.svg" alt="**Simulated Mean for arcsin(x)/2**"></td>
+<td><img src="bernoullicharts/arcsin_x_2_bits.svg" alt="**Expected Bits Consumed by arcsin(x)/2**"></td>
+</tr>
+<tr>
+<td>arctan(x) (Two-Coin Special Case)</td>
+<td><img src="bernoullicharts/arctan_x_two-coin_special_case__mean.svg" alt="**Simulated Mean for arctan(x) (Two-Coin Special Case)**"></td>
+<td><img src="bernoullicharts/arctan_x_two-coin_special_case__bits.svg" alt="**Expected Bits Consumed by arctan(x) (Two-Coin Special Case)**"></td>
+</tr>
+<tr>
+<td>arctan(x) (Flajolet)</td>
+<td><img src="bernoullicharts/arctan_x_flajolet__mean.svg" alt="**Simulated Mean for arctan(x) (Flajolet)**"></td>
+<td><img src="bernoullicharts/arctan_x_flajolet__bits.svg" alt="**Expected Bits Consumed by arctan(x) (Flajolet)**"></td>
+</tr>
 <tr>
 <td>exp(-x) (Alt. Series)</td>
 <td><img src="bernoullicharts/exp_-x_alt_series__mean.svg" alt="**Simulated Mean for exp(-x) (Alt. Series)**"></td>
@@ -426,9 +456,11 @@
 
 <p><small><sup id=Note10>(10)</sup> Morina, G., Łatuszyński, K., et al., &quot;<a href="https://arxiv.org/abs/1912.09229v1"><strong>From the Bernoulli Factory to a Dice Enterprise via Perfect Sampling of Markov Chains</strong></a>&quot;, arXiv:1912.09229v1 [math.PR], 2019.</small></p>
 
-<p><small><sup id=Note11>(11)</sup> Shaddin Dughmi, Jason D. Hartline, Robert Kleinberg, and Rad Niazadeh. 2017. Bernoulli Factories and Black-Box Reductions in Mechanism Design. In <em>Proceedings of 49th Annual ACM SIGACT Symposium on the Theory of Computing</em>, Montreal, Canada, June 2017 (STOC’17).</small></p>
+<p><small><sup id=Note11>(11)</sup> Mendo, Luis. &quot;An asymptotically optimal Bernoulli factory for certain functions that can be expressed as power series.&quot; Stochastic Processes and their Applications 129, no. 11 (2019): 4366-4384.</small></p>
 
-<p><small><sup id=Note12>(12)</sup> Mendo, Luis. &quot;An asymptotically optimal Bernoulli factory for certain functions that can be expressed as power series.&quot; Stochastic Processes and their Applications 129, no. 11 (2019): 4366-4384.</small></p>
+<p><small><sup id=Note12>(12)</sup> One of the only implementations I could find of this, if not the only, was a <a href="https://github.com/derekelkins/buffon/blob/master/Data/Distribution/Buffon.hs"><strong>Haskell implementation</strong></a>.</small></p>
+
+<p><small><sup id=Note13>(13)</sup> Shaddin Dughmi, Jason D. Hartline, Robert Kleinberg, and Rad Niazadeh. 2017. Bernoulli Factories and Black-Box Reductions in Mechanism Design. In <em>Proceedings of 49th Annual ACM SIGACT Symposium on the Theory of Computing</em>, Montreal, Canada, June 2017 (STOC’17).</small></p>
 
 <p><a id=License></a></p>
 
