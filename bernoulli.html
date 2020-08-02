@@ -194,6 +194,22 @@
 <li>Call the <strong>algorithm for arctan(&lambda;) /&lambda;</strong> and flip the input coin.  Return 1 if the call and flip both return 1, or 0 otherwise.</li>
 </ul>
 
+<p><strong>Algorithm for &lambda;<sup><em>x</em>/<em>y</em></sup>.</strong> In the algorithm below, the case where <em>x</em>/<em>y</em> is in (0, 1) is due to recent work by Mendo (2019)<sup><a href="#Note11"><strong>(11)</strong></a></sup>.  The algorithm works only when <em>x</em>/<em>y</em> is 0 or greater.</p>
+
+<ol>
+<li>If <em>x</em>/<em>y</em> is 0, return 1.</li>
+<li>If <em>x</em>/<em>y</em> is equal to 1, flip the input coin and return the result.</li>
+<li>If <em>x</em>/<em>y</em> is greater than 1, flip the input coin <code>floor(_x_/_y_)</code> times and call <strong>PowerBernoulliFactory</strong> (once) with <em>x</em>/<em>y</em> =<em>x</em>/<em>y</em> &minus; floor(<em>x</em>/<em>y</em>).  Return 1 if all these calls and flips return 1; otherwise, return 0.
+4.<em>x</em>/<em>y</em> is less than 1, so set <em>i</em> to 1.</li>
+<li>Flip the input coin; if it returns 1, return 1.</li>
+<li>Return 0 with probability <em>x</em>/(<em>y</em>*<em>i</em>).</li>
+<li>Add 1 to <em>i</em> and go to step 5.</li>
+</ol>
+
+<p>Note, however, that when <em>x</em>/<em>y</em> &lt; 1, this algorithm converges more and more slowly as &lambda; approaches 0.</p>
+
+<p><strong>Algorithm for sqrt(&lambda;).</strong> Use the algorithm for &lambda;<sup>1/2</sup>.</p>
+
 <p><a id=Algorithms_for_Irrational_Constants></a></p>
 
 <h3>Algorithms for Irrational Constants</h3>
@@ -230,7 +246,7 @@
 
 <h3>General Algorithms</h3>
 
-<p><strong>Algorithm for the probability generating function.</strong>  Let <em>X</em> be a random number that follows a discrete distribution (one that takes on a countable number of values).  The following algorithm generates heads with probability <strong>E</strong>[&lambda;<sup><em>X</em></sup>], that is, the expected (average) value of &lambda;<sup><em>X</em></sup>.  <strong>E</strong>[&lambda;<sup><em>X</em></sup>] is the distribution&#39;s <em>probability generating function</em>, also known as <em>factorial moment generating function</em> (Dughmi et al. 2017)<sup><a href="#Note11"><strong>(11)</strong></a></sup>.</p>
+<p><strong>Algorithm for the probability generating function.</strong>  Let <em>X</em> be a random number that follows a discrete distribution (one that takes on a countable number of values).  The following algorithm generates heads with probability <strong>E</strong>[&lambda;<sup><em>X</em></sup>], that is, the expected (average) value of &lambda;<sup><em>X</em></sup>.  <strong>E</strong>[&lambda;<sup><em>X</em></sup>] is the distribution&#39;s <em>probability generating function</em>, also known as <em>factorial moment generating function</em> (Dughmi et al. 2017)<sup><a href="#Note12"><strong>(12)</strong></a></sup>.</p>
 
 <ol>
 <li>Generate a random number <em>N</em> of the given distribution.</li>
@@ -279,6 +295,41 @@
 <td><img src="bernoullicharts/exp_-x_alt_series__bits.svg" alt="**Expected Bits Consumed by exp(-x) (Alt. Series)**"></td>
 </tr>
 <tr>
+<td>sqrt(x)</td>
+<td><img src="bernoullicharts/sqrt_x__mean.svg" alt="**Simulated Mean for sqrt(x)**"></td>
+<td><img src="bernoullicharts/sqrt_x__bits.svg" alt="**Expected Bits Consumed by sqrt(x)**"></td>
+</tr>
+<tr>
+<td>pow(x,1/3)</td>
+<td><img src="bernoullicharts/pow_x_1_3__mean.svg" alt="**Simulated Mean for pow(x,1/3)**"></td>
+<td><img src="bernoullicharts/pow_x_1_3__bits.svg" alt="**Expected Bits Consumed by pow(x,1/3)**"></td>
+</tr>
+<tr>
+<td>pow(x,3/4)</td>
+<td><img src="bernoullicharts/pow_x_3_4__mean.svg" alt="**Simulated Mean for pow(x,3/4)**"></td>
+<td><img src="bernoullicharts/pow_x_3_4__bits.svg" alt="**Expected Bits Consumed by pow(x,3/4)**"></td>
+</tr>
+<tr>
+<td>pow(x,4/5)</td>
+<td><img src="bernoullicharts/pow_x_4_5__mean.svg" alt="**Simulated Mean for pow(x,4/5)**"></td>
+<td><img src="bernoullicharts/pow_x_4_5__bits.svg" alt="**Expected Bits Consumed by pow(x,4/5)**"></td>
+</tr>
+<tr>
+<td>pow(x,5/4)</td>
+<td><img src="bernoullicharts/pow_x_5_4__mean.svg" alt="**Simulated Mean for pow(x,5/4)**"></td>
+<td><img src="bernoullicharts/pow_x_5_4__bits.svg" alt="**Expected Bits Consumed by pow(x,5/4)**"></td>
+</tr>
+<tr>
+<td>pow(x,2/1)</td>
+<td><img src="bernoullicharts/pow_x_2_1__mean.svg" alt="**Simulated Mean for pow(x,2/1)**"></td>
+<td><img src="bernoullicharts/pow_x_2_1__bits.svg" alt="**Expected Bits Consumed by pow(x,2/1)**"></td>
+</tr>
+<tr>
+<td>pow(x,5/1)</td>
+<td><img src="bernoullicharts/pow_x_5_1__mean.svg" alt="**Simulated Mean for pow(x,5/1)**"></td>
+<td><img src="bernoullicharts/pow_x_5_1__bits.svg" alt="**Expected Bits Consumed by pow(x,5/1)**"></td>
+</tr>
+<tr>
 <td>exp(-x) (Flajolet)</td>
 <td><img src="bernoullicharts/exp_-x_flajolet__mean.svg" alt="**Simulated Mean for exp(-x) (Flajolet)**"></td>
 <td><img src="bernoullicharts/exp_-x_flajolet__bits.svg" alt="**Expected Bits Consumed by exp(-x) (Flajolet)**"></td>
@@ -325,8 +376,8 @@
 </tr>
 <tr>
 <td>(1/3)*x/(1+(1/3)*x)</td>
-<td><img src="bernoullicharts/_1_3_x_1_1_3_x__mean.svg" alt="**Simulated Mean for (1/3)\*x/(1+(1/3)\*x)**"></td>
-<td><img src="bernoullicharts/_1_3_x_1_1_3_x__bits.svg" alt="**Expected Bits Consumed by (1/3)\*x/(1+(1/3)\*x)**"></td>
+<td><img src="bernoullicharts/1_3_x_1_1_3_x__mean.svg" alt="**Simulated Mean for (1/3)\*x/(1+(1/3)\*x)**"></td>
+<td><img src="bernoullicharts/1_3_x_1_1_3_x__bits.svg" alt="**Expected Bits Consumed by (1/3)\*x/(1+(1/3)\*x)**"></td>
 </tr>
 <tr>
 <td>exp(x)*(1-x)</td>
@@ -347,7 +398,7 @@
 
 <p><small><sup id=Note4>(4)</sup> As used here and in the Flajolet paper, a geometric random number is the number of successes before the first failure, where the success probability is &lambda;.</small></p>
 
-<p><small><sup id=Note5>(5)</sup> The Flajolet paper describes what it calls the <em>von Neumann schema</em>, which, given a permutation specification and an input coin, generates a random non-negative integer <em>n</em> with probability equal to (&lambda;<sup><em>n</em></sup> * V(<em>n</em>) / <em>n</em>!) / &Sigma;<sub><em>k</em> = 0, 1, ...</sub> (&lambda;<sup><em>k</em></sup> * V(<em>k</em>) / <em>k</em>!), where V(<em>n</em>) is the number of <em>valid</em> permutations of size <em>n</em> (or 1 if <em>n</em> is 0).  Here, the sum in this formula is also known as an <em>exponential generating function</em>.  Effectively, a geometric(&lambda;) random number <em>G</em> is accepted with probability V(<em>G</em>)/<em>G</em>! (where <em>G</em>! is the number of <em>possible</em> permutations of size <em>G</em>, or 1 if <em>G</em> is 0), and rejected otherwise.</small></p>
+<p><small><sup id=Note5>(5)</sup> The Flajolet paper describes what it calls the <em>von Neumann schema</em>, which, given a permutation specification and an input coin, generates a random non-negative integer <em>n</em> with probability equal to (&lambda;<sup><em>n</em></sup> * V(<em>n</em>) / <em>n</em>!) / &Sigma;<sub><em>k</em> = 0, 1, ...</sub> (&lambda;<sup><em>k</em></sup> * V(<em>k</em>) / <em>k</em>!), where V(<em>n</em>) is the number of <em>valid</em> permutations of size <em>n</em>.  Here, the sum in this formula is also known as an <em>exponential generating function</em>.  Effectively, a geometric(&lambda;) random number <em>G</em> is accepted with probability V(<em>G</em>)/<em>G</em>! (where <em>G</em>! is the number of <em>possible</em> permutations of size <em>G</em>, or 1 if <em>G</em> is 0), and rejected otherwise.</small></p>
 
 <p><small><sup id=Note6>(6)</sup> Łatuszyński, K., Kosmidis, I.,  Papaspiliopoulos, O., Roberts, G.O., &quot;<a href="https://arxiv.org/abs/0907.4018v2"><strong>Simulating events of unknown probabilities via reverse time martingales</strong></a>&quot;, arXiv:0907.4018v2 [stat.CO], 2009/2011.</small></p>
 
@@ -359,7 +410,9 @@
 
 <p><small><sup id=Note10>(10)</sup> Morina, G., Łatuszyński, K., et al., &quot;<a href="https://arxiv.org/abs/1912.09229v1"><strong>From the Bernoulli Factory to a Dice Enterprise via Perfect Sampling of Markov Chains</strong></a>&quot;, arXiv:1912.09229v1 [math.PR], 2019.</small></p>
 
-<p><small><sup id=Note11>(11)</sup> Shaddin Dughmi, Jason D. Hartline, Robert Kleinberg, and Rad Niazadeh. 2017. Bernoulli Factories and Black-Box Reductions in Mechanism Design. In <em>Proceedings of 49th Annual ACM SIGACT Symposium on the Theory of Computing</em>, Montreal, Canada, June 2017 (STOC’17).</small></p>
+<p><small><sup id=Note11>(11)</sup> No note text yet.</small></p>
+
+<p><small><sup id=Note12>(12)</sup> Shaddin Dughmi, Jason D. Hartline, Robert Kleinberg, and Rad Niazadeh. 2017. Bernoulli Factories and Black-Box Reductions in Mechanism Design. In <em>Proceedings of 49th Annual ACM SIGACT Symposium on the Theory of Computing</em>, Montreal, Canada, June 2017 (STOC’17).</small></p>
 
 <p><a id=License></a></p>
 

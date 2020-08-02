@@ -190,16 +190,17 @@ For another base (radix), such as 10 for decimal, this can be implemented as **U
 1. For each position in \[0, `p`), if the item at that position is not a digit, set the item there to to a digit chosen uniformly at random (e.g., either 0 or 1 for binary), increasing the geometric bag's capacity as necessary. (See also (Oberhoff 2018, sec. 8)<sup>[**(10)**](#Note10)</sup>.)
 2. Take the first `p` digits of the geometric bag and return &Sigma;<sub>_i_=0, ..., `p`&minus;1</sub> bag[_i_] * _b_<sup>&minus;_i_&minus;1</sup>, where _b_ is the base, or radix.  (If it somehow happens that digits beyond `p` are set to 0 or 1, then the implementation could choose instead to fill all unsampled digits between the first and the last set digit and return the full number, optionally rounding it to a number whose fractional part has `p` digits, with a rounding mode of choice.)
 
-**PowerBernoulliFactory** is a Bernoulli factory algorithm that transforms a coin that produces heads with probability `p` into a coin that produces heads with probability `pow(p, y)`.  The case where `y` is in (0, 1) is due to recent work by Mendo (2019)<sup>[**(15)**](#Note15)</sup>.  The algorithm takes a Bernoulli factory sub-algorithm (the coin that produces heads with probability `p`) as well as the parameter _y_, and is described as follows:
+**PowerBernoulliFactory** is a Bernoulli factory algorithm that transforms a coin that produces heads with probability `p` into a coin that produces heads with probability `pow(p, y)`.  The case where `y` is in (0, 1) is due to recent work by Mendo (2019)<sup>[**(15)**](#Note15)</sup>.  The algorithm takes an input coin that produces heads with probability `p`, as well as the parameter _y_, and is described as follows:
 
-1. If _y_ is equal to 1, call the sub-algorithm and return the result.
-2. If _y_ is greater than 1, call the sub-algorithm `floor(y)` times and call **PowerBernoulliFactory** (once) with _y_ = _y_ &minus; floor(_y_).  Return 1 if all these calls return 1; otherwise, return 0.
-3. _y_ is less than 1, so set _i_ to 1.
-4. Call the sub-algorithm; if it returns 1, return 1.
-5. Return 0 with probability _y_/_i_.
-6. Add 1 to _i_ and go to step 4.
+1. If _y_ is 0, return 1.
+2. If _y_ is equal to 1, flip the input coin and return the result.
+3. If _y_ is greater than 1, flip the input coin `floor(y)` times and call **PowerBernoulliFactory** (once) with _y_ = _y_ &minus; floor(_y_).  Return 1 if all these calls and flips return 1; otherwise, return 0.
+4. _y_ is less than 1, so set _i_ to 1.
+5. Flip the input coin; if it returns 1, return 1.
+6. Return 0 with probability _y_/_i_.
+7. Add 1 to _i_ and go to step 5.
 
-Note, however, that this algorithm converges more and more slowly if the probability `p` approaches 0.  See the appendix for notes on the convergence of Bernoulli factories.  The appendix also shows an alternative way to implement this and other Bernoulli factory algorithms using geometric bags, which is not the focus of this article since it involves arithmetic.
+Note, however, that when _y_ < 1, this algorithm converges more and more slowly as the probability `p` approaches 0.  See the appendix for notes on the convergence of Bernoulli factories.  The appendix also shows an alternative way to implement this and other Bernoulli factory algorithms using geometric bags, which is not the focus of this article since it involves arithmetic.
 
 The **kthsmallest** method generates the 'k'th smallest 'bitcount'-digit uniform random number out of 'n' of them, is also relied on by this beta sampler.  It is used when both `a` and `b` are integers, based on the known property that a beta random variable in this case is the `a`th smallest uniform (0, 1) random number out of `a + b - 1` of them (Devroye 1986, p. 431)<sup>[**(16)**](#Note16)</sup>.
 
