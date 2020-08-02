@@ -55,12 +55,12 @@
 
 <p>The algorithms as described here do not always lead to the best performance.  An implementation may change these algorithms as long as they produce the same results as the algorithms as described here.  Some algorithms are described as &quot;uniformly fast&quot;.  This means that their average running time is bounded from above for all choices of &lambda; and other parameters (Devroye 1986, esp. p. 717)<sup><a href="#Note3"><strong>(3)</strong></a></sup>.</p>
 
-<p>An algorithm can be uniformly fast for all &lambda; parameters in a closed interval in (0, 1) only if its factory function meets the Lipschitz condition on that closed interval, that is, it is continuous and has no slope that tends to a vertical slope anywhere in that interval (Nacu and Peres 2005, proposition 23)<sup><a href="#Note14"><strong>(14)</strong></a></sup>.</p>
+<p>An algorithm can be uniformly fast for all &lambda; parameters in a closed interval in (0, 1) only if its factory function meets the Lipschitz condition on that closed interval, that is, it is continuous and has no slope that tends to a vertical slope anywhere in that interval (Nacu and Peres 2005, proposition 23)<sup><a href="#Note4"><strong>(4)</strong></a></sup>.</p>
 </blockquote>
 
 <p><strong>Algorithms for exp(&minus;&lambda;).</strong></p>
 
-<p>The algorithm in (Flajolet et al., 2010)<sup><a href="#Note1"><strong>(1)</strong></a></sup> calls for generating a Poisson(&lambda;) random number and returning 1 if that number is 0, or 0 otherwise.  The Poisson generator in turn involves generating a geometric(&lambda;) random number <em>G</em><sup><a href="#Note4"><strong>(4)</strong></a></sup>, then <em>G</em> uniform random numbers, then returning <em>G</em> only if all <em>G</em> uniform numbers are sorted.<sup><a href="#Note5"><strong>(5)</strong></a></sup>  The algorithm follows.</p>
+<p>The algorithm in (Flajolet et al., 2010)<sup><a href="#Note1"><strong>(1)</strong></a></sup> calls for generating a Poisson(&lambda;) random number and returning 1 if that number is 0, or 0 otherwise.  The Poisson generator in turn involves generating a geometric(&lambda;) random number <em>G</em><sup><a href="#Note5"><strong>(5)</strong></a></sup>, then <em>G</em> uniform random numbers, then returning <em>G</em> only if all <em>G</em> uniform numbers are sorted.<sup><a href="#Note6"><strong>(6)</strong></a></sup>  The algorithm follows.</p>
 
 <ol>
 <li>Flip the input coin until the coin returns 0.  Then set <em>G</em> to the number of times the coin returns 1 this way.</li>
@@ -90,7 +90,7 @@
 
 <p>In turn, this algorithm likewise converges very slowly as &lambda; approaches 1.</p>
 
-<p>A third algorithm is uniformly fast everywhere in (0, 1).   It uses the reverse-time martingale approach for alternating series in (Łatuszyński et al. 2009/2011)<sup><a href="#Note6"><strong>(6)</strong></a></sup> and makes use of the fact that exp(&minus;&lambda;) can be rewritten as 1 &minus; &lambda; + &lambda;<sup>2</sup>/2 &minus; &lambda;<sup>3</sup>/6 + &lambda;<sup>4</sup>/24 &minus; ..., which is an alternating series whose coefficients are 1, 1, 1/(2!), 1/(3!), 1/(4!), ..., which satisfy the requirements for this approach because the coefficients are nonincreasing and all 1 or less.  However, the algorithm requires a bit more arithmetic, notably rational division.</p>
+<p>A third algorithm is uniformly fast everywhere in (0, 1).   It uses the reverse-time martingale approach for alternating series in (Łatuszyński et al. 2009/2011)<sup><a href="#Note7"><strong>(7)</strong></a></sup> and makes use of the fact that exp(&minus;&lambda;) can be rewritten as 1 &minus; &lambda; + &lambda;<sup>2</sup>/2 &minus; &lambda;<sup>3</sup>/6 + &lambda;<sup>4</sup>/24 &minus; ..., which is an alternating series whose coefficients are 1, 1, 1/(2!), 1/(3!), 1/(4!), ..., which satisfy the requirements for this approach because the coefficients are nonincreasing and all 1 or less.  However, the algorithm requires a bit more arithmetic, notably rational division.</p>
 
 <p>First, the general algorithm for the reverse-time martingale approach (called the <strong>general martingale algorithm</strong>) follows.  It takes a list of coefficients and an input coin, and returns 1 with probability <em>c[0]</em> &minus; <em>c[1]</em> * &lambda; + <em>c[2]</em> * &lambda;<sup>2</sup> &minus; ..., and 0 otherwise.</p>
 
@@ -138,7 +138,7 @@
 <li>Flip the input coin.  If it returns 0, return 0.  Otherwise, go to step 1.</li>
 </ol>
 
-<p>A third algorithm is a special case of the two-coin Bernoulli factory of (Gonçalves et al., 2017)<sup><a href="#Note7"><strong>(7)</strong></a></sup> and is uniformly fast, unlike the previous two algorithms:</p>
+<p>A third algorithm is a special case of the two-coin Bernoulli factory of (Gonçalves et al., 2017)<sup><a href="#Note8"><strong>(8)</strong></a></sup> and is uniformly fast, unlike the previous two algorithms:</p>
 
 <ol>
 <li>With probability 1/2, return 1. (For example, generate an unbiased random bit and return 1 if that bit is 1.)</li>
@@ -165,18 +165,18 @@
 
 <p>A third algorithm is to invert the result of the algorithm for 1 &minus; log(1+&lambda;) below (make it 1 if it&#39;s 0 and vice versa).</p>
 
-<p><strong>Algorithm for 1 &minus; log(1+&lambda;).</strong>  This algorithm uses the reverse-time martingale approach in (Łatuszyński et al. 2009/2011)<sup><a href="#Note6"><strong>(6)</strong></a></sup>.  Here, the alternating series is <code>1 - x + x^2/2 - x^3/3 + ...</code>, whose coefficients are 1, 1, 1/2, 1/3, ....  Follow the general martingale algorithm, but note that this algorithm uses more bits on average as &lambda; approaches 1.</p>
+<p><strong>Algorithm for 1 &minus; log(1+&lambda;).</strong>  This algorithm uses the reverse-time martingale approach in (Łatuszyński et al. 2009/2011)<sup><a href="#Note7"><strong>(7)</strong></a></sup>.  Here, the alternating series is <code>1 - x + x^2/2 - x^3/3 + ...</code>, whose coefficients are 1, 1, 1/2, 1/3, ....  Follow the general martingale algorithm, but note that this algorithm uses more bits on average as &lambda; approaches 1.</p>
 
 <p>Alternatively, invert the result of either of the algorithms for log(1+&lambda;) (make it 1 if it&#39;s 0 and vice versa).</p>
 
-<p><strong>Algorithm for <em>c</em> * &lambda; * &beta; / (&beta; * (<em>c</em> * &lambda; + <em>d</em> * &mu;) &minus; (&beta; &minus; 1) * (<em>c</em> + <em>d</em>)).</strong>  This is the general two-coin algorithm of (Gonçalves et al., 2017)<sup><a href="#Note7"><strong>(7)</strong></a></sup> and (Vats et al. 2020)<sup><a href="#Note8"><strong>(8)</strong></a></sup>.  It takes two input coins that each output heads (1) with probability &lambda; or &mu;, respectively.  It also takes a parameter &beta; in the interval [0, 1], which is a so-called &quot;portkey&quot; or early rejection parameter (when &beta; = 1, the formula simplifies to <em>c</em> * &lambda; / (<em>c</em> * &lambda; + <em>d</em> * &mu;)).</p>
+<p><strong>Algorithm for <em>c</em> * &lambda; * &beta; / (&beta; * (<em>c</em> * &lambda; + <em>d</em> * &mu;) &minus; (&beta; &minus; 1) * (<em>c</em> + <em>d</em>)).</strong>  This is the general two-coin algorithm of (Gonçalves et al., 2017)<sup><a href="#Note8"><strong>(8)</strong></a></sup> and (Vats et al. 2020)<sup><a href="#Note9"><strong>(9)</strong></a></sup>.  It takes two input coins that each output heads (1) with probability &lambda; or &mu;, respectively.  It also takes a parameter &beta; in the interval [0, 1], which is a so-called &quot;portkey&quot; or early rejection parameter (when &beta; = 1, the formula simplifies to <em>c</em> * &lambda; / (<em>c</em> * &lambda; + <em>d</em> * &mu;)).</p>
 
 <ol>
 <li>With probability &beta;, go to step 2.  Otherwise, return 0. (For example, call <code>ZeroOrOne</code> with &beta;&#39;s numerator and denominator, and return 0 if that call returns 0, or go to step 2 otherwise.)</li>
 <li>With probability <em>c</em> / (<em>c</em> + <em>d</em>), flip the &lambda; input coin.  Otherwise, flip the &mu; input coin.  If the &lambda; input coin returns 1, return 1.  If the &mu; input coin returns 1, return 0.  If the corresponding coin returns 0, go to step 1.</li>
 </ol>
 
-<p><strong>Algorithm for <em>c</em> * &lambda; / (<em>c</em> * &lambda; + <em>d</em>) or (<em>c</em>/<em>d</em>) * &lambda; / (1 + (<em>c</em>/<em>d</em>) * &lambda;)).</strong> This algorithm, also known as the <strong>logistic Bernoulli factory</strong> (Huber 2016)<sup><a href="#Note9"><strong>(9)</strong></a></sup>, (Morina et al., 2019)<sup><a href="#Note10"><strong>(10)</strong></a></sup>, is a special case of the two-coin algorithm above, but this time uses only one input coin.</p>
+<p><strong>Algorithm for <em>c</em> * &lambda; / (<em>c</em> * &lambda; + <em>d</em>) or (<em>c</em>/<em>d</em>) * &lambda; / (1 + (<em>c</em>/<em>d</em>) * &lambda;)).</strong> This algorithm, also known as the <strong>logistic Bernoulli factory</strong> (Huber 2016)<sup><a href="#Note10"><strong>(10)</strong></a></sup>, (Morina et al., 2019)<sup><a href="#Note11"><strong>(11)</strong></a></sup>, is a special case of the two-coin algorithm above, but this time uses only one input coin.</p>
 
 <ol>
 <li>With probability <em>d</em> / (<em>c</em> + <em>d</em>), return 0.</li>
@@ -207,7 +207,7 @@
 <li>Call the <strong>algorithm for arctan(&lambda;) /&lambda;</strong> and flip the input coin.  Return 1 if the call and flip both return 1, or 0 otherwise.</li>
 </ul>
 
-<p><strong>Algorithm for &lambda;<sup><em>x</em>/<em>y</em></sup>.</strong> In the algorithm below, the case where <em>x</em>/<em>y</em> is in (0, 1) is due to recent work by Mendo (2019)<sup><a href="#Note11"><strong>(11)</strong></a></sup>.  The algorithm works only when <em>x</em>/<em>y</em> is 0 or greater.</p>
+<p><strong>Algorithm for &lambda;<sup><em>x</em>/<em>y</em></sup>.</strong> In the algorithm below, the case where <em>x</em>/<em>y</em> is in (0, 1) is due to recent work by Mendo (2019)<sup><a href="#Note12"><strong>(12)</strong></a></sup>.  The algorithm works only when <em>x</em>/<em>y</em> is 0 or greater.</p>
 
 <ol>
 <li>If <em>x</em>/<em>y</em> is 0, return 1.</li>
@@ -237,7 +237,7 @@
 <li>Call <strong>SampleGeometricBag</strong> once on the PSRN, and flip the input coin once.  If both the call and flip return 1, return 0.  Otherwise, go to step 4.</li>
 </ol>
 
-<p><strong>Algorithm for arcsin(&lambda;) / 2.</strong>  The Flajolet paper doesn&#39;t explain in detail how arcsin(&lambda;)/2 arises out of arcsin(&lambda;) + sqrt(1 &minus; &lambda;<sup>2</sup>) &minus; 1 via Bernoulli factory constructions, but here is an algorithm.<sup><a href="#Note12"><strong>(12)</strong></a></sup> Note, however, that the number of input coin flips is expected to grow without bound as &lambda; approaches 0.</p>
+<p><strong>Algorithm for arcsin(&lambda;) / 2.</strong>  The Flajolet paper doesn&#39;t explain in detail how arcsin(&lambda;)/2 arises out of arcsin(&lambda;) + sqrt(1 &minus; &lambda;<sup>2</sup>) &minus; 1 via Bernoulli factory constructions, but here is an algorithm.<sup><a href="#Note13"><strong>(13)</strong></a></sup> Note, however, that the number of input coin flips is expected to grow without bound as &lambda; approaches 0.</p>
 
 <ol>
 <li>With probability 1/2, run the <strong>algorithm for arcsin(&lambda;) + sqrt(1 &minus; &lambda;<sup>2</sup>) &minus; 1</strong> and return the result.</li>
@@ -292,7 +292,7 @@
 <li>Return 1.</li>
 </ol>
 
-<p><strong>Algorithm for (<em>a</em>/<em>b</em>)<sup><em>x</em>/<em>y</em></sup>.</strong> In the algorithm below, the case where <em>x</em>/<em>y</em> is in (0, 1) is due to recent work by Mendo (2019)<sup><a href="#Note11"><strong>(11)</strong></a></sup>.  The algorithm works only if <em>x</em>/<em>y</em> is 0 or greater and <em>a</em>/<em>b</em> is in the interval [0, 1].</p>
+<p><strong>Algorithm for (<em>a</em>/<em>b</em>)<sup><em>x</em>/<em>y</em></sup>.</strong> In the algorithm below, the case where <em>x</em>/<em>y</em> is in (0, 1) is due to recent work by Mendo (2019)<sup><a href="#Note12"><strong>(12)</strong></a></sup>.  The algorithm works only if <em>x</em>/<em>y</em> is 0 or greater and <em>a</em>/<em>b</em> is in the interval [0, 1].</p>
 
 <ol>
 <li>If <em>x</em> is 0, return 1.  Otherwise, if <em>a</em> is 0, return 0.  Otherwise, if <em>a</em> equals <em>b</em>, return 1.</li>
@@ -313,7 +313,7 @@
 
 <h3>General Algorithms</h3>
 
-<p><strong>Algorithm for the probability generating function.</strong>  Let <em>X</em> be a random number that follows a discrete distribution (one that takes on a countable number of values).  The following algorithm generates heads with probability <strong>E</strong>[&lambda;<sup><em>X</em></sup>], that is, the expected (average) value of &lambda;<sup><em>X</em></sup>.  <strong>E</strong>[&lambda;<sup><em>X</em></sup>] is the distribution&#39;s <em>probability generating function</em>, also known as <em>factorial moment generating function</em> (Dughmi et al. 2017)<sup><a href="#Note13"><strong>(13)</strong></a></sup>.</p>
+<p><strong>Algorithm for the probability generating function.</strong>  Let <em>X</em> be a random number that follows a discrete distribution (one that takes on a countable number of values).  The following algorithm generates heads with probability <strong>E</strong>[&lambda;<sup><em>X</em></sup>], that is, the expected (average) value of &lambda;<sup><em>X</em></sup>.  <strong>E</strong>[&lambda;<sup><em>X</em></sup>] is the distribution&#39;s <em>probability generating function</em>, also known as <em>factorial moment generating function</em> (Dughmi et al. 2017)<sup><a href="#Note14"><strong>(14)</strong></a></sup>.</p>
 
 <ol>
 <li>Generate a random number <em>N</em> of the given distribution.</li>
@@ -345,7 +345,7 @@
 
 <p>For each algorithm, if a single run was detected to use more than 5000 bits for a given &lambda;, the entire data point for that &lambda; was suppressed in the charts below.</p>
 
-<p>In addition, for each algorithm, a table appears showing the minimum number of coin flips that any fast Bernoulli factory algorithm will need on average to simulate the given function, based on work by Mendo (2019)<sup><a href="#Note11"><strong>(11)</strong></a></sup>.  Note that some functions require a growing number of coin flips as &lambda; approaches 0 or 1.</p>
+<p>In addition, for each algorithm, a table appears showing the minimum number of coin flips that any fast Bernoulli factory algorithm will need on average to simulate the given function, based on work by Mendo (2019)<sup><a href="#Note12"><strong>(12)</strong></a></sup>.  Note that some functions require a growing number of coin flips as &lambda; approaches 0 or 1.</p>
 
 <p><a id=The_Charts></a></p>
 
@@ -509,27 +509,27 @@
 
 <p><small><sup id=Note3>(3)</sup> Devroye, L., <a href="http://luc.devroye.org/rnbookindex.html"><strong><em>Non-Uniform Random Variate Generation</em></strong></a>, 1986.</small></p>
 
-<p><small><sup id=Note4>(4)</sup> As used here and in the Flajolet paper, a geometric random number is the number of successes before the first failure, where the success probability is &lambda;.</small></p>
+<p><small><sup id=Note4>(4)</sup> Nacu, Şerban, and Yuval Peres. &quot;Fast simulation of new coins from old&quot;, The Annals of Applied Probability 15, no. 1A (2005): 93-115.</small></p>
 
-<p><small><sup id=Note5>(5)</sup> The Flajolet paper describes what it calls the <em>von Neumann schema</em>, which, given a permutation class and an input coin, generates a random non-negative integer <em>n</em> with probability equal to (&lambda;<sup><em>n</em></sup> * V(<em>n</em>) / <em>n</em>!) / EGF(&lambda;), where EGF(&lambda;) = &Sigma;<sub><em>k</em> = 0, 1, ...</sub> (&lambda;<sup><em>k</em></sup> * V(<em>k</em>) / <em>k</em>!), and V(<em>n</em>) is the number of <em>valid</em> permutations of size <em>n</em>.  Here, EGF(&lambda;) is the <em>exponential generating function</em>.  Effectively, a geometric(&lambda;) random number <em>G</em> is accepted with probability V(<em>G</em>)/<em>G</em>! (where <em>G</em>! is the number of <em>possible</em> permutations of size <em>G</em>, or 1 if <em>G</em> is 0), and rejected otherwise.  The probability that <em>r</em> geometric random numbers are rejected this way is <em>p</em>*(1 &minus; <em>p</em>)<sup><em>r</em></sup>, where <em>p</em> = (1 &minus; &lambda;) * EGF(&lambda;).</small></p>
+<p><small><sup id=Note5>(5)</sup> As used here and in the Flajolet paper, a geometric random number is the number of successes before the first failure, where the success probability is &lambda;.</small></p>
 
-<p><small><sup id=Note6>(6)</sup> Łatuszyński, K., Kosmidis, I.,  Papaspiliopoulos, O., Roberts, G.O., &quot;<a href="https://arxiv.org/abs/0907.4018v2"><strong>Simulating events of unknown probabilities via reverse time martingales</strong></a>&quot;, arXiv:0907.4018v2 [stat.CO], 2009/2011.</small></p>
+<p><small><sup id=Note6>(6)</sup> The Flajolet paper describes what it calls the <em>von Neumann schema</em>, which, given a permutation class and an input coin, generates a random non-negative integer <em>n</em> with probability equal to (&lambda;<sup><em>n</em></sup> * V(<em>n</em>) / <em>n</em>!) / EGF(&lambda;), where EGF(&lambda;) = &Sigma;<sub><em>k</em> = 0, 1, ...</sub> (&lambda;<sup><em>k</em></sup> * V(<em>k</em>) / <em>k</em>!), and V(<em>n</em>) is the number of <em>valid</em> permutations of size <em>n</em>.  Here, EGF(&lambda;) is the <em>exponential generating function</em>.  Effectively, a geometric(&lambda;) random number <em>G</em> is accepted with probability V(<em>G</em>)/<em>G</em>! (where <em>G</em>! is the number of <em>possible</em> permutations of size <em>G</em>, or 1 if <em>G</em> is 0), and rejected otherwise.  The probability that <em>r</em> geometric random numbers are rejected this way is <em>p</em>*(1 &minus; <em>p</em>)<sup><em>r</em></sup>, where <em>p</em> = (1 &minus; &lambda;) * EGF(&lambda;).</small></p>
 
-<p><small><sup id=Note7>(7)</sup> Gonçalves, F. B., Łatuszyński, K. G., Roberts, G. O. (2017).  Exact Monte Carlo likelihood-based inference for jump-diffusion processes.</small></p>
+<p><small><sup id=Note7>(7)</sup> Łatuszyński, K., Kosmidis, I.,  Papaspiliopoulos, O., Roberts, G.O., &quot;<a href="https://arxiv.org/abs/0907.4018v2"><strong>Simulating events of unknown probabilities via reverse time martingales</strong></a>&quot;, arXiv:0907.4018v2 [stat.CO], 2009/2011.</small></p>
 
-<p><small><sup id=Note8>(8)</sup> Vats, D., Gonçalves, F. B., Łatuszyński, K. G., Roberts, G. O. Efficient Bernoulli factory MCMC for intractable likelihoods, arXiv:2004.07471v1 [stat.CO], 2020.</small></p>
+<p><small><sup id=Note8>(8)</sup> Gonçalves, F. B., Łatuszyński, K. G., Roberts, G. O. (2017).  Exact Monte Carlo likelihood-based inference for jump-diffusion processes.</small></p>
 
-<p><small><sup id=Note9>(9)</sup> Huber, M., &quot;<a href="https://arxiv.org/abs/1507.00843v2"><strong>Optimal linear Bernoulli factories for small mean problems</strong></a>&quot;, arXiv:1507.00843v2 [math.PR], 2016</small></p>
+<p><small><sup id=Note9>(9)</sup> Vats, D., Gonçalves, F. B., Łatuszyński, K. G., Roberts, G. O. Efficient Bernoulli factory MCMC for intractable likelihoods, arXiv:2004.07471v1 [stat.CO], 2020.</small></p>
 
-<p><small><sup id=Note10>(10)</sup> Morina, G., Łatuszyński, K., et al., &quot;<a href="https://arxiv.org/abs/1912.09229v1"><strong>From the Bernoulli Factory to a Dice Enterprise via Perfect Sampling of Markov Chains</strong></a>&quot;, arXiv:1912.09229v1 [math.PR], 2019.</small></p>
+<p><small><sup id=Note10>(10)</sup> Huber, M., &quot;<a href="https://arxiv.org/abs/1507.00843v2"><strong>Optimal linear Bernoulli factories for small mean problems</strong></a>&quot;, arXiv:1507.00843v2 [math.PR], 2016</small></p>
 
-<p><small><sup id=Note11>(11)</sup> Mendo, Luis. &quot;An asymptotically optimal Bernoulli factory for certain functions that can be expressed as power series.&quot; Stochastic Processes and their Applications 129, no. 11 (2019): 4366-4384.</small></p>
+<p><small><sup id=Note11>(11)</sup> Morina, G., Łatuszyński, K., et al., &quot;<a href="https://arxiv.org/abs/1912.09229v1"><strong>From the Bernoulli Factory to a Dice Enterprise via Perfect Sampling of Markov Chains</strong></a>&quot;, arXiv:1912.09229v1 [math.PR], 2019.</small></p>
 
-<p><small><sup id=Note12>(12)</sup> One of the only implementations I could find of this, if not the only, was a <a href="https://github.com/derekelkins/buffon/blob/master/Data/Distribution/Buffon.hs"><strong>Haskell implementation</strong></a>.</small></p>
+<p><small><sup id=Note12>(12)</sup> Mendo, Luis. &quot;An asymptotically optimal Bernoulli factory for certain functions that can be expressed as power series.&quot; Stochastic Processes and their Applications 129, no. 11 (2019): 4366-4384.</small></p>
 
-<p><small><sup id=Note13>(13)</sup> Shaddin Dughmi, Jason D. Hartline, Robert Kleinberg, and Rad Niazadeh. 2017. Bernoulli Factories and Black-Box Reductions in Mechanism Design. In <em>Proceedings of 49th Annual ACM SIGACT Symposium on the Theory of Computing</em>, Montreal, Canada, June 2017 (STOC’17).</small></p>
+<p><small><sup id=Note13>(13)</sup> One of the only implementations I could find of this, if not the only, was a <a href="https://github.com/derekelkins/buffon/blob/master/Data/Distribution/Buffon.hs"><strong>Haskell implementation</strong></a>.</small></p>
 
-<p><small><sup id=Note14>(14)</sup> Nacu, Şerban, and Yuval Peres. &quot;Fast simulation of new coins from old&quot;, The Annals of Applied Probability 15, no. 1A (2005): 93-115.</small></p>
+<p><small><sup id=Note14>(14)</sup> Shaddin Dughmi, Jason D. Hartline, Robert Kleinberg, and Rad Niazadeh. 2017. Bernoulli Factories and Black-Box Reductions in Mechanism Design. In <em>Proceedings of 49th Annual ACM SIGACT Symposium on the Theory of Computing</em>, Montreal, Canada, June 2017 (STOC’17).</small></p>
 
 <p><a id=License></a></p>
 
