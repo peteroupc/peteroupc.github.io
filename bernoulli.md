@@ -174,7 +174,12 @@ Note, however, that when _x_/_y_ < 1, this algorithm converges more and more slo
 4. With probability 1/2, flip the input coin and return the result.
 5. Call **SampleGeometricBag** once on the PSRN, and flip the input coin once.  If both the call and flip return 1, return 0.  Otherwise, go to step 4.
 
-Unfortunately, the Flajolet paper doesn't explain in detail how arcsin(&lambda;)/2 arises out of arcsin(&lambda;) + sqrt(1 &minus; &lambda;<sup>2</sup>) &minus; 1 via Bernoulli factory constructions, and I have been unable to find a derivation.
+**Algorithm for arcsin(&lambda;) / 2.**  The Flajolet paper doesn't explain in detail how arcsin(&lambda;)/2 arises out of arcsin(&lambda;) + sqrt(1 &minus; &lambda;<sup>2</sup>) &minus; 1 via Bernoulli factory constructions, but here is an algorithm.
+
+1. With probability 1/2, run the **algorithm for arcsin(&lambda;) + sqrt(1 &minus; &lambda;<sup>2</sup>) &minus; 1** and return the result.
+2. Create a secondary coin &mu; that does the following:
+    - Call **SampleGeometricBag** on the PSRN, and flip the input coin.  If both the call and flip return 1, return 0.  Otherwise, return 1.
+3. Call the **algorithm for &mu;<sup>1/2</sup>** using the secondary coin &mu;.  If it returns 0, return 1; otherwise, return 0.
 
 <a id=Algorithms_for_Irrational_Constants></a>
 ### Algorithms for Irrational Constants
