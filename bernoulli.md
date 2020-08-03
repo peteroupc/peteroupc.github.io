@@ -238,14 +238,14 @@ The algorithm follows.
 2. If _x_/_y_ is equal to 1, return 1 with probability _a_/_b_ and 0 otherwise.
 3. If _x_ is 0, return 1.  Otherwise, if _a_ is 0, return 0.  Otherwise, if _a_ equals _b_, return 1.
 4. If _x_/_y_ is greater than 1:
-    1. Generate a random number that is 1 with probability _a_<sup>_k_</sup>/_b_<sup>_k_</sup> or 0 otherwise, where _k_ = floor(_x_/_y_). (Or generate _k_ random numbers that are 1 with probability _a_/_b_ or 0 otherwise, then multiply them all.)  If the number is 0, return 0.
+    1. Generate a random number that is 1 with probability _a_<sup>_k_</sup>/_b_<sup>_k_</sup> or 0 otherwise, where _k_ = floor(_x_/_y_). (Or generate _k_ random numbers that are each 1 with probability _a_/_b_ or 0 otherwise, then multiply them all.)  If the number is 0, return 0.
     2. Otherwise, set _x_ and _y_ such that _x_/_y_ =_x_/_y_ &minus; _k_.
 5. Set _i_ to 1.
 6. With probability _a_/_b_, return 1.
 7. Otherwise, with probability _x_/(_y_*_i_), return 0.
 8. Add 1 to _i_ and go to step 6.
 
-**Algorithm for exp(&minus; _x_/_y_).**  This algorithm takes integers _x_ >= 0 and _y_ > 0 and outputs 1 with probability `exp(-x/y)` or 0 otherwise. It originates from (Canonne et al. 2020)<sup>[**(19)**](#Note19)</sup>.
+**Algorithm for exp(&minus; _x_/_y_).**  This algorithm takes integers _x_ >= 0 and _y_ > 0 and outputs 1 with probability `exp(-x/y)` or 0 otherwise. It originates from (Canonne et al. 2020)<sup>[**(14)**](#Note14)</sup>.
 
 1. Special case: If _x_ is 0, return 1. (This is because the probability becomes `exp(0) = 1`.)
 2. If `x > y` (so _x_/_y_ is greater than 1), call this algorithm (recursively) `floor(x/y)` times with _x_ = _y_ = 1 and once with _x_ = _x_ &minus; floor(_x_/_y_) \* _y_ and _y_ = _y_.  Return 1 if all these calls return 1; otherwise, return 0.
@@ -253,7 +253,7 @@ The algorithm follows.
 4. Return _r_ with probability (_y_ \* _i_ &minus; _x_) / (_y_ \* _i_).
 5. Set _r_ to 1 &minus; _r_, add 1 to _i_, and go to step 4.
 
-**Algorithm for exp(&minus; _z_).** This algorithm is similar to the previous algorithm, except that _z_ can be any real number 0 or greater, as long as _z_ can be rewritten as the sum of one or more components whose fractional parts can each be simulated by a Bernoulli factory algorithm that outputs heads with probability equal to that fractional part.
+**Algorithm for exp(&minus; _z_).** This algorithm is similar to the previous algorithm, except that _z_ can be any real number 0 or greater, as long as _z_ can be rewritten as the sum of one or more components whose fractional parts can each be simulated by a Bernoulli factory algorithm that outputs heads with probability equal to that fractional part. (This makes use of the identity exp(&minus;a) = exp(&minus;b) * exp(&minus;c).)
 
 More specifically:
 
@@ -262,12 +262,12 @@ More specifically:
 
 The algorithm is then as follows:
 
-- For each component _LC_\[_i_\], call the **algorithm for exp(&minus; _LI_\[_i_\]/1)**, and call the **general martingale algorithm** adapted for **exp(&minus; _LF_\[_i_\])**.  If any of these calls returns 0, return 0; otherwise, return 1. (See also (Canonne et al. 2020)<sup>[**(14)**](#Note14)</sup>.)
+- For each component _LC_\[_i_\], call the **algorithm for exp(&minus; _LI_\[_i_\]/1)**, and call the **general martingale algorithm** adapted for **exp(&minus; _LF_\[_i_\])**.  If any of these calls returns 0, return 0; otherwise, return 1. (See also (Canonne et al. 2020)<sup>[**(15)**](#Note15)</sup>.)
 
 <a id=General_Algorithms></a>
 ### General Algorithms
 
-**Algorithm for the probability generating function.**  Let _X_ be a random number that follows a discrete distribution (one that takes on a countable number of values).  The following algorithm generates heads with probability **E**\[&lambda;<sup>_X_</sup>\], that is, the expected (average) value of &lambda;<sup>_X_</sup>.  **E**\[&lambda;<sup>_X_</sup>\] is the distribution's _probability generating function_, also known as _factorial moment generating function_ (Dughmi et al. 2017)<sup>[**(15)**](#Note15)</sup>.
+**Algorithm for the probability generating function.**  Let _X_ be a random number that follows a discrete distribution (one that takes on a countable number of values).  The following algorithm generates heads with probability **E**\[&lambda;<sup>_X_</sup>\], that is, the expected (average) value of &lambda;<sup>_X_</sup>.  **E**\[&lambda;<sup>_X_</sup>\] is the distribution's _probability generating function_, also known as _factorial moment generating function_ (Dughmi et al. 2017)<sup>[**(16)**](#Note16)</sup>.
 
 1. Generate a random number _N_ of the given distribution.
 2. Flip the input coin until the coin returns 0 or the coin is flipped _N_ times.  Return 1 if all the coin flips, including the last, returned 1 (or if _N_ is 0); or return 0 otherwise.
@@ -288,7 +288,7 @@ The algorithm is then as follows:
 The following charts show the correctness of many of the algorithms on this page and show their performance in terms of the number of bits they use on average.  For each algorithm, and for each of 100 &lambda; values evenly spaced from 0.0001 to 0.9999:
 
 - 500 runs of the algorithm were done.  Then...
-- The number of bits used by the runs were averaged, as were the return values of the runs (since the return value is either 0 or 1, the mean return value will be in the interval [0, 1]).
+- The number of bits used by the runs were averaged, as were the return values of the runs (since the return value is either 0 or 1, the mean return value will be in the interval [0, 1]).  The number of bits used included the number of bits used to produce each coin flip, assuming the coin flip procedure for &lambda; was generated using the `Bernoulli#coin()` method in _bernoulli.py_, which produces that probability in an optimal or near-optimal way.
 
 For each algorithm, if a single run was detected to use more than 5000 bits for a given &lambda;, the entire data point for that &lambda; was suppressed in the charts below.
 
@@ -297,7 +297,7 @@ In addition, for each algorithm, a table appears showing the minimum number of i
 <a id=The_Charts></a>
 ### The Charts
 
-| Algorithm | Simulated Mean | Average Bits Consumed | Coin Flip Lower Bound |
+| Algorithm | Simulated Mean | Average Bits Consumed | Coins Flipped |
  --- | --- | --- | --- |
 | arcsin(x)+sqrt(1-x\*x)-1 | ![**Simulated Mean for arcsin(x)+sqrt(1-x\*x)-1**](bernoullicharts/arcsin_x_sqrt_1-x_x_-1_mean.svg) | ![**Expected Bits Consumed by arcsin(x)+sqrt(1-x\*x)-1**](bernoullicharts/arcsin_x_sqrt_1-x_x_-1_bits.svg) | ![**Coin Flip Lower Bound for the Function**](bernoullicharts/arcsin_x_sqrt_1-x_x_-1_bound.svg) |
 | arcsin(x)/2 | ![**Simulated Mean for arcsin(x)/2**](bernoullicharts/arcsin_x_2_mean.svg) | ![**Expected Bits Consumed by arcsin(x)/2**](bernoullicharts/arcsin_x_2_bits.svg) | ![**Coin Flip Lower Bound for the Function**](bernoullicharts/arcsin_x_2_bound.svg) |
@@ -352,17 +352,11 @@ In addition, for each algorithm, a table appears showing the minimum number of i
 
 <small><sup id=Note13>(13)</sup> One of the only implementations I could find of this, if not the only, was a [**Haskell implementation**](https://github.com/derekelkins/buffon/blob/master/Data/Distribution/Buffon.hs).</small>
 
-<small><sup id=Note14>(14)</sup> No note text yet.</small>
+<small><sup id=Note14>(14)</sup> Canonne, C., Kamath, G., Steinke, T., "[**The Discrete Gaussian for Differential Privacy**](https://arxiv.org/abs/2004.00010v2)", arXiv:2004.00010v2 [cs.DS], 2020.</small>
 
-<small><sup id=Note15>(15)</sup> Shaddin Dughmi, Jason D. Hartline, Robert Kleinberg, and Rad Niazadeh. 2017. Bernoulli Factories and Black-Box Reductions in Mechanism Design. In _Proceedings of 49th Annual ACM SIGACT Symposium on the Theory of Computing_, Montreal, Canada, June 2017 (STOC’17).</small>
+<small><sup id=Note15>(15)</sup> No note text yet.</small>
 
-<small><sup id=Note16>(16)</sup> No note text yet.</small>
-
-<small><sup id=Note17>(17)</sup> No note text yet.</small>
-
-<small><sup id=Note18>(18)</sup> No note text yet.</small>
-
-<small><sup id=Note19>(19)</sup> Canonne, C., Kamath, G., Steinke, T., "[The Discrete Gaussian for Differential Privacy](https://arxiv.org/abs/2004.00010v2)", arXiv:2004.00010v2 [cs.DS], 2020.</small>
+<small><sup id=Note16>(16)</sup> Shaddin Dughmi, Jason D. Hartline, Robert Kleinberg, and Rad Niazadeh. 2017. Bernoulli Factories and Black-Box Reductions in Mechanism Design. In _Proceedings of 49th Annual ACM SIGACT Symposium on the Theory of Computing_, Montreal, Canada, June 2017 (STOC’17).</small>
 
 <a id=Appendix></a>
 ## Appendix
@@ -398,15 +392,15 @@ for i in range(iters):
 
 As this code shows, as _x_ (the probability of heads of the input coin) approaches 0, the convergence rate gets slower and slower, even though the probability will eventually converge to the correct one. In fact, when _y_/_z_ is less than 1:
 
-- The average number of coin flips needed by this algorithm will grow without bound as _x_ approaches 0, and Mendo (2019)<sup>[**(16)**](#Note16)</sup> showed that this is a lower bound; that is, no Bernoulli factory algorithm can do much better without knowing more information on _x_.
-- _x_<sup>_y_/_z_</sup> has a slope that tends to a vertical slope near 0, so that the so-called [**_Lipschitz condition_**](https://en.wikipedia.org/wiki/Lipschitz_continuity) is not met at 0.  And (Nacu and Peres 2005, propositions 10 and 23)<sup>[**(17)**](#Note17)</sup> showed that the Lipschitz condition is necessary for a Bernoulli factory to have an upper bound on the average running time.
+- The average number of coin flips needed by this algorithm will grow without bound as _x_ approaches 0, and Mendo (2019)<sup>[**(15)**](#Note15)</sup> showed that this is a lower bound; that is, no Bernoulli factory algorithm can do much better without knowing more information on _x_.
+- _x_<sup>_y_/_z_</sup> has a slope that tends to a vertical slope near 0, so that the so-called [**_Lipschitz condition_**](https://en.wikipedia.org/wiki/Lipschitz_continuity) is not met at 0.  And (Nacu and Peres 2005, propositions 10 and 23)<sup>[**(15)**](#Note15)</sup> showed that the Lipschitz condition is necessary for a Bernoulli factory to have an upper bound on the average running time.
 
 Thus, a practical implementation of this algorithm may have to switch to an alternative implementation (such as the one described in the next section) when it detects that the geometric bag's first few digits are zeros.
 
 <a id=Alternative_Implementation_of_Bernoulli_Factories></a>
 ### Alternative Implementation of Bernoulli Factories
 
-Say we have a Bernoulli factory algorithm that takes a coin with probability of heads of _p_ and outputs 1 with probability _f_(_p_).  If this algorithm takes a geometric bag (a partially-sampled uniform random number or PSRN) as the input coin and flips that coin using **SampleGeometricBag**, the algorithm could instead be implemented as follows in order to return 1 with probability _f_(_U_), where _U_ is the number represented by the geometric bag (see also (Brassard et al., 2019)<sup>[**(11)**](#Note11)</sup>, (Devroye 1986, p. 431)<sup>[**(18)**](#Note18)</sup>, (Devroye and Gravel 2015)<sup>[**(3)**](#Note3)</sup>):
+Say we have a Bernoulli factory algorithm that takes a coin with probability of heads of _p_ and outputs 1 with probability _f_(_p_).  If this algorithm takes a geometric bag (a partially-sampled uniform random number or PSRN) as the input coin and flips that coin using **SampleGeometricBag**, the algorithm could instead be implemented as follows in order to return 1 with probability _f_(_U_), where _U_ is the number represented by the geometric bag (see also (Brassard et al., 2019)<sup>[**(11)**](#Note11)</sup>, (Devroye 1986, p. 431)<sup>[**(15)**](#Note15)</sup>, (Devroye and Gravel 2015)<sup>[**(3)**](#Note3)</sup>):
 
 1. Set _v_ to 0 and _k_ to 1.
 2. Set _v_ to _b_ * _v_ + _d_, where _b_ is the base (or radix) of the geometric bag's digits, and _d_ is a digit chosen uniformly at random.

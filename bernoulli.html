@@ -315,7 +315,7 @@
 <li>If <em>x</em>/<em>y</em> is greater than 1:
 
 <ol>
-<li>Generate a random number that is 1 with probability <em>a</em><sup><em>k</em></sup>/<em>b</em><sup><em>k</em></sup> or 0 otherwise, where <em>k</em> = floor(<em>x</em>/<em>y</em>). (Or generate <em>k</em> random numbers that are 1 with probability <em>a</em>/<em>b</em> or 0 otherwise, then multiply them all.)  If the number is 0, return 0.</li>
+<li>Generate a random number that is 1 with probability <em>a</em><sup><em>k</em></sup>/<em>b</em><sup><em>k</em></sup> or 0 otherwise, where <em>k</em> = floor(<em>x</em>/<em>y</em>). (Or generate <em>k</em> random numbers that are each 1 with probability <em>a</em>/<em>b</em> or 0 otherwise, then multiply them all.)  If the number is 0, return 0.</li>
 <li>Otherwise, set <em>x</em> and <em>y</em> such that <em>x</em>/<em>y</em> =<em>x</em>/<em>y</em> &minus; <em>k</em>.</li>
 </ol></li>
 <li>Set <em>i</em> to 1.</li>
@@ -324,7 +324,7 @@
 <li>Add 1 to <em>i</em> and go to step 6.</li>
 </ol>
 
-<p><strong>Algorithm for exp(&minus; <em>x</em>/<em>y</em>).</strong>  This algorithm takes integers <em>x</em> &gt;= 0 and <em>y</em> &gt; 0 and outputs 1 with probability <code>exp(-x/y)</code> or 0 otherwise. It originates from (Canonne et al. 2020)<sup><a href="#Note19"><strong>(19)</strong></a></sup>.</p>
+<p><strong>Algorithm for exp(&minus; <em>x</em>/<em>y</em>).</strong>  This algorithm takes integers <em>x</em> &gt;= 0 and <em>y</em> &gt; 0 and outputs 1 with probability <code>exp(-x/y)</code> or 0 otherwise. It originates from (Canonne et al. 2020)<sup><a href="#Note14"><strong>(14)</strong></a></sup>.</p>
 
 <ol>
 <li>Special case: If <em>x</em> is 0, return 1. (This is because the probability becomes <code>exp(0) = 1</code>.)</li>
@@ -334,7 +334,7 @@
 <li>Set <em>r</em> to 1 &minus; <em>r</em>, add 1 to <em>i</em>, and go to step 4.</li>
 </ol>
 
-<p><strong>Algorithm for exp(&minus; <em>z</em>).</strong> This algorithm is similar to the previous algorithm, except that <em>z</em> can be any real number 0 or greater, as long as <em>z</em> can be rewritten as the sum of one or more components whose fractional parts can each be simulated by a Bernoulli factory algorithm that outputs heads with probability equal to that fractional part.</p>
+<p><strong>Algorithm for exp(&minus; <em>z</em>).</strong> This algorithm is similar to the previous algorithm, except that <em>z</em> can be any real number 0 or greater, as long as <em>z</em> can be rewritten as the sum of one or more components whose fractional parts can each be simulated by a Bernoulli factory algorithm that outputs heads with probability equal to that fractional part. (This makes use of the identity exp(&minus;a) = exp(&minus;b) * exp(&minus;c).)</p>
 
 <p>More specifically:</p>
 
@@ -346,14 +346,14 @@
 <p>The algorithm is then as follows:</p>
 
 <ul>
-<li>For each component <em>LC</em>[<em>i</em>], call the <strong>algorithm for exp(&minus; <em>LI</em>[<em>i</em>]/1)</strong>, and call the <strong>general martingale algorithm</strong> adapted for <strong>exp(&minus; <em>LF</em>[<em>i</em>])</strong>.  If any of these calls returns 0, return 0; otherwise, return 1. (See also (Canonne et al. 2020)<sup><a href="#Note14"><strong>(14)</strong></a></sup>.)</li>
+<li>For each component <em>LC</em>[<em>i</em>], call the <strong>algorithm for exp(&minus; <em>LI</em>[<em>i</em>]/1)</strong>, and call the <strong>general martingale algorithm</strong> adapted for <strong>exp(&minus; <em>LF</em>[<em>i</em>])</strong>.  If any of these calls returns 0, return 0; otherwise, return 1. (See also (Canonne et al. 2020)<sup><a href="#Note15"><strong>(15)</strong></a></sup>.)</li>
 </ul>
 
 <p><a id=General_Algorithms></a></p>
 
 <h3>General Algorithms</h3>
 
-<p><strong>Algorithm for the probability generating function.</strong>  Let <em>X</em> be a random number that follows a discrete distribution (one that takes on a countable number of values).  The following algorithm generates heads with probability <strong>E</strong>[&lambda;<sup><em>X</em></sup>], that is, the expected (average) value of &lambda;<sup><em>X</em></sup>.  <strong>E</strong>[&lambda;<sup><em>X</em></sup>] is the distribution&#39;s <em>probability generating function</em>, also known as <em>factorial moment generating function</em> (Dughmi et al. 2017)<sup><a href="#Note15"><strong>(15)</strong></a></sup>.</p>
+<p><strong>Algorithm for the probability generating function.</strong>  Let <em>X</em> be a random number that follows a discrete distribution (one that takes on a countable number of values).  The following algorithm generates heads with probability <strong>E</strong>[&lambda;<sup><em>X</em></sup>], that is, the expected (average) value of &lambda;<sup><em>X</em></sup>.  <strong>E</strong>[&lambda;<sup><em>X</em></sup>] is the distribution&#39;s <em>probability generating function</em>, also known as <em>factorial moment generating function</em> (Dughmi et al. 2017)<sup><a href="#Note16"><strong>(16)</strong></a></sup>.</p>
 
 <ol>
 <li>Generate a random number <em>N</em> of the given distribution.</li>
@@ -380,7 +380,7 @@
 
 <ul>
 <li>500 runs of the algorithm were done.  Then...</li>
-<li>The number of bits used by the runs were averaged, as were the return values of the runs (since the return value is either 0 or 1, the mean return value will be in the interval [0, 1]).</li>
+<li>The number of bits used by the runs were averaged, as were the return values of the runs (since the return value is either 0 or 1, the mean return value will be in the interval [0, 1]).  The number of bits used included the number of bits used to produce each coin flip, assuming the coin flip procedure for &lambda; was generated using the <code>Bernoulli#coin()</code> method in <em>bernoulli.py</em>, which produces that probability in an optimal or near-optimal way.</li>
 </ul>
 
 <p>For each algorithm, if a single run was detected to use more than 5000 bits for a given &lambda;, the entire data point for that &lambda; was suppressed in the charts below.</p>
@@ -396,7 +396,7 @@
 <th>Algorithm</th>
 <th>Simulated Mean</th>
 <th>Average Bits Consumed</th>
-<th>Coin Flip Lower Bound</th>
+<th>Coins Flipped</th>
 </tr>
 </thead><tbody>
 <tr>
@@ -569,17 +569,11 @@
 
 <p><small><sup id=Note13>(13)</sup> One of the only implementations I could find of this, if not the only, was a <a href="https://github.com/derekelkins/buffon/blob/master/Data/Distribution/Buffon.hs"><strong>Haskell implementation</strong></a>.</small></p>
 
-<p><small><sup id=Note14>(14)</sup> No note text yet.</small></p>
+<p><small><sup id=Note14>(14)</sup> Canonne, C., Kamath, G., Steinke, T., &quot;<a href="https://arxiv.org/abs/2004.00010v2"><strong>The Discrete Gaussian for Differential Privacy</strong></a>&quot;, arXiv:2004.00010v2 [cs.DS], 2020.</small></p>
 
-<p><small><sup id=Note15>(15)</sup> Shaddin Dughmi, Jason D. Hartline, Robert Kleinberg, and Rad Niazadeh. 2017. Bernoulli Factories and Black-Box Reductions in Mechanism Design. In <em>Proceedings of 49th Annual ACM SIGACT Symposium on the Theory of Computing</em>, Montreal, Canada, June 2017 (STOC’17).</small></p>
+<p><small><sup id=Note15>(15)</sup> No note text yet.</small></p>
 
-<p><small><sup id=Note16>(16)</sup> No note text yet.</small></p>
-
-<p><small><sup id=Note17>(17)</sup> No note text yet.</small></p>
-
-<p><small><sup id=Note18>(18)</sup> No note text yet.</small></p>
-
-<p><small><sup id=Note19>(19)</sup> Canonne, C., Kamath, G., Steinke, T., &quot;<a href="https://arxiv.org/abs/2004.00010v2">The Discrete Gaussian for Differential Privacy</a>&quot;, arXiv:2004.00010v2 [cs.DS], 2020.</small></p>
+<p><small><sup id=Note16>(16)</sup> Shaddin Dughmi, Jason D. Hartline, Robert Kleinberg, and Rad Niazadeh. 2017. Bernoulli Factories and Black-Box Reductions in Mechanism Design. In <em>Proceedings of 49th Annual ACM SIGACT Symposium on the Theory of Computing</em>, Montreal, Canada, June 2017 (STOC’17).</small></p>
 
 <p><a id=Appendix></a></p>
 
@@ -617,8 +611,8 @@ for i in range(iters):
 <p>As this code shows, as <em>x</em> (the probability of heads of the input coin) approaches 0, the convergence rate gets slower and slower, even though the probability will eventually converge to the correct one. In fact, when <em>y</em>/<em>z</em> is less than 1:</p>
 
 <ul>
-<li>The average number of coin flips needed by this algorithm will grow without bound as <em>x</em> approaches 0, and Mendo (2019)<sup><a href="#Note16"><strong>(16)</strong></a></sup> showed that this is a lower bound; that is, no Bernoulli factory algorithm can do much better without knowing more information on <em>x</em>.</li>
-<li><em>x</em><sup><em>y</em>/<em>z</em></sup> has a slope that tends to a vertical slope near 0, so that the so-called <a href="https://en.wikipedia.org/wiki/Lipschitz_continuity"><strong><em>Lipschitz condition</em></strong></a> is not met at 0.  And (Nacu and Peres 2005, propositions 10 and 23)<sup><a href="#Note17"><strong>(17)</strong></a></sup> showed that the Lipschitz condition is necessary for a Bernoulli factory to have an upper bound on the average running time.</li>
+<li>The average number of coin flips needed by this algorithm will grow without bound as <em>x</em> approaches 0, and Mendo (2019)<sup><a href="#Note15"><strong>(15)</strong></a></sup> showed that this is a lower bound; that is, no Bernoulli factory algorithm can do much better without knowing more information on <em>x</em>.</li>
+<li><em>x</em><sup><em>y</em>/<em>z</em></sup> has a slope that tends to a vertical slope near 0, so that the so-called <a href="https://en.wikipedia.org/wiki/Lipschitz_continuity"><strong><em>Lipschitz condition</em></strong></a> is not met at 0.  And (Nacu and Peres 2005, propositions 10 and 23)<sup><a href="#Note15"><strong>(15)</strong></a></sup> showed that the Lipschitz condition is necessary for a Bernoulli factory to have an upper bound on the average running time.</li>
 </ul>
 
 <p>Thus, a practical implementation of this algorithm may have to switch to an alternative implementation (such as the one described in the next section) when it detects that the geometric bag&#39;s first few digits are zeros.</p>
@@ -627,7 +621,7 @@ for i in range(iters):
 
 <h3>Alternative Implementation of Bernoulli Factories</h3>
 
-<p>Say we have a Bernoulli factory algorithm that takes a coin with probability of heads of <em>p</em> and outputs 1 with probability <em>f</em>(<em>p</em>).  If this algorithm takes a geometric bag (a partially-sampled uniform random number or PSRN) as the input coin and flips that coin using <strong>SampleGeometricBag</strong>, the algorithm could instead be implemented as follows in order to return 1 with probability <em>f</em>(<em>U</em>), where <em>U</em> is the number represented by the geometric bag (see also (Brassard et al., 2019)<sup><a href="#Note11"><strong>(11)</strong></a></sup>, (Devroye 1986, p. 431)<sup><a href="#Note18"><strong>(18)</strong></a></sup>, (Devroye and Gravel 2015)<sup><a href="#Note3"><strong>(3)</strong></a></sup>):</p>
+<p>Say we have a Bernoulli factory algorithm that takes a coin with probability of heads of <em>p</em> and outputs 1 with probability <em>f</em>(<em>p</em>).  If this algorithm takes a geometric bag (a partially-sampled uniform random number or PSRN) as the input coin and flips that coin using <strong>SampleGeometricBag</strong>, the algorithm could instead be implemented as follows in order to return 1 with probability <em>f</em>(<em>U</em>), where <em>U</em> is the number represented by the geometric bag (see also (Brassard et al., 2019)<sup><a href="#Note11"><strong>(11)</strong></a></sup>, (Devroye 1986, p. 431)<sup><a href="#Note15"><strong>(15)</strong></a></sup>, (Devroye and Gravel 2015)<sup><a href="#Note3"><strong>(3)</strong></a></sup>):</p>
 
 <ol>
 <li>Set <em>v</em> to 0 and <em>k</em> to 1.</li>
