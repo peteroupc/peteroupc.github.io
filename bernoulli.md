@@ -162,6 +162,11 @@ Observing that the even-parity construction used in the Flajolet paper is equiva
 
 (Note that Huber specifies this Bernoulli factory in terms of a Poisson point process, which seems to require much more randomness on average.)
 
+**Algorithm for 1/(_c_ + &lambda;)**, where _c_ > 0.
+
+1. With probability _c_/(1 + _c_), return a number that is 1 with probability 1/_c_ and 0 otherwise.
+2. Flip the input coin.  If the coin returns 1, return 0.  Otherwise, go to step 1.
+
 **Algorithm for arctan(&lambda;) /&lambda;** (Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup>:
 
 1. Generate an empty uniform PSRN.
@@ -223,6 +228,15 @@ Observing that the even-parity construction used in the Flajolet paper is equiva
 ### Algorithms for Irrational Constants
 
 The following algorithms generate heads with a probability equal to an irrational number.  (On the other hand, probabilities that are _rational_ constants are trivial to simulate.  If fair coins are available, the `ZeroOrOne` method should be used.  If coins with unknown bias are available, then a _randomness extraction_ method such as the von Neumann algorithm should be used to turn them into fair coins.  Randomness extraction is outside the scope of this document, however.)
+
+**Algorithm for continued fractions.**  The following algorithm simulates a probability expressed as a regular continued fraction of the following form: 0 + 1 / (a\[1\] + 1 / (a\[2\] + 1 / ( a\[3\] + ... ))).  The _a_\[_i_\] are the _partial denominators_ and must be integers greater than 0.  Inspired by (Flajolet et al., 2010, "Finite graphs (Markov chains) and rational functions")<sup>[**(1)**](#Note1)</sup>, I developed the following algorithm.
+
+The algorithm begins with _pos_ equal to 1.  Then the following steps are taken.
+
+1. If _a_\[_pos_\] is the last partial denominator, return a number that is 1 with probability 1/(1+_a_\[_pos_\]) and 0 otherwise.
+2. Set _k_ to _a_\[_pos_\].
+3. With probability _k_/(1+_k_), return a number that is 1 with probability 1/_k_ and 0 otherwise.
+4. Run this algorithm recursively, but with _pos_ = _pos_ + 1.  If the result is 1, return 0.  Otherwise, go to step 3.
 
 **Algorithm for arctan(_x_/_y_) \* _y_/_x_** (Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup>:
 
@@ -334,7 +348,7 @@ The following charts show the correctness of many of the algorithms on this page
 
 For each algorithm, if a single run was detected to use more than 5000 bits for a given &lambda;, the entire data point for that &lambda; was suppressed in the charts below.
 
-In addition, for each algorithm, a table appears showing the minimum number of input coin flips that any fast Bernoulli factory algorithm will need on average to simulate the given function, based on work by Mendo (2019)<sup>[**(13)**](#Note13)</sup>.  Note that some functions require a growing number of coin flips as &lambda; approaches 0 or 1.
+In addition, for each algorithm, a chart appears showing the minimum number of input coin flips that any fast Bernoulli factory algorithm will need on average to simulate the given function, based on work by Mendo (2019)<sup>[**(13)**](#Note13)</sup>.  Note that some functions require a growing number of coin flips as &lambda; approaches 0 or 1.
 
 <a id=The_Charts></a>
 ### The Charts
@@ -347,6 +361,8 @@ In addition, for each algorithm, a table appears showing the minimum number of i
 | 1/(1+x) (Alt. Series) | ![**Simulated Mean for 1/(1+x) (Alt. Series)**](bernoullicharts/1_1_x_alt_series__mean.svg) | ![**Expected Bits Consumed by 1/(1+x) (Alt. Series)**](bernoullicharts/1_1_x_alt_series__bits.svg) | ![**Coin Flips for the Function**](bernoullicharts/1_1_x_alt_series__bound.svg) |
 | 1/(1+x) (Even Parity) | ![**Simulated Mean for 1/(1+x) (Even Parity)**](bernoullicharts/1_1_x_even_parity__mean.svg) | ![**Expected Bits Consumed by 1/(1+x) (Even Parity)**](bernoullicharts/1_1_x_even_parity__bits.svg) | ![**Coin Flips for the Function**](bernoullicharts/1_1_x_even_parity__bound.svg) |
 | 1/(1+x) (Two-Coin Special Case) | ![**Simulated Mean for 1/(1+x) (Two-Coin Special Case)**](bernoullicharts/1_1_x_two-coin_special_case__mean.svg) | ![**Expected Bits Consumed by 1/(1+x) (Two-Coin Special Case)**](bernoullicharts/1_1_x_two-coin_special_case__bits.svg) | ![**Coin Flips for the Function**](bernoullicharts/1_1_x_two-coin_special_case__bound.svg) |
+| 1/(3+x) | ![**Simulated Mean for 1/(3+x)**](bernoullicharts/1_3_x__mean.svg) | ![**Expected Bits Consumed by 1/(3+x)**](bernoullicharts/1_3_x__bits.svg) | ![**Coin Flips for the Function**](bernoullicharts/1_3_x__bound.svg) |
+| 1/(5+x) | ![**Simulated Mean for 1/(5+x)**](bernoullicharts/1_5_x__mean.svg) | ![**Expected Bits Consumed by 1/(5+x)**](bernoullicharts/1_5_x__bits.svg) | ![**Coin Flips for the Function**](bernoullicharts/1_5_x__bound.svg) |
 | arcsin(x)+sqrt(1-x\*x)-1 | ![**Simulated Mean for arcsin(x)+sqrt(1-x\*x)-1**](bernoullicharts/arcsin_x_sqrt_1-x_x_-1_mean.svg) | ![**Expected Bits Consumed by arcsin(x)+sqrt(1-x\*x)-1**](bernoullicharts/arcsin_x_sqrt_1-x_x_-1_bits.svg) | ![**Coin Flips for the Function**](bernoullicharts/arcsin_x_sqrt_1-x_x_-1_bound.svg) |
 | arcsin(x)/2 | ![**Simulated Mean for arcsin(x)/2**](bernoullicharts/arcsin_x_2_mean.svg) | ![**Expected Bits Consumed by arcsin(x)/2**](bernoullicharts/arcsin_x_2_bits.svg) | ![**Coin Flips for the Function**](bernoullicharts/arcsin_x_2_bound.svg) |
 | arctan(x) (Flajolet) | ![**Simulated Mean for arctan(x) (Flajolet)**](bernoullicharts/arctan_x_flajolet__mean.svg) | ![**Expected Bits Consumed by arctan(x) (Flajolet)**](bernoullicharts/arctan_x_flajolet__bits.svg) | ![**Coin Flips for the Function**](bernoullicharts/arctan_x_flajolet__bound.svg) |

@@ -219,6 +219,13 @@
 
 <p>(Note that Huber specifies this Bernoulli factory in terms of a Poisson point process, which seems to require much more randomness on average.)</p>
 
+<p><strong>Algorithm for 1/(<em>c</em> + &lambda;)</strong>, where <em>c</em> &gt; 0.</p>
+
+<ol>
+<li>With probability <em>c</em>/(1 + <em>c</em>), return a number that is 1 with probability 1/<em>c</em> and 0 otherwise.</li>
+<li>Flip the input coin.  If the coin returns 1, return 0.  Otherwise, go to step 1.</li>
+</ol>
+
 <p><strong>Algorithm for arctan(&lambda;) /&lambda;</strong> (Flajolet et al., 2010)<sup><a href="#Note1"><strong>(1)</strong></a></sup>:</p>
 
 <ol>
@@ -306,6 +313,17 @@
 <h3>Algorithms for Irrational Constants</h3>
 
 <p>The following algorithms generate heads with a probability equal to an irrational number.  (On the other hand, probabilities that are <em>rational</em> constants are trivial to simulate.  If fair coins are available, the <code>ZeroOrOne</code> method should be used.  If coins with unknown bias are available, then a <em>randomness extraction</em> method such as the von Neumann algorithm should be used to turn them into fair coins.  Randomness extraction is outside the scope of this document, however.)</p>
+
+<p><strong>Algorithm for continued fractions.</strong>  The following algorithm simulates a probability expressed as a regular continued fraction of the following form: 0 + 1 / (a[1] + 1 / (a[2] + 1 / ( a[3] + ... ))).  The <em>a</em>[<em>i</em>] are the <em>partial denominators</em> and must be integers greater than 0.  Inspired by (Flajolet et al., 2010, &quot;Finite graphs (Markov chains) and rational functions&quot;)<sup><a href="#Note1"><strong>(1)</strong></a></sup>, I developed the following algorithm.</p>
+
+<p>The algorithm begins with <em>pos</em> equal to 1.  Then the following steps are taken.</p>
+
+<ol>
+<li>If <em>a</em>[<em>pos</em>] is the last partial denominator, return a number that is 1 with probability 1/(1+<em>a</em>[<em>pos</em>]) and 0 otherwise.</li>
+<li>Set <em>k</em> to <em>a</em>[<em>pos</em>].</li>
+<li>With probability <em>k</em>/(1+<em>k</em>), return a number that is 1 with probability 1/<em>k</em> and 0 otherwise.</li>
+<li>Run this algorithm recursively, but with <em>pos</em> = <em>pos</em> + 1.  If the result is 1, return 0.  Otherwise, go to step 3.</li>
+</ol>
 
 <p><strong>Algorithm for arctan(<em>x</em>/<em>y</em>) * <em>y</em>/<em>x</em></strong> (Flajolet et al., 2010)<sup><a href="#Note1"><strong>(1)</strong></a></sup>:</p>
 
@@ -453,7 +471,7 @@
 
 <p>For each algorithm, if a single run was detected to use more than 5000 bits for a given &lambda;, the entire data point for that &lambda; was suppressed in the charts below.</p>
 
-<p>In addition, for each algorithm, a table appears showing the minimum number of input coin flips that any fast Bernoulli factory algorithm will need on average to simulate the given function, based on work by Mendo (2019)<sup><a href="#Note13"><strong>(13)</strong></a></sup>.  Note that some functions require a growing number of coin flips as &lambda; approaches 0 or 1.</p>
+<p>In addition, for each algorithm, a chart appears showing the minimum number of input coin flips that any fast Bernoulli factory algorithm will need on average to simulate the given function, based on work by Mendo (2019)<sup><a href="#Note13"><strong>(13)</strong></a></sup>.  Note that some functions require a growing number of coin flips as &lambda; approaches 0 or 1.</p>
 
 <p><a id=The_Charts></a></p>
 
@@ -502,6 +520,18 @@
 <td><img src="bernoullicharts/1_1_x_two-coin_special_case__mean.svg" alt="**Simulated Mean for 1/(1+x) (Two-Coin Special Case)**"></td>
 <td><img src="bernoullicharts/1_1_x_two-coin_special_case__bits.svg" alt="**Expected Bits Consumed by 1/(1+x) (Two-Coin Special Case)**"></td>
 <td><img src="bernoullicharts/1_1_x_two-coin_special_case__bound.svg" alt="**Coin Flips for the Function**"></td>
+</tr>
+<tr>
+<td>1/(3+x)</td>
+<td><img src="bernoullicharts/1_3_x__mean.svg" alt="**Simulated Mean for 1/(3+x)**"></td>
+<td><img src="bernoullicharts/1_3_x__bits.svg" alt="**Expected Bits Consumed by 1/(3+x)**"></td>
+<td><img src="bernoullicharts/1_3_x__bound.svg" alt="**Coin Flips for the Function**"></td>
+</tr>
+<tr>
+<td>1/(5+x)</td>
+<td><img src="bernoullicharts/1_5_x__mean.svg" alt="**Simulated Mean for 1/(5+x)**"></td>
+<td><img src="bernoullicharts/1_5_x__bits.svg" alt="**Expected Bits Consumed by 1/(5+x)**"></td>
+<td><img src="bernoullicharts/1_5_x__bound.svg" alt="**Coin Flips for the Function**"></td>
 </tr>
 <tr>
 <td>arcsin(x)+sqrt(1-x*x)-1</td>
