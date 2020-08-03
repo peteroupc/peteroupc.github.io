@@ -53,33 +53,25 @@ class Bernoulli:
         self.totalbits = 0
 
     def _algorithm_a(self, f, m, c):
-        # B(p) -> B(c*p*(1-(c*p)^(m-1))/(1-(c*p)^m)) (Huber 2016)
+        # B(p) -> B(c*p*(1-(c*p)^(m-1))/(1-(c*p)^m)), or the "gambler's ruin" walk
+        # (Huber 2016)
         s = 1
-        cx = Fraction(1) / (Fraction(c) + 1)
+        # print([m, float(c), self._coinprob])
         while s > 0 and s < m:
-            # b = logistic(f, beta*c)
-            b = -1
-            while b < 0:  # Logistic algorithm found in Morina et al., not Huber
-                if self.zero_or_one(cx.numerator, cx.denominator) == 1:
-                    b = 0
-                elif f() == 1:
-                    b = 1
-            s = s - b * 2 + 1
+            if False:  # if self.totalbits >= 5000:
+                return math.nan
+            lo = self.logistic(f, c.numerator, c.denominator)
+            s = s - lo * 2 + 1
         return 1 if s == 0 else 0
 
     def _high_power_logistic(self, f, m, beta, c):
-        # B(p) => B(beta*c*p*(1+(beta*c*p)+...+(beta*c*p)^m)) (Huber 2016)
+        # B(p) => B((beta*c*p)^m/(1+(beta*c*p)+...+(beta*c*p)^m)) (Huber 2016)
         s = 1
-        cx = Fraction(1) / (Fraction(beta * c) + 1)
+        bc = beta * c
         while s > 0 and s <= m:
-            # b = logistic(f, beta*c)
-            b = -1
-            while b < 0:  # Logistic algorithm found in Morina et al., not Huber
-                if self.zero_or_one(cx.numerator, cx.denominator) == 1:
-                    b = 0
-                elif f() == 1:
-                    b = 1
-            s = s + b * 2 - 1
+            if False:  # if self.totalbits >= 5000:
+                return math.nan
+            s = s + self.logistic(f, bc.numerator, bc.denominator) * 2 - 1
         return 1 if s == m + 1 else 0
 
     def _henderson_glynn_double_inexact(self, f, n=100):
@@ -596,6 +588,8 @@ class Bernoulli:
         # and 1 otherwise.  Returns 1 if nx/ny is 0.  Reference: Mendo 2019.
         i = 1
         while True:
+            if False:  # if self.totalbits >= 5000:
+                return math.nan
             x = self.zero_or_one(px, py)
             if x == 1:
                 return 1
@@ -614,6 +608,8 @@ class Bernoulli:
         ny = n.denominator
         px = p.numerator
         py = p.denominator
+        if False:  # if self.totalbits >= 5000:
+            return math.nan
         if n < 0:  # (px/py)^(nx/ny) -> (py/px)^-(nx/ny)
             n = -n
             return self.zero_or_one_power_ratio(py, px, n.numerator, n.denominator)
@@ -699,28 +695,59 @@ class Bernoulli:
        by c. c must be 0 or greater. If c > 1, c must be chosen so that c*p <= 1 - eps.
      - eps: A Fraction in (0, 1). If c > 1, eps must be chosen so that c*p <= 1 - eps.
      """
+        if cy == 1:
+            c = Fraction(cx)
+        else:
+            c = Fraction(cx, cy)
+        # Fast cases, not covered in Huber, to make this more general than c > 1
+        if c < 0:
+            raise ValueError
+        if c == 0:
+            return 0
+        if c == 1:
+            return f()
+        if c.numerator < c.denominator:
+            # B(p) -> B(c*p), where c is in (0, 1)
+            return (
+                1
+                if self.zero_or_one(c.numerator, c.denominator) == 1 and f() == 1
+                else 0
+            )
         gamma = Fraction(1, 2)
+        eps = Fraction(eps)
+        if eps <= 0:
+            raise ValueError
         k = Fraction(23, 10) / (gamma * eps)
-        i = 1
         eps = min(eps, Fraction(644, 1000))
-        c = Fraction(cx, cy)
+        i = 1
         while True:
+            ce = (c - 1) / c
+            cn = ce.numerator
+            cd = ce.denominator
             while True:
-                b = f() ^ 1
-                if b == 1:
-                    i -= 1
-                else:
-                    ce = (c - 1) / c
+                # print([i,self.totalbits,float(self._coinprob),"k",float(k)])
+                if False:  # if self.totalbits >= 5000:
+                    return math.nan
+                i -= 1
+                if f() == 0:
                     # Number of failures before first success, plus 1
-                    g = 1
-                    while self.zero_or_one(ce.numerator, ce.denominator) == 0:
-                        g += 1
-                    i = (i - 1) + g
-                if i == 0 or i >= k:
+                    i += 1
+                    while self.zero_or_one(cn, cd) == 0:
+                        if False:  # if self.totalbits >= 5000:
+                            return math.nan
+                        i += 1
+                if i == 0:
+                    return 1
+                if i >= k:
                     break
             if i >= k:
                 ce = 1 + gamma * eps
-                if self.zero_or_one_power(ce.numerator, ce.denominator, -i) == 0:
+                if ce < 1:
+                    raise ValueError
+                if False:  # if self.totalbits >= 5000:
+                    return math.nan
+                # print(float(ce),float(ce**-i),float((1/ce)**i))
+                if self.zero_or_one_power(ce.denominator, ce.numerator, i) == 0:
                     return 1 if i == 0 else 0
                 c *= ce
                 eps *= 1 - gamma
@@ -734,9 +761,11 @@ class Bernoulli:
      - cx, cy: numerator and denominator of c; the probability of heads (p) is multiplied
        by c. c must be 0 or greater. If c > 1, c must be chosen so that c*p <= 1 - eps.
      - eps: A Fraction in (0, 1). If c > 1, eps must be chosen so that c*p <= 1 - eps.
-       This method is more accurate, but slower, when eps is close to 1.
      """
-        c = Fraction(cx, cy)
+        if cy == 1:
+            c = Fraction(cx)
+        else:
+            c = Fraction(cx, cy)
         # Fast cases, not covered in Huber, to make this more general than c > 1
         if c < 0:
             raise ValueError
@@ -752,20 +781,39 @@ class Bernoulli:
                 else 0
             )
         eps = Fraction(eps)
+        if eps <= 0:
+            raise ValueError
         m = (Fraction(45, 10) / eps) + 1
         # Ceiling operation
         m += Fraction(m.denominator - m.numerator % m.denominator, m.denominator)
+        m = int(m)
+        # if float(m)!=float(math.ceil(4.5/eps)+1): raise ValueError
         beta = 1 + Fraction(1) / (m - 1)
-        if self._algorithm_a(f, m, c) == 0:
+        if False:  # if self.totalbits >= 5000:
+            return math.nan
+        r = beta * c * self._coinprob
+        if self._algorithm_a(f, m, beta * c) == 0:
+            if False:  # if self.totalbits >= 5000:
+                return math.nan
             return 0
         if self.zero_or_one(beta.denominator, beta.numerator) == 1:
+            if False:  # if self.totalbits >= 5000:
+                return math.nan
             return 1  # Bern(1/beta)
-        # Algorithm B (B(p) -> B((m-1)*(beta*c*p)^(m-1)/(1+(beta*c*p)+...+(beta*c*p)^(m-2)))
         while True:
+            if False:  # if self.totalbits >= 5000:
+                return math.nan
             bc = beta * c
-            if self.linear(f, bc.numerator, bc.denominator, 1 - beta * (1 - eps)) == 0:
+            if (
+                self.linear(f, bc.numerator, bc.denominator, eps=1 - beta * (1 - eps))
+                == 0
+            ):
+                if False:  # if self.totalbits >= 5000:
+                    return math.nan
                 return 0
             if self._high_power_logistic(f, m - 2, beta, c) == 1:
+                if False:  # if self.totalbits >= 5000:
+                    return math.nan
                 return 1
             m -= 1
 
@@ -886,7 +934,10 @@ class Bernoulli:
         eps = Fraction(eps)
         if eps <= 0:
             raise ValueError
-        c = Fraction(cx, cy)
+        if cy == 1:
+            c = Fraction(cx)
+        else:
+            c = Fraction(cx, cy)
         # Fast cases, not covered in Huber, to make this more general than c > 1
         if c < 0:
             raise ValueError
@@ -904,6 +955,8 @@ class Bernoulli:
             return self.linear_power(fv, 1, 1, i, eps)
         thresh = Fraction(355, 100)
         while True:
+            if False:  # if self.totalbits >= 5000:
+                return math.nan
             if i == 0:
                 return 1
             while i > thresh / eps:
@@ -923,7 +976,10 @@ class Bernoulli:
        by c. c must be 0 or greater. If c > 1, c must be chosen so that c*p <= m < 1/2.
      - m: A Fraction in (0, 1/2). If c > 1, m must be chosen so that c*p <= m < 1/2.
      """
-        c = Fraction(cx, cy)
+        if cy == 1:
+            c = Fraction(cx)
+        else:
+            c = Fraction(cx, cy)
         # Fast cases, not covered in Huber, to make this more general than c > 1
         if c < 0:
             raise ValueError
@@ -938,8 +994,6 @@ class Bernoulli:
                 if self.zero_or_one(c.numerator, c.denominator) == 1 and f() == 1
                 else 0
             )
-        if m == None:
-            m = Fraction(249, 500)
         m = Fraction(m)
         if m >= Fraction(1, 2):
             raise ValueError
@@ -951,7 +1005,7 @@ class Bernoulli:
         if self.zero_or_one(beta.denominator, beta.numerator) == 1:
             return 1  # Bern(1/beta)
         c = beta * c / (beta - 1)
-        return self.linear_power(f, c, eps=Fraction(1, 2) + m)
+        return self.linear_power(f, c, eps=Fraction(1) - m)
 
 # Examples of use
 if __name__ == "__main__":
@@ -1013,16 +1067,6 @@ if __name__ == "__main__":
             if v >= ls[i] and v < ls[i + 1]:
                 buckets[i] += 1
                 break
-
-    """
-    b = Bernoulli()
-    ls = linspace(-10,10, 30)
-    buckets = [0 for x in ls]
-    ksample = [b.betadist(2,1,3,2) for i in range(5000)]
-    for ks in ksample:
-            bucket(ks, ls, buckets)
-    showbuckets(ls, buckets)
-    """
 
     c = [b.exp_minus(b.coin(0.2)) for i in range(10000)]
     print([_mean(c), math.exp(-0.2)])

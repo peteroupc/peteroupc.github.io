@@ -58,6 +58,10 @@
 <p>An algorithm can be uniformly fast for all &lambda; parameters in a closed interval in (0, 1) only if its factory function meets the Lipschitz condition on that closed interval, that is, it is continuous and has no slope that tends to a vertical slope anywhere in that interval (Nacu and Peres 2005, proposition 23)<sup><a href="#Note4"><strong>(4)</strong></a></sup>.</p>
 </blockquote>
 
+<p><a id=Algorithms_for_Functions_of_lambda></a></p>
+
+<h3>Algorithms for Functions of &lambda;</h3>
+
 <p><strong>Algorithms for exp(&minus;&lambda;).</strong></p>
 
 <p>The algorithm in (Flajolet et al., 2010)<sup><a href="#Note1"><strong>(1)</strong></a></sup> calls for generating a Poisson(&lambda;) random number and returning 1 if that number is 0, or 0 otherwise.  The Poisson generator in turn involves generating a geometric(&lambda;) random number <em>G</em><sup><a href="#Note5"><strong>(5)</strong></a></sup>, then <em>G</em> uniform random numbers, then returning <em>G</em> only if all <em>G</em> uniform numbers are sorted.<sup><a href="#Note6"><strong>(6)</strong></a></sup>  The algorithm follows.</p>
@@ -123,7 +127,7 @@
 <p><strong>Algorithm for exp(&minus;&lambda; &minus; <em>c</em>)</strong>.  To the best of my knowledge, I am not aware of any article or paper by others that presents this particular Bernoulli factory. In this algorithm, <em>c</em> is an integer that is 0 or greater.</p>
 
 <ol>
-<li>Run the <strong>ZeroOrOneExpMinus</strong> algorithm, described in my article on <a href="https://peteroupc.github.io/exporand.html"><strong>partially-sampled random numbers (PSRNs)</strong></a>, with <em>x</em> = <em>c</em> and <em>y</em> = 1.  Return 0 if the algorithm returns 0.</li>
+<li>Run the <strong>algorithm for exp(&minus;<em>c</em>/1)</strong> described later in this document.  Return 0 if the algorithm returns 0.</li>
 <li>Return the result of the <strong>algorithm for exp(&minus;&lambda;)</strong>.</li>
 </ol>
 
@@ -163,20 +167,16 @@
 <li>Call <strong>SampleGeometricBag</strong> on the PSRN, then flip the input coin.  If the call and the flip both return 1, return 0.  Otherwise, go to step 2.</li>
 </ol>
 
-<p>A third algorithm is to invert the result of the algorithm for 1 &minus; log(1+&lambda;) below (make it 1 if it&#39;s 0 and vice versa).</p>
+<p><strong>Algorithm for 1 &minus; log(1+&lambda;).</strong>  Invert the result of the algorithm for log(1+&lambda;) (make it 1 if it&#39;s 0 and vice versa).<sup><a href="#Note9"><strong>(9)</strong></a></sup>&gt;</p>
 
-<p><strong>Algorithm for 1 &minus; log(1+&lambda;).</strong>  This algorithm uses the reverse-time martingale approach in (Łatuszyński et al. 2009/2011)<sup><a href="#Note7"><strong>(7)</strong></a></sup>.  Here, the alternating series is <code>1 - x + x^2/2 - x^3/3 + ...</code>, whose coefficients are 1, 1, 1/2, 1/3, ....  Follow the general martingale algorithm, but note that this algorithm uses more bits on average as &lambda; approaches 1.</p>
-
-<p>Alternatively, invert the result of either of the algorithms for log(1+&lambda;) (make it 1 if it&#39;s 0 and vice versa).</p>
-
-<p><strong>Algorithm for <em>c</em> * &lambda; * &beta; / (&beta; * (<em>c</em> * &lambda; + <em>d</em> * &mu;) &minus; (&beta; &minus; 1) * (<em>c</em> + <em>d</em>)).</strong>  This is the general two-coin algorithm of (Gonçalves et al., 2017)<sup><a href="#Note8"><strong>(8)</strong></a></sup> and (Vats et al. 2020)<sup><a href="#Note9"><strong>(9)</strong></a></sup>.  It takes two input coins that each output heads (1) with probability &lambda; or &mu;, respectively.  It also takes a parameter &beta; in the interval [0, 1], which is a so-called &quot;portkey&quot; or early rejection parameter (when &beta; = 1, the formula simplifies to <em>c</em> * &lambda; / (<em>c</em> * &lambda; + <em>d</em> * &mu;)).</p>
+<p><strong>Algorithm for <em>c</em> * &lambda; * &beta; / (&beta; * (<em>c</em> * &lambda; + <em>d</em> * &mu;) &minus; (&beta; &minus; 1) * (<em>c</em> + <em>d</em>)).</strong>  This is the general two-coin algorithm of (Gonçalves et al., 2017)<sup><a href="#Note8"><strong>(8)</strong></a></sup> and (Vats et al. 2020)<sup><a href="#Note10"><strong>(10)</strong></a></sup>.  It takes two input coins that each output heads (1) with probability &lambda; or &mu;, respectively.  It also takes a parameter &beta; in the interval [0, 1], which is a so-called &quot;portkey&quot; or early rejection parameter (when &beta; = 1, the formula simplifies to <em>c</em> * &lambda; / (<em>c</em> * &lambda; + <em>d</em> * &mu;)).</p>
 
 <ol>
 <li>With probability &beta;, go to step 2.  Otherwise, return 0. (For example, call <code>ZeroOrOne</code> with &beta;&#39;s numerator and denominator, and return 0 if that call returns 0, or go to step 2 otherwise.)</li>
 <li>With probability <em>c</em> / (<em>c</em> + <em>d</em>), flip the &lambda; input coin.  Otherwise, flip the &mu; input coin.  If the &lambda; input coin returns 1, return 1.  If the &mu; input coin returns 1, return 0.  If the corresponding coin returns 0, go to step 1.</li>
 </ol>
 
-<p><strong>Algorithm for <em>c</em> * &lambda; / (<em>c</em> * &lambda; + <em>d</em>) or (<em>c</em>/<em>d</em>) * &lambda; / (1 + (<em>c</em>/<em>d</em>) * &lambda;)).</strong> This algorithm, also known as the <strong>logistic Bernoulli factory</strong> (Huber 2016)<sup><a href="#Note10"><strong>(10)</strong></a></sup>, (Morina et al., 2019)<sup><a href="#Note11"><strong>(11)</strong></a></sup>, is a special case of the two-coin algorithm above, but this time uses only one input coin.</p>
+<p><strong>Algorithm for <em>c</em> * &lambda; / (<em>c</em> * &lambda; + <em>d</em>) or (<em>c</em>/<em>d</em>) * &lambda; / (1 + (<em>c</em>/<em>d</em>) * &lambda;)).</strong> This algorithm, also known as the <strong>logistic Bernoulli factory</strong> (Huber 2016)<sup><a href="#Note11"><strong>(11)</strong></a></sup>, (Morina et al., 2019)<sup><a href="#Note12"><strong>(12)</strong></a></sup>, is a special case of the two-coin algorithm above, but this time uses only one input coin.</p>
 
 <ol>
 <li>With probability <em>d</em> / (<em>c</em> + <em>d</em>), return 0.</li>
@@ -207,7 +207,7 @@
 <li>Call the <strong>algorithm for arctan(&lambda;) /&lambda;</strong> and flip the input coin.  Return 1 if the call and flip both return 1, or 0 otherwise.</li>
 </ul>
 
-<p><strong>Algorithm for &lambda;<sup><em>x</em>/<em>y</em></sup>.</strong> In the algorithm below, the case where <em>x</em>/<em>y</em> is in (0, 1) is due to recent work by Mendo (2019)<sup><a href="#Note12"><strong>(12)</strong></a></sup>.  The algorithm works only when <em>x</em>/<em>y</em> is 0 or greater.</p>
+<p><strong>Algorithm for &lambda;<sup><em>x</em>/<em>y</em></sup>.</strong> In the algorithm below, the case where <em>x</em>/<em>y</em> is in (0, 1) is due to recent work by Mendo (2019)<sup><a href="#Note13"><strong>(13)</strong></a></sup>.  The algorithm works only when <em>x</em>/<em>y</em> is 0 or greater.</p>
 
 <ol>
 <li>If <em>x</em>/<em>y</em> is 0, return 1.</li>
@@ -220,7 +220,7 @@
 </ol>
 
 <blockquote>
-<p><strong>Note:</strong> When <em>x</em>/<em>y</em> is less than 1, the minimum number of coin flips needed, on average, by this algorithm will grow without bound as &lambda; approaches 0.  For this case in particular, see the appendix, which also shows an alternative way to implement this and other Bernoulli factory algorithms using PSRNs, which exploits knowledge of &lambda; but is not the focus of this article since it involves arithmetic.</p>
+<p><strong>Note:</strong> When <em>x</em>/<em>y</em> is less than 1, the minimum number of coin flips needed, on average, by this algorithm will grow without bound as &lambda; approaches 0.  In fact, no fast Bernoulli factory algorithm can avoid this unbounded growth without additional information on &lambda; (Mendo 2019)<sup><a href="#Note13"><strong>(13)</strong></a></sup>.  See also the appendix, which also shows an alternative way to implement this and other Bernoulli factory algorithms using PSRNs, which exploits knowledge of &lambda; but is not the focus of this article since it involves arithmetic.</p>
 </blockquote>
 
 <p><strong>Algorithm for sqrt(&lambda;).</strong> Use the algorithm for &lambda;<sup>1/2</sup>.</p>
@@ -239,7 +239,7 @@
 <li>Call <strong>SampleGeometricBag</strong> once on the PSRN, and flip the input coin once.  If both the call and flip return 1, return 0.  Otherwise, go to step 4.</li>
 </ol>
 
-<p><strong>Algorithm for arcsin(&lambda;) / 2.</strong>  The Flajolet paper doesn&#39;t explain in detail how arcsin(&lambda;)/2 arises out of arcsin(&lambda;) + sqrt(1 &minus; &lambda;<sup>2</sup>) &minus; 1 via Bernoulli factory constructions, but here is an algorithm.<sup><a href="#Note13"><strong>(13)</strong></a></sup> Note, however, that the number of input coin flips is expected to grow without bound as &lambda; approaches 0.</p>
+<p><strong>Algorithm for arcsin(&lambda;) / 2.</strong>  The Flajolet paper doesn&#39;t explain in detail how arcsin(&lambda;)/2 arises out of arcsin(&lambda;) + sqrt(1 &minus; &lambda;<sup>2</sup>) &minus; 1 via Bernoulli factory constructions, but here is an algorithm.<sup><a href="#Note14"><strong>(14)</strong></a></sup> Note, however, that the number of input coin flips is expected to grow without bound as &lambda; approaches 1.</p>
 
 <ol>
 <li>With probability 1/2, run the <strong>algorithm for arcsin(&lambda;) + sqrt(1 &minus; &lambda;<sup>2</sup>) &minus; 1</strong> and return the result.</li>
@@ -299,7 +299,7 @@
 <li>Return 1.</li>
 </ol>
 
-<p><strong>Algorithm for (<em>a</em>/<em>b</em>)<sup><em>x</em>/<em>y</em></sup>.</strong> In the algorithm below, <em>a</em>, <em>b</em>, <em>x</em>, and <em>y</em> are integers, and the case where <em>x</em>/<em>y</em> is in (0, 1) is due to recent work by Mendo (2019)<sup><a href="#Note12"><strong>(12)</strong></a></sup>.  This algorithm works only if&mdash;</p>
+<p><strong>Algorithm for (<em>a</em>/<em>b</em>)<sup><em>x</em>/<em>y</em></sup>.</strong> In the algorithm below, <em>a</em>, <em>b</em>, <em>x</em>, and <em>y</em> are integers, and the case where <em>x</em>/<em>y</em> is in (0, 1) is due to recent work by Mendo (2019)<sup><a href="#Note13"><strong>(13)</strong></a></sup>.  This algorithm works only if&mdash;</p>
 
 <ul>
 <li> <em>x</em>/<em>y</em> is 0 or greater and <em>a</em>/<em>b</em> is in the interval [0, 1], or</li>
@@ -324,7 +324,7 @@
 <li>Add 1 to <em>i</em> and go to step 6.</li>
 </ol>
 
-<p><strong>Algorithm for exp(&minus; <em>x</em>/<em>y</em>).</strong>  This algorithm takes integers <em>x</em> &gt;= 0 and <em>y</em> &gt; 0 and outputs 1 with probability <code>exp(-x/y)</code> or 0 otherwise. It originates from (Canonne et al. 2020)<sup><a href="#Note14"><strong>(14)</strong></a></sup>.</p>
+<p><strong>Algorithm for exp(&minus; <em>x</em>/<em>y</em>).</strong>  This algorithm takes integers <em>x</em> &gt;= 0 and <em>y</em> &gt; 0 and outputs 1 with probability <code>exp(-x/y)</code> or 0 otherwise. It originates from (Canonne et al. 2020)<sup><a href="#Note15"><strong>(15)</strong></a></sup>.</p>
 
 <ol>
 <li>Special case: If <em>x</em> is 0, return 1. (This is because the probability becomes <code>exp(0) = 1</code>.)</li>
@@ -346,14 +346,14 @@
 <p>The algorithm is then as follows:</p>
 
 <ul>
-<li>For each component <em>LC</em>[<em>i</em>], call the <strong>algorithm for exp(&minus; <em>LI</em>[<em>i</em>]/1)</strong>, and call the <strong>general martingale algorithm</strong> adapted for <strong>exp(&minus; <em>LF</em>[<em>i</em>])</strong>.  If any of these calls returns 0, return 0; otherwise, return 1. (See also (Canonne et al. 2020)<sup><a href="#Note15"><strong>(15)</strong></a></sup>.)</li>
+<li>For each component <em>LC</em>[<em>i</em>], call the <strong>algorithm for exp(&minus; <em>LI</em>[<em>i</em>]/1)</strong>, and call the <strong>general martingale algorithm</strong> adapted for <strong>exp(&minus;&lambda;)</strong> using the input coin that simulates  <em>LF</em>[<em>i</em>].  If any of these calls returns 0, return 0; otherwise, return 1. (See also (Canonne et al. 2020)<sup><a href="#Note16"><strong>(16)</strong></a></sup>.)</li>
 </ul>
 
 <p><a id=General_Algorithms></a></p>
 
 <h3>General Algorithms</h3>
 
-<p><strong>Algorithm for the probability generating function.</strong>  Let <em>X</em> be a random number that follows a discrete distribution (one that takes on a countable number of values).  The following algorithm generates heads with probability <strong>E</strong>[&lambda;<sup><em>X</em></sup>], that is, the expected (average) value of &lambda;<sup><em>X</em></sup>.  <strong>E</strong>[&lambda;<sup><em>X</em></sup>] is the distribution&#39;s <em>probability generating function</em>, also known as <em>factorial moment generating function</em> (Dughmi et al. 2017)<sup><a href="#Note16"><strong>(16)</strong></a></sup>.</p>
+<p><strong>Algorithm for the probability generating function.</strong>  Let <em>X</em> be a random number that follows a discrete distribution (one that takes on a countable number of values).  The following algorithm generates heads with probability <strong>E</strong>[&lambda;<sup><em>X</em></sup>], that is, the expected (average) value of &lambda;<sup><em>X</em></sup>.  <strong>E</strong>[&lambda;<sup><em>X</em></sup>] is the distribution&#39;s <em>probability generating function</em>, also known as <em>factorial moment generating function</em> (Dughmi et al. 2017)<sup><a href="#Note17"><strong>(17)</strong></a></sup>.</p>
 
 <ol>
 <li>Generate a random number <em>N</em> of the given distribution.</li>
@@ -385,7 +385,7 @@
 
 <p>For each algorithm, if a single run was detected to use more than 5000 bits for a given &lambda;, the entire data point for that &lambda; was suppressed in the charts below.</p>
 
-<p>In addition, for each algorithm, a table appears showing the minimum number of input coin flips that any fast Bernoulli factory algorithm will need on average to simulate the given function, based on work by Mendo (2019)<sup><a href="#Note12"><strong>(12)</strong></a></sup>.  Note that some functions require a growing number of coin flips as &lambda; approaches 0 or 1.</p>
+<p>In addition, for each algorithm, a table appears showing the minimum number of input coin flips that any fast Bernoulli factory algorithm will need on average to simulate the given function, based on work by Mendo (2019)<sup><a href="#Note13"><strong>(13)</strong></a></sup>.  Note that some functions require a growing number of coin flips as &lambda; approaches 0 or 1.</p>
 
 <p><a id=The_Charts></a></p>
 
@@ -396,92 +396,26 @@
 <th>Algorithm</th>
 <th>Simulated Mean</th>
 <th>Average Bits Consumed</th>
-<th>Coins Flipped</th>
+<th>Coin Flip Lower Bound</th>
 </tr>
 </thead><tbody>
 <tr>
-<td>arcsin(x)+sqrt(1-x*x)-1</td>
-<td><img src="bernoullicharts/arcsin_x_sqrt_1-x_x_-1_mean.svg" alt="**Simulated Mean for arcsin(x)+sqrt(1-x\*x)-1**"></td>
-<td><img src="bernoullicharts/arcsin_x_sqrt_1-x_x_-1_bits.svg" alt="**Expected Bits Consumed by arcsin(x)+sqrt(1-x\*x)-1**"></td>
-<td><img src="bernoullicharts/arcsin_x_sqrt_1-x_x_-1_bound.svg" alt="**Coin Flip Lower Bound for the Function**"></td>
+<td>(1/3)*x/(1+(1/3)*x)</td>
+<td><img src="bernoullicharts/1_3_x_1_1_3_x__mean.svg" alt="**Simulated Mean for (1/3)\*x/(1+(1/3)\*x)**"></td>
+<td><img src="bernoullicharts/1_3_x_1_1_3_x__bits.svg" alt="**Expected Bits Consumed by (1/3)\*x/(1+(1/3)\*x)**"></td>
+<td><img src="bernoullicharts/1_3_x_1_1_3_x__bound.svg" alt="**Coin Flip Lower Bound for the Function**"></td>
 </tr>
 <tr>
-<td>arcsin(x)/2</td>
-<td><img src="bernoullicharts/arcsin_x_2_mean.svg" alt="**Simulated Mean for arcsin(x)/2**"></td>
-<td><img src="bernoullicharts/arcsin_x_2_bits.svg" alt="**Expected Bits Consumed by arcsin(x)/2**"></td>
-<td><img src="bernoullicharts/arcsin_x_2_bound.svg" alt="**Coin Flip Lower Bound for the Function**"></td>
+<td>0.5*x/(1+0.5*x)</td>
+<td><img src="bernoullicharts/0_5_x_1_0_5_x__mean.svg" alt="**Simulated Mean for 0.5\*x/(1+0.5\*x)**"></td>
+<td><img src="bernoullicharts/0_5_x_1_0_5_x__bits.svg" alt="**Expected Bits Consumed by 0.5\*x/(1+0.5\*x)**"></td>
+<td><img src="bernoullicharts/0_5_x_1_0_5_x__bound.svg" alt="**Coin Flip Lower Bound for the Function**"></td>
 </tr>
 <tr>
-<td>arctan(x) (Two-Coin Special Case)</td>
-<td><img src="bernoullicharts/arctan_x_two-coin_special_case__mean.svg" alt="**Simulated Mean for arctan(x) (Two-Coin Special Case)**"></td>
-<td><img src="bernoullicharts/arctan_x_two-coin_special_case__bits.svg" alt="**Expected Bits Consumed by arctan(x) (Two-Coin Special Case)**"></td>
-<td><img src="bernoullicharts/arctan_x_two-coin_special_case__bound.svg" alt="**Coin Flip Lower Bound for the Function**"></td>
-</tr>
-<tr>
-<td>arctan(x) (Flajolet)</td>
-<td><img src="bernoullicharts/arctan_x_flajolet__mean.svg" alt="**Simulated Mean for arctan(x) (Flajolet)**"></td>
-<td><img src="bernoullicharts/arctan_x_flajolet__bits.svg" alt="**Expected Bits Consumed by arctan(x) (Flajolet)**"></td>
-<td><img src="bernoullicharts/arctan_x_flajolet__bound.svg" alt="**Coin Flip Lower Bound for the Function**"></td>
-</tr>
-<tr>
-<td>exp(-x) (Alt. Series)</td>
-<td><img src="bernoullicharts/exp_-x_alt_series__mean.svg" alt="**Simulated Mean for exp(-x) (Alt. Series)**"></td>
-<td><img src="bernoullicharts/exp_-x_alt_series__bits.svg" alt="**Expected Bits Consumed by exp(-x) (Alt. Series)**"></td>
-<td><img src="bernoullicharts/exp_-x_alt_series__bound.svg" alt="**Coin Flip Lower Bound for the Function**"></td>
-</tr>
-<tr>
-<td>sqrt(x)</td>
-<td><img src="bernoullicharts/sqrt_x__mean.svg" alt="**Simulated Mean for sqrt(x)**"></td>
-<td><img src="bernoullicharts/sqrt_x__bits.svg" alt="**Expected Bits Consumed by sqrt(x)**"></td>
-<td><img src="bernoullicharts/sqrt_x__bound.svg" alt="**Coin Flip Lower Bound for the Function**"></td>
-</tr>
-<tr>
-<td>pow(x,1/3)</td>
-<td><img src="bernoullicharts/pow_x_1_3__mean.svg" alt="**Simulated Mean for pow(x,1/3)**"></td>
-<td><img src="bernoullicharts/pow_x_1_3__bits.svg" alt="**Expected Bits Consumed by pow(x,1/3)**"></td>
-<td><img src="bernoullicharts/pow_x_1_3__bound.svg" alt="**Coin Flip Lower Bound for the Function**"></td>
-</tr>
-<tr>
-<td>pow(x,3/4)</td>
-<td><img src="bernoullicharts/pow_x_3_4__mean.svg" alt="**Simulated Mean for pow(x,3/4)**"></td>
-<td><img src="bernoullicharts/pow_x_3_4__bits.svg" alt="**Expected Bits Consumed by pow(x,3/4)**"></td>
-<td><img src="bernoullicharts/pow_x_3_4__bound.svg" alt="**Coin Flip Lower Bound for the Function**"></td>
-</tr>
-<tr>
-<td>pow(x,4/5)</td>
-<td><img src="bernoullicharts/pow_x_4_5__mean.svg" alt="**Simulated Mean for pow(x,4/5)**"></td>
-<td><img src="bernoullicharts/pow_x_4_5__bits.svg" alt="**Expected Bits Consumed by pow(x,4/5)**"></td>
-<td><img src="bernoullicharts/pow_x_4_5__bound.svg" alt="**Coin Flip Lower Bound for the Function**"></td>
-</tr>
-<tr>
-<td>pow(x,5/4)</td>
-<td><img src="bernoullicharts/pow_x_5_4__mean.svg" alt="**Simulated Mean for pow(x,5/4)**"></td>
-<td><img src="bernoullicharts/pow_x_5_4__bits.svg" alt="**Expected Bits Consumed by pow(x,5/4)**"></td>
-<td><img src="bernoullicharts/pow_x_5_4__bound.svg" alt="**Coin Flip Lower Bound for the Function**"></td>
-</tr>
-<tr>
-<td>pow(x,2/1)</td>
-<td><img src="bernoullicharts/pow_x_2_1__mean.svg" alt="**Simulated Mean for pow(x,2/1)**"></td>
-<td><img src="bernoullicharts/pow_x_2_1__bits.svg" alt="**Expected Bits Consumed by pow(x,2/1)**"></td>
-<td><img src="bernoullicharts/pow_x_2_1__bound.svg" alt="**Coin Flip Lower Bound for the Function**"></td>
-</tr>
-<tr>
-<td>pow(x,5/1)</td>
-<td><img src="bernoullicharts/pow_x_5_1__mean.svg" alt="**Simulated Mean for pow(x,5/1)**"></td>
-<td><img src="bernoullicharts/pow_x_5_1__bits.svg" alt="**Expected Bits Consumed by pow(x,5/1)**"></td>
-<td><img src="bernoullicharts/pow_x_5_1__bound.svg" alt="**Coin Flip Lower Bound for the Function**"></td>
-</tr>
-<tr>
-<td>exp(-x) (Flajolet)</td>
-<td><img src="bernoullicharts/exp_-x_flajolet__mean.svg" alt="**Simulated Mean for exp(-x) (Flajolet)**"></td>
-<td><img src="bernoullicharts/exp_-x_flajolet__bits.svg" alt="**Expected Bits Consumed by exp(-x) (Flajolet)**"></td>
-<td><img src="bernoullicharts/exp_-x_flajolet__bound.svg" alt="**Coin Flip Lower Bound for the Function**"></td>
-</tr>
-<tr>
-<td>exp(-x) (Alg. 2)</td>
-<td><img src="bernoullicharts/exp_-x_alg_2__mean.svg" alt="**Simulated Mean for exp(-x) (Alg. 2)**"></td>
-<td><img src="bernoullicharts/exp_-x_alg_2__bits.svg" alt="**Expected Bits Consumed by exp(-x) (Alg. 2)**"></td>
-<td><img src="bernoullicharts/exp_-x_alg_2__bound.svg" alt="**Coin Flip Lower Bound for the Function**"></td>
+<td>1 - log(1+x) (Alt. Series)</td>
+<td><img src="bernoullicharts/1_-_log_1_x_alt_series__mean.svg" alt="**Simulated Mean for 1 - log(1+x) (Alt. Series)**"></td>
+<td><img src="bernoullicharts/1_-_log_1_x_alt_series__bits.svg" alt="**Expected Bits Consumed by 1 - log(1+x) (Alt. Series)**"></td>
+<td><img src="bernoullicharts/1_-_log_1_x_alt_series__bound.svg" alt="**Coin Flip Lower Bound for the Function**"></td>
 </tr>
 <tr>
 <td>1/(1+x) (Alt. Series)</td>
@@ -502,6 +436,54 @@
 <td><img src="bernoullicharts/1_1_x_two-coin_special_case__bound.svg" alt="**Coin Flip Lower Bound for the Function**"></td>
 </tr>
 <tr>
+<td>arcsin(x)+sqrt(1-x*x)-1</td>
+<td><img src="bernoullicharts/arcsin_x_sqrt_1-x_x_-1_mean.svg" alt="**Simulated Mean for arcsin(x)+sqrt(1-x\*x)-1**"></td>
+<td><img src="bernoullicharts/arcsin_x_sqrt_1-x_x_-1_bits.svg" alt="**Expected Bits Consumed by arcsin(x)+sqrt(1-x\*x)-1**"></td>
+<td><img src="bernoullicharts/arcsin_x_sqrt_1-x_x_-1_bound.svg" alt="**Coin Flip Lower Bound for the Function**"></td>
+</tr>
+<tr>
+<td>arcsin(x)/2</td>
+<td><img src="bernoullicharts/arcsin_x_2_mean.svg" alt="**Simulated Mean for arcsin(x)/2**"></td>
+<td><img src="bernoullicharts/arcsin_x_2_bits.svg" alt="**Expected Bits Consumed by arcsin(x)/2**"></td>
+<td><img src="bernoullicharts/arcsin_x_2_bound.svg" alt="**Coin Flip Lower Bound for the Function**"></td>
+</tr>
+<tr>
+<td>arctan(x) (Flajolet)</td>
+<td><img src="bernoullicharts/arctan_x_flajolet__mean.svg" alt="**Simulated Mean for arctan(x) (Flajolet)**"></td>
+<td><img src="bernoullicharts/arctan_x_flajolet__bits.svg" alt="**Expected Bits Consumed by arctan(x) (Flajolet)**"></td>
+<td><img src="bernoullicharts/arctan_x_flajolet__bound.svg" alt="**Coin Flip Lower Bound for the Function**"></td>
+</tr>
+<tr>
+<td>arctan(x) (Two-Coin Special Case)</td>
+<td><img src="bernoullicharts/arctan_x_two-coin_special_case__mean.svg" alt="**Simulated Mean for arctan(x) (Two-Coin Special Case)**"></td>
+<td><img src="bernoullicharts/arctan_x_two-coin_special_case__bits.svg" alt="**Expected Bits Consumed by arctan(x) (Two-Coin Special Case)**"></td>
+<td><img src="bernoullicharts/arctan_x_two-coin_special_case__bound.svg" alt="**Coin Flip Lower Bound for the Function**"></td>
+</tr>
+<tr>
+<td>exp(-x) (Alg. 2)</td>
+<td><img src="bernoullicharts/exp_-x_alg_2__mean.svg" alt="**Simulated Mean for exp(-x) (Alg. 2)**"></td>
+<td><img src="bernoullicharts/exp_-x_alg_2__bits.svg" alt="**Expected Bits Consumed by exp(-x) (Alg. 2)**"></td>
+<td><img src="bernoullicharts/exp_-x_alg_2__bound.svg" alt="**Coin Flip Lower Bound for the Function**"></td>
+</tr>
+<tr>
+<td>exp(-x) (Alt. Series)</td>
+<td><img src="bernoullicharts/exp_-x_alt_series__mean.svg" alt="**Simulated Mean for exp(-x) (Alt. Series)**"></td>
+<td><img src="bernoullicharts/exp_-x_alt_series__bits.svg" alt="**Expected Bits Consumed by exp(-x) (Alt. Series)**"></td>
+<td><img src="bernoullicharts/exp_-x_alt_series__bound.svg" alt="**Coin Flip Lower Bound for the Function**"></td>
+</tr>
+<tr>
+<td>exp(-x) (Flajolet)</td>
+<td><img src="bernoullicharts/exp_-x_flajolet__mean.svg" alt="**Simulated Mean for exp(-x) (Flajolet)**"></td>
+<td><img src="bernoullicharts/exp_-x_flajolet__bits.svg" alt="**Expected Bits Consumed by exp(-x) (Flajolet)**"></td>
+<td><img src="bernoullicharts/exp_-x_flajolet__bound.svg" alt="**Coin Flip Lower Bound for the Function**"></td>
+</tr>
+<tr>
+<td>exp(x)*(1-x)</td>
+<td><img src="bernoullicharts/exp_x_1-x__mean.svg" alt="**Simulated Mean for exp(x)\*(1-x)**"></td>
+<td><img src="bernoullicharts/exp_x_1-x__bits.svg" alt="**Expected Bits Consumed by exp(x)\*(1-x)**"></td>
+<td><img src="bernoullicharts/exp_x_1-x__bound.svg" alt="**Coin Flip Lower Bound for the Function**"></td>
+</tr>
+<tr>
 <td>log(1+x) (Flajolet)</td>
 <td><img src="bernoullicharts/log_1_x_flajolet__mean.svg" alt="**Simulated Mean for log(1+x) (Flajolet)**"></td>
 <td><img src="bernoullicharts/log_1_x_flajolet__bits.svg" alt="**Expected Bits Consumed by log(1+x) (Flajolet)**"></td>
@@ -514,28 +496,46 @@
 <td><img src="bernoullicharts/log_1_x_two-coin_special_case__bound.svg" alt="**Coin Flip Lower Bound for the Function**"></td>
 </tr>
 <tr>
-<td>1 - log(1+x) (Alt. Series)</td>
-<td><img src="bernoullicharts/1_-_log_1_x_alt_series__mean.svg" alt="**Simulated Mean for 1 - log(1+x) (Alt. Series)**"></td>
-<td><img src="bernoullicharts/1_-_log_1_x_alt_series__bits.svg" alt="**Expected Bits Consumed by 1 - log(1+x) (Alt. Series)**"></td>
-<td><img src="bernoullicharts/1_-_log_1_x_alt_series__bound.svg" alt="**Coin Flip Lower Bound for the Function**"></td>
+<td>pow(x,1/3)</td>
+<td><img src="bernoullicharts/pow_x_1_3__mean.svg" alt="**Simulated Mean for pow(x,1/3)**"></td>
+<td><img src="bernoullicharts/pow_x_1_3__bits.svg" alt="**Expected Bits Consumed by pow(x,1/3)**"></td>
+<td><img src="bernoullicharts/pow_x_1_3__bound.svg" alt="**Coin Flip Lower Bound for the Function**"></td>
 </tr>
 <tr>
-<td>0.5*x/(1+0.5*x)</td>
-<td><img src="bernoullicharts/0_5_x_1_0_5_x__mean.svg" alt="**Simulated Mean for 0.5\*x/(1+0.5\*x)**"></td>
-<td><img src="bernoullicharts/0_5_x_1_0_5_x__bits.svg" alt="**Expected Bits Consumed by 0.5\*x/(1+0.5\*x)**"></td>
-<td><img src="bernoullicharts/0_5_x_1_0_5_x__bound.svg" alt="**Coin Flip Lower Bound for the Function**"></td>
+<td>pow(x,2/1)</td>
+<td><img src="bernoullicharts/pow_x_2_1__mean.svg" alt="**Simulated Mean for pow(x,2/1)**"></td>
+<td><img src="bernoullicharts/pow_x_2_1__bits.svg" alt="**Expected Bits Consumed by pow(x,2/1)**"></td>
+<td><img src="bernoullicharts/pow_x_2_1__bound.svg" alt="**Coin Flip Lower Bound for the Function**"></td>
 </tr>
 <tr>
-<td>(1/3)*x/(1+(1/3)*x)</td>
-<td><img src="bernoullicharts/1_3_x_1_1_3_x__mean.svg" alt="**Simulated Mean for (1/3)\*x/(1+(1/3)\*x)**"></td>
-<td><img src="bernoullicharts/1_3_x_1_1_3_x__bits.svg" alt="**Expected Bits Consumed by (1/3)\*x/(1+(1/3)\*x)**"></td>
-<td><img src="bernoullicharts/1_3_x_1_1_3_x__bound.svg" alt="**Coin Flip Lower Bound for the Function**"></td>
+<td>pow(x,3/4)</td>
+<td><img src="bernoullicharts/pow_x_3_4__mean.svg" alt="**Simulated Mean for pow(x,3/4)**"></td>
+<td><img src="bernoullicharts/pow_x_3_4__bits.svg" alt="**Expected Bits Consumed by pow(x,3/4)**"></td>
+<td><img src="bernoullicharts/pow_x_3_4__bound.svg" alt="**Coin Flip Lower Bound for the Function**"></td>
 </tr>
 <tr>
-<td>exp(x)*(1-x)</td>
-<td><img src="bernoullicharts/exp_x_1-x__mean.svg" alt="**Simulated Mean for exp(x)\*(1-x)**"></td>
-<td><img src="bernoullicharts/exp_x_1-x__bits.svg" alt="**Expected Bits Consumed by exp(x)\*(1-x)**"></td>
-<td><img src="bernoullicharts/exp_x_1-x__bound.svg" alt="**Coin Flip Lower Bound for the Function**"></td>
+<td>pow(x,4/5)</td>
+<td><img src="bernoullicharts/pow_x_4_5__mean.svg" alt="**Simulated Mean for pow(x,4/5)**"></td>
+<td><img src="bernoullicharts/pow_x_4_5__bits.svg" alt="**Expected Bits Consumed by pow(x,4/5)**"></td>
+<td><img src="bernoullicharts/pow_x_4_5__bound.svg" alt="**Coin Flip Lower Bound for the Function**"></td>
+</tr>
+<tr>
+<td>pow(x,5/1)</td>
+<td><img src="bernoullicharts/pow_x_5_1__mean.svg" alt="**Simulated Mean for pow(x,5/1)**"></td>
+<td><img src="bernoullicharts/pow_x_5_1__bits.svg" alt="**Expected Bits Consumed by pow(x,5/1)**"></td>
+<td><img src="bernoullicharts/pow_x_5_1__bound.svg" alt="**Coin Flip Lower Bound for the Function**"></td>
+</tr>
+<tr>
+<td>pow(x,5/4)</td>
+<td><img src="bernoullicharts/pow_x_5_4__mean.svg" alt="**Simulated Mean for pow(x,5/4)**"></td>
+<td><img src="bernoullicharts/pow_x_5_4__bits.svg" alt="**Expected Bits Consumed by pow(x,5/4)**"></td>
+<td><img src="bernoullicharts/pow_x_5_4__bound.svg" alt="**Coin Flip Lower Bound for the Function**"></td>
+</tr>
+<tr>
+<td>sqrt(x)</td>
+<td><img src="bernoullicharts/sqrt_x__mean.svg" alt="**Simulated Mean for sqrt(x)**"></td>
+<td><img src="bernoullicharts/sqrt_x__bits.svg" alt="**Expected Bits Consumed by sqrt(x)**"></td>
+<td><img src="bernoullicharts/sqrt_x__bound.svg" alt="**Coin Flip Lower Bound for the Function**"></td>
 </tr>
 </tbody></table>
 
@@ -559,21 +559,27 @@
 
 <p><small><sup id=Note8>(8)</sup> Gonçalves, F. B., Łatuszyński, K. G., Roberts, G. O. (2017).  Exact Monte Carlo likelihood-based inference for jump-diffusion processes.</small></p>
 
-<p><small><sup id=Note9>(9)</sup> Vats, D., Gonçalves, F. B., Łatuszyński, K. G., Roberts, G. O. Efficient Bernoulli factory MCMC for intractable likelihoods, arXiv:2004.07471v1 [stat.CO], 2020.</small></p>
+<p><small><sup id=Note9>(9)</sup> Another algorithm for this function uses the general martingale algorithm, but uses more bits on average as &lambda; approaches 1.  Here, the alternating series is <code>1 - x + x^2/2 - x^3/3 + ...</code>, whose coefficients are 1, 1, 1/2, 1/3, ...</small></p>
 
-<p><small><sup id=Note10>(10)</sup> Huber, M., &quot;<a href="https://arxiv.org/abs/1507.00843v2"><strong>Optimal linear Bernoulli factories for small mean problems</strong></a>&quot;, arXiv:1507.00843v2 [math.PR], 2016</small></p>
+<p><small><sup id=Note10>(10)</sup> Vats, D., Gonçalves, F. B., Łatuszyński, K. G., Roberts, G. O. Efficient Bernoulli factory MCMC for intractable likelihoods, arXiv:2004.07471v1 [stat.CO], 2020.</small></p>
 
-<p><small><sup id=Note11>(11)</sup> Morina, G., Łatuszyński, K., et al., &quot;<a href="https://arxiv.org/abs/1912.09229v1"><strong>From the Bernoulli Factory to a Dice Enterprise via Perfect Sampling of Markov Chains</strong></a>&quot;, arXiv:1912.09229v1 [math.PR], 2019.</small></p>
+<p><small><sup id=Note11>(11)</sup> Huber, M., &quot;<a href="https://arxiv.org/abs/1507.00843v2"><strong>Optimal linear Bernoulli factories for small mean problems</strong></a>&quot;, arXiv:1507.00843v2 [math.PR], 2016</small></p>
 
-<p><small><sup id=Note12>(12)</sup> Mendo, Luis. &quot;An asymptotically optimal Bernoulli factory for certain functions that can be expressed as power series.&quot; Stochastic Processes and their Applications 129, no. 11 (2019): 4366-4384.</small></p>
+<p><small><sup id=Note12>(12)</sup> Morina, G., Łatuszyński, K., et al., &quot;<a href="https://arxiv.org/abs/1912.09229v1"><strong>From the Bernoulli Factory to a Dice Enterprise via Perfect Sampling of Markov Chains</strong></a>&quot;, arXiv:1912.09229v1 [math.PR], 2019.</small></p>
 
-<p><small><sup id=Note13>(13)</sup> One of the only implementations I could find of this, if not the only, was a <a href="https://github.com/derekelkins/buffon/blob/master/Data/Distribution/Buffon.hs"><strong>Haskell implementation</strong></a>.</small></p>
+<p><small><sup id=Note13>(13)</sup> Mendo, Luis. &quot;An asymptotically optimal Bernoulli factory for certain functions that can be expressed as power series.&quot; Stochastic Processes and their Applications 129, no. 11 (2019): 4366-4384.</small></p>
 
-<p><small><sup id=Note14>(14)</sup> Canonne, C., Kamath, G., Steinke, T., &quot;<a href="https://arxiv.org/abs/2004.00010v2"><strong>The Discrete Gaussian for Differential Privacy</strong></a>&quot;, arXiv:2004.00010v2 [cs.DS], 2020.</small></p>
+<p><small><sup id=Note14>(14)</sup> One of the only implementations I could find of this, if not the only, was a <a href="https://github.com/derekelkins/buffon/blob/master/Data/Distribution/Buffon.hs"><strong>Haskell implementation</strong></a>.</small></p>
 
-<p><small><sup id=Note15>(15)</sup> No note text yet.</small></p>
+<p><small><sup id=Note15>(15)</sup> Canonne, C., Kamath, G., Steinke, T., &quot;<a href="https://arxiv.org/abs/2004.00010v2"><strong>The Discrete Gaussian for Differential Privacy</strong></a>&quot;, arXiv:2004.00010v2 [cs.DS], 2020.</small></p>
 
-<p><small><sup id=Note16>(16)</sup> Shaddin Dughmi, Jason D. Hartline, Robert Kleinberg, and Rad Niazadeh. 2017. Bernoulli Factories and Black-Box Reductions in Mechanism Design. In <em>Proceedings of 49th Annual ACM SIGACT Symposium on the Theory of Computing</em>, Montreal, Canada, June 2017 (STOC’17).</small></p>
+<p><small><sup id=Note16>(16)</sup> No note text yet.</small></p>
+
+<p><small><sup id=Note17>(17)</sup> Shaddin Dughmi, Jason D. Hartline, Robert Kleinberg, and Rad Niazadeh. 2017. Bernoulli Factories and Black-Box Reductions in Mechanism Design. In <em>Proceedings of 49th Annual ACM SIGACT Symposium on the Theory of Computing</em>, Montreal, Canada, June 2017 (STOC’17).</small></p>
+
+<p><small><sup id=Note18>(18)</sup> Brassard, G., Devroye, L., Gravel, C., &quot;Remote Sampling with Applications to General Entanglement Simulation&quot;, Entropy 2019(21)(92), doi:10.3390/e21010092.</small></p>
+
+<p><small><sup id=Note19>(19)</sup> Devroye, L., Gravel, C., &quot;<a href="https://arxiv.org/abs/1502.02539v5"><strong>Sampling with arbitrary precision</strong></a>&quot;, arXiv:1502.02539v5 [cs.IT], 2015.</small></p>
 
 <p><a id=Appendix></a></p>
 
@@ -611,8 +617,8 @@ for i in range(iters):
 <p>As this code shows, as <em>x</em> (the probability of heads of the input coin) approaches 0, the convergence rate gets slower and slower, even though the probability will eventually converge to the correct one. In fact, when <em>y</em>/<em>z</em> is less than 1:</p>
 
 <ul>
-<li>The average number of coin flips needed by this algorithm will grow without bound as <em>x</em> approaches 0, and Mendo (2019)<sup><a href="#Note15"><strong>(15)</strong></a></sup> showed that this is a lower bound; that is, no Bernoulli factory algorithm can do much better without knowing more information on <em>x</em>.</li>
-<li><em>x</em><sup><em>y</em>/<em>z</em></sup> has a slope that tends to a vertical slope near 0, so that the so-called <a href="https://en.wikipedia.org/wiki/Lipschitz_continuity"><strong><em>Lipschitz condition</em></strong></a> is not met at 0.  And (Nacu and Peres 2005, propositions 10 and 23)<sup><a href="#Note15"><strong>(15)</strong></a></sup> showed that the Lipschitz condition is necessary for a Bernoulli factory to have an upper bound on the average running time.</li>
+<li>The average number of coin flips needed by this algorithm will grow without bound as <em>x</em> approaches 0, and Mendo (2019)<sup><a href="#Note16"><strong>(16)</strong></a></sup> showed that this is a lower bound; that is, no Bernoulli factory algorithm can do much better without knowing more information on <em>x</em>.</li>
+<li><em>x</em><sup><em>y</em>/<em>z</em></sup> has a slope that tends to a vertical slope near 0, so that the so-called <a href="https://en.wikipedia.org/wiki/Lipschitz_continuity"><strong><em>Lipschitz condition</em></strong></a> is not met at 0.  And (Nacu and Peres 2005, propositions 10 and 23)<sup><a href="#Note16"><strong>(16)</strong></a></sup> showed that the Lipschitz condition is necessary for a Bernoulli factory to have an upper bound on the average running time.</li>
 </ul>
 
 <p>Thus, a practical implementation of this algorithm may have to switch to an alternative implementation (such as the one described in the next section) when it detects that the geometric bag&#39;s first few digits are zeros.</p>
@@ -621,7 +627,7 @@ for i in range(iters):
 
 <h3>Alternative Implementation of Bernoulli Factories</h3>
 
-<p>Say we have a Bernoulli factory algorithm that takes a coin with probability of heads of <em>p</em> and outputs 1 with probability <em>f</em>(<em>p</em>).  If this algorithm takes a geometric bag (a partially-sampled uniform random number or PSRN) as the input coin and flips that coin using <strong>SampleGeometricBag</strong>, the algorithm could instead be implemented as follows in order to return 1 with probability <em>f</em>(<em>U</em>), where <em>U</em> is the number represented by the geometric bag (see also (Brassard et al., 2019)<sup><a href="#Note11"><strong>(11)</strong></a></sup>, (Devroye 1986, p. 431)<sup><a href="#Note15"><strong>(15)</strong></a></sup>, (Devroye and Gravel 2015)<sup><a href="#Note3"><strong>(3)</strong></a></sup>):</p>
+<p>Say we have a Bernoulli factory algorithm that takes a coin with probability of heads of <em>p</em> and outputs 1 with probability <em>f</em>(<em>p</em>).  If this algorithm takes a geometric bag (a partially-sampled uniform random number or PSRN) as the input coin and flips that coin using <strong>SampleGeometricBag</strong>, the algorithm could instead be implemented as follows in order to return 1 with probability <em>f</em>(<em>U</em>), where <em>U</em> is the number represented by the geometric bag (see also (Brassard et al., 2019)<sup><a href="#Note18"><strong>(18)</strong></a></sup>, (Devroye 1986, p. 431)<sup><a href="#Note16"><strong>(16)</strong></a></sup>, (Devroye and Gravel 2015)<sup><a href="#Note19"><strong>(19)</strong></a></sup>:</p>
 
 <ol>
 <li>Set <em>v</em> to 0 and <em>k</em> to 1.</li>

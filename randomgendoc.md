@@ -1733,7 +1733,6 @@ CLASSES
      |      - cx, cy: numerator and denominator of c; the probability of heads (p) is multiplied
      |        by c. c must be 0 or greater. If c > 1, c must be chosen so that c*p <= 1 - eps.
      |      - eps: A Fraction in (0, 1). If c > 1, eps must be chosen so that c*p <= 1 - eps.
-     |        This method is more accurate, but slower, when eps is close to 1.
      |
      |  linear_lowprob(self, f, cx, cy=1, m=Fraction(249, 500))
      |      Linear Bernoulli factory which is faster if the probability of heads is known
