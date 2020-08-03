@@ -1039,25 +1039,16 @@ def exprandscore(ln,ld,ln2,ld2):
 <pre>pow(lamda, x) * pow(1 - lamda, 1 - x).
 </pre>
 
-<p>Again, this function meets the requirements stated by Keane and O&#39;Brien, so it can be simulated via Bernoulli factories.  Thus, this distribution can be simulated in Python using a geometric bag (which represents <em>x</em> in the formula above) and a two-coin Bernoulli factory described below.</p>
+<p>Again, this function meets the requirements stated by Keane and O&#39;Brien, so it can be simulated via Bernoulli factories.  Thus, this distribution can be simulated in Python as described below.</p>
 
-<p>The <strong>two-coin power factory</strong> has the following algorithm.  It is based on the <strong>PowerBernoulliFactory</strong> but changed to accept a second input coin rather than a fixed value for the exponent. To the best of my knowledge, I am not aware of any other article or paper that presents this particular Bernoulli factory.</p>
-
-<ol>
-<li>Set <em>i</em> to 1.</li>
-<li>Flip the input coin that simulates the base; if it returns 1, return 1.</li>
-<li>Flip the input coin that simulates the exponent; if it returns 1, return 0 with probability 1/<em>i</em>.</li>
-<li>Add 1 to <em>i</em> and go to step 1.</li>
-</ol>
-
-<p>The algorithm for sampling the continuous Bernoulli distribution follows.  It uses a <strong>lambda Bernoulli factory</strong> algorithm, which returns 1 with probability <code>lamda</code>.</p>
+<p>The algorithm for sampling the continuous Bernoulli distribution follows.  It uses an input coin that returns 1 with probability <code>lamda</code>.</p>
 
 <ol>
 <li>Create an empty list to serve as a &quot;geometric bag&quot;.</li>
-<li>Create a <strong>complementary lambda Bernoulli factory</strong> that returns 1 minus the result of the <strong>lambda Bernoulli factory</strong>.</li>
+<li>Create a <strong>complementary lambda Bernoulli factory</strong> that returns 1 minus the result of the input coin.</li>
 <li>Remove all digits from the geometric bag.  This will result in an empty uniform random number, <em>U</em>, for the following steps, which will accept <em>U</em> with probability <code>lamda</code><sup><em>U</em></sup>*(1&minus;<code>lamda</code>)<sup>1&minus;<em>U</em></sup>) (the proportional probability for the beta distribution), as <em>U</em> is built up.</li>
-<li>Call the <strong>two-coin power factory</strong> using the <strong>lambda Bernoulli factory</strong> as the base and <strong>SampleGeometricBag</strong> as the exponent (which will return 1 with probability <code>lamda</code><sup><em>U</em></sup>).  If the result is 0, go to step 3.</li>
-<li>Call the <strong>two-coin power factory</strong> using the <strong>complementary lambda Bernoulli factory</strong> as the base and <strong>SampleGeometricBagComplement</strong> algorithm and parameter <em>b</em> &minus; 1 (which will return 1 with probability (1-<code>lamda</code>)<sup>1&minus;<em>U</em></sup>).  If the result is 0, go to step 3. (Note that steps 4 and 5 don&#39;t depend on each other and can be done in either order without affecting correctness.)</li>
+<li>Call the <strong>algorithm for &lambda;<sup>&mu;</sup></strong> described in &quot;<a href="https://peteroupc.github.io/bernoulli.html"><strong>Bernoulli Factory Algorithms</strong></a>&quot;, using the input coin as the &lambda;-coin, and <strong>SampleGeometricBag</strong> as the &mu;-coin (which will return 1 with probability <code>lamda</code><sup><em>U</em></sup>).  If the result is 0, go to step 3.</li>
+<li>Call the <strong>algorithm for &lambda;<sup>&mu;</sup></strong> using the <strong>complementary lambda Bernoulli factory</strong> as the &lambda;-coin and <strong>SampleGeometricBagComplement</strong> algorithm as the &mu;-coin (which will return 1 with probability (1-<code>lamda</code>)<sup>1&minus;<em>U</em></sup>).  If the result is 0, go to step 3. (Note that steps 4 and 5 don&#39;t depend on each other and can be done in either order without affecting correctness.)</li>
 <li><em>U</em> was accepted, so return the result of <strong>FillGeometricBag</strong>.</li>
 </ol>
 

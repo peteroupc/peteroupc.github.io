@@ -2004,23 +2004,35 @@ Returns 'list'. """
             # (px/py)^(nx/ny) -> (px/py)^int(nx/ny) * (px/py)^frac(nx/ny)
             xf = int(nx / ny)  # Get integer part
             nx = nx % ny  # Reduce to fraction
-            if nx > 0 and self._zero_or_one_power_frac(nx, ny) == 0:
-                return 0
-            n1 = 1
-            npx = px
-            npy = py
-            while n1 < xf and px < (1 << 32) and py < (1 << 32):
-                npx *= px
-                npy *= py
-                n1 += 1
-            if n1 > 1:
-                quo = int(xf / n1)
-                if self.zero_or_one_power(npx, npy, quo) == 0:
+            if nx > 0:
+                # Split 1 plus the fractional part in two pieces, so that the fractional
+                # parts involved in power_frac are closer to 1, and so are processed
+                # much faster by power_frac.  Compensate by reducing the
+                # integer part by 1.
+                xf -= 1
+                nx += ny
+                nxpart = int(nx / 2)
+                if (
+                    self._zero_or_one_power_frac(nxpart, ny) == 0
+                    or self._zero_or_one_power_frac(nx - nxpart, ny) == 0
+                ):
                     return 0
-                xf -= quo * n1
-            for i in range(xf):
-                if self.zero_or_one(px, py) == 0:
-                    return 0
+            if xf >= 1:
+                n1 = 1
+                npx = px
+                npy = py
+                while n1 < xf and px < (1 << 32) and py < (1 << 32):
+                    npx *= px
+                    npy *= py
+                    n1 += 1
+                if n1 > 1:
+                    quo = int(xf / n1)
+                    if self.zero_or_one_power(npx, npy, quo) == 0:
+                        return 0
+                    xf -= quo * n1
+                for i in range(xf):
+                    if self.zero_or_one(px, py) == 0:
+                        return 0
             return 1
         return self._zero_or_one_power_frac(px, py, nx, ny)
 

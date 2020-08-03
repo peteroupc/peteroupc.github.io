@@ -721,22 +721,15 @@ The continous Bernoulli distribution takes one parameter `lamda` (a number in [0
 
     pow(lamda, x) * pow(1 - lamda, 1 - x).
 
-Again, this function meets the requirements stated by Keane and O'Brien, so it can be simulated via Bernoulli factories.  Thus, this distribution can be simulated in Python using a geometric bag (which represents _x_ in the formula above) and a two-coin Bernoulli factory described below.
+Again, this function meets the requirements stated by Keane and O'Brien, so it can be simulated via Bernoulli factories.  Thus, this distribution can be simulated in Python as described below.
 
-The **two-coin power factory** has the following algorithm.  It is based on the **PowerBernoulliFactory** but changed to accept a second input coin rather than a fixed value for the exponent. To the best of my knowledge, I am not aware of any other article or paper that presents this particular Bernoulli factory.
-
-1. Set _i_ to 1.
-2. Flip the input coin that simulates the base; if it returns 1, return 1.
-3. Flip the input coin that simulates the exponent; if it returns 1, return 0 with probability 1/_i_.
-4. Add 1 to _i_ and go to step 1.
-
-The algorithm for sampling the continuous Bernoulli distribution follows.  It uses a **lambda Bernoulli factory** algorithm, which returns 1 with probability `lamda`.
+The algorithm for sampling the continuous Bernoulli distribution follows.  It uses an input coin that returns 1 with probability `lamda`.
 
 1. Create an empty list to serve as a "geometric bag".
-2. Create a **complementary lambda Bernoulli factory** that returns 1 minus the result of the **lambda Bernoulli factory**.
+2. Create a **complementary lambda Bernoulli factory** that returns 1 minus the result of the input coin.
 3. Remove all digits from the geometric bag.  This will result in an empty uniform random number, _U_, for the following steps, which will accept _U_ with probability `lamda`<sup>_U_</sup>*(1&minus;`lamda`)<sup>1&minus;_U_</sup>) (the proportional probability for the beta distribution), as _U_ is built up.
-4. Call the **two-coin power factory** using the **lambda Bernoulli factory** as the base and **SampleGeometricBag** as the exponent (which will return 1 with probability `lamda`<sup>_U_</sup>).  If the result is 0, go to step 3.
-5. Call the **two-coin power factory** using the **complementary lambda Bernoulli factory** as the base and **SampleGeometricBagComplement** algorithm and parameter _b_ &minus; 1 (which will return 1 with probability (1-`lamda`)<sup>1&minus;_U_</sup>).  If the result is 0, go to step 3. (Note that steps 4 and 5 don't depend on each other and can be done in either order without affecting correctness.)
+4. Call the **algorithm for &lambda;<sup>&mu;</sup>** described in "[**Bernoulli Factory Algorithms**](https://peteroupc.github.io/bernoulli.html)", using the input coin as the &lambda;-coin, and **SampleGeometricBag** as the &mu;-coin (which will return 1 with probability `lamda`<sup>_U_</sup>).  If the result is 0, go to step 3.
+5. Call the **algorithm for &lambda;<sup>&mu;</sup>** using the **complementary lambda Bernoulli factory** as the &lambda;-coin and **SampleGeometricBagComplement** algorithm as the &mu;-coin (which will return 1 with probability (1-`lamda`)<sup>1&minus;_U_</sup>).  If the result is 0, go to step 3. (Note that steps 4 and 5 don't depend on each other and can be done in either order without affecting correctness.)
 6. _U_ was accepted, so return the result of **FillGeometricBag**.
 
 The Python code that samples the continuous Bernoulli distribution follows.
