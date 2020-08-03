@@ -170,7 +170,7 @@ Observing that the even-parity construction used in the Flajolet paper is equiva
 6. Return 0 with probability _x_/(_y_*_i_).
 7. Add 1 to _i_ and go to step 5.
 
-Note, however, that when _x_/_y_ < 1, this algorithm converges more and more slowly as &lambda; approaches 0.
+> **Note:** When _x_/_y_ is less than 1, the minimum number of coin flips needed, on average, by this algorithm will grow without bound as &lambda; approaches 0.  For this case in particular, see the appendix, which also shows an alternative way to implement this and other Bernoulli factory algorithms using PSRNs, which exploits knowledge of &lambda; but is not the focus of this article since it involves arithmetic.
 
 **Algorithm for sqrt(&lambda;).** Use the algorithm for &lambda;<sup>1/2</sup>.
 
@@ -210,7 +210,10 @@ Observing that the even-parity construction used in the Flajolet paper is equiva
 3. With probability _x_ * _x_/(_y_ * _y_), call **SampleGeometricBag** twice on the PSRN.  If both of these calls return 1, return 0.
 4. Go to step 2.
 
-**Algorithm for &pi; / 12**:  Use the algorithm for **arcsin(1/2) / 2**.  Where the algorithm says to "flip the input coin", instead generate an unbiased random bit.
+**Algorithm for &pi; / 12**:  Two algorithms:
+
+- First algorithm: Use the algorithm for **arcsin(1/2) / 2**.  Where the algorithm says to "flip the input coin", instead generate an unbiased random bit.
+- Second algorithm: With probability 2/3, return 0.  Otherwise, run the algorithm for **&pi; / 4** and return the result.
 
 **Algorithm for &pi; / 4** (Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup>:
 
@@ -224,22 +227,47 @@ Observing that the even-parity construction used in the Flajolet paper is equiva
 3. Generate 2*_t_ unbiased random bits, and return 0 if there are more zeros than ones generated this way or vice versa.  (Note that this condition can be checked even before all the bits are generated this way.)  Repeat this step two more times.
 4. Return 1.
 
-**Algorithm for (_a_/_b_)<sup>_x_/_y_</sup>.** In the algorithm below, the case where _x_/_y_ is in (0, 1) is due to recent work by Mendo (2019)<sup>[**(12)**](#Note12)</sup>.  The algorithm works only if _x_/_y_ is 0 or greater and _a_/_b_ is in the interval [0, 1].
+**Algorithm for (_a_/_b_)<sup>_x_/_y_</sup>.** In the algorithm below, _a_, _b_, _x_, and _y_ are integers, and the case where _x_/_y_ is in (0, 1) is due to recent work by Mendo (2019)<sup>[**(12)**](#Note12)</sup>.  This algorithm works only if&mdash;
 
-1. If _x_ is 0, return 1.  Otherwise, if _a_ is 0, return 0.  Otherwise, if _a_ equals _b_, return 1.
+-  _x_/_y_ is 0 or greater and _a_/_b_ is in the interval [0, 1], or
+-  _x_/_y_ is less than 0 and _a_/_b_ is 1 or greater.
+
+The algorithm follows.
+
+1. If _x_/_y_ is less than 0, swap _a_ and _b_, and remove the sign from _x_/_y_.  If _a_/_b_ is now no longer in the interval [0, 1], return an error.
 2. If _x_/_y_ is equal to 1, return 1 with probability _a_/_b_ and 0 otherwise.
-3. If _x_/_y_ is greater than 1:
+3. If _x_ is 0, return 1.  Otherwise, if _a_ is 0, return 0.  Otherwise, if _a_ equals _b_, return 1.
+4. If _x_/_y_ is greater than 1:
     1. Generate a random number that is 1 with probability _a_<sup>_k_</sup>/_b_<sup>_k_</sup> or 0 otherwise, where _k_ = floor(_x_/_y_). (Or generate _k_ random numbers that are 1 with probability _a_/_b_ or 0 otherwise, then multiply them all.)  If the number is 0, return 0.
     2. Otherwise, set _x_ and _y_ such that _x_/_y_ =_x_/_y_ &minus; _k_.
-4. Set _i_ to 1.
-5. With probability _a_/_b_, return 1.
-6. Otherwise, with probability _x_/(_y_*_i_), return 0.
-7. Add 1 to _i_ and go to step 5.
+5. Set _i_ to 1.
+6. With probability _a_/_b_, return 1.
+7. Otherwise, with probability _x_/(_y_*_i_), return 0.
+8. Add 1 to _i_ and go to step 6.
+
+**Algorithm for exp(&minus; _x_/_y_).**  This algorithm takes integers _x_ >= 0 and _y_ > 0 and outputs 1 with probability `exp(-x/y)` or 0 otherwise. It originates from (Canonne et al. 2020)<sup>[**(19)**](#Note19)</sup>.
+
+1. Special case: If _x_ is 0, return 1. (This is because the probability becomes `exp(0) = 1`.)
+2. If `x > y` (so _x_/_y_ is greater than 1), call this algorithm (recursively) `floor(x/y)` times with _x_ = _y_ = 1 and once with _x_ = _x_ &minus; floor(_x_/_y_) \* _y_ and _y_ = _y_.  Return 1 if all these calls return 1; otherwise, return 0.
+3. Set _r_ to 1 and _i_ to 1.
+4. Return _r_ with probability (_y_ \* _i_ &minus; _x_) / (_y_ \* _i_).
+5. Set _r_ to 1 &minus; _r_, add 1 to _i_, and go to step 4.
+
+**Algorithm for exp(&minus; _z_).** This algorithm is similar to the previous algorithm, except that _z_ can be any real number 0 or greater, as long as _z_ can be rewritten as the sum of one or more components whose fractional parts can each be simulated by a Bernoulli factory algorithm that outputs heads with probability equal to that fractional part.
+
+More specifically:
+
+1. Decompose _z_ into _n_ > 0 positive components that sum to _z_.  For example, if _z_ = 3.5, it can be decomposed into only one component, 3.5 (whose fractional part is trivial to simulate), and if _z_ = &pi;, it can be decomposed into four components that are all (&pi; / 4), which has a not-so-trivial simulation described earlier on this page.
+2. For each component _LC_\[_i_\] found this way, let _LI_\[_i_\] be floor(_LC_\[_i_\]) and let _LF_\[_i_\] be _LC_\[_i_\] &minus; floor(_LC_\[_i_\]) (_LC_\[_i_\]'s fractional part).
+
+The algorithm is then as follows:
+
+- For each component _LC_\[_i_\], call the **algorithm for exp(&minus; _LI_\[_i_\]/1)**, and call the **general martingale algorithm** adapted for **exp(&minus; _LF_\[_i_\])**.  If any of these calls returns 0, return 0; otherwise, return 1. (See also (Canonne et al. 2020)<sup>[**(14)**](#Note14)</sup>.)
 
 <a id=General_Algorithms></a>
 ### General Algorithms
 
-**Algorithm for the probability generating function.**  Let _X_ be a random number that follows a discrete distribution (one that takes on a countable number of values).  The following algorithm generates heads with probability **E**\[&lambda;<sup>_X_</sup>\], that is, the expected (average) value of &lambda;<sup>_X_</sup>.  **E**\[&lambda;<sup>_X_</sup>\] is the distribution's _probability generating function_, also known as _factorial moment generating function_ (Dughmi et al. 2017)<sup>[**(14)**](#Note14)</sup>.
+**Algorithm for the probability generating function.**  Let _X_ be a random number that follows a discrete distribution (one that takes on a countable number of values).  The following algorithm generates heads with probability **E**\[&lambda;<sup>_X_</sup>\], that is, the expected (average) value of &lambda;<sup>_X_</sup>.  **E**\[&lambda;<sup>_X_</sup>\] is the distribution's _probability generating function_, also known as _factorial moment generating function_ (Dughmi et al. 2017)<sup>[**(15)**](#Note15)</sup>.
 
 1. Generate a random number _N_ of the given distribution.
 2. Flip the input coin until the coin returns 0 or the coin is flipped _N_ times.  Return 1 if all the coin flips, including the last, returned 1 (or if _N_ is 0); or return 0 otherwise.
@@ -324,7 +352,72 @@ In addition, for each algorithm, a table appears showing the minimum number of i
 
 <small><sup id=Note13>(13)</sup> One of the only implementations I could find of this, if not the only, was a [**Haskell implementation**](https://github.com/derekelkins/buffon/blob/master/Data/Distribution/Buffon.hs).</small>
 
-<small><sup id=Note14>(14)</sup> Shaddin Dughmi, Jason D. Hartline, Robert Kleinberg, and Rad Niazadeh. 2017. Bernoulli Factories and Black-Box Reductions in Mechanism Design. In _Proceedings of 49th Annual ACM SIGACT Symposium on the Theory of Computing_, Montreal, Canada, June 2017 (STOC’17).</small>
+<small><sup id=Note14>(14)</sup> No note text yet.</small>
+
+<small><sup id=Note15>(15)</sup> Shaddin Dughmi, Jason D. Hartline, Robert Kleinberg, and Rad Niazadeh. 2017. Bernoulli Factories and Black-Box Reductions in Mechanism Design. In _Proceedings of 49th Annual ACM SIGACT Symposium on the Theory of Computing_, Montreal, Canada, June 2017 (STOC’17).</small>
+
+<small><sup id=Note16>(16)</sup> No note text yet.</small>
+
+<small><sup id=Note17>(17)</sup> No note text yet.</small>
+
+<small><sup id=Note18>(18)</sup> No note text yet.</small>
+
+<small><sup id=Note19>(19)</sup> Canonne, C., Kamath, G., Steinke, T., "[The Discrete Gaussian for Differential Privacy](https://arxiv.org/abs/2004.00010v2)", arXiv:2004.00010v2 [cs.DS], 2020.</small>
+
+<a id=Appendix></a>
+## Appendix
+
+&nbsp;
+
+<a id=Convergence_of_Bernoulli_Factories></a>
+### Convergence of Bernoulli Factories
+
+The following Python code illustrates how to test a Bernoulli factory algorithm for convergence to the correct probability, as well as the speed of this convergence.  In this case, we are testing the Bernoulli factory algorithm of _x_<sup>_y_/_z_</sup>, where _x_ is in the interval (0, 1) and _y_/_z_ is greater than 0.  Depending on the parameters _x_, _y_, and _z_, this Bernoulli factory converges faster or slower.
+
+```
+# Parameters for the Bernoulli factory x**(y/z)
+x=0.005 # x is the input coin's probability of heads
+y=2
+z=3
+# Print the desired probability
+print(x**(y/z))
+passp = 0
+failp = 0
+# Set cumulative probability to 1
+cumu = 1
+iters=4000
+for i in range(iters):
+  # With probability x, the algorithm returns 1 (heads)
+  prob=(x);prob*=cumu; passp+=prob; cumu-=prob
+  # With probability (y/(z*(i+1))), the algorithm returns 0 (tails)
+  prob=(y/(z*(i+1)));prob*=cumu; failp+=prob; cumu-=prob
+  # Output the current probability in this iteration,
+  # but only for the first 30 and last 30 iterations
+  if i<30 or i>=iters-30: print(passp)
+```
+
+As this code shows, as _x_ (the probability of heads of the input coin) approaches 0, the convergence rate gets slower and slower, even though the probability will eventually converge to the correct one. In fact, when _y_/_z_ is less than 1:
+
+- The average number of coin flips needed by this algorithm will grow without bound as _x_ approaches 0, and Mendo (2019)<sup>[**(16)**](#Note16)</sup> showed that this is a lower bound; that is, no Bernoulli factory algorithm can do much better without knowing more information on _x_.
+- _x_<sup>_y_/_z_</sup> has a slope that tends to a vertical slope near 0, so that the so-called [**_Lipschitz condition_**](https://en.wikipedia.org/wiki/Lipschitz_continuity) is not met at 0.  And (Nacu and Peres 2005, propositions 10 and 23)<sup>[**(17)**](#Note17)</sup> showed that the Lipschitz condition is necessary for a Bernoulli factory to have an upper bound on the average running time.
+
+Thus, a practical implementation of this algorithm may have to switch to an alternative implementation (such as the one described in the next section) when it detects that the geometric bag's first few digits are zeros.
+
+<a id=Alternative_Implementation_of_Bernoulli_Factories></a>
+### Alternative Implementation of Bernoulli Factories
+
+Say we have a Bernoulli factory algorithm that takes a coin with probability of heads of _p_ and outputs 1 with probability _f_(_p_).  If this algorithm takes a geometric bag (a partially-sampled uniform random number or PSRN) as the input coin and flips that coin using **SampleGeometricBag**, the algorithm could instead be implemented as follows in order to return 1 with probability _f_(_U_), where _U_ is the number represented by the geometric bag (see also (Brassard et al., 2019)<sup>[**(11)**](#Note11)</sup>, (Devroye 1986, p. 431)<sup>[**(18)**](#Note18)</sup>, (Devroye and Gravel 2015)<sup>[**(3)**](#Note3)</sup>):
+
+1. Set _v_ to 0 and _k_ to 1.
+2. Set _v_ to _b_ * _v_ + _d_, where _b_ is the base (or radix) of the geometric bag's digits, and _d_ is a digit chosen uniformly at random.
+3. Calculate an approximation of _f_(_U_) as follows:
+    1. Set _n_ to the number of items (sampled and unsampled digits) in the geometric bag.
+    2. Of the first _n_ items in the geometric bag, sample each of the unsampled digits uniformly at random.  Then let _uk_ be the geometric bag's digit expansion up to the first _n_ digits after the point.
+    3. Calculate the lowest and highest values of _f_ in the interval \[_uk_, _uk_ + _b_<sup>&minus;_n_</sup>\], call them _fmin_ and _fmax_. If abs(_fmin_ - _fmax_) <= 2 * _b_<sup>&minus;_k_</sup>, calculate (_fmax_ + _fmin_) / 2 as the approximation.  Otherwise, add 1 to _n_ and go to the previous substep.
+4. Let _pk_ be the approximation's digit expansion up to the _k_ digits after the point.  For example, if _f_(_U_) is &pi; and _k_ is 2, _pk_ is 314.
+5. If _pk_ + 1 <= _v_, return 0. If _pk_ &minus; 2 >= _v_, return 1.  If neither is the case, add 1 to _k_ and go to step 2.
+
+However, the focus of this article is on algorithms that don't rely on calculations of irrational numbers, which is why this section is in the appendix.
 
 <a id=License></a>
 ## License

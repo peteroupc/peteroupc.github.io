@@ -94,8 +94,6 @@
 
 <ul>
 <li><a href="#SymPy_Formula_for_ZeroOrOneExpMinus"><strong>SymPy Formula for ZeroOrOneExpMinus</strong></a></li>
-<li><a href="#Convergence_of_Bernoulli_Factories"><strong>Convergence of Bernoulli Factories</strong></a></li>
-<li><a href="#Alternative_Implementation_of_Bernoulli_Factories"><strong>Alternative Implementation of Bernoulli Factories</strong></a></li>
 <li><a href="#Another_Example_of_an_Arbitrary_Precision_Sampler"><strong>Another Example of an Arbitrary-Precision Sampler</strong></a></li>
 </ul></li>
 <li><a href="#License"><strong>License</strong></a></li>
@@ -270,20 +268,9 @@
 <li>Take the first <code>p</code> digits of the geometric bag and return &Sigma;<sub><em>i</em>=0, ..., <code>p</code>&minus;1</sub> bag[<em>i</em>] * <em>b</em><sup>&minus;<em>i</em>&minus;1</sup>, where <em>b</em> is the base, or radix.  (If it somehow happens that digits beyond <code>p</code> are set to 0 or 1, then the implementation could choose instead to fill all unsampled digits between the first and the last set digit and return the full number, optionally rounding it to a number whose fractional part has <code>p</code> digits, with a rounding mode of choice.)</li>
 </ol>
 
-<p><strong>PowerBernoulliFactory</strong> is a Bernoulli factory algorithm that transforms a coin that produces heads with probability <code>p</code> into a coin that produces heads with probability <code>pow(p, y)</code>.  The case where <code>y</code> is in (0, 1) is due to recent work by Mendo (2019)<sup><a href="#Note15"><strong>(15)</strong></a></sup>.  The algorithm takes an input coin that produces heads with probability <code>p</code>, as well as the parameter <em>y</em>, which must be 0 or greater, and is described as follows:</p>
+<p><strong>PowerBernoulliFactory</strong> is the <strong>algorithm for &lambda;<sup><em>x</em>/<em>y</em></sup></strong> described in &quot;<a href="https://peteroupc.github.io/bernoulli.html"><strong>Bernoulli Factory Algorithms</strong></a>&quot;.</p>
 
-<ol>
-<li>If <em>y</em> is 0, return 1.  If <em>y</em> is equal to 1, flip the input coin and return the result.</li>
-<li>If <em>y</em> is greater than 1, flip the input coin <code>floor(y)</code> times and call <strong>PowerBernoulliFactory</strong> (once) with <em>y</em> = <em>y</em> &minus; floor(<em>y</em>).  Return 1 if all these calls and flips return 1; otherwise, return 0.</li>
-<li><em>y</em> is less than 1, so set <em>i</em> to 1.</li>
-<li>Flip the input coin; if it returns 1, return 1.</li>
-<li>Return 0 with probability <em>y</em>/<em>i</em>.</li>
-<li>Add 1 to <em>i</em> and go to step 4.</li>
-</ol>
-
-<p>Note, however, that when <em>y</em> is less than 1, the minimum number of coin flips needed, on average, by this algorithm will grow without bound as <code>p</code> approaches 0. Mendo (2019)<sup><a href="#Note15"><strong>(15)</strong></a></sup> showed that this is a lower bound; that is, no Bernoulli factory algorithm can do much better without knowing more information on <code>p</code>.  Because of this, the appendix shows an alternative way to implement this and other Bernoulli factory algorithms using geometric bags, which exploits knowledge of <code>p</code> but is not the focus of this article since it involves arithmetic.   The appendix also has notes on the convergence of Bernoulli factories.</p>
-
-<p>The <strong>kthsmallest</strong> method generates the &#39;k&#39;th smallest &#39;bitcount&#39;-digit uniform random number out of &#39;n&#39; of them, is also relied on by this beta sampler.  It is used when both <code>a</code> and <code>b</code> are integers, based on the known property that a beta random variable in this case is the <code>a</code>th smallest uniform (0, 1) random number out of <code>a + b - 1</code> of them (Devroye 1986, p. 431)<sup><a href="#Note16"><strong>(16)</strong></a></sup>.</p>
+<p>The <strong>kthsmallest</strong> method generates the &#39;k&#39;th smallest &#39;bitcount&#39;-digit uniform random number out of &#39;n&#39; of them, is also relied on by this beta sampler.  It is used when both <code>a</code> and <code>b</code> are integers, based on the known property that a beta random variable in this case is the <code>a</code>th smallest uniform (0, 1) random number out of <code>a + b - 1</code> of them (Devroye 1986, p. 431)<sup><a href="#Note15"><strong>(15)</strong></a></sup>.</p>
 
 <p><strong>kthsmallest</strong>, however, doesn&#39;t simply generate &#39;n&#39; &#39;bitcount&#39;-digit numbers and then sort them.  Rather, it builds up their digit expansions digit by digit, via PSRNs.    It uses the observation that (in the binary case) each uniform (0, 1) random number is equally likely to be less than half or greater than half; thus, the number of uniform numbers that are less than half vs. greater than half follows a binomial(n, 1/2) distribution (and of the numbers less than half, say, the less-than-one-quarter vs. greater-than-one-quarter numbers follows the same distribution, and so on).    Thanks to this observation, the algorithm can generate a sorted sample &quot;on the fly&quot;.  A similar observation applies to other bases than base 2 if we use the multinomial distribution instead of the binomial distribution.  I am not aware of any other article or paper (besides one by me) that describes the <strong>kthsmallest</strong> algorithm given here.</p>
 
@@ -320,17 +307,9 @@
 
 <p>These two algorithms enable e-rands with rational-valued &lambda; parameters and are described below.</p>
 
-<p>The <strong>ZeroOrOneExpMinus</strong> algorithm takes integers <em>x</em> &gt;= 0 and <em>y</em> &gt; 0 and outputs 1 with probability <code>exp(-x/y)</code> or 0 otherwise. It originates from (Canonne et al. 2020)<sup><a href="#Note17"><strong>(17)</strong></a></sup>.</p>
+<p><strong>ZeroOrOneExpMinus</strong> is the <strong>algorithm for exp(&minus;<em>x</em>/<em>y</em>)</strong> described in &quot;<a href="https://peteroupc.github.io/bernoulli.html"><strong>Bernoulli Factory Algorithms</strong></a>&quot;.</p>
 
-<ol>
-<li>Special case: If <em>x</em> is 0, return 1. (This is because the probability becomes <code>exp(0) = 1</code>.)</li>
-<li>If <code>x &gt; y</code> (so <em>x</em>/<em>y</em> is greater than 1), call <strong>ZeroOrOneExpMinus</strong> <code>floor(x/y)</code> times with <em>x</em> = <em>y</em> = 1 and once with <em>x</em> = <em>x</em> &minus; floor(<em>x</em>/<em>y</em>) * <em>y</em> and <em>y</em> = <em>y</em>.  Return 1 if all these calls return 1; otherwise, return 0.</li>
-<li>Set <em>r</em> to 1 and <em>i</em> to 1.</li>
-<li>Return <em>r</em> with probability (<em>y</em> * <em>i</em> &minus; <em>x</em>) / (<em>y</em> * <em>i</em>).</li>
-<li>Set <em>r</em> to 1 &minus; <em>r</em>, add 1 to <em>i</em>, and go to step 4.</li>
-</ol>
-
-<p>The <strong>LogisticExp</strong> algorithm is a special case of the <em>logistic Bernoulli factory</em> given in (Morina et al. 2019)<sup><a href="#Note18"><strong>(18)</strong></a></sup>.  It takes integers <em>x</em> &gt;= 0,  <em>y</em> &gt; 0, and <em>prec</em> &gt; 0 and outputs 1 with probability <code>1/(1+exp(x/(y*pow(2, prec))))</code> and 0 otherwise.</p>
+<p>The <strong>LogisticExp</strong> algorithm is a special case of the <em>logistic Bernoulli factory</em> given in (Morina et al. 2019)<sup><a href="#Note16"><strong>(16)</strong></a></sup>.  It takes integers <em>x</em> &gt;= 0,  <em>y</em> &gt; 0, and <em>prec</em> &gt; 0 and outputs 1 with probability <code>1/(1+exp(x/(y*pow(2, prec))))</code> and 0 otherwise.</p>
 
 <ol>
 <li>Return 0 with probability 1/2.</li>
@@ -361,8 +340,8 @@
 </ul></li>
 <li>Create an empty list to serve as a &quot;geometric bag&quot;.</li>
 <li>Remove all digits from the geometric bag.  This will result in an empty uniform random number, <em>U</em>, for the following steps, which will accept <em>U</em> with probability <em>U</em><sup>a&minus;1</sup>*(1&minus;<em>U</em>)<sup>b&minus;1</sup>) (the proportional probability for the beta distribution), as <em>U</em> is built up.</li>
-<li>Call the <strong>PowerBernoulliFactory</strong> using the <strong>SampleGeometricBag</strong> algorithm and parameter <em>a</em> &minus; 1 (which will return 1 with probability <em>U</em><sup>a&minus;1</sup>).  If the result is 0, go to step 3.</li>
-<li>Call the <strong>PowerBernoulliFactory</strong> using the <strong>SampleGeometricBagComplement</strong> algorithm and parameter <em>b</em> &minus; 1 (which will return 1 with probability (1&minus;<em>U</em>)<sup>b&minus;1</sup>).  If the result is 0, go to step 3. (Note that steps 4 and 5 don&#39;t depend on each other and can be done in either order without affecting correctness, and this is taken advantage of in the Python code below.)</li>
+<li>Call the <strong>PowerBernoulliFactory</strong> using the <strong>SampleGeometricBag</strong> algorithm and parameter (<em>a</em> &minus; 1)/1 (which will return 1 with probability <em>U</em><sup>a&minus;1</sup>).  If the result is 0, go to step 3.</li>
+<li>Call the <strong>PowerBernoulliFactory</strong> using the <strong>SampleGeometricBagComplement</strong> algorithm and parameter (<em>b</em> &minus; 1)/1 (which will return 1 with probability (1&minus;<em>U</em>)<sup>b&minus;1</sup>).  If the result is 0, go to step 3. (Note that steps 4 and 5 don&#39;t depend on each other and can be done in either order without affecting correctness, and this is taken advantage of in the Python code below.)</li>
 <li><em>U</em> was accepted, so return the result of <strong>FillGeometricBag</strong>.</li>
 </ol>
 
@@ -405,8 +384,8 @@
 <p>It makes use of a number of algorithms as follows:</p>
 
 <ul>
-<li>It uses an algorithm for <a href="https://peteroupc.github.io/unbounded.html"><strong>sampling unbounded monotone density functions</strong></a>, which in turn is similar to the inversion-rejection algorithm in (Devroye 1986, ch. 7, sec. 4.4)<sup><a href="#Note16"><strong>(16)</strong></a></sup>.  This is needed because when <em>px</em>/<em>py</em> is greater than 1, <em>U</em><sup><em>px</em>/<em>py</em></sup> is distributed as <code>(py/px) / pow(U, 1-py/px)</code>, which has an unbounded peak at 0.</li>
-<li>It uses a number of Bernoulli factory algorithms.  In addition to the <strong>SampleGeometricBag</strong> and <strong>PowerBernoulliFactory</strong> algorithms mentioned earlier, it also uses <em>randomgen.py</em>&#39;s <code>zero_or_one_power_ratio</code> method (which returns 1 with probability (<em>a</em>/<em>b</em>)<sup><em>c</em>/<em>d</em></sup>)) and <em>bernoulli.py</em>&#39;s <code>eps_div</code> Bernoulli factory (which returns 1 with probability <em>a</em>/<em>b</em> and originates from (Lee et al. 2014)<sup><a href="#Note19"><strong>(19)</strong></a></sup>).  <code>eps_div</code> in turn relies on Huber&#39;s Bernoulli factory for linear functions (Huber 2016)<sup><a href="#Note20"><strong>(20)</strong></a></sup>.</li>
+<li>It uses an algorithm for <a href="https://peteroupc.github.io/unbounded.html"><strong>sampling unbounded monotone density functions</strong></a>, which in turn is similar to the inversion-rejection algorithm in (Devroye 1986, ch. 7, sec. 4.4)<sup><a href="#Note15"><strong>(15)</strong></a></sup>.  This is needed because when <em>px</em>/<em>py</em> is greater than 1, <em>U</em><sup><em>px</em>/<em>py</em></sup> is distributed as <code>(py/px) / pow(U, 1-py/px)</code>, which has an unbounded peak at 0.</li>
+<li>It uses a number of Bernoulli factory algorithms.  In addition to the <strong>SampleGeometricBag</strong> and <strong>PowerBernoulliFactory</strong> algorithms mentioned earlier, it also uses <em>randomgen.py</em>&#39;s <code>zero_or_one_power_ratio</code> method (which returns 1 with probability (<em>a</em>/<em>b</em>)<sup><em>c</em>/<em>d</em></sup>)) and <em>bernoulli.py</em>&#39;s <code>eps_div</code> Bernoulli factory (which returns 1 with probability <em>a</em>/<em>b</em> and originates from (Lee et al. 2014)<sup><a href="#Note17"><strong>(17)</strong></a></sup>).  <code>eps_div</code> in turn relies on Huber&#39;s Bernoulli factory for linear functions (Huber 2016)<sup><a href="#Note18"><strong>(18)</strong></a></sup>.</li>
 </ul>
 
 <p>However, this algorithm supports only base 2.</p>
@@ -713,7 +692,7 @@ def exprand(lam):
 <ul>
 <li>Estimate an upper bound for the peak of the density <code>peak</code>, given <code>alpha</code> and <code>beta</code>.</li>
 <li>Calculate a largest factor <code>c</code> such that <code>peak * c = m &lt; 0.5</code>.</li>
-<li>Use Huber&#39;s <code>linear_lowprob</code> Bernoulli factory (implemented in <em>bernoulli.py</em>) (Huber 2016)<sup><a href="#Note20"><strong>(20)</strong></a></sup>, taking the values found for <code>c</code> and <code>m</code>.  Testing shows that the choice of <code>m</code> is crucial for performance.</li>
+<li>Use Huber&#39;s <code>linear_lowprob</code> Bernoulli factory (implemented in <em>bernoulli.py</em>) (Huber 2016)<sup><a href="#Note18"><strong>(18)</strong></a></sup>, taking the values found for <code>c</code> and <code>m</code>.  Testing shows that the choice of <code>m</code> is crucial for performance.</li>
 </ul>
 
 <p>But doing so apparently worsened the performance (in terms of random bits used) compared to the simple rejection approach.</p>
@@ -722,12 +701,12 @@ def exprand(lam):
 
 <h3>Exponential Sampler: Extension</h3>
 
-<p>The code above supports rational-valued &lambda; parameters.  It can be extended to support any real-valued &lambda; parameter greater than 0, as long as &lambda; can be rewritten as the sum of one or more components whose fractional parts can each be simulated by a Bernoulli factory algorithm that outputs heads with probability equal to that fractional part.<sup><a href="#Note21"><strong>(21)</strong></a></sup>.</p>
+<p>The code above supports rational-valued &lambda; parameters.  It can be extended to support any real-valued &lambda; parameter greater than 0, as long as &lambda; can be rewritten as the sum of one or more components whose fractional parts can each be simulated by a Bernoulli factory algorithm that outputs heads with probability equal to that fractional part.<sup><a href="#Note19"><strong>(19)</strong></a></sup>.</p>
 
 <p>More specifically:</p>
 
 <ol>
-<li>Decompose &lambda; into <em>n</em> &gt; 0 positive components that sum to &lambda;.  For example, if &lambda; = 3.5, it can be decomposed into only one component, 3.5 (whose fractional part is trivial to simulate), and if &lambda; = &pi;, it can be decomposed into four components that are all (&pi; / 4), which has a not-so-trivial simulation as a so-called <em>Machin machine</em> (as described by (Flajolet et al. 2010)<sup><a href="#Note7"><strong>(7)</strong></a></sup>).</li>
+<li>Decompose &lambda; into <em>n</em> &gt; 0 positive components that sum to &lambda;.  For example, if &lambda; = 3.5, it can be decomposed into only one component, 3.5 (whose fractional part is trivial to simulate), and if &lambda; = &pi;, it can be decomposed into four components that are all (&pi; / 4), which has a not-so-trivial simulation described in &quot;<a href="https://peteroupc.github.io/bernoulli.html"><strong>Bernoulli Factory Algorithms</strong></a>&quot;.</li>
 <li>For each component <em>LC</em>[<em>i</em>] found this way, let <em>LI</em>[<em>i</em>] be floor(<em>LC</em>[<em>i</em>]) and let <em>LF</em>[<em>i</em>] be <em>LC</em>[<em>i</em>] &minus; floor(<em>LC</em>[<em>i</em>]) (<em>LC</em>[<em>i</em>]&#39;s fractional part).</li>
 </ol>
 
@@ -735,20 +714,14 @@ def exprand(lam):
 
 <ul>
 <li><p><code>exprandnew</code> is modified so that instead of taking <code>lamdanum</code> and <code>lamdaden</code>, it takes a list of the components described above.  Each component is stored as <em>LI</em>[<em>i</em>] and an algorithm that simulates <em>LF</em>[<em>i</em>].</p></li>
-<li><p><code>zero_or_one_exp_minus(a, b)</code> is replaced with a Bernoulli factory, described below, that takes a component list as described above and outputs heads with probability exp(&minus;&lambda;).  It extends the <strong>ExpMinus Bernoulli factory</strong> as described, for example, in (Łatuszyński et al. 2011)<sup><a href="#Note22"><strong>(22)</strong></a></sup> or (Flajolet et al. 2010)<sup><a href="#Note7"><strong>(7)</strong></a></sup>. Here, the probability <code>exp(-x/y)</code> is rewritten as <code>exp(-LI[0]) * exp(-LF[0]) * ... * exp(-LI[n-1]) * exp(-LF[n-1])</code>.</p>
-
-<ol>
-<li>For each component <em>LC</em>[<em>i</em>], call <strong>ZeroOrOneExpMinus</strong> with <em>x</em> = <em>LI</em>[<em>i</em>] and <em>y</em> = 1, and call the <strong>ExpMinus Bernoulli factory</strong> with the Bernoulli generator that simulates <em>LF</em>[<em>i</em>].  Return 0 if any of these calls returns 0. (See also (Canonne et al. 2020)<sup><a href="#Note17"><strong>(17)</strong></a></sup>.)</li>
-<li>Return 1.</li>
-</ol></li>
+<li><p><code>zero_or_one_exp_minus(a, b)</code> is replaced with the <strong>algorithm for exp(&minus; <em>z</em>)</strong> described in &quot;<a href="https://peteroupc.github.io/bernoulli.html"><strong>Bernoulli Factory Algorithms</strong></a>&quot;, where <em>z</em> is the real-valued &lambda; parameter.</p></li>
 <li><p><code>logisticexp(a, b, index+1)</code> is replaced with a modified <strong>LogisticExp</strong> algorithm described as follows.  Here, the probability <code>1/(1+exp(x/(y*pow(2, prec))))</code> is rewritten as 1/(1+exp(&Sigma;<sub><em>i</em></sub><em>LI</em>[<em>i</em>]/2<sup><em>prec</em></sup>) * &Pi;<sub><em>i</em></sub> exp(<em>LF</em>[<em>i</em>]/2<sup><em>prec</em></sup>) ).</p>
 
 <ol>
 <li>For each component <em>LC</em>[<em>i</em>], create a Bernoulli generator that uses the following algorithm: (a) With probability 1/(2<sup><em>prec</em></sup>), return 1 if the algorithm that simulates <em>LF</em>[<em>i</em>] returns 1; (b) Return 0.</li>
 <li>Return 0 with probability 1/2.</li>
 <li>Call <strong>ZeroOrOneExpMinus</strong> with <em>x</em> = &Sigma;<sub><em>i</em></sub> <em>LI</em>[<em>i</em>] and <em>y</em> = 2<sup><em>prec</em></sup>.  If this call returns 0, go to step 2.</li>
-<li>For each component <em>LC</em>[<em>i</em>], call the <strong>ExpMinus Bernoulli factory</strong> with the Bernoulli generator for that component described in step 1.  Go to step 2 if any of these calls returns 0.</li>
-<li>Return 1.</li>
+<li>For each component <em>LC</em>[<em>i</em>], call the <strong>algorithm for exp(&minus; <em>z</em>)</strong>described in &quot;<a href="https://peteroupc.github.io/bernoulli.html"><strong>Bernoulli Factory Algorithms</strong></a>&quot;, where <em>z</em> is that component. If any of these calls returns 0, go to step 2.  Otherwise, return 1.</li>
 </ol></li>
 </ul>
 
@@ -1059,7 +1032,7 @@ def exprandscore(ln,ld,ln2,ld2):
 
 <h3>An Example: The Continuous Bernoulli Distribution</h3>
 
-<p>The continuous Bernoulli distribution (Loaiza-Ganem and Cunningham 2019)<sup><a href="#Note23"><strong>(23)</strong></a></sup> was designed to considerably improve performance of variational autoencoders (a machine learning model) in modeling continuous data that takes values in the interval [0, 1], including &quot;almost-binary&quot; image data.</p>
+<p>The continuous Bernoulli distribution (Loaiza-Ganem and Cunningham 2019)<sup><a href="#Note20"><strong>(20)</strong></a></sup> was designed to considerably improve performance of variational autoencoders (a machine learning model) in modeling continuous data that takes values in the interval [0, 1], including &quot;almost-binary&quot; image data.</p>
 
 <p>The continous Bernoulli distribution takes one parameter <code>lamda</code> (a number in [0, 1]), and takes on values in the interval [0, 1] with a probability proportional to&mdash;</p>
 
@@ -1068,7 +1041,7 @@ def exprandscore(ln,ld,ln2,ld2):
 
 <p>Again, this function meets the requirements stated by Keane and O&#39;Brien, so it can be simulated via Bernoulli factories.  Thus, this distribution can be simulated in Python using a geometric bag (which represents <em>x</em> in the formula above) and a two-coin Bernoulli factory described below.</p>
 
-<p>The <strong>two-coin power factory</strong> has the following algorithm.  It is based on the <strong>PowerBernoulliFactory</strong> given earlier (including the algorithm from (Mendo 2019)<sup><a href="#Note15"><strong>(15)</strong></a></sup>), but changed to accept a second input coin rather than a fixed value for the exponent. To the best of my knowledge, I am not aware of any other article or paper that presents this particular Bernoulli factory.</p>
+<p>The <strong>two-coin power factory</strong> has the following algorithm.  It is based on the <strong>PowerBernoulliFactory</strong> but changed to accept a second input coin rather than a fixed value for the exponent. To the best of my knowledge, I am not aware of any other article or paper that presents this particular Bernoulli factory.</p>
 
 <ol>
 <li>Set <em>i</em> to 1.</li>
@@ -1147,7 +1120,7 @@ def contbernoullidist(b, lamda, precision=53):
 
 <ul>
 <li>For a 1-dimensional continuous distribution, the bit complexity is bounded from below by <code>DE + prec - 1</code> random bits, where <code>DE</code> is the differential entropy for the distribution and <em>prec</em> is the number of bits in the random number&#39;s fractional part (Devroye and Gravel 2015)<sup><a href="#Note3"><strong>(3)</strong></a></sup>.</li>
-<li>For a discrete distribution (a distribution of random integers with separate probabilities of occurring), the bit complexity is bounded from below by the binary entropies of all the probabilities involved, summed together (Knuth and Yao 1976)<sup><a href="#Note24"><strong>(24)</strong></a></sup>.  (For a given probability <em>p</em>, the binary entropy is <code>p*log2(1/p)</code>.)  An optimal algorithm will come within 2 bits of this lower bound on average.</li>
+<li>For a discrete distribution (a distribution of random integers with separate probabilities of occurring), the bit complexity is bounded from below by the binary entropies of all the probabilities involved, summed together (Knuth and Yao 1976)<sup><a href="#Note21"><strong>(21)</strong></a></sup>.  (For a given probability <em>p</em>, the binary entropy is <code>p*log2(1/p)</code>.)  An optimal algorithm will come within 2 bits of this lower bound on average.</li>
 </ul>
 
 <p>For example, in the case of the exponential distribution, <code>DE</code> is log2(exp(1)/&lambda;), so the minimum bit complexity for this distribution is log2(exp(1)/&lambda;) + <em>prec</em> &minus; 1, so that if <em>prec</em> = 20, this minimum is about 20.443 bits when &lambda; = 1, decreases when &lambda; goes up, and increases when &lambda; goes down.  In the case of any other continuous distribution, <code>DE</code> is the integral of <code>f(x) * log2(1/f(x))</code> over all valid values <code>x</code>, where <code>f</code> is the distribution&#39;s density function.</p>
@@ -1167,7 +1140,7 @@ def contbernoullidist(b, lamda, precision=53):
 
 <p>The beta and exponential samplers given here will generally use many more bits on average than the lower bounds on bit complexity, especially since they generate a PSRN one digit at a time.</p>
 
-<p>The <code>zero_or_one</code> method generally uses 2 random bits on average, due to its nature as a Bernoulli trial involving random bits, see also (Lumbroso 2013, Appendix B)<sup><a href="#Note25"><strong>(25)</strong></a></sup>.  However, it uses no random bits if both its parameters are the same.</p>
+<p>The <code>zero_or_one</code> method generally uses 2 random bits on average, due to its nature as a Bernoulli trial involving random bits, see also (Lumbroso 2013, Appendix B)<sup><a href="#Note22"><strong>(22)</strong></a></sup>.  However, it uses no random bits if both its parameters are the same.</p>
 
 <p>For <strong>SampleGeometricBag</strong> with base 2, the bit complexity has two components.</p>
 
@@ -1185,7 +1158,7 @@ def contbernoullidist(b, lamda, precision=53):
 
 <p><strong>FillGeometricBag</strong>&#39;s bit complexity is rather easy to find.  For base 2, it uses only one bit to sample each unfilled digit at positions less than <code>p</code>. (For bases other than 2, sampling <em>each</em> digit this way might not be optimal, since the digits are generated one at a time and random bits are not recycled over several digits.)  As a result, for an algorithm that uses both <strong>SampleGeometricBag</strong> and <strong>FillGeometricBag</strong> with <code>p</code> bits, these two contribute, on average, anywhere from <code>p + g * 2</code> to <code>p + g * 4</code> bits to the complexity, where <code>g</code> is the number of calls to <strong>SampleGeometricBag</strong>. (This complexity could be increased by 1 bit if <strong>FillGeometricBag</strong> is implemented with a rounding mechanism other than simple truncation.)</p>
 
-<p>The complexity of <strong>ZeroOrOneExpMinus</strong> (which outputs 1 with probability exp(&minus;<em>x</em>/<em>y</em>)) was discussed in some detail by (Canonne et al. 2020)<sup><a href="#Note17"><strong>(17)</strong></a></sup>, but not in terms of its bit complexity.  The special case of &gamma; =<em>x</em>/<em>y</em> = 0 requires no bits.  If &gamma; is an integer greater than 1, then the bit complexity is the same as that of sampling a geometric(exp(&minus;1)) random number, but truncated to [0, &gamma;]. (In this document, the geometric(<code>n</code>) distribution has the density function <code>pow(x, n) * (1 - x)</code>.)</p>
+<p>The complexity of <strong>ZeroOrOneExpMinus</strong> (which outputs 1 with probability exp(&minus;<em>x</em>/<em>y</em>)) was discussed in some detail by (Canonne et al. 2020)<sup><a href="#Note23"><strong>(23)</strong></a></sup>, but not in terms of its bit complexity.  The special case of &gamma; =<em>x</em>/<em>y</em> = 0 requires no bits.  If &gamma; is an integer greater than 1, then the bit complexity is the same as that of sampling a geometric(exp(&minus;1)) random number, but truncated to [0, &gamma;]. (In this document, the geometric(<code>n</code>) distribution has the density function <code>pow(x, n) * (1 - x)</code>.)</p>
 
 <ul>
 <li>Optimal lower bound: Has a complicated formula for general &gamma;, but approaches <code>log2(exp(1)-(exp(1)+1)*ln(exp(1)-1))</code> = 2.579730853... bits with increasing &gamma;.</li>
@@ -1212,7 +1185,7 @@ def contbernoullidist(b, lamda, precision=53):
 <li>The actual implementation&#39;s average bit complexity is generally&mdash;
 
 <ul>
-<li>the expected number of calls to <code>zero_or_one</code>, which was determined to be exp(&gamma;) in (Canonne et al. 2020)<sup><a href="#Note17"><strong>(17)</strong></a></sup>, times</li>
+<li>the expected number of calls to <code>zero_or_one</code>, which was determined to be exp(&gamma;) in (Canonne et al. 2020)<sup><a href="#Note23"><strong>(23)</strong></a></sup>, times</li>
 <li>the bit complexity for each such call (which is generally 2, but is lower in the case of &gamma; = 1, which involves <code>zero_or_one(1, 1)</code> that uses no random bits).</li>
 </ul></li>
 </ul>
@@ -1231,7 +1204,7 @@ def contbernoullidist(b, lamda, precision=53):
 <li>choosing the item with the smallest key</li>
 </ul>
 
-<p>(see also (Efraimidis 2015)<sup><a href="#Note26"><strong>(26)</strong></a></sup>). However, using fully-sampled exponential random numbers as keys (such as the naïve idiom <code>-ln(1-RNDU01())/w</code> in common floating-point arithmetic) can lead to inexact sampling, since the keys have a limited precision, it&#39;s possible for multiple items to have the same random key (which can make sampling those items depend on their order rather than on randomness), and the maximum weight is unknown.  Partially-sampled e-rands, as given in this document, eliminate the problem of inexact sampling.  This is notably because the <code>exprandless</code> method returns one of only two answers&mdash;either &quot;less&quot; or &quot;greater&quot;&mdash;and samples from both e-rands as necessary so that they will differ from each other by the end of the operation.  (This is not a problem because randomly generated real numbers are expected to differ from each other almost surely.) Another reason is that partially-sampled e-rands have potentially arbitrary precision.</p>
+<p>(see also (Efraimidis 2015)<sup><a href="#Note24"><strong>(24)</strong></a></sup>). However, using fully-sampled exponential random numbers as keys (such as the naïve idiom <code>-ln(1-RNDU01())/w</code> in common floating-point arithmetic) can lead to inexact sampling, since the keys have a limited precision, it&#39;s possible for multiple items to have the same random key (which can make sampling those items depend on their order rather than on randomness), and the maximum weight is unknown.  Partially-sampled e-rands, as given in this document, eliminate the problem of inexact sampling.  This is notably because the <code>exprandless</code> method returns one of only two answers&mdash;either &quot;less&quot; or &quot;greater&quot;&mdash;and samples from both e-rands as necessary so that they will differ from each other by the end of the operation.  (This is not a problem because randomly generated real numbers are expected to differ from each other almost surely.) Another reason is that partially-sampled e-rands have potentially arbitrary precision.</p>
 
 <p><a id=Open_Questions></a></p>
 
@@ -1283,31 +1256,25 @@ def contbernoullidist(b, lamda, precision=53):
 
 <p><small><sup id=Note14>(14)</sup> Rohatgi, V.K., 1976. An Introduction to Probability Theory Mathematical Statistics.</small></p>
 
-<p><small><sup id=Note15>(15)</sup> Mendo, Luis. &quot;An asymptotically optimal Bernoulli factory for certain functions that can be expressed as power series.&quot; Stochastic Processes and their Applications 129, no. 11 (2019): 4366-4384.</small></p>
+<p><small><sup id=Note15>(15)</sup> Devroye, L., <a href="http://luc.devroye.org/rnbookindex.html"><strong><em>Non-Uniform Random Variate Generation</em></strong></a>, 1986.</small></p>
 
-<p><small><sup id=Note16>(16)</sup> Devroye, L., <a href="http://luc.devroye.org/rnbookindex.html"><strong><em>Non-Uniform Random Variate Generation</em></strong></a>, 1986.</small></p>
+<p><small><sup id=Note16>(16)</sup> Morina, G., Łatuszyński, K., et al., &quot;From the Bernoulli Factory to a Dice Enterprise via Perfect Sampling of Markov Chains&quot;, 2019.</small></p>
 
-<p><small><sup id=Note17>(17)</sup> Canonne, C., Kamath, G., Steinke, T., &quot;<a href="https://arxiv.org/abs/2004.00010v2"><strong>The Discrete Gaussian for Differential Privacy</strong></a>&quot;, arXiv:2004.00010v2 [cs.DS], 2020.</small></p>
+<p><small><sup id=Note17>(17)</sup> Lee, A., Doucet, A. and Łatuszyński, K., 2014. Perfect simulation using atomic regeneration with application to Sequential Monte Carlo, arXiv:1407.5770v1  [stat.CO]</small></p>
 
-<p><small><sup id=Note18>(18)</sup> Morina, G., Łatuszyński, K., et al., &quot;From the Bernoulli Factory to a Dice Enterprise via Perfect Sampling of Markov Chains&quot;, 2019.</small></p>
+<p><small><sup id=Note18>(18)</sup> Huber, M., &quot;<a href="https://arxiv.org/abs/1507.00843v2"><strong>Optimal linear Bernoulli factories for small mean problems</strong></a>&quot;, arXiv:1507.00843v2 [math.PR], 2016.</small></p>
 
-<p><small><sup id=Note19>(19)</sup> Lee, A., Doucet, A. and Łatuszyński, K., 2014. Perfect simulation using atomic regeneration with application to Sequential Monte Carlo, arXiv:1407.5770v1  [stat.CO]</small></p>
+<p><small><sup id=Note19>(19)</sup> In fact, thanks to the &quot;geometric bag&quot; technique of Flajolet et al. (2010), that fractional part can even be a uniform random number in [0, 1] whose contents are built up digit by digit.</small></p>
 
-<p><small><sup id=Note20>(20)</sup> Huber, M., &quot;<a href="https://arxiv.org/abs/1507.00843v2"><strong>Optimal linear Bernoulli factories for small mean problems</strong></a>&quot;, arXiv:1507.00843v2 [math.PR], 2016.</small></p>
+<p><small><sup id=Note20>(20)</sup> Loaiza-Ganem, G., Cunningham, J.P., &quot;<a href="https://arxiv.org/abs/1907.06845v5"><strong>The continuous Bernoulli: fixing a pervasive error in variational autoencoders</strong></a>&quot;, arXiv:1907.06845v5  [stat.ML], 2019.</small></p>
 
-<p><small><sup id=Note21>(21)</sup> In fact, thanks to the &quot;geometric bag&quot; technique of Flajolet et al. (2010), that fractional part can even be a uniform random number in [0, 1] whose contents are built up digit by digit.</small></p>
+<p><small><sup id=Note21>(21)</sup> Knuth, Donald E. and Andrew Chi-Chih Yao. &quot;The complexity of nonuniform random number generation&quot;, in <em>Algorithms and Complexity: New Directions and Recent Results</em>, 1976.</small></p>
 
-<p><small><sup id=Note22>(22)</sup> Łatuszyński, K., Kosmidis, I.,  Papaspiliopoulos, O., Roberts, G.O., &quot;Simulating events of unknown probabilities via reverse time martingales&quot;, 2011.</small></p>
+<p><small><sup id=Note22>(22)</sup> Lumbroso, J., &quot;<a href="https://arxiv.org/abs/1304.1916"><strong>Optimal Discrete Uniform Generation from Coin Flips, and Applications</strong></a>&quot;, arXiv:1304.1916 [cs.DS].</small></p>
 
-<p><small><sup id=Note23>(23)</sup> Loaiza-Ganem, G., Cunningham, J.P., &quot;<a href="https://arxiv.org/abs/1907.06845v5"><strong>The continuous Bernoulli: fixing a pervasive error in variational autoencoders</strong></a>&quot;, arXiv:1907.06845v5  [stat.ML], 2019.</small></p>
+<p><small><sup id=Note23>(23)</sup> Canonne, C., Kamath, G., Steinke, T., &quot;<a href="https://arxiv.org/abs/2004.00010v2"><strong>The Discrete Gaussian for Differential Privacy</strong></a>&quot;, arXiv:2004.00010v2 [cs.DS], 2020.</small></p>
 
-<p><small><sup id=Note24>(24)</sup> Knuth, Donald E. and Andrew Chi-Chih Yao. &quot;The complexity of nonuniform random number generation&quot;, in <em>Algorithms and Complexity: New Directions and Recent Results</em>, 1976.</small></p>
-
-<p><small><sup id=Note25>(25)</sup> Lumbroso, J., &quot;<a href="https://arxiv.org/abs/1304.1916"><strong>Optimal Discrete Uniform Generation from Coin Flips, and Applications</strong></a>&quot;, arXiv:1304.1916 [cs.DS].</small></p>
-
-<p><small><sup id=Note26>(26)</sup> Efraimidis, P. &quot;<a href="https://arxiv.org/abs/1012.0256v2"><strong>Weighted Random Sampling over Data Streams</strong></a>&quot;, arXiv:1012.0256v2 [cs.DS], 2015.</small></p>
-
-<p><small><sup id=Note27>(27)</sup> Nacu, Şerban, and Yuval Peres. &quot;Fast simulation of new coins from old&quot;, The Annals of Applied Probability 15, no. 1A (2005): 93-115.</small></p>
+<p><small><sup id=Note24>(24)</sup> Efraimidis, P. &quot;<a href="https://arxiv.org/abs/1012.0256v2"><strong>Weighted Random Sampling over Data Streams</strong></a>&quot;, arXiv:1012.0256v2 [cs.DS], 2015.</small></p>
 
 <p><a id=Appendix></a></p>
 
@@ -1333,69 +1300,11 @@ def expminusformula():
 plot(expminusformula(), xlim=(0,1), ylim=(0,2))
 </pre>
 
-<p><a id=Convergence_of_Bernoulli_Factories></a></p>
-
-<h3>Convergence of Bernoulli Factories</h3>
-
-<p>The following Python code illustrates how to test a Bernoulli factory algorithm for convergence to the correct probability, as well as the speed of this convergence.  In this case, we are testing the <strong>PowerBernoulliFactory</strong> of <em>x</em><sup><em>y</em>/<em>z</em></sup>, where <em>x</em> is in the interval (0, 1) and <em>y</em>/<em>z</em> is greater than 0.  Depending on the parameters <em>x</em>, <em>y</em>, and <em>z</em>, this Bernoulli factory converges faster or slower.</p>
-
-<pre># Parameters for the Bernoulli factory x**(y/z)
-x=0.005 # x is the input coin&#39;s probability of heads
-y=2
-z=3
-# Print the desired probability
-print(x**(y/z))
-passp = 0
-failp = 0
-# Set cumulative probability to 1
-cumu = 1
-iters=4000
-for i in range(iters):
-  # With probability x, the algorithm returns 1 (heads)
-  prob=(x);prob*=cumu; passp+=prob; cumu-=prob
-  # With probability (y/(z*(i+1))), the algorithm returns 0 (tails)
-  prob=(y/(z*(i+1)));prob*=cumu; failp+=prob; cumu-=prob
-  # Output the current probability in this iteration,
-  # but only for the first 30 and last 30 iterations
-  if i&lt;30 or i&gt;=iters-30: print(passp)
-</pre>
-
-<p>As this code shows, as <em>x</em> (the probability of heads of the input coin) approaches 0, the convergence rate gets slower and slower, even though the probability will eventually converge to the correct one. In fact, when <em>y</em>/<em>z</em> is less than 1:</p>
-
-<ul>
-<li>The average number of coin flips needed by <strong>PowerBernoulliFactory</strong> will grow without bound as <em>x</em> approaches 0, and Mendo (2019)<sup><a href="#Note15"><strong>(15)</strong></a></sup> showed that this is a lower bound; that is, no Bernoulli factory algorithm can do much better without knowing more information on <em>x</em>.</li>
-<li><em>x</em><sup><em>y</em>/<em>z</em></sup> has a slope that tends to a vertical slope near 0, so that the so-called <a href="https://en.wikipedia.org/wiki/Lipschitz_continuity"><strong><em>Lipschitz condition</em></strong></a> is not met at 0.  And (Nacu and Peres 2005, propositions 10 and 23)<sup><a href="#Note27"><strong>(27)</strong></a></sup> showed that the Lipschitz condition is necessary for a Bernoulli factory to have an upper bound on the average running time.</li>
-</ul>
-
-<p>Thus, a practical implementation of <strong>PowerBernoulliFactory</strong> may have to switch to an alternative implementation (such as the one described in the next section) when it detects that the geometric bag&#39;s first few digits are zeros.</p>
-
-<p><a id=Alternative_Implementation_of_Bernoulli_Factories></a></p>
-
-<h3>Alternative Implementation of Bernoulli Factories</h3>
-
-<p>Say we have a Bernoulli factory algorithm that takes a coin with probability of heads of <em>p</em> and outputs 1 with probability <em>f</em>(<em>p</em>).  If this algorithm takes a geometric bag as the input coin and flips that coin using <strong>SampleGeometricBag</strong>, the algorithm could instead be implemented as follows in order to return 1 with probability <em>f</em>(<em>U</em>), where <em>U</em> is the number represented by the geometric bag (see also (Brassard et al., 2019)<sup><a href="#Note11"><strong>(11)</strong></a></sup>, (Devroye 1986, p. 431)<sup><a href="#Note16"><strong>(16)</strong></a></sup>, (Devroye and Gravel 2015)<sup><a href="#Note3"><strong>(3)</strong></a></sup>):</p>
-
-<ol>
-<li>Set <em>v</em> to 0 and <em>k</em> to 1.</li>
-<li>Set <em>v</em> to <em>b</em> * <em>v</em> + <em>d</em>, where <em>b</em> is the base (or radix) of the geometric bag&#39;s digits, and <em>d</em> is a digit chosen uniformly at random.</li>
-<li>Calculate an approximation of <em>f</em>(<em>U</em>) as follows:
-
-<ol>
-<li>Set <em>n</em> to the number of items (sampled and unsampled digits) in the geometric bag.</li>
-<li>Of the first <em>n</em> items in the geometric bag, sample each of the unsampled digits uniformly at random.  Then let <em>uk</em> be the geometric bag&#39;s digit expansion up to the first <em>n</em> digits after the point.</li>
-<li>Calculate the lowest and highest values of <em>f</em> in the interval [<em>uk</em>, <em>uk</em> + <em>b</em><sup>&minus;<em>n</em></sup>], call them <em>fmin</em> and <em>fmax</em>. If abs(<em>fmin</em> - <em>fmax</em>) &lt;= 2 * <em>b</em><sup>&minus;<em>k</em></sup>, calculate (<em>fmax</em> + <em>fmin</em>) / 2 as the approximation.  Otherwise, add 1 to <em>n</em> and go to the previous substep.</li>
-</ol></li>
-<li>Let <em>pk</em> be the approximation&#39;s digit expansion up to the <em>k</em> digits after the point.  For example, if <em>f</em>(<em>U</em>) is &pi; and <em>k</em> is 2, <em>pk</em> is 314.</li>
-<li>If <em>pk</em> + 1 &lt;= <em>v</em>, return 0. If <em>pk</em> &minus; 2 &gt;= <em>v</em>, return 1.  If neither is the case, add 1 to <em>k</em> and go to step 2.</li>
-</ol>
-
-<p>However, the focus of this article is on algorithms that don&#39;t rely on calculations of irrational numbers, which is why this section is in the appendix.</p>
-
 <p><a id=Another_Example_of_an_Arbitrary_Precision_Sampler></a></p>
 
 <h3>Another Example of an Arbitrary-Precision Sampler</h3>
 
-<p>As an additional example of how PSRNs can be useful, here we reimplement an example from Devroye&#39;s book <em>Non-Uniform Random Variate Generation</em> (Devroye 1986, pp. 128&ndash;129)<sup><a href="#Note16"><strong>(16)</strong></a></sup></sup>.  The following algorithm generates a random number from a distribution with the following cumulative distribution function: <code>1 - cos(pi*x/2).</code>  The random number will be in the interval [0, 1].  What is notable about this algorithm is that it&#39;s an arbitrary-precision algorithm that avoids floating-point arithmetic.  Note that the result is the same as applying acos(<em>U</em>)*2/&pi;, where <em>U</em> is a uniform [0, 1] random number, as pointed out by Devroye.  The algorithm follows.</p>
+<p>As an additional example of how PSRNs can be useful, here we reimplement an example from Devroye&#39;s book <em>Non-Uniform Random Variate Generation</em> (Devroye 1986, pp. 128&ndash;129)<sup><a href="#Note15"><strong>(15)</strong></a></sup></sup>.  The following algorithm generates a random number from a distribution with the following cumulative distribution function: <code>1 - cos(pi*x/2).</code>  The random number will be in the interval [0, 1].  What is notable about this algorithm is that it&#39;s an arbitrary-precision algorithm that avoids floating-point arithmetic.  Note that the result is the same as applying acos(<em>U</em>)*2/&pi;, where <em>U</em> is a uniform [0, 1] random number, as pointed out by Devroye.  The algorithm follows.</p>
 
 <ol>
 <li>Call the <strong>kthsmallest</strong> algorithm with <code>n = 2</code> and <code>k = 2</code>, but without filling it with digits at the last step.  Let <em>ret</em> be the result.</li>

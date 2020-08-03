@@ -219,7 +219,9 @@
 <li>Add 1 to <em>i</em> and go to step 5.</li>
 </ol>
 
-<p>Note, however, that when <em>x</em>/<em>y</em> &lt; 1, this algorithm converges more and more slowly as &lambda; approaches 0.</p>
+<blockquote>
+<p><strong>Note:</strong> When <em>x</em>/<em>y</em> is less than 1, the minimum number of coin flips needed, on average, by this algorithm will grow without bound as &lambda; approaches 0.  For this case in particular, see the appendix, which also shows an alternative way to implement this and other Bernoulli factory algorithms using PSRNs, which exploits knowledge of &lambda; but is not the focus of this article since it involves arithmetic.</p>
+</blockquote>
 
 <p><strong>Algorithm for sqrt(&lambda;).</strong> Use the algorithm for &lambda;<sup>1/2</sup>.</p>
 
@@ -274,7 +276,12 @@
 <li>Go to step 2.</li>
 </ol>
 
-<p><strong>Algorithm for &pi; / 12</strong>:  Use the algorithm for <strong>arcsin(1/2) / 2</strong>.  Where the algorithm says to &quot;flip the input coin&quot;, instead generate an unbiased random bit.</p>
+<p><strong>Algorithm for &pi; / 12</strong>:  Two algorithms:</p>
+
+<ul>
+<li>First algorithm: Use the algorithm for <strong>arcsin(1/2) / 2</strong>.  Where the algorithm says to &quot;flip the input coin&quot;, instead generate an unbiased random bit.</li>
+<li>Second algorithm: With probability 2/3, return 0.  Otherwise, run the algorithm for <strong>&pi; / 4</strong> and return the result.</li>
+</ul>
 
 <p><strong>Algorithm for &pi; / 4</strong> (Flajolet et al., 2010)<sup><a href="#Note1"><strong>(1)</strong></a></sup>:</p>
 
@@ -292,11 +299,19 @@
 <li>Return 1.</li>
 </ol>
 
-<p><strong>Algorithm for (<em>a</em>/<em>b</em>)<sup><em>x</em>/<em>y</em></sup>.</strong> In the algorithm below, the case where <em>x</em>/<em>y</em> is in (0, 1) is due to recent work by Mendo (2019)<sup><a href="#Note12"><strong>(12)</strong></a></sup>.  The algorithm works only if <em>x</em>/<em>y</em> is 0 or greater and <em>a</em>/<em>b</em> is in the interval [0, 1].</p>
+<p><strong>Algorithm for (<em>a</em>/<em>b</em>)<sup><em>x</em>/<em>y</em></sup>.</strong> In the algorithm below, <em>a</em>, <em>b</em>, <em>x</em>, and <em>y</em> are integers, and the case where <em>x</em>/<em>y</em> is in (0, 1) is due to recent work by Mendo (2019)<sup><a href="#Note12"><strong>(12)</strong></a></sup>.  This algorithm works only if&mdash;</p>
+
+<ul>
+<li> <em>x</em>/<em>y</em> is 0 or greater and <em>a</em>/<em>b</em> is in the interval [0, 1], or</li>
+<li> <em>x</em>/<em>y</em> is less than 0 and <em>a</em>/<em>b</em> is 1 or greater.</li>
+</ul>
+
+<p>The algorithm follows.</p>
 
 <ol>
-<li>If <em>x</em> is 0, return 1.  Otherwise, if <em>a</em> is 0, return 0.  Otherwise, if <em>a</em> equals <em>b</em>, return 1.</li>
+<li>If <em>x</em>/<em>y</em> is less than 0, swap <em>a</em> and <em>b</em>, and remove the sign from <em>x</em>/<em>y</em>.  If <em>a</em>/<em>b</em> is now no longer in the interval [0, 1], return an error.</li>
 <li>If <em>x</em>/<em>y</em> is equal to 1, return 1 with probability <em>a</em>/<em>b</em> and 0 otherwise.</li>
+<li>If <em>x</em> is 0, return 1.  Otherwise, if <em>a</em> is 0, return 0.  Otherwise, if <em>a</em> equals <em>b</em>, return 1.</li>
 <li>If <em>x</em>/<em>y</em> is greater than 1:
 
 <ol>
@@ -306,14 +321,39 @@
 <li>Set <em>i</em> to 1.</li>
 <li>With probability <em>a</em>/<em>b</em>, return 1.</li>
 <li>Otherwise, with probability <em>x</em>/(<em>y</em>*<em>i</em>), return 0.</li>
-<li>Add 1 to <em>i</em> and go to step 5.</li>
+<li>Add 1 to <em>i</em> and go to step 6.</li>
 </ol>
+
+<p><strong>Algorithm for exp(&minus; <em>x</em>/<em>y</em>).</strong>  This algorithm takes integers <em>x</em> &gt;= 0 and <em>y</em> &gt; 0 and outputs 1 with probability <code>exp(-x/y)</code> or 0 otherwise. It originates from (Canonne et al. 2020)<sup><a href="#Note19"><strong>(19)</strong></a></sup>.</p>
+
+<ol>
+<li>Special case: If <em>x</em> is 0, return 1. (This is because the probability becomes <code>exp(0) = 1</code>.)</li>
+<li>If <code>x &gt; y</code> (so <em>x</em>/<em>y</em> is greater than 1), call this algorithm (recursively) <code>floor(x/y)</code> times with <em>x</em> = <em>y</em> = 1 and once with <em>x</em> = <em>x</em> &minus; floor(<em>x</em>/<em>y</em>) * <em>y</em> and <em>y</em> = <em>y</em>.  Return 1 if all these calls return 1; otherwise, return 0.</li>
+<li>Set <em>r</em> to 1 and <em>i</em> to 1.</li>
+<li>Return <em>r</em> with probability (<em>y</em> * <em>i</em> &minus; <em>x</em>) / (<em>y</em> * <em>i</em>).</li>
+<li>Set <em>r</em> to 1 &minus; <em>r</em>, add 1 to <em>i</em>, and go to step 4.</li>
+</ol>
+
+<p><strong>Algorithm for exp(&minus; <em>z</em>).</strong> This algorithm is similar to the previous algorithm, except that <em>z</em> can be any real number 0 or greater, as long as <em>z</em> can be rewritten as the sum of one or more components whose fractional parts can each be simulated by a Bernoulli factory algorithm that outputs heads with probability equal to that fractional part.</p>
+
+<p>More specifically:</p>
+
+<ol>
+<li>Decompose <em>z</em> into <em>n</em> &gt; 0 positive components that sum to <em>z</em>.  For example, if <em>z</em> = 3.5, it can be decomposed into only one component, 3.5 (whose fractional part is trivial to simulate), and if <em>z</em> = &pi;, it can be decomposed into four components that are all (&pi; / 4), which has a not-so-trivial simulation described earlier on this page.</li>
+<li>For each component <em>LC</em>[<em>i</em>] found this way, let <em>LI</em>[<em>i</em>] be floor(<em>LC</em>[<em>i</em>]) and let <em>LF</em>[<em>i</em>] be <em>LC</em>[<em>i</em>] &minus; floor(<em>LC</em>[<em>i</em>]) (<em>LC</em>[<em>i</em>]&#39;s fractional part).</li>
+</ol>
+
+<p>The algorithm is then as follows:</p>
+
+<ul>
+<li>For each component <em>LC</em>[<em>i</em>], call the <strong>algorithm for exp(&minus; <em>LI</em>[<em>i</em>]/1)</strong>, and call the <strong>general martingale algorithm</strong> adapted for <strong>exp(&minus; <em>LF</em>[<em>i</em>])</strong>.  If any of these calls returns 0, return 0; otherwise, return 1. (See also (Canonne et al. 2020)<sup><a href="#Note14"><strong>(14)</strong></a></sup>.)</li>
+</ul>
 
 <p><a id=General_Algorithms></a></p>
 
 <h3>General Algorithms</h3>
 
-<p><strong>Algorithm for the probability generating function.</strong>  Let <em>X</em> be a random number that follows a discrete distribution (one that takes on a countable number of values).  The following algorithm generates heads with probability <strong>E</strong>[&lambda;<sup><em>X</em></sup>], that is, the expected (average) value of &lambda;<sup><em>X</em></sup>.  <strong>E</strong>[&lambda;<sup><em>X</em></sup>] is the distribution&#39;s <em>probability generating function</em>, also known as <em>factorial moment generating function</em> (Dughmi et al. 2017)<sup><a href="#Note14"><strong>(14)</strong></a></sup>.</p>
+<p><strong>Algorithm for the probability generating function.</strong>  Let <em>X</em> be a random number that follows a discrete distribution (one that takes on a countable number of values).  The following algorithm generates heads with probability <strong>E</strong>[&lambda;<sup><em>X</em></sup>], that is, the expected (average) value of &lambda;<sup><em>X</em></sup>.  <strong>E</strong>[&lambda;<sup><em>X</em></sup>] is the distribution&#39;s <em>probability generating function</em>, also known as <em>factorial moment generating function</em> (Dughmi et al. 2017)<sup><a href="#Note15"><strong>(15)</strong></a></sup>.</p>
 
 <ol>
 <li>Generate a random number <em>N</em> of the given distribution.</li>
@@ -529,7 +569,81 @@
 
 <p><small><sup id=Note13>(13)</sup> One of the only implementations I could find of this, if not the only, was a <a href="https://github.com/derekelkins/buffon/blob/master/Data/Distribution/Buffon.hs"><strong>Haskell implementation</strong></a>.</small></p>
 
-<p><small><sup id=Note14>(14)</sup> Shaddin Dughmi, Jason D. Hartline, Robert Kleinberg, and Rad Niazadeh. 2017. Bernoulli Factories and Black-Box Reductions in Mechanism Design. In <em>Proceedings of 49th Annual ACM SIGACT Symposium on the Theory of Computing</em>, Montreal, Canada, June 2017 (STOC’17).</small></p>
+<p><small><sup id=Note14>(14)</sup> No note text yet.</small></p>
+
+<p><small><sup id=Note15>(15)</sup> Shaddin Dughmi, Jason D. Hartline, Robert Kleinberg, and Rad Niazadeh. 2017. Bernoulli Factories and Black-Box Reductions in Mechanism Design. In <em>Proceedings of 49th Annual ACM SIGACT Symposium on the Theory of Computing</em>, Montreal, Canada, June 2017 (STOC’17).</small></p>
+
+<p><small><sup id=Note16>(16)</sup> No note text yet.</small></p>
+
+<p><small><sup id=Note17>(17)</sup> No note text yet.</small></p>
+
+<p><small><sup id=Note18>(18)</sup> No note text yet.</small></p>
+
+<p><small><sup id=Note19>(19)</sup> Canonne, C., Kamath, G., Steinke, T., &quot;<a href="https://arxiv.org/abs/2004.00010v2">The Discrete Gaussian for Differential Privacy</a>&quot;, arXiv:2004.00010v2 [cs.DS], 2020.</small></p>
+
+<p><a id=Appendix></a></p>
+
+<h2>Appendix</h2>
+
+<p>&nbsp;</p>
+
+<p><a id=Convergence_of_Bernoulli_Factories></a></p>
+
+<h3>Convergence of Bernoulli Factories</h3>
+
+<p>The following Python code illustrates how to test a Bernoulli factory algorithm for convergence to the correct probability, as well as the speed of this convergence.  In this case, we are testing the Bernoulli factory algorithm of <em>x</em><sup><em>y</em>/<em>z</em></sup>, where <em>x</em> is in the interval (0, 1) and <em>y</em>/<em>z</em> is greater than 0.  Depending on the parameters <em>x</em>, <em>y</em>, and <em>z</em>, this Bernoulli factory converges faster or slower.</p>
+
+<pre># Parameters for the Bernoulli factory x**(y/z)
+x=0.005 # x is the input coin&#39;s probability of heads
+y=2
+z=3
+# Print the desired probability
+print(x**(y/z))
+passp = 0
+failp = 0
+# Set cumulative probability to 1
+cumu = 1
+iters=4000
+for i in range(iters):
+  # With probability x, the algorithm returns 1 (heads)
+  prob=(x);prob*=cumu; passp+=prob; cumu-=prob
+  # With probability (y/(z*(i+1))), the algorithm returns 0 (tails)
+  prob=(y/(z*(i+1)));prob*=cumu; failp+=prob; cumu-=prob
+  # Output the current probability in this iteration,
+  # but only for the first 30 and last 30 iterations
+  if i&lt;30 or i&gt;=iters-30: print(passp)
+</pre>
+
+<p>As this code shows, as <em>x</em> (the probability of heads of the input coin) approaches 0, the convergence rate gets slower and slower, even though the probability will eventually converge to the correct one. In fact, when <em>y</em>/<em>z</em> is less than 1:</p>
+
+<ul>
+<li>The average number of coin flips needed by this algorithm will grow without bound as <em>x</em> approaches 0, and Mendo (2019)<sup><a href="#Note16"><strong>(16)</strong></a></sup> showed that this is a lower bound; that is, no Bernoulli factory algorithm can do much better without knowing more information on <em>x</em>.</li>
+<li><em>x</em><sup><em>y</em>/<em>z</em></sup> has a slope that tends to a vertical slope near 0, so that the so-called <a href="https://en.wikipedia.org/wiki/Lipschitz_continuity"><strong><em>Lipschitz condition</em></strong></a> is not met at 0.  And (Nacu and Peres 2005, propositions 10 and 23)<sup><a href="#Note17"><strong>(17)</strong></a></sup> showed that the Lipschitz condition is necessary for a Bernoulli factory to have an upper bound on the average running time.</li>
+</ul>
+
+<p>Thus, a practical implementation of this algorithm may have to switch to an alternative implementation (such as the one described in the next section) when it detects that the geometric bag&#39;s first few digits are zeros.</p>
+
+<p><a id=Alternative_Implementation_of_Bernoulli_Factories></a></p>
+
+<h3>Alternative Implementation of Bernoulli Factories</h3>
+
+<p>Say we have a Bernoulli factory algorithm that takes a coin with probability of heads of <em>p</em> and outputs 1 with probability <em>f</em>(<em>p</em>).  If this algorithm takes a geometric bag (a partially-sampled uniform random number or PSRN) as the input coin and flips that coin using <strong>SampleGeometricBag</strong>, the algorithm could instead be implemented as follows in order to return 1 with probability <em>f</em>(<em>U</em>), where <em>U</em> is the number represented by the geometric bag (see also (Brassard et al., 2019)<sup><a href="#Note11"><strong>(11)</strong></a></sup>, (Devroye 1986, p. 431)<sup><a href="#Note18"><strong>(18)</strong></a></sup>, (Devroye and Gravel 2015)<sup><a href="#Note3"><strong>(3)</strong></a></sup>):</p>
+
+<ol>
+<li>Set <em>v</em> to 0 and <em>k</em> to 1.</li>
+<li>Set <em>v</em> to <em>b</em> * <em>v</em> + <em>d</em>, where <em>b</em> is the base (or radix) of the geometric bag&#39;s digits, and <em>d</em> is a digit chosen uniformly at random.</li>
+<li>Calculate an approximation of <em>f</em>(<em>U</em>) as follows:
+
+<ol>
+<li>Set <em>n</em> to the number of items (sampled and unsampled digits) in the geometric bag.</li>
+<li>Of the first <em>n</em> items in the geometric bag, sample each of the unsampled digits uniformly at random.  Then let <em>uk</em> be the geometric bag&#39;s digit expansion up to the first <em>n</em> digits after the point.</li>
+<li>Calculate the lowest and highest values of <em>f</em> in the interval [<em>uk</em>, <em>uk</em> + <em>b</em><sup>&minus;<em>n</em></sup>], call them <em>fmin</em> and <em>fmax</em>. If abs(<em>fmin</em> - <em>fmax</em>) &lt;= 2 * <em>b</em><sup>&minus;<em>k</em></sup>, calculate (<em>fmax</em> + <em>fmin</em>) / 2 as the approximation.  Otherwise, add 1 to <em>n</em> and go to the previous substep.</li>
+</ol></li>
+<li>Let <em>pk</em> be the approximation&#39;s digit expansion up to the <em>k</em> digits after the point.  For example, if <em>f</em>(<em>U</em>) is &pi; and <em>k</em> is 2, <em>pk</em> is 314.</li>
+<li>If <em>pk</em> + 1 &lt;= <em>v</em>, return 0. If <em>pk</em> &minus; 2 &gt;= <em>v</em>, return 1.  If neither is the case, add 1 to <em>k</em> and go to step 2.</li>
+</ol>
+
+<p>However, the focus of this article is on algorithms that don&#39;t rely on calculations of irrational numbers, which is why this section is in the appendix.</p>
 
 <p><a id=License></a></p>
 
