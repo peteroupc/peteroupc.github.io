@@ -226,6 +226,14 @@
 <li>Flip the input coin.  If the coin returns 1, return 0.  Otherwise, go to step 1.</li>
 </ol>
 
+<p><strong>Algorithm for 1 &minus; &lambda; * &mu;</strong>  (Flajolet et al., 2010)<sup><a href="#Note1"><strong>(1)</strong></a></sup>: Flip the &lambda; input coin and return 0 if the result is 1, or 1 otherwise.</p>
+
+<p><strong>Algorithm for &lambda; * &mu;</strong>  (Flajolet et al., 2010)<sup><a href="#Note1"><strong>(1)</strong></a></sup>: Flip the &lambda; input coin and the &mu; input coin.  Return 1 if both flips return 1, and 0 otherwise.</p>
+
+<p><strong>Algorithm for &nu; * &lambda; + (1 &minus; &nu;) * &mu;</strong>  (Flajolet et al., 2010)<sup><a href="#Note1"><strong>(1)</strong></a></sup>: Flip the &nu; input coin.  If the result is 0, flip the &lambda; input coin and return the result.  Otherwise, flip the &mu; input coin and return the result.</p>
+
+<p><strong>Algorithm for &lambda; + &mu; &minus; (&lambda; * &mu;)</strong>  (Flajolet et al., 2010)<sup><a href="#Note1"><strong>(1)</strong></a></sup>: Flip the &lambda; input coin and the &mu; input coin.  Return 1 if either flip returns 1, and 0 otherwise.</p>
+
 <p><strong>Algorithm for arctan(&lambda;) /&lambda;</strong> (Flajolet et al., 2010)<sup><a href="#Note1"><strong>(1)</strong></a></sup>:</p>
 
 <ol>
@@ -392,7 +400,7 @@
 <p>The algorithm begins with <em>pos</em> equal to 1.  Then the following steps are taken.</p>
 
 <ol>
-<li>If <em>a</em>[<em>pos</em>] is the last partial denominator, return a number that is 1 with probability 1/(1+<em>a</em>[<em>pos</em>]) and 0 otherwise.</li>
+<li>If <em>a</em>[<em>pos</em>] is the last partial denominator, return a number that is 1 with probability 1/<em>a</em>[<em>pos</em>] and 0 otherwise.</li>
 <li>Set <em>k</em> to <em>a</em>[<em>pos</em>].</li>
 <li>With probability <em>k</em>/(1+<em>k</em>), return a number that is 1 with probability 1/<em>k</em> and 0 otherwise.</li>
 <li>Run this algorithm recursively, but with <em>pos</em> = <em>pos</em> + 1.  If the result is 1, return 0.  Otherwise, go to step 3.</li>

@@ -167,6 +167,14 @@ Observing that the even-parity construction used in the Flajolet paper is equiva
 1. With probability _c_/(1 + _c_), return a number that is 1 with probability 1/_c_ and 0 otherwise.
 2. Flip the input coin.  If the coin returns 1, return 0.  Otherwise, go to step 1.
 
+**Algorithm for 1 &minus; &lambda; * &mu;**  (Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup>: Flip the &lambda; input coin and return 0 if the result is 1, or 1 otherwise.
+
+**Algorithm for &lambda; * &mu;**  (Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup>: Flip the &lambda; input coin and the &mu; input coin.  Return 1 if both flips return 1, and 0 otherwise.
+
+**Algorithm for &nu; * &lambda; + (1 &minus; &nu;) * &mu;**  (Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup>: Flip the &nu; input coin.  If the result is 0, flip the &lambda; input coin and return the result.  Otherwise, flip the &mu; input coin and return the result.
+
+**Algorithm for &lambda; + &mu; &minus; (&lambda; * &mu;)**  (Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup>: Flip the &lambda; input coin and the &mu; input coin.  Return 1 if either flip returns 1, and 0 otherwise.
+
 **Algorithm for arctan(&lambda;) /&lambda;** (Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup>:
 
 1. Generate an empty uniform PSRN.
@@ -286,7 +294,7 @@ The following algorithms generate heads with a probability equal to an irrationa
 
 The algorithm begins with _pos_ equal to 1.  Then the following steps are taken.
 
-1. If _a_\[_pos_\] is the last partial denominator, return a number that is 1 with probability 1/(1+_a_\[_pos_\]) and 0 otherwise.
+1. If _a_\[_pos_\] is the last partial denominator, return a number that is 1 with probability 1/_a_\[_pos_\] and 0 otherwise.
 2. Set _k_ to _a_\[_pos_\].
 3. With probability _k_/(1+_k_), return a number that is 1 with probability 1/_k_ and 0 otherwise.
 4. Run this algorithm recursively, but with _pos_ = _pos_ + 1.  If the result is 1, return 0.  Otherwise, go to step 3.
