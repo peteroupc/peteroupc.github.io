@@ -31,7 +31,9 @@ The following sections will detail the topics given above, with suggestions on h
 
 The [**pseudocode conventions**](https://peteroupc.github.io/pseudocode.html) apply to this document.
 
-In this document, a **random number generator (RNG)** means software and/or hardware that seeks to generate numbers with the property that each possible outcome is as likely as any other without influence by anything else.  All the randomization methods presented on this page are ultimately based on an underlying RNG; however, the methods make no assumptions on that RNG's implementation (e.g., whether that RNG uses only its input and its state to produce numbers) or on that RNG's statistical quality or predictability.
+In this document, a **random number generator (RNG)** means software and/or hardware that seeks to generate numbers with the property that each possible outcome is as likely as any other without influence by anything else. (For example, RNGs include pseudorandom number generators \[PRNGs\]; so-called &quot;true&quot; random number generators; APIs that provide random-behaving numbers to applications; and so on, but do not include Gaussian and other non-uniform noise generators.)
+
+All the randomization methods presented on this page are ultimately based on an underlying RNG; however, the methods make no assumptions on that RNG's implementation (e.g., whether that RNG uses only its input and its state to produce numbers) or on that RNG's statistical quality or predictability.
 
 <a id=Contents></a>
 ## Contents

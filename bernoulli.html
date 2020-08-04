@@ -33,9 +33,54 @@
 <li><a href="#Algorithms"><strong>Algorithms</strong></a>
 
 <ul>
-<li><a href="#Algorithms_for_Functions_of_lambda"><strong>Algorithms for Functions of &lambda;</strong></a></li>
-<li><a href="#Algorithms_for_Irrational_Constants"><strong>Algorithms for Irrational Constants</strong></a></li>
-<li><a href="#General_Algorithms"><strong>General Algorithms</strong></a></li>
+<li><a href="#Algorithms_for_Functions_of_lambda"><strong>Algorithms for Functions of &lambda;</strong></a>
+
+<ul>
+<li><a href="#Algorithms_for_exp_minus_lambda"><strong>Algorithms for exp(&minus;&lambda;)</strong></a></li>
+<li><a href="#exp_lambda_1_minus_lambda"><strong>exp(&lambda;)*(1&minus;&lambda;)</strong></a></li>
+<li><a href="#exp_minus_lambda_minus__c"><strong>exp(&minus;&lambda; &minus; <em>c</em>)</strong></a></li>
+<li><a href="#1_1_lambda"><strong>1/(1+&lambda;)</strong></a></li>
+<li><a href="#log_1_lambda"><strong>log(1+&lambda;)</strong></a></li>
+<li><a href="#1_minus_log_1_lambda"><strong>1 &minus; log(1+&lambda;)</strong></a></li>
+<li><a href="#c__lambda_beta_beta__c__lambda__d__mu_minus_beta_minus_1__c___d"><strong><em>c</em> * &lambda; * &beta; / (&beta; * (<em>c</em> * &lambda; + <em>d</em> * &mu;) &minus; (&beta; &minus; 1) * (<em>c</em> + <em>d</em>))</strong></a></li>
+<li><a href="#c__lambda__c__lambda__d__or__c___d__lambda_1__c___d__lambda"><strong><em>c</em> * &lambda; / (<em>c</em> * &lambda; + <em>d</em>) or (<em>c</em>/<em>d</em>) * &lambda; / (1 + (<em>c</em>/<em>d</em>) * &lambda;))</strong></a></li>
+<li><a href="#lambda_mu"><strong>&lambda; + &mu;</strong></a></li>
+<li><a href="#lambda_minus_mu"><strong>&lambda; &minus; &mu;</strong></a></li>
+<li><a href="#1__c__lambda"><strong>1/(<em>c</em> + &lambda;)</strong></a></li>
+<li><a href="#1_minus_lambda"><strong>1 &minus; &lambda;</strong></a></li>
+<li><a href="#lambda_mu_2"><strong>&lambda; * &mu;</strong></a></li>
+<li><a href="#nu_lambda_1_minus_nu_mu"><strong>&nu; * &lambda; + (1 &minus; &nu;) * &mu;</strong></a></li>
+<li><a href="#lambda_mu_minus_lambda_mu"><strong>&lambda; + &mu; &minus; (&lambda; * &mu;)</strong></a></li>
+<li><a href="#lambda_mu_2_2"><strong>(&lambda; + &mu;) / 2</strong></a></li>
+<li><a href="#arctan_lambda_lambda"><strong>arctan(&lambda;) /&lambda;</strong></a></li>
+<li><a href="#arctan_lambda"><strong>arctan(&lambda;)</strong></a></li>
+<li><a href="#lambda__x___y"><strong>&lambda;<sup><em>x</em>/<em>y</em></sup></strong></a></li>
+<li><a href="#lambda_mu_3"><strong>&lambda;<sup>&mu;</sup></strong></a></li>
+<li><a href="#sqrt_lambda"><strong>sqrt(&lambda;)</strong></a></li>
+<li><a href="#arcsin_lambda_sqrt_1_minus_lambda_2_minus_1"><strong>arcsin(&lambda;) + sqrt(1 &minus; &lambda;<sup>2</sup>) &minus; 1</strong></a></li>
+<li><a href="#arcsin_lambda_2"><strong>arcsin(&lambda;) / 2</strong></a></li>
+<li><a href="#lambda__x___y__linear_Bernoulli_factories"><strong>&lambda; * <em>x</em>/<em>y</em> (linear Bernoulli factories)</strong></a></li>
+<li><a href="#lambda__x___y___i"><strong>(&lambda; * <em>x</em>/<em>y</em>)<sup><em>i</em></sup></strong></a></li>
+</ul></li>
+<li><a href="#Algorithms_for_Irrational_Constants"><strong>Algorithms for Irrational Constants</strong></a>
+
+<ul>
+<li><a href="#Continued_Fractions"><strong>Continued Fractions</strong></a></li>
+<li><a href="#arctan__x___y___y___x"><strong>arctan(<em>x</em>/<em>y</em>) * <em>y</em>/<em>x</em></strong></a></li>
+<li><a href="#pi_12"><strong>&pi; / 12</strong></a></li>
+<li><a href="#pi_4"><strong>&pi; / 4</strong></a></li>
+<li><a href="#1_pi"><strong>1 / &pi;</strong></a></li>
+<li><a href="#a___b___x___y"><strong>(<em>a</em>/<em>b</em>)<sup><em>x</em>/<em>y</em></sup></strong></a></li>
+<li><a href="#exp_minus__x___y"><strong>exp(&minus; <em>x</em>/<em>y</em>)</strong></a></li>
+<li><a href="#exp_minus__z"><strong>exp(&minus; <em>z</em>)</strong></a></li>
+<li><a href="#a___b___z"><strong>(<em>a</em>/<em>b</em>)<sup><em>z</em></sup></strong></a></li>
+</ul></li>
+<li><a href="#General_Algorithms"><strong>General Algorithms</strong></a>
+
+<ul>
+<li><a href="#Simulating_the_Probability_Generating_Function"><strong>Simulating the Probability Generating Function</strong></a></li>
+<li><a href="#URandLessThanFraction"><strong>URandLessThanFraction</strong></a></li>
+</ul></li>
 </ul></li>
 <li><a href="#Correctness_and_Performance_Charts"><strong>Correctness and Performance Charts</strong></a>
 
@@ -96,7 +141,11 @@
 
 <h3>Algorithms for Functions of &lambda;</h3>
 
-<p><strong>Algorithms for exp(&minus;&lambda;).</strong></p>
+<p>&nbsp;</p>
+
+<p><a id=Algorithms_for_exp_minus_lambda></a></p>
+
+<h4>Algorithms for exp(&minus;&lambda;)</h4>
 
 <p>The algorithm in (Flajolet et al., 2010)<sup><a href="#Note1"><strong>(1)</strong></a></sup> calls for generating a Poisson(&lambda;) random number and returning 1 if that number is 0, or 0 otherwise.  The Poisson generator in turn involves generating a geometric(&lambda;) random number <em>G</em><sup><a href="#Note5"><strong>(5)</strong></a></sup>, then <em>G</em> uniform random numbers, then returning <em>G</em> only if all <em>G</em> uniform numbers are sorted.<sup><a href="#Note6"><strong>(6)</strong></a></sup>  The algorithm follows.</p>
 
@@ -148,7 +197,11 @@
 <li>Rather than multiplying by <em>c[n]</em> in step 4, divide <em>w</em> by <em>n</em> in step 3 (after multiplying by the result of the flip).  This is a more efficient way to take account of the factorial in the second and later coefficients.</li>
 </ul>
 
-<p><strong>Algorithm for exp(&lambda;)*(1&minus;&lambda;)</strong>  (Flajolet et al., 2010)<sup><a href="#Note1"><strong>(1)</strong></a></sup>:</p>
+<p><a id=exp_lambda_1_minus_lambda></a></p>
+
+<h4>exp(&lambda;)*(1&minus;&lambda;)</h4>
+
+<p>(Flajolet et al., 2010)<sup><a href="#Note1"><strong>(1)</strong></a></sup>:</p>
 
 <ol>
 <li>Set <em>k</em> and <em>w</em> each to 0.</li>
@@ -158,14 +211,20 @@
 <li>Set <em>w</em> to <em>U</em>, add 1 to <em>k</em>, and go to step 2.</li>
 </ol>
 
-<p><strong>Algorithm for exp(&minus;&lambda; &minus; <em>c</em>)</strong>.  To the best of my knowledge, I am not aware of any article or paper by others that presents this particular Bernoulli factory. In this algorithm, <em>c</em> is an integer that is 0 or greater.</p>
+<p><a id=exp_minus_lambda_minus__c></a></p>
+
+<h4>exp(&minus;&lambda; &minus; <em>c</em>)</h4>
+
+<p>To the best of my knowledge, I am not aware of any article or paper by others that presents this particular Bernoulli factory. In this algorithm, <em>c</em> is an integer that is 0 or greater.</p>
 
 <ol>
 <li>Run the <strong>algorithm for exp(&minus;<em>c</em>/1)</strong> described later in this document.  Return 0 if the algorithm returns 0.</li>
 <li>Return the result of the <strong>algorithm for exp(&minus;&lambda;)</strong>.</li>
 </ol>
 
-<p><strong>Algorithms for 1/(1+&lambda;).</strong></p>
+<p><a id=1_1_lambda></a></p>
+
+<h4>1/(1+&lambda;)</h4>
 
 <p>One algorithm is the general martingale algorithm, since when &lambda; is in [0, 1], this function is an alternating series of the form <code>1 - x + x^2 - x^3 + ...</code>, whose coefficients are 1, 1, 1, 1, ....  However, this algorithm converges slowly when &lambda; is very close to 1.</p>
 
@@ -183,7 +242,11 @@
 <li>Flip the input coin.  If it returns 1, return 0.  Otherwise, go to step 1.</li>
 </ol>
 
-<p><strong>Algorithm for log(1+&lambda;)</strong>  (Flajolet et al., 2010)<sup><a href="#Note1"><strong>(1)</strong></a></sup>:</p>
+<p><a id=log_1_lambda></a></p>
+
+<h4>log(1+&lambda;)</h4>
+
+<p>(Flajolet et al., 2010)<sup><a href="#Note1"><strong>(1)</strong></a></sup>:</p>
 
 <ol>
 <li>Create an empty uniform PSRN.</li>
@@ -201,40 +264,104 @@
 <li>Call <strong>SampleGeometricBag</strong> on the PSRN, then flip the input coin.  If the call and the flip both return 1, return 0.  Otherwise, go to step 2.</li>
 </ol>
 
-<p><strong>Algorithm for 1 &minus; log(1+&lambda;).</strong>  Invert the result of the algorithm for log(1+&lambda;) (make it 1 if it&#39;s 0 and vice versa).<sup><a href="#Note9"><strong>(9)</strong></a></sup></p>
+<p><a id=1_minus_log_1_lambda></a></p>
 
-<p><strong>Algorithm for <em>c</em> * &lambda; * &beta; / (&beta; * (<em>c</em> * &lambda; + <em>d</em> * &mu;) &minus; (&beta; &minus; 1) * (<em>c</em> + <em>d</em>)).</strong>  This is the general two-coin algorithm of (Gonçalves et al., 2017)<sup><a href="#Note8"><strong>(8)</strong></a></sup> and (Vats et al. 2020)<sup><a href="#Note10"><strong>(10)</strong></a></sup>.  It takes two input coins that each output heads (1) with probability &lambda; or &mu;, respectively.  It also takes a parameter &beta; in the interval [0, 1], which is a so-called &quot;portkey&quot; or early rejection parameter (when &beta; = 1, the formula simplifies to <em>c</em> * &lambda; / (<em>c</em> * &lambda; + <em>d</em> * &mu;)).</p>
+<h4>1 &minus; log(1+&lambda;)</h4>
+
+<p>Invert the result of the algorithm for log(1+&lambda;) (make it 1 if it&#39;s 0 and vice versa).<sup><a href="#Note9"><strong>(9)</strong></a></sup></p>
+
+<p><a id=c__lambda_beta_beta__c__lambda__d__mu_minus_beta_minus_1__c___d></a></p>
+
+<h4><em>c</em> * &lambda; * &beta; / (&beta; * (<em>c</em> * &lambda; + <em>d</em> * &mu;) &minus; (&beta; &minus; 1) * (<em>c</em> + <em>d</em>))</h4>
+
+<p>This is the general two-coin algorithm of (Gonçalves et al., 2017)<sup><a href="#Note8"><strong>(8)</strong></a></sup> and (Vats et al. 2020)<sup><a href="#Note10"><strong>(10)</strong></a></sup>.  It takes two input coins that each output heads (1) with probability &lambda; or &mu;, respectively.  It also takes a parameter &beta; in the interval [0, 1], which is a so-called &quot;portkey&quot; or early rejection parameter (when &beta; = 1, the formula simplifies to <em>c</em> * &lambda; / (<em>c</em> * &lambda; + <em>d</em> * &mu;)).</p>
 
 <ol>
 <li>With probability &beta;, go to step 2.  Otherwise, return 0. (For example, call <code>ZeroOrOne</code> with &beta;&#39;s numerator and denominator, and return 0 if that call returns 0, or go to step 2 otherwise.)</li>
 <li>With probability <em>c</em> / (<em>c</em> + <em>d</em>), flip the &lambda; input coin.  Otherwise, flip the &mu; input coin.  If the &lambda; input coin returns 1, return 1.  If the &mu; input coin returns 1, return 0.  If the corresponding coin returns 0, go to step 1.</li>
 </ol>
 
-<p><strong>Algorithm for <em>c</em> * &lambda; / (<em>c</em> * &lambda; + <em>d</em>) or (<em>c</em>/<em>d</em>) * &lambda; / (1 + (<em>c</em>/<em>d</em>) * &lambda;)).</strong> This algorithm, also known as the <strong>logistic Bernoulli factory</strong> (Huber 2016)<sup><a href="#Note11"><strong>(11)</strong></a></sup>, (Morina et al., 2019)<sup><a href="#Note12"><strong>(12)</strong></a></sup>, is a special case of the two-coin algorithm above, but this time uses only one input coin.</p>
+<p><a id=c__lambda__c__lambda__d__or__c___d__lambda_1__c___d__lambda></a></p>
+
+<h4><em>c</em> * &lambda; / (<em>c</em> * &lambda; + <em>d</em>) or (<em>c</em>/<em>d</em>) * &lambda; / (1 + (<em>c</em>/<em>d</em>) * &lambda;))</h4>
+
+<p>This algorithm, also known as the <strong>logistic Bernoulli factory</strong> (Huber 2016)<sup><a href="#Note11"><strong>(11)</strong></a></sup>, (Morina et al., 2019)<sup><a href="#Note12"><strong>(12)</strong></a></sup>, is a special case of the two-coin algorithm above, but this time uses only one input coin.</p>
 
 <ol>
 <li>With probability <em>d</em> / (<em>c</em> + <em>d</em>), return 0.</li>
 <li>Flip the input coin.  If the coin returns 1, return 1.  Otherwise, go to step 1.</li>
 </ol>
 
-<p>(Note that Huber specifies this Bernoulli factory in terms of a Poisson point process, which seems to require much more randomness on average.)</p>
+<p>(Note that Huber [2016] specifies this Bernoulli factory in terms of a Poisson point process, which seems to require much more randomness on average.)</p>
 
-<p><strong>Algorithm for 1/(<em>c</em> + &lambda;)</strong>, where <em>c</em> &gt; 0.</p>
+<p><a id=lambda_mu></a></p>
+
+<h4>&lambda; + &mu;</h4>
+
+<p>(Nacu and Peres 2005, proposition 14(iii))<sup><a href="#Note4"><strong>(4)</strong></a></sup>.  This algorithm takes two input coins that simulate &lambda; or &mu;, respectively, and a parameter &epsilon;, which must be greater than 0 and chosen such that &lambda; + &mu; &lt; 1 &minus; &epsilon;.</p>
+
+<ol>
+<li>Create a &nu; input coin that does the following: &quot;With probability 1/2, flip the &lambda; input coin and return the result.  Otherwise, flip the &mu; input coin and return the result.&quot;</li>
+<li>Call the <strong>2014 algorithm</strong>, the <strong>2016 algorithm</strong>, or the <strong>2019 algorithm</strong>, described later, using the &nu; input coin, <em>x</em>/<em>y</em> = 2/1, <em>i</em> = 1 (for the 2019 algorithm), and &epsilon; = &epsilon;, and return the result.</li>
+</ol>
+
+<p><a id=lambda_minus_mu></a></p>
+
+<h4>&lambda; &minus; &mu;</h4>
+
+<p>(Nacu and Peres 2005, proposition 14(iii-iv))<sup><a href="#Note4"><strong>(4)</strong></a></sup>.  This algorithm takes two input coins that simulate &lambda; or &mu;, respectively, and a parameter &epsilon;, which must be greater than 0 and chosen such that &lambda; &minus; &mu; &gt; 1 &minus; &epsilon;.</p>
+
+<ol>
+<li>Create a &nu; input coin that does the following: &quot;With probability 1/2, flip the &lambda; input coin and return <strong>1 minus the result</strong>.  Otherwise, flip the &mu; input coin and return the result.&quot;</li>
+<li>Call the <strong>2014 algorithm</strong>, the <strong>2016 algorithm</strong>, or the <strong>2019 algorithm</strong>, described later, using the &nu; input coin, <em>x</em>/<em>y</em> = 2/1, <em>i</em> = 1 (for the 2019 algorithm), and &epsilon; = &epsilon;, and return the result.</li>
+</ol>
+
+<p><a id=1__c__lambda></a></p>
+
+<h4>1/(<em>c</em> + &lambda;)**</h4>
+
+<p>Works only if <em>c</em> &gt; 0.</p>
 
 <ol>
 <li>With probability <em>c</em>/(1 + <em>c</em>), return a number that is 1 with probability 1/<em>c</em> and 0 otherwise.</li>
 <li>Flip the input coin.  If the coin returns 1, return 0.  Otherwise, go to step 1.</li>
 </ol>
 
-<p><strong>Algorithm for 1 &minus; &lambda; * &mu;</strong>  (Flajolet et al., 2010)<sup><a href="#Note1"><strong>(1)</strong></a></sup>: Flip the &lambda; input coin and return 0 if the result is 1, or 1 otherwise.</p>
+<p><a id=1_minus_lambda></a></p>
 
-<p><strong>Algorithm for &lambda; * &mu;</strong>  (Flajolet et al., 2010)<sup><a href="#Note1"><strong>(1)</strong></a></sup>: Flip the &lambda; input coin and the &mu; input coin.  Return 1 if both flips return 1, and 0 otherwise.</p>
+<h4>1 &minus; &lambda;</h4>
 
-<p><strong>Algorithm for &nu; * &lambda; + (1 &minus; &nu;) * &mu;</strong>  (Flajolet et al., 2010)<sup><a href="#Note1"><strong>(1)</strong></a></sup>: Flip the &nu; input coin.  If the result is 0, flip the &lambda; input coin and return the result.  Otherwise, flip the &mu; input coin and return the result.</p>
+<p>(Flajolet et al., 2010)<sup><a href="#Note1"><strong>(1)</strong></a></sup>: Flip the &lambda; input coin and return 0 if the result is 1, or 1 otherwise.</p>
 
-<p><strong>Algorithm for &lambda; + &mu; &minus; (&lambda; * &mu;)</strong>  (Flajolet et al., 2010)<sup><a href="#Note1"><strong>(1)</strong></a></sup>: Flip the &lambda; input coin and the &mu; input coin.  Return 1 if either flip returns 1, and 0 otherwise.</p>
+<p><a id=lambda_mu_2></a></p>
 
-<p><strong>Algorithm for arctan(&lambda;) /&lambda;</strong> (Flajolet et al., 2010)<sup><a href="#Note1"><strong>(1)</strong></a></sup>:</p>
+<h4>&lambda; * &mu;</h4>
+
+<p>(Flajolet et al., 2010)<sup><a href="#Note1"><strong>(1)</strong></a></sup>: Flip the &lambda; input coin and the &mu; input coin.  Return 1 if both flips return 1, and 0 otherwise.</p>
+
+<p><a id=nu_lambda_1_minus_nu_mu></a></p>
+
+<h4>&nu; * &lambda; + (1 &minus; &nu;) * &mu;</h4>
+
+<p>(Flajolet et al., 2010)<sup><a href="#Note1"><strong>(1)</strong></a></sup>: Flip the &nu; input coin.  If the result is 0, flip the &lambda; input coin and return the result.  Otherwise, flip the &mu; input coin and return the result.</p>
+
+<p><a id=lambda_mu_minus_lambda_mu></a></p>
+
+<h4>&lambda; + &mu; &minus; (&lambda; * &mu;)</h4>
+
+<p>(Flajolet et al., 2010)<sup><a href="#Note1"><strong>(1)</strong></a></sup>: Flip the &lambda; input coin and the &mu; input coin.  Return 1 if either flip returns 1, and 0 otherwise.</p>
+
+<p><a id=lambda_mu_2_2></a></p>
+
+<h4>(&lambda; + &mu;) / 2</h4>
+
+<p>(Nacu and Peres 2005, proposition 14(iii))<sup><a href="#Note4"><strong>(4)</strong></a></sup>; (Flajolet et al., 2010)<sup><a href="#Note1"><strong>(1)</strong></a></sup>: With probability 1/2, flip the &lambda; input coin and return the result.  Otherwise, flip the &mu; input coin and return the result.</p>
+
+<p><a id=arctan_lambda_lambda></a></p>
+
+<h4>arctan(&lambda;) /&lambda;</h4>
+
+<p>(Flajolet et al., 2010)<sup><a href="#Note1"><strong>(1)</strong></a></sup>:</p>
 
 <ol>
 <li>Generate an empty uniform PSRN.</li>
@@ -250,13 +377,17 @@
 <li>Call <strong>SampleGeometricBag</strong> twice on the PSRN, and flip the input coin twice.  If all of these calls and flips return 1, return 0.  Otherwise, go to step 2.</li>
 </ol>
 
-<p><strong>Algorithm for arctan(&lambda;)</strong> (Flajolet et al., 2010)<sup><a href="#Note1"><strong>(1)</strong></a></sup>:</p>
+<p><a id=arctan_lambda></a></p>
 
-<ul>
-<li>Call the <strong>algorithm for arctan(&lambda;) /&lambda;</strong> and flip the input coin.  Return 1 if the call and flip both return 1, or 0 otherwise.</li>
-</ul>
+<h4>arctan(&lambda;)</h4>
 
-<p><strong>Algorithm for &lambda;<sup><em>x</em>/<em>y</em></sup>.</strong> In the algorithm below, the case where <em>x</em>/<em>y</em> is in (0, 1) is due to recent work by Mendo (2019)<sup><a href="#Note13"><strong>(13)</strong></a></sup>.  The algorithm works only when <em>x</em>/<em>y</em> is 0 or greater.</p>
+<p>(Flajolet et al., 2010)<sup><a href="#Note1"><strong>(1)</strong></a></sup>: Call the <strong>algorithm for arctan(&lambda;) /&lambda;</strong> and flip the input coin.  Return 1 if the call and flip both return 1, or 0 otherwise.</p>
+
+<p><a id=lambda__x___y></a></p>
+
+<h4>&lambda;<sup><em>x</em>/<em>y</em></sup></h4>
+
+<p>In the algorithm below, the case where <em>x</em>/<em>y</em> is in (0, 1) is due to recent work by Mendo (2019)<sup><a href="#Note13"><strong>(13)</strong></a></sup>.  The algorithm works only when <em>x</em>/<em>y</em> is 0 or greater.</p>
 
 <ol>
 <li>If <em>x</em>/<em>y</em> is 0, return 1.</li>
@@ -265,7 +396,7 @@
 
 <ol>
 <li>Set <em>ipart</em> to floor(<em>x</em>/<em>y</em>) and <em>fpart</em> to <code>rem(x, y)</code>.</li>
-<li>If <em>fpart</em> is greater than 0, subtract 1 from <em>ipart</em>, then call this algorithm recursively with <em>x</em> = floor(<em>fpart</em>/2) and <em>y</em> = <em>y</em>, then call this algorithm, again recursively, with <em>x</em> = <em>fpart</em> &minus; floor(<em>fpart</em>/2) and <em>y</em> = <em>y</em>. Return 0 if either call returns 0.  (This is done rather than the more obvious approach to avoid calling this algorithm with fractional parts very close to 0, because the algorithm runs much more slowly than for fractional parts closer to 1.)</li>
+<li>If <em>fpart</em> is greater than 0, subtract 1 from <em>ipart</em>, then call this algorithm recursively with <em>x</em> = floor(<em>fpart</em>/2) and <em>y</em> = <em>y</em>, then call this algorithm, again recursively, with <em>x</em> = <em>fpart</em> &minus; floor(<em>fpart</em>/2) and <em>y</em> = <em>y</em>. Return 0 if either call returns 0.  (This is done rather than the more obvious approach in order to avoid calling this algorithm with fractional parts very close to 0, because the algorithm runs much more slowly than for fractional parts closer to 1.)</li>
 <li>If <em>ipart</em> is 1 or greater, flip the input coin <em>ipart</em> many times.  Return 0 if any of these flips returns 1.</li>
 <li>Return 1.</li>
 </ol></li>
@@ -279,7 +410,11 @@
 <p><strong>Note:</strong> When <em>x</em>/<em>y</em> is less than 1, the minimum number of coin flips needed, on average, by this algorithm will grow without bound as &lambda; approaches 0.  In fact, no fast Bernoulli factory algorithm can avoid this unbounded growth without additional information on &lambda; (Mendo 2019)<sup><a href="#Note13"><strong>(13)</strong></a></sup>.  See also the appendix, which also shows an alternative way to implement this and other Bernoulli factory algorithms using PSRNs, which exploits knowledge of &lambda; but is not the focus of this article since it involves arithmetic.</p>
 </blockquote>
 
-<p><strong>Algorithm for &lambda;<sup>&mu;</sup>.</strong> This algorithm is based on the previous one, but changed to accept a second input coin (which outputs heads with probability &mu;) rather than a fixed value for the exponent. To the best of my knowledge, I am not aware of any other article or paper that presents this particular Bernoulli factory.</p>
+<p><a id=lambda_mu_3></a></p>
+
+<h4>&lambda;<sup>&mu;</sup></h4>
+
+<p>This algorithm is based on the previous one, but changed to accept a second input coin (which outputs heads with probability &mu;) rather than a fixed value for the exponent. To the best of my knowledge, I am not aware of any other article or paper that presents this particular Bernoulli factory.</p>
 
 <ol>
 <li>Set <em>i</em> to 1.</li>
@@ -288,35 +423,43 @@
 <li>Add 1 to <em>i</em> and go to step 1.</li>
 </ol>
 
-<p><strong>Algorithm for sqrt(&lambda;).</strong> Use the algorithm for &lambda;<sup>1/2</sup>.</p>
+<p><a id=sqrt_lambda></a></p>
 
-<p><strong>Algorithm for arcsin(&lambda;) + sqrt(1 &minus; &lambda;<sup>2</sup>) &minus; 1.</strong> (Flajolet et al., 2010)<sup><a href="#Note1"><strong>(1)</strong></a></sup>.  The algorithm given here uses the special two-coin case rather than the even-parity construction.</p>
+<h4>sqrt(&lambda;)</h4>
+
+<p>Use the algorithm for &lambda;<sup>1/2</sup>.</p>
+
+<p><a id=arcsin_lambda_sqrt_1_minus_lambda_2_minus_1></a></p>
+
+<h4>arcsin(&lambda;) + sqrt(1 &minus; &lambda;<sup>2</sup>) &minus; 1</h4>
+
+<p>(Flajolet et al., 2010)<sup><a href="#Note1"><strong>(1)</strong></a></sup>.  The algorithm given here uses the special two-coin case rather than the even-parity construction.</p>
 
 <ol>
 <li>Create an empty uniform PSRN.</li>
-<li>Create a secondary coin &mu; that does the following:
-
-<ul>
-<li>Call <strong>SampleGeometricBag</strong> twice on the PSRN, and flip the input coin twice.  If all of these calls and flips return 1, return 0.  Otherwise, return 1.</li>
-</ul></li>
+<li>Create a secondary coin &mu; that does the following: &quot;Call <strong>SampleGeometricBag</strong> twice on the PSRN, and flip the input coin twice.  If all of these calls and flips return 1, return 0.  Otherwise, return 1.&quot;</li>
 <li>Call the <strong>algorithm for &mu;<sup>1/2</sup></strong> using the secondary coin &mu;.  If it returns 0, return 0.</li>
 <li>With probability 1/2, flip the input coin and return the result.</li>
 <li>Call <strong>SampleGeometricBag</strong> once on the PSRN, and flip the input coin once.  If both the call and flip return 1, return 0.  Otherwise, go to step 4.</li>
 </ol>
 
-<p><strong>Algorithm for arcsin(&lambda;) / 2.</strong>  The Flajolet paper doesn&#39;t explain in detail how arcsin(&lambda;)/2 arises out of arcsin(&lambda;) + sqrt(1 &minus; &lambda;<sup>2</sup>) &minus; 1 via Bernoulli factory constructions, but here is an algorithm.<sup><a href="#Note14"><strong>(14)</strong></a></sup> Note, however, that the number of input coin flips is expected to grow without bound as &lambda; approaches 1.</p>
+<p><a id=arcsin_lambda_2></a></p>
+
+<h4>arcsin(&lambda;) / 2</h4>
+
+<p>The Flajolet paper doesn&#39;t explain in detail how arcsin(&lambda;)/2 arises out of arcsin(&lambda;) + sqrt(1 &minus; &lambda;<sup>2</sup>) &minus; 1 via Bernoulli factory constructions, but here is an algorithm.<sup><a href="#Note14"><strong>(14)</strong></a></sup> Note, however, that the number of input coin flips is expected to grow without bound as &lambda; approaches 1.</p>
 
 <ol>
 <li>With probability 1/2, run the <strong>algorithm for arcsin(&lambda;) + sqrt(1 &minus; &lambda;<sup>2</sup>) &minus; 1</strong> and return the result.</li>
-<li>Create a secondary coin &mu; that does the following:
-
-<ul>
-<li>Flip the input coin twice.  If both flips return 1, return 0.  Otherwise, return 1.</li>
-</ul></li>
+<li>Create a secondary coin &mu; that does the following: &quot;Flip the input coin twice.  If both flips return 1, return 0.  Otherwise, return 1.&quot;</li>
 <li>Call the <strong>algorithm for &mu;<sup>1/2</sup></strong> using the secondary coin &mu;.  If it returns 0, return 1; otherwise, return 0.</li>
 </ol>
 
-<p><strong>Algorithm for &lambda; * <em>x</em>/<em>y</em>.</strong>  Huber has suggested several algorithms for this function over the years.</p>
+<p><a id=lambda__x___y__linear_Bernoulli_factories></a></p>
+
+<h4>&lambda; * <em>x</em>/<em>y</em> (linear Bernoulli factories)</h4>
+
+<p>Huber has suggested several algorithms for this function over the years.</p>
 
 <p>The first algorithm is called the <strong>2014 algorithm</strong> in this document (Huber 2014)<sup><a href="#Note15"><strong>(15)</strong></a></sup>.  It uses three parameters: <em>x</em>, <em>y</em>, and &epsilon;, such that <em>x</em>/<em>y</em> &gt; 0 and &epsilon; is greater than 0.  When <em>x</em>/<em>y</em> is greater than 1, the &epsilon; parameter has to be chosen such that &lambda; * <em>x</em>/<em>y</em> &lt; 1 &minus; &epsilon;, which implies that some knowledge of &lambda; has to be available to the algorithm.  (In fact, as simulation results show, the choice of &epsilon; is crucial to this algorithm&#39;s performance; for best results, &epsilon; should be chosen such that &lambda; * <em>x</em>/<em>y</em> is slightly less than 1 &minus; &epsilon;.) The algorithm as described below also includes certain special cases, not mentioned in Huber, to make it more general.</p>
 
@@ -371,7 +514,11 @@
 <li>Run the 2014 algorithm or 2016 algorithm with <em>x</em>/<em>y</em> = (<em>x</em>/<em>y</em>) / (2 * <em>m</em>) and &epsilon; = 1 &minus; <em>m</em>.</li>
 </ol>
 
-<p><strong>Algorithm for (&lambda; * <em>x</em>/<em>y</em>)<sup><em>i</em></sup></strong> (Huber 2019)<sup><a href="#Note17"><strong>(17)</strong></a></sup>.  This algorithm uses four parameters: <em>x</em>, <em>y</em>, <em>i</em>, and &epsilon;, such that <em>x</em>/<em>y</em> &gt; 0, <em>i</em> &gt;= 0 is an integer, and &epsilon; is greater than 0.  When <em>x</em>/<em>y</em> is greater than 1, the &epsilon; parameter has to be chosen such that &lambda; * <em>x</em>/<em>y</em> &lt; 1 &minus; &epsilon;.  It also has special cases not mentioned in Huber 2019.</p>
+<p><a id=lambda__x___y___i></a></p>
+
+<h4>(&lambda; * <em>x</em>/<em>y</em>)<sup><em>i</em></sup></h4>
+
+<p>(Huber 2019)<sup><a href="#Note17"><strong>(17)</strong></a></sup>.  This algorithm, called the <strong>2019 algorithm</strong> in this document, uses four parameters: <em>x</em>, <em>y</em>, <em>i</em>, and &epsilon;, such that <em>x</em>/<em>y</em> &gt; 0, <em>i</em> &gt;= 0 is an integer, and &epsilon; is greater than 0.  When <em>x</em>/<em>y</em> is greater than 1, the &epsilon; parameter has to be chosen such that &lambda; * <em>x</em>/<em>y</em> &lt; 1 &minus; &epsilon;.  It also has special cases not mentioned in Huber 2019.</p>
 
 <ol>
 <li> Special cases: If <em>i</em> is 0, return 1.  If <em>x</em> is 0, return 0.  Otherwise, if <em>x</em> equals <em>y</em> and <em>i</em> equals 1, flip the input coin and return the result.</li>
@@ -395,18 +542,26 @@
 
 <p>The following algorithms generate heads with a probability equal to an irrational number.  (On the other hand, probabilities that are <em>rational</em> constants are trivial to simulate.  If fair coins are available, the <code>ZeroOrOne</code> method should be used.  If coins with unknown bias are available, then a <em>randomness extraction</em> method such as the von Neumann algorithm should be used to turn them into fair coins.  Randomness extraction is outside the scope of this document, however.)</p>
 
-<p><strong>Algorithm for continued fractions.</strong>  The following algorithm simulates a probability expressed as a regular continued fraction of the following form: 0 + 1 / (<em>a</em>[1] + 1 / (<em>a</em>[2] + 1 / (<em>a</em>[3] + ... ))).  The <em>a</em>[<em>i</em>] are the <em>partial denominators</em> and must be integers greater than 0.  Inspired by (Flajolet et al., 2010, &quot;Finite graphs (Markov chains) and rational functions&quot;)<sup><a href="#Note1"><strong>(1)</strong></a></sup>, I developed the following algorithm.</p>
+<p><a id=Continued_Fractions></a></p>
+
+<h4>Continued Fractions</h4>
+
+<p>The following algorithm simulates a probability expressed as a regular continued fraction of the following form: 0 + 1 / (<em>a</em>[1] + 1 / (<em>a</em>[2] + 1 / (<em>a</em>[3] + ... ))).  The <em>a</em>[<em>i</em>] are the <em>partial denominators</em> and must be integers greater than 0.  Inspired by (Flajolet et al., 2010, &quot;Finite graphs (Markov chains) and rational functions&quot;)<sup><a href="#Note1"><strong>(1)</strong></a></sup>, I developed the following algorithm.</p>
 
 <p>The algorithm begins with <em>pos</em> equal to 1.  Then the following steps are taken.</p>
 
 <ol>
-<li>If <em>a</em>[<em>pos</em>] is the last partial denominator, return a number that is 1 with probability 1/<em>a</em>[<em>pos</em>] and 0 otherwise.</li>
 <li>Set <em>k</em> to <em>a</em>[<em>pos</em>].</li>
+<li>If <em>k</em> is the last partial denominator, return a number that is 1 with probability 1/<em>k</em> and 0 otherwise.</li>
 <li>With probability <em>k</em>/(1+<em>k</em>), return a number that is 1 with probability 1/<em>k</em> and 0 otherwise.</li>
 <li>Run this algorithm recursively, but with <em>pos</em> = <em>pos</em> + 1.  If the result is 1, return 0.  Otherwise, go to step 3.</li>
 </ol>
 
-<p><strong>Algorithm for arctan(<em>x</em>/<em>y</em>) * <em>y</em>/<em>x</em></strong> (Flajolet et al., 2010)<sup><a href="#Note1"><strong>(1)</strong></a></sup>:</p>
+<p><a id=arctan__x___y___y___x></a></p>
+
+<h4>arctan(<em>x</em>/<em>y</em>) * <em>y</em>/<em>x</em></h4>
+
+<p>(Flajolet et al., 2010)<sup><a href="#Note1"><strong>(1)</strong></a></sup>:</p>
 
 <ol>
 <li>Create an empty uniform PSRN.</li>
@@ -425,21 +580,33 @@
 <li>Go to step 2.</li>
 </ol>
 
-<p><strong>Algorithm for &pi; / 12.</strong>  Two algorithms:</p>
+<p><a id=pi_12></a></p>
+
+<h4>&pi; / 12</h4>
+
+<p>Two algorithms:</p>
 
 <ul>
 <li>First algorithm: Use the algorithm for <strong>arcsin(1/2) / 2</strong>.  Where the algorithm says to &quot;flip the input coin&quot;, instead generate an unbiased random bit.</li>
 <li>Second algorithm: With probability 2/3, return 0.  Otherwise, run the algorithm for <strong>&pi; / 4</strong> and return the result.</li>
 </ul>
 
-<p><strong>Algorithm for &pi; / 4</strong> (Flajolet et al., 2010)<sup><a href="#Note1"><strong>(1)</strong></a></sup>:</p>
+<p><a id=pi_4></a></p>
+
+<h4>&pi; / 4</h4>
+
+<p>(Flajolet et al., 2010)<sup><a href="#Note1"><strong>(1)</strong></a></sup>:</p>
 
 <ol>
 <li>Generate a random integer in the interval [0, 6), call it <em>n</em>.</li>
 <li>If <em>n</em> is less than 3, return the result of the <strong>algorithm for arctan(1/2) * 2</strong>.  Otherwise, if <em>n</em> is 3, return 0.  Otherwise, return the result of the <strong>algorithm for arctan(1/3) * 3</strong>.</li>
 </ol>
 
-<p><strong>Algorithm for 1 / &pi;</strong> (Flajolet et al., 2010)<sup><a href="#Note1"><strong>(1)</strong></a></sup>:</p>
+<p><a id=1_pi></a></p>
+
+<h4>1 / &pi;</h4>
+
+<p>(Flajolet et al., 2010)<sup><a href="#Note1"><strong>(1)</strong></a></sup>:</p>
 
 <ol>
 <li>Generate two geometric(1/4) random numbers, and call <em>t</em> their sum.  (As used here, a geometric(1/4) random number is the number of successes before the first failure, with success probability 1/4.)</li>
@@ -448,7 +615,11 @@
 <li>Return 1.</li>
 </ol>
 
-<p><strong>Algorithm for (<em>a</em>/<em>b</em>)<sup><em>x</em>/<em>y</em></sup>.</strong> In the algorithm below, <em>a</em>, <em>b</em>, <em>x</em>, and <em>y</em> are integers, and the case where <em>x</em>/<em>y</em> is in (0, 1) is due to recent work by Mendo (2019)<sup><a href="#Note13"><strong>(13)</strong></a></sup>.  This algorithm works only if&mdash;</p>
+<p><a id=a___b___x___y></a></p>
+
+<h4>(<em>a</em>/<em>b</em>)<sup><em>x</em>/<em>y</em></sup></h4>
+
+<p>In the algorithm below, <em>a</em>, <em>b</em>, <em>x</em>, and <em>y</em> are integers, and the case where <em>x</em>/<em>y</em> is in (0, 1) is due to recent work by Mendo (2019)<sup><a href="#Note13"><strong>(13)</strong></a></sup>.  This algorithm works only if&mdash;</p>
 
 <ul>
 <li> <em>x</em>/<em>y</em> is 0 or greater and <em>a</em>/<em>b</em> is in the interval [0, 1], or</li>
@@ -465,7 +636,7 @@
 
 <ol>
 <li>Set <em>ipart</em> to floor(<em>x</em>/<em>y</em>) and <em>fpart</em> to <code>rem(x, y)</code>.</li>
-<li>If <em>fpart</em> is greater than 0, subtract 1 from <em>ipart</em>, then call this algorithm recursively with <em>x</em> = floor(<em>fpart</em>/2) and <em>y</em> = <em>y</em>, then call this algorithm, again recursively, with <em>x</em> = <em>fpart</em> &minus; floor(<em>fpart</em>/2) and <em>y</em> = <em>y</em>. Return 0 if either call returns 0.  (This is done rather than the more obvious approach to avoid calling this algorithm with fractional parts very close to 0, because the algorithm runs much more slowly than for fractional parts closer to 1.)</li>
+<li>If <em>fpart</em> is greater than 0, subtract 1 from <em>ipart</em>, then call this algorithm recursively with <em>x</em> = floor(<em>fpart</em>/2) and <em>y</em> = <em>y</em>, then call this algorithm, again recursively, with <em>x</em> = <em>fpart</em> &minus; floor(<em>fpart</em>/2) and <em>y</em> = <em>y</em>. Return 0 if either call returns 0.  (This is done rather than the more obvious approach in order to avoid calling this algorithm with fractional parts very close to 0, because the algorithm runs much more slowly than for fractional parts closer to 1.)</li>
 <li>If <em>ipart</em> is 1 or greater, generate a random number that is 1 with probability <em>a</em><sup><em>ipart</em></sup>/<em>b</em><sup><em>ipart</em></sup> or 0 otherwise. (Or generate <em>ipart</em> many random numbers that are each 1 with probability <em>a</em>/<em>b</em> or 0 otherwise, then multiply them all into one number.)  If that number is 0, return 0.</li>
 <li>Return 1.</li>
 </ol></li>
@@ -475,7 +646,11 @@
 <li>Add 1 to <em>i</em> and go to step 6.</li>
 </ol>
 
-<p><strong>Algorithm for exp(&minus; <em>x</em>/<em>y</em>).</strong>  This algorithm takes integers <em>x</em> &gt;= 0 and <em>y</em> &gt; 0 and outputs 1 with probability <code>exp(-x/y)</code> or 0 otherwise. It originates from (Canonne et al. 2020)<sup><a href="#Note18"><strong>(18)</strong></a></sup>.</p>
+<p><a id=exp_minus__x___y></a></p>
+
+<h4>exp(&minus; <em>x</em>/<em>y</em>)</h4>
+
+<p>This algorithm takes integers <em>x</em> &gt;= 0 and <em>y</em> &gt; 0 and outputs 1 with probability <code>exp(-x/y)</code> or 0 otherwise. It originates from (Canonne et al. 2020)<sup><a href="#Note18"><strong>(18)</strong></a></sup>.</p>
 
 <ol>
 <li>Special case: If <em>x</em> is 0, return 1. (This is because the probability becomes <code>exp(0) = 1</code>.)</li>
@@ -485,7 +660,11 @@
 <li>Set <em>r</em> to 1 &minus; <em>r</em>, add 1 to <em>i</em>, and go to step 4.</li>
 </ol>
 
-<p><strong>Algorithm for exp(&minus; <em>z</em>).</strong> This algorithm is similar to the previous algorithm, except that the exponent, <em>z</em>, can be any real number 0 or greater, as long as <em>z</em> can be rewritten as the sum of one or more components whose fractional parts can each be simulated by a Bernoulli factory algorithm that outputs heads with probability equal to that fractional part. (This makes use of the identity exp(&minus;a) = exp(&minus;b) * exp(&minus;c).)</p>
+<p><a id=exp_minus__z></a></p>
+
+<h4>exp(&minus; <em>z</em>)</h4>
+
+<p>This algorithm is similar to the previous algorithm, except that the exponent, <em>z</em>, can be any real number 0 or greater, as long as <em>z</em> can be rewritten as the sum of one or more components whose fractional parts can each be simulated by a Bernoulli factory algorithm that outputs heads with probability equal to that fractional part. (This makes use of the identity exp(&minus;a) = exp(&minus;b) * exp(&minus;c).)</p>
 
 <p>More specifically:</p>
 
@@ -500,7 +679,11 @@
 <li>For each component <em>LC</em>[<em>i</em>], call the <strong>algorithm for exp(&minus; <em>LI</em>[<em>i</em>]/1)</strong>, and call the <strong>general martingale algorithm</strong> adapted for <strong>exp(&minus;&lambda;)</strong> using the input coin that simulates  <em>LF</em>[<em>i</em>].  If any of these calls returns 0, return 0; otherwise, return 1. (See also (Canonne et al. 2020)<sup><a href="#Note18"><strong>(18)</strong></a></sup>.)</li>
 </ul>
 
-<p><strong>Algorithm for (<em>a</em>/<em>b</em>)<sup><em>z</em></sup>.</strong> This algorithm is similar to the previous algorithm for powering, except that the exponent, <em>z</em>,  can be any real number 0 or greater, as long as <em>z</em> can be rewritten as the sum of one or more components whose fractional parts can each be simulated by a Bernoulli factory algorithm that outputs heads with probability equal to that fractional part. This algorithm makes use of a similar identity as for <code>exp</code> and works only if <em>z</em> is 0 or greater and <em>a</em>/<em>b</em> is in the interval [0, 1].</p>
+<p><a id=a___b___z></a></p>
+
+<h4>(<em>a</em>/<em>b</em>)<sup><em>z</em></sup></h4>
+
+<p>This algorithm is similar to the previous algorithm for powering, except that the exponent, <em>z</em>,  can be any real number 0 or greater, as long as <em>z</em> can be rewritten as the sum of one or more components whose fractional parts can each be simulated by a Bernoulli factory algorithm that outputs heads with probability equal to that fractional part. This algorithm makes use of a similar identity as for <code>exp</code> and works only if <em>z</em> is 0 or greater and <em>a</em>/<em>b</em> is in the interval [0, 1].</p>
 
 <p>Decompose <em>z</em> into <em>LC</em>[<em>i</em>], <em>LI</em>[<em>i</em>], and <em>LF</em>[<em>i</em>] just as for the <strong>exp(&minus; <em>z</em>)</strong> algorithm.  The algorithm is then as follows.</p>
 
@@ -520,14 +703,22 @@
 
 <h3>General Algorithms</h3>
 
-<p><strong>Algorithm for the probability generating function.</strong>  Let <em>X</em> be a random number that follows a discrete distribution (one that takes on a countable number of values).  The following algorithm generates heads with probability <strong>E</strong>[&lambda;<sup><em>X</em></sup>], that is, the expected (average) value of &lambda;<sup><em>X</em></sup>.  <strong>E</strong>[&lambda;<sup><em>X</em></sup>] is the distribution&#39;s <em>probability generating function</em>, also known as <em>factorial moment generating function</em> (Dughmi et al. 2017)<sup><a href="#Note19"><strong>(19)</strong></a></sup>.</p>
+<p><a id=Simulating_the_Probability_Generating_Function></a></p>
+
+<h4>Simulating the Probability Generating Function</h4>
+
+<p>Let <em>X</em> be a random number that follows a discrete distribution (one that takes on a countable number of values).  The following algorithm generates heads with probability <strong>E</strong>[&lambda;<sup><em>X</em></sup>], that is, the expected (average) value of &lambda;<sup><em>X</em></sup>.  <strong>E</strong>[&lambda;<sup><em>X</em></sup>] is the distribution&#39;s <em>probability generating function</em>, also known as <em>factorial moment generating function</em> (Dughmi et al. 2017)<sup><a href="#Note19"><strong>(19)</strong></a></sup>.</p>
 
 <ol>
 <li>Generate a random number <em>N</em> of the given distribution.</li>
 <li>Flip the input coin until the coin returns 0 or the coin is flipped <em>N</em> times.  Return 1 if all the coin flips, including the last, returned 1 (or if <em>N</em> is 0); or return 0 otherwise.</li>
 </ol>
 
-<p><strong>URandLessThanFraction algorithm</strong>.  The following helper algorithm is used by some of the algorithms on this page.  It returns 1 if a PSRN turns out to be less than a fraction, <em>frac</em>, which is a number in the interval [0, 1].</p>
+<p><a id=URandLessThanFraction></a></p>
+
+<h4>URandLessThanFraction</h4>
+
+<p>The following helper algorithm is used by some of the algorithms on this page.  It returns 1 if a PSRN turns out to be less than a fraction, <em>frac</em>, which is a number in the interval [0, 1].</p>
 
 <ol>
 <li>If <em>frac</em> is 0 or 1, return 0 or 1, respectively. (The case of 1 is a degenerate case since the PSRN could, at least in theory, represent an infinite sequence of ones, making it equal to 1.)</li>
