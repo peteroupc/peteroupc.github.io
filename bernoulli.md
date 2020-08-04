@@ -224,12 +224,65 @@ Observing that the even-parity construction used in the Flajolet paper is equiva
     - Flip the input coin twice.  If both flips return 1, return 0.  Otherwise, return 1.
 3. Call the **algorithm for &mu;<sup>1/2</sup>** using the secondary coin &mu;.  If it returns 0, return 1; otherwise, return 0.
 
+**Algorithm for &lambda; * _x_/_y_.**  Huber has suggested several algorithms for this function over the years.  The first one is called the **2014 algorithm** in this document and is described below (Huber 2014)<sup>[**(19)**](#Note19)</sup>.
+
+The 2014 algorithm uses three parameters: _x_, _y_, and &epsilon;, such that _x_/_y_ > 0 and &epsilon; is greater than 0.  When _x_/_y_ is greater than 1, the &epsilon; parameter has to be chosen such that &lambda; * _x_/_y_ <= 1 &minus; &epsilon;, which implies that some knowledge of &lambda; has to be available to the algorithm.  (In fact, as simulation results show, the choice of &epsilon; is crucial to this algorithm's performance; for best results, &epsilon; should be chosen such that &lambda; * _x_/_y_ is slightly less than 1 &minus; &epsilon;.) The algorithm as described below also includes certain special cases, not mentioned in Huber, to make it more general.
+
+1. Special cases: If _x_ is 0, return 0.  Otherwise, if _x_ equals _y_, flip the input coin and return the result.  Otherwise, if _x_ is less than _y_, then: (a) With probability _x_/_y_, flip the input coin and return the result; otherwise (b) return 0.
+2. Set _c_ to _x_/_y_, and set _k_ to 23 / (5 * &epsilon;).
+3. If &epsilon; is greater than 644/1000, set &epsilon; to 644/1000.
+4. Set _i_ to 1.
+5. Flip the input coin.  If it returns 0, then generate numbers that are each 1 with probability (_c_ &minus; 1) / _c_ and 0 otherwise, until 0 is generated this way, then add 1 to _i_ for each number generated this way (including the last).
+6. Subtract 1 from _i_, then if _i_ is 0, return 1.
+7. If _i_ is less than _k_, go to step 5.
+8. If _i_ is _k_ or greater:
+    1. Generate _i_ numbers that are each 1 with probability 2 / (&epsilon; + 2) or 0 otherwise.  If any of those numbers is 0, return 0.
+    2. Multiply _c_ by 2 / (&epsilon; + 2), divide &epsilon; by 2, and multiply _k_ by 2.
+9. If _i_ is 0, return 1.  Otherwise, go to step 5.
+
+The second algorithm is called the **2016 algorithm** (Huber 2016)<sup>[**(20)**](#Note20)</sup> and uses the same parameters _x_, _y_, and &epsilon;, and its description uses the same special cases.  The difference here is that it involves a so-called "logistic Bernoulli factory", which is replaced in this document with a different one that simulates the same function.
+
+1. The same special cases as for the 2014 algorithm apply.
+2. Set _m_ to ceil(1 + 9 / (2 * &epsilon;)).
+3. Set &beta; to 1 + 1 / (_m_ &minus; 1).
+4. **Algorithm A** is what Huber calls this step.  Set _s_ to 1, then while _s_ is greater than 0 and less than _m_:
+    1. Run the **logistic Bernoulli factory** algorithm with _c_/_d_ = &beta; * _x_/_y_.
+    2. Set _s_ to _s_ &minus; _z_ * 2 + 1, where _z_ is the result of the logistic Bernoulli factory.
+5. If _s_ is other than 0, return 0.
+6. With probability 1/&beta;, return 1.
+7. Run this algorithm recursively, with _x_/_y_ = &beta; * _x_/_y_ and &epsilon; = 1 &minus; &beta; * (1 &minus; &epsilon;).  If it returns 0, return 0.
+8. The **high-power logistic Bernoulli factory** is what Huber calls this step.  Set _s_ to 1, then while _s_ is greater than 0 and less than or equal to _m_ minus 2:
+    1. Run the **logistic Bernoulli factory** algorithm with _c_/_d_ = &beta; * _x_/_y_.
+    2. Set _s_ to _s_ + _z_ * 2 &minus; 1, where _z_ is the result of the logistic Bernoulli factory.
+9. If _s_ is equal to _m_ minus 1, return 1.
+10. Subtract 1 from _m_ and go to step 7.
+
+The paper that presented the 2016 algorithm also included a third algorithm, described below, that works only if &lambda; * _x_ / _y_ is known to be less than 1/2.  This third algorithm takes three parameters: _x_, _y_, and _m_, and _m_ has to be chosen such that &lambda; * _x_ / _y_ <= _m_ < 1/2.
+
+1. The same special cases as for the 2014 algorithm apply.
+2. Run the **logistic Bernoulli factory** algorithm with _c_/_d_; = (_x_/_y_) / (1 &minus; 2 * _m_).  If it returns 0, return 0.
+3. With probability 1 &minus; 2 * _m_, return 1.
+4. Run the 2014 algorithm or 2016 algorithm with _x_/_y_ = (_x_/_y_) / 2 * _m_ and &epsilon; = 1 &minus; _m_.
+
+**Algorithm for (&lambda; * _x_/_y_)<sup>_i_</sup>** (Huber 2019)<sup>[**(21)**](#Note21)</sup>.  This algorithm uses four parameters: _x_, _y_, _i_, and &epsilon;, such that _x_/_y_ > 0, _i_ >= 0 is an integer, and &epsilon; is greater than 0.  When _x_/_y_ is greater than 1, the &epsilon; parameter has to be chosen such that &lambda; * _x_/_y_ <= 1 &minus; &epsilon;.  It also has special cases not mentioned in Huber 2019.
+
+1.  Special cases: If _i_ is 0, return 1.  If _x_ is 0, return 0.  Otherwise, if _x_ equals _y_ and _i_ equals 1, flip the input coin and return the result.
+2. Special case: If _x_ is less than _y_ and _i_ = 1, then: (a) With probability _x_/_y_, flip the input coin and return the result; otherwise (b) return 0.
+3. Special case: If _x_ is less than _y_, then create a secondary coin &mu; that does the following: "(a) With probability _x_/_y_, flip the input coin and return the result; otherwise (b) return 0", then run the **algorithm for (&mu;<sup>_i_/1</sup>)** (described earlier) using this secondary coin.
+4. Set _t_ to 355/100 and _c_ to _x_/_y_.
+5. If _i_ is 0, return 1.
+6. While _i_ = _t_ / &epsilon;:
+    1. Set &beta; to (1 &minus; &epsilon; / 2) / (1 &minus; &epsilon;).
+    2. Run the **algorithm for (1/&beta;)<sup>_i_</sup>** (described later).  If it returns 0, return 0.
+    3. Multiply _c_ by _beta_, then divide &epsilon; by 2.
+7. Run the **logistic Bernoulli factory** with _c_/_d_ = _c_, then set _z_ to the result.  Set _i_ to _i_ + 1 &minus; _z_ * 2, then go to step 5.
+
 <a id=Algorithms_for_Irrational_Constants></a>
 ### Algorithms for Irrational Constants
 
 The following algorithms generate heads with a probability equal to an irrational number.  (On the other hand, probabilities that are _rational_ constants are trivial to simulate.  If fair coins are available, the `ZeroOrOne` method should be used.  If coins with unknown bias are available, then a _randomness extraction_ method such as the von Neumann algorithm should be used to turn them into fair coins.  Randomness extraction is outside the scope of this document, however.)
 
-**Algorithm for continued fractions.**  The following algorithm simulates a probability expressed as a regular continued fraction of the following form: 0 + 1 / (a\[1\] + 1 / (a\[2\] + 1 / ( a\[3\] + ... ))).  The _a_\[_i_\] are the _partial denominators_ and must be integers greater than 0.  Inspired by (Flajolet et al., 2010, "Finite graphs (Markov chains) and rational functions")<sup>[**(1)**](#Note1)</sup>, I developed the following algorithm.
+**Algorithm for continued fractions.**  The following algorithm simulates a probability expressed as a regular continued fraction of the following form: 0 + 1 / (_a_\[1\] + 1 / (_a_\[2\] + 1 / (_a_\[3\] + ... ))).  The _a_\[_i_\] are the _partial denominators_ and must be integers greater than 0.  Inspired by (Flajolet et al., 2010, "Finite graphs (Markov chains) and rational functions")<sup>[**(1)**](#Note1)</sup>, I developed the following algorithm.
 
 The algorithm begins with _pos_ equal to 1.  Then the following steps are taken.
 
@@ -420,6 +473,12 @@ In addition, for each algorithm, a chart appears showing the minimum number of i
 <small><sup id=Note17>(17)</sup> Brassard, G., Devroye, L., Gravel, C., "Remote Sampling with Applications to General Entanglement Simulation", Entropy 2019(21)(92), doi:10.3390/e21010092.</small>
 
 <small><sup id=Note18>(18)</sup> Devroye, L., Gravel, C., "[**Sampling with arbitrary precision**](https://arxiv.org/abs/1502.02539v5)", arXiv:1502.02539v5 [cs.IT], 2015.</small>
+
+<small><sup id=Note19>(19)</sup> Huber, M., "[Nearly optimal Bernoulli factories for linear functions](https://arxiv.org/abs/1308.1562v2)", arXiv:1308.1562v2  [math.PR], 2014.</small>
+
+<small><sup id=Note20>(20)</sup> Huber, M., "[Optimal linear Bernoulli factories for small mean problems](https://arxiv.org/abs/1507.00843v2)", arXiv:1507.00843v2 [math.PR], 2016.</small>
+
+<small><sup id=Note21>(21)</sup> "[Designing perfect simulation algorithms using local correctness](https://arxiv.org/abs/1907.06748v1)", arXiv:1907.06748v1 [cs.DS], 2019.</small>
 
 <a id=Appendix></a>
 ## Appendix

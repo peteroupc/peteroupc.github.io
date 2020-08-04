@@ -308,13 +308,86 @@
 <li>Call the <strong>algorithm for &mu;<sup>1/2</sup></strong> using the secondary coin &mu;.  If it returns 0, return 1; otherwise, return 0.</li>
 </ol>
 
+<p><strong>Algorithm for &lambda; * <em>x</em>/<em>y</em>.</strong>  Huber has suggested several algorithms for this function over the years.  The first one is called the <strong>2014 algorithm</strong> in this document and is described below (Huber 2014)<sup><a href="#Note19"><strong>(19)</strong></a></sup>.</p>
+
+<p>The 2014 algorithm uses three parameters: <em>x</em>, <em>y</em>, and &epsilon;, such that <em>x</em>/<em>y</em> &gt; 0 and &epsilon; is greater than 0.  When <em>x</em>/<em>y</em> is greater than 1, the &epsilon; parameter has to be chosen such that &lambda; * <em>x</em>/<em>y</em> &lt;= 1 &minus; &epsilon;, which implies that some knowledge of &lambda; has to be available to the algorithm.  (In fact, as simulation results show, the choice of &epsilon; is crucial to this algorithm&#39;s performance; for best results, &epsilon; should be chosen such that &lambda; * <em>x</em>/<em>y</em> is slightly less than 1 &minus; &epsilon;.) The algorithm as described below also includes certain special cases, not mentioned in Huber, to make it more general.</p>
+
+<ol>
+<li>Special cases: If <em>x</em> is 0, return 0.  Otherwise, if <em>x</em> equals <em>y</em>, flip the input coin and return the result.  Otherwise, if <em>x</em> is less than <em>y</em>, then: (a) With probability <em>x</em>/<em>y</em>, flip the input coin and return the result; otherwise (b) return 0.</li>
+<li>Set <em>c</em> to <em>x</em>/<em>y</em>, and set <em>k</em> to 23 / (5 * &epsilon;).</li>
+<li>If &epsilon; is greater than 644/1000, set &epsilon; to 644/1000.</li>
+<li>Set <em>i</em> to 1.</li>
+<li>Flip the input coin.  If it returns 0, then generate numbers that are each 1 with probability (<em>c</em> &minus; 1) / <em>c</em> and 0 otherwise, until 0 is generated this way, then add 1 to <em>i</em> for each number generated this way (including the last).</li>
+<li>Subtract 1 from <em>i</em>, then if <em>i</em> is 0, return 1.</li>
+<li>If <em>i</em> is less than <em>k</em>, go to step 5.</li>
+<li>If <em>i</em> is <em>k</em> or greater:
+
+<ol>
+<li>Generate <em>i</em> numbers that are each 1 with probability 2 / (&epsilon; + 2) or 0 otherwise.  If any of those numbers is 0, return 0.</li>
+<li>Multiply <em>c</em> by 2 / (&epsilon; + 2), divide &epsilon; by 2, and multiply <em>k</em> by 2.</li>
+</ol></li>
+<li>If <em>i</em> is 0, return 1.  Otherwise, go to step 5.</li>
+</ol>
+
+<p>The second algorithm is called the <strong>2016 algorithm</strong> (Huber 2016)<sup><a href="#Note20"><strong>(20)</strong></a></sup> and uses the same parameters <em>x</em>, <em>y</em>, and &epsilon;, and its description uses the same special cases.  The difference here is that it involves a so-called &quot;logistic Bernoulli factory&quot;, which is replaced in this document with a different one that simulates the same function.</p>
+
+<ol>
+<li>The same special cases as for the 2014 algorithm apply.</li>
+<li>Set <em>m</em> to ceil(1 + 9 / (2 * &epsilon;)).</li>
+<li>Set &beta; to 1 + 1 / (<em>m</em> &minus; 1).</li>
+<li><strong>Algorithm A</strong> is what Huber calls this step.  Set <em>s</em> to 1, then while <em>s</em> is greater than 0 and less than <em>m</em>:
+
+<ol>
+<li>Run the <strong>logistic Bernoulli factory</strong> algorithm with <em>c</em>/<em>d</em> = &beta; * <em>x</em>/<em>y</em>.</li>
+<li>Set <em>s</em> to <em>s</em> &minus; <em>z</em> * 2 + 1, where <em>z</em> is the result of the logistic Bernoulli factory.</li>
+</ol></li>
+<li>If <em>s</em> is other than 0, return 0.</li>
+<li>With probability 1/&beta;, return 1.</li>
+<li>Run this algorithm recursively, with <em>x</em>/<em>y</em> = &beta; * <em>x</em>/<em>y</em> and &epsilon; = 1 &minus; &beta; * (1 &minus; &epsilon;).  If it returns 0, return 0.</li>
+<li>The <strong>high-power logistic Bernoulli factory</strong> is what Huber calls this step.  Set <em>s</em> to 1, then while <em>s</em> is greater than 0 and less than or equal to <em>m</em> minus 2:
+
+<ol>
+<li>Run the <strong>logistic Bernoulli factory</strong> algorithm with <em>c</em>/<em>d</em> = &beta; * <em>x</em>/<em>y</em>.</li>
+<li>Set <em>s</em> to <em>s</em> + <em>z</em> * 2 &minus; 1, where <em>z</em> is the result of the logistic Bernoulli factory.</li>
+</ol></li>
+<li>If <em>s</em> is equal to <em>m</em> minus 1, return 1.</li>
+<li>Subtract 1 from <em>m</em> and go to step 7.</li>
+</ol>
+
+<p>The paper that presented the 2016 algorithm also included a third algorithm, described below, that works only if &lambda; * <em>x</em> / <em>y</em> is known to be less than 1/2.  This third algorithm takes three parameters: <em>x</em>, <em>y</em>, and <em>m</em>, and <em>m</em> has to be chosen such that &lambda; * <em>x</em> / <em>y</em> &lt;= <em>m</em> &lt; 1/2.</p>
+
+<ol>
+<li>The same special cases as for the 2014 algorithm apply.</li>
+<li>Run the <strong>logistic Bernoulli factory</strong> algorithm with <em>c</em>/<em>d</em>; = (<em>x</em>/<em>y</em>) / (1 &minus; 2 * <em>m</em>).  If it returns 0, return 0.</li>
+<li>With probability 1 &minus; 2 * <em>m</em>, return 1.</li>
+<li>Run the 2014 algorithm or 2016 algorithm with <em>x</em>/<em>y</em> = (<em>x</em>/<em>y</em>) / 2 * <em>m</em> and &epsilon; = 1 &minus; <em>m</em>.</li>
+</ol>
+
+<p><strong>Algorithm for (&lambda; * <em>x</em>/<em>y</em>)<sup><em>i</em></sup></strong> (Huber 2019)<sup><a href="#Note21"><strong>(21)</strong></a></sup>.  This algorithm uses four parameters: <em>x</em>, <em>y</em>, <em>i</em>, and &epsilon;, such that <em>x</em>/<em>y</em> &gt; 0, <em>i</em> &gt;= 0 is an integer, and &epsilon; is greater than 0.  When <em>x</em>/<em>y</em> is greater than 1, the &epsilon; parameter has to be chosen such that &lambda; * <em>x</em>/<em>y</em> &lt;= 1 &minus; &epsilon;.  It also has special cases not mentioned in Huber 2019.</p>
+
+<ol>
+<li> Special cases: If <em>i</em> is 0, return 1.  If <em>x</em> is 0, return 0.  Otherwise, if <em>x</em> equals <em>y</em> and <em>i</em> equals 1, flip the input coin and return the result.</li>
+<li>Special case: If <em>x</em> is less than <em>y</em> and <em>i</em> = 1, then: (a) With probability <em>x</em>/<em>y</em>, flip the input coin and return the result; otherwise (b) return 0.</li>
+<li>Special case: If <em>x</em> is less than <em>y</em>, then create a secondary coin &mu; that does the following: &quot;(a) With probability <em>x</em>/<em>y</em>, flip the input coin and return the result; otherwise (b) return 0&quot;, then run the <strong>algorithm for (&mu;<sup><em>i</em>/1</sup>)</strong> (described earlier) using this secondary coin.</li>
+<li>Set <em>t</em> to 355/100 and <em>c</em> to <em>x</em>/<em>y</em>.</li>
+<li>If <em>i</em> is 0, return 1.</li>
+<li>While <em>i</em> = <em>t</em> / &epsilon;:
+
+<ol>
+<li>Set &beta; to (1 &minus; &epsilon; / 2) / (1 &minus; &epsilon;).</li>
+<li>Run the <strong>algorithm for (1/&beta;)<sup><em>i</em></sup></strong> (described later).  If it returns 0, return 0.</li>
+<li>Multiply <em>c</em> by <em>beta</em>, then divide &epsilon; by 2.</li>
+</ol></li>
+<li>Run the <strong>logistic Bernoulli factory</strong> with <em>c</em>/<em>d</em> = <em>c</em>, then set <em>z</em> to the result.  Set <em>i</em> to <em>i</em> + 1 &minus; <em>z</em> * 2, then go to step 5.</li>
+</ol>
+
 <p><a id=Algorithms_for_Irrational_Constants></a></p>
 
 <h3>Algorithms for Irrational Constants</h3>
 
 <p>The following algorithms generate heads with a probability equal to an irrational number.  (On the other hand, probabilities that are <em>rational</em> constants are trivial to simulate.  If fair coins are available, the <code>ZeroOrOne</code> method should be used.  If coins with unknown bias are available, then a <em>randomness extraction</em> method such as the von Neumann algorithm should be used to turn them into fair coins.  Randomness extraction is outside the scope of this document, however.)</p>
 
-<p><strong>Algorithm for continued fractions.</strong>  The following algorithm simulates a probability expressed as a regular continued fraction of the following form: 0 + 1 / (a[1] + 1 / (a[2] + 1 / ( a[3] + ... ))).  The <em>a</em>[<em>i</em>] are the <em>partial denominators</em> and must be integers greater than 0.  Inspired by (Flajolet et al., 2010, &quot;Finite graphs (Markov chains) and rational functions&quot;)<sup><a href="#Note1"><strong>(1)</strong></a></sup>, I developed the following algorithm.</p>
+<p><strong>Algorithm for continued fractions.</strong>  The following algorithm simulates a probability expressed as a regular continued fraction of the following form: 0 + 1 / (<em>a</em>[1] + 1 / (<em>a</em>[2] + 1 / (<em>a</em>[3] + ... ))).  The <em>a</em>[<em>i</em>] are the <em>partial denominators</em> and must be integers greater than 0.  Inspired by (Flajolet et al., 2010, &quot;Finite graphs (Markov chains) and rational functions&quot;)<sup><a href="#Note1"><strong>(1)</strong></a></sup>, I developed the following algorithm.</p>
 
 <p>The algorithm begins with <em>pos</em> equal to 1.  Then the following steps are taken.</p>
 
@@ -682,6 +755,12 @@
 <p><small><sup id=Note17>(17)</sup> Brassard, G., Devroye, L., Gravel, C., &quot;Remote Sampling with Applications to General Entanglement Simulation&quot;, Entropy 2019(21)(92), doi:10.3390/e21010092.</small></p>
 
 <p><small><sup id=Note18>(18)</sup> Devroye, L., Gravel, C., &quot;<a href="https://arxiv.org/abs/1502.02539v5"><strong>Sampling with arbitrary precision</strong></a>&quot;, arXiv:1502.02539v5 [cs.IT], 2015.</small></p>
+
+<p><small><sup id=Note19>(19)</sup> Huber, M., &quot;<a href="https://arxiv.org/abs/1308.1562v2">Nearly optimal Bernoulli factories for linear functions</a>&quot;, arXiv:1308.1562v2  [math.PR], 2014.</small></p>
+
+<p><small><sup id=Note20>(20)</sup> Huber, M., &quot;<a href="https://arxiv.org/abs/1507.00843v2">Optimal linear Bernoulli factories for small mean problems</a>&quot;, arXiv:1507.00843v2 [math.PR], 2016.</small></p>
+
+<p><small><sup id=Note21>(21)</sup> &quot;<a href="https://arxiv.org/abs/1907.06748v1">Designing perfect simulation algorithms using local correctness</a>&quot;, arXiv:1907.06748v1 [cs.DS], 2019.</small></p>
 
 <p><a id=Appendix></a></p>
 

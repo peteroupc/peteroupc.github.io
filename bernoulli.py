@@ -58,7 +58,7 @@ class Bernoulli:
         s = 1
         # if self.totalbits!=0: print([m, self.totalbits, float(c), self._coinprob])
         while s > 0 and s < m:
-            if self.totalbits >= 2000:
+            if False:  # self.totalbits >= 5000:
                 return math.nan
             lo = self.logistic(f, c.numerator, c.denominator)
             s = s - lo * 2 + 1
@@ -69,7 +69,7 @@ class Bernoulli:
         s = 1
         bc = beta * c
         while s > 0 and s <= m:
-            if self.totalbits >= 2000:
+            if False:  # self.totalbits >= 5000:
                 return math.nan
             s = s + self.logistic(f, bc.numerator, bc.denominator) * 2 - 1
         return 1 if s == m + 1 else 0
@@ -600,7 +600,7 @@ class Bernoulli:
         # and 1 otherwise.  Returns 1 if nx/ny is 0.  Reference: Mendo 2019.
         i = 1
         while True:
-            if self.totalbits >= 2000:
+            if False:  # self.totalbits >= 5000:
                 return math.nan
             x = self.zero_or_one(px, py)
             if x == 1:
@@ -620,7 +620,7 @@ class Bernoulli:
         ny = n.denominator
         px = p.numerator
         py = p.denominator
-        if self.totalbits >= 2000:
+        if False:  # self.totalbits >= 5000:
             return math.nan
         if n < 0:  # (px/py)^(nx/ny) -> (py/px)^-(nx/ny)
             n = -n
@@ -660,6 +660,8 @@ class Bernoulli:
                         return 0
                     xf -= quo * n1
                 for i in range(xf):
+                    if False:  # self.totalbits >= 5000:
+                        return math.nan
                     if self.zero_or_one(px, py) == 0:
                         return 0
             return 1
@@ -750,14 +752,14 @@ class Bernoulli:
             cd = ce.denominator
             while True:
                 # print([i,self.totalbits,float(self._coinprob),"k",float(k)])
-                if self.totalbits >= 2000:
+                if False:  # self.totalbits >= 5000:
                     return math.nan
                 i -= 1
                 if f() == 0:
                     # Number of failures before first success, plus 1
                     i += 1
                     while self.zero_or_one(cn, cd) == 0:
-                        if self.totalbits >= 2000:
+                        if False:  # self.totalbits >= 5000:
                             return math.nan
                         i += 1
                 if i == 0:
@@ -768,7 +770,7 @@ class Bernoulli:
                 ce = 1 + gamma * eps
                 if ce < 1:
                     raise ValueError
-                if self.totalbits >= 2000:
+                if False:  # self.totalbits >= 5000:
                     return math.nan
                 # print(float(ce),float(ce**-i),float((1/ce)**i))
                 if self.zero_or_one_power(ce.denominator, ce.numerator, i) == 0:
@@ -807,36 +809,34 @@ class Bernoulli:
         eps = Fraction(eps)
         if eps <= 0:
             raise ValueError
-        m = (Fraction(45, 10) / eps) + 1
+        m = (Fraction(9, 2) / eps) + 1
         # Ceiling operation
         m += Fraction(m.denominator - m.numerator % m.denominator, m.denominator)
         m = int(m)
-        # if float(m)!=float(math.ceil(4.5/eps)+1): raise ValueError
         beta = 1 + Fraction(1) / (m - 1)
-        if self.totalbits >= 2000:
+        if False:  # self.totalbits >= 5000:
             return math.nan
-        r = beta * c * self._coinprob
         if self._algorithm_a(f, m, beta * c) == 0:
-            if self.totalbits >= 2000:
+            if False:  # self.totalbits >= 5000:
                 return math.nan
             return 0
         if self.zero_or_one(beta.denominator, beta.numerator) == 1:
-            if self.totalbits >= 2000:
+            if False:  # self.totalbits >= 5000:
                 return math.nan
             return 1  # Bern(1/beta)
         while True:
-            if self.totalbits >= 2000:
+            if False:  # self.totalbits >= 5000:
                 return math.nan
             bc = beta * c
             if (
                 self.linear(f, bc.numerator, bc.denominator, eps=1 - beta * (1 - eps))
                 == 0
             ):
-                if self.totalbits >= 2000:
+                if False:  # self.totalbits >= 5000:
                     return math.nan
                 return 0
             if self._high_power_logistic(f, m - 2, beta, c) == 1:
-                if self.totalbits >= 2000:
+                if False:  # self.totalbits >= 5000:
                     return math.nan
                 return 1
             m -= 1
@@ -976,23 +976,27 @@ class Bernoulli:
                 if self.zero_or_one(c.numerator, c.denominator) == 1 and f() == 1
                 else 0
             )
-            return self.linear_power(fv, 1, 1, i, eps)
+            return self.power(fv, i)
         thresh = Fraction(355, 100)
         while True:
-            if self.totalbits >= 2000:
+            if False:  # self.totalbits >= 5000:
                 return math.nan
             if i == 0:
                 return 1
             while i > thresh / eps:
-                if self.totalbits >= 2000:
+                if False:  # self.totalbits >= 5000:
                     return math.nan
                 halfeps = eps / 2
                 beta = (1 - halfeps) / (1 - eps)
                 if self.zero_or_one_power(beta.denominator, beta.numerator, i) == 0:
+                    if False:  # self.totalbits >= 5000:
+                        return math.nan
                     return 0
                 c *= beta
                 eps = halfeps
             i = i + 1 - self.logistic(f, c, 1) * 2
+            if math.isnan(i):
+                return math.nan
 
     def linear_lowprob(self, f, cx, cy=1, m=Fraction(249, 500)):
         """ Linear Bernoulli factory which is faster if the probability of heads is known
@@ -1027,6 +1031,8 @@ class Bernoulli:
         bc = beta * c
         lb = self.logistic(f, bc.numerator, bc.denominator)
         if lb == 0:
+            if self.totalbits >= 2000:
+                return math.nan
             return 0
         if self.zero_or_one(beta.denominator, beta.numerator) == 1:
             return 1  # Bern(1/beta)
