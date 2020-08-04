@@ -832,7 +832,7 @@ For cryptographic RNGs, an application should use only one thread-safe instance 
 
 <p><small><sup id=Note3>(3)</sup> For example, see F. Dörre and V. Klebanov, &quot;Practical Detection of Entropy Loss in Pseudo-Random Number Generators&quot;, 2016.</small></p>
 
-<p><small><sup id=Note4>(4)</sup> If the generator produces numbers with unequal probabilities, but is otherwise an RNG as defined here, then  <em>randomness extraction</em> can make it produce numbers with closer to equal probabilities (see &quot;<a href="#Seed_Generation"><strong>Seed Generation</strong></a>&quot;).</small></p>
+<p><small><sup id=Note4>(4)</sup> Tthe definition of an RNG does not include items that generate non-uniform random numbers, even if they otherwise meet the criteria of an RNG as defined here.  (For example, RNGs exclude Gaussian and similar noise generators.)  Many of these items, however, typically serve as sources from which uniform random numbers can be derived through techniques collectively known as  <em>randomness extraction</em> (see &quot;<a href="#Seed_Generation"><strong>Seed Generation</strong></a>&quot;).</small></p>
 
 <p><small><sup id=Note5>(5)</sup> See also the FIPS 200 definition (&quot;The protection of information and information systems from unauthorized access, use, disclosure, disruption, modification, or destruction in order to provide confidentiality, integrity, and availability&quot;) and ISO/IEC 27000.</small></p>
 

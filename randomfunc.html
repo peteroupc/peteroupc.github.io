@@ -2399,17 +2399,11 @@ END METHOD
 
 <h2>Notes</h2>
 
-<p><small><sup id=Note1>(1)</sup> For the definition of an RNG, it is irrelevant&mdash;</p>
+<p><small><sup id=Note1>(1)</sup> The definition of an RNG covers the entire range of devices and programs that generate numbers that behave like uniform random numbers.  For example, the definition of an RNG includes pseudorandom number generators (PRNGs); so-called &quot;true&quot; random number generators; APIs that provide uniform random-behaving numbers to applications, and so on.  Such items are RNGs as defined here regardless of their predictability, how well they pass statistical randomness tests, whether they extract random bits from noise sources, or whether they use only their input and their state to produce numbers.  However, it is outside the scope of this document to give advice on which RNG to choose for a particular purpose.</p>
 
-<ul>
-<li>how hard it is to predict the numbers the item produces,</li>
-<li>how well the item passes statistical randomness tests,</li>
-<li>whether the item is initialized automatically or not,</li>
-<li>whether the item uses only its input and its state to produce numbers, or</li>
-<li>whether the item extracts random bits from one or more noise sources.</li>
-</ul>
+<p>On the other hand, the definition of an RNG does not include items that generate non-uniform random numbers, even if they otherwise meet the criteria of an RNG as defined here.  (For example, RNGs exclude Gaussian and similar noise generators.)  Many of these items, however, typically serve as so-called &quot;entropy sources&quot;, from which uniform random numbers can be derived through techniques collectively known as  <em>randomness extraction</em> (which is outside the scope of this document).</p>
 
-<p>If the generator produces numbers with unequal probabilities, but is otherwise an RNG as defined here, then  <em>randomness extraction</em> (which is outside the scope of this document) can make it produce numbers with closer to equal probabilities.</small></p>
+<p>For the most part, the concept of an RNG is designed only to serve as a backbone for the <code>RNDINT</code> method, which all other randomization methods in this document are based on.</small></p>
 
 <p><small><sup id=Note2>(2)</sup> Pedersen, K., &quot;<a href="https://arxiv.org/abs/1704.07949v3"><strong>Reconditioning your quantile function</strong></a>&quot;, arXiv:1704.07949v3 [stat.CO], 2018.</small></p>
 
@@ -2582,9 +2576,7 @@ and &quot;<a href="https://randomascii.wordpress.com/2013/07/16/floating-point-d
 
 <p><small><sup id=Note80>(80)</sup> Describing differences between SQL dialects is outside the scope of this document, but <a href="http://flourishlib.com/docs/FlourishSQL"><strong>Flourish SQL</strong></a> describes many such differences, including those concerning RNGs.</small></p>
 
-<p><small><sup id=Note81>(81)</sup> Mironov, I., &quot;On Significance of the Least Significant Bits For Differential Privacy&quot;, 2012.</small></p>
-
-<p><small><sup id=Note82>(82)</sup> For example, see Balcer, V., Vadhan, S., &quot;Differential Privacy on Finite Computers&quot;, Dec. 4, 2018; as well as Micciancio, D. and Walter, M., &quot;Gaussian sampling over the integers: Efficient, generic, constant-time&quot;, in Annual International Cryptology Conference, August 2017 (pp. 455-485).</small></p>
+<p><small><sup id=Note81>(81)</sup> For example, see Balcer, V., Vadhan, S., &quot;Differential Privacy on Finite Computers&quot;, Dec. 4, 2018; as well as Micciancio, D. and Walter, M., &quot;Gaussian sampling over the integers: Efficient, generic, constant-time&quot;, in Annual International Cryptology Conference, August 2017 (pp. 455-485).</small></p>
 
 <p><a id=Appendix></a></p>
 
@@ -2666,7 +2658,7 @@ END METHOD
 <li><strong>Cryptographic RNG.</strong> The application has to use a cryptographic RNG.  Choosing a cryptographic RNG is outside the scope of this document.</li>
 <li><strong>Timing attacks.</strong>  Certain security attacks have exploited timing and other differences to recover cleartext, encryption keys, or other sensitive data.  Thus, so-called &quot;constant-time&quot; security algorithms have been developed.  (In general, &quot;constant-time&quot; algorithms are designed to have no timing differences, including memory access patterns, that reveal anything about any secret inputs, such as keys, passwords, or RNG &quot;seeds&quot;).  But even if an algorithm has variable running time (e.g., <a href="#Rejection_Sampling"><strong>rejection sampling</strong></a>), it may or may not have security-relevant timing differences, especially if it does not reuse secrets.</li>
 <li><strong>Security algorithms out of scope.</strong> Security algorithms that take random secrets to generate random security parameters, such as encryption keys, public/private key pairs, elliptic curves, or points on an elliptic curve, are outside this document&#39;s scope.</li>
-<li><strong>Floating-point numbers.</strong>  Random numbers generated for security purposes are almost always integers (and, in very rare cases, fixed-point numbers). Even with a secure random number generator, the use of random floating-point numbers can cause security issues not present with integers or fixed-point numbers; one example is found in (Mironov 2012)<sup><a href="#Note81"><strong>(81)</strong></a></sup>.  And even in the few security applications where random floating-point numbers are used (differential privacy and lattice-based cryptography), there are ways to avoid such random numbers<sup><a href="#Note82"><strong>(82)</strong></a></sup>.</li>
+<li><strong>Floating-point numbers.</strong>  Random numbers generated for security purposes are almost always integers (and, in very rare cases, fixed-point numbers). Even in the few security applications where random floating-point numbers are used (differential privacy and lattice-based cryptography), there are ways to avoid such random numbers<sup><a href="#Note81"><strong>(81)</strong></a></sup>.</li>
 </ol>
 
 <p><a id=License></a></p>

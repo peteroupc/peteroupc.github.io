@@ -718,8 +718,8 @@ class Bernoulli:
         """ Linear Bernoulli factory: B(p) => B((cx/cy)*p). Older algorithm given in (Huber 2014).
      - f: Function that returns 1 if heads and 0 if tails.
      - cx, cy: numerator and denominator of c; the probability of heads (p) is multiplied
-       by c. c must be 0 or greater. If c > 1, c must be chosen so that c*p <= 1 - eps.
-     - eps: A Fraction in (0, 1). If c > 1, eps must be chosen so that c*p <= 1 - eps.
+       by c. c must be 0 or greater. If c > 1, c must be chosen so that c*p < 1 - eps.
+     - eps: A Fraction in (0, 1). If c > 1, eps must be chosen so that c*p < 1 - eps.
      """
         if cy == 1:
             c = Fraction(cx)

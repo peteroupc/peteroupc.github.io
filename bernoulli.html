@@ -308,9 +308,9 @@
 <li>Call the <strong>algorithm for &mu;<sup>1/2</sup></strong> using the secondary coin &mu;.  If it returns 0, return 1; otherwise, return 0.</li>
 </ol>
 
-<p><strong>Algorithm for &lambda; * <em>x</em>/<em>y</em>.</strong>  Huber has suggested several algorithms for this function over the years.  The first one is called the <strong>2014 algorithm</strong> in this document and is described below (Huber 2014)<sup><a href="#Note19"><strong>(19)</strong></a></sup>.</p>
+<p><strong>Algorithm for &lambda; * <em>x</em>/<em>y</em>.</strong>  Huber has suggested several algorithms for this function over the years.</p>
 
-<p>The 2014 algorithm uses three parameters: <em>x</em>, <em>y</em>, and &epsilon;, such that <em>x</em>/<em>y</em> &gt; 0 and &epsilon; is greater than 0.  When <em>x</em>/<em>y</em> is greater than 1, the &epsilon; parameter has to be chosen such that &lambda; * <em>x</em>/<em>y</em> &lt;= 1 &minus; &epsilon;, which implies that some knowledge of &lambda; has to be available to the algorithm.  (In fact, as simulation results show, the choice of &epsilon; is crucial to this algorithm&#39;s performance; for best results, &epsilon; should be chosen such that &lambda; * <em>x</em>/<em>y</em> is slightly less than 1 &minus; &epsilon;.) The algorithm as described below also includes certain special cases, not mentioned in Huber, to make it more general.</p>
+<p>The first algorithm is called the <strong>2014 algorithm</strong> in this document (Huber 2014)<sup><a href="#Note15"><strong>(15)</strong></a></sup>.  It uses three parameters: <em>x</em>, <em>y</em>, and &epsilon;, such that <em>x</em>/<em>y</em> &gt; 0 and &epsilon; is greater than 0.  When <em>x</em>/<em>y</em> is greater than 1, the &epsilon; parameter has to be chosen such that &lambda; * <em>x</em>/<em>y</em> &lt; 1 &minus; &epsilon;, which implies that some knowledge of &lambda; has to be available to the algorithm.  (In fact, as simulation results show, the choice of &epsilon; is crucial to this algorithm&#39;s performance; for best results, &epsilon; should be chosen such that &lambda; * <em>x</em>/<em>y</em> is slightly less than 1 &minus; &epsilon;.) The algorithm as described below also includes certain special cases, not mentioned in Huber, to make it more general.</p>
 
 <ol>
 <li>Special cases: If <em>x</em> is 0, return 0.  Otherwise, if <em>x</em> equals <em>y</em>, flip the input coin and return the result.  Otherwise, if <em>x</em> is less than <em>y</em>, then: (a) With probability <em>x</em>/<em>y</em>, flip the input coin and return the result; otherwise (b) return 0.</li>
@@ -329,7 +329,7 @@
 <li>If <em>i</em> is 0, return 1.  Otherwise, go to step 5.</li>
 </ol>
 
-<p>The second algorithm is called the <strong>2016 algorithm</strong> (Huber 2016)<sup><a href="#Note20"><strong>(20)</strong></a></sup> and uses the same parameters <em>x</em>, <em>y</em>, and &epsilon;, and its description uses the same special cases.  The difference here is that it involves a so-called &quot;logistic Bernoulli factory&quot;, which is replaced in this document with a different one that simulates the same function.</p>
+<p>The second algorithm is called the <strong>2016 algorithm</strong> (Huber 2016)<sup><a href="#Note16"><strong>(16)</strong></a></sup> and uses the same parameters <em>x</em>, <em>y</em>, and &epsilon;, and its description uses the same special cases.  The difference here is that it involves a so-called &quot;logistic Bernoulli factory&quot;, which is replaced in this document with a different one that simulates the same function.  When <em>x</em>/<em>y</em> is greater than 1, the &epsilon; parameter has to be chosen such that &lambda; * <em>x</em>/<em>y</em> &lt;= 1 &minus; &epsilon;.</p>
 
 <ol>
 <li>The same special cases as for the 2014 algorithm apply.</li>
@@ -358,12 +358,12 @@
 
 <ol>
 <li>The same special cases as for the 2014 algorithm apply.</li>
-<li>Run the <strong>logistic Bernoulli factory</strong> algorithm with <em>c</em>/<em>d</em>; = (<em>x</em>/<em>y</em>) / (1 &minus; 2 * <em>m</em>).  If it returns 0, return 0.</li>
+<li>Run the <strong>logistic Bernoulli factory</strong> algorithm with <em>c</em>/<em>d</em> = (<em>x</em>/<em>y</em>) / (1 &minus; 2 * <em>m</em>).  If it returns 0, return 0.</li>
 <li>With probability 1 &minus; 2 * <em>m</em>, return 1.</li>
-<li>Run the 2014 algorithm or 2016 algorithm with <em>x</em>/<em>y</em> = (<em>x</em>/<em>y</em>) / 2 * <em>m</em> and &epsilon; = 1 &minus; <em>m</em>.</li>
+<li>Run the 2014 algorithm or 2016 algorithm with <em>x</em>/<em>y</em> = (<em>x</em>/<em>y</em>) / (2 * <em>m</em>) and &epsilon; = 1 &minus; <em>m</em>.</li>
 </ol>
 
-<p><strong>Algorithm for (&lambda; * <em>x</em>/<em>y</em>)<sup><em>i</em></sup></strong> (Huber 2019)<sup><a href="#Note21"><strong>(21)</strong></a></sup>.  This algorithm uses four parameters: <em>x</em>, <em>y</em>, <em>i</em>, and &epsilon;, such that <em>x</em>/<em>y</em> &gt; 0, <em>i</em> &gt;= 0 is an integer, and &epsilon; is greater than 0.  When <em>x</em>/<em>y</em> is greater than 1, the &epsilon; parameter has to be chosen such that &lambda; * <em>x</em>/<em>y</em> &lt;= 1 &minus; &epsilon;.  It also has special cases not mentioned in Huber 2019.</p>
+<p><strong>Algorithm for (&lambda; * <em>x</em>/<em>y</em>)<sup><em>i</em></sup></strong> (Huber 2019)<sup><a href="#Note17"><strong>(17)</strong></a></sup>.  This algorithm uses four parameters: <em>x</em>, <em>y</em>, <em>i</em>, and &epsilon;, such that <em>x</em>/<em>y</em> &gt; 0, <em>i</em> &gt;= 0 is an integer, and &epsilon; is greater than 0.  When <em>x</em>/<em>y</em> is greater than 1, the &epsilon; parameter has to be chosen such that &lambda; * <em>x</em>/<em>y</em> &lt; 1 &minus; &epsilon;.  It also has special cases not mentioned in Huber 2019.</p>
 
 <ol>
 <li> Special cases: If <em>i</em> is 0, return 1.  If <em>x</em> is 0, return 0.  Otherwise, if <em>x</em> equals <em>y</em> and <em>i</em> equals 1, flip the input coin and return the result.</li>
@@ -376,7 +376,7 @@
 <ol>
 <li>Set &beta; to (1 &minus; &epsilon; / 2) / (1 &minus; &epsilon;).</li>
 <li>Run the <strong>algorithm for (1/&beta;)<sup><em>i</em></sup></strong> (described later).  If it returns 0, return 0.</li>
-<li>Multiply <em>c</em> by <em>beta</em>, then divide &epsilon; by 2.</li>
+<li>Multiply <em>c</em> by &beta;, then divide &epsilon; by 2.</li>
 </ol></li>
 <li>Run the <strong>logistic Bernoulli factory</strong> with <em>c</em>/<em>d</em> = <em>c</em>, then set <em>z</em> to the result.  Set <em>i</em> to <em>i</em> + 1 &minus; <em>z</em> * 2, then go to step 5.</li>
 </ol>
@@ -467,7 +467,7 @@
 <li>Add 1 to <em>i</em> and go to step 6.</li>
 </ol>
 
-<p><strong>Algorithm for exp(&minus; <em>x</em>/<em>y</em>).</strong>  This algorithm takes integers <em>x</em> &gt;= 0 and <em>y</em> &gt; 0 and outputs 1 with probability <code>exp(-x/y)</code> or 0 otherwise. It originates from (Canonne et al. 2020)<sup><a href="#Note15"><strong>(15)</strong></a></sup>.</p>
+<p><strong>Algorithm for exp(&minus; <em>x</em>/<em>y</em>).</strong>  This algorithm takes integers <em>x</em> &gt;= 0 and <em>y</em> &gt; 0 and outputs 1 with probability <code>exp(-x/y)</code> or 0 otherwise. It originates from (Canonne et al. 2020)<sup><a href="#Note18"><strong>(18)</strong></a></sup>.</p>
 
 <ol>
 <li>Special case: If <em>x</em> is 0, return 1. (This is because the probability becomes <code>exp(0) = 1</code>.)</li>
@@ -489,7 +489,7 @@
 <p>The algorithm is then as follows:</p>
 
 <ul>
-<li>For each component <em>LC</em>[<em>i</em>], call the <strong>algorithm for exp(&minus; <em>LI</em>[<em>i</em>]/1)</strong>, and call the <strong>general martingale algorithm</strong> adapted for <strong>exp(&minus;&lambda;)</strong> using the input coin that simulates  <em>LF</em>[<em>i</em>].  If any of these calls returns 0, return 0; otherwise, return 1. (See also (Canonne et al. 2020)<sup><a href="#Note15"><strong>(15)</strong></a></sup>.)</li>
+<li>For each component <em>LC</em>[<em>i</em>], call the <strong>algorithm for exp(&minus; <em>LI</em>[<em>i</em>]/1)</strong>, and call the <strong>general martingale algorithm</strong> adapted for <strong>exp(&minus;&lambda;)</strong> using the input coin that simulates  <em>LF</em>[<em>i</em>].  If any of these calls returns 0, return 0; otherwise, return 1. (See also (Canonne et al. 2020)<sup><a href="#Note18"><strong>(18)</strong></a></sup>.)</li>
 </ul>
 
 <p><strong>Algorithm for (<em>a</em>/<em>b</em>)<sup><em>z</em></sup>.</strong> This algorithm is similar to the previous algorithm for powering, except that the exponent, <em>z</em>,  can be any real number 0 or greater, as long as <em>z</em> can be rewritten as the sum of one or more components whose fractional parts can each be simulated by a Bernoulli factory algorithm that outputs heads with probability equal to that fractional part. This algorithm makes use of a similar identity as for <code>exp</code> and works only if <em>z</em> is 0 or greater and <em>a</em>/<em>b</em> is in the interval [0, 1].</p>
@@ -512,7 +512,7 @@
 
 <h3>General Algorithms</h3>
 
-<p><strong>Algorithm for the probability generating function.</strong>  Let <em>X</em> be a random number that follows a discrete distribution (one that takes on a countable number of values).  The following algorithm generates heads with probability <strong>E</strong>[&lambda;<sup><em>X</em></sup>], that is, the expected (average) value of &lambda;<sup><em>X</em></sup>.  <strong>E</strong>[&lambda;<sup><em>X</em></sup>] is the distribution&#39;s <em>probability generating function</em>, also known as <em>factorial moment generating function</em> (Dughmi et al. 2017)<sup><a href="#Note16"><strong>(16)</strong></a></sup>.</p>
+<p><strong>Algorithm for the probability generating function.</strong>  Let <em>X</em> be a random number that follows a discrete distribution (one that takes on a countable number of values).  The following algorithm generates heads with probability <strong>E</strong>[&lambda;<sup><em>X</em></sup>], that is, the expected (average) value of &lambda;<sup><em>X</em></sup>.  <strong>E</strong>[&lambda;<sup><em>X</em></sup>] is the distribution&#39;s <em>probability generating function</em>, also known as <em>factorial moment generating function</em> (Dughmi et al. 2017)<sup><a href="#Note19"><strong>(19)</strong></a></sup>.</p>
 
 <ol>
 <li>Generate a random number <em>N</em> of the given distribution.</li>
@@ -748,19 +748,19 @@
 
 <p><small><sup id=Note14>(14)</sup> One of the only implementations I could find of this, if not the only, was a <a href="https://github.com/derekelkins/buffon/blob/master/Data/Distribution/Buffon.hs"><strong>Haskell implementation</strong></a>.</small></p>
 
-<p><small><sup id=Note15>(15)</sup> Canonne, C., Kamath, G., Steinke, T., &quot;<a href="https://arxiv.org/abs/2004.00010v2"><strong>The Discrete Gaussian for Differential Privacy</strong></a>&quot;, arXiv:2004.00010v2 [cs.DS], 2020.</small></p>
+<p><small><sup id=Note15>(15)</sup> Huber, M., &quot;<a href="https://arxiv.org/abs/1308.1562v2"><strong>Nearly optimal Bernoulli factories for linear functions</strong></a>&quot;, arXiv:1308.1562v2  [math.PR], 2014.</small></p>
 
-<p><small><sup id=Note16>(16)</sup> Shaddin Dughmi, Jason D. Hartline, Robert Kleinberg, and Rad Niazadeh. 2017. Bernoulli Factories and Black-Box Reductions in Mechanism Design. In <em>Proceedings of 49th Annual ACM SIGACT Symposium on the Theory of Computing</em>, Montreal, Canada, June 2017 (STOC’17).</small></p>
+<p><small><sup id=Note16>(16)</sup> Huber, M., &quot;<a href="https://arxiv.org/abs/1507.00843v2"><strong>Optimal linear Bernoulli factories for small mean problems</strong></a>&quot;, arXiv:1507.00843v2 [math.PR], 2016.</small></p>
 
-<p><small><sup id=Note17>(17)</sup> Brassard, G., Devroye, L., Gravel, C., &quot;Remote Sampling with Applications to General Entanglement Simulation&quot;, Entropy 2019(21)(92), doi:10.3390/e21010092.</small></p>
+<p><small><sup id=Note17>(17)</sup> Huber, M., &quot;<a href="https://arxiv.org/abs/1907.06748v1"><strong>Designing perfect simulation algorithms using local correctness</strong></a>&quot;, arXiv:1907.06748v1 [cs.DS], 2019.</small></p>
 
-<p><small><sup id=Note18>(18)</sup> Devroye, L., Gravel, C., &quot;<a href="https://arxiv.org/abs/1502.02539v5"><strong>Sampling with arbitrary precision</strong></a>&quot;, arXiv:1502.02539v5 [cs.IT], 2015.</small></p>
+<p><small><sup id=Note18>(18)</sup> Canonne, C., Kamath, G., Steinke, T., &quot;<a href="https://arxiv.org/abs/2004.00010v2"><strong>The Discrete Gaussian for Differential Privacy</strong></a>&quot;, arXiv:2004.00010v2 [cs.DS], 2020.</small></p>
 
-<p><small><sup id=Note19>(19)</sup> Huber, M., &quot;<a href="https://arxiv.org/abs/1308.1562v2">Nearly optimal Bernoulli factories for linear functions</a>&quot;, arXiv:1308.1562v2  [math.PR], 2014.</small></p>
+<p><small><sup id=Note19>(19)</sup> Shaddin Dughmi, Jason D. Hartline, Robert Kleinberg, and Rad Niazadeh. 2017. Bernoulli Factories and Black-Box Reductions in Mechanism Design. In <em>Proceedings of 49th Annual ACM SIGACT Symposium on the Theory of Computing</em>, Montreal, Canada, June 2017 (STOC’17).</small></p>
 
-<p><small><sup id=Note20>(20)</sup> Huber, M., &quot;<a href="https://arxiv.org/abs/1507.00843v2">Optimal linear Bernoulli factories for small mean problems</a>&quot;, arXiv:1507.00843v2 [math.PR], 2016.</small></p>
+<p><small><sup id=Note20>(20)</sup> Brassard, G., Devroye, L., Gravel, C., &quot;Remote Sampling with Applications to General Entanglement Simulation&quot;, Entropy 2019(21)(92), doi:10.3390/e21010092.</small></p>
 
-<p><small><sup id=Note21>(21)</sup> &quot;<a href="https://arxiv.org/abs/1907.06748v1">Designing perfect simulation algorithms using local correctness</a>&quot;, arXiv:1907.06748v1 [cs.DS], 2019.</small></p>
+<p><small><sup id=Note21>(21)</sup> Devroye, L., Gravel, C., &quot;<a href="https://arxiv.org/abs/1502.02539v5"><strong>Sampling with arbitrary precision</strong></a>&quot;, arXiv:1502.02539v5 [cs.IT], 2015.</small></p>
 
 <p><a id=Appendix></a></p>
 
@@ -808,7 +808,7 @@ for i in range(iters):
 
 <h3>Alternative Implementation of Bernoulli Factories</h3>
 
-<p>Say we have a Bernoulli factory algorithm that takes a coin with probability of heads of <em>p</em> and outputs 1 with probability <em>f</em>(<em>p</em>).  If this algorithm takes a geometric bag (a partially-sampled uniform random number or PSRN) as the input coin and flips that coin using <strong>SampleGeometricBag</strong>, the algorithm could instead be implemented as follows in order to return 1 with probability <em>f</em>(<em>U</em>), where <em>U</em> is the number represented by the geometric bag (see also (Brassard et al., 2019)<sup><a href="#Note17"><strong>(17)</strong></a></sup>, (Devroye 1986, p. 431)<sup><a href="#Note3"><strong>(3)</strong></a></sup>, (Devroye and Gravel 2015)<sup><a href="#Note18"><strong>(18)</strong></a></sup>:</p>
+<p>Say we have a Bernoulli factory algorithm that takes a coin with probability of heads of <em>p</em> and outputs 1 with probability <em>f</em>(<em>p</em>).  If this algorithm takes a geometric bag (a partially-sampled uniform random number or PSRN) as the input coin and flips that coin using <strong>SampleGeometricBag</strong>, the algorithm could instead be implemented as follows in order to return 1 with probability <em>f</em>(<em>U</em>), where <em>U</em> is the number represented by the geometric bag (see also (Brassard et al., 2019)<sup><a href="#Note20"><strong>(20)</strong></a></sup>, (Devroye 1986, p. 431)<sup><a href="#Note3"><strong>(3)</strong></a></sup>, (Devroye and Gravel 2015)<sup><a href="#Note21"><strong>(21)</strong></a></sup>:</p>
 
 <ol>
 <li>Set <em>v</em> to 0 and <em>k</em> to 1.</li>

@@ -561,7 +561,7 @@ I acknowledge&mdash;
 
 <small><sup id=Note3>(3)</sup> For example, see F. Dörre and V. Klebanov, "Practical Detection of Entropy Loss in Pseudo-Random Number Generators", 2016.</small>
 
-<small><sup id=Note4>(4)</sup> If the generator produces numbers with unequal probabilities, but is otherwise an RNG as defined here, then  _randomness extraction_ can make it produce numbers with closer to equal probabilities (see "[**Seed Generation**](#Seed_Generation)").</small>
+<small><sup id=Note4>(4)</sup> Tthe definition of an RNG does not include items that generate non-uniform random numbers, even if they otherwise meet the criteria of an RNG as defined here.  (For example, RNGs exclude Gaussian and similar noise generators.)  Many of these items, however, typically serve as sources from which uniform random numbers can be derived through techniques collectively known as  _randomness extraction_ (see "[**Seed Generation**](#Seed_Generation)").</small>
 
 <small><sup id=Note5>(5)</sup> See also the FIPS 200 definition ("The protection of information and information systems from unauthorized access, use, disclosure, disruption, modification, or destruction in order to provide confidentiality, integrity, and availability") and ISO/IEC 27000.</small>
 
