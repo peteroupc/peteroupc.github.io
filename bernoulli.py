@@ -379,9 +379,9 @@ class Bernoulli:
      - cx, cy: numerator and denominator of c; the probability of heads (p) is multiplied
        by c. c must be in (0, 1).
      """
-        cc = Fraction(1) / (Fraction(cx, cy) + 1)
+        c = Fraction(cx, cy)
         while True:
-            if self.zero_or_one(cc.numerator, cc.denominator) == 1:
+            if self.zero_or_one(c.denominator, cx.numerator + cx.denominator) == 1:
                 return 0
             elif f() == 1:
                 return 1
@@ -1004,7 +1004,7 @@ class Bernoulli:
         if self.zero_or_one(beta.denominator, beta.numerator) == 1:
             return 1  # Bern(1/beta)
         c = beta * c / (beta - 1)
-        return self.linear_power(f, c, eps=Fraction(1) - m)
+        return self.linear(f, c, eps=Fraction(1) - m)
 
 # Examples of use
 if __name__ == "__main__":
