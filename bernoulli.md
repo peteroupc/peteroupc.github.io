@@ -30,13 +30,11 @@ This page catalogs algorithms to turn coins biased one way into coins biased ano
         - [**_c_ * &lambda; * &beta; / (&beta; * (_c_ * &lambda; + _d_ * &mu;) &minus; (&beta; &minus; 1) * (_c_ + _d_))**](#c__lambda_beta_beta__c__lambda__d__mu_minus_beta_minus_1__c___d)
         - [**_c_ * &lambda; / (_c_ * &lambda; + _d_) or (_c_/_d_) * &lambda; / (1 + (_c_/_d_) * &lambda;))**](#c__lambda__c__lambda__d__or__c___d__lambda_1__c___d__lambda)
         - [**&lambda; + &mu;**](#lambda_mu)
-        - [**&lambda; &minus; &mu;**](#lambda_minus_mu)
         - [**1/(_c_ + &lambda;)**](#1__c__lambda)
         - [**1 &minus; &lambda;**](#1_minus_lambda)
-        - [**&lambda; * &mu;**](#lambda_mu_2)
         - [**&nu; * &lambda; + (1 &minus; &nu;) * &mu;**](#nu_lambda_1_minus_nu_mu)
         - [**&lambda; + &mu; &minus; (&lambda; * &mu;)**](#lambda_mu_minus_lambda_mu)
-        - [**(&lambda; + &mu;) / 2**](#lambda_mu_2_2)
+        - [**(&lambda; + &mu;) / 2**](#lambda_mu_2)
         - [**arctan(&lambda;) /&lambda;**](#arctan_lambda_lambda)
         - [**arctan(&lambda;)**](#arctan_lambda)
         - [**&lambda;<sup>_x_/_y_</sup>**](#lambda__x___y)
@@ -44,8 +42,10 @@ This page catalogs algorithms to turn coins biased one way into coins biased ano
         - [**sqrt(&lambda;)**](#sqrt_lambda)
         - [**arcsin(&lambda;) + sqrt(1 &minus; &lambda;<sup>2</sup>) &minus; 1**](#arcsin_lambda_sqrt_1_minus_lambda_2_minus_1)
         - [**arcsin(&lambda;) / 2**](#arcsin_lambda_2)
+        - [**&lambda; * &mu;**](#lambda_mu_4)
         - [**&lambda; * _x_/_y_ (linear Bernoulli factories)**](#lambda__x___y__linear_Bernoulli_factories)
         - [**(&lambda; * _x_/_y_)<sup>_i_</sup>**](#lambda__x___y___i)
+        - [**&epsilon; / &lambda;**](#epsilon_lambda)
     - [**Algorithms for Irrational Constants**](#Algorithms_for_Irrational_Constants)
         - [**Continued Fractions**](#Continued_Fractions)
         - [**arctan(_x_/_y_) \* _y_/_x_**](#arctan__x___y___y___x)
@@ -53,8 +53,8 @@ This page catalogs algorithms to turn coins biased one way into coins biased ano
         - [**&pi; / 4**](#pi_4)
         - [**1 / &pi;**](#1_pi)
         - [**(_a_/_b_)<sup>_x_/_y_</sup>**](#a___b___x___y)
-        - [**exp(&minus; _x_/_y_)**](#exp_minus__x___y)
-        - [**exp(&minus; _z_)**](#exp_minus__z)
+        - [**exp(&minus;_x_/_y_)**](#exp_minus__x___y)
+        - [**exp(&minus;_z_)**](#exp_minus__z)
         - [**(_a_/_b_)<sup>_z_</sup>**](#a___b___z)
     - [**General Algorithms**](#General_Algorithms)
         - [**Simulating the Probability Generating Function**](#Simulating_the_Probability_Generating_Function)
@@ -228,14 +228,6 @@ This is the general two-coin algorithm of (Gonçalves et al., 2017)<sup>[**(8)**
 1. Create a &nu; input coin that does the following: "With probability 1/2, flip the &lambda; input coin and return the result.  Otherwise, flip the &mu; input coin and return the result."
 2. Call the **2014 algorithm**, the **2016 algorithm**, or the **2019 algorithm**, described later, using the &nu; input coin, _x_/_y_ = 2/1, _i_ = 1 (for the 2019 algorithm), and &epsilon; = &epsilon;, and return the result.
 
-<a id=lambda_minus_mu></a>
-#### &lambda; &minus; &mu;
-
-(Nacu and Peres 2005, proposition 14(iii-iv))<sup>[**(4)**](#Note4)</sup>.  This algorithm takes two input coins that simulate &lambda; or &mu;, respectively, and a parameter &epsilon;, which must be greater than 0 and chosen such that &lambda; &minus; &mu; > 1 &minus; &epsilon;.
-
-1. Create a &nu; input coin that does the following: "With probability 1/2, flip the &lambda; input coin and return **1 minus the result**.  Otherwise, flip the &mu; input coin and return the result."
-2. Call the **2014 algorithm**, the **2016 algorithm**, or the **2019 algorithm**, described later, using the &nu; input coin, _x_/_y_ = 2/1, _i_ = 1 (for the 2019 algorithm), and &epsilon; = &epsilon;, and return the result.
-
 <a id=1__c__lambda></a>
 #### 1/(_c_ + &lambda;)
 
@@ -249,11 +241,6 @@ Works only if _c_ > 0.
 
 (Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup>: Flip the &lambda; input coin and return 0 if the result is 1, or 1 otherwise.
 
-<a id=lambda_mu_2></a>
-#### &lambda; * &mu;
-
-(Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup>: Flip the &lambda; input coin and the &mu; input coin.  Return 1 if both flips return 1, and 0 otherwise.
-
 <a id=nu_lambda_1_minus_nu_mu></a>
 #### &nu; * &lambda; + (1 &minus; &nu;) * &mu;
 
@@ -264,7 +251,7 @@ Works only if _c_ > 0.
 
 (Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup>: Flip the &lambda; input coin and the &mu; input coin.  Return 1 if either flip returns 1, and 0 otherwise.
 
-<a id=lambda_mu_2_2></a>
+<a id=lambda_mu_2></a>
 #### (&lambda; + &mu;) / 2
 
 (Nacu and Peres 2005, proposition 14(iii))<sup>[**(4)**](#Note4)</sup>; (Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup>: With probability 1/2, flip the &lambda; input coin and return the result.  Otherwise, flip the &mu; input coin and return the result.
@@ -343,6 +330,11 @@ The Flajolet paper doesn't explain in detail how arcsin(&lambda;)/2 arises out o
 2. Create a secondary coin &mu; that does the following: "Flip the input coin twice.  If both flips return 1, return 0.  Otherwise, return 1."
 3. Call the **algorithm for &mu;<sup>1/2</sup>** using the secondary coin &mu;.  If it returns 0, return 1; otherwise, return 0.
 
+<a id=lambda_mu_4></a>
+#### &lambda; * &mu;
+
+(Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup>: Flip the &lambda; input coin and the &mu; input coin.  Return 1 if both flips return 1, and 0 otherwise.
+
 <a id=lambda__x___y__linear_Bernoulli_factories></a>
 #### &lambda; * _x_/_y_ (linear Bernoulli factories)
 
@@ -401,6 +393,16 @@ The paper that presented the 2016 algorithm also included a third algorithm, des
     2. Run the **algorithm for (1/&beta;)<sup>_i_</sup>** (described later).  If it returns 0, return 0.
     3. Multiply _c_ by &beta;, then divide &epsilon; by 2.
 7. Run the **logistic Bernoulli factory** with _c_/_d_ = _c_, then set _z_ to the result.  Set _i_ to _i_ + 1 &minus; _z_ * 2, then go to step 5.
+
+<a id=epsilon_lambda></a>
+#### &epsilon; / &lambda;
+
+(Lee et al. 2014)<sup>[**(22)**](#Note22)</sup>  This algorithm, in addition to the input coin, takes a parameter &epsilon;, which must be greater than 0 and be chosen such that &epsilon; is less than &lambda;.
+
+1. If &beta; to max(&epsilon;, 1/2) and set &gamma; to 1 &minus; (1 &minus; &beta;) / (1 &minus; (&beta; / 2)).
+2. Create a &mu; input coin that flips the input coin and returns 1 minus the result.
+3. With probability &epsilon;, return 1.
+4. Run the **2014 algorithm**, **2016 algorithm**, or **2019 algorithm**, with the &mu; input coin, _x_/_y_ = &minus;_y_/(_x_&minus;_y_), _i_ = 1 (for the 2019 algorithm), and &epsilon; = &gamma;. If the result is 0, return 0.  Otherwise, go to step 3.  (Note that running the algorithm this way simulates the probability (&lambda; &minus; &epsilon;)/(1 &minus; &epsilon;) or 1 &minus; (1 &minus; &lambda;)/(1 &minus; &epsilon;)
 
 <a id=Algorithms_for_Irrational_Constants></a>
 ### Algorithms for Irrational Constants
@@ -487,7 +489,7 @@ The algorithm follows.
 8. Add 1 to _i_ and go to step 6.
 
 <a id=exp_minus__x___y></a>
-#### exp(&minus; _x_/_y_)
+#### exp(&minus;_x_/_y_)
 
 This algorithm takes integers _x_ >= 0 and _y_ > 0 and outputs 1 with probability `exp(-x/y)` or 0 otherwise. It originates from (Canonne et al. 2020)<sup>[**(18)**](#Note18)</sup>.
 
@@ -498,7 +500,7 @@ This algorithm takes integers _x_ >= 0 and _y_ > 0 and outputs 1 with probabilit
 5. Set _r_ to 1 &minus; _r_, add 1 to _i_, and go to step 4.
 
 <a id=exp_minus__z></a>
-#### exp(&minus; _z_)
+#### exp(&minus;_z_)
 
 This algorithm is similar to the previous algorithm, except that the exponent, _z_, can be any real number 0 or greater, as long as _z_ can be rewritten as the sum of one or more components whose fractional parts can each be simulated by a Bernoulli factory algorithm that outputs heads with probability equal to that fractional part. (This makes use of the identity exp(&minus;a) = exp(&minus;b) * exp(&minus;c).)
 
@@ -647,6 +649,8 @@ In addition, for each algorithm, a chart appears showing the minimum number of i
 <small><sup id=Note20>(20)</sup> Brassard, G., Devroye, L., Gravel, C., "Remote Sampling with Applications to General Entanglement Simulation", Entropy 2019(21)(92), doi:10.3390/e21010092.</small>
 
 <small><sup id=Note21>(21)</sup> Devroye, L., Gravel, C., "[**Sampling with arbitrary precision**](https://arxiv.org/abs/1502.02539v5)", arXiv:1502.02539v5 [cs.IT], 2015.</small>
+
+<small><sup id=Note22>(22)</sup> Lee, A., Doucet, A. and Łatuszyński, K., 2014. Perfect simulation using atomic regeneration with application to Sequential Monte Carlo, arXiv:1407.5770v1  [stat.CO].</small>
 
 <a id=Appendix></a>
 ## Appendix

@@ -45,13 +45,11 @@
 <li><a href="#c__lambda_beta_beta__c__lambda__d__mu_minus_beta_minus_1__c___d"><strong><em>c</em> * &lambda; * &beta; / (&beta; * (<em>c</em> * &lambda; + <em>d</em> * &mu;) &minus; (&beta; &minus; 1) * (<em>c</em> + <em>d</em>))</strong></a></li>
 <li><a href="#c__lambda__c__lambda__d__or__c___d__lambda_1__c___d__lambda"><strong><em>c</em> * &lambda; / (<em>c</em> * &lambda; + <em>d</em>) or (<em>c</em>/<em>d</em>) * &lambda; / (1 + (<em>c</em>/<em>d</em>) * &lambda;))</strong></a></li>
 <li><a href="#lambda_mu"><strong>&lambda; + &mu;</strong></a></li>
-<li><a href="#lambda_minus_mu"><strong>&lambda; &minus; &mu;</strong></a></li>
 <li><a href="#1__c__lambda"><strong>1/(<em>c</em> + &lambda;)</strong></a></li>
 <li><a href="#1_minus_lambda"><strong>1 &minus; &lambda;</strong></a></li>
-<li><a href="#lambda_mu_2"><strong>&lambda; * &mu;</strong></a></li>
 <li><a href="#nu_lambda_1_minus_nu_mu"><strong>&nu; * &lambda; + (1 &minus; &nu;) * &mu;</strong></a></li>
 <li><a href="#lambda_mu_minus_lambda_mu"><strong>&lambda; + &mu; &minus; (&lambda; * &mu;)</strong></a></li>
-<li><a href="#lambda_mu_2_2"><strong>(&lambda; + &mu;) / 2</strong></a></li>
+<li><a href="#lambda_mu_2"><strong>(&lambda; + &mu;) / 2</strong></a></li>
 <li><a href="#arctan_lambda_lambda"><strong>arctan(&lambda;) /&lambda;</strong></a></li>
 <li><a href="#arctan_lambda"><strong>arctan(&lambda;)</strong></a></li>
 <li><a href="#lambda__x___y"><strong>&lambda;<sup><em>x</em>/<em>y</em></sup></strong></a></li>
@@ -59,8 +57,10 @@
 <li><a href="#sqrt_lambda"><strong>sqrt(&lambda;)</strong></a></li>
 <li><a href="#arcsin_lambda_sqrt_1_minus_lambda_2_minus_1"><strong>arcsin(&lambda;) + sqrt(1 &minus; &lambda;<sup>2</sup>) &minus; 1</strong></a></li>
 <li><a href="#arcsin_lambda_2"><strong>arcsin(&lambda;) / 2</strong></a></li>
+<li><a href="#lambda_mu_4"><strong>&lambda; * &mu;</strong></a></li>
 <li><a href="#lambda__x___y__linear_Bernoulli_factories"><strong>&lambda; * <em>x</em>/<em>y</em> (linear Bernoulli factories)</strong></a></li>
 <li><a href="#lambda__x___y___i"><strong>(&lambda; * <em>x</em>/<em>y</em>)<sup><em>i</em></sup></strong></a></li>
+<li><a href="#epsilon_lambda"><strong>&epsilon; / &lambda;</strong></a></li>
 </ul></li>
 <li><a href="#Algorithms_for_Irrational_Constants"><strong>Algorithms for Irrational Constants</strong></a>
 
@@ -71,8 +71,8 @@
 <li><a href="#pi_4"><strong>&pi; / 4</strong></a></li>
 <li><a href="#1_pi"><strong>1 / &pi;</strong></a></li>
 <li><a href="#a___b___x___y"><strong>(<em>a</em>/<em>b</em>)<sup><em>x</em>/<em>y</em></sup></strong></a></li>
-<li><a href="#exp_minus__x___y"><strong>exp(&minus; <em>x</em>/<em>y</em>)</strong></a></li>
-<li><a href="#exp_minus__z"><strong>exp(&minus; <em>z</em>)</strong></a></li>
+<li><a href="#exp_minus__x___y"><strong>exp(&minus;<em>x</em>/<em>y</em>)</strong></a></li>
+<li><a href="#exp_minus__z"><strong>exp(&minus;<em>z</em>)</strong></a></li>
 <li><a href="#a___b___z"><strong>(<em>a</em>/<em>b</em>)<sup><em>z</em></sup></strong></a></li>
 </ul></li>
 <li><a href="#General_Algorithms"><strong>General Algorithms</strong></a>
@@ -305,17 +305,6 @@
 <li>Call the <strong>2014 algorithm</strong>, the <strong>2016 algorithm</strong>, or the <strong>2019 algorithm</strong>, described later, using the &nu; input coin, <em>x</em>/<em>y</em> = 2/1, <em>i</em> = 1 (for the 2019 algorithm), and &epsilon; = &epsilon;, and return the result.</li>
 </ol>
 
-<p><a id=lambda_minus_mu></a></p>
-
-<h4>&lambda; &minus; &mu;</h4>
-
-<p>(Nacu and Peres 2005, proposition 14(iii-iv))<sup><a href="#Note4"><strong>(4)</strong></a></sup>.  This algorithm takes two input coins that simulate &lambda; or &mu;, respectively, and a parameter &epsilon;, which must be greater than 0 and chosen such that &lambda; &minus; &mu; &gt; 1 &minus; &epsilon;.</p>
-
-<ol>
-<li>Create a &nu; input coin that does the following: &quot;With probability 1/2, flip the &lambda; input coin and return <strong>1 minus the result</strong>.  Otherwise, flip the &mu; input coin and return the result.&quot;</li>
-<li>Call the <strong>2014 algorithm</strong>, the <strong>2016 algorithm</strong>, or the <strong>2019 algorithm</strong>, described later, using the &nu; input coin, <em>x</em>/<em>y</em> = 2/1, <em>i</em> = 1 (for the 2019 algorithm), and &epsilon; = &epsilon;, and return the result.</li>
-</ol>
-
 <p><a id=1__c__lambda></a></p>
 
 <h4>1/(<em>c</em> + &lambda;)</h4>
@@ -333,12 +322,6 @@
 
 <p>(Flajolet et al., 2010)<sup><a href="#Note1"><strong>(1)</strong></a></sup>: Flip the &lambda; input coin and return 0 if the result is 1, or 1 otherwise.</p>
 
-<p><a id=lambda_mu_2></a></p>
-
-<h4>&lambda; * &mu;</h4>
-
-<p>(Flajolet et al., 2010)<sup><a href="#Note1"><strong>(1)</strong></a></sup>: Flip the &lambda; input coin and the &mu; input coin.  Return 1 if both flips return 1, and 0 otherwise.</p>
-
 <p><a id=nu_lambda_1_minus_nu_mu></a></p>
 
 <h4>&nu; * &lambda; + (1 &minus; &nu;) * &mu;</h4>
@@ -351,7 +334,7 @@
 
 <p>(Flajolet et al., 2010)<sup><a href="#Note1"><strong>(1)</strong></a></sup>: Flip the &lambda; input coin and the &mu; input coin.  Return 1 if either flip returns 1, and 0 otherwise.</p>
 
-<p><a id=lambda_mu_2_2></a></p>
+<p><a id=lambda_mu_2></a></p>
 
 <h4>(&lambda; + &mu;) / 2</h4>
 
@@ -455,6 +438,12 @@
 <li>Call the <strong>algorithm for &mu;<sup>1/2</sup></strong> using the secondary coin &mu;.  If it returns 0, return 1; otherwise, return 0.</li>
 </ol>
 
+<p><a id=lambda_mu_4></a></p>
+
+<h4>&lambda; * &mu;</h4>
+
+<p>(Flajolet et al., 2010)<sup><a href="#Note1"><strong>(1)</strong></a></sup>: Flip the &lambda; input coin and the &mu; input coin.  Return 1 if both flips return 1, and 0 otherwise.</p>
+
 <p><a id=lambda__x___y__linear_Bernoulli_factories></a></p>
 
 <h4>&lambda; * <em>x</em>/<em>y</em> (linear Bernoulli factories)</h4>
@@ -534,6 +523,19 @@
 <li>Multiply <em>c</em> by &beta;, then divide &epsilon; by 2.</li>
 </ol></li>
 <li>Run the <strong>logistic Bernoulli factory</strong> with <em>c</em>/<em>d</em> = <em>c</em>, then set <em>z</em> to the result.  Set <em>i</em> to <em>i</em> + 1 &minus; <em>z</em> * 2, then go to step 5.</li>
+</ol>
+
+<p><a id=epsilon_lambda></a></p>
+
+<h4>&epsilon; / &lambda;</h4>
+
+<p>(Lee et al. 2014)<sup><a href="#Note22"><strong>(22)</strong></a></sup>  This algorithm, in addition to the input coin, takes a parameter &epsilon;, which must be greater than 0 and be chosen such that &epsilon; is less than &lambda;.</p>
+
+<ol>
+<li>If &beta; to max(&epsilon;, 1/2) and set &gamma; to 1 &minus; (1 &minus; &beta;) / (1 &minus; (&beta; / 2)).</li>
+<li>Create a &mu; input coin that flips the input coin and returns 1 minus the result.</li>
+<li>With probability &epsilon;, return 1.</li>
+<li>Run the <strong>2014 algorithm</strong>, <strong>2016 algorithm</strong>, or <strong>2019 algorithm</strong>, with the &mu; input coin, <em>x</em>/<em>y</em> = &minus;<em>y</em>/(<em>x</em>&minus;<em>y</em>), <em>i</em> = 1 (for the 2019 algorithm), and &epsilon; = &gamma;. If the result is 0, return 0.  Otherwise, go to step 3.  (Note that running the algorithm this way simulates the probability (&lambda; &minus; &epsilon;)/(1 &minus; &epsilon;) or 1 &minus; (1 &minus; &lambda;)/(1 &minus; &epsilon;)</li>
 </ol>
 
 <p><a id=Algorithms_for_Irrational_Constants></a></p>
@@ -648,7 +650,7 @@
 
 <p><a id=exp_minus__x___y></a></p>
 
-<h4>exp(&minus; <em>x</em>/<em>y</em>)</h4>
+<h4>exp(&minus;<em>x</em>/<em>y</em>)</h4>
 
 <p>This algorithm takes integers <em>x</em> &gt;= 0 and <em>y</em> &gt; 0 and outputs 1 with probability <code>exp(-x/y)</code> or 0 otherwise. It originates from (Canonne et al. 2020)<sup><a href="#Note18"><strong>(18)</strong></a></sup>.</p>
 
@@ -662,7 +664,7 @@
 
 <p><a id=exp_minus__z></a></p>
 
-<h4>exp(&minus; <em>z</em>)</h4>
+<h4>exp(&minus;<em>z</em>)</h4>
 
 <p>This algorithm is similar to the previous algorithm, except that the exponent, <em>z</em>, can be any real number 0 or greater, as long as <em>z</em> can be rewritten as the sum of one or more components whose fractional parts can each be simulated by a Bernoulli factory algorithm that outputs heads with probability equal to that fractional part. (This makes use of the identity exp(&minus;a) = exp(&minus;b) * exp(&minus;c).)</p>
 
@@ -1020,6 +1022,8 @@
 <p><small><sup id=Note20>(20)</sup> Brassard, G., Devroye, L., Gravel, C., &quot;Remote Sampling with Applications to General Entanglement Simulation&quot;, Entropy 2019(21)(92), doi:10.3390/e21010092.</small></p>
 
 <p><small><sup id=Note21>(21)</sup> Devroye, L., Gravel, C., &quot;<a href="https://arxiv.org/abs/1502.02539v5"><strong>Sampling with arbitrary precision</strong></a>&quot;, arXiv:1502.02539v5 [cs.IT], 2015.</small></p>
+
+<p><small><sup id=Note22>(22)</sup> Lee, A., Doucet, A. and Łatuszyński, K., 2014. Perfect simulation using atomic regeneration with application to Sequential Monte Carlo, arXiv:1407.5770v1  [stat.CO].</small></p>
 
 <p><a id=Appendix></a></p>
 
