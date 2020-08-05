@@ -45,6 +45,7 @@
 <li><a href="#c__lambda_beta_beta__c__lambda__d__mu_minus_beta_minus_1__c___d"><strong><em>c</em> * &lambda; * &beta; / (&beta; * (<em>c</em> * &lambda; + <em>d</em> * &mu;) &minus; (&beta; &minus; 1) * (<em>c</em> + <em>d</em>))</strong></a></li>
 <li><a href="#c__lambda__c__lambda__d__or__c___d__lambda_1__c___d__lambda"><strong><em>c</em> * &lambda; / (<em>c</em> * &lambda; + <em>d</em>) or (<em>c</em>/<em>d</em>) * &lambda; / (1 + (<em>c</em>/<em>d</em>) * &lambda;))</strong></a></li>
 <li><a href="#lambda_mu"><strong>&lambda; + &mu;</strong></a></li>
+<li><a href="#lambda_minus_mu"><strong>&lambda; &minus; &mu;</strong></a></li>
 <li><a href="#1__c__lambda"><strong>1/(<em>c</em> + &lambda;)</strong></a></li>
 <li><a href="#1_minus_lambda"><strong>1 &minus; &lambda;</strong></a></li>
 <li><a href="#nu_lambda_1_minus_nu_mu"><strong>&nu; * &lambda; + (1 &minus; &nu;) * &mu;</strong></a></li>
@@ -303,6 +304,17 @@
 <ol>
 <li>Create a &nu; input coin that does the following: &quot;With probability 1/2, flip the &lambda; input coin and return the result.  Otherwise, flip the &mu; input coin and return the result.&quot;</li>
 <li>Call the <strong>2014 algorithm</strong>, the <strong>2016 algorithm</strong>, or the <strong>2019 algorithm</strong>, described later, using the &nu; input coin, <em>x</em>/<em>y</em> = 2/1, <em>i</em> = 1 (for the 2019 algorithm), and &epsilon; = &epsilon;, and return the result.</li>
+</ol>
+
+<p><a id=lambda_minus_mu></a></p>
+
+<h4>&lambda; &minus; &mu;</h4>
+
+<p>(Nacu and Peres 2005, proposition 14(iii-iv))<sup><a href="#Note4"><strong>(4)</strong></a></sup>.  This algorithm takes two input coins that simulate &lambda; or &mu;, respectively, and a parameter &epsilon;, which must be greater than 0 and chosen such that &lambda; &minus; &mu; &gt; &epsilon; (and should be chosen such that &epsilon; is slightly less than &lambda; &minus; &mu;).</p>
+
+<ol>
+<li>Create a &nu; input coin that does the following: &quot;With probability 1/2, flip the &lambda; input coin and return <strong>1 minus the result</strong>.  Otherwise, flip the &mu; input coin and return the result.&quot;</li>
+<li>Call the <strong>2014 algorithm</strong>, the <strong>2016 algorithm</strong>, or the <strong>2019 algorithm</strong>, described later, using the &nu; input coin, <em>x</em>/<em>y</em> = 2/1, <em>i</em> = 1 (for the 2019 algorithm), and &epsilon; = &epsilon;, and return 1 minus the result.</li>
 </ol>
 
 <p><a id=1__c__lambda></a></p>
@@ -866,6 +878,30 @@
 <td><img src="bernoullicharts/2014_lin_x_8_0_mean.svg" alt="**Simulated Mean for 2014 Lin. x\*8.0**"></td>
 <td><img src="bernoullicharts/2014_lin_x_8_0_bits.svg" alt="**Expected Bits Consumed by 2014 Lin. x\*8.0**"></td>
 <td><img src="bernoullicharts/2014_lin_x_8_0_bound.svg" alt="**Coin Flips for the Function**"></td>
+</tr>
+<tr>
+<td>2014 Sub. x-0.1</td>
+<td><img src="bernoullicharts/2014_sub_x-0_1_mean.svg" alt="**Simulated Mean for 2014 Sub. x-0.1**"></td>
+<td><img src="bernoullicharts/2014_sub_x-0_1_bits.svg" alt="**Expected Bits Consumed by 2014 Sub. x-0.1**"></td>
+<td><img src="bernoullicharts/2014_sub_x-0_1_bound.svg" alt="**Coin Flips for the Function**"></td>
+</tr>
+<tr>
+<td>2014 Sub. x-0.2</td>
+<td><img src="bernoullicharts/2014_sub_x-0_2_mean.svg" alt="**Simulated Mean for 2014 Sub. x-0.2**"></td>
+<td><img src="bernoullicharts/2014_sub_x-0_2_bits.svg" alt="**Expected Bits Consumed by 2014 Sub. x-0.2**"></td>
+<td><img src="bernoullicharts/2014_sub_x-0_2_bound.svg" alt="**Coin Flips for the Function**"></td>
+</tr>
+<tr>
+<td>2014 Sub. x-0.3</td>
+<td><img src="bernoullicharts/2014_sub_x-0_3_mean.svg" alt="**Simulated Mean for 2014 Sub. x-0.3**"></td>
+<td><img src="bernoullicharts/2014_sub_x-0_3_bits.svg" alt="**Expected Bits Consumed by 2014 Sub. x-0.3**"></td>
+<td><img src="bernoullicharts/2014_sub_x-0_3_bound.svg" alt="**Coin Flips for the Function**"></td>
+</tr>
+<tr>
+<td>2014 Sub. x-0.5</td>
+<td><img src="bernoullicharts/2014_sub_x-0_5_mean.svg" alt="**Simulated Mean for 2014 Sub. x-0.5**"></td>
+<td><img src="bernoullicharts/2014_sub_x-0_5_bits.svg" alt="**Expected Bits Consumed by 2014 Sub. x-0.5**"></td>
+<td><img src="bernoullicharts/2014_sub_x-0_5_bound.svg" alt="**Coin Flips for the Function**"></td>
 </tr>
 <tr>
 <td>arcsin(x)+sqrt(1-x*x)-1</td>

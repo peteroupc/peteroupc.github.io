@@ -30,6 +30,7 @@ This page catalogs algorithms to turn coins biased one way into coins biased ano
         - [**_c_ * &lambda; * &beta; / (&beta; * (_c_ * &lambda; + _d_ * &mu;) &minus; (&beta; &minus; 1) * (_c_ + _d_))**](#c__lambda_beta_beta__c__lambda__d__mu_minus_beta_minus_1__c___d)
         - [**_c_ * &lambda; / (_c_ * &lambda; + _d_) or (_c_/_d_) * &lambda; / (1 + (_c_/_d_) * &lambda;))**](#c__lambda__c__lambda__d__or__c___d__lambda_1__c___d__lambda)
         - [**&lambda; + &mu;**](#lambda_mu)
+        - [**&lambda; &minus; &mu;**](#lambda_minus_mu)
         - [**1/(_c_ + &lambda;)**](#1__c__lambda)
         - [**1 &minus; &lambda;**](#1_minus_lambda)
         - [**&nu; * &lambda; + (1 &minus; &nu;) * &mu;**](#nu_lambda_1_minus_nu_mu)
@@ -227,6 +228,14 @@ This is the general two-coin algorithm of (Gonçalves et al., 2017)<sup>[**(8)**
 
 1. Create a &nu; input coin that does the following: "With probability 1/2, flip the &lambda; input coin and return the result.  Otherwise, flip the &mu; input coin and return the result."
 2. Call the **2014 algorithm**, the **2016 algorithm**, or the **2019 algorithm**, described later, using the &nu; input coin, _x_/_y_ = 2/1, _i_ = 1 (for the 2019 algorithm), and &epsilon; = &epsilon;, and return the result.
+
+<a id=lambda_minus_mu></a>
+#### &lambda; &minus; &mu;
+
+(Nacu and Peres 2005, proposition 14(iii-iv))<sup>[**(4)**](#Note4)</sup>.  This algorithm takes two input coins that simulate &lambda; or &mu;, respectively, and a parameter &epsilon;, which must be greater than 0 and chosen such that &lambda; &minus; &mu; > &epsilon; (and should be chosen such that &epsilon; is slightly less than &lambda; &minus; &mu;).
+
+1. Create a &nu; input coin that does the following: "With probability 1/2, flip the &lambda; input coin and return **1 minus the result**.  Otherwise, flip the &mu; input coin and return the result."
+2. Call the **2014 algorithm**, the **2016 algorithm**, or the **2019 algorithm**, described later, using the &nu; input coin, _x_/_y_ = 2/1, _i_ = 1 (for the 2019 algorithm), and &epsilon; = &epsilon;, and return 1 minus the result.
 
 <a id=1__c__lambda></a>
 #### 1/(_c_ + &lambda;)
@@ -586,6 +595,10 @@ In addition, for each algorithm, a chart appears showing the minimum number of i
 | 2014 Lin. x\*4.0 | ![**Simulated Mean for 2014 Lin. x\*4.0**](bernoullicharts/2014_lin_x_4_0_mean.svg) | ![**Expected Bits Consumed by 2014 Lin. x\*4.0**](bernoullicharts/2014_lin_x_4_0_bits.svg) | ![**Coin Flips for the Function**](bernoullicharts/2014_lin_x_4_0_bound.svg) |
 | 2014 Lin. x\*6.0 | ![**Simulated Mean for 2014 Lin. x\*6.0**](bernoullicharts/2014_lin_x_6_0_mean.svg) | ![**Expected Bits Consumed by 2014 Lin. x\*6.0**](bernoullicharts/2014_lin_x_6_0_bits.svg) | ![**Coin Flips for the Function**](bernoullicharts/2014_lin_x_6_0_bound.svg) |
 | 2014 Lin. x\*8.0 | ![**Simulated Mean for 2014 Lin. x\*8.0**](bernoullicharts/2014_lin_x_8_0_mean.svg) | ![**Expected Bits Consumed by 2014 Lin. x\*8.0**](bernoullicharts/2014_lin_x_8_0_bits.svg) | ![**Coin Flips for the Function**](bernoullicharts/2014_lin_x_8_0_bound.svg) |
+| 2014 Sub. x-0.1 | ![**Simulated Mean for 2014 Sub. x-0.1**](bernoullicharts/2014_sub_x-0_1_mean.svg) | ![**Expected Bits Consumed by 2014 Sub. x-0.1**](bernoullicharts/2014_sub_x-0_1_bits.svg) | ![**Coin Flips for the Function**](bernoullicharts/2014_sub_x-0_1_bound.svg) |
+| 2014 Sub. x-0.2 | ![**Simulated Mean for 2014 Sub. x-0.2**](bernoullicharts/2014_sub_x-0_2_mean.svg) | ![**Expected Bits Consumed by 2014 Sub. x-0.2**](bernoullicharts/2014_sub_x-0_2_bits.svg) | ![**Coin Flips for the Function**](bernoullicharts/2014_sub_x-0_2_bound.svg) |
+| 2014 Sub. x-0.3 | ![**Simulated Mean for 2014 Sub. x-0.3**](bernoullicharts/2014_sub_x-0_3_mean.svg) | ![**Expected Bits Consumed by 2014 Sub. x-0.3**](bernoullicharts/2014_sub_x-0_3_bits.svg) | ![**Coin Flips for the Function**](bernoullicharts/2014_sub_x-0_3_bound.svg) |
+| 2014 Sub. x-0.5 | ![**Simulated Mean for 2014 Sub. x-0.5**](bernoullicharts/2014_sub_x-0_5_mean.svg) | ![**Expected Bits Consumed by 2014 Sub. x-0.5**](bernoullicharts/2014_sub_x-0_5_bits.svg) | ![**Coin Flips for the Function**](bernoullicharts/2014_sub_x-0_5_bound.svg) |
 | arcsin(x)+sqrt(1-x\*x)-1 | ![**Simulated Mean for arcsin(x)+sqrt(1-x\*x)-1**](bernoullicharts/arcsin_x_sqrt_1-x_x_-1_mean.svg) | ![**Expected Bits Consumed by arcsin(x)+sqrt(1-x\*x)-1**](bernoullicharts/arcsin_x_sqrt_1-x_x_-1_bits.svg) | ![**Coin Flips for the Function**](bernoullicharts/arcsin_x_sqrt_1-x_x_-1_bound.svg) |
 | arcsin(x)/2 | ![**Simulated Mean for arcsin(x)/2**](bernoullicharts/arcsin_x_2_mean.svg) | ![**Expected Bits Consumed by arcsin(x)/2**](bernoullicharts/arcsin_x_2_bits.svg) | ![**Coin Flips for the Function**](bernoullicharts/arcsin_x_2_bound.svg) |
 | arctan(x) (Flajolet) | ![**Simulated Mean for arctan(x) (Flajolet)**](bernoullicharts/arctan_x_flajolet__mean.svg) | ![**Expected Bits Consumed by arctan(x) (Flajolet)**](bernoullicharts/arctan_x_flajolet__bits.svg) | ![**Coin Flips for the Function**](bernoullicharts/arctan_x_flajolet__bound.svg) |
