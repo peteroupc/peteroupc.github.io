@@ -58,7 +58,7 @@ class Bernoulli:
         s = 1
         # if self.totalbits!=0: print([m, self.totalbits, float(c), self._coinprob])
         while s > 0 and s < m:
-            if False:  # self.totalbits >= 5000:
+            if False:  # if self.totalbits >= 5000:
                 return math.nan
             lo = self.logistic(f, c.numerator, c.denominator)
             s = s - lo * 2 + 1
@@ -69,7 +69,7 @@ class Bernoulli:
         s = 1
         bc = beta * c
         while s > 0 and s <= m:
-            if False:  # self.totalbits >= 5000:
+            if False:  # if self.totalbits >= 5000:
                 return math.nan
             s = s + self.logistic(f, bc.numerator, bc.denominator) * 2 - 1
         return 1 if s == m + 1 else 0
@@ -156,39 +156,6 @@ class Bernoulli:
             if aa > bb:
                 return False
             index += 1
-
-    def _gamma_g(self, f):
-        """ Gamma-G generator (Flajolet et al. 2010).  Returns the number of successes
-             before failure. """
-        i = 0
-        while True:
-            if f() == 0:
-                return i
-            i += 1
-
-    def exp_minus_flajolet(b, f):
-        """
-        Exp-minus Bernoulli factory: B(p) -> B(exp(-p)) (Flajolet et al. 2010).
-        - f: Function that returns 1 if heads and 0 if tails.
-        """
-        while True:
-            n = self._gamma_g(f)
-            if n == 0:
-                return 1
-            if n == 1:
-                return 0
-            u = self._urandnew()
-            success = True
-            i = 1
-            while i < n and success:
-                u2 = self._urandnew()
-                if self._urandless(u, u2):
-                    u = u2
-                else:
-                    success = False  # Not sorted
-                i = i + 1
-            if success:
-                return 0
 
     def fill_geometric_bag(self, bag, precision=53):
         ret = 0
@@ -600,7 +567,7 @@ class Bernoulli:
         # and 1 otherwise.  Returns 1 if nx/ny is 0.  Reference: Mendo 2019.
         i = 1
         while True:
-            if False:  # self.totalbits >= 5000:
+            if False:  # if self.totalbits >= 5000:
                 return math.nan
             x = self.zero_or_one(px, py)
             if x == 1:
@@ -620,7 +587,7 @@ class Bernoulli:
         ny = n.denominator
         px = p.numerator
         py = p.denominator
-        if False:  # self.totalbits >= 5000:
+        if False:  # if self.totalbits >= 5000:
             return math.nan
         if n < 0:  # (px/py)^(nx/ny) -> (py/px)^-(nx/ny)
             n = -n
@@ -660,7 +627,7 @@ class Bernoulli:
                         return 0
                     xf -= quo * n1
                 for i in range(xf):
-                    if False:  # self.totalbits >= 5000:
+                    if False:  # if self.totalbits >= 5000:
                         return math.nan
                     if self.zero_or_one(px, py) == 0:
                         return 0
@@ -752,14 +719,14 @@ class Bernoulli:
             cd = ce.denominator
             while True:
                 # print([i,self.totalbits,float(self._coinprob),"k",float(k)])
-                if False:  # self.totalbits >= 5000:
+                if False:  # if self.totalbits >= 5000:
                     return math.nan
                 i -= 1
                 if f() == 0:
                     # Number of failures before first success, plus 1
                     i += 1
                     while self.zero_or_one(cn, cd) == 0:
-                        if False:  # self.totalbits >= 5000:
+                        if False:  # if self.totalbits >= 5000:
                             return math.nan
                         i += 1
                 if i == 0:
@@ -770,7 +737,7 @@ class Bernoulli:
                 ce = 1 + gamma * eps
                 if ce < 1:
                     raise ValueError
-                if False:  # self.totalbits >= 5000:
+                if False:  # if self.totalbits >= 5000:
                     return math.nan
                 # print(float(ce),float(ce**-i),float((1/ce)**i))
                 if self.zero_or_one_power(ce.denominator, ce.numerator, i) == 0:
@@ -814,29 +781,29 @@ class Bernoulli:
         m += Fraction(m.denominator - m.numerator % m.denominator, m.denominator)
         m = int(m)
         beta = 1 + Fraction(1) / (m - 1)
-        if False:  # self.totalbits >= 5000:
+        if False:  # if self.totalbits >= 5000:
             return math.nan
         if self._algorithm_a(f, m, beta * c) == 0:
-            if False:  # self.totalbits >= 5000:
+            if False:  # if self.totalbits >= 5000:
                 return math.nan
             return 0
         if self.zero_or_one(beta.denominator, beta.numerator) == 1:
-            if False:  # self.totalbits >= 5000:
+            if False:  # if self.totalbits >= 5000:
                 return math.nan
             return 1  # Bern(1/beta)
         while True:
-            if False:  # self.totalbits >= 5000:
+            if False:  # if self.totalbits >= 5000:
                 return math.nan
             bc = beta * c
             if (
                 self.linear(f, bc.numerator, bc.denominator, eps=1 - beta * (1 - eps))
                 == 0
             ):
-                if False:  # self.totalbits >= 5000:
+                if False:  # if self.totalbits >= 5000:
                     return math.nan
                 return 0
             if self._high_power_logistic(f, m - 2, beta, c) == 1:
-                if False:  # self.totalbits >= 5000:
+                if False:  # if self.totalbits >= 5000:
                     return math.nan
                 return 1
             m -= 1
@@ -979,17 +946,17 @@ class Bernoulli:
             return self.power(fv, i)
         thresh = Fraction(355, 100)
         while True:
-            if False:  # self.totalbits >= 5000:
+            if False:  # if self.totalbits >= 5000:
                 return math.nan
             if i == 0:
                 return 1
             while i > thresh / eps:
-                if False:  # self.totalbits >= 5000:
+                if False:  # if self.totalbits >= 5000:
                     return math.nan
                 halfeps = eps / 2
                 beta = (1 - halfeps) / (1 - eps)
                 if self.zero_or_one_power(beta.denominator, beta.numerator, i) == 0:
-                    if False:  # self.totalbits >= 5000:
+                    if False:  # if self.totalbits >= 5000:
                         return math.nan
                     return 0
                 c *= beta

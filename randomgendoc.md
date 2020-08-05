@@ -1713,10 +1713,6 @@ CLASSES
      |      - f: Function that returns 1 if heads and 0 if tails.
      |      - c: Integer part of exp-minus.  Default is 0.
      |
-     |  exp_minus_flajolet(b, f)
-     |      Exp-minus Bernoulli factory: B(p) -> B(exp(-p)) (Flajolet et al. 2010).
-     |      - f: Function that returns 1 if heads and 0 if tails.
-     |
      |  fill_geometric_bag(self, bag, precision=53)
      |
      |  geometric_bag(self, u)

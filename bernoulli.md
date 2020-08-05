@@ -21,7 +21,7 @@ This page catalogs algorithms to turn coins biased one way into coins biased ano
 - [**About Bernoulli Factories**](#About_Bernoulli_Factories)
 - [**Algorithms**](#Algorithms)
     - [**Algorithms for Functions of &lambda;**](#Algorithms_for_Functions_of_lambda)
-        - [**Algorithms for exp(&minus;&lambda;)**](#Algorithms_for_exp_minus_lambda)
+        - [**exp(&minus;&lambda;)**](#exp_minus_lambda)
         - [**exp(&lambda;)*(1&minus;&lambda;)**](#exp_lambda_1_minus_lambda)
         - [**exp(&minus;&lambda; &minus; _c_)**](#exp_minus_lambda_minus__c)
         - [**1/(1+&lambda;)**](#1_1_lambda)
@@ -104,8 +104,8 @@ In the following algorithms:
 
 &nbsp;
 
-<a id=Algorithms_for_exp_minus_lambda></a>
-#### Algorithms for exp(&minus;&lambda;)
+<a id=exp_minus_lambda></a>
+#### exp(&minus;&lambda;)
 
 The algorithm in (Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup> calls for generating a Poisson(&lambda;) random number and returning 1 if that number is 0, or 0 otherwise.  The Poisson generator in turn involves generating a geometric(&lambda;) random number _G_<sup>[**(5)**](#Note5)</sup>, then _G_ uniform random numbers, then returning _G_ only if all _G_ uniform numbers are sorted.<sup>[**(6)**](#Note6)</sup>  The algorithm follows.
 
@@ -237,7 +237,7 @@ This is the general two-coin algorithm of (Gonçalves et al., 2017)<sup>[**(8)**
 2. Call the **2014 algorithm**, the **2016 algorithm**, or the **2019 algorithm**, described later, using the &nu; input coin, _x_/_y_ = 2/1, _i_ = 1 (for the 2019 algorithm), and &epsilon; = &epsilon;, and return the result.
 
 <a id=1__c__lambda></a>
-#### 1/(_c_ + &lambda;)**
+#### 1/(_c_ + &lambda;)
 
 Works only if _c_ > 0.
 
@@ -559,7 +559,7 @@ The following charts show the correctness of many of the algorithms on this page
 
 For each algorithm, if a single run was detected to use more than 5000 bits for a given &lambda;, the entire data point for that &lambda; was suppressed in the charts below.
 
-In addition, for each algorithm, a chart appears showing the minimum number of input coin flips that any fast Bernoulli factory algorithm will need on average to simulate the given function, based on work by Mendo (2019)<sup>[**(13)**](#Note13)</sup>.  Note that some functions require a growing number of coin flips as &lambda; approaches 0 or 1.
+In addition, for each algorithm, a chart appears showing the minimum number of input coin flips that any fast Bernoulli factory algorithm will need on average to simulate the given function, based on work by Mendo (2019)<sup>[**(13)**](#Note13)</sup>.  Note that some functions require a growing number of coin flips as &lambda; approaches 0 or 1.  Note that for the 2014, 2016, and 2019 algorithms, an &epsilon; of 1 &minus; _x_ * _c_ * 1.001 was used (or 0.0001 if &epsilon; would be greater than 1).  Points with invalid &epsilon; values were suppressed.  For the low-mean algorithm, an _m_ of max(0.49999, _x_*_c_*1.02) was used unless noted otherwise.
 
 <a id=The_Charts></a>
 ### The Charts
@@ -574,6 +574,16 @@ In addition, for each algorithm, a chart appears showing the minimum number of i
 | 1/(1+x) (Two-Coin Special Case) | ![**Simulated Mean for 1/(1+x) (Two-Coin Special Case)**](bernoullicharts/1_1_x_two-coin_special_case__mean.svg) | ![**Expected Bits Consumed by 1/(1+x) (Two-Coin Special Case)**](bernoullicharts/1_1_x_two-coin_special_case__bits.svg) | ![**Coin Flips for the Function**](bernoullicharts/1_1_x_two-coin_special_case__bound.svg) |
 | 1/(3+x) | ![**Simulated Mean for 1/(3+x)**](bernoullicharts/1_3_x__mean.svg) | ![**Expected Bits Consumed by 1/(3+x)**](bernoullicharts/1_3_x__bits.svg) | ![**Coin Flips for the Function**](bernoullicharts/1_3_x__bound.svg) |
 | 1/(5+x) | ![**Simulated Mean for 1/(5+x)**](bernoullicharts/1_5_x__mean.svg) | ![**Expected Bits Consumed by 1/(5+x)**](bernoullicharts/1_5_x__bits.svg) | ![**Coin Flips for the Function**](bernoullicharts/1_5_x__bound.svg) |
+| 2014 Add. x+0.1 | ![**Simulated Mean for 2014 Add. x+0.1**](bernoullicharts/2014_add_x_0_1_mean.svg) | ![**Expected Bits Consumed by 2014 Add. x+0.1**](bernoullicharts/2014_add_x_0_1_bits.svg) | ![**Coin Flips for the Function**](bernoullicharts/2014_add_x_0_1_bound.svg) |
+| 2014 Add. x+0.2 | ![**Simulated Mean for 2014 Add. x+0.2**](bernoullicharts/2014_add_x_0_2_mean.svg) | ![**Expected Bits Consumed by 2014 Add. x+0.2**](bernoullicharts/2014_add_x_0_2_bits.svg) | ![**Coin Flips for the Function**](bernoullicharts/2014_add_x_0_2_bound.svg) |
+| 2014 Add. x+0.3 | ![**Simulated Mean for 2014 Add. x+0.3**](bernoullicharts/2014_add_x_0_3_mean.svg) | ![**Expected Bits Consumed by 2014 Add. x+0.3**](bernoullicharts/2014_add_x_0_3_bits.svg) | ![**Coin Flips for the Function**](bernoullicharts/2014_add_x_0_3_bound.svg) |
+| 2014 Add. x+0.5 | ![**Simulated Mean for 2014 Add. x+0.5**](bernoullicharts/2014_add_x_0_5_mean.svg) | ![**Expected Bits Consumed by 2014 Add. x+0.5**](bernoullicharts/2014_add_x_0_5_bits.svg) | ![**Coin Flips for the Function**](bernoullicharts/2014_add_x_0_5_bound.svg) |
+| 2014 Lin. x\*1.3 | ![**Simulated Mean for 2014 Lin. x\*1.3**](bernoullicharts/2014_lin_x_1_3_mean.svg) | ![**Expected Bits Consumed by 2014 Lin. x\*1.3**](bernoullicharts/2014_lin_x_1_3_bits.svg) | ![**Coin Flips for the Function**](bernoullicharts/2014_lin_x_1_3_bound.svg) |
+| 2014 Lin. x\*1.5 | ![**Simulated Mean for 2014 Lin. x\*1.5**](bernoullicharts/2014_lin_x_1_5_mean.svg) | ![**Expected Bits Consumed by 2014 Lin. x\*1.5**](bernoullicharts/2014_lin_x_1_5_bits.svg) | ![**Coin Flips for the Function**](bernoullicharts/2014_lin_x_1_5_bound.svg) |
+| 2014 Lin. x\*2.0 | ![**Simulated Mean for 2014 Lin. x\*2.0**](bernoullicharts/2014_lin_x_2_0_mean.svg) | ![**Expected Bits Consumed by 2014 Lin. x\*2.0**](bernoullicharts/2014_lin_x_2_0_bits.svg) | ![**Coin Flips for the Function**](bernoullicharts/2014_lin_x_2_0_bound.svg) |
+| 2014 Lin. x\*4.0 | ![**Simulated Mean for 2014 Lin. x\*4.0**](bernoullicharts/2014_lin_x_4_0_mean.svg) | ![**Expected Bits Consumed by 2014 Lin. x\*4.0**](bernoullicharts/2014_lin_x_4_0_bits.svg) | ![**Coin Flips for the Function**](bernoullicharts/2014_lin_x_4_0_bound.svg) |
+| 2014 Lin. x\*6.0 | ![**Simulated Mean for 2014 Lin. x\*6.0**](bernoullicharts/2014_lin_x_6_0_mean.svg) | ![**Expected Bits Consumed by 2014 Lin. x\*6.0**](bernoullicharts/2014_lin_x_6_0_bits.svg) | ![**Coin Flips for the Function**](bernoullicharts/2014_lin_x_6_0_bound.svg) |
+| 2014 Lin. x\*8.0 | ![**Simulated Mean for 2014 Lin. x\*8.0**](bernoullicharts/2014_lin_x_8_0_mean.svg) | ![**Expected Bits Consumed by 2014 Lin. x\*8.0**](bernoullicharts/2014_lin_x_8_0_bits.svg) | ![**Coin Flips for the Function**](bernoullicharts/2014_lin_x_8_0_bound.svg) |
 | arcsin(x)+sqrt(1-x\*x)-1 | ![**Simulated Mean for arcsin(x)+sqrt(1-x\*x)-1**](bernoullicharts/arcsin_x_sqrt_1-x_x_-1_mean.svg) | ![**Expected Bits Consumed by arcsin(x)+sqrt(1-x\*x)-1**](bernoullicharts/arcsin_x_sqrt_1-x_x_-1_bits.svg) | ![**Coin Flips for the Function**](bernoullicharts/arcsin_x_sqrt_1-x_x_-1_bound.svg) |
 | arcsin(x)/2 | ![**Simulated Mean for arcsin(x)/2**](bernoullicharts/arcsin_x_2_mean.svg) | ![**Expected Bits Consumed by arcsin(x)/2**](bernoullicharts/arcsin_x_2_bits.svg) | ![**Coin Flips for the Function**](bernoullicharts/arcsin_x_2_bound.svg) |
 | arctan(x) (Flajolet) | ![**Simulated Mean for arctan(x) (Flajolet)**](bernoullicharts/arctan_x_flajolet__mean.svg) | ![**Expected Bits Consumed by arctan(x) (Flajolet)**](bernoullicharts/arctan_x_flajolet__bits.svg) | ![**Coin Flips for the Function**](bernoullicharts/arctan_x_flajolet__bound.svg) |
