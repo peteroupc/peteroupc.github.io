@@ -1,4 +1,4 @@
-# Random Number Generation and Sampling Methods
+# Randomization and Sampling Methods
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
@@ -16,21 +16,22 @@ This page is focused on sampling methods that _exactly_ sample from the distribu
 
 [**Sample Python code**](https://peteroupc.github.io/randomgen.zip) that implements many of the methods in this document is available, together with [**documentation for the code**](https://peteroupc.github.io/randomgendoc.html).
 
-**In general, this document does not cover:**
+**In general, the following are outside the scope of this document:**
 
-- How to choose an underlying RNG (or pseudorandom number generator) for a particular application, including in terms of security, performance, and quality.  I have written more on RNG recommendations in [**another document**](https://peteroupc.github.io/random.html).
-- How to test RNGs for correctness or adequate random number generation.  This is covered, for example, in "[**Testing PRNGs for High-Quality Randomness**](https://github.com/peteroupc/peteroupc.github.io/blob/master/randomtest.md)".
-- How to specify or generate "seeds" for certain pseudorandom number generators.  This is "[**covered in detail**](https://peteroupc.github.io/random.html#Nondeterministic_Sources_and_Seed_Generation) elsewhere.
-- How to generate random security parameters such as encryption keys.
-- Randomness extraction (also known as _unbiasing_, _deskewing_, or _whitening_), such as [**hash functions**](https://peteroupc.github.io/random.html#Hash_Functions) and von Neumann unbiasing.
-- Variance reduction techniques such as importance sampling or common random numbers.
+- This document does not cover how to choose an underlying RNG (or pseudorandom number generator) for a particular application, including in terms of security, performance, and quality.  I have written more on RNG recommendations in [**another document**](https://peteroupc.github.io/random.html).
+- This document does not include algorithms for specific pseudorandom number generators, such as Mersenne Twister, PCG, xorshift, linear congruential generators, or generators based on hash functions.
+- This document does not cover how to test RNGs for correctness or adequate random number generation.  This is covered, for example, in "[**Testing PRNGs for High-Quality Randomness**](https://github.com/peteroupc/peteroupc.github.io/blob/master/randomtest.md)".
+- This document does not explain how to specify or generate "seeds" for certain pseudorandom number generators.  This is [**covered in detail**](https://peteroupc.github.io/random.html#Nondeterministic_Sources_and_Seed_Generation) elsewhere.
+- This document does not show how to generate random security parameters such as encryption keys.
+- This document does not cover randomness extraction (also known as _unbiasing_, _deskewing_, or _whitening_), such as [**hash functions**](https://peteroupc.github.io/random.html#Hash_Functions) and von Neumann unbiasing.
+- Variance reduction techniques, such as importance sampling or common random numbers, are not in the scope of this document.
 
 <a id=About_Random_Numbers_and_Random_Number_Generators></a>
 ### About Random Numbers and Random Number Generators
 
 This document uses terms like "random" and "random number generator" very broadly.
 
-In this document, a **random number generator (RNG)** means software and/or hardware that seeks to generate numbers with the property that each possible outcome is as likely as any other without influence by anything else.  This definition covers a wide range of devices and programs, including pseudorandom number generators (PRNGs), so-called &quot;true&quot; random number generators, APIs that provide uniform random-behaving numbers to applications.  These items are considered RNGs here regardless of their predictability, how well they pass statistical randomness tests, whether they extract random bits from noise sources, or whether they use only their input and their state to produce numbers.  However, some RNGs are better than others for certain purposes, and giving advice on which RNG to choose is outside the scope of this document.
+In this document, a **random number generator (RNG)** means software and/or hardware that seeks to generate numbers with the property that each possible outcome is as likely as any other without influence by anything else.  This definition covers a wide range of devices and programs, including pseudorandom number generators (PRNGs), so-called &quot;true&quot; random number generators, and APIs that provide uniform random-behaving numbers to applications.  These items are considered RNGs here regardless of their predictability, how well they pass statistical randomness tests, whether they extract random bits from noise sources, or whether they use only their input and their state to produce numbers.  However, some RNGs are better than others for certain purposes, and giving advice on which RNG to choose is outside the scope of this document.
 
 On the other hand, items that generate non-uniform random-behaving numbers or signals are not RNGs as defined here.  (For example, RNGs exclude Gaussian and similar noise generators.)  Many of these items, however, typically serve as so-called "entropy sources", from which uniform random numbers can be derived through techniques collectively known as  _randomness extraction_ (which is outside the scope of this document).
 
@@ -126,6 +127,7 @@ The randomization methods in this document will work regardless of what kind of 
         - [**Random Points Inside a Ball, Shell, or Cone**](#Random_Points_Inside_a_Ball_Shell_or_Cone)
         - [**Random Latitude and Longitude**](#Random_Latitude_and_Longitude)
 - [**Acknowledgments**](#Acknowledgments)
+- [**Other Documents**](#Other_Documents)
 - [**Notes**](#Notes)
 - [**Appendix**](#Appendix)
     - [**Mean and Variance Calculation**](#Mean_and_Variance_Calculation)
@@ -1990,18 +1992,19 @@ I acknowledge the commenters to the CodeProject version of this page, including 
 
 I also acknowledge Christoph Conrads, who gave suggestions in parts of this article.
 
+<a id=Other_Documents></a>
 ## Other Documents
 
 The following are some additional articles I have written on the topic of random and pseudorandom number generation.  All of them are open-source.
 
-* [Random Number Generator Recommendations for Applications](https://peteroupc.github.io/random.html)
-* [More Random Number Sampling Methods](https://peteroupc.github.io/randomnotes.html)
-* [Code Generator for Discrete Distributions](https://peteroupc.github.io/autodist.html)
-* [The Most Common Topics Involving Randomization](https://peteroupc.github.io/randomcommon.html)
-* [Partially-Sampled Random Numbers for Exact Sampling of the Beta, Exponential, and Other Continuous Distributions](https://peteroupc.github.io/exporand.html)
-* [Bernoulli Factory Algorithms](https://peteroupc.github.io/bernoulli.html)
-* [Testing PRNGs for High-Quality Randomness](https://peteroupc.github.io/randomtest.html)
-* [Examples of High-Quality PRNGs](https://peteroupc.github.io/hqprng.html)
+* [**Random Number Generator Recommendations for Applications**](https://peteroupc.github.io/random.html)
+* [**More Random Number Sampling Methods**](https://peteroupc.github.io/randomnotes.html)
+* [**Code Generator for Discrete Distributions**](https://peteroupc.github.io/autodist.html)
+* [**The Most Common Topics Involving Randomization**](https://peteroupc.github.io/randomcommon.html)
+* [**Partially-Sampled Random Numbers for Exact Sampling of the Beta, Exponential, and Other Continuous Distributions**](https://peteroupc.github.io/exporand.html)
+* [**Bernoulli Factory Algorithms**](https://peteroupc.github.io/bernoulli.html)
+* [**Testing PRNGs for High-Quality Randomness**](https://peteroupc.github.io/randomtest.html)
+* [**Examples of High-Quality PRNGs**](https://peteroupc.github.io/hqprng.html)
 
 <a id=Notes></a>
 ## Notes
