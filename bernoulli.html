@@ -62,6 +62,7 @@
 <li><a href="#lambda__x___y__linear_Bernoulli_factories"><strong>&lambda; * <em>x</em>/<em>y</em> (linear Bernoulli factories)</strong></a></li>
 <li><a href="#lambda__x___y___i"><strong>(&lambda; * <em>x</em>/<em>y</em>)<sup><em>i</em></sup></strong></a></li>
 <li><a href="#x03F5_lambda"><strong>&#x03F5; / &lambda;</strong></a></li>
+<li><a href="#Certain_Power_Series"><strong>Certain Power Series</strong></a></li>
 </ul></li>
 <li><a href="#Algorithms_for_Irrational_Constants"><strong>Algorithms for Irrational Constants</strong></a>
 
@@ -553,6 +554,25 @@
 <li>Run the <strong>2014 algorithm</strong>, <strong>2016 algorithm</strong>, or <strong>2019 algorithm</strong>, with the &mu; input coin, <em>x</em>/<em>y</em> = 1 / (1 &minus; &#x03F5;),  <em>i</em> = 1 (for the 2019 algorithm), and &#x03F5; = &gamma;. If the result is 0, return 0.  Otherwise, go to step 3.  (Note that running the algorithm this way simulates the probability (&lambda; &minus; &#x03F5;)/(1 &minus; &#x03F5;) or 1 &minus; (1 &minus; &lambda;)/(1 &minus; &#x03F5;)).</li>
 </ol>
 
+<p><a id=Certain_Power_Series></a></p>
+
+<h4>Certain Power Series</h4>
+
+<p>Mendo (2019)<sup><a href="#Note13"><strong>(13)</strong></a></sup> gave a Bernoulli factory algorithm for certain functions that can be rewritten as a series of the form&mdash;</p>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;1 &minus; (<em>c</em>[0] * (1 &minus; &lambda;) + ... + <em>c</em>[<em>i</em>] * (1 &minus; &lambda;)<sup><em>i</em> + 1</sup> + ...),</p>
+
+<p>where <em>c</em>[<em>i</em>] &gt;= 0 are the coefficients of a power series.  The algorithm follows:</p>
+
+<ol>
+<li>Let <em>csum</em> be the sum of the coefficients.</li>
+<li>Set <em>dsum</em> to 0.</li>
+<li>Flip the input coin.  If it returns 1, return 1.</li>
+<li>If <em>i</em> is equal to or greater than the number of coefficients, set <em>ci</em> to 0.  Otherwise, set <em>ci</em> to <em>c</em>[<em>i</em>]/<em>csum</em>.</li>
+<li>With probability <em>ci</em>/(1 &minus; <em>dsum</em>), return 0.</li>
+<li>Add <em>ci</em> to <em>dsum</em>, add 1 to <em>i</em>, and go to step 3.</li>
+</ol>
+
 <p><a id=Algorithms_for_Irrational_Constants></a></p>
 
 <h3>Algorithms for Irrational Constants</h3>
@@ -569,7 +589,7 @@
 
 <ol>
 <li>Set <em>k</em> to <em>a</em>[<em>pos</em>].</li>
-<li>If <em>k</em> is the last partial denominator, return a number that is 1 with probability 1/<em>k</em> and 0 otherwise.</li>
+<li>If the partial denominator at <em>pos</em> is the last, return a number that is 1 with probability 1/<em>k</em> and 0 otherwise.</li>
 <li>With probability <em>k</em>/(1+<em>k</em>), return a number that is 1 with probability 1/<em>k</em> and 0 otherwise.</li>
 <li>Run this algorithm recursively, but with <em>pos</em> = <em>pos</em> + 1.  If the result is 1, return 0.  Otherwise, go to step 3.</li>
 </ol>
@@ -590,6 +610,17 @@
 <li>Flip the last input coin created by this algorithm, and return the result.</li>
 </ol>
 </blockquote>
+
+<p>A <em>generalized continued fraction</em> has the form 0 + <em>b</em>[1] / (<em>a</em>[1] + <em>b</em>[2] / (<em>a</em>[2] + <em>b</em>[3] / (<em>a</em>[3] + ... ))).  The <em>a</em>[<em>i</em>] are the same as before, but the <em>b</em>[<em>i</em>] are the <em>partial numerators</em> and must be greater than 0. The following is an algorithm to simulate a probability in the form of a generalized continued fraction; this algorithm employs an equivalence transform from generalized to regular continued fractions.</p>
+
+<p>The algorithm begins with <em>pos</em> and <em>r</em> both equal to 1.  Then the following steps are taken.</p>
+
+<ol>
+<li>Set <em>r</em> to 1 / (<em>r</em> * <em>b</em>[<em>pos</em>]), then set <em>k</em> to <em>a</em>[<em>pos</em>] * <em>r</em>. (<em>k</em> is the partial denominator for the equivalent regular continued fraction.)</li>
+<li>If the partial numerator/denominator pair at <em>pos</em> is the last, return a number that is 1 with probability 1/<em>k</em> and 0 otherwise.</li>
+<li>With probability <em>k</em>/(1+<em>k</em>), return a number that is 1 with probability 1/<em>k</em> and 0 otherwise.</li>
+<li>Run this algorithm recursively, but with <em>pos</em> = <em>pos</em> + 1 and <em>r</em> = <em>r</em>.  If the result is 1, return 0.  Otherwise, go to step 3.</li>
+</ol>
 
 <p><a id=1_phi></a></p>
 
@@ -617,7 +648,7 @@
 
 <h4>1/sqrt(2)</h4>
 
-<p>This third example of a continued fraction shows how to simulate a probability 1/<em>z</em>, where <em>z</em> &gt; 1 has a known continued fraction expansion.  In this case, the partial denominators are as follows: floor(<em>z</em>), <em>a</em>[1], <em>a</em>[2], ..., where the <em>a</em>[<em>i</em>] are <em>z</em>&#39;s partial denominators (not including <em>z</em>&#39;s integer part).  In the example of 1/sqrt(2), the partial denominators are 1, 2, 2, 2, ..., where 1 comes first since floor(sqrt(2)) = 1.  The algorithm to simulate 1/sqrt(2) is as follows:</p>
+<p>This third example of a continued fraction shows how to simulate a probability 1/<em>z</em>, where <em>z</em> &gt; 1 has a known regular continued fraction expansion.  In this case, the partial denominators are as follows: floor(<em>z</em>), <em>a</em>[1], <em>a</em>[2], ..., where the <em>a</em>[<em>i</em>] are <em>z</em>&#39;s partial denominators (not including <em>z</em>&#39;s integer part).  In the example of 1/sqrt(2), the partial denominators are 1, 2, 2, 2, ..., where 1 comes first since floor(sqrt(2)) = 1.  The algorithm to simulate 1/sqrt(2) is as follows:</p>
 
 <p>The algorithm begins with <em>pos</em> equal to 1.  Then the following steps are taken.</p>
 

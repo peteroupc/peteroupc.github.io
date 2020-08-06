@@ -47,6 +47,7 @@ This page catalogs algorithms to turn coins biased one way into coins biased ano
         - [**&lambda; * _x_/_y_ (linear Bernoulli factories)**](#lambda__x___y__linear_Bernoulli_factories)
         - [**(&lambda; * _x_/_y_)<sup>_i_</sup>**](#lambda__x___y___i)
         - [**&#x03F5; / &lambda;**](#x03F5_lambda)
+        - [**Certain Power Series**](#Certain_Power_Series)
     - [**Algorithms for Irrational Constants**](#Algorithms_for_Irrational_Constants)
         - [**Continued Fractions**](#Continued_Fractions)
         - [**1 / &phi;**](#1_phi)
@@ -416,6 +417,22 @@ The paper that presented the 2016 algorithm also included a third algorithm, des
 3. With probability &#x03F5;, return 1.
 4. Run the **2014 algorithm**, **2016 algorithm**, or **2019 algorithm**, with the &mu; input coin, _x_/_y_ = 1 / (1 &minus; &#x03F5;),  _i_ = 1 (for the 2019 algorithm), and &#x03F5; = &gamma;. If the result is 0, return 0.  Otherwise, go to step 3.  (Note that running the algorithm this way simulates the probability (&lambda; &minus; &#x03F5;)/(1 &minus; &#x03F5;) or 1 &minus; (1 &minus; &lambda;)/(1 &minus; &#x03F5;)).
 
+<a id=Certain_Power_Series></a>
+#### Certain Power Series
+
+Mendo (2019)<sup>[**(13)**](#Note13)</sup> gave a Bernoulli factory algorithm for certain functions that can be rewritten as a series of the form&mdash;
+
+&nbsp;&nbsp;&nbsp;&nbsp;1 &minus; (_c_\[0\] \* (1 &minus; &lambda;) + ... + _c_\[_i_\] * (1 &minus; &lambda;)<sup>_i_ + 1</sup> + ...),
+
+where _c_\[_i_\] >= 0 are the coefficients of a power series.  The algorithm follows:
+
+1. Let _csum_ be the sum of the coefficients.
+2. Set _dsum_ to 0.
+3. Flip the input coin.  If it returns 1, return 1.
+4. If _i_ is equal to or greater than the number of coefficients, set _ci_ to 0.  Otherwise, set _ci_ to _c_\[_i_\]/_csum_.
+5. With probability _ci_/(1 &minus; _dsum_), return 0.
+6. Add _ci_ to _dsum_, add 1 to _i_, and go to step 3.
+
 <a id=Algorithms_for_Irrational_Constants></a>
 ### Algorithms for Irrational Constants
 
@@ -429,7 +446,7 @@ The following algorithm simulates a probability expressed as a regular continued
 The algorithm begins with _pos_ equal to 1.  Then the following steps are taken.
 
 1. Set _k_ to _a_\[_pos_\].
-2. If _k_ is the last partial denominator, return a number that is 1 with probability 1/_k_ and 0 otherwise.
+2. If the partial denominator at _pos_ is the last, return a number that is 1 with probability 1/_k_ and 0 otherwise.
 3. With probability _k_/(1+_k_), return a number that is 1 with probability 1/_k_ and 0 otherwise.
 4. Run this algorithm recursively, but with _pos_ = _pos_ + 1.  If the result is 1, return 0.  Otherwise, go to step 3.
 
@@ -442,6 +459,15 @@ The algorithm begins with _pos_ equal to 1.  Then the following steps are taken.
 >     2. Create an input coin that takes the previous input coin and _k_ and does the following: "(a) With probability _k_/(1+_k_), return a number that is 1 with probability 1/_k_ and 0 otherwise; (b) Flip the previous input coin.  If the result is 1, return 0.  Otherwise, go to step (a)".  (The probability _k_/(1+_k_) is related to &lambda;/(1+&lambda;) = 1 &minus; 1/(1+&lambda;), which involves the even-parity construction&mdash;or the two-coin special case&mdash;for 1/(1+&lambda;) as well as complementation for "1 &minus; _x_".)
 >     3. Subtract 1 from _i_.
 > 4. Flip the last input coin created by this algorithm, and return the result.
+
+A _generalized continued fraction_ has the form 0 + _b_\[1\] / (_a_\[1\] + _b_\[2\] / (_a_\[2\] + _b_\[3\] / (_a_\[3\] + ... ))).  The _a_\[_i_\] are the same as before, but the _b_\[_i_\] are the _partial numerators_ and must be greater than 0. The following is an algorithm to simulate a probability in the form of a generalized continued fraction; this algorithm employs an equivalence transform from generalized to regular continued fractions.
+
+The algorithm begins with _pos_ and _r_ both equal to 1.  Then the following steps are taken.
+
+1. Set _r_ to 1 / (_r_ * _b_\[_pos_\]), then set _k_ to _a_\[_pos_\] * _r_. (_k_ is the partial denominator for the equivalent regular continued fraction.)
+2. If the partial numerator/denominator pair at _pos_ is the last, return a number that is 1 with probability 1/_k_ and 0 otherwise.
+3. With probability _k_/(1+_k_), return a number that is 1 with probability 1/_k_ and 0 otherwise.
+4. Run this algorithm recursively, but with _pos_ = _pos_ + 1 and _r_ = _r_.  If the result is 1, return 0.  Otherwise, go to step 3.
 
 <a id=1_phi></a>
 #### 1 / &phi;
@@ -462,7 +488,7 @@ Another example of a continued fraction is that of the fractional part of the sq
 <a id=1_sqrt_2></a>
 #### 1/sqrt(2)
 
-This third example of a continued fraction shows how to simulate a probability 1/_z_, where _z_ > 1 has a known continued fraction expansion.  In this case, the partial denominators are as follows: floor(_z_), _a_\[1\], _a_\[2\], ..., where the _a_\[_i_\] are _z_'s partial denominators (not including _z_'s integer part).  In the example of 1/sqrt(2), the partial denominators are 1, 2, 2, 2, ..., where 1 comes first since floor(sqrt(2)) = 1.  The algorithm to simulate 1/sqrt(2) is as follows:
+This third example of a continued fraction shows how to simulate a probability 1/_z_, where _z_ > 1 has a known regular continued fraction expansion.  In this case, the partial denominators are as follows: floor(_z_), _a_\[1\], _a_\[2\], ..., where the _a_\[_i_\] are _z_'s partial denominators (not including _z_'s integer part).  In the example of 1/sqrt(2), the partial denominators are 1, 2, 2, 2, ..., where 1 comes first since floor(sqrt(2)) = 1.  The algorithm to simulate 1/sqrt(2) is as follows:
 
 The algorithm begins with _pos_ equal to 1.  Then the following steps are taken.
 
