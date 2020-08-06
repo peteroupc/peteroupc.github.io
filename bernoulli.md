@@ -50,6 +50,8 @@ This page catalogs algorithms to turn coins biased one way into coins biased ano
     - [**Algorithms for Irrational Constants**](#Algorithms_for_Irrational_Constants)
         - [**Continued Fractions**](#Continued_Fractions)
         - [**1 / &phi;**](#1_phi)
+        - [**sqrt(2) &minus; 1**](#sqrt_2_minus_1)
+        - [**1/sqrt(2)**](#1_sqrt_2)
         - [**arctan(_x_/_y_) \* _y_/_x_**](#arctan__x___y___y___x)
         - [**&pi; / 12**](#pi_12)
         - [**&pi; / 4**](#pi_4)
@@ -449,6 +451,24 @@ This algorithm uses the algorithm described in the previous section to simulate 
 1. With probability 1/2, return 1.
 2. Run this algorithm recursively.  If the result is 1, return 0.  Otherwise, go to step 1.
 
+<a id=sqrt_2_minus_1></a>
+#### sqrt(2) &minus; 1
+
+Another example of a continued fraction is that of the fractional part of the square root of 2, where the partial denominators are 2, 2, 2, 2, .... The algorithm to simulate this number is as follows:
+
+1. With probability 2/3, generate an unbiased random bit and return that bit.
+2. Run this algorithm recursively.  If the result is 1, return 0.  Otherwise, go to step 1.
+
+<a id=1_sqrt_2></a>
+#### 1/sqrt(2)
+
+This third example of a continued fraction shows how to simulate a probability 1/_z_, where _z_ > 1 has a known continued fraction expansion.  In this case, the partial denominators are as follows: floor(_z_), _a_\[1\], _a_\[2\], ..., where the _a_\[_i_\] are _z_'s partial denominators (not including _z_'s integer part).  In the example of 1/sqrt(2), the partial denominators are 1, 2, 2, 2, ..., where 1 comes first since floor(sqrt(2)) = 1.  The algorithm to simulate 1/sqrt(2) is as follows:
+
+The algorithm begins with _pos_ equal to 1.  Then the following steps are taken.
+
+1. If _pos_ is 1, return 1 with probability 1/2.  If _pos_ is greater than 1, then with probability 2/3, generate an unbiased random bit and return that bit.
+2. Run this algorithm recursively, but with _pos_ = _pos_ + 1.  If the result is 1, return 0.  Otherwise, go to step 1.
+
 <a id=arctan__x___y___y___x></a>
 #### arctan(_x_/_y_) \* _y_/_x_
 
@@ -551,7 +571,7 @@ Decompose _z_ into _LC_\[_i_\], _LI_\[_i_\], and _LF_\[_i_\] just as for the **e
 - If _z_ is 0, return 1.  Otherwise, if _a_ is 0, return 0.  Otherwise, for each component _LC_\[_i_\] (until the algorithm returns a number):
     1. Call the **algorithm for  (_a_/_b_)<sup>_LI_\[_i_\]/1</sup>**.  If it returns 0, return 0.
     2. Set _j_ to 1.
-    3. Generate a random number that is 1 with probability _a_/_b_ and 0 otherwise.  If that number is 1, move on to the next component or, if there are no more components, return 1.
+    3. Generate a random number that is 1 with probability _a_/_b_ and 0 otherwise.  If that number is 1, abort these steps and move on to the next component or, if there are no more components, return 1.
     4. Flip the input coin that simulates  _LF_\[_i_\] (which is the exponent); if it returns 1, return 0 with probability 1/_j_.
     5. Add 1 to _j_ and go to substep 2.
 
@@ -589,7 +609,12 @@ The following charts show the correctness of many of the algorithms on this page
 
 For each algorithm, if a single run was detected to use more than 5000 bits for a given &lambda;, the entire data point for that &lambda; was suppressed in the charts below.
 
-In addition, for each algorithm, a chart appears showing the minimum number of input coin flips that any fast Bernoulli factory algorithm will need on average to simulate the given function, based on work by Mendo (2019)<sup>[**(13)**](#Note13)</sup>.  Note that some functions require a growing number of coin flips as &lambda; approaches 0 or 1.  Note that for the 2014, 2016, and 2019 algorithms, an &epsilon; of 1 &minus; _x_ * _c_ * 1.001 was used (or 0.0001 if &epsilon; would be greater than 1).  Points with invalid &epsilon; values were suppressed.  For the low-mean algorithm, an _m_ of max(0.49999, _x_*_c_*1.02) was used unless noted otherwise.
+In addition, for each algorithm, a chart appears showing the minimum number of input coin flips that any fast Bernoulli factory algorithm will need on average to simulate the given function, based on work by Mendo (2019)<sup>[**(13)**](#Note13)</sup>.  Note that some functions require a growing number of coin flips as &lambda; approaches 0 or 1.  Note that for the 2014, 2016, and 2019 algorithms&mdash;
+
+- an &epsilon; of 1 &minus; (_x_ + _c_) * 1.001 was used (or 0.0001 if &epsilon; would be greater than 1), and
+- an &epsilon; of (_x_ &minus; _c_) * 0.9995 for the subtraction variants.
+
+Points with invalid &epsilon; values were suppressed.  For the low-mean algorithm, an _m_ of max(0.49999, _x_*_c_*1.02) was used unless noted otherwise.
 
 <a id=The_Charts></a>
 ### The Charts

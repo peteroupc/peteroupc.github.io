@@ -31,9 +31,7 @@ The following sections will detail the topics given above, with suggestions on h
 
 The [**pseudocode conventions**](https://peteroupc.github.io/pseudocode.html) apply to this document.
 
-In this document, a **random number generator (RNG)** means software and/or hardware that seeks to generate numbers with the property that each possible outcome is as likely as any other without influence by anything else. (For example, RNGs include pseudorandom number generators \[PRNGs\]; so-called &quot;true&quot; random number generators; APIs that provide random-behaving numbers to applications; and so on, but do not include Gaussian and other non-uniform noise generators.)
-
-All the randomization methods presented on this page are ultimately based on an underlying RNG; however, the methods make no assumptions on that RNG's implementation (e.g., whether that RNG uses only its input and its state to produce numbers) or on that RNG's statistical quality or predictability.
+All the randomization methods presented on this page assume we have a source of "truly" random and unbiased numbers.
 
 <a id=Contents></a>
 ## Contents
@@ -54,7 +52,7 @@ All the randomization methods presented on this page are ultimately based on an 
 <a id=Uniform_Numbers_in_a_Range></a>
 ## Uniform Numbers in a Range
 
-For algorithms on generating uniform random _integers_ in a range, see [**"Uniform Random Integers"**](https://peteroupc.github.io/randomfunc.html#Uniform_Random_Integers) and "[**A Note on Integer Generation Algorithms**](https://peteroupc.github.io/randomnotes.html#A_Note_on_Integer_Generation_Algorithms)" for a survey of algorithms.  It should be noted there that most RNGs in common use output 32- or 64-bit non-negative integers, and for JavaScript, the idiom `(Math.random() < 0.5 ? 0 : 1)` will work in many practical cases as a random bit generator.  Here is a JavaScript example of generating a random integer in the interval [**`minInclusive`, `maxExclusive`), using the Fast Dice Roller by J. Lumbroso (2013)<sup>[**(1)**](#Note1)</sup>:
+For algorithms on generating uniform random _integers_ in a range, see [**"Uniform Random Integers"**](https://peteroupc.github.io/randomfunc.html#Uniform_Random_Integers) and "[**A Note on Integer Generation Algorithms**](https://peteroupc.github.io/randomnotes.html#A_Note_on_Integer_Generation_Algorithms)" for a survey of algorithms.  It should be noted there that most random number generators in common use output 32- or 64-bit non-negative integers, and for JavaScript, the idiom `(Math.random() < 0.5 ? 0 : 1)` will work in many practical cases as a random bit generator.  Here is a JavaScript example of generating a random integer in the interval [**`minInclusive`, `maxExclusive`), using the Fast Dice Roller by J. Lumbroso (2013)<sup>[**(1)**](#Note1)</sup>:
 
     function randomInt(minInclusive, maxExclusive) {
       var maxInclusive = (maxExclusive - minInclusive) - 1
@@ -106,7 +104,7 @@ Some applications require generating unique values that identify something, such
 <a id=Shuffling></a>
 ## Shuffling
 
-An algorithm to randomize (_shuffle_) the order of a list is given in [**"Shuffling"**](https://peteroupc.github.io/randomfunc.html#Shuffling).  It should be noted that the algorithm is easy to implement incorrectly.  Also, the choice of underlying RNG is important when it comes to shuffling; see my [**RNG recommendation document on shuffling**](https://peteroupc.github.io/random.html#Shuffling).
+An algorithm to randomize (_shuffle_) the order of a list is given in [**"Shuffling"**](https://peteroupc.github.io/randomfunc.html#Shuffling).  It should be noted that the algorithm is easy to implement incorrectly.  Also, the choice of random number generator is important when it comes to shuffling; see my [**RNG recommendation document on shuffling**](https://peteroupc.github.io/random.html#Shuffling).
 
 <a id=Random_Records_from_a_Database></a>
 ## Random Records from a Database

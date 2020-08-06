@@ -51,13 +51,13 @@
 
 <p>That is, the methods assume we have a <strong>source of (uniform) random numbers</strong> (also known as a <em>uniform discrete memoryless source</em>). (Thus, none of these methods <em>generate</em> random numbers themselves, strictly speaking, but assume we have a source of them already.)</p>
 
-<p>However, this is an ideal assumption which is generally not achieved by most devices and programs in practice.</p>
+<p>However, this is an ideal assumption which is hard if not impossible to achieve in practice.</p>
 
-<p>Instead, most applications make use of <em>pseudorandom number generators</em> (PRNGs), which are algorithms that produce <em>random-behaving</em> numbers, that is, numbers that simulate the ideal source of random numbers mentioned above. As a result, the performance and quality of the methods on this page will depend in practice on the quality of the PRNG (or other kind of RNG) even if it doesn&#39;t in theory.</p>
+<p>Instead, most applications make use of <em>pseudorandom number generators</em> (PRNGs), which are algorithms that produce <em>random-behaving</em> numbers, that is, numbers that simulate the ideal source of random numbers mentioned above. As a result, the performance and quality of the methods on this page will depend in practice on the quality of the PRNG (or other kind of RNG) even if they don&#39;t in theory.</p>
 
 <p>Note that the source of random numbers can be generated (or simulated) by a wide range of devices and programs, including PRNGs, so-called &quot;true&quot; random number generators, and application programming interfaces (APIs) that provide uniform random-behaving numbers to applications.  They can serve as a source of random numbers regardless of their predictability or statistical quality, and whether or not they use a deterministic algorithm. However, some random number generators are better than others for certain purposes, and giving advice on which RNG to choose is outside the scope of this document.</p>
 
-<p>On the other hand, items that generate non-uniform random-behaving numbers or signals (such as Gaussian noise generators) cannot serve as a source of random numbers by themselves.  Many of these items, however, typically serve as so-called &quot;entropy sources&quot;, from which uniform random numbers can be derived through techniques collectively known as  <em>randomness extraction</em> (which is outside the scope of this document).</p>
+<p>On the other hand, items that generate non-uniform random-behaving numbers or signals (such as Gaussian noise generators) cannot serve as a source of random numbers by themselves.  Many of these items, however, can serve as so-called &quot;entropy sources&quot;, and techniques collectively known as  <em>randomness extraction</em> (which is outside the scope of this document) can derive uniform random numbers from such sources.</p>
 
 <p>The randomization methods in this document will be deterministic (that is, produce the same values given the same state and input) as long as they are powered by a PRNG (as will generally be the case in practice), as PRNGs are deterministic.  However, if a &quot;true&quot; random number generator powers these methods, they will not necessarily be deterministic.</p>
 
