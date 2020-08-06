@@ -15,7 +15,7 @@ Open-source articles on programming subjects.
 * [More Random Number Sampling Methods](./randomnotes.html)
 * [Code Generator for Discrete Distributions](./autodist.html)
 * [The Most Common Topics Involving Randomization](./randomcommon.html)
-* [Partially-Sampled Random Numbers for Exact Sampling of the Beta, Exponential, and Other Continuous Distributions](./exporand.html)
+* [Partially-Sampled Random Numbers for Accurate Sampling of the Beta, Exponential, and Other Continuous Distributions](./exporand.html)
 * [How to Sample Unbounded Monotone Density Functions](./unbounded.html)
 * [Bernoulli Factory Algorithms](./bernoulli.html)
 * [Testing PRNGs for High-Quality Randomness](./randomtest.html)
