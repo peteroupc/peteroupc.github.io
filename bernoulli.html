@@ -61,7 +61,7 @@
 <li><a href="#lambda_mu_4"><strong>&lambda; * &mu;</strong></a></li>
 <li><a href="#lambda__x___y__linear_Bernoulli_factories"><strong>&lambda; * <em>x</em>/<em>y</em> (linear Bernoulli factories)</strong></a></li>
 <li><a href="#lambda__x___y___i"><strong>(&lambda; * <em>x</em>/<em>y</em>)<sup><em>i</em></sup></strong></a></li>
-<li><a href="#epsilon_lambda"><strong>&epsilon; / &lambda;</strong></a></li>
+<li><a href="#x03F5_lambda"><strong>&#x03F5; / &lambda;</strong></a></li>
 </ul></li>
 <li><a href="#Algorithms_for_Irrational_Constants"><strong>Algorithms for Irrational Constants</strong></a>
 
@@ -302,22 +302,22 @@
 
 <h4>&lambda; + &mu;</h4>
 
-<p>(Nacu and Peres 2005, proposition 14(iii))<sup><a href="#Note4"><strong>(4)</strong></a></sup>.  This algorithm takes two input coins that simulate &lambda; or &mu;, respectively, and a parameter &epsilon;, which must be greater than 0 and chosen such that &lambda; + &mu; &lt; 1 &minus; &epsilon;.</p>
+<p>(Nacu and Peres 2005, proposition 14(iii))<sup><a href="#Note4"><strong>(4)</strong></a></sup>.  This algorithm takes two input coins that simulate &lambda; or &mu;, respectively, and a parameter &#x03F5;, which must be greater than 0 and chosen such that &lambda; + &mu; &lt; 1 &minus; &#x03F5;.</p>
 
 <ol>
 <li>Create a &nu; input coin that does the following: &quot;With probability 1/2, flip the &lambda; input coin and return the result.  Otherwise, flip the &mu; input coin and return the result.&quot;</li>
-<li>Call the <strong>2014 algorithm</strong>, the <strong>2016 algorithm</strong>, or the <strong>2019 algorithm</strong>, described later, using the &nu; input coin, <em>x</em>/<em>y</em> = 2/1, <em>i</em> = 1 (for the 2019 algorithm), and &epsilon; = &epsilon;, and return the result.</li>
+<li>Call the <strong>2014 algorithm</strong>, the <strong>2016 algorithm</strong>, or the <strong>2019 algorithm</strong>, described later, using the &nu; input coin, <em>x</em>/<em>y</em> = 2/1, <em>i</em> = 1 (for the 2019 algorithm), and &#x03F5; = &#x03F5;, and return the result.</li>
 </ol>
 
 <p><a id=lambda_minus_mu></a></p>
 
 <h4>&lambda; &minus; &mu;</h4>
 
-<p>(Nacu and Peres 2005, proposition 14(iii-iv))<sup><a href="#Note4"><strong>(4)</strong></a></sup>.  This algorithm takes two input coins that simulate &lambda; or &mu;, respectively, and a parameter &epsilon;, which must be greater than 0 and chosen such that &lambda; &minus; &mu; &gt; &epsilon; (and should be chosen such that &epsilon; is slightly less than &lambda; &minus; &mu;).</p>
+<p>(Nacu and Peres 2005, proposition 14(iii-iv))<sup><a href="#Note4"><strong>(4)</strong></a></sup>.  This algorithm takes two input coins that simulate &lambda; or &mu;, respectively, and a parameter &#x03F5;, which must be greater than 0 and chosen such that &lambda; &minus; &mu; &gt; &#x03F5; (and should be chosen such that &#x03F5; is slightly less than &lambda; &minus; &mu;).</p>
 
 <ol>
 <li>Create a &nu; input coin that does the following: &quot;With probability 1/2, flip the &lambda; input coin and return <strong>1 minus the result</strong>.  Otherwise, flip the &mu; input coin and return the result.&quot;</li>
-<li>Call the <strong>2014 algorithm</strong>, the <strong>2016 algorithm</strong>, or the <strong>2019 algorithm</strong>, described later, using the &nu; input coin, <em>x</em>/<em>y</em> = 2/1, <em>i</em> = 1 (for the 2019 algorithm), and &epsilon; = &epsilon;, and return 1 minus the result.</li>
+<li>Call the <strong>2014 algorithm</strong>, the <strong>2016 algorithm</strong>, or the <strong>2019 algorithm</strong>, described later, using the &nu; input coin, <em>x</em>/<em>y</em> = 2/1, <em>i</em> = 1 (for the 2019 algorithm), and &#x03F5; = &#x03F5;, and return 1 minus the result.</li>
 </ol>
 
 <p><a id=1__c__lambda></a></p>
@@ -465,12 +465,12 @@
 
 <p>Huber has suggested several algorithms for this function over the years.</p>
 
-<p>The first algorithm is called the <strong>2014 algorithm</strong> in this document (Huber 2014)<sup><a href="#Note15"><strong>(15)</strong></a></sup>.  It uses three parameters: <em>x</em>, <em>y</em>, and &epsilon;, such that <em>x</em>/<em>y</em> &gt; 0 and &epsilon; is greater than 0.  When <em>x</em>/<em>y</em> is greater than 1, the &epsilon; parameter has to be chosen such that &lambda; * <em>x</em>/<em>y</em> &lt; 1 &minus; &epsilon;, which implies that some knowledge of &lambda; has to be available to the algorithm.  (In fact, as simulation results show, the choice of &epsilon; is crucial to this algorithm&#39;s performance; for best results, &epsilon; should be chosen such that &lambda; * <em>x</em>/<em>y</em> is slightly less than 1 &minus; &epsilon;.) The algorithm as described below also includes certain special cases, not mentioned in Huber, to make it more general.</p>
+<p>The first algorithm is called the <strong>2014 algorithm</strong> in this document (Huber 2014)<sup><a href="#Note15"><strong>(15)</strong></a></sup>.  It uses three parameters: <em>x</em>, <em>y</em>, and &#x03F5;, such that <em>x</em>/<em>y</em> &gt; 0 and &#x03F5; is greater than 0.  When <em>x</em>/<em>y</em> is greater than 1, the &#x03F5; parameter has to be chosen such that &lambda; * <em>x</em>/<em>y</em> &lt; 1 &minus; &#x03F5;, which implies that some knowledge of &lambda; has to be available to the algorithm.  (In fact, as simulation results show, the choice of &#x03F5; is crucial to this algorithm&#39;s performance; for best results, &#x03F5; should be chosen such that &lambda; * <em>x</em>/<em>y</em> is slightly less than 1 &minus; &#x03F5;.) The algorithm as described below also includes certain special cases, not mentioned in Huber, to make it more general.</p>
 
 <ol>
 <li>Special cases: If <em>x</em> is 0, return 0.  Otherwise, if <em>x</em> equals <em>y</em>, flip the input coin and return the result.  Otherwise, if <em>x</em> is less than <em>y</em>, then: (a) With probability <em>x</em>/<em>y</em>, flip the input coin and return the result; otherwise (b) return 0.</li>
-<li>Set <em>c</em> to <em>x</em>/<em>y</em>, and set <em>k</em> to 23 / (5 * &epsilon;).</li>
-<li>If &epsilon; is greater than 644/1000, set &epsilon; to 644/1000.</li>
+<li>Set <em>c</em> to <em>x</em>/<em>y</em>, and set <em>k</em> to 23 / (5 * &#x03F5;).</li>
+<li>If &#x03F5; is greater than 644/1000, set &#x03F5; to 644/1000.</li>
 <li>Set <em>i</em> to 1.</li>
 <li>Flip the input coin.  If it returns 0, then generate numbers that are each 1 with probability (<em>c</em> &minus; 1) / <em>c</em> and 0 otherwise, until 0 is generated this way, then add 1 to <em>i</em> for each number generated this way (including the last).</li>
 <li>Subtract 1 from <em>i</em>, then if <em>i</em> is 0, return 1.</li>
@@ -478,17 +478,17 @@
 <li>If <em>i</em> is <em>k</em> or greater:
 
 <ol>
-<li>Generate <em>i</em> numbers that are each 1 with probability 2 / (&epsilon; + 2) or 0 otherwise.  If any of those numbers is 0, return 0.</li>
-<li>Multiply <em>c</em> by 2 / (&epsilon; + 2), divide &epsilon; by 2, and multiply <em>k</em> by 2.</li>
+<li>Generate <em>i</em> numbers that are each 1 with probability 2 / (&#x03F5; + 2) or 0 otherwise.  If any of those numbers is 0, return 0.</li>
+<li>Multiply <em>c</em> by 2 / (&#x03F5; + 2), divide &#x03F5; by 2, and multiply <em>k</em> by 2.</li>
 </ol></li>
 <li>If <em>i</em> is 0, return 1.  Otherwise, go to step 5.</li>
 </ol>
 
-<p>The second algorithm is called the <strong>2016 algorithm</strong> (Huber 2016)<sup><a href="#Note16"><strong>(16)</strong></a></sup> and uses the same parameters <em>x</em>, <em>y</em>, and &epsilon;, and its description uses the same special cases.  The difference here is that it involves a so-called &quot;logistic Bernoulli factory&quot;, which is replaced in this document with a different one that simulates the same function.  When <em>x</em>/<em>y</em> is greater than 1, the &epsilon; parameter has to be chosen such that &lambda; * <em>x</em>/<em>y</em> &lt;= 1 &minus; &epsilon;.</p>
+<p>The second algorithm is called the <strong>2016 algorithm</strong> (Huber 2016)<sup><a href="#Note16"><strong>(16)</strong></a></sup> and uses the same parameters <em>x</em>, <em>y</em>, and &#x03F5;, and its description uses the same special cases.  The difference here is that it involves a so-called &quot;logistic Bernoulli factory&quot;, which is replaced in this document with a different one that simulates the same function.  When <em>x</em>/<em>y</em> is greater than 1, the &#x03F5; parameter has to be chosen such that &lambda; * <em>x</em>/<em>y</em> &lt;= 1 &minus; &#x03F5;.</p>
 
 <ol>
 <li>The same special cases as for the 2014 algorithm apply.</li>
-<li>Set <em>m</em> to ceil(1 + 9 / (2 * &epsilon;)).</li>
+<li>Set <em>m</em> to ceil(1 + 9 / (2 * &#x03F5;)).</li>
 <li>Set &beta; to 1 + 1 / (<em>m</em> &minus; 1).</li>
 <li><strong>Algorithm A</strong> is what Huber calls this step.  Set <em>s</em> to 1, then while <em>s</em> is greater than 0 and less than <em>m</em>:
 
@@ -498,7 +498,7 @@
 </ol></li>
 <li>If <em>s</em> is other than 0, return 0.</li>
 <li>With probability 1/&beta;, return 1.</li>
-<li>Run this algorithm recursively, with <em>x</em>/<em>y</em> = &beta; * <em>x</em>/<em>y</em> and &epsilon; = 1 &minus; &beta; * (1 &minus; &epsilon;).  If it returns 0, return 0.</li>
+<li>Run this algorithm recursively, with <em>x</em>/<em>y</em> = &beta; * <em>x</em>/<em>y</em> and &#x03F5; = 1 &minus; &beta; * (1 &minus; &#x03F5;).  If it returns 0, return 0.</li>
 <li>The <strong>high-power logistic Bernoulli factory</strong> is what Huber calls this step.  Set <em>s</em> to 1, then while <em>s</em> is greater than 0 and less than or equal to <em>m</em> minus 2:
 
 <ol>
@@ -515,14 +515,14 @@
 <li>The same special cases as for the 2014 algorithm apply.</li>
 <li>Run the <strong>logistic Bernoulli factory</strong> algorithm with <em>c</em>/<em>d</em> = (<em>x</em>/<em>y</em>) / (1 &minus; 2 * <em>m</em>).  If it returns 0, return 0.</li>
 <li>With probability 1 &minus; 2 * <em>m</em>, return 1.</li>
-<li>Run the 2014 algorithm or 2016 algorithm with <em>x</em>/<em>y</em> = (<em>x</em>/<em>y</em>) / (2 * <em>m</em>) and &epsilon; = 1 &minus; <em>m</em>.</li>
+<li>Run the 2014 algorithm or 2016 algorithm with <em>x</em>/<em>y</em> = (<em>x</em>/<em>y</em>) / (2 * <em>m</em>) and &#x03F5; = 1 &minus; <em>m</em>.</li>
 </ol>
 
 <p><a id=lambda__x___y___i></a></p>
 
 <h4>(&lambda; * <em>x</em>/<em>y</em>)<sup><em>i</em></sup></h4>
 
-<p>(Huber 2019)<sup><a href="#Note17"><strong>(17)</strong></a></sup>.  This algorithm, called the <strong>2019 algorithm</strong> in this document, uses four parameters: <em>x</em>, <em>y</em>, <em>i</em>, and &epsilon;, such that <em>x</em>/<em>y</em> &gt; 0, <em>i</em> &gt;= 0 is an integer, and &epsilon; is greater than 0.  When <em>x</em>/<em>y</em> is greater than 1, the &epsilon; parameter has to be chosen such that &lambda; * <em>x</em>/<em>y</em> &lt; 1 &minus; &epsilon;.  It also has special cases not mentioned in Huber 2019.</p>
+<p>(Huber 2019)<sup><a href="#Note17"><strong>(17)</strong></a></sup>.  This algorithm, called the <strong>2019 algorithm</strong> in this document, uses four parameters: <em>x</em>, <em>y</em>, <em>i</em>, and &#x03F5;, such that <em>x</em>/<em>y</em> &gt; 0, <em>i</em> &gt;= 0 is an integer, and &#x03F5; is greater than 0.  When <em>x</em>/<em>y</em> is greater than 1, the &#x03F5; parameter has to be chosen such that &lambda; * <em>x</em>/<em>y</em> &lt; 1 &minus; &#x03F5;.  It also has special cases not mentioned in Huber 2019.</p>
 
 <ol>
 <li> Special cases: If <em>i</em> is 0, return 1.  If <em>x</em> is 0, return 0.  Otherwise, if <em>x</em> equals <em>y</em> and <em>i</em> equals 1, flip the input coin and return the result.</li>
@@ -530,27 +530,27 @@
 <li>Special case: If <em>x</em> is less than <em>y</em>, then create a secondary coin &mu; that does the following: &quot;(a) With probability <em>x</em>/<em>y</em>, flip the input coin and return the result; otherwise (b) return 0&quot;, then run the <strong>algorithm for (&mu;<sup><em>i</em>/1</sup>)</strong> (described earlier) using this secondary coin.</li>
 <li>Set <em>t</em> to 355/100 and <em>c</em> to <em>x</em>/<em>y</em>.</li>
 <li>If <em>i</em> is 0, return 1.</li>
-<li>While <em>i</em> = <em>t</em> / &epsilon;:
+<li>While <em>i</em> = <em>t</em> / &#x03F5;:
 
 <ol>
-<li>Set &beta; to (1 &minus; &epsilon; / 2) / (1 &minus; &epsilon;).</li>
+<li>Set &beta; to (1 &minus; &#x03F5; / 2) / (1 &minus; &#x03F5;).</li>
 <li>Run the <strong>algorithm for (1/&beta;)<sup><em>i</em></sup></strong> (described later).  If it returns 0, return 0.</li>
-<li>Multiply <em>c</em> by &beta;, then divide &epsilon; by 2.</li>
+<li>Multiply <em>c</em> by &beta;, then divide &#x03F5; by 2.</li>
 </ol></li>
 <li>Run the <strong>logistic Bernoulli factory</strong> with <em>c</em>/<em>d</em> = <em>c</em>, then set <em>z</em> to the result.  Set <em>i</em> to <em>i</em> + 1 &minus; <em>z</em> * 2, then go to step 5.</li>
 </ol>
 
-<p><a id=epsilon_lambda></a></p>
+<p><a id=x03F5_lambda></a></p>
 
-<h4>&epsilon; / &lambda;</h4>
+<h4>&#x03F5; / &lambda;</h4>
 
-<p>(Lee et al. 2014)<sup><a href="#Note18"><strong>(18)</strong></a></sup>  This algorithm, in addition to the input coin, takes a parameter &epsilon;, which must be greater than 0 and be chosen such that &epsilon; is less than &lambda;.</p>
+<p>(Lee et al. 2014)<sup><a href="#Note18"><strong>(18)</strong></a></sup>  This algorithm, in addition to the input coin, takes a parameter &#x03F5;, which must be greater than 0 and be chosen such that &#x03F5; is less than &lambda;.</p>
 
 <ol>
-<li>If &beta; to max(&epsilon;, 1/2) and set &gamma; to 1 &minus; (1 &minus; &beta;) / (1 &minus; (&beta; / 2)).</li>
+<li>If &beta; to max(&#x03F5;, 1/2) and set &gamma; to 1 &minus; (1 &minus; &beta;) / (1 &minus; (&beta; / 2)).</li>
 <li>Create a &mu; input coin that flips the input coin and returns 1 minus the result.</li>
-<li>With probability &epsilon;, return 1.</li>
-<li>Run the <strong>2014 algorithm</strong>, <strong>2016 algorithm</strong>, or <strong>2019 algorithm</strong>, with the &mu; input coin, <em>x</em>/<em>y</em> = 1 / (1 &minus; &epsilon;),  <em>i</em> = 1 (for the 2019 algorithm), and &epsilon; = &gamma;. If the result is 0, return 0.  Otherwise, go to step 3.  (Note that running the algorithm this way simulates the probability (&lambda; &minus; &epsilon;)/(1 &minus; &epsilon;) or 1 &minus; (1 &minus; &lambda;)/(1 &minus; &epsilon;)).</li>
+<li>With probability &#x03F5;, return 1.</li>
+<li>Run the <strong>2014 algorithm</strong>, <strong>2016 algorithm</strong>, or <strong>2019 algorithm</strong>, with the &mu; input coin, <em>x</em>/<em>y</em> = 1 / (1 &minus; &#x03F5;),  <em>i</em> = 1 (for the 2019 algorithm), and &#x03F5; = &gamma;. If the result is 0, return 0.  Otherwise, go to step 3.  (Note that running the algorithm this way simulates the probability (&lambda; &minus; &#x03F5;)/(1 &minus; &#x03F5;) or 1 &minus; (1 &minus; &lambda;)/(1 &minus; &#x03F5;)).</li>
 </ol>
 
 <p><a id=Algorithms_for_Irrational_Constants></a></p>
@@ -584,7 +584,7 @@
 
 <ol>
 <li>Set <em>k</em> to <em>a</em>[<em>i</em>].</li>
-<li>Create an input coin that takes the previous input coin and <em>k</em> and does the following: &quot;(a) With probability <em>k</em>/(1+<em>k</em>), return a number that is 1 with probability 1/<em>k</em> and 0 otherwise; (b) Flip the previous input coin.  If the result is 1, return 0.  Otherwise, go to step (a)&quot;.  (The probability <em>k</em>/(1+<em>k</em>) is related to &lambda;/(1+&lambda;) = 1 &minus; 1/(1+&amp;lambda), which involves the even-parity construction&mdash;or the two-coin special case&mdash;for 1/(1+&lambda;) as well as complementation for &quot;1 &minus; <em>x</em>&quot;.)</li>
+<li>Create an input coin that takes the previous input coin and <em>k</em> and does the following: &quot;(a) With probability <em>k</em>/(1+<em>k</em>), return a number that is 1 with probability 1/<em>k</em> and 0 otherwise; (b) Flip the previous input coin.  If the result is 1, return 0.  Otherwise, go to step (a)&quot;.  (The probability <em>k</em>/(1+<em>k</em>) is related to &lambda;/(1+&lambda;) = 1 &minus; 1/(1+&lambda;), which involves the even-parity construction&mdash;or the two-coin special case&mdash;for 1/(1+&lambda;) as well as complementation for &quot;1 &minus; <em>x</em>&quot;.)</li>
 <li>Subtract 1 from <em>i</em>.</li>
 </ol></li>
 <li>Flip the last input coin created by this algorithm, and return the result.</li>
@@ -815,11 +815,11 @@
 <p>In addition, for each algorithm, a chart appears showing the minimum number of input coin flips that any fast Bernoulli factory algorithm will need on average to simulate the given function, based on work by Mendo (2019)<sup><a href="#Note13"><strong>(13)</strong></a></sup>.  Note that some functions require a growing number of coin flips as &lambda; approaches 0 or 1.  Note that for the 2014, 2016, and 2019 algorithms&mdash;</p>
 
 <ul>
-<li>an &epsilon; of 1 &minus; (<em>x</em> + <em>c</em>) * 1.001 was used (or 0.0001 if &epsilon; would be greater than 1), and</li>
-<li>an &epsilon; of (<em>x</em> &minus; <em>c</em>) * 0.9995 for the subtraction variants.</li>
+<li>an &#x03F5; of 1 &minus; (<em>x</em> + <em>c</em>) * 1.001 was used (or 0.0001 if &#x03F5; would be greater than 1), and</li>
+<li>an &#x03F5; of (<em>x</em> &minus; <em>c</em>) * 0.9995 for the subtraction variants.</li>
 </ul>
 
-<p>Points with invalid &epsilon; values were suppressed.  For the low-mean algorithm, an <em>m</em> of max(0.49999, <em>x</em><em><em>c</em></em>1.02) was used unless noted otherwise.</p>
+<p>Points with invalid &#x03F5; values were suppressed.  For the low-mean algorithm, an <em>m</em> of max(0.49999, <em>x</em><em><em>c</em></em>1.02) was used unless noted otherwise.</p>
 
 <p><a id=The_Charts></a></p>
 
