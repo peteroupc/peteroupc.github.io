@@ -472,7 +472,7 @@ This section describes a way to implement weighted choice of one or more items f
 then the solution involves turning a biased coin to a fair coin, and then turning the fair coin into a loaded die.
 
 1.  Biased coin to fair coin:  This can be achieved with _randomness extraction_ techniques, such as von Neumann unbiasing.  Randomness extraction is outside the scope of this document.
-2.  Fair coin to loaded die:  There are many ways to solve this problem.  For example, fair coins can serve as the RNG for `RNDINT` (see "[**Uniform Random Integers**](https://peteroupc.github.io/randomfunc.html#Uniform_Random_Integers)"), and `RNDINT` can in turn be used to implement [**`WeightedChoice`**](https://peteroupc.github.io/randomfunc.html#Weighted_Choice_With_Replacement), which implements loaded dice.  Some algorithms also produce a loaded die _directly_ from fair coins, such as the [**Fast Loaded Dice Roller**](https://github.com/probcomp/fast-loaded-dice-roller).
+2.  Fair coin to loaded die:  There are many ways to solve this problem.  For example, fair coins can serve as the source of random numbers for `RNDINT` (see "[**Uniform Random Integers**](https://peteroupc.github.io/randomfunc.html#Uniform_Random_Integers)"), and `RNDINT` can in turn be used to implement [**`WeightedChoice`**](https://peteroupc.github.io/randomfunc.html#Weighted_Choice_With_Replacement), which implements loaded dice.  Some algorithms also produce a loaded die _directly_ from fair coins, such as the [**Fast Loaded Dice Roller**](https://github.com/probcomp/fast-loaded-dice-roller).
 
 For related algorithms, see the appendix.
 
@@ -657,7 +657,7 @@ Assuming that we only have&mdash;
 one of the following two algorithms can be used (see the [**_Stack Overflow_ question**](https://stackoverflow.com/questions/62806441/can-i-achieve-weighted-randomness-with-a-function-that-returns-weighted-booleans) by Daniel Kaplan).  Since in this case we can treat `UnfairCoin(q)` (for any fixed value of `q` in (0, 1)) as a coin with _unknown_ bias (allowing us to use the method in "[**Weighted Choice with Biased Coins**](#Weighted_Choice_with_Biased_Coins)), these algorithms given below are not very useful in practice.
 
 1. The first uses iteration and is as follows: `cumu = 1.0; for i in 0...size(probs): if UnfairCoin(probs[i]/cumu): return i; else: cumu = cumu - probs[i]`.  This algorithm runs on average in linear time (or in constant time if the weights are sorted in descending order). This algorithm ought to be implemented using rational-valued weights and rational arithmetic, since the algorithm will be error-bounded in that case.  For a proof of its correctness, see [**Darts, Dice, and Coins**](https://www.keithschwarz.com/darts-dice-coins/)" by Keith Schwarz.
-2. The second uses rejection sampling and relies on generating a random integer using fair coins: `while true; y=RNDINT(size(probs)-1); if UnfairCoin(probs[y]): return y; else continue; end`, where `UnfairCoin(0.5)` serves as the RNG for `RNDINT`. This algorithm is error-bounded when all the probabilities in `probs` can be simulated exactly by `UnfairCoin`.
+2. The second uses rejection sampling and relies on generating a random integer using fair coins: `while true; y=RNDINT(size(probs)-1); if UnfairCoin(probs[y]): return y; else continue; end`, where `UnfairCoin(0.5)` serves as the source of random numbers for `RNDINT`. This algorithm is error-bounded when all the probabilities in `probs` can be simulated exactly by `UnfairCoin`.
 
 <a id=License></a>
 ## License
