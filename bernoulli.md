@@ -53,6 +53,7 @@ This page catalogs algorithms to turn coins biased one way into coins biased ano
         - [**1 / &phi;**](#1_phi)
         - [**sqrt(2) &minus; 1**](#sqrt_2_minus_1)
         - [**1/sqrt(2)**](#1_sqrt_2)
+        - [**Euler's constant &gamma;**](#Euler_s_constant_gamma)
         - [**arctan(_x_/_y_) \* _y_/_x_**](#arctan__x___y___y___x)
         - [**&pi; / 12**](#pi_12)
         - [**&pi; / 4**](#pi_4)
@@ -454,8 +455,9 @@ The algorithm begins with _pos_ equal to 1.  Then the following steps are taken.
 
 1. Set _k_ to _a_\[_pos_\].
 2. If the partial denominator at _pos_ is the last, return a number that is 1 with probability 1/_k_ and 0 otherwise.
-3. With probability _k_/(1+_k_), return a number that is 1 with probability 1/_k_ and 0 otherwise.
-4. Run this algorithm recursively, but with _pos_ = _pos_ + 1.  If the result is 1, return 0.  Otherwise, go to step 3.
+3. If _a_\[_pos_\] is less than 0, set _kp_ to _k_ &minus; 1 and _s_ to 0.  Otherwise, set _kp_ to _k_ and _s_ to 1. (This step accounts for negative partial denominators.)
+4. With probability _kp_/(1+_kp_), return a number that is 1 with probability 1/_kp_ and 0 otherwise.
+5. Run this algorithm recursively, but with _pos_ = _pos_ + 1.  If the result is _s_, return 0.  Otherwise, go to step 3.
 
 > **Note:**  The following is an alternative way to write the algorithm, which better shows the inspiration because it shows how the "even parity construction" (or the two-coin special case) as well as the "1 &minus; _x_" construction can be used to develop rational number simulators that are as big as their continued fraction expansions, as suggested in the cited part of the Flajolet paper.  However, it only works if the size of the continued fraction expansion (here, _size_) is known in advance.
 >
@@ -472,9 +474,13 @@ A _generalized continued fraction_ has the form 0 + _b_\[1\] / (_a_\[1\] + _b_\[
 The algorithm begins with _pos_ and _r_ both equal to 1.  Then the following steps are taken.
 
 1. Set _r_ to 1 / (_r_ * _b_\[_pos_\]), then set _k_ to _a_\[_pos_\] * _r_. (_k_ is the partial denominator for the equivalent regular continued fraction.)
-2. If the partial numerator/denominator pair at _pos_ is the last, return a number that is 1 with probability 1/_k_ and 0 otherwise.
-3. With probability _k_/(1+_k_), return a number that is 1 with probability 1/_k_ and 0 otherwise.
-4. Run this algorithm recursively, but with _pos_ = _pos_ + 1 and _r_ = _r_.  If the result is 1, return 0.  Otherwise, go to step 3.
+2. If the partial numerator/denominator pair at _pos_ is the last, return a number that is 1 with probability 1/abs(_k_) and 0 otherwise.
+3. Set _kp_ to abs(_k_) and _s_ to 1.
+4. Set _r2_ to 1 / (_r_ * _b_\[_pos_ + 1\]).  If _a_\[_pos_ + 1\] * _r2_ is less than 0, set _kp_ to _k_ &minus; 1 and _s_ to 0. (This step accounts for negative partial numerators and denominators.)
+5. With probability _kp_/(1+_kp_), return a number that is 1 with probability 1/_kp_ and 0 otherwise.
+6. Run this algorithm recursively, but with _pos_ = _pos_ + 1 and _r_ = _r_.  If the result is _s_, return 0.  Otherwise, go to step 5.
+
+(Note that if any of these algorithms encounters a probability outside the interval [0, 1], the entire algorithm will fail for that continued fraction.)
 
 <a id=1_phi></a>
 #### 1 / &phi;
@@ -501,6 +507,11 @@ The algorithm begins with _pos_ equal to 1.  Then the following steps are taken.
 
 1. If _pos_ is 1, return 1 with probability 1/2.  If _pos_ is greater than 1, then with probability 2/3, generate an unbiased random bit and return that bit.
 2. Run this algorithm recursively, but with _pos_ = _pos_ + 1.  If the result is 1, return 0.  Otherwise, go to step 1.
+
+<a id=Euler_s_constant_gamma></a>
+#### Euler's constant &gamma;
+
+The continued fraction algorithm will help solve an open question of (Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup>, asking for a "'natural' experiment, whose probability of success is &gamma;", where &gamma; is the Euler&ndash;Mascheroni constant, which is about 5.77215....  This involves a rather non-trivial continued fraction expansion discovered by (Hessami Pilehrood and Hessami Pilehrood 2013)<sup>[**(24)**](#Note24)</sup> and whose approximate regular continued fraction equivalent is: 2, -4, 3.2, 8.1944..., -0.1848..., .... See Theorem 3 of the paper for the complete definition of this continued fraction (which is in generalized continued fraction form, so that the algorithm for generalized continued fractions has to be used).
 
 <a id=arctan__x___y___y___x></a>
 #### arctan(_x_/_y_) \* _y_/_x_
@@ -609,7 +620,7 @@ Decompose _z_ into _LC_\[_i_\], _LI_\[_i_\], and _LF_\[_i_\] just as for the **e
     5. Add 1 to _j_ and go to substep 2.
 
 <a id=1_1_exp__x___y__2_prec__LogisticExp></a>
-#### **1 / 1 + exp(_x_ / (_y_ * 2<sup>_prec_</sup>)) (LogisticExp)**
+#### 1 / 1 + exp(_x_ / (_y_ * 2<sup>_prec_</sup>)) (LogisticExp)
 
 This is the probability that the bit at _prec_ (the _prec_<sup>th</sup> bit after the point) is set for an exponential random number with rate _x_/_y_.  This algorithm is a special case of the **logistic Bernoulli factory**.
 
@@ -617,7 +628,7 @@ This is the probability that the bit at _prec_ (the _prec_<sup>th</sup> bit afte
 2. Call the **algorithm for exp(&minus; _x_/(_y_ * 2<sup>_prec_</sup>))**.  If the call returns 1, return 1.  Otherwise, go to step 1.
 
 <a id=1_1_exp__z__2_prec__LogisticExp></a>
-#### **1 / 1 + exp(_z_ / 2<sup>_prec_</sup>)) (LogisticExp)**
+#### 1 / 1 + exp(_z_ / 2<sup>_prec_</sup>)) (LogisticExp)
 
 This is similar to the previous algorithm, except that _z_ can be any real number described in the **algorithm for exp(&minus;_z_)**.
 
@@ -763,6 +774,8 @@ Points with invalid &#x03F5; values were suppressed.  For the low-mean algorithm
 <small><sup id=Note22>(22)</sup> Brassard, G., Devroye, L., Gravel, C., "Remote Sampling with Applications to General Entanglement Simulation", Entropy 2019(21)(92), doi:10.3390/e21010092.</small>
 
 <small><sup id=Note23>(23)</sup> Devroye, L., Gravel, C., "[**Sampling with arbitrary precision**](https://arxiv.org/abs/1502.02539v5)", arXiv:1502.02539v5 [cs.IT], 2015.</small>
+
+<small><sup id=Note24>(24)</sup> Kh. Hessami Pilehrood, T. Hessami Pilehrood, On a continued fraction expansion for Euler's constant, _Journal of Number Theory_ 133, Issue 2, 2013, Pages 769-786, [https://doi.org/10.1016/j.jnt.2012.08.016,](https://doi.org/10.1016/j.jnt.2012.08.016,) [http://www.sciencedirect.com/science/article/pii/S0022314X12002624.</small>](http://www.sciencedirect.com/science/article/pii/S0022314X12002624.</small>)
 
 <a id=Appendix></a>
 ## Appendix
