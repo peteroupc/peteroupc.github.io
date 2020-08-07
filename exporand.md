@@ -60,7 +60,7 @@ This page shows [**Python code**](#Sampler_Code) for these samplers.
 - [**Acknowledgments**](#Acknowledgments)
 - [**Notes**](#Notes)
 - [**Appendix**](#Appendix)
-    - [**SymPy Formula for ZeroOrOneExpMinus**](#SymPy_Formula_for_ZeroOrOneExpMinus)
+    - [**SymPy Formula for the algorithm for exp(&minus;_x_/_y_)**](#SymPy_Formula_for_the_algorithm_for_exp_minus__x___y)
     - [**Another Example of an Arbitrary-Precision Sampler**](#Another_Example_of_an_Arbitrary_Precision_Sampler)
 - [**License**](#License)
 
@@ -213,18 +213,10 @@ The algorithm is as follows:
 
 To implement these probabilities using just random bits, the sampler uses two algorithms:
 
-1. One to simulate a probability of the form `exp(-x/y)` (**ZeroOrOneExpMinus**).
-2. One to simulate a probability of the form `1/(1+exp(x/(y*pow(2, prec))))` (**LogisticExp**).
+1. One to simulate a probability of the form `exp(-x/y)` (here, the **algorithm for exp(&minus;_x_/_y_)** described in "[**Bernoulli Factory Algorithms**](https://peteroupc.github.io/bernoulli.html)").
+2. One to simulate a probability of the form `1/(1+exp(x/(y*pow(2, prec))))` (here, the **LogisticExp** algorithm described in "[**Bernoulli Factory Algorithms**](https://peteroupc.github.io/bernoulli.html)").
 
-These two algorithms enable e-rands with rational-valued &lambda; parameters and are described below.
-
-**ZeroOrOneExpMinus** is the **algorithm for exp(&minus;_x_/_y_)** described in "[**Bernoulli Factory Algorithms**](https://peteroupc.github.io/bernoulli.html)".
-
-The **LogisticExp** algorithm is a special case of the _logistic Bernoulli factory_ given in (Morina et al. 2019)<sup>[**(16)**](#Note16)</sup>.  It takes integers _x_ >= 0,  _y_ > 0, and _prec_ > 0 and outputs 1 with probability `1/(1+exp(x/(y*pow(2, prec))))` and 0 otherwise.
-
-1. Return 0 with probability 1/2.
-2. Call **ZeroOrOneExpMinus** with _x_ = _x_ and _y_ = _y_*2<sup>_prec_</sup>.  If the call returns 1, return 1.
-3. Go to step 1.
+These two algorithms enable e-rands with rational-valued &lambda; parameters.
 
 <a id=Algorithms_for_the_Beta_and_Exponential_Distributions></a>
 ## Algorithms for the Beta and Exponential Distributions
@@ -258,10 +250,10 @@ To sample bit _k_ after the binary point of an exponential random number with ra
 
 The **ExpRandLess** algorithm is a special case of the general **RandLess** algorithm given earlier.  It compares two e-rands **a** and **b** (and samples additional bits from them as necessary) and returns `true` if **a** turns out to be less than **b**, or `false` otherwise. (Note that **a** and **b** are allowed to have different &lambda; parameters.)
 
-1. If **a**'s integer part wasn't sampled yet, call **ZeroOrOneExpMinus** with _x_ = &lambda;'s numerator and _y_ = &lambda;'s denominator, until the call returns 0, then set the integer part to the number of times 1 was returned this way.  Do the same for **b**.
+1. If **a**'s integer part wasn't sampled yet, call the **algorithm for exp(&minus;_x_/_y_)** with _x_ = &lambda;'s numerator and _y_ = &lambda;'s denominator, until the call returns 0, then set the integer part to the number of times 1 was returned this way.  Do the same for **b**.
 2. Return `true` if **a**'s integer part is less than **b**'s, or `false` if **a**'s integer part is greater than **b**'s.
 3. Set _i_ to 0.
-4. If **a**'s fractional part has _i_ or fewer bits, call **LogisticExp** with _x_ = &lambda;'s numerator, _y_ = &lambda;'s denominator, and _prec_ = _i_ + 1, and append the result to that fractional part's binary expansion.  Do the same for **b**.
+4. If **a**'s fractional part has _i_ or fewer bits, call the **LogisticExp** algorithm with _x_ = &lambda;'s numerator, _y_ = &lambda;'s denominator, and _prec_ = _i_ + 1, and append the result to that fractional part's binary expansion.  Do the same for **b**.
 5. Return `true` if **a**'s fractional part is less than **b**'s, or `false` if **a**'s fractional part is greater than **b**'s.
 6. Add 1 to _i_ and go to step 4.
 
@@ -269,7 +261,7 @@ The **ExpRandFill** algorithm takes an e-rand **a** and generates a number whose
 
 1. If **a**'s integer part wasn't sampled yet, sample it as given in step 1 of **ExpRandLess**.
 2. If **a**'s fractional part has greater than `p` bits, round **a** to a number whose fractional part has `p` bits, and return that number.  The rounding can be done, for example, by discarding all bits beyond `p` bits after the place to be rounded, or by rounding to the nearest 2<sup>-p</sup>, ties-to-up, as done in the sample Python code.
-3. While **a**'s fractional part has fewer than `p` bits, call **LogisticExp** with _x_ = &lambda;'s numerator, _y_ = &lambda;'s denominator, and _prec_ = _i_, where _i_ is 1 plus the number of bits in **a**'s fractional part, and append the result to that fractional part's binary expansion.
+3. While **a**'s fractional part has fewer than `p` bits, call the **LogisticExp** algorithm with _x_ = &lambda;'s numerator, _y_ = &lambda;'s denominator, and _prec_ = _i_, where _i_ is 1 plus the number of bits in **a**'s fractional part, and append the result to that fractional part's binary expansion.
 4. Return the number represented by **a**.
 
 <a id=Power_of_Uniform_Sub_Algorithm></a>
@@ -280,7 +272,7 @@ The power-of-uniform sub-algorithm is used for certain cases of the beta sampler
 It makes use of a number of algorithms as follows:
 
 - It uses an algorithm for [**sampling unbounded monotone density functions**](https://peteroupc.github.io/unbounded.html), which in turn is similar to the inversion-rejection algorithm in (Devroye 1986, ch. 7, sec. 4.4)<sup>[**(15)**](#Note15)</sup>.  This is needed because when _px_/_py_ is greater than 1, _U_<sup>_px_/_py_</sup> is distributed as `(py/px) / pow(U, 1-py/px)`, which has an unbounded peak at 0.
-- It uses a number of Bernoulli factory algorithms.  In addition to the **SampleGeometricBag** and **PowerBernoulliFactory** algorithms mentioned earlier, it also uses _bernoulli.py_'s `eps_div` Bernoulli factory (which returns 1 with probability _a_/_b_ and originates from (Lee et al. 2014)<sup>[**(17)**](#Note17)</sup>).  `eps_div` in turn relies on Huber's Bernoulli factory for linear functions (Huber 2016)<sup>[**(18)**](#Note18)</sup>.
+- It uses a number of Bernoulli factory algorithms.  In addition to the **SampleGeometricBag** and **PowerBernoulliFactory** algorithms mentioned earlier, it also uses _bernoulli.py_'s `eps_div` Bernoulli factory (which returns 1 with probability _a_/_b_ and originates from (Lee et al. 2014)<sup>[**(16)**](#Note16)</sup>).  `eps_div` in turn relies on Huber's Bernoulli factory for linear functions (Huber 2016)<sup>[**(17)**](#Note17)</sup>.
 
 However, this algorithm supports only base 2.
 
@@ -578,14 +570,14 @@ In the beta sampler, the bigger `alpha` or `beta` is, the smaller the area of ac
 
 - Estimate an upper bound for the peak of the density `peak`, given `alpha` and `beta`.
 - Calculate a largest factor `c` such that `peak * c = m < 0.5`.
-- Use Huber's `linear_lowprob` Bernoulli factory (implemented in _bernoulli.py_) (Huber 2016)<sup>[**(18)**](#Note18)</sup>, taking the values found for `c` and `m`.  Testing shows that the choice of `m` is crucial for performance.
+- Use Huber's `linear_lowprob` Bernoulli factory (implemented in _bernoulli.py_) (Huber 2016)<sup>[**(17)**](#Note17)</sup>, taking the values found for `c` and `m`.  Testing shows that the choice of `m` is crucial for performance.
 
 But doing so apparently worsened the performance (in terms of random bits used) compared to the simple rejection approach.
 
 <a id=Exponential_Sampler_Extension></a>
 ### Exponential Sampler: Extension
 
-The code above supports rational-valued &lambda; parameters.  It can be extended to support any real-valued &lambda; parameter greater than 0, as long as &lambda; can be rewritten as the sum of one or more components whose fractional parts can each be simulated by a Bernoulli factory algorithm that outputs heads with probability equal to that fractional part.<sup>[**(19)**](#Note19)</sup>.
+The code above supports rational-valued &lambda; parameters.  It can be extended to support any real-valued &lambda; parameter greater than 0, as long as &lambda; can be rewritten as the sum of one or more components whose fractional parts can each be simulated by a Bernoulli factory algorithm that outputs heads with probability equal to that fractional part.<sup>[**(18)**](#Note18)</sup>.
 
 More specifically:
 
@@ -598,11 +590,7 @@ The code above can then be modified as follows:
 
 - `zero_or_one_exp_minus(a, b)` is replaced with the **algorithm for exp(&minus; _z_)** described in "[**Bernoulli Factory Algorithms**](https://peteroupc.github.io/bernoulli.html)", where _z_ is the real-valued &lambda; parameter.
 
-- `logisticexp(a, b, index+1)` is replaced with a modified **LogisticExp** algorithm described as follows.  Here, the probability `1/(1+exp(x/(y*pow(2, prec))))` is rewritten as 1/(1+exp(&Sigma;<sub>_i_</sub>_LI_\[_i_\]/2<sup>_prec_</sup>) * &Pi;<sub>_i_</sub> exp(_LF_\[_i_\]/2<sup>_prec_</sup>) ).
-    1. For each component _LC_\[_i_\], create a Bernoulli generator that uses the following algorithm: (a) With probability 1/(2<sup>_prec_</sup>), return 1 if the algorithm that simulates _LF_\[_i_\] returns 1; (b) Return 0.
-    2. Return 0 with probability 1/2.
-    3. Call **ZeroOrOneExpMinus** with _x_ = &Sigma;<sub>_i_</sub> _LI_\[_i_\] and _y_ = 2<sup>_prec_</sup>.  If this call returns 0, go to step 2.
-    4. For each component _LC_\[_i_\], call the **algorithm for exp(&minus; _z_)**described in "[**Bernoulli Factory Algorithms**](https://peteroupc.github.io/bernoulli.html)", where _z_ is that component. If any of these calls returns 0, go to step 2.  Otherwise, return 1.
+- `logisticexp(a, b, index+1)` is replaced with the **algorithm for 1 / 1 + exp(_z_ / 2<sup>_index_ + 1</sup>)) (LogisticExp)** described in "[**Bernoulli Factory Algorithms**](https://peteroupc.github.io/bernoulli.html)", where _z_ is the real-valued &lambda; parameter.
 
 <a id=Correctness_Testing></a>
 ## Correctness Testing
@@ -715,7 +703,7 @@ On the other hand, modifying this algorithm to produce random numbers in any oth
 <a id=An_Example_The_Continuous_Bernoulli_Distribution></a>
 ### An Example: The Continuous Bernoulli Distribution
 
-The continuous Bernoulli distribution (Loaiza-Ganem and Cunningham 2019)<sup>[**(20)**](#Note20)</sup> was designed to considerably improve performance of variational autoencoders (a machine learning model) in modeling continuous data that takes values in the interval [0, 1], including "almost-binary" image data.
+The continuous Bernoulli distribution (Loaiza-Ganem and Cunningham 2019)<sup>[**(19)**](#Note19)</sup> was designed to considerably improve performance of variational autoencoders (a machine learning model) in modeling continuous data that takes values in the interval [0, 1], including "almost-binary" image data.
 
 The continous Bernoulli distribution takes one parameter `lamda` (a number in [0, 1]), and takes on values in the interval [0, 1] with a probability proportional to&mdash;
 
@@ -787,7 +775,7 @@ The _bit complexity_ of an algorithm that generates random numbers is measured a
 Existing work shows how to calculate the bit complexity for any distribution of random numbers:
 
 - For a 1-dimensional continuous distribution, the bit complexity is bounded from below by `DE + prec - 1` random bits, where `DE` is the differential entropy for the distribution and _prec_ is the number of bits in the random number's fractional part (Devroye and Gravel 2015)<sup>[**(3)**](#Note3)</sup>.
-- For a discrete distribution (a distribution of random integers with separate probabilities of occurring), the bit complexity is bounded from below by the binary entropies of all the probabilities involved, summed together (Knuth and Yao 1976)<sup>[**(21)**](#Note21)</sup>.  (For a given probability _p_, the binary entropy is `p*log2(1/p)`.)  An optimal algorithm will come within 2 bits of this lower bound on average.
+- For a discrete distribution (a distribution of random integers with separate probabilities of occurring), the bit complexity is bounded from below by the binary entropies of all the probabilities involved, summed together (Knuth and Yao 1976)<sup>[**(20)**](#Note20)</sup>.  (For a given probability _p_, the binary entropy is `p*log2(1/p)`.)  An optimal algorithm will come within 2 bits of this lower bound on average.
 
 For example, in the case of the exponential distribution, `DE` is log2(exp(1)/&lambda;), so the minimum bit complexity for this distribution is log2(exp(1)/&lambda;) + _prec_ &minus; 1, so that if _prec_ = 20, this minimum is about 20.443 bits when &lambda; = 1, decreases when &lambda; goes up, and increases when &lambda; goes down.  In the case of any other continuous distribution, `DE` is the integral of `f(x) * log2(1/f(x))` over all valid values `x`, where `f` is the distribution's density function.
 
@@ -803,7 +791,7 @@ In general, if an algorithm calls other algorithms that generate random numbers,
 
 The beta and exponential samplers given here will generally use many more bits on average than the lower bounds on bit complexity, especially since they generate a PSRN one digit at a time.
 
-The `zero_or_one` method generally uses 2 random bits on average, due to its nature as a Bernoulli trial involving random bits, see also (Lumbroso 2013, Appendix B)<sup>[**(22)**](#Note22)</sup>.  However, it uses no random bits if both its parameters are the same.
+The `zero_or_one` method generally uses 2 random bits on average, due to its nature as a Bernoulli trial involving random bits, see also (Lumbroso 2013, Appendix B)<sup>[**(21)**](#Note21)</sup>.  However, it uses no random bits if both its parameters are the same.
 
 For **SampleGeometricBag** with base 2, the bit complexity has two components.
 
@@ -816,12 +804,12 @@ For **SampleGeometricBag** with base 2, the bit complexity has two components.
 
 **FillGeometricBag**'s bit complexity is rather easy to find.  For base 2, it uses only one bit to sample each unfilled digit at positions less than `p`. (For bases other than 2, sampling _each_ digit this way might not be optimal, since the digits are generated one at a time and random bits are not recycled over several digits.)  As a result, for an algorithm that uses both **SampleGeometricBag** and **FillGeometricBag** with `p` bits, these two contribute, on average, anywhere from `p + g * 2` to `p + g * 4` bits to the complexity, where `g` is the number of calls to **SampleGeometricBag**. (This complexity could be increased by 1 bit if **FillGeometricBag** is implemented with a rounding mechanism other than simple truncation.)
 
-The complexity of **ZeroOrOneExpMinus** (which outputs 1 with probability exp(&minus;_x_/_y_)) was discussed in some detail by (Canonne et al. 2020)<sup>[**(23)**](#Note23)</sup>, but not in terms of its bit complexity.  The special case of &gamma; =_x_/_y_ = 0 requires no bits.  If &gamma; is an integer greater than 1, then the bit complexity is the same as that of sampling a geometric(exp(&minus;1)) random number, but truncated to \[0, &gamma;\]. (In this document, the geometric(`n`) distribution has the density function `pow(x, n) * (1 - x)`.)
+The complexity of the **algorithm for exp(&minus;_x_/_y_)** (which outputs 1 with probability exp(&minus;_x_/_y_)) was discussed in some detail by (Canonne et al. 2020)<sup>[**(22)**](#Note22)</sup>, but not in terms of its bit complexity.  The special case of &gamma; =_x_/_y_ = 0 requires no bits.  If &gamma; is an integer greater than 1, then the bit complexity is the same as that of sampling a geometric(exp(&minus;1)) random number, but truncated to \[0, &gamma;\]. (In this document, the geometric(`n`) distribution has the density function `pow(x, n) * (1 - x)`.)
 
 - Optimal lower bound: Has a complicated formula for general &gamma;, but approaches `log2(exp(1)-(exp(1)+1)*ln(exp(1)-1))` = 2.579730853... bits with increasing &gamma;.
 - Optimal upper bound: Optimal lower bound plus 2.
 - The actual implementation's average bit complexity is generally&mdash;
-    - the expected number of calls to **ZeroOrOneExpMinus** (with &gamma; = 1), which is the expected value of the truncated geometric distribution described above, times
+    - the expected number of calls to the **algorithm for exp(&minus;_x_/_y_)** (with &gamma; = 1), which is the expected value of the truncated geometric distribution described above, times
     - the bit complexity for each such call.
 
 If &gamma; is 1 or less, the optimal bit complexity is determined as the complexity of sampling a random integer _k_ with probability function&mdash;
@@ -833,7 +821,7 @@ and the optimal lower bound is found by taking the binary entropy of each probab
 - Optimal lower bound: Again, this has a complicated formula (see the appendix for SymPy code), but it appears to be highest at about 1.85 bits, which is reached when &gamma; is about 0.848.
 - Optimal upper bound: Optimal lower bound plus 2.
 - The actual implementation's average bit complexity is generally&mdash;
-    - the expected number of calls to `zero_or_one`, which was determined to be exp(&gamma;) in (Canonne et al. 2020)<sup>[**(23)**](#Note23)</sup>, times
+    - the expected number of calls to `zero_or_one`, which was determined to be exp(&gamma;) in (Canonne et al. 2020)<sup>[**(22)**](#Note22)</sup>, times
     - the bit complexity for each such call (which is generally 2, but is lower in the case of &gamma; = 1, which involves `zero_or_one(1, 1)` that uses no random bits).
 
 If &gamma; is a non-integer greater than 1, the bit complexity is the sum of the bit complexities for its integer part and for its fractional part.
@@ -847,7 +835,7 @@ If &gamma; is a non-integer greater than 1, the bit complexity is the sum of the
 - giving each item an exponential random number with &lambda; = _w_, call it a key, and
 - choosing the item with the smallest key
 
-(see also (Efraimidis 2015)<sup>[**(24)**](#Note24)</sup>). However, using fully-sampled exponential random numbers as keys (such as the naïve idiom `-ln(1-RNDU01())/w` in common floating-point arithmetic) can lead to inexact sampling, since the keys have a limited precision, it's possible for multiple items to have the same random key (which can make sampling those items depend on their order rather than on randomness), and the maximum weight is unknown.  Partially-sampled e-rands, as given in this document, eliminate the problem of inexact sampling.  This is notably because the `exprandless` method returns one of only two answers&mdash;either "less" or "greater"&mdash;and samples from both e-rands as necessary so that they will differ from each other by the end of the operation.  (This is not a problem because randomly generated real numbers are expected to differ from each other almost surely.) Another reason is that partially-sampled e-rands have potentially arbitrary precision.
+(see also (Efraimidis 2015)<sup>[**(23)**](#Note23)</sup>). However, using fully-sampled exponential random numbers as keys (such as the naïve idiom `-ln(1-RNDU01())/w` in common floating-point arithmetic) can lead to inexact sampling, since the keys have a limited precision, it's possible for multiple items to have the same random key (which can make sampling those items depend on their order rather than on randomness), and the maximum weight is unknown.  Partially-sampled e-rands, as given in this document, eliminate the problem of inexact sampling.  This is notably because the `exprandless` method returns one of only two answers&mdash;either "less" or "greater"&mdash;and samples from both e-rands as necessary so that they will differ from each other by the end of the operation.  (This is not a problem because randomly generated real numbers are expected to differ from each other almost surely.) Another reason is that partially-sampled e-rands have potentially arbitrary precision.
 
 <a id=Open_Questions></a>
 ## Open Questions
@@ -896,31 +884,29 @@ I acknowledge Claude Gravel who reviewed a previous version of this article.
 
 <small><sup id=Note15>(15)</sup> Devroye, L., [**_Non-Uniform Random Variate Generation_**](http://luc.devroye.org/rnbookindex.html), 1986.</small>
 
-<small><sup id=Note16>(16)</sup> Morina, G., Łatuszyński, K., et al., "From the Bernoulli Factory to a Dice Enterprise via Perfect Sampling of Markov Chains", 2019.</small>
+<small><sup id=Note16>(16)</sup> Lee, A., Doucet, A. and Łatuszyński, K., 2014. Perfect simulation using atomic regeneration with application to Sequential Monte Carlo, arXiv:1407.5770v1  [stat.CO]</small>
 
-<small><sup id=Note17>(17)</sup> Lee, A., Doucet, A. and Łatuszyński, K., 2014. Perfect simulation using atomic regeneration with application to Sequential Monte Carlo, arXiv:1407.5770v1  [stat.CO]</small>
+<small><sup id=Note17>(17)</sup> Huber, M., "[**Optimal linear Bernoulli factories for small mean problems**](https://arxiv.org/abs/1507.00843v2)", arXiv:1507.00843v2 [math.PR], 2016.</small>
 
-<small><sup id=Note18>(18)</sup> Huber, M., "[**Optimal linear Bernoulli factories for small mean problems**](https://arxiv.org/abs/1507.00843v2)", arXiv:1507.00843v2 [math.PR], 2016.</small>
+<small><sup id=Note18>(18)</sup> In fact, thanks to the "geometric bag" technique of Flajolet et al. (2010), that fractional part can even be a uniform random number in [0, 1] whose contents are built up digit by digit.</small>
 
-<small><sup id=Note19>(19)</sup> In fact, thanks to the "geometric bag" technique of Flajolet et al. (2010), that fractional part can even be a uniform random number in [0, 1] whose contents are built up digit by digit.</small>
+<small><sup id=Note19>(19)</sup> Loaiza-Ganem, G., Cunningham, J.P., "[**The continuous Bernoulli: fixing a pervasive error in variational autoencoders**](https://arxiv.org/abs/1907.06845v5)", arXiv:1907.06845v5  [stat.ML], 2019.</small>
 
-<small><sup id=Note20>(20)</sup> Loaiza-Ganem, G., Cunningham, J.P., "[**The continuous Bernoulli: fixing a pervasive error in variational autoencoders**](https://arxiv.org/abs/1907.06845v5)", arXiv:1907.06845v5  [stat.ML], 2019.</small>
+<small><sup id=Note20>(20)</sup> Knuth, Donald E. and Andrew Chi-Chih Yao. "The complexity of nonuniform random number generation", in _Algorithms and Complexity: New Directions and Recent Results_, 1976.</small>
 
-<small><sup id=Note21>(21)</sup> Knuth, Donald E. and Andrew Chi-Chih Yao. "The complexity of nonuniform random number generation", in _Algorithms and Complexity: New Directions and Recent Results_, 1976.</small>
+<small><sup id=Note21>(21)</sup> Lumbroso, J., "[**Optimal Discrete Uniform Generation from Coin Flips, and Applications**](https://arxiv.org/abs/1304.1916)", arXiv:1304.1916 [cs.DS].</small>
 
-<small><sup id=Note22>(22)</sup> Lumbroso, J., "[**Optimal Discrete Uniform Generation from Coin Flips, and Applications**](https://arxiv.org/abs/1304.1916)", arXiv:1304.1916 [cs.DS].</small>
+<small><sup id=Note22>(22)</sup> Canonne, C., Kamath, G., Steinke, T., "[**The Discrete Gaussian for Differential Privacy**](https://arxiv.org/abs/2004.00010v2)", arXiv:2004.00010v2 [cs.DS], 2020.</small>
 
-<small><sup id=Note23>(23)</sup> Canonne, C., Kamath, G., Steinke, T., "[**The Discrete Gaussian for Differential Privacy**](https://arxiv.org/abs/2004.00010v2)", arXiv:2004.00010v2 [cs.DS], 2020.</small>
-
-<small><sup id=Note24>(24)</sup> Efraimidis, P. "[**Weighted Random Sampling over Data Streams**](https://arxiv.org/abs/1012.0256v2)", arXiv:1012.0256v2 [cs.DS], 2015.</small>
+<small><sup id=Note23>(23)</sup> Efraimidis, P. "[**Weighted Random Sampling over Data Streams**](https://arxiv.org/abs/1012.0256v2)", arXiv:1012.0256v2 [cs.DS], 2015.</small>
 
 <a id=Appendix></a>
 ## Appendix
 
-<a id=SymPy_Formula_for_ZeroOrOneExpMinus></a>
-### SymPy Formula for ZeroOrOneExpMinus
+<a id=SymPy_Formula_for_the_algorithm_for_exp_minus__x___y></a>
+### SymPy Formula for the algorithm for exp(&minus;_x_/_y_)
 
-The following Python code uses SymPy to plot the bit complexity lower bound for **ZeroOrOneExpMinus** when &gamma; is 1 or less:
+The following Python code uses SymPy to plot the bit complexity lower bound for the **algorithm for exp(&minus;_x_/_y_)** when &gamma; is 1 or less:
 
 ```
 def ent(p):
