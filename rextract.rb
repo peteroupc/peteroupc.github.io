@@ -24,6 +24,27 @@ def newtree()
   return [PHI, nil, nil]
 end
 
+# Passes a random face (in [0, numFaces))
+# to the extractor tree, using
+# the "entropy-preserving binarization" in S. Pae,
+# "Binarization Trees and Random Number Generation",
+# arXiv:1602.06058v2 [cs.DS]
+def extractFace(tree, randomFace, numFaces, output)
+  raise if numFaces<2
+  if numFaces==2
+    extract(tree, randomFace, output)
+    return
+  end
+  if randomFace>0
+    extract(tree, 1, output)
+  end
+  if randomFace<numFaces-1
+    for b in 0...((numFaces-1)-randomFace)
+      extract(tree, 0, output)
+    end
+  end
+end
+
 # Uses the given extractor tree to
 # extract randomness from the given bit (0 or 1)
 # and write output bits to the given array.
@@ -79,6 +100,15 @@ tree=newtree()
 for i in 0...200000
   bit=rand(10)==0 ? 1 : 0
   extract(tree,bit,output)
+end
+a=output.map{|x| x==0 ? 1 : nil}.compact.length
+b=output.map{|x| x==1 ? 1 : nil}.compact.length
+p [a,b]
+
+output=[]
+tree=newtree()
+for i in 0...200000
+  extractFace(tree,rand(6)+rand(6),12,output)
 end
 a=output.map{|x| x==0 ? 1 : nil}.compact.length
 b=output.map{|x| x==1 ? 1 : nil}.compact.length

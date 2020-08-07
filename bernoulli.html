@@ -71,7 +71,6 @@
 <li><a href="#1_phi"><strong>1 / &phi;</strong></a></li>
 <li><a href="#sqrt_2_minus_1"><strong>sqrt(2) &minus; 1</strong></a></li>
 <li><a href="#1_sqrt_2"><strong>1/sqrt(2)</strong></a></li>
-<li><a href="#Euler_s_constant_gamma"><strong>Euler&#39;s constant &gamma;</strong></a></li>
 <li><a href="#arctan__x___y___y___x"><strong>arctan(<em>x</em>/<em>y</em>) * <em>y</em>/<em>x</em></strong></a></li>
 <li><a href="#pi_12"><strong>&pi; / 12</strong></a></li>
 <li><a href="#pi_4"><strong>&pi; / 4</strong></a></li>
@@ -590,7 +589,7 @@
 
 <h4>Continued Fractions</h4>
 
-<p>The following algorithm simulates a probability expressed as a regular continued fraction of the following form: 0 + 1 / (<em>a</em>[1] + 1 / (<em>a</em>[2] + 1 / (<em>a</em>[3] + ... ))).  The <em>a</em>[<em>i</em>] are the <em>partial denominators</em> and must be greater than 0.  Inspired by (Flajolet et al., 2010, &quot;Finite graphs (Markov chains) and rational functions&quot;)<sup><a href="#Note1"><strong>(1)</strong></a></sup>, I developed the following algorithm. Note that the algorithm will work even if the partial denominators are not integers.</p>
+<p>The following algorithm simulates a probability expressed as a regular continued fraction of the following form: 0 + 1 / (<em>a</em>[1] + 1 / (<em>a</em>[2] + 1 / (<em>a</em>[3] + ... ))).  The <em>a</em>[<em>i</em>] are the <em>partial denominators</em>, none of which may be 0.  Inspired by (Flajolet et al., 2010, &quot;Finite graphs (Markov chains) and rational functions&quot;)<sup><a href="#Note1"><strong>(1)</strong></a></sup>, I developed the following algorithm. Note that the algorithm will work even if some or all of the partial denominators are not integers or are negative.</p>
 
 <p>The algorithm begins with <em>pos</em> equal to 1.  Then the following steps are taken.</p>
 
@@ -619,7 +618,7 @@
 </ol>
 </blockquote>
 
-<p>A <em>generalized continued fraction</em> has the form 0 + <em>b</em>[1] / (<em>a</em>[1] + <em>b</em>[2] / (<em>a</em>[2] + <em>b</em>[3] / (<em>a</em>[3] + ... ))).  The <em>a</em>[<em>i</em>] are the same as before, but the <em>b</em>[<em>i</em>] are the <em>partial numerators</em> and must be greater than 0. The following is an algorithm to simulate a probability in the form of a generalized continued fraction; this algorithm employs an equivalence transform from generalized to regular continued fractions.  The algorithm will work even if the partial numerators and denominators are not integers.</p>
+<p>A <em>generalized continued fraction</em> has the form 0 + <em>b</em>[1] / (<em>a</em>[1] + <em>b</em>[2] / (<em>a</em>[2] + <em>b</em>[3] / (<em>a</em>[3] + ... ))).  The <em>a</em>[<em>i</em>] are the same as before, but the <em>b</em>[<em>i</em>] are the <em>partial numerators</em>, none of which may be 0. The following is an algorithm to simulate a probability in the form of a generalized continued fraction; this algorithm employs an equivalence transform from generalized to regular continued fractions.  The algorithm will work even if some or all of the partial numerators and denominators are not integers or are negative.</p>
 
 <p>The algorithm begins with <em>pos</em> and <em>r</em> both equal to 1.  Then the following steps are taken.</p>
 
@@ -668,12 +667,6 @@
 <li>If <em>pos</em> is 1, return 1 with probability 1/2.  If <em>pos</em> is greater than 1, then with probability 2/3, generate an unbiased random bit and return that bit.</li>
 <li>Run this algorithm recursively, but with <em>pos</em> = <em>pos</em> + 1.  If the result is 1, return 0.  Otherwise, go to step 1.</li>
 </ol>
-
-<p><a id=Euler_s_constant_gamma></a></p>
-
-<h4>Euler&#39;s constant &gamma;</h4>
-
-<p>The continued fraction algorithm will help solve an open question of (Flajolet et al., 2010)<sup><a href="#Note1"><strong>(1)</strong></a></sup>, asking for a &quot;&#39;natural&#39; experiment, whose probability of success is &gamma;&quot;, where &gamma; is the Euler&ndash;Mascheroni constant, which is about 5.77215....  This involves a rather non-trivial continued fraction expansion discovered by (Hessami Pilehrood and Hessami Pilehrood 2013)<sup><a href="#Note24"><strong>(24)</strong></a></sup> and whose approximate regular continued fraction equivalent is: 2, -4, 3.2, 8.1944..., -0.1848..., .... See Theorem 3 of the paper for the complete definition of this continued fraction (which is in generalized continued fraction form, so that the algorithm for generalized continued fractions has to be used).</p>
 
 <p><a id=arctan__x___y___y___x></a></p>
 
@@ -1199,8 +1192,6 @@
 <p><small><sup id=Note22>(22)</sup> Brassard, G., Devroye, L., Gravel, C., &quot;Remote Sampling with Applications to General Entanglement Simulation&quot;, Entropy 2019(21)(92), doi:10.3390/e21010092.</small></p>
 
 <p><small><sup id=Note23>(23)</sup> Devroye, L., Gravel, C., &quot;<a href="https://arxiv.org/abs/1502.02539v5"><strong>Sampling with arbitrary precision</strong></a>&quot;, arXiv:1502.02539v5 [cs.IT], 2015.</small></p>
-
-<p><small><sup id=Note24>(24)</sup> Kh. Hessami Pilehrood, T. Hessami Pilehrood, On a continued fraction expansion for Euler&#39;s constant, <em>Journal of Number Theory</em> 133, Issue 2, 2013, Pages 769-786, <a href="https://doi.org/10.1016/j.jnt.2012.08.016">https://doi.org/10.1016/j.jnt.2012.08.016</a>, <a href="http://www.sciencedirect.com/science/article/pii/S0022314X12002624">http://www.sciencedirect.com/science/article/pii/S0022314X12002624</a>.</small></p>
 
 <p><a id=Appendix></a></p>
 
