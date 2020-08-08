@@ -175,9 +175,10 @@ One of them is the "geometric bag" technique by Flajolet and others (2010)<sup>[
 
 The algorithm **SampleGeometricBag** is a Bernoulli factory algorithm.  For base 2, the algorithm is described as follows (see (Flajolet et al., 2010)<sup>[**(7)**](#Note7)</sup>):
 
-1.  Let N be a geometric(1/2) random number.  In this document, a geometric(_p_) random number is the number of failures before the first success, where a success occurs with probability _p_. For example, flip fair coins until tails is flipped, then let N be the number of heads flipped this way.
-2.  If the item at position N in the geometric bag (positions start at 0) is not set to a digit (e.g., 0 or 1 for base 2), set the item at that position to a digit chosen uniformly at random (e.g., either 0 or 1 for base 2), increasing the geometric bag's capacity as necessary.  (As a result of this step, there may be "gaps" in the geometric bag where no digit was sampled yet.)
-3.  Return the item at position N.
+1.  Set _N_ to 0.
+2.  With probability 1/2, go to the next step.  Otherwise, add 1 to _N_ and repeat this step.
+2.  If the item at position _N_ in the geometric bag (positions start at 0) is not set to a digit (e.g., 0 or 1 for base 2), set the item at that position to a digit chosen uniformly at random (e.g., either 0 or 1 for base 2), increasing the geometric bag's capacity as necessary.  (As a result of this step, there may be "gaps" in the geometric bag where no digit was sampled yet.)
+3.  Return the item at position _N_.
 
 For another base (radix), such as 10 for decimal, this can be implemented as **URandLess**, with **a** being an empty uniform PSRN and **b** being the geometric bag. Return 1 if the algorithm returns `true`, or 0 otherwise.
 

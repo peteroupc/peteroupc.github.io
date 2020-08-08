@@ -252,9 +252,10 @@
 <p>The algorithm <strong>SampleGeometricBag</strong> is a Bernoulli factory algorithm.  For base 2, the algorithm is described as follows (see (Flajolet et al., 2010)<sup><a href="#Note7"><strong>(7)</strong></a></sup>):</p>
 
 <ol>
-<li> Let N be a geometric(1/2) random number.  In this document, a geometric(<em>p</em>) random number is the number of failures before the first success, where a success occurs with probability <em>p</em>. For example, flip fair coins until tails is flipped, then let N be the number of heads flipped this way.</li>
-<li> If the item at position N in the geometric bag (positions start at 0) is not set to a digit (e.g., 0 or 1 for base 2), set the item at that position to a digit chosen uniformly at random (e.g., either 0 or 1 for base 2), increasing the geometric bag&#39;s capacity as necessary.  (As a result of this step, there may be &quot;gaps&quot; in the geometric bag where no digit was sampled yet.)</li>
-<li> Return the item at position N.</li>
+<li> Set <em>N</em> to 0.</li>
+<li> With probability 1/2, go to the next step.  Otherwise, add 1 to <em>N</em> and repeat this step.</li>
+<li> If the item at position <em>N</em> in the geometric bag (positions start at 0) is not set to a digit (e.g., 0 or 1 for base 2), set the item at that position to a digit chosen uniformly at random (e.g., either 0 or 1 for base 2), increasing the geometric bag&#39;s capacity as necessary.  (As a result of this step, there may be &quot;gaps&quot; in the geometric bag where no digit was sampled yet.)</li>
+<li> Return the item at position <em>N</em>.</li>
 </ol>
 
 <p>For another base (radix), such as 10 for decimal, this can be implemented as <strong>URandLess</strong>, with <strong>a</strong> being an empty uniform PSRN and <strong>b</strong> being the geometric bag. Return 1 if the algorithm returns <code>true</code>, or 0 otherwise.</p>
