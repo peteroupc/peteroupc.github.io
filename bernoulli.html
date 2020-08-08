@@ -589,7 +589,7 @@
 
 <h4>Continued Fractions</h4>
 
-<p>The following algorithm simulates a probability expressed as a regular continued fraction of the following form: 0 + 1 / (<em>a</em>[1] + 1 / (<em>a</em>[2] + 1 / (<em>a</em>[3] + ... ))).  The <em>a</em>[<em>i</em>] are the <em>partial denominators</em>, none of which may be 0.  Inspired by (Flajolet et al., 2010, &quot;Finite graphs (Markov chains) and rational functions&quot;)<sup><a href="#Note1"><strong>(1)</strong></a></sup>, I developed the following algorithm. Note that the algorithm will work even if some or all of the partial denominators are not integers or are negative.</p>
+<p>The following algorithm simulates a probability expressed as a regular continued fraction of the following form: 0 + 1 / (<em>a</em>[1] + 1 / (<em>a</em>[2] + 1 / (<em>a</em>[3] + ... ))).  The <em>a</em>[<em>i</em>] are the <em>partial denominators</em>, none of which may be 0.  Inspired by (Flajolet et al., 2010, &quot;Finite graphs (Markov chains) and rational functions&quot;)<sup><a href="#Note1"><strong>(1)</strong></a></sup>, I developed the following algorithm. Note that the algorithm will work even if some or all of the partial denominators are not integers or are negative (unless the first is negative), and the algorithm is designed to allow the partial denominators to be calculated &quot;on the fly&quot;.</p>
 
 <p>The algorithm begins with <em>pos</em> equal to 1.  Then the following steps are taken.</p>
 
@@ -618,7 +618,7 @@
 </ol>
 </blockquote>
 
-<p>A <em>generalized continued fraction</em> has the form 0 + <em>b</em>[1] / (<em>a</em>[1] + <em>b</em>[2] / (<em>a</em>[2] + <em>b</em>[3] / (<em>a</em>[3] + ... ))).  The <em>a</em>[<em>i</em>] are the same as before, but the <em>b</em>[<em>i</em>] are the <em>partial numerators</em>, none of which may be 0. The following is an algorithm to simulate a probability in the form of a generalized continued fraction; this algorithm employs an equivalence transform from generalized to regular continued fractions.  The algorithm will work even if some or all of the partial numerators and denominators are not integers or are negative.</p>
+<p>A <em>generalized continued fraction</em> has the form 0 + <em>b</em>[1] / (<em>a</em>[1] + <em>b</em>[2] / (<em>a</em>[2] + <em>b</em>[3] / (<em>a</em>[3] + ... ))).  The <em>a</em>[<em>i</em>] are the same as before, but the <em>b</em>[<em>i</em>] are the <em>partial numerators</em>, none of which may be 0. The following is an algorithm to simulate a probability in the form of a generalized continued fraction; this algorithm employs an equivalence transform from generalized to regular continued fractions.  Otherwise, the same notes to the regular algorithm apply here.  Note that the algorithm will work even if some or all of the partial denominators are not integers or are negative (unless the first partial numerator or denominator is negative), and the algorithm is designed to allow the partial denominators to be calculated &quot;on the fly&quot;.</p>
 
 <p>The algorithm begins with <em>pos</em> and <em>r</em> both equal to 1.  Then the following steps are taken.</p>
 
@@ -626,7 +626,7 @@
 <li>Set <em>r</em> to 1 / (<em>r</em> * <em>b</em>[<em>pos</em>]), then set <em>k</em> to <em>a</em>[<em>pos</em>] * <em>r</em>. (<em>k</em> is the partial denominator for the equivalent regular continued fraction.)</li>
 <li>If the partial numerator/denominator pair at <em>pos</em> is the last, return a number that is 1 with probability 1/abs(<em>k</em>) and 0 otherwise.</li>
 <li>Set <em>kp</em> to abs(<em>k</em>) and <em>s</em> to 1.</li>
-<li>Set <em>r2</em> to 1 / (<em>r</em> * <em>b</em>[<em>pos</em> + 1]).  If <em>a</em>[<em>pos</em> + 1] * <em>r2</em> is less than 0, set <em>kp</em> to <em>k</em> &minus; 1 and <em>s</em> to 0. (This step accounts for negative partial numerators and denominators.)</li>
+<li>Set <em>r2</em> to 1 / (<em>r</em> * <em>b</em>[<em>pos</em> + 1]).  If <em>a</em>[<em>pos</em> + 1] * <em>r2</em> is less than 0, set <em>kp</em> to <em>kp</em> &minus; 1 and <em>s</em> to 0. (This step accounts for negative partial numerators and denominators.)</li>
 <li>With probability <em>kp</em>/(1+<em>kp</em>), return a number that is 1 with probability 1/<em>kp</em> and 0 otherwise.</li>
 <li>Run this algorithm recursively, but with <em>pos</em> = <em>pos</em> + 1 and <em>r</em> = <em>r</em>.  If the result is <em>s</em>, return 0.  Otherwise, go to step 5.</li>
 </ol>
