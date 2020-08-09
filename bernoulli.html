@@ -71,6 +71,7 @@
 <ul>
 <li><a href="#Digit_Expansions"><strong>Digit Expansions</strong></a></li>
 <li><a href="#Continued_Fractions"><strong>Continued Fractions</strong></a></li>
+<li><a href="#Continued_Logarithms"><strong>Continued Logarithms</strong></a></li>
 <li><a href="#1_phi"><strong>1 / &phi;</strong></a></li>
 <li><a href="#sqrt_2_minus_1"><strong>sqrt(2) &minus; 1</strong></a></li>
 <li><a href="#1_sqrt_2"><strong>1/sqrt(2)</strong></a></li>
@@ -571,16 +572,26 @@
 
 <p>&nbsp;&nbsp;&nbsp;&nbsp;1 &minus; (<em>c</em>[0] * (1 &minus; &lambda;) + ... + <em>c</em>[<em>i</em>] * (1 &minus; &lambda;)<sup><em>i</em> + 1</sup> + ...),</p>
 
-<p>where <em>c</em>[<em>i</em>] &gt;= 0 are the coefficients of the series.  The algorithm follows:</p>
+<p>where <em>c</em>[<em>i</em>] &gt;= 0 are the coefficients of the series and sum to 1.  The algorithm follows:</p>
 
 <ol>
-<li>Let <em>csum</em> be the sum of the coefficients.</li>
+<li>Let_s_ be 1 and let <em>r</em> be 1.</li>
 <li>Set <em>dsum</em> to 0 and <em>i</em> to 0.</li>
-<li>Flip the input coin.  If it returns 1, return 1.</li>
-<li>If <em>i</em> is equal to or greater than the number of coefficients, set <em>ci</em> to 0.  Otherwise, set <em>ci</em> to <em>c</em>[<em>i</em>]/<em>csum</em>.</li>
-<li>With probability <em>ci</em>/(1 &minus; <em>dsum</em>), return 0.</li>
+<li>Flip the input coin.  If it returns <em>s</em>, return <em>r</em>.</li>
+<li>If <em>i</em> is equal to or greater than the number of coefficients, set <em>ci</em> to 0.  Otherwise, set <em>ci</em> to <em>c</em>[<em>i</em>].</li>
+<li>With probability <em>ci</em>/(1 &minus; <em>dsum</em>), return 1 minus <em>r</em>.</li>
 <li>Add <em>ci</em> to <em>dsum</em>, add 1 to <em>i</em>, and go to step 3.</li>
 </ol>
+
+<p>As pointed out in Mendo (2019)<sup><a href="#Note5"><strong>(5)</strong></a></sup>, variants of this algorithm work for power series of the form&mdash;</p>
+
+<ol>
+<li>(<em>c</em>[0] * (&lambda;) + ... + <em>c</em>[<em>i</em>] * (1 &lambda;)<sup><em>i</em> + 1</sup> + ...), or</li>
+<li>(<em>c</em>[0] * (1 &minus; &lambda;) + ... + <em>c</em>[<em>i</em>] * (1 &minus; &lambda;)<sup><em>i</em> + 1</sup> + ...), or</li>
+<li>1 &minus; (<em>c</em>[0] * (1 &minus; &lambda;) + ... + <em>c</em>[<em>i</em>] * (1 &minus; &lambda;)<sup><em>i</em> + 1</sup> + ...).</li>
+</ol>
+
+<p>In the first two cases, replace &quot;let <em>r</em> be 1&quot; in the algorithm with &quot;let <em>r</em> be 0&quot;.  In the last two cases, replace &quot;let <em>s</em> be 0&quot; with &quot;let <em>s</em> be 1&quot;.</p>
 
 <p><a id=Algorithms_for_Irrational_Constants></a></p>
 
@@ -606,7 +617,7 @@
 
 <h4>Continued Fractions</h4>
 
-<p>The following algorithm simulates a probability expressed as a regular continued fraction of the following form: 0 + 1 / (<em>a</em>[1] + 1 / (<em>a</em>[2] + 1 / (<em>a</em>[3] + ... ))).  The <em>a</em>[<em>i</em>] are the <em>partial denominators</em>, none of which may have an absolute value less than 1.  Inspired by (Flajolet et al., 2010, &quot;Finite graphs (Markov chains) and rational functions&quot;)<sup><a href="#Note1"><strong>(1)</strong></a></sup>, I developed the following algorithm. Note that the algorithm will work even if some or all of the partial denominators are not integers or are negative (unless the first is negative), and the algorithm is designed to allow the partial denominators to be calculated &quot;on the fly&quot;.</p>
+<p>The following algorithm simulates a probability expressed as a simple continued fraction of the following form: 0 + 1 / (<em>a</em>[1] + 1 / (<em>a</em>[2] + 1 / (<em>a</em>[3] + ... ))).  The <em>a</em>[<em>i</em>] are the <em>partial denominators</em>, none of which may have an absolute value less than 1.  Inspired by (Flajolet et al., 2010, &quot;Finite graphs (Markov chains) and rational functions&quot;)<sup><a href="#Note1"><strong>(1)</strong></a></sup>, I developed the following algorithm. Note that the algorithm will work even if some or all of the partial denominators are not integers or are negative (unless the first is negative), and the algorithm is designed to allow the partial denominators to be calculated &quot;on the fly&quot;.</p>
 
 <p>The algorithm begins with <em>pos</em> equal to 1.  Then the following steps are taken.</p>
 
@@ -615,15 +626,15 @@
 <li>If the partial denominator at <em>pos</em> is the last, return a number that is 1 with probability 1/<em>k</em> and 0 otherwise.</li>
 <li>If <em>a</em>[<em>pos</em>] is less than 0, set <em>kp</em> to <em>k</em> &minus; 1 and <em>s</em> to 0.  Otherwise, set <em>kp</em> to <em>k</em> and <em>s</em> to 1. (This step accounts for negative partial denominators.)</li>
 <li>With probability <em>kp</em>/(1+<em>kp</em>), return a number that is 1 with probability 1/<em>kp</em> and 0 otherwise.</li>
-<li>Run this algorithm recursively, but with <em>pos</em> = <em>pos</em> + 1.  If the result is <em>s</em>, return 0.  Otherwise, go to step 3.</li>
+<li>Run this algorithm recursively, but with <em>pos</em> = <em>pos</em> + 1.  If the result is <em>s</em>, return 0.  Otherwise, go to step 4.</li>
 </ol>
 
-<p>A <em>generalized continued fraction</em> has the form 0 + <em>b</em>[1] / (<em>a</em>[1] + <em>b</em>[2] / (<em>a</em>[2] + <em>b</em>[3] / (<em>a</em>[3] + ... ))).  The <em>a</em>[<em>i</em>] are the same as before, but the <em>b</em>[<em>i</em>] are the <em>partial numerators</em>. The following is an algorithm to simulate a probability in the form of a generalized continued fraction; this algorithm employs an equivalence transform from generalized to regular continued fractions. Note that the algorithm will work even if some or all of the partial numerators and denominators are not integers or are negative (unless <em>b</em>[1] &lt; 0, <em>a</em>[1] &lt; 0, or abs(<em>b</em>[<em>i</em>]/<em>a</em>[<em>i</em>]) &gt; 1 for some <em>i</em>), and the algorithm is designed to allow <em>a</em> and <em>b</em> to be calculated &quot;on the fly&quot;.</p>
+<p>A <em>generalized continued fraction</em> has the form 0 + <em>b</em>[1] / (<em>a</em>[1] + <em>b</em>[2] / (<em>a</em>[2] + <em>b</em>[3] / (<em>a</em>[3] + ... ))).  The <em>a</em>[<em>i</em>] are the same as before, but the <em>b</em>[<em>i</em>] are the <em>partial numerators</em>. The following is an algorithm to simulate a probability in the form of a generalized continued fraction; this algorithm employs an equivalence transform from generalized to simple continued fractions. Note that the algorithm will work even if some or all of the partial numerators and denominators are not integers or are negative (as long as the equivalent simple continued fraction works), and the algorithm is designed to allow <em>a</em> and <em>b</em> to be calculated &quot;on the fly&quot;.</p>
 
 <p>The algorithm begins with <em>pos</em> and <em>r</em> both equal to 1.  Then the following steps are taken.</p>
 
 <ol>
-<li>Set <em>r</em> to 1 / (<em>r</em> * <em>b</em>[<em>pos</em>]), then set <em>k</em> to <em>a</em>[<em>pos</em>] * <em>r</em>. (<em>k</em> is the partial denominator for the equivalent regular continued fraction.)</li>
+<li>Set <em>r</em> to 1 / (<em>r</em> * <em>b</em>[<em>pos</em>]), then set <em>k</em> to <em>a</em>[<em>pos</em>] * <em>r</em>. (<em>k</em> is the partial denominator for the equivalent simple continued fraction.)</li>
 <li>If the partial numerator/denominator pair at <em>pos</em> is the last, return a number that is 1 with probability 1/abs(<em>k</em>) and 0 otherwise.</li>
 <li>Set <em>kp</em> to abs(<em>k</em>) and <em>s</em> to 1.</li>
 <li>Set <em>r2</em> to 1 / (<em>r</em> * <em>b</em>[<em>pos</em> + 1]).  If <em>a</em>[<em>pos</em> + 1] * <em>r2</em> is less than 0, set <em>kp</em> to <em>kp</em> &minus; 1 and <em>s</em> to 0. (This step accounts for negative partial numerators and denominators.)</li>
@@ -632,16 +643,17 @@
 </ol>
 
 <blockquote>
-<p><strong>Note:</strong> If any of these algorithms encounters a probability outside the interval [0, 1], the entire algorithm will fail for that continued fraction.</p>
+<p><strong>Notes:</strong></p>
 
-<p><strong>Note:</strong> These algorithms will work for continued fractions of the form &quot;1 &minus; ...&quot; (rather than &quot;0 + ...&quot;) if&mdash;</p>
+<ul>
+<li><p>If any of these algorithms encounters a probability outside the interval [0, 1], the entire algorithm will fail for that continued fraction.</p></li>
+<li><p>These algorithms will work for continued fractions of the form &quot;1 &minus; ...&quot; (rather than &quot;0 + ...&quot;) if&mdash;</p>
 
 <ul>
 <li>before running the algorithm, the first partial numerator and denominator have their sign removed, and</li>
 <li>after running the algorithm, 1 minus the result (rather than just the result) is taken.</li>
-</ul>
-
-<p><strong>Note:</strong>  The following is an alternative way to write the first algorithm, which better shows the inspiration because it shows how the &quot;even parity construction&quot; (or the two-coin special case) as well as the &quot;1 &minus; <em>x</em>&quot; construction can be used to develop rational number simulators that are as big as their continued fraction expansions, as suggested in the cited part of the Flajolet paper.  However, it only works if the size of the continued fraction expansion (here, <em>size</em>) is known in advance.</p>
+</ul></li>
+<li><p>The following is an alternative way to write the first algorithm, which better shows the inspiration because it shows how the &quot;even parity construction&quot; (or the two-coin special case) as well as the &quot;1 &minus; <em>x</em>&quot; construction can be used to develop rational number simulators that are as big as their continued fraction expansions, as suggested in the cited part of the Flajolet paper.  However, it only works if the size of the continued fraction expansion (here, <em>size</em>) is known in advance.</p>
 
 <ol>
 <li>Set <em>i</em> to <em>size</em>.</li>
@@ -654,8 +666,24 @@
 <li>Subtract 1 from <em>i</em>.</li>
 </ol></li>
 <li>Flip the last input coin created by this algorithm, and return the result.</li>
-</ol>
+</ol></li>
+</ul>
 </blockquote>
+
+<p><a id=Continued_Logarithms></a></p>
+
+<h4>Continued Logarithms</h4>
+
+<p>The <em>continued logarithm</em> (Gosper 1978)<sup><a href="#Note23"><strong>(23)</strong></a></sup>, (Borwein et al., 2016)<sup><a href="#Note24"><strong>(24)</strong></a></sup> of a number in (0, 1) has the following continued fraction form: 0 + (1 / 2<sup><em>c</em>[1]</sup>) / (1 + (1 / 2<sup><em>c</em>[2]</sup>) / (1 + ...)), where <em>c</em>[<em>i</em>] are the coefficients of the continued logarithm and all 0 or greater.  I have come up with the following algorithm that simulates a probability expressed as a continued logarithm expansion:</p>
+
+<p>The algorithm begins with <em>pos</em> equal to 1.  Then the following steps are taken.</p>
+
+<ol>
+<li>Set <em>k</em> to <em>a</em>[<em>pos</em>].</li>
+<li>If the coefficient at <em>pos</em> is the last, return a number that is 1 with probability 1/(2<sup><em>a</em>[<em>pos</em>]</sup>) and 0 otherwise.</li>
+<li>With probability 1/2, return a number that is 1 with probability 1/(2<sup><em>a</em>[<em>pos</em>]</sup>) and 0 otherwise.</li>
+<li>Run this algorithm recursively, but with <em>pos</em> = <em>pos</em> + 1.  If the result is 1, return 0.  Otherwise, go to step 3.</li>
+</ol>
 
 <p><a id=1_phi></a></p>
 
@@ -683,7 +711,7 @@
 
 <h4>1/sqrt(2)</h4>
 
-<p>This third example of a continued fraction shows how to simulate a probability 1/<em>z</em>, where <em>z</em> &gt; 1 has a known regular continued fraction expansion.  In this case, the partial denominators are as follows: floor(<em>z</em>), <em>a</em>[1], <em>a</em>[2], ..., where the <em>a</em>[<em>i</em>] are <em>z</em>&#39;s partial denominators (not including <em>z</em>&#39;s integer part).  In the example of 1/sqrt(2), the partial denominators are 1, 2, 2, 2, ..., where 1 comes first since floor(sqrt(2)) = 1.  The algorithm to simulate 1/sqrt(2) is as follows:</p>
+<p>This third example of a continued fraction shows how to simulate a probability 1/<em>z</em>, where <em>z</em> &gt; 1 has a known simple continued fraction expansion.  In this case, the partial denominators are as follows: floor(<em>z</em>), <em>a</em>[1], <em>a</em>[2], ..., where the <em>a</em>[<em>i</em>] are <em>z</em>&#39;s partial denominators (not including <em>z</em>&#39;s integer part).  In the example of 1/sqrt(2), the partial denominators are 1, 2, 2, 2, ..., where 1 comes first since floor(sqrt(2)) = 1.  The algorithm to simulate 1/sqrt(2) is as follows:</p>
 
 <p>The algorithm begins with <em>pos</em> equal to 1.  Then the following steps are taken.</p>
 
@@ -1215,6 +1243,10 @@
 
 <p><small><sup id=Note22>(22)</sup> Devroye, L., Gravel, C., &quot;<a href="https://arxiv.org/abs/1502.02539v5"><strong>Sampling with arbitrary precision</strong></a>&quot;, arXiv:1502.02539v5 [cs.IT], 2015.</small></p>
 
+<p><small><sup id=Note23>(23)</sup> Bill Gosper, &quot;Continued Fraction Arithmetic&quot;, 1978.</small></p>
+
+<p><small><sup id=Note24>(24)</sup> Borwein, J.M., Calkin, N.J., et al., &quot;Continued logarithms and associated continued fractions&quot;, 2016.</small></p>
+
 <p><a id=Appendix></a></p>
 
 <h2>Appendix</h2>
@@ -1271,7 +1303,7 @@ for i in range(iters):
 <ol>
 <li>Set <em>n</em> to the number of items (sampled and unsampled digits) in the geometric bag.</li>
 <li>Of the first <em>n</em> items in the geometric bag, sample each of the unsampled digits uniformly at random.  Then let <em>uk</em> be the geometric bag&#39;s digit expansion up to the first <em>n</em> digits after the point.</li>
-<li>Calculate the lowest and highest values of <em>f</em> in the interval [<em>uk</em>, <em>uk</em> + <em>b</em><sup>&minus;<em>n</em></sup>], call them <em>fmin</em> and <em>fmax</em>. If abs(<em>fmin</em> - <em>fmax</em>) &lt;= 2 * <em>b</em><sup>&minus;<em>k</em></sup>, calculate (<em>fmax</em> + <em>fmin</em>) / 2 as the approximation.  Otherwise, add 1 to <em>n</em> and go to the previous substep.</li>
+<li>Calculate the lowest and highest values of <em>f</em> in the interval [<em>uk</em>, <em>uk</em> + <em>b</em><sup>&minus;<em>n</em></sup>], call them <em>fmin</em> and <em>fmax</em>. If abs(<em>fmin</em> &minus; <em>fmax</em>) &lt;= 2 * <em>b</em><sup>&minus;<em>k</em></sup>, calculate (<em>fmax</em> + <em>fmin</em>) / 2 as the approximation.  Otherwise, add 1 to <em>n</em> and go to the previous substep.</li>
 </ol></li>
 <li>Let <em>pk</em> be the approximation&#39;s digit expansion up to the <em>k</em> digits after the point.  For example, if <em>f</em>(<em>U</em>) is &pi; and <em>k</em> is 2, <em>pk</em> is 314.</li>
 <li>If <em>pk</em> + 1 &lt;= <em>v</em>, return 0. If <em>pk</em> &minus; 2 &gt;= <em>v</em>, return 1.  If neither is the case, add 1 to <em>k</em> and go to step 2.</li>

@@ -53,6 +53,7 @@ This page also contains algorithms to exactly simulate probabilities that are ir
     - [**Algorithms for Irrational Constants**](#Algorithms_for_Irrational_Constants)
         - [**Digit Expansions**](#Digit_Expansions)
         - [**Continued Fractions**](#Continued_Fractions)
+        - [**Continued Logarithms**](#Continued_Logarithms)
         - [**1 / &phi;**](#1_phi)
         - [**sqrt(2) &minus; 1**](#sqrt_2_minus_1)
         - [**1/sqrt(2)**](#1_sqrt_2)
@@ -434,14 +435,22 @@ Mendo (2019)<sup>[**(5)**](#Note5)</sup> gave a Bernoulli factory algorithm for 
 
 &nbsp;&nbsp;&nbsp;&nbsp;1 &minus; (_c_\[0\] \* (1 &minus; &lambda;) + ... + _c_\[_i_\] * (1 &minus; &lambda;)<sup>_i_ + 1</sup> + ...),
 
-where _c_\[_i_\] >= 0 are the coefficients of the series.  The algorithm follows:
+where _c_\[_i_\] >= 0 are the coefficients of the series and sum to 1.  The algorithm follows:
 
-1. Let _csum_ be the sum of the coefficients.
+1. Let_s_ be 1 and let _r_ be 1.
 2. Set _dsum_ to 0 and _i_ to 0.
-3. Flip the input coin.  If it returns 1, return 1.
-4. If _i_ is equal to or greater than the number of coefficients, set _ci_ to 0.  Otherwise, set _ci_ to _c_\[_i_\]/_csum_.
-5. With probability _ci_/(1 &minus; _dsum_), return 0.
+3. Flip the input coin.  If it returns _s_, return _r_.
+4. If _i_ is equal to or greater than the number of coefficients, set _ci_ to 0.  Otherwise, set _ci_ to _c_\[_i_\].
+5. With probability _ci_/(1 &minus; _dsum_), return 1 minus _r_.
 6. Add _ci_ to _dsum_, add 1 to _i_, and go to step 3.
+
+As pointed out in Mendo (2019)<sup>[**(5)**](#Note5)</sup>, variants of this algorithm work for power series of the form&mdash;
+
+1. (_c_\[0\] \* (&lambda;) + ... + _c_\[_i_\] * (1 &lambda;)<sup>_i_ + 1</sup> + ...), or
+2. (_c_\[0\] \* (1 &minus; &lambda;) + ... + _c_\[_i_\] * (1 &minus; &lambda;)<sup>_i_ + 1</sup> + ...), or
+3. 1 &minus; (_c_\[0\] \* (1 &minus; &lambda;) + ... + _c_\[_i_\] * (1 &minus; &lambda;)<sup>_i_ + 1</sup> + ...).
+
+In the first two cases, replace "let _r_ be 1" in the algorithm with "let _r_ be 0".  In the last two cases, replace "let _s_ be 0" with "let _s_ be 1".
 
 <a id=Algorithms_for_Irrational_Constants></a>
 ### Algorithms for Irrational Constants
@@ -462,7 +471,7 @@ In the algorithm (see also (Brassard et al., 2019)<sup>[**(19)**](#Note19)</sup>
 <a id=Continued_Fractions></a>
 #### Continued Fractions
 
-The following algorithm simulates a probability expressed as a regular continued fraction of the following form: 0 + 1 / (_a_\[1\] + 1 / (_a_\[2\] + 1 / (_a_\[3\] + ... ))).  The _a_\[_i_\] are the _partial denominators_, none of which may have an absolute value less than 1.  Inspired by (Flajolet et al., 2010, "Finite graphs (Markov chains) and rational functions")<sup>[**(1)**](#Note1)</sup>, I developed the following algorithm. Note that the algorithm will work even if some or all of the partial denominators are not integers or are negative (unless the first is negative), and the algorithm is designed to allow the partial denominators to be calculated "on the fly".
+The following algorithm simulates a probability expressed as a simple continued fraction of the following form: 0 + 1 / (_a_\[1\] + 1 / (_a_\[2\] + 1 / (_a_\[3\] + ... ))).  The _a_\[_i_\] are the _partial denominators_, none of which may have an absolute value less than 1.  Inspired by (Flajolet et al., 2010, "Finite graphs (Markov chains) and rational functions")<sup>[**(1)**](#Note1)</sup>, I developed the following algorithm. Note that the algorithm will work even if some or all of the partial denominators are not integers or are negative (unless the first is negative), and the algorithm is designed to allow the partial denominators to be calculated "on the fly".
 
 The algorithm begins with _pos_ equal to 1.  Then the following steps are taken.
 
@@ -470,35 +479,47 @@ The algorithm begins with _pos_ equal to 1.  Then the following steps are taken.
 2. If the partial denominator at _pos_ is the last, return a number that is 1 with probability 1/_k_ and 0 otherwise.
 3. If _a_\[_pos_\] is less than 0, set _kp_ to _k_ &minus; 1 and _s_ to 0.  Otherwise, set _kp_ to _k_ and _s_ to 1. (This step accounts for negative partial denominators.)
 4. With probability _kp_/(1+_kp_), return a number that is 1 with probability 1/_kp_ and 0 otherwise.
-5. Run this algorithm recursively, but with _pos_ = _pos_ + 1.  If the result is _s_, return 0.  Otherwise, go to step 3.
+5. Run this algorithm recursively, but with _pos_ = _pos_ + 1.  If the result is _s_, return 0.  Otherwise, go to step 4.
 
-A _generalized continued fraction_ has the form 0 + _b_\[1\] / (_a_\[1\] + _b_\[2\] / (_a_\[2\] + _b_\[3\] / (_a_\[3\] + ... ))).  The _a_\[_i_\] are the same as before, but the _b_\[_i_\] are the _partial numerators_. The following is an algorithm to simulate a probability in the form of a generalized continued fraction; this algorithm employs an equivalence transform from generalized to regular continued fractions. Note that the algorithm will work even if some or all of the partial numerators and denominators are not integers or are negative (unless _b_\[1\] < 0, _a_\[1\] < 0, or abs(_b_\[_i_\]/_a_\[_i_\]) > 1 for some _i_), and the algorithm is designed to allow _a_ and _b_ to be calculated "on the fly".
+A _generalized continued fraction_ has the form 0 + _b_\[1\] / (_a_\[1\] + _b_\[2\] / (_a_\[2\] + _b_\[3\] / (_a_\[3\] + ... ))).  The _a_\[_i_\] are the same as before, but the _b_\[_i_\] are the _partial numerators_. The following is an algorithm to simulate a probability in the form of a generalized continued fraction; this algorithm employs an equivalence transform from generalized to simple continued fractions. Note that the algorithm will work even if some or all of the partial numerators and denominators are not integers or are negative (as long as the equivalent simple continued fraction works), and the algorithm is designed to allow _a_ and _b_ to be calculated "on the fly".
 
 The algorithm begins with _pos_ and _r_ both equal to 1.  Then the following steps are taken.
 
-1. Set _r_ to 1 / (_r_ * _b_\[_pos_\]), then set _k_ to _a_\[_pos_\] * _r_. (_k_ is the partial denominator for the equivalent regular continued fraction.)
+1. Set _r_ to 1 / (_r_ * _b_\[_pos_\]), then set _k_ to _a_\[_pos_\] * _r_. (_k_ is the partial denominator for the equivalent simple continued fraction.)
 2. If the partial numerator/denominator pair at _pos_ is the last, return a number that is 1 with probability 1/abs(_k_) and 0 otherwise.
 3. Set _kp_ to abs(_k_) and _s_ to 1.
 4. Set _r2_ to 1 / (_r_ * _b_\[_pos_ + 1\]).  If _a_\[_pos_ + 1\] * _r2_ is less than 0, set _kp_ to _kp_ &minus; 1 and _s_ to 0. (This step accounts for negative partial numerators and denominators.)
 5. With probability _kp_/(1+_kp_), return a number that is 1 with probability 1/_kp_ and 0 otherwise.
 6. Run this algorithm recursively, but with _pos_ = _pos_ + 1 and _r_ = _r_.  If the result is _s_, return 0.  Otherwise, go to step 5.
 
-> **Note:** If any of these algorithms encounters a probability outside the interval [0, 1], the entire algorithm will fail for that continued fraction.
+> **Notes:**
 >
-> **Note:** These algorithms will work for continued fractions of the form "1 &minus; ..." (rather than "0 + ...") if&mdash;
+> - If any of these algorithms encounters a probability outside the interval [0, 1], the entire algorithm will fail for that continued fraction.
 >
-> - before running the algorithm, the first partial numerator and denominator have their sign removed, and
-> - after running the algorithm, 1 minus the result (rather than just the result) is taken.
+> - These algorithms will work for continued fractions of the form "1 &minus; ..." (rather than "0 + ...") if&mdash;
+>     - before running the algorithm, the first partial numerator and denominator have their sign removed, and
+>     - after running the algorithm, 1 minus the result (rather than just the result) is taken.
 >
-> **Note:**  The following is an alternative way to write the first algorithm, which better shows the inspiration because it shows how the "even parity construction" (or the two-coin special case) as well as the "1 &minus; _x_" construction can be used to develop rational number simulators that are as big as their continued fraction expansions, as suggested in the cited part of the Flajolet paper.  However, it only works if the size of the continued fraction expansion (here, _size_) is known in advance.
->
-> 1. Set _i_ to _size_.
-> 2. Create an input coin that does the following: "Return a number that is 1 with probability 1/_a_\[_size_\] or 0 otherwise".
-> 3. While _i_ is 1 or greater:
->     1. Set _k_ to _a_\[_i_\].
->     2. Create an input coin that takes the previous input coin and _k_ and does the following: "(a) With probability _k_/(1+_k_), return a number that is 1 with probability 1/_k_ and 0 otherwise; (b) Flip the previous input coin.  If the result is 1, return 0.  Otherwise, go to step (a)".  (The probability _k_/(1+_k_) is related to &lambda;/(1+&lambda;) = 1 &minus; 1/(1+&lambda;), which involves the even-parity construction&mdash;or the two-coin special case&mdash;for 1/(1+&lambda;) as well as complementation for "1 &minus; _x_".)
->     3. Subtract 1 from _i_.
-> 4. Flip the last input coin created by this algorithm, and return the result.
+> - The following is an alternative way to write the first algorithm, which better shows the inspiration because it shows how the "even parity construction" (or the two-coin special case) as well as the "1 &minus; _x_" construction can be used to develop rational number simulators that are as big as their continued fraction expansions, as suggested in the cited part of the Flajolet paper.  However, it only works if the size of the continued fraction expansion (here, _size_) is known in advance.
+>     1. Set _i_ to _size_.
+>     2. Create an input coin that does the following: "Return a number that is 1 with probability 1/_a_\[_size_\] or 0 otherwise".
+>     3. While _i_ is 1 or greater:
+>         1. Set _k_ to _a_\[_i_\].
+>         2. Create an input coin that takes the previous input coin and _k_ and does the following: "(a) With probability _k_/(1+_k_), return a number that is 1 with probability 1/_k_ and 0 otherwise; (b) Flip the previous input coin.  If the result is 1, return 0.  Otherwise, go to step (a)".  (The probability _k_/(1+_k_) is related to &lambda;/(1+&lambda;) = 1 &minus; 1/(1+&lambda;), which involves the even-parity construction&mdash;or the two-coin special case&mdash;for 1/(1+&lambda;) as well as complementation for "1 &minus; _x_".)
+>         3. Subtract 1 from _i_.
+>     4. Flip the last input coin created by this algorithm, and return the result.
+
+<a id=Continued_Logarithms></a>
+#### Continued Logarithms
+
+The _continued logarithm_ (Gosper 1978)<sup>[**(23)**](#Note23)</sup>, (Borwein et al., 2016)<sup>[**(24)**](#Note24)</sup> of a number in (0, 1) has the following continued fraction form: 0 + (1 / 2<sup>_c_\[1\]</sup>) / (1 + (1 / 2<sup>_c_\[2\]</sup>) / (1 + ...)), where _c_\[_i_\] are the coefficients of the continued logarithm and all 0 or greater.  I have come up with the following algorithm that simulates a probability expressed as a continued logarithm expansion:
+
+The algorithm begins with _pos_ equal to 1.  Then the following steps are taken.
+
+1. Set _k_ to _a_\[_pos_\].
+2. If the coefficient at _pos_ is the last, return a number that is 1 with probability 1/(2<sup>_a_\[_pos_\]</sup>) and 0 otherwise.
+3. With probability 1/2, return a number that is 1 with probability 1/(2<sup>_a_\[_pos_\]</sup>) and 0 otherwise.
+4. Run this algorithm recursively, but with _pos_ = _pos_ + 1.  If the result is 1, return 0.  Otherwise, go to step 3.
 
 <a id=1_phi></a>
 #### 1 / &phi;
@@ -519,7 +540,7 @@ Another example of a continued fraction is that of the fractional part of the sq
 <a id=1_sqrt_2></a>
 #### 1/sqrt(2)
 
-This third example of a continued fraction shows how to simulate a probability 1/_z_, where _z_ > 1 has a known regular continued fraction expansion.  In this case, the partial denominators are as follows: floor(_z_), _a_\[1\], _a_\[2\], ..., where the _a_\[_i_\] are _z_'s partial denominators (not including _z_'s integer part).  In the example of 1/sqrt(2), the partial denominators are 1, 2, 2, 2, ..., where 1 comes first since floor(sqrt(2)) = 1.  The algorithm to simulate 1/sqrt(2) is as follows:
+This third example of a continued fraction shows how to simulate a probability 1/_z_, where _z_ > 1 has a known simple continued fraction expansion.  In this case, the partial denominators are as follows: floor(_z_), _a_\[1\], _a_\[2\], ..., where the _a_\[_i_\] are _z_'s partial denominators (not including _z_'s integer part).  In the example of 1/sqrt(2), the partial denominators are 1, 2, 2, 2, ..., where 1 comes first since floor(sqrt(2)) = 1.  The algorithm to simulate 1/sqrt(2) is as follows:
 
 The algorithm begins with _pos_ equal to 1.  Then the following steps are taken.
 
@@ -786,6 +807,10 @@ Points with invalid &#x03F5; values were suppressed.  For the low-mean algorithm
 
 <small><sup id=Note22>(22)</sup> Devroye, L., Gravel, C., "[**Sampling with arbitrary precision**](https://arxiv.org/abs/1502.02539v5)", arXiv:1502.02539v5 [cs.IT], 2015.</small>
 
+<small><sup id=Note23>(23)</sup> Bill Gosper, "Continued Fraction Arithmetic", 1978.</small>
+
+<small><sup id=Note24>(24)</sup> Borwein, J.M., Calkin, N.J., et al., "Continued logarithms and associated continued fractions", 2016.</small>
+
 <a id=Appendix></a>
 ## Appendix
 
@@ -835,7 +860,7 @@ Say we have a Bernoulli factory algorithm that takes a coin with probability of 
 3. Calculate an approximation of _f_(_U_) as follows:
     1. Set _n_ to the number of items (sampled and unsampled digits) in the geometric bag.
     2. Of the first _n_ items in the geometric bag, sample each of the unsampled digits uniformly at random.  Then let _uk_ be the geometric bag's digit expansion up to the first _n_ digits after the point.
-    3. Calculate the lowest and highest values of _f_ in the interval \[_uk_, _uk_ + _b_<sup>&minus;_n_</sup>\], call them _fmin_ and _fmax_. If abs(_fmin_ - _fmax_) <= 2 * _b_<sup>&minus;_k_</sup>, calculate (_fmax_ + _fmin_) / 2 as the approximation.  Otherwise, add 1 to _n_ and go to the previous substep.
+    3. Calculate the lowest and highest values of _f_ in the interval \[_uk_, _uk_ + _b_<sup>&minus;_n_</sup>\], call them _fmin_ and _fmax_. If abs(_fmin_ &minus; _fmax_) <= 2 * _b_<sup>&minus;_k_</sup>, calculate (_fmax_ + _fmin_) / 2 as the approximation.  Otherwise, add 1 to _n_ and go to the previous substep.
 4. Let _pk_ be the approximation's digit expansion up to the _k_ digits after the point.  For example, if _f_(_U_) is &pi; and _k_ is 2, _pk_ is 314.
 5. If _pk_ + 1 <= _v_, return 0. If _pk_ &minus; 2 >= _v_, return 1.  If neither is the case, add 1 to _k_ and go to step 2.
 
