@@ -674,14 +674,13 @@
 
 <h4>Continued Logarithms</h4>
 
-<p>The <em>continued logarithm</em> (Gosper 1978)<sup><a href="#Note23"><strong>(23)</strong></a></sup>, (Borwein et al., 2016)<sup><a href="#Note24"><strong>(24)</strong></a></sup> of a number in (0, 1) has the following continued fraction form: 0 + (1 / 2<sup><em>c</em>[1]</sup>) / (1 + (1 / 2<sup><em>c</em>[2]</sup>) / (1 + ...)), where <em>c</em>[<em>i</em>] are the coefficients of the continued logarithm and all 0 or greater.  I have come up with the following algorithm that simulates a probability expressed as a continued logarithm expansion:</p>
+<p>The <em>continued logarithm</em> (Gosper 1978)<sup><a href="#Note20"><strong>(20)</strong></a></sup>, (Borwein et al., 2016)<sup><a href="#Note21"><strong>(21)</strong></a></sup> of a number in (0, 1) has the following continued fraction form: 0 + (1 / 2<sup><em>c</em>[1]</sup>) / (1 + (1 / 2<sup><em>c</em>[2]</sup>) / (1 + ...)), where <em>c</em>[<em>i</em>] are the coefficients of the continued logarithm and all 0 or greater.  I have come up with the following algorithm that simulates a probability expressed as a continued logarithm expansion:</p>
 
 <p>The algorithm begins with <em>pos</em> equal to 1.  Then the following steps are taken.</p>
 
 <ol>
-<li>Set <em>k</em> to <em>a</em>[<em>pos</em>].</li>
-<li>If the coefficient at <em>pos</em> is the last, return a number that is 1 with probability 1/(2<sup><em>a</em>[<em>pos</em>]</sup>) and 0 otherwise.</li>
-<li>With probability 1/2, return a number that is 1 with probability 1/(2<sup><em>a</em>[<em>pos</em>]</sup>) and 0 otherwise.</li>
+<li>If the coefficient at <em>pos</em> is the last, return a number that is 1 with probability 1/(2<sup><em>c</em>[<em>pos</em>]</sup>) and 0 otherwise.</li>
+<li>With probability 1/2, return a number that is 1 with probability 1/(2<sup><em>c</em>[<em>pos</em>]</sup>) and 0 otherwise.</li>
 <li>Run this algorithm recursively, but with <em>pos</em> = <em>pos</em> + 1.  If the result is 1, return 0.  Otherwise, go to step 3.</li>
 </ol>
 
@@ -813,7 +812,7 @@
 
 <h4>exp(&minus;<em>x</em>/<em>y</em>)</h4>
 
-<p>This algorithm takes integers <em>x</em> &gt;= 0 and <em>y</em> &gt; 0 and outputs 1 with probability <code>exp(-x/y)</code> or 0 otherwise. It originates from (Canonne et al. 2020)<sup><a href="#Note20"><strong>(20)</strong></a></sup>.</p>
+<p>This algorithm takes integers <em>x</em> &gt;= 0 and <em>y</em> &gt; 0 and outputs 1 with probability <code>exp(-x/y)</code> or 0 otherwise. It originates from (Canonne et al. 2020)<sup><a href="#Note22"><strong>(22)</strong></a></sup>.</p>
 
 <ol>
 <li>Special case: If <em>x</em> is 0, return 1. (This is because the probability becomes <code>exp(0) = 1</code>.)</li>
@@ -839,7 +838,7 @@
 <p>The algorithm is then as follows:</p>
 
 <ul>
-<li>For each component <em>LC</em>[<em>i</em>], call the <strong>algorithm for exp(&minus; <em>LI</em>[<em>i</em>]/1)</strong>, and call the <strong>general martingale algorithm</strong> adapted for <strong>exp(&minus;&lambda;)</strong> using the input coin that simulates  <em>LF</em>[<em>i</em>].  If any of these calls returns 0, return 0; otherwise, return 1. (See also (Canonne et al. 2020)<sup><a href="#Note20"><strong>(20)</strong></a></sup>.)</li>
+<li>For each component <em>LC</em>[<em>i</em>], call the <strong>algorithm for exp(&minus; <em>LI</em>[<em>i</em>]/1)</strong>, and call the <strong>general martingale algorithm</strong> adapted for <strong>exp(&minus;&lambda;)</strong> using the input coin that simulates  <em>LF</em>[<em>i</em>].  If any of these calls returns 0, return 0; otherwise, return 1. (See also (Canonne et al. 2020)<sup><a href="#Note22"><strong>(22)</strong></a></sup>.)</li>
 </ul>
 
 <p><a id=a___b___z></a></p>
@@ -896,7 +895,7 @@
 
 <h4>Simulating the Probability Generating Function</h4>
 
-<p>Let <em>X</em> be a random number that follows a discrete distribution (one that takes on a countable number of values).  The following algorithm generates heads with probability <strong>E</strong>[&lambda;<sup><em>X</em></sup>], that is, the expected (average) value of &lambda;<sup><em>X</em></sup>.  <strong>E</strong>[&lambda;<sup><em>X</em></sup>] is the distribution&#39;s <em>probability generating function</em>, also known as <em>factorial moment generating function</em> (Dughmi et al. 2017)<sup><a href="#Note21"><strong>(21)</strong></a></sup>.</p>
+<p>Let <em>X</em> be a random number that follows a discrete distribution (one that takes on a countable number of values).  The following algorithm generates heads with probability <strong>E</strong>[&lambda;<sup><em>X</em></sup>], that is, the expected (average) value of &lambda;<sup><em>X</em></sup>.  <strong>E</strong>[&lambda;<sup><em>X</em></sup>] is the distribution&#39;s <em>probability generating function</em>, also known as <em>factorial moment generating function</em> (Dughmi et al. 2017)<sup><a href="#Note23"><strong>(23)</strong></a></sup>.</p>
 
 <ol>
 <li>Generate a random number <em>N</em> of the given distribution.</li>
@@ -1237,15 +1236,15 @@
 
 <p><small><sup id=Note19>(19)</sup> Brassard, G., Devroye, L., Gravel, C., &quot;Remote Sampling with Applications to General Entanglement Simulation&quot;, Entropy 2019(21)(92), doi:10.3390/e21010092.</small></p>
 
-<p><small><sup id=Note20>(20)</sup> Canonne, C., Kamath, G., Steinke, T., &quot;<a href="https://arxiv.org/abs/2004.00010v2"><strong>The Discrete Gaussian for Differential Privacy</strong></a>&quot;, arXiv:2004.00010v2 [cs.DS], 2020.</small></p>
+<p><small><sup id=Note20>(20)</sup> Bill Gosper, &quot;Continued Fraction Arithmetic&quot;, 1978.</small></p>
 
-<p><small><sup id=Note21>(21)</sup> Shaddin Dughmi, Jason D. Hartline, Robert Kleinberg, and Rad Niazadeh. 2017. Bernoulli Factories and Black-Box Reductions in Mechanism Design. In <em>Proceedings of 49th Annual ACM SIGACT Symposium on the Theory of Computing</em>, Montreal, Canada, June 2017 (STOC’17).</small></p>
+<p><small><sup id=Note21>(21)</sup> Borwein, J.M., Calkin, N.J., et al., &quot;Continued logarithms and associated continued fractions&quot;, 2016.</small></p>
 
-<p><small><sup id=Note22>(22)</sup> Devroye, L., Gravel, C., &quot;<a href="https://arxiv.org/abs/1502.02539v5"><strong>Sampling with arbitrary precision</strong></a>&quot;, arXiv:1502.02539v5 [cs.IT], 2015.</small></p>
+<p><small><sup id=Note22>(22)</sup> Canonne, C., Kamath, G., Steinke, T., &quot;<a href="https://arxiv.org/abs/2004.00010v2"><strong>The Discrete Gaussian for Differential Privacy</strong></a>&quot;, arXiv:2004.00010v2 [cs.DS], 2020.</small></p>
 
-<p><small><sup id=Note23>(23)</sup> Bill Gosper, &quot;Continued Fraction Arithmetic&quot;, 1978.</small></p>
+<p><small><sup id=Note23>(23)</sup> Shaddin Dughmi, Jason D. Hartline, Robert Kleinberg, and Rad Niazadeh. 2017. Bernoulli Factories and Black-Box Reductions in Mechanism Design. In <em>Proceedings of 49th Annual ACM SIGACT Symposium on the Theory of Computing</em>, Montreal, Canada, June 2017 (STOC’17).</small></p>
 
-<p><small><sup id=Note24>(24)</sup> Borwein, J.M., Calkin, N.J., et al., &quot;Continued logarithms and associated continued fractions&quot;, 2016.</small></p>
+<p><small><sup id=Note24>(24)</sup> Devroye, L., Gravel, C., &quot;<a href="https://arxiv.org/abs/1502.02539v5"><strong>Sampling with arbitrary precision</strong></a>&quot;, arXiv:1502.02539v5 [cs.IT], 2015.</small></p>
 
 <p><a id=Appendix></a></p>
 
@@ -1293,7 +1292,7 @@ for i in range(iters):
 
 <h3>Alternative Implementation of Bernoulli Factories</h3>
 
-<p>Say we have a Bernoulli factory algorithm that takes a coin with probability of heads of <em>p</em> and outputs 1 with probability <em>f</em>(<em>p</em>).  If this algorithm takes a geometric bag (a partially-sampled uniform random number or PSRN) as the input coin and flips that coin using <strong>SampleGeometricBag</strong>, the algorithm could instead be implemented as follows in order to return 1 with probability <em>f</em>(<em>U</em>), where <em>U</em> is the number represented by the geometric bag (see also (Brassard et al., 2019)<sup><a href="#Note19"><strong>(19)</strong></a></sup>, (Devroye 1986, p. 769)<sup><a href="#Note3"><strong>(3)</strong></a></sup>, (Devroye and Gravel 2015)<sup><a href="#Note22"><strong>(22)</strong></a></sup>:</p>
+<p>Say we have a Bernoulli factory algorithm that takes a coin with probability of heads of <em>p</em> and outputs 1 with probability <em>f</em>(<em>p</em>).  If this algorithm takes a geometric bag (a partially-sampled uniform random number or PSRN) as the input coin and flips that coin using <strong>SampleGeometricBag</strong>, the algorithm could instead be implemented as follows in order to return 1 with probability <em>f</em>(<em>U</em>), where <em>U</em> is the number represented by the geometric bag (see also (Brassard et al., 2019)<sup><a href="#Note19"><strong>(19)</strong></a></sup>, (Devroye 1986, p. 769)<sup><a href="#Note3"><strong>(3)</strong></a></sup>, (Devroye and Gravel 2015)<sup><a href="#Note24"><strong>(24)</strong></a></sup>:</p>
 
 <ol>
 <li>Set <em>v</em> to 0 and <em>k</em> to 1.</li>
