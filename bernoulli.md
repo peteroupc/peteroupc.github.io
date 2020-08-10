@@ -49,6 +49,7 @@ This page also contains algorithms to exactly simulate probabilities that are ir
         - [**&lambda; * _x_/_y_ (linear Bernoulli factories)**](#lambda__x___y__linear_Bernoulli_factories)
         - [**(&lambda; * _x_/_y_)<sup>_i_</sup>**](#lambda__x___y___i)
         - [**&#x03F5; / &lambda;**](#x03F5_lambda)
+        - [**Bernstein Polynomials**](#Bernstein_Polynomials)
         - [**Certain Power Series**](#Certain_Power_Series)
     - [**Algorithms for Irrational Constants**](#Algorithms_for_Irrational_Constants)
         - [**Digit Expansions**](#Digit_Expansions)
@@ -428,6 +429,16 @@ The paper that presented the 2016 algorithm also included a third algorithm, des
 3. With probability &#x03F5;, return 1.
 4. Run the **2014 algorithm**, **2016 algorithm**, or **2019 algorithm**, with the &mu; input coin, _x_/_y_ = 1 / (1 &minus; &#x03F5;),  _i_ = 1 (for the 2019 algorithm), and &#x03F5; = &gamma;. If the result is 0, return 0.  Otherwise, go to step 3.  (Note that running the algorithm this way simulates the probability (&lambda; &minus; &#x03F5;)/(1 &minus; &#x03F5;) or 1 &minus; (1 &minus; &lambda;)/(1 &minus; &#x03F5;)).
 
+<a id=Bernstein_Polynomials></a>
+#### Bernstein Polynomials
+
+A _Bernstein polynomial_ is a polynomial of the form &Sigma;<sub>_i_ = 0, ..., _n_</sub> choose(_n_, _i_) * &lambda;<sup>_i_</sup> * (1 &minus; &lambda;)<sup>_n_ &minus; _i_</sup> * _a_\[_i_\], where _n_ is the polynomial's degree and _a_\[_i_\] are the polynomial's Bernstein coefficients.  According to (Goyal and Sigman 2012)<sup>[**(19)**](#Note19)</sup>, the only kinds of functions that can be simulated with only a limited number of input coin flips are Bernstein polynomials whose Bernstein coefficients are all in the interval [0, 1].  They also give an algorithm for simulating these polynomials, which is given below.
+
+1. Flip the input coin _n_ times, and let _j_ be the number of times the coin returned 1 this way.
+2. With probability _a_\[_j_\], return 1.  Otherwise, return 0.
+
+> **Note**: Each _a_\[_i_\] can also be seen as a control point for a 1-dimensional [**Bézier curve**](https://en.wikipedia.org/wiki/Bézier_curve), where &lambda; is the relative position on that curve, the curve begins at  _a_\[0\], and the curve ends at _a_\[_n_\].  For example, given Bernstein coefficients 0.2, 0.3, and 0.6, the curve is 0.2 when &lambda; = 0 and 0.6 when &lambda; = 1.
+
 <a id=Certain_Power_Series></a>
 #### Certain Power Series
 
@@ -462,7 +473,7 @@ The following algorithms generate heads with a probability equal to an irrationa
 
 Probabilities can be expressed as a digit expansion (of the form `0.dddddd...`).  The following assumes that the probability is in [0, 1).  Note that the number 0 is also an infinite digit expansion of zeros, and the number 1 is also an infinite digit expansion of base-minus-ones.  Irrational numbers always have infinite digit expansions, which must be calculated "on-the-fly".
 
-In the algorithm (see also (Brassard et al., 2019)<sup>[**(19)**](#Note19)</sup>, (Devroye 1986, p. 769)<sup>[**(3)**](#Note3)</sup>), `BASE` is the digit base, such as 2 for binary or 10 for decimal.
+In the algorithm (see also (Brassard et al., 2019)<sup>[**(20)**](#Note20)</sup>, (Devroye 1986, p. 769)<sup>[**(3)**](#Note3)</sup>), `BASE` is the digit base, such as 2 for binary or 10 for decimal.
 
 1. Set `u` to 0 and `k` to 1.
 2. Set `u` to `(u * BASE) + v`, where `v` is a random integer in the interval [0, `BASE`) (such as `RNDINTEXC(BASE)`).  Set `pk` to `p`'s digit expansion up to the `k` digits after the point.  Example: If `p` is &pi;/4, `BASE` is 10, and `k` is 5, then `pk = 78539`.
@@ -471,9 +482,9 @@ In the algorithm (see also (Brassard et al., 2019)<sup>[**(19)**](#Note19)</sup>
 <a id=Continued_Fractions></a>
 #### Continued Fractions
 
-The following algorithm simulates a probability expressed as a simple continued fraction of the following form: 0 + 1 / (_a_\[1\] + 1 / (_a_\[2\] + 1 / (_a_\[3\] + ... ))).  The _a_\[_i_\] are the _partial denominators_, none of which may have an absolute value less than 1.  Inspired by (Flajolet et al., 2010, "Finite graphs (Markov chains) and rational functions")<sup>[**(1)**](#Note1)</sup>, I developed the following algorithm. Note that the algorithm will work even if some or all of the partial denominators are not integers or are negative (unless the first is negative), and the algorithm is designed to allow the partial denominators to be calculated "on the fly".
+The following algorithm simulates a probability expressed as a simple continued fraction of the following form: 0 + 1 / (_a_\[1\] + 1 / (_a_\[2\] + 1 / (_a_\[3\] + ... ))).  The _a_\[_i_\] are the _partial denominators_, none of which may have an absolute value less than 1.  Inspired by (Flajolet et al., 2010, "Finite graphs (Markov chains) and rational functions")<sup>[**(1)**](#Note1)</sup>, I developed the following algorithm.
 
-The algorithm begins with _pos_ equal to 1.  Then the following steps are taken.
+Algorithm 1. This algorithm works only if each _a_\[_i_\]'s absolute value is 1 or greater and _a_\[0\] is 0 or greater, but each  _a_\[_i_\] may be negative and/or a non-integer.  The algorithm begins with _pos_ equal to 1.  Then the following steps are taken.
 
 1. Set _k_ to _a_\[_pos_\].
 2. If the partial denominator at _pos_ is the last, return a number that is 1 with probability 1/_k_ and 0 otherwise.
@@ -481,9 +492,9 @@ The algorithm begins with _pos_ equal to 1.  Then the following steps are taken.
 4. With probability _kp_/(1+_kp_), return a number that is 1 with probability 1/_kp_ and 0 otherwise.
 5. Run this algorithm recursively, but with _pos_ = _pos_ + 1.  If the result is _s_, return 0.  Otherwise, go to step 4.
 
-A _generalized continued fraction_ has the form 0 + _b_\[1\] / (_a_\[1\] + _b_\[2\] / (_a_\[2\] + _b_\[3\] / (_a_\[3\] + ... ))).  The _a_\[_i_\] are the same as before, but the _b_\[_i_\] are the _partial numerators_. The following is an algorithm to simulate a probability in the form of a generalized continued fraction; this algorithm employs an equivalence transform from generalized to simple continued fractions. Note that the algorithm will work even if some or all of the partial numerators and denominators are not integers or are negative (as long as the equivalent simple continued fraction works), and the algorithm is designed to allow _a_ and _b_ to be calculated "on the fly".
+A _generalized continued fraction_ has the form 0 + _b_\[1\] / (_a_\[1\] + _b_\[2\] / (_a_\[2\] + _b_\[3\] / (_a_\[3\] + ... ))).  The _a_\[_i_\] are the same as before, but the _b_\[_i_\] are the _partial numerators_. The following are two algorithms to simulate a probability in the form of a generalized continued fraction.
 
-The algorithm begins with _pos_ and _r_ both equal to 1.  Then the following steps are taken.
+Algorithm 2. This algorithm works only if each _b_\[_i_\]/_a_\[_i_\] is 1 or less, but each _b_\[_i_\] and each  _a_\[_i_\] may be negative and/or a non-integer.  This algorithm employs an equivalence transform from generalized to simple continued fractions.  The algorithm begins with _pos_ and _r_ both equal to 1.  Then the following steps are taken.
 
 1. Set _r_ to 1 / (_r_ * _b_\[_pos_\]), then set _k_ to _a_\[_pos_\] * _r_. (_k_ is the partial denominator for the equivalent simple continued fraction.)
 2. If the partial numerator/denominator pair at _pos_ is the last, return a number that is 1 with probability 1/abs(_k_) and 0 otherwise.
@@ -491,6 +502,12 @@ The algorithm begins with _pos_ and _r_ both equal to 1.  Then the following ste
 4. Set _r2_ to 1 / (_r_ * _b_\[_pos_ + 1\]).  If _a_\[_pos_ + 1\] * _r2_ is less than 0, set _kp_ to _kp_ &minus; 1 and _s_ to 0. (This step accounts for negative partial numerators and denominators.)
 5. With probability _kp_/(1+_kp_), return a number that is 1 with probability 1/_kp_ and 0 otherwise.
 6. Run this algorithm recursively, but with _pos_ = _pos_ + 1 and _r_ = _r_.  If the result is _s_, return 0.  Otherwise, go to step 5.
+
+Algorithm 3. This algorithm works only if each _b_\[_i_\]/_a_\[_i_\] is 1 or less and if each _b_\[_i_\] and each  _a_\[_i_\] is greater than 0, but each _b_\[_i_\] and each _a_\[_i_\] may be a non-integer.  The algorithm begins with _pos_ equal to 1.  Then the following steps are taken.
+
+1. If the partial numerator/denominator pair at _pos_ is the last, return a number that is 1 with probability _b_\[_pos_\]/_a_\[_pos_\] and 0 otherwise.
+2. With probability _a_\[_pos_\]/(1 + _a_\[_pos_\]), return a number that is 1 with probability _b_\[_pos_\]/_a_\[_pos_\] and 0 otherwise.
+3. Run this algorithm recursively, but with _pos_ = _pos_ + 1.  If the result is 1, return 0.  Otherwise, go to step 2.
 
 > **Notes:**
 >
@@ -500,7 +517,8 @@ The algorithm begins with _pos_ and _r_ both equal to 1.  Then the following ste
 >     - before running the algorithm, the first partial numerator and denominator have their sign removed, and
 >     - after running the algorithm, 1 minus the result (rather than just the result) is taken.
 >
-> - The following is an alternative way to write the first algorithm, which better shows the inspiration because it shows how the "even parity construction" (or the two-coin special case) as well as the "1 &minus; _x_" construction can be used to develop rational number simulators that are as big as their continued fraction expansions, as suggested in the cited part of the Flajolet paper.  However, it only works if the size of the continued fraction expansion (here, _size_) is known in advance.
+> - These algorithms are designed to allow the partial numerators and denominators to be calculated "on the fly".
+> - The following is an alternative way to write Algorithm 1, which better shows the inspiration because it shows how the "even parity construction" (or the two-coin special case) as well as the "1 &minus; _x_" construction can be used to develop rational number simulators that are as big as their continued fraction expansions, as suggested in the cited part of the Flajolet paper.  However, it only works if the size of the continued fraction expansion (here, _size_) is known in advance.
 >     1. Set _i_ to _size_.
 >     2. Create an input coin that does the following: "Return a number that is 1 with probability 1/_a_\[_size_\] or 0 otherwise".
 >     3. While _i_ is 1 or greater:
@@ -512,7 +530,7 @@ The algorithm begins with _pos_ and _r_ both equal to 1.  Then the following ste
 <a id=Continued_Logarithms></a>
 #### Continued Logarithms
 
-The _continued logarithm_ (Gosper 1978)<sup>[**(20)**](#Note20)</sup>, (Borwein et al., 2016)<sup>[**(21)**](#Note21)</sup> of a number in (0, 1) has the following continued fraction form: 0 + (1 / 2<sup>_c_\[1\]</sup>) / (1 + (1 / 2<sup>_c_\[2\]</sup>) / (1 + ...)), where _c_\[_i_\] are the coefficients of the continued logarithm and all 0 or greater.  I have come up with the following algorithm that simulates a probability expressed as a continued logarithm expansion:
+The _continued logarithm_ (Gosper 1978)<sup>[**(21)**](#Note21)</sup>, (Borwein et al., 2016)<sup>[**(22)**](#Note22)</sup> of a number in (0, 1) has the following continued fraction form: 0 + (1 / 2<sup>_c_\[1\]</sup>) / (1 + (1 / 2<sup>_c_\[2\]</sup>) / (1 + ...)), where _c_\[_i_\] are the coefficients of the continued logarithm and all 0 or greater.  I have come up with the following algorithm that simulates a probability expressed as a continued logarithm expansion:
 
 The algorithm begins with _pos_ equal to 1.  Then the following steps are taken.
 
@@ -625,7 +643,7 @@ The algorithm follows.
 <a id=exp_minus__x___y></a>
 #### exp(&minus;_x_/_y_)
 
-This algorithm takes integers _x_ >= 0 and _y_ > 0 and outputs 1 with probability `exp(-x/y)` or 0 otherwise. It originates from (Canonne et al. 2020)<sup>[**(22)**](#Note22)</sup>.
+This algorithm takes integers _x_ >= 0 and _y_ > 0 and outputs 1 with probability `exp(-x/y)` or 0 otherwise. It originates from (Canonne et al. 2020)<sup>[**(23)**](#Note23)</sup>.
 
 1. Special case: If _x_ is 0, return 1. (This is because the probability becomes `exp(0) = 1`.)
 2. If `x > y` (so _x_/_y_ is greater than 1), call this algorithm (recursively) `floor(x/y)` times with _x_ = _y_ = 1 and once with _x_ = _x_ &minus; floor(_x_/_y_) \* _y_ and _y_ = _y_.  Return 1 if all these calls return 1; otherwise, return 0.
@@ -645,7 +663,7 @@ More specifically:
 
 The algorithm is then as follows:
 
-- For each component _LC_\[_i_\], call the **algorithm for exp(&minus; _LI_\[_i_\]/1)**, and call the **general martingale algorithm** adapted for **exp(&minus;&lambda;)** using the input coin that simulates  _LF_\[_i_\].  If any of these calls returns 0, return 0; otherwise, return 1. (See also (Canonne et al. 2020)<sup>[**(22)**](#Note22)</sup>.)
+- For each component _LC_\[_i_\], call the **algorithm for exp(&minus; _LI_\[_i_\]/1)**, and call the **general martingale algorithm** adapted for **exp(&minus;&lambda;)** using the input coin that simulates  _LF_\[_i_\].  If any of these calls returns 0, return 0; otherwise, return 1. (See also (Canonne et al. 2020)<sup>[**(23)**](#Note23)</sup>.)
 
 <a id=a___b___z></a>
 #### (_a_/_b_)<sup>_z_</sup>
@@ -687,7 +705,7 @@ Decompose _z_ into _LC_\[_i_\], _LI_\[_i_\], and _LF_\[_i_\] just as for the **e
 <a id=Simulating_the_Probability_Generating_Function></a>
 #### Simulating the Probability Generating Function
 
-Let _X_ be a random number that follows a discrete distribution (one that takes on a countable number of values).  The following algorithm generates heads with probability **E**\[&lambda;<sup>_X_</sup>\], that is, the expected (average) value of &lambda;<sup>_X_</sup>.  **E**\[&lambda;<sup>_X_</sup>\] is the distribution's _probability generating function_, also known as _factorial moment generating function_ (Dughmi et al. 2017)<sup>[**(23)**](#Note23)</sup>.
+Let _X_ be a random number that follows a discrete distribution (one that takes on a countable number of values).  The following algorithm generates heads with probability **E**\[&lambda;<sup>_X_</sup>\], that is, the expected (average) value of &lambda;<sup>_X_</sup>.  **E**\[&lambda;<sup>_X_</sup>\] is the distribution's _probability generating function_, also known as _factorial moment generating function_ (Dughmi et al. 2017)<sup>[**(24)**](#Note24)</sup>.
 
 1. Generate a random number _N_ of the given distribution.
 2. Flip the input coin until the coin returns 0 or the coin is flipped _N_ times.  Return 1 if all the coin flips, including the last, returned 1 (or if _N_ is 0); or return 0 otherwise.
@@ -807,17 +825,19 @@ Points with invalid &#x03F5; values were suppressed.  For the low-mean algorithm
 
 <small><sup id=Note18>(18)</sup> Lee, A., Doucet, A. and Łatuszyński, K., 2014. Perfect simulation using atomic regeneration with application to Sequential Monte Carlo, arXiv:1407.5770v1  [stat.CO].</small>
 
-<small><sup id=Note19>(19)</sup> Brassard, G., Devroye, L., Gravel, C., "Remote Sampling with Applications to General Entanglement Simulation", Entropy 2019(21)(92), doi:10.3390/e21010092.</small>
+<small><sup id=Note19>(19)</sup> Goyal, V. and Sigman, K., 2012. On simulating a class of Bernstein polynomials. ACM Transactions on Modeling and Computer Simulation (TOMACS), 22(2), pp.1-5.</small>
 
-<small><sup id=Note20>(20)</sup> Bill Gosper, "Continued Fraction Arithmetic", 1978.</small>
+<small><sup id=Note20>(20)</sup> Brassard, G., Devroye, L., Gravel, C., "Remote Sampling with Applications to General Entanglement Simulation", Entropy 2019(21)(92), doi:10.3390/e21010092.</small>
 
-<small><sup id=Note21>(21)</sup> Borwein, J.M., Calkin, N.J., et al., "Continued logarithms and associated continued fractions", 2016.</small>
+<small><sup id=Note21>(21)</sup> Bill Gosper, "Continued Fraction Arithmetic", 1978.</small>
 
-<small><sup id=Note22>(22)</sup> Canonne, C., Kamath, G., Steinke, T., "[**The Discrete Gaussian for Differential Privacy**](https://arxiv.org/abs/2004.00010v2)", arXiv:2004.00010v2 [cs.DS], 2020.</small>
+<small><sup id=Note22>(22)</sup> Borwein, J.M., Calkin, N.J., et al., "Continued logarithms and associated continued fractions", 2016.</small>
 
-<small><sup id=Note23>(23)</sup> Shaddin Dughmi, Jason D. Hartline, Robert Kleinberg, and Rad Niazadeh. 2017. Bernoulli Factories and Black-Box Reductions in Mechanism Design. In _Proceedings of 49th Annual ACM SIGACT Symposium on the Theory of Computing_, Montreal, Canada, June 2017 (STOC’17).</small>
+<small><sup id=Note23>(23)</sup> Canonne, C., Kamath, G., Steinke, T., "[**The Discrete Gaussian for Differential Privacy**](https://arxiv.org/abs/2004.00010v2)", arXiv:2004.00010v2 [cs.DS], 2020.</small>
 
-<small><sup id=Note24>(24)</sup> Devroye, L., Gravel, C., "[**Sampling with arbitrary precision**](https://arxiv.org/abs/1502.02539v5)", arXiv:1502.02539v5 [cs.IT], 2015.</small>
+<small><sup id=Note24>(24)</sup> Shaddin Dughmi, Jason D. Hartline, Robert Kleinberg, and Rad Niazadeh. 2017. Bernoulli Factories and Black-Box Reductions in Mechanism Design. In _Proceedings of 49th Annual ACM SIGACT Symposium on the Theory of Computing_, Montreal, Canada, June 2017 (STOC’17).</small>
+
+<small><sup id=Note25>(25)</sup> Devroye, L., Gravel, C., "[**Sampling with arbitrary precision**](https://arxiv.org/abs/1502.02539v5)", arXiv:1502.02539v5 [cs.IT], 2015.</small>
 
 <a id=Appendix></a>
 ## Appendix
@@ -861,7 +881,7 @@ Thus, a practical implementation of this algorithm may have to switch to an alte
 <a id=Alternative_Implementation_of_Bernoulli_Factories></a>
 ### Alternative Implementation of Bernoulli Factories
 
-Say we have a Bernoulli factory algorithm that takes a coin with probability of heads of _p_ and outputs 1 with probability _f_(_p_).  If this algorithm takes a geometric bag (a partially-sampled uniform random number or PSRN) as the input coin and flips that coin using **SampleGeometricBag**, the algorithm could instead be implemented as follows in order to return 1 with probability _f_(_U_), where _U_ is the number represented by the geometric bag (see also (Brassard et al., 2019)<sup>[**(19)**](#Note19)</sup>, (Devroye 1986, p. 769)<sup>[**(3)**](#Note3)</sup>, (Devroye and Gravel 2015)<sup>[**(24)**](#Note24)</sup>:
+Say we have a Bernoulli factory algorithm that takes a coin with probability of heads of _p_ and outputs 1 with probability _f_(_p_).  If this algorithm takes a geometric bag (a partially-sampled uniform random number or PSRN) as the input coin and flips that coin using **SampleGeometricBag**, the algorithm could instead be implemented as follows in order to return 1 with probability _f_(_U_), where _U_ is the number represented by the geometric bag (see also (Brassard et al., 2019)<sup>[**(20)**](#Note20)</sup>, (Devroye 1986, p. 769)<sup>[**(3)**](#Note3)</sup>, (Devroye and Gravel 2015)<sup>[**(25)**](#Note25)</sup>:
 
 1. Set _v_ to 0 and _k_ to 1.
 2. Set _v_ to _b_ * _v_ + _d_, where _b_ is the base (or radix) of the geometric bag's digits, and _d_ is a digit chosen uniformly at random.

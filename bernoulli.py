@@ -812,12 +812,13 @@ class Bernoulli:
         """ Bernstein polynomial Bernoulli factory: B(p) => B(Bernstein(alpha))
                (Goyal and Sigman 2012).
           - f: Function that returns 1 if heads and 0 if tails.
-          - alpha: List of Bernstein coefficients for the Bernstein polynomial.
+          - alpha: List of Bernstein coefficients for the Bernstein polynomial,
+             whose degree is this list's length minus 1.
              For this to work, each coefficient must be in [0, 1]. """
         for a in alpha:
             if a < 0 or a > 1:
                 raise ValueError
-        j = sum([f() for i in range(n)])
+        j = sum([f() for i in range(len(alpha) - 1)])
         return 1 if self._uniform_less([], alpha[j]) == 1 else 0
 
     def exp_minus_ext(self, f, c=0):
