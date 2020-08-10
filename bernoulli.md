@@ -85,12 +85,12 @@ This page also contains algorithms to exactly simulate probabilities that are ir
 
 A _Bernoulli factory_ (Keane and O'Brien 1994)<sup>[**(2)**](#Note2)</sup> is an algorithm that takes an input coin (a method that returns 1, or heads, with an unknown probability, or 0, or tails, otherwise) and returns 0 or 1 with a probability that depends on the input coin's probability of heads.  For example, a Bernoulli factory algorithm can take a coin that returns heads with probability &lambda; and produce a coin that returns heads with probability exp(&minus;&lambda;).
 
-A _factory function_ is a function that relates the old probability to the new one.  Its domain is [0, 1] and returns a probability in [0, 1].  There are certain requirements for factory functions.  As shown by Keane and O'Brien (1994)<sup>[**(2)**](#Note2)</sup>, a function _f_ can serve as a factory function if and only if _f_, in the interval \[0, 1\]&mdash;
+A _factory function_ is a function that relates the old probability to the new one.  Its domain is [0, 1] and returns a probability in [0, 1].  There are certain requirements for factory functions.  As shown by Keane and O'Brien (1994)<sup>[**(2)**](#Note2)</sup>, a function _f_(&lambda;) can serve as a factory function if and only if _f_, in the interval \[0, 1\]&mdash;
 
 - is continuous everywhere, and
 - either returns a constant value in \[0, 1\] everywhere, or returns a value in \[0, 1\] at each of the points 0 and 1 and a value in (0, 1) at each other point.
 
-As one example, the function _f_ = 2*p cannot serve as a factory function, since its graph touches 1 somewhere in the open interval (0, 1).
+As one example, the function _f_ = 2*&lambda; cannot serve as a factory function, since its graph touches 1 somewhere in the open interval (0, 1).
 
 The next section will show algorithms for a number of factory functions, allowing different kinds of probabilities to be simulated from input coins.
 
@@ -435,25 +435,29 @@ The paper that presented the 2016 algorithm also included a third algorithm, des
 
 According to (Mossel and Peres 2005)<sup>[**(19)**](#Note19)</sup>, a function can be simulated by a so-called "finite automaton" (equivalently, a "probabilistic regular grammar" (Smith and Johnson 2007)<sup>[**(20)**](#Note20)</sup>, (Icard 2019)<sup>[**(21)**](#Note21)</sup>) if and only if the function can be written as a rational function with rational coefficients, that takes in an input &lambda; in some subset of (0, 1) and outputs a number in the interval (0, 1).
 
-The following algorithm is suggested by Mossel and Peres.  It assumes the rational function is of the form _D_(&lambda;)/_E_(&lambda;), where&mdash;
+The following algorithm is suggested from the Mossel and Peres paper and from (Thomas and Blanchet)<sup>[**(29)**](#Note29)</sup>.  It assumes the rational function is of the form _D_(&lambda;)/_E_(&lambda;), where&mdash;
 
 - _D_(&lambda;) = &Sigma;<sub>_i_ = 0, ..., _n_</sub> &lambda;<sup>_i_</sup> * (1 &minus; &lambda;)<sup>_n_ &minus; _i_</sup> * _d_\[_i_\],
 - _E_(&lambda;) = &Sigma;<sub>_i_ = 0, ..., _n_</sub> &lambda;<sup>_i_</sup> * (1 &minus; &lambda;)<sup>_n_ &minus; _i_</sup> * _e_\[_i_\],
 - every _d_\[_i_\] is less than or equal to the corresponding _e_\[_i_\], and
 - each _d_\[_i_\] and each _e_\[_i_\] is in the interval [0, choose(_n_, _i_)], where the upper bound is the total number of _n_-bit words with _i_ ones.
 
+Here, _d_\[_i_\] is akin to the number of "passing" _n_-bit words with _i_ ones, and _e_\[_i_\] is akin to that number plus the number of "failing" _n_-bit words with _i_ ones.  Note that choose(_n_, 0) equals 1.
+
 The algorithm follows.
 
-1. Let _a1_ be the sum of all _d_\[_i_\], and let _a01_ be the sum of all _e_\[_i_\]. (Here, _d_\[_i_\] is akin to the number of "passing" _n_-bit words with _i_ ones, and _e_\[_i_\] is akin to that number plus the number of "failing" _n_-bit words with _i_ ones.  Note that choose(_n_, 0) equals 1.)
-2. Flip the input coin _n_ times.  Build an _n_ bit block where each bit (either 0 or 1) is the result of one of the coin flips.  Treat this block as an _n_-bit integer 0 or greater.
-3. If the block is less than _a1_, return 1.  Otherwise, if the block is less than _a01_, return 0.  Otherwise, go to step 2.
+1. Flip the input coin _n_ times, and let _j_ be the number of times the coin returned 1 this way.
+2. Call **WeightedChoice**(\[_e_\[_j_\] &minus; _d_\[_j_\], _d_\[_j_\], choose(_n_, _j_) &minus; _e_\[_j_\]\]), where **WeightedChoice** is given in "[**Weighted Choice With Replacement**](https://peteroupc.github.io/randomfunc.html#Weighted_Choice_With_Replacement)".  If the call returns 0 or 1, return that result.  Otherwise, go to step 1.
 
-> **Note:** In the formulas above&mdash;
+> **Notes:**
 >
-> - _d_\[_i_\] can be replaced with floor(_&delta;_\[_i_\] * choose(_n_,_i_)), where _&delta;_\[_i_\] is in the interval \[0, 1\] (and thus expresses the probability that a given word is a "passing" word among all _n_-bit words with _i_ ones), and
-> - _e_\[_i_\] can be replaced with floor(_&eta;_\[_i_\] * choose(_n_,_i_)), where _&eta;_\[_i_\] is in the interval \[0, 1\] (and thus expresses the probability that a given word is a "passing" or "failing" word among all _n_-bit words with _i_ ones),
+> 1. In the formulas above&mdash;
+>
+>     - _d_\[_i_\] can be replaced with floor(_&delta;_\[_i_\] * choose(_n_,_i_)), where _&delta;_\[_i_\] is in the interval \[0, 1\] (and thus expresses the probability that a given word is a "passing" word among all _n_-bit words with _i_ ones), and
+>     - _e_\[_i_\] can be replaced with floor(_&eta;_\[_i_\] * choose(_n_,_i_)), where _&eta;_\[_i_\] is in the interval \[0, 1\] (and thus expresses the probability that a given word is a "passing" or "failing" word among all _n_-bit words with _i_ ones),
 >
 > and then _&delta;_\[_i_\] and _&eta;_\[_i_\] can be seen as control points for two different 1-dimensional [**Bézier curves**](https://en.wikipedia.org/wiki/Bézier_curve), where the _&delta;_ curve is always on or "below" the _&eta;_ curve.  For each curve, &lambda; is the relative position on that curve, the curve begins at  _&delta;_\[0\] or _&eta;_\[0\], and the curve ends at _&delta;_\[_n_\] or _&eta;_\[_n_\]. See also the next section. (Note that the algorithm would then be inexact if _&delta;_\[_i_\] * choose(_n_,_i_) is not an integer, and similarly for _&eta;_.)
+> 2. This algorithm could be modified to avoid additional randomness besides the input coin flips, but this is not so trivial to do without introducing bias (especially because it's not simple to determine whether a given _n_-bit word with a given number of ones is "passing" or "failing").  As one attempt, after step 1, the following step 1a could be added, which avoids choosing all-zero or all-one blocks in some cases (similar to how the von Neumann scheme avoids accepting all-heads or all-tails (von Neumann 1951)<sup>[**(6)**](#Note6)</sup>): "1a. If the sum of all _e_\[_i_\] is greater than 2<sup>_n_</sup> &minus; 2, go to step 2. Otherwise, build an _n_-bit block where each bit (either 0 or 1) is the result of one of the coin flips from step 1, in order. Treat this block as an _n_-bit integer 0 or greater. If the block is greater than 0 and less than or equal to the sum of all _d_\[_i_\], return 1. Otherwise, if the block is greater than 0 and less than or equal to the sum of all _e_\[_i_\], return 1. Otherwise, go to step 1."
 
 <a id=Bernstein_Polynomials></a>
 #### Bernstein Polynomials
@@ -855,7 +859,7 @@ Points with invalid &#x03F5; values were suppressed.  For the low-mean algorithm
 
 <small><sup id=Note20>(20)</sup> Smith, N. A. and Johnson, M. (2007).  Weighted and probabilistic context-free grammars are equally expressive. Computational Linguistics, 33(4):477–491.</small>
 
-<small><sup id=Note21>(21)</sup> Icard, Thomas F.. "Calibrating generative models: The probabilistic Chomsky–Schützenberger hierarchy." Journal of Mathematical Psychology 95 (2020): 102308.</small>
+<small><sup id=Note21>(21)</sup> Icard, Thomas F., "Calibrating generative models: The probabilistic Chomsky–Schützenberger hierarchy." Journal of Mathematical Psychology 95 (2020): 102308.</small>
 
 <small><sup id=Note22>(22)</sup> Goyal, V. and Sigman, K., 2012. On simulating a class of Bernstein polynomials. ACM Transactions on Modeling and Computer Simulation (TOMACS), 22(2), pp.1-5.</small>
 
@@ -870,6 +874,8 @@ Points with invalid &#x03F5; values were suppressed.  For the low-mean algorithm
 <small><sup id=Note27>(27)</sup> Shaddin Dughmi, Jason D. Hartline, Robert Kleinberg, and Rad Niazadeh. 2017. Bernoulli Factories and Black-Box Reductions in Mechanism Design. In _Proceedings of 49th Annual ACM SIGACT Symposium on the Theory of Computing_, Montreal, Canada, June 2017 (STOC’17).</small>
 
 <small><sup id=Note28>(28)</sup> Devroye, L., Gravel, C., "[**Sampling with arbitrary precision**](https://arxiv.org/abs/1502.02539v5)", arXiv:1502.02539v5 [cs.IT], 2015.</small>
+
+<small><sup id=Note29>(29)</sup> Thomas, A.C., Blanchet, J., "[A Practical Implementation of the Bernoulli Factory](https://arxiv.org/abs/1106.2508v3)", arXiv:1106.2508v3  [stat.AP], 2012.</small>
 
 <a id=Appendix></a>
 ## Appendix

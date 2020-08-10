@@ -116,14 +116,14 @@
 
 <p>A <em>Bernoulli factory</em> (Keane and O&#39;Brien 1994)<sup><a href="#Note2"><strong>(2)</strong></a></sup> is an algorithm that takes an input coin (a method that returns 1, or heads, with an unknown probability, or 0, or tails, otherwise) and returns 0 or 1 with a probability that depends on the input coin&#39;s probability of heads.  For example, a Bernoulli factory algorithm can take a coin that returns heads with probability &lambda; and produce a coin that returns heads with probability exp(&minus;&lambda;).</p>
 
-<p>A <em>factory function</em> is a function that relates the old probability to the new one.  Its domain is [0, 1] and returns a probability in [0, 1].  There are certain requirements for factory functions.  As shown by Keane and O&#39;Brien (1994)<sup><a href="#Note2"><strong>(2)</strong></a></sup>, a function <em>f</em> can serve as a factory function if and only if <em>f</em>, in the interval [0, 1]&mdash;</p>
+<p>A <em>factory function</em> is a function that relates the old probability to the new one.  Its domain is [0, 1] and returns a probability in [0, 1].  There are certain requirements for factory functions.  As shown by Keane and O&#39;Brien (1994)<sup><a href="#Note2"><strong>(2)</strong></a></sup>, a function <em>f</em>(&lambda;) can serve as a factory function if and only if <em>f</em>, in the interval [0, 1]&mdash;</p>
 
 <ul>
 <li>is continuous everywhere, and</li>
 <li>either returns a constant value in [0, 1] everywhere, or returns a value in [0, 1] at each of the points 0 and 1 and a value in (0, 1) at each other point.</li>
 </ul>
 
-<p>As one example, the function <em>f</em> = 2*p cannot serve as a factory function, since its graph touches 1 somewhere in the open interval (0, 1).</p>
+<p>As one example, the function <em>f</em> = 2*&lambda; cannot serve as a factory function, since its graph touches 1 somewhere in the open interval (0, 1).</p>
 
 <p>The next section will show algorithms for a number of factory functions, allowing different kinds of probabilities to be simulated from input coins.</p>
 
@@ -572,7 +572,7 @@
 
 <p>According to (Mossel and Peres 2005)<sup><a href="#Note19"><strong>(19)</strong></a></sup>, a function can be simulated by a so-called &quot;finite automaton&quot; (equivalently, a &quot;probabilistic regular grammar&quot; (Smith and Johnson 2007)<sup><a href="#Note20"><strong>(20)</strong></a></sup>, (Icard 2019)<sup><a href="#Note21"><strong>(21)</strong></a></sup>) if and only if the function can be written as a rational function with rational coefficients, that takes in an input &lambda; in some subset of (0, 1) and outputs a number in the interval (0, 1).</p>
 
-<p>The following algorithm is suggested by Mossel and Peres.  It assumes the rational function is of the form <em>D</em>(&lambda;)/<em>E</em>(&lambda;), where&mdash;</p>
+<p>The following algorithm is suggested from the Mossel and Peres paper and from (Thomas and Blanchet)<sup><a href="#Note29"><strong>(29)</strong></a></sup>.  It assumes the rational function is of the form <em>D</em>(&lambda;)/<em>E</em>(&lambda;), where&mdash;</p>
 
 <ul>
 <li><em>D</em>(&lambda;) = &Sigma;<sub><em>i</em> = 0, ..., <em>n</em></sub> &lambda;<sup><em>i</em></sup> * (1 &minus; &lambda;)<sup><em>n</em> &minus; <em>i</em></sup> * <em>d</em>[<em>i</em>],</li>
@@ -581,23 +581,29 @@
 <li>each <em>d</em>[<em>i</em>] and each <em>e</em>[<em>i</em>] is in the interval [0, choose(<em>n</em>, <em>i</em>)], where the upper bound is the total number of <em>n</em>-bit words with <em>i</em> ones.</li>
 </ul>
 
+<p>Here, <em>d</em>[<em>i</em>] is akin to the number of &quot;passing&quot; <em>n</em>-bit words with <em>i</em> ones, and <em>e</em>[<em>i</em>] is akin to that number plus the number of &quot;failing&quot; <em>n</em>-bit words with <em>i</em> ones.  Note that choose(<em>n</em>, 0) equals 1.</p>
+
 <p>The algorithm follows.</p>
 
 <ol>
-<li>Let <em>a1</em> be the sum of all <em>d</em>[<em>i</em>], and let <em>a01</em> be the sum of all <em>e</em>[<em>i</em>]. (Here, <em>d</em>[<em>i</em>] is akin to the number of &quot;passing&quot; <em>n</em>-bit words with <em>i</em> ones, and <em>e</em>[<em>i</em>] is akin to that number plus the number of &quot;failing&quot; <em>n</em>-bit words with <em>i</em> ones.  Note that choose(<em>n</em>, 0) equals 1.)</li>
-<li>Flip the input coin <em>n</em> times.  Build an <em>n</em> bit block where each bit (either 0 or 1) is the result of one of the coin flips.  Treat this block as an <em>n</em>-bit integer 0 or greater.</li>
-<li>If the block is less than <em>a1</em>, return 1.  Otherwise, if the block is less than <em>a01</em>, return 0.  Otherwise, go to step 2.</li>
+<li>Flip the input coin <em>n</em> times, and let <em>j</em> be the number of times the coin returned 1 this way.</li>
+<li>Call <strong>WeightedChoice</strong>([<em>e</em>[<em>j</em>] &minus; <em>d</em>[<em>j</em>], <em>d</em>[<em>j</em>], choose(<em>n</em>, <em>j</em>) &minus; <em>e</em>[<em>j</em>]]), where <strong>WeightedChoice</strong> is given in &quot;<a href="https://peteroupc.github.io/randomfunc.html#Weighted_Choice_With_Replacement"><strong>Weighted Choice With Replacement</strong></a>&quot;.  If the call returns 0 or 1, return that result.  Otherwise, go to step 1.</li>
 </ol>
 
 <blockquote>
-<p><strong>Note:</strong> In the formulas above&mdash;</p>
+<p><strong>Notes:</strong></p>
+
+<ol>
+<li><p>In the formulas above&mdash;</p>
 
 <ul>
 <li><em>d</em>[<em>i</em>] can be replaced with floor(<em>&delta;</em>[<em>i</em>] * choose(<em>n</em>,<em>i</em>)), where <em>&delta;</em>[<em>i</em>] is in the interval [0, 1] (and thus expresses the probability that a given word is a &quot;passing&quot; word among all <em>n</em>-bit words with <em>i</em> ones), and</li>
 <li><em>e</em>[<em>i</em>] can be replaced with floor(<em>&eta;</em>[<em>i</em>] * choose(<em>n</em>,<em>i</em>)), where <em>&eta;</em>[<em>i</em>] is in the interval [0, 1] (and thus expresses the probability that a given word is a &quot;passing&quot; or &quot;failing&quot; word among all <em>n</em>-bit words with <em>i</em> ones),</li>
-</ul>
+</ul></li>
+</ol>
 
-<p>and then <em>&delta;</em>[<em>i</em>] and <em>&eta;</em>[<em>i</em>] can be seen as control points for two different 1-dimensional <a href="https://en.wikipedia.org/wiki/B%C3%A9zier_curve"><strong>Bézier curves</strong></a>, where the <em>&delta;</em> curve is always on or &quot;below&quot; the <em>&eta;</em> curve.  For each curve, &lambda; is the relative position on that curve, the curve begins at  <em>&delta;</em>[0] or <em>&eta;</em>[0], and the curve ends at <em>&delta;</em>[<em>n</em>] or <em>&eta;</em>[<em>n</em>]. See also the next section. (Note that the algorithm would then be inexact if <em>&delta;</em>[<em>i</em>] * choose(<em>n</em>,<em>i</em>) is not an integer, and similarly for <em>&eta;</em>.)</p>
+<p>and then <em>&delta;</em>[<em>i</em>] and <em>&eta;</em>[<em>i</em>] can be seen as control points for two different 1-dimensional <a href="https://en.wikipedia.org/wiki/B%C3%A9zier_curve"><strong>Bézier curves</strong></a>, where the <em>&delta;</em> curve is always on or &quot;below&quot; the <em>&eta;</em> curve.  For each curve, &lambda; is the relative position on that curve, the curve begins at  <em>&delta;</em>[0] or <em>&eta;</em>[0], and the curve ends at <em>&delta;</em>[<em>n</em>] or <em>&eta;</em>[<em>n</em>]. See also the next section. (Note that the algorithm would then be inexact if <em>&delta;</em>[<em>i</em>] * choose(<em>n</em>,<em>i</em>) is not an integer, and similarly for <em>&eta;</em>.)
+2. This algorithm could be modified to avoid additional randomness besides the input coin flips, but this is not so trivial to do without introducing bias (especially because it&#39;s not simple to determine whether a given <em>n</em>-bit word with a given number of ones is &quot;passing&quot; or &quot;failing&quot;).  As one attempt, after step 1, the following step 1a could be added, which avoids choosing all-zero or all-one blocks in some cases (similar to how the von Neumann scheme avoids accepting all-heads or all-tails (von Neumann 1951)<sup><a href="#Note6"><strong>(6)</strong></a></sup>): &quot;1a. If the sum of all <em>e</em>[<em>i</em>] is greater than 2<sup><em>n</em></sup> &minus; 2, go to step 2. Otherwise, build an <em>n</em>-bit block where each bit (either 0 or 1) is the result of one of the coin flips from step 1, in order. Treat this block as an <em>n</em>-bit integer 0 or greater. If the block is greater than 0 and less than or equal to the sum of all <em>d</em>[<em>i</em>], return 1. Otherwise, if the block is greater than 0 and less than or equal to the sum of all <em>e</em>[<em>i</em>], return 1. Otherwise, go to step 1.&quot;</p>
 </blockquote>
 
 <p><a id=Bernstein_Polynomials></a></p>
@@ -1309,7 +1315,7 @@
 
 <p><small><sup id=Note20>(20)</sup> Smith, N. A. and Johnson, M. (2007).  Weighted and probabilistic context-free grammars are equally expressive. Computational Linguistics, 33(4):477–491.</small></p>
 
-<p><small><sup id=Note21>(21)</sup> Icard, Thomas F.. &quot;Calibrating generative models: The probabilistic Chomsky–Schützenberger hierarchy.&quot; Journal of Mathematical Psychology 95 (2020): 102308.</small></p>
+<p><small><sup id=Note21>(21)</sup> Icard, Thomas F., &quot;Calibrating generative models: The probabilistic Chomsky–Schützenberger hierarchy.&quot; Journal of Mathematical Psychology 95 (2020): 102308.</small></p>
 
 <p><small><sup id=Note22>(22)</sup> Goyal, V. and Sigman, K., 2012. On simulating a class of Bernstein polynomials. ACM Transactions on Modeling and Computer Simulation (TOMACS), 22(2), pp.1-5.</small></p>
 
@@ -1324,6 +1330,8 @@
 <p><small><sup id=Note27>(27)</sup> Shaddin Dughmi, Jason D. Hartline, Robert Kleinberg, and Rad Niazadeh. 2017. Bernoulli Factories and Black-Box Reductions in Mechanism Design. In <em>Proceedings of 49th Annual ACM SIGACT Symposium on the Theory of Computing</em>, Montreal, Canada, June 2017 (STOC’17).</small></p>
 
 <p><small><sup id=Note28>(28)</sup> Devroye, L., Gravel, C., &quot;<a href="https://arxiv.org/abs/1502.02539v5"><strong>Sampling with arbitrary precision</strong></a>&quot;, arXiv:1502.02539v5 [cs.IT], 2015.</small></p>
+
+<p><small><sup id=Note29>(29)</sup> Thomas, A.C., Blanchet, J., &quot;<a href="https://arxiv.org/abs/1106.2508v3">A Practical Implementation of the Bernoulli Factory</a>&quot;, arXiv:1106.2508v3  [stat.AP], 2012.</small></p>
 
 <p><a id=Appendix></a></p>
 
