@@ -684,6 +684,13 @@
 <li>Run this algorithm recursively, but with <em>pos</em> = <em>pos</em> + 1.  If the result is 1, return 0.  Otherwise, go to step 3.</li>
 </ol>
 
+<p>Here is a proof of its correctness, taking advantage of Huber&#39;s &quot;fundamental theorem of perfect simulation&quot; (Huber 2019)<sup><a href="#Note17"><strong>(17)</strong></a></sup>.  Using this theorem requires proving two things:</p>
+
+<ul>
+<li>First we note that the algorithm clearly halts almost surely, since step 1 will stop the algorithm if it reaches the last coefficient, and step 2 always gives a chance that the algorithm will return a value, even if it&#39;s called recursively or the number of coefficients is infinite.</li>
+<li>Second, we show the algorithm is locally correct when the recursive call in step 3 is replaced with an oracle that simulates the correct &quot;continued sub-logarithm&quot;.  If step 1 reaches the last coefficient, the algorithm obviously passes with the correct probability.  Otherwise, we will be simulating the probability (1 / 2<sup><em>c</em>[<em>i</em>]</sup>) / (1 + <em>x</em>), where <em>x</em> is the &quot;continued sub-logarithm&quot; and will be at most 1 by construction.  Steps 2 and 3 define a loop that divides the probability space into three pieces: the first piece takes up one half, the second piece (step 3) takes up a portion of the other half (which here is equal to <em>x</em>/2), and the last piece is the &quot;rejection piece&quot; that reruns the loop.  Since this loop changes no variables that affect later iterations, each iteration acts like an acceptance-rejection algorithm already proved to be a perfect simulator by Huber.  The algorithm will pass at step 2 with probability <em>p</em> = (1 / 2<sup><em>c</em>[<em>i</em>]</sup>) / 2 and fail either at step 2 with probability <em>f1</em> = (1 &minus; 1 / 2<sup><em>c</em>[<em>i</em>]</sup>) / 2, or at step 3 with probability <em>f2</em> = <em>x</em>/2 (the conditional probability of <em>x</em> given that step 2 did nothing).  Finally, dividing the passes by the sum of passes and fails (<em>p</em> / (<em>f1</em> + <em>f2</em>)) leads to (1 / 2<sup><em>c</em>[<em>i</em>]</sup>) / (1 + <em>x</em>), which is the probability we wanted.</li>
+</ul>
+
 <p><a id=1_phi></a></p>
 
 <h4>1 / &phi;</h4>
