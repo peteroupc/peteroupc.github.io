@@ -625,7 +625,7 @@
 
 <h4>Bernstein Polynomials</h4>
 
-<p>A <em>Bernstein polynomial</em> is a polynomial of the form &Sigma;<sub><em>i</em> = 0, ..., <em>n</em></sub> choose(<em>n</em>, <em>i</em>) * &lambda;<sup><em>i</em></sup> * (1 &minus; &lambda;)<sup><em>n</em> &minus; <em>i</em></sup> * <em>a</em>[<em>i</em>], where <em>n</em> is the polynomial&#39;s degree and <em>a</em>[<em>i</em>] are the polynomial&#39;s Bernstein coefficients.  According to (Goyal and Sigman 2012)<sup><a href="#Note24"><strong>(24)</strong></a></sup>, a function can be simulated with a fixed number of input coin flips if and only if it&#39;s a Bernstein polynomial whose Bernstein coefficients are all in the interval <a href="see%20also%20(W%C3%A4stlund%201999,%20section%204)%3Csup%3E%5B**(25)**%5D(#Note25)%3C/sup">0, 1</a>.  They also give an algorithm for simulating these polynomials, which is given below.</p>
+<p>A <em>Bernstein polynomial</em> is a polynomial of the form &Sigma;<sub><em>i</em> = 0, ..., <em>n</em></sub> choose(<em>n</em>, <em>i</em>) * &lambda;<sup><em>i</em></sup> * (1 &minus; &lambda;)<sup><em>n</em> &minus; <em>i</em></sup> * <em>a</em>[<em>i</em>], where <em>n</em> is the polynomial&#39;s degree and <em>a</em>[<em>i</em>] are the polynomial&#39;s Bernstein coefficients.  According to (Goyal and Sigman 2012)<sup><a href="#Note24"><strong>(24)</strong></a></sup>, a function can be simulated with a fixed number of input coin flips if and only if it&#39;s a Bernstein polynomial whose Bernstein coefficients are all in the interval [0, 1] (see also (Wästlund 1999, section 4)<sup><a href="#Note25"><strong>(25)</strong></a></sup>).  They also give an algorithm for simulating these polynomials, which is given below.</p>
 
 <ol>
 <li>Flip the input coin <em>n</em> times, and let <em>j</em> be the number of times the coin returned 1 this way.</li>
@@ -982,7 +982,7 @@
 
 <h4>Convex Combinations</h4>
 
-<p>Assume we have one or more input coins <em>c</em><sub><em>i</em></sub>(&lambda;) that returns heads with a probability that depends on &lambda;.  The following algorithm chooses one of these coins at random then flips that coin.  Specifically, the algorithm simulates the following function: <em>g</em>(0) * <em>h</em><sub>0</sub>(&lambda;) + <em>g</em>(1) * <em>h</em><sub>1</sub>(&lambda;), ..., where <em>g</em>(<em>i</em>) is the probability that coin <em>i</em> will be chosen, and  <em>h</em><sub><em>i</em></sub> is the function simulated by coin <em>i</em>.  See (Wästlund 1999, Theorem 2.7)<sup><a href="#Note25"><strong>(25)</strong></a></sup>.  (Alternatively, the algorithm can be seen as simulating <strong>E</strong>[<em>h</em><sub><em>X</em></sub>(&lambda;)], that is, the expected or average value of <em>h</em><sub><em>X</em></sub> where <em>X</em> is the number that identifies the randomly chosen coin.)</p>
+<p>Assume we have one or more input coins <em>c</em><sub><em>i</em></sub>(&lambda;) that returns heads with a probability that depends on &lambda;.  The following algorithm chooses one of these coins at random then flips that coin.  Specifically, the algorithm simulates the following function: <em>g</em>(0) * <em>h</em><sub>0</sub>(&lambda;) + <em>g</em>(1) * <em>h</em><sub>1</sub>(&lambda;) + ..., where <em>g</em>(<em>i</em>) is the probability that coin <em>i</em> will be chosen, and  <em>h</em><sub><em>i</em></sub> is the function simulated by coin <em>i</em>.  See (Wästlund 1999, Theorem 2.7)<sup><a href="#Note25"><strong>(25)</strong></a></sup>.  (Alternatively, the algorithm can be seen as simulating <strong>E</strong>[<em>h</em><sub><em>X</em></sub>(&lambda;)], that is, the expected or average value of <em>h</em><sub><em>X</em></sub> where <em>X</em> is the number that identifies the randomly chosen coin.)</p>
 
 <ol>
 <li>Generate a random integer <em>X</em> in some way.  For example, it could be a uniform random integer in [1, 6], or it could be a Poisson random number.</li>
@@ -1168,28 +1168,10 @@
 <td><img src="bernoullicharts/2014_lin_x_8_0_bound.svg" alt="**Coin Flips for the Function**"></td>
 </tr>
 <tr>
-<td>2014 Sub. x-0.1</td>
-<td><img src="bernoullicharts/2014_sub_x-0_1_mean.svg" alt="**Simulated Mean for 2014 Sub. x-0.1**"></td>
-<td><img src="bernoullicharts/2014_sub_x-0_1_bits.svg" alt="**Expected Bits Consumed by 2014 Sub. x-0.1**"></td>
-<td><img src="bernoullicharts/2014_sub_x-0_1_bound.svg" alt="**Coin Flips for the Function**"></td>
-</tr>
-<tr>
-<td>2014 Sub. x-0.2</td>
-<td><img src="bernoullicharts/2014_sub_x-0_2_mean.svg" alt="**Simulated Mean for 2014 Sub. x-0.2**"></td>
-<td><img src="bernoullicharts/2014_sub_x-0_2_bits.svg" alt="**Expected Bits Consumed by 2014 Sub. x-0.2**"></td>
-<td><img src="bernoullicharts/2014_sub_x-0_2_bound.svg" alt="**Coin Flips for the Function**"></td>
-</tr>
-<tr>
-<td>2014 Sub. x-0.3</td>
-<td><img src="bernoullicharts/2014_sub_x-0_3_mean.svg" alt="**Simulated Mean for 2014 Sub. x-0.3**"></td>
-<td><img src="bernoullicharts/2014_sub_x-0_3_bits.svg" alt="**Expected Bits Consumed by 2014 Sub. x-0.3**"></td>
-<td><img src="bernoullicharts/2014_sub_x-0_3_bound.svg" alt="**Coin Flips for the Function**"></td>
-</tr>
-<tr>
-<td>2014 Sub. x-0.5</td>
-<td><img src="bernoullicharts/2014_sub_x-0_5_mean.svg" alt="**Simulated Mean for 2014 Sub. x-0.5**"></td>
-<td><img src="bernoullicharts/2014_sub_x-0_5_bits.svg" alt="**Expected Bits Consumed by 2014 Sub. x-0.5**"></td>
-<td><img src="bernoullicharts/2014_sub_x-0_5_bound.svg" alt="**Coin Flips for the Function**"></td>
+<td>Bernstein 0.2,0.6,0.3</td>
+<td><img src="bernoullicharts/bernstein_0_2_0_6_0_3_mean.svg" alt="**Simulated Mean for Bernstein 0.2,0.6,0.3**"></td>
+<td><img src="bernoullicharts/bernstein_0_2_0_6_0_3_bits.svg" alt="**Expected Bits Consumed by Bernstein 0.2,0.6,0.3**"></td>
+<td><img src="bernoullicharts/bernstein_0_2_0_6_0_3_bound.svg" alt="**Coin Flips for the Function**"></td>
 </tr>
 <tr>
 <td>arcsin(x)+sqrt(1-x*x)-1</td>
@@ -1454,7 +1436,7 @@ for i in range(iters):
 
 <ul>
 <li>The algorithm halts almost surely for the same reason as the similar continued logarithm simulator.</li>
-<li>If the call in step 3 is replaced with an oracle that simulates the correct &quot;sub-fraction&quot;, the algorithm is locally correct.  If step 1 reaches the last element of the continued fraction, the algorithm obviously passes with the correct probability. Otherwise, we will be simulating the probability <em>b</em>[<em>i</em>] / (<em>a</em>[<em>i</em>] + <em>x</em>), where <em>x</em> is the &quot;continued sub-fraction&quot; and will be at most 1 by assumption.  Steps 2 and 3 define a loop that divides the probability space into three pieces: the first piece takes up a part equal to <em>h</em> = <em>a</em>[<em>i</em>]/(<em>a</em>[<em>i</em>] + 1), the second piece (step 3) takes up a portion of the remainder (which here is equal to <em>x</em> * (1 &minus; <em>h</em>)), and the last piece is the &quot;rejection piece&quot;.  The algorithm will pass at step 2 with probability <em>p</em> = (<em>b</em>[<em>i</em>] / <em>a</em>[<em>pos</em>]) * <em>h</em> and fail either at step 2 with probability <em>f1</em> = (1 &minus; <em>b</em>[<em>i</em>] / <em>a</em>[<em>pos</em>]) * <em>h</em>, or at step 3 with probability <em>f2</em> = <em>x</em> * (1 &minus; <em>h</em>) (all these probabilities are relative to the whole iteration).  Finally, dividing the passes by the sum of passes and fails leads to b_[<em>i</em>] / (<em>a</em>[<em>i</em>] + <em>x</em>), which is the probability we wanted, so that both of Huber&#39;s conditions are satisfied and we are done.  &#x25a1;</li>
+<li>If the call in step 3 is replaced with an oracle that simulates the correct &quot;sub-fraction&quot;, the algorithm is locally correct.  If step 1 reaches the last element of the continued fraction, the algorithm obviously passes with the correct probability. Otherwise, we will be simulating the probability <em>b</em>[<em>i</em>] / (<em>a</em>[<em>i</em>] + <em>x</em>), where <em>x</em> is the &quot;continued sub-fraction&quot; and will be at most 1 by assumption.  Steps 2 and 3 define a loop that divides the probability space into three pieces: the first piece takes up a part equal to <em>h</em> = <em>a</em>[<em>i</em>]/(<em>a</em>[<em>i</em>] + 1), the second piece (step 3) takes up a portion of the remainder (which here is equal to <em>x</em> * (1 &minus; <em>h</em>)), and the last piece is the &quot;rejection piece&quot;.  The algorithm will pass at step 2 with probability <em>p</em> = (<em>b</em>[<em>i</em>] / <em>a</em>[<em>pos</em>]) * <em>h</em> and fail either at step 2 with probability <em>f1</em> = (1 &minus; <em>b</em>[<em>i</em>] / <em>a</em>[<em>pos</em>]) * <em>h</em>, or at step 3 with probability <em>f2</em> = <em>x</em> * (1 &minus; <em>h</em>) (all these probabilities are relative to the whole iteration).  Finally, dividing the passes by the sum of passes and fails leads to <em>b</em>[<em>i</em>] / (<em>a</em>[<em>i</em>] + <em>x</em>), which is the probability we wanted, so that both of Huber&#39;s conditions are satisfied and we are done.  &#x25a1;</li>
 </ul>
 
 <p><a id=License></a></p>
