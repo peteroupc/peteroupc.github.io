@@ -587,7 +587,7 @@
 
 <p>According to (Mossel and Peres 2005)<sup><a href="#Note20"><strong>(20)</strong></a></sup>, a function can be simulated by a so-called &quot;finite automaton&quot; (equivalently, a &quot;probabilistic regular grammar&quot; (Smith and Johnson 2007)<sup><a href="#Note21"><strong>(21)</strong></a></sup>, (Icard 2019)<sup><a href="#Note22"><strong>(22)</strong></a></sup>) if and only if the function can be written as a rational function with rational coefficients, that takes in an input &lambda; in some subset of (0, 1) and outputs a number in the interval (0, 1).</p>
 
-<p>The following algorithm is suggested from the Mossel and Peres paper and from (Thomas and Blanchet)<sup><a href="#Note29"><strong>(29)</strong></a></sup>.  It assumes the rational function is of the form <em>D</em>(&lambda;)/<em>E</em>(&lambda;), where&mdash;</p>
+<p>The following algorithm is suggested from the Mossel and Peres paper and from (Thomas and Blanchet)<sup><a href="#Note23"><strong>(23)</strong></a></sup>.  It assumes the rational function is of the form <em>D</em>(&lambda;)/<em>E</em>(&lambda;), where&mdash;</p>
 
 <ul>
 <li><em>D</em>(&lambda;) = &Sigma;<sub><em>i</em> = 0, ..., <em>n</em></sub> &lambda;<sup><em>i</em></sup> * (1 &minus; &lambda;)<sup><em>n</em> &minus; <em>i</em></sup> * <em>d</em>[<em>i</em>],</li>
@@ -625,7 +625,7 @@
 
 <h4>Bernstein Polynomials</h4>
 
-<p>A <em>Bernstein polynomial</em> is a polynomial of the form &Sigma;<sub><em>i</em> = 0, ..., <em>n</em></sub> choose(<em>n</em>, <em>i</em>) * &lambda;<sup><em>i</em></sup> * (1 &minus; &lambda;)<sup><em>n</em> &minus; <em>i</em></sup> * <em>a</em>[<em>i</em>], where <em>n</em> is the polynomial&#39;s degree and <em>a</em>[<em>i</em>] are the polynomial&#39;s Bernstein coefficients.  According to (Goyal and Sigman 2012)<sup><a href="#Note23"><strong>(23)</strong></a></sup>, a function can be simulated with a fixed number of input coin flips if and only if it&#39;s a Bernstein polynomial whose Bernstein coefficients are all in the interval <a href="see%20also%20(W%C3%A4stlund%201999,%20section%204)%3Csup%3E%5B**(30)**%5D(#Note30)%3C/sup">0, 1</a>.  They also give an algorithm for simulating these polynomials, which is given below.</p>
+<p>A <em>Bernstein polynomial</em> is a polynomial of the form &Sigma;<sub><em>i</em> = 0, ..., <em>n</em></sub> choose(<em>n</em>, <em>i</em>) * &lambda;<sup><em>i</em></sup> * (1 &minus; &lambda;)<sup><em>n</em> &minus; <em>i</em></sup> * <em>a</em>[<em>i</em>], where <em>n</em> is the polynomial&#39;s degree and <em>a</em>[<em>i</em>] are the polynomial&#39;s Bernstein coefficients.  According to (Goyal and Sigman 2012)<sup><a href="#Note24"><strong>(24)</strong></a></sup>, a function can be simulated with a fixed number of input coin flips if and only if it&#39;s a Bernstein polynomial whose Bernstein coefficients are all in the interval <a href="see%20also%20(W%C3%A4stlund%201999,%20section%204)%3Csup%3E%5B**(25)**%5D(#Note25)%3C/sup">0, 1</a>.  They also give an algorithm for simulating these polynomials, which is given below.</p>
 
 <ol>
 <li>Flip the input coin <em>n</em> times, and let <em>j</em> be the number of times the coin returned 1 this way.</li>
@@ -677,7 +677,7 @@
 
 <p>Probabilities can be expressed as a digit expansion (of the form <code>0.dddddd...</code>).  The following assumes that the probability is in [0, 1).  Note that the number 0 is also an infinite digit expansion of zeros, and the number 1 is also an infinite digit expansion of base-minus-ones.  Irrational numbers always have infinite digit expansions, which must be calculated &quot;on-the-fly&quot;.</p>
 
-<p>In the algorithm (see also (Brassard et al., 2019)<sup><a href="#Note24"><strong>(24)</strong></a></sup>, (Devroye 1986, p. 769)<sup><a href="#Note3"><strong>(3)</strong></a></sup>), <code>BASE</code> is the digit base, such as 2 for binary or 10 for decimal.</p>
+<p>In the algorithm (see also (Brassard et al., 2019)<sup><a href="#Note26"><strong>(26)</strong></a></sup>, (Devroye 1986, p. 769)<sup><a href="#Note3"><strong>(3)</strong></a></sup>), <code>BASE</code> is the digit base, such as 2 for binary or 10 for decimal.</p>
 
 <ol>
 <li>Set <code>u</code> to 0 and <code>k</code> to 1.</li>
@@ -757,7 +757,7 @@
 
 <h4>Continued Logarithms</h4>
 
-<p>The <em>continued logarithm</em> (Gosper 1978)<sup><a href="#Note25"><strong>(25)</strong></a></sup>, (Borwein et al., 2016)<sup><a href="#Note26"><strong>(26)</strong></a></sup> of a number in (0, 1) has the following continued fraction form: 0 + (1 / 2<sup><em>c</em>[1]</sup>) / (1 + (1 / 2<sup><em>c</em>[2]</sup>) / (1 + ...)), where <em>c</em>[<em>i</em>] are the coefficients of the continued logarithm and all 0 or greater.  I have come up with the following algorithm that simulates a probability expressed as a continued logarithm expansion:</p>
+<p>The <em>continued logarithm</em> (Gosper 1978)<sup><a href="#Note27"><strong>(27)</strong></a></sup>, (Borwein et al., 2016)<sup><a href="#Note28"><strong>(28)</strong></a></sup> of a number in (0, 1) has the following continued fraction form: 0 + (1 / 2<sup><em>c</em>[1]</sup>) / (1 + (1 / 2<sup><em>c</em>[2]</sup>) / (1 + ...)), where <em>c</em>[<em>i</em>] are the coefficients of the continued logarithm and all 0 or greater.  I have come up with the following algorithm that simulates a probability expressed as a continued logarithm expansion:</p>
 
 <p>The algorithm begins with <em>pos</em> equal to 1.  Then the following steps are taken.</p>
 
@@ -897,7 +897,7 @@
 
 <h4>exp(&minus;<em>x</em>/<em>y</em>)</h4>
 
-<p>This algorithm takes integers <em>x</em> &gt;= 0 and <em>y</em> &gt; 0 and outputs 1 with probability <code>exp(-x/y)</code> or 0 otherwise. It originates from (Canonne et al. 2020)<sup><a href="#Note27"><strong>(27)</strong></a></sup>.</p>
+<p>This algorithm takes integers <em>x</em> &gt;= 0 and <em>y</em> &gt; 0 and outputs 1 with probability <code>exp(-x/y)</code> or 0 otherwise. It originates from (Canonne et al. 2020)<sup><a href="#Note29"><strong>(29)</strong></a></sup>.</p>
 
 <ol>
 <li>Special case: If <em>x</em> is 0, return 1. (This is because the probability becomes <code>exp(0) = 1</code>.)</li>
@@ -923,7 +923,7 @@
 <p>The algorithm is then as follows:</p>
 
 <ul>
-<li>For each component <em>LC</em>[<em>i</em>], call the <strong>algorithm for exp(&minus; <em>LI</em>[<em>i</em>]/1)</strong>, and call the <strong>general martingale algorithm</strong> adapted for <strong>exp(&minus;&lambda;)</strong> using the input coin that simulates  <em>LF</em>[<em>i</em>].  If any of these calls returns 0, return 0; otherwise, return 1. (See also (Canonne et al. 2020)<sup><a href="#Note27"><strong>(27)</strong></a></sup>.)</li>
+<li>For each component <em>LC</em>[<em>i</em>], call the <strong>algorithm for exp(&minus; <em>LI</em>[<em>i</em>]/1)</strong>, and call the <strong>general martingale algorithm</strong> adapted for <strong>exp(&minus;&lambda;)</strong> using the input coin that simulates  <em>LF</em>[<em>i</em>].  If any of these calls returns 0, return 0; otherwise, return 1. (See also (Canonne et al. 2020)<sup><a href="#Note29"><strong>(29)</strong></a></sup>.)</li>
 </ul>
 
 <p><a id=a___b___z></a></p>
@@ -982,11 +982,11 @@
 
 <h4>Convex Combinations</h4>
 
-<p>Assume we have one or more functions <em>h</em><sub><em>i</em></sub>(&lambda;) that returns heads with a probability that depends on &lambda;.  The following algorithm chooses one of these functions at random then simulates the chosen function.  Specifically, the algorithm simulates the following function: <em>g</em>(0) * <em>h</em><sub>0</sub>(&lambda;) + <em>g</em>(1) * <em>h</em><sub>1</sub>(&lambda;), ..., where <em>g</em>(<em>i</em>) is the probability that <em>h</em><sub><em>i</em></sub> will be chosen.  See (Wästlund 1999, Theorem 2.7)<sup><a href="#Note31"><strong>(31)</strong></a></sup>.  (Alternatively, the algorithm can be seen as simulating <strong>E</strong>[<em>h</em><sub><em>X</em></sub>(&lambda;)], that is, the expected or average value of <em>h</em><sub><em>X</em></sub> where <em>X</em> is the number that identifies the randomly chosen function.)</p>
+<p>Assume we have one or more input coins <em>c</em><sub><em>i</em></sub>(&lambda;) that returns heads with a probability that depends on &lambda;.  The following algorithm chooses one of these coins at random then flips that coin.  Specifically, the algorithm simulates the following function: <em>g</em>(0) * <em>h</em><sub>0</sub>(&lambda;) + <em>g</em>(1) * <em>h</em><sub>1</sub>(&lambda;), ..., where <em>g</em>(<em>i</em>) is the probability that coin <em>i</em> will be chosen, and  <em>h</em><sub><em>i</em></sub> is the function simulated by coin <em>i</em>.  See (Wästlund 1999, Theorem 2.7)<sup><a href="#Note25"><strong>(25)</strong></a></sup>.  (Alternatively, the algorithm can be seen as simulating <strong>E</strong>[<em>h</em><sub><em>X</em></sub>(&lambda;)], that is, the expected or average value of <em>h</em><sub><em>X</em></sub> where <em>X</em> is the number that identifies the randomly chosen coin.)</p>
 
 <ol>
 <li>Generate a random integer <em>X</em> in some way.  For example, it could be a uniform random integer in [1, 6], or it could be a Poisson random number.</li>
-<li>Call the algorithm that simulates <em>h</em><sub><em>X</em></sub>(&lambda;), and return the result.</li>
+<li>Flip the coin represented by <em>X</em> and return the result.</li>
 </ol>
 
 <blockquote>
@@ -994,7 +994,7 @@
 
 <ol>
 <li>As one example, generate a Poisson random number <em>X</em>, then flip the input coin.  With probability 1/(1+<em>N</em>), return the result of the coin flip; otherwise, return 0.</li>
-<li><em>Bernoulli Race</em> (Dughmi et al. 2017)<sup><a href="#Note10"><strong>(10)</strong></a></sup>: If we have <em>n</em> functions <em>h</em><sub><em>i</em></sub>, where <em>i</em> is in [0, <em>n</em>), then choose a uniform random integer in [0, <em>n</em>), call it <em>X</em>, and call the algorithm that simulates <em>h</em><sub><em>X</em></sub>(&lambda;). If the call returns 1, return <em>X</em>; otherwise, repeat this algorithm.</li>
+<li><em>Bernoulli Race</em> (Dughmi et al. 2017)<sup><a href="#Note10"><strong>(10)</strong></a></sup>: If we have <em>n</em> functions <em>h</em><sub><em>i</em></sub>, where <em>i</em> is in [0, <em>n</em>), then choose a uniform random integer in [0, <em>n</em>), call it <em>X</em>, and flip the coin represented by <em>X</em>. If the flip returns 1, return <em>X</em>; otherwise, repeat this algorithm.</li>
 </ol>
 </blockquote>
 
@@ -1349,23 +1349,21 @@
 
 <p><small><sup id=Note22>(22)</sup> Icard, Thomas F., &quot;Calibrating generative models: The probabilistic Chomsky–Schützenberger hierarchy.&quot; Journal of Mathematical Psychology 95 (2020): 102308.</small></p>
 
-<p><small><sup id=Note23>(23)</sup> Goyal, V. and Sigman, K., 2012. On simulating a class of Bernstein polynomials. ACM Transactions on Modeling and Computer Simulation (TOMACS), 22(2), pp.1-5.</small></p>
+<p><small><sup id=Note23>(23)</sup> Thomas, A.C., Blanchet, J., &quot;<a href="https://arxiv.org/abs/1106.2508v3"><strong>A Practical Implementation of the Bernoulli Factory</strong></a>&quot;, arXiv:1106.2508v3  [stat.AP], 2012.</small></p>
 
-<p><small><sup id=Note24>(24)</sup> Brassard, G., Devroye, L., Gravel, C., &quot;Remote Sampling with Applications to General Entanglement Simulation&quot;, Entropy 2019(21)(92), doi:10.3390/e21010092.</small></p>
+<p><small><sup id=Note24>(24)</sup> Goyal, V. and Sigman, K., 2012. On simulating a class of Bernstein polynomials. ACM Transactions on Modeling and Computer Simulation (TOMACS), 22(2), pp.1-5.</small></p>
 
-<p><small><sup id=Note25>(25)</sup> Bill Gosper, &quot;Continued Fraction Arithmetic&quot;, 1978.</small></p>
+<p><small><sup id=Note25>(25)</sup> Wästlund, J., &quot;<a href="http://www.math.chalmers.se/%7Ewastlund/coinFlip.pdf"><strong>Functions arising by coin flipping</strong></a>&quot;, 1999.</small></p>
 
-<p><small><sup id=Note26>(26)</sup> Borwein, J.M., Calkin, N.J., et al., &quot;Continued logarithms and associated continued fractions&quot;, 2016.</small></p>
+<p><small><sup id=Note26>(26)</sup> Brassard, G., Devroye, L., Gravel, C., &quot;Remote Sampling with Applications to General Entanglement Simulation&quot;, Entropy 2019(21)(92), doi:10.3390/e21010092.</small></p>
 
-<p><small><sup id=Note27>(27)</sup> Canonne, C., Kamath, G., Steinke, T., &quot;<a href="https://arxiv.org/abs/2004.00010v2"><strong>The Discrete Gaussian for Differential Privacy</strong></a>&quot;, arXiv:2004.00010v2 [cs.DS], 2020.</small></p>
+<p><small><sup id=Note27>(27)</sup> Bill Gosper, &quot;Continued Fraction Arithmetic&quot;, 1978.</small></p>
 
-<p><small><sup id=Note28>(28)</sup> Devroye, L., Gravel, C., &quot;<a href="https://arxiv.org/abs/1502.02539v5"><strong>Sampling with arbitrary precision</strong></a>&quot;, arXiv:1502.02539v5 [cs.IT], 2015.</small></p>
+<p><small><sup id=Note28>(28)</sup> Borwein, J.M., Calkin, N.J., et al., &quot;Continued logarithms and associated continued fractions&quot;, 2016.</small></p>
 
-<p><small><sup id=Note29>(29)</sup> Thomas, A.C., Blanchet, J., &quot;<a href="https://arxiv.org/abs/1106.2508v3">A Practical Implementation of the Bernoulli Factory</a>&quot;, arXiv:1106.2508v3  [stat.AP], 2012.</small></p>
+<p><small><sup id=Note29>(29)</sup> Canonne, C., Kamath, G., Steinke, T., &quot;<a href="https://arxiv.org/abs/2004.00010v2"><strong>The Discrete Gaussian for Differential Privacy</strong></a>&quot;, arXiv:2004.00010v2 [cs.DS], 2020.</small></p>
 
-<p><small><sup id=Note30>(30)</sup> Wästlund, J., &quot;<a href="http://www.math.chalmers.se/%7Ewastlund/coinFlip.pdf"><strong>Functions arising by coin flipping</strong></a>&quot;, 1999.</small></p>
-
-<p><small><sup id=Note31>(31)</sup> Wästlund, J., &quot;<a href="http://www.math.chalmers.se/%7Ewastlund/coinFlip.pdf"><strong>Functions arising by coin flipping</strong></a>&quot;, 1999.</small></p>
+<p><small><sup id=Note30>(30)</sup> Devroye, L., Gravel, C., &quot;<a href="https://arxiv.org/abs/1502.02539v5"><strong>Sampling with arbitrary precision</strong></a>&quot;, arXiv:1502.02539v5 [cs.IT], 2015.</small></p>
 
 <p><a id=Appendix></a></p>
 
@@ -1413,7 +1411,7 @@ for i in range(iters):
 
 <h3>Alternative Implementation of Bernoulli Factories</h3>
 
-<p>Say we have a Bernoulli factory algorithm that takes a coin with probability of heads of <em>p</em> and outputs 1 with probability <em>f</em>(<em>p</em>).  If this algorithm takes a geometric bag (a partially-sampled uniform random number or PSRN) as the input coin and flips that coin using <strong>SampleGeometricBag</strong>, the algorithm could instead be implemented as follows in order to return 1 with probability <em>f</em>(<em>U</em>), where <em>U</em> is the number represented by the geometric bag (see also (Brassard et al., 2019)<sup><a href="#Note24"><strong>(24)</strong></a></sup>, (Devroye 1986, p. 769)<sup><a href="#Note3"><strong>(3)</strong></a></sup>, (Devroye and Gravel 2015)<sup><a href="#Note28"><strong>(28)</strong></a></sup>:</p>
+<p>Say we have a Bernoulli factory algorithm that takes a coin with probability of heads of <em>p</em> and outputs 1 with probability <em>f</em>(<em>p</em>).  If this algorithm takes a geometric bag (a partially-sampled uniform random number or PSRN) as the input coin and flips that coin using <strong>SampleGeometricBag</strong>, the algorithm could instead be implemented as follows in order to return 1 with probability <em>f</em>(<em>U</em>), where <em>U</em> is the number represented by the geometric bag (see also (Brassard et al., 2019)<sup><a href="#Note26"><strong>(26)</strong></a></sup>, (Devroye 1986, p. 769)<sup><a href="#Note3"><strong>(3)</strong></a></sup>, (Devroye and Gravel 2015)<sup><a href="#Note30"><strong>(30)</strong></a></sup>:</p>
 
 <ol>
 <li>Set <em>v</em> to 0 and <em>k</em> to 1.</li>
