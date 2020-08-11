@@ -109,6 +109,7 @@
 <li><a href="#Convergence_of_Bernoulli_Factories"><strong>Convergence of Bernoulli Factories</strong></a></li>
 <li><a href="#Alternative_Implementation_of_Bernoulli_Factories"><strong>Alternative Implementation of Bernoulli Factories</strong></a></li>
 <li><a href="#Correctness_Proof_for_the_Continued_Logarithm_Simulation_Algorithm"><strong>Correctness Proof for the Continued Logarithm Simulation Algorithm</strong></a></li>
+<li><a href="#Correctness_Proof_for_Continued_Fraction_Simulation_Algorithm_3"><strong>Correctness Proof for Continued Fraction Simulation Algorithm 3</strong></a></li>
 </ul></li>
 <li><a href="#License"><strong>License</strong></a></li>
 </ul>
@@ -720,6 +721,8 @@
 <li>With probability <em>a</em>[<em>pos</em>]/(1 + <em>a</em>[<em>pos</em>]), return a number that is 1 with probability <em>b</em>[<em>pos</em>]/<em>a</em>[<em>pos</em>] and 0 otherwise.</li>
 <li>Run this algorithm recursively, but with <em>pos</em> = <em>pos</em> + 1.  If the result is 1, return 0.  Otherwise, go to step 2.</li>
 </ol>
+
+<p>See the appendix for a correctness proof of Algorithm 3.</p>
 
 <blockquote>
 <p><strong>Notes:</strong></p>
@@ -1442,6 +1445,19 @@ for i in range(iters):
 </ul>
 
 <p>Since both conditions of Huber&#39;s theorem are satisfied, this completes the proof. &#x25a1;</p>
+
+<p><a id=Correctness_Proof_for_Continued_Fraction_Simulation_Algorithm_3></a></p>
+
+<h3>Correctness Proof for Continued Fraction Simulation Algorithm 3</h3>
+
+<p><strong>Theorem.</strong> <em>Suppose a generalized continued fraction&#39;s partial numerators are b[i] and all greater than 0, and its partial denominators are a[i] and all greater than 0, and suppose further that each b[i]/a[i] is 1 or less. Then the algorithm given as Algorithm 3 in &quot;Continued Fractions&quot; returns 1 with probability exactly equal to the number represented by that continued fraction, and 0 otherwise.</em></p>
+
+<p><em>Proof.</em> We use Huber&#39;s &quot;fundamental theorem of perfect simulation&quot; again in the proof of correctness.</p>
+
+<ul>
+<li>The algorithm halts almost surely for the same reason as the similar continued logarithm simulator.</li>
+<li>If the call in step 3 is replaced with an oracle that simulates the correct &quot;sub-fraction&quot;, the algorithm is locally correct.  If step 1 reaches the last element of the continued fraction, the algorithm obviously passes with the correct probability. Otherwise, we will be simulating the probability <em>b</em>[<em>i</em>] / (<em>a</em>[<em>i</em>] + <em>x</em>), where <em>x</em> is the &quot;continued sub-fraction&quot; and will be at most 1 by assumption.  Steps 2 and 3 define a loop that divides the probability space into three pieces: the first piece takes up a part equal to <em>h</em> = <em>a</em>[<em>i</em>]/(<em>a</em>[<em>i</em>] + 1), the second piece (step 3) takes up a portion of the remainder (which here is equal to <em>x</em> * (1 &minus; <em>h</em>)), and the last piece is the &quot;rejection piece&quot;.  The algorithm will pass at step 2 with probability <em>p</em> = (<em>b</em>[<em>i</em>] / <em>a</em>[<em>pos</em>]) * <em>h</em> and fail either at step 2 with probability <em>f1</em> = (1 &minus; <em>b</em>[<em>i</em>] / <em>a</em>[<em>pos</em>]) * <em>h</em>, or at step 3 with probability <em>f2</em> = <em>x</em> * (1 &minus; <em>h</em>) (all these probabilities are relative to the whole iteration).  Finally, dividing the passes by the sum of passes and fails leads to b_[<em>i</em>] / (<em>a</em>[<em>i</em>] + <em>x</em>), which is the probability we wanted, so that both of Huber&#39;s conditions are satisfied and we are done.  &#x25a1;</li>
+</ul>
 
 <p><a id=License></a></p>
 
