@@ -96,7 +96,11 @@ A _factory function_ is a function that relates the old probability to the new o
 
 As one example, the function _f_ = 2*&lambda; cannot serve as a factory function, since its graph touches 1 somewhere in the open interval (0, 1).
 
+If a function's graph touches 0 or 1 somewhere in (0, 1), papers have suggested dealing with this by modifying the function so it no longer touches 0 or 1 there (for example, _f_ = 2*&lambda; might become _f_ = min(2 * &lambda; 1 &minus; &#x03F5;) (Keane and O'Brien 1994)<sup>[**(2)**](#Note2)</sup>, (Huber 2014, introduction)<sup>[**(17)**](#Note17)</sup>) or by somehow ensuring that &lambda; does not come close to the point where the graph touches 0 or 1 (Nacu and Peres 2005, theorem 1)<sup>[**(4)**](#Note4)</sup>.
+
 The next section will show algorithms for a number of factory functions, allowing different kinds of probabilities to be simulated from input coins.
+
+> **Note:** An algorithm that simulates &lambda;, or any other probability, is the same as building an unbiased estimator for that probability (Łatuszyński et al. 2009/2011)<sup>[**(9)**](#Note9)</sup>.  However, algorithms that directly estimate the probability of an input coin are outside the scope of this document.
 
 <a id=Algorithms></a>
 ## Algorithms
@@ -376,9 +380,11 @@ The Flajolet paper doesn't explain in detail how arcsin(&lambda;)/2 arises out o
 <a id=lambda__x___y__linear_Bernoulli_factories></a>
 #### &lambda; * _x_/_y_ (linear Bernoulli factories)
 
+In general, this function will touch 0 or 1 somewhere in \[0, 1\], when _x_/_y_ > 0.  This makes the function relatively non-trivial to simulate in this case.
+
 Huber has suggested several algorithms for this function over the years.
 
-The first algorithm is called the **2014 algorithm** in this document (Huber 2014)<sup>[**(17)**](#Note17)</sup>.  It uses three parameters: _x_, _y_, and &#x03F5;, such that _x_/_y_ > 0 and &#x03F5; is greater than 0.  When _x_/_y_ is greater than 1, the &#x03F5; parameter has to be chosen such that &lambda; * _x_/_y_ < 1 &minus; &#x03F5;, which implies that some knowledge of &lambda; has to be available to the algorithm.  (In fact, as simulation results show, the choice of &#x03F5; is crucial to this algorithm's performance; for best results, &#x03F5; should be chosen such that &lambda; * _x_/_y_ is slightly less than 1 &minus; &#x03F5;.) The algorithm as described below also includes certain special cases, not mentioned in Huber, to make it more general.
+The first algorithm is called the **2014 algorithm** in this document (Huber 2014)<sup>[**(17)**](#Note17)</sup>.  It uses three parameters: _x_, _y_, and &#x03F5;, such that _x_/_y_ > 0 and &#x03F5; is greater than 0.  When _x_/_y_ is greater than 1, the &#x03F5; parameter has to be chosen such that &lambda; * _x_/_y_ < 1 &minus; &#x03F5;, in order to bound the function away from 0 and 1.  As a result, some knowledge of &lambda; has to be available to the algorithm.  (In fact, as simulation results show, the choice of &#x03F5; is crucial to this algorithm's performance; for best results, &#x03F5; should be chosen such that &lambda; * _x_/_y_ is slightly less than 1 &minus; &#x03F5;.) The algorithm as described below also includes certain special cases, not mentioned in Huber, to make it more general.
 
 1. Special cases: If _x_ is 0, return 0.  Otherwise, if _x_ equals _y_, flip the input coin and return the result.  Otherwise, if _x_ is less than _y_, then: (a) With probability _x_/_y_, flip the input coin and return the result; otherwise (b) return 0.
 2. Set _c_ to _x_/_y_, and set _k_ to 23 / (5 * &#x03F5;).
@@ -447,7 +453,7 @@ The paper that presented the 2016 algorithm also included a third algorithm, des
 
 According to (Mossel and Peres 2005)<sup>[**(20)**](#Note20)</sup>, a function can be simulated by a so-called "finite automaton" (equivalently, a "probabilistic regular grammar" (Smith and Johnson 2007)<sup>[**(21)**](#Note21)</sup>, (Icard 2019)<sup>[**(22)**](#Note22)</sup>) if and only if the function can be written as a rational function with rational coefficients, that takes in an input &lambda; in some subset of (0, 1) and outputs a number in the interval (0, 1).
 
-The following algorithm is suggested from the Mossel and Peres paper and from (Thomas and Blanchet)<sup>[**(23)**](#Note23)</sup>.  It assumes the rational function is of the form _D_(&lambda;)/_E_(&lambda;), where&mdash;
+The following algorithm is suggested from the Mossel and Peres paper and from (Thomas and Blanchet 2012)<sup>[**(23)**](#Note23)</sup>.  It assumes the rational function is of the form _D_(&lambda;)/_E_(&lambda;), where&mdash;
 
 - _D_(&lambda;) = &Sigma;<sub>_i_ = 0, ..., _n_</sub> &lambda;<sup>_i_</sup> * (1 &minus; &lambda;)<sup>_n_ &minus; _i_</sup> * _d_\[_i_\],
 - _E_(&lambda;) = &Sigma;<sub>_i_ = 0, ..., _n_</sub> &lambda;<sup>_i_</sup> * (1 &minus; &lambda;)<sup>_n_ &minus; _i_</sup> * _e_\[_i_\],
@@ -753,12 +759,12 @@ Assume we have one or more input coins _c_<sub>_i_</sub>(&lambda;) that returns 
 > **Examples:**
 >
 > 1. As one example, generate a Poisson random number _X_, then flip the input coin.  With probability 1/(1+_N_), return the result of the coin flip; otherwise, return 0.
-> 2. _Bernoulli Race_ (Dughmi et al. 2017)<sup>[**(10)**](#Note10)</sup>: If we have _n_ functions _h_<sub>_i_</sub>, where _i_ is in \[0, _n_), then choose a uniform random integer in \[0, _n_), call it _X_, and flip the coin represented by _X_. If the flip returns 1, return _X_; otherwise, repeat this algorithm.
+> 2. _Bernoulli Race_ (Dughmi et al. 2017)<sup>[**(10)**](#Note10)</sup>: If we have _n_ coins, then choose one of them uniformly at random and flip that coin. If the flip returns 1, return _X_; otherwise, repeat this algorithm.
 
 <a id=Simulating_the_Probability_Generating_Function></a>
 #### Simulating the Probability Generating Function
 
-The following algorithm is a special case of the convex combination method.  It generates heads with probability **E**\[&lambda;<sup>_X_</sup>\], that is, the expected (average) value of &lambda;<sup>_X_</sup>.  **E**\[&lambda;<sup>_X_</sup>\] is the _probability generating function_, also known as _factorial moment generating function_, for the distribution of _X_ (Dughmi et al. 2017)<sup>[**(10)**](#Note10)</sup>.
+The following algorithm is a special case of the convex combination method.  It generates heads with probability **E**\[&lambda;<sup>_X_</sup>\], that is, the expected or average value of &lambda;<sup>_X_</sup>.  **E**\[&lambda;<sup>_X_</sup>\] is the _probability generating function_, also known as _factorial moment generating function_, for the distribution of _X_ (Dughmi et al. 2017)<sup>[**(10)**](#Note10)</sup>.
 
 1. Generate a random integer _X_ in some way.  For example, it could be a uniform random integer in [1, 6], or it could be a Poisson random number.
 2. Flip the input coin until the coin returns 0 or the coin is flipped _X_ times.  Return 1 if all the coin flips, including the last, returned 1 (or if _X_ is 0); or return 0 otherwise.
