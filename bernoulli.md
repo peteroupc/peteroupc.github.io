@@ -460,23 +460,23 @@ The following algorithm is suggested from the Mossel and Peres paper and from (T
 - every _d_\[_i_\] is less than or equal to the corresponding _e_\[_i_\], and
 - each _d_\[_i_\] and each _e_\[_i_\] is in the interval [0, choose(_n_, _i_)], where the upper bound is the total number of _n_-bit words with _i_ ones.
 
-Here, _d_\[_i_\] is akin to the number of "passing" _n_-bit words with _i_ ones, and _e_\[_i_\] is akin to that number plus the number of "failing" _n_-bit words with _i_ ones.  Note that choose(_n_, 0) equals 1.
+Here, _d_\[_i_\] is akin to the number of "passing" _n_-bit words with _i_ ones, and _e_\[_i_\] is akin to that number plus the number of "failing" _n_-bit words with _i_ ones.  Note that choose(_n_, 0) equals 1. _d_\[_i_\] and _e_\[_i_\] can be rational numbers, not just integers.
 
 The algorithm follows.
 
 1. Flip the input coin _n_ times, and let _j_ be the number of times the coin returned 1 this way.
-2. Call **WeightedChoice**(\[_e_\[_j_\] &minus; _d_\[_j_\], _d_\[_j_\], choose(_n_, _j_) &minus; _e_\[_j_\]\]), where **WeightedChoice** is given in "[**Weighted Choice With Replacement**](https://peteroupc.github.io/randomfunc.html#Weighted_Choice_With_Replacement)".  If the call returns 0 or 1, return that result.  Otherwise, go to step 1.
+2. Call **WeightedChoice**(**NormalizeRatios**(\[_e_\[_j_\] &minus; _d_\[_j_\], _d_\[_j_\], choose(_n_, _j_) &minus; _e_\[_j_\]\])), where **WeightedChoice** and **NormalizeRatios** are given in "[**Randomization and Sampling Methods**](https://peteroupc.github.io/randomfunc.html)".  If the call returns 0 or 1, return that result.  Otherwise, go to step 1.
 
 > **Notes:**
 >
 > 1. In the formulas above&mdash;
 >
->     - _d_\[_i_\] can be replaced with floor(_&delta;_\[_i_\] * choose(_n_,_i_)), where _&delta;_\[_i_\] is in the interval \[0, 1\] (and thus expresses the probability that a given word is a "passing" word among all _n_-bit words with _i_ ones), and
->     - _e_\[_i_\] can be replaced with floor(_&eta;_\[_i_\] * choose(_n_,_i_)), where _&eta;_\[_i_\] is in the interval \[0, 1\] (and thus expresses the probability that a given word is a "passing" or "failing" word among all _n_-bit words with _i_ ones),
+>     - _d_\[_i_\] can be replaced with _&delta;_\[_i_\] * choose(_n_,_i_), where _&delta;_\[_i_\] is a rational number in the interval \[0, 1\] (and thus expresses the probability that a given word is a "passing" word among all _n_-bit words with _i_ ones), and
+>     - _e_\[_i_\] can be replaced with _&eta;_\[_i_\] * choose(_n_,_i_), where _&eta;_\[_i_\] is a rational number in the interval \[0, 1\] (and thus expresses the probability that a given word is a "passing" or "failing" word among all _n_-bit words with _i_ ones),
 >
->     and then _&delta;_\[_i_\] and _&eta;_\[_i_\] can be seen as control points for two different 1-dimensional [**Bézier curves**](https://en.wikipedia.org/wiki/Bézier_curve), where the _&delta;_ curve is always on or "below" the _&eta;_ curve.  For each curve, &lambda; is the relative position on that curve, the curve begins at  _&delta;_\[0\] or _&eta;_\[0\], and the curve ends at _&delta;_\[_n_\] or _&eta;_\[_n_\]. See also the next section. (Note that the algorithm would then be inexact if _&delta;_\[_i_\] * choose(_n_,_i_) is not an integer, and similarly for _&eta;_.)
+>     and then _&delta;_\[_i_\] and _&eta;_\[_i_\] can be seen as control points for two different 1-dimensional [**Bézier curves**](https://en.wikipedia.org/wiki/Bézier_curve), where the _&delta;_ curve is always on or "below" the _&eta;_ curve.  For each curve, &lambda; is the relative position on that curve, the curve begins at  _&delta;_\[0\] or _&eta;_\[0\], and the curve ends at _&delta;_\[_n_\] or _&eta;_\[_n_\]. See also the next section.
 >
-> 2. This algorithm could be modified to avoid additional randomness besides the input coin flips, but this is not so trivial to do without introducing bias (especially because it's not simple to determine whether a given _n_-bit word with a given number of ones is "passing" or "failing").  As one attempt, after step 1, the following step 1a could be added, which avoids choosing all-zero or all-one blocks in some cases (similar to how the von Neumann scheme avoids accepting all-heads or all-tails (von Neumann 1951)<sup>[**(9)**](#Note9)</sup>): "1a. If the sum of all _e_\[_i_\] is greater than 2<sup>_n_</sup> &minus; 2, go to step 2. Otherwise, build an _n_-bit block where each bit (either 0 or 1) is the result of one of the coin flips from step 1, in order. Treat this block as an _n_-bit integer 0 or greater. If the block is greater than 0 and less than or equal to the sum of all _d_\[_i_\], return 1. Otherwise, if the block is greater than 0 and less than or equal to the sum of all _e_\[_i_\], return 1. Otherwise, go to step 1."
+> 2. This algorithm could be modified to avoid additional randomness besides the input coin flips, but this is not so trivial to do without introducing bias (especially because it's not simple to determine whether a given _n_-bit word with a given number of ones is "passing" or "failing").  Moreover, _d_\[_i_\] and _e_\[_i_\] would have to be limited to integers. As one attempt, after step 1, the following step 1a could be added, which avoids choosing all-zero or all-one blocks in some cases (similar to how the von Neumann scheme avoids accepting all-heads or all-tails (von Neumann 1951)<sup>[**(9)**](#Note9)</sup>): "1a. If the sum of all _e_\[_i_\] is greater than 2<sup>_n_</sup> &minus; 2, go to step 2. Otherwise, build an _n_-bit block where each bit (either 0 or 1) is the result of one of the coin flips from step 1, in order. Treat this block as an _n_-bit integer 0 or greater. If the block is greater than 0 and less than or equal to the sum of all _d_\[_i_\], return 1. Otherwise, if the block is greater than 0 and less than or equal to the sum of all _e_\[_i_\], return 1. Otherwise, go to step 1."
 
 <a id=Bernstein_Polynomials></a>
 #### Bernstein Polynomials
@@ -525,7 +525,7 @@ Probabilities can be expressed as a digit expansion (of the form `0.dddddd...`).
 In the algorithm (see also (Brassard et al., 2019)<sup>[**(26)**](#Note26)</sup>, (Devroye 1986, p. 769)<sup>[**(7)**](#Note7)</sup>), `BASE` is the digit base, such as 2 for binary or 10 for decimal.
 
 1. Set `u` to 0 and `k` to 1.
-2. Set `u` to `(u * BASE) + v`, where `v` is a random integer in the interval [0, `BASE`) (such as `RNDINTEXC(BASE)`).  Set `pk` to `p`'s digit expansion up to the `k` digits after the point.  Example: If `p` is &pi;/4, `BASE` is 10, and `k` is 5, then `pk = 78539`.
+2. Set `u` to `(u * BASE) + v`, where `v` is a random integer in the interval [0, `BASE`) (such as `RNDINTEXC(BASE)`, or simply an unbiased random bit if `BASE` is 2).  Set `pk` to `p`'s digit expansion up to the `k` digits after the point.  Example: If `p` is &pi;/4, `BASE` is 10, and `k` is 5, then `pk = 78539`.
 3. If `pk + 1 <= u`, return 0.  If `pk - 2 >= u`, return 1.  If neither is the case, add 1 to `k` and go to step 2.
 
 <a id=Continued_Fractions></a>
@@ -656,9 +656,11 @@ Two algorithms:
 
 (Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup>:
 
-1. Generate two geometric(1/4) random numbers, and call _t_ their sum.  (As used here, a geometric(1/4) random number is the number of successes before the first failure, with success probability 1/4.)
+1. Set _t_ to 0.
+2. With probability 1/4, add 1 to _t_ and repeat this step.  Otherwise, go to step 3.
+3. With probability 1/4, add 1 to _t_ and repeat this step.  Otherwise, go to step 4.
 2. With probability 5/9, add 1 to _t_.
-3. Generate 2*_t_ unbiased random bits, and return 0 if there are more zeros than ones generated this way or more ones than zeros.  (Note that this condition can be checked even before all the bits are generated this way.)  Repeat this step two more times.
+3. Generate 2*_t_ unbiased random bits, and return 0 if there are more zeros than ones generated this way or more ones than zeros.  (Note that this condition can be checked even before all the bits are generated this way.)  Do this step two more times.
 4. Return 1.
 
 <a id=a___b___x___y></a>
@@ -865,7 +867,7 @@ Points with invalid &#x03F5; values were suppressed.  For the low-mean algorithm
 
 <small><sup id=Note10>(10)</sup> As used here and in the Flajolet paper, a geometric random number is the number of successes before the first failure, where the success probability is &lambda;.</small>
 
-<small><sup id=Note11>(11)</sup> The Flajolet paper describes what it calls the _von Neumann schema_, which, given a permutation class and an input coin, generates a random non-negative integer _n_ with probability equal to (&lambda;<sup>_n_</sup> * V(_n_) / _n_!) / EGF(&lambda;), where EGF(&lambda;) = &Sigma;<sub>_k_ = 0, 1, ...</sub> (&lambda;<sup>_k_</sup> * V(_k_) / _k_!), and V(_n_) is the number of _valid_ permutations of size _n_.  Here, EGF(&lambda;) is the _exponential generating function_.  Effectively, a geometric(&lambda;) random number _G_ is accepted with probability V(_G_)/_G_! (where _G_! is the number of _possible_ permutations of size _G_, or 1 if _G_ is 0), and rejected otherwise.  The probability that _r_ geometric random numbers are rejected this way is _p_*(1 &minus; _p_)<sup>_r_</sup>, where _p_ = (1 &minus; &lambda;) * EGF(&lambda;).</small>
+<small><sup id=Note11>(11)</sup> The Flajolet paper describes what it calls the _von Neumann schema_, which, given a permutation class and an input coin, generates a random non-negative integer _n_ with probability equal to (&lambda;<sup>_n_</sup> * V(_n_) / _n_!) / EGF(&lambda;), where EGF(&lambda;) = &Sigma;<sub>_k_ = 0, 1, ...</sub> (&lambda;<sup>_k_</sup> * V(_k_) / _k_!), and V(_n_) is the number of _valid_ permutations of size _n_.  Here, EGF(&lambda;) is the _exponential generating function_.  Effectively, a geometric(&lambda;) random number _G_ (see previous note) is accepted with probability V(_G_)/_G_! (where _G_! is the number of _possible_ permutations of size _G_, or 1 if _G_ is 0), and rejected otherwise.  The probability that _r_ geometric random numbers are rejected this way is _p_*(1 &minus; _p_)<sup>_r_</sup>, where _p_ = (1 &minus; &lambda;) * EGF(&lambda;).</small>
 
 <small><sup id=Note12>(12)</sup> Shaddin Dughmi, Jason D. Hartline, Robert Kleinberg, and Rad Niazadeh. 2017. Bernoulli Factories and Black-Box Reductions in Mechanism Design. In _Proceedings of 49th Annual ACM SIGACT Symposium on the Theory of Computing_, Montreal, Canada, June 2017 (STOC’17).</small>
 

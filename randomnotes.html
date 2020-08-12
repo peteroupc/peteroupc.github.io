@@ -40,7 +40,6 @@
 <li><a href="#A_Note_on_Integer_Generation_Algorithms"><strong>A Note on Integer Generation Algorithms</strong></a></li>
 <li><a href="#A_Note_on_Weighted_Choice_Algorithms"><strong>A Note on Weighted Choice Algorithms</strong></a></li>
 <li><a href="#A_Note_on_Error_Bounded_Algorithms"><strong>A Note on Error-Bounded Algorithms</strong></a></li>
-<li><a href="#Weighted_Choice_with_Coins_of_Known_Bias"><strong>Weighted Choice with Coins of Known Bias</strong></a></li>
 </ul></li>
 <li><a href="#License"><strong>License</strong></a></li>
 </ul>
@@ -552,14 +551,14 @@ END METHOD
 <li> Fair coin to loaded die:  There are many ways to solve this problem.  For example, fair coins can serve as the source of random numbers for <code>RNDINT</code> (see &quot;<a href="https://peteroupc.github.io/randomfunc.html#Uniform_Random_Integers"><strong>Uniform Random Integers</strong></a>&quot;), and <code>RNDINT</code> can in turn be used to implement <a href="https://peteroupc.github.io/randomfunc.html#Weighted_Choice_With_Replacement"><strong><code>WeightedChoice</code></strong></a>, which implements loaded dice.  Some algorithms also produce a loaded die <em>directly</em> from fair coins, such as the <a href="https://github.com/probcomp/fast-loaded-dice-roller"><strong>Fast Loaded Dice Roller</strong></a>.</li>
 </ol>
 
-<p>If we have multiple biased coins (<em>n</em> of them), each with a separate unknown bias, we can choose one of them uniformly at random via rejection sampling, also known as the <em>Bernoulli race</em> (Dughmi et al. 2017)<sup><a href="#Note35"><strong>(35)</strong></a></sup>; see also (Morina et al., 2019)<sup><a href="#Note36"><strong>(36)</strong></a></sup>:</p>
+<p>If we have multiple biased coins (<em>n</em> of them), each with a separate unknown bias, we can choose one of them at random according to their bias via rejection sampling, also known as the <em>Bernoulli race</em> (Dughmi et al. 2017)<sup><a href="#Note35"><strong>(35)</strong></a></sup>; see also (Morina et al., 2019)<sup><a href="#Note36"><strong>(36)</strong></a></sup>:</p>
 
 <ol>
 <li>Set <em>i</em> to <code>RNDINT(n - 1)</code>.</li>
 <li>Flip coin <em>i</em> (the first coin is 0, the second is 1, etc.). If the coin returns 1 or heads, return <em>i</em>.  Otherwise, go to step 1.</li>
 </ol>
 
-<p>For related algorithms, see the appendix.</p>
+<p><strong>Coins of Known Bias:</strong> If we only have a list of probabilities (<code>probs</code>) that sum to 1, as well as <code>UnfairCoin(p)</code>, which returns 1 with a given probability <code>p</code> and zero otherwise (such as <code>ZeroOrOne</code> or <code>RNDU01() &lt; p</code>), one of the following two algorithms chooses an integer at random according to its probability (see the <a href="https://stackoverflow.com/questions/62806441/can-i-achieve-weighted-randomness-with-a-function-that-returns-weighted-booleans"><strong><em>Stack Overflow</em> question</strong></a> by Daniel Kaplan).  However, since we can treat <code>UnfairCoin(q)</code> (for any fixed value of <code>q</code> in (0, 1)) as a coin with <em>unknown</em> bias in this case, these algorithms are only given for completeness. The algorithms are error-bounded when all the probabilities in <code>probs</code> are rational numbers. The <strong>first algorithm</strong> uses iteration and is as follows: <code>cumu = 1.0; for i in 0...size(probs): if UnfairCoin(probs[i]/cumu)==1: return i; else: cumu = cumu - probs[i]</code>.  For a proof of its correctness, see &quot;<a href="https://www.keithschwarz.com/darts-dice-coins/"><strong>Darts, Dice, and Coins</strong></a>&quot; by Keith Schwarz.  The <strong>second algorithm</strong> is the <em>Bernoulli race</em>: <code>while true; y=RNDINT(size(probs)-1); if UnfairCoin(probs[y])==1: return y; else continue; end</code>, where <code>UnfairCoin(0.5)</code> serves as the source of random numbers for <code>RNDINT</code>.</p>
 
 <p><a id=Notes></a></p>
 
@@ -769,7 +768,7 @@ END METHOD
 <p>There are other weighted choice algorithms that don&#39;t necessarily take integer weights.  They include:</p>
 
 <ul>
-<li>The section &quot;Weighted Choice with Coins of Known Bias&quot; in this appendix.</li>
+<li>The algorithms given in &quot;Weighted Choice with Biased Coins&quot; in this appendix.</li>
 <li>The <em>alias method</em> by Walker (1977)<sup><a href="#Note30"><strong>(30)</strong></a></sup>.  Michael Vose&#39;s version of the alias method (Vose 1991)<sup><a href="#Note31"><strong>(31)</strong></a></sup> is described in &quot;<a href="https://www.keithschwarz.com/darts-dice-coins/"><strong>Darts, Dice, and Coins: Sampling from a Discrete Distribution</strong></a>&quot;.  The alias method ought to be implemented using rational-valued weights and rational-number arithmetic, since this method is hard to apply to integer weights if the sum of the weights is not divisible by the number of weights.</li>
 <li>The Knuth and Yao algorithm that generates a DDG tree from the binary expansions of the probabilities, an algorithm that is optimal, or at least nearly so.  This is suggested in exercise 3.4.2 of chapter 15 of (Devroye 1986, p. 1-2)<sup><a href="#Note10"><strong>(10)</strong></a></sup>, implemented in <em>randomgen.py</em> as the <code>discretegen</code> method, and also described in (Roy et al. 2013)<sup><a href="#Note32"><strong>(32)</strong></a></sup>.</li>
 <li>The Han and Hoshi algorithm (Han and Hoshi 1997)<sup><a href="#Note33"><strong>(33)</strong></a></sup> that uses the cumulative probabilities as input and is described in (Devroye and Gravel 2015)<sup><a href="#Note22"><strong>(22)</strong></a></sup>.  This algorithm comes within 3 bits, on average, of the optimal number of bits.</li>
@@ -794,24 +793,6 @@ END METHOD
 <p>On the other hand, if an algorithm returns results that are accurate to a given number of digits after the point (for example, 53 bits after the point), it can generate any number of digits uniformly at random and append those digits to the result&#39;s digit expansion while remaining accurate to that many digits. For example, after it generates a normally-distributed random number, an algorithm can fill it with enough uniform random bits, as necessary, to give the number 100 bits after the point (Karney 2014)<sup><a href="#Note1"><strong>(1)</strong></a></sup>, see also (Oberhoff 2018)<sup><a href="#Note34"><strong>(34)</strong></a></sup> (example: <code>for i in 54..100: ret = ret + RNDINT(1) * pow(2,-i)</code>).</p>
 
 <p>There are many ways to describe closeness between two distributions.  As one suggestion found in (Devroye and Gravel 2015)<sup><a href="#Note22"><strong>(22)</strong></a></sup>, an algorithm has accuracy &epsilon; (the user-specified error tolerance) if it samples random numbers whose distribution is close to the ideal distribution by a Wasserstein L<sub>&infin;</sub> distance of not more than &epsilon;.</p>
-
-<p><a id=Weighted_Choice_with_Coins_of_Known_Bias></a></p>
-
-<h3>Weighted Choice with Coins of Known Bias</h3>
-
-<p>Assuming that we only have&mdash;</p>
-
-<ul>
-<li>a list of probabilities (<code>probs</code>) that sum to 1, and</li>
-<li><code>UnfairCoin(p)</code>, which returns 1 with probability <code>p</code> and zero otherwise (such as <code>ZeroOrOne</code> or <code>RNDU01() &lt; p</code>),</li>
-</ul>
-
-<p>one of the following two algorithms can be used (see the <a href="https://stackoverflow.com/questions/62806441/can-i-achieve-weighted-randomness-with-a-function-that-returns-weighted-booleans"><strong><em>Stack Overflow</em> question</strong></a> by Daniel Kaplan).  Since in this case we can treat <code>UnfairCoin(q)</code> (for any fixed value of <code>q</code> in (0, 1)) as a coin with <em>unknown</em> bias (allowing us to use the method in &quot;<a href="#Weighted_Choice_with_Biased_Coins"><strong>Weighted Choice with Biased Coins</strong></a>), these algorithms given below are not very useful in practice.</p>
-
-<ol>
-<li>The first uses iteration and is as follows: <code>cumu = 1.0; for i in 0...size(probs): if UnfairCoin(probs[i]/cumu): return i; else: cumu = cumu - probs[i]</code>.  This algorithm runs on average in linear time (or in constant time if the weights are sorted in descending order). This algorithm ought to be implemented using rational-valued weights and rational arithmetic, since the algorithm will be error-bounded in that case.  For a proof of its correctness, see &quot;<a href="https://www.keithschwarz.com/darts-dice-coins/"><strong>Darts, Dice, and Coins</strong></a>&quot; by Keith Schwarz.</li>
-<li>The second uses rejection sampling and relies on generating a random integer using fair coins: <code>while true; y=RNDINT(size(probs)-1); if UnfairCoin(probs[y]): return y; else continue; end</code>, where <code>UnfairCoin(0.5)</code> serves as the source of random numbers for <code>RNDINT</code>. This algorithm is error-bounded when all the probabilities in <code>probs</code> can be simulated exactly by <code>UnfairCoin</code>.</li>
-</ol>
 
 <p><a id=License></a></p>
 
