@@ -24,11 +24,12 @@ def newtree()
   return [PHI, nil, nil]
 end
 
-# Passes a random face (in [0, numFaces))
-# to the extractor tree, using
+# Passes a face (in [0, numFaces)) that was randomly
+# generated to the extractor tree, using
 # the "entropy-preserving binarization" in S. Pae,
 # "Binarization Trees and Random Number Generation",
-# arXiv:1602.06058v2 [cs.DS]
+# arXiv:1602.06058v2 [cs.DS].  Note that this is not
+# efficient if 'numFaces' is a large number.
 def extractFace(tree, randomFace, numFaces, output)
   raise if numFaces<2
   if numFaces==2
@@ -42,6 +43,27 @@ def extractFace(tree, randomFace, numFaces, output)
     for b in 0...((numFaces-1)-randomFace)
       extract(tree, 0, output)
     end
+  end
+end
+
+# Alternative method for passing
+# a face (in [0, numFaces)) that was randomly
+# generated to the extractor tree.
+def extractFace2(tree, randomFace, numFaces, output)
+  raise if numFaces<2
+  if numFaces==2
+    extract(tree, randomFace, output)
+    return
+  end
+  # Add bit_length+1 bits, up to the bit
+  # length of numFaces
+  bits=randomFace.bit_length()+1
+  if bits>numFaces.bit_length()
+    bits=numFaces.bit_length()
+  end
+  for b in 0...bits
+    extract(tree, randomFace&1, output)
+    randomFace>>=1
   end
 end
 
@@ -92,6 +114,36 @@ def dbgtree(tree)
    return label
  end
  return "["+label+","+dbgtree(tree[1])+","+dbgtree(tree[2])+"]"
+end
+
+# Reads all bits from 'bits' (leaving out the last if there is an
+# odd number of bits), and stores the extracted bits in 'output'.
+# Reference: Peres, Y., "Iterating von Neumann's procedure for
+# extracting random bits", The Annals of Statistics 1992,20,1, pp.590-597.
+def peres(bits,output)
+  u=[]
+  v=[]
+  len=bits.length-bits.length%2
+  return if len==0
+  i=0; while i<len
+    if bits[i]==0 and bits[i+1]==0
+      u.push(0)
+      v.push(0)
+    elsif bits[i]==0 and bits[i+1]==1
+      output.push(0)
+      u.push(1)
+    elsif bits[i]==1 and bits[i+1]==0
+      output.push(1)
+      u.push(1)
+    elsif bits[i]==1 and bits[i+1]==1
+      u.push(0)
+      v.push(1)
+    end
+    i+=2
+  end
+  # Recursion on "discarded" bits
+  peres(u, output)
+  peres(v, output)
 end
 
 # Example

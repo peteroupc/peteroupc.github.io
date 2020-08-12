@@ -12,7 +12,7 @@ Open-source articles on programming subjects.
 * [Pseudocode Conventions](./pseudocode.html)
 * [Random Number Generator Recommendations for Applications](./random.html)
 * [Randomization and Sampling Methods](./randomfunc.html)
-* [More Random Number Sampling Methods](./randomnotes.html)
+* [More Random Sampling Methods](./randomnotes.html)
 * [Code Generator for Discrete Distributions](./autodist.html)
 * [The Most Common Topics Involving Randomization](./randomcommon.html)
 * [Partially-Sampled Random Numbers for Accurate Sampling of the Beta, Exponential, and Other Continuous Distributions](./exporand.html)
