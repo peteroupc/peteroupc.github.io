@@ -458,9 +458,9 @@ The following algorithm is suggested from the Mossel and Peres paper and from (T
 - _D_(&lambda;) = &Sigma;<sub>_i_ = 0, ..., _n_</sub> &lambda;<sup>_i_</sup> * (1 &minus; &lambda;)<sup>_n_ &minus; _i_</sup> * _d_\[_i_\],
 - _E_(&lambda;) = &Sigma;<sub>_i_ = 0, ..., _n_</sub> &lambda;<sup>_i_</sup> * (1 &minus; &lambda;)<sup>_n_ &minus; _i_</sup> * _e_\[_i_\],
 - every _d_\[_i_\] is less than or equal to the corresponding _e_\[_i_\], and
-- each _d_\[_i_\] and each _e_\[_i_\] is in the interval [0, choose(_n_, _i_)], where the upper bound is the total number of _n_-bit words with _i_ ones.
+- each _d_\[_i_\] and each _e_\[_i_\] is an integer or rational number in the interval [0, choose(_n_, _i_)], where the upper bound is the total number of _n_-bit words with _i_ ones.
 
-Here, _d_\[_i_\] is akin to the number of "passing" _n_-bit words with _i_ ones, and _e_\[_i_\] is akin to that number plus the number of "failing" _n_-bit words with _i_ ones.  Note that choose(_n_, 0) equals 1. _d_\[_i_\] and _e_\[_i_\] can be rational numbers, not just integers.
+Here, _d_\[_i_\] is akin to the number of "passing" _n_-bit words with _i_ ones, and _e_\[_i_\] is akin to that number plus the number of "failing" _n_-bit words with _i_ ones.
 
 The algorithm follows.
 
@@ -476,17 +476,17 @@ The algorithm follows.
 >
 >     and then _&delta;_\[_i_\] and _&eta;_\[_i_\] can be seen as control points for two different 1-dimensional [**Bézier curves**](https://en.wikipedia.org/wiki/Bézier_curve), where the _&delta;_ curve is always on or "below" the _&eta;_ curve.  For each curve, &lambda; is the relative position on that curve, the curve begins at  _&delta;_\[0\] or _&eta;_\[0\], and the curve ends at _&delta;_\[_n_\] or _&eta;_\[_n_\]. See also the next section.
 >
-> 2. This algorithm could be modified to avoid additional randomness besides the input coin flips, but this is not so trivial to do without introducing bias (especially because it's not simple to determine whether a given _n_-bit word with a given number of ones is "passing" or "failing").  Moreover, _d_\[_i_\] and _e_\[_i_\] would have to be limited to integers. As one attempt, after step 1, the following step 1a could be added, which avoids choosing all-zero or all-one blocks in some cases (similar to how the von Neumann scheme avoids accepting all-heads or all-tails (von Neumann 1951)<sup>[**(9)**](#Note9)</sup>): "1a. If the sum of all _e_\[_i_\] is greater than 2<sup>_n_</sup> &minus; 2, go to step 2. Otherwise, build an _n_-bit block where each bit (either 0 or 1) is the result of one of the coin flips from step 1, in order. Treat this block as an _n_-bit integer 0 or greater. If the block is greater than 0 and less than or equal to the sum of all _d_\[_i_\], return 1. Otherwise, if the block is greater than 0 and less than or equal to the sum of all _e_\[_i_\], return 1. Otherwise, go to step 1."
+> 2. This algorithm could be modified to avoid additional randomness besides the input coin flips by packing the coin flips into an _n_-bit word and looking up whether that word is "passing", "failing", or neither, among all _n_-bit words with _j_ ones, but this is not so trivial to do (especially because in general, a lookup table first has to be built in a setup step, which can be impractical unless 2<sup>_n_</sup> is relatively small).  Moreover, _d_\[_i_\] and _e_\[_i_\] would have to be limited to integers.
 
 <a id=Bernstein_Polynomials></a>
 #### Bernstein Polynomials
 
-A _Bernstein polynomial_ is a polynomial of the form &Sigma;<sub>_i_ = 0, ..., _n_</sub> choose(_n_, _i_) * &lambda;<sup>_i_</sup> * (1 &minus; &lambda;)<sup>_n_ &minus; _i_</sup> * _a_\[_i_\], where _n_ is the polynomial's degree and _a_\[_i_\] are the polynomial's Bernstein coefficients.  According to (Goyal and Sigman 2012)<sup>[**(24)**](#Note24)</sup>, a function can be simulated with a fixed number of input coin flips if and only if it's a Bernstein polynomial whose Bernstein coefficients are all in the interval \[0, 1\] (see also (Wästlund 1999, section 4)<sup>[**(25)**](#Note25)</sup>).  They also give an algorithm for simulating these polynomials, which is given below.
+A _Bernstein polynomial_ is a polynomial of the form &Sigma;<sub>_i_ = 0, ..., _n_</sub> choose(_n_, _i_) * &lambda;<sup>_i_</sup> * (1 &minus; &lambda;)<sup>_n_ &minus; _i_</sup> * _a_\[_i_\], where _n_ is the polynomial's degree and _a_\[_i_\] are the control points for the polynomial's corresponding Bézier curve.  According to (Goyal and Sigman 2012)<sup>[**(24)**](#Note24)</sup>, a function can be simulated with a fixed number of input coin flips if and only if it's a Bernstein polynomial whose control points are all in the interval \[0, 1\] (see also (Wästlund 1999, section 4)<sup>[**(25)**](#Note25)</sup>).  They also give an algorithm for simulating these polynomials, which is given below.
 
 1. Flip the input coin _n_ times, and let _j_ be the number of times the coin returned 1 this way.
 2. With probability _a_\[_j_\], return 1.  Otherwise, return 0.
 
-> **Note**: Each _a_\[_i_\] can also be seen as a control point for a 1-dimensional [**Bézier curve**](https://en.wikipedia.org/wiki/Bézier_curve), where &lambda; is the relative position on that curve, the curve begins at  _a_\[0\], and the curve ends at _a_\[_n_\].  For example, given Bernstein coefficients 0.2, 0.3, and 0.6, the curve is at 0.2 when &lambda; = 0, and 0.6 when &lambda; = 1.
+> **Note**: Each _a_\[_i_\] acts as a control point for a 1-dimensional [**Bézier curve**](https://en.wikipedia.org/wiki/Bézier_curve), where &lambda; is the relative position on that curve, the curve begins at  _a_\[0\], and the curve ends at _a_\[_n_\].  For example, given control points 0.2, 0.3, and 0.6, the curve is at 0.2 when &lambda; = 0, and 0.6 when &lambda; = 1.
 
 <a id=Certain_Power_Series></a>
 #### Certain Power Series

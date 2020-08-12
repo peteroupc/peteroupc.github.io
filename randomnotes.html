@@ -551,7 +551,7 @@ END METHOD
 <li> Fair coin to loaded die:  There are many ways to solve this problem.  For example, fair coins can serve as the source of random numbers for <code>RNDINT</code> (see &quot;<a href="https://peteroupc.github.io/randomfunc.html#Uniform_Random_Integers"><strong>Uniform Random Integers</strong></a>&quot;), and <code>RNDINT</code> can in turn be used to implement <a href="https://peteroupc.github.io/randomfunc.html#Weighted_Choice_With_Replacement"><strong><code>WeightedChoice</code></strong></a>, which implements loaded dice.  Some algorithms also produce a loaded die <em>directly</em> from fair coins, such as the <a href="https://github.com/probcomp/fast-loaded-dice-roller"><strong>Fast Loaded Dice Roller</strong></a>.</li>
 </ol>
 
-<p>If we have multiple biased coins (<em>n</em> of them), each with a separate unknown bias, we can choose one of them at random according to their bias via rejection sampling, also known as the <em>Bernoulli race</em> (Dughmi et al. 2017)<sup><a href="#Note35"><strong>(35)</strong></a></sup>; see also (Morina et al., 2019)<sup><a href="#Note36"><strong>(36)</strong></a></sup>:</p>
+<p>If we have multiple biased coins (<em>n</em> of them), each with a separate unknown bias, we can choose one of them at random according to their bias via rejection sampling, also known as the <em>Bernoulli race</em> (Dughmi et al. 2017)<sup><a href="#Note15"><strong>(15)</strong></a></sup>; see also (Morina et al., 2019)<sup><a href="#Note16"><strong>(16)</strong></a></sup>:</p>
 
 <ol>
 <li>Set <em>i</em> to <code>RNDINT(n - 1)</code>.</li>
@@ -592,49 +592,49 @@ END METHOD
 
 <p><small><sup id=Note14>(14)</sup> Hofert, M., and Maechler, M.  &quot;Nested Archimedean Copulas Meet R: The nacopula Package&quot;.  <em>Journal of Statistical Software</em> 39(9), 2011, pp. 1-20.</small></p>
 
-<p><small><sup id=Note15>(15)</sup> Knuth, Donald E. and Andrew Chi-Chih Yao. &quot;The complexity of nonuniform random number generation&quot;, in <em>Algorithms and Complexity: New Directions and Recent Results</em>, 1976.</small></p>
+<p><small><sup id=Note15>(15)</sup> Shaddin Dughmi, Jason D. Hartline, Robert Kleinberg, and Rad Niazadeh. 2017. Bernoulli Factories and Black-Box Reductions in Mechanism Design. In <em>Proceedings of 49th Annual ACM SIGACT Symposium on the Theory of Computing</em>, Montreal, Canada, June 2017 (STOC’17).</small></p>
 
-<p><small><sup id=Note16>(16)</sup> This is because the binary entropy of <code>p = 1/n</code> is <code>p * log2(1/p) = log2(n) / n</code>, and the sum of <code>n</code> binary entropies (for <code>n</code> outcomes with probability <code>1/n</code> each) is <code>log2(n)</code>.  Any optimal integer generator will come within 2 bits of this lower bound on average.</small></p>
+<p><small><sup id=Note16>(16)</sup> Morina, G., Łatuszyński, K., et al., &quot;<a href="https://arxiv.org/abs/1912.09229v1"><strong>From the Bernoulli Factory to a Dice Enterprise via Perfect Sampling of Markov Chains</strong></a>&quot;, arXiv:1912.09229v1 [math.PR], 2019.</small></p>
 
-<p><small><sup id=Note17>(17)</sup> D. Lemire, &quot;A fast alternative to the modulo reduction&quot;, Daniel Lemire&#39;s blog, 2016.</small></p>
+<p><small><sup id=Note17>(17)</sup> Knuth, Donald E. and Andrew Chi-Chih Yao. &quot;The complexity of nonuniform random number generation&quot;, in <em>Algorithms and Complexity: New Directions and Recent Results</em>, 1976.</small></p>
 
-<p><small><sup id=Note18>(18)</sup> Lemire, D., &quot;<a href="https://arxiv.org/abs/1805.10941v4"><strong>Fast Random Integer Generation in an Interval</strong></a>&quot;, arXiv:1805.10941v4  [cs.DS], 2018.</small></p>
+<p><small><sup id=Note18>(18)</sup> This is because the binary entropy of <code>p = 1/n</code> is <code>p * log2(1/p) = log2(n) / n</code>, and the sum of <code>n</code> binary entropies (for <code>n</code> outcomes with probability <code>1/n</code> each) is <code>log2(n)</code>.  Any optimal integer generator will come within 2 bits of this lower bound on average.</small></p>
 
-<p><small><sup id=Note19>(19)</sup> Lumbroso, J., &quot;<a href="https://arxiv.org/abs/1304.1916"><strong>Optimal Discrete Uniform Generation from Coin Flips, and Applications</strong></a>&quot;, arXiv:1304.1916 [cs.DS]</small></p>
+<p><small><sup id=Note19>(19)</sup> D. Lemire, &quot;A fast alternative to the modulo reduction&quot;, Daniel Lemire&#39;s blog, 2016.</small></p>
 
-<p><small><sup id=Note20>(20)</sup> &quot;<a href="http://mathforum.org/library/drmath/view/65653.html"><strong>Probability and Random Numbers</strong></a>&quot;, Feb. 29, 2004.</small></p>
+<p><small><sup id=Note20>(20)</sup> Lemire, D., &quot;<a href="https://arxiv.org/abs/1805.10941v4"><strong>Fast Random Integer Generation in an Interval</strong></a>&quot;, arXiv:1805.10941v4  [cs.DS], 2018.</small></p>
 
-<p><small><sup id=Note21>(21)</sup> Mennucci, A.C.G. &quot;<a href="https://arxiv.org/abs/1012.4290"><strong>Bit Recycling for Scaling Random Number Generators</strong></a>&quot;, arXiv:1012.4290 [cs.IT], 2018.</small></p>
+<p><small><sup id=Note21>(21)</sup> Lumbroso, J., &quot;<a href="https://arxiv.org/abs/1304.1916"><strong>Optimal Discrete Uniform Generation from Coin Flips, and Applications</strong></a>&quot;, arXiv:1304.1916 [cs.DS]</small></p>
 
-<p><small><sup id=Note22>(22)</sup> Devroye, L., Gravel, C., &quot;<a href="https://arxiv.org/abs/1502.02539v5"><strong>Sampling with arbitrary precision</strong></a>&quot;, arXiv:1502.02539v5 [cs.IT], 2015.</small></p>
+<p><small><sup id=Note22>(22)</sup> &quot;<a href="http://mathforum.org/library/drmath/view/65653.html"><strong>Probability and Random Numbers</strong></a>&quot;, Feb. 29, 2004.</small></p>
 
-<p><small><sup id=Note23>(23)</sup> Saad, F.A., Freer C.E., et al., &quot;<a href="https://arxiv.org/abs/2003.03830v2"><strong>The Fast Loaded Dice Roller: A Near-Optimal Exact Sampler for Discrete Probability Distributions</strong></a>&quot;, arXiv:2003.03830v2  [stat.CO], also in <em>AISTATS 2020: Proceedings of the 23rd International Conference on Artificial Intelligence and Statistics, Proceedings of Machine Learning Research</em> 108, Palermo, Sicily, Italy, 2020.</small></p>
+<p><small><sup id=Note23>(23)</sup> Mennucci, A.C.G. &quot;<a href="https://arxiv.org/abs/1012.4290"><strong>Bit Recycling for Scaling Random Number Generators</strong></a>&quot;, arXiv:1012.4290 [cs.IT], 2018.</small></p>
 
-<p><small><sup id=Note24>(24)</sup> Feras A. Saad, Cameron E. Freer, Martin C. Rinard, and Vikash K. Mansinghka, &quot;<a href="https://arxiv.org/abs/2001.04555v1"><strong>Optimal Approximate Sampling From Discrete Probability Distributions</strong></a>&quot;, arXiv:2001.04555v1 [cs.DS], also in Proc. ACM Program. Lang. 4, POPL, Article 36 (January 2020), 33 pages.</small></p>
+<p><small><sup id=Note24>(24)</sup> Devroye, L., Gravel, C., &quot;<a href="https://arxiv.org/abs/1502.02539v5"><strong>Sampling with arbitrary precision</strong></a>&quot;, arXiv:1502.02539v5 [cs.IT], 2015.</small></p>
 
-<p><small><sup id=Note25>(25)</sup> Klundert, B. van de, &quot;<a href="https://dspace.library.uu.nl/handle/1874/393383"><strong>Efficient Generation of Discrete Random Variates</strong></a>&quot;, Master thesis, Universiteit Utrecht, 2019.</small></p>
+<p><small><sup id=Note25>(25)</sup> Saad, F.A., Freer C.E., et al., &quot;<a href="https://arxiv.org/abs/2003.03830v2"><strong>The Fast Loaded Dice Roller: A Near-Optimal Exact Sampler for Discrete Probability Distributions</strong></a>&quot;, arXiv:2003.03830v2  [stat.CO], also in <em>AISTATS 2020: Proceedings of the 23rd International Conference on Artificial Intelligence and Statistics, Proceedings of Machine Learning Research</em> 108, Palermo, Sicily, Italy, 2020.</small></p>
 
-<p><small><sup id=Note26>(26)</sup> K. Bringmann and K. G. Larsen, &quot;Succinct Sampling from Discrete Distributions&quot;, In: Proc. 45th Annual ACM Symposium on Theory of Computing (STOC&#39;13), 2013.</small></p>
+<p><small><sup id=Note26>(26)</sup> Feras A. Saad, Cameron E. Freer, Martin C. Rinard, and Vikash K. Mansinghka, &quot;<a href="https://arxiv.org/abs/2001.04555v1"><strong>Optimal Approximate Sampling From Discrete Probability Distributions</strong></a>&quot;, arXiv:2001.04555v1 [cs.DS], also in Proc. ACM Program. Lang. 4, POPL, Article 36 (January 2020), 33 pages.</small></p>
 
-<p><small><sup id=Note27>(27)</sup> K. Bringmann and K. Panagiotou, &quot;Efficient Sampling Methods for Discrete Distributions.&quot; In: Proc. 39th International Colloquium on Automata, Languages, and Programming (ICALP&#39;12), 2012.</small></p>
+<p><small><sup id=Note27>(27)</sup> Klundert, B. van de, &quot;<a href="https://dspace.library.uu.nl/handle/1874/393383"><strong>Efficient Generation of Discrete Random Variates</strong></a>&quot;, Master thesis, Universiteit Utrecht, 2019.</small></p>
 
-<p><small><sup id=Note28>(28)</sup> L. Hübschle-Schneider and P. Sanders, &quot;<a href="https://arxiv.org/abs/1903.00227v2"><strong>Parallel Weighted Random Sampling</strong></a>&quot;, arXiv:1903.00227v2  [cs.DS], 2019.</small></p>
+<p><small><sup id=Note28>(28)</sup> K. Bringmann and K. G. Larsen, &quot;Succinct Sampling from Discrete Distributions&quot;, In: Proc. 45th Annual ACM Symposium on Theory of Computing (STOC&#39;13), 2013.</small></p>
 
-<p><small><sup id=Note29>(29)</sup> Y. Tang, &quot;An Empirical Study of Random Sampling Methods for Changing Discrete Distributions&quot;, Master&#39;s thesis, University of Alberta, 2019.</small></p>
+<p><small><sup id=Note29>(29)</sup> K. Bringmann and K. Panagiotou, &quot;Efficient Sampling Methods for Discrete Distributions.&quot; In: Proc. 39th International Colloquium on Automata, Languages, and Programming (ICALP&#39;12), 2012.</small></p>
 
-<p><small><sup id=Note30>(30)</sup> A.J. Walker, &quot;An efficient method for generating discrete random variables with general distributions&quot;, <em>ACM Transactions on Mathematical Software</em> 3, 1977.</small></p>
+<p><small><sup id=Note30>(30)</sup> L. Hübschle-Schneider and P. Sanders, &quot;<a href="https://arxiv.org/abs/1903.00227v2"><strong>Parallel Weighted Random Sampling</strong></a>&quot;, arXiv:1903.00227v2  [cs.DS], 2019.</small></p>
 
-<p><small><sup id=Note31>(31)</sup> Vose, Michael D. &quot;A linear algorithm for generating random numbers with a given distribution.&quot; IEEE Transactions on software engineering 17, no. 9 (1991): 972-975.</small></p>
+<p><small><sup id=Note31>(31)</sup> Y. Tang, &quot;An Empirical Study of Random Sampling Methods for Changing Discrete Distributions&quot;, Master&#39;s thesis, University of Alberta, 2019.</small></p>
 
-<p><small><sup id=Note32>(32)</sup> Roy, Sujoy Sinha, Frederik Vercauteren and Ingrid Verbauwhede. &quot;<a href="https://www.esat.kuleuven.be/cosic/publications/article-2372.pdf"><strong>High Precision Discrete Gaussian Sampling on FPGAs</strong></a>.&quot; <em>Selected Areas in Cryptography</em> (2013).</small></p>
+<p><small><sup id=Note32>(32)</sup> A.J. Walker, &quot;An efficient method for generating discrete random variables with general distributions&quot;, <em>ACM Transactions on Mathematical Software</em> 3, 1977.</small></p>
 
-<p><small><sup id=Note33>(33)</sup> T. S. Han and M. Hoshi, &quot;Interval algorithm for random number generation&quot;, <em>IEEE Transactions on Information Theory</em> 43(2), March 1997.</small></p>
+<p><small><sup id=Note33>(33)</sup> Vose, Michael D. &quot;A linear algorithm for generating random numbers with a given distribution.&quot; IEEE Transactions on software engineering 17, no. 9 (1991): 972-975.</small></p>
 
-<p><small><sup id=Note34>(34)</sup> Oberhoff, Sebastian, &quot;<a href="https://dc.uwm.edu/etd/1888"><strong>Exact Sampling and Prefix Distributions</strong></a>&quot;, <em>Theses and Dissertations</em>, University of Wisconsin Milwaukee, 2018.</small></p>
+<p><small><sup id=Note34>(34)</sup> Roy, Sujoy Sinha, Frederik Vercauteren and Ingrid Verbauwhede. &quot;<a href="https://www.esat.kuleuven.be/cosic/publications/article-2372.pdf"><strong>High Precision Discrete Gaussian Sampling on FPGAs</strong></a>.&quot; <em>Selected Areas in Cryptography</em> (2013).</small></p>
 
-<p><small><sup id=Note35>(35)</sup> Shaddin Dughmi, Jason D. Hartline, Robert Kleinberg, and Rad Niazadeh. 2017. Bernoulli Factories and Black-Box Reductions in Mechanism Design. In <em>Proceedings of 49th Annual ACM SIGACT Symposium on the Theory of Computing</em>, Montreal, Canada, June 2017 (STOC’17).</small></p>
+<p><small><sup id=Note35>(35)</sup> T. S. Han and M. Hoshi, &quot;Interval algorithm for random number generation&quot;, <em>IEEE Transactions on Information Theory</em> 43(2), March 1997.</small></p>
 
-<p><small><sup id=Note36>(36)</sup> Morina, G., Łatuszyński, K., et al., &quot;<a href="https://arxiv.org/abs/1912.09229v1"><strong>From the Bernoulli Factory to a Dice Enterprise via Perfect Sampling of Markov Chains</strong></a>&quot;, arXiv:1912.09229v1 [math.PR], 2019.</small></p>
+<p><small><sup id=Note36>(36)</sup> Oberhoff, Sebastian, &quot;<a href="https://dc.uwm.edu/etd/1888"><strong>Exact Sampling and Prefix Distributions</strong></a>&quot;, <em>Theses and Dissertations</em>, University of Wisconsin Milwaukee, 2018.</small></p>
 
 <p><a id=Appendix></a></p>
 
@@ -679,7 +679,7 @@ END METHOD
 
 <p>There are many algorithms for the <code>RNDINT(maxInclusive)</code> method, which generates uniform random integers in [0, maxInclusive].  This section deals with &quot;optimal&quot; <code>RNDINT</code> algorithms in terms of the number of random bits they use on average (assuming we have a &quot;true&quot; random generator that outputs independent unbiased random bits).</p>
 
-<p>Knuth and Yao (1976)<sup><a href="#Note15"><strong>(15)</strong></a></sup> showed that any algorithm that uses only random bits to generate random integers with separate probabilities can be described as a <em>binary tree</em> (also known as a <em>DDG tree</em> or <em>discrete distribution generating tree</em>).  Random bits trace a path in this tree, and each leaf (terminal node) in the tree represents an outcome.  They also gave lower bounds on the number of random bits an algorithm needs on average for this purpose.  In the case of <code>RNDINT</code>, there are <code>n = maxInclusive + 1</code> outcomes that each occur with probability <code>1/n</code>, so any <em>optimal</em> algorithm for <code>RNDINT</code> needs at least <code>log2(n)</code> and at most <code>log2(n) + 2</code> bits on average (where <code>log2(x) = ln(x)/ln(2)</code>).<sup><a href="#Note16"><strong>(16)</strong></a></sup></p>
+<p>Knuth and Yao (1976)<sup><a href="#Note17"><strong>(17)</strong></a></sup> showed that any algorithm that uses only random bits to generate random integers with separate probabilities can be described as a <em>binary tree</em> (also known as a <em>DDG tree</em> or <em>discrete distribution generating tree</em>).  Random bits trace a path in this tree, and each leaf (terminal node) in the tree represents an outcome.  They also gave lower bounds on the number of random bits an algorithm needs on average for this purpose.  In the case of <code>RNDINT</code>, there are <code>n = maxInclusive + 1</code> outcomes that each occur with probability <code>1/n</code>, so any <em>optimal</em> algorithm for <code>RNDINT</code> needs at least <code>log2(n)</code> and at most <code>log2(n) + 2</code> bits on average (where <code>log2(x) = ln(x)/ln(2)</code>).<sup><a href="#Note18"><strong>(18)</strong></a></sup></p>
 
 <p>As also shown by Knuth and Yao, however, any integer generating algorithm that is both optimal <em>and unbiased (exact)</em> will also run forever in the worst case, even if it uses few random bits on average.  This is because in most cases, <code>n</code> will not be a power of 2, so that <code>n</code> will have an infinite binary expansion, so that the resulting DDG tree will have to either be infinitely deep, or include &quot;rejection leaves&quot; at the end of the tree. (If <code>n</code> is a power of 2, the binary expansion will be finite, so that the DDG tree will have a finite depth and no rejection leaves.)</p>
 
@@ -702,7 +702,7 @@ END METHOD
 <td>Runs forever in worst case</td>
 </tr>
 <tr>
-<td><em>Multiply-and-shift reduction</em>: Generate <code>bignumber</code>, a <code>k</code>-bit random integer with many more bits than <code>n</code> has, then find <code>(bignumber * n) &gt;&gt; k</code> (see (Lemire 2016)<sup><a href="#Note17"><strong>(17)</strong></a></sup>, (Lemire 2018)<sup><a href="#Note18"><strong>(18)</strong></a></sup>, and the &quot;Integer Multiplication&quot; algorithm surveyed by M. O&#39;Neill.</td>
+<td><em>Multiply-and-shift reduction</em>: Generate <code>bignumber</code>, a <code>k</code>-bit random integer with many more bits than <code>n</code> has, then find <code>(bignumber * n) &gt;&gt; k</code> (see (Lemire 2016)<sup><a href="#Note19"><strong>(19)</strong></a></sup>, (Lemire 2018)<sup><a href="#Note20"><strong>(20)</strong></a></sup>, and the &quot;Integer Multiplication&quot; algorithm surveyed by M. O&#39;Neill.</td>
 <td>No</td>
 <td>No</td>
 <td>Constant</td>
@@ -714,13 +714,13 @@ END METHOD
 <td>Constant</td>
 </tr>
 <tr>
-<td><em>Fast Dice Roller</em> (Lumbroso 2013)<sup><a href="#Note19"><strong>(19)</strong></a></sup></td>
+<td><em>Fast Dice Roller</em> (Lumbroso 2013)<sup><a href="#Note21"><strong>(21)</strong></a></sup></td>
 <td>Yes</td>
 <td>Yes</td>
 <td>Runs forever in worst case</td>
 </tr>
 <tr>
-<td>Math Forum (2004)<sup><a href="#Note20"><strong>(20)</strong></a></sup> or (Mennucci 2018)<sup><a href="#Note21"><strong>(21)</strong></a></sup> (batching/recycling random bits)</td>
+<td>Math Forum (2004)<sup><a href="#Note22"><strong>(22)</strong></a></sup> or (Mennucci 2018)<sup><a href="#Note23"><strong>(23)</strong></a></sup> (batching/recycling random bits)</td>
 <td>Yes</td>
 <td>Yes</td>
 <td>Runs forever in worst case</td>
@@ -745,7 +745,7 @@ END METHOD
 </tr>
 </tbody></table>
 
-<p>There are various techniques that can reduce the number of bits &quot;wasted&quot; by an integer-generating algorithm, and bring that algorithm closer to the theoretical lower bound of Knuth and Yao, even if the algorithm isn&#39;t &quot;optimal&quot;.  These techniques, which include batching, bit recycling, and randomness extraction, are discussed, for example, in the Math Forum page and the Lumbroso and Mennucci papers referenced above, and in (Devroye and Gravel 2015)<sup><a href="#Note22"><strong>(22)</strong></a></sup>.</p>
+<p>There are various techniques that can reduce the number of bits &quot;wasted&quot; by an integer-generating algorithm, and bring that algorithm closer to the theoretical lower bound of Knuth and Yao, even if the algorithm isn&#39;t &quot;optimal&quot;.  These techniques, which include batching, bit recycling, and randomness extraction, are discussed, for example, in the Math Forum page and the Lumbroso and Mennucci papers referenced above, and in (Devroye and Gravel 2015)<sup><a href="#Note24"><strong>(24)</strong></a></sup>.</p>
 
 <p><a id=A_Note_on_Weighted_Choice_Algorithms></a></p>
 
@@ -753,25 +753,25 @@ END METHOD
 
 <p>Just like integer generation algorithms (see the previous section), weighted choice algorithms (implementations of <code>WeightedChoice</code> that sample with replacement) involve generating random integers with separate probabilities.  And all of them can be described as a binary DDG tree just like integer generating algorithms.</p>
 
-<p>In this case, though, the number of random bits an algorithm uses on average is bounded from below by the sum of binary entropies of all the probabilities involved.  For example, say we give the four integers 1, 2, 3, 4 the following weights: 3, 15, 1, 2.  The binary entropies of these weights are 0.4010... + 0.3467... + 0.2091... + 0.3230... = 1.2800... (because the sum of the weights is 21 and the binary entropy of 3/21 is <code>(3/21) * log2(21/3) = 0.4010...</code>, and so on for the other weights), so an optimal algorithm will use anywhere from 1.2800... to 3.2800... bits on average to generate a random number with these weights.<sup><a href="#Note16"><strong>(16)</strong></a></sup>  Another difference from integer generation algorithms is that usually a special data structure has to be built for the sampling to work, and often there is a need to make updates to the structure as items are sampled.  The following are some ways to implement <code>WeightedChoice</code>; unless noted, the algorithms are not optimal in terms of the number of bits used.</p>
+<p>In this case, though, the number of random bits an algorithm uses on average is bounded from below by the sum of binary entropies of all the probabilities involved.  For example, say we give the four integers 1, 2, 3, 4 the following weights: 3, 15, 1, 2.  The binary entropies of these weights are 0.4010... + 0.3467... + 0.2091... + 0.3230... = 1.2800... (because the sum of the weights is 21 and the binary entropy of 3/21 is <code>(3/21) * log2(21/3) = 0.4010...</code>, and so on for the other weights), so an optimal algorithm will use anywhere from 1.2800... to 3.2800... bits on average to generate a random number with these weights.<sup><a href="#Note18"><strong>(18)</strong></a></sup>  Another difference from integer generation algorithms is that usually a special data structure has to be built for the sampling to work, and often there is a need to make updates to the structure as items are sampled.  The following are some ways to implement <code>WeightedChoice</code>; unless noted, the algorithms are not optimal in terms of the number of bits used.</p>
 
 <ul>
-<li>The Fast Loaded Dice Roller (Saad et al., 2020)<sup><a href="#Note23"><strong>(23)</strong></a></sup>.  This sampler comes within 6 bits, on average, of the optimal number of bits.  The paper for this algorithm also reviews rejection samplers in section 4.</li>
-<li>The samplers described in (Saad et al., 2020)<sup><a href="#Note24"><strong>(24)</strong></a></sup>.   The samplers are optimal in the sense given here as long as the sum of the weights is of the form 2<sup>k</sup> or 2<sup>k</sup> &minus; 2<sup>m</sup>.</li>
-<li>The data structures surveyed and mentioned in (Klundert 2019)<sup><a href="#Note25"><strong>(25)</strong></a></sup>.</li>
-<li>The Bringmann&ndash;Larsen succinct data structure (Bringmann and Larsen 2013)<sup><a href="#Note26"><strong>(26)</strong></a></sup>.</li>
-<li>A sampler that is designed to work on a sorted list of weights (Bringmann and Panagiotou 2012)<sup><a href="#Note27"><strong>(27)</strong></a></sup>.</li>
-<li>The parallel weighted random samplers described in (Hübschle-Schneider and Sanders 2019)<sup><a href="#Note28"><strong>(28)</strong></a></sup>.</li>
-<li>The two-level search, multi-level search, and flat method described in (Tang 2019)<sup><a href="#Note29"><strong>(29)</strong></a></sup>.</li>
+<li>The Fast Loaded Dice Roller (Saad et al., 2020)<sup><a href="#Note25"><strong>(25)</strong></a></sup>.  This sampler comes within 6 bits, on average, of the optimal number of bits.  The paper for this algorithm also reviews rejection samplers in section 4.</li>
+<li>The samplers described in (Saad et al., 2020)<sup><a href="#Note26"><strong>(26)</strong></a></sup>.   The samplers are optimal in the sense given here as long as the sum of the weights is of the form 2<sup>k</sup> or 2<sup>k</sup> &minus; 2<sup>m</sup>.</li>
+<li>The data structures surveyed and mentioned in (Klundert 2019)<sup><a href="#Note27"><strong>(27)</strong></a></sup>.</li>
+<li>The Bringmann&ndash;Larsen succinct data structure (Bringmann and Larsen 2013)<sup><a href="#Note28"><strong>(28)</strong></a></sup>.</li>
+<li>A sampler that is designed to work on a sorted list of weights (Bringmann and Panagiotou 2012)<sup><a href="#Note29"><strong>(29)</strong></a></sup>.</li>
+<li>The parallel weighted random samplers described in (Hübschle-Schneider and Sanders 2019)<sup><a href="#Note30"><strong>(30)</strong></a></sup>.</li>
+<li>The two-level search, multi-level search, and flat method described in (Tang 2019)<sup><a href="#Note31"><strong>(31)</strong></a></sup>.</li>
 </ul>
 
 <p>There are other weighted choice algorithms that don&#39;t necessarily take integer weights.  They include:</p>
 
 <ul>
 <li>The algorithms given in &quot;Weighted Choice with Biased Coins&quot; in this appendix.</li>
-<li>The <em>alias method</em> by Walker (1977)<sup><a href="#Note30"><strong>(30)</strong></a></sup>.  Michael Vose&#39;s version of the alias method (Vose 1991)<sup><a href="#Note31"><strong>(31)</strong></a></sup> is described in &quot;<a href="https://www.keithschwarz.com/darts-dice-coins/"><strong>Darts, Dice, and Coins: Sampling from a Discrete Distribution</strong></a>&quot;.  The alias method ought to be implemented using rational-valued weights and rational-number arithmetic, since this method is hard to apply to integer weights if the sum of the weights is not divisible by the number of weights.</li>
-<li>The Knuth and Yao algorithm that generates a DDG tree from the binary expansions of the probabilities, an algorithm that is optimal, or at least nearly so.  This is suggested in exercise 3.4.2 of chapter 15 of (Devroye 1986, p. 1-2)<sup><a href="#Note10"><strong>(10)</strong></a></sup>, implemented in <em>randomgen.py</em> as the <code>discretegen</code> method, and also described in (Roy et al. 2013)<sup><a href="#Note32"><strong>(32)</strong></a></sup>.</li>
-<li>The Han and Hoshi algorithm (Han and Hoshi 1997)<sup><a href="#Note33"><strong>(33)</strong></a></sup> that uses the cumulative probabilities as input and is described in (Devroye and Gravel 2015)<sup><a href="#Note22"><strong>(22)</strong></a></sup>.  This algorithm comes within 3 bits, on average, of the optimal number of bits.</li>
+<li>The <em>alias method</em> by Walker (1977)<sup><a href="#Note32"><strong>(32)</strong></a></sup>.  Michael Vose&#39;s version of the alias method (Vose 1991)<sup><a href="#Note33"><strong>(33)</strong></a></sup> is described in &quot;<a href="https://www.keithschwarz.com/darts-dice-coins/"><strong>Darts, Dice, and Coins: Sampling from a Discrete Distribution</strong></a>&quot;.  The alias method ought to be implemented using rational-valued weights and rational-number arithmetic, since this method is hard to apply to integer weights if the sum of the weights is not divisible by the number of weights.</li>
+<li>The Knuth and Yao algorithm that generates a DDG tree from the binary expansions of the probabilities, an algorithm that is optimal, or at least nearly so.  This is suggested in exercise 3.4.2 of chapter 15 of (Devroye 1986, p. 1-2)<sup><a href="#Note10"><strong>(10)</strong></a></sup>, implemented in <em>randomgen.py</em> as the <code>discretegen</code> method, and also described in (Roy et al. 2013)<sup><a href="#Note34"><strong>(34)</strong></a></sup>.</li>
+<li>The Han and Hoshi algorithm (Han and Hoshi 1997)<sup><a href="#Note35"><strong>(35)</strong></a></sup> that uses the cumulative probabilities as input and is described in (Devroye and Gravel 2015)<sup><a href="#Note24"><strong>(24)</strong></a></sup>.  This algorithm comes within 3 bits, on average, of the optimal number of bits.</li>
 </ul>
 
 <p>For all weighted-choice algorithms in this section (except the last two algorithms), floating-point arithmetic and floating-point random number generation (such as <code>RNDRANGE()</code>) ought to be avoided, since they often introduce bias in real-world implementations.</p>
@@ -790,9 +790,9 @@ END METHOD
 
 <p>Most algorithms on this page, though, are not <em>error-bounded</em>, but even so, they may still be useful to an application willing to trade accuracy for speed.</p>
 
-<p>On the other hand, if an algorithm returns results that are accurate to a given number of digits after the point (for example, 53 bits after the point), it can generate any number of digits uniformly at random and append those digits to the result&#39;s digit expansion while remaining accurate to that many digits. For example, after it generates a normally-distributed random number, an algorithm can fill it with enough uniform random bits, as necessary, to give the number 100 bits after the point (Karney 2014)<sup><a href="#Note1"><strong>(1)</strong></a></sup>, see also (Oberhoff 2018)<sup><a href="#Note34"><strong>(34)</strong></a></sup> (example: <code>for i in 54..100: ret = ret + RNDINT(1) * pow(2,-i)</code>).</p>
+<p>On the other hand, if an algorithm returns results that are accurate to a given number of digits after the point (for example, 53 bits after the point), it can generate any number of digits uniformly at random and append those digits to the result&#39;s digit expansion while remaining accurate to that many digits. For example, after it generates a normally-distributed random number, an algorithm can fill it with enough uniform random bits, as necessary, to give the number 100 bits after the point (Karney 2014)<sup><a href="#Note1"><strong>(1)</strong></a></sup>, see also (Oberhoff 2018)<sup><a href="#Note36"><strong>(36)</strong></a></sup> (example: <code>for i in 54..100: ret = ret + RNDINT(1) * pow(2,-i)</code>).</p>
 
-<p>There are many ways to describe closeness between two distributions.  As one suggestion found in (Devroye and Gravel 2015)<sup><a href="#Note22"><strong>(22)</strong></a></sup>, an algorithm has accuracy &epsilon; (the user-specified error tolerance) if it samples random numbers whose distribution is close to the ideal distribution by a Wasserstein L<sub>&infin;</sub> distance of not more than &epsilon;.</p>
+<p>There are many ways to describe closeness between two distributions.  As one suggestion found in (Devroye and Gravel 2015)<sup><a href="#Note24"><strong>(24)</strong></a></sup>, an algorithm has accuracy &epsilon; (the user-specified error tolerance) if it samples random numbers whose distribution is close to the ideal distribution by a Wasserstein L<sub>&infin;</sub> distance of not more than &epsilon;.</p>
 
 <p><a id=License></a></p>
 

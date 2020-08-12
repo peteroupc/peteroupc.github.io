@@ -601,10 +601,10 @@
 <li><em>D</em>(&lambda;) = &Sigma;<sub><em>i</em> = 0, ..., <em>n</em></sub> &lambda;<sup><em>i</em></sup> * (1 &minus; &lambda;)<sup><em>n</em> &minus; <em>i</em></sup> * <em>d</em>[<em>i</em>],</li>
 <li><em>E</em>(&lambda;) = &Sigma;<sub><em>i</em> = 0, ..., <em>n</em></sub> &lambda;<sup><em>i</em></sup> * (1 &minus; &lambda;)<sup><em>n</em> &minus; <em>i</em></sup> * <em>e</em>[<em>i</em>],</li>
 <li>every <em>d</em>[<em>i</em>] is less than or equal to the corresponding <em>e</em>[<em>i</em>], and</li>
-<li>each <em>d</em>[<em>i</em>] and each <em>e</em>[<em>i</em>] is in the interval [0, choose(<em>n</em>, <em>i</em>)], where the upper bound is the total number of <em>n</em>-bit words with <em>i</em> ones.</li>
+<li>each <em>d</em>[<em>i</em>] and each <em>e</em>[<em>i</em>] is an integer or rational number in the interval [0, choose(<em>n</em>, <em>i</em>)], where the upper bound is the total number of <em>n</em>-bit words with <em>i</em> ones.</li>
 </ul>
 
-<p>Here, <em>d</em>[<em>i</em>] is akin to the number of &quot;passing&quot; <em>n</em>-bit words with <em>i</em> ones, and <em>e</em>[<em>i</em>] is akin to that number plus the number of &quot;failing&quot; <em>n</em>-bit words with <em>i</em> ones.  Note that choose(<em>n</em>, 0) equals 1. <em>d</em>[<em>i</em>] and <em>e</em>[<em>i</em>] can be rational numbers, not just integers.</p>
+<p>Here, <em>d</em>[<em>i</em>] is akin to the number of &quot;passing&quot; <em>n</em>-bit words with <em>i</em> ones, and <em>e</em>[<em>i</em>] is akin to that number plus the number of &quot;failing&quot; <em>n</em>-bit words with <em>i</em> ones.</p>
 
 <p>The algorithm follows.</p>
 
@@ -625,7 +625,7 @@
 </ul>
 
 <p>and then <em>&delta;</em>[<em>i</em>] and <em>&eta;</em>[<em>i</em>] can be seen as control points for two different 1-dimensional <a href="https://en.wikipedia.org/wiki/B%C3%A9zier_curve"><strong>Bézier curves</strong></a>, where the <em>&delta;</em> curve is always on or &quot;below&quot; the <em>&eta;</em> curve.  For each curve, &lambda; is the relative position on that curve, the curve begins at  <em>&delta;</em>[0] or <em>&eta;</em>[0], and the curve ends at <em>&delta;</em>[<em>n</em>] or <em>&eta;</em>[<em>n</em>]. See also the next section.</p></li>
-<li><p>This algorithm could be modified to avoid additional randomness besides the input coin flips, but this is not so trivial to do without introducing bias (especially because it&#39;s not simple to determine whether a given <em>n</em>-bit word with a given number of ones is &quot;passing&quot; or &quot;failing&quot;).  Moreover, <em>d</em>[<em>i</em>] and <em>e</em>[<em>i</em>] would have to be limited to integers. As one attempt, after step 1, the following step 1a could be added, which avoids choosing all-zero or all-one blocks in some cases (similar to how the von Neumann scheme avoids accepting all-heads or all-tails (von Neumann 1951)<sup><a href="#Note9"><strong>(9)</strong></a></sup>): &quot;1a. If the sum of all <em>e</em>[<em>i</em>] is greater than 2<sup><em>n</em></sup> &minus; 2, go to step 2. Otherwise, build an <em>n</em>-bit block where each bit (either 0 or 1) is the result of one of the coin flips from step 1, in order. Treat this block as an <em>n</em>-bit integer 0 or greater. If the block is greater than 0 and less than or equal to the sum of all <em>d</em>[<em>i</em>], return 1. Otherwise, if the block is greater than 0 and less than or equal to the sum of all <em>e</em>[<em>i</em>], return 1. Otherwise, go to step 1.&quot;</p></li>
+<li><p>This algorithm could be modified to avoid additional randomness besides the input coin flips by packing the coin flips into an <em>n</em>-bit word and looking up whether that word is &quot;passing&quot;, &quot;failing&quot;, or neither, among all <em>n</em>-bit words with <em>j</em> ones, but this is not so trivial to do (especially because in general, a lookup table first has to be built in a setup step, which can be impractical unless 2<sup><em>n</em></sup> is relatively small).  Moreover, <em>d</em>[<em>i</em>] and <em>e</em>[<em>i</em>] would have to be limited to integers.</p></li>
 </ol>
 </blockquote>
 
@@ -633,7 +633,7 @@
 
 <h4>Bernstein Polynomials</h4>
 
-<p>A <em>Bernstein polynomial</em> is a polynomial of the form &Sigma;<sub><em>i</em> = 0, ..., <em>n</em></sub> choose(<em>n</em>, <em>i</em>) * &lambda;<sup><em>i</em></sup> * (1 &minus; &lambda;)<sup><em>n</em> &minus; <em>i</em></sup> * <em>a</em>[<em>i</em>], where <em>n</em> is the polynomial&#39;s degree and <em>a</em>[<em>i</em>] are the polynomial&#39;s Bernstein coefficients.  According to (Goyal and Sigman 2012)<sup><a href="#Note24"><strong>(24)</strong></a></sup>, a function can be simulated with a fixed number of input coin flips if and only if it&#39;s a Bernstein polynomial whose Bernstein coefficients are all in the interval [0, 1] (see also (Wästlund 1999, section 4)<sup><a href="#Note25"><strong>(25)</strong></a></sup>).  They also give an algorithm for simulating these polynomials, which is given below.</p>
+<p>A <em>Bernstein polynomial</em> is a polynomial of the form &Sigma;<sub><em>i</em> = 0, ..., <em>n</em></sub> choose(<em>n</em>, <em>i</em>) * &lambda;<sup><em>i</em></sup> * (1 &minus; &lambda;)<sup><em>n</em> &minus; <em>i</em></sup> * <em>a</em>[<em>i</em>], where <em>n</em> is the polynomial&#39;s degree and <em>a</em>[<em>i</em>] are the control points for the polynomial&#39;s corresponding Bézier curve.  According to (Goyal and Sigman 2012)<sup><a href="#Note24"><strong>(24)</strong></a></sup>, a function can be simulated with a fixed number of input coin flips if and only if it&#39;s a Bernstein polynomial whose control points are all in the interval [0, 1] (see also (Wästlund 1999, section 4)<sup><a href="#Note25"><strong>(25)</strong></a></sup>).  They also give an algorithm for simulating these polynomials, which is given below.</p>
 
 <ol>
 <li>Flip the input coin <em>n</em> times, and let <em>j</em> be the number of times the coin returned 1 this way.</li>
@@ -641,7 +641,7 @@
 </ol>
 
 <blockquote>
-<p><strong>Note</strong>: Each <em>a</em>[<em>i</em>] can also be seen as a control point for a 1-dimensional <a href="https://en.wikipedia.org/wiki/B%C3%A9zier_curve"><strong>Bézier curve</strong></a>, where &lambda; is the relative position on that curve, the curve begins at  <em>a</em>[0], and the curve ends at <em>a</em>[<em>n</em>].  For example, given Bernstein coefficients 0.2, 0.3, and 0.6, the curve is at 0.2 when &lambda; = 0, and 0.6 when &lambda; = 1.</p>
+<p><strong>Note</strong>: Each <em>a</em>[<em>i</em>] acts as a control point for a 1-dimensional <a href="https://en.wikipedia.org/wiki/B%C3%A9zier_curve"><strong>Bézier curve</strong></a>, where &lambda; is the relative position on that curve, the curve begins at  <em>a</em>[0], and the curve ends at <em>a</em>[<em>n</em>].  For example, given control points 0.2, 0.3, and 0.6, the curve is at 0.2 when &lambda; = 0, and 0.6 when &lambda; = 1.</p>
 </blockquote>
 
 <p><a id=Certain_Power_Series></a></p>
