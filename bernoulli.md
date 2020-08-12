@@ -41,6 +41,7 @@ This page also contains algorithms to exactly simulate probabilities that are ir
         - [**(&lambda; + &mu;) / 2**](#lambda_mu_2)
         - [**arctan(&lambda;) /&lambda;**](#arctan_lambda_lambda)
         - [**arctan(&lambda;)**](#arctan_lambda)
+        - [**cos(&lambda;)**](#cos_lambda)
         - [**&lambda;<sup>_x_/_y_</sup>**](#lambda__x___y)
         - [**&lambda;<sup>&mu;</sup>**](#lambda_mu_3)
         - [**sqrt(&lambda;)**](#sqrt_lambda)
@@ -96,7 +97,7 @@ A _factory function_ is a function that relates the old probability to the new o
 
 As one example, the function _f_ = 2*&lambda; cannot serve as a factory function, since its graph touches 1 somewhere in the open interval (0, 1).
 
-If a function's graph touches 0 or 1 somewhere in (0, 1), papers have suggested dealing with this by modifying the function so it no longer touches 0 or 1 there (for example, _f_ = 2*&lambda; might become _f_ = min(2 * &lambda;, 1 &minus; &#x03F5;) (Keane and O'Brien 1994)<sup>[**(2)**](#Note2)</sup>, (Huber 2014, introduction)<sup>[**(3)**](#Note3)</sup>), or by somehow ensuring that &lambda; does not come close to the point where the graph touches 0 or 1 (Nacu and Peres 2005, theorem 1)<sup>[**(4)**](#Note4)</sup>.
+If a function's graph touches 0 or 1 somewhere in (0, 1), papers have suggested dealing with this by modifying the function so it no longer touches 0 or 1 there (for example, _f_ = 2*&lambda; might become _f_ = min(2 * &lambda;, 1 &minus; &#x03F5;) where &#x03F5; is in (0, 1/2) (Keane and O'Brien 1994)<sup>[**(2)**](#Note2)</sup>, (Huber 2014, introduction)<sup>[**(3)**](#Note3)</sup>), or by somehow ensuring that &lambda; does not come close to the point where the graph touches 0 or 1 (Nacu and Peres 2005, theorem 1)<sup>[**(4)**](#Note4)</sup>.
 
 The next section will show algorithms for a number of factory functions, allowing different kinds of probabilities to be simulated from input coins.
 
@@ -118,9 +119,9 @@ In the following algorithms:
 >
 >     An algorithm can be uniformly fast for all &lambda; parameters in a closed interval in (0, 1) only if its factory function meets the Lipschitz condition on that closed interval, that is, it is continuous and has no slope that tends to a vertical slope anywhere in that interval (Nacu and Peres 2005, proposition 23)<sup>[**(4)**](#Note4)</sup>.
 >
-> 2. **Simulating probabilities vs. estimating probabilities.** An algorithm that simulates &lambda;, or any other probability, is the same as building an unbiased estimator for that probability (Łatuszyński et al. 2009/2011)<sup>[**(6)**](#Note6)</sup>.  However, since the focus of this document is on "exact" sampling, algorithms that directly estimate the probability of an input coin (for instance, by flipping the coin many times and averaging the results) are outside the scope of this document. As (Mossel and Peres 2005)<sup>[**(7)**](#Note7)</sup> says: "The difficulty here is that [&lambda;] is unknown.  It is easy to estimate [&lambda;], and therefore [_f_(&lambda;)].  However, to get a coin with an exact bias [_f_(&lambda;)] is harder", and that is what Bernoulli factory algorithms are designed to do.
+> 2. **Simulating probabilities vs. estimating probabilities.** An algorithm that simulates &lambda;, or any other probability, is the same as building an unbiased estimator for that probability (Łatuszyński et al. 2009/2011)<sup>[**(6)**](#Note6)</sup>.  (In what follows, an _unbiased probability estimator_ is an unbiased estimator whose estimates are in \[0, 1\] almost surely.) However, since the focus of this document is on "exact" sampling, algorithms that directly estimate the probability of an input coin (for instance, by flipping the coin many times and averaging the results) are outside the scope of this document. As (Mossel and Peres 2005)<sup>[**(7)**](#Note7)</sup> says: "The difficulty here is that [&lambda;] is unknown.  It is easy to estimate [&lambda;], and therefore [_f_(&lambda;)].  However, to get a coin with an exact bias [_f_(&lambda;)] is harder", and that is what Bernoulli factory algorithms are designed to do.
 >
-> As also shown in (Łatuszyński et al. 2009/2011)<sup>[**(6)**](#Note6)</sup>, however, if _f_(&lambda;) can't serve as a factory function, no unbiased estimator of _f_(&lambda;) can exist, since sampling _f_(&lambda;) isn't possible.  For example, if &lambda; is known to be in the interval (0, 1/2), no algorithm that simulates 2 * &lambda; can exist, since it won't be an unbiased estimator of &lambda;.  This is true even if the algorithm directly estimates &lambda; by averaging the results of many coin flips.
+>     As also shown in (Łatuszyński et al. 2009/2011)<sup>[**(6)**](#Note6)</sup>, however, if _f_(&lambda;) can't serve as a factory function, no unbiased probability estimator of _f_ is possible, since sampling _f_(&lambda;) isn't possible.  For example, if &lambda; is known to be in the interval (0, 1/2), no simulator of 2 * &lambda; can exist, since it won't be an unbiased probability estimator of 2 * &lambda;.  This is true even if the algorithm directly estimates &lambda; by averaging the results of many coin flips.  However, if &lambda; is known to be in the interval (0, 1/2 &minus; &#x03F5;), where &#x03F5; is in (0, 1/2), a simulator (and thus an unbiased probability estimator) for 2 * &lambda; _is_ possible, since 2 * &lambda; _can_ serve as a factory function in that interval (Keane and O'Brien 1994)<sup>[**(2)**](#Note2)</sup>.
 >
 > 3. **Randomized vs. non-randomized algorithms.** A _non-randomized algorithm_ is a simulation algorithm that uses nothing but the input coin as a source of randomness (in contrast to _randomized algorithms_, which do use other sources of randomness) (Mendo 2019)<sup>[**(8)**](#Note8)</sup>.  Instead of generating outside randomness, a randomized algorithm can implement a _randomness extraction_ procedure (such as the von Neumann algorithm) to generate that randomness using the input coins themselves.  In this way, the algorithm becomes a _non-randomized algorithm_.  For example, if an algorithm implements the **two-coin special case** (below) by generating a random bit in step 1, it could replace generating that bit with flipping the input coin twice until the coin returns 0 then 1 or 1 then 0 this way, then taking the result as 0 or 1, respectively (von Neumann 1951)<sup>[**(9)**](#Note9)</sup>.
 >
@@ -163,7 +164,7 @@ First, the general algorithm for the reverse-time martingale approach (called th
 1. Let _c[0]_, _c[1]_, etc. be the first, second, etc. coefficients of the alternating series.  Set _u_ to _c[0]_, set _w_ to 1, set _l_ to 0, and set _n_ to 1.
 2. Create an empty uniform PSRN.
 3. If _w_ is not 0, flip the input coin and multiply _w_ by the result of the flip.
-4. If _n_ is even, set _u_ to _l_ + _w_ * _c[n]_.  Otherwise, set _l_ to _u_ + _w_ * _c[n]_.
+4. If _n_ is even, set _u_ to _l_ + _w_ * _c[n]_.  Otherwise, set _l_ to _u_ &minus; _w_ * _c[n]_.
 5. Run the **URandLessThanFraction algorithm** on the PSRN and _l_.  If the algorithm returns 1, return 1.
 6. Run the **URandLessThanFraction algorithm** on the PSRN and _u_.  If the algorithm returns 0, return 0.
 7. Add 1 to _n_ and go to step 3.
@@ -317,6 +318,27 @@ Observing that the even-parity construction used in the Flajolet paper is equiva
 #### arctan(&lambda;)
 
 (Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup>: Call the **algorithm for arctan(&lambda;) /&lambda;** and flip the input coin.  Return 1 if the call and flip both return 1, or 0 otherwise.
+
+<a id=cos_lambda></a>
+#### cos(&lambda;)
+
+This algorithm adapts the general martingale algorithm for this function's series expansion.  In fact, this is a special case of Algorithm 3 of (Łatuszyński et al. 2009/2011)<sup>[**(6)**](#Note6)</sup> (which is more general than Proposition 3.4, the general martingale algorithm). The series expansion for cos(&lambda;) is 1 &minus; &lambda;<sup>2</sup>/(2!) + &lambda;<sup>4</sup>/(4!) &minus; ..., which is an alternating series except the exponent is increased by 2 (rather than 1) with each term.  The coefficients are thus 1, 1/(2!), 1/(4!), ....  A _lower truncation_ of the series is a truncation of that series that ends with a minus term, and the corresponding _upper truncation_ is the same truncation but without the last minus term.  This series expansion meets the requirements of Algorithm 3 because&mdash;
+
+- the lower truncation is less than or equal to its corresponding upper truncation almost surely,
+- the lower and upper truncations are in the interval [0, 1],
+- each lower truncation is greater than or equal to the previous lower truncation almost surely,
+- each upper truncation is less than or equal to the previous upper truncation almost surely, and
+- the lower and upper truncations converge from below and above to &lambda;.
+
+The algorithm to simulate cos(&lambda;) follows.
+
+1. Set _u_ to 1, set _w_ to 1, set _l_ to 0, set _n_ to 1, and set _fac_ to 2.
+2. Create an empty uniform PSRN.
+3. If _w_ is not 0, flip the input coin. If the flip returns 0, set _w_ to 0. Do this step again. (Note that in the general martingale algorithm, only one coin is flipped in this step. Up to two coins are flipped instead because the exponent increases by 2 rather than 1.)
+4. If _n_ is even, set _u_ to _l_ + _w_ / _fac_.  Otherwise, set _l_ to _u_ &minus; _w_ / _fac_. (Here we divide by the factorial of 2-times-_n_.)
+5. Run the **URandLessThanFraction algorithm** on the PSRN and _l_.  If the algorithm returns 1, return 1.
+6. Run the **URandLessThanFraction algorithm** on the PSRN and _u_.  If the algorithm returns 0, return 0.
+7. Add 1 to _n_, then multiply _fac_ by (_n_ * 2 &minus; 1) * (_n_ * 2), then go to step 3.
 
 <a id=lambda__x___y></a>
 #### &lambda;<sup>_x_/_y_</sup>

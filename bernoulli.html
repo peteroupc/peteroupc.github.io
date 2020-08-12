@@ -56,6 +56,7 @@
 <li><a href="#lambda_mu_2"><strong>(&lambda; + &mu;) / 2</strong></a></li>
 <li><a href="#arctan_lambda_lambda"><strong>arctan(&lambda;) /&lambda;</strong></a></li>
 <li><a href="#arctan_lambda"><strong>arctan(&lambda;)</strong></a></li>
+<li><a href="#cos_lambda"><strong>cos(&lambda;)</strong></a></li>
 <li><a href="#lambda__x___y"><strong>&lambda;<sup><em>x</em>/<em>y</em></sup></strong></a></li>
 <li><a href="#lambda_mu_3"><strong>&lambda;<sup>&mu;</sup></strong></a></li>
 <li><a href="#sqrt_lambda"><strong>sqrt(&lambda;)</strong></a></li>
@@ -129,7 +130,7 @@
 
 <p>As one example, the function <em>f</em> = 2*&lambda; cannot serve as a factory function, since its graph touches 1 somewhere in the open interval (0, 1).</p>
 
-<p>If a function&#39;s graph touches 0 or 1 somewhere in (0, 1), papers have suggested dealing with this by modifying the function so it no longer touches 0 or 1 there (for example, <em>f</em> = 2*&lambda; might become <em>f</em> = min(2 * &lambda;, 1 &minus; &#x03F5;) (Keane and O&#39;Brien 1994)<sup><a href="#Note2"><strong>(2)</strong></a></sup>, (Huber 2014, introduction)<sup><a href="#Note3"><strong>(3)</strong></a></sup>), or by somehow ensuring that &lambda; does not come close to the point where the graph touches 0 or 1 (Nacu and Peres 2005, theorem 1)<sup><a href="#Note4"><strong>(4)</strong></a></sup>.</p>
+<p>If a function&#39;s graph touches 0 or 1 somewhere in (0, 1), papers have suggested dealing with this by modifying the function so it no longer touches 0 or 1 there (for example, <em>f</em> = 2*&lambda; might become <em>f</em> = min(2 * &lambda;, 1 &minus; &#x03F5;) where &#x03F5; is in (0, 1/2) (Keane and O&#39;Brien 1994)<sup><a href="#Note2"><strong>(2)</strong></a></sup>, (Huber 2014, introduction)<sup><a href="#Note3"><strong>(3)</strong></a></sup>), or by somehow ensuring that &lambda; does not come close to the point where the graph touches 0 or 1 (Nacu and Peres 2005, theorem 1)<sup><a href="#Note4"><strong>(4)</strong></a></sup>.</p>
 
 <p>The next section will show algorithms for a number of factory functions, allowing different kinds of probabilities to be simulated from input coins.</p>
 
@@ -155,13 +156,10 @@
 <li><p><strong>Performance.</strong> The algorithms as described here do not always lead to the best performance.  An implementation may change these algorithms as long as they produce the same results as the algorithms as described here.  Some algorithms are described as &quot;uniformly fast&quot;.  This means that their average running time is bounded from above for all choices of &lambda; and other parameters (Devroye 1986, esp. p. 717)<sup><a href="#Note5"><strong>(5)</strong></a></sup>.</p>
 
 <p>An algorithm can be uniformly fast for all &lambda; parameters in a closed interval in (0, 1) only if its factory function meets the Lipschitz condition on that closed interval, that is, it is continuous and has no slope that tends to a vertical slope anywhere in that interval (Nacu and Peres 2005, proposition 23)<sup><a href="#Note4"><strong>(4)</strong></a></sup>.</p></li>
-<li><p><strong>Simulating probabilities vs. estimating probabilities.</strong> An algorithm that simulates &lambda;, or any other probability, is the same as building an unbiased estimator for that probability (Łatuszyński et al. 2009/2011)<sup><a href="#Note6"><strong>(6)</strong></a></sup>.  However, since the focus of this document is on &quot;exact&quot; sampling, algorithms that directly estimate the probability of an input coin (for instance, by flipping the coin many times and averaging the results) are outside the scope of this document. As (Mossel and Peres 2005)<sup><a href="#Note7"><strong>(7)</strong></a></sup> says: &quot;The difficulty here is that [&lambda;] is unknown.  It is easy to estimate [&lambda;], and therefore [<em>f</em>(&lambda;)].  However, to get a coin with an exact bias [<em>f</em>(&lambda;)] is harder&quot;, and that is what Bernoulli factory algorithms are designed to do.</p></li>
-</ol>
+<li><p><strong>Simulating probabilities vs. estimating probabilities.</strong> An algorithm that simulates &lambda;, or any other probability, is the same as building an unbiased estimator for that probability (Łatuszyński et al. 2009/2011)<sup><a href="#Note6"><strong>(6)</strong></a></sup>.  (In what follows, an <em>unbiased probability estimator</em> is an unbiased estimator whose estimates almost surely lie in the interval [0, 1].) However, since the focus of this document is on &quot;exact&quot; sampling, algorithms that directly estimate the probability of an input coin (for instance, by flipping the coin many times and averaging the results) are outside the scope of this document. As (Mossel and Peres 2005)<sup><a href="#Note7"><strong>(7)</strong></a></sup> says: &quot;The difficulty here is that [&lambda;] is unknown.  It is easy to estimate [&lambda;], and therefore [<em>f</em>(&lambda;)].  However, to get a coin with an exact bias [<em>f</em>(&lambda;)] is harder&quot;, and that is what Bernoulli factory algorithms are designed to do.</p>
 
-<p>As also shown in (Łatuszyński et al. 2009/2011)<sup><a href="#Note6"><strong>(6)</strong></a></sup>, however, if <em>f</em>(&lambda;) can&#39;t serve as a factory function, no unbiased estimator of <em>f</em>(&lambda;) can exist, since sampling <em>f</em>(&lambda;) isn&#39;t possible.  For example, if &lambda; is known to be in the interval (0, 1/2), no algorithm that simulates 2 * &lambda; can exist, since it won&#39;t be an unbiased estimator of &lambda;.  This is true even if the algorithm directly estimates &lambda; by averaging the results of many coin flips.</p>
-
-<ol>
-<li><strong>Randomized vs. non-randomized algorithms.</strong> A <em>non-randomized algorithm</em> is a simulation algorithm that uses nothing but the input coin as a source of randomness (in contrast to <em>randomized algorithms</em>, which do use other sources of randomness) (Mendo 2019)<sup><a href="#Note8"><strong>(8)</strong></a></sup>.  Instead of generating outside randomness, a randomized algorithm can implement a <em>randomness extraction</em> procedure (such as the von Neumann algorithm) to generate that randomness using the input coins themselves.  In this way, the algorithm becomes a <em>non-randomized algorithm</em>.  For example, if an algorithm implements the <strong>two-coin special case</strong> (below) by generating a random bit in step 1, it could replace generating that bit with flipping the input coin twice until the coin returns 0 then 1 or 1 then 0 this way, then taking the result as 0 or 1, respectively (von Neumann 1951)<sup><a href="#Note9"><strong>(9)</strong></a></sup>.</li>
+<p>As also shown in (Łatuszyński et al. 2009/2011)<sup><a href="#Note6"><strong>(6)</strong></a></sup>, however, if <em>f</em>(&lambda;) can&#39;t serve as a factory function, no unbiased probability estimator of <em>f</em> is possible, since sampling <em>f</em>(&lambda;) isn&#39;t possible.  For example, if &lambda; is known to be in the interval (0, 1/2), no simulator of 2 * &lambda; can exist, since it won&#39;t be an unbiased probability estimator of 2 * &lambda;.  This is true even if the algorithm directly estimates &lambda; by averaging the results of many coin flips.  However, if &lambda; is known to be in the interval (0, 1/2 &minus; &#x03F5;), where &#x03F5; is in (0, 1/2), a simulator (and thus an unbiased probability estimator) for 2 * &lambda; <em>is</em> possible, since 2 * &lambda; can serve as a factory function in that interval (Keane and O&#39;Brien 1994)<sup><a href="#Note2"><strong>(2)</strong></a></sup>.</p></li>
+<li><p><strong>Randomized vs. non-randomized algorithms.</strong> A <em>non-randomized algorithm</em> is a simulation algorithm that uses nothing but the input coin as a source of randomness (in contrast to <em>randomized algorithms</em>, which do use other sources of randomness) (Mendo 2019)<sup><a href="#Note8"><strong>(8)</strong></a></sup>.  Instead of generating outside randomness, a randomized algorithm can implement a <em>randomness extraction</em> procedure (such as the von Neumann algorithm) to generate that randomness using the input coins themselves.  In this way, the algorithm becomes a <em>non-randomized algorithm</em>.  For example, if an algorithm implements the <strong>two-coin special case</strong> (below) by generating a random bit in step 1, it could replace generating that bit with flipping the input coin twice until the coin returns 0 then 1 or 1 then 0 this way, then taking the result as 0 or 1, respectively (von Neumann 1951)<sup><a href="#Note9"><strong>(9)</strong></a></sup>.</p></li>
 </ol>
 </blockquote>
 
@@ -213,7 +211,7 @@
 <li>Let <em>c[0]</em>, <em>c[1]</em>, etc. be the first, second, etc. coefficients of the alternating series.  Set <em>u</em> to <em>c[0]</em>, set <em>w</em> to 1, set <em>l</em> to 0, and set <em>n</em> to 1.</li>
 <li>Create an empty uniform PSRN.</li>
 <li>If <em>w</em> is not 0, flip the input coin and multiply <em>w</em> by the result of the flip.</li>
-<li>If <em>n</em> is even, set <em>u</em> to <em>l</em> + <em>w</em> * <em>c[n]</em>.  Otherwise, set <em>l</em> to <em>u</em> + <em>w</em> * <em>c[n]</em>.</li>
+<li>If <em>n</em> is even, set <em>u</em> to <em>l</em> + <em>w</em> * <em>c[n]</em>.  Otherwise, set <em>l</em> to <em>u</em> &minus; <em>w</em> * <em>c[n]</em>.</li>
 <li>Run the <strong>URandLessThanFraction algorithm</strong> on the PSRN and <em>l</em>.  If the algorithm returns 1, return 1.</li>
 <li>Run the <strong>URandLessThanFraction algorithm</strong> on the PSRN and <em>u</em>.  If the algorithm returns 0, return 0.</li>
 <li>Add 1 to <em>n</em> and go to step 3.</li>
@@ -415,6 +413,32 @@
 <h4>arctan(&lambda;)</h4>
 
 <p>(Flajolet et al., 2010)<sup><a href="#Note1"><strong>(1)</strong></a></sup>: Call the <strong>algorithm for arctan(&lambda;) /&lambda;</strong> and flip the input coin.  Return 1 if the call and flip both return 1, or 0 otherwise.</p>
+
+<p><a id=cos_lambda></a></p>
+
+<h4>cos(&lambda;)</h4>
+
+<p>This algorithm adapts the general martingale algorithm for this function&#39;s series expansion.  In fact, this is a special case of Algorithm 3 of (Łatuszyński et al. 2009/2011)<sup><a href="#Note6"><strong>(6)</strong></a></sup> (which is more general than Proposition 3.4, the general martingale algorithm). The series expansion for cos(&lambda;) is 1 &minus; &lambda;<sup>2</sup>/(2!) + &lambda;<sup>4</sup>/(4!) &minus; ..., which is an alternating series except the exponent is increased by 2 (rather than 1) with each term.  The coefficients are thus 1, 1/(2!), 1/(4!), ....  A <em>lower truncation</em> of the series is a truncation of that series that ends with a minus term, and the corresponding <em>upper truncation</em> is the same truncation but without the last minus term.  This series expansion meets the requirements of Algorithm 3 because&mdash;</p>
+
+<ul>
+<li>the lower truncation is less than or equal to its corresponding upper truncation almost surely,</li>
+<li>the lower and upper truncations are in the interval [0, 1],</li>
+<li>each lower truncation is greater than or equal to the previous lower truncation almost surely,</li>
+<li>each upper truncation is less than or equal to the previous upper truncation almost surely, and</li>
+<li>the lower and upper truncations converge from below and above to &lambda;.</li>
+</ul>
+
+<p>The algorithm to simulate cos(&lambda;) follows.</p>
+
+<ol>
+<li>Set <em>u</em> to 1, set <em>w</em> to 1, set <em>l</em> to 0, set <em>n</em> to 1, and set <em>fac</em> to 2.</li>
+<li>Create an empty uniform PSRN.</li>
+<li>If <em>w</em> is not 0, flip the input coin. If the flip returns 0, set <em>w</em> to 0. Do this step again. (Note that in the general martingale algorithm, only one coin is flipped in this step. Up to two coins are flipped instead because the exponent increases by 2 rather than 1.)</li>
+<li>If <em>n</em> is even, set <em>u</em> to <em>l</em> + <em>w</em> / <em>fac</em>.  Otherwise, set <em>l</em> to <em>u</em> &minus; <em>w</em> / <em>fac</em>. (Here we divide by the factorial of 2-times-<em>n</em>.)</li>
+<li>Run the <strong>URandLessThanFraction algorithm</strong> on the PSRN and <em>l</em>.  If the algorithm returns 1, return 1.</li>
+<li>Run the <strong>URandLessThanFraction algorithm</strong> on the PSRN and <em>u</em>.  If the algorithm returns 0, return 0.</li>
+<li>Add 1 to <em>n</em>, then multiply <em>fac</em> by (<em>n</em> * 2 &minus; 1) * (<em>n</em> * 2), then go to step 3.</li>
+</ol>
 
 <p><a id=lambda__x___y></a></p>
 
