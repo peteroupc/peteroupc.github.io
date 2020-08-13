@@ -439,13 +439,13 @@
 
 <h4>sin(&lambda;)</h4>
 
-<p>This algorithm is likewise a special case of Algorithm 3 of (Łatuszyński et al. 2009/2011)<sup><a href="#Note8"><strong>(8)</strong></a></sup>.  This time, the series expansion is &lambda; &minus; &lambda;<sup>3</sup>/(3!) + &lambda;<sup>5</sup>/(5!) &minus; ..., which is an alternating series except the exponent is increased by 2 (rather than 1) with each term, and the first term is not a constant.  The coefficients are thus &lambda;, 1/(3!), 1/(5!), .... This series expansion meets the requirements of Algorithm 3 for the same reasons as the cos(&lambda;) series does.</p>
+<p>This algorithm is likewise a special case of Algorithm 3 of (Łatuszyński et al. 2009/2011)<sup><a href="#Note8"><strong>(8)</strong></a></sup>.  sin(&lambda;) can be rewritten as &lambda; * (1 &minus; &lambda;<sup>2</sup>/(3!) + &lambda;<sup>4</sup>/(5!) &minus; ...), which includes an alternating series where the exponent is increased by 2 (rather than 1) with each term.  The coefficients are thus 1, 1/(3!), 1/(5!), .... This series expansion meets the requirements of Algorithm 3 for the same reasons as the cos(&lambda;) series does.</p>
 
 <p>The algorithm to simulate sin(&lambda;) follows.</p>
 
 <ol>
-<li>Flip the input coin.  If it returns 0, return 0. Otherwise, set <em>u</em> to 1. (This is equivalent to setting <em>u</em> to the coin result, which thus simulates the first coefficient, &lambda;.  If <em>u</em> would be 0 this way, both <em>u</em> and <em>l</em> will be 0 meaning the algorithm can only return 0.)</li>
-<li>Set set <em>w</em> to 1, set <em>l</em> to 0, set <em>n</em> to 1, and set <em>fac</em> to 6.</li>
+<li>Flip the input coin.  If it returns 0, return 0.</li>
+<li>Set <em>u</em> to 1, set <em>w</em> to 1, set <em>l</em> to 0, set <em>n</em> to 1, and set <em>fac</em> to 6.</li>
 <li>Create an empty uniform PSRN.</li>
 <li>If <em>w</em> is not 0, flip the input coin. If the flip returns 0, set <em>w</em> to 0. Do this step again.</li>
 <li>If <em>n</em> is even, set <em>u</em> to <em>l</em> + <em>w</em> / <em>fac</em>.  Otherwise, set <em>l</em> to <em>u</em> &minus; <em>w</em> / <em>fac</em>.</li>
@@ -1414,17 +1414,18 @@
 
 <p>In fact, there is a well-known lower bound on the average number of coin flips needed to turn a coin with one bias (&lambda;) into a coin with another bias (called &tau; = <em>f</em>(&lambda;)).  It&#39;s called the <em>entropy bound</em> (see, e.g., (Pae 2005)<sup><a href="#Note30"><strong>(30)</strong></a></sup>, (Peres 1992)<sup><a href="#Note31"><strong>(31)</strong></a></sup>) and is calculated as&mdash;</p>
 
-<p>&nbsp;&nbsp;&nbsp;&nbsp;&tau; * log2(1/&tau;) + (1 &minus; &tau;) * log2(1/&tau;)) / (&lambda; * log2(1/&lambda;) + (1 &minus; &lambda;) * log2(1/(1 &minus; &lambda;)))).</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;((&tau; &minus; 1) * ln(1 &minus; &tau;) &minus; &tau; * ln(&tau;)) /
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;((&lambda; &minus; 1) * ln(1 &minus; &lambda;) &minus; &lambda; * ln(&lambda;))</p>
 
-<p>For example, if <em>f</em> is a constant, non-randomized algorithms will generally require a growing number of coin flips to simulate that constant if the input coin&#39;s bias (&lambda;) is close to 0 or 1.  Note that this formula only works for non-randomized algorithms.</p>
+<p>For example, if <em>f</em>(&lambda;) is a constant, non-randomized algorithms will generally require a growing number of coin flips to simulate that constant if the input coin&#39;s bias (&lambda;) is close to 0 or 1.  Note that this formula only works if nothing but coin flips is allowed as randomness.</p>
 
 <p><a id=Simulating_Probabilities_vs_Estimating_Probabilities></a></p>
 
 <h3>Simulating Probabilities vs. Estimating Probabilities</h3>
 
-<p>A Bernoulli factory or another algorithm that simulates &lambda;, or any other probability, is the same as building an unbiased estimator for that probability (Łatuszyński et al. 2009/2011)<sup><a href="#Note8"><strong>(8)</strong></a></sup>.  (In this note, an <em>unbiased probability estimator</em> is an unbiased estimator whose estimates are in [0, 1] almost surely.) However, since the focus of this document is on &quot;exact&quot; sampling, algorithms that directly estimate the probability of an input coin (for instance, by flipping the coin many times and averaging the results) are outside the scope of this document. As (Mossel and Peres 2005)<sup><a href="#Note19"><strong>(19)</strong></a></sup> says: &quot;The difficulty here is that [&lambda;] is unknown.  It is easy to estimate [&lambda;], and therefore [<em>f</em>(&lambda;)].  However, to get a coin with an exact bias [<em>f</em>(&lambda;)] is harder&quot;, and that is what Bernoulli factory algorithms are designed to do.</p>
+<p>A Bernoulli factory or another algorithm that produces heads with a given probability is the same as building an unbiased estimator for that probability (Łatuszyński et al. 2009/2011)<sup><a href="#Note8"><strong>(8)</strong></a></sup>.  (In this note, an <em>unbiased probability estimator</em> is an unbiased estimator whose estimates are in [0, 1] almost surely.) However, since the focus of this document is on &quot;exact&quot; sampling, algorithms that directly estimate &lambda;, or the probability of an input coin (for instance, by flipping the coin many times and averaging the results), are outside the scope of this document. As (Mossel and Peres 2005)<sup><a href="#Note19"><strong>(19)</strong></a></sup> says: &quot;The difficulty here is that [&lambda;] is unknown.  It is easy to estimate [&lambda;], and therefore [<em>f</em>(&lambda;)].  However, to get a coin with an exact bias [<em>f</em>(&lambda;)] is harder&quot;, and that is what Bernoulli factory algorithms are designed to do.</p>
 
-<p>As also shown in (Łatuszyński et al. 2009/2011)<sup><a href="#Note8"><strong>(8)</strong></a></sup>, however, if <em>f</em>(&lambda;) can&#39;t serve as a factory function, no unbiased probability estimator of <em>f</em> is possible, since sampling <em>f</em>(&lambda;) isn&#39;t possible.  For example, function A can&#39;t serve as a factory function, so no simulator (or unbiased probability estimator) for that function is possible.  This is possible for function B, however (Keane and O&#39;Brien 1994)<sup><a href="#Note2"><strong>(2)</strong></a></sup>.</p>
+<p>As also shown in (Łatuszyński et al. 2009/2011)<sup><a href="#Note8"><strong>(8)</strong></a></sup>, however, if <em>f</em>(&lambda;) can&#39;t serve as a factory function, no unbiased probability estimator of that function is possible, since sampling it isn&#39;t possible.  For example, function A can&#39;t serve as a factory function, so no simulator (or unbiased probability estimator) for that function is possible.  This is possible for function B, however (Keane and O&#39;Brien 1994)<sup><a href="#Note2"><strong>(2)</strong></a></sup>.</p>
 
 <ul>
 <li>Function A: 2 * &lambda;, when &lambda; lies in (0, 1/2).</li>
