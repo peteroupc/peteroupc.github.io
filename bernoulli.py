@@ -251,6 +251,25 @@ class Bernoulli:
         else:
             return 1 if r < 5 and self.zero_or_one_arctan_n_div_n(1, 3) == 1 else 0
 
+    def one_div_pi(self):
+        """ Generates 1 with probability 1/pi.
+        Reference: Flajolet et al. 2010.
+        """
+        t = 0
+        while self.zero_or_one(1, 4) == 0:
+            t += 1
+        while self.zero_or_one(1, 4) == 0:
+            t += 1
+        if self.zero_or_one(5, 9):
+            t += 1
+        if t == 0:
+            return 1
+        for i in range(3):
+            s = sum(self.randbit() for j in t * 2)
+            if s != t:
+                return 0
+        return 1
+
     def _uniform_less(self, bag, frac):
         """ Determines whether a uniformly-distributed random number
              (given as an incomplete binary expansion that is built up
@@ -672,6 +691,66 @@ class Bernoulli:
             # Return it if it flips heads
             if coins[c]() == 1:
                 return c
+
+    def sin(self, f):
+        """ Sine Bernoulli factory: B(p) => B(sin(p)).  Special
+          case of Algorithm3 of reverse-time martingale paper.
+        """
+        if f() == 0:
+            return 0
+        u = Fraction(1)
+        l = Fraction(0)
+        w = Fraction(1)
+        bag = []
+        fac = 6
+        n = 1
+        while True:
+            if self.debug and self.totalbits >= 5000:
+                return math.nan
+            # print([fac,math.factorial(2*n)])
+            if w != 0:
+                w *= f()
+            if w != 0:
+                w *= f()
+            if n % 2 == 0:
+                u = l + w / fac
+            else:
+                l = u - w / fac
+            if self._uniform_less(bag, l) == 1:
+                return 1
+            if self._uniform_less(bag, u) == 0:
+                return 0
+            n += 1
+            fac *= (n * 2) * (n * 2 + 1)
+
+    def cos(self, f):
+        """ Cosine Bernoulli factory: B(p) => B(cos(p)).  Special
+          case of Algorithm3 of reverse-time martingale paper.
+        """
+        u = Fraction(1)
+        l = Fraction(0)
+        w = Fraction(1)
+        bag = []
+        fac = 2
+        n = 1
+        while True:
+            if self.debug and self.totalbits >= 5000:
+                return math.nan
+            # print([fac,math.factorial(2*n)])
+            if w != 0:
+                w *= f()
+            if w != 0:
+                w *= f()
+            if n % 2 == 0:
+                u = l + w / fac
+            else:
+                l = u - w / fac
+            if self._uniform_less(bag, l) == 1:
+                return 1
+            if self._uniform_less(bag, u) == 0:
+                return 0
+            n += 1
+            fac *= (n * 2 - 1) * (n * 2)
 
     def add(self, f1, f2, eps=Fraction(5, 100)):
         """ Addition Bernoulli factory: B(p), B(q) => B(p+q) (Dughmi et al. 2017)

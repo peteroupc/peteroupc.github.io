@@ -1678,6 +1678,10 @@ CLASSES
      |      Conditional: B(p), B(q), B(r) => B((1-r)*q+r*p)  (Flajolet et al. 2010)
      |      - f1, f2, f3: Functions that return 1 if heads and 0 if tails.
      |
+     |  cos(self, f)
+     |      Cosine Bernoulli factory: B(p) => B(cos(p)).  Special
+     |      case of Algorithm3 of reverse-time martingale paper.
+     |
      |  disjunction(self, f1, f2)
      |      Disjunction (OR): B(p), B(q) => B(p+q-p*q) (Flajolet et al. 2010)
      |      - f1, f2: Functions that return 1 if heads and 0 if tails.
@@ -1766,6 +1770,10 @@ CLASSES
      |        by c. c must be 0 or greater. If c > 1, c must be chosen so that c*p < 1 - eps.
      |      - eps: A Fraction in (0, 1). If c > 1, eps must be chosen so that c*p < 1 - eps.
      |
+     |  one_div_pi(self)
+     |      Generates 1 with probability 1/pi.
+     |      Reference: Flajolet et al. 2010.
+     |
      |  power(self, f, ax, ay=1)
      |      Power Bernoulli factory: B(p) => B(p^(ax/ay)). (case of (0, 1) provided by
      |       Mendo 2019).
@@ -1799,6 +1807,10 @@ CLASSES
      |
      |  rndintexc(self, maxexc)
      |      Returns a random integer in [0, maxexc).
+     |
+     |  sin(self, f)
+     |      Sine Bernoulli factory: B(p) => B(sin(p)).  Special
+     |      case of Algorithm3 of reverse-time martingale paper.
      |
      |  square(self, f1, f2)
      |      Square: B(p) => B(1-p). (Flajolet et al. 2010)
