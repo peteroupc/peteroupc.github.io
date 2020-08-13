@@ -25,7 +25,10 @@ def newtree()
 end
 
 # Passes a face (in [0, numFaces)) that was randomly
-# generated to the extractor tree, using
+# generated to the extractor tree.
+# If numFaces is a power of 2, the face's bits are
+# sent to the extractor directly.  Otherwise, the face
+# is passed using
 # the "entropy-preserving binarization" in S. Pae,
 # "Binarization Trees and Random Number Generation",
 # arXiv:1602.06058v2 [cs.DS].  Note that this is not
@@ -34,6 +37,15 @@ def extractFace(tree, randomFace, numFaces, output)
   raise if numFaces<2
   if numFaces==2
     extract(tree, randomFace, output)
+    return
+  end
+  if (numFaces-1).bit_length() < numFaces.bit_length()
+    # Power of 2
+    bits=(numFaces-1).bit_length()
+    for b in 0...bits
+      extract(tree, randomFace&1, output)
+      randomFace>>=1
+    end
     return
   end
   if randomFace>0

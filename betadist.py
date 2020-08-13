@@ -8,8 +8,7 @@ def _bern_power(bern, bag, num, den, bagfactory):
     if len(bag) >= 4 and bag[0] == 0 and bag[1] == 0 and bag[2] == 0 and bag[3] == 0:
         # If the geometric bag is known to hold a very small number, use
         # a different approach than the power Bernoulli factory, which converges
-        # very slowly as the input number approaches 0, perhaps due to
-        # the lack of Lipschitz continuity of x**(num/den) at 0, when num/den
+        # very slowly as the input number approaches 0, when num/den
         # is less than 1.
         # NOTE: Calculating "**(num/den)" requires floating-point arithmetic,
         # and so does geobagcompare, at the moment.
