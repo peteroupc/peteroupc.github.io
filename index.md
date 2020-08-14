@@ -26,8 +26,28 @@ Open-source articles on programming subjects.
 * [File Name Support in Applications](./filenames.html)
 * [Color Topics for Programmers](./colorgen.html)
 * [Supplemental Color Topics for Programmers](./suppcolor.html)
-* [Generating Verifiable Random Numbers](./randomverif.html)
 * [Chi-Squared Test](./chisqtest.html)
+
+#### PDF Versions
+
+* [Pseudocode Conventions](./pseudocode.pdf)
+* [Random Number Generator Recommendations for Applications](./random.pdf)
+* [Randomization and Sampling Methods](./randomfunc.pdf)
+* [More Random Sampling Methods](./randomnotes.pdf)
+* [Code Generator for Discrete Distributions](./autodist.pdf)
+* [The Most Common Topics Involving Randomization](./randomcommon.pdf)
+* [Partially-Sampled Random Numbers for Accurate Sampling of the Beta, Exponential, and Other Continuous Distributions](./exporand.pdf)
+* [How to Sample Unbounded Monotone Density Functions](./unbounded.pdf)
+* [Bernoulli Factory Algorithms](./bernoulli.pdf)
+* [Testing PRNGs for High-Quality Randomness](./randomtest.pdf)
+* [Examples of High-Quality PRNGs](./hqprng.pdf)
+* [Notes on Calculating Jump Parameters for Some PRNGs](./jump.pdf)
+* [A Note on Hash Functions](./hash.pdf)
+* [A Note on the Bays&ndash;Durham Shuffle](./bdshuffle.pdf)
+* [File Name Support in Applications](./filenames.pdf)
+* [Color Topics for Programmers](./colorgen.pdf)
+* [Supplemental Color Topics for Programmers](./suppcolor.pdf)
+* [Chi-Squared Test](./chisqtest.pdf)
 
 ### HTML/JavaScript
 
