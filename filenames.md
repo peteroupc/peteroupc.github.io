@@ -49,6 +49,8 @@ Applications should avoid giving internal files an internationalized file name w
 - put the internationalized string [in UTF-8](https://peteroupc.github.io/MailLib/docs/PeterO.DataUtilities.html#GetUtf8Bytes_string_bool) (an 8-bit encoding form of the Unicode Standard), then
 - encode the UTF-8 bytes using lowercase base16 or lowercase base32 without padding (RFC 4648).
 
+Alternatively, applications could store internationalized or other names for an internal file separately from the file (such as in a "metadata file" or in a database table).
+
 ### File Name Length Limits
 
 Different file systems have different limits in the sizes of file names.  To maximize compatibility with different file system limits, applications should avoid using file names longer than 63 Unicode code points.

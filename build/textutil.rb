@@ -180,7 +180,10 @@ Dir.glob("*.md"){|fn|
     end
     File.delete(rpdf) rescue nil
     FileUtils.cp(rtmppdf,rpdf) rescue nil
-    break if FileTest.exist?(rpdf)
+    if FileTest.exist?(rpdf)
+      File.delete("/tmp/#{file}.md") rescue nil
+      File.delete("/tmp/#{file}.pdf") rescue nil
+    end
     i+=1
   end
 }
