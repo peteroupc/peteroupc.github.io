@@ -129,3 +129,60 @@ def prepareMarkdown(data)
   end
   return data
 end
+
+def preparePandoc(markdown)
+  markdown=markdown.gsub(/^(?:\#\#)\s+(.*)\n+/) { "<h2>" + $1+"</h2>\n\n" }
+  markdown=markdown.gsub(/^(?:\#\#\#)\s+(.*)\n+/) { "<h3>" + $1+"</h3>\n\n" }
+  markdown=markdown.gsub(/^(?:\#\#\#\#)\s+(.*)\n+/) { "<h4>" + $1+"</h4>\n\n" }
+  markdown=markdown.gsub(/\[([^\]]+)\]\(\#[^\)]+\)/) { $1 }
+  markdown=markdown.gsub(/(dash;|\:)(\n+)-\s+/) { $1+"\n\n- " }
+  return markdown
+end
+
+def markdownTitle(markdown)
+  title="Untitled"
+  markdown.scan(/^(?:\#)\s+(.*)\n+/) {|m|
+     title=m[0] }
+  if title=="Untitled"
+   markdown.scan(/^(?:\#\#)\s+(.*)\n+/) {|m|
+     title=m[0];break }
+  end
+  return title
+end
+
+require 'tmpdir'
+require 'fileutils'
+
+def preparePdfs()
+Dir.glob("*.md"){|fn|
+  next if fn=="README.pdf"
+  next if fn=="index.pdf"
+  file=File.basename(fn).gsub(/\.md$/,"")
+  r=IO.read("#{file}.md")
+  mtime=File.mtime("#{file}.md")
+  title=markdownTitle(r)
+  r=r.gsub(/\A\s*(?:<a\s+id.*)?\s*(\#+\s+.*)\n+/) {
+    $1+"\n\n" + sprintf("This version of the document is dated %04d-%02d-%02d.",
+        mtime.year,mtime.mon,mtime.day) + "\n\n" }
+  IO.write("/tmp/#{file}.md",preparePandoc(r))
+  puts(r[0,100])
+  i=0
+  while true
+    ii=i==0 ? "" : i.to_s
+    rpdf=File.expand_path(".")+"/#{file}#{ii}.pdf"
+    rtmppdf=Dir::tmpdir()+"/#{file}#{ii}.pdf"
+    p rtmppdf
+    p rpdf
+    puts `pandoc -t html5 -o '#{rtmppdf}' --metadata pagetitle=\"#{title}\" /tmp/#{file}.md`
+    p FileTest.exist?(rtmppdf)
+    if !FileTest.exist?(rtmppdf)
+      i+=1; next
+    end
+    File.delete(rpdf) rescue nil
+    FileUtils.cp(rtmppdf,rpdf) rescue nil
+    break if FileTest.exist?(rpdf)
+    i+=1
+  end
+}
+end
+#preparePdfs()

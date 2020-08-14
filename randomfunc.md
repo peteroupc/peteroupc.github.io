@@ -1445,7 +1445,7 @@ Randomization is the core of **Monte Carlo sampling**.  There are three main use
     - The (biased) **sample variance**, the second sample central moment.
     - The **probability**, if `EFUNC(x)` is `1` if some condition is met or `0` otherwise.
 
-    If the sampling domain is also limited to random numbers meeting a given condition (such as `x < 2` or `x != 10`), then the estimated expected value is also called the estimated _conditional expectation_.
+    If the sampling domain is also limited to random numbers meeting a given condition (such as `x < 2` or `x != 10`), then the estimated expected value is also called the estimated _conditional expectation_.  In any Monte Carlo estimation, the difference between _biased_ and _unbiased estimators_ is important.  For example, an `Expectation` for the mean is an unbiased estimator, but an `Expectation` for the sample variance is not since there is more than one degree of freedom to the estimation (see "[**Variance**](https://mathworld.wolfram.com/Variance.html)" in MathWorld).
 
 2. [**Monte Carlo integration**](https://en.wikipedia.org/wiki/Monte_Carlo_integration).  This is a way to estimate a multidimensional integral; randomly sampled numbers are put into a list (`nums`) and the estimated integral and its standard error are then calculated with `Expectation(nums)` with `EFUNC(x) = x`, and multiplied by the volume of the sampling domain.
 

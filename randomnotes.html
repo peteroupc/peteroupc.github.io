@@ -2,9 +2,7 @@
 <p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a> -
 <a href="http://peteroupc.github.io/">Donate to Me</a></p></div>
 <div class="mainarea" id="top">
-<p><a id=More_Random_Sampling_Methods></a></p>
-
-<h2>More Random Sampling Methods</h2>
+<h1>More Random Sampling Methods</h1>
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
@@ -12,26 +10,21 @@
 
 <h3>Contents</h3>
 
-<ul>
-<li><a href="#More_Random_Sampling_Methods"><strong>More Random Sampling Methods</strong></a>
+<pre>- [**Contents**](#Contents)
+- [**Specific Distributions**](#Specific_Distributions)
+    - [**Normal (Gaussian) Distribution**](#Normal_Gaussian_Distribution)
+    - [**Gamma Distribution**](#Gamma_Distribution)
+    - [**Beta Distribution**](#Beta_Distribution)
+    - [**von Mises Distribution**](#von_Mises_Distribution)
+    - [**Stable Distribution**](#Stable_Distribution)
+    - [**Multivariate Normal (Multinormal) Distribution**](#Multivariate_Normal_Multinormal_Distribution)
+    - [**Random Real Numbers with a Given Positive Sum**](#Random_Real_Numbers_with_a_Given_Positive_Sum)
+    - [**Gaussian and Other Copulas**](#Gaussian_and_Other_Copulas)
+    - [**Exponential Distribution: Another Error-Bounded Algorithm**](#Exponential_Distribution_Another_Error_Bounded_Algorithm)
+- [**Weighted Choice with Biased Coins**](#Weighted_Choice_with_Biased_Coins)
+</pre>
 
 <ul>
-<li><a href="#Contents"><strong>Contents</strong></a></li>
-<li><a href="#Specific_Distributions"><strong>Specific Distributions</strong></a>
-
-<ul>
-<li><a href="#Normal_Gaussian_Distribution"><strong>Normal (Gaussian) Distribution</strong></a></li>
-<li><a href="#Gamma_Distribution"><strong>Gamma Distribution</strong></a></li>
-<li><a href="#Beta_Distribution"><strong>Beta Distribution</strong></a></li>
-<li><a href="#von_Mises_Distribution"><strong>von Mises Distribution</strong></a></li>
-<li><a href="#Stable_Distribution"><strong>Stable Distribution</strong></a></li>
-<li><a href="#Multivariate_Normal_Multinormal_Distribution"><strong>Multivariate Normal (Multinormal) Distribution</strong></a></li>
-<li><a href="#Random_Real_Numbers_with_a_Given_Positive_Sum"><strong>Random Real Numbers with a Given Positive Sum</strong></a></li>
-<li><a href="#Gaussian_and_Other_Copulas"><strong>Gaussian and Other Copulas</strong></a></li>
-<li><a href="#Exponential_Distribution_Another_Error_Bounded_Algorithm"><strong>Exponential Distribution: Another Error-Bounded Algorithm</strong></a></li>
-</ul></li>
-<li><a href="#Weighted_Choice_with_Biased_Coins"><strong>Weighted Choice with Biased Coins</strong></a></li>
-</ul></li>
 <li><a href="#Notes"><strong>Notes</strong></a></li>
 <li><a href="#Appendix"><strong>Appendix</strong></a>
 
@@ -402,7 +395,7 @@ method for generating multiple random vectors in one call.</p>
 <li><strong>Log-multinormal distribution</strong>: Generate a multinormal random vector, then apply <code>exp(n)</code> to each component <code>n</code>.</li>
 <li>A <strong>Beckmann distribution</strong>: Generate a random binormal vector <code>vec</code>, then apply <code>Norm(vec)</code> to that vector.</li>
 <li>A <strong>Rice (Rician) distribution</strong> is a Beckmann distribution in which the binormal random pair is generated with <code>m1 = m2 = a / sqrt(2)</code>, <code>rho = 0</code>, and <code>s1 = s2 = b</code>, where <code>a</code> and <code>b</code> are the parameters to the Rice distribution.</li>
-<li>A <strong>Rice&ndash;Norton distributed</strong>: Generate <code>vec = MultivariateNormal([v,v,v],[[w,0,0],[0,w,0],[0,0,w]])</code> (where <code>v = a/sqrt(m*2)</code>, <code>w = b*b/m</code>, and <code>a</code>, <code>b</code>, and <code>m</code> are the parameters to the Rice&ndash;Norton distribution), then apply <code>Norm(vec)</code> to that vector.</li>
+<li><strong>Rice&ndash;Norton distribution</strong>: Generate <code>vec = MultivariateNormal([v,v,v],[[w,0,0],[0,w,0],[0,0,w]])</code> (where <code>v = a/sqrt(m*2)</code>, <code>w = b*b/m</code>, and <code>a</code>, <code>b</code>, and <code>m</code> are the parameters to the Rice&ndash;Norton distribution), then apply <code>Norm(vec)</code> to that vector.</li>
 <li>A <strong>standard</strong> <a href="https://en.wikipedia.org/wiki/Complex_normal_distribution"><strong>complex normal distribution</strong></a> is a binormal distribution in which the binormal random pair is generated with <code>s1 = s2 = sqrt(0.5)</code> and <code>mu1 = mu2 = 0</code> and treated as the real and imaginary parts of a complex number.</li>
 <li><strong>Multivariate Linnik distribution</strong>: Generate a multinormal random vector, then multiply each component by <code>GeometricStable(alpha/2.0, 1, 1)</code>, where <code>alpha</code> is a parameter in (0, 2] (Kozubowski 2000)<sup><a href="#Note11"><strong>(11)</strong></a></sup>.</li>
 </ol>
@@ -450,7 +443,7 @@ method for generating multiple random vectors in one call.</p>
 END METHOD
 </pre>
 
-<p>Each of the resulting uniform random numbers will be in the interval [0, 1], and each one can be further transformed to any other probability distribution (which is called a <em>marginal distribution</em> here) by taking the quantile of that uniform number for that distribution (see &quot;<a href="#Inverse_Transform_Sampling"><strong>Inverse Transform Sampling</strong></a>&quot;, and see also (Cario and Nelson 1997)<sup><a href="#Note13"><strong>(13)</strong></a></sup>.)</p>
+<p>Each of the resulting uniform random numbers will be in the interval [0, 1], and each one can be further transformed to any other probability distribution (which is called a <em>marginal distribution</em> here) by taking the quantile of that uniform number for that distribution (see &quot;<a href="https://peteroupc.github.io/randomfunc.html#Inverse_Transform_Sampling"><strong>Inverse Transform Sampling</strong></a>&quot;, and see also (Cario and Nelson 1997)<sup><a href="#Note13"><strong>(13)</strong></a></sup>.)</p>
 
 <blockquote>
 <p><strong>Examples:</strong></p>

@@ -1,12 +1,10 @@
-<a id=More_Random_Sampling_Methods></a>
-## More Random Sampling Methods
+# More Random Sampling Methods
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
 <a id=Contents></a>
 ### Contents
 
-- [**More Random Sampling Methods**](#More_Random_Sampling_Methods)
     - [**Contents**](#Contents)
     - [**Specific Distributions**](#Specific_Distributions)
         - [**Normal (Gaussian) Distribution**](#Normal_Gaussian_Distribution)
@@ -351,7 +349,7 @@ The following pseudocode calculates a random vector (list of numbers) that follo
 > 2. **Log-multinormal distribution**: Generate a multinormal random vector, then apply `exp(n)` to each component `n`.
 > 3. A **Beckmann distribution**: Generate a random binormal vector `vec`, then apply `Norm(vec)` to that vector.
 > 4. A **Rice (Rician) distribution** is a Beckmann distribution in which the binormal random pair is generated with `m1 = m2 = a / sqrt(2)`, `rho = 0`, and `s1 = s2 = b`, where `a` and `b` are the parameters to the Rice distribution.
-> 5. A **Rice&ndash;Norton distributed**: Generate `vec = MultivariateNormal([v,v,v],[[w,0,0],[0,w,0],[0,0,w]])` (where `v = a/sqrt(m*2)`, `w = b*b/m`, and `a`, `b`, and `m` are the parameters to the Rice&ndash;Norton distribution), then apply `Norm(vec)` to that vector.
+> 5. **Rice&ndash;Norton distribution**: Generate `vec = MultivariateNormal([v,v,v],[[w,0,0],[0,w,0],[0,0,w]])` (where `v = a/sqrt(m*2)`, `w = b*b/m`, and `a`, `b`, and `m` are the parameters to the Rice&ndash;Norton distribution), then apply `Norm(vec)` to that vector.
 > 6. A **standard** [**complex normal distribution**](https://en.wikipedia.org/wiki/Complex_normal_distribution) is a binormal distribution in which the binormal random pair is generated with `s1 = s2 = sqrt(0.5)` and `mu1 = mu2 = 0` and treated as the real and imaginary parts of a complex number.
 > 7. **Multivariate Linnik distribution**: Generate a multinormal random vector, then multiply each component by `GeometricStable(alpha/2.0, 1, 1)`, where `alpha` is a parameter in (0, 2] (Kozubowski 2000)<sup>[**(11)**](#Note11)</sup>.
 
@@ -388,7 +386,7 @@ One example is a _Gaussian copula_; this copula is sampled by sampling from a [*
        return mvn
     END METHOD
 
-Each of the resulting uniform random numbers will be in the interval [0, 1], and each one can be further transformed to any other probability distribution (which is called a _marginal distribution_ here) by taking the quantile of that uniform number for that distribution (see "[**Inverse Transform Sampling**](#Inverse_Transform_Sampling)", and see also (Cario and Nelson 1997)<sup>[**(13)**](#Note13)</sup>.)
+Each of the resulting uniform random numbers will be in the interval [0, 1], and each one can be further transformed to any other probability distribution (which is called a _marginal distribution_ here) by taking the quantile of that uniform number for that distribution (see "[**Inverse Transform Sampling**](https://peteroupc.github.io/randomfunc.html#Inverse_Transform_Sampling)", and see also (Cario and Nelson 1997)<sup>[**(13)**](#Note13)</sup>.)
 
 > **Examples:**
 >
