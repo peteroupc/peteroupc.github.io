@@ -20,6 +20,18 @@ ONE = 4
 MAXDEPTH = 15
 
 # Creates a new randomness extractor tree.
+# There should be an extractor tree for each source
+# with a given bias.  For example, if one source outputs
+# random 6-sided die results, another source outputs
+# random sums of rolling 2 six-sided dice, and a third
+# source outputs coin flips with a bias of 0.75, there
+# should be three extractor trees.  At least if those three
+# sources are independent, the extracted bit sequences will be
+# independent and unbiased, so that those sequences
+# can then be concatenated to each other without
+# introducing bias (Zhou and Bruck, "A Universal Scheme
+# for Transforming Binary Algorithms to Generate Random
+# Bits from Loaded Dice", arXiv:1209.0726 [cs.IT], 2012).
 def newtree()
   return [PHI, nil, nil]
 end
@@ -131,7 +143,8 @@ end
 # Reads all bits from 'bits' (leaving out the last if there is an
 # odd number of bits), and stores the extracted bits in 'output'.
 # Reference: Peres, Y., "Iterating von Neumann's procedure for
-# extracting random bits", The Annals of Statistics 1992,20,1, pp.590-597.
+# extracting random bits", The Annals of Statistics 1992,20,1,
+# pp.590-597.
 def peres(bits,output)
   u=[]
   v=[]
