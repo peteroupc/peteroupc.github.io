@@ -14,7 +14,11 @@ This page is focused on sampling methods that _exactly_ simulate the probability
 <a id=About_This_Document></a>
 ### About This Document
 
-**This is an open-source document; for an updated version, see the** [**source code**](https://github.com/peteroupc/peteroupc.github.io/raw/master/bernoulli.md) **or its** [**rendering on GitHub**](https://github.com/peteroupc/peteroupc.github.io/blob/master/bernoulli.md)**.  You can send comments on this document on the** [**GitHub issues page**](https://github.com/peteroupc/peteroupc.github.io/issues)**.  You are welcome to suggest additional Bernoulli factory algorithms, especially specific** [**continued fraction expansions**](#Continued_Fractions) **and series expansions for the** [**general martingale**](#exp_minus_lambda) **and** [**Mendo**](#Certain_Power_Series) **algorithms below.**
+**This is an open-source document; for an updated version, see the** [**source code**](https://github.com/peteroupc/peteroupc.github.io/raw/master/bernoulli.md) **or its** [**rendering on GitHub**](https://github.com/peteroupc/peteroupc.github.io/blob/master/bernoulli.md)**.  You can send comments on this document on the** [**GitHub issues page**](https://github.com/peteroupc/peteroupc.github.io/issues)**.  You are welcome to suggest additional Bernoulli factory algorithms, especially&mdash;**
+
+- **specific** [**continued fraction expansions**](#Continued_Fractions),
+- **series expansions for the** [**power series**](#Certain_Power_Series) **algorithms below, and**
+- **algorithms that simulate probability mass functions or probability density functions, with or without a normalizing constant.**
 
 <a id=Contents></a>
 ## Contents
@@ -25,6 +29,7 @@ This page is focused on sampling methods that _exactly_ simulate the probability
 - [**About Bernoulli Factories**](#About_Bernoulli_Factories)
 - [**Algorithms**](#Algorithms)
     - [**Algorithms for Functions of &lambda;**](#Algorithms_for_Functions_of_lambda)
+        - [**Certain Power Series**](#Certain_Power_Series)
         - [**exp(&minus;&lambda;)**](#exp_minus_lambda)
         - [**exp(&lambda;)*(1&minus;&lambda;)**](#exp_lambda_1_minus_lambda)
         - [**exp(&lambda; * _c_ &minus; * _c_)**](#exp_lambda__c__minus__c)
@@ -56,7 +61,6 @@ This page is focused on sampling methods that _exactly_ simulate the probability
         - [**&#x03F5; / &lambda;**](#x03F5_lambda)
         - [**Certain Rational Functions**](#Certain_Rational_Functions)
         - [**Bernstein Polynomials**](#Bernstein_Polynomials)
-        - [**Certain Power Series**](#Certain_Power_Series)
     - [**Algorithms for Irrational Constants**](#Algorithms_for_Irrational_Constants)
         - [**Digit Expansions**](#Digit_Expansions)
         - [**Continued Fractions**](#Continued_Fractions)
@@ -129,10 +133,58 @@ Bernoulli factory algorithms that simulate _f_(&lambda;) are equivalent to unbia
 
 &nbsp;
 
+<a id=Certain_Power_Series></a>
+#### Certain Power Series
+
+Mendo (2019)<sup>[**(5)**](#Note5)</sup> gave a Bernoulli factory algorithm for certain functions that can be rewritten as a series of the form&mdash;
+
+&nbsp;&nbsp;&nbsp;&nbsp;1 &minus; (_c_\[0\] \* (1 &minus; &lambda;) + ... + _c_\[_i_\] * (1 &minus; &lambda;)<sup>_i_ + 1</sup> + ...),
+
+where _c_\[_i_\] >= 0 are the coefficients of the series and sum to 1.  The algorithm follows:
+
+1. Let _v_ be 1 and let _result_ be 1.
+2. Set _dsum_ to 0 and _i_ to 0.
+3. Flip the input coin.  If it returns _v_, return _result_.
+4. If _i_ is equal to or greater than the number of coefficients, set _ci_ to 0.  Otherwise, set _ci_ to _c_\[_i_\].
+5. With probability _ci_/(1 &minus; _dsum_), return 1 minus _result_.
+6. Add _ci_ to _dsum_, add 1 to _i_, and go to step 3.
+
+As pointed out in Mendo (2019)<sup>[**(5)**](#Note5)</sup>, variants of this algorithm work for power series of the form&mdash;
+
+1. (_c_\[0\] \* (1 &minus; &lambda;) + ... + _c_\[_i_\] * (1 &minus; &lambda;)<sup>_i_ + 1</sup> + ...), or
+2. (_c_\[0\] \* &lambda; + ... + _c_\[_i_\] * &lambda;<sup>_i_ + 1</sup> + ...), or
+3. 1 &minus; (_c_\[0\] \* &lambda; + ... + _c_\[_i_\] * &lambda;<sup>_i_ + 1</sup> + ...).
+
+In the first two cases, replace "let _result_ be 1" in the algorithm with "let _result_ be 0".  In the last two cases, replace "let _v_ be 1" with "let _v_ be 0".
+
+(Łatuszyński et al. 2009/2011)<sup>[**(6)**](#Note6)</sup> gave an algorithm that works for a wide class of series and other constructs that converge to the desired probability from above and from below.
+
+One of these constructs is an alternating series of the form&mdash;
+
+&nbsp;&nbsp;&nbsp;&nbsp;_d[0]_ &minus; _d[1]_ * &lambda; + _d[2]_ * &lambda;<sup>2</sup> &minus; ...,
+
+where _d_\[_i_\] are all in the interval [0, 1] and form a non-increasing sequence of coefficients.
+
+The following is the general algorithm for this kind of series, called the **general martingale algorithm**.  It takes a list of coefficients and an input coin, and returns 1 with probability given above, and 0 otherwise.
+
+1. Let _d[0]_, _d[1]_, etc. be the first, second, etc. coefficients of the alternating series.  Set _u_ to _d[0]_, set _w_ to 1, set _l_ to 0, and set _n_ to 1.
+2. Create an empty uniform PSRN.
+3. If _w_ is not 0, flip the input coin and multiply _w_ by the result of the flip.
+4. If _n_ is even, set _u_ to _l_ + _w_ * _d[n]_.  Otherwise, set _l_ to _u_ &minus; _w_ * _d[n]_.
+5. Run the **URandLessThanFraction algorithm** on the PSRN and _l_.  If the algorithm returns 1, return 1.
+6. Run the **URandLessThanFraction algorithm** on the PSRN and _u_.  If the algorithm returns 0, return 0.
+7. Add 1 to _n_ and go to step 3.
+
+If the alternating series has the form&mdash;
+
+&nbsp;&nbsp;&nbsp;&nbsp;_d[0]_ &minus; _d[1]_ * &lambda;<sup>2</sup> + _d[2]_ * &lambda;<sup>4</sup> &minus; ...,
+
+then modify the general martingale algorithm by adding the following after step 3: "3a. Repeat step 3 once."  (Examples of this kind of series are found in sin(&lambda;) and cos(&lambda;).)
+
 <a id=exp_minus_lambda></a>
 #### exp(&minus;&lambda;)
 
-The algorithm in (Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup> calls for generating a Poisson(&lambda;) random number and returning 1 if that number is 0, or 0 otherwise.  The Poisson generator in turn involves generating a geometric(&lambda;) random number _G_<sup>[**(5)**](#Note5)</sup>, then _G_ uniform random numbers, then returning _G_ only if all _G_ uniform numbers are sorted.<sup>[**(6)**](#Note6)</sup>  The algorithm follows.
+The algorithm in (Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup> calls for generating a Poisson(&lambda;) random number and returning 1 if that number is 0, or 0 otherwise.  The Poisson generator in turn involves generating a geometric(&lambda;) random number _G_<sup>[**(7)**](#Note7)</sup>, then _G_ uniform random numbers, then returning _G_ only if all _G_ uniform numbers are sorted.<sup>[**(8)**](#Note8)</sup>  The algorithm follows.
 
 1. Flip the input coin until the coin returns 0.  Then set _G_ to the number of times the coin returns 1 this way.
 2. If _G_ is 0, return 1.
@@ -155,21 +207,15 @@ Here is an alternative version of the algorithm above, which doesn't generate a 
 
 In turn, this algorithm likewise converges very slowly as &lambda; approaches 1.
 
-On the other hand, this third algorithm is converges quickly everywhere in (0, 1).  (In other words, the algorithm is _uniformly fast_, meaning the average running time is bounded from above for all choices of &lambda; and other parameters (Devroye 1986, esp. p. 717)<sup>[**(7)**](#Note7)</sup>.) This algorithm uses the martingale approach for alternating series in (Łatuszyński et al. 2009/2011)<sup>[**(8)**](#Note8)</sup> and makes use of the fact that exp(&minus;&lambda;) can be rewritten as 1 &minus; &lambda; + &lambda;<sup>2</sup>/2 &minus; &lambda;<sup>3</sup>/6 + &lambda;<sup>4</sup>/24 &minus; ..., which is an alternating series whose coefficients are 1, 1, 1/(2!), 1/(3!), 1/(4!), ..., which satisfy the requirements for this approach because the coefficients are nonincreasing and all 1 or less.  However, the algorithm requires a bit more arithmetic, notably rational division.
+On the other hand, this third algorithm is converges quickly everywhere in (0, 1).  (In other words, the algorithm is _uniformly fast_, meaning the average running time is bounded from above for all choices of &lambda; and other parameters (Devroye 1986, esp. p. 717)<sup>[**(9)**](#Note9)</sup>.) This algorithm is adapted from the general martingale algorithm (in "Certain Power Series", above), and makes use of the fact that exp(&minus;&lambda;) can be rewritten as 1 &minus; &lambda; + &lambda;<sup>2</sup>/2 &minus; &lambda;<sup>3</sup>/6 + &lambda;<sup>4</sup>/24 &minus; ..., which is an alternating series whose coefficients are 1, 1, 1/(2!), 1/(3!), 1/(4!), ....
 
-First, the general algorithm for the martingale approach (called the **general martingale algorithm**) follows.  It takes a list of coefficients and an input coin, and returns 1 with probability _c[0]_ &minus; _c[1]_ * &lambda; + _c[2]_ * &lambda;<sup>2</sup> &minus; ..., and 0 otherwise.
-
-1. Let _c[0]_, _c[1]_, etc. be the first, second, etc. coefficients of the alternating series.  Set _u_ to _c[0]_, set _w_ to 1, set _l_ to 0, and set _n_ to 1.
+1. Set _u_ to 1, set _w_ to 1, set _l_ to 0, and set _n_ to 1.
 2. Create an empty uniform PSRN.
-3. If _w_ is not 0, flip the input coin and multiply _w_ by the result of the flip.
-4. If _n_ is even, set _u_ to _l_ + _w_ * _c[n]_.  Otherwise, set _l_ to _u_ &minus; _w_ * _c[n]_.
+3. If _w_ is not 0, flip the input coin, multiply _w_ by the result of the flip, and divide _w_ by _n_. (This is changed from the general martingale algorithm to take account of the factorial more efficiently in the second and later coefficients.)
+4. If _n_ is even, set _u_ to _l_ + _w_.  Otherwise, set _l_ to _u_ &minus; _w_.
 5. Run the **URandLessThanFraction algorithm** on the PSRN and _l_.  If the algorithm returns 1, return 1.
 6. Run the **URandLessThanFraction algorithm** on the PSRN and _u_.  If the algorithm returns 0, return 0.
 7. Add 1 to _n_ and go to step 3.
-
-For **exp(&minus;&lambda;)**, modify that algorithm as follows for more efficiency:
-
-- Rather than multiplying by _c[n]_ in step 4, divide _w_ by _n_ in step 3 (after multiplying by the result of the flip).  This is a more efficient way to take account of the factorial in the second and later coefficients.
 
 <a id=exp_lambda_1_minus_lambda></a>
 #### exp(&lambda;)*(1&minus;&lambda;)
@@ -185,7 +231,7 @@ For **exp(&minus;&lambda;)**, modify that algorithm as follows for more efficien
 <a id=exp_lambda__c__minus__c></a>
 #### exp(&lambda; * _c_ &minus; * _c_)
 
-Used in (Dughmi et al. 2017)<sup>[**(9)**](#Note9)</sup> to apply an exponential weight (here, _c_) to an input coin.
+Used in (Dughmi et al. 2017)<sup>[**(10)**](#Note10)</sup> to apply an exponential weight (here, _c_) to an input coin.
 
 1. Generate a Poisson(_c_) random integer, call it _N_.
 2. Flip the input coin until the coin returns 0 or the coin is flipped _N_ times.  Return 1 if all the coin flips, including the last, returned 1 (or if _N_ is 0); or return 0 otherwise.
@@ -208,7 +254,7 @@ A second algorithm is the so-called "even-parity" construction of (Flajolet et a
 1. Flip the input coin.  If it returns 0, return 1.
 2. Flip the input coin.  If it returns 0, return 0.  Otherwise, go to step 1.
 
-A third algorithm is a special case of the two-coin Bernoulli factory of (Gonçalves et al., 2017)<sup>[**(10)**](#Note10)</sup> and is uniformly fast, unlike the previous two algorithms.  It will be called the **two-coin special case** in this document.
+A third algorithm is a special case of the two-coin Bernoulli factory of (Gonçalves et al., 2017)<sup>[**(11)**](#Note11)</sup> and is uniformly fast, unlike the previous two algorithms.  It will be called the **two-coin special case** in this document.
 
 1. With probability 1/2, return 1. (For example, generate an unbiased random bit and return 1 if that bit is 1.)
 2. Flip the input coin.  If it returns 1, return 0.  Otherwise, go to step 1.
@@ -233,12 +279,12 @@ Observing that the even-parity construction used in the Flajolet paper is equiva
 <a id=1_minus_log_1_lambda></a>
 #### 1 &minus; log(1+&lambda;)
 
-Invert the result of the algorithm for log(1+&lambda;) (make it 1 if it's 0 and vice versa).<sup>[**(11)**](#Note11)</sup>
+Invert the result of the algorithm for log(1+&lambda;) (make it 1 if it's 0 and vice versa).<sup>[**(12)**](#Note12)</sup>
 
 <a id=c__lambda_beta_beta__c__lambda__d__mu_minus_beta_minus_1__c___d></a>
 #### _c_ * &lambda; * &beta; / (&beta; * (_c_ * &lambda; + _d_ * &mu;) &minus; (&beta; &minus; 1) * (_c_ + _d_))
 
-This is the general two-coin algorithm of (Gonçalves et al., 2017)<sup>[**(10)**](#Note10)</sup> and (Vats et al. 2020)<sup>[**(12)**](#Note12)</sup>.  It takes two input coins that each output heads (1) with probability &lambda; or &mu;, respectively.  It also takes a parameter &beta; in the interval [0, 1], which is a so-called "portkey" or early rejection parameter (when &beta; = 1, the formula simplifies to _c_ * &lambda; / (_c_ * &lambda; + _d_ * &mu;)).
+This is the general two-coin algorithm of (Gonçalves et al., 2017)<sup>[**(11)**](#Note11)</sup> and (Vats et al. 2020)<sup>[**(13)**](#Note13)</sup>.  It takes two input coins that each output heads (1) with probability &lambda; or &mu;, respectively.  It also takes a parameter &beta; in the interval [0, 1], which is a so-called "portkey" or early rejection parameter (when &beta; = 1, the formula simplifies to _c_ * &lambda; / (_c_ * &lambda; + _d_ * &mu;)).
 
 1. With probability &beta;, go to step 2.  Otherwise, return 0. (For example, call `ZeroOrOne` with &beta;'s numerator and denominator, and return 0 if that call returns 0, or go to step 2 otherwise.)
 2. With probability _c_ / (_c_ + _d_), flip the &lambda; input coin.  Otherwise, flip the &mu; input coin.  If the &lambda; input coin returns 1, return 1.  If the &mu; input coin returns 1, return 0.  If the corresponding coin returns 0, go to step 1.
@@ -246,7 +292,7 @@ This is the general two-coin algorithm of (Gonçalves et al., 2017)<sup>[**(10)*
 <a id=c__lambda__c__lambda__d__or__c___d__lambda_1__c___d__lambda></a>
 #### _c_ * &lambda; / (_c_ * &lambda; + _d_) or (_c_/_d_) * &lambda; / (1 + (_c_/_d_) * &lambda;))
 
-This algorithm, also known as the **logistic Bernoulli factory** (Huber 2016)<sup>[**(13)**](#Note13)</sup>, (Morina et al., 2019)<sup>[**(14)**](#Note14)</sup>, is a special case of the two-coin algorithm above, but this time uses only one input coin.
+This algorithm, also known as the **logistic Bernoulli factory** (Huber 2016)<sup>[**(14)**](#Note14)</sup>, (Morina et al., 2019)<sup>[**(15)**](#Note15)</sup>, is a special case of the two-coin algorithm above, but this time uses only one input coin.
 
 1. With probability _d_ / (_c_ + _d_), return 0.
 2. Flip the input coin.  If the coin returns 1, return 1.  Otherwise, go to step 1.
@@ -320,7 +366,7 @@ Observing that the even-parity construction used in the Flajolet paper is equiva
 <a id=cos_lambda></a>
 #### cos(&lambda;)
 
-This algorithm adapts the general martingale algorithm for this function's series expansion.  In fact, this is a special case of Algorithm 3 of (Łatuszyński et al. 2009/2011)<sup>[**(8)**](#Note8)</sup> (which is more general than Proposition 3.4, the general martingale algorithm). The series expansion for cos(&lambda;) is 1 &minus; &lambda;<sup>2</sup>/(2!) + &lambda;<sup>4</sup>/(4!) &minus; ..., which is an alternating series except the exponent is increased by 2 (rather than 1) with each term.  The coefficients are thus 1, 1/(2!), 1/(4!), ....  A _lower truncation_ of the series is a truncation of that series that ends with a minus term, and the corresponding _upper truncation_ is the same truncation but without the last minus term.  This series expansion meets the requirements of Algorithm 3 because&mdash;
+This algorithm adapts the general martingale algorithm for this function's series expansion.  In fact, this is a special case of Algorithm 3 of (Łatuszyński et al. 2009/2011)<sup>[**(6)**](#Note6)</sup> (which is more general than Proposition 3.4, the general martingale algorithm). The series expansion for cos(&lambda;) is 1 &minus; &lambda;<sup>2</sup>/(2!) + &lambda;<sup>4</sup>/(4!) &minus; ..., which is an alternating series except the exponent is increased by 2 (rather than 1) with each term.  The coefficients are thus 1, 1/(2!), 1/(4!), ....  A _lower truncation_ of the series is a truncation of that series that ends with a minus term, and the corresponding _upper truncation_ is the same truncation but without the last minus term.  This series expansion meets the requirements of Algorithm 3 because&mdash;
 
 - the lower truncation is less than or equal to its corresponding upper truncation almost surely,
 - the lower and upper truncations are in the interval [0, 1],
@@ -341,7 +387,7 @@ The algorithm to simulate cos(&lambda;) follows.
 <a id=sin_lambda></a>
 #### sin(&lambda;)
 
-This algorithm is likewise a special case of Algorithm 3 of (Łatuszyński et al. 2009/2011)<sup>[**(8)**](#Note8)</sup>.  sin(&lambda;) can be rewritten as &lambda; * (1 &minus; &lambda;<sup>2</sup>/(3!) + &lambda;<sup>4</sup>/(5!) &minus; ...), which includes an alternating series where the exponent is increased by 2 (rather than 1) with each term.  The coefficients are thus 1, 1/(3!), 1/(5!), .... This series expansion meets the requirements of Algorithm 3 for the same reasons as the cos(&lambda;) series does.
+This algorithm is likewise a special case of Algorithm 3 of (Łatuszyński et al. 2009/2011)<sup>[**(6)**](#Note6)</sup>.  sin(&lambda;) can be rewritten as &lambda; * (1 &minus; &lambda;<sup>2</sup>/(3!) + &lambda;<sup>4</sup>/(5!) &minus; ...), which includes an alternating series where the exponent is increased by 2 (rather than 1) with each term.  The coefficients are thus 1, 1/(3!), 1/(5!), .... This series expansion meets the requirements of Algorithm 3 for the same reasons as the cos(&lambda;) series does.
 
 The algorithm to simulate sin(&lambda;) follows.
 
@@ -357,7 +403,7 @@ The algorithm to simulate sin(&lambda;) follows.
 <a id=lambda__x___y></a>
 #### &lambda;<sup>_x_/_y_</sup>
 
-In the algorithm below, the case where _x_/_y_ is in (0, 1) is due to recent work by Mendo (2019)<sup>[**(15)**](#Note15)</sup>.  The algorithm works only when _x_/_y_ is 0 or greater.
+In the algorithm below, the case where _x_/_y_ is in (0, 1) is due to recent work by Mendo (2019)<sup>[**(5)**](#Note5)</sup>.  The algorithm works only when _x_/_y_ is 0 or greater.
 
 1. If _x_/_y_ is 0, return 1.
 2. If _x_/_y_ is equal to 1, flip the input coin and return the result.
@@ -371,7 +417,7 @@ In the algorithm below, the case where _x_/_y_ is in (0, 1) is due to recent wor
 6. Return 0 with probability _x_/(_y_*_i_).
 7. Add 1 to _i_ and go to step 5.
 
-> **Note:** When _x_/_y_ is less than 1, the minimum number of coin flips needed, on average, by this algorithm will grow without bound as &lambda; approaches 0.  In fact, no fast Bernoulli factory algorithm can avoid this unbounded growth without additional information on &lambda; (Mendo 2019)<sup>[**(15)**](#Note15)</sup>.  See also the appendix, which also shows an alternative way to implement this and other Bernoulli factory algorithms using PSRNs, which exploits knowledge of &lambda; but is not the focus of this article since it involves arithmetic.
+> **Note:** When _x_/_y_ is less than 1, the minimum number of coin flips needed, on average, by this algorithm will grow without bound as &lambda; approaches 0.  In fact, no fast Bernoulli factory algorithm can avoid this unbounded growth without additional information on &lambda; (Mendo 2019)<sup>[**(5)**](#Note5)</sup>.  See also the appendix, which also shows an alternative way to implement this and other Bernoulli factory algorithms using PSRNs, which exploits knowledge of &lambda; but is not the focus of this article since it involves arithmetic.
 
 <a id=lambda_mu_3></a>
 #### &lambda;<sup>&mu;</sup>
@@ -434,7 +480,7 @@ The first algorithm is called the **2014 algorithm** in this document (Huber 201
     2. Multiply _c_ by 2 / (&#x03F5; + 2), divide &#x03F5; by 2, and multiply _k_ by 2.
 9. If _i_ is 0, return 1.  Otherwise, go to step 5.
 
-The second algorithm is called the **2016 algorithm** (Huber 2016)<sup>[**(13)**](#Note13)</sup> and uses the same parameters _x_, _y_, and &#x03F5;, and its description uses the same special cases.  The difference here is that it involves a so-called "logistic Bernoulli factory", which is replaced in this document with a different one that simulates the same function.  When _x_/_y_ is greater than 1, the &#x03F5; parameter has to be chosen such that &lambda; * _x_/_y_ <= 1 &minus; &#x03F5;.
+The second algorithm is called the **2016 algorithm** (Huber 2016)<sup>[**(14)**](#Note14)</sup> and uses the same parameters _x_, _y_, and &#x03F5;, and its description uses the same special cases.  The difference here is that it involves a so-called "logistic Bernoulli factory", which is replaced in this document with a different one that simulates the same function.  When _x_/_y_ is greater than 1, the &#x03F5; parameter has to be chosen such that &lambda; * _x_/_y_ <= 1 &minus; &#x03F5;.
 
 1. The same special cases as for the 2014 algorithm apply.
 2. Set _m_ to ceil(1 + 9 / (2 * &#x03F5;)).
@@ -524,30 +570,6 @@ A _Bernstein polynomial_ is a polynomial of the form &Sigma;<sub>_i_ = 0, ..., _
 
 > **Note**: Each _a_\[_i_\] acts as a control point for a 1-dimensional [**Bézier curve**](https://en.wikipedia.org/wiki/Bézier_curve), where &lambda; is the relative position on that curve, the curve begins at  _a_\[0\], and the curve ends at _a_\[_n_\].  For example, given control points 0.2, 0.3, and 0.6, the curve is at 0.2 when &lambda; = 0, and 0.6 when &lambda; = 1.
 
-<a id=Certain_Power_Series></a>
-#### Certain Power Series
-
-Mendo (2019)<sup>[**(15)**](#Note15)</sup> gave a Bernoulli factory algorithm for certain functions that can be rewritten as a series of the form&mdash;
-
-&nbsp;&nbsp;&nbsp;&nbsp;1 &minus; (_c_\[0\] \* (1 &minus; &lambda;) + ... + _c_\[_i_\] * (1 &minus; &lambda;)<sup>_i_ + 1</sup> + ...),
-
-where _c_\[_i_\] >= 0 are the coefficients of the series and sum to 1.  The algorithm follows:
-
-1. Let _v_ be 1 and let _result_ be 1.
-2. Set _dsum_ to 0 and _i_ to 0.
-3. Flip the input coin.  If it returns _v_, return _result_.
-4. If _i_ is equal to or greater than the number of coefficients, set _ci_ to 0.  Otherwise, set _ci_ to _c_\[_i_\].
-5. With probability _ci_/(1 &minus; _dsum_), return 1 minus _result_.
-6. Add _ci_ to _dsum_, add 1 to _i_, and go to step 3.
-
-As pointed out in Mendo (2019)<sup>[**(15)**](#Note15)</sup>, variants of this algorithm work for power series of the form&mdash;
-
-1. (_c_\[0\] \* (1 &minus; &lambda;) + ... + _c_\[_i_\] * (1 &minus; &lambda;)<sup>_i_ + 1</sup> + ...), or
-2. (_c_\[0\] \* &lambda; + ... + _c_\[_i_\] * &lambda;<sup>_i_ + 1</sup> + ...), or
-3. 1 &minus; (_c_\[0\] \* &lambda; + ... + _c_\[_i_\] * &lambda;<sup>_i_ + 1</sup> + ...).
-
-In the first two cases, replace "let _result_ be 1" in the algorithm with "let _result_ be 0".  In the last two cases, replace "let _v_ be 1" with "let _v_ be 0".
-
 <a id=Algorithms_for_Irrational_Constants></a>
 ### Algorithms for Irrational Constants
 
@@ -558,7 +580,7 @@ The following algorithms generate heads with a probability equal to an irrationa
 
 Probabilities can be expressed as a digit expansion (of the form `0.dddddd...`).  The following assumes that the probability is in [0, 1).  Note that the number 0 is also an infinite digit expansion of zeros, and the number 1 is also an infinite digit expansion of base-minus-ones.  Irrational numbers always have infinite digit expansions, which must be calculated "on-the-fly".
 
-In the algorithm (see also (Brassard et al., 2019)<sup>[**(25)**](#Note25)</sup>, (Devroye 1986, p. 769)<sup>[**(7)**](#Note7)</sup>), `BASE` is the digit base, such as 2 for binary or 10 for decimal.
+In the algorithm (see also (Brassard et al., 2019)<sup>[**(25)**](#Note25)</sup>, (Devroye 1986, p. 769)<sup>[**(9)**](#Note9)</sup>), `BASE` is the digit base, such as 2 for binary or 10 for decimal.
 
 1. Set `u` to 0 and `k` to 1.
 2. Set `u` to `(u * BASE) + v`, where `v` is a random integer in the interval [0, `BASE`) (such as `RNDINTEXC(BASE)`, or simply an unbiased random bit if `BASE` is 2).  Set `pk` to `p`'s digit expansion up to the `k` digits after the point.  Example: If `p` is &pi;/4, `BASE` is 10, and `k` is 5, then `pk = 78539`.
@@ -702,7 +724,7 @@ Two algorithms:
 <a id=a___b___x___y></a>
 #### (_a_/_b_)<sup>_x_/_y_</sup>
 
-In the algorithm below, _a_, _b_, _x_, and _y_ are integers, and the case where _x_/_y_ is in (0, 1) is due to recent work by Mendo (2019)<sup>[**(15)**](#Note15)</sup>.  This algorithm works only if&mdash;
+In the algorithm below, _a_, _b_, _x_, and _y_ are integers, and the case where _x_/_y_ is in (0, 1) is due to recent work by Mendo (2019)<sup>[**(5)**](#Note5)</sup>.  This algorithm works only if&mdash;
 
 -  _x_/_y_ is 0 or greater and _a_/_b_ is in the interval [0, 1], or
 -  _x_/_y_ is less than 0 and _a_/_b_ is 1 or greater.
@@ -797,12 +819,12 @@ Assume we have one or more input coins _h_<sub>_i_</sub>(&lambda;) that returns 
 > **Examples:**
 >
 > 1. As one example, generate a Poisson random number _X_, then flip the input coin.  With probability 1/(1+_X_), return the result of the coin flip; otherwise, return 0.
-> 2. _Bernoulli Race_ (Dughmi et al. 2017)<sup>[**(9)**](#Note9)</sup>: If we have _n_ coins, then choose one of them uniformly at random and flip that coin. If the flip returns 1, return _X_; otherwise, repeat this algorithm.  This algorithm chooses a random coin based on its probability of heads.
+> 2. _Bernoulli Race_ (Dughmi et al. 2017)<sup>[**(10)**](#Note10)</sup>: If we have _n_ coins, then choose one of them uniformly at random and flip that coin. If the flip returns 1, return _X_; otherwise, repeat this algorithm.  This algorithm chooses a random coin based on its probability of heads.
 
 <a id=Simulating_the_Probability_Generating_Function></a>
 #### Simulating the Probability Generating Function
 
-The following algorithm is a special case of the convex combination method.  It generates heads with probability **E**\[&lambda;<sup>_X_</sup>\], that is, the expected or average value of &lambda;<sup>_X_</sup>.  **E**\[&lambda;<sup>_X_</sup>\] is the _probability generating function_, also known as _factorial moment generating function_, for the distribution of _X_ (Dughmi et al. 2017)<sup>[**(9)**](#Note9)</sup>.
+The following algorithm is a special case of the convex combination method.  It generates heads with probability **E**\[&lambda;<sup>_X_</sup>\], that is, the expected or average value of &lambda;<sup>_X_</sup>.  **E**\[&lambda;<sup>_X_</sup>\] is the _probability generating function_, also known as _factorial moment generating function_, for the distribution of _X_ (Dughmi et al. 2017)<sup>[**(10)**](#Note10)</sup>.
 
 1. Generate a random integer _X_ in some way.  For example, it could be a uniform random integer in [1, 6], or it could be a Poisson random number.
 2. Flip the input coin until the coin returns 0 or the coin is flipped _X_ times.  Return 1 if all the coin flips, including the last, returned 1 (or if _X_ is 0); or return 0 otherwise.
@@ -830,7 +852,7 @@ The following charts show the correctness of many of the algorithms on this page
 
 For each algorithm, if a single run was detected to use more than 5000 bits for a given &lambda;, the entire data point for that &lambda; was suppressed in the charts below.
 
-In addition, for each algorithm, a chart appears showing the minimum number of input coin flips that any fast Bernoulli factory algorithm will need on average to simulate the given function, based on work by Mendo (2019)<sup>[**(15)**](#Note15)</sup>.  Note that some functions require a growing number of coin flips as &lambda; approaches 0 or 1.  Note that for the 2014, 2016, and 2019 algorithms&mdash;
+In addition, for each algorithm, a chart appears showing the minimum number of input coin flips that any fast Bernoulli factory algorithm will need on average to simulate the given function, based on work by Mendo (2019)<sup>[**(5)**](#Note5)</sup>.  Note that some functions require a growing number of coin flips as &lambda; approaches 0 or 1.  Note that for the 2014, 2016, and 2019 algorithms&mdash;
 
 - an &#x03F5; of 1 &minus; (_x_ + _c_) * 1.001 was used (or 0.0001 if &#x03F5; would be greater than 1), and
 - an &#x03F5; of (_x_ &minus; _c_) * 0.9995 for the subtraction variants.
@@ -894,27 +916,27 @@ Points with invalid &#x03F5; values were suppressed.  For the low-mean algorithm
 
 <small><sup id=Note4>(4)</sup> Nacu, Şerban, and Yuval Peres. "Fast simulation of new coins from old", The Annals of Applied Probability 15, no. 1A (2005): 93-115.</small>
 
-<small><sup id=Note5>(5)</sup> As used here and in the Flajolet paper, a geometric random number is the number of successes before the first failure, where the success probability is &lambda;.</small>
+<small><sup id=Note5>(5)</sup> Mendo, Luis. "An asymptotically optimal Bernoulli factory for certain functions that can be expressed as power series." Stochastic Processes and their Applications 129, no. 11 (2019): 4366-4384.</small>
 
-<small><sup id=Note6>(6)</sup> The Flajolet paper describes what it calls the _von Neumann schema_, which, given a permutation class and an input coin, generates a random non-negative integer _n_ with probability equal to (&lambda;<sup>_n_</sup> * V(_n_) / _n_!) / EGF(&lambda;), where EGF(&lambda;) = &Sigma;<sub>_k_ = 0, 1, ...</sub> (&lambda;<sup>_k_</sup> * V(_k_) / _k_!), and V(_n_) is the number of _valid_ permutations of size _n_.  Here, EGF(&lambda;) is the _exponential generating function_.  Effectively, a geometric(&lambda;) random number _G_ (see previous note) is accepted with probability V(_G_)/_G_! (where _G_! is the number of _possible_ permutations of size _G_, or 1 if _G_ is 0), and rejected otherwise.  The probability that _r_ geometric random numbers are rejected this way is _p_*(1 &minus; _p_)<sup>_r_</sup>, where _p_ = (1 &minus; &lambda;) * EGF(&lambda;).</small>
+<small><sup id=Note6>(6)</sup> Łatuszyński, K., Kosmidis, I.,  Papaspiliopoulos, O., Roberts, G.O., "[**Simulating events of unknown probabilities via reverse time martingales**](https://arxiv.org/abs/0907.4018v2)", arXiv:0907.4018v2 [stat.CO], 2009/2011.</small>
 
-<small><sup id=Note7>(7)</sup> Devroye, L., [**_Non-Uniform Random Variate Generation_**](http://luc.devroye.org/rnbookindex.html), 1986.</small>
+<small><sup id=Note7>(7)</sup> As used here and in the Flajolet paper, a geometric random number is the number of successes before the first failure, where the success probability is &lambda;.</small>
 
-<small><sup id=Note8>(8)</sup> Łatuszyński, K., Kosmidis, I.,  Papaspiliopoulos, O., Roberts, G.O., "[**Simulating events of unknown probabilities via reverse time martingales**](https://arxiv.org/abs/0907.4018v2)", arXiv:0907.4018v2 [stat.CO], 2009/2011.</small>
+<small><sup id=Note8>(8)</sup> The Flajolet paper describes what it calls the _von Neumann schema_, which, given a permutation class and an input coin, generates a random non-negative integer _n_ with probability equal to (&lambda;<sup>_n_</sup> * V(_n_) / _n_!) / EGF(&lambda;), where EGF(&lambda;) = &Sigma;<sub>_k_ = 0, 1, ...</sub> (&lambda;<sup>_k_</sup> * V(_k_) / _k_!), and V(_n_) is the number of _valid_ permutations of size _n_.  Here, EGF(&lambda;) is the _exponential generating function_.  Effectively, a geometric(&lambda;) random number _G_ (see previous note) is accepted with probability V(_G_)/_G_! (where _G_! is the number of _possible_ permutations of size _G_, or 1 if _G_ is 0), and rejected otherwise.  The probability that _r_ geometric random numbers are rejected this way is _p_*(1 &minus; _p_)<sup>_r_</sup>, where _p_ = (1 &minus; &lambda;) * EGF(&lambda;).</small>
 
-<small><sup id=Note9>(9)</sup> Shaddin Dughmi, Jason D. Hartline, Robert Kleinberg, and Rad Niazadeh. 2017. Bernoulli Factories and Black-Box Reductions in Mechanism Design. In _Proceedings of 49th Annual ACM SIGACT Symposium on the Theory of Computing_, Montreal, Canada, June 2017 (STOC’17).</small>
+<small><sup id=Note9>(9)</sup> Devroye, L., [**_Non-Uniform Random Variate Generation_**](http://luc.devroye.org/rnbookindex.html), 1986.</small>
 
-<small><sup id=Note10>(10)</sup> Gonçalves, F. B., Łatuszyński, K. G., Roberts, G. O. (2017).  Exact Monte Carlo likelihood-based inference for jump-diffusion processes.</small>
+<small><sup id=Note10>(10)</sup> Shaddin Dughmi, Jason D. Hartline, Robert Kleinberg, and Rad Niazadeh. 2017. Bernoulli Factories and Black-Box Reductions in Mechanism Design. In _Proceedings of 49th Annual ACM SIGACT Symposium on the Theory of Computing_, Montreal, Canada, June 2017 (STOC’17).</small>
 
-<small><sup id=Note11>(11)</sup> Another algorithm for this function uses the general martingale algorithm, but uses more bits on average as &lambda; approaches 1.  Here, the alternating series is `1 - x + x^2/2 - x^3/3 + ...`, whose coefficients are 1, 1, 1/2, 1/3, ...</small>
+<small><sup id=Note11>(11)</sup> Gonçalves, F. B., Łatuszyński, K. G., Roberts, G. O. (2017).  Exact Monte Carlo likelihood-based inference for jump-diffusion processes.</small>
 
-<small><sup id=Note12>(12)</sup> Vats, D., Gonçalves, F. B., Łatuszyński, K. G., Roberts, G. O. Efficient Bernoulli factory MCMC for intractable likelihoods, arXiv:2004.07471v1 [stat.CO], 2020.</small>
+<small><sup id=Note12>(12)</sup> Another algorithm for this function uses the general martingale algorithm, but uses more bits on average as &lambda; approaches 1.  Here, the alternating series is `1 - x + x^2/2 - x^3/3 + ...`, whose coefficients are 1, 1, 1/2, 1/3, ...</small>
 
-<small><sup id=Note13>(13)</sup> Huber, M., "[**Optimal linear Bernoulli factories for small mean problems**](https://arxiv.org/abs/1507.00843v2)", arXiv:1507.00843v2 [math.PR], 2016.</small>
+<small><sup id=Note13>(13)</sup> Vats, D., Gonçalves, F. B., Łatuszyński, K. G., Roberts, G. O. Efficient Bernoulli factory MCMC for intractable likelihoods, arXiv:2004.07471v1 [stat.CO], 2020.</small>
 
-<small><sup id=Note14>(14)</sup> Morina, G., Łatuszyński, K., et al., "[**From the Bernoulli Factory to a Dice Enterprise via Perfect Sampling of Markov Chains**](https://arxiv.org/abs/1912.09229v1)", arXiv:1912.09229v1 [math.PR], 2019.</small>
+<small><sup id=Note14>(14)</sup> Huber, M., "[**Optimal linear Bernoulli factories for small mean problems**](https://arxiv.org/abs/1507.00843v2)", arXiv:1507.00843v2 [math.PR], 2016.</small>
 
-<small><sup id=Note15>(15)</sup> Mendo, Luis. "An asymptotically optimal Bernoulli factory for certain functions that can be expressed as power series." Stochastic Processes and their Applications 129, no. 11 (2019): 4366-4384.</small>
+<small><sup id=Note15>(15)</sup> Morina, G., Łatuszyński, K., et al., "[**From the Bernoulli Factory to a Dice Enterprise via Perfect Sampling of Markov Chains**](https://arxiv.org/abs/1912.09229v1)", arXiv:1912.09229v1 [math.PR], 2019.</small>
 
 <small><sup id=Note16>(16)</sup> One of the only implementations I could find of this, if not the only, was a [**Haskell implementation**](https://github.com/derekelkins/buffon/blob/master/Data/Distribution/Buffon.hs).</small>
 
@@ -958,7 +980,7 @@ Points with invalid &#x03F5; values were suppressed.  For the low-mean algorithm
 <a id=Randomized_vs_Non_Randomized_Algorithms></a>
 ### Randomized vs. Non-Randomized Algorithms
 
-A _non-randomized algorithm_ is a simulation algorithm that uses nothing but the input coin as a source of randomness (in contrast to _randomized algorithms_, which do use other sources of randomness) (Mendo 2019)<sup>[**(15)**](#Note15)</sup>.  Instead of generating outside randomness, a randomized algorithm can implement a _randomness extraction_ procedure (such as the von Neumann algorithm) to generate that randomness using the input coins themselves.  In this way, the algorithm becomes a _non-randomized algorithm_.  For example, if an algorithm implements the **two-coin special case** by generating a random bit in step 1, it could replace generating that bit with flipping the input coin twice until the coin returns 0 then 1 or 1 then 0 this way, then taking the result as 0 or 1, respectively (von Neumann 1951)<sup>[**(29)**](#Note29)</sup>.
+A _non-randomized algorithm_ is a simulation algorithm that uses nothing but the input coin as a source of randomness (in contrast to _randomized algorithms_, which do use other sources of randomness) (Mendo 2019)<sup>[**(5)**](#Note5)</sup>.  Instead of generating outside randomness, a randomized algorithm can implement a _randomness extraction_ procedure (such as the von Neumann algorithm) to generate that randomness using the input coins themselves.  In this way, the algorithm becomes a _non-randomized algorithm_.  For example, if an algorithm implements the **two-coin special case** by generating a random bit in step 1, it could replace generating that bit with flipping the input coin twice until the coin returns 0 then 1 or 1 then 0 this way, then taking the result as 0 or 1, respectively (von Neumann 1951)<sup>[**(29)**](#Note29)</sup>.
 
 In fact, there is a well-known lower bound on the average number of coin flips needed to turn a coin with one bias (&lambda;) into a coin with another bias (&tau; = _f_(&lambda;)).  It's called the _entropy bound_ (see, e.g., (Pae 2005)<sup>[**(30)**](#Note30)</sup>, (Peres 1992)<sup>[**(31)**](#Note31)</sup>) and is calculated as&mdash;
 
@@ -970,7 +992,7 @@ For example, if _f_(&lambda;) is a constant, non-randomized algorithms will gene
 <a id=Simulating_Probabilities_vs_Estimating_Probabilities></a>
 ### Simulating Probabilities vs. Estimating Probabilities
 
-A Bernoulli factory or another algorithm that produces heads with a given probability is the same as building an unbiased estimator for that probability (Łatuszyński et al. 2009/2011)<sup>[**(8)**](#Note8)</sup>.  (In this note, an _unbiased probability estimator_ is an unbiased estimator whose estimates are in \[0, 1\] almost surely.) As a result&mdash;
+A Bernoulli factory or another algorithm that produces heads with a given probability is the same as building an unbiased estimator for that probability (Łatuszyński et al. 2009/2011)<sup>[**(6)**](#Note6)</sup>.  (In this note, an _unbiased probability estimator_ is an unbiased estimator whose estimates are in \[0, 1\] almost surely.) As a result&mdash;
 
 1. estimating the input coin's probability of heads (&lambda;) in some way (such as by flipping the coin many times and averaging the results),
 2. calculating _v_ = _f_(&lambda;),
@@ -979,7 +1001,7 @@ A Bernoulli factory or another algorithm that produces heads with a given probab
 
 will simulate the probability _f_(&lambda;) in theory.  In practice, however, this method is prone to numerous errors, including errors in the estimate in step 1, and rounding and approximation errors in steps 2 and 3.  For this reason and also because "exact sampling" is the focus of this page, this document does not cover algorithms that directly estimate &lambda; (such as in step 1). As (Mossel and Peres 2005)<sup>[**(19)**](#Note19)</sup> says: "The difficulty here is that [&lambda;] is unknown.  It is easy to estimate [&lambda;], and therefore [_f_(&lambda;)].  However, to get a coin with an exact bias [_f_(&lambda;)] is harder", and that is what Bernoulli factory algorithms are designed to do.
 
-As also shown in (Łatuszyński et al. 2009/2011)<sup>[**(8)**](#Note8)</sup>, however, if _f_(&lambda;) can't serve as a factory function, no unbiased probability estimator of that function is possible, since sampling it isn't possible.  For example, function A can't serve as a factory function, so no simulator (or unbiased probability estimator) for that function is possible.  This is possible for function B, however (Keane and O'Brien 1994)<sup>[**(2)**](#Note2)</sup>.
+As also shown in (Łatuszyński et al. 2009/2011)<sup>[**(6)**](#Note6)</sup>, however, if _f_(&lambda;) can't serve as a factory function, no unbiased probability estimator of that function is possible, since sampling it isn't possible.  For example, function A can't serve as a factory function, so no simulator (or unbiased probability estimator) for that function is possible.  This is possible for function B, however (Keane and O'Brien 1994)<sup>[**(2)**](#Note2)</sup>.
 
 - Function A: 2 * &lambda;, when &lambda; lies in (0, 1/2).
 - Function B: 2 * &lambda;, when &lambda; lies in (0, 1/2 &minus; &#x03F5;), where &#x03F5; is in (0, 1/2).
@@ -1013,7 +1035,7 @@ for i in range(iters):
 
 As this code shows, as _x_ (the probability of heads of the input coin) approaches 0, the convergence rate gets slower and slower, even though the probability will eventually converge to the correct one. In fact, when _y_/_z_ is less than 1:
 
-- The average number of coin flips needed by this algorithm will grow without bound as _x_ approaches 0, and Mendo (2019)<sup>[**(15)**](#Note15)</sup> showed that this is a lower bound; that is, no Bernoulli factory algorithm can do much better without knowing more information on _x_.
+- The average number of coin flips needed by this algorithm will grow without bound as _x_ approaches 0, and Mendo (2019)<sup>[**(5)**](#Note5)</sup> showed that this is a lower bound; that is, no Bernoulli factory algorithm can do much better without knowing more information on _x_.
 - _x_<sup>_y_/_z_</sup> has a slope that tends to a vertical slope near 0, so that the so-called [**_Lipschitz condition_**](https://en.wikipedia.org/wiki/Lipschitz_continuity) is not met at 0.  And (Nacu and Peres 2005, propositions 10 and 23)<sup>[**(4)**](#Note4)</sup> showed that the Lipschitz condition is necessary for a Bernoulli factory to have an upper bound on the average running time.
 
 Thus, a practical implementation of this algorithm may have to switch to an alternative implementation (such as the one described in the next section) when it detects that the geometric bag's first few digits are zeros.
@@ -1021,7 +1043,7 @@ Thus, a practical implementation of this algorithm may have to switch to an alte
 <a id=Alternative_Implementation_of_Bernoulli_Factories></a>
 ### Alternative Implementation of Bernoulli Factories
 
-Say we have a Bernoulli factory algorithm that takes a coin with probability of heads of _p_ and outputs 1 with probability _f_(_p_).  If this algorithm takes a geometric bag (a partially-sampled uniform random number or PSRN) as the input coin and flips that coin using **SampleGeometricBag**, the algorithm could instead be implemented as follows in order to return 1 with probability _f_(_U_), where _U_ is the number represented by the geometric bag (see also (Brassard et al., 2019)<sup>[**(25)**](#Note25)</sup>, (Devroye 1986, p. 769)<sup>[**(7)**](#Note7)</sup>, (Devroye and Gravel 2015)<sup>[**(32)**](#Note32)</sup>:
+Say we have a Bernoulli factory algorithm that takes a coin with probability of heads of _p_ and outputs 1 with probability _f_(_p_).  If this algorithm takes a geometric bag (a partially-sampled uniform random number or PSRN) as the input coin and flips that coin using **SampleGeometricBag**, the algorithm could instead be implemented as follows in order to return 1 with probability _f_(_U_), where _U_ is the number represented by the geometric bag (see also (Brassard et al., 2019)<sup>[**(25)**](#Note25)</sup>, (Devroye 1986, p. 769)<sup>[**(9)**](#Note9)</sup>, (Devroye and Gravel 2015)<sup>[**(32)**](#Note32)</sup>:
 
 1. Set _v_ to 0 and _k_ to 1.
 2. Set _v_ to _b_ * _v_ + _d_, where _b_ is the base (or radix) of the geometric bag's digits, and _d_ is a digit chosen uniformly at random.
