@@ -91,7 +91,7 @@ For surveys of normal random number generators, see (Thomas et al. 2007)<sup>[**
 > **Notes:**
 >
 > 1. The _standard normal distribution_ is implemented as `Normal(0, 1)`.
-> 2. Methods implementing a variant of the normal distribution, the _discrete Gaussian distribution_, generate _integers_ that closely follow the normal distribution.  Examples include the one in (Karney 2014)<sup>[**(1)**](#Note1)</sup>, as well as so-called "constant-time" methods such as (Micciancio and Walter 2017)<sup>[**(7)**](#Note7)</sup> that are used above all in _lattice-based cryptography_.
+> 2. Methods implementing a variant of the normal distribution, the _discrete Gaussian distribution_, generate _integers_ that closely follow the normal distribution.  Examples include the one in (Karney 2014)<sup>[**(1)**](#Note1)</sup>, an improved version in (Du et al. 2020)<sup>[**(37)**](#Note37)</sup>, as well as so-called "constant-time" methods such as (Micciancio and Walter 2017)<sup>[**(7)**](#Note7)</sup> that are used above all in _lattice-based cryptography_.
 
 <a id=Gamma_Distribution></a>
 #### Gamma Distribution
@@ -552,6 +552,8 @@ If we have multiple biased coins (_n_ of them), each with a separate unknown bia
 <small><sup id=Note35>(35)</sup> T. S. Han and M. Hoshi, "Interval algorithm for random number generation", _IEEE Transactions on Information Theory_ 43(2), March 1997.</small>
 
 <small><sup id=Note36>(36)</sup> Oberhoff, Sebastian, "[**Exact Sampling and Prefix Distributions**](https://dc.uwm.edu/etd/1888)", _Theses and Dissertations_, University of Wisconsin Milwaukee, 2018.</small>
+
+<small><sup id=Note37>(37)</sup> Yusong Du, Baoying Fan, and Baodian Wei, "[An Improved Exact Sampling Algorithm for the Standard Normal Distribution](https://arxiv.org/abs/2008.03855)", arXiv:2008.03855 [cs.DS], 2020.</small>
 
 <a id=Appendix></a>
 ## Appendix

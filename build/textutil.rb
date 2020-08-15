@@ -131,9 +131,10 @@ def prepareMarkdown(data)
 end
 
 def preparePandoc(markdown)
-  markdown=markdown.gsub(/^(?:\#\#)\s+(.*)\n+/) { "<h2>" + $1+"</h2>\n\n" }
-  markdown=markdown.gsub(/^(?:\#\#\#)\s+(.*)\n+/) { "<h3>" + $1+"</h3>\n\n" }
-  markdown=markdown.gsub(/^(?:\#\#\#\#)\s+(.*)\n+/) { "<h4>" + $1+"</h4>\n\n" }
+  markdown=markdown.gsub(/^(?:\#)\s+(.*)\n+/) { "<h1>" + $1+"</h1>\n\n" }
+  markdown=markdown.gsub(/^(?:\#\#)\s+(.*)\n+/) { "<small>\n# " + $1+"</small>\n\n" }
+  markdown=markdown.gsub(/^(?:\#\#\#)\s+(.*)\n+/) { "## " + $1+"\n\n" }
+  markdown=markdown.gsub(/^(?:\#\#\#\#)\s+(.*)\n+/) { "### " + $1+"\n\n" }
   markdown=markdown.gsub(/\[([^\]]+)\]\(\#[^\)]+\)/) { $1 }
   markdown=markdown.gsub(/(dash;|\:)(\n+)-\s+/) { $1+"\n\n- " }
   return markdown
@@ -155,8 +156,8 @@ require 'fileutils'
 
 def preparePdfs()
 Dir.glob("*.md"){|fn|
-  next if fn=="README.pdf"
-  next if fn=="index.pdf"
+  next if fn=="README.md"
+  next if fn=="index.md"
   file=File.basename(fn).gsub(/\.md$/,"")
   r=IO.read("#{file}.md")
   mtime=File.mtime("#{file}.md")
@@ -170,22 +171,27 @@ Dir.glob("*.md"){|fn|
   while true
     ii=i==0 ? "" : i.to_s
     rpdf=File.expand_path(".")+"/#{file}#{ii}.pdf"
+    rtex=File.expand_path(".")+"/#{file}#{ii}.tex"
     rtmppdf=Dir::tmpdir()+"/#{file}#{ii}.pdf"
     p rtmppdf
     p rpdf
-    puts `pandoc -t html5 -o '#{rtmppdf}' --metadata pagetitle=\"#{title}\" /tmp/#{file}.md`
+    outputengine="html5"
+    output="-o '#{rtmppdf}'"
+    #output="-s -o '#{rtex}'"
+    File.delete(rtex) rescue nil
+    puts `pandoc -V papersize=letter -f gfm --number-sections --number-offset=0 --top-level-division=chapter -t #{outputengine} #{output} --metadata pagetitle=\"#{title}\" /tmp/#{file}.md`
     p FileTest.exist?(rtmppdf)
-    if !FileTest.exist?(rtmppdf)
+    if !FileTest.exist?(rtmppdf) && !FileTest.exist?(rtex)
       i+=1; next
     end
     File.delete(rpdf) rescue nil
     FileUtils.cp(rtmppdf,rpdf) rescue nil
-    if FileTest.exist?(rpdf)
+    if FileTest.exist?(rpdf) || FileTest.exist?(rtex)
       File.delete("/tmp/#{file}.md") rescue nil
-      File.delete("/tmp/#{file}.pdf") rescue nil
+      File.delete("/tmp/#{file}#{ii}.pdf") rescue nil
+      break
     end
     i+=1
   end
 }
 end
-#preparePdfs()

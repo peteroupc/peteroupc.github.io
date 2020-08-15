@@ -50,7 +50,7 @@ This page shows [**Python code**](#Sampler_Code) for these samplers.
     - [**Beta Sampler**](#Beta_Sampler)
     - [**ExpRandFill**](#ExpRandFill)
     - [**ExpRandLess**](#ExpRandLess)
-- [Accurate Simulation of Continuous Distributions on \[0, 1\]](#Accurate_Simulation_of_Continuous_Distributions_on_0_1)
+- [**Accurate Simulation of Continuous Distributions Supported on 0 to 1**](#Accurate_Simulation_of_Continuous_Distributions_Supported_on_0_to_1)
     - [**An Example: The Continuous Bernoulli Distribution**](#An_Example_The_Continuous_Bernoulli_Distribution)
 - [**Complexity**](#Complexity)
     - [**General Principles**](#General_Principles)
@@ -670,8 +670,8 @@ def exprandscore(ln,ld,ln2,ld2):
               else 0 for i in range(1000))
 ```
 
-<a id=Accurate_Simulation_of_Continuous_Distributions_on_0_1></a>
-## Accurate Simulation of Continuous Distributions on [0, 1]
+<a id=Accurate_Simulation_of_Continuous_Distributions_Supported_on_0_to_1></a>
+## Accurate Simulation of Continuous Distributions Supported on 0 to 1
 
 The beta sampler in this document shows one case of a general approach to simulating a wide class of continuous distributions supported on \[0, 1\], thanks to Bernoulli factories.  This general approach can sample a number that follows one of these distributions, using the algorithm below.  The algorithm allows any arbitrary base (or radix) _b_ (such as 2 for binary).
 

@@ -1,4 +1,4 @@
-## Essentials of SVG
+# Essentials of SVG
 
 The following short note explains the most useful things to know when writing vector graphics to SVG.
 
