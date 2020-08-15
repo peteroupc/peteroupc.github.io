@@ -156,6 +156,7 @@ require 'fileutils'
 
 def preparePdfs()
 Dir.glob("*.md"){|fn|
+  next if fn!="random.md"
   next if fn=="README.md"
   next if fn=="index.md"
   file=File.basename(fn).gsub(/\.md$/,"")
@@ -165,7 +166,7 @@ Dir.glob("*.md"){|fn|
   r=r.gsub(/\A\s*(?:<a\s+id.*)?\s*(\#+\s+.*)\n+/) {
     $1+"\n\n" + sprintf("This version of the document is dated %04d-%02d-%02d.",
         mtime.year,mtime.mon,mtime.day) + "\n\n" }
-  IO.write("/tmp/#{file}.md",preparePandoc(r))
+  IO.write(Dir::tmpdir()+"/#{file}.md",preparePandoc(r))
   puts(r[0,100])
   i=0
   while true
@@ -184,8 +185,9 @@ Dir.glob("*.md"){|fn|
     if !FileTest.exist?(rtmppdf) && !FileTest.exist?(rtex)
       i+=1; next
     end
-    File.delete(rpdf) rescue nil
     FileUtils.cp(rtmppdf,rpdf) rescue nil
+    p rpdf
+    p FileTest.exist?(rpdf)
     if FileTest.exist?(rpdf) || FileTest.exist?(rtex)
       File.delete("/tmp/#{file}.md") rescue nil
       File.delete("/tmp/#{file}#{ii}.pdf") rescue nil
