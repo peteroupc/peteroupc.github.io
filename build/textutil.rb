@@ -156,7 +156,6 @@ require 'fileutils'
 
 def preparePdfs()
 Dir.glob("*.md"){|fn|
-  next if fn!="random.md"
   next if fn=="README.md"
   next if fn=="index.md"
   file=File.basename(fn).gsub(/\.md$/,"")

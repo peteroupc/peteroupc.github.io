@@ -663,20 +663,24 @@ An algorithm called _coupling from the past_ (Propp and Wilson 1996)<sup>[**(13)
 
     METHOD CFTP(chain)
        states=[]
-       // Start multiple chains at different states.  NOTE:
-       // If the chain is monotonic (meaning the states
-       // are ordered and, whenever state A is less
-       // than state B, A's next state is never higher than
-       // B's next state), then just two chains can be
-       // created instead, starting
-       // at the first and last state, respectively.
        numstates=StateCount(chain)
-       for i in 0...numstates: AddItem(states, i)
        done=false
+       randoms=[]
        while not done
+          // Start multiple chains at different states.  NOTE:
+          // If the chain is monotonic (meaning the states
+          // are ordered and, whenever state A is less
+          // than state B, A's next state is never higher than
+          // B's next state), then just two chains can be
+          // created instead, starting
+          // at the first and last state, respectively.
+          for i in 0...numstates: AddItem(states, i)
           // Update each chain with the same randomness
-          r=RANDOM()
-          for i in 0...numstates: states[i]=UPDATE(chain, states[i], r)
+          AddItem(randoms, RANDOM())
+          for k in 0...size(randoms):
+             for i in 0...numstates: states[i]=
+                UPDATE(chain, states[i], randoms[size(randoms)-1-k])
+          end
           // Stop when all states are the same
           fs=states[0]
           done=true
@@ -1447,7 +1451,7 @@ Randomization is the core of **Monte Carlo sampling**.  There are three main use
 
     If the sampling domain is also limited to random numbers meeting a given condition (such as `x < 2` or `x != 10`), then the estimated expected value is also called the estimated _conditional expectation_.
 
-    Monte Carlo estimation makes a difference between _biased_ and _unbiased_ estimators. An estimator is _unbiased_ if the average of multiple estimates, based on independent samples of the same distribution, approaches the true value as the number of estimates grows.  For example, an `Expectation` for the mean is an unbiased estimator, but an `Expectation` for the sample variance is not since there is more than one degree of freedom to the estimation (see "[**Variance**](https://mathworld.wolfram.com/Variance.html)" in MathWorld).
+    Monte Carlo estimation makes a difference between _biased_ and _unbiased_ estimators. An estimator is _unbiased_ if the average of multiple estimates, based on independent samples of the same distribution, is consistent even as the number of estimates grows.  For example, an `Expectation` for the mean is an unbiased estimator, but an `Expectation` for the sample variance is not since there is more than one degree of freedom to the estimation (see "[**Variance**](https://mathworld.wolfram.com/Variance.html)" in MathWorld).
 
 2. [**Monte Carlo integration**](https://en.wikipedia.org/wiki/Monte_Carlo_integration).  This is a way to estimate a multidimensional integral; randomly sampled numbers are put into a list (`nums`) and the estimated integral and its standard error are then calculated with `Expectation(nums)` with `EFUNC(x) = x`, and multiplied by the volume of the sampling domain.
 
