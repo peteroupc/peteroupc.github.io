@@ -70,6 +70,19 @@ def extractFace(tree, randomFace, numFaces, output)
   end
 end
 
+# Passes two i.i.d. random numbers to the extractor as follows: Passes
+# 0 if the first is less than the second, nothing if they are equal, 1 otherwise.
+# Reference: Algorithm 1 in Morina, G., Łatuszyński, K., et al., "From the
+# Bernoulli Factory to a Dice Enterprise via Perfect
+# Sampling of Markov Chains", arXiv:1912.09229v1 [math.PR], 2019.
+def extractFaces(tree, face1, face2, output)
+  if face1<face2
+    extract(tree, 0, output)
+  elsif face1>face2
+    extract(tree, 1, output)
+  end
+end
+
 # Alternative method for passing
 # a face (in [0, numFaces)) that was randomly
 # generated to the extractor tree.
@@ -185,7 +198,7 @@ p [a,b]
 output=[]
 tree=newtree()
 for i in 0...200000
-  extractFace(tree,rand(6)+rand(6),12,output)
+  extractFaces(tree,rand(6)+rand(6),rand(6)+rand(6),output)
 end
 a=output.map{|x| x==0 ? 1 : nil}.compact.length
 b=output.map{|x| x==1 ? 1 : nil}.compact.length

@@ -1087,6 +1087,235 @@ class Bernoulli:
         c = beta * c / (beta - 1)
         return self.linear(f, c, eps=Fraction(1) - m)
 
+def _multinom(n, x):
+    num = math.factorial(n)
+    den = 1
+    for v in x:
+        den *= math.factorial(v)
+    return num / den
+
+# TODO: Avoid floating-point arithmetic and random.random()
+class DiceEnterprise:
+    """
+   Implements the Dice Enterprise algorithm for
+   turning loaded dice with unknown bias into loaded dice
+   with a different bias.  Currently, only the case of biased coins
+   to loaded dice (the Bernoulli Factory problem) is fully
+   implemented.
+
+   Reference: Morina, G., Łatuszyński, K., et al., "From the
+   Bernoulli Factory to a Dice Enterprise via Perfect
+   Sampling of Markov Chains", arXiv:1912.09229v1 [math.PR], 2019.
+
+   Example:
+
+   >>> ent=DiceEnterprise()
+   >>> # Example 3 from the paper
+   >>> ent.append_poly(1,[[math.sqrt(2),3]])
+   >>> ent.append_poly(0,[[-5,3],[11,2],[-9,1],[3,0]])
+   >>> coin=lambda: 1 if random.random() < 0.60 else 0
+   >>> print([ent.next(coin) for i in range(100)])
+
+    """
+
+    def __init__(self):
+        self.ladder = []
+        self.r = random.Random()
+
+    def append_poly(self, result, poly):
+        """
+      Appends a probability in the form of a polynomial.
+      result - A number indicating the result (die roll or coin
+        flip) that will be
+        returned with the probability represented by this polynomial.
+      poly - Polynomial expressed as a list of terms as follows:
+        Each term is a list of two or three items that express one of
+        the polynomial's terms; the first item is the coefficient,
+        the second is the power of p, and the third (optional) is the power
+        of 1-minus p.  Specifically, the term has the following form:
+                 term[0] * p**term[1] * (1-p)**term[2].
+        For example, [3, 4, 5] becomes:
+                 3 * p**4 * (1-p)**5
+      Returns this object.
+      """
+        d = 0  # Degree of polynomial
+        for j in range(len(poly)):
+            d = max(d, poly[j][1], (0 if len(poly[j]) == 2 else poly[j][2]))
+        for nv in range(d + 1):
+            n = [nv, d - nv]  # p**nv * (1-p)**(d-nv)
+            dn = self._dn_m_eq_1_ex(poly, n)
+            if dn != 0:
+                self.ladder.append([[dn], n, [result]])
+        return self._autoaugment()
+
+    def _is_connected(self):
+        # Determine whether the ladder is connected.
+        # Currently, works only for univariate ladders
+        for i in range(len(self.ladder) - 1):
+            j = i + 1
+            one_norm = 0
+            for k in range(len(self.ladder[j][1])):
+                one_norm += abs(self.ladder[j][1][k] - self.ladder[i][1][k])
+            if one_norm > 2:
+                return False
+        return True
+
+    def _thin(self):
+        for i in range(len(self.ladder)):
+            if self.ladder[i] == None:
+                continue
+            for j in range(i + 1, len(self.ladder)):
+                if self.ladder[j] and self.ladder[i][1] == self.ladder[j][1]:
+                    # Combine terms with the same monomial
+                    for k in range(len(self.ladder[j][0])):
+                        added = False
+                        jm = self.ladder[j][0][k]
+                        for m in range(len(self.ladder[i][0])):
+                            im = self.ladder[i][0][m]
+                            # Add two terms if they are both integers
+                            # and point to the same result (die roll or coin toss)
+                            if (
+                                int(im) == im
+                                and int(jm) == jm
+                                and self.ladder[i][2][m] == self.ladder[j][2][k]
+                            ):
+                                self.ladder[i][0][m] += jm
+                                added = True
+                                break
+                        if not added:
+                            self.ladder[i][0].append(self.ladder[j][0][k])
+                            self.ladder[i][2].append(self.ladder[j][2][k])
+                    self.ladder[j] = None
+        newladder = []
+        for v in self.ladder:
+            if v != None:
+                newladder.append(v)
+        newladder.sort(key=lambda x: x[1])
+        self.ladder = newladder
+        return self
+
+    def _increase_degree(self):
+        newladder1 = [
+            [[x for x in v[0]], [v[1][0] + 1, v[1][1]], [x for x in v[2]]]
+            for v in self.ladder
+        ]
+        newladder2 = [
+            [[x for x in v[0]], [v[1][0], v[1][1] + 1], [x for x in v[2]]]
+            for v in self.ladder
+        ]
+        newladder1 += newladder2
+        self.ladder = newladder1
+        return self
+
+    def _autoaugment(self):
+        deg = 0  # Degree of polynomial
+        for v in self.ladder:
+            deg = max(deg, max(v[1]))
+        # Turn into a fine ladder if necessary
+        self._thin()
+        for i in range(deg):
+            if self._is_connected():
+                break
+            self.augment()
+        return self
+
+    def augment(self):
+        """ Augments the degree of the function represented
+           by this object, which can improve performance in some cases
+           (for details, see the paper).
+           Returns this object.
+      """
+        return self._increase_degree()._thin()
+
+    def _calcprob(self, p, result=1):
+        ret = 0
+        rtot = 0
+        for v in self.ladder:
+            for k in range(len(v[2])):
+                rtot += v[0][k] * p ** v[1][0] * (1 - p) ** v[1][1]
+                if v[2][k] == result:
+                    ret += v[0][k] * p ** v[1][0] * (1 - p) ** v[1][1]
+        return ret / rtot
+
+    def next(self, coin):
+        """ Returns the next result of the flip from a coin
+          that is transformed from the given coin by the function
+          represented by this Dice Enterprise object.
+          coin - Function that returns 1 (heads) or 0 (tails). """
+        s = self._monotoniccftp(coin)
+        if len(s[2]) == 1:
+            return s[2][0]
+        else:
+            # This is an aggregation
+            mx = max(s[0])
+            while True:
+                j = r.randint(0, len(s[0]) - 1)
+                if r.random() * mx < s[0][j]:
+                    return s[2][j]
+
+    def _univladderupdate(self, i, b, u):
+        if i > 0 and b == 0:
+            la = self.ladder[i - 1][0]
+            lcur = self.ladder[i][0]
+            la = (la[0] if len(la) == 1 else sum(la)) * 1.0
+            lcur = (lcur[0] if len(lcur) == 1 else sum(lcur)) * 1.0
+            if u <= la / max(la, lcur):
+                return i - 1
+        if i < len(self.ladder) - 1 and b == 1:
+            la = self.ladder[i + 1][0]
+            lcur = self.ladder[i][0]
+            la = (la[0] if len(la) == 1 else sum(la)) * 1.0
+            lcur = (lcur[0] if len(lcur) == 1 else sum(lcur)) * 1.0
+            if u <= la / max(la, lcur):
+                return i + 1
+        return i
+
+    def _monotoniccftp(self, coin):
+        state1 = 0
+        state2 = len(self.ladder) - 1
+        bs = []
+        us = []
+        while state1 != state2:
+            bs.append(coin())
+            us.append(r.random())
+            state1 = 0
+            state2 = len(self.ladder) - 1
+            i = 0
+            while i < len(bs):
+                state1 = self._univladderupdate(
+                    state1, bs[len(bs) - 1 - i], us[len(bs) - 1 - i]
+                )
+                state2 = self._univladderupdate(
+                    state2, bs[len(bs) - 1 - i], us[len(bs) - 1 - i]
+                )
+                i += 1
+        return self.ladder[state1]
+
+    def _dn_m_eq_1_ex(self, a, n):
+        # each item of a is of the form:
+        # a[i][0] * p**a[i][1] * (1-p)**a[i][2]
+        # 'result' is the desired result (coin flip
+        # or die roll) as an integer
+        d = 0  # Degree of polynomial
+        for j in range(len(a)):
+            d = max(d, a[j][1], (0 if len(a[j]) == 2 else a[j][2]))
+        ret = 0
+        for i in range(d + 1):
+            for nt in range(i + 1):
+                ntilde = [nt, i - nt]
+                for np in range((d - i) + 1):
+                    nprime = [np, (d - i) - np]
+                    if ntilde[0] + nprime[0] == n[0] and ntilde[1] + nprime[1] == n[1]:
+                        for j in range(len(a)):
+                            if (
+                                a[j][1] == ntilde[0]
+                                and (0 if len(a[j]) == 2 else a[j][2]) == ntilde[1]
+                            ):
+                                antilde = a[j][0]
+                                antilde *= _multinom(d - i, nprime)
+                                ret += antilde
+        return ret
+
 # Examples of use
 if __name__ == "__main__":
 

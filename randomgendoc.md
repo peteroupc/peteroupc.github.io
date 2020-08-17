@@ -1578,6 +1578,7 @@ NAME
 CLASSES
     builtins.object
         Bernoulli
+        DiceEnterprise
 
     class Bernoulli(builtins.object)
      |  This class contains methods that generate Bernoulli random numbers,
@@ -1870,6 +1871,67 @@ CLASSES
      |  zero_or_one_power_ratio(self, px, py, nx, ny)
      |      Generates 1 with probability (px/py)^(nx/ny) (where nx/ny can be
      |      positive, negative, or zero); 0 otherwise.
+     |
+     |  ----------------------------------------------------------------------
+     |  Data descriptors defined here:
+     |
+     |  __dict__
+     |      dictionary for instance variables (if defined)
+     |
+     |  __weakref__
+     |      list of weak references to the object (if defined)
+
+    class DiceEnterprise(builtins.object)
+     |  Implements the Dice Enterprise algorithm for
+     |  turning loaded dice with unknown bias into loaded dice
+     |  with a different bias.  Currently, only the case of biased coins
+     |  to loaded dice (the Bernoulli Factory problem) is fully
+     |  implemented.
+     |
+     |  Reference: Morina, G., Łatuszyński, K., et al., "From the
+     |  Bernoulli Factory to a Dice Enterprise via Perfect
+     |  Sampling of Markov Chains", arXiv:1912.09229v1 [math.PR], 2019.
+     |
+     |  Example:
+     |
+     |  >>> ent=DiceEnterprise()
+     |  >>> # Example 3 from the paper
+     |  >>> ent.append_poly(1,[[math.sqrt(2),3]])
+     |  >>> ent.append_poly(0,[[-5,3],[11,2],[-9,1],[3,0]])
+     |  >>> coin=lambda: 1 if random.random() < 0.60 else 0
+     |  >>> print([ent.next(coin) for i in range(100)])
+     |
+     |  Methods defined here:
+     |
+     |  __init__(self)
+     |      Initialize self.  See help(type(self)) for accurate signature.
+     |
+     |  append_poly(self, result, poly)
+     |      Appends a probability in the form of a polynomial.
+     |      result - A number indicating the result (die roll or coin
+     |        flip) that will be
+     |        returned with the probability represented by this polynomial.
+     |      poly - Polynomial expressed as a list of terms as follows:
+     |        Each term is a list of two or three items that express one of
+     |        the polynomial's terms; the first item is the coefficient,
+     |        the second is the power of p, and the third (optional) is the power
+     |        of 1-minus p.  Specifically, the term has the following form:
+     |                 term[0] * p**term[1] * (1-p)**term[2].
+     |        For example, [3, 4, 5] becomes:
+     |                 3 * p**4 * (1-p)**5
+     |      Returns this object.
+     |
+     |  augment(self)
+     |      Augments the degree of the function represented
+     |      by this object, which can improve performance in some cases
+     |      (for details, see the paper).
+     |      Returns this object.
+     |
+     |  next(self, coin)
+     |      Returns the next result of the flip from a coin
+     |      that is transformed from the given coin by the function
+     |      represented by this Dice Enterprise object.
+     |      coin - Function that returns 1 (heads) or 0 (tails).
      |
      |  ----------------------------------------------------------------------
      |  Data descriptors defined here:
