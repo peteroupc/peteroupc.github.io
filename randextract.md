@@ -5,7 +5,7 @@
 _Randomness extraction_ (also known as _unbiasing_, _debiasing_, _deskewing_, _whitening_, or _entropy extraction_) is a set of techniques for generating unbiased random bits from biased sources.  This note covers some useful extraction techniques.
 
 <a id=In_Information_Security></a>
-### In Information Security
+## In Information Security
 
 In information security, randomness extraction serves to generate a seed, password, encryption key, or other secret value from hard-to-predict sources of noise.
 
@@ -20,7 +20,7 @@ Some papers also refer to two-source extractors and resilient functions (especia
 > 3. Take the first 170 (or fewer) bits as the seed (512 divided by 3, rounded down).
 
 <a id=Outside_of_Information_Security></a>
-### Outside of Information Security
+## Outside of Information Security
 
 Outside of information security, randomness extraction serves the purpose of recycling random numbers, to reduce calls to a pseudorandom number generator (PRNG), for example.  This is in addition to the purpose of generating a seed for a PRNG.
 
@@ -36,13 +36,13 @@ An algorithm from (Morina et al. 2019)<sup>[**(3)**](#Note3)</sup> extends this 
 
 Pae (2005)<sup>[**(4)**](#Note4)</sup> characterizes _extracting functions_.  Informally, an _extracting function_ is a function that maps a fixed number of bits to a variable number of bits such that, whenever the input has a given number of ones, every output string of a given length is as likely to occur as every other output string of that length, regardless of the input coin's bias.  Among others, von Neumann's extractor and the one by Peres (1992)<sup>[**(5)**](#Note5)</sup> are extracting functions.
 
-A streaming algorithm, which builds something like an "extractor tree", is another example of a randomness extractor <<Zhou, H. and Bruck, J., "[**Streaming algorithms for optimal generation of random bits**](https://arxiv.org/abs/1209.0730)", arXiv:1209.0730 [cs.IT], 2012.>>.
+A streaming algorithm, which builds something like an "extractor tree", is another example of a randomness extractor (Zhou and Bruck 2012)<sup>[**(7)**](#Note7)</sup>.
 
 I maintain [**source code of this extractor**](https://github.com/peteroupc/peteroupc.github.io/blob/master/rextract.rb), which also includes additional notes on randomness extraction.
 
-Pae's "entropy-preserving" binarization (Pae 2020)<sup>[**(6)**](#Note6)</sup>, given below, is meant to be used in other extractor algorithms such as the ones mentioned above.  It assumes the number of possible values _n_ is known. However, it is obviously not efficient if _n_ is a large number.
+Pae's "entropy-preserving" binarization (Pae 2020)<sup>[**(6)**](#Note6)</sup>, given below, is meant to be used in other extractor algorithms such as the ones mentioned above.  It assumes the number of possible values, _n_, is known. However, it is obviously not efficient if _n_ is a large number.
 
-1. Let _f_ be a number in the interval [0, _n_) that was previously randomly generated.  If _f_ is greater than 0, output a 1.
+1. Let _f_ be a number in the interval \[0, _n_) that was previously randomly generated.  If _f_ is greater than 0, output a 1 (and go to step 2).
 2. If _f_ is less than _n_ &minus; 1, output a 0 _x_ times, where _x_ is (_n_ &minus; 1) &minus; _f_.
 
 Finally, different kinds of random numbers should not be mixed in the same extractor stream.  For example, if one source outputs random 6-sided die results, another source outputs random sums of rolling 2 six-sided dice, and a third source outputs coin flips with a bias of 0.75, there should be three extractor streams (for instance, three extractor trees that implement the Zhou and Bruck algorithm).
@@ -67,6 +67,8 @@ where &lambda; is the bias of the input coin.  According to this formula, a grow
 <small><sup id=Note5>(5)</sup> Peres, Y., "Iterating von Neumann's procedure for extracting random bits", Annals of Statistics 1992,20,1, p. 590-597.</small>
 
 <small><sup id=Note6>(6)</sup> S. Pae, "[**Binarization Trees and Random Number Generation**](https://arxiv.org/abs/1602.06058v2)", arXiv:1602.06058v2 [cs.DS].</small>
+
+<small><sup id=Note7>(7)</sup> Zhou, H. and Bruck, J., "[**Streaming algorithms for optimal generation of random bits**](https://arxiv.org/abs/1209.0730)", arXiv:1209.0730 [cs.IT], 2012.</small>
 
 <a id=License></a>
 ## License

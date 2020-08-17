@@ -10,7 +10,7 @@
 
 <p><a id=In_Information_Security></a></p>
 
-<h3>In Information Security</h3>
+<h2>In Information Security</h2>
 
 <p>In information security, randomness extraction serves to generate a seed, password, encryption key, or other secret value from hard-to-predict sources of noise.</p>
 
@@ -30,7 +30,7 @@
 
 <p><a id=Outside_of_Information_Security></a></p>
 
-<h3>Outside of Information Security</h3>
+<h2>Outside of Information Security</h2>
 
 <p>Outside of information security, randomness extraction serves the purpose of recycling random numbers, to reduce calls to a pseudorandom number generator (PRNG), for example.  This is in addition to the purpose of generating a seed for a PRNG.</p>
 
@@ -50,14 +50,14 @@
 
 <p>Pae (2005)<sup><a href="#Note4"><strong>(4)</strong></a></sup> characterizes <em>extracting functions</em>.  Informally, an <em>extracting function</em> is a function that maps a fixed number of bits to a variable number of bits such that, whenever the input has a given number of ones, every output string of a given length is as likely to occur as every other output string of that length, regardless of the input coin&#39;s bias.  Among others, von Neumann&#39;s extractor and the one by Peres (1992)<sup><a href="#Note5"><strong>(5)</strong></a></sup> are extracting functions.</p>
 
-<p>A streaming algorithm, which builds something like an &quot;extractor tree&quot;, is another example of a randomness extractor &lt;<Zhou, H. and Bruck, J., "[**Streaming algorithms for optimal generation of random bits**](https://arxiv.org/abs/1209.0730)", arXiv:1209.0730 [cs.IT], 2012.>&gt;.</p>
+<p>A streaming algorithm, which builds something like an &quot;extractor tree&quot;, is another example of a randomness extractor (Zhou and Bruck 2012)<sup><a href="#Note7"><strong>(7)</strong></a></sup>.</p>
 
 <p>I maintain <a href="https://github.com/peteroupc/peteroupc.github.io/blob/master/rextract.rb"><strong>source code of this extractor</strong></a>, which also includes additional notes on randomness extraction.</p>
 
 <p>Pae&#39;s &quot;entropy-preserving&quot; binarization (Pae 2020)<sup><a href="#Note6"><strong>(6)</strong></a></sup>, given below, is meant to be used in other extractor algorithms such as the ones mentioned above.  It assumes the number of possible values <em>n</em> is known. However, it is obviously not efficient if <em>n</em> is a large number.</p>
 
 <ol>
-<li>Let <em>f</em> be a number in the interval [0, <em>n</em>) that was previously randomly generated.  If <em>f</em> is greater than 0, output a 1.</li>
+<li>Let <em>f</em> be a number in the interval [0, <em>n</em>) that was previously randomly generated.  If <em>f</em> is greater than 0, output a 1 (and go to step 2).</li>
 <li>If <em>f</em> is less than <em>n</em> &minus; 1, output a 0 <em>x</em> times, where <em>x</em> is (<em>n</em> &minus; 1) &minus; <em>f</em>.</li>
 </ol>
 
@@ -84,6 +84,8 @@
 <p><small><sup id=Note5>(5)</sup> Peres, Y., &quot;Iterating von Neumann&#39;s procedure for extracting random bits&quot;, Annals of Statistics 1992,20,1, p. 590-597.</small></p>
 
 <p><small><sup id=Note6>(6)</sup> S. Pae, &quot;<a href="https://arxiv.org/abs/1602.06058v2"><strong>Binarization Trees and Random Number Generation</strong></a>&quot;, arXiv:1602.06058v2 [cs.DS].</small></p>
+
+<p><small><sup id=Note7>(7)</sup> Zhou, H. and Bruck, J., &quot;<a href="https://arxiv.org/abs/1209.0730"><strong>Streaming algorithms for optimal generation of random bits</strong></a>&quot;, arXiv:1209.0730 [cs.IT], 2012.</small></p>
 
 <p><a id=License></a></p>
 
