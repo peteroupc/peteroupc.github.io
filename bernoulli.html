@@ -742,7 +742,7 @@
 
 <h3>Algorithms for Irrational Constants</h3>
 
-<p>The following algorithms generate heads with a probability equal to an irrational number.  (On the other hand, probabilities that are <em>rational</em> constants are trivial to simulate.  If fair coins are available, the <code>ZeroOrOne</code> method should be used.  If coins with unknown bias are available, then a <em>randomness extraction</em> method such as the von Neumann algorithm should be used to turn them into fair coins.  Randomness extraction is outside the scope of this document, however.)</p>
+<p>The following algorithms generate heads with a probability equal to an irrational number.  (On the other hand, probabilities that are <em>rational</em> constants are trivial to simulate.  If fair coins are available, the <code>ZeroOrOne</code> method should be used.  If coins with unknown bias are available, then a <a href="https://peteroupc.github.io/randextract.html"><strong><em>randomness extraction</em></strong></a> method should be used to turn them into fair coins.)</p>
 
 <p><a id=Digit_Expansions></a></p>
 
@@ -1454,7 +1454,7 @@
 
 <h3>Randomized vs. Non-Randomized Algorithms</h3>
 
-<p>A <em>non-randomized algorithm</em> is a simulation algorithm that uses nothing but the input coin as a source of randomness (in contrast to <em>randomized algorithms</em>, which do use other sources of randomness) (Mendo 2019)<sup><a href="#Note5"><strong>(5)</strong></a></sup>.  Instead of generating outside randomness, a randomized algorithm can implement a <em>randomness extraction</em> procedure (such as the von Neumann algorithm) to generate that randomness using the input coins themselves.  In this way, the algorithm becomes a <em>non-randomized algorithm</em>.  For example, if an algorithm implements the <strong>two-coin special case</strong> by generating a random bit in step 1, it could replace generating that bit with flipping the input coin twice until the coin returns 0 then 1 or 1 then 0 this way, then taking the result as 0 or 1, respectively (von Neumann 1951)<sup><a href="#Note29"><strong>(29)</strong></a></sup>.</p>
+<p>A <em>non-randomized algorithm</em> is a simulation algorithm that uses nothing but the input coin as a source of randomness (in contrast to <em>randomized algorithms</em>, which do use other sources of randomness) (Mendo 2019)<sup><a href="#Note5"><strong>(5)</strong></a></sup>.  Instead of generating outside randomness, a randomized algorithm can implement a <a href="https://peteroupc.github.io/randextract.html"><strong><em>randomness extraction</em></strong></a> procedure to generate that randomness using the input coins themselves.  In this way, the algorithm becomes a <em>non-randomized algorithm</em>.  For example, if an algorithm implements the <strong>two-coin special case</strong> by generating a random bit in step 1, it could replace generating that bit with flipping the input coin twice until the coin returns 0 then 1 or 1 then 0 this way, then taking the result as 0 or 1, respectively (von Neumann 1951)<sup><a href="#Note29"><strong>(29)</strong></a></sup>.</p>
 
 <p>In fact, there is a well-known lower bound on the average number of coin flips needed to turn a coin with one bias (&lambda;) into a coin with another bias (&tau; = <em>f</em>(&lambda;)).  It&#39;s called the <em>entropy bound</em> (see, e.g., (Pae 2005)<sup><a href="#Note30"><strong>(30)</strong></a></sup>, (Peres 1992)<sup><a href="#Note31"><strong>(31)</strong></a></sup>) and is calculated as&mdash;</p>
 

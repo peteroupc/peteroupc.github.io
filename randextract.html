@@ -1,0 +1,119 @@
+<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>A Note on Randomness Extraction</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a> -
+<a href="http://peteroupc.github.io/">Donate to Me</a></p></div>
+<div class="mainarea" id="top">
+<h1>A Note on Randomness Extraction</h1>
+
+<p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
+
+<p><em>Randomness extraction</em> (also known as <em>unbiasing</em>, <em>debiasing</em>, <em>deskewing</em>, <em>whitening</em>, or <em>entropy extraction</em>) is a set of techniques for generating unbiased random bits from biased sources.  This note covers some useful extraction techniques.</p>
+
+<p><a id=In_Information_Security></a></p>
+
+<h3>In Information Security</h3>
+
+<p>In information security, randomness extraction serves to generate a seed, password, encryption key, or other secret value from hard-to-predict sources of noise.</p>
+
+<p>Randomness extraction for information security is discussed in NIST SP 800-90B sec. 3.1.5.1, and RFC 4086 sec. 4.2 and 5.2. Popular choices of such extractors include keyed cryptographic hash functions  (see, e.g., (Cliff et al., 2009)<sup><a href="#Note1"><strong>(1)</strong></a></sup>. In information security applications, extractors other than keyed cryptographic hash functions should not be used by themselves in randomness extraction.</p>
+
+<p>Some papers also refer to two-source extractors and resilient functions (especially the works by E. Chattopadhyay and D. Zuckerman), but there are few if any real implementations of these extraction techniques.</p>
+
+<blockquote>
+<p><strong>Example:</strong> The Cliff reference reviewed the use of HMAC (hash-based message authentication code) algorithms, and implies that one way to generate a seed is as follows:</p>
+
+<ol>
+<li>Gather data with at least 512 bits of entropy.</li>
+<li>Run HMAC-SHA-512 with that data to generate a 512-bit HMAC.</li>
+<li>Take the first 170 (or fewer) bits as the seed (512 divided by 3, rounded down).</li>
+</ol>
+</blockquote>
+
+<p><a id=Outside_of_Information_Security></a></p>
+
+<h3>Outside of Information Security</h3>
+
+<p>Outside of information security, randomness extraction serves the purpose of recycling random numbers, to reduce calls to a pseudorandom number generator (PRNG), for example.  This is in addition to the purpose of generating a seed for a PRNG.</p>
+
+<p>Perhaps the most familiar example of randomness extraction is the one by von Neumann (1951)<sup><a href="#Note2"><strong>(2)</strong></a></sup>:</p>
+
+<ol>
+<li>Flip a coin twice (whose bias is unknown).</li>
+<li>If the coin lands heads-tails or tails-heads, return heads or tails, respectively.  Otherwise, go to step 1.</li>
+</ol>
+
+<p>An algorithm from (Morina et al. 2019)<sup><a href="#Note3"><strong>(3)</strong></a></sup> extends this to loaded dice.  Based on personal communication by K. Łatuszyński, perhaps this works for any distribution of random numbers, not just loaded dice, as the key &quot;is to find two non overlapping events of the same probability&quot; via &quot;symmetric events {X_1 &lt; X_2}  and  {X_2 &lt; X_1} that have the same probability&quot;.</p>
+
+<ol>
+<li>Throw a die twice (whose bias is unknown), call the results <em>X</em> and <em>Y</em>, respectively.</li>
+<li>If <em>X</em> is less than <em>Y</em>, return 1.  If <em>X</em> is greater than <em>Y</em>, return 0.  Otherwise, go to step 1.</li>
+</ol>
+
+<p>Pae (2005)<sup><a href="#Note4"><strong>(4)</strong></a></sup> characterizes <em>extracting functions</em>.  Informally, an <em>extracting function</em> is a function that maps a fixed number of bits to a variable number of bits such that, whenever the input has a given number of ones, every output string of a given length is as likely to occur as every other output string of that length, regardless of the input coin&#39;s bias.  Among others, von Neumann&#39;s extractor and the one by Peres (1992)<sup><a href="#Note5"><strong>(5)</strong></a></sup> are extracting functions.</p>
+
+<p>A streaming algorithm, which builds something like an &quot;extractor tree&quot;, is another example of a randomness extractor &lt;<Zhou, H. and Bruck, J., "[**Streaming algorithms for optimal generation of random bits**](https://arxiv.org/abs/1209.0730)", arXiv:1209.0730 [cs.IT], 2012.>&gt;.</p>
+
+<p>I maintain <a href="https://github.com/peteroupc/peteroupc.github.io/blob/master/rextract.rb"><strong>source code of this extractor</strong></a>, which also includes additional notes on randomness extraction.</p>
+
+<p>Pae&#39;s &quot;entropy-preserving&quot; binarization (Pae 2020)<sup><a href="#Note6"><strong>(6)</strong></a></sup>, given below, is meant to be used in other extractor algorithms such as the ones mentioned above.  It assumes the number of possible values <em>n</em> is known. However, it is obviously not efficient if <em>n</em> is a large number.</p>
+
+<ol>
+<li>Let <em>f</em> be a number in the interval [0, <em>n</em>) that was previously randomly generated.  If <em>f</em> is greater than 0, output a 1.</li>
+<li>If <em>f</em> is less than <em>n</em> &minus; 1, output a 0 <em>x</em> times, where <em>x</em> is (<em>n</em> &minus; 1) &minus; <em>f</em>.</li>
+</ol>
+
+<p>Finally, different kinds of random numbers should not be mixed in the same extractor stream.  For example, if one source outputs random 6-sided die results, another source outputs random sums of rolling 2 six-sided dice, and a third source outputs coin flips with a bias of 0.75, there should be three extractor streams (for instance, three extractor trees that implement the Zhou and Bruck algorithm).</p>
+
+<p>The lower bound on the average number of coin flips needed to turn a biased coin into an unbiased coin is as follows (and is a special case of the <em>entropy bound</em>; see, e.g., (Pae 2005)<sup><a href="#Note4"><strong>(4)</strong></a></sup>, (Peres 1992)<sup><a href="#Note5"><strong>(5)</strong></a></sup>):</p>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;ln(2) / ((&lambda; &minus; 1) * ln(1 &minus; &lambda;) &minus; &lambda; * ln(&lambda;)),</p>
+
+<p>where &lambda; is the bias of the input coin.  According to this formula, a growing number of coin flips is needed if the input coin is strongly biased towards heads or tails.</p>
+
+<p><a id=Notes></a></p>
+
+<h2>Notes</h2>
+
+<p><small><sup id=Note1>(1)</sup> Cliff, Y., Boyd, C., Gonzalez Nieto, J. &quot;How to Extract and Expand Randomness: A Summary and Explanation of Existing Results&quot;, 2009.</small></p>
+
+<p><small><sup id=Note2>(2)</sup> von Neumann, J., &quot;Various techniques used in connection with random digits&quot;, 1951.</small></p>
+
+<p><small><sup id=Note3>(3)</sup> Morina, G., Łatuszyński, K., et al., &quot;<a href="https://arxiv.org/abs/1912.09229v1"><strong>From the Bernoulli Factory to a Dice Enterprise via Perfect Sampling of Markov Chains</strong></a>&quot;, arXiv:1912.09229v1 [math.PR], 2019.</small></p>
+
+<p><small><sup id=Note4>(4)</sup> Pae, S., &quot;Random number generation using a biased source&quot;, dissertation, University of Illinois at Urbana-Champaign, 2005.</small></p>
+
+<p><small><sup id=Note5>(5)</sup> Peres, Y., &quot;Iterating von Neumann&#39;s procedure for extracting random bits&quot;, Annals of Statistics 1992,20,1, p. 590-597.</small></p>
+
+<p><small><sup id=Note6>(6)</sup> S. Pae, &quot;<a href="https://arxiv.org/abs/1602.06058v2"><strong>Binarization Trees and Random Number Generation</strong></a>&quot;, arXiv:1602.06058v2 [cs.DS].</small></p>
+
+<p><a id=License></a></p>
+
+<h2>License</h2>
+
+<p>Any copyright to this page is released to the Public Domain.  In case this is not possible, this page is also licensed under <a href="https://creativecommons.org/publicdomain/zero/1.0/"><strong>Creative Commons Zero</strong></a>.</p>
+</div><nav id="navigation"><ul>
+<li><a href="/">Back to start site.</a>
+<li><a href="https://github.com/peteroupc/peteroupc.github.io">This site's repository (source code)</a>
+<li><a href="https://github.com/peteroupc/peteroupc.github.io/issues">Post an issue or comment</a></ul>
+<p>
+If you like this software, you should consider donating to me, Peter O., at the link below:</p>
+<p class="printonly"><b>peteroupc.github.io</b></p>
+<div class="noprint">
+<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=56E5T4FH7KD2S">
+<img src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif"
+name="submit" border="2" alt="PayPal - The safer, easier way to pay online!"></a>
+<p>
+<a href="//twitter.com/share">Share via Twitter</a>, <a href="//www.facebook.com/sharer/sharer.php" id="sharer">Share via Facebook</a>
+</p>
+</div>
+</nav><script>
+if("share" in navigator){
+ document.getElementById("sharer").href="javascript:void(null)";
+ document.getElementById("sharer").innerHTML="Share This Page";
+ navigator.share({title:document.title,url:document.location.href}).then(
+   function(){});
+} else {
+ document.getElementById("sharer").href="//www.facebook.com/sharer/sharer.php?u="+
+    encodeURIComponent(document.location.href)
+}
+</script>
+</body></html>

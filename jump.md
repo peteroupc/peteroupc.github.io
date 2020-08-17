@@ -1,6 +1,8 @@
 <a id=Notes_on_Jumping_PRNGs_Ahead></a>
 ## Notes on Jumping PRNGs Ahead
 
+[**Peter Occil**](mailto:poccil14@gmail.com)
+
 Some pseudorandom number generators (PRNGs) have an efficient way to advance their state as though a huge number of PRNG outputs were discarded.  Notes on how they work are described in the following sections.
 
 <a id=F2_linear_PRNGs></a>

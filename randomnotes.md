@@ -3,9 +3,9 @@
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
 <a id=Contents></a>
-### Contents
+## Contents
 
-    - [**Contents**](#Contents)
+- [**Contents**](#Contents)
     - [**Specific Distributions**](#Specific_Distributions)
         - [**Normal (Gaussian) Distribution**](#Normal_Gaussian_Distribution)
         - [**Gamma Distribution**](#Gamma_Distribution)
@@ -468,7 +468,7 @@ This section describes a way to implement weighted choice of one or more items f
 
 then the solution involves turning a biased coin to a fair coin, and then turning the fair coin into a loaded die.
 
-1.  Biased coin to fair coin:  This can be achieved with _randomness extraction_ techniques, such as von Neumann unbiasing.  Randomness extraction is outside the scope of this document.
+1.  Biased coin to fair coin:  This can be achieved with _randomness extraction_ (see my [**Note on Randomness Extraction**](https://peteroupc.github.io/randextract.html)).
 2.  Fair coin to loaded die:  There are many ways to solve this problem.  For example, fair coins can serve as the source of random numbers for `RNDINT` (see "[**Uniform Random Integers**](https://peteroupc.github.io/randomfunc.html#Uniform_Random_Integers)"), and `RNDINT` can in turn be used to implement [**`WeightedChoice`**](https://peteroupc.github.io/randomfunc.html#Weighted_Choice_With_Replacement), which implements loaded dice.  Some algorithms also produce a loaded die _directly_ from fair coins, such as the [**Fast Loaded Dice Roller**](https://github.com/probcomp/fast-loaded-dice-roller).
 
 If we have multiple biased coins (_n_ of them), each with a separate unknown bias, we can choose one of them at random according to their bias via rejection sampling, also known as the _Bernoulli race_ (Dughmi et al. 2017)<sup>[**(16)**](#Note16)</sup>; see also (Morina et al., 2019)<sup>[**(17)**](#Note17)</sup>:

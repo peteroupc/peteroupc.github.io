@@ -24,7 +24,7 @@ This page is focused on sampling methods that _exactly_ sample from the distribu
 - This document does not cover how to test RNGs for correctness or adequate random number generation.  This is covered, for example, in "[**Testing PRNGs for High-Quality Randomness**](https://github.com/peteroupc/peteroupc.github.io/blob/master/randomtest.md)".
 - This document does not explain how to specify or generate "seeds" for certain PRNGs.  This is [**covered in detail**](https://peteroupc.github.io/random.html#Nondeterministic_Sources_and_Seed_Generation) elsewhere.
 - This document does not show how to generate random security parameters such as encryption keys.
-- This document does not cover randomness extraction (also known as _unbiasing_, _deskewing_, or _whitening_), such as [**hash functions**](https://peteroupc.github.io/random.html#Hash_Functions) and von Neumann unbiasing.
+- This document does not cover randomness extraction (also known as _unbiasing_, _deskewing_, or _whitening_).  See my [**Note on Randomness Extraction**](https://peteroupc.github.io/randextract.html).
 - Variance reduction techniques, such as importance sampling or common random numbers, are not in the scope of this document.
 
 <a id=Sources_of_Random_Numbers></a>
@@ -170,7 +170,7 @@ Specifically:
 
 | If the underlying source produces: | Then `NEXTRAND()` is: | And `MODULUS` is: |
  --------- | ------ | ------ |
-| Non-uniform numbers<sup>[**(3)**](#Note3)</sup>. | The next number from a new source formed by writing the underlying source's outputs to a stream of memory units (such as 8-bit bytes) and using a _randomness extraction_ technique to transform that stream to _n_-bit non-negative integers. (Randomness extraction is beyond this page's scope.) | 2<sup>_n_</sup>. |
+| Non-uniform numbers<sup>[**(3)**](#Note3)</sup>. | The next number from a new source formed by writing the underlying source's outputs to a stream of memory units (such as 8-bit bytes) and using a [**_randomness extraction_**](https://peteroupc.github.io/randextract.html) technique to transform that stream to _n_-bit non-negative integers. | 2<sup>_n_</sup>. |
 | Uniform numbers not described below. | Same as above. | 2<sup>_n_</sup>. |
 | Uniform 32-bit non-negative integers. | The next number from the source. | 2<sup>32</sup>. |
 | Uniform 64-bit non-negative integers. | The next number from the source. | 2<sup>64</sup>. |

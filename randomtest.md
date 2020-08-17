@@ -1,6 +1,8 @@
 <a id=Testing_PRNGs_for_High_Quality_Randomness></a>
 ## Testing PRNGs for High-Quality Randomness
 
+[**Peter Occil**](mailto:poccil14@gmail.com)
+
 According to my document on [**pseudorandom number generator (PRNG) recommendations**](https://peteroupc.github.io/random.html), a high-quality PRNG, among other requirements&mdash;
 
 > generates bits that behave like independent uniform random bits (at least for nearly all practical purposes outside of information security)[,]

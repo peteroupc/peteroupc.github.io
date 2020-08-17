@@ -367,13 +367,14 @@ class FastLoadedDiceRoller:
             if x < leaves:
                 label = self.leavesAndLabels[x + 1][y]
                 if label <= self.n:
-                    # NOTE: The pair [label-1, (x, y)] could be
+                    # NOTE: The variables label-1 and y are separate
+                    # random variables that could be
                     # recycled via a randomness extraction
                     # method to generate additional uniform
                     # random bits, as explained by L.
                     # Devroye and C. Gravel
                     # ("Sampling with arbitrary precision",
-                    # 2015, arXiv:1502.02539 [cs.IT])
+                    # 2015, arXiv:1502.02539 [cs.IT]).
                     return label - 1
                 x = 0
                 y = 0
@@ -3329,17 +3330,10 @@ acap - Optional.  A setting used in the optimization process; an
     def _toWeights(self, ratios):
         ret = [self._fpRatio(r) for r in ratios]
         ret = [Fraction(f[0], f[1]) for r in ratios]
+        # NOTE: Takes advantage of Fraction's automatic
+        # lowest-terms conversion
         wsum = sum(ret)
-        return [int(x * wsum.denominator) for x in self.weights]
-
-    def _toWeights_lessrobust(self, ratios):
-        # Less robust because ratios are assumed
-        # to be a power of 2
-        ret = [self._fpRatio(r) for r in ratios]
-        maxden = 0
-        for r in ret:
-            maxden = max(maxden, r[1])
-        return [r[0] * (maxden // r[1]) for i in ret]
+        return [int(x * wsum.denominator) for x in ret]
 
     def integers_from_pdf(self, pdf, mn, mx, n=1):
         """ Generates one or more random integers from a discrete probability

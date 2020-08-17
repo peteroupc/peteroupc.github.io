@@ -8,23 +8,27 @@
 
 <p><a id=Contents></a></p>
 
-<h3>Contents</h3>
-
-<pre>- [**Contents**](#Contents)
-- [**Specific Distributions**](#Specific_Distributions)
-    - [**Normal (Gaussian) Distribution**](#Normal_Gaussian_Distribution)
-    - [**Gamma Distribution**](#Gamma_Distribution)
-    - [**Beta Distribution**](#Beta_Distribution)
-    - [**von Mises Distribution**](#von_Mises_Distribution)
-    - [**Stable Distribution**](#Stable_Distribution)
-    - [**Multivariate Normal (Multinormal) Distribution**](#Multivariate_Normal_Multinormal_Distribution)
-    - [**Random Real Numbers with a Given Positive Sum**](#Random_Real_Numbers_with_a_Given_Positive_Sum)
-    - [**Gaussian and Other Copulas**](#Gaussian_and_Other_Copulas)
-    - [**Exponential Distribution: Another Error-Bounded Algorithm**](#Exponential_Distribution_Another_Error_Bounded_Algorithm)
-- [**Weighted Choice with Biased Coins**](#Weighted_Choice_with_Biased_Coins)
-</pre>
+<h2>Contents</h2>
 
 <ul>
+<li><a href="#Contents"><strong>Contents</strong></a>
+
+<ul>
+<li><a href="#Specific_Distributions"><strong>Specific Distributions</strong></a>
+
+<ul>
+<li><a href="#Normal_Gaussian_Distribution"><strong>Normal (Gaussian) Distribution</strong></a></li>
+<li><a href="#Gamma_Distribution"><strong>Gamma Distribution</strong></a></li>
+<li><a href="#Beta_Distribution"><strong>Beta Distribution</strong></a></li>
+<li><a href="#von_Mises_Distribution"><strong>von Mises Distribution</strong></a></li>
+<li><a href="#Stable_Distribution"><strong>Stable Distribution</strong></a></li>
+<li><a href="#Multivariate_Normal_Multinormal_Distribution"><strong>Multivariate Normal (Multinormal) Distribution</strong></a></li>
+<li><a href="#Random_Real_Numbers_with_a_Given_Positive_Sum"><strong>Random Real Numbers with a Given Positive Sum</strong></a></li>
+<li><a href="#Gaussian_and_Other_Copulas"><strong>Gaussian and Other Copulas</strong></a></li>
+<li><a href="#Exponential_Distribution_Another_Error_Bounded_Algorithm"><strong>Exponential Distribution: Another Error-Bounded Algorithm</strong></a></li>
+</ul></li>
+<li><a href="#Weighted_Choice_with_Biased_Coins"><strong>Weighted Choice with Biased Coins</strong></a></li>
+</ul></li>
 <li><a href="#Notes"><strong>Notes</strong></a></li>
 <li><a href="#Appendix"><strong>Appendix</strong></a>
 
@@ -540,7 +544,7 @@ END METHOD
 <p>then the solution involves turning a biased coin to a fair coin, and then turning the fair coin into a loaded die.</p>
 
 <ol>
-<li> Biased coin to fair coin:  This can be achieved with <em>randomness extraction</em> techniques, such as von Neumann unbiasing.  Randomness extraction is outside the scope of this document.</li>
+<li> Biased coin to fair coin:  This can be achieved with <em>randomness extraction</em> (see my <a href="https://peteroupc.github.io/randextract.html"><strong>Note on Randomness Extraction</strong></a>).</li>
 <li> Fair coin to loaded die:  There are many ways to solve this problem.  For example, fair coins can serve as the source of random numbers for <code>RNDINT</code> (see &quot;<a href="https://peteroupc.github.io/randomfunc.html#Uniform_Random_Integers"><strong>Uniform Random Integers</strong></a>&quot;), and <code>RNDINT</code> can in turn be used to implement <a href="https://peteroupc.github.io/randomfunc.html#Weighted_Choice_With_Replacement"><strong><code>WeightedChoice</code></strong></a>, which implements loaded dice.  Some algorithms also produce a loaded die <em>directly</em> from fair coins, such as the <a href="https://github.com/probcomp/fast-loaded-dice-roller"><strong>Fast Loaded Dice Roller</strong></a>.</li>
 </ol>
 

@@ -1919,6 +1919,8 @@ CLASSES
      |                 term[0] * p**term[1] * (1-p)**term[2].
      |        For example, [3, 4, 5] becomes:
      |                 3 * p**4 * (1-p)**5
+     |        For best results, the coefficient should be a rational number
+     |        (such as int or Python's Fraction).
      |      Returns this object.
      |
      |  augment(self)

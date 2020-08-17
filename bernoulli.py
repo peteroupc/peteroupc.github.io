@@ -1094,7 +1094,72 @@ def _multinom(n, x):
         den *= math.factorial(v)
     return num / den
 
-# TODO: Avoid floating-point arithmetic and random.random()
+class _FastLoadedDiceRoller:
+    """
+    Fast Loaded Dice Roller.  Reference: Saad et al. 2020, "The Fast Loaded
+    Dice Roller [etc.]".
+    """
+
+    def _toWeights(self, numbers):
+        ret = [Fraction(r) for r in numbers]
+        # NOTE: Takes advantage of Fraction's automatic
+        # lowest-terms conversion
+        wsum = sum(ret)
+        return [int(x * wsum.denominator) for x in ret]
+
+    def __init__(self, weights):
+        self.n = len(weights)
+        if self.n == 1:
+            return
+        weights = self._toWeights(weights)
+        weightBits = 0
+        totalWeights = sum(weights)
+        if totalWeights < 0:
+            raise ValueError("Sum of weights is negative")
+        if totalWeights == 0:
+            raise ValueError("Sum of weights is zero")
+        tmp = totalWeights - 1
+        while tmp > 0:
+            tmp >>= 1
+            weightBits += 1
+        lasta = (1 << weightBits) - totalWeights
+        self.leavesAndLabels = [
+            [0 for i in range(weightBits)] for j in range(self.n + 2)
+        ]
+        shift = weightBits - 1
+        for j in range(weightBits):
+            level = 1
+            for i in range(self.n + 1):
+                ai = lasta if i == self.n else weights[i]
+                if ai < 0:
+                    raise ValueError
+                leaf = (ai >> shift) & 1
+                if leaf > 0:
+                    # NOTE: Labels start at 1
+                    self.leavesAndLabels[0][j] += leaf
+                    self.leavesAndLabels[level][j] = i + 1
+                    level += 1
+            shift -= 1
+
+    def next(self, randgen):
+        if self.n == 1:
+            return 0
+        x = 0
+        y = 0
+        while True:
+            x = randgen.randbit() | (x << 1)
+            leaves = self.leavesAndLabels[0][y]
+            if x < leaves:
+                label = self.leavesAndLabels[x + 1][y]
+                if label <= self.n:
+                    return label - 1
+                x = 0
+                y = 0
+            else:
+                x -= leaves
+                y += 1
+
+# TODO: Implement dice-to-dice case
 class DiceEnterprise:
     """
    Implements the Dice Enterprise algorithm for
@@ -1122,7 +1187,6 @@ class DiceEnterprise:
         self.ladder = []
         self.optladder = []
         self.bern = Bernoulli()
-        self.r = random.Random()
 
     def append_poly(self, result, poly):
         """
@@ -1138,6 +1202,8 @@ class DiceEnterprise:
                  term[0] * p**term[1] * (1-p)**term[2].
         For example, [3, 4, 5] becomes:
                  3 * p**4 * (1-p)**5
+        For best results, the coefficient should be a rational number
+        (such as int or Python's Fraction).
       Returns this object.
       """
         d = 0  # Degree of polynomial
@@ -1249,22 +1315,23 @@ class DiceEnterprise:
         if len(self.ladder) == 0:
             return 0
         s = self._monotoniccftp(coin)
-        if len(s[2]) == 1:
-            return s[2][0]
+        if s[0] == None:
+            # Only one coefficient, so return the corresponding result
+            return s[1][0]
         else:
-            # This is an aggregation
-            # TODO: Use random-bit-based weighted choice
-            mx = max(s[0])
-            while True:
-                j = self.r.randint(0, len(s[0]) - 1)
-                if self.r.random() * mx < s[0][j]:
-                    return s[2][j]
+            # This is an aggregation, so do a weighted choice
+            # of all coefficients sharing this monomial to decide
+            # which result to return
+            return s[1][s[0].next(self.bern)]
 
     def _compile_ladder(self):
         self.optladder = [0 for i in range(len(self.ladder))]
         for i in range(len(self.ladder)):
             fr1 = 0
             fr2 = 0
+            fr3 = None
+            if len(self.ladder[i][0]) > 1:
+                fr3 = _FastLoadedDiceRoller(self.ladder[i][0])
             if i > 0:
                 la = self.ladder[i - 1][0]
                 lcur = self.ladder[i][0]
@@ -1288,7 +1355,7 @@ class DiceEnterprise:
                     else (Fraction(la) / Fraction(lcur))
                 )
                 fr2 = fr
-            self.optladder[i] = [fr1, fr2]
+            self.optladder[i] = [fr1, fr2, fr3]
         return self
 
     def _univladderupdate(self, i, b, u):
@@ -1321,7 +1388,7 @@ class DiceEnterprise:
                     state2, bs[len(bs) - 1 - i], us[len(bs) - 1 - i]
                 )
                 i += 1
-        return self.ladder[state1]
+        return [self.optladder[state1][2], self.ladder[state1][2]]
 
     def _dn_m_eq_1_ex(self, a, n):
         # each item of a is of the form:
@@ -1343,8 +1410,12 @@ class DiceEnterprise:
                                 a[j][1] == ntilde[0]
                                 and (0 if len(a[j]) == 2 else a[j][2]) == ntilde[1]
                             ):
-                                # TODO: Can involve floating-point arithmetic in multiplication
                                 antilde = a[j][0]
+                                antilde = (
+                                    antilde
+                                    if isinstance(antilde, int)
+                                    else Fraction(antilde)
+                                )
                                 antilde *= _multinom(d - i, nprime)
                                 ret += antilde
         return ret

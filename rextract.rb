@@ -158,6 +158,12 @@ end
 # Reference: Peres, Y., "Iterating von Neumann's procedure for
 # extracting random bits", The Annals of Statistics 1992,20,1,
 # pp.590-597.
+# According to Remark 3 in the paper, to produce m
+# unbiased bits, take peres(block1)+peres(block2)+... until
+# at least m bits are produced this way, where each block has
+# a fixed number of bits greater than 1; this should be done
+# rather than the practice of generating biased bits until
+# peres(biased_bits) produces at least m unbiased bits.
 def peres(bits,output)
   u=[]
   v=[]

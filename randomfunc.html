@@ -32,7 +32,7 @@
 <li>This document does not cover how to test RNGs for correctness or adequate random number generation.  This is covered, for example, in &quot;<a href="https://github.com/peteroupc/peteroupc.github.io/blob/master/randomtest.md"><strong>Testing PRNGs for High-Quality Randomness</strong></a>&quot;.</li>
 <li>This document does not explain how to specify or generate &quot;seeds&quot; for certain PRNGs.  This is <a href="https://peteroupc.github.io/random.html#Nondeterministic_Sources_and_Seed_Generation"><strong>covered in detail</strong></a> elsewhere.</li>
 <li>This document does not show how to generate random security parameters such as encryption keys.</li>
-<li>This document does not cover randomness extraction (also known as <em>unbiasing</em>, <em>deskewing</em>, or <em>whitening</em>), such as <a href="https://peteroupc.github.io/random.html#Hash_Functions"><strong>hash functions</strong></a> and von Neumann unbiasing.</li>
+<li>This document does not cover randomness extraction (also known as <em>unbiasing</em>, <em>deskewing</em>, or <em>whitening</em>).  See my <a href="https://peteroupc.github.io/randextract.html"><strong>Note on Randomness Extraction</strong></a>.</li>
 <li>Variance reduction techniques, such as importance sampling or common random numbers, are not in the scope of this document.</li>
 </ul>
 
@@ -239,7 +239,7 @@
 </thead><tbody>
 <tr>
 <td>Non-uniform numbers<sup><a href="#Note3"><strong>(3)</strong></a></sup>.</td>
-<td>The next number from a new source formed by writing the underlying source&#39;s outputs to a stream of memory units (such as 8-bit bytes) and using a <em>randomness extraction</em> technique to transform that stream to <em>n</em>-bit non-negative integers. (Randomness extraction is beyond this page&#39;s scope.)</td>
+<td>The next number from a new source formed by writing the underlying source&#39;s outputs to a stream of memory units (such as 8-bit bytes) and using a <a href="https://peteroupc.github.io/randextract.html"><strong><em>randomness extraction</em></strong></a> technique to transform that stream to <em>n</em>-bit non-negative integers.</td>
 <td>2<sup><em>n</em></sup>.</td>
 </tr>
 <tr>
