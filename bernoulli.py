@@ -1120,6 +1120,8 @@ class DiceEnterprise:
 
     def __init__(self):
         self.ladder = []
+        self.optladder = []
+        self.bern = Bernoulli()
         self.r = random.Random()
 
     def append_poly(self, result, poly):
@@ -1217,7 +1219,7 @@ class DiceEnterprise:
             if self._is_connected():
                 break
             self.augment()
-        return self
+        return self._compile_ladder()
 
     def augment(self):
         """ Augments the degree of the function represented
@@ -1225,9 +1227,11 @@ class DiceEnterprise:
            (for details, see the paper).
            Returns this object.
       """
-        return self._increase_degree()._thin()
+        return self._increase_degree()._thin()._compile_ladder()
 
     def _calcprob(self, p, result=1):
+        # Debugging method to calculate the probability
+        # of getting a particular result from this object
         ret = 0
         rtot = 0
         for v in self.ladder:
@@ -1235,39 +1239,67 @@ class DiceEnterprise:
                 rtot += v[0][k] * p ** v[1][0] * (1 - p) ** v[1][1]
                 if v[2][k] == result:
                     ret += v[0][k] * p ** v[1][0] * (1 - p) ** v[1][1]
-        return ret / rtot
+        return float(ret / rtot)
 
     def next(self, coin):
         """ Returns the next result of the flip from a coin
           that is transformed from the given coin by the function
           represented by this Dice Enterprise object.
           coin - Function that returns 1 (heads) or 0 (tails). """
+        if len(self.ladder) == 0:
+            return 0
         s = self._monotoniccftp(coin)
         if len(s[2]) == 1:
             return s[2][0]
         else:
             # This is an aggregation
+            # TODO: Use random-bit-based weighted choice
             mx = max(s[0])
             while True:
-                j = r.randint(0, len(s[0]) - 1)
-                if r.random() * mx < s[0][j]:
+                j = self.r.randint(0, len(s[0]) - 1)
+                if self.r.random() * mx < s[0][j]:
                     return s[2][j]
 
+    def _compile_ladder(self):
+        self.optladder = [0 for i in range(len(self.ladder))]
+        for i in range(len(self.ladder)):
+            fr1 = 0
+            fr2 = 0
+            if i > 0:
+                la = self.ladder[i - 1][0]
+                lcur = self.ladder[i][0]
+                la = la[0] if len(la) == 1 else sum(la)
+                lcur = lcur[0] if len(lcur) == 1 else sum(lcur)
+                lcur = max(la, lcur)
+                fr = (
+                    Fraction(la, lcur)
+                    if isinstance(la, int) and isinstance(lcur, int)
+                    else (Fraction(la) / Fraction(lcur))
+                )
+                fr1 = fr
+            if i < len(self.ladder) - 1:
+                la = self.ladder[i + 1][0]
+                lcur = self.ladder[i][0]
+                la = la[0] if len(la) == 1 else sum(la)
+                lcur = lcur[0] if len(lcur) == 1 else sum(lcur)
+                fr = (
+                    Fraction(la, lcur)
+                    if isinstance(la, int) and isinstance(lcur, int)
+                    else (Fraction(la) / Fraction(lcur))
+                )
+                fr2 = fr
+            self.optladder[i] = [fr1, fr2]
+        return self
+
     def _univladderupdate(self, i, b, u):
-        if i > 0 and b == 0:
-            la = self.ladder[i - 1][0]
-            lcur = self.ladder[i][0]
-            la = (la[0] if len(la) == 1 else sum(la)) * 1.0
-            lcur = (lcur[0] if len(lcur) == 1 else sum(lcur)) * 1.0
-            if u <= la / max(la, lcur):
-                return i - 1
-        if i < len(self.ladder) - 1 and b == 1:
-            la = self.ladder[i + 1][0]
-            lcur = self.ladder[i][0]
-            la = (la[0] if len(la) == 1 else sum(la)) * 1.0
-            lcur = (lcur[0] if len(lcur) == 1 else sum(lcur)) * 1.0
-            if u <= la / max(la, lcur):
-                return i + 1
+        if i > 0 and b == 0 and self.bern._uniform_less(u, self.optladder[i][0]):
+            return i - 1
+        if (
+            i < len(self.ladder) - 1
+            and b == 1
+            and self.bern._uniform_less(u, self.optladder[i][1])
+        ):
+            return i + 1
         return i
 
     def _monotoniccftp(self, coin):
@@ -1277,7 +1309,7 @@ class DiceEnterprise:
         us = []
         while state1 != state2:
             bs.append(coin())
-            us.append(r.random())
+            us.append([])  # Uniform random number to be filled on demand
             state1 = 0
             state2 = len(self.ladder) - 1
             i = 0
@@ -1311,6 +1343,7 @@ class DiceEnterprise:
                                 a[j][1] == ntilde[0]
                                 and (0 if len(a[j]) == 2 else a[j][2]) == ntilde[1]
                             ):
+                                # TODO: Can involve floating-point arithmetic in multiplication
                                 antilde = a[j][0]
                                 antilde *= _multinom(d - i, nprime)
                                 ret += antilde
