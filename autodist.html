@@ -345,28 +345,117 @@ function fldrTable(data,offset,weights){
   return ret
 }
 
+function ceilingToPowerOfTwoOrThree(x) {
+  let power2=2
+  let power3=3
+  while(x>power2) {
+    power2*=2
+  }
+  while(x>power3) {
+    power3*=3
+  }
+  return Math.min(power2,power3)
+}
+
+function rational(x,y) {
+  if(typeof y=="undefined")y=1
+  if(typeof BigInt!="undefined") {
+    return [BigInt(x),BigInt(y)]
+  } else {
+    return [x,y]
+  }
+}
+
+function rationalpow(rat,y) {
+  var r=rational(1)
+  for(var i=0;i<y;i++){
+    r=rationalmul(r,rat)
+  }
+  return r
+}
+
+function rationalmul(rat,rat2) {
+  return [rat[0]*rat2[0],rat[1]*rat2[1]]
+}
+
+function rationaladd(rat,rat2) {
+  return [rat[0]*rat2[1]+rat[1]*rat2[0],rat[1]*rat2[1]]
+}
+
+function rationalabssub(rat,rat2) {
+  let r=rat[0]*rat2[1]-rat[1]*rat2[0]
+  if(r<0)r=-r
+  return [r,rat[1]*rat2[1]]
+}
+
+function rationaldiv(rat,rat2) {
+  return [rat[0]*rat2[1],rat[1]*rat2[0]]
+}
+
+function rationalcmp(rat,rat2) {
+  if(typeof rat2=="number")rat2=rational(rat2)
+  s=rat[0]*rat2[1]-rat[1]*rat2[0]
+  return s<0 ? -1 : (s==0 ? 0 : 1)
+}
+
+function rationalsum(a) {
+  let x=rational(0)
+  for(let i=0;i<a.length;i++){
+    x=rationaladd(x,a[i])
+  }
+  return x
+}
+
+function rationalnum(rat) {
+  return Number(rat[0])/Number(rat[1])
+}
+
 function dicetable(weights, offset) {
   // Reference: Benoît Kloeckner, "Simulating a dice with a dice", 2008.
   // Extended to allow the output die to have an arbitrary discrete
-  // distributions (loaded dice), not just a uniform distribution (fair dice).
+  // distribution (loaded dice), not just a uniform distribution (fair dice).
   // This requires only a trivial modification to the greedy simulation
   // process in that paper.
   if(weights.length<2){
     return "The result is "+(offset||0)+".\n\n"
   }
+  let origweights=weights
+  let wgcd=weightsgcd(weights)
+  weights=weights.map(o=>o/wgcd)
   let srcFaces=6 // Fixed at 6, but also works for any other number of faces
-  let dstFaces=weights.length
   let dstWords=[];
-  for(var i=0;i<dstFaces;i++) { dstWords.push([]) }
+  for(var i=0;i<weights.length;i++) { dstWords.push([]) }
   let dstWeights=[];
-  for(var i=0;i<dstFaces;i++) { dstWeights.push(0) }
+  for(var i=0;i<weights.length;i++) { dstWeights.push(rational(0)) }
   let srcWord=0
   let srcWordCount=1
   let wsum=sum(weights)
+  let dstFaces=weights.length // Max. number of outcomes
+  // Make the sum of weights a power of 2 or 3, to give
+  // the simulation a bounded running time (see Lemma 3 of
+  // Kloeckner's paper).  This is similar to an idea used by the
+  // Fast Loaded Dice Roller, where it changes the weight table
+  // to make the sum of weights a power of 2, by adding a
+  // rejection event.
+  let wsp2or3=ceilingToPowerOfTwoOrThree(wsum)
+  if(wsum!=wsp2or3 && wsum/gcd(wsum,6)!=1) {
+     // Add a "rejection" weight
+     let newWeights=[]
+     for(var i=0;i<weights.length;i++) { newWeights.push(weights[i]) }
+     let newWeight = wsp2or3-wsum
+     wsum+=newWeight
+     newWeights.push(newWeight)
+     dstWords.push([])
+     dstWeights.push(rational(0))
+     weights=newWeights
+  }
+  let ii=0
   while (true) {
+    if(ii>10)break;ii+=1
     let wordsAddedInAll=true
     for (var i=0;i<dstWords.length;i++){
       let wordsAdded=0
+      console.log([srcWord,srcFaces**srcWordCount])
       while(srcWord<srcFaces**srcWordCount) {
         let t=srcWord
         let wordToAdd=[]
@@ -374,10 +463,15 @@ function dicetable(weights, offset) {
           wordToAdd.push(t%srcFaces)
           t=Math.floor(t/srcFaces)
         }
-        let newWeight=dstWeights[i]+(1/srcFaces)**srcWordCount
+        let newWeight=rationaladd(
+              dstWeights[i],
+              rationalpow(rational(1,srcFaces),srcWordCount))
         // Instead of 1/k (as in the paper), we check whether
         // newWeight is greater than the face's corresponding probability
-        if (newWeight>(weights[i]/wsum)) {
+        console.log([srcWord,srcFaces,srcWordCount,
+            rationalnum(dstWeights[i]),"newWeight",rationalnum(newWeight),
+            weights[i]/wsum,srcWordCount])
+        if (rationalcmp(newWeight,rational(weights[i],wsum))>0) {
            if(wordsAdded>0) {
               wordsAddedInAll=false
            }
@@ -390,12 +484,8 @@ function dicetable(weights, offset) {
         dstWords[i].push(wordToAdd)
       }
     }
-    // Stop if all the faces are filled with words and their total
-    // "weight" is greater than 0.99999 (by the paper, this is
-    // not strictly necessary,
-    // but it helps avoid infinite termination and avoids
-    // having to check many die roll results on a "printed"
-    // version of the table).
+    // Stop if all the faces are filled with words and their
+    // "weights" sum to 1.
     let minWordsLength=-1
     for(var i=0;i<weights.length;i++){
       if(weights[i]>0) {
@@ -405,11 +495,10 @@ function dicetable(weights, offset) {
            minWordsLength=Math.min(minWordsLength,dstWords[i].length)
       }
     }
-    console.log([minWordsLength,sum(dstWeights),
-                       ""+dstWeights,
-                       ""+weights.map(x=>x/wsum)])
-    if(minWordsLength>0 &&
-         sum(dstWeights) > 0.99999) break
+    var dw=rationalsum(dstWeights)
+    if(minWordsLength>0 && rationalcmp(dw,1)==0) {
+      break
+    }
     srcWord*=srcFaces
     srcWordCount+=1
   }
@@ -425,18 +514,18 @@ function dicetable(weights, offset) {
   let reject=false
   for(var i=0;i<dstWords.length;i++){
     for(var j=0;j<dstWords[i].length;j++){
-      if(dstWords[i][j].length>0) {
+      if(dstWords[i][j].length>0 && i < dstFaces) {
         items.push("- "+dieroll(dstWords[i][j],coins)+", the result is "+(i+(offset||0))+".")
       }
     }
   }
   ret+=items.sort().join("\n")+"\n"
-  if(sum(dstWeights)<1){
+  if(sum(dstWeights)<1 || dstFaces < dstWeights.length){
     ret+="- Anything else, start over.\n"
   }
   ret+="\n"
   ret+="X = Any die roll.\n\n"
-  ret+=chancenote(weights,offset)+"\n"
+  ret+=chancenote(origweights,offset)+"\n"
   return ret
 }
 
