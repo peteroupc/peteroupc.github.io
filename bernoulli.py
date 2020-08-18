@@ -1095,7 +1095,7 @@ def _multinom(n, x):
     return num / den
 
 def _neighbordist(ni, nj, b):
-    ret = [av - bv for av, bv in zip(a, b)]
+    ret = [av - bv for av, bv in zip(ni, nj)]
     ret[b] += 1
     return sum(abs(x) for x in ret)
 
@@ -1192,6 +1192,7 @@ class DiceEnterprise:
         self.ladder = []
         self.optladder = []
         self.bern = Bernoulli()
+        self.vmatrix = None
 
     def append_poly(self, result, poly):
         """
@@ -1224,6 +1225,7 @@ class DiceEnterprise:
     def _is_connected(self):
         # Determine whether the ladder is connected.
         # Currently, works only for univariate ladders
+        # TODO: Implement for multivariate ladders
         for i in range(len(self.ladder) - 1):
             j = i + 1
             one_norm = 0
@@ -1234,6 +1236,7 @@ class DiceEnterprise:
         return True
 
     def _thin(self):
+        # TODO: Support multivariate ladders
         for i in range(len(self.ladder)):
             if self.ladder[i] == None:
                 continue
@@ -1268,6 +1271,7 @@ class DiceEnterprise:
         return self
 
     def _increase_degree(self):
+        # TODO: Support multivariate ladders
         newladder1 = [
             [[x for x in v[0]], [v[1][0] + 1, v[1][1]], [x for x in v[2]]]
             for v in self.ladder
@@ -1281,7 +1285,7 @@ class DiceEnterprise:
         return self
 
     def _neighbors(self, m):
-        k = len(self.ladder) - 1
+        k = len(self.ladder)
         ret = [[[] for _ in range(m + 1)] for _ in range(k)]
         for i in range(k):
             for j in range(k):
@@ -1293,28 +1297,43 @@ class DiceEnterprise:
         return ret
 
     def _sum_neighbors(self, neighbors):
-        return [[sum(sum(self.ladder[j][0]) for j in v2) for v2 in v] for v in n]
+        return [
+            [sum(sum(self.ladder[j][0]) for j in v2) for v2 in v] for v in neighbors
+        ]
 
     def _copy_neighbors(self, neighbors):
-        return [[[j for j in v2] for v2 in v] for v in n]
+        return [[[j for j in v2] for v2 in v] for v in neighbors]
 
     def _find_max_b_i(self, s):
-        # TODO
-        pass
+        mv = -1
+        best_i = 0
+        best_b = 0
+        for i in range(len(s)):
+            for b in range(len(s[i])):
+                if mv < s[i][b]:
+                    best_i = i
+                    best_b = b
+                    mv = s[i][b]
+        return best_b, best_i
 
     def _find_direction(self, neighbors, i, j):
-        # TODO
-        pass
+        for c in range(len(neighbors[j])):
+            if i in neighbors[j][c]:
+                return c
+        raise ValueError
 
-    def _build_markov_matrix(self, m):
+    def _build_markov_matrix(self):
         k = len(self.ladder) - 1
+        m = len(self.ladder[0][1]) - 1
         v = [[0 for _ in range(k + 1)] for _ in range(k + 1)]
         n = self._neighbors(m)
-        self.neighbors = self.copy_neighbors(n)
-        n_count = sum(sum(v.length for _ in v) for v in n)
+        print(n)
+        self.neighbors = self._copy_neighbors(n)
+        n_count = sum(sum(len(v2) for v2 in v) for v in n)
         if n_count % 2 != 0:
             raise ValueError
         s = self._sum_neighbors(n)
+        print(s)
         w = [[0 for _ in nb] for nb in n]
         while n_count > 0:
             b, i = self._find_max_b_i(s)
@@ -1323,11 +1342,11 @@ class DiceEnterprise:
                 rj = sum(self.ladder[j][0])
                 v[i][j] = rj / s[i][b]
                 n[i][b].remove(j)
-                w[i][b] += vi[i][j]
+                w[i][b] += v[i][j]
                 c = self._find_direction(n, i, j)
                 v[j][i] = ri / s[i][b]
                 n[j][c].remove(i)
-                w[j][c] += vi[j][i]
+                w[j][c] += v[j][i]
                 s[j][c] = sum(sum(self.ladder[jj][0]) for jj in n[j][c]) / (1 - w[j][c])
                 n_count -= 2
             s[i][b] = 0
@@ -1373,7 +1392,10 @@ class DiceEnterprise:
           coin - Function that returns 1 (heads) or 0 (tails). """
         if len(self.ladder) == 0:
             return 0
-        s = self._monotoniccftp(coin)
+        if len(self.ladder[0][1]) == 2:
+            s = self._monotoniccftp(coin)
+        else:
+            s = self._cftp(coin)
         if s[0] == None:
             # Only one coefficient, so return the corresponding result
             return s[1][0]
@@ -1385,39 +1407,43 @@ class DiceEnterprise:
 
     def _compile_ladder(self):
         self.optladder = [0 for i in range(len(self.ladder))]
+        monotonic = len(self.ladder[0][1]) == 2
+        if not monotonic:
+            self._build_markov_matrix()
         for i in range(len(self.ladder)):
             fr1 = 0
             fr2 = 0
             fr3 = None
             if len(self.ladder[i][0]) > 1:
                 fr3 = _FastLoadedDiceRoller(self.ladder[i][0])
-            if i > 0:
-                la = self.ladder[i - 1][0]
-                lcur = self.ladder[i][0]
-                la = la[0] if len(la) == 1 else sum(la)
-                lcur = lcur[0] if len(lcur) == 1 else sum(lcur)
-                lcur = max(la, lcur)
-                fr = (
-                    Fraction(la, lcur)
-                    if isinstance(la, int) and isinstance(lcur, int)
-                    else (Fraction(la) / Fraction(lcur))
-                )
-                fr1 = fr
-            if i < len(self.ladder) - 1:
-                la = self.ladder[i + 1][0]
-                lcur = self.ladder[i][0]
-                la = la[0] if len(la) == 1 else sum(la)
-                lcur = lcur[0] if len(lcur) == 1 else sum(lcur)
-                fr = (
-                    Fraction(la, lcur)
-                    if isinstance(la, int) and isinstance(lcur, int)
-                    else (Fraction(la) / Fraction(lcur))
-                )
-                fr2 = fr
+            if monotonic:
+                if i > 0:
+                    la = self.ladder[i - 1][0]
+                    lcur = self.ladder[i][0]
+                    la = la[0] if len(la) == 1 else sum(la)
+                    lcur = lcur[0] if len(lcur) == 1 else sum(lcur)
+                    lcur = max(la, lcur)
+                    fr = (
+                        Fraction(la, lcur)
+                        if isinstance(la, int) and isinstance(lcur, int)
+                        else (Fraction(la) / Fraction(lcur))
+                    )
+                    fr1 = fr
+                if i < len(self.ladder) - 1:
+                    la = self.ladder[i + 1][0]
+                    lcur = self.ladder[i][0]
+                    la = la[0] if len(la) == 1 else sum(la)
+                    lcur = lcur[0] if len(lcur) == 1 else sum(lcur)
+                    fr = (
+                        Fraction(la, lcur)
+                        if isinstance(la, int) and isinstance(lcur, int)
+                        else (Fraction(la) / Fraction(lcur))
+                    )
+                    fr2 = fr
             self.optladder[i] = [fr1, fr2, fr3]
         return self
 
-    def _univladderupdate(self, i, b, u):
+    def _monotonicladderupdate(self, i, b, u):
         if i > 0 and b == 0 and self.bern._uniform_less(u, self.optladder[i][0]):
             return i - 1
         if (
@@ -1458,7 +1484,7 @@ class DiceEnterprise:
                         states[j], bs[len(bs) - 1 - i], us[len(bs) - 1 - i]
                     )
                 i += 1
-        return [self.optladder[state1][2], self.ladder[state1][2]]
+        return [self.optladder[states[0]][2], self.ladder[states[0]][2]]
 
     def _monotoniccftp(self, coin):
         state1 = 0
@@ -1472,10 +1498,7 @@ class DiceEnterprise:
             state2 = len(self.ladder) - 1
             i = 0
             while i < len(bs):
-                state1 = self._ladderupdate(
-                    state1, bs[len(bs) - 1 - i], us[len(bs) - 1 - i]
-                )
-                state2 = self._univladderupdate(
+                state2 = self._monotonicladderupdate(
                     state2, bs[len(bs) - 1 - i], us[len(bs) - 1 - i]
                 )
                 i += 1
