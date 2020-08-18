@@ -27,14 +27,14 @@ Outside of information security, randomness extraction serves the purpose of rec
 Perhaps the most familiar example of randomness extraction is the one by von Neumann (1951)<sup>[**(2)**](#Note2)</sup>:
 
 1. Flip a coin twice (whose bias is unknown).
-2. If the coin lands heads-tails or tails-heads, return heads or tails, respectively.  Otherwise, go to step 1.
+2. If the coin lands heads then tails, return heads.  If it lands tails then heads, return tails.  If neither is the case, go to step 1.
 
 An algorithm from (Morina et al. 2019)<sup>[**(3)**](#Note3)</sup> extends this to loaded dice.  Based on personal communication by K. Łatuszyński, perhaps this works for any distribution of random numbers, not just loaded dice, as the key "is to find two non overlapping events of the same probability" via "symmetric events {X_1 < X_2}  and  {X_2 < X_1} that have the same probability".
 
 1. Throw a die twice (whose bias is unknown), call the results _X_ and _Y_, respectively.
-2. If _X_ is less than _Y_, return 0.  If _X_ is greater than _Y_, return 1.  Otherwise, go to step 1.
+2. If _X_ is less than _Y_, return 0.  If _X_ is greater than _Y_, return 1.  If neither is the case, go to step 1.
 
-Pae (2005)<sup>[**(4)**](#Note4)</sup> and (Pae and Loui 2006)<sup>[**(5)**](#Note5)</sup> characterize _extracting functions_.  Informally, an _extracting function_ is a function that maps a fixed number of digits to a variable number of bits such that, whenever the input has a given number of ones, twos, etc., every output bit-string of a given length is as likely to occur as every other output string of that length, regardless of the input's bias.<sup>[**(6)**](#Note6)</sup>  Among others, von Neumann's extractor and the one by Peres (1992)<sup>[**(7)**](#Note7)</sup> are extracting functions.
+Pae (2005)<sup>[**(4)**](#Note4)</sup> and (Pae and Loui 2006)<sup>[**(5)**](#Note5)</sup> characterize _extracting functions_.  Informally, an _extracting function_ is a function that maps a fixed number of digits to a variable number of bits such that, whenever the input has a given number of ones, twos, etc., every output bit-string of a given length is as likely to occur as every other output bit-string of that length, regardless of the input's bias.<sup>[**(6)**](#Note6)</sup>  Among others, von Neumann's extractor and the one by Peres (1992)<sup>[**(7)**](#Note7)</sup> are extracting functions.
 
 A streaming algorithm, which builds something like an "extractor tree", is another example of a randomness extractor (Zhou and Bruck 2012)<sup>[**(8)**](#Note8)</sup>.
 

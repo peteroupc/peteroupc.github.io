@@ -1223,7 +1223,7 @@ def brange(interval, mn, mx):
     return ret
 
 def aIllum(wavelength):
-    """ CIE A Standard Illuminant. `wavelength` is in nanometers."""
+    """ Substantially equivalent to the CIE A Standard Illuminant. `wavelength` is in nanometers."""
     return planckian(2856, wavelength)
 
 _d50Illum = SPD([dseries(5000, _) for _ in brange(5, 300, 830)], 5, 300)

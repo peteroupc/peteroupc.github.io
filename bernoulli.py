@@ -1094,12 +1094,16 @@ def _multinom(n, x):
         den *= math.factorial(v)
     return num / den
 
+def _neighbordist(ni, nj, b):
+   ret=[av-bv for av, bv in zip(a, b)]
+   ret[b]+=1
+   return sum(abs(x) for x in ret)
+
 class _FastLoadedDiceRoller:
     """
     Fast Loaded Dice Roller.  Reference: Saad et al. 2020, "The Fast Loaded
     Dice Roller [etc.]".
     """
-
     def _toWeights(self, numbers):
         ret = [Fraction(r) for r in numbers]
         # NOTE: Takes advantage of Fraction's automatic
@@ -1275,6 +1279,58 @@ class DiceEnterprise:
         self.ladder = newladder1
         return self
 
+    def _neighbors(self, m):
+        k=len(self.ladder)-1
+        ret=[[for _ in range(m+1)] for _ in range(k)]
+        for i in range(k):
+           for j in range(k):
+              if i==j: continue
+              for b in range(m+1):
+                 if _neighbordist(self.ladder[i][1],self.ladder[j][1],b)==1:
+                    ret[i][b].append(j)
+        return ret
+
+    def _sum_neighbors(self, neighbors):
+       return [[sum(sum(self.ladder[j][0]) for j in v2) for v2 in v] for v in n]
+
+    def _copy_neighbors(self, neighbors):
+       return [[[j for j in v2] for v2 in v] for v in n]
+
+    def _find_max_b_i(self, s):
+       # TODO
+       pass
+
+    def _find_direction(self, neighbors, i, j):
+       # TODO
+       pass
+
+    def _build_markov_matrix(self, m):
+       k=len(self.ladder)-1
+       v=[[0 for _ in range(k+1)] for _ in range(k+1)]
+       n=self._neighbors(m)
+       self.neighbors=self.copy_neighbors(n)
+       n_count=sum(sum(v.length for _ in v) for v in n)
+       if n_count%2!=0: raise ValueError
+       s=self._sum_neighbors(n)
+       w=[[0 for _ in nb] for nb in n]
+       while n_count>0:
+           b, i=self._find_max_b_i(s)
+           for j in [x for x in n[i][b]]:
+               ri=sum(self.ladder[i][0])
+               rj=sum(self.ladder[j][0])
+               v[i][j]=rj/s[i][b]
+               n[i][b].remove(j)
+               w[i][b]+=vi[i][j]
+               c=self._find_direction(n, i, j)
+               v[j][i]=ri/s[i][b]
+               n[j][c].remove(i)
+               w[j][c]+=vi[j][i]
+               s[j][c]=sum(sum(self.ladder[jj][0]) for jj in n[j][c]) / (1 - w[j][c])
+               n_count-=2
+           s[i][b] = 0
+       self.vmatrix = v
+       return self
+
     def _autoaugment(self):
         deg = 0  # Degree of polynomial
         for v in self.ladder:
@@ -1315,7 +1371,7 @@ class DiceEnterprise:
         if len(self.ladder) == 0:
             return 0
         s = self._monotoniccftp(coin)
-        if s[0] == None:
+        if s[0]==None:
             # Only one coefficient, so return the corresponding result
             return s[1][0]
         else:
@@ -1330,7 +1386,7 @@ class DiceEnterprise:
             fr1 = 0
             fr2 = 0
             fr3 = None
-            if len(self.ladder[i][0]) > 1:
+            if len(self.ladder[i][0])>1:
                 fr3 = _FastLoadedDiceRoller(self.ladder[i][0])
             if i > 0:
                 la = self.ladder[i - 1][0]
@@ -1369,6 +1425,36 @@ class DiceEnterprise:
             return i + 1
         return i
 
+    def _ladderupdate(self, i, b, u):
+        n = self.neighbors[i][b]
+        v = Fraction(0)
+        for j in n:
+           v+=self.vmatrix[i][j]
+           if self.bern._uniform_less(u, v): return j
+        return i
+
+    def _allsame(self, states):
+        for i in range(len(states)-1):
+           if states[i]!=states[i+1]: return False
+        return True
+
+    def _cftp(self, coin):
+        states = [x for x in range(len(self.ladder))]
+        bs = []
+        us = []
+        while not self._allsame(states):
+            bs.append(coin())
+            us.append([])  # Uniform random number to be filled on demand
+            states = [x for x in range(len(self.ladder))]
+            i = 0
+            while i < len(bs):
+                for j in range(len(states)):
+                   states[j] = self._ladderupdate(
+                    states[j], bs[len(bs) - 1 - i], us[len(bs) - 1 - i]
+                   )
+                i += 1
+        return [self.optladder[state1][2], self.ladder[state1][2]]
+
     def _monotoniccftp(self, coin):
         state1 = 0
         state2 = len(self.ladder) - 1
@@ -1381,7 +1467,7 @@ class DiceEnterprise:
             state2 = len(self.ladder) - 1
             i = 0
             while i < len(bs):
-                state1 = self._univladderupdate(
+                state1 = self._ladderupdate(
                     state1, bs[len(bs) - 1 - i], us[len(bs) - 1 - i]
                 )
                 state2 = self._univladderupdate(
@@ -1411,11 +1497,7 @@ class DiceEnterprise:
                                 and (0 if len(a[j]) == 2 else a[j][2]) == ntilde[1]
                             ):
                                 antilde = a[j][0]
-                                antilde = (
-                                    antilde
-                                    if isinstance(antilde, int)
-                                    else Fraction(antilde)
-                                )
+                                antilde = antilde if isinstance(antilde,int) else Fraction(antilde)
                                 antilde *= _multinom(d - i, nprime)
                                 ret += antilde
         return ret

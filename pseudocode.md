@@ -7,18 +7,6 @@
 
 This document explains the conventions and common functions used in some of my articles that use pseudocode.
 
-<a id=Contents></a>
-## Contents
-
-- [**Introduction**](#Introduction)
-- [**Contents**](#Contents)
-- [**Symbols**](#Symbols)
-- [**Loops**](#Loops)
-- [**Lists and Files**](#Lists_and_Files)
-- [**Functions**](#Functions)
-- [**Pseudocode Notes**](#Pseudocode_Notes)
-- [**License**](#License)
-
 <a id=Symbols></a>
 ## Symbols
 
