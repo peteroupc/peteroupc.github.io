@@ -35,7 +35,6 @@ Open-source articles on programming subjects.
 * [Random Number Generator Recommendations for Applications](./random.pdf)
 * [Randomization and Sampling Methods](./randomfunc.pdf)
 * [More Random Sampling Methods](./randomnotes.pdf)
-* [Code Generator for Discrete Distributions](./autodist.pdf)
 * [The Most Common Topics Involving Randomization](./randomcommon.pdf)
 * [Partially-Sampled Random Numbers for Accurate Sampling of the Beta, Exponential, and Other Continuous Distributions](./exporand.pdf)
 * [How to Sample Unbounded Monotone Density Functions](./unbounded.pdf)
