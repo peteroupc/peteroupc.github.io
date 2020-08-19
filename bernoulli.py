@@ -1214,18 +1214,23 @@ class DiceEnterprise:
       """
         d = 0  # Degree of polynomial
         for j in range(len(poly)):
-            d = max(d, poly[j][1], (0 if len(poly[j]) == 2 else poly[j][2]))
+            # Take max of powers (the items after the first in 'poly')
+            d = max(d, max(poly[j][1:]))
         for nv in range(d + 1):
             n = [nv, d - nv]  # p**nv * (1-p)**(d-nv)
-            dn = self._dn_m_eq_1_ex(poly, n)
+            dn = self._dn_m_univariate(poly, n)
             if dn != 0:
                 self.ladder.append([[dn], n, [result]])
         return self._autoaugment()
 
-    def _is_connected(self):
+    def _is_definitely_connected(self):
         # Determine whether the ladder is connected.
         # Currently, works only for univariate ladders
-        # TODO: Implement for multivariate ladders
+        if not self._is_univariate():
+            # Assume ladder is not connected, since determining
+            # whether every state is reachable from every other
+            # seems hard in the multivariate case
+            return False
         for i in range(len(self.ladder) - 1):
             j = i + 1
             one_norm = 0
@@ -1266,22 +1271,19 @@ class DiceEnterprise:
         for v in self.ladder:
             if v != None:
                 newladder.append(v)
-        newladder.sort(key=lambda x: x[1])
+        if self._is_univariate():
+            newladder.sort(key=lambda x: x[1])
         self.ladder = newladder
         return self
 
     def _increase_degree(self):
-        # TODO: Support multivariate ladders
-        newladder1 = [
-            [[x for x in v[0]], [v[1][0] + 1, v[1][1]], [x for x in v[2]]]
-            for v in self.ladder
-        ]
-        newladder2 = [
-            [[x for x in v[0]], [v[1][0], v[1][1] + 1], [x for x in v[2]]]
-            for v in self.ladder
-        ]
-        newladder1 += newladder2
-        self.ladder = newladder1
+        newladder = []
+        for v in self.ladder:
+            for k in range(self.ladder[0][1]):
+                nl = [[x for x in v[0]], [v[1][0], v[1][1]], [x for x in v[2]]]
+                nl[1][k] += 1
+                newladder.append(nl)
+        self.ladder = newladder
         return self
 
     def _neighbors(self, m):
@@ -1360,7 +1362,7 @@ class DiceEnterprise:
         # Turn into a fine ladder if necessary
         self._thin()
         for i in range(deg):
-            if self._is_connected():
+            if self._is_definitely_connected():
                 break
             self.augment()
         return self._compile_ladder()
@@ -1376,6 +1378,7 @@ class DiceEnterprise:
     def _calcprob(self, p, result=1):
         # Debugging method to calculate the probability
         # of getting a particular result from this object
+        # TODO: Support multivariate ladders
         ret = 0
         rtot = 0
         for v in self.ladder:
@@ -1405,10 +1408,13 @@ class DiceEnterprise:
             # which result to return
             return s[1][s[0].next(self.bern)]
 
+    def _is_univariate(self):
+        return len(self.ladder[0][1]) == 2
+
     def _compile_ladder(self):
         self.optladder = [0 for i in range(len(self.ladder))]
-        monotonic = len(self.ladder[0][1]) == 2
-        if not monotonic:
+        univ = self._is_univariate()
+        if not univ:
             self._build_markov_matrix()
         for i in range(len(self.ladder)):
             fr1 = 0
@@ -1416,7 +1422,7 @@ class DiceEnterprise:
             fr3 = None
             if len(self.ladder[i][0]) > 1:
                 fr3 = _FastLoadedDiceRoller(self.ladder[i][0])
-            if monotonic:
+            if univ:
                 if i > 0:
                     la = self.ladder[i - 1][0]
                     lcur = self.ladder[i][0]
@@ -1504,14 +1510,15 @@ class DiceEnterprise:
                 i += 1
         return [self.optladder[state1][2], self.ladder[state1][2]]
 
-    def _dn_m_eq_1_ex(self, a, n):
+    def _dn_m_univariate(self, a, n):
         # each item of a is of the form:
         # a[i][0] * p**a[i][1] * (1-p)**a[i][2]
         # 'result' is the desired result (coin flip
         # or die roll) as an integer
         d = 0  # Degree of polynomial
         for j in range(len(a)):
-            d = max(d, a[j][1], (0 if len(a[j]) == 2 else a[j][2]))
+            # Take max of powers (the items after the first in 'a')
+            d = max(d, max(a[j][1:]))
         ret = 0
         for i in range(d + 1):
             for nt in range(i + 1):

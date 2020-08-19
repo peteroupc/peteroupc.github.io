@@ -7,10 +7,12 @@
 
 <p>The code generator is powered by the recently presented Fast Loaded Dice Roller (Saad et al. 2020) and by the Fast Dice Roller (Lumbroso 2013).  The code generator is also powered by JavaScript, at least the kind supported by modern Web browsers.  Accordingly, the generator requires JavaScript (active scripting) to be enabled in the browser settings.</p>
 <form action='javascript:void(null)'>
-<p>In the text box below, enter a comma-separated list of integer weights.  Each weight must be 0 or greater.
-Spaces can appear at the beginning and end of the value as well as around the commas.</p>
-
-<p>In the following example <code>10, 30, 40</code>, 0 is chosen with probability (10/(10+30+40)) and 1 is chosen with probability (30/(10+30+40)).<br><input type=text id=probabilities /><br>
+<p>In the text box below, enter one of the following:
+<ul>
+<li>A comma-separated list of integer weights.  Each weight must be 0 or greater.  Spaces can appear at the beginning and end of the value as well as around the commas.  In the following example <code>10, 30, 40</code>, 0 is chosen with probability (10/(10+30+40)) and 1 is chosen with probability (30/(10+30+40)).
+<li>A dice specification of the following form: [XX]dYY[+ZZ], where XX is the number of dice, YY is the number of faces per die, and ZZ is a number to add to the final die roll.  Examples: d20, d6, 2d10, 4d8+25.  Up to 99 dice and 100 faces per die are supported.  Note, however, that with high numbers of faces and dice, the code generation may take so long to build that the browser may time out.
+</ul>
+<br><input type=text id=probabilities /><br>
 Name of generator: <input type=text id=genname value="discrete_gen"/><br>
 Language of generated code: <select id=genlang>
 <option value='javascript'>JavaScript</option>
@@ -126,15 +128,15 @@ function fdr(name, v) {
        return ret
 }
 
-function codegenruby(fldr,name) {
+function codegenruby(fldr,name,offset) {
    name=name||"discrete_gen"
    ret="def "+name+"()\n"
         if (fldr[0]==null) {
-           ret += "return " + fldr[2] + "\n"
+           ret += "return " + (fldr[2]+(offset||0)) + "\n"
         } else if(fldr[0][0].length==1) {
            // Special case of 2 items with equal probability
-           ret += "  return rand(2) == 0 ? " +(fldr[0][1][0]-1) +" : " +
-              (fldr[0][2][0]-1)+"\n"
+           ret += "  return rand(2) == 0 ? " +(fldr[0][1][0]-1+(offset||0)) +" : " +
+              (fldr[0][2][0]-1+(offset||0))+"\n"
         } else {
         ret += "  table = ["
         for (let i=0;i<fldr[0].length;i++){
@@ -152,11 +154,11 @@ function codegenruby(fldr,name) {
         ret += "    if x < leaves\n"
         if (fldr[2]<fldr[1]) {
           // No rejection leaf
-          ret += "        return table[x + 1][y] - 1\n"
+          ret += "        return (table[x + 1][y] - 1) + " + (offset||0) + "\n"
         } else {
           ret += "        label = table[x + 1][y]\n"
           ret += "        if label <= "+fldr[1]+"\n"
-          ret += "            return label - 1\n"
+          ret += "            return (label - 1) + " + (offset||0) + "\n"
           ret += "        end\n"
           ret += "        x = 0\n"
           ret += "        y = 0\n"
@@ -171,17 +173,17 @@ function codegenruby(fldr,name) {
        return ret
 }
 
-function codegen(fldr,name) {
+function codegen(fldr,name,offset) {
    name=name||"discrete_gen"
    ret="var "+name+" = (function() {\n"
         if (fldr[0]==null) {
            ret += "return function(){\n"
-           ret += "  return " + fldr[2] + "\n"
+           ret += "  return " + (fldr[2]+(offset||0)) + "\n"
         } else if(fldr[0][0].length==1) {
            // Special case of 2 items with equal probability
            ret += "return function(){\n"
-           ret += "  return Math.random() < 0.5 ? " +(fldr[0][1][0]-1) +" : " +
-              (fldr[0][2][0]-1)+"\n"
+           ret += "  return Math.random() < 0.5 ? " +((fldr[0][1][0]-1)+(offset||0)) +" : " +
+              ((fldr[0][2][0]-1)+(offset||0))+"\n"
         } else {
         ret += "var table = ["
         for (let i=0;i<fldr[0].length;i++){
@@ -200,11 +202,11 @@ function codegen(fldr,name) {
         ret += "    if(x < leaves){\n"
         if (fldr[2]<fldr[1]) {
           // No rejection leaf
-          ret += "        return table[x + 1][y] - 1\n"
+          ret += "        return (table[x + 1][y] - 1) + " + (offset||0) + "\n"
         } else {
           ret += "        let label = table[x + 1][y]\n"
           ret += "        if (label <= "+fldr[1]+") {\n"
-          ret += "            return label - 1\n"
+          ret += "            return (label - 1) + " + (offset||0) + "\n"
           ret += "        }\n"
           ret += "        x = 0\n"
           ret += "        y = 0\n"
@@ -345,16 +347,20 @@ function fldrTable(data,offset,weights){
   return ret
 }
 
-function ceilingToPowerOfTwoOrThree(x) {
+function ceilingToPowerOf2Or3Or6(x) {
   let power2=2
   let power3=3
+  let power6=6
   while(x>power2) {
     power2*=2
   }
   while(x>power3) {
     power3*=3
   }
-  return Math.min(power2,power3)
+  while(x>power6) {
+    power6*=6
+  }
+  return Math.min(Math.min(power2,power3), power6)
 }
 
 function rational(x,y) {
@@ -422,7 +428,11 @@ function dicetable(weights, offset) {
   let origweights=weights
   let wgcd=weightsgcd(weights)
   weights=weights.map(o=>o/wgcd)
-  let srcFaces=6 // Fixed at 6, but also works for any other number of faces
+  // Fixed at 6, but also works for any other number of faces
+  // if the sum of weights is adjusted so that every prime number
+  // dividing that sum also divides 'srcFaces' (see Lemma 3 of
+  // Kloeckner's paper).
+  let srcFaces=6
   let dstWords=[];
   for(var i=0;i<weights.length;i++) { dstWords.push([]) }
   let dstWeights=[];
@@ -431,14 +441,14 @@ function dicetable(weights, offset) {
   let srcWordCount=1
   let wsum=sum(weights)
   let dstFaces=weights.length // Max. number of outcomes
-  // Make the sum of weights a power of 2 or 3, to give
+  // Make the sum of weights a power of 2, 3, or 6 to give
   // the simulation a bounded running time (see Lemma 3 of
   // Kloeckner's paper).  This is similar to an idea used by the
   // Fast Loaded Dice Roller, where it changes the weight table
   // to make the sum of weights a power of 2, by adding a
   // rejection event.
-  let wsp2or3=ceilingToPowerOfTwoOrThree(wsum)
-  if(wsum!=wsp2or3 && wsum/gcd(wsum,6)!=1) {
+  let wsp2or3=ceilingToPowerOf2Or3Or6(wsum)
+  if(wsum!=wsp2or3) {
      // Add a "rejection" weight
      let newWeights=[]
      for(var i=0;i<weights.length;i++) { newWeights.push(weights[i]) }
@@ -449,13 +459,11 @@ function dicetable(weights, offset) {
      dstWeights.push(rational(0))
      weights=newWeights
   }
-  let ii=0
   while (true) {
-    if(ii>10)break;ii+=1
     let wordsAddedInAll=true
     for (var i=0;i<dstWords.length;i++){
       let wordsAdded=0
-      console.log([srcWord,srcFaces**srcWordCount])
+      //console.log([srcWord,srcFaces**srcWordCount])
       while(srcWord<srcFaces**srcWordCount) {
         let t=srcWord
         let wordToAdd=[]
@@ -468,9 +476,9 @@ function dicetable(weights, offset) {
               rationalpow(rational(1,srcFaces),srcWordCount))
         // Instead of 1/k (as in the paper), we check whether
         // newWeight is greater than the face's corresponding probability
-        console.log([srcWord,srcFaces,srcWordCount,
-            rationalnum(dstWeights[i]),"newWeight",rationalnum(newWeight),
-            weights[i]/wsum,srcWordCount])
+        // console.log([srcWord,srcFaces,srcWordCount,
+        //    rationalnum(dstWeights[i]),"newWeight",rationalnum(newWeight),
+        //    weights[i]/wsum,srcWordCount])
         if (rationalcmp(newWeight,rational(weights[i],wsum))>0) {
            if(wordsAdded>0) {
               wordsAddedInAll=false
@@ -624,6 +632,47 @@ function sameweights(x){
   return true
 }
 
+function binco(n, i) {
+      // A robust form of the binomial coefficient that
+      // returns NaN if the result would exceed MAX_SAFE_INTEGER.
+      // Except in certain trivial cases, also returns NaN
+      // if either argument exceeds MAX_SAFE_INTEGER.
+      if(i === 0 || i === n) {
+        return 1;
+      } else if(isNaN(n) || isNaN(i) || n > 9007199254740991 ||
+         i > 9007199254740991) {
+        return 0.0 / 0.0;
+      } else if(i === 1) {
+        return n;
+      } else if(i > n || n < 0 || i < 0) {
+        return 0;
+      } else if(n - 1 === i) {
+        return n;
+      } else if(n < binco._fact.length) {
+        return binco._fact[n] / (binco._fact[i] * binco._fact[n - i]);
+      } else if(n / 2 < i && n - i !== i) {
+        return binco(n, n - i);
+      } else {
+        var bc = binco(n - 1, i - 1);
+        if(isNaN(bc))return bc;
+        if(bc % i === 0) {
+          var ret = bc / i * n;
+          if(ret <= 9007199254740991)return ret;
+        } else {
+          var tret = bc * n;
+          if(tret <= 9007199254740991)return tret / i;
+        }
+        var bc2 = binco(n - 1, i);
+        bc2 += bc;
+        if(bc2 <= 9007199254740991)return bc2;
+        return 0.0 / 0.0;
+      }
+}
+binco._fact = [1, 1, 2, 6, 24, 120, 720, 5040, 40320, 362880,
+      3628800, 39916800, 479001600, 6227020800, 87178291200,
+      1307674368000, 20922789888000, 355687428096000,
+      6402373705728000];
+
 var changefunc=function() {
      var curval=document.getElementById("probabilities").value+"|"+
         document.getElementById("genname").value+"|"+
@@ -632,34 +681,82 @@ var changefunc=function() {
      currentValue=curval
      var weights=document.getElementById("probabilities").value
      if(weights.length==0)return
-     var genname=document.getElementById("genname").value.replace(/[^A-Za-z0-9_]+/g,"_")
-       .replace(/^[0-9]/,"_")
-     weights=weights.replace(/^\s+/g,"")
-     weights=weights.replace(/\s+$/g,"")
-     weights=weights.replace(/,\s*$/g,"")
-     weights=weights.split(/\s*,\s*/)
-     var weightints=[]
-     for(var i=0;i<weights.length;i++){
-       if(!(/^\d+$/).test(weights[i])) {
-         document.getElementById("error").innerHTML="Not a valid list of integer weights."
-         return
-       }
-       num=Number.parseInt(weights[i],10)
-       if(num>Number.MAX_SAFE_INTEGER) {
-         document.getElementById("error").innerHTML="This generator does not "+
-            "support weights greater than "+Number.MAX_SAFE_INTEGER+"."
-         return
-       }
-       weightints.push(num)
-     }
-     if(weightints.length==0)return
-     if(sum(weightints)>Number.MAX_SAFE_INTEGER){
-         document.getElementById("error").innerHTML="This generator does not "+
-            "support a sum of weights greater than "+Number.MAX_SAFE_INTEGER+"."
-         return
-     }
-     var code=""
+     var genname=document.getElementById("genname").value
      var glang=document.getElementById("genlang").value
+     var d20test=(/^\s*(\d\d?)?d(\d+?)(?:\+(\d+))?\s*$/).exec(weights)
+     console.log(d20test)
+     var weightints=[]
+     var code=""
+     if(d20test) {
+        let numdice=d20test[1]==null ? 1 : parseInt(d20test[1],10)
+        let numfaces=parseInt(d20test[2],10)
+        let bonus=d20test[3]==null ? 0 : parseInt(d20test[3],10)
+        if(numfaces>100 || numfaces<2) {
+            document.getElementById("error").innerHTML="This generator supports "+
+               "only 2 through 100 die faces."
+            return
+        }
+        if(numdice>99) {
+            document.getElementById("error").innerHTML="This generator does not "+
+               "support die numbers greater than 99."
+            return
+        }
+        if(bonus>Number.MAX_SAFE_INTEGER) {
+            document.getElementById("error").innerHTML="This generator does not "+
+               "support bonuses greater than "+Number.MAX_SAFE_INTEGER+"."
+            return
+        }
+        weightints=[]
+        for(var i=0;i<=numdice*numfaces;i++){
+          var p=i
+          var lim=Math.floor((p-numdice)/numfaces)
+          if(lim<0) {
+             weightints.push(0)
+          } else {
+             var weight=0
+             for(var j=0;j<=lim;j++){
+                weight+=Math.pow(-1,j) * binco(numdice, j) * binco(p - numfaces*j - 1, numdice-1)
+             }
+             weightints.push(weight)
+          }
+        }
+        var data=fldr(weightints)
+        if(!data && document.getElementById("probabilities").value!="") {
+          document.getElementById("error").innerHTML="Failed to generate code for these weights."
+          return
+        }
+        if (glang=="javascript")code=codegen(data,genname,bonus)
+        if (glang=="ruby")code=codegenruby(data,genname,bonus)
+        if (glang=="coinflip")code=fldrTable(data,bonus,weightints)
+        if (glang=="coinflip1")code=fldrTable(data,bonus+1,weightints)
+        if (glang=="dieroll")code=dicetable(weightints,bonus)
+        if (glang=="dieroll1")code=dicetable(weightints,bonus+1)
+     } else {
+        genname=genname.replace(/[^A-Za-z0-9_]+/g,"_")
+          .replace(/^[0-9]/,"_")
+        weights=weights.replace(/^\s+/g,"")
+        weights=weights.replace(/\s+$/g,"")
+        weights=weights.replace(/,\s*$/g,"")
+        weights=weights.split(/\s*,\s*/)
+        for(var i=0;i<weights.length;i++){
+          if(!(/^\d+$/).test(weights[i])) {
+            document.getElementById("error").innerHTML="Not a valid list of integer weights."
+            return
+          }
+          num=Number.parseInt(weights[i],10)
+          if(num>Number.MAX_SAFE_INTEGER) {
+            document.getElementById("error").innerHTML="This generator does not "+
+               "support weights greater than "+Number.MAX_SAFE_INTEGER+"."
+            return
+          }
+          weightints.push(num)
+        }
+        if(weightints.length==0)return
+        if(sum(weightints)>Number.MAX_SAFE_INTEGER){
+            document.getElementById("error").innerHTML="This generator does not "+
+               "support a sum of weights greater than "+Number.MAX_SAFE_INTEGER+"."
+            return
+       }
      if(sameweights(weightints) && (glang=="javascript" || glang=="ruby")) {
        // All weights are the same
        if (glang=="javascript")code=fdr(data,weightints.length)
@@ -676,6 +773,7 @@ var changefunc=function() {
        if (glang=="coinflip1")code=fldrTable(data,1,weightints)
        if (glang=="dieroll")code=dicetable(weightints,0)
        if (glang=="dieroll1")code=dicetable(weightints,1)
+     }
      }
      document.getElementById("code").value=code
      document.getElementById("error").innerHTML=""
