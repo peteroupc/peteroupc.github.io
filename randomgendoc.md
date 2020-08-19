@@ -1912,13 +1912,23 @@ CLASSES
      |        flip) that will be
      |        returned with the probability represented by this polynomial.
      |      poly - Polynomial expressed as a list of terms as follows:
-     |        Each term is a list of two or three items that express one of
+     |        Each term is a list of two or more items that express one of
      |        the polynomial's terms; the first item is the coefficient,
-     |        the second is the power of p, and the third (optional) is the power
-     |        of 1-minus p.  Specifically, the term has the following form:
+     |        the remaining items are the powers of the input coins'
+     |        probabilities.  Specifically, the term has the following form:
+     |
+     |        In the case of coins-to dice (so the probabilities are p and 1-p):
      |                 term[0] * p**term[1] * (1-p)**term[2].
+     |        In the case of dice-to dice (so the probabilities are p1, p2, etc.):
+     |                 term[0] * p1**term[1] * p2**term[2] * ... * pn**term[n].
+     |
      |        For example, [3, 4, 5] becomes:
      |                 3 * p**4 * (1-p)**5
+     |        As a special case, this list can contain two items and the third
+     |        is treated as 0.
+     |        For example, [3, 4] becomes:
+     |                 3 * p**4 * (1-p)**0 = 3 * p **4
+     |
      |        For best results, the coefficient should be a rational number
      |        (such as int or Python's Fraction).
      |      Returns this object.

@@ -270,16 +270,23 @@ class Bernoulli:
                 return 0
         return 1
 
+    _HALF = Fraction(1, 2)
+    _TWO = Fraction(2, 1)
+
     def _uniform_less(self, bag, frac):
         """ Determines whether a uniformly-distributed random number
              (given as an incomplete binary expansion that is built up
               as necessary) is less than the given Fraction (in the interval [0, 1]). """
-        if frac == 0:
+        if frac.numerator == 0:
             return 0
-        if frac == 1:
+        if frac.numerator == frac.denominator:
             return 1
-        frac = Fraction(frac)
-        pt = Fraction(1, 2)
+        frac = frac if isinstance(frac, Fraction) else Fraction(frac)
+        # NOTE: Fractions are not compared and subtracted directly because
+        # doing so is very costly in Python
+        a = frac.numerator
+        b = frac.denominator
+        pt = 1
         i = 0
         while True:
             while len(bag) <= i:
@@ -287,14 +294,20 @@ class Bernoulli:
             if bag[i] == None:
                 bag[i] = self.randbit()
             mybit = bag[i]
-            bit = 1 if frac >= pt else 0
+            # Determine whether frac >= 2**-pt
+            cmpare = (a << pt) >= b
+            # if cmpare!=(frac>=Fraction(1,1<<pt)): raise ValueError
+            bit = 1 if cmpare else 0
             if mybit == 0 and bit == 1:
                 return 1
             if mybit == 1 and bit == 0:
                 return 0
-            if frac >= pt:
-                frac -= pt
-            pt /= 2
+            if cmpare:
+                # Subtract 2**-pt from frac
+                a = (a << pt) - b
+                b <<= pt
+                # frac-=Fraction(1,1<<pt)
+            pt += 1
             i += 1
         return 0
 
@@ -1193,6 +1206,7 @@ class DiceEnterprise:
         self.optladder = []
         self.bern = Bernoulli()
         self.vmatrix = None
+        self._dirty = True
 
     def append_poly(self, result, poly):
         """
@@ -1201,45 +1215,63 @@ class DiceEnterprise:
         flip) that will be
         returned with the probability represented by this polynomial.
       poly - Polynomial expressed as a list of terms as follows:
-        Each term is a list of two or three items that express one of
+        Each term is a list of two or more items that express one of
         the polynomial's terms; the first item is the coefficient,
-        the second is the power of p, and the third (optional) is the power
-        of 1-minus p.  Specifically, the term has the following form:
+        the remaining items are the powers of the input coins'
+        probabilities.  Specifically, the term has the following form:
+
+        In the case of coins-to dice (so the probabilities are p and 1-p):
                  term[0] * p**term[1] * (1-p)**term[2].
+        In the case of dice-to dice (so the probabilities are p1, p2, etc.):
+                 term[0] * p1**term[1] * p2**term[2] * ... * pn**term[n].
+
         For example, [3, 4, 5] becomes:
                  3 * p**4 * (1-p)**5
+        As a special case, this list can contain two items and the third
+        is treated as 0.
+        For example, [3, 4] becomes:
+                 3 * p**4 * (1-p)**0 = 3 * p **4
+
         For best results, the coefficient should be a rational number
         (such as int or Python's Fraction).
       Returns this object.
       """
-        # TODO: Update documentation to note multivariate case
         d = 0  # Degree of polynomial
+        for j in range(len(poly)):
+            r = poly[j][1:]
+            if len(r) == 1:
+                r = [r[0], 0]
+            self.ladder.append([[Fraction(poly[j][0])], r, [result]])
+        self._dirty = True
+        return self
+        """
         for j in range(len(poly)):
             # Take max of powers (the items after the first in 'poly')
             d = max(d, max(poly[j][1:]))
-        probs = min(2, len(poly[j]) - 1)
-        dimension = probs - 1
+        probs=max(2, len(poly[j]) - 1)
+        dimension=probs-1
         for n in self._simplex(d, dimension):
-            dn = self._homogeneous_coeff(poly, n)
+            dn = self._make_positive(poly, n)
             if dn != 0:
                 self.ladder.append([[dn], n, [result]])
-        return self._autoaugment()
+        return self # ._autoaugment()
+        """
 
     def _simplex(self, d, m):
         # Enumerates the points of a d-scaled m-dimensional simplex
-        if m < 0:
+        if m <= 0:
             raise ValueError
         if m == 1:  # One-dimensional case, or base case
             for nv in range(d + 1):
                 yield [nv, d - nv]  # p**nv * (1-p)**(d-nv)
         else:
             for nv in range(d + 1):
-                for nvs in self.simplex(d - nv, m - 1):
+                for nvs in self._simplex(d - nv, m - 1):
                     yield [nv] + nvs
 
     def _is_definitely_connected(self):
         # Determine whether the ladder is connected.
-        # Currently, works only for univariate ladders
+        # Currently, works only for univariate ladders.
         if not self._is_univariate():
             # Assume ladder is not connected, since determining
             # whether every state is reachable from every other
@@ -1295,7 +1327,7 @@ class DiceEnterprise:
     def _increase_degree(self):
         newladder = []
         for v in self.ladder:
-            for k in range(self.ladder[0][1]):
+            for k in range(len(self.ladder[0][1])):
                 nl = [[x for x in v[0]], [x for x in v[1]], [x for x in v[2]]]
                 nl[1][k] += 1
                 newladder.append(nl)
@@ -1345,13 +1377,11 @@ class DiceEnterprise:
         m = len(self.ladder[0][1]) - 1
         v = [[0 for _ in range(k + 1)] for _ in range(k + 1)]
         n = self._neighbors(m)
-        print(n)
         self.neighbors = self._copy_neighbors(n)
         n_count = sum(sum(len(v2) for v2 in v) for v in n)
         if n_count % 2 != 0:
             raise ValueError
         s = self._sum_neighbors(n)
-        print(s)
         w = [[0 for _ in nb] for nb in n]
         while n_count > 0:
             b, i = self._find_max_b_i(s)
@@ -1371,11 +1401,16 @@ class DiceEnterprise:
         self.vmatrix = v
         return self
 
-    def _autoaugment(self):
+    def _degree(self):
         deg = 0  # Degree of polynomial
         for v in self.ladder:
             deg = max(deg, max(v[1]))
+        return deg
+
+    def _autoaugment(self):
+        # TODO: Handle ladders with negative coefficients
         # Turn into a fine ladder if necessary
+        deg = self._degree()
         self._thin()
         for i in range(deg):
             if self._is_definitely_connected():
@@ -1415,6 +1450,9 @@ class DiceEnterprise:
           coin - Function that returns 1 (heads) or 0 (tails). """
         if len(self.ladder) == 0:
             return 0
+        if self._dirty:
+            self._dirty = False
+            self._autoaugment()
         if len(self.ladder[0][1]) == 2:
             s = self._monotoniccftp(coin)
         else:
@@ -1524,6 +1562,9 @@ class DiceEnterprise:
             state2 = len(self.ladder) - 1
             i = 0
             while i < len(bs):
+                state1 = self._monotonicladderupdate(
+                    state1, bs[len(bs) - 1 - i], us[len(bs) - 1 - i]
+                )
                 state2 = self._monotonicladderupdate(
                     state2, bs[len(bs) - 1 - i], us[len(bs) - 1 - i]
                 )
@@ -1538,24 +1579,19 @@ class DiceEnterprise:
 
     def _a_allowed(self, a, ntilde):
         if len(a) == 2:  # Special case: only one power
+            # print(["special",a])
             return a[1] == ntilde[0] and ntilde[1] == 0
         else:
-            if len(a) - 1 != len(ntilde):
-                return False
-            for i in range(1, len(a)):
-                if a[i] != ntilde[i - 1]:
-                    return False
-            return True
+            # print([a[1:],ntilde])
+            return a[1:] == ntilde
 
-    def _homogeneous_coeff(self, a, n):
-        d = 0  # Degree of polynomial
-        for j in range(len(a)):
-            # Take max of powers (the items after the first in 'a')
-            d = max(d, max(a[j][1:]))
+    def _make_positive(self, d, a, n):
+        probs = max(2, len(a[j]) - 1)
+        dimension = probs - 1
         ret = 0
         for i in range(d + 1):
-            for ntilde in self._simplex(i, m):
-                for nprime in self._simplex(d - i, m):
+            for ntilde in self._simplex(i, dimension):
+                for nprime in self._simplex(d - i, dimension):
                     if self._simplex_allowed(ntilde, nprime, n):
                         for j in range(len(a)):
                             if self._a_allowed(a[j], ntilde):
@@ -1567,7 +1603,6 @@ class DiceEnterprise:
                                 )
                                 antilde *= _multinom(d - i, nprime)
                                 ret += antilde
-                                break
         return ret
 
 # Examples of use
