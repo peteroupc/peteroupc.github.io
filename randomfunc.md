@@ -824,10 +824,12 @@ Alternatively, if all the weights are integers 0 or greater and their sum is rel
 <a id=Weighted_Choice_Without_Replacement_Single_Copies></a>
 #### Weighted Choice Without Replacement (Single Copies)
 
-The following are ways to implement weighted choice without replacement, where each item **can be chosen no more than once** at random (or alternatively, where higher-weighted items are more likely to appear first):
+The following are ways to implement weighted choice without replacement, where each item **can be chosen no more than once** at random.  The weights have the property that higher-weighted items are more likely to appear first.
 
 - Use `WeightedChoice` to choose random indices.  Each time an index is chosen, set the weight for the chosen index to 0 to keep it from being chosen again.  Or...
-- Assign each index a random exponential number (with a rate equal to that index's weight), make a list of pairs assigning each number to an index, then sort that list in ascending order by those numbers.  Example: `v=[]; for i in 0...size(weights): AddItem(v, [ExpoNew(weights[i]), i]); Sort(v)` (see the next section for `ExpoNew`).  The sorted list of indices will then correspond to a weighted choice without replacement.  See "[**Algorithms for sampling without replacement**](https://timvieira.github.io/blog/post/2019/09/16/algorithms-for-sampling-without-replacement/)".
+- Assign each index a random exponentially-distributed number (with a rate equal to that index's weight), make a list of pairs assigning each number to an index, then sort that list in ascending order by those numbers.  Example: `v=[]; for i in 0...size(weights): AddItem(v, [ExpoNew(weights[i]), i]); Sort(v)` (see the next section for `ExpoNew`).  (Each weight must be 1 or greater.)  The sorted list of indices will then correspond to a weighted choice without replacement.  See "[**Algorithms for sampling without replacement**](https://timvieira.github.io/blog/post/2019/09/16/algorithms-for-sampling-without-replacement/)".
+
+> **Note:** Each item's weight is not necessarily the chance that a given sample of `n` items will include that item.  The methods given here and in the next section will not necessarily ensure that a given item will appear in a random sample with probability proportional to its weight; for that, see "[**Algorithms of sampling with equal or unequal probabilities**](https://www.eustat.eus/productosServicios/52.1_Unequal_prob_sampling.pdf)".
 
 <a id=Weighted_Choice_Without_Replacement_List_of_Unknown_Size></a>
 #### Weighted Choice Without Replacement (List of Unknown Size)

@@ -1212,16 +1212,30 @@ class DiceEnterprise:
         (such as int or Python's Fraction).
       Returns this object.
       """
+        # TODO: Update documentation to note multivariate case
         d = 0  # Degree of polynomial
         for j in range(len(poly)):
             # Take max of powers (the items after the first in 'poly')
             d = max(d, max(poly[j][1:]))
-        for nv in range(d + 1):
-            n = [nv, d - nv]  # p**nv * (1-p)**(d-nv)
-            dn = self._dn_m_univariate(poly, n)
+        probs = min(2, len(poly[j]) - 1)
+        dimension = probs - 1
+        for n in self._simplex(d, dimension):
+            dn = self._homogeneous_coeff(poly, n)
             if dn != 0:
                 self.ladder.append([[dn], n, [result]])
         return self._autoaugment()
+
+    def _simplex(self, d, m):
+        # Enumerates the points of a d-scaled m-dimensional simplex
+        if m < 0:
+            raise ValueError
+        if m == 1:  # One-dimensional case, or base case
+            for nv in range(d + 1):
+                yield [nv, d - nv]  # p**nv * (1-p)**(d-nv)
+        else:
+            for nv in range(d + 1):
+                for nvs in self.simplex(d - nv, m - 1):
+                    yield [nv] + nvs
 
     def _is_definitely_connected(self):
         # Determine whether the ladder is connected.
@@ -1229,7 +1243,10 @@ class DiceEnterprise:
         if not self._is_univariate():
             # Assume ladder is not connected, since determining
             # whether every state is reachable from every other
-            # seems hard in the multivariate case
+            # seems hard in the multivariate case.  Fortunately,
+            # augmenting the ladder enough times will form a
+            # connected ladder, and we know how often it should
+            # be augmented.
             return False
         for i in range(len(self.ladder) - 1):
             j = i + 1
@@ -1241,7 +1258,6 @@ class DiceEnterprise:
         return True
 
     def _thin(self):
-        # TODO: Support multivariate ladders
         for i in range(len(self.ladder)):
             if self.ladder[i] == None:
                 continue
@@ -1280,7 +1296,7 @@ class DiceEnterprise:
         newladder = []
         for v in self.ladder:
             for k in range(self.ladder[0][1]):
-                nl = [[x for x in v[0]], [v[1][0], v[1][1]], [x for x in v[2]]]
+                nl = [[x for x in v[0]], [x for x in v[1]], [x for x in v[2]]]
                 nl[1][k] += 1
                 newladder.append(nl)
         self.ladder = newladder
@@ -1378,14 +1394,18 @@ class DiceEnterprise:
     def _calcprob(self, p, result=1):
         # Debugging method to calculate the probability
         # of getting a particular result from this object
-        # TODO: Support multivariate ladders
+        if isinstance(p, float):
+            p = [p, 1 - p]
         ret = 0
         rtot = 0
         for v in self.ladder:
             for k in range(len(v[2])):
-                rtot += v[0][k] * p ** v[1][0] * (1 - p) ** v[1][1]
+                rtv = v[0][k]
+                for pv, v2 in zip(p, v[1]):
+                    rtv *= pv ** v2
+                rtot += rtv
                 if v[2][k] == result:
-                    ret += v[0][k] * p ** v[1][0] * (1 - p) ** v[1][1]
+                    ret += rtv
         return float(ret / rtot)
 
     def next(self, coin):
@@ -1510,27 +1530,35 @@ class DiceEnterprise:
                 i += 1
         return [self.optladder[state1][2], self.ladder[state1][2]]
 
-    def _dn_m_univariate(self, a, n):
-        # each item of a is of the form:
-        # a[i][0] * p**a[i][1] * (1-p)**a[i][2]
-        # 'result' is the desired result (coin flip
-        # or die roll) as an integer
+    def _simplex_allowed(self, nt, np, n):
+        for t, p, nn in zip(nt, np, n):
+            if t + p != nn:
+                return False
+        return True
+
+    def _a_allowed(self, a, ntilde):
+        if len(a) == 2:  # Special case: only one power
+            return a[1] == ntilde[0] and ntilde[1] == 0
+        else:
+            if len(a) - 1 != len(ntilde):
+                return False
+            for i in range(1, len(a)):
+                if a[i] != ntilde[i - 1]:
+                    return False
+            return True
+
+    def _homogeneous_coeff(self, a, n):
         d = 0  # Degree of polynomial
         for j in range(len(a)):
             # Take max of powers (the items after the first in 'a')
             d = max(d, max(a[j][1:]))
         ret = 0
         for i in range(d + 1):
-            for nt in range(i + 1):
-                ntilde = [nt, i - nt]
-                for np in range((d - i) + 1):
-                    nprime = [np, (d - i) - np]
-                    if ntilde[0] + nprime[0] == n[0] and ntilde[1] + nprime[1] == n[1]:
+            for ntilde in self._simplex(i, m):
+                for nprime in self._simplex(d - i, m):
+                    if self._simplex_allowed(ntilde, nprime, n):
                         for j in range(len(a)):
-                            if (
-                                a[j][1] == ntilde[0]
-                                and (0 if len(a[j]) == 2 else a[j][2]) == ntilde[1]
-                            ):
+                            if self._a_allowed(a[j], ntilde):
                                 antilde = a[j][0]
                                 antilde = (
                                     antilde
@@ -1539,6 +1567,7 @@ class DiceEnterprise:
                                 )
                                 antilde *= _multinom(d - i, nprime)
                                 ret += antilde
+                                break
         return ret
 
 # Examples of use
