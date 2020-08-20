@@ -270,18 +270,16 @@ class Bernoulli:
                 return 0
         return 1
 
-    def _uniform_less(self, bag, frac):
+    def _uniform_less_nd(self, bag, num, den):
         """ Determines whether a uniformly-distributed random number
              (given as an incomplete binary expansion that is built up
-              as necessary) is less than the given Fraction (in the interval [0, 1]). """
-        frac = frac if isinstance(frac, Fraction) else Fraction(frac)
-        # NOTE: Fractions are not compared and subtracted directly because
-        # doing so is very costly in Python
-        a = frac.numerator
-        if a == 0:
+              as necessary) is less than the given fraction (in the interval [0, 1])
+              expressed as a numerator and denominator. """
+        a = num
+        if num == 0:
             return 0
-        b = frac.denominator
-        if a == b:
+        b = den
+        if num == den:
             return 1
         pt = 1
         i = 0
@@ -307,6 +305,15 @@ class Bernoulli:
             pt += 1
             i += 1
         return 0
+
+    def _uniform_less(self, bag, frac):
+        """ Determines whether a uniformly-distributed random number
+             (given as an incomplete binary expansion that is built up
+              as necessary) is less than the given Fraction (in the interval [0, 1]). """
+        frac = frac if isinstance(frac, Fraction) else Fraction(frac)
+        # NOTE: Fractions are not compared and subtracted directly because
+        # doing so is very costly in Python
+        return self._uniform_less_nd(bag, frac.numerator, frac.denominator)
 
     def bernoulli_x(self, f, x):
         """ Bernoulli factory with a given probability: B(p) => B(x) (Mendo 2019).
@@ -1292,6 +1299,12 @@ class DiceEnterprise:
         for i in range(len(self.ladder)):
             if self.ladder[i] == None:
                 continue
+            if (len(self.ladder[i][0]) == 1 and self.ladder[i][0] == 0) or sum(
+                self.ladder[i][0]
+            ) == 0:
+                # This state has a coefficient of 0
+                self.ladder[i] = None
+                continue
             for j in range(i + 1, len(self.ladder)):
                 if self.ladder[j] and (
                     (len(self.ladder[j][0]) == 1 and self.ladder[j][0] == 0)
@@ -1301,6 +1314,8 @@ class DiceEnterprise:
                     self.ladder[j] = None
                 if self.ladder[j] and self.ladder[i][1] == self.ladder[j][1]:
                     # Combine terms with the same monomial
+                    # print(self.ladder[i])
+                    # print(self.ladder[j])
                     for k in range(len(self.ladder[j][0])):
                         added = False
                         jm = self.ladder[j][0][k]
@@ -1310,12 +1325,14 @@ class DiceEnterprise:
                             # point to the same result (die roll or coin toss).
                             # Since the terms are Fractions, this will be exact.
                             if self.ladder[i][2][m] == self.ladder[j][2][k]:
+                                # print(["adding","im",float(self.ladder[i][0][m]),"jm",float(jm)])
                                 self.ladder[i][0][m] += jm
                                 added = True
                                 break
                         if not added:
                             self.ladder[i][0].append(self.ladder[j][0][k])
                             self.ladder[i][2].append(self.ladder[j][2][k])
+                    # print(["i now",self.ladder[i]])
                     self.ladder[j] = None
         newladder = []
         for v in self.ladder:
@@ -1500,7 +1517,8 @@ class DiceEnterprise:
             return 0
         if self._dirty:
             self._dirty = False
-            self._autoaugment()
+            self._compile_ladder()
+            # self._autoaugment()
         if len(self.ladder[0][1]) == 2:
             s = self._monotoniccftp(coin)
         else:
@@ -1528,7 +1546,10 @@ class DiceEnterprise:
             fr3 = None
             if len(self.ladder[i][0]) > 1:
                 fr3 = _FastLoadedDiceRoller(self.ladder[i][0])
+            # Precalculation done here because Python's
+            # Fraction class is greatly slow
             if univ:
+                # Precalculation for univariate ladders
                 if i > 0:
                     la = self.ladder[i - 1][0]
                     lcur = self.ladder[i][0]
@@ -1552,6 +1573,15 @@ class DiceEnterprise:
                         else (Fraction(la) / Fraction(lcur))
                     )
                     fr2 = fr
+            else:
+                # Precalculation for multivariate ladders
+                n = [[] for v in self.neighbors[i]]
+                for b in range(len(self.neighbors[i])):
+                    v = Fraction(0)
+                    for j in self.neighbors[i][b]:
+                        v += self.vmatrix[i][j]
+                        n[b].append([v.numerator, v.denominator])
+                fr1 = n
             self.optladder[i] = [fr1, fr2, fr3]
         return self
 
@@ -1570,14 +1600,10 @@ class DiceEnterprise:
         return i
 
     def _ladderupdate(self, i, b, u):
+        vs = self.optladder[i][0][b]
         n = self.neighbors[i][b]
-        v = None
-        for j in n:
-            if v == None:
-                v = self.vmatrix[i][j]
-            else:
-                v += self.vmatrix[i][j]
-            if self.bern._uniform_less(u, v):
+        for v, j in zip(vs, n):
+            if self.bern._uniform_less_nd(u, v[0], v[1]):
                 return j
         return i
 
