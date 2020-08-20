@@ -1947,10 +1947,11 @@ CLASSES
      |        (such as int or Python's Fraction).
      |      Returns this object.
      |
-     |  augment(self)
+     |  augment(self, count=1)
      |      Augments the degree of the function represented
      |      by this object, which can improve performance in some cases
      |      (for details, see the paper).
+     |      - count: Number of times to augment the ladder.
      |      Returns this object.
      |
      |  next(self, coin)

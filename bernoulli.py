@@ -1293,7 +1293,10 @@ class DiceEnterprise:
             if self.ladder[i] == None:
                 continue
             for j in range(i + 1, len(self.ladder)):
-                if self.ladder[j] and sum(self.ladder[j][0]) == 0:
+                if self.ladder[j] and (
+                    (len(self.ladder[j][0]) == 1 and self.ladder[j][0] == 0)
+                    or sum(self.ladder[j][0]) == 0
+                ):
                     # This state has a coefficient of 0
                     self.ladder[j] = None
                 if self.ladder[j] and self.ladder[i][1] == self.ladder[j][1]:
@@ -1303,13 +1306,10 @@ class DiceEnterprise:
                         jm = self.ladder[j][0][k]
                         for m in range(len(self.ladder[i][0])):
                             im = self.ladder[i][0][m]
-                            # Add two terms if they are both integers
-                            # and point to the same result (die roll or coin toss)
-                            if (
-                                int(im) == im
-                                and int(jm) == jm
-                                and self.ladder[i][2][m] == self.ladder[j][2][k]
-                            ):
+                            # Add two terms if they both
+                            # point to the same result (die roll or coin toss).
+                            # Since the terms are Fractions, this will be exact.
+                            if self.ladder[i][2][m] == self.ladder[j][2][k]:
                                 self.ladder[i][0][m] += jm
                                 added = True
                                 break
@@ -1346,6 +1346,9 @@ class DiceEnterprise:
                 for b in range(m + 1):
                     if _neighbordist(self.ladder[i][1], self.ladder[j][1], b) == 1:
                         ret[i][b].append(j)
+                    # if j==168 and i==192:
+                    #    print(["i",i,"j",j,"b",b,"neighbordist",
+                    #     _neighbordist(self.ladder[i][1], self.ladder[j][1], b)])
         return ret
 
     def _sum_neighbors(self, neighbors):
@@ -1372,7 +1375,10 @@ class DiceEnterprise:
         for c in range(len(neighbors[j])):
             if i in neighbors[j][c]:
                 return c
-        raise ValueError
+        # Failed; perhaps the ladder is not a connected one
+        print(["Cannot find i in any of j's neighbors", "i", i, "j", j])
+        print(["neighbors", neighbors[j]])
+        return None
 
     def _build_markov_matrix(self):
         k = len(self.ladder) - 1
@@ -1384,6 +1390,7 @@ class DiceEnterprise:
         if n_count % 2 != 0:
             raise ValueError
         s = self._sum_neighbors(n)
+        # print(["192's neighbors",n[192]])
         w = [[0 for _ in nb] for nb in n]
         while n_count > 0:
             b, i = self._find_max_b_i(s)
@@ -1392,10 +1399,20 @@ class DiceEnterprise:
                 rj = sum(self.ladder[j][0])
                 v[i][j] = rj / s[i][b]
                 n[i][b].remove(j)
+                # print(["removing j from i's neighbors","j",j,"i",i])
+                # print(["i's neighbors are now",n[i]])
                 w[i][b] += v[i][j]
+                # print([n[i][b],i,j])
                 c = self._find_direction(n, i, j)
+                if c == None:
+                    # Failed; perhaps the ladder is not a connected one
+                    # print(self.ladder)
+                    # print(self.neighbors)
+                    raise ValueError
                 v[j][i] = ri / s[i][b]
                 n[j][c].remove(i)
+                # print(["removing i from j's neighbors","j",j,"i",i])
+                # print(["j's neighbors are now",n[j]])
                 w[j][c] += v[j][i]
                 s[j][c] = sum(sum(self.ladder[jj][0]) for jj in n[j][c]) / (1 - w[j][c])
                 n_count -= 2
@@ -1409,45 +1426,48 @@ class DiceEnterprise:
             deg = max(deg, max(v[1]))
         return deg
 
-    def _rebuild_if_negative(self):
+    def _rebuild(self):
         deg = self._degree()
         hasneg = False
         maxresult = 0
         for st in self.ladder:
-            for coeff in st[0]:
-                if coeff < 0:
-                    hasneg = True
             maxresult = max(max(st[2]), maxresult)
-        # If the ladder has a negative coefficient, rebuild
-        # the whole ladder
-        if hasneg:
-            dimension = len(st[1]) - 1  # Dimension of simplex
-            newladder = []
-            for res in range(maxresult + 1):
-                self._make_positive(newladder, res, deg, dimension)
-            self.ladder = newladder
+        # Rebuild the whole ladder, in case not all polynomials
+        # for each result have the same degree or some of their
+        # coefficients are negative.  This is especially important
+        # in the multivariate case in order for the Markov matrix
+        # construction to succeed.
+        dimension = len(st[1]) - 1  # Dimension of simplex
+        newladder = []
+        for res in range(maxresult + 1):
+            self._make_positive(newladder, res, deg, dimension)
+        self.ladder = newladder
 
     def _autoaugment(self):
-        self._rebuild_if_negative()
+        self._rebuild()
         deg = self._degree()
         # Turn into a fine ladder if necessary
+        # print(["degree",deg])
         self._thin()
         for i in range(deg):
             if self._is_definitely_connected():
                 break
-            self.augment()
+            self._increase_degree()._thin()
         return self._compile_ladder()
 
-    def augment(self):
+    def augment(self, count=1):
         """ Augments the degree of the function represented
            by this object, which can improve performance in some cases
            (for details, see the paper).
+           - count: Number of times to augment the ladder.
            Returns this object.
       """
         if self._dirty:
             self._dirty = False
-            self._rebuild_if_negative()
-        return self._increase_degree()._thin()._compile_ladder()
+            self._rebuild()
+        for i in range(count):
+            self._increase_degree()._thin()
+        return self._compile_ladder()
 
     def _calcprob(self, p, result=1):
         # Debugging method to calculate the probability
@@ -1551,9 +1571,12 @@ class DiceEnterprise:
 
     def _ladderupdate(self, i, b, u):
         n = self.neighbors[i][b]
-        v = Fraction(0)
+        v = None
         for j in n:
-            v += self.vmatrix[i][j]
+            if v == None:
+                v = self.vmatrix[i][j]
+            else:
+                v += self.vmatrix[i][j]
             if self.bern._uniform_less(u, v):
                 return j
         return i
