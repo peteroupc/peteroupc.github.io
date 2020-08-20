@@ -270,22 +270,19 @@ class Bernoulli:
                 return 0
         return 1
 
-    _HALF = Fraction(1, 2)
-    _TWO = Fraction(2, 1)
-
     def _uniform_less(self, bag, frac):
         """ Determines whether a uniformly-distributed random number
              (given as an incomplete binary expansion that is built up
               as necessary) is less than the given Fraction (in the interval [0, 1]). """
-        if frac.numerator == 0:
-            return 0
-        if frac.numerator == frac.denominator:
-            return 1
         frac = frac if isinstance(frac, Fraction) else Fraction(frac)
         # NOTE: Fractions are not compared and subtracted directly because
         # doing so is very costly in Python
         a = frac.numerator
+        if a == 0:
+            return 0
         b = frac.denominator
+        if a == b:
+            return 1
         pt = 1
         i = 0
         while True:
@@ -1177,14 +1174,17 @@ class _FastLoadedDiceRoller:
                 x -= leaves
                 y += 1
 
-# TODO: Implement dice-to-dice case
 class DiceEnterprise:
     """
    Implements the Dice Enterprise algorithm for
    turning loaded dice with unknown bias into loaded dice
-   with a different bias.  Currently, only the case of biased coins
-   to loaded dice (the Bernoulli Factory problem) is fully
-   implemented.
+   with a different bias.  Specifically, it supports specifying
+   the probability that the output die will land on a given
+   number, as a polynomial function of the input die's bias.
+   The case of biased coins to biased coins is also called
+   the Bernoulli factory problem; this class allows the output
+   coin's bias to be specified as a polynomial function of the
+   input coin's bias.
 
    Reference: Morina, G., Łatuszyński, K., et al., "From the
    Bernoulli Factory to a Dice Enterprise via Perfect
@@ -1212,17 +1212,24 @@ class DiceEnterprise:
         """
       Appends a probability in the form of a polynomial.
       result - A number indicating the result (die roll or coin
-        flip) that will be
-        returned with the probability represented by this polynomial.
+        flip) that will be returned by the _output_ coin or _output_
+        die with  the probability represented by this polynomial.
+        Must be an integer 0 or greater.
       poly - Polynomial expressed as a list of terms as follows:
         Each term is a list of two or more items that express one of
         the polynomial's terms; the first item is the coefficient,
-        the remaining items are the powers of the input coins'
-        probabilities.  Specifically, the term has the following form:
+        the remaining items are the powers of the input die's
+        probabilities.  The number of remaining items in each term
+        is the number of faces the _input_ die has. Specifically, the
+        term has the following form:
 
-        In the case of coins-to dice (so the probabilities are p and 1-p):
+        In the case of coins-to dice (so the probabilities are p and 1-p,
+        where the [unknown] probability that the _input_ coin returns 0
+        is p, or returns 1 is 1-p):
                  term[0] * p**term[1] * (1-p)**term[2].
-        In the case of dice-to dice (so the probabilities are p1, p2, etc.):
+        In the case of dice-to dice (so the probabilities are p1, p2, etc.,
+        where the [unknown] probability that the _input_ die returns
+        0 is p1, returns 1 is p2, etc.):
                  term[0] * p1**term[1] * p2**term[2] * ... * pn**term[n].
 
         For example, [3, 4, 5] becomes:
@@ -1236,7 +1243,8 @@ class DiceEnterprise:
         (such as int or Python's Fraction).
       Returns this object.
       """
-        d = 0  # Degree of polynomial
+        if result < 0 or int(result) != result:
+            raise ValueError
         for j in range(len(poly)):
             r = poly[j][1:]
             if len(r) == 1:
@@ -1244,18 +1252,6 @@ class DiceEnterprise:
             self.ladder.append([[Fraction(poly[j][0])], r, [result]])
         self._dirty = True
         return self
-        """
-        for j in range(len(poly)):
-            # Take max of powers (the items after the first in 'poly')
-            d = max(d, max(poly[j][1:]))
-        probs=max(2, len(poly[j]) - 1)
-        dimension=probs-1
-        for n in self._simplex(d, dimension):
-            dn = self._make_positive(poly, n)
-            if dn != 0:
-                self.ladder.append([[dn], n, [result]])
-        return self # ._autoaugment()
-        """
 
     def _simplex(self, d, m):
         # Enumerates the points of a d-scaled m-dimensional simplex
@@ -1294,6 +1290,9 @@ class DiceEnterprise:
             if self.ladder[i] == None:
                 continue
             for j in range(i + 1, len(self.ladder)):
+                if self.ladder[j] and sum(self.ladder[j][0]) == 0:
+                    # This state has a coefficient of 0
+                    self.ladder[j] = None
                 if self.ladder[j] and self.ladder[i][1] == self.ladder[j][1]:
                     # Combine terms with the same monomial
                     for k in range(len(self.ladder[j][0])):
@@ -1407,10 +1406,28 @@ class DiceEnterprise:
             deg = max(deg, max(v[1]))
         return deg
 
-    def _autoaugment(self):
-        # TODO: Handle ladders with negative coefficients
-        # Turn into a fine ladder if necessary
+    def _rebuild_if_negative(self):
         deg = self._degree()
+        hasneg = False
+        maxresult = 0
+        for st in self.ladder:
+            for coeff in st[0]:
+                if coeff < 0:
+                    hasneg = True
+            maxresult = max(max(st[2]), maxresult)
+        # If the ladder has a negative coefficient, rebuild
+        # the whole ladder
+        if hasneg:
+            dimension = len(st[1]) - 1  # Dimension of simplex
+            newladder = []
+            for res in range(maxresult + 1):
+                self._make_positive(newladder, res, deg, dimension)
+            self.ladder = newladder
+
+    def _autoaugment(self):
+        self._rebuild_if_negative()
+        deg = self._degree()
+        # Turn into a fine ladder if necessary
         self._thin()
         for i in range(deg):
             if self._is_definitely_connected():
@@ -1424,6 +1441,9 @@ class DiceEnterprise:
            (for details, see the paper).
            Returns this object.
       """
+        if self._dirty:
+            self._dirty = False
+            self._rebuild_if_negative()
         return self._increase_degree()._thin()._compile_ladder()
 
     def _calcprob(self, p, result=1):
@@ -1579,31 +1599,27 @@ class DiceEnterprise:
 
     def _a_allowed(self, a, ntilde):
         if len(a) == 2:  # Special case: only one power
-            # print(["special",a])
             return a[1] == ntilde[0] and ntilde[1] == 0
         else:
-            # print([a[1:],ntilde])
             return a[1:] == ntilde
 
-    def _make_positive(self, d, a, n):
-        probs = max(2, len(a[j]) - 1)
-        dimension = probs - 1
-        ret = 0
-        for i in range(d + 1):
-            for ntilde in self._simplex(i, dimension):
-                for nprime in self._simplex(d - i, dimension):
-                    if self._simplex_allowed(ntilde, nprime, n):
-                        for j in range(len(a)):
-                            if self._a_allowed(a[j], ntilde):
-                                antilde = a[j][0]
-                                antilde = (
-                                    antilde
-                                    if isinstance(antilde, int)
-                                    else Fraction(antilde)
-                                )
-                                antilde *= _multinom(d - i, nprime)
-                                ret += antilde
-        return ret
+    def _make_positive(self, newladder, result, degree, dimension):
+        for n in self._simplex(degree, dimension):
+            ret = 0
+            for i in range(degree + 1):
+                for ntilde in self._simplex(i, dimension):
+                    for nprime in self._simplex(degree - i, dimension):
+                        if self._simplex_allowed(ntilde, nprime, n):
+                            for state in self.ladder:
+                                if state[1] == ntilde:
+                                    for j in range(len(state[0])):
+                                        if state[2][j] == result:
+                                            mnom = _multinom(degree - i, nprime)
+                                            ret += Fraction(state[0][j]) * Fraction(
+                                                mnom
+                                            )
+            if ret != 0:
+                newladder.append([[ret], n, [result]])
 
 # Examples of use
 if __name__ == "__main__":

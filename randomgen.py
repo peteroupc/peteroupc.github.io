@@ -931,28 +931,34 @@ class PascalTriangle:
 class _FractionBinaryExpansion:
     def __init__(self, frac):
         self.frac = frac
-        self.tmpfrac = frac
-        self.px = Fraction(1, 2)
+        self.fracnum = frac.numerator
+        self.fracden = frac.denominator
+        self.pt = 1
 
     def reset(self):
         """ Resets this object to the first bit in the binary expansion. """
-        self.tmpfrac = frac
-        self.px = Fraction(1, 2)
+        self.fracnum = frac.numerator
+        self.fracden = frac.denominator
+        self.pt = 1
 
     def eof(self):
         """ Returns True if the end of the binary expansion was reached; False otherwise. """
-        return self.tmpfrac == 0
+        return self.fracnum == 0
 
     def nextbit(self):
         """ Reads the next bit in the binary expansion. """
-        if self.tmpfrac == 0:
+        if self.fracnum == 0:
             return 0
-        if self.tmpfrac > self.px:
-            self.tmpfrac -= self.px
-            self.px /= 2
+        # Determine whether frac >= 2**-pt
+        cmpare = (self.fracnum << self.pt) >= self.fracden
+        if self.tmpfrac >= self.px:
+            # Subtract 2**-pt from frac
+            self.fracnum = (self.fracnum << self.pt) - self.fracden
+            self.fracden <<= self.pt
+            self.pt += 1
             return 1
         else:
-            self.px /= 2
+            self.pt += 1
             return 0
 
 class _FloatBinaryExpansion:
@@ -974,7 +980,7 @@ class _FloatBinaryExpansion:
         """ Reads the next bit in the binary expansion. """
         if self.tmpfrac == 0:
             return 0
-        if self.tmpfrac > self.px:
+        if self.tmpfrac >= self.px:
             self.tmpfrac -= self.px
             self.px /= 2
             return 1

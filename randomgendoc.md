@@ -1884,9 +1884,13 @@ CLASSES
     class DiceEnterprise(builtins.object)
      |  Implements the Dice Enterprise algorithm for
      |  turning loaded dice with unknown bias into loaded dice
-     |  with a different bias.  Currently, only the case of biased coins
-     |  to loaded dice (the Bernoulli Factory problem) is fully
-     |  implemented.
+     |  with a different bias.  Specifically, it supports specifying
+     |  the probability that the output die will land on a given
+     |  number, as a polynomial function of the input die's bias.
+     |  The case of biased coins to biased coins is also called
+     |  the Bernoulli factory problem; this class allows the output
+     |  coin's bias to be specified as a polynomial function of the
+     |  input coin's bias.
      |
      |  Reference: Morina, G., Łatuszyński, K., et al., "From the
      |  Bernoulli Factory to a Dice Enterprise via Perfect
@@ -1909,17 +1913,24 @@ CLASSES
      |  append_poly(self, result, poly)
      |      Appends a probability in the form of a polynomial.
      |      result - A number indicating the result (die roll or coin
-     |        flip) that will be
-     |        returned with the probability represented by this polynomial.
+     |        flip) that will be returned by the _output_ coin or _output_
+     |        die with  the probability represented by this polynomial.
+     |        Must be an integer 0 or greater.
      |      poly - Polynomial expressed as a list of terms as follows:
      |        Each term is a list of two or more items that express one of
      |        the polynomial's terms; the first item is the coefficient,
-     |        the remaining items are the powers of the input coins'
-     |        probabilities.  Specifically, the term has the following form:
+     |        the remaining items are the powers of the input die's
+     |        probabilities.  The number of remaining items in each term
+     |        is the number of faces the _input_ die has. Specifically, the
+     |        term has the following form:
      |
-     |        In the case of coins-to dice (so the probabilities are p and 1-p):
+     |        In the case of coins-to dice (so the probabilities are p and 1-p,
+     |        where the [unknown] probability that the _input_ coin returns 0
+     |        is p, or returns 1 is 1-p):
      |                 term[0] * p**term[1] * (1-p)**term[2].
-     |        In the case of dice-to dice (so the probabilities are p1, p2, etc.):
+     |        In the case of dice-to dice (so the probabilities are p1, p2, etc.,
+     |        where the [unknown] probability that the _input_ die returns
+     |        0 is p1, returns 1 is p2, etc.):
      |                 term[0] * p1**term[1] * p2**term[2] * ... * pn**term[n].
      |
      |        For example, [3, 4, 5] becomes:
