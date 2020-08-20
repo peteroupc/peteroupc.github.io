@@ -1911,24 +1911,27 @@ CLASSES
      |      Initialize self.  See help(type(self)) for accurate signature.
      |
      |  append_poly(self, result, poly)
-     |      Appends a probability in the form of a polynomial.
+     |      Appends a probability that the output die will land on
+     |      a given number, in the form of a polynomial.
      |      result - A number indicating the result (die roll or coin
      |        flip) that will be returned by the _output_ coin or _output_
-     |        die with  the probability represented by this polynomial.
-     |        Must be an integer 0 or greater.
+     |        die with the probability represented by this polynomial.
+     |        Must be an integer 0 or greater.  In the case of dice-to-coins
+     |        or coins-to-coins, must be either 0 or 1, where 1 means
+     |        heads and 0 means tails.
      |      poly - Polynomial expressed as a list of terms as follows:
-     |        Each term is a list of two or more items that express one of
-     |        the polynomial's terms; the first item is the coefficient,
+     |        Each term is a list of two or more items that each express one of
+     |        the polynomial's terms; the first item is the coefficient, and
      |        the remaining items are the powers of the input die's
      |        probabilities.  The number of remaining items in each term
      |        is the number of faces the _input_ die has. Specifically, the
      |        term has the following form:
      |
-     |        In the case of coins-to dice (so the probabilities are p and 1-p,
+     |        In the case of coins-to-dice or coins-to-coins (so the probabilities are 1-p and p,
      |        where the [unknown] probability that the _input_ coin returns 0
-     |        is p, or returns 1 is 1-p):
+     |        is 1 - p, or returns 0 is p):
      |                 term[0] * p**term[1] * (1-p)**term[2].
-     |        In the case of dice-to dice (so the probabilities are p1, p2, etc.,
+     |        In the case of dice-to-dice or dice-to-coins (so the probabilities are p1, p2, etc.,
      |        where the [unknown] probability that the _input_ die returns
      |        0 is p1, returns 1 is p2, etc.):
      |                 term[0] * p1**term[1] * p2**term[2] * ... * pn**term[n].
@@ -1937,7 +1940,7 @@ CLASSES
      |                 3 * p**4 * (1-p)**5
      |        As a special case, this list can contain two items and the third
      |        is treated as 0.
-     |        For example, [3, 4] becomes:
+     |        For example, [3, 4] is the same as [3, 0, 4], which in turn becomes:
      |                 3 * p**4 * (1-p)**0 = 3 * p **4
      |
      |        For best results, the coefficient should be a rational number
@@ -1951,10 +1954,15 @@ CLASSES
      |      Returns this object.
      |
      |  next(self, coin)
-     |      Returns the next result of the flip from a coin
-     |      that is transformed from the given coin by the function
+     |      Returns the next result of the flip from a coin or die
+     |      that is transformed from the given input coin or die by the function
      |      represented by this Dice Enterprise object.
-     |      coin - Function that returns 1 (heads) or 0 (tails).
+     |      coin - In the case of coins-to-dice or coins-to-coins (see the "append_poly" method),
+     |         this specifies the _input coin_, which must be a function that
+     |         returns either 1 (heads) or 0 (tails).  In the case of dice-to-dice or dice-to-coins,
+     |         this specifies an _input die_ with _m_ faces, which must be a
+     |         function that returns an integer in the interval [0, m), which
+     |         specifies which face the input die lands on.
      |
      |  ----------------------------------------------------------------------
      |  Data descriptors defined here:
