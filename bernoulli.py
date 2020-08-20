@@ -1244,8 +1244,8 @@ class DiceEnterprise:
 
         For example, [3, 4, 5] becomes:
                  3 * p**4 * (1-p)**5
-        As a special case, this list can contain two items and the third
-        is treated as 0.
+        As a special case, this list can contain two items and a zero is
+        squeezed between the first and second item.
         For example, [3, 4] is the same as [3, 0, 4], which in turn becomes:
                  3 * p**4 * (1-p)**0 = 3 * p **4
 
@@ -1363,9 +1363,6 @@ class DiceEnterprise:
                 for b in range(m + 1):
                     if _neighbordist(self.ladder[i][1], self.ladder[j][1], b) == 1:
                         ret[i][b].append(j)
-                    # if j==168 and i==192:
-                    #    print(["i",i,"j",j,"b",b,"neighbordist",
-                    #     _neighbordist(self.ladder[i][1], self.ladder[j][1], b)])
         return ret
 
     def _sum_neighbors(self, neighbors):
@@ -1416,20 +1413,14 @@ class DiceEnterprise:
                 rj = sum(self.ladder[j][0])
                 v[i][j] = rj / s[i][b]
                 n[i][b].remove(j)
-                # print(["removing j from i's neighbors","j",j,"i",i])
-                # print(["i's neighbors are now",n[i]])
                 w[i][b] += v[i][j]
                 # print([n[i][b],i,j])
                 c = self._find_direction(n, i, j)
                 if c == None:
                     # Failed; perhaps the ladder is not a connected one
-                    # print(self.ladder)
-                    # print(self.neighbors)
                     raise ValueError
                 v[j][i] = ri / s[i][b]
                 n[j][c].remove(i)
-                # print(["removing i from j's neighbors","j",j,"i",i])
-                # print(["j's neighbors are now",n[j]])
                 w[j][c] += v[j][i]
                 s[j][c] = sum(sum(self.ladder[jj][0]) for jj in n[j][c]) / (1 - w[j][c])
                 n_count -= 2

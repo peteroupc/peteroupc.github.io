@@ -654,12 +654,18 @@ For cryptographic RNGs, an application should use only one thread-safe instance 
 
 <p>Some applications may also care about &quot;unique random&quot; values.  Generally, however, values that are both <em>unique</em> and <em>random</em> are impossible.  Thus, applications that want &quot;unique random&quot; values have to either settle for numbers that merely &quot;look random&quot;; or check for or tolerate possible duplicates; or pair random numbers with unique ones.</p>
 
-<p>If the application can settle for &quot;random-looking&quot; unique integers, it can produce a unique N-bit integer and apply any of the following to that integer:</p>
+<p>If the application can settle for &quot;random-looking&quot; unique integers:</p>
+
+<ul>
+<li>The application can produce a unique N-bit integer and pass that integer to a function that maps N-bit integers to N-bit integers in a reversible way (also called a <em>mixing function</em> with reversible operations; see &quot;<a href="https://papa.bretmulvey.com/post/124027987928"><strong>Hash functions</strong></a>&quot; by B. Mulvey).  This includes using the unique integer as the seed for a &quot;full-period&quot; linear PRNG that cycles through all N-bit integers exactly once<sup><a href="#Note35"><strong>(35)</strong></a></sup>.</li>
+<li>The application can generate unique integers greater than 0 and less than <em>K</em> as follows:
 
 <ol>
-<li>A function that maps N-bit integers to N-bit integers in a reversible way (also called a <em>mixing function</em> with reversible operations; see &quot;<a href="https://papa.bretmulvey.com/post/124027987928"><strong>Hash functions</strong></a>&quot; by B. Mulvey).  This includes using the unique integer as the seed for a &quot;full-period&quot; linear PRNG that cycles through all N-bit integers exactly once<sup><a href="#Note35"><strong>(35)</strong></a></sup>.</li>
-<li>If unique integers 0 or greater, but less than K, are desired, choose an N-bit function described earlier, where N is the number of bits needed to store the number K-minus-1, and discard all outputs that are K or greater.</li>
-</ol>
+<li>Set <em>U</em> to 0, and choose <em>F</em>, an N-bit function described earlier, where N is the number of bits needed to store the number K-minus-1.</li>
+<li>Calculate <em>F</em>(<em>U</em>) then add 1 to <em>U</em>.  If the result of <em>F</em> is less than <em>K</em>, output that result; otherwise, repeat this step.</li>
+<li>Repeat the previous step as needed to generate additional unique integers.</li>
+</ol></li>
+</ul>
 
 <p>An application that generates unique identifiers should do so as follows:</p>
 

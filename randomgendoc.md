@@ -1146,6 +1146,9 @@ CLASSES
      |
      |  weighted_choice(self, weights)
      |
+     |  weighted_choice_inclusion(self, weights, n)
+     |      Chooses a random sample of `n` indices from a list of items (whose weights are given as `weights`), such that the chance that index `k` is in the sample is given as `weights[k]*n/Sum(weights)`.  It implements the splitting method found in pp. 73-74 in "Algorithms of sampling with equal or unequal probabilities", www.eustat.eus/productosServicios/52.1_Unequal_prob_sampling.pdf .
+     |
      |  weighted_choice_n(self, weights, n=1)
      |
      |  wiener(self, st, en, step=1.0, mu=0.0, sigma=1.0)
@@ -1938,8 +1941,8 @@ CLASSES
      |
      |        For example, [3, 4, 5] becomes:
      |                 3 * p**4 * (1-p)**5
-     |        As a special case, this list can contain two items and the third
-     |        is treated as 0.
+     |        As a special case, this list can contain two items and a zero is
+     |        squeezed between the first and second item.
      |        For example, [3, 4] is the same as [3, 0, 4], which in turn becomes:
      |                 3 * p**4 * (1-p)**0 = 3 * p **4
      |

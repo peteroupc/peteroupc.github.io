@@ -88,6 +88,7 @@ The randomization methods in this document will be deterministic (that is, produ
         - [**Weighted Choice Without Replacement (Multiple Copies)**](#Weighted_Choice_Without_Replacement_Multiple_Copies)
         - [**Weighted Choice Without Replacement (Single Copies)**](#Weighted_Choice_Without_Replacement_Single_Copies)
         - [**Weighted Choice Without Replacement (List of Unknown Size)**](#Weighted_Choice_Without_Replacement_List_of_Unknown_Size)
+        - [**Weighted Choice with Inclusion Probabilities**](#Weighted_Choice_with_Inclusion_Probabilities)
     - [**Mixtures of Distributions**](#Mixtures_of_Distributions)
     - [**Transformations of Random Numbers**](#Transformations_of_Random_Numbers)
 - [**Specific Non-Uniform Distributions**](#Specific_Non_Uniform_Distributions)
@@ -659,7 +660,7 @@ After creating the simulated data sets, one or more statistics, such as the mean
 
 A [**Markov chain**](https://en.wikipedia.org/wiki/Markov_chain) models one or more _states_ (for example, individual letters or syllables), and stores the probabilities to transition from one state to another (e.g., "b" to "e" with a chance of 20 percent, or "b" to "b" with a chance of 1 percent).  Thus, each state can be seen as having its own list of _weights_ for each relevant state transition (see "[**Weighted Choice With Replacement**](#Weighted_Choice_With_Replacement)).  For example, a Markov chain for generating **"pronounceable" words**, or words similar to natural-language words, can include "start" and "stop" states for the start and end of the word, respectively.
 
-An algorithm called _coupling from the past_ (Propp and Wilson 1996)<sup>[**(13)**](#Note13)</sup> can sample a state from a Markov chain's _stationary distribution_, that is, the chain's steady state, by starting multiple chains at different states and running them until they all reach the same state at the same time.  The following pseudocode implements coupling from the past.  In the method, `StateCount` is the number of states in the Markov chain, `UPDATE(chain, state, random)` transitions the Markov chain to the next state given the current state and random numbers, and `RANDOM()` generates one or more random numbers needed by `UPDATE`.
+An algorithm called _coupling from the past_ (Propp and Wilson 1996)<sup>[**(13)**](#Note13)</sup> can sample a state from a Markov chain's _stationary distribution_, that is, the chain's steady state, by starting multiple chains at different states and running them until they all reach the same state at the same time.  However, stopping the algorithm early can introduce bias unless precautions are taken (Fill 1998)<sup>[**(81)**](#Note81)</sup>.  The following pseudocode implements coupling from the past.  In the method, `StateCount` is the number of states in the Markov chain, `UPDATE(chain, state, random)` transitions the Markov chain to the next state given the current state and random numbers, and `RANDOM()` generates one or more random numbers needed by `UPDATE`.
 
     METHOD CFTP(chain)
        states=[]
@@ -829,8 +830,6 @@ The following are ways to implement weighted choice without replacement, where e
 - Use `WeightedChoice` to choose random indices.  Each time an index is chosen, set the weight for the chosen index to 0 to keep it from being chosen again.  Or...
 - Assign each index a random exponentially-distributed number (with a rate equal to that index's weight), make a list of pairs assigning each number to an index, then sort that list in ascending order by those numbers.  Example: `v=[]; for i in 0...size(weights): AddItem(v, [ExpoNew(weights[i]), i]); Sort(v)` (see the next section for `ExpoNew`).  (Each weight must be 1 or greater.)  The sorted list of indices will then correspond to a weighted choice without replacement.  See "[**Algorithms for sampling without replacement**](https://timvieira.github.io/blog/post/2019/09/16/algorithms-for-sampling-without-replacement/)".
 
-> **Note:** Each item's weight is not necessarily the chance that a given sample of `n` items will include that item.  The methods given here and in the next section will not necessarily ensure that a given item will appear in a random sample with probability proportional to its weight; for that, see "[**Algorithms of sampling with equal or unequal probabilities**](https://www.eustat.eus/productosServicios/52.1_Unequal_prob_sampling.pdf)".
-
 <a id=Weighted_Choice_Without_Replacement_List_of_Unknown_Size></a>
 #### Weighted Choice Without Replacement (List of Unknown Size)
 
@@ -864,7 +863,7 @@ If the number of items in a list is not known in advance, then the following pse
         if size(queue) < k // Fewer than k items
           AddItem(queue, [key, itemToStore])
           Sort(queue)
-        else // phase 2
+        else
           // Check whether this key is smaller
           // than the largest key in the queue
           if ExpoLess(key, queue[size(queue)-1][0])
@@ -884,6 +883,50 @@ If the number of items in a list is not known in advance, then the following pse
     end
 
 > **Note:** Weighted choice _with replacement_ can be implemented by doing one or more concurrent runs of `RandomKItemsFromFileWeighted(file, 1)` (making sure each run traverses `file` the same way for multiple runs as for a single run) (Efraimidis 2015)<sup>[**(19)**](#Note19)</sup>.
+
+<a id=Weighted_Choice_with_Inclusion_Probabilities></a>
+#### Weighted Choice with Inclusion Probabilities
+
+For the weighted-choice-without-replacement methods given earlier, the weights have the property that higher-weighted items are chosen first, but each weight is not necessarily the chance that a given sample of `n` items will include the corresponding item (an _inclusion probability_).  The following method chooses a random sample of `n` indices from a list of items (whose weights are given as `weights`), such that the chance that index `k` is in the sample is given as `weights[k]*n/Sum(weights)`.  It implements the splitting method found in pp. 73-74 in "[**Algorithms of sampling with equal or unequal probabilities**](https://www.eustat.eus/productosServicios/52.1_Unequal_prob_sampling.pdf)".
+
+```
+METHOD InclusionSelect(weights, n)
+  if n>size(weights): return error
+  if n==0: return []
+  ws=Sum(weights)
+  wts=[]
+  items=[]
+  // Calculate inclusion probabilities
+  for i in 0...size(weights):
+     AddItem(wts,[MakeRatio(weights[i],ws)*n, i])
+  Sort(wts)
+  // Check for invalid inclusion probabilities
+  if wts[size(wts)-1][0]>1: return error
+  last=size(wts)-n
+  if n==size(wts)
+    for i in 0...n: AddItem(items,i)
+    return items
+  end
+  while true
+    lamda=min(MakeRatio(1,1)-wts[last-1][0],wts[last][0])
+    if lamda==0: return error
+    if ZeroOrOne(lamda[0],lamda[1])
+      for k in 0...size(wts)
+        if k+1>ntotal-n:AddItem(items,wts[k][1])
+      end
+      return items
+    end
+    newwts=[]
+    for k in 0...size(wts)
+      newwt=(k+1<=last) ?
+          wts[k][0]/(1-lamda) : (wts[k][0]-lamda)/(1-lamda)
+      AddItem(newwts,[newwt,wts[k][1]])
+    end
+    wts=newwts
+    Sort(wts)
+  end
+END METHOD
+```
 
 <a id=Mixtures_of_Distributions></a>
 ### Mixtures of Distributions
@@ -1472,7 +1515,7 @@ A [**_low-discrepancy sequence_**](https://en.wikipedia.org/wiki/Low-discrepancy
 - _Latin hypercube sampling_ doesn't exactly produce low-discrepancy sequences, but serves much the same purpose.  The following pseudocode implements this sampling for an `n`-number sequence: `lhs = []; for i in 0...n: AddItem(RNDRANGEMinMaxExc(i*1.0/n,(i+1)*1.0/n)); lhs = Shuffle(lhs)`.
 - Linear congruential generators with modulus `m`, a full period, and "good lattice structure"; a sequence of `n`-dimensional points is then `[MLCG(i), MLCG(i+1), ..., MLCG(i+n-1)]` for each integer `i` in the interval \[1, `m`\] (L'Ecuyer 1999)<sup>[**(40)**](#Note40)</sup>.  One example of `MLCG(seed)`: `rem(92717*seed,262139)/262139.0`.
 - Linear feedback shift register generators with good "uniformity" for Monte Carlo sampling (e.g., (Harase 2020)<sup>[**(41)**](#Note41)</sup>).
-- If the sequence outputs numbers in the interval [0, 1], the [**Baker's map**](http://en.wikipedia.org/wiki/Baker's_map) of the sequence is `2 * (0.5-abs(x - 0.5))`, where `x` is each
+- If the sequence outputs numbers in the interval \[0, 1\], the [**Baker's map**](http://en.wikipedia.org/wiki/Baker's_map) of the sequence is `2 * (0.5-abs(x - 0.5))`, where `x` is each
 number in the sequence.
 
 In most cases, pseudorandom number generators (or other kinds of RNGs) can be used to generate a "seed" to start the low-discrepancy sequence at.  In Monte Carlo sampling, low-discrepancy sequences are often used to achieve more efficient "random" sampling.
@@ -2195,6 +2238,8 @@ provided the PDF's values are all 0 or greater and the area under the PDF's curv
 <small><sup id=Note79>(79)</sup> Describing differences between SQL dialects is outside the scope of this document, but [**Flourish SQL**](http://flourishlib.com/docs/FlourishSQL) describes many such differences, including those concerning randomization features provided by SQL dialects.</small>
 
 <small><sup id=Note80>(80)</sup> For example, see Balcer, V., Vadhan, S., "Differential Privacy on Finite Computers", Dec. 4, 2018; as well as Micciancio, D. and Walter, M., "Gaussian sampling over the integers: Efficient, generic, constant-time", in Annual International Cryptology Conference, August 2017 (pp. 455-485).</small>
+
+<small><sup id=Note81>(81)</sup> Fill, J.A., "[**An interruptible algorithm for perfect sampling via Markov chains**](https://projecteuclid.org/euclid.aoap/1027961037)", _Annals of Applied Probability_ 8(1), 1998.</small>
 
 <a id=Appendix></a>
 ## Appendix

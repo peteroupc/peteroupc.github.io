@@ -1506,6 +1506,47 @@ Returns 'list'. """
             k += 1
         return ret
 
+    def weighted_choice_inclusion(self, weights, n):
+        """
+  Chooses a random sample of `n` indices from a list of items (whose weights are given as `weights`), such that the chance that index `k` is in the sample is given as `weights[k]*n/Sum(weights)`.  It implements the splitting method found in pp. 73-74 in "Algorithms of sampling with equal or unequal probabilities", www.eustat.eus/productosServicios/52.1_Unequal_prob_sampling.pdf .
+  """
+        # Deville, J.-C. and Tillé, Y.  Unequal probability sampling
+        # without replacement through a splitting method. Biometrika 85 (1998).
+        if n > weights.length:
+            raise ValueError
+        if n == 0:
+            return []
+        # Inclusion probabilities
+        ws = sum(weights)
+        wts = [[Fraction(weights[i]) * n / ws, i] for i in range(len(weights))]
+        wts = wts.sort()
+        if wts[wts.length - 1][0] > 1:
+            raise ValueError
+        if n == weights.length:
+            # All the items are chosen
+            return [i for i in range(n)]
+        ntotal = len(weights)
+        items = []
+        while True:
+            lamda = min(Fraction(1) - wts[ntotal - n - 1][0], wts[ntotal - n][0])
+            if lamda == 0:
+                raise ValueError
+            newwts2 = []
+            if self.zero_or_one(lamda.numerator, lamda.denominator):
+                for k in range(len(wts)):
+                    if k + 1 > ntotal - n:
+                        items.append(wts[k][1])
+                return items
+            for k in range(len(wts)):
+                newwt = (
+                    wts[k][0] / (1 - lamda)
+                    if (k + 1 <= ntotal - n)
+                    else (wts[k][0] - lamda) / (1 - lamda)
+                )
+                newwts.append([newwt, wts[k][1]])
+            wts = newwts
+            wts = wts.sort()
+
     def piecewise_linear(self, values, weights):
         return self.piecewise_linear_n(values, weights)[0]
 

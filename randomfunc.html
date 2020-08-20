@@ -119,6 +119,7 @@
 <li><a href="#Weighted_Choice_Without_Replacement_Multiple_Copies"><strong>Weighted Choice Without Replacement (Multiple Copies)</strong></a></li>
 <li><a href="#Weighted_Choice_Without_Replacement_Single_Copies"><strong>Weighted Choice Without Replacement (Single Copies)</strong></a></li>
 <li><a href="#Weighted_Choice_Without_Replacement_List_of_Unknown_Size"><strong>Weighted Choice Without Replacement (List of Unknown Size)</strong></a></li>
+<li><a href="#Weighted_Choice_with_Inclusion_Probabilities"><strong>Weighted Choice with Inclusion Probabilities</strong></a></li>
 </ul></li>
 <li><a href="#Mixtures_of_Distributions"><strong>Mixtures of Distributions</strong></a></li>
 <li><a href="#Transformations_of_Random_Numbers"><strong>Transformations of Random Numbers</strong></a></li>
@@ -852,7 +853,7 @@ END METHOD
 
 <p>A <a href="https://en.wikipedia.org/wiki/Markov_chain"><strong>Markov chain</strong></a> models one or more <em>states</em> (for example, individual letters or syllables), and stores the probabilities to transition from one state to another (e.g., &quot;b&quot; to &quot;e&quot; with a chance of 20 percent, or &quot;b&quot; to &quot;b&quot; with a chance of 1 percent).  Thus, each state can be seen as having its own list of <em>weights</em> for each relevant state transition (see &quot;<a href="#Weighted_Choice_With_Replacement"><strong>Weighted Choice With Replacement</strong></a>).  For example, a Markov chain for generating <strong>&quot;pronounceable&quot; words</strong>, or words similar to natural-language words, can include &quot;start&quot; and &quot;stop&quot; states for the start and end of the word, respectively.</p>
 
-<p>An algorithm called <em>coupling from the past</em> (Propp and Wilson 1996)<sup><a href="#Note13"><strong>(13)</strong></a></sup> can sample a state from a Markov chain&#39;s <em>stationary distribution</em>, that is, the chain&#39;s steady state, by starting multiple chains at different states and running them until they all reach the same state at the same time.  The following pseudocode implements coupling from the past.  In the method, <code>StateCount</code> is the number of states in the Markov chain, <code>UPDATE(chain, state, random)</code> transitions the Markov chain to the next state given the current state and random numbers, and <code>RANDOM()</code> generates one or more random numbers needed by <code>UPDATE</code>.</p>
+<p>An algorithm called <em>coupling from the past</em> (Propp and Wilson 1996)<sup><a href="#Note13"><strong>(13)</strong></a></sup> can sample a state from a Markov chain&#39;s <em>stationary distribution</em>, that is, the chain&#39;s steady state, by starting multiple chains at different states and running them until they all reach the same state at the same time.  However, stopping the algorithm early can introduce bias unless precautions are taken (Fill 1998)<sup><a href="#Note81"><strong>(81)</strong></a></sup>.  The following pseudocode implements coupling from the past.  In the method, <code>StateCount</code> is the number of states in the Markov chain, <code>UPDATE(chain, state, random)</code> transitions the Markov chain to the next state given the current state and random numbers, and <code>RANDOM()</code> generates one or more random numbers needed by <code>UPDATE</code>.</p>
 
 <pre>METHOD CFTP(chain)
    states=[]
@@ -1045,10 +1046,6 @@ end
 <li>Assign each index a random exponentially-distributed number (with a rate equal to that index&#39;s weight), make a list of pairs assigning each number to an index, then sort that list in ascending order by those numbers.  Example: <code>v=[]; for i in 0...size(weights): AddItem(v, [ExpoNew(weights[i]), i]); Sort(v)</code> (see the next section for <code>ExpoNew</code>).  (Each weight must be 1 or greater.)  The sorted list of indices will then correspond to a weighted choice without replacement.  See &quot;<a href="https://timvieira.github.io/blog/post/2019/09/16/algorithms-for-sampling-without-replacement/"><strong>Algorithms for sampling without replacement</strong></a>&quot;.</li>
 </ul>
 
-<blockquote>
-<p><strong>Note:</strong> Each item&#39;s weight is not necessarily the chance that a given sample of <code>n</code> items will include that item.  The methods given here and in the next section will not necessarily ensure that a given item will appear in a random sample with probability proportional to its weight; for that, see &quot;<a href="https://www.eustat.eus/productosServicios/52.1_Unequal_prob_sampling.pdf"><strong>Algorithms of sampling with equal or unequal probabilities</strong></a>&quot;.</p>
-</blockquote>
-
 <p><a id=Weighted_Choice_Without_Replacement_List_of_Unknown_Size></a></p>
 
 <h4>Weighted Choice Without Replacement (List of Unknown Size)</h4>
@@ -1085,7 +1082,7 @@ end
     if size(queue) &lt; k // Fewer than k items
       AddItem(queue, [key, itemToStore])
       Sort(queue)
-    else // phase 2
+    else
       // Check whether this key is smaller
       // than the largest key in the queue
       if ExpoLess(key, queue[size(queue)-1][0])
@@ -1108,6 +1105,50 @@ end
 <blockquote>
 <p><strong>Note:</strong> Weighted choice <em>with replacement</em> can be implemented by doing one or more concurrent runs of <code>RandomKItemsFromFileWeighted(file, 1)</code> (making sure each run traverses <code>file</code> the same way for multiple runs as for a single run) (Efraimidis 2015)<sup><a href="#Note19"><strong>(19)</strong></a></sup>.</p>
 </blockquote>
+
+<p><a id=Weighted_Choice_with_Inclusion_Probabilities></a></p>
+
+<h4>Weighted Choice with Inclusion Probabilities</h4>
+
+<p>For the weighted-choice-without-replacement methods given earlier, the weights have the property that higher-weighted items are chosen first, but each weight is not necessarily the chance that a given sample of <code>n</code> items will include the corresponding item (an <em>inclusion probability</em>).  The following method chooses a random sample of <code>n</code> indices from a list of items (whose weights are given as <code>weights</code>), such that the chance that index <code>k</code> is in the sample is given as <code>weights[k]*n/Sum(weights)</code>.  It implements the splitting method found in pp. 73-74 in &quot;<a href="https://www.eustat.eus/productosServicios/52.1_Unequal_prob_sampling.pdf"><strong>Algorithms of sampling with equal or unequal probabilities</strong></a>&quot;.</p>
+
+<pre>METHOD InclusionSelect(weights, n)
+  if n&gt;size(weights): return error
+  if n==0: return []
+  ws=Sum(weights)
+  wts=[]
+  items=[]
+  // Calculate inclusion probabilities
+  for i in 0...size(weights):
+     AddItem(wts,[MakeRatio(weights[i],ws)*n, i])
+  Sort(wts)
+  // Check for invalid inclusion probabilities
+  if wts[size(wts)-1][0]&gt;1: return error
+  last=size(wts)-n
+  if n==size(wts)
+    for i in 0...n: AddItem(items,i)
+    return items
+  end
+  while true
+    lamda=min(MakeRatio(1,1)-wts[last-1][0],wts[last][0])
+    if lamda==0: return error
+    if ZeroOrOne(lamda[0],lamda[1])
+      for k in 0...size(wts)
+        if k+1&gt;ntotal-n:AddItem(items,wts[k][1])
+      end
+      return items
+    end
+    newwts=[]
+    for k in 0...size(wts)
+      newwt=(k+1&lt;=last) ?
+          wts[k][0]/(1-lamda) : (wts[k][0]-lamda)/(1-lamda)
+      AddItem(newwts,[newwt,wts[k][1]])
+    end
+    wts=newwts
+    Sort(wts)
+  end
+END METHOD
+</pre>
 
 <p><a id=Mixtures_of_Distributions></a></p>
 
@@ -2625,6 +2666,8 @@ and &quot;<a href="https://randomascii.wordpress.com/2013/07/16/floating-point-d
 <p><small><sup id=Note79>(79)</sup> Describing differences between SQL dialects is outside the scope of this document, but <a href="http://flourishlib.com/docs/FlourishSQL"><strong>Flourish SQL</strong></a> describes many such differences, including those concerning randomization features provided by SQL dialects.</small></p>
 
 <p><small><sup id=Note80>(80)</sup> For example, see Balcer, V., Vadhan, S., &quot;Differential Privacy on Finite Computers&quot;, Dec. 4, 2018; as well as Micciancio, D. and Walter, M., &quot;Gaussian sampling over the integers: Efficient, generic, constant-time&quot;, in Annual International Cryptology Conference, August 2017 (pp. 455-485).</small></p>
+
+<p><small><sup id=Note81>(81)</sup> Fill, J.A., &quot;<a href="https://projecteuclid.org/euclid.aoap/1027961037"><strong>An interruptible algorithm for perfect sampling via Markov chains</strong></a>&quot;, <em>Annals of Applied Probability</em> 8(1), 1998.</small></p>
 
 <p><a id=Appendix></a></p>
 
