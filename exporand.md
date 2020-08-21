@@ -62,7 +62,7 @@ This page shows [**Python code**](#Sampler_Code) for these samplers.
 - [**Notes**](#Notes)
 - [**Appendix**](#Appendix)
     - [**SymPy Formula for the algorithm for exp(&minus;_x_/_y_)**](#SymPy_Formula_for_the_algorithm_for_exp_minus__x___y)
-    - [**Another Example of an Arbitrary-Precision Sampler**](#Another_Example_of_an_Arbitrary_Precision_Sampler)
+    - [**Additional Examples of Arbitrary-Precision Samplers**](#Additional_Examples_of_Arbitrary_Precision_Samplers)
 - [**License**](#License)
 
 <a id=About_the_Beta_Distribution></a>
@@ -935,8 +935,8 @@ def expminusformula():
 plot(expminusformula(), xlim=(0,1), ylim=(0,2))
 ```
 
-<a id=Another_Example_of_an_Arbitrary_Precision_Sampler></a>
-### Another Example of an Arbitrary-Precision Sampler
+<a id=Additional_Examples_of_Arbitrary_Precision_Samplers></a>
+### Additional Examples of Arbitrary-Precision Samplers
 
 As an additional example of how PSRNs can be useful, here we reimplement an example from Devroye's book _Non-Uniform Random Variate Generation_ (Devroye 1986, pp. 128&ndash;129)<sup>[**(15)**](#Note15)</sup></sup>.  The following algorithm generates a random number from a distribution with the following cumulative distribution function: `1 - cos(pi*x/2).`  The random number will be in the interval [0, 1].  What is notable about this algorithm is that it's an arbitrary-precision algorithm that avoids floating-point arithmetic.  Note that the result is the same as applying acos(_U_)*2/&pi;, where _U_ is a uniform \[0, 1\] random number, as pointed out by Devroye.  The algorithm follows.
 
@@ -966,6 +966,35 @@ def example_4_2_1(rg, bern, precision=53):
              return randomgen.urandfill(rg,ret,precision)/(1<<precision)
           else: break
 ```
+
+A second example of an arbitrary-precision sampler is the following method that samples the sum of two uniform random numbers.  Again, it uses floating-point arithmetic only at the end.
+
+```
+def sum_of_uniform(bern, precision=53):
+    """ Exact simulation of the sum of two uniform
+          random numbers. """
+    bag=[]
+    while True:
+       bag.clear()
+       if bern.randbit()==1:
+          # 0 to 1
+          if bern.geometric_bag(bag)==1:
+             return bern.fill_geometric_bag(bag, precision)
+       else:
+          # 1 to 2
+          if bern.geometric_bag(bag)==0:
+             return 1.0 + bern.fill_geometric_bag(bag, precision)
+
+```
+
+The following is the algorithm:
+
+1. Create an empty uniform PSRN, call it _ret_.
+2. Remove all digits from _ret_.
+3. Call the **SampleGeometricBag** algorithm on _ret_, then generate an unbiased random bit.
+4. If the bit is 1 and the result of **SampleGeometricBag** is 1, fill _ret_ with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to **FillGeometricBag**), and return _ret_.
+5. If the bit is 0 and the result of **SampleGeometricBag** is 0, fill _ret_ as in step 4, and return 1 + _ret_.
+6. Go to step 2.
 
 <a id=License></a>
 ## License

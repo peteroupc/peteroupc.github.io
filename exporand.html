@@ -95,7 +95,7 @@
 
 <ul>
 <li><a href="#SymPy_Formula_for_the_algorithm_for_exp_minus__x___y"><strong>SymPy Formula for the algorithm for exp(&minus;<em>x</em>/<em>y</em>)</strong></a></li>
-<li><a href="#Another_Example_of_an_Arbitrary_Precision_Sampler"><strong>Another Example of an Arbitrary-Precision Sampler</strong></a></li>
+<li><a href="#Additional_Examples_of_Arbitrary_Precision_Samplers"><strong>Additional Examples of Arbitrary-Precision Samplers</strong></a></li>
 </ul></li>
 <li><a href="#License"><strong>License</strong></a></li>
 </ul>
@@ -1287,9 +1287,9 @@ def expminusformula():
 plot(expminusformula(), xlim=(0,1), ylim=(0,2))
 </pre>
 
-<p><a id=Another_Example_of_an_Arbitrary_Precision_Sampler></a></p>
+<p><a id=Additional_Examples_of_Arbitrary_Precision_Samplers></a></p>
 
-<h3>Another Example of an Arbitrary-Precision Sampler</h3>
+<h3>Additional Examples of Arbitrary-Precision Samplers</h3>
 
 <p>As an additional example of how PSRNs can be useful, here we reimplement an example from Devroye&#39;s book <em>Non-Uniform Random Variate Generation</em> (Devroye 1986, pp. 128&ndash;129)<sup><a href="#Note15"><strong>(15)</strong></a></sup></sup>.  The following algorithm generates a random number from a distribution with the following cumulative distribution function: <code>1 - cos(pi*x/2).</code>  The random number will be in the interval [0, 1].  What is notable about this algorithm is that it&#39;s an arbitrary-precision algorithm that avoids floating-point arithmetic.  Note that the result is the same as applying acos(<em>U</em>)*2/&pi;, where <em>U</em> is a uniform [0, 1] random number, as pointed out by Devroye.  The algorithm follows.</p>
 
@@ -1320,6 +1320,36 @@ plot(expminusformula(), xlim=(0,1), ylim=(0,2))
              return randomgen.urandfill(rg,ret,precision)/(1&lt;&lt;precision)
           else: break
 </pre>
+
+<p>A second example of an arbitrary-precision sampler is the following method that samples the sum of two uniform random numbers.  Again, it uses floating-point arithmetic only at the end.</p>
+
+<pre>def sum_of_uniform(bern, precision=53):
+    &quot;&quot;&quot; Exact simulation of the sum of two uniform
+          random numbers. &quot;&quot;&quot;
+    bag=[]
+    while True:
+       bag.clear()
+       if bern.randbit()==1:
+          # 0 to 1
+          if bern.geometric_bag(bag)==1:
+             return bern.fill_geometric_bag(bag, precision)
+       else:
+          # 1 to 2
+          if bern.geometric_bag(bag)==0:
+             return 1.0 + bern.fill_geometric_bag(bag, precision)
+
+</pre>
+
+<p>The following is the algorithm:</p>
+
+<ol>
+<li>Create an empty uniform PSRN, call it <em>ret</em>.</li>
+<li>Remove all digits from <em>ret</em>.</li>
+<li>Call the <strong>SampleGeometricBag</strong> algorithm on <em>ret</em>, then generate an unbiased random bit.</li>
+<li>If the bit is 1 and the result of <strong>SampleGeometricBag</strong> is 1, fill <em>ret</em> with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to <strong>FillGeometricBag</strong>), and return <em>ret</em>.</li>
+<li>If the bit is 0 and the result of <strong>SampleGeometricBag</strong> is 0, fill <em>ret</em> as in step 4, and return 1 + <em>ret</em>.</li>
+<li>Go to step 2.</li>
+</ol>
 
 <p><a id=License></a></p>
 

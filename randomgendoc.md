@@ -1932,7 +1932,7 @@ CLASSES
      |
      |        In the case of coins-to-dice or coins-to-coins (so the probabilities are 1-p and p,
      |        where the [unknown] probability that the _input_ coin returns 0
-     |        is 1 - p, or returns 0 is p):
+     |        is 1 - p, or returns 1 is p):
      |                 term[0] * p**term[1] * (1-p)**term[2].
      |        In the case of dice-to-dice or dice-to-coins (so the probabilities are p1, p2, etc.,
      |        where the [unknown] probability that the _input_ die returns
@@ -1948,6 +1948,12 @@ CLASSES
      |
      |        For best results, the coefficient should be a rational number
      |        (such as int or Python's Fraction).
+     |
+     |        Each term in the polynomial must have the same number of items (except
+     |        for the special case given above).  For example, the following is not a valid
+     |        way to express this parameter:
+     |                 [[1, 1, 0], [1, 3, 4, 5], [1, 1, 2], [2, 3, 4]]
+     |        Here, the second term has four items, not three like the rest.
      |      Returns this object.
      |
      |  augment(self, count=1)

@@ -427,7 +427,8 @@ class Bernoulli:
         # Huber 2016, replaces logistic(f, c) in linear Bernoulli factory to make a multivariate
         # Bernoulli factory of the form B(p1), ..., B(pn) -> B(c1*p1 + ... + cn*pn).
         # For this method:
-        # B(p1), ..., B(pn) -> B(r/(1+r)), where r = c1*p1 + ... + cn*pn
+        # B(p1), ..., B(pn) -> B(r/(1+r)), where r = c1*p1 + ... + cn*pn and r is bounded away
+        # from 1 (notice that c1, ..., cn need not be in [0, 1]).
         x = 0
         a = -math.log(self.r.random())
         t = [0 for i in range(len(fa))]
@@ -1235,7 +1236,7 @@ class DiceEnterprise:
 
         In the case of coins-to-dice or coins-to-coins (so the probabilities are 1-p and p,
         where the [unknown] probability that the _input_ coin returns 0
-        is 1 - p, or returns 0 is p):
+        is 1 - p, or returns 1 is p):
                  term[0] * p**term[1] * (1-p)**term[2].
         In the case of dice-to-dice or dice-to-coins (so the probabilities are p1, p2, etc.,
         where the [unknown] probability that the _input_ die returns
@@ -1251,14 +1252,24 @@ class DiceEnterprise:
 
         For best results, the coefficient should be a rational number
         (such as int or Python's Fraction).
+
+        Each term in the polynomial must have the same number of items (except
+        for the special case given above).  For example, the following is not a valid
+        way to express this parameter:
+                 [[1, 1, 0], [1, 3, 4, 5], [1, 1, 2], [2, 3, 4]]
+        Here, the second term has four items, not three like the rest.
       Returns this object.
       """
         if result < 0 or int(result) != result:
             raise ValueError
+        oldrlen = -1
         for j in range(len(poly)):
             r = poly[j][1:]
             if len(r) == 1:
                 r = [0, r[0]]
+            if oldrlen >= 0 and oldrlen != len(r):
+                raise ValueError
+            oldrlen = len(r)
             self.ladder.append([[Fraction(poly[j][0])], r, [result]])
         self._dirty = True
         return self
@@ -1481,7 +1492,8 @@ class DiceEnterprise:
         # Debugging method to calculate the probability
         # of getting a particular result from this object
         if isinstance(p, float):
-            p = [p, 1 - p]
+            p = [1 - p, p]
+        p = [Fraction(x) for x in p]
         ret = 0
         rtot = 0
         for v in self.ladder:

@@ -32,7 +32,7 @@ This page is focused on sampling methods that _exactly_ simulate the probability
         - [**Certain Power Series**](#Certain_Power_Series)
         - [**exp(&minus;&lambda;)**](#exp_minus_lambda)
         - [**exp(&lambda;)*(1&minus;&lambda;)**](#exp_lambda_1_minus_lambda)
-        - [**exp(&lambda; * _c_ &minus; * _c_)**](#exp_lambda__c__minus__c)
+        - [**exp(&lambda; * _c_ &minus; _c_)**](#exp_lambda__c__minus__c)
         - [**exp(&minus;&lambda; &minus; _c_)**](#exp_minus_lambda_minus__c)
         - [**1/(1+&lambda;)**](#1_1_lambda)
         - [**log(1+&lambda;)**](#log_1_lambda)
@@ -229,7 +229,7 @@ On the other hand, this third algorithm converges quickly everywhere in (0, 1). 
 5. Set _w_ to _U_, add 1 to _k_, and go to step 2.
 
 <a id=exp_lambda__c__minus__c></a>
-#### exp(&lambda; * _c_ &minus; * _c_)
+#### exp(&lambda; * _c_ &minus; _c_)
 
 Used in (Dughmi et al. 2017)<sup>[**(10)**](#Note10)</sup> to apply an exponential weight (here, _c_) to an input coin.
 
