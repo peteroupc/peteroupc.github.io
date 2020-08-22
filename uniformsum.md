@@ -23,12 +23,65 @@ The samplers given below for the uniform sum logically work as follows:
 
     where _x_ is a real number in \[0, 1\].  Since _f_&prime; is a polynomial, it can be converted to a Bernstein polynomial whose control points describe the shape of the curve drawn out by _f_&prime;.  A Bernstein polynomial has the form&mdash;
 
-    - &Sigma;<sub>_k_ = 0, ..., (_m_ &minus; 1)</sub> choose(_m_, _k_) * _x_<sup>_k_</sup> * (1 &minus; _x_)<sup>_m_ &minus; _k_</sup> * _a_\[_k_\],
+    - &Sigma;<sub>_k_ = 0, ..., _m_</sub> choose(_m_, _k_) * _x_<sup>_k_</sup> * (1 &minus; _x_)<sup>_m_ &minus; _k_</sup> * _a_\[_k_\],
 
     where _a_\[_k_\] are the control points and _m_ is the polynomial's degree (here, _n_ &minus; 1). In this case, there will be _n_ control points, which together trace out a 1-dimensional Bézier curve.  Moreover, this polynomial can be simulated because it is continuous, returns only numbers in \[0, 1\], and doesn't touch 0 or 1 anywhere inside the domain (except possibly at 0 or 1) (Keane and O'Brien 1994)<sup>[**(1)**](#Note1)</sup>.
 4. The sampler creates a "coin" made up of a uniform partially-sampled random number (PSRN) whose contents are built up on demand using an algorithm called **SampleGeometricBag**.  It flips this "coin" _n_ &minus; 1 times and counts the number of times the coin returned 1 this way, call it _j_. (The "coin" will return 1 with probability equal to the to-be-determined uniform random number.  See (Goyal and Sigman 2012)<sup>[**(2)**](#Note2)</sup>.)
 5. Based on _j_, the sampler accepts the PSRN with probability equal to the control point _a_\[_j_\].
 6. If the PSRN is accepted, it fills it up with uniform random digits, and returns _i_ plus the finished PSRN.  If the PSRN is not accepted, the sampler starts over.
+
+<a id=Finding_Parameters></a>
+## Finding Parameters
+
+Using this sampler for an arbitrary _n_ requires finding the Bernstein control points for each of the _n_ pieces of the uniform sum density.  This can be found, for example, with the Python code below, which uses the SymPy computer algebra library.
+
+```
+def unifsum(x,n,v):
+    # Builds up the density at x (with offset v)
+    # of the sum of n uniform random numbers
+    ret=0
+    x=x+v # v is an offset
+    for k in range(n+1):
+           s=(-1)**k*binomial(n,k)*(x-k)**(n-1)
+           if k>v: ret-=s
+           else: ret+=s
+    return ret/(2*factorial(n-1))
+
+x=symbols('x', real=True)
+n=4 # Degree of the polynomial
+for i in range(n):
+  # Find the "usual" coefficients of the uniform
+  # sum polynomial at offset i.
+  poly=Poly(unifsum(x, n, i))
+  coeffs=[poly.coeff_monomial(x**i) for i in range(n)]
+  # Build coefficient vector
+  coeffs=Matrix(coeffs)
+  # Build power-to-Bernstein basis matrix
+  mat=[[0 for _ in range(n)] for _ in range(n)]
+  # TODO: Complete this.
+  # Print out the Bernstein control points
+  print(mat*coeffs)
+```
+
+For example, if _n_ = 4 (so a sum of four uniform random numbers is desired), the following control points are used for each piece of the density function:
+
+| Piece | Control Points |
+ --- | --- |
+| 0 | 0, 0, 0, 1/6 |
+| 1 | 1/6, 1/3, 2/3, 2/3 |
+| 2 | 2/3, 2/3, 1/3, 1/6 |
+| 3 | 1/6, 0, 0, 0 |
+
+For more efficient results, all these control points could be scaled so that the highest control point is equal to 1. In the example above, after multiplying by 3/2, the table would now look like this:
+
+| Piece | Control Points |
+ --- | --- |
+| 0 | 0, 0, 0, 1/4 |
+| 1 | 1/4, 1/2, 1, 1 |
+| 2 | 1, 1, 1/2, 1/4 |
+| 3 | 1/4, 0, 0, 0 |
+
+Notice that all these control points are rational numbers, and the sampler may have to determine whether an event is true with probability equal to a control point.  For rational numbers like these, it is possible to determine this exactly (using only random bits), using the **ZeroOrOne** method given in my [**article on randomization and sampling methods**](https://peteroupc.github.io/randomfunc.html#Boolean_True_False_Conditions).
 
 <a id=Sum_of_Two_Uniform_Random_Numbers></a>
 ## Sum of Two Uniform Random Numbers

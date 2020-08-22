@@ -17,6 +17,7 @@ Open-source articles on programming subjects.
 * [The Most Common Topics Involving Randomization](./randomcommon.html)
 * [Partially-Sampled Random Numbers for Accurate Sampling of the Beta, Exponential, and Other Continuous Distributions](./exporand.html)
 * [How to Sample Unbounded Monotone Density Functions](./unbounded.html)
+* [Arbitrary-Precision Samplers for the Sum of Uniform Random Numbers](./uniformsum.html)
 * [Bernoulli Factory Algorithms](./bernoulli.html)
 * [Testing PRNGs for High-Quality Randomness](./randomtest.html)
 * [Examples of High-Quality PRNGs](./hqprng.html)
