@@ -1,0 +1,141 @@
+<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Exact Samplers for the Sum of Uniform Random Numbers</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></nav></div>
+<div class="mainarea" id="top">
+<h1>Exact Samplers for the Sum of Uniform Random Numbers</h1>
+
+<p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
+
+<p>This page presents new algorithms to sample the sum of uniform(0, 1) random numbers, with the help of <a href="https://peteroupc.github.io/exporand.html"><strong>partially-sampled random numbers</strong></a>, with arbitrary precision and without relying on floating-point arithmetic.  See that page for more information on some of the algorithms made use of here, including <strong>SampleGeometricBag</strong> and <strong>FillGeometricBag</strong>.</p>
+
+<p><a id=Sum_of_Two_Uniform_Random_Numbers></a></p>
+
+<h2>Sum of Two Uniform Random Numbers</h2>
+
+<p>The following algorithm samples the sum of two uniform random numbers.</p>
+
+<ol>
+<li>Create an empty uniform PSRN (partially-sampled random number), call it <em>ret</em>.</li>
+<li>Remove all digits from <em>ret</em>.  (This algorithm, and others on this page, works for digits of any base, including base 10 or decimal, or base 2 or binary.)</li>
+<li>Call the <strong>SampleGeometricBag</strong> algorithm on <em>ret</em>, then generate an unbiased random bit.</li>
+<li>If the bit is 1 and the result of <strong>SampleGeometricBag</strong> is 1, fill <em>ret</em> with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to <strong>FillGeometricBag</strong>), and return <em>ret</em>.</li>
+<li>If the bit is 0 and the result of <strong>SampleGeometricBag</strong> is 0, fill <em>ret</em> as in step 4, and return 1 + <em>ret</em>.</li>
+<li>Go to step 2.</li>
+</ol>
+
+<p>And here is Python code that implements this algorithm. It uses floating-point arithmetic only at the end, to convert the result to a convenient form, and that it relies on methods from <em>randomgen.py</em> and <em>bernoulli.py</em>.</p>
+
+<pre>def sum_of_uniform(bern, precision=53):
+    &quot;&quot;&quot; Exact simulation of the sum of two uniform
+          random numbers. &quot;&quot;&quot;
+    bag=[]
+    while True:
+       bag.clear()
+       if bern.randbit()==1:
+          # 0 to 1
+          if bern.geometric_bag(bag)==1:
+             return bern.fill_geometric_bag(bag, precision)
+       else:
+          # 1 to 2
+          if bern.geometric_bag(bag)==0:
+             return 1.0 + bern.fill_geometric_bag(bag, precision)
+</pre>
+
+<p><a id=Sum_of_Three_Uniform_Random_Numbers></a></p>
+
+<h2>Sum of Three Uniform Random Numbers</h2>
+
+<p>The following algorithm samples the sum of three uniform random numbers.</p>
+
+<ol>
+<li>Create an empty uniform PSRN, call it <em>ret</em>.</li>
+<li>Remove all digits from <em>ret</em>.</li>
+<li>Choose 0, 1 or 2, uniformly at random.</li>
+<li>If 0 was chosen by step 3, we will sample from the left piece of the function for the sum of three uniform random numbers.  This piece runs along the interval [0, 1) and is a Bernstein polynomial with control points (0, 0, 1/2).  (Bernstein polynomials are the backbone of the well-known Bézier curve. In this case, the density&#39;s value at 0 is 0, or the first control point, and its value at 1 is 1/2, or the third control point.)  Thus, we can simulate this polynomial with the algorithm of Goyal and Sigman (2012)<sup><a href="#Note1"><strong>(1)</strong></a></sup>, using a partially-sampled uniform random number, as follows: Call the <strong>SampleGeometricBag</strong> algorithm twice on <em>ret</em>.  If both of these calls return 1, then accept <em>ret</em> with probability 1/2. (1/2 is the third control point and corresponds to both calls returning 1.)  If <em>ret</em> was accepted, fill <em>ret</em> with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to <strong>FillGeometricBag</strong>), and return <em>ret</em>.</li>
+<li>If 1 was chosen by step 3, we will sample from the middle piece of the density, which runs along the interval [1, 2) and is a Bernstein polynomial with control points (1/2, 1, 1/2).  Call the <strong>SampleGeometricBag</strong> algorithm twice on <em>ret</em>.  If neither or both of these calls return 1, then accept <em>ret</em>.  Otherwise, if one of these calls returns 1 and the other 0, then accept <em>ret</em> with probability 1/2.  If <em>ret</em> was accepted, fill <em>ret</em> as given in step 4 and return 1 + <em>ret</em>.</li>
+<li>If 2 was chosen by step 3, we will sample from the right piece of the density, which runs along the interval [2, 1) and is a Bernstein polynomial with control points (1/2, 0, 0).  Call the <strong>SampleGeometricBag</strong> algorithm twice on <em>ret</em>.  If both of these calls return 0, then accept <em>ret</em> with probability 1/2. (1/2 is the first control point and corresponds to both calls returning 0.)  If <em>ret</em> was accepted, fill <em>ret</em> as given in step 4 and return 2 + <em>ret</em>.</li>
+<li>Go to step 2.</li>
+</ol>
+
+<p>The following changes to the algorithm result in an equivalent algorithm to the algorithm above.</p>
+
+<ul>
+<li>Replace step 3 with the following: &quot;Choose 0, 1, 2, or 3, uniformly at random.&quot;</li>
+<li>In steps 4 and 6, replace &quot;then accept <em>ret</em> with probability 1/2&quot; with &quot;then accept <em>ret</em>&quot;, because the left and right pieces are each now half as likely to be chosen as the middle piece.</li>
+<li>In step 5, replace &quot;If 1 was chosen by step 3&quot; with &quot;If 1 or 3 was chosen by step 3&quot;, for the same reason.</li>
+</ul>
+
+<p>And here is Python code that implements this algorithm.</p>
+
+<pre>def sum_of_uniform3(bern):
+    &quot;&quot;&quot; Exact simulation of the sum of three uniform
+          random numbers. &quot;&quot;&quot;
+    while True:
+       # Choose a piece of the PDF uniformly (but
+       # not by area).
+       r=4
+       while r&gt;=4:
+          r=bern.randbit() + bern.randbit() * 2
+       bag=[]
+       if r==0:
+          # Left piece
+          if bern.randbit() == 0 and \
+             bern.geometric_bag(bag) == 1 and \
+             bern.geometric_bag(bag) == 1:
+              # Accepted
+             return bern.fill_geometric_bag(bag)
+       elif r==1 or r==3:
+          # Middle piece
+          ones=bern.geometric_bag(bag) + bern.geometric_bag(bag)
+          if (ones == 0 or ones == 2) and bern.randbit() == 0:
+              # Accepted
+             return 1.0 + bern.fill_geometric_bag(bag)
+          if ones == 1:
+              # Accepted
+             return 1.0 + bern.fill_geometric_bag(bag)
+       else:
+          # Right piece
+          if bern.randbit() == 0 and \
+             bern.geometric_bag(bag) == 0 and \
+             bern.geometric_bag(bag) == 0:
+              # Accepted
+             return 2.0 + bern.fill_geometric_bag(bag)
+</pre>
+
+<p><a id=Notes></a></p>
+
+<h2>Notes</h2>
+
+<p><small><sup id=Note1>(1)</sup> Goyal, V. and Sigman, K., 2012. On simulating a class of Bernstein polynomials. ACM Transactions on Modeling and Computer Simulation (TOMACS), 22(2), pp.1-5.</small></p>
+
+<p><a id=License></a></p>
+
+<h2>License</h2>
+
+<p>Any copyright to this page is released to the Public Domain.  In case this is not possible, this page is also licensed under <a href="https://creativecommons.org/publicdomain/zero/1.0/"><strong>Creative Commons Zero</strong></a>.</p>
+</div><nav id="navigation"><ul>
+<li><a href="/">Back to start site.</a>
+<li><a href="https://github.com/peteroupc/peteroupc.github.io">This site's repository (source code)</a>
+<li><a href="https://github.com/peteroupc/peteroupc.github.io/issues">Post an issue or comment</a></ul>
+<p>
+If you like this software, you should consider donating to me, Peter O., at the link below:</p>
+<p class="printonly"><b>peteroupc.github.io</b></p>
+<div class="noprint">
+<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=56E5T4FH7KD2S">
+<img src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif"
+name="submit" border="2" alt="PayPal - The safer, easier way to pay online!"></a>
+<p>
+<a href="//twitter.com/share">Share via Twitter</a>, <a href="//www.facebook.com/sharer/sharer.php" id="sharer">Share via Facebook</a>
+</p>
+</div>
+</nav><script>
+if("share" in navigator){
+ document.getElementById("sharer").href="javascript:void(null)";
+ document.getElementById("sharer").innerHTML="Share This Page";
+ navigator.share({title:document.title,url:document.location.href}).then(
+   function(){});
+} else {
+ document.getElementById("sharer").href="//www.facebook.com/sharer/sharer.php?u="+
+    encodeURIComponent(document.location.href)
+}
+</script>
+</body></html>

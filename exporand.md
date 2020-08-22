@@ -146,7 +146,7 @@ Two PSRNs, each of a different distribution but storing digits of the same base 
 5. Return `true` if **a**'s fractional part is less than **b**'s, or `false` if **a**'s fractional part is greater than **b**'s.
 6. Add 1 to _i_ and go to step 4.
 
-**URandLess** is a version of **RandLess** that involves two uniform PSRNs.  The algorithm for **URandLess**, digits samples digit _i_ in step 4 by setting the digit at position _i_ to a digit chosen uniformly at random.
+**URandLess** is a version of **RandLess** that involves two uniform PSRNs.  The algorithm for **URandLess** samples digit _i_ in step 4 by setting the digit at position _i_ to a digit chosen uniformly at random.
 
 <a id=Arithmetic></a>
 ### Arithmetic
