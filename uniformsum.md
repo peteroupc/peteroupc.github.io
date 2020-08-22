@@ -9,7 +9,7 @@ This page presents new algorithms to sample the sum of uniform(0, 1) random numb
 
 The sum of _n_ uniform(0, 1) random numbers has the following density function (see [**MathWorld**](https://mathworld.wolfram.com/UniformSumDistribution.html)):
 
-&nbsp;&nbsp;&nbsp;&nbsp;_f_(_x_) = (&Sigma;<sub>_k_ = 0, ..., _n_</sub> (&minus;1)<sup>_k_</sup> * choose(_n_, _k_) * (_x_ &minus; _k_)<sub>_n_ &minus; 1</sub> * sign(_x_ &minus; _k_)) / (2*(n&minus;1)!).
+&nbsp;&nbsp;&nbsp;&nbsp;_f_(_x_) = (&Sigma;<sub>_k_ = 0, ..., _n_</sub> (&minus;1)<sup>_k_</sup> * choose(_n_, _k_) * (_x_ &minus; _k_)<sup>_n_ &minus; 1</sup> * sign(_x_ &minus; _k_)) / (2*(n&minus;1)!).
 
 For _n_ uniform numbers, the distribution can take on values in the interval [0, _n_].  Note also that the density expresses a polynomial of degree _n_ &minus; 1.
 
@@ -19,13 +19,13 @@ The samplers given below for the uniform sum logically work as follows:
 2. An integer in [0, _n_) is chosen uniformly at random, call it _i_, then the piece identified by _i_ is chosen.
 3. The density function at \[_i_, _i_ + 1\] is simulated.  This is done by shifting the density so the desired piece of the density is at \[0, 1\] rather than its usual place.  More specifically, the density is now as follows:
 
-    - _f_&prime;(_x_) = (&Sigma;<sub>_k_ = 0, ..., _n_</sub> (&minus;1)<sup>_k_</sup> * choose(_n_, _k_) * ((_x_ + _i_) &minus; _k_)<sub>_n_ &minus; 1</sub> * sign(_i_ &minus; _k_)) / (2*(n&minus;1)!),
+    - _f_&prime;(_x_) = (&Sigma;<sub>_k_ = 0, ..., _n_</sub> (&minus;1)<sup>_k_</sup> * choose(_n_, _k_) * ((_x_ + _i_) &minus; _k_)<sup>_n_ &minus; 1</sup> * sign(_i_ &minus; _k_)) / (2*(n&minus;1)!),
 
     where _x_ is a real number in \[0, 1\].  Since _f_&prime; is a polynomial, it can be converted to a Bernstein polynomial whose control points describe the shape of the curve drawn out by _f_&prime;.  A Bernstein polynomial has the form&mdash;
 
-    - &Sigma;<sub>_k_ = 0, ..., _n_</sub> choose(_n_, _k_) * _x_<sup>_k_</sup> * (1 &minus; _x_)<sup>_n_ &minus; _k_</sup> * _a_\[_k_\],
+    - &Sigma;<sub>_k_ = 0, ..., (_m_ &minus; 1)</sub> choose(_m_, _k_) * _x_<sup>_k_</sup> * (1 &minus; _x_)<sup>_m_ &minus; _k_</sup> * _a_\[_k_\],
 
-    where _a_\[_k_\] are the control points. In this case, there will be _n_ control points, which together trace out a 1-dimensional Bézier curve.  Moreover, this polynomial can be simulated because it is continuous, returns only numbers in \[0, 1\], and doesn't touch 0 or 1 anywhere inside the domain (except possibly at 0 or 1) (Keane and O'Brien 1994)<sup>[**(1)**](#Note1)</sup>.
+    where _a_\[_k_\] are the control points and _m_ is the polynomial's degree (here, _n_ &minus; 1). In this case, there will be _n_ control points, which together trace out a 1-dimensional Bézier curve.  Moreover, this polynomial can be simulated because it is continuous, returns only numbers in \[0, 1\], and doesn't touch 0 or 1 anywhere inside the domain (except possibly at 0 or 1) (Keane and O'Brien 1994)<sup>[**(1)**](#Note1)</sup>.
 4. The sampler creates a "coin" made up of a uniform partially-sampled random number (PSRN) whose contents are built up on demand using an algorithm called **SampleGeometricBag**.  It flips this "coin" _n_ &minus; 1 times and counts the number of times the coin returned 1 this way, call it _j_. (The "coin" will return 1 with probability equal to the to-be-determined uniform random number.  See (Goyal and Sigman 2012)<sup>[**(2)**](#Note2)</sup>.)
 5. Based on _j_, the sampler accepts the PSRN with probability equal to the control point _a_\[_j_\].
 6. If the PSRN is accepted, it fills it up with uniform random digits, and returns _i_ plus the finished PSRN.  If the PSRN is not accepted, the sampler starts over.
