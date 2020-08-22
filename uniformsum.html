@@ -34,7 +34,7 @@
 <li>&Sigma;<sub><em>k</em> = 0, ..., <em>m</em></sub> choose(<em>m</em>, <em>k</em>) * <em>x</em><sup><em>k</em></sup> * (1 &minus; <em>x</em>)<sup><em>m</em> &minus; <em>k</em></sup> * <em>a</em>[<em>k</em>],</li>
 </ul>
 
-<p>where <em>a</em>[<em>k</em>] are the control points and <em>m</em> is the polynomial&#39;s degree (here, <em>n</em> &minus; 1). In this case, there will be <em>n</em> control points, which together trace out a 1-dimensional Bézier curve.  Moreover, this polynomial can be simulated because it is continuous, returns only numbers in [0, 1], and doesn&#39;t touch 0 or 1 anywhere inside the domain (except possibly at 0 or 1) (Keane and O&#39;Brien 1994)<sup><a href="#Note1"><strong>(1)</strong></a></sup>.</p></li>
+<p>where <em>a</em>[<em>k</em>] are the control points and <em>m</em> is the polynomial&#39;s degree (here, <em>n</em> &minus; 1). In this case, there will be <em>n</em> control points, which together trace out a 1-dimensional Bézier curve.  Moreover, this polynomial can be simulated because it is continuous, returns only numbers in [0, 1], and doesn&#39;t touch 0 or 1 anywhere inside the domain (except possibly at 0 and/or 1) (Keane and O&#39;Brien 1994)<sup><a href="#Note1"><strong>(1)</strong></a></sup>.</p></li>
 <li>The sampler creates a &quot;coin&quot; made up of a uniform partially-sampled random number (PSRN) whose contents are built up on demand using an algorithm called <strong>SampleGeometricBag</strong>.  It flips this &quot;coin&quot; <em>n</em> &minus; 1 times and counts the number of times the coin returned 1 this way, call it <em>j</em>. (The &quot;coin&quot; will return 1 with probability equal to the to-be-determined uniform random number.  See (Goyal and Sigman 2012)<sup><a href="#Note2"><strong>(2)</strong></a></sup>.)</li>
 <li>Based on <em>j</em>, the sampler accepts the PSRN with probability equal to the control point <em>a</em>[<em>j</em>].</li>
 <li>If the PSRN is accepted, it fills it up with uniform random digits, and returns <em>i</em> plus the finished PSRN.  If the PSRN is not accepted, the sampler starts over.</li>
@@ -57,9 +57,9 @@
            else: ret+=s
     return ret/(2*factorial(n-1))
 
-x=symbols(&#39;x&#39;, real=True)
-n=4 # Degree of the polynomial
-for i in range(n):
+def find_control_points(n):
+ x=symbols(&#39;x&#39;, real=True)
+ for i in range(n):
   # Find the &quot;usual&quot; coefficients of the uniform
   # sum polynomial at offset i.
   poly=Poly(unifsum(x, n, i))
@@ -68,10 +68,20 @@ for i in range(n):
   coeffs=Matrix(coeffs)
   # Build power-to-Bernstein basis matrix
   mat=[[0 for _ in range(n)] for _ in range(n)]
-  # TODO: Complete this.
+  for j in range(n):
+    for k in range(n):
+       if k==0 or j==n-1:
+         mat[j][k]=1
+       elif k&lt;=j:
+         mat[j][k]=binomial(j, j-k) / binomial(n-1, k)
+       else:
+         mat[j][k]=0
+  mat=Matrix(mat)
   # Print out the Bernstein control points
   print(mat*coeffs)
 </pre>
+
+<p>The basis matrix is found, for example, as Equation 42 of (Ray and Nataraj 2012)<sup><a href="#Note3"><strong>(3)</strong></a></sup>.</p>
 
 <p>For example, if <em>n</em> = 4 (so a sum of four uniform random numbers is desired), the following control points are used for each piece of the density function:</p>
 
@@ -228,6 +238,8 @@ for i in range(n):
 <p><small><sup id=Note1>(1)</sup> Keane,  M.  S.,  and  O&#39;Brien,  G.  L., &quot;A Bernoulli factory&quot;, <em>ACM Transactions on Modeling and Computer Simulation</em> 4(2), 1994</small></p>
 
 <p><small><sup id=Note2>(2)</sup> Goyal, V. and Sigman, K., 2012. On simulating a class of Bernstein polynomials. ACM Transactions on Modeling and Computer Simulation (TOMACS), 22(2), pp.1-5.</small></p>
+
+<p><small><sup id=Note3>(3)</sup> S. Ray, P.S.V. Nataraj, &quot;A Matrix Method for Efficient Computation of Bernstein Coefficients&quot;, <em>Reliable Computing</em> 17(1), 2012.</small></p>
 
 <p><a id=License></a></p>
 
