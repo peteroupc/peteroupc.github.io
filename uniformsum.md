@@ -1,8 +1,34 @@
-# Exact Samplers for the Sum of Uniform Random Numbers
+# Arbitrary-Precision Samplers for the Sum of Uniform Random Numbers
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
 This page presents new algorithms to sample the sum of uniform(0, 1) random numbers, with the help of [**partially-sampled random numbers**](https://peteroupc.github.io/exporand.html), with arbitrary precision and without relying on floating-point arithmetic.  See that page for more information on some of the algorithms made use of here, including **SampleGeometricBag** and **FillGeometricBag**.
+
+<a id=About_the_Uniform_Sum_Distribution></a>
+## About the Uniform Sum Distribution
+
+The sum of _n_ uniform(0, 1) random numbers has the following density function (see [**MathWorld**](https://mathworld.wolfram.com/UniformSumDistribution.html)):
+
+&nbsp;&nbsp;&nbsp;&nbsp;_f_(_x_) = (&Sigma;<sub>_k_ = 0, ..., _n_</sub> (&minus;1)<sup>_k_</sup> * choose(_n_, _k_) * (_x_ &minus; _k_)<sub>_n_ &minus; 1</sub> * sign(_x_ &minus; _k_)) / (2*(n&minus;1)!).
+
+For _n_ uniform numbers, the distribution can take on values in the interval [0, _n_].  Note also that the density expresses a polynomial of degree _n_ &minus; 1.
+
+The samplers given below for the uniform sum logically work as follows:
+
+1. The distribution is divided into pieces that are each 1 unit wide (thus, for example, if _n_ is 4, there will be four pieces).
+2. An integer in [0, _n_) is chosen uniformly at random, call it _i_, then the piece identified by _i_ is chosen.
+3. The density function at \[_i_, _i_ + 1\] is simulated.  This is done by shifting the density so the desired piece of the density is at \[0, 1\] rather than its usual place.  More specifically, the density is now as follows:
+
+    - _f_&prime;(_x_) = (&Sigma;<sub>_k_ = 0, ..., _n_</sub> (&minus;1)<sup>_k_</sup> * choose(_n_, _k_) * ((_x_ + _i_) &minus; _k_)<sub>_n_ &minus; 1</sub> * sign(_i_ &minus; _k_)) / (2*(n&minus;1)!),
+
+    where _x_ is a real number in \[0, 1\].  Since _f_&prime; is a polynomial, it can be converted to a Bernstein polynomial whose control points describe the shape of the curve drawn out by _f_&prime;.  A Bernstein polynomial has the form&mdash;
+
+    - &Sigma;<sub>_k_ = 0, ..., _n_</sub> choose(_n_, _k_) * _x_<sup>_k_</sup> * (1 &minus; _x_)<sup>_n_ &minus; _k_</sup> * _a_\[_k_\],
+
+    where _a_\[_k_\] are the control points. In this case, there will be _n_ control points, which together trace out a 1-dimensional Bézier curve.  Moreover, this polynomial can be simulated because it is continuous, returns only numbers in \[0, 1\], and doesn't touch 0 or 1 anywhere inside the domain (except possibly at 0 or 1) (Keane and O'Brien 1994)<sup>[**(1)**](#Note1)</sup>.
+4. The sampler creates a "coin" made up of a uniform partially-sampled random number (PSRN) whose contents are built up on demand using an algorithm called **SampleGeometricBag**.  It flips this "coin" _n_ &minus; 1 times and counts the number of times the coin returned 1 this way, call it _j_. (The "coin" will return 1 with probability equal to the to-be-determined uniform random number.  See (Goyal and Sigman 2012)<sup>[**(2)**](#Note2)</sup>.)
+5. Based on _j_, the sampler accepts the PSRN with probability equal to the control point _a_\[_j_\].
+6. If the PSRN is accepted, it fills it up with uniform random digits, and returns _i_ plus the finished PSRN.  If the PSRN is not accepted, the sampler starts over.
 
 <a id=Sum_of_Two_Uniform_Random_Numbers></a>
 ## Sum of Two Uniform Random Numbers
@@ -43,7 +69,7 @@ The following algorithm samples the sum of three uniform random numbers.
 1. Create an empty uniform PSRN, call it _ret_.
 2. Remove all digits from _ret_.
 3. Choose 0, 1 or 2, uniformly at random.
-4. If 0 was chosen by step 3, we will sample from the left piece of the function for the sum of three uniform random numbers.  This piece runs along the interval \[0, 1\) and is a Bernstein polynomial with control points (0, 0, 1/2).  (Bernstein polynomials are the backbone of the well-known Bézier curve. In this case, the density's value at 0 is 0, or the first control point, and its value at 1 is 1/2, or the third control point.)  Thus, we can simulate this polynomial with the algorithm of Goyal and Sigman (2012)<sup>[**(1)**](#Note1)</sup>, using a partially-sampled uniform random number, as follows: Call the **SampleGeometricBag** algorithm twice on _ret_.  If both of these calls return 1, then accept _ret_ with probability 1/2. (1/2 is the third control point and corresponds to both calls returning 1.)  If _ret_ was accepted, fill _ret_ with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to **FillGeometricBag**), and return _ret_.
+4. If 0 was chosen by step 3, we will sample from the left piece of the function for the sum of three uniform random numbers.  This piece runs along the interval \[0, 1\) and is a Bernstein polynomial with control points (0, 0, 1/2).  (Bernstein polynomials are the backbone of the well-known Bézier curve. In this case, the density's value at 0 is 0, or the first control point, and its value at 1 is 1/2, or the third control point.)  Thus, we can simulate this polynomial with the algorithm of Goyal and Sigman (2012)<sup>[**(2)**](#Note2)</sup>, using a partially-sampled uniform random number, as follows: Call the **SampleGeometricBag** algorithm twice on _ret_.  If both of these calls return 1, then accept _ret_ with probability 1/2. (1/2 is the third control point and corresponds to both calls returning 1.)  If _ret_ was accepted, fill _ret_ with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to **FillGeometricBag**), and return _ret_.
 5. If 1 was chosen by step 3, we will sample from the middle piece of the density, which runs along the interval [1, 2) and is a Bernstein polynomial with control points (1/2, 1, 1/2).  Call the **SampleGeometricBag** algorithm twice on _ret_.  If neither or both of these calls return 1, then accept _ret_.  Otherwise, if one of these calls returns 1 and the other 0, then accept _ret_ with probability 1/2.  If _ret_ was accepted, fill _ret_ as given in step 4 and return 1 + _ret_.
 6. If 2 was chosen by step 3, we will sample from the right piece of the density, which runs along the interval [2, 1) and is a Bernstein polynomial with control points (1/2, 0, 0).  Call the **SampleGeometricBag** algorithm twice on _ret_.  If both of these calls return 0, then accept _ret_ with probability 1/2. (1/2 is the first control point and corresponds to both calls returning 0.)  If _ret_ was accepted, fill _ret_ as given in step 4 and return 2 + _ret_.
 7. Go to step 2.
@@ -95,7 +121,9 @@ def sum_of_uniform3(bern):
 <a id=Notes></a>
 ## Notes
 
-<small><sup id=Note1>(1)</sup> Goyal, V. and Sigman, K., 2012. On simulating a class of Bernstein polynomials. ACM Transactions on Modeling and Computer Simulation (TOMACS), 22(2), pp.1-5.</small>
+<small><sup id=Note1>(1)</sup> Keane,  M.  S.,  and  O'Brien,  G.  L., "A Bernoulli factory", _ACM Transactions on Modeling and Computer Simulation_ 4(2), 1994</small>
+
+<small><sup id=Note2>(2)</sup> Goyal, V. and Sigman, K., 2012. On simulating a class of Bernstein polynomials. ACM Transactions on Modeling and Computer Simulation (TOMACS), 22(2), pp.1-5.</small>
 
 <a id=License></a>
 ## License
