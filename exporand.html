@@ -240,7 +240,7 @@
 
 <p>There is previous work that relates continuous distributions to digit probabilities in a similar manner (but only in base 10) (Habibizad Navin et al., 2007)<sup><a href="#Note12"><strong>(12)</strong></a></sup>, (Nezhad et al., 2013)<sup><a href="#Note13"><strong>(13)</strong></a></sup>.</p>
 
-<p>Finally, arithmetic with partially-sampled numbers may be possible if the result of the arithmetic is distributed with a known density function (e.g., one found via Rohatgi&#39;s formula (Rohatgi 1976)<sup><a href="#Note14"><strong>(14)</strong></a></sup>), allowing for an algorithm that implements rejection from the uniform or exponential distribution.  However, that density function may have an unbounded peak, thus ruling out rejection sampling in practice.  For example, if <em>X</em> is a uniform PSRN, then <em>X</em><sup>3</sup> is distributed as <code>(1/3) / pow(X, 2/3)</code>, which has an unbounded peak at 0.  While this rules out plain rejection samplers for <em>X</em><sup>3</sup> in practice, it&#39;s still possible to sample powers of uniforms using PSRNs, which will be described later in this article.</p>
+<p>Finally, arithmetic with partially-sampled numbers may be possible if the result of the arithmetic is distributed with a known density function (e.g., one found via Rohatgi&#39;s formula (Rohatgi 1976)<sup><a href="#Note14"><strong>(14)</strong></a></sup>), allowing for an algorithm that implements rejection from the uniform or exponential distribution.  An example of this is found in my article on <a href="https://peteroupc.github.io/uniformsum.html"><strong>&quot;exact&quot; samplers for the sum of uniform random numbers</strong></a>.  However, that density function may have an unbounded peak, thus ruling out rejection sampling in practice.  For example, if <em>X</em> is a uniform PSRN, then <em>X</em><sup>3</sup> is distributed as <code>(1/3) / pow(X, 2/3)</code>, which has an unbounded peak at 0.  While this rules out plain rejection samplers for <em>X</em><sup>3</sup> in practice, it&#39;s still possible to sample powers of uniforms using PSRNs, which will be described later in this article.</p>
 
 <p><a id=Building_Blocks></a></p>
 
@@ -1320,36 +1320,6 @@ plot(expminusformula(), xlim=(0,1), ylim=(0,2))
              return randomgen.urandfill(rg,ret,precision)/(1&lt;&lt;precision)
           else: break
 </pre>
-
-<p>A second example of an arbitrary-precision sampler is the following method that samples the sum of two uniform random numbers.  Again, it uses floating-point arithmetic only at the end.</p>
-
-<pre>def sum_of_uniform(bern, precision=53):
-    &quot;&quot;&quot; Exact simulation of the sum of two uniform
-          random numbers. &quot;&quot;&quot;
-    bag=[]
-    while True:
-       bag.clear()
-       if bern.randbit()==1:
-          # 0 to 1
-          if bern.geometric_bag(bag)==1:
-             return bern.fill_geometric_bag(bag, precision)
-       else:
-          # 1 to 2
-          if bern.geometric_bag(bag)==0:
-             return 1.0 + bern.fill_geometric_bag(bag, precision)
-
-</pre>
-
-<p>The following is the algorithm:</p>
-
-<ol>
-<li>Create an empty uniform PSRN, call it <em>ret</em>.</li>
-<li>Remove all digits from <em>ret</em>.</li>
-<li>Call the <strong>SampleGeometricBag</strong> algorithm on <em>ret</em>, then generate an unbiased random bit.</li>
-<li>If the bit is 1 and the result of <strong>SampleGeometricBag</strong> is 1, fill <em>ret</em> with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to <strong>FillGeometricBag</strong>), and return <em>ret</em>.</li>
-<li>If the bit is 0 and the result of <strong>SampleGeometricBag</strong> is 0, fill <em>ret</em> as in step 4, and return 1 + <em>ret</em>.</li>
-<li>Go to step 2.</li>
-</ol>
 
 <p><a id=License></a></p>
 
