@@ -239,7 +239,7 @@
 
 <p>There is previous work that relates continuous distributions to digit probabilities in a similar manner (but only in base 10) (Habibizad Navin et al., 2007)<sup><a href="#Note12"><strong>(12)</strong></a></sup>, (Nezhad et al., 2013)<sup><a href="#Note13"><strong>(13)</strong></a></sup>.</p>
 
-<p>Finally, arithmetic with partially-sampled numbers may be possible if the result of the arithmetic is distributed with a known density function (e.g., one found via Rohatgi&#39;s formula (Rohatgi 1976)<sup><a href="#Note14"><strong>(14)</strong></a></sup>), allowing for an algorithm that implements rejection from the uniform or exponential distribution.  An example of this is found in my article on <a href="https://peteroupc.github.io/uniformsum.html"><strong>&quot;exact&quot; samplers for the sum of uniform random numbers</strong></a>.  However, that density function may have an unbounded peak, thus ruling out rejection sampling in practice.  For example, if <em>X</em> is a uniform PSRN, then <em>X</em><sup>3</sup> is distributed as <code>(1/3) / pow(X, 2/3)</code>, which has an unbounded peak at 0.  While this rules out plain rejection samplers for <em>X</em><sup>3</sup> in practice, it&#39;s still possible to sample powers of uniforms using PSRNs, which will be described later in this article.</p>
+<p>Finally, arithmetic with partially-sampled numbers may be possible if the result of the arithmetic is distributed with a known density function (e.g., one found via Rohatgi&#39;s formula (Rohatgi 1976)<sup><a href="#Note14"><strong>(14)</strong></a></sup>), allowing for an algorithm that implements rejection from the uniform or exponential distribution.  An example of this is found in my article on <a href="https://peteroupc.github.io/uniformsum.html"><strong>arbitrary-precision samplers for the sum of uniform random numbers</strong></a>.  However, that density function may have an unbounded peak, thus ruling out rejection sampling in practice.  For example, if <em>X</em> is a uniform PSRN, then <em>X</em><sup>3</sup> is distributed as <code>(1/3) / pow(X, 2/3)</code>, which has an unbounded peak at 0.  While this rules out plain rejection samplers for <em>X</em><sup>3</sup> in practice, it&#39;s still possible to sample powers of uniforms using PSRNs, which will be described later in this article.</p>
 
 <p><a id=Building_Blocks></a></p>
 
@@ -978,20 +978,15 @@ def exprandscore(ln,ld,ln2,ld2):
 
 <ol>
 <li>Create an &quot;empty&quot; uniform PSRN (or &quot;geometric bag&quot;).  Create a <strong>SampleGeometricBag</strong> Bernoulli factory that uses that geometric bag.</li>
-<li><p>As the geometric bag builds up a uniform random number, accept the number with a probability that can be represented by a Bernoulli factory (that takes the <strong>SampleGeometricBag</strong> factory from step 1 as part of its input), or reject it otherwise.  Let <em>f</em>(<em>U</em>) be the probability function modeled by this Bernoulli factory, where <em>U</em> is the uniform random number built up by the geometric bag. <em>f</em> is a multiple of the density function for the underlying continuous distribution (as a result, this algorithm can be used even if the distribution&#39;s density function is only known up to a normalization constant).  As shown by Keane and O&#39;Brien <sup><a href="#Note6"><strong>(6)</strong></a></sup>, however, this step works if and only if <em>f</em>(&lambda;), in a given interval in [0, 1]&mdash;</p>
+<li><p>As the geometric bag builds up a uniform random number, accept the number with a probability that can be represented by a Bernoulli factory algorithm (that takes the <strong>SampleGeometricBag</strong> factory from step 1 as part of its input), or reject it otherwise. (A number of these algorithms can be found in &quot;<a href="https://peteroupc.github.io/bernoulli.html"><strong>Bernoulli Factory Algorithms</strong></a>&quot;.)  Let <em>f</em>(<em>U</em>) be the probability function modeled by this Bernoulli factory, where <em>U</em> is the uniform random number built up by the geometric bag. <em>f</em> is a multiple of the density function for the underlying continuous distribution (as a result, this algorithm can be used even if the distribution&#39;s density function is only known up to a normalization constant).  As shown by Keane and O&#39;Brien <sup><a href="#Note6"><strong>(6)</strong></a></sup>, however, this step works if and only if <em>f</em>(&lambda;), in a given interval in [0, 1]&mdash;</p>
 
 <ul>
 <li>is continuous everywhere, and</li>
 <li>either returns a constant value in [0, 1] everywhere, or returns a value in [0, 1] at each of the points 0 and 1 and a value in (0, 1) at each other point,</li>
 </ul>
 
-<p>and they give the example of 2 * &lambda; as a probability function that cannot be represented by a Bernoulli factory.  In the case of constants, the Bernoulli factory can represent them by a geometric bag&mdash;</p>
-
-<ul>
-<li>that is prefilled with the digit expansion of the constant in question, or</li>
-<li>that uses a modified <strong>SampleGeometricBag</strong> algorithm in which the constant&#39;s digit expansion&#39;s digits are not sampled at random, but rather calculated &quot;on the fly&quot; and as necessary.</li>
-</ul></li>
-<li><p>If the geometric bag is accepted, either return the bag as is or fill the unsampled digits of the bag with uniform random digits as necessary to give the number an <em>n</em>-digit fractional part (similarly to <strong>FillGeometricBag</strong> above), where <em>n</em> is a precision parameter, then return the resulting number.</p></li>
+<p>and they give the example of 2 * &lambda; as a probability function that cannot be represented by a Bernoulli factory.</p></li>
+<li>If the geometric bag is accepted, either return the bag as is or fill the unsampled digits of the bag with uniform random digits as necessary to give the number an <em>n</em>-digit fractional part (similarly to <strong>FillGeometricBag</strong> above), where <em>n</em> is a precision parameter, then return the resulting number.</li>
 </ol>
 
 <p>However, the speed of this algorithm depends crucially on the mode (highest point) of <em>f</em> in [0, 1].  As that mode approaches 0, the average rejection rate increases.  Effectively, this step generates a point uniformly at random in a 1&times;1 area in space.  If that mode is close to 0, <em>f</em> will cover only a tiny portion of this area, so that the chance is high that the generated point will fall outside the area of <em>f</em> and have to be rejected.</p>
@@ -1001,7 +996,7 @@ def exprandscore(ln,ld,ln2,ld2):
 <p>This algorithm can be modified to produce random numbers in the interval [<em>m</em>, <em>m</em> + <em>b</em><sup><em>i</em></sup>] (where <em>b</em> is the base, or radix, and <em>i</em> and <em>m</em> are integers), rather than [0, 1], as follows:</p>
 
 <ol>
-<li>Apply the algorithm above, except a modified probability function <em>f&prime;</em>(<em>x</em>) = <em>f</em>(<em>x</em> * <em>b</em><sup><em>i</em></sup> + <em>m</em>) is used rather than <em>f</em>.</li>
+<li>Apply the algorithm above, except a modified probability function <em>f&prime;</em>(<em>x</em>) = <em>f</em>(<em>x</em> * <em>b</em><sup><em>i</em></sup> + <em>m</em>) is used rather than <em>f</em>, where <em>x</em> is the number in [0, 1] that is built up by the geometric bag.</li>
 <li>Multiply the resulting random number or geometric bag by <em>b</em><sup><em>i</em></sup>, then add <em>m</em> (this step is relatively trivial given that the geometric bag stores a base-<em>b</em> fractional part).</li>
 <li>If the random number (rather than its geometric bag) will be returned, and the number&#39;s fractional part now has fewer than <em>n</em> digits due to step 2, re-fill the number as necessary to give the fractional part <em>n</em> digits.</li>
 </ol>

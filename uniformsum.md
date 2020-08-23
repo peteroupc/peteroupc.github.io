@@ -16,7 +16,7 @@ For _n_ uniform numbers, the distribution can take on values in the interval [0,
 The samplers given below for the uniform sum logically work as follows:
 
 1. The distribution is divided into pieces that are each 1 unit wide (thus, for example, if _n_ is 4, there will be four pieces).
-2. An integer in [0, _n_) is chosen uniformly at random, call it _i_, then the piece identified by _i_ is chosen.
+2. An integer in \[0, _n_\) is chosen uniformly at random, call it _i_, then the piece identified by _i_ is chosen.  There are [**many algorithms to choose an integer**](https://peteroupc.github.io/randomnotes.html#A_Note_on_Integer_Generation_Algorithms) this way, but an algorithm that is "optimal" in terms of the number of bits it uses, as well as unbiased, should be chosen.
 3. The density function at \[_i_, _i_ + 1\] is simulated.  This is done by shifting the density so the desired piece of the density is at \[0, 1\] rather than its usual place.  More specifically, the density is now as follows:
 
     - _f_&prime;(_x_) = (&Sigma;<sub>_k_ = 0, ..., _n_</sub> (&minus;1)<sup>_k_</sup> * choose(_n_, _k_) * ((_x_ + _i_) &minus; _k_)<sup>_n_ &minus; 1</sup> * sign(_i_ &minus; _k_)) / (2*(n&minus;1)!),
@@ -28,12 +28,16 @@ The samplers given below for the uniform sum logically work as follows:
     where _a_\[_k_\] are the control points and _m_ is the polynomial's degree (here, _n_ &minus; 1). In this case, there will be _n_ control points, which together trace out a 1-dimensional Bézier curve.  Moreover, this polynomial can be simulated because it is continuous, returns only numbers in \[0, 1\], and doesn't touch 0 or 1 anywhere inside the domain (except possibly at 0 and/or 1) (Keane and O'Brien 1994)<sup>[**(1)**](#Note1)</sup>.
 4. The sampler creates a "coin" made up of a uniform partially-sampled random number (PSRN) whose contents are built up on demand using an algorithm called **SampleGeometricBag**.  It flips this "coin" _n_ &minus; 1 times and counts the number of times the coin returned 1 this way, call it _j_. (The "coin" will return 1 with probability equal to the to-be-determined uniform random number.  See (Goyal and Sigman 2012)<sup>[**(2)**](#Note2)</sup>.)
 5. Based on _j_, the sampler accepts the PSRN with probability equal to the control point _a_\[_j_\].
-6. If the PSRN is accepted, it fills it up with uniform random digits, and returns _i_ plus the finished PSRN.  If the PSRN is not accepted, the sampler starts over.
+6. If the PSRN is accepted, it fills it up with uniform random digits, and returns _i_ plus the finished PSRN.  If the PSRN is not accepted, the sampler starts over from step 2.
 
 <a id=Finding_Parameters></a>
 ## Finding Parameters
 
-Using this sampler for an arbitrary _n_ requires finding the Bernstein control points for each of the _n_ pieces of the uniform sum density.  This can be found, for example, with the Python code below, which uses the SymPy computer algebra library.
+Using this sampler for an arbitrary _n_ requires finding the Bernstein control points for each of the _n_ pieces of the uniform sum density.  This can be found, for example, with the Python code below, which uses the SymPy computer algebra library.  In the code:
+
+- `unifsum(x,n,v)` calculates the density function of the sum of `n` uniform random numbers when the variable `x` is shifted by `v` units.
+- `find_control_points` prints out the control points for each piece of the density for the sum of `n` uniform random numbers, starting with piece 0.
+- `find_areas` prints out the areas for each piece of that density.  This can be useful to implement a variant of the sampler above, as detailed later in this section.
 
 ```
 def unifsum(x,n,v):
@@ -46,6 +50,11 @@ def unifsum(x,n,v):
            if k>v: ret-=s
            else: ret+=s
     return ret/(2*factorial(n-1))
+
+def find_areas(n):
+  x=symbols('x', real=True)
+  areas=[integrate(unifsum(x,n,i),(x,0,1)) for i in range(n)]
+  print(areas)
 
 def find_control_points(n):
  x=symbols('x', real=True)
@@ -69,6 +78,7 @@ def find_control_points(n):
   mat=Matrix(mat)
   # Print out the Bernstein control points
   print(mat*coeffs)
+
 ```
 
 The basis matrix is found, for example, as Equation 42 of (Ray and Nataraj 2012)<sup>[**(3)**](#Note3)</sup>.
@@ -93,17 +103,32 @@ For more efficient results, all these control points could be scaled so that the
 
 Notice that all these control points are rational numbers, and the sampler may have to determine whether an event is true with probability equal to a control point.  For rational numbers like these, it is possible to determine this exactly (using only random bits), using the **ZeroOrOne** method given in my [**article on randomization and sampling methods**](https://peteroupc.github.io/randomfunc.html#Boolean_True_False_Conditions).
 
+If the areas of the density's pieces are known in advance (and SymPy makes them easy to find as the `find_areas` method shows), then the sampler could be modified as follows, since each piece is now chosen with probability proportional to the chance that a random number there will be sampled:
+
+- Step 2 is changed to read: "An integer in \[0, _n_\) is chosen with probability proportional to the corresponding piece's area, call the integer _i_, then the piece identified by _i_ is chosen.  There are many [**algorithms to choose an integer**](https://peteroupc.github.io/randomnotes.html#A_Note_on_Weighted_Choice_Algorithms) this way, but it's recommended to use one that takes integers rather than floating-point numbers as weights, and perhaps one that is economical in terms of the number of random bits it uses.  In this sense, the Fast Loaded Dice Roller (Saad et al. 2020)<sup>[**(4)**](#Note4)</sup> comes within 6 bits of the optimal number of random bits used on average."
+- The last sentence in step 6 is changed to read: "If the PSRN is not accepted, the sampler starts over from step 3."  With this, the same piece is sampled again.
+
+If the sampler is modified this way, then the control points should be scaled so that the highest control point of _each_ piece is equal to 1.  However, not doing this additional step does not affect the sampler's correctness.  The following table is an example:
+
+| Piece | Control Points |
+ --- | --- |
+| 0 | 0, 0, 0, 1 |
+| 1 | 1/4, 1/2, 1, 1 |
+| 2 | 1, 1, 1/2, 1/4 |
+| 3 | 1, 0, 0, 0 |
+
 <a id=Sum_of_Two_Uniform_Random_Numbers></a>
 ## Sum of Two Uniform Random Numbers
 
 The following algorithm samples the sum of two uniform random numbers.
 
 1. Create an empty uniform PSRN (partially-sampled random number), call it _ret_.
+2. Generate an unbiased random bit.
 2. Remove all digits from _ret_.  (This algorithm, and others on this page, works for digits of any base, including base 10 or decimal, or base 2 or binary.)
 3. Call the **SampleGeometricBag** algorithm on _ret_, then generate an unbiased random bit.
-4. If the bit is 1 and the result of **SampleGeometricBag** is 1, fill _ret_ with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to **FillGeometricBag**), and return _ret_.
-5. If the bit is 0 and the result of **SampleGeometricBag** is 0, fill _ret_ as in step 4, and return 1 + _ret_.
-6. Go to step 2.
+4. If the bit generated in step 2 is 1 and the result of **SampleGeometricBag** is 1, fill _ret_ with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to **FillGeometricBag**), and return _ret_.
+5. If the bit generated in step 2 is 0 and the result of **SampleGeometricBag** is 0, fill _ret_ as in step 4, and return 1 + _ret_.
+6. Go to step 3.
 
 And here is Python code that implements this algorithm. It uses floating-point arithmetic only at the end, to convert the result to a convenient form, and that it relies on methods from _randomgen.py_ and _bernoulli.py_.
 
@@ -112,9 +137,10 @@ def sum_of_uniform(bern, precision=53):
     """ Exact simulation of the sum of two uniform
           random numbers. """
     bag=[]
+    rb=bern.randbit()
     while True:
        bag.clear()
-       if bern.randbit()==1:
+       if rb==1:
           # 0 to 1
           if bern.geometric_bag(bag)==1:
              return bern.fill_geometric_bag(bag, precision)
@@ -130,18 +156,12 @@ def sum_of_uniform(bern, precision=53):
 The following algorithm samples the sum of three uniform random numbers.
 
 1. Create an empty uniform PSRN, call it _ret_.
-2. Remove all digits from _ret_.
-3. Choose 0, 1 or 2, uniformly at random.
-4. If 0 was chosen by step 3, we will sample from the left piece of the function for the sum of three uniform random numbers.  This piece runs along the interval \[0, 1\) and is a Bernstein polynomial with control points (0, 0, 1/2).  (Bernstein polynomials are the backbone of the well-known Bézier curve. In this case, the density's value at 0 is 0, or the first control point, and its value at 1 is 1/2, or the third control point.)  Thus, we can simulate this polynomial with the algorithm of Goyal and Sigman (2012)<sup>[**(2)**](#Note2)</sup>, using a partially-sampled uniform random number, as follows: Call the **SampleGeometricBag** algorithm twice on _ret_.  If both of these calls return 1, then accept _ret_ with probability 1/2. (1/2 is the third control point and corresponds to both calls returning 1.)  If _ret_ was accepted, fill _ret_ with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to **FillGeometricBag**), and return _ret_.
-5. If 1 was chosen by step 3, we will sample from the middle piece of the density, which runs along the interval [1, 2) and is a Bernstein polynomial with control points (1/2, 1, 1/2).  Call the **SampleGeometricBag** algorithm twice on _ret_.  If neither or both of these calls return 1, then accept _ret_.  Otherwise, if one of these calls returns 1 and the other 0, then accept _ret_ with probability 1/2.  If _ret_ was accepted, fill _ret_ as given in step 4 and return 1 + _ret_.
-6. If 2 was chosen by step 3, we will sample from the right piece of the density, which runs along the interval [2, 1) and is a Bernstein polynomial with control points (1/2, 0, 0).  Call the **SampleGeometricBag** algorithm twice on _ret_.  If both of these calls return 0, then accept _ret_ with probability 1/2. (1/2 is the first control point and corresponds to both calls returning 0.)  If _ret_ was accepted, fill _ret_ as given in step 4 and return 2 + _ret_.
-7. Go to step 2.
-
-The following changes to the algorithm result in an equivalent algorithm to the algorithm above.
-
-- Replace step 3 with the following: "Choose 0, 1, 2, or 3, uniformly at random."
-- In steps 4 and 6, replace "then accept _ret_ with probability 1/2" with "then accept _ret_", because the left and right pieces are each now half as likely to be chosen as the middle piece.
-- In step 5, replace "If 1 was chosen by step 3" with "If 1 or 3 was chosen by step 3", for the same reason.
+2. Choose an integer in [0, 6), uniformly at random. (With this, the left piece is chosen at a 1/3 chance, the right piece at 1/6 and the middle piece at 2/3, corresponding to the relative areas occupied by the three pieces.)
+3. Remove all digits from _ret_.
+4. If 0 was chosen by step 2, we will sample from the left piece of the function for the sum of three uniform random numbers.  This piece runs along the interval \[0, 1\) and is a Bernstein polynomial with control points (0, 0, 1/2).  (Bernstein polynomials are the backbone of the well-known Bézier curve. In this case, the density's value at 0 is 0, or the first control point, and its value at 1 is 1/2, or the third control point.)  Thus, we can simulate this polynomial with the algorithm of Goyal and Sigman (2012)<sup>[**(2)**](#Note2)</sup>, using a partially-sampled uniform random number, as follows: Call the **SampleGeometricBag** algorithm twice on _ret_.  If both of these calls return 1, then accept _ret_. (Alternatively, "...accept _ret_ with probability 1/2", since 1/2 is the third control point and corresponds to both calls returning 1, but the step as given is still correct since it merely moves the upper bound closer to the top of the left piece.)  If _ret_ was accepted, fill _ret_ with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to **FillGeometricBag**), and return _ret_.
+5. If 2, 3, 4, or 5 was chosen by step 2, we will sample from the middle piece of the density, which runs along the interval [1, 2) and is a Bernstein polynomial with control points (1/2, 1, 1/2).  Call the **SampleGeometricBag** algorithm twice on _ret_.  If neither or both of these calls return 1, then accept _ret_.  Otherwise, if one of these calls returns 1 and the other 0, then accept _ret_ with probability 1/2.  If _ret_ was accepted, fill _ret_ as given in step 4 and return 1 + _ret_.
+6. If 1 was chosen by step 2, we will sample from the right piece of the density, which runs along the interval [2, 1) and is a Bernstein polynomial with control points (1/2, 0, 0).  Call the **SampleGeometricBag** algorithm twice on _ret_.  If both of these calls return 0, then accept _ret_. (Alternatively, "...accept _ret_ with probability 1/2", 1/2 is the first control point and corresponds to both calls returning 0, but the step is given is still correct.)  If _ret_ was accepted, fill _ret_ as given in step 4 and return 2 + _ret_.
+7. Go to step 3.
 
 And here is Python code that implements this algorithm.
 
@@ -149,21 +169,20 @@ And here is Python code that implements this algorithm.
 def sum_of_uniform3(bern):
     """ Exact simulation of the sum of three uniform
           random numbers. """
+    r=6
+    while r>=6:
+       r=bern.randbit() + bern.randbit() * 2 + bern.randbit() * 4
     while True:
        # Choose a piece of the PDF uniformly (but
        # not by area).
-       r=4
-       while r>=4:
-          r=bern.randbit() + bern.randbit() * 2
        bag=[]
        if r==0:
           # Left piece
-          if bern.randbit() == 0 and \
-             bern.geometric_bag(bag) == 1 and \
+          if bern.geometric_bag(bag) == 1 and \
              bern.geometric_bag(bag) == 1:
               # Accepted
              return bern.fill_geometric_bag(bag)
-       elif r==1 or r==3:
+       elif r<=4:
           # Middle piece
           ones=bern.geometric_bag(bag) + bern.geometric_bag(bag)
           if (ones == 0 or ones == 2) and bern.randbit() == 0:
@@ -189,6 +208,8 @@ def sum_of_uniform3(bern):
 <small><sup id=Note2>(2)</sup> Goyal, V. and Sigman, K., 2012. On simulating a class of Bernstein polynomials. ACM Transactions on Modeling and Computer Simulation (TOMACS), 22(2), pp.1-5.</small>
 
 <small><sup id=Note3>(3)</sup> S. Ray, P.S.V. Nataraj, "A Matrix Method for Efficient Computation of Bernstein Coefficients", _Reliable Computing_ 17(1), 2012.</small>
+
+<small><sup id=Note4>(4)</sup> Saad, F.A., Freer C.E., et al., "[The Fast Loaded Dice Roller: A Near-Optimal Exact Sampler for Discrete Probability Distributions](https://arxiv.org/abs/2003.03830v2)", arXiv:2003.03830v2 [stat.CO], also in AISTATS 2020: Proceedings of the 23rd International Conference on Artificial Intelligence and Statistics, Proceedings of Machine Learning Research 108, Palermo, Sicily, Italy, 2020.</small>
 
 <a id=License></a>
 ## License
