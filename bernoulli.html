@@ -55,9 +55,11 @@
 <li><a href="#1_minus_log_1_lambda"><strong>1 &minus; log(1+&lambda;)</strong></a></li>
 <li><a href="#c__lambda_beta_beta__c__lambda__d__mu_minus_beta_minus_1__c___d"><strong><em>c</em> * &lambda; * &beta; / (&beta; * (<em>c</em> * &lambda; + <em>d</em> * &mu;) &minus; (&beta; &minus; 1) * (<em>c</em> + <em>d</em>))</strong></a></li>
 <li><a href="#c__lambda__c__lambda__d__or__c___d__lambda_1__c___d__lambda"><strong><em>c</em> * &lambda; / (<em>c</em> * &lambda; + <em>d</em>) or (<em>c</em>/<em>d</em>) * &lambda; / (1 + (<em>c</em>/<em>d</em>) * &lambda;))</strong></a></li>
+<li><a href="#1__c__lambda"><strong>1 / (<em>c</em> + &lambda;)</strong></a></li>
+<li><a href="#d___c__lambda"><strong><em>d</em> / (<em>c</em> + &lambda;)</strong></a></li>
 <li><a href="#lambda_mu"><strong>&lambda; + &mu;</strong></a></li>
 <li><a href="#lambda_minus_mu"><strong>&lambda; &minus; &mu;</strong></a></li>
-<li><a href="#1__c__lambda"><strong>1/(<em>c</em> + &lambda;)</strong></a></li>
+<li><a href="#1__c__lambda_2"><strong>1/(<em>c</em> + &lambda;)</strong></a></li>
 <li><a href="#1_minus_lambda"><strong>1 &minus; &lambda;</strong></a></li>
 <li><a href="#nu_lambda_1_minus_nu_mu"><strong>&nu; * &lambda; + (1 &minus; &nu;) * &mu;</strong></a></li>
 <li><a href="#lambda_mu_minus_lambda_mu"><strong>&lambda; + &mu; &minus; (&lambda; * &mu;)</strong></a></li>
@@ -380,6 +382,28 @@
 
 <p>(Note that Huber [2016] specifies this Bernoulli factory in terms of a Poisson point process, which seems to require much more randomness on average.)</p>
 
+<p><a id=1__c__lambda></a></p>
+
+<h4>1 / (<em>c</em> + &lambda;)</h4>
+
+<p>In this algorithm, <em>c</em> must be 1 or greater.  For example, this algorithm can simulate a probability of the form 1 / <em>z</em>, where <em>z</em> is greater than 0 and made up of an integer part (<em>c</em>) and a fractional part (&lambda;) that can be simulated by a Bernoulli factory.  See also the algorithms for continued fractions.</p>
+
+<ol>
+<li>With probability <em>c</em> / (1 + <em>c</em>), return a number that is 1 with probability 1/<em>c</em> and 0 otherwise.</li>
+<li>Flip the input coin.  If the coin returns 1, return 0.  Otherwise, go to step 1.</li>
+</ol>
+
+<p><a id=d___c__lambda></a></p>
+
+<h4><em>d</em> / (<em>c</em> + &lambda;)</h4>
+
+<p>In this algorithm, <em>c</em> must be 1 or greater and <em>d</em> must be in the interval [0, <em>c</em>].  See also the algorithms for continued fractions.</p>
+
+<ol>
+<li>With probability <em>c</em> / (1 + <em>c</em>), return a number that is 1 with probability <em>d</em>/<em>c</em> and 0 otherwise.</li>
+<li>Flip the input coin.  If the coin returns 1, return 0.  Otherwise, go to step 1.</li>
+</ol>
+
 <p><a id=lambda_mu></a></p>
 
 <h4>&lambda; + &mu;</h4>
@@ -402,7 +426,7 @@
 <li>Call the <strong>2014 algorithm</strong>, the <strong>2016 algorithm</strong>, or the <strong>2019 algorithm</strong>, described later, using the &nu; input coin, <em>x</em>/<em>y</em> = 2/1, <em>i</em> = 1 (for the 2019 algorithm), and &#x03F5; = &#x03F5;, and return 1 minus the result.</li>
 </ol>
 
-<p><a id=1__c__lambda></a></p>
+<p><a id=1__c__lambda_2></a></p>
 
 <h4>1/(<em>c</em> + &lambda;)</h4>
 
@@ -1403,7 +1427,7 @@
 
 <p><small><sup id=Note12>(12)</sup> Another algorithm for this function uses the general martingale algorithm, but uses more bits on average as &lambda; approaches 1.  Here, the alternating series is <code>1 - x + x^2/2 - x^3/3 + ...</code>, whose coefficients are 1, 1, 1/2, 1/3, ...</small></p>
 
-<p><small><sup id=Note13>(13)</sup> Vats, D., Gonçalves, F. B., Łatuszyński, K. G., Roberts, G. O. Efficient Bernoulli factory MCMC for intractable likelihoods, arXiv:2004.07471v1 [stat.CO], 2020.</small></p>
+<p><small><sup id=Note13>(13)</sup> Vats, D., Gonçalves, F. B., Łatuszyński, K. G., Roberts, G. O. &quot;<a href="https://arxiv.org/abs/2004.07471v1">Efficient Bernoulli factory MCMC for intractable likelihoods</a>&quot;, arXiv:2004.07471v1 [stat.CO], 2020.</small></p>
 
 <p><small><sup id=Note14>(14)</sup> Huber, M., &quot;<a href="https://arxiv.org/abs/1507.00843v2"><strong>Optimal linear Bernoulli factories for small mean problems</strong></a>&quot;, arXiv:1507.00843v2 [math.PR], 2016.</small></p>
 

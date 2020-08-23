@@ -1,8 +1,8 @@
-# Arbitrary-Precision Samplers for the Sum of Uniform Random Numbers
+# Arbitrary-Precision Samplers for the Sum and Ratio of Uniform Random Numbers
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-This page presents new algorithms to sample the sum of uniform(0, 1) random numbers, with the help of [**partially-sampled random numbers**](https://peteroupc.github.io/exporand.html), with arbitrary precision and without relying on floating-point arithmetic.  See that page for more information on some of the algorithms made use of here, including **SampleGeometricBag** and **FillGeometricBag**.
+This page presents new algorithms to sample the sum of uniform(0, 1) random numbers and the ratio of two uniform(0, 1) random numbers, with the help of [**partially-sampled random numbers**](https://peteroupc.github.io/exporand.html), with arbitrary precision and without relying on floating-point arithmetic.  See that page for more information on some of the algorithms made use of here, including **SampleGeometricBag** and **FillGeometricBag**.
 
 <a id=About_the_Uniform_Sum_Distribution></a>
 ## About the Uniform Sum Distribution
@@ -33,7 +33,7 @@ The samplers given below for the uniform sum logically work as follows:
 <a id=Finding_Parameters></a>
 ## Finding Parameters
 
-Using this sampler for an arbitrary _n_ requires finding the Bernstein control points for each of the _n_ pieces of the uniform sum density.  This can be found, for example, with the Python code below, which uses the SymPy computer algebra library.  In the code:
+Using the uniform sum sampler for an arbitrary _n_ requires finding the Bernstein control points for each of the _n_ pieces of the uniform sum density.  This can be found, for example, with the Python code below, which uses the SymPy computer algebra library.  In the code:
 
 - `unifsum(x,n,v)` calculates the density function of the sum of `n` uniform random numbers when the variable `x` is shifted by `v` units.
 - `find_control_points` prints out the control points for each piece of the density for the sum of `n` uniform random numbers, starting with piece 0.
@@ -200,6 +200,71 @@ def sum_of_uniform3(bern):
              return 2.0 + bern.fill_geometric_bag(bag)
 ```
 
+<a id=Ratio_of_Two_Uniform_Random_Numbers></a>
+### Ratio of Two Uniform Random Numbers
+
+The ratio of two uniform(0,1) random numbers has the following density function (see [**MathWorld**](https://mathworld.wolfram.com/UniformRatioDistribution.html)):
+
+- 1/2 if _x_ >= 0 and _x_ <= 1,
+- ( 1/ _x_<sup>2</sup>) / 2 if _x_ > 1, and
+- 0 otherwise.
+
+The following algorithm simulates this density.
+
+1. With probability 1/2, return either an empty uniform PSRN or a uniform random number in [0, 1) whose fractional part contains the desired number of digits.
+2. At this point, the result will be 1 or greater.  Set _intval_ to 1 and set _size_ to 1.
+3. With probability 1/2, add _size_ to _intval_, then multiply _size_ by 2, then repeat this step.  (This step chooses an interval beyond 1, taking advantage of the fact that the area under the density between 1 and 2 is 1/4, between 2 and 4 is 1/8, between 4 and 8 is 1/16, and so on, so that an appropriate interval is chosen with the correct probability.)
+4. Generate an integer in the interval [_intval_, _intval_ + _size_) uniformly at random, call it _i_.
+5. Create an empty uniform PSRN, _ret_.
+6. Call the **sub-algorithm** below with _d_ = _intval_ and _c_ = _i_.  If the call returns 0, go to step 4.  (Here we simulate _intval_/(_i_+&lambda;) rather than 1/(_i_+&lambda;) in order to increase acceptance rates in this step.  This is possible without affecting the algorithm's correctness.)
+7. Call the **sub-algorithm** below with _d_ = 1 and _c_ = _i_.  If the call returns 0, go to step 4.
+8. The PSRN _ret_ was accepted, so fill it with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to **FillGeometricBag**), and return _i_ + _ret_.
+
+The algorithm above uses a sub-algorithm that simulates the probability _d_ / (_c_ + &lambda;), where &lambda; is the probability built up by the uniform PSRN, as follows:
+
+1. With probability _c_ / (1 + _c_), return a number that is 1 with probability _d_/_c_ and 0 otherwise.
+2. Call **SampleGeometricBag** on _ret_ (the uniform PSRN).  If the call returns 1, return 0.  Otherwise, go to step 1.
+
+And the following Python code implements this algorithm.
+
+```
+def numerator_div(bern, numerator, intpart, bag):
+   # Simulates numerator/(intpart+bag)
+   while True:
+      if bern.zero_or_one(intpart,1+intpart)==1:
+         return bern.zero_or_one(numerator,intpart)
+      if bern.geometric_bag(bag)==1: return 0
+
+def ratio_of_uniform(bern):
+    """ Exact simulation of the ratio of uniform random numbers."""
+    # First, simulate the integer part
+    if bern.randbit():
+       # This is 0 to 1, which follows a uniform distribution
+       bag=[]
+       return bern.fill_geometric_bag(bag)
+    else:
+       # This is 1 or greater
+       intval=1
+       size=1
+       count=0
+       # Determine which range of integer parts to draw
+       while True:
+           if bern.randbit()==1:
+                break
+           intval+=size
+           size*=2
+           count+=1
+       while True:
+         # Draw the integer part
+         intpart=random.randint(0, size-1) + intval
+         bag=[]
+         # Note: Density at [intval,intval+size) is multiplied
+         # by intval, to increase acceptance rates
+         if numerator_div(bern,intval,intpart,bag)==1 and \
+            numerator_div(bern,1,intpart,bag)==1:
+             return intpart + bern.fill_geometric_bag(bag)
+```
+
 <a id=Notes></a>
 ## Notes
 
@@ -209,7 +274,7 @@ def sum_of_uniform3(bern):
 
 <small><sup id=Note3>(3)</sup> S. Ray, P.S.V. Nataraj, "A Matrix Method for Efficient Computation of Bernstein Coefficients", _Reliable Computing_ 17(1), 2012.</small>
 
-<small><sup id=Note4>(4)</sup> Saad, F.A., Freer C.E., et al., "[The Fast Loaded Dice Roller: A Near-Optimal Exact Sampler for Discrete Probability Distributions](https://arxiv.org/abs/2003.03830v2)", arXiv:2003.03830v2 [stat.CO], also in AISTATS 2020: Proceedings of the 23rd International Conference on Artificial Intelligence and Statistics, Proceedings of Machine Learning Research 108, Palermo, Sicily, Italy, 2020.</small>
+<small><sup id=Note4>(4)</sup> Saad, F.A., Freer C.E., et al., "[**The Fast Loaded Dice Roller: A Near-Optimal Exact Sampler for Discrete Probability Distributions**](https://arxiv.org/abs/2003.03830v2)", arXiv:2003.03830v2 [stat.CO], also in AISTATS 2020: Proceedings of the 23rd International Conference on Artificial Intelligence and Statistics, Proceedings of Machine Learning Research 108, Palermo, Sicily, Italy, 2020.</small>
 
 <a id=License></a>
 ## License

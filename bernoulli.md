@@ -39,9 +39,11 @@ This page is focused on sampling methods that _exactly_ simulate the probability
         - [**1 &minus; log(1+&lambda;)**](#1_minus_log_1_lambda)
         - [**_c_ * &lambda; * &beta; / (&beta; * (_c_ * &lambda; + _d_ * &mu;) &minus; (&beta; &minus; 1) * (_c_ + _d_))**](#c__lambda_beta_beta__c__lambda__d__mu_minus_beta_minus_1__c___d)
         - [**_c_ * &lambda; / (_c_ * &lambda; + _d_) or (_c_/_d_) * &lambda; / (1 + (_c_/_d_) * &lambda;))**](#c__lambda__c__lambda__d__or__c___d__lambda_1__c___d__lambda)
+        - [**1 / (_c_ + &lambda;)**](#1__c__lambda)
+        - [**_d_ / (_c_ + &lambda;)**](#d___c__lambda)
         - [**&lambda; + &mu;**](#lambda_mu)
         - [**&lambda; &minus; &mu;**](#lambda_minus_mu)
-        - [**1/(_c_ + &lambda;)**](#1__c__lambda)
+        - [**1/(_c_ + &lambda;)**](#1__c__lambda_2)
         - [**1 &minus; &lambda;**](#1_minus_lambda)
         - [**&nu; * &lambda; + (1 &minus; &nu;) * &mu;**](#nu_lambda_1_minus_nu_mu)
         - [**&lambda; + &mu; &minus; (&lambda; * &mu;)**](#lambda_mu_minus_lambda_mu)
@@ -284,7 +286,7 @@ Invert the result of the algorithm for log(1+&lambda;) (make it 1 if it's 0 and 
 <a id=c__lambda_beta_beta__c__lambda__d__mu_minus_beta_minus_1__c___d></a>
 #### _c_ * &lambda; * &beta; / (&beta; * (_c_ * &lambda; + _d_ * &mu;) &minus; (&beta; &minus; 1) * (_c_ + _d_))
 
-This is the general two-coin algorithm of (Gonçalves et al., 2017)<sup>[**(11)**](#Note11)</sup> and (Vats et al. 2020)<sup>[**(13)**](#Note13)</sup>.  It takes two input coins that each output heads (1) with probability &lambda; or &mu;, respectively.  It also takes a parameter &beta; in the interval [0, 1], which is a so-called "portkey" or early rejection parameter (when &beta; = 1, the formula simplifies to _c_ * &lambda; / (_c_ * &lambda; + _d_ * &mu;)).
+This is the general two-coin algorithm of (Gonçalves et al., 2017)<sup>[**(11)**](#Note11)</sup> and (Vats et al. 2020)<sup>[**(13)**](#Note13)</sup>.  It takes two input coins that each output heads (1) with probability &lambda; or &mu;, respectively.  It also takes a parameter &beta; in the interval \[0, 1\], which is a so-called "portkey" or early rejection parameter (when &beta; = 1, the formula simplifies to _c_ * &lambda; / (_c_ * &lambda; + _d_ * &mu;)).
 
 1. With probability &beta;, go to step 2.  Otherwise, return 0. (For example, call `ZeroOrOne` with &beta;'s numerator and denominator, and return 0 if that call returns 0, or go to step 2 otherwise.)
 2. With probability _c_ / (_c_ + _d_), flip the &lambda; input coin.  Otherwise, flip the &mu; input coin.  If the &lambda; input coin returns 1, return 1.  If the &mu; input coin returns 1, return 0.  If the corresponding coin returns 0, go to step 1.
@@ -298,6 +300,22 @@ This algorithm, also known as the **logistic Bernoulli factory** (Huber 2016)<su
 2. Flip the input coin.  If the coin returns 1, return 1.  Otherwise, go to step 1.
 
 (Note that Huber \[2016\] specifies this Bernoulli factory in terms of a Poisson point process, which seems to require much more randomness on average.)
+
+<a id=1__c__lambda></a>
+#### 1 / (_c_ + &lambda;)
+
+In this algorithm, _c_ must be 1 or greater.  For example, this algorithm can simulate a probability of the form 1 / _z_, where _z_ is greater than 0 and made up of an integer part (_c_) and a fractional part (&lambda;) that can be simulated by a Bernoulli factory.  See also the algorithms for continued fractions.
+
+1. With probability _c_ / (1 + _c_), return a number that is 1 with probability 1/_c_ and 0 otherwise.
+2. Flip the input coin.  If the coin returns 1, return 0.  Otherwise, go to step 1.
+
+<a id=d___c__lambda></a>
+#### _d_ / (_c_ + &lambda;)
+
+In this algorithm, _c_ must be 1 or greater and _d_ must be in the interval \[0, _c_\].  See also the algorithms for continued fractions.
+
+1. With probability _c_ / (1 + _c_), return a number that is 1 with probability _d_/_c_ and 0 otherwise.
+2. Flip the input coin.  If the coin returns 1, return 0.  Otherwise, go to step 1.
 
 <a id=lambda_mu></a>
 #### &lambda; + &mu;
@@ -315,7 +333,7 @@ This algorithm, also known as the **logistic Bernoulli factory** (Huber 2016)<su
 1. Create a &nu; input coin that does the following: "With probability 1/2, flip the &lambda; input coin and return **1 minus the result**.  Otherwise, flip the &mu; input coin and return the result."
 2. Call the **2014 algorithm**, the **2016 algorithm**, or the **2019 algorithm**, described later, using the &nu; input coin, _x_/_y_ = 2/1, _i_ = 1 (for the 2019 algorithm), and &#x03F5; = &#x03F5;, and return 1 minus the result.
 
-<a id=1__c__lambda></a>
+<a id=1__c__lambda_2></a>
 #### 1/(_c_ + &lambda;)
 
 Works only if _c_ > 0.
@@ -932,7 +950,7 @@ Points with invalid &#x03F5; values were suppressed.  For the low-mean algorithm
 
 <small><sup id=Note12>(12)</sup> Another algorithm for this function uses the general martingale algorithm, but uses more bits on average as &lambda; approaches 1.  Here, the alternating series is `1 - x + x^2/2 - x^3/3 + ...`, whose coefficients are 1, 1, 1/2, 1/3, ...</small>
 
-<small><sup id=Note13>(13)</sup> Vats, D., Gonçalves, F. B., Łatuszyński, K. G., Roberts, G. O. Efficient Bernoulli factory MCMC for intractable likelihoods, arXiv:2004.07471v1 [stat.CO], 2020.</small>
+<small><sup id=Note13>(13)</sup> Vats, D., Gonçalves, F. B., Łatuszyński, K. G., Roberts, G. O. "[Efficient Bernoulli factory MCMC for intractable likelihoods](https://arxiv.org/abs/2004.07471v1)", arXiv:2004.07471v1 [stat.CO], 2020.</small>
 
 <small><sup id=Note14>(14)</sup> Huber, M., "[**Optimal linear Bernoulli factories for small mean problems**](https://arxiv.org/abs/1507.00843v2)", arXiv:1507.00843v2 [math.PR], 2016.</small>
 
