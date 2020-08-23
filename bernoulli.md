@@ -40,7 +40,9 @@ This page is focused on sampling methods that _exactly_ simulate the probability
         - [**_c_ * &lambda; * &beta; / (&beta; * (_c_ * &lambda; + _d_ * &mu;) &minus; (&beta; &minus; 1) * (_c_ + _d_))**](#c__lambda_beta_beta__c__lambda__d__mu_minus_beta_minus_1__c___d)
         - [**_c_ * &lambda; / (_c_ * &lambda; + _d_) or (_c_/_d_) * &lambda; / (1 + (_c_/_d_) * &lambda;))**](#c__lambda__c__lambda__d__or__c___d__lambda_1__c___d__lambda)
         - [**1 / (_c_ + &lambda;)**](#1__c__lambda)
+        - [**(_d_ + &lambda;) / _c_**](#d__lambda__c)
         - [**_d_ / (_c_ + &lambda;)**](#d___c__lambda)
+        - [**(_d_ + &mu;) / (_c_ + &lambda;)**](#d__mu__c__lambda)
         - [**&lambda; + &mu;**](#lambda_mu)
         - [**&lambda; &minus; &mu;**](#lambda_minus_mu)
         - [**1/(_c_ + &lambda;)**](#1__c__lambda_2)
@@ -309,6 +311,14 @@ In this algorithm, _c_ must be 1 or greater.  For example, this algorithm can si
 1. With probability _c_ / (1 + _c_), return a number that is 1 with probability 1/_c_ and 0 otherwise.
 2. Flip the input coin.  If the coin returns 1, return 0.  Otherwise, go to step 1.
 
+<a id=d__lambda__c></a>
+#### (_d_ + &lambda;) / _c_
+
+This algorithm currently works only if _d_ and _c_ are integers and 0 <= _d_ < _c_.
+
+1. Generate an integer in [0, _c_) uniformly at random, call it _i_.
+2. If _i_ < _d_, return 1.  If _i_ = _d_, flip the input coin and return the result.  If neither is the case, go to step 1.
+
 <a id=d___c__lambda></a>
 #### _d_ / (_c_ + &lambda;)
 
@@ -316,6 +326,16 @@ In this algorithm, _c_ must be 1 or greater and _d_ must be in the interval \[0,
 
 1. With probability _c_ / (1 + _c_), return a number that is 1 with probability _d_/_c_ and 0 otherwise.
 2. Flip the input coin.  If the coin returns 1, return 0.  Otherwise, go to step 1.
+
+<a id=d__mu__c__lambda></a>
+#### (_d_ + &mu;) / (_c_ + &lambda;)
+
+Combines the algorithms in the previous two sections.  This algorithm currently works only if _d_ and _c_ are integers and 0 <= _d_ < _c_.
+
+1. With probability _c_ / (1 + _c_), do the following:
+    1. Generate an integer in [0, _c_) uniformly at random, call it _i_.
+    2. If _i_ < _d_, return 1.  If _i_ = _d_, flip the &mu; input coin and return the result.  If neither is the case, go to the previous substep.
+2. Flip the &lambda; input coin.  If the coin returns 1, return 0.  Otherwise, go to step 1.
 
 <a id=lambda_mu></a>
 #### &lambda; + &mu;
@@ -950,7 +970,7 @@ Points with invalid &#x03F5; values were suppressed.  For the low-mean algorithm
 
 <small><sup id=Note12>(12)</sup> Another algorithm for this function uses the general martingale algorithm, but uses more bits on average as &lambda; approaches 1.  Here, the alternating series is `1 - x + x^2/2 - x^3/3 + ...`, whose coefficients are 1, 1, 1/2, 1/3, ...</small>
 
-<small><sup id=Note13>(13)</sup> Vats, D., Gonçalves, F. B., Łatuszyński, K. G., Roberts, G. O. "[Efficient Bernoulli factory MCMC for intractable likelihoods](https://arxiv.org/abs/2004.07471v1)", arXiv:2004.07471v1 [stat.CO], 2020.</small>
+<small><sup id=Note13>(13)</sup> Vats, D., Gonçalves, F. B., Łatuszyński, K. G., Roberts, G. O. "[**Efficient Bernoulli factory MCMC for intractable likelihoods**](https://arxiv.org/abs/2004.07471v1)", arXiv:2004.07471v1 [stat.CO], 2020.</small>
 
 <small><sup id=Note14>(14)</sup> Huber, M., "[**Optimal linear Bernoulli factories for small mean problems**](https://arxiv.org/abs/1507.00843v2)", arXiv:1507.00843v2 [math.PR], 2016.</small>
 

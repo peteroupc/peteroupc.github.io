@@ -1,4 +1,4 @@
-# Arbitrary-Precision Samplers for the Sum and Ratio of Uniform Random Numbers
+# Arbitrary-Precision Samplers for the Sum or Ratio of Uniform Random Numbers
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
@@ -201,7 +201,7 @@ def sum_of_uniform3(bern):
 ```
 
 <a id=Ratio_of_Two_Uniform_Random_Numbers></a>
-### Ratio of Two Uniform Random Numbers
+## Ratio of Two Uniform Random Numbers
 
 The ratio of two uniform(0,1) random numbers has the following density function (see [**MathWorld**](https://mathworld.wolfram.com/UniformRatioDistribution.html)):
 

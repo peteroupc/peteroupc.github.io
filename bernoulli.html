@@ -56,7 +56,9 @@
 <li><a href="#c__lambda_beta_beta__c__lambda__d__mu_minus_beta_minus_1__c___d"><strong><em>c</em> * &lambda; * &beta; / (&beta; * (<em>c</em> * &lambda; + <em>d</em> * &mu;) &minus; (&beta; &minus; 1) * (<em>c</em> + <em>d</em>))</strong></a></li>
 <li><a href="#c__lambda__c__lambda__d__or__c___d__lambda_1__c___d__lambda"><strong><em>c</em> * &lambda; / (<em>c</em> * &lambda; + <em>d</em>) or (<em>c</em>/<em>d</em>) * &lambda; / (1 + (<em>c</em>/<em>d</em>) * &lambda;))</strong></a></li>
 <li><a href="#1__c__lambda"><strong>1 / (<em>c</em> + &lambda;)</strong></a></li>
+<li><a href="#d__lambda__c"><strong>(<em>d</em> + &lambda;) / <em>c</em></strong></a></li>
 <li><a href="#d___c__lambda"><strong><em>d</em> / (<em>c</em> + &lambda;)</strong></a></li>
+<li><a href="#d__mu__c__lambda"><strong>(<em>d</em> + &mu;) / (<em>c</em> + &lambda;)</strong></a></li>
 <li><a href="#lambda_mu"><strong>&lambda; + &mu;</strong></a></li>
 <li><a href="#lambda_minus_mu"><strong>&lambda; &minus; &mu;</strong></a></li>
 <li><a href="#1__c__lambda_2"><strong>1/(<em>c</em> + &lambda;)</strong></a></li>
@@ -393,6 +395,17 @@
 <li>Flip the input coin.  If the coin returns 1, return 0.  Otherwise, go to step 1.</li>
 </ol>
 
+<p><a id=d__lambda__c></a></p>
+
+<h4>(<em>d</em> + &lambda;) / <em>c</em></h4>
+
+<p>This algorithm currently works only if <em>d</em> and <em>c</em> are integers and 0 &lt;= <em>d</em> &lt; <em>c</em>.</p>
+
+<ol>
+<li>Generate an integer in [0, <em>c</em>) uniformly at random, call it <em>i</em>.</li>
+<li>If <em>i</em> &lt; <em>d</em>, return 1.  If <em>i</em> = <em>d</em>, flip the input coin and return the result.  If neither is the case, go to step 1.</li>
+</ol>
+
 <p><a id=d___c__lambda></a></p>
 
 <h4><em>d</em> / (<em>c</em> + &lambda;)</h4>
@@ -402,6 +415,22 @@
 <ol>
 <li>With probability <em>c</em> / (1 + <em>c</em>), return a number that is 1 with probability <em>d</em>/<em>c</em> and 0 otherwise.</li>
 <li>Flip the input coin.  If the coin returns 1, return 0.  Otherwise, go to step 1.</li>
+</ol>
+
+<p><a id=d__mu__c__lambda></a></p>
+
+<h4>(<em>d</em> + &mu;) / (<em>c</em> + &lambda;)</h4>
+
+<p>Combines the algorithms in the previous two sections.  This algorithm currently works only if <em>d</em> and <em>c</em> are integers and 0 &lt;= <em>d</em> &lt; <em>c</em>.</p>
+
+<ol>
+<li>With probability <em>c</em> / (1 + <em>c</em>), do the following:
+
+<ol>
+<li>Generate an integer in [0, <em>c</em>) uniformly at random, call it <em>i</em>.</li>
+<li>If <em>i</em> &lt; <em>d</em>, return 1.  If <em>i</em> = <em>d</em>, flip the &mu; input coin and return the result.  If neither is the case, go to the previous substep.</li>
+</ol></li>
+<li>Flip the &lambda; input coin.  If the coin returns 1, return 0.  Otherwise, go to step 1.</li>
 </ol>
 
 <p><a id=lambda_mu></a></p>
@@ -1427,7 +1456,7 @@
 
 <p><small><sup id=Note12>(12)</sup> Another algorithm for this function uses the general martingale algorithm, but uses more bits on average as &lambda; approaches 1.  Here, the alternating series is <code>1 - x + x^2/2 - x^3/3 + ...</code>, whose coefficients are 1, 1, 1/2, 1/3, ...</small></p>
 
-<p><small><sup id=Note13>(13)</sup> Vats, D., Gonçalves, F. B., Łatuszyński, K. G., Roberts, G. O. &quot;<a href="https://arxiv.org/abs/2004.07471v1">Efficient Bernoulli factory MCMC for intractable likelihoods</a>&quot;, arXiv:2004.07471v1 [stat.CO], 2020.</small></p>
+<p><small><sup id=Note13>(13)</sup> Vats, D., Gonçalves, F. B., Łatuszyński, K. G., Roberts, G. O. &quot;<a href="https://arxiv.org/abs/2004.07471v1"><strong>Efficient Bernoulli factory MCMC for intractable likelihoods</strong></a>&quot;, arXiv:2004.07471v1 [stat.CO], 2020.</small></p>
 
 <p><small><sup id=Note14>(14)</sup> Huber, M., &quot;<a href="https://arxiv.org/abs/1507.00843v2"><strong>Optimal linear Bernoulli factories for small mean problems</strong></a>&quot;, arXiv:1507.00843v2 [math.PR], 2016.</small></p>
 
