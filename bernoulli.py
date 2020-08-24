@@ -599,6 +599,27 @@ class Bernoulli:
                 return 0
             i = i + 1
 
+    def a_div_b_bag(self, numerator, intpart, bag):
+        """ Simulates numerator/(intpart+bag). """
+        while True:
+            if self.zero_or_one(intpart, 1 + intpart) == 1:
+                return self.zero_or_one(numerator, intpart)
+            if self.geometric_bag(bag) == 1:
+                return 0
+
+    def a_bag_div_b_bag(selfnumerator, numbag, intpart, bag):
+        """ Simulates (numerator+numbag)/(intpart+bag). """
+        while True:
+            if self.zero_or_one(intpart, 1 + intpart) == 1:
+                while True:
+                    i = self.rndintexc(intpart)
+                    if i < numerator:
+                        return 1
+                    if i == numerator:
+                        return self.geometric_bag(numbag)
+            if self.geometric_bag(bag) == 1:
+                return 0
+
     def _zero_or_one_power_frac(self, px, py, nx, ny):
         # Generates a random number, namely 1 with
         # probability (px/py)^(nx/ny) (where nx/ny is in (0, 1)),
@@ -1125,10 +1146,14 @@ class _FastLoadedDiceRoller:
 
     def _toWeights(self, numbers):
         ret = [Fraction(r) for r in numbers]
-        # NOTE: Takes advantage of Fraction's automatic
-        # lowest-terms conversion
-        wsum = sum(ret)
-        return [int(x * wsum.denominator) for x in ret]
+        prod = 1
+        for v in ret:
+            prod *= v.denominator
+        ret = [int(v * prod) for v in ret]
+        gc = 0
+        for v in ret:
+            gc = math.gcd(gc, v)
+        return [v // gc for v in ret]
 
     def __init__(self, weights):
         self.n = len(weights)

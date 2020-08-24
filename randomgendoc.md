@@ -1631,6 +1631,12 @@ CLASSES
      |  __init__(self)
      |      Creates a new instance of the Bernoulli class.
      |
+     |  a_bag_div_b_bag(selfnumerator, numbag, intpart, bag)
+     |      Simulates (numerator+numbag)/(intpart+bag).
+     |
+     |  a_div_b_bag(self, numerator, intpart, bag)
+     |      Simulates numerator/(intpart+bag).
+     |
      |  add(self, f1, f2, eps=Fraction(1, 20))
      |      Addition Bernoulli factory: B(p), B(q) => B(p+q) (Dughmi et al. 2017)
      |      - f1, f2: Functions that return 1 if heads and 0 if tails.

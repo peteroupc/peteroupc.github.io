@@ -36,8 +36,8 @@ The samplers given below for the uniform sum logically work as follows:
 Using the uniform sum sampler for an arbitrary _n_ requires finding the Bernstein control points for each of the _n_ pieces of the uniform sum density.  This can be found, for example, with the Python code below, which uses the SymPy computer algebra library.  In the code:
 
 - `unifsum(x,n,v)` calculates the density function of the sum of `n` uniform random numbers when the variable `x` is shifted by `v` units.
-- `find_control_points` prints out the control points for each piece of the density for the sum of `n` uniform random numbers, starting with piece 0.
-- `find_areas` prints out the areas for each piece of that density.  This can be useful to implement a variant of the sampler above, as detailed later in this section.
+- `find_control_points` returns the control points for each piece of the density for the sum of `n` uniform random numbers, starting with piece 0.
+- `find_areas` returns the relative areas for each piece of that density.  This can be useful to implement a variant of the sampler above, as detailed later in this section.
 
 ```
 def unifsum(x,n,v):
@@ -52,12 +52,17 @@ def unifsum(x,n,v):
     return ret/(2*factorial(n-1))
 
 def find_areas(n):
-  x=symbols('x', real=True)
-  areas=[integrate(unifsum(x,n,i),(x,0,1)) for i in range(n)]
-  print(areas)
+   x=symbols('x', real=True)
+   areas=[integrate(unifsum(x,n,i),(x,0,1)) for i in range(n)]
+   g=prod([v.q for v in areas])
+   areas=[int(v*g) for v in areas]
+   g=gcd(areas)
+   areas=[v/int(g) for v in areas]
+   return areas
 
-def find_control_points(n):
+def find_control_points(n, scale_pieces=False):
  x=symbols('x', real=True)
+ controls=[]
  for i in range(n):
   # Find the "usual" coefficients of the uniform
   # sum polynomial at offset i.
@@ -76,9 +81,16 @@ def find_control_points(n):
        else:
          mat[j][k]=0
   mat=Matrix(mat)
-  # Print out the Bernstein control points
-  print(mat*coeffs)
-
+  # Get the Bernstein control points
+  mv = mat*coeffs
+  mvc = [Rational(mv[i]) for i in range(n)]
+  maxcoeff = max(mvc)
+  # If requested, scale up control points to raise acceptance rate
+  if scale_pieces:
+     mvc = [v/maxcoeff for v in mvc]
+  mv = [[v.p, v.q] for v in mvc]
+  controls.append(mv)
+ return controls
 ```
 
 The basis matrix is found, for example, as Equation 42 of (Ray and Nataraj 2012)<sup>[**(3)**](#Note3)</sup>.
@@ -101,7 +113,12 @@ For more efficient results, all these control points could be scaled so that the
 | 2 | 1, 1, 1/2, 1/4 |
 | 3 | 1/4, 0, 0, 0 |
 
-Notice that all these control points are rational numbers, and the sampler may have to determine whether an event is true with probability equal to a control point.  For rational numbers like these, it is possible to determine this exactly (using only random bits), using the **ZeroOrOne** method given in my [**article on randomization and sampling methods**](https://peteroupc.github.io/randomfunc.html#Boolean_True_False_Conditions).
+Notice the following:
+
+- All these control points are rational numbers, and the sampler may have to determine whether an event is true with probability equal to a control point.  For rational numbers like these, it is possible to determine this exactly (using only random bits), using the **ZeroOrOne** method given in my [**article on randomization and sampling methods**](https://peteroupc.github.io/randomfunc.html#Boolean_True_False_Conditions).
+- The first and last piece of the density have a predictable set of control points.  Namely the control points are as follows:
+    - Piece 0: 0, 0, ..., 0, 1/((_n_ &minus; 1)!).
+    - Piece _n_ &minus; 1: 1/((_n_ &minus; 1)!), 0, 0, ..., 0.
 
 If the areas of the density's pieces are known in advance (and SymPy makes them easy to find as the `find_areas` method shows), then the sampler could be modified as follows, since each piece is now chosen with probability proportional to the chance that a random number there will be sampled:
 
@@ -211,7 +228,8 @@ The ratio of two uniform(0,1) random numbers has the following density function 
 
 The following algorithm simulates this density.
 
-1. With probability 1/2, return either an empty uniform PSRN or a uniform random number in [0, 1) whose fractional part contains the desired number of digits.
+1. With probability 1/2, we have a uniform(0, 1) random number.  Create an empty uniform PSRN, then either return that PSRN as is or fill it with uniform random digits as necessary to give the number's fractional part the desired number of digits (similarly to **FillGeometricBag**) and return the resulting number.
+return either an empty uniform PSRN or a uniform random number in [0, 1) whose fractional part contains the desired number of digits.
 2. At this point, the result will be 1 or greater.  Set _intval_ to 1 and set _size_ to 1.
 3. With probability 1/2, add _size_ to _intval_, then multiply _size_ by 2, then repeat this step.  (This step chooses an interval beyond 1, taking advantage of the fact that the area under the density between 1 and 2 is 1/4, between 2 and 4 is 1/8, between 4 and 8 is 1/16, and so on, so that an appropriate interval is chosen with the correct probability.)
 4. Generate an integer in the interval [_intval_, _intval_ + _size_) uniformly at random, call it _i_.
@@ -256,7 +274,7 @@ def ratio_of_uniform(bern):
            count+=1
        while True:
          # Draw the integer part
-         intpart=random.randint(0, size-1) + intval
+         intpart=bern.rndintexc(size) + intval
          bag=[]
          # Note: Density at [intval,intval+size) is multiplied
          # by intval, to increase acceptance rates

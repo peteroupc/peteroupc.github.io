@@ -2193,7 +2193,7 @@ Returns 'list'. """
 
     # The von Neumann exponential generator,
     # but using u-rands as defined in Karney.
-    def _expovnbits(self, bits):
+    def _expovnbits(self, bits=53):
         count = 0
         while True:
             y1 = urandnew()
@@ -3377,10 +3377,14 @@ acap - Optional.  A setting used in the optimization process; an
     def _toWeights(self, ratios):
         ret = [self._fpRatio(r) for r in ratios]
         ret = [Fraction(f[0], f[1]) for r in ratios]
-        # NOTE: Takes advantage of Fraction's automatic
-        # lowest-terms conversion
-        wsum = sum(ret)
-        return [int(x * wsum.denominator) for x in ret]
+        prod = 1
+        for v in ret:
+            prod *= v.denominator
+        ret = [int(v * prod) for v in ret]
+        gc = 0
+        for v in ret:
+            gc = math.gcd(gc, v)
+        return [v // gc for v in ret]
 
     def integers_from_pdf(self, pdf, mn, mx, n=1):
         """ Generates one or more random integers from a discrete probability

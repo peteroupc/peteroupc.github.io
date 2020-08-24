@@ -1610,7 +1610,7 @@ If the distribution **is discrete**<sup>[**(50)**](#Note50)</sup>, numbers that 
 1. the chosen points cover all of the distribution, and
 2. the values of the PDF or CDF are calculated exactly, without error (if they are not, though, this method will not introduce any additional error on those values).<sup>[**(51)**](#Note51)</sup>
 
-The pseudocode below shows the following methods that work with a **known PDF** (`PDF(x)`, more properly called _probability mass function_) or a **known CDF** (`CDF(x)`) that outputs floating-point numbers of the form  `FPSignificand` * `FPRadix`<sup>`FPExponent`</sup> (which include Java's `double` and `float`)<sup>[**(52)**](#Note52)</sup>. In the code, `LTDenom(x)` is the lowest-terms denominator of the ratio `x`.
+The pseudocode below shows the following methods that work with a **known PDF** (`PDF(x)`, more properly called _probability mass function_) or a **known CDF** (`CDF(x)`) that outputs floating-point numbers of the form  `FPSignificand` * `FPRadix`<sup>`FPExponent`</sup> (which include Java's `double` and `float`)<sup>[**(52)**](#Note52)</sup>. In the code, `gcd(a, b)` is the greatest common divisor between two numbers (where `gcd(0, a) = gcd(a, 0) = a` whenever `a >= 0`).
 
 - `SampleFP(mini, maxi)` chooses a random number in \[`mini`, `maxi`\] based on a **known PDF** (see also `integers_from_pdf` in the [**Python sample code**](https://peteroupc.github.io/randomgen.zip)).  `InversionSampleFP` is similar, but is based on a **known CDF**; however, `SampleFP` should be used instead where possible.
 - `IntegerWeightsFP(mini, maxi)` generates a list of integer weights for the interval [`mini`, `maxi`] based on a **known PDF**<sup>[**(53)**](#Note53)</sup>. (Alternatively, the weights could be approximated, such as by scaling and rounding [e.g., `round(PDF(i) * mult)`] or by using a more sophisticated algorithm (Saad et al., 2020)<sup>[**(54)**](#Note54)</sup>, but doing so can introduce error.)
@@ -1638,10 +1638,15 @@ The pseudocode below shows the following methods that work with a **known PDF** 
     END METHOD
 
     METHOD NormalizeRatios(ratios)
-      ratioSum = Sum(ratios)
-      denom = LTDenom(ratioSum)
+      prod=1; gc=0
+      for r in ratios: prod*=r[1]
       weights=[]
-      for r in ratios: AddItem(weights, floor(r[0]*denom))
+      for r in ratios
+         rn = floor(r * prod)
+         gc = gcd(rn, gc); AddItem(weights, rn)
+      end
+      if gc==0: return weights
+      for i in 0...size(weights): weights[i]=floor(weights[i]/gc)
       return weights
     END METHOD
 

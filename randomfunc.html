@@ -1963,7 +1963,7 @@ number in the sequence.</li>
 <li>the values of the PDF or CDF are calculated exactly, without error (if they are not, though, this method will not introduce any additional error on those values).<sup><a href="#Note51"><strong>(51)</strong></a></sup></li>
 </ol>
 
-<p>The pseudocode below shows the following methods that work with a <strong>known PDF</strong> (<code>PDF(x)</code>, more properly called <em>probability mass function</em>) or a <strong>known CDF</strong> (<code>CDF(x)</code>) that outputs floating-point numbers of the form  <code>FPSignificand</code> * <code>FPRadix</code><sup><code>FPExponent</code></sup> (which include Java&#39;s <code>double</code> and <code>float</code>)<sup><a href="#Note52"><strong>(52)</strong></a></sup>. In the code, <code>LTDenom(x)</code> is the lowest-terms denominator of the ratio <code>x</code>.</p>
+<p>The pseudocode below shows the following methods that work with a <strong>known PDF</strong> (<code>PDF(x)</code>, more properly called <em>probability mass function</em>) or a <strong>known CDF</strong> (<code>CDF(x)</code>) that outputs floating-point numbers of the form  <code>FPSignificand</code> * <code>FPRadix</code><sup><code>FPExponent</code></sup> (which include Java&#39;s <code>double</code> and <code>float</code>)<sup><a href="#Note52"><strong>(52)</strong></a></sup>. In the code, <code>gcd(a, b)</code> is the greatest common divisor between two numbers (where <code>gcd(0, a) = gcd(a, 0) = a</code> whenever <code>a &gt;= 0</code>).</p>
 
 <ul>
 <li><code>SampleFP(mini, maxi)</code> chooses a random number in [<code>mini</code>, <code>maxi</code>] based on a <strong>known PDF</strong> (see also <code>integers_from_pdf</code> in the <a href="https://peteroupc.github.io/randomgen.zip"><strong>Python sample code</strong></a>).  <code>InversionSampleFP</code> is similar, but is based on a <strong>known CDF</strong>; however, <code>SampleFP</code> should be used instead where possible.</li>
@@ -1993,10 +1993,15 @@ METHOD FPRatio(fp)
 END METHOD
 
 METHOD NormalizeRatios(ratios)
-  ratioSum = Sum(ratios)
-  denom = LTDenom(ratioSum)
+  prod=1; gc=0
+  for r in ratios: prod*=r[1]
   weights=[]
-  for r in ratios: AddItem(weights, floor(r[0]*denom))
+  for r in ratios
+     rn = floor(r * prod)
+     gc = gcd(rn, gc); AddItem(weights, rn)
+  end
+  if gc==0: return weights
+  for i in 0...size(weights): weights[i]=floor(weights[i]/gc)
   return weights
 END METHOD
 
