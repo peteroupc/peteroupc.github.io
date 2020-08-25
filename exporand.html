@@ -95,6 +95,7 @@
 <ul>
 <li><a href="#SymPy_Formula_for_the_algorithm_for_exp_minus__x___y"><strong>SymPy Formula for the algorithm for exp(&minus;<em>x</em>/<em>y</em>)</strong></a></li>
 <li><a href="#Additional_Examples_of_Arbitrary_Precision_Samplers"><strong>Additional Examples of Arbitrary-Precision Samplers</strong></a></li>
+<li><a href="#Equivalence_of_SampleGeometricBag_Algorithms"><strong>Equivalence of SampleGeometricBag Algorithms</strong></a></li>
 </ul></li>
 <li><a href="#License"><strong>License</strong></a></li>
 </ul>
@@ -258,7 +259,16 @@
 <li> Return the item at position <em>N</em>.</li>
 </ol>
 
-<p>For another base (radix), such as 10 for decimal, this can be implemented as <strong>URandLess</strong>, with <strong>a</strong> being an empty uniform PSRN and <strong>b</strong> being the geometric bag. Return 1 if the algorithm returns <code>true</code>, or 0 otherwise.</p>
+<p>For another base (radix), such as 10 for decimal, this can be implemented as follows (based on <strong>URandLess</strong>):</p>
+
+<ol>
+<li>Set <em>i</em> to 0.</li>
+<li>If <strong>a</strong>&#39;s fractional part has <em>i</em> or fewer digits, sample digit <em>i</em> of <strong>a</strong> (positions start at 0 where 0 is the most significant digit after the point, 1 is the next, etc.), and append the result to that fractional part&#39;s digit expansion.  Do the same for <strong>b</strong>.</li>
+<li>Return 0 if <strong>a</strong>&#39;s fractional part is less than <strong>b</strong>&#39;s, or 2 if <strong>a</strong>&#39;s fractional part is greater than <strong>b</strong>&#39;s.</li>
+<li>Add 1 to <em>i</em> and go to step 3.</li>
+</ol>
+
+<p>For more on why these two algorithms are equivalent, see the appendix.</p>
 
 <p><strong>SampleGeometricBagComplement</strong> is the same as the <strong>SampleGeometricBag</strong> algorithm, except the return value is 1 minus the original return value.  The result is that if <strong>SampleGeometricBag</strong> outputs 1 with probability <em>U</em>, <strong>SampleGeometricBagComplement</strong> outputs 1 with probability 1 &minus; <em>U</em>.</p>
 
@@ -1313,6 +1323,17 @@ plot(expminusformula(), xlim=(0,1), ylim=(0,2))
           elif (k&amp;1)==1:
              return randomgen.urandfill(rg,ret,precision)/(1&lt;&lt;precision)
           else: break
+</pre>
+
+<p><a id=Equivalence_of_SampleGeometricBag_Algorithms></a></p>
+
+<h3>Equivalence of SampleGeometricBag Algorithms</h3>
+
+<p>For the <strong>SampleGeometricBag</strong>, there are two versions: one for binary (base 2) and one for other bases.  Here is why these two versions are equivalent in the binary case.  Step 2 of the first algorithm samples a temporary random number <em>N</em>.  This can be implemented by generating unbiased random bits until a zero is generated this way.  There are three cases relevant here.</p>
+
+<pre>- The generated bit is one, which will occur at a 50% chance. This means the bit position is skipped and the algorithm moves on to the next position.  In algorithm 3, this corresponds to moving to step 3 because **a**&#39;s fractional part is equal to **b**&#39;s, which likewise occurs at a 50% chance compared to the fractional parts being unequal (since **a** is fully built up in the course of the algorithm).
+- The generated bit is zero, and the algorithm samples (or retrieves) a zero bit at position _N_, which will occur at a 25% chance. In algorithm 3, this corresponds to returning 0 because **a**&#39;s fractional part is less than **b**&#39;s, which will occur with the same probability.
+- The generated bit is zero, and the algorithm samples (or retrieves) a one bit at position _N_, which will occur at a 25% chance. In algorithm 3, this corresponds to returning 1 because **a**&#39;s fractional part is greater than **b**&#39;s, which will occur with the same probability.
 </pre>
 
 <p><a id=License></a></p>

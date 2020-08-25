@@ -38,7 +38,7 @@ The [**_normal distribution_**](https://en.wikipedia.org/wiki/Normal_distributio
 - `sigma` (&sigma;), the standard deviation, affects how wide the "bell curve" appears. The
 probability that a normally-distributed random number will be within one standard deviation from the mean is about 68.3%; within two standard deviations (2 times `sigma`), about 95.4%; and within three standard deviations, about 99.7%.  (Some publications give &sigma;<sup>2</sup>, or variance, rather than standard deviation, as the second parameter.  In this case, the standard deviation is the variance's square root.)
 
-There are a number of methods for normal random number generation, including the following.  An application can combine some or all of these.
+There are a number of methods for sampling the normal distribution. An application can combine some or all of these.
 
 1. The ratio-of-uniforms method (given as `NormalRatioOfUniforms` below).
 2. In the _Box&ndash;Müller transformation_, `mu + radius * cos(angle)` and `mu + radius * sin(angle)`, where `angle = RNDRANGEMaxExc(0, 2 * pi)` and `radius = sqrt(Expo(0.5)) * sigma`, are two independent normally-distributed random numbers.  The polar method (given as `NormalPolar` below) likewise produces two independent normal random numbers at a time.
@@ -47,7 +47,7 @@ There are a number of methods for normal random number generation, including the
     - The sum of twelve `RNDRANGEMaxExc(0, sigma)` numbers (see Note 13), subtracted by 6 * `sigma`. See `NormalCLT` below, which also includes an optional step to "warp" the random number for better accuracy (Kabal 2000/2019)<sup>[**(2)**](#Note2)</sup> See also [**"Irwin&ndash;Hall distribution" on Wikipedia**](https://en.wikipedia.org/wiki/Irwin%E2%80%93Hall_distribution).  D. Thomas (2014)<sup>[**(3)**](#Note3)</sup>, describes a more general approximation called CLT<sub>k</sub>, which combines `k` uniform random numbers as follows: `RNDU01() - RNDU01() + RNDU01() - ...`.
     - [**Inversions**](#Inverse_Transform_Sampling) of the normal distribution's cumulative distribution function (CDF), including those by Wichura, by Acklam, and by Luu (Luu 2016)<sup>[**(4)**](#Note4)</sup>.  See also [**"A literate program to compute the inverse of the normal CDF"**](https://www.johndcook.com/blog/normal_cdf_inverse/).  Notice that the normal distribution's inverse CDF has no closed form.
 
-For surveys of normal random number generators, see (Thomas et al. 2007)<sup>[**(5)**](#Note5)</sup>, and (Malik and Hemani 2016)<sup>[**(6)**](#Note6)</sup>.
+For surveys of Gaussian samplers, see (Thomas et al. 2007)<sup>[**(5)**](#Note5)</sup>, and (Malik and Hemani 2016)<sup>[**(6)**](#Note6)</sup>.
 
     METHOD NormalRatioOfUniforms(mu, sigma)
         while true
@@ -637,7 +637,7 @@ There are other weighted choice algorithms that don't necessarily take integer w
 - The Knuth and Yao algorithm that generates a DDG tree from the binary expansions of the probabilities, an algorithm that is optimal, or at least nearly so.  This is suggested in exercise 3.4.2 of chapter 15 of (Devroye 1986, p. 1-2)<sup>[**(11)**](#Note11)</sup>, implemented in _randomgen.py_ as the `discretegen` method, and also described in (Roy et al. 2013)<sup>[**(35)**](#Note35)</sup>.  `discretegen` can work with probabilities that are irrational numbers (which have infinite binary expansions) as long as there is a way to calculate the binary expansion "on the fly".
 - The Han and Hoshi algorithm (Han and Hoshi 1997)<sup>[**(36)**](#Note36)</sup> that uses the cumulative probabilities as input and is described in (Devroye and Gravel 2015)<sup>[**(25)**](#Note25)</sup>.  This algorithm comes within 3 bits, on average, of the optimal number of bits.
 
-For all weighted-choice algorithms in this section (except the last two algorithms), floating-point arithmetic and floating-point random number generation (such as `RNDRANGE()`) ought to be avoided, since they often introduce bias in real-world implementations.
+For all weighted-choice algorithms in this section, floating-point arithmetic and floating-point random number generation (such as `RNDRANGE()`) ought to be avoided, since they often introduce bias in real-world implementations.
 
 <a id=A_Note_on_Error_Bounded_Algorithms></a>
 ### A Note on Error-Bounded Algorithms

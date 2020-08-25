@@ -58,7 +58,7 @@
 probability that a normally-distributed random number will be within one standard deviation from the mean is about 68.3%; within two standard deviations (2 times <code>sigma</code>), about 95.4%; and within three standard deviations, about 99.7%.  (Some publications give &sigma;<sup>2</sup>, or variance, rather than standard deviation, as the second parameter.  In this case, the standard deviation is the variance&#39;s square root.)</li>
 </ul>
 
-<p>There are a number of methods for normal random number generation, including the following.  An application can combine some or all of these.</p>
+<p>There are a number of methods for sampling the normal distribution. An application can combine some or all of these.</p>
 
 <ol>
 <li>The ratio-of-uniforms method (given as <code>NormalRatioOfUniforms</code> below).</li>
@@ -72,7 +72,7 @@ probability that a normally-distributed random number will be within one standar
 </ul></li>
 </ol>
 
-<p>For surveys of normal random number generators, see (Thomas et al. 2007)<sup><a href="#Note5"><strong>(5)</strong></a></sup>, and (Malik and Hemani 2016)<sup><a href="#Note6"><strong>(6)</strong></a></sup>.</p>
+<p>For surveys of Gaussian samplers, see (Thomas et al. 2007)<sup><a href="#Note5"><strong>(5)</strong></a></sup>, and (Malik and Hemani 2016)<sup><a href="#Note6"><strong>(6)</strong></a></sup>.</p>
 
 <pre>METHOD NormalRatioOfUniforms(mu, sigma)
     while true
@@ -772,7 +772,7 @@ END METHOD
 <li>The Han and Hoshi algorithm (Han and Hoshi 1997)<sup><a href="#Note36"><strong>(36)</strong></a></sup> that uses the cumulative probabilities as input and is described in (Devroye and Gravel 2015)<sup><a href="#Note25"><strong>(25)</strong></a></sup>.  This algorithm comes within 3 bits, on average, of the optimal number of bits.</li>
 </ul>
 
-<p>For all weighted-choice algorithms in this section (except the last two algorithms), floating-point arithmetic and floating-point random number generation (such as <code>RNDRANGE()</code>) ought to be avoided, since they often introduce bias in real-world implementations.</p>
+<p>For all weighted-choice algorithms in this section, floating-point arithmetic and floating-point random number generation (such as <code>RNDRANGE()</code>) ought to be avoided, since they often introduce bias in real-world implementations.</p>
 
 <p><a id=A_Note_on_Error_Bounded_Algorithms></a></p>
 

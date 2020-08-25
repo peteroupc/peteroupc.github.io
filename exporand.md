@@ -63,6 +63,7 @@ This page shows [**Python code**](#Sampler_Code) for these samplers.
 - [**Appendix**](#Appendix)
     - [**SymPy Formula for the algorithm for exp(&minus;_x_/_y_)**](#SymPy_Formula_for_the_algorithm_for_exp_minus__x___y)
     - [**Additional Examples of Arbitrary-Precision Samplers**](#Additional_Examples_of_Arbitrary_Precision_Samplers)
+    - [**Equivalence of SampleGeometricBag Algorithms**](#Equivalence_of_SampleGeometricBag_Algorithms)
 - [**License**](#License)
 
 <a id=About_the_Beta_Distribution></a>
@@ -178,10 +179,17 @@ The algorithm **SampleGeometricBag** is a Bernoulli factory algorithm.  For base
 
 1.  Set _N_ to 0.
 2.  With probability 1/2, go to the next step.  Otherwise, add 1 to _N_ and repeat this step.
-2.  If the item at position _N_ in the geometric bag (positions start at 0) is not set to a digit (e.g., 0 or 1 for base 2), set the item at that position to a digit chosen uniformly at random (e.g., either 0 or 1 for base 2), increasing the geometric bag's capacity as necessary.  (As a result of this step, there may be "gaps" in the geometric bag where no digit was sampled yet.)
-3.  Return the item at position _N_.
+3.  If the item at position _N_ in the geometric bag (positions start at 0) is not set to a digit (e.g., 0 or 1 for base 2), set the item at that position to a digit chosen uniformly at random (e.g., either 0 or 1 for base 2), increasing the geometric bag's capacity as necessary.  (As a result of this step, there may be "gaps" in the geometric bag where no digit was sampled yet.)
+4.  Return the item at position _N_.
 
-For another base (radix), such as 10 for decimal, this can be implemented as **URandLess**, with **a** being an empty uniform PSRN and **b** being the geometric bag. Return 1 if the algorithm returns `true`, or 0 otherwise.
+For another base (radix), such as 10 for decimal, this can be implemented as follows (based on **URandLess**):
+
+1. Set _i_ to 0.
+2. If **a**'s fractional part has _i_ or fewer digits, sample digit _i_ of **a** (positions start at 0 where 0 is the most significant digit after the point, 1 is the next, etc.), and append the result to that fractional part's digit expansion.  Do the same for **b**.
+3. Return 0 if **a**'s fractional part is less than **b**'s, or 2 if **a**'s fractional part is greater than **b**'s.
+4. Add 1 to _i_ and go to step 3.
+
+For more on why these two algorithms are equivalent, see the appendix.
 
 **SampleGeometricBagComplement** is the same as the **SampleGeometricBag** algorithm, except the return value is 1 minus the original return value.  The result is that if **SampleGeometricBag** outputs 1 with probability _U_, **SampleGeometricBagComplement** outputs 1 with probability 1 &minus; _U_.
 
@@ -963,6 +971,15 @@ def example_4_2_1(rg, bern, precision=53):
              return randomgen.urandfill(rg,ret,precision)/(1<<precision)
           else: break
 ```
+
+<a id=Equivalence_of_SampleGeometricBag_Algorithms></a>
+### Equivalence of SampleGeometricBag Algorithms
+
+For the **SampleGeometricBag**, there are two versions: one for binary (base 2) and one for other bases.  Here is why these two versions are equivalent in the binary case.  Step 2 of the first algorithm samples a temporary random number _N_.  This can be implemented by generating unbiased random bits until a zero is generated this way.  There are three cases relevant here.
+
+    - The generated bit is one, which will occur at a 50% chance. This means the bit position is skipped and the algorithm moves on to the next position.  In algorithm 3, this corresponds to moving to step 3 because **a**'s fractional part is equal to **b**'s, which likewise occurs at a 50% chance compared to the fractional parts being unequal (since **a** is fully built up in the course of the algorithm).
+    - The generated bit is zero, and the algorithm samples (or retrieves) a zero bit at position _N_, which will occur at a 25% chance. In algorithm 3, this corresponds to returning 0 because **a**'s fractional part is less than **b**'s, which will occur with the same probability.
+    - The generated bit is zero, and the algorithm samples (or retrieves) a one bit at position _N_, which will occur at a 25% chance. In algorithm 3, this corresponds to returning 1 because **a**'s fractional part is greater than **b**'s, which will occur with the same probability.
 
 <a id=License></a>
 ## License
