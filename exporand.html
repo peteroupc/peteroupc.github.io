@@ -53,13 +53,20 @@
 <li><a href="#Comparisons"><strong>Comparisons</strong></a></li>
 <li><a href="#Arithmetic"><strong>Arithmetic</strong></a></li>
 </ul></li>
-<li><a href="#Building_Blocks"><strong>Building Blocks</strong></a></li>
+<li><a href="#Building_Blocks"><strong>Building Blocks</strong></a>
+
+<ul>
+<li><a href="#SampleGeometricBag"><strong>SampleGeometricBag</strong></a></li>
+<li><a href="#FillGeometricBag"><strong>FillGeometricBag</strong></a></li>
+<li><a href="#kthsmallest"><strong>kthsmallest</strong></a></li>
+<li><a href="#Sampling_E_rands"><strong>Sampling E-rands</strong></a></li>
+<li><a href="#Power_of_Uniform_Sub_Algorithm"><strong>Power-of-Uniform Sub-Algorithm</strong></a></li>
+</ul></li>
 <li><a href="#Algorithms_for_the_Beta_and_Exponential_Distributions"><strong>Algorithms for the Beta and Exponential Distributions</strong></a>
 
 <ul>
 <li><a href="#Beta_Distribution"><strong>Beta Distribution</strong></a></li>
 <li><a href="#Exponential_Distribution"><strong>Exponential Distribution</strong></a></li>
-<li><a href="#Power_of_Uniform_Sub_Algorithm"><strong>Power-of-Uniform Sub-Algorithm</strong></a></li>
 </ul></li>
 <li><a href="#Sampler_Code"><strong>Sampler Code</strong></a>
 
@@ -250,6 +257,10 @@
 
 <p>One of them is the &quot;geometric bag&quot; technique by Flajolet and others (2010)<sup><a href="#Note7"><strong>(7)</strong></a></sup>, which generates heads or tails with a probability that is built up digit by digit.   A <em>geometric bag</em> was defined earlier.</p>
 
+<p><a id=SampleGeometricBag></a></p>
+
+<h3>SampleGeometricBag</h3>
+
 <p>The algorithm <strong>SampleGeometricBag</strong> is a Bernoulli factory algorithm.  For base 2, the algorithm is described as follows (see (Flajolet et al., 2010)<sup><a href="#Note7"><strong>(7)</strong></a></sup>):</p>
 
 <ol>
@@ -272,12 +283,20 @@
 
 <p><strong>SampleGeometricBagComplement</strong> is the same as the <strong>SampleGeometricBag</strong> algorithm, except the return value is 1 minus the original return value.  The result is that if <strong>SampleGeometricBag</strong> outputs 1 with probability <em>U</em>, <strong>SampleGeometricBagComplement</strong> outputs 1 with probability 1 &minus; <em>U</em>.</p>
 
+<p><a id=FillGeometricBag></a></p>
+
+<h3>FillGeometricBag</h3>
+
 <p><strong>FillGeometricBag</strong> takes a geometric bag and generates a number whose fractional part has <code>p</code> digits as follows:</p>
 
 <ol>
 <li>For each position in [0, <code>p</code>), if the item at that position is not a digit, set the item there to to a digit chosen uniformly at random (e.g., either 0 or 1 for binary), increasing the geometric bag&#39;s capacity as necessary. (See also (Oberhoff 2018, sec. 8)<sup><a href="#Note10"><strong>(10)</strong></a></sup>.)</li>
 <li>Take the first <code>p</code> digits of the geometric bag and return &Sigma;<sub><em>i</em>=0, ..., <code>p</code>&minus;1</sub> bag[<em>i</em>] * <em>b</em><sup>&minus;<em>i</em>&minus;1</sup>, where <em>b</em> is the base, or radix.  (If it somehow happens that digits beyond <code>p</code> are set to 0 or 1, then the implementation could choose instead to fill all unsampled digits between the first and the last set digit and return the full number, optionally rounding it to a number whose fractional part has <code>p</code> digits, with a rounding mode of choice.)</li>
 </ol>
+
+<p><a id=kthsmallest></a></p>
+
+<h3>kthsmallest</h3>
 
 <p>The <strong>kthsmallest</strong> method generates the &#39;k&#39;th smallest &#39;bitcount&#39;-digit uniform random number out of &#39;n&#39; of them, is also relied on by this beta sampler.  It is used when both <code>a</code> and <code>b</code> are integers, based on the known property that a beta random variable in this case is the <code>a</code>th smallest uniform (0, 1) random number out of <code>a + b - 1</code> of them (Devroye 1986, p. 431)<sup><a href="#Note15"><strong>(15)</strong></a></sup>.</p>
 
@@ -298,6 +317,10 @@
 <li>Take the <code>k</code>th PSRN (starting at 1) and fill it with uniform random digits as necessary to give its fractional part <code>bitcount</code> many digits (similarly to <strong>FillGeometricBag</strong> above). Return that number.  (An implementation may instead just return the PSRN without filling it this way first, but the beta sampler described later doesn&#39;t use this alternative.)</li>
 </ol>
 
+<p><a id=Sampling_E_rands></a></p>
+
+<h3>Sampling E-rands</h3>
+
 <p><strong>Sampling an e-rand</strong> (a exponential PSRN) makes use of two observations (based on the parameter &lambda; of the exponential distribution):</p>
 
 <ul>
@@ -307,14 +330,45 @@
 
 <p>(Devroye and Gravel 2015)<sup><a href="#Note3"><strong>(3)</strong></a></sup> already made these observations in their Appendix, but only for &lambda; = 1.</p>
 
-<p>To implement these probabilities using just random bits, the sampler uses two algorithms:</p>
+<p>To implement these probabilities using just random bits, the sampler uses two algorithms, which both enable e-rands with rational valued &lambda; parameters:</p>
 
 <ol>
 <li>One to simulate a probability of the form <code>exp(-x/y)</code> (here, the <strong>algorithm for exp(&minus;<em>x</em>/<em>y</em>)</strong> described in &quot;<a href="https://peteroupc.github.io/bernoulli.html"><strong>Bernoulli Factory Algorithms</strong></a>&quot;).</li>
 <li>One to simulate a probability of the form <code>1/(1+exp(x/(y*pow(2, prec))))</code> (here, the <strong>LogisticExp</strong> algorithm described in &quot;<a href="https://peteroupc.github.io/bernoulli.html"><strong>Bernoulli Factory Algorithms</strong></a>&quot;).</li>
 </ol>
 
-<p>These two algorithms enable e-rands with rational-valued &lambda; parameters.</p>
+<p><a id=Power_of_Uniform_Sub_Algorithm></a></p>
+
+<h3>Power-of-Uniform Sub-Algorithm</h3>
+
+<p>The power-of-uniform sub-algorithm is used for certain cases of the beta sampler below.  It returns <em>U</em><sup><em>px</em>/<em>py</em></sup>, where <em>U</em> is a uniform random number in the interval [0, 1] and <em>px</em>/<em>py</em> is greater than 1, but unlike the naïve algorithm it supports an arbitrary precision, uses only random bits, and avoids floating-point arithmetic.  It also uses a <em>complement</em> flag to determine whether to return 1 minus the result.</p>
+
+<p>It makes use of a number of algorithms as follows:</p>
+
+<ul>
+<li>It uses an algorithm for <a href="https://peteroupc.github.io/unbounded.html"><strong>sampling unbounded monotone density functions</strong></a>, which in turn is similar to the inversion-rejection algorithm in (Devroye 1986, ch. 7, sec. 4.4)<sup><a href="#Note15"><strong>(15)</strong></a></sup>.  This is needed because when <em>px</em>/<em>py</em> is greater than 1, <em>U</em><sup><em>px</em>/<em>py</em></sup> is distributed as <code>(py/px) / pow(U, 1-py/px)</code>, which has an unbounded peak at 0.</li>
+<li>It uses a number of Bernoulli factory algorithms, including <strong>SampleGeometricBag</strong> and some algorithms described in &quot;<a href="https://peteroupc.github.io/bernoulli.html"><strong>Bernoulli Factory Algorithms</strong></a>&quot;.</li>
+</ul>
+
+<p>However, this algorithm supports only base 2.</p>
+
+<p>The power-of-uniform algorithm is as follows:</p>
+
+<ol>
+<li>Set <em>i</em> to 1.</li>
+<li>Call the <strong>algorithm for (<em>a</em>/<em>b</em>)<sup><em>x</em>/<em>y</em></sup></strong> described in &quot;<a href="https://peteroupc.github.io/bernoulli.html"><strong>Bernoulli Factory Algorithms</strong></a>&quot;, with parameters <code>a = 1, b = 2, x = py, y = px</code>.  If the call returns 1 and <em>i</em> is less than <em>n</em>, add 1 to <em>i</em> and repeat this step.  If the call returns 1 and <em>i</em> is <em>n</em> or greater, return 1 if the <em>complement</em> flag is <code>true</code> or 0 otherwise (or return a geometric bag filled with exactly <em>n</em> ones or zeros, respectively).</li>
+<li>As a result, we will now sample a number in the interval [2<sup>&minus;<em>i</em></sup>, 2<sup>&minus;(<em>i</em> &minus; 1)</sup>).  We now have to generate a uniform random number <em>X</em> in this interval, then accept it with probability (<em>py</em> / (<em>px</em> * 2<sup><em>i</em></sup>)) / <em>X</em><sup>1 &minus; <em>py</em> / <em>px</em></sup>; the 2<sup><em>i</em></sup> in this formula is to help avoid very low probabilities for sampling purposes.  The following steps will achieve this without having to use floating-point arithmetic.</li>
+<li>Create an empty list to serve as a geometric bag, then create a <em>geobag</em> input coin that returns the result of <strong>SampleGeometricBag</strong> on that geometric bag.</li>
+<li>Create a <em>powerbag</em> input coin that does the following: &quot;Call the  <strong>algorithm for &lambda;<sup><em>x</em>/<em>y</em></sup></strong>, described in &#39;<a href="https://peteroupc.github.io/bernoulli.html#lambda__x___y"><strong>Bernoulli Factory Algorithms</strong></a>&#39;, using the <em>geobag</em> input coin and with <em>x</em>/<em>y</em> = 1 &minus; <em>py</em> / <em>px</em>, and return the result.&quot;</li>
+<li>Append <em>i</em> &minus; 1 zero-digits followed by a single one-digit to the geometric bag.  This will allow us to sample a uniform random number limited to the interval mentioned earlier.</li>
+<li>Call the <strong>algorithm for ϵ / λ</strong>, described in &quot;<a href="https://peteroupc.github.io/bernoulli.html#x03F5_lambda"><strong>Bernoulli Factory Algorithms</strong></a>&quot;, using the <em>powerbag</em> input coin (which represents <em>b</em>) and with ϵ = <em>py</em>/(<em>px</em> * 2<sup><em>i</em></sup>) (which represents <em>a</em>), thus returning 1 with probability <em>a</em>/<em>b</em>.  If the call returns 1, the geometric bag was accepted, so do the following:
+
+<ol>
+<li>If the <em>complement</em> flag is <code>true</code>, make each zero-digit in the geometric bag a one-digit and vice versa.</li>
+<li>Either return the geometric bag as is or fill the unsampled digits of the bag with uniform random digits as necessary to give the number an <em>n</em>-digit fractional part (similarly to <strong>FillGeometricBag</strong> above), where <em>n</em> is a precision parameter, then return the resulting number.</li>
+</ol></li>
+<li>If the call to the algorithm for ϵ / λ returns 0, remove all but the first <em>i</em> digits from the geometric bag, then go to step 7.</li>
+</ol>
 
 <p><a id=Algorithms_for_the_Beta_and_Exponential_Distributions></a></p>
 
@@ -372,39 +426,6 @@
 <li>If <strong>a</strong>&#39;s fractional part has greater than <code>p</code> bits, round <strong>a</strong> to a number whose fractional part has <code>p</code> bits, and return that number.  The rounding can be done, for example, by discarding all bits beyond <code>p</code> bits after the place to be rounded, or by rounding to the nearest 2<sup>-p</sup>, ties-to-up, as done in the sample Python code.</li>
 <li>While <strong>a</strong>&#39;s fractional part has fewer than <code>p</code> bits, call the <strong>LogisticExp</strong> algorithm with <em>x</em> = &lambda;&#39;s numerator, <em>y</em> = &lambda;&#39;s denominator, and <em>prec</em> = <em>i</em>, where <em>i</em> is 1 plus the number of bits in <strong>a</strong>&#39;s fractional part, and append the result to that fractional part&#39;s binary expansion.</li>
 <li>Return the number represented by <strong>a</strong>.</li>
-</ol>
-
-<p><a id=Power_of_Uniform_Sub_Algorithm></a></p>
-
-<h3>Power-of-Uniform Sub-Algorithm</h3>
-
-<p>The power-of-uniform sub-algorithm is used for certain cases of the beta sampler above.  It returns <em>U</em><sup><em>px</em>/<em>py</em></sup>, where <em>U</em> is a uniform random number in the interval [0, 1] and <em>px</em>/<em>py</em> is greater than 1, but unlike the naïve algorithm it supports an arbitrary precision, uses only random bits, and avoids floating-point arithmetic.  It also uses a <em>complement</em> flag to determine whether to return 1 minus the result.</p>
-
-<p>It makes use of a number of algorithms as follows:</p>
-
-<ul>
-<li>It uses an algorithm for <a href="https://peteroupc.github.io/unbounded.html"><strong>sampling unbounded monotone density functions</strong></a>, which in turn is similar to the inversion-rejection algorithm in (Devroye 1986, ch. 7, sec. 4.4)<sup><a href="#Note15"><strong>(15)</strong></a></sup>.  This is needed because when <em>px</em>/<em>py</em> is greater than 1, <em>U</em><sup><em>px</em>/<em>py</em></sup> is distributed as <code>(py/px) / pow(U, 1-py/px)</code>, which has an unbounded peak at 0.</li>
-<li>It uses a number of Bernoulli factory algorithms, including <strong>SampleGeometricBag</strong> and some algorithms described in &quot;<a href="https://peteroupc.github.io/bernoulli.html"><strong>Bernoulli Factory Algorithms</strong></a>&quot;.</li>
-</ul>
-
-<p>However, this algorithm supports only base 2.</p>
-
-<p>The power-of-uniform algorithm is as follows:</p>
-
-<ol>
-<li>Set <em>i</em> to 1.</li>
-<li>Call the <strong>algorithm for (<em>a</em>/<em>b</em>)<sup><em>x</em>/<em>y</em></sup></strong> described in &quot;<a href="https://peteroupc.github.io/bernoulli.html"><strong>Bernoulli Factory Algorithms</strong></a>&quot;, with parameters <code>a = 1, b = 2, x = py, y = px</code>.  If the call returns 1 and <em>i</em> is less than <em>n</em>, add 1 to <em>i</em> and repeat this step.  If the call returns 1 and <em>i</em> is <em>n</em> or greater, return 1 if the <em>complement</em> flag is <code>true</code> or 0 otherwise (or return a geometric bag filled with exactly <em>n</em> ones or zeros, respectively).</li>
-<li>As a result, we will now sample a number in the interval [2<sup>&minus;<em>i</em></sup>, 2<sup>&minus;(<em>i</em> &minus; 1)</sup>).  We now have to generate a uniform random number <em>X</em> in this interval, then accept it with probability (<em>py</em> / (<em>px</em> * 2<sup><em>i</em></sup>)) / <em>X</em><sup>1 &minus; <em>py</em> / <em>px</em></sup>; the 2<sup><em>i</em></sup> in this formula is to help avoid very low probabilities for sampling purposes.  The following steps will achieve this without having to use floating-point arithmetic.</li>
-<li>Create an empty list to serve as a geometric bag, then create a <em>geobag</em> input coin that returns the result of <strong>SampleGeometricBag</strong> on that geometric bag.</li>
-<li>Create a <em>powerbag</em> input coin that does the following: &quot;Call the  <strong>algorithm for &lambda;<sup><em>x</em>/<em>y</em></sup></strong>, described in &#39;<a href="https://peteroupc.github.io/bernoulli.html#lambda__x___y"><strong>Bernoulli Factory Algorithms</strong></a>&#39;, using the <em>geobag</em> input coin and with <em>x</em>/<em>y</em> = 1 &minus; <em>py</em> / <em>px</em>, and return the result.&quot;</li>
-<li>Append <em>i</em> &minus; 1 zero-digits followed by a single one-digit to the geometric bag.  This will allow us to sample a uniform random number limited to the interval mentioned earlier.</li>
-<li>Call the <strong>algorithm for ϵ / λ</strong>, described in &quot;<a href="https://peteroupc.github.io/bernoulli.html#x03F5_lambda"><strong>Bernoulli Factory Algorithms</strong></a>&quot;, using the <em>powerbag</em> input coin (which represents <em>b</em>) and with ϵ = <em>py</em>/(<em>px</em> * 2<sup><em>i</em></sup>) (which represents <em>a</em>), thus returning 1 with probability <em>a</em>/<em>b</em>.  If the call returns 1, the geometric bag was accepted, so do the following:
-
-<ol>
-<li>If the <em>complement</em> flag is <code>true</code>, make each zero-digit in the geometric bag a one-digit and vice versa.</li>
-<li>Either return the geometric bag as is or fill the unsampled digits of the bag with uniform random digits as necessary to give the number an <em>n</em>-digit fractional part (similarly to <strong>FillGeometricBag</strong> above), where <em>n</em> is a precision parameter, then return the resulting number.</li>
-</ol></li>
-<li>If the call to the algorithm for ϵ / λ returns 0, remove all but the first <em>i</em> digits from the geometric bag, then go to step 7.</li>
 </ol>
 
 <p><a id=Sampler_Code></a></p>
@@ -1331,10 +1352,11 @@ plot(expminusformula(), xlim=(0,1), ylim=(0,2))
 
 <p>For the <strong>SampleGeometricBag</strong>, there are two versions: one for binary (base 2) and one for other bases.  Here is why these two versions are equivalent in the binary case.  Step 2 of the first algorithm samples a temporary random number <em>N</em>.  This can be implemented by generating unbiased random bits until a zero is generated this way.  There are three cases relevant here.</p>
 
-<pre>- The generated bit is one, which will occur at a 50% chance. This means the bit position is skipped and the algorithm moves on to the next position.  In algorithm 3, this corresponds to moving to step 3 because **a**&#39;s fractional part is equal to **b**&#39;s, which likewise occurs at a 50% chance compared to the fractional parts being unequal (since **a** is fully built up in the course of the algorithm).
-- The generated bit is zero, and the algorithm samples (or retrieves) a zero bit at position _N_, which will occur at a 25% chance. In algorithm 3, this corresponds to returning 0 because **a**&#39;s fractional part is less than **b**&#39;s, which will occur with the same probability.
-- The generated bit is zero, and the algorithm samples (or retrieves) a one bit at position _N_, which will occur at a 25% chance. In algorithm 3, this corresponds to returning 1 because **a**&#39;s fractional part is greater than **b**&#39;s, which will occur with the same probability.
-</pre>
+<ul>
+<li>The generated bit is one, which will occur at a 50% chance. This means the bit position is skipped and the algorithm moves on to the next position.  In algorithm 3, this corresponds to moving to step 3 because <strong>a</strong>&#39;s fractional part is equal to <strong>b</strong>&#39;s, which likewise occurs at a 50% chance compared to the fractional parts being unequal (since <strong>a</strong> is fully built up in the course of the algorithm).</li>
+<li>The generated bit is zero, and the algorithm samples (or retrieves) a zero bit at position <em>N</em>, which will occur at a 25% chance. In algorithm 3, this corresponds to returning 0 because <strong>a</strong>&#39;s fractional part is less than <strong>b</strong>&#39;s, which will occur with the same probability.</li>
+<li>The generated bit is zero, and the algorithm samples (or retrieves) a one bit at position <em>N</em>, which will occur at a 25% chance. In algorithm 3, this corresponds to returning 1 because <strong>a</strong>&#39;s fractional part is greater than <strong>b</strong>&#39;s, which will occur with the same probability.</li>
+</ul>
 
 <p><a id=License></a></p>
 
