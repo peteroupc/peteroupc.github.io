@@ -517,7 +517,7 @@ If we have multiple biased coins (_n_ of them), each with a separate unknown bia
 
 <small><sup id=Note18>(18)</sup> Knuth, Donald E. and Andrew Chi-Chih Yao. "The complexity of nonuniform random number generation", in _Algorithms and Complexity: New Directions and Recent Results_, 1976.</small>
 
-<small><sup id=Note19>(19)</sup> This is because the binary entropy of `p = 1/n` is `p * log2(1/p) = log2(n) / n`, and the sum of `n` binary entropies (for `n` outcomes with probability `1/n` each) is `log2(n)`.  Any optimal integer generator will come within 2 bits of this lower bound on average.</small>
+<small><sup id=Note19>(19)</sup> This is because the binary entropy of `p = 1/n` is `p * log2(1/p) = log2(n) / n`, and the sum of `n` binary entropies (for `n` outcomes with probability `1/n` each) is `log2(n)`.  Any optimal integer generation algorithm will come within 2 bits of this lower bound on average.</small>
 
 <small><sup id=Note20>(20)</sup> D. Lemire, "A fast alternative to the modulo reduction", Daniel Lemire's blog, 2016.</small>
 
@@ -592,13 +592,13 @@ The pseudocode below shows how the [**error function**](https://en.wikipedia.org
 <a id=A_Note_on_Integer_Generation_Algorithms></a>
 ### A Note on Integer Generation Algorithms
 
-There are many algorithms for the `RNDINT(maxInclusive)` method, which generates uniform random integers in [0, maxInclusive].  This section deals with "optimal" `RNDINT` algorithms in terms of the number of random bits they use on average (assuming we have a "true" random generator that outputs independent unbiased random bits).
+There are many algorithms for the `RNDINT(maxInclusive)` method, which generates uniform random integers in [0, maxInclusive].  This section deals with "optimal" `RNDINT` algorithms in terms of the number of random bits they use on average (assuming we have a source of "truly" random bits).
 
 Knuth and Yao (1976)<sup>[**(18)**](#Note18)</sup> showed that any algorithm that uses only random bits to generate random integers with separate probabilities can be described as a _binary tree_ (also known as a _DDG tree_ or _discrete distribution generating tree_).  Random bits trace a path in this tree, and each leaf (terminal node) in the tree represents an outcome.  They also gave lower bounds on the number of random bits an algorithm needs on average for this purpose.  In the case of `RNDINT`, there are `n = maxInclusive + 1` outcomes that each occur with probability `1/n`, so any _optimal_ algorithm for `RNDINT` needs at least `log2(n)` and at most `log2(n) + 2` bits on average (where `log2(x) = ln(x)/ln(2)`).<sup>[**(19)**](#Note19)</sup>
 
 As also shown by Knuth and Yao, however, any integer generating algorithm that is both optimal _and unbiased (exact)_ will also run forever in the worst case, even if it uses few random bits on average.  This is because in most cases, `n` will not be a power of 2, so that `n` will have an infinite binary expansion, so that the resulting DDG tree will have to either be infinitely deep, or include "rejection leaves" at the end of the tree. (If `n` is a power of 2, the binary expansion will be finite, so that the DDG tree will have a finite depth and no rejection leaves.)
 
-Because of this, there is no general way to "fix" the worst case of running forever, while still having an unbiased (exact) algorithm.  For instance, modulo reductions can be represented by a DDG tree in which rejection leaves are replaced with labeled outcomes, but the bias occurs because only some outcomes can replace rejection leaves this way.  Even with rejection sampling, stopping the rejection after a fixed number of iterations will likewise lead to bias, for the same reasons.
+Because of this, there is no general way to "fix" the worst case of running forever, while still having an unbiased (exact) algorithm.  For instance, modulo reductions can be represented by a DDG tree in which rejection leaves are replaced with labeled outcomes, but the bias occurs because only some outcomes can replace rejection leaves this way.  Even with rejection sampling, stopping the rejection after a fixed number of iterations will likewise lead to bias, for the same reasons.  However, which outcomes are biased this way depends on the algorithm.
 
 The following are some ways to implement `RNDINT`.  (The column "Unbiased?" means whether the algorithm generates random integers without bias, even if `n` is not a power of 2.)
 

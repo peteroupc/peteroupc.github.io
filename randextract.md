@@ -9,7 +9,7 @@ _Randomness extraction_ (also known as _unbiasing_, _debiasing_, _deskewing_, _w
 
 In information security, randomness extraction serves to generate a seed, password, encryption key, or other secret value from hard-to-predict sources of noise.
 
-Randomness extraction for information security is discussed in NIST SP 800-90B sec. 3.1.5.1, and RFC 4086 sec. 4.2 and 5.2. Popular choices of such extractors include keyed cryptographic hash functions  (see, e.g., (Cliff et al., 2009)<sup>[**(1)**](#Note1)</sup>. In information security applications, extractors other than keyed cryptographic hash functions should not be used by themselves in randomness extraction.
+Randomness extraction for information security is discussed in NIST SP 800-90B sec. 3.1.5.1, and RFC 4086 sec. 4.2 and 5.2. Popular choices of such extractors include keyed cryptographic hash functions  (see, e.g., (Cliff et al., 2009)<sup>[**(1)**](#Note1)</sup>). In information security applications, extractors other than keyed cryptographic hash functions should not be used by themselves in randomness extraction.
 
 Some papers also refer to two-source extractors and resilient functions (especially the works by E. Chattopadhyay and D. Zuckerman), but there are few if any real implementations of these extraction techniques.
 

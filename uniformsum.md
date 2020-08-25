@@ -132,7 +132,7 @@ If the areas of the PDF's pieces are known in advance (and SymPy makes them easy
 
     - The control points should be scaled so that the highest control point of _each_ piece is equal to 1.  See the table below for an example.
     - If piece 0 is being sampled and the PSRN's digits are binary (base 2), the "coin" described in step 4 uses a modified version of **SampleGeometricBag** in which a 1 (rather than any other digit) is sampled from the PSRN when it reads from or writes to that PSRN.  Moreover, the PSRN is always accepted regardless of the result of the "coin" flip.
-    - If piece _n_ &minus; 1 is being sampled and the PSRN's digits are binary (base 2), the "coin" again uses a modified version of **SampleGeometricBag** in which a 0 (rather than any other digit) is sampled, and the PSRN is always accepted.
+    - If piece _n_ &minus; 1 is being sampled and the PSRN's digits are binary (base 2), the "coin" uses a modified version of **SampleGeometricBag** in which a 0 (rather than any other digit) is sampled, and the PSRN is always accepted.
 
 | Piece | Control Points |
  --- | --- |
