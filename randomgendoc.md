@@ -26,6 +26,7 @@ CLASSES
         KVectorSampler
         OptimalSampler
         PascalTriangle
+        PrefixDistributionSampler
         RandomGen
         RatioOfUniformsTiling
         SortedAliasMethod
@@ -464,6 +465,37 @@ CLASSES
      |  row(self)
      |      Gets the row number of the row that will be generated
      |      the next time _next_ is called.
+     |
+     |  ----------------------------------------------------------------------
+     |  Data descriptors defined here:
+     |
+     |  __dict__
+     |      dictionary for instance variables (if defined)
+     |
+     |  __weakref__
+     |      list of weak references to the object (if defined)
+
+    class PrefixDistributionSampler(builtins.object)
+     |  An arbitrary-precision sampler for probability distributions
+     |  supported on [0, 1] and bounded from above.
+     |  Note that this sampler currently relies on floating-point operations
+     |  and thus the evaluations of the PDF (the distribution's probability
+     |  density function) could incur rounding errors.
+     |  - pdf: PDF, which takes a value in [0, 1] and returns a probability
+     |    density at that value (which is 0 or greater).  Currently,
+     |    the PDF must be monotone (either increasing or decreasing).
+     |  Reference: Oberhoff, Sebastian, "Exact Sampling and Prefix
+     |  Distributions", Theses and Dissertations, University of
+     |  Wisconsin Milwaukee, 2018.
+     |
+     |  Methods defined here:
+     |
+     |  __init__(self, pdf)
+     |      Initialize self.  See help(type(self)) for accurate signature.
+     |
+     |  fill(self, rg, prefixLength, prefix, precision=53)
+     |
+     |  next(self, rg, precision=53)
      |
      |  ----------------------------------------------------------------------
      |  Data descriptors defined here:

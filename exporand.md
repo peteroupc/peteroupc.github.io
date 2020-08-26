@@ -68,6 +68,7 @@ This page shows [**Python code**](#Sampler_Code) for these samplers.
     - [**SymPy Formula for the algorithm for exp(&minus;_x_/_y_)**](#SymPy_Formula_for_the_algorithm_for_exp_minus__x___y)
     - [**Additional Examples of Arbitrary-Precision Samplers**](#Additional_Examples_of_Arbitrary_Precision_Samplers)
     - [**Equivalence of SampleGeometricBag Algorithms**](#Equivalence_of_SampleGeometricBag_Algorithms)
+    - [**Oberhoff's Prefix Distribution Sampler**](#Oberhoff_s_Prefix_Distribution_Sampler)
 - [**License**](#License)
 
 <a id=About_the_Beta_Distribution></a>
@@ -104,7 +105,7 @@ The most trivial example of a PSRN is that of the uniform distribution in [0, 1]
 - as a _geometric bag_ in (Flajolet et al., 2010)<sup>[**(7)**](#Note7)</sup> (but only in the binary case), and
 - as a _u-rand_ in (Karney 2014)<sup>[**(1)**](#Note1)</sup>.
 
-Each additional digit is sampled simply by setting it to an independent unbiased random digit, an observation that dates from von Neumann (1951)<sup>[**(9)**](#Note9)</sup> in the binary case.
+Each additional digit is sampled simply by setting it to an independent uniform random digit, an observation that dates from von Neumann (1951)<sup>[**(9)**](#Note9)</sup> in the binary case.
 
 Note that the _u-rand_ concept by Karney only contemplates sampling digits from left to right without any gaps, whereas the geometric bag concept is more general in this respect.
 
@@ -133,11 +134,13 @@ Partially-sampled numbers could also be implemented via rejection from the expon
 
 An algorithm that samples from a continuous distribution using PSRNs has the following properties:
 
-1. The algorithm relies only on a source of random bits for randomness, and does not rely on floating-point arithmetic or calculations of irrational or transcendental numbers (other than digit extractions), including when the algorithm samples each digit of a PSRN.  The algorithm may use rational arithmetic (such as `Fraction` in Python or `Rational` in Ruby), as long as the arithmetic is exact.
-2. If the algorithm outputs a PSRN, the number represented by the sampled digits must follow a distribution that is close to the ideal distribution by a distance of not more than _b_<sup>&minus;_m_</sup>, where _b_ is the PSRN's base, or radix (such as 2 for binary), and _m_ is the number of sampled digits in the PSRN's fractional part.  ((Devroye and Gravel 2015)<sup>[**(3)**](#Note3)</sup> suggests Wasserstein L<sub>&infin;</sub> distance as the distance to use for this purpose.) The number has to be close this way even if the algorithm's caller later samples unsampled digits of that PSRN at random (e.g., uniformly at random in the case of a uniform PSRN).
-3. If the algorithm fills a PSRN's unsampled fractional digits at random (e.g., uniformly at random in the case of a uniform PSRN), so that the number's fractional part has _m_ digits, the number's distribution must remain close to the ideal distribution by a distance of not more than _b_<sup>&minus;_m_</sup>.
+1. The algorithm relies only on a source of random bits for randomness.
+2. The algorithm does not rely on floating-point arithmetic or calculations of irrational or transcendental numbers (other than digit extractions), including when the algorithm samples each digit of a PSRN.
+3. The algorithm may use rational arithmetic (such as `Fraction` in Python or `Rational` in Ruby), as long as the arithmetic is exact.
+4. If the algorithm outputs a PSRN, the number represented by the sampled digits must follow a distribution that is close to the ideal distribution by a distance of not more than _b_<sup>&minus;_m_</sup>, where _b_ is the PSRN's base, or radix (such as 2 for binary), and _m_ is the position, starting from 1, of the  rightmost sampled digit of the PSRN's fractional part.  ((Devroye and Gravel 2015)<sup>[**(3)**](#Note3)</sup> suggests Wasserstein L<sub>&infin;</sub> distance as the distance to use for this purpose.) The number has to be close this way even if the algorithm's caller later samples unsampled digits of that PSRN at random (e.g., uniformly at random in the case of a uniform PSRN).
+5. If the algorithm fills a PSRN's unsampled fractional digits at random (e.g., uniformly at random in the case of a uniform PSRN), so that the number's fractional part has _m_ digits, the number's distribution must remain close to the ideal distribution by a distance of not more than _b_<sup>&minus;_m_</sup>.
 
-The concept of _prefix distributions_ (Oberhoff 2018)<sup>[**(10)**](#Note10)</sup> comes close to PSRNs, but numbers sampled this way are not PSRNs in the sense used here.  This is because the method requires calculating minimums of probabilities and, in practice, requires the use of floating-point arithmetic in most cases (see property 1 above).  Moreover, the method samples from a discrete distribution whose progression depends on the value of previously sampled bits, not just on the position of those bits as with the uniform and exponential distributions (see also (Thomas and Luk 2008)<sup>[**(4)**](#Note4)</sup>).
+The concept of _prefix distributions_ (Oberhoff 2018)<sup>[**(10)**](#Note10)</sup> comes close to PSRNs, but numbers sampled this way are not PSRNs in the sense used here.  This is because the method requires calculating minimums of probabilities and, in practice, requires the use of floating-point arithmetic in most cases (see property 2 above).  Moreover, the method samples from a discrete distribution whose progression depends on the value of previously sampled bits, not just on the position of those bits as with the uniform and exponential distributions (see also (Thomas and Luk 2008)<sup>[**(4)**](#Note4)</sup>).  For completeness, Oberhoff's method appears in the appendix.
 
 <a id=Comparisons></a>
 ### Comparisons
@@ -931,6 +934,10 @@ The following are some additional articles I have written on the topic of random
 
 <small><sup id=Note22>(22)</sup> Efraimidis, P. "[**Weighted Random Sampling over Data Streams**](https://arxiv.org/abs/1012.0256v2)", arXiv:1012.0256v2 [cs.DS], 2015.</small>
 
+<small><sup id=Note23>(23)</sup> Oberhoff, Sebastian, "[**Exact Sampling and Prefix Distributions**](https://dc.uwm.edu/etd/1888)", _Theses and Dissertations_, University of Wisconsin Milwaukee, 2018.</small>
+
+<small><sup id=Note24>(24)</sup> Devroye, L., Gravel, C., "[Sampling with arbitrary precision](https://arxiv.org/abs/1502.02539v5)", arXiv:1502.02539v5 [cs.IT], 2015.</small>
+
 <a id=Appendix></a>
 ## Appendix
 
@@ -994,6 +1001,23 @@ For the **SampleGeometricBag**, there are two versions: one for binary (base 2) 
 - The generated bit is one, which will occur at a 50% chance. This means the bit position is skipped and the algorithm moves on to the next position.  In algorithm 3, this corresponds to moving to step 3 because **a**'s fractional part is equal to **b**'s, which likewise occurs at a 50% chance compared to the fractional parts being unequal (since **a** is fully built up in the course of the algorithm).
 - The generated bit is zero, and the algorithm samples (or retrieves) a zero bit at position _N_, which will occur at a 25% chance. In algorithm 3, this corresponds to returning 0 because **a**'s fractional part is less than **b**'s, which will occur with the same probability.
 - The generated bit is zero, and the algorithm samples (or retrieves) a one bit at position _N_, which will occur at a 25% chance. In algorithm 3, this corresponds to returning 1 because **a**'s fractional part is greater than **b**'s, which will occur with the same probability.
+
+<a id=Oberhoff_s_Prefix_Distribution_Sampler></a>
+### Oberhoff's Prefix Distribution Sampler
+
+The following describes Oberhoff's algorithm for sampling a continuous distribution supported on the interval [0, 1], as long as its probability function is continuous almost everywhere and bounded from above (Oberhoff 2018)<sup>[**(23)**](#Note23)</sup>, see also (Devroye and Gravel 2015)<sup>[**(24)**](#Note24)</sup>. (Note that if the probability function's domain is wider than [0, 1], then the function needs to be divided into one-unit-long pieces, one piece chosen at random with probability proportional to its area, and that piece shifted so that it lies in [0, 1] rather than its usual place; see Oberhoff pp. 11-12.)
+
+1. Set _pdfmax_ to an upper bound of the probability function at \[0, 1\].  Let _base_ be the base, or radix, of the digits in the return value (such as 2 for binary or 10 for decimal).
+2. Set _prefix_ to 0 and _prefixLength_ to 0.
+3. Set _y_ to a uniform random number in the interval \[0, _pdfmax_\] (which should be a partially-sampled random number that is sampled digit-by-digit and on demand).
+4. Let _pw_ be _base_<sup>&minus;_prefixLength_</sup>.  Set _lower_ and _upper_ to the lower and upper bound, respectively, of the probability function's value at the interval \[_prefix_ * _pw_, _prefix_ * _pw_ + _pw_\].
+5. If _y_ turns out to be less than _lower_ (such as by **URandLess**), the prefix was accepted.  Now do the following:
+    1. While _prefixLength_ is less than the desired precision, set _prefix_ to _prefix_ * _base_ + _r_, where _r_ is a uniform random digit, then add 1 to _prefixLength_.
+    2. Return _prefix_ * _base_<sup>&minus;_prefixLength_</sup>.  (If _prefixLength_ is somehow greater than the desired precision, then the algorithm could choose to round the return value to a number whose fractional part has the desired number of digits, with a rounding mode of choice.)
+6. If _y_ turns out to be greater than _upper_ (such as by **URandLess**), the prefix was rejected, so go to step 2.
+7. Set _prefix_ to _prefix_ * _base_ + _r_, where _r_ is a uniform random digit, then add 1 to _prefixLength_, then go to step 4.
+
+Because this algorithm requires evaluating the probability function and finding its maximum and minimum values at an interval (which often requires floating-point arithmetic and is often not trivial), this algorithm appears here in the appendix rather than in the main text.
 
 <a id=License></a>
 ## License

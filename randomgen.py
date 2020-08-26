@@ -4758,6 +4758,62 @@ class DensityInversionSampler:
                 return a + self._newtonEvaluate(c, u, r - self.table[j][3])
         return 0
 
+class PrefixDistributionSampler:
+    """ An arbitrary-precision sampler for probability distributions
+        supported on [0, 1] and bounded from above.
+        Note that this sampler currently relies on floating-point operations
+        and thus the evaluations of the PDF (the distribution's probability
+        density function) could incur rounding errors.
+        - pdf: PDF, which takes a value in [0, 1] and returns a probability
+          density at that value (which is 0 or greater).  Currently,
+          the PDF must be monotone (either increasing or decreasing).
+        Reference: Oberhoff, Sebastian, "Exact Sampling and Prefix
+        Distributions", Theses and Dissertations, University of
+        Wisconsin Milwaukee, 2018.
+        """
+
+    def __init__(self, pdf):
+        # NOTE: To ensure accuracy, pdfmax should be an upper bound
+        self.pdfmax = max(pdf(0), pdf(1))
+        self.pdf = pdf
+        self.prefixes = []
+
+    def fill(self, rg, prefixLength, prefix, precision=53):
+        if prefixLength < precision:
+            prefix <<= precision - prefixLength
+            prefix |= rg.rndint((1 << (precision - prefixLength)) - 1)
+            prefixLength = precision
+        return prefix / (1 << prefixLength)
+
+    def next(self, rg, precision=53):
+        while True:
+            prefixLength = 0
+            prefix = 0
+            y = rg.rndrange(0, self.pdfmax)
+            while True:
+                # NOTE: Should be a rational number,
+                # 1/(1<<prefixLength), but Python's Fraction
+                # has a very slow implementation
+                pw = 2.0 ** (-prefixLength)
+                p = prefix * pw
+                # NOTE: To ensure accuracy, p1 and p2 should
+                # produce lower and upper bounds
+                p1 = self.pdf(p)
+                p2 = self.pdf(p + pw)
+                # NOTE: To ensure accuracy, min should
+                # produce a lower bound and max should
+                # produce an upper bound
+                if y < min(p1, p2):
+                    # accepted
+                    return self.fill(rg, prefixLength, prefix)
+                elif y > max(p1, p2):
+                    # rejected
+                    break
+                else:
+                    prefix <<= 1
+                    prefix |= rg.rndint(1)
+                    prefixLength += 1
+
 class KVectorSampler:
     """ A K-Vector-like sampler of a continuous distribution
       with a known cumulative distribution function (CDF).

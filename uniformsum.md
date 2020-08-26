@@ -15,7 +15,7 @@ For _n_ uniform numbers, the distribution can take on values in the interval [0,
 
 The samplers given below for the uniform sum logically work as follows:
 
-1. The distribution is divided into pieces that are each 1 unit wide (thus, for example, if _n_ is 4, there will be four pieces).
+1. The distribution is divided into pieces that are each 1 unit long (thus, for example, if _n_ is 4, there will be four pieces).
 2. An integer in \[0, _n_\) is chosen uniformly at random, call it _i_, then the piece identified by _i_ is chosen.  There are [**many algorithms to choose an integer**](https://peteroupc.github.io/randomnotes.html#A_Note_on_Integer_Generation_Algorithms) this way, but an algorithm that is "optimal" in terms of the number of bits it uses, as well as unbiased, should be chosen.
 3. The PDF at \[_i_, _i_ + 1\] is simulated.  This is done by shifting the PDF so the desired piece of the PDF is at \[0, 1\] rather than its usual place.  More specifically, the PDF is now as follows:
 
@@ -108,7 +108,7 @@ For example, if _n_ = 4 (so a sum of four uniform random numbers is desired), th
 | 2 | 2/3, 2/3, 1/3, 1/6 |
 | 3 | 1/6, 0, 0, 0 |
 
-For more efficient results, all these control points could be scaled so that the highest control point is equal to 1. In the example above, after multiplying by 3/2 (the reciprocal of the highest control point, which is 2/3), the table would now look like this:
+For more efficient results, all these control points could be scaled so that the highest control point is equal to 1.  This doesn't affect the algorithm's correctness because scaling a Bézier curve's control points scales the curve accordingly, as is well known. In the example above, after multiplying by 3/2 (the reciprocal of the highest control point, which is 2/3), the table would now look like this:
 
 | Piece | Control Points |
  --- | --- |

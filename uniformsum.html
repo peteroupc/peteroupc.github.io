@@ -20,7 +20,7 @@
 <p>The samplers given below for the uniform sum logically work as follows:</p>
 
 <ol>
-<li>The distribution is divided into pieces that are each 1 unit wide (thus, for example, if <em>n</em> is 4, there will be four pieces).</li>
+<li>The distribution is divided into pieces that are each 1 unit long (thus, for example, if <em>n</em> is 4, there will be four pieces).</li>
 <li>An integer in [0, <em>n</em>) is chosen uniformly at random, call it <em>i</em>, then the piece identified by <em>i</em> is chosen.  There are <a href="https://peteroupc.github.io/randomnotes.html#A_Note_on_Integer_Generation_Algorithms"><strong>many algorithms to choose an integer</strong></a> this way, but an algorithm that is &quot;optimal&quot; in terms of the number of bits it uses, as well as unbiased, should be chosen.</li>
 <li><p>The PDF at [<em>i</em>, <em>i</em> + 1] is simulated.  This is done by shifting the PDF so the desired piece of the PDF is at [0, 1] rather than its usual place.  More specifically, the PDF is now as follows:</p>
 
@@ -137,7 +137,7 @@ def find_control_points(n, scale_pieces=False):
 </tr>
 </tbody></table>
 
-<p>For more efficient results, all these control points could be scaled so that the highest control point is equal to 1. In the example above, after multiplying by 3/2 (the reciprocal of the highest control point, which is 2/3), the table would now look like this:</p>
+<p>For more efficient results, all these control points could be scaled so that the highest control point is equal to 1.  This doesn&#39;t affect the algorithm&#39;s correctness because scaling a Bézier curve&#39;s control points scales the curve accordingly, as is well known. In the example above, after multiplying by 3/2 (the reciprocal of the highest control point, which is 2/3), the table would now look like this:</p>
 
 <table><thead>
 <tr>
