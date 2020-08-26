@@ -103,7 +103,7 @@
 <li><a href="#SymPy_Formula_for_the_algorithm_for_exp_minus__x___y"><strong>SymPy Formula for the algorithm for exp(&minus;<em>x</em>/<em>y</em>)</strong></a></li>
 <li><a href="#Additional_Examples_of_Arbitrary_Precision_Samplers"><strong>Additional Examples of Arbitrary-Precision Samplers</strong></a></li>
 <li><a href="#Equivalence_of_SampleGeometricBag_Algorithms"><strong>Equivalence of SampleGeometricBag Algorithms</strong></a></li>
-<li><a href="#Oberhoff_s_Prefix_Distribution_Sampler"><strong>Oberhoff&#39;s Prefix Distribution Sampler</strong></a></li>
+<li><a href="#Oberhoff_s_Exact_Rejection_Sampling_Method"><strong>Oberhoff&#39;s &quot;Exact Rejection Sampling&quot; Method</strong></a></li>
 </ul></li>
 <li><a href="#License"><strong>License</strong></a></li>
 </ul>
@@ -151,7 +151,7 @@
 <li>as a <em>u-rand</em> in (Karney 2014)<sup><a href="#Note1"><strong>(1)</strong></a></sup>.</li>
 </ul>
 
-<p>Each additional digit is sampled simply by setting it to an independent unbiased random digit, an observation that dates from von Neumann (1951)<sup><a href="#Note9"><strong>(9)</strong></a></sup> in the binary case.</p>
+<p>Each additional digit is sampled simply by setting it to an independent uniform random digit, an observation that dates from von Neumann (1951)<sup><a href="#Note9"><strong>(9)</strong></a></sup> in the binary case.</p>
 
 <p>Note that the <em>u-rand</em> concept by Karney only contemplates sampling digits from left to right without any gaps, whereas the geometric bag concept is more general in this respect.</p>
 
@@ -193,7 +193,7 @@
 <li>If the algorithm fills a PSRN&#39;s unsampled fractional digits at random (e.g., uniformly at random in the case of a uniform PSRN), so that the number&#39;s fractional part has <em>m</em> digits, the number&#39;s distribution must remain close to the ideal distribution by a distance of not more than <em>b</em><sup>&minus;<em>m</em></sup>.</li>
 </ol>
 
-<p>The concept of <em>prefix distributions</em> (Oberhoff 2018)<sup><a href="#Note10"><strong>(10)</strong></a></sup> comes close to PSRNs, but numbers sampled this way are not PSRNs in the sense used here.  This is because the method requires calculating minimums of probabilities and, in practice, requires the use of floating-point arithmetic in most cases (see property 2 above).  Moreover, the method samples from a discrete distribution whose progression depends on the value of previously sampled bits, not just on the position of those bits as with the uniform and exponential distributions (see also (Thomas and Luk 2008)<sup><a href="#Note4"><strong>(4)</strong></a></sup>).  For completeness, Oberhoff&#39;s method appears in the appendix.</p>
+<p>The <em>exact rejection sampling</em> algorithm described by Oberhoff (2018)<sup><a href="#Note10"><strong>(10)</strong></a></sup> produces samples that act like PSRNs; however, the algorithm doesn&#39;t have the properties described in this section.  This is because the method requires calculating minimums of probabilities and, in practice, requires the use of floating-point arithmetic in most cases (see property 2 above).  Moreover, the algorithm&#39;s progression depends on the value of previously sampled bits, not just on the position of those bits as with the uniform and exponential distributions (see also (Thomas and Luk 2008)<sup><a href="#Note4"><strong>(4)</strong></a></sup>).  For completeness, Oberhoff&#39;s method appears in the appendix.</p>
 
 <p><a id=Comparisons></a></p>
 
@@ -1291,9 +1291,7 @@ def contbernoullidist(b, lamda, precision=53):
 
 <p><small><sup id=Note22>(22)</sup> Efraimidis, P. &quot;<a href="https://arxiv.org/abs/1012.0256v2"><strong>Weighted Random Sampling over Data Streams</strong></a>&quot;, arXiv:1012.0256v2 [cs.DS], 2015.</small></p>
 
-<p><small><sup id=Note23>(23)</sup> Oberhoff, Sebastian, &quot;<a href="https://dc.uwm.edu/etd/1888"><strong>Exact Sampling and Prefix Distributions</strong></a>&quot;, <em>Theses and Dissertations</em>, University of Wisconsin Milwaukee, 2018.</small></p>
-
-<p><small><sup id=Note24>(24)</sup> Devroye, L., Gravel, C., &quot;<a href="https://arxiv.org/abs/1502.02539v5">Sampling with arbitrary precision</a>&quot;, arXiv:1502.02539v5 [cs.IT], 2015.</small></p>
+<p><small><sup id=Note23>(23)</sup> Devroye, L., Gravel, C., &quot;<a href="https://arxiv.org/abs/1511.02273">The expected bit complexity of the von Neumann rejection algorithm</a>&quot;, arXiv:1511.02273 [cs.IT], 2016.</small></p>
 
 <p><a id=Appendix></a></p>
 
@@ -1365,28 +1363,30 @@ plot(expminusformula(), xlim=(0,1), ylim=(0,2))
 <li>The generated bit is zero, and the algorithm samples (or retrieves) a one bit at position <em>N</em>, which will occur at a 25% chance. In algorithm 3, this corresponds to returning 1 because <strong>a</strong>&#39;s fractional part is greater than <strong>b</strong>&#39;s, which will occur with the same probability.</li>
 </ul>
 
-<p><a id=Oberhoff_s_Prefix_Distribution_Sampler></a></p>
+<p><a id=Oberhoff_s_Exact_Rejection_Sampling_Method></a></p>
 
-<h3>Oberhoff&#39;s Prefix Distribution Sampler</h3>
+<h3>Oberhoff&#39;s &quot;Exact Rejection Sampling&quot; Method</h3>
 
-<p>The following describes Oberhoff&#39;s algorithm for sampling a continuous distribution supported on the interval [0, 1], as long as its probability function is continuous almost everywhere and bounded from above (Oberhoff 2018)<sup><a href="#Note23"><strong>(23)</strong></a></sup>, see also (Devroye and Gravel 2015)<sup><a href="#Note24"><strong>(24)</strong></a></sup>. (Note that if the probability function&#39;s domain is wider than [0, 1], then the function needs to be divided into one-unit-long pieces, one piece chosen at random with probability proportional to its area, and that piece shifted so that it lies in [0, 1] rather than its usual place; see Oberhoff pp. 11-12.)</p>
+<p>The following describes an algorithm described by Oberhoff for sampling a continuous distribution supported on the interval [0, 1], as long as its probability function is continuous almost everywhere and bounded from above (Oberhoff 2018, section 3)<sup><a href="#Note10"><strong>(10)</strong></a></sup>, see also (Devroye and Gravel 2016)<sup><a href="#Note23"><strong>(23)</strong></a></sup>. (Note that if the probability function&#39;s domain is wider than [0, 1], then the function needs to be divided into one-unit-long pieces, one piece chosen at random with probability proportional to its area, and that piece shifted so that it lies in [0, 1] rather than its usual place; see Oberhoff pp. 11-12.)</p>
 
 <ol>
-<li>Set <em>pdfmax</em> to an upper bound of the probability function at [0, 1].  Let <em>base</em> be the base, or radix, of the digits in the return value (such as 2 for binary or 10 for decimal).</li>
+<li>Set <em>pdfmax</em> to an upper bound of the probability function on the domain at [0, 1].  Let <em>base</em> be the base, or radix, of the digits in the return value (such as 2 for binary or 10 for decimal).</li>
 <li>Set <em>prefix</em> to 0 and <em>prefixLength</em> to 0.</li>
-<li>Set <em>y</em> to a uniform random number in the interval [0, <em>pdfmax</em>] (which should be a partially-sampled random number that is sampled digit-by-digit and on demand).</li>
-<li>Let <em>pw</em> be <em>base</em><sup>&minus;prefixLength</sup>.  Set <em>lower</em> and <em>upper</em> to the lower and upper bound, respectively, of the probability function&#39;s value at the interval [<em>prefix</em> * <em>pw</em>, <em>prefix</em> * <em>pw</em> + <em>pw</em>].</li>
-<li>If <em>y</em> turns out to be less than <em>lower</em> (such as by <strong>URandLess</strong>), the prefix was accepted.  Now do the following:
+<li>Set <em>y</em> to a uniform random number in the interval [0, <em>pdfmax</em>].</li>
+<li>Let <em>pw</em> be <em>base</em><sup>&minus;<em>prefixLength</em></sup>.  Set <em>lower</em> and <em>upper</em> to a lower or upper bound, respectively, of the probability function&#39;s value on the domain at [<em>prefix</em> * <em>pw</em>, <em>prefix</em> * <em>pw</em> + <em>pw</em>].</li>
+<li>If <em>y</em> turns out to be greater than <em>upper</em>, the prefix was rejected, so go to step 2.</li>
+<li>If <em>y</em> turns out to be less than <em>lower</em>, the prefix was accepted.  Now do the following:
 
 <ol>
-<li>While <em>prefixLength</em> is less than the desired precision, set <em>prefix</em> to <em>prefix</em> * <em>base</em> + <em>r</em>, where <em>r</em> is a random digit, then add 1 to <em>prefixLength</em>.</li>
+<li>While <em>prefixLength</em> is less than the desired precision, set <em>prefix</em> to <em>prefix</em> * <em>base</em> + <em>r</em>, where <em>r</em> is a uniform random digit, then add 1 to <em>prefixLength</em>.</li>
 <li>Return <em>prefix</em> * <em>base</em><sup>&minus;<em>prefixLength</em></sup>.  (If <em>prefixLength</em> is somehow greater than the desired precision, then the algorithm could choose to round the return value to a number whose fractional part has the desired number of digits, with a rounding mode of choice.)</li>
 </ol></li>
-<li>If <em>y</em> turns out to be greater than <em>upper</em> (such as by <strong>URandLess</strong>), the prefix was rejected, so go to step 2.</li>
-<li>Set <em>prefix</em> to <em>prefix</em> * <em>base</em> + <em>r</em>, where <em>r</em> is a random digit, then add 1 to <em>prefixLength</em>, then go to step 4.</li>
+<li>Set <em>prefix</em> to <em>prefix</em> * <em>base</em> + <em>r</em>, where <em>r</em> is a uniform random digit, then add 1 to <em>prefixLength</em>, then go to step 4.</li>
 </ol>
 
-<p>Because this algorithm requires evaluating the probability function and finding its maximum and minimum values at an interval (which often requires floating-point arithmetic and is often not trivial), this algorithm appears here in the appendix rather than in the main text.</p>
+<p>Because this algorithm requires evaluating the probability function and finding its maximum and minimum values at an interval (which often requires floating-point arithmetic and is often not trivial), this algorithm appears here in the appendix rather than in the main text.  Moreover, there is additional approximation error from generating <em>y</em> with a fixed number of digits, unless <em>y</em> is a uniform PSRN (see also &quot;<a href="#Application%20to%20Weighted%20Reservoir%20Sampling"><strong>Application to Weighted Reservoir Sampling</strong></a>&quot;).</p>
+
+<p>Oberhoff also describes <em>prefix distributions</em> that sample a box that covers the probability function, with probability proportional to the box&#39;s area, but these distributions will have to support a fixed maximum prefix length and so will only approximate the underlying continuous distribution.</p>
 
 <p><a id=License></a></p>
 
