@@ -2455,7 +2455,12 @@ END METHOD
 <blockquote>
 <p><strong>Example:</strong> To generate a random point inside a cylinder running along the Z axis, generate random X and Y coordinates inside a disc (2-dimensional ball) and generate a random Z coordinate by <code>RNDRANGE(mn, mx)</code>, where <code>mn</code> and <code>mx</code> are the highest and lowest Z coordinates possible.</p>
 
-<p><strong>Note:</strong> The <a href="https://peteroupc.github.io/randomgen.zip"><strong>Python sample code</strong></a> contains a method for generating a random point on the surface of an ellipsoid modeling the Earth.</p>
+<p><strong>Notes:</strong></p>
+
+<ol>
+<li>The <a href="https://peteroupc.github.io/randomgen.zip"><strong>Python sample code</strong></a> contains a method for generating a random point on the surface of an ellipsoid modeling the Earth.</li>
+<li>Sampling a half-ball, half-shell, or half-hypersphere can be done by sampling a full ball, shell, or hypersphere and replacing one of the dimensions of the result with its absolute value.</li>
+</ol>
 </blockquote>
 
 <p><a id=Random_Latitude_and_Longitude></a></p>
