@@ -184,6 +184,10 @@ END METHOD
 END METHOD
 </pre>
 
+<blockquote>
+<p><strong>Note:</strong> The following is a useful identity for the gamma distribution: <code>GammaDist(a) = BetaDist(a, b - a) * GammaDist(b)</code> (Chen et al. 2020)<sup><a href="#Note38"><strong>(38)</strong></a></sup>.</p>
+</blockquote>
+
 <p><a id=Beta_Distribution></a></p>
 
 <h4>Beta Distribution</h4>
@@ -278,12 +282,9 @@ END METHOD
 END METHOD
 </pre>
 
-<p>Methods implementing the strictly geometric stable and general geometric stable distributions are shown below (Kozubowski 2000)<sup><a href="#Note12"><strong>(12)</strong></a></sup>.  Here, <code>alpha</code> is in (0, 2], <code>lamda</code> is greater than 0, and <code>tau</code>&#39;s absolute value is min(1, 2/<code>alpha</code> - 1).</p>
+<p>Methods implementing the strictly geometric stable and general geometric stable distributions are shown below (Kozubowski 2000)<sup><a href="#Note12"><strong>(12)</strong></a></sup>.  Here, <code>alpha</code> is in (0, 2], <code>lamda</code> is greater than 0, and <code>tau</code>&#39;s absolute value is min(1, 2/<code>alpha</code> - 1).  The result of <code>GeometricStable</code> is a symmetric Linnik distribution if <code>tau = 0</code>, or a Mittag&ndash;Leffler distribution if <code>tau = 1</code> and <code>alpha &lt; 1</code>.</p>
 
 <pre>METHOD GeometricStable(alpha, lamda, tau)
-   // If tau is 0, this is a symmetric Linnik distribution.
-   // If tau is 1 and alpha is less than 1, this is
-   // a Mittag--Leffler distribution.
    rho = alpha*(1-tau)/2
    sign = -1
    if RNDINT(1)==0 or RNDU01() &lt; tau
@@ -634,6 +635,8 @@ END METHOD
 
 <p><small><sup id=Note37>(37)</sup> Oberhoff, Sebastian, &quot;<a href="https://dc.uwm.edu/etd/1888"><strong>Exact Sampling and Prefix Distributions</strong></a>&quot;, <em>Theses and Dissertations</em>, University of Wisconsin Milwaukee, 2018.</small></p>
 
+<p><small><sup id=Note38>(38)</sup> <a href="https://res.mdpi.com/d_attachment/sensors/sensors-20-00955/article_deploy/sensors-20-00955-v2.pdf"><strong>A Novel Gamma Distributed Random Variable (RV) Generation Method for Clutter Simulation with Non-Integral Shape Parameters</strong></a>. <em>Sensors</em>, 20(4), p.955.</small></p>
+
 <p><a id=Appendix></a></p>
 
 <h2>Appendix</h2>
@@ -781,16 +784,38 @@ END METHOD
 <p>There are three kinds of randomization algorithms:</p>
 
 <ol>
-<li>An <em>error-bounded algorithm</em> is an algorithm that samples a distribution in a manner that minimizes approximation error.  This means the algorithm samples from a continuous distribution that is close to the ideal distribution within a user-specified error tolerance (see below for details), or samples exactly from a discrete distribution (one that takes on a countable number of values).  Thus, the algorithm gives every representable number the expected probability of occurring.  In general, the only random numbers the algorithm uses are random bits (binary digits).  An application should use error-bounded algorithms whenever possible.</li>
-<li>An <em>exact algorithm</em> is an algorithm that samples from the exact distribution requested, assuming that computers can store and operate on real numbers of any precision and can generate independent uniform random real numbers of any precision (Devroye 1986, p. 1-2)<sup><a href="#Note11"><strong>(11)</strong></a></sup>.  Without more, however, an exact algorithm implemented on real-life computers can incur rounding and other errors, especially when floating-point arithmetic is used or when irrational numbers or transcendental functions are involved.  An exact algorithm can achieve a guaranteed bound on accuracy (and thus be an <em>error-bounded algorithm</em>) using either arbitrary-precision or interval arithmetic (see also Devroye 1986, p. 2)<sup><a href="#Note11"><strong>(11)</strong></a></sup>.  In this page, all methods given here are exact unless otherwise noted.  Note that <code>RNDU01</code> or <code>RNDRANGE</code> are exact in theory, but have no required implementation.</li>
+<li><p>An <em>exact algorithm</em> is an algorithm that samples from the exact distribution requested, assuming that computers&mdash;</p>
+
+<ul>
+<li>can store and operate on real numbers of any precision, and</li>
+<li>can generate independent uniform random real numbers of any precision</li>
+</ul>
+
+<p>(Devroye 1986, p. 1-2)<sup><a href="#Note11"><strong>(11)</strong></a></sup>.  Without more, however, an exact algorithm implemented on real-life computers can incur rounding and other errors, especially when floating-point arithmetic is used or when irrational numbers or transcendental functions are involved.  An exact algorithm can achieve a guaranteed bound on accuracy (and thus be an <em>error-bounded algorithm</em>) using either arbitrary-precision or interval arithmetic (see also Devroye 1986, p. 2)<sup><a href="#Note11"><strong>(11)</strong></a></sup>.  In this page, all methods given here are exact unless otherwise noted.  Note that <code>RNDU01</code> or <code>RNDRANGE</code> are exact in theory, but have no required implementation.</p></li>
+<li><p>An <em>error-bounded algorithm</em> is an exact algorithm with further requirements described below:</p>
+
+<ul>
+<li>If the ideal distribution is discrete (takes on a countable number of values), the algorithm samples exactly from that distribution, without incurring any approximation error not already present in the inputs.</li>
+<li>If the ideal distribution is continuous, the algorithm samples from a distribution that is close to the ideal within a user-specified error tolerance (see below for details).  Besides the error needed to round the final result to this tolerance, the algorithm incurs no other approximation error not already present in the inputs.  The algorithm can also sample a random number only partially, as long as the fully sampled number can be made close to the ideal within any error tolerance desired.</li>
+</ul>
+
+<p>In general, the only random numbers the algorithm uses are random bits (binary digits).  An application should use error-bounded algorithms whenever possible.</p></li>
 <li>An <em>inexact</em>, <em>approximate</em>, or <em>biased algorithm</em> is neither exact nor error-bounded; it uses &quot;a mathematical approximation of sorts&quot; to generate a random number that is close to the desired distribution (Devroye 1986, p. 2)<sup><a href="#Note11"><strong>(11)</strong></a></sup>.  An application should use this kind of algorithm only if it&#39;s willing to trade accuracy for speed.</li>
 </ol>
 
 <p>Most algorithms on this page, though, are not <em>error-bounded</em>, but even so, they may still be useful to an application willing to trade accuracy for speed.</p>
 
-<p>On the other hand, if an algorithm returns results that are accurate to a given number of digits after the point (for example, 53 bits after the point), it can generate any number of digits uniformly at random and append those digits to the result&#39;s digit expansion while remaining accurate to that many digits. For example, after it generates a normally-distributed random number, an algorithm can fill it with enough uniform random bits, as necessary, to give the number 100 bits after the point (Karney 2014)<sup><a href="#Note1"><strong>(1)</strong></a></sup>, see also (Oberhoff 2018)<sup><a href="#Note37"><strong>(37)</strong></a></sup> (example: <code>for i in 54..100: ret = ret + RNDINT(1) * pow(2,-i)</code>).</p>
+<p>There are many ways to describe closeness between two distributions.  As one suggestion found in (Devroye and Gravel 2015)<sup><a href="#Note25"><strong>(25)</strong></a></sup>, an algorithm has accuracy &epsilon; (the user-specified error tolerance) if it samples random numbers whose distribution is close to the ideal distribution by a Wasserstein L<sub>&infin;</sub> distance (&quot;earth-mover distance&quot;) of not more than &epsilon;.</p>
 
-<p>There are many ways to describe closeness between two distributions.  As one suggestion found in (Devroye and Gravel 2015)<sup><a href="#Note25"><strong>(25)</strong></a></sup>, an algorithm has accuracy &epsilon; (the user-specified error tolerance) if it samples random numbers whose distribution is close to the ideal distribution by a Wasserstein L<sub>&infin;</sub> distance of not more than &epsilon;.</p>
+<blockquote>
+<p><strong>Examples:</strong></p>
+
+<ol>
+<li>Generating an exponential random number via <code>-ln(RNDU01())</code> is an <em>exact algorithm</em> (in theory), but not an <em>error-bounded</em> one for common floating-point number formats.  The same is true of the Box&ndash;Müller transformation.</li>
+<li>Generating an exponential random number as described in <a href="#Exponential_Distribution_Another_Error_Bounded_Algorithm"><strong>another section of this page</strong></a> is an <em>error-bounded algorithm</em>.  Karney&#39;s algorithm for the normal distribution (Karney 2014)<sup><a href="#Note1"><strong>(1)</strong></a></sup> is also error-bounded because it returns a result that can be made to come close to the normal distribution within any error tolerance desired simply by appending more random digits to the end (an example when the return value has 53 bits after the point is as follows: <code>for i in 54..100: ret = ret + RNDINT(1) * pow(2,-i)</code>).  See also (Oberhoff 2018)<sup><a href="#Note37"><strong>(37)</strong></a></sup>.</li>
+<li>Examples of <em>approximate algorithms</em> include generating a Gaussian random number via a sum of <code>RNDU01()</code>, or most cases of generating a random integer via modulo reduction (see &quot;<a href="#A_Note_on_Integer_Generation_Algorithms"><strong>A Note on Integer Generation Algorithms</strong></a>&quot;).</li>
+</ol>
+</blockquote>
 
 <p><a id=License></a></p>
 

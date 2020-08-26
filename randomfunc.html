@@ -2111,7 +2111,7 @@ END METHOD
 
 <ol>
 <li>If only percentiles of data (such as the median or 50th percentile, the minimum or 0th percentile, or the maximum or 100th percentile) are available, the quantile function can be approximated via those percentiles.  The Nth percentile corresponds to the quantile for <code>N/100.0</code>.  Missing values for the quantile function can then be filled in by interpolation (such as spline fitting).  If the raw data points are available, see &quot;<a href="#Random_Numbers_from_a_Distribution_of_Data_Points"><strong>Random Numbers from a Distribution of Data Points</strong></a>&quot; instead.</li>
-<li>Taking the <code>k</code>th smallest of <code>n</code> random numbers distributed the same way is the same as taking the <code>k</code>th smallest of <code>n</code> <em>uniform</em> random numbers (e.g., <code>pow(u, 1/n)</code> for the maximum) and finding its quantile (Devroye 2006)<sup><a href="#Note60"><strong>(60)</strong></a></sup>; (Devroye 1986, p. 30)<sup><a href="#Note14"><strong>(14)</strong></a>.</li>
+<li>Taking the <code>k</code>th smallest of <code>n</code> random numbers distributed the same way is the same as taking the <code>k</code>th smallest of <code>n</code> <em>uniform</em> random numbers (e.g., <code>BetaDist(k, n+1-k)</code>) and finding its quantile (Devroye 2006)<sup><a href="#Note60"><strong>(60)</strong></a></sup>; (Devroye 1986, p. 30)<sup><a href="#Note14"><strong>(14)</strong></a>.</li>
 </ol>
 </blockquote>
 
@@ -2205,7 +2205,7 @@ above for returning more than one random number in one call.</p>
 
 <h3>Specific Distributions</h3>
 
-<p>Methods to sample additional distributions are given in a <a href="https://github.com/peteroupc/peteroupc.github.io/blob/master/randomnotes.html"><strong>separate page</strong></a>. They cover the normal, gamma, beta, von Mises, stable, and multivariate normal distributions as well as copulas.  Note, however, that most of the methods won&#39;t sample the given distribution in a manner that minimizes approximation error, but they may still be useful if the application is willing to trade accuracy for speed.</p>
+<p>Methods to sample additional distributions are given in a <a href="https://peteroupc.github.io/randomnotes.html"><strong>separate page</strong></a>. They cover the normal, gamma, beta, von Mises, stable, and multivariate normal distributions as well as copulas.  Note, however, that most of the methods won&#39;t sample the given distribution in a manner that minimizes approximation error, but they may still be useful if the application is willing to trade accuracy for speed.</p>
 
 <p><a id=Index_of_Non_Uniform_Distributions></a></p>
 

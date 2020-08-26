@@ -150,6 +150,8 @@ Here, `meanLifetime` must be an integer or noninteger greater than 0, and `scale
         return ret * scale
     END METHOD
 
+> **Note:** The following is a useful identity for the gamma distribution: `GammaDist(a) = BetaDist(a, b - a) * GammaDist(b)` (Chen et al. 2020)<sup>[**(38)**](#Note38)</sup>.
+
 <a id=Beta_Distribution></a>
 #### Beta Distribution
 
@@ -236,12 +238,9 @@ As more and more independent random numbers, generated the same way, are added t
         end
     END METHOD
 
-Methods implementing the strictly geometric stable and general geometric stable distributions are shown below (Kozubowski 2000)<sup>[**(12)**](#Note12)</sup>.  Here, `alpha` is in (0, 2], `lamda` is greater than 0, and `tau`'s absolute value is min(1, 2/`alpha` - 1).
+Methods implementing the strictly geometric stable and general geometric stable distributions are shown below (Kozubowski 2000)<sup>[**(12)**](#Note12)</sup>.  Here, `alpha` is in (0, 2], `lamda` is greater than 0, and `tau`'s absolute value is min(1, 2/`alpha` - 1).  The result of `GeometricStable` is a symmetric Linnik distribution if `tau = 0`, or a Mittag&ndash;Leffler distribution if `tau = 1` and `alpha < 1`.
 
     METHOD GeometricStable(alpha, lamda, tau)
-       // If tau is 0, this is a symmetric Linnik distribution.
-       // If tau is 1 and alpha is less than 1, this is
-       // a Mittag--Leffler distribution.
        rho = alpha*(1-tau)/2
        sign = -1
        if RNDINT(1)==0 or RNDU01() < tau
@@ -555,6 +554,8 @@ If we have multiple biased coins (_n_ of them), each with a separate unknown bia
 
 <small><sup id=Note37>(37)</sup> Oberhoff, Sebastian, "[**Exact Sampling and Prefix Distributions**](https://dc.uwm.edu/etd/1888)", _Theses and Dissertations_, University of Wisconsin Milwaukee, 2018.</small>
 
+<small><sup id=Note38>(38)</sup> [**A Novel Gamma Distributed Random Variable (RV) Generation Method for Clutter Simulation with Non-Integral Shape Parameters**](https://res.mdpi.com/d_attachment/sensors/sensors-20-00955/article_deploy/sensors-20-00955-v2.pdf). _Sensors_, 20(4), p.955.</small>
+
 <a id=Appendix></a>
 ## Appendix
 
@@ -644,15 +645,30 @@ For all weighted-choice algorithms in this section, floating-point arithmetic an
 
 There are three kinds of randomization algorithms:
 
-1. An _error-bounded algorithm_ is an algorithm that samples a distribution in a manner that minimizes approximation error.  This means the algorithm samples from a continuous distribution that is close to the ideal distribution within a user-specified error tolerance (see below for details), or samples exactly from a discrete distribution (one that takes on a countable number of values).  Thus, the algorithm gives every representable number the expected probability of occurring.  In general, the only random numbers the algorithm uses are random bits (binary digits).  An application should use error-bounded algorithms whenever possible.
-2. An _exact algorithm_ is an algorithm that samples from the exact distribution requested, assuming that computers can store and operate on real numbers of any precision and can generate independent uniform random real numbers of any precision (Devroye 1986, p. 1-2)<sup>[**(11)**](#Note11)</sup>.  Without more, however, an exact algorithm implemented on real-life computers can incur rounding and other errors, especially when floating-point arithmetic is used or when irrational numbers or transcendental functions are involved.  An exact algorithm can achieve a guaranteed bound on accuracy (and thus be an _error-bounded algorithm_) using either arbitrary-precision or interval arithmetic (see also Devroye 1986, p. 2)<sup>[**(11)**](#Note11)</sup>.  In this page, all methods given here are exact unless otherwise noted.  Note that `RNDU01` or `RNDRANGE` are exact in theory, but have no required implementation.
+1. An _exact algorithm_ is an algorithm that samples from the exact distribution requested, assuming that computers&mdash;
+
+    - can store and operate on real numbers of any precision, and
+    - can generate independent uniform random real numbers of any precision
+
+    (Devroye 1986, p. 1-2)<sup>[**(11)**](#Note11)</sup>.  Without more, however, an exact algorithm implemented on real-life computers can incur rounding and other errors, especially when floating-point arithmetic is used or when irrational numbers or transcendental functions are involved.  An exact algorithm can achieve a guaranteed bound on accuracy (and thus be an _error-bounded algorithm_) using either arbitrary-precision or interval arithmetic (see also Devroye 1986, p. 2)<sup>[**(11)**](#Note11)</sup>.  In this page, all methods given here are exact unless otherwise noted.  Note that `RNDU01` or `RNDRANGE` are exact in theory, but have no required implementation.
+2. An _error-bounded algorithm_ is an exact algorithm with further requirements described below:
+
+    - If the ideal distribution is discrete (takes on a countable number of values), the algorithm samples exactly from that distribution, without incurring any approximation error not already present in the inputs.
+    - If the ideal distribution is continuous, the algorithm samples from a distribution that is close to the ideal within a user-specified error tolerance (see below for details).  Besides the error needed to round the final result to this tolerance, the algorithm incurs no other approximation error not already present in the inputs.  The algorithm can also sample a random number only partially, as long as the fully sampled number can be made close to the ideal within any error tolerance desired.
+
+    In general, the only random numbers the algorithm uses are random bits (binary digits).  An application should use error-bounded algorithms whenever possible.
 3. An _inexact_, _approximate_, or _biased algorithm_ is neither exact nor error-bounded; it uses "a mathematical approximation of sorts" to generate a random number that is close to the desired distribution (Devroye 1986, p. 2)<sup>[**(11)**](#Note11)</sup>.  An application should use this kind of algorithm only if it's willing to trade accuracy for speed.
 
 Most algorithms on this page, though, are not _error-bounded_, but even so, they may still be useful to an application willing to trade accuracy for speed.
 
-On the other hand, if an algorithm returns results that are accurate to a given number of digits after the point (for example, 53 bits after the point), it can generate any number of digits uniformly at random and append those digits to the result's digit expansion while remaining accurate to that many digits. For example, after it generates a normally-distributed random number, an algorithm can fill it with enough uniform random bits, as necessary, to give the number 100 bits after the point (Karney 2014)<sup>[**(1)**](#Note1)</sup>, see also (Oberhoff 2018)<sup>[**(37)**](#Note37)</sup> (example: `for i in 54..100: ret = ret + RNDINT(1) * pow(2,-i)`).
+There are many ways to describe closeness between two distributions.  As one suggestion found in (Devroye and Gravel 2015)<sup>[**(25)**](#Note25)</sup>, an algorithm has accuracy &epsilon; (the user-specified error tolerance) if it samples random numbers whose distribution is close to the ideal distribution by a Wasserstein L<sub>&infin;</sub> distance ("earth-mover distance") of not more than &epsilon;.
 
-There are many ways to describe closeness between two distributions.  As one suggestion found in (Devroye and Gravel 2015)<sup>[**(25)**](#Note25)</sup>, an algorithm has accuracy &epsilon; (the user-specified error tolerance) if it samples random numbers whose distribution is close to the ideal distribution by a Wasserstein L<sub>&infin;</sub> distance of not more than &epsilon;.
+>
+> **Examples:**
+>
+> 1. Generating an exponential random number via `-ln(RNDU01())` is an _exact algorithm_ (in theory), but not an _error-bounded_ one for common floating-point number formats.  The same is true of the Box&ndash;Müller transformation.
+> 2. Generating an exponential random number as described in [**another section of this page**](#Exponential_Distribution_Another_Error_Bounded_Algorithm) is an _error-bounded algorithm_.  Karney's algorithm for the normal distribution (Karney 2014)<sup>[**(1)**](#Note1)</sup> is also error-bounded because it returns a result that can be made to come close to the normal distribution within any error tolerance desired simply by appending more random digits to the end (an example when the return value has 53 bits after the point is as follows: `for i in 54..100: ret = ret + RNDINT(1) * pow(2,-i)`).  See also (Oberhoff 2018)<sup>[**(37)**](#Note37)</sup>.
+> 3. Examples of _approximate algorithms_ include generating a Gaussian random number via a sum of `RNDU01()`, or most cases of generating a random integer via modulo reduction (see "[**A Note on Integer Generation Algorithms**](#A_Note_on_Integer_Generation_Algorithms)").
 
 <a id=License></a>
 ## License
