@@ -188,7 +188,6 @@
 <ul>
 <li><a href="#Mean_and_Variance_Calculation"><strong>Mean and Variance Calculation</strong></a></li>
 <li><a href="#Norm_Calculation"><strong>Norm Calculation</strong></a></li>
-<li><a href="#Multithreading_Note"><strong>Multithreading Note</strong></a></li>
 <li><a href="#Implementation_Considerations"><strong>Implementation Considerations</strong></a></li>
 <li><a href="#Security_Considerations"><strong>Security Considerations</strong></a></li>
 </ul></li>
@@ -2728,12 +2727,6 @@ END METHOD
 
 <p>There are other kinds of norms besides the &#x2113;<sub>2</sub> norm.  More generally, the &#x2113;<sub><em>p</em></sub> norm, where <em>p</em> is 1 or greater or is &infin;, is the <em>p</em><sup>th</sup> root of the sum of <em>p</em><sup>th</sup> powers of a vector&#39;s components&#39; absolute values (or, if <em>p</em> is &infin;, the highest absolute value among those components).  An &#x2113;<sub><em>p</em></sub> ball or sphere of a given radius is a ball or sphere that is bounded by or traces, respectively, all points with an &#x2113;<sub><em>p</em></sub> norm equal to that radius.  (An &#x2113;<sub>&infin;</sub> ball or sphere is box-shaped.)</p>
 
-<p><a id=Multithreading_Note></a></p>
-
-<h3>Multithreading Note</h3>
-
-<p>Multithreading can serve as a fast way to generate multiple random numbers at once; it is not reflected in the pseudocode given in this page.  In general, this involves dividing a block of memory into chunks, assigning each chunk to a thread, giving each thread its own instance of a random number generator, and letting each thread fill its assigned chunk with random numbers.  For an example, see &quot;<a href="https://docs.scipy.org/doc/numpy/reference/random/multithreading.html"><strong>Multithreaded Generation</strong></a>&quot;.</p>
-
 <p><a id=Implementation_Considerations></a></p>
 
 <h3>Implementation Considerations</h3>
@@ -2742,6 +2735,7 @@ END METHOD
 <li><strong>Shell scripts and Microsoft Windows batch files</strong> are designed for running other programs, rather than general-purpose programming.  However, batch files and <code>bash</code> (a shell script interpreter) might support a variable which returns a random integer in the interval [0, 32767] (called <code>%RANDOM%</code> or <code>$RANDOM</code>, respectively); neither variable is designed for information security. Whenever possible, the methods in this document should not be implemented in shell scripts or batch files, especially if information security is a goal.</li>
 <li><strong>Query languages such as SQL</strong> have no procedural elements such as loops and branches.  Moreover, standard SQL has no way to generate random numbers, but popular SQL dialects often do &mdash; with idiosyncratic behavior.<sup><a href="#Note80"><strong>(80)</strong></a></sup> Whenever possible, the methods in this document should not be implemented in SQL, especially if information security is a goal.</li>
 <li><strong>Stateless PRNGs.</strong> Most designs of pseudorandom number generators (PRNGs) in common use maintain an internal state and update that state each time a random number is generated.  But for <a href="https://peteroupc.github.io/random.html#Designs_for_PRNGs"><strong><em>stateless</em> PRNG designs</strong></a> (including so-called &quot;splittable&quot; PRNGs), <code>RNDINT()</code>, <code>NEXTRAND()</code>, and other random sampling methods in this document may have to be adjusted accordingly (usually by adding an additional parameter).</li>
+<li><strong>Multithreading.</strong> Multithreading can serve as a fast way to generate multiple random numbers at once; it is not reflected in the pseudocode given in this page.  In general, this involves dividing a block of memory into chunks, assigning each chunk to a thread, giving each thread its own instance of a random number generator, and letting each thread fill its assigned chunk with random numbers.  For an example, see &quot;<a href="https://docs.scipy.org/doc/numpy/reference/random/multithreading.html"><strong>Multithreaded Generation</strong></a>&quot;.</li>
 </ol>
 
 <p><a id=Security_Considerations></a></p>

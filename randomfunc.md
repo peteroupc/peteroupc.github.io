@@ -136,7 +136,6 @@ The randomization methods in this document will be deterministic (that is, produ
 - [**Appendix**](#Appendix)
     - [**Mean and Variance Calculation**](#Mean_and_Variance_Calculation)
     - [**Norm Calculation**](#Norm_Calculation)
-    - [**Multithreading Note**](#Multithreading_Note)
     - [**Implementation Considerations**](#Implementation_Considerations)
     - [**Security Considerations**](#Security_Considerations)
 - [**License**](#License)
@@ -2290,17 +2289,13 @@ The following method calculates the norm of a vector (list of numbers), more spe
 
 There are other kinds of norms besides the &#x2113;<sub>2</sub> norm.  More generally, the &#x2113;<sub>_p_</sub> norm, where _p_ is 1 or greater or is &infin;, is the _p_<sup>th</sup> root of the sum of _p_<sup>th</sup> powers of a vector's components' absolute values (or, if _p_ is &infin;, the highest absolute value among those components).  An &#x2113;<sub>_p_</sub> ball or sphere of a given radius is a ball or sphere that is bounded by or traces, respectively, all points with an &#x2113;<sub>_p_</sub> norm equal to that radius.  (An &#x2113;<sub>&infin;</sub> ball or sphere is box-shaped.)
 
-<a id=Multithreading_Note></a>
-### Multithreading Note
-
-Multithreading can serve as a fast way to generate multiple random numbers at once; it is not reflected in the pseudocode given in this page.  In general, this involves dividing a block of memory into chunks, assigning each chunk to a thread, giving each thread its own instance of a random number generator, and letting each thread fill its assigned chunk with random numbers.  For an example, see "[**Multithreaded Generation**](https://docs.scipy.org/doc/numpy/reference/random/multithreading.html)".
-
 <a id=Implementation_Considerations></a>
 ### Implementation Considerations
 
 1. **Shell scripts and Microsoft Windows batch files** are designed for running other programs, rather than general-purpose programming.  However, batch files and `bash` (a shell script interpreter) might support a variable which returns a random integer in the interval \[0, 32767\] (called `%RANDOM%` or `$RANDOM`, respectively); neither variable is designed for information security. Whenever possible, the methods in this document should not be implemented in shell scripts or batch files, especially if information security is a goal.
 2. **Query languages such as SQL** have no procedural elements such as loops and branches.  Moreover, standard SQL has no way to generate random numbers, but popular SQL dialects often do &mdash; with idiosyncratic behavior.<sup>[**(80)**](#Note80)</sup> Whenever possible, the methods in this document should not be implemented in SQL, especially if information security is a goal.
 3. **Stateless PRNGs.** Most designs of pseudorandom number generators (PRNGs) in common use maintain an internal state and update that state each time a random number is generated.  But for [**_stateless_ PRNG designs**](https://peteroupc.github.io/random.html#Designs_for_PRNGs) (including so-called "splittable" PRNGs), `RNDINT()`, `NEXTRAND()`, and other random sampling methods in this document may have to be adjusted accordingly (usually by adding an additional parameter).
+4. **Multithreading.** Multithreading can serve as a fast way to generate multiple random numbers at once; it is not reflected in the pseudocode given in this page.  In general, this involves dividing a block of memory into chunks, assigning each chunk to a thread, giving each thread its own instance of a random number generator, and letting each thread fill its assigned chunk with random numbers.  For an example, see "[**Multithreaded Generation**](https://docs.scipy.org/doc/numpy/reference/random/multithreading.html)".
 
 <a id=Security_Considerations></a>
 ### Security Considerations
