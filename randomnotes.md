@@ -22,13 +22,13 @@
     - [**Implementation of `erf`**](#Implementation_of_erf)
     - [**A Note on Integer Generation Algorithms**](#A_Note_on_Integer_Generation_Algorithms)
     - [**A Note on Weighted Choice Algorithms**](#A_Note_on_Weighted_Choice_Algorithms)
-    - [**A Note on Error-Bounded Algorithms**](#A_Note_on_Error_Bounded_Algorithms)
+    - [**Exact, Error-Bounded, and Approximate Algorithms**](#Exact_Error_Bounded_and_Approximate_Algorithms)
 - [**License**](#License)
 
 <a id=Specific_Distributions></a>
 ### Specific Distributions
 
-**Requires random real numbers.**  This section shows algorithms to sample several popular non-uniform distributions.  The algorithms are exact unless otherwise noted, and applications should choose algorithms with either no error (including rounding error) or a user-settable error bound.  See the [**appendix**](#A_Note_on_Error_Bounded_Algorithms) for more information.
+**Requires random real numbers.**  This section shows algorithms to sample several popular non-uniform distributions.  The algorithms are exact unless otherwise noted, and applications should choose algorithms with either no error (including rounding error) or a user-settable error bound.  See the [**appendix**](#Exact_Error_Bounded_and_Approximate_Algorithms) for more information.
 
 <a id=Normal_Gaussian_Distribution></a>
 #### Normal (Gaussian) Distribution
@@ -640,8 +640,8 @@ There are other weighted choice algorithms that don't necessarily take integer w
 
 For all weighted-choice algorithms in this section, floating-point arithmetic and floating-point random number generation (such as `RNDRANGE()`) ought to be avoided, since they often introduce bias in real-world implementations.
 
-<a id=A_Note_on_Error_Bounded_Algorithms></a>
-### A Note on Error-Bounded Algorithms
+<a id=Exact_Error_Bounded_and_Approximate_Algorithms></a>
+### Exact, Error-Bounded, and Approximate Algorithms
 
 There are three kinds of randomization algorithms:
 

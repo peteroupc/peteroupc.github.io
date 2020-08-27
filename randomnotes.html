@@ -35,7 +35,7 @@
 <li><a href="#Implementation_of_erf"><strong>Implementation of <code>erf</code></strong></a></li>
 <li><a href="#A_Note_on_Integer_Generation_Algorithms"><strong>A Note on Integer Generation Algorithms</strong></a></li>
 <li><a href="#A_Note_on_Weighted_Choice_Algorithms"><strong>A Note on Weighted Choice Algorithms</strong></a></li>
-<li><a href="#A_Note_on_Error_Bounded_Algorithms"><strong>A Note on Error-Bounded Algorithms</strong></a></li>
+<li><a href="#Exact_Error_Bounded_and_Approximate_Algorithms"><strong>Exact, Error-Bounded, and Approximate Algorithms</strong></a></li>
 </ul></li>
 <li><a href="#License"><strong>License</strong></a></li>
 </ul>
@@ -44,7 +44,7 @@
 
 <h3>Specific Distributions</h3>
 
-<p><strong>Requires random real numbers.</strong>  This section shows algorithms to sample several popular non-uniform distributions.  The algorithms are exact unless otherwise noted, and applications should choose algorithms with either no error (including rounding error) or a user-settable error bound.  See the <a href="#A_Note_on_Error_Bounded_Algorithms"><strong>appendix</strong></a> for more information.</p>
+<p><strong>Requires random real numbers.</strong>  This section shows algorithms to sample several popular non-uniform distributions.  The algorithms are exact unless otherwise noted, and applications should choose algorithms with either no error (including rounding error) or a user-settable error bound.  See the <a href="#Exact_Error_Bounded_and_Approximate_Algorithms"><strong>appendix</strong></a> for more information.</p>
 
 <p><a id=Normal_Gaussian_Distribution></a></p>
 
@@ -777,9 +777,9 @@ END METHOD
 
 <p>For all weighted-choice algorithms in this section, floating-point arithmetic and floating-point random number generation (such as <code>RNDRANGE()</code>) ought to be avoided, since they often introduce bias in real-world implementations.</p>
 
-<p><a id=A_Note_on_Error_Bounded_Algorithms></a></p>
+<p><a id=Exact_Error_Bounded_and_Approximate_Algorithms></a></p>
 
-<h3>A Note on Error-Bounded Algorithms</h3>
+<h3>Exact, Error-Bounded, and Approximate Algorithms</h3>
 
 <p>There are three kinds of randomization algorithms:</p>
 

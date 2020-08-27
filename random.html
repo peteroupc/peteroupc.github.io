@@ -528,11 +528,10 @@ For cryptographic RNGs, an application should use only one thread-safe instance 
 </tr>
 </tbody></table>
 
-<p><small>(A) The general RNGs of recent versions of Python and Ruby implement <a href="https://en.wikipedia.org/wiki/Mersenne_Twister"><strong>Mersenne Twister</strong></a>, which is not preferred for a high-quality RNG.  PHP&#39;s <code>mt_rand()</code> implements or implemented a flawed version of Mersenne Twister.</small></p>
-
-<p><small>(B) JavaScript&#39;s <code>Math.random()</code> (which ranges 0 or greater and less than 1) is implemented using <code>xorshift128+</code> (or a variant) in the V8 engine, Firefox, and certain other modern browsers as of late 2017; <code>Math.random()</code> uses an &quot;implementation-dependent algorithm or strategy&quot;, though (see ECMAScript sec. 20.2.2.27).</small></p>
-
-<p><small>(C) A cryptographic RNG implementation can&mdash;</p>
+<ul>
+<li><small>(A) The general RNGs of recent versions of Python and Ruby implement <a href="https://en.wikipedia.org/wiki/Mersenne_Twister"><strong>Mersenne Twister</strong></a>, which is not preferred for a high-quality RNG.  PHP&#39;s <code>mt_rand()</code> implements or implemented a flawed version of Mersenne Twister.</small></li>
+<li><small>(B) JavaScript&#39;s <code>Math.random()</code> (which ranges 0 or greater and less than 1) is implemented using <code>xorshift128+</code> (or a variant) in the V8 engine, Firefox, and certain other modern browsers as of late 2017; <code>Math.random()</code> uses an &quot;implementation-dependent algorithm or strategy&quot;, though (see ECMAScript sec. 20.2.2.27).</small></li>
+<li><p><small>(C) A cryptographic RNG implementation can&mdash;</p>
 
 <ul>
 <li>read from the <code>/dev/urandom</code> device in Linux-based systems (using the <code>open</code> and <code>read</code> system calls where available)<sup><a href="#Note21"><strong>(21)</strong></a></sup>,</li>
@@ -541,18 +540,13 @@ For cryptographic RNGs, an application should use only one thread-safe instance 
 <li>call the <code>BCryptGenRandom</code> API in Windows 7 and later,</small></li>
 </ul>
 
-<p><small>and only use other techniques if the existing ones are inadequate for the application.  But unfortunately, resource-constrained devices (&quot;embedded&quot; devices) are much less likely to have a cryptographic RNG available compared to general-purpose computing devices such as desktop computers and smartphones (Wetzels 2017)<sup><a href="#Note22"><strong>(22)</strong></a></sup>, although methods exist for implementing a cryptographic RNG on the Arduino (Peng 2017)<sup><a href="#Note23"><strong>(23)</strong></a></sup>.
-</small></p>
-
-<p><small>(D) Java&#39;s <code>java.util.Random</code> class uses a 48-bit seed, so is not considered a high-quality RNG.  However, a subclass of <code>java.util.Random</code> might be implemented as a high-quality RNG.</small></p>
-
-<p><small>(E) Ruby&#39;s <code>SecureRandom.rand</code> method presents a beautiful and simple API for random number generation, in my opinion.  Namely, <code>rand()</code> returns a number 0 or greater and less than 1, and <code>rand(N)</code> returns an integer 0 or greater and less than N.</small></p>
-
-<p><small>(F) In Java 8 and later, use <code>SecureRandom.getInstanceStrong()</code>.  In Java earlier than 8, call <code>SecureRandom.getInstance(&quot;NativePRNGNonBlocking&quot;)</code> or, if that fails, <code>SecureRandom.getInstance(&quot;NativePRNG&quot;)</code>.  For Android, especially versions 4.3 and earlier, see (Klyubin 2013)<sup><a href="#Note24"><strong>(24)</strong></a></sup>.  Using the <code>SecureRandom</code> implementation <code>&quot;SHA1PRNG&quot;</code> is not recommended, because of weaknesses in seeding and RNG quality in implementations as of 2013 (Michaelis et al., 2013)<sup><a href="#Note25"><strong>(25)</strong></a></sup>.</small></p>
-
-<p><small>(G) <a href="http://en.cppreference.com/w/cpp/numeric/random/random_device"><strong><code>std::random_device</code></strong></a> was introduced in C++11, but its specification leaves considerably much to be desired.  For example,  <code>std::random_device</code> can fall back to a PRNG of unspecified quality without much warning.  At best, <code>std::random_device</code> should not be used except to supplement other techniques for random number generation.</small></p>
-
-<p><small>(H) The .NET Framework&#39;s <code>System.Random</code> class uses a seed of at most 32 bits, so is not considered a high-quality RNG.  However, a subclass of <code>System.Random</code> might be implemented as a high-quality RNG.</small></p>
+<p><small>and only use other techniques if the existing ones are inadequate for the application.  But unfortunately, resource-constrained devices (&quot;embedded&quot; devices) are much less likely to have a cryptographic RNG available compared to general-purpose computing devices such as desktop computers and smartphones (Wetzels 2017)<sup><a href="#Note22"><strong>(22)</strong></a></sup>, although methods exist for implementing a cryptographic RNG on the Arduino (Peng 2017)<sup><a href="#Note23"><strong>(23)</strong></a></sup>.</small></p></li>
+<li><small>(D) Java&#39;s <code>java.util.Random</code> class uses a 48-bit seed, so is not considered a high-quality RNG.  However, a subclass of <code>java.util.Random</code> might be implemented as a high-quality RNG.</small></li>
+<li><small>(E) Ruby&#39;s <code>SecureRandom.rand</code> method presents a beautiful and simple API for random number generation, in my opinion.  Namely, <code>rand()</code> returns a number 0 or greater and less than 1, and <code>rand(N)</code> returns an integer 0 or greater and less than N.</small></li>
+<li><small>(F) In Java 8 and later, use <code>SecureRandom.getInstanceStrong()</code>.  In Java earlier than 8, call <code>SecureRandom.getInstance(&quot;NativePRNGNonBlocking&quot;)</code> or, if that fails, <code>SecureRandom.getInstance(&quot;NativePRNG&quot;)</code>.  For Android, especially versions 4.3 and earlier, see (Klyubin 2013)<sup><a href="#Note24"><strong>(24)</strong></a></sup>.  Using the <code>SecureRandom</code> implementation <code>&quot;SHA1PRNG&quot;</code> is not recommended, because of weaknesses in seeding and RNG quality in implementations as of 2013 (Michaelis et al., 2013)<sup><a href="#Note25"><strong>(25)</strong></a></sup>.</small></li>
+<li><small>(G) <a href="http://en.cppreference.com/w/cpp/numeric/random/random_device"><strong><code>std::random_device</code></strong></a> was introduced in C++11, but its specification leaves considerably much to be desired.  For example,  <code>std::random_device</code> can fall back to a PRNG of unspecified quality without much warning.  At best, <code>std::random_device</code> should not be used except to supplement other techniques for random number generation.</small></li>
+<li><small>(H) The .NET Framework&#39;s <code>System.Random</code> class uses a seed of at most 32 bits, so is not considered a high-quality RNG.  However, a subclass of <code>System.Random</code> might be implemented as a high-quality RNG.</small></li>
+</ul>
 
 <p><a id=Hash_Functions></a></p>
 
