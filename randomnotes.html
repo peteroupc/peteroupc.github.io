@@ -297,7 +297,7 @@ END METHOD
       cotparam = RNDRANGE(0, rho)
       w = sin(rho)*cos(cotparam)/sin(cotparam)-cos(rho)
    end
-   return Expo(1)*sign*pow(lamda*w, 1.0/alpha)
+   return Expo(1) * sign * pow(lamda*w, 1.0/alpha)
 END METHOD
 
 METHOD GeneralGeoStable(alpha, beta, mu, sigma)

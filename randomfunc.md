@@ -594,19 +594,20 @@ _Rejection sampling_ is a simple and flexible approach for generating random con
 2. If the content doesn't meet predetermined criteria, go to step 1.
 
 Example criteria include checking&mdash;
-- whether a random number is not less than a minimum threshold (_left-truncation_),
-- whether a random number is not greater than a maximum threshold (_right-truncation_),
-- whether a random number is prime,
-- whether a random number is divisible or not by certain numbers,
-- whether a random number is not among recently chosen random numbers,
-- whether a random number was not already chosen (with the aid of a hash table, red-black tree, or similar structure),
-- whether a random number was not chosen more often in a row than desired,
+- whether a random number&mdash;
+    - is not less than a minimum threshold (_left-truncation_),
+    - is not greater than a maximum threshold (_right-truncation_),
+    - is prime,
+    - is divisible or not by certain numbers,
+    - is not among recently chosen random numbers,
+    - was not already chosen (with the aid of a hash table, red&ndash;black tree, or similar structure), or
+    - was not chosen more often in a row than desired,
+    - is not included in a "blacklist" of numbers,
 - whether a random point is sufficiently distant from previous random points (with the aid of a KD-tree or similar structure),
-- whether a random string matches a regular expression,
-- whether a random number is not included in a "blacklist" of numbers, or
+- whether a random string matches a regular expression, or
 - two or more of the foregoing criteria.
 
-(KD-trees, hash tables, red-black trees, prime-number testing algorithms, and regular expressions are outside the scope of this document.)
+(KD-trees, hash tables, red&ndash;black trees, prime-number testing algorithms, and regular expressions are outside the scope of this document.)
 
 > **Note:** All rejection sampling strategies have a chance to reject data, so they all have a _variable running time_ (in fact, they could run indefinitely).  Note that graphics processing units (GPUs) and other devices that run multiple tasks at once work better if all the tasks finish their work at the same time.  This is not possible if they all generate a random number via rejection sampling because of its variable running time.  If each iteration of the rejection sampler has a low rejection rate, one solution is to have each task run one iteration of the sampler, with its own source of random numbers (such as numbers generated from its own PRNG), then to take the first random number that hasn't been rejected this way by a task (which can fail at a very low rate).<sup>[**(11)**](#Note11)</sup>
 
@@ -685,7 +686,7 @@ An algorithm called _coupling from the past_ (Propp and Wilson 1996)<sup>[**(13)
           // Stop when all states are the same
           fs=states[0]
           done=true
-          for i in 1...numstates: done=done and states[i]==fs
+          for i in 1...numstates: done=(done and states[i]==fs)
        end
        return states[0] // Return the steady state
     END METHOD
@@ -796,7 +797,7 @@ The first kind is called weighted choice _with replacement_ (which can be though
 >
 > 1. Assume we have the following list: `["apples", "oranges", "bananas", "grapes"]`, and `weights` is the following: `[3, 15, 1, 2]`.  The weight for "apples" is 3, and the weight for "oranges" is 15.  Since "oranges" has a higher weight than "apples", the index for "oranges" (1) is more likely to be chosen than the index for "apples" (0) with the `WeightedChoice` method.  The following idiom implements how to get a randomly chosen item from the list with that method: `item = list[WeightedChoice(weights)]`.
 > 2. Example 1 can be implemented with `CumulativeWeightedChoice` instead of `WeightedChoice` if `weights` is the following list of cumulative weights: `[0, 3, 18, 19, 21]`.
-> 3. **Piecewise constant distribution.** Assume the weights from example 1 are used and the list contains the following: `[0, 5, 10, 11, 13]` (one more item than the weights).  This expresses four intervals: [0, 5), [5, 10), and so on.  After a random index is chosen with `index = WeightedChoice(weights)`, an independent uniform random number in the chosen interval is chosen.  For example, code like the following chooses a random integer this way: `number = RNDINTEXCRANGE(list[index], list[index + 1])`.
+> 3. **Piecewise constant distribution.** Assume the weights from example 1 are used and the list contains the following: `[0, 5, 10, 11, 13]` (one more item than the weights).  This expresses four intervals: \[0, 5), \[5, 10), and so on.  After a random index is chosen with `index = WeightedChoice(weights)`, an independent uniform random number in the chosen interval is chosen.  For example, code like the following chooses a random integer this way: `number = RNDINTEXCRANGE(list[index], list[index + 1])`.
 
 <a id=Weighted_Choice_Without_Replacement_Multiple_Copies></a>
 #### Weighted Choice Without Replacement (Multiple Copies)
@@ -820,7 +821,7 @@ To implement weighted choice _without replacement_ (which can be thought of as d
 
 Alternatively, if all the weights are integers 0 or greater and their sum is relatively small, create a list with as many copies of each item as its weight, then [**shuffle**](#Shuffling) that list.  The resulting list will be ordered in a way that corresponds to a weighted random choice without replacement.
 
-> **Note:** The weighted sampling described in this section can be useful to some applications (particularly some games) that wish to control which random numbers appear, to make the random outcomes appear fairer to users (e.g., to avoid long streaks of good outcomes or of bad outcomes).  When used for this purpose, each item represents a different outcome (e.g., "good" or "bad"), and the lists are replenished once no further items can be chosen.  However, this kind of sampling should not be used for this purpose whenever information security (ISO/IEC 27000) is involved, including when predicting future random numbers would give a player or user a significant and unfair advantage.
+> **Note:** The weighted sampling described in this section can be useful to some applications (particularly some games) that wish to control which random numbers appear, to make the random outcomes appear fairer to users (e.g., to avoid long streaks of good outcomes or of bad outcomes).  When used for this purpose, each item represents a different outcome (e.g., "good" or "bad"), and the lists are replenished once no further items can be chosen.  However, this kind of sampling should be avoided in applications that care about information security, including when predicting future random numbers would give a player or user a significant and unfair advantage.
 
 <a id=Weighted_Choice_Without_Replacement_Single_Copies></a>
 #### Weighted Choice Without Replacement (Single Copies)
@@ -953,14 +954,7 @@ A _mixture_ consists of two or more probability distributions with separate prob
 >     - Create a list (`weights`) of weights for each range.  Each range is given a weight of `(mx - mn) + 1`, where `mn` is that range's minimum and `mx` is its maximum.
 >     - Choose an index using `WeightedChoice(weights)`, then generate `RNDINTRANGE(mn, mx)`, where `mn` is the corresponding range's minimum and `mx` is its maximum.
 > 4. In the pseudocode `index = WeightedChoice([80, 20]); list = [[0, 5], [5, 10]]; number = RNDINTEXCRANGE(list[index][0], list[index][1])`, a random integer in [0, 5) is chosen at an 80% chance, and a random integer in [5, 10) at a 20% chance.
-> 5. A **hyperexponential distribution** is a mixture of [**exponential distributions**](#Exponential_Distribution), each one with a separate weight and separate rate parameter.  An example is below.
->
->          index = WeightedChoice([0.6, 0.3, 0.1])
->          // Rates of the three exponential distributions, as ratios
->          rates = [[3, 10], [5, 10], [1, 100]]
->          // Generate an exponential random number
->          // with chosen rate, as a ratio
->          number = ExpoRatio(100000, rates[i][0], rates[i][1])
+> 5. A **hyperexponential distribution** is a mixture of [**exponential distributions**](#Exponential_Distribution), each one with a separate weight and separate rate parameter.  The following is an example involving three different exponential distributions: `index = WeightedChoice([6, 3, 1]); rates = [[3, 10], [5, 10], [1, 100]]; number = ExpoRatio(100000, rates[i][0], rates[i][1])`.
 
 <a id=Transformations_of_Random_Numbers></a>
 ### Transformations of Random Numbers
@@ -990,15 +984,13 @@ If the probability distributions are the same, then strategies 1 to 3 make highe
 > 1. The idiom `min(RNDINTRANGE(1, 6), RNDINTRANGE(1, 6))` takes the lowest of two six-sided die results (strategy 4).  Due to this approach, 1 is more likely to occur than 6.
 > 2. The idiom `RNDINTRANGE(1, 6) + RNDINTRANGE(1, 6)` takes the result of two six-sided dice (see also "[**Dice**](#Dice)") (strategy 7).
 > 3. A **binomial distribution** models the sum of `n` random numbers each generated by `ZeroOrOne(px,py)` (strategy 7) (see "[**Binomial Distribution**](#Binomial_Distribution)").
-> 4. A **hypoexponential distribution** models the sum
- of _n_ random numbers that follow an exponential distribution and each have a separate rate parameter (see "[**Exponential Distribution**](#Exponential_Distribution)").
-> 5. **Clamped random numbers.**  These are one example of transformed random numbers.  To generate a clamped random number, generate a random number as usual, then&mdash;
+> 4. **Clamped random numbers.**  These are one example of transformed random numbers.  To generate a clamped random number, generate a random number as usual, then&mdash;
 >     - if that number is less than a minimum threshold, use the minimum threshold instead (_left-censoring_), and/or
 >     - if that number is greater than a maximum threshold, use the maximum threshold instead (_right-censoring_).
 >
 >     An example of a clamped random number is `min(200, RNDINT(255))`.
-> 6. A **compound Poisson distribution** models the sum of _n_ random numbers each generated the same way, where _n_ follows a [**Poisson distribution**](#Poisson_Distribution) (e.g., `n = PoissonInt(10, 1)` for an average of 10 numbers) (strategy 7, sum).
-> 7. A **P&oacute;lya&ndash;Aeppli distribution** is a compound Poisson distribution in which the random numbers are generated by `NegativeBinomial(1, 1-p)+1` for a fixed `p`.
+> 5. A **compound Poisson distribution** models the sum of _n_ random numbers each generated the same way, where _n_ follows a [**Poisson distribution**](#Poisson_Distribution) (e.g., `n = PoissonInt(10, 1)` for an average of 10 numbers) (strategy 7, sum).
+> 6. A **P&oacute;lya&ndash;Aeppli distribution** is a compound Poisson distribution in which the random numbers are generated by `NegativeBinomial(1, 1-p)+1` for a fixed `p`.
 
 <a id=Specific_Non_Uniform_Distributions></a>
 ## Specific Non-Uniform Distributions
@@ -1558,6 +1550,8 @@ Example 3 in "[**Mixtures of Distributions**](#Mixtures_of_Distributions)" can b
 1. **Bates distribution**: Find the mean of _n_ uniform random numbers in a given range (such as by `RNDRANGE(minimum, maximum)`) (strategy 8, mean; see the [**appendix**](#Mean_and_Variance_Calculation)).
 2. A random point (`x`, `y`) can be transformed (strategy 9, geometric transformation) to derive a point with **correlated random** coordinates (old `x`, new `x`) as follows (see (Saucier 2000)<sup>[**(46)**](#Note46)</sup>, sec. 3.8): `[x, y*sqrt(1 - rho * rho) + rho * x]`, where `x` and `y` are independent random numbers generated the same way, and `rho` is a _correlation coefficient_ in the interval \[-1, 1\] (if `rho` is 0, `x` and `y` are uncorrelated).
 3. It is reasonable to talk about sampling the sum or mean of N random numbers, where N has a fractional part.  In this case, `ceil(N)` random numbers are generated and the last number is multiplied by that fractional part.  For example, to sample the sum of 2.5 random numbers, generate three random numbers, multiply the last by 0.5 (the fractional part of 2.5), then sum all three numbers.
+4. A **hypoexponential distribution** models the sum
+ of _n_ random numbers that follow an exponential distribution and each have a separate rate parameter (see "[**Exponential Distribution**](#Exponential_Distribution)").
 
 <a id=Random_Numbers_from_a_Distribution_of_Data_Points></a>
 ### Random Numbers from a Distribution of Data Points
@@ -1795,8 +1789,8 @@ A [**_piecewise linear distribution_**](http://en.cppreference.com/w/cpp/numeric
       if size(values)==1: return values[0]
       areas=[]
       for i in 1...size(values)
-         area=abs((weights[i] + weights[i-1]) * 0.5 *
-                (values[i] - values[i-1]))
+         area=abs((weights[i] + weights[i-1]) *
+             (values[i] - values[i-1]) / 2) // NOTE: Not rounded
          AddItem(areas,area)
       end
       // NOTE: If values and weights are rational
@@ -2146,7 +2140,7 @@ The following are some additional articles I have written on the topic of random
 <small><sup id=Note33>(33)</sup> The NVIDIA white paper "[**Floating Point and IEEE 754 Compliance for NVIDIA GPUs**](https://docs.nvidia.com/cuda/floating-point/)",
 and "[**Floating-Point Determinism**](https://randomascii.wordpress.com/2013/07/16/floating-point-determinism/)" by Bruce Dawson, discuss issues with floating-point numbers in much more detail.</small>
 
-<small><sup id=Note34>(34)</sup> Note that `RNDU01OneExc()` corresponds to `Math.random()` in Java and JavaScript.</small>
+<small><sup id=Note34>(34)</sup> This method corresponds to `Math.random()` in Java and JavaScript.</small>
 
 <small><sup id=Note35>(35)</sup> This includes integers if `e` is limited to 0, and fixed-point numbers if `e` is limited to a single exponent less than 0.</small>
 

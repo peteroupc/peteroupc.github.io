@@ -193,7 +193,9 @@
 <li>If the algorithm fills a PSRN&#39;s unsampled fractional digits at random (e.g., uniformly at random in the case of a uniform PSRN), so that the number&#39;s fractional part has <em>m</em> digits, the number&#39;s distribution must remain close to the ideal distribution by a distance of not more than <em>b</em><sup>&minus;<em>m</em></sup>.</li>
 </ol>
 
-<p>The <em>exact rejection sampling</em> algorithm described by Oberhoff (2018)<sup><a href="#Note10"><strong>(10)</strong></a></sup> produces samples that act like PSRNs; however, the algorithm doesn&#39;t have the properties described in this section.  This is because the method requires calculating minimums of probabilities and, in practice, requires the use of floating-point arithmetic in most cases (see property 2 above).  Moreover, the algorithm&#39;s progression depends on the value of previously sampled bits, not just on the position of those bits as with the uniform and exponential distributions (see also (Thomas and Luk 2008)<sup><a href="#Note4"><strong>(4)</strong></a></sup>).  For completeness, Oberhoff&#39;s method appears in the appendix.</p>
+<blockquote>
+<p><strong>Note:</strong> The <em>exact rejection sampling</em> algorithm described by Oberhoff (2018)<sup><a href="#Note10"><strong>(10)</strong></a></sup> produces samples that act like PSRNs; however, the algorithm doesn&#39;t have the properties described in this section.  This is because the method requires calculating minimums of probabilities and, in practice, requires the use of floating-point arithmetic in most cases (see property 2 above).  Moreover, the algorithm&#39;s progression depends on the value of previously sampled bits, not just on the position of those bits as with the uniform and exponential distributions (see also (Thomas and Luk 2008)<sup><a href="#Note4"><strong>(4)</strong></a></sup>).  For completeness, Oberhoff&#39;s method appears in the appendix.</p>
+</blockquote>
 
 <p><a id=Comparisons></a></p>
 
@@ -216,7 +218,7 @@
 
 <h3>Arithmetic</h3>
 
-<p>Arithmetic between two PSRNs is not exactly trivial.  The naïve approach of adding, multiplying or dividing two PSRNs <em>A</em> and <em>B</em> (see also (Brassard et al., 2019)<sup><a href="#Note11"><strong>(11)</strong></a></sup>) may result in a partially-sampled number <em>C</em> that is not close to the ideal distribution once additional digits of <em>C</em> are sampled uniformly at random (see properties 2 and 3 above).</p>
+<p>Arithmetic between two PSRNs is not exactly trivial.  The naïve approach of adding, multiplying or dividing two PSRNs <em>A</em> and <em>B</em> (see also (Brassard et al., 2019)<sup><a href="#Note11"><strong>(11)</strong></a></sup>) may result in a partially-sampled number <em>C</em> that is not close to the ideal distribution once additional digits of <em>C</em> are sampled uniformly at random (see properties 4 and 5 above).</p>
 
 <p>On the other hand, partially-sampled-number arithmetic may be possible by relating the relative probabilities of each digit, in the result&#39;s digit expansion, to some kind of formula.  (This ignores trivial arithmetic operations, such as addition by half provided the base (radix) is even, or negation &mdash; both operations mentioned in (Karney 2014)<sup><a href="#Note1"><strong>(1)</strong></a></sup> &mdash; or operations affecting the integer part only.)  For example, I can show empirically that when an exponential(1) random number is multiplied by a uniform [0, 1] random number, the following (approximate) probabilities of 1 occur in the following positions of the result&#39;s binary expansion:</p>
 
@@ -1291,7 +1293,7 @@ def contbernoullidist(b, lamda, precision=53):
 
 <p><small><sup id=Note22>(22)</sup> Efraimidis, P. &quot;<a href="https://arxiv.org/abs/1012.0256v2"><strong>Weighted Random Sampling over Data Streams</strong></a>&quot;, arXiv:1012.0256v2 [cs.DS], 2015.</small></p>
 
-<p><small><sup id=Note23>(23)</sup> Devroye, L., Gravel, C., &quot;<a href="https://arxiv.org/abs/1511.02273">The expected bit complexity of the von Neumann rejection algorithm</a>&quot;, arXiv:1511.02273 [cs.IT], 2016.</small></p>
+<p><small><sup id=Note23>(23)</sup> Devroye, L., Gravel, C., &quot;<a href="https://arxiv.org/abs/1511.02273"><strong>The expected bit complexity of the von Neumann rejection algorithm</strong></a>&quot;, arXiv:1511.02273 [cs.IT], 2016.</small></p>
 
 <p><a id=Appendix></a></p>
 

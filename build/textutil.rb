@@ -8,7 +8,7 @@ def prepareMarkdown(data)
   textstorefs={} # to help remove duplicate note texts
   data.scan(/<sup\s+id\s*\=\s*([^>]+)>\s*\(\d+\)\s*<\/sup>\s*([\s\S]+?)(?=<sup\s+id|\#\#|\z)/){|n|
     notetext=n[1].gsub(/\s+\z/,"")
-    notetext=notetext.gsub(/<\/?small>/,"").gsub(/\s+\z/,"")
+    notetext=notetext.gsub(/<\/?small>/,"").gsub(/<br\/>\s*\z/,"").gsub(/\s+\z/,"")
     textstorefs[notetext]=n[0] if !textstorefs[notetext]
     notetexts[n[0]]=notetext
   }

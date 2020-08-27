@@ -771,20 +771,24 @@ list by <code>RandomKItemsInOrder(list, n - k)</code>.</li>
 <p>Example criteria include checking&mdash;</p>
 
 <ul>
-<li>whether a random number is not less than a minimum threshold (<em>left-truncation</em>),</li>
-<li>whether a random number is not greater than a maximum threshold (<em>right-truncation</em>),</li>
-<li>whether a random number is prime,</li>
-<li>whether a random number is divisible or not by certain numbers,</li>
-<li>whether a random number is not among recently chosen random numbers,</li>
-<li>whether a random number was not already chosen (with the aid of a hash table, red-black tree, or similar structure),</li>
-<li>whether a random number was not chosen more often in a row than desired,</li>
+<li>whether a random number&mdash;
+
+<ul>
+<li>is not less than a minimum threshold (<em>left-truncation</em>),</li>
+<li>is not greater than a maximum threshold (<em>right-truncation</em>),</li>
+<li>is prime,</li>
+<li>is divisible or not by certain numbers,</li>
+<li>is not among recently chosen random numbers,</li>
+<li>was not already chosen (with the aid of a hash table, red&ndash;black tree, or similar structure), or</li>
+<li>was not chosen more often in a row than desired,</li>
+<li>is not included in a &quot;blacklist&quot; of numbers,</li>
+</ul></li>
 <li>whether a random point is sufficiently distant from previous random points (with the aid of a KD-tree or similar structure),</li>
-<li>whether a random string matches a regular expression,</li>
-<li>whether a random number is not included in a &quot;blacklist&quot; of numbers, or</li>
+<li>whether a random string matches a regular expression, or</li>
 <li>two or more of the foregoing criteria.</li>
 </ul>
 
-<p>(KD-trees, hash tables, red-black trees, prime-number testing algorithms, and regular expressions are outside the scope of this document.)</p>
+<p>(KD-trees, hash tables, red&ndash;black trees, prime-number testing algorithms, and regular expressions are outside the scope of this document.)</p>
 
 <blockquote>
 <p><strong>Note:</strong> All rejection sampling strategies have a chance to reject data, so they all have a <em>variable running time</em> (in fact, they could run indefinitely).  Note that graphics processing units (GPUs) and other devices that run multiple tasks at once work better if all the tasks finish their work at the same time.  This is not possible if they all generate a random number via rejection sampling because of its variable running time.  If each iteration of the rejection sampler has a low rejection rate, one solution is to have each task run one iteration of the sampler, with its own source of random numbers (such as numbers generated from its own PRNG), then to take the first random number that hasn&#39;t been rejected this way by a task (which can fail at a very low rate).<sup><a href="#Note11"><strong>(11)</strong></a></sup></p>
@@ -877,7 +881,7 @@ END METHOD
       // Stop when all states are the same
       fs=states[0]
       done=true
-      for i in 1...numstates: done=done and states[i]==fs
+      for i in 1...numstates: done=(done and states[i]==fs)
    end
    return states[0] // Return the steady state
 END METHOD
@@ -1031,7 +1035,7 @@ end
 <p>Alternatively, if all the weights are integers 0 or greater and their sum is relatively small, create a list with as many copies of each item as its weight, then <a href="#Shuffling"><strong>shuffle</strong></a> that list.  The resulting list will be ordered in a way that corresponds to a weighted random choice without replacement.</p>
 
 <blockquote>
-<p><strong>Note:</strong> The weighted sampling described in this section can be useful to some applications (particularly some games) that wish to control which random numbers appear, to make the random outcomes appear fairer to users (e.g., to avoid long streaks of good outcomes or of bad outcomes).  When used for this purpose, each item represents a different outcome (e.g., &quot;good&quot; or &quot;bad&quot;), and the lists are replenished once no further items can be chosen.  However, this kind of sampling should not be used for this purpose whenever information security (ISO/IEC 27000) is involved, including when predicting future random numbers would give a player or user a significant and unfair advantage.</p>
+<p><strong>Note:</strong> The weighted sampling described in this section can be useful to some applications (particularly some games) that wish to control which random numbers appear, to make the random outcomes appear fairer to users (e.g., to avoid long streaks of good outcomes or of bad outcomes).  When used for this purpose, each item represents a different outcome (e.g., &quot;good&quot; or &quot;bad&quot;), and the lists are replenished once no further items can be chosen.  However, this kind of sampling should be avoided in applications that care about information security, including when predicting future random numbers would give a player or user a significant and unfair advantage.</p>
 </blockquote>
 
 <p><a id=Weighted_Choice_Without_Replacement_Single_Copies></a></p>
@@ -1182,15 +1186,7 @@ else: number = RNDINTRANGE(1,6) +
 <li>Choose an index using <code>WeightedChoice(weights)</code>, then generate <code>RNDINTRANGE(mn, mx)</code>, where <code>mn</code> is the corresponding range&#39;s minimum and <code>mx</code> is its maximum.</li>
 </ul></li>
 <li>In the pseudocode <code>index = WeightedChoice([80, 20]); list = [[0, 5], [5, 10]]; number = RNDINTEXCRANGE(list[index][0], list[index][1])</code>, a random integer in [0, 5) is chosen at an 80% chance, and a random integer in [5, 10) at a 20% chance.</li>
-<li><p>A <strong>hyperexponential distribution</strong> is a mixture of <a href="#Exponential_Distribution"><strong>exponential distributions</strong></a>, each one with a separate weight and separate rate parameter.  An example is below.</p>
-
-<pre> index = WeightedChoice([0.6, 0.3, 0.1])
- // Rates of the three exponential distributions, as ratios
- rates = [[3, 10], [5, 10], [1, 100]]
- // Generate an exponential random number
- // with chosen rate, as a ratio
- number = ExpoRatio(100000, rates[i][0], rates[i][1])
-</pre></li>
+<li>A <strong>hyperexponential distribution</strong> is a mixture of <a href="#Exponential_Distribution"><strong>exponential distributions</strong></a>, each one with a separate weight and separate rate parameter.  The following is an example involving three different exponential distributions: <code>index = WeightedChoice([6, 3, 1]); rates = [[3, 10], [5, 10], [1, 100]]; number = ExpoRatio(100000, rates[i][0], rates[i][1])</code>.</li>
 </ol>
 </blockquote>
 
@@ -1227,8 +1223,6 @@ else: number = RNDINTRANGE(1,6) +
 <li>The idiom <code>min(RNDINTRANGE(1, 6), RNDINTRANGE(1, 6))</code> takes the lowest of two six-sided die results (strategy 4).  Due to this approach, 1 is more likely to occur than 6.</li>
 <li>The idiom <code>RNDINTRANGE(1, 6) + RNDINTRANGE(1, 6)</code> takes the result of two six-sided dice (see also &quot;<a href="#Dice"><strong>Dice</strong></a>&quot;) (strategy 7).</li>
 <li>A <strong>binomial distribution</strong> models the sum of <code>n</code> random numbers each generated by <code>ZeroOrOne(px,py)</code> (strategy 7) (see &quot;<a href="#Binomial_Distribution"><strong>Binomial Distribution</strong></a>&quot;).</li>
-<li>A <strong>hypoexponential distribution</strong> models the sum
-of <em>n</em> random numbers that follow an exponential distribution and each have a separate rate parameter (see &quot;<a href="#Exponential_Distribution"><strong>Exponential Distribution</strong></a>&quot;).</li>
 <li><p><strong>Clamped random numbers.</strong>  These are one example of transformed random numbers.  To generate a clamped random number, generate a random number as usual, then&mdash;</p>
 
 <ul>
@@ -1889,6 +1883,8 @@ number in the sequence.</li>
 <li><strong>Bates distribution</strong>: Find the mean of <em>n</em> uniform random numbers in a given range (such as by <code>RNDRANGE(minimum, maximum)</code>) (strategy 8, mean; see the <a href="#Mean_and_Variance_Calculation"><strong>appendix</strong></a>).</li>
 <li>A random point (<code>x</code>, <code>y</code>) can be transformed (strategy 9, geometric transformation) to derive a point with <strong>correlated random</strong> coordinates (old <code>x</code>, new <code>x</code>) as follows (see (Saucier 2000)<sup><a href="#Note46"><strong>(46)</strong></a></sup>, sec. 3.8): <code>[x, y*sqrt(1 - rho * rho) + rho * x]</code>, where <code>x</code> and <code>y</code> are independent random numbers generated the same way, and <code>rho</code> is a <em>correlation coefficient</em> in the interval [-1, 1] (if <code>rho</code> is 0, <code>x</code> and <code>y</code> are uncorrelated).</li>
 <li>It is reasonable to talk about sampling the sum or mean of N random numbers, where N has a fractional part.  In this case, <code>ceil(N)</code> random numbers are generated and the last number is multiplied by that fractional part.  For example, to sample the sum of 2.5 random numbers, generate three random numbers, multiply the last by 0.5 (the fractional part of 2.5), then sum all three numbers.</li>
+<li>A <strong>hypoexponential distribution</strong> models the sum
+of <em>n</em> random numbers that follow an exponential distribution and each have a separate rate parameter (see &quot;<a href="#Exponential_Distribution"><strong>Exponential Distribution</strong></a>&quot;).</li>
 </ol>
 
 <p><a id=Random_Numbers_from_a_Distribution_of_Data_Points></a></p>
@@ -2174,8 +2170,8 @@ END METHOD
   if size(values)==1: return values[0]
   areas=[]
   for i in 1...size(values)
-     area=abs((weights[i] + weights[i-1]) * 0.5 *
-            (values[i] - values[i-1]))
+     area=abs((weights[i] + weights[i-1]) *
+         (values[i] - values[i-1]) / 2) // NOTE: Not rounded
      AddItem(areas,area)
   end
   // NOTE: If values and weights are rational
@@ -2570,7 +2566,7 @@ END METHOD
 <p><small><sup id=Note33>(33)</sup> The NVIDIA white paper &quot;<a href="https://docs.nvidia.com/cuda/floating-point/"><strong>Floating Point and IEEE 754 Compliance for NVIDIA GPUs</strong></a>&quot;,
 and &quot;<a href="https://randomascii.wordpress.com/2013/07/16/floating-point-determinism/"><strong>Floating-Point Determinism</strong></a>&quot; by Bruce Dawson, discuss issues with floating-point numbers in much more detail.</small></p>
 
-<p><small><sup id=Note34>(34)</sup> Note that <code>RNDU01OneExc()</code> corresponds to <code>Math.random()</code> in Java and JavaScript.</small></p>
+<p><small><sup id=Note34>(34)</sup> This method corresponds to <code>Math.random()</code> in Java and JavaScript.</small></p>
 
 <p><small><sup id=Note35>(35)</sup> This includes integers if <code>e</code> is limited to 0, and fixed-point numbers if <code>e</code> is limited to a single exponent less than 0.</small></p>
 
