@@ -717,7 +717,7 @@ The following method generates a random `n`-vertex graph that follows the model 
         return graph
     END METHOD
 
-Other kinds of graphs are possible, including _Erdős&ndash;Rényi graphs_ (choose _n_ random edges without replacement), Chung&ndash;Lu graphs, preferential attachment graphs, and more.  For example, a _mesh graph_ is a graph in the form of a rectangular mesh, where vertices are the corners and edges are the sides of the mesh's rectangles.  A random _maze_ is a random spanning tree of a mesh graph.  Penschuck et al. (2020)<sup>[**(17)**](#Note17)</sup> give a survey of random graph generation techniques.
+Other kinds of graphs are possible, including _Erdős&ndash;Rényi graphs_ (choose _n_ random edges without replacement), Chung&ndash;Lu graphs, preferential attachment graphs, and more.  For example, a _mesh graph_ is a graph in the form of a rectangular mesh, where vertices are the corners and edges are the sides of the mesh's rectangles.  A random _maze_ is a random spanning tree (Costantini 2020)<sup>[**(82)**](#Note82)</sup> of a mesh graph.  Penschuck et al. (2020)<sup>[**(17)**](#Note17)</sup> give a survey of random graph generation techniques.
 
 <a id=A_Note_on_Sorting_Random_Numbers></a>
 ### A Note on Sorting Random Numbers
@@ -2241,6 +2241,10 @@ provided the PDF's values are all 0 or greater and the area under the PDF's curv
 <small><sup id=Note80>(80)</sup> Describing differences between SQL dialects is outside the scope of this document, but [**Flourish SQL**](http://flourishlib.com/docs/FlourishSQL) describes many such differences, including those concerning randomization features provided by SQL dialects.</small>
 
 <small><sup id=Note81>(81)</sup> For example, see Balcer, V., Vadhan, S., "Differential Privacy on Finite Computers", Dec. 4, 2018; as well as Micciancio, D. and Walter, M., "Gaussian sampling over the integers: Efficient, generic, constant-time", in Annual International Cryptology Conference, August 2017 (pp. 455-485).</small>
+
+<small><sup id=Note82>(82)</sup> Costantini, Lucia. "Algorithms for sampling spanning trees uniformly at random."
+Master's thesis, Universitat Politècnica de Catalunya, 2020.
+[https://upcommons.upc.edu/bitstream/handle/2117/328169/memoria.pdf</small>](https://upcommons.upc.edu/bitstream/handle/2117/328169/memoria.pdf</small>)
 
 <a id=Appendix></a>
 ## Appendix

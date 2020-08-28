@@ -3741,7 +3741,9 @@ _Non-Uniform Random Variate Generation_, 1986.
          the range given by mn and mx should cover all or
          almost all of the distribution.
          - ures - Maximum approximation error tolerable, or
-         "u-resolution".  Default is 10^-8.  Currently used only if a
+         "u-resolution".  Default is 10^-8. The underlying sampler's approximation
+         error will generally be less than this tolerance, but this is not guaranteed.
+         Currently used only if a
          PDF is given.
         """
         if pdf != None and (cdf == None or ures != None):
@@ -3879,6 +3881,170 @@ _Non-Uniform Random Variate Generation_, 1986.
         if k <= 0 or k > n:
             raise ValueError
         return urandfill(self, kthsmallest_urand(n, k), b)
+
+    def fromDyadicDecompCode(self, code, precision=53):
+        """ Generates a uniform random number contained in a box described
+          by the given universal dyadic decomposition code.
+          - code: A list returned by the getDyadicDecompCode
+            or getDyadicDecompCodePdf method.
+          - precision: Desired minimum precision in number of binary digits
+            after the point.  Default is 53.
+
+      Reference: C.T. Li, A. El Gamal, "A Universal Coding Scheme for
+      Remote Generation of Continuous Random Variables",
+      arXiv:1603.05238v1  [cs.IT], 2016.
+      """
+        k = code[0]
+        bitgen = max(0, precision - k)
+        mult = 2.0 ** -(k + bitgen)  # To convert to a float
+        return [
+            (x * (1 << bitgen) + self.rndintexc(1 << bitgen)) * mult for x in code[1]
+        ]
+
+    def _floorint(self, x):
+        r = int(x)
+        if r == x:
+            return r
+        return r - 1 if x < 0 else r
+
+    def _setinc(self, f, box, z):
+        bounds = f(box)
+        if z < bounds[0]:
+            return 2
+        if z > bounds[1]:
+            return 0
+        return 1
+
+    def getDyadicDecompCodePdf(self, point, pdf=None, pdfbounds=None):
+        """
+      Finds a code describing the position and size of a box that covers the given
+      point in the universal dyadic decomposition for random number generation,
+      based on a non-uniform probability density function.  It generates a
+      random number for this purpose, so the return value may differ from call to
+      call. (Also, since that random number is a float, this method might suffer from
+      rounding and approximation errors.)
+      - point: A list of coordinates of a point in space.  This method assumes
+        the point was random generated and within the support of a continuous
+        distribution.  Let N be the number of coordinates of this parameter
+        (the number of dimensions).
+      - pdf: The probability density function (PDF) of the continuous distribution.
+        This method takes as input a list
+        containing N coordinates describing a point in space, and returns the probability
+        density of that point as a single number.  If this parameter is
+        given, this method assumes the PDF is unimodal and monotone at all points
+        away from the mode, and may return incorrect results if that is not the case.
+        Notice that if the given PDF outputs floating-point numbers, the resulting
+        dyadic decomposition code may be inaccurate due to rounding errors.
+      - pdfbounds: A function that returns the lower and upper bounds of the PDF's value
+        at a box. This method takes as input a list containing N items, where each item
+        is a list containing the lowest and highest value of the box for the
+        corresponding dimension.  Returns a list
+        containing two items: the lower bound and the upper bound, respectively, of the
+        PDF anywhere in the given box.  If this parameter is
+        given, this method assumes the PDF is continuous almost everywhere and bounded
+        from above; the dyadic decomposition will generally work only if that is the case.
+      Returns a list containing two items. The first describes the size of the box
+      (as a negative power of 2). The second is a list of coordinates describing the
+      position.  Let v be 2**-ret[0].  The box is then calculated as (ret[1][0]*v,
+      ret[1]*v+v), ..., (ret[1][n-1]*v, ret[1][n-1]*v+v).
+      Raises an error if the point is determined to be outside the support of the PDF.
+      Either pdf or pdfbounds must be passed to this method, but not both.
+
+      Reference: C.T. Li, A. El Gamal, "A Universal Coding Scheme for
+      Remote Generation of Continuous Random Variables",
+      arXiv:1603.05238v1  [cs.IT], 2016.
+      """
+        # TODO: Make more robust by avoiding floating-point operations
+        # and supporting a user-defined tolerance for generating z
+        if (pdf != None and pdfbounds != None) or (pdf == None and pdfbounds == None):
+            raise ValueError("either pdf or pdfbounds must be given, but not both")
+        if pdf != None:
+            z = self.rndrange(0, pdf(point))
+            f2 = lambda pt: pdf(pt) >= z
+            return self.getDyadicDecompCode(point, f=f2)
+        else:
+            while True:
+                pb = pdfbounds([[v, v] for v in point])
+                z = self.rndrange(0, pb[1])
+                f2 = lambda pt: self._setinc(pdfbounds, pt, z)
+                if z <= pb[0]:
+                    return self.getDyadicDecompCode(point, fbox=f2)
+                else:
+                    # Unusual case that z is greater than lower bound,
+                    # so getDyadicDecompCode might fail
+                    try:
+                        c = self.getDyadicDecompCode(point, fbox=f2)
+                        return c
+                    except:
+                        pass
+
+    def getDyadicDecompCode(self, point, f=None, fbox=None):
+        """
+      Finds a code describing the position and size of a box that covers the given
+      point in the universal dyadic decomposition for random number generation.
+      - point: A list of coordinates of a point in space.  This method assumes
+        the point was a randomly generated member of a geometric set (such as a
+        sphere, ellipse, polygon, or any other volume).  Let N be the number
+        of coordinates of this parameter (the number of dimensions).
+      - f: A function that determines whether a point belongs in the geometric set.
+        Returns True if so, and False otherwise.  This method takes as input a list
+        containing N coordinates describing a point in space.  If this parameter is
+        given, this method assumes the geometric set is convex (and this method
+        may return incorrect results for concave sets), because the method checks
+        only the corners of each box to determine whether the box is entirely included
+        in the geometric set.
+      - fbox: A function that determines whether a box is included
+        in the geometric set. This method takes
+        as input a list containing N items, where each item is a list containing the
+        lowest and highest value of the box for the corresponding dimension.  Returns 0 if the
+        box is entirely outside the set, 1 if the box is partially inside the set (or if the
+        method is not certain whether the box is inside or outside the set), and 2
+        if the box is entirely inside the set.
+      Returns a list containing two items. The first describes the size of the box
+      (as a negative power of 2). The second is a list of coordinates describing the
+      position.  Let v be 2**-ret[0].  The box is then calculated as (ret[1][0]*v,
+      ret[1]*v+v), ..., (ret[1][n-1]*v, ret[1][n-1]*v+v).
+      Raises an error if the point was determined not to belong in the geometric set.
+      Either f or fset must be passed to this method, but not both.
+
+      Reference: C.T. Li, A. El Gamal, "A Universal Coding Scheme for
+      Remote Generation of Continuous Random Variables",
+      arXiv:1603.05238v1  [cs.IT], 2016.
+      """
+        if (f != None and fbox != None) or (f == None and fbox == None):
+            raise ValueError("either f or fbox must be given, but not both")
+        pt = [self._floorint(v) for v in point]
+        k = 0
+        while True:
+            boxsize = Fraction(1, 1 << k)
+            box = [[x * boxsize, x * boxsize + boxsize] for x in pt]
+            if fbox != None:
+                r = fbox(box)
+                if r == 2:
+                    return [k, pt]
+                if r == 0:
+                    raise ValueError("outside of set")
+            elif f != None:
+                success = True
+                isoutside = True
+                for corner in range(1 << len(box)):
+                    pttmp = [
+                        box[i][1 if (corner & (1 << i)) != 0 else 0]
+                        for i in range(len(box))
+                    ]
+                    if not f(pttmp):
+                        success = False
+                        if not isoutside:
+                            break
+                    else:
+                        isoutside = False
+                if isoutside:
+                    raise ValueError("outside of set")
+                if success:
+                    return [k, pt]
+            point = [Fraction(v) * 2 for v in point]
+            pt = [self._floorint(v) for v in point]
+            k += 1
 
 class ConvexPolygonSampler:
     """ A class for uniform random sampling of
@@ -4571,7 +4737,10 @@ class DensityInversionSampler:
       - ures - Maximum approximation error tolerable, or
         "u-resolution".  Default is 10^-8.  This error tolerance
         "does not work for continuous distributions [whose PDFs
-        have] high and narrow peaks or poles".
+        have] high and narrow peaks or poles".  This sampler's
+        approximation error will generally be less than this tolerance,
+        but this is not guaranteed, especially for PDFs of the kind
+        just mentioned.
 
         Reference:
         Gerhard Derflinger, Wolfgang Hörmann, and Josef Leydold,
