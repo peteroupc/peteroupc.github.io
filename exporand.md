@@ -125,7 +125,7 @@ Partially-sampled numbers of other distributions can be implemented via rejectio
 - The standard normal distribution, as shown in (Karney 2014)<sup>[**(1)**](#Note1)</sup> by running Karney's Algorithm N and filling unsampled digits uniformly at random.
 - For uniform distributions in \[0, _n_\) (not just [0, 1]), a partially-sampled version might be trivial by first ensuring that the first "few" digits are such that the resulting number will be less than _n_, via rejection sampling.
 
-For these distributions (and others that are continuous almost everywhere and bounded from above), Oberhoff (2018)<sup>[**(10)**](#Note10)</sup> proved that unsampled trailing bits of the partially-sampled number converge to the uniform distribution.
+For these distributions (and others that are continuous almost everywhere and bounded from above), Oberhoff (2018)<sup>[**(10)**](#Note10)</sup> proved that unsampled trailing bits of the partially-sampled number converge to the uniform distribution (see also (Kakutani 1948)<sup>[**(24)**](#Note24)</sup>).
 
 Partially-sampled numbers could also be implemented via rejection from the exponential distribution, although no concrete examples are presented here.
 
@@ -172,6 +172,12 @@ On the other hand, partially-sampled-number arithmetic may be possible by relati
 | 5th |    0.461612   |
 
 There is previous work that relates continuous distributions to digit probabilities in a similar manner (but only in base 10) (Habibizad Navin et al., 2007)<sup>[**(12)**](#Note12)</sup>, (Nezhad et al., 2013)<sup>[**(13)**](#Note13)</sup>.
+
+In this sense, Kakutani's theorem (Kakutani 1948)<sup>[**(25)**](#Note25)</sup> may be useful: Let p(_j_) be the _j_<sup>th</sup> binary digit probability in a random number's binary expansion.  Then the random number is absolutely continuous if and only if the sum of squares of (p(_j_) &minus; 1/2) converges.  In other words, the random number's bits become less and less biased as they move farther and farther from the binary point.  An absolutely continuous distribution can be built if we can find a sequence _a_<sub>_j_</sub> that converges to 1/2.  One example is the truncated exponential(1) distribution, where the binary digit probabilities have the form&mdash;
+
+- _a_<sub>_j_</sub> = exp(&minus;1/2<sub>_j_</sub>)/(1 + exp(&minus;1/2<sub>_j_</sub>))
+
+(Devroye and Gravel 2015)<sup>[**(3)**](#Note3)</sup>, which converges to 1/2 because exp(&minus;1/2<sub>_j_</sub>) converges to 1.  Replacing the exp expression with something else that converges to 1 could lead to new continuous distributions.  Another example is the sequence _a_<sub>_j_</sub> = _y_(_j_)/_x_, where _x_ > 0 and _y_(_j_) is a function that tends to _x_/2 as _j_ tends to infinity.
 
 Finally, arithmetic with partially-sampled numbers may be possible if the result of the arithmetic is distributed with a known density function (e.g., one found via Rohatgi's formula (Rohatgi 1976)<sup>[**(14)**](#Note14)</sup>), allowing for an algorithm that implements rejection from the uniform or exponential distribution.  An example of this is found in my article on [**arbitrary-precision samplers for the sum of uniform random numbers**](https://peteroupc.github.io/uniformsum.html).  However, that density function may have an unbounded peak, thus ruling out rejection sampling in practice.  For example, if _X_ is a uniform PSRN, then _X_<sup>3</sup> is distributed as `(1/3) / pow(X, 2/3)`, which has an unbounded peak at 0.  While this rules out plain rejection samplers for _X_<sup>3</sup> in practice, it's still possible to sample powers of uniforms using PSRNs, which will be described later in this article.
 
@@ -913,6 +919,8 @@ The following are some additional articles I have written on the topic of random
 - <small><sup id=Note21>(21)</sup> Canonne, C., Kamath, G., Steinke, T., "[**The Discrete Gaussian for Differential Privacy**](https://arxiv.org/abs/2004.00010v2)", arXiv:2004.00010v2 [cs.DS], 2020.</small>
 - <small><sup id=Note22>(22)</sup> Efraimidis, P. "[**Weighted Random Sampling over Data Streams**](https://arxiv.org/abs/1012.0256v2)", arXiv:1012.0256v2 [cs.DS], 2015.</small>
 - <small><sup id=Note23>(23)</sup> Devroye, L., Gravel, C., "[**The expected bit complexity of the von Neumann rejection algorithm**](https://arxiv.org/abs/1511.02273)", arXiv:1511.02273 [cs.IT], 2016.</small>
+- <small><sup id=Note24>(24)</sup> S. Kakutani, "On equivalence of infinite product measures", _Annals of Mathematics_ 1948.</small>
+- <small><sup id=Note25>(25)</sup> S. Kakutani, "On equivalence of infinite product measures", _Annals of Mathematics_ 1948.</small>
 
 <a id=Appendix></a>
 ## Appendix
