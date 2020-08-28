@@ -58,23 +58,15 @@ Some additional notes:
 <a id=Notes></a>
 ## Notes
 
-<small><sup id=Note1>(1)</sup> Cliff, Y., Boyd, C., Gonzalez Nieto, J. "How to Extract and Expand Randomness: A Summary and Explanation of Existing Results", 2009.</small>
-
-<small><sup id=Note2>(2)</sup> von Neumann, J., "Various techniques used in connection with random digits", 1951.</small>
-
-<small><sup id=Note3>(3)</sup> Morina, G., Łatuszyński, K., et al., "[**From the Bernoulli Factory to a Dice Enterprise via Perfect Sampling of Markov Chains**](https://arxiv.org/abs/1912.09229v1)", arXiv:1912.09229v1 [math.PR], 2019.</small>
-
-<small><sup id=Note4>(4)</sup> Pae, S., "Random number generation using a biased source", dissertation, University of Illinois at Urbana-Champaign, 2005.</small>
-
-<small><sup id=Note5>(5)</sup> Pae, S., Loui, M.C., "Randomizing functions: Simulation of discrete probability distribution using a source of unknown distribution", _IEEE Transactions on Information Theory_ 52(11), November 2006.</small>
-
-<small><sup id=Note6>(6)</sup> It follows from this definition that an extracting function must map an all-X string (such as an all-zeros string) to the empty string, since there is only one empty string but more than one string of any other length.  Thus, no reversible function can be extracting, and a function that never returns an empty string (including nearly all hash functions) can't be extracting, either.</small>
-
-<small><sup id=Note7>(7)</sup> Peres, Y., "Iterating von Neumann's procedure for extracting random bits", Annals of Statistics 1992,20,1, p. 590-597.</small>
-
-<small><sup id=Note8>(8)</sup> Zhou, H. and Bruck, J., "[**Streaming algorithms for optimal generation of random bits**](https://arxiv.org/abs/1209.0730)", arXiv:1209.0730 [cs.IT], 2012.</small>
-
-<small><sup id=Note9>(9)</sup> S. Pae, "[**Binarization Trees and Random Number Generation**](https://arxiv.org/abs/1602.06058v2)", arXiv:1602.06058v2 [cs.DS].</small>
+- <small><sup id=Note1>(1)</sup> Cliff, Y., Boyd, C., Gonzalez Nieto, J. "How to Extract and Expand Randomness: A Summary and Explanation of Existing Results", 2009.</small>
+- <small><sup id=Note2>(2)</sup> von Neumann, J., "Various techniques used in connection with random digits", 1951.</small>
+- <small><sup id=Note3>(3)</sup> Morina, G., Łatuszyński, K., et al., "[**From the Bernoulli Factory to a Dice Enterprise via Perfect Sampling of Markov Chains**](https://arxiv.org/abs/1912.09229v1)", arXiv:1912.09229v1 [math.PR], 2019.</small>
+- <small><sup id=Note4>(4)</sup> Pae, S., "Random number generation using a biased source", dissertation, University of Illinois at Urbana-Champaign, 2005.</small>
+- <small><sup id=Note5>(5)</sup> Pae, S., Loui, M.C., "Randomizing functions: Simulation of discrete probability distribution using a source of unknown distribution", _IEEE Transactions on Information Theory_ 52(11), November 2006.</small>
+- <small><sup id=Note6>(6)</sup> It follows from this definition that an extracting function must map an all-X string (such as an all-zeros string) to the empty string, since there is only one empty string but more than one string of any other length.  Thus, no reversible function can be extracting, and a function that never returns an empty string (including nearly all hash functions) can't be extracting, either.</small>
+- <small><sup id=Note7>(7)</sup> Peres, Y., "Iterating von Neumann's procedure for extracting random bits", Annals of Statistics 1992,20,1, p. 590-597.</small>
+- <small><sup id=Note8>(8)</sup> Zhou, H. and Bruck, J., "[**Streaming algorithms for optimal generation of random bits**](https://arxiv.org/abs/1209.0730)", arXiv:1209.0730 [cs.IT], 2012.</small>
+- <small><sup id=Note9>(9)</sup> S. Pae, "[**Binarization Trees and Random Number Generation**](https://arxiv.org/abs/1602.06058v2)", arXiv:1602.06058v2 [cs.DS].</small>
 
 <a id=License></a>
 ## License

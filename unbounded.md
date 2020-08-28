@@ -26,7 +26,7 @@ In the case of powers of a uniform \[0, 1\] random number _X_, namely _X_<sup>_n
 <a id=Notes></a>
 ## Notes
 
-<small><sup id=Note1>(1)</sup> Devroye, L., [**_Non-Uniform Random Variate Generation_**](http://luc.devroye.org/rnbookindex.html), 1986.</small>
+- <small><sup id=Note1>(1)</sup> Devroye, L., [**_Non-Uniform Random Variate Generation_**](http://luc.devroye.org/rnbookindex.html), 1986.</small>
 
 <a id=License></a>
 ## License

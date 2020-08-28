@@ -1638,114 +1638,67 @@ The following topics would greatly enrich this document:
 <a id=Notes></a>
 ## Notes
 
-<small><sup id=Note1>(1)</sup> The CIE publishes [**tabulated data**](http://www.cie.co.at/technical-work/technical-resources) for the D65 illuminant and the CIE 1931 and 1964 standard observers at its Web site.  In some cases, the CIE 1931 standard observer can be approximated using the methods given in Wyman, Sloan, and Shirley, [**"Simple analytic approximations to the CIE XYZ color matching functions"**](http://jcgt.org/published/0002/02/01/), Journal of Computer Graphics Techniques 2(2), 2013, pp. 1-11.</small>
-
-<small><sup id=Note2>(2)</sup> This overview has none of the heavy baggage from color teachings involving "red, yellow, and blue", "primary/secondary/tertiary" colors, or using a "color wheel" to "predict" color mixtures.  Also deliberately missing are discussions on color psychology, "color forecasting", or color in natural language, all topics that are generally irrelevant in programming.</small>
-
-<small><sup id=Note3>(3)</sup> It's not accurate to speak of "red light", "green light", "blue light", "white light", and so on.</small>
-
-<small><sup id=Note4>(4)</sup> Color perception is influenced by the three things that make color possible:
-- _Light._ For example, natural daylight and sunlight change how they render colors depending on time of day and year, place, and weather.
-- _Objects._ A material's surface properties such as gloss, transparency, haze, and more affect color perception.
-- _Observers._ Different observers "see" colors differently due to aging, culture, defective color vision, personal experience, kind of observer (human, camera, lens, animal, etc.), and more. B. MacEvoy documents the [**wide observer variation**](http://www.handprint.com/HP/WCL/color2.html#individualdiffs) even among people with normal color vision.
+- <small><sup id=Note1>(1)</sup> The CIE publishes [**tabulated data**](http://www.cie.co.at/technical-work/technical-resources) for the D65 illuminant and the CIE 1931 and 1964 standard observers at its Web site.  In some cases, the CIE 1931 standard observer can be approximated using the methods given in Wyman, Sloan, and Shirley, [**"Simple analytic approximations to the CIE XYZ color matching functions"**](http://jcgt.org/published/0002/02/01/), Journal of Computer Graphics Techniques 2(2), 2013, pp. 1-11.</small>
+- <small><sup id=Note2>(2)</sup> This overview has none of the heavy baggage from color teachings involving "red, yellow, and blue", "primary/secondary/tertiary" colors, or using a "color wheel" to "predict" color mixtures.  Also deliberately missing are discussions on color psychology, "color forecasting", or color in natural language, all topics that are generally irrelevant in programming.</small>
+- <small><sup id=Note3>(3)</sup> It's not accurate to speak of "red light", "green light", "blue light", "white light", and so on.</small>
+- <small><sup id=Note4>(4)</sup> Color perception is influenced by the three things that make color possible:
+    - _Light._ For example, natural daylight and sunlight change how they render colors depending on time of day and year, place, and weather.
+    - _Objects._ A material's surface properties such as gloss, transparency, haze, and more affect color perception.
+    - _Observers._ Different observers "see" colors differently due to aging, culture, defective color vision, personal experience, kind of observer (human, camera, lens, animal, etc.), and more. B. MacEvoy documents the [**wide observer variation**](http://www.handprint.com/HP/WCL/color2.html#individualdiffs) even among people with normal color vision.
 
 For a detailed overview on phenomena involving human color vision, see section 9 of Kirk, R., "Standard Colour Spaces", [**FilmLight Technical Note**](https://www.filmlight.ltd.uk/support/documents/other/legacy_tl.php), version 4.0, 2004-2018.</small>
-
-<small><sup id=Note5>(5)</sup> For example, the light&ndash;dark signal is roughly the sum of the three cone responses.  The theory of opponent colors is largely due to E. Hering's work and was reconciled with the three-cone theory around the mid-20th century (for example, through work by Hurvich and Jameson).</small>
-
-<small><sup id=Note6>(6)</sup> For information on how defective color vision can be simulated, see "[**Color Blindness Simulation Research**](http://ixora.io/projects/colorblindness/color-blindness-simulation-research/)", by "Jim".</small>
-
-<small><sup id=Note7>(7)</sup> Although most color display devices in the past used three dots per pixel ("red", "green", and "blue"), this may hardly be the case today.  Nowadays, recent display devices and luminaires are likely to use more than three dots per pixel &mdash; such as "red", "green", "blue", and "white", or RGBW &mdash; and ideally, color spaces following the _RGBW color model_, or similar color models, describe the intensity those dots should have in order to reproduce certain colors.  Such color spaces, though, are not yet of practical interest to most programmers outside of hardware and driver development for solid-state lighting, luminaires, or display devices.</small>
-
-<small><sup id=Note8>(8)</sup> B. Lindbloom, "[**RGB Working Space Information**](http://www.brucelindbloom.com/index.html?WorkingSpaceInfo.html)".</small>
-
-<small><sup id=Note9>(9)</sup> Mano, Y., et al.  "Enhancing the Netflix UI Experience with HDR", Netflix Technology Blog, Medium.com, Sep. 24, 2018.</small>
-
-<small><sup id=Note10>(10)</sup> The base-16 digits, in order, are 0 through 9, followed by A through F. The digits A through F can be uppercase or lowercase.</small>
-
-<small><sup id=Note11>(11)</sup> A [**Working Draft**](http://www.w3.org/TR/2016/WD-css-color-4-20160705/#hex-notation) of the CSS Color Module Level 4 mentions two additional formats, namely&mdash;
-
-- an 8-digit format, consisting of "#" followed by eight base-16 digits, two each for the red, green, blue, and alpha components, in that order, and
-- a 4-digit format, consisting of "#" followed by four base-16 digits, one each for the red, green, blue, and alpha components, in that order (where, for example, "#345F" is the same as "#334455FF" in the 8-digit format).</small>
-
-<small><sup id=Note12>(12)</sup> The hue angle is in radians, and the angle is 0 or greater and less than 2&pi;. Radians can be converted to degrees by multiplying by `180 / pi`.  Degrees can be converted to radians by multiplying by `pi / 180`.</small>
-
-<small><sup id=Note13>(13)</sup> Smith, A.R. and Lyons, E.R., 1996. HWB&mdash;A more intuitive hue-based color model. Journal of graphics tools, 1(1), pp. 3-17.</small>
-
-<small><sup id=Note14>(14)</sup> The prime symbol appears near Y because the conversion from RGB usually involves [**encoded RGB colors**](#RGB_Color_Spaces), so that Y&prime; (_luma_) is not the same as luminance (Y).  (See C. Poynton, [**"_YUV_ and _luminance_ considered harmful"**](http://poynton.ca/PDFs/YUV_and_luminance_harmful.pdf).)  However, that symbol is left out in function names and other names in the pseudocode for convenience only.</small>
-
-<small><sup id=Note15>(15)</sup> In interior and architectural design, the luminance factor multiplied by 100 is also known as _light reflectance value_ (LRV).</small>
-
-<small><sup id=Note16>(16)</sup> Although the D65/2 white point is the usual one for sRGB, another white point may be more convenient in the following cases, among others:
-- Using the white point `[0.9642, 1, 0.8249]` can improve interoperability with applications color-managed with International Color Consortium (ICC) version 2 or 4 profiles (this corresponds to the D50/2 white point given in CIE Publication 15 [**before it was corrected**](https://lists.w3.org/Archives/Public/public-colorweb/2018Apr/0003.html)).
-- The printing industry uses the D50 illuminant for historical reasons (see A. Kraushaar, [**"Why the printing industry is not using D65?"**](https://fogra.org/plugin.php?menuid=125&template=mv/templates/mv_show_front.html&mv_id=10&extern_meta=x&mv_content_id=140332&getlang=en), 2009).</small>
-
-<small><sup id=Note17>(17)</sup> Chromatic adaptation transforms include linear Bradford transformations, but are not further detailed in this document. (See also E. Stone, "[**The Luminance of an sRGB Color**](https://ninedegreesbelow.com/photography/srgb-luminance.html)", 2013.)</small>
-
-<small><sup id=Note18>(18)</sup> Chromaticity coordinates can be defined for any three-dimensional Cartesian color space, not just XYZ (e.g., (_r_, _g_, _b_) chromaticity coordinates for RGB).  Such coordinates are calculated analogously to (_x_, _y_, _z_) coordinates.</small>
-
-<small><sup id=Note19>(19)</sup> [**CIE Technical Note 001:2014**](http://www.cie.co.at/publications/technical-notes) says the chromaticity difference (_&Delta;<sub>u&prime;v&prime;</sub>_) should be calculated as the [**Euclidean distance**](#Color_Differences) between two _u&prime;v&prime;_ pairs and that a chromaticity difference of 0.0013 is just noticeable "at 50% probability".
+- <small><sup id=Note5>(5)</sup> For example, the light&ndash;dark signal is roughly the sum of the three cone responses.  The theory of opponent colors is largely due to E. Hering's work and was reconciled with the three-cone theory around the mid-20th century (for example, through work by Hurvich and Jameson).</small>
+- <small><sup id=Note6>(6)</sup> For information on how defective color vision can be simulated, see "[**Color Blindness Simulation Research**](http://ixora.io/projects/colorblindness/color-blindness-simulation-research/)", by "Jim".</small>
+- <small><sup id=Note7>(7)</sup> Although most color display devices in the past used three dots per pixel ("red", "green", and "blue"), this may hardly be the case today.  Nowadays, recent display devices and luminaires are likely to use more than three dots per pixel &mdash; such as "red", "green", "blue", and "white", or RGBW &mdash; and ideally, color spaces following the _RGBW color model_, or similar color models, describe the intensity those dots should have in order to reproduce certain colors.  Such color spaces, though, are not yet of practical interest to most programmers outside of hardware and driver development for solid-state lighting, luminaires, or display devices.</small>
+- <small><sup id=Note8>(8)</sup> B. Lindbloom, "[**RGB Working Space Information**](http://www.brucelindbloom.com/index.html?WorkingSpaceInfo.html)".</small>
+- <small><sup id=Note9>(9)</sup> Mano, Y., et al.  "Enhancing the Netflix UI Experience with HDR", Netflix Technology Blog, Medium.com, Sep. 24, 2018.</small>
+- <small><sup id=Note10>(10)</sup> The base-16 digits, in order, are 0 through 9, followed by A through F. The digits A through F can be uppercase or lowercase.</small>
+- <small><sup id=Note11>(11)</sup> A [**Working Draft**](http://www.w3.org/TR/2016/WD-css-color-4-20160705/#hex-notation) of the CSS Color Module Level 4 mentions two additional formats, namely&mdash;
+    - an 8-digit format, consisting of "#" followed by eight base-16 digits, two each for the red, green, blue, and alpha components, in that order, and
+    - a 4-digit format, consisting of "#" followed by four base-16 digits, one each for the red, green, blue, and alpha components, in that order (where, for example, "#345F" is the same as "#334455FF" in the 8-digit format).</small>
+- <small><sup id=Note12>(12)</sup> The hue angle is in radians, and the angle is 0 or greater and less than 2&pi;. Radians can be converted to degrees by multiplying by `180 / pi`.  Degrees can be converted to radians by multiplying by `pi / 180`.</small>
+- <small><sup id=Note13>(13)</sup> Smith, A.R. and Lyons, E.R., 1996. HWB&mdash;A more intuitive hue-based color model. Journal of graphics tools, 1(1), pp. 3-17.</small>
+- <small><sup id=Note14>(14)</sup> The prime symbol appears near Y because the conversion from RGB usually involves [**encoded RGB colors**](#RGB_Color_Spaces), so that Y&prime; (_luma_) is not the same as luminance (Y).  (See C. Poynton, [**"_YUV_ and _luminance_ considered harmful"**](http://poynton.ca/PDFs/YUV_and_luminance_harmful.pdf).)  However, that symbol is left out in function names and other names in the pseudocode for convenience only.</small>
+- <small><sup id=Note15>(15)</sup> In interior and architectural design, the luminance factor multiplied by 100 is also known as _light reflectance value_ (LRV).</small>
+- <small><sup id=Note16>(16)</sup> Although the D65/2 white point is the usual one for sRGB, another white point may be more convenient in the following cases, among others:
+    - Using the white point `[0.9642, 1, 0.8249]` can improve interoperability with applications color-managed with International Color Consortium (ICC) version 2 or 4 profiles (this corresponds to the D50/2 white point given in CIE Publication 15 [**before it was corrected**](https://lists.w3.org/Archives/Public/public-colorweb/2018Apr/0003.html)).
+    - The printing industry uses the D50 illuminant for historical reasons (see A. Kraushaar, [**"Why the printing industry is not using D65?"**](https://fogra.org/plugin.php?menuid=125&template=mv/templates/mv_show_front.html&mv_id=10&extern_meta=x&mv_content_id=140332&getlang=en), 2009).</small>
+- <small><sup id=Note17>(17)</sup> Chromatic adaptation transforms include linear Bradford transformations, but are not further detailed in this document. (See also E. Stone, "[**The Luminance of an sRGB Color**](https://ninedegreesbelow.com/photography/srgb-luminance.html)", 2013.)</small>
+- <small><sup id=Note18>(18)</sup> Chromaticity coordinates can be defined for any three-dimensional Cartesian color space, not just XYZ (e.g., (_r_, _g_, _b_) chromaticity coordinates for RGB).  Such coordinates are calculated analogously to (_x_, _y_, _z_) coordinates.</small>
+- <small><sup id=Note19>(19)</sup> [**CIE Technical Note 001:2014**](http://www.cie.co.at/publications/technical-notes) says the chromaticity difference (_&Delta;<sub>u&prime;v&prime;</sub>_) should be calculated as the [**Euclidean distance**](#Color_Differences) between two _u&prime;v&prime;_ pairs and that a chromaticity difference of 0.0013 is just noticeable "at 50% probability".
 
 (_u_, _v_) coordinates, a former 1960 version of _u&prime;_ and _v&prime;_, are found by taking _u_ as _u&prime;_ and _v_ as (_v&prime;_ \* 2.0 / 3).</small>
-
-<small><sup id=Note20>(20)</sup> Although the CIELAB color model is also often called "perceptually uniform"&mdash;
-- CIELAB "was not designed to have the perceptual qualities needed for gamut mapping", according to [**B. Lindbloom**](http://www.brucelindbloom.com/index.html?UPLab.html), and
-- such a claim "is really only the case for very low spatial frequencies", according to P. Kovesi (P. Kovesi, "[**Good Colour Maps: How to Design Them**](https://arxiv.org/abs/1509.03700)", arXiv:1509.03700 [cs.GR], 2015).</small>
-
-<small><sup id=Note21>(21)</sup> The placement of the _L\*_, _a\*_, and _b\*_ axes is related to the light&ndash;dark signal and the two opponent signals red/green and blue/yellow. See also endnote 6.</small>
-
-<small><sup id=Note22>(22)</sup> The terms _lightness_ and _chroma_ are relative to an area appearing white.  The corresponding terms _brightness_ and _saturation_, respectively, are subjective terms: _brightness_ is the perceived degree of reflected or emitted light, and _saturation_ is the perceived hue strength (_colorfulness_) of an area in proportion to its brightness. (See also the CIE's International Lighting Vocabulary.) CIELAB has no formal saturation formula, however (see the Wikipedia article on [**colorfulness**](https://en.wikipedia.org/wiki/Colorfulness)).</small>
-
-<small><sup id=Note23>(23)</sup> This section focuses on CMYK because printing systems that involve inks other than cyan, magenta, yellow, and black (notably "extended gamut" systems of five or more inks, and systems that use custom "spot" color inks) are not yet of general interest to programmers.</small>
-
-<small><sup id=Note24>(24)</sup> This page does not detail how multidimensional interpolation works, but an example is SciPy's [**`griddata`**](https://docs.scipy.org/doc/scipy/reference/generated/scipy.interpolate.griddata.html) method.</small>
-
-<small><sup id=Note25>(25)</sup> T. Helland, [**"Seven grayscale conversion algorithms (with pseudocode and VB6 source code)"**](http://www.tannerhelland.com/3643/grayscale-image-algorithm-vb6/).</small>
-
-<small><sup id=Note26>(26)</sup> J. Cook, [**"Converting color to grayscale"**](https://www.johndcook.com/blog/2009/08/24/algorithms-convert-color-grayscale/), Aug. 24, 2009.</small>
-
-<small><sup id=Note27>(27)</sup> `Lerp3` is equivalent to `mix` in OpenGL Shading Language (GLSL).  Making `alpha` the output of a function (for example, `Lerp3(color1, color2, FUNC(...))`,
+- <small><sup id=Note20>(20)</sup> Although the CIELAB color model is also often called "perceptually uniform"&mdash;
+    - CIELAB "was not designed to have the perceptual qualities needed for gamut mapping", according to [**B. Lindbloom**](http://www.brucelindbloom.com/index.html?UPLab.html), and
+    - such a claim "is really only the case for very low spatial frequencies", according to P. Kovesi (P. Kovesi, "[**Good Colour Maps: How to Design Them**](https://arxiv.org/abs/1509.03700)", arXiv:1509.03700 [cs.GR], 2015).</small>
+- <small><sup id=Note21>(21)</sup> The placement of the _L\*_, _a\*_, and _b\*_ axes is related to the light&ndash;dark signal and the two opponent signals red/green and blue/yellow. See also endnote 6.</small>
+- <small><sup id=Note22>(22)</sup> The terms _lightness_ and _chroma_ are relative to an area appearing white.  The corresponding terms _brightness_ and _saturation_, respectively, are subjective terms: _brightness_ is the perceived degree of reflected or emitted light, and _saturation_ is the perceived hue strength (_colorfulness_) of an area in proportion to its brightness. (See also the CIE's International Lighting Vocabulary.) CIELAB has no formal saturation formula, however (see the Wikipedia article on [**colorfulness**](https://en.wikipedia.org/wiki/Colorfulness)).</small>
+- <small><sup id=Note23>(23)</sup> This section focuses on CMYK because printing systems that involve inks other than cyan, magenta, yellow, and black (notably "extended gamut" systems of five or more inks, and systems that use custom "spot" color inks) are not yet of general interest to programmers.</small>
+- <small><sup id=Note24>(24)</sup> This page does not detail how multidimensional interpolation works, but an example is SciPy's [**`griddata`**](https://docs.scipy.org/doc/scipy/reference/generated/scipy.interpolate.griddata.html) method.</small>
+- <small><sup id=Note25>(25)</sup> T. Helland, [**"Seven grayscale conversion algorithms (with pseudocode and VB6 source code)"**](http://www.tannerhelland.com/3643/grayscale-image-algorithm-vb6/).</small>
+- <small><sup id=Note26>(26)</sup> J. Cook, [**"Converting color to grayscale"**](https://www.johndcook.com/blog/2009/08/24/algorithms-convert-color-grayscale/), Aug. 24, 2009.</small>
+- <small><sup id=Note27>(27)</sup> `Lerp3` is equivalent to `mix` in OpenGL Shading Language (GLSL).  Making `alpha` the output of a function (for example, `Lerp3(color1, color2, FUNC(...))`,
 where `FUNC` is an arbitrary function of one or more variables) can be done to achieve special nonlinear blends.  Such blends (interpolations) are described in further detail [**in another page**](https://peteroupc.github.io/html3dutil/MathUtil.html#MathUtil.vec3lerp).</small>
-
-<small><sup id=Note28>(28)</sup> P. Haeberli and D. Voorhees, "[**Image Processing by Interpolation and Extrapolation**](http://www.graficaobscura.com/interp/index.html)".</small>
-
-<small><sup id=Note29>(29)</sup> B. MacEvoy calls these [**_hue harmonies_**](http://www.handprint.com/HP/WCL/tech13.html#harmonies).  See also his [**summary of harmonious color relationships**](http://www.handprint.com/HP/WCL/tech13.html#harmonyoverview).</small>
-
-<small><sup id=Note30>(30)</sup> Porter, T., and Duff. T. "Compositing Digital Images". Computer Graphics 18(3), p 253 ff., 1984.</small>
-
-<small><sup id=Note31>(31)</sup> P. Haeberli, [**"Matrix Operations for Image Processing"**](http://www.graficaobscura.com/matrix/index.html), 1993.  The hue rotation matrix given was generated using the technique in the section "Hue Rotation While Preserving Luminance", with constants rounded to five significant digits and with `rwgt=0.2126`, `gwgt=0.7152`, and `bwgt = 0.0722`, the sRGB luminance factors for the red, green, and blue points.  For the saturation and hue rotation matrices, the sRGB luminance factors are used rather than the values recommended by the source.</small>
-
-<small><sup id=Note32>(32)</sup> The hue rotation angle is in radians, and the angle is greater than -2&pi; and less than 2&pi;. Degrees can be converted to radians by multiplying by `pi / 180`.</small>
-
-<small><sup id=Note33>(33)</sup> This is often called the "CMY" ("cyan&ndash;magenta&ndash;yellow") version of the RGB color (although the resulting color is not necessarily based on a proportion of cyan, magenta, and yellow inks; see also "[**CMYK and Other Ink-Mixture Color Models**](#CMYK_and_Other_Ink_Mixture_Color_Models)").  If such an operation is used, the conversions between "CMY" and RGB are exactly the same.</small>
-
-<small><sup id=Note34>(34)</sup> The "E" here stands for the German word _Empfindung_.</small>
-
-<small><sup id=Note35>(35)</sup> T. Riemersma, [**"Colour metric"**](https://www.compuphase.com/cmetric.htm), section "A low-cost approximation".</small>
-
-<small><sup id=Note36>(36)</sup> Huang, M., Cui, G., et al. (2015). "Power functions improving the performance of color-difference formulas." Optical Society of America, 23(1), 597&ndash;610.</small>
-
-<small><sup id=Note37>(37)</sup> One way to implement dithering is mentioned in C. Peters, "[**Free blue noise textures**](http://momentsingraphics.de/?p=127)", _Moments in Graphics_, Dec. 22, 2016.</small>
-
-<small><sup id=Note38>(38)</sup> This document does not cover how to implement hash tables.</small>
-
-<small><sup id=Note39>(39)</sup> An example of scene-referred image data is a raw image from a digital camera after applying an input device transform as defined in Academy Procedure P-2013-001.  Scene-referred image data have not undergone operations such as look modification transforms (as defined in P-2013-001), tone mapping, gamut mapping, or other color rendering.</small>
-
-<small><sup id=Note40>(40)</sup> In general, a color can be considered "print friendly" if it lies within the extent of colors (_color gamut_) that can be reproduced under a given or standardized printing condition (see also "[**CMYK and Other Ink-Mixture Color Models**](#CMYK_and_Other_Ink_Mixture_Color_Models)").</small>
-
-<small><sup id=Note41>(41)</sup> Many color collections are represented by printed or dyed color swatches and/or found in printed "fan decks".  Most color collections of this kind, however, are proprietary. "5RP 5/6" is an example from a famous color system and color space from the early 20th century.</small>
-
-<small><sup id=Note42>(42)</sup> Venn, A., et al. "Das Farbw&ouml;rterbuch / The Colour Dictionary".</small>
-
-<small><sup id=Note43>(43)</sup> An approximation of the colors, in order, to encoded sRGB in [**HTML color format**](#HTML_Format_and_Other_Text_Formats), is as follows: "#F0F0F1", "#181818", "#F7C100", "#875392", "#F78000", "#9EC9EF", "#C0002D", "#C2B280", "#838382", "#008D4B", "#E68DAB", "#0067A8", "#F99178", "#5E4B97", "#FBA200", "#B43E6B", "#DDD200", "#892610", "#8DB600", "#65421B", "#E4531B", "#263A21". The list was generated by converting the Munsell renotations (and a similar renotation for black) to sRGB using the Python `colour` package.</small>
-
-<small><sup id=Note44>(44)</sup> Tatarize, "[**Color Distribution Methodology**](http://godsnotwheregodsnot.blogspot.com/2012/09/color-distribution-methodology.html)".</small>
-
-<small><sup id=Note45>(45)</sup> See also J. Walker, "[**Colour Rendering of Spectra**](http://www.fourmilab.ch/documents/specrend/)".</small>
-
-<small><sup id=Note46>(46)</sup> As [**B. MacEvoy explains**](http://www.handprint.com/HP/WCL/color18a.html#compmatch) (at "Other Factors in Material Mixtures"), things that affect the mixture of two colorants include their "refractive index, particle size, crystal form, hiding power and tinting strength" (see also his [**principles 39 to 41**](http://www.handprint.com/HP/WCL/color18a.html#ctprin39)), and "the material attributes of the support [e.g., the paper or canvas] and the paint application methods" are also relevant here.  These factors, to the extent the reflectance curves don't take them into account, are not dealt with in this method.</small>
-
-<small><sup id=Note47>(47)</sup> Walowit, E.  "Spectrophotometric color formulation based on two-constant Kubelka-Munk theory". Thesis, Rochester Institute of Technology, 1985.</small>
+- <small><sup id=Note28>(28)</sup> P. Haeberli and D. Voorhees, "[**Image Processing by Interpolation and Extrapolation**](http://www.graficaobscura.com/interp/index.html)".</small>
+- <small><sup id=Note29>(29)</sup> B. MacEvoy calls these [**_hue harmonies_**](http://www.handprint.com/HP/WCL/tech13.html#harmonies).  See also his [**summary of harmonious color relationships**](http://www.handprint.com/HP/WCL/tech13.html#harmonyoverview).</small>
+- <small><sup id=Note30>(30)</sup> Porter, T., and Duff. T. "Compositing Digital Images". Computer Graphics 18(3), p 253 ff., 1984.</small>
+- <small><sup id=Note31>(31)</sup> P. Haeberli, [**"Matrix Operations for Image Processing"**](http://www.graficaobscura.com/matrix/index.html), 1993.  The hue rotation matrix given was generated using the technique in the section "Hue Rotation While Preserving Luminance", with constants rounded to five significant digits and with `rwgt=0.2126`, `gwgt=0.7152`, and `bwgt = 0.0722`, the sRGB luminance factors for the red, green, and blue points.  For the saturation and hue rotation matrices, the sRGB luminance factors are used rather than the values recommended by the source.</small>
+- <small><sup id=Note32>(32)</sup> The hue rotation angle is in radians, and the angle is greater than -2&pi; and less than 2&pi;. Degrees can be converted to radians by multiplying by `pi / 180`.</small>
+- <small><sup id=Note33>(33)</sup> This is often called the "CMY" ("cyan&ndash;magenta&ndash;yellow") version of the RGB color (although the resulting color is not necessarily based on a proportion of cyan, magenta, and yellow inks; see also "[**CMYK and Other Ink-Mixture Color Models**](#CMYK_and_Other_Ink_Mixture_Color_Models)").  If such an operation is used, the conversions between "CMY" and RGB are exactly the same.</small>
+- <small><sup id=Note34>(34)</sup> The "E" here stands for the German word _Empfindung_.</small>
+- <small><sup id=Note35>(35)</sup> T. Riemersma, [**"Colour metric"**](https://www.compuphase.com/cmetric.htm), section "A low-cost approximation".</small>
+- <small><sup id=Note36>(36)</sup> Huang, M., Cui, G., et al. (2015). "Power functions improving the performance of color-difference formulas." Optical Society of America, 23(1), 597&ndash;610.</small>
+- <small><sup id=Note37>(37)</sup> One way to implement dithering is mentioned in C. Peters, "[**Free blue noise textures**](http://momentsingraphics.de/?p=127)", _Moments in Graphics_, Dec. 22, 2016.</small>
+- <small><sup id=Note38>(38)</sup> This document does not cover how to implement hash tables.</small>
+- <small><sup id=Note39>(39)</sup> An example of scene-referred image data is a raw image from a digital camera after applying an input device transform as defined in Academy Procedure P-2013-001.  Scene-referred image data have not undergone operations such as look modification transforms (as defined in P-2013-001), tone mapping, gamut mapping, or other color rendering.</small>
+- <small><sup id=Note40>(40)</sup> In general, a color can be considered "print friendly" if it lies within the extent of colors (_color gamut_) that can be reproduced under a given or standardized printing condition (see also "[**CMYK and Other Ink-Mixture Color Models**](#CMYK_and_Other_Ink_Mixture_Color_Models)").</small>
+- <small><sup id=Note41>(41)</sup> Many color collections are represented by printed or dyed color swatches and/or found in printed "fan decks".  Most color collections of this kind, however, are proprietary. "5RP 5/6" is an example from a famous color system and color space from the early 20th century.</small>
+- <small><sup id=Note42>(42)</sup> Venn, A., et al. "Das Farbw&ouml;rterbuch / The Colour Dictionary".</small>
+- <small><sup id=Note43>(43)</sup> An approximation of the colors, in order, to encoded sRGB in [**HTML color format**](#HTML_Format_and_Other_Text_Formats), is as follows: "#F0F0F1", "#181818", "#F7C100", "#875392", "#F78000", "#9EC9EF", "#C0002D", "#C2B280", "#838382", "#008D4B", "#E68DAB", "#0067A8", "#F99178", "#5E4B97", "#FBA200", "#B43E6B", "#DDD200", "#892610", "#8DB600", "#65421B", "#E4531B", "#263A21". The list was generated by converting the Munsell renotations (and a similar renotation for black) to sRGB using the Python `colour` package.</small>
+- <small><sup id=Note44>(44)</sup> Tatarize, "[**Color Distribution Methodology**](http://godsnotwheregodsnot.blogspot.com/2012/09/color-distribution-methodology.html)".</small>
+- <small><sup id=Note45>(45)</sup> See also J. Walker, "[**Colour Rendering of Spectra**](http://www.fourmilab.ch/documents/specrend/)".</small>
+- <small><sup id=Note46>(46)</sup> As [**B. MacEvoy explains**](http://www.handprint.com/HP/WCL/color18a.html#compmatch) (at "Other Factors in Material Mixtures"), things that affect the mixture of two colorants include their "refractive index, particle size, crystal form, hiding power and tinting strength" (see also his [**principles 39 to 41**](http://www.handprint.com/HP/WCL/color18a.html#ctprin39)), and "the material attributes of the support [e.g., the paper or canvas] and the paint application methods" are also relevant here.  These factors, to the extent the reflectance curves don't take them into account, are not dealt with in this method.</small>
+- <small><sup id=Note47>(47)</sup> Walowit, E.  "Spectrophotometric color formulation based on two-constant Kubelka-Munk theory". Thesis, Rochester Institute of Technology, 1985.</small>
 
 <a id=License></a>
 ## License

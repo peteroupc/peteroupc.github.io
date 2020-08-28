@@ -8,7 +8,8 @@ def prepareMarkdown(data)
   textstorefs={} # to help remove duplicate note texts
   data.scan(/<sup\s+id\s*\=\s*([^>]+)>\s*\(\d+\)\s*<\/sup>\s*([\s\S]+?)(?=<sup\s+id|\#\#|\z)/){|n|
     notetext=n[1].gsub(/\s+\z/,"")
-    notetext=notetext.gsub(/<\/?small>/,"").gsub(/<br\/>\s*\z/,"").gsub(/\s+\z/,"")
+    notetext=notetext.gsub(/<\/?small>/,"").gsub(/<br\/>\s*\z/,"").gsub(/\s+-\s*\z/,"").gsub(/\s+\z/,"")
+    notetext=notetext.gsub(/\n\s*(-\s+|\d+\.)/) { "\n" + " "*4 + $1 }
     textstorefs[notetext]=n[0] if !textstorefs[notetext]
     notetexts[n[0]]=notetext
   }
@@ -28,7 +29,7 @@ def prepareMarkdown(data)
        noterefs[noteref]=newref
        ntext=notetexts[noteref] || "No note text yet."
        ntext="<sup id=#{newrefid}>(#{newref+1})</sup> "+ntext
-       newnotetexts.push("<small>"+ntext+"</small>")
+       newnotetexts.push("- <small>"+ntext+"</small>")
      else
        newref=noterefs[noteref]
        newrefid="Note#{newref+1}"
@@ -44,13 +45,13 @@ def prepareMarkdown(data)
      noterefs[noteref]=newref
      ntext=notedata
      ntext="<sup id=#{newrefid}>(#{newref+1})</sup> "+ntext
-     newnotetexts.push("<small>"+ntext+"</small>")
+     newnotetexts.push("- <small>"+ntext+"</small>")
      noterefparen=(noteref.length==0) ? "" : "(#{noteref})"
      next noterefparen+"<sup>[(#{newref+1})](##{newrefid})</sup>"
   }
 
-  data=data.gsub(/<sup\s+id[\s\S]+?(?=\#\#|\z)/){
-    next newnotetexts.join("\n\n")+"\n\n"
+  data=data.gsub(/(<small>)?(-\s+)?<sup\s+id[\s\S]+?(?=\#\#|\z)/){
+    next newnotetexts.join("\n")+"\n\n"
   }
   data.scan(/^(\#\#+)\s+(.*)\s+?/){|heading|
    h0=heading[0]
@@ -78,6 +79,11 @@ def prepareMarkdown(data)
    p2=$2
    nt=$3
    nt=nt.gsub(/\A\s+|\s+\z/,"")
+   nt=nt.gsub(/<(p|div)\s+id\=notesection>/,"")
+   nt=nt.gsub(/<\/(div|p|notesection)>/,"")
+   nt=nt.gsub(/<notesection>/,"")
+   nt=nt.gsub(/(-\s+)+/,"- ")
+   nt=nt.gsub(/\A\s*<small>-/,"-")
    nt=nt.gsub(/(<small>\s*)+/,"<small>")
    ret="#{p1} #{p2}\n\n"+nt+"\n\n"
    next ret

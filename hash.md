@@ -22,4 +22,4 @@ Bret Mulvey has written a page on [**how hash functions are built**](https://pap
 <a id=Notes></a>
 ## Notes
 
-<small><sup id=Note1>(1)</sup> Richter, Alvarez, Dittrich, "A Seven-Dimensional Analysis of Hashing Methods and its Implications on Query Processing", _Proceedings of the VLDB Endowment_ 9(3), 2015.</small>
+- <small><sup id=Note1>(1)</sup> Richter, Alvarez, Dittrich, "A Seven-Dimensional Analysis of Hashing Methods and its Implications on Query Processing", _Proceedings of the VLDB Endowment_ 9(3), 2015.</small>

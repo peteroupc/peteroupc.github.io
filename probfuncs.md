@@ -37,10 +37,9 @@ Generally, `EICDF` can make use of interval arithmetic, which provides rigorous 
 <a id=Notes></a>
 ## Notes
 
-<small><sup id=Note1>(1)</sup> Devroye, L., Gravel, C., "[The expected bit complexity of the von Neumann rejection
+- <small><sup id=Note1>(1)</sup> Devroye, L., Gravel, C., "[The expected bit complexity of the von Neumann rejection
 algorithm](https://arxiv.org/abs/1511.02273v2)", arXiv:1511.02273v2  \[cs.IT\], 2016.</small>
-
-<small><sup id=Note2>(2)</sup> Devroye, L., Gravel, C., "[**Sampling with arbitrary precision**](https://arxiv.org/abs/1502.02539v5)", arXiv:1502.02539v5 \[cs.IT\], 2015.</small>
+- <small><sup id=Note2>(2)</sup> Devroye, L., Gravel, C., "[**Sampling with arbitrary precision**](https://arxiv.org/abs/1502.02539v5)", arXiv:1502.02539v5 \[cs.IT\], 2015.</small>
 
 <a id=License></a>
 ## License

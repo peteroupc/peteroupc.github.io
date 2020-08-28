@@ -124,33 +124,20 @@ The following are not considered high-quality PRNGs:
 <a id=Notes></a>
 ## Notes
 
-<small><sup id=Note1>(1)</sup> Blackman, D., Vigna, S. "Scrambled Linear Pseudorandom Number Generators", 2019 (xoroshiro and xoshiro families); S. Vigna, "[**An experimental exploration of Marsaglia's `xorshift` generators, scrambled**](http://vigna.di.unimi.it/ftp/papers/xorshift.pdf)", 2016 (scrambled xorshift family).</small>
-
-<small><sup id=Note2>(2)</sup> L'Ecuyer, P., "Good Parameters and Implementations for Combined Multiple Recursive Random Number Generators", _Operations Research_ 47(1), 1999; L'Ecuyer, P., Simard, R., et al., "An Object-Oriented Random Number Package with Many Long Streams and Substreams", _Operations Research_ 50(6), 2002.</small>
-
-<small><sup id=Note3>(3)</sup> L'Ecuyer, P., Touzin, R., "Fast Combined Multiple Recursive Generators with Multipliers of the Form a = &pm;2<sup>q</sup> &pm; 2<sup>r</sup>", _Proceedings of the 2000 Winter Simulation Conference_, 2000.</small>
-
-<small><sup id=Note4>(4)</sup> Jones, D., "Good Practice in (Pseudo) Random Number Generation for Bioinformatics Applications", 2007/2010.</small>
-
-<small><sup id=Note5>(5)</sup> P. L'Ecuyer, "Tables of Linear Congruential Generators of Different Sizes and Good Lattice Structure", _Mathematics of Computation_ 68(225), January 1999, with [**errata**](http://www.iro.umontreal.ca/~lecuyer/myftp/papers/latrules99Errata.pdf).</small>
-
-<small><sup id=Note6>(6)</sup> This XorShift\* generator is not to be confused with S. Vigna's \*-scrambled PRNGs, which multiply the PRNG state differently than this one does.</small>
-
-<small><sup id=Note7>(7)</sup> Salmon, J.K.; Moraes, M.A.; et al., "Parallel Random Numbers: As Easy as 1, 2, 3", 2011.</small>
-
-<small><sup id=Note8>(8)</sup> L&uuml;scher, M., "A Portable High-Quality Random Number Generator for Lattice Field Theory Simulations", arXiv:hep-lat/9309020 (1994).  See also Conrads, C., "[**Faster RANLUX Pseudo-Random Number Generators**](https://christoph-conrads.name/faster-ranlux-pseudo-random-number-generators/)".</small>
-
-<small><sup id=Note9>(9)</sup> S. Vigna, "[**It Is High Time We Let Go of the Mersenne Twister**](https://arxiv.org/abs/1910.06437)", arXiv:1910.06437 [cs.DS], 2019.</small>
-
-<small><sup id=Note10>(10)</sup> S. Vigna, "[**An experimental exploration of Marsaglia's `xorshift` generators, scrambled**](http://vigna.di.unimi.it/ftp/papers/xorshift.pdf)", 2016.</small>
-
-<small><sup id=Note11>(11)</sup> Widynski, B., "[**Middle Square Weyl Sequence RNG**](https://arxiv.org/abs/1704.00358)", arXiv:1704.00358 [cs.CR], 2017.</small>
-
-<small><sup id=Note12>(12)</sup> Bhattacharjee, K., "[**Cellular Automata: Reversibility, Semi-reversibility and Randomness**](https://arxiv.org/abs/1911.03609)", arXiv:1911.03609 [cs.FL], 2019.</small>
-
-<small><sup id=Note13>(13)</sup> Neves, S., and Araujo, F., "Fast and Small Nonlinear Pseudorandom Number Generators for Computer Simulation", 2011.</small>
-
-<small><sup id=Note14>(14)</sup> Claessen, K, Pa&#x142;ka, M., "Splittable Pseudorandom Number Generators using Cryptographic Hashing", _ACM SIGPLAN Notices_ 48(12), December 2013.</small>
+- <small><sup id=Note1>(1)</sup> Blackman, D., Vigna, S. "Scrambled Linear Pseudorandom Number Generators", 2019 (xoroshiro and xoshiro families); S. Vigna, "[**An experimental exploration of Marsaglia's `xorshift` generators, scrambled**](http://vigna.di.unimi.it/ftp/papers/xorshift.pdf)", 2016 (scrambled xorshift family).</small>
+- <small><sup id=Note2>(2)</sup> L'Ecuyer, P., "Good Parameters and Implementations for Combined Multiple Recursive Random Number Generators", _Operations Research_ 47(1), 1999; L'Ecuyer, P., Simard, R., et al., "An Object-Oriented Random Number Package with Many Long Streams and Substreams", _Operations Research_ 50(6), 2002.</small>
+- <small><sup id=Note3>(3)</sup> L'Ecuyer, P., Touzin, R., "Fast Combined Multiple Recursive Generators with Multipliers of the Form a = &pm;2<sup>q</sup> &pm; 2<sup>r</sup>", _Proceedings of the 2000 Winter Simulation Conference_, 2000.</small>
+- <small><sup id=Note4>(4)</sup> Jones, D., "Good Practice in (Pseudo) Random Number Generation for Bioinformatics Applications", 2007/2010.</small>
+- <small><sup id=Note5>(5)</sup> P. L'Ecuyer, "Tables of Linear Congruential Generators of Different Sizes and Good Lattice Structure", _Mathematics of Computation_ 68(225), January 1999, with [**errata**](http://www.iro.umontreal.ca/~lecuyer/myftp/papers/latrules99Errata.pdf).</small>
+- <small><sup id=Note6>(6)</sup> This XorShift\* generator is not to be confused with S. Vigna's \*-scrambled PRNGs, which multiply the PRNG state differently than this one does.</small>
+- <small><sup id=Note7>(7)</sup> Salmon, J.K.; Moraes, M.A.; et al., "Parallel Random Numbers: As Easy as 1, 2, 3", 2011.</small>
+- <small><sup id=Note8>(8)</sup> L&uuml;scher, M., "A Portable High-Quality Random Number Generator for Lattice Field Theory Simulations", arXiv:hep-lat/9309020 (1994).  See also Conrads, C., "[**Faster RANLUX Pseudo-Random Number Generators**](https://christoph-conrads.name/faster-ranlux-pseudo-random-number-generators/)".</small>
+- <small><sup id=Note9>(9)</sup> S. Vigna, "[**It Is High Time We Let Go of the Mersenne Twister**](https://arxiv.org/abs/1910.06437)", arXiv:1910.06437 [cs.DS], 2019.</small>
+- <small><sup id=Note10>(10)</sup> S. Vigna, "[**An experimental exploration of Marsaglia's `xorshift` generators, scrambled**](http://vigna.di.unimi.it/ftp/papers/xorshift.pdf)", 2016.</small>
+- <small><sup id=Note11>(11)</sup> Widynski, B., "[**Middle Square Weyl Sequence RNG**](https://arxiv.org/abs/1704.00358)", arXiv:1704.00358 [cs.CR], 2017.</small>
+- <small><sup id=Note12>(12)</sup> Bhattacharjee, K., "[**Cellular Automata: Reversibility, Semi-reversibility and Randomness**](https://arxiv.org/abs/1911.03609)", arXiv:1911.03609 [cs.FL], 2019.</small>
+- <small><sup id=Note13>(13)</sup> Neves, S., and Araujo, F., "Fast and Small Nonlinear Pseudorandom Number Generators for Computer Simulation", 2011.</small>
+- <small><sup id=Note14>(14)</sup> Claessen, K, Pa&#x142;ka, M., "Splittable Pseudorandom Number Generators using Cryptographic Hashing", _ACM SIGPLAN Notices_ 48(12), December 2013.</small>
 
 <a id=Appendix></a>
 ## Appendix

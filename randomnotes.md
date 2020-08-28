@@ -480,81 +480,44 @@ If we have multiple biased coins (_n_ of them), each with a separate unknown bia
 <a id=Notes></a>
 ## Notes
 
-<small><sup id=Note1>(1)</sup> Karney, C.F.F., "[**Sampling exactly from the normal distribution**](https://arxiv.org/abs/1303.6257v2)", arXiv:1303.6257v2  [physics.comp-ph], 2014.</small>
-
-<small><sup id=Note2>(2)</sup> Kabal, P., "Generating Gaussian Pseudo-Random Variates", McGill University, 2000/2019.</small>
-
-<small><sup id=Note3>(3)</sup> Thomas, D.B., 2014, May. FPGA Gaussian random number generators with guaranteed statistical accuracy. In _2014 IEEE 22nd Annual International Symposium on Field-Programmable Custom Computing Machines_ (pp. 149-156).</small>
-
-<small><sup id=Note4>(4)</sup> Luu, T., "Fast and Accurate Parallel Computation of Quantile Functions for Random Number Generation", Dissertation, University College London, 2016.</small>
-
-<small><sup id=Note5>(5)</sup> Thomas, D., et al., "Gaussian Random Number Generators", _ACM Computing Surveys_ 39(4), 2007.</small>
-
-<small><sup id=Note6>(6)</sup> Malik, J.S., Hemani, A., "Gaussian random number generation: A survey on hardware architectures", _ACM Computing Surveys_ 49(3), 2016.</small>
-
-<small><sup id=Note7>(7)</sup> Yusong Du, Baoying Fan, and Baodian Wei, "[**An Improved Exact Sampling Algorithm for the Standard Normal Distribution**](https://arxiv.org/abs/2008.03855)", arXiv:2008.03855 [cs.DS], 2020.</small>
-
-<small><sup id=Note8>(8)</sup> Micciancio, D. and Walter, M., "Gaussian sampling over the integers: Efficient, generic, constant-time", in Annual International Cryptology Conference, August 2017 (pp. 455-485).</small>
-
-<small><sup id=Note9>(9)</sup> "A simple method for generating gamma variables", _ACM Transactions on Mathematical Software_ 26(3), 2000.</small>
-
-<small><sup id=Note10>(10)</sup> Liu, C., Martin, R., Syring, N., "[**Simulating from a gamma distribution with small shape parameter**](https://arxiv.org/abs/1302.1884v3)", arXiv:1302.1884v3  [stat.CO], 2015.</small>
-
-<small><sup id=Note11>(11)</sup> Chen, S., Luo, F. and Hu, C., 2020. [**A Novel Gamma Distributed Random Variable (RV) Generation Method for Clutter Simulation with Non-Integral Shape Parameters**](https://res.mdpi.com/d_attachment/sensors/sensors-20-00955/article_deploy/sensors-20-00955-v2.pdf). _Sensors_, 20(4), p.955.</small>
-
-<small><sup id=Note12>(12)</sup> Devroye, L., [**_Non-Uniform Random Variate Generation_**](http://luc.devroye.org/rnbookindex.html), 1986.</small>
-
-<small><sup id=Note13>(13)</sup> Tomasz J. Kozubowski, "Computer simulation of geometric stable distributions", _Journal of Computational and Applied Mathematics_ 116(2), 2000.</small>
-
-<small><sup id=Note14>(14)</sup> [**Kahan summation**](https://en.wikipedia.org/wiki/Kahan_summation_algorithm) can be a more robust way than the na&iuml;ve approach to compute the sum of three or more floating-point numbers.</small>
-
-<small><sup id=Note15>(15)</sup> Cario, M. C., B. L. Nelson, "Modeling and generating random vectors with arbitrary marginal distributions and correlation matrix", 1997.</small>
-
-<small><sup id=Note16>(16)</sup> Hofert, M., and Maechler, M.  "Nested Archimedean Copulas Meet R: The nacopula Package".  _Journal of Statistical Software_ 39(9), 2011, pp. 1-20.</small>
-
-<small><sup id=Note17>(17)</sup> Shaddin Dughmi, Jason D. Hartline, Robert Kleinberg, and Rad Niazadeh. 2017. Bernoulli Factories and Black-Box Reductions in Mechanism Design. In _Proceedings of 49th Annual ACM SIGACT Symposium on the Theory of Computing_, Montreal, Canada, June 2017 (STOC’17).</small>
-
-<small><sup id=Note18>(18)</sup> Morina, G., Łatuszyński, K., et al., "[**From the Bernoulli Factory to a Dice Enterprise via Perfect Sampling of Markov Chains**](https://arxiv.org/abs/1912.09229v1)", arXiv:1912.09229v1 [math.PR], 2019.</small>
-
-<small><sup id=Note19>(19)</sup> Knuth, Donald E. and Andrew Chi-Chih Yao. "The complexity of nonuniform random number generation", in _Algorithms and Complexity: New Directions and Recent Results_, 1976.</small>
-
-<small><sup id=Note20>(20)</sup> This is because the binary entropy of `p = 1/n` is `p * log2(1/p) = log2(n) / n`, and the sum of `n` binary entropies (for `n` outcomes with probability `1/n` each) is `log2(n)`.  Any optimal integer generation algorithm will come within 2 bits of this lower bound on average.</small>
-
-<small><sup id=Note21>(21)</sup> D. Lemire, "A fast alternative to the modulo reduction", Daniel Lemire's blog, 2016.</small>
-
-<small><sup id=Note22>(22)</sup> Lemire, D., "[**Fast Random Integer Generation in an Interval**](https://arxiv.org/abs/1805.10941v4)", arXiv:1805.10941v4  [cs.DS], 2018.</small>
-
-<small><sup id=Note23>(23)</sup> Lumbroso, J., "[**Optimal Discrete Uniform Generation from Coin Flips, and Applications**](https://arxiv.org/abs/1304.1916)", arXiv:1304.1916 [cs.DS]</small>
-
-<small><sup id=Note24>(24)</sup> "[**Probability and Random Numbers**](http://mathforum.org/library/drmath/view/65653.html)", Feb. 29, 2004.</small>
-
-<small><sup id=Note25>(25)</sup> Mennucci, A.C.G. "[**Bit Recycling for Scaling Random Number Generators**](https://arxiv.org/abs/1012.4290)", arXiv:1012.4290 [cs.IT], 2018.</small>
-
-<small><sup id=Note26>(26)</sup> Devroye, L., Gravel, C., "[**Sampling with arbitrary precision**](https://arxiv.org/abs/1502.02539v5)", arXiv:1502.02539v5 [cs.IT], 2015.</small>
-
-<small><sup id=Note27>(27)</sup> Saad, F.A., Freer C.E., et al., "[**The Fast Loaded Dice Roller: A Near-Optimal Exact Sampler for Discrete Probability Distributions**](https://arxiv.org/abs/2003.03830v2)", arXiv:2003.03830v2  [stat.CO], also in _AISTATS 2020: Proceedings of the 23rd International Conference on Artificial Intelligence and Statistics, Proceedings of Machine Learning Research_ 108, Palermo, Sicily, Italy, 2020.</small>
-
-<small><sup id=Note28>(28)</sup> Feras A. Saad, Cameron E. Freer, Martin C. Rinard, and Vikash K. Mansinghka, "[**Optimal Approximate Sampling From Discrete Probability Distributions**](https://arxiv.org/abs/2001.04555v1)", arXiv:2001.04555v1 [cs.DS], also in Proc. ACM Program. Lang. 4, POPL, Article 36 (January 2020), 33 pages.</small>
-
-<small><sup id=Note29>(29)</sup> Klundert, B. van de, "[**Efficient Generation of Discrete Random Variates**](https://dspace.library.uu.nl/handle/1874/393383)", Master thesis, Universiteit Utrecht, 2019.</small>
-
-<small><sup id=Note30>(30)</sup> K. Bringmann and K. G. Larsen, "Succinct Sampling from Discrete Distributions", In: Proc. 45th Annual ACM Symposium on Theory of Computing (STOC'13), 2013.</small>
-
-<small><sup id=Note31>(31)</sup> K. Bringmann and K. Panagiotou, "Efficient Sampling Methods for Discrete Distributions." In: Proc. 39th International Colloquium on Automata, Languages, and Programming (ICALP'12), 2012.</small>
-
-<small><sup id=Note32>(32)</sup> L. Hübschle-Schneider and P. Sanders, "[**Parallel Weighted Random Sampling**](https://arxiv.org/abs/1903.00227v2)", arXiv:1903.00227v2  [cs.DS], 2019.</small>
-
-<small><sup id=Note33>(33)</sup> Y. Tang, "An Empirical Study of Random Sampling Methods for Changing Discrete Distributions", Master's thesis, University of Alberta, 2019.</small>
-
-<small><sup id=Note34>(34)</sup> A.J. Walker, "An efficient method for generating discrete random variables with general distributions", _ACM Transactions on Mathematical Software_ 3, 1977.</small>
-
-<small><sup id=Note35>(35)</sup> Vose, Michael D. "A linear algorithm for generating random numbers with a given distribution." IEEE Transactions on software engineering 17, no. 9 (1991): 972-975.</small>
-
-<small><sup id=Note36>(36)</sup> Roy, Sujoy Sinha, Frederik Vercauteren and Ingrid Verbauwhede. "[**High Precision Discrete Gaussian Sampling on FPGAs**](https://www.esat.kuleuven.be/cosic/publications/article-2372.pdf)." _Selected Areas in Cryptography_ (2013).</small>
-
-<small><sup id=Note37>(37)</sup> T. S. Han and M. Hoshi, "Interval algorithm for random number generation", _IEEE Transactions on Information Theory_ 43(2), March 1997.</small>
-
-<small><sup id=Note38>(38)</sup> Oberhoff, Sebastian, "[**Exact Sampling and Prefix Distributions**](https://dc.uwm.edu/etd/1888)", _Theses and Dissertations_, University of Wisconsin Milwaukee, 2018.</small>
+- <small><sup id=Note1>(1)</sup> Karney, C.F.F., "[**Sampling exactly from the normal distribution**](https://arxiv.org/abs/1303.6257v2)", arXiv:1303.6257v2  [physics.comp-ph], 2014.</small>
+- <small><sup id=Note2>(2)</sup> Kabal, P., "Generating Gaussian Pseudo-Random Variates", McGill University, 2000/2019.</small>
+- <small><sup id=Note3>(3)</sup> Thomas, D.B., 2014, May. FPGA Gaussian random number generators with guaranteed statistical accuracy. In _2014 IEEE 22nd Annual International Symposium on Field-Programmable Custom Computing Machines_ (pp. 149-156).</small>
+- <small><sup id=Note4>(4)</sup> Luu, T., "Fast and Accurate Parallel Computation of Quantile Functions for Random Number Generation", Dissertation, University College London, 2016.</small>
+- <small><sup id=Note5>(5)</sup> Thomas, D., et al., "Gaussian Random Number Generators", _ACM Computing Surveys_ 39(4), 2007.</small>
+- <small><sup id=Note6>(6)</sup> Malik, J.S., Hemani, A., "Gaussian random number generation: A survey on hardware architectures", _ACM Computing Surveys_ 49(3), 2016.</small>
+- <small><sup id=Note7>(7)</sup> Yusong Du, Baoying Fan, and Baodian Wei, "[**An Improved Exact Sampling Algorithm for the Standard Normal Distribution**](https://arxiv.org/abs/2008.03855)", arXiv:2008.03855 [cs.DS], 2020.</small>
+- <small><sup id=Note8>(8)</sup> Micciancio, D. and Walter, M., "Gaussian sampling over the integers: Efficient, generic, constant-time", in Annual International Cryptology Conference, August 2017 (pp. 455-485).</small>
+- <small><sup id=Note9>(9)</sup> "A simple method for generating gamma variables", _ACM Transactions on Mathematical Software_ 26(3), 2000.</small>
+- <small><sup id=Note10>(10)</sup> Liu, C., Martin, R., Syring, N., "[**Simulating from a gamma distribution with small shape parameter**](https://arxiv.org/abs/1302.1884v3)", arXiv:1302.1884v3  [stat.CO], 2015.</small>
+- <small><sup id=Note11>(11)</sup> Chen, S., Luo, F. and Hu, C., 2020. [**A Novel Gamma Distributed Random Variable (RV) Generation Method for Clutter Simulation with Non-Integral Shape Parameters**](https://res.mdpi.com/d_attachment/sensors/sensors-20-00955/article_deploy/sensors-20-00955-v2.pdf). _Sensors_, 20(4), p.955.</small>
+- <small><sup id=Note12>(12)</sup> Devroye, L., [**_Non-Uniform Random Variate Generation_**](http://luc.devroye.org/rnbookindex.html), 1986.</small>
+- <small><sup id=Note13>(13)</sup> Tomasz J. Kozubowski, "Computer simulation of geometric stable distributions", _Journal of Computational and Applied Mathematics_ 116(2), 2000.</small>
+- <small><sup id=Note14>(14)</sup> [**Kahan summation**](https://en.wikipedia.org/wiki/Kahan_summation_algorithm) can be a more robust way than the na&iuml;ve approach to compute the sum of three or more floating-point numbers.</small>
+- <small><sup id=Note15>(15)</sup> Cario, M. C., B. L. Nelson, "Modeling and generating random vectors with arbitrary marginal distributions and correlation matrix", 1997.</small>
+- <small><sup id=Note16>(16)</sup> Hofert, M., and Maechler, M.  "Nested Archimedean Copulas Meet R: The nacopula Package".  _Journal of Statistical Software_ 39(9), 2011, pp. 1-20.</small>
+- <small><sup id=Note17>(17)</sup> Shaddin Dughmi, Jason D. Hartline, Robert Kleinberg, and Rad Niazadeh. 2017. Bernoulli Factories and Black-Box Reductions in Mechanism Design. In _Proceedings of 49th Annual ACM SIGACT Symposium on the Theory of Computing_, Montreal, Canada, June 2017 (STOC’17).</small>
+- <small><sup id=Note18>(18)</sup> Morina, G., Łatuszyński, K., et al., "[**From the Bernoulli Factory to a Dice Enterprise via Perfect Sampling of Markov Chains**](https://arxiv.org/abs/1912.09229v1)", arXiv:1912.09229v1 [math.PR], 2019.</small>
+- <small><sup id=Note19>(19)</sup> Knuth, Donald E. and Andrew Chi-Chih Yao. "The complexity of nonuniform random number generation", in _Algorithms and Complexity: New Directions and Recent Results_, 1976.</small>
+- <small><sup id=Note20>(20)</sup> This is because the binary entropy of `p = 1/n` is `p * log2(1/p) = log2(n) / n`, and the sum of `n` binary entropies (for `n` outcomes with probability `1/n` each) is `log2(n)`.  Any optimal integer generation algorithm will come within 2 bits of this lower bound on average.</small>
+- <small><sup id=Note21>(21)</sup> D. Lemire, "A fast alternative to the modulo reduction", Daniel Lemire's blog, 2016.</small>
+- <small><sup id=Note22>(22)</sup> Lemire, D., "[**Fast Random Integer Generation in an Interval**](https://arxiv.org/abs/1805.10941v4)", arXiv:1805.10941v4  [cs.DS], 2018.</small>
+- <small><sup id=Note23>(23)</sup> Lumbroso, J., "[**Optimal Discrete Uniform Generation from Coin Flips, and Applications**](https://arxiv.org/abs/1304.1916)", arXiv:1304.1916 [cs.DS]</small>
+- <small><sup id=Note24>(24)</sup> "[**Probability and Random Numbers**](http://mathforum.org/library/drmath/view/65653.html)", Feb. 29, 2004.</small>
+- <small><sup id=Note25>(25)</sup> Mennucci, A.C.G. "[**Bit Recycling for Scaling Random Number Generators**](https://arxiv.org/abs/1012.4290)", arXiv:1012.4290 [cs.IT], 2018.</small>
+- <small><sup id=Note26>(26)</sup> Devroye, L., Gravel, C., "[**Sampling with arbitrary precision**](https://arxiv.org/abs/1502.02539v5)", arXiv:1502.02539v5 [cs.IT], 2015.</small>
+- <small><sup id=Note27>(27)</sup> Saad, F.A., Freer C.E., et al., "[**The Fast Loaded Dice Roller: A Near-Optimal Exact Sampler for Discrete Probability Distributions**](https://arxiv.org/abs/2003.03830v2)", arXiv:2003.03830v2  [stat.CO], also in _AISTATS 2020: Proceedings of the 23rd International Conference on Artificial Intelligence and Statistics, Proceedings of Machine Learning Research_ 108, Palermo, Sicily, Italy, 2020.</small>
+- <small><sup id=Note28>(28)</sup> Feras A. Saad, Cameron E. Freer, Martin C. Rinard, and Vikash K. Mansinghka, "[**Optimal Approximate Sampling From Discrete Probability Distributions**](https://arxiv.org/abs/2001.04555v1)", arXiv:2001.04555v1 [cs.DS], also in Proc. ACM Program. Lang. 4, POPL, Article 36 (January 2020), 33 pages.</small>
+- <small><sup id=Note29>(29)</sup> Klundert, B. van de, "[**Efficient Generation of Discrete Random Variates**](https://dspace.library.uu.nl/handle/1874/393383)", Master thesis, Universiteit Utrecht, 2019.</small>
+- <small><sup id=Note30>(30)</sup> K. Bringmann and K. G. Larsen, "Succinct Sampling from Discrete Distributions", In: Proc. 45th Annual ACM Symposium on Theory of Computing (STOC'13), 2013.</small>
+- <small><sup id=Note31>(31)</sup> K. Bringmann and K. Panagiotou, "Efficient Sampling Methods for Discrete Distributions." In: Proc. 39th International Colloquium on Automata, Languages, and Programming (ICALP'12), 2012.</small>
+- <small><sup id=Note32>(32)</sup> L. Hübschle-Schneider and P. Sanders, "[**Parallel Weighted Random Sampling**](https://arxiv.org/abs/1903.00227v2)", arXiv:1903.00227v2  [cs.DS], 2019.</small>
+- <small><sup id=Note33>(33)</sup> Y. Tang, "An Empirical Study of Random Sampling Methods for Changing Discrete Distributions", Master's thesis, University of Alberta, 2019.</small>
+- <small><sup id=Note34>(34)</sup> A.J. Walker, "An efficient method for generating discrete random variables with general distributions", _ACM Transactions on Mathematical Software_ 3, 1977.</small>
+- <small><sup id=Note35>(35)</sup> Vose, Michael D. "A linear algorithm for generating random numbers with a given distribution." IEEE Transactions on software engineering 17, no. 9 (1991): 972-975.</small>
+- <small><sup id=Note36>(36)</sup> Roy, Sujoy Sinha, Frederik Vercauteren and Ingrid Verbauwhede. "[**High Precision Discrete Gaussian Sampling on FPGAs**](https://www.esat.kuleuven.be/cosic/publications/article-2372.pdf)." _Selected Areas in Cryptography_ (2013).</small>
+- <small><sup id=Note37>(37)</sup> T. S. Han and M. Hoshi, "Interval algorithm for random number generation", _IEEE Transactions on Information Theory_ 43(2), March 1997.</small>
+- <small><sup id=Note38>(38)</sup> Oberhoff, Sebastian, "[**Exact Sampling and Prefix Distributions**](https://dc.uwm.edu/etd/1888)", _Theses and Dissertations_, University of Wisconsin Milwaukee, 2018.</small>
 
 <a id=Appendix></a>
 ## Appendix

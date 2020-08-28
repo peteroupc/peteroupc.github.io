@@ -2072,179 +2072,97 @@ The following are some additional articles I have written on the topic of random
 <a id=Notes></a>
 ## Notes
 
-<small><sup id=Note1>(1)</sup> Pedersen, K., "[**Reconditioning your quantile function**](https://arxiv.org/abs/1704.07949v3)", arXiv:1704.07949v3 [stat.CO], 2018.</small>
-
-<small><sup id=Note2>(2)</sup> For an exercise solved by part of the `RNDINT` pseudocode, see A. Koenig and B. E. Moo, _Accelerated C++_, 2000; see also a [**blog post by Johnny Chan**](http://mathalope.co.uk/2014/10/26/accelerated-c-solution-to-exercise-7-9/).  Part of the pseudocode uses the Fast Dice Roller in Lumbroso, J., "[**Optimal Discrete Uniform Generation from Coin Flips, and Applications**](https://arxiv.org/abs/1304.1916)", arXiv:1304.1916 [cs.DS].</small>
-
-<small><sup id=Note3>(3)</sup> An example of such a source is a Gaussian noise generator.  This kind of source is often called an _entropy source_.</small>
-
-<small><sup id=Note4>(4)</sup> A na&iuml;ve `RNDINTEXC` implementation often seen in certain languages like JavaScript is the idiom `floor(Math.random() * maxExclusive)`, where `Math.random()` is any method that outputs an independent uniform random number in the interval \[0, 1\).  However, no implementation of `Math.random()` can choose from all real numbers in \[0, 1\), so this idiom can bias some results over others depending on the value of `maxExclusive`.  For example, if `Math.random()` is implemented as `RNDINT(X - 1)/X` and `X` is not divisible by `maxExclusive`, the result will be biased.  Also, an implementation might pre-round `Math.random() * maxExclusive` (before the `floor`) to the closest number it can represent; in rare cases, that might be `maxExclusive` for certain rounding modes. If an application is concerned about these issues, it should treat the `Math.random()` implementation as the source of random numbers for `RNDINT` and implement `RNDINTEXC` through `RNDINT` instead.</small>
-
-<small><sup id=Note5>(5)</sup> Lumbroso, J., "[**Optimal Discrete Uniform Generation from Coin Flips, and Applications**](https://arxiv.org/abs/1304.1916)", arXiv:1304.1916 [cs.DS].</small>
-
-<small><sup id=Note6>(6)</sup> Jeff Atwood, "[**The danger of na&iuml;vet&eacute;**](https://blog.codinghorror.com/the-danger-of-naivete/)", Dec. 7, 2007.</small>
-
-<small><sup id=Note7>(7)</sup> Bacher, A., Bodini, O., et al., "[**MergeShuffle: A Very Fast, Parallel Random Permutation Algorithm**](https://arxiv.org/abs/1508.03167)", arXiv:1508.03167 [cs.DS], 2015.</small>
-
-<small><sup id=Note8>(8)</sup> Merlini, D., Sprugnoli, R., Verri, M.C., "An Analysis of a Simple Algorithm for Random Derangements", 2007.</small>
-
-<small><sup id=Note9>(9)</sup> Devroye, L., [**_Non-Uniform Random Variate Generation_**](http://luc.devroye.org/rnbookindex.html), 1986.</small>
-
-<small><sup id=Note10>(10)</sup> See also the _Stack Overflow_ question "Random index of a non zero value in a numpy array".</small>
-
-<small><sup id=Note11>(11)</sup> S. Linderman, "A Parallel Gamma Sampling Implementation", Laboratory for Independent Probabilistic Systems Blog, Feb. 21, 2013, illustrates one example, a GPU-implemented sampler of gamma-distributed random numbers.</small>
-
-<small><sup id=Note12>(12)</sup> Brownlee, J. "[**A Gentle Introduction to the Bootstrap Method**](https://machinelearningmastery.com/a-gentle-introduction-to-the-bootstrap-method/)", _Machine Learning Mastery_, May 25, 2018.</small>
-
-<small><sup id=Note13>(13)</sup> Propp, J.G., Wilson, D.B., "Exact sampling with coupled Markov chains and applications to statistical mechanics", 1996.</small>
-
-<small><sup id=Note14>(14)</sup> Fill, J.A., "[**An interruptible algorithm for perfect sampling via Markov chains**](https://projecteuclid.org/euclid.aoap/1027961037)", _Annals of Applied Probability_ 8(1), 1998.</small>
-
-<small><sup id=Note15>(15)</sup> E. N. Gilbert, "Random Graphs", _Annals of Mathematical Statistics_ 30(4), 1959.</small>
-
-<small><sup id=Note16>(16)</sup> V. Batagelj and U. Brandes, "Efficient generation of large random networks", Phys.Rev. E 71:036113, 2005.</small>
-
-<small><sup id=Note17>(17)</sup> Costantini, Lucia. "Algorithms for sampling spanning trees uniformly at random."
+- <small><sup id=Note1>(1)</sup> Pedersen, K., "[**Reconditioning your quantile function**](https://arxiv.org/abs/1704.07949v3)", arXiv:1704.07949v3 [stat.CO], 2018.</small>
+- <small><sup id=Note2>(2)</sup> For an exercise solved by part of the `RNDINT` pseudocode, see A. Koenig and B. E. Moo, _Accelerated C++_, 2000; see also a [**blog post by Johnny Chan**](http://mathalope.co.uk/2014/10/26/accelerated-c-solution-to-exercise-7-9/).  Part of the pseudocode uses the Fast Dice Roller in Lumbroso, J., "[**Optimal Discrete Uniform Generation from Coin Flips, and Applications**](https://arxiv.org/abs/1304.1916)", arXiv:1304.1916 [cs.DS].</small>
+- <small><sup id=Note3>(3)</sup> An example of such a source is a Gaussian noise generator.  This kind of source is often called an _entropy source_.</small>
+- <small><sup id=Note4>(4)</sup> A na&iuml;ve `RNDINTEXC` implementation often seen in certain languages like JavaScript is the idiom `floor(Math.random() * maxExclusive)`, where `Math.random()` is any method that outputs an independent uniform random number in the interval \[0, 1\).  However, no implementation of `Math.random()` can choose from all real numbers in \[0, 1\), so this idiom can bias some results over others depending on the value of `maxExclusive`.  For example, if `Math.random()` is implemented as `RNDINT(X - 1)/X` and `X` is not divisible by `maxExclusive`, the result will be biased.  Also, an implementation might pre-round `Math.random() * maxExclusive` (before the `floor`) to the closest number it can represent; in rare cases, that might be `maxExclusive` for certain rounding modes. If an application is concerned about these issues, it should treat the `Math.random()` implementation as the source of random numbers for `RNDINT` and implement `RNDINTEXC` through `RNDINT` instead.</small>
+- <small><sup id=Note5>(5)</sup> Lumbroso, J., "[**Optimal Discrete Uniform Generation from Coin Flips, and Applications**](https://arxiv.org/abs/1304.1916)", arXiv:1304.1916 [cs.DS].</small>
+- <small><sup id=Note6>(6)</sup> Jeff Atwood, "[**The danger of na&iuml;vet&eacute;**](https://blog.codinghorror.com/the-danger-of-naivete/)", Dec. 7, 2007.</small>
+- <small><sup id=Note7>(7)</sup> Bacher, A., Bodini, O., et al., "[**MergeShuffle: A Very Fast, Parallel Random Permutation Algorithm**](https://arxiv.org/abs/1508.03167)", arXiv:1508.03167 [cs.DS], 2015.</small>
+- <small><sup id=Note8>(8)</sup> Merlini, D., Sprugnoli, R., Verri, M.C., "An Analysis of a Simple Algorithm for Random Derangements", 2007.</small>
+- <small><sup id=Note9>(9)</sup> Devroye, L., [**_Non-Uniform Random Variate Generation_**](http://luc.devroye.org/rnbookindex.html), 1986.</small>
+- <small><sup id=Note10>(10)</sup> See also the _Stack Overflow_ question "Random index of a non zero value in a numpy array".</small>
+- <small><sup id=Note11>(11)</sup> S. Linderman, "A Parallel Gamma Sampling Implementation", Laboratory for Independent Probabilistic Systems Blog, Feb. 21, 2013, illustrates one example, a GPU-implemented sampler of gamma-distributed random numbers.</small>
+- <small><sup id=Note12>(12)</sup> Brownlee, J. "[**A Gentle Introduction to the Bootstrap Method**](https://machinelearningmastery.com/a-gentle-introduction-to-the-bootstrap-method/)", _Machine Learning Mastery_, May 25, 2018.</small>
+- <small><sup id=Note13>(13)</sup> Propp, J.G., Wilson, D.B., "Exact sampling with coupled Markov chains and applications to statistical mechanics", 1996.</small>
+- <small><sup id=Note14>(14)</sup> Fill, J.A., "[**An interruptible algorithm for perfect sampling via Markov chains**](https://projecteuclid.org/euclid.aoap/1027961037)", _Annals of Applied Probability_ 8(1), 1998.</small>
+- <small><sup id=Note15>(15)</sup> E. N. Gilbert, "Random Graphs", _Annals of Mathematical Statistics_ 30(4), 1959.</small>
+- <small><sup id=Note16>(16)</sup> V. Batagelj and U. Brandes, "Efficient generation of large random networks", Phys.Rev. E 71:036113, 2005.</small>
+- <small><sup id=Note17>(17)</sup> Costantini, Lucia. "Algorithms for sampling spanning trees uniformly at random."
 Master's thesis, Universitat Politècnica de Catalunya, 2020.
 [**https://upcommons.upc.edu/bitstream/handle/2117/328169/memoria.pdf**](https://upcommons.upc.edu/bitstream/handle/2117/328169/memoria.pdf)</small>
-
-<small><sup id=Note18>(18)</sup> Penschuck, M., et al., "[**Recent Advances in Scalable Network Generation**](https://arxiv.org/abs/2003.00736v1)", arXiv:2003.00736v1  [cs.DS], 2020.</small>
-
-<small><sup id=Note19>(19)</sup> Jon Louis Bentley and James B. Saxe, "Generating Sorted Lists of Random Numbers", _ACM Trans. Math. Softw._ 6 (1980), pp. 359-364, describes a way to generate random numbers in sorted order, but it's not given here because it relies on generating real numbers in the interval [0, 1], which is inherently imperfect because computers can't choose among all random numbers between 0 and 1, and there are infinitely many of them.</small>
-
-<small><sup id=Note20>(20)</sup> Efraimidis, P. and Spirakis, P. "[**Weighted Random Sampling (2005; Efraimidis, Spirakis)**](http://utopia.duth.gr/~pefraimi/research/data/2007EncOfAlg.pdf)", 2005.</small>
-
-<small><sup id=Note21>(21)</sup> Efraimidis, P. "[**Weighted Random Sampling over Data Streams**](https://arxiv.org/abs/1012.0256v2)", arXiv:1012.0256v2 [cs.DS], 2015.</small>
-
-<small><sup id=Note22>(22)</sup> T. Vieira, "[**Gumbel-max trick and weighted reservoir sampling**](http://timvieira.github.io/blog/post/2014/08/01/gumbel-max-trick-and-weighted-reservoir-sampling/)", 2014.</small>
-
-<small><sup id=Note23>(23)</sup> T. Vieira, "[**Faster reservoir sampling by waiting**](https://timvieira.github.io/blog/post/2019/06/11/faster-reservoir-sampling-by-waiting/)", 2019.</small>
-
-<small><sup id=Note24>(24)</sup> The [**Python sample code**](https://peteroupc.github.io/randomgen.zip) includes a `ConvexPolygonSampler` class that implements this kind of sampling for convex polygons; unlike other polygons, convex polygons are trivial to decompose into triangles.</small>
-
-<small><sup id=Note25>(25)</sup> That article also mentions a critical-hit distribution, which is actually a [**mixture**](#Mixtures_of_Distributions) of two distributions: one roll of dice and the sum of two rolls of dice.</small>
-
-<small><sup id=Note26>(26)</sup> An _affine transformation_ is one that keeps straight lines straight and parallel lines parallel.</small>
-
-<small><sup id=Note27>(27)</sup> Farach-Colton, M. and Tsai, M.T., 2015. Exact sublinear binomial sampling. _Algorithmica_ 73(4), pp. 637-651.</small>
-
-<small><sup id=Note28>(28)</sup> Heaukulani, C., Roy, D.M., "[**Black-box constructions for exchangeable sequences of random multisets**](https://arxiv.org/abs/1908.06349v1)", arXiv:1908.06349v1  [math.PR], 2019.  Note however that this reference defines a negative binomial distribution as the number of successes before N failures (not vice versa).</small>
-
-<small><sup id=Note29>(29)</sup> von Neumann, J., "Various techniques used in connection with random digits", 1951.</small>
-
-<small><sup id=Note30>(30)</sup> Flajolet, P., Pelletier, M., Soria, M., "[**On Buffon machines and numbers**](https://arxiv.org/abs/0906.5560v2)", arXiv:0906.5560v2  [math.PR], 2010.</small>
-
-<small><sup id=Note31>(31)</sup> Karney, C.F.F., "[**Sampling exactly from the normal distribution**](https://arxiv.org/abs/1303.6257v2)", arXiv:1303.6257v2  [physics.comp-ph], 2014.</small>
-
-<small><sup id=Note32>(32)</sup> Smith and Tromble, "[**Sampling Uniformly from the Unit Simplex**](http://www.cs.cmu.edu/~nasmith/papers/smith+tromble.tr04.pdf)", 2004.</small>
-
-<small><sup id=Note33>(33)</sup> Durfee, et al., "l1 Regression using Lewis Weights Preconditioning and Stochastic Gradient Descent", _Proceedings of Machine Learning Research_ 75(1), 2018.</small>
-
-<small><sup id=Note34>(34)</sup> The NVIDIA white paper "[**Floating Point and IEEE 754 Compliance for NVIDIA GPUs**](https://docs.nvidia.com/cuda/floating-point/)",
+- <small><sup id=Note18>(18)</sup> Penschuck, M., et al., "[**Recent Advances in Scalable Network Generation**](https://arxiv.org/abs/2003.00736v1)", arXiv:2003.00736v1  [cs.DS], 2020.</small>
+- <small><sup id=Note19>(19)</sup> Jon Louis Bentley and James B. Saxe, "Generating Sorted Lists of Random Numbers", _ACM Trans. Math. Softw._ 6 (1980), pp. 359-364, describes a way to generate random numbers in sorted order, but it's not given here because it relies on generating real numbers in the interval [0, 1], which is inherently imperfect because computers can't choose among all random numbers between 0 and 1, and there are infinitely many of them.</small>
+- <small><sup id=Note20>(20)</sup> Efraimidis, P. and Spirakis, P. "[**Weighted Random Sampling (2005; Efraimidis, Spirakis)**](http://utopia.duth.gr/~pefraimi/research/data/2007EncOfAlg.pdf)", 2005.</small>
+- <small><sup id=Note21>(21)</sup> Efraimidis, P. "[**Weighted Random Sampling over Data Streams**](https://arxiv.org/abs/1012.0256v2)", arXiv:1012.0256v2 [cs.DS], 2015.</small>
+- <small><sup id=Note22>(22)</sup> T. Vieira, "[**Gumbel-max trick and weighted reservoir sampling**](http://timvieira.github.io/blog/post/2014/08/01/gumbel-max-trick-and-weighted-reservoir-sampling/)", 2014.</small>
+- <small><sup id=Note23>(23)</sup> T. Vieira, "[**Faster reservoir sampling by waiting**](https://timvieira.github.io/blog/post/2019/06/11/faster-reservoir-sampling-by-waiting/)", 2019.</small>
+- <small><sup id=Note24>(24)</sup> The [**Python sample code**](https://peteroupc.github.io/randomgen.zip) includes a `ConvexPolygonSampler` class that implements this kind of sampling for convex polygons; unlike other polygons, convex polygons are trivial to decompose into triangles.</small>
+- <small><sup id=Note25>(25)</sup> That article also mentions a critical-hit distribution, which is actually a [**mixture**](#Mixtures_of_Distributions) of two distributions: one roll of dice and the sum of two rolls of dice.</small>
+- <small><sup id=Note26>(26)</sup> An _affine transformation_ is one that keeps straight lines straight and parallel lines parallel.</small>
+- <small><sup id=Note27>(27)</sup> Farach-Colton, M. and Tsai, M.T., 2015. Exact sublinear binomial sampling. _Algorithmica_ 73(4), pp. 637-651.</small>
+- <small><sup id=Note28>(28)</sup> Heaukulani, C., Roy, D.M., "[**Black-box constructions for exchangeable sequences of random multisets**](https://arxiv.org/abs/1908.06349v1)", arXiv:1908.06349v1  [math.PR], 2019.  Note however that this reference defines a negative binomial distribution as the number of successes before N failures (not vice versa).</small>
+- <small><sup id=Note29>(29)</sup> von Neumann, J., "Various techniques used in connection with random digits", 1951.</small>
+- <small><sup id=Note30>(30)</sup> Flajolet, P., Pelletier, M., Soria, M., "[**On Buffon machines and numbers**](https://arxiv.org/abs/0906.5560v2)", arXiv:0906.5560v2  [math.PR], 2010.</small>
+- <small><sup id=Note31>(31)</sup> Karney, C.F.F., "[**Sampling exactly from the normal distribution**](https://arxiv.org/abs/1303.6257v2)", arXiv:1303.6257v2  [physics.comp-ph], 2014.</small>
+- <small><sup id=Note32>(32)</sup> Smith and Tromble, "[**Sampling Uniformly from the Unit Simplex**](http://www.cs.cmu.edu/~nasmith/papers/smith+tromble.tr04.pdf)", 2004.</small>
+- <small><sup id=Note33>(33)</sup> Durfee, et al., "l1 Regression using Lewis Weights Preconditioning and Stochastic Gradient Descent", _Proceedings of Machine Learning Research_ 75(1), 2018.</small>
+- <small><sup id=Note34>(34)</sup> The NVIDIA white paper "[**Floating Point and IEEE 754 Compliance for NVIDIA GPUs**](https://docs.nvidia.com/cuda/floating-point/)",
 and "[**Floating-Point Determinism**](https://randomascii.wordpress.com/2013/07/16/floating-point-determinism/)" by Bruce Dawson, discuss issues with floating-point numbers in much more detail.</small>
-
-<small><sup id=Note35>(35)</sup> This method corresponds to `Math.random()` in Java and JavaScript.</small>
-
-<small><sup id=Note36>(36)</sup> This includes integers if `e` is limited to 0, and fixed-point numbers if `e` is limited to a single exponent less than 0.</small>
-
-<small><sup id=Note37>(37)</sup> Downey, A. B. "[**Generating Pseudo-random Floating Point Values**](http://allendowney.com/research/rand/)", 2007.</small>
-
-<small><sup id=Note38>(38)</sup> Ideally, `X` is the highest integer `p` such that all multiples of `1/p` in the interval [0, 1] are representable in the number format in question.  For example, `X` is 2^53 (9007199254740992) for binary64, and 2^24 (16777216) for binary32.</small>
-
-<small><sup id=Note39>(39)</sup> Goualard, F., "[**Generating Random Floating-Point Numbers by Dividing Integers: a Case Study**](https://hal.archives-ouvertes.fr/hal-02427338/)", 2020.</small>
-
-<small><sup id=Note40>(40)</sup> Monahan, J.F., "Accuracy in Random Number Generation", _Mathematics of Computation_ 45(172), 1985.</small>
-
-<small><sup id=Note41>(41)</sup> Spall, J.C., "An Overview of the Simultaneous Perturbation Method for Efficient Optimization", _Johns Hopkins APL Technical Digest_ 19(4), 1998, pp. 482-492.</small>
-
-<small><sup id=Note42>(42)</sup> P. L'Ecuyer, "Tables of Linear Congruential Generators of Different Sizes and Good Lattice Structure", _Mathematics of Computation_ 68(225), January 1999, with [**errata**](http://www.iro.umontreal.ca/~lecuyer/myftp/papers/latrules99Errata.pdf).</small>
-
-<small><sup id=Note43>(43)</sup> Harase, S., "[**A table of short-period Tausworthe generators for Markov chain quasi-Monte Carlo**](https://arxiv.org/abs/2002.09006)", arXiv:2002.09006 [math.NA], 2020.</small>
-
-<small><sup id=Note44>(44)</sup> Brassard, G., Devroye, L., Gravel, C., "Exact Classical Simulation of the Quantum-Mechanical GHZ Distribution", _IEEE Transactions on Information Theory_ 62(2), February 2016.  Note that that paper defines a Bernoulli trial as 0 for success and 1 for failure, rather than the other way around, as in this document.</small>
-
-<small><sup id=Note45>(45)</sup> D. Revuz, M. Yor, "Continuous Martingales and Brownian Motion", 1999.</small>
-
-<small><sup id=Note46>(46)</sup> Alexopoulos, Goldsman, "[**Random Variate Generation**](https://www2.isye.gatech.edu/~sman/courses/6644/Module07-RandomVariateGenerationSlides_171116.pdf)", 2017.</small>
-
-<small><sup id=Note47>(47)</sup> Saucier, R. "Computer Generation of Statistical Distributions", March 2000.</small>
-
-<small><sup id=Note48>(48)</sup> Other references on density estimation include [**a Wikipedia article on multiple-variable kernel density estimation**](https://en.wikipedia.org/wiki/Multivariate_kernel_density_estimation), and a [**blog post by M. Kay**](https://web.archive.org/web/20160501200206/http://mark-kay.net/2013/12/24/kernel-density-estimation).</small>
-
-<small><sup id=Note49>(49)</sup> "Jitter", as used in this step, follows a distribution formally called a _kernel_, of which the normal distribution is one example.  _Bandwidth_ should be set so that the estimated distribution fits the data and remains smooth.  A more complex kind of "jitter" (for multi-component data points) consists of a point generated from a [**multinormal distribution**](https://en.wikipedia.org/wiki/Multivariate_normal_distribution) with all the means equal to 0 and a _covariance matrix_ that, in this context, serves as a _bandwidth matrix_.  "Jitter" and bandwidth are not further discussed in this document.</small>
-
-<small><sup id=Note50>(50)</sup> More formally&mdash;
-- the PDF is the _derivative_ (instantaneous rate of change) of the distribution's CDF (that is, PDF(x) = CDF&prime;(x)), and
-- the CDF is also defined as the _integral_ ("area under the curve") of the PDF,
+- <small><sup id=Note35>(35)</sup> This method corresponds to `Math.random()` in Java and JavaScript.</small>
+- <small><sup id=Note36>(36)</sup> This includes integers if `e` is limited to 0, and fixed-point numbers if `e` is limited to a single exponent less than 0.</small>
+- <small><sup id=Note37>(37)</sup> Downey, A. B. "[**Generating Pseudo-random Floating Point Values**](http://allendowney.com/research/rand/)", 2007.</small>
+- <small><sup id=Note38>(38)</sup> Ideally, `X` is the highest integer `p` such that all multiples of `1/p` in the interval [0, 1] are representable in the number format in question.  For example, `X` is 2^53 (9007199254740992) for binary64, and 2^24 (16777216) for binary32.</small>
+- <small><sup id=Note39>(39)</sup> Goualard, F., "[**Generating Random Floating-Point Numbers by Dividing Integers: a Case Study**](https://hal.archives-ouvertes.fr/hal-02427338/)", 2020.</small>
+- <small><sup id=Note40>(40)</sup> Monahan, J.F., "Accuracy in Random Number Generation", _Mathematics of Computation_ 45(172), 1985.</small>
+- <small><sup id=Note41>(41)</sup> Spall, J.C., "An Overview of the Simultaneous Perturbation Method for Efficient Optimization", _Johns Hopkins APL Technical Digest_ 19(4), 1998, pp. 482-492.</small>
+- <small><sup id=Note42>(42)</sup> P. L'Ecuyer, "Tables of Linear Congruential Generators of Different Sizes and Good Lattice Structure", _Mathematics of Computation_ 68(225), January 1999, with [**errata**](http://www.iro.umontreal.ca/~lecuyer/myftp/papers/latrules99Errata.pdf).</small>
+- <small><sup id=Note43>(43)</sup> Harase, S., "[**A table of short-period Tausworthe generators for Markov chain quasi-Monte Carlo**](https://arxiv.org/abs/2002.09006)", arXiv:2002.09006 [math.NA], 2020.</small>
+- <small><sup id=Note44>(44)</sup> Brassard, G., Devroye, L., Gravel, C., "Exact Classical Simulation of the Quantum-Mechanical GHZ Distribution", _IEEE Transactions on Information Theory_ 62(2), February 2016.  Note that that paper defines a Bernoulli trial as 0 for success and 1 for failure, rather than the other way around, as in this document.</small>
+- <small><sup id=Note45>(45)</sup> D. Revuz, M. Yor, "Continuous Martingales and Brownian Motion", 1999.</small>
+- <small><sup id=Note46>(46)</sup> Alexopoulos, Goldsman, "[**Random Variate Generation**](https://www2.isye.gatech.edu/~sman/courses/6644/Module07-RandomVariateGenerationSlides_171116.pdf)", 2017.</small>
+- <small><sup id=Note47>(47)</sup> Saucier, R. "Computer Generation of Statistical Distributions", March 2000.</small>
+- <small><sup id=Note48>(48)</sup> Other references on density estimation include [**a Wikipedia article on multiple-variable kernel density estimation**](https://en.wikipedia.org/wiki/Multivariate_kernel_density_estimation), and a [**blog post by M. Kay**](https://web.archive.org/web/20160501200206/http://mark-kay.net/2013/12/24/kernel-density-estimation).</small>
+- <small><sup id=Note49>(49)</sup> "Jitter", as used in this step, follows a distribution formally called a _kernel_, of which the normal distribution is one example.  _Bandwidth_ should be set so that the estimated distribution fits the data and remains smooth.  A more complex kind of "jitter" (for multi-component data points) consists of a point generated from a [**multinormal distribution**](https://en.wikipedia.org/wiki/Multivariate_normal_distribution) with all the means equal to 0 and a _covariance matrix_ that, in this context, serves as a _bandwidth matrix_.  "Jitter" and bandwidth are not further discussed in this document.</small>
+- <small><sup id=Note50>(50)</sup> More formally&mdash;
+    - the PDF is the _derivative_ (instantaneous rate of change) of the distribution's CDF (that is, PDF(x) = CDF&prime;(x)), and
+    - the CDF is also defined as the _integral_ ("area under the curve") of the PDF,
 
 provided the PDF's values are all 0 or greater and the area under the PDF's curve is 1.</small>
-
-<small><sup id=Note51>(51)</sup> A _discrete distribution_ is a distribution that associates one or more items with a separate probability. This page assumes (without loss of generality) that these items are integers.  A discrete distribution can produce non-integer values (e.g., `x/y` with probability `x/(1+y)`) as long as the values can be converted to and from integers. Two examples:
-
-- A rational number in lowest terms can be converted to an integer by interleaving the bits of the numerator and denominator.
-- Integer-quantized numbers (popular in "deep-learning" neural networks) take a relatively small number of bits (usually 8 bits or even smaller).  An 8-bit quantized number format is effectively a "look-up table" that maps 256 integers to real numbers.</small>
-
-<small><sup id=Note52>(52)</sup> If those values are inexact floating-point numbers, their relative error will generally be smaller the closer they are to 0 (see also Walter, 2019).</small>
-
-<small><sup id=Note53>(53)</sup> This includes integers if `FPExponent` is limited to 0, and fixed-point numbers if `FPExponent` is limited to a single exponent less than 0.</small>
-
-<small><sup id=Note54>(54)</sup> Based on a suggestion by F. Saad in a personal communication (Mar. 26, 2020).</small>
-
-<small><sup id=Note55>(55)</sup> Saad, F.A., et al., "[**Optimal Approximate Sampling from Discrete Probability Distributions**](https://arxiv.org/abs/2001.04555)", arXiv:2001.04555 [cs.DS], 2020.  See also the [**associated source code**](https://github.com/probcomp/optimal-approximate-sampling).</small>
-
-<small><sup id=Note56>(56)</sup> Devroye, L., Gravel, C., "[**Sampling with arbitrary precision**](https://arxiv.org/abs/1502.02539v5)", arXiv:1502.02539v5 [cs.IT], 2015.</small>
-
-<small><sup id=Note57>(57)</sup> Bringmann, K., and Friedrich, T., 2013, July. Exact and efficient generation of geometric random variates and random graphs, in _International Colloquium on Automata, Languages, and Programming_ (pp. 267-278).</small>
-
-<small><sup id=Note58>(58)</sup> Walter, M., "Sampling the Integers with Low Relative Error", in _International Conference on Cryptology in Africa_, Jul. 2019, pp. 157-180.</small>
-
-<small><sup id=Note59>(59)</sup> Gerhard Derflinger, Wolfgang Hörmann, and Josef Leydold, "Random variate generation by numerical inversion when only the density is known", ACM Transactions on Modeling and Computer Simulation 20(4) article 18, October 2010.</small>
-
-<small><sup id=Note60>(60)</sup> Part of `numbers_from_u01` uses algorithms described in Arnas, D., Leake, C., Mortari, D., "Random Sampling using k-vector", _Computing in Science & Engineering_ 21(1) pp. 94-107, 2019, and Mortari, D., Neta, B., "k-Vector Range Searching Techniques".</small>
-
-<small><sup id=Note61>(61)</sup> Devroye, L., "Non-Uniform Random Variate Generation".  In _Handbooks in Operations Research and Management Science: Simulation_, Henderson, S.G., Nelson, B.L. (eds.), 2006, p.83.</small>
-
-<small><sup id=Note62>(62)</sup> Devroye, L., Gravel, C., "[**The expected bit complexity of the von Neumann rejection algorithm**](https://arxiv.org/abs/1511.02273v2)", arXiv:1511.02273v2  [cs.IT], 2016.</small>
-
-<small><sup id=Note63>(63)</sup> Sainudiin, Raazesh, and Thomas L. York. "An Auto-Validating, Trans-Dimensional, Universal Rejection Sampler for Locally Lipschitz Arithmetical Expressions," _Reliable Computing_ 18 (2013): 15-54.</small>
-
-<small><sup id=Note64>(64)</sup> Tran, K.H., "[**A Common Derivation for Markov Chain Monte Carlo Algorithms with Tractable and Intractable Targets**](https://arxiv.org/abs/1607.01985v5)", arXiv:1607.01985v5 [stat.CO], 2018, gives a common framework for describing many MCMC algorithms, including Metropolis&ndash;Hastings, slice sampling, and Gibbs sampling.</small>
-
-<small><sup id=Note65>(65)</sup> Kschischang, Frank R. "A Trapezoid-Ziggurat Algorithm for Generating Gaussian Pseudorandom Variates." (2019).</small>
-
-<small><sup id=Note66>(66)</sup> Devroye, L., 1996, December, "Random variate generation in one line of code" In _Proceedings Winter Simulation Conference_ (pp. 265-272). IEEE.</small>
-
-<small><sup id=Note67>(67)</sup> McGrath, E.J., Irving, D.C., "Techniques for Efficient Monte Carlo Simulation, Volume II", Oak Ridge National Laboratory, April 1975.</small>
-
-<small><sup id=Note68>(68)</sup> Devroye, L., "Expected Time Analysis of a Simple Recursive Poisson Random Variate Generator", _Computing_ 46, pp. 165-173, 1991.</small>
-
-<small><sup id=Note69>(69)</sup> Giammatteo, P., and Di Mascio, T., "Wilson-Hilferty-type approximation for Poisson Random Variable", _Advances in Science, Technology and Engineering Systems Journal_ 5(2), 2020.</small>
-
-<small><sup id=Note70>(70)</sup> Bailey, R.W., "Polar generation of random variates with the t distribution", _Mathematics of Computation_ 62 (1984).</small>
-
-<small><sup id=Note71>(71)</sup> Stein, W.E. and Keblis, M.F., "A new method to simulate the triangular distribution", _Mathematical and Computer Modelling_ 49(5-6), 2009, pp.1143-1147.</small>
-
-<small><sup id=Note72>(72)</sup> Saha, M., et al., "[**The extended xgamma distribution**](https://arxiv.org/abs/1909.01103)", arXiv:1909.01103 [math.ST], 2019.</small>
-
-<small><sup id=Note73>(73)</sup> Sen, S., et al., "The xgamma distribution: statistical properties and application", 2016.</small>
-
-<small><sup id=Note74>(74)</sup> Baker, R., Jackson, D., "[**A new distribution for robust least squares**](https://arxiv.org/abs/1408.3237)", arXiv:1408.3237 [stat.ME], 2018.</small>
-
-<small><sup id=Note75>(75)</sup> Grimme, C., "Picking a Uniformly Random Point from an Arbitrary Simplex", 2015.</small>
-
-<small><sup id=Note76>(76)</sup> Weisstein, Eric W.  "[**Hypersphere Point Picking**](http://mathworld.wolfram.com/HyperspherePointPicking.html)".  From MathWorld&mdash;A Wolfram Web Resource.</small>
-
-<small><sup id=Note77>(77)</sup> Voelker, A.R., Gosmann, J., Stewart, T.C., "Efficiently sampling vectors and coordinates from the _n_-sphere and _n_-ball", Jan. 4, 2017.</small>
-
-<small><sup id=Note78>(78)</sup> See the _Mathematics Stack Exchange_ question titled "Random multivariate in hyperannulus", `questions/1885630`.</small>
-
-<small><sup id=Note79>(79)</sup> See the _Stack Overflow_ question "Uniform sampling (by volume) within a cone", `questions/41749411`. Square and cube roots replaced with maximums.</small>
-
-<small><sup id=Note80>(80)</sup> Reference: [**"Sphere Point Picking"**](http://mathworld.wolfram.com/SpherePointPicking.html) in MathWorld (replacing inverse cosine with `atan2` equivalent).</small>
-
-<small><sup id=Note81>(81)</sup> Describing differences between SQL dialects is outside the scope of this document, but [**Flourish SQL**](http://flourishlib.com/docs/FlourishSQL) describes many such differences, including those concerning randomization features provided by SQL dialects.</small>
-
-<small><sup id=Note82>(82)</sup> For example, see Balcer, V., Vadhan, S., "Differential Privacy on Finite Computers", Dec. 4, 2018; as well as Micciancio, D. and Walter, M., "Gaussian sampling over the integers: Efficient, generic, constant-time", in Annual International Cryptology Conference, August 2017 (pp. 455-485).</small>
+- <small><sup id=Note51>(51)</sup> A _discrete distribution_ is a distribution that associates one or more items with a separate probability. This page assumes (without loss of generality) that these items are integers.  A discrete distribution can produce non-integer values (e.g., `x/y` with probability `x/(1+y)`) as long as the values can be converted to and from integers. Two examples:
+    - A rational number in lowest terms can be converted to an integer by interleaving the bits of the numerator and denominator.
+    - Integer-quantized numbers (popular in "deep-learning" neural networks) take a relatively small number of bits (usually 8 bits or even smaller).  An 8-bit quantized number format is effectively a "look-up table" that maps 256 integers to real numbers.</small>
+- <small><sup id=Note52>(52)</sup> If those values are inexact floating-point numbers, their relative error will generally be smaller the closer they are to 0 (see also Walter, 2019).</small>
+- <small><sup id=Note53>(53)</sup> This includes integers if `FPExponent` is limited to 0, and fixed-point numbers if `FPExponent` is limited to a single exponent less than 0.</small>
+- <small><sup id=Note54>(54)</sup> Based on a suggestion by F. Saad in a personal communication (Mar. 26, 2020).</small>
+- <small><sup id=Note55>(55)</sup> Saad, F.A., et al., "[**Optimal Approximate Sampling from Discrete Probability Distributions**](https://arxiv.org/abs/2001.04555)", arXiv:2001.04555 [cs.DS], 2020.  See also the [**associated source code**](https://github.com/probcomp/optimal-approximate-sampling).</small>
+- <small><sup id=Note56>(56)</sup> Devroye, L., Gravel, C., "[**Sampling with arbitrary precision**](https://arxiv.org/abs/1502.02539v5)", arXiv:1502.02539v5 [cs.IT], 2015.</small>
+- <small><sup id=Note57>(57)</sup> Bringmann, K., and Friedrich, T., 2013, July. Exact and efficient generation of geometric random variates and random graphs, in _International Colloquium on Automata, Languages, and Programming_ (pp. 267-278).</small>
+- <small><sup id=Note58>(58)</sup> Walter, M., "Sampling the Integers with Low Relative Error", in _International Conference on Cryptology in Africa_, Jul. 2019, pp. 157-180.</small>
+- <small><sup id=Note59>(59)</sup> Gerhard Derflinger, Wolfgang Hörmann, and Josef Leydold, "Random variate generation by numerical inversion when only the density is known", ACM Transactions on Modeling and Computer Simulation 20(4) article 18, October 2010.</small>
+- <small><sup id=Note60>(60)</sup> Part of `numbers_from_u01` uses algorithms described in Arnas, D., Leake, C., Mortari, D., "Random Sampling using k-vector", _Computing in Science & Engineering_ 21(1) pp. 94-107, 2019, and Mortari, D., Neta, B., "k-Vector Range Searching Techniques".</small>
+- <small><sup id=Note61>(61)</sup> Devroye, L., "Non-Uniform Random Variate Generation".  In _Handbooks in Operations Research and Management Science: Simulation_, Henderson, S.G., Nelson, B.L. (eds.), 2006, p.83.</small>
+- <small><sup id=Note62>(62)</sup> Devroye, L., Gravel, C., "[**The expected bit complexity of the von Neumann rejection algorithm**](https://arxiv.org/abs/1511.02273v2)", arXiv:1511.02273v2  [cs.IT], 2016.</small>
+- <small><sup id=Note63>(63)</sup> Sainudiin, Raazesh, and Thomas L. York. "An Auto-Validating, Trans-Dimensional, Universal Rejection Sampler for Locally Lipschitz Arithmetical Expressions," _Reliable Computing_ 18 (2013): 15-54.</small>
+- <small><sup id=Note64>(64)</sup> Tran, K.H., "[**A Common Derivation for Markov Chain Monte Carlo Algorithms with Tractable and Intractable Targets**](https://arxiv.org/abs/1607.01985v5)", arXiv:1607.01985v5 [stat.CO], 2018, gives a common framework for describing many MCMC algorithms, including Metropolis&ndash;Hastings, slice sampling, and Gibbs sampling.</small>
+- <small><sup id=Note65>(65)</sup> Kschischang, Frank R. "A Trapezoid-Ziggurat Algorithm for Generating Gaussian Pseudorandom Variates." (2019).</small>
+- <small><sup id=Note66>(66)</sup> Devroye, L., 1996, December, "Random variate generation in one line of code" In _Proceedings Winter Simulation Conference_ (pp. 265-272). IEEE.</small>
+- <small><sup id=Note67>(67)</sup> McGrath, E.J., Irving, D.C., "Techniques for Efficient Monte Carlo Simulation, Volume II", Oak Ridge National Laboratory, April 1975.</small>
+- <small><sup id=Note68>(68)</sup> Devroye, L., "Expected Time Analysis of a Simple Recursive Poisson Random Variate Generator", _Computing_ 46, pp. 165-173, 1991.</small>
+- <small><sup id=Note69>(69)</sup> Giammatteo, P., and Di Mascio, T., "Wilson-Hilferty-type approximation for Poisson Random Variable", _Advances in Science, Technology and Engineering Systems Journal_ 5(2), 2020.</small>
+- <small><sup id=Note70>(70)</sup> Bailey, R.W., "Polar generation of random variates with the t distribution", _Mathematics of Computation_ 62 (1984).</small>
+- <small><sup id=Note71>(71)</sup> Stein, W.E. and Keblis, M.F., "A new method to simulate the triangular distribution", _Mathematical and Computer Modelling_ 49(5-6), 2009, pp.1143-1147.</small>
+- <small><sup id=Note72>(72)</sup> Saha, M., et al., "[**The extended xgamma distribution**](https://arxiv.org/abs/1909.01103)", arXiv:1909.01103 [math.ST], 2019.</small>
+- <small><sup id=Note73>(73)</sup> Sen, S., et al., "The xgamma distribution: statistical properties and application", 2016.</small>
+- <small><sup id=Note74>(74)</sup> Baker, R., Jackson, D., "[**A new distribution for robust least squares**](https://arxiv.org/abs/1408.3237)", arXiv:1408.3237 [stat.ME], 2018.</small>
+- <small><sup id=Note75>(75)</sup> Grimme, C., "Picking a Uniformly Random Point from an Arbitrary Simplex", 2015.</small>
+- <small><sup id=Note76>(76)</sup> Weisstein, Eric W.  "[**Hypersphere Point Picking**](http://mathworld.wolfram.com/HyperspherePointPicking.html)".  From MathWorld&mdash;A Wolfram Web Resource.</small>
+- <small><sup id=Note77>(77)</sup> Voelker, A.R., Gosmann, J., Stewart, T.C., "Efficiently sampling vectors and coordinates from the _n_-sphere and _n_-ball", Jan. 4, 2017.</small>
+- <small><sup id=Note78>(78)</sup> See the _Mathematics Stack Exchange_ question titled "Random multivariate in hyperannulus", `questions/1885630`.</small>
+- <small><sup id=Note79>(79)</sup> See the _Stack Overflow_ question "Uniform sampling (by volume) within a cone", `questions/41749411`. Square and cube roots replaced with maximums.</small>
+- <small><sup id=Note80>(80)</sup> Reference: [**"Sphere Point Picking"**](http://mathworld.wolfram.com/SpherePointPicking.html) in MathWorld (replacing inverse cosine with `atan2` equivalent).</small>
+- <small><sup id=Note81>(81)</sup> Describing differences between SQL dialects is outside the scope of this document, but [**Flourish SQL**](http://flourishlib.com/docs/FlourishSQL) describes many such differences, including those concerning randomization features provided by SQL dialects.</small>
+- <small><sup id=Note82>(82)</sup> For example, see Balcer, V., Vadhan, S., "Differential Privacy on Finite Computers", Dec. 4, 2018; as well as Micciancio, D. and Walter, M., "Gaussian sampling over the integers: Efficient, generic, constant-time", in Annual International Cryptology Conference, August 2017 (pp. 455-485).</small>
 
 <a id=Appendix></a>
 ## Appendix

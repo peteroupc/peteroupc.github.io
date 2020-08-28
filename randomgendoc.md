@@ -740,11 +740,11 @@ CLASSES
      |      - pdf: The probability density function (PDF) of the continuous distribution.
      |        This method takes as input a list
      |        containing N coordinates describing a point in space, and returns the probability
-     |        density of that point as a single number.  If this parameter is
-     |        given, this method assumes the PDF is unimodal and monotone at all points
-     |        away from the mode, and may return incorrect results if that is not the case.
-     |        Notice that if the given PDF outputs floating-point numbers, the resulting
-     |        dyadic decomposition code may be inaccurate due to rounding errors.
+     |        density of that point as a single number.  If this parameter is given, however:
+     |        - This method assumes the PDF is unimodal and monotone at all points
+     |          away from the mode, and may return incorrect results if that is not the case.
+     |        - If the given PDF outputs floating-point numbers, the resulting
+     |          dyadic decomposition code may be inaccurate due to rounding errors.
      |      - pdfbounds: A function that returns the lower and upper bounds of the PDF's value
      |        at a box. This method takes as input a list containing N items, where each item
      |        is a list containing the lowest and highest value of the box for the

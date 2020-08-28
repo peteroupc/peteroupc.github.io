@@ -129,14 +129,9 @@ Sebastiano Vigna reviewed this page and gave comments.
 <a id=Notes></a>
 ## Notes
 
-<small><sup id=Note1>(1)</sup> Haramoto, Matsumoto, Nishimura, Panneton, L'Ecuyer, "Efficient Jump Ahead for F<sub>2</sub>-Linear Random Number Generators", _INFORMS Journal on Computing_ 20(3), Summer 2008.</small>
-
-<small><sup id=Note2>(2)</sup> Vigna, S., "Further scramblings of Marsaglia's xorshift generators", _Journal of Computational and Applied Mathematics_ 315 (2017).</small>
-
-<small><sup id=Note3>(3)</sup> Blackman, Vigna, "Scrambled Linear Pseudorandom Number Generators", 2019.</small>
-
-<small><sup id=Note4>(4)</sup> Salmon, J.K.; Moraes, M.A.; et al., "Parallel Random Numbers: As Easy as 1, 2, 3", 2011.</small>
-
-<small><sup id=Note5>(5)</sup> L'Ecuyer, Simard, Chen, Kelton, "An Object-Oriented Random-Number Package with Many Long Streams and Substreams", _Operations Research_ 50(6), 2002.</small>
-
-<small><sup id=Note6>(6)</sup> Brown, F., "Random Number Generation with Arbitrary Strides", _Transactions of the American Nuclear Society_ Nov. 1994.</small>
+- <small><sup id=Note1>(1)</sup> Haramoto, Matsumoto, Nishimura, Panneton, L'Ecuyer, "Efficient Jump Ahead for F<sub>2</sub>-Linear Random Number Generators", _INFORMS Journal on Computing_ 20(3), Summer 2008.</small>
+- <small><sup id=Note2>(2)</sup> Vigna, S., "Further scramblings of Marsaglia's xorshift generators", _Journal of Computational and Applied Mathematics_ 315 (2017).</small>
+- <small><sup id=Note3>(3)</sup> Blackman, Vigna, "Scrambled Linear Pseudorandom Number Generators", 2019.</small>
+- <small><sup id=Note4>(4)</sup> Salmon, J.K.; Moraes, M.A.; et al., "Parallel Random Numbers: As Easy as 1, 2, 3", 2011.</small>
+- <small><sup id=Note5>(5)</sup> L'Ecuyer, Simard, Chen, Kelton, "An Object-Oriented Random-Number Package with Many Long Streams and Substreams", _Operations Research_ 50(6), 2002.</small>
+- <small><sup id=Note6>(6)</sup> Brown, F., "Random Number Generation with Arbitrary Strides", _Transactions of the American Nuclear Society_ Nov. 1994.</small>
