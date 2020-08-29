@@ -609,7 +609,7 @@ END METHOD
 
 <h3>Implementation of <code>erf</code></h3>
 
-<p>The pseudocode below shows how the <a href="https://en.wikipedia.org/wiki/Error_function"><strong>error function</strong></a> <code>erf</code> can be implemented, in case the programming language used doesn&#39;t include a built-in version of <code>erf</code> (such as JavaScript at the time of this writing).   In the pseudocode, <code>EPSILON</code> is a very small number to end the iterative calculation.</p>
+<p>The pseudocode below shows an approximate implementation of the <a href="https://en.wikipedia.org/wiki/Error_function"><strong>error function</strong></a> <code>erf</code>, in case the programming language used doesn&#39;t include a built-in version of <code>erf</code> (such as JavaScript at the time of this writing).   In the pseudocode, <code>EPSILON</code> is a very small number to end the iterative calculation.</p>
 
 <pre>METHOD erf(v)
     if v==0: return 0

@@ -104,6 +104,7 @@
 <li><a href="#Additional_Examples_of_Arbitrary_Precision_Samplers"><strong>Additional Examples of Arbitrary-Precision Samplers</strong></a></li>
 <li><a href="#Equivalence_of_SampleGeometricBag_Algorithms"><strong>Equivalence of SampleGeometricBag Algorithms</strong></a></li>
 <li><a href="#Oberhoff_s_Exact_Rejection_Sampling_Method"><strong>Oberhoff&#39;s &quot;Exact Rejection Sampling&quot; Method</strong></a></li>
+<li><a href="#Setting_Digits_by_Digit_Probabilities"><strong>Setting Digits by Digit Probabilities</strong></a></li>
 </ul></li>
 <li><a href="#License"><strong>License</strong></a></li>
 </ul>
@@ -250,15 +251,7 @@
 </tr>
 </tbody></table>
 
-<p>There is previous work that relates continuous distributions to digit probabilities in a similar manner (but only in base 10) (Habibizad Navin et al., 2007)<sup><a href="#Note13"><strong>(13)</strong></a></sup>, (Nezhad et al., 2013)<sup><a href="#Note14"><strong>(14)</strong></a></sup>.</p>
-
-<p>In this sense, Kakutani&#39;s theorem (Kakutani 1948)<sup><a href="#Note11"><strong>(11)</strong></a></sup> may be useful: Let p(<em>j</em>) be the <em>j</em><sup>th</sup> binary digit probability in a random number&#39;s binary expansion, where each digit is independently set.  Then the random number is absolutely continuous if and only if the sum of squares of (p(<em>j</em>) &minus; 1/2) converges.  In other words, the random number&#39;s bits become less and less biased as they move farther and farther from the binary point.  An absolutely continuous distribution can be built if we can find a sequence <em>a</em><sub><em>j</em></sub> that converges to 1/2.  One example is the truncated exponential(1) distribution, where the binary digit probabilities have the form&mdash;</p>
-
-<ul>
-<li><em>a</em><sub><em>j</em></sub> = exp(&minus;1/2<sub><em>j</em></sub>)/(1 + exp(&minus;1/2<sub><em>j</em></sub>))</li>
-</ul>
-
-<p>(Devroye and Gravel 2015)<sup><a href="#Note3"><strong>(3)</strong></a></sup>, which converges to 1/2 because exp(&minus;1/2<sub><em>j</em></sub>) converges to 1.  Replacing exp(&minus;1/2<sub><em>j</em></sub>) with something else that converges to 1 could lead to new continuous distributions.  Another example is the sequence <em>a</em><sub><em>j</em></sub> = <em>y</em>(<em>j</em>)/<em>x</em>, where <em>x</em> &gt; 0 and <em>y</em>(<em>j</em>) is a function that tends to <em>x</em>/2 as <em>j</em> tends to infinity.</p>
+<p>There is previous work that relates continuous distributions to digit probabilities in a similar manner (but only in base 10) (Habibizad Navin et al., 2007)<sup><a href="#Note13"><strong>(13)</strong></a></sup>, (Nezhad et al., 2013)<sup><a href="#Note14"><strong>(14)</strong></a></sup>.  However, for independently sampled digits, there appear to be limits on how practical this approach is; see the appendix for details.</p>
 
 <p>Finally, arithmetic with partially-sampled numbers may be possible if the result of the arithmetic is distributed with a known density function (e.g., one found via Rohatgi&#39;s formula (Rohatgi 1976)<sup><a href="#Note15"><strong>(15)</strong></a></sup>), allowing for an algorithm that implements rejection from the uniform or exponential distribution.  An example of this is found in my article on <a href="https://peteroupc.github.io/uniformsum.html"><strong>arbitrary-precision samplers for the sum of uniform random numbers</strong></a>.  However, that density function may have an unbounded peak, thus ruling out rejection sampling in practice.  For example, if <em>X</em> is a uniform PSRN, then <em>X</em><sup>3</sup> is distributed as <code>(1/3) / pow(X, 2/3)</code>, which has an unbounded peak at 0.  While this rules out plain rejection samplers for <em>X</em><sup>3</sup> in practice, it&#39;s still possible to sample powers of uniforms using PSRNs, which will be described later in this article.</p>
 
@@ -1378,6 +1371,30 @@ plot(expminusformula(), xlim=(0,1), ylim=(0,2))
 <p>Because this algorithm requires evaluating the probability function and finding its maximum and minimum values at an interval (which often requires floating-point arithmetic and is often not trivial), this algorithm appears here in the appendix rather than in the main text.  Moreover, there is additional approximation error from generating <em>y</em> with a fixed number of digits, unless <em>y</em> is a uniform PSRN (see also &quot;<a href="#Application%20to%20Weighted%20Reservoir%20Sampling"><strong>Application to Weighted Reservoir Sampling</strong></a>&quot;).</p>
 
 <p>Oberhoff also describes <em>prefix distributions</em> that sample a box that covers the probability function, with probability proportional to the box&#39;s area, but these distributions will have to support a fixed maximum prefix length and so will only approximate the underlying continuous distribution.</p>
+
+<p><a id=Setting_Digits_by_Digit_Probabilities></a></p>
+
+<h3>Setting Digits by Digit Probabilities</h3>
+
+<p>In principle, a partially-sampled random number is possible by finding a sequence of digit probabilities and setting that number&#39;s digits according to those probabilities.  However, there seem to be limits on how practical this approach is.</p>
+
+<p>The following is part of Kakutani&#39;s theorem (Kakutani 1948)<sup><a href="#Note11"><strong>(11)</strong></a></sup>: Let <em>a</em><sub><em>j</em></sub> be the <em>j</em><sup>th</sup> binary digit probability in a random number&#39;s binary expansion, where the random number is in [0, 1] and each digit is independently set.  Then the random number&#39;s distribution is absolutely continuous if and only if the sum of squares of (<em>a</em><sub><em>j</em></sub> &minus; 1/2) converges.  In other words, the random number&#39;s bits become less and less biased as they move farther and farther from the binary point.</p>
+
+<p>An absolutely continuous distribution can thus be built if we can find a sequence <em>a</em><sub><em>j</em></sub> that converges to 1/2.  Then a random number could be formed by setting each of its digits to 1 with probability equal to the corresponding <em>a</em><sub><em>j</em></sub>.  However, experiments show that the resulting distribution will generally be discontinuous, except if the sequence has the form&mdash;</p>
+
+<ul>
+<li><em>a</em><sub><em>j</em></sub> = <em>y</em><sup>1/&beta;<sup><em>j</em></sup></sup>/(1 + <em>y</em><sup>1/&beta;<sup><em>j</em></sup></sup>),</li>
+</ul>
+
+<p>where &beta; = 2, and special cases include the uniform distribution (<em>y</em> = 1) and the truncated exponential(1) distribution (<em>y</em> = (1/exp(1)); (Devroye and Gravel 2015)<sup><a href="#Note3"><strong>(3)</strong></a></sup>).  Other sequences of the form <em>z</em>(<em>j</em>)/(1 + <em>z</em>(<em>j</em>)) will generally be discontinuous even if <em>z</em>(<em>j</em>) converges to 1.  For reference, the following calculates the relative probability for <em>x</em> for a given sequence, where <em>x</em> is in [0, 1), and plotting this distribution will often show whether it is discontinuous:</p>
+
+<ul>
+<li>Let <em>b</em><sub><em>j</em></sub> be the <em>j</em><sup>th</sup> base-&beta; digit after the point (e.g., <code>rem(floor(x*pow(beta, j)), beta)</code> where <code>beta</code> = &beta;).</li>
+<li>Let <em>t</em>(<em>x</em>) = &Pi;<sub><em>j</em> = 1, 2, ...</sub> <em>b</em><sub><em>j</em></sub> * <em>a</em><sub><em>j</em></sub> + (1 &minus; <em>b</em><sub><em>j</em></sub>) * (1 &minus; <em>a</em><sub><em>j</em></sub>).</li>
+<li>The relative probability for <em>x</em> is <em>t</em>(<em>x</em>) / (argmax<sub><em>z</em></sub> <em>t</em>(<em>z</em>)).</li>
+</ul>
+
+<p>It may be that something similar applies for &beta; other than 2 (non-base-2 or non-binary cases) as it does to &beta; = 2 (the base-2 or binary case).</p>
 
 <p><a id=License></a></p>
 
