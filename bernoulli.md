@@ -1001,9 +1001,9 @@ For example, if _f_(&lambda;) is a constant, non-randomized algorithms will gene
 
 A Bernoulli factory or another algorithm that produces heads with a given probability is the same as building an unbiased estimator for that probability (Łatuszyński et al. 2009/2011)<sup>[**(6)**](#Note6)</sup>.  (In this note, an _unbiased probability estimator_ is an unbiased estimator whose estimates are in \[0, 1\] almost surely.) As a result&mdash;
 
-1. estimating the input coin's probability of heads (&lambda;) in some way (such as by flipping the coin many times and averaging the results),
-2. calculating _v_ = _f_(&lambda;),
-3. generating a uniform random number in [0,1], call it _u_, and
+1. finding in some way an unbiased estimate of the input coin's probability of heads (&lambda;), such as by flipping the coin many times and averaging the results;
+2. calculating _v_ = _f_(&lambda;);
+3. generating a uniform random number in [0,1], call it _u_; and
 4. returning 1 if _u_ is less than _v_, or 0 otherwise,
 
 will simulate the probability _f_(&lambda;) in theory.  In practice, however, this method is prone to numerous errors, including errors in the estimate in step 1, and rounding and approximation errors in steps 2 and 3.  For this reason and also because "exact sampling" is the focus of this page, this document does not cover algorithms that directly estimate &lambda; (such as in step 1). As (Mossel and Peres 2005)<sup>[**(19)**](#Note19)</sup> says: "The difficulty here is that [&lambda;] is unknown.  It is easy to estimate [&lambda;], and therefore [_f_(&lambda;)].  However, to get a coin with an exact bias [_f_(&lambda;)] is harder", and that is what Bernoulli factory algorithms are designed to do.
