@@ -524,7 +524,7 @@ If we have multiple biased coins (_n_ of them), each with a separate bias (eithe
 <a id=Implementation_of_erf></a>
 ### Implementation of `erf`
 
-The pseudocode below shows how the [**error function**](https://en.wikipedia.org/wiki/Error_function) `erf` can be implemented, in case the programming language used doesn't include a built-in version of `erf` (such as JavaScript at the time of this writing).   In the pseudocode, `EPSILON` is a very small number to end the iterative calculation.
+The pseudocode below shows an approximate implementation of the [**error function**](https://en.wikipedia.org/wiki/Error_function) `erf`, in case the programming language used doesn't include a built-in version of `erf` (such as JavaScript at the time of this writing).   In the pseudocode, `EPSILON` is a very small number to end the iterative calculation.
 
     METHOD erf(v)
         if v==0: return 0
@@ -578,6 +578,8 @@ The following are some ways to implement `RNDINT`.  (The column "Unbiased?" mean
 
 There are various techniques that can reduce the number of bits "wasted" by an integer-generating algorithm, and bring that algorithm closer to the theoretical lower bound of Knuth and Yao, even if the algorithm isn't "optimal".  These techniques, which include batching, bit recycling, and randomness extraction, are discussed, for example, in the Math Forum page and the Lumbroso and Mennucci papers referenced above, and in (Devroye and Gravel 2015)<sup>[**(26)**](#Note26)</sup>.
 
+> **Note:** A similar question is how to generate a random integer given rolls of a fair die; more specifically, how to roll a _k_-sided die given a _p_-sided die.  This can't be done without "wasting" randomness, unless "every prime number dividing _k_ also divides _p_" (see "[**Simulating a dice with a dice**](https://perso.math.u-pem.fr/kloeckner.benoit/papiers/DiceSimulation.pdf)" by B. Kloeckner, 2008).  However, since randomness extraction can turn die rolls into unbiased bits, so that the discussion above applies, this question is interesting only when someone wants to build instructions to choose a number at random by rolling real dice or flipping real coins.
+
 <a id=A_Note_on_Weighted_Choice_Algorithms></a>
 ### A Note on Weighted Choice Algorithms
 
@@ -587,17 +589,17 @@ In this case, though, the number of random bits an algorithm uses on average is 
 
 The following are some ways to implement `WeightedChoice`. The algorithms are generally not optimal in terms of the number of bits used, unless noted. For these samplers to be _error-bounded_:
 
-- Weights passed to these algorithms should first be converted to rational numbers or integers (see `IntegerWeightsListFP` or `NormalizeRatios` in "[**Sampling for Discrete Distributions**](https://peteroupc.github.io/randomfunc.html#Sampling_for_Discrete_Distributions)" for conversion methods).
+- Weights passed to these algorithms should first be converted to integers (see `IntegerWeightsListFP` or `NormalizeRatios` in "[**Sampling for Discrete Distributions**](https://peteroupc.github.io/randomfunc.html#Sampling_for_Discrete_Distributions)" for conversion methods), or rational numbers when indicated.
 - Floating-point arithmetic and floating-point random number generation (such as `RNDRANGE()`) should be avoided.
 
 | Algorithm | Notes |
   --- | --- |
 | _Fast Loaded Dice Roller_ (Saad et al., 2020)<sup>[**(27)**](#Note27)</sup>. | Uses integer weights only. This sampler comes within 6 bits, on average, of the optimal number of bits.  Section 4 of the paper for this algorithm also reviews rejection samplers. |
 | Samplers described in (Saad et al., 2020)<sup>[**(28)**](#Note28)</sup> | Uses integer weights only. The samplers are optimal in the sense given here as long as the sum of the weights is of the form 2<sup>k</sup> or 2<sup>k</sup> &minus; 2<sup>m</sup>. |
-| (Bringmann and Panagiotou 2012)<sup>[**(29)**](#Note29)</sup>. | A sampler that is designed to work on a sorted list of weights. |
+| (Bringmann and Panagiotou 2012)<sup>[**(29)**](#Note29)</sup>. | Shows a sampler designed to work on a sorted list of weights. |
 | Alias method (Walker 1977)<sup>[**(30)**](#Note30)</sup> | Michael Vose's version of the alias method (Vose 1991)<sup>[**(31)**](#Note31)</sup> is described in "[**Darts, Dice, and Coins: Sampling from a Discrete Distribution**](https://www.keithschwarz.com/darts-dice-coins/)". Weights should be rational numbers. |
 | (Klundert 2019)<sup>[**(29)**](#Note29) | Various data structures, with emphasis on how they can support changes in weights. |
-| The Bringmann&ndash;Larsen succinct data structure (Bringmann and Larsen 2013)<sup>[**(32)**](#Note32)</sup> | |
+| The Bringmann&ndash;Larsen succinct data structure (Bringmann and Larsen 2013)<sup>[**(32)**](#Note32)</sup> | Uses rejection sampling if the sum of weights is large, and a compressed structure otherwise. |
 | (Hübschle-Schneider and Sanders 2019)<sup>[**(33)**](#Note33)</sup>. | Parallel weighted random samplers. |
 | Two- and multi-level search; flat method (Tang 2019)<sup>[**(34)**](#Note34)</sup>. | |
 | "Weighted Choice with Biased Coins" in this appendix. | Takes "coins" with unknown bias as input. |
@@ -614,7 +616,7 @@ There are three kinds of randomization algorithms:
     - can store and operate on real numbers of any precision, and
     - can generate independent uniform random real numbers of any precision
 
-    (Devroye 1986, p. 1-2)<sup>[**(12)**](#Note12)</sup>.  However, an exact algorithm implemented on real-life computers can incur rounding and other errors, especially when floating-point arithmetic is used or when irrational numbers or transcendental functions are involved.  An exact algorithm can achieve a guaranteed bound on accuracy (and thus be an _error-bounded algorithm_) using either arbitrary-precision or interval arithmetic (see also Devroye 1986, p. 2)<sup>[**(12)**](#Note12)</sup>. All methods given on this page are exact unless otherwise noted.  Note that `RNDU01` or `RNDRANGE` are exact in theory, but have no required implementation.
+    (Devroye 1986, p. 1-2)<sup>[**(12)**](#Note12)</sup>.  However, an exact algorithm implemented on real-life computers can incur rounding and other errors, especially errors involving floating-point arithmetic or irrational numbers. An exact algorithm can achieve a guaranteed bound on accuracy (and thus be an _error-bounded algorithm_) using either arbitrary-precision or interval arithmetic (see also Devroye 1986, p. 2)<sup>[**(12)**](#Note12)</sup>. All methods given on this page are exact unless otherwise noted.  Note that `RNDU01` or `RNDRANGE` are exact in theory, but have no required implementation.
 2. An _error-bounded algorithm_ is an exact algorithm with further requirements described below:
 
     - If the ideal distribution is discrete (takes on a countable number of values), the algorithm samples exactly from that distribution.
