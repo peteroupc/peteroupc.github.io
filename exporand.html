@@ -1378,15 +1378,17 @@ plot(expminusformula(), xlim=(0,1), ylim=(0,2))
 
 <p>In principle, a partially-sampled random number is possible by finding a sequence of digit probabilities and setting that number&#39;s digits according to those probabilities.  However, there seem to be limits on how practical this approach is.</p>
 
-<p>The following is part of Kakutani&#39;s theorem (Kakutani 1948)<sup><a href="#Note11"><strong>(11)</strong></a></sup>: Let <em>a</em><sub><em>j</em></sub> be the <em>j</em><sup>th</sup> binary digit probability in a random number&#39;s binary expansion, where the random number is in [0, 1] and each digit is independently set.  Then the random number&#39;s distribution is absolutely continuous if and only if the sum of squares of (<em>a</em><sub><em>j</em></sub> &minus; 1/2) converges.  In other words, the random number&#39;s bits become less and less biased as they move farther and farther from the binary point.</p>
+<p>The following is part of Kakutani&#39;s theorem (Kakutani 1948)<sup><a href="#Note11"><strong>(11)</strong></a></sup>: Let <em>a</em><sub><em>j</em></sub> be the <em>j</em><sup>th</sup> binary digit probability in a random number&#39;s binary expansion, where the random number is in [0, 1] and each digit is independently set.  Then the random number&#39;s distribution is absolutely continuous (in this case, continuous everywhere except at a countable number of points) if and only if the sum of squares of (<em>a</em><sub><em>j</em></sub> &minus; 1/2) converges.  In other words, the random number&#39;s bits become less and less biased as they move farther and farther from the binary point.</p>
 
 <p>An absolutely continuous distribution can thus be built if we can find a sequence <em>a</em><sub><em>j</em></sub> that converges to 1/2.  Then a random number could be formed by setting each of its digits to 1 with probability equal to the corresponding <em>a</em><sub><em>j</em></sub>.  However, experiments show that the resulting distribution will generally be discontinuous, except if the sequence has the form&mdash;</p>
 
 <ul>
-<li><em>a</em><sub><em>j</em></sub> = <em>y</em><sup>1/&beta;<sup><em>j</em></sup></sup>/(1 + <em>y</em><sup>1/&beta;<sup><em>j</em></sup></sup>),</li>
+<li><em>a</em><sub><em>j</em></sub> = <em>y</em><sup><em>w</em>/&beta;<sup><em>j</em></sup></sup>/(1 + <em>y</em><sup><em>w</em>/&beta;<sup><em>j</em></sup></sup>),</li>
 </ul>
 
-<p>where &beta; = 2, and special cases include the uniform distribution (<em>y</em> = 1) and the truncated exponential(1) distribution (<em>y</em> = (1/exp(1)); (Devroye and Gravel 2015)<sup><a href="#Note3"><strong>(3)</strong></a></sup>).  Other sequences of the form <em>z</em>(<em>j</em>)/(1 + <em>z</em>(<em>j</em>)) will generally be discontinuous even if <em>z</em>(<em>j</em>) converges to 1.  For reference, the following calculates the relative probability for <em>x</em> for a given sequence, where <em>x</em> is in [0, 1), and plotting this distribution will often show whether it is discontinuous:</p>
+<p>where &beta; = 2, <em>y</em> &gt; 0, and <em>w</em> &gt; 0, and special cases include the uniform distribution (<em>y</em> = 1, <em>w</em> = 1) the truncated exponential(1) distribution (<em>y</em> = (1/exp(1)), <em>w</em> = 1; (Devroye and Gravel 2015)<sup><a href="#Note3"><strong>(3)</strong></a></sup>), and the more general exponential(&lambda;) distribution (<em>y</em> = (1/exp(1)), <em>w</em> = &lambda;).  Other sequences of the form <em>z</em>(<em>j</em>)/(1 + <em>z</em>(<em>j</em>)) will generally be discontinuous even if <em>z</em>(<em>j</em>) converges to 1.</p>
+
+<p>For reference, the following calculates the relative probability for <em>x</em> for a given sequence, where <em>x</em> is in [0, 1), and plotting this distribution will often show whether it is discontinuous:</p>
 
 <ul>
 <li>Let <em>b</em><sub><em>j</em></sub> be the <em>j</em><sup>th</sup> base-&beta; digit after the point (e.g., <code>rem(floor(x*pow(beta, j)), beta)</code> where <code>beta</code> = &beta;).</li>

@@ -1004,13 +1004,15 @@ Oberhoff also describes _prefix distributions_ that sample a box that covers the
 
 In principle, a partially-sampled random number is possible by finding a sequence of digit probabilities and setting that number's digits according to those probabilities.  However, there seem to be limits on how practical this approach is.
 
-The following is part of Kakutani's theorem (Kakutani 1948)<sup>[**(11)**](#Note11)</sup>: Let _a_<sub>_j_</sub> be the _j_<sup>th</sup> binary digit probability in a random number's binary expansion, where the random number is in [0, 1] and each digit is independently set.  Then the random number's distribution is absolutely continuous if and only if the sum of squares of (_a_<sub>_j_</sub> &minus; 1/2) converges.  In other words, the random number's bits become less and less biased as they move farther and farther from the binary point.
+The following is part of Kakutani's theorem (Kakutani 1948)<sup>[**(11)**](#Note11)</sup>: Let _a_<sub>_j_</sub> be the _j_<sup>th</sup> binary digit probability in a random number's binary expansion, where the random number is in [0, 1] and each digit is independently set.  Then the random number's distribution is absolutely continuous (in this case, continuous everywhere except at a countable number of points) if and only if the sum of squares of (_a_<sub>_j_</sub> &minus; 1/2) converges.  In other words, the random number's bits become less and less biased as they move farther and farther from the binary point.
 
 An absolutely continuous distribution can thus be built if we can find a sequence _a_<sub>_j_</sub> that converges to 1/2.  Then a random number could be formed by setting each of its digits to 1 with probability equal to the corresponding _a_<sub>_j_</sub>.  However, experiments show that the resulting distribution will generally be discontinuous, except if the sequence has the form&mdash;
 
-- _a_<sub>_j_</sub> = _y_<sup>1/&beta;<sup>_j_</sup></sup>/(1 + _y_<sup>1/&beta;<sup>_j_</sup></sup>),
+- _a_<sub>_j_</sub> = _y_<sup>_w_/&beta;<sup>_j_</sup></sup>/(1 + _y_<sup>_w_/&beta;<sup>_j_</sup></sup>),
 
-where &beta; = 2, and special cases include the uniform distribution (_y_ = 1) and the truncated exponential(1) distribution (_y_ = (1/exp(1)); (Devroye and Gravel 2015)<sup>[**(3)**](#Note3)</sup>).  Other sequences of the form _z_(_j_)/(1 + _z_(_j_)) will generally be discontinuous even if _z_(_j_) converges to 1.  For reference, the following calculates the relative probability for _x_ for a given sequence, where _x_ is in [0, 1), and plotting this distribution will often show whether it is discontinuous:
+where &beta; = 2, _y_ > 0, and _w_ > 0, and special cases include the uniform distribution (_y_ = 1, _w_ = 1) the truncated exponential(1) distribution (_y_ = (1/exp(1)), _w_ = 1; (Devroye and Gravel 2015)<sup>[**(3)**](#Note3)</sup>), and the more general exponential(&lambda;) distribution (_y_ = (1/exp(1)), _w_ = &lambda;).  Other sequences of the form _z_(_j_)/(1 + _z_(_j_)) will generally be discontinuous even if _z_(_j_) converges to 1.
+
+For reference, the following calculates the relative probability for _x_ for a given sequence, where _x_ is in [0, 1), and plotting this distribution will often show whether it is discontinuous:
 
 - Let _b_<sub>_j_</sub> be the _j_<sup>th</sup> base-&beta; digit after the point (e.g., `rem(floor(x*pow(beta, j)), beta)` where `beta` = &beta;).
 - Let _t_(_x_) = &Pi;<sub>_j_ = 1, 2, ...</sub> _b_<sub>_j_</sub> * _a_<sub>_j_</sub> + (1 &minus; _b_<sub>_j_</sub>) * (1 &minus; _a_<sub>_j_</sub>).
