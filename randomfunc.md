@@ -21,7 +21,7 @@ This page is focused on sampling methods that _exactly_ sample from the distribu
 
 - This document does not cover how to choose an underlying RNG (or PRNG) for a particular application, including in terms of security, performance, and quality.  I have written more on RNG recommendations in [**another document**](https://peteroupc.github.io/random.html).
 - This document does not include algorithms for specific PRNGs, such as Mersenne Twister, PCG, xorshift, linear congruential generators, or generators based on hash functions.
-- This document does not cover how to test RNGs for correctness or adequate random number generation.  This is covered, for example, in "[**Testing PRNGs for High-Quality Randomness**](https://github.com/peteroupc/peteroupc.github.io/blob/master/randomtest.md)".
+- This document does not cover how to test RNGs for correctness or adequate random number generation.  This is covered, for example, in "[**Testing PRNGs for High-Quality Randomness**](https://peteroupc.github.io/randomtest.html)".
 - This document does not explain how to specify or generate "seeds" for certain PRNGs.  This is [**covered in detail**](https://peteroupc.github.io/random.html#Nondeterministic_Sources_and_Seed_Generation) elsewhere.
 - This document does not show how to generate random security parameters such as encryption keys.
 - This document does not cover randomness extraction (also known as _unbiasing_, _deskewing_, or _whitening_).  See my [**Note on Randomness Extraction**](https://peteroupc.github.io/randextract.html).
@@ -384,7 +384,7 @@ The method can also be implemented in the following way (as pointed out by Lumbr
       end
     END METHOD
 
-> **Note:** Probabilities can be rational or irrational numbers.  Rational probabilities are of the form `n`/`d` and can be simulated with `ZeroOrOne` above.  Irrational probabilities (such as `exp(-x/y)` or `ln(2)`) have an infinite digit expansion (`0.ddddd....`), and they require special algorithms to simulate; see "[**Algorithms for Irrational Constants**](https://peteroupc.github.io/bernoulli.md)" in my page on Bernoulli Factory algorithms.
+> **Note:** Probabilities can be rational or irrational numbers.  Rational probabilities are of the form `n`/`d` and can be simulated with `ZeroOrOne` above.  Irrational probabilities (such as `exp(-x/y)` or `ln(2)`) have an infinite digit expansion (`0.ddddd....`), and they require special algorithms to simulate; see "[**Algorithms for Irrational Constants**](https://peteroupc.github.io/bernoulli.html)" in my page on Bernoulli Factory algorithms.
 >
 > **Examples**:
 >
@@ -598,8 +598,8 @@ Example criteria include checking&mdash;
     - is prime,
     - is divisible or not by certain numbers,
     - is not among recently chosen random numbers,
-    - was not already chosen (with the aid of a hash table, red&ndash;black tree, or similar structure), or
-    - was not chosen more often in a row than desired,
+    - was not already chosen (with the aid of a hash table, red&ndash;black tree, or similar structure),
+    - was not chosen more often in a row than desired, or
     - is not included in a "blacklist" of numbers,
 - whether a random point is sufficiently distant from previous random points (with the aid of a KD-tree or similar structure),
 - whether a random string matches a regular expression, or
@@ -2113,7 +2113,7 @@ and "[**Floating-Point Determinism**](https://randomascii.wordpress.com/2013/07/
     - the PDF is the _derivative_ (instantaneous rate of change) of the distribution's CDF (that is, PDF(x) = CDF&prime;(x)), and
     - the CDF is also defined as the _integral_ ("area under the curve") of the PDF,
 
-provided the PDF's values are all 0 or greater and the area under the PDF's curve is 1.</small>
+    provided the PDF's values are all 0 or greater and the area under the PDF's curve is 1.</small>
 - <small><sup id=Note50>(50)</sup> A _discrete distribution_ is a distribution that associates one or more items with a separate probability. This page assumes (without loss of generality) that these items are integers.  A discrete distribution can produce non-integer values (e.g., `x/y` with probability `x/(1+y)`) as long as the values can be converted to and from integers. Two examples:
     - A rational number in lowest terms can be converted to an integer by interleaving the bits of the numerator and denominator.
     - Integer-quantized numbers (popular in "deep-learning" neural networks) take a relatively small number of bits (usually 8 bits or even smaller).  An 8-bit quantized number format is effectively a "look-up table" that maps 256 integers to real numbers.</small>

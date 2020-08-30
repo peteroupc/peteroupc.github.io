@@ -28,7 +28,7 @@
 <ul>
 <li>This document does not cover how to choose an underlying RNG (or PRNG) for a particular application, including in terms of security, performance, and quality.  I have written more on RNG recommendations in <a href="https://peteroupc.github.io/random.html"><strong>another document</strong></a>.</li>
 <li>This document does not include algorithms for specific PRNGs, such as Mersenne Twister, PCG, xorshift, linear congruential generators, or generators based on hash functions.</li>
-<li>This document does not cover how to test RNGs for correctness or adequate random number generation.  This is covered, for example, in &quot;<a href="https://github.com/peteroupc/peteroupc.github.io/blob/master/randomtest.md"><strong>Testing PRNGs for High-Quality Randomness</strong></a>&quot;.</li>
+<li>This document does not cover how to test RNGs for correctness or adequate random number generation.  This is covered, for example, in &quot;<a href="https://peteroupc.github.io/randomtest.html"><strong>Testing PRNGs for High-Quality Randomness</strong></a>&quot;.</li>
 <li>This document does not explain how to specify or generate &quot;seeds&quot; for certain PRNGs.  This is <a href="https://peteroupc.github.io/random.html#Nondeterministic_Sources_and_Seed_Generation"><strong>covered in detail</strong></a> elsewhere.</li>
 <li>This document does not show how to generate random security parameters such as encryption keys.</li>
 <li>This document does not cover randomness extraction (also known as <em>unbiasing</em>, <em>deskewing</em>, or <em>whitening</em>).  See my <a href="https://peteroupc.github.io/randextract.html"><strong>Note on Randomness Extraction</strong></a>.</li>
@@ -510,7 +510,7 @@ END METHOD
 </pre>
 
 <blockquote>
-<p><strong>Note:</strong> Probabilities can be rational or irrational numbers.  Rational probabilities are of the form <code>n</code>/<code>d</code> and can be simulated with <code>ZeroOrOne</code> above.  Irrational probabilities (such as <code>exp(-x/y)</code> or <code>ln(2)</code>) have an infinite digit expansion (<code>0.ddddd....</code>), and they require special algorithms to simulate; see &quot;<a href="https://peteroupc.github.io/bernoulli.md"><strong>Algorithms for Irrational Constants</strong></a>&quot; in my page on Bernoulli Factory algorithms.</p>
+<p><strong>Note:</strong> Probabilities can be rational or irrational numbers.  Rational probabilities are of the form <code>n</code>/<code>d</code> and can be simulated with <code>ZeroOrOne</code> above.  Irrational probabilities (such as <code>exp(-x/y)</code> or <code>ln(2)</code>) have an infinite digit expansion (<code>0.ddddd....</code>), and they require special algorithms to simulate; see &quot;<a href="https://peteroupc.github.io/bernoulli.html"><strong>Algorithms for Irrational Constants</strong></a>&quot; in my page on Bernoulli Factory algorithms.</p>
 
 <p><strong>Examples</strong>:</p>
 
@@ -777,8 +777,8 @@ list by <code>RandomKItemsInOrder(list, n - k)</code>.</li>
 <li>is prime,</li>
 <li>is divisible or not by certain numbers,</li>
 <li>is not among recently chosen random numbers,</li>
-<li>was not already chosen (with the aid of a hash table, red&ndash;black tree, or similar structure), or</li>
-<li>was not chosen more often in a row than desired,</li>
+<li>was not already chosen (with the aid of a hash table, red&ndash;black tree, or similar structure),</li>
+<li>was not chosen more often in a row than desired, or</li>
 <li>is not included in a &quot;blacklist&quot; of numbers,</li>
 </ul></li>
 <li>whether a random point is sufficiently distant from previous random points (with the aid of a KD-tree or similar structure),</li>
@@ -2533,17 +2533,14 @@ and &quot;<a href="https://randomascii.wordpress.com/2013/07/16/floating-point-d
 <li><small><sup id=Note46>(46)</sup> Saucier, R. &quot;Computer Generation of Statistical Distributions&quot;, March 2000.</small></li>
 <li><small><sup id=Note47>(47)</sup> Other references on density estimation include <a href="https://en.wikipedia.org/wiki/Multivariate_kernel_density_estimation"><strong>a Wikipedia article on multiple-variable kernel density estimation</strong></a>, and a <a href="https://web.archive.org/web/20160501200206/http://mark-kay.net/2013/12/24/kernel-density-estimation"><strong>blog post by M. Kay</strong></a>.</small></li>
 <li><small><sup id=Note48>(48)</sup> &quot;Jitter&quot;, as used in this step, follows a distribution formally called a <em>kernel</em>, of which the normal distribution is one example.  <em>Bandwidth</em> should be set so that the estimated distribution fits the data and remains smooth.  A more complex kind of &quot;jitter&quot; (for multi-component data points) consists of a point generated from a <a href="https://en.wikipedia.org/wiki/Multivariate_normal_distribution"><strong>multinormal distribution</strong></a> with all the means equal to 0 and a <em>covariance matrix</em> that, in this context, serves as a <em>bandwidth matrix</em>.  &quot;Jitter&quot; and bandwidth are not further discussed in this document.</small></li>
-<li><small><sup id=Note49>(49)</sup> More formally&mdash;
+<li><p><small><sup id=Note49>(49)</sup> More formally&mdash;</p>
 
 <ul>
 <li>the PDF is the <em>derivative</em> (instantaneous rate of change) of the distribution&#39;s CDF (that is, PDF(x) = CDF&prime;(x)), and</li>
 <li>the CDF is also defined as the <em>integral</em> (&quot;area under the curve&quot;) of the PDF,</li>
-</ul></li>
 </ul>
 
-<p>provided the PDF&#39;s values are all 0 or greater and the area under the PDF&#39;s curve is 1.</small></p>
-
-<ul>
+<p>provided the PDF&#39;s values are all 0 or greater and the area under the PDF&#39;s curve is 1.</small></p></li>
 <li><small><sup id=Note50>(50)</sup> A <em>discrete distribution</em> is a distribution that associates one or more items with a separate probability. This page assumes (without loss of generality) that these items are integers.  A discrete distribution can produce non-integer values (e.g., <code>x/y</code> with probability <code>x/(1+y)</code>) as long as the values can be converted to and from integers. Two examples:
 
 <ul>
