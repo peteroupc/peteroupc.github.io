@@ -1512,7 +1512,7 @@ END METHOD
 
 <h3>Random Integers with a Given Positive Sum</h3>
 
-<p>The following pseudocode shows how to generate <code>n</code> uniform random integers greater than 0 with a given positive sum, in random order. (The algorithm for this was presented in (Smith and Tromble 2004)<sup><a href="#Note32"><strong>(32)</strong></a></sup>.)  In the pseudocode below&mdash;</p>
+<p>The following pseudocode shows how to generate <code>n</code> random integers with a given positive sum, in random order (specifically, a uniformly chosen random partition of that sum into <code>n</code> parts with repetition). (The algorithm for this was presented in (Smith and Tromble 2004)<sup><a href="#Note32"><strong>(32)</strong></a></sup>.)  In the pseudocode below&mdash;</p>
 
 <ul>
 <li>the method <code>PositiveIntegersWithSum</code> returns <code>n</code> integers greater than 0 that sum to <code>total</code>, in random order,</li>
@@ -1556,9 +1556,9 @@ END METHOD
 <p><strong>Notes:</strong></p>
 
 <ol>
-<li>To generate <code>N</code> uniform random numbers with a given positive average <code>avg</code>, in random order, generate <code>IntegersWithSum(N, N * avg)</code> (or its equivalent for real numbers).</li>
-<li>To generate <code>N</code> uniform random numbers <code>min</code> or greater and with a given positive sum <code>sum</code>, in random order, generate <code>IntegersWithSum(N, sum - N * min)</code> (or its equivalent for real numbers), then add <code>min</code> to each number generated this way.  The <a href="https://peteroupc.github.io/randomgen.zip"><strong>Python sample code</strong></a> implements an efficient way to generate such integers if each one can&#39;t exceed a given maximum; the algorithm is thanks to a <em>Stack Overflow</em> answer (<code>questions/61393463</code>) by John McClane.</li>
-<li>To generate <code>N</code> uniform rational numbers that sum to <code>tx</code>/<code>ty</code>, call <code>IntegersWithSum(N, tx * ty * x)</code> or <code>PositiveIntegersWithSum(N, tx * ty * x)</code> as appropriate (where <code>x</code> is the desired accuracy as an integer, such as <code>pow(2, 32)</code> or <code>pow(2, 53)</code>, so that the results are accurate to <code>1/x</code> or less), then for each number <code>c</code> in the result, convert it to <code>MakeRatio(c, tx * ty * x) * MakeRatio(tx, ty)</code>.</li>
+<li>To generate <code>N</code> random numbers with a given positive average <code>avg</code>, in random order, generate <code>IntegersWithSum(N, N * avg)</code>.</li>
+<li>To generate <code>N</code> random numbers <code>min</code> or greater and with a given positive sum <code>sum</code>, in random order, generate <code>IntegersWithSum(N, sum - N * min)</code>, then add <code>min</code> to each number generated this way.  The <a href="https://peteroupc.github.io/randomgen.zip"><strong>Python sample code</strong></a> implements an efficient way to generate such integers if each one can&#39;t exceed a given maximum; the algorithm is thanks to a <em>Stack Overflow</em> answer (<code>questions/61393463</code>) by John McClane.</li>
+<li>To generate <code>N</code> rational numbers that sum to <code>tx</code>/<code>ty</code>, call <code>IntegersWithSum(N, tx * ty * x)</code> or <code>PositiveIntegersWithSum(N, tx * ty * x)</code> as appropriate (where <code>x</code> is the desired accuracy as an integer, such as <code>pow(2, 32)</code> or <code>pow(2, 53)</code>, so that the results are accurate to <code>1/x</code> or less), then for each number <code>c</code> in the result, convert it to <code>MakeRatio(c, tx * ty * x) * MakeRatio(tx, ty)</code>.</li>
 </ol>
 </blockquote>
 
@@ -2251,8 +2251,8 @@ the two parameters of the beta distribution, and <code>trials</code> is a parame
 <li><strong>Chi distribution</strong>: Square root of a chi-squared random number.  See chi-squared distribution.</li>
 <li><strong>Compound Poisson distribution</strong>: See <a href="#Transformations_of_Random_Numbers_Additional_Examples"><strong>Transformations of Random Numbers: Additional Examples</strong></a>.</li>
 <li><strong>Cosine distribution</strong>&#x2b26;: <code>atan2(x, sqrt(1 - x * x)) / pi</code>, where <code>x = RNDRANGE(-1, 1)</code> (Saucier 2000, p. 17; inverse sine replaced with <code>atan2</code> equivalent).</li>
-<li><strong>Dagum distribution</strong>: See beta prime distribution.
-<strong>Dirichlet distribution</strong>: [<strong>This distribution</strong>](<a href="https://en.wikipedia.org/wiki/Dirichlet_distribution">https://en.wikipedia.org/wiki/Dirichlet_distribution</a> (e.g., (Devroye 1986)<sup><a href="#Note12"><strong>(12)</strong></a></sup>, p. 593-594) can be sampled by generating <em>n</em>+1 random <a href="https://peteroupc.github.io/randomfunc.md#Gamma_Distribution"><strong>gamma-distributed</strong></a> numbers, each with separate parameters, taking their sum<sup><a href="#Note14"><strong>(14)</strong></a></sup>, dividing them by that sum, and taking the first <em>n</em> numbers. (The <em>n</em>+1 numbers sum to 1, but the Dirichlet distribution models the first <em>n</em> of them, which will generally sum to less than 1.)</li>
+<li><strong>Dagum distribution</strong>: See beta prime distribution.</li>
+<li><strong>Dirichlet distribution</strong>: [<strong>This distribution</strong>](<a href="https://en.wikipedia.org/wiki/Dirichlet_distribution">https://en.wikipedia.org/wiki/Dirichlet_distribution</a> (e.g., (Devroye 1986)<sup><a href="#Note12"><strong>(12)</strong></a></sup>, p. 593-594) can be sampled by generating <em>n</em>+1 random <a href="https://peteroupc.github.io/randomfunc.md#Gamma_Distribution"><strong>gamma-distributed</strong></a> numbers, each with separate parameters, taking their sum<sup><a href="#Note14"><strong>(14)</strong></a></sup>, dividing them by that sum, and taking the first <em>n</em> numbers. (The <em>n</em>+1 numbers sum to 1, but the Dirichlet distribution models the first <em>n</em> of them, which will generally sum to less than 1.)</li>
 <li><strong>Double logarithmic distribution</strong>&#x2b26;: <code>(0.5 + (RNDINT(1) * 2 - 1) * RNDRANGEMaxExc(0, 0.5) * RNDU01OneExc())</code> (see also Saucier 2000, p. 15, which shows the wrong X axes).</li>
 <li><strong>Erlang distribution</strong>: <code>GammaDist(n, 1.0 / lamda)</code>.  Returns a number that simulates a sum of <code>n</code> exponential random numbers with the given <code>lamda</code> parameter.</li>
 <li><strong>Estoup distribution</strong>: See zeta distribution.</li>
