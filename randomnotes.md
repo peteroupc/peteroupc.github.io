@@ -15,7 +15,6 @@
         - [**Multivariate Normal (Multinormal) Distribution**](#Multivariate_Normal_Multinormal_Distribution)
         - [**Gaussian and Other Copulas**](#Gaussian_and_Other_Copulas)
         - [**Exponential Distribution: Another Error-Bounded Algorithm**](#Exponential_Distribution_Another_Error_Bounded_Algorithm)
-    - [**Weighted Choice with Biased Coins**](#Weighted_Choice_with_Biased_Coins)
 - [**Notes**](#Notes)
 - [**Appendix**](#Appendix)
     - [**Implementation of `erf`**](#Implementation_of_erf)
@@ -445,11 +444,6 @@ The following method samples from an exponential distribution with a &lambda; pa
 
 > **Note:** After `ExpoExact` is used to generate a random number, an application can append additional binary digits (such as `RNDINT(1)`) to the end of that number while remaining accurate to the given precision (Karney 2014)<sup>[**(1)**](#Note1)</sup>.
 
-<a id=Weighted_Choice_with_Biased_Coins></a>
-### Weighted Choice with Biased Coins
-
-**Coins of Known Bias:** If we only have a list of probabilities (`probs`) that sum to 1, as well as `UnfairCoin(p)`, which returns 1 with a given probability `p` and zero otherwise (such as `ZeroOrOne` or `RNDU01() < p`), one of the following two algorithms chooses an integer at random according to its probability (see the [**_Stack Overflow_ question**](https://stackoverflow.com/questions/62806441/can-i-achieve-weighted-randomness-with-a-function-that-returns-weighted-booleans) by Daniel Kaplan).  However, since we can treat `UnfairCoin(q)` (for any fixed value of `q` in (0, 1)) as a coin with _unknown_ bias in this case, these algorithms are only given for completeness. The algorithms are error-bounded when all the probabilities in `probs` are rational numbers. The **first algorithm** uses iteration and is as follows: `cumu = 1.0; for i in 0...size(probs): if UnfairCoin(probs[i]/cumu)==1: return i; else: cumu = cumu - probs[i]`.  For a proof of its correctness, see "[**Darts, Dice, and Coins**](https://www.keithschwarz.com/darts-dice-coins/)" by Keith Schwarz.  The **second algorithm** is the _Bernoulli race_: `while true; y=RNDINT(size(probs)-1); if UnfairCoin(probs[y])==1: return y; else continue; end`, where `UnfairCoin(0.5)` serves as the source of random numbers for `RNDINT`.
-
 <a id=Notes></a>
 ## Notes
 
@@ -575,7 +569,7 @@ The following are some ways to implement `WeightedChoice`. The algorithms are ge
 | The Bringmann&ndash;Larsen succinct data structure (Bringmann and Larsen 2013)<sup>[**(31)**](#Note31)</sup> | Uses rejection sampling if the sum of weights is large, and a compressed structure otherwise. |
 | (Hübschle-Schneider and Sanders 2019)<sup>[**(32)**](#Note32)</sup>. | Parallel weighted random samplers. |
 | Two- and multi-level search; flat method (Tang 2019)<sup>[**(33)**](#Note33)</sup>. | |
-| "Weighted Choice with Biased Coins" in this appendix. | Takes "coins" with unknown bias as input. |
+| "Loaded Die from Biased Coins" | Given a list of probabilities `probs` that must sum to 1 and should be rational numbers: (1) Set `cumu` to 1 and `i` to 0; (2) with probability `probs[i]/cumu`, return `i`; (3) subtract `probs[i]` from `cumu`, then add 1 to `i`, then go to step 2.  For a correctness proof, see "Darts, Dice, and Coins". |
 | Knuth and Yao (1976)<sup>[**(16)**](#Note16)</sup> | Generates a DDG tree from the binary expansions of the probabilities. Is optimal, or at least nearly so.  This is suggested in exercise 3.4.2 of chapter 15 of (Devroye 1986, p. 1-2)<sup>[**(12)**](#Note12)</sup>, implemented in _randomgen.py_ as the `discretegen` method, and also described in (Roy et al. 2013)<sup>[**(34)**](#Note34)</sup>.  `discretegen` can work with probabilities that are irrational numbers (which have infinite binary expansions) as long as there is a way to calculate the binary expansion "on the fly". |
 | (Han and Hoshi 1997)<sup>[**(35)**](#Note35)</sup> | Uses cumulative probabilities as input.  An error-bounded version is described in (Devroye and Gravel 2015)<sup>[**(23)**](#Note23)</sup> and comes within 3 bits, on average, of the optimal number of bits. |
 

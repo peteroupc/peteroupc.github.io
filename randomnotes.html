@@ -25,7 +25,6 @@
 <li><a href="#Gaussian_and_Other_Copulas"><strong>Gaussian and Other Copulas</strong></a></li>
 <li><a href="#Exponential_Distribution_Another_Error_Bounded_Algorithm"><strong>Exponential Distribution: Another Error-Bounded Algorithm</strong></a></li>
 </ul></li>
-<li><a href="#Weighted_Choice_with_Biased_Coins"><strong>Weighted Choice with Biased Coins</strong></a></li>
 </ul></li>
 <li><a href="#Notes"><strong>Notes</strong></a></li>
 <li><a href="#Appendix"><strong>Appendix</strong></a>
@@ -513,12 +512,6 @@ END METHOD
 <p><strong>Note:</strong> After <code>ExpoExact</code> is used to generate a random number, an application can append additional binary digits (such as <code>RNDINT(1)</code>) to the end of that number while remaining accurate to the given precision (Karney 2014)<sup><a href="#Note1"><strong>(1)</strong></a></sup>.</p>
 </blockquote>
 
-<p><a id=Weighted_Choice_with_Biased_Coins></a></p>
-
-<h3>Weighted Choice with Biased Coins</h3>
-
-<p><strong>Coins of Known Bias:</strong> If we only have a list of probabilities (<code>probs</code>) that sum to 1, as well as <code>UnfairCoin(p)</code>, which returns 1 with a given probability <code>p</code> and zero otherwise (such as <code>ZeroOrOne</code> or <code>RNDU01() &lt; p</code>), one of the following two algorithms chooses an integer at random according to its probability (see the <a href="https://stackoverflow.com/questions/62806441/can-i-achieve-weighted-randomness-with-a-function-that-returns-weighted-booleans"><strong><em>Stack Overflow</em> question</strong></a> by Daniel Kaplan).  However, since we can treat <code>UnfairCoin(q)</code> (for any fixed value of <code>q</code> in (0, 1)) as a coin with <em>unknown</em> bias in this case, these algorithms are only given for completeness. The algorithms are error-bounded when all the probabilities in <code>probs</code> are rational numbers. The <strong>first algorithm</strong> uses iteration and is as follows: <code>cumu = 1.0; for i in 0...size(probs): if UnfairCoin(probs[i]/cumu)==1: return i; else: cumu = cumu - probs[i]</code>.  For a proof of its correctness, see &quot;<a href="https://www.keithschwarz.com/darts-dice-coins/"><strong>Darts, Dice, and Coins</strong></a>&quot; by Keith Schwarz.  The <strong>second algorithm</strong> is the <em>Bernoulli race</em>: <code>while true; y=RNDINT(size(probs)-1); if UnfairCoin(probs[y])==1: return y; else continue; end</code>, where <code>UnfairCoin(0.5)</code> serves as the source of random numbers for <code>RNDINT</code>.</p>
-
 <p><a id=Notes></a></p>
 
 <h2>Notes</h2>
@@ -735,8 +728,8 @@ END METHOD
 <td></td>
 </tr>
 <tr>
-<td>&quot;Weighted Choice with Biased Coins&quot; in this appendix.</td>
-<td>Takes &quot;coins&quot; with unknown bias as input.</td>
+<td>&quot;Loaded Die from Biased Coins&quot;</td>
+<td>Given a list of probabilities <code>probs</code> that must sum to 1 and should be rational numbers: (1) Set <code>cumu</code> to 1 and <code>i</code> to 0; (2) with probability <code>probs[i]/cumu</code>, return <code>i</code>; (3) subtract <code>probs[i]</code> from <code>cumu</code>, then add 1 to <code>i</code>, then go to step 2.  For a correctness proof, see &quot;Darts, Dice, and Coins&quot;.</td>
 </tr>
 <tr>
 <td>Knuth and Yao (1976)<sup><a href="#Note16"><strong>(16)</strong></a></sup></td>
