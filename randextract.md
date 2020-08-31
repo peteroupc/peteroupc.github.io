@@ -7,12 +7,12 @@ _Randomness extraction_ (also known as _unbiasing_, _debiasing_, _deskewing_, _w
 <a id=In_Information_Security></a>
 ## In Information Security
 
-In information security, randomness extraction serves to generate a seed, password, encryption key, or other secret value from hard-to-predict sources of noise.
+In information security, randomness extraction serves to generate a seed, password, encryption key, or other secret value from hard-to-predict nondeterministic sources.
 
-Randomness extraction for information security is discussed in NIST SP 800-90B sec. 3.1.5.1, and RFC 4086 sec. 4.2 and 5.2. Popular choices of such extractors include keyed cryptographic hash functions (see, e.g., (Cliff et al., 2009)<sup>[**(1)**](#Note1)</sup>). In information security applications:
+Randomness extraction for information security is discussed in NIST SP 800-90B sec. 3.1.5.1, and RFC 4086 sec. 4.2 and 5.2. Possible choices of such extractors include keyed cryptographic hash functions (see, e.g., (Cliff et al., 2009)<sup>[**(1)**](#Note1)</sup>) and two-universal hash functions with a random seed (Frauchiger et al., 2013)<sup>[**(10)**](#Note10)</sup>. In information security applications:
 
-- Extractors other than keyed cryptographic hash functions should not be used by themselves in randomness extraction.
-- Where possible, there should be two or more independent sources of noise from which to apply randomness extraction.
+- Unkeyed hash functions and other unkeyed extraction functions should not be used by themselves in randomness extraction.
+- Where possible, there should be two or more independent nondeterministic sources from which to apply randomness extraction.
 
 Some papers also refer to two-source extractors and resilient functions (especially the works by E. Chattopadhyay and D. Zuckerman), but there are few if any real implementations of these extraction techniques.
 
@@ -37,11 +37,19 @@ An algorithm from (Morina et al. 2019)<sup>[**(3)**](#Note3)</sup> extends this 
 1. Throw a die twice (whose bias is unknown), call the results _X_ and _Y_, respectively.
 2. If _X_ is less than _Y_, return 0.  If _X_ is greater than _Y_, return 1.  If neither is the case, go to step 1.
 
-Pae (2005)<sup>[**(4)**](#Note4)</sup> and (Pae and Loui 2006)<sup>[**(5)**](#Note5)</sup> characterize _extracting functions_.  Informally, an _extracting function_ is a function that maps a fixed number of digits to a variable number of bits such that, whenever the input has a given number of ones, twos, etc., every output bit-string of a given length is as likely to occur as every other output bit-string of that length, regardless of the input's bias.<sup>[**(6)**](#Note6)</sup>  Among others, von Neumann's extractor and the one by Peres (1992)<sup>[**(7)**](#Note7)</sup> are extracting functions.
+Pae (2005)<sup>[**(4)**](#Note4)</sup> and (Pae and Loui 2006)<sup>[**(5)**](#Note5)</sup> characterize _extracting functions_.  Informally, an _extracting function_ is a function that maps a fixed number of digits to a variable number of bits such that, whenever the input has a given number of ones, twos, etc., every output bit-string of a given length is as likely to occur as every other output bit-string of that length, regardless of the input's bias.<sup>[**(6)**](#Note6)</sup>  Among others, von Neumann's extractor and the one by Peres (1992)<sup>[**(7)**](#Note7)</sup> are extracting functions.  The Peres extractor takes a list of bits (zeros and ones with the same bias) as input and is described as follows:
+
+1. Create two empty lists named U and V. Then, while two or more bits remain:
+    1. If the next two bits are 0/0, append 0 to U and 0 to V.
+    2. If the next two bits are 0/1, output 0 and append 1 to U.
+    3. If the next two bits are 1/0, output 1 and append 1 to U.
+    4. If the next two bits are 1/1, append 0 to U and 1 to V.
+2. Run this algorithm recursively, with the bits placed in U.
+3. Run this algorithm recursively, with the bits placed in V.
 
 A streaming algorithm, which builds something like an "extractor tree", is another example of a randomness extractor (Zhou and Bruck 2012)<sup>[**(8)**](#Note8)</sup>.
 
-I maintain [**source code of this extractor**](https://github.com/peteroupc/peteroupc.github.io/blob/master/rextract.rb), which also includes additional notes on randomness extraction.
+I maintain [**source code of this extractor and the Peres extractor**](https://github.com/peteroupc/peteroupc.github.io/blob/master/rextract.rb), which also includes additional notes on randomness extraction.
 
 Pae's "entropy-preserving" binarization (Pae 2020)<sup>[**(9)**](#Note9)</sup>, given below, is meant to be used in other extractor algorithms such as the ones mentioned above.  It assumes the number of possible values, _n_, is known. However, it is obviously not efficient if _n_ is a large number.
 
@@ -67,6 +75,7 @@ Some additional notes:
 - <small><sup id=Note7>(7)</sup> Peres, Y., "Iterating von Neumann's procedure for extracting random bits", Annals of Statistics 1992,20,1, p. 590-597.</small>
 - <small><sup id=Note8>(8)</sup> Zhou, H. and Bruck, J., "[**Streaming algorithms for optimal generation of random bits**](https://arxiv.org/abs/1209.0730)", arXiv:1209.0730 [cs.IT], 2012.</small>
 - <small><sup id=Note9>(9)</sup> S. Pae, "[**Binarization Trees and Random Number Generation**](https://arxiv.org/abs/1602.06058v2)", arXiv:1602.06058v2 [cs.DS].</small>
+- <small><sup id=Note10>(10)</sup> Frauchiger, D., Renner, R., Troyer, M., "True randomness from realistic quantum devices", 2013.</small>
 
 <a id=License></a>
 ## License

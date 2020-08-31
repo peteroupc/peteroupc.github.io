@@ -267,7 +267,7 @@ In general, there are two steps to generate an `N`-bit seed for a PRNG<sup>[**(1
 1. Gather enough data from independent nondeterministic sources to reach `N` bits of _entropy_ or more.
 2. Then, condense the data into an `N`-bit number, a process called _randomness extraction_.
 
-See my [**Note on Randomness Extraction**](https://peteroupc.github.io/randextract.html). It should be mentioned, though, that in information security applications, extractors other than keyed cryptographic hash functions should not be used by themselves in randomness extraction.
+See my [**Note on Randomness Extraction**](https://peteroupc.github.io/randextract.html). It should be mentioned, though, that in information security applications, unkeyed hash functions should not be used by themselves in randomness extraction.
 
 <a id=Seed_Generation_for_Noncryptographic_PRNGs></a>
 ### Seed Generation for Noncryptographic PRNGs

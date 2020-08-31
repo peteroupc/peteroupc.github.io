@@ -1014,6 +1014,11 @@ For reference, the following calculates the relative probability for _x_ for a g
 - Let _t_(_x_) = &Pi;<sub>_j_ = 1, 2, ...</sub> _b_<sub>_j_</sub> * _a_<sub>_j_</sub> + (1 &minus; _b_<sub>_j_</sub>) * (1 &minus; _a_<sub>_j_</sub>).
 - The relative probability for _x_ is _t_(_x_) / (argmax<sub>_z_</sub> _t_(_z_)).
 
+It appears that the distribution will be discontinuous unless&mdash;
+
+- the probabilities of the first half, interval (0, 1/2), are proportional to those of those of the second half, interval (1/2, 1), and
+- the probabilities of each quarter, eighth, etc. are proportional to those of every other quarter, eighth, etc.
+
 It may be that something similar applies for &beta; other than 2 (non-base-2 or non-binary cases) as it does to &beta; = 2 (the base-2 or binary case).
 
 <a id=License></a>

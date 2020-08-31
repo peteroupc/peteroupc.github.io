@@ -387,7 +387,7 @@ For cryptographic RNGs, an application should use only one thread-safe instance 
 <li>Then, condense the data into an <code>N</code>-bit number, a process called <em>randomness extraction</em>.</li>
 </ol>
 
-<p>See my <a href="https://peteroupc.github.io/randextract.html"><strong>Note on Randomness Extraction</strong></a>. It should be mentioned, though, that in information security applications, extractors other than keyed cryptographic hash functions should not be used by themselves in randomness extraction.</p>
+<p>See my <a href="https://peteroupc.github.io/randextract.html"><strong>Note on Randomness Extraction</strong></a>. It should be mentioned, though, that in information security applications, unkeyed hash functions should not be used by themselves in randomness extraction.</p>
 
 <p><a id=Seed_Generation_for_Noncryptographic_PRNGs></a></p>
 
