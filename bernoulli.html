@@ -124,11 +124,8 @@
 <li><a href="#Convergence_of_Bernoulli_Factories"><strong>Convergence of Bernoulli Factories</strong></a></li>
 <li><a href="#Alternative_Implementation_of_Bernoulli_Factories"><strong>Alternative Implementation of Bernoulli Factories</strong></a></li>
 <li><a href="#Correctness_Proof_for_the_Continued_Logarithm_Simulation_Algorithm"><strong>Correctness Proof for the Continued Logarithm Simulation Algorithm</strong></a></li>
-<li><a href="#Correctness_Proof_for_Continued_Fraction_Simulation_Algorithm_3"><strong>Correctness Proof for Continued Fraction Simulation Algorithm 3</strong></a>
-
-<ul>
+<li><a href="#Correctness_Proof_for_Continued_Fraction_Simulation_Algorithm_3"><strong>Correctness Proof for Continued Fraction Simulation Algorithm 3</strong></a></li>
 <li><a href="#Sketch_of_Derivation_of_the_Algorithm_for_1_pi"><strong>Sketch of Derivation of the Algorithm for 1 / &pi;</strong></a></li>
-</ul></li>
 </ul></li>
 <li><a href="#License"><strong>License</strong></a></li>
 </ul>
@@ -1602,15 +1599,19 @@ for i in range(iters):
 
 <p><a id=Sketch_of_Derivation_of_the_Algorithm_for_1_pi></a></p>
 
-<h4>Sketch of Derivation of the Algorithm for 1 / &pi;</h4>
+<h3>Sketch of Derivation of the Algorithm for 1 / &pi;</h3>
 
 <p>The Flajolet paper presented an algorithm to simulate 1 / &pi; but provided no derivation.  Here is a sketch of how this algorithm works.</p>
 
 <p>The algorithm is an application of the <a href="#Convex_Combinations"><strong>convex combination</strong></a> technique.  Namely, 1 / &pi; can be seen as a convex combination of two components:</p>
 
 <ul>
-<li><em>g</em>(<em>n</em>): 2<sup>6 * <em>n</em></sup> (6 * <em>n</em> + 1) / 2<sup>8 * <em>n</em> + 4</sup>, which is proportional to the probability mass of the sum of two geometric(1/4) random numbers<sup><a href="#Note7"><strong>(7)</strong></a></sup> and one Bernoulli(5/9) random number.  This corresponds to step 1 of the convex combination algorithm and steps 2 through 4 of the 1 / &pi; algorithm.</li>
-<li><em>h</em><sub><em>n</em></sub>(): choose(<em>n</em> * 2, <em>n</em>) / 2<sup><em>n</em></sup>, which is the probability of heads of the &quot;coin&quot; numbered <em>n</em>.  This corresponds to step 2 of the convex combination algorithm and step 5 of the 1 / &pi; algorithm.</li>
+<li><em>g</em>(<em>n</em>): 2<sup>6 * <em>n</em></sup> * (6 * <em>n</em> + 1) / 2<sup>8 * <em>n</em> + 2</sup> = 2<sup>-2 * <em>n</em></sup> * (6 * <em>n</em> + 1) / 4 = (6 * <em>n</em> + 1) / (2<sup>2 * <em>n</em> + 2</sup>), which is the probability mass of the sum of two geometric(1/4) random numbers<sup><a href="#Note7"><strong>(7)</strong></a></sup> and one Bernoulli(5/9) random number.  This corresponds to step 1 of the convex combination algorithm and steps 2 through 4 of the 1 / &pi; algorithm.  (This also shows that there may be an error in the identity for 1 / &pi; given in the Flajolet paper: the &quot;8 <em>n</em> + 4&quot; should probably read &quot;8 <em>n</em> + 2&quot;.)
+
+<ul>
+<li>Note: 9 * (<em>n</em> + 1) / (2<sup>2 * <em>n</em> + 4</sup>) is the probability mass of the sum of two geometric(1/4) random numbers.</li>
+</ul></li>
+<li><em>h</em><sub><em>n</em></sub>(): (choose(<em>n</em> * 2, <em>n</em>) / 2<sup><em>n</em> * 2</sup>)<sup>3</sup>, which is the probability of heads of the &quot;coin&quot; numbered <em>n</em>.  This corresponds to step 2 of the convex combination algorithm and step 5 of the 1 / &pi; algorithm.</li>
 </ul>
 
 <p><a id=License></a></p>
