@@ -420,13 +420,13 @@ _Sampling without replacement_  essentially means taking a random item _without_
         - If the items are already stored in a list and the list's order can be changed, then shuffle that list and choose the first `k` items from the shuffled list.
         - If the items are already stored in a list and the list's order can't be changed, then store the indices to those items in another list, shuffle the latter list, then choose the first `k` indices (or the items corresponding to those indices) from the latter list.
         - If `k` is much smaller than `n`, proceed as in item 3 instead.
-3. **If `k` is much smaller than `n` and the items have to be chosen in random order:**
+3. **If `k` is much smaller than `n` and the order of the items must be random or is unimportant:**
     - **If the items are stored in a list whose order can be changed:** Do a _partial shuffle_ of that list, then choose the _last_ `k` items from that list.  A _partial shuffle_ proceeds as given in the section "[**Shuffling**](#Shuffling)", except the partial shuffle stops after `k` swaps have been made (where swapping one item with itself counts as a swap).
     - Otherwise, **if the items are stored in a list and `n` is not very large (for example, less than 5000):** Store the indices to those items in another list, do a _partial shuffle_ of the latter list, then choose the _last_ `k` indices (or the items corresponding to those indices) from the latter list.
     - Otherwise, **if `n` is not very large:** Store all the items in a list, do a _partial shuffle_ of that list, then choose the _last_ `k` items from that list.
 4. **If `n - k` is much smaller than `n` and the order of the sampled items is unimportant:**  Proceed as in item 3, except the partial shuffle involves `n - k` swaps and the _first_ `k` items are chosen rather than the last `k`.
 5. **Otherwise (for example, if 32-bit or larger integers will be chosen so that `n` is 2<sup>32</sup>, or if `n` is otherwise very large):**
-    - If the items have to be chosen **in relative (index) order**: Let `n2 = floor(n/2)`.  Generate `h = Hypergeometric(k, n2, n)`.  Sample `h` integers from the list `[0, 1, ..., n2 - 1]` by running this algorithm (items 1 to 5) recursively, then sample `k - h` integers from the list `[n2, n2 + 1, ..., n - 1]` by running this algorithm recursively.  The integers chosen this way are the indices to the desired items in relative (index) order (Sanders et al. 2019)<sup>[**(6)**](#Note6)</sup>.
+    - If the items have to be chosen **in relative (index) order**: Let `n2 = floor(n/2)`.  Generate `h = Hypergeometric(k, n2, n)`.  Sample `h` integers in relative order from the list `[0, 1, ..., n2 - 1]` by running this algorithm (items 1 to 5) recursively, then sample `k - h` integers in relative order from the list `[n2, n2 + 1, ..., n - 1]` by running this algorithm recursively.  The integers chosen this way are the indices to the desired items in relative (index) order (Sanders et al. 2019)<sup>[**(6)**](#Note6)</sup>.
     - Otherwise, create a data structure to store the indices to items already chosen.  When a new index to an item is randomly chosen, add it to the data structure if it's not already there, or if it is, choose a new random index.  Repeat this process until `k` indices were added to the data structure this way.  Examples of suitable data structures are&mdash;
         - a [**hash table**](https://en.wikipedia.org/wiki/Hash_table),
         - a compressed bit set (e.g, "roaring bitmap", EWAH), and
@@ -1236,7 +1236,7 @@ The following method generates a random integer that follows a _hypergeometric d
 <a id=Random_Integers_with_a_Given_Positive_Sum></a>
 ### Random Integers with a Given Positive Sum
 
-The following pseudocode shows how to generate `n` random integers with a given positive sum, in random order (specifically, a uniformly chosen random partition of that sum into `n` parts with repetition). (The algorithm for this was presented in (Smith and Tromble 2004)<sup>[**(33)**](#Note33)</sup>.)  In the pseudocode below&mdash;
+The following pseudocode shows how to generate `n` random integers with a given positive sum, in random order (specifically, a uniformly chosen random partition of that sum into `n` parts with repetition and in random order). (The algorithm for this was presented in (Smith and Tromble 2004)<sup>[**(33)**](#Note33)</sup>.)  In the pseudocode below&mdash;
 
 - the method `PositiveIntegersWithSum` returns `n` integers greater than 0 that sum to `total`, in random order,
 - the method `IntegersWithSum` returns `n` integers 0 or greater that sum to `total`, in random order, and

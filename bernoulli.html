@@ -124,7 +124,11 @@
 <li><a href="#Convergence_of_Bernoulli_Factories"><strong>Convergence of Bernoulli Factories</strong></a></li>
 <li><a href="#Alternative_Implementation_of_Bernoulli_Factories"><strong>Alternative Implementation of Bernoulli Factories</strong></a></li>
 <li><a href="#Correctness_Proof_for_the_Continued_Logarithm_Simulation_Algorithm"><strong>Correctness Proof for the Continued Logarithm Simulation Algorithm</strong></a></li>
-<li><a href="#Correctness_Proof_for_Continued_Fraction_Simulation_Algorithm_3"><strong>Correctness Proof for Continued Fraction Simulation Algorithm 3</strong></a></li>
+<li><a href="#Correctness_Proof_for_Continued_Fraction_Simulation_Algorithm_3"><strong>Correctness Proof for Continued Fraction Simulation Algorithm 3</strong></a>
+
+<ul>
+<li><a href="#Sketch_of_Derivation_of_the_Algorithm_for_1_pi"><strong>Sketch of Derivation of the Algorithm for 1 / &pi;</strong></a></li>
+</ul></li>
 </ul></li>
 <li><a href="#License"><strong>License</strong></a></li>
 </ul>
@@ -989,6 +993,8 @@
 <li>Return 1.</li>
 </ol>
 
+<p>For a sketch of how this algorithm is derived, see the appendix</p>
+
 <p><a id=a___b___x___y></a></p>
 
 <h4>(<em>a</em>/<em>b</em>)<sup><em>x</em>/<em>y</em></sup></h4>
@@ -1592,6 +1598,19 @@ for i in range(iters):
 <ul>
 <li>The algorithm halts almost surely for the same reason as the similar continued logarithm simulator.</li>
 <li>If the call in step 3 is replaced with an oracle that simulates the correct &quot;sub-fraction&quot;, the algorithm is locally correct.  If step 1 reaches the last element of the continued fraction, the algorithm obviously passes with the correct probability. Otherwise, we will be simulating the probability <em>b</em>[<em>i</em>] / (<em>a</em>[<em>i</em>] + <em>x</em>), where <em>x</em> is the &quot;continued sub-fraction&quot; and will be at most 1 by assumption.  Steps 2 and 3 define a loop that divides the probability space into three pieces: the first piece takes up a part equal to <em>h</em> = <em>a</em>[<em>i</em>]/(<em>a</em>[<em>i</em>] + 1), the second piece (step 3) takes up a portion of the remainder (which here is equal to <em>x</em> * (1 &minus; <em>h</em>)), and the last piece is the &quot;rejection piece&quot;.  The algorithm will pass at step 2 with probability <em>p</em> = (<em>b</em>[<em>i</em>] / <em>a</em>[<em>pos</em>]) * <em>h</em> and fail either at step 2 with probability <em>f1</em> = (1 &minus; <em>b</em>[<em>i</em>] / <em>a</em>[<em>pos</em>]) * <em>h</em>, or at step 3 with probability <em>f2</em> = <em>x</em> * (1 &minus; <em>h</em>) (all these probabilities are relative to the whole iteration).  Finally, dividing the passes by the sum of passes and fails leads to <em>b</em>[<em>i</em>] / (<em>a</em>[<em>i</em>] + <em>x</em>), which is the probability we wanted, so that both of Huber&#39;s conditions are satisfied and we are done.  &#x25a1;</li>
+</ul>
+
+<p><a id=Sketch_of_Derivation_of_the_Algorithm_for_1_pi></a></p>
+
+<h4>Sketch of Derivation of the Algorithm for 1 / &pi;</h4>
+
+<p>The Flajolet paper presented an algorithm to simulate 1 / &pi; but provided no derivation.  Here is a sketch of how this algorithm works.</p>
+
+<p>The algorithm is an application of the <a href="#Convex_Combinations"><strong>convex combination</strong></a> technique.  Namely, 1 / &pi; can be seen as a convex combination of two components:</p>
+
+<ul>
+<li><em>g</em>(<em>n</em>): 2<sup>6 * <em>n</em></sup> (6 * <em>n</em> + 1) / 2<sup>8 * <em>n</em> + 4</sup>, which is proportional to the probability mass of the sum of two geometric(1/4) random numbers<sup><a href="#Note7"><strong>(7)</strong></a></sup> and one Bernoulli(5/9) random number.  This corresponds to step 1 of the convex combination algorithm and steps 2 through 4 of the 1 / &pi; algorithm.</li>
+<li><em>h</em><sub><em>n</em></sub>(): choose(<em>n</em> * 2, <em>n</em>) / 2<sup><em>n</em></sup>, which is the probability of heads of the &quot;coin&quot; numbered <em>n</em>.  This corresponds to step 2 of the convex combination algorithm and step 5 of the 1 / &pi; algorithm.</li>
 </ul>
 
 <p><a id=License></a></p>

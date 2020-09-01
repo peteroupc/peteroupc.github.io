@@ -561,7 +561,7 @@ END METHOD
 <li>If <code>k</code> is much smaller than <code>n</code>, proceed as in item 3 instead.</li>
 </ul></li>
 </ul></li>
-<li><strong>If <code>k</code> is much smaller than <code>n</code> and the items have to be chosen in random order:</strong>
+<li><strong>If <code>k</code> is much smaller than <code>n</code> and the order of the items must be random or is unimportant:</strong>
 
 <ul>
 <li><strong>If the items are stored in a list whose order can be changed:</strong> Do a <em>partial shuffle</em> of that list, then choose the <em>last</em> <code>k</code> items from that list.  A <em>partial shuffle</em> proceeds as given in the section &quot;<a href="#Shuffling"><strong>Shuffling</strong></a>&quot;, except the partial shuffle stops after <code>k</code> swaps have been made (where swapping one item with itself counts as a swap).</li>
@@ -572,7 +572,7 @@ END METHOD
 <li><p><strong>Otherwise (for example, if 32-bit or larger integers will be chosen so that <code>n</code> is 2<sup>32</sup>, or if <code>n</code> is otherwise very large):</strong></p>
 
 <ul>
-<li>If the items have to be chosen <strong>in relative (index) order</strong>: Let <code>n2 = floor(n/2)</code>.  Generate <code>h = Hypergeometric(k, n2, n)</code>.  Sample <code>h</code> integers from the list <code>[0, 1, ..., n2 - 1]</code> by running this algorithm (items 1 to 5) recursively, then sample <code>k - h</code> integers from the list <code>[n2, n2 + 1, ..., n - 1]</code> by running this algorithm recursively.  The integers chosen this way are the indices to the desired items in relative (index) order (Sanders et al. 2019)<sup><a href="#Note6"><strong>(6)</strong></a></sup>.</li>
+<li>If the items have to be chosen <strong>in relative (index) order</strong>: Let <code>n2 = floor(n/2)</code>.  Generate <code>h = Hypergeometric(k, n2, n)</code>.  Sample <code>h</code> integers in relative order from the list <code>[0, 1, ..., n2 - 1]</code> by running this algorithm (items 1 to 5) recursively, then sample <code>k - h</code> integers in relative order from the list <code>[n2, n2 + 1, ..., n - 1]</code> by running this algorithm recursively.  The integers chosen this way are the indices to the desired items in relative (index) order (Sanders et al. 2019)<sup><a href="#Note6"><strong>(6)</strong></a></sup>.</li>
 <li><p>Otherwise, create a data structure to store the indices to items already chosen.  When a new index to an item is randomly chosen, add it to the data structure if it&#39;s not already there, or if it is, choose a new random index.  Repeat this process until <code>k</code> indices were added to the data structure this way.  Examples of suitable data structures are&mdash;</p>
 
 <ul>
@@ -1512,7 +1512,7 @@ END METHOD
 
 <h3>Random Integers with a Given Positive Sum</h3>
 
-<p>The following pseudocode shows how to generate <code>n</code> random integers with a given positive sum, in random order (specifically, a uniformly chosen random partition of that sum into <code>n</code> parts with repetition). (The algorithm for this was presented in (Smith and Tromble 2004)<sup><a href="#Note33"><strong>(33)</strong></a></sup>.)  In the pseudocode below&mdash;</p>
+<p>The following pseudocode shows how to generate <code>n</code> random integers with a given positive sum, in random order (specifically, a uniformly chosen random partition of that sum into <code>n</code> parts with repetition and in random order). (The algorithm for this was presented in (Smith and Tromble 2004)<sup><a href="#Note33"><strong>(33)</strong></a></sup>.)  In the pseudocode below&mdash;</p>
 
 <ul>
 <li>the method <code>PositiveIntegersWithSum</code> returns <code>n</code> integers greater than 0 that sum to <code>total</code>, in random order,</li>
