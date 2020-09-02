@@ -760,7 +760,7 @@ Two algorithms:
 5. Generate 2*_t_ unbiased random bits, and return 0 if there are more zeros than ones generated this way or more ones than zeros.  (Note that this condition can be checked even before all the bits are generated this way.)  Do this step two more times.
 6. Return 1.
 
-For a sketch of how this algorithm is derived, see the appendix
+For a sketch of how this algorithm is derived, see the appendix.
 
 <a id=a___b___x___y></a>
 #### (_a_/_b_)<sup>_x_/_y_</sup>
@@ -1095,8 +1095,9 @@ The Flajolet paper presented an algorithm to simulate 1 / &pi; but provided no d
 
 The algorithm is an application of the [**convex combination**](#Convex_Combinations) technique.  Namely, 1 / &pi; can be seen as a convex combination of two components:
 
-- _g_(_n_): 2<sup>6 * _n_</sup> * (6 * _n_ + 1) / 2<sup>8 * _n_ + 2</sup> = 2<sup>-2 * _n_</sup> * (6 * _n_ + 1) / 4 = (6 * _n_ + 1) / (2<sup>2 * _n_ + 2</sup>), which is the probability mass of the sum of two geometric(1/4) random numbers<sup>[**(7)**](#Note7)</sup> and one Bernoulli(5/9) random number.  This corresponds to step 1 of the convex combination algorithm and steps 2 through 4 of the 1 / &pi; algorithm.  (This also shows that there may be an error in the identity for 1 / &pi; given in the Flajolet paper: the "8 _n_ + 4" should probably read "8 _n_ + 2".)
-    - Note: 9 * (_n_ + 1) / (2<sup>2 * _n_ + 4</sup>) is the probability mass of the sum of two geometric(1/4) random numbers.
+- _g_(_n_): 2<sup>6 * _n_</sup> * (6 * _n_ + 1) / 2<sup>8 * _n_ + 2</sup> = 2<sup>&minus;2 * _n_</sup> * (6 * _n_ + 1) / 4 = (6 * _n_ + 1) / (2<sup>2 * _n_ + 2</sup>), which is the probability mass of the sum of two geometric(1/4) random numbers<sup>[**(7)**](#Note7)</sup> and one Bernoulli(5/9) random number, all of which are independent.  This corresponds to step 1 of the convex combination algorithm and steps 2 through 4 of the 1 / &pi; algorithm.  (This also shows that there may be an error in the identity for 1 / &pi; given in the Flajolet paper: the "8 _n_ + 4" should probably read "8 _n_ + 2".)
+    - Note 1: 9 * (_n_ + 1) / (2<sup>2 * _n_ + 4</sup>) is the probability mass of the sum of two independent geometric(1/4) random numbers.
+    - Note 2: _f_(_z_) * (1 &minus; _p_) + _f_(_z_ &minus; 1) * _p_ is the probability mass of the sum of two independent random numbers: a Bernoulli(_p_) number and a number _z_ with probability mass function _f_(.).
 - _h_<sub>_n_</sub>(): (choose(_n_ * 2, _n_) / 2<sup>_n_ * 2</sup>)<sup>3</sup>, which is the probability of heads of the "coin" numbered _n_.  This corresponds to step 2 of the convex combination algorithm and step 5 of the 1 / &pi; algorithm.
 
 <a id=License></a>
