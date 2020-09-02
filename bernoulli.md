@@ -65,6 +65,7 @@ This page is focused on sampling methods that _exactly_ simulate the probability
         - [**&#x03F5; / &lambda;**](#x03F5_lambda)
         - [**Certain Rational Functions**](#Certain_Rational_Functions)
         - [**Bernstein Polynomials**](#Bernstein_Polynomials)
+        - [**Certain Algebraic Functions**](#Certain_Algebraic_Functions)
     - [**Algorithms for Irrational Constants**](#Algorithms_for_Irrational_Constants)
         - [**Digit Expansions**](#Digit_Expansions)
         - [**Continued Fractions**](#Continued_Fractions)
@@ -610,6 +611,24 @@ A _Bernstein polynomial_ is a polynomial of the form &Sigma;<sub>_i_ = 0, ..., _
 
 > **Note**: Each _a_\[_i_\] acts as a control point for a 1-dimensional [**Bézier curve**](https://en.wikipedia.org/wiki/Bézier_curve), where &lambda; is the relative position on that curve, the curve begins at  _a_\[0\], and the curve ends at _a_\[_n_\].  For example, given control points 0.2, 0.3, and 0.6, the curve is at 0.2 when &lambda; = 0, and 0.6 when &lambda; = 1.  (Note that the curve is not at 0.3 when &lambda; = 1/2; in general, Bézier curves do not cross their control points other than the first and the last.)
 
+<a id=Certain_Algebraic_Functions></a>
+#### Certain Algebraic Functions
+
+(Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup> showed how certain algebraic functions can be simulated by generating a bitstring and determining whether that bitstring belongs to a certain class of valid bitstrings.  The rules for determining whether a bitstring is valid are called a _binary stochastic grammar_, which uses an alphabet of only two "letters".
+
+The following algorithm simulates the following algebraic function:
+
+- &Sigma;<sub>_k_ = 1, 2, ...</sub> (W(_k_) * (&lambda; / &beta;)<sup>_k_</sup>), or alternatively,
+- &Sigma;<sub>_k_ = 1, 2, ...</sub> (&lambda;<sup>_k_ &minus; 1</sup> * (1 &minus; &lambda;) * W(_k_) / &beta;<sup>_k_</sup>),
+
+where &beta; is 2 and W(_k_) is the number of valid _k_-letter words. (An algebraic function is a function that can be a root of a polynomial system.)
+
+1. Set _g_ to 1. (This ensures _g_ is 1 or greater, which is not done in figure 4 as given in the Flajolet paper.)
+2. With probability &lambda;, add 1 to _g_ and repeat this step.  Otherwise, go to step 3.
+3. Return a number that is 1 with probability W(_g_)/&beta;<sup>_g_</sup>, and 0 otherwise.  (In the Flajolet paper, this is done by generating a _g_-letter word and "parsing" that string using a binary stochastic grammar to determine whether that word is valid.)
+
+An extension to this algorithm, not mentioned in the Flajolet paper, is the use of stochastic grammars with a bigger alphabet than two "letters".  For example, in the case of _ternary stochastic grammars_, the alphabet size is 3 and &beta; is 3 in the algorithm above.  In general, for <em>&beta;-ary stochastic grammars</em>, the alphabet size is &beta;.
+
 <a id=Algorithms_for_Irrational_Constants></a>
 ### Algorithms for Irrational Constants
 
@@ -966,7 +985,7 @@ Points with invalid &#x03F5; values were suppressed.  For the low-mean algorithm
 - <small><sup id=Note5>(5)</sup> Mendo, Luis. "An asymptotically optimal Bernoulli factory for certain functions that can be expressed as power series." Stochastic Processes and their Applications 129, no. 11 (2019): 4366-4384.</small>
 - <small><sup id=Note6>(6)</sup> Łatuszyński, K., Kosmidis, I.,  Papaspiliopoulos, O., Roberts, G.O., "[**Simulating events of unknown probabilities via reverse time martingales**](https://arxiv.org/abs/0907.4018v2)", arXiv:0907.4018v2 [stat.CO], 2009/2011.</small>
 - <small><sup id=Note7>(7)</sup> As used here and in the Flajolet paper, a geometric random number is the number of successes before the first failure, where the success probability is &lambda;.</small>
-- <small><sup id=Note8>(8)</sup> The Flajolet paper describes what it calls the _von Neumann schema_ (sec. 2), which, given a permutation class and an input coin, generates a random non-negative integer _n_ with probability equal to (&lambda;<sup>_n_</sup> * V(_n_) / _n_!) / EGF(&lambda;), where EGF(&lambda;) = &Sigma;<sub>_k_ = 0, 1, ...</sub> (&lambda;<sup>_k_</sup> * V(_k_) / _k_!), and V(_n_) is the number of _valid_ permutations of size _n_.  Here, EGF(&lambda;) is the _exponential generating function_.  Effectively, a geometric(&lambda;) random number _G_ (see previous note) is accepted with probability V(_G_)/_G_! (where _G_! is the number of _possible_ permutations of size _G_, or 1 if _G_ is 0), and rejected otherwise.  The probability that _r_ geometric random numbers are rejected this way is _p_*(1 &minus; _p_)<sup>_r_</sup>, where _p_ = (1 &minus; &lambda;) * EGF(&lambda;).  The binary stochastic grammar construction in the same paper (sec. 3.2; fig. 4) also generates a geometric(&lambda;) random number _G_, except this time the construction returns a number that is 1 with probability W(&gamma;)/2<sup>&gamma;</sup> (or the ratio of _valid_ to _possible_ &gamma;-bit words), where &gamma; = _G_ + 1, or with probability &Sigma;<sub>_k_ = 0, 1, ...</sub> (W(_k_) * (&lambda; / 2)<sup>_k_</sup>), and 0 otherwise. (This incorporates a correction to figure 4 in the paper.)</small>
+- <small><sup id=Note8>(8)</sup> The Flajolet paper describes what it calls the _von Neumann schema_ (sec. 2), which, given a permutation class and an input coin, generates a random non-negative integer _n_ with probability equal to (&lambda;<sup>_n_</sup> * V(_n_) / _n_!) / EGF(&lambda;), where EGF(&lambda;) = &Sigma;<sub>_k_ = 0, 1, ...</sub> (&lambda;<sup>_k_</sup> * V(_k_) / _k_!), and V(_n_) is the number of _valid_ permutations of size _n_.  Here, EGF(&lambda;) is the _exponential generating function_.  Effectively, a geometric(&lambda;) random number _G_ (see previous note) is accepted with probability V(_G_)/_G_! (where _G_! is the number of _possible_ permutations of size _G_, or 1 if _G_ is 0), and rejected otherwise.  The probability that _r_ geometric random numbers are rejected this way is _p_*(1 &minus; _p_)<sup>_r_</sup>, where _p_ = (1 &minus; &lambda;) * EGF(&lambda;).</small>
 - <small><sup id=Note9>(9)</sup> Devroye, L., [**_Non-Uniform Random Variate Generation_**](http://luc.devroye.org/rnbookindex.html), 1986.</small>
 - <small><sup id=Note10>(10)</sup> Shaddin Dughmi, Jason D. Hartline, Robert Kleinberg, and Rad Niazadeh. 2017. Bernoulli Factories and Black-Box Reductions in Mechanism Design. In _Proceedings of 49th Annual ACM SIGACT Symposium on the Theory of Computing_, Montreal, Canada, June 2017 (STOC’17).</small>
 - <small><sup id=Note11>(11)</sup> Gonçalves, F. B., Łatuszyński, K. G., Roberts, G. O. (2017).  Exact Monte Carlo likelihood-based inference for jump-diffusion processes.</small>
