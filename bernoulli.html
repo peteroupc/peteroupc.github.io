@@ -1,5 +1,5 @@
-<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Bernoulli Factory Algorithms</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
-<nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></nav></div>
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/"itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Bernoulli Factory Algorithms</title><meta name="citation_title" content="Bernoulli Factory Algorithms"><meta name="citation_author" content="Peter Occil"/><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>Bernoulli Factory Algorithms</h1>
 
@@ -1658,6 +1658,7 @@
 <li><small><sup id=Note29>(29)</sup> Pae, S., &quot;Random number generation using a biased source&quot;, dissertation, University of Illinois at Urbana-Champaign, 2005.</small></li>
 <li><small><sup id=Note30>(30)</sup> Peres, Y., &quot;Iterating von Neumann&#39;s procedure for extracting random bits&quot;, Annals of Statistics 1992,20,1, p. 590-597.</small></li>
 <li><small><sup id=Note31>(31)</sup> Devroye, L., Gravel, C., &quot;<a href="https://arxiv.org/abs/1502.02539v5"><strong>Sampling with arbitrary precision</strong></a>&quot;, arXiv:1502.02539v5 [cs.IT], 2015.</small></li>
+<li><small><sup id=Note32>(32)</sup> Flajolet, P., Sedgewick, R., &quot;Analytic Combinatorics&quot;, 2009.</small></li>
 </ul>
 
 <p><a id=Appendix></a></p>
@@ -1805,6 +1806,18 @@ for i in range(iters):
 </ul>
 
 <p>Effectively, a geometric(&lambda;) random number <em>G</em><sup><a href="#Note7"><strong>(7)</strong></a></sup> is accepted with probability V(<em>G</em>)/<em>G</em>! (where <em>G</em>! is the number of <em>possible</em> permutations of size <em>G</em>, or 1 if <em>G</em> is 0), and rejected otherwise.  The probability that <em>r</em> geometric random numbers are rejected this way is <em>p</em>*(1 &minus; <em>p</em>)<sup><em>r</em></sup>, where <em>p</em> = (1 &minus; &lambda;) * EGF(&lambda;).</p>
+
+<p>Examples of permutation classes include&mdash;</p>
+
+<ul>
+<li>single-cycle permutations (EGF(&lambda;) = Cyc(&lambda;) = ln(1/(1 &minus; &lambda;));V(<em>n</em>) = (<em>n</em> &minus; 1)!)</li>
+<li>sorted permutations (EGF(&lambda;) = Set(&lambda;) = exp(&lambda;); V(<em>n</em>) = 1),</li>
+<li>all permutations (EGF(&lambda;) = Seq(&lambda;) = 1/(1 &minus; &lambda;); V(<em>n</em>) = <em>n</em>!),</li>
+<li>alternating permutations of even size (EGF(&lambda;) = 1/cos(&lambda;); the V(<em>n</em>) starting at <em>n</em> = 0 is <a href="https://oeis.org/A000111"><strong>A000111</strong></a> in the <em>On-Line Encyclopedia of Integer Sequences</em>, except every second integer is 0 instead), and</li>
+<li>alternating permutations of odd size (EGF(&lambda;) = tan(&lambda;); the V(<em>n</em>) starting at <em>n</em> = 0 is A000111, except every other integer starting with the first is 0 instead),</li>
+</ul>
+
+<p>using the notation in &quot;Analytic Combinatorics&quot; (Flajolet and Sedgewick 2009)<sup><a href="#Note32"><strong>(32)</strong></a></sup>.</p>
 
 <p>The following algorithm generates a random number that follows the von Neumann schema.</p>
 

@@ -1061,6 +1061,7 @@ Points with invalid &#x03F5; values were suppressed.  For the low-mean algorithm
 - <small><sup id=Note29>(29)</sup> Pae, S., "Random number generation using a biased source", dissertation, University of Illinois at Urbana-Champaign, 2005.</small>
 - <small><sup id=Note30>(30)</sup> Peres, Y., "Iterating von Neumann's procedure for extracting random bits", Annals of Statistics 1992,20,1, p. 590-597.</small>
 - <small><sup id=Note31>(31)</sup> Devroye, L., Gravel, C., "[**Sampling with arbitrary precision**](https://arxiv.org/abs/1502.02539v5)", arXiv:1502.02539v5 [cs.IT], 2015.</small>
+- <small><sup id=Note32>(32)</sup> Flajolet, P., Sedgewick, R., "Analytic Combinatorics", 2009.</small>
 
 <a id=Appendix></a>
 ## Appendix
@@ -1181,6 +1182,16 @@ where&mdash;
 - V(_n_) is the number of _valid_ permutations of size _n_.
 
 Effectively, a geometric(&lambda;) random number _G_<sup>[**(7)**](#Note7)</sup> is accepted with probability V(_G_)/_G_! (where _G_! is the number of _possible_ permutations of size _G_, or 1 if _G_ is 0), and rejected otherwise.  The probability that _r_ geometric random numbers are rejected this way is _p_*(1 &minus; _p_)<sup>_r_</sup>, where _p_ = (1 &minus; &lambda;) * EGF(&lambda;).
+
+Examples of permutation classes include&mdash;
+
+- single-cycle permutations (EGF(&lambda;) = Cyc(&lambda;) = ln(1/(1 &minus; &lambda;));V(_n_) = (_n_ &minus; 1)!)
+- sorted permutations (EGF(&lambda;) = Set(&lambda;) = exp(&lambda;); V(_n_) = 1),
+- all permutations (EGF(&lambda;) = Seq(&lambda;) = 1/(1 &minus; &lambda;); V(_n_) = _n_!),
+- alternating permutations of even size (EGF(&lambda;) = 1/cos(&lambda;); the V(_n_) starting at _n_ = 0 is [**A000111**](https://oeis.org/A000111) in the _On-Line Encyclopedia of Integer Sequences_, except every second integer is 0 instead), and
+- alternating permutations of odd size (EGF(&lambda;) = tan(&lambda;); the V(_n_) starting at _n_ = 0 is A000111, except every other integer starting with the first is 0 instead),
+
+using the notation in "Analytic Combinatorics" (Flajolet and Sedgewick 2009)<sup>[**(32)**](#Note32)</sup>.
 
 The following algorithm generates a random number that follows the von Neumann schema.
 
