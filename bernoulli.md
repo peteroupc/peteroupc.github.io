@@ -1185,7 +1185,7 @@ Effectively, a geometric(&lambda;) random number _G_<sup>[**(7)**](#Note7)</sup>
 
 Examples of permutation classes include&mdash;
 
-- single-cycle permutations (EGF(&lambda;) = Cyc(&lambda;) = ln(1/(1 &minus; &lambda;));V(_n_) = (_n_ &minus; 1)!)
+- single-cycle permutations (EGF(&lambda;) = Cyc(&lambda;) = ln(1/(1 &minus; &lambda;)); V(_n_) = (_n_ &minus; 1)!)
 - sorted permutations (EGF(&lambda;) = Set(&lambda;) = exp(&lambda;); V(_n_) = 1),
 - all permutations (EGF(&lambda;) = Seq(&lambda;) = 1/(1 &minus; &lambda;); V(_n_) = _n_!),
 - alternating permutations of even size (EGF(&lambda;) = 1/cos(&lambda;); the V(_n_) starting at _n_ = 0 is [**A000111**](https://oeis.org/A000111) in the _On-Line Encyclopedia of Integer Sequences_, except every second integer is 0 instead), and
