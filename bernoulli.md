@@ -32,6 +32,8 @@ This page is focused on sampling methods that _exactly_ simulate the probability
         - [**Certain Power Series**](#Certain_Power_Series)
         - [**exp(&minus;&lambda;)**](#exp_minus_lambda)
         - [**exp(&lambda;)*(1&minus;&lambda;)**](#exp_lambda_1_minus_lambda)
+        - [**(1&minus;&lambda;)/cos(&lambda;)**](#1_minus_lambda_cos_lambda)
+        - [**(1&minus;&lambda;) * tan(&lambda;)**](#1_minus_lambda_tan_lambda)
         - [**exp(&lambda; * _c_ &minus; _c_)**](#exp_lambda__c__minus__c)
         - [**exp(&minus;&lambda; &minus; _c_)**](#exp_minus_lambda_minus__c)
         - [**1/(1+&lambda;)**](#1_1_lambda)
@@ -234,6 +236,36 @@ On the other hand, this third algorithm converges quickly everywhere in (0, 1). 
 3. Generate a uniform random number _U_.
 4. If _k_ > 0 and _w_ is less than _U_, return 0.
 5. Set _w_ to _U_, add 1 to _k_, and go to step 2.
+
+<a id=1_minus_lambda_cos_lambda></a>
+#### (1&minus;&lambda;)/cos(&lambda;)
+
+(Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup>:
+
+1. Flip the input coin until the coin returns 0.  Then set _G_ to the number of times the coin returns 1 this way.
+2. If _G_ is **odd**, return 0.
+3. Generate a uniform random number _U_, then set _i_ to 1.
+4. While _i_ is less than _G_:
+    1. Generate a uniform random number _V_.
+    2. If _i_ is odd and _V_ is less than _U_, return 0.
+    3. If _i_ is even and _U_ is less than _V_, return 0.
+    4. Add 1 to _i_, then set _U_ to _V_.
+5. Return 1.
+
+<a id=1_minus_lambda_tan_lambda></a>
+#### (1&minus;&lambda;) * tan(&lambda;)
+
+(Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup>:
+
+1. Flip the input coin until the coin returns 0.  Then set _G_ to the number of times the coin returns 1 this way.
+2. If _G_ is **even**, return 0.
+3. Generate a uniform random number _U_, then set _i_ to 1.
+4. While _i_ is less than _G_:
+    1. Generate a uniform random number _V_.
+    2. If _i_ is odd and _V_ is less than _U_, return 0.
+    3. If _i_ is even and _U_ is less than _V_, return 0.
+    4. Add 1 to _i_, then set _U_ to _V_.
+5. Return 1.
 
 <a id=exp_lambda__c__minus__c></a>
 #### exp(&lambda; * _c_ &minus; _c_)
@@ -625,7 +657,7 @@ where &beta; is 2 and W(_k_) is the number of valid _k_-letter words. (An algebr
 
 1. Set _g_ to 1. (This ensures _g_ is 1 or greater, which is not done in figure 4 as given in the Flajolet paper.)
 2. With probability &lambda;, add 1 to _g_ and repeat this step.  Otherwise, go to step 3.
-3. Return a number that is 1 with probability W(_g_)/&beta;<sup>_g_</sup>, and 0 otherwise.  (In the Flajolet paper, this is done by generating a _g_-letter word and "parsing" that string using a binary stochastic grammar to determine whether that word is valid.)
+3. Return a number that is 1 with probability W(_g_)/&beta;<sup>_g_</sup>, and 0 otherwise.  (In the Flajolet paper, this is done by generating a _g_-letter word and "parsing" that word using a binary stochastic grammar to determine whether that word is valid.  Note that the word can be determined to be valid as each of its "letters" is generated.)
 
 An extension to this algorithm, not mentioned in the Flajolet paper, is the use of stochastic grammars with a bigger alphabet than two "letters".  For example, in the case of _ternary stochastic grammars_, the alphabet size is 3 and &beta; is 3 in the algorithm above.  In general, for <em>&beta;-ary stochastic grammars</em>, the alphabet size is &beta;.
 
@@ -867,7 +899,7 @@ Decompose _z_ into _LC_\[_i_\], _LI_\[_i_\], and _LF_\[_i_\] just as for the **e
 <a id=Polylogarithmic_Constants></a>
 ### Polylogarithmic Constants
 
-The following algorithm simulates a polylogarithmic constant of the form Li<sub>_r_</sub>(1/2), where _r_ is an integer 1 or greater.  See (Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup> and "Convex Combinations" (the algorithm works by decomposing the series forming the polylogarithmic constant into _g_(_i_) = (1/2)<sup>_i_</sup>, which sums to 1, and _h_<sub>_i_</sub>() = _i_<sub>_r_</sub>, where _i_ >= 1).
+The following algorithm simulates a polylogarithmic constant of the form Li<sub>_r_</sub>(1/2), where _r_ is an integer 1 or greater.  See (Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup> and "Convex Combinations" (the algorithm works by decomposing the series forming the polylogarithmic constant into _g_(_i_) = (1/2)<sup>_i_</sup>, which sums to 1, and _h_<sub>_i_</sub>() = _i_<sup>_r_</sup>, where _i_ >= 1).
 
 1. Set _t_ to 1.
 2. With probability 1/2, add 1 to _t_ and repeat this step.  Otherwise, go to step 3.
@@ -881,15 +913,16 @@ The following algorithm simulates a polylogarithmic constant of the form Li<sub>
 <a id=Convex_Combinations></a>
 #### Convex Combinations
 
-Assume we have one or more input coins _h_<sub>_i_</sub>(&lambda;) that returns heads with a probability that depends on &lambda;.  (The number of coins may be infinite.) The following algorithm chooses one of these coins at random then flips that coin.  Specifically, the algorithm simulates the following function: _g_(0) * _h_<sub>0</sub>(&lambda;) + _g_(1) * _h_<sub>1</sub>(&lambda;) + ..., where _g_(_i_) is the probability that coin _i_ will be chosen, _h_<sub>_i_</sub> is the function simulated by coin _i_, and all the _g_(_i_) sum to 1.  See (Wästlund 1999, Theorem 2.7)<sup>[**(24)**](#Note24)</sup>.  (Alternatively, the algorithm can be seen as simulating **E**\[_h_<sub>_X_</sub>(&lambda;)\], that is, the expected or average value of _h_<sub>_X_</sub> where _X_ is the number that identifies the randomly chosen coin.)
+Assume we have one or more input coins _h_<sub>_i_</sub>(&lambda;) that returns heads with a probability that depends on &lambda;.  (The number of coins may be infinite.) The following algorithm chooses one of these coins at random then flips that coin.  Specifically, the algorithm simulates the following function: _g_(0); * _h_<sub>0</sub>(&lambda;) + _g_(1) * _h_<sub>1</sub>(&lambda;) + ..., where _g_(_i_) is the probability that coin _i_ will be chosen, _h_<sub>_i_</sub> is the function simulated by coin _i_, and all the _g_(_i_) sum to 1.  See (Wästlund 1999, Theorem 2.7)<sup>[**(24)**](#Note24)</sup>.  (Alternatively, the algorithm can be seen as simulating **E**\[_h_<sub>_X_</sub>(&lambda;)\], that is, the expected or average value of _h_<sub>_X_</sub> where _X_ is the number that identifies the randomly chosen coin.)
 
 1. Generate a random integer _X_ in some way.  For example, it could be a uniform random integer in [1, 6], or it could be a Poisson random number.
 2. Flip the coin represented by _X_ and return the result.
 
 > **Examples:**
 >
-> 1. As one example, generate a Poisson random number _X_, then flip the input coin.  With probability 1/(1+_X_), return the result of the coin flip; otherwise, return 0.
-> 2. _Bernoulli Race_ (Dughmi et al. 2017)<sup>[**(10)**](#Note10)</sup>: If we have _n_ coins, then choose one of them uniformly at random and flip that coin. If the flip returns 1, return _X_; otherwise, repeat this algorithm.  This algorithm chooses a random coin based on its probability of heads.
+> 1. Example 1. As one example, generate a Poisson random number _X_, then flip the input coin.  With probability 1/(1+_X_), return the result of the coin flip; otherwise, return 0.
+> 2. Example 2. Generate a Poisson(&mu;) random number _X_ and return 1 if _X_ is 0, or 0 otherwise.  This is a Bernoulli factory for exp(&mu;) mentioned earlier, and corresponds to _g_(_i_) being the Poisson(&mu;) probabilities and _h_<sub>_i_</sub> returning 1 if _i_ is 0, and 0 otherwise.
+> 3. Example 3. _Bernoulli Race_ (Dughmi et al. 2017)<sup>[**(10)**](#Note10)</sup>: If we have _n_ coins, then choose one of them uniformly at random and flip that coin. If the flip returns 1, return _X_; otherwise, repeat this algorithm.  This algorithm chooses a random coin based on its probability of heads.
 
 <a id=Simulating_the_Probability_Generating_Function></a>
 #### Simulating the Probability Generating Function
@@ -934,7 +967,11 @@ Points with invalid &#x03F5; values were suppressed.  For the low-mean algorithm
 
 | Algorithm | Simulated Mean | Average Bits Consumed | Coin Flips |
  --- | --- | --- | --- |
+| (1-x)\*tan(x) | ![**Simulated Mean for (1-x)\*tan(x)**](bernoullicharts/1-x_tan_x__mean.svg) | ![**Expected Bits Consumed by (1-x)\*tan(x)**](bernoullicharts/1-x_tan_x__bits.svg) | ![**Coin Flips for the Function**](bernoullicharts/1-x_tan_x__bound.svg) |
+| (1-x)/cos(x) | ![**Simulated Mean for (1-x)/cos(x)**](bernoullicharts/1-x_cos_x__mean.svg) | ![**Expected Bits Consumed by (1-x)/cos(x)**](bernoullicharts/1-x_cos_x__bits.svg) | ![**Coin Flips for the Function**](bernoullicharts/1-x_cos_x__bound.svg) |
 | (1/3)\*x/(1+(1/3)\*x) | ![**Simulated Mean for (1/3)\*x/(1+(1/3)\*x)**](bernoullicharts/1_3_x_1_1_3_x__mean.svg) | ![**Expected Bits Consumed by (1/3)\*x/(1+(1/3)\*x)**](bernoullicharts/1_3_x_1_1_3_x__bits.svg) | ![**Coin Flips for the Function**](bernoullicharts/1_3_x_1_1_3_x__bound.svg) |
+| (2/3)\*x/(1+(2/3)\*x) | ![**Simulated Mean for (2/3)\*x/(1+(2/3)\*x)**](bernoullicharts/2_3_x_1_2_3_x__mean.svg) | ![**Expected Bits Consumed by (2/3)\*x/(1+(2/3)\*x)**](bernoullicharts/2_3_x_1_2_3_x__bits.svg) | ![**Coin Flips for the Function**](bernoullicharts/2_3_x_1_2_3_x__bound.svg) |
+| (3/2)\*x/(1+(3/2)\*x) | ![**Simulated Mean for (3/2)\*x/(1+(3/2)\*x)**](bernoullicharts/3_2_x_1_3_2_x__mean.svg) | ![**Expected Bits Consumed by (3/2)\*x/(1+(3/2)\*x)**](bernoullicharts/3_2_x_1_3_2_x__bits.svg) | ![**Coin Flips for the Function**](bernoullicharts/3_2_x_1_3_2_x__bound.svg) |
 | 0.5\*x/(1+0.5\*x) | ![**Simulated Mean for 0.5\*x/(1+0.5\*x)**](bernoullicharts/0_5_x_1_0_5_x__mean.svg) | ![**Expected Bits Consumed by 0.5\*x/(1+0.5\*x)**](bernoullicharts/0_5_x_1_0_5_x__bits.svg) | ![**Coin Flips for the Function**](bernoullicharts/0_5_x_1_0_5_x__bound.svg) |
 | 1 - log(1+x) (Alt. Series) | ![**Simulated Mean for 1 - log(1+x) (Alt. Series)**](bernoullicharts/1_-_log_1_x_alt_series__mean.svg) | ![**Expected Bits Consumed by 1 - log(1+x) (Alt. Series)**](bernoullicharts/1_-_log_1_x_alt_series__bits.svg) | ![**Coin Flips for the Function**](bernoullicharts/1_-_log_1_x_alt_series__bound.svg) |
 | 1/(1+x) (Alt. Series) | ![**Simulated Mean for 1/(1+x) (Alt. Series)**](bernoullicharts/1_1_x_alt_series__mean.svg) | ![**Expected Bits Consumed by 1/(1+x) (Alt. Series)**](bernoullicharts/1_1_x_alt_series__bits.svg) | ![**Coin Flips for the Function**](bernoullicharts/1_1_x_alt_series__bound.svg) |
@@ -942,6 +979,11 @@ Points with invalid &#x03F5; values were suppressed.  For the low-mean algorithm
 | 1/(1+x) (Two-Coin Special Case) | ![**Simulated Mean for 1/(1+x) (Two-Coin Special Case)**](bernoullicharts/1_1_x_two-coin_special_case__mean.svg) | ![**Expected Bits Consumed by 1/(1+x) (Two-Coin Special Case)**](bernoullicharts/1_1_x_two-coin_special_case__bits.svg) | ![**Coin Flips for the Function**](bernoullicharts/1_1_x_two-coin_special_case__bound.svg) |
 | 1/(3+x) | ![**Simulated Mean for 1/(3+x)**](bernoullicharts/1_3_x__mean.svg) | ![**Expected Bits Consumed by 1/(3+x)**](bernoullicharts/1_3_x__bits.svg) | ![**Coin Flips for the Function**](bernoullicharts/1_3_x__bound.svg) |
 | 1/(5+x) | ![**Simulated Mean for 1/(5+x)**](bernoullicharts/1_5_x__mean.svg) | ![**Expected Bits Consumed by 1/(5+x)**](bernoullicharts/1_5_x__bits.svg) | ![**Coin Flips for the Function**](bernoullicharts/1_5_x__bound.svg) |
+| 2014 1.200000 eps=0.050000 | ![**Simulated Mean for 2014 1.200000 eps=0.050000**](bernoullicharts/2014_1_200000_eps_0_050000_mean.svg) | ![**Expected Bits Consumed by 2014 1.200000 eps=0.050000**](bernoullicharts/2014_1_200000_eps_0_050000_bits.svg) | ![**Coin Flips for the Function**](bernoullicharts/2014_1_200000_eps_0_050000_bound.svg) |
+| 2014 1.500000 eps=0.050000 | ![**Simulated Mean for 2014 1.500000 eps=0.050000**](bernoullicharts/2014_1_500000_eps_0_050000_mean.svg) | ![**Expected Bits Consumed by 2014 1.500000 eps=0.050000**](bernoullicharts/2014_1_500000_eps_0_050000_bits.svg) | ![**Coin Flips for the Function**](bernoullicharts/2014_1_500000_eps_0_050000_bound.svg) |
+| 2014 2.000000 eps=0.050000 | ![**Simulated Mean for 2014 2.000000 eps=0.050000**](bernoullicharts/2014_2_000000_eps_0_050000_mean.svg) | ![**Expected Bits Consumed by 2014 2.000000 eps=0.050000**](bernoullicharts/2014_2_000000_eps_0_050000_bits.svg) | ![**Coin Flips for the Function**](bernoullicharts/2014_2_000000_eps_0_050000_bound.svg) |
+| 2014 3.000000 eps=0.050000 | ![**Simulated Mean for 2014 3.000000 eps=0.050000**](bernoullicharts/2014_3_000000_eps_0_050000_mean.svg) | ![**Expected Bits Consumed by 2014 3.000000 eps=0.050000**](bernoullicharts/2014_3_000000_eps_0_050000_bits.svg) | ![**Coin Flips for the Function**](bernoullicharts/2014_3_000000_eps_0_050000_bound.svg) |
+| 2014 5.000000 eps=0.050000 | ![**Simulated Mean for 2014 5.000000 eps=0.050000**](bernoullicharts/2014_5_000000_eps_0_050000_mean.svg) | ![**Expected Bits Consumed by 2014 5.000000 eps=0.050000**](bernoullicharts/2014_5_000000_eps_0_050000_bits.svg) | ![**Coin Flips for the Function**](bernoullicharts/2014_5_000000_eps_0_050000_bound.svg) |
 | 2014 Add. x+0.1 | ![**Simulated Mean for 2014 Add. x+0.1**](bernoullicharts/2014_add_x_0_1_mean.svg) | ![**Expected Bits Consumed by 2014 Add. x+0.1**](bernoullicharts/2014_add_x_0_1_bits.svg) | ![**Coin Flips for the Function**](bernoullicharts/2014_add_x_0_1_bound.svg) |
 | 2014 Add. x+0.2 | ![**Simulated Mean for 2014 Add. x+0.2**](bernoullicharts/2014_add_x_0_2_mean.svg) | ![**Expected Bits Consumed by 2014 Add. x+0.2**](bernoullicharts/2014_add_x_0_2_bits.svg) | ![**Coin Flips for the Function**](bernoullicharts/2014_add_x_0_2_bound.svg) |
 | 2014 Add. x+0.3 | ![**Simulated Mean for 2014 Add. x+0.3**](bernoullicharts/2014_add_x_0_3_mean.svg) | ![**Expected Bits Consumed by 2014 Add. x+0.3**](bernoullicharts/2014_add_x_0_3_bits.svg) | ![**Coin Flips for the Function**](bernoullicharts/2014_add_x_0_3_bound.svg) |
@@ -952,8 +994,17 @@ Points with invalid &#x03F5; values were suppressed.  For the low-mean algorithm
 | 2014 Lin. x\*4.0 | ![**Simulated Mean for 2014 Lin. x\*4.0**](bernoullicharts/2014_lin_x_4_0_mean.svg) | ![**Expected Bits Consumed by 2014 Lin. x\*4.0**](bernoullicharts/2014_lin_x_4_0_bits.svg) | ![**Coin Flips for the Function**](bernoullicharts/2014_lin_x_4_0_bound.svg) |
 | 2014 Lin. x\*6.0 | ![**Simulated Mean for 2014 Lin. x\*6.0**](bernoullicharts/2014_lin_x_6_0_mean.svg) | ![**Expected Bits Consumed by 2014 Lin. x\*6.0**](bernoullicharts/2014_lin_x_6_0_bits.svg) | ![**Coin Flips for the Function**](bernoullicharts/2014_lin_x_6_0_bound.svg) |
 | 2014 Lin. x\*8.0 | ![**Simulated Mean for 2014 Lin. x\*8.0**](bernoullicharts/2014_lin_x_8_0_mean.svg) | ![**Expected Bits Consumed by 2014 Lin. x\*8.0**](bernoullicharts/2014_lin_x_8_0_bits.svg) | ![**Coin Flips for the Function**](bernoullicharts/2014_lin_x_8_0_bound.svg) |
+| 2016 1.200000 eps=0.050000 | ![**Simulated Mean for 2016 1.200000 eps=0.050000**](bernoullicharts/2016_1_200000_eps_0_050000_mean.svg) | ![**Expected Bits Consumed by 2016 1.200000 eps=0.050000**](bernoullicharts/2016_1_200000_eps_0_050000_bits.svg) | ![**Coin Flips for the Function**](bernoullicharts/2016_1_200000_eps_0_050000_bound.svg) |
+| 2016 1.500000 eps=0.050000 | ![**Simulated Mean for 2016 1.500000 eps=0.050000**](bernoullicharts/2016_1_500000_eps_0_050000_mean.svg) | ![**Expected Bits Consumed by 2016 1.500000 eps=0.050000**](bernoullicharts/2016_1_500000_eps_0_050000_bits.svg) | ![**Coin Flips for the Function**](bernoullicharts/2016_1_500000_eps_0_050000_bound.svg) |
+| 2016 2.000000 eps=0.050000 | ![**Simulated Mean for 2016 2.000000 eps=0.050000**](bernoullicharts/2016_2_000000_eps_0_050000_mean.svg) | ![**Expected Bits Consumed by 2016 2.000000 eps=0.050000**](bernoullicharts/2016_2_000000_eps_0_050000_bits.svg) | ![**Coin Flips for the Function**](bernoullicharts/2016_2_000000_eps_0_050000_bound.svg) |
+| 2016 3.000000 eps=0.050000 | ![**Simulated Mean for 2016 3.000000 eps=0.050000**](bernoullicharts/2016_3_000000_eps_0_050000_mean.svg) | ![**Expected Bits Consumed by 2016 3.000000 eps=0.050000**](bernoullicharts/2016_3_000000_eps_0_050000_bits.svg) | ![**Coin Flips for the Function**](bernoullicharts/2016_3_000000_eps_0_050000_bound.svg) |
+| 2016 5.000000 eps=0.050000 | ![**Simulated Mean for 2016 5.000000 eps=0.050000**](bernoullicharts/2016_5_000000_eps_0_050000_mean.svg) | ![**Expected Bits Consumed by 2016 5.000000 eps=0.050000**](bernoullicharts/2016_5_000000_eps_0_050000_bits.svg) | ![**Coin Flips for the Function**](bernoullicharts/2016_5_000000_eps_0_050000_bound.svg) |
+| 2019 1.200000 eps=0.050000 | ![**Simulated Mean for 2019 1.200000 eps=0.050000**](bernoullicharts/2019_1_200000_eps_0_050000_mean.svg) | ![**Expected Bits Consumed by 2019 1.200000 eps=0.050000**](bernoullicharts/2019_1_200000_eps_0_050000_bits.svg) | ![**Coin Flips for the Function**](bernoullicharts/2019_1_200000_eps_0_050000_bound.svg) |
+| 2019 1.500000 eps=0.050000 | ![**Simulated Mean for 2019 1.500000 eps=0.050000**](bernoullicharts/2019_1_500000_eps_0_050000_mean.svg) | ![**Expected Bits Consumed by 2019 1.500000 eps=0.050000**](bernoullicharts/2019_1_500000_eps_0_050000_bits.svg) | ![**Coin Flips for the Function**](bernoullicharts/2019_1_500000_eps_0_050000_bound.svg) |
+| 2019 2.000000 eps=0.050000 | ![**Simulated Mean for 2019 2.000000 eps=0.050000**](bernoullicharts/2019_2_000000_eps_0_050000_mean.svg) | ![**Expected Bits Consumed by 2019 2.000000 eps=0.050000**](bernoullicharts/2019_2_000000_eps_0_050000_bits.svg) | ![**Coin Flips for the Function**](bernoullicharts/2019_2_000000_eps_0_050000_bound.svg) |
+| 2019 3.000000 eps=0.050000 | ![**Simulated Mean for 2019 3.000000 eps=0.050000**](bernoullicharts/2019_3_000000_eps_0_050000_mean.svg) | ![**Expected Bits Consumed by 2019 3.000000 eps=0.050000**](bernoullicharts/2019_3_000000_eps_0_050000_bits.svg) | ![**Coin Flips for the Function**](bernoullicharts/2019_3_000000_eps_0_050000_bound.svg) |
+| 2019 5.000000 eps=0.050000 | ![**Simulated Mean for 2019 5.000000 eps=0.050000**](bernoullicharts/2019_5_000000_eps_0_050000_mean.svg) | ![**Expected Bits Consumed by 2019 5.000000 eps=0.050000**](bernoullicharts/2019_5_000000_eps_0_050000_bits.svg) | ![**Coin Flips for the Function**](bernoullicharts/2019_5_000000_eps_0_050000_bound.svg) |
 | Bernstein 0.2,0.6,0.3 | ![**Simulated Mean for Bernstein 0.2,0.6,0.3**](bernoullicharts/bernstein_0_2_0_6_0_3_mean.svg) | ![**Expected Bits Consumed by Bernstein 0.2,0.6,0.3**](bernoullicharts/bernstein_0_2_0_6_0_3_bits.svg) | ![**Coin Flips for the Function**](bernoullicharts/bernstein_0_2_0_6_0_3_bound.svg) |
-| Rational Func [0.2,0.6,0.3,0.8],[0.4,0.9,0.5,0.9] | ![Simulated Mean for Rational Func [0.2,0.6,0.3,0.8],[0.4,0.9,0.5,0.9]](bernoullicharts/rational_func_0_2_0_6_0_3_0_8_0_4_0_9_0_5_0_9__mean.svg) | ![Expected Bits Consumed by Rational Func [0.2,0.6,0.3,0.8],[0.4,0.9,0.5,0.9]](bernoullicharts/rational_func_0_2_0_6_0_3_0_8_0_4_0_9_0_5_0_9__bits.svg) | ![**Coin Flips for the Function**](bernoullicharts/rational_func_0_2_0_6_0_3_0_8_0_4_0_9_0_5_0_9__bound.svg) |
 | arcsin(x)+sqrt(1-x\*x)-1 | ![**Simulated Mean for arcsin(x)+sqrt(1-x\*x)-1**](bernoullicharts/arcsin_x_sqrt_1-x_x_-1_mean.svg) | ![**Expected Bits Consumed by arcsin(x)+sqrt(1-x\*x)-1**](bernoullicharts/arcsin_x_sqrt_1-x_x_-1_bits.svg) | ![**Coin Flips for the Function**](bernoullicharts/arcsin_x_sqrt_1-x_x_-1_bound.svg) |
 | arcsin(x)/2 | ![**Simulated Mean for arcsin(x)/2**](bernoullicharts/arcsin_x_2_mean.svg) | ![**Expected Bits Consumed by arcsin(x)/2**](bernoullicharts/arcsin_x_2_bits.svg) | ![**Coin Flips for the Function**](bernoullicharts/arcsin_x_2_bound.svg) |
 | arctan(x) (Flajolet) | ![**Simulated Mean for arctan(x) (Flajolet)**](bernoullicharts/arctan_x_flajolet__mean.svg) | ![**Expected Bits Consumed by arctan(x) (Flajolet)**](bernoullicharts/arctan_x_flajolet__bits.svg) | ![**Coin Flips for the Function**](bernoullicharts/arctan_x_flajolet__bound.svg) |
