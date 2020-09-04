@@ -651,7 +651,8 @@ A _Bernstein polynomial_ is a polynomial of the form &Sigma;<sub>_i_ = 0, ..., _
 
 The following algorithm simulates the following algebraic function:
 
-- &Sigma;<sub>_k_ = 0, 1, 2, ...</sub> (&lambda;<sup>_k_</sup> * (1 &minus; &lambda;) * W(_k_) / &beta;<sup>_k_</sup>),
+- &Sigma;<sub>_k_ = 0, 1, 2, ...</sub> (&lambda;<sup>_k_</sup> * (1 &minus; &lambda;) * W(_k_) / &beta;<sup>_k_</sup>), or alternatively,
+- (1 &minus; &lambda;) * &Sigma; <sub>_k_ = 0, 1, 2, ... </sub> (W(_k_) * (&lambda;/&beta;)<sup>_k_</sup>) (correcting Theorem 3.2 of the paper),
 
 where &beta; is 2 and W(_k_) is the number of valid _k_-letter words.<sup>[**(24)**](#Note24)</sup> (An algebraic function is a function that can be a root of a polynomial system.)
 
@@ -660,6 +661,8 @@ where &beta; is 2 and W(_k_) is the number of valid _k_-letter words.<sup>[**(24
 3. Return a number that is 1 with probability W(_g_)/&beta;<sup>_g_</sup>, and 0 otherwise.  (In the Flajolet paper, this is done by generating a _g_-letter word uniformly at random and "parsing" that word using a binary stochastic grammar to determine whether that word is valid.  Note that the word can be determined to be valid as each of its "letters" is generated.)
 
 An extension to this algorithm, not mentioned in the Flajolet paper, is the use of stochastic grammars with a bigger alphabet than two "letters".  For example, in the case of _ternary stochastic grammars_, the alphabet size is 3 and &beta; is 3 in the algorithm above.  In general, for <em>&beta;-ary stochastic grammars</em>, the alphabet size is &beta;, which can be any integer 2 or greater.
+
+> **Example:** A _g_-letter binary word can be "parsed" as follows to determine whether that word encodes a ternary tree (an example from the Flajolet paper): (1) Set _i_ to 1 and _d_ to 1, then while _i_ < _g_ and _d_ > 0: (1a) generate an unbiased random bit, then subtract 1 from _d_ if that bit is 0, or add 2 to _d_ otherwise; (1b) add 1 to _i_; (2) return 1 if _d_ is 0 and _i_ is _g_, or 0 otherwise.
 
 <a id=Algorithms_for_Irrational_Constants></a>
 ### Algorithms for Irrational Constants
@@ -730,7 +733,7 @@ See the appendix for a correctness proof of Algorithm 3.
 <a id=Continued_Logarithms></a>
 #### Continued Logarithms
 
-The _continued logarithm_ (Gosper 1978)<sup>[**(26)**](#Note26)</sup>, (Borwein et al., 2016)<sup>[**(27)**](#Note27)</sup> of a number in (0, 1) has the following continued fraction form: 0 + (1 / 2<sup>_c_\[1\]</sup>) / (1 + (1 / 2<sup>_c_\[2\]</sup>) / (1 + ...)), where _c_\[_i_\] are the coefficients of the continued logarithm and all 0 or greater.  I have come up with the following algorithm that simulates a probability expressed as a continued logarithm expansion:
+The _continued logarithm_ (Gosper 1978)<sup>[**(26)**](#Note26)</sup>, (Borwein et al., 2016)<sup>[**(27)**](#Note27)</sup> of a number in (0, 1) has the following continued fraction form: 0 + (1 / 2<sup>_c_\[1\]</sup>) / (1 + (1 / 2<sup>_c_\[2\]</sup>) / (1 + ...)), where _c_\[_i_\] are the coefficients of the continued logarithm and all 0 or greater.  I have come up with the following algorithm that simulates a probability expressed as a continued logarithm expansion.
 
 The algorithm begins with _pos_ equal to 1.  Then the following steps are taken.
 
@@ -1052,7 +1055,7 @@ Points with invalid &#x03F5; values were suppressed.  For the low-mean algorithm
 - <small><sup id=Note21>(21)</sup> Thomas, A.C., Blanchet, J., "[**A Practical Implementation of the Bernoulli Factory**](https://arxiv.org/abs/1106.2508v3)", arXiv:1106.2508v3  [stat.AP], 2012.</small>
 - <small><sup id=Note22>(22)</sup> Goyal, V. and Sigman, K., 2012. On simulating a class of Bernstein polynomials. ACM Transactions on Modeling and Computer Simulation (TOMACS), 22(2), pp.1-5.</small>
 - <small><sup id=Note23>(23)</sup> Wästlund, J., "[**Functions arising by coin flipping**](http://www.math.chalmers.se/~wastlund/coinFlip.pdf)", 1999.</small>
-- <small><sup id=Note24>(24)</sup> The probability given in Theorem 3.2 of the Flajolet paper, namely "&Sigma; <sub>_k_ = 0, 1, 2, ... </sub> (W(_k_) / (&lambda;/2)<sup>_k_</sup>)", appears to be incorrect in conjunction with Figure 4 of that paper.</small>
+- <small><sup id=Note24>(24)</sup> The probability given in Theorem 3.2 of the Flajolet paper, namely just "&Sigma; <sub>_k_ = 0, 1, 2, ... </sub> (W(_k_) * (&lambda;/2)<sup>_k_</sup>)", appears to be incorrect in conjunction with Figure 4 of that paper.</small>
 - <small><sup id=Note25>(25)</sup> Brassard, G., Devroye, L., Gravel, C., "Remote Sampling with Applications to General Entanglement Simulation", Entropy 2019(21)(92), doi:10.3390/e21010092.</small>
 - <small><sup id=Note26>(26)</sup> Bill Gosper, "Continued Fraction Arithmetic", 1978.</small>
 - <small><sup id=Note27>(27)</sup> Borwein, J.M., Calkin, N.J., et al., "Continued logarithms and associated continued fractions", 2016.</small>
