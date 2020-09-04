@@ -847,19 +847,18 @@
 <p>The following algorithm simulates the following algebraic function:</p>
 
 <ul>
-<li>&Sigma;<sub><em>k</em> = 1, 2, ...</sub> (W(<em>k</em>) * (&lambda; / &beta;)<sup><em>k</em></sup>), or alternatively,</li>
 <li>&Sigma;<sub><em>k</em> = 1, 2, ...</sub> (&lambda;<sup><em>k</em> &minus; 1</sup> * (1 &minus; &lambda;) * W(<em>k</em>) / &beta;<sup><em>k</em></sup>),</li>
 </ul>
 
-<p>where &beta; is 2 and W(<em>k</em>) is the number of valid <em>k</em>-letter words. (An algebraic function is a function that can be a root of a polynomial system.)</p>
+<p>where &beta; is 2 and W(<em>k</em>) is the number of valid <em>k</em>-letter words.<sup><a href="#Note33"><strong>(33)</strong></a></sup> (An algebraic function is a function that can be a root of a polynomial system.)</p>
 
 <ol>
-<li>Set <em>g</em> to 1. (This ensures <em>g</em> is 1 or greater, which is not done in figure 4 as given in the Flajolet paper.)</li>
+<li>Set <em>g</em> to 0.</li>
 <li>With probability &lambda;, add 1 to <em>g</em> and repeat this step.  Otherwise, go to step 3.</li>
-<li>Return a number that is 1 with probability W(<em>g</em>)/&beta;<sup><em>g</em></sup>, and 0 otherwise.  (In the Flajolet paper, this is done by generating a <em>g</em>-letter word and &quot;parsing&quot; that word using a binary stochastic grammar to determine whether that word is valid.  Note that the word can be determined to be valid as each of its &quot;letters&quot; is generated.)</li>
+<li>Return a number that is 1 with probability W(<em>g</em>)/&beta;<sup><em>g</em></sup>, and 0 otherwise.  (In the Flajolet paper, this is done by generating a <em>g</em>-letter word uniformly at random and &quot;parsing&quot; that word using a binary stochastic grammar to determine whether that word is valid.  Note that the word can be determined to be valid as each of its &quot;letters&quot; is generated.)</li>
 </ol>
 
-<p>An extension to this algorithm, not mentioned in the Flajolet paper, is the use of stochastic grammars with a bigger alphabet than two &quot;letters&quot;.  For example, in the case of <em>ternary stochastic grammars</em>, the alphabet size is 3 and &beta; is 3 in the algorithm above.  In general, for <em>&beta;-ary stochastic grammars</em>, the alphabet size is &beta;.</p>
+<p>An extension to this algorithm, not mentioned in the Flajolet paper, is the use of stochastic grammars with a bigger alphabet than two &quot;letters&quot;.  For example, in the case of <em>ternary stochastic grammars</em>, the alphabet size is 3 and &beta; is 3 in the algorithm above.  In general, for <em>&beta;-ary stochastic grammars</em>, the alphabet size is &beta;, which can be any integer 2 or greater.</p>
 
 <p><a id=Algorithms_for_Irrational_Constants></a></p>
 
@@ -1659,6 +1658,7 @@
 <li><small><sup id=Note30>(30)</sup> Peres, Y., &quot;Iterating von Neumann&#39;s procedure for extracting random bits&quot;, Annals of Statistics 1992,20,1, p. 590-597.</small></li>
 <li><small><sup id=Note31>(31)</sup> Devroye, L., Gravel, C., &quot;<a href="https://arxiv.org/abs/1502.02539v5"><strong>Sampling with arbitrary precision</strong></a>&quot;, arXiv:1502.02539v5 [cs.IT], 2015.</small></li>
 <li><small><sup id=Note32>(32)</sup> Flajolet, P., Sedgewick, R., &quot;Analytic Combinatorics&quot;, 2009.</small></li>
+<li><small><sup id=Note33>(33)</sup> The probability given in Theorem 3.2 of the Flajolet paper, namely &quot;&Sigma; <sub><em>k</em> = 0, 1, 2, ... </sub> (W(<em>k</em>) / (&lambda;/2)<sup><em>k</em></sup>)&quot;, appears to be incorrect in conjunction with Figure 4 of that paper.</small></li>
 </ul>
 
 <p><a id=Appendix></a></p>
@@ -1833,10 +1833,10 @@ for i in range(iters):
 <pre>def coeffext(f, x, power):
     # Extract a coefficient from a generating function
     while True:
-      poly=Poly(series(f, n=power+2))
-      try:
-         return poly.coeff_monomial(x**power)
-      except: return 0
+      poly=Poly(series(f, n=power+2).removeO())
+      if power==0:
+        return poly.coeff_monomial(1)
+      return poly.as_expr().coeff(x**power)
 
 def number_n_prob(f, x, n):
     # Probability that the number n is generated
@@ -1845,11 +1845,12 @@ def number_n_prob(f, x, n):
     # Example: number_n_prob(exp(x),x,1) --&gt; x**exp(-x)
     return (x**n*coeffext(f, x, n))/f
 
-def k_iterations_prob(f, x, k):
+def r_rejects_prob(f, x, r):
     # Probability that the von Neumann schema
-    # with the given e.g.f. will terminate in k iterations
+    # with the given e.g.f. will reject r random numbers
+    # before accepting the next one
     p=(1-x)*f
-    return p*(1-p)**(k-1)
+    return p*(1-p)**r
 
 def valid_perm(f, x, n):
     # Number of valid permutations of size n for the
