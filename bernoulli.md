@@ -86,6 +86,7 @@ This page is focused on sampling methods that _exactly_ simulate the probability
         - [**1 / 1 + exp(_x_ / (_y_ * 2<sup>_prec_</sup>)) (LogisticExp)**](#1_1_exp__x___y__2_prec__LogisticExp)
         - [**1 / 1 + exp(_z_ / 2<sup>_prec_</sup>)) (LogisticExp)**](#1_1_exp__z__2_prec__LogisticExp)
     - [**Polylogarithmic Constants**](#Polylogarithmic_Constants)
+        - [**&zeta;(3) * 3 / 4 and Other Zeta-Related Constants**](#zeta_3_3_4_and_Other_Zeta_Related_Constants)
     - [**General Algorithms**](#General_Algorithms)
         - [**Convex Combinations**](#Convex_Combinations)
         - [**Simulating the Probability Generating Function**](#Simulating_the_Probability_Generating_Function)
@@ -907,6 +908,21 @@ The following algorithm simulates a polylogarithmic constant of the form Li<sub>
 1. Set _t_ to 1.
 2. With probability 1/2, add 1 to _t_ and repeat this step.  Otherwise, go to step 3.
 3. Return a number that is 1 with probability 1/_t_<sup>_r_</sup> and 0 otherwise.
+
+<a id=zeta_3_3_4_and_Other_Zeta_Related_Constants></a>
+#### &zeta;(3) * 3 / 4 and Other Zeta-Related Constants
+
+(Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup>.  It can be seen as a triple integral whose integrand is 1/(1 + _a_ * _b_ * _c_), where _a_, _b_, and _c_ are uniform random numbers.  This algorithm is given below, but using the two-coin special case instead of the even-parity construction.  Note that the triple integral in section 5 of the paper is &zeta;(3) * 3 / 4, not &zeta;(3) * 7 / 8.
+
+1. Create three empty uniform PSRNs.
+2. With probability 1/2, return 1.
+3. Call **SampleGeometricBag** on each of the three PSRNs.  If all three calls return 1, return 0.  Otherwise, go to step 2. (This implements a triple integral involving the uniform PSRNs.)
+
+This can be extended to cover any constant of the form &zeta;(_k_) * (1 &minus; 2<sup>&minus; (_k_ &minus; 1)) where _k_ >= 2, as suggested slightly by the Flajolet paper when it mentions &zeta;(5) * 31 / 32 (which should probably read &zeta;(5) * 15 / 16 instead), using the following algorithm.
+
+1. Create _k_ empty uniform PSRNs.
+2. With probability 1/2, return 1.
+3. Call **SampleGeometricBag** on each of the _k_ PSRNs.  If all _k_ calls return 1, return 0.  Otherwise, go to step 2.
 
 <a id=General_Algorithms></a>
 ### General Algorithms

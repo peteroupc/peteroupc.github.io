@@ -105,7 +105,11 @@
 <li><a href="#1_1_exp__x___y__2_prec__LogisticExp"><strong>1 / 1 + exp(<em>x</em> / (<em>y</em> * 2<sup><em>prec</em></sup>)) (LogisticExp)</strong></a></li>
 <li><a href="#1_1_exp__z__2_prec__LogisticExp"><strong>1 / 1 + exp(<em>z</em> / 2<sup><em>prec</em></sup>)) (LogisticExp)</strong></a></li>
 </ul></li>
-<li><a href="#Polylogarithmic_Constants"><strong>Polylogarithmic Constants</strong></a></li>
+<li><a href="#Polylogarithmic_Constants"><strong>Polylogarithmic Constants</strong></a>
+
+<ul>
+<li><a href="#zeta_3_3_4_and_Other_Zeta_Related_Constants"><strong>&zeta;(3) * 3 / 4 and Other Zeta-Related Constants</strong></a></li>
+</ul></li>
 <li><a href="#General_Algorithms"><strong>General Algorithms</strong></a>
 
 <ul>
@@ -1186,6 +1190,26 @@
 <li>Set <em>t</em> to 1.</li>
 <li>With probability 1/2, add 1 to <em>t</em> and repeat this step.  Otherwise, go to step 3.</li>
 <li>Return a number that is 1 with probability 1/<em>t</em><sup><em>r</em></sup> and 0 otherwise.</li>
+</ol>
+
+<p><a id=zeta_3_3_4_and_Other_Zeta_Related_Constants></a></p>
+
+<h4>&zeta;(3) * 3 / 4 and Other Zeta-Related Constants</h4>
+
+<p>(Flajolet et al., 2010)<sup><a href="#Note1"><strong>(1)</strong></a></sup>.  It can be seen as a triple integral whose integrand is 1/(1 + <em>a</em> * <em>b</em> * <em>c</em>), where <em>a</em>, <em>b</em>, and <em>c</em> are uniform random numbers.  This algorithm is given below, but using the two-coin special case instead of the even-parity construction.  Note that the triple integral in section 5 of the paper is &zeta;(3) * 3 / 4, not &zeta;(3) * 7 / 8.</p>
+
+<ol>
+<li>Create three empty uniform PSRNs.</li>
+<li>With probability 1/2, return 1.</li>
+<li>Call <strong>SampleGeometricBag</strong> on each of the three PSRNs.  If all three calls return 1, return 0.  Otherwise, go to step 2. (This implements a triple integral involving the uniform PSRNs.)</li>
+</ol>
+
+<p>This can be extended to cover any constant of the form &zeta;(<em>k</em>) * (1 &minus; 2<sup>&minus; (<em>k</em> &minus; 1)) where <em>k</em> &gt;= 2, as suggested slightly by the Flajolet paper when it mentions &zeta;(5) * 31 / 32 (which should probably read &zeta;(5) * 15 / 16 instead), using the following algorithm.</p>
+
+<ol>
+<li>Create <em>k</em> empty uniform PSRNs.</li>
+<li>With probability 1/2, return 1.</li>
+<li>Call <strong>SampleGeometricBag</strong> on each of the <em>k</em> PSRNs.  If all <em>k</em> calls return 1, return 0.  Otherwise, go to step 2.</li>
 </ol>
 
 <p><a id=General_Algorithms></a></p>
