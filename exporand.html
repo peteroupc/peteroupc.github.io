@@ -1256,7 +1256,6 @@ def contbernoullidist(b, lamda, precision=53):
 <li><small><sup id=Note22>(22)</sup> Canonne, C., Kamath, G., Steinke, T., &quot;<a href="https://arxiv.org/abs/2004.00010v2"><strong>The Discrete Gaussian for Differential Privacy</strong></a>&quot;, arXiv:2004.00010v2 [cs.DS], 2020.</small></li>
 <li><small><sup id=Note23>(23)</sup> Efraimidis, P. &quot;<a href="https://arxiv.org/abs/1012.0256v2"><strong>Weighted Random Sampling over Data Streams</strong></a>&quot;, arXiv:1012.0256v2 [cs.DS], 2015.</small></li>
 <li><small><sup id=Note24>(24)</sup> Devroye, L., Gravel, C., &quot;<a href="https://arxiv.org/abs/1511.02273"><strong>The expected bit complexity of the von Neumann rejection algorithm</strong></a>&quot;, arXiv:1511.02273 [cs.IT], 2016.</small></li>
-<li><small><sup id=Note25>(25)</sup> This means that every zero-volume (measure-zero) subset of that distribution (such as a set of points) has zero probability.</small></li>
 </ul>
 
 <p><a id=Appendix></a></p>
@@ -1360,17 +1359,17 @@ plot(expminusformula(), xlim=(0,1), ylim=(0,2))
 
 <p>In principle, a partially-sampled random number is possible by finding a sequence of digit probabilities and setting that number&#39;s digits according to those probabilities.  However, there seem to be limits on how practical this approach is.</p>
 
-<p>The following is part of Kakutani&#39;s theorem (Kakutani 1948)<sup><a href="#Note11"><strong>(11)</strong></a></sup>: Let <em>a</em><sub><em>j</em></sub> be the <em>j</em><sup>th</sup> binary digit probability in a random number&#39;s binary expansion, where the random number is in [0, 1] and each digit is independently set.  Then the random number&#39;s distribution is absolutely continuous<sup><a href="#Note25"><strong>(25)</strong></a></sup> if and only if the sum of squares of (<em>a</em><sub><em>j</em></sub> &minus; 1/2) converges.  In other words, the random number&#39;s bits become less and less biased as they move farther and farther from the binary point.</p>
+<p>The following is part of Kakutani&#39;s theorem (Kakutani 1948)<sup><a href="#Note11"><strong>(11)</strong></a></sup>: Let <em>a</em><sub><em>j</em></sub> be the <em>j</em><sup>th</sup> binary digit probability in a random number&#39;s binary expansion, where the random number is in [0, 1] and each digit is independently set.  Then the random number&#39;s distribution is <em>absolutely continuous</em> (its cumulative distribution function is continuous) if and only if the sum of squares of (<em>a</em><sub><em>j</em></sub> &minus; 1/2) converges.  In other words, the random number&#39;s bits become less and less biased as they move farther and farther from the binary point.</p>
 
-<p>An absolutely continuous distribution can thus be built if we can find a sequence <em>a</em><sub><em>j</em></sub> that converges to 1/2.  Then a random number could be formed by setting each of its digits to 1 with probability equal to the corresponding <em>a</em><sub><em>j</em></sub>.  However, experiments show that the resulting distribution will generally be discontinuous, except if the sequence has the form&mdash;</p>
+<p>An absolutely continuous distribution can thus be built if we can find a sequence <em>a</em><sub><em>j</em></sub> that converges to 1/2.  Then a random number could be formed by setting each of its digits to 1 with probability equal to the corresponding <em>a</em><sub><em>j</em></sub>.  However, experiments show that the resulting distribution will have a discontinuous <em>density function</em>, except if the sequence has the form&mdash;</p>
 
 <ul>
 <li><em>a</em><sub><em>j</em></sub> = <em>y</em><sup><em>w</em>/&beta;<sup><em>j</em></sup></sup>/(1 + <em>y</em><sup><em>w</em>/&beta;<sup><em>j</em></sup></sup>),</li>
 </ul>
 
-<p>where &beta; = 2, <em>y</em> &gt; 0, and <em>w</em> &gt; 0, and special cases include the uniform distribution (<em>y</em> = 1, <em>w</em> = 1), the truncated exponential(1) distribution (<em>y</em> = (1/exp(1)), <em>w</em> = 1; (Devroye and Gravel 2015)<sup><a href="#Note3"><strong>(3)</strong></a></sup>), and the more general exponential(&lambda;) distribution (<em>y</em> = (1/exp(1)), <em>w</em> = &lambda;).  Other sequences of the form <em>z</em>(<em>j</em>)/(1 + <em>z</em>(<em>j</em>)) will generally be discontinuous even if <em>z</em>(<em>j</em>) converges to 1.</p>
+<p>where &beta; = 2, <em>y</em> &gt; 0, and <em>w</em> &gt; 0, and special cases include the uniform distribution (<em>y</em> = 1, <em>w</em> = 1), the truncated exponential(1) distribution (<em>y</em> = (1/exp(1)), <em>w</em> = 1; (Devroye and Gravel 2015)<sup><a href="#Note3"><strong>(3)</strong></a></sup>), and the more general exponential(&lambda;) distribution (<em>y</em> = (1/exp(1)), <em>w</em> = &lambda;).  Other sequences of the form <em>z</em>(<em>j</em>)/(1 + <em>z</em>(<em>j</em>)) will generally result in a discontinuous density function even if <em>z</em>(<em>j</em>) converges to 1.</p>
 
-<p>For reference, the following calculates the relative probability for <em>x</em> for a given sequence, where <em>x</em> is in [0, 1), and plotting this distribution will often show whether it is discontinuous:</p>
+<p>For reference, the following calculates the relative probability for <em>x</em> for a given sequence, where <em>x</em> is in [0, 1), and plotting this probability function (which is proportional to the density function) will often show whether the function is discontinuous:</p>
 
 <ul>
 <li>Let <em>b</em><sub><em>j</em></sub> be the <em>j</em><sup>th</sup> base-&beta; digit after the point (e.g., <code>rem(floor(x*pow(beta, j)), beta)</code> where <code>beta</code> = &beta;).</li>
@@ -1378,7 +1377,7 @@ plot(expminusformula(), xlim=(0,1), ylim=(0,2))
 <li>The relative probability for <em>x</em> is <em>t</em>(<em>x</em>) / (argmax<sub><em>z</em></sub> <em>t</em>(<em>z</em>)).</li>
 </ul>
 
-<p>It appears that the distribution will be discontinuous unless&mdash;</p>
+<p>It appears that the distribution&#39;s density function will be discontinuous unless&mdash;</p>
 
 <ul>
 <li>the probabilities of the first half, interval (0, 1/2), are proportional to those of the second half, interval (1/2, 1), and</li>

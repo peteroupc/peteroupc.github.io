@@ -912,7 +912,6 @@ The following are some additional articles I have written on the topic of random
 - <small><sup id=Note22>(22)</sup> Canonne, C., Kamath, G., Steinke, T., "[**The Discrete Gaussian for Differential Privacy**](https://arxiv.org/abs/2004.00010v2)", arXiv:2004.00010v2 [cs.DS], 2020.</small>
 - <small><sup id=Note23>(23)</sup> Efraimidis, P. "[**Weighted Random Sampling over Data Streams**](https://arxiv.org/abs/1012.0256v2)", arXiv:1012.0256v2 [cs.DS], 2015.</small>
 - <small><sup id=Note24>(24)</sup> Devroye, L., Gravel, C., "[**The expected bit complexity of the von Neumann rejection algorithm**](https://arxiv.org/abs/1511.02273)", arXiv:1511.02273 [cs.IT], 2016.</small>
-- <small><sup id=Note25>(25)</sup> This means that every zero-volume (measure-zero) subset of that distribution (such as a set of points) has zero probability.</small>
 
 <a id=Appendix></a>
 ## Appendix
@@ -1002,21 +1001,21 @@ Oberhoff also describes _prefix distributions_ that sample a box that covers the
 
 In principle, a partially-sampled random number is possible by finding a sequence of digit probabilities and setting that number's digits according to those probabilities.  However, there seem to be limits on how practical this approach is.
 
-The following is part of Kakutani's theorem (Kakutani 1948)<sup>[**(11)**](#Note11)</sup>: Let _a_<sub>_j_</sub> be the _j_<sup>th</sup> binary digit probability in a random number's binary expansion, where the random number is in [0, 1] and each digit is independently set.  Then the random number's distribution is absolutely continuous<sup>[**(25)**](#Note25)</sup> if and only if the sum of squares of (_a_<sub>_j_</sub> &minus; 1/2) converges.  In other words, the random number's bits become less and less biased as they move farther and farther from the binary point.
+The following is part of Kakutani's theorem (Kakutani 1948)<sup>[**(11)**](#Note11)</sup>: Let _a_<sub>_j_</sub> be the _j_<sup>th</sup> binary digit probability in a random number's binary expansion, where the random number is in [0, 1] and each digit is independently set.  Then the random number's distribution is _absolutely continuous_ (its cumulative distribution function is continuous) if and only if the sum of squares of (_a_<sub>_j_</sub> &minus; 1/2) converges.  In other words, the random number's bits become less and less biased as they move farther and farther from the binary point.
 
-An absolutely continuous distribution can thus be built if we can find a sequence _a_<sub>_j_</sub> that converges to 1/2.  Then a random number could be formed by setting each of its digits to 1 with probability equal to the corresponding _a_<sub>_j_</sub>.  However, experiments show that the resulting distribution will generally be discontinuous, except if the sequence has the form&mdash;
+An absolutely continuous distribution can thus be built if we can find a sequence _a_<sub>_j_</sub> that converges to 1/2.  Then a random number could be formed by setting each of its digits to 1 with probability equal to the corresponding _a_<sub>_j_</sub>.  However, experiments show that the resulting distribution will have a discontinuous _density function_, except if the sequence has the form&mdash;
 
 - _a_<sub>_j_</sub> = _y_<sup>_w_/&beta;<sup>_j_</sup></sup>/(1 + _y_<sup>_w_/&beta;<sup>_j_</sup></sup>),
 
-where &beta; = 2, _y_ > 0, and _w_ > 0, and special cases include the uniform distribution (_y_ = 1, _w_ = 1), the truncated exponential(1) distribution (_y_ = (1/exp(1)), _w_ = 1; (Devroye and Gravel 2015)<sup>[**(3)**](#Note3)</sup>), and the more general exponential(&lambda;) distribution (_y_ = (1/exp(1)), _w_ = &lambda;).  Other sequences of the form _z_(_j_)/(1 + _z_(_j_)) will generally be discontinuous even if _z_(_j_) converges to 1.
+where &beta; = 2, _y_ > 0, and _w_ > 0, and special cases include the uniform distribution (_y_ = 1, _w_ = 1), the truncated exponential(1) distribution (_y_ = (1/exp(1)), _w_ = 1; (Devroye and Gravel 2015)<sup>[**(3)**](#Note3)</sup>), and the more general exponential(&lambda;) distribution (_y_ = (1/exp(1)), _w_ = &lambda;).  Other sequences of the form _z_(_j_)/(1 + _z_(_j_)) will generally result in a discontinuous density function even if _z_(_j_) converges to 1.
 
-For reference, the following calculates the relative probability for _x_ for a given sequence, where _x_ is in [0, 1), and plotting this distribution will often show whether it is discontinuous:
+For reference, the following calculates the relative probability for _x_ for a given sequence, where _x_ is in [0, 1), and plotting this probability function (which is proportional to the density function) will often show whether the function is discontinuous:
 
 - Let _b_<sub>_j_</sub> be the _j_<sup>th</sup> base-&beta; digit after the point (e.g., `rem(floor(x*pow(beta, j)), beta)` where `beta` = &beta;).
 - Let _t_(_x_) = &Pi;<sub>_j_ = 1, 2, ...</sub> _b_<sub>_j_</sub> * _a_<sub>_j_</sub> + (1 &minus; _b_<sub>_j_</sub>) * (1 &minus; _a_<sub>_j_</sub>).
 - The relative probability for _x_ is _t_(_x_) / (argmax<sub>_z_</sub> _t_(_z_)).
 
-It appears that the distribution will be discontinuous unless&mdash;
+It appears that the distribution's density function will be discontinuous unless&mdash;
 
 - the probabilities of the first half, interval (0, 1/2), are proportional to those of the second half, interval (1/2, 1), and
 - the probabilities of each quarter, eighth, etc. are proportional to those of every other quarter, eighth, etc.

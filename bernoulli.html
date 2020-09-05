@@ -84,6 +84,7 @@
 <li><a href="#Certain_Rational_Functions"><strong>Certain Rational Functions</strong></a></li>
 <li><a href="#Bernstein_Polynomials"><strong>Bernstein Polynomials</strong></a></li>
 <li><a href="#Certain_Algebraic_Functions"><strong>Certain Algebraic Functions</strong></a></li>
+<li><a href="#Expressions_Involving_Polylogarithms"><strong>Expressions Involving Polylogarithms</strong></a></li>
 </ul></li>
 <li><a href="#Algorithms_for_Irrational_Constants"><strong>Algorithms for Irrational Constants</strong></a>
 
@@ -846,7 +847,7 @@
 
 <p>(Flajolet et al., 2010)<sup><a href="#Note1"><strong>(1)</strong></a></sup> showed how certain algebraic functions can be simulated by generating a bitstring and determining whether that bitstring belongs to a certain class of valid bitstrings.  The rules for determining whether a bitstring is valid are called a <em>binary stochastic grammar</em>, which uses an alphabet of only two &quot;letters&quot;.</p>
 
-<p>The following algorithm simulates the following algebraic function<sup><a href="#Note34"><strong>(34)</strong></a></sup>:</p>
+<p>The following algorithm simulates the following algebraic function<sup><a href="#Note24"><strong>(24)</strong></a></sup>:</p>
 
 <ul>
 <li>&Sigma;<sub><em>k</em> = 0, 1, 2, ...</sub> (&lambda;<sup><em>k</em></sup> * (1 &minus; &lambda;) * W(<em>k</em>) / &beta;<sup><em>k</em></sup>), or alternatively,</li>
@@ -859,7 +860,7 @@
 <li>&beta; is 2,</li>
 <li>W(<em>k</em>) is the number of valid <em>k</em>-letter words,</li>
 <li>the <em>ordinary generating function</em> OGF(<em>x</em>) = W(0) + W(1) * <em>x</em> + W(2) * <em>x</em><sup>2</sup> + W(3) * <em>x</em><sup>3</sup> + ..., and</li>
-<li>the second formula incorporates a correction to Theorem 3.2 of the paper<sup><a href="#Note24"><strong>(24)</strong></a></sup>.</li>
+<li>the second formula incorporates a correction to Theorem 3.2 of the paper<sup><a href="#Note25"><strong>(25)</strong></a></sup>.</li>
 </ul>
 
 <p>(Here, the <em>k</em><sup>th</sup> coefficient of OGF(<em>x</em>) corresponds to W(<em>k</em>).)  The algorithm follows.</p>
@@ -883,6 +884,17 @@
 <p><strong>Note:</strong> The <em>square-root construction</em> sqrt(1 &minus; &lambda;) (mentioned in the Flajolet paper) can be expressed by a slightly different formula from the one given here, namely &Sigma;<sub><em>k</em> = 0, 1, 2, ...</sub> (&lambda;<sup><em>k</em></sup> * (1 &minus; &lambda;) * choose(<em>k</em> * 2, <em>k</em>) / 2<sup><em>k</em> * 2</sup>).  Thus, if &beta; is 2, the following replaces step 3 of the algorithm: &quot;3. Generate <em>g</em> * 2 unbiased random bits, then return 1 if exactly <em>g</em> zeros were generated this way, or 0 otherwise.&quot;</p>
 </blockquote>
 
+<p><a id=Expressions_Involving_Polylogarithms></a></p>
+
+<h4>Expressions Involving Polylogarithms</h4>
+
+<p>The following algorithm simulates the expression Li<sub><em>r</em></sub>(&lambda;) * (1 / &lambda; &minus; 1), where <em>r</em> is an integer 1 or greater.  If &lambda; is 1/2, this expression simplifies to Li<sub><em>r</em></sub>(1/2). See also (Flajolet et al., 2010)<sup><a href="#Note1"><strong>(1)</strong></a></sup>.  Note, however, that even with a relatively small <em>r</em> such as 6, the expression quickly approaches a straight line.</p>
+
+<ol>
+<li>Flip the input coin until it returns 0, and let <em>t</em> be the number of times the coin returned 1 this way.</li>
+<li>Return a number that is 1 with probability 1/<em>t</em><sup><em>r</em></sup> and 0 otherwise.</li>
+</ol>
+
 <p><a id=Algorithms_for_Irrational_Constants></a></p>
 
 <h3>Algorithms for Irrational Constants</h3>
@@ -895,7 +907,7 @@
 
 <p>Probabilities can be expressed as a digit expansion (of the form <code>0.dddddd...</code>).  The following assumes that the probability is in [0, 1).  Note that the number 0 is also an infinite digit expansion of zeros, and the number 1 is also an infinite digit expansion of base-minus-ones.  Irrational numbers always have infinite digit expansions, which must be calculated &quot;on-the-fly&quot;.</p>
 
-<p>In the algorithm (see also (Brassard et al., 2019)<sup><a href="#Note25"><strong>(25)</strong></a></sup>, (Devroye 1986, p. 769)<sup><a href="#Note8"><strong>(8)</strong></a></sup>), <code>BASE</code> is the digit base, such as 2 for binary or 10 for decimal.</p>
+<p>In the algorithm (see also (Brassard et al., 2019)<sup><a href="#Note26"><strong>(26)</strong></a></sup>, (Devroye 1986, p. 769)<sup><a href="#Note8"><strong>(8)</strong></a></sup>), <code>BASE</code> is the digit base, such as 2 for binary or 10 for decimal.</p>
 
 <ol>
 <li>Set <code>u</code> to 0 and <code>k</code> to 1.</li>
@@ -975,7 +987,7 @@
 
 <h4>Continued Logarithms</h4>
 
-<p>The <em>continued logarithm</em> (Gosper 1978)<sup><a href="#Note26"><strong>(26)</strong></a></sup>, (Borwein et al., 2016)<sup><a href="#Note27"><strong>(27)</strong></a></sup> of a number in (0, 1) has the following continued fraction form: 0 + (1 / 2<sup><em>c</em>[1]</sup>) / (1 + (1 / 2<sup><em>c</em>[2]</sup>) / (1 + ...)), where <em>c</em>[<em>i</em>] are the coefficients of the continued logarithm and all 0 or greater.  I have come up with the following algorithm that simulates a probability expressed as a continued logarithm expansion.</p>
+<p>The <em>continued logarithm</em> (Gosper 1978)<sup><a href="#Note27"><strong>(27)</strong></a></sup>, (Borwein et al., 2016)<sup><a href="#Note28"><strong>(28)</strong></a></sup> of a number in (0, 1) has the following continued fraction form: 0 + (1 / 2<sup><em>c</em>[1]</sup>) / (1 + (1 / 2<sup><em>c</em>[2]</sup>) / (1 + ...)), where <em>c</em>[<em>i</em>] are the coefficients of the continued logarithm and all 0 or greater.  I have come up with the following algorithm that simulates a probability expressed as a continued logarithm expansion.</p>
 
 <p>The algorithm begins with <em>pos</em> equal to 1.  Then the following steps are taken.</p>
 
@@ -1119,7 +1131,7 @@
 
 <h4>exp(&minus;<em>x</em>/<em>y</em>)</h4>
 
-<p>This algorithm takes integers <em>x</em> &gt;= 0 and <em>y</em> &gt; 0 and outputs 1 with probability <code>exp(-x/y)</code> or 0 otherwise. It originates from (Canonne et al. 2020)<sup><a href="#Note28"><strong>(28)</strong></a></sup>.</p>
+<p>This algorithm takes integers <em>x</em> &gt;= 0 and <em>y</em> &gt; 0 and outputs 1 with probability <code>exp(-x/y)</code> or 0 otherwise. It originates from (Canonne et al. 2020)<sup><a href="#Note29"><strong>(29)</strong></a></sup>.</p>
 
 <ol>
 <li>Special case: If <em>x</em> is 0, return 1. (This is because the probability becomes <code>exp(0) = 1</code>.)</li>
@@ -1145,7 +1157,7 @@
 <p>The algorithm is then as follows:</p>
 
 <ul>
-<li>For each component <em>LC</em>[<em>i</em>], call the <strong>algorithm for exp(&minus; <em>LI</em>[<em>i</em>]/1)</strong>, and call the <strong>general martingale algorithm</strong> adapted for <strong>exp(&minus;&lambda;)</strong> using the input coin that simulates  <em>LF</em>[<em>i</em>].  If any of these calls returns 0, return 0; otherwise, return 1. (See also (Canonne et al. 2020)<sup><a href="#Note28"><strong>(28)</strong></a></sup>.)</li>
+<li>For each component <em>LC</em>[<em>i</em>], call the <strong>algorithm for exp(&minus; <em>LI</em>[<em>i</em>]/1)</strong>, and call the <strong>general martingale algorithm</strong> adapted for <strong>exp(&minus;&lambda;)</strong> using the input coin that simulates  <em>LF</em>[<em>i</em>].  If any of these calls returns 0, return 0; otherwise, return 1. (See also (Canonne et al. 2020)<sup><a href="#Note29"><strong>(29)</strong></a></sup>.)</li>
 </ul>
 
 <p><a id=a___b___z></a></p>
@@ -1218,7 +1230,7 @@
 <li>Call <strong>SampleGeometricBag</strong> on each of the three PSRNs.  If all three calls return 1, return 0.  Otherwise, go to step 2. (This implements a triple integral involving the uniform PSRNs.)</li>
 </ol>
 
-<p>This can be extended to cover any constant of the form &zeta;(<em>k</em>) * (1 &minus; 2<sup>&minus; (<em>k</em> &minus; 1)</sup>) where <em>k</em> &gt;= 2, as suggested slightly by the Flajolet paper when it mentions &zeta;(5) * 31 / 32 (which should probably read &zeta;(5) * 15 / 16 instead), using the following algorithm.</p>
+<p>This can be extended to cover any constant of the form &zeta;(<em>k</em>) * (1 &minus; 2<sup>&minus;(<em>k</em> &minus; 1)</sup>) where <em>k</em> &gt;= 2, as suggested slightly by the Flajolet paper when it mentions &zeta;(5) * 31 / 32 (which should probably read &zeta;(5) * 15 / 16 instead), using the following algorithm.</p>
 
 <ol>
 <li>Create <em>k</em> empty uniform PSRNs.</li>
@@ -1248,7 +1260,7 @@
 
 <ol>
 <li>Example 1. As one example, generate a Poisson random number <em>X</em>, then flip the input coin.  With probability 1/(1+<em>X</em>), return the result of the coin flip; otherwise, return 0.</li>
-<li>Example 2. Generate a Poisson(&mu;) random number <em>X</em> and return 1 if <em>X</em> is 0, or 0 otherwise.  This is a Bernoulli factory for exp(&mu;) mentioned earlier, and corresponds to <em>g</em>(<em>i</em>) being the Poisson(&mu;) probabilities and <em>h</em><sub><em>i</em></sub> returning 1 if <em>i</em> is 0, and 0 otherwise.</li>
+<li>Example 2. Generate a Poisson(&mu;) random number <em>X</em> and return 1 if <em>X</em> is 0, or 0 otherwise.  This is a Bernoulli factory for exp(&minus;&mu;) mentioned earlier, and corresponds to <em>g</em>(<em>i</em>) being the Poisson(&mu;) probabilities and <em>h</em><sub><em>i</em></sub> returning 1 if <em>i</em> is 0, and 0 otherwise.</li>
 <li>Example 3. <em>Bernoulli Race</em> (Dughmi et al. 2017)<sup><a href="#Note9"><strong>(9)</strong></a></sup>: If we have <em>n</em> coins, then choose one of them uniformly at random and flip that coin. If the flip returns 1, return <em>X</em>; otherwise, repeat this algorithm.  This algorithm chooses a random coin based on its probability of heads.</li>
 </ol>
 </blockquote>
@@ -1692,17 +1704,17 @@
 <li><small><sup id=Note21>(21)</sup> Thomas, A.C., Blanchet, J., &quot;<a href="https://arxiv.org/abs/1106.2508v3"><strong>A Practical Implementation of the Bernoulli Factory</strong></a>&quot;, arXiv:1106.2508v3  [stat.AP], 2012.</small></li>
 <li><small><sup id=Note22>(22)</sup> Goyal, V. and Sigman, K., 2012. On simulating a class of Bernstein polynomials. ACM Transactions on Modeling and Computer Simulation (TOMACS), 22(2), pp.1-5.</small></li>
 <li><small><sup id=Note23>(23)</sup> Wästlund, J., &quot;<a href="http://www.math.chalmers.se/%7Ewastlund/coinFlip.pdf"><strong>Functions arising by coin flipping</strong></a>&quot;, 1999.</small></li>
-<li><small><sup id=Note24>(24)</sup> The probability given in Theorem 3.2 of the Flajolet paper, namely just &quot;&Sigma; <sub><em>k</em> = 0, 1, 2, ... </sub> (W(<em>k</em>) * (&lambda;/2)<sup><em>k</em></sup>)&quot;, appears to be incorrect in conjunction with Figure 4 of that paper.</small></li>
-<li><small><sup id=Note25>(25)</sup> Brassard, G., Devroye, L., Gravel, C., &quot;Remote Sampling with Applications to General Entanglement Simulation&quot;, Entropy 2019(21)(92), doi:10.3390/e21010092.</small></li>
-<li><small><sup id=Note26>(26)</sup> Bill Gosper, &quot;Continued Fraction Arithmetic&quot;, 1978.</small></li>
-<li><small><sup id=Note27>(27)</sup> Borwein, J.M., Calkin, N.J., et al., &quot;Continued logarithms and associated continued fractions&quot;, 2016.</small></li>
-<li><small><sup id=Note28>(28)</sup> Canonne, C., Kamath, G., Steinke, T., &quot;<a href="https://arxiv.org/abs/2004.00010v2"><strong>The Discrete Gaussian for Differential Privacy</strong></a>&quot;, arXiv:2004.00010v2 [cs.DS], 2020.</small></li>
-<li><small><sup id=Note29>(29)</sup> von Neumann, J., &quot;Various techniques used in connection with random digits&quot;, 1951.</small></li>
-<li><small><sup id=Note30>(30)</sup> Pae, S., &quot;Random number generation using a biased source&quot;, dissertation, University of Illinois at Urbana-Champaign, 2005.</small></li>
-<li><small><sup id=Note31>(31)</sup> Peres, Y., &quot;Iterating von Neumann&#39;s procedure for extracting random bits&quot;, Annals of Statistics 1992,20,1, p. 590-597.</small></li>
-<li><small><sup id=Note32>(32)</sup> Devroye, L., Gravel, C., &quot;<a href="https://arxiv.org/abs/1502.02539v5"><strong>Sampling with arbitrary precision</strong></a>&quot;, arXiv:1502.02539v5 [cs.IT], 2015.</small></li>
-<li><small><sup id=Note33>(33)</sup> Flajolet, P., Sedgewick, R., &quot;Analytic Combinatorics&quot;, 2009.</small></li>
-<li><small><sup id=Note34>(34)</sup> An algebraic function is a function that can be a root of a polynomial system.</small></li>
+<li><small><sup id=Note24>(24)</sup> An algebraic function is a function that can be a root of a polynomial system.</small></li>
+<li><small><sup id=Note25>(25)</sup> The probability given in Theorem 3.2 of the Flajolet paper, namely just &quot;&Sigma; <sub><em>k</em> = 0, 1, 2, ... </sub> (W(<em>k</em>) * (&lambda;/2)<sup><em>k</em></sup>)&quot;, appears to be incorrect in conjunction with Figure 4 of that paper.</small></li>
+<li><small><sup id=Note26>(26)</sup> Brassard, G., Devroye, L., Gravel, C., &quot;Remote Sampling with Applications to General Entanglement Simulation&quot;, Entropy 2019(21)(92), doi:10.3390/e21010092.</small></li>
+<li><small><sup id=Note27>(27)</sup> Bill Gosper, &quot;Continued Fraction Arithmetic&quot;, 1978.</small></li>
+<li><small><sup id=Note28>(28)</sup> Borwein, J.M., Calkin, N.J., et al., &quot;Continued logarithms and associated continued fractions&quot;, 2016.</small></li>
+<li><small><sup id=Note29>(29)</sup> Canonne, C., Kamath, G., Steinke, T., &quot;<a href="https://arxiv.org/abs/2004.00010v2"><strong>The Discrete Gaussian for Differential Privacy</strong></a>&quot;, arXiv:2004.00010v2 [cs.DS], 2020.</small></li>
+<li><small><sup id=Note30>(30)</sup> von Neumann, J., &quot;Various techniques used in connection with random digits&quot;, 1951.</small></li>
+<li><small><sup id=Note31>(31)</sup> Pae, S., &quot;Random number generation using a biased source&quot;, dissertation, University of Illinois at Urbana-Champaign, 2005.</small></li>
+<li><small><sup id=Note32>(32)</sup> Peres, Y., &quot;Iterating von Neumann&#39;s procedure for extracting random bits&quot;, Annals of Statistics 1992,20,1, p. 590-597.</small></li>
+<li><small><sup id=Note33>(33)</sup> Devroye, L., Gravel, C., &quot;<a href="https://arxiv.org/abs/1502.02539v5"><strong>Sampling with arbitrary precision</strong></a>&quot;, arXiv:1502.02539v5 [cs.IT], 2015.</small></li>
+<li><small><sup id=Note34>(34)</sup> Flajolet, P., Sedgewick, R., &quot;Analytic Combinatorics&quot;, 2009.</small></li>
 </ul>
 
 <p><a id=Appendix></a></p>
@@ -1715,9 +1727,9 @@
 
 <h3>Randomized vs. Non-Randomized Algorithms</h3>
 
-<p>A <em>non-randomized algorithm</em> is a simulation algorithm that uses nothing but the input coin as a source of randomness (in contrast to <em>randomized algorithms</em>, which do use other sources of randomness) (Mendo 2019)<sup><a href="#Note5"><strong>(5)</strong></a></sup>.  Instead of generating outside randomness, a randomized algorithm can implement a <a href="https://peteroupc.github.io/randextract.html"><strong><em>randomness extraction</em></strong></a> procedure to generate that randomness using the input coins themselves.  In this way, the algorithm becomes a <em>non-randomized algorithm</em>.  For example, if an algorithm implements the <strong>two-coin special case</strong> by generating a random bit in step 1, it could replace generating that bit with flipping the input coin twice until the coin returns 0 then 1 or 1 then 0 this way, then taking the result as 0 or 1, respectively (von Neumann 1951)<sup><a href="#Note29"><strong>(29)</strong></a></sup>.</p>
+<p>A <em>non-randomized algorithm</em> is a simulation algorithm that uses nothing but the input coin as a source of randomness (in contrast to <em>randomized algorithms</em>, which do use other sources of randomness) (Mendo 2019)<sup><a href="#Note5"><strong>(5)</strong></a></sup>.  Instead of generating outside randomness, a randomized algorithm can implement a <a href="https://peteroupc.github.io/randextract.html"><strong><em>randomness extraction</em></strong></a> procedure to generate that randomness using the input coins themselves.  In this way, the algorithm becomes a <em>non-randomized algorithm</em>.  For example, if an algorithm implements the <strong>two-coin special case</strong> by generating a random bit in step 1, it could replace generating that bit with flipping the input coin twice until the coin returns 0 then 1 or 1 then 0 this way, then taking the result as 0 or 1, respectively (von Neumann 1951)<sup><a href="#Note30"><strong>(30)</strong></a></sup>.</p>
 
-<p>In fact, there is a lower bound on the average number of coin flips needed to turn a coin with one bias (&lambda;) into a coin with another bias (&tau; = <em>f</em>(&lambda;)).  It&#39;s called the <em>entropy bound</em> (see, e.g., (Pae 2005)<sup><a href="#Note30"><strong>(30)</strong></a></sup>, (Peres 1992)<sup><a href="#Note31"><strong>(31)</strong></a></sup>) and is calculated as&mdash;</p>
+<p>In fact, there is a lower bound on the average number of coin flips needed to turn a coin with one bias (&lambda;) into a coin with another bias (&tau; = <em>f</em>(&lambda;)).  It&#39;s called the <em>entropy bound</em> (see, e.g., (Pae 2005)<sup><a href="#Note31"><strong>(31)</strong></a></sup>, (Peres 1992)<sup><a href="#Note32"><strong>(32)</strong></a></sup>) and is calculated as&mdash;</p>
 
 <p>&nbsp;&nbsp;&nbsp;&nbsp;((&tau; &minus; 1) * ln(1 &minus; &tau;) &minus; &tau; * ln(&tau;)) /<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;((&lambda; &minus; 1) * ln(1 &minus; &lambda;) &minus; &lambda; * ln(&lambda;)).</p>
@@ -1786,7 +1798,7 @@ for i in range(iters):
 
 <h3>Alternative Implementation of Bernoulli Factories</h3>
 
-<p>Say we have a Bernoulli factory algorithm that takes a coin with probability of heads of <em>p</em> and outputs 1 with probability <em>f</em>(<em>p</em>).  If this algorithm takes a geometric bag (a partially-sampled uniform random number or PSRN) as the input coin and flips that coin using <strong>SampleGeometricBag</strong>, the algorithm could instead be implemented as follows in order to return 1 with probability <em>f</em>(<em>U</em>), where <em>U</em> is the number represented by the geometric bag (see also (Brassard et al., 2019)<sup><a href="#Note25"><strong>(25)</strong></a></sup>, (Devroye 1986, p. 769)<sup><a href="#Note8"><strong>(8)</strong></a></sup>, (Devroye and Gravel 2015)<sup><a href="#Note32"><strong>(32)</strong></a></sup>:</p>
+<p>Say we have a Bernoulli factory algorithm that takes a coin with probability of heads of <em>p</em> and outputs 1 with probability <em>f</em>(<em>p</em>).  If this algorithm takes a geometric bag (a partially-sampled uniform random number or PSRN) as the input coin and flips that coin using <strong>SampleGeometricBag</strong>, the algorithm could instead be implemented as follows in order to return 1 with probability <em>f</em>(<em>U</em>), where <em>U</em> is the number represented by the geometric bag (see also (Brassard et al., 2019)<sup><a href="#Note26"><strong>(26)</strong></a></sup>, (Devroye 1986, p. 769)<sup><a href="#Note8"><strong>(8)</strong></a></sup>, (Devroye and Gravel 2015)<sup><a href="#Note33"><strong>(33)</strong></a></sup>:</p>
 
 <ol>
 <li>Set <em>v</em> to 0 and <em>k</em> to 1.</li>
@@ -1861,7 +1873,7 @@ for i in range(iters):
 <li>alternating permutations of odd size (EGF(&lambda;) = tan(&lambda;); the V(<em>n</em>) starting at <em>n</em> = 0 is A000111, except every other integer starting with the first is 0 instead),</li>
 </ul>
 
-<p>using the notation in &quot;Analytic Combinatorics&quot; (Flajolet and Sedgewick 2009)<sup><a href="#Note33"><strong>(33)</strong></a></sup>.</p>
+<p>using the notation in &quot;Analytic Combinatorics&quot; (Flajolet and Sedgewick 2009)<sup><a href="#Note34"><strong>(34)</strong></a></sup>.</p>
 
 <p>The following algorithm generates a random number that follows the von Neumann schema.</p>
 
