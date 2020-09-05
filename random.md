@@ -84,7 +84,7 @@ so that as a result, many applications use RNGs, especially built-in RNGs, that 
 In this document:
 
 - **Random number generator (RNG)** means software and/or hardware that seeks to generate numbers with the property that each possible outcome is as likely as any other without influence by anything else<sup>[**(4)**](#Note4)</sup>.
-- **Pseudorandom number generator (PRNG)** means a random number generator in which the numbers it generates are completely determined by its input.
+- **Pseudorandom number generator (PRNG)** means a random number generator that produces numbers by an algorithm that mathematically expands its input.
 - **Seed** means arbitrary data serving as a PRNG's input.
 - **Information security** means keeping information safe from attacks that could access, use, delay, or manipulate that information.<sup>[**(5)**](#Note5)</sup>
 

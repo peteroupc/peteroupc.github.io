@@ -85,7 +85,7 @@ This page is focused on sampling methods that _exactly_ simulate the probability
         - [**(_a_/_b_)<sup>_z_</sup>**](#a___b___z)
         - [**1 / 1 + exp(_x_ / (_y_ * 2<sup>_prec_</sup>)) (LogisticExp)**](#1_1_exp__x___y__2_prec__LogisticExp)
         - [**1 / 1 + exp(_z_ / 2<sup>_prec_</sup>)) (LogisticExp)**](#1_1_exp__z__2_prec__LogisticExp)
-    - [**Polylogarithmic Constants**](#Polylogarithmic_Constants)
+        - [**Polylogarithmic Constants**](#Polylogarithmic_Constants)
         - [**&zeta;(3) * 3 / 4 and Other Zeta-Related Constants**](#zeta_3_3_4_and_Other_Zeta_Related_Constants)
     - [**General Algorithms**](#General_Algorithms)
         - [**Convex Combinations**](#Convex_Combinations)
@@ -112,7 +112,8 @@ A _Bernoulli factory_ (Keane and O'Brien 1994)<sup>[**(2)**](#Note2)</sup> is an
 
 A _factory function_ is a function that relates the old probability to the new one.  Its domain is [0, 1] and returns a probability in [0, 1].  There are certain requirements for factory functions.  As shown by Keane and O'Brien (1994)<sup>[**(2)**](#Note2)</sup>, a function _f_(&lambda;) can serve as a factory function if and only if _f_, in a given interval in \[0, 1\]&mdash;
 
-- is continuous everywhere, and
+- is continuous everywhere,
+- does not go to 0 or 1 exponentially fast, and
 - either returns a constant value in \[0, 1\] everywhere, or returns a value in \[0, 1\] at each of the points 0 and 1 and a value in (0, 1) at each other point.
 
 As one example, the function _f_ = 2*&lambda; cannot serve as a factory function, since its graph touches 1 somewhere in the open interval (0, 1).
@@ -650,12 +651,19 @@ A _Bernstein polynomial_ is a polynomial of the form &Sigma;<sub>_i_ = 0, ..., _
 
 (Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup> showed how certain algebraic functions can be simulated by generating a bitstring and determining whether that bitstring belongs to a certain class of valid bitstrings.  The rules for determining whether a bitstring is valid are called a _binary stochastic grammar_, which uses an alphabet of only two "letters".
 
-The following algorithm simulates the following algebraic function:
+The following algorithm simulates the following algebraic function<sup>[**(34)**](#Note34)</sup>:
 
 - &Sigma;<sub>_k_ = 0, 1, 2, ...</sub> (&lambda;<sup>_k_</sup> * (1 &minus; &lambda;) * W(_k_) / &beta;<sup>_k_</sup>), or alternatively,
-- (1 &minus; &lambda;) * &Sigma; <sub>_k_ = 0, 1, 2, ... </sub> (W(_k_) * (&lambda;/&beta;)<sup>_k_</sup>) (correcting Theorem 3.2 of the paper),
+- (1 &minus; &lambda;) * OGF(&lambda;/&beta;),
 
-where &beta; is 2 and W(_k_) is the number of valid _k_-letter words.<sup>[**(24)**](#Note24)</sup> (An algebraic function is a function that can be a root of a polynomial system.)
+where&mdash;
+
+- &beta; is 2,
+- W(_k_) is the number of valid _k_-letter words,
+- the _ordinary generating function_ OGF(_x_) = W(0) + W(1) * _x_ + W(2) * _x_<sup>2</sup> + W(3) * _x_<sup>3</sup> + ..., and
+- the second formula incorporates a correction to Theorem 3.2 of the paper<sup>[**(24)**](#Note24)</sup>.
+
+(Here, the _k_<sup>th</sup> coefficient of OGF(_x_) corresponds to W(_k_).)  The algorithm follows.
 
 1. Set _g_ to 0.
 2. With probability &lambda;, add 1 to _g_ and repeat this step.  Otherwise, go to step 3.
@@ -663,7 +671,12 @@ where &beta; is 2 and W(_k_) is the number of valid _k_-letter words.<sup>[**(24
 
 An extension to this algorithm, not mentioned in the Flajolet paper, is the use of stochastic grammars with a bigger alphabet than two "letters".  For example, in the case of _ternary stochastic grammars_, the alphabet size is 3 and &beta; is 3 in the algorithm above.  In general, for <em>&beta;-ary stochastic grammars</em>, the alphabet size is &beta;, which can be any integer 2 or greater.
 
-> **Example:** A _g_-letter binary word can be "parsed" as follows to determine whether that word encodes a ternary tree (an example from the Flajolet paper): (1) Set _i_ to 1 and _d_ to 1, then while _i_ < _g_ and _d_ > 0: (1a) generate an unbiased random bit, then subtract 1 from _d_ if that bit is 0, or add 2 to _d_ otherwise; (1b) add 1 to _i_; (2) return 1 if _d_ is 0 and _i_ is _g_, or 0 otherwise.
+> **Examples:** The following are examples from the Flajolet paper.
+>
+> 1. A _g_-letter binary word can be "parsed" as follows to determine whether that word encodes a ternary tree: (1) Set _i_ to 1 and _d_ to 1, then while _i_ < _g_ and _d_ > 0: (1a) generate an unbiased random bit, then subtract 1 from _d_ if that bit is 0, or add 2 to _d_ otherwise; (1b) add 1 to _i_; (2) return 1 if _d_ is 0 and _i_ is _g_, or 0 otherwise.
+> 2. If &beta; is 2 and if W(_g_), the number of valid _g_-letter words, has the form choose(_g_, _g_/_t_) if _g_ is divisible by _t_ (where _t_ is 2 or greater), or 0 otherwise, step 3 of the algorithm can be implemented by generating _g_ unbiased random bits and returning 1 if _g_ is divisible by _t_ and exactly _g_/_t_ zeros were generated this way, or 0 otherwise.
+>
+> **Note:** The _square-root construction_ sqrt(1 &minus; &lambda;) (mentioned in the Flajolet paper) can be expressed by a slightly different formula from the one given here, namely &Sigma;<sub>_k_ = 0, 1, 2, ...</sub> (&lambda;<sup>_k_</sup> * (1 &minus; &lambda;) * choose(_k_ * 2, _k_) / 2<sup>_k_ * 2</sup>).  Thus, if &beta; is 2, the following replaces step 3 of the algorithm: "3. Generate _g_ * 2 unbiased random bits, then return 1 if exactly _g_ zeros were generated this way, or 0 otherwise."
 
 <a id=Algorithms_for_Irrational_Constants></a>
 ### Algorithms for Irrational Constants
@@ -901,7 +914,7 @@ Decompose _z_ into _LC_\[_i_\], _LI_\[_i_\], and _LF_\[_i_\] just as for the **e
 4. For each component _LC_\[_i_\], call the **algorithm for exp(&minus;&lambda;)**, using the corresponding input coin for  _LC_\[_i_\] created in step 1. If any of these calls returns 0, go to step 2.  Otherwise, return 1.
 
 <a id=Polylogarithmic_Constants></a>
-### Polylogarithmic Constants
+#### Polylogarithmic Constants
 
 The following algorithm simulates a polylogarithmic constant of the form Li<sub>_r_</sub>(1/2), where _r_ is an integer 1 or greater.  See (Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup> and "Convex Combinations" (the algorithm works by decomposing the series forming the polylogarithmic constant into _g_(_i_) = (1/2)<sup>_i_</sup>, which sums to 1, and _h_<sub>_i_</sub>() = _i_<sup>_r_</sup>, where _i_ >= 1).
 
@@ -918,7 +931,7 @@ The following algorithm simulates a polylogarithmic constant of the form Li<sub>
 2. With probability 1/2, return 1.
 3. Call **SampleGeometricBag** on each of the three PSRNs.  If all three calls return 1, return 0.  Otherwise, go to step 2. (This implements a triple integral involving the uniform PSRNs.)
 
-This can be extended to cover any constant of the form &zeta;(_k_) * (1 &minus; 2<sup>&minus; (_k_ &minus; 1)) where _k_ >= 2, as suggested slightly by the Flajolet paper when it mentions &zeta;(5) * 31 / 32 (which should probably read &zeta;(5) * 15 / 16 instead), using the following algorithm.
+This can be extended to cover any constant of the form &zeta;(_k_) * (1 &minus; 2<sup>&minus; (_k_ &minus; 1)</sup>) where _k_ >= 2, as suggested slightly by the Flajolet paper when it mentions &zeta;(5) * 31 / 32 (which should probably read &zeta;(5) * 15 / 16 instead), using the following algorithm.
 
 1. Create _k_ empty uniform PSRNs.
 2. With probability 1/2, return 1.
@@ -1081,6 +1094,7 @@ Points with invalid &#x03F5; values were suppressed.  For the low-mean algorithm
 - <small><sup id=Note31>(31)</sup> Peres, Y., "Iterating von Neumann's procedure for extracting random bits", Annals of Statistics 1992,20,1, p. 590-597.</small>
 - <small><sup id=Note32>(32)</sup> Devroye, L., Gravel, C., "[**Sampling with arbitrary precision**](https://arxiv.org/abs/1502.02539v5)", arXiv:1502.02539v5 [cs.IT], 2015.</small>
 - <small><sup id=Note33>(33)</sup> Flajolet, P., Sedgewick, R., "Analytic Combinatorics", 2009.</small>
+- <small><sup id=Note34>(34)</sup> An algebraic function is a function that can be a root of a polynomial system.</small>
 
 <a id=Appendix></a>
 ## Appendix
@@ -1197,7 +1211,7 @@ _Proof._ We use Huber's "fundamental theorem of perfect simulation" again in the
 
 where&mdash;
 
-- EGF(&lambda;) = &Sigma;<sub>_k_ = 0, 1, ...</sub> (&lambda;<sup>_k_</sup> * V(_k_) / _k_!) (the _exponential generating function_ or EGF, which completely determines a probability class), and
+- EGF(&lambda;) = &Sigma;<sub>_k_ = 0, 1, ...</sub> (&lambda;<sup>_k_</sup> * V(_k_) / _k_!) (the _exponential generating function_ or EGF, which completely determines a permutation class), and
 - V(_n_) is the number of _valid_ permutations of size _n_.
 
 Effectively, a geometric(&lambda;) random number _G_<sup>[**(7)**](#Note7)</sup> is accepted with probability V(_G_)/_G_! (where _G_! is the number of _possible_ permutations of size _G_, or 1 if _G_ is 0), and rejected otherwise.  The probability that _r_ geometric random numbers are rejected this way is _p_*(1 &minus; _p_)<sup>_r_</sup>, where _p_ = (1 &minus; &lambda;) * EGF(&lambda;).
@@ -1216,7 +1230,7 @@ The following algorithm generates a random number that follows the von Neumann s
 
 1. Set _r_ to 0. (This is the number of times the algorithm rejects a random number.)
 2. Flip the input coin until the coin returns 0.  Then set _G_ to the number of times the coin returns 1 this way.
-3. With probability V(_G_)/_G_!, return _G_ (or _r_ if desired).  (In practice, the probability check is done by generating _G_ uniform random numbers and determining whether those numbers satisfy the given probability class, or generating as many of those numbers as necessary to make this determination.  This is especially because _G_!, the factorial of _G_, can easily become very large.)
+3. With probability V(_G_)/_G_!, return _G_ (or _r_ if desired).  (In practice, the probability check is done by generating _G_ uniform random numbers and determining whether those numbers satisfy the given permutation class, or generating as many of those numbers as necessary to make this determination.  This is especially because _G_!, the factorial of _G_, can easily become very large.)
 4. Add 1 to _r_ and go to step 2.
 
 The following Python functions use the SymPy computer algebra library to find probabilities and other useful information for applying the von Neumann schema, given a permutation class's EGF.

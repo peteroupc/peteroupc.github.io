@@ -699,7 +699,8 @@ The beta sampler in this document shows one case of a general approach to simula
 
 1. Create an "empty" uniform PSRN (or "geometric bag").  Create a **SampleGeometricBag** Bernoulli factory that uses that geometric bag.
 2. As the geometric bag builds up a uniform random number, accept the number with a probability that can be represented by a Bernoulli factory algorithm (that takes the **SampleGeometricBag** factory from step 1 as part of its input), or reject it otherwise. (A number of these algorithms can be found in "[**Bernoulli Factory Algorithms**](https://peteroupc.github.io/bernoulli.html)".)  Let _f_(_U_) be the probability function modeled by this Bernoulli factory, where _U_ is the uniform random number built up by the geometric bag. _f_ is a multiple of the density function for the underlying continuous distribution (as a result, this algorithm can be used even if the distribution's density function is only known up to a normalization constant).  As shown by Keane and O'Brien <sup>[**(6)**](#Note6)</sup>, however, this step works if and only if _f_(&lambda;), in a given interval in \[0, 1\]&mdash;
-    - is continuous everywhere, and
+    - is continuous everywhere,
+    - does not go to 0 or 1 exponentially fast, and
     - either returns a constant value in \[0, 1\] everywhere, or returns a value in \[0, 1\] at each of the points 0 and 1 and a value in (0, 1) at each other point,
 
    and they give the example of 2 \* &lambda; as a probability function that cannot be represented by a Bernoulli factory.  Notice that the probability can be a constant, including an irrational number; see "[**Algorithms for Irrational Constants**](https://peteroupc.github.io/bernoulli.html#Algorithms_for_Irrational_Constants)" for ways to simulate constant probabilities.

@@ -998,7 +998,8 @@ def exprandscore(ln,ld,ln2,ld2):
 <li><p>As the geometric bag builds up a uniform random number, accept the number with a probability that can be represented by a Bernoulli factory algorithm (that takes the <strong>SampleGeometricBag</strong> factory from step 1 as part of its input), or reject it otherwise. (A number of these algorithms can be found in &quot;<a href="https://peteroupc.github.io/bernoulli.html"><strong>Bernoulli Factory Algorithms</strong></a>&quot;.)  Let <em>f</em>(<em>U</em>) be the probability function modeled by this Bernoulli factory, where <em>U</em> is the uniform random number built up by the geometric bag. <em>f</em> is a multiple of the density function for the underlying continuous distribution (as a result, this algorithm can be used even if the distribution&#39;s density function is only known up to a normalization constant).  As shown by Keane and O&#39;Brien <sup><a href="#Note6"><strong>(6)</strong></a></sup>, however, this step works if and only if <em>f</em>(&lambda;), in a given interval in [0, 1]&mdash;</p>
 
 <ul>
-<li>is continuous everywhere, and</li>
+<li>is continuous everywhere,</li>
+<li>does not go to 0 or 1 exponentially fast, and</li>
 <li>either returns a constant value in [0, 1] everywhere, or returns a value in [0, 1] at each of the points 0 and 1 and a value in (0, 1) at each other point,</li>
 </ul>
 
