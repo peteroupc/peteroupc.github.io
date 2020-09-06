@@ -528,8 +528,8 @@ Use the algorithm for &lambda;<sup>1/2</sup>.
 The Flajolet paper doesn't explain in detail how arcsin(&lambda;)/2 arises out of arcsin(&lambda;) + sqrt(1 &minus; &lambda;<sup>2</sup>) &minus; 1 via Bernoulli factory constructions, but here is an algorithm.<sup>[**(15)**](#Note15)</sup> Note, however, that the number of input coin flips is expected to grow without bound as &lambda; approaches 1.
 
 1. With probability 1/2, run the **algorithm for arcsin(&lambda;) + sqrt(1 &minus; &lambda;<sup>2</sup>) &minus; 1** and return the result.
-2. Create a secondary coin &mu; that does the following: "Flip the input coin twice.  If both flips return 1, return 0.  Otherwise, return 1."
-3. Call the **algorithm for &mu;<sup>1/2</sup>** using the secondary coin &mu;.  If it returns 0, return 1; otherwise, return 0.
+2. Create a secondary coin &mu; that does the following: "Flip the input coin twice.  If both flips return 1, return 0.  Otherwise, return 1." (The coin simulates 1 &minus; &lambda;<sup>2</sup>.)
+3. Call the **algorithm for &mu;<sup>1/2</sup>** using the secondary coin &mu;.  If it returns 0, return 1; otherwise, return 0. (This step effectively cancels out the sqrt(1 &minus; &lambda;<sup>2</sup>) &minus; 1 part and divides by 2.)
 
 <a id=lambda_mu_4></a>
 #### &lambda; * &mu;
@@ -674,10 +674,10 @@ An extension to this algorithm, not mentioned in the Flajolet paper, is the use 
 
 > **Examples:** The following are examples from the Flajolet paper.
 >
-> 1. A _g_-letter binary word can be "parsed" as follows to determine whether that word encodes a ternary tree: (1) Set _i_ to 1 and _d_ to 1, then while _i_ < _g_ and _d_ > 0: (1a) generate an unbiased random bit, then subtract 1 from _d_ if that bit is 0, or add 2 to _d_ otherwise; (1b) add 1 to _i_; (2) return 1 if _d_ is 0 and _i_ is _g_, or 0 otherwise.
-> 2. If &beta; is 2 and if W(_g_), the number of valid _g_-letter words, has the form choose(_g_, _g_/_t_) if _g_ is divisible by _t_ (where _t_ is 2 or greater), or 0 otherwise, step 3 of the algorithm can be implemented by generating _g_ unbiased random bits and returning 1 if _g_ is divisible by _t_ and exactly _g_/_t_ zeros were generated this way, or 0 otherwise.
+> 1. A _g_-letter binary word can be "parsed" as follows to determine whether that word encodes a ternary tree: "3. If _g_ is 0, return 0.  Otherwise, set _i_ to 1 and _d_ to 1.; 3a. Generate an unbiased random bit, then subtract 1 from _d_ if that bit is 0, or add 2 to _d_ otherwise.; 3b. Add 1 to _i_. Then, if _i_ < _g_ and _d_ > 0, go to step 3a.; 3c. Return 1 if _d_ is 0 and _i_ is _g_, or 0 otherwise."
+> 2. If &beta; is 2 and if W(_g_), the number of valid _g_-letter words, has the form choose(_g_, _g_/_t_) if _g_ is divisible by _t_ (where _t_ is 2 or greater), or 0 otherwise, step 3 of the algorithm can be done as follows: "3. If _g_ is not divisible by _t_, return 0. Otherwise, generate _g_ unbiased random bits, then return 1 if exactly _g_/_t_ zeros were generated this way, or 0 otherwise."
 >
-> **Note:** The _square-root construction_ sqrt(1 &minus; &lambda;) (mentioned in the Flajolet paper) can be expressed by a slightly different formula from the one given here, namely &Sigma;<sub>_k_ = 0, 1, 2, ...</sub> (&lambda;<sup>_k_</sup> * (1 &minus; &lambda;) * choose(_k_ * 2, _k_) / 2<sup>_k_ * 2</sup>).  Thus, if &beta; is 2, the following replaces step 3 of the algorithm: "3. Generate _g_ * 2 unbiased random bits, then return 1 if exactly _g_ zeros were generated this way, or 0 otherwise."
+> **Note:** The _square-root construction_ sqrt(1 &minus; &lambda;) (mentioned in the Flajolet paper) can be expressed by a slightly different formula from the one given here, namely &Sigma;<sub>_k_ = 0, 1, 2, ...</sub> (&lambda;<sup>_k_</sup> * (1 &minus; &lambda;) * choose(_k_ * &alpha;, _k_) / 2<sup>_k_ * &alpha;</sup>), where &alpha; = 2.  Thus, if &beta; (as defined in this section) is 2, the following replaces step 3 of the algorithm: "3. Generate _g_ * &alpha; unbiased random bits, then return 1 if exactly _g_ zeros were generated this way, or 0 otherwise." Interestingly, I have found that if &alpha; is an integer 4 or greater, the formula simplifies to involve hypergeometric functions.  For example, for &alpha; = 6, the formula is (1 &minus; &lambda;) * <sub>5</sub>_F_<sub>4</sub>(1/6, 2/6, ..., 5/6; 1/5, ..., 4/5; 729 * &lambda; / 3125).
 
 <a id=Expressions_Involving_Polylogarithms></a>
 #### Expressions Involving Polylogarithms
@@ -954,15 +954,15 @@ This can be extended to cover any constant of the form &zeta;(_k_) * (1 &minus; 
 <a id=Convex_Combinations></a>
 #### Convex Combinations
 
-Assume we have one or more input coins _h_<sub>_i_</sub>(&lambda;) that returns heads with a probability that depends on &lambda;.  (The number of coins may be infinite.) The following algorithm chooses one of these coins at random then flips that coin.  Specifically, the algorithm simulates the following function: _g_(0); * _h_<sub>0</sub>(&lambda;) + _g_(1) * _h_<sub>1</sub>(&lambda;) + ..., where _g_(_i_) is the probability that coin _i_ will be chosen, _h_<sub>_i_</sub> is the function simulated by coin _i_, and all the _g_(_i_) sum to 1.  See (Wästlund 1999, Theorem 2.7)<sup>[**(23)**](#Note23)</sup>.  (Alternatively, the algorithm can be seen as simulating **E**\[_h_<sub>_X_</sub>(&lambda;)\], that is, the expected or average value of _h_<sub>_X_</sub> where _X_ is the number that identifies the randomly chosen coin.)
+Assume we have one or more input coins _h_<sub>_i_</sub>(&lambda;) that returns heads with a probability that depends on &lambda;.  (The number of coins may be infinite.) The following algorithm chooses one of these coins at random then flips that coin.  Specifically, the algorithm simulates the following function: _g_(0) * _h_<sub>0</sub>(&lambda;) + _g_(1) * _h_<sub>1</sub>(&lambda;) + ..., where _g_(_i_) is the probability that coin _i_ will be chosen, _h_<sub>_i_</sub> is the function simulated by coin _i_, and all the _g_(_i_) sum to 1.  See (Wästlund 1999, Theorem 2.7)<sup>[**(23)**](#Note23)</sup>.  (Alternatively, the algorithm can be seen as simulating **E**\[_h_<sub>_X_</sub>(&lambda;)\], that is, the expected or average value of _h_<sub>_X_</sub> where _X_ is the number that identifies the randomly chosen coin.)
 
 1. Generate a random integer _X_ in some way.  For example, it could be a uniform random integer in [1, 6], or it could be a Poisson random number.
 2. Flip the coin represented by _X_ and return the result.
 
 > **Examples:**
 >
-> 1. Example 1. As one example, generate a Poisson random number _X_, then flip the input coin.  With probability 1/(1+_X_), return the result of the coin flip; otherwise, return 0.
-> 2. Example 2. Generate a Poisson(&mu;) random number _X_ and return 1 if _X_ is 0, or 0 otherwise.  This is a Bernoulli factory for exp(&minus;&mu;) mentioned earlier, and corresponds to _g_(_i_) being the Poisson(&mu;) probabilities and _h_<sub>_i_</sub> returning 1 if _i_ is 0, and 0 otherwise.
+> 1. Example 1. Generate a Poisson random number _X_, then flip the input coin.  With probability 1/(1+_X_), return the result of the coin flip; otherwise, return 0.
+> 2. Example 2. Generate a Poisson(&mu;) random number _X_ and return 1 if _X_ is 0, or 0 otherwise.  This is a Bernoulli factory for exp(&minus;&mu;) mentioned earlier, and corresponds to _g_(_i_) being the Poisson(&mu;) probabilities and _h_<sub>_i_</sub>() returning 1 if _i_ is 0, and 0 otherwise.
 > 3. Example 3. _Bernoulli Race_ (Dughmi et al. 2017)<sup>[**(9)**](#Note9)</sup>: If we have _n_ coins, then choose one of them uniformly at random and flip that coin. If the flip returns 1, return _X_; otherwise, repeat this algorithm.  This algorithm chooses a random coin based on its probability of heads.
 
 <a id=Simulating_the_Probability_Generating_Function></a>
