@@ -677,14 +677,14 @@ An extension to this algorithm, not mentioned in the Flajolet paper, is the use 
 > 1. A _g_-letter binary word can be "parsed" as follows to determine whether that word encodes a ternary tree: "3. If _g_ is 0, return 0.  Otherwise, set _i_ to 1 and _d_ to 1.; 3a. Generate an unbiased random bit, then subtract 1 from _d_ if that bit is 0, or add 2 to _d_ otherwise.; 3b. Add 1 to _i_. Then, if _i_ < _g_ and _d_ > 0, go to step 3a.; 3c. Return 1 if _d_ is 0 and _i_ is _g_, or 0 otherwise."
 > 2. If &beta; is 2 and if W(_g_), the number of valid _g_-letter words, has the form choose(_g_, _g_/_t_) if _g_ is divisible by _t_ (where _t_ is 2 or greater), or 0 otherwise, step 3 of the algorithm can be done as follows: "3. If _g_ is not divisible by _t_, return 0. Otherwise, generate _g_ unbiased random bits, then return 1 if exactly _g_/_t_ zeros were generated this way, or 0 otherwise."
 >
-> **Note:** The _square-root construction_ sqrt(1 &minus; &lambda;) (mentioned in the Flajolet paper) can be expressed by a slightly different formula from the one given here, namely &Sigma;<sub>_k_ = 0, 1, 2, ...</sub> (&lambda;<sup>_k_</sup> * (1 &minus; &lambda;) * choose(_k_ * &alpha;, _k_) / 2<sup>_k_ * &alpha;</sup>), where &alpha; = 2.  Thus, if &beta; (as defined in this section) is 2, the following replaces step 3 of the algorithm: "3. Generate _g_ * &alpha; unbiased random bits, then return 1 if exactly _g_ zeros were generated this way, or 0 otherwise." Interestingly, I have found that if &alpha; is an integer 4 or greater, the formula simplifies to involve hypergeometric functions.  For example, for &alpha; = 6, the formula is (1 &minus; &lambda;) * <sub>5</sub>_F_<sub>4</sub>(1/6, 2/6, ..., 5/6; 1/5, ..., 4/5; 729 * &lambda; / 3125).
+> **Note:** The _square-root construction_ sqrt(1 &minus; &lambda;) (mentioned in the Flajolet paper) can be expressed by a slightly different formula from the one given here, namely &Sigma;<sub>_k_ = 0, 1, 2, ...</sub> (&lambda;<sup>_k_</sup> * (1 &minus; &lambda;) * choose(_k_ * &alpha;, _k_) / 2<sup>_k_ * &alpha;</sup>), where &alpha; = 2.  Thus, if the alphabet size is 2, the following replaces step 3 of the algorithm: "3. Generate _g_ * &alpha; unbiased random bits, then return 1 if exactly _g_ zeros were generated this way, or 0 otherwise." Interestingly, I have found that if &alpha; is an integer 4 or greater, the formula simplifies to involve hypergeometric functions.  For example, for &alpha; = 6, the formula is (1 &minus; &lambda;) * <sub>5</sub>_F_<sub>4</sub>(1/6, 2/6, ..., 5/6; 1/5, ..., 4/5; 729 * &lambda; / 3125).
 
 <a id=Expressions_Involving_Polylogarithms></a>
 #### Expressions Involving Polylogarithms
 
 The following algorithm simulates the expression Li<sub>_r_</sub>(&lambda;) * (1 / &lambda; &minus; 1), where _r_ is an integer 1 or greater.  If &lambda; is 1/2, this expression simplifies to Li<sub>_r_</sub>(1/2). See also (Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup>.  Note, however, that even with a relatively small _r_ such as 6, the expression quickly approaches a straight line.
 
-1. Flip the input coin until it returns 0, and let _t_ be the number of times the coin returned 1 this way.
+1. Flip the input coin until it returns 0, and let _t_ be 1 plus the number of times the coin returned 1 this way.
 2. Return a number that is 1 with probability 1/_t_<sup>_r_</sup> and 0 otherwise.
 
 <a id=Algorithms_for_Irrational_Constants></a>
@@ -1248,8 +1248,8 @@ The following Python functions use the SymPy computer algebra library to find pr
 def coeffext(f, x, power):
     # Extract a coefficient from a generating function
     while True:
-      poly=Poly(series(f, n=power+2).removeO())
-      if power==0:
+      poly=Poly(series(f, x=x, n=power+2).removeO())
+      if power == 0:
         return poly.coeff_monomial(1)
       return poly.as_expr().coeff(x**power)
 
@@ -1273,6 +1273,8 @@ def valid_perm(f, x, n):
     return coeffext(f, x, n)*factorial(n)
 ```
 
+> **Note:** The von Neumann schema can simulate any _power series distribution_ (such as Poisson, negative binomial, geometric, and logarithmic series), given a suitable exponential generating function.
+
 <a id=Sketch_of_Derivation_of_the_Algorithm_for_1_pi></a>
 ### Sketch of Derivation of the Algorithm for 1 / &pi;
 
@@ -1282,7 +1284,8 @@ The algorithm is an application of the [**convex combination**](#Convex_Combinat
 
 - _g_(_n_): 2<sup>6 * _n_</sup> * (6 * _n_ + 1) / 2<sup>8 * _n_ + 2</sup> = 2<sup>&minus;2 * _n_</sup> * (6 * _n_ + 1) / 4 = (6 * _n_ + 1) / (2<sup>2 * _n_ + 2</sup>), which is the probability that the sum of two geometric(1/4) random numbers<sup>[**(7)**](#Note7)</sup> and one Bernoulli(5/9) random number, all of which are independent, equals _n_.  This corresponds to step 1 of the convex combination algorithm and steps 2 through 4 of the 1 / &pi; algorithm.  (This also shows that there may be an error in the identity for 1 / &pi; given in the Flajolet paper: the "8 _n_ + 4" should probably read "8 _n_ + 2".)
     - Note 1: 9 * (_n_ + 1) / (2<sup>2 * _n_ + 4</sup>) is the probability that the sum of two independent geometric(1/4) random numbers equals _n_.
-    - Note 2: _f_(_z_) * (1 &minus; _p_) + _f_(_z_ &minus; 1) * _p_ is the probability that the sum of two independent random numbers &mdash; a Bernoulli(_p_) number and a number _z_ with probability function _f_(.) &mdash; equals _z_.
+    - Note 2: _p_<sup>_n_</sup> * (1 &minus; _p_)<sup>_m_</sup> * choose(_n_ + _m_ &minus; 1, _m_ &minus; 1) is the probability that the sum of _m_ independent geometric(_p_) random numbers equals _n_ (a _negative binomial distribution_).
+    - Note 3: _f_(_z_) * (1 &minus; _p_) + _f_(_z_ &minus; 1) * _p_ is the probability that the sum of two independent random numbers &mdash; a Bernoulli(_p_) number and a number _z_ with probability function _f_(.) &mdash; equals _z_.
 - _h_<sub>_n_</sub>(): (choose(_n_ * 2, _n_) / 2<sup>_n_ * 2</sup>)<sup>3</sup>, which is the probability of heads of the "coin" numbered _n_.  This corresponds to step 2 of the convex combination algorithm and step 5 of the 1 / &pi; algorithm.
 
 <a id=License></a>

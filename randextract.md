@@ -12,6 +12,7 @@ In information security, randomness extraction serves to generate a seed, passwo
 Randomness extraction for information security is discussed in NIST SP 800-90B sec. 3.1.5.1, and RFC 4086 sec. 4.2 and 5.2. Possible choices of such extractors include keyed cryptographic hash functions (see, e.g., (Cliff et al., 2009)<sup>[**(1)**](#Note1)</sup>) and two-universal hash functions with a fixed but randomly chosen seed (Frauchiger et al., 2013)<sup>[**(2)**](#Note2)</sup>. In information security applications:
 
 - Unkeyed hash functions and other unkeyed extraction functions should not be used by themselves in randomness extraction.
+- Lossless compression should not be used as a randomness extractor.
 - Where possible, there should be two or more independent nondeterministic sources from which to apply randomness extraction.
 
 Some papers also refer to two-source extractors and resilient functions (especially the works by E. Chattopadhyay and D. Zuckerman), but there are few if any real implementations of these extraction techniques.
@@ -41,9 +42,9 @@ Pae (2005)<sup>[**(5)**](#Note5)</sup> and (Pae and Loui 2006)<sup>[**(6)**](#No
 
 1. Create two empty lists named U and V. Then, while two or more bits remain:
     1. If the next two bits are 0/0, append 0 to U and 0 to V.
-    2. Otherwise, if the next two bits are 0/1, write a 0 then append 1 to U.
-    3. Otherwise, if the next two bits are 1/0, write a 1 then append 1 to U.
-    4. Otherwise, if the next two bits are 1/1, append 0 to U and 1 to V.
+    2. Otherwise, if those bits are 0/1, append 1 to U, then write a 0.
+    3. Otherwise, if those bits are 1/0, append 1 to U, then write a 1.
+    4. Otherwise, if those bits are 1/1, append 0 to U and 1 to V.
 2. Run this algorithm recursively, with the bits placed in U.
 3. Run this algorithm recursively, with the bits placed in V.
 

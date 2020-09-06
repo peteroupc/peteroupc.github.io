@@ -17,6 +17,7 @@
 
 <ul>
 <li>Unkeyed hash functions and other unkeyed extraction functions should not be used by themselves in randomness extraction.</li>
+<li>Lossless compression should not be used as a randomness extractor.</li>
 <li>Where possible, there should be two or more independent nondeterministic sources from which to apply randomness extraction.</li>
 </ul>
 
@@ -59,9 +60,9 @@
 
 <ol>
 <li>If the next two bits are 0/0, append 0 to U and 0 to V.</li>
-<li>Otherwise, if the next two bits are 0/1, write a 0 then append 1 to U.</li>
-<li>Otherwise, if the next two bits are 1/0, write a 1 then append 1 to U.</li>
-<li>Otherwise, if the next two bits are 1/1, append 0 to U and 1 to V.</li>
+<li>Otherwise, if those bits are 0/1, append 1 to U, then write a 0.</li>
+<li>Otherwise, if those bits are 1/0, append 1 to U, then write a 1.</li>
+<li>Otherwise, if those bits are 1/1, append 0 to U and 1 to V.</li>
 </ol></li>
 <li>Run this algorithm recursively, with the bits placed in U.</li>
 <li>Run this algorithm recursively, with the bits placed in V.</li>
